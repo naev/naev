@@ -746,6 +746,63 @@ void gl_drawLine( const double x1, const double y1,
 
 
 /**
+ * @brief Draws a trail.
+ *
+ *    @param x1 X position of the first point in screen coordinates.
+ *    @param y1 Y position of the first point in screen coordinates.
+ *    @param x2 X position of the second point in screen coordinates.
+ *    @param y2 Y position of the second point in screen coordinates.
+ *    @param t1 time of the first point.
+ *    @param t2 time of the second point.
+ *    @param c1 Colour to use for first point.
+ *    @param c2 Colour to use for second point.
+ *    @param thick1 Thickness to use for first point.
+ *    @param thick2 Thickness to use for second point.
+ */
+void gl_drawTrail( double x1, double y1, double x2, double y2,
+      double t1, double t2, const glColour *c1,
+      const glColour *c2, double thick1, double thick2 )
+{
+   gl_Matrix4 projection;
+   double a, s;
+
+   glUseProgram(shaders.trail.program);
+
+   a = atan2( y2-y1, x2-x1 );
+   s = sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) );
+
+   /* Set vertex. */
+   projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);
+   projection = gl_Matrix4_Rotate2d(projection, a);
+   projection = gl_Matrix4_Scale(projection, s, thick1+thick2, 1);
+   projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
+   glEnableVertexAttribArray( shaders.trail.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );
+
+   /* There was some ambitious code here to pass the colours to the vertex shader.
+    * Would advise looking at toolkit_drawOutline in src/toolkit.c for reference if retrying that. */
+
+   /* Set uniforms. */
+   gl_uniformColor(shaders.trail.c1, c1);
+   gl_uniformColor(shaders.trail.c2, c2);
+   gl_Matrix4_Uniform(shaders.trail.projection, projection);
+   glUniform1f(shaders.trail.t1, (GLfloat) t1);
+   glUniform1f(shaders.trail.t2, (GLfloat) t2);
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.trail.vertex );
+   glUseProgram(0);
+
+   /* Check errors. */
+   gl_checkErr();
+
+}
+
+
+/**
  * @brief Sets up 2d clipping planes around a rectangle.
  *
  *    @param x X position of the rectangle.

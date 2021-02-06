@@ -8,6 +8,7 @@
  <class>Destroyer</class>
  <price>900000</price>
  <time_mod>1.5</time_mod>
+ <trail_generator x="-40" y="0" h="0">fire</trail_generator>
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>This military grade version of the Vigilance has stronger armour and diverts more of its energy to its forward-mounted weapons than its standard counterpart, resulting in increased damage at the cost of slightly increased power consumption and heat production.</description>

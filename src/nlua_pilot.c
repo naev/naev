@@ -503,7 +503,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    }
    else if (lua_issystem(L,2+from_ship)) {
       ss = system_getIndex( lua_tosystem(L,2+from_ship) );
-      for (i=0; i<cur_system->njumps; i++) {
+      for (i=0; i<array_size(cur_system->jumps); i++) {
          if ((cur_system->jumps[i].target == ss)
                && !jp_isFlag( cur_system->jumps[i].returnJump, JP_EXITONLY )) {
             jump = cur_system->jumps[i].returnJump;
@@ -511,10 +511,10 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          }
       }
       if (jump == NULL) {
-         if (cur_system->njumps > 0) {
+         if (array_size(cur_system->jumps) > 0) {
             WARN(_("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."),
                   fltname, ss->name, cur_system->name );
-            jump = cur_system->jumps[RNG_BASE(0,cur_system->njumps-1)].returnJump;
+            jump = cur_system->jumps[RNG_BASE(0, array_size(cur_system->jumps)-1)].returnJump;
          }
          else
             WARN(_("Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."),
@@ -734,7 +734,7 @@ static int pilotL_toggleSpawn( lua_State *L )
          b = !lua_toboolean(L,2);
 
          /* Find the faction and set. */
-         for (i=0; i<cur_system->npresence; i++) {
+         for (i=0; i<array_size(cur_system->presence); i++) {
             if (cur_system->presence[i].faction != f)
                continue;
             cur_system->presence[i].disabled = b;
@@ -1142,7 +1142,7 @@ static int pilotL_weapset( lua_State *L )
 
    /* Push set. */
    if (all)
-      n = p->noutfits;
+      n = array_size(p->outfits);
    else
       po_list = pilot_weapSetList( p, id, &n );
 
@@ -1373,7 +1373,7 @@ static int pilotL_weapsetHeat( lua_State *L )
 
    /* Push set. */
    if (all)
-      n = p->noutfits;
+      n = array_size(p->outfits);
    else
       po_list = pilot_weapSetList( p, id, &n );
 
@@ -1477,15 +1477,13 @@ static int pilotL_actives( lua_State *L )
    lua_newtable(L);
 
    if (sort) {
-      outfits = malloc( sizeof(PilotOutfitSlot*) * p->noutfits );
-      memcpy( outfits, p->outfits, sizeof(PilotOutfitSlot*) * p->noutfits );
-      qsort( outfits, p->noutfits, sizeof(PilotOutfitSlot*), outfit_compareActive );
+      outfits = array_copy( PilotOutfitSlot*, p->outfits );
+      qsort( outfits, array_size(outfits), sizeof(PilotOutfitSlot*), outfit_compareActive );
    }
    else
       outfits  = p->outfits;
 
-   for (i=0; i<p->noutfits; i++) {
-
+   for (i=0; i<array_size(outfits); i++) {
       /* Get active outfits. */
       o = outfits[i];
       if (o->outfit == NULL)
@@ -1568,7 +1566,7 @@ static int pilotL_actives( lua_State *L )
 
    /* Clean up. */
    if (sort)
-      free(outfits);
+      array_free(outfits);
 
    return 1;
 }
@@ -1635,7 +1633,7 @@ static int pilotL_outfits( lua_State *L )
 
    j  = 1;
    lua_newtable( L );
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
 
       /* Get outfit. */
       if (p->outfits[i]->outfit == NULL)
@@ -2387,7 +2385,7 @@ static int pilotL_addOutfit( lua_State *L )
 
    /* Add outfit. */
    added = 0;
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       /* Must still have to add outfit. */
       if (q <= 0)
          break;
@@ -2475,7 +2473,7 @@ static int pilotL_rmOutfit( lua_State *L )
 
       /* If outfit is "all", we remove everything except cores. */
       if (strcmp(outfit,"all")==0) {
-         for (i=0; i<p->noutfits; i++) {
+         for (i=0; i<array_size(p->outfits); i++) {
             if (p->outfits[i]->sslot->required)
                continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
@@ -2486,7 +2484,7 @@ static int pilotL_rmOutfit( lua_State *L )
       }
       /* If outfit is "cores", we remove cores only. */
       else if (strcmp(outfit,"cores")==0) {
-         for (i=0; i<p->noutfits; i++) {
+         for (i=0; i<array_size(p->outfits); i++) {
             if (!p->outfits[i]->sslot->required)
                continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
@@ -2501,7 +2499,7 @@ static int pilotL_rmOutfit( lua_State *L )
       o = luaL_validoutfit(L,2);
 
       /* Remove the outfit outfit. */
-      for (i=0; i<p->noutfits; i++) {
+      for (i=0; i<array_size(p->outfits); i++) {
          /* Must still need to remove. */
          if (q <= 0)
             break;
@@ -2635,7 +2633,7 @@ static int pilotL_setTemp( lua_State *L )
 
    /* Handle pilot outfits (maybe). */
    if (setOutfits)
-      for (i = 0; i < p->noutfits; i++)
+      for (i = 0; i < array_size(p->outfits); i++)
          p->outfits[i]->heat_T = kelvins;
 
    return 0;
@@ -3136,7 +3134,7 @@ static int pilotL_cargoList( lua_State *L )
 
    p = luaL_validpilot(L,1);
    lua_newtable(L); /* t */
-   for (i=0; i<p->ncommodities; i++) {
+   for (i=0; i<array_size(p->commodities); i++) {
       lua_pushnumber(L, i+1); /* t, i */
 
       /* Represents the cargo. */
@@ -3760,7 +3758,7 @@ static int pilotL_hyperspace( lua_State *L )
    if (ss == NULL)
       return 0;
    /* Find the jump. */
-   for (i=0; i < cur_system->njumps; i++) {
+   for (i=0; i < array_size(cur_system->jumps); i++) {
       jp = &cur_system->jumps[i];
       if (jp->target != ss)
          continue;
@@ -3823,12 +3821,12 @@ static int pilotL_land( lua_State *L )
 
    if (pnt != NULL) {
       /* Find the jump. */
-      for (i=0; i < cur_system->nplanets; i++) {
+      for (i=0; i < array_size(cur_system->planets); i++) {
          if (cur_system->planets[i] == pnt) {
             break;
          }
       }
-      if (i >= cur_system->nplanets) {
+      if (i >= array_size(cur_system->planets)) {
          NLUA_ERROR( L, _("Planet '%s' not found in system '%s'"), pnt->name, cur_system->name );
          return 0;
       }
@@ -4028,7 +4026,7 @@ static int pilotL_followers( lua_State *L ) {
    p = luaL_validpilot(L, 1);
 
    lua_newtable(L);
-   for (i = 0; i < p->nescorts; i++) {
+   for (i = 0; i < array_size(p->escorts); i++) {
       lua_pushnumber(L, i+1);
       lua_pushpilot(L, p->escorts[i].id);
       lua_rawset(L, -3);

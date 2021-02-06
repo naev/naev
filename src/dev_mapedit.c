@@ -1090,7 +1090,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
       xmlw_attr( writer, "name", "%s", s->name );
 
       /* Iterate jumps and see if they lead to any other systems in our array. */
-      for (j = 0; j < s->njumps; j++) {
+      for (j = 0; j < array_size(s->jumps); j++) {
          /* Ignore hidden and exit-only jumps. */
          if (jp_isFlag(&s->jumps[j], JP_EXITONLY ))
             continue;
@@ -1106,7 +1106,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
       }
 
       /* Iterate assets and add them */
-      for (j = 0; j < s->nplanets; j++) {
+      for (j = 0; j < array_size(s->planets); j++) {
          if (s->planets[j]->real)
             xmlw_elem( writer, "asset", "%s", s->planets[j]->name );
       }

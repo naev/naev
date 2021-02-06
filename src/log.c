@@ -9,12 +9,11 @@
  */
 
 /** @cond */
-#include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <sys/stat.h>
-#include <sys/types.h>
 #include <time.h> /* strftime */
+#include "physfs.h"
 
 #include "naev.h"
 
@@ -26,7 +25,7 @@
 #include "log.h"
 
 #include "console.h"
-#include "nfile.h"
+#include "ndata.h"
 #include "nstring.h"
 
 
@@ -41,8 +40,6 @@ static int noutcopy = 0; /* Number of bytes written to outcopy. */
 static int nerrcopy = 0; /* Number of bytes written to errcopy. */
 
 /**< Output filenames for stdout and stderr. */
-static char *outfile = NULL;
-static char *errfile = NULL;
 static char *outfiledouble = NULL;
 static char *errfiledouble = NULL;
 
@@ -50,8 +47,8 @@ static char *errfiledouble = NULL;
 static int copying = 0;
 
 /* File descriptors */
-static FILE *logout_file = NULL;
-static FILE *logerr_file = NULL;
+static PHYSFS_File *logout_file = NULL;
+static PHYSFS_File *logerr_file = NULL;
 
 
 /*
@@ -103,15 +100,15 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
       log_append(stream, &buf[2]);
 
    if ( stream == stdout && logout_file != NULL ) {
-      fprintf( logout_file, "%s", &buf[ 2 ] );
+      PHYSFS_writeBytes( logout_file, &buf[2], newline ? n+2 : n+1 );
       if ( newline )
-         fflush( logout_file );
+         PHYSFS_flush( logout_file );
    }
 
    if ( stream == stderr && logerr_file != NULL ) {
-      fprintf( logerr_file, "%s", &buf[ 2 ] );
+      PHYSFS_writeBytes( logerr_file, &buf[2], newline ? n+1 : n );
       if ( newline )
-         fflush( logerr_file );
+         PHYSFS_flush( logerr_file );
    }
 
    /* Also print to the stream. */
@@ -130,7 +127,6 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
  */
 void log_redirect (void)
 {
-   char *buf;
    time_t cur;
    struct tm *ts;
    char timestr[20];
@@ -139,33 +135,20 @@ void log_redirect (void)
    ts = localtime(&cur);
    strftime( timestr, sizeof(timestr), "%Y-%m-%d_%H-%M-%S", ts );
 
-   buf = malloc(PATH_MAX);
-   nsnprintf( buf, PATH_MAX, "%slogs/", nfile_dataPath() );
-   nfile_dirMakeExist( buf );
-   free(buf);
-
-   outfile = malloc(PATH_MAX);
-   errfile = malloc(PATH_MAX);
    outfiledouble = malloc(PATH_MAX);
    errfiledouble = malloc(PATH_MAX);
 
-   nsnprintf( outfile, PATH_MAX, "%slogs/stdout.txt", nfile_dataPath() );
-   logout_file = fopen( outfile, "w" );
-   if ( logout_file == NULL ) {
+   PHYSFS_mkdir( "logs" );
+   logout_file = PHYSFS_openWrite( "logs/stdout.txt" );
+   if ( logout_file == NULL )
       WARN(_("Unable to redirect stdout to file"));
-   }
 
-   nsnprintf( errfile, PATH_MAX, "%slogs/stderr.txt", nfile_dataPath() );
-   logerr_file = fopen( errfile, "w" );
-   if ( logerr_file == NULL ) {
+   logerr_file = PHYSFS_openWrite( "logs/stderr.txt" );
+   if ( logerr_file == NULL )
       WARN(_("Unable to redirect stderr to file"));
-   }
 
-   nsnprintf( outfiledouble, PATH_MAX, "%slogs/%s_stdout.txt", nfile_dataPath(), timestr );
-   nsnprintf( errfiledouble, PATH_MAX, "%slogs/%s_stderr.txt", nfile_dataPath(), timestr );
-
-   /* stderr should be unbuffered */
-   setvbuf( logerr_file, NULL, _IONBF, 0 );
+   nsnprintf( outfiledouble, PATH_MAX, "logs/%s_stdout.txt", timestr );
+   nsnprintf( errfiledouble, PATH_MAX, "logs/%s_stderr.txt", timestr );
 }
 
 
@@ -235,15 +218,11 @@ void log_copy( int enable )
       return;
    }
 
-   if ( noutcopy && logout_file != NULL ) {
-      fprintf( logout_file, "%s", outcopy );
-      fflush( logout_file );
-   }
+   if ( noutcopy && logout_file != NULL )
+      PHYSFS_writeBytes( logout_file, outcopy, strlen(outcopy) );
 
-   if ( nerrcopy && logerr_file != NULL ) {
-      fprintf( logerr_file, "%s", errcopy );
-      fflush( logerr_file );
-   }
+   if ( nerrcopy && logerr_file != NULL )
+      PHYSFS_writeBytes( logerr_file, errcopy, strlen(errcopy) );
 
    log_purge();
 }
@@ -283,26 +262,26 @@ void log_purge (void)
  */
 void log_clean (void)
 {
-   struct stat err;
+   PHYSFS_Stat err;
 
    /* We assume redirection is only done in pairs. */
-   if ((outfile == NULL) || (errfile == NULL))
+   if ((logout_file == NULL) || (logerr_file == NULL))
       return;
 
-   fclose( logout_file );
+   PHYSFS_close( logout_file );
    logout_file = NULL;
-   fclose( logerr_file );
+   PHYSFS_close( logerr_file );
    logerr_file = NULL;
 
-   if (stat(errfile, &err) != 0)
+   if (PHYSFS_stat( "logs/stderr.txt", &err) == 0)
       return;
 
-   if (err.st_size == 0) {
-      unlink(outfile);
-      unlink(errfile);
+   if (err.filesize == 0) {
+      PHYSFS_delete( "logs/stdout.txt" );
+      PHYSFS_delete( "logs/stderr.txt" );
    } else {
-      nfile_copyIfExists(outfile, outfiledouble);
-      nfile_copyIfExists(errfile, errfiledouble);
+      ndata_copyIfExists( "logs/stdout.txt", outfiledouble );
+      ndata_copyIfExists( "logs/stderr.txt", errfiledouble );
    }
 }
 

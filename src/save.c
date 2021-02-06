@@ -10,6 +10,7 @@
 
 /** @cond */
 #include <errno.h>
+#include "physfs.h"
 
 #include "naev.h"
 /** @endcond */
@@ -26,7 +27,7 @@
 #include "log.h"
 #include "menu.h"
 #include "news.h"
-#include "nfile.h"
+#include "ndata.h"
 #include "nlua_var.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -136,16 +137,16 @@ int save_all (void)
    xmlw_done(writer);
 
    /* Write to file. */
-   if ((nfile_dirMakeExist(nfile_dataPath()) < 0) ||
-         (nfile_dirMakeExist(nfile_dataPath(), "saves") < 0)) {
-      WARN(_("Failed to create save directory '%ssaves'."), nfile_dataPath());
+   if (PHYSFS_mkdir("saves") == 0) {
+      nsnprintf(file, sizeof(file), "%s/saves", PHYSFS_getWriteDir());
+      WARN(_( "Dir '%s' does not exist and unable to create: %s" ), file, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       goto err_writer;
    }
-   nsnprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
+   nsnprintf(file, sizeof(file), "saves/%s.ns", player.name);
 
    /* Back up old saved game. */
    if (!save_loaded) {
-      if (nfile_backupIfExists(file) < 0) {
+      if (ndata_backupIfExists(file) < 0) {
          WARN(_("Aborting save..."));
          goto err_writer;
       }
@@ -155,6 +156,7 @@ int save_all (void)
    /* Critical section, if crashes here player's game gets corrupted.
     * Luckily we have a copy just in case... */
    xmlFreeTextWriter(writer);
+   nsnprintf(file, sizeof(file), "%s/saves/%s.ns", PHYSFS_getWriteDir(), player.name); /* TODO: write via physfs */
    if (xmlSaveFileEnc(file, doc, "UTF-8") < 0) {
       WARN(_("Failed to write saved game!  You'll most likely have to restore it by copying your backup saved game over your current saved game."));
       goto err;
@@ -176,40 +178,6 @@ err:
 void save_reload (void)
 {
    char path[PATH_MAX];
-   nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
+   nsnprintf(path, PATH_MAX, "saves/%s.ns", player.name);
    load_gameFile( path );
 }
-
-
-/**
- * @brief Checks to see if there's a saved game available.
- *
- *    @return 1 if a saved game is available, 0 otherwise.
- */
-int save_hasSave (void)
-{
-   char **files;
-   size_t nfiles, i, len;
-   int has_save;
-
-   /* Look for saved games. */
-   files = nfile_readDir( &nfiles, nfile_dataPath(), "saves" );
-   has_save = 0;
-   for (i=0; i<nfiles; i++) {
-      len = strlen(files[i]);
-
-      /* no save extension */
-      if ((len >= 5) && (strcmp(&files[i][len-3],".ns")==0)) {
-         has_save = 1;
-         break;
-      }
-   }
-
-   /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free(files[i]);
-   free(files);
-
-   return has_save;
-}
-

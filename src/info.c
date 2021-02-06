@@ -781,7 +781,7 @@ static void cargo_genList( unsigned int wid )
       window_destroyWidget( wid, "lstCargo" );
 
    /* List */
-   if (player.p->ncommodities==0) {
+   if (array_size(player.p->commodities)==0) {
       /* No cargo */
       buf = malloc(sizeof(char*));
       buf[0] = strdup(_("None"));
@@ -789,15 +789,15 @@ static void cargo_genList( unsigned int wid )
    }
    else {
       /* List the player's cargo */
-      buf = malloc(sizeof(char*)*player.p->ncommodities);
-      for (i=0; i<player.p->ncommodities; i++) {
+      buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
+      for (i=0; i<array_size(player.p->commodities); i++) {
          buf[i] = malloc(128);
          nsnprintf(buf[i],128, "%s%s %d",
                _(player.p->commodities[i].commodity->name),
                (player.p->commodities[i].id != 0) ? "*" : "",
                player.p->commodities[i].quantity);
       }
-      nbuf = player.p->ncommodities;
+      nbuf = array_size(player.p->commodities);
    }
    window_addList( wid, 20, -40,
          w - 40, h - BUTTON_HEIGHT - 80,
@@ -811,7 +811,7 @@ static void cargo_update( unsigned int wid, char* str )
 {
    (void)str;
 
-   if (player.p->ncommodities==0)
+   if (array_size(player.p->commodities)==0)
       return; /* No cargo */
 
    /* Can jettison all but mission cargo when not landed*/
@@ -830,7 +830,7 @@ static void cargo_jettison( unsigned int wid, char* str )
    int i, j, f, pos, ret;
    Mission *misn;
 
-   if (player.p->ncommodities==0)
+   if (array_size(player.p->commodities)==0)
       return; /* No cargo, redundant check */
 
    pos = toolkit_getListPos( wid, "lstCargo" );

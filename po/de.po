@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-01-27 20:07-0500\n"
+"POT-Creation-Date: 2021-02-01 09:14-0500\n"
 "PO-Revision-Date: 2021-01-30 19:41+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
@@ -11661,19 +11661,19 @@ msgstr ""
 #: dat/assets/regensburg.xml:27 dat/gui/brushed.lua:850 dat/gui/brushed.lua:859
 #: dat/missions/pirate/fake_id.lua:38 dat/missions/rehab_common.lua:18
 #: dat/missions/soromid/comingout/srm_comingout4.lua:75
-#: dat/missions/tutorial/tutorial.lua:101 src/dev_sysedit.c:1275
-#: src/dev_sysedit.c:1512 src/dev_sysedit.c:1513 src/dev_sysedit.c:1620
-#: src/dev_sysedit.c:1634 src/dev_sysedit.c:1661 src/dev_sysedit.c:1683
-#: src/dev_sysedit.c:1762 src/dev_sysedit.c:1779 src/dev_sysedit.c:1819
-#: src/dev_sysedit.c:1843 src/dev_sysedit.c:1880 src/dev_sysedit.c:1915
-#: src/dev_sysedit.c:1921 src/dev_uniedit.c:967 src/dev_uniedit.c:1145
-#: src/dev_uniedit.c:1368 src/dev_uniedit.c:1433 src/info.c:249 src/info.c:346
-#: src/info.c:784 src/info.c:1086 src/input.c:550 src/land_outfits.c:396
-#: src/land_outfits.c:429 src/land_outfits.c:608 src/land_shipyard.c:160
+#: dat/missions/tutorial/tutorial.lua:101 src/dev_sysedit.c:1274
+#: src/dev_sysedit.c:1511 src/dev_sysedit.c:1512 src/dev_sysedit.c:1619
+#: src/dev_sysedit.c:1633 src/dev_sysedit.c:1660 src/dev_sysedit.c:1682
+#: src/dev_sysedit.c:1761 src/dev_sysedit.c:1778 src/dev_sysedit.c:1818
+#: src/dev_sysedit.c:1842 src/dev_sysedit.c:1879 src/dev_sysedit.c:1914
+#: src/dev_sysedit.c:1920 src/dev_uniedit.c:967 src/dev_uniedit.c:1145
+#: src/dev_uniedit.c:1368 src/dev_uniedit.c:1433 src/info.c:251 src/info.c:349
+#: src/info.c:787 src/info.c:1089 src/input.c:550 src/land_outfits.c:394
+#: src/land_outfits.c:427 src/land_outfits.c:606 src/land_shipyard.c:160
 #: src/land_shipyard.c:251 src/land_trade.c:84 src/land_trade.c:86
-#: src/land_trade.c:120 src/load.c:319 src/load.c:365 src/load.c:412
-#: src/map.c:581 src/map.c:606 src/map.c:1570 src/map_find.c:743
-#: src/map_system.c:616 src/map_system.c:692 src/pilot_outfit.c:899
+#: src/land_trade.c:120 src/load.c:374 src/load.c:419 src/load.c:463
+#: src/map.c:581 src/map.c:606 src/map.c:1570 src/map_find.c:737
+#: src/map_system.c:610 src/map_system.c:686 src/pilot_outfit.c:899
 #, c-format
 msgid "None"
 msgstr "Keine"
@@ -17737,7 +17737,7 @@ msgstr "VIP"
 msgid "Waste Containers"
 msgstr "Abfallbehälter"
 
-#: dat/commodity.xml:302 dat/missions/pirate/pir_cargo.lua:69 src/info.c:57
+#: dat/commodity.xml:302 dat/missions/pirate/pir_cargo.lua:69 src/info.c:58
 msgid "Weapons"
 msgstr "Waffen"
 
@@ -24638,7 +24638,7 @@ msgstr ""
 "Dies ist ein diplomatisches Schiff. Es darf weder vom Spieler noch von den "
 "normalen KI benutzt werden."
 
-#: dat/ships/drone.xml:2 dat/missions/minerva/pirate1.lua:179 src/ship.c:205
+#: dat/ships/drone.xml:2 dat/missions/minerva/pirate1.lua:179 src/ship.c:204
 msgid "Drone"
 msgstr "Drohne"
 
@@ -24654,7 +24654,7 @@ msgstr ""
 "Dies ist eine modifizierte Version der Roboterdrohne, die ein "
 "Lebenserhaltungssystem für Menschen enthält."
 
-#: dat/ships/drone_heavy.xml:2 src/ship.c:207
+#: dat/ships/drone_heavy.xml:2 src/ship.c:206
 msgid "Heavy Drone"
 msgstr "Schwerdrohne"
 
@@ -25169,7 +25169,7 @@ msgstr ""
 #: dat/ships/raelid_outpost.xml:11 dat/ships/raglan_outpost.xml:11
 #: dat/ships/sindbad.xml:11 src/dev_uniedit.c:228 src/dev_uniedit.c:234
 #: src/dev_uniedit.c:884 src/dev_uniedit.c:885 src/map.c:515 src/map.c:516
-#: src/outfit.c:266 src/outfit.c:286
+#: src/outfit.c:265 src/outfit.c:285
 msgid "N/A"
 msgstr "N/V"
 
@@ -29923,8 +29923,8 @@ msgid ""
 "stupid people. With regards to how well you have helped us in the past, we "
 "will exceptionally let you live, but don't expect us to trust you anymore!\""
 msgstr ""
-"Als du landest, siehst Sie die Kapitänin Leblanc am Dock und sie rügt dich: „"
-"Das war eine Falle, %s. Die Tatsache, dass Sie in sie hineingefallen sind, "
+"Als du landest, siehst Sie die Kapitänin Leblanc am Dock und sie rügt dich: "
+"„Das war eine Falle, %s. Die Tatsache, dass Sie in sie hineingefallen sind, "
 "beweist, dass Sie illoyal sind. Illoyal und dumm übrigens, denn die Falle "
 "war ziemlich offensichtlich, wenn ich hinzufügen darf. Und das Hohe Kommando "
 "kann es sich nicht leisten, mit illoyalen und dummen Leuten zu arbeiten. In "
@@ -31664,7 +31664,7 @@ msgid "Cyborg Chicken"
 msgstr "Cyborg-Huhn"
 
 #: dat/events/minerva/station.lua:200 dat/events/minerva/station.lua:285
-#: src/load.c:333
+#: src/load.c:388
 msgid "Back"
 msgstr "Zurück"
 
@@ -31814,7 +31814,7 @@ msgstr "Handeln"
 #. Run callback.
 #: dat/events/minerva/station.lua:297 dat/rescue.lua:43 dat/rescue.lua:53
 #: dat/rescue.lua:113 dat/rescue.lua:162 src/dialogue.c:749 src/escort.c:273
-#: src/map_find.c:249 src/options.c:248 src/options.c:762 src/options.c:869
+#: src/map_find.c:243 src/options.c:248 src/options.c:762 src/options.c:869
 #: src/options.c:1127 src/options.c:1181
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -37190,8 +37190,8 @@ msgstr "Kopfgeldjäger"
 #: dat/gui/legacy.lua:310 dat/gui/legacy.lua:324 dat/gui/slim.lua:387
 #: dat/gui/slim.lua:952 dat/missions/shadow/darkshadow.lua:147 src/gui.c:1766
 #: src/map.c:452 src/map.c:458 src/map.c:464 src/map.c:470 src/map.c:476
-#: src/map.c:482 src/map.c:1566 src/map_overlay.c:175 src/outfit.c:274
-#: src/outfit.c:294 src/outfit.c:843 src/ship.c:213
+#: src/map.c:482 src/map.c:1566 src/map_overlay.c:175 src/outfit.c:273
+#: src/outfit.c:293 src/outfit.c:842 src/ship.c:212
 msgid "Unknown"
 msgstr "Unbekannt"
 
@@ -37381,7 +37381,7 @@ msgstr "Abbezahlt"
 #. Kills of the faction's allies
 #. Missions done for the faction's enemies
 #. Missions done for the faction's allies
-#: dat/factions/standing/skel.lua:27 src/info.c:724
+#: dat/factions/standing/skel.lua:27 src/info.c:727
 msgid "Legend"
 msgstr "Legende"
 
@@ -45043,7 +45043,7 @@ msgstr ""
 msgid "Return to %s"
 msgstr "Kehre nach %s zurück"
 
-#: dat/missions/empire/collective/ec03.lua:62 src/map_find.c:435
+#: dat/missions/empire/collective/ec03.lua:62 src/map_find.c:429
 #, c-format, lua-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
@@ -70247,13 +70247,27 @@ msgstr ""
 "sein, die nützliche Tipps für Sie haben könnten!“"
 
 #: dat/missions/tutorial/tutorial.lua:62
-#, lua-format
+#, fuzzy, lua-format
+#| msgid ""
+#| "\"This is the Mission Computer, where you can find basic missions in the "
+#| "official mission database. Missions are how you make your living as a "
+#| "pilot, so I recommend you check this screen often to see where the money-"
+#| "making opportunities are! You can see that each mission is given a brief "
+#| "summary, and by clicking them, you well be able to see more information "
+#| "about the mission. Since many missions involve cargo, you can also see "
+#| "how much free space is available in your ship in the top-right.\n"
+#| "    \"When picking missions, pay attention to how much they pay. You'll "
+#| "want to strike a balance of choosing missions that you're capable of "
+#| "doing, but getting paid as much as possible to do them. Once you've "
+#| "chosen a mission, click the 'Accept Mission' button on the bottom-right "
+#| "and it will be added to your active missions, which you can review via "
+#| "the Info screen by pressing %s.\""
 msgid ""
 "\"This is the Mission Computer, where you can find basic missions in the "
 "official mission database. Missions are how you make your living as a pilot, "
 "so I recommend you check this screen often to see where the money-making "
 "opportunities are! You can see that each mission is given a brief summary, "
-"and by clicking them, you well be able to see more information about the "
+"and by clicking them, you will be able to see more information about the "
 "mission. Since many missions involve cargo, you can also see how much free "
 "space is available in your ship in the top-right.\n"
 "    \"When picking missions, pay attention to how much they pay. You'll want "
@@ -77370,11 +77384,11 @@ msgstr ""
 msgid "Credits"
 msgstr "Credits"
 
-#: src/board.c:167 src/info.c:58
+#: src/board.c:167 src/info.c:59
 msgid "Cargo"
 msgstr "Fracht"
 
-#: src/board.c:171 src/outfit.c:833
+#: src/board.c:171 src/outfit.c:832
 msgid "Ammo"
 msgstr "Munition"
 
@@ -77473,11 +77487,11 @@ msgstr[1] "%d Raketen\n"
 msgid "#%c%s#0 has plundered %s from your ship!"
 msgstr "#%c%s#0 hat %s aus deinem Schiff geplündert!"
 
-#: src/claim.c:280
+#: src/claim.c:279
 msgid "System Claim has inexistent system"
 msgstr "System-Claim hat nicht existentes System"
 
-#: src/claim.c:314
+#: src/claim.c:313
 #, c-format
 msgid "System Claim trying to load system '%s' which doesn't exist"
 msgstr "System-Claim versucht, System „%s“ zu laden, welches nicht existiert"
@@ -77529,13 +77543,13 @@ msgstr "%s antwortet nicht."
 msgid "Communication Channel"
 msgstr "Kommunikationskanal"
 
-#: src/comm.c:375 src/console.c:652 src/dev_sysedit.c:1347
-#: src/dev_sysedit.c:1457 src/dev_sysedit.c:1520 src/dev_sysedit.c:1715
-#: src/dev_sysedit.c:1890 src/dev_sysedit.c:1974 src/dev_uniedit.c:1031
-#: src/dev_uniedit.c:1243 src/dev_uniedit.c:1490 src/info.c:240 src/info.c:317
-#: src/info.c:402 src/info.c:545 src/info.c:754 src/info.c:933 src/info.c:1021
-#: src/info.c:1363 src/land_outfits.c:173 src/map.c:288 src/map_find.c:1064
-#: src/map_system.c:199
+#: src/comm.c:375 src/console.c:652 src/dev_sysedit.c:1346
+#: src/dev_sysedit.c:1456 src/dev_sysedit.c:1519 src/dev_sysedit.c:1714
+#: src/dev_sysedit.c:1889 src/dev_sysedit.c:1973 src/dev_uniedit.c:1031
+#: src/dev_uniedit.c:1243 src/dev_uniedit.c:1490 src/info.c:241 src/info.c:320
+#: src/info.c:405 src/info.c:548 src/info.c:757 src/info.c:936 src/info.c:1024
+#: src/info.c:1366 src/land_outfits.c:171 src/map.c:288 src/map_find.c:1057
+#: src/map_system.c:194
 msgid "Close"
 msgstr "Schließen"
 
@@ -77714,8 +77728,8 @@ msgstr ""
 msgid "Malformed %s file: missing root element '%s'"
 msgstr "Defekte „%s“-Datei: fehlendes Wurzelelement „%s“"
 
-#: src/commodity.c:601 src/faction.c:1502 src/map.c:2547 src/outfit.c:1079
-#: src/ship.c:614 src/ship.c:1105 src/space.c:1773 src/space.c:3328
+#: src/commodity.c:601 src/faction.c:1502 src/map.c:2547 src/outfit.c:1078
+#: src/ship.c:613 src/ship.c:1104 src/space.c:1765 src/space.c:3320
 #: src/tech.c:122
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -78261,6 +78275,95 @@ msgstr "Schadenstyp „%d“ ist ungültig."
 msgid "No debris special effects found."
 msgstr "Keine Trümmerspezialeffekte gefunden."
 
+#: src/debug.c:52
+msgid "SIGFPE (raised by program)"
+msgstr "SIGFPE (vom Programm ausgelöst)"
+
+#: src/debug.c:53
+msgid "SIGFPE (integer divide by zero)"
+msgstr "SIGFPE (Division einer Ganzzahl durch Null)"
+
+#: src/debug.c:54
+msgid "SIGFPE (integer overflow)"
+msgstr "SIGFPE (Ganzzahlüberlauf)"
+
+#: src/debug.c:55
+msgid "SIGFPE (floating-point divide by zero)"
+msgstr "SIGFPE (Division einer Fließkommazahl durch Null)"
+
+#: src/debug.c:56
+msgid "SIGFPE (floating-point overflow)"
+msgstr "SIGFPE (Fließkommazahlüberlauf)"
+
+#: src/debug.c:57
+msgid "SIGFPE (floating-point underflow)"
+msgstr "SIGFPE (Fließkommazahlunterlauf)"
+
+#: src/debug.c:58
+msgid "SIGFPE (floating-point inexact result)"
+msgstr "SIGFPE (Fließkommazahl: ungenaues Ergebnis)"
+
+#: src/debug.c:59
+msgid "SIGFPE (floating-point invalid operation)"
+msgstr "SIGFPE (Fließkommazahl: ungültige Aktion)"
+
+#: src/debug.c:60
+msgid "SIGFPE (subscript out of range)"
+msgstr "SIGFPE (Subscript außerhalb des Wertebereichs)"
+
+#: src/debug.c:61
+msgid "SIGFPE"
+msgstr "SIGFPE"
+
+#: src/debug.c:65
+msgid "SIGSEGV (raised by program)"
+msgstr "SIGSEGV (vom Programm ausgelöst)"
+
+#: src/debug.c:66
+msgid "SIGSEGV (address not mapped to object)"
+msgstr "SIGSEGV (Addresse nicht zum Objekt gemappt)"
+
+#: src/debug.c:67
+msgid "SIGSEGV (invalid permissions for mapped object)"
+msgstr "SIGSEGV (ungültige Erlaubnisse für gemapptes Objekt)"
+
+#: src/debug.c:68
+msgid "SIGSEGV"
+msgstr "SIGSEGV"
+
+#: src/debug.c:72
+msgid "SIGABRT (raised by program)"
+msgstr "SIGABRT (vom Programm ausgelöst)"
+
+#: src/debug.c:73
+msgid "SIGABRT"
+msgstr "SIGABRT"
+
+#: src/debug.c:150
+#, c-format
+msgid "Naev received %s!"
+msgstr "Naev hat %s erhalten!"
+
+#: src/debug.c:158
+msgid "Report this to project maintainer with the backtrace."
+msgstr "Melde dies dem Projektverwalter mit dem Backtrace."
+
+#: src/debug.c:204
+msgid "Unable to set up SIGSEGV signal handler."
+msgstr "SIGSEGV-Signalbehandlung konnte nicht aufgesetzt werden."
+
+#: src/debug.c:207
+msgid "Unable to set up SIGFPE signal handler."
+msgstr "SIGFPE-Signalbehandlung konnte nicht aufgesetzt werden."
+
+#: src/debug.c:210
+msgid "Unable to set up SIGABRT signal handler."
+msgstr "SIGABRT-Signalbehandlung konnte nicht aufgesetzt werden."
+
+#: src/debug.c:211
+msgid "BFD backtrace catching enabled."
+msgstr "BFD-Backtrace-Catching aktiviert."
+
 #: src/dev.c:33
 msgid "Generating CSV data..."
 msgstr "CSV-Daten generieren …"
@@ -78274,113 +78377,113 @@ msgid "Generation complete!"
 msgstr "Erzeugung fertig!"
 
 #. Create the window.
-#: src/dev_mapedit.c:167
+#: src/dev_mapedit.c:166
 msgid "Map Outfit Editor"
 msgstr "Kartenausstattungseditor"
 
 #. window
-#: src/dev_mapedit.c:652
+#: src/dev_mapedit.c:651
 msgid "Open Map Outfit"
 msgstr "Kartenausstattung öffnen"
 
-#: src/dev_mapedit.c:1073 src/dev_planet.c:44 src/dev_system.c:94
-#: src/save.c:111
+#: src/dev_mapedit.c:1060 src/dev_planet.c:44 src/dev_system.c:95
+#: src/save.c:112
 msgid "testXmlwriterDoc: Error creating the xml writer"
 msgstr "testXmlwriterDoc: Fehler beim Erzeugen des XML-Schreibers"
 
-#: src/dev_outfit.c:39 src/dev_outfit.c:99 src/dev_outfit.c:155
-#: src/dev_outfit.c:209 src/dev_outfit.c:279 src/dev_ship.c:38
-#: src/dev_ship.c:98
+#: src/dev_outfit.c:40 src/dev_outfit.c:100 src/dev_outfit.c:156
+#: src/dev_outfit.c:210 src/dev_outfit.c:280 src/dev_ship.c:39
+#: src/dev_ship.c:99
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "„%s“ zum Schreiben von %s konnte nicht geöffnet werden"
 
 #. Create the window.
-#: src/dev_sysedit.c:183
+#: src/dev_sysedit.c:182
 #, c-format
 msgid "%s - Star System Editor"
 msgstr "%s – Sternensystemeditor"
 
-#: src/dev_sysedit.c:192 src/dev_uniedit.c:177 src/menu.c:244 src/menu.c:438
+#: src/dev_sysedit.c:191 src/dev_uniedit.c:177 src/menu.c:244 src/menu.c:438
 msgid "Exit"
 msgstr "Beenden"
 
-#: src/dev_sysedit.c:197 src/dev_uniedit.c:182
+#: src/dev_sysedit.c:196 src/dev_uniedit.c:182
 msgid "Automatically save changes"
 msgstr "Änderungen automatisch speichern"
 
-#: src/dev_sysedit.c:201
+#: src/dev_sysedit.c:200
 msgid "Scale"
 msgstr "Skalierung"
 
-#: src/dev_sysedit.c:206
+#: src/dev_sysedit.c:205
 msgid "Reset Jumps"
 msgstr "Sprünge zurücksetzen"
 
-#: src/dev_sysedit.c:211 src/dev_uniedit.c:202
+#: src/dev_sysedit.c:210 src/dev_uniedit.c:202
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: src/dev_sysedit.c:216 src/dev_uniedit.c:1379
+#: src/dev_sysedit.c:215 src/dev_uniedit.c:1379
 msgid "Remove"
 msgstr "Entfernen"
 
-#: src/dev_sysedit.c:221 src/dev_sysedit.c:1268 src/dev_uniedit.c:197
-#: src/dev_uniedit.c:1249 src/equipment.c:275
+#: src/dev_sysedit.c:220 src/dev_sysedit.c:1267 src/dev_uniedit.c:197
+#: src/dev_uniedit.c:1249 src/equipment.c:276
 msgid "Rename"
 msgstr "Umbenennen"
 
-#: src/dev_sysedit.c:226
+#: src/dev_sysedit.c:225
 msgid "New Planet"
 msgstr "Neuer Planet"
 
-#: src/dev_sysedit.c:231
+#: src/dev_sysedit.c:230
 msgid "Grid"
 msgstr "Gitter"
 
 #. Selected text.
-#: src/dev_sysedit.c:238 src/dev_sysedit.c:556
+#: src/dev_sysedit.c:237 src/dev_sysedit.c:555
 #, c-format
 msgid "Radius: %.0f"
 msgstr "Radius: %.0f"
 
 #. Get new name.
-#: src/dev_sysedit.c:363 src/dev_sysedit.c:421
+#: src/dev_sysedit.c:362 src/dev_sysedit.c:420
 msgid "New Planet Creation"
 msgstr "Neuen Planeten erstellen"
 
-#: src/dev_sysedit.c:363
+#: src/dev_sysedit.c:362
 msgid "What do you want to name the new planet?"
 msgstr "Wie möchtest du den neuen Planeten nennen?"
 
-#: src/dev_sysedit.c:369 src/dev_sysedit.c:428
+#: src/dev_sysedit.c:368 src/dev_sysedit.c:427
 #, c-format
 msgid "Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"
 msgstr "Ein Planet mit dem Namen #r„%s“#0 existiert bereits im System #r„%s“#0"
 
-#: src/dev_sysedit.c:422
+#: src/dev_sysedit.c:421
 #, c-format
 msgid "What do you want to rename the planet #r%s#0?"
 msgstr "Zu welchen Namen möchest du den Planeten #r%s#0 umbenennen?"
 
-#: src/dev_sysedit.c:470
+#: src/dev_sysedit.c:469
 msgid "Remove selected planets?"
 msgstr "Ausgewählte Planeten entfernen?"
 
-#: src/dev_sysedit.c:470
+#: src/dev_sysedit.c:469
 msgid "This can not be undone."
 msgstr "Das kann nicht rückgängig gemacht werden."
 
 #. Prompt scale amount.
-#: src/dev_sysedit.c:525 src/dev_sysedit.c:535
+#: src/dev_sysedit.c:524 src/dev_sysedit.c:534
 msgid "Scale Star System"
 msgstr "Sternensystem skalieren"
 
-#: src/dev_sysedit.c:525
+#: src/dev_sysedit.c:524
 msgid "By how much do you want to scale the star system?"
 msgstr "Um wie viel möchtest du das Sternensystem skalieren?"
 
-#: src/dev_sysedit.c:535
+#: src/dev_sysedit.c:534
 #, c-format
 msgid ""
 "Are you sure you want to scale the star system by %.2f (from %.2f to %.2f)?"
@@ -78388,148 +78491,148 @@ msgstr ""
 "Bist du dir sicher, dass du das Sternensystem um %.2f (von %.2f nach %.2f) "
 "skalieren möchtest?"
 
-#: src/dev_sysedit.c:696 src/map.c:667
+#: src/dev_sysedit.c:695 src/map.c:667
 msgid "Asteroid Field"
 msgstr "Asterioidenfeld"
 
-#: src/dev_sysedit.c:1223
+#: src/dev_sysedit.c:1222
 msgid "Trying to deselect item that is not in selection!"
 msgstr "Versuchte, etwas abzuwählen, was nicht ausgewählt wurde!"
 
 #. Create the window.
-#: src/dev_sysedit.c:1252
+#: src/dev_sysedit.c:1251
 #, c-format
 msgid "Planet Property Editor - %s"
 msgstr "Planeteneigenschaftseditor – %s"
 
-#: src/dev_sysedit.c:1262
+#: src/dev_sysedit.c:1261
 msgid "Name: "
 msgstr "Name: "
 
-#: src/dev_sysedit.c:1270
+#: src/dev_sysedit.c:1269
 msgid "Faction"
 msgstr "Fraktion"
 
-#: src/dev_sysedit.c:1274
+#: src/dev_sysedit.c:1273
 msgid "Faction: "
 msgstr "Fraktion: "
 
-#: src/dev_sysedit.c:1281
+#: src/dev_sysedit.c:1280
 msgid "Population"
 msgstr "Einwohnerzahl"
 
-#: src/dev_sysedit.c:1289
+#: src/dev_sysedit.c:1288
 msgid "Class"
 msgstr "Klasse"
 
-#: src/dev_sysedit.c:1296 src/input.c:96 src/space.c:174
+#: src/dev_sysedit.c:1295 src/input.c:96 src/space.c:174
 msgid "Land"
 msgstr "Land"
 
-#: src/dev_sysedit.c:1307
+#: src/dev_sysedit.c:1306
 msgid "Presence"
 msgstr "Präsenz"
 
-#: src/dev_sysedit.c:1315
+#: src/dev_sysedit.c:1314
 msgid "Range"
 msgstr "Reichweite"
 
-#: src/dev_sysedit.c:1323
+#: src/dev_sysedit.c:1322
 msgid "hide"
 msgstr "verbergen"
 
-#: src/dev_sysedit.c:1335
+#: src/dev_sysedit.c:1334
 msgid "Rm Service"
 msgstr "Dienst entf."
 
-#: src/dev_sysedit.c:1337
+#: src/dev_sysedit.c:1336
 msgid "Add Service"
 msgstr "Dienst hinzu"
 
-#: src/dev_sysedit.c:1339
+#: src/dev_sysedit.c:1338
 msgid "Edit Tech"
 msgstr "Tech. bearbeiten"
 
-#: src/dev_sysedit.c:1341
+#: src/dev_sysedit.c:1340
 msgid "Description"
 msgstr "Beschreibung"
 
-#: src/dev_sysedit.c:1343
+#: src/dev_sysedit.c:1342
 msgid "Land GFX"
 msgstr "Landegrafik"
 
-#: src/dev_sysedit.c:1345
+#: src/dev_sysedit.c:1344
 msgid "Space GFX"
 msgstr "Weltraumgrafik"
 
 #. Create the window.
-#: src/dev_sysedit.c:1412
+#: src/dev_sysedit.c:1411
 msgid "Jump Point Editor"
 msgstr "Sprungpunkteditor"
 
-#: src/dev_sysedit.c:1419
+#: src/dev_sysedit.c:1418
 msgid "Target: "
 msgstr "Ziel: "
 
-#: src/dev_sysedit.c:1439
+#: src/dev_sysedit.c:1438
 msgid "Hidden"
 msgstr "Verborgen"
 
-#: src/dev_sysedit.c:1442
+#: src/dev_sysedit.c:1441
 msgid "Exit only"
 msgstr "Nur Ausgang"
 
-#: src/dev_sysedit.c:1445
+#: src/dev_sysedit.c:1444
 msgid "Hide"
 msgstr "Verbergen"
 
 #. Create the window.
-#: src/dev_sysedit.c:1504
+#: src/dev_sysedit.c:1503
 #, c-format
 msgid "Planet Information - %s"
 msgstr "Planeteninformation – %s"
 
-#: src/dev_sysedit.c:1517
+#: src/dev_sysedit.c:1516
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: src/dev_sysedit.c:1524
+#: src/dev_sysedit.c:1523
 msgid "Landing Description"
 msgstr "Landebeschreibung"
 
-#: src/dev_sysedit.c:1536
+#: src/dev_sysedit.c:1535
 msgid "Bar Description"
 msgstr "Barbeschreibung"
 
 #. Create the window.
-#: src/dev_sysedit.c:1707
+#: src/dev_sysedit.c:1706
 msgid "Planet Tech Editor"
 msgstr "Planetentechnologieeditor"
 
-#: src/dev_sysedit.c:1720
+#: src/dev_sysedit.c:1719
 msgid "Rm Tech"
 msgstr "Tech. entf."
 
-#: src/dev_sysedit.c:1724
+#: src/dev_sysedit.c:1723
 msgid "Add Tech"
 msgstr "Tech. hinzu"
 
 #. Create the window.
-#: src/dev_sysedit.c:1871
+#: src/dev_sysedit.c:1870
 msgid "Modify Faction"
 msgstr "Fraktion ändern"
 
-#: src/dev_sysedit.c:1894
+#: src/dev_sysedit.c:1893
 msgid "Set"
 msgstr "Setzen"
 
 #. Create the window.
-#: src/dev_sysedit.c:1965
+#: src/dev_sysedit.c:1964
 #, c-format
 msgid "%s - Planet Properties"
 msgstr "%s – Planeteneigenschaften"
 
-#: src/dev_sysedit.c:1978
+#: src/dev_sysedit.c:1977
 msgid "Apply"
 msgstr "Anwenden"
 
@@ -78554,7 +78657,7 @@ msgstr "Neu Sys"
 msgid "Open"
 msgstr "Öffnen"
 
-#: src/dev_uniedit.c:217 src/map.c:293 src/map_find.c:1062
+#: src/dev_uniedit.c:217 src/map.c:293 src/map_find.c:1055
 msgid "Find"
 msgstr "Finden"
 
@@ -78770,8 +78873,8 @@ msgstr "Konnte CSparse-Matrixzelle nicht betreten."
 msgid "Unable to create economy G Matrix."
 msgstr "Konnte Wirtschafts-G-Matrix nicht erzeugen."
 
-#: src/economy.c:506 src/gui.c:1857 src/ndata.c:188 src/news.c:104
-#: src/nfile.c:615 src/opengl_tex.c:134 src/opengl_tex.c:351 src/perlin.c:399
+#: src/economy.c:506 src/gui.c:1857 src/ndata.c:199 src/news.c:104
+#: src/nfile.c:490 src/opengl_tex.c:134 src/opengl_tex.c:351 src/perlin.c:399
 #: src/perlin.c:460 src/physics.c:485
 msgid "Out of Memory"
 msgstr "Speicher erschöpft"
@@ -78790,26 +78893,26 @@ msgstr "Planet „%s“ scheint Ware „%s“ definiert zu haben, aber keine Fra
 msgid "Planet '%s' has saved economy data but doesn't exist!"
 msgstr "Planet „%s“ hat gespeicherte Wirtschaftsdaten, aber existiert nicht!"
 
-#: src/equipment.c:272 src/land.c:289 src/land.c:566 src/land.c:1207
-#: src/land_outfits.c:168 src/land_shipyard.c:94 src/land_trade.c:73
+#: src/equipment.c:273 src/land.c:289 src/land.c:566 src/land.c:1207
+#: src/land_outfits.c:166 src/land_shipyard.c:94 src/land_trade.c:73
 msgid "Take Off"
 msgstr "Abheben"
 
 #. Check if player really wants to sell.
-#: src/equipment.c:278 src/equipment.c:1856
+#: src/equipment.c:279 src/equipment.c:1857
 msgid "Sell Ship"
 msgstr "Schiff verkaufen"
 
-#: src/equipment.c:281
+#: src/equipment.c:282
 msgid "Swap Ship"
 msgstr "Schiff wechseln"
 
-#: src/equipment.c:284
+#: src/equipment.c:285
 msgid "Unequip"
 msgstr "Abrüsten"
 
 #. text
-#: src/equipment.c:287
+#: src/equipment.c:288
 msgid ""
 "#nName:\n"
 "#0#nModel:\n"
@@ -78855,52 +78958,52 @@ msgstr ""
 "#0\n"
 "#nSchiffsstatus:#0"
 
-#: src/equipment.c:318
+#: src/equipment.c:319
 msgid "Available Ships"
 msgstr "Verfügbare Schiffe"
 
-#: src/equipment.c:320
+#: src/equipment.c:321
 msgid "Available Outfits"
 msgstr "Verfügbare Ausstattungen"
 
-#: src/equipment.c:516 src/outfit.c:272
+#: src/equipment.c:517 src/outfit.c:271
 msgid "Weapon"
 msgstr "Waffe"
 
-#: src/equipment.c:524 src/outfit.c:270
+#: src/equipment.c:525 src/outfit.c:269
 msgid "Utility"
 msgstr "Utensil"
 
-#: src/equipment.c:532 src/outfit.c:268
+#: src/equipment.c:533 src/outfit.c:267
 msgid "Structure"
 msgstr "Gerüst"
 
-#: src/equipment.c:565
+#: src/equipment.c:566
 msgid "CPU Free"
 msgstr "CPU frei"
 
-#: src/equipment.c:577
+#: src/equipment.c:578
 msgid "Mass Limit Left"
 msgstr "Verbl. Massenlimit"
 
-#: src/equipment.c:592
+#: src/equipment.c:593
 #, c-format
 msgid "!! %.0f%% Slower !!"
 msgstr "!! %.0f%% langsamer !!"
 
-#: src/equipment.c:645
+#: src/equipment.c:646
 msgid "Right click to remove"
 msgstr "Rechtsklick zum Entfernen"
 
-#: src/equipment.c:656
+#: src/equipment.c:657
 msgid "Right click to add"
 msgstr "Rechtsklick zum Hinzufügen"
 
-#: src/equipment.c:769
+#: src/equipment.c:770
 msgid " [exclusive]"
 msgstr " [exklusiv]"
 
-#: src/equipment.c:790
+#: src/equipment.c:791
 msgid ""
 "\n"
 "#oUnique#0"
@@ -78908,7 +79011,7 @@ msgstr ""
 "\n"
 "#oEinzigartig#0"
 
-#: src/equipment.c:792
+#: src/equipment.c:793
 #, c-format
 msgid ""
 "\n"
@@ -78917,7 +79020,7 @@ msgstr ""
 "\n"
 "#oPlatz %s#0"
 
-#: src/equipment.c:798
+#: src/equipment.c:799
 #, c-format
 msgid ""
 "\n"
@@ -78932,21 +79035,21 @@ msgstr[1] ""
 "\n"
 "%.0f Tonnen"
 
-#: src/equipment.c:1298
+#: src/equipment.c:1299
 #, c-format
 msgid "%s%.2f DPS [%.2f EPS]"
 msgstr "%s%.2f SPS [%.2f EPS]"
 
-#: src/equipment.c:1380
+#: src/equipment.c:1381
 msgid "Ship Stats\n"
 msgstr "Schiffsstatistiken\n"
 
-#: src/equipment.c:1412 src/land_outfits.c:281 src/shiplog.c:477
+#: src/equipment.c:1413 src/land_outfits.c:279 src/shiplog.c:477
 #: src/shiplog.c:522
 msgid "All"
 msgstr "Alle"
 
-#: src/equipment.c:1553
+#: src/equipment.c:1554
 #, c-format
 msgid ""
 "%s\n"
@@ -78993,12 +79096,12 @@ msgstr ""
 "\n"
 "#%c%s#0"
 
-#: src/equipment.c:1781
+#: src/equipment.c:1782
 msgid "You can not unequip your ship while you have deployed fighters!"
 msgstr ""
 "Du kannst dein Schiff nicht abrüsten, während deine Kämpfer aktiv sind!"
 
-#: src/equipment.c:1786
+#: src/equipment.c:1787
 msgid ""
 "You can not unequip your ship when you have more cargo than it can hold "
 "without modifications!"
@@ -79006,46 +79109,46 @@ msgstr ""
 "Du kannst dein Schiff nicht abrüsten, so lange du mehr Frachtladung hast, "
 "die es ohne Modifikationen tragen kann!"
 
-#: src/equipment.c:1790
+#: src/equipment.c:1791
 msgid "Unequip Ship"
 msgstr "Schiff abrüsten"
 
 #. confirm
-#: src/equipment.c:1791
+#: src/equipment.c:1792
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 "Bist du dir sicher, dass du all das Equipment von deinem Schiff entfernen "
 "möchtest?"
 
-#: src/equipment.c:1857
+#: src/equipment.c:1858
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "Bist du dir sicher, dass du das Schiff %s für %s verkaufen möchtest?"
 
 #. Display widget.
-#: src/equipment.c:1874
+#: src/equipment.c:1875
 msgid "Ship Sold"
 msgstr "Schiff verkauft"
 
-#: src/equipment.c:1875
+#: src/equipment.c:1876
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr "Du hast dein Schiff %s für %s verkauft."
 
-#: src/equipment.c:1904 src/player.c:415
+#: src/equipment.c:1905 src/player.c:415
 msgid "Ship Name"
 msgstr "Schiffsname"
 
-#: src/equipment.c:1905
+#: src/equipment.c:1906
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr "Bitte gib einen neuen Namen für %s ein:"
 
-#: src/equipment.c:1913
+#: src/equipment.c:1914
 msgid "Name Collision"
 msgstr "Namenskollision"
 
-#: src/equipment.c:1914 src/player.c:440
+#: src/equipment.c:1915 src/player.c:440
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 "Bitte gib dem Schiff keinen Namen, den du bereits für eines deiner anderen "
@@ -79621,32 +79724,32 @@ msgstr "Ungültiger Hook."
 msgid "Save has unsupported hook type."
 msgstr "Spielstand hat unbekannten Hook-Typ."
 
-#: src/info.c:55
+#: src/info.c:56
 msgid "Main"
 msgstr "Haupt"
 
-#: src/info.c:56 src/map_find.c:1012
+#: src/info.c:57 src/map_find.c:1005
 msgid "Ship"
 msgstr "Schiff"
 
-#: src/info.c:59 src/land.c:968 src/space.c:178
+#: src/info.c:60 src/land.c:968 src/space.c:178
 msgid "Missions"
 msgstr "Missionen"
 
-#: src/info.c:60
+#: src/info.c:61
 msgid "Standings"
 msgstr "Ansehen"
 
-#: src/info.c:61
+#: src/info.c:62
 msgid "Ship log"
 msgstr "Schiffslogbuch"
 
 #. Create the window.
-#: src/info.c:141 src/menu.c:433
+#: src/info.c:142 src/menu.c:433
 msgid "Info"
 msgstr "Info"
 
-#: src/info.c:209
+#: src/info.c:210
 msgid ""
 "#nPilot:#0\n"
 "#nDate:#0\n"
@@ -79664,7 +79767,7 @@ msgstr ""
 "#nSchiff:#0\n"
 "#nTreibstoff:#0"
 
-#: src/info.c:219
+#: src/info.c:220
 #, c-format
 msgid ""
 "%s\n"
@@ -79683,19 +79786,19 @@ msgstr ""
 "%s\n"
 "%d (%d Sprünge)"
 
-#: src/info.c:243
+#: src/info.c:244
 msgid "Set GUI"
 msgstr "GUI setzen"
 
-#: src/info.c:257
+#: src/info.c:259
 msgid "Licenses"
 msgstr "Lizenzen"
 
-#: src/info.c:295
+#: src/info.c:298
 msgid "No GUI available."
 msgstr "Keine GUI verfügbar."
 
-#: src/info.c:296
+#: src/info.c:299
 msgid ""
 "There are no GUI available, this means something went wrong somewhere. "
 "Inform the Naev maintainer."
@@ -79704,28 +79807,28 @@ msgstr ""
 "gelaufen ist. Informiere den Maintainer von Naev."
 
 #. window
-#: src/info.c:301
+#: src/info.c:304
 msgid "Select GUI"
 msgstr "GUI wählen"
 
-#: src/info.c:319 src/load.c:335
+#: src/info.c:322 src/load.c:390
 msgid "Load"
 msgstr "Laden"
 
-#: src/info.c:323
+#: src/info.c:326
 msgid "Override GUI"
 msgstr "GUI überschreiben"
 
-#: src/info.c:350
+#: src/info.c:353
 msgid "GUI Override is not set."
 msgstr "GUI-Überschreibung ist nicht gesetzt."
 
-#: src/info.c:351
+#: src/info.c:354
 #, c-format
 msgid "Enable GUI Override and change GUI to '%s'?"
 msgstr "GUI-Überschreibung aktivieren und GUI auf „%s“ setzen?"
 
-#: src/info.c:407
+#: src/info.c:410
 msgid ""
 "#nName:#0\n"
 "#nModel:#0\n"
@@ -79769,7 +79872,7 @@ msgstr ""
 "\n"
 "#nStatistiken:#0\n"
 
-#: src/info.c:452
+#: src/info.c:455
 #, c-format
 msgid ""
 "%s\n"
@@ -79812,35 +79915,35 @@ msgstr ""
 "%d / %d Einheiten (%d Sprünge)\n"
 "\n"
 
-#: src/info.c:521
+#: src/info.c:524
 msgid "Current Set Settings"
 msgstr "Aktuelle Set-Einstellungen"
 
-#: src/info.c:524
+#: src/info.c:527
 msgid "Enable instant mode (only for weapons)"
 msgstr "Sofortmodus aktivieren (nur für Waffen)"
 
-#: src/info.c:528
+#: src/info.c:531
 msgid "Only shoot weapons that are in range"
 msgstr "Nur Waffen, die in Reichweite sind, feuern"
 
-#: src/info.c:532
+#: src/info.c:535
 msgid "Global Settings"
 msgstr "Globale Einstellungen"
 
-#: src/info.c:535
+#: src/info.c:538
 msgid "Automatically handle weapons"
 msgstr "Waffen automatisch bedienen"
 
-#: src/info.c:538
+#: src/info.c:541
 msgid "Dogfight aiming helper"
 msgstr "Nahkampfzielhelfer"
 
-#: src/info.c:630
+#: src/info.c:633
 msgid "Enable autoweapons?"
 msgstr "Autowaffen aktivieren?"
 
-#: src/info.c:631
+#: src/info.c:634
 msgid ""
 "Are you sure you want to enable automatic weapon groups for the ship?\n"
 "\n"
@@ -79851,58 +79954,58 @@ msgstr ""
 "\n"
 "Dies wird alle manuell angepassten Waffengruppen überschreiben."
 
-#: src/info.c:674
+#: src/info.c:677
 msgid "You can not set all your weapon sets to fire groups!"
 msgstr "Du kannst nicht all deine Waffengruppen auf Feuergruppen setzen!"
 
-#: src/info.c:728
+#: src/info.c:731
 msgid "Outfit that can be activated"
 msgstr "Ausstattung, die aktiviert werden kann"
 
-#: src/info.c:732
+#: src/info.c:735
 msgid "Secondary Weapon (Right click toggles)"
 msgstr "Sekundärwaffe (Rechtsklick schaltet um)"
 
-#: src/info.c:736
+#: src/info.c:739
 msgid "Primary Weapon (Left click toggles)"
 msgstr "Primärwaffe (Rechtsklick schaltet um)"
 
-#: src/info.c:756
+#: src/info.c:759
 msgid "Jettison"
 msgstr "Wegwerfen"
 
-#: src/info.c:837 src/info.c:1114
+#: src/info.c:840 src/info.c:1117
 msgid "Abort Mission"
 msgstr "Mission abbrechen"
 
-#: src/info.c:838 src/info.c:1115
+#: src/info.c:841 src/info.c:1118
 msgid "Are you sure you want to abort this mission?"
 msgstr "Bist du dir sicher, dass du diese Mission abbrechen willst?"
 
-#: src/info.c:854
+#: src/info.c:857
 #, c-format
 msgid "Cargo '%d' does not belong to any active mission."
 msgstr "Ware „%d“ gehört zu keiner aktiven Mission."
 
-#: src/info.c:1023
+#: src/info.c:1026
 msgid "Abort"
 msgstr "Abbrechen"
 
-#: src/info.c:1029
+#: src/info.c:1032
 msgid "#nReward:#0"
 msgstr "#nBelohnung:#0"
 
 #. no missions
 #. Make sure you have missions.
-#: src/info.c:1067 src/info.c:1085 src/land.c:627 src/land.c:695 src/land.c:731
+#: src/info.c:1070 src/info.c:1088 src/land.c:627 src/land.c:695 src/land.c:731
 msgid "No Missions"
 msgstr "Keine Missionen"
 
-#: src/info.c:1088
+#: src/info.c:1091
 msgid "You currently have no active missions."
 msgstr "Du hast im Moment keine aktiven Missionen."
 
-#: src/info.c:1266
+#: src/info.c:1269
 msgid ""
 "You are currently viewing all logs in the selected log type. Please select a "
 "log title to delete."
@@ -79910,7 +80013,7 @@ msgstr ""
 "Du siehst gerade alle Einträge des gewählten Protokolltyps aus. Bitte wähl "
 "einen Protokolltitel zum Löschen aus."
 
-#: src/info.c:1271
+#: src/info.c:1274
 #, c-format
 msgid ""
 "This will delete ALL \"%s\" log entries. This operation cannot be undone. "
@@ -79919,56 +80022,56 @@ msgstr ""
 "Dies wird ALLE „%s“-Logbucheinträge löschen. Diese Aktion kann nicht "
 "widerrufen werden. Bist du dir sicher?"
 
-#: src/info.c:1301
+#: src/info.c:1304
 msgid "Log message"
 msgstr "Logbuchnachricht"
 
-#: src/info.c:1324 src/info.c:1332
+#: src/info.c:1327 src/info.c:1335
 msgid "Add a log entry"
 msgstr "Neuer Logbucheintrag"
 
-#: src/info.c:1324
+#: src/info.c:1327
 msgid "Add an entry to your diary:"
 msgstr "Eintrag für dein Tagebuch hinzufügen:"
 
-#: src/info.c:1327
+#: src/info.c:1330
 msgid "Your Diary"
 msgstr "Dein Tagebuch"
 
-#: src/info.c:1332
+#: src/info.c:1335
 #, c-format
 msgid "Add an entry to the log titled '%s':"
 msgstr "Eintrag zum Logbuch namens ‚%s‘ hinzufügen:"
 
-#: src/info.c:1338
+#: src/info.c:1341
 msgid "Cannot add log"
 msgstr "Kann nicht hinzufügen"
 
-#: src/info.c:1338
+#: src/info.c:1341
 msgid "Cannot find this log!  Something went wrong here!"
 msgstr "Dieses Protokoll kann nicht gefunden werden! Etwas lief hier falsch!"
 
-#: src/info.c:1365 src/load.c:337
+#: src/info.c:1368 src/load.c:392
 msgid "Delete"
 msgstr "Löschen"
 
-#: src/info.c:1368
+#: src/info.c:1371
 msgid "View Entry"
 msgstr "Eintrag ansehen"
 
-#: src/info.c:1371
+#: src/info.c:1374
 msgid "Add Entry"
 msgstr "Neuer Eintrag"
 
-#: src/info.c:1377
+#: src/info.c:1380
 msgid "Select log type:"
 msgstr "Logtyp wählen:"
 
-#: src/info.c:1381
+#: src/info.c:1384
 msgid "Select log title:"
 msgstr "Logtitel wählen:"
 
-#: src/info.c:1385
+#: src/info.c:1388
 msgid "Log entries:"
 msgstr "Logeinträge:"
 
@@ -80268,7 +80371,7 @@ msgid "Cycles through jump points."
 msgstr "Rotiert durch Sprungpunkte."
 
 #. create the window.
-#: src/input.c:98 src/map.c:212 src/outfit.c:809
+#: src/input.c:98 src/map.c:212 src/outfit.c:808
 msgid "Star Map"
 msgstr "Sternenkarte"
 
@@ -80566,7 +80669,7 @@ msgstr "Meta"
 msgid "Any"
 msgstr "Beliebig"
 
-#: src/input.c:556 src/opengl_tex.c:627
+#: src/input.c:556 src/opengl_tex.c:629
 msgid "unknown"
 msgstr "unbekannt"
 
@@ -80730,7 +80833,7 @@ msgstr "Lokale Karte kaufen (%s)"
 msgid "Landing Main"
 msgstr "Landehauptplatz"
 
-#: src/land.c:973 src/map_find.c:1075 src/space.c:180
+#: src/land.c:973 src/map_find.c:1068 src/space.c:180
 msgid "Outfits"
 msgstr "Ausstattungen"
 
@@ -80784,19 +80887,19 @@ msgstr "#oAbheben von %s bei %s."
 msgid "Rescue: 'rescue' : '%s'"
 msgstr "Rettung: „rescue“: „%s“"
 
-#: src/land_outfits.c:177 src/land_trade.c:71
+#: src/land_outfits.c:175 src/land_trade.c:71
 msgid "Sell"
 msgstr "Verkaufen"
 
-#: src/land_outfits.c:180 src/land_shipyard.c:100 src/land_trade.c:69
+#: src/land_outfits.c:178 src/land_shipyard.c:100 src/land_trade.c:69
 msgid "Buy"
 msgstr "Kaufen"
 
-#: src/land_outfits.c:183
+#: src/land_outfits.c:181
 msgid "Find Outfits"
 msgstr "Ausst. finden"
 
-#: src/land_outfits.c:202 src/map_find.c:674
+#: src/land_outfits.c:200 src/map_find.c:668
 msgid ""
 "#nOwned:#0\n"
 "\n"
@@ -80818,11 +80921,11 @@ msgstr ""
 "#nGeld:#0\n"
 "#nLizenz:#0\n"
 
-#: src/land_outfits.c:281
+#: src/land_outfits.c:279
 msgid "Other"
 msgstr "Andere"
 
-#: src/land_outfits.c:386
+#: src/land_outfits.c:384
 msgid ""
 "N/A\n"
 "\n"
@@ -80844,7 +80947,7 @@ msgstr ""
 "N/V\n"
 "N/V\n"
 
-#: src/land_outfits.c:443 src/map_find.c:728
+#: src/land_outfits.c:441 src/map_find.c:722
 #, c-format
 msgid ""
 "%d\n"
@@ -80867,16 +80970,16 @@ msgstr ""
 "%s\n"
 "%s\n"
 
-#: src/land_outfits.c:639
+#: src/land_outfits.c:637
 msgid "#oUnique#0\n"
 msgstr "#oEinzigartig#0\n"
 
-#: src/land_outfits.c:641
+#: src/land_outfits.c:639
 #, c-format
 msgid "#oSlot %s#0\n"
 msgstr "#oPlatz %s#0\n"
 
-#: src/land_outfits.c:647
+#: src/land_outfits.c:645
 #, c-format
 msgid ""
 "\n"
@@ -80885,50 +80988,50 @@ msgstr ""
 "\n"
 "%.0f Tonnen"
 
-#: src/land_outfits.c:691
+#: src/land_outfits.c:689
 msgid "You can only own one of this outfit."
 msgstr "Du kannst nur eine Ausstattung dieses Typs besitzen."
 
-#: src/land_outfits.c:698
+#: src/land_outfits.c:696
 msgid "You already know of everything this map contains."
 msgstr "Du weißt bereits alles, was diese Karte enthält."
 
-#: src/land_outfits.c:703
+#: src/land_outfits.c:701
 msgid "You already own this GUI."
 msgstr "Dir gehört bereits diese GUI."
 
-#: src/land_outfits.c:708
+#: src/land_outfits.c:706
 msgid "You already have this license."
 msgstr "Du hast bereits diese Lizenz."
 
-#: src/land_outfits.c:714 src/land_shipyard.c:422 src/land_shipyard.c:493
+#: src/land_outfits.c:712 src/land_shipyard.c:422 src/land_shipyard.c:493
 #: src/land_trade.c:238
 #, c-format
 msgid "You need %s more."
 msgstr "Du brauchst %s weitere."
 
-#: src/land_outfits.c:720
+#: src/land_outfits.c:718
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr "Du brauchst die „%s“-Lizenz, um diese Ausstattung kaufen zu können."
 
-#: src/land_outfits.c:798
+#: src/land_outfits.c:796
 msgid "You can't sell a unique outfit."
 msgstr "Du kannst eine einzigartige Ausstattung nicht verkaufen."
 
-#: src/land_outfits.c:804
+#: src/land_outfits.c:802
 msgid "You can't sell a map."
 msgstr "Du kannst eine Karte nicht verkaufen."
 
-#: src/land_outfits.c:810
+#: src/land_outfits.c:808
 msgid "You can't sell a GUI."
 msgstr "Du kannst eine GUI nicht verkaufen."
 
-#: src/land_outfits.c:816
+#: src/land_outfits.c:814
 msgid "You can't sell a license."
 msgstr "Du kannst eine Lizenz nicht verkaufen."
 
-#: src/land_outfits.c:822 src/land_trade.c:257
+#: src/land_outfits.c:820 src/land_trade.c:257
 msgid "You can't sell something you don't have!"
 msgstr "Du kannst etwas, das dir nicht gehört, nicht verkaufen!"
 
@@ -81221,27 +81324,32 @@ msgstr ""
 msgid "No cargo space available!"
 msgstr "Kein Frachtraum verfügbar!"
 
-#: src/load.c:101
+#: src/load.c:115
 #, c-format
 msgid "Unable to parse save path '%s'."
 msgstr "Speicherpfad „%s“ konnte nicht geparst werden."
 
-#: src/load.c:106
+#: src/load.c:120
 #, c-format
 msgid "Unable to get child node of save '%s'."
 msgstr "Konnte Kind-Node von Spielstand „%s“ nicht holen."
 
+#: src/load.c:275 src/ndata.c:270
+#, c-format
+msgid "PhysicsFS: Cannot stat %s: %s"
+msgstr "PhysicsFS: Kann stat auf %s nicht anwenden: %s"
+
 #. window
-#: src/load.c:294 src/menu.c:227
+#: src/load.c:349 src/menu.c:227
 msgid "Load Game"
 msgstr "Spiel laden"
 
-#: src/load.c:309
+#: src/load.c:364
 #, c-format
 msgid "%s #r(Backup)#0"
 msgstr "%s #r(Backup)#0"
 
-#: src/load.c:377
+#: src/load.c:430
 #, c-format
 msgid ""
 "#nName:\n"
@@ -81286,11 +81394,11 @@ msgstr ""
 "#nSchiffsmodell:\n"
 "#0   %s"
 
-#: src/load.c:421
+#: src/load.c:471
 msgid "Save game version mismatch"
 msgstr "Spielstandsversionskonflikt"
 
-#: src/load.c:422
+#: src/load.c:472
 #, c-format
 msgid ""
 "Save game '%s' version does not match Naev version:\n"
@@ -81304,43 +81412,43 @@ msgstr ""
 "Bist du dir sicher, dass du dieses Spiel laden möchtest? Ein Datenverlust "
 "könnte auftreten."
 
-#: src/load.c:462
+#: src/load.c:510
 msgid "Permanently Delete?"
 msgstr "Dauerhaft löschen?"
 
-#: src/load.c:463
+#: src/load.c:511
 #, c-format
 msgid "Are you sure you want to permanently delete '%s'?"
 msgstr "Bist du dir sicher, dass du „%s“ dauerhaft löschen möchtest?"
 
-#: src/load.c:532 src/load.c:600
+#: src/load.c:579 src/load.c:647
 msgid "Saved game file seems to have been deleted."
 msgstr "Spielstandsdatei scheint gelöscht zu sein."
 
-#: src/load.c:555 src/load.c:679
+#: src/load.c:602 src/load.c:726
 #, c-format
 msgid "Saved game '%s' invalid!"
 msgstr "Spielstand „%s“ ungültig!"
 
 #. Welcome message - must be before space_init.
-#: src/load.c:616 src/player.c:347
+#: src/load.c:663 src/player.c:347
 #, c-format
 msgid "#gWelcome to %s!"
 msgstr "#gWillkommen bei %s!"
 
-#: src/load.c:627
+#: src/load.c:674
 msgid "Old version detected. Sanitizing ships for slots"
 msgstr "Alte Version erfasst. Schiffe werden für Plätze aufgeräumt"
 
-#: src/log.c:155
+#: src/log.c:144
 msgid "Unable to redirect stdout to file"
 msgstr "Konnte stdout nicht zu Datei umleiten"
 
-#: src/log.c:161
+#: src/log.c:148
 msgid "Unable to redirect stderr to file"
 msgstr "Konnte stderr nicht zu Datei umleiten"
 
-#: src/log.c:346
+#: src/log.c:325
 #, c-format
 msgid "An error occurred while buffering %s!"
 msgstr "Ein Fehler trat beim Puffern von %s auf!"
@@ -81496,176 +81604,176 @@ msgid "Map decorator has unknown node '%s'."
 msgstr "Kartendekorator hat unbekannen Node „%s“."
 
 #. Create window.
-#: src/map_find.c:233 src/map_find.c:788 src/map_find.c:920
+#: src/map_find.c:227 src/map_find.c:782 src/map_find.c:914
 msgid "Search Results"
 msgstr "Ergebnisse durchsuchen"
 
-#: src/map_find.c:247
+#: src/map_find.c:241
 msgid "Select"
 msgstr "Wählen"
 
-#: src/map_find.c:329
+#: src/map_find.c:323
 msgid "Jump to first system not found!"
 msgstr "Sprung zum ersten System nicht gefunden!"
 
-#: src/map_find.c:365
+#: src/map_find.c:359
 msgid "Matching jumps not found, something is up..."
 msgstr "Passende Sprünge nicht gefunden, irgendetwas ist faul …"
 
-#: src/map_find.c:425
+#: src/map_find.c:419
 msgid "unknown route"
 msgstr "unbekannte Route"
 
-#: src/map_find.c:429
+#: src/map_find.c:423
 #, c-format
 msgid "%d jump, %.0fk distance"
 msgid_plural "%d jumps, %.0fk distance"
 msgstr[0] "%d Sprung, %.0fk Entfernung"
 msgstr[1] "%d Sprünge, %.0fk Entfernung"
 
-#: src/map_find.c:438
+#: src/map_find.c:432
 #, c-format
 msgid "#%c%s (%s, %s)"
 msgstr "#%c%s (%s, %s)"
 
-#: src/map_find.c:790
+#: src/map_find.c:784
 #, c-format
 msgid "Search results for outfits matching '%s':"
 msgstr "Suchergebnisse für Ausstattungen, die auf „%s“ passen:"
 
-#: src/map_find.c:921
+#: src/map_find.c:915
 #, c-format
 msgid "Search results for ships matching '%s':"
 msgstr "Suchergebnisse für Schiffe, die auf „%s“ passen:"
 
-#: src/map_find.c:1000
+#: src/map_find.c:993
 msgid "System"
 msgstr "System"
 
-#: src/map_find.c:1004
+#: src/map_find.c:997
 msgid "Planet"
 msgstr "Planet"
 
-#: src/map_find.c:1008
+#: src/map_find.c:1001
 msgid "Outfit"
 msgstr "Ausstattung"
 
-#: src/map_find.c:1018
+#: src/map_find.c:1011
 #, c-format
 msgid "%s matching '%s' not found!"
 msgstr "%s passend auf „%s“ nicht gefunden!"
 
-#: src/map_find.c:1043
+#: src/map_find.c:1036
 msgid "Find..."
 msgstr "Finden …"
 
-#: src/map_find.c:1052
+#: src/map_find.c:1045
 msgid "Enter keyword to search for:"
 msgstr "Zu suchendes Schlüsselwort eingeben:"
 
-#: src/map_find.c:1069
+#: src/map_find.c:1062
 msgid "Systems"
 msgstr "Systeme"
 
-#: src/map_find.c:1072
+#: src/map_find.c:1065
 msgid "Planets"
 msgstr "Planeten"
 
-#: src/map_find.c:1078
+#: src/map_find.c:1071
 msgid "Ships"
 msgstr "Schiffe"
 
-#: src/map_overlay.c:548
+#: src/map_overlay.c:547
 msgid "TARGET"
 msgstr "ZIEL"
 
 #. create the window.
-#: src/map_system.c:191
+#: src/map_system.c:186
 msgid "System Map"
 msgstr "Systemkarte"
 
-#: src/map_system.c:202
+#: src/map_system.c:197
 msgid "Buy commodity price info"
 msgstr "Warenpreisinfos kaufen"
 
-#: src/map_system.c:310
+#: src/map_system.c:304
 #, c-format
 msgid "No gfx for %s...\n"
 msgstr "Keine Grafik für %s …\n"
 
 #. no nebula or star images - probably due to nebula
-#: src/map_system.c:356 src/map_system.c:358
+#: src/map_system.c:350 src/map_system.c:352
 msgid "Obscured by the nebula"
 msgstr "Vom Nebel verdeckt"
 
-#: src/map_system.c:396
+#: src/map_system.c:390
 #, c-format
 msgid "System: %s\n"
 msgstr "System: %s\n"
 
 #. display sun information
-#: src/map_system.c:398
+#: src/map_system.c:392
 #, c-format
 msgid "%d-star system\n"
 msgid_plural "%d-star system\n"
 msgstr[0] "%d-Sternensystem\n"
 msgstr[1] "%d-Sternensystem\n"
 
-#: src/map_system.c:404
+#: src/map_system.c:398
 msgid "Nebula: Volatile, "
 msgstr "Nebel: Volatil, "
 
-#: src/map_system.c:406
+#: src/map_system.c:400
 msgid "Nebula: Dangerous, "
 msgstr "Nebel: Gefährlich, "
 
-#: src/map_system.c:408
+#: src/map_system.c:402
 msgid "Nebula: Unstable, "
 msgstr "Nebel: Instabil, "
 
-#: src/map_system.c:410
+#: src/map_system.c:404
 msgid "Nebula: Stable, "
 msgstr "Nebel: Stabil, "
 
-#: src/map_system.c:414
+#: src/map_system.c:408
 msgid "Dense\n"
 msgstr "Dicht\n"
 
-#: src/map_system.c:416
+#: src/map_system.c:410
 msgid "Light\n"
 msgstr "Leicht\n"
 
-#: src/map_system.c:418
+#: src/map_system.c:412
 msgid "Medium\n"
 msgstr "Mittel\n"
 
-#: src/map_system.c:420
+#: src/map_system.c:414
 msgid "Nebula: None\n"
 msgstr "Nebel: Keiner\n"
 
-#: src/map_system.c:425
+#: src/map_system.c:419
 msgid "Interference: Dense\n"
 msgstr "Interferenz: Dicht\n"
 
-#: src/map_system.c:427
+#: src/map_system.c:421
 msgid "Interference: Light\n"
 msgstr "Interferenz: Leicht\n"
 
-#: src/map_system.c:435
+#: src/map_system.c:429
 #, c-format
 msgid " Asteroid Field density %g\n"
 msgstr " Asterioidenfelddichte: %g\n"
 
-#: src/map_system.c:444
+#: src/map_system.c:438
 msgid "Faction: Multiple\n"
 msgstr "Fraktion: Mehrere\n"
 
-#: src/map_system.c:450
+#: src/map_system.c:444
 msgid "Faction: N/A\n"
 msgstr "Fraktion: N/V\n"
 
 #. saw them all and all the same
-#: src/map_system.c:453
+#: src/map_system.c:447
 #, c-format
 msgid ""
 "Faction: %s\n"
@@ -81674,20 +81782,20 @@ msgstr ""
 "Fraktion: %s\n"
 "Ansehen: %s\n"
 
-#: src/map_system.c:480
+#: src/map_system.c:474
 msgid "Presence: N/A\n"
 msgstr "Präsenz: N/V\n"
 
 #. First jump
-#: src/map_system.c:491
+#: src/map_system.c:485
 msgid "   Jump points to:\n"
 msgstr "   Sprungpunkte nach:\n"
 
-#: src/map_system.c:495
+#: src/map_system.c:489
 msgid "     Unknown system\n"
 msgstr "     Unbekanntest System\n"
 
-#: src/map_system.c:515
+#: src/map_system.c:509
 #, c-format
 msgid ""
 "Planet: %s\n"
@@ -81696,92 +81804,92 @@ msgstr ""
 "Planet: %s\n"
 "Planetenklasse: %s     Einwohnerzahl: %.0f\n"
 
-#: src/map_system.c:517
+#: src/map_system.c:511
 msgid "No space port here\n"
 msgstr "Hier ist kein Weltraumhafen\n"
 
-#: src/map_system.c:519
+#: src/map_system.c:513
 msgid "You can land here\n"
 msgstr "Hier kannst du landen\n"
 
-#: src/map_system.c:521
+#: src/map_system.c:515
 msgid "Not advisable to land here\n"
 msgstr "Nicht ratsam, hier zu landen\n"
 
-#: src/map_system.c:523
+#: src/map_system.c:517
 msgid "You cannot land here\n"
 msgstr "Du kannst hier nicht landen\n"
 
 #. Add a description
-#: src/map_system.c:526
+#: src/map_system.c:520
 msgid "No description available"
 msgstr "Keine Beschreibung verfügbar"
 
-#: src/map_system.c:536
+#: src/map_system.c:530
 msgid "This system is landable"
 msgstr "Dieses System ist landbar"
 
-#: src/map_system.c:536
+#: src/map_system.c:530
 msgid "This system is not landable"
 msgstr "Dieses System ist nicht landbar"
 
-#: src/map_system.c:537
+#: src/map_system.c:531
 msgid "This system is inhabited"
 msgstr "Dieses System ist bewohnt"
 
-#: src/map_system.c:537
+#: src/map_system.c:531
 msgid "This system is not inhabited"
 msgstr "Dieses System ist unbewohnt"
 
-#: src/map_system.c:538
+#: src/map_system.c:532
 msgid "You can refuel here"
 msgstr "Du kannst hier auftanken"
 
-#: src/map_system.c:538
+#: src/map_system.c:532
 msgid "You cannot refuel here"
 msgstr "Du kannst hier nicht auftanken"
 
-#: src/map_system.c:539
+#: src/map_system.c:533
 msgid "This system has a bar"
 msgstr "Dieses System hat eine Kneipe"
 
-#: src/map_system.c:539
+#: src/map_system.c:533
 msgid "This system does not have a bar"
 msgstr "Dieses System hat keine Kneipe"
 
-#: src/map_system.c:540
+#: src/map_system.c:534
 msgid "This system offers missions"
 msgstr "Dieses System bietet Missionen an"
 
-#: src/map_system.c:540
+#: src/map_system.c:534
 msgid "This system does not offer missions"
 msgstr "Dieses System bietet keine Missionen an"
 
-#: src/map_system.c:541
+#: src/map_system.c:535
 msgid "This system has a trade outlet"
 msgstr "Dieses System hat einen Handelsposten"
 
-#: src/map_system.c:541
+#: src/map_system.c:535
 msgid "This system does not have a trade outlet"
 msgstr "Dieses System hat keinen Handelsposten"
 
-#: src/map_system.c:542
+#: src/map_system.c:536
 msgid "This system sells ship equipment"
 msgstr "Dieses System verkauft Equipment"
 
-#: src/map_system.c:542
+#: src/map_system.c:536
 msgid "This system does not sell ship equipment"
 msgstr "Dieses System verkauft kein Equipment"
 
-#: src/map_system.c:543
+#: src/map_system.c:537
 msgid "This system sells ships"
 msgstr "Dieses System verkauft Schiffe"
 
-#: src/map_system.c:543
+#: src/map_system.c:537
 msgid "This system does not sell ships"
 msgstr "Dieses System verkauft keine Schiffe"
 
-#: src/map_system.c:629
+#: src/map_system.c:623
 #, c-format
 msgid ""
 "%s\n"
@@ -81804,7 +81912,7 @@ msgstr ""
 "#nMasse:#0   %.0f Tonnen     #nPreis:#0 %s\n"
 "#nLizenz#0: %s"
 
-#: src/map_system.c:650
+#: src/map_system.c:644
 #, c-format
 msgid ""
 "#nModel:#0 %s    #nClass:#0 %s\n"
@@ -81839,21 +81947,21 @@ msgstr ""
 "#nPreis:#0 %s  #nLizenz:#0 %s\n"
 "%s"
 
-#: src/map_system.c:720
+#: src/map_system.c:714
 #, c-format
 msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
 msgid_plural "#nYou have:#0 %d tonnes, purchased at %s/t\n"
 msgstr[0] "#nDu hast:#0 %d Tonne, gekauft für %s/t\n"
 msgstr[1] "#nDu hast:#0 %d Tonnen, gekauft für %s/t\n"
 
-#: src/map_system.c:726
+#: src/map_system.c:720
 #, c-format
 msgid "#nYou have:#0 %d tonne\n"
 msgid_plural "#nYou have:#0 %d tonnes\n"
 msgstr[0] "#nDu hast:#0 %d Tonne\n"
 msgstr[1] "#nDu hast:#0 %d Tonnen\n"
 
-#: src/map_system.c:731
+#: src/map_system.c:725
 #, c-format
 msgid ""
 "#nAverage price seen here:#0 %s/t ± %s/t\n"
@@ -81862,16 +81970,16 @@ msgstr ""
 "#nDurchschnittspreis hier gesehen:#0 %s/t ± %s/t\n"
 "#nDurchschnittspreis überall gesehen:#0 %s/t ± %s/t\n"
 
-#: src/map_system.c:736
+#: src/map_system.c:730
 msgid "Unexpected call to map_system_array_update\n"
 msgstr "Unerwarteter Aufruf von map_system_array_update\n"
 
 #. no route
-#: src/map_system.c:1007
+#: src/map_system.c:1001
 msgid "Not available here"
 msgstr "Hier nicht verfügbar"
 
-#: src/map_system.c:1007
+#: src/map_system.c:1001
 #, c-format
 msgid ""
 "Sorry, we don't have the commodity prices for %s available here at the "
@@ -81879,11 +81987,11 @@ msgid ""
 msgstr ""
 "Es tut mir Leid, aber wir haben im Moment die Warenpreise für %s nicht."
 
-#: src/map_system.c:1019
+#: src/map_system.c:1013
 msgid "You can't afford that"
 msgstr "Das kannst du dir nicht leisten"
 
-#: src/map_system.c:1019
+#: src/map_system.c:1013
 #, c-format
 msgid ""
 "Sorry, but we are selling this information for %s, which you don't have."
@@ -81891,19 +81999,19 @@ msgstr ""
 "Es tut uns leid, aber wir verkaufen diese Informationen für %s, die Sie "
 "nicht haben."
 
-#: src/map_system.c:1021
+#: src/map_system.c:1015
 msgid "No commodities sold here"
 msgstr "Hier wird nichts verkauft"
 
-#: src/map_system.c:1021
+#: src/map_system.c:1015
 msgid "There are no commodities sold here, as far as we are aware!"
 msgstr "Es werden hier keine Waren verkauft, soweit uns bekannt ist!"
 
-#: src/map_system.c:1023
+#: src/map_system.c:1017
 msgid "You already have newer information"
 msgstr "Du hast bereits neuere Informationen"
 
-#: src/map_system.c:1023
+#: src/map_system.c:1017
 msgid ""
 "I've checked your computer, and you already have newer information than we "
 "can sell."
@@ -81911,11 +82019,11 @@ msgstr ""
 "Ich habe Ihren Computer überprüft, und Sie haben bereits neuere "
 "Informationen, als wir verkaufen können."
 
-#: src/map_system.c:1025
+#: src/map_system.c:1019
 msgid "Purchase commodity prices?"
 msgstr "Warenpreise kaufen?"
 
-#: src/map_system.c:1025
+#: src/map_system.c:1019
 #, c-format
 msgid ""
 "For %s, that will cost %s. The latest information we have is %g periods old."
@@ -81999,7 +82107,7 @@ msgstr "Kartenausstattungen"
 msgid "Exit to Main Menu"
 msgstr "Zurück zum Hauptmenü"
 
-#: src/mission.c:118 src/nlua_player.c:1092 src/nlua_player.c:1121
+#: src/mission.c:118 src/nlua_player.c:1088 src/nlua_player.c:1117
 #, c-format
 msgid "Mission '%s' not found in stack"
 msgstr "Mission „%s“ nicht im Stack gefunden"
@@ -82177,31 +82285,27 @@ msgid "Music thread did not exit when asked, ignoring..."
 msgstr ""
 "Musik-Thread hat sich nach einer Anfrage nicht beendet, wird ignoriert …"
 
-#: src/naev.c:196 src/naev.c:1110
+#: src/naev.c:175 src/naev.c:1088
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr "Versionszeichenkette „%s“ konnte nicht geparst werden!"
 
-#: src/naev.c:208
+#: src/naev.c:187
 #, c-format
 msgid "Unable to initialize SDL: %s"
 msgstr "Konnte SDL nicht initialisieren: %s"
 
-#: src/naev.c:225 src/opengl.c:477
+#: src/naev.c:204 src/opengl.c:477
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
 msgstr "Konnte SDL Video nicht initialisieren: %s"
 
-#: src/naev.c:249
+#: src/naev.c:228
 #, c-format
 msgid "Unable to create config directory '%s'"
 msgstr "Konnte Konfigurationsverzeichnis „%s“ nicht erzeugen"
 
-#: src/naev.c:272
-msgid "Failed to open ndata."
-msgstr "Konnte ndata nicht öffnen."
-
-#: src/naev.c:279
+#: src/naev.c:258
 msgid "Failed to load module start data."
 msgstr "Konnte Modulstartdaten nicht öffnen."
 
@@ -82209,48 +82313,48 @@ msgstr "Konnte Modulstartdaten nicht öffnen."
 #. * OpenGL
 #.
 #. initializes video output
-#: src/naev.c:294
+#: src/naev.c:273
 msgid "Initializing video output failed, exiting..."
 msgstr "Initalisierung von Videoausgabe fehlgeschlagen. Beenden …"
 
-#: src/naev.c:311
+#: src/naev.c:290
 msgid "Initializing subsystems..."
 msgstr "Initialisiere Untersysteme …"
 
-#: src/naev.c:319
+#: src/naev.c:298
 msgid "Error initializing joystick input"
 msgstr "Fehler bei Initialisierung von Joystickeingabe"
 
-#: src/naev.c:322 src/naev.c:329
+#: src/naev.c:301 src/naev.c:308
 msgid "Failure to open any joystick, falling back to default keybinds"
 msgstr ""
 "Fehler beim Öffnen von Joysticks, es wird ersatzweise die "
 "Standardtastenbelegung benutzt"
 
-#: src/naev.c:338
+#: src/naev.c:317
 msgid "Sound is disabled!"
 msgstr "Ton ist deaktiviert!"
 
-#: src/naev.c:343
+#: src/naev.c:322
 msgid "Problem setting up sound!"
 msgstr "Problem beim Aufsetzen des Tons!"
 
 #. Misc graphics init
 #. Initializes the nebula
 #. An error has happened
-#: src/naev.c:352
+#: src/naev.c:331
 msgid "Unable to initialize the Nebula subsystem!"
 msgstr "Das Nebeluntersystem konnte nicht initialisiert werden!"
 
-#: src/naev.c:378
+#: src/naev.c:357
 msgid "Reached main menu"
 msgstr "Hauptmenü erreicht"
 
-#: src/naev.c:399
+#: src/naev.c:378
 msgid "Welcome to Naev"
 msgstr "Willkommen bei Naev"
 
-#: src/naev.c:400
+#: src/naev.c:379
 #, c-format
 msgid ""
 "Welcome to Naev version %s, and thank you for playing! We hope you enjoy "
@@ -82284,271 +82388,187 @@ msgstr ""
 "schau dir naev.org an; dort findest du alle relevanten Links. Und nochmals, "
 "danke fürs Spielen!"
 
-#: src/naev.c:506
+#: src/naev.c:483
 msgid "No loading screens found!"
 msgstr "Keine Ladebildschirme gefunden!"
 
 #. order is very important as they're interdependent
-#: src/naev.c:620
+#: src/naev.c:597
 msgid "Loading Commodities..."
 msgstr "Waren laden …"
 
 #. dep for space
-#: src/naev.c:622
+#: src/naev.c:599
 msgid "Loading Factions..."
 msgstr "Fraktionen laden …"
 
 #. dep for fleet, space, missions, AI
-#: src/naev.c:624
+#: src/naev.c:601
 msgid "Loading AI..."
 msgstr "KI laden …"
 
 #. dep for fleets
-#: src/naev.c:626
+#: src/naev.c:603
 msgid "Loading Missions..."
 msgstr "Missionen laden …"
 
 #. no dep
-#: src/naev.c:628
+#: src/naev.c:605
 msgid "Loading Events..."
 msgstr "Ereignisse laden …"
 
 #. no dep
-#: src/naev.c:630
+#: src/naev.c:607
 msgid "Loading Special Effects..."
 msgstr "Spezialeffekte laden …"
 
 #. no dep
-#: src/naev.c:632
+#: src/naev.c:609
 msgid "Loading Damage Types..."
 msgstr "Schadenstypen laden …"
 
 #. no dep
-#: src/naev.c:634
+#: src/naev.c:611
 msgid "Loading Outfits..."
 msgstr "Ausstattungen laden …"
 
 #. dep for ships
-#: src/naev.c:636
+#: src/naev.c:613
 msgid "Loading Ships..."
 msgstr "Schiffe laden …"
 
 #. dep for fleet
-#: src/naev.c:638
+#: src/naev.c:615
 msgid "Loading Fleets..."
 msgstr "Flotten laden …"
 
 #. dep for space
-#: src/naev.c:640
+#: src/naev.c:617
 msgid "Loading Techs..."
 msgstr "Technologien laden …"
 
 #. dep for space
-#: src/naev.c:642
+#: src/naev.c:619
 msgid "Loading the Universe..."
 msgstr "Das Universum laden …"
 
-#: src/naev.c:644
+#: src/naev.c:621
 msgid "Loading the UniDiffs..."
 msgstr "UniDiffs laden …"
 
-#: src/naev.c:646
+#: src/naev.c:623
 msgid "Populating Maps..."
 msgstr "Karten bevölkern …"
 
 #. Initialize player stuff.
-#: src/naev.c:654
+#: src/naev.c:631
 msgid "Loading Completed!"
 msgstr "Ladevorgang abgeschlossen!"
 
-#: src/naev.c:796
+#: src/naev.c:770
 msgid "clock_gettime failed, disabling POSIX time."
 msgstr "clock_gettime fehlgeschlagen, posix-Zeit wird deaktiviert."
 
-#: src/naev.c:821
+#: src/naev.c:795
 msgid "clock_gettime failed!"
 msgstr "clock_gettime fehlgeschlagen!"
 
-#: src/naev.c:1026
+#: src/naev.c:1004
 msgid "PAUSED"
 msgstr "PAUSIERT"
 
-#: src/naev.c:1051
+#: src/naev.c:1029
 msgid "Icon (icon.png) not found!"
 msgstr "Icon (icon.png) nicht gefunden!"
 
-#: src/naev.c:1056
+#: src/naev.c:1034
 msgid "Unable to load icon.png!"
 msgstr "Konnte icon.png nicht laden!"
 
-#: src/naev.c:1081
+#: src/naev.c:1059
 msgid " debug"
 msgstr " debug"
 
-#: src/naev.c:1136
+#: src/naev.c:1114
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr "SDL: %d.%d.%d [kompiliert: %d.%d.%d]"
 
-#: src/naev.c:1146
+#: src/naev.c:1124
 msgid "SDL is newer than compiled version"
 msgstr "SDL ist neuer als die kompilierte Version"
 
-#: src/naev.c:1148
+#: src/naev.c:1126
 msgid "SDL is older than compiled version."
 msgstr "SDL ist älter als die kompilierte Version."
 
-#: src/naev.c:1164
-msgid "SIGFPE (raised by program)"
-msgstr "SIGFPE (vom Programm ausgelöst)"
-
-#: src/naev.c:1165
-msgid "SIGFPE (integer divide by zero)"
-msgstr "SIGFPE (Division einer Ganzzahl durch Null)"
-
-#: src/naev.c:1166
-msgid "SIGFPE (integer overflow)"
-msgstr "SIGFPE (Ganzzahlüberlauf)"
-
-#: src/naev.c:1167
-msgid "SIGFPE (floating-point divide by zero)"
-msgstr "SIGFPE (Division einer Fließkommazahl durch Null)"
-
-#: src/naev.c:1168
-msgid "SIGFPE (floating-point overflow)"
-msgstr "SIGFPE (Fließkommazahlüberlauf)"
-
-#: src/naev.c:1169
-msgid "SIGFPE (floating-point underflow)"
-msgstr "SIGFPE (Fließkommazahlunterlauf)"
-
-#: src/naev.c:1170
-msgid "SIGFPE (floating-point inexact result)"
-msgstr "SIGFPE (Fließkommazahl: ungenaues Ergebnis)"
-
-#: src/naev.c:1171
-msgid "SIGFPE (floating-point invalid operation)"
-msgstr "SIGFPE (Fließkommazahl: ungültige Aktion)"
-
-#: src/naev.c:1172
-msgid "SIGFPE (subscript out of range)"
-msgstr "SIGFPE (Subscript außerhalb des Wertebereichs)"
-
-#: src/naev.c:1173
-msgid "SIGFPE"
-msgstr "SIGFPE"
-
-#: src/naev.c:1177
-msgid "SIGSEGV (raised by program)"
-msgstr "SIGSEGV (vom Programm ausgelöst)"
-
-#: src/naev.c:1178
-msgid "SIGSEGV (address not mapped to object)"
-msgstr "SIGSEGV (Addresse nicht zum Objekt gemappt)"
-
-#: src/naev.c:1179
-msgid "SIGSEGV (invalid permissions for mapped object)"
-msgstr "SIGSEGV (ungültige Erlaubnisse für gemapptes Objekt)"
-
-#: src/naev.c:1180
-msgid "SIGSEGV"
-msgstr "SIGSEGV"
-
-#: src/naev.c:1184
-msgid "SIGABRT (raised by program)"
-msgstr "SIGABRT (vom Programm ausgelöst)"
-
-#: src/naev.c:1185
-msgid "SIGABRT"
-msgstr "SIGABRT"
-
-#: src/naev.c:1262
-#, c-format
-msgid "Naev received %s!"
-msgstr "Naev hat %s erhalten!"
-
-#: src/naev.c:1270
-msgid "Report this to project maintainer with the backtrace."
-msgstr "Melde dies dem Projektverwalter mit dem Backtrace."
-
-#: src/naev.c:1316
-msgid "Unable to set up SIGSEGV signal handler."
-msgstr "SIGSEGV-Signalbehandlung konnte nicht aufgesetzt werden."
-
-#: src/naev.c:1319
-msgid "Unable to set up SIGFPE signal handler."
-msgstr "SIGFPE-Signalbehandlung konnte nicht aufgesetzt werden."
-
-#: src/naev.c:1322
-msgid "Unable to set up SIGABRT signal handler."
-msgstr "SIGABRT-Signalbehandlung konnte nicht aufgesetzt werden."
-
-#: src/naev.c:1323
-msgid "BFD backtrace catching enabled."
-msgstr "BFD-Backtrace-Catching aktiviert."
-
-#: src/ndata.c:71
+#: src/ndata.c:70
 msgid ""
 "Unable to find game data. You may need to install, specify a datapath, or "
 "run using naev.sh (if developing)."
 msgstr ""
 
-#: src/ndata.c:80
+#: src/ndata.c:79
 msgid "ndata version inconsistency with this version of Naev!"
 msgstr "ndata-Versionsinkonsistenz mit dieser Version von Naev!"
 
-#: src/ndata.c:81
+#: src/ndata.c:80
 #, c-format
 msgid "Expected ndata version %s got %s."
 msgstr "Erwartete ndata-Version: %s; tatsächliche Version: %s."
 
-#: src/ndata.c:83
+#: src/ndata.c:82
 msgid "Please get a compatible ndata version!"
 msgstr "Bitte hole eine kompatible ndata-Version!"
 
-#: src/ndata.c:85
+#: src/ndata.c:84
 msgid ""
 "Naev will probably crash now as the versions are probably not compatible."
 msgstr ""
 "Naev wird jetzt wahrscheinlich abstürzen, da de Versionen wahrscheinlich "
 "nicht kompatibel sind."
 
-#: src/ndata.c:101
+#: src/ndata.c:107
+msgid "Cannot determine data path, using current directory."
+msgstr ""
+"Datenpfad konnte nicht bestimmt werden, aktuelles Verzeichnis wird benutzt."
+
+#: src/ndata.c:121
 #, c-format
 msgid "Added datapath from conf.lua file: %s"
 msgstr ""
 
-#: src/ndata.c:105 src/ndata.c:111 src/ndata.c:116 src/ndata.c:121
+#: src/ndata.c:125 src/ndata.c:131 src/ndata.c:136 src/ndata.c:141
 #, fuzzy, c-format
 #| msgid "Using default font '%s'"
 msgid "Trying default datapath: %s"
 msgstr "Standardschrift „%s“ wird benutzt"
 
-#: src/ndata.c:155 src/ndata.c:169 src/nfile.c:578 src/nfile.c:592
-#: src/nfile.c:688
+#: src/ndata.c:166 src/ndata.c:180 src/nfile.c:453 src/nfile.c:467
+#: src/nfile.c:563
 #, c-format
 msgid "Error occurred while opening '%s': %s"
 msgstr "Fehler beim Öffnen von „%s“: %s"
 
-#: src/ndata.c:161 src/nfile.c:584
+#: src/ndata.c:172 src/nfile.c:459
 #, c-format
 msgid "Error occurred while opening '%s': It is not a regular file"
 msgstr "Fehler beim Öffnen von „%s“: Das ist keine reguläre Datei"
 
-#: src/ndata.c:178 src/nfile.c:599 src/nfile.c:606
+#: src/ndata.c:189 src/nfile.c:474 src/nfile.c:481
 #, c-format
 msgid "Error occurred while seeking '%s': %s"
 msgstr "Fehler beim Bewegen des Schreib-/Lesezeigers in „%s“: %s"
 
-#: src/ndata.c:200 src/nfile.c:627
+#: src/ndata.c:211 src/nfile.c:502
 #, c-format
 msgid "Error occurred while reading '%s': %s"
 msgstr "Fehler beim Lesen von „%s“: %s"
 
-#: src/ndata.c:259
+#: src/ndata.c:332 src/ndata.c:361 src/nfile.c:394 src/nfile.c:423
 #, c-format
-msgid "PhysicsFS: Cannot stat %s: %s"
-msgstr "PhysicsFS: Kann stat auf %s nicht anwenden: %s"
+msgid "Failure to copy '%s' to '%s': %s"
+msgstr "Fehler beim Kopieren von „%s“ nach „%s“: %s"
 
 #: src/ndata.h:63
 msgid "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf"
@@ -82594,87 +82614,53 @@ msgstr ""
 msgid "Event is missing '%s', skipping."
 msgstr "Dem Ereignis fehlt „%s“, wird übersprungen."
 
-#: src/nfile.c:159
-msgid "Cannot determine data path, using current directory."
-msgstr ""
-"Datenpfad konnte nicht bestimmt werden, aktuelles Verzeichnis wird benutzt."
-
-#: src/nfile.c:185
+#: src/nfile.c:131
 msgid "Cannot determine config path, using current directory."
 msgstr ""
 "Konfigurationspfad konnte nicht bestimmt werden, aktuelles Verzeichnis wird "
 "benutzt."
 
-#: src/nfile.c:191
+#: src/nfile.c:137
 msgid "$XDG_CONFIG_HOME isn't set, using current directory."
 msgstr ""
 "$XDG_CONFIG_HOME ist nicht gesetzt, aktuelles Verzeichnis wird benutzt."
 
-#: src/nfile.c:200 src/nfile.c:244
+#: src/nfile.c:146 src/nfile.c:190
 #, c-format
 msgid "%%APPDATA%% isn't set, using current directory."
 msgstr "%%APPDATA%% ist nicht gesetzt, aktuelles Verzeichnis wird benutzt."
 
-#: src/nfile.c:229
+#: src/nfile.c:175
 msgid "Cannot determine cache path, using current directory."
 msgstr ""
 "Zwischenspeicherpfad konnte nicht bestimmt werden, aktuelles Verzeichnis "
 "wird benutzt."
 
-#: src/nfile.c:235
+#: src/nfile.c:181
 msgid "$XDG_CACHE_HOME isn't set, using current directory."
 msgstr "$XDG_CACHE_HOME ist nicht gesetzt, aktuelles Verzeichnis wird benutzt."
 
-#: src/nfile.c:342
+#: src/nfile.c:291
 #, c-format
 msgid "Dir '%s' does not exist and unable to create: %s"
 msgstr "Verzeichnis „%s“ existiert nicht, unfähig zu erstellen: %s"
 
-#: src/nfile.c:439 src/nfile.c:468
-#, c-format
-msgid "Failure to copy '%s' to '%s': %s"
-msgstr "Fehler beim Kopieren von „%s“ nach „%s“: %s"
-
-#: src/nfile.c:659
+#: src/nfile.c:534
 #, c-format
 msgid "Unable to touch file '%s': %s"
 msgstr "Datei „%s“ konnte nicht angefasst werden: %s"
 
-#: src/nfile.c:697
+#: src/nfile.c:572
 #, c-format
 msgid "Error occurred while writing '%s': %s"
 msgstr "Fehler beim Schreiben von „%s“: %s"
 
-#: src/nfile.c:706
+#: src/nfile.c:581
 #, c-format
 msgid "Error occurred while closing '%s': %s"
 msgstr "Fehler beim Schließen von „%s“: %s"
 
-#: src/nfile.c:723
-#, c-format
-msgid "Error deleting file %s"
-msgstr "Fehler beim Löschen der Datei %s"
-
-#: src/nfile.c:739
-#, c-format
-msgid "Can not rename non existent file %s"
-msgstr "Nicht existente Datei %s kann nicht umbenannt werden"
-
-#: src/nfile.c:743
-msgid "Can not rename to NULL file name"
-msgstr "Es kann nicht zu einem NULL-Dateinamen umbenannt werden"
-
-#: src/nfile.c:747
-#, c-format
-msgid "Error renaming %s to %s. %s already exists"
-msgstr "Fehler beim Umbenennen von %s nach %s. %s existiert bereits"
-
-#: src/nfile.c:751
-#, c-format
-msgid "Error renaming %s to %s"
-msgstr "Fehler beim Umbenennen von %s nach %s"
-
-#: src/nfile.c:806
+#: src/nfile.c:621
 msgid ""
 "First argument to nfile_concatPaths was NULL. This is probably an error."
 msgstr ""
@@ -82707,13 +82693,13 @@ msgstr "Farbe „%s“ existiert nicht!"
 msgid "Commodity is invalid."
 msgstr "Ware ist ungültig."
 
-#: src/nlua_commodity.c:211 src/nlua_system.c:762
+#: src/nlua_commodity.c:211 src/nlua_system.c:763
 #, c-format
 msgid "Commodity '%s' not found!"
 msgstr "Ware „%s“ nicht gefunden!"
 
-#: src/nlua_commodity.c:339 src/nlua_commodity.c:375 src/nlua_player.c:1227
-#: src/nlua_player.c:1245
+#: src/nlua_commodity.c:339 src/nlua_commodity.c:375 src/nlua_player.c:1223
+#: src/nlua_player.c:1241
 #, c-format
 msgid "Planet '%s' does not belong to a system."
 msgstr "Planet „%s“ gehört zu keinem System."
@@ -83038,74 +83024,74 @@ msgstr "Planet „%s“ nicht im System „%s“ gefunden"
 msgid "#%c%s#0 is hailing you."
 msgstr "#%c%s#0 funkt dich an."
 
-#: src/nlua_planet.c:174
+#: src/nlua_planet.c:175
 msgid "Planet is invalid"
 msgstr "Planet ist ungültig"
 
-#: src/nlua_planet.c:231
+#: src/nlua_planet.c:232
 msgid "Attempting to get landed planet when player not landed."
 msgstr ""
 "Versuchte, den gelandeten Planeten anzufragen, obwohl der Spieler nicht "
 "gelandet ist."
 
-#: src/nlua_planet.c:281 src/nlua_planet.c:341
+#: src/nlua_planet.c:282 src/nlua_planet.c:342
 #, c-format
 msgid "Planet '%s' not found in stack"
 msgstr "Planet „%s“ nicht im Stack gefunden"
 
-#: src/nlua_planet.c:346
+#: src/nlua_planet.c:347
 #, c-format
 msgid "Planet '%s' is not placed in a system"
 msgstr "Planet „%s“ wurde nicht in einem System platziert"
 
-#: src/nlua_planet.c:351
+#: src/nlua_planet.c:352
 #, c-format
 msgid "Planet '%s' can't find system '%s'"
 msgstr "Planet „%s“ kann System „%s“ nicht finden"
 
-#: src/nlua_player.c:561
+#: src/nlua_player.c:562
 msgid "Second parameter to cinematics should be a table of options or omitted!"
 msgstr ""
 "Zweiter Parameter zu cinematics sollte eine Tabelle von Optionen oder "
 "ausgelassen werden!"
 
-#: src/nlua_player.c:639
+#: src/nlua_player.c:640
 msgid "Player must be landed to force takeoff."
 msgstr "Spieler muss gelandet sein, um das Abheben zu erzwingen."
 
-#: src/nlua_player.c:715
+#: src/nlua_player.c:716
 msgid "Must be landed to set the active land window."
 msgstr "Muss gelandet sein, um das aktive Landungsfenster zu setzen."
 
-#: src/nlua_player.c:822
+#: src/nlua_player.c:823
 #, c-format
 msgid "Player does not own a ship named '%s'"
 msgstr "Dem Spieler gehört kein Schiff namens „%s“"
 
-#: src/nlua_player.c:1147 src/nlua_player.c:1177
+#: src/nlua_player.c:1143 src/nlua_player.c:1173
 #, c-format
 msgid "Event '%s' not found in stack"
 msgstr "Ereignis „%s“ nicht im Stack gefunden"
 
-#: src/nlua_player.c:1209
+#: src/nlua_player.c:1205
 msgid "Can not teleport the player while landed!"
 msgstr "Kann den Spieler nicht teleportieren, während er gelandet ist!"
 
-#: src/nlua_player.c:1211
+#: src/nlua_player.c:1207
 msgid "Can not teleport the player while the comm is open!"
 msgstr ""
 "Kann den Spieler nicht teleportieren, während die Kommunikation offen ist!"
 
-#: src/nlua_player.c:1213
+#: src/nlua_player.c:1209
 msgid "Can not teleport the player while they are boarded!"
 msgstr "Kann den Spieler nicht teleportieren, während er geentert wird!"
 
-#: src/nlua_player.c:1236
+#: src/nlua_player.c:1232
 #, c-format
 msgid "'%s' is not a valid teleportation target."
 msgstr "„%s“ ist kein gültiges Teleportationsziel."
 
-#: src/nlua_player.c:1255
+#: src/nlua_player.c:1251
 #, c-format
 msgid "System '%s' does not exist."
 msgstr "System „%s“ existiert nicht."
@@ -83128,20 +83114,20 @@ msgstr "Konnte Schiffszielgrafik für „%s“ nicht holen."
 msgid "Unable to get ship graphic for '%s'."
 msgstr "Konnte Schiffsgrafik für „%s“ nicht holen."
 
-#: src/nlua_system.c:166
+#: src/nlua_system.c:167
 msgid "System is invalid"
 msgstr "System ist ungültig"
 
-#: src/nlua_system.c:259
+#: src/nlua_system.c:260
 msgid "No matching systems found."
 msgstr "Keine passenden Systeme gefunden."
 
-#: src/nlua_system.c:679 src/nlua_system.c:712
+#: src/nlua_system.c:680 src/nlua_system.c:713
 #, c-format
 msgid "field index %d too high"
 msgstr "Feldindex %d zu hoch"
 
-#: src/nlua_system.c:684 src/nlua_system.c:717
+#: src/nlua_system.c:685 src/nlua_system.c:718
 msgid "asteroid index too high"
 msgstr "Asteroidenindex zu hoch"
 
@@ -83403,29 +83389,29 @@ msgstr "Ungültige #include-Syntax in „%s%s“!"
 msgid "Texture '%s' has no RWops"
 msgstr "Textur „%s“ hat kein RWops"
 
-#: src/opengl_tex.c:594
+#: src/opengl_tex.c:596
 msgid "Trying to load image from NULL path."
 msgstr "Versuche, Bild aus NULL-Bild zu laden."
 
-#: src/opengl_tex.c:601
+#: src/opengl_tex.c:603
 #, c-format
 msgid "Failed to load surface '%s' from ndata."
 msgstr "Surface „%s“ aus ndata konnte nicht geladen werden."
 
-#: src/opengl_tex.c:632
+#: src/opengl_tex.c:634
 #, fuzzy, c-format
 #| msgid "Unable to load Nebula image: %s"
 msgid "Unable to load image '%s'."
 msgstr "Nebelbild konnte nicht geladen werden: %s"
 
-#: src/opengl_tex.c:637
+#: src/opengl_tex.c:639
 #, c-format
 msgid "'%s' could not be opened"
 msgstr "„%s“ konnte nicht geöffnet werden"
 
 #. Not found
 #. Surfaces will have NULL names
-#: src/opengl_tex.c:751
+#: src/opengl_tex.c:753
 #, c-format
 msgid "Attempting to free texture '%s' not found in stack!"
 msgstr ""
@@ -83433,21 +83419,21 @@ msgstr ""
 "zu entfernen!"
 
 #. Invalid texture.
-#: src/opengl_tex.c:788
+#: src/opengl_tex.c:790
 #, c-format
 msgid "Unable to duplicate texture '%s'."
 msgstr "Texture „%s“ konnte nicht dupliziert werden."
 
-#: src/opengl_tex.c:830
+#: src/opengl_tex.c:832
 #, c-format
 msgid "Angle not between 0 and 2.*M_PI [%f]."
 msgstr "Winkel nicht zwischen 0 and 2.*M_PI [%f]."
 
-#: src/opengl_tex.c:896
+#: src/opengl_tex.c:898
 msgid "Texture leak detected!"
 msgstr "Texturenleck erfasst!"
 
-#: src/opengl_tex.c:898
+#: src/opengl_tex.c:900
 #, c-format
 msgid "   '%s' opened %d time"
 msgid_plural "   '%s' opened %d times"
@@ -83722,7 +83708,7 @@ msgstr "Features"
 msgid "Engine Glow (More RAM)"
 msgstr "Motorleuchten (mehr RAM)"
 
-#: src/options.c:1298 src/outfit.c:811 src/outfit.c:841
+#: src/options.c:1298 src/outfit.c:810 src/outfit.c:840
 msgid "GUI"
 msgstr "GUI"
 
@@ -83779,137 +83765,137 @@ msgstr "%.0f%%"
 msgid "Outfit '%s' not found in stack."
 msgstr "Ausstattung „%s“ nicht im Stack gefunden."
 
-#: src/outfit.c:288
+#: src/outfit.c:287
 msgid "Small"
 msgstr "Klein"
 
-#: src/outfit.c:290
+#: src/outfit.c:289
 msgid "Medium"
 msgstr "Mittel"
 
-#: src/outfit.c:292
+#: src/outfit.c:291
 msgid "Large"
 msgstr "Groß"
 
-#: src/outfit.c:350
+#: src/outfit.c:349
 #, c-format
 msgid "'%s' does not match any outfit slot sizes."
 msgstr "„%s“ passt auf keine Ausstattungsplatzgrößen."
 
-#: src/outfit.c:366
+#: src/outfit.c:365
 #, c-format
 msgid "Outfit '%s' has implicit slot size, setting to '%s'."
 msgstr "Ausstattung „%s“ hat implizite Platzgröße, wird zu „%s“ gesetzt."
 
-#: src/outfit.c:797
+#: src/outfit.c:796
 msgid "NULL"
 msgstr "NULL"
 
-#: src/outfit.c:798
+#: src/outfit.c:797
 msgid "Bolt Cannon"
 msgstr "Blitzkanone"
 
-#: src/outfit.c:799
+#: src/outfit.c:798
 msgid "Beam Cannon"
 msgstr "Strahlkanone"
 
-#: src/outfit.c:800
+#: src/outfit.c:799
 msgid "Bolt Turret"
 msgstr "Blitzgeschützturm"
 
-#: src/outfit.c:801
+#: src/outfit.c:800
 msgid "Beam Turret"
 msgstr "Strahlgeschützturm"
 
-#: src/outfit.c:802 src/outfit.c:832
+#: src/outfit.c:801 src/outfit.c:831
 msgid "Launcher"
 msgstr "Werfer"
 
-#: src/outfit.c:803
+#: src/outfit.c:802
 msgid "Ammunition"
 msgstr "Munition"
 
-#: src/outfit.c:804
+#: src/outfit.c:803
 msgid "Turret Launcher"
 msgstr "Geschützturmwerfer"
 
-#: src/outfit.c:805
+#: src/outfit.c:804
 msgid "Ship Modification"
 msgstr "Schiffsmodifikation"
 
-#: src/outfit.c:806 src/outfit.c:836
+#: src/outfit.c:805 src/outfit.c:835
 msgid "Afterburner"
 msgstr "Nachbrenner"
 
-#: src/outfit.c:807 src/outfit.c:837
+#: src/outfit.c:806 src/outfit.c:836
 msgid "Fighter Bay"
 msgstr "Kämpferbucht"
 
-#: src/outfit.c:808 src/outfit.c:838 src/ship.c:191
+#: src/outfit.c:807 src/outfit.c:837 src/ship.c:190
 msgid "Fighter"
 msgstr "Kämpfer"
 
-#: src/outfit.c:810 src/outfit.c:840
+#: src/outfit.c:809 src/outfit.c:839
 msgid "Local Map"
 msgstr "Lokale Karte"
 
-#: src/outfit.c:812 src/outfit.c:842
+#: src/outfit.c:811 src/outfit.c:841
 msgid "License"
 msgstr "Lizenz"
 
-#: src/outfit.c:830
+#: src/outfit.c:829
 msgid "Bolt Weapon"
 msgstr "Blitzwaffe"
 
-#: src/outfit.c:831
+#: src/outfit.c:830
 msgid "Beam Weapon"
 msgstr "Strahlwaffe"
 
-#: src/outfit.c:834
+#: src/outfit.c:833
 msgid "Turret"
 msgstr "Geschützturm"
 
-#: src/outfit.c:835
+#: src/outfit.c:834
 msgid "Modification"
 msgstr "Modifikation"
 
-#: src/outfit.c:839
+#: src/outfit.c:838
 msgid "Map"
 msgstr "Karte"
 
-#: src/outfit.c:855
+#: src/outfit.c:854
 msgid "Unguided"
 msgstr "Ungelenkt"
 
-#: src/outfit.c:856
+#: src/outfit.c:855
 msgid "Seek"
 msgstr "Suchen"
 
-#: src/outfit.c:857
+#: src/outfit.c:856
 msgid "Smart"
 msgstr "Schlau"
 
-#: src/outfit.c:861
+#: src/outfit.c:860
 #, c-format
 msgid "Outfit '%s' is not an ammo outfit"
 msgstr "Ausstattung „%s“ ist keine Munitionsausstattung"
 
-#: src/outfit.c:976
+#: src/outfit.c:975
 #, c-format
 msgid "Invalid outfit type: '%s'"
 msgstr "Ungültiger Ausstattungstyp „%s“"
 
-#: src/outfit.c:1020
+#: src/outfit.c:1019
 #, c-format
 msgid "Unknown damage type '%s'"
 msgstr "Unbekannter Schadenstyp „%s“"
 
-#: src/outfit.c:1023
+#: src/outfit.c:1022
 #, c-format
 msgid "Damage has unknown node '%s'"
 msgstr "Schaden hat unbekannen Node „%s“"
 
-#: src/outfit.c:1061
+#: src/outfit.c:1060
 #, c-format
 msgid ""
 "%s xml collision polygon does not exist!\n"
@@ -83920,12 +83906,12 @@ msgstr ""
 "                Bitte benutze das Skript „polygon_from_sprite.py“, welches "
 "in Naevs „artwork“-Repository gefunden werden kann."
 
-#: src/outfit.c:1163 src/outfit.c:1511
+#: src/outfit.c:1162 src/outfit.c:1510
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
 msgstr "Ausstattung „%s“ hat ungültige „blowup“-Eigenschaft: „%s“"
 
-#: src/outfit.c:1189 src/outfit.c:1537
+#: src/outfit.c:1188 src/outfit.c:1536
 #, c-format
 msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
@@ -83934,15 +83920,15 @@ msgstr ""
 "Ausstattung „%s“: Die Anzahl der Kollisionspolygone ist falsch.\n"
 "                     npolygon = %i und sx*sy = %i"
 
-#: src/outfit.c:1225 src/outfit.c:1372 src/outfit.c:1456 src/outfit.c:1578
-#: src/outfit.c:1661 src/outfit.c:1756 src/outfit.c:1820 src/outfit.c:1866
-#: src/outfit.c:1939 src/outfit.c:1962 src/outfit.c:2004 src/outfit.c:2043
-#: src/outfit.c:2077 src/outfit.c:2216 src/outfit.c:2297
+#: src/outfit.c:1224 src/outfit.c:1371 src/outfit.c:1455 src/outfit.c:1577
+#: src/outfit.c:1660 src/outfit.c:1755 src/outfit.c:1819 src/outfit.c:1865
+#: src/outfit.c:1937 src/outfit.c:1960 src/outfit.c:2002 src/outfit.c:2041
+#: src/outfit.c:2075 src/outfit.c:2214 src/outfit.c:2295
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr "Ausstattung „%s“ hat unbekannen Node „%s“"
 
-#: src/outfit.c:1254
+#: src/outfit.c:1253
 #, c-format
 msgid ""
 "%s [%s]\n"
@@ -83955,12 +83941,12 @@ msgstr ""
 "%.0f%% Durchdringung\n"
 "%.2f SPS [%.0f Schaden]\n"
 
-#: src/outfit.c:1264
+#: src/outfit.c:1263
 #, c-format
 msgid "%.2f Disable/s [%.0f Disable]\n"
 msgstr "%.2f Unfähigmachung/s [%.0f Unfähigmachung]\n"
 
-#: src/outfit.c:1268
+#: src/outfit.c:1267
 #, c-format
 msgid ""
 "%.1f Shots Per Second\n"
@@ -83973,7 +83959,7 @@ msgstr ""
 "%.0f Reichweite\n"
 "%.1f Sekunden Aufhitzung"
 
-#: src/outfit.c:1278
+#: src/outfit.c:1277
 #, c-format
 msgid ""
 "\n"
@@ -83982,14 +83968,14 @@ msgstr ""
 "\n"
 "%.1f Grad Drehung"
 
-#: src/outfit.c:1285 src/outfit.c:1415 src/outfit.c:1589 src/outfit.c:1793
-#: src/outfit.c:1840 src/outfit.c:1876 src/outfit.c:1978 src/outfit.c:2017
-#: src/outfit.c:2052 src/outfit.c:2087 src/outfit.c:2301
+#: src/outfit.c:1284 src/outfit.c:1414 src/outfit.c:1588 src/outfit.c:1792
+#: src/outfit.c:1839 src/outfit.c:1875 src/outfit.c:1976 src/outfit.c:2015
+#: src/outfit.c:2050 src/outfit.c:2085 src/outfit.c:2299
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr "Ausstattung „%s“ fehlt oder hat ungültiges „%s“-Element"
 
-#: src/outfit.c:1390
+#: src/outfit.c:1389
 #, c-format
 msgid ""
 "%s\n"
@@ -84002,12 +83988,12 @@ msgstr ""
 "%.0f%% Durchdringung\n"
 "%.2f SPS [%s]\n"
 
-#: src/outfit.c:1400
+#: src/outfit.c:1399
 #, c-format
 msgid "%.0f Disable/s\n"
 msgstr "%.0f Unfähigmachung/s\n"
 
-#: src/outfit.c:1404
+#: src/outfit.c:1403
 #, c-format
 msgid ""
 "%.1f EPS\n"
@@ -84020,17 +84006,17 @@ msgstr ""
 "%.0f Reichweite\n"
 "%.1f Sekunden Aufhitzung"
 
-#: src/outfit.c:1468
+#: src/outfit.c:1467
 #, c-format
 msgid "Outfit '%s' missing '%s' element"
 msgstr "Ausstattung „%s“ fehlt „%s“-Element"
 
-#: src/outfit.c:1574
+#: src/outfit.c:1573
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
 msgstr "Munition „%s“ hat unbekannten „ai“-Typ „%s“."
 
-#: src/outfit.c:1674
+#: src/outfit.c:1673
 msgid ""
 "\n"
 "#rActivated Outfit#0"
@@ -84038,82 +84024,82 @@ msgstr ""
 "\n"
 "#rAktivierbare Ausstattung#0"
 
-#: src/outfit.c:1683
+#: src/outfit.c:1682
 #, c-format
 msgid "%+.0f CPU"
 msgstr "%+.0f CPU"
 
-#: src/outfit.c:1684
+#: src/outfit.c:1683
 #, c-format
 msgid "%+.0f Thrust"
 msgstr "%+.0f Schub"
 
-#: src/outfit.c:1685
+#: src/outfit.c:1684
 #, c-format
 msgid "%+.0f Turn Rate"
 msgstr "%+.0f Drehung"
 
-#: src/outfit.c:1686
+#: src/outfit.c:1685
 #, c-format
 msgid "%+.0f Maximum Speed"
 msgstr "%+.0f Maximalgeschwindigkeit"
 
-#: src/outfit.c:1687
+#: src/outfit.c:1686
 #, c-format
 msgid "%+.0f Armour"
 msgstr "%+.0f Panzerung"
 
-#: src/outfit.c:1688
+#: src/outfit.c:1687
 #, c-format
 msgid "%+.0f Shield"
 msgstr "%+.0f Schild"
 
-#: src/outfit.c:1689
+#: src/outfit.c:1688
 #, c-format
 msgid "%+.0f Energy"
 msgstr "%+.0f Energie"
 
-#: src/outfit.c:1690
+#: src/outfit.c:1689
 #, c-format
 msgid "%+.d Fuel"
 msgstr "%+.d Treibstoff"
 
-#: src/outfit.c:1691
+#: src/outfit.c:1690
 #, c-format
 msgid "%+.1f Armour Per Second"
 msgstr "%+.1f Panzerung pro Sekunde"
 
-#: src/outfit.c:1692
+#: src/outfit.c:1691
 #, c-format
 msgid "%+.1f Shield Per Second"
 msgstr "%+.1f Schild pro Sekunde"
 
-#: src/outfit.c:1693
+#: src/outfit.c:1692
 #, c-format
 msgid "%+.1f Energy Per Second"
 msgstr "%+.1f Energie pro Sekunde"
 
-#: src/outfit.c:1694
+#: src/outfit.c:1693
 #, c-format
 msgid "%+.0f Absorption"
 msgstr "%+.0f Absorbtion"
 
-#: src/outfit.c:1695
+#: src/outfit.c:1694
 #, c-format
 msgid "%+.0f Cargo"
 msgstr "%+.0f Fracht"
 
-#: src/outfit.c:1696
+#: src/outfit.c:1695
 #, c-format
 msgid "%+.0f %% Crew"
 msgstr "%+.0f %% Crew"
 
-#: src/outfit.c:1697
+#: src/outfit.c:1696
 #, c-format
 msgid "%+.0f %% Mass"
 msgstr "%+.0f %% Masse"
 
-#: src/outfit.c:1762
+#: src/outfit.c:1761
 #, c-format
 msgid ""
 "%s\n"
@@ -84136,7 +84122,7 @@ msgstr ""
 "%.1f EPS\n"
 "%.1f Rumpel"
 
-#: src/outfit.c:1830
+#: src/outfit.c:1829
 #, c-format
 msgid ""
 "%s\n"
@@ -84149,107 +84135,107 @@ msgstr ""
 "%.1f Starts pro Sekunde\n"
 "Fasst %d %s"
 
-#: src/outfit.c:1928
+#: src/outfit.c:1926
 #, c-format
 msgid "Map '%s' has invalid asset '%s'"
 msgstr "Karte „%s“ hat ungültige Mediendaten „%s“"
 
-#: src/outfit.c:1936
+#: src/outfit.c:1934
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr "Karte „%s“ hat ungültigen Sprungpunkt „%s“"
 
-#: src/outfit.c:1943
+#: src/outfit.c:1941
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr "Karte „%s“ hat ungültiges System „%s“"
 
-#: src/outfit.c:2049
+#: src/outfit.c:2047
 msgid "GUI (Graphical User Interface)"
 msgstr "GUI (Grafische Benutzeroberfläche)"
 
-#: src/outfit.c:2116 src/outfit.c:2440 src/slots.c:74 src/space.c:3208
+#: src/outfit.c:2114 src/outfit.c:2438 src/slots.c:74 src/space.c:3200
 #: src/spfx.c:223 src/start.c:74
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr "Defekte „%s“-Datei: enthält keine Elemente"
 
-#: src/outfit.c:2126
+#: src/outfit.c:2124
 #, c-format
 msgid "Outfit in %s has invalid or no name"
 msgstr "Mission in %s hat ungültigen oder keinen Namen"
 
-#: src/outfit.c:2179
+#: src/outfit.c:2177
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr "Ausstattung „%s“ hat einen ungültigen Platztyp."
 
-#: src/outfit.c:2187
+#: src/outfit.c:2185
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr "Ausstattung „%s“ hat einen unbekannten Platztyp „%s“."
 
-#: src/outfit.c:2200
+#: src/outfit.c:2198
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr "Ausstattung „%s“ hat einen unbekannten generellen Node „%s“"
 
-#: src/outfit.c:2226
+#: src/outfit.c:2224
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 "Bei Ausstattung „%s“ fehlt dem Element „specific“ die Eigenschaft „type“"
 
-#: src/outfit.c:2242
+#: src/outfit.c:2240
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr "Ausstattung „%s“ hat Gruppe „%d“, sie sollte im Wertebereich 1-%d sein"
 
-#: src/outfit.c:2253
+#: src/outfit.c:2251
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr "Ausstattung „%s“ ist vom Typ NONE"
 
-#: src/outfit.c:2370
+#: src/outfit.c:2368
 #, c-format
 msgid "Outfit '%s' missing/invalid 'ew_target' element"
 msgstr "Ausstattung „%s“ hat fehlendes/ungültiges „ew_target“-Element"
 
-#: src/outfit.c:2372
+#: src/outfit.c:2370
 #, c-format
 msgid "Outfit '%s' missing/invalid 'lockon' element"
 msgstr "Ausstattung „%s“ hat fehlendes/ungültiges „lockon“-Element"
 
-#: src/outfit.c:2374
+#: src/outfit.c:2372
 #, c-format
 msgid "Outfit '%s' missing/invalid 'arc' element"
 msgstr "Ausstattung „%s“ hat fehlendes/ungültiges „arc“-Element"
 
-#: src/outfit.c:2399
+#: src/outfit.c:2397
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] "Namenskollision! %d Ausstattung haben den Namen „%s“"
 msgstr[1] "Namenskollision! %d Ausstattungen haben den Namen „%s“"
 
-#: src/outfit.c:2406
+#: src/outfit.c:2404
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] "%d Ausstattung geladen"
 msgstr[1] "%d Ausstattungen geladen"
 
-#: src/outfit.c:2433
+#: src/outfit.c:2431
 #, c-format
 msgid "%s file is invalid xml!"
 msgstr "„%s“-Datei ist ungültiges XML!"
 
-#: src/outfit.c:2488
+#: src/outfit.c:2486
 #, c-format
 msgid "Outfit '%s' already has a short description"
 msgstr "Ausstattung „%s“ hat bereits eine kurze Beschreibung"
 
-#: src/outfit.c:2496
+#: src/outfit.c:2494
 #, c-format
 msgid ""
 "%s [%s]\n"
@@ -84258,12 +84244,12 @@ msgstr ""
 "%s [%s]\n"
 "%.0f CPU\n"
 
-#: src/outfit.c:2503
+#: src/outfit.c:2501
 #, c-format
 msgid "%.1f Second Lock-on\n"
 msgstr "%.1f Sekunden Zielerfassung\n"
 
-#: src/outfit.c:2507
+#: src/outfit.c:2505
 #, c-format
 msgid ""
 "Holds %d %s:\n"
@@ -84274,12 +84260,12 @@ msgstr ""
 "%.0f%% Penetration\n"
 "%.2f SPS [%.0f Schaden]\n"
 
-#: src/outfit.c:2516
+#: src/outfit.c:2514
 #, c-format
 msgid "%.1f Disable/s [%.0f Disable]\n"
 msgstr "%.1f Unfähigmachung/s [%.0f Unfähigmachung]\n"
 
-#: src/outfit.c:2520
+#: src/outfit.c:2518
 #, c-format
 msgid ""
 "%.1f Shots Per Second\n"
@@ -84331,57 +84317,57 @@ msgstr "#oHaupt"
 msgid "Solid initialization did not specify correct update function!"
 msgstr "Solid-Initialisierung hat keine gültige Updatefunktion angegeben!"
 
-#: src/pilot.c:889
+#: src/pilot.c:888
 msgid "#oActive cooldown engaged."
 msgstr "#oAktive Abkühlung aktiviert."
 
-#: src/pilot.c:944
+#: src/pilot.c:943
 msgid "#oActive cooldown completed."
 msgstr "#oAktive Abkühlung abgeschlossen."
 
-#: src/pilot.c:947
+#: src/pilot.c:946
 #, c-format
 msgid "#rActive cooldown aborted: %s!"
 msgstr "#rAktive Abkühlung abgebrochen: %s!"
 
-#: src/pilot.c:949
+#: src/pilot.c:948
 msgid "#rActive cooldown aborted!"
 msgstr "#rAktive Abkühlung abgebrochen!"
 
-#: src/pilot.c:1112
+#: src/pilot.c:1111
 #, c-format
 msgid "#%cComm %s>#0 \"%s\""
 msgstr "#%cKomm. %s>#0 „%s“"
 
-#: src/pilot.c:1140
+#: src/pilot.c:1139
 #, c-format
 msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr "#%cRundfunk %s>#0 „%s“"
 
-#: src/pilot.c:2286 src/pilot.c:2313
+#: src/pilot.c:2285 src/pilot.c:2312
 msgid "#rStrayed too far from jump point: jump aborted."
 msgstr "#rZu weit vom Sprungpunkt abgekommen: Sprung abgebrochen."
 
-#: src/pilot.c:2293
+#: src/pilot.c:2292
 msgid "#rAfterburner active: jump aborted."
 msgstr "#rNachbrenner aktiv: Sprung abgebrochen."
 
-#: src/pilot.c:2333
+#: src/pilot.c:2332
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 "Pilot „%s“ versuchte, von Nur-Ausgangs-Sprung von „%s“ nach „%s“ zu springen"
 
-#: src/pilot.c:2660
+#: src/pilot.c:2659
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr "Pilot „%s“ ist bei der Vernüftigkeitsprüfung durchgefallen: %s"
 
-#: src/pilot.c:2733 src/pilot.c:2764
+#: src/pilot.c:2732 src/pilot.c:2763
 msgid "Unable to allocate memory"
 msgstr "Speicher konnte nicht alloziert werden"
 
-#: src/pilot.c:2912
+#: src/pilot.c:2911
 msgid "Creating pilot in system with no jumps nor planets to take off from!"
 msgstr ""
 "Erzeuge Pilot im System ohne Sprünge oder Planeten, von denen man abheben "
@@ -84742,247 +84728,247 @@ msgstr ""
 "Preis für Spielerschiff „%s“ konnte nicht gefunden werden: Schiff existiert "
 "nicht!"
 
-#: src/player.c:889
+#: src/player.c:886
 msgid "Harmless"
 msgstr "Harmlos"
 
-#: src/player.c:890
+#: src/player.c:887
 msgid "Mostly Harmless"
 msgstr "Größtenteils harmlos"
 
-#: src/player.c:891
+#: src/player.c:888
 msgid "Smallfry"
 msgstr "Kleiner Fisch"
 
-#: src/player.c:892
+#: src/player.c:889
 msgid "Average"
 msgstr "Durchschnittlich"
 
-#: src/player.c:893
+#: src/player.c:890
 msgid "Above Average"
 msgstr "Überdurchschnittlich"
 
-#: src/player.c:894
+#: src/player.c:891
 msgid "Major"
 msgstr "Bedeutend"
 
-#: src/player.c:895
+#: src/player.c:892
 msgid "Intimidating"
 msgstr "Einschüchternd"
 
-#: src/player.c:896
+#: src/player.c:893
 msgid "Fearsome"
 msgstr "Bedrohlich"
 
-#: src/player.c:897
+#: src/player.c:894
 msgid "Terrifying"
 msgstr "Furchterregend"
 
-#: src/player.c:898
+#: src/player.c:895
 msgid "Unstoppable"
 msgstr "Unaufhaltsam"
 
-#: src/player.c:899
+#: src/player.c:896
 msgid "Godlike"
 msgstr "Gottgleich"
 
-#: src/player.c:1327
+#: src/player.c:1324
 #, c-format
 msgid "Trying to set player's planet target to invalid ID '%d'"
 msgstr ""
 "Versuchte, das Planetenziel des Spielers zur ungültigen ID „%d“ zu setzen"
 
-#: src/player.c:1377
+#: src/player.c:1374
 msgid "Asteroid targeted, composition: "
 msgstr "Asteroid markiert, Zusammensetzung: "
 
-#: src/player.c:1380
+#: src/player.c:1377
 #, c-format
 msgid "%s, quantity: %i"
 msgstr "%s, Menge: %i"
 
-#: src/player.c:1385
+#: src/player.c:1382
 msgid "Asteroid targeted"
 msgstr "Asterioid markiert"
 
-#: src/player.c:1453
+#: src/player.c:1450
 msgid "#rThere are no planets to land on."
 msgstr "#rEs gibt keine Planeten, auf die gelandet werden kann."
 
-#: src/player.c:1490
+#: src/player.c:1487
 msgid "#rDocking stabilizers malfunctioning, cannot land."
 msgstr "#rDie Andockstabilisatoren sind defekt, Landung nicht möglich."
 
-#: src/player.c:1497
+#: src/player.c:1494
 msgid "#rYou can't land here."
 msgstr "#rDu kannst hier nicht landen."
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1515
+#: src/player.c:1512
 #, c-format
 msgid "#oReady to land on %s."
 msgstr "#oBereit zum Landen auf %s."
 
-#: src/player.c:1525
+#: src/player.c:1522
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr "#rDu bist zu weit weg, um auf %s zu landen."
 
-#: src/player.c:1530
+#: src/player.c:1527
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr "#rDu bewegst dich zu schnell, um auf %s zu landen."
 
-#: src/player.c:1569
+#: src/player.c:1566
 msgid "Player has landing permission, but no valid planet targeted."
 msgstr "Spieler hat Landeerlaubnis, aber keinen gültigen Zielplaneten."
 
-#: src/player.c:1580
+#: src/player.c:1577
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr "#%c%s>#0 Landeerlaubnis entzogen."
 
-#: src/player.c:1607
+#: src/player.c:1604
 msgid "You are not allowed to land at this moment."
 msgstr "Du hast im Moment nicht die Erlaubnis, hier zu landen."
 
-#: src/player.c:1621
+#: src/player.c:1618
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 "Versuchte, das Hyperraumziel des Spielers zur ungültigen ID „%d“ zu setzen"
 
-#: src/player.c:1724
+#: src/player.c:1721
 #, c-format
 msgid "#rReceiving hail! Press %s to respond."
 msgstr "#rFunknachricht wird empfangen! Drücke %s zum Antworten."
 
-#: src/player.c:1779
+#: src/player.c:1776
 msgid "#rAborting hyperspace sequence."
 msgstr "#rHyperraumsequenz abgebrochen."
 
-#: src/player.c:1786
+#: src/player.c:1783
 msgid "#rYou are too far from a jump point to initiate hyperspace."
 msgstr ""
 "#rDu bist zu weit von einem Sprungpunkt entfernt, um in den Hyperraum "
 "überzugehen."
 
-#: src/player.c:1788 src/player_autonav.c:84
+#: src/player.c:1785 src/player_autonav.c:85
 msgid "#rHyperspace drive is offline."
 msgstr "#rHyperraumantrieb ist inaktiv."
 
-#: src/player.c:1790
+#: src/player.c:1787
 msgid "#rYou do not have enough fuel to hyperspace jump."
 msgstr "#rDu hast nicht genügend Treibstoff für einen Hyperraumsprung."
 
-#: src/player.c:1792
+#: src/player.c:1789
 msgid "#oPreparing for hyperspace."
 msgstr "#oVorbereitung für den Hyperraum."
 
-#: src/player.c:1868
+#: src/player.c:1865
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr "#oAutonav kam im System „%s“ an."
 
-#: src/player.c:1873
+#: src/player.c:1870
 #, c-format
 msgid "#oAutonav continuing until destination (%d jump left)."
 msgid_plural "#oAutonav continuing until destination (%d jumps left)."
 msgstr[0] "#oAutonav wird bis zum Ziel fortfahren (%d Sprung verbleibend)."
 msgstr[1] "#oAutonav wird bis zum Ziel fortfahren (%d Sprünge verbleibend)."
 
-#: src/player.c:2103
+#: src/player.c:2100
 msgid "Aborting screenshot"
 msgstr "Bildschirmfoto abgebrochen"
 
 #. in case the crap system breaks :)
-#: src/player.c:2116
+#: src/player.c:2113
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr "Du hast die maximale Anzahl an Bildschirmfotos (999) erreicht"
 
 #. now proceed to take the screenshot
-#: src/player.c:2121
+#: src/player.c:2118
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr "Bildschirmfoto machen [%d03d] …"
 
-#: src/player.c:2155
+#: src/player.c:2152
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr "#r%s ist außerhalb des Kommunikationsradius, Kontakt nicht möglich."
 
-#: src/player.c:2179 src/player.c:2202
+#: src/player.c:2176 src/player.c:2199
 msgid "#rNo target selected to hail."
 msgstr "#rKein aktives Ziel zum Anfunken."
 
-#: src/player.c:2230
+#: src/player.c:2233
 msgid "#rYou haven't been hailed by any pilots."
 msgstr "#rDu wurdest von keinem Piloten angefunkt."
 
-#: src/player.c:2251
+#: src/player.c:2244
 msgid "#oMouse flying enabled."
 msgstr "#oMausflug aktiviert."
 
-#: src/player.c:2257
+#: src/player.c:2250
 msgid "#rMouse flying disabled."
 msgstr "#rMausflug deaktiviert."
 
-#: src/player.c:2491
+#: src/player.c:2480
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr "Spielerschiff „%s“ nicht im Stack gefunden"
 
-#: src/player.c:2927
+#: src/player.c:2905
 msgid "Escort is undeployed"
 msgstr "Geleit nicht stationiert"
 
-#: src/player.c:3145
+#: src/player.c:3123
 msgid "Found mission cargo without associated mission."
 msgstr "Missionsfracht ohne passende Mission gefunden."
 
-#: src/player.c:3146
+#: src/player.c:3124
 msgid "Please reload save game to remove the dead cargo."
 msgstr "Bitte lade den Spielstand erneut, um die tote Fracht zu entfernen."
 
-#: src/player.c:3296
+#: src/player.c:3274
 msgid "Malformed time in save game!"
 msgstr "Defekte Zeit im Spielstand!"
 
-#: src/player.c:3330
+#: src/player.c:3308
 #, c-format
 msgid "Outfit '%s' was saved but does not exist!"
 msgstr "Ausstattung „%s“ wurde gespeichert, aber existiert nicht!"
 
-#: src/player.c:3336
+#: src/player.c:3314
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr "Ausstattung „%s“ wurde ohne Mengenangabe gespeichert!"
 
-#: src/player.c:3356
+#: src/player.c:3334
 msgid "Player ship does not exist!"
 msgstr "Spielerschiff existiert nicht!"
 
-#: src/player.c:3359
+#: src/player.c:3337
 msgid "Player has no other ships, giving starting ship."
 msgstr "Spieler hat keine anderen Schiffe, das Startschiff wird vergeben."
 
-#: src/player.c:3370
+#: src/player.c:3348
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr "Schiff „%s“ wird an Spieler gegeben."
 
-#: src/player.c:3376
+#: src/player.c:3354
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 "Etwas ist fürchterlich schief gelaufen, der Spieler existiert nicht nach dem "
 "Laden …"
 
-#: src/player.c:3386
+#: src/player.c:3364
 msgid "Save has no time information, setting to start information."
 msgstr ""
 "Spielstand hat keine Zeitinformation, sie wird zur Startinformation gesetzt."
 
-#: src/player.c:3395
+#: src/player.c:3373
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
@@ -84991,40 +84977,40 @@ msgstr ""
 "Spieler startet auf nicht existentem oder ungültigem Planeten „%s“, es wird "
 "versucht, stattdessen einen geeigneten zu finden."
 
-#: src/player.c:3425
+#: src/player.c:3403
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr "Ein Planet, der Kriterien %d erfüllt, konnte nicht gefunden werden."
 
-#: src/player.c:3429
+#: src/player.c:3407
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr ""
 "Keinen geeigneten Planeten gefunden. Ein zufälliger Planet wird ausgewählt."
 
-#: src/player.c:3481
+#: src/player.c:3459
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 "Mission „%s“ scheint nicht mehr zu existieren, sie wird vom Spielstand "
 "entfernt."
 
-#: src/player.c:3509
+#: src/player.c:3487
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 "Ereignis „%s“ scheint nicht mehr zu existieren, es wird vom Spielstand "
 "entfernt."
 
-#: src/player.c:3537
+#: src/player.c:3515
 msgid "License node is missing name attribute."
 msgstr "Lizenz-Node fehlt das „name“-Attribut."
 
-#: src/player.c:3568
+#: src/player.c:3546
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr "Geleit hat ungültigen Typ „%s“."
 
-#: src/player.c:3592
+#: src/player.c:3570
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
@@ -85033,38 +85019,38 @@ msgstr ""
 "Ausstattung „%s“ passt nicht auf zugewiesenem Platz für Spielerpilot „%s“, "
 "wird zum Vorrat hinzugefügt."
 
-#: src/player.c:3600
+#: src/player.c:3578
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 "Ausstattung „%s“ passt nicht auf Spielerpilot „%s“, wird zum Vorrat "
 "hinzugefügt."
 
-#: src/player.c:3622
+#: src/player.c:3600
 msgid "Empty ship slot node found, skipping."
 msgstr "Leerer Schiffs-Platz-Node gefunden, wird übersprungen."
 
-#: src/player.c:3690
+#: src/player.c:3668
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr "Spielerschiff „%s“ nicht gefunden!"
 
-#: src/player.c:3740
+#: src/player.c:3718
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 "Ausstattungs-Platz ist außerhalb des Bereichs, wird nicht zum Schiff "
 "hinzugefügt."
 
-#: src/player.c:3753 src/player.c:3766
+#: src/player.c:3731 src/player.c:3744
 msgid "Outfit slot out of range, not adding."
 msgstr "Ausstattung ist außerhalb des Bereichs, wird nicht hinzugefügt."
 
-#: src/player.c:3783
+#: src/player.c:3761
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr "Unbekannte Ware „%s“ entdeckt, wird entfernt."
 
-#: src/player.c:3807
+#: src/player.c:3785
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
@@ -85073,7 +85059,7 @@ msgstr ""
 "Spielerschiff „%s“ hat die Vernünftigkeitüberprüfung nicht bestanden, es "
 "werden alle Ausstattungen entfernt und zum Vorat hinzugefügt."
 
-#: src/player.c:3850
+#: src/player.c:3828
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
@@ -85082,22 +85068,22 @@ msgstr ""
 "Spielerschiff „%s“ hat unbekannten Node „%s“ in „weaponsets“ („weaponset“ "
 "erwartet)."
 
-#: src/player.c:3858
+#: src/player.c:3836
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr "Spielerschiff „%s“ hat fehlendes „id“-Tag für Waffensatz."
 
-#: src/player.c:3862
+#: src/player.c:3840
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr "Spielerschiff „%s“ hat ungültige Waffensatz-ID „%d“ (Max. %d)."
 
-#: src/player.c:3878
+#: src/player.c:3856
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr "Spielerschiff „%s“ hat fehlendes „type“-Tag für Waffensatz."
 
-#: src/player.c:3891
+#: src/player.c:3869
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
@@ -85105,77 +85091,77 @@ msgstr ""
 "Spielerschiff „%s“ hat unbekannten „weaponset“-Child-Node „%s“ („weapon“ "
 "erwartet)."
 
-#: src/player.c:3899
+#: src/player.c:3877
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr "Spielerschiff „%s“ hat fehlendes „level“-Tag für Waffensatzwaffe."
 
-#: src/player.c:3904
+#: src/player.c:3882
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr "Spielerschiff „%s“ hat ungültige Waffen-ID „%d“ (Max. %d)."
 
-#: src/player_autonav.c:79
+#: src/player_autonav.c:80
 msgid "#rNot enough fuel to jump for autonav."
 msgstr "#rNicht genügend Treibstoff für Autonav, um zu springen."
 
-#: src/player_autonav.c:110
+#: src/player_autonav.c:111
 #, fuzzy
 #| msgid "#oAutonav initialized."
 msgid "#oAutonav: initialized."
 msgstr "#oAutonav gestartet."
 
-#: src/player_autonav.c:173
+#: src/player_autonav.c:174
 msgid "position"
 msgstr "Position"
 
-#: src/player_autonav.c:212
+#: src/player_autonav.c:213
 #, fuzzy, c-format
 #| msgid "Quit following %s!"
 msgid "#oAutonav: following %s."
 msgstr "Hör auf, %s zu verfolgen!"
 
-#: src/player_autonav.c:272
+#: src/player_autonav.c:273
 #, fuzzy, c-format
 #| msgid "#rAutonav aborted: %s!"
 msgid "#rAutonav: aborted due to '%s'!"
 msgstr "#rAutonav abgebrochen: %s!"
 
-#: src/player_autonav.c:274
+#: src/player_autonav.c:275
 #, fuzzy
 #| msgid "#rAutonav aborted!"
 msgid "#rAutonav: aborted!"
 msgstr "#rAutonav abgebrochen!"
 
-#: src/player_autonav.c:283
+#: src/player_autonav.c:284
 #, fuzzy
 #| msgid "#oAborting hyperspace sequence."
 msgid "#oAutonav: aborting hyperspace sequence."
 msgstr "#oHyperraumsequenz abgebrochen."
 
-#: src/player_autonav.c:368
+#: src/player_autonav.c:369
 #, fuzzy
 #| msgid "#oAutonav arrived at position."
 msgid "#oAutonav: arrived at position."
 msgstr "#oAutonav an Position angekommen."
 
-#: src/player_autonav.c:378
+#: src/player_autonav.c:379
 #, fuzzy, c-format
 #| msgid "#oAutonav arrived at #%c%s#0."
 msgid "#oAutonav: arrived at #%c%s#0."
 msgstr "#oAutonav kam an bei #%c%s#0."
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
-#: src/player_autonav.c:393
+#: src/player_autonav.c:394
 #, c-format
 msgid "#oAutonav: following target  %s has been lost."
 msgstr ""
 
-#: src/player_autonav.c:590
+#: src/player_autonav.c:591
 msgid "Target changed to current system"
 msgstr "Ziel geändert zu aktuellem System"
 
-#: src/player_autonav.c:594
+#: src/player_autonav.c:595
 msgid "Not enough fuel for autonav to continue"
 msgstr "Nicht genügend Treibstoff für Autonav, um fortzufahren"
 
@@ -85184,7 +85170,7 @@ msgstr "Nicht genügend Treibstoff für Autonav, um fortzufahren"
 msgid "GUI '%s' does not exist as a file: '%s' not found."
 msgstr "GUI „%s“ existiert nicht als Datei: „%s“ nicht gefunden."
 
-#: src/save.c:130
+#: src/save.c:131
 msgid "Trying to save game data"
 msgstr "Versuche, Spieldaten zu speichern"
 
@@ -85197,7 +85183,7 @@ msgstr "Fehler beim Erstellen des Spielstandsverzeichnisses „%ssaves“."
 msgid "Aborting save..."
 msgstr "Speichern abbrechen …"
 
-#: src/save.c:159
+#: src/save.c:160
 msgid ""
 "Failed to write saved game!  You'll most likely have to restore it by "
 "copying your backup saved game over your current saved game."
@@ -85211,82 +85197,82 @@ msgstr ""
 msgid "Ship %s does not exist"
 msgstr "Schiff %s existiert nicht"
 
-#: src/ship.c:171
+#: src/ship.c:170
 msgid "Yacht"
 msgstr "Yacht"
 
-#: src/ship.c:173
+#: src/ship.c:172
 msgid "Luxury Yacht"
 msgstr "Luxusyacht"
 
-#: src/ship.c:175
+#: src/ship.c:174
 msgid "Cruise Ship"
 msgstr "Kreuzer"
 
-#: src/ship.c:179
+#: src/ship.c:178
 msgid "Courier"
 msgstr "Kurier"
 
-#: src/ship.c:181
+#: src/ship.c:180
 msgid "Armoured Transport"
 msgstr "Gepanzerter Transport"
 
-#: src/ship.c:183
+#: src/ship.c:182
 msgid "Freighter"
 msgstr "Frachter"
 
-#: src/ship.c:185
+#: src/ship.c:184
 msgid "Bulk Carrier"
 msgstr "Großträger"
 
-#: src/ship.c:189
+#: src/ship.c:188
 msgid "Scout"
 msgstr "Kundschafter"
 
-#: src/ship.c:193
+#: src/ship.c:192
 msgid "Bomber"
 msgstr "Bomber"
 
-#: src/ship.c:195
+#: src/ship.c:194
 msgid "Corvette"
 msgstr "Korvette"
 
-#: src/ship.c:197
+#: src/ship.c:196
 msgid "Destroyer"
 msgstr "Zerstörer"
 
-#: src/ship.c:199
+#: src/ship.c:198
 msgid "Cruiser"
 msgstr "Kreuzer"
 
-#: src/ship.c:201
+#: src/ship.c:200
 msgid "Carrier"
 msgstr "Träger"
 
-#: src/ship.c:209
+#: src/ship.c:208
 msgid "Mothership"
 msgstr "Mutterschiff"
 
-#: src/ship.c:285
+#: src/ship.c:284
 msgid "Negative ship base price!"
 msgstr "Negativer Schiffbasispreis!"
 
-#: src/ship.c:406
+#: src/ship.c:405
 #, c-format
 msgid "Unable to create ship '%s' targeting surface."
 msgstr "Schiffziel-Surface „%s“ konnte nicht erzeugt werden."
 
-#: src/ship.c:549
+#: src/ship.c:548
 #, c-format
 msgid "Failed to get base path of '%s'."
 msgstr "Basispfad von „%s“ konnte nicht geholt werden."
 
-#: src/ship.c:561
+#: src/ship.c:560
 #, c-format
 msgid "Ship '%s' does not have an engine sprite (%s)."
 msgstr "Schiff „%s“ hat keinen Engine-Sprite (%s)."
 
-#: src/ship.c:595
+#: src/ship.c:594
 #, c-format
 msgid ""
 "%s xml collision polygon does not exist!\n"
@@ -85302,32 +85288,32 @@ msgstr ""
 "                Diese Dateien können in Naevs „artwork“-Repository gefunden "
 "werden."
 
-#: src/ship.c:681
+#: src/ship.c:680
 #, c-format
 msgid "Ship '%s' has implicit slot size, setting to '%s'"
 msgstr "Schiff „%s“ hat implizite Platzgröße, wird zu „%s“ gesetzt"
 
-#: src/ship.c:719
+#: src/ship.c:718
 #, c-format
 msgid "Ship '%s' has default outfit '%s' which does not exist."
 msgstr "Schiff „%s“ hat Standardausstattung „%s“, welche nicht existiert."
 
-#: src/ship.c:729
+#: src/ship.c:728
 #, c-format
 msgid "Ship '%s' has required slot without a default outfit."
 msgstr "Schiff „%s“ hat einen benötigten Platz ohne eine Standardausstattung."
 
-#: src/ship.c:760
+#: src/ship.c:759
 #, c-format
 msgid "Ship in %s has invalid or no name"
 msgstr "Schiff in %s hat ungültigen oder keinen Namen"
 
-#: src/ship.c:784
+#: src/ship.c:783
 #, c-format
 msgid "Ship '%s': GFX element is NULL"
 msgstr "Schif „%s“: GFX-Element ist NULL"
 
-#: src/ship.c:806
+#: src/ship.c:805
 #, c-format
 msgid ""
 "Ship '%s': the number of collision polygons is wrong.\n"
@@ -85336,62 +85322,62 @@ msgstr ""
 "Schiff „%s“: Die Anzahl der Kollisionspolygone ist falsch.\n"
 "                     npolygon = %i und sx*sy = %i"
 
-#: src/ship.c:819
+#: src/ship.c:818
 #, c-format
 msgid "Ship '%s': gfx_space element is NULL"
 msgstr "Schif „%s“: gfx_space-Element ist NULL"
 
-#: src/ship.c:843
+#: src/ship.c:842
 #, c-format
 msgid "Ship '%s': gfx_engine element is NULL"
 msgstr "Schif „%s“: gfx_engine-Element ist NULL"
 
-#: src/ship.c:866
+#: src/ship.c:865
 #, c-format
 msgid "Ship '%s': gfx_comm element is NULL"
 msgstr "Schif „%s“: gfx_comm-Element ist NULL"
 
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:916
+#: src/ship.c:915
 #, c-format
 msgid "Ship '%s' has unknown movement node '%s'."
 msgstr "Schiff „%s“ hat unbekannten „movement“-Node „%s“."
 
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:932
+#: src/ship.c:931
 #, c-format
 msgid "Ship '%s' has unknown health node '%s'."
 msgstr "Schiff „%s“ hat unbekannten „health“-Node „%s“."
 
 #. All the xmlr_ stuff have continue cases.
-#: src/ship.c:947
+#: src/ship.c:946
 #, c-format
 msgid "Ship '%s' has unknown characteristic node '%s'."
 msgstr "Schiff „%s“ hat unbekannten „characteristic“-Node „%s“."
 
-#: src/ship.c:963
+#: src/ship.c:962
 #, c-format
 msgid "Ship '%s' has unknown slot node '%s'."
 msgstr "Schiff „%s“ hat unbekannten „slot“-Node „%s“."
 
-#: src/ship.c:1002
+#: src/ship.c:1001
 #, c-format
 msgid "Ship '%s' has unknown stat '%s'."
 msgstr "Schiff „%s“ hat unbekannten Stat „%s“."
 
-#: src/ship.c:1026
+#: src/ship.c:1025
 #, c-format
 msgid "Ship '%s' has unknown node '%s'."
 msgstr "Schiff „%s“ hat unbekannten Node „%s“."
 
 #. Convert to rad.
 #. ship validator
-#: src/ship.c:1034
+#: src/ship.c:1033
 #, c-format
 msgid "Ship '%s' missing '%s' element"
 msgstr "Schiff „%s“ fehlt das „%s“-Element"
 
-#: src/ship.c:1122
+#: src/ship.c:1121
 #, c-format
 msgid "Loaded %d Ship"
 msgid_plural "Loaded %d Ships"
@@ -85800,45 +85786,45 @@ msgid "Unable to find jump in point for '%s' in '%s': not connected"
 msgstr ""
 "Sprungpunkt für „%s“ in „%s“ konnte nicht gefunden werden: nicht verbunden"
 
-#: src/space.c:849
+#: src/space.c:845
 #, c-format
 msgid "System '%s' not found in stack"
 msgstr "System „%s“ nicht im Stack gefunden"
 
-#: src/space.c:910
+#: src/space.c:906
 #, c-format
 msgid "Planet '%s' not found in planetname stack"
 msgstr "Planet „%s“ nicht im Planetennamens-Stack gefunden"
 
-#: src/space.c:926
+#: src/space.c:922
 msgid "Trying to find NULL planet..."
 msgstr "Versuche, einen NULL-Planeten zu finden …"
 
-#: src/space.c:934
+#: src/space.c:930
 #, c-format
 msgid "Planet '%s' not found in the universe"
 msgstr "Planet „%s“ nicht im Universum gefunden"
 
-#: src/space.c:949
+#: src/space.c:945
 #, c-format
 msgid "Planet index '%d' out of range (max %d)"
 msgstr "Planetenindex „%d“ außerhalb des Wertebereichs (Max. %d)"
 
-#: src/space.c:1067
+#: src/space.c:1059
 msgid "Trying to find NULL jump point..."
 msgstr "Versuche, einen NULL-Sprungpunkt zu finden …"
 
-#: src/space.c:1077
+#: src/space.c:1069
 #, c-format
 msgid "Jump point '%s' not found in %s"
 msgstr "Sprungpunkt „%s“ nicht gefunden in %s"
 
-#: src/space.c:1098
+#: src/space.c:1090
 #, c-format
 msgid "Jump point to '%s' not found in %s"
 msgstr "Sprungpunkt nach „%s“ nicht gefunden in %s"
 
-#: src/space.c:1145
+#: src/space.c:1137
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'create'."
@@ -85846,7 +85832,7 @@ msgstr ""
 "Lua-Spawn-Skript für Fraktion „%s“ fehlt der obligatorische Einstiegspunkt "
 "„create“."
 
-#: src/space.c:1160
+#: src/space.c:1152
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'."
@@ -85857,74 +85843,74 @@ msgstr ""
 #. f, [arg,], max
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:1172
+#: src/space.c:1164
 #, c-format
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr "Lua-Spawn-Skript für Fraktion „%s“: %s"
 
-#: src/space.c:1180 src/space.c:4338
+#: src/space.c:1172 src/space.c:4330
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
 "Lua-Spawn-Skript für Fraktion „%s“ scheitert daran, Timer-Wert zurückzugeben."
 
-#: src/space.c:1192
+#: src/space.c:1184
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a table)."
 msgstr ""
 "Lua-Spawn-Skript für Fraktion „%s“ gibt ungültige Daten (keine Tabelle) "
 "zurück."
 
-#: src/space.c:1200
+#: src/space.c:1192
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a pilot)."
 msgstr ""
 "Lua-Spawn-Skript für Fraktion „%s“ gibt ungültige Daten (kein Pilot) zurück."
 
-#: src/space.c:1213
+#: src/space.c:1205
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a number)."
 msgstr ""
 "Lua-Spawn-Skript für Fraktion „%s“ gibt ungültige Daten (keine Zahl) zurück."
 
-#: src/space.c:1220
+#: src/space.c:1212
 #, c-format
 msgid "Lua spawn script for faction '%s' actually spawned a '%s' pilot."
 msgstr ""
 "Lua-Spawn-Skript für Fraktion „%s“ hat in Wahrheit einen „%s“-Piloten "
 "gespawnt."
 
-#: src/space.c:1350
+#: src/space.c:1342
 #, c-format
 msgid "You discovered #%c%s#0."
 msgstr "Du hast #%c%s#0 entdeckt."
 
-#: src/space.c:1367
+#: src/space.c:1359
 msgid "You discovered a Jump Point."
 msgstr "Du hast einen Sprungpunkt entdeckt."
 
-#: src/space.c:1500
+#: src/space.c:1492
 msgid "Cannot reinit system if there is no system previously loaded"
 msgstr ""
 "System kann nicht erneut initialisiert werden, wenn es kein zuvor geladenes "
 "System gibt"
 
-#: src/space.c:1507
+#: src/space.c:1499
 #, c-format
 msgid "System %s not found in stack"
 msgstr "System %s nicht im Stack gefunden"
 
-#: src/space.c:1511
+#: src/space.c:1503
 #, c-format
 msgid "#oEntering System %s on %s."
 msgstr "#oSystem %s bei %s betreten."
 
-#: src/space.c:1513
+#: src/space.c:1505
 #, c-format
 msgid "#rWARNING - Volatile nebula detected in %s! Taking damage!"
 msgstr "#rACHTUNG – Volatilen Nebel erfasst in %s! Schaden erhalten!"
 
-#: src/space.c:1745
+#: src/space.c:1737
 #, c-format
 msgid ""
 "Failed to load landing file: %s\n"
@@ -85936,56 +85922,56 @@ msgstr ""
 "Wahrscheinlich hat die Luadatei eine fehlerhafte Syntax, bitte überprüfen"
 
 #. error has occurred
-#: src/space.c:1892
+#: src/space.c:1884
 #, c-format
 msgid "Landing: '%s' : %s"
 msgstr "Landen: „%s“: %s"
 
-#: src/space.c:1902
+#: src/space.c:1894
 #, c-format
 msgid "%s: %s (%s) -> return parameter 2 is not a string!"
 msgstr "%s: %s (%s) -> Rückgabeparameter 2 ist kein String!"
 
-#: src/space.c:1903
+#: src/space.c:1895
 msgid "Invalid land message"
 msgstr "Ungültige Landenachricht"
 
-#: src/space.c:1912
+#: src/space.c:1904
 #, c-format
 msgid "%s: %s (%s) -> return parameter 4 is not a string!"
 msgstr "%s: %s (%s) -> Rückgabeparameter 4 ist kein String!"
 
-#: src/space.c:1913
+#: src/space.c:1905
 msgid "Invalid bribe message"
 msgstr "Ungültige Bestechungsnachricht"
 
-#: src/space.c:1919
+#: src/space.c:1911
 #, c-format
 msgid "%s: %s (%s) -> return parameter 5 is not a string!"
 msgstr "%s: %s (%s) -> Rückgabeparameter 5 ist kein String!"
 
-#: src/space.c:1920
+#: src/space.c:1912
 msgid "Invalid bribe ack message"
 msgstr "Ungültige Bestechungsbestätigungsnachricht"
 
-#: src/space.c:1926
+#: src/space.c:1918
 #, c-format
 msgid "%s: %s (%s) -> return parameter 3 is not a number or string or nil!"
 msgstr ""
 "%s: %s (%s) -> Rückgabeparameter 3 ist weder Zahl, noch String, noch nil!"
 
-#: src/space.c:2090
+#: src/space.c:2082
 #, c-format
 msgid "Planet '%s' has landing function '%s' which is not found in '%s'."
 msgstr ""
 "Planet „%s“ hat Landefunktion „%s“, welche nicht in „%s“ gefunden wurde."
 
-#: src/space.c:2114
+#: src/space.c:2106
 #, c-format
 msgid "Planet '%s' has unknown services tag '%s'"
 msgstr "Planet „%s“ hat unbekanntes „services“-Tag „%s“"
 
-#: src/space.c:2158
+#: src/space.c:2150
 #, c-format
 msgid "Unknown node '%s' in planet '%s'"
 msgstr "Unbekannter Node „%s“ in Planet „%s“"
@@ -85993,69 +85979,69 @@ msgstr "Unbekannter Node „%s“ in Planet „%s“"
 #.
 #. * verification
 #.
-#: src/space.c:2164
+#: src/space.c:2156
 #, c-format
 msgid "Planet '%s' missing '%s' element"
 msgstr "Planet „%s“ fehlt „%s“-Element"
 
-#: src/space.c:2313
+#: src/space.c:2305
 #, c-format
 msgid "Unable to remove planet '%s' from NULL system."
 msgstr "Planet „%s“ konnte nicht von NULL-System entfernt werden."
 
-#: src/space.c:2325
+#: src/space.c:2317
 #, c-format
 msgid "Planet '%s' not found in system '%s' for removal."
 msgstr "Planet „%s“ nicht im System „%s“ für die Entfernung gefunden."
 
-#: src/space.c:2347
+#: src/space.c:2339
 #, c-format
 msgid "Unable to find planet '%s' and system '%s' in planet<->system stack."
 msgstr ""
 "Planet „%s“ und System „%s“ konnten nicht im „planet<->system“-Stack "
 "gefunden werden."
 
-#: src/space.c:2412
+#: src/space.c:2404
 #, c-format
 msgid "Unable to remove jump point '%s' from NULL system."
 msgstr "Sprungpunkt „%s“ konnte nicht von NULL-System entfernt werden."
 
-#: src/space.c:2424
+#: src/space.c:2416
 #, c-format
 msgid "Jump point '%s' not found in system '%s' for removal."
 msgstr "Sprungpunkt „%s“ nicht im System „%s“ für die Entfernung gefunden."
 
-#: src/space.c:2623
+#: src/space.c:2615
 #, c-format
 msgid "Unknown node '%s' in star system '%s'"
 msgstr "Unbekannter Node „%s“ im Sternensystem „%s“"
 
-#: src/space.c:2626
+#: src/space.c:2618
 #, c-format
 msgid "Star System '%s' missing '%s' element"
 msgstr "Sternensystem „%s“ fehlt „%s“-Element"
 
-#: src/space.c:2627
+#: src/space.c:2619
 #, c-format
 msgid "Star System '%s' missing 'name' tag"
 msgstr "Sternensystem „%s“ fehlt das „name“-Tag"
 
-#: src/space.c:2717 src/space.c:2809
+#: src/space.c:2709 src/space.c:2801
 #, c-format
 msgid "JumpPoint node for system '%s' has no target attribute."
 msgstr "JumpPoint-Node für System „%s“ hat kein „target“-Attribut."
 
-#: src/space.c:2722 src/space.c:2814
+#: src/space.c:2714 src/space.c:2806
 #, c-format
 msgid "JumpPoint node for system '%s' has invalid target '%s'."
 msgstr "JumpPoint-Node für System „%s“ hat ungültiges Ziel „%s“."
 
-#: src/space.c:2734 src/space.c:2827
+#: src/space.c:2726 src/space.c:2819
 #, c-format
 msgid "Star System '%s' has duplicate jump point to '%s'."
 msgstr "Sternensystem „%s“ hat doppelten Sprungpunkt nach „%s“."
 
-#: src/space.c:2872
+#: src/space.c:2864
 #, c-format
 msgid ""
 "JumpPoint in system '%s' is missing pos element but does not have autopos "
@@ -86064,59 +86050,59 @@ msgstr ""
 "Sprungpunkt für System „%s“ fehlt das „pos“-Element, hat aber kein „autopos“-"
 "Flag."
 
-#: src/space.c:2905
+#: src/space.c:2897
 #, c-format
 msgid "System '%s' was not found in the stack for some reason"
 msgstr "System „%s“ wurde nicht im Stack aus irgendeinem Grund gefunden"
 
-#: src/space.c:2990
+#: src/space.c:2982
 #, c-format
 msgid "Asteroid field in %s has no position."
 msgstr "Asteroidenfeld in %s hat keine Position."
 
-#: src/space.c:2993
+#: src/space.c:2985
 #, c-format
 msgid "Asteroid field in %s has no radius."
 msgstr "Asteroidenfeld in %s hat keinen Radius."
 
-#: src/space.c:3058
+#: src/space.c:3050
 #, c-format
 msgid "Asteroid exclusion in %s has no position."
 msgstr "Asteroidenausschließung in %s hat keine Position."
 
-#: src/space.c:3061
+#: src/space.c:3053
 #, c-format
 msgid "Asteroid exclusion in %s has no radius."
 msgstr "Asteroidenausschließung in %s hat keinen Radius."
 
-#: src/space.c:3201
+#: src/space.c:3193
 #, c-format
 msgid "Malformed '%s' file: missing root element 'Asteroid_types'"
 msgstr "Defekte „%s“-Datei: fehlendes Wurzelelement „Asteroid_types“"
 
-#: src/space.c:3264
+#: src/space.c:3256
 msgid "Asteroid type's commodity lacks name or quantity."
 msgstr "Ware des Asteriodenttyps fehlt Name oder Menge."
 
-#: src/space.c:3272
+#: src/space.c:3264
 msgid "Asteroid type has no gfx associated."
 msgstr "Asteroidentyp hat kein gfx zugewiesen."
 
-#: src/space.c:3368
+#: src/space.c:3360
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
 msgstr[0] "%d Sternensystem geladen"
 msgstr[1] "%d Sternensysteme geladen"
 
-#: src/space.c:3369
+#: src/space.c:3361
 #, c-format
 msgid "       with %d Planet"
 msgid_plural "       with %d Planets"
 msgstr[0] "       mit %d Planet"
 msgstr[1] "       mit %d Planeten"
 
-#: src/space.c:3770 src/space.c:3814
+#: src/space.c:3762 src/space.c:3806
 msgid "Unknown marker type."
 msgstr "Unbekannter Markertyp."
 
@@ -86125,7 +86111,7 @@ msgstr "Unbekannter Markertyp."
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:4330
+#: src/space.c:4322
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr "Lua-Verringerungsskript für Fraktion „%s“: %s"
@@ -86558,6 +86544,24 @@ msgstr "Ungültiger WEAPON_LAYER angegeben"
 #: src/weapon.c:1797
 msgid "Trying to destroy weapon not found in stack!"
 msgstr "Versuch, eine Waffe, die nicht im Stack ist, zu zerstören!"
+
+#~ msgid "Failed to open ndata."
+#~ msgstr "Konnte ndata nicht öffnen."
+
+#~ msgid "Error deleting file %s"
+#~ msgstr "Fehler beim Löschen der Datei %s"
+
+#~ msgid "Can not rename non existent file %s"
+#~ msgstr "Nicht existente Datei %s kann nicht umbenannt werden"
+
+#~ msgid "Can not rename to NULL file name"
+#~ msgstr "Es kann nicht zu einem NULL-Dateinamen umbenannt werden"
+
+#~ msgid "Error renaming %s to %s. %s already exists"
+#~ msgstr "Fehler beim Umbenennen von %s nach %s. %s existiert bereits"
+
+#~ msgid "Error renaming %s to %s"
+#~ msgstr "Fehler beim Umbenennen von %s nach %s"
 
 #~ msgid "addShips: Error, ship list is not a fleet or table of fleets!"
 #~ msgstr ""

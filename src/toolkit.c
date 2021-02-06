@@ -8,8 +8,6 @@
  * @brief Handles windows and widgets.
  */
 
-/* TODO: better rendering with static VBO and smooth corners */
-
 /** @cond */
 #include <stdarg.h>
 

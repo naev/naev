@@ -18,6 +18,7 @@
 #include "naev.h"
 /** @endcond */
 
+#include "array.h"
 #include "conf.h"
 #include "gui.h"
 #include "log.h"
@@ -394,7 +395,9 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
 
       if (cachefile != NULL) {
          /* Cache newly-generated transparency map. */
-         nfile_dirMakeExist( nfile_cachePath(), "collisions/" );
+         char dirpath[PATH_MAX];
+	 nsnprintf( dirpath, sizeof(dirpath), "%s/%s", nfile_cachePath(), "collisions/" );
+         nfile_dirMakeExist( dirpath );
          nfile_writeFile( (char*)trans, cachesize, cachefile );
          free(cachefile);
       }
@@ -855,20 +858,20 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 /**
  * @brief Copy a texture array.
  */
-glTexture** gl_copyTexArray( glTexture **tex, int texn, int *n )
+glTexture** gl_copyTexArray( glTexture **tex, int *n )
 {
    int i;
    glTexture **t;
 
-   if (texn == 0) {
+   if (array_size(tex) == 0) {
       *n = 0;
       return NULL;
    }
 
-   t = malloc( texn * sizeof(glTexture*) );
-   for (i=0; i<texn; i++)
+   t = malloc( array_size(tex) * sizeof(glTexture*) );
+   for (i=0; i<array_size(tex); i++)
       t[i] = gl_dupTexture( tex[i] );
-   *n = texn;
+   *n = array_size(tex);
    return t;
 }
 

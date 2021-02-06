@@ -8,6 +8,7 @@
  <class>Drone</class>
  <price>300000</price>
  <time_mod>0.875</time_mod>
+ <trail_generator x="0" y="0" h="0" />
  <fabricator>Robosys</fabricator>
  <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
  <health>

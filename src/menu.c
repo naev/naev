@@ -10,6 +10,7 @@
 
 
 /** @cond */
+#include "physfs.h"
 #include "SDL.h"
 
 #include "naev.h"
@@ -17,6 +18,7 @@
 
 #include "menu.h"
 
+#include "array.h"
 #include "board.h"
 #include "camera.h"
 #include "comm.h"
@@ -35,7 +37,6 @@
 #include "music.h"
 #include "ndata.h"
 #include "nebula.h"
-#include "nfile.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "options.h"
@@ -243,7 +244,7 @@ void menu_main (void)
          "btnExit", _("Exit"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
-   if (!save_hasSave()) {
+   if (array_size( load_getList() ) == 0) {
       window_disableButton( wid, "btnLoad" );
       window_setFocus( wid, "btnNew" );
    }
@@ -558,8 +559,8 @@ void menu_death (void)
    window_onClose( wid, menu_death_close );
 
    /* Allow the player to continue if the saved game exists, if not, propose to restart */
-   nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
-   if (nfile_fileExists(path))
+   nsnprintf( path, PATH_MAX, "saves/%s.ns", player.name );
+   if (PHYSFS_exists( path ))
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", _("Continue"), menu_death_continue, SDLK_c );
    else

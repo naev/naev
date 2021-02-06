@@ -8,6 +8,7 @@
  <class>Fighter</class>
  <price>350000</price>
  <time_mod>1</time_mod>
+ <trail_generator x="-8" y="0" h="0" />
  <fabricator>Thurion shipyards</fabricator>
  <license>Light Combat Vessel License</license>
  <description>The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms.</description>

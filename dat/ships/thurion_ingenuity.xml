@@ -8,6 +8,7 @@
  <class>Fighter</class>
  <price>650000</price>
  <time_mod>1</time_mod>
+ <trail_generator x="-8" y="0" h="0" />
  <fabricator>Thurion shipyards</fabricator>
  <license>Light Combat Vessel License</license>
  <description>The Thurion Ingenuity is a fighter built for survival. Like all Thurian ships, it puts defensive capabilities first, and offensive capabilities second. However, by no means is the Ingenuity a poor combat craft. It is capable of staying in combat and slugging it out, and when things get too hot, it can quickly retreat to recharge and regenerate. Also, like every Thurian ship, the electronics are well above average.</description>

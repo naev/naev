@@ -17,6 +17,7 @@
 
 #include "dev_sysedit.h"
 
+#include "array.h"
 #include "conf.h"
 #include "dev_planet.h"
 #include "dev_system.h"
@@ -25,7 +26,6 @@
 #include "economy.h"
 #include "map.h"
 #include "ndata.h"
-#include "nfile.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "opengl_render.h"
@@ -442,7 +442,7 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
          nsnprintf(newName, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
          free(filtered);
 
-         nfile_rename(oldName, newName);
+         rename(oldName, newName);
 
          free(oldName);
          free(newName);
@@ -474,7 +474,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
             filtered = uniedit_nameFilter( sysedit_sys->planets[ sel->u.planet ]->name );
             file = malloc(16 + strlen(filtered));
             nsnprintf(file, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
-            nfile_delete(file);
+            remove(file);
 
             free(filtered);
             free(file);
@@ -557,13 +557,13 @@ void sysedit_sysScale( StarSystem *sys, double factor )
    window_modifyText( sysedit_wid, "txtSelected", buf );
 
    /* Scale planets. */
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       p     = sys->planets[i];
       vect_cset( &p->pos, p->pos.x*factor, p->pos.y*factor );
    }
 
    /* Scale jumps. */
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp    = &sys->jumps[i];
       vect_cset( &jp->pos, jp->pos.x*factor, jp->pos.y*factor );
    }
@@ -613,7 +613,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    sysedit_renderBG( bx, by, w, h, x, y );
 
    /* Render planets. */
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       p              = sys->planets[i];
 
       /* Must be real. */
@@ -636,7 +636,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render jump points. */
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp    = &sys->jumps[i];
 
       /* Choose colour. */
@@ -662,14 +662,14 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render asteroids */
-   for (i=0; i<sys->nasteroids; i++) {
+   for (i=0; i<array_size(sys->asteroids); i++) {
       ast = &sys->asteroids[i];
       selected = 0;
       sysedit_renderAsteroidsField( x, y, ast, selected );
    }
 
    /* Render asteroid exclusions */
-   for (i=0; i<sys->nastexclude; i++) {
+   for (i=0; i<array_size(sys->astexclude); i++) {
       aexcl = &sys->astexclude[i];
       selected = 0;
       sysedit_renderAsteroidExclusion( x, y, aexcl, selected );
@@ -877,7 +877,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
 
             /* Check planets. */
-            for (i=0; i<sys->nplanets; i++) {
+            for (i=0; i<array_size(sys->planets); i++) {
                p = sys->planets[i];
 
                /* Must be real. */
@@ -942,7 +942,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             }
 
             /* Check jump points. */
-            for (i=0; i<sys->njumps; i++) {
+            for (i=0; i<array_size(sys->jumps); i++) {
                jp = &sys->jumps[i];
 
                /* Position. */

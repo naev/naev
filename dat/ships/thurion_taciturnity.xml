@@ -5,6 +5,7 @@
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
+ <trail_generator x="-20" y="0" h="0" />
  <class>Armoured Transport</class>
  <price>1600000</price>
  <time_mod>1.5</time_mod>

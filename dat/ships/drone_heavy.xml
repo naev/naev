@@ -8,6 +8,7 @@
  <class>Heavy Drone</class>
  <price>750000</price>
  <time_mod>1</time_mod>
+ <trail_generator x="-15" y="0" h="0" />
  <fabricator>Robosys</fabricator>
  <description>This Collective heavy drone has been modified by engineers to support a human pilot.</description>
  <health>

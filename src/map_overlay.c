@@ -160,12 +160,12 @@ void ovr_refresh (void)
 
    /* Calculate max size. */
    items = 0;
-   pos = calloc(cur_system->njumps + cur_system->nplanets, sizeof(Vector2d*));
-   mo  = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPos*));
-   moo = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPosOpt));
+   pos = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(Vector2d*));
+   mo  = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(MapOverlayPos*));
+   moo = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(MapOverlayPosOpt));
    max_x = 0.;
    max_y = 0.;
-   for (i=0; i<cur_system->njumps; i++) {
+   for (i=0; i<array_size(cur_system->jumps); i++) {
       jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
       max_y = MAX( max_y, ABS(jp->pos.y) );
@@ -180,7 +180,7 @@ void ovr_refresh (void)
       items++;
    }
    jumpitems = items;
-   for (i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
@@ -511,14 +511,14 @@ void ovr_render( double dt )
    gl_renderRect( (double)gui_getMapOverlayBoundLeft(), (double)gui_getMapOverlayBoundRight(), w, h, &c );
 
    /* Render planets. */
-   for (i=0; i<cur_system->nplanets; i++)
+   for (i=0; i<array_size(cur_system->planets); i++)
       if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
          gui_renderPlanet( i, RADAR_RECT, w, h, res, 1 );
    if (player.p->nav_planet > -1)
       gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res, 1 );
 
    /* Render jump points. */
-   for (i=0; i<cur_system->njumps; i++)
+   for (i=0; i<array_size(cur_system->jumps); i++)
       if ((i != player.p->nav_hyperspace) && !jp_isFlag(&cur_system->jumps[i], JP_EXITONLY))
          gui_renderJumpPoint( i, RADAR_RECT, w, h, res, 1 );
    if (player.p->nav_hyperspace > -1)
@@ -548,7 +548,7 @@ void ovr_render( double dt )
    }
 
    /* render the asteroids */
-   for (i=0; i<cur_system->nasteroids; i++) {
+   for (i=0; i<array_size(cur_system->asteroids); i++) {
       ast = &cur_system->asteroids[i];
       for (j=0; j<ast->nb; j++)
          gui_renderAsteroid( &ast->asteroids[j], w, h, res, 1 );
@@ -606,11 +606,9 @@ void ovr_mrkFree (void)
 void ovr_mrkClear (void)
 {
    int i;
-   if (ovr_markers == NULL)
-      return;
    for (i=0; i<array_size(ovr_markers); i++)
       ovr_mrkCleanup( &ovr_markers[i] );
-   array_erase( &ovr_markers, ovr_markers, &ovr_markers[ array_size(ovr_markers) ] );
+   array_erase( &ovr_markers, array_begin(ovr_markers), array_end(ovr_markers) );
 }
 
 

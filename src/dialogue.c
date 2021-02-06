@@ -15,8 +15,6 @@
  *  the main loop until it's over, making these functions seem to be blocking
  *  without really being blocking.
  *
- * @todo Make dialogue system more flexible.
- *
  * @sa toolkit.c
  */
 

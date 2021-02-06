@@ -41,8 +41,6 @@ typedef struct CommodityModifier_ CommodityModifier;
  * @struct Commodity
  *
  * @brief Represents a commodity.
- *
- * @todo Use inverse normal?
  */
 typedef struct Commodity_ {
    char* name; /**< Name of the commodity. */
@@ -120,7 +118,7 @@ void price2str( char *str, credits_t price, credits_t credits, int decimals );
 void tonnes2str( char *str, int tonnes );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
 int commodity_compareTech( const void *commodity1, const void *commodity2 );
-Commodity ** standard_commodities( unsigned int *nb );
+Commodity ** standard_commodities (void);
 
 
 #endif /* COMMODITY_H */

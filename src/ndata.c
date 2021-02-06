@@ -14,7 +14,6 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <string.h>
 #if HAS_WIN32
 #include <windows.h>
 #endif /* HAS_WIN32 */
@@ -89,11 +88,32 @@ static void ndata_testVersion (void)
 
 
 /**
- * @brief Opens the ndata directory.
- *
- *    @return 0 on success.
+ * @brief Gets Naev's data path (for user data such as saves and screenshots)
  */
-int ndata_open (void)
+void ndata_setupWriteDir (void)
+{
+   /* Global override is set. */
+   if (conf.datapath) {
+      PHYSFS_setWriteDir( conf.datapath );
+      return;
+   }
+#if HAS_MACOS
+   /* For historical reasons predating physfs adoption, this case is different. */
+   PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "org.naev.Naev" ) );
+#else
+   PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "naev" ) );
+#endif
+   if (PHYSFS_getWriteDir() == NULL) {
+      WARN(_("Cannot determine data path, using current directory."));
+      PHYSFS_setWriteDir( "./naev/" );
+   }
+}
+
+
+/**
+ * @brief Sets up the PhysicsFS search path.
+ */
+void ndata_setupReadDirs (void)
 {
    char buf[ PATH_MAX ];
 
@@ -122,17 +142,8 @@ int ndata_open (void)
       PHYSFS_mount( buf, NULL, 1 );
    }
 
+   PHYSFS_mount( PHYSFS_getWriteDir(), NULL, 0 );
    ndata_testVersion();
-   return 0;
-}
-
-
-/**
- * @brief Closes and cleans up the ndata directory.
- */
-void ndata_close (void)
-{
-   PHYSFS_deinit();
 }
 
 
@@ -269,4 +280,87 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
    else
       free( path );
    return PHYSFS_ENUM_OK;
+}
+
+
+/**
+ * @brief Backup a file, if it exists.
+ *
+ *    @param path PhysicsFS relative pathname to back up.
+ *    @return 0 on success, or if file does not exist, -1 on error.
+ */
+int ndata_backupIfExists( const char *path )
+{
+   char backup[ PATH_MAX ];
+
+   if ( path == NULL )
+      return -1;
+
+   if ( !PHYSFS_exists( path ) )
+      return 0;
+
+   nsnprintf(backup, PATH_MAX, "%s.backup", path);
+
+   return ndata_copyIfExists( path, backup );
+}
+
+
+/**
+ * @brief Copy a file, if it exists.
+ *
+ *    @param file1 PhysicsFS relative pathname to copy from.
+ *    @param file2 PhysicsFS relative pathname to copy to.
+ *    @return 0 on success, or if file1 does not exist, -1 on error.
+ */
+int ndata_copyIfExists( const char* file1, const char* file2 )
+{
+   PHYSFS_File *f_in, *f_out;
+   char buf[ 8*1024 ];
+   PHYSFS_sint64 lr, lw;
+
+   if (file1 == NULL)
+      return -1;
+
+   /* Check if input file exists */
+   if (!PHYSFS_exists(file1))
+      return 0;
+
+   /* Open files. */
+   f_in  = PHYSFS_openRead( file1 );
+   f_out = PHYSFS_openWrite( file2 );
+   if ((f_in==NULL) || (f_out==NULL)) {
+      WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      if (f_in!=NULL)
+         PHYSFS_close(f_in);
+      return -1;
+   }
+
+   /* Copy data over. */
+   do {
+      lr = PHYSFS_readBytes( f_in, buf, sizeof(buf) );
+      if (lr == -1)
+         goto err;
+      else if (!lr) {
+         if (PHYSFS_eof( f_in ))
+            break;
+         goto err;
+      }
+
+      lw = PHYSFS_writeBytes( f_out, buf, lr );
+      if (lr != lw)
+         goto err;
+   } while (lr > 0);
+
+   /* Close files. */
+   PHYSFS_close( f_in );
+   PHYSFS_close( f_out );
+
+   return 0;
+
+err:
+   WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+   PHYSFS_close( f_in );
+   PHYSFS_close( f_out );
+
+   return -1;
 }

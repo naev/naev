@@ -12,6 +12,7 @@
   <sound_hit>medexp1</sound_hit>
   <spfx_shield>EmpM</spfx_shield>
   <spfx_armour>EmpM</spfx_armour>
+  <trail_generator x="0">missile</trail_generator>
   <duration blowup="armour">5</duration>
   <thrust>0</thrust>
   <turn>50</turn>

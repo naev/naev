@@ -8,6 +8,7 @@
  <class>Bomber</class>
  <price>525000</price>
  <time_mod>1</time_mod>
+ <trail_generator x="-15" y="0" h="0" />
  <fabricator>Sirius Systems</fabricator>
  <license>Light Combat Vessel License</license>
  <description>Though its relatively sleek form may cause it to be mistaken for a light fighter from a distance, the Shaman is anything but. A purpose-built light missile platform, few enemies escape the reach of the Shaman.</description>

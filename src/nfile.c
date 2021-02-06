@@ -17,7 +17,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <sys/stat.h>
 #include "physfs.h"
 
@@ -43,26 +42,6 @@
 #endif /* HAS_MACOS */
 #include "log.h"
 #include "nstring.h"
-
-
-/**
- * @TODO try to use SDL_GetPrefPath and SDL_GetBasePath when possible.
- */
-
-
-#define BLOCK_SIZE      128*1024 /**< 128 kilobytes. */
-
-
-/**
- * @brief Struct containing a file's name and stat structure.
- */
-typedef struct filedata {
-   char *name;
-   struct stat stat;
-} filedata_t;
-
-
-static int nfile_sortCompare( const void *p1, const void *p2 );
 
 
 #if HAS_UNIX && !HAS_MACOS
@@ -131,39 +110,6 @@ static char * xdgGetRelativeHome( const char *envname, const char *relativefallb
     return relhome;
 }
 #endif
-
-static char naev_dataPath[PATH_MAX] = "\0"; /**< Store Naev's data path. */
-/**
- * @brief Gets Naev's data path (for user data such as saves and screenshots)
- *
- *    @return The xdg data path.
- */
-const char* nfile_dataPath (void)
-{
-   const char *osDefault;
-
-   if (naev_dataPath[0] == '\0') {
-      /* Global override is set. */
-      if (conf.datapath) {
-         nsnprintf( naev_dataPath, PATH_MAX, "%s/", conf.datapath );
-         return naev_dataPath;
-      }
-#if HAS_MACOS
-      /* For historical reasons predating physfs adoption, this case is different. */
-      osDefault = PHYSFS_getPrefDir(".", "org.naev.Naev");
-#else
-      /* TODO: Test Windows; we want \<org>\<app>\ to resolve the same as \naev\. */
-      osDefault = PHYSFS_getPrefDir(".", "naev");
-#endif
-      if (osDefault == NULL) {
-         WARN(_("Cannot determine data path, using current directory."));
-         osDefault = "./naev/";
-      }
-      strncpy( naev_dataPath, osDefault, PATH_MAX-1 );
-   }
-
-   return naev_dataPath;
-}
 
 
 static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
@@ -321,9 +267,12 @@ static int mkpath( const char *path )
 
 
 /**
- * @see nfile_dirMakeExist
+ * @brief Creates a directory if it doesn't exist.
+ *
+ *    @param path Path to create directory if it doesn't exist.
+ *    @return 0 on success.
  */
-int _nfile_dirMakeExist( const char *path )
+int nfile_dirMakeExist( const char *path )
 {
    if ( path == NULL )
       return -1;
@@ -347,7 +296,13 @@ int _nfile_dirMakeExist( const char *path )
 }
 
 
-int _nfile_dirExists( const char *path )
+/**
+ * @brief Checks to see if a directory exists.
+ *
+ * @param path Path to directory
+ * @return 1 on exists, 0 otherwise
+ */
+int nfile_dirExists( const char *path )
 {
    DIR *d;
 
@@ -368,7 +323,7 @@ int _nfile_dirExists( const char *path )
  *    @param path string pointing to the file to check for existence.
  *    @return 1 if file exists, 0 if it doesn't or -1 on error.
  */
-int _nfile_fileExists( const char *path )
+int nfile_fileExists( const char *path )
 {
    struct stat buf;
 
@@ -396,7 +351,7 @@ int _nfile_fileExists( const char *path )
  *    @param path printf formatted string pointing to the file to backup.
  *    @return 0 on success, or if file does not exist, -1 on error.
  */
-int _nfile_backupIfExists( const char *path )
+int nfile_backupIfExists( const char *path )
 {
    char backup[ PATH_MAX ];
 
@@ -474,93 +429,13 @@ err:
 
 
 /**
- * @brief Lists all the visible files in a directory.
- *
- * Should also sort by last modified but that's up to the OS in question.
- * Paths are relative to base directory.
- *
- *    @param[out] nfiles Returns how many files there are.
- *    @param path Directory to read.
- */
-char **_nfile_readDir( size_t *nfiles, const char *path )
-{
-   char file[ PATH_MAX ];
-   char **files;
-   filedata_t *filedata;
-
-   ( *nfiles ) = 0;
-   if ( path == NULL )
-      return NULL;
-
-   size_t i;
-   DIR *d;
-   struct dirent *dir;
-   char *name;
-   size_t mfiles;
-   struct stat sb;
-
-   d = opendir( path );
-   if ( d == NULL )
-      return NULL;
-
-   mfiles      = 128;
-   filedata    = malloc(sizeof(filedata_t) * mfiles);
-
-   /* Get the file list */
-   while ((dir = readdir(d)) != NULL) {
-      name = dir->d_name;
-
-      /* Skip hidden directories */
-      if (name[0] == '.')
-         continue;
-
-      /* Stat the file */
-      nsnprintf( file, PATH_MAX, "%s/%s", path, name );
-      if ( stat( file, &sb ) == -1 )
-         continue; /* Unable to stat */
-
-      /* Enough memory? */
-      if ((*nfiles)+1 > mfiles) {
-         mfiles *= 2;
-         filedata = realloc( filedata, sizeof(filedata_t) * mfiles );
-      }
-
-      /* Write the information */
-      filedata[(*nfiles)].name = strdup(name);
-      filedata[(*nfiles)].stat = sb;
-      (*nfiles)++;
-   }
-
-   closedir(d);
-
-   /* Sort by last changed date */
-   if ((*nfiles) > 0) {
-      qsort(filedata, *nfiles, sizeof(filedata_t), nfile_sortCompare);
-
-      files = malloc(sizeof(char*) * (*nfiles));
-      for (i=0; i<(*nfiles); i++) {
-         files[i] = strdup(filedata[i].name);
-         free(filedata[i].name);
-      }
-   }
-   else
-      files = NULL;
-
-   free(filedata);
-   filedata = NULL;
-
-   return files;
-}
-
-
-/**
  * @brief Tries to read a file.
  *
  *    @param filesize Stores the size of the file.
  *    @param path Path of the file.
  *    @return The file data.
  */
-char *_nfile_readFile( size_t *filesize, const char *path )
+char *nfile_readFile( size_t *filesize, const char *path )
 {
    int n;
    char *buf;
@@ -646,7 +521,7 @@ char *_nfile_readFile( size_t *filesize, const char *path )
  *
  *    @param path Path of the file to create.
  */
-int _nfile_touch( const char *path )
+int nfile_touch( const char *path )
 {
    FILE *f;
 
@@ -673,7 +548,7 @@ int _nfile_touch( const char *path )
  *    @param path Path of the file.
  *    @return 0 on success, -1 on error.
  */
-int _nfile_writeFile( const char *data, size_t len, const char *path )
+int nfile_writeFile( const char *data, size_t len, const char *path )
 {
    size_t n;
    FILE *file;
@@ -710,66 +585,6 @@ int _nfile_writeFile( const char *data, size_t len, const char *path )
    return 0;
 }
 
-
-/**
- * @brief Deletes a file.
- *
- *    @param file File to delete.
- *    @return 0 on success.
- */
-int _nfile_delete( const char *file )
-{
-   if (unlink(file)) {
-      WARN( _("Error deleting file %s"),file );
-      return -1;
-   }
-   return 0;
-}
-
-/**
- * @brief Renames a file.
- *
- *    @param oldname Old name of the file.
- *    @param newname New name to set the file to.
- *    @return 0 on success.
- */
-int nfile_rename( const char* oldname, const char* newname )
-{
-   if (!nfile_fileExists(oldname)) {
-      WARN(_("Can not rename non existent file %s"),oldname);
-      return -1;
-   }
-   if (newname == NULL) {
-      WARN(_("Can not rename to NULL file name"));
-      return -1;
-   }
-   if (nfile_fileExists( newname )) {
-      WARN(_("Error renaming %s to %s. %s already exists"),oldname,newname,newname);
-      return -1;
-   }
-   if (rename(oldname,newname))
-      WARN(_("Error renaming %s to %s"),oldname,newname);
-   return 0;
-}
-
-
-/**
- * @brief qsort compare function for files.
- */
-static int nfile_sortCompare( const void *p1, const void *p2 )
-{
-   filedata_t *f1, *f2;
-
-   f1 = (filedata_t*) p1;
-   f2 = (filedata_t*) p2;
-
-   if (f1->stat.st_mtime > f2->stat.st_mtime)
-      return -1;
-   else if (f1->stat.st_mtime < f2->stat.st_mtime)
-      return +1;
-
-   return strcmp( f1->name, f2->name );
-}
 
 /**
  * @brief Checks to see if a character is used to separate files in a path.

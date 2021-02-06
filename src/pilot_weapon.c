@@ -282,7 +282,7 @@ static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
 {
    int i;
 
-   for (i=0; i<p->noutfits; i++)
+   for (i=0; i<array_size(p->outfits); i++)
       p->outfits[i]->level = -1;
 
    for (i=0; i<array_size(ws->slots); i++)
@@ -1115,7 +1115,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
          return 0;
 
       /* Get index of outfit slot */
-      for (j=0; j<p->noutfits; j++) {
+      for (j=0; j<array_size(p->outfits); j++) {
          if (p->outfits[j] == w)
             dockslot = j;
       }
@@ -1180,8 +1180,7 @@ void pilot_weaponClear( Pilot *p )
 
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       ws = pilot_weapSet( p, i );
-      if (ws->slots != NULL)
-         array_erase( &ws->slots, &ws->slots[0], &ws->slots[ array_size(ws->slots) ] );
+      array_erase( &ws->slots, array_begin(ws->slots), array_end(ws->slots) );
    }
 }
 
@@ -1228,7 +1227,7 @@ void pilot_weaponAuto( Pilot *p )
       }
 
    /* Iterate through all the outfits. */
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       slot = p->outfits[i];
       o    = slot->outfit;
 
@@ -1394,7 +1393,7 @@ int pilot_outfitOffAll( Pilot *p )
    int i;
 
    nchg = 0;
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       o = p->outfits[i];
       /* Picky about our outfits. */
       if (o->outfit == NULL)

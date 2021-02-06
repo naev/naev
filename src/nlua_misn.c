@@ -849,8 +849,7 @@ static int misn_osdGetActiveItem( lua_State *L )
    Mission *cur_mission;
    cur_mission = misn_getFromLua(L);
 
-   int nitems;
-   char **items = osd_getItems(cur_mission->osd, &nitems);
+   char **items = osd_getItems(cur_mission->osd);
    int active   = osd_getActive(cur_mission->osd);
 
    if (!items || active < 0) {

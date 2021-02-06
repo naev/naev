@@ -19,6 +19,7 @@
 
 #include "array.h"
 #include "conf.h"
+#include "map.h"
 #include "pause.h"
 #include "pilot.h"
 #include "pilot_ew.h"
@@ -29,7 +30,6 @@
 
 
 extern double player_acc; /**< Player acceleration. */
-extern int map_npath; /**< @todo remove */
 
 static double tc_mod    = 1.; /**< Time compression modifier. */
 static double tc_base   = 1.; /**< Base compression modifier. */
@@ -297,9 +297,11 @@ static void player_autonav (void)
 {
    JumpPoint *jp;
    Pilot *p;
-   int ret;
+   int ret, map_npath;
    double d, t, tint;
    double vel;
+
+   (void)map_getDestination( &map_npath );
 
    switch (player.autonav) {
       case AUTONAV_JUMP_APPROACH:

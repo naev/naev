@@ -110,7 +110,6 @@ void gl_resize (void);
  * Extensions and version.
  */
 GLboolean gl_hasVersion( int major, int minor );
-int gl_vendorIsIntel (void);
 
 
 /*

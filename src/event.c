@@ -48,8 +48,6 @@
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
 #define XML_EVENT_TAG         "event" /**< XML event tag. */
 
-#define EVENT_CHUNK           32 /**< Size to grow event data by. */
-
 
 #define EVENT_FLAG_UNIQUE     (1<<0) /**< Unique event. */
 

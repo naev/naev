@@ -8,6 +8,9 @@
  <class>Corvette</class>
  <price>600000</price>
  <time_mod>1.25</time_mod>
+ <trail_generator x="-10" y="8" h="0">fire</trail_generator>
+ <trail_generator x="-15" y="0" h="0">fire</trail_generator>
+ <trail_generator x="-10" y="-8" h="0">fire</trail_generator>
  <fabricator>Soromid</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>The Odium offers a good balance between shields and armour, as well as an impressive amount of system hardpoints for a ship its size. It can often be found dominating smaller military engagements.</description>

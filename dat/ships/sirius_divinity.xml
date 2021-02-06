@@ -8,6 +8,8 @@
  <class>Carrier</class>
  <price>7200000</price>
  <time_mod>2</time_mod>
+ <trail_generator x="-52" y="5" h="0" />
+ <trail_generator x="-52" y="-5" h="0" />
  <fabricator>Sirius Systems</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>

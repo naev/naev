@@ -454,17 +454,13 @@ static void background_clearImgArr( background_image_t **arr )
    int i;
    background_image_t *bkg;
 
-   /* Must have an image array created. */
-   if (*arr == NULL)
-      return;
-
    for (i=0; i<array_size(*arr); i++) {
       bkg = &((*arr)[i]);
       gl_freeTexture( bkg->image );
    }
 
    /* Erase it all. */
-   array_erase( arr, &(*arr)[0], &(*arr)[ array_size(*arr) ] );
+   array_erase( arr, array_begin(*arr), array_end(*arr) );
 }
 
 

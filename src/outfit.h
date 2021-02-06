@@ -13,6 +13,7 @@
 #include "opengl.h"
 #include "shipstats.h"
 #include "sound.h"
+#include "spfx.h"
 
 
 /*
@@ -153,8 +154,7 @@ typedef struct OutfitBoltData_ {
    int spfx_shield;  /**< special effect on hit. */
 
    /* collision polygon */
-   CollPoly *polygon; /**< Collision polygons. */
-   int npolygon; /**< Number of collision polygons. */
+   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 } OutfitBoltData;
 
 /**
@@ -223,10 +223,11 @@ typedef struct OutfitAmmoData_ {
    int sound_hit;    /**< Sound to play on hit. */
    int spfx_armour;  /**< special effect on hit */
    int spfx_shield;  /**< special effect on hit */
+   const TrailSpec* trail_spec; /**< Trail style if applicable, else NULL. */
+   double trail_x_offset;       /**< Offset x. */
 
    /* collision polygon */
-   CollPoly *polygon; /**< Collision polygons. */
-   int npolygon; /**< Number of collision polygons. */
+   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 } OutfitAmmoData;
 
 /**
@@ -346,8 +347,7 @@ typedef struct Outfit_ {
    int priority;     /**< Sort priority, highest first. */
 
    glTexture* gfx_store; /**< Store graphic. */
-   glTexture** gfx_overlays; /**< Store overlay graphics. */
-   int gfx_noverlays; /**< Number of overlays. */
+   glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
 
    unsigned int properties; /**< Properties stored bitwise. */
    unsigned int group; /**< Weapon group to use when autoweap is enabled. */

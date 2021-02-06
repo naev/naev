@@ -31,14 +31,10 @@
 
 
 /** @cond */
-#include <png.h>
-#include <stdarg.h> /* va_list for gl_print */
-#include <stdio.h>
-#include <stdlib.h>
-#include <zlib.h> /* Z_DEFAULT_COMPRESSION */
+#include "physfsrwops.h"
 #include "SDL.h"
 #include "SDL_error.h"
-#include "SDL_version.h"
+#include "SDL_image.h"
 
 #include "naev.h"
 /** @endcond */
@@ -46,10 +42,7 @@
 #include "opengl.h"
 
 #include "conf.h"
-#include "gui.h"
 #include "log.h"
-#include "ndata.h"
-#include "nstring.h"
 
 
 /*
@@ -72,10 +65,6 @@ static int gl_view_h = 0; /* Viewport height. */
 gl_Matrix4 gl_view_matrix = {0};
 
 
-/* Whether Intel is the OpenGL vendor. */
-static int intel_vendor = 0;
-
-
 /*
  * prototypes
  */
@@ -87,9 +76,6 @@ static int gl_getGLInfo (void);
 static int gl_defState (void);
 static int gl_setupScaling (void);
 static int gl_hint (void);
-/* png */
-static int write_png( const char *file_name, png_bytep *rows,
-      int w, int h, int colourtype, int bitdepth );
 
 
 /*
@@ -100,37 +86,41 @@ static int write_png( const char *file_name, png_bytep *rows,
 /**
  * @brief Takes a screenshot.
  *
- *    @param filename Name of the file to save screenshot as.
+ *    @param filename PhysicsFS path (e.g., "screenshots/screenshot042.png") of the file to save screenshot as.
  */
 void gl_screenshot( const char *filename )
 {
    GLubyte *screenbuf;
-   png_bytep *rows;
+   SDL_RWops *rw;
+   SDL_Surface *surface;
    int i, w, h;
 
    /* Allocate data. */
    w           = gl_screen.rw;
    h           = gl_screen.rh;
    screenbuf   = malloc( sizeof(GLubyte) * 3 * w*h );
-   rows        = malloc( sizeof(png_bytep) * h );
+   surface     = SDL_CreateRGBSurface( 0, w, h, 24, RGBAMASK );
 
    /* Read pixels from buffer -- SLOW. */
    glPixelStorei(GL_PACK_ALIGNMENT, 1); /* Force them to pack the bytes. */
    glReadPixels( 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, screenbuf );
 
    /* Convert data. */
-   for (i = 0; i < h; i++)
-      rows[i] = &screenbuf[ (h - i - 1) * (3*w) ];
+   for (i=0; i<h; i++)
+      memcpy( (GLubyte*)surface->pixels + i * (3*w), &screenbuf[ (h - i - 1) * (3*w) ], 3*w );
+   free( screenbuf );
 
    /* Save PNG. */
-   write_png( filename, rows, w, h, PNG_COLOR_TYPE_RGB, 8);
+   if (!(rw = PHYSFSRWOPS_openWrite( filename )))
+      WARN( _("Aborting screenshot") );
+   else
+      IMG_SavePNG_RW( surface, rw, 1 );
 
    /* Check to see if an error occurred. */
    gl_checkErr();
 
    /* Free memory. */
-   free( screenbuf );
-   free( rows );
+   SDL_FreeSurface( surface );
 }
 
 
@@ -151,20 +141,6 @@ GLboolean gl_hasVersion( int major, int minor )
    if (GLVersion.major >= major && GLVersion.minor >= minor)
       return GL_TRUE;
    return GL_FALSE;
-}
-
-
-/**
- * @brief Returns whether the OpenGL vendor is Intel.
- *
- * This is a bit ugly, but it seems that Intel integrated graphics tend to lie
- * about their capabilities with regards to smooth points and lines.
- *
- *    @return 1 if Intel is the vendor, 0 otherwise.
- */
-int gl_vendorIsIntel (void)
-{
-   return intel_vendor;
 }
 
 
@@ -330,7 +306,6 @@ static int gl_createWindow( unsigned int flags )
 static int gl_getGLInfo (void)
 {
    int doublebuf;
-   char *vendor;
 
    SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
    SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
@@ -346,10 +321,6 @@ static int gl_getGLInfo (void)
    /* Texture information */
    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &gl_screen.tex_max);
    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &gl_screen.multitex_max);
-
-   /* Ugly, but Intel hardware seems to be uniquely problematic. */
-   vendor = (char*)glGetString(GL_VENDOR);
-   intel_vendor = !!(nstrcasestr(vendor, "Intel") != NULL);
 
    /* Debug happiness */
    DEBUG(_("OpenGL Drawable Created: %dx%d@%dbpp"), gl_screen.rw, gl_screen.rh, gl_screen.depth);
@@ -672,64 +643,3 @@ void gl_exit (void)
    /* Shut down the subsystem */
    SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
-
-
-/**
- * @brief Saves a png.
- *
- *    @param file_name Name of the file to save the png as.
- *    @param rows Rows containing the data.
- *    @param w Width of the png.
- *    @param h Height of the png.
- *    @param colourtype Colour type of the png.
- *    @param bitdepth Bit depth of the png.
- *    @return 0 on success.
- */
-static int write_png( const char *file_name, png_bytep *rows,
-      int w, int h, int colourtype, int bitdepth )
-{
-   png_structp png_ptr;
-   png_infop info_ptr;
-   FILE *fp;
-
-   /* Open file for writing. */
-   if (!(fp = fopen(file_name, "wb"))) {
-      WARN(_("Unable to open '%s' for writing."), file_name);
-      return -1;
-   }
-
-   /* Create working structs. */
-   if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL))) {
-      WARN(_("Unable to create png write struct."));
-      goto ERR_FAIL;
-   }
-   if (!(info_ptr = png_create_info_struct(png_ptr))) {
-      WARN(_("Unable to create PNG info struct."));
-      goto ERR_FAIL;
-   }
-
-   /* Set image details. */
-   png_init_io(png_ptr, fp);
-   png_set_compression_level(png_ptr, Z_DEFAULT_COMPRESSION);
-   png_set_IHDR(png_ptr, info_ptr, w, h, bitdepth, colourtype,
-         PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
-         PNG_FILTER_TYPE_DEFAULT);
-
-   /* Write image. */
-   png_write_info(png_ptr, info_ptr);
-   png_write_image(png_ptr, rows);
-   png_write_end(png_ptr, NULL);
-
-   /* Clean up. */
-   fclose(fp);
-   png_destroy_write_struct( &png_ptr, &info_ptr );
-
-   return 0;
-
-ERR_FAIL:
-   fclose(fp);
-   png_destroy_write_struct( &png_ptr, &info_ptr );
-   return -1;
-}
-
-

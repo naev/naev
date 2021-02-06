@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Trail_types>
+ <!-- Defalut Type trails -->
+ <trail name="default">
+  <thickness>6</thickness>
+  <ttl>1.5</ttl>
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="0" g="1" b="1" a="0.7" />
+  <afterburn r="1" g="0.5" b="0" a="0.85" />
+  <jumping r="0.9" g="0.1" b="0.9" a="0.85" />
+ </trail>
+ <trail name="thin" inherits="default">
+  <thickness>2</thickness>
+  <ttl>1</ttl>
+ </trail>
+ <trail name="missile" inherits="default">
+  <thickness>2</thickness>
+  <ttl>0.3</ttl>
+ </trail>
+ <trail name="missileL" inherits="default">
+  <thickness>4</thickness>
+  <ttl>0.5</ttl>
+ </trail>
+
+ <!-- Fire type of engines-->
+ <trail name="fire">
+  <thickness>6</thickness>
+  <ttl>1.5</ttl>
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="1" g="0.84" b="0" a="0.7" />
+  <afterburn r="1" g="0.5" b="0" a="0.85" />
+  <jumping r="0.9" g="0.1" b="0.9" a="0.85" />
+ </trail>
+ <trail name="fire-thin" inherits="fire">
+  <thickness>2</thickness>
+  <ttl>1</ttl>
+ </trail>
+ <trail name="fire-missile" inherits="fire">
+  <thickness>2</thickness>
+  <ttl>0.3</ttl>
+ </trail>
+ <trail name="fire-missileL" inherits="fire">
+  <thickness>4</thickness>
+  <ttl>0.5</ttl>
+ </trail>
+
+ <!-- Red type of engines -->
+ <trail name="red">
+  <thickness>6</thickness>
+  <ttl>1</ttl>
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="1" g="0.3" b="0.3" a="0.7" />
+  <afterburn r="1" g="0.5" b="0" a="0.85" />
+  <jumping r="0.9" g="0.1" b="0.9" a="0.85" />
+ </trail>
+ <trail name="red10" inherits="red">
+  <thickness>10</thickness>
+  <ttl>1.5</ttl>
+ </trail>
+ <trail name="red12" inherits="red">
+  <thickness>12</thickness>
+  <ttl>2</ttl>
+ </trail>
+ <trail name="red-missile" inherits="red">
+  <thickness>2</thickness>
+  <ttl>0.3</ttl>
+ </trail>
+ <trail name="red-missileL" inherits="red">
+  <thickness>4</thickness>
+  <ttl>0.5</ttl>
+ </trail>
+</Trail_types>
