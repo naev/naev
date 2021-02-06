@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Trail_types>
+ <!-- Defalut Type trails -->
  <trail name="default">
   <thickness>6</thickness>
   <ttl>1.5</ttl>
@@ -12,6 +13,8 @@
   <thickness>2</thickness>
   <ttl>1</ttl>
  </trail>
+
+ <!-- Fire type of engines-->
  <trail name="fire">
   <thickness>6</thickness>
   <ttl>1.5</ttl>
@@ -24,6 +27,8 @@
   <thickness>2</thickness>
   <ttl>1</ttl>
  </trail>
+
+ <!-- Red type of engines -->
  <trail name="red">
   <thickness>6</thickness>
   <ttl>1</ttl>
