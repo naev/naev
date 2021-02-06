@@ -33,7 +33,7 @@ float smoothbeam( float x, float k )
 }
 
 float random (vec2 st) {
-  return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+   return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
 }
 
 void main(void) {
@@ -52,7 +52,8 @@ void main(void) {
    // Modulate width
    d = smoothbeam( pos.y, 3.*m );
 
-   color_out.a *= d * (1. - (random(pos) * .3));
+   //color_out.a *= d * (1. - (random(pos) * .3));
+   color_out.a *= d;
 
 #include "colorblind.glsl"
 }
