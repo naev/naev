@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-02-01 09:14-0500\n"
-"PO-Revision-Date: 2021-02-06 05:41+0000\n"
-"Last-Translator: rhebok-git <geneenkei@gmail.com>\n"
+"PO-Revision-Date: 2021-02-06 17:50+0000\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,6 @@ msgstr ""
 "X-Generator: Weblate 4.5-dev\n"
 
 #: dat/intro:2
-#, fuzzy
 msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
@@ -120,7 +119,6 @@ msgstr ""
 "Les Grandes Maisons surveillaient maintenant les voies spatiales."
 
 #: dat/intro:23
-#, fuzzy
 msgid "Rise and fall, the rhythm of history. "
 msgstr "Montée et chute, le rythme de l’histoire. "
 
@@ -133,17 +131,16 @@ msgid "It tore the heart out of the Empire."
 msgstr "Cela a déchiré le cœur de l'Empire."
 
 #: dat/intro:29
-#, fuzzy
 msgid ""
 "From Earth, a cataclysmic explosion ripped through space, annihilating "
 "stars, vaporising worlds. Billions died. Dozens of systems disappeared into "
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
-"Depuis la Terre, une explosion cataclysmique s'est déchiré à travers "
-"l'espace, anéantissant les étoiles, vaporisant des mondes. Des milliards "
-"sont morts. Des dizaines de systèmes planétaires ont disparu dans la "
-"mystérieuse nébuleuse laissée derrière. Aujourd'hui, la grande civilisation "
+"Depuis la Terre, une explosion cataclysmique a déchiré l'espace, "
+"anéantissant les étoiles, vaporisant les mondes. Des milliards de personnes "
+"sont mortes. Des dizaines de systèmes ont disparu dans la mystérieuse "
+"nébuleuse laissée derrière eux. Aujourd'hui, la grande civilisation "
 "galactique survit comme l'ombre de sa gloire passée."
 
 #: dat/intro:32
@@ -162,175 +159,181 @@ msgstr ""
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr "Bienvenue dans l'univers de Naev..."
+msgstr "Bienvenue dans l'univers de Naev…"
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "Équipe de développement principale actuelle"
 
 #: dat/AUTHORS:2 dat/AUTHORS:23 dat/AUTHORS:33 dat/AUTHORS:63 dat/AUTHORS:174
 msgid "---------------------------------------"
-msgstr ""
+msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr ""
+msgstr "Edgar Simo-Serra « bobbens » <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * Développeur principal"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
-msgstr ""
+msgstr "Bas Fournier « BTAxis » <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * Scénariste et développement divers"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
-msgstr ""
+msgstr "Ian Douglas Scott « ids1024 » <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11 dat/AUTHORS:14 dat/AUTHORS:20 dat/AUTHORS:29
 msgid "   * Misc. Development"
-msgstr ""
+msgstr "   * Développement divers"
 
 #: dat/AUTHORS:13
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
-msgstr ""
+msgstr "Layla and Emmy « The Diligent Circle » <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:16
+#, fuzzy
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
-msgstr ""
+msgstr "Justin Blanchard « UncombedCoconut » <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:17
 msgid "   * Code Carnage and Bug Beating"
-msgstr ""
+msgstr "   * Tests et correction de bugs"
 
 #: dat/AUTHORS:19
 msgid "nenau"
-msgstr ""
+msgstr "nenau"
 
 #: dat/AUTHORS:22
 msgid "Past Development Team"
-msgstr ""
+msgstr "Équipe de développement passée"
 
 #: dat/AUTHORS:25
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
-msgstr ""
+msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
 #: dat/AUTHORS:26
 msgid "   * Bringer of Sound"
-msgstr ""
+msgstr "   * Porteur de son"
 
 #: dat/AUTHORS:28
 msgid "Deiz"
-msgstr ""
+msgstr "Deiz"
 
 #: dat/AUTHORS:32
 msgid "Major Contributors"
-msgstr ""
+msgstr "Contributeurs majeurs"
 
 #: dat/AUTHORS:35
 msgid "Josiah Schwartfeger"
-msgstr ""
+msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:36
 msgid "   * Graphic Designer and Modeller"
-msgstr ""
+msgstr "   * Graphiste et modéliste"
 
 #: dat/AUTHORS:38
 msgid "Elderman"
-msgstr ""
+msgstr "Elderman"
 
 #: dat/AUTHORS:39
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * Développement des missions"
 
 #: dat/AUTHORS:40
 msgid "   The first non-bobbens mission developer!"
-msgstr ""
+msgstr "   Le premier développeur de missions qui n'est pas bobbens !"
 
 #: dat/AUTHORS:42
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
-msgstr ""
+msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
 #: dat/AUTHORS:43
 msgid "   * NPC Portrait Artist"
-msgstr ""
+msgstr "   * Portraitiste des PNJ"
 
 #: dat/AUTHORS:45
 msgid "Enigmatic"
-msgstr ""
+msgstr "Enigmatic"
 
 #: dat/AUTHORS:46
 msgid "   * Ships for the Sirius, many other models and faction logos"
 msgstr ""
+"   * Des vaisseaux pour le Sirius, de nombreux autres modèles et des logos "
+"de factions"
 
 #: dat/AUTHORS:48
+#, fuzzy
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
-msgstr ""
+msgstr "Felix Schneider « Scaatis » <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:49
 msgid "   * Naev logo, Lua GUI development"
-msgstr ""
+msgstr "   * Logo de Naev, développement de l'interface graphique en Lua"
 
 #: dat/AUTHORS:51
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
-msgstr ""
+msgstr "M. R. Bokhari « Viruk » <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:52
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr ""
+msgstr "   *  Des vaisseaux pour le Soromid et le Za'lek"
 
 #: dat/AUTHORS:54
+#, fuzzy
 msgid "Askyel"
-msgstr ""
+msgstr "Askyel"
 
 #: dat/AUTHORS:55
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
 msgstr ""
+"   * Compositeur de près d'une heure de musique en exclusivité pour Naev."
 
 #: dat/AUTHORS:57
 msgid "Jack Greiner <jack@emoss.org>"
-msgstr ""
+msgstr "Jack Greiner <jack@emoss.org>"
 
 #: dat/AUTHORS:58
 msgid "   * CI dude"
-msgstr ""
+msgstr "   * Intégration continue"
 
 #: dat/AUTHORS:59
 msgid "   * Bringer of automated releases"
-msgstr ""
+msgstr "   * A apporté les versions automatisées"
 
 #: dat/AUTHORS:60
 msgid "   * Various helper scripts and build system tweaks"
-msgstr ""
+msgstr "   * Divers scripts d'aide et ajustements du système de compilation"
 
 #: dat/AUTHORS:62
 msgid "Contributions"
-msgstr ""
+msgstr "Contributions"
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
-msgstr ""
+msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * Modèles de vaisseau"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * Musique"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * Sons"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * Images des planètes"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -338,56 +341,66 @@ msgid ""
 "didn't actively participate, by allowing me to use their data they did me a "
 "great favour and let me concentrate on the coding."
 msgstr ""
+"   Cela n'aurait pas été possible sans l'équipe de Vega Strike, bien qu'elle "
+"n'ait pas participé activement, en me permettant d'utiliser ses données, "
+"elle m'a rendu un grand service et m'a permis de me concentrer sur le "
+"développement."
 
 #: dat/AUTHORS:72
 msgid "Joel Hans <wolorf@gmail.com>"
-msgstr ""
+msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr ""
+msgstr "   * Graphismes des planètes"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
-msgstr ""
+msgstr "   * Script de rendu"
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
 msgstr ""
+"   A aidé au démarrage du projet. Cela a beaucoup aidé à remonter le moral "
+"des troupes."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
-msgstr ""
+msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
 msgid "Rob Loach <http://robloach.net>"
-msgstr ""
+msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
-msgstr ""
+msgstr "   * SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
+"   Bien que nous n'utilisions pas la bibliothèque SDL_collide elle-même, "
+"elle a été une source d'inspiration pour les procédures de collision de Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
-msgstr ""
+msgstr "Pete Shinners <pete@shinners.org>"
 
 #: dat/AUTHORS:83
 msgid "   * SavePNG"
-msgstr ""
+msgstr "   * SavePNG"
 
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
 msgstr ""
+"   Une grande fonction tout droit sortie d'un jeu pygame. Fonctionne à "
+"merveille !"
 
 #: dat/AUTHORS:86
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
-msgstr ""
+msgstr "Aurore D. « Rore » <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
@@ -398,10 +411,12 @@ msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
+"   Cela nous a évité beaucoup d'ennuis en nous permettant de créer "
+"rapidement des graphismes de planètes spatiales."
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
-msgstr ""
+msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
@@ -410,14 +425,16 @@ msgstr ""
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
+"   Bien qu'il n'ait pas été utilisé directement, il a permis de créer notre "
+"propre script de sprite."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
-msgstr ""
+msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * Bruitage de turbulence"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -425,51 +442,59 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
+"   Après l'horrible échec de notre propre tentative de fractale plasmique, "
+"le bruit de turbulence de TCOD semblait parfaitement faire tout là où nous "
+"avions échoué. Avec une optimisation poussée, le code a été introduit à Naev."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
-msgstr ""
+msgstr "Jordi Pegueroles Queralt « pegue » <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr ""
+msgstr "   * Modèle de fusée Mace"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
-msgstr ""
+msgstr "Brian J. Cameron"
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
-msgstr ""
+msgstr "   * Beaucoup d'illustrations"
 
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom naev content."
 msgstr ""
+"   Artiste talentueux, l'un des premiers à créer du contenu personnalisé "
+"pour naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
-msgstr ""
+msgstr "Camilo Polymeris <cpolymeris@gmx.net>"
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
-msgstr ""
+msgstr "   * Illustrations et développement"
 
 #: dat/AUTHORS:107
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
+"   C'est bien de voir quelqu'un d'autre travailler sur le code de Naev et la "
+"documentation de Lua."
 
 #: dat/AUTHORS:109
+#, fuzzy
 msgid "Dimitry Marakasov"
-msgstr ""
+msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
-msgstr ""
+msgstr "   * Port de FreeBSD et CMake"
 
 #: dat/AUTHORS:111
 msgid "   Talented coder who did the first official port of Naev."
-msgstr ""
+msgstr "   Talentueux développeur qui a fait le premier port officiel de Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
@@ -29933,7 +29958,7 @@ msgstr ""
 #. Render planet image.
 #: dat/gui/brushed.lua:907 dat/gui/slim.lua:866 dat/gui/slim.lua:999
 msgid "TARGETED"
-msgstr ""
+msgstr "CIBLE EN VUE"
 
 #: dat/gui/brushed.lua:910
 #, lua-format
@@ -29949,11 +29974,11 @@ msgstr ""
 #. Render dir sprite.
 #: dat/gui/brushed.lua:925 dat/gui/slim.lua:1016
 msgid "SERVICES:"
-msgstr ""
+msgstr "SERVICES :"
 
 #: dat/gui/brushed.lua:930
 msgid "SERVICES: none"
-msgstr ""
+msgstr "SERVICES : aucun"
 
 #. Fleet functions
 #. TODO: Add an API for and implement fleet command buttons
@@ -30204,19 +30229,19 @@ msgstr ""
 
 #: dat/gui/slim.lua:1047
 msgid "Pilot: "
-msgstr ""
+msgstr "Pilote : "
 
 #: dat/gui/slim.lua:1047
 msgid "System: "
-msgstr ""
+msgstr "Système : "
 
 #: dat/gui/slim.lua:1047
 msgid "Time: "
-msgstr ""
+msgstr "Heure : "
 
 #: dat/gui/slim.lua:1047
 msgid "Credits: "
-msgstr ""
+msgstr "Crédits : "
 
 #: dat/gui/slim.lua:1048
 msgid "Nav: "
@@ -30224,7 +30249,7 @@ msgstr ""
 
 #: dat/gui/slim.lua:1048
 msgid "Fuel: "
-msgstr ""
+msgstr "Carburant : "
 
 #: dat/gui/slim.lua:1049
 msgid "WSet: "
@@ -62199,6 +62224,10 @@ msgid ""
 "Fuel:\n"
 "Ammo:\n"
 msgstr ""
+"Crédits :\n"
+"Cargo :\n"
+"Carburant :\n"
+"Ammo :\n"
 
 #: src/board.c:165
 msgid "Credits"
@@ -63206,7 +63235,7 @@ msgstr ""
 #: src/dev_sysedit.c:220 src/dev_sysedit.c:1267 src/dev_uniedit.c:197
 #: src/dev_uniedit.c:1249 src/equipment.c:276
 msgid "Rename"
-msgstr ""
+msgstr "Renommer"
 
 #: src/dev_sysedit.c:225
 msgid "New Planet"
@@ -63239,7 +63268,7 @@ msgstr ""
 #: src/dev_sysedit.c:421
 #, c-format
 msgid "What do you want to rename the planet #r%s#0?"
-msgstr ""
+msgstr "Comment voulez-vous renommer la planète #r%s#0 ?"
 
 #: src/dev_sysedit.c:469
 msgid "Remove selected planets?"
@@ -63280,7 +63309,7 @@ msgstr ""
 
 #: src/dev_sysedit.c:1261
 msgid "Name: "
-msgstr ""
+msgstr "Nom : "
 
 #: src/dev_sysedit.c:1269
 msgid "Faction"
@@ -63288,7 +63317,7 @@ msgstr ""
 
 #: src/dev_sysedit.c:1273
 msgid "Faction: "
-msgstr ""
+msgstr "Faction : "
 
 #: src/dev_sysedit.c:1280
 msgid "Population"
@@ -63440,7 +63469,7 @@ msgstr ""
 
 #: src/dev_uniedit.c:232 src/map.c:268
 msgid "Presence:"
-msgstr ""
+msgstr "Présence :"
 
 #: src/dev_uniedit.c:450
 msgid "Click to add a new system"
@@ -63458,12 +63487,12 @@ msgstr ""
 #. Get name.
 #: src/dev_uniedit.c:690
 msgid "Rename Star System"
-msgstr ""
+msgstr "Renommer le système solaire"
 
 #: src/dev_uniedit.c:690
 #, c-format
 msgid "What do you want to rename #r%s#0?"
-msgstr ""
+msgstr "Comment voulez-vous renommer #r%s#0 ?"
 
 #. Get name.
 #: src/dev_uniedit.c:739
@@ -63521,7 +63550,7 @@ msgstr ""
 #: src/dev_uniedit.c:1247
 #, c-format
 msgid "Name: #n%s"
-msgstr ""
+msgstr "Nom : #n%s"
 
 #: src/dev_uniedit.c:1247 src/dev_uniedit.c:1544
 msgid "#rvarious"
@@ -63581,7 +63610,7 @@ msgstr ""
 #: src/dev_uniedit.c:1544
 #, c-format
 msgid "Name: %s"
-msgstr ""
+msgstr "Nom : %s"
 
 #: src/dialogue.c:122 src/dialogue.c:138
 msgid "Dialogue counter not in sync!"
@@ -63668,7 +63697,7 @@ msgstr ""
 #. Check if player really wants to sell.
 #: src/equipment.c:279 src/equipment.c:1857
 msgid "Sell Ship"
-msgstr ""
+msgstr "Vendre le vaisseau"
 
 #: src/equipment.c:282
 msgid "Swap Ship"
@@ -63676,7 +63705,7 @@ msgstr ""
 
 #: src/equipment.c:285
 msgid "Unequip"
-msgstr ""
+msgstr "Déséquiper"
 
 #. text
 #: src/equipment.c:288
@@ -63706,11 +63735,11 @@ msgstr ""
 
 #: src/equipment.c:319
 msgid "Available Ships"
-msgstr ""
+msgstr "Vaisseaux disponibles"
 
 #: src/equipment.c:321
 msgid "Available Outfits"
-msgstr ""
+msgstr "Tenues disponibles"
 
 #: src/equipment.c:517 src/outfit.c:271
 msgid "Weapon"
@@ -63718,15 +63747,15 @@ msgstr ""
 
 #: src/equipment.c:525 src/outfit.c:269
 msgid "Utility"
-msgstr ""
+msgstr "Utilitaire"
 
 #: src/equipment.c:533 src/outfit.c:267
 msgid "Structure"
-msgstr ""
+msgstr "Structure"
 
 #: src/equipment.c:566
 msgid "CPU Free"
-msgstr ""
+msgstr "CPU libre"
 
 #: src/equipment.c:578
 msgid "Mass Limit Left"
@@ -63816,16 +63845,20 @@ msgstr ""
 #: src/equipment.c:1782
 msgid "You can not unequip your ship while you have deployed fighters!"
 msgstr ""
+"Vous ne pouvez pas déséquiper votre vaisseau alors que vous avez déployé des "
+"unités de combat !"
 
 #: src/equipment.c:1787
 msgid ""
 "You can not unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
+"Vous ne pouvez pas déséquiper votre vaisseau lorsque vous avez plus de "
+"cargaison qu'il ne peut en contenir sans subir de modifications !"
 
 #: src/equipment.c:1791
 msgid "Unequip Ship"
-msgstr ""
+msgstr "Déséquiper le vaisseau"
 
 #. confirm
 #: src/equipment.c:1792
@@ -63835,7 +63868,7 @@ msgstr ""
 #: src/equipment.c:1858
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir vendre votre votre vaisseau %s pour %s ?"
 
 #. Display widget.
 #: src/equipment.c:1875
@@ -64943,11 +64976,11 @@ msgstr ""
 #. Space Navigation
 #: src/input.c:94
 msgid "Autonavigation On"
-msgstr ""
+msgstr "Pilote automatique activé"
 
 #: src/input.c:94
 msgid "Initializes the autonavigation system."
-msgstr ""
+msgstr "Initialise le système de pilote automatique."
 
 #: src/input.c:95
 msgid "Target Planet"
@@ -64974,11 +65007,11 @@ msgstr ""
 #. create the window.
 #: src/input.c:98 src/map.c:212 src/outfit.c:808
 msgid "Star Map"
-msgstr ""
+msgstr "Carte des étoiles"
 
 #: src/input.c:98
 msgid "Opens the star map."
-msgstr ""
+msgstr "Ouvre la carte des étoiles."
 
 #: src/input.c:99
 msgid "Initiate Jump"
@@ -65437,6 +65470,10 @@ msgid ""
 "Free Space:\n"
 "Money:"
 msgstr ""
+"Stationné sur :\n"
+"Système :\n"
+"Espace libre :\n"
+"Argent :"
 
 #: src/land.c:1213
 msgid "No refueling services."
@@ -65693,6 +65730,7 @@ msgstr ""
 #: src/land_shipyard.c:436
 msgid "You can't sell the ship you're piloting!"
 msgstr ""
+"Vous ne pouvez pas vendre le vaisseau que vous êtes en train de piloter !"
 
 #: src/land_shipyard.c:457
 #, c-format
@@ -65898,7 +65936,7 @@ msgstr ""
 
 #: src/map.c:254
 msgid "Faction:"
-msgstr ""
+msgstr "Faction :"
 
 #: src/map.c:261
 msgid "Standing:"
@@ -65906,11 +65944,11 @@ msgstr ""
 
 #: src/map.c:275
 msgid "Planets:"
-msgstr ""
+msgstr "Planètes :"
 
 #: src/map.c:282
 msgid "Services:"
-msgstr ""
+msgstr "Services :"
 
 #. Commodity button
 #: src/map.c:290
@@ -65919,7 +65957,7 @@ msgstr ""
 
 #: src/map.c:296
 msgid "Autonav"
-msgstr ""
+msgstr "Pilote automatique"
 
 #: src/map.c:425
 #, c-format
@@ -66131,7 +66169,7 @@ msgstr ""
 #: src/map_system.c:390
 #, c-format
 msgid "System: %s\n"
-msgstr ""
+msgstr "Système : %s\n"
 
 #. display sun information
 #: src/map_system.c:392
@@ -66188,11 +66226,11 @@ msgstr ""
 
 #: src/map_system.c:438
 msgid "Faction: Multiple\n"
-msgstr ""
+msgstr "Faction : Plusieurs\n"
 
 #: src/map_system.c:444
 msgid "Faction: N/A\n"
-msgstr ""
+msgstr "Faction : N/A\n"
 
 #. saw them all and all the same
 #: src/map_system.c:447
@@ -66204,7 +66242,7 @@ msgstr ""
 
 #: src/map_system.c:474
 msgid "Presence: N/A\n"
-msgstr ""
+msgstr "Présence : N/A\n"
 
 #. First jump
 #: src/map_system.c:485
@@ -66293,19 +66331,19 @@ msgstr ""
 
 #: src/map_system.c:536
 msgid "This system sells ship equipment"
-msgstr ""
+msgstr "Ce système vend de l'équipement pour vaisseaux"
 
 #: src/map_system.c:536
 msgid "This system does not sell ship equipment"
-msgstr ""
+msgstr "Ce système ne vend pas d'équipement pour vaisseaux"
 
 #: src/map_system.c:537
 msgid "This system sells ships"
-msgstr ""
+msgstr "Ce système vend des vaisseaux"
 
 #: src/map_system.c:537
 msgid "This system does not sell ships"
-msgstr ""
+msgstr "Ce système ne vend pas de vaisseaux"
 
 #: src/map_system.c:623
 #, c-format
@@ -66723,7 +66761,7 @@ msgstr ""
 
 #: src/naev.c:378
 msgid "Welcome to Naev"
-msgstr ""
+msgstr "Bienvenue dans Naev"
 
 #: src/naev.c:379
 #, c-format
@@ -69332,7 +69370,7 @@ msgstr ""
 
 #: src/player_autonav.c:595
 msgid "Not enough fuel for autonav to continue"
-msgstr ""
+msgstr "Pas assez de carburant pour continuer en pilote automatique"
 
 #: src/player_gui.c:71
 #, c-format
@@ -70023,7 +70061,7 @@ msgstr ""
 #: src/space.c:1342
 #, c-format
 msgid "You discovered #%c%s#0."
-msgstr ""
+msgstr "Vous avez découvert #%c%s#0."
 
 #: src/space.c:1359
 msgid "You discovered a Jump Point."
