@@ -30,9 +30,10 @@ float smoothbeam( float x, float k )
    return 1. - pow( abs( sin( M_PI * x / 2. ) ), k );
 }
 
+/* Similar to smoothbeam, but morke k == sharper. */
 float sharpbeam( float x, float k )
 {
-   return 1. - pow( min( cos( M_PI * x / 2. ), 1.0 - abs(x) ), k );
+   return pow( min( cos( M_PI * x / 2. ), 1.0 - abs(x) ), k );
 }
 
 float random (vec2 st) {
@@ -124,7 +125,7 @@ float trail_nebula( float t, float y )
 
    // Modulate width
    m *= 2-smoothstep( 0., 0.2, 1.-t );
-   a *= 1-sharpbeam( y, 3*m );
+   a *= sharpbeam( y, 3*m );
    a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-t );
 
    return a;
