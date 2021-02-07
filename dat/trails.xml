@@ -48,21 +48,29 @@
 
  <!-- Red type of engines -->
  <trail name="red">
-  <type>1</type>
-  <thickness>8</thickness>
+  <type>1.1</type>
+  <thickness>10</thickness>
   <ttl>1</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="1" g="0.3" b="0.3" a="0.7" />
   <afterburn r="1" g="0.5" b="0" a="0.85" scale="2" />
   <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="3" />
  </trail>
- <trail name="red10" inherits="red">
-  <thickness>10</thickness>
-  <ttl>1.5</ttl>
+ <trail name="redXS" inherits="red">
+  <thickness>8</thickness>
+  <ttl>1.0</ttl>
  </trail>
- <trail name="red12" inherits="red">
-  <thickness>12</thickness>
-  <ttl>2</ttl>
+ <trail name="redS" inherits="red">
+  <thickness>10</thickness>
+  <ttl>1.0</ttl>
+ </trail>
+ <trail name="redL" inherits="red">
+  <thickness>14</thickness>
+  <ttl>1.4</ttl>
+ </trail>
+ <trail name="redXL" inherits="red">
+  <thickness>18</thickness>
+  <ttl>1.8</ttl>
  </trail>
  <trail name="red-missile" inherits="red">
   <thickness>2</thickness>
