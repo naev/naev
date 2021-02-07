@@ -69,7 +69,7 @@ float trail_pulse( float t, float y )
    a *= smoothbeam( y, 3.*m );
 
    v = smoothstep( 0., 0.5, 1-t );
-   a *=  0.8 + 0.2*((1-v) + v*sin( 2*M_PI * (t * 25 + dt * 3) ));
+   a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (t * 25 + dt * 3) ), v );
 
    return a;
 }
