@@ -1,5 +1,6 @@
 * 0.9.0 (unreleased)
    * Gameplay
+      * Ships and rockets now have engine trails
       * Added outfits that allow converting damage to disable
       * Added gambling resort "Minerva Station"
       * New missions
