@@ -25,8 +25,8 @@
 
  <!-- Fire type of engines-->
  <trail name="fire">
-  <type>0</type>
-  <thickness>6</thickness>
+  <type>2</type>
+  <thickness>8</thickness>
   <ttl>1.5</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="1" g="0.84" b="0" a="0.7" />
@@ -34,23 +34,23 @@
   <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="3" />
  </trail>
  <trail name="fire-thin" inherits="fire">
-  <thickness>2</thickness>
+  <thickness>4</thickness>
   <ttl>1</ttl>
  </trail>
  <trail name="fire-missile" inherits="fire">
-  <thickness>2</thickness>
+  <thickness>3</thickness>
   <ttl>0.3</ttl>
  </trail>
  <trail name="fire-missileL" inherits="fire">
-  <thickness>4</thickness>
+  <thickness>5</thickness>
   <ttl>0.5</ttl>
  </trail>
 
  <!-- Red type of engines -->
  <trail name="red">
-  <type>1.1</type>
+  <type>1</type>
   <thickness>10</thickness>
-  <ttl>1</ttl>
+  <ttl>1.1</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="1" g="0.3" b="0.3" a="0.7" />
   <afterburn r="1" g="0.5" b="0" a="0.85" scale="2" />
@@ -83,7 +83,7 @@
 
  <!-- Nebula trail! -->
  <trail name="nebula">
-  <nebula>1</nebula>
+  <nebula>3</nebula>
   <type>2</type>
   <thickness>9</thickness>
   <ttl>2</ttl>
