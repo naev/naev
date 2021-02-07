@@ -68,14 +68,14 @@ float trail_pulse( float t, float y )
    a *= smoothbeam( y, 3.*m );
 
    v = smoothstep( 0., 0.5, 1-t );
-   a *=  0.8 + 0.2*((1-v) + v*sin( 2*M_PI * (t * 25 + dt * 3) ));
+   a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (t * 25 + dt * 3) ), v );
 
    return a;
 }
 
 float trail_wave( float t, float y )
 {
-   float a, m;
+   float a, m, p;
 
    // Modulate alpha base on length
    a = fastdropoff( t, 1. );
@@ -84,7 +84,28 @@ float trail_wave( float t, float y )
    m = 0.5 + 0.5*impulse( 1.-t, 30. );
 
    // Modulate width
-   y += 0.2 * smoothstep(0, 0.8, 1-t) * sin( 2*M_PI * (t*5 + dt * 5) );
+   p = 2*M_PI * (t*5 + dt * 0.5);
+   y += 0.2 * smoothstep(0, 0.8, 1-t) * sin( p );
+   a *= smoothbeam( y, 2.*m );
+
+   return a;
+}
+
+float trail_flame( float t, float y )
+{
+   float a, m, p;
+
+   // Modulate alpha base on length
+   a = fastdropoff( t, 1. );
+
+   // Modulate alpha based on dispersion
+   m = 0.5 + 0.5*impulse( 1.-t, 30. );
+
+   // Modulate width
+   // By multiplying two sine waves with different period it looks more like
+   // a natural flame.
+   p = 2*M_PI * (t*5 + dt * 5);
+   y += 0.2 * smoothstep(0, 0.8, 1-t) * sin( p ) * sin( 2.7*p );
    a *= smoothbeam( y, 2.*m );
 
    return a;
@@ -123,6 +144,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    else if (type==2)
       a = trail_wave( t, pos.y );
    else if (type==3)
+      a = trail_flame( t, pos.y );
+   else if (type==4)
       a = trail_nebula( t, pos.y );
    else
       a = trail_default( t, pos.y );
