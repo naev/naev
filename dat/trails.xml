@@ -46,8 +46,8 @@
   <ttl>0.5</ttl>
  </trail>
 
- <!-- Red type of engines -->
- <trail name="red">
+ <!-- Za'lek type of engines -->
+ <trail name="zalek">
   <type>1</type>
   <thickness>10</thickness>
   <ttl>1.1</ttl>
@@ -56,27 +56,27 @@
   <afterburn r="1" g="0.5" b="0" a="0.85" scale="2" />
   <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="3" />
  </trail>
- <trail name="redXS" inherits="red">
+ <trail name="zalekXS" inherits="zalek">
   <thickness>8</thickness>
   <ttl>1.0</ttl>
  </trail>
- <trail name="redS" inherits="red">
+ <trail name="zalekS" inherits="zalek">
   <thickness>10</thickness>
   <ttl>1.0</ttl>
  </trail>
- <trail name="redL" inherits="red">
+ <trail name="zalekL" inherits="zalek">
   <thickness>14</thickness>
   <ttl>1.4</ttl>
  </trail>
- <trail name="redXL" inherits="red">
+ <trail name="zalekXL" inherits="zalek">
   <thickness>18</thickness>
   <ttl>1.8</ttl>
  </trail>
- <trail name="red-missile" inherits="red">
+ <trail name="zalek-missile" inherits="zalek">
   <thickness>2</thickness>
   <ttl>0.3</ttl>
  </trail>
- <trail name="red-missileL" inherits="red">
+ <trail name="zalek-missileL" inherits="zalek">
   <thickness>4</thickness>
   <ttl>0.5</ttl>
  </trail>
