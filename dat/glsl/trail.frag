@@ -139,6 +139,8 @@ void main(void) {
 
    // TODO optimize this with subroutines
    // https://www.khronos.org/opengl/wiki/Shader_Subroutine
+   // Main issue is that this would require OpenGL 4.0+ unless
+   // worked around
    if (type==1)
       a = trail_pulse( t, pos.y );
    else if (type==2)
