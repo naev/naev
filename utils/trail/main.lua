@@ -9,6 +9,7 @@ local pixelcode = [[
 
 uniform float dt;
 uniform int type;
+uniform float length;
 
 //
 // Description : Array and textureless GLSL 2D simplex noise function.
@@ -53,7 +54,7 @@ float snoise(vec2 v)
 // Permutations
   i = mod289(i); // Avoid truncation effects in permutation
   vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
-		+ i.x + vec3(0.0, i1.x, 1.0 ));
+      + i.x + vec3(0.0, i1.x, 1.0 ));
 
   vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
   m = m*m ;
@@ -137,7 +138,7 @@ float trail_pulse( float t, float y )
    a *= smoothbeam( y, 3.*m );
 
    v = smoothstep( 0., 0.5, 1-t );
-   a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (t * 25 + dt * 3) ), v );
+   a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (t * 0.03 * length + dt * 3) ), v );
 
    return a;
 }
@@ -183,7 +184,7 @@ float trail_flame( float t, float y )
 float trail_arc( float t, float y )
 {
    float a, m, p, v, s;
-	vec2 ncoord;
+   vec2 ncoord;
 
    // Modulate alpha base on length
    a = fastdropoff( t, 1. );
@@ -191,21 +192,39 @@ float trail_arc( float t, float y )
    // Modulate alpha based on dispersion
    //m = 0.5 + 0.5*impulse( 1.-t, 1. );
    m = 0.5 + 0.5*impulse( 1.-t, 1. );
-	m *= 3;
+   m *= 3;
 
    // Modulate width
-	ncoord = vec2( 20*t, 7*dt );
-	s =  0.6 * smoothstep(0, 0.2, 1-t);
-	p = y + s * snoise( ncoord );
-	v = sharpbeam( p, m );
-	p = y + s * snoise( 1.5*ncoord );
-	v += sharpbeam( p, 2*m );
-	p = y + s * snoise( 2*ncoord );
-	v += sharpbeam( p, 4*m );
+   ncoord = vec2( t * 0.03*length, 7*dt );
+   s =  0.6 * smoothstep(0, 0.2, 1-t);
+   p = y + s * snoise( ncoord );
+   v = sharpbeam( p, m );
+   p = y + s * snoise( 1.5*ncoord );
+   v += sharpbeam( p, 2*m );
+   p = y + s * snoise( 2*ncoord );
+   v += sharpbeam( p, 4*m );
 
-	a *= v * 0.6;
+   a *= v * 0.6;
 
    return min(1, a);
+}
+
+float trail_bubbles( float t, float y )
+{
+   float a, m,p;
+
+   // Modulate alpha base on length
+   a = fastdropoff( t, 1. );
+
+   // Modulate alpha based on dispersion
+   m = 0.5 + 0.5*impulse( 1.-t, 3. );
+
+   p = 0.5 + min( 0.5, snoise( 0.08*vec2( length*t+200*dt, 10*y )  ));
+
+   // Modulate width
+   a *= p * smoothbeam( y, 3.*m );
+
+   return a;
 }
 
 float trail_nebula( float t, float y )
@@ -228,10 +247,10 @@ float trail_nebula( float t, float y )
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-	vec4 color_out = color;
-	vec2 pos = texture_coords;
-	pos.y = 2*pos.y-1;
-	pos.x = 1-pos.x;
+   vec4 color_out = color;
+   vec2 pos = texture_coords;
+   pos.y = 2*pos.y-1;
+   pos.x = 1-pos.x;
    float t = pos.x;
    float a;
 
@@ -245,12 +264,14 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       a = trail_nebula( t, pos.y );
    else if (type==5)
       a = trail_arc( t, pos.y );
+   else if (type==6)
+      a = trail_bubbles( t, pos.y );
    else
       a = trail_default( t, pos.y );
 
    color_out.a *= a;
 
-	return color_out;
+   return color_out;
 }
 ]]
 
@@ -259,10 +280,11 @@ local vertexcode = [[
 
 uniform float dt;
 uniform int type;
+uniform float length;
 
 vec4 position( mat4 transform_projection, vec4 vertex_position )
 {
-	return transform_projection * vertex_position;
+   return transform_projection * vertex_position;
 }
 ]]
 
@@ -270,13 +292,13 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 function love.load()
    love.window.setTitle( "Naev Trail Demo" )
    -- Set up the shader
-	shader 	= love.graphics.newShader(pixelcode, vertexcode)
+   shader   = love.graphics.newShader(pixelcode, vertexcode)
    shader_type = 0
    shader:send( "type", shader_type )
    -- We need an image for the shader to work so we create a 1x1 px white image.
-	local idata = love.image.newImageData( 1, 1 )
-	idata:setPixel( 0, 0, 1, 1, 1, 1 )
-	img 		= love.graphics.newImage( idata )
+   local idata = love.image.newImageData( 1, 1 )
+   idata:setPixel( 0, 0, 1, 1, 1, 1 )
+   img      = love.graphics.newImage( idata )
    -- Set the font
    love.graphics.setNewFont( 24 )
 end
@@ -292,23 +314,24 @@ function love.keypressed(key)
 end
 
 function love.draw ()
-	local x = 20
-	local y = 10
+   local x = 20
+   local y = 10
    local lg = love.graphics
    lg.setShader()
    lg.setColor( 1, 1, 1, 1 )
    lg.print( string.format("Use the number keys to change between shaders.\nCurrent Shader: %d", shader_type), x, y )
    y = y + 54 + 10
-	for _,w in ipairs( {700, 500, 300, 100} ) do
-		for _,h in ipairs( {30, 20, 10} ) do
-			lg.setColor( 1, 1, 1, 0.5 )
-			lg.rectangle( "line", x-2, y-2, w+4, h+4 )
-			lg.setShader(shader)
-			lg.setColor( 0, 1, 1, 0.7 )
-			lg.draw( img, x, y, 0, w, h)
-			y = y + h + 20
-		end
-	end
+   for _,w in ipairs( {700, 500, 300, 100} ) do
+      for _,h in ipairs( {30, 20, 10} ) do
+         lg.setColor( 1, 1, 1, 0.5 )
+         lg.rectangle( "line", x-2, y-2, w+4, h+4 )
+         lg.setShader(shader)
+         shader:send( "length", w )
+         lg.setColor( 0, 1, 1, 0.7 )
+         lg.draw( img, x, y, 0, w, h)
+         y = y + h + 20
+      end
+   end
 end
 
 function love.update( dt )
