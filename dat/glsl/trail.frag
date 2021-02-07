@@ -12,7 +12,7 @@ in vec2 pos;
 out vec4 color_out;
 
 /* Has a peak at 1/k */
-pure float impulse( float x, float k )
+float impulse( float x, float k )
 {
    float h = x*k;
    return h * exp( 1.0 - h );
