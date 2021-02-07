@@ -43,12 +43,12 @@ typedef struct TrailSpec_ {
 } TrailSpec;
 
 
-typedef struct trailPoint_ {
-   Vector2d p;    /**< Control points for the trail. */
+typedef struct TrailPoint {
+   GLfloat x, y;    /**< Control points for the trail. */
    glColour c;   /**< Colour associated with the trail's control points. */
-   double t; /**< Timer, normalized to the time to live of the trail (starts at 1, ends at 0). */
-   double thickness; /**< Thickness of the trail. */
-} trailPoint;
+   GLfloat t; /**< Timer, normalized to the time to live of the trail (starts at 1, ends at 0). */
+   GLfloat thickness; /**< Thickness of the trail. */
+} TrailPoint;
 
 
 /**
@@ -58,7 +58,7 @@ typedef struct trailPoint_ {
  */
 typedef struct Trail_spfx_ {
    double ttl;       /**< Time To Life (in seconds). */
-   trailPoint *point_ringbuf; /**< Circular buffer (malloced/freed) of trail points. */
+   TrailPoint *point_ringbuf; /**< Circular buffer (malloced/freed) of trail points. */
    size_t capacity; /**< Buffer size, guaranteed to be a power of 2. */
    size_t iread; /**< Start index (NOT reduced modulo capacity). */
    size_t iwrite; /**< End index (NOT reduced modulo capacity). */

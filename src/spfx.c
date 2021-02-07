@@ -488,7 +488,7 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
    trail->ttl = spec->ttl;
    trail->capacity = 1;
    trail->iread = trail->iwrite = 0;
-   trail->point_ringbuf = calloc( trail->capacity, sizeof(trailPoint) );
+   trail->point_ringbuf = calloc( trail->capacity, sizeof(TrailPoint) );
    trail->refcount = 1;
 
    if ( trail_spfx_stack == NULL )
@@ -548,8 +548,9 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
  */
 void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
 {
-   trailPoint p;
-   p.p = pos;
+   TrailPoint p;
+   p.x = pos.x;
+   p.y = pos.y;
    p.c = style.col;
    p.t = 1.;
    p.thickness = style.thick;
@@ -564,10 +565,10 @@ void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
    /* If the last time we inserted a control point was recent enough, we don't need a new one. */
    if (trail_size(trail) == trail->capacity) {
       /* Full! Double capacity, and make the elements contiguous. (We've made space to grow rightward.) */
-      trail->point_ringbuf = realloc( trail->point_ringbuf, 2 * trail->capacity * sizeof(trailPoint) );
+      trail->point_ringbuf = realloc( trail->point_ringbuf, 2 * trail->capacity * sizeof(TrailPoint) );
       trail->iread %= trail->capacity;
       trail->iwrite = trail->iread + trail->capacity;
-      memmove( &trail->point_ringbuf[trail->capacity], trail->point_ringbuf, trail->iread * sizeof(trailPoint) );
+      memmove( &trail->point_ringbuf[trail->capacity], trail->point_ringbuf, trail->iread * sizeof(TrailPoint) );
       trail->capacity *= 2;
    }
    trail_at( trail, trail->iwrite++ ) = p;
@@ -614,7 +615,7 @@ static void spfx_trail_free( Trail_spfx* trail )
 static void spfx_trail_draw( const Trail_spfx* trail )
 {
    double x1, y1, x2, y2, z;
-   trailPoint *tp, *tpp;
+   TrailPoint *tp, *tpp;
    size_t i, n;
 
    n = trail_size(trail);
@@ -625,8 +626,8 @@ static void spfx_trail_draw( const Trail_spfx* trail )
       z   = cam_getZoom();
       tp  = &trail_at( trail, i );
       tpp = &trail_at( trail, i-1 );
-      gl_gameToScreenCoords( &x1, &y1,  tp->p.x,  tp->p.y );
-      gl_gameToScreenCoords( &x2, &y2, tpp->p.x, tpp->p.y );
+      gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
+      gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
       gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, tp->thickness * z, tpp->thickness * z );
    }
 }
