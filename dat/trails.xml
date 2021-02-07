@@ -75,6 +75,7 @@
 
  <!-- Nebula trail! -->
  <trail name="nebula">
+  <nebula>1</nebula>
   <type>2</type>
   <thickness>9</thickness>
   <ttl>2</ttl>
