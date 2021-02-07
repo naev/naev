@@ -84,9 +84,9 @@ float trail_nebula( float t, float y )
    m = impulse( t, 0.3);
 
    // Modulate width
-   a *= 1-sharpbeam( y, 1.5*m );
-
-   a *= 0.5 + 0.5*smoothstep( 0., 0.3, 1.-t );
+   m *= 2-smoothstep( 0., 0.2, 1.-t );
+   a *= 1-sharpbeam( y, 3*m );
+   a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-t );
 
    return a;
 }
