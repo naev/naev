@@ -30,6 +30,7 @@
 #include "perlin.h"
 #include "physics.h"
 #include "rng.h"
+#include "space.h"
 
 
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
@@ -491,6 +492,7 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
    trail->point_ringbuf = calloc( trail->capacity, sizeof(TrailPoint) );
    trail->refcount = 1;
    trail->type = spec->type;
+   trail->nebula = spec->nebula;
 
    if ( trail_spfx_stack == NULL )
       trail_spfx_stack = array_create( Trail_spfx* );
@@ -511,6 +513,9 @@ void spfx_update_trails( double dt ) {
 
    for (i=0; i<array_size(trail_spfx_stack); i++) {
       trail = trail_spfx_stack[i];
+      if (trail->nebula  && (cur_system->nebu_density<=0.))
+         continue;
+
       spfx_trail_update( trail, dt );
       if (!trail->refcount && !trail_size(trail) ) {
          spfx_trail_free( trail );
@@ -553,6 +558,10 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
 void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
 {
    TrailPoint p;
+
+   if (style.col.a <= 0.)
+      return;
+
    p.x = pos.x;
    p.y = pos.y;
    p.c = style.col;
@@ -833,6 +842,7 @@ void spfx_render( const int layer )
    SPFX_Base *effect;
    int sx, sy;
    double time;
+   Trail_spfx *trail;
 
    /* get the appropriate layer */
    switch (layer) {
@@ -851,8 +861,12 @@ void spfx_render( const int layer )
 
    /* Trails are special (for now?). */
    if (layer == SPFX_LAYER_BACK)
-      for (i=0; i<array_size(trail_spfx_stack); i++)
-         spfx_trail_draw( trail_spfx_stack[i] );
+      for (i=0; i<array_size(trail_spfx_stack); i++) {
+         trail = trail_spfx_stack[i];
+         if (trail->nebula && (cur_system->nebu_density<=0.))
+            continue;
+         spfx_trail_draw( trail );
+      }
 
    /* Now render the layer */
    for (i=array_size(spfx_stack)-1; i>=0; i--) {
@@ -893,6 +907,8 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
          tc->ttl = xml_getFloat( cur );
       else if (xml_isNode(cur, "type"))
          tc->type = xml_getInt( cur );
+      else if (xml_isNode(cur, "nebula"))
+         tc->nebula = xml_getInt( cur );
       else if (xml_isNode(cur,"idle")) {
          xmlr_attr_float_opt( cur, "r", tc->idle.col.r );
          xmlr_attr_float_opt( cur, "g", tc->idle.col.g );

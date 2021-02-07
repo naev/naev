@@ -49,7 +49,7 @@
  <!-- Red type of engines -->
  <trail name="red">
   <type>1</type>
-  <thickness>6</thickness>
+  <thickness>8</thickness>
   <ttl>1</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
   <glow r="1" g="0.3" b="0.3" a="0.7" />
@@ -71,5 +71,16 @@
  <trail name="red-missileL" inherits="red">
   <thickness>4</thickness>
   <ttl>0.5</ttl>
+ </trail>
+
+ <!-- Nebula trail! -->
+ <trail name="nebula">
+  <type>2</type>
+  <thickness>9</thickness>
+  <ttl>2</ttl>
+  <idle r="0.2" g="0.2" b="0.8" a="0.7" />
+  <glow r="0.2" g="0.2" b="0.8" a="0.7" />
+  <afterburn r="0.2" g="0.2" b="0.8" a="0.7" scale="2" />
+  <jumping r="0.2" g="0.2" b="0.8" a="0.7" scale="3" />
  </trail>
 </Trail_types>

@@ -41,6 +41,7 @@ typedef struct TrailSpec_ {
    TrailStyle glow; /**< Colour when thrusting. */
    TrailStyle aftb; /**< Colour when afterburning. */
    TrailStyle jmpn; /**< Colour when jumping. */
+   int nebula;      /**< Whether or not the trail should be only active in the nebula. */
 } TrailSpec;
 
 
@@ -61,11 +62,12 @@ typedef struct Trail_spfx_ {
    double ttl;       /**< Time To Life (in seconds). */
    int type;         /**< Shader to use. */
    TrailPoint *point_ringbuf; /**< Circular buffer (malloced/freed) of trail points. */
-   size_t capacity; /**< Buffer size, guaranteed to be a power of 2. */
-   size_t iread; /**< Start index (NOT reduced modulo capacity). */
-   size_t iwrite; /**< End index (NOT reduced modulo capacity). */
-   int refcount;      /**< Number of referrers. If 0, trail dies after its TTL. */
+   size_t capacity;  /**< Buffer size, guaranteed to be a power of 2. */
+   size_t iread;     /**< Start index (NOT reduced modulo capacity). */
+   size_t iwrite;    /**< End index (NOT reduced modulo capacity). */
+   int refcount;     /**< Number of referrers. If 0, trail dies after its TTL. */
    double dt;        /**< Timer accumulator. */
+   int nebula;       /**< Whether or not this trail is only shown in the nebula. */
 } Trail_spfx;
 
 /** @brief Indexes into a trail's circular buffer.  */
