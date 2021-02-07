@@ -6,6 +6,7 @@ uniform vec4 c1;
 uniform vec4 c2;
 uniform float t1;
 uniform float t2;
+uniform int type;
 in vec2 pos;
 out vec4 color_out;
 

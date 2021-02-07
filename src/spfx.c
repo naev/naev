@@ -490,6 +490,7 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
    trail->iread = trail->iwrite = 0;
    trail->point_ringbuf = calloc( trail->capacity, sizeof(TrailPoint) );
    trail->refcount = 1;
+   trail->type = spec->type;
 
    if ( trail_spfx_stack == NULL )
       trail_spfx_stack = array_create( Trail_spfx* );
@@ -628,7 +629,7 @@ static void spfx_trail_draw( const Trail_spfx* trail )
       tpp = &trail_at( trail, i-1 );
       gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
       gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
-      gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, tp->thickness * z, tpp->thickness * z );
+      gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, tp->thickness * z, tpp->thickness * z, trail->type );
    }
 }
 
@@ -886,6 +887,8 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
          tc->def_thick = xml_getFloat( cur );
       else if (xml_isNode(cur, "ttl"))
          tc->ttl = xml_getFloat( cur );
+      else if (xml_isNode(cur, "type"))
+         tc->type = xml_getInt( cur );
       else if (xml_isNode(cur,"idle")) {
          xmlr_attr_float_opt( cur, "r", tc->idle.col.r );
          xmlr_attr_float_opt( cur, "g", tc->idle.col.g );

@@ -758,10 +758,12 @@ void gl_drawLine( const double x1, const double y1,
  *    @param c2 Colour to use for second point.
  *    @param thick1 Thickness to use for first point.
  *    @param thick2 Thickness to use for second point.
+ *    @param type Shader to use.
  */
 void gl_drawTrail( double x1, double y1, double x2, double y2,
       double t1, double t2, const glColour *c1,
-      const glColour *c2, double thick1, double thick2 )
+      const glColour *c2, double thick1, double thick2,
+      int type )
 {
    gl_Matrix4 projection;
    double a, s;
@@ -788,6 +790,7 @@ void gl_drawTrail( double x1, double y1, double x2, double y2,
    gl_Matrix4_Uniform(shaders.trail.projection, projection);
    glUniform1f(shaders.trail.t1, (GLfloat) t1);
    glUniform1f(shaders.trail.t2, (GLfloat) t2);
+   glUniform1i(shaders.trail.type, type );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
