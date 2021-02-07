@@ -1,4 +1,5 @@
 #include "math.h"
+#include "noise2D.glsl"
 
 // For ideas: https://thebookofshaders.com/05/
 
@@ -40,6 +41,7 @@ float random (vec2 st) {
    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
 }
 
+/* No animation. */
 float trail_default( float t, float y )
 {
    float a, m;
@@ -56,6 +58,7 @@ float trail_default( float t, float y )
    return a;
 }
 
+/* Pulsating motion. */
 float trail_pulse( float t, float y )
 {
    float a, m, v;
@@ -75,6 +78,7 @@ float trail_pulse( float t, float y )
    return a;
 }
 
+/* Slow ondulating wave-like movement. */
 float trail_wave( float t, float y )
 {
    float a, m, p;
@@ -93,6 +97,7 @@ float trail_wave( float t, float y )
    return a;
 }
 
+/* Flame-like periodic movement. */
 float trail_flame( float t, float y )
 {
    float a, m, p;
@@ -113,6 +118,38 @@ float trail_flame( float t, float y )
    return a;
 }
 
+/* Somewhat like lightning. */
+float trail_arc( float t, float y )
+{
+   float a, m, p, v, s;
+	vec2 ncoord;
+
+   // Modulate alpha base on length
+   a = fastdropoff( t, 1. );
+
+   // Modulate alpha based on dispersion
+   //m = 0.5 + 0.5*impulse( 1.-t, 1. );
+   m = 0.5 + 0.5*impulse( 1.-t, 1. );
+	m *= 3;
+
+   // Modulate width
+	ncoord = vec2( 20*t, 7*dt );
+	s =  0.6 * smoothstep(0, 0.2, 1-t);
+	p = y + s * snoise( ncoord );
+	v = sharpbeam( p, m );
+	p = y + s * snoise( 1.5*ncoord );
+	v += sharpbeam( p, 2*m );
+	p = y + s * snoise( 2*ncoord );
+	v += sharpbeam( p, 4*m );
+
+   // Compensate
+	a *= v * 0.6;
+
+   // It does go over 1, so we take min
+   return min(1, a);
+}
+
+/* Starts thin and gets wide. */
 float trail_nebula( float t, float y )
 {
    float a, m;
@@ -150,6 +187,8 @@ void main(void) {
       a = trail_flame( t, pos.y );
    else if (type==4)
       a = trail_nebula( t, pos.y );
+   else if (type==5)
+      a = trail_arc( t, pos.y );
    else
       a = trail_default( t, pos.y );
 
