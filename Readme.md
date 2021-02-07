@@ -15,8 +15,9 @@ accompanying everything from planets to equipment.
 
 ## DEPENDENCIES
 
-Naev's dependencies are intended to be relatively common. In addition to
-an OpenGL-capable graphics card and driver, Naev requires the following:
+Naev's dependencies are intended to be relatively common. In addition to an
+OpenGL-capable graphics card and driver with support for at least OpenGL 3.1,
+Naev requires the following:
 * SDL 2
 * libxml2
 * freetype2
@@ -149,7 +150,7 @@ meson compile naev-pot        # necessary if translatable strings changed
 meson compile naev-update-po  # necessary outside the main line, where Weblate handles it
 ```
 
-This wil allow you to edit the translation files in `po/` manually to modify
+This will allow you to edit the translation files in `po/` manually to modify
 translations.
 
 ## CRASHES & PROBLEMS
