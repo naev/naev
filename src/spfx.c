@@ -116,6 +116,7 @@ typedef struct SPFX_ {
 
 /* front stack is for effects on player, back is for the rest */
 static SPFX *spfx_stack_front = NULL; /**< Frontal special effect layer. */
+static SPFX *spfx_stack_middle = NULL; /**< Middle special effect layer. */
 static SPFX *spfx_stack_back = NULL; /**< Back special effect layer. */
 
 
@@ -272,6 +273,7 @@ int spfx_load (void)
 
    /* Stacks. */
    spfx_stack_front = array_create( SPFX );
+   spfx_stack_middle = array_create( SPFX );
    spfx_stack_back = array_create( SPFX );
 
    return 0;
@@ -292,6 +294,8 @@ void spfx_free (void)
    spfx_clear();
    array_free(spfx_stack_front);
    spfx_stack_front = NULL;
+   array_free(spfx_stack_middle);
+   spfx_stack_middle = NULL;
    array_free(spfx_stack_back);
    spfx_stack_back = NULL;
 
@@ -344,6 +348,8 @@ void spfx_add( int effect,
     */
    if (layer == SPFX_LAYER_FRONT) /* front layer */
       cur_spfx = &array_grow( &spfx_stack_front );
+   else if (layer == SPFX_LAYER_MIDDLE) /* middle layer */
+      cur_spfx = &array_grow( &spfx_stack_middle );
    else if (layer == SPFX_LAYER_BACK) /* back layer */
       cur_spfx = &array_grow( &spfx_stack_back );
    else {
@@ -391,6 +397,7 @@ void spfx_clear (void)
 void spfx_update( const double dt )
 {
    spfx_update_layer( spfx_stack_front, dt );
+   spfx_update_layer( spfx_stack_middle, dt );
    spfx_update_layer( spfx_stack_back, dt );
    spfx_update_trails( dt );
 }
@@ -848,6 +855,10 @@ void spfx_render( const int layer )
    switch (layer) {
       case SPFX_LAYER_FRONT:
          spfx_stack = spfx_stack_front;
+         break;
+
+      case SPFX_LAYER_MIDDLE:
+         spfx_stack = spfx_stack_middle;
          break;
 
       case SPFX_LAYER_BACK:

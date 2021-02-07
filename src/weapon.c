@@ -518,7 +518,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                if (spfx != -1) {
                   spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
                         w->solid->vel.x, w->solid->vel.y,
-                        SPFX_LAYER_BACK ); /* presume back. */
+                        SPFX_LAYER_MIDDLE ); /* presume middle. */
                   /* Add sound if explodes and has it. */
                   s = outfit_soundHit(w->outfit);
                   if (s != -1)
@@ -548,7 +548,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                if (spfx != -1) {
                   spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
                         w->solid->vel.x, w->solid->vel.y,
-                        SPFX_LAYER_BACK ); /* presume back. */
+                        SPFX_LAYER_MIDDLE ); /* presume middle. */
                   /* Add sound if explodes and has it. */
                   s = outfit_soundHit(w->outfit);
                   if (s != -1)
@@ -1148,7 +1148,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
 
    /* Get the layer. */
-   spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+   spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
    /* Choose spfx. */
    if (p->shield > 0.)
       spfx = outfit_spfxShield(w->outfit);
@@ -1238,7 +1238,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->exp_timer == -1.) {
       /* Get the layer. */
-      spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+      spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
 
       /* Choose spfx. */
       if (p->shield > 0.)
@@ -1291,9 +1291,9 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
 
       /* Add graphic. */
       spfx_add( spfx, pos[0].x, pos[0].y,
-            VX(a->vel), VY(a->vel), SPFX_LAYER_BACK );
+            VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
       spfx_add( spfx, pos[1].x, pos[1].y,
-            VX(a->vel), VY(a->vel), SPFX_LAYER_BACK );
+            VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
       w->exp_timer = -2;
    }
 }

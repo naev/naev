@@ -2006,7 +2006,7 @@ void pilot_update( Pilot* pilot, const double dt )
          vy = VY(pilot->solid->vel);
 
          /* set explosions */
-         l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+         l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
          if (RNGF() > 0.8)
             spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
          else
