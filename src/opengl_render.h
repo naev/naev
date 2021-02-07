@@ -89,7 +89,7 @@ void gl_drawLine( const double x1, const double y1,
 void gl_drawTrail( double x1, double y1, double x2, double y2,
       double t1, double t2, const glColour *c1,
       const glColour *c2, double thick1, double thick2,
-      int type );
+      int type, double dt );
 
 /* Rectangles. */
 void gl_renderRect( double x, double y, double w, double h, const glColour *c );

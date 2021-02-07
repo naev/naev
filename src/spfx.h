@@ -65,6 +65,7 @@ typedef struct Trail_spfx_ {
    size_t iread; /**< Start index (NOT reduced modulo capacity). */
    size_t iwrite; /**< End index (NOT reduced modulo capacity). */
    int refcount;      /**< Number of referrers. If 0, trail dies after its TTL. */
+   double dt;        /**< Timer accumulator. */
 } Trail_spfx;
 
 /** @brief Indexes into a trail's circular buffer.  */

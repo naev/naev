@@ -537,6 +537,9 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
    /* Remove first elements if they're outdated. */
    while (trail->iread < trail->iwrite && trail_front(trail).t < 0.)
       trail->iread++;
+
+   /* Update timer. */
+   trail->dt += dt;
 }
 
 
@@ -584,6 +587,7 @@ void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
 static void spfx_trail_clear( Trail_spfx* trail )
 {
    trail->iread = trail->iwrite = 0;
+   trail->dt = 0.;
 }
 
 
@@ -629,7 +633,7 @@ static void spfx_trail_draw( const Trail_spfx* trail )
       tpp = &trail_at( trail, i-1 );
       gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
       gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
-      gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, tp->thickness * z, tpp->thickness * z, trail->type );
+      gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, tp->thickness * z, tpp->thickness * z, trail->type, trail->dt );
    }
 }
 
@@ -1003,12 +1007,9 @@ static int trailSpec_load (void)
          free( name );
 
          /* Set properties. */
-         tc->ttl  = parent->ttl;
-         tc->def_thick = parent->def_thick;
-         tc->idle = parent->idle;
-         tc->glow = parent->glow;
-         tc->aftb = parent->aftb;
-         tc->jmpn = parent->jmpn;
+         name = tc->name;
+         memcpy( tc, parent, sizeof(TrailSpec) );
+         tc->name = name;
 
          /* Load remaining properties (overrides parent). */
          trailSpec_parse( node, tc );

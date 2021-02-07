@@ -7,6 +7,8 @@ local pixelcode = [[
 #pragma language glsl3
 #define M_PI 3.141592502593994140625
 
+uniform float dt;
+
 /* Has a peak at 1/k */
 float impulse( float x, float k )
 {
@@ -14,13 +16,9 @@ float impulse( float x, float k )
    return h * exp( 1.0 - h );
 }
 
-float fastdropoff( float x )
+float fastdropoff( float x, float k )
 {
-   return 1. - pow( max(0.0, abs(1.-x) * 2.0 - 1.0 ), 1.0 );
-   float s = step( x, 0.92 );
-   float a = (0. - .63348*log(1.0 - x));
-   float b = (-20.0 * x) + 20.0;
-   return s*a + (1-s)*b;
+   return 1. - pow( max(0.0, abs(1.-x) * 2.0 - 1.0 ), k );
 }
 
 /* k is the sharpness, more k == sharper.
@@ -30,8 +28,65 @@ float smoothbeam( float x, float k )
    return 1. - pow( abs( sin( M_PI * x / 2. ) ), k );
 }
 
+float sharpbeam( float x, float k )
+{
+   return 1. - pow( min( cos( M_PI * x / 2. ), 1.0 - abs(x) ), k );
+}
+
 float random (vec2 st) {
   return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+}
+
+float trail_default( float t, float y )
+{
+   float a, m;
+
+   // Modulate alpha base on length
+   a = fastdropoff( t, 1. );
+
+   // Modulate alpha based on dispersion
+   m = 0.5 + 0.5*impulse( 1.-t, 30. );
+
+   // Modulate width
+   a *= smoothbeam( y, 3.*m );
+
+   return a;
+}
+
+float trail_pulse( float t, float y )
+{
+   float a, m;
+
+   // Modulate alpha base on length
+   a = fastdropoff( t, 1. );
+
+   // Modulate alpha based on dispersion
+   m = 0.5 + 0.5*impulse( 1.-t, 30. );
+
+   // Modulate width
+   a *= smoothbeam( y, 3.*m );
+
+   a *= 0.9 + 0.1*sin( 2*M_PI * (t * 25 + dt * 3) );
+
+   return a;
+}
+
+float trail_nebula( float t, float y )
+{
+   float a, m;
+
+   // Modulate alpha base on length
+   a = fastdropoff( t, 1.5 );
+
+   // Modulate alpha based on dispersion
+   m = impulse( t, 0.3);
+
+   // Modulate width
+   a *= 1-sharpbeam( y, 1.5*m );
+
+   a *= 0.5 + 0.5*smoothstep( 0., 0.3, 1.-t );
+
+   return a;
 }
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -40,20 +95,18 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 	vec2 pos = texture_coords;
 	pos.y = 2*pos.y-1;
 	pos.x = 1-pos.x;
+   float t = pos.x;
+   float a;
+   int type = 2;
 
-	float m, d;
-	float t = pos.x;
+   if (type==1)
+      a = trail_nebula( t, pos.y );
+   else if (type==2)
+      a = trail_pulse( t, pos.y );
+   else
+      a = trail_default( t, pos.y );
 
-   // Modulate alpha base on length
-   color_out.a *= fastdropoff( t );
-
-   // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-t, 30. );
-
-   // Modulate width
-   d = smoothbeam( pos.y, 3.*m );
-
-   color_out.a *= d * (1. - (random(pos) * .3));
+   color_out.a *= a;
 
 	return color_out;
 }
@@ -61,6 +114,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
  
 local vertexcode = [[
 #pragma language glsl3
+
+uniform float dt;
 
 vec4 position( mat4 transform_projection, vec4 vertex_position )
 {
@@ -96,4 +151,9 @@ function love.draw ()
 	end
 end
 
+function love.update( dt )
+   global_dt = global_dt or 0
+   global_dt = math.mod( global_dt + dt, 1 )
+   shader:send( "dt", global_dt )
+end
 

@@ -2,6 +2,7 @@
 <Trail_types>
  <!-- Defalut Type trails -->
  <trail name="default">
+  <type>0</type>
   <thickness>6</thickness>
   <ttl>1.5</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
@@ -24,6 +25,7 @@
 
  <!-- Fire type of engines-->
  <trail name="fire">
+  <type>0</type>
   <thickness>6</thickness>
   <ttl>1.5</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
@@ -46,6 +48,7 @@
 
  <!-- Red type of engines -->
  <trail name="red">
+  <type>1</type>
   <thickness>6</thickness>
   <ttl>1</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
