@@ -169,17 +169,24 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
  
 
 function love.load()
+   love.window.setTitle( "Naev Trail Demo" )
+   -- Set up the shader
 	shader 	= love.graphics.newShader(pixelcode, vertexcode)
-   shader:send( "type", 0 )
+   shader_type = 0
+   shader:send( "type", shader_type )
+   -- We need an image for the shader to work so we create a 1x1 px white image.
 	local idata = love.image.newImageData( 1, 1 )
 	idata:setPixel( 0, 0, 1, 1, 1, 1 )
 	img 		= love.graphics.newImage( idata )
+   -- Set the font
+   love.graphics.setNewFont( 24 )
 end
 
 function love.keypressed(key)
    local num = tonumber(key)
    if num~=nil then
-      shader:send( "type", num )
+      shader_type = num
+      shader:send( "type", shader_type )
    else
       love.event.quit()
    end
@@ -187,15 +194,19 @@ end
 
 function love.draw ()
 	local x = 20
-	local y = 20
+	local y = 10
+   local lg = love.graphics
+   lg.setShader()
+   lg.setColor( 1, 1, 1, 1 )
+   lg.print( string.format("Use the number keys to change between shaders.\nCurrent Shader: %d", shader_type), x, y )
+   y = y + 54 + 10
 	for _,w in ipairs( {700, 500, 300, 100} ) do
 		for _,h in ipairs( {30, 20, 10} ) do
-			love.graphics.setShader()
-			love.graphics.setColor( 1, 1, 1, 0.5 )
-			love.graphics.rectangle( "line", x-2, y-2, w+4, h+4 )
-			love.graphics.setShader(shader)
-			love.graphics.setColor( 0, 1, 1, 0.7 )
-			love.graphics.draw( img, x, y, 0, w, h)
+			lg.setColor( 1, 1, 1, 0.5 )
+			lg.rectangle( "line", x-2, y-2, w+4, h+4 )
+			lg.setShader(shader)
+			lg.setColor( 0, 1, 1, 0.7 )
+			lg.draw( img, x, y, 0, w, h)
 			y = y + h + 20
 		end
 	end
