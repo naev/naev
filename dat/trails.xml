@@ -25,7 +25,7 @@
 
  <!-- Fire type of engines-->
  <trail name="fire">
-  <type>2</type>
+  <type>3</type>
   <thickness>8</thickness>
   <ttl>1.5</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
@@ -95,7 +95,7 @@
  <!-- Nebula trail! -->
  <trail name="nebula">
   <nebula>3</nebula>
-  <type>2</type>
+  <type>4</type>
   <thickness>9</thickness>
   <ttl>2</ttl>
   <idle r="0.2" g="0.2" b="0.8" a="0.7" />

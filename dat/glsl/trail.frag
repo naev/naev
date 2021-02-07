@@ -76,7 +76,7 @@ float trail_pulse( float t, float y )
 
 float trail_wave( float t, float y )
 {
-   float a, m;
+   float a, m, p;
 
    // Modulate alpha base on length
    a = fastdropoff( t, 1. );
@@ -85,7 +85,28 @@ float trail_wave( float t, float y )
    m = 0.5 + 0.5*impulse( 1.-t, 30. );
 
    // Modulate width
-   y += 0.2 * smoothstep(0, 0.8, 1-t) * sin( 2*M_PI * (t*5 + dt * 5) );
+   p = 2*M_PI * (t*5 + dt * 0.5);
+   y += 0.2 * smoothstep(0, 0.8, 1-t) * sin( p );
+   a *= smoothbeam( y, 2.*m );
+
+   return a;
+}
+
+float trail_flame( float t, float y )
+{
+   float a, m, p;
+
+   // Modulate alpha base on length
+   a = fastdropoff( t, 1. );
+
+   // Modulate alpha based on dispersion
+   m = 0.5 + 0.5*impulse( 1.-t, 30. );
+
+   // Modulate width
+   // By multiplying two sine waves with different period it looks more like
+   // a natural flame.
+   p = 2*M_PI * (t*5 + dt * 5);
+   y += 0.2 * smoothstep(0, 0.8, 1-t) * sin( p ) * sin( 2.7*p );
    a *= smoothbeam( y, 2.*m );
 
    return a;
@@ -121,6 +142,8 @@ void main(void) {
    else if (type==2)
       a = trail_wave( t, pos.y );
    else if (type==3)
+      a = trail_flame( t, pos.y );
+   else if (type==4)
       a = trail_nebula( t, pos.y );
    else
       a = trail_default( t, pos.y );
