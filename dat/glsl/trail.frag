@@ -12,7 +12,7 @@ in vec2 pos;
 out vec4 color_out;
 
 /* Has a peak at 1/k */
-float impulse( float x, float k )
+pure float impulse( float x, float k )
 {
    float h = x*k;
    return h * exp( 1.0 - h );
@@ -137,6 +137,8 @@ void main(void) {
    color_out = pos.x*(c2-c1) + c1;
    t = pos.x*(t2-t1) + t1;
 
+   // TODO optimize this with subroutines
+   // https://www.khronos.org/opengl/wiki/Shader_Subroutine
    if (type==1)
       a = trail_pulse( t, pos.y );
    else if (type==2)
