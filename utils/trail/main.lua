@@ -159,6 +159,7 @@ local vertexcode = [[
 #pragma language glsl3
 
 uniform float dt;
+uniform int type;
 
 vec4 position( mat4 transform_projection, vec4 vertex_position )
 {
