@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-02-01 09:14-0500\n"
-"PO-Revision-Date: 2021-02-04 18:42+0000\n"
+"PO-Revision-Date: 2021-02-07 09:50+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -2581,15 +2581,15 @@ msgstr "Capricorn IIIa"
 
 #: dat/assets/castellan_epsilon.xml:2
 msgid "Castellan Epsilon"
-msgstr ""
+msgstr "Castellan Epsilon"
 
 #: dat/assets/castellan_i.xml:2
 msgid "Castellan I"
-msgstr ""
+msgstr "Castellan I"
 
 #: dat/assets/castellan_iii.xml:2
 msgid "Castellan III"
-msgstr ""
+msgstr "Castellan III"
 
 #: dat/assets/castellan_iii.xml:27
 msgid ""
