@@ -8,6 +8,7 @@ local pixelcode = [[
 #define M_PI 3.141592502593994140625
 
 uniform float dt;
+in float scale;
 
 /* Has a peak at 1/k */
 float impulse( float x, float k )
@@ -76,7 +77,7 @@ float trail_nebula( float t, float y )
    float a, m;
 
    // Modulate alpha base on length
-   a = fastdropoff( t, 1.5 );
+   a = fastdropoff( t, 1 );
 
    // Modulate alpha based on dispersion
    m = impulse( t, 0.3);
@@ -100,9 +101,9 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    int type = 2;
 
    if (type==1)
-      a = trail_nebula( t, pos.y );
-   else if (type==2)
       a = trail_pulse( t, pos.y );
+   else if (type==2)
+      a = trail_nebula( t, pos.y );
    else
       a = trail_default( t, pos.y );
 
@@ -116,9 +117,11 @@ local vertexcode = [[
 #pragma language glsl3
 
 uniform float dt;
+out float scale;
 
 vec4 position( mat4 transform_projection, vec4 vertex_position )
 {
+   scale = transform_projection[0][0];
 	return transform_projection * vertex_position;
 }
 ]]
@@ -152,8 +155,9 @@ function love.draw ()
 end
 
 function love.update( dt )
-   global_dt = global_dt or 0
-   global_dt = math.mod( global_dt + dt, 1 )
-   shader:send( "dt", global_dt )
+   global_dt = (global_dt or 0) + dt
+   if shader:hasUniform("dt") then
+      shader:send( "dt", global_dt )
+   end
 end
 
