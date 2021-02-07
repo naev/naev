@@ -8,7 +8,6 @@ local pixelcode = [[
 #define M_PI 3.141592502593994140625
 
 uniform float dt;
-in float scale;
 
 /* Has a peak at 1/k */
 float impulse( float x, float k )
@@ -160,11 +159,9 @@ local vertexcode = [[
 #pragma language glsl3
 
 uniform float dt;
-out float scale;
 
 vec4 position( mat4 transform_projection, vec4 vertex_position )
 {
-   scale = transform_projection[0][0];
 	return transform_projection * vertex_position;
 }
 ]]
