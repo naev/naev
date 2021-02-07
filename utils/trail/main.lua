@@ -8,6 +8,7 @@ local pixelcode = [[
 #define M_PI 3.141592502593994140625
 
 uniform float dt;
+uniform int type;
 
 /* Has a peak at 1/k */
 float impulse( float x, float k )
@@ -136,7 +137,6 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 	pos.x = 1-pos.x;
    float t = pos.x;
    float a;
-   int type = 2;
 
    if (type==1)
       a = trail_pulse( t, pos.y );
@@ -169,13 +169,19 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 
 function love.load()
 	shader 	= love.graphics.newShader(pixelcode, vertexcode)
+   shader:send( "type", 0 )
 	local idata = love.image.newImageData( 1, 1 )
 	idata:setPixel( 0, 0, 1, 1, 1, 1 )
 	img 		= love.graphics.newImage( idata )
 end
 
 function love.keypressed(key)
-   love.event.quit()
+   local num = tonumber(key)
+   if num~=nil then
+      shader:send( "type", num )
+   else
+      love.event.quit()
+   end
 end
 
 function love.draw ()
