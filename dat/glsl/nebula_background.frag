@@ -1,5 +1,3 @@
-// TODO move this math include to flow2D.glsl. For some reason it doesn't work...
-#include "lib/math.glsl"
 #include "lib/flow2D.glsl"
 
 const int ITERATIONS = 3;
