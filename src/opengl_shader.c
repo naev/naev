@@ -224,6 +224,8 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
    free( prepend );
 
    program = gl_program_make( vertex_shader, fragment_shader );
+   if (program==0)
+      WARN(_("Failed to link vertex shader '%s' and fragment shader '%s'!"), vertfile, fragfile);
 
    return program;
 }
