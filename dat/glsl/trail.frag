@@ -179,7 +179,7 @@ float trail_bubbles( vec2 pos_tex, vec2 dim )
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
-   coords = dim * pos_tex + vec2( 220*dt, 0 );;
+   coords = dim * pos_tex + vec2( 220*dt, 0 );
    p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
 
    // Modulate width

@@ -92,6 +92,21 @@
   <ttl>0.5</ttl>
  </trail>
 
+ <!-- Soromid type of engines -->
+ <trail name="soromid">
+  <type>6</type>
+  <thickness>7</thickness>
+  <ttl>1.1</ttl>
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="0.5" g="0.9" b="0.2" a="0.7" />
+  <afterburn r="1" g="0.5" b="0" a="0.85" scale="2" />
+  <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="3" />
+ </trail>
+ <trail name="soromidS" inherits="soromid">
+  <thickness>5</thickness>
+  <ttl>1.0</ttl>
+ </trail>
+
  <!-- Nebula trail! -->
  <trail name="nebula">
   <nebula>3</nebula>
