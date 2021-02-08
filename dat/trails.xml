@@ -2,7 +2,7 @@
 <Trail_types>
  <!-- Defalut Type trails -->
  <trail name="default">
-  <type>0</type>
+  <type>trail_default</type>
   <thickness>6</thickness>
   <ttl>1.5</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
@@ -25,7 +25,7 @@
 
  <!-- Fire type of engines-->
  <trail name="fire">
-  <type>3</type>
+  <type>trail_flame</type>
   <thickness>8</thickness>
   <ttl>1.5</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
@@ -48,7 +48,7 @@
 
  <!-- Sirius type of engines -->
  <trail name="sirius">
-  <type>2</type>
+  <type>trail_wave</type>
   <thickness>10</thickness>
   <ttl>1.1</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
@@ -59,7 +59,7 @@
 
  <!-- Za'lek type of engines -->
  <trail name="zalek">
-  <type>1</type>
+  <type>trail_pulse</type>
   <thickness>10</thickness>
   <ttl>1.1</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
@@ -94,7 +94,7 @@
 
  <!-- Soromid type of engines -->
  <trail name="soromid">
-  <type>6</type>
+  <type>trail_bubbles</type>
   <thickness>7</thickness>
   <ttl>1.1</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
@@ -109,7 +109,7 @@
 
  <!-- Pirate type of engines -->
  <trail name="pirate">
-  <type>5</type>
+  <type>trail_arc</type>
   <thickness>6</thickness>
   <ttl>1.1</ttl>
   <idle r="1" g="1" b="1" a="0.05" />
@@ -124,8 +124,8 @@
 
  <!-- Nebula trail! -->
  <trail name="nebula">
-  <nebula>3</nebula>
-  <type>4</type>
+  <type>trail_nebula</type>
+  <nebula>1</nebula>
   <thickness>9</thickness>
   <ttl>2</ttl>
   <idle r="0.2" g="0.2" b="0.8" a="0.7" />
