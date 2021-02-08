@@ -1,4 +1,6 @@
 #include "math.h"
+const int ITERATIONS = 4;
+const float SCALAR = 2.;
 
 uniform vec4 color;
 uniform vec2 center;
@@ -25,12 +27,13 @@ vec2 hash( vec2 p )
    return -1. + 2.*fract( sin( p )*43758.5453123 );
 }
 
-float noise( in vec2 p, in float scale )
+// Compatible interface with srnoise from https://github.com/stegu/webgl-noise/blob/master/src/psrdnoise2D.glsl
+float srnoise( in vec2 p, in float rot )
 {
    vec2 i = floor( p );
    vec2 f = fract( p );
    vec2 u = smoothstep( 0, 1, fract( p ) );
-   float t = M_PI * (time / scale + i.x - i.y);
+   float t = 2*M_PI * (rot + i.x - i.y);
    mat2 R = mat2( cos(t), -sin(t),
                   sin(t),  cos(t) );
 
@@ -40,21 +43,14 @@ float noise( in vec2 p, in float scale )
                     dot( hash( i + vec2(1,1) ),  (f - vec2(1,1))*R ), u.x), u.y);
 }
 
-float turbulence( in vec2 uv )
-{
-   float f = 0.0;
-   mat2 m = mat2( 1.6,  1.2,
-                 -1.2,  1.6 );
-   float scale = 1.;
-   f += abs( noise( uv, scale ) ) / scale; uv = m*uv; scale *= 2.;
-   f += abs( noise( uv, scale ) ) / scale; uv = m*uv; scale *= 2.;
-   f += abs( noise( uv, scale ) ) / scale; uv = m*uv; scale *= 2.;
-   f += abs( noise( uv, scale ) ) / scale; uv = m*uv; scale *= 2.;
-   return f;
-}
-
 void main(void) {
-   color_out = mix( vec4( 0, 0, 0, 1 ), color, .1 + .7 * turbulence( (gl_FragCoord.xy-center)*4./radius ) );
+   float f = 0.0;
+   vec2 uv = (gl_FragCoord.xy-center)*4./radius;
+   for (int i=0; i<ITERATIONS; i++) {
+      float scale = pow(SCALAR, i);
+      f += abs( srnoise( uv*scale, .5*time/scale ) ) / scale;
+   }
+   color_out = mix( vec4( 0, 0, 0, 1 ), color, .1 + .7*f );
 
 #include "colorblind.glsl"
 }
