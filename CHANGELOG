@@ -1,3 +1,12 @@
+* 0.8.2
+   * Gameplay
+      * Fixed duplicate rewards from pirate ship-stealing missions. (Sorry.)
+   * Engine
+      * Fixed a bug loading games with short (1-character) names.
+      * Tweaked chances of seeing Spaceport Bar missions.
+      * Updated German translation.
+      * Fixed "configure" script when the system has a "cxsparse" library and no "csparse".
+
 * 0.8.1
    * Gameplay
       * Lowered large ships' time constant (renamed from time dilation) by 50% of the deviation from 100%.
