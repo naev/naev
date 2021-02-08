@@ -40,10 +40,10 @@ reward = 2000000
 -- amount of jumps the drone did to escape. Each jump reduces it's speed
 fled = false
 jumps = 0 
-t_sys[1] = "Xavier"
+t_sys[1] = system.get("Xavier")
 t_pla[1] = system.get(t_sys[1]):planets()[1]
-t_sys[2] = "Seiben"
-t_pla[2] = "Gastan"
+t_sys[2] = system.get("Seiben")
+t_pla[2] = planet.get("Gastan")
 misn_title = _("The one with the Runaway")
 misn_reward = _("A peek at the new prototype and some compensation for your efforts")
 misn_desc = _("You've been hired by Dr. Geller to retrieve his prototype that ran away.")
@@ -98,25 +98,25 @@ function accept()
    end
    tk.msg( title[1], text[2] )
    misn.accept()
-   misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[1]),osd_msg[2],osd_msg[3]:format(t_pla[2],t_sys[2])})
+   misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[1]:name()),osd_msg[2],osd_msg[3]:format(t_pla[2]:name(),t_sys[2]:name())})
    misn.setDesc(misn_desc)
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
    misn.osdActive(1)
-   mmarker = misn.markerAdd(system.get(t_sys[1]), "high")
+   mmarker = misn.markerAdd(t_sys[1], "high")
    hook.jumpin("sys_enter")
 end
 
 function sys_enter ()
    -- Check to see if reaching target system
-   if system.cur() == system.get(t_sys[1]) then
+   if system.cur() == t_sys[1] then
       -- wait til stars have settled and do stuff
       --pilot.clear()
       --pilot.toggleSpawn(false)
       hook.timer( 2000,"game_of_drones")
    end
    if jumps ~= 0 then 
-      if system.cur() == system.get(t_sys[3]) then
+      if system.cur() == t_sys[3] then
          -- do something else
          hook.timer(2000,"chase_of_drones")
       end
@@ -183,7 +183,7 @@ function sp_baddies()
    end
    jps = system.cur():jumps()
    t_drone:taskClear()
-   t_sys[3] = jps[1]:dest():nameRaw()
+   t_sys[3] = jps[1]:dest()
    t_drone:hyperspace(jps[1]:dest())
 end
 
@@ -202,7 +202,7 @@ function targetBoard()
    cargoID = misn.cargoAdd("Prototype",10)
    misn.osdActive(3)
    misn.markerRm(mmarker)
-   mmarker = misn.markerAdd(system.get(t_sys[2]),"high")
+   mmarker = misn.markerAdd(t_sys[2],"high")
    if jumps == 0 then
       leavehook = hook.timer(2000, "drones_flee")
    end
@@ -211,10 +211,10 @@ end
 
 function drone_jumped ()
    --begin the chase: 
-   tk.msg(title[3], text[9]:format(_(t_sys[3])))
+   tk.msg(title[3], text[9]:format(t_sys[3]:name()))
    misn.markerRm(mmarker)
    if (jumps==0) then
-      mmarker = misn.markerAdd(system.get(t_sys[3]),"high")
+      mmarker = misn.markerAdd(t_sys[3],"high")
       for i=1,#badguys do
          badguys[i]:control()
          badguys[i]:hyperspace()
@@ -229,7 +229,7 @@ function drone_jumped ()
       tk.msg(title[3],text[14])
       misn.finish(false)
    else
-      mmarker = misn.markerAdd(system.get(t_sys[3]),"high")
+      mmarker = misn.markerAdd(t_sys[3],"high")
    end
    jumps = jumps + 1
 end
@@ -273,7 +273,7 @@ function drone_attacked()
    t_drone:setVisplayer(true)
    jps = system.cur():jumps()
    t_drone:taskClear()
-   t_sys[3] = jps[1]:dest():nameRaw()
+   t_sys[3] = jps[1]:dest()
    t_drone:hyperspace(jps[1]:dest())
    hook.timer(4000,"drone_disableable")
 end
@@ -295,8 +295,8 @@ function drone_disableable()
 end
 -- last hook
 function land_home()
-   if planet.cur() == planet.get(t_pla[2]) then
-      tk.msg(title[4]:format(t_pla[2]),text[15])
+   if planet.cur() == t_pla[2] then
+      tk.msg(title[4]:format(t_pla[2]:name()),text[15])
       player.pay(reward)
       player.addOutfit("Toy Drone")
       zlk_addSciWrongLog( log_text )
@@ -319,7 +319,7 @@ function drones_flee ()
    end
 end
 
--- check how man drones are left, tell them to leave if <=2 
+-- check how many drones are left, tell them to leave if <=2
 function dead_drone ()
    -- remove dead drones
    for i=1,#badguys do

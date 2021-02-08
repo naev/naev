@@ -31,9 +31,9 @@ require "missions/zalek/common"
 -- mission variables
 t_sys = {}
 t_pla = {}
-t_pla[1] = "Gastan"
-t_sys[1] = "Seiben"
-t_sys[2] = "Shikima"
+t_pla[1] = planet.get("Gastan")
+t_sys[1] = system.get("Seiben")
+t_sys[2] = system.get("Shikima")
 reward = 1000000
 shpnm = _("Tokera")
 -- Mission details
@@ -85,19 +85,19 @@ function accept()
    end
    tk.msg( title[1], text[2]:format(shpnm) )
    misn.accept()
-   misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[2],shpnm),osd_msg[2]:format(shpnm),osd_msg[3]:format(t_pla[1],t_sys[1])})
+   misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[2]:name(), shpnm), osd_msg[2]:format(shpnm), osd_msg[3]:format(t_pla[1]:name(), t_sys[1]:name())})
    misn.setDesc(misn_desc)
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
    misn.osdActive(1)
-   misn_mark = misn.markerAdd( system.get(t_sys[2]), "high" )
+   misn_mark = misn.markerAdd( t_sys[2], "high" )
    targetalive = true
    hook.enter("sys_enter")
 end
 
 
 function sys_enter ()
-   if system.cur() == system.get(t_sys[2]) and targetalive then
+   if system.cur() == t_sys[2] and targetalive then
       dist = rnd.rnd() * system.cur():radius() *1/2
       angle = rnd.rnd() * 2 * math.pi
       location = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- Randomly spawn the Ship in the system
@@ -158,14 +158,14 @@ function targetBoard()
    cargoID = misn.cargoAdd("Secret Technology",0)
    misn.osdActive(3)
    misn.markerRm(misn_mark)
-   misn_mark = misn.markerAdd( system.get(t_sys[1]), "high" )
+   misn_mark = misn.markerAdd( t_sys[1], "high" )
    hland = hook.land("land")
    boarded = true
    hook.rm(hboard)
 end
 
 function land()
-   if planet.cur() == planet.get(t_pla[1]) then
+   if planet.cur() == t_pla[1] then
       tk.msg(title[1], text[5])
       hook.rm(hland)
       misn.markerRm(misn_mark)
