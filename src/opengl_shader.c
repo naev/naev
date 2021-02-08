@@ -20,7 +20,7 @@
 /*
  * Prototypes.
  */
-static char* gl_shader_loadfile( const char *filename, size_t *size, int main, const char *prepend );
+static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend );
 static GLuint gl_shader_compile( GLuint type, const char *buf,
       GLint length, const char *filename);
 static int gl_program_link( GLuint program );
@@ -32,11 +32,10 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
  *
  *    @param[in] filename Filename of the shader to load.
  *    @param[out] size Size of the loaded shader.
- *    @param[in] main Whether or not this is the main shader.
  *    @param[in] prepend String that should be prepended.
  *    @return The loaded shader buffer.
  */
-static char* gl_shader_loadfile( const char *filename, size_t *size, int main, const char *prepend )
+static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend )
 {
    size_t i, bufsize, ibufsize, fbufsize;
    char *buf, *fbuf, *ibuf, *newbuf;
@@ -55,7 +54,7 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main, c
    }
 
    /* Prepend useful information if available. */
-   if (main && (prepend != NULL)) {
+   if (prepend != NULL) {
       bufsize = fbufsize+strlen(prepend)+1;
       buf = malloc( bufsize );
       snprintf( buf, bufsize, "%s%s", prepend, fbuf );
@@ -96,7 +95,7 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main, c
       include[i] = '\0'; /* Last character should be " or > */
 
       /* Recursive loading and handling of #includes. */
-      ibuf = gl_shader_loadfile( include, &ibufsize, 0, NULL );
+      ibuf = gl_shader_loadfile( include, &ibufsize, NULL );
 
       /* Move data over. */
       newbuf = malloc( bufsize+ibufsize );
@@ -213,8 +212,8 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
       prepend = buf;
    }
 
-   vert_str = gl_shader_loadfile( vertfile, &vert_size, 1, prepend );
-   frag_str = gl_shader_loadfile( fragfile, &frag_size, 1, prepend );
+   vert_str = gl_shader_loadfile( vertfile, &vert_size, prepend );
+   frag_str = gl_shader_loadfile( fragfile, &frag_size, prepend );
 
    vertex_shader     = gl_shader_compile( GL_VERTEX_SHADER, vert_str, vert_size, vertfile );
    fragment_shader   = gl_shader_compile( GL_FRAGMENT_SHADER, frag_str, frag_size, fragfile );
