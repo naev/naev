@@ -538,14 +538,29 @@ void spfx_update_trails( double dt ) {
 static void spfx_trail_update( Trail_spfx* trail, double dt )
 {
    size_t i;
+   GLfloat x, y, len;
+   TrailPoint *point;
 
    /* Update all elements. */
-   for (i=trail->iread; i<trail->iwrite; i++)
-      trail_at( trail, i ).t -= dt / trail->ttl;
+   len = 0.;
+   i = trail->iread;
+   point = &trail_at( trail, i );
+   point->t -= dt / trail->ttl;
+   x = point->x;
+   y = point->y;
+   for ( ; i<trail->iwrite; i++) {
+      point = &trail_at( trail, i );
+      point->t -= dt / trail->ttl;
+      len += pow2(point->x-x) + pow2(point->y-y);
+      x = point->x;
+      y = point->y;
+   }
+   trail->len = len;
 
    /* Remove first elements if they're outdated. */
-   while (trail->iread < trail->iwrite && trail_front(trail).t < 0.)
+   while (trail->iread < trail->iwrite && trail_front(trail).t < 0.) {
       trail->iread++;
+   }
 
    /* Update timer. */
    trail->dt += dt;
@@ -646,7 +661,7 @@ static void spfx_trail_draw( const Trail_spfx* trail )
       tpp = &trail_at( trail, i-1 );
       gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
       gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
-      gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, tp->thickness * z, tpp->thickness * z, trail->type, trail->dt );
+      gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, tp->thickness * z, tpp->thickness * z, trail->type, trail->dt, trail->len );
    }
 }
 

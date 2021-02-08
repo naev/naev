@@ -67,7 +67,8 @@ typedef struct Trail_spfx_ {
    size_t iread;     /**< Start index (NOT reduced modulo capacity). */
    size_t iwrite;    /**< End index (NOT reduced modulo capacity). */
    int refcount;     /**< Number of referrers. If 0, trail dies after its TTL. */
-   double dt;        /**< Timer accumulator. */
+   double dt;        /**< Timer accumulator (in seconds). */
+   GLfloat len;      /**< Total length of the trail (in pixels). */
    int nebula;       /**< Whether or not this trail is only shown in the nebula. */
 } Trail_spfx;
 
