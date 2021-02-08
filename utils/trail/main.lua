@@ -108,6 +108,7 @@ float random (vec2 st) {
   return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
 }
 
+/* No animation. */
 float trail_default( vec2 pos_tex, vec2 dim )
 {
    float a, m;
@@ -124,6 +125,7 @@ float trail_default( vec2 pos_tex, vec2 dim )
    return a;
 }
 
+/* Pulsating motion. */
 float trail_pulse( vec2 pos_tex, vec2 dim )
 {
    float a, m, v;
@@ -143,6 +145,7 @@ float trail_pulse( vec2 pos_tex, vec2 dim )
    return a;
 }
 
+/* Slow ondulating wave-like movement. */
 float trail_wave( vec2 pos_tex, vec2 dim )
 {
    float a, m, p, y;
@@ -161,6 +164,7 @@ float trail_wave( vec2 pos_tex, vec2 dim )
    return a;
 }
 
+/* Flame-like periodic movement. */
 float trail_flame( vec2 pos_tex, vec2 dim )
 {
    float a, m, p, y;
@@ -181,6 +185,26 @@ float trail_flame( vec2 pos_tex, vec2 dim )
    return a;
 }
 
+/* Starts thin and gets wide. */
+float trail_nebula( vec2 pos_tex, vec2 dim )
+{
+   float a, m;
+
+   // Modulate alpha base on length
+   a = fastdropoff( pos_tex.x, 1 );
+
+   // Modulate alpha based on dispersion
+   m = impulse( pos_tex.x, 0.3);
+
+   // Modulate width
+   m *= 2-smoothstep( 0., 0.2, 1.-pos_tex.x );
+   a *= sharpbeam( pos_tex.y, 3*m );
+   a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-pos_tex.x );
+
+   return a;
+}
+
+/* Somewhat like a lightning arc. */
 float trail_arc( vec2 pos_tex, vec2 dim )
 {
    float a, m, p, v, s;
@@ -209,6 +233,7 @@ float trail_arc( vec2 pos_tex, vec2 dim )
    return min(1, a);
 }
 
+/* Bubbly effect. */
 float trail_bubbles( vec2 pos_tex, vec2 dim )
 {
    float a, m, p;
@@ -220,7 +245,7 @@ float trail_bubbles( vec2 pos_tex, vec2 dim )
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
-   coords = dim * pos_tex + vec2( 220*dt, 0 );;
+   coords = dim * pos_tex + vec2( 220*dt, 0 );
    p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
 
    // Modulate width
@@ -229,23 +254,6 @@ float trail_bubbles( vec2 pos_tex, vec2 dim )
    return a;
 }
 
-float trail_nebula( vec2 pos_tex, vec2 dim )
-{
-   float a, m;
-
-   // Modulate alpha base on length
-   a = fastdropoff( pos_tex.x, 1 );
-
-   // Modulate alpha based on dispersion
-   m = impulse( pos_tex.x, 0.3);
-
-   // Modulate width
-   m *= 2-smoothstep( 0., 0.2, 1.-pos_tex.x );
-   a *= sharpbeam( pos_tex.y, 3*m );
-   a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-pos_tex.x );
-
-   return a;
-}
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
