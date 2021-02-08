@@ -36,9 +36,6 @@
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
 #define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
 
-#define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
-#define SPFX_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
-
 #define SHAKE_MASS      (1./400.) /** Shake mass. */
 #define SHAKE_K         (1./50.) /**< Constant for virtual spring. */
 #define SHAKE_B         (3.*sqrt(SHAKE_K*SHAKE_MASS)) /**< Constant for virtual dampener. */
