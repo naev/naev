@@ -172,8 +172,8 @@ void main(void) {
    float a, t;
 
    // Interpolate
-   color_out = pos.x*(c2-c1) + c1;
-   t = pos.x*(t2-t1) + t1;
+   color_out = mix( c1, c2, pos.x );
+   t = mix( t1, t2, pos.x );
 
    // TODO optimize this with subroutines
    // https://www.khronos.org/opengl/wiki/Shader_Subroutine
