@@ -91,8 +91,9 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main )
       len    = ibufsize;
       strncpy( &newbuf[offset], ibuf, len );
       offset += len;
-      len    = bufsize-(subs-buf-1);
-      strncpy( &newbuf[offset], subs+1, bufsize-(subs-buf-1) );
+      subs   = subs+1;
+      len    = bufsize-(subs-buf);
+      strncpy( &newbuf[offset], subs, bufsize-(subs-buf) );
       offset += len;
       newbuf[offset] = '\0';
 
