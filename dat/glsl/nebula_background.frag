@@ -1,4 +1,4 @@
-#include "math.h"
+#include "lib/math.glsl"
 const int ITERATIONS = 3;
 const float SCALAR = pow(2., 4./3.);
 
