@@ -188,8 +188,8 @@ int load_refresh (void)
       len = strlen(files[i]);
 
       /* no save or backup save extension */
-      if (((len < 5) || strcmp(&files[i][len-3],".ns")) &&
-            ((len < 12) || strcmp(&files[i][len-10],".ns.backup"))) {
+      if (((len < 4) || strcmp(&files[i][len-3],".ns")) &&
+            ((len < 11) || strcmp(&files[i][len-10],".ns.backup"))) {
          free(files[i]);
          memmove( &files[i], &files[i+1], sizeof(char*) * (nfiles-i-1) );
          nfiles--;

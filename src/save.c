@@ -197,7 +197,8 @@ int save_hasSave (void)
       len = strlen(files[i]);
 
       /* no save extension */
-      if ((len >= 5) && (strcmp(&files[i][len-3],".ns")==0)) {
+      if (((len >= 4) && !strcmp(&files[i][len-3],".ns")) ||
+            ((len < 11) && !strcmp(&files[i][len-10],".ns.backup"))) {
          has_save = 1;
          break;
       }
