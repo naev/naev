@@ -6,8 +6,7 @@
       * New missions
          * Follow happenings on "Minerva Station"
          * Invade the frontier with the Dvaered
-      * New translation(s) in progress
-         * Czech
+      * New translation(s) in progress: Czech, French, and Korean
    * Engine
       * Added image format support beyond PNG (notably WebP)
       * Game data now handled by PhysicsFS, allowing for multiple sources and easier modding
