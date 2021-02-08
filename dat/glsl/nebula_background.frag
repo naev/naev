@@ -1,6 +1,6 @@
 #include "math.h"
-const int ITERATIONS = 4;
-const float SCALAR = 2.;
+const int ITERATIONS = 3;
+const float SCALAR = pow(2., 4./3.);
 
 uniform vec4 color;
 uniform vec2 center;
@@ -50,7 +50,7 @@ void main(void) {
       float scale = pow(SCALAR, i);
       f += abs( srnoise( uv*scale, .5*time/scale ) ) / scale;
    }
-   color_out = mix( vec4( 0, 0, 0, 1 ), color, .1 + .7*f );
+   color_out = mix( vec4( 0, 0, 0, 1 ), color, .1 + f );
 
 #include "colorblind.glsl"
 }
