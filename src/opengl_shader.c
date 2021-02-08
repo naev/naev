@@ -24,7 +24,7 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main, c
 static GLuint gl_shader_compile( GLuint type, const char *buf,
       GLint length, const char *filename);
 static int gl_program_link( GLuint program );
-static int gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
+static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
 
 
 /**
@@ -192,13 +192,13 @@ static int gl_program_link( GLuint program )
  *
  *    @param[in] vertfile Vertex shader filename.
  *    @param[in] fragfile Fragment shader filename.
- *    @return The shader compiled program.
+ *    @return The shader compiled program or 0 on failure.
  */
-int gl_program_vert_frag( const char *vertfile, const char *fragfile )
+GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
 {
    char *vert_str, *frag_str, *prepend, *buf;
    size_t vert_size, frag_size, prepend_len;
-   GLuint vertex_shader, fragment_shader;
+   GLuint vertex_shader, fragment_shader, program;
 
    prepend_len = strlen(GLSL_VERSION) + 1;
    prepend = malloc( sizeof(prepend) * prepend_len );
@@ -216,14 +216,16 @@ int gl_program_vert_frag( const char *vertfile, const char *fragfile )
    vert_str = gl_shader_loadfile( vertfile, &vert_size, 1, prepend );
    frag_str = gl_shader_loadfile( fragfile, &frag_size, 1, prepend );
 
-   vertex_shader = gl_shader_compile( GL_VERTEX_SHADER, vert_str, vert_size, vertfile );
-   fragment_shader = gl_shader_compile( GL_FRAGMENT_SHADER, frag_str, frag_size, fragfile );
+   vertex_shader     = gl_shader_compile( GL_VERTEX_SHADER, vert_str, vert_size, vertfile );
+   fragment_shader   = gl_shader_compile( GL_FRAGMENT_SHADER, frag_str, frag_size, fragfile );
 
    free( vert_str );
    free( frag_str );
    free( prepend );
 
-   return gl_program_make( vertex_shader, fragment_shader );
+   program = gl_program_make( vertex_shader, fragment_shader );
+
+   return program;
 }
 
 
@@ -234,13 +236,15 @@ int gl_program_vert_frag( const char *vertfile, const char *fragfile )
  *    @param[in] vert_size Size of the vertex shader string.
  *    @param[in] frag Fragment shader string.
  *    @param[in] frag_size Size of the fragment shader string.
- *    @return The shader compiled program.
+ *    @return The shader compiled program or 0 on failure.
  */
-int gl_program_vert_frag_string( const char *vert, size_t vert_size, const char *frag, size_t frag_size )
+GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size, const char *frag, size_t frag_size )
 {
    GLuint vertex_shader, fragment_shader;
-   vertex_shader = gl_shader_compile( GL_VERTEX_SHADER, vert, vert_size, NULL );
-   fragment_shader = gl_shader_compile( GL_FRAGMENT_SHADER, frag, frag_size, NULL );
+   /* Compile the shaders. */
+   vertex_shader     = gl_shader_compile( GL_VERTEX_SHADER, vert, vert_size, NULL );
+   fragment_shader   = gl_shader_compile( GL_FRAGMENT_SHADER, frag, frag_size, NULL );
+   /* Link. */
    return gl_program_make( vertex_shader, fragment_shader );
 }
 
@@ -250,9 +254,9 @@ int gl_program_vert_frag_string( const char *vert, size_t vert_size, const char 
  *
  *    @param vertex_shader Vertex shader to make program from.
  *    @param fragment_shader Fragment shader to make program from.
- *    @return New shader program.
+ *    @return New shader program or 0 on failure.
  */
-static int gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
+static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
 {
    GLuint program = 0;
    if (vertex_shader != 0 && fragment_shader != 0) {
@@ -260,6 +264,7 @@ static int gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
       glAttachShader(program, vertex_shader);
       glAttachShader(program, fragment_shader);
       if (gl_program_link(program) == -1) {
+         /* Spec specifies 0 as failure value for glCreateProgram() */
          program = 0;
       }
    }
