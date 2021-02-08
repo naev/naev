@@ -1,5 +1,5 @@
 #include "lib/math.glsl"
-#include "lib/noise2D.glsl"
+#include "lib/simplex2D.glsl"
 
 // For ideas: https://thebookofshaders.com/05/
 
