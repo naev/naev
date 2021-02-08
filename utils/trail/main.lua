@@ -298,13 +298,16 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
+function set_shader( num )
+   shader_type = num
+   shader:send( "type", shader_type )
+end
 
 function love.load()
    love.window.setTitle( "Naev Trail Demo" )
    -- Set up the shader
    shader   = love.graphics.newShader(pixelcode, vertexcode)
-   shader_type = 0
-   shader:send( "type", shader_type )
+   set_shader( 0 )
    -- We need an image for the shader to work so we create a 1x1 px white image.
    local idata = love.image.newImageData( 1, 1 )
    idata:setPixel( 0, 0, 1, 1, 1, 1 )
@@ -316,8 +319,7 @@ end
 function love.keypressed(key)
    local num = tonumber(key)
    if num~=nil then
-      shader_type = num
-      shader:send( "type", shader_type )
+      set_shader( num )
    else
       love.event.quit()
    end
