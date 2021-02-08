@@ -13,7 +13,7 @@
 #include "opengl.h"
 
 
-#define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
+#define GLSL_VERSION    "#version 400\n\n" /**< Version to use for all shaders. */
 #define GLSL_COLORBLIND "#define COLORBLIND_MODE ROD_MONOCHROMACY\n" /**< Line to enable colorblind mode. */
 
 
