@@ -9,7 +9,7 @@ local pixelcode = [[
 
 uniform float dt;
 uniform int type;
-uniform float length;
+uniform vec2 dimensions;
 
 //
 // Description : Array and textureless GLSL 2D simplex noise function.
@@ -108,100 +108,100 @@ float random (vec2 st) {
   return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
 }
 
-float trail_default( float t, float y )
+float trail_default( vec2 pos_tex, vec2 dim )
 {
    float a, m;
 
    // Modulate alpha base on length
-   a = fastdropoff( t, 1. );
+   a = fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-t, 30. );
+   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
 
    // Modulate width
-   a *= smoothbeam( y, 3.*m );
+   a *= smoothbeam( pos_tex.y, 3.*m );
 
    return a;
 }
 
-float trail_pulse( float t, float y )
+float trail_pulse( vec2 pos_tex, vec2 dim )
 {
    float a, m, v;
 
    // Modulate alpha base on length
-   a = fastdropoff( t, 1. );
+   a = fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-t, 30. );
+   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
 
    // Modulate width
-   a *= smoothbeam( y, 3.*m );
+   a *= smoothbeam( pos_tex.y, 3.*m );
 
-   v = smoothstep( 0., 0.5, 1-t );
-   a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (t * 0.03 * length + dt * 3) ), v );
+   v = smoothstep( 0., 0.5, 1-pos_tex.x );
+   a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (pos_tex.x * 0.03 * dim.x + dt * 3) ), v );
 
    return a;
 }
 
-float trail_wave( float t, float y )
+float trail_wave( vec2 pos_tex, vec2 dim )
 {
-   float a, m, p;
+   float a, m, p, y;
 
    // Modulate alpha base on length
-   a = fastdropoff( t, 1. );
+   a = fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-t, 30. );
+   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
 
    // Modulate width
-   p = 2*M_PI * (t*5 + dt * 0.5);
-   y += 0.2 * smoothstep(0, 0.8, 1-t) * sin( p );
+   p = 2*M_PI * (pos_tex.x*5 + dt * 0.5);
+   y = pos_tex.y + 0.2 * smoothstep(0, 0.8, 1-pos_tex.x) * sin( p );
    a *= smoothbeam( y, 2.*m );
 
    return a;
 }
 
-float trail_flame( float t, float y )
+float trail_flame( vec2 pos_tex, vec2 dim )
 {
-   float a, m, p;
+   float a, m, p, y;
 
    // Modulate alpha base on length
-   a = fastdropoff( t, 1. );
+   a = fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-t, 30. );
+   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
 
    // Modulate width
    // By multiplying two sine waves with different period it looks more like
    // a natural flame.
-   p = 2*M_PI * (t*5 + dt * 5);
-   y += 0.2 * smoothstep(0, 0.8, 1-t) * sin( p ) * sin( 2.7*p );
+   p = 2*M_PI * (pos_tex.x*5 + dt * 5);
+   y = pos_tex.y + 0.2 * smoothstep(0, 0.8, 1-pos_tex.x) * sin( p ) * sin( 2.7*p );
    a *= smoothbeam( y, 2.*m );
 
    return a;
 }
 
-float trail_arc( float t, float y )
+float trail_arc( vec2 pos_tex, vec2 dim )
 {
    float a, m, p, v, s;
    vec2 ncoord;
 
    // Modulate alpha base on length
-   a = fastdropoff( t, 1. );
+   a = fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
-   //m = 0.5 + 0.5*impulse( 1.-t, 1. );
-   m = 0.5 + 0.5*impulse( 1.-t, 1. );
+   //m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 1. );
+   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 1. );
    m *= 3;
 
    // Modulate width
-   ncoord = vec2( t * 0.03*length, 7*dt );
-   s =  0.6 * smoothstep(0, 0.2, 1-t);
-   p = y + s * snoise( ncoord );
+   ncoord = vec2( pos_tex.x * 0.03*dim.x, 7*dt );
+   s =  0.6 * smoothstep(0, 0.2, 1.-pos_tex.x);
+   p = pos_tex.y + s * snoise( ncoord );
    v = sharpbeam( p, m );
-   p = y + s * snoise( 1.5*ncoord );
+   p = pos_tex.y + s * snoise( 1.5*ncoord );
    v += sharpbeam( p, 2*m );
-   p = y + s * snoise( 2*ncoord );
+   p = pos_tex.y + s * snoise( 2*ncoord );
    v += sharpbeam( p, 4*m );
 
    a *= v * 0.6;
@@ -209,38 +209,40 @@ float trail_arc( float t, float y )
    return min(1, a);
 }
 
-float trail_bubbles( float t, float y )
+float trail_bubbles( vec2 pos_tex, vec2 dim )
 {
-   float a, m,p;
+   float a, m, p;
+   vec2 coords;
 
    // Modulate alpha base on length
-   a = fastdropoff( t, 1. );
+   a = fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-t, 3. );
+   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
-   p = 0.5 + min( 0.5, snoise( 0.08*vec2( length*t+200*dt, 10*y )  ));
+   coords = dim * pos_tex + vec2( 220*dt, 0 );;
+   p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
 
    // Modulate width
-   a *= p * smoothbeam( y, 3.*m );
+   a *= p * smoothbeam( pos_tex.y, 3.*m );
 
    return a;
 }
 
-float trail_nebula( float t, float y )
+float trail_nebula( vec2 pos_tex, vec2 dim )
 {
    float a, m;
 
    // Modulate alpha base on length
-   a = fastdropoff( t, 1 );
+   a = fastdropoff( pos_tex.x, 1 );
 
    // Modulate alpha based on dispersion
-   m = impulse( t, 0.3);
+   m = impulse( pos_tex.x, 0.3);
 
    // Modulate width
-   m *= 2-smoothstep( 0., 0.2, 1.-t );
-   a *= sharpbeam( y, 3*m );
-   a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-t );
+   m *= 2-smoothstep( 0., 0.2, 1.-pos_tex.x );
+   a *= sharpbeam( pos_tex.y, 3*m );
+   a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-pos_tex.x );
 
    return a;
 }
@@ -255,19 +257,19 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    float a;
 
    if (type==1)
-      a = trail_pulse( t, pos.y );
+      a = trail_pulse( pos, dimensions );
    else if (type==2)
-      a = trail_wave( t, pos.y );
+      a = trail_wave( pos, dimensions );
    else if (type==3)
-      a = trail_flame( t, pos.y );
+      a = trail_flame( pos, dimensions );
    else if (type==4)
-      a = trail_nebula( t, pos.y );
+      a = trail_nebula( pos, dimensions );
    else if (type==5)
-      a = trail_arc( t, pos.y );
+      a = trail_arc( pos, dimensions );
    else if (type==6)
-      a = trail_bubbles( t, pos.y );
+      a = trail_bubbles( pos, dimensions );
    else
-      a = trail_default( t, pos.y );
+      a = trail_default( pos, dimensions );
 
    color_out.a *= a;
 
@@ -280,7 +282,7 @@ local vertexcode = [[
 
 uniform float dt;
 uniform int type;
-uniform float length;
+uniform vec2 dimensions;
 
 vec4 position( mat4 transform_projection, vec4 vertex_position )
 {
@@ -326,7 +328,7 @@ function love.draw ()
          lg.setColor( 1, 1, 1, 0.5 )
          lg.rectangle( "line", x-2, y-2, w+4, h+4 )
          lg.setShader(shader)
-         shader:send( "length", w )
+         shader:send( "dimensions", {w,h} )
          lg.setColor( 0, 1, 1, 0.7 )
          lg.draw( img, x, y, 0, w, h)
          y = y + h + 20
