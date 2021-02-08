@@ -149,7 +149,7 @@ static void nebu_renderBackground( const double dt )
    /* Set shader uniforms. */
    gl_uniformColor(shaders.nebula_background.color, &cBlue);
    gl_Matrix4_Uniform(shaders.nebula_background.projection, projection);
-   glUniform2f(shaders.nebula_background.center, gl_screen.w / 2, gl_screen.h / 2);
+   glUniform2f(shaders.nebula_background.center, gl_screen.rw / 2, gl_screen.rh / 2);
    glUniform1f(shaders.nebula_background.radius, nebu_view * cam_getZoom());
    glUniform1f(shaders.nebula_background.time, nebu_time);
 
