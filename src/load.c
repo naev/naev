@@ -210,7 +210,7 @@ int load_refresh (void)
       len = strlen( files[i] );
 
       /* Only interested in swapping backup with file after it if it's not backup. */
-      if ((len < 12) || strcmp( &files[i][len-10],".ns.backup" ))
+      if ((len < 11) || strcmp( &files[i][len-10],".ns.backup" ))
          continue;
 
       /* Don't match. */
