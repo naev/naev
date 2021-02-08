@@ -109,49 +109,49 @@ float random (vec2 st) {
 }
 
 /* No animation. */
-float trail_default( vec2 pos_tex, vec2 dim )
+vec4 trail_default( vec4 color, vec2 pos_tex, vec2 dim )
 {
-   float a, m;
+   float m;
 
    // Modulate alpha base on length
-   a = fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
 
    // Modulate width
-   a *= smoothbeam( pos_tex.y, 3.*m );
+   color.a *= smoothbeam( pos_tex.y, 3.*m );
 
-   return a;
+   return color;
 }
 
 /* Pulsating motion. */
-float trail_pulse( vec2 pos_tex, vec2 dim )
+vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 dim )
 {
-   float a, m, v;
+   float m, v;
 
    // Modulate alpha base on length
-   a = fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
 
    // Modulate width
-   a *= smoothbeam( pos_tex.y, 3.*m );
+   color.a *= smoothbeam( pos_tex.y, 3.*m );
 
    v = smoothstep( 0., 0.5, 1-pos_tex.x );
-   a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (pos_tex.x * 0.03 * dim.x + dt * 3) ), v );
+   color.a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (pos_tex.x * 0.03 * dim.x + dt * 3) ), v );
 
-   return a;
+   return color;
 }
 
 /* Slow ondulating wave-like movement. */
-float trail_wave( vec2 pos_tex, vec2 dim )
+vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 dim )
 {
-   float a, m, p, y;
+   float m, p, y;
 
    // Modulate alpha base on length
-   a = fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
@@ -159,18 +159,18 @@ float trail_wave( vec2 pos_tex, vec2 dim )
    // Modulate width
    p = 2*M_PI * (pos_tex.x*5 + dt * 0.5);
    y = pos_tex.y + 0.2 * smoothstep(0, 0.8, 1-pos_tex.x) * sin( p );
-   a *= smoothbeam( y, 2.*m );
+   color.a *= smoothbeam( y, 2.*m );
 
-   return a;
+   return color;
 }
 
 /* Flame-like periodic movement. */
-float trail_flame( vec2 pos_tex, vec2 dim )
+vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 dim )
 {
-   float a, m, p, y;
+   float m, p, y;
 
    // Modulate alpha base on length
-   a = fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
@@ -180,32 +180,32 @@ float trail_flame( vec2 pos_tex, vec2 dim )
    // a natural flame.
    p = 2*M_PI * (pos_tex.x*5 + dt * 5);
    y = pos_tex.y + 0.2 * smoothstep(0, 0.8, 1-pos_tex.x) * sin( p ) * sin( 2.7*p );
-   a *= smoothbeam( y, 2.*m );
+   color.a *= smoothbeam( y, 2.*m );
 
-   return a;
+   return color;
 }
 
 /* Starts thin and gets wide. */
-float trail_nebula( vec2 pos_tex, vec2 dim )
+vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 dim )
 {
-   float a, m;
+   float m;
 
    // Modulate alpha base on length
-   a = fastdropoff( pos_tex.x, 1 );
+   color.a *= fastdropoff( pos_tex.x, 1 );
 
    // Modulate alpha based on dispersion
    m = impulse( pos_tex.x, 0.3);
 
    // Modulate width
    m *= 2-smoothstep( 0., 0.2, 1.-pos_tex.x );
-   a *= sharpbeam( pos_tex.y, 3*m );
-   a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-pos_tex.x );
+   color.a *= sharpbeam( pos_tex.y, 3*m );
+   color.a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-pos_tex.x );
 
-   return a;
+   return color;
 }
 
 /* Somewhat like a lightning arc. */
-float trail_arc( vec2 pos_tex, vec2 dim )
+vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
 {
    float a, m, p, v, s;
    vec2 ncoord;
@@ -230,17 +230,18 @@ float trail_arc( vec2 pos_tex, vec2 dim )
 
    a *= v * 0.6;
 
-   return min(1, a);
+   color.a *= min(1, a);
+   return color;
 }
 
 /* Bubbly effect. */
-float trail_bubbles( vec2 pos_tex, vec2 dim )
+vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 dim )
 {
-   float a, m, p;
+   float m, p;
    vec2 coords;
 
    // Modulate alpha base on length
-   a = fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
@@ -249,37 +250,33 @@ float trail_bubbles( vec2 pos_tex, vec2 dim )
    p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
 
    // Modulate width
-   a *= p * smoothbeam( pos_tex.y, 3.*m );
+   color.a *= p * smoothbeam( pos_tex.y, 3.*m );
 
-   return a;
+   return color;
 }
 
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec4 color_out = color;
+   vec4 color_out;
    vec2 pos = texture_coords;
    pos.y = 2*pos.y-1;
    pos.x = 1-pos.x;
-   float t = pos.x;
-   float a;
 
    if (type==1)
-      a = trail_pulse( pos, dimensions );
+      color_out = trail_pulse( color, pos, dimensions );
    else if (type==2)
-      a = trail_wave( pos, dimensions );
+      color_out = trail_wave( color, pos, dimensions );
    else if (type==3)
-      a = trail_flame( pos, dimensions );
+      color_out = trail_flame( color, pos, dimensions );
    else if (type==4)
-      a = trail_nebula( pos, dimensions );
+      color_out = trail_nebula( color, pos, dimensions );
    else if (type==5)
-      a = trail_arc( pos, dimensions );
+      color_out = trail_arc( color, pos, dimensions );
    else if (type==6)
-      a = trail_bubbles( pos, dimensions );
+      color_out = trail_bubbles( color, pos, dimensions );
    else
-      a = trail_default( pos, dimensions );
-
-   color_out.a *= a;
+      color_out = trail_default( color, pos, dimensions );
 
    return color_out;
 }
