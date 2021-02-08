@@ -211,7 +211,9 @@ function call_the_police ()
    spwn_police()
    tk.msg(title[2],text[11])
    tk.msg(title[2],text[12])
-   boardh = hook.pilot(player.pilot(), "disable", "go_board")
+   if boardh == nil then
+      boardh = hook.pilot(player.pilot(), "disable", "go_board")
+   end
 end
 
 function spwn_police ()
@@ -242,23 +244,23 @@ end
 -- move to the player ship 
 
 function go_board ()
-   if adm1 then
+   if adm1:exists() then
       adm1:control()
       adm1:setHostile(false)
       adm1:goto(player.pos())
-      hook.pilot(adm1, "idle", "fine_vanish")
+      admho = hook.pilot(adm1, "idle", "fine_vanish")
    end
-   if lance1 then
+   if lance1:exists() then
       lance1:control()
       lance1:setHostile(false)
       lance1:goto(player.pos())
-      hook.pilot(lance1, "idle", "fine_vanish")
+      l1ho = hook.pilot(lance1, "idle", "fine_vanish")
    end
-   if lance2 then
+   if lance2:exists() then
       lance2:control()
       lance2:setHostile(false)
       lance2:goto(player.pos())
-      hook.pilot(lance2, "idle", "fine_vanish")
+      l2ho = hook.pilot(lance2, "idle", "fine_vanish")
    end
 end
 -- display msgs and have the ships disappear and fail the mission...
@@ -272,13 +274,13 @@ function fine_vanish ()
       player.pay(-player.credits())
    end
    misn.cargoRm(carg_id)
-   if adm1 then
+   if adm1:exists() then
       adm1:hyperspace()
    end
-   if lance1 then
+   if lance1:exists() then
       lance1:hyperspace()
    end
-   if lance2 then
+   if lance2:exists() then
       lance2:hyperspace()
    end
    player.msgClear()

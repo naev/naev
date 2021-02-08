@@ -109,7 +109,7 @@ end
 
 function sys_enter ()
    -- Check to see if reaching target system
-   if system.cur() == system.get(t_sys[1]) then
+   if system.cur() == system.get(t_sys[1]) and not captured then
       -- wait til stars have settled and do stuff
       --pilot.clear()
       --pilot.toggleSpawn(false)
@@ -147,7 +147,7 @@ function game_of_drones ()
    sp = t_pla[1] 
    -- + vec2.new(dist*math.cos(math.pi*2*rnd.rnd()),dist*math.sin(2*math.pi*rnd.rnd()))
    --pilot.toggleSpawn(true)
-   hook.pilot(t_drone,"hail","got_hailed",t_drone,badguys)
+   hailhook = hook.pilot(t_drone,"hail","got_hailed",t_drone,badguys)
 end
 
 function got_hailed()
@@ -155,6 +155,7 @@ function got_hailed()
       player.msg(_("Target out of range"))
       return
    end
+   hook.rm(hailhook)
    hook.rm(idlehook)
    tk.msg(title[3], text[4])
    tk.msg(title[3], text[5]:format(t_pla[1]:name()))
@@ -197,14 +198,14 @@ function targetBoard()
    tk.msg(title[3], text[7])
    t_drone:setHilight(false)
    t_drone:setVisplayer(false)
-   hook.rm(idlehook)
+   captured = true
    t_drone:rm()
    cargoID = misn.cargoAdd("Prototype",10)
    misn.osdActive(3)
    misn.markerRm(mmarker)
    mmarker = misn.markerAdd(system.get(t_sys[2]),"high")
    if jumps == 0 then
-      leavehook = hook.timer(2000, "drones_flee")
+      hook.timer(2000, "drones_flee")
    end
    hook.land("land_home")
 end
