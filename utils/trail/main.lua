@@ -255,7 +255,6 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 dim )
    return color;
 }
 
-
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec4 color_out;
