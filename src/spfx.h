@@ -37,7 +37,7 @@ typedef struct TrailSpec_ {
    char* name;      /**< Trail definition's name. */
    double ttl;      /**< Time To Life (in seconds). */
    double def_thick;/**< Default thickness, relevant while loading. */
-   int type;        /**< Shader to use. */
+   GLuint type;     /**< Shader to use. */
    TrailStyle idle; /**< Colour when idle. */
    TrailStyle glow; /**< Colour when thrusting. */
    TrailStyle aftb; /**< Colour when afterburning. */
@@ -61,7 +61,7 @@ typedef struct TrailPoint {
  */
 typedef struct Trail_spfx_ {
    double ttl;       /**< Time To Life (in seconds). */
-   int type;         /**< Shader to use. */
+   GLuint type;      /**< Shader to use. */
    TrailPoint *point_ringbuf; /**< Circular buffer (malloced/freed) of trail points. */
    size_t capacity;  /**< Buffer size, guaranteed to be a power of 2. */
    size_t iread;     /**< Start index (NOT reduced modulo capacity). */

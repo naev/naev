@@ -1,3 +1,15 @@
+#ifdef HAS_GL_ARB_shader_subroutine
+#extension GL_ARB_shader_subroutine : require
+
+subroutine vec4 trail_func_prototype( vec4 color, vec2 pos_tex, vec2 dim );
+subroutine uniform trail_func_prototype trail_func;
+
+#define TRAIL_FUNC_PROTOTYPE  subroutine( trail_func_prototype )
+#else /* HAS_GL_ARB_shader_subroutine */
+#define TRAIL_FUNC_PROTOTYPE
+#endif /* HAS_GL_ARB_shader_subroutine */
+
+
 #include "lib/math.glsl"
 #include "lib/simplex2D.glsl"
 #include "lib/cellular2x2.glsl"
@@ -39,11 +51,8 @@ float sharpbeam( float x, float k )
    return pow( min( cos( M_PI * x / 2. ), 1.0 - abs(x) ), k );
 }
 
-float random (vec2 st) {
-   return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
-}
-
 /* No animation. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_default( vec4 color, vec2 pos_tex, vec2 dim )
 {
    float m;
@@ -61,6 +70,7 @@ vec4 trail_default( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Pulsating motion. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 dim )
 {
    float m, v;
@@ -81,6 +91,7 @@ vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Slow ondulating wave-like movement. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 dim )
 {
    float m, p, y;
@@ -100,6 +111,7 @@ vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Flame-like periodic movement. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 dim )
 {
    float m, p, y;
@@ -121,6 +133,7 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Starts thin and gets wide. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 dim )
 {
    float m;
@@ -140,6 +153,7 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Somewhat like a lightning arc. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
 {
    float m, p, v, s;
@@ -168,6 +182,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Bubbly effect. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 dim )
 {
    float m, p;
@@ -199,24 +214,13 @@ void main(void) {
    pos_tex   = pos;
    pos_tex.x = mix( t1, t2, pos.x );
 
-   // TODO optimize this with subroutines
-   // https://www.khronos.org/opengl/wiki/Shader_Subroutine
-   // Main issue is that this would require OpenGL 4.0+ unless
-   // worked around
-   if (type==1)
-      color_out = trail_pulse( color_out, pos_tex, dimensions );
-   else if (type==2)
-      color_out = trail_wave( color_out, pos_tex, dimensions );
-   else if (type==3)
-      color_out = trail_flame( color_out, pos_tex, dimensions );
-   else if (type==4)
-      color_out = trail_nebula( color_out, pos_tex, dimensions );
-   else if (type==5)
-      color_out = trail_arc( color_out, pos_tex, dimensions );
-   else if (type==6)
-      color_out = trail_bubbles( color_out, pos_tex, dimensions );
-   else
-      color_out = trail_default( color_out, pos_tex, dimensions );
+#ifdef HAS_GL_ARB_shader_subroutine
+   // Use subroutines
+   color_out = trail_func( color_out, pos_tex, dimensions );
+#else /* HAS_GL_ARB_shader_subroutine */
+   //* Just use default
+   color_out = trail_default( color_out, pos_tex, dimensions );
+#endif /* HAS_GL_ARB_shader_subroutine */
 
 #include "colorblind.glsl"
 }

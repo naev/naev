@@ -211,7 +211,7 @@ void gl_blitTexture(  const glTexture* texture,
       const double tw, const double th, const glColour *c, const double angle )
 {
    // Half width and height
-   double hw, hh; 
+   double hw, hh;
    gl_Matrix4 projection, tex_mat;
 
    glUseProgram(shaders.texture.program);
@@ -765,7 +765,7 @@ void gl_drawLine( const double x1, const double y1,
 void gl_drawTrail( double x1, double y1, double x2, double y2,
       double t1, double t2, const glColour *c1,
       const glColour *c2, GLfloat thick1, GLfloat thick2,
-      GLint type, GLfloat dt, GLfloat length )
+      GLuint type, GLfloat dt, GLfloat length )
 {
    gl_Matrix4 projection;
    double a, s;
@@ -792,9 +792,12 @@ void gl_drawTrail( double x1, double y1, double x2, double y2,
    gl_Matrix4_Uniform(shaders.trail.projection, projection);
    glUniform1f(shaders.trail.t1, (GLfloat) t1);
    glUniform1f(shaders.trail.t2, (GLfloat) t2);
-   glUniform1i(shaders.trail.type, type );
    glUniform1f(shaders.trail.dt, dt );
    glUniform2f(shaders.trail.dimensions, length, (thick1+thick2)/2. );
+
+   /* Set the subroutine. */
+   if (GLAD_GL_ARB_shader_subroutine)
+      glad_glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &type );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
