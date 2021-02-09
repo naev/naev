@@ -1,5 +1,6 @@
 #include "lib/math.glsl"
 #include "lib/simplex2D.glsl"
+#include "lib/cellular2x2.glsl"
 
 // For ideas: https://thebookofshaders.com/05/
 
@@ -180,8 +181,9 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 dim )
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
-   coords = dim * pos_tex + vec2( 220*dt, 0 );
-   p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
+   // Add the fancy noise
+   coords = dim * pos_tex + vec2( 420*dt, 0 );
+   p = 1 - 0.7*cellular2x2( 0.04 * coords ).x;
 
    // Modulate width
    color.a *= p * smoothbeam( pos_tex.y, 3.*m );
