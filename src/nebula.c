@@ -132,7 +132,7 @@ static void nebu_renderBackground( const double dt )
    gl_Matrix4 projection;
 
    /* calculate frame to draw */
-   nebu_time += dt / nebu_dt;
+   nebu_time += dt * nebu_dt;
 
    /* Compensate possible rumble */
    spfx_getShake( &sx, &sy );
@@ -322,7 +322,7 @@ void nebu_prep( double density, double volatility )
 
    nebu_density = density;
    nebu_update( 0. );
-   nebu_dt   = 2000. / (density + 100.); /* Faster at higher density */
+   nebu_dt   = (density + 500) / 10000.; /* Faster at higher density */
    nebu_time = 0.;
 
    nebu_npuffs = density/4.;

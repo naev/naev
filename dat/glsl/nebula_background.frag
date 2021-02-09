@@ -14,7 +14,7 @@ void main(void) {
    vec2 uv = (gl_FragCoord.xy-center)*4./radius;
    for (int i=0; i<ITERATIONS; i++) {
       float scale = pow(SCALAR, i);
-      f += abs( srnoise( uv*scale, .5*time/scale ) ) / scale;
+      f += abs( srnoise( uv*scale, time/scale ) ) / scale;
    }
    color_out = mix( vec4( 0, 0, 0, 1 ), color, .1 + f );
 
