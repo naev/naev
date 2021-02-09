@@ -69,6 +69,7 @@ typedef struct Trail_spfx_ {
    int refcount;     /**< Number of referrers. If 0, trail dies after its TTL. */
    double dt;        /**< Timer accumulator (in seconds). */
    int nebula;       /**< Whether or not this trail is only shown in the nebula. */
+   GLfloat r;        /**< Random variable between 0 and 1 to make each trail unique. */
 } Trail_spfx;
 
 /** @brief Indexes into a trail's circular buffer.  */

@@ -497,6 +497,7 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
    trail->refcount = 1;
    trail->type = spec->type;
    trail->nebula = spec->nebula;
+   trail->r = RNGF();
 
    if ( trail_spfx_stack == NULL )
       trail_spfx_stack = array_create( Trail_spfx* );
@@ -649,6 +650,7 @@ static void spfx_trail_draw( const Trail_spfx* trail )
    glEnableVertexAttribArray( shaders.trail.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );
    glUniform1f( shaders.trail.dt, trail->dt );
+   glUniform1f( shaders.trail.r, trail->r );
 
    z   = cam_getZoom();
    len = 0.;

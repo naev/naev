@@ -23,6 +23,7 @@ uniform float t2;
 uniform float dt;
 uniform vec2 pos1;
 uniform vec2 pos2;
+uniform float r;
 in vec2 pos;
 out vec4 color_out;
 
@@ -103,7 +104,7 @@ vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 pos_px )
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
 
    // Modulate width
-   p = 2*M_PI * (pos_tex.x*5 + dt * 0.5);
+   p = 2*M_PI * (pos_tex.x*5 + dt * 0.5 + r);
    y = pos_tex.y + 0.2 * smoothstep(0, 0.8, 1-pos_tex.x) * sin( p );
    color.a *= smoothbeam( y, 2.*m );
 
@@ -125,7 +126,7 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Modulate width
    // By multiplying two sine waves with different period it looks more like
    // a natural flame.
-   p = 2*M_PI * (pos_tex.x*5 + dt * 5);
+   p = 2*M_PI * (pos_tex.x*5 + dt * 5 + r);
    y = pos_tex.y + 0.2 * smoothstep(0, 0.8, 1-pos_tex.x) * sin( p ) * sin( 2.7*p );
    color.a *= smoothbeam( y, 2.*m );
 
@@ -166,7 +167,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    m = 1.5 + 1.5*impulse( 1.-pos_tex.x, 1. );
 
    // Modulate width
-   ncoord = vec2( 0.03 * pos_px.x, 7*dt );
+   ncoord = vec2( 0.03 * pos_px.x, 7*dt ) + 1000 * r;
    s =  0.6 * smoothstep(0, 0.2, 1.-pos_tex.x);
    p = pos_tex.y + s * snoise( ncoord );
    v = sharpbeam( p, m );
@@ -195,8 +196,8 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos_px )
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
    //coords = pos_px + vec2( 220*dt, 0 );
-   //p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
-   coords = pos_px + vec2( 120*dt, 0 );
+   //p = 0.5 + min( 0.5, snoise( 0.08 * coords ) );
+   coords = pos_px + vec2( 120*dt, 0 ) + 1000 * r;
    p = 1 - 0.7*cellular2x2( 0.13 * coords ).x;
 
    // Modulate width
