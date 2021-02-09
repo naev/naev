@@ -47,10 +47,10 @@ typedef struct TrailSpec_ {
 
 
 typedef struct TrailPoint {
-   GLfloat x, y;    /**< Control points for the trail. */
-   glColour c;   /**< Colour associated with the trail's control points. */
-   GLfloat t; /**< Timer, normalized to the time to live of the trail (starts at 1, ends at 0). */
-   GLfloat thickness; /**< Thickness of the trail. */
+   GLfloat x, y;     /**< Control points for the trail. */
+   glColour c;       /**< Colour associated with the trail's control points. */
+   GLfloat t;        /**< Timer, normalized to the time to live of the trail (starts at 1, ends at 0). */
+   GLfloat thickness;/**< Thickness of the trail. */
 } TrailPoint;
 
 
@@ -68,7 +68,6 @@ typedef struct Trail_spfx_ {
    size_t iwrite;    /**< End index (NOT reduced modulo capacity). */
    int refcount;     /**< Number of referrers. If 0, trail dies after its TTL. */
    double dt;        /**< Timer accumulator (in seconds). */
-   GLfloat len;      /**< Total length of the trail (in pixels). */
    int nebula;       /**< Whether or not this trail is only shown in the nebula. */
 } Trail_spfx;
 

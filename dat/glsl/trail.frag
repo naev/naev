@@ -20,9 +20,9 @@ uniform vec4 c1;
 uniform vec4 c2;
 uniform float t1;
 uniform float t2;
-uniform int type;
 uniform float dt;
-uniform vec2 dimensions;
+uniform vec2 pos1;
+uniform vec2 pos2;
 in vec2 pos;
 out vec4 color_out;
 
@@ -53,7 +53,7 @@ float sharpbeam( float x, float k )
 
 /* No animation. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_default( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_default( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m;
 
@@ -71,7 +71,7 @@ vec4 trail_default( vec4 color, vec2 pos_tex, vec2 dim )
 
 /* Pulsating motion. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, v;
 
@@ -85,14 +85,14 @@ vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 dim )
    color.a *= smoothbeam( pos_tex.y, 3.*m );
 
    v = smoothstep( 0., 0.5, 1-pos_tex.x );
-   color.a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (pos_tex.x * 0.03 * dim.x + dt * 3) ), v );
+   color.a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (0.03 * pos.x + dt * 3) ), v );
 
    return color;
 }
 
 /* Slow ondulating wave-like movement. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p, y;
 
@@ -112,7 +112,7 @@ vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 dim )
 
 /* Flame-like periodic movement. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p, y;
 
@@ -134,7 +134,7 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 dim )
 
 /* Starts thin and gets wide. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m;
 
@@ -154,7 +154,7 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 dim )
 
 /* Somewhat like a lightning arc. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p, v, s;
    vec2 ncoord;
@@ -166,7 +166,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
    m = 1.5 + 1.5*impulse( 1.-pos_tex.x, 1. );
 
    // Modulate width
-   ncoord = vec2( pos_tex.x * 0.03*dim.x, 7*dt );
+   ncoord = vec2( 0.03 * pos.x, 7*dt );
    s =  0.6 * smoothstep(0, 0.2, 1.-pos_tex.x);
    p = pos_tex.y + s * snoise( ncoord );
    v = sharpbeam( p, m );
@@ -183,7 +183,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
 
 /* Bubbly effect. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p;
    vec2 coords;
@@ -194,10 +194,10 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 dim )
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
-   //coords = dim * pos_tex + vec2( 220*dt, 0 );
+   //coords = pos + vec2( 220*dt, 0 );
    //p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
-   coords = dim * pos_tex + vec2( 420*dt, 0 );
-   p = 1 - 0.7*cellular2x2( 0.04 * coords ).x;
+   coords = pos + vec2( 420*dt, 0 );
+   p = 1 - 0.7*cellular2x2( 0.13 * coords ).x;
 
    // Modulate width
    color.a   *= p * smoothbeam( pos_tex.y, 3.*m );
@@ -207,19 +207,21 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 void main(void) {
-   vec2 pos_tex;
+   vec2 pos_tex, pos_px;
 
    // Interpolate
    color_out = mix( c1, c2, pos.x );
-   pos_tex   = pos;
+   pos_px    = mix( pos1, pos2, pos );
+   pos_px.y *= pos.y;
    pos_tex.x = mix( t1, t2, pos.x );
+   pos_tex.y = 2. * pos.y - 1.;
 
 #ifdef HAS_GL_ARB_shader_subroutine
    // Use subroutines
-   color_out = trail_func( color_out, pos_tex, dimensions );
+   color_out = trail_func( color_out, pos_tex, pos_px );
 #else /* HAS_GL_ARB_shader_subroutine */
    //* Just use default
-   color_out = trail_default( color_out, pos_tex, dimensions );
+   color_out = trail_default( color_out, pos_tex, pos_px );
 #endif /* HAS_GL_ARB_shader_subroutine */
 
 #include "colorblind.glsl"

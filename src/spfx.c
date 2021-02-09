@@ -538,24 +538,10 @@ void spfx_update_trails( double dt ) {
 static void spfx_trail_update( Trail_spfx* trail, double dt )
 {
    size_t i;
-   GLfloat x, y, len;
-   TrailPoint *point;
 
    /* Update all elements. */
-   len = 0.;
-   i = trail->iread;
-   point = &trail_at( trail, i );
-   point->t -= dt / trail->ttl;
-   x = point->x;
-   y = point->y;
-   for ( ; i<trail->iwrite; i++) {
-      point = &trail_at( trail, i );
-      point->t -= dt / trail->ttl;
-      len += pow2(point->x-x) + pow2(point->y-y);
-      x = point->x;
-      y = point->y;
-   }
-   trail->len = len;
+   for (i = trail->iread; i < trail->iwrite; i++)
+      trail_at( trail, i ).t -= dt/ trail->ttl;
 
    /* Remove first elements if they're outdated. */
    while (trail->iread < trail->iwrite && trail_front(trail).t < 0.) {
@@ -650,19 +636,61 @@ static void spfx_trail_draw( const Trail_spfx* trail )
    double x1, y1, x2, y2, z;
    TrailPoint *tp, *tpp;
    size_t i, n;
+   GLfloat len;
+   gl_Matrix4 projection;
+   double a, s;
 
    n = trail_size(trail);
    if (n==0)
       return;
 
+   /* Stuff that doesn't change for the entire trail. */
+   glUseProgram( shaders.trail.program );
+   glEnableVertexAttribArray( shaders.trail.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );
+   glUniform1f( shaders.trail.dt, trail->dt );
+
+   z   = cam_getZoom();
+   len = 0.;
    for (i = trail->iread + 1; i < trail->iwrite; i++) {
-      z   = cam_getZoom();
       tp  = &trail_at( trail, i );
       tpp = &trail_at( trail, i-1 );
       gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
       gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
-      gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, tp->thickness * z, tpp->thickness * z, trail->type, trail->dt, trail->len );
+
+      a = atan2( y2-y1, x2-x1 );
+      s = hypotf( x2-x1, y2-y1 );
+
+      /* Set vertex. */
+      projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);
+      projection = gl_Matrix4_Rotate2d(projection, a);
+      projection = gl_Matrix4_Scale(projection, s, z*(tp->thickness+tpp->thickness), 1);
+      projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
+
+      /* Set uniforms. */
+      gl_Matrix4_Uniform(shaders.trail.projection, projection);
+      gl_uniformColor(shaders.trail.c1, &tp->c);
+      gl_uniformColor(shaders.trail.c2, &tpp->c);
+      glUniform1f(shaders.trail.t1, tp->t);
+      glUniform1f(shaders.trail.t2, tpp->t);
+      glUniform2f(shaders.trail.pos2, len, tp->thickness );
+      len += s;
+      glUniform2f(shaders.trail.pos1, len, tpp->thickness );
+
+      /* Set the subroutine. */
+      if (GLAD_GL_ARB_shader_subroutine)
+         glad_glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &trail->type );
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    }
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.trail.vertex );
+   glUseProgram(0);
+
+   /* Check errors. */
+   gl_checkErr();
 }
 
 
