@@ -1,5 +1,6 @@
-#include "math.h"
-#include "noise2D.glsl"
+#include "lib/math.glsl"
+#include "lib/simplex2D.glsl"
+#include "lib/cellular2x2.glsl"
 
 // For ideas: https://thebookofshaders.com/05/
 
@@ -146,16 +147,14 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 dim )
 subroutine( trail_func_prototype )
 vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
 {
-   float a, m, p, v, s;
+   float m, p, v, s;
    vec2 ncoord;
 
    // Modulate alpha base on length
-   a = fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1. );
 
    // Modulate alpha based on dispersion
-   //m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 1. );
-   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 1. );
-   m *= 3;
+   m = 1.5 + 1.5*impulse( 1.-pos_tex.x, 1. );
 
    // Modulate width
    ncoord = vec2( pos_tex.x * 0.03*dim.x, 7*dt );
@@ -167,9 +166,9 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
    p = pos_tex.y + s * snoise( 2*ncoord );
    v += sharpbeam( p, 4*m );
 
-   a *= v * 0.6;
+   color.xyz *= 1 + max(0, 3*(v-0.9));
+   color.a   *= min(1, 0.6*v);
 
-   color.a *= min(1, a);
    return color;
 }
 
@@ -186,11 +185,14 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 dim )
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
-   coords = dim * pos_tex + vec2( 220*dt, 0 );
-   p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
+   //coords = dim * pos_tex + vec2( 220*dt, 0 );
+   //p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
+   coords = dim * pos_tex + vec2( 420*dt, 0 );
+   p = 1 - 0.7*cellular2x2( 0.04 * coords ).x;
 
    // Modulate width
-   color.a *= p * smoothbeam( pos_tex.y, 3.*m );
+   color.a   *= p * smoothbeam( pos_tex.y, 3.*m );
+   color.xyz *= 1 + max(0, 10*(p-0.8));
 
    return color;
 }
