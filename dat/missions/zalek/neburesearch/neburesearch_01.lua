@@ -151,7 +151,7 @@ function takeoff()
 end
 
 function jumpin()
-     if system.cur() ~= nextsys then
+     if system.cur() ~= nextsys and not station_visited then
         fail(_("MISSION FAILED! You jumped into the wrong system. You failed science miserably!"))
     else
         spawnTransporter()
