@@ -355,6 +355,22 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 function set_shader( num )
    shader_type = num
    shader:send( "type", shader_type )
+
+   if shader_type == 1 then -- zalek
+      shader_color = { 1, 0.3, 0.3, 0.7 }
+   elseif shader_type == 2 then -- sirius
+      shader_color = { 1, 0.9, 0.6, 0.7 }
+   elseif shader_type == 3 then -- fire
+      shader_color = { 1, 0.84, 0, 0.7 }
+   elseif shader_type == 4 then -- nebula
+      shader_color = { 0.2, 0.2, 0.8, 0.7 }
+   elseif shader_type == 5 then -- pirate
+      shader_color = { 0.9, 0.1, 0.4, 0.7 }
+   elseif shader_type == 6 then -- soromid
+      shader_color = { 0.5, 0.9, 0.2, 0.7 }
+   else -- default
+      shader_color = { 0, 1, 1, 0.7 }
+   end
 end
 
 function love.load()
@@ -393,7 +409,7 @@ function love.draw ()
          lg.rectangle( "line", x-2, y-2, w+4, h+4 )
          lg.setShader(shader)
          shader:send( "dimensions", {w,h} )
-         lg.setColor( 0, 1, 1, 0.7 )
+         lg.setColor( shader_color )
          lg.draw( img, x, y, 0, w, h)
          y = y + h + 20
       end
