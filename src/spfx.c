@@ -931,10 +931,11 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
          tc->ttl = xml_getFloat( cur );
       else if (xml_isNode(cur, "type")) {
          type = xml_get(cur);
-         tc->type = glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );
-         if (tc->type == GL_INVALID_INDEX)
-            WARN("Trail '%s' has unknown type '%s'", tc->name, type );
-         gl_checkErr();
+         if (GLAD_GL_ARB_shader_subroutine) {
+            tc->type = glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );
+            if (tc->type == GL_INVALID_INDEX)
+               WARN("Trail '%s' has unknown type '%s'", tc->name, type );
+         }
       }
       else if (xml_isNode(cur, "nebula"))
          tc->nebula = xml_getInt( cur );

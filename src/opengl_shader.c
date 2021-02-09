@@ -13,8 +13,9 @@
 #include "opengl.h"
 
 
-#define GLSL_VERSION    "#version 400\n\n" /**< Version to use for all shaders. */
-#define GLSL_COLORBLIND "#define COLORBLIND_MODE ROD_MONOCHROMACY\n" /**< Line to enable colorblind mode. */
+#define GLSL_VERSION    "#version 150\n\n" /**< Version to use for all shaders. */
+#define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
+#define GLSL_COLORBLIND "#define COLORBLIND_MODE ROD_MONOCHROMACY 1\n" /**< Line to enable colorblind mode. */
 
 
 /*
@@ -196,22 +197,15 @@ static int gl_program_link( GLuint program )
  */
 GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
 {
-   char *vert_str, *frag_str, *prepend, *buf;
-   size_t vert_size, frag_size, prepend_len;
+   char *vert_str, *frag_str, prepend[STRMAX];
+   size_t vert_size, frag_size;
    GLuint vertex_shader, fragment_shader, program;
 
-   prepend_len = strlen(GLSL_VERSION) + 1;
-   prepend = malloc( sizeof(prepend) * prepend_len );
-   strcpy( prepend, GLSL_VERSION );
-
-   if ( conf.colorblind ) {
-      prepend_len = strlen(prepend) + strlen(GLSL_COLORBLIND) + 1;
-      buf = malloc( sizeof(buf) * prepend_len );
-      nsnprintf( buf, prepend_len, "%s%s", prepend, GLSL_COLORBLIND );
-      buf[prepend_len - 1] = '\0';
-      free( prepend );
-      prepend = buf;
-   }
+   strncpy( prepend, GLSL_VERSION, sizeof(prepend) );
+   if (conf.colorblind)
+      strncat( prepend, GLSL_COLORBLIND, strlen(prepend)-strlen(GLSL_COLORBLIND) );
+   if (GLAD_GL_ARB_shader_subroutine)
+      strncat( prepend, GLSL_SUBROUTINE, strlen(prepend)-strlen(GLSL_SUBROUTINE) );
 
    vert_str = gl_shader_loadfile( vertfile, &vert_size, prepend );
    frag_str = gl_shader_loadfile( fragfile, &frag_size, prepend );
@@ -221,7 +215,6 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
 
    free( vert_str );
    free( frag_str );
-   free( prepend );
 
    program = gl_program_make( vertex_shader, fragment_shader );
    if (program==0)

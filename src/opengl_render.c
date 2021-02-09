@@ -796,7 +796,8 @@ void gl_drawTrail( double x1, double y1, double x2, double y2,
    glUniform2f(shaders.trail.dimensions, length, (thick1+thick2)/2. );
 
    /* Set the subroutine. */
-   glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &type );
+   if (GLAD_GL_ARB_shader_subroutine)
+      glad_glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &type );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
