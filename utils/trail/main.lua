@@ -320,7 +320,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec2 pos_px = mix( pos1, pos2, pos );
    pos.y = 2*pos.y-1;
    pos.x = 1-pos.x;
-   
+
 
    if (type==1)
       color_out = trail_pulse( color, pos, pos_px );
