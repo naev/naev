@@ -7,6 +7,8 @@ local pixelcode = [[
 #pragma language glsl3
 #define M_PI 3.141592502593994140625
 
+#define TRAIL_FUNC_PROTOTYPE
+
 uniform float dt;
 uniform int type;
 uniform vec2 pos1;
@@ -166,6 +168,7 @@ float random (vec2 st) {
 }
 
 /* No animation. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_default( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m;
@@ -183,6 +186,7 @@ vec4 trail_default( vec4 color, vec2 pos_tex, vec2 pos )
 }
 
 /* Pulsating motion. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, v;
@@ -203,6 +207,7 @@ vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 pos )
 }
 
 /* Slow ondulating wave-like movement. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p, y;
@@ -222,6 +227,7 @@ vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 pos )
 }
 
 /* Flame-like periodic movement. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p, y;
@@ -243,6 +249,7 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos )
 }
 
 /* Starts thin and gets wide. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m;
@@ -262,6 +269,7 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos )
 }
 
 /* Somewhat like a lightning arc. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p, v, s;
@@ -290,6 +298,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos )
 }
 
 /* Bubbly effect. */
+TRAIL_FUNC_PROTOTYPE
 vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p;
@@ -304,7 +313,7 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos )
    //coords = pos + vec2( 220*dt, 0 );
    //p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
    coords = pos + vec2( 420*dt, 0 );
-   p = 1 - 0.7*cellular2x2( 0.04 * coords ).x;
+   p = 1 - 0.7*cellular2x2( 0.13 * coords ).x;
 
    // Modulate width
    color.a   *= p * smoothbeam( pos_tex.y, 3.*m );
@@ -406,8 +415,10 @@ function love.draw ()
    lg.setColor( 1, 1, 1, 1 )
    lg.print( string.format("Use the number keys to change between shaders.\nCurrent Shader: %d", shader_type), x, y )
    y = y + 54 + 10
-   for _,w in ipairs( {700, 500, 300, 100} ) do
-      for _,h in ipairs( {30, 20, 10} ) do
+   love.graphics.scale( 2, 2 )
+   y = y/2
+   for _,w in ipairs( {350, 250, 150, 50} ) do
+      for _,h in ipairs( {15, 10, 5} ) do
          lg.setColor( 1, 1, 1, 0.5 )
          lg.rectangle( "line", x-2, y-2, w+4, h+4 )
          lg.setShader(shader)
@@ -415,7 +426,7 @@ function love.draw ()
          shader:send( "pos2", {0,0} )
          lg.setColor( shader_color )
          lg.draw( img, x, y, 0, w, h)
-         y = y + h + 20
+         y = y + h + 10
       end
    end
 end
