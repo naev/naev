@@ -191,10 +191,12 @@ def generate_c_file(f):
                     shader.name,
                     uniform))
 
+        f.write("   if (GLAD_GL_ARB_shader_subroutine) {\n")
         for subroutine, routines in shader.subroutines.items():
-            f.write(f"   shaders.{shader.name}.{subroutine}.uniform = glGetSubroutineUniformLocation( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n")
+            f.write(f"      shaders.{shader.name}.{subroutine}.uniform = glad_glGetSubroutineUniformLocation( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n")
             for r in routines:
-                f.write(f"   shaders.{shader.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n")
+                f.write(f"      shaders.{shader.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n")
+        f.write("   }\n");
 
         if i != len(SHADERS) - 1:
             f.write("\n")

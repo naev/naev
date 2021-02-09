@@ -6,6 +6,7 @@ subroutine uniform trail_func_prototype trail_func;
 
 #define TRAIL_FUNC_PROTOTYPE  subroutine( trail_func_prototype )
 #else /* HAS_GL_ARB_shader_subroutine */
+#define TRAIL_FUNC_PROTOTYPE
 #endif /* HAS_GL_ARB_shader_subroutine */
 
 
