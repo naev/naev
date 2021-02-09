@@ -196,7 +196,7 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos_px )
 
    //coords = pos_px + vec2( 220*dt, 0 );
    //p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
-   coords = pos_px + vec2( 420*dt, 0 );
+   coords = pos_px + vec2( 120*dt, 0 );
    p = 1 - 0.7*cellular2x2( 0.13 * coords ).x;
 
    // Modulate width
