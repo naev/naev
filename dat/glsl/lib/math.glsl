@@ -27,4 +27,16 @@ vec3 permute(vec3 x) {
   return mod289((34.0 * x + 1.0) * x);
 }
 
+vec4 taylorInvSqrt(vec4 r)
+{
+  return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+vec3 fade(vec3 t) {
+  return t*t*t*(t*(t*6.0-15.0)+10.0);
+}
+vec2 fade(vec2 t) {
+  return t*t*t*(t*(t*6.0-15.0)+10.0);
+}
+
 #endif /* _MATH_H */

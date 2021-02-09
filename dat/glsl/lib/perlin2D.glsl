@@ -17,15 +17,6 @@
 
 #include "lib/math.glsl"
 
-vec4 taylorInvSqrt(vec4 r)
-{
-  return 1.79284291400159 - 0.85373472095314 * r;
-}
-
-vec2 fade(vec2 t) {
-  return t*t*t*(t*(t*6.0-15.0)+10.0);
-}
-
 // Classic Perlin noise
 float cnoise(vec2 P)
 {

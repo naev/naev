@@ -1,4 +1,5 @@
 #include "lib/flow2D.glsl"
+#include "lib/perlin3D.glsl"
 
 const int ITERATIONS = 3;
 const float SCALAR = pow(2., 4./3.);
@@ -11,10 +12,13 @@ out vec4 color_out;
 
 void main(void) {
    float f = 0.0;
-   vec2 uv = (gl_FragCoord.xy-center)*4./radius;
+   vec3 uv;
+   uv.xy = (gl_FragCoord.xy-center)*4./radius;
+   uv.z = time;
    for (int i=0; i<ITERATIONS; i++) {
       float scale = pow(SCALAR, i);
-      f += abs( srnoise( uv*scale, time/scale ) ) / scale;
+      //f += abs( srnoise( uv*scale, time/scale ) ) / scale;
+      f += abs( cnoise( uv * scale ) ) / scale;
    }
    color_out = mix( vec4( 0, 0, 0, 1 ), color, .1 + f );
 
