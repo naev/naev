@@ -9,7 +9,8 @@ local pixelcode = [[
 
 uniform float dt;
 uniform int type;
-uniform vec2 dimensions;
+uniform vec2 pos1;
+uniform vec2 pos2;
 
 //
 // Description : Array and textureless GLSL 2D simplex noise function.
@@ -165,7 +166,7 @@ float random (vec2 st) {
 }
 
 /* No animation. */
-vec4 trail_default( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_default( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m;
 
@@ -182,7 +183,7 @@ vec4 trail_default( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Pulsating motion. */
-vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, v;
 
@@ -196,13 +197,13 @@ vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 dim )
    color.a *= smoothbeam( pos_tex.y, 3.*m );
 
    v = smoothstep( 0., 0.5, 1-pos_tex.x );
-   color.a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (pos_tex.x * 0.03 * dim.x + dt * 3) ), v );
+   color.a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (0.03 * pos.x + dt * 3) ), v );
 
    return color;
 }
 
 /* Slow ondulating wave-like movement. */
-vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p, y;
 
@@ -221,7 +222,7 @@ vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Flame-like periodic movement. */
-vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p, y;
 
@@ -242,7 +243,7 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Starts thin and gets wide. */
-vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m;
 
@@ -261,7 +262,7 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Somewhat like a lightning arc. */
-vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p, v, s;
    vec2 ncoord;
@@ -273,7 +274,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
    m = 1.5 + 1.5*impulse( 1.-pos_tex.x, 1. );
 
    // Modulate width
-   ncoord = vec2( pos_tex.x * 0.03*dim.x, 7*dt );
+   ncoord = vec2( 0.03 * pos.x, 7*dt );
    s =  0.6 * smoothstep(0, 0.2, 1.-pos_tex.x);
    p = pos_tex.y + s * snoise( ncoord );
    v = sharpbeam( p, m );
@@ -289,7 +290,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
 }
 
 /* Bubbly effect. */
-vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 dim )
+vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos )
 {
    float m, p;
    vec2 coords;
@@ -300,9 +301,9 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 dim )
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
-   //coords = dim * pos_tex + vec2( 220*dt, 0 );
+   //coords = pos + vec2( 220*dt, 0 );
    //p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
-   coords = dim * pos_tex + vec2( 420*dt, 0 );
+   coords = pos + vec2( 420*dt, 0 );
    p = 1 - 0.7*cellular2x2( 0.04 * coords ).x;
 
    // Modulate width
@@ -316,23 +317,25 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec4 color_out;
    vec2 pos = texture_coords;
+   vec2 pos_px = mix( pos1, pos2, pos );
    pos.y = 2*pos.y-1;
    pos.x = 1-pos.x;
+   
 
    if (type==1)
-      color_out = trail_pulse( color, pos, dimensions );
+      color_out = trail_pulse( color, pos, pos_px );
    else if (type==2)
-      color_out = trail_wave( color, pos, dimensions );
+      color_out = trail_wave( color, pos, pos_px );
    else if (type==3)
-      color_out = trail_flame( color, pos, dimensions );
+      color_out = trail_flame( color, pos, pos_px );
    else if (type==4)
-      color_out = trail_nebula( color, pos, dimensions );
+      color_out = trail_nebula( color, pos, pos_px );
    else if (type==5)
-      color_out = trail_arc( color, pos, dimensions );
+      color_out = trail_arc( color, pos, pos_px );
    else if (type==6)
-      color_out = trail_bubbles( color, pos, dimensions );
+      color_out = trail_bubbles( color, pos, pos_px );
    else
-      color_out = trail_default( color, pos, dimensions );
+      color_out = trail_default( color, pos, pos_px );
 
    return color_out;
 }
@@ -343,7 +346,8 @@ local vertexcode = [[
 
 uniform float dt;
 uniform int type;
-uniform vec2 dimensions;
+uniform vec2 pos1;
+uniform vec2 pos2;
 
 vec4 position( mat4 transform_projection, vec4 vertex_position )
 {
@@ -407,7 +411,8 @@ function love.draw ()
          lg.setColor( 1, 1, 1, 0.5 )
          lg.rectangle( "line", x-2, y-2, w+4, h+4 )
          lg.setShader(shader)
-         shader:send( "dimensions", {w,h} )
+         shader:send( "pos1", {w,h} )
+         shader:send( "pos2", {0,0} )
          lg.setColor( shader_color )
          lg.draw( img, x, y, 0, w, h)
          y = y + h + 20
