@@ -8,8 +8,8 @@
  <class>Corvette</class>
  <price>700000</price>
  <time_mod>1.25</time_mod>
- <trail_generator x="-15" y="32" h="0" >nebula</trail_generator>
- <trail_generator x="-15" y="-32" h="0" >nebula</trail_generator>
+ <trail_generator x="-11" y="33" h="-2" >nebula</trail_generator>
+ <trail_generator x="-11" y="-33" h="-2" >nebula</trail_generator>
  <trail_generator x="-25" y="5" h="5" >pirate</trail_generator>
  <trail_generator x="-25" y="-5" h="5" >pirate</trail_generator>
  <trail_generator x="-25" y="5" h="-5" >pirate</trail_generator>
