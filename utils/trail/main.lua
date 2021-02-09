@@ -169,7 +169,7 @@ float random (vec2 st) {
 
 /* No animation. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_default( vec4 color, vec2 pos_tex, vec2 pos )
+vec4 trail_default( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
    float m;
 
@@ -187,7 +187,7 @@ vec4 trail_default( vec4 color, vec2 pos_tex, vec2 pos )
 
 /* Pulsating motion. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 pos )
+vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
    float m, v;
 
@@ -201,14 +201,14 @@ vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 pos )
    color.a *= smoothbeam( pos_tex.y, 3.*m );
 
    v = smoothstep( 0., 0.5, 1-pos_tex.x );
-   color.a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (0.03 * pos.x + dt * 3) ), v );
+   color.a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (0.03 * pos_px.x + dt * 3) ), v );
 
    return color;
 }
 
 /* Slow ondulating wave-like movement. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 pos )
+vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
    float m, p, y;
 
@@ -228,7 +228,7 @@ vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 pos )
 
 /* Flame-like periodic movement. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos )
+vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
    float m, p, y;
 
@@ -250,7 +250,7 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos )
 
 /* Starts thin and gets wide. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos )
+vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
    float m;
 
@@ -270,7 +270,7 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos )
 
 /* Somewhat like a lightning arc. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos )
+vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
    float m, p, v, s;
    vec2 ncoord;
@@ -282,7 +282,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos )
    m = 1.5 + 1.5*impulse( 1.-pos_tex.x, 1. );
 
    // Modulate width
-   ncoord = vec2( 0.03 * pos.x, 7*dt );
+   ncoord = vec2( 0.03 * pos_px.x, 7*dt );
    s =  0.6 * smoothstep(0, 0.2, 1.-pos_tex.x);
    p = pos_tex.y + s * snoise( ncoord );
    v = sharpbeam( p, m );
@@ -299,7 +299,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos )
 
 /* Bubbly effect. */
 TRAIL_FUNC_PROTOTYPE
-vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos )
+vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
    float m, p;
    vec2 coords;
@@ -310,9 +310,9 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos )
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
-   //coords = pos + vec2( 220*dt, 0 );
+   //coords = pos_px + vec2( 220*dt, 0 );
    //p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
-   coords = pos + vec2( 420*dt, 0 );
+   coords = pos_px + vec2( 420*dt, 0 );
    p = 1 - 0.7*cellular2x2( 0.13 * coords ).x;
 
    // Modulate width
