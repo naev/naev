@@ -1,6 +1,7 @@
 * 0.8.2
    * Gameplay
       * Fixed duplicate rewards from pirate ship-stealing missions. (Sorry.)
+      * Fixed the Advanced Nebula Research mission's failure condition in case you don't stick with the transport ship. (Sorry.)
    * Engine
       * Fixed a bug loading games with short (1-character) names.
       * Tweaked chances of seeing Spaceport Bar missions.

@@ -128,7 +128,7 @@ function accept()
     nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
     
     misn.accept()
-    osd_msg[1] = string.format(osd_msg[1], t_planet[5]:name(), destsys:name())
+    osd_msg[1] = string.format(osd_msg[1], t_planet[1]:name(), destsys:name())
     osd_msg[2] = string.format(osd_msg[2], _(station), t_sys[5]:name())
     osd_msg[3] = string.format(osd_msg[3], _(homeworld), t_sys[8]:name())
     misn.osdCreate(osd_title, osd_msg)
@@ -198,6 +198,7 @@ function land()
         tk.msg(refueltitle, string.format(refueltext, _(homeworld)))
         station_visited = true
         misn.osdActive(3)
+        misn.markerMove(misn_marker, homeworld)
     elseif planet.cur() == planet.get(homeworld) then
         tk.msg(title[5], string.format(text[7], creditstring(credits)))
         player.pay(credits)
@@ -326,3 +327,16 @@ function transporterDeath()
     misn.finish(false)
 end
 
+-- Fail the mission, showing message to the player.
+function fail( message )
+   if message ~= nil then
+      -- Pre-colourized, do nothing.
+      if message:find("\a") then
+         player.msg( message )
+      -- Colourize in red.
+      else
+         player.msg( "\ar" .. message .. "\a0" )
+      end
+   end
+   misn.finish( false )
+end
