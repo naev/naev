@@ -13,7 +13,7 @@ out vec4 color_out;
 void main(void) {
    float f = 0.0;
    vec3 uv;
-   uv.xy = (gl_FragCoord.xy-center)*4./radius;
+   uv.xy = 0.1*(gl_FragCoord.xy-center)*4./ pow(radius, 0.7);
    uv.z = time;
    for (int i=0; i<ITERATIONS; i++) {
       float scale = pow(SCALAR, i);
