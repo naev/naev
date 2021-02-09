@@ -9,10 +9,11 @@ subroutine uniform trail_func_prototype trail_func;
 #define TRAIL_FUNC_PROTOTYPE
 #endif /* HAS_GL_ARB_shader_subroutine */
 
-
+// Libraries
 #include "lib/math.glsl"
 #include "lib/simplex2D.glsl"
 #include "lib/cellular2x2.glsl"
+#include "lib/perlin2D.glsl"
 
 // For ideas: https://thebookofshaders.com/05/
 
@@ -137,7 +138,9 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos_px )
 TRAIL_FUNC_PROTOTYPE
 vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
-   float m;
+   float m, f;
+   vec2 coords;
+   const float SCALAR = pow(2., 4./3. );
 
    // Modulate alpha base on length
    color.a *= fastdropoff( pos_tex.x, 1 );
@@ -149,6 +152,12 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos_px )
    m *= 2-smoothstep( 0., 0.2, 1.-pos_tex.x );
    color.a *= sharpbeam( pos_tex.y, 3*m );
    color.a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-pos_tex.x );
+
+   // We only do two iterations here
+   coords = 0.02 * pos_px + vec2( dt, 0 );
+   f  = abs( cnoise( coords * SCALAR ) );
+   f += abs( cnoise( coords * pow(SCALAR,2.) ) );
+   color.a *= 0.5 + f;
 
    return color;
 }

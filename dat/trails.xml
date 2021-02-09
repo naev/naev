@@ -128,9 +128,9 @@
   <nebula>1</nebula>
   <thickness>9</thickness>
   <ttl>2</ttl>
-  <idle r="0.2" g="0.2" b="0.8" a="0.7" />
-  <glow r="0.2" g="0.2" b="0.8" a="0.7" />
-  <afterburn r="0.2" g="0.2" b="0.8" a="0.7" scale="2" />
-  <jumping r="0.2" g="0.2" b="0.8" a="0.7" scale="3" />
+  <idle r="0.4" g="0.4" b="0.9" a="0.7" />
+  <glow r="0.4" g="0.4" b="0.9" a="0.7" />
+  <afterburn r="0.4" g="0.4" b="0.9" a="0.9" scale="2" />
+  <jumping r="0.4" g="0.4" b="0.9" a="0.9" scale="3" />
  </trail>
 </Trail_types>
