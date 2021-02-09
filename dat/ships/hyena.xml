@@ -7,6 +7,8 @@
  <class>Fighter</class>
  <price>180000</price>
  <time_mod>0.75</time_mod>
+ <trail_generator x="-3" y="13" h="0">nebula</trail_generator>
+ <trail_generator x="-3" y="-13" h="0">nebula</trail_generator>
  <trail_generator x="-15" y="-6" h="0">fire-thin</trail_generator>
  <trail_generator x="-15" y="6" h="0">fire-thin</trail_generator>
  <fabricator>Aerosys</fabricator>
