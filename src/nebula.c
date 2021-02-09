@@ -322,10 +322,10 @@ void nebu_prep( double density, double volatility )
 
    nebu_density = density;
    nebu_update( 0. );
-   nebu_dt   = (density + 500) / 10000.; /* Faster at higher density */
+   nebu_dt   = (2.*density + 200.) / 10000.; /* Faster at higher density */
    nebu_time = 0.;
 
-   nebu_npuffs = density/4.;
+   nebu_npuffs = density/2.;
    nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);
    for (i=0; i<nebu_npuffs; i++) {
       /* Position */
