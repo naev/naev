@@ -312,7 +312,7 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos_px )
 
    //coords = pos_px + vec2( 220*dt, 0 );
    //p = 0.5 + min( 0.5, snoise( 0.08 * coords ));
-   coords = pos_px + vec2( 420*dt, 0 );
+   coords = pos_px + vec2( 120*dt, 0 );
    p = 1 - 0.7*cellular2x2( 0.13 * coords ).x;
 
    // Modulate width
@@ -329,7 +329,6 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec2 pos_px = mix( pos1, pos2, pos );
    pos.y = 2*pos.y-1;
    pos.x = 1-pos.x;
-
 
    if (type==1)
       color_out = trail_pulse( color, pos, pos_px );
@@ -396,6 +395,8 @@ function love.load()
    img      = love.graphics.newImage( idata )
    -- Set the font
    love.graphics.setNewFont( 24 )
+   -- Scaling
+   scaling = 2
 end
 
 function love.keypressed(key)
@@ -415,8 +416,9 @@ function love.draw ()
    lg.setColor( 1, 1, 1, 1 )
    lg.print( string.format("Use the number keys to change between shaders.\nCurrent Shader: %d", shader_type), x, y )
    y = y + 54 + 10
-   love.graphics.scale( 2, 2 )
-   y = y/2
+   local s = scaling
+   love.graphics.scale( s, s )
+   y = y/s
    for _,w in ipairs( {350, 250, 150, 50} ) do
       for _,h in ipairs( {15, 10, 5} ) do
          lg.setColor( 1, 1, 1, 0.5 )
@@ -426,7 +428,7 @@ function love.draw ()
          shader:send( "pos2", {0,0} )
          lg.setColor( shader_color )
          lg.draw( img, x, y, 0, w, h)
-         y = y + h + 10
+         y = y + h + 20/s
       end
    end
 end
