@@ -263,7 +263,7 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 dim )
 /* Somewhat like a lightning arc. */
 vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 dim )
 {
-   float a, m, p, v, s;
+   float m, p, v, s;
    vec2 ncoord;
 
    // Modulate alpha base on length
