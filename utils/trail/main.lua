@@ -336,7 +336,8 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos_px )
    coords = 0.02 * pos_px + vec2( dt, 0 ) + 1000*r;
    f  = abs( cnoise( coords * SCALAR ) );
    f += abs( cnoise( coords * pow(SCALAR,2.) ) );
-   color.a *= 0.5 + f;
+   color.a *=  0.5 + 0.7*f;
+   //color.a *=  0.5 + f;
 
    return color;
 }
@@ -442,7 +443,6 @@ function set_shader( num )
    elseif shader_type == 3 then -- fire
       shader_color = { 1, 0.84, 0, 0.7 }
    elseif shader_type == 4 then -- nebula
-      shader_color = { 1, 1, 1, 1 }
       shader_color = { 0.4, 0.4, 0.9, 0.7 }
    elseif shader_type == 5 then -- pirate
       shader_color = { 0.9, 0.1, 0.4, 0.7 }
