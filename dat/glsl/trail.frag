@@ -154,7 +154,7 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos_px )
    color.a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-pos_tex.x );
 
    // We only do two iterations here
-   coords = 0.02 * pos_px + vec2( dt, 0 );
+   coords = 0.02 * pos_px + vec2( dt, 0 ) + 1000.*r;
    f  = abs( cnoise( coords * SCALAR ) );
    f += abs( cnoise( coords * pow(SCALAR,2.) ) );
    color.a *= 0.5 + 0.7*f;
