@@ -75,6 +75,7 @@ typedef struct Weapon_ {
    double life; /**< Total life. */
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
+   GLfloat r; /**< Unique random value . */
    int sprite; /**< Used for spinning outfits. */
    PilotOutfitSlot *mount; /**< Used for beam weapons. */
    double falloff; /**< Point at which damage falls off. */
@@ -637,13 +638,13 @@ void weapons_render( const WeaponLayer layer, const double dt )
 
 static void weapon_renderBeam( Weapon* w, const double dt ) {
    double x, y, z;
-   glTexture *gfx;
-   gl_Matrix4 projection, tex_mat;
+   gl_Matrix4 projection;
+
+   /* Animation. */
+   w->anim += dt;
 
    /* Load GLSL program */
    glUseProgram(shaders.beam.program);
-
-   gfx = outfit_gfx(w->outfit);
 
    /* Zoom. */
    z = cam_getZoom();
@@ -653,25 +654,19 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
 
    projection = gl_Matrix4_Translate( gl_view_matrix, x, y, 0. );
    projection = gl_Matrix4_Rotate2d( projection, w->solid->dir );
-   projection = gl_Matrix4_Scale( projection, w->outfit->u.bem.range*z,gfx->sh * z, 1 );
+   projection = gl_Matrix4_Scale( projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1 );
    projection = gl_Matrix4_Translate( projection, 0., -0.5, 0. );
-
-   /* Bind the texture. */
-   glBindTexture( GL_TEXTURE_2D, gfx->texture);
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.beam.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.beam.vertex,
          0, 2, GL_FLOAT, 0 );
 
-   /* Set the texture. */
-   tex_mat = gl_Matrix4_Identity();
-   tex_mat = gl_Matrix4_Translate(tex_mat, w->anim, 0, 0);
-   tex_mat = gl_Matrix4_Scale(tex_mat, w->outfit->u.bem.range / gfx->sw, 1, 1);
-
    /* Set shader uniforms. */
    gl_Matrix4_Uniform(shaders.beam.projection, projection);
-   gl_Matrix4_Uniform(shaders.beam.tex_mat, tex_mat);
+   gl_uniformColor(shaders.beam.color, &cWhite);
+   glUniform1f(shaders.beam.dt, w->anim);
+   glUniform1f(shaders.beam.r, w->r);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -682,12 +677,6 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
 
    /* anything failed? */
    gl_checkErr();
-
-   /* Do the beam movement. */
-   gfx = outfit_gfx(w->outfit);
-   w->anim -= 5. * dt;
-   if (w->anim <= -gfx->sw)
-      w->anim += gfx->sw;
 }
 
 
@@ -1611,6 +1600,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
          else if (rdir >= 2.*M_PI)
             rdir -= 2.*M_PI;
          mass = 1.; /**< Needs a mass. */
+         w->r     = RNGF(); /* Set unique value. */
          w->solid = solid_create( mass, rdir, pos, vel, SOLID_UPDATE_EULER );
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;

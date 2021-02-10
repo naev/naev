@@ -548,7 +548,6 @@ int outfit_isSecondary( const Outfit* o )
 glTexture* outfit_gfx( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.gfx_space;
-   else if (outfit_isBeam(o)) return o->u.bem.gfx;
    else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
    return NULL;
 }
@@ -1302,6 +1301,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    int l;
    xmlNodePtr node;
    double C, area;
+   char *shader;
 
    /* Defaults. */
    temp->u.bem.spfx_armour = -1;
@@ -1332,9 +1332,18 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       }
 
       /* Graphic stuff. */
-      if (xml_isNode(node,"gfx")) {
-         temp->u.bem.gfx = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s", 1, 1, OPENGL_TEX_MIPMAPS );
+      if (xml_isNode(node,"shader")) {
+         xmlr_attr_float(node, "r", temp->u.bem.colour.r);
+         xmlr_attr_float(node, "g", temp->u.bem.colour.g);
+         xmlr_attr_float(node, "b", temp->u.bem.colour.b);
+         xmlr_attr_float(node, "a", temp->u.bem.colour.a);
+         xmlr_attr_float(node, "width", temp->u.bem.width);
+         shader = xml_get(node);
+         if (GLAD_GL_ARB_shader_subroutine) {
+            temp->u.bem.shader = glad_glGetSubroutineIndex( shaders.beam.program, GL_FRAGMENT_SHADER, shader );
+            if (temp->u.bem.shader == GL_INVALID_INDEX)
+               WARN("Beam outfit '%s' has unknown shader function '%s'", temp->name, shader);
+         }
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
@@ -1403,7 +1412,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
-   MELEMENT(temp->u.bem.gfx==NULL,"gfx");
+   MELEMENT(temp->u.bem.width==0.,"shader width");
    MELEMENT(temp->u.bem.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.bem.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.bem.warmup > 0.) && (temp->u.bem.sound<0),"sound_warmup");

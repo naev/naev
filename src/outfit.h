@@ -176,7 +176,9 @@ typedef struct OutfitBeamData_ {
    double heat;      /**< Heat per second. */
 
    /* Graphics and sound. */
-   glTexture *gfx;   /**< Base texture. */
+   glColour colour;  /**< Color to use for the shader. */
+   GLfloat width;    /**< Width of the beam. */
+   GLuint shader;    /**< Shader subroutine to use. */
    int spfx_armour;  /**< special effect on hit */
    int spfx_shield;  /**< special effect on hit */
    int sound_warmup; /**< Sound to play when warming up. @todo use. */

@@ -108,8 +108,12 @@ SHADERS = [
       vs_path = "beam.vert",
       fs_path = "beam.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat"],
-      subroutines = {},
+      uniforms = ["projection", "color", "dt", "r"],
+      subroutines = {
+        'beam_func' : [
+            'beam_default',
+        ]
+      }
    ),
    Shader(
       name = "tk",
