@@ -962,7 +962,7 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
       else if (xml_isNode(cur, "type")) {
          type = xml_get(cur);
          if (GLAD_GL_ARB_shader_subroutine) {
-            tc->type = glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );
+            tc->type = glad_glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );
             if (tc->type == GL_INVALID_INDEX)
                WARN("Trail '%s' has unknown type '%s'", tc->name, type );
          }
