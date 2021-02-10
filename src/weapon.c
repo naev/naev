@@ -636,7 +636,7 @@ void weapons_render( const WeaponLayer layer, const double dt )
 
 
 static void weapon_renderBeam( Weapon* w, const double dt ) {
-   double x, y, z, cx, cy, gx, gy;
+   double x, y, z;
    glTexture *gfx;
    gl_Matrix4 projection, tex_mat;
 
@@ -649,12 +649,9 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
    z = cam_getZoom();
 
    /* Position. */
-   cam_getPos( &cx, &cy );
-   gui_getOffset( &gx, &gy );
-   x = (w->solid->pos.x - cx)*z + gx;
-   y = (w->solid->pos.y - cy)*z + gy;
+   gl_gameToScreenCoords( &x, &y, w->solid->pos.x, w->solid->pos.y );
 
-   projection = gl_Matrix4_Translate( gl_view_matrix, SCREEN_W/2.+x, SCREEN_H/2.+y, 0. );
+   projection = gl_Matrix4_Translate( gl_view_matrix, x, y, 0. );
    projection = gl_Matrix4_Rotate2d( projection, w->solid->dir );
    projection = gl_Matrix4_Scale( projection, w->outfit->u.bem.range*z,gfx->sh * z, 1 );
 
