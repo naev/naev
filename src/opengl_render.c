@@ -223,9 +223,8 @@ void gl_blitTexture(  const glTexture* texture,
    if (c == NULL)
       c = &cWhite;
 
-   hw = w/2.0;
-   hh = h/2.0;
-
+   hw = w/2.;
+   hh = h/2.;
 
    /* Set the vertex. */
    projection = gl_view_matrix;
