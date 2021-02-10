@@ -116,7 +116,7 @@ function accept()
     t_planet[5] = planet.get(station)
     t_planet[6] = t_planet[1]
     t_planet[7] = planet.get("Vilati Vilata")
-    t_planet[8] = homeworld
+    t_planet[8] = planet.get(homeworld)
     
     tk.msg(title[1], string.format(text[2], t_sys[2]:name(), t_sys[3]:name(), t_sys[4]:name(), _(station), _(homeworld)))
     
@@ -128,16 +128,30 @@ function accept()
     nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
     
     misn.accept()
-    osd_msg[1] = string.format(osd_msg[1], t_planet[1]:name(), destsys:name())
-    osd_msg[2] = string.format(osd_msg[2], _(station), t_sys[5]:name())
-    osd_msg[3] = string.format(osd_msg[3], _(homeworld), t_sys[8]:name())
-    misn.osdCreate(osd_title, osd_msg)
-    misn_marker = misn.markerAdd(destsys, "low")
+    misn_marker = misn.markerAdd(nextsys, "low")
+    updateGoalDisplay()
     
     hook.takeoff("takeoff")
     hook.jumpin("jumpin")
     hook.jumpout("jumpout")
     hook.land("land")
+end
+
+function updateGoalDisplay()
+    local s, i, osd_index, osd_active, omsg
+    osd_index = {1, 0, 0, 0, 2, 2, 2, 3}
+    omsg = {}
+    osd_active = 1
+    for s, i in ipairs(osd_index) do
+        if i > 0 then
+            omsg[#omsg+1] = osd_msg[i]:format(t_planet[s]:name(), t_sys[s]:name())
+            if stage > s and (stage > s+1 or destplanet == nil) then
+                osd_active = #omsg + 1
+            end
+        end
+    end
+    misn.osdCreate(osd_title, omsg)
+    misn.osdActive(osd_active)
 end
 
 function takeoff()
@@ -147,13 +161,15 @@ function takeoff()
     end
     destplanet = nil
     spawnTransporter()
-    misn.markerMove(misn_marker, destsys)
+    updateGoalDisplay()
 end
 
 function jumpin()
      if system.cur() ~= nextsys then
         fail(_("MISSION FAILED! You jumped into the wrong system. You failed science miserably!"))
     else
+        nextsys = getNextSystem(system.cur(), destsys)
+        updateGoalDisplay()
         spawnTransporter()
         if not ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then
             hook.timer(2000, "startAmbush")
@@ -164,8 +180,6 @@ function jumpin()
                 j:control(true)
                 j:attack(transporter)
             end
-        elseif system.cur() == t_sys[5] then
-            misn.osdActive(2)
         end
     end
 end
@@ -175,7 +189,6 @@ function jumpout()
         fail(_("MISSION FAILED! You jumped before the transport ship you were escorting."))
     end
     origin = system.cur()
-    nextsys = getNextSystem(system.cur(), destsys)
     if nextsys == t_sys[stage] then
         if t_planet[stage] ~= nil then
             destplanet = t_planet[stage]
@@ -184,9 +197,6 @@ function jumpout()
         end
         stage = stage+1
         destsys = t_sys[stage]
-        if destplanet ~= nil then
-            misn.markerMove(misn_marker, destsys)
-        end
     end
 end
 
@@ -197,8 +207,6 @@ function land()
     elseif planet.cur() == planet.get(station) and not station_visited then
         tk.msg(refueltitle, string.format(refueltext, _(homeworld)))
         station_visited = true
-        misn.osdActive(3)
-        misn.markerMove(misn_marker, homeworld)
     elseif planet.cur() == planet.get(homeworld) then
         tk.msg(title[5], string.format(text[7], creditstring(credits)))
         player.pay(credits)
@@ -223,15 +231,17 @@ function continueToDest(pilot)
     t_planet[5] = planet.get(station)
     t_planet[6] = t_planet[1]
     t_planet[7] = planet.get("Vilati Vilata")
-    t_planet[8] = homeworld
+    t_planet[8] = planet.get(homeworld)
     if pilot ~= nil and pilot:exists() then
         pilot:control(true)
         pilot:setNoJump(false)
         pilot:setNoLand(false)
         if destplanet ~= nil then
             pilot:land(destplanet, true)
+            misn.markerMove(misn_marker, destplanet:system())
         else
-            pilot:hyperspace(getNextSystem(system.cur(), destsys), true)
+            pilot:hyperspace(nextsys, true)
+            misn.markerMove(misn_marker, nextsys)
         end
     end
 end
