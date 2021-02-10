@@ -13,8 +13,12 @@ out vec4 color_out;
 void main(void) {
    float f = 0.0;
    vec3 uv;
-   uv.xy = 0.1*(gl_FragCoord.xy-center)*4./ pow(radius, 0.7);
+
+   // Calculate coordinates
+   uv.xy = 0.4 * (gl_FragCoord.xy-center) / pow(radius, 0.7);
    uv.z = time;
+
+   // Create the noise
    for (int i=0; i<ITERATIONS; i++) {
       float scale = pow(SCALAR, i);
       //f += abs( srnoise( uv*scale, time/scale ) ) / scale;

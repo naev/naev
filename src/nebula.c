@@ -243,6 +243,7 @@ void nebu_renderOverlay( const double dt )
    gl_Matrix4_Uniform(shaders.nebula.projection, projection);
    glUniform2f(shaders.nebula.center, gl_screen.rw / 2, gl_screen.rh / 2);
    glUniform1f(shaders.nebula.radius, nebu_view * z * (1 / gl_screen.scale));
+   glUniform1f(shaders.nebula.time, nebu_time);
 
    glEnableVertexAttribArray(shaders.nebula.vertex);
    gl_vboActivateAttribOffset( nebu_vboOverlay, shaders.nebula.vertex, 0, 2, GL_FLOAT, 0 );
