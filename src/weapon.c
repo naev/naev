@@ -654,6 +654,7 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
    projection = gl_Matrix4_Translate( gl_view_matrix, x, y, 0. );
    projection = gl_Matrix4_Rotate2d( projection, w->solid->dir );
    projection = gl_Matrix4_Scale( projection, w->outfit->u.bem.range*z,gfx->sh * z, 1 );
+   projection = gl_Matrix4_Translate( projection, 0., -0.5, 0. );
 
    /* Bind the texture. */
    glBindTexture( GL_TEXTURE_2D, gfx->texture);
