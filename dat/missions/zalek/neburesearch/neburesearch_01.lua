@@ -55,7 +55,7 @@ text[4] = _([[Suddenly your comm system turns on, receiving a conversation betwe
 text[5] = _([[Dr. Mensing  pauses, apparently choosing her words with care.
     "Fine, do whatever you want. Our reasoning is obviously beyond the imagination of your degenerate intellect." With this answer the comm shuts off. Your sensors show that a Dvaered patrol changed their course and is heading straight towards the transporter.]])
 text[6] = _([["The situation would have escalated anyway." argues Dr. Mensing, this time directly speaking towards you.
-    "I must admit, it is suspicious for a refitted transport ship with such advanced sensor suits to show up in Dvaered space. I haven't considered this point.
+    "I must admit, it is suspicious for a refitted transport ship with such advanced sensor suits to show up in Dvaered space. I hadn't considered this point.
     I'm counting on you, %s. Please help us."]])
 text[7] = _([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth %s and thanks you for your help.
     "We'll be able to return to Jorla safely from here on. You did science a great favor today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]])
