@@ -9,8 +9,8 @@
  <time_mod>1.5</time_mod>
  <trail_generator x="-33" y="-13" h="0">nebula</trail_generator>
  <trail_generator x="-33" y="13" h="0">nebula</trail_generator>
- <trail_generator x="-20" y="0" h="-25">nebula</trail_generator>
- <trail_generator x="-25" y="0" h="25">nebula</trail_generator>
+ <!--<trail_generator x="-20" y="0" h="-25">nebula</trail_generator>
+ <trail_generator x="-25" y="0" h="25">nebula</trail_generator>-->
  <trail_generator x="-33" y="0" h="0">fire</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <license>Large Civilian Vessel License</license>
