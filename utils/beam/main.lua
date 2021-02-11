@@ -230,20 +230,21 @@ float beamfade( float x )
 BEAM_FUNC_PROTOTYPE
 vec4 beam_default( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
-   vec2 ncoord;
+   vec2 coords;
    float m;
    const float range = 0.3;
 
+   color.a *= beamfade( pos_tex.x );
+
    // Normal beam
-   ncoord = vec2( 3.*dt, 0 );
-   m = 2 + snoise( ncoord );
+   coords = pos_px / 500. + vec2( -3.*dt, 0 );
+   m = 2 + snoise( coords );
    float a = smoothbeam( pos_tex.y, m );
    color.xyz = mix( color.xyz, vec3(1,1,1), 3*smoothbeam( pos_tex.y, 0.1 ) );
    color.a *= a;
-   color.a *= beamfade( pos_tex.x );
 
    // Do fancy noise effect
-   vec2 coords = pos_px * vec2( 0.03, 5. ) + vec2( -10.*dt, 0 ) + 1000. * r;
+   coords = pos_px * vec2( 0.03, 5. ) + vec2( -10.*dt, 0 ) + 1000. * r;
    float v = snoise( coords );
    v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
    color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
@@ -254,19 +255,22 @@ vec4 beam_default( vec4 color, vec2 pos_tex, vec2 pos_px )
 BEAM_FUNC_PROTOTYPE
 vec4 beam_unstable( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
-   vec2 ncoord;
+   vec2 coords;
    float a, m, y;
    const float range = 0.3;
 
    // Normal beam
-   ncoord = vec2( 3.*(dt+r), 0 );
-   m = 0.5 + 0.5*snoise( ncoord );
+   coords = vec2( 3.*(dt+r), 0 );
+   m = 0.5 + 0.5*snoise( coords );
 
-   y = pos_tex.y + 0.2*snoise( vec2( 3*dt, 1000. ) );
+   coords = pos_px/2000. + vec2( -3*dt, 1000. );
+   y = pos_tex.y + 0.2*snoise( coords );
    a = smoothbeam( y, m );
-   y = pos_tex.y + 0.7*snoise( vec2( 3*dt, 2000. ) );
+   coords += vec2( 1000., 0. );
+   y = pos_tex.y + 0.7*snoise( coords );
    a += 0.5*smoothbeam( y, 0.5 );
-   y = pos_tex.y + 0.7*snoise( vec2( 3*dt, 3000. ) );
+   coords += vec2( 1000., 0. );
+   y = pos_tex.y + 0.7*snoise( coords );
    a += 0.5*smoothbeam( y, 0.5 );
    a = min( a, 1 );
    color.xyz = mix( color.xyz, vec3(1,1,1), 3.*smoothbeam( pos_tex.y, 0.1 ) );
@@ -274,7 +278,7 @@ vec4 beam_unstable( vec4 color, vec2 pos_tex, vec2 pos_px )
    color.a *= beamfade( pos_tex.x );
 
    // Do fancy noise effect
-   vec2 coords = pos_px * vec2( 0.03, 5. ) + vec2( -10.*dt, 0 ) + 1000. * r;
+   coords = pos_px * vec2( 0.03, 5. ) + vec2( -10.*dt, 0 ) + 1000. * r;
    float v = snoise( coords );
    v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
    color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
@@ -314,18 +318,21 @@ vec4 beam_fuzzy( vec4 color, vec2 pos_tex, vec2 pos_px )
 BEAM_FUNC_PROTOTYPE
 vec4 beam_wave( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
-   float y, p;
+   float y, p, m;
+   vec2 coords;
    const float range = 0.3;
 
    color.a *= beamfade( pos_tex.x );
 
+   coords = pos_px / 500. + vec2( -3.*dt, 0 );
+   m = 2 + snoise( coords );
    p = 2*M_PI * (pos_px.x/20.- dt * 8. + r);
    y = pos_tex.y + 0.2 * sin( p );
-   color.a *= smoothbeam( y, 3. );
+   color.a *= smoothbeam( y, m );
    color.xyz = mix( color.xyz, vec3(1,1,1), 5*smoothbeam( y, 0.1 ) );
-   
+
    // Do fancy noise effect
-   vec2 coords = pos_px * vec2( 0.03, 5. ) + vec2( -10*dt, 0 ) + 1000. * r;
+   coords = pos_px * vec2( 0.03, 5. ) + vec2( -10*dt, 0 ) + 1000. * r;
    float v = snoise( coords );
    v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
    color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
@@ -336,26 +343,23 @@ vec4 beam_wave( vec4 color, vec2 pos_tex, vec2 pos_px )
 BEAM_FUNC_PROTOTYPE
 vec4 beam_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
-   float m, p, v, s;
+   float m, y, v;
    vec2 ncoord;
 
    // Modulate alpha base on length
    color.a *= beamfade( pos_tex.x );
 
    // Modulate alpha based on dispersion
-   //m = 1.5 + 1.5*impulse( 1.-pos_tex.x, 1. );
    m = 3.;
 
    // Modulate width
    ncoord = vec2( 0.03 * pos_px.x, 7*dt ) + 1000 * r;
-   //s =  0.6 * smoothstep(0, 0.2, pos_tex.x);
-   s = 0.7;
-   p = pos_tex.y + s * snoise( ncoord );
-   v = sharpbeam( p, m );
-   p = pos_tex.y + s * snoise( 1.5*ncoord );
-   v += sharpbeam( p, 2*m );
-   p = pos_tex.y + s * snoise( 2*ncoord );
-   v += sharpbeam( p, 4*m );
+   y = pos_tex.y + 0.7 * snoise( ncoord );
+   v = sharpbeam( y, m );
+   y = pos_tex.y + 0.7 * snoise( 1.5*ncoord );
+   v += sharpbeam( y, 2*m );
+   y = pos_tex.y + 0.7 * snoise( 2*ncoord );
+   v += sharpbeam( y, 4*m );
 
    color.xyz *= 1 + max(0, 2*(v-0.9));
    color.a   *= min(1, 0.6*v);
@@ -382,7 +386,7 @@ vec4 beam_helix( vec4 color, vec2 pos_tex, vec2 pos_px )
    v += 3.*smoothbeam( y, 0.1 );
    color.xyz = mix( color.xyz, vec3(1,1,1), v );
    color.a *= a;
-   
+
    // Do fancy noise effect
    coords = pos_px * vec2( 0.03, 5. ) + vec2( -10*dt, 0 ) + 1000. * r;
    v = snoise( coords );
@@ -410,13 +414,13 @@ vec4 beam_organic( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Modulate width
    color.a   *= p * smoothbeam( pos_tex.y, 3.*m );
    color.xyz = mix( color.xyz, vec3(1,1,1), max(0, 10*(p-0.9)) );
-   
+
    // Do fancy noise effect
    coords = pos_px * vec2( 0.03, 5. ) + vec2( -10*dt, 0 ) + 1000. * r;
    float v = snoise( coords );
    v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
    color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
-  
+
   return color;
 }
 
