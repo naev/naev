@@ -266,7 +266,7 @@ vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 pos_px )
    color.a *= smoothbeam( pos_tex.y, 3.*m );
 
    v = smoothstep( 0., 0.5, 1-pos_tex.x );
-   color.a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (0.03 * pos_px.x + dt * 3) ), v );
+   color.a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (0.06 * pos_px.x + dt * 3) ), v );
 
    return color;
 }
