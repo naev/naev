@@ -205,7 +205,7 @@ def generate_c_file(f):
         for subroutine, routines in shader.subroutines.items():
             f.write(f"      shaders.{shader.name}.{subroutine}.uniform = glad_glGetSubroutineUniformLocation( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n")
             for r in routines:
-                f.write(f"      shaders.{shader.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n")
+                f.write(f"      shaders.{shader.name}.{subroutine}.{r} = glad_glGetSubroutineIndex( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n")
         f.write("   }\n");
 
         if i != len(SHADERS) - 1:
