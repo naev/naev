@@ -1022,9 +1022,9 @@ static void info_openMissions( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeMissions", _("Close"), info_close );
-   window_addButton( wid, -20, 40 + BUTTON_HEIGHT,
+   window_addButtonKey( wid, -20, 40 + BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnAbortMission", _("Abort"),
-         mission_menu_abort );
+         mission_menu_abort, SDLK_a );
 
    /* text */
    window_addText( wid, 300+40, -60,
