@@ -358,10 +358,7 @@ function love.load()
 end
 
 function love.keypressed(key)
-   local num = tonumber(key)
-   if num~=nil then
-      set_shader( num )
-   else
+   if key=="q" or key=="escape" then
       love.event.quit()
    end
 end
