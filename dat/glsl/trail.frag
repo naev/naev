@@ -25,6 +25,7 @@ uniform float dt;
 uniform vec2 pos1;
 uniform vec2 pos2;
 uniform float r;
+
 in vec2 pos;
 out vec4 color_out;
 
@@ -47,7 +48,7 @@ float smoothbeam( float x, float k )
    return 1. - pow( abs( sin( M_PI * x / 2. ) ), k );
 }
 
-/* Similar to smoothbeam, but morke k == sharper. */
+/* Similar to smoothbeam, but more k == sharper. */
 float sharpbeam( float x, float k )
 {
    return pow( min( cos( M_PI * x / 2. ), 1.0 - abs(x) ), k );

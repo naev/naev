@@ -665,6 +665,7 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
    /* Set shader uniforms. */
    gl_Matrix4_Uniform(shaders.beam.projection, projection);
    gl_uniformColor(shaders.beam.color, &w->outfit->u.bem.colour);
+   glUniform2f(shaders.beam.dimensions, w->outfit->u.bem.range, w->outfit->u.bem.width);
    glUniform1f(shaders.beam.dt, w->anim);
    glUniform1f(shaders.beam.r, w->r);
 
