@@ -570,7 +570,7 @@ function love.load()
       {
          name = "Shattershield Lance",
          h = 14,
-         colour = { 0.6, 0.6, 1.0, 1 },
+         colour = { 0.2, 0.5, 0.9, 1 },
          type = 2,
       },
       {
