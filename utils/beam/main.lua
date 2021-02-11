@@ -520,6 +520,42 @@ function love.load()
    }
    beamoutfits = {
       {
+         name = "Orion Beam",
+         h = 16,
+         colour = { 0.2, 0.6, 0.9, 1 },
+         type = 1,
+      },
+      {
+         name = "Orion Lance",
+         h = 13,
+         colour = { 0.2, 0.6, 0.9, 1 },
+         type = 6,
+      },
+      {
+         name = "Particle Beam",
+         h = 12,
+         colour = { 1.0, 0.2, 0.0, 1 },
+         type = 6,
+      },
+      {
+         name = "Particle Lance",
+         h = 10,
+         colour = {1.0, 0.35, 0.0, 1 },
+         type = 0,
+      },
+      {
+         name = "Pulse Beam",
+         h = 14,
+         colour = { 0.6, 0.9, 0.2, 1 },
+         type = 5,
+      },
+      {
+         name = "Ragnarok Beam",
+         h = 22,
+         colour = { 0.8, 0.1, 0.4, 1 },
+         type = 3,
+      },
+      {
          name = "Grave Beam",
          h = 20,
          colour = { 1.0, 0.3, 0.6, 1 },
@@ -528,38 +564,8 @@ function love.load()
       {
          name = "Grave Lance",
          h = 20,
-         colour = { 1.0, 0.2, 0.5, 1 },
+         colour = { 0.9, 0.2, 0.5, 1 },
          type = 6,
-      },
-      {
-         name = "Orion Beam",
-         h = 16,
-         colour = { 0.2, 0.6, 0.9, 1 },
-         type = 1,
-      },
-      {
-         name = "Particle Beam",
-         h = 10,
-         colour = { 0.3, 0.3, 1.0, 1 },
-         type = 0,
-      },
-      {
-         name = "Particle Lance",
-         h = 8,
-         colour = { 0.5, 0.5, 0.9, 1 },
-         type = 0,
-      },
-      {
-         name = "Pulse Beam",
-         h = 14,
-         colour = { 0.8, 0.9, 0.3, 1 },
-         type = 5,
-      },
-      {
-         name = "Ragnarok Beam",
-         h = 22,
-         colour = { 0.9, 0.5, 0.8, 1 },
-         type = 3,
       },
       {
          name = "Shattershield Lance",
