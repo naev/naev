@@ -470,10 +470,11 @@ function love.load()
    -- Set the font
    love.graphics.setNewFont( 12 )
    -- Scaling
+   love.window.setMode( 800, 900 )
    scaling = 2
 
    -- Beams
-   beams = {
+   beamtypes = {
       {
          name = "beam_default",
          h = 14,
@@ -517,10 +518,65 @@ function love.load()
          type = 4,
       },
    }
+   beamoutfits = {
+      {
+         name = "Grave Beam",
+         h = 20,
+         colour = { 1.0, 0.3, 0.6, 1 },
+         type = 3,
+      },
+      {
+         name = "Grave Lance",
+         h = 20,
+         colour = { 1.0, 0.2, 0.5, 1 },
+         type = 6,
+      },
+      {
+         name = "Orion Beam",
+         h = 16,
+         colour = { 0.2, 0.6, 0.9, 1 },
+         type = 1,
+      },
+      {
+         name = "Particle Beam",
+         h = 10,
+         colour = { 0.3, 0.3, 1.0, 1 },
+         type = 0,
+      },
+      {
+         name = "Particle Lance",
+         h = 8,
+         colour = { 0.5, 0.5, 0.9, 1 },
+         type = 0,
+      },
+      {
+         name = "Pulse Beam",
+         h = 14,
+         colour = { 0.8, 0.9, 0.3, 1 },
+         type = 5,
+      },
+      {
+         name = "Ragnarok Beam",
+         h = 22,
+         colour = { 0.9, 0.5, 0.8, 1 },
+         type = 3,
+      },
+      {
+         name = "Shattershield Lance",
+         h = 14,
+         colour = { 0.6, 0.6, 1.0, 1 },
+         type = 2,
+      },
+   }
+   beams = beamtypes
 end
 
 function love.keypressed(key)
-   if key=="q" or key=="escape" then
+   if key=="1" then
+      beams = beamtypes
+   elseif key=="2" then
+      beams = beamoutfits
+   elseif key=="q" or key=="escape" then
       love.event.quit()
    end
 end
@@ -532,6 +588,10 @@ function love.draw ()
    local s = scaling
    love.graphics.scale( s, s )
    y = y/s
+   lg.setShader()
+   lg.setColor( 1, 1, 1, 1 )
+   lg.print( "Press 1 to show types, press 2 to show outfits, q to quit.", x, y )
+   y = y + 20
 
    local w = 350
    for k,b in ipairs(beams) do
