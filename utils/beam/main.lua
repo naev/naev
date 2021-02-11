@@ -230,16 +230,80 @@ float beamfade( float x )
 BEAM_FUNC_PROTOTYPE
 vec4 beam_default( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
+   vec2 ncoord;
+   float m;
    const float range = 0.3;
 
    // Normal beam
-   float a = smoothbeam( pos_tex.y, 2. );
-   color.xyz += 2. * a * smoothbeam( pos_tex.y, 0.1 );
+   ncoord = vec2( 3.*dt, 0 );
+   m = 2 + snoise( ncoord );
+   float a = smoothbeam( pos_tex.y, m );
+   color.xyz = mix( color.xyz, vec3(1,1,1), 3*smoothbeam( pos_tex.y, 0.1 ) );
    color.a *= a;
    color.a *= beamfade( pos_tex.x );
 
    // Do fancy noise effect
    vec2 coords = pos_px * vec2( 0.03, 5. ) + vec2( -10.*dt, 0 ) + 1000. * r;
+   float v = snoise( coords );
+   v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
+   color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
+
+   return color;
+}
+
+BEAM_FUNC_PROTOTYPE
+vec4 beam_unstable( vec4 color, vec2 pos_tex, vec2 pos_px )
+{
+   vec2 ncoord;
+   float a, m, y;
+   const float range = 0.3;
+
+   // Normal beam
+   ncoord = vec2( 3.*(dt+r), 0 );
+   m = 0.5 + 0.5*snoise( ncoord );
+
+   y = pos_tex.y + 0.2*snoise( vec2( 3*dt, 1000. ) );
+   a = smoothbeam( y, m );
+   y = pos_tex.y + 0.7*snoise( vec2( 3*dt, 2000. ) );
+   a += 0.5*smoothbeam( y, 0.5 );
+   y = pos_tex.y + 0.7*snoise( vec2( 3*dt, 3000. ) );
+   a += 0.5*smoothbeam( y, 0.5 );
+   a = min( a, 1 );
+   color.xyz = mix( color.xyz, vec3(1,1,1), 3.*smoothbeam( pos_tex.y, 0.1 ) );
+   color.a *= a;
+   color.a *= beamfade( pos_tex.x );
+
+   // Do fancy noise effect
+   vec2 coords = pos_px * vec2( 0.03, 5. ) + vec2( -10.*dt, 0 ) + 1000. * r;
+   float v = snoise( coords );
+   v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
+   color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
+
+   return color;
+}
+
+BEAM_FUNC_PROTOTYPE
+vec4 beam_fuzzy( vec4 color, vec2 pos_tex, vec2 pos_px )
+{
+   vec2 coords;
+   float m, f;
+   const float range = 0.3;
+
+   // Normal beam
+   coords = vec2( 3.*dt, 0 );
+   m = 6 + snoise( coords );
+   float a = smoothbeam( pos_tex.y, m );
+   color.xyz += 3. * a * smoothbeam( pos_tex.y, 0.1 );
+   color.a *= a;
+   color.a *= beamfade( pos_tex.x );
+
+   // Perlin noise
+   coords = 0.2 * pos_px + vec2( -45.*dt, 0 ) + 1000*r;
+   f = abs( cnoise( coords ) );
+   color.a *= 1 + f * smoothstep( 0., 1, abs(pos_tex.y) );
+
+   // Do fancy noise effect
+   coords = pos_px * vec2( 0.03, 5. ) + vec2( -10.*dt, 0 ) + 1000. * r;
    float v = snoise( coords );
    v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
    color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
@@ -258,7 +322,7 @@ vec4 beam_wave( vec4 color, vec2 pos_tex, vec2 pos_px )
    p = 2*M_PI * (pos_px.x/20.- dt * 8. + r);
    y = pos_tex.y + 0.2 * sin( p );
    color.a *= smoothbeam( y, 3. );
-   color.xyz += 5*smoothbeam( y, 0.1 );
+   color.xyz = mix( color.xyz, vec3(1,1,1), 5*smoothbeam( y, 0.1 ) );
    
    // Do fancy noise effect
    vec2 coords = pos_px * vec2( 0.03, 5. ) + vec2( -10*dt, 0 ) + 1000. * r;
@@ -302,7 +366,8 @@ vec4 beam_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
 BEAM_FUNC_PROTOTYPE
 vec4 beam_helix( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
-   float y, p, a, c, m;
+   float y, p, a, c, m, v;
+   vec2 coords;
    const float range = 0.3;
 
    color.a *= beamfade( pos_tex.x );
@@ -311,19 +376,48 @@ vec4 beam_helix( vec4 color, vec2 pos_tex, vec2 pos_px )
    p = 2*M_PI * (pos_px.x/40.- dt * 6. + r);
    y = pos_tex.y + m * sin( p );
    a = smoothbeam( y, 1. );
-   color.xyz += 2*smoothbeam( y, 0.1 );
+   v = 3.*smoothbeam( y, 0.1 );
    y = pos_tex.y + m * sin( p + M_PI );
    a += smoothbeam( y, 1. );
-   color.xyz += 2*smoothbeam( y, 0.1 );
+   v += 3.*smoothbeam( y, 0.1 );
+   color.xyz = mix( color.xyz, vec3(1,1,1), v );
    color.a *= a;
    
    // Do fancy noise effect
-   vec2 coords = pos_px * vec2( 0.03, 5. ) + vec2( -10*dt, 0 ) + 1000. * r;
-   float v = snoise( coords );
+   coords = pos_px * vec2( 0.03, 5. ) + vec2( -10*dt, 0 ) + 1000. * r;
+   v = snoise( coords );
    v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
    color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
 
    return color;
+}
+
+BEAM_FUNC_PROTOTYPE
+vec4 beam_organic( vec4 color, vec2 pos_tex, vec2 pos_px )
+{
+   float m, p;
+   vec2 coords;
+   const float range = 0.3;
+
+   color.a *= beamfade( pos_tex.x );
+
+   // Modulate alpha based on dispersion
+   m = 1;
+
+   coords = pos_px + vec2( -320*dt, 0 ) + 1000 * r;
+   p = 1 - 0.7*cellular2x2( 0.13 * coords ).x;
+
+   // Modulate width
+   color.a   *= p * smoothbeam( pos_tex.y, 3.*m );
+   color.xyz = mix( color.xyz, vec3(1,1,1), max(0, 10*(p-0.9)) );
+   
+   // Do fancy noise effect
+   coords = pos_px * vec2( 0.03, 5. ) + vec2( -10*dt, 0 ) + 1000. * r;
+   float v = snoise( coords );
+   v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
+   color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
+  
+  return color;
 }
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -339,6 +433,12 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       color_out = beam_arc( color, pos, pos_px );
    else if (type==3)
       color_out = beam_helix( color, pos, pos_px );
+   else if (type==4)
+      color_out = beam_organic( color, pos, pos_px );
+   else if (type==5)
+      color_out = beam_unstable( color, pos, pos_px );
+   else if (type==6)
+      color_out = beam_fuzzy( color, pos, pos_px );
    else
       color_out = beam_default( color, pos, pos_px );
 
@@ -377,6 +477,18 @@ function love.load()
          type = 0,
       },
       {
+         name = "beam_unstable",
+         h = 16,
+         colour = { 1, 0.5, 0, 1 },
+         type = 5,
+      },
+      {
+         name = "beam_fuzzy",
+         h = 14,
+         colour = { 1, 0.2, 0, 1 },
+         type = 6,
+      },
+      {
          name = "beam_wave",
          h = 14,
          colour = { 1, 0, 0, 1 },
@@ -393,6 +505,12 @@ function love.load()
          h = 16,
          colour = { 0.2, 0.9, 0.5, 1 },
          type = 3,
+      },
+      {
+         name = "beam_organic",
+         h = 16,
+         colour = { 0.6, 0.6, 0.95, 1 },
+         type = 4,
       },
    }
 end
