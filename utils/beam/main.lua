@@ -573,6 +573,12 @@ function love.load()
          colour = { 0.6, 0.6, 1.0, 1 },
          type = 2,
       },
+      {
+         name = "Valkyrie Beam",
+         h = 26,
+         colour = { 1.0, 0.6, 0.9, 1 },
+         type = 3,
+      },
    }
    beams = beamtypes
 end
