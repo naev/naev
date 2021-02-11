@@ -36,14 +36,14 @@ SHADERS = [
       attributes = ["vertex"],
       uniforms = ["projection", "c1", "c2", "t1", "t2", "dt", "pos1", "pos2", "r" ],
       subroutines = {
-        'trail_func' : [
-            'trail_default',
-            'trail_pulse',
-            'trail_wave',
-            'trail_flame',
-            'trail_nebula',
-            'trail_arc',
-            'trail_bubbles',
+        "trail_func" : [
+            "trail_default",
+            "trail_pulse",
+            "trail_wave",
+            "trail_flame",
+            "trail_nebula",
+            "trail_arc",
+            "trail_bubbles",
         ]
       }
    ),
@@ -108,8 +108,18 @@ SHADERS = [
       vs_path = "beam.vert",
       fs_path = "beam.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat"],
-      subroutines = {},
+      uniforms = ["projection", "color", "dt", "r", "dimensions" ],
+      subroutines = {
+        "beam_func" : [
+            "beam_default",
+            "beam_wave",
+            "beam_arc",
+            "beam_helix",
+            "beam_organic",
+            "beam_unstable",
+            "beam_fuzzy",
+        ]
+      }
    ),
    Shader(
       name = "tk",

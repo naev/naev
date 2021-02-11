@@ -1,12 +1,8 @@
-uniform mat4 tex_mat;
 uniform mat4 projection;
-
 in vec4 vertex;
-out vec2 tex_coord;
-out float pos;
+out vec2 pos;
 
 void main(void) {
-   pos = vertex.x;
-   tex_coord = (tex_mat * vertex).st;
+   pos = vertex.xy;
    gl_Position = projection * vertex;
 }
