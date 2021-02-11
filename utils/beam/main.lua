@@ -230,21 +230,19 @@ float beamfade( float x )
 BEAM_FUNC_PROTOTYPE
 vec4 beam_default( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
-   vec2 coords;
-   float v;
-   const float RANGE = 0.3;
+   const float range = 0.3;
 
    // Normal beam
-   color.a *= smoothbeam( pos_tex.y, 2. );
-   color.xyz *= 1. + 5*smoothbeam( pos_tex.y, 0.1 );
+   float a = smoothbeam( pos_tex.y, 2. );
+   color.xyz += 2. * a * smoothbeam( pos_tex.y, 0.1 );
+   color.a *= a;
+   color.a *= beamfade( pos_tex.x );
 
    // Do fancy noise effect
-   coords = pos_tex * vec2( 5., 50 ) + vec2( -10*dt, 0 );
-   v = snoise( coords );
-   v = max( 0, v-(1.-RANGE) ) * (2./RANGE) - 0.1;
-   color.a += v;
-
-   color.a *= beamfade( pos_tex.x );
+   vec2 coords = pos_px * vec2( 0.03, 5. ) + vec2( -10.*dt, 0 ) + 1000. * r;
+   float v = snoise( coords );
+   v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
+   color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
 
    return color;
 }
@@ -253,6 +251,7 @@ BEAM_FUNC_PROTOTYPE
 vec4 beam_wave( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
    float y, p;
+   const float range = 0.3;
 
    color.a *= beamfade( pos_tex.x );
 
@@ -260,6 +259,12 @@ vec4 beam_wave( vec4 color, vec2 pos_tex, vec2 pos_px )
    y = pos_tex.y + 0.2 * sin( p );
    color.a *= smoothbeam( y, 3. );
    color.xyz += 5*smoothbeam( y, 0.1 );
+   
+   // Do fancy noise effect
+   vec2 coords = pos_px * vec2( 0.03, 5. ) + vec2( -10*dt, 0 ) + 1000. * r;
+   float v = snoise( coords );
+   v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
+   color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
 
    return color;
 }
@@ -280,7 +285,7 @@ vec4 beam_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Modulate width
    ncoord = vec2( 0.03 * pos_px.x, 7*dt ) + 1000 * r;
    //s =  0.6 * smoothstep(0, 0.2, pos_tex.x);
-   s = 0.8;
+   s = 0.7;
    p = pos_tex.y + s * snoise( ncoord );
    v = sharpbeam( p, m );
    p = pos_tex.y + s * snoise( 1.5*ncoord );
@@ -290,6 +295,33 @@ vec4 beam_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
 
    color.xyz *= 1 + max(0, 2*(v-0.9));
    color.a   *= min(1, 0.6*v);
+
+   return color;
+}
+
+BEAM_FUNC_PROTOTYPE
+vec4 beam_helix( vec4 color, vec2 pos_tex, vec2 pos_px )
+{
+   float y, p, a, c, m;
+   const float range = 0.3;
+
+   color.a *= beamfade( pos_tex.x );
+
+   m = 0.6 * (0.8 + 0.2*sin( 2*M_PI * (dt*0.5) ) );
+   p = 2*M_PI * (pos_px.x/40.- dt * 6. + r);
+   y = pos_tex.y + m * sin( p );
+   a = smoothbeam( y, 1. );
+   color.xyz += 2*smoothbeam( y, 0.1 );
+   y = pos_tex.y + m * sin( p + M_PI );
+   a += smoothbeam( y, 1. );
+   color.xyz += 2*smoothbeam( y, 0.1 );
+   color.a *= a;
+   
+   // Do fancy noise effect
+   vec2 coords = pos_px * vec2( 0.03, 5. ) + vec2( -10*dt, 0 ) + 1000. * r;
+   float v = snoise( coords );
+   v = max( 0, v-(1.-range) ) * (2./range) - 0.1;
+   color.a += v * (1. - smoothstep( 0., 0.05, pos_tex.x-0.95 ) );
 
    return color;
 }
@@ -305,6 +337,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       color_out = beam_wave( color, pos, pos_px );
    else if (type==2)
       color_out = beam_arc( color, pos, pos_px );
+   else if (type==3)
+      color_out = beam_helix( color, pos, pos_px );
    else
       color_out = beam_default( color, pos, pos_px );
 
@@ -344,7 +378,7 @@ function love.load()
       },
       {
          name = "beam_wave",
-         h = 10,
+         h = 14,
          colour = { 1, 0, 0, 1 },
          type = 1,
       },
@@ -353,6 +387,12 @@ function love.load()
          h = 16,
          colour = { 0.2, 0.5, 0.9, 1 },
          type = 2,
+      },
+      {
+         name = "beam_helix",
+         h = 16,
+         colour = { 0.2, 0.9, 0.5, 1 },
+         type = 3,
       },
    }
 end
