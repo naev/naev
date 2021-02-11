@@ -462,6 +462,7 @@ int gl_init (void)
    if (!gladLoadGLLoader(SDL_GL_GetProcAddress))
       ERR("Unable to load OpenGL using GLAD");
 
+   /* We are interested in 3.1 because it drops all the deprecated stuff. */
    if ( !GLAD_GL_VERSION_3_1 )
       WARN( "Naev requires OpenGL 3.1, but got OpenGL %d.%d!", GLVersion.major, GLVersion.minor );
 
