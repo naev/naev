@@ -17,7 +17,7 @@ appdata_DATA = org.naev.naev.metainfo.xml
 dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
-dist_doc_DATA = README TODO LICENSE
+dist_doc_DATA = CHANGELOG code_of_conduct.md README Readme.md TODO LICENSE
 
 MKSPR      = $(top_builddir)/utils/mkspr/mkspr$(EXEEXT)
 NAEV	     = $(top_builddir)/$(PACKAGE)$(EXEEXT)
@@ -48,6 +48,11 @@ NAEVSRCPOT  = $(top_builddir)/po/$(GETTEXT_PACKAGE).pot
 NAEVPOT     = $(top_builddir)/po/$(PACKAGE).pot
 XMLPOT      = $(top_builddir)/po/xml.pot
 EXTRA_DIST += $(XMLFILES) $(TRANSLATIONITS)
+EXTRA_DIST += .gdbinit meson.build meson.sh meson_options.txt po/POTFILES_COMBINED.in po/its/translation.loc po/meson.build src/meson.build
+EXTRA_DIST += extras/macos/bundle.py utils/package-po.sh
+EXTRA_DIST += check-po.sh test/
+EXTRA_DIST += subprojects/packagefiles subprojects/SuiteSparse.wrap subprojects/lua.wrap subprojects/luajit.wrap
+# Documentation? What's that? (Trying to distribute docs/ here causes a spectacular failure for some reason.)
 CLEANFILES += $(CREDITSPOT) $(NAEVPOT) $(XMLPOT)
 TESTS = check-po.sh
 AM_TESTS_ENVIRONMENT = POFILE='$(srcdir)/po/de.po'; EXPECT=9000; export POFILE EXPECT;

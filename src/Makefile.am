@@ -16,6 +16,7 @@ shaders.gen.c shaders.gen.h: shaders_c_gen.py
 CLEANFILES += shaders.gen.c shaders.gen.h
 BUILT_SOURCES = shaders.gen.c shaders.gen.h
 endif
+EXTRA_DIST = shaders_c_gen.py
 
 
 naev_SOURCES = \
@@ -334,4 +335,6 @@ endif
 
 if HAVE_MACOS
 naev_SOURCES += glue_macos.m glue_macos.h
+else
+EXTRA_DIST += glue_macos.m glue_macos.h
 endif
