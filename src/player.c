@@ -1839,6 +1839,9 @@ void player_brokeHyperspace (void)
    pilot_rmFlag( player.p, PILOT_HYP_BRAKE );
    pilot_rmFlag( player.p, PILOT_HYP_PREP );
 
+   /* Set the ttimer. */
+   player.p->ptimer = HYPERSPACE_FADEIN;
+
    /* Update the map */
    map_jump();
 

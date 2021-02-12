@@ -3155,7 +3155,7 @@ void pilots_update( double dt )
          pilot_hyperspace(p, dt);
       /* Entering hyperspace. */
       else if (pilot_isFlag(p, PILOT_HYP_END)) {
-         if (VMOD(p->solid->vel) < 2*solid_maxspeed( p->solid, p->speed, p->thrust) )
+         if ((VMOD(p->solid->vel) < 2*solid_maxspeed( p->solid, p->speed, p->thrust) ) && (p->ptimer < 0.))
             pilot_rmFlag(p, PILOT_HYP_END);
       }
       /* Must not be boarding to think. */

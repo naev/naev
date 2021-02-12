@@ -854,13 +854,11 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
  *
  *    @param dt Current delta tick.
  */
-static double gui_dt = 0.;
 void gui_render( double dt )
 {
    int i;
    gl_Matrix4 projection;
-
-   gui_dt += dt;
+   double fade, direction;
 
    /* If player is dead just render the cinematic mode. */
    if (!menu_isOpen(MENU_MAIN) &&
@@ -928,9 +926,20 @@ void gui_render( double dt )
       can_jump = i;
    }
 
-   /* Hyperspace. */
+   /* Determine if we need to fade in/out. */
+   fade = 0.;
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
          (player.p->ptimer < HYPERSPACE_FADEOUT)) {
+      fade = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
+      direction = VANGLE(player.p->solid->vel);
+   }
+   else if (pilot_isFlag(player.p, PILOT_HYP_END) &&
+         player.p->ptimer > 0.) {
+      fade = player.p->ptimer / HYPERSPACE_FADEIN;
+      direction = VANGLE(player.p->solid->vel) + M_PI;
+   }
+   /* Perform the fade. */
+   if (fade > 0.) {
       /* Set up the program. */
       glUseProgram( shaders.jump.program );
       glEnableVertexAttribArray( shaders.jump.vertex );
@@ -942,8 +951,8 @@ void gui_render( double dt )
 
       /* Pass stuff over. */
       gl_Matrix4_Uniform( shaders.jump.projection, projection );
-      glUniform1f( shaders.jump.progress, (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT );
-      glUniform1f( shaders.jump.direction, VANGLE(player.p->solid->vel) );
+      glUniform1f( shaders.jump.progress, fade );
+      glUniform1f( shaders.jump.direction, direction );
       glUniform2f( shaders.jump.dimensions, gl_screen.nw, gl_screen.nh );
 
       /* Set the subroutine. */
