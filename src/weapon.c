@@ -38,9 +38,6 @@
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
-#define WEAPON_CHUNK_MAX      16384 /**< Maximum size to increase array with */
-#define WEAPON_CHUNK_MIN      256 /**< Minimum size to increase array with */
-
 /* Weapon status */
 #define WEAPON_STATUS_OK         0 /**< Weapon is fine */
 #define WEAPON_STATUS_JAMMED     1 /**< Got jammed */
@@ -75,6 +72,7 @@ typedef struct Weapon_ {
    double life; /**< Total life. */
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
+   GLfloat r; /**< Unique random value . */
    int sprite; /**< Used for spinning outfits. */
    PilotOutfitSlot *mount; /**< Used for beam weapons. */
    double falloff; /**< Point at which damage falls off. */
@@ -518,7 +516,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                if (spfx != -1) {
                   spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
                         w->solid->vel.x, w->solid->vel.y,
-                        SPFX_LAYER_BACK ); /* presume back. */
+                        SPFX_LAYER_MIDDLE ); /* presume middle. */
                   /* Add sound if explodes and has it. */
                   s = outfit_soundHit(w->outfit);
                   if (s != -1)
@@ -548,7 +546,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                if (spfx != -1) {
                   spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
                         w->solid->vel.x, w->solid->vel.y,
-                        SPFX_LAYER_BACK ); /* presume back. */
+                        SPFX_LAYER_MIDDLE ); /* presume middle. */
                   /* Add sound if explodes and has it. */
                   s = outfit_soundHit(w->outfit);
                   if (s != -1)
@@ -636,44 +634,41 @@ void weapons_render( const WeaponLayer layer, const double dt )
 
 
 static void weapon_renderBeam( Weapon* w, const double dt ) {
-   double x, y, z, cx, cy, gx, gy;
-   glTexture *gfx;
-   gl_Matrix4 projection, tex_mat;
+   double x, y, z;
+   gl_Matrix4 projection;
+
+   /* Animation. */
+   w->anim += dt;
 
    /* Load GLSL program */
    glUseProgram(shaders.beam.program);
-
-   gfx = outfit_gfx(w->outfit);
 
    /* Zoom. */
    z = cam_getZoom();
 
    /* Position. */
-   cam_getPos( &cx, &cy );
-   gui_getOffset( &gx, &gy );
-   x = (w->solid->pos.x - cx)*z + gx;
-   y = (w->solid->pos.y - cy)*z + gy;
+   gl_gameToScreenCoords( &x, &y, w->solid->pos.x, w->solid->pos.y );
 
-   projection = gl_Matrix4_Translate( gl_view_matrix, SCREEN_W/2.+x, SCREEN_H/2.+y, 0. );
+   projection = gl_Matrix4_Translate( gl_view_matrix, x, y, 0. );
    projection = gl_Matrix4_Rotate2d( projection, w->solid->dir );
-   projection = gl_Matrix4_Scale( projection, w->outfit->u.bem.range*z,gfx->sh * z, 1 );
-
-   /* Bind the texture. */
-   glBindTexture( GL_TEXTURE_2D, gfx->texture);
+   projection = gl_Matrix4_Scale( projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1 );
+   projection = gl_Matrix4_Translate( projection, 0., -0.5, 0. );
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.beam.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.beam.vertex,
          0, 2, GL_FLOAT, 0 );
 
-   /* Set the texture. */
-   tex_mat = gl_Matrix4_Identity();
-   tex_mat = gl_Matrix4_Translate(tex_mat, w->anim, 0, 0);
-   tex_mat = gl_Matrix4_Scale(tex_mat, w->outfit->u.bem.range / gfx->sw, 1, 1);
-
    /* Set shader uniforms. */
    gl_Matrix4_Uniform(shaders.beam.projection, projection);
-   gl_Matrix4_Uniform(shaders.beam.tex_mat, tex_mat);
+   gl_uniformColor(shaders.beam.color, &w->outfit->u.bem.colour);
+   glUniform2f(shaders.beam.dimensions, w->outfit->u.bem.range, w->outfit->u.bem.width);
+   glUniform1f(shaders.beam.dt, w->anim);
+   glUniform1f(shaders.beam.r, w->r);
+
+   /* Set the subroutine. */
+   if (GLAD_GL_ARB_shader_subroutine)
+      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &w->outfit->u.bem.shader );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -684,12 +679,6 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
 
    /* anything failed? */
    gl_checkErr();
-
-   /* Do the beam movement. */
-   gfx = outfit_gfx(w->outfit);
-   w->anim -= 5. * dt;
-   if (w->anim <= -gfx->sw)
-      w->anim += gfx->sw;
 }
 
 
@@ -1148,7 +1137,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
 
    /* Get the layer. */
-   spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+   spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
    /* Choose spfx. */
    if (p->shield > 0.)
       spfx = outfit_spfxShield(w->outfit);
@@ -1238,7 +1227,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->exp_timer == -1.) {
       /* Get the layer. */
-      spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+      spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
 
       /* Choose spfx. */
       if (p->shield > 0.)
@@ -1291,9 +1280,9 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
 
       /* Add graphic. */
       spfx_add( spfx, pos[0].x, pos[0].y,
-            VX(a->vel), VY(a->vel), SPFX_LAYER_BACK );
+            VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
       spfx_add( spfx, pos[1].x, pos[1].y,
-            VX(a->vel), VY(a->vel), SPFX_LAYER_BACK );
+            VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
       w->exp_timer = -2;
    }
 }
@@ -1613,6 +1602,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
          else if (rdir >= 2.*M_PI)
             rdir -= 2.*M_PI;
          mass = 1.; /**< Needs a mass. */
+         w->r     = RNGF(); /* Set unique value. */
          w->solid = solid_create( mass, rdir, pos, vel, SOLID_UPDATE_EULER );
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;

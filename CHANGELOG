@@ -1,12 +1,14 @@
 * 0.9.0 (unreleased)
    * Gameplay
+      * Ships and rockets now have engine trails
+      * Beam visuals have been made more flexible and pretty
+      * Jumping visuals improved
       * Added outfits that allow converting damage to disable
       * Added gambling resort "Minerva Station"
       * New missions
          * Follow happenings on "Minerva Station"
          * Invade the frontier with the Dvaered
-      * New translation(s) in progress
-         * Czech
+      * New translation(s) in progress: Czech, French, and Korean
    * Engine
       * Added image format support beyond PNG (notably WebP)
       * Game data now handled by PhysicsFS, allowing for multiple sources and easier modding
@@ -17,6 +19,18 @@
       * Added Visual Novel library
       * Added card games
       * Added dynamic factions
+
+* 0.8.2
+   * Gameplay
+      * Fixed duplicate rewards from pirate ship-stealing missions. (Sorry.)
+      * Fixed the Advanced Nebula Research mission's failure condition in case you don't stick with the transport ship. (Sorry.)
+      * Fixed the "The one with the Runaway" mission so the captured drone doesn't appear back in space.
+   * Engine
+      * Fixed a bug loading games with short (1-character) names.
+      * Tweaked chances of seeing Spaceport Bar missions.
+      * Updated German translation.
+      * Fixed "configure" script when the system has a "cxsparse" library and no "csparse".
+      * Fixed source .tar.gz so ./configure is immediately usable again. (Note: 0.9.x will use Meson for builds.)
 
 * 0.8.1
    * Gameplay

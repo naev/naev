@@ -8,10 +8,10 @@
  <class>Armoured Transport</class>
  <price>1500000</price>
  <time_mod>1.5</time_mod>
- <trail_generator x="-35" y="4" h="10" />
- <trail_generator x="-35" y="4" h="0" />
- <trail_generator x="-35" y="-4" h="10" />
- <trail_generator x="-35" y="-4" h="0" />
+ <trail_generator x="-35" y="4" h="10" >pirate</trail_generator>
+ <trail_generator x="-35" y="4" h="0" >pirate</trail_generator>
+ <trail_generator x="-35" y="-4" h="10" >pirate</trail_generator>
+ <trail_generator x="-35" y="-4" h="0" >pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
  <health>

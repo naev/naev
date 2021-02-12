@@ -112,8 +112,6 @@
 #define xmlr_attr_long_opt(n,s,a)    xmlr_attr_long_def(n,s,a,a)
 #define xmlr_attr_ulong_opt(n,s,a)   xmlr_attr_ulong_def(n,s,a,a)
 #define xmlr_attr_float_opt(n,s,a)   xmlr_attr_float_def(n,s,a,a)
-/** DEPRECATED common pattern for optional ints (actually of type int) */
-#define xmlr_attr_atoi_neg1(n,s,a) do {xmlr_attr(n,s,char*T); a = T==NULL ? -1 : atoi(T); free(T);} while(0)
 
 /*
  * writer crap

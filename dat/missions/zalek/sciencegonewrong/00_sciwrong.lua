@@ -35,13 +35,13 @@ require "missions/zalek/common"
 -- set mission variables
 t_sys = {}
 t_pla = {}
-t_sys[1] = "Daravon"
-t_pla[1] = "Vilati Vilata"
-t_sys[2] = "Waterhole"
-t_pla[2] = "Waterhole's Moon"
+t_sys[1] = system.get("Daravon")
+t_pla[1] = planet.get("Vilati Vilata")
+t_sys[2] = system.get("Waterhole")
+t_pla[2] = planet.get("Waterhole's Moon")
 -- t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
-t_sys[3] = "Seiben"
-t_pla[3] = "Gastan"
+t_sys[3] = system.get("Seiben")
+t_pla[3] = planet.get("Gastan")
 pho_mny = 50000
 reward = 1000000 
 title = {}
@@ -106,25 +106,25 @@ function accept()
    end
    tk.msg( title[1], text[2] )
    misn.accept()
-   misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[1], t_pla[1])})
+   misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[1]:name(), t_pla[1]:name())})
    misn.setDesc(misn_desc)
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
-   misn_mark = misn.markerAdd( system.get(t_sys[1]), "high" )
+   misn_mark = misn.markerAdd( t_sys[1], "high" )
    talked = false
    lhook1 =  hook.land("land1", "land")
 end
 
 function land1()
-   if planet.cur() == planet.get(t_pla[1]) and not talked and not traded then
+   if planet.cur() == t_pla[1] and not talked and not traded then
       bar1pir1 = misn.npcAdd("first_trd", _("Trader"), "neutral/scientist3.png", trd1_desc)
-   elseif planet.cur() == planet.get(t_pla[1]) and talked and traded1 then
+   elseif planet.cur() == t_pla[1] and talked and traded1 then
       bar1pir1 = misn.npcAdd("third_trd", _("Trader"), "neutral/scientist3.png", trd1_desc)
    end
 end
 
 function land2()
-   if planet.cur() == planet.get(t_pla[2]) and talked and not traded1 then
+   if planet.cur() == t_pla[2] and talked and not traded1 then
       bar2pir1 = misn.npcAdd("second_trd", _("Contact Person"), "neutral/unique/dealer.png", trd2_desc)
    end
 end
@@ -136,15 +136,15 @@ function first_trd()
      return
   else
      tk.msg(title[1], text[3])
-     tk.msg(title[1], text[4]:format(t_pla[2], t_sys[2]))
+     tk.msg(title[1], text[4]:format(t_pla[2]:name(), t_sys[2]:name()))
      talked = true
   end
   
   
-  osd_msg[2] = osd_msg[2]:format(t_sys[2], t_pla[2])
+  osd_msg[2] = osd_msg[2]:format(t_sys[2]:name(), t_pla[2]:name())
   misn.osdCreate(misn_title, {osd_msg[2]})
   
-  misn.markerMove(misn_mark, system.get(t_sys[2]))
+  misn.markerMove(misn_mark, t_sys[2])
   
   lhook2 = hook.land("land2", "land")
   
@@ -164,10 +164,10 @@ function second_trd()
   player.pay(-pho_mny)
   carg_id = misn.cargoAdd("Phosphine", 3)
   tk.msg(title[1], text[9])
-  osd_msg[3] = osd_msg[3]:format(t_sys[1],t_pla[1])
+  osd_msg[3] = osd_msg[3]:format(t_sys[1]:name(), t_pla[1]:name())
   misn.osdCreate(misn_title, {osd_msg[3]})
  -- create hook that player will be hailed by authorities bc of toxic materials 
-  misn.markerMove(misn_mark, system.get(t_sys[1]))
+  misn.markerMove(misn_mark, t_sys[1])
   hook.rm(lhook2)
   hook.enter("sys_enter")
   traded1 = true
@@ -179,11 +179,11 @@ function third_trd()
   
   misn.npcRm(bar1pir1)
   misn.cargoRm(carg_id)
-  player.msg(t_sys[3])
-  osd_msg[4] = osd_msg[4]:format(t_sys[3], t_pla[3])
+  player.msg(t_sys[3]:name())
+  osd_msg[4] = osd_msg[4]:format(t_sys[3]:name(), t_pla[3]:name())
   misn.osdCreate(misn_title, {osd_msg[4]})
   
-  misn.markerMove(misn_mark, system.get(t_sys[3]))
+  misn.markerMove(misn_mark, t_sys[3])
   
   hook.rm(lhook1)
   
@@ -193,7 +193,7 @@ end
 
 -- final land: let the player land and collect the reward
 function fnl_ld ()
-   if planet.cur() == planet.get(t_pla[3]) and traded2 then
+   if planet.cur() == t_pla[3] and traded2 then
       tk.msg(title[1],text[15])
       tk.msg(title[1],text[16])
       player.pay(reward)
@@ -203,7 +203,7 @@ function fnl_ld ()
 end
 -- when the player takes off the authorities will want them
 function sys_enter ()
-   if system.cur() == system.get(t_sys[2]) then
+   if system.cur() == t_sys[2] then
       hook.timer(7000, "call_the_police")
    end
 end
@@ -211,7 +211,9 @@ function call_the_police ()
    spwn_police()
    tk.msg(title[2],text[11])
    tk.msg(title[2],text[12])
-   boardh = hook.pilot(player.pilot(), "disable", "go_board")
+   if boardh == nil then
+      boardh = hook.pilot(player.pilot(), "disable", "go_board")
+   end
 end
 
 function spwn_police ()
@@ -239,23 +241,23 @@ end
 -- move to the player ship 
 
 function go_board ()
-   if adm1 then
+   if adm1:exists() then
       adm1:control()
       adm1:setHostile(false)
       adm1:moveto(player.pos())
-      hook.pilot(adm1, "idle", "fine_vanish")
+      admho = hook.pilot(adm1, "idle", "fine_vanish")
    end
-   if lance1 then
+   if lance1:exists() then
       lance1:control()
       lance1:setHostile(false)
       lance1:moveto(player.pos())
-      hook.pilot(lance1, "idle", "fine_vanish")
+      l1ho = hook.pilot(lance1, "idle", "fine_vanish")
    end
-   if lance2 then
+   if lance2:exists() then
       lance2:control()
       lance2:setHostile(false)
       lance2:moveto(player.pos())
-      hook.pilot(lance2, "idle", "fine_vanish")
+      l2ho = hook.pilot(lance2, "idle", "fine_vanish")
    end
 end
 -- display msgs and have the ships disappear and fail the mission...
@@ -269,13 +271,13 @@ function fine_vanish ()
       player.pay(-player.credits())
    end
    misn.cargoRm(carg_id)
-   if adm1 then
+   if adm1:exists() then
       adm1:hyperspace()
    end
-   if lance1 then
+   if lance1:exists() then
       lance1:hyperspace()
    end
-   if lance2 then
+   if lance2:exists() then
       lance2:hyperspace()
    end
    player.msgClear()

@@ -14,7 +14,8 @@
 
 
 #define SPFX_LAYER_FRONT   0 /**< Front spfx layer. */
-#define SPFX_LAYER_BACK    1 /**< Back spfx layer. */
+#define SPFX_LAYER_MIDDLE  1 /**< Middle spfx layer. */
+#define SPFX_LAYER_BACK    2 /**< Back spfx layer. */
 
 #define SHAKE_DECAY        0.3 /**< Rumble decay parameter */
 #define SHAKE_MAX          1.0 /**< Rumblemax parameter */
@@ -36,19 +37,21 @@ typedef struct TrailSpec_ {
    char* name;      /**< Trail definition's name. */
    double ttl;      /**< Time To Life (in seconds). */
    double def_thick;/**< Default thickness, relevant while loading. */
+   GLuint type;     /**< Shader to use. */
    TrailStyle idle; /**< Colour when idle. */
    TrailStyle glow; /**< Colour when thrusting. */
    TrailStyle aftb; /**< Colour when afterburning. */
    TrailStyle jmpn; /**< Colour when jumping. */
+   int nebula;      /**< Whether or not the trail should be only active in the nebula. */
 } TrailSpec;
 
 
-typedef struct trailPoint_ {
-   Vector2d p;    /**< Control points for the trail. */
-   glColour c;   /**< Colour associated with the trail's control points. */
-   double t; /**< Timer, normalized to the time to live of the trail (starts at 1, ends at 0). */
-   double thickness; /**< Thickness of the trail. */
-} trailPoint;
+typedef struct TrailPoint {
+   GLfloat x, y;     /**< Control points for the trail. */
+   glColour c;       /**< Colour associated with the trail's control points. */
+   GLfloat t;        /**< Timer, normalized to the time to live of the trail (starts at 1, ends at 0). */
+   GLfloat thickness;/**< Thickness of the trail. */
+} TrailPoint;
 
 
 /**
@@ -58,11 +61,15 @@ typedef struct trailPoint_ {
  */
 typedef struct Trail_spfx_ {
    double ttl;       /**< Time To Life (in seconds). */
-   trailPoint *point_ringbuf; /**< Circular buffer (malloced/freed) of trail points. */
-   size_t capacity; /**< Buffer size, guaranteed to be a power of 2. */
-   size_t iread; /**< Start index (NOT reduced modulo capacity). */
-   size_t iwrite; /**< End index (NOT reduced modulo capacity). */
-   int refcount;      /**< Number of referrers. If 0, trail dies after its TTL. */
+   GLuint type;      /**< Shader to use. */
+   TrailPoint *point_ringbuf; /**< Circular buffer (malloced/freed) of trail points. */
+   size_t capacity;  /**< Buffer size, guaranteed to be a power of 2. */
+   size_t iread;     /**< Start index (NOT reduced modulo capacity). */
+   size_t iwrite;    /**< End index (NOT reduced modulo capacity). */
+   int refcount;     /**< Number of referrers. If 0, trail dies after its TTL. */
+   double dt;        /**< Timer accumulator (in seconds). */
+   int nebula;       /**< Whether or not this trail is only shown in the nebula. */
+   GLfloat r;        /**< Random variable between 0 and 1 to make each trail unique. */
 } Trail_spfx;
 
 /** @brief Indexes into a trail's circular buffer.  */

@@ -306,10 +306,11 @@ static int audioL_getVolume( lua_State *L )
    LuaAudio_t *la;
    double volume, master;
    ALfloat alvol;
-   if (lua_gettop(L)>0) {
+   if (conf.nosound)
+      volume = 0.;
+   else if (lua_gettop(L)>0) {
       la = luaL_checkaudio(L,1);
-      if (!conf.nosound)
-         alGetSourcef( la->source, AL_GAIN, &alvol );
+      alGetSourcef( la->source, AL_GAIN, &alvol );
       master = sound_getVolumeLog();
       volume = alvol / master;
    }

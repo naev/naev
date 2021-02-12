@@ -8,6 +8,8 @@
  <class>Destroyer</class>
  <price>1100000</price>
  <time_mod>1.5</time_mod>
+ <trail_generator x="-18" y="-25" h="-3" >nebula</trail_generator>
+ <trail_generator x="-18" y="25" h="-3" >nebula</trail_generator>
  <trail_generator x="-35" y="8" h="0" />
  <trail_generator x="-35" y="-8" h="0" />
  <fabricator>Nexus Shipyards</fabricator>

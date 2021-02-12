@@ -212,7 +212,7 @@ int load_refresh (void)
       len = strlen( files[i].name );
 
       /* Only interested in swapping backup with file after it if it's not backup. */
-      if ((len < 12) || strcmp( &files[i].name[len-10],".ns.backup" ))
+      if ((len < 11) || strcmp( &files[i].name[len-10],".ns.backup" ))
          continue;
 
       /* Don't match. */
@@ -264,7 +264,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
    name_len = strlen( fname );
 
    /* no save or backup save extension? */
-   if ((name_len < 5 || strcmp( &fname[name_len-3], ".ns" )) && (name_len < 12 || strcmp( &fname[name_len-10], ".ns.backup" )))
+   if ((name_len < 4 || strcmp( &fname[name_len-3], ".ns" )) && (name_len < 11 || strcmp( &fname[name_len-10], ".ns.backup" )))
       return PHYSFS_ENUM_OK;
 
    path_size = dir_len + name_len + 2;

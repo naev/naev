@@ -2006,7 +2006,7 @@ void pilot_update( Pilot* pilot, const double dt )
          vy = VY(pilot->solid->vel);
 
          /* set explosions */
-         l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+         l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
          if (RNGF() > 0.8)
             spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
          else
@@ -2223,7 +2223,7 @@ static void pilot_sample_trail( Pilot* p, int generator )
               p->solid->pos.y + dy*M_SQRT1_2 + p->ship->trail_emitters[generator].h_engine*M_SQRT1_2 );
 
    /* Set the colour. */
-   if (pilot_isFlag(p, PILOT_HYPERSPACE))
+   if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
       style = p->ship->trail_emitters[generator].trail_spec->jmpn;
    else if (pilot_isFlag(p, PILOT_AFTERBURNER))
       style = p->ship->trail_emitters[generator].trail_spec->aftb;
@@ -3155,7 +3155,7 @@ void pilots_update( double dt )
          pilot_hyperspace(p, dt);
       /* Entering hyperspace. */
       else if (pilot_isFlag(p, PILOT_HYP_END)) {
-         if (VMOD(p->solid->vel) < 2*solid_maxspeed( p->solid, p->speed, p->thrust) )
+         if ((VMOD(p->solid->vel) < 2*solid_maxspeed( p->solid, p->speed, p->thrust) ) && (p->ptimer < 0.))
             pilot_rmFlag(p, PILOT_HYP_END);
       }
       /* Must not be boarding to think. */

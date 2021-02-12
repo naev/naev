@@ -450,7 +450,7 @@ static void gui_renderPlanetTarget( double dt )
       return;
 
    /* Make sure target exists. */
-   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0) 
+   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0)
        && (player.p->nav_asteroid < 0))
       return;
 
@@ -857,8 +857,8 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
 void gui_render( double dt )
 {
    int i;
-   double x;
-   glColour col;
+   gl_Matrix4 projection;
+   double fade, direction;
 
    /* If player is dead just render the cinematic mode. */
    if (!menu_isOpen(MENU_MAIN) &&
@@ -926,15 +926,52 @@ void gui_render( double dt )
       can_jump = i;
    }
 
-   /* Hyperspace. */
+   /* Determine if we need to fade in/out. */
+   fade = 0.;
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
          (player.p->ptimer < HYPERSPACE_FADEOUT)) {
-      x = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
-      col.r = 1.;
-      col.g = 1.;
-      col.b = 1.;
-      col.a = x;
-      gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &col );
+      fade = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
+      direction = VANGLE(player.p->solid->vel);
+   }
+   else if (pilot_isFlag(player.p, PILOT_HYP_END) &&
+         player.p->ptimer > 0.) {
+      fade = player.p->ptimer / HYPERSPACE_FADEIN;
+      direction = VANGLE(player.p->solid->vel) + M_PI;
+   }
+   /* Perform the fade. */
+   if (fade > 0.) {
+      /* Set up the program. */
+      glUseProgram( shaders.jump.program );
+      glEnableVertexAttribArray( shaders.jump.vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.jump.vertex, 0, 2, GL_FLOAT, 0 );
+
+      /* Set up the projection. */
+      projection = gl_view_matrix;
+      projection = gl_Matrix4_Scale(projection, gl_screen.nw, gl_screen.nh, 1. );
+
+      /* Pass stuff over. */
+      gl_Matrix4_Uniform( shaders.jump.projection, projection );
+      glUniform1f( shaders.jump.progress, fade );
+      glUniform1f( shaders.jump.direction, direction );
+      glUniform2f( shaders.jump.dimensions, gl_screen.nw, gl_screen.nh );
+
+      /* Set the subroutine. */
+      if (GLAD_GL_ARB_shader_subroutine) {
+         if (cur_system->nebu_density > 0.)
+            glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shaders.jump.jump_func.jump_nebula );
+         else
+            glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shaders.jump.jump_func.jump_wind );
+      }
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.jump.vertex );
+      glUseProgram(0);
+
+      /* Check errors. */
+      gl_checkErr();
    }
 
    /* Reset viewport. */
@@ -963,7 +1000,7 @@ void gui_cooldownEnd (void)
  *    @param bottom Bottom boundary in pixels
  *    @param left Left boundary in pixels
  *
- *    @return 0 on success 
+ *    @return 0 on success
  */
 void gui_setMapOverlayBounds( int top, int right, int bottom, int left )
 {
@@ -1346,7 +1383,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
    }
 
-   if (p->id == player.p->target) 
+   if (p->id == player.p->target)
       col = cRadar_hilight;
    else if (pilot_isFlag(p, PILOT_HILIGHT))
       col = cRadar_tPilot;
@@ -1644,7 +1681,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    if (ind == player.p->nav_planet)
       gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet);
 
-   /* 
+   /*
    gl_beginSolidProgram(gl_Matrix4_Scale(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), vr, vr, 1), &col);
    gl_vboActivateAttribOffset( gui_planet_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 5 );

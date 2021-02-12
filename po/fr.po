@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-02-01 09:14-0500\n"
-"PO-Revision-Date: 2021-02-06 05:41+0000\n"
-"Last-Translator: rhebok-git <geneenkei@gmail.com>\n"
+"POT-Creation-Date: 2021-02-10 18:03-0500\n"
+"PO-Revision-Date: 2021-02-07 20:50+0000\n"
+"Last-Translator: nouara <amminouara1999@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,6 @@ msgstr ""
 "X-Generator: Weblate 4.5-dev\n"
 
 #: dat/intro:2
-#, fuzzy
 msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
@@ -120,7 +119,6 @@ msgstr ""
 "Les Grandes Maisons surveillaient maintenant les voies spatiales."
 
 #: dat/intro:23
-#, fuzzy
 msgid "Rise and fall, the rhythm of history. "
 msgstr "Montée et chute, le rythme de l’histoire. "
 
@@ -133,18 +131,17 @@ msgid "It tore the heart out of the Empire."
 msgstr "Cela a déchiré le cœur de l'Empire."
 
 #: dat/intro:29
-#, fuzzy
 msgid ""
 "From Earth, a cataclysmic explosion ripped through space, annihilating "
 "stars, vaporising worlds. Billions died. Dozens of systems disappeared into "
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
-"Depuis la Terre, une explosion cataclysmique s'est déchiré à travers "
-"l'espace, anéantissant les étoiles, vaporisant des mondes. Des milliards "
-"sont morts. Des dizaines de systèmes planétaires ont disparu dans la "
-"mystérieuse nébuleuse laissée derrière. Aujourd'hui, la grande civilisation "
-"galactique survit comme l'ombre de sa gloire passée."
+"Depuis la Terre, une explosion cataclysmique a déchiré l'espace, "
+"anéantissant les étoiles, vaporisant les mondes. Des milliards sont morts. "
+"Des dizaines de systèmes ont disparu dans la mystérieuse nébuleuse laissée "
+"derrière. Aujourd'hui, la grande civilisation galactique survit comme "
+"l'ombre de sa gloire passée."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
@@ -162,175 +159,181 @@ msgstr ""
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr "Bienvenue dans l'univers de Naev..."
+msgstr "Bienvenue dans l'univers de Naev…"
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "Équipe de développement principale actuelle"
 
 #: dat/AUTHORS:2 dat/AUTHORS:23 dat/AUTHORS:33 dat/AUTHORS:63 dat/AUTHORS:174
 msgid "---------------------------------------"
-msgstr ""
+msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr ""
+msgstr "Edgar Simo-Serra « bobbens » <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * Développeur principal"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
-msgstr ""
+msgstr "Bas Fournier « BTAxis » <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * Scénariste et développement divers"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
-msgstr ""
+msgstr "Ian Douglas Scott « ids1024 » <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11 dat/AUTHORS:14 dat/AUTHORS:20 dat/AUTHORS:29
 msgid "   * Misc. Development"
-msgstr ""
+msgstr "   * Développement divers"
 
 #: dat/AUTHORS:13
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
-msgstr ""
+msgstr "Layla and Emmy « The Diligent Circle » <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:16
+#, fuzzy
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
-msgstr ""
+msgstr "Justin Blanchard « UncombedCoconut » <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:17
 msgid "   * Code Carnage and Bug Beating"
-msgstr ""
+msgstr "   * Tests et correction de bugs"
 
 #: dat/AUTHORS:19
 msgid "nenau"
-msgstr ""
+msgstr "nenau"
 
 #: dat/AUTHORS:22
 msgid "Past Development Team"
-msgstr ""
+msgstr "Équipe de développement passée"
 
 #: dat/AUTHORS:25
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
-msgstr ""
+msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
 #: dat/AUTHORS:26
 msgid "   * Bringer of Sound"
-msgstr ""
+msgstr "   * Porteur de son"
 
 #: dat/AUTHORS:28
 msgid "Deiz"
-msgstr ""
+msgstr "Deiz"
 
 #: dat/AUTHORS:32
 msgid "Major Contributors"
-msgstr ""
+msgstr "Contributeurs majeurs"
 
 #: dat/AUTHORS:35
 msgid "Josiah Schwartfeger"
-msgstr ""
+msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:36
 msgid "   * Graphic Designer and Modeller"
-msgstr ""
+msgstr "   * Graphiste et modéliste"
 
 #: dat/AUTHORS:38
 msgid "Elderman"
-msgstr ""
+msgstr "Elderman"
 
 #: dat/AUTHORS:39
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * Développement des missions"
 
 #: dat/AUTHORS:40
 msgid "   The first non-bobbens mission developer!"
-msgstr ""
+msgstr "   Le premier développeur de missions qui n'est pas bobbens !"
 
 #: dat/AUTHORS:42
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
-msgstr ""
+msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
 #: dat/AUTHORS:43
 msgid "   * NPC Portrait Artist"
-msgstr ""
+msgstr "   * Portraitiste des PNJ"
 
 #: dat/AUTHORS:45
 msgid "Enigmatic"
-msgstr ""
+msgstr "Enigmatic"
 
 #: dat/AUTHORS:46
 msgid "   * Ships for the Sirius, many other models and faction logos"
 msgstr ""
+"   * Des vaisseaux pour le Sirius, de nombreux autres modèles et des logos "
+"de factions"
 
 #: dat/AUTHORS:48
+#, fuzzy
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
-msgstr ""
+msgstr "Felix Schneider « Scaatis » <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:49
 msgid "   * Naev logo, Lua GUI development"
-msgstr ""
+msgstr "   * Logo de Naev, développement de l'interface graphique en Lua"
 
 #: dat/AUTHORS:51
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
-msgstr ""
+msgstr "M. R. Bokhari « Viruk » <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:52
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr ""
+msgstr "   *  Des vaisseaux pour le Soromid et le Za'lek"
 
 #: dat/AUTHORS:54
+#, fuzzy
 msgid "Askyel"
-msgstr ""
+msgstr "Askyel"
 
 #: dat/AUTHORS:55
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
 msgstr ""
+"   * Compositeur de près d'une heure de musique en exclusivité pour Naev."
 
 #: dat/AUTHORS:57
 msgid "Jack Greiner <jack@emoss.org>"
-msgstr ""
+msgstr "Jack Greiner <jack@emoss.org>"
 
 #: dat/AUTHORS:58
 msgid "   * CI dude"
-msgstr ""
+msgstr "   * Intégration continue"
 
 #: dat/AUTHORS:59
 msgid "   * Bringer of automated releases"
-msgstr ""
+msgstr "   * A apporté les versions automatisées"
 
 #: dat/AUTHORS:60
 msgid "   * Various helper scripts and build system tweaks"
-msgstr ""
+msgstr "   * Divers scripts d'aide et ajustements du système de compilation"
 
 #: dat/AUTHORS:62
 msgid "Contributions"
-msgstr ""
+msgstr "Contributions"
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
-msgstr ""
+msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * Modèles de vaisseau"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * Musique"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * Sons"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * Images de la planète"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -338,70 +341,82 @@ msgid ""
 "didn't actively participate, by allowing me to use their data they did me a "
 "great favour and let me concentrate on the coding."
 msgstr ""
+"   Cela n'aurait pas été possible sans l'équipe de Vega Strike, bien qu'elle "
+"n'ait pas participé activement, en me permettant d'utiliser ses données, "
+"elle m'a rendu un grand service et m'a permis de me concentrer sur le "
+"développement."
 
 #: dat/AUTHORS:72
 msgid "Joel Hans <wolorf@gmail.com>"
-msgstr ""
+msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr ""
+msgstr "   * Graphismes des planètes"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
-msgstr ""
+msgstr "   * Script de rendu"
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
 msgstr ""
+"   A aidé au démarrage du projet. Cela a beaucoup aidé à remonter le moral "
+"des troupes."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
-msgstr ""
+msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
 msgid "Rob Loach <http://robloach.net>"
-msgstr ""
+msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
 msgid "   * SDL_collide"
-msgstr ""
+msgstr "   * SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
+"   Bien que nous n'utilisions pas la bibliothèque SDL_collide elle-même, "
+"elle a été une source d'inspiration pour les procédures de collision de Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
-msgstr ""
+msgstr "Pete Shinners <pete@shinners.org>"
 
 #: dat/AUTHORS:83
 msgid "   * SavePNG"
-msgstr ""
+msgstr "   * SavePNG"
 
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
 msgstr ""
+"   Une grande fonction tout droit sortie d'un jeu pygame. Fonctionne à "
+"merveille !"
 
 #: dat/AUTHORS:86
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
-msgstr ""
+msgstr "Aurore D. « Rore » <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
 msgid "   * Planet gimp script"
-msgstr ""
+msgstr "   Script  Planet Gimp"
 
 #: dat/AUTHORS:88
 msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
+"   Cela nous a évité beaucoup d'ennuis en nous permettant de créer "
+"rapidement des graphismes de planètes spatiales."
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
-msgstr ""
+msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
@@ -410,14 +425,16 @@ msgstr ""
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
+"   Bien qu'il n'ait pas été utilisé directement, il a permis de créer notre "
+"propre script de sprite."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
-msgstr ""
+msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * Bruitage de turbulence"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -425,119 +442,134 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
+"   Après l'horrible échec de notre propre tentative de fractale plasmique, "
+"le bruit de turbulence de TCOD semblait parfaitement faire tout là où nous "
+"avions échoué. Avec une optimisation poussée, le code a été introduit à Naev."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
-msgstr ""
+msgstr "Jordi Pegueroles Queralt « pegue » <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr ""
+msgstr "   * Modèle de fusée Mace"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
-msgstr ""
+msgstr "Brian J. Cameron"
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
-msgstr ""
+msgstr "   * Beaucoup d'illustrations"
 
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom naev content."
 msgstr ""
+"   Artiste talentueux, l'un des premiers à créer du contenu personnalisé "
+"pour naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
-msgstr ""
+msgstr "Camilo Polymeris <cpolymeris@gmx.net>"
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
-msgstr ""
+msgstr "   * Illustrations et développement"
 
 #: dat/AUTHORS:107
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
+"   C'est bien de voir quelqu'un d'autre travailler sur le code de Naev et la "
+"documentation de Lua."
 
 #: dat/AUTHORS:109
+#, fuzzy
 msgid "Dimitry Marakasov"
-msgstr ""
+msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
-msgstr ""
+msgstr "   * Port de FreeBSD et CMake"
 
 #: dat/AUTHORS:111
 msgid "   Talented coder who did the first official port of Naev."
-msgstr ""
+msgstr "   Talentueux développeur qui a fait le premier port officiel de Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
-msgstr ""
+msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
-msgstr ""
+msgstr "   * Fonctionnalités intéressantes codées"
 
 #: dat/AUTHORS:115
 msgid ""
 "   First non-bobbens coder to make serious commits! Like the reason the maps "
 "are all over or the faction in the maps."
 msgstr ""
+"   Premier codeur non bobbens à faire de sérieux engagements  ! Comme la "
+"raison pour laquelle les cartes sont partout ou la faction sur les cartes."
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
-msgstr ""
+msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
-msgstr ""
+msgstr "   * Accéléré la génération de nébuleuses de beaucoup"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
-msgstr ""
+msgstr "Unavowed <unavowed@vexillium.org>"
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
 msgstr ""
+"   * Porté le système de construction de Naev vers les outils automatiques."
 
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
 msgstr ""
+"   Probablement l'implémentation d'autotools la plus propre que je n'ai "
+"jamais vue."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr ""
+msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missios."
-msgstr ""
+msgstr "   * Pimenté les missios de fret génériques ennuyeux."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr ""
+msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr ""
+msgstr "   * Missions"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
-msgstr ""
+msgstr "   * Support de codage divers"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
-msgstr ""
+msgstr "Pêcheur"
 
 #: dat/AUTHORS:132
 msgid ""
 "   * Threading code to speed up nebula generation (and in the future who "
 "knows?)"
 msgstr ""
+"   * Threading code pour accélérer la génération de nébuleuses (et dans le "
+"futur qui sait?)"
 
 #: dat/AUTHORS:133
 msgid "   * Hot dog mission"
-msgstr ""
+msgstr "   * Mission de hot-dog"
 
 #: dat/AUTHORS:135
 msgid "Ludovic Bellière \"xrogaan\""
@@ -545,11 +577,11 @@ msgstr ""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
-msgstr ""
+msgstr "   * Programmeur Python extraordinaire"
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
-msgstr ""
+msgstr "Ses utilitaires sauvent les cheveux gris pour tout le monde."
 
 #: dat/AUTHORS:139
 msgid "Josh Combs"
@@ -557,31 +589,31 @@ msgstr ""
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr ""
+msgstr "   * Artiste de la plupart des nébuleuses."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
-msgstr ""
+msgstr "Galileus"
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
-msgstr ""
+msgstr "   * Modélisateur du requin et du rhinocéros"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
-msgstr ""
+msgstr "Devin Khan"
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
-msgstr ""
+msgstr "   * Modélisateur du Phalanx"
 
 #: dat/AUTHORS:148
 msgid "Areze"
-msgstr ""
+msgstr "Areze"
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
-msgstr ""
+msgstr "   * Assistant créateur de galaxie junior"
 
 #: dat/AUTHORS:151
 msgid "Old Man <oldtopman@gmail.com>"
@@ -597,7 +629,7 @@ msgstr ""
 
 #: dat/AUTHORS:155 dat/AUTHORS:161
 msgid "   * Mission contributor"
-msgstr ""
+msgstr "   * Contributeur à la mission"
 
 #: dat/AUTHORS:157
 msgid "Sudarshan S"
@@ -629,7 +661,7 @@ msgstr ""
 
 #: dat/AUTHORS:167
 msgid "   * Solar system information screen"
-msgstr ""
+msgstr "   * Écran d'information du système solaire"
 
 #: dat/AUTHORS:169
 msgid "Music by Matthew Pablo"
@@ -641,7 +673,7 @@ msgstr ""
 
 #: dat/AUTHORS:173
 msgid "Testers"
-msgstr ""
+msgstr "Testeurs"
 
 #: dat/AUTHORS:176
 msgid "John Schwartfeger"
@@ -670,7 +702,7 @@ msgstr ""
 
 #: dat/assets/abandoned_station.xml:2
 msgid "Abandoned Station"
-msgstr ""
+msgstr "Station abandonnée"
 
 #: dat/assets/adham.xml:2
 msgid "Adham"
@@ -684,6 +716,13 @@ msgid ""
 "considered neutral territory, most of the planet's surface is subject to the "
 "destructive sport that is so popular among Totoran's visitors."
 msgstr ""
+"Adham est une planète froide et sans vie. La seule raison pour laquelle une "
+"piste d'atterrissage se trouve ici est que la planète abrite les trois "
+"arènes à thème arctique pour les jeux de gladiateurs de Totoran. Bien que la "
+"zone d'atterrissage et une petite zone tampon autour de celle-ci soient "
+"considérées comme des territoires neutres, la majeure partie de la surface "
+"de la planète est soumise au sport destructeur si populaire auprès des "
+"visiteurs de Totoran."
 
 #: dat/assets/adius.xml:2
 msgid "Adius"
@@ -691,7 +730,7 @@ msgstr ""
 
 #: dat/assets/adrian.xml:2
 msgid "Adrian"
-msgstr ""
+msgstr "Adrian"
 
 #: dat/assets/adrian.xml:27
 msgid ""
@@ -708,6 +747,10 @@ msgid ""
 "kept at an acceptable, though uncomfortable, low. Most patrons of this "
 "spaceport bar are in full winter gear."
 msgstr ""
+"Le chauffage dans les mondes de classe P est souvent une affaire coûteuse, "
+"de sorte que la température est maintenue à un niveau acceptable, quoique "
+"inconfortable. La plupart des clients de ce bar spatial sont en tenue "
+"d'hiver."
 
 #: dat/assets/aera.xml:2
 msgid "Aera"
@@ -720,6 +763,10 @@ msgid ""
 "subduction, which coaxes them out of the planet's dangerous core and into "
 "the upper atmosphere where they can be safely collected."
 msgstr ""
+"Cette géante gazeuse  est suffisamment riche en minéraux précieux pour que "
+"le Proteron décide d'établir une colonie minière. Les minéraux sont extraits "
+"par subduction thermique OOA, qui les fait sortir du noyau dangereux de la "
+"planète pour les envoyer dans la haute atmosphère o"
 
 #: dat/assets/aesir_iv.xml:2
 msgid "Aesir IV"
@@ -736,6 +783,10 @@ msgid ""
 "core but, this being a remote part of Soromid space, it is still a local "
 "highlight."
 msgstr ""
+"Agino est une planète très animée, essentiellement peuplée de citoyens "
+"soromides de la classe moyenne. La planète n'excelle dans aucun domaine par "
+"rapport aux mondes du noyau soromide mais, comme il s'agit d'une partie "
+"éloignée de l'espace soromide, elle reste un point d'attraction local."
 
 #: dat/assets/agino.xml:30
 msgid ""
@@ -766,6 +817,11 @@ msgid ""
 "gas extraction. The Soromid might understand comfort and how to have a good "
 "time but this is clearly not the place where they are doing it."
 msgstr ""
+"Un bar très utilitaire avec une attitude plutôt laxiste au confort, du moins "
+"selon les normes de l’Empire. Les gens viennent ici pour faire des affaires "
+"et parler d’extraction de minerai, de minéraux et de gaz. Le Soromide "
+"pourrait comprendre le confort et comment passer un bon moment, mais ce "
+"n’est clairement pas l’endroit où ils le font."
 
 #: dat/assets/aillis.xml:2
 msgid "Aillis"
@@ -786,6 +842,10 @@ msgid ""
 "very welcome. Running costs are kept low which means maintenance and service "
 "suffer. Nevertheless, it's quite possible to have a good time here."
 msgstr ""
+"Bien que ce bar n’est pas exactement inhospitalier, il ne vous fait pas vous "
+"sentir les bienvenus. Les coûts de fonctionnement sont maintenus bas, ce qui "
+"signifie que l’entretien et le service en souffrent. Néanmoins, il est tout "
+"à fait possible de passer un bon moment ici."
 
 #: dat/assets/akios_station.xml:2
 msgid "Akios Station"
@@ -806,7 +866,7 @@ msgstr ""
 
 #: dat/assets/akra_station.xml:2
 msgid "Akra Station"
-msgstr ""
+msgstr "Station Akra"
 
 #: dat/assets/akra_station.xml:28
 msgid ""
@@ -815,6 +875,10 @@ msgid ""
 "system congregate here, leading to more inter-planetary personal "
 "relationships than normal."
 msgstr ""
+"Construite pour desservir les navires de la région, la gare d'Akra sert "
+"également de centre de communication et de commerce essentiel pour les "
+"résidents d'Akra. Des gens de partout dans le système se rassemblent ici, "
+"conduisant à plus de relations personnelles interplanétaires que la normale."
 
 #: dat/assets/akra_station.xml:29
 msgid ""
@@ -842,6 +906,12 @@ msgid ""
 "materials for all sorts of industries though, and the lack of pollution "
 "controls on the planet make it very attractive for corporations."
 msgstr ""
+"Aldarus possède de vastes océans remplis de boues organiques qui n'ont pas "
+"grand-chose à voir avec l'eau. L'atmosphère est toxique et tuera un être "
+"humain non protégé en quelques hectosecondes. Les boues dans les mers sont "
+"cependant une bonne source de matières premières pour toutes sortes "
+"d'industries, et le manque de contrôle de la pollution sur la planète la "
+"rend très attractive pour les entreprises."
 
 #: dat/assets/aldarus.xml:30
 msgid ""
@@ -850,6 +920,11 @@ msgid ""
 "for private conversations, in case the bar's main area is a little too "
 "public for comfort. The music here can also be a bit grating on the ears."
 msgstr ""
+"Le bar du port spatial sur Aldarus propose une variété d'activités de "
+"loisirs, telles que les jeux de hasard et les jeux de compétition. Il existe "
+"également des cabines murées pour des conversations privées, au cas où la "
+"zone principale du bar serait un peu trop publique pour le confort. La "
+"musique ici peut aussi être un peu grinçante pour les oreilles."
 
 #: dat/assets/aldernael.xml:2
 msgid "Aldernael"
@@ -1166,6 +1241,10 @@ msgid ""
 "resources. Unlike more developed Za'lek settlements, there is little in the "
 "way of scholarly presence here."
 msgstr ""
+"Ce monde stérile regorge de minéraux enfouis sous des kilomètres de glace, "
+"et les Za'lek ont déployé des moyens considérables pour en exploiter les "
+"ressources. Contrairement aux colonies Za'lek plus développées, il y a peu "
+"de présence scientifique ici."
 
 #: dat/assets/andors.xml:31
 msgid ""
@@ -1721,6 +1800,9 @@ msgid ""
 "sent out to the defense forces. It also maintains a small contingent of "
 "Za'lek vessels at home to serve as a in-system guard."
 msgstr ""
+"Ces chantiers navals sont l'un des endroits où les navires Za'lek sont "
+"construits et envoyés aux forces de défense. Il maintient également un petit "
+"contingent de navires Za'lek chez lui pour servir de garde dans le système."
 
 #: dat/assets/beeklo_ii.xml:2
 msgid "Beeklo II"
@@ -2573,6 +2655,10 @@ msgid ""
 "don't ask about the moon. Trust me, don't do it. The locals are a little "
 "touchy on the subject. How about a drink instead?"
 msgstr ""
+"Bonjour, voyageur, bienvenue au bar du port spatial de Daahrax. Un conseil, "
+"ne posez pas de questions sur la lune. Faites-moi confiance, ne le faites "
+"pas. Les locaux sont un peu susceptibles sur le sujet. Que diriez-vous d'un "
+"verre à la place ?"
 
 #: dat/assets/daal.xml:2
 msgid "Daal"
@@ -3160,7 +3246,7 @@ msgstr ""
 
 #: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:609
 msgid "Dvaered High Command"
-msgstr ""
+msgstr "Haut commandement Dvaered"
 
 #: dat/assets/dvaered_high_command.xml:27
 msgid ""
@@ -3320,6 +3406,10 @@ msgid ""
 "making deals over beer and coffee. The bar is large but it is still filled "
 "almost to the point of standing room only."
 msgstr ""
+"Ce bar abrite plusieurs mineurs et leurs partenaires commerciaux qui "
+"marchandent et concluent des accords autour de la bière et du café. Le bar "
+"est grand, mais il est toujours rempli presque au point de n'avoir que des "
+"places debout."
 
 #. Creates the mission
 #. Intro text
@@ -3387,6 +3477,10 @@ msgid ""
 "wait for the repairs and modifications of their ships to be finished. It's a "
 "small but cozy bar, with people constantly coming and going."
 msgstr ""
+"Les civils, les commerçants et les militaires se réunissent dans ce bar en "
+"attendant que les réparations et les modifications de leurs navires soient "
+"terminées. C’est un petit bar confortable, avec des gens qui vont et "
+"viennent constamment."
 
 #: dat/assets/elixir_i.xml:2
 msgid "Elixir I"
@@ -3902,6 +3996,10 @@ msgid ""
 "the station. The local Sirian workers seem to take particular pride in the "
 "visit since the Touched usually operate only in population centers."
 msgstr ""
+"Le bar est dominé par la ressemblance des Touched qui ont officiellement "
+"béni la station. Les travailleurs Sirian locaux semblent être "
+"particulièrement fiers de la visite puisque les Touched n'opèrent "
+"généralement que dans les centres de population."
 
 #: dat/assets/fried_i.xml:2
 msgid "Fried I"
@@ -4383,6 +4481,10 @@ msgid ""
 "skeleton government, this world has fallen into hard times and struggles to "
 "remain afloat."
 msgstr ""
+"Ce monde a particulièrement souffert de la centralisation de l’espace "
+"Za’lek. Avec l’abandon effectif par les autorités za’lek au-delà d’un "
+"gouvernement squelette, ce monde est tombé dans des moments difficiles et "
+"lutte pour rester à flot."
 
 #: dat/assets/greenberg.xml:29
 msgid ""
@@ -6359,6 +6461,10 @@ msgid ""
 "Southern reaches of the Dvaered. The station is large and well-supplied, "
 "providing an ample launching pad and rallying point near Sirius space."
 msgstr ""
+"Cette station sert de point de patrouille et de dépôt de ravitaillement pour "
+"les courses dans les confins sud du Dvaered. La station est grande et bien "
+"approvisionnée, offrant une grande rampe de lancement et un point de "
+"ralliement près de l’espace Sirius."
 
 #: dat/assets/marauder_station.xml:30
 msgid "The bar is completely unnoteworthy, besides the vile stench."
@@ -6534,6 +6640,10 @@ msgid ""
 "have learned to be practical and utilitarian, and so didn't waste any more "
 "space or effort on the bar onboard Megan than was required."
 msgstr ""
+"La barre de Spaceock est assez simple dans ses rendez-vous. Les gens de "
+"Frontier ont appris à être pratiques et utilitaires, et n'ont donc pas "
+"gaspillé plus d'espace ou d'efforts sur le barre à bord de Megan que "
+"nécessaire."
 
 #: dat/assets/megas.xml:2
 msgid "Megas"
@@ -6594,6 +6704,9 @@ msgid ""
 "an eerie noise. This happens quite a lot, but despite the local authorities' "
 "best efforts, the sound refuses to be blocked out completely."
 msgstr ""
+"Lorsqu'une tempête de poussière fait rage à l'extérieur, le bar du port "
+"spatial est rempli d'un bruit sinistre. Cela arrive souvent, mais malgré les "
+"efforts des autorités locales, le son refuse d'être complètement bloqué."
 
 #: dat/assets/merisi_i.xml:2
 msgid "Merisi I"
@@ -8712,19 +8825,19 @@ msgstr ""
 #: dat/assets/regensburg.xml:27 dat/gui/brushed.lua:850 dat/gui/brushed.lua:859
 #: dat/missions/pirate/fake_id.lua:38 dat/missions/rehab_common.lua:18
 #: dat/missions/soromid/comingout/srm_comingout4.lua:75
-#: dat/missions/tutorial/tutorial.lua:101 src/dev_sysedit.c:1274
-#: src/dev_sysedit.c:1511 src/dev_sysedit.c:1512 src/dev_sysedit.c:1619
-#: src/dev_sysedit.c:1633 src/dev_sysedit.c:1660 src/dev_sysedit.c:1682
-#: src/dev_sysedit.c:1761 src/dev_sysedit.c:1778 src/dev_sysedit.c:1818
-#: src/dev_sysedit.c:1842 src/dev_sysedit.c:1879 src/dev_sysedit.c:1914
-#: src/dev_sysedit.c:1920 src/dev_uniedit.c:967 src/dev_uniedit.c:1145
-#: src/dev_uniedit.c:1368 src/dev_uniedit.c:1433 src/info.c:251 src/info.c:349
-#: src/info.c:787 src/info.c:1089 src/input.c:550 src/land_outfits.c:394
-#: src/land_outfits.c:427 src/land_outfits.c:606 src/land_shipyard.c:160
-#: src/land_shipyard.c:251 src/land_trade.c:84 src/land_trade.c:86
-#: src/land_trade.c:120 src/load.c:374 src/load.c:419 src/load.c:463
-#: src/map.c:581 src/map.c:606 src/map.c:1570 src/map_find.c:737
-#: src/map_system.c:610 src/map_system.c:686 src/pilot_outfit.c:899
+#: dat/missions/tutorial/tutorial.lua:101 src/dev_sysedit.c:1275
+#: src/dev_sysedit.c:1512 src/dev_sysedit.c:1513 src/dev_sysedit.c:1620
+#: src/dev_sysedit.c:1634 src/dev_sysedit.c:1661 src/dev_sysedit.c:1683
+#: src/dev_sysedit.c:1762 src/dev_sysedit.c:1779 src/dev_sysedit.c:1819
+#: src/dev_sysedit.c:1843 src/dev_sysedit.c:1880 src/dev_sysedit.c:1915
+#: src/dev_sysedit.c:1921 src/dev_uniedit.c:964 src/dev_uniedit.c:1142
+#: src/dev_uniedit.c:1365 src/dev_uniedit.c:1430 src/info.c:251 src/info.c:349
+#: src/info.c:787 src/info.c:1089 src/input.c:551 src/land_outfits.c:394
+#: src/land_outfits.c:427 src/land_outfits.c:606 src/land_shipyard.c:161
+#: src/land_shipyard.c:252 src/land_trade.c:85 src/land_trade.c:87
+#: src/land_trade.c:121 src/load.c:374 src/load.c:419 src/load.c:463
+#: src/map.c:580 src/map.c:605 src/map.c:1569 src/map_find.c:737
+#: src/map_system.c:620 src/map_system.c:696 src/pilot_outfit.c:900
 #, c-format
 msgid "None"
 msgstr ""
@@ -8855,6 +8968,10 @@ msgid ""
 "other planet. The only thing that reminds you that you're still on Rionna is "
 "that the patrons are all wearing warm clothes."
 msgstr ""
+"Cette barre de port spatial est tout à fait ordinaire. Ça pourrait être "
+"n’importe quel autre bar sur n’importe quelle autre planète. La seule chose "
+"qui vous rappelle que vous êtes toujours sur Rionna, c’est que les clients "
+"portent tous des vêtements chauds."
 
 #: dat/assets/riun.xml:2
 msgid "Riun"
@@ -9011,6 +9128,9 @@ msgid ""
 "have security clearance to land on Ruadan Prime or Ruadan Bastion. There is "
 "precious little else of interest here."
 msgstr ""
+"Cette simple station sert de dépôt de ravitaillement pour les navires qui "
+"n'ont pas l'autorisation de débarquer sur le Ruadan Prime ou le Bastion de "
+"Ruadan. Il n'y a pas grand-chose d'autre d'intéressant ici."
 
 #: dat/assets/rudderfern.xml:2
 msgid "Rudderfern"
@@ -9292,6 +9412,9 @@ msgid ""
 "Wayline. The Dvaered garrison don't want to have to be on the planet at all, "
 "so they had this station built."
 msgstr ""
+"La gare de Sarrii sert de point de garnison pour la planète voisine de "
+"Wayline. La garnison de Dvaered ne veut pas du tout être sur la planète, "
+"alors ils ont construit cette station."
 
 #: dat/assets/savoy.xml:2
 msgid "Savoy"
@@ -9474,6 +9597,9 @@ msgid ""
 "uneventful planet, as it serves primarily as an agricultural world producing "
 "algae, and as a living place for biological Thurions."
 msgstr ""
+"Sevlow est l’un des rares mondes thuriens véritablement habités. Sevlow est "
+"une planète calme, car elle sert principalement de monde agricole produisant "
+"des algues, et comme un lieu de vie pour les thurions biologiques."
 
 #: dat/assets/sevlow.xml:29
 msgid ""
@@ -13029,7 +13155,7 @@ msgstr ""
 msgid "Four Winds Informant"
 msgstr ""
 
-#: dat/commodity.xml:220 src/board.c:169
+#: dat/commodity.xml:220 src/board.c:170
 msgid "Fuel"
 msgstr ""
 
@@ -13213,9 +13339,9 @@ msgstr ""
 msgid "Empire"
 msgstr ""
 
-#: dat/faction.xml:156 dat/faction.xml:159 dat/ships/proteron_archimedes.xml:11
-#: dat/ships/proteron_derivative.xml:11 dat/ships/proteron_kahan.xml:11
-#: dat/ships/proteron_watson.xml:11
+#: dat/faction.xml:156 dat/faction.xml:159 dat/ships/proteron_archimedes.xml:17
+#: dat/ships/proteron_derivative.xml:14 dat/ships/proteron_kahan.xml:13
+#: dat/ships/proteron_watson.xml:13
 msgid "Proteron"
 msgstr ""
 
@@ -13235,11 +13361,11 @@ msgstr ""
 msgid "Space Traders Guild"
 msgstr ""
 
-#: dat/faction.xml:207 dat/ships/soromid_arx.xml:11
-#: dat/ships/soromid_brigand.xml:11 dat/ships/soromid_ira.xml:11
-#: dat/ships/soromid_marauder.xml:11 dat/ships/soromid_nyx.xml:11
-#: dat/ships/soromid_odium.xml:11 dat/ships/soromid_reaver.xml:11
-#: dat/ships/soromid_vox.xml:11 dat/missions/soromid/common.lua:22
+#: dat/faction.xml:207 dat/ships/soromid_arx.xml:17
+#: dat/ships/soromid_brigand.xml:12 dat/ships/soromid_ira.xml:17
+#: dat/ships/soromid_marauder.xml:13 dat/ships/soromid_nyx.xml:13
+#: dat/ships/soromid_odium.xml:14 dat/ships/soromid_reaver.xml:12
+#: dat/ships/soromid_vox.xml:16 dat/missions/soromid/common.lua:22
 msgid "Soromid"
 msgstr ""
 
@@ -13295,11 +13421,11 @@ msgstr ""
 msgid "Dvaered"
 msgstr ""
 
-#: dat/faction.xml:273 dat/ships/ancestor.xml:10
-#: dat/ships/dvaered_ancestor.xml:11 dat/ships/dvaered_phalanx.xml:11
-#: dat/ships/dvaered_vendetta.xml:11 dat/ships/dvaered_vigilance.xml:11
-#: dat/ships/phalanx.xml:10 dat/ships/vendetta.xml:10
-#: dat/ships/vigilance.xml:10
+#: dat/faction.xml:273 dat/ships/ancestor.xml:13
+#: dat/ships/dvaered_ancestor.xml:14 dat/ships/dvaered_phalanx.xml:12
+#: dat/ships/dvaered_vendetta.xml:15 dat/ships/dvaered_vigilance.xml:12
+#: dat/ships/phalanx.xml:11 dat/ships/vendetta.xml:14
+#: dat/ships/vigilance.xml:11
 msgid "House Dvaered"
 msgstr ""
 
@@ -13326,8 +13452,8 @@ msgstr ""
 msgid "Goddard"
 msgstr ""
 
-#: dat/faction.xml:329 dat/ships/dvaered_goddard.xml:11
-#: dat/ships/goddard.xml:10
+#: dat/faction.xml:329 dat/ships/dvaered_goddard.xml:15
+#: dat/ships/goddard.xml:14
 msgid "House Goddard"
 msgstr ""
 
@@ -13731,19 +13857,16 @@ msgstr ""
 #. Stone Table -> Sollav
 #. Xavier -> Sheffield
 #. Straight Row -> Nunavut
-#. /!\ We did not claim this system /!\
-#. Empire Blocus:
+#. /!\ We did not claim this system /!#. Empire Blocus:
 #. Overture -> Pas
 #. -> Waterhole
 #. Eneguoz  -> Hakoi
 #. Mural -> Salvador
-#. Arcturus -> Goddard /!\ This one is passable if deal with the empire /!\
-#. (Delta Pavonis -> Goddard) ? TODO: this one is not necessary
+#. Arcturus -> Goddard /!\ This one is passable if deal with the empire /!#. (Delta Pavonis -> Goddard) ? TODO: this one is not necessary
 #. Fortitude -> Pontus
 #. -> Acheron
 #. Merisi -> Acheron
-#. /!\ We did not claim this system /!\
-#. Special case: JP from Arcturus to Goddard
+#. /!\ We did not claim this system /!#. Special case: JP from Arcturus to Goddard
 #. Functions for the escort
 #. Makes the carceral convoy enter the system
 #. escort[4] = pilot.add( "Za'lek Heavy Drone", "Za'lek", prevsys, nil, "collective" )
@@ -14434,7 +14557,7 @@ msgid "Ghost Ship"
 msgstr ""
 
 #. Shuts him up for at least 5s.
-#: dat/fleet.xml:1164 dat/missions/zalek/neburesearch/neburesearch_01.lua:283
+#: dat/fleet.xml:1164 dat/missions/zalek/neburesearch/neburesearch_01.lua:294
 msgid "Nebula Research Shuttle"
 msgstr ""
 
@@ -18870,16 +18993,16 @@ msgstr ""
 #. along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #.
 #. --
-#: dat/ships/admonisher.xml:10 dat/ships/empire_admonisher.xml:11
-#: dat/ships/empire_hawking.xml:11 dat/ships/empire_lancelot.xml:11
-#: dat/ships/empire_pacifier.xml:11 dat/ships/empire_peacemaker.xml:11
-#: dat/ships/empire_shark.xml:11 dat/ships/gawain.xml:10
-#: dat/ships/hawking.xml:10 dat/ships/lancelot.xml:10 dat/ships/pacifier.xml:10
-#: dat/ships/shark.xml:10 dat/missions/shark/common.lua:22
+#: dat/ships/admonisher.xml:16 dat/ships/empire_admonisher.xml:17
+#: dat/ships/empire_hawking.xml:14 dat/ships/empire_lancelot.xml:15
+#: dat/ships/empire_pacifier.xml:15 dat/ships/empire_peacemaker.xml:17
+#: dat/ships/empire_shark.xml:16 dat/ships/gawain.xml:13
+#: dat/ships/hawking.xml:13 dat/ships/lancelot.xml:14 dat/ships/pacifier.xml:14
+#: dat/ships/shark.xml:15 dat/missions/shark/common.lua:22
 msgid "Nexus Shipyards"
 msgstr ""
 
-#: dat/ships/admonisher.xml:12
+#: dat/ships/admonisher.xml:18
 msgid ""
 "A very versatile combat ship. Nexus defines the Admonisher as a compromise "
 "between the ruggedness of the Pacifier and the agility of the Lancelot. "
@@ -18890,7 +19013,7 @@ msgstr ""
 msgid "Ancestor"
 msgstr ""
 
-#: dat/ships/ancestor.xml:12
+#: dat/ships/ancestor.xml:15
 msgid ""
 "Commonly referred to as the little Goddard, the Ancestor also has its roots "
 "in the primitive flying machines used by men many ages ago. Unlike the "
@@ -18902,14 +19025,14 @@ msgstr ""
 msgid "Diplomatic Vessel"
 msgstr ""
 
-#: dat/ships/diplomatic_vessel.xml:10 dat/ships/schroedinger.xml:10
-#: dat/ships/sirius_divinity.xml:11 dat/ships/sirius_dogma.xml:11
-#: dat/ships/sirius_fidelity.xml:12 dat/ships/sirius_preacher.xml:11
-#: dat/ships/sirius_reverence.xml:11 dat/ships/sirius_shaman.xml:11
+#: dat/ships/diplomatic_vessel.xml:11 dat/ships/schroedinger.xml:11
+#: dat/ships/sirius_divinity.xml:13 dat/ships/sirius_dogma.xml:13
+#: dat/ships/sirius_fidelity.xml:13 dat/ships/sirius_preacher.xml:12
+#: dat/ships/sirius_reverence.xml:12 dat/ships/sirius_shaman.xml:12
 msgid "Sirius Systems"
 msgstr ""
 
-#: dat/ships/diplomatic_vessel.xml:11
+#: dat/ships/diplomatic_vessel.xml:12
 msgid ""
 "This is a diplomatic vessel. Not to be used by the player or the normal AIs."
 msgstr ""
@@ -18918,11 +19041,11 @@ msgstr ""
 msgid "Drone"
 msgstr ""
 
-#: dat/ships/drone.xml:11 dat/ships/drone_heavy.xml:11
+#: dat/ships/drone.xml:12 dat/ships/drone_heavy.xml:12
 msgid "Robosys"
 msgstr ""
 
-#: dat/ships/drone.xml:12
+#: dat/ships/drone.xml:13
 msgid ""
 "This is a modified version of the robotic drone that includes a life support "
 "system for humans."
@@ -18932,20 +19055,20 @@ msgstr ""
 msgid "Heavy Drone"
 msgstr ""
 
-#: dat/ships/drone_heavy.xml:12
+#: dat/ships/drone_heavy.xml:13
 msgid ""
 "This Collective heavy drone has been modified by engineers to support a "
 "human pilot."
 msgstr ""
 
-#: dat/ships/dvaered_ancestor.xml:13
+#: dat/ships/dvaered_ancestor.xml:16
 msgid ""
 "This military grade version of the Ancestor is equipped with slightly more "
 "armour than its standard counterpart, which improves the integrity of its "
 "hull at the cost of slightly increased base mass."
 msgstr ""
 
-#: dat/ships/dvaered_goddard.xml:13
+#: dat/ships/dvaered_goddard.xml:17
 msgid ""
 "Once, the Goddard Battlecruiser was commissioned by the Empire for military "
 "service. However, during the Dvaered Revolts most Goddard captains sided "
@@ -18956,7 +19079,7 @@ msgid ""
 "increased mass and energy consumption."
 msgstr ""
 
-#: dat/ships/dvaered_phalanx.xml:13
+#: dat/ships/dvaered_phalanx.xml:14
 msgid ""
 "This military grade version of the Phalanx has slightly stronger armour "
 "compared to its standard counterpart, and it also features a special cooling "
@@ -18964,7 +19087,7 @@ msgid ""
 "space."
 msgstr ""
 
-#: dat/ships/dvaered_vendetta.xml:13
+#: dat/ships/dvaered_vendetta.xml:17
 msgid ""
 "This military grade version of the Vendetta has stronger armour and better "
 "weapon cooling facilities than the standard Vendetta, but its turning "
@@ -18973,7 +19096,7 @@ msgid ""
 "turning rate slightly."
 msgstr ""
 
-#: dat/ships/dvaered_vigilance.xml:13
+#: dat/ships/dvaered_vigilance.xml:14
 msgid ""
 "This military grade version of the Vigilance has stronger armour and diverts "
 "more of its energy to its forward-mounted weapons than its standard "
@@ -18981,35 +19104,35 @@ msgid ""
 "power consumption and heat production."
 msgstr ""
 
-#: dat/ships/empire_admonisher.xml:13
+#: dat/ships/empire_admonisher.xml:19
 msgid ""
 "This military grade version of the Admonisher is mostly identical in "
 "function to a standard Admonisher, but with slightly better armour, shields, "
 "and heat dissipation."
 msgstr ""
 
-#: dat/ships/empire_hawking.xml:13
+#: dat/ships/empire_hawking.xml:16
 msgid ""
 "This military grade version of the Hawking is mostly identical in function "
 "to a standard Hawking, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
 
-#: dat/ships/empire_lancelot.xml:13
+#: dat/ships/empire_lancelot.xml:17
 msgid ""
 "This military grade version of the Lancelot is mostly identical in function "
 "to a standard Lancelot, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
 
-#: dat/ships/empire_pacifier.xml:13
+#: dat/ships/empire_pacifier.xml:17
 msgid ""
 "This military grade version of the Pacifier is mostly identical in function "
 "to a standard Pacifier, but with slightly better armour, shields, and heat "
 "dissipation."
 msgstr ""
 
-#: dat/ships/empire_peacemaker.xml:13
+#: dat/ships/empire_peacemaker.xml:19
 msgid ""
 "Built under contract for the Empire by Nexus Shipyards, the Peacemaker is "
 "one of the grandest vessels in the galaxy, dwarfing even the mighty Goddard. "
@@ -19018,7 +19141,7 @@ msgid ""
 "most capital ships, however, it is vulnerable to attack from enemy bombers."
 msgstr ""
 
-#: dat/ships/empire_shark.xml:13
+#: dat/ships/empire_shark.xml:18
 msgid ""
 "The Empire military grade version of the Shark is mostly identical in "
 "function to a standard Shark, but with slightly better armour, shields, and "
@@ -19030,7 +19153,7 @@ msgstr ""
 msgid "Gawain"
 msgstr ""
 
-#: dat/ships/gawain.xml:11
+#: dat/ships/gawain.xml:14
 msgid ""
 "The Gawain is a very high-end ship, outpacing nearly all other production "
 "vessels. It relies heavily on technology first implemented on the Lancelot, "
@@ -19039,7 +19162,7 @@ msgid ""
 "fragility."
 msgstr ""
 
-#: dat/ships/goddard.xml:12
+#: dat/ships/goddard.xml:16
 msgid ""
 "Designed by eccentric genius Eduard Manuel Goddard, the Goddard "
 "Battlecruiser is what skyrocketed House Goddard to fame and fortune. "
@@ -19052,7 +19175,7 @@ msgstr ""
 msgid "Hawking"
 msgstr ""
 
-#: dat/ships/hawking.xml:12
+#: dat/ships/hawking.xml:15
 msgid ""
 "The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser "
 "designed for extended engagements, it is widely used by the Empire to exert "
@@ -19061,11 +19184,11 @@ msgid ""
 "allows it to present a smaller target to the enemy."
 msgstr ""
 
-#: dat/ships/hyena.xml:10
+#: dat/ships/hyena.xml:14
 msgid "Aerosys"
 msgstr ""
 
-#: dat/ships/hyena.xml:11
+#: dat/ships/hyena.xml:15
 msgid ""
 "The star product of Aerosys, the Hyena quickly has become a favorite of "
 "pirates far and wide. Not much of a fighter, nor does it pack too much of a "
@@ -19080,11 +19203,11 @@ msgstr ""
 msgid "Kestrel"
 msgstr ""
 
-#: dat/ships/kestrel.xml:10
+#: dat/ships/kestrel.xml:14
 msgid "Krain Industries"
 msgstr ""
 
-#: dat/ships/kestrel.xml:12
+#: dat/ships/kestrel.xml:16
 msgid ""
 "The ship that single-handedly put Krain Industries on the map, the Kestrel "
 "was designed to be a sleek heavy assault cruiser. Generally more fragile "
@@ -19097,12 +19220,12 @@ msgstr ""
 msgid "Koala"
 msgstr ""
 
-#: dat/ships/koala.xml:10 dat/ships/llama.xml:10 dat/ships/mule.xml:10
-#: dat/ships/quicksilver.xml:10 dat/ships/rhino.xml:10
+#: dat/ships/koala.xml:13 dat/ships/llama.xml:15 dat/ships/mule.xml:15
+#: dat/ships/quicksilver.xml:13 dat/ships/rhino.xml:14
 msgid "Melendez Corp."
 msgstr ""
 
-#: dat/ships/koala.xml:11
+#: dat/ships/koala.xml:14
 msgid ""
 "The Koala is your standard cargo vessel. It's a small ship with little "
 "weapon space but a decent amount of cargo space. Good for the entrepreneur "
@@ -19113,7 +19236,7 @@ msgstr ""
 msgid "Lancelot"
 msgstr ""
 
-#: dat/ships/lancelot.xml:12
+#: dat/ships/lancelot.xml:16
 msgid ""
 "One of the prize heavy fighters of Nexus Shipyards. The Lancelot was "
 "originally a classified design for the Empire military, but its existence "
@@ -19127,7 +19250,7 @@ msgstr ""
 msgid "Llama"
 msgstr ""
 
-#: dat/ships/llama.xml:11
+#: dat/ships/llama.xml:16
 msgid ""
 "One of the most widely used ships in the galaxy. Renowned for its stability "
 "and stubbornness. The design hasn't been modified much since its creation "
@@ -19139,7 +19262,7 @@ msgstr ""
 msgid "Mule"
 msgstr ""
 
-#: dat/ships/mule.xml:12
+#: dat/ships/mule.xml:17
 msgid ""
 "A heavy freighter specialized in transporting cargo throughout the galaxy. "
 "Also has sufficient accommodations for passengers depending on the model, "
@@ -19151,7 +19274,7 @@ msgstr ""
 msgid "Pacifier"
 msgstr ""
 
-#: dat/ships/pacifier.xml:12
+#: dat/ships/pacifier.xml:16
 msgid ""
 "The Pacifier is one of the older and trustier designs of Nexus Shipyards. It "
 "was designed primarily as a border-patrol vessel, and as such it is able to "
@@ -19163,20 +19286,20 @@ msgstr ""
 msgid "Phalanx"
 msgstr ""
 
-#: dat/ships/phalanx.xml:12
+#: dat/ships/phalanx.xml:13
 msgid ""
 "While somewhat technologically antiquated, the Phalanx's large energy "
 "capacity and heavy armour allow it to remain an effective combat vessel."
 msgstr ""
 
-#: dat/ships/pirate_admonisher.xml:11 dat/ships/pirate_ancestor.xml:11
-#: dat/ships/pirate_kestrel.xml:11 dat/ships/pirate_phalanx.xml:11
-#: dat/ships/pirate_rhino.xml:11 dat/ships/pirate_shark.xml:11
-#: dat/ships/pirate_vendetta.xml:11
+#: dat/ships/pirate_admonisher.xml:17 dat/ships/pirate_ancestor.xml:14
+#: dat/ships/pirate_kestrel.xml:15 dat/ships/pirate_phalanx.xml:12
+#: dat/ships/pirate_rhino.xml:15 dat/ships/pirate_shark.xml:16
+#: dat/ships/pirate_vendetta.xml:15
 msgid "Skull and Bones"
 msgstr ""
 
-#: dat/ships/pirate_admonisher.xml:12
+#: dat/ships/pirate_admonisher.xml:18
 msgid ""
 "The stock Admonisher is a powerful vessel, especially for its size. Through "
 "the usual Skull and Bones refit the Pirate Admonisher features improved "
@@ -19184,7 +19307,7 @@ msgid ""
 "cost of cargo capacity and armor regeneration rates."
 msgstr ""
 
-#: dat/ships/pirate_ancestor.xml:12
+#: dat/ships/pirate_ancestor.xml:15
 msgid ""
 "Ancestors were one of the first ships to be fancied by pirates. The big "
 "intimidating wings and good top speeds would usually get ships to surrender "
@@ -19192,7 +19315,7 @@ msgid ""
 "fallen due to their archaic electronics and targeting systems."
 msgstr ""
 
-#: dat/ships/pirate_kestrel.xml:12
+#: dat/ships/pirate_kestrel.xml:16
 msgid ""
 "The Kestrel is the best ship offered by the Skull and Bones. It is extremely "
 "agile for a cruiser yet doesn't lack the firepower necessary to question the "
@@ -19200,21 +19323,21 @@ msgid ""
 "it."
 msgstr ""
 
-#: dat/ships/pirate_phalanx.xml:12
+#: dat/ships/pirate_phalanx.xml:13
 msgid ""
 "Building upon the already-capable Phalanx chassis, the Skull and Bones "
 "engineers have substantially improved the ship's performance, while only "
 "minorly sacrificing protection."
 msgstr ""
 
-#: dat/ships/pirate_rhino.xml:12
+#: dat/ships/pirate_rhino.xml:16
 msgid ""
 "The traditional Skull and Bones refit has left the Rhino substantially more "
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
 "and durability, the Rhino has become an excellent scavenger ship."
 msgstr ""
 
-#: dat/ships/pirate_shark.xml:12
+#: dat/ships/pirate_shark.xml:17
 msgid ""
 "The nimble Nexus Shipyards Shark has proved an excellent canvas for the "
 "Skull and Bones technicians. Fitted with an additional weapon mount, its "
@@ -19222,7 +19345,7 @@ msgid ""
 "firepower to bear."
 msgstr ""
 
-#: dat/ships/pirate_vendetta.xml:12
+#: dat/ships/pirate_vendetta.xml:16
 msgid ""
 "The Pirate Vendetta is even more intimidating than its regular counterpart. "
 "It's been heavily tweaked to be more adjusted to the pirate style of flying. "
@@ -19232,13 +19355,13 @@ msgid ""
 "nova destroying the ship. You hope it won't happen to you if you get in one."
 msgstr ""
 
-#: dat/ships/proteron_archimedes.xml:13
+#: dat/ships/proteron_archimedes.xml:19
 msgid ""
 "The Archimedes is the backbone of the Proteron fleet. Offering heavy "
 "firepower and high durability, it can always be found in the heat of battle."
 msgstr ""
 
-#: dat/ships/proteron_derivative.xml:13
+#: dat/ships/proteron_derivative.xml:16
 msgid ""
 "While smaller and less intimidating than its bigger siblings in the Proteron "
 "arsenal, a pack of Derivatives is still a foe to be reckoned with. True to "
@@ -19248,7 +19371,7 @@ msgid ""
 "of battle on many occasions."
 msgstr ""
 
-#: dat/ships/proteron_kahan.xml:13
+#: dat/ships/proteron_kahan.xml:15
 msgid ""
 "The Kahan is a cutting-edge vessel. Its design was completed shortly before "
 "the Incident, and it was on track to become the Proteron military's primary "
@@ -19256,7 +19379,7 @@ msgid ""
 "makes up for it with its lower mass and structural space."
 msgstr ""
 
-#: dat/ships/proteron_watson.xml:13
+#: dat/ships/proteron_watson.xml:15
 msgid ""
 "The heart of the Proteron battle fleet is formed by the Watsons. Acting as a "
 "mobile launch base as well as a command and control unit, this vessel "
@@ -19267,7 +19390,7 @@ msgstr ""
 msgid "Quicksilver"
 msgstr ""
 
-#: dat/ships/quicksilver.xml:11
+#: dat/ships/quicksilver.xml:14
 msgid ""
 "While still a cargo hauler, the Quicksilver is quite different from "
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
@@ -19276,7 +19399,7 @@ msgstr ""
 
 #: dat/ships/raelid_outpost.xml:11 dat/ships/raglan_outpost.xml:11
 #: dat/ships/sindbad.xml:11 src/dev_uniedit.c:228 src/dev_uniedit.c:234
-#: src/dev_uniedit.c:884 src/dev_uniedit.c:885 src/map.c:515 src/map.c:516
+#: src/dev_uniedit.c:881 src/dev_uniedit.c:882 src/map.c:514 src/map.c:515
 #: src/outfit.c:265 src/outfit.c:285
 msgid "N/A"
 msgstr ""
@@ -19290,7 +19413,7 @@ msgstr ""
 msgid "Rhino"
 msgstr ""
 
-#: dat/ships/rhino.xml:12
+#: dat/ships/rhino.xml:16
 msgid ""
 "A particularly durable Melendez design, the Rhino is well-suited to "
 "transporting high-value, high-risk freight. While it has much lower cargo "
@@ -19303,7 +19426,7 @@ msgstr ""
 msgid "Schroedinger"
 msgstr ""
 
-#: dat/ships/schroedinger.xml:11
+#: dat/ships/schroedinger.xml:12
 msgid ""
 "The Schroedinger is primarily used as a reconnaissance vessel. It requires a "
 "skeleton crew due to its advanced automation subsystems, and its proprietary "
@@ -19317,14 +19440,14 @@ msgstr ""
 msgid "Shark"
 msgstr ""
 
-#: dat/ships/shark.xml:12
+#: dat/ships/shark.xml:17
 msgid ""
 "A newer Nexus Shipyards design, the Shark is an agile light fighter designed "
 "for in-system patrolling. While it's not as capable as its larger relative, "
 "the Lancelot, it's still an effective addition to any fleet."
 msgstr ""
 
-#: dat/ships/sirius_divinity.xml:13
+#: dat/ships/sirius_divinity.xml:15
 msgid ""
 "Whilst the Dogma is said to form the core of any Sirian fleet, few combat "
 "pilots would dismiss the significance of the Divinity. Though not "
@@ -19333,21 +19456,21 @@ msgid ""
 "as a key logistical vessel in any sizable fleet."
 msgstr ""
 
-#: dat/ships/sirius_dogma.xml:13
+#: dat/ships/sirius_dogma.xml:15
 msgid ""
 "The backbone of the House Sirius fleet, the Dogma is a sight to behold. "
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
 "is seldom surpassed in either prestige or military might."
 msgstr ""
 
-#: dat/ships/sirius_fidelity.xml:13
+#: dat/ships/sirius_fidelity.xml:14
 msgid ""
 "The Fidelity is the light fighter of House Sirius. While not particularly "
 "competent alone, it's often employed as a forward scout, bringing with it "
 "far deadlier allies."
 msgstr ""
 
-#: dat/ships/sirius_preacher.xml:13
+#: dat/ships/sirius_preacher.xml:14
 msgid ""
 "The Preacher, as its name implies, is the primary vessel by which House "
 "Sirius projects its message and will. Fielding a large array of weaponry, "
@@ -19358,7 +19481,7 @@ msgstr ""
 msgid "Sirius Reverence"
 msgstr ""
 
-#: dat/ships/sirius_reverence.xml:13
+#: dat/ships/sirius_reverence.xml:14
 msgid ""
 "A modified version of the more common Preacher, the Reverence is only "
 "available to the purest of the pure, those who carry a fraction of the "
@@ -19366,14 +19489,14 @@ msgid ""
 "buy, the Reverence is nevertheless weak in offense."
 msgstr ""
 
-#: dat/ships/sirius_shaman.xml:13
+#: dat/ships/sirius_shaman.xml:14
 msgid ""
 "Though its relatively sleek form may cause it to be mistaken for a light "
 "fighter from a distance, the Shaman is anything but. A purpose-built light "
 "missile platform, few enemies escape the reach of the Shaman."
 msgstr ""
 
-#: dat/ships/soromid_arx.xml:13
+#: dat/ships/soromid_arx.xml:19
 msgid ""
 "The Soromid Arx usually features in Soromid fleets as a command vessel and "
 "fighter carrier. It provides small craft with refuel and rearm services and "
@@ -19381,7 +19504,7 @@ msgid ""
 "mobility areas."
 msgstr ""
 
-#: dat/ships/soromid_brigand.xml:13
+#: dat/ships/soromid_brigand.xml:14
 msgid ""
 "The Brigand is a fast, maneuverable bioship that the Soromid use for system "
 "patrols and police duties. The ship is lightly armoured and fairly fragile, "
@@ -19389,14 +19512,14 @@ msgid ""
 "expendable."
 msgstr ""
 
-#: dat/ships/soromid_ira.xml:13
+#: dat/ships/soromid_ira.xml:19
 msgid ""
 "The Ira is the heaviest conventional combat vessel in Soromid service. "
 "Though lumbering and vulnerable when caught without escorts, it can deliver "
 "terrible punishment on enemy spaceships."
 msgstr ""
 
-#: dat/ships/soromid_marauder.xml:13
+#: dat/ships/soromid_marauder.xml:15
 msgid ""
 "The Marauder was developed from the same base as the Brigand, but the two "
 "ships are quite different. The Marauder was developed to fill a bomber role, "
@@ -19404,46 +19527,46 @@ msgid ""
 "quite a bit slower than its distant cousin."
 msgstr ""
 
-#: dat/ships/soromid_nyx.xml:13
+#: dat/ships/soromid_nyx.xml:15
 msgid ""
 "The Nyx is the symbol of the Soromid's military might. Able to provide heavy "
 "firepower in heated battles and agile enough to withdraw when needed, this "
 "ship usually forms the backbone of any sizable Soromid fleet."
 msgstr ""
 
-#: dat/ships/soromid_odium.xml:13
+#: dat/ships/soromid_odium.xml:16
 msgid ""
 "The Odium offers a good balance between shields and armour, as well as an "
 "impressive amount of system hardpoints for a ship its size. It can often be "
 "found dominating smaller military engagements."
 msgstr ""
 
-#: dat/ships/soromid_reaver.xml:13
+#: dat/ships/soromid_reaver.xml:14
 msgid ""
 "Reavers are often found at the forefront of Soromid military engagements. "
 "Their good speed and maneuverability are compounded by their durability, "
 "making the Reaver one of the most effective heavy fighters in the galaxy."
 msgstr ""
 
-#: dat/ships/soromid_vox.xml:13
+#: dat/ships/soromid_vox.xml:18
 msgid ""
 "The Vox is the biggest vessel the Soromid field hands down. This dreadnought "
 "serves as the core of any given Soromid war fleet and only called upon in "
 "notable engagements."
 msgstr ""
 
-#: dat/ships/thurion_apprehension.xml:11 dat/ships/thurion_certitude.xml:11
-#: dat/ships/thurion_ingenuity.xml:11 dat/ships/thurion_perspicacity.xml:11
-#: dat/ships/thurion_scintillation.xml:11 dat/ships/thurion_taciturnity.xml:11
-#: dat/ships/thurion_virtuosity.xml:11
+#: dat/ships/thurion_apprehension.xml:14 dat/ships/thurion_certitude.xml:15
+#: dat/ships/thurion_ingenuity.xml:12 dat/ships/thurion_perspicacity.xml:12
+#: dat/ships/thurion_scintillation.xml:12 dat/ships/thurion_taciturnity.xml:12
+#: dat/ships/thurion_virtuosity.xml:13
 msgid "Thurion shipyards"
 msgstr ""
 
-#: dat/ships/thurion_apprehension.xml:13 dat/ships/thurion_certitude.xml:13
+#: dat/ships/thurion_apprehension.xml:16 dat/ships/thurion_certitude.xml:17
 msgid "..."
 msgstr ""
 
-#: dat/ships/thurion_ingenuity.xml:13
+#: dat/ships/thurion_ingenuity.xml:14
 msgid ""
 "The Thurion Ingenuity is a fighter built for survival. Like all Thurian "
 "ships, it puts defensive capabilities first, and offensive capabilities "
@@ -19453,26 +19576,26 @@ msgid ""
 "Thurian ship, the electronics are well above average."
 msgstr ""
 
-#: dat/ships/thurion_perspicacity.xml:13
+#: dat/ships/thurion_perspicacity.xml:14
 msgid ""
 "The Thurion Perspicacity is a fast, light fighter typically used for "
 "scouting or attacking in swarms."
 msgstr ""
 
-#: dat/ships/thurion_scintillation.xml:13
+#: dat/ships/thurion_scintillation.xml:14
 msgid ""
 "The Thurion Scintillation is a bomber designed to attack from a large "
 "distance. It is better armed than any other Thurion ship of comparable size, "
 "but still not as well as other bombers."
 msgstr ""
 
-#: dat/ships/thurion_taciturnity.xml:13
+#: dat/ships/thurion_taciturnity.xml:14
 msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both "
 "of surviving the harsh nebula and defending itself from attack."
 msgstr ""
 
-#: dat/ships/thurion_virtuosity.xml:13
+#: dat/ships/thurion_virtuosity.xml:15
 msgid ""
 "The Thurion Virtuosity is a medium-size ship used by the Thurion for frontal "
 "assaults. While weapon space is less than stellar, the vessel's superior "
@@ -19483,7 +19606,7 @@ msgstr ""
 msgid "Vendetta"
 msgstr ""
 
-#: dat/ships/vendetta.xml:12
+#: dat/ships/vendetta.xml:16
 msgid ""
 "The Vendetta displays the House Dvaered philosophy very well. Give a ship "
 "many intimidating guns, layer it with heavy armour, and neglect the "
@@ -19497,7 +19620,7 @@ msgstr ""
 msgid "Vigilance"
 msgstr ""
 
-#: dat/ships/vigilance.xml:12
+#: dat/ships/vigilance.xml:13
 msgid ""
 "The Vigilance is the embodiment of Dvaered philosophy. Featuring immense "
 "energy reserves and six weapon hardpoints, it's designed to hit as hard as "
@@ -19505,13 +19628,13 @@ msgid ""
 "relative to its counterparts."
 msgstr ""
 
-#: dat/ships/zalek_demon.xml:11 dat/ships/zalek_diablo.xml:11
-#: dat/ships/zalek_hephaestus.xml:11 dat/ships/zalek_imp.xml:11
-#: dat/ships/zalek_mephisto.xml:11 dat/ships/zalek_sting.xml:11
+#: dat/ships/zalek_demon.xml:13 dat/ships/zalek_diablo.xml:15
+#: dat/ships/zalek_hephaestus.xml:15 dat/ships/zalek_imp.xml:12
+#: dat/ships/zalek_mephisto.xml:12 dat/ships/zalek_sting.xml:13
 msgid "Za'lek Fabricators"
 msgstr ""
 
-#: dat/ships/zalek_demon.xml:13
+#: dat/ships/zalek_demon.xml:15
 msgid ""
 "House Za'lek's ferociously-named destroyer has earned the moniker with "
 "disproportionately powerful shields and energy management, as well as size. "
@@ -19519,43 +19642,43 @@ msgid ""
 "comes as poor consolation to the Za'lek's enemies."
 msgstr ""
 
-#: dat/ships/zalek_diablo.xml:13
+#: dat/ships/zalek_diablo.xml:17
 msgid ""
 "This carrier is the archetypical Za'lek warship. Virtually unarmored and "
 "equipped with heavy shields, they are meant to serve as a platform for "
 "devastating drone swarms, not frontline combat."
 msgstr ""
 
-#: dat/ships/zalek_drone_bomber.xml:10 dat/ships/zalek_drone_heavy.xml:10
-#: dat/ships/zalek_drone_light.xml:10 dat/ships/zalek_drone_scout.xml:10
+#: dat/ships/zalek_drone_bomber.xml:11 dat/ships/zalek_drone_heavy.xml:11
+#: dat/ships/zalek_drone_light.xml:11 dat/ships/zalek_drone_scout.xml:11
 msgid "Za'lek Robotics"
 msgstr ""
 
-#: dat/ships/zalek_drone_bomber.xml:11
+#: dat/ships/zalek_drone_bomber.xml:12
 msgid ""
 "This is the Za'lek Bomber Drone. Built for attacking heavy ships. Not to be "
 "flown by the player."
 msgstr ""
 
-#: dat/ships/zalek_drone_heavy.xml:11
+#: dat/ships/zalek_drone_heavy.xml:12
 msgid ""
 "This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by "
 "the player."
 msgstr ""
 
-#: dat/ships/zalek_drone_light.xml:11
+#: dat/ships/zalek_drone_light.xml:12
 msgid ""
 "This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be "
 "flown by the player."
 msgstr ""
 
-#: dat/ships/zalek_drone_scout.xml:11
+#: dat/ships/zalek_drone_scout.xml:12
 msgid ""
 "This is the Za'lek Scout Drone. Built for scouting, not for battle. Not to "
 "be flown by the player."
 msgstr ""
 
-#: dat/ships/zalek_hephaestus.xml:13
+#: dat/ships/zalek_hephaestus.xml:17
 msgid ""
 "The crown of the House Za'lek Defense Fleet, these proud buttresses of the "
 "Za'lek's ideals frequently serve as the nerve center of a Za'lek battle "
@@ -19567,7 +19690,7 @@ msgstr ""
 msgid "Za'lek Imp"
 msgstr ""
 
-#: dat/ships/zalek_imp.xml:13
+#: dat/ships/zalek_imp.xml:14
 msgid ""
 "The Za'lek Imp is a lightweight corvette that features a cutting-edge sensor "
 "suite, even relative to most other Za'lek vessels. While it lacks the "
@@ -19575,7 +19698,7 @@ msgid ""
 "fleets should not be dismissed."
 msgstr ""
 
-#: dat/ships/zalek_mephisto.xml:13
+#: dat/ships/zalek_mephisto.xml:14
 msgid ""
 "A mighty ship, the Mephisto has grand energy and shielding management, and "
 "its shields allow it to shrug off a lot of abuse. A core of these ships can "
@@ -19586,18 +19709,18 @@ msgstr ""
 msgid "Za'lek Prototype"
 msgstr ""
 
-#: dat/ships/zalek_prototype.xml:11
+#: dat/ships/zalek_prototype.xml:13
 msgid "Za'lek Research Team"
 msgstr ""
 
-#: dat/ships/zalek_prototype.xml:13
+#: dat/ships/zalek_prototype.xml:15
 msgid ""
 "This is an experimental type of cruiser developed by Za'lek engineers. "
 "Little is known about it outside of the development team, but it is rumoured "
 "to have powerful upgrades and enhancements over much of the competition."
 msgstr ""
 
-#: dat/ships/zalek_sting.xml:13
+#: dat/ships/zalek_sting.xml:15
 msgid ""
 "The Sting Corvette is rather large for its size, but its advanced sensor "
 "suite, impressive weapons loadout, and tough shields makes it a good "
@@ -21985,8 +22108,7 @@ msgstr ""
 #. --
 #. Pilot still sees the target: continue attack
 #. Pilots on manual control (in missions or events) never loose target
-#. /!\ This is not necessary desirable all the time /!\
-#. TODO: there should probably be a flag settable to allow to outwit pilots under manual control
+#. /!\ This is not necessary desirable all the time /!#. TODO: there should probably be a flag settable to allow to outwit pilots under manual control
 #. Un-target
 #.
 #. -- Decides if zigzag is a good option
@@ -25010,7 +25132,7 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:291 dat/missions/minerva/maikki1.lua:536
 #: dat/missions/minerva/maikki1.lua:906 dat/missions/minerva/maikki2.lua:242
 #: dat/missions/minerva/maikki2.lua:511 dat/missions/minerva/maikki2.lua:766
-#: src/board.c:173
+#: src/board.c:174
 msgid "Leave"
 msgstr ""
 
@@ -25218,7 +25340,7 @@ msgstr ""
 #. Only "Cancel" remains, nothing to do.
 #. Run callback.
 #: dat/events/minerva/station.lua:297 dat/rescue.lua:43 dat/rescue.lua:53
-#: dat/rescue.lua:113 dat/rescue.lua:162 src/dialogue.c:749 src/escort.c:273
+#: dat/rescue.lua:113 dat/rescue.lua:162 src/dialogue.c:747 src/escort.c:270
 #: src/map_find.c:243 src/options.c:248 src/options.c:762 src/options.c:869
 #: src/options.c:1127 src/options.c:1181
 msgid "Cancel"
@@ -29498,8 +29620,8 @@ msgstr ""
 #: dat/gui/brushed.lua:816 dat/gui/brushed.lua:855 dat/gui/legacy.lua:220
 #: dat/gui/legacy.lua:310 dat/gui/legacy.lua:324 dat/gui/slim.lua:387
 #: dat/gui/slim.lua:952 dat/missions/shadow/darkshadow.lua:147 src/gui.c:1766
-#: src/map.c:452 src/map.c:458 src/map.c:464 src/map.c:470 src/map.c:476
-#: src/map.c:482 src/map.c:1566 src/map_overlay.c:175 src/outfit.c:273
+#: src/map.c:451 src/map.c:457 src/map.c:463 src/map.c:469 src/map.c:475
+#: src/map.c:481 src/map.c:1565 src/map_overlay.c:175 src/outfit.c:273
 #: src/outfit.c:293 src/outfit.c:842 src/ship.c:212
 msgid "Unknown"
 msgstr ""
@@ -29933,7 +30055,7 @@ msgstr ""
 #. Render planet image.
 #: dat/gui/brushed.lua:907 dat/gui/slim.lua:866 dat/gui/slim.lua:999
 msgid "TARGETED"
-msgstr ""
+msgstr "CIBLE EN VUE"
 
 #: dat/gui/brushed.lua:910
 #, lua-format
@@ -29949,11 +30071,11 @@ msgstr ""
 #. Render dir sprite.
 #: dat/gui/brushed.lua:925 dat/gui/slim.lua:1016
 msgid "SERVICES:"
-msgstr ""
+msgstr "SERVICES :"
 
 #: dat/gui/brushed.lua:930
 msgid "SERVICES: none"
-msgstr ""
+msgstr "SERVICES : aucun"
 
 #. Fleet functions
 #. TODO: Add an API for and implement fleet command buttons
@@ -30204,19 +30326,19 @@ msgstr ""
 
 #: dat/gui/slim.lua:1047
 msgid "Pilot: "
-msgstr ""
+msgstr "Pilote : "
 
 #: dat/gui/slim.lua:1047
 msgid "System: "
-msgstr ""
+msgstr "Système : "
 
 #: dat/gui/slim.lua:1047
 msgid "Time: "
-msgstr ""
+msgstr "Heure : "
 
 #: dat/gui/slim.lua:1047
 msgid "Credits: "
-msgstr ""
+msgstr "Crédits : "
 
 #: dat/gui/slim.lua:1048
 msgid "Nav: "
@@ -30224,7 +30346,7 @@ msgstr ""
 
 #: dat/gui/slim.lua:1048
 msgid "Fuel: "
-msgstr ""
+msgstr "Carburant : "
 
 #: dat/gui/slim.lua:1049
 msgid "WSet: "
@@ -33386,7 +33508,7 @@ msgstr ""
 #.
 #. * create the boarding window
 #.
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:102 src/board.c:152
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:102 src/board.c:153
 msgid "Boarding"
 msgstr ""
 
@@ -36445,7 +36567,7 @@ msgstr ""
 #: dat/missions/empire/collective/ec06.lua:44
 #: dat/missions/neutral/nebu_satellite.lua:42
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:39
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:36 src/space.c:177
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:36 src/space.c:173
 msgid "Bar"
 msgstr ""
 
@@ -43130,7 +43252,7 @@ msgstr ""
 msgid "#oNon-Dvaered equipped weapons detected: %s"
 msgstr ""
 
-#: dat/missions/minerva/pirate2.lua:181 src/map.c:641 src/map.c:655
+#: dat/missions/minerva/pirate2.lua:181 src/map.c:640 src/map.c:654
 msgid ", "
 msgstr ""
 
@@ -55846,7 +55968,7 @@ msgstr ""
 
 #. Handle the jumps of convoy.
 #: dat/missions/trader/trader_escort.lua:225
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:242
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:253
 #, lua-format
 msgid "%s has jumped to %s."
 msgstr ""
@@ -56625,7 +56747,7 @@ msgid ""
 "\"The situation would have escalated anyway.\" argues Dr. Mensing, this time "
 "directly speaking towards you.\n"
 "    \"I must admit, it is suspicious for a refitted transport ship with such "
-"advanced sensor suits to show up in Dvaered space. I haven't considered this "
+"advanced sensor suits to show up in Dvaered space. I hadn't considered this "
 "point.\n"
 "    I'm counting on you, %s. Please help us.\""
 msgstr ""
@@ -56707,28 +56829,31 @@ msgstr ""
 
 #. Set up mission information
 #. This variable holds the system the player is supposed to jump to NEXT.
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:155
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:169
 msgid ""
 "MISSION FAILED! You jumped into the wrong system. You failed science "
 "miserably!"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:175
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:189
 msgid ""
 "MISSION FAILED! You jumped before the transport ship you were escorting."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:250
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:261
 #, lua-format
 msgid "%s has landed on %s."
 msgstr ""
 
 #. Hack to make ambushes more reliable.
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:294
+#: dat/missions/zalek/neburesearch/neburesearch_01.lua:305
 msgid "Research Shuttle"
 msgstr ""
 
 #. Handle the destruction of the transporter. Abort the mission.
+#. Fail the mission, showing message to the player.
+#. Pre-colourized, do nothing.
+#. Colourize in red.
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Emergency of Immediate Inspiration">
@@ -56951,7 +57076,7 @@ msgid ""
 "supposed to work out??\n"
 "    Your thoughts are interrupted by an incoming message from the student. "
 "\"As promised I'm sending you the text you have to recite. I hope you "
-"appreciate the time I wasted on typing that down. I haven't considered that "
+"appreciate the time I wasted on typing that down. I hadn't considered that "
 "you'll have to answer questions after the talk, though. Do what every good "
 "scientist does and just talk about some random stuff that sounds like it may "
 "be related to the question. I'm sure you'll do it just fine. Good luck!\" "
@@ -57156,12 +57281,12 @@ msgstr ""
 
 #. buttons
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:203
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:212 src/dialogue.c:408
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:212 src/dialogue.c:406
 msgid "Yes"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:203
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:212 src/dialogue.c:410
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:212 src/dialogue.c:408
 msgid "No"
 msgstr ""
 
@@ -57649,7 +57774,7 @@ msgstr ""
 #. Re-outfit the ships to use disable weapons. Make a proper function for that.
 #. move to the player ship
 #. display msgs and have the ships disappear and fail the mission...
-#: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:282
+#: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:284
 msgid "Mission failed!"
 msgstr ""
 
@@ -57877,7 +58002,7 @@ msgstr ""
 msgid ""
 "\"Um, there seems to be a glitch. Well, sort of. Um, if I deciphered this "
 "correctly, the drone just hijacked the unused drones on %s and ordered them "
-"to attack us. I never should have tempered with that weird chip those "
+"to attack us. I never should have tampered with that weird chip those "
 "pirates sold me!\""
 msgstr ""
 
@@ -57984,7 +58109,7 @@ msgstr ""
 #. prototype is a scout drone
 #. add something so it is not insta-disabled with one shot?
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:136
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:244
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:245
 msgid "Prototype Drone"
 msgstr ""
 
@@ -57996,7 +58121,7 @@ msgstr ""
 msgid "Target out of range"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:261
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:262
 msgid ""
 "Something went terribly wrong here! If you see this message please reload "
 "and report a bug in this mission. Thank you!"
@@ -58006,7 +58131,7 @@ msgstr ""
 #. last hook
 #. tell drones to spread and flee
 #. badguys[i]:changeAI("flee")
-#. check how man drones are left, tell them to leave if <=2
+#. check how many drones are left, tell them to leave if <=2
 #. remove dead drones
 #. player.msg("If close worked")
 #. if it is the last attacking drone, make it run away from the player
@@ -62127,16 +62252,16 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2239
+#: src/ai.c:2233
 #, c-format
 msgid "Pilot '%s' has no land target"
 msgstr ""
 
-#: src/ai.c:2319
+#: src/ai.c:2313
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2870
+#: src/ai.c:2859
 msgid "Invalid Bounds"
 msgstr ""
 
@@ -62163,145 +62288,149 @@ msgstr ""
 msgid "unknown error"
 msgstr ""
 
-#: src/board.c:89
+#: src/board.c:90
 msgid "#rYou need a target to board first!"
 msgstr ""
 
-#: src/board.c:99
+#: src/board.c:100
 msgid "#rTarget ship can not be boarded."
 msgstr ""
 
-#: src/board.c:103
+#: src/board.c:104
 msgid "#rYour target cannot be boarded again."
 msgstr ""
 
-#: src/board.c:107
+#: src/board.c:108
 msgid "#rYou cannot board a ship that isn't disabled!"
 msgstr ""
 
-#: src/board.c:112
+#: src/board.c:113
 msgid "#rYou are too far away to board your target."
 msgstr ""
 
-#: src/board.c:118
+#: src/board.c:119
 msgid "#rYou are going too fast to board the ship."
 msgstr ""
 
-#: src/board.c:128
+#: src/board.c:129
 #, c-format
 msgid "#oBoarding ship #%c%s#0."
 msgstr ""
 
-#: src/board.c:156
+#: src/board.c:157
 msgid ""
 "Credits:\n"
 "Cargo:\n"
 "Fuel:\n"
 "Ammo:\n"
 msgstr ""
+"Crédits :\n"
+"Cargo :\n"
+"Carburant :\n"
+"Ammo :\n"
 
-#: src/board.c:165
+#: src/board.c:166
 msgid "Credits"
 msgstr ""
 
-#: src/board.c:167 src/info.c:59
+#: src/board.c:168 src/info.c:59
 msgid "Cargo"
 msgstr ""
 
-#: src/board.c:171 src/outfit.c:832
+#: src/board.c:172 src/outfit.c:832
 msgid "Ammo"
 msgstr ""
 
 #. you can't steal from the poor
-#: src/board.c:218
+#: src/board.c:219
 msgid "#oThe ship has no credits."
 msgstr ""
 
 #. update the lack of credits
-#: src/board.c:227
+#: src/board.c:228
 msgid "#oYou manage to steal the ship's credits."
 msgstr ""
 
 #. no cargo
-#: src/board.c:246
+#: src/board.c:247
 msgid "#oThe ship has no cargo."
 msgstr ""
 
-#: src/board.c:250
+#: src/board.c:251
 msgid "#rYou have no room for the ship's cargo."
 msgstr ""
 
-#: src/board.c:265
+#: src/board.c:266
 msgid "#oYou manage to steal the ship's cargo."
 msgstr ""
 
 #. no fuel.
-#: src/board.c:283
+#: src/board.c:284
 msgid "#oThe ship has no fuel."
 msgstr ""
 
-#: src/board.c:287
+#: src/board.c:288
 msgid "#rYour ship is at maximum fuel capacity."
 msgstr ""
 
-#: src/board.c:305
+#: src/board.c:306
 msgid "#oYou manage to steal the ship's fuel."
 msgstr ""
 
-#: src/board.c:326
+#: src/board.c:327
 msgid "#rThe ship has no ammo."
 msgstr ""
 
-#: src/board.c:331
+#: src/board.c:332
 msgid "#rYou are already at max ammo."
 msgstr ""
 
-#: src/board.c:376
+#: src/board.c:377
 #, c-format
 msgid "#oYou looted: %d × %s"
 msgstr ""
 
-#: src/board.c:386
+#: src/board.c:387
 msgid "#rThere is no ammo compatible with your launchers on board."
 msgstr ""
 
 #. killed ship.
-#: src/board.c:448
+#: src/board.c:449
 msgid "#oYou have tripped the ship's self-destruct mechanism!"
 msgstr ""
 
 #. you just got locked out
-#: src/board.c:450
+#: src/board.c:451
 #, c-format
 msgid "#oThe ship's security system locks %s out."
 msgstr ""
 
-#: src/board.c:480 src/board.c:496 src/board.c:507
+#: src/board.c:481 src/board.c:497 src/board.c:508
 msgid "none\n"
 msgstr ""
 
-#: src/board.c:490
+#: src/board.c:491
 #, c-format
 msgid "%d tonne\n"
 msgid_plural "%d tonnes\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/board.c:500
+#: src/board.c:501
 #, c-format
 msgid "%d unit\n"
 msgid_plural "%d units\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/board.c:511
+#: src/board.c:512
 #, c-format
 msgid "%d missile\n"
 msgid_plural "%d missiles\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/board.c:593
+#: src/board.c:594
 #, c-format
 msgid "#%c%s#0 has plundered %s from your ship!"
 msgstr ""
@@ -62348,7 +62477,7 @@ msgstr ""
 msgid "Bribe"
 msgstr ""
 
-#: src/comm.c:211 src/space.c:176
+#: src/comm.c:211 src/space.c:172
 msgid "Refuel"
 msgstr ""
 
@@ -62362,13 +62491,13 @@ msgstr ""
 msgid "Communication Channel"
 msgstr ""
 
-#: src/comm.c:375 src/console.c:652 src/dev_sysedit.c:1346
-#: src/dev_sysedit.c:1456 src/dev_sysedit.c:1519 src/dev_sysedit.c:1714
-#: src/dev_sysedit.c:1889 src/dev_sysedit.c:1973 src/dev_uniedit.c:1031
-#: src/dev_uniedit.c:1243 src/dev_uniedit.c:1490 src/info.c:241 src/info.c:320
+#: src/comm.c:375 src/console.c:652 src/dev_sysedit.c:1347
+#: src/dev_sysedit.c:1457 src/dev_sysedit.c:1520 src/dev_sysedit.c:1715
+#: src/dev_sysedit.c:1890 src/dev_sysedit.c:1974 src/dev_uniedit.c:1028
+#: src/dev_uniedit.c:1240 src/dev_uniedit.c:1487 src/info.c:241 src/info.c:320
 #: src/info.c:405 src/info.c:548 src/info.c:757 src/info.c:936 src/info.c:1024
-#: src/info.c:1366 src/land_outfits.c:171 src/map.c:288 src/map_find.c:1057
-#: src/map_system.c:194
+#: src/info.c:1366 src/land_outfits.c:171 src/map.c:287 src/map_find.c:1057
+#: src/map_system.c:204
 msgid "Close"
 msgstr ""
 
@@ -62501,55 +62630,55 @@ msgstr ""
 msgid "Commodity with index %d not found"
 msgstr ""
 
-#: src/commodity.c:328
+#: src/commodity.c:323
 #, c-format
 msgid "Commodity from %s has invalid or no name"
 msgstr ""
 
-#: src/commodity.c:331
+#: src/commodity.c:326
 #, c-format
 msgid "No <gfx_store> node found, using default texture for commodity \"%s\""
 msgstr ""
 
-#: src/commodity.c:341
+#: src/commodity.c:336
 #, c-format
 msgid "Commodity '%s' missing '"
 msgstr ""
 
-#: src/commodity.c:545
+#: src/commodity.c:540
 #, c-format
 msgid "%d ton of %s gathered"
 msgid_plural "%d tons of %s gathered"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/commodity.c:561
+#: src/commodity.c:556
 msgid "No more cargo space available"
 msgstr ""
 
-#: src/commodity.c:565
+#: src/commodity.c:560
 msgid "Cannot gather material: no more cargo space available"
 msgstr ""
 
-#: src/commodity.c:595 src/faction.c:1496 src/tech.c:115
+#: src/commodity.c:590 src/faction.c:1496 src/tech.c:115
 #, c-format
 msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
-#: src/commodity.c:601 src/faction.c:1502 src/map.c:2547 src/outfit.c:1078
-#: src/ship.c:613 src/ship.c:1104 src/space.c:1765 src/space.c:3320
+#: src/commodity.c:596 src/faction.c:1502 src/map.c:2541 src/outfit.c:1073
+#: src/ship.c:612 src/ship.c:1089 src/space.c:1750 src/space.c:3233
 #: src/tech.c:122
 #, c-format
 msgid "Malformed %s file: does not contain elements"
 msgstr ""
 
-#: src/commodity.c:620 src/map.c:2559 src/slots.c:83 src/spfx.c:235
+#: src/commodity.c:615 src/map.c:2553 src/slots.c:83 src/spfx.c:254
 #: src/start.c:126 src/tech.c:136
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
 
-#: src/commodity.c:625
+#: src/commodity.c:620
 #, c-format
 msgid "Loaded %d Commodity"
 msgid_plural "Loaded %d Commodities"
@@ -62665,344 +62794,344 @@ msgstr ""
 msgid "   -v, --version         print the version and exit"
 msgstr ""
 
-#: src/conf.c:471
+#: src/conf.c:456
 msgid "Found keybind with no type field!"
 msgstr ""
 
-#: src/conf.c:475
+#: src/conf.c:460
 msgid "Found keybind with invalid type field!"
 msgstr ""
 
-#: src/conf.c:489
+#: src/conf.c:474
 msgid "Found keybind with no key field!"
 msgstr ""
 
-#: src/conf.c:493
+#: src/conf.c:478
 msgid "Found keybind with invalid key field!"
 msgstr ""
 
-#: src/conf.c:519
+#: src/conf.c:504
 #, c-format
 msgid "Unknown keybinding of type %s"
 msgstr ""
 
-#: src/conf.c:525
+#: src/conf.c:510
 #, c-format
 msgid "Keybind for '%s' is invalid"
 msgstr ""
 
-#: src/conf.c:538
+#: src/conf.c:523
 #, c-format
 msgid "Unknown keybinding mod of type %s"
 msgstr ""
 
-#: src/conf.c:549
+#: src/conf.c:534
 #, c-format
 msgid "Malformed keybind for '%s' in '%s'."
 msgstr ""
 
 #. failed to load the config file
-#: src/conf.c:556
+#: src/conf.c:541
 #, c-format
 msgid "Config file '%s' has invalid syntax:"
 msgstr ""
 
-#: src/conf.c:653
+#: src/conf.c:638
 msgid "Enabling developer mode."
 msgstr ""
 
-#: src/conf.c:658
+#: src/conf.c:643
 msgid "Will generate CSV output."
 msgstr ""
 
 #. Write a nice header for new configuration files
-#: src/conf.c:839
+#: src/conf.c:824
 msgid "Naev configuration file"
 msgstr ""
 
-#: src/conf.c:845
+#: src/conf.c:830
 msgid "Not saving configuration."
 msgstr ""
 
-#: src/conf.c:851
+#: src/conf.c:836
 msgid "The contents of this section will be rewritten by Naev!"
 msgstr ""
 
 #. ndata.
-#: src/conf.c:855
+#: src/conf.c:840
 msgid "The location of Naev's data pack, usually called 'ndata'"
 msgstr ""
 
 #. Language.
-#: src/conf.c:860
+#: src/conf.c:845
 msgid ""
 "Language to use. Set to the two character identifier to the language (e.g., "
 "\"en\" for English), and nil for autodetect."
 msgstr ""
 
 #. OpenGL.
-#: src/conf.c:865
+#: src/conf.c:850
 msgid "The factor to use in Full-Scene Anti-Aliasing"
 msgstr ""
 
-#: src/conf.c:866
+#: src/conf.c:851
 msgid "Anything lower than 2 will simply disable FSAA"
 msgstr ""
 
-#: src/conf.c:870
+#: src/conf.c:855
 msgid "Synchronize framebuffer updates with the vertical blanking interval"
 msgstr ""
 
-#: src/conf.c:874
+#: src/conf.c:859
 msgid "Use OpenGL MipMaps"
 msgstr ""
 
-#: src/conf.c:878
+#: src/conf.c:863
 msgid "Use OpenGL Texture Compression"
 msgstr ""
 
-#: src/conf.c:882
+#: src/conf.c:867
 msgid "Use OpenGL Texture Interpolation"
 msgstr ""
 
-#: src/conf.c:885
+#: src/conf.c:870
 msgid "Use OpenGL Non-\"Power of Two\" textures if available"
 msgstr ""
 
-#: src/conf.c:886
+#: src/conf.c:871
 msgid "Lowers memory usage by a lot, but may cause slow downs on some systems"
 msgstr ""
 
 #. Memory.
-#: src/conf.c:890
+#: src/conf.c:875
 msgid "If true enables engine glow"
 msgstr ""
 
 #. Window.
-#: src/conf.c:895
+#: src/conf.c:880
 msgid "The window size or screen resolution"
 msgstr ""
 
-#: src/conf.c:896
+#: src/conf.c:881
 msgid "Set both of these to 0 to make Naev try the desktop resolution"
 msgstr ""
 
-#: src/conf.c:906
+#: src/conf.c:891
 msgid "Factor used to divide the above resolution with"
 msgstr ""
 
-#: src/conf.c:907
+#: src/conf.c:892
 msgid "This is used to lower the rendering resolution, and scale to the above"
 msgstr ""
 
-#: src/conf.c:911
+#: src/conf.c:896
 msgid "Run Naev in full-screen mode"
 msgstr ""
 
-#: src/conf.c:915
+#: src/conf.c:900
 msgid "Use video modesetting when fullscreen is enabled"
 msgstr ""
 
-#: src/conf.c:919 src/options.c:1289
+#: src/conf.c:904 src/options.c:1289
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: src/conf.c:923 src/options.c:1292
+#: src/conf.c:908 src/options.c:1292
 msgid "Colorblind mode"
 msgstr ""
 
 #. FPS
-#: src/conf.c:928
+#: src/conf.c:913
 msgid "Display a frame rate counter"
 msgstr ""
 
-#: src/conf.c:932
+#: src/conf.c:917
 msgid "Limit the rendering frame rate"
 msgstr ""
 
 #. Pause
-#: src/conf.c:937
+#: src/conf.c:922
 msgid "Show 'PAUSED' on screen while paused"
 msgstr ""
 
 #. Sound.
-#: src/conf.c:942
+#: src/conf.c:927
 msgid "Maximum number of simultaneous sounds to play, must be at least 16."
 msgstr ""
 
-#: src/conf.c:946
+#: src/conf.c:931
 msgid ""
 "Sets sound to be relative to pilot when camera is following a pilot instead "
 "of referenced to camera."
 msgstr ""
 
-#: src/conf.c:950
+#: src/conf.c:935
 msgid "Enables EFX extension for OpenAL backend."
 msgstr ""
 
-#: src/conf.c:954
+#: src/conf.c:939
 msgid "Size of the OpenAL music buffer (in kibibytes)."
 msgstr ""
 
-#: src/conf.c:958
+#: src/conf.c:943
 msgid "Disable all sound"
 msgstr ""
 
-#: src/conf.c:962
+#: src/conf.c:947
 msgid "Volume of sound effects and music, between 0.0 and 1.0"
 msgstr ""
 
 #. Joystick.
-#: src/conf.c:968
+#: src/conf.c:953
 msgid "The name or numeric index of the joystick to use"
 msgstr ""
 
-#: src/conf.c:969
+#: src/conf.c:954
 msgid "Setting this to nil disables the joystick support"
 msgstr ""
 
 #. GUI.
-#: src/conf.c:982
+#: src/conf.c:967
 msgid "Number of lines visible in the comm window."
 msgstr ""
 
-#: src/conf.c:984
+#: src/conf.c:969
 msgid "Opacity fraction (0-1) for the overlay map."
 msgstr ""
 
 #. Key repeat.
-#: src/conf.c:990
+#: src/conf.c:975
 msgid "Delay in ms before starting to repeat (0 disables)"
 msgstr ""
 
-#: src/conf.c:992
+#: src/conf.c:977
 msgid "Delay in ms between repeats once it starts to repeat"
 msgstr ""
 
 #. Zoom.
-#: src/conf.c:997
+#: src/conf.c:982
 msgid "Minimum and maximum zoom factor to use in-game"
 msgstr ""
 
-#: src/conf.c:998
+#: src/conf.c:983
 msgid "At 1.0, no sprites are scaled"
 msgstr ""
 
-#: src/conf.c:999
+#: src/conf.c:984
 msgid "zoom_far should be less then zoom_near"
 msgstr ""
 
-#: src/conf.c:1005
+#: src/conf.c:990
 msgid "Zooming speed in factor increments per second"
 msgstr ""
 
-#: src/conf.c:1009
+#: src/conf.c:994
 msgid "Zooming modulation factor for the starry background"
 msgstr ""
 
 #. Fonts.
-#: src/conf.c:1014
+#: src/conf.c:999
 msgid "Font sizes (in pixels) for Naev"
 msgstr ""
 
-#: src/conf.c:1015
+#: src/conf.c:1000
 msgid "Warning, setting to other than the default can cause visual glitches!"
 msgstr ""
 
-#: src/conf.c:1016
+#: src/conf.c:1001
 #, c-format
 msgid "-- Console default: %d\n"
 msgstr ""
 
-#: src/conf.c:1018
+#: src/conf.c:1003
 #, c-format
 msgid "-- Intro default: %d\n"
 msgstr ""
 
-#: src/conf.c:1020
+#: src/conf.c:1005
 #, c-format
 msgid "-- Default size: %d\n"
 msgstr ""
 
-#: src/conf.c:1022
+#: src/conf.c:1007
 #, c-format
 msgid "-- Small size: %d\n"
 msgstr ""
 
-#: src/conf.c:1024
+#: src/conf.c:1009
 msgid "Default font to use: unset"
 msgstr ""
 
-#: src/conf.c:1029
+#: src/conf.c:1014
 msgid "font_name_default = \"/path/to/file.ttf\""
 msgstr ""
 
 #. Misc.
-#: src/conf.c:1041
+#: src/conf.c:1026
 msgid ""
 "Sets the velocity (px/s) to compress up to when time compression is enabled."
 msgstr ""
 
-#: src/conf.c:1045
+#: src/conf.c:1030
 msgid "Sets the multiplier to compress up to when time compression is enabled."
 msgstr ""
 
-#: src/conf.c:1049
+#: src/conf.c:1034
 msgid "Redirects log and error output to files"
 msgstr ""
 
-#: src/conf.c:1053
+#: src/conf.c:1038
 msgid "Enables compression on saved games"
 msgstr ""
 
-#: src/conf.c:1057
+#: src/conf.c:1042
 msgid "Afterburner sensitivity"
 msgstr ""
 
-#: src/conf.c:1061
+#: src/conf.c:1046
 msgid "Mouse-flying thrust control"
 msgstr ""
 
-#: src/conf.c:1065
+#: src/conf.c:1050
 msgid "Maximum interval to count as a double-click (0 disables)."
 msgstr ""
 
-#: src/conf.c:1069
+#: src/conf.c:1054
 msgid "Condition under which the autonav aborts."
 msgstr ""
 
-#: src/conf.c:1073
+#: src/conf.c:1058
 msgid "Enables developer mode (universe editor and the likes)"
 msgstr ""
 
-#: src/conf.c:1077
+#: src/conf.c:1062
 msgid ""
 "Automatic saving for when using the universe editor whenever an edit is done"
 msgstr ""
 
-#: src/conf.c:1081
+#: src/conf.c:1066
 msgid "Save the config every time game exits (rewriting this bit)"
 msgstr ""
 
-#: src/conf.c:1085
+#: src/conf.c:1070
 msgid "Indicates the last version the game has run in before"
 msgstr ""
 
 #. Debugging.
-#: src/conf.c:1090
+#: src/conf.c:1075
 msgid "Enables FPU exceptions - only works on DEBUG builds"
 msgstr ""
 
 #. Editor.
-#: src/conf.c:1095
+#: src/conf.c:1080
 msgid "Paths for saving different files from the editor"
 msgstr ""
 
-#: src/conf.c:1105
+#: src/conf.c:1090
 msgid "Keybindings"
 msgstr ""
 
-#: src/conf.c:1174
+#: src/conf.c:1159
 msgid ""
 "Failed to write configuration!  You'll most likely have to restore it by "
 "copying your backup configuration over your current configuration."
@@ -63022,7 +63151,7 @@ msgid "#gWelcome to the Lua console!"
 msgstr ""
 
 #. Create the window.
-#: src/console.c:638 src/input.c:117
+#: src/console.c:638 src/input.c:118
 msgid "Lua Console"
 msgstr ""
 
@@ -63174,238 +63303,238 @@ msgid "Unable to open '%s' for writing: %s"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:182
+#: src/dev_sysedit.c:183
 #, c-format
 msgid "%s - Star System Editor"
 msgstr ""
 
-#: src/dev_sysedit.c:191 src/dev_uniedit.c:177 src/menu.c:244 src/menu.c:438
+#: src/dev_sysedit.c:192 src/dev_uniedit.c:177 src/menu.c:244 src/menu.c:438
 msgid "Exit"
 msgstr ""
 
-#: src/dev_sysedit.c:196 src/dev_uniedit.c:182
+#: src/dev_sysedit.c:197 src/dev_uniedit.c:182
 msgid "Automatically save changes"
 msgstr ""
 
-#: src/dev_sysedit.c:200
+#: src/dev_sysedit.c:201
 msgid "Scale"
 msgstr ""
 
-#: src/dev_sysedit.c:205
+#: src/dev_sysedit.c:206
 msgid "Reset Jumps"
 msgstr ""
 
-#: src/dev_sysedit.c:210 src/dev_uniedit.c:202
+#: src/dev_sysedit.c:211 src/dev_uniedit.c:202
 msgid "Edit"
 msgstr ""
 
-#: src/dev_sysedit.c:215 src/dev_uniedit.c:1379
+#: src/dev_sysedit.c:216 src/dev_uniedit.c:1376
 msgid "Remove"
 msgstr ""
 
-#: src/dev_sysedit.c:220 src/dev_sysedit.c:1267 src/dev_uniedit.c:197
-#: src/dev_uniedit.c:1249 src/equipment.c:276
+#: src/dev_sysedit.c:221 src/dev_sysedit.c:1268 src/dev_uniedit.c:197
+#: src/dev_uniedit.c:1246 src/equipment.c:271
 msgid "Rename"
-msgstr ""
+msgstr "Renommer"
 
-#: src/dev_sysedit.c:225
+#: src/dev_sysedit.c:226
 msgid "New Planet"
 msgstr ""
 
-#: src/dev_sysedit.c:230
+#: src/dev_sysedit.c:231
 msgid "Grid"
 msgstr ""
 
 #. Selected text.
-#: src/dev_sysedit.c:237 src/dev_sysedit.c:555
+#: src/dev_sysedit.c:238 src/dev_sysedit.c:556
 #, c-format
 msgid "Radius: %.0f"
 msgstr ""
 
 #. Get new name.
-#: src/dev_sysedit.c:362 src/dev_sysedit.c:420
+#: src/dev_sysedit.c:363 src/dev_sysedit.c:421
 msgid "New Planet Creation"
 msgstr ""
 
-#: src/dev_sysedit.c:362
+#: src/dev_sysedit.c:363
 msgid "What do you want to name the new planet?"
 msgstr ""
 
-#: src/dev_sysedit.c:368 src/dev_sysedit.c:427
+#: src/dev_sysedit.c:369 src/dev_sysedit.c:428
 #, c-format
 msgid "Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"
 msgstr ""
 
-#: src/dev_sysedit.c:421
+#: src/dev_sysedit.c:422
 #, c-format
 msgid "What do you want to rename the planet #r%s#0?"
-msgstr ""
+msgstr "Comment voulez-vous renommer la planète #r%s#0 ?"
 
-#: src/dev_sysedit.c:469
+#: src/dev_sysedit.c:470
 msgid "Remove selected planets?"
 msgstr ""
 
-#: src/dev_sysedit.c:469
+#: src/dev_sysedit.c:470
 msgid "This can not be undone."
 msgstr ""
 
 #. Prompt scale amount.
-#: src/dev_sysedit.c:524 src/dev_sysedit.c:534
+#: src/dev_sysedit.c:525 src/dev_sysedit.c:535
 msgid "Scale Star System"
 msgstr ""
 
-#: src/dev_sysedit.c:524
+#: src/dev_sysedit.c:525
 msgid "By how much do you want to scale the star system?"
 msgstr ""
 
-#: src/dev_sysedit.c:534
+#: src/dev_sysedit.c:535
 #, c-format
 msgid ""
 "Are you sure you want to scale the star system by %.2f (from %.2f to %.2f)?"
 msgstr ""
 
-#: src/dev_sysedit.c:695 src/map.c:667
+#: src/dev_sysedit.c:696 src/map.c:666
 msgid "Asteroid Field"
 msgstr ""
 
-#: src/dev_sysedit.c:1222
+#: src/dev_sysedit.c:1223
 msgid "Trying to deselect item that is not in selection!"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1251
+#: src/dev_sysedit.c:1252
 #, c-format
 msgid "Planet Property Editor - %s"
 msgstr ""
 
-#: src/dev_sysedit.c:1261
+#: src/dev_sysedit.c:1262
 msgid "Name: "
-msgstr ""
+msgstr "Nom : "
 
-#: src/dev_sysedit.c:1269
+#: src/dev_sysedit.c:1270
 msgid "Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1273
+#: src/dev_sysedit.c:1274
 msgid "Faction: "
-msgstr ""
+msgstr "Faction : "
 
-#: src/dev_sysedit.c:1280
+#: src/dev_sysedit.c:1281
 msgid "Population"
 msgstr ""
 
-#: src/dev_sysedit.c:1288
+#: src/dev_sysedit.c:1289
 msgid "Class"
 msgstr ""
 
-#: src/dev_sysedit.c:1295 src/input.c:96 src/space.c:174
+#: src/dev_sysedit.c:1296 src/input.c:97 src/space.c:170
 msgid "Land"
 msgstr ""
 
-#: src/dev_sysedit.c:1306
+#: src/dev_sysedit.c:1307
 msgid "Presence"
 msgstr ""
 
-#: src/dev_sysedit.c:1314
+#: src/dev_sysedit.c:1315
 msgid "Range"
 msgstr ""
 
-#: src/dev_sysedit.c:1322
+#: src/dev_sysedit.c:1323
 msgid "hide"
 msgstr ""
 
-#: src/dev_sysedit.c:1334
+#: src/dev_sysedit.c:1335
 msgid "Rm Service"
 msgstr ""
 
-#: src/dev_sysedit.c:1336
+#: src/dev_sysedit.c:1337
 msgid "Add Service"
 msgstr ""
 
-#: src/dev_sysedit.c:1338
+#: src/dev_sysedit.c:1339
 msgid "Edit Tech"
 msgstr ""
 
-#: src/dev_sysedit.c:1340
+#: src/dev_sysedit.c:1341
 msgid "Description"
 msgstr ""
 
-#: src/dev_sysedit.c:1342
+#: src/dev_sysedit.c:1343
 msgid "Land GFX"
 msgstr ""
 
-#: src/dev_sysedit.c:1344
+#: src/dev_sysedit.c:1345
 msgid "Space GFX"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1411
+#: src/dev_sysedit.c:1412
 msgid "Jump Point Editor"
 msgstr ""
 
-#: src/dev_sysedit.c:1418
+#: src/dev_sysedit.c:1419
 msgid "Target: "
 msgstr ""
 
-#: src/dev_sysedit.c:1438
+#: src/dev_sysedit.c:1439
 msgid "Hidden"
 msgstr ""
 
-#: src/dev_sysedit.c:1441
+#: src/dev_sysedit.c:1442
 msgid "Exit only"
 msgstr ""
 
-#: src/dev_sysedit.c:1444
+#: src/dev_sysedit.c:1445
 msgid "Hide"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1503
+#: src/dev_sysedit.c:1504
 #, c-format
 msgid "Planet Information - %s"
 msgstr ""
 
-#: src/dev_sysedit.c:1516
+#: src/dev_sysedit.c:1517
 msgid "Properties"
 msgstr ""
 
-#: src/dev_sysedit.c:1523
+#: src/dev_sysedit.c:1524
 msgid "Landing Description"
 msgstr ""
 
-#: src/dev_sysedit.c:1535
+#: src/dev_sysedit.c:1536
 msgid "Bar Description"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1706
+#: src/dev_sysedit.c:1707
 msgid "Planet Tech Editor"
 msgstr ""
 
-#: src/dev_sysedit.c:1719
+#: src/dev_sysedit.c:1720
 msgid "Rm Tech"
 msgstr ""
 
-#: src/dev_sysedit.c:1723
+#: src/dev_sysedit.c:1724
 msgid "Add Tech"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1870
+#: src/dev_sysedit.c:1871
 msgid "Modify Faction"
 msgstr ""
 
-#: src/dev_sysedit.c:1893
+#: src/dev_sysedit.c:1894
 msgid "Set"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1964
+#: src/dev_sysedit.c:1965
 #, c-format
 msgid "%s - Planet Properties"
 msgstr ""
 
-#: src/dev_sysedit.c:1977
+#: src/dev_sysedit.c:1978
 msgid "Apply"
 msgstr ""
 
@@ -63430,7 +63559,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:217 src/map.c:293 src/map_find.c:1055
+#: src/dev_uniedit.c:217 src/map.c:292 src/map_find.c:1055
 msgid "Find"
 msgstr ""
 
@@ -63438,9 +63567,9 @@ msgstr ""
 msgid "Nebula:"
 msgstr ""
 
-#: src/dev_uniedit.c:232 src/map.c:268
+#: src/dev_uniedit.c:232 src/map.c:267
 msgid "Presence:"
-msgstr ""
+msgstr "Présence :"
 
 #: src/dev_uniedit.c:450
 msgid "Click to add a new system"
@@ -63458,12 +63587,12 @@ msgstr ""
 #. Get name.
 #: src/dev_uniedit.c:690
 msgid "Rename Star System"
-msgstr ""
+msgstr "Renommer le système solaire"
 
 #: src/dev_uniedit.c:690
 #, c-format
 msgid "What do you want to rename #r%s#0?"
-msgstr ""
+msgstr "Comment voulez-vous renommer #r%s#0 ?"
 
 #. Get name.
 #: src/dev_uniedit.c:739
@@ -63478,135 +63607,135 @@ msgstr ""
 msgid "Star System creation aborted!"
 msgstr ""
 
-#: src/dev_uniedit.c:857
+#: src/dev_uniedit.c:855
 #, c-format
 msgid "Jump for system '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/dev_uniedit.c:883
+#: src/dev_uniedit.c:880
 msgid "No selection"
 msgstr ""
 
-#: src/dev_uniedit.c:938
+#: src/dev_uniedit.c:935
 #, c-format
 msgid "Trying to remove system '%s' from selection when not selected."
 msgstr ""
 
-#: src/dev_uniedit.c:969
+#: src/dev_uniedit.c:966
 #, c-format
 msgid ""
 "%.0f Density\n"
 "%.0fVolatility"
 msgstr ""
 
-#: src/dev_uniedit.c:973 src/dev_uniedit.c:974
+#: src/dev_uniedit.c:970 src/dev_uniedit.c:971
 msgid "Multiple selected"
 msgstr ""
 
 #. Create the window.
-#: src/dev_uniedit.c:1024
+#: src/dev_uniedit.c:1021
 msgid "Find Systems and Assets"
 msgstr ""
 
-#: src/dev_uniedit.c:1102
+#: src/dev_uniedit.c:1099
 #, c-format
 msgid "%s (%s system)"
 msgstr ""
 
 #. Create the window.
-#: src/dev_uniedit.c:1235
+#: src/dev_uniedit.c:1232
 msgid "Star System Property Editor"
 msgstr ""
 
-#: src/dev_uniedit.c:1247
+#: src/dev_uniedit.c:1244
 #, c-format
 msgid "Name: #n%s"
-msgstr ""
+msgstr "Nom : #n%s"
 
-#: src/dev_uniedit.c:1247 src/dev_uniedit.c:1544
+#: src/dev_uniedit.c:1244 src/dev_uniedit.c:1541
 msgid "#rvarious"
 msgstr ""
 
 #. Add general stats
-#: src/dev_uniedit.c:1255
+#: src/dev_uniedit.c:1252
 msgid "Radius"
 msgstr ""
 
-#: src/dev_uniedit.c:1262
+#: src/dev_uniedit.c:1259
 msgid "(Scales asset positions)"
 msgstr ""
 
-#: src/dev_uniedit.c:1271
+#: src/dev_uniedit.c:1268
 msgid "Stars"
 msgstr ""
 
-#: src/dev_uniedit.c:1279 src/map.c:648
+#: src/dev_uniedit.c:1276 src/map.c:647
 msgid "Interference"
 msgstr ""
 
-#: src/dev_uniedit.c:1292
+#: src/dev_uniedit.c:1289
 msgid "Nebula"
 msgstr ""
 
-#: src/dev_uniedit.c:1300
+#: src/dev_uniedit.c:1297
 msgid "Volatility"
 msgstr ""
 
-#: src/dev_uniedit.c:1382 src/dev_uniedit.c:1494
+#: src/dev_uniedit.c:1379 src/dev_uniedit.c:1491
 msgid "Add"
 msgstr ""
 
-#: src/dev_uniedit.c:1439
+#: src/dev_uniedit.c:1436
 #, c-format
 msgid "Failed to remove planet '%s'!"
 msgstr ""
 
-#: src/dev_uniedit.c:1470
+#: src/dev_uniedit.c:1467
 msgid ""
 "No virtual assets to add! Please add virtual assets to the 'assets' "
 "directory first."
 msgstr ""
 
 #. Create the window.
-#: src/dev_uniedit.c:1475
+#: src/dev_uniedit.c:1472
 msgid "Add a Virtual Asset"
 msgstr ""
 
-#: src/dev_uniedit.c:1514
+#: src/dev_uniedit.c:1511
 #, c-format
 msgid "Failed to add virtual asset '%s'!"
 msgstr ""
 
 #. Update text.
-#: src/dev_uniedit.c:1544
+#: src/dev_uniedit.c:1541
 #, c-format
 msgid "Name: %s"
-msgstr ""
+msgstr "Nom : %s"
 
-#: src/dialogue.c:122 src/dialogue.c:138
+#: src/dialogue.c:120 src/dialogue.c:136
 msgid "Dialogue counter not in sync!"
 msgstr ""
 
 #. create the window
-#: src/dialogue.c:164 src/options.c:157
+#: src/dialogue.c:162 src/options.c:157
 msgid "Warning"
 msgstr ""
 
 #. Add the OK button
-#: src/dialogue.c:168 src/dialogue.c:296 src/dialogue.c:354 src/dialogue.c:747
+#: src/dialogue.c:166 src/dialogue.c:294 src/dialogue.c:352 src/dialogue.c:745
 #: src/options.c:245 src/options.c:557 src/options.c:866 src/options.c:1178
 msgid "OK"
 msgstr ""
 
-#: src/dialogue.c:439
+#: src/dialogue.c:437
 msgid "Unknown button clicked in YesNo dialogue!"
 msgstr ""
 
-#: src/dialogue.c:511
+#: src/dialogue.c:509
 msgid "Done"
 msgstr ""
 
-#: src/dialogue.c:522
+#: src/dialogue.c:520
 #, c-format
 msgid "Input must be at least %d character long!"
 msgid_plural "Input must be at least %d characters long!"
@@ -63640,8 +63769,8 @@ msgstr ""
 msgid "Unable to create economy G Matrix."
 msgstr ""
 
-#: src/economy.c:506 src/gui.c:1857 src/ndata.c:199 src/news.c:104
-#: src/nfile.c:490 src/opengl_tex.c:134 src/opengl_tex.c:351 src/perlin.c:399
+#: src/economy.c:506 src/gui.c:1857 src/ndata.c:199 src/news.c:102
+#: src/nfile.c:490 src/opengl_tex.c:135 src/opengl_tex.c:352 src/perlin.c:399
 #: src/perlin.c:460 src/physics.c:485
 msgid "Out of Memory"
 msgstr ""
@@ -63655,31 +63784,31 @@ msgstr ""
 msgid "Planet '%s' appears to have commodity '%s' defined, but no faction."
 msgstr ""
 
-#: src/economy.c:1031
+#: src/economy.c:1027
 #, c-format
 msgid "Planet '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
-#: src/equipment.c:273 src/land.c:289 src/land.c:566 src/land.c:1207
-#: src/land_outfits.c:166 src/land_shipyard.c:94 src/land_trade.c:73
+#: src/equipment.c:268 src/land.c:289 src/land.c:566 src/land.c:1207
+#: src/land_outfits.c:166 src/land_shipyard.c:95 src/land_trade.c:74
 msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:279 src/equipment.c:1857
+#: src/equipment.c:274 src/equipment.c:1850
 msgid "Sell Ship"
-msgstr ""
+msgstr "Vendre le vaisseau"
 
-#: src/equipment.c:282
+#: src/equipment.c:277
 msgid "Swap Ship"
 msgstr ""
 
-#: src/equipment.c:285
+#: src/equipment.c:280
 msgid "Unequip"
-msgstr ""
+msgstr "Déséquiper"
 
 #. text
-#: src/equipment.c:288
+#: src/equipment.c:283
 msgid ""
 "#nName:\n"
 "#0#nModel:\n"
@@ -63704,65 +63833,65 @@ msgid ""
 "#nShip Status:#0"
 msgstr ""
 
-#: src/equipment.c:319
+#: src/equipment.c:314
 msgid "Available Ships"
-msgstr ""
+msgstr "Vaisseaux disponibles"
 
-#: src/equipment.c:321
+#: src/equipment.c:316
 msgid "Available Outfits"
-msgstr ""
+msgstr "Tenues disponibles"
 
-#: src/equipment.c:517 src/outfit.c:271
+#: src/equipment.c:512 src/outfit.c:271
 msgid "Weapon"
 msgstr ""
 
-#: src/equipment.c:525 src/outfit.c:269
+#: src/equipment.c:520 src/outfit.c:269
 msgid "Utility"
-msgstr ""
+msgstr "Utilitaire"
 
-#: src/equipment.c:533 src/outfit.c:267
+#: src/equipment.c:528 src/outfit.c:267
 msgid "Structure"
-msgstr ""
+msgstr "Structure"
 
-#: src/equipment.c:566
+#: src/equipment.c:561
 msgid "CPU Free"
-msgstr ""
+msgstr "CPU libre"
 
-#: src/equipment.c:578
+#: src/equipment.c:573
 msgid "Mass Limit Left"
 msgstr ""
 
-#: src/equipment.c:593
+#: src/equipment.c:588
 #, c-format
 msgid "!! %.0f%% Slower !!"
 msgstr ""
 
-#: src/equipment.c:646
+#: src/equipment.c:640
 msgid "Right click to remove"
 msgstr ""
 
-#: src/equipment.c:657
+#: src/equipment.c:651
 msgid "Right click to add"
 msgstr ""
 
-#: src/equipment.c:770
+#: src/equipment.c:764
 msgid " [exclusive]"
 msgstr ""
 
-#: src/equipment.c:791
+#: src/equipment.c:785
 msgid ""
 "\n"
 "#oUnique#0"
 msgstr ""
 
-#: src/equipment.c:793
+#: src/equipment.c:787
 #, c-format
 msgid ""
 "\n"
 "#oSlot %s#0"
 msgstr ""
 
-#: src/equipment.c:799
+#: src/equipment.c:793
 #, c-format
 msgid ""
 "\n"
@@ -63773,21 +63902,21 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1299
+#: src/equipment.c:1292
 #, c-format
 msgid "%s%.2f DPS [%.2f EPS]"
 msgstr ""
 
-#: src/equipment.c:1381
+#: src/equipment.c:1374
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1413 src/land_outfits.c:279 src/shiplog.c:477
+#: src/equipment.c:1406 src/land_outfits.c:279 src/shiplog.c:477
 #: src/shiplog.c:522
 msgid "All"
 msgstr ""
 
-#: src/equipment.c:1554
+#: src/equipment.c:1547
 #, c-format
 msgid ""
 "%s\n"
@@ -63813,99 +63942,103 @@ msgid ""
 "#%c%s#0"
 msgstr ""
 
-#: src/equipment.c:1782
+#: src/equipment.c:1775
 msgid "You can not unequip your ship while you have deployed fighters!"
 msgstr ""
+"Vous ne pouvez pas déséquiper votre vaisseau alors que vous avez déployé des "
+"unités de combat !"
 
-#: src/equipment.c:1787
+#: src/equipment.c:1780
 msgid ""
 "You can not unequip your ship when you have more cargo than it can hold "
 "without modifications!"
 msgstr ""
+"Vous ne pouvez pas déséquiper votre vaisseau lorsque vous avez plus de "
+"cargaison qu'il ne peut en contenir sans subir de modifications !"
 
-#: src/equipment.c:1791
+#: src/equipment.c:1784
 msgid "Unequip Ship"
-msgstr ""
+msgstr "Déséquiper le vaisseau"
 
 #. confirm
-#: src/equipment.c:1792
+#: src/equipment.c:1785
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:1858
+#: src/equipment.c:1851
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir vendre votre votre vaisseau %s pour %s ?"
 
 #. Display widget.
-#: src/equipment.c:1875
+#: src/equipment.c:1868
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:1876
+#: src/equipment.c:1869
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:1905 src/player.c:415
+#: src/equipment.c:1898 src/player.c:411
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:1906
+#: src/equipment.c:1899
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:1914
+#: src/equipment.c:1907
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:1915 src/player.c:440
+#: src/equipment.c:1908 src/player.c:436
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
-#: src/escort.c:212
+#: src/escort.c:209
 #, c-format
 msgid "#gEscorts: #0Attacking %s."
 msgstr ""
 
-#: src/escort.c:225
+#: src/escort.c:222
 msgid "#gEscorts: #0Holding position."
 msgstr ""
 
-#: src/escort.c:238
+#: src/escort.c:235
 msgid "#gEscorts: #0Returning to ship."
 msgstr ""
 
-#: src/escort.c:251
+#: src/escort.c:248
 msgid "#gEscorts: #0Clearing orders."
 msgstr ""
 
-#: src/escort.c:270
+#: src/escort.c:267
 msgid "Hold Position"
 msgstr ""
 
-#: src/escort.c:271
+#: src/escort.c:268
 msgid "Return To Ship"
 msgstr ""
 
-#: src/escort.c:272
+#: src/escort.c:269
 msgid "Clear Orders"
 msgstr ""
 
-#: src/escort.c:281
+#: src/escort.c:278
 msgid "Escort Orders"
 msgstr ""
 
-#: src/escort.c:282
+#: src/escort.c:279
 msgid "Select the order to give to this escort."
 msgstr ""
 
-#: src/escort.c:327
+#: src/escort.c:324
 msgid "#gEscorts: #0Jumping."
 msgstr ""
 
-#: src/event.c:282
+#: src/event.c:280
 #, c-format
 msgid ""
 "Error loading event file: %s\n"
@@ -63913,112 +64046,112 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/event.c:344
+#: src/event.c:342
 #, c-format
 msgid "Event ID '%u' not valid."
 msgstr ""
 
-#: src/event.c:411
+#: src/event.c:409
 #, c-format
 msgid "Conditional for event '%s' failed to run."
 msgstr ""
 
-#: src/event.c:446
+#: src/event.c:444
 #, c-format
 msgid "Event in %s has invalid or no name"
 msgstr ""
 
-#: src/event.c:459
+#: src/event.c:457
 #, c-format
 msgid "Event '%s': Null trigger type."
 msgstr ""
 
-#: src/event.c:469
+#: src/event.c:467
 #, c-format
 msgid "Event '%s' has invalid 'trigger' parameter: %s"
 msgstr ""
 
-#: src/event.c:483
+#: src/event.c:481
 #, c-format
 msgid "Event '%s' has unknown flag node '%s'."
 msgstr ""
 
-#: src/event.c:500
+#: src/event.c:498
 #, c-format
 msgid "Unknown node '%s' in event '%s'"
 msgstr ""
 
-#: src/event.c:507
+#: src/event.c:505
 #, c-format
 msgid "Event '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/event.c:552
+#: src/event.c:550
 #, c-format
 msgid "Loaded %d Event"
 msgid_plural "Loaded %d Events"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/event.c:578 src/faction.c:1395 src/mission.c:909 src/nxml.c:94
+#: src/event.c:576 src/faction.c:1395 src/mission.c:909 src/nxml.c:88
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr ""
 
-#: src/event.c:587
+#: src/event.c:585
 #, c-format
 msgid "Event '%s' has create function but no XML header!"
 msgstr ""
 
-#: src/event.c:596
+#: src/event.c:594
 #, c-format
 msgid "Event file '%s' has missing XML header!"
 msgstr ""
 
-#: src/event.c:603
+#: src/event.c:601
 #, c-format
 msgid "Unable to parse document XML header for Event '%s'"
 msgstr ""
 
-#: src/event.c:610 src/slots.c:67 src/spfx.c:216 src/start.c:68
+#: src/event.c:608 src/slots.c:67 src/spfx.c:235 src/start.c:68
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr ""
 
-#: src/event.c:623
+#: src/event.c:621
 #, c-format
 msgid "Event Lua '%s' syntax error: %s"
 msgstr ""
 
-#: src/event.c:700
+#: src/event.c:698
 #, c-format
 msgid "No event data found matching name '%s'."
 msgstr ""
 
 #. Must delete.
-#: src/event.c:759
+#: src/event.c:757
 #, c-format
 msgid ""
 "Detected event '%s' without any hooks and is therefore invalid. Removing "
 "event."
 msgstr ""
 
-#: src/event.c:853
+#: src/event.c:851
 msgid "Event has missing 'name' attribute, skipping."
 msgstr ""
 
-#: src/event.c:858
+#: src/event.c:856
 #, c-format
 msgid ""
 "Event in save has name '%s' but event data not found matching name. Skipping."
 msgstr ""
 
-#: src/event.c:865
+#: src/event.c:863
 #, c-format
 msgid "Event with data '%s' has invalid 'id' attribute, skipping."
 msgstr ""
 
-#: src/event.c:873
+#: src/event.c:871
 #, c-format
 msgid "Event with data '%s' was not created, skipping."
 msgstr ""
@@ -64281,7 +64414,7 @@ msgstr ""
 msgid "Adding translations from %s"
 msgstr ""
 
-#: src/gui.c:495 src/input.c:1316
+#: src/gui.c:495 src/input.c:1317
 msgid "Gfx index out of range"
 msgstr ""
 
@@ -64332,67 +64465,67 @@ msgstr ""
 msgid "OSD '%s' only has %d items (requested %d)"
 msgstr ""
 
-#: src/hook.c:282
+#: src/hook.c:279
 msgid "Unknown Lua parameter type."
 msgstr ""
 
-#: src/hook.c:312
+#: src/hook.c:309
 msgid "Trying to run hook with nonexistent parent: deleting"
 msgstr ""
 
-#: src/hook.c:320
+#: src/hook.c:317
 msgid "Trying to run hook with parent not in player mission stack: deleting"
 msgstr ""
 
 #. error has occurred
-#: src/hook.c:344 src/hook.c:394
+#: src/hook.c:341 src/hook.c:391
 #, c-format
 msgid "Hook [%s] '%d' -> '%s' failed"
 msgstr ""
 
-#: src/hook.c:375
+#: src/hook.c:372
 #, c-format
 msgid "Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook."
 msgstr ""
 
-#: src/hook.c:432
+#: src/hook.c:429
 #, c-format
 msgid "Invalid hook type '%d', deleting."
 msgstr ""
 
-#: src/hook.c:977
+#: src/hook.c:974
 #, c-format
 msgid "HOOK_MAX_PARAM is set too low (%d), need at least %d!"
 msgstr ""
 
-#: src/hook.c:1064
+#: src/hook.c:1061
 #, c-format
 msgid "Attempting to run hook of id '%d' which is not in the stack"
 msgstr ""
 
-#: src/hook.c:1124
+#: src/hook.c:1121
 msgid "Running hook_cleanup while hook stack is being run!"
 msgstr ""
 
-#: src/hook.c:1206
+#: src/hook.c:1203
 msgid "Something has gone screwy here..."
 msgstr ""
 
-#: src/hook.c:1303
+#: src/hook.c:1300
 #, c-format
 msgid "Hook of unknown type '%s' found, skipping."
 msgstr ""
 
-#: src/hook.c:1332
+#: src/hook.c:1329
 #, c-format
 msgid "Save has unknown hook node '%s'."
 msgstr ""
 
-#: src/hook.c:1337
+#: src/hook.c:1334
 msgid "Invalid hook."
 msgstr ""
 
-#: src/hook.c:1350
+#: src/hook.c:1347
 msgid "Save has unsupported hook type."
 msgstr ""
 
@@ -64404,7 +64537,7 @@ msgstr ""
 msgid "Ship"
 msgstr ""
 
-#: src/info.c:60 src/land.c:968 src/space.c:178
+#: src/info.c:60 src/land.c:968 src/space.c:174
 msgid "Missions"
 msgstr ""
 
@@ -64685,594 +64818,594 @@ msgid "Log entries:"
 msgstr ""
 
 #. Movement
-#: src/input.c:58
+#: src/input.c:59
 msgid "Accelerate"
 msgstr ""
 
-#: src/input.c:58
+#: src/input.c:59
 msgid "Makes your ship accelerate forward."
 msgstr ""
 
-#: src/input.c:59
+#: src/input.c:60
 msgid "Turn Left"
 msgstr ""
 
-#: src/input.c:59
+#: src/input.c:60
 msgid "Makes your ship turn left."
 msgstr ""
 
-#: src/input.c:60
+#: src/input.c:61
 msgid "Turn Right"
 msgstr ""
 
-#: src/input.c:60
+#: src/input.c:61
 msgid "Makes your ship turn right."
 msgstr ""
 
-#: src/input.c:61
+#: src/input.c:62
 msgid "Reverse"
 msgstr ""
 
-#: src/input.c:61
+#: src/input.c:62
 msgid ""
 "Makes your ship face the direction you're moving from. Useful for braking."
 msgstr ""
 
 #. Targeting
-#: src/input.c:63
+#: src/input.c:64
 msgid "Target Next"
 msgstr ""
 
-#: src/input.c:63
+#: src/input.c:64
 msgid "Cycles through ship targets."
 msgstr ""
 
-#: src/input.c:64
+#: src/input.c:65
 msgid "Target Previous"
 msgstr ""
 
-#: src/input.c:64
+#: src/input.c:65
 msgid "Cycles backwards through ship targets."
 msgstr ""
 
-#: src/input.c:65
+#: src/input.c:66
 msgid "Target Nearest"
 msgstr ""
 
-#: src/input.c:65
+#: src/input.c:66
 msgid "Targets the nearest non-disabled ship."
 msgstr ""
 
-#: src/input.c:66
+#: src/input.c:67
 msgid "Target Next Hostile"
 msgstr ""
 
-#: src/input.c:66
+#: src/input.c:67
 msgid "Cycles through hostile ship targets."
 msgstr ""
 
-#: src/input.c:67
+#: src/input.c:68
 msgid "Target Previous Hostile"
 msgstr ""
 
-#: src/input.c:67
+#: src/input.c:68
 msgid "Cycles backwards through hostile ship targets."
 msgstr ""
 
-#: src/input.c:68
+#: src/input.c:69
 msgid "Target Nearest Hostile"
 msgstr ""
 
-#: src/input.c:68
+#: src/input.c:69
 msgid "Targets the nearest hostile ship."
 msgstr ""
 
-#: src/input.c:69
+#: src/input.c:70
 msgid "Clear Target"
 msgstr ""
 
-#: src/input.c:69
+#: src/input.c:70
 msgid "Clears the currently-targeted ship, planet or jump point."
 msgstr ""
 
 #. Fighting
-#: src/input.c:71
+#: src/input.c:72
 msgid "Fire Primary Weapon"
 msgstr ""
 
-#: src/input.c:71
+#: src/input.c:72
 msgid "Fires primary weapons."
 msgstr ""
 
-#: src/input.c:72
+#: src/input.c:73
 msgid "Face Target"
 msgstr ""
 
-#: src/input.c:72
+#: src/input.c:73
 msgid ""
 "Faces the targeted ship if one is targeted, otherwise faces targeted planet "
 "or jump point."
 msgstr ""
 
-#: src/input.c:73
+#: src/input.c:74
 msgid "Board Target"
 msgstr ""
 
-#: src/input.c:73
+#: src/input.c:74
 msgid "Attempts to board the targeted ship."
 msgstr ""
 
 #. Secondary Weapons
-#: src/input.c:75
+#: src/input.c:76
 msgid "Fire Secondary Weapon"
 msgstr ""
 
-#: src/input.c:75
+#: src/input.c:76
 msgid "Fires secondary weapons."
 msgstr ""
 
-#: src/input.c:76
+#: src/input.c:77
 msgid "Weapon Set 1"
 msgstr ""
 
-#: src/input.c:76
+#: src/input.c:77
 msgid "Activates weapon set 1."
 msgstr ""
 
-#: src/input.c:77
+#: src/input.c:78
 msgid "Weapon Set 2"
 msgstr ""
 
-#: src/input.c:77
+#: src/input.c:78
 msgid "Activates weapon set 2."
 msgstr ""
 
-#: src/input.c:78
+#: src/input.c:79
 msgid "Weapon Set 3"
 msgstr ""
 
-#: src/input.c:78
+#: src/input.c:79
 msgid "Activates weapon set 3."
 msgstr ""
 
-#: src/input.c:79
+#: src/input.c:80
 msgid "Weapon Set 4"
 msgstr ""
 
-#: src/input.c:79
+#: src/input.c:80
 msgid "Activates weapon set 4."
 msgstr ""
 
-#: src/input.c:80
+#: src/input.c:81
 msgid "Weapon Set 5"
 msgstr ""
 
-#: src/input.c:80
+#: src/input.c:81
 msgid "Activates weapon set 5."
 msgstr ""
 
-#: src/input.c:81
+#: src/input.c:82
 msgid "Weapon Set 6"
 msgstr ""
 
-#: src/input.c:81
+#: src/input.c:82
 msgid "Activates weapon set 6."
 msgstr ""
 
-#: src/input.c:82
+#: src/input.c:83
 msgid "Weapon Set 7"
 msgstr ""
 
-#: src/input.c:82
+#: src/input.c:83
 msgid "Activates weapon set 7."
 msgstr ""
 
-#: src/input.c:83
+#: src/input.c:84
 msgid "Weapon Set 8"
 msgstr ""
 
-#: src/input.c:83
+#: src/input.c:84
 msgid "Activates weapon set 8."
 msgstr ""
 
-#: src/input.c:84
+#: src/input.c:85
 msgid "Weapon Set 9"
 msgstr ""
 
-#: src/input.c:84
+#: src/input.c:85
 msgid "Activates weapon set 9."
 msgstr ""
 
-#: src/input.c:85
+#: src/input.c:86
 msgid "Weapon Set 0"
 msgstr ""
 
-#: src/input.c:85
+#: src/input.c:86
 msgid "Activates weapon set 0."
 msgstr ""
 
 #. Escorts
-#: src/input.c:87
+#: src/input.c:88
 msgid "Target Next Escort"
 msgstr ""
 
-#: src/input.c:87
+#: src/input.c:88
 msgid "Cycles through your escorts."
 msgstr ""
 
-#: src/input.c:88
+#: src/input.c:89
 msgid "Target Previous Escort"
 msgstr ""
 
-#: src/input.c:88
+#: src/input.c:89
 msgid "Cycles backwards through your escorts."
 msgstr ""
 
-#: src/input.c:89
+#: src/input.c:90
 msgid "Escort Attack Command"
 msgstr ""
 
-#: src/input.c:89
+#: src/input.c:90
 msgid "Orders escorts to attack your target."
 msgstr ""
 
-#: src/input.c:90
+#: src/input.c:91
 msgid "Escort Hold Command"
 msgstr ""
 
-#: src/input.c:90
+#: src/input.c:91
 msgid "Orders escorts to hold their positions."
 msgstr ""
 
-#: src/input.c:91
+#: src/input.c:92
 msgid "Escort Return Command"
 msgstr ""
 
-#: src/input.c:91
+#: src/input.c:92
 msgid "Orders escorts to return to your ship hangars."
 msgstr ""
 
-#: src/input.c:92
+#: src/input.c:93
 msgid "Escort Clear Commands"
 msgstr ""
 
-#: src/input.c:92
+#: src/input.c:93
 msgid "Clears your escorts of commands."
 msgstr ""
 
 #. Space Navigation
-#: src/input.c:94
+#: src/input.c:95
 msgid "Autonavigation On"
-msgstr ""
-
-#: src/input.c:94
-msgid "Initializes the autonavigation system."
-msgstr ""
+msgstr "Pilote automatique activé"
 
 #: src/input.c:95
+msgid "Initializes the autonavigation system."
+msgstr "Initialise le système de pilote automatique."
+
+#: src/input.c:96
 msgid "Target Planet"
 msgstr ""
 
-#: src/input.c:95
+#: src/input.c:96
 msgid "Cycles through planet targets."
 msgstr ""
 
-#: src/input.c:96
+#: src/input.c:97
 msgid ""
 "Attempts to land on the targeted planet or targets the nearest landable "
 "planet. Requests permission if necessary."
 msgstr ""
 
-#: src/input.c:97
+#: src/input.c:98
 msgid "Target Jumpgate"
 msgstr ""
 
-#: src/input.c:97
+#: src/input.c:98
 msgid "Cycles through jump points."
 msgstr ""
 
 #. create the window.
-#: src/input.c:98 src/map.c:212 src/outfit.c:808
+#: src/input.c:99 src/map.c:211 src/outfit.c:808
 msgid "Star Map"
-msgstr ""
-
-#: src/input.c:98
-msgid "Opens the star map."
-msgstr ""
+msgstr "Carte des étoiles"
 
 #: src/input.c:99
+msgid "Opens the star map."
+msgstr "Ouvre la carte des étoiles."
+
+#: src/input.c:100
 msgid "Initiate Jump"
 msgstr ""
 
-#: src/input.c:99
+#: src/input.c:100
 msgid "Attempts to jump via a jump point."
 msgstr ""
 
-#: src/input.c:100
+#: src/input.c:101
 msgid "Overlay Map"
 msgstr ""
 
-#: src/input.c:100
+#: src/input.c:101
 msgid "Opens the in-system overlay map."
 msgstr ""
 
-#: src/input.c:101
+#: src/input.c:102
 msgid "Mouse Flight"
 msgstr ""
 
-#: src/input.c:101
+#: src/input.c:102
 msgid "Toggles mouse flying."
 msgstr ""
 
-#: src/input.c:102
+#: src/input.c:103
 msgid "Autobrake"
 msgstr ""
 
-#: src/input.c:102
+#: src/input.c:103
 msgid "Begins automatic braking or active cooldown, if stopped."
 msgstr ""
 
 #. Communication
-#: src/input.c:104
+#: src/input.c:105
 msgid "Log Scroll Up"
 msgstr ""
 
-#: src/input.c:104
+#: src/input.c:105
 msgid "Scrolls the log upwards."
 msgstr ""
 
-#: src/input.c:105
+#: src/input.c:106
 msgid "Log Scroll Down"
 msgstr ""
 
-#: src/input.c:105
+#: src/input.c:106
 msgid "Scrolls the log downwards."
 msgstr ""
 
-#: src/input.c:106
+#: src/input.c:107
 msgid "Hail Target"
 msgstr ""
 
-#: src/input.c:106
+#: src/input.c:107
 msgid "Attempts to initialize communication with the targeted ship."
 msgstr ""
 
-#: src/input.c:107
+#: src/input.c:108
 msgid "Autohail"
 msgstr ""
 
-#: src/input.c:107
+#: src/input.c:108
 msgid "Automatically initialize communication with a ship that is hailing you."
 msgstr ""
 
 #. Misc.
-#: src/input.c:109
+#: src/input.c:110
 msgid "Radar Zoom In"
 msgstr ""
 
-#: src/input.c:109
+#: src/input.c:110
 msgid "Zooms in on the radar."
 msgstr ""
 
-#: src/input.c:110
+#: src/input.c:111
 msgid "Radar Zoom Out"
 msgstr ""
 
-#: src/input.c:110
+#: src/input.c:111
 msgid "Zooms out on the radar."
 msgstr ""
 
-#: src/input.c:111
+#: src/input.c:112
 msgid "Screenshot"
 msgstr ""
 
-#: src/input.c:111
+#: src/input.c:112
 msgid "Takes a screenshot."
 msgstr ""
 
-#: src/input.c:112
+#: src/input.c:113
 msgid "Toggle Fullscreen"
 msgstr ""
 
-#: src/input.c:112
+#: src/input.c:113
 msgid "Toggles between windowed and fullscreen mode."
 msgstr ""
 
-#: src/input.c:113
+#: src/input.c:114
 msgid "Pause"
 msgstr ""
 
-#: src/input.c:113
+#: src/input.c:114
 msgid "Pauses the game."
 msgstr ""
 
-#: src/input.c:114
+#: src/input.c:115
 msgid "Toggle Speed"
 msgstr ""
 
-#: src/input.c:114
+#: src/input.c:115
 msgid "Toggles speed modifier."
 msgstr ""
 
-#: src/input.c:115
+#: src/input.c:116
 msgid "Small Menu"
 msgstr ""
 
-#: src/input.c:115
+#: src/input.c:116
 msgid "Opens the small in-game menu."
 msgstr ""
 
-#: src/input.c:116
+#: src/input.c:117
 msgid "Information Menu"
 msgstr ""
 
-#: src/input.c:116
+#: src/input.c:117
 msgid "Opens the information menu."
 msgstr ""
 
-#: src/input.c:117
+#: src/input.c:118
 msgid "Opens the Lua console."
 msgstr ""
 
-#: src/input.c:118
+#: src/input.c:119
 msgid "Switch Tab 1"
 msgstr ""
 
-#: src/input.c:118
+#: src/input.c:119
 msgid "Switches to tab 1."
 msgstr ""
 
-#: src/input.c:119
+#: src/input.c:120
 msgid "Switch Tab 2"
 msgstr ""
 
-#: src/input.c:119
+#: src/input.c:120
 msgid "Switches to tab 2."
 msgstr ""
 
-#: src/input.c:120
+#: src/input.c:121
 msgid "Switch Tab 3"
 msgstr ""
 
-#: src/input.c:120
+#: src/input.c:121
 msgid "Switches to tab 3."
 msgstr ""
 
-#: src/input.c:121
+#: src/input.c:122
 msgid "Switch Tab 4"
 msgstr ""
 
-#: src/input.c:121
+#: src/input.c:122
 msgid "Switches to tab 4."
 msgstr ""
 
-#: src/input.c:122
+#: src/input.c:123
 msgid "Switch Tab 5"
 msgstr ""
 
-#: src/input.c:122
+#: src/input.c:123
 msgid "Switches to tab 5."
 msgstr ""
 
-#: src/input.c:123
+#: src/input.c:124
 msgid "Switch Tab 6"
 msgstr ""
 
-#: src/input.c:123
+#: src/input.c:124
 msgid "Switches to tab 6."
 msgstr ""
 
-#: src/input.c:124
+#: src/input.c:125
 msgid "Switch Tab 7"
 msgstr ""
 
-#: src/input.c:124
+#: src/input.c:125
 msgid "Switches to tab 7."
 msgstr ""
 
-#: src/input.c:125
+#: src/input.c:126
 msgid "Switch Tab 8"
 msgstr ""
 
-#: src/input.c:125
+#: src/input.c:126
 msgid "Switches to tab 8."
 msgstr ""
 
-#: src/input.c:126
+#: src/input.c:127
 msgid "Switch Tab 9"
 msgstr ""
 
-#: src/input.c:126
+#: src/input.c:127
 msgid "Switches to tab 9."
 msgstr ""
 
-#: src/input.c:127
+#: src/input.c:128
 msgid "Switch Tab 0"
 msgstr ""
 
-#: src/input.c:127
+#: src/input.c:128
 msgid "Switches to tab 0."
 msgstr ""
 
-#: src/input.c:417
+#: src/input.c:418
 #, c-format
 msgid "Keyname '%s' doesn't match any key."
 msgstr ""
 
-#: src/input.c:443
+#: src/input.c:444
 #, c-format
 msgid "Unable to set keybinding '%s', that command doesn't exist"
 msgstr ""
 
-#: src/input.c:467
+#: src/input.c:468
 #, c-format
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr ""
 
-#: src/input.c:494 src/options.c:705
+#: src/input.c:495 src/options.c:705
 msgid "Not bound"
 msgstr ""
 
-#: src/input.c:511
+#: src/input.c:512
 #, c-format
 msgid "joy button %d"
 msgstr ""
 
-#: src/input.c:515
+#: src/input.c:516
 #, c-format
 msgid "joy hat %d up"
 msgstr ""
 
-#: src/input.c:519
+#: src/input.c:520
 #, c-format
 msgid "joy hat %d down"
 msgstr ""
 
-#: src/input.c:523
+#: src/input.c:524
 #, c-format
 msgid "joy hat %d left"
 msgstr ""
 
-#: src/input.c:527
+#: src/input.c:528
 #, c-format
 msgid "joy hat %d right"
 msgstr ""
 
-#: src/input.c:531
+#: src/input.c:532
 #, c-format
 msgid "joy axis %d-"
 msgstr ""
 
-#: src/input.c:535
+#: src/input.c:536
 #, c-format
 msgid "joy axis %d+"
 msgstr ""
 
-#: src/input.c:551
+#: src/input.c:552
 msgid "Ctrl"
 msgstr ""
 
-#: src/input.c:552
+#: src/input.c:553
 msgid "Shift"
 msgstr ""
 
-#: src/input.c:553
+#: src/input.c:554
 msgid "Alt"
 msgstr ""
 
-#: src/input.c:554
+#: src/input.c:555
 msgid "Meta"
 msgstr ""
 
-#: src/input.c:555
+#: src/input.c:556
 msgid "Any"
 msgstr ""
 
-#: src/input.c:556 src/opengl_tex.c:629
+#: src/input.c:557 src/opengl_tex.c:630
 msgid "unknown"
 msgstr ""
 
-#: src/input.c:623
+#: src/input.c:624
 #, c-format
 msgid "Unable to get keybinding description '%s', that command doesn't exist"
 msgstr ""
@@ -65345,7 +65478,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. Escorts are in space.
-#: src/land.c:185 src/land_shipyard.c:464
+#: src/land.c:185 src/land_shipyard.c:465
 msgid "You can't strand your fighters in space."
 msgstr ""
 
@@ -65418,15 +65551,15 @@ msgstr ""
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:973 src/map_find.c:1068 src/space.c:180
+#: src/land.c:973 src/map_find.c:1068 src/space.c:176
 msgid "Outfits"
 msgstr ""
 
-#: src/land.c:978 src/space.c:181
+#: src/land.c:978 src/space.c:177
 msgid "Shipyard"
 msgstr ""
 
-#: src/land.c:989 src/space.c:179
+#: src/land.c:989 src/space.c:175
 msgid "Commodity"
 msgstr ""
 
@@ -65437,6 +65570,10 @@ msgid ""
 "Free Space:\n"
 "Money:"
 msgstr ""
+"Stationné sur :\n"
+"Système :\n"
+"Espace libre :\n"
+"Argent :"
 
 #: src/land.c:1213
 msgid "No refueling services."
@@ -65465,11 +65602,11 @@ msgstr ""
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
 
-#: src/land_outfits.c:175 src/land_trade.c:71
+#: src/land_outfits.c:175 src/land_trade.c:72
 msgid "Sell"
 msgstr ""
 
-#: src/land_outfits.c:178 src/land_shipyard.c:100 src/land_trade.c:69
+#: src/land_outfits.c:178 src/land_shipyard.c:101 src/land_trade.c:70
 msgid "Buy"
 msgstr ""
 
@@ -65553,8 +65690,8 @@ msgstr ""
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:712 src/land_shipyard.c:422 src/land_shipyard.c:493
-#: src/land_trade.c:238
+#: src/land_outfits.c:712 src/land_shipyard.c:423 src/land_shipyard.c:494
+#: src/land_trade.c:239
 #, c-format
 msgid "You need %s more."
 msgstr ""
@@ -65580,20 +65717,20 @@ msgstr ""
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:820 src/land_trade.c:257
+#: src/land_outfits.c:820 src/land_trade.c:258
 msgid "You can't sell something you don't have!"
 msgstr ""
 
-#: src/land_shipyard.c:97
+#: src/land_shipyard.c:98
 msgid "Trade-In"
 msgstr ""
 
-#: src/land_shipyard.c:103
+#: src/land_shipyard.c:104
 msgid "Find Ships"
 msgstr ""
 
 #. text
-#: src/land_shipyard.c:121
+#: src/land_shipyard.c:122
 msgid ""
 "#nModel:\n"
 "#0#nClass:\n"
@@ -65620,7 +65757,7 @@ msgid ""
 "#0"
 msgstr ""
 
-#: src/land_shipyard.c:209
+#: src/land_shipyard.c:210
 msgid ""
 "None\n"
 "N/A\n"
@@ -65646,7 +65783,7 @@ msgid ""
 "N/A\n"
 msgstr ""
 
-#: src/land_shipyard.c:259
+#: src/land_shipyard.c:260
 #, c-format
 msgid ""
 "%s\n"
@@ -65673,28 +65810,29 @@ msgid ""
 "%s\n"
 msgstr ""
 
-#: src/land_shipyard.c:376 src/land_shipyard.c:534 src/land_shipyard.c:540
-#: src/land_shipyard.c:546
+#: src/land_shipyard.c:377 src/land_shipyard.c:535 src/land_shipyard.c:541
+#: src/land_shipyard.c:547
 msgid "Are you sure?"
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:377
+#: src/land_shipyard.c:378
 #, c-format
 msgid "Do you really want to spend %s on a new ship?"
 msgstr ""
 
-#: src/land_shipyard.c:416 src/land_shipyard.c:486
+#: src/land_shipyard.c:417 src/land_shipyard.c:487
 #, c-format
 msgid "You lack the %s."
 msgstr ""
 
 #. Already on-board.
-#: src/land_shipyard.c:436
+#: src/land_shipyard.c:437
 msgid "You can't sell the ship you're piloting!"
 msgstr ""
+"Vous ne pouvez pas vendre le vaisseau que vous êtes en train de piloter !"
 
-#: src/land_shipyard.c:457
+#: src/land_shipyard.c:458
 #, c-format
 msgid "You have %g tonne more cargo than the new ship can hold."
 msgid_plural "You have %g tonnes more cargo than the new ship can hold."
@@ -65702,7 +65840,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. confirm
-#: src/land_shipyard.c:535
+#: src/land_shipyard.c:536
 #, c-format
 msgid ""
 "Your %s is worth %s, exactly as much as the new ship, so no credits need be "
@@ -65710,7 +65848,7 @@ msgid ""
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:541
+#: src/land_shipyard.c:542
 #, c-format
 msgid ""
 "Your %s is worth %s, more than the new ship. For your ship, you will get the "
@@ -65718,18 +65856,18 @@ msgid ""
 msgstr ""
 
 #. confirm
-#: src/land_shipyard.c:547
+#: src/land_shipyard.c:548
 #, c-format
 msgid ""
 "Your %s is worth %s, so the new ship will cost %s. Are you sure you want to "
 "trade your ship in?"
 msgstr ""
 
-#: src/land_shipyard.c:587
+#: src/land_shipyard.c:588
 msgid "Slots:"
 msgstr ""
 
-#: src/land_trade.c:89
+#: src/land_trade.c:90
 msgid ""
 "#nYou have:#0\n"
 "#nPurchased for:#0\n"
@@ -65740,7 +65878,7 @@ msgid ""
 "#nAverage price all:#0"
 msgstr ""
 
-#: src/land_trade.c:161
+#: src/land_trade.c:162
 #, c-format
 msgid ""
 "N/A tonnes\n"
@@ -65752,16 +65890,16 @@ msgid ""
 "N/A ¤"
 msgstr ""
 
-#: src/land_trade.c:171
+#: src/land_trade.c:172
 msgid "No commodities available."
 msgstr ""
 
-#: src/land_trade.c:183 src/land_trade.c:186
+#: src/land_trade.c:184 src/land_trade.c:187
 #, c-format
 msgid "%.1f ¤"
 msgstr ""
 
-#: src/land_trade.c:197
+#: src/land_trade.c:198
 #, c-format
 msgid ""
 "%s\n"
@@ -65773,7 +65911,7 @@ msgid ""
 "%s/t ± %s/t\n"
 msgstr ""
 
-#: src/land_trade.c:242
+#: src/land_trade.c:243
 msgid "No cargo space available!"
 msgstr ""
 
@@ -65859,7 +65997,7 @@ msgid "Saved game '%s' invalid!"
 msgstr ""
 
 #. Welcome message - must be before space_init.
-#: src/load.c:663 src/player.c:347
+#: src/load.c:663 src/player.c:343
 #, c-format
 msgid "#gWelcome to %s!"
 msgstr ""
@@ -65896,32 +66034,32 @@ msgstr ""
 msgid "ERROR %s:%d [%s]: "
 msgstr ""
 
-#: src/map.c:254
+#: src/map.c:253
 msgid "Faction:"
-msgstr ""
+msgstr "Faction :"
 
-#: src/map.c:261
+#: src/map.c:260
 msgid "Standing:"
 msgstr ""
 
-#: src/map.c:275
+#: src/map.c:274
 msgid "Planets:"
-msgstr ""
+msgstr "Planètes :"
 
-#: src/map.c:282
+#: src/map.c:281
 msgid "Services:"
-msgstr ""
+msgstr "Services :"
 
 #. Commodity button
-#: src/map.c:290
+#: src/map.c:289
 msgid "Mode"
 msgstr ""
 
-#: src/map.c:296
+#: src/map.c:295
 msgid "Autonav"
-msgstr ""
+msgstr "Pilote automatique"
 
-#: src/map.c:425
+#: src/map.c:424
 #, c-format
 msgid ""
 "%s prices trading from %s shown: Positive/blue values mean a profit\n"
@@ -65929,98 +66067,98 @@ msgid ""
 "system."
 msgstr ""
 
-#: src/map.c:430
+#: src/map.c:429
 #, c-format
 msgid "Known %s prices shown. Galaxy-wide average: %.2f"
 msgstr ""
 
-#: src/map.c:509
+#: src/map.c:508
 msgid "Multiple"
 msgstr ""
 
-#: src/map.c:622
+#: src/map.c:621
 msgid "Dense "
 msgstr ""
 
-#: src/map.c:624
+#: src/map.c:623
 msgid "Light "
 msgstr ""
 
-#: src/map.c:630
+#: src/map.c:629
 #, c-format
 msgid "Volatile %sNebula"
 msgstr ""
 
-#: src/map.c:632
+#: src/map.c:631
 #, c-format
 msgid "Dangerous %sNebula"
 msgstr ""
 
-#: src/map.c:634
+#: src/map.c:633
 #, c-format
 msgid "Unstable %sNebula"
 msgstr ""
 
-#: src/map.c:636
+#: src/map.c:635
 #, c-format
 msgid "%sNebula"
 msgstr ""
 
-#: src/map.c:644
+#: src/map.c:643
 msgid "Dense Interference"
 msgstr ""
 
-#: src/map.c:646
+#: src/map.c:645
 msgid "Light Interference"
 msgstr ""
 
-#: src/map.c:663
+#: src/map.c:662
 msgid "Dense Asteroid Field"
 msgstr ""
 
-#: src/map.c:665
+#: src/map.c:664
 msgid "Light Asteroid Field"
 msgstr ""
 
-#: src/map.c:1514
+#: src/map.c:1513
 #, c-format
 msgid ""
 "No price info for\n"
 "%s here"
 msgstr ""
 
-#: src/map.c:1739
+#: src/map.c:1735
 msgid "Travel (Default)"
 msgstr ""
 
-#: src/map.c:1741
+#: src/map.c:1737
 #, c-format
 msgid "%s: Cost"
 msgstr ""
 
-#: src/map.c:1742
+#: src/map.c:1738
 #, c-format
 msgid "%s: Trade"
 msgstr ""
 
-#: src/map.c:2541
+#: src/map.c:2535
 #, c-format
 msgid "Malformed %s file: missing root element 'map'"
 msgstr ""
 
-#: src/map.c:2564
+#: src/map.c:2558
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map.c:2591
+#: src/map.c:2585
 #, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr ""
 
-#: src/map.c:2596
+#: src/map.c:2590
 #, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr ""
@@ -66110,204 +66248,204 @@ msgid "TARGET"
 msgstr ""
 
 #. create the window.
-#: src/map_system.c:186
+#: src/map_system.c:196
 msgid "System Map"
 msgstr ""
 
-#: src/map_system.c:197
+#: src/map_system.c:207
 msgid "Buy commodity price info"
 msgstr ""
 
-#: src/map_system.c:304
+#: src/map_system.c:314
 #, c-format
 msgid "No gfx for %s...\n"
 msgstr ""
 
 #. no nebula or star images - probably due to nebula
-#: src/map_system.c:350 src/map_system.c:352
+#: src/map_system.c:360 src/map_system.c:362
 msgid "Obscured by the nebula"
 msgstr ""
 
-#: src/map_system.c:390
+#: src/map_system.c:400
 #, c-format
 msgid "System: %s\n"
-msgstr ""
+msgstr "Système : %s\n"
 
 #. display sun information
-#: src/map_system.c:392
+#: src/map_system.c:402
 #, c-format
 msgid "%d-star system\n"
 msgid_plural "%d-star system\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map_system.c:398
+#: src/map_system.c:408
 msgid "Nebula: Volatile, "
 msgstr ""
 
-#: src/map_system.c:400
+#: src/map_system.c:410
 msgid "Nebula: Dangerous, "
 msgstr ""
 
-#: src/map_system.c:402
+#: src/map_system.c:412
 msgid "Nebula: Unstable, "
 msgstr ""
 
-#: src/map_system.c:404
+#: src/map_system.c:414
 msgid "Nebula: Stable, "
 msgstr ""
 
-#: src/map_system.c:408
+#: src/map_system.c:418
 msgid "Dense\n"
 msgstr ""
 
-#: src/map_system.c:410
+#: src/map_system.c:420
 msgid "Light\n"
 msgstr ""
 
-#: src/map_system.c:412
+#: src/map_system.c:422
 msgid "Medium\n"
 msgstr ""
 
-#: src/map_system.c:414
+#: src/map_system.c:424
 msgid "Nebula: None\n"
 msgstr ""
 
-#: src/map_system.c:419
+#: src/map_system.c:429
 msgid "Interference: Dense\n"
 msgstr ""
 
-#: src/map_system.c:421
+#: src/map_system.c:431
 msgid "Interference: Light\n"
 msgstr ""
 
-#: src/map_system.c:429
+#: src/map_system.c:439
 #, c-format
 msgid " Asteroid Field density %g\n"
 msgstr ""
 
-#: src/map_system.c:438
+#: src/map_system.c:448
 msgid "Faction: Multiple\n"
-msgstr ""
+msgstr "Faction : Plusieurs\n"
 
-#: src/map_system.c:444
+#: src/map_system.c:454
 msgid "Faction: N/A\n"
-msgstr ""
+msgstr "Faction : N/A\n"
 
 #. saw them all and all the same
-#: src/map_system.c:447
+#: src/map_system.c:457
 #, c-format
 msgid ""
 "Faction: %s\n"
 "Standing: %s\n"
 msgstr ""
 
-#: src/map_system.c:474
+#: src/map_system.c:484
 msgid "Presence: N/A\n"
-msgstr ""
+msgstr "Présence : N/A\n"
 
 #. First jump
-#: src/map_system.c:485
+#: src/map_system.c:495
 msgid "   Jump points to:\n"
 msgstr ""
 
-#: src/map_system.c:489
+#: src/map_system.c:499
 msgid "     Unknown system\n"
 msgstr ""
 
-#: src/map_system.c:509
+#: src/map_system.c:519
 #, c-format
 msgid ""
 "Planet: %s\n"
 "Planetary class: %s    Population: %.0f\n"
 msgstr ""
 
-#: src/map_system.c:511
+#: src/map_system.c:521
 msgid "No space port here\n"
 msgstr ""
 
-#: src/map_system.c:513
+#: src/map_system.c:523
 msgid "You can land here\n"
 msgstr ""
 
-#: src/map_system.c:515
+#: src/map_system.c:525
 msgid "Not advisable to land here\n"
 msgstr ""
 
-#: src/map_system.c:517
+#: src/map_system.c:527
 msgid "You cannot land here\n"
 msgstr ""
 
 #. Add a description
-#: src/map_system.c:520
+#: src/map_system.c:530
 msgid "No description available"
 msgstr ""
 
-#: src/map_system.c:530
+#: src/map_system.c:540
 msgid "This system is landable"
 msgstr ""
 
-#: src/map_system.c:530
+#: src/map_system.c:540
 msgid "This system is not landable"
 msgstr ""
 
-#: src/map_system.c:531
+#: src/map_system.c:541
 msgid "This system is inhabited"
 msgstr ""
 
-#: src/map_system.c:531
+#: src/map_system.c:541
 msgid "This system is not inhabited"
 msgstr ""
 
-#: src/map_system.c:532
+#: src/map_system.c:542
 msgid "You can refuel here"
 msgstr ""
 
-#: src/map_system.c:532
+#: src/map_system.c:542
 msgid "You cannot refuel here"
 msgstr ""
 
-#: src/map_system.c:533
+#: src/map_system.c:543
 msgid "This system has a bar"
 msgstr ""
 
-#: src/map_system.c:533
+#: src/map_system.c:543
 msgid "This system does not have a bar"
 msgstr ""
 
-#: src/map_system.c:534
+#: src/map_system.c:544
 msgid "This system offers missions"
 msgstr ""
 
-#: src/map_system.c:534
+#: src/map_system.c:544
 msgid "This system does not offer missions"
 msgstr ""
 
-#: src/map_system.c:535
+#: src/map_system.c:545
 msgid "This system has a trade outlet"
 msgstr ""
 
-#: src/map_system.c:535
+#: src/map_system.c:545
 msgid "This system does not have a trade outlet"
 msgstr ""
 
-#: src/map_system.c:536
+#: src/map_system.c:546
 msgid "This system sells ship equipment"
-msgstr ""
+msgstr "Ce système vend de l'équipement pour vaisseaux"
 
-#: src/map_system.c:536
+#: src/map_system.c:546
 msgid "This system does not sell ship equipment"
-msgstr ""
+msgstr "Ce système ne vend pas d'équipement pour vaisseaux"
 
-#: src/map_system.c:537
+#: src/map_system.c:547
 msgid "This system sells ships"
-msgstr ""
+msgstr "Ce système vend des vaisseaux"
 
-#: src/map_system.c:537
+#: src/map_system.c:547
 msgid "This system does not sell ships"
-msgstr ""
+msgstr "Ce système ne vend pas de vaisseaux"
 
-#: src/map_system.c:623
+#: src/map_system.c:633
 #, c-format
 msgid ""
 "%s\n"
@@ -66321,7 +66459,7 @@ msgid ""
 "#nLicense:#0 %s"
 msgstr ""
 
-#: src/map_system.c:644
+#: src/map_system.c:654
 #, c-format
 msgid ""
 "#nModel:#0 %s    #nClass:#0 %s\n"
@@ -66341,76 +66479,76 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/map_system.c:714
+#: src/map_system.c:724
 #, c-format
 msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
 msgid_plural "#nYou have:#0 %d tonnes, purchased at %s/t\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map_system.c:720
+#: src/map_system.c:730
 #, c-format
 msgid "#nYou have:#0 %d tonne\n"
 msgid_plural "#nYou have:#0 %d tonnes\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map_system.c:725
+#: src/map_system.c:735
 #, c-format
 msgid ""
 "#nAverage price seen here:#0 %s/t ± %s/t\n"
 "#nAverage price seen everywhere:#0 %s/t ± %s/t\n"
 msgstr ""
 
-#: src/map_system.c:730
+#: src/map_system.c:740
 msgid "Unexpected call to map_system_array_update\n"
 msgstr ""
 
 #. no route
-#: src/map_system.c:1001
+#: src/map_system.c:1011
 msgid "Not available here"
 msgstr ""
 
-#: src/map_system.c:1001
+#: src/map_system.c:1011
 #, c-format
 msgid ""
 "Sorry, we don't have the commodity prices for %s available here at the "
 "moment."
 msgstr ""
 
-#: src/map_system.c:1013
+#: src/map_system.c:1023
 msgid "You can't afford that"
 msgstr ""
 
-#: src/map_system.c:1013
+#: src/map_system.c:1023
 #, c-format
 msgid ""
 "Sorry, but we are selling this information for %s, which you don't have."
 msgstr ""
 
-#: src/map_system.c:1015
+#: src/map_system.c:1025
 msgid "No commodities sold here"
 msgstr ""
 
-#: src/map_system.c:1015
+#: src/map_system.c:1025
 msgid "There are no commodities sold here, as far as we are aware!"
 msgstr ""
 
-#: src/map_system.c:1017
+#: src/map_system.c:1027
 msgid "You already have newer information"
 msgstr ""
 
-#: src/map_system.c:1017
+#: src/map_system.c:1027
 msgid ""
 "I've checked your computer, and you already have newer information than we "
 "can sell."
 msgstr ""
 
-#: src/map_system.c:1019
+#: src/map_system.c:1029
 msgid "Purchase commodity prices?"
 msgstr ""
 
-#: src/map_system.c:1019
+#: src/map_system.c:1029
 #, c-format
 msgid ""
 "For %s, that will cost %s. The latest information we have is %g periods old."
@@ -66583,22 +66721,22 @@ msgstr ""
 msgid "Mission Lua '%s' syntax error: %s"
 msgstr ""
 
-#: src/mission.c:1136
+#: src/mission.c:1135
 #, c-format
 msgid "Mission '%s' from saved game not found in game - ignoring."
 msgstr ""
 
-#: src/mission.c:1142
+#: src/mission.c:1141
 #, c-format
 msgid "Mission '%s' from saved game failed to load properly - ignoring."
 msgstr ""
 
-#: src/mission.c:1169
+#: src/mission.c:1168
 #, c-format
 msgid "System Marker to '%s' does not exist"
 msgstr ""
 
-#: src/mission.c:1199
+#: src/mission.c:1198
 msgid "Inconsistency with 'nitems' in save file."
 msgstr ""
 
@@ -66658,7 +66796,7 @@ msgstr ""
 msgid "Music thread did not exit when asked, ignoring..."
 msgstr ""
 
-#: src/naev.c:175 src/naev.c:1088
+#: src/naev.c:175 src/naev.c:1089
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -66668,7 +66806,7 @@ msgstr ""
 msgid "Unable to initialize SDL: %s"
 msgstr ""
 
-#: src/naev.c:204 src/opengl.c:477
+#: src/naev.c:204 src/opengl.c:448
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
 msgstr ""
@@ -66723,7 +66861,7 @@ msgstr ""
 
 #: src/naev.c:378
 msgid "Welcome to Naev"
-msgstr ""
+msgstr "Bienvenue dans Naev"
 
 #: src/naev.c:379
 #, c-format
@@ -66828,32 +66966,32 @@ msgstr ""
 msgid "clock_gettime failed!"
 msgstr ""
 
-#: src/naev.c:1004
+#: src/naev.c:1005
 msgid "PAUSED"
 msgstr ""
 
-#: src/naev.c:1029
+#: src/naev.c:1030
 msgid "Icon (icon.png) not found!"
 msgstr ""
 
-#: src/naev.c:1034
+#: src/naev.c:1035
 msgid "Unable to load icon.png!"
 msgstr ""
 
-#: src/naev.c:1059
+#: src/naev.c:1060
 msgid " debug"
 msgstr ""
 
-#: src/naev.c:1114
+#: src/naev.c:1115
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr ""
 
-#: src/naev.c:1124
+#: src/naev.c:1125
 msgid "SDL is newer than compiled version"
 msgstr ""
 
-#: src/naev.c:1126
+#: src/naev.c:1127
 msgid "SDL is older than compiled version."
 msgstr ""
 
@@ -66921,28 +67059,28 @@ msgstr ""
 msgid "Failure to copy '%s' to '%s': %s"
 msgstr ""
 
-#: src/ndata.h:63
+#: src/ndata.h:64
 msgid "Cabin-SemiBold.otf,NanumBarunGothicBold.ttf,SourceCodePro-Semibold.ttf"
 msgstr ""
 
 #. *< Default font path.
-#: src/ndata.h:64
+#: src/ndata.h:65
 msgid "SourceCodePro-Semibold.ttf,D2CodingBold.ttf"
 msgstr ""
 
-#: src/news.c:148
+#: src/news.c:146
 msgid ""
 "\n"
 "Last article, do not remove"
 msgstr ""
 
-#: src/news.c:158
+#: src/news.c:156
 msgid ""
 "\n"
 "Article to remove not found"
 msgstr ""
 
-#: src/news.c:310
+#: src/news.c:304
 msgid ""
 "\n"
 "\n"
@@ -66951,7 +67089,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: src/news.c:661
+#: src/news.c:640
 #, c-format
 msgid "Event is missing '%s', skipping."
 msgstr ""
@@ -66977,7 +67115,7 @@ msgstr ""
 msgid "$XDG_CACHE_HOME isn't set, using current directory."
 msgstr ""
 
-#: src/nfile.c:291
+#: src/nfile.c:291 src/save.c:142
 #, c-format
 msgid "Dir '%s' does not exist and unable to create: %s"
 msgstr ""
@@ -67022,22 +67160,22 @@ msgstr ""
 msgid "Colour '%s' does not exist!"
 msgstr ""
 
-#: src/nlua_commodity.c:124
+#: src/nlua_commodity.c:125
 msgid "Commodity is invalid."
 msgstr ""
 
-#: src/nlua_commodity.c:211 src/nlua_system.c:763
+#: src/nlua_commodity.c:212 src/nlua_system.c:763
 #, c-format
 msgid "Commodity '%s' not found!"
 msgstr ""
 
-#: src/nlua_commodity.c:339 src/nlua_commodity.c:375 src/nlua_player.c:1223
+#: src/nlua_commodity.c:340 src/nlua_commodity.c:376 src/nlua_player.c:1223
 #: src/nlua_player.c:1241
 #, c-format
 msgid "Planet '%s' does not belong to a system."
 msgstr ""
 
-#: src/nlua_commodity.c:344 src/nlua_commodity.c:380
+#: src/nlua_commodity.c:345 src/nlua_commodity.c:381
 #, c-format
 msgid "Planet '%s' can not find its system '%s'."
 msgstr ""
@@ -67086,7 +67224,7 @@ msgstr ""
 msgid "Event '%s' -> '%s': %s"
 msgstr ""
 
-#: src/nlua_evt.c:234 src/nlua_misn.c:938
+#: src/nlua_evt.c:234 src/nlua_misn.c:937
 msgid "Invalid NPC ID!"
 msgstr ""
 
@@ -67128,24 +67266,24 @@ msgstr ""
 msgid "Invalid window info name '%s'."
 msgstr ""
 
-#: src/nlua_hook.c:277
+#: src/nlua_hook.c:280
 msgid "Mission not in stack trying to hook, forgot to run misn.accept()?"
 msgstr ""
 
-#: src/nlua_hook.c:297
+#: src/nlua_hook.c:300
 msgid "Attempting to set a hook outside of a mission or event."
 msgstr ""
 
-#: src/nlua_hook.c:302
+#: src/nlua_hook.c:305
 msgid "No hook target was set."
 msgstr ""
 
-#: src/nlua_hook.c:821
+#: src/nlua_hook.c:824
 msgid "Invalid parameter #1 for hook.pilot, expecting pilot or nil."
 msgstr ""
 
 #. hook_type not valid
-#: src/nlua_hook.c:840
+#: src/nlua_hook.c:843
 #, c-format
 msgid "Invalid pilot hook type: '%s'"
 msgstr ""
@@ -67186,7 +67324,7 @@ msgstr ""
 msgid "Can't create an OSD on an unaccepted mission!"
 msgstr ""
 
-#: src/nlua_misn.c:970
+#: src/nlua_misn.c:969
 msgid "Mission trying to claim but already has."
 msgstr ""
 
@@ -67249,7 +67387,7 @@ msgstr ""
 msgid "Pilot is invalid."
 msgstr ""
 
-#: src/nlua_pilot.c:480 src/nlua_ship.c:221
+#: src/nlua_pilot.c:480 src/nlua_ship.c:222
 #, c-format
 msgid "Ship '%s' not found!"
 msgstr ""
@@ -67274,55 +67412,55 @@ msgstr ""
 msgid "Trying to remove the bloody player!"
 msgstr ""
 
-#: src/nlua_pilot.c:1631
+#: src/nlua_pilot.c:1629
 #, c-format
 msgid "Unknown slot type '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3055 src/nlua_pilot.c:3099
+#: src/nlua_pilot.c:3053 src/nlua_pilot.c:3097
 #, c-format
 msgid "Cargo '%s' does not exist!"
 msgstr ""
 
-#: src/nlua_pilot.c:3060
+#: src/nlua_pilot.c:3058
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
 
-#: src/nlua_pilot.c:3104
+#: src/nlua_pilot.c:3102
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)"
 msgstr ""
 
-#: src/nlua_pilot.c:3403
+#: src/nlua_pilot.c:3401
 msgid "pilot.memory requires 1 argument!"
 msgstr ""
 
-#: src/nlua_pilot.c:3412
+#: src/nlua_pilot.c:3410
 msgid "Pilot does not have AI."
 msgstr ""
 
-#: src/nlua_pilot.c:3457
+#: src/nlua_pilot.c:3455
 msgid "Pilot is not on manual control."
 msgstr ""
 
-#: src/nlua_pilot.c:3770
+#: src/nlua_pilot.c:3768
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
 msgstr ""
 
 #. Not found.
-#: src/nlua_pilot.c:3782
+#: src/nlua_pilot.c:3780
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3832
+#: src/nlua_pilot.c:3830
 #, c-format
 msgid "Planet '%s' not found in system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3886
+#: src/nlua_pilot.c:3884
 #, c-format
 msgid "#%c%s#0 is hailing you."
 msgstr ""
@@ -67335,17 +67473,17 @@ msgstr ""
 msgid "Attempting to get landed planet when player not landed."
 msgstr ""
 
-#: src/nlua_planet.c:282 src/nlua_planet.c:342
+#: src/nlua_planet.c:280 src/nlua_planet.c:341
 #, c-format
 msgid "Planet '%s' not found in stack"
 msgstr ""
 
-#: src/nlua_planet.c:347
+#: src/nlua_planet.c:346
 #, c-format
 msgid "Planet '%s' is not placed in a system"
 msgstr ""
 
-#: src/nlua_planet.c:352
+#: src/nlua_planet.c:351
 #, c-format
 msgid "Planet '%s' can't find system '%s'"
 msgstr ""
@@ -67398,16 +67536,16 @@ msgstr ""
 msgid "shader failed to compile!"
 msgstr ""
 
-#: src/nlua_ship.c:134
+#: src/nlua_ship.c:135
 msgid "Ship is invalid."
 msgstr ""
 
-#: src/nlua_ship.c:492
+#: src/nlua_ship.c:476
 #, c-format
 msgid "Unable to get ship target graphic for '%s'."
 msgstr ""
 
-#: src/nlua_ship.c:522
+#: src/nlua_ship.c:506
 #, c-format
 msgid "Unable to get ship graphic for '%s'."
 msgstr ""
@@ -67524,7 +67662,7 @@ msgstr ""
 msgid "UST %d:%.*f"
 msgstr ""
 
-#: src/nxml.c:99
+#: src/nxml.c:93
 #, c-format
 msgid "Unable to parse document '%s'"
 msgstr ""
@@ -67565,104 +67703,95 @@ msgstr ""
 msgid "Unknown Lua data type!"
 msgstr ""
 
-#: src/opengl.c:188
+#: src/opengl.c:115 src/player.c:2090
+msgid "Aborting screenshot"
+msgstr ""
+
+#: src/opengl.c:164
 msgid "GL invalid enum"
 msgstr ""
 
-#: src/opengl.c:191
+#: src/opengl.c:167
 msgid "GL invalid value"
 msgstr ""
 
-#: src/opengl.c:194
+#: src/opengl.c:170
 msgid "GL invalid operation"
 msgstr ""
 
-#: src/opengl.c:197
+#: src/opengl.c:173
 msgid "GL invalid framebuffer operation"
 msgstr ""
 
-#: src/opengl.c:200
+#: src/opengl.c:176
 msgid "GL out of memory"
 msgstr ""
 
-#: src/opengl.c:204
+#: src/opengl.c:180
 msgid "GL unknown error"
 msgstr ""
 
-#: src/opengl.c:207
+#: src/opengl.c:183
 #, c-format
 msgid "OpenGL error [%s:%d]: %s"
 msgstr ""
 
-#: src/opengl.c:297
+#: src/opengl.c:273
 #, c-format
 msgid "Unable to create window! %s"
 msgstr ""
 
-#: src/opengl.c:306
+#: src/opengl.c:282
 #, c-format
 msgid "Unable to create OpenGL context! %s"
 msgstr ""
 
 #. Debug happiness
-#: src/opengl.c:355
+#: src/opengl.c:326
 #, c-format
 msgid "OpenGL Drawable Created: %dx%d@%dbpp"
 msgstr ""
 
-#: src/opengl.c:356
+#: src/opengl.c:327
 #, c-format
 msgid "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
 msgstr ""
 
-#: src/opengl.c:358 src/opengl.c:361 src/opengl.c:362 src/opengl.c:363
+#: src/opengl.c:329 src/opengl.c:332 src/opengl.c:333 src/opengl.c:334
 msgid "yes"
 msgstr ""
 
-#: src/opengl.c:358 src/opengl.c:361 src/opengl.c:362 src/opengl.c:363
+#: src/opengl.c:329 src/opengl.c:332 src/opengl.c:333 src/opengl.c:334
 msgid "no"
 msgstr ""
 
-#: src/opengl.c:360
+#: src/opengl.c:331
 #, c-format
 msgid "vsync: %s, mm: %s, compress: %s"
 msgstr ""
 
-#: src/opengl.c:364 src/sound_openal.c:356
+#: src/opengl.c:335 src/sound_openal.c:356
 #, c-format
 msgid "Renderer: %s"
 msgstr ""
 
-#: src/opengl.c:365
+#: src/opengl.c:336
 #, c-format
 msgid "Version: %s"
 msgstr ""
 
-#: src/opengl.c:369
+#: src/opengl.c:340
 #, c-format
 msgid "Missing texture units (%d required, %d found)"
 msgstr ""
 
-#: src/opengl.c:372
+#: src/opengl.c:343
 #, c-format
 msgid "Unable to get requested FSAA level (%d requested, got %d)"
 msgstr ""
 
-#: src/opengl.c:423
+#: src/opengl.c:394
 msgid "Screen size too small, upscaling..."
-msgstr ""
-
-#: src/opengl.c:697
-#, c-format
-msgid "Unable to open '%s' for writing."
-msgstr ""
-
-#: src/opengl.c:703
-msgid "Unable to create png write struct."
-msgstr ""
-
-#: src/opengl.c:707
-msgid "Unable to create PNG info struct."
 msgstr ""
 
 #: src/opengl_shader.c:53
@@ -67675,56 +67804,61 @@ msgstr ""
 msgid "Invalid #include syntax in '%s%s'!"
 msgstr ""
 
+#: src/opengl_shader.c:221
+#, c-format
+msgid "Failed to link vertex shader '%s' and fragment shader '%s'!"
+msgstr ""
+
 #. We could hash raw pixel data here, but that's slower than just
 #. * generating the map from scratch.
 #.
-#: src/opengl_tex.c:387
+#: src/opengl_tex.c:388
 #, c-format
 msgid "Texture '%s' has no RWops"
 msgstr ""
 
-#: src/opengl_tex.c:596
+#: src/opengl_tex.c:597
 msgid "Trying to load image from NULL path."
 msgstr ""
 
-#: src/opengl_tex.c:603
+#: src/opengl_tex.c:604
 #, c-format
 msgid "Failed to load surface '%s' from ndata."
 msgstr ""
 
-#: src/opengl_tex.c:634
+#: src/opengl_tex.c:635
 #, c-format
 msgid "Unable to load image '%s'."
 msgstr ""
 
-#: src/opengl_tex.c:639
+#: src/opengl_tex.c:640
 #, c-format
 msgid "'%s' could not be opened"
 msgstr ""
 
 #. Not found
 #. Surfaces will have NULL names
-#: src/opengl_tex.c:753
+#: src/opengl_tex.c:754
 #, c-format
 msgid "Attempting to free texture '%s' not found in stack!"
 msgstr ""
 
 #. Invalid texture.
-#: src/opengl_tex.c:790
+#: src/opengl_tex.c:791
 #, c-format
 msgid "Unable to duplicate texture '%s'."
 msgstr ""
 
-#: src/opengl_tex.c:832
+#: src/opengl_tex.c:833
 #, c-format
 msgid "Angle not between 0 and 2.*M_PI [%f]."
 msgstr ""
 
-#: src/opengl_tex.c:898
+#: src/opengl_tex.c:899
 msgid "Texture leak detected!"
 msgstr ""
 
-#: src/opengl_tex.c:900
+#: src/opengl_tex.c:901
 #, c-format
 msgid "   '%s' opened %d time"
 msgid_plural "   '%s' opened %d times"
@@ -68181,7 +68315,7 @@ msgstr ""
 msgid "Damage has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1060
+#: src/outfit.c:1055
 #, c-format
 msgid ""
 "%s xml collision polygon does not exist!\n"
@@ -68189,27 +68323,27 @@ msgid ""
 "found in Naev's artwork repo."
 msgstr ""
 
-#: src/outfit.c:1162 src/outfit.c:1510
+#: src/outfit.c:1153 src/outfit.c:1502
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
 msgstr ""
 
-#: src/outfit.c:1188 src/outfit.c:1536
+#: src/outfit.c:1179 src/outfit.c:1528
 #, c-format
 msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 msgstr ""
 
-#: src/outfit.c:1224 src/outfit.c:1371 src/outfit.c:1455 src/outfit.c:1577
-#: src/outfit.c:1660 src/outfit.c:1755 src/outfit.c:1819 src/outfit.c:1865
-#: src/outfit.c:1937 src/outfit.c:1960 src/outfit.c:2002 src/outfit.c:2041
-#: src/outfit.c:2075 src/outfit.c:2214 src/outfit.c:2295
+#: src/outfit.c:1215 src/outfit.c:1362 src/outfit.c:1446 src/outfit.c:1576
+#: src/outfit.c:1659 src/outfit.c:1754 src/outfit.c:1818 src/outfit.c:1864
+#: src/outfit.c:1936 src/outfit.c:1959 src/outfit.c:2001 src/outfit.c:2040
+#: src/outfit.c:2074 src/outfit.c:2206 src/outfit.c:2287
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1253
+#: src/outfit.c:1244
 #, c-format
 msgid ""
 "%s [%s]\n"
@@ -68218,12 +68352,12 @@ msgid ""
 "%.2f DPS [%.0f Damage]\n"
 msgstr ""
 
-#: src/outfit.c:1263
+#: src/outfit.c:1254
 #, c-format
 msgid "%.2f Disable/s [%.0f Disable]\n"
 msgstr ""
 
-#: src/outfit.c:1267
+#: src/outfit.c:1258
 #, c-format
 msgid ""
 "%.1f Shots Per Second\n"
@@ -68232,21 +68366,21 @@ msgid ""
 "%.1f second heat up"
 msgstr ""
 
-#: src/outfit.c:1277
+#: src/outfit.c:1268
 #, c-format
 msgid ""
 "\n"
 "%.1f degree swivel"
 msgstr ""
 
-#: src/outfit.c:1284 src/outfit.c:1414 src/outfit.c:1588 src/outfit.c:1792
-#: src/outfit.c:1839 src/outfit.c:1875 src/outfit.c:1976 src/outfit.c:2015
-#: src/outfit.c:2050 src/outfit.c:2085 src/outfit.c:2299
+#: src/outfit.c:1275 src/outfit.c:1405 src/outfit.c:1587 src/outfit.c:1791
+#: src/outfit.c:1838 src/outfit.c:1874 src/outfit.c:1975 src/outfit.c:2014
+#: src/outfit.c:2049 src/outfit.c:2084 src/outfit.c:2291
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/outfit.c:1389
+#: src/outfit.c:1380
 #, c-format
 msgid ""
 "%s\n"
@@ -68255,12 +68389,12 @@ msgid ""
 "%.2f DPS [%s]\n"
 msgstr ""
 
-#: src/outfit.c:1399
+#: src/outfit.c:1390
 #, c-format
 msgid "%.0f Disable/s\n"
 msgstr ""
 
-#: src/outfit.c:1403
+#: src/outfit.c:1394
 #, c-format
 msgid ""
 "%.1f EPS\n"
@@ -68269,98 +68403,98 @@ msgid ""
 "%.1f second heat up"
 msgstr ""
 
-#: src/outfit.c:1467
+#: src/outfit.c:1458
 #, c-format
 msgid "Outfit '%s' missing '%s' element"
 msgstr ""
 
-#: src/outfit.c:1573
+#: src/outfit.c:1572
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
 msgstr ""
 
-#: src/outfit.c:1673
+#: src/outfit.c:1672
 msgid ""
 "\n"
 "#rActivated Outfit#0"
 msgstr ""
 
-#: src/outfit.c:1682
+#: src/outfit.c:1681
 #, c-format
 msgid "%+.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1683
+#: src/outfit.c:1682
 #, c-format
 msgid "%+.0f Thrust"
 msgstr ""
 
-#: src/outfit.c:1684
+#: src/outfit.c:1683
 #, c-format
 msgid "%+.0f Turn Rate"
 msgstr ""
 
-#: src/outfit.c:1685
+#: src/outfit.c:1684
 #, c-format
 msgid "%+.0f Maximum Speed"
 msgstr ""
 
-#: src/outfit.c:1686
+#: src/outfit.c:1685
 #, c-format
 msgid "%+.0f Armour"
 msgstr ""
 
-#: src/outfit.c:1687
+#: src/outfit.c:1686
 #, c-format
 msgid "%+.0f Shield"
 msgstr ""
 
-#: src/outfit.c:1688
+#: src/outfit.c:1687
 #, c-format
 msgid "%+.0f Energy"
 msgstr ""
 
-#: src/outfit.c:1689
+#: src/outfit.c:1688
 #, c-format
 msgid "%+.d Fuel"
 msgstr ""
 
-#: src/outfit.c:1690
+#: src/outfit.c:1689
 #, c-format
 msgid "%+.1f Armour Per Second"
 msgstr ""
 
-#: src/outfit.c:1691
+#: src/outfit.c:1690
 #, c-format
 msgid "%+.1f Shield Per Second"
 msgstr ""
 
-#: src/outfit.c:1692
+#: src/outfit.c:1691
 #, c-format
 msgid "%+.1f Energy Per Second"
 msgstr ""
 
-#: src/outfit.c:1693
+#: src/outfit.c:1692
 #, c-format
 msgid "%+.0f Absorption"
 msgstr ""
 
-#: src/outfit.c:1694
+#: src/outfit.c:1693
 #, c-format
 msgid "%+.0f Cargo"
 msgstr ""
 
-#: src/outfit.c:1695
+#: src/outfit.c:1694
 #, c-format
 msgid "%+.0f %% Crew"
 msgstr ""
 
-#: src/outfit.c:1696
+#: src/outfit.c:1695
 #, c-format
 msgid "%+.0f %% Mass"
 msgstr ""
 
-#: src/outfit.c:1761
+#: src/outfit.c:1760
 #, c-format
 msgid ""
 "%s\n"
@@ -68374,7 +68508,7 @@ msgid ""
 "%.1f Rumble"
 msgstr ""
 
-#: src/outfit.c:1829
+#: src/outfit.c:1828
 #, c-format
 msgid ""
 "%s\n"
@@ -68383,118 +68517,118 @@ msgid ""
 "Holds %d %s"
 msgstr ""
 
-#: src/outfit.c:1926
+#: src/outfit.c:1925
 #, c-format
 msgid "Map '%s' has invalid asset '%s'"
 msgstr ""
 
-#: src/outfit.c:1934
+#: src/outfit.c:1933
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr ""
 
-#: src/outfit.c:1941
+#: src/outfit.c:1940
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr ""
 
-#: src/outfit.c:2047
+#: src/outfit.c:2046
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2114 src/outfit.c:2438 src/slots.c:74 src/space.c:3200
-#: src/spfx.c:223 src/start.c:74
+#: src/outfit.c:2113 src/outfit.c:2430 src/slots.c:74 src/space.c:3129
+#: src/spfx.c:242 src/spfx.c:1038 src/start.c:74
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
 
-#: src/outfit.c:2124
+#: src/outfit.c:2123
 #, c-format
 msgid "Outfit in %s has invalid or no name"
 msgstr ""
 
-#: src/outfit.c:2177
+#: src/outfit.c:2169
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr ""
 
-#: src/outfit.c:2185
+#: src/outfit.c:2177
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr ""
 
-#: src/outfit.c:2198
+#: src/outfit.c:2190
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr ""
 
-#: src/outfit.c:2224
+#: src/outfit.c:2216
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 
-#: src/outfit.c:2240
+#: src/outfit.c:2232
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr ""
 
-#: src/outfit.c:2251
+#: src/outfit.c:2243
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr ""
 
-#: src/outfit.c:2368
+#: src/outfit.c:2360
 #, c-format
 msgid "Outfit '%s' missing/invalid 'ew_target' element"
 msgstr ""
 
-#: src/outfit.c:2370
+#: src/outfit.c:2362
 #, c-format
 msgid "Outfit '%s' missing/invalid 'lockon' element"
 msgstr ""
 
-#: src/outfit.c:2372
+#: src/outfit.c:2364
 #, c-format
 msgid "Outfit '%s' missing/invalid 'arc' element"
 msgstr ""
 
-#: src/outfit.c:2397
+#: src/outfit.c:2389
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2404
+#: src/outfit.c:2396
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2431
+#: src/outfit.c:2423
 #, c-format
 msgid "%s file is invalid xml!"
 msgstr ""
 
-#: src/outfit.c:2486
+#: src/outfit.c:2478
 #, c-format
 msgid "Outfit '%s' already has a short description"
 msgstr ""
 
-#: src/outfit.c:2494
+#: src/outfit.c:2486
 #, c-format
 msgid ""
 "%s [%s]\n"
 "%.0f CPU\n"
 msgstr ""
 
-#: src/outfit.c:2501
+#: src/outfit.c:2493
 #, c-format
 msgid "%.1f Second Lock-on\n"
 msgstr ""
 
-#: src/outfit.c:2505
+#: src/outfit.c:2497
 #, c-format
 msgid ""
 "Holds %d %s:\n"
@@ -68502,12 +68636,12 @@ msgid ""
 "%.2f DPS [%.0f Damage]\n"
 msgstr ""
 
-#: src/outfit.c:2514
+#: src/outfit.c:2506
 #, c-format
 msgid "%.1f Disable/s [%.0f Disable]\n"
 msgstr ""
 
-#: src/outfit.c:2518
+#: src/outfit.c:2510
 #, c-format
 msgid ""
 "%.1f Shots Per Second\n"
@@ -68531,22 +68665,22 @@ msgstr ""
 #. when timer is up.
 #. Outfit filter labels. [Doc comments are also translator notes and must precede the #define.]
 #. * Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title.
-#: src/outfit.h:33
+#: src/outfit.h:34
 msgid "#b W "
 msgstr ""
 
 #. * Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title.
-#: src/outfit.h:35
+#: src/outfit.h:36
 msgid "#g U "
 msgstr ""
 
 #. * Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title.
-#: src/outfit.h:37
+#: src/outfit.h:38
 msgid "#p S "
 msgstr ""
 
 #. * Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title.
-#: src/outfit.h:39
+#: src/outfit.h:40
 msgid "#oCore"
 msgstr ""
 
@@ -68581,33 +68715,33 @@ msgstr ""
 msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
-#: src/pilot.c:2285 src/pilot.c:2312
+#: src/pilot.c:2326 src/pilot.c:2353
 msgid "#rStrayed too far from jump point: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2292
+#: src/pilot.c:2333
 msgid "#rAfterburner active: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2332
+#: src/pilot.c:2373
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 
-#: src/pilot.c:2659
+#: src/pilot.c:2681
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr ""
 
-#: src/pilot.c:2732 src/pilot.c:2763
+#: src/pilot.c:2760 src/pilot.c:2791
 msgid "Unable to allocate memory"
 msgstr ""
 
-#: src/pilot.c:2911
+#: src/pilot.c:2919
 msgid "Creating pilot in system with no jumps nor planets to take off from!"
 msgstr ""
 
-#: src/pilot_cargo.c:81
+#: src/pilot_cargo.c:82
 #, c-format
 msgid "Unable to copy cargo over from pilot '%s' to '%s'. Leaving cargo as is."
 msgstr ""
@@ -68617,214 +68751,214 @@ msgstr ""
 msgid "Pilot '%s' failed to run hook type %d"
 msgstr ""
 
-#: src/pilot_outfit.c:348
+#: src/pilot_outfit.c:349
 #, c-format
 msgid ""
 "Pilot '%s': trying to add outfit '%s' to slot that already has an outfit"
 msgstr ""
 
-#: src/pilot_outfit.c:355
+#: src/pilot_outfit.c:356
 #, c-format
 msgid "Pilot '%s': Not enough CPU to add outfit '%s'"
 msgstr ""
 
-#: src/pilot_outfit.c:361
+#: src/pilot_outfit.c:362
 #, c-format
 msgid "Pilot '%s': Trying to add outfit but %s"
 msgstr ""
 
-#: src/pilot_outfit.c:446
+#: src/pilot_outfit.c:447
 #, c-format
 msgid "Pilot '%s': Trying to remove outfit but %s"
 msgstr ""
 
-#: src/pilot_outfit.c:509
+#: src/pilot_outfit.c:510
 msgid "Doesn't fit slot"
 msgstr ""
 
-#: src/pilot_outfit.c:513
+#: src/pilot_outfit.c:514
 msgid "Insufficient CPU"
 msgstr ""
 
-#: src/pilot_outfit.c:517
+#: src/pilot_outfit.c:518
 msgid "Insufficient Thrust"
 msgstr ""
 
-#: src/pilot_outfit.c:519
+#: src/pilot_outfit.c:520
 msgid "Insufficient Speed"
 msgstr ""
 
-#: src/pilot_outfit.c:521
+#: src/pilot_outfit.c:522
 msgid "Insufficient Turn"
 msgstr ""
 
-#: src/pilot_outfit.c:525
+#: src/pilot_outfit.c:526
 msgid "Insufficient Armour"
 msgstr ""
 
-#: src/pilot_outfit.c:527
+#: src/pilot_outfit.c:528
 msgid "Insufficient Armour Regeneration"
 msgstr ""
 
-#: src/pilot_outfit.c:529
+#: src/pilot_outfit.c:530
 msgid "Insufficient Shield"
 msgstr ""
 
-#: src/pilot_outfit.c:531
+#: src/pilot_outfit.c:532
 msgid "Insufficient Shield Regeneration"
 msgstr ""
 
-#: src/pilot_outfit.c:533
+#: src/pilot_outfit.c:534
 msgid "Insufficient Energy"
 msgstr ""
 
-#: src/pilot_outfit.c:535
+#: src/pilot_outfit.c:536
 msgid "Insufficient Energy Regeneration"
 msgstr ""
 
-#: src/pilot_outfit.c:539
+#: src/pilot_outfit.c:540
 msgid "Insufficient Fuel Maximum"
 msgstr ""
 
-#: src/pilot_outfit.c:541
+#: src/pilot_outfit.c:542
 msgid "Insufficient Fuel Consumption"
 msgstr ""
 
-#: src/pilot_outfit.c:543
+#: src/pilot_outfit.c:544
 msgid "Insufficient Free Cargo Space"
 msgstr ""
 
-#: src/pilot_outfit.c:547
+#: src/pilot_outfit.c:548
 msgid "Not All Core Slots are equipped"
 msgstr ""
 
 #. Core Slots
-#: src/pilot_outfit.c:569
+#: src/pilot_outfit.c:570
 msgid "!! Not All Core Slots are equipped\n"
 msgstr ""
 
 #. CPU.
-#: src/pilot_outfit.c:571
+#: src/pilot_outfit.c:572
 msgid "!! Insufficient CPU\n"
 msgstr ""
 
 #. Movement.
-#: src/pilot_outfit.c:574
+#: src/pilot_outfit.c:575
 msgid "!! Insufficient Thrust\n"
 msgstr ""
 
-#: src/pilot_outfit.c:575
+#: src/pilot_outfit.c:576
 msgid "!! Insufficient Speed\n"
 msgstr ""
 
-#: src/pilot_outfit.c:576
+#: src/pilot_outfit.c:577
 msgid "!! Insufficient Turn\n"
 msgstr ""
 
 #. Health.
-#: src/pilot_outfit.c:579
+#: src/pilot_outfit.c:580
 msgid "!! Insufficient Armour\n"
 msgstr ""
 
-#: src/pilot_outfit.c:580
+#: src/pilot_outfit.c:581
 msgid "!! Insufficient Armour Regeneration\n"
 msgstr ""
 
-#: src/pilot_outfit.c:581
+#: src/pilot_outfit.c:582
 msgid "!! Insufficient Shield\n"
 msgstr ""
 
-#: src/pilot_outfit.c:582
+#: src/pilot_outfit.c:583
 msgid "!! Insufficient Shield Regeneration\n"
 msgstr ""
 
-#: src/pilot_outfit.c:583
+#: src/pilot_outfit.c:584
 msgid "!! Insufficient Energy\n"
 msgstr ""
 
-#: src/pilot_outfit.c:584
+#: src/pilot_outfit.c:585
 msgid "!! Insufficient Energy Regeneration\n"
 msgstr ""
 
 #. Misc.
-#: src/pilot_outfit.c:587
+#: src/pilot_outfit.c:588
 msgid "!! Insufficient Fuel Maximum\n"
 msgstr ""
 
-#: src/pilot_outfit.c:588
+#: src/pilot_outfit.c:589
 msgid "!! Insufficient Fuel Consumption\n"
 msgstr ""
 
-#: src/pilot_outfit.c:589
+#: src/pilot_outfit.c:590
 msgid "!! Insufficient Free Cargo Space\n"
 msgstr ""
 
-#: src/pilot_outfit.c:590
+#: src/pilot_outfit.c:591
 msgid "!! Insufficient Crew\n"
 msgstr ""
 
 #. string is empty so no errors encountered
-#: src/pilot_outfit.c:602
+#: src/pilot_outfit.c:603
 msgid "Spaceworthy"
 msgstr ""
 
-#: src/pilot_outfit.c:645
+#: src/pilot_outfit.c:646
 msgid "Nothing selected."
 msgstr ""
 
-#: src/pilot_outfit.c:650
+#: src/pilot_outfit.c:651
 msgid "Does not fit slot."
 msgstr ""
 
-#: src/pilot_outfit.c:653
+#: src/pilot_outfit.c:654
 msgid "Already have an outfit of this type installed"
 msgstr ""
 
-#: src/pilot_outfit.c:656
+#: src/pilot_outfit.c:657
 msgid "Can only install unique outfit once."
 msgstr ""
 
-#: src/pilot_outfit.c:661
+#: src/pilot_outfit.c:662
 msgid "Recall the fighters first"
 msgstr ""
 
-#: src/pilot_outfit.c:684
+#: src/pilot_outfit.c:685
 #, c-format
 msgid "Pilot '%s': Trying to add ammo to unequipped slot."
 msgstr ""
 
-#: src/pilot_outfit.c:688
+#: src/pilot_outfit.c:689
 #, c-format
 msgid ""
 "Pilot '%s': Trying to add ammo to non-launcher/fighterbay type outfit '%s'"
 msgstr ""
 
-#: src/pilot_outfit.c:693
+#: src/pilot_outfit.c:694
 #, c-format
 msgid "Pilot '%s': Trying to add non-ammo/fighter type outfit '%s' as ammo."
 msgstr ""
 
-#: src/pilot_outfit.c:698
+#: src/pilot_outfit.c:699
 #, c-format
 msgid "Pilot '%s': Trying to add fighter '%s' as launcher '%s' ammo"
 msgstr ""
 
-#: src/pilot_outfit.c:703
+#: src/pilot_outfit.c:704
 #, c-format
 msgid "Pilot '%s': Trying to add ammo '%s' as fighter bay '%s' ammo"
 msgstr ""
 
-#: src/pilot_outfit.c:709
+#: src/pilot_outfit.c:710
 #, c-format
 msgid "Pilot '%s': Trying to add ammo to outfit that already has ammo."
 msgstr ""
 
-#: src/pilot_outfit.c:745
+#: src/pilot_outfit.c:746
 #, c-format
 msgid "Pilot '%s': Trying to remove ammo from unequipped slot."
 msgstr ""
 
-#: src/pilot_outfit.c:749
+#: src/pilot_outfit.c:750
 #, c-format
 msgid ""
 "Pilot '%s': Trying to remove ammo from non-launcher/fighter bay type outfit "
@@ -68852,38 +68986,38 @@ msgstr ""
 msgid "Shooting unknown weapon type: %s"
 msgstr ""
 
-#: src/player.c:250
+#: src/player.c:246
 msgid "Normal Speed"
 msgstr ""
 
-#: src/player.c:251
+#: src/player.c:247
 msgid "Slow Speed"
 msgstr ""
 
 #. Get the name.
-#: src/player.c:258
+#: src/player.c:254
 msgid "Player Name"
 msgstr ""
 
-#: src/player.c:259
+#: src/player.c:255
 msgid "Please write your name:"
 msgstr ""
 
-#: src/player.c:269
+#: src/player.c:265
 msgid "Overwrite"
 msgstr ""
 
-#: src/player.c:270
+#: src/player.c:266
 #, c-format
 msgid "You already have a pilot named %s. Overwrite?"
 msgstr ""
 
 #. Set game speed.
-#: src/player.c:278
+#: src/player.c:274
 msgid "Game Speed"
 msgstr ""
 
-#: src/player.c:279
+#: src/player.c:275
 msgid ""
 "Your game can be set to normal speed or slow speed. Slow speed causes time "
 "in space to pass at half the rate it would in normal speed, which may be "
@@ -68892,391 +69026,387 @@ msgid ""
 "speed is probably what you want.)"
 msgstr ""
 
-#: src/player.c:309
+#: src/player.c:305
 #, c-format
 msgid "Failed to run start mission '%s'."
 msgstr ""
 
-#: src/player.c:315
+#: src/player.c:311
 #, c-format
 msgid "Failed to run start event '%s'."
 msgstr ""
 
-#: src/player.c:354
+#: src/player.c:350
 msgid "Ship not properly set by module."
 msgstr ""
 
-#: src/player.c:416
+#: src/player.c:412
 msgid "Please name your new ship:"
 msgstr ""
 
-#: src/player.c:439
+#: src/player.c:435
 msgid "Name collision"
 msgstr ""
 
-#: src/player.c:450
+#: src/player.c:446
 msgid "Player ship isn't valid... This shouldn't happen!"
 msgstr ""
 
-#: src/player.c:517
+#: src/player.c:513
 msgid ""
 "Something seriously wonky went on, newly created player does not exist, "
 "bailing!"
 msgstr ""
 
-#: src/player.c:594
+#: src/player.c:590
 #, c-format
 msgid "Unable to swap player.p with ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:623
+#: src/player.c:619
 #, c-format
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:886
+#: src/player.c:878
 msgid "Harmless"
 msgstr ""
 
-#: src/player.c:887
+#: src/player.c:879
 msgid "Mostly Harmless"
 msgstr ""
 
-#: src/player.c:888
+#: src/player.c:880
 msgid "Smallfry"
 msgstr ""
 
-#: src/player.c:889
+#: src/player.c:881
 msgid "Average"
 msgstr ""
 
-#: src/player.c:890
+#: src/player.c:882
 msgid "Above Average"
 msgstr ""
 
-#: src/player.c:891
+#: src/player.c:883
 msgid "Major"
 msgstr ""
 
-#: src/player.c:892
+#: src/player.c:884
 msgid "Intimidating"
 msgstr ""
 
-#: src/player.c:893
+#: src/player.c:885
 msgid "Fearsome"
 msgstr ""
 
-#: src/player.c:894
+#: src/player.c:886
 msgid "Terrifying"
 msgstr ""
 
-#: src/player.c:895
+#: src/player.c:887
 msgid "Unstoppable"
 msgstr ""
 
-#: src/player.c:896
+#: src/player.c:888
 msgid "Godlike"
 msgstr ""
 
-#: src/player.c:1324
+#: src/player.c:1316
 #, c-format
 msgid "Trying to set player's planet target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1374
+#: src/player.c:1366
 msgid "Asteroid targeted, composition: "
 msgstr ""
 
-#: src/player.c:1377
+#: src/player.c:1369
 #, c-format
 msgid "%s, quantity: %i"
 msgstr ""
 
-#: src/player.c:1382
+#: src/player.c:1374
 msgid "Asteroid targeted"
 msgstr ""
 
-#: src/player.c:1450
+#: src/player.c:1442
 msgid "#rThere are no planets to land on."
 msgstr ""
 
-#: src/player.c:1487
+#: src/player.c:1479
 msgid "#rDocking stabilizers malfunctioning, cannot land."
 msgstr ""
 
-#: src/player.c:1494
+#: src/player.c:1486
 msgid "#rYou can't land here."
 msgstr ""
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1512
+#: src/player.c:1504
 #, c-format
 msgid "#oReady to land on %s."
 msgstr ""
 
-#: src/player.c:1522
+#: src/player.c:1514
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr ""
 
-#: src/player.c:1527
+#: src/player.c:1519
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
-#: src/player.c:1566
+#: src/player.c:1558
 msgid "Player has landing permission, but no valid planet targeted."
 msgstr ""
 
-#: src/player.c:1577
+#: src/player.c:1569
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr ""
 
-#: src/player.c:1604
+#: src/player.c:1596
 msgid "You are not allowed to land at this moment."
 msgstr ""
 
-#: src/player.c:1618
+#: src/player.c:1610
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1721
+#: src/player.c:1713
 #, c-format
 msgid "#rReceiving hail! Press %s to respond."
 msgstr ""
 
-#: src/player.c:1776
+#: src/player.c:1768
 msgid "#rAborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1783
+#: src/player.c:1775
 msgid "#rYou are too far from a jump point to initiate hyperspace."
 msgstr ""
 
-#: src/player.c:1785 src/player_autonav.c:85
+#: src/player.c:1777 src/player_autonav.c:85
 msgid "#rHyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1787
+#: src/player.c:1779
 msgid "#rYou do not have enough fuel to hyperspace jump."
 msgstr ""
 
-#: src/player.c:1789
+#: src/player.c:1781
 msgid "#oPreparing for hyperspace."
 msgstr ""
 
-#: src/player.c:1865
+#: src/player.c:1857
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr ""
 
-#: src/player.c:1870
+#: src/player.c:1862
 #, c-format
 msgid "#oAutonav continuing until destination (%d jump left)."
 msgid_plural "#oAutonav continuing until destination (%d jumps left)."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/player.c:2100
-msgid "Aborting screenshot"
-msgstr ""
-
 #. in case the crap system breaks :)
-#: src/player.c:2113
+#: src/player.c:2102
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2118
+#: src/player.c:2107
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2152
+#: src/player.c:2141
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2176 src/player.c:2199
+#: src/player.c:2165 src/player.c:2188
 msgid "#rNo target selected to hail."
 msgstr ""
 
-#: src/player.c:2233
+#: src/player.c:2222
 msgid "#rYou haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2244
+#: src/player.c:2233
 msgid "#oMouse flying enabled."
 msgstr ""
 
-#: src/player.c:2250
+#: src/player.c:2239
 msgid "#rMouse flying disabled."
 msgstr ""
 
-#: src/player.c:2480
+#: src/player.c:2469
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:2905
+#: src/player.c:2888
 msgid "Escort is undeployed"
 msgstr ""
 
-#: src/player.c:3123
+#: src/player.c:3106
 msgid "Found mission cargo without associated mission."
 msgstr ""
 
-#: src/player.c:3124
+#: src/player.c:3107
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3274
+#: src/player.c:3257
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3308
+#: src/player.c:3291
 #, c-format
 msgid "Outfit '%s' was saved but does not exist!"
 msgstr ""
 
-#: src/player.c:3314
+#: src/player.c:3297
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3334
+#: src/player.c:3317
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3337
+#: src/player.c:3320
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3348
+#: src/player.c:3331
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3354
+#: src/player.c:3337
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3364
+#: src/player.c:3347
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3373
+#: src/player.c:3356
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3403
+#: src/player.c:3386
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3407
+#: src/player.c:3390
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr ""
 
-#: src/player.c:3459
+#: src/player.c:3442
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3487
+#: src/player.c:3470
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3515
+#: src/player.c:3498
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3546
+#: src/player.c:3529
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3570
+#: src/player.c:3553
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:3578
+#: src/player.c:3561
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:3600
+#: src/player.c:3583
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:3668
+#: src/player.c:3651
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:3718
+#: src/player.c:3701
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:3731 src/player.c:3744
+#: src/player.c:3714 src/player.c:3727
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:3761
+#: src/player.c:3744
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:3785
+#: src/player.c:3768
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:3828
+#: src/player.c:3811
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:3836
+#: src/player.c:3819
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:3840
+#: src/player.c:3823
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:3856
+#: src/player.c:3839
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:3869
+#: src/player.c:3852
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:3877
+#: src/player.c:3860
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:3882
+#: src/player.c:3865
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
@@ -69311,28 +69441,28 @@ msgstr ""
 msgid "#oAutonav: aborting hyperspace sequence."
 msgstr ""
 
-#: src/player_autonav.c:369
+#: src/player_autonav.c:371
 msgid "#oAutonav: arrived at position."
 msgstr ""
 
-#: src/player_autonav.c:379
+#: src/player_autonav.c:381
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
 msgstr ""
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
-#: src/player_autonav.c:394
+#: src/player_autonav.c:396
 #, c-format
 msgid "#oAutonav: following target  %s has been lost."
 msgstr ""
 
-#: src/player_autonav.c:591
+#: src/player_autonav.c:593
 msgid "Target changed to current system"
 msgstr ""
 
-#: src/player_autonav.c:595
+#: src/player_autonav.c:597
 msgid "Not enough fuel for autonav to continue"
-msgstr ""
+msgstr "Pas assez de carburant pour continuer en pilote automatique"
 
 #: src/player_gui.c:71
 #, c-format
@@ -69343,16 +69473,11 @@ msgstr ""
 msgid "Trying to save game data"
 msgstr ""
 
-#: src/save.c:141
-#, c-format
-msgid "Failed to create save directory '%ssaves'."
-msgstr ""
-
-#: src/save.c:149
+#: src/save.c:150
 msgid "Aborting save..."
 msgstr ""
 
-#: src/save.c:160
+#: src/save.c:161
 msgid ""
 "Failed to write saved game!  You'll most likely have to restore it by "
 "copying your backup saved game over your current saved game."
@@ -69438,7 +69563,7 @@ msgstr ""
 msgid "Ship '%s' does not have an engine sprite (%s)."
 msgstr ""
 
-#: src/ship.c:594
+#: src/ship.c:593
 #, c-format
 msgid ""
 "%s xml collision polygon does not exist!\n"
@@ -69448,49 +69573,49 @@ msgid ""
 "                These files can be found in Naev's artwork repo."
 msgstr ""
 
-#: src/ship.c:680
+#: src/ship.c:678
 #, c-format
 msgid "Ship '%s' has implicit slot size, setting to '%s'"
 msgstr ""
 
-#: src/ship.c:718
+#: src/ship.c:716
 #, c-format
 msgid "Ship '%s' has default outfit '%s' which does not exist."
 msgstr ""
 
-#: src/ship.c:728
+#: src/ship.c:726
 #, c-format
 msgid "Ship '%s' has required slot without a default outfit."
 msgstr ""
 
-#: src/ship.c:759
+#: src/ship.c:758
 #, c-format
 msgid "Ship in %s has invalid or no name"
 msgstr ""
 
-#: src/ship.c:783
+#: src/ship.c:785
 #, c-format
 msgid "Ship '%s': GFX element is NULL"
 msgstr ""
 
-#: src/ship.c:805
+#: src/ship.c:803
 #, c-format
 msgid ""
 "Ship '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 msgstr ""
 
-#: src/ship.c:818
+#: src/ship.c:816
 #, c-format
 msgid "Ship '%s': gfx_space element is NULL"
 msgstr ""
 
-#: src/ship.c:842
+#: src/ship.c:836
 #, c-format
 msgid "Ship '%s': gfx_engine element is NULL"
 msgstr ""
 
-#: src/ship.c:865
+#: src/ship.c:855
 #, c-format
 msgid "Ship '%s': gfx_comm element is NULL"
 msgstr ""
@@ -69513,29 +69638,29 @@ msgstr ""
 msgid "Ship '%s' has unknown characteristic node '%s'."
 msgstr ""
 
-#: src/ship.c:962
+#: src/ship.c:967
 #, c-format
 msgid "Ship '%s' has unknown slot node '%s'."
 msgstr ""
 
-#: src/ship.c:1001
+#: src/ship.c:986
 #, c-format
 msgid "Ship '%s' has unknown stat '%s'."
 msgstr ""
 
-#: src/ship.c:1025
+#: src/ship.c:1010
 #, c-format
 msgid "Ship '%s' has unknown node '%s'."
 msgstr ""
 
 #. Convert to rad.
 #. ship validator
-#: src/ship.c:1033
+#: src/ship.c:1018
 #, c-format
 msgid "Ship '%s' missing '%s' element"
 msgstr ""
 
-#: src/ship.c:1121
+#: src/ship.c:1106
 #, c-format
 msgid "Loaded %d Ship"
 msgid_plural "Loaded %d Ships"
@@ -69924,64 +70049,64 @@ msgstr ""
 msgid "Group '%d' has no free sounds."
 msgstr ""
 
-#: src/space.c:175
+#: src/space.c:171
 msgid "Inhabited"
 msgstr ""
 
-#: src/space.c:182
+#: src/space.c:178
 msgid "Blackmarket"
 msgstr ""
 
-#: src/space.c:365
+#: src/space.c:361
 #, c-format
 msgid "Unable to find jump in point for '%s' in '%s': not connected"
 msgstr ""
 
-#: src/space.c:845
+#: src/space.c:822
 #, c-format
 msgid "System '%s' not found in stack"
 msgstr ""
 
-#: src/space.c:906
+#: src/space.c:883
 #, c-format
 msgid "Planet '%s' not found in planetname stack"
 msgstr ""
 
-#: src/space.c:922
+#: src/space.c:899
 msgid "Trying to find NULL planet..."
 msgstr ""
 
-#: src/space.c:930
+#: src/space.c:907
 #, c-format
 msgid "Planet '%s' not found in the universe"
 msgstr ""
 
-#: src/space.c:945
+#: src/space.c:922
 #, c-format
 msgid "Planet index '%d' out of range (max %d)"
 msgstr ""
 
-#: src/space.c:1059
+#: src/space.c:1036
 msgid "Trying to find NULL jump point..."
 msgstr ""
 
-#: src/space.c:1069
+#: src/space.c:1046
 #, c-format
 msgid "Jump point '%s' not found in %s"
 msgstr ""
 
-#: src/space.c:1090
+#: src/space.c:1067
 #, c-format
 msgid "Jump point to '%s' not found in %s"
 msgstr ""
 
-#: src/space.c:1137
+#: src/space.c:1114
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'create'."
 msgstr ""
 
-#: src/space.c:1152
+#: src/space.c:1129
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'."
@@ -69990,65 +70115,65 @@ msgstr ""
 #. f, [arg,], max
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:1164
+#: src/space.c:1141
 #, c-format
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr ""
 
-#: src/space.c:1172 src/space.c:4330
+#: src/space.c:1149 src/space.c:4234
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
 
-#: src/space.c:1184
+#: src/space.c:1161
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a table)."
 msgstr ""
 
-#: src/space.c:1192
+#: src/space.c:1169
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a pilot)."
 msgstr ""
 
-#: src/space.c:1205
+#: src/space.c:1182
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a number)."
 msgstr ""
 
-#: src/space.c:1212
+#: src/space.c:1189
 #, c-format
 msgid "Lua spawn script for faction '%s' actually spawned a '%s' pilot."
 msgstr ""
 
-#: src/space.c:1342
+#: src/space.c:1319
 #, c-format
 msgid "You discovered #%c%s#0."
-msgstr ""
+msgstr "Vous avez découvert #%c%s#0."
 
-#: src/space.c:1359
+#: src/space.c:1336
 msgid "You discovered a Jump Point."
 msgstr ""
 
-#: src/space.c:1492
+#: src/space.c:1478
 msgid "Cannot reinit system if there is no system previously loaded"
 msgstr ""
 
-#: src/space.c:1499
+#: src/space.c:1485
 #, c-format
 msgid "System %s not found in stack"
 msgstr ""
 
-#: src/space.c:1503
+#: src/space.c:1489
 #, c-format
 msgid "#oEntering System %s on %s."
 msgstr ""
 
-#: src/space.c:1505
+#: src/space.c:1491
 #, c-format
 msgid "#rWARNING - Volatile nebula detected in %s! Taking damage!"
 msgstr ""
 
-#: src/space.c:1737
+#: src/space.c:1722
 #, c-format
 msgid ""
 "Failed to load landing file: %s\n"
@@ -70057,54 +70182,54 @@ msgid ""
 msgstr ""
 
 #. error has occurred
-#: src/space.c:1884
+#: src/space.c:1869
 #, c-format
 msgid "Landing: '%s' : %s"
 msgstr ""
 
-#: src/space.c:1894
+#: src/space.c:1879
 #, c-format
 msgid "%s: %s (%s) -> return parameter 2 is not a string!"
 msgstr ""
 
-#: src/space.c:1895
+#: src/space.c:1880
 msgid "Invalid land message"
 msgstr ""
 
-#: src/space.c:1904
+#: src/space.c:1889
 #, c-format
 msgid "%s: %s (%s) -> return parameter 4 is not a string!"
 msgstr ""
 
-#: src/space.c:1905
+#: src/space.c:1890
 msgid "Invalid bribe message"
 msgstr ""
 
-#: src/space.c:1911
+#: src/space.c:1896
 #, c-format
 msgid "%s: %s (%s) -> return parameter 5 is not a string!"
 msgstr ""
 
-#: src/space.c:1912
+#: src/space.c:1897
 msgid "Invalid bribe ack message"
 msgstr ""
 
-#: src/space.c:1918
+#: src/space.c:1903
 #, c-format
 msgid "%s: %s (%s) -> return parameter 3 is not a number or string or nil!"
 msgstr ""
 
-#: src/space.c:2082
+#: src/space.c:2064
 #, c-format
 msgid "Planet '%s' has landing function '%s' which is not found in '%s'."
 msgstr ""
 
-#: src/space.c:2106
+#: src/space.c:2088
 #, c-format
 msgid "Planet '%s' has unknown services tag '%s'"
 msgstr ""
 
-#: src/space.c:2150
+#: src/space.c:2119
 #, c-format
 msgid "Unknown node '%s' in planet '%s'"
 msgstr ""
@@ -70112,126 +70237,126 @@ msgstr ""
 #.
 #. * verification
 #.
-#: src/space.c:2156
+#: src/space.c:2125
 #, c-format
 msgid "Planet '%s' missing '%s' element"
 msgstr ""
 
-#: src/space.c:2305
+#: src/space.c:2242
 #, c-format
 msgid "Unable to remove planet '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2317
+#: src/space.c:2254
 #, c-format
 msgid "Planet '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2339
+#: src/space.c:2275
 #, c-format
 msgid "Unable to find planet '%s' and system '%s' in planet<->system stack."
 msgstr ""
 
-#: src/space.c:2404
+#: src/space.c:2340
 #, c-format
 msgid "Unable to remove jump point '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2416
+#: src/space.c:2352
 #, c-format
 msgid "Jump point '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2615
+#: src/space.c:2555
 #, c-format
 msgid "Unknown node '%s' in star system '%s'"
 msgstr ""
 
-#: src/space.c:2618
+#: src/space.c:2561
 #, c-format
 msgid "Star System '%s' missing '%s' element"
 msgstr ""
 
-#: src/space.c:2619
+#: src/space.c:2562
 #, c-format
 msgid "Star System '%s' missing 'name' tag"
 msgstr ""
 
-#: src/space.c:2709 src/space.c:2801
+#: src/space.c:2652 src/space.c:2737
 #, c-format
 msgid "JumpPoint node for system '%s' has no target attribute."
 msgstr ""
 
-#: src/space.c:2714 src/space.c:2806
+#: src/space.c:2657 src/space.c:2742
 #, c-format
 msgid "JumpPoint node for system '%s' has invalid target '%s'."
 msgstr ""
 
-#: src/space.c:2726 src/space.c:2819
+#: src/space.c:2669 src/space.c:2755
 #, c-format
 msgid "Star System '%s' has duplicate jump point to '%s'."
 msgstr ""
 
-#: src/space.c:2864
+#: src/space.c:2799
 #, c-format
 msgid ""
 "JumpPoint in system '%s' is missing pos element but does not have autopos "
 "flag."
 msgstr ""
 
-#: src/space.c:2897
+#: src/space.c:2829
 #, c-format
 msgid "System '%s' was not found in the stack for some reason"
 msgstr ""
 
-#: src/space.c:2982
+#: src/space.c:2915
 #, c-format
 msgid "Asteroid field in %s has no position."
 msgstr ""
 
-#: src/space.c:2985
+#: src/space.c:2918
 #, c-format
 msgid "Asteroid field in %s has no radius."
 msgstr ""
 
-#: src/space.c:3050
+#: src/space.c:2979
 #, c-format
 msgid "Asteroid exclusion in %s has no position."
 msgstr ""
 
-#: src/space.c:3053
+#: src/space.c:2982
 #, c-format
 msgid "Asteroid exclusion in %s has no radius."
 msgstr ""
 
-#: src/space.c:3193
+#: src/space.c:3122
 #, c-format
 msgid "Malformed '%s' file: missing root element 'Asteroid_types'"
 msgstr ""
 
-#: src/space.c:3256
+#: src/space.c:3176
 msgid "Asteroid type's commodity lacks name or quantity."
 msgstr ""
 
-#: src/space.c:3264
+#: src/space.c:3181
 msgid "Asteroid type has no gfx associated."
 msgstr ""
 
-#: src/space.c:3360
+#: src/space.c:3273
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/space.c:3361
+#: src/space.c:3274
 #, c-format
 msgid "       with %d Planet"
 msgid_plural "       with %d Planets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/space.c:3762 src/space.c:3806
+#: src/space.c:3673 src/space.c:3717
 msgid "Unknown marker type."
 msgstr ""
 
@@ -70240,41 +70365,66 @@ msgstr ""
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:4322
+#: src/space.c:4226
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
 
-#: src/spfx.c:146
+#: src/spfx.c:165
 #, c-format
 msgid "SPFX '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/spfx.c:156
+#: src/spfx.c:175
 #, c-format
 msgid "SPFX '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/spfx.c:305
+#: src/spfx.c:339
 msgid "Trying to add spfx with invalid effect!"
 msgstr ""
 
-#: src/spfx.c:317
+#: src/spfx.c:353
 msgid "Invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:562
+#: src/spfx.c:820
 #, c-format
 msgid "Unable to upload haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:599
+#: src/spfx.c:857
 #, c-format
 msgid "Failed to update haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:649
+#: src/spfx.c:911
 msgid "Rendering invalid SPFX layer."
+msgstr ""
+
+#: src/spfx.c:1001
+#, c-format
+msgid "Trail '%s' has unknown node '%s'."
+msgstr ""
+
+#: src/spfx.c:1004
+#, c-format
+msgid "Trail '%s' missing '%s' element"
+msgstr ""
+
+#: src/spfx.c:1031
+#, c-format
+msgid "Malformed '%s' file: missing root element 'Trail_types'"
+msgstr ""
+
+#: src/spfx.c:1079
+#, c-format
+msgid "Trail '%s' that inherits from '%s' has missing reference!"
+msgstr ""
+
+#: src/spfx.c:1119
+#, c-format
+msgid "Trail type '%s' not found in stack"
 msgstr ""
 
 #: src/start.c:104
@@ -70422,38 +70572,38 @@ msgstr ""
 msgid "Widget '%s' is not an image array."
 msgstr ""
 
-#: src/toolkit.c:265
+#: src/toolkit.c:263
 #, c-format
 msgid ""
 "Trying to create widget '%s' over existing one that hasn't been destroyed"
 msgstr ""
 
-#: src/toolkit.c:321 src/toolkit.c:327
+#: src/toolkit.c:319 src/toolkit.c:325
 #, c-format
 msgid "Window '%u' not found in list!"
 msgstr ""
 
-#: src/toolkit.c:347 src/toolkit.c:356
+#: src/toolkit.c:345 src/toolkit.c:354
 #, c-format
 msgid "Widget '%s' not found in window '%u'!"
 msgstr ""
 
-#: src/toolkit.c:691
+#: src/toolkit.c:689
 #, c-format
 msgid "Window with name '%s' already exists!"
 msgstr ""
 
-#: src/toolkit.c:1058
+#: src/toolkit.c:1056
 #, c-format
 msgid "window '%d' does not exist"
 msgstr ""
 
-#: src/toolkit.c:1093
+#: src/toolkit.c:1091
 #, c-format
 msgid "Widget '%s' not found in window '%s'"
 msgstr ""
 
-#: src/toolkit.c:1803
+#: src/toolkit.c:1801
 #, c-format
 msgid "Toolkit: Button '%s' of Window '%s' doesn't have a function trigger"
 msgstr ""
@@ -70612,30 +70762,30 @@ msgstr ""
 msgid "Unknown hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1041
+#: src/unidiff.c:1038
 #, c-format
 msgid "Unknown Hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1046
+#: src/unidiff.c:1043
 #, c-format
 msgid "Failed to remove hunk type '%d'."
 msgstr ""
 
-#: src/unidiff.c:1159
+#: src/unidiff.c:1156
 msgid "Expected node \"diff\" to contain the name of a unidiff. Was empty."
 msgstr ""
 
-#: src/weapon.c:372
+#: src/weapon.c:374
 #, c-format
 msgid "Unknown weapon status for '%s'"
 msgstr ""
 
-#: src/weapon.c:493 src/weapon.c:627 src/weapon.c:1649 src/weapon.c:1791
+#: src/weapon.c:495 src/weapon.c:629 src/weapon.c:1685 src/weapon.c:1827
 msgid "Unknown weapon layer!"
 msgstr ""
 
-#: src/weapon.c:588
+#: src/weapon.c:590
 #, c-format
 msgid "Weapon of type '%s' has no update implemented yet!"
 msgstr ""
@@ -70645,23 +70795,23 @@ msgstr ""
 msgid "Weapon of type '%s' has no render implemented yet!"
 msgstr ""
 
-#: src/weapon.c:1596
+#: src/weapon.c:1632
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
 msgstr ""
 
-#: src/weapon.c:1632
+#: src/weapon.c:1668
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
 msgstr ""
 
-#: src/weapon.c:1692
+#: src/weapon.c:1728
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
 msgstr ""
 
-#: src/weapon.c:1712 src/weapon.c:1756 src/weapon.c:1920
+#: src/weapon.c:1748 src/weapon.c:1792 src/weapon.c:1959
 msgid "Invalid WEAPON_LAYER specified"
 msgstr ""
 
-#: src/weapon.c:1797
+#: src/weapon.c:1833
 msgid "Trying to destroy weapon not found in stack!"
 msgstr ""

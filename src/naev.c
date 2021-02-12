@@ -939,13 +939,14 @@ static void render_all (void)
    /* setup */
    spfx_begin(dt, real_dt);
    /* BG */
-   space_render(dt);
+   space_render( real_dt ); /* Nebula looks really weird otherwise. */
    planets_render();
+   spfx_render(SPFX_LAYER_BACK);
    weapons_render(WEAPON_LAYER_BG, dt);
    /* N */
    pilots_render(dt);
    weapons_render(WEAPON_LAYER_FG, dt);
-   spfx_render(SPFX_LAYER_BACK);
+   spfx_render(SPFX_LAYER_MIDDLE);
    /* FG */
    player_render(dt);
    spfx_render(SPFX_LAYER_FRONT);

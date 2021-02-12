@@ -132,7 +132,7 @@ static void nebu_renderBackground( const double dt )
    gl_Matrix4 projection;
 
    /* calculate frame to draw */
-   nebu_time += dt / nebu_dt;
+   nebu_time += dt * nebu_dt;
 
    /* Compensate possible rumble */
    spfx_getShake( &sx, &sy );
@@ -149,7 +149,7 @@ static void nebu_renderBackground( const double dt )
    /* Set shader uniforms. */
    gl_uniformColor(shaders.nebula_background.color, &cBlue);
    gl_Matrix4_Uniform(shaders.nebula_background.projection, projection);
-   glUniform2f(shaders.nebula_background.center, gl_screen.w / 2, gl_screen.h / 2);
+   glUniform2f(shaders.nebula_background.center, gl_screen.rw / 2, gl_screen.rh / 2);
    glUniform1f(shaders.nebula_background.radius, nebu_view * cam_getZoom());
    glUniform1f(shaders.nebula_background.time, nebu_time);
 
@@ -243,6 +243,7 @@ void nebu_renderOverlay( const double dt )
    gl_Matrix4_Uniform(shaders.nebula.projection, projection);
    glUniform2f(shaders.nebula.center, gl_screen.rw / 2, gl_screen.rh / 2);
    glUniform1f(shaders.nebula.radius, nebu_view * z * (1 / gl_screen.scale));
+   glUniform1f(shaders.nebula.time, nebu_time);
 
    glEnableVertexAttribArray(shaders.nebula.vertex);
    gl_vboActivateAttribOffset( nebu_vboOverlay, shaders.nebula.vertex, 0, 2, GL_FLOAT, 0 );
@@ -322,10 +323,10 @@ void nebu_prep( double density, double volatility )
 
    nebu_density = density;
    nebu_update( 0. );
-   nebu_dt   = 2000. / (density + 100.); /* Faster at higher density */
+   nebu_dt   = (2.*density + 200.) / 10000.; /* Faster at higher density */
    nebu_time = 0.;
 
-   nebu_npuffs = density/4.;
+   nebu_npuffs = density/2.;
    nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);
    for (i=0; i<nebu_npuffs; i++) {
       /* Position */

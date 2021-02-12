@@ -30,13 +30,11 @@
 #include "perlin.h"
 #include "physics.h"
 #include "rng.h"
+#include "space.h"
 
 
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
 #define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
-
-#define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
-#define SPFX_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
 
 #define SHAKE_MASS      (1./400.) /** Shake mass. */
 #define SHAKE_K         (1./50.) /**< Constant for virtual spring. */
@@ -115,6 +113,7 @@ typedef struct SPFX_ {
 
 /* front stack is for effects on player, back is for the rest */
 static SPFX *spfx_stack_front = NULL; /**< Frontal special effect layer. */
+static SPFX *spfx_stack_middle = NULL; /**< Middle special effect layer. */
 static SPFX *spfx_stack_back = NULL; /**< Back special effect layer. */
 
 
@@ -271,6 +270,7 @@ int spfx_load (void)
 
    /* Stacks. */
    spfx_stack_front = array_create( SPFX );
+   spfx_stack_middle = array_create( SPFX );
    spfx_stack_back = array_create( SPFX );
 
    return 0;
@@ -291,6 +291,8 @@ void spfx_free (void)
    spfx_clear();
    array_free(spfx_stack_front);
    spfx_stack_front = NULL;
+   array_free(spfx_stack_middle);
+   spfx_stack_middle = NULL;
    array_free(spfx_stack_back);
    spfx_stack_back = NULL;
 
@@ -343,6 +345,8 @@ void spfx_add( int effect,
     */
    if (layer == SPFX_LAYER_FRONT) /* front layer */
       cur_spfx = &array_grow( &spfx_stack_front );
+   else if (layer == SPFX_LAYER_MIDDLE) /* middle layer */
+      cur_spfx = &array_grow( &spfx_stack_middle );
    else if (layer == SPFX_LAYER_BACK) /* back layer */
       cur_spfx = &array_grow( &spfx_stack_back );
    else {
@@ -390,6 +394,7 @@ void spfx_clear (void)
 void spfx_update( const double dt )
 {
    spfx_update_layer( spfx_stack_front, dt );
+   spfx_update_layer( spfx_stack_middle, dt );
    spfx_update_layer( spfx_stack_back, dt );
    spfx_update_trails( dt );
 }
@@ -488,8 +493,11 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
    trail->ttl = spec->ttl;
    trail->capacity = 1;
    trail->iread = trail->iwrite = 0;
-   trail->point_ringbuf = calloc( trail->capacity, sizeof(trailPoint) );
+   trail->point_ringbuf = calloc( trail->capacity, sizeof(TrailPoint) );
    trail->refcount = 1;
+   trail->type = spec->type;
+   trail->nebula = spec->nebula;
+   trail->r = RNGF();
 
    if ( trail_spfx_stack == NULL )
       trail_spfx_stack = array_create( Trail_spfx* );
@@ -510,6 +518,9 @@ void spfx_update_trails( double dt ) {
 
    for (i=0; i<array_size(trail_spfx_stack); i++) {
       trail = trail_spfx_stack[i];
+      if (trail->nebula  && (cur_system->nebu_density<=0.))
+         continue;
+
       spfx_trail_update( trail, dt );
       if (!trail->refcount && !trail_size(trail) ) {
          spfx_trail_free( trail );
@@ -530,12 +541,16 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
    size_t i;
 
    /* Update all elements. */
-   for (i=trail->iread; i<trail->iwrite; i++)
-      trail_at( trail, i ).t -= dt / trail->ttl;
+   for (i = trail->iread; i < trail->iwrite; i++)
+      trail_at( trail, i ).t -= dt/ trail->ttl;
 
    /* Remove first elements if they're outdated. */
-   while (trail->iread < trail->iwrite && trail_front(trail).t < 0.)
+   while (trail->iread < trail->iwrite && trail_front(trail).t < 0.) {
       trail->iread++;
+   }
+
+   /* Update timer. */
+   trail->dt += dt;
 }
 
 
@@ -548,8 +563,13 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
  */
 void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
 {
-   trailPoint p;
-   p.p = pos;
+   TrailPoint p;
+
+   if (style.col.a <= 0.)
+      return;
+
+   p.x = pos.x;
+   p.y = pos.y;
    p.c = style.col;
    p.t = 1.;
    p.thickness = style.thick;
@@ -564,10 +584,10 @@ void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
    /* If the last time we inserted a control point was recent enough, we don't need a new one. */
    if (trail_size(trail) == trail->capacity) {
       /* Full! Double capacity, and make the elements contiguous. (We've made space to grow rightward.) */
-      trail->point_ringbuf = realloc( trail->point_ringbuf, 2 * trail->capacity * sizeof(trailPoint) );
+      trail->point_ringbuf = realloc( trail->point_ringbuf, 2 * trail->capacity * sizeof(TrailPoint) );
       trail->iread %= trail->capacity;
       trail->iwrite = trail->iread + trail->capacity;
-      memmove( &trail->point_ringbuf[trail->capacity], trail->point_ringbuf, trail->iread * sizeof(trailPoint) );
+      memmove( &trail->point_ringbuf[trail->capacity], trail->point_ringbuf, trail->iread * sizeof(TrailPoint) );
       trail->capacity *= 2;
    }
    trail_at( trail, trail->iwrite++ ) = p;
@@ -582,6 +602,7 @@ void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
 static void spfx_trail_clear( Trail_spfx* trail )
 {
    trail->iread = trail->iwrite = 0;
+   trail->dt = 0.;
 }
 
 
@@ -614,21 +635,64 @@ static void spfx_trail_free( Trail_spfx* trail )
 static void spfx_trail_draw( const Trail_spfx* trail )
 {
    double x1, y1, x2, y2, z;
-   trailPoint *tp, *tpp;
+   TrailPoint *tp, *tpp;
    size_t i, n;
+   GLfloat len;
+   gl_Matrix4 projection;
+   double a, s;
 
    n = trail_size(trail);
    if (n==0)
       return;
 
+   /* Stuff that doesn't change for the entire trail. */
+   glUseProgram( shaders.trail.program );
+   glEnableVertexAttribArray( shaders.trail.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );
+   glUniform1f( shaders.trail.dt, trail->dt );
+   glUniform1f( shaders.trail.r, trail->r );
+
+   z   = cam_getZoom();
+   len = 0.;
    for (i = trail->iread + 1; i < trail->iwrite; i++) {
-      z   = cam_getZoom();
       tp  = &trail_at( trail, i );
       tpp = &trail_at( trail, i-1 );
-      gl_gameToScreenCoords( &x1, &y1,  tp->p.x,  tp->p.y );
-      gl_gameToScreenCoords( &x2, &y2, tpp->p.x, tpp->p.y );
-      gl_drawTrail( x1, y1, x2, y2, tp->t, tpp->t, &tp->c, &tpp->c, tp->thickness * z, tpp->thickness * z );
+      gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
+      gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
+
+      a = atan2( y2-y1, x2-x1 );
+      s = hypotf( x2-x1, y2-y1 );
+
+      /* Set vertex. */
+      projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);
+      projection = gl_Matrix4_Rotate2d(projection, a);
+      projection = gl_Matrix4_Scale(projection, s, z*(tp->thickness+tpp->thickness), 1);
+      projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
+
+      /* Set uniforms. */
+      gl_Matrix4_Uniform(shaders.trail.projection, projection);
+      gl_uniformColor(shaders.trail.c1, &tp->c);
+      gl_uniformColor(shaders.trail.c2, &tpp->c);
+      glUniform1f(shaders.trail.t1, tp->t);
+      glUniform1f(shaders.trail.t2, tpp->t);
+      glUniform2f(shaders.trail.pos2, len, tp->thickness );
+      len += s;
+      glUniform2f(shaders.trail.pos1, len, tpp->thickness );
+
+      /* Set the subroutine. */
+      if (GLAD_GL_ARB_shader_subroutine)
+         glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &trail->type );
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    }
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.trail.vertex );
+   glUseProgram(0);
+
+   /* Check errors. */
+   gl_checkErr();
 }
 
 
@@ -827,11 +891,16 @@ void spfx_render( const int layer )
    SPFX_Base *effect;
    int sx, sy;
    double time;
+   Trail_spfx *trail;
 
    /* get the appropriate layer */
    switch (layer) {
       case SPFX_LAYER_FRONT:
          spfx_stack = spfx_stack_front;
+         break;
+
+      case SPFX_LAYER_MIDDLE:
+         spfx_stack = spfx_stack_middle;
          break;
 
       case SPFX_LAYER_BACK:
@@ -845,8 +914,12 @@ void spfx_render( const int layer )
 
    /* Trails are special (for now?). */
    if (layer == SPFX_LAYER_BACK)
-      for (i=0; i<array_size(trail_spfx_stack); i++)
-         spfx_trail_draw( trail_spfx_stack[i] );
+      for (i=0; i<array_size(trail_spfx_stack); i++) {
+         trail = trail_spfx_stack[i];
+         if (trail->nebula && (cur_system->nebu_density<=0.))
+            continue;
+         spfx_trail_draw( trail );
+      }
 
    /* Now render the layer */
    for (i=array_size(spfx_stack)-1; i>=0; i--) {
@@ -877,6 +950,7 @@ void spfx_render( const int layer )
  */
 static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
 {
+   char *type;
    xmlNodePtr cur = node->children;
 
    do {
@@ -885,6 +959,16 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
          tc->def_thick = xml_getFloat( cur );
       else if (xml_isNode(cur, "ttl"))
          tc->ttl = xml_getFloat( cur );
+      else if (xml_isNode(cur, "type")) {
+         type = xml_get(cur);
+         if (GLAD_GL_ARB_shader_subroutine) {
+            tc->type = glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );
+            if (tc->type == GL_INVALID_INDEX)
+               WARN("Trail '%s' has unknown type '%s'", tc->name, type );
+         }
+      }
+      else if (xml_isNode(cur, "nebula"))
+         tc->nebula = xml_getInt( cur );
       else if (xml_isNode(cur,"idle")) {
          xmlr_attr_float_opt( cur, "r", tc->idle.col.r );
          xmlr_attr_float_opt( cur, "g", tc->idle.col.g );
@@ -999,11 +1083,9 @@ static int trailSpec_load (void)
          free( name );
 
          /* Set properties. */
-         tc->ttl  = parent->ttl;
-         tc->idle = parent->idle;
-         tc->glow = parent->glow;
-         tc->aftb = parent->aftb;
-         tc->jmpn = parent->jmpn;
+         name = tc->name;
+         memcpy( tc, parent, sizeof(TrailSpec) );
+         tc->name = name;
 
          /* Load remaining properties (overrides parent). */
          trailSpec_parse( node, tc );

@@ -14,17 +14,18 @@
 
 
 #define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
-#define GLSL_COLORBLIND "#define COLORBLIND_MODE ROD_MONOCHROMACY\n" /**< Line to enable colorblind mode. */
+#define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
+#define GLSL_COLORBLIND "#define COLORBLIND_MODE ROD_MONOCHROMACY 1\n" /**< Line to enable colorblind mode. */
 
 
 /*
  * Prototypes.
  */
-static char* gl_shader_loadfile( const char *filename, size_t *size, int main, const char *prepend );
+static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend );
 static GLuint gl_shader_compile( GLuint type, const char *buf,
       GLint length, const char *filename);
 static int gl_program_link( GLuint program );
-static int gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
+static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
 
 
 /**
@@ -32,11 +33,10 @@ static int gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
  *
  *    @param[in] filename Filename of the shader to load.
  *    @param[out] size Size of the loaded shader.
- *    @param[in] main Whether or not this is the main shader.
  *    @param[in] prepend String that should be prepended.
  *    @return The loaded shader buffer.
  */
-static char* gl_shader_loadfile( const char *filename, size_t *size, int main, const char *prepend )
+static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend )
 {
    size_t i, bufsize, ibufsize, fbufsize;
    char *buf, *fbuf, *ibuf, *newbuf;
@@ -55,7 +55,7 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main, c
    }
 
    /* Prepend useful information if available. */
-   if (main && (prepend != NULL)) {
+   if (prepend != NULL) {
       bufsize = fbufsize+strlen(prepend)+1;
       buf = malloc( bufsize );
       snprintf( buf, bufsize, "%s%s", prepend, fbuf );
@@ -96,7 +96,7 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main, c
       include[i] = '\0'; /* Last character should be " or > */
 
       /* Recursive loading and handling of #includes. */
-      ibuf = gl_shader_loadfile( include, &ibufsize, 0, NULL );
+      ibuf = gl_shader_loadfile( include, &ibufsize, NULL );
 
       /* Move data over. */
       newbuf = malloc( bufsize+ibufsize );
@@ -107,8 +107,9 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, int main, c
       len    = ibufsize;
       strncpy( &newbuf[offset], ibuf, len );
       offset += len;
-      len    = bufsize-(subs-buf-1);
-      strncpy( &newbuf[offset], subs+1, bufsize-(subs-buf-1) );
+      subs   = subs+1;
+      len    = bufsize-(subs-buf);
+      strncpy( &newbuf[offset], subs, bufsize-(subs-buf) );
       offset += len;
       newbuf[offset] = '\0';
 
@@ -146,11 +147,12 @@ static GLuint gl_shader_compile( GLuint type, const char *buf,
 
    /* Check for compile error */
    glGetShaderiv(shader, GL_COMPILE_STATUS, &compile_status);
-   if (compile_status == GL_FALSE) {
-      glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
+   glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
+   //if (GL_COMPILE_STATUS == GL_FALSE) {
+   if (log_length > 0) {
       log = malloc(log_length + 1);
       glGetShaderInfoLog(shader, log_length, &log_length, log);
-      WARN("%s %s\n", filename, log);
+      WARN("%s\n%s\n", filename, log);
       free(log);
       shader = 0;
    }
@@ -174,7 +176,9 @@ static int gl_program_link( GLuint program )
 
    /* Check for linking error */
    glGetProgramiv(program, GL_LINK_STATUS, &link_status);
-   if (link_status == GL_FALSE) {
+   glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
+   //if (link_status == GL_FALSE) {
+   if (log_length > 0) {
       glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
       log = malloc(log_length + 1);
       glGetProgramInfoLog(program, log_length, &log_length, log);
@@ -192,38 +196,34 @@ static int gl_program_link( GLuint program )
  *
  *    @param[in] vertfile Vertex shader filename.
  *    @param[in] fragfile Fragment shader filename.
- *    @return The shader compiled program.
+ *    @return The shader compiled program or 0 on failure.
  */
-int gl_program_vert_frag( const char *vertfile, const char *fragfile )
+GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
 {
-   char *vert_str, *frag_str, *prepend, *buf;
-   size_t vert_size, frag_size, prepend_len;
-   GLuint vertex_shader, fragment_shader;
+   char *vert_str, *frag_str, prepend[STRMAX];
+   size_t vert_size, frag_size;
+   GLuint vertex_shader, fragment_shader, program;
 
-   prepend_len = strlen(GLSL_VERSION) + 1;
-   prepend = malloc( sizeof(prepend) * prepend_len );
-   strcpy( prepend, GLSL_VERSION );
+   strncpy( prepend, GLSL_VERSION, sizeof(prepend) );
+   if (conf.colorblind)
+      strncat( prepend, GLSL_COLORBLIND, strlen(prepend)-strlen(GLSL_COLORBLIND) );
+   if (GLAD_GL_ARB_shader_subroutine)
+      strncat( prepend, GLSL_SUBROUTINE, strlen(prepend)-strlen(GLSL_SUBROUTINE) );
 
-   if ( conf.colorblind ) {
-      prepend_len = strlen(prepend) + strlen(GLSL_COLORBLIND) + 1;
-      buf = malloc( sizeof(buf) * prepend_len );
-      nsnprintf( buf, prepend_len, "%s%s", prepend, GLSL_COLORBLIND );
-      buf[prepend_len - 1] = '\0';
-      free( prepend );
-      prepend = buf;
-   }
+   vert_str = gl_shader_loadfile( vertfile, &vert_size, prepend );
+   frag_str = gl_shader_loadfile( fragfile, &frag_size, prepend );
 
-   vert_str = gl_shader_loadfile( vertfile, &vert_size, 1, prepend );
-   frag_str = gl_shader_loadfile( fragfile, &frag_size, 1, prepend );
-
-   vertex_shader = gl_shader_compile( GL_VERTEX_SHADER, vert_str, vert_size, vertfile );
-   fragment_shader = gl_shader_compile( GL_FRAGMENT_SHADER, frag_str, frag_size, fragfile );
+   vertex_shader     = gl_shader_compile( GL_VERTEX_SHADER, vert_str, vert_size, vertfile );
+   fragment_shader   = gl_shader_compile( GL_FRAGMENT_SHADER, frag_str, frag_size, fragfile );
 
    free( vert_str );
    free( frag_str );
-   free( prepend );
 
-   return gl_program_make( vertex_shader, fragment_shader );
+   program = gl_program_make( vertex_shader, fragment_shader );
+   if (program==0)
+      WARN(_("Failed to link vertex shader '%s' and fragment shader '%s'!"), vertfile, fragfile);
+
+   return program;
 }
 
 
@@ -234,13 +234,15 @@ int gl_program_vert_frag( const char *vertfile, const char *fragfile )
  *    @param[in] vert_size Size of the vertex shader string.
  *    @param[in] frag Fragment shader string.
  *    @param[in] frag_size Size of the fragment shader string.
- *    @return The shader compiled program.
+ *    @return The shader compiled program or 0 on failure.
  */
-int gl_program_vert_frag_string( const char *vert, size_t vert_size, const char *frag, size_t frag_size )
+GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size, const char *frag, size_t frag_size )
 {
    GLuint vertex_shader, fragment_shader;
-   vertex_shader = gl_shader_compile( GL_VERTEX_SHADER, vert, vert_size, NULL );
-   fragment_shader = gl_shader_compile( GL_FRAGMENT_SHADER, frag, frag_size, NULL );
+   /* Compile the shaders. */
+   vertex_shader     = gl_shader_compile( GL_VERTEX_SHADER, vert, vert_size, NULL );
+   fragment_shader   = gl_shader_compile( GL_FRAGMENT_SHADER, frag, frag_size, NULL );
+   /* Link. */
    return gl_program_make( vertex_shader, fragment_shader );
 }
 
@@ -250,9 +252,9 @@ int gl_program_vert_frag_string( const char *vert, size_t vert_size, const char 
  *
  *    @param vertex_shader Vertex shader to make program from.
  *    @param fragment_shader Fragment shader to make program from.
- *    @return New shader program.
+ *    @return New shader program or 0 on failure.
  */
-static int gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
+static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
 {
    GLuint program = 0;
    if (vertex_shader != 0 && fragment_shader != 0) {
@@ -260,6 +262,7 @@ static int gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
       glAttachShader(program, vertex_shader);
       glAttachShader(program, fragment_shader);
       if (gl_program_link(program) == -1) {
+         /* Spec specifies 0 as failure value for glCreateProgram() */
          program = 0;
       }
    }

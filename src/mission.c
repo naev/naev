@@ -43,8 +43,6 @@
 
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
 
-#define MISSION_CHUNK         32 /**< Chunk allocation. */
-
 
 /*
  * current player missions
@@ -1160,8 +1158,8 @@ static int missions_parseActive( xmlNodePtr parent )
                nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"marker")) {
-                     xmlr_attr_atoi_neg1(nest,"id",id);
-                     xmlr_attr_atoi_neg1(nest,"type",type);
+                     xmlr_attr_int_def( nest, "id", id, -1 );
+                     xmlr_attr_int_def( nest, "type", type, -1 );
                      /* Get system. */
                      ssys = system_get( xml_get( nest ));
                      if (ssys == NULL) {
@@ -1185,7 +1183,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* OSD. */
             if (xml_isNode(cur,"osd")) {
-               xmlr_attr_atoi_neg1(cur,"nitems",nitems);
+               xmlr_attr_int_def( cur, "nitems", nitems, -1 );
                if (nitems == -1)
                   continue;
                xmlr_attr_strd(cur,"title",title);
@@ -1209,7 +1207,7 @@ static int missions_parseActive( xmlNodePtr parent )
                free(title);
 
                /* Set active. */
-               xmlr_attr_atoi_neg1(cur,"active",active);
+               xmlr_attr_int_def( cur, "active", active, -1 );
                if (active != -1)
                   osd_active( misn->osd, active );
             }
