@@ -20,14 +20,14 @@ subroutine uniform trail_func_prototype trail_func;
 
 // For ideas: https://thebookofshaders.com/05/
 
-uniform vec4 c1;
-uniform vec4 c2;
-uniform float t1;
-uniform float t2;
-uniform float dt;
-uniform vec2 pos1;
-uniform vec2 pos2;
-uniform float r;
+uniform vec4 c1;  // Start colour
+uniform vec4 c2;  // End colour
+uniform float t1; // Start time [0,1]
+uniform float t2; // End time [0,1]
+uniform float dt; // Current time (in seconds)
+uniform vec2 pos1;// Start position
+uniform vec2 pos2;// End position
+uniform float r;  // Unique value per trail [0,1]
 
 in vec2 pos;
 out vec4 color_out;
@@ -157,7 +157,7 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos_px )
    color.a *= sharpbeam( pos_tex.y, 3*m );
    color.a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-pos_tex.x );
 
-   // We only do two iterations here
+   // We only do two iterations here (turbulence noise)
    coords = 0.02 * pos_px + vec2( dt, 0 ) + 1000.*r;
    f  = abs( cnoise( coords * SCALAR ) );
    f += abs( cnoise( coords * pow(SCALAR,2.) ) );
@@ -179,7 +179,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Modulate alpha based on dispersion
    m = 1.5 + 1.5*impulse( 1.-pos_tex.x, 1. );
 
-   // Modulate width
+   // Create three beams with varying parameters
    ncoord = vec2( 0.03 * pos_px.x, 7*dt ) + 1000 * r;
    s =  0.6 * smoothstep(0, 0.2, 1.-pos_tex.x);
    p = pos_tex.y + s * snoise( ncoord );
@@ -209,7 +209,6 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos_px )
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
    //coords = pos_px + vec2( 220*dt, 0 );
-   //p = 0.5 + min( 0.5, snoise( 0.08 * coords ) );
    coords = pos_px + vec2( 120*dt, 0 ) + 1000 * r;
    p = 1 - 0.7*cellular2x2( 0.13 * coords ).x;
 
