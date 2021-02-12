@@ -21,13 +21,13 @@
   <falloff>850</falloff>
   <gfx_end>laser1S.png</gfx_end>
   <energy>10</energy>
-  <heatup>20</heatup>
+  <heatup>35</heatup>
   <track>3</track>
   <swivel>22</swivel>
   <damage>
    <type>normal</type>
    <penetrate>12</penetrate>
-   <physical>23</physical>
+   <physical>26</physical>
    <disable>2</disable>
   </damage>
  </specific>
