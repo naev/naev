@@ -20,14 +20,16 @@ jobs:
 
       - name: Package Dist
         run: |
-          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-          meson dist -C build --formats=gztar --no-tests --include-subprojects
+          ./autogen.sh
+          ./configure
+          make dist-gzip
+          make dat/VERSION
 
       - name: Upload Dist Artifact
         uses: actions/upload-artifact@v2
         with:
           name: naev-dist-${{ github.sha }}
-          path: ${{ github.workspace }}/build/meson-dist/*
+          path: ${{ github.workspace }}/build/naev-*.tar.gz
 
   "Linux_Compile_Naev":
     needs: "Package_Source"

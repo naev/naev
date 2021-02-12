@@ -25,13 +25,16 @@ jobs:
 
       - name: Package Dist
         run: |
-          meson setup build source -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
-          meson dist -C build --formats=gztar --no-tests --include-subprojects
+          ./autogen.sh
+          ./configure
+          make dist-gzip
+          make dat/VERSION
 
       - name: Collect Artifacts
         run: |
           mkdir -p dist/out/steam
-          mv build/meson-dist/naev-*.tar.gz dist/out/source.tar.gz
+          mkdir -p dist/out
+          mv naev-*.tar.gz dist/out/source.tar.gz
           cp source/CHANGELOG dist/out
           cp source/dat/VERSION dist/out
           cp -r source/utils/ci/steam/* dist/out/steam
