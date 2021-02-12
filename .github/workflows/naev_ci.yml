@@ -20,10 +20,12 @@ jobs:
 
       - name: Package Dist
         run: |
+          cd source
           ./autogen.sh
           ./configure
           make dist-gzip
           make dat/VERSION
+          cd ..
 
       - name: Upload Dist Artifact
         uses: actions/upload-artifact@v2

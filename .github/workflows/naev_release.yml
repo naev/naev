@@ -25,16 +25,18 @@ jobs:
 
       - name: Package Dist
         run: |
+          cd source
           ./autogen.sh
           ./configure
           make dist-gzip
           make dat/VERSION
+          cd ..
 
       - name: Collect Artifacts
         run: |
           mkdir -p dist/out/steam
           mkdir -p dist/out
-          mv naev-*.tar.gz dist/out/source.tar.gz
+          mv source/naev-*.tar.gz dist/out/source.tar.gz
           cp source/CHANGELOG dist/out
           cp source/dat/VERSION dist/out
           cp -r source/utils/ci/steam/* dist/out/steam
