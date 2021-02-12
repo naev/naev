@@ -29,6 +29,7 @@
       * Tweaked chances of seeing Spaceport Bar missions.
       * Updated German translation.
       * Fixed "configure" script when the system has a "cxsparse" library and no "csparse".
+      * Fixed source .tar.gz so ./configure is immediately usable again. (Note: 0.9.x will use Meson for builds.)
 
 * 0.8.1
    * Gameplay
