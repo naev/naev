@@ -854,10 +854,13 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
  *
  *    @param dt Current delta tick.
  */
+static double gui_dt = 0.;
 void gui_render( double dt )
 {
    int i;
    gl_Matrix4 projection;
+
+   gui_dt += dt;
 
    /* If player is dead just render the cinematic mode. */
    if (!menu_isOpen(MENU_MAIN) &&
@@ -935,11 +938,12 @@ void gui_render( double dt )
 
       /* Set up the projection. */
       projection = gl_view_matrix;
-      projection = gl_Matrix4_Scale(projection, SCREEN_W, SCREEN_H, 1. );
+      projection = gl_Matrix4_Scale(projection, gl_screen.nw, gl_screen.nh, 1. );
 
       /* Pass stuff over. */
       gl_Matrix4_Uniform( shaders.jump.projection, projection );
-      glUniform1f( shaders.jump.a, (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT );
+      glUniform1f( shaders.jump.progress, (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT );
+      glUniform1f( shaders.jump.direction, VANGLE(player.p->solid->vel) );
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
