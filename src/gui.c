@@ -857,8 +857,7 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
 void gui_render( double dt )
 {
    int i;
-   double x;
-   glColour col;
+   gl_Matrix4 projection;
 
    /* If player is dead just render the cinematic mode. */
    if (!menu_isOpen(MENU_MAIN) &&
@@ -929,12 +928,28 @@ void gui_render( double dt )
    /* Hyperspace. */
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
          (player.p->ptimer < HYPERSPACE_FADEOUT)) {
-      x = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
-      col.r = 1.;
-      col.g = 1.;
-      col.b = 1.;
-      col.a = x;
-      gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &col );
+      /* Set up the program. */
+      glUseProgram( shaders.jump.program );
+      glEnableVertexAttribArray( shaders.jump.vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.jump.vertex, 0, 2, GL_FLOAT, 0 );
+
+      /* Set up the projection. */
+      projection = gl_view_matrix;
+      projection = gl_Matrix4_Scale(projection, SCREEN_W, SCREEN_H, 1. );
+
+      /* Pass stuff over. */
+      gl_Matrix4_Uniform( shaders.jump.projection, projection );
+      glUniform1f( shaders.jump.a, (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT );
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.jump.vertex );
+      glUseProgram(0);
+
+      /* Check errors. */
+      gl_checkErr();
    }
 
    /* Reset viewport. */

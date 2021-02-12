@@ -129,6 +129,14 @@ SHADERS = [
       uniforms = ["projection", "c", "dc", "lc", "oc", "wh", "corner_radius"],
       subroutines = {},
    ),
+   Shader(
+      name = "jump",
+      vs_path = "jump.vert",
+      fs_path = "jump.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "a"],
+      subroutines = {},
+   ),
 ]
 
 def write_header(f):
