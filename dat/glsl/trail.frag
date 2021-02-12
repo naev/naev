@@ -5,8 +5,11 @@ subroutine vec4 trail_func_prototype( vec4 color, vec2 pos_tex, vec2 dim );
 subroutine uniform trail_func_prototype trail_func;
 
 #define TRAIL_FUNC_PROTOTYPE  subroutine( trail_func_prototype )
+
 #else /* HAS_GL_ARB_shader_subroutine */
+
 #define TRAIL_FUNC_PROTOTYPE
+
 #endif /* HAS_GL_ARB_shader_subroutine */
 
 // Libraries
