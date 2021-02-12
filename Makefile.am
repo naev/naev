@@ -51,8 +51,8 @@ EXTRA_DIST += $(XMLFILES) $(TRANSLATIONITS)
 EXTRA_DIST += .gdbinit meson.build meson.sh meson_options.txt po/POTFILES_COMBINED.in po/its/translation.loc po/meson.build src/meson.build
 EXTRA_DIST += extras/macos/bundle.py utils/package-po.sh
 EXTRA_DIST += check-po.sh test/
+EXTRA_DIST += docs
 EXTRA_DIST += subprojects/packagefiles subprojects/SuiteSparse.wrap subprojects/lua.wrap subprojects/luajit.wrap
-# Documentation? What's that? (Trying to distribute docs/ here causes a spectacular failure for some reason.)
 CLEANFILES += $(CREDITSPOT) $(NAEVPOT) $(XMLPOT)
 TESTS = check-po.sh
 AM_TESTS_ENVIRONMENT = POFILE='$(srcdir)/po/de.po'; EXPECT=9000; export POFILE EXPECT;

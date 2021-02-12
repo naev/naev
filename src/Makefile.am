@@ -16,7 +16,7 @@ shaders.gen.c shaders.gen.h: shaders_c_gen.py
 CLEANFILES += shaders.gen.c shaders.gen.h
 BUILT_SOURCES = shaders.gen.c shaders.gen.h
 endif
-EXTRA_DIST = shaders_c_gen.py
+EXTRA_DIST = Doxyfile shaders_c_gen.py
 
 
 naev_SOURCES = \
