@@ -199,8 +199,9 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
 TRAIL_FUNC_PROTOTYPE
 vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
+   const float speed = 16.;   // How fast the trail moves
+   const float scale = 0.13;  // Noise scaling (sharpness)
    float m, p;
-   vec2 coords;
 
    // Modulate alpha base on length
    color.a *= fastdropoff( pos_tex.x, 1. );
@@ -208,9 +209,8 @@ vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos_px )
    // Modulate alpha based on dispersion
    m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
 
-   //coords = pos_px + vec2( 220*dt, 0 );
-   coords = pos_px + vec2( 120*dt, 0 ) + 1000 * r;
-   p = 1 - 0.7*cellular2x2( 0.13 * coords ).x;
+   // Compute the noise
+   p = 1 - 0.7*cellular2x2( scale * pos_px + vec2( speed*dt, 0 ) + 1000. * r ).x;
 
    // Modulate width
    color.a   *= p * smoothbeam( pos_tex.y, 3.*m );
