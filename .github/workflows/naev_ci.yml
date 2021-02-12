@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: naev-dist-${{ github.sha }}
-          path: ${{ github.workspace }}/build/naev-*.tar.gz
+          path: ${{ github.workspace }}/source/naev-*.tar.gz
 
   "Linux_Compile_Naev":
     needs: "Package_Source"
