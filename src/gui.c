@@ -450,7 +450,7 @@ static void gui_renderPlanetTarget( double dt )
       return;
 
    /* Make sure target exists. */
-   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0) 
+   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0)
        && (player.p->nav_asteroid < 0))
       return;
 
@@ -945,6 +945,14 @@ void gui_render( double dt )
       glUniform1f( shaders.jump.progress, (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT );
       glUniform1f( shaders.jump.direction, VANGLE(player.p->solid->vel) );
 
+      /* Set the subroutine. */
+      if (GLAD_GL_ARB_shader_subroutine) {
+         if (cur_system->nebu_density > 0.)
+            glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shaders.jump.jump_func.jump_nebula );
+         else
+            glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shaders.jump.jump_func.jump_wind );
+      }
+
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
@@ -982,7 +990,7 @@ void gui_cooldownEnd (void)
  *    @param bottom Bottom boundary in pixels
  *    @param left Left boundary in pixels
  *
- *    @return 0 on success 
+ *    @return 0 on success
  */
 void gui_setMapOverlayBounds( int top, int right, int bottom, int left )
 {
@@ -1365,7 +1373,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
    }
 
-   if (p->id == player.p->target) 
+   if (p->id == player.p->target)
       col = cRadar_hilight;
    else if (pilot_isFlag(p, PILOT_HILIGHT))
       col = cRadar_tPilot;
@@ -1663,7 +1671,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    if (ind == player.p->nav_planet)
       gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet);
 
-   /* 
+   /*
    gl_beginSolidProgram(gl_Matrix4_Scale(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), vr, vr, 1), &col);
    gl_vboActivateAttribOffset( gui_planet_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 5 );

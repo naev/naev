@@ -1,4 +1,19 @@
+#ifdef HAS_GL_ARB_shader_subroutine
+#extension GL_ARB_shader_subroutine : require
+
+subroutine vec4 jump_func_prototype (void);
+subroutine uniform jump_func_prototype jump_func;
+
+#define JUMP_FUNC_PROTOTYPE  subroutine( jump_func_prototype )
+
+#else /* HAS_GL_ARB_shader_subroutine */
+
+#define JUMP_FUNC_PROTOTYPE
+
+#endif /* HAS_GL_ARB_shader_subroutine */
+
 // Libraries
+#include "lib/math.glsl"
 #include "lib/perlin2D.glsl"
 #include "lib/cellular2x2.glsl"
 
@@ -10,11 +25,13 @@ out vec4 color_out;
 const vec4 colour_from = vec4( 1, 1, 1, 0 );
 const vec4 colour_to   = vec4( 1, 1, 1, 1 );
 
+JUMP_FUNC_PROTOTYPE
 vec4 jump_default (void)
 {
    return mix( colour_from, colour_to, progress );
 }
 
+JUMP_FUNC_PROTOTYPE
 vec4 jump_nebula (void)
 {
    const float scale       = 4.;
@@ -28,6 +45,7 @@ vec4 jump_nebula (void)
    return mix( colour_from, colour_to, 1-q );
 }
 
+JUMP_FUNC_PROTOTYPE
 vec4 jump_organic (void)
 {
    const float scale       = 20.;
@@ -41,6 +59,7 @@ vec4 jump_organic (void)
    return mix( colour_from, colour_to, 1-q );
 }
 
+JUMP_FUNC_PROTOTYPE
 vec4 jump_circular (void)
 {
    const float smoothness  = 0.3;
@@ -50,6 +69,7 @@ vec4 jump_circular (void)
    return mix( colour_from, colour_to, m );
 }
 
+JUMP_FUNC_PROTOTYPE
 vec4 jump_wind (void)
 {
    const float size        = 0.1;
@@ -85,7 +105,14 @@ void main(void) {
    //color_out = jump_nebula();
    //color_out = jump_organic();
    //color_out = jump_circular();
+   //color_out = jump_wind();
+#ifdef HAS_GL_ARB_shader_subroutine
+   // Use subroutines
+   color_out = jump_func();
+#else /* HAS_GL_ARB_shader_subroutine */
+   //* Just use default
    color_out = jump_wind();
+#endif /* HAS_GL_ARB_shader_subroutine */
 
 #include "colorblind.glsl"
 }

@@ -135,7 +135,15 @@ SHADERS = [
       fs_path = "jump.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "progress", "direction"],
-      subroutines = {},
+      subroutines = {
+        "jump_func" : [
+            "jump_default",
+            "jump_nebula",
+            "jump_organic",
+            "jump_circular",
+            "jump_wind",
+        ]
+      }
    ),
 ]
 
