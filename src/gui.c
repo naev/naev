@@ -944,6 +944,7 @@ void gui_render( double dt )
       gl_Matrix4_Uniform( shaders.jump.projection, projection );
       glUniform1f( shaders.jump.progress, (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT );
       glUniform1f( shaders.jump.direction, VANGLE(player.p->solid->vel) );
+      glUniform2f( shaders.jump.dimensions, gl_screen.nw, gl_screen.nh );
 
       /* Set the subroutine. */
       if (GLAD_GL_ARB_shader_subroutine) {

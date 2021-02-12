@@ -19,6 +19,7 @@ subroutine uniform jump_func_prototype jump_func;
 
 uniform float progress;
 uniform float direction;
+uniform vec2 dimensions;
 in vec2 pos;
 out vec4 color_out;
 
@@ -84,7 +85,8 @@ vec4 jump_wind (void)
    mat2 R = mat2( c, -s, s, c );
 
    // Compute new scaled coordinates
-   vec2 lpos = l * (1.0-2.0*(smoothness+size)) * pos + smoothness + size;
+   vec2 lpos = pos * dimensions / dimensions.x;
+   lpos = l * (1.0-2.0*(smoothness+size)) * lpos + smoothness + size;
    vec2 uv = R * (lpos - center) + center;
 
    // Compute noise
