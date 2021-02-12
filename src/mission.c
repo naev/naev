@@ -43,8 +43,6 @@
 
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
 
-#define MISSION_CHUNK         32 /**< Chunk allocation. */
-
 
 /*
  * current player missions
