@@ -142,9 +142,9 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos_px )
 TRAIL_FUNC_PROTOTYPE
 vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
+   const float SCALAR = pow(2., 4./3. );
    float m, f;
    vec2 coords;
-   const float SCALAR = pow(2., 4./3. );
 
    // Modulate alpha base on length
    color.a *= fastdropoff( pos_tex.x, 1 );
