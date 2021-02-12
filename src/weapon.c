@@ -38,9 +38,6 @@
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
-#define WEAPON_CHUNK_MAX      16384 /**< Maximum size to increase array with */
-#define WEAPON_CHUNK_MIN      256 /**< Minimum size to increase array with */
-
 /* Weapon status */
 #define WEAPON_STATUS_OK         0 /**< Weapon is fine */
 #define WEAPON_STATUS_JAMMED     1 /**< Got jammed */
