@@ -1522,6 +1522,10 @@ void toolkit_render (void)
 {
    Window *w;
 
+   /* Only render if open. */
+   if (!toolkit_isOpen())
+      return;
+
    /* Render base. */
    for (w = windows; w!=NULL; w = w->next) {
       if (!window_isFlag(w, WINDOW_NORENDER) &&

@@ -693,9 +693,7 @@ void main_loop( int update )
     * Handle render.
     */
    /* Clear buffer. */
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    render_all();
-   gl_checkErr(); /* check error every loop */
    /* Draw buffer. */
    SDL_GL_SwapWindow( gl_screen.window );
 }
@@ -933,21 +931,22 @@ void update_routine( double dt, int enter_sys )
 static void render_all (void)
 {
    double dt;
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    dt = (paused) ? 0. : game_dt;
 
    /* setup */
    spfx_begin(dt, real_dt);
-   /* BG */
+   /* Background stuff */
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
    planets_render();
    spfx_render(SPFX_LAYER_BACK);
    weapons_render(WEAPON_LAYER_BG, dt);
-   /* N */
+   /* Middle stuff */
    pilots_render(dt);
    weapons_render(WEAPON_LAYER_FG, dt);
    spfx_render(SPFX_LAYER_MIDDLE);
-   /* FG */
+   /* Foreground stuff */
    player_render(dt);
    spfx_render(SPFX_LAYER_FRONT);
    space_renderOverlay(dt);
@@ -955,12 +954,14 @@ static void render_all (void)
    pilots_renderOverlay(dt);
    spfx_end();
    gui_render(dt);
-   ovr_render(dt);
-   display_fps( real_dt ); /* Exception. */
 
-   /* Toolkit is rendered on top. */
-   if (toolkit_isOpen())
-      toolkit_render();
+   /* Top stuff. */
+   ovr_render(dt);
+   display_fps( real_dt ); /* Exception using real_dt. */
+   toolkit_render();
+
+   /* check error every loop */
+   gl_checkErr();
 }
 
 
