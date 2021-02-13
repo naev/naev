@@ -176,10 +176,10 @@ function graphics.rotate( angle ) graphics._T[1]:rotate( angle ) end
 graphics.SpriteBatch = class.inheritsFrom( graphics.Drawable )
 graphics.SpriteBatch._type = "SpriteBatch"
 function graphics.newSpriteBatch( image, maxsprites, usage  )
+   love._unimplemented()
    local batch = graphics.SpriteBatch.new()
    batch.image = image
    batch:clear()
-   love._unimplemented()
    return batch
 end
 function graphics.SpriteBatch:clear()
@@ -470,6 +470,9 @@ graphics.Canvas = class.inheritsFrom( object.Drawable )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
    local c = graphics.Canvas.new()
+   if width==nil then
+      width, height = graphics.getDimensions()
+   end
    c.canvas = naev.canvas.new( width, height )
    -- Set texture
    local t = graphics.Image.new()
