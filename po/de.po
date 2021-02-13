@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-02-10 18:03-0500\n"
-"PO-Revision-Date: 2021-01-30 19:41+0000\n"
+"PO-Revision-Date: 2021-02-14 02:50+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -34462,7 +34462,7 @@ msgid ""
 "an invasion of the planet.\""
 msgstr ""
 "„Auch wenn unsere Labors die besten in der Galaxie sind, so haben doch auch "
-"andere Fraktionen ihre eigenen Labors. So war zum Beispiel das Dvaer-"
+"andere Fraktionen ihre eigenen Labors. So war zum Beispiel das Dvaer-Eins-"
 "Hauptlabor für Fortgeschrittene Mace-Raketenwissenschaft sehr erfolgreich, "
 "bis es versehentlich von einem Kriegsherrn bei einer Invasion des Planeten "
 "atomar zerstört wurde.“"
@@ -39802,10 +39802,8 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:335
 #: dat/missions/dvaered/championship.lua:336
 #: dat/missions/dvaered/championship.lua:337
-#, fuzzy
-#| msgid "Heavy Drone"
 msgid "Security"
-msgstr "Schwerdrohne"
+msgstr "Sicherheit"
 
 #. Set the radius for the follow function
 #. Set the angle for the follow function
@@ -41423,16 +41421,34 @@ msgid ""
 "   \"Hey, but am I deviating from our original subject? What was it already? "
 "Oh I don't remember. Anyway, citizen, if you want to take off, I'm ready.\""
 msgstr ""
+"„Sie wissen, dass ich nicht immer im Hauptquartier gearbeitet habe. Ich habe "
+"als Pilot auf der HKD-Basis auf Rhaana angefangen. Oh, Entschuldigung, ‚HKD‘ "
+"steht für ‚Hohes Kommando der Dvaered‘. Wissen Sie, es gibt zwei Arten von "
+"Dvaered-Soldaten: Es gibt diejenigen, die direkt dem HKD unterstellt sind, "
+"wie ich, und die Freaks, wie wir sie nennen (oder die Krieger, wie sie sich "
+"selbst nennen), die Soldaten, die den lokalen Kriegsherrn unterstehen.\n"
+"   ‚Kriegsherren‘-Kräfte können von HKD requiriert werden, aber nur, um eine "
+"Bedrohung für die Integrität der Dvaered-Nation zu bekämpfen, also sind sie "
+"in der Praxis meist sich selbst überlassen und führen Krieg gegeneinander. "
+"Wissen Sie, Ausländer denken manchmal, dass die internen Konflikte zwischen "
+"den Kriegsherren sinnlos sind (ich habe sogar einmal das Wort ‚dumm‘ gehört)"
+", aber tatsächlich sind sie der Schlüssel zur Philosophie der Dvaered. Ohne "
+"diese Kriege würde die Dvaered-Nation nicht mehr so existieren, wie wir sie "
+"kennen, und wir hätten uns auf den Totalitarismus verlassen müssen, wie das "
+"Imperium, auf die Nostalgie einer idealisierten Vergangenheit, wie die "
+"Front, auf eine unterdrückerische Technokratie wie die Za'lek, oder "
+"ähnliches …\n"
+"   Moment, aber weiche ich nicht von unserem ursprünglichen Thema ab? Was "
+"war das nochmal? Oh, ich kann mich nicht erinnern. Wie auch immer, Bürger, "
+"wenn Sie abheben wollen, ich bin bereit.“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:83
 msgid "\"Anyway, citizen, if you want to take off, I'm ready.\""
-msgstr ""
+msgstr "„Wie auch immer, Bürger, wenn Sie abheben wollen, bin ich bereit.“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:85
-#, fuzzy
-#| msgid "Thank you"
 msgid "Thank you, citizen"
-msgstr "Danke"
+msgstr "Danke sehr, Bürger"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:86
 #, lua-format
@@ -41447,12 +41463,19 @@ msgid ""
 "going to do? I will give you a set of Gauss Guns worth %s! One always needs "
 "Gauss Guns, no?\""
 msgstr ""
+"Als du landst, begrüßt dich Major Tam am Raumhafen. „Nach den Verlusten, die "
+"sie heute erlitten haben, bezweifle ich, dass diese Söldner in nächster Zeit "
+"auf mich zurückkommen werden. Ich muss mich bei der Station des Hohen "
+"Kommandos in Dvaer zurückmelden und brauche keine weitere Eskorte. Oh, und, "
+"ähm … wegen der Bezahlung, ich fürchte, es gibt einen kleinen Rückschlag …“ "
+"Du befürchtest, er würde versuchen, dich zu bestechen, aber er fährt fort: „"
+"Ich weiß nicht, warum, aber das Hohe Kommando hat die Zahlung noch nicht "
+"gutgeschrieben … Nun, wissen Sie, was wir tun werden? Ich werde Ihnen einen "
+"Satz Gaußkanonen im Wert von %s geben! Gaußkanonen braucht man immer, oder?“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:88
-#, fuzzy
-#| msgid "That was a fatal mistake!"
 msgid "That was really close!"
-msgstr "Das war ein fataler Fehler!"
+msgstr "Das war ziemlich knapp!"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:89
 #, lua-format
@@ -41469,12 +41492,24 @@ msgid ""
 "with a warlord. Dvaered know that it is better not to be involved in "
 "warlord's affairs.\""
 msgstr ""
+"Du sendest eine Nachricht an Major Tam, um zu fragen, ob du jetzt in "
+"Sicherheit bist. „Ich denke schon.“, antwortet er, „Lord Kampfeslusts "
+"Truppen werden uns nicht folgen, wenn wir sofort nach %s gehen, denn der "
+"Planet gehört seinem ärgsten Feind, Lady Blankschuss.“ Als du ihn fragst, "
+"was passiert ist, antwortet er: „Wissen Sie, lassen Sie sich von Lord "
+"Kampfeslusts Reaktion nicht in die Irre führen. Er ist kein schlechter "
+"Mensch, er ist nur … ähm … ein bisschen altmodisch. Er ist mit den Ideen der "
+"neuen Generation von Generälen im Hohen Kommando der Dvaered nicht "
+"einverstanden und wollte seinen Standpunkt deutlich machen.“\n"
+"   Du fragst Tam, warum die Dvaered-Patrouillenschiffe dir nicht geholfen "
+"haben, und er antwortet: „Erwarten Sie nicht, dass die reguläre Polizei oder "
+"Armee Ihnen hilft, wenn Sie in Schwierigkeiten mit einem Kriegsherrn sind. "
+"Die Dvaered wissen, dass es besser ist, sich nicht in die Angelegenheiten "
+"eines Kriegsherrn einzumischen.“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:92
-#, fuzzy
-#| msgid "Say hello to my little friends!"
 msgid "Say hello to my mace rockets"
-msgstr "Sag meinen kleinen Freunden hallo!"
+msgstr "Sag meinen Mace-Raketen ‚hallo‘"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:93
 msgid ""
@@ -41483,16 +41518,21 @@ msgid ""
 "following message: \"Tam, you small fearful weakling, did you believe Lord "
 "Battleaddict would really let you live? You're doomed!\""
 msgstr ""
+"Als dein Schiff nach dem Sprung auf seine normale Geschwindigkeit abbremst, "
+"bemerkst du, dass feindliche Schiffe in der Nähe sind. Ein feindlicher Hai "
+"sendet dann die folgende Nachricht: „Tam, du kleiner ängstlichaer "
+"Schwächling, hast du geglaubt, dass Lord Kampfeslust dich wirklich am Leben "
+"lassen würde? Du bist dem Untergang geweiht!“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:94
 msgid "You wanted to meet Lord Jim? What about you meet your doom instead?"
 msgstr ""
+"Du wolltest Lord Jim treffen? Wie wäre es, wenn du stattdessen deinen "
+"Untergang triffst?"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:96
-#, fuzzy
-#| msgid "Hostiles eliminated."
 msgid "Hostiles eliminated"
-msgstr "Feinde eliminiert."
+msgstr "Feinde eliminiert"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:97
 #, lua-format
@@ -41513,6 +41553,24 @@ msgid ""
 "spoke to you, Captain.\" Leblanc responds: \"Hello, citizen. I'm glad there "
 "are civilians like you who do their duty and serve the Dvaered Nation.\""
 msgstr ""
+"Als die verbliebenen Angreifer fliehen, bemerkst du, dass eine Dvaered-"
+"Patrouille dir geholfen hat, im Gegensatz zu dem, was Tam zuvor erklärt "
+"hatte. Dann erhältst du die Nachrichten, die zwischen Major Tam und dem "
+"Anführer der Dvaered-Staffel ausgetauscht wurden: „Dieses Mal bin ich Ihnen "
+"wirklich etwas schuldig, Kapitän“, sagt Tam. „Kein Problem, Sir.“ antwortet "
+"der andere. „Aber der Gefährlichste ist entkommen. Der Hai, Sie wissen "
+"schon, das war Hamelsen, der zweite Kommandant von Kampfeslust. Nachdem wir "
+"gehört haben, was der alte Affe mit Ihnen gemacht hat, haben wir ihn unter "
+"Beobachtung gestellt und wir haben gesehen, wie Hamelsen Sie mit dem Hai "
+"verfolgt hat, also sind wir ihr gefolgt und haben so getan, als ob wir nur "
+"eine Polizeistaffel wären. Den Rest kennen Sie.“\n"
+"   Tam antwortet: „Übrigens, %s, lassen Sie mich Ihnen Kapitän Leblanc "
+"vorstellen, sie gehört zum Sondereinsatztruppe (SET), die Teil des Hohen "
+"Kommandos der Dvaered (HKD) ist. Ich habe es Ihnen nicht gesagt, aber ihre "
+"Piloten haben immer ein Auge auf mich aus der Ferne, wenn ich mich mit "
+"Kriegsherrn treffen muss. %s ist der Privatpilot, über den ich geredet habe, "
+"Kapitän.“ Leblanc antwortet: „Hallo, Bürger. Ich bin froh, dass es "
+"Zivilisten wie Sie gibt, die ihre Pflicht tun und der Dvaered-Nation dienen.“"
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:100
 msgid "Two attacks are one too many"
@@ -42650,7 +42708,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:138
 msgid "The rule was not to kill anybody, did you remember?"
-msgstr ""
+msgstr "Die Regel lautete, niemanden zu töten, schon vergessen?"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:141
 #, fuzzy
@@ -42734,7 +42792,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:155
 msgid "That was the wrong answer"
-msgstr ""
+msgstr "Das war die falsche Antwort"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:156
 msgid ""
@@ -43176,6 +43234,25 @@ msgid ""
 "   \"If you have any additional questions, I'll stay at the bar until we "
 "take off.\""
 msgstr ""
+"„Das werden Sie nicht bereuen!“ sagt Tam … „Es sei denn, Sie werden dabei "
+"getötet, schätze ich … Wie auch immer, ich werde mit meiner Vigilanz zu %s "
+"in %s gehen. Zweifellos werden die Attentäter irgendwo auf dem Weg einen "
+"Hinterhalt legen. Sie und ein paar Piloten der Sondereinsatztruppe (SET) "
+"werden sie ausfindig machen und darauf warten, dass ich einspringe. Während "
+"des Hinterhalts werden die Attentäter ins Kreuzfeuer geraten und wir werden "
+"sie bis auf das letzte Schiff auslöschen. Das klingt doch eigentlich viel "
+"attraktiver als ein 3 Perioden langes Treffen mit schurkischen sirianischen "
+"Diplomaten, oder?\n"
+"   Auf unserer Seite werden wir nicht viel Feuerkraft haben, also zähle ich "
+"darauf, dass Sie uns mit der Panzerung und den Kanonen versorgen (aber Sie "
+"sollten immer noch in der Lage sein, mittelgroße Zerstörer zu überholen). "
+"Sie werden sich mit Leutnant Strafer zusammentun, weil es beim letzten Mal "
+"gut funktioniert hat, und zwei weiteren Piloten. Aber die SET hat nicht "
+"unzählige Piloten, also hängt die Höhe Ihrer Belohnung davon ab, wie viele "
+"von ihnen zurückkommen. Strafer wird einen Kundschafter mit "
+"Hochleistungssensoren fliegen. Er wird unsere Augen sein, also würde sein "
+"Tod das Ende der Mission bedeuten.\n"
+"   Wenn Sie weitere Fragen haben, bleibe ich an der Kneipe, bis wir abheben.“"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:56
 #, fuzzy
@@ -43630,6 +43707,18 @@ msgid ""
 "Forces to support the regular units of the station. Fly to Dvaer Prime and "
 "meet me in the bar there.\""
 msgstr ""
+"„General Klank hat die Warlords zusammengerufen, um ihnen den Invasionsplan "
+"der Front zu präsentieren. Bei einem Treffen des hohen Rates der "
+"Kriegsherren kommt es zu einem kurzen Waffenstillstand und sie kommen alle "
+"mit ihren Goddards auf die HKD-Station. Diese Tatsache allein reicht schon "
+"aus, um den Sicherheitsdienst der Station unter Druck zu setzen, da sich die "
+"Kriegsherren ständig gegenseitig provozieren und Schlägereien anfangen. Aber "
+"dieses Mal glauben wir, dass Hamelsen entweder versuchen wird, Kriegsherren "
+"zu ermorden oder unseren Invasionsplan aufzuzeichnen, um ihn an feindliche "
+"ausländische Mächte zu verkaufen.\n"
+"   Deshalb möchte Major Tam, dass unser Geschwader der Sondereinsatztruppe "
+"die regulären Einheiten der Station unterstützt. Fliegen Sie nach Dvaer Eins "
+"und treffen Sie mich dort in der Kneipe.“"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:55
 msgid ""
@@ -43989,6 +44078,9 @@ msgid ""
 "that the alpha squadron has left the system. The fleet leader orders you to "
 "land on Dvaer Prime."
 msgstr ""
+"Als das letzte feindliche Schiff explodiert, schaust du auf deinen "
+"Sensorbildschirm und bemerkst, dass das Alpha-Geschwader das System "
+"verlassen hat. Der Flottenführer befiehlt dir, auf Dvaer Eins zu landen."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:150
 msgid "Time for a gorgeous reward?"
