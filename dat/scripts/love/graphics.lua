@@ -50,7 +50,7 @@ end
 --]]
 graphics.Drawable = class.inheritsFrom( object.Object )
 graphics.Drawable._type = "Drawable"
-function graphics.Drawable.draw() error(_("unimplemented")) end
+function graphics.Drawable.draw() love._unimplemented() end
 
 
 --[[
@@ -466,12 +466,35 @@ end
 --[[
 -- Canvas class
 --]]
-graphics.Canvas = class.inheritsFrom( object.Object )
+graphics.Canvas = class.inheritsFrom( object.Drawable )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
-   love._unimplemented()
-   return graphics.Canvas.new()
+   local c = graphics.Canvas.new()
+   c.canvas = naev.canvas.new( width, height )
+   -- Set texture
+   local t = graphics.Image.new()
+   t.tex = c.canvas:getTex()
+   t.w, t.h = t.tex:dim()
+   t:setFilter( graphics._minfilter, graphics._magfilter )
+   t:setWrap( graphics._wraph, graphics._wrapv, graphics._wrapd )
+   c.t = t
+   return c
 end
+function graphics.setCanvas( canvas )
+   if canvas==nil then
+      naev.canvas.set()
+   else
+      naev.canvas.set( canvas.canvas )
+   end
+end
+function graphics.Canvas:draw(...)     return self.t:draw(...) end
+function graphics.Canvas:setFilter(...)return self.t:setFilter(...) end
+function graphics.Canvas:getFilter(...)return self.t:getFilter(...) end
+function graphics.Canvas:setWrap(...)  return self.t:setWrap(...) end
+function graphics.Canvas:getWrap(...)  return self.t:getWrap(...) end
+function graphics.Canvas:getDimensions(...) return self.t:getDimensions(...) end
+function graphics.Canvas:getWidth(...) return self.t:getWidth(...) end
+function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
 
 
 -- unimplemented
