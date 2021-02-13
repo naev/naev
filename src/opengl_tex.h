@@ -103,7 +103,6 @@ void gl_freeTexture( glTexture* texture );
 /*
  * Info.
  */
-int gl_texHasMipmaps (void);
 int gl_texHasCompress (void);
 
 /*

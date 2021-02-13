@@ -264,16 +264,6 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
 }
 
 /**
- * @brief Checks to see if mipmaps are supported and enabled.
- *
- *    @return 1 if mipmaps are supported and enabled.
- */
-int gl_texHasMipmaps (void)
-{
-   return 1;
-}
-
-/**
  * @brief Checks to see if texture compression is available and enabled.
  *
  *    @return 1 if texture compression is available and enabled.
@@ -338,7 +328,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, int *rw, int *rh, unsigned i
    SDL_UnlockSurface( surface );
 
    /* Create mipmaps. */
-   if ((flags & OPENGL_TEX_MIPMAPS) && gl_texHasMipmaps()) {
+   if (flags & OPENGL_TEX_MIPMAPS) {
       /* Do fancy stuff. */
       if (GLAD_GL_ARB_texture_filter_anisotropic) {
          glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &param);

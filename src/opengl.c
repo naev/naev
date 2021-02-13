@@ -429,7 +429,7 @@ static int gl_getGLInfo (void)
          gl_screen.fsaa, gl_screen.tex_max);
    DEBUG(_("vsync: %s, mm: %s, compress: %s, npot: %s"),
          gl_has(OPENGL_VSYNC) ? _("yes") : _("no"),
-         gl_texHasMipmaps() ? _("yes") : _("no"),
+         _("yes"),
          gl_texHasCompress() ? _("yes") : _("no"),
          gl_needPOT() ? _("no") : _("yes") );
    DEBUG(_("Renderer: %s"), glGetString(GL_RENDERER));
