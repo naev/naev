@@ -128,28 +128,23 @@ void nebu_render( const double dt )
  */
 static void nebu_renderBackground( const double dt )
 {
-   double sx, sy;
    gl_Matrix4 projection;
 
    /* calculate frame to draw */
    nebu_time += dt * nebu_dt;
 
-   /* Compensate possible rumble */
-   spfx_getShake( &sx, &sy );
-
    glUseProgram(shaders.nebula_background.program);
 
    /* Set the vertex. */
    projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, -sx, -sy, 0);
-   projection = gl_Matrix4_Scale(projection, gl_screen.w, gl_screen.h, 1);
+   projection = gl_Matrix4_Scale(projection, gl_screen.nw, gl_screen.nh, 1. );
    glEnableVertexAttribArray( shaders.nebula_background.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.nebula_background.vertex, 0, 2, GL_FLOAT, 0 );
 
    /* Set shader uniforms. */
    gl_uniformColor(shaders.nebula_background.color, &cBlue);
    gl_Matrix4_Uniform(shaders.nebula_background.projection, projection);
-   glUniform2f(shaders.nebula_background.center, gl_screen.rw / 2, gl_screen.rh / 2);
+   glUniform2f(shaders.nebula_background.center, gl_screen.nw / 2, gl_screen.nh / 2);
    glUniform1f(shaders.nebula_background.radius, nebu_view * cam_getZoom());
    glUniform1f(shaders.nebula_background.time, nebu_time);
 
