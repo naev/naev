@@ -43,7 +43,6 @@ static GLuint nebu_fbo   = GL_INVALID_VALUE;
 static GLuint nebu_tex   = GL_INVALID_VALUE;
 static GLfloat nebu_fbo_w= 0.;
 static GLfloat nebu_fbo_h= 0.;
-static gl_Matrix4 nebu_fbo_M;
 static gl_Matrix4 nebu_fbo_P;
 
 /* puff textures */
@@ -76,6 +75,7 @@ static void nebu_generatePuffs (void);
 static void nebu_renderPuffs( int below_player );
 /* Nebula render methods. */
 static void nebu_renderBackground( const double dt );
+static void nebu_blitFBO (void);
 
 
 /**
@@ -136,8 +136,6 @@ int nebu_resize (void)
       status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
       if (status != GL_FRAMEBUFFER_COMPLETE)
          WARN(_("Error setting up nebula framebuffer!"));
-
-      nebu_fbo_M = gl_Matrix4_Identity();
 
       /* Restore state. */
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -238,11 +236,20 @@ static void nebu_renderBackground( const double dt )
    glEnableVertexAttribArray( shaders.nebula_background.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.nebula_background.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   nebu_blitFBO();
 
    /* Clean up. */
    glDisableVertexAttribArray( shaders.nebula_background.vertex );
+   glUseProgram(0);
    gl_checkErr();
+}
 
+
+/**
+ * @brief If we're drawing the nebula buffered, copy to the screen.
+ */
+static void nebu_blitFBO (void)
+{
    if (nebu_dofbo) {
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -257,7 +264,7 @@ static void nebu_renderBackground( const double dt )
       /* Set shader uniforms. */
       gl_uniformColor(shaders.texture.color, &cWhite);
       gl_Matrix4_Uniform(shaders.texture.projection, nebu_fbo_P);
-      gl_Matrix4_Uniform(shaders.texture.tex_mat, nebu_fbo_M);
+      gl_Matrix4_Uniform(shaders.texture.tex_mat, gl_Matrix4_Identity());
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -265,9 +272,6 @@ static void nebu_renderBackground( const double dt )
       /* Clear state. */
       glDisableVertexAttribArray( shaders.texture.vertex );
    }
-
-   glUseProgram(0);
-   gl_checkErr();
 }
 
 
@@ -345,7 +349,6 @@ void nebu_renderOverlay( const double dt )
    gl_uniformColor(shaders.nebula.color, &cDarkBlue);
    gl_Matrix4_Uniform(shaders.nebula.projection, nebu_fbo_P);
    glUniform2f(shaders.nebula.center, w/2., h/2.);
-   //glUniform1f(shaders.nebula.radius, nebu_view * z * (1 / gl_screen.scale));
    glUniform1f(shaders.nebula.radius, nebu_view * z / pow2(nebu_scale));
    glUniform1f(shaders.nebula.time, nebu_time);
 
@@ -353,35 +356,10 @@ void nebu_renderOverlay( const double dt )
    glEnableVertexAttribArray(shaders.nebula.vertex);
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.nebula.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   nebu_blitFBO();
 
    /* Clean up. */
    glDisableVertexAttribArray( shaders.nebula.vertex );
-   gl_checkErr();
-
-   if (nebu_dofbo) {
-      glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-      glUseProgram(shaders.texture.program);
-
-      glBindTexture( GL_TEXTURE_2D, nebu_tex );
-
-      glEnableVertexAttribArray( shaders.texture.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
-            0, 2, GL_FLOAT, 0 );
-
-      /* Set shader uniforms. */
-      gl_uniformColor(shaders.texture.color, &cWhite);
-      gl_Matrix4_Uniform(shaders.texture.projection, nebu_fbo_P);
-      gl_Matrix4_Uniform(shaders.texture.tex_mat, nebu_fbo_M);
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clear state. */
-      glDisableVertexAttribArray( shaders.texture.vertex );
-   }
-
-   /* Clean up. */
    glClearColor( 0., 0., 0., 1. );
    glUseProgram(0);
    gl_checkErr();
