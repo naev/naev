@@ -153,6 +153,17 @@ meson compile naev-update-po  # necessary outside the main line, where Weblate h
 This will allow you to edit the translation files in `po/` manually to modify
 translations.
 
+If you like, you can set up commmit hooks to handle the `potfiles` step. For instance:
+```bash
+# .git/hooks/pre-commit
+#!/bin/bash
+. utils/update-po.sh
+
+# .git/hooks/post-commit
+#!/bin/sh
+git diff --exit-code po/POTFILES.in || exec git commit --amend -C HEAD po/POTFILES.in
+```
+
 ## CRASHES & PROBLEMS
 
 Please take a look at the [FAQ](https://github.com/naev/naev/wiki/FAQ) before submitting a new
