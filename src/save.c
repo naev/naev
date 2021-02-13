@@ -198,7 +198,7 @@ int save_hasSave (void)
 
       /* no save extension */
       if (((len >= 4) && !strcmp(&files[i][len-3],".ns")) ||
-            ((len < 11) && !strcmp(&files[i][len-10],".ns.backup"))) {
+            ((len >= 11) && !strcmp(&files[i][len-10],".ns.backup"))) {
          has_save = 1;
          break;
       }
