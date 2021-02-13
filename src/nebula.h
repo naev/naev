@@ -27,7 +27,6 @@ void nebu_update( double dt );
 /*
  * Misc
  */
-void nebu_genOverlay (void);
 double nebu_getSightRadius (void);
 void nebu_prep( double density, double volatility );
 void nebu_movePuffs( double x, double y );

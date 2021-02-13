@@ -267,14 +267,6 @@ void nebu_update( double dt )
 
 
 /**
- * @brief Regenerates the overlay.
- */
-void nebu_genOverlay (void)
-{
-}
-
-
-/**
  * @brief Renders the nebula overlay (hides what player can't see).
  *
  *    @param dt Current delta tick.
@@ -458,9 +450,6 @@ void nebu_prep( double density, double volatility )
       nebu_puffs[i].tex = RNG(0,NEBULA_PUFFS-1);
       nebu_puffs[i].height = RNGF() + 0.2;
    }
-
-   /* Generate the overlay. */
-   nebu_genOverlay();
 }
 
 

@@ -131,7 +131,7 @@ static void fps_control (void);
 static void update_all (void);
 static void render_all (void);
 /* Misc. */
-void loadscreen_render( double done, const char *msg ); /* nebula.c */
+static void loadscreen_render( double done, const char *msg );
 void main_loop( int update ); /* dialogue.c */
 
 

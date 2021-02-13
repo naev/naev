@@ -43,7 +43,6 @@
 #include "mission.h"
 #include "music.h"
 #include "ndata.h"
-#include "nebula.h"
 #include "news.h"
 #include "nfile.h"
 #include "nlua_misn.h"

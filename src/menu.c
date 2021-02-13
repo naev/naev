@@ -36,7 +36,6 @@
 #include "mission.h"
 #include "music.h"
 #include "ndata.h"
-#include "nebula.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "options.h"
