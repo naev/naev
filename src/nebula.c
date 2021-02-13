@@ -212,7 +212,7 @@ static void nebu_renderBackground( const double dt )
    gl_uniformColor(shaders.nebula_background.color, &cBlue);
    gl_Matrix4_Uniform(shaders.nebula_background.projection, projection);
    glUniform2f(shaders.nebula_background.center, w/2., h/2.);
-   glUniform1f(shaders.nebula_background.radius, nebu_view * cam_getZoom() / nebu_scale);
+   glUniform1f(shaders.nebula_background.radius, nebu_view * cam_getZoom() / pow2(nebu_scale));
    glUniform1f(shaders.nebula_background.time, nebu_time);
 
    /* Draw. */
@@ -335,7 +335,7 @@ void nebu_renderOverlay( const double dt )
    gl_Matrix4_Uniform(shaders.nebula.projection, nebu_fbo_P);
    glUniform2f(shaders.nebula.center, w/2., h/2.);
    //glUniform1f(shaders.nebula.radius, nebu_view * z * (1 / gl_screen.scale));
-   glUniform1f(shaders.nebula.radius, nebu_view * z / nebu_scale);
+   glUniform1f(shaders.nebula.radius, nebu_view * z / pow2(nebu_scale));
    glUniform1f(shaders.nebula.time, nebu_time);
 
    /* Draw. */
