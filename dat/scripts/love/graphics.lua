@@ -461,6 +461,9 @@ end
 function graphics.setShader( shader )
    graphics._shader = shader or graphics._shader_default
 end
+function graphics.Shader:send( name, ... )
+   self.shader:send( name, ... )
+end
 
 
 --[[
