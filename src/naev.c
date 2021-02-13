@@ -730,14 +730,11 @@ void naev_resize (void)
    /* Reload the GUI (may regenerate land window) */
    gui_reload();
 
-   /* Resets the overlay dimensions. */
+   /* Resets dimensions in other components which care. */
    ovr_refresh();
-
-   /* Re-center windows. */
    toolkit_reposition();
-
-   /* Reposition main menu, if open. */
    menu_main_resize();
+   nebu_resize();
 }
 
 /*

@@ -253,6 +253,7 @@ void conf_setVideoDefaults (void)
    conf.height       = h;
    conf.explicit_dim = 0; /* No need for a define, this is only for first-run. */
    conf.scalefactor  = SCALE_FACTOR_DEFAULT;
+   conf.nebu_scale   = NEBULA_SCALE_FACTOR_DEFAULT;
    conf.minimize     = MINIMIZE_DEFAULT;
    conf.colorblind   = COLORBLIND_DEFAULT;
 
@@ -352,6 +353,7 @@ int conf_loadConfig ( const char* file )
          conf.height = h;
       }
       conf_loadFloat( lEnv, "scalefactor", conf.scalefactor );
+      conf_loadFloat( lEnv, "nebu_scale", conf.nebu_scale );
       conf_loadBool( lEnv, "fullscreen", conf.fullscreen );
       conf_loadBool( lEnv, "modesetting", conf.modesetting );
       conf_loadBool( lEnv, "minimize", conf.minimize );
@@ -878,6 +880,11 @@ int conf_saveConfig ( const char* file )
    conf_saveComment(_("Factor used to divide the above resolution with"));
    conf_saveComment(_("This is used to lower the rendering resolution, and scale to the above"));
    conf_saveFloat("scalefactor",conf.scalefactor);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Scale factor for rendered nebula backgrounds."));
+   conf_saveComment(_("Larger values can save time but lead to a blurrier appearance."));
+   conf_saveFloat("nebu_scale",conf.nebu_scale);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Run Naev in full-screen mode"));

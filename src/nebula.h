@@ -11,6 +11,7 @@
  * Init/Exit
  */
 int nebu_init (void);
+int nebu_resize (void);
 void nebu_exit (void);
 
 /*

@@ -15,6 +15,7 @@
 #include "nebula.h"
 
 #include "camera.h"
+#include "conf.h"
 #include "gui.h"
 #include "log.h"
 #include "menu.h"
@@ -84,16 +85,37 @@ static void nebu_renderBackground( const double dt );
  */
 int nebu_init (void)
 {
+   nebu_generatePuffs();
+   return nebu_resize();
+}
+
+
+/**
+ * @brief Handles a screen s
+ *
+ *    @return 0 on success.
+ */
+int nebu_resize (void)
+{
+   double scale;
+   GLfloat fbo_w, fbo_h;
    GLenum status;
 
-   nebu_generatePuffs();
+   scale = conf.nebu_scale * gl_screen.scale;
+   fbo_w = round(gl_screen.nw/scale);
+   fbo_h = round(gl_screen.nh/scale);
+   if (scale == nebu_scale && fbo_w == nebu_fbo_w && fbo_h == nebu_fbo_h)
+      return 0;
 
-   nebu_scale *= gl_screen.scale;
+   nebu_scale = scale;
+   nebu_fbo_w = fbo_w;
+   nebu_fbo_h = fbo_h;
    nebu_dofbo = (nebu_scale != 1.);
+   glDeleteTextures( 1, &nebu_tex );
+   glDeleteFramebuffers( 1, &nebu_fbo );
+
    if (nebu_dofbo) {
       /* Create the render buffer. */
-      nebu_fbo_w = round(gl_screen.nw/nebu_scale);
-      nebu_fbo_h = round(gl_screen.nh/nebu_scale);
       glGenTextures(1, &nebu_tex);
       glBindTexture(GL_TEXTURE_2D, nebu_tex);
       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nebu_fbo_w, nebu_fbo_h, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
@@ -127,7 +149,6 @@ int nebu_init (void)
    nebu_fbo_P = gl_Matrix4_Identity();
    nebu_fbo_P = gl_Matrix4_Translate(nebu_fbo_P, -1., -1., 0. );
    nebu_fbo_P = gl_Matrix4_Scale(nebu_fbo_P, 2., 2., 1);
-
 
    return 0;
 }
