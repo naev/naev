@@ -31,7 +31,6 @@
 #define FULLSCREEN_MODESETTING               0     /**< Whether fullscreen uses video modesetting. */
 #define FSAA_DEFAULT                         1     /**< Whether to use Full Screen Anti-Aliasing. */
 #define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
-#define MIPMAP_DEFAULT                       0     /**< Whether to use Mip Mapping. */
 #define TEXTURE_COMPRESSION_DEFAULT          0     /**< Whether to use texture compression. */
 #define SCALE_FACTOR_DEFAULT                 1.    /**< Default scale factor. */
 #define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
