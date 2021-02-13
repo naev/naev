@@ -189,7 +189,6 @@ static void nebu_renderBackground( const double dt )
 
    if (nebu_dofbo) {
       glBindFramebuffer(GL_FRAMEBUFFER, nebu_fbo);
-      glClearColor( 0., 0., 0., 1. );
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       glDisable( GL_DEPTH_TEST );
       w = nebu_fbo_w;
@@ -371,6 +370,7 @@ void nebu_renderOverlay( const double dt )
    }
 
    /* Clean up. */
+   glClearColor( 0., 0., 0., 1. );
    glUseProgram(0);
    gl_checkErr();
 
