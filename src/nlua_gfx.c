@@ -204,12 +204,14 @@ static int gfxL_renderTex( lua_State *L )
  *    @luatparam number tex_h Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
  *    @luatparam[opt] Colour colour Colour to use when rendering.
  *    @luatparam[opt] number angle Angle to rotate in radians.
+ *    @luatparam[opt] Shader shader Shader to use when rendering (or nil for none).
  * @luafunc renderTexRaw
  */
 static int gfxL_renderTexRaw( lua_State *L )
 {
    glTexture *t;
    glColour *col;
+   LuaShader_t *shader;
    double px,py, pw,ph, tx,ty, tw,th;
    double angle;
    int sx, sy;
@@ -220,6 +222,7 @@ static int gfxL_renderTexRaw( lua_State *L )
    /* Parameters. */
    top = lua_gettop(L);
    col = NULL;
+   shader = NULL;
    t  = luaL_checktex( L, 1 );
    px = luaL_checknumber( L, 2 );
    py = luaL_checknumber( L, 3 );
@@ -234,6 +237,8 @@ static int gfxL_renderTexRaw( lua_State *L )
    if (top > 11)
       col = luaL_checkcolour(L, 12 );
    angle = luaL_optnumber(L,13,0.);
+   if (top > 13)
+      shader = luaL_checkshader(L,14);
 
    /* Some safety checking. */
 #if DEBUGGING
@@ -255,8 +260,68 @@ static int gfxL_renderTexRaw( lua_State *L )
    if (th < 0)
       ty -= th;
 
-   /* Render. */
-   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col, angle );
+   if (shader==NULL)
+      gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col, angle );
+   else {
+      /* Render. */
+      // Half width and height
+      double hw, hh;
+      gl_Matrix4 projection, tex_mat;
+      const glColour *c;
+
+      glUseProgram( shader->program );
+
+      /* Bind the texture. */
+      glBindTexture( GL_TEXTURE_2D, t->texture );
+
+      /* Must have colour for now. */
+      c = (col==NULL) ? &cWhite : col;
+
+      hw = pw/2.;
+      hh = ph/2.;
+
+      /* Set the vertex. */
+      projection = gl_view_matrix;
+      if (angle==0.){
+         projection = gl_Matrix4_Translate(projection, px, py, 0);
+         projection = gl_Matrix4_Scale(projection, pw, ph, 1);
+      } else {
+         projection = gl_Matrix4_Translate(projection, px+hw, py+hh, 0);
+         projection = gl_Matrix4_Rotate2d(projection, angle);
+         projection = gl_Matrix4_Translate(projection, -hw, -hh, 0);
+         projection = gl_Matrix4_Scale(projection, pw, ph, 1);
+      }
+      glEnableVertexAttribArray( shader->VertexPosition );
+      gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexPosition,
+            0, 2, GL_FLOAT, 0 );
+
+      glEnableVertexAttribArray( shader->VertexTexCoord );
+      gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord,
+            0, 2, GL_FLOAT, 0 );
+
+      /* Set the texture. */
+      tex_mat = (t->flags & OPENGL_TEX_VFLIP) ? gl_Matrix4_Ortho(-1, 1, 2, 0, 1, -1) : gl_Matrix4_Identity();
+      tex_mat = gl_Matrix4_Translate(tex_mat, tx, ty, 0);
+      tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
+
+      /* Set shader uniforms. */
+      gl_uniformColor( shader->ConstantColor, c );
+      gl_Matrix4_Uniform( shader->ClipSpaceFromLocal, projection );
+      gl_Matrix4_Uniform( shaders.texture.tex_mat, tex_mat);
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shader->VertexPosition );
+      glDisableVertexAttribArray( shader->VertexTexCoord );
+
+      /* anything failed? */
+      gl_checkErr();
+
+      glUseProgram(0);
+   }
+
    return 0;
 }
 

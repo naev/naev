@@ -129,7 +129,7 @@ function graphics.Image:draw( ... )
       th = q.h
    end
    x,y,w,h = _xy(x,y,w*sx,h*sy)
-   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r )
+   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r, graphics._shader.shader )
 end
 
 
@@ -397,7 +397,6 @@ end
 graphics.Shader = class.inheritsFrom( object.Object )
 graphics.Shader._type = "Shader"
 function graphics.newShader( pixelcode, vertexcode )
-   love._unimplemented() -- Not finished yet
    local prepend = [[
 #version 140
 // Syntax sugar
@@ -457,9 +456,10 @@ void main(void) {
    s.shader = naev.shader.new(
          prepend..frag..pixelcode,
          prepend..vert..vertexcode )
+   return s
 end
 function graphics.setShader( shader )
-   graphics._shader = shader or graphics._shader_default
+   graphics._shader = shader
 end
 function graphics.Shader:send( name, ... )
    self.shader:send( name, ... )
@@ -529,7 +529,7 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
 graphics.origin()
---graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
---graphics.setShader( graphics._shader_default )
+graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
+graphics.setShader( graphics._shader_default )
 
 return graphics

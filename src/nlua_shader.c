@@ -182,10 +182,10 @@ static int shaderL_new( lua_State *L )
    UNIFORM( ClipSpaceFromLocal );
    UNIFORM( ViewNormalFromLocal );
    UNIFORM( MainTex );
+   UNIFORM( ConstantColor );
    ATTRIB( VertexPosition );
    ATTRIB( VertexTexCoord );
    ATTRIB( VertexColor );
-   ATTRIB( ConstantColor );
 
    gl_checkErr();
 
