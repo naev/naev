@@ -190,7 +190,6 @@ static void nebu_renderBackground( const double dt )
    if (nebu_dofbo) {
       glBindFramebuffer(GL_FRAMEBUFFER, nebu_fbo);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      glDisable( GL_DEPTH_TEST );
       w = nebu_fbo_w;
       h = nebu_fbo_h;
 
