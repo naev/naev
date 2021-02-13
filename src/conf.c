@@ -858,13 +858,6 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("compress",conf.compress);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Use OpenGL Texture Interpolation"));
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Use OpenGL Non-\"Power of Two\" textures if available"));
-   conf_saveComment(_("Lowers memory usage by a lot, but may cause slow downs on some systems"));
-   conf_saveEmptyLine();
-
    /* Memory. */
    conf_saveComment(_("If true enables engine glow"));
    conf_saveBool("engineglow",conf.engineglow);
