@@ -632,6 +632,3 @@ static int gfxL_printText( lua_State *L )
    return 0;
 }
 
-
-
-
