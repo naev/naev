@@ -274,7 +274,6 @@ void conf_setVideoDefaults (void)
    /* OpenGL. */
    conf.fsaa         = FSAA_DEFAULT;
    conf.vsync        = VSYNC_DEFAULT;
-   conf.mipmaps      = MIPMAP_DEFAULT; /* Also cause for issues. */
    conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
    conf.npot         = NPOT_TEXTURES_DEFAULT;
 
@@ -374,7 +373,6 @@ int conf_loadConfig ( const char* file )
       /* OpenGL. */
       conf_loadInt( lEnv, "fsaa", conf.fsaa );
       conf_loadBool( lEnv, "vsync", conf.vsync );
-      conf_loadBool( lEnv, "mipmaps", conf.mipmaps );
       conf_loadBool( lEnv, "compress", conf.compress );
       conf_loadBool( lEnv, "npot", conf.npot );
 
@@ -926,10 +924,6 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Synchronize framebuffer updates with the vertical blanking interval"));
    conf_saveBool("vsync",conf.vsync);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Use OpenGL MipMaps"));
-   conf_saveBool("mipmaps",conf.mipmaps);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Use OpenGL Texture Compression"));
