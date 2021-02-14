@@ -145,9 +145,7 @@ typedef struct Planet_ {
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
-#define sys_isKnown(s) \
-   (!system_exists((s)->name) || \
-      sys_isFlag(s,SYSTEM_KNOWN)) /**< Checks if system is known. */
+#define sys_isKnown(s)     sys_isFlag(s,SYSTEM_KNOWN) /**< Checks if system is known. */
 #define sys_isMarked(s)    sys_isFlag(s,SYSTEM_MARKED) /**< Checks if system is marked. */
 
 
@@ -421,7 +419,6 @@ void space_gfxUnload( StarSystem *sys );
  * Getting stuff.
  */
 StarSystem* system_getAll (void);
-int system_exists( const char* sysname );
 const char *system_existsCase( const char* sysname );
 char **system_searchFuzzyCase( const char* sysname, int *n );
 StarSystem* system_get( const char* sysname );

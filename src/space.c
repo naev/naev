@@ -738,22 +738,6 @@ StarSystem* system_getAll (void)
 
 
 /**
- * @brief Checks to see if a system exists.
- *
- *    @param sysname Name of the system to match.
- *    @return 1 if the system exists.
- */
-int system_exists( const char* sysname )
-{
-   int i;
-   for (i=0; i<array_size(systems_stack); i++)
-      if (strcmp(sysname, systems_stack[i].name)==0)
-         return 1;
-   return 0;
-}
-
-
-/**
  * @brief Checks to see if a system exists case insensitively.
  *
  *    @param sysname Name of the system to match (case insensitive).
