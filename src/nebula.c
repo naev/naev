@@ -273,7 +273,7 @@ void nebu_update( double dt )
       mod = player.p->ew_detect;
 
    /* At density 1000 you have zero visibility. */
-   nebu_view = (1000. - nebu_density) * mod * 2;
+   nebu_view = (1000. - nebu_density) * mod;
 }
 
 
