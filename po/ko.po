@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-02-14 12:05-0500\n"
+"POT-Creation-Date: 2021-02-14 13:58-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -34470,11 +34470,11 @@ msgid ""
 "before proceeding to the combat, I have to ask you one last time: Are you "
 "sure your disagreement cannot be solved by any other means?\"\n"
 "   A formal silence follows the words of the colonel, but soon Battleaddict "
-"and Klank respond: \"It can not, mister commissioner.\" And Urnus continues: "
-"\"I am witness to the fact that this duel is conform to the rules "
-"established by our ancestors. I have controlled both ships and I attest that "
-"no irregularity is to be noticed. Let the fight begin, may the most virtuous "
-"of you both survive.\""
+"and Klank respond: \"It can not, Mister Commissioner.\" And Urnus continues: "
+"\"I am witness to the fact that this duel conforms to the rules established "
+"by our ancestors. I have controlled both ships and I attest that I observed "
+"no irregularities. Let the fight begin, may the most virtuous of you both "
+"survive.\""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:120
@@ -34776,13 +34776,13 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:76
 msgid ""
-"As you approach, Leblanc recognizes you. \"Hello, citizen. The Major told me "
-"I would end up finding you by browsing all the shifty places in Dvaered "
-"space. He was right! We happen to need your services once more. But this "
-"time, it will be sort of a bit... More illegal.\" You then wonder how "
-"something could be more illegal than supporting a black ops commando in "
-"order to assassinate a pilot, steal a corvette and sabotage a warlord's "
-"cruiser, and you answer:"
+"As you approach, Leblanc recognizes you. \"Hello, citizen. Fancy meeting you "
+"here! The Major told me I would end up finding you by browsing all the "
+"shifty places in Dvaered space. We happen to need your services once more. "
+"But this time, it will be sort of a bit... More illegal.\" You then wonder "
+"how something could be more illegal than helping black ops commandos "
+"assassinate a pilot, steal a corvette, and sabotage a warlord's cruiser, and "
+"you answer:"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:78
@@ -34819,7 +34819,7 @@ msgid ""
 "by violence, so they don't take too many precautions.\n"
 "   \"Major Tam has prepared the operation. First, you will pick up "
 "Hamfresser and his team on %s in %s. I'll be there too and then we will fly "
-"in formation to %s and settle the ambush. It would be preferable if you "
+"in formation to %s and set up the ambush. It would be preferable if you "
 "would make sure that your ship doesn't outrun my Vendetta. There should be a "
 "few drones and a corvette. We will destroy the drones and disable the "
 "corvette, in order to let the commando unit enter the ship and recover the "
@@ -35386,8 +35386,8 @@ msgid ""
 "strange deal the Empire has forced you to make with them and the major's "
 "face turns red: \"You did WHAT? The imperial intelligence service is the "
 "strongest in the world, they can deduce things you would not even imagine "
-"just by looking at someone, and you let them discuss with a black ops "
-"commando leader!\"\n"
+"just by looking at someone, and you let them interview a black ops commando "
+"leader!\"\n"
 "   As you argue that you had no other choice, he seems to calm down a little "
 "bit \"I will interrogate Hamfresser to see if one can understand what they "
 "were looking for. Damn! I'm afraid something awful may happen to us somehow "
@@ -56154,6 +56154,13 @@ msgid ""
 "would like to get back in touch with you again sometime for another mission."
 msgstr ""
 
+#: dat/missions/soromid/comingout/srm_comingout3.lua:174
+#: dat/missions/soromid/comingout/srm_comingout4.lua:178
+#: dat/missions/soromid/comingout/srm_comingout5.lua:156
+#, lua-format
+msgid "Thug %s"
+msgstr ""
+
 #. Fail the mission, showing message to the player.
 #. Pre-colourized, do nothing.
 #. Colourize in red.
@@ -63596,7 +63603,7 @@ msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
 #: src/commodity.c:596 src/faction.c:1502 src/map.c:2548 src/outfit.c:1072
-#: src/ship.c:612 src/ship.c:1089 src/space.c:1734 src/space.c:3217
+#: src/ship.c:612 src/ship.c:1089 src/space.c:1734 src/space.c:3211
 #: src/tech.c:122
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -69545,7 +69552,7 @@ msgstr ""
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2122 src/outfit.c:2439 src/slots.c:74 src/space.c:3113
+#: src/outfit.c:2122 src/outfit.c:2439 src/slots.c:74 src/space.c:3107
 #: src/spfx.c:242 src/spfx.c:1038 src/start.c:74
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -71126,7 +71133,7 @@ msgstr ""
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr ""
 
-#: src/space.c:1133 src/space.c:4218
+#: src/space.c:1133 src/space.c:4212
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
@@ -71288,79 +71295,79 @@ msgstr ""
 msgid "Star System '%s' missing 'name' tag"
 msgstr ""
 
-#: src/space.c:2636 src/space.c:2721
+#: src/space.c:2636 src/space.c:2715
 #, c-format
 msgid "JumpPoint node for system '%s' has no target attribute."
 msgstr ""
 
-#: src/space.c:2641 src/space.c:2726
+#: src/space.c:2641 src/space.c:2720
 #, c-format
 msgid "JumpPoint node for system '%s' has invalid target '%s'."
 msgstr ""
 
-#: src/space.c:2653 src/space.c:2739
+#: src/space.c:2654 src/space.c:2733
 #, c-format
 msgid "Star System '%s' has duplicate jump point to '%s'."
 msgstr ""
 
-#: src/space.c:2783
+#: src/space.c:2777
 #, c-format
 msgid ""
 "JumpPoint in system '%s' is missing pos element but does not have autopos "
 "flag."
 msgstr ""
 
-#: src/space.c:2813
+#: src/space.c:2807
 #, c-format
 msgid "System '%s' was not found in the stack for some reason"
 msgstr ""
 
-#: src/space.c:2899
+#: src/space.c:2893
 #, c-format
 msgid "Asteroid field in %s has no position."
 msgstr ""
 
-#: src/space.c:2902
+#: src/space.c:2896
 #, c-format
 msgid "Asteroid field in %s has no radius."
 msgstr ""
 
-#: src/space.c:2963
+#: src/space.c:2957
 #, c-format
 msgid "Asteroid exclusion in %s has no position."
 msgstr ""
 
-#: src/space.c:2966
+#: src/space.c:2960
 #, c-format
 msgid "Asteroid exclusion in %s has no radius."
 msgstr ""
 
-#: src/space.c:3106
+#: src/space.c:3100
 #, c-format
 msgid "Malformed '%s' file: missing root element 'Asteroid_types'"
 msgstr ""
 
-#: src/space.c:3160
+#: src/space.c:3154
 msgid "Asteroid type's commodity lacks name or quantity."
 msgstr ""
 
-#: src/space.c:3165
+#: src/space.c:3159
 msgid "Asteroid type has no gfx associated."
 msgstr ""
 
-#: src/space.c:3257
+#: src/space.c:3251
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
 msgstr[0] ""
 
-#: src/space.c:3258
+#: src/space.c:3252
 #, c-format
 msgid "       with %d Planet"
 msgid_plural "       with %d Planets"
 msgstr[0] ""
 
-#: src/space.c:3657 src/space.c:3701
+#: src/space.c:3651 src/space.c:3695
 msgid "Unknown marker type."
 msgstr ""
 
@@ -71369,7 +71376,7 @@ msgstr ""
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:4210
+#: src/space.c:4204
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
