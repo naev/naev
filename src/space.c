@@ -2642,6 +2642,7 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
       free(buf);
       return -1;
    }
+   free(buf);
 
 #ifdef DEBUGGING
    int i;
@@ -2661,16 +2662,8 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    memset( j, 0, sizeof(JumpPoint) );
 
    /* Handle jump point position. We want both x and y, or we autoposition the jump point. */
-   xmlr_attr( node, "x", buf );
-   if (buf == NULL)
-      jp_setFlag(j,JP_AUTOPOS);
-   else
-      x = atof(buf);
-   xmlr_attr( node, "y", buf );
-   if (buf == NULL)
-      jp_setFlag(j,JP_AUTOPOS);
-   else
-      y = atof(buf);
+   xmlr_attr_float_def( node, "x", x, HUGE_VAL );
+   xmlr_attr_float_def( node, "y", y, HUGE_VAL );
 
    /* Handle jump point type. */
    xmlr_attr_strd( node, "type", buf );
@@ -2685,12 +2678,13 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
 
    /* Set some stuff. */
    j->target = target;
-   free(buf);
    j->targetid = j->target->id;
    j->radius = 200.;
 
-   if (!jp_isFlag(j,JP_AUTOPOS))
+   if (x < HUGE_VAL && y < HUGE_VAL)
       vect_cset( &j->pos, x, y );
+   else
+      jp_setFlag(j,JP_AUTOPOS);
 
    /* Square to allow for linear multiplication with squared distances. */
    j->hide = pow2(j->hide);

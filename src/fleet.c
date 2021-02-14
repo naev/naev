@@ -113,7 +113,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(Fleet) );
    temp->faction = -1;
 
-   xmlr_attr(parent,"name",temp->name);
+   xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
       WARN( _("Fleet in %s has invalid or no name"), FLEET_DATA_PATH );
 
@@ -162,11 +162,11 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                memset( pilot, 0, sizeof(FleetPilot) );
 
                /* Check for name override */
-               xmlr_attr(cur,"name",c);
+               xmlr_attr_strd(cur,"name",c);
                pilot->name = c; /* No need to free since it will have to later */
 
                /* Load pilot's ship */
-               xmlr_attr(cur,"ship",c);
+               xmlr_attr_strd(cur,"ship",c);
                if (c==NULL)
                   WARN(_("Pilot %s in Fleet %s has null ship"), pilot->name, temp->name);
                pilot->ship = ship_get(c);
