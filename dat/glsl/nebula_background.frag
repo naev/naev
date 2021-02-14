@@ -15,7 +15,7 @@ void main(void) {
    vec3 uv;
 
    // Calculate coordinates
-   uv.xy = 0.4 * (gl_FragCoord.xy-center) / pow(radius, 0.7);
+   uv.xy = 4. * (gl_FragCoord.xy-center) / radius;
    uv.z = time;
 
    // Create the noise

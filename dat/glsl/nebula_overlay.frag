@@ -14,7 +14,7 @@ void main(void) {
 
    // Compute coordinates for the noise
    // Offset with respect to nebula_background
-   uv.xy = 0.1 * (gl_FragCoord.xy-center) / pow(radius, 0.7) + 1000.;
+   uv.xy = (gl_FragCoord.xy-center) / radius + 1000.;
    uv.z = time * 0.7; // Slower than background
 
    // Do very simple two iteration noise
