@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-02-14 13:58-0500\n"
+"POT-Creation-Date: 2021-02-14 14:20-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -18648,10 +18648,10 @@ msgstr ""
 
 #: dat/outfits/weapons/neutron_disruptor.xml:10
 msgid ""
-"The Neutron Disruptor uses high-energy pulses that modify the base "
+"The Neutron Disruptor uses high-energy pulses that alter the base "
 "composition of molecules, causing heavy damage. This weapon was first "
-"popular with the Collective, as until recently, firing it would produce "
-"radiation lethal to humans aboard the ship."
+"popular with the Collective, whose drones were immune to early versions' "
+"lethal backscatter radiation."
 msgstr ""
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:2
