@@ -76,7 +76,7 @@ SHADERS = [
       vs_path = "nebula.vert",
       fs_path = "nebula_overlay.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "center", "radius", "time"],
+      uniforms = ["projection", "color", "radius", "time"],
       subroutines = {},
    ),
    Shader(
@@ -84,7 +84,7 @@ SHADERS = [
       vs_path = "nebula.vert",
       fs_path = "nebula_background.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "center", "radius", "time"],
+      uniforms = ["projection", "color", "radius", "time"],
       subroutines = {},
    ),
    Shader(
