@@ -153,7 +153,7 @@ void naev_quit (void)
  */
 int main( int argc, char** argv )
 {
-   char buf[PATH_MAX];
+   char conf_file_path[PATH_MAX], **search_path, **p;
 
    env_detect( argc, argv );
 
@@ -228,9 +228,9 @@ int main( int argc, char** argv )
       WARN( _("Unable to create config directory '%s'"), nfile_configPath());
 
    /* Set the configuration. */
-   nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
+   nsnprintf(conf_file_path, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
-   conf_loadConfig(buf); /* Lua to parse the configuration file */
+   conf_loadConfig(conf_file_path); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
    /* Set up I/O. */
@@ -243,15 +243,21 @@ int main( int argc, char** argv )
    else
       log_purge();
 
+   ndata_setupReadDirs();
+   gettext_setLanguage( conf.language ); /* now that we can find translations */
+   LOG( _("Loaded configuration: %s"), conf_file_path );
+   search_path = PHYSFS_getSearchPath();
+   LOG( "%s", _("Read locations, searched in order:") );
+   for (p = search_path; *p != NULL; p++)
+      LOG( "    %s", *p );
+   PHYSFS_freeList( search_path );
+   /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
+   DEBUG( _("Cache location: %s"), nfile_cachePath() );
+   LOG( _("Write location: %s\n"), PHYSFS_getWriteDir() );
+
    /* Enable FPU exceptions. */
    if (conf.fpu_except)
       debug_enableFPUExcept();
-
-   /* Open data. */
-   ndata_setupReadDirs();
-
-   /* We now know which translations to use. */
-   gettext_setLanguage( conf.language );
 
    /* Load the start info. */
    if (start_load())
@@ -414,7 +420,7 @@ int main( int argc, char** argv )
    }
 
    /* Save configuration. */
-   conf_saveConfig(buf);
+   conf_saveConfig(conf_file_path);
 
    /* data unloading */
    unload_all();

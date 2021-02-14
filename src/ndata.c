@@ -6,7 +6,7 @@
  * @file ndata.c
  *
  * @brief Wrappers to set up and access game assets (mounted via PhysicsFS).
- *        The main search for data takes place in ndata_open().
+ *        We choose our underlying directories in ndata_setupWriteDir() and ndata_setupReadDirs().
  *        However, conf.c code may have seeded the search path based on command-line arguments.
  */
 
