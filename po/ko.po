@@ -59162,7 +59162,7 @@ msgstr ""
 #: dat/missions/zalek/zlk_cargorun.lua:54
 #, lua-format
 msgid ""
-"You say that he is looking at one right now. Rather surprisingly, the he "
+"You say that he is looking at one right now. Rather surprisingly, he "
 "laughs slightly, looking relieved. \"Thank you, captain! I was hoping that "
 "you could help me. My name is Dr. Andrej Logan. The job will be a bit "
 "dangerous, but I will pay you handsomely for your services.\n"
@@ -68727,10 +68727,9 @@ msgid "no"
 msgstr "아니야"
 
 #: src/opengl.c:331
-#, fuzzy, c-format
-#| msgid "vsync: %s, mm: %s, compress: %s, npot: %s"
+#, c-format
 msgid "vsync: %s, mm: %s, compress: %s"
-msgstr "vsync: %s, mm: %s, 압축: %s, npot: %s"
+msgstr "vsync: %s, 압축: %s"
 
 #: src/opengl.c:335 src/sound_openal.c:356
 #, c-format
