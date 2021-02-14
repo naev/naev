@@ -32,6 +32,7 @@
 
 /* Nebula properties */
 static double nebu_density = 0.; /**< The density. */
+static double nebu_dx   = 0.; /**< Length scale (space coords) for turbulence/eddies we draw. */
 static double nebu_view = 0.; /**< How far player can see. */
 static double nebu_dt   = 0.; /**< How fast nebula changes. */
 static double nebu_time = 0.; /**< Timer since last render. */
@@ -214,7 +215,7 @@ static void nebu_renderBackground( const double dt )
    /* Set shader uniforms. */
    gl_uniformColor(shaders.nebula_background.color, &cBlue);
    gl_Matrix4_Uniform(shaders.nebula_background.projection, nebu_render_P);
-   glUniform1f(shaders.nebula_background.radius, nebu_view * cam_getZoom() / nebu_scale);
+   glUniform1f(shaders.nebula_background.eddy_scale, nebu_view * cam_getZoom() / nebu_scale);
    glUniform1f(shaders.nebula_background.time, nebu_time);
 
    /* Draw. */
@@ -313,7 +314,8 @@ void nebu_renderOverlay( const double dt )
    /* Set shader uniforms. */
    gl_uniformColor(shaders.nebula.color, &cDarkBlue);
    gl_Matrix4_Uniform(shaders.nebula.projection, nebu_render_P);
-   glUniform1f(shaders.nebula.radius, nebu_view * z / nebu_scale);
+   glUniform1f(shaders.nebula.horizon, nebu_view * z / nebu_scale);
+   glUniform1f(shaders.nebula.eddy_scale, nebu_dx * z / nebu_scale);
    glUniform1f(shaders.nebula.time, nebu_time);
 
    /* Draw. */
@@ -398,6 +400,7 @@ void nebu_prep( double density, double volatility )
    nebu_density = density;
    nebu_update( 0. );
    nebu_dt   = (2.*density + 200.) / 10000.; /* Faster at higher density */
+   nebu_dx   = 15000. / pow(density, 1./3.); /* Closer at higher density */
    nebu_time = 0.;
 
    nebu_npuffs = density/2.;

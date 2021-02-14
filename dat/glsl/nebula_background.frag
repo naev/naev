@@ -6,7 +6,7 @@ const float SCALAR = pow(2., 4./3.);
 
 uniform vec4 color;
 uniform mat4 projection;
-uniform float radius;
+uniform float eddy_scale;
 uniform float time;
 out vec4 color_out;
 
@@ -16,7 +16,7 @@ void main(void) {
 
    // Calculate coordinates
    vec2 rel_pos = gl_FragCoord.xy + projection[3].xy;
-   uv.xy = 4. * rel_pos / radius;
+   uv.xy = rel_pos / eddy_scale;
    uv.z = time;
 
    // Create the noise
