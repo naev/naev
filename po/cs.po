@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-02-14 07:34-0500\n"
+"POT-Creation-Date: 2021-02-14 12:05-0500\n"
 "PO-Revision-Date: 2021-02-07 09:50+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -67471,7 +67471,7 @@ msgstr ""
 msgid "Music thread did not exit when asked, ignoring..."
 msgstr ""
 
-#: src/naev.c:175 src/naev.c:1087
+#: src/naev.c:175 src/naev.c:1093
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -67491,7 +67491,28 @@ msgstr ""
 msgid "Unable to create config directory '%s'"
 msgstr ""
 
-#: src/naev.c:258
+#. now that we can find translations
+#: src/naev.c:248
+#, c-format
+msgid "Loaded configuration: %s"
+msgstr ""
+
+#: src/naev.c:250
+msgid "Read locations, searched in order:"
+msgstr ""
+
+#. Logging the cache path is noisy, noisy is good at the DEBUG level.
+#: src/naev.c:255
+#, c-format
+msgid "Cache location: %s"
+msgstr ""
+
+#: src/naev.c:256
+#, c-format
+msgid "Write location: %s\n"
+msgstr ""
+
+#: src/naev.c:264
 msgid "Failed to load module start data."
 msgstr ""
 
@@ -67499,46 +67520,46 @@ msgstr ""
 #. * OpenGL
 #.
 #. initializes video output
-#: src/naev.c:273
+#: src/naev.c:279
 msgid "Initializing video output failed, exiting..."
 msgstr ""
 
-#: src/naev.c:290
+#: src/naev.c:296
 msgid "Initializing subsystems..."
 msgstr ""
 
-#: src/naev.c:298
+#: src/naev.c:304
 msgid "Error initializing joystick input"
 msgstr ""
 
-#: src/naev.c:301 src/naev.c:308
+#: src/naev.c:307 src/naev.c:314
 msgid "Failure to open any joystick, falling back to default keybinds"
 msgstr ""
 
-#: src/naev.c:317
+#: src/naev.c:323
 msgid "Sound is disabled!"
 msgstr ""
 
-#: src/naev.c:322
+#: src/naev.c:328
 msgid "Problem setting up sound!"
 msgstr ""
 
 #. Misc graphics init
 #. Initializes the nebula
 #. An error has happened
-#: src/naev.c:331
+#: src/naev.c:337
 msgid "Unable to initialize the Nebula subsystem!"
 msgstr ""
 
-#: src/naev.c:357
+#: src/naev.c:363
 msgid "Reached main menu"
 msgstr ""
 
-#: src/naev.c:378
+#: src/naev.c:384
 msgid "Welcome to Naev"
 msgstr ""
 
-#: src/naev.c:379
+#: src/naev.c:385
 #, c-format
 msgid ""
 "Welcome to Naev version %s, and thank you for playing! We hope you enjoy "
@@ -67556,117 +67577,117 @@ msgid ""
 "playing!"
 msgstr ""
 
-#: src/naev.c:483
+#: src/naev.c:489
 msgid "No loading screens found!"
 msgstr ""
 
 #. order is very important as they're interdependent
-#: src/naev.c:597
+#: src/naev.c:603
 msgid "Loading Commodities..."
 msgstr ""
 
 #. dep for space
-#: src/naev.c:599
+#: src/naev.c:605
 msgid "Loading Factions..."
 msgstr ""
 
 #. dep for fleet, space, missions, AI
-#: src/naev.c:601
+#: src/naev.c:607
 msgid "Loading AI..."
 msgstr ""
 
 #. dep for fleets
-#: src/naev.c:603
+#: src/naev.c:609
 msgid "Loading Missions..."
 msgstr ""
 
 #. no dep
-#: src/naev.c:605
+#: src/naev.c:611
 msgid "Loading Events..."
 msgstr ""
 
 #. no dep
-#: src/naev.c:607
+#: src/naev.c:613
 msgid "Loading Special Effects..."
 msgstr ""
 
 #. no dep
-#: src/naev.c:609
+#: src/naev.c:615
 msgid "Loading Damage Types..."
 msgstr ""
 
 #. no dep
-#: src/naev.c:611
+#: src/naev.c:617
 msgid "Loading Outfits..."
 msgstr ""
 
 #. dep for ships
-#: src/naev.c:613
+#: src/naev.c:619
 msgid "Loading Ships..."
 msgstr ""
 
 #. dep for fleet
-#: src/naev.c:615
+#: src/naev.c:621
 msgid "Loading Fleets..."
 msgstr ""
 
 #. dep for space
-#: src/naev.c:617
+#: src/naev.c:623
 msgid "Loading Techs..."
 msgstr ""
 
 #. dep for space
-#: src/naev.c:619
+#: src/naev.c:625
 msgid "Loading the Universe..."
 msgstr ""
 
-#: src/naev.c:621
+#: src/naev.c:627
 msgid "Loading the UniDiffs..."
 msgstr ""
 
-#: src/naev.c:623
+#: src/naev.c:629
 msgid "Populating Maps..."
 msgstr ""
 
 #. Initialize player stuff.
-#: src/naev.c:631
+#: src/naev.c:637
 msgid "Loading Completed!"
 msgstr ""
 
-#: src/naev.c:765
+#: src/naev.c:771
 msgid "clock_gettime failed, disabling POSIX time."
 msgstr ""
 
-#: src/naev.c:790
+#: src/naev.c:796
 msgid "clock_gettime failed!"
 msgstr ""
 
-#: src/naev.c:1003
+#: src/naev.c:1009
 msgid "PAUSED"
 msgstr ""
 
-#: src/naev.c:1028
+#: src/naev.c:1034
 msgid "Icon (icon.png) not found!"
 msgstr ""
 
-#: src/naev.c:1033
+#: src/naev.c:1039
 msgid "Unable to load icon.png!"
 msgstr ""
 
-#: src/naev.c:1058
+#: src/naev.c:1064
 msgid " debug"
 msgstr ""
 
-#: src/naev.c:1113
+#: src/naev.c:1119
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr ""
 
-#: src/naev.c:1123
+#: src/naev.c:1129
 msgid "SDL is newer than compiled version"
 msgstr ""
 
-#: src/naev.c:1125
+#: src/naev.c:1131
 msgid "SDL is older than compiled version."
 msgstr ""
 
@@ -67743,7 +67764,7 @@ msgstr ""
 msgid "SourceCodePro-Semibold.ttf,D2CodingBold.ttf"
 msgstr ""
 
-#: src/nebula.c:138
+#: src/nebula.c:139
 msgid "Error setting up nebula framebuffer!"
 msgstr ""
 
