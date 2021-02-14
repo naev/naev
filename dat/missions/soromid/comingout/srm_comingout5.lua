@@ -153,7 +153,7 @@ end
 function spawnThug( param )
    local shiptypes = { "Hyena", "Hyena", "Shark", "Lancelot", "Admonisher" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   thug = pilot.add( shiptype, "Comingout_thugs", param, "Thug " .. shiptype )
+   thug = pilot.add( shiptype, "Comingout_thugs", param, _("Thug %s"):format( _(shiptype) ) )
 
    thug:setHostile()
 
