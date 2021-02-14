@@ -2484,8 +2484,8 @@ int player_outfitOwned( const Outfit* o )
    int i;
 
    /* Special case map. */
-   if ((outfit_isMap(o) && map_isMapped(o)) ||
-         (outfit_isLocalMap(o) && localmap_isMapped(o)))
+   if ((outfit_isMap(o) && map_isUseless(o)) ||
+         (outfit_isLocalMap(o) && localmap_isUseless(o)))
       return 1;
 
    /* Special case license. */

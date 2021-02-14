@@ -66,8 +66,7 @@ enum {
 #define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
-#define planet_isKnown(p) \
-   (!planet_hasSystem((p)->name) || planet_isFlag(p,PLANET_KNOWN)) /**< Checks if planet is known. */
+#define planet_isKnown(p) planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
 
 
 /**

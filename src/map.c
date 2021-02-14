@@ -2360,22 +2360,28 @@ int map_map( const Outfit *map )
 
 
 /**
- * @brief Check to see if map data is already mapped (known).
+ * @brief Check to see if map data is limited to locations which are known
+ *        or in a nonexistent status for plot reasons.
  *
  *    @param map Map outfit to check.
  *    @return 1 if already mapped, 0 if it wasn't.
  */
-int map_isMapped( const Outfit* map )
+int map_isUseless( const Outfit* map )
 {
    int i;
+   Planet *p;
 
    for (i=0; i<array_size(map->u.map->systems);i++)
       if (!sys_isKnown(map->u.map->systems[i]))
          return 0;
 
-   for (i=0; i<array_size(map->u.map->assets);i++)
-      if (!planet_isKnown(map->u.map->assets[i]))
+   for (i=0; i<array_size(map->u.map->assets);i++) {
+      p = map->u.map->assets[i];
+      if (p->real != ASSET_REAL || !planet_hasSystem( p->name ) )
+         continue;
+      if (!planet_isKnown(p))
          return 0;
+   }
 
    for (i=0; i<array_size(map->u.map->jumps);i++)
       if (!jp_isKnown(map->u.map->jumps[i]))
@@ -2412,7 +2418,7 @@ int localmap_map( const Outfit *lmap )
    detect = lmap->u.lmap.asset_detect;
    for (i=0; i<array_size(cur_system->planets); i++) {
       p = cur_system->planets[i];
-      if (p->real != ASSET_REAL)
+      if (p->real != ASSET_REAL || !planet_hasSystem( p->name ) )
          continue;
       if (mod*p->hide <= detect)
          planet_setKnown( p );
@@ -2421,9 +2427,10 @@ int localmap_map( const Outfit *lmap )
 }
 
 /**
- * @brief Checks to see if the local map is mapped.
+ * @brief Checks to see if the local map is limited to locations which are known
+ *        or in a nonexistent status for plot reasons.
  */
-int localmap_isMapped( const Outfit *lmap )
+int localmap_isUseless( const Outfit *lmap )
 {
    int i;
    JumpPoint *jp;

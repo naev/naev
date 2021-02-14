@@ -691,8 +691,8 @@ int outfit_canBuy( const char *name, Planet *planet )
    }
 
    /* Map already mapped */
-   if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
-         (outfit_isLocalMap(outfit) && localmap_isMapped(outfit))) {
+   if ((outfit_isMap(outfit) && map_isUseless(outfit)) ||
+         (outfit_isLocalMap(outfit) && localmap_isUseless(outfit))) {
       land_errDialogueBuild( _("You already know of everything this map contains.") );
       return 0;
    }
