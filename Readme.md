@@ -23,7 +23,7 @@ Naev requires the following:
 * freetype2
 * libpng
 * OpenAL
-* libvorbis
+* libvorbis >= 1.2.2
 * binutils
 * intltool
 

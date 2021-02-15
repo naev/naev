@@ -155,7 +155,6 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
-   config_data.set10('HAVE_OV_READ_FILTER', cc.has_header_symbol('vorbis/vorbisfile.h', 'ov_read_filter'))
 
    # OS declaration (Shows which OS we built this with in the options menu)
    if host_machine.system() == 'linux'
