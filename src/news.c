@@ -336,7 +336,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
       i = gl_printWidthForText( NULL, &buf[p], w-40, NULL );
 
       /* Copy the line. */
-      array_push_back( &news_lines, nstrndup( buf+p, i ) );
+      array_push_back( &news_lines, strndup( buf+p, i ) );
       if (array_size( news_restores ) == 0)
          gl_printRestoreInit( &array_grow( &news_restores ) );
       else {

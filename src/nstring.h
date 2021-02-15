@@ -30,11 +30,7 @@
 
 const char *nstrnstr( const char *haystack, const char *needle, size_t size );
 /*const*/ char *strcasestr( const char *haystack, const char *needle );
-#if HAS_POSIX && defined(_GNU_SOURCE)
-#define nstrndup        strndup
-#else /* HAS_POSIX && defined(_GNU_SOURCE) */
-char* nstrndup( const char *s, size_t n );
-#endif /* HAS_POSIX && defined(_GNU_SOURCE) */
+char* strndup( const char *s, size_t n );
 
 int strsort( const void *p1, const void *p2 );
 

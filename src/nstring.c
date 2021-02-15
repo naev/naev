@@ -85,16 +85,17 @@ char *strcasestr( const char *haystack, const char *needle )
 
    return NULL;
 }
-#endif /* !(HAS_POSIX && defined(_GNU_SOURCE)) */
+#endif /* !HAVE_STRCASESTR */
 
 
 /**
- * @brief nstrndup wrapper.
+ * @brief Return a pointer to a new string, which is a duplicate of the string \p s
+ *        (or, if necessary, which contains the first \p nn bytes of \p s plus a terminating null).
  *
- * Taken from glibc.
+ * Taken from glibc. Conforms to POSIX.1-2008.
  */
-#if !(HAS_POSIX && defined(_GNU_SOURCE))
-char* nstrndup( const char *s, size_t n )
+#if !HAVE_STRNDUP
+char* strndup( const char *s, size_t n )
 {
    size_t len = MIN( strlen(s), n );
    char *new = (char *) malloc (len + 1);
@@ -103,7 +104,7 @@ char* nstrndup( const char *s, size_t n )
    new[len] = '\0';
    return (char *) memcpy (new, s, len);
 }
-#endif /* !(HAS_POSIX && defined(_GNU_SOURCE)) */
+#endif /* !HAVE_STRNDUP */
 
 
 /**
