@@ -29,11 +29,10 @@
 #define PRINTF_FORMAT( i, j ) FORMAT( BUILTIN_PRINTF_FORMAT, i, j)
 
 const char *nstrnstr( const char *haystack, const char *needle, size_t size );
+/*const*/ char *strcasestr( const char *haystack, const char *needle );
 #if HAS_POSIX && defined(_GNU_SOURCE)
-#define nstrcasestr     strcasestr
 #define nstrndup        strndup
 #else /* HAS_POSIX && defined(_GNU_SOURCE) */
-const char *nstrcasestr( const char *haystack, const char *needle );
 char* nstrndup( const char *s, size_t n );
 #endif /* HAS_POSIX && defined(_GNU_SOURCE) */
 

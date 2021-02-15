@@ -544,7 +544,7 @@ int outfits_filter( Outfit **outfits, int n,
       if ((filter != NULL) && !filter(outfits[i]))
          continue;
 
-      if ((name != NULL) && (nstrcasestr( outfits[i]->name, name ) == NULL))
+      if ((name != NULL) && (strcasestr( outfits[i]->name, name ) == NULL))
          continue;
 
       /* Shift matches downward. */

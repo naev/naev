@@ -607,7 +607,7 @@ static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
    /* Do fuzzy search. */
    l = 0;
    for (i=0; i<n; i++) {
-      if (nstrcasestr( _(o[i]->name), name ) != NULL) {
+      if (strcasestr( _(o[i]->name), name ) != NULL) {
          names[l] = o[i]->name;
          l++;
       }
@@ -847,7 +847,7 @@ static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
    /* Do fuzzy search. */
    l = 0;
    for (i=0; i<n; i++) {
-      if (nstrcasestr( _(s[i]->name), name ) != NULL) {
+      if (strcasestr( _(s[i]->name), name ) != NULL) {
          names[l] = s[i]->name;
          l++;
       }

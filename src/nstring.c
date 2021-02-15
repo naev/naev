@@ -65,8 +65,8 @@ const char *nstrnstr( const char *haystack, const char *needle, size_t size )
  *    @param needle String to find.
  *    @return Pointer in haystack where needle was found or NULL if not found.
  */
-#if !(HAS_POSIX && defined(_GNU_SOURCE))
-const char *nstrcasestr( const char *haystack, const char *needle )
+#if !HAVE_STRCASESTR
+char *strcasestr( const char *haystack, const char *needle )
 {
    size_t hay_len, needle_len;
 
@@ -77,7 +77,7 @@ const char *nstrcasestr( const char *haystack, const char *needle )
    /* Slow search. */
    while (hay_len >= needle_len) {
       if (strncasecmp(haystack, needle, needle_len) == 0)
-         return haystack;
+         return (char*)haystack;
 
       haystack++;
       hay_len--;

@@ -767,7 +767,7 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<array_size(systems_stack); i++) {
-      if (nstrcasestr( _(systems_stack[i].name), sysname ) != NULL) {
+      if (strcasestr( _(systems_stack[i].name), sysname ) != NULL) {
          names[len] = systems_stack[i].name;
          len++;
       }
@@ -988,7 +988,7 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<array_size(planet_stack); i++) {
-      if (nstrcasestr( _(planet_stack[i].name), planetname ) != NULL) {
+      if (strcasestr( _(planet_stack[i].name), planetname ) != NULL) {
          names[len] = planet_stack[i].name;
          len++;
       }
