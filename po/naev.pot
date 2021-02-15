@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-02-14 14:20-0500\n"
+"POT-Creation-Date: 2021-02-15 11:45-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32489,9 +32489,9 @@ msgstr ""
 #, lua-format
 msgid ""
 "\"My General has just retired from the High Command and is now looking to "
-"become the Warlord of a planetary system. Unfortunately, our loyal forces do "
-"not seem sufficient enough to take on any existing planetary defense forces "
-"head on.  \n"
+"become the Warlord of a planetary system. Unfortunately, our loyal forces "
+"seem insufficient to take on any existing planetary defense forces head "
+"on.  \n"
 "      \"However, it looks like there may be an opportunity for us in %s. "
 "Warlord Khan of %s has been building his newest flagship, the Hawk, and will "
 "be onboard the Hawk as it tests its hyperspace capabilities. Since its "
@@ -32652,7 +32652,8 @@ msgstr ""
 msgid "I declare myself the Warlord of %s!"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:144
+#. Half finished installing weapons. :)
+#: dat/missions/dvaered/dv_diversion.lua:149
 msgid "Hawk"
 msgstr ""
 
