@@ -299,25 +299,25 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
          &gl_smallFont, &cFontOrange,
          ""
-#ifdef DEBUGGING
-#ifdef DEBUG_PARANOID
+#if DEBUGGING
+#if DEBUG_PARANOID
          "Debug Paranoid\n"
 #else /* DEBUG_PARANOID */
          "Debug\n"
 #endif /* DEBUG_PARANOID */
 #endif /* DEBUGGING */
-#if defined(LINUX)
+#if LINUX
          "Linux\n"
-#elif defined(FREEBSD)
+#elif FREEBSD
          "FreeBSD\n"
-#elif defined(MACOS)
+#elif MACOS
          "macOS\n"
-#elif defined(WIN32)
+#elif WIN32
          "Windows\n"
 #else
          "Unknown OS\n"
 #endif
-#ifdef HAVE_LUAJIT
+#if HAVE_LUAJIT
          "Using LuaJIT\n"
 #endif
          );
