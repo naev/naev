@@ -757,13 +757,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       if (slot->sslot->slot.spid == 0)
          return;
 
-      pos = nsnprintf( alt, sizeof(alt),
+      pos = snprintf( alt, sizeof(alt),
             "#o%s", _( sp_display( slot->sslot->slot.spid ) ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
-         pos += nsnprintf( &alt[pos], sizeof(alt)-pos,
+         pos += snprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
       if (pos < (int)sizeof(alt))
-         nsnprintf( &alt[pos], sizeof(alt)-pos,
+         snprintf( &alt[pos], sizeof(alt)-pos,
                "\n\n%s", _( sp_description( slot->sslot->slot.spid ) ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
@@ -778,18 +778,18 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Get text. */
    if (o->desc_short == NULL)
       return;
-   pos = nsnprintf( alt, sizeof(alt),
+   pos = snprintf( alt, sizeof(alt),
          "%s",
          _(o->name) );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n#oUnique#0") );
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n#oUnique#0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, _("\n#oSlot %s#0"),
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n#oSlot %s#0"),
             _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
-      pos += nsnprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
-      nsnprintf( &alt[pos], sizeof(alt)-pos,
+      snprintf( &alt[pos], sizeof(alt)-pos,
             n_("\n%.0f Tonne", "\n%.0f Tonnes", mass),
             mass );
 
@@ -1288,7 +1288,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    /* Write to buffer. */
    l = 0;
    if (dps > 0.)
-      l += nsnprintf( &buf[l], (max_len-l),
+      l += snprintf( &buf[l], (max_len-l),
             _("%s%.2f DPS [%.2f EPS]"), (l!=0)?"\n":"", dps, eps );
    l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), l );
    return l;
@@ -1349,7 +1349,7 @@ static void equipment_genShipList( unsigned int wid )
       t = gl_newImage( OVERLAY_GFX_PATH"active.png", OPENGL_TEX_MIPMAPS );
       cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
       if (player.p->ship->rarity > 0) {
-         nsnprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.png", player.p->ship->rarity );
+         snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.png", player.p->ship->rarity );
          t = gl_newImage( r, OPENGL_TEX_MIPMAPS );
          cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
       }
@@ -1361,7 +1361,7 @@ static void equipment_genShipList( unsigned int wid )
             cships[i].caption = strdup( ps[i-1].p->name );
             cships[i].layers = gl_copyTexArray( ps[i-1].p->ship->gfx_overlays, &cships[i].nlayers );
             if (ps[i-1].p->ship->rarity > 0) {
-               nsnprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.png", ps[i-1].p->ship->rarity );
+               snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.png", ps[i-1].p->ship->rarity );
                t = gl_newImage( r, OPENGL_TEX_MIPMAPS );
                cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
             }
@@ -1371,7 +1371,7 @@ static void equipment_genShipList( unsigned int wid )
       for (i=0; i<nships; i++) {
          s        = player_getShip( cships[i].caption );
          cships[i].alt = malloc( SHIP_ALT_MAX );
-         l        = nsnprintf( &cships[i].alt[0], SHIP_ALT_MAX, _("Ship Stats\n") );
+         l        = snprintf( &cships[i].alt[0], SHIP_ALT_MAX, _("Ship Stats\n") );
          l        = equipment_shipStats( &cships[i].alt[0], SHIP_ALT_MAX-l, s, 1 );
          if (l == 0) {
             free( cships[i].alt );
@@ -1543,7 +1543,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
 
    /* Fill the buffer. */
-   nsnprintf( buf, sizeof(buf),
+   snprintf( buf, sizeof(buf),
          _("%s\n"
          "%s\n"
          "%s\n"

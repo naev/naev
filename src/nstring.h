@@ -38,8 +38,6 @@ const char *nstrcasestr( const char *haystack, const char *needle );
 char* nstrndup( const char *s, size_t n );
 #endif /* HAS_POSIX && defined(_GNU_SOURCE) */
 
-#define nsnprintf       snprintf
-
 int strsort( const void *p1, const void *p2 );
 
 

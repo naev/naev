@@ -416,19 +416,19 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
    if (ret) {
       found[n].jumps    = 10000;
       found[n].distance = 1e6;
-      nsnprintf( route_info, sizeof(route_info), "%s", _("unknown route") );
+      snprintf( route_info, sizeof(route_info), "%s", _("unknown route") );
    }
    else
-      nsnprintf( route_info, sizeof(route_info),
+      snprintf( route_info, sizeof(route_info),
             n_( "%d jump, %.0fk distance", "%d jumps, %.0fk distance", found[n].jumps ),
             found[n].jumps, found[n].distance/1000. );
 
    /* Set fancy name. */
    if (pnt == NULL)
-      nsnprintf( found[n].display, sizeof(found[n].display),
+      snprintf( found[n].display, sizeof(found[n].display),
             _("%s (%s)"), _(sys->name), route_info );
    else
-      nsnprintf( found[n].display, sizeof(found[n].display),
+      snprintf( found[n].display, sizeof(found[n].display),
             _("#%c%s (%s, %s)"), map_getPlanetColourChar(pnt),
             _(pnt->name), _(sys->name), route_info );
 }
@@ -718,7 +718,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    window_modifyText( wid, "txtDescription", _(outfit->description) );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
-   nsnprintf( buf, PATH_MAX,
+   snprintf( buf, PATH_MAX,
          _("%d\n"
          "\n"
          "%s\n"

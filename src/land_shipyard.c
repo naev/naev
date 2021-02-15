@@ -206,7 +206,7 @@ void shipyard_update( unsigned int wid, char* str )
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
-      nsnprintf( buf, PATH_MAX,
+      snprintf( buf, PATH_MAX,
             _("None\n"
             "N/A\n"
             "N/A\n"
@@ -253,10 +253,10 @@ void shipyard_update( unsigned int wid, char* str )
    else if (player_hasLicense( ship->license ))
       strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
    else
-      nsnprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
+      snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
    buf_license[ sizeof(buf_license)-1 ] = '\0';
 
-   nsnprintf( buf, PATH_MAX,
+   snprintf( buf, PATH_MAX,
          _("%s\n"
          "%s\n"
          "%s\n"

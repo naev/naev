@@ -228,7 +228,7 @@ int main( int argc, char** argv )
       WARN( _("Unable to create config directory '%s'"), nfile_configPath());
 
    /* Set the configuration. */
-   nsnprintf(conf_file_path, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
+   snprintf(conf_file_path, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
    conf_loadConfig(conf_file_path); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
@@ -495,7 +495,7 @@ void loadscreen_load (void)
    cam_setZoom( conf.zoom_far );
 
    /* Load the texture */
-   nsnprintf( file_path, PATH_MAX, GFX_PATH"loading/%s", loadscreens[ RNG_BASE(0,nload-1) ] );
+   snprintf( file_path, PATH_MAX, GFX_PATH"loading/%s", loadscreens[ RNG_BASE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
 
    /* Create the stars. */
@@ -1041,7 +1041,7 @@ static void window_caption (void)
    }
 
    /* Set caption. */
-   nsnprintf(buf, PATH_MAX, APPNAME" - %s", start_name());
+   snprintf(buf, PATH_MAX, APPNAME" - %s", start_name());
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
 }
@@ -1058,7 +1058,7 @@ char *naev_version( int long_version )
    /* Set up the long version. */
    if (long_version) {
       if (version_human[0] == '\0')
-         nsnprintf( version_human, sizeof(version_human),
+         snprintf( version_human, sizeof(version_human),
                " "APPNAME" v%s%s - %s", VERSION,
 #ifdef DEBUGGING
                _(" debug"),

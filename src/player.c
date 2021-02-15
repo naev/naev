@@ -259,7 +259,7 @@ void player_new (void)
       return;
    }
 
-   nsnprintf( buf, sizeof(buf), "saves/%s.ns", player.name);
+   snprintf( buf, sizeof(buf), "saves/%s.ns", player.name);
    if (PHYSFS_exists( buf )) {
       r = dialogue_YesNo(_("Overwrite"),
             _("You already have a pilot named %s. Overwrite?"),player.name);
@@ -424,7 +424,7 @@ Pilot* player_newShip( Ship* ship, const char *def_name,
       ship_name = malloc( len );
       strcpy( ship_name, def_name );
       while (player_hasShip(ship_name)) {
-         nsnprintf( ship_name, len, "%s %d", def_name, i );
+         snprintf( ship_name, len, "%s %d", def_name, i );
          i++;
       }
    }
@@ -1709,7 +1709,7 @@ void player_hailStart (void)
    player_hailCounter = 5;
 
    input_getKeybindDisplay( "autohail", buf, sizeof(buf) );
-   nsnprintf( msg, sizeof(msg), _("#rReceiving hail! Press %s to respond."), buf );
+   snprintf( msg, sizeof(msg), _("#rReceiving hail! Press %s to respond."), buf );
    player_messageRaw( msg );
 
    /* Reset speed. */
@@ -2095,7 +2095,7 @@ void player_screenshot (void)
 
    /* Try to find current screenshots. */
    for ( ; screenshot_cur < 1000; screenshot_cur++) {
-      nsnprintf( filename, PATH_MAX, "screenshots/screenshot%03d.png", screenshot_cur );
+      snprintf( filename, PATH_MAX, "screenshots/screenshot%03d.png", screenshot_cur );
       if (!PHYSFS_exists( filename ))
          break;
    }

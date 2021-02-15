@@ -703,12 +703,12 @@ static void uniedit_renameSys (void)
       /* Change the name. */
       filtered = uniedit_nameFilter(sys->name);
       oldName = malloc(14 + strlen(filtered));
-      nsnprintf(oldName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
+      snprintf(oldName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
       free(filtered);
 
       filtered = uniedit_nameFilter(name);
       newName = malloc(14 + strlen(filtered));
-      nsnprintf(newName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
+      snprintf(newName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
       free(filtered);
 
       rename(oldName, newName);
@@ -947,7 +947,7 @@ void uniedit_selectText (void)
 
    l = 0;
    for (i=0; i<uniedit_nsys; i++) {
-      l += nsnprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
+      l += snprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
             (i == uniedit_nsys-1) ? "" : ", " );
    }
    if (l == 0)
@@ -1095,7 +1095,7 @@ static void uniedit_findSearch( unsigned int wid, char *str )
       found[n].sys      = sys;
 
       /* Set fancy name. */
-      nsnprintf( found[n].display, sizeof(found[n].display),
+      snprintf( found[n].display, sizeof(found[n].display),
             _("%s (%s system)"), planets[i], sys->name );
       n++;
    }
@@ -1241,7 +1241,7 @@ static void uniedit_editSys (void)
 
    /* Rename button. */
    y = -45;
-   nsnprintf( buf, sizeof(buf), _("Name: #n%s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
+   snprintf( buf, sizeof(buf), _("Name: #n%s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", _("Rename"), uniedit_btnEditRename );
 
@@ -1305,15 +1305,15 @@ static void uniedit_editSys (void)
    (void)x;
 
    /* Load values */
-   nsnprintf( buf, sizeof(buf), "%g", sys->radius );
+   snprintf( buf, sizeof(buf), "%g", sys->radius );
    window_setInput( wid, "inpRadius", buf );
-   nsnprintf( buf, sizeof(buf), "%d", sys->stars );
+   snprintf( buf, sizeof(buf), "%d", sys->stars );
    window_setInput( wid, "inpStars", buf );
-   nsnprintf( buf, sizeof(buf), "%g", sys->interference );
+   snprintf( buf, sizeof(buf), "%g", sys->interference );
    window_setInput( wid, "inpInterference", buf );
-   nsnprintf( buf, sizeof(buf), "%g", sys->nebu_density );
+   snprintf( buf, sizeof(buf), "%g", sys->nebu_density );
    window_setInput( wid, "inpNebula", buf );
-   nsnprintf( buf, sizeof(buf), "%g", sys->nebu_volatility );
+   snprintf( buf, sizeof(buf), "%g", sys->nebu_volatility );
    window_setInput( wid, "inpVolatility", buf );
 
    /* Generate the list. */
@@ -1538,7 +1538,7 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused )
    uniedit_renameSys();
 
    /* Update text. */
-   nsnprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
+   snprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_modifyText( wid, "txtName", buf );
 }
 

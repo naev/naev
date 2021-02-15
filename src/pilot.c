@@ -1963,7 +1963,7 @@ void pilot_update( Pilot* pilot, const double dt )
             (pilot->ptimer < 0.050)) {
 
          /* Play random explosion sound. */
-         nsnprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
+         snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
          sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
 

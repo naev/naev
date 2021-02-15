@@ -65,7 +65,7 @@ int nsetenv( const char *name, const char *value, int overwrite )
    return _putenv_s(name, value);
 #else /* HAVE_DECL__PUTENV_S */
    char buf[PATH_MAX];
-   nsnprintf( buf, sizeof(buf), "%s=%s", name, value );
+   snprintf( buf, sizeof(buf), "%s=%s", name, value );
    /* Per the standard, the string pointed to by putenv's argument becomes part of the environment
     * ("so altering the string alters the environment" and "it is an error to call putenv() with an
     * automatic variable as the argument".)

@@ -426,7 +426,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    SDL_BlitSurface( surface, &rtemp, gfx_store, &dstrect );
 
    /* Load the store surface. */
-   nsnprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
+   snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
    temp->gfx_store = gl_loadImagePad( buf, gfx_store, OPENGL_TEX_VFLIP, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
 #if 0 /* Disabled for now due to issues with larger sprites. */
@@ -461,7 +461,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 #endif
 
    /* Load the surface. */
-   nsnprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
+   snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
    temp->gfx_target = gl_loadImagePad( buf, gfx, OPENGL_TEX_VFLIP, sw, sh, 1, 1, 1 );
 
    return 0;
@@ -549,19 +549,19 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
       return -1;
    }
 
-   nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_EXT, base, buf );
+   snprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_EXT, base, buf );
    ship_loadSpaceImage( temp, str, sx, sy );
 
    /* Load the engine sprite .*/
    if (engine && conf.engineglow) {
-      nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+      snprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
       ship_loadEngineImage( temp, str, sx, sy );
       if (temp->gfx_engine == NULL)
          WARN(_("Ship '%s' does not have an engine sprite (%s)."), temp->name, str );
    }
 
    /* Get the comm graphic for future loading. */
-   nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+   snprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
    temp->gfx_comm = strdup(str);
 
    return 0;
@@ -586,7 +586,7 @@ static int ship_loadPLG( Ship *temp, char *buf, int size_hint )
    sl   = strlen(buf)+strlen(SHIP_POLYGON_PATH)+strlen(".xml")+1;
    file = malloc( sl );
 
-   nsnprintf( file, sl, "%s%s.xml", SHIP_POLYGON_PATH, buf );
+   snprintf( file, sl, "%s%s.xml", SHIP_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
    if (!PHYSFS_exists(file)) {
@@ -816,7 +816,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             WARN(_("Ship '%s': gfx_space element is NULL"), temp->name);
             continue;
          }
-         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+         snprintf( str, PATH_MAX, GFX_PATH"%s", buf );
 
          /* Get sprite size. */
          xmlr_attr_int_def( node, "sx", sx, 8 );
@@ -836,7 +836,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             WARN(_("Ship '%s': gfx_engine element is NULL"), temp->name);
             continue;
          }
-         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+         snprintf( str, PATH_MAX, GFX_PATH"%s", buf );
 
          /* Get sprite size. */
          xmlr_attr_int_def( node, "sx", sx, 8 );
@@ -855,7 +855,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             WARN(_("Ship '%s': gfx_comm element is NULL"), temp->name);
             continue;
          }
-         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+         snprintf( str, PATH_MAX, GFX_PATH"%s", buf );
          temp->gfx_comm = strdup(str);
          continue;
       }
@@ -1073,7 +1073,7 @@ int ships_load (void)
       /* Get the file name .*/
       sl   = strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+1;
       file = malloc( sl );
-      nsnprintf( file, sl, "%s%s", SHIP_DATA_PATH, ship_files[i] );
+      snprintf( file, sl, "%s%s", SHIP_DATA_PATH, ship_files[i] );
 
       /* Load the XML. */
       doc  = xml_parsePhysFS( file );

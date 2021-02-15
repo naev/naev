@@ -382,12 +382,12 @@ void player_messageRaw( const char *str )
 
       /* Add the new one */
       if (p == 0) {
-         nsnprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
+         snprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
          gl_printRestoreInit( &mesg_stack[mesg_pointer].restore );
       }
       else {
          mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
-         nsnprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
+         snprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
          gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, p );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
@@ -1701,7 +1701,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    //glLineWidth(1.);
 
    if (overlay) {
-      nsnprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
+      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
       gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, buf );
    }
 }
@@ -1798,7 +1798,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Render name. */
    if (overlay) {
-      nsnprintf(
+      snprintf(
             buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
             sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       gl_printMarkerRaw( &gl_smallFont, cx+jp->mo.text_offx, cy+jp->mo.text_offy, &col, buf );
@@ -2148,7 +2148,7 @@ int gui_load( const char* name )
    gui_cleanup();
 
    /* Open file. */
-   nsnprintf( path, sizeof(path), GUI_PATH"%s.lua", name );
+   snprintf( path, sizeof(path), GUI_PATH"%s.lua", name );
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
       WARN(_("Unable to find GUI '%s'."), path );

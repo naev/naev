@@ -204,7 +204,7 @@ nlua_env nlua_newEnv(int rw) {
     * "package.path" to look in the data.
     * "package.cpath" unset */
    lua_getglobal(naevL, "package");
-   nsnprintf( packagepath, sizeof(packagepath),
+   snprintf( packagepath, sizeof(packagepath),
          "?.lua;"LUA_INCLUDE_PATH"?.lua" );
    lua_pushstring(naevL, packagepath);
    lua_setfield(naevL, -2, "path");

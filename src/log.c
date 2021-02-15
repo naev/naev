@@ -147,8 +147,8 @@ void log_redirect (void)
    if ( logerr_file == NULL )
       WARN(_("Unable to redirect stderr to file"));
 
-   nsnprintf( outfiledouble, PATH_MAX, "logs/%s_stdout.txt", timestr );
-   nsnprintf( errfiledouble, PATH_MAX, "logs/%s_stderr.txt", timestr );
+   snprintf( outfiledouble, PATH_MAX, "logs/%s_stdout.txt", timestr );
+   snprintf( errfiledouble, PATH_MAX, "logs/%s_stderr.txt", timestr );
 }
 
 

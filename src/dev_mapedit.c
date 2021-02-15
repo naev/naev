@@ -573,7 +573,7 @@ void mapedit_selectText (void)
    /* Built list of all selected systems names */
    l = 0;
    for (i=0; i<mapedit_nsys; i++) {
-      l += nsnprintf( &buf[l], sizeof(buf)-l, "%s%s", mapedit_sys[i]->name,
+      l += snprintf( &buf[l], sizeof(buf)-l, "%s%s", mapedit_sys[i]->name,
             (i == mapedit_nsys-1) ? "" : ", " );
    }
 
@@ -586,7 +586,7 @@ void mapedit_selectText (void)
 
       /* Display number of selected systems */
       buf[0]      = '\0';
-      nsnprintf( &buf[0], 4, "%i", mapedit_nsys);
+      snprintf( &buf[0], 4, "%i", mapedit_nsys);
       window_modifyText( mapedit_wid, "txtCurrentNumSystems", buf );
 
       /* Compute and display presence text. */
@@ -594,7 +594,7 @@ void mapedit_selectText (void)
          sys = system_getIndex( mapedit_iLastClickedSystem );
          map_updateFactionPresence( mapedit_wid, "txtPresence", sys, 1 );
          buf[0]      = '\0';
-         nsnprintf( &buf[0], sizeof(buf), "Presence (%s)", sys->name );
+         snprintf( &buf[0], sizeof(buf), "Presence (%s)", sys->name );
          window_modifyText( mapedit_wid, "txtSPresence", buf );
       } else {
          window_modifyText( mapedit_wid, "txtSPresence", "Presence" );
@@ -715,7 +715,7 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
    ns  = &mapList[pos];
 
    /* Display text. */
-   nsnprintf( buf, sizeof(buf),
+   snprintf( buf, sizeof(buf),
          "File Name:\n"
          "   %s\n"
          "Map name:\n"
@@ -772,7 +772,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    /* Display text. */
    len  = strlen(MAP_DATA_PATH)+strlen(ns->fileName)+2;
    file = malloc( len );
-   nsnprintf( file, len, "%s%s", MAP_DATA_PATH, ns->fileName );
+   snprintf( file, len, "%s%s", MAP_DATA_PATH, ns->fileName );
 
    doc = xml_parsePhysFS( file );
 
@@ -883,11 +883,11 @@ void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns )
    window_setInput( mapedit_wid, "inpFileName",    ns->fileName );
    window_setInput( mapedit_wid, "inpMapName",     ns->mapName );
    window_setInput( mapedit_wid, "inpDescription", ns->description );
-   nsnprintf( buf, sizeof(buf), "%i", ns->numSystems );
+   snprintf( buf, sizeof(buf), "%i", ns->numSystems );
    window_modifyText( mapedit_wid, "txtCurrentNumSystems", buf );
-   nsnprintf( buf, sizeof(buf), "%"CREDITS_PRI, ns->price );
+   snprintf( buf, sizeof(buf), "%"CREDITS_PRI, ns->price );
    window_setInput( mapedit_wid, "inpPrice", buf );
-   nsnprintf( buf, sizeof(buf), "%i", ns->rarity );
+   snprintf( buf, sizeof(buf), "%i", ns->rarity );
    window_setInput( mapedit_wid, "inpRarity", buf );
 
    /* Local information. */
@@ -924,7 +924,7 @@ static int mapedit_mapsList_refresh (void)
 
       len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
       file = malloc( len );
-      nsnprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
+      snprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
 
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
@@ -1121,7 +1121,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    /* No need for writer anymore. */
    xmlFreeTextWriter(writer);
 
-   nsnprintf( file, sizeof(file), "dat/outfits/maps/%s", ns->fileName );
+   snprintf( file, sizeof(file), "dat/outfits/maps/%s", ns->fileName );
 
    /* Actually write data */
    xmlSaveFileEnc( file, doc, "UTF-8" );

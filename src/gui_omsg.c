@@ -125,7 +125,7 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
    while (n < l) {
       s  = gl_printWidthForText( font, &msg[n], omsg_center_w, NULL );
       omsg->msg[m] = malloc( s+1 );
-      nsnprintf( omsg->msg[m], s+1, "%s", &msg[n] );
+      snprintf( omsg->msg[m], s+1, "%s", &msg[n] );
       m++;
       n += s+1;
    }

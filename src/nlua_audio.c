@@ -393,7 +393,7 @@ static int audioL_soundPlay( lua_State *L )
       }
    }
 
-   nsnprintf(buf, PATH_MAX, "%s", name);
+   snprintf(buf, PATH_MAX, "%s", name);
 
    if (dopos)
       sound_playPos( sound_get(buf), pos->x, pos->y, vel->x, vel->y );

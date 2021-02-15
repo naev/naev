@@ -420,13 +420,13 @@ static void map_update( unsigned int wid )
    if ( cur_commod >= 0 ) {
       c = commod_known[cur_commod];
       if ( cur_commod_mode == 0 ) {
-         nsnprintf( buf, PATH_MAX,
+         snprintf( buf, PATH_MAX,
                    _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
                      "while negative/orange values mean a loss when sold at the corresponding system."),
                    _(c->name), _(sys->name) );
          window_modifyText( wid, "txtSystemStatus", buf );
       } else {
-         nsnprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
+         snprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
          window_modifyText( wid, "txtSystemStatus", buf );
       }
    } else {
@@ -505,7 +505,7 @@ static void map_update( unsigned int wid )
       }
       else if (f != sys->planets[i]->faction /** @todo more verbosity */
                && (sys->planets[i]->faction > 0)) {
-         nsnprintf( buf, PATH_MAX, _("Multiple") );
+         snprintf( buf, PATH_MAX, _("Multiple") );
          break;
       }
    }
@@ -517,7 +517,7 @@ static void map_update( unsigned int wid )
    }
    else {
       if (i==array_size(sys->planets)) /* saw them all and all the same */
-         nsnprintf( buf, PATH_MAX, "%s", faction_longname(f) );
+         snprintf( buf, PATH_MAX, "%s", faction_longname(f) );
 
       /* Modify the image. */
       logo = faction_logoSmall(f);
@@ -567,10 +567,10 @@ static void map_update( unsigned int wid )
       sym = planet_getSymbol(sys->planets[i]);
 
       if (!hasPlanets)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "#%c%s%s#n",
+         p += snprintf( &buf[p], PATH_MAX-p, "#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
       else
-         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n#%c%s%s#n",
+         p += snprintf( &buf[p], PATH_MAX-p, ",\n#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
       hasPlanets = 1;
       if (p > PATH_MAX)
@@ -597,12 +597,12 @@ static void map_update( unsigned int wid )
          services |= sys->planets[i]->services;
    buf[0] = '\0';
    p = 0;
-   /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
+   /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
       if (services & i)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", _(planet_getServiceName(i)) );
+         p += snprintf( &buf[p], PATH_MAX-p, "%s\n", _(planet_getServiceName(i)) );
    if (buf[0] == '\0')
-      p += nsnprintf( &buf[p], PATH_MAX-p, _("None"));
+      p += snprintf( &buf[p], PATH_MAX-p, _("None"));
    (void)p;
 
    window_modifyText( wid, "txtServices", buf );
@@ -626,32 +626,32 @@ static void map_update( unsigned int wid )
 
          /* Volatility */
          if (sys->nebu_volatility > 700.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile %sNebula"), adj);
+            p += snprintf(&buf[p], PATH_MAX-p, _("Volatile %sNebula"), adj);
          else if (sys->nebu_volatility > 300.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous %sNebula"), adj);
+            p += snprintf(&buf[p], PATH_MAX-p, _("Dangerous %sNebula"), adj);
          else if (sys->nebu_volatility > 0.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable %sNebula"), adj);
+            p += snprintf(&buf[p], PATH_MAX-p, _("Unstable %sNebula"), adj);
          else
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("%sNebula"), adj);
+            p += snprintf(&buf[p], PATH_MAX-p, _("%sNebula"), adj);
       }
       /* Interference. */
       if (sys->interference > 0.) {
          if (buf[0] != '\0')
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
+            p += snprintf(&buf[p], PATH_MAX-p, _(", "));
 
          if (sys->interference > 700.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Interference"));
+            p += snprintf(&buf[p], PATH_MAX-p, _("Dense Interference"));
          else if (sys->interference < 300.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Interference"));
+            p += snprintf(&buf[p], PATH_MAX-p, _("Light Interference"));
          else
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Interference"));
+            p += snprintf(&buf[p], PATH_MAX-p, _("Interference"));
       }
       /* Asteroids. */
       if (array_size(sys->asteroids) > 0) {
          double density;
 
          if (buf[0] != '\0')
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
+            p += snprintf(&buf[p], PATH_MAX-p, _(", "));
 
          density = 0.;
          for (i=0; i<array_size(sys->asteroids); i++) {
@@ -659,11 +659,11 @@ static void map_update( unsigned int wid )
          }
 
          if (density >= 1.5)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Asteroid Field"));
+            p += snprintf(&buf[p], PATH_MAX-p, _("Dense Asteroid Field"));
          else if (density <= 0.5)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Asteroid Field"));
+            p += snprintf(&buf[p], PATH_MAX-p, _("Light Asteroid Field"));
          else
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Asteroid Field"));
+            p += snprintf(&buf[p], PATH_MAX-p, _("Asteroid Field"));
       }
       window_modifyText( wid, "txtSystemStatus", buf );
       (void)p;
@@ -1215,9 +1215,9 @@ void map_renderNames( double bx, double by, double x, double y,
          /* Display. */
          n = sqrt(sys->jumps[j].hide);
          if (n == 0.)
-            nsnprintf( buf, sizeof(buf), "#gH: %.2f", n );
+            snprintf( buf, sizeof(buf), "#gH: %.2f", n );
          else
-            nsnprintf( buf, sizeof(buf), "H: %.2f", n );
+            snprintf( buf, sizeof(buf), "H: %.2f", n );
          gl_printRaw( &gl_smallFont, tx, ty, &cGrey70, -1, buf );
       }
    }
@@ -1510,7 +1510,7 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
    char buf[80], *line2;
    size_t charn;
 
-   nsnprintf( buf, 80, _("No price info for\n%s here"), _(c->name) );
+   snprintf( buf, 80, _("No price info for\n%s here"), _(c->name) );
    line2 = u8_strchr( buf, '\n', &charn );
    if ( line2 != NULL ) {
       *line2++ = '\0';
@@ -1554,7 +1554,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          break;
       }
       /* Use map grey instead of default neutral colour */
-      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
+      l += snprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
                       omniscient ? faction_name( sys->presence[ i ].faction )
                                  : faction_shortname( sys->presence[ i ].faction ),
                       faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
@@ -1562,11 +1562,11 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          break;
    }
    if ( unknownPresence != 0 && l <= sizeof( buf ) )
-      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
+      l += snprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
                       unknownPresence );
 
    if ( hasPresence == 0 )
-      nsnprintf( buf, sizeof( buf ), _( "None" ) );
+      snprintf( buf, sizeof( buf ), _( "None" ) );
 
    (void) l;
    window_modifyText( wid, name, buf );
@@ -1740,10 +1740,10 @@ static void map_genModeList(void)
       commod_text = _(commod_known[i]->name);
       l = strlen(odd_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
       array_push_back( &map_modes, malloc(l) );
-      nsnprintf( map_modes[2*i+1], l, odd_template, commod_text );
+      snprintf( map_modes[2*i+1], l, odd_template, commod_text );
       l = strlen(even_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
       array_push_back( &map_modes, malloc(l) );
-      nsnprintf( map_modes[2*i+2], l, even_template, commod_text );
+      snprintf( map_modes[2*i+2], l, even_template, commod_text );
    }
 }
 

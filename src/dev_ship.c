@@ -41,7 +41,7 @@ void dship_csv( const char *path )
    }
 
    /* Write "header" */
-   l = nsnprintf( buf, sizeof(buf),
+   l = snprintf( buf, sizeof(buf),
          "name,class,base_type,price,license,fabricator,"
          "thrust,turn,speed,"
          "crew,mass,cpu,fuel,cargo,"
@@ -57,7 +57,7 @@ void dship_csv( const char *path )
    for (i=0; i<array_size(s_all); i++) {
       s = &s_all[i];
 
-      l = nsnprintf( buf, sizeof(buf),
+      l = snprintf( buf, sizeof(buf),
             "%s,%s,%s,%"CREDITS_PRI",%s,%s,"
             "%f,%f,%f,"
             "%d,%f,%f,%d,%f,"
@@ -112,7 +112,7 @@ void dship_csvStat( const char *path )
       s = &s_all[i];
 
       /* Prepend name. */
-      l = nsnprintf( buf, sizeof(buf), "%s,", s->name );
+      l = snprintf( buf, sizeof(buf), "%s,", s->name );
 
       l += ss_csv( &(s->stats_array), &buf[l], sizeof(buf) - l );
       SDL_RWwrite( rw, buf, l, 1 );

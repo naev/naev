@@ -499,41 +499,41 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
          p = 0;
          /* Handle mod. */
          if ((mod != NMOD_NONE) && (mod != NMOD_ALL))
-            p += nsnprintf( &buf[p], len-p, "%s + ", input_modToText(mod) );
+            p += snprintf( &buf[p], len-p, "%s + ", input_modToText(mod) );
          /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
          if (key < 0x100 && isalpha(key))
-            p += nsnprintf( &buf[p], len-p, "%c", toupper(key) );
+            p += snprintf( &buf[p], len-p, "%c", toupper(key) );
          else
-            p += nsnprintf( &buf[p], len-p, "%s", _(SDL_GetKeyName(key)) );
+            p += snprintf( &buf[p], len-p, "%s", _(SDL_GetKeyName(key)) );
          (void)p;
          break;
 
       case KEYBIND_JBUTTON:
-         nsnprintf( buf, len, _("joy button %d"), key );
+         snprintf( buf, len, _("joy button %d"), key );
          break;
 
       case KEYBIND_JHAT_UP:
-         nsnprintf( buf, len, _("joy hat %d up"), key );
+         snprintf( buf, len, _("joy hat %d up"), key );
          break;
 
       case KEYBIND_JHAT_DOWN:
-         nsnprintf( buf, len, _("joy hat %d down"), key );
+         snprintf( buf, len, _("joy hat %d down"), key );
          break;
 
       case KEYBIND_JHAT_LEFT:
-         nsnprintf( buf, len, _("joy hat %d left"), key );
+         snprintf( buf, len, _("joy hat %d left"), key );
          break;
 
       case KEYBIND_JHAT_RIGHT:
-         nsnprintf( buf, len, _("joy hat %d right"), key );
+         snprintf( buf, len, _("joy hat %d right"), key );
          break;
 
       case KEYBIND_JAXISPOS:
-         nsnprintf( buf, len, _("joy axis %d-"), key );
+         snprintf( buf, len, _("joy axis %d-"), key );
          break;
 
       case KEYBIND_JAXISNEG:
-         nsnprintf( buf, len, _("joy axis %d+"), key );
+         snprintf( buf, len, _("joy axis %d+"), key );
          break;
    }
 }

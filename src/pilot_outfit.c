@@ -562,7 +562,7 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
 {
    #define SPACEWORTHY_CHECK(cond,msg) \
    if (cond) { ret++; \
-      if (pos < bufSize) pos += nsnprintf( &buf[pos], bufSize-pos, (msg) ); }
+      if (pos < bufSize) pos += snprintf( &buf[pos], bufSize-pos, (msg) ); }
    int pos = 0;
    int ret = 0;
 
@@ -600,7 +600,7 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
    else {
       if (pos == 0)
          /*string is empty so no errors encountered */
-         nsnprintf( buf, bufSize, _("Spaceworthy"));
+         snprintf( buf, bufSize, _("Spaceworthy"));
       else
          /*string is not empty, so trunc the last newline */
          buf[pos-1]='\0';
@@ -892,12 +892,12 @@ char* pilot_getOutfits( const Pilot* pilot )
    for (i=1; i<array_size(pilot->outfits); i++) {
       if (pilot->outfits[i]->outfit == NULL)
          continue;
-      p += nsnprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
+      p += snprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
             _(pilot->outfits[i]->outfit->name) );
    }
 
    if (p==0)
-      p += nsnprintf( &buf[p], len-p, _("None") );
+      p += snprintf( &buf[p], len-p, _("None") );
 
    (void)p;
 

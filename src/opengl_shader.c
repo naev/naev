@@ -47,7 +47,7 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, const char 
    *size = 0;
 
    /* Load base file. */
-   nsnprintf(path, sizeof(path), GLSL_PATH "%s", filename);
+   snprintf(path, sizeof(path), GLSL_PATH "%s", filename);
    fbuf = ndata_read(path, &fbufsize);
    if (fbuf == NULL) {
       WARN( _("Shader '%s' not found."), path);

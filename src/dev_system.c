@@ -220,7 +220,7 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Write data. */
    cleanName = uniedit_nameFilter( sys->name );
-   nsnprintf( file, sizeof(file), "%s/%s.xml", conf.dev_save_sys, cleanName );
+   snprintf( file, sizeof(file), "%s/%s.xml", conf.dev_save_sys, cleanName );
    xmlSaveFileEnc( file, doc, "UTF-8" );
 
    /* Clean up. */

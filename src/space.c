@@ -1722,7 +1722,7 @@ static int planets_load ( void )
    for (i=0; planet_files[i]!=NULL; i++) {
       len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
       file = malloc( len );
-      nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
+      snprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
          free(file);
@@ -1979,13 +1979,13 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
-               nsnprintf( str, PATH_MAX, PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
+               snprintf( str, PATH_MAX, PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
                planet->radius = -1.;
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
-               nsnprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
+               snprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
                planet->gfx_exterior = strdup(str);
                planet->gfx_exteriorPath = xml_getStrd(cur);
             }
@@ -3038,7 +3038,7 @@ int space_load (void)
 
    for (i=0; asteroid_files[i]!=NULL; i++) {
       len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
-      nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
+      snprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
    }
 
@@ -3123,7 +3123,7 @@ static int asteroidTypes_load (void)
             if (xml_isNode(cur,"gfx")) {
                str = xml_get(cur);
                len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+10);
-               nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str);
+               snprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str);
                array_push_back( &at->gfxs, gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
             }
 
@@ -3200,7 +3200,7 @@ static int systems_load (void)
    for (i=0; system_files[i]!=NULL; i++) {
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
       file = malloc( len );
-      nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
+      snprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       doc = xml_parsePhysFS( file );
       if (doc == NULL)
@@ -3228,7 +3228,7 @@ static int systems_load (void)
    for (i=0; system_files[i]!=NULL; i++) {
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
       file = malloc( len );
-      nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
+      snprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       doc = xml_parsePhysFS( file );
       free( file );
@@ -3434,7 +3434,7 @@ static void space_renderAsteroid( Asteroid *a )
    for (i=0; i<array_size(at->material); i++) {
       com = at->material[i];
       gl_blitSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
-      nsnprintf(c, sizeof(c), "x%i", at->quantity[i]);
+      snprintf(c, sizeof(c), "x%i", at->quantity[i]);
       gl_printRaw( &gl_smallFont, nx+10, ny-5-10.*i, &cFontWhite, -1., c );
    }
 }
@@ -4114,7 +4114,7 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_rewa
                  50., &dmg, NULL, EXPL_MODE_SHIP );
 
    /* Play random explosion sound. */
-   nsnprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
+   snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
    sound_playPos( sound_get(buf), a->pos.x, a->pos.y, a->vel.x, a->vel.y );
 
    if ( give_reward ) {

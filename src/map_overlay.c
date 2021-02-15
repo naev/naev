@@ -172,7 +172,7 @@ void ovr_refresh (void)
       if (!jp_isUsable(jp) || !jp_isKnown(jp))
          continue;
       /* Initialize the map overlay stuff. */
-      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+      snprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       moo[items].text_width = gl_printWidthRaw(&gl_smallFont, buf);
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
@@ -187,7 +187,7 @@ void ovr_refresh (void)
       if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
          continue;
       /* Initialize the map overlay stuff. */
-      nsnprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
+      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
       moo[items].text_width = gl_printWidthRaw( &gl_smallFont, buf );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;

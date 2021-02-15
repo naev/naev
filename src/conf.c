@@ -662,7 +662,7 @@ void conf_parseCLI( int argc, char** argv )
 
 
 /**
- * @brief nsnprintf-like function to quote and escape a string for use in Lua source code
+ * @brief snprintf-like function to quote and escape a string for use in Lua source code
  *
  *    @param str The destination buffer
  *    @param size The maximum amount of space in str to use
@@ -680,7 +680,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
    /* Write a Lua nil if we are given a NULL pointer */
    if (text == NULL)
-      return nsnprintf(str, size, "nil");
+      return snprintf(str, size, "nil");
 
    count = 0;
 
@@ -733,7 +733,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
    /* zero-terminate, if possible */
    if (count != size)
-      str[count] = '\0';   /* don't increase count, like nsnprintf */
+      str[count] = '\0';   /* don't increase count, like snprintf */
 
    /* return the amount of characters written */
    return count;
@@ -741,26 +741,26 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
 
 #define  conf_saveComment(t)     \
-pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
 
 #define  conf_saveEmptyLine()     \
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
 
 #define  conf_saveInt(n,i)    \
-pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
 
 #define  conf_saveFloat(n,f)    \
-pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
 
 #define  conf_saveBool(n,b)    \
 if (b) \
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = true\n", n); \
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = true\n", n); \
 else \
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = false\n", n);
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = false\n", n);
 
 #define  conf_saveString(n,s) \
-pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = ", n); \
+pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = ", n); \
 pos += quoteLuaString(&buf[pos], sizeof(buf)-pos, s); \
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
@@ -992,13 +992,13 @@ int conf_saveConfig ( const char* file )
    /* Fonts. */
    conf_saveComment(_("Font sizes (in pixels) for Naev"));
    conf_saveComment(_("Warning, setting to other than the default can cause visual glitches!"));
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Console default: %d\n"), FONT_SIZE_CONSOLE_DEFAULT);
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, _("-- Console default: %d\n"), FONT_SIZE_CONSOLE_DEFAULT);
    conf_saveInt("font_size_console",conf.font_size_console);
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Intro default: %d\n"), FONT_SIZE_INTRO_DEFAULT);
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, _("-- Intro default: %d\n"), FONT_SIZE_INTRO_DEFAULT);
    conf_saveInt("font_size_intro",conf.font_size_intro);
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Default size: %d\n"), FONT_SIZE_DEF_DEFAULT);
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, _("-- Default size: %d\n"), FONT_SIZE_DEF_DEFAULT);
    conf_saveInt("font_size_def",conf.font_size_def);
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Small size: %d\n"), FONT_SIZE_SMALL_DEFAULT);
+   pos += snprintf(&buf[pos], sizeof(buf)-pos, _("-- Small size: %d\n"), FONT_SIZE_SMALL_DEFAULT);
    conf_saveInt("font_size_small",conf.font_size_small);
    conf_saveComment(_("Default font to use: unset"));
    if (conf.font_name_default) {
@@ -1128,10 +1128,10 @@ int conf_saveConfig ( const char* file )
          quoteLuaString(keyname, sizeof(keyname)-1, SDL_GetKeyName(key));
       /* If SDL can't describe the key, store it as an integer */
       if (type != KEYBIND_KEYBOARD || strcmp(keyname, "\"unknown key\"") == 0)
-         nsnprintf(keyname, sizeof(keyname)-1, "%d", key);
+         snprintf(keyname, sizeof(keyname)-1, "%d", key);
 
       /* Write out a simple Lua table containing the keybind info */
-      pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
+      pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
             keybind_info[i][0], typename, modname, keyname);
    }
    conf_saveEmptyLine();

@@ -74,21 +74,21 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent );
 void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
-      nsnprintf( str, ECON_CRED_STRLEN, _("%"CREDITS_PRI" ¤"), credits );
+      snprintf( str, ECON_CRED_STRLEN, _("%"CREDITS_PRI" ¤"), credits );
    else if (credits >= 1000000000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f E¤"), decimals, (double)credits / 1000000000000000000. );
+      snprintf( str, ECON_CRED_STRLEN, _("%.*f E¤"), decimals, (double)credits / 1000000000000000000. );
    else if (credits >= 1000000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f P¤"), decimals, (double)credits / 1000000000000000. );
+      snprintf( str, ECON_CRED_STRLEN, _("%.*f P¤"), decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000LL)
-      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f T¤"), decimals, (double)credits / 1000000000000. );
+      snprintf( str, ECON_CRED_STRLEN, _("%.*f T¤"), decimals, (double)credits / 1000000000000. );
    else if (credits >= 1000000000L)
-      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f G¤"), decimals, (double)credits / 1000000000. );
+      snprintf( str, ECON_CRED_STRLEN, _("%.*f G¤"), decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000)
-      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f M¤"), decimals, (double)credits / 1000000. );
+      snprintf( str, ECON_CRED_STRLEN, _("%.*f M¤"), decimals, (double)credits / 1000000. );
    else if (credits >= 1000)
-      nsnprintf( str, ECON_CRED_STRLEN, _("%.*f k¤"), decimals, (double)credits / 1000. );
+      snprintf( str, ECON_CRED_STRLEN, _("%.*f k¤"), decimals, (double)credits / 1000. );
    else
-      nsnprintf (str, ECON_CRED_STRLEN, _("%"CREDITS_PRI" ¤"), credits );
+      snprintf (str, ECON_CRED_STRLEN, _("%"CREDITS_PRI" ¤"), credits );
 }
 
 /**
@@ -108,7 +108,7 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
       return;
 
    buf = strdup(str);
-   nsnprintf(str, ECON_CRED_STRLEN, "#r%s#0", buf);
+   snprintf(str, ECON_CRED_STRLEN, "#r%s#0", buf);
    free(buf);
 }
 

@@ -533,7 +533,7 @@ static void cli_input( unsigned int wid, char *unused )
       return;
 
    /* Put the message in the console. */
-   nsnprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0",
+   snprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0",
          cli_firstline ? "> " : ">>", str );
    cli_printCoreString( buf );
 
@@ -628,7 +628,7 @@ void cli_open (void)
       char buf[256];
       cli_addMessage( "" );
       cli_addMessage( _("#gWelcome to the Lua console!") );
-      nsnprintf( buf, sizeof(buf), "#g "APPNAME" v%s", naev_version(0) );
+      snprintf( buf, sizeof(buf), "#g "APPNAME" v%s", naev_version(0) );
       cli_printCoreString( buf );
       cli_addMessage( "" );
       cli_firstOpen = 0;
