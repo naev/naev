@@ -13,22 +13,14 @@
 /** @endcond */
 
 #include "colour.h"
-#include "ncompat.h"
 #include "physics.h"
 
 
 /* Recommended for compatibility and such */
-#if HAS_BIGENDIAN
-#  define RMASK   0xff000000 /**< Red bit mask. */
-#  define GMASK   0x00ff0000 /**< Green bit mask. */
-#  define BMASK   0x0000ff00 /**< Blue bit mask. */
-#  define AMASK   0x000000ff /**< Alpha bit mask. */
-#else
-#  define RMASK   0x000000ff /**< Red bit mask. */
-#  define GMASK   0x0000ff00 /**< Green bit mask. */
-#  define BMASK   0x00ff0000 /**< Blue bit mask. */
-#  define AMASK   0xff000000 /**< Alpha bit mask. */
-#endif
+#define RMASK   SDL_SwapLE32(0x000000ff) /**< Red bit mask. */
+#define GMASK   SDL_SwapLE32(0x0000ff00) /**< Green bit mask. */
+#define BMASK   SDL_SwapLE32(0x00ff0000) /**< Blue bit mask. */
+#define AMASK   SDL_SwapLE32(0xff000000) /**< Alpha bit mask. */
 #define RGBAMASK  RMASK,GMASK,BMASK,AMASK
 
 

@@ -28,23 +28,23 @@
 #include <errno.h>
 #include <libgen.h>
 #endif /* HAS_POSIX */
-#if HAS_WIN32
+#if WIN32
 #include <windows.h>
-#endif /* HAS_WIN32 */
+#endif /* WIN32 */
 /** @endcond */
 
 #include "nfile.h"
 
 #include "array.h"
 #include "conf.h"
-#if HAS_MACOS
+#if MACOS
 #include "glue_macos.h"
-#endif /* HAS_MACOS */
+#endif /* MACOS */
 #include "log.h"
 #include "nstring.h"
 
 
-#if HAS_UNIX && !HAS_MACOS
+#if HAS_UNIX && !MACOS
 //! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
 
 /**
@@ -126,7 +126,7 @@ const char* nfile_configPath (void)
            nsnprintf( naev_configPath, PATH_MAX, "%s/", conf.datapath );
            return naev_configPath;
         }
-#if HAS_MACOS
+#if MACOS
         if (macos_configPath( naev_configPath, PATH_MAX ) != 0) {
            WARN(_("Cannot determine config path, using current directory."));
            nsnprintf( naev_configPath, PATH_MAX, "./naev/" );
@@ -140,7 +140,7 @@ const char* nfile_configPath (void)
 
         nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
         free (path);
-#elif HAS_WIN32
+#elif WIN32
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
          WARN(_("%%APPDATA%% isn't set, using current directory."));
@@ -170,7 +170,7 @@ const char* nfile_cachePath (void)
            nsnprintf( naev_cachePath, PATH_MAX, "%s/", conf.datapath );
            return naev_cachePath;
         }
-#if HAS_MACOS
+#if MACOS
         if (macos_cachePath( naev_cachePath, PATH_MAX ) != 0) {
            WARN(_("Cannot determine cache path, using current directory."));
            nsnprintf( naev_cachePath, PATH_MAX, "./naev/" );
@@ -184,7 +184,7 @@ const char* nfile_cachePath (void)
 
         nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
         free (path);
-#elif HAS_WIN32
+#elif WIN32
       char *path = SDL_getenv("APPDATA");
       if (path == NULL) {
          WARN(_("%%APPDATA%% isn't set, using current directory."));
@@ -203,7 +203,7 @@ const char* nfile_cachePath (void)
 #if HAS_POSIX
 #define MKDIR mkdir( opath, mode )
 static int mkpath( const char *path, mode_t mode )
-#elif HAS_WIN32
+#elif WIN32
 #define MKDIR !CreateDirectory( opath, NULL )
 static int mkpath( const char *path )
 #else
@@ -283,7 +283,7 @@ int nfile_dirMakeExist( const char *path )
 
 #if HAS_POSIX
    if ( mkpath( path, S_IRWXU | S_IRWXG | S_IRWXO ) < 0 ) {
-#elif HAS_WIN32
+#elif WIN32
    if ( mkpath( path ) < 0 ) {
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
@@ -596,10 +596,10 @@ int nfile_isSeparator( uint32_t c )
 {
    if (c == '/')
       return 1;
-#if HAS_WIN32
+#if WIN32
    else if (c == '\\')
       return 1;
-#endif /* HAS_WIN32 */
+#endif /* WIN32 */
    return 0;
 }
 

@@ -164,7 +164,7 @@ int log_isTerminal (void)
    if (isatty(fileno(stdin)) && (isatty(fileno(stdout)) || isatty(fileno(stderr))))
       return 1;
 
-#elif HAS_WIN32
+#elif WIN32
    struct stat buf;
 
    /* Not interactive if stdin isn't a FIFO or character device. */

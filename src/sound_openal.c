@@ -651,7 +651,7 @@ static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    i = 0;
    while (i < len) {
       /* Fill buffer with data in the 16 bit signed samples format. */
-      i += ov_read( vf, &data[i], len-i, HAS_BIGENDIAN, 2, 1, &section );
+      i += ov_read( vf, &data[i], len-i, (SDL_BYTEORDER == SDL_BIG_ENDIAN), 2, 1, &section );
    }
 
    soundLock();

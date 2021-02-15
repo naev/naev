@@ -14,9 +14,9 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#if HAS_WIN32
+#if WIN32
 #include <windows.h>
-#endif /* HAS_WIN32 */
+#endif /* WIN32 */
 
 #include "physfs.h"
 #include "SDL.h"
@@ -29,9 +29,9 @@
 #include "array.h"
 #include "conf.h"
 #include "env.h"
-#if HAS_MACOS
+#if MACOS
 #include "glue_macos.h"
-#endif /* HAS_MACOS */
+#endif /* MACOS */
 #include "log.h"
 #include "nfile.h"
 #include "nstring.h"
@@ -97,12 +97,12 @@ void ndata_setupWriteDir (void)
       PHYSFS_setWriteDir( conf.datapath );
       return;
    }
-#if HAS_MACOS
+#if MACOS
    /* For historical reasons predating physfs adoption, this case is different. */
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "org.naev.Naev" ) );
 #else
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "naev" ) );
-#endif
+#endif /* MACOS */
    if (PHYSFS_getWriteDir() == NULL) {
       WARN(_("Cannot determine data path, using current directory."));
       PHYSFS_setWriteDir( "./naev/" );
@@ -120,12 +120,12 @@ void ndata_setupReadDirs (void)
    if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
       LOG(_("Added datapath from conf.lua file: %s"), conf.ndata);
 
-#if HAS_MACOS
+#if MACOS
    if ( !ndata_found() && macos_isBundle() && macos_resourcesPath( buf, PATH_MAX-4 ) >= 0 && strncat( buf, "/dat", 4 ) ) {
       LOG(_("Trying default datapath: %s"), buf);
       PHYSFS_mount( buf, NULL, 1 );
    }
-#endif /* HAS_MACOS */
+#endif /* MACOS */
 
    if ( !ndata_found() && env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >= 0 ) {
       LOG(_("Trying default datapath: %s"), buf);
