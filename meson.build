@@ -157,6 +157,7 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
    config_data.set10('HAVE_STRCASESTR', cc.has_function('strcasestr'))
    config_data.set10('HAVE_STRNDUP', cc.has_function('strndup'))
+   config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))
 
    # OS declaration (Shows which OS we built this with in the options menu)
    if host_machine.system() == 'linux'

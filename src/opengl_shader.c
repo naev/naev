@@ -75,11 +75,11 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, const char 
     * can't be anywhere in the code. Extra whitespace should also be handled. */
    keyword = "#include";
    subs = buf;
-   while ((substart = nstrnstr( subs, keyword, bufsize-(subs-buf) ))!=NULL) {
+   while ((substart = strnstr( subs, keyword, bufsize-(subs-buf) ))!=NULL) {
       subs = substart+strlen(keyword)+1;
       i = 0;
       /* Find the argument - we only support " atm. */
-      subss = nstrnstr( subs, "\"", bufsize-(subs-buf));
+      subss = strnstr( subs, "\"", bufsize-(subs-buf));
       if (subss == NULL) {
          WARN(_("Invalid #include syntax in '%s%s'!"), GLSL_PATH, filename);
          continue;

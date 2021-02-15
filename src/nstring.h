@@ -28,7 +28,7 @@
  *        1-based index where the formatted items (if any) start. */
 #define PRINTF_FORMAT( i, j ) FORMAT( BUILTIN_PRINTF_FORMAT, i, j)
 
-const char *nstrnstr( const char *haystack, const char *needle, size_t size );
+/*const*/ char *strnstr( const char *haystack, const char *needle, size_t size );
 /*const*/ char *strcasestr( const char *haystack, const char *needle );
 char* strndup( const char *s, size_t n );
 

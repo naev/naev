@@ -18,14 +18,15 @@
 
 
 /**
- * @brief A bounded version of strstr
+ * @brief A bounded version of strstr. Conforms to BSD semantics.
  *
  *    @param haystack The string to search in
  *    @param size The size of haystack
  *    @param needle The string to search for
  *    @return A pointer to the first occurrence of needle in haystack, or NULL
  */
-const char *nstrnstr( const char *haystack, const char *needle, size_t size )
+#if !HAVE_STRNSTR
+char *strnstr( const char *haystack, const char *needle, size_t size )
 {
    size_t needlesize;
    const char *i, *j, *k, *end, *giveup;
@@ -51,11 +52,12 @@ const char *nstrnstr( const char *haystack, const char *needle, size_t size )
       /* If we've reached the end of needle, we've found a match */
       /* i contains the start of our match */
       if (*k == '\0')
-         return i;
+         return (char*) i;
    }
    /* Fell through the loops, nothing found */
    return NULL;
 }
+#endif /* !HAVE_STRNSTR */
 
 
 /**
