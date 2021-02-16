@@ -42,7 +42,7 @@
 
 
 typedef struct LandOutfitData_ {
-   Outfit *outfits;
+   Outfit **outfits;
    int noutfits;
 } LandOutfitData;
 

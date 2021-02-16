@@ -848,7 +848,7 @@ int gl_printTextRaw( const glFont *ft_font,
       const char *text
     )
 {
-   int p, s, l, lp;
+   int p, s, l;
    double x,y;
    size_t i, ret;
    uint32_t ch;
@@ -870,10 +870,9 @@ int gl_printTextRaw( const glFont *ft_font,
    ch = text[0]; /* In case of a 0-width first line (ret==p) below, we just care if text is empty or not. */
    i = 0;
    s = 0;
-   lp = 0;
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
-      lp = p;
+      int lp = p;
       l = gl_printWidthForText( ft_font, &text[p], width, NULL );
       ret = p + l;
 

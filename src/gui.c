@@ -927,7 +927,7 @@ void gui_render( double dt )
    }
 
    /* Determine if we need to fade in/out. */
-   fade = 0.;
+   fade = direction = 0.;
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
          (player.p->ptimer < HYPERSPACE_FADEOUT)) {
       fade = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;

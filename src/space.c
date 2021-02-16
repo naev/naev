@@ -2625,9 +2625,6 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    double x, y;
    StarSystem *target;
 
-   x = 0.;
-   y = 0.;
-
    /* Get target. */
    xmlr_attr_strd( node, "target", buf );
    if (buf == NULL) {

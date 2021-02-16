@@ -288,7 +288,6 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       for (i=0; i<items; i++) {
          cx = pos[i]->x / res;
          cy = pos[i]->y / res;
-         r  = mo[i]->radius;
          /* Move text if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+mo[i]->text_offx, cy+mo[i]->text_offy, moo[i].text_width, gl_smallFont.h, pos, mo, moo, items, i, 0, pixbuf, object_weight, text_weight )) {
             moo[i].text_offx += ox * update_rate;
