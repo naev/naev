@@ -148,6 +148,7 @@ if buildExec.disabled() == false
    naev_deps += [openal, vorbis, vorbisfile]
 
    # Standard library feature tests
+   config_data.set10('HAVE_ASPRINTF', cc.has_function('asprintf'))
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
@@ -159,6 +160,7 @@ if buildExec.disabled() == false
    # strndup() detectin must work around this bug: https://github.com/mesonbuild/meson/issues/3672
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
    config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))
+   config_data.set10('HAVE_VASPRINTF', cc.has_function('vasprintf'))
 
    # OS declaration (Shows which OS we built this with in the options menu)
    if host_machine.system() == 'linux'

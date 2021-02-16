@@ -117,3 +117,76 @@ int strsort( const void *p1, const void *p2 )
    return strcmp(*(const char **) p1, *(const char **) p2);
 }
 
+
+/**
+ * @brief Like vsprintf(), but it allocates a large-enough string and returns the pointer in the first argument.
+ *        Conforms to GNU and BSD libc semantics.
+ *
+ * @param[out] strp Used to return the allocated char* in case of success. Caller must free.
+ *                  In case of failure, *strp is set to NULL, but don't rely on this because the GNU version doesn't guarantee it.
+ * @param fmt Same as vsprintf().
+ * @param ap Same as vsprintf().
+ * @return -1 if it failed, otherwise the number of bytes "printed".
+ */
+#if !HAVE_VASPRINTF
+int vasprintf( char** strp, const char* fmt, va_list ap )
+{
+   int n;
+   va_list ap1;
+
+   va_copy( ap1, ap );
+   n = vsnprintf( NULL, 0, fmt, ap1 );
+   va_end( ap1 );
+
+   if (n < 0)
+      return -1;
+   *strp = malloc( n+1 );
+   if (strp == NULL )
+      return -1; /* Not that we'll check. We're Linux fans. We've never heard of malloc() failing. */
+
+   return vsnprintf( *strp, n+1, fmt, ap );
+}
+#endif /* !HAVE_VASPRINTF */
+
+
+/**
+ * @brief Like sprintf(), but it allocates a large-enough string and returns the pointer in the first argument.
+ *        Conforms to GNU and BSD libc semantics.
+ *
+ * @param[out] strp Used to return the allocated char* in case of success. Caller must free.
+ *                  In case of failure, *strp is set to NULL, but don't rely on this because the GNU version doesn't guarantee it.
+ * @param fmt Same as sprintf().
+ * @return -1 if it failed, otherwise the number of bytes "printed".
+ */
+#if !HAVE_ASPRINTF
+int asprintf( char** strp, const char* fmt, ... )
+{
+   int n;
+   va_list ap;
+
+   va_start( ap, fmt );
+   n = vasprintf( strp, fmt, ap );
+   va_end( ap );
+   return n;
+}
+#endif /* !HAVE_ASPRINTF */
+
+
+/**
+ * @brief Like snprintf(), but returns the number of characters \em ACTUALLY "printed" into the buffer.
+ *        This makes it possible to chain these calls to concatenate into a buffer without introducing a potential bug every time.
+ *        This call was first added to the Linux kernel by Juergen Quade.
+ */
+int scnprintf( char* text, size_t maxlen, const char* fmt, ... )
+{
+   int n;
+   va_list ap;
+
+   if (!maxlen)
+      return 0;
+
+   va_start( ap, fmt );
+   n = vsnprintf( text, maxlen, fmt, ap );
+   va_end( ap );
+   return MIN( maxlen-1, (size_t)n );
+}
