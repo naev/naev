@@ -619,7 +619,7 @@ static int planetL_services( lua_State *L )
       if (planet_hasService(p, i)) {
          name = planet_getServiceName(i);
          len = strlen(name) + 1;
-         nsnprintf( lower, MIN(len,sizeof(lower)), "%c%s", tolower(name[0]), &name[1] );
+         snprintf( lower, MIN(len,sizeof(lower)), "%c%s", tolower(name[0]), &name[1] );
 
          lua_pushstring(L, name);
          lua_setfield(L, -2, lower );

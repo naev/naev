@@ -474,43 +474,33 @@ static void board_update( unsigned int wdw )
 
    /* Credits. */
    credits2str( cred, p->credits, 2 );
-   j += nsnprintf( &str[j], PATH_MAX, "%s\n", cred );
+   j += scnprintf( &str[j], sizeof(str), "%s\n", cred );
 
    /* Commodities. */
-   if ((array_size(p->commodities)==0) && (j < PATH_MAX))
-      j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
+   if ((array_size(p->commodities)==0))
+      j += scnprintf( &str[j], sizeof(str)-j, _("none\n") );
    else {
       total_cargo = 0;
       for (i=0; i<array_size(p->commodities); i++) {
-         if (j > PATH_MAX)
-            break;
          if (p->commodities[i].commodity == NULL)
             continue;
          total_cargo += p->commodities[i].quantity;
       }
-      j += nsnprintf( &str[ j ], PATH_MAX - j, n_( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
+      j += scnprintf( &str[ j ], sizeof(str) - j, n_( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
    }
 
    /* Fuel. */
-   if (p->fuel <= 0) {
-      if (j < PATH_MAX)
-         j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
-   }
-   else {
-      if (j < PATH_MAX)
-         j += nsnprintf( &str[ j ], PATH_MAX - j, n_( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
-   }
+   if (p->fuel <= 0)
+      j += scnprintf( &str[j], sizeof(str)-j, _("none\n") );
+   else
+      j += scnprintf( &str[ j ], sizeof(str) - j, n_( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
 
    /* Missiles */
    int nmissiles = pilot_countAmmo(p);
-   if (nmissiles <= 0) {
-      if (j < PATH_MAX)
-        j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
-   }
-   else {
-      if (j < PATH_MAX)
-         j += nsnprintf( &str[ j ], PATH_MAX - j, n_( "%d missile\n", "%d missiles\n", nmissiles ), nmissiles );
-   }
+   if (nmissiles <= 0)
+      j += scnprintf( &str[j], sizeof(str)-j, _("none\n") );
+   else
+      j += scnprintf( &str[ j ], sizeof(str) - j, n_( "%d missile\n", "%d missiles\n", nmissiles ), nmissiles );
    (void)j;
 
    window_modifyText( wdw, "txtData", str );

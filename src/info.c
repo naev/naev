@@ -216,7 +216,7 @@ static void info_openMain( unsigned int wid )
          "#nFuel:#0")
          );
    credits2str( creds, player.p->credits, 2 );
-   nsnprintf( str, sizeof(str),
+   snprintf( str, sizeof(str),
          _("%s\n"
          "%s\n"
          "%s\n"
@@ -451,7 +451,7 @@ static void ship_update( unsigned int wid )
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
    hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
-   len = nsnprintf( buf, sizeof(buf),
+   len = scnprintf( buf, sizeof(buf),
          _("%s\n"
          "%s\n"
          "%s\n"
@@ -575,9 +575,9 @@ static void weapons_genList( unsigned int wid )
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       str = pilot_weapSetName( info_eq_weaps.selected, i );
       if (str == NULL)
-         nsnprintf( tbuf, sizeof(tbuf), "%d - ??", (i+1)%10 );
+         snprintf( tbuf, sizeof(tbuf), "%d - ??", (i+1)%10 );
       else
-         nsnprintf( tbuf, sizeof(tbuf), "%d - %s", (i+1)%10, str );
+         snprintf( tbuf, sizeof(tbuf), "%d - %s", (i+1)%10, str );
       buf[i] = strdup( tbuf );
    }
    window_addList( wid, 20+180+20, -40,
@@ -791,8 +791,7 @@ static void cargo_genList( unsigned int wid )
       /* List the player's cargo */
       buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
       for (i=0; i<array_size(player.p->commodities); i++) {
-         buf[i] = malloc(128);
-         nsnprintf(buf[i],128, "%s%s %d",
+         asprintf(&buf[i], "%s%s %d",
                _(player.p->commodities[i].commodity->name),
                (player.p->commodities[i].id != 0) ? "*" : "",
                player.p->commodities[i].quantity);
@@ -950,9 +949,8 @@ static void info_openStandings( unsigned int wid )
 
    /* Create list. */
    for (i=0; i<n; i++) {
-      str[i] = malloc( 256 );
       m = round( faction_getPlayer( info_factions[i] ) );
-      nsnprintf( str[i], 256, "%s   [ %+d%% ]",
+      asprintf( &str[i], "%s   [ %+d%% ]",
             _(faction_name( info_factions[i] )), m );
    }
 
@@ -999,7 +997,7 @@ static void standings_update( unsigned int wid, char* str )
    window_moveWidget( wid, "txtName", lw+40, y );
    y -= 40;
    m = round( faction_getPlayer( info_factions[p] ) );
-   nsnprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m,
+   snprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m,
       faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtStanding", buf );
    window_moveWidget( wid, "txtStanding", lw+40, y );
@@ -1270,7 +1268,7 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
       return;
    }
    
-   nsnprintf( buf, 256,
+   snprintf( buf, 256,
          _("This will delete ALL \"%s\" log entries. This operation cannot be undone. Are you sure?"),
          logs[selectedLog]);
    ret = dialogue_YesNoRaw( "", buf );

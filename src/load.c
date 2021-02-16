@@ -232,7 +232,7 @@ int load_refresh (void)
    for (i=0; i<array_size(files); i++) {
       if (!ok)
          ns = &array_grow( &load_saves );
-      nsnprintf( buf, sizeof(buf), "saves/%s", files[i].name );
+      snprintf( buf, sizeof(buf), "saves/%s", files[i].name );
       ok = load_load( ns, buf );
    }
 
@@ -256,7 +256,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
 {
    char *path;
    const char *fmt;
-   size_t dir_len, name_len, path_size;
+   size_t dir_len, name_len;
    filedata_t *tmp;
    PHYSFS_Stat stat;
 
@@ -267,10 +267,8 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
    if ((name_len < 4 || strcmp( &fname[name_len-3], ".ns" )) && (name_len < 11 || strcmp( &fname[name_len-10], ".ns.backup" )))
       return PHYSFS_ENUM_OK;
 
-   path_size = dir_len + name_len + 2;
-   path = malloc( path_size );
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   nsnprintf( path, path_size, fmt, origdir, fname );
+   asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat ))
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
@@ -361,7 +359,7 @@ void load_loadGameMenu (void)
          ns       = &load_saves[i];
          len      = strlen(ns->path);
          if (strcmp(&ns->path[len-10],".ns.backup")==0) {
-            nsnprintf( buf, sizeof(buf), _("%s #r(Backup)#0"), ns->name );
+            snprintf( buf, sizeof(buf), _("%s #r(Backup)#0"), ns->name );
             names[i] = strdup(buf);
          }
          else
@@ -426,7 +424,7 @@ static void load_menu_update( unsigned int wid, char *str )
    /* Display text. */
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
-   nsnprintf( buf, sizeof(buf),
+   snprintf( buf, sizeof(buf),
          _("#nName:\n"
          "#0   %s\n\n"
          "#nVersion:\n"
@@ -735,6 +733,6 @@ static xmlDocPtr load_xml_parsePhysFS( const char* filename )
 {
    char buf[PATH_MAX];
 
-   nsnprintf( buf, sizeof(buf), "%s/%s", PHYSFS_getWriteDir(), filename);
+   snprintf( buf, sizeof(buf), "%s/%s", PHYSFS_getWriteDir(), filename);
    return xmlParseFile( buf );
 }

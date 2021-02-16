@@ -31,9 +31,9 @@
 #define FULLSCREEN_MODESETTING               0     /**< Whether fullscreen uses video modesetting. */
 #define FSAA_DEFAULT                         1     /**< Whether to use Full Screen Anti-Aliasing. */
 #define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
-#define MIPMAP_DEFAULT                       0     /**< Whether to use Mip Mapping. */
 #define TEXTURE_COMPRESSION_DEFAULT          0     /**< Whether to use texture compression. */
 #define SCALE_FACTOR_DEFAULT                 1.    /**< Default scale factor. */
+#define NEBULA_SCALE_FACTOR_DEFAULT          4.    /**< Default scale factor for nebula rendering. */
 #define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
 #define FPS_MAX_DEFAULT                      60    /**< Maximum FPS. */
 #define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
@@ -88,6 +88,7 @@ typedef struct PlayerConf_s {
    int height; /**< Height of the window to use. */
    int explicit_dim; /**< Dimension is explicit. */
    double scalefactor; /**< Amount to reduce resolution by. */
+   double nebu_scale; /**< Downscaling factor for the expensively rendered nebula. */
    int fullscreen; /**< Whether or not game is fullscreen. */
    int modesetting; /**< Whether to use modesetting for fullscreen. */
    int minimize; /**< Whether to minimize on focus loss. */

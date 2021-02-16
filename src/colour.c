@@ -18,7 +18,6 @@
 #include "colour.h"
 
 #include "log.h"
-#include "ncompat.h"
 #include "nmath.h"
 #include "nstring.h"
 

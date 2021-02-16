@@ -436,7 +436,7 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return nsnprintf( buf, len, "%s#%s%+.0f%% %s#0",
+   return scnprintf( buf, len, "%s#%s%+.0f%% %s#0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          d*100., _(sl->display) );
@@ -450,7 +450,7 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 {
    if (FABS(d) < 1e-10)
       return 0;
-   return nsnprintf( buf, len, "%s#%s%+.0f %s#0",
+   return scnprintf( buf, len, "%s#%s%+.0f %s#0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          d, _(sl->display) );
@@ -464,7 +464,7 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 {
    if (i == 0)
       return 0;
-   return nsnprintf( buf, len, "%s#%s%+d %s#0",
+   return scnprintf( buf, len, "%s#%s%+d %s#0",
          (newline) ? "\n" : "",
          ss_printI_colour( i, sl ),
          i, _(sl->display) );
@@ -478,7 +478,7 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 {
    if (!b)
       return 0;
-   return nsnprintf( buf, len, "%s#%s%s#0",
+   return scnprintf( buf, len, "%s#%s%s#0",
          (newline) ? "\n" : "",
          ss_printI_colour( b, sl ),
          _(sl->display) );
@@ -627,25 +627,25 @@ int ss_csv( const ShipStats *s, char *buf, int len )
       }
 
       if (s == NULL) {
-         l += nsnprintf( &buf[l], left, "%s,", sl->name );
+         l += scnprintf( &buf[l], left, "%s,", sl->name );
          continue;
       }
 
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
             memcpy(&dbl, &ptr[ sl->offset ], sizeof(double));
-            l  += nsnprintf( &buf[l], left, "%f,", (dbl - 1.) * 100. );
+            l  += scnprintf( &buf[l], left, "%f,", (dbl - 1.) * 100. );
             break;
 
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
             memcpy(&dbl, &ptr[ sl->offset ], sizeof(double));
-            l  += nsnprintf( &buf[l], left, "%f,", dbl );
+            l  += scnprintf( &buf[l], left, "%f,", dbl );
             break;
 
          case SS_DATA_TYPE_INTEGER:
          case SS_DATA_TYPE_BOOLEAN:
             memcpy(&num, &ptr[ sl->offset ], sizeof(int));
-            l  += nsnprintf( &buf[l], left, "%d,", num );
+            l  += scnprintf( &buf[l], left, "%d,", num );
             break;
       }
    }

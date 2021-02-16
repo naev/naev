@@ -47,7 +47,7 @@ glTexture* xml_parseTexture( xmlNodePtr node,
       return NULL;
 
    /* Convert name. */
-   nsnprintf( filename, PATH_MAX, (path != NULL) ? path : "%s", buf );
+   snprintf( filename, sizeof(filename), (path != NULL) ? path : "%s", buf );
 
    /* Load the graphic. */
    if ((sx == 1) && (sy == 1))

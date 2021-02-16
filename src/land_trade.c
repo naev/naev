@@ -158,7 +158,7 @@ void commodity_update( unsigned int wid, char* str )
    if (i < 0 || array_size(land_planet->commodities) == 0) {
       credits2str( buf_credits, player.p->credits, 2 );
       tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
-      nsnprintf( buf, PATH_MAX,
+      snprintf( buf, sizeof(buf),
          _("N/A tonnes\n"
            "\n"
            "N/A ¤\n"
@@ -181,10 +181,10 @@ void commodity_update( unsigned int wid, char* str )
 
    planet_averagePlanetPrice( land_planet, com, &mean, &std);
    credits2str( buf_mean, mean, -1 );
-   nsnprintf( buf_std, sizeof(buf_std), _("%.1f ¤"), std ); /* TODO credit2str could learn to do this... */
+   snprintf( buf_std, sizeof(buf_std), _("%.1f ¤"), std ); /* TODO credit2str could learn to do this... */
    economy_getAveragePrice( com, &globalmean, &globalstd );
    credits2str( buf_globalmean, globalmean, -1 );
-   nsnprintf( buf_globalstd, sizeof(buf_globalstd), _("%.1f ¤"), globalstd ); /* TODO credit2str could learn to do this... */
+   snprintf( buf_globalstd, sizeof(buf_globalstd), _("%.1f ¤"), globalstd ); /* TODO credit2str could learn to do this... */
    /* modify text */
    buf_purchase_price[0]='\0';
    owned=pilot_cargoOwned( player.p, com->name );
@@ -194,7 +194,7 @@ void commodity_update( unsigned int wid, char* str )
    credits2str( buf_local_price, planet_commodityPrice( land_planet, com ), -1 );
    tonnes2str( buf_tonnes_owned, owned );
    tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
-   nsnprintf( buf, PATH_MAX,
+   snprintf( buf, sizeof(buf),
               _( "%s\n"
                  "%s\n"
                  "%s/t\n"
@@ -385,6 +385,6 @@ void commodity_renderMod( double bx, double by, double w, double h, void *data )
       commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
       commodity_mod = q;
    }
-   nsnprintf( buf, 8, "%dx", q );
+   snprintf( buf, 8, "%dx", q );
    gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }

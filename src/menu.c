@@ -36,7 +36,6 @@
 #include "mission.h"
 #include "music.h"
 #include "ndata.h"
-#include "nebula.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "options.h"
@@ -559,7 +558,7 @@ void menu_death (void)
    window_onClose( wid, menu_death_close );
 
    /* Allow the player to continue if the saved game exists, if not, propose to restart */
-   nsnprintf( path, PATH_MAX, "saves/%s.ns", player.name );
+   snprintf( path, sizeof(path), "saves/%s.ns", player.name );
    if (PHYSFS_exists( path ))
       window_addButtonKey( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnContinue", _("Continue"), menu_death_continue, SDLK_c );

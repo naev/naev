@@ -131,7 +131,7 @@ static void fps_control (void);
 static void update_all (void);
 static void render_all (void);
 /* Misc. */
-void loadscreen_render( double done, const char *msg ); /* nebula.c */
+static void loadscreen_render( double done, const char *msg );
 void main_loop( int update ); /* dialogue.c */
 
 
@@ -153,7 +153,7 @@ void naev_quit (void)
  */
 int main( int argc, char** argv )
 {
-   char buf[PATH_MAX];
+   char conf_file_path[PATH_MAX], **search_path, **p;
 
    env_detect( argc, argv );
 
@@ -228,9 +228,9 @@ int main( int argc, char** argv )
       WARN( _("Unable to create config directory '%s'"), nfile_configPath());
 
    /* Set the configuration. */
-   nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
+   snprintf(conf_file_path, sizeof(conf_file_path), "%s"CONF_FILE, nfile_configPath());
 
-   conf_loadConfig(buf); /* Lua to parse the configuration file */
+   conf_loadConfig(conf_file_path); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
    /* Set up I/O. */
@@ -243,15 +243,21 @@ int main( int argc, char** argv )
    else
       log_purge();
 
+   ndata_setupReadDirs();
+   gettext_setLanguage( conf.language ); /* now that we can find translations */
+   LOG( _("Loaded configuration: %s"), conf_file_path );
+   search_path = PHYSFS_getSearchPath();
+   LOG( "%s", _("Read locations, searched in order:") );
+   for (p = search_path; *p != NULL; p++)
+      LOG( "    %s", *p );
+   PHYSFS_freeList( search_path );
+   /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
+   DEBUG( _("Cache location: %s"), nfile_cachePath() );
+   LOG( _("Write location: %s\n"), PHYSFS_getWriteDir() );
+
    /* Enable FPU exceptions. */
    if (conf.fpu_except)
       debug_enableFPUExcept();
-
-   /* Open data. */
-   ndata_setupReadDirs();
-
-   /* We now know which translations to use. */
-   gettext_setLanguage( conf.language );
 
    /* Load the start info. */
    if (start_load())
@@ -414,7 +420,7 @@ int main( int argc, char** argv )
    }
 
    /* Save configuration. */
-   conf_saveConfig(buf);
+   conf_saveConfig(conf_file_path);
 
    /* data unloading */
    unload_all();
@@ -489,7 +495,7 @@ void loadscreen_load (void)
    cam_setZoom( conf.zoom_far );
 
    /* Load the texture */
-   nsnprintf( file_path, PATH_MAX, GFX_PATH"loading/%s", loadscreens[ RNG_BASE(0,nload-1) ] );
+   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s", loadscreens[ RNG_BASE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
 
    /* Create the stars. */
@@ -693,9 +699,7 @@ void main_loop( int update )
     * Handle render.
     */
    /* Clear buffer. */
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    render_all();
-   gl_checkErr(); /* check error every loop */
    /* Draw buffer. */
    SDL_GL_SwapWindow( gl_screen.window );
 }
@@ -732,14 +736,11 @@ void naev_resize (void)
    /* Reload the GUI (may regenerate land window) */
    gui_reload();
 
-   /* Resets the overlay dimensions. */
+   /* Resets dimensions in other components which care. */
    ovr_refresh();
-
-   /* Re-center windows. */
    toolkit_reposition();
-
-   /* Reposition main menu, if open. */
    menu_main_resize();
+   nebu_resize();
 }
 
 /*
@@ -933,21 +934,22 @@ void update_routine( double dt, int enter_sys )
 static void render_all (void)
 {
    double dt;
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    dt = (paused) ? 0. : game_dt;
 
    /* setup */
    spfx_begin(dt, real_dt);
-   /* BG */
+   /* Background stuff */
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
    planets_render();
    spfx_render(SPFX_LAYER_BACK);
    weapons_render(WEAPON_LAYER_BG, dt);
-   /* N */
+   /* Middle stuff */
    pilots_render(dt);
    weapons_render(WEAPON_LAYER_FG, dt);
    spfx_render(SPFX_LAYER_MIDDLE);
-   /* FG */
+   /* Foreground stuff */
    player_render(dt);
    spfx_render(SPFX_LAYER_FRONT);
    space_renderOverlay(dt);
@@ -955,12 +957,14 @@ static void render_all (void)
    pilots_renderOverlay(dt);
    spfx_end();
    gui_render(dt);
-   ovr_render(dt);
-   display_fps( real_dt ); /* Exception. */
 
-   /* Toolkit is rendered on top. */
-   if (toolkit_isOpen())
-      toolkit_render();
+   /* Top stuff. */
+   ovr_render(dt);
+   display_fps( real_dt ); /* Exception using real_dt. */
+   toolkit_render();
+
+   /* check error every loop */
+   gl_checkErr();
 }
 
 
@@ -1037,7 +1041,7 @@ static void window_caption (void)
    }
 
    /* Set caption. */
-   nsnprintf(buf, PATH_MAX, APPNAME" - %s", start_name());
+   snprintf(buf, sizeof(buf), APPNAME" - %s", start_name());
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
 }
@@ -1054,7 +1058,7 @@ char *naev_version( int long_version )
    /* Set up the long version. */
    if (long_version) {
       if (version_human[0] == '\0')
-         nsnprintf( version_human, sizeof(version_human),
+         snprintf( version_human, sizeof(version_human),
                " "APPNAME" v%s%s - %s", VERSION,
 #ifdef DEBUGGING
                _(" debug"),

@@ -40,11 +40,11 @@ void map_jump (void);
 StarSystem **map_getJumpPath( int *njumps, const char *sysstart, const char *sysend, int ignore_known, int show_hidden,
                               StarSystem **old_data ) WARN_IF( *njumps < 0, "njumps must be >= 0" );
 int map_map( const Outfit *map );
-int map_isMapped( const Outfit* map );
+int map_isUseless( const Outfit* map );
 
 /* Local map stuff. */
 int localmap_map( const Outfit *lmap );
-int localmap_isMapped( const Outfit *lmap );
+int localmap_isUseless( const Outfit *lmap );
 
 /* shows a map at x, y (relative to wid) with size w,h  */
 void map_show( int wid, int x, int y, int w, int h, double zoom );

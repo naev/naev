@@ -51,10 +51,13 @@
   1999-05-03 lpd Original version.
  */
 
+/** @cond */
+#include "SDL.h"
+/** @endcond */
+
 #include "md5.h"
-#include "ncompat.h"
 #include "nstring.h"
-#define ARCH_IS_BIG_ENDIAN HAS_BIGENDIAN
+#define ARCH_IS_BIG_ENDIAN (SDL_BYTEORDER == SDL_BIG_ENDIAN)
 
 
 #undef BYTE_ORDER /* 1 = big-endian, -1 = little-endian, 0 = unknown */

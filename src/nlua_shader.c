@@ -25,10 +25,12 @@
 static int shaderL_gc( lua_State *L );
 static int shaderL_eq( lua_State *L );
 static int shaderL_new( lua_State *L );
+static int shaderL_send( lua_State *L );
 static const luaL_Reg shaderL_methods[] = {
    { "__gc", shaderL_gc },
    { "__eq", shaderL_eq },
    { "new", shaderL_new },
+   { "send", shaderL_send },
    {0,0}
 }; /**< Shader metatable methods. */
 
@@ -190,3 +192,80 @@ static int shaderL_new( lua_State *L )
    lua_pushshader( L, shader );
    return 1;
 }
+
+
+/**
+ * @brief Allows setting values of uniforms for a shader.
+ *
+ *    @luatparam Shader shader Shader to send uniform to.
+ *    @luatparam string name Name of the uniform.
+ * @luafunc send
+ */
+static int shaderL_send( lua_State *L )
+{
+   LuaShader_t *ls;
+   const char *name;
+   GLuint id;
+   int i, t, len, j;
+   double n;
+   GLfloat values[4];
+
+   ls = luaL_checkshader(L,1);
+   name = luaL_checkstring(L,2);
+   id = glGetUniformLocation( ls->program, name );
+   if (id==GL_INVALID_VALUE)
+      NLUA_ERROR(L,_("Shader does not have uniform '%s'!"), name);
+
+   t = lua_gettop(L)-2;
+   if (t>1)
+      NLUA_ERROR(L,_("Uniform arrays not supported at the moment."));
+
+   /* With OpenGL 4.1 or ARB_separate_shader_objects, there
+    * is no need to set the program first. */
+   glUseProgram( ls->program );
+   i = 3;
+   if (lua_istable(L,i)) {
+      len = lua_objlen(L,i);
+      if (len > 4) {
+         glUseProgram( 0 );
+         NLUA_ERROR(L,_("Only up to 4 values are supported for uniforms, got %d!"), len);
+      }
+      for (j=0; j<len; j++) {
+         lua_pushnumber(L,j+1);
+         lua_gettable(L, i);
+         values[j] = luaL_checknumber(L,-1);
+         lua_pop(L,1);
+      }
+      switch (len) {
+         case 0:
+            glUseProgram( 0 );
+            NLUA_ERROR(L,_("No values specified for uniform!"));
+         case 1:
+            glUniform1f( id, values[0] );
+            break;
+         case 2:
+            glUniform2f( id, values[0], values[1] );
+            break;
+         case 3:
+            glUniform3f( id, values[0], values[1], values[2] );
+            break;
+         case 4:
+            glUniform4f( id, values[0], values[1], values[2], values[3] );
+            break;
+      }
+   }
+   else  {
+      n = lua_tonumber(L,i);
+      if ((int)floor(n) == (int)ceil(n))
+         glUniform1i( id, (int)n );
+      else
+         glUniform1f( id, n );
+   }
+   glUseProgram( 0 );
+
+   gl_checkErr();
+
+   return 0;
+}
+
+

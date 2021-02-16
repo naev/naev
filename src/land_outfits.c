@@ -42,7 +42,7 @@
 
 
 typedef struct LandOutfitData_ {
-   Outfit *outfits;
+   Outfit **outfits;
    int noutfits;
 } LandOutfitData;
 
@@ -380,7 +380,7 @@ void outfits_update( unsigned int wid, char* str )
       window_modifyImage( wid, "imgOutfit", NULL, 192, 192 );
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
-      nsnprintf( buf, PATH_MAX,
+      snprintf( buf, sizeof(buf),
             _("N/A\n"
             "\n"
             "N/A\n"
@@ -428,7 +428,7 @@ void outfits_update( unsigned int wid, char* str )
    else if (player_hasLicense( outfit->license ))
       strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
    else
-      nsnprintf( buf_license, sizeof(buf_license), "#r%s#0", _(outfit->license) );
+      snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(outfit->license) );
    buf_license[ sizeof(buf_license)-1 ] = '\0';
 
    mass = outfit->mass;
@@ -437,7 +437,7 @@ void outfits_update( unsigned int wid, char* str )
       mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
    }
 
-   nsnprintf( buf, PATH_MAX,
+   snprintf( buf, sizeof(buf),
          _("%d\n"
          "\n"
          "%s\n"
@@ -544,7 +544,7 @@ int outfits_filter( Outfit **outfits, int n,
       if ((filter != NULL) && !filter(outfits[i]))
          continue;
 
-      if ((name != NULL) && (nstrcasestr( outfits[i]->name, name ) == NULL))
+      if ((name != NULL) && (strcasestr( outfits[i]->name, name ) == NULL))
          continue;
 
       /* Shift matches downward. */
@@ -632,16 +632,15 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 
             l = strlen(o->desc_short) + 128;
             coutfits[i].alt = malloc( l );
-            p  = nsnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
+            p  = scnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
             if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-               p += nsnprintf( &coutfits[i].alt[p], l-p, _("#oUnique#0\n") );
-            if ((o->slot.spid!=0) && (p < l))
-               p += nsnprintf( &coutfits[i].alt[p], l-p, _("#oSlot %s#0\n"),
+               p += scnprintf( &coutfits[i].alt[p], l-p, _("#oUnique#0\n") );
+            if (o->slot.spid!=0)
+               p += scnprintf( &coutfits[i].alt[p], l-p, _("#oSlot %s#0\n"),
                      _( sp_display( o->slot.spid ) ) );
-            if (p < l)
-               p += nsnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
+            p += scnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
             if ((o->mass > 0.) && (p < l))
-               nsnprintf( &coutfits[i].alt[p], l-p,
+               scnprintf( &coutfits[i].alt[p], l-p,
                      _("\n%.0f Tonnes"),
                      mass );
          }
@@ -691,8 +690,8 @@ int outfit_canBuy( const char *name, Planet *planet )
    }
 
    /* Map already mapped */
-   if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
-         (outfit_isLocalMap(outfit) && localmap_isMapped(outfit))) {
+   if ((outfit_isMap(outfit) && map_isUseless(outfit)) ||
+         (outfit_isLocalMap(outfit) && localmap_isUseless(outfit))) {
       land_errDialogueBuild( _("You already know of everything this map contains.") );
       return 0;
    }
@@ -903,7 +902,7 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
    }
    if (q==1) return; /* Ignore no modifier. */
 
-   nsnprintf( buf, 8, "%dx", q );
+   snprintf( buf, 8, "%dx", q );
    gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }
 

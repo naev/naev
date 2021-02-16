@@ -1305,7 +1305,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "spawn")) {
          if (temp->sched_env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'spawn' tag."), temp->name);
-         nsnprintf( buf, sizeof(buf), FACTIONS_PATH"spawn/%s.lua", xml_raw(node) );
+         snprintf( buf, sizeof(buf), FACTIONS_PATH"spawn/%s.lua", xml_raw(node) );
          temp->sched_env = nlua_newEnv(1);
          nlua_loadStandard( temp->sched_env);
          dat = ndata_read( buf, &ndat );
@@ -1324,7 +1324,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "standing")) {
          if (temp->env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'standing' tag."), temp->name);
-         nsnprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", xml_raw(node) );
+         snprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", xml_raw(node) );
          temp->env = nlua_newEnv(1);
          nlua_loadStandard( temp->env );
          dat = ndata_read( buf, &ndat );
@@ -1348,7 +1348,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "equip")) {
          if (temp->equip_env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'equip' tag."), temp->name);
-         nsnprintf( buf, sizeof(buf), FACTIONS_PATH"equip/%s.lua", xml_raw(node) );
+         snprintf( buf, sizeof(buf), FACTIONS_PATH"equip/%s.lua", xml_raw(node) );
          temp->equip_env = nlua_newEnv(1);
          nlua_loadStandard( temp->equip_env );
          dat = ndata_read( buf, &ndat );
@@ -1367,9 +1367,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node,"logo")) {
          if (temp->logo_small != NULL)
             WARN(_("Faction '%s' has duplicate 'logo' tag."), temp->name);
-         nsnprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
+         snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s_small.png", xml_get(node));
          temp->logo_small = gl_newImage(buf, 0);
-         nsnprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_tiny.png", xml_get(node));
+         snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s_tiny.png", xml_get(node));
          temp->logo_tiny = gl_newImage(buf, 0);
          continue;
       }

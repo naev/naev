@@ -416,19 +416,19 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
    if (ret) {
       found[n].jumps    = 10000;
       found[n].distance = 1e6;
-      nsnprintf( route_info, sizeof(route_info), "%s", _("unknown route") );
+      snprintf( route_info, sizeof(route_info), "%s", _("unknown route") );
    }
    else
-      nsnprintf( route_info, sizeof(route_info),
+      snprintf( route_info, sizeof(route_info),
             n_( "%d jump, %.0fk distance", "%d jumps, %.0fk distance", found[n].jumps ),
             found[n].jumps, found[n].distance/1000. );
 
    /* Set fancy name. */
    if (pnt == NULL)
-      nsnprintf( found[n].display, sizeof(found[n].display),
+      snprintf( found[n].display, sizeof(found[n].display),
             _("%s (%s)"), _(sys->name), route_info );
    else
-      nsnprintf( found[n].display, sizeof(found[n].display),
+      snprintf( found[n].display, sizeof(found[n].display),
             _("#%c%s (%s, %s)"), map_getPlanetColourChar(pnt),
             _(pnt->name), _(sys->name), route_info );
 }
@@ -607,7 +607,7 @@ static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
    /* Do fuzzy search. */
    l = 0;
    for (i=0; i<n; i++) {
-      if (nstrcasestr( _(o[i]->name), name ) != NULL) {
+      if (strcasestr( _(o[i]->name), name ) != NULL) {
          names[l] = o[i]->name;
          l++;
       }
@@ -718,7 +718,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    window_modifyText( wid, "txtDescription", _(outfit->description) );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
-   nsnprintf( buf, PATH_MAX,
+   snprintf( buf, sizeof(buf),
          _("%d\n"
          "\n"
          "%s\n"
@@ -847,7 +847,7 @@ static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
    /* Do fuzzy search. */
    l = 0;
    for (i=0; i<n; i++) {
-      if (nstrcasestr( _(s[i]->name), name ) != NULL) {
+      if (strcasestr( _(s[i]->name), name ) != NULL) {
          names[l] = s[i]->name;
          l++;
       }

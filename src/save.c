@@ -138,11 +138,11 @@ int save_all (void)
 
    /* Write to file. */
    if (PHYSFS_mkdir("saves") == 0) {
-      nsnprintf(file, sizeof(file), "%s/saves", PHYSFS_getWriteDir());
+      snprintf(file, sizeof(file), "%s/saves", PHYSFS_getWriteDir());
       WARN(_( "Dir '%s' does not exist and unable to create: %s" ), file, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       goto err_writer;
    }
-   nsnprintf(file, sizeof(file), "saves/%s.ns", player.name);
+   snprintf(file, sizeof(file), "saves/%s.ns", player.name);
 
    /* Back up old saved game. */
    if (!save_loaded) {
@@ -156,7 +156,7 @@ int save_all (void)
    /* Critical section, if crashes here player's game gets corrupted.
     * Luckily we have a copy just in case... */
    xmlFreeTextWriter(writer);
-   nsnprintf(file, sizeof(file), "%s/saves/%s.ns", PHYSFS_getWriteDir(), player.name); /* TODO: write via physfs */
+   snprintf(file, sizeof(file), "%s/saves/%s.ns", PHYSFS_getWriteDir(), player.name); /* TODO: write via physfs */
    if (xmlSaveFileEnc(file, doc, "UTF-8") < 0) {
       WARN(_("Failed to write saved game!  You'll most likely have to restore it by copying your backup saved game over your current saved game."));
       goto err;
@@ -178,6 +178,6 @@ err:
 void save_reload (void)
 {
    char path[PATH_MAX];
-   nsnprintf(path, PATH_MAX, "saves/%s.ns", player.name);
+   snprintf(path, sizeof(path), "saves/%s.ns", player.name);
    load_gameFile( path );
 }

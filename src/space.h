@@ -66,8 +66,7 @@ enum {
 #define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
-#define planet_isKnown(p) \
-   (!planet_hasSystem((p)->name) || planet_isFlag(p,PLANET_KNOWN)) /**< Checks if planet is known. */
+#define planet_isKnown(p) planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
 
 
 /**
@@ -145,9 +144,7 @@ typedef struct Planet_ {
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
-#define sys_isKnown(s) \
-   (!system_exists((s)->name) || \
-      sys_isFlag(s,SYSTEM_KNOWN)) /**< Checks if system is known. */
+#define sys_isKnown(s)     sys_isFlag(s,SYSTEM_KNOWN) /**< Checks if system is known. */
 #define sys_isMarked(s)    sys_isFlag(s,SYSTEM_MARKED) /**< Checks if system is marked. */
 
 
@@ -421,7 +418,6 @@ void space_gfxUnload( StarSystem *sys );
  * Getting stuff.
  */
 StarSystem* system_getAll (void);
-int system_exists( const char* sysname );
 const char *system_existsCase( const char* sysname );
 char **system_searchFuzzyCase( const char* sysname, int *n );
 StarSystem* system_get( const char* sysname );

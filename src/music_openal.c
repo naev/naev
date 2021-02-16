@@ -86,7 +86,6 @@ static int music_forced             = 0; /**< Whether or not music is force stop
  * saves the music to ram in this structure
  */
 typedef struct alMusic_ {
-   char name[PATH_MAX]; /**< Song name. */
    SDL_RWops *rw; /**< RWops file reading from. */
    OggVorbis_File stream; /**< Vorbis file stream. */
    vorbis_info* info; /**< Information of the stream. */
@@ -115,9 +114,7 @@ static ALfloat music_vol_lin = 1.; /**< Current volume level (linear). */
 /*
  * prototypes
  */
-#ifdef HAVE_OV_READ_FILTER
 static void rg_filter( float **pcm, long channels, long samples, void *filter_param );
-#endif /* HAVE_OV_READ_FILTER */
 static void music_kill (void);
 static int music_thread( void* unused );
 static int stream_loadBuffer( ALuint buffer );
@@ -471,7 +468,6 @@ static int music_thread( void* unused )
 }
 
 
-#ifdef HAVE_OV_READ_FILTER
 /**
  * @brief This is the filter function for the decoded Ogg Vorbis stream.
  *
@@ -510,7 +506,6 @@ static void rg_filter( float **pcm, long channels, long samples, void *filter_pa
          for (j = 0; j < samples; j++)
             pcm[i][j] *= scale_factor;
 }
-#endif /* HAVE_OV_READ_FILTER */
 
 
 /**
@@ -534,27 +529,16 @@ static int stream_loadBuffer( ALuint buffer )
    size = 0;
    while (size < music_bufSize) { /* file up the entire data buffer */
 
-#ifdef HAVE_OV_READ_FILTER
       result = ov_read_filter(
             &music_vorbis.stream,   /* stream */
             &music_buf[size],       /* data */
             music_bufSize - size,   /* amount to read */
-            HAS_BIGENDIAN,          /* big endian? */
+            (SDL_BYTEORDER == SDL_BIG_ENDIAN),
             2,                      /* 16 bit */
             1,                      /* signed */
             &section,               /* current bitstream */
             rg_filter,              /* filter function */
             &music_vorbis );        /* filter parameter */
-#else /* HAVE_OV_READ_FILTER */
-      result = ov_read(
-            &music_vorbis.stream,   /* stream */
-            &music_buf[size],       /* data */
-            music_bufSize - size,   /* amount to read */
-            HAS_BIGENDIAN,          /* big endian? */
-            2,                      /* 16 bit */
-            1,                      /* signed */
-            &section );             /* current bitstream */
-#endif /* HAVE_OV_READ_FILTER */
 
       /* End of file. */
       if (result == 0) {
@@ -685,10 +669,6 @@ int music_al_load( const char* name, SDL_RWops *rw )
    char *tag = NULL;
 
    musicVorbisLock();
-
-   /* set the new name */
-   strncpy( music_vorbis.name, name, PATH_MAX );
-   music_vorbis.name[PATH_MAX-1] = '\0';
 
    /* Load new ogg. */
    music_vorbis.rw = rw;
