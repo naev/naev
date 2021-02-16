@@ -351,8 +351,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
          snprintf( &digest[i * 2], 3, "%02x", md5val[i] );
       free(md5val);
 
-      cachefile = malloc( PATH_MAX );
-      snprintf( cachefile, PATH_MAX, "%scollisions/%s",
+      asprintf( &cachefile, "%scollisions/%s",
          nfile_cachePath(), digest );
 
       /* Attempt to find a cached transparency map. */

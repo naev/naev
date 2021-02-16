@@ -258,14 +258,12 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
 {
    char *path;
    const char *fmt;
-   size_t dir_len, path_size;
+   size_t dir_len;
    PHYSFS_Stat stat;
 
    dir_len = strlen( origdir );
-   path_size = dir_len + strlen( fname ) + 2;
-   path = malloc( path_size );
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   snprintf( path, path_size, fmt, origdir, fname );
+   asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat )) {
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
@@ -299,7 +297,7 @@ int ndata_backupIfExists( const char *path )
    if ( !PHYSFS_exists( path ) )
       return 0;
 
-   snprintf(backup, PATH_MAX, "%s.backup", path);
+   snprintf(backup, sizeof(backup), "%s.backup", path);
 
    return ndata_copyIfExists( path, backup );
 }

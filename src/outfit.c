@@ -1039,15 +1039,11 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
 static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
 {
    char *file;
-   int sl;
    CollPoly *polygon;
    xmlDocPtr doc;
    xmlNodePtr node, cur;
 
-   sl   = strlen(buf)+strlen(OUTFIT_POLYGON_PATH)+strlen(".xml")+1;
-   file = malloc( sl );
-
-   snprintf( file, sl, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
+   asprintf( &file, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
    if (!PHYSFS_exists(file)) {
@@ -1239,7 +1235,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = scnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s [%s]\n"
          "%.0f CPU\n"
          "%.0f%% Penetration\n"
@@ -1249,11 +1245,11 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.dmg.penetration*100.,
          1./temp->u.blt.delay * temp->u.blt.dmg.damage, temp->u.blt.dmg.damage );
    if (temp->u.blt.dmg.disable > 0.) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.2f Disable/s [%.0f Disable]\n"),
          1./temp->u.blt.delay * temp->u.blt.dmg.disable, temp->u.blt.dmg.disable );
    }
-   l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+   l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range\n"
@@ -1263,7 +1259,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.range,
          temp->u.blt.heatup);
    if (!outfit_isTurret(temp)) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("\n%.1f degree swivel"),
          temp->u.blt.swivel*180./M_PI );
    }
@@ -1385,7 +1381,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = scnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s\n"
          "%.0f CPU\n"
          "%.0f%% Penetration\n"
@@ -1395,11 +1391,11 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.dmg.penetration*100.,
          temp->u.bem.dmg.damage, _(dtype_damageTypeToStr(temp->u.bem.dmg.type) ) );
    if (temp->u.blt.dmg.disable > 0.) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.0f Disable/s\n"),
          temp->u.bem.dmg.disable );
    }
-   l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+   l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.1f EPS\n"
          "%.1f Duration %.1f Cooldown\n"
          "%.0f Range\n"
@@ -1674,7 +1670,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   i = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   i = scnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s"
          "%s",
          _(outfit_getType(temp)),
@@ -1683,9 +1679,9 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 #define DESC_ADD(x, s) \
 if ((x) != 0) \
    do { \
-      i += snprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n#%c", ((x)>0)?'g':'r' ); \
-      i += snprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, s, x ); \
-      i += snprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "#0" ); \
+      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n#%c", ((x)>0)?'g':'r' ); \
+      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, s, x ); \
+      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "#0" ); \
    } while(0)
    DESC_ADD( temp->cpu,                _("%+.0f CPU") );
    DESC_ADD( temp->u.mod.thrust,       _("%+.0f Thrust") );
@@ -2415,7 +2411,7 @@ int outfit_load (void)
 int outfit_mapParse (void)
 {
    Outfit *o;
-   size_t i, len;
+   size_t i;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    char **map_files;
@@ -2423,9 +2419,7 @@ int outfit_mapParse (void)
 
    map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );
    for (i=0; map_files[i]!=NULL; i++) {
-      len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
-      file = malloc( len );
-      snprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
+      asprintf( &file, "%s%s", MAP_DATA_PATH, map_files[i] );
 
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
@@ -2491,18 +2485,18 @@ static void outfit_launcherDesc( Outfit* o )
    a = o->u.lau.ammo;
 
    o->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = snprintf( o->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = scnprintf( o->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s [%s]\n"
          "%.0f CPU\n"),
          _(outfit_getType(o)), _(dtype_damageTypeToStr(a->u.amm.dmg.type)),
          o->cpu );
 
    if (outfit_isSeeker(o))
-      l += snprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+      l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("%.1f Second Lock-on\n"),
             o->u.lau.lockon );
 
-   l += snprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+   l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
          _("Holds %d %s:\n"
          "%.0f%% Penetration\n"
          "%.2f DPS [%.0f Damage]\n"),
@@ -2511,11 +2505,11 @@ static void outfit_launcherDesc( Outfit* o )
          1. / o->u.lau.delay * a->u.amm.dmg.damage, a->u.amm.dmg.damage );
 
    if (a->u.amm.dmg.disable > 0.)
-      l += snprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+      l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("%.1f Disable/s [%.0f Disable]\n"),
             1. / o->u.lau.delay * a->u.amm.dmg.disable, a->u.amm.dmg.disable );
 
-   l += snprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+   l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
          _("%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range [%.1f duration]\n"

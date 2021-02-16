@@ -380,7 +380,7 @@ void outfits_update( unsigned int wid, char* str )
       window_modifyImage( wid, "imgOutfit", NULL, 192, 192 );
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
-      snprintf( buf, PATH_MAX,
+      snprintf( buf, sizeof(buf),
             _("N/A\n"
             "\n"
             "N/A\n"
@@ -437,7 +437,7 @@ void outfits_update( unsigned int wid, char* str )
       mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
    }
 
-   snprintf( buf, PATH_MAX,
+   snprintf( buf, sizeof(buf),
          _("%d\n"
          "\n"
          "%s\n"
@@ -632,16 +632,15 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 
             l = strlen(o->desc_short) + 128;
             coutfits[i].alt = malloc( l );
-            p  = snprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
+            p  = scnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
             if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("#oUnique#0\n") );
-            if ((o->slot.spid!=0) && (p < l))
-               p += snprintf( &coutfits[i].alt[p], l-p, _("#oSlot %s#0\n"),
+               p += scnprintf( &coutfits[i].alt[p], l-p, _("#oUnique#0\n") );
+            if (o->slot.spid!=0)
+               p += scnprintf( &coutfits[i].alt[p], l-p, _("#oSlot %s#0\n"),
                      _( sp_display( o->slot.spid ) ) );
-            if (p < l)
-               p += snprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
+            p += scnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
             if ((o->mass > 0.) && (p < l))
-               snprintf( &coutfits[i].alt[p], l-p,
+               scnprintf( &coutfits[i].alt[p], l-p,
                      _("\n%.0f Tonnes"),
                      mass );
          }

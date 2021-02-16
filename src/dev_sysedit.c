@@ -433,13 +433,11 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
 
          /* Rename. */
          filtered = uniedit_nameFilter(p->name);
-         oldName = malloc(16 + strlen(filtered));
-         snprintf(oldName, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
+         asprintf(&oldName, "dat/assets/%s.xml", filtered);
          free(filtered);
 
          filtered = uniedit_nameFilter(name);
-         newName = malloc(16 + strlen(filtered));
-         snprintf(newName, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
+         asprintf(&newName, "dat/assets/%s.xml", filtered);
          free(filtered);
 
          rename(oldName, newName);
@@ -472,8 +470,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
          sel = &sysedit_select[i];
          if (sel->type == SELECT_PLANET) {
             filtered = uniedit_nameFilter( sysedit_sys->planets[ sel->u.planet ]->name );
-            file = malloc(16 + strlen(filtered));
-            snprintf(file, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
+            asprintf(&file, "dat/assets/%s.xml", filtered);
             remove(file);
 
             free(filtered);

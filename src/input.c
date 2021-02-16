@@ -499,12 +499,12 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
          p = 0;
          /* Handle mod. */
          if ((mod != NMOD_NONE) && (mod != NMOD_ALL))
-            p += snprintf( &buf[p], len-p, "%s + ", input_modToText(mod) );
+            p += scnprintf( &buf[p], len-p, "%s + ", input_modToText(mod) );
          /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
          if (key < 0x100 && isalpha(key))
-            p += snprintf( &buf[p], len-p, "%c", toupper(key) );
+            p += scnprintf( &buf[p], len-p, "%c", toupper(key) );
          else
-            p += snprintf( &buf[p], len-p, "%s", _(SDL_GetKeyName(key)) );
+            p += scnprintf( &buf[p], len-p, "%s", _(SDL_GetKeyName(key)) );
          (void)p;
          break;
 

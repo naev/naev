@@ -1695,7 +1695,7 @@ static int planets_load ( void )
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
-   size_t i, len;
+   size_t i;
    Commodity **stdList;
 
    /* Load landing stuff. */
@@ -1720,9 +1720,7 @@ static int planets_load ( void )
    /* Load XML stuff. */
    planet_files = PHYSFS_enumerateFiles( PLANET_DATA_PATH );
    for (i=0; planet_files[i]!=NULL; i++) {
-      len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
-      file = malloc( len );
-      snprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
+      asprintf( &file, "%s%s", PLANET_DATA_PATH, planet_files[i]);
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
          free(file);
@@ -1979,13 +1977,13 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
-               snprintf( str, PATH_MAX, PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
+               snprintf( str, sizeof(str), PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
                planet->radius = -1.;
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
-               snprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
+               snprintf( str, sizeof(str), PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
                planet->gfx_exterior = strdup(str);
                planet->gfx_exteriorPath = xml_getStrd(cur);
             }
@@ -3000,7 +2998,7 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
 int space_load (void)
 {
    size_t i;
-   int j, len;
+   int j;
    int ret;
    StarSystem *sys;
    char **asteroid_files, file[PATH_MAX];
@@ -3037,8 +3035,7 @@ int space_load (void)
    asteroid_gfx = malloc( sizeof(glTexture*) * nasterogfx );
 
    for (i=0; asteroid_files[i]!=NULL; i++) {
-      len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
-      snprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
+      snprintf( file, sizeof(file), "%s%s", PLANET_GFX_SPACE_PATH"asteroid/", asteroid_files[i] );
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
    }
 
@@ -3083,7 +3080,7 @@ int space_load (void)
  */
 static int asteroidTypes_load (void)
 {
-   int len, namdef, qttdef;
+   int namdef, qttdef;
    AsteroidType *at;
    char *str, file[PATH_MAX];
    xmlNodePtr node, cur, child;
@@ -3122,8 +3119,7 @@ static int asteroidTypes_load (void)
          do {
             if (xml_isNode(cur,"gfx")) {
                str = xml_get(cur);
-               len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+10);
-               snprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str);
+               snprintf( file, sizeof(file), "%s%s", PLANET_GFX_SPACE_PATH"asteroid/", str);
                array_push_back( &at->gfxs, gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
             }
 
@@ -3186,7 +3182,7 @@ static int systems_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
-   size_t i, len;
+   size_t i;
 
    /* Allocate if needed. */
    if (systems_stack == NULL)
@@ -3198,9 +3194,7 @@ static int systems_load (void)
     * First pass - loads all the star systems_stack.
     */
    for (i=0; system_files[i]!=NULL; i++) {
-      len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
-      file = malloc( len );
-      snprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
+      asprintf( &file, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       doc = xml_parsePhysFS( file );
       if (doc == NULL)
@@ -3226,9 +3220,7 @@ static int systems_load (void)
     * Second pass - loads all the jump routes.
     */
    for (i=0; system_files[i]!=NULL; i++) {
-      len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
-      file = malloc( len );
-      snprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
+      asprintf( &file, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       doc = xml_parsePhysFS( file );
       free( file );

@@ -702,13 +702,11 @@ static void uniedit_renameSys (void)
 
       /* Change the name. */
       filtered = uniedit_nameFilter(sys->name);
-      oldName = malloc(14 + strlen(filtered));
-      snprintf(oldName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
+      asprintf(&oldName, "dat/ssys/%s.xml", filtered);
       free(filtered);
 
       filtered = uniedit_nameFilter(name);
-      newName = malloc(14 + strlen(filtered));
-      snprintf(newName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
+      asprintf(&newName, "dat/ssys/%s.xml", filtered);
       free(filtered);
 
       rename(oldName, newName);
@@ -947,7 +945,7 @@ void uniedit_selectText (void)
 
    l = 0;
    for (i=0; i<uniedit_nsys; i++) {
-      l += snprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
             (i == uniedit_nsys-1) ? "" : ", " );
    }
    if (l == 0)

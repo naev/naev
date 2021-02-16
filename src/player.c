@@ -2095,7 +2095,7 @@ void player_screenshot (void)
 
    /* Try to find current screenshots. */
    for ( ; screenshot_cur < 1000; screenshot_cur++) {
-      snprintf( filename, PATH_MAX, "screenshots/screenshot%03d.png", screenshot_cur );
+      snprintf( filename, sizeof(filename), "screenshots/screenshot%03d.png", screenshot_cur );
       if (!PHYSFS_exists( filename ))
          break;
    }

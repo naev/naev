@@ -262,9 +262,9 @@ static void opt_gameplay( unsigned int wid )
    for (i=l=0; paths[i]!=NULL && (size_t)l < sizeof(buf); i++)
    {
       if (i == 0)
-         l = snprintf( buf, sizeof(buf), _("ndata: %s"), paths[i] );
+         l = scnprintf( buf, sizeof(buf), _("ndata: %s"), paths[i] );
       else
-         l += snprintf( &buf[l], sizeof(buf)-l, ":%s", paths[i] );
+         l += scnprintf( &buf[l], sizeof(buf)-l, ":%s", paths[i] );
    }
    PHYSFS_freeList(paths);
    paths = NULL;
@@ -610,13 +610,13 @@ static void menuKeybinds_genList( unsigned int wid )
                p = 0;
                mod_text[0] = '\0';
                if (mod & NMOD_SHIFT)
-                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "shift+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "shift+" );
                if (mod & NMOD_CTRL)
-                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "ctrl+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "ctrl+" );
                if (mod & NMOD_ALT)
-                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
                if (mod & NMOD_META)
-                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
                (void)p;
             }
 
@@ -741,7 +741,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    }
 
    /* Update text. */
-   snprintf(buf, 1024, "%s\n\n%s\n", desc, binding);
+   snprintf(buf, sizeof(buf), "%s\n\n%s\n", desc, binding);
    window_modifyText( wid, "txtDesc", buf );
 }
 
@@ -1209,14 +1209,12 @@ static void opt_video( unsigned int wid )
    nres  = 0;
    res_def = 0;
    if (j) {
-      res[0]   = malloc(16);
-      snprintf( res[0], 16, "%dx%d", conf.width, conf.height );
+      asprintf( &res[0], "%dx%d", conf.width, conf.height );
       nres     = 1;
    }
    for (i=0; i<n; i++) {
       SDL_GetDisplayMode( display_index, i, &mode  );
-      res[ nres ] = malloc(16);
-      snprintf( res[ nres ], 16, "%dx%d", mode.w, mode.h );
+      asprintf( &res[ nres ], "%dx%d", mode.w, mode.h );
 
       /* Make sure doesn't already exist. */
       for (k=0; k<nres; k++)

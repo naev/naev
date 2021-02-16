@@ -234,14 +234,14 @@ void land_errDialogueBuild( const char *fmt, ... )
       return;
    else { /* get the message */
       va_start(ap, fmt);
-      vsnprintf(errorreason, 512, fmt, ap);
+      vsnprintf(errorreason, sizeof(errorreason), fmt, ap);
       va_end(ap);
    }
 
    if (errorlist_ptr == NULL) /* Initialize on first run. */
-      errorappend = snprintf( errorlist, sizeof(errorlist), "%s", errorreason );
+      errorappend = scnprintf( errorlist, sizeof(errorlist), "%s", errorreason );
    else /* Append newest error to the existing list. */
-      snprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
+      scnprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
    errorlist_ptr = errorlist;
 }
 

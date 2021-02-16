@@ -56,10 +56,7 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, const char 
 
    /* Prepend useful information if available. */
    if (prepend != NULL) {
-      bufsize = fbufsize+strlen(prepend)+1;
-      buf = malloc( bufsize );
-      snprintf( buf, bufsize, "%s%s", prepend, fbuf );
-      buf[bufsize-1] = '\0';
+      bufsize = asprintf( &buf, "%s%s", prepend, fbuf ) + 1 /* the null byte */;
       free( fbuf );
    }
    else {

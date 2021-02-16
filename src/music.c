@@ -315,7 +315,7 @@ int music_load( const char* name )
    /* Load new music. */
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
-   snprintf( filename, PATH_MAX, MUSIC_PATH"%s"MUSIC_SUFFIX, name);
+   snprintf( filename, sizeof(filename), MUSIC_PATH"%s"MUSIC_SUFFIX, name);
    rw = PHYSFSRWOPS_openRead( filename );
    if (rw == NULL) {
       WARN(_("Music '%s' not found."), filename);

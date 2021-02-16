@@ -757,13 +757,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       if (slot->sslot->slot.spid == 0)
          return;
 
-      pos = snprintf( alt, sizeof(alt),
+      pos = scnprintf( alt, sizeof(alt),
             "#o%s", _( sp_display( slot->sslot->slot.spid ) ) );
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
-         pos += snprintf( &alt[pos], sizeof(alt)-pos,
+         pos += scnprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
       if (pos < (int)sizeof(alt))
-         snprintf( &alt[pos], sizeof(alt)-pos,
+         scnprintf( &alt[pos], sizeof(alt)-pos,
                "\n\n%s", _( sp_description( slot->sslot->slot.spid ) ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
@@ -778,18 +778,18 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Get text. */
    if (o->desc_short == NULL)
       return;
-   pos = snprintf( alt, sizeof(alt),
+   pos = scnprintf( alt, sizeof(alt),
          "%s",
          _(o->name) );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n#oUnique#0") );
+      pos += scnprintf( &alt[pos], sizeof(alt)-pos, _("\n#oUnique#0") );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, _("\n#oSlot %s#0"),
+      pos += scnprintf( &alt[pos], sizeof(alt)-pos, _("\n#oSlot %s#0"),
             _( sp_display( o->slot.spid ) ) );
    if (pos < (int)sizeof(alt))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
+      pos += scnprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
-      snprintf( &alt[pos], sizeof(alt)-pos,
+      scnprintf( &alt[pos], sizeof(alt)-pos,
             n_("\n%.0f Tonne", "\n%.0f Tonnes", mass),
             mass );
 
@@ -1288,7 +1288,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    /* Write to buffer. */
    l = 0;
    if (dps > 0.)
-      l += snprintf( &buf[l], (max_len-l),
+      l += scnprintf( &buf[l], (max_len-l),
             _("%s%.2f DPS [%.2f EPS]"), (l!=0)?"\n":"", dps, eps );
    l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), l );
    return l;
@@ -1509,7 +1509,7 @@ eq_qCol( cur, base, inv ), eq_qSym( cur, base, inv ), cur
 void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[STRMAX], buf2[ECON_CRED_STRLEN];
+   char *buf, buf2[ECON_CRED_STRLEN];
    char errorReport[STRMAX_SHORT];
    char *shipname;
    Pilot *ship;
@@ -1543,7 +1543,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
 
    /* Fill the buffer. */
-   snprintf( buf, sizeof(buf),
+   asprintf( &buf,
          _("%s\n"
          "%s\n"
          "%s\n"
@@ -1595,6 +1595,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    window_modifyText( wid, "txtDDesc", buf );
 
    /* Clean up. */
+   free( buf );
    free( nt );
 
    /* button disabling */

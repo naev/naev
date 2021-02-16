@@ -1367,9 +1367,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node,"logo")) {
          if (temp->logo_small != NULL)
             WARN(_("Faction '%s' has duplicate 'logo' tag."), temp->name);
-         snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
+         snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s_small.png", xml_get(node));
          temp->logo_small = gl_newImage(buf, 0);
-         snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_tiny.png", xml_get(node));
+         snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s_tiny.png", xml_get(node));
          temp->logo_tiny = gl_newImage(buf, 0);
          continue;
       }

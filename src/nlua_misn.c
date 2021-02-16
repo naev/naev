@@ -523,7 +523,7 @@ static int misn_setNPC( lua_State *L )
    cur_mission->npc = strdup(name);
 
    /* Set portrait. */
-   snprintf( buf, PATH_MAX, GFX_PATH"portraits/%s", str );
+   snprintf( buf, sizeof(buf), GFX_PATH"portraits/%s", str );
    cur_mission->portrait = gl_newImage( buf, 0 );
 
    return 0;
@@ -897,9 +897,9 @@ static int misn_npcAdd( lua_State *L )
    bg   = luaL_optstring(L,6,NULL);
 
    /* Set path. */
-   snprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s", gfx );
+   snprintf( portrait, sizeof(portrait), GFX_PATH"portraits/%s", gfx );
    if (bg!=NULL)
-      snprintf( background, PATH_MAX, GFX_PATH"portraits/%s", bg );
+      snprintf( background, sizeof(background), GFX_PATH"portraits/%s", bg );
 
    cur_mission = misn_getFromLua(L);
 

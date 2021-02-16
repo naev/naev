@@ -451,7 +451,7 @@ static void ship_update( unsigned int wid )
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
    hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
-   len = snprintf( buf, sizeof(buf),
+   len = scnprintf( buf, sizeof(buf),
          _("%s\n"
          "%s\n"
          "%s\n"
@@ -791,8 +791,7 @@ static void cargo_genList( unsigned int wid )
       /* List the player's cargo */
       buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
       for (i=0; i<array_size(player.p->commodities); i++) {
-         buf[i] = malloc(128);
-         snprintf(buf[i],128, "%s%s %d",
+         asprintf(&buf[i], "%s%s %d",
                _(player.p->commodities[i].commodity->name),
                (player.p->commodities[i].id != 0) ? "*" : "",
                player.p->commodities[i].quantity);
@@ -950,9 +949,8 @@ static void info_openStandings( unsigned int wid )
 
    /* Create list. */
    for (i=0; i<n; i++) {
-      str[i] = malloc( 256 );
       m = round( faction_getPlayer( info_factions[i] ) );
-      snprintf( str[i], 256, "%s   [ %+d%% ]",
+      asprintf( &str[i], "%s   [ %+d%% ]",
             _(faction_name( info_factions[i] )), m );
    }
 

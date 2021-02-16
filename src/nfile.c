@@ -361,7 +361,7 @@ int nfile_backupIfExists( const char *path )
    if ( !nfile_fileExists( path ) )
       return 0;
 
-   snprintf(backup, PATH_MAX, "%s.backup", path);
+   snprintf(backup, sizeof(backup), "%s.backup", path);
 
    return nfile_copyIfExists( path, backup );
 }

@@ -135,9 +135,6 @@ void log_redirect (void)
    ts = localtime(&cur);
    strftime( timestr, sizeof(timestr), "%Y-%m-%d_%H-%M-%S", ts );
 
-   outfiledouble = malloc(PATH_MAX);
-   errfiledouble = malloc(PATH_MAX);
-
    PHYSFS_mkdir( "logs" );
    logout_file = PHYSFS_openWrite( "logs/stdout.txt" );
    if ( logout_file == NULL )
@@ -147,8 +144,8 @@ void log_redirect (void)
    if ( logerr_file == NULL )
       WARN(_("Unable to redirect stderr to file"));
 
-   snprintf( outfiledouble, PATH_MAX, "logs/%s_stdout.txt", timestr );
-   snprintf( errfiledouble, PATH_MAX, "logs/%s_stderr.txt", timestr );
+   asprintf( &outfiledouble, "logs/%s_stdout.txt", timestr );
+   asprintf( &errfiledouble, "logs/%s_stderr.txt", timestr );
 }
 
 

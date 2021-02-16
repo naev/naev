@@ -718,7 +718,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    window_modifyText( wid, "txtDescription", _(outfit->description) );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
-   snprintf( buf, PATH_MAX,
+   snprintf( buf, sizeof(buf),
          _("%d\n"
          "\n"
          "%s\n"

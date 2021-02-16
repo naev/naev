@@ -178,6 +178,6 @@ err:
 void save_reload (void)
 {
    char path[PATH_MAX];
-   snprintf(path, PATH_MAX, "saves/%s.ns", player.name);
+   snprintf(path, sizeof(path), "saves/%s.ns", player.name);
    load_gameFile( path );
 }

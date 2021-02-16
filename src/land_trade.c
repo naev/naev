@@ -158,7 +158,7 @@ void commodity_update( unsigned int wid, char* str )
    if (i < 0 || array_size(land_planet->commodities) == 0) {
       credits2str( buf_credits, player.p->credits, 2 );
       tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
-      snprintf( buf, PATH_MAX,
+      snprintf( buf, sizeof(buf),
          _("N/A tonnes\n"
            "\n"
            "N/A ¤\n"
@@ -194,7 +194,7 @@ void commodity_update( unsigned int wid, char* str )
    credits2str( buf_local_price, planet_commodityPrice( land_planet, com ), -1 );
    tonnes2str( buf_tonnes_owned, owned );
    tonnes2str( buf_tonnes_free, pilot_cargoFree(player.p) );
-   snprintf( buf, PATH_MAX,
+   snprintf( buf, sizeof(buf),
               _( "%s\n"
                  "%s\n"
                  "%s/t\n"

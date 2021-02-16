@@ -256,7 +256,7 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
 {
    char *path;
    const char *fmt;
-   size_t dir_len, name_len, path_size;
+   size_t dir_len, name_len;
    filedata_t *tmp;
    PHYSFS_Stat stat;
 
@@ -267,10 +267,8 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
    if ((name_len < 4 || strcmp( &fname[name_len-3], ".ns" )) && (name_len < 11 || strcmp( &fname[name_len-10], ".ns.backup" )))
       return PHYSFS_ENUM_OK;
 
-   path_size = dir_len + name_len + 2;
-   path = malloc( path_size );
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   snprintf( path, path_size, fmt, origdir, fname );
+   asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat ))
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
