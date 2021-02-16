@@ -372,7 +372,6 @@ static int audioL_setPitch( lua_State *L )
 static int audioL_soundPlay( lua_State *L )
 {
    const char *name;
-   char buf[PATH_MAX];
    Vector2d *pos, *vel, vel0;
    int dopos;
 
@@ -393,12 +392,10 @@ static int audioL_soundPlay( lua_State *L )
       }
    }
 
-   snprintf(buf, PATH_MAX, "%s", name);
-
    if (dopos)
-      sound_playPos( sound_get(buf), pos->x, pos->y, vel->x, vel->y );
+      sound_playPos( sound_get(name), pos->x, pos->y, vel->x, vel->y );
    else
-      sound_play( sound_get(buf) );
+      sound_play( sound_get(name) );
 
    return 0;
 }

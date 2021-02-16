@@ -573,8 +573,6 @@ static void map_update( unsigned int wid )
          p += scnprintf( &buf[p], sizeof(buf)-p, ",\n#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
       hasPlanets = 1;
-      if (p > PATH_MAX)
-         break;
    }
    if (hasPlanets == 0) {
       strncpy( buf, _("None"), sizeof(buf)-1 );

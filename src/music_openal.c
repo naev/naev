@@ -86,7 +86,6 @@ static int music_forced             = 0; /**< Whether or not music is force stop
  * saves the music to ram in this structure
  */
 typedef struct alMusic_ {
-   char name[PATH_MAX]; /**< Song name. */
    SDL_RWops *rw; /**< RWops file reading from. */
    OggVorbis_File stream; /**< Vorbis file stream. */
    vorbis_info* info; /**< Information of the stream. */
@@ -670,10 +669,6 @@ int music_al_load( const char* name, SDL_RWops *rw )
    char *tag = NULL;
 
    musicVorbisLock();
-
-   /* set the new name */
-   strncpy( music_vorbis.name, name, PATH_MAX );
-   music_vorbis.name[PATH_MAX-1] = '\0';
 
    /* Load new ogg. */
    music_vorbis.rw = rw;
