@@ -55,8 +55,8 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
-static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine );
-static int ship_loadPLG( Ship *temp, char *buf, int size_hint );
+static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
+static int ship_loadPLG( Ship *temp, const char *buf, int size_hint );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -531,23 +531,13 @@ static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
  *    @param sy Number of Y sprites in image.
  *    @param engine Whether there is also an engine image to load.
  */
-static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
+static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine )
 {
-   char base[NDATA_PATH_MAX], str[PATH_MAX];
-   size_t i;
+   char str[PATH_MAX], *base, *delim;
 
    /* Get base path. */
-   for (i=0; i<sizeof(base); i++) {
-      if ((buf[i] == '\0') || (buf[i] == '_')) {
-         base[i] = '\0';
-         break;
-      }
-      base[i] = buf[i];
-   }
-   if (i>=sizeof(base)) {
-      WARN(_("Failed to get base path of '%s'."), buf);
-      return -1;
-   }
+   delim = strchr( buf, '_' );
+   base = delim==NULL ? strdup( buf ) : strndup( buf, delim-buf );
 
    snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_EXT, base, buf );
    ship_loadSpaceImage( temp, str, sx, sy );
@@ -561,8 +551,8 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
    }
 
    /* Get the comm graphic for future loading. */
-   snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
-   temp->gfx_comm = strdup(str);
+   asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+   free( base );
 
    return 0;
 }
@@ -575,7 +565,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
  *    @param buf Name of the file.
  *    @param size_hint Expected array length required.
  */
-static int ship_loadPLG( Ship *temp, char *buf, int size_hint )
+static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
 {
    char *file;
    CollPoly *polygon;
