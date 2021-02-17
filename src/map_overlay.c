@@ -229,6 +229,9 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    const float object_weight = 1.; /**< Weight for overlapping with objects. */
    const float text_weight = 2.; /**< Weight for overlapping with text. */
 
+   if (items <= 0)
+      return;
+
    /* Fix radii which fit together. */
    MapOverlayRadiusConstraint cur, *fits = array_create(MapOverlayRadiusConstraint);
    uint8_t *must_shrink = malloc( items );

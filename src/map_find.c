@@ -797,7 +797,8 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    /* Construct found table. */
    found = NULL;
    n = 0;
-   for (i=0; i<array_size(map_known_techs); i++) {
+   len = array_size(map_known_techs);
+   for (i=0; i<len; i++) {
       /* Try to find the outfit in the planet. */
       olist = tech_getOutfit( map_known_techs[i], &nolist );
       for (j=0; j<nolist; j++)
@@ -817,7 +818,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
          continue;
 
       if (found == NULL) /* Allocate results array on first match. */
-         found = malloc( sizeof(map_find_t) * array_size(map_known_techs) );
+         found = malloc( sizeof(map_find_t) * len );
 
       map_findAccumulateResult( found, n, sys, pnt );
       n++;
@@ -927,7 +928,8 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    /* Construct found table. */
    found = NULL;
    n = 0;
-   for (i=0; i<array_size(map_known_techs); i++) {
+   len = array_size(map_known_techs);
+   for (i=0; i<len; i++) {
       /* Try to find the ship in the planet. */
       slist = tech_getShip( map_known_techs[i], &nslist );
       for (j=0; j<nslist; j++)
@@ -948,7 +950,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
          continue;
 
       if (found == NULL) /* Allocate results array on first match. */
-         found = malloc( sizeof(map_find_t) * array_size(map_known_techs) );
+         found = malloc( sizeof(map_find_t) * len );
 
       map_findAccumulateResult( found, n, sys, pnt );
       n++;
