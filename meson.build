@@ -45,7 +45,8 @@ subdir('po')
 ####
 buildExec = get_option('executable')
 if buildExec.disabled() == false
-   debug    = get_option('debug')
+   debug = get_option('debug')
+   debug_arrays = get_option('debug_arrays')
    paranoid = get_option('paranoid')
    config_data.set_quoted('PACKAGE', meson.project_name())
    config_data.set_quoted('PACKAGE_NAME', meson.project_name())
@@ -57,6 +58,7 @@ if buildExec.disabled() == false
    config_data.set('VMINOR', meson.project_version().split('.')[1])
    config_data.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
    config_data.set('DEBUG', debug ? 1 : false)
+   config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
    config_data.set('DEBUGGING', debug ? 1 : false)
    config_data.set('DEBUG_PARANOID', paranoid ? 1 : false)
    summary('Enabled' , debug   , section: 'Debug', bool_yn: true)

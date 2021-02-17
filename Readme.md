@@ -96,6 +96,16 @@ meson compile
 If you need special settings you can run `meson configure` in your build
 directory to see a list of all available options.
 
+**For installation**, try: `meson configure --buildtype=release -Db_lto=true`
+
+**For Windows packaging**, try adding: `--bindir=bin -Dndata_path=bin`
+
+**For macOS**, try adding: `--prefix="$(pwd)"/build/dist/Naev.app --bindir=Contents/MacOS -Dndata_path=Contents/Resources`
+
+**For normal development**, try adding: `--buildtype=debug -Db_sanitize=address` (adding `-Db_lundef=false` if compiling with Clang, substituting `-Ddebug_arrays=true` for `-Db_sanitize=...` on Windows if you can't use Clang).
+
+**For faster debug builds** (but harder to trace with gdb/lldb), try `--buildtype=debugoptimized -Db_lto=true -Db_lto_mode=thin` in place of the corresponding values above.
+
 ## INSTALLATION
 
 Naev currently supports `meson install` which will install everything that
