@@ -396,12 +396,11 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 /**
  * @brief Gets the name of all the planets that belong to factions.
  *
- *    @param factions Factions to check against.
- *    @param nfactions Number of factions in factions.
+ *    @param factions Array (array.h): Factions to check against.
  *    @param landable Whether the search is limited to landable planets.
  *    @return An array (array.h) of faction names.  Individual names are not allocated.
  */
-char** space_getFactionPlanet( int *factions, int nfactions, int landable )
+char** space_getFactionPlanet( int *factions, int landable )
 {
    int i,j,k, f;
    Planet* planet;
@@ -419,7 +418,7 @@ char** space_getFactionPlanet( int *factions, int nfactions, int landable )
 
          /* Check if it's in factions. */
          f = 0;
-         for (k=0; k<nfactions; k++) {
+         for (k=0; k<array_size(factions); k++) {
             if (planet->faction == factions[k]) {
                f = 1;
                break;

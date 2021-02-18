@@ -243,11 +243,9 @@ static int planetL_getBackend( lua_State *L, int landable )
 {
    int i;
    int *factions;
-   int nfactions;
    char **planets;
    const char *rndplanet;
    LuaSystem luasys;
-   LuaFaction f;
    Planet *pnt;
    StarSystem *sys;
    char *sysname;
@@ -266,8 +264,10 @@ static int planetL_getBackend( lua_State *L, int landable )
 
    /* Get a planet by faction */
    else if (lua_isfaction(L,1)) {
-      f        = lua_tofaction(L,1);
-      planets  = space_getFactionPlanet( &f, 1, landable );
+      factions = array_create( int );
+      array_push_back( &factions, lua_tofaction(L,1) );
+      planets  = space_getFactionPlanet( factions, landable );
+      array_free( factions );
    }
 
    /* Get a planet by name */
@@ -291,20 +291,18 @@ static int planetL_getBackend( lua_State *L, int landable )
    /* Get a planet from faction list */
    else if (lua_istable(L,1)) {
       /* Get table length and preallocate. */
-      nfactions = (int) lua_objlen(L,1);
-      factions = malloc( sizeof(int) * nfactions );
+      factions = array_create_size( int, lua_objlen(L,1) );
       /* Load up the table. */
       lua_pushnil(L);
-      i = 0;
       while (lua_next(L, -2) != 0) {
          if (lua_isfaction(L, -1))
-            factions[i++] = lua_tofaction(L, -1);
+            array_push_back( &factions, lua_tofaction(L, -1) );
          lua_pop(L,1);
       }
 
       /* get the planets */
-      planets = space_getFactionPlanet( factions, nfactions, landable );
-      free(factions);
+      planets = space_getFactionPlanet( factions, landable );
+      array_free(factions);
    }
    else
       NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
