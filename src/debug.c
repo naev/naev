@@ -8,15 +8,8 @@
  * @brief Handles low-level debugging hooks.
  */
 
-/* This module uses GNU extensions to enable FPU exceptions. */
-#define _GNU_SOURCE
-
 /** @cond */
 #include "naev.h"
-
-#if HAVE_FENV_H && DEBUGGING
-#include <fenv.h>
-#endif /* HAVE_FENV_H && DEBUGGING */
 
 #if LINUX && HAS_BFD && DEBUGGING
 #include <signal.h>
@@ -29,6 +22,12 @@
 /** @endcond */
 
 #include "log.h"
+
+#if HAVE_FENV_H && DEBUGGING
+/* This module uses GNU extensions to enable FPU exceptions. */
+#define _GNU_SOURCE
+#include <fenv.h>
+#endif /* HAVE_FENV_H && DEBUGGING */
 
 
 #if LINUX && HAS_BFD && DEBUGGING
