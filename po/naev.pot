@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-02-18 08:42-0500\n"
+"POT-Creation-Date: 2021-02-18 08:47-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46404,7 +46404,7 @@ msgstr ""
 
 #: dat/missions/neutral/patrol.lua:82 dat/missions/pirate/patrol.lua:70
 #, lua-format
-msgid "Land in %s territory and collect your pay"
+msgid "Land in %s territory to collect your pay"
 msgstr ""
 
 #: dat/missions/neutral/patrol.lua:85 dat/missions/pirate/patrol.lua:73
@@ -46963,7 +46963,7 @@ msgstr ""
 #: dat/missions/neutral/pirbounty_dead.lua:110
 #: dat/missions/proteron/dissbounty_dead.lua:91
 #, lua-format
-msgid "Land in %s territory and collect your bounty"
+msgid "Land in %s territory to collect your bounty"
 msgstr ""
 
 #. No pirates nearby
