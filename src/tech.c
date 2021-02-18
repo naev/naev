@@ -90,7 +90,7 @@ static int tech_getID( const char *name );
 static int tech_addItemGroupPointer( tech_group_t *grp, tech_group_t *ptr );
 static int tech_addItemGroup( tech_group_t *grp, const char* name );
 /* Getting by tech. */
-static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group_t *tech, int *n, int *m );
+static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group_t *tech );
 
 
 /**
@@ -655,12 +655,14 @@ static void tech_createMetaGroup( tech_group_t *grp, tech_group_t **tech, int nu
 /**
  * @brief Recursive function for creating an array of commodities from a tech group.
  */
-static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group_t *tech, int *n, int *m )
+static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group_t *tech )
 {
    int i, j, size, f;
    tech_item_t *item;
 
-   /* Comfort. */
+   /* Set up. */
+   if (items == NULL)
+      items = array_create( void* );
    size  = array_size( tech->items );
 
    /* Load commodities first, then we handle groups. */
@@ -673,7 +675,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 
       /* Skip if already in list. */
       f = 0;
-      for (j=0; j<*n; j++) {
+      for (j=0; j<array_size(items); j++) {
          if (items[j] == item->u.ptr) {
             f = 1;
             break;
@@ -682,17 +684,8 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
       if (f == 1)
          continue;
 
-      /* Allocate memory if needed. */
-      (*n)++;
-      if ((*n) > (*m)) {
-         if ((*m) == 0)
-            (*m)  = 16;
-         (*m) *= 2;
-         items = realloc( items, sizeof(void*) * (*m) );
-      }
-
       /* Add. */
-      items[ (*n)-1 ]  = item->u.ptr;
+      array_push_back( &items, item->u.ptr );
    }
 
    /* Now handle other groups. */
@@ -701,9 +694,9 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 
       /* Only handle commodities for now. */
       if (item->type == TECH_TYPE_GROUP)
-         items  = tech_addGroupItem( items, type, &tech_groups[ item->u.grp ], n, m );
+         items  = tech_addGroupItem( items, type, &tech_groups[ item->u.grp ] );
       else if (item->type == TECH_TYPE_GROUP_POINTER)
-         items  = tech_addGroupItem( items, type, item->u.grpptr, n, m );
+         items  = tech_addGroupItem( items, type, item->u.grpptr );
    }
 
    return items;
@@ -793,32 +786,21 @@ char** tech_getAllItemNames( int *n )
  * @note The returned list must be freed (but not the pointers).
  *
  *    @param tech Tech to get outfits from.
- *    @param[out] n The number of outfits found.
- *    @return Outfits found.
+ *    @return Array (array.h): Outfits found.
  */
-Outfit** tech_getOutfit( tech_group_t *tech, int *n )
+Outfit** tech_getOutfit( tech_group_t *tech )
 {
-   int m;
    Outfit **o;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
-   /* Get the outfits. */
-   *n = 0;
-   m  = 0;
-   o  = (Outfit**)tech_addGroupItem( NULL, TECH_TYPE_OUTFIT, tech, n, &m );
-
-   /* None found case. */
-   if (o == NULL) {
-      *n = 0;
-      return NULL;
-   }
+   o  = (Outfit**)tech_addGroupItem( NULL, TECH_TYPE_OUTFIT, tech );
 
    /* Sort. */
-   qsort( o, *n, sizeof(Outfit*), outfit_compareTech );
+   if (o != NULL)
+      qsort( o, array_size(o), sizeof(Outfit*), outfit_compareTech );
+
    return o;
 }
 
@@ -830,21 +812,18 @@ Outfit** tech_getOutfit( tech_group_t *tech, int *n )
  *
  *    @param tech Array of techs to get from.
  *    @param num Number of elements in the array.
- *    @param[out] n The number of outfits found.
- *    @return Outfits found.
+ *    @return Array (array.h): Outfits found.
  */
-Outfit** tech_getOutfitArray( tech_group_t **tech, int num, int *n )
+Outfit** tech_getOutfitArray( tech_group_t **tech, int num )
 {
    tech_group_t grp;
    Outfit **o;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
    tech_createMetaGroup( &grp, tech, num );
-   o = tech_getOutfit( &grp, n );
+   o = tech_getOutfit( &grp );
    tech_freeGroup( &grp );
 
    return o;
@@ -857,32 +836,22 @@ Outfit** tech_getOutfitArray( tech_group_t **tech, int num, int *n )
  * @note The returned array must be freed (but not the pointers).
  *
  *    @param tech Tech group to get list of ships from.
- *    @param[out] n The number of ships found.
- *    @return The ships found.
+ *    @return Array (array.h): The ships found.
  */
-Ship** tech_getShip( tech_group_t *tech, int *n )
+Ship** tech_getShip( tech_group_t *tech )
 {
-   int m;
    Ship **s;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
    /* Get the outfits. */
-   *n = 0;
-   m  = 0;
-   s  = (Ship**) tech_addGroupItem( NULL, TECH_TYPE_SHIP, tech, n, &m );
-
-   /* None found case. */
-   if (s == NULL) {
-      *n = 0;
-      return NULL;
-   }
+   s  = (Ship**) tech_addGroupItem( NULL, TECH_TYPE_SHIP, tech );
 
    /* Sort. */
-   qsort( s, *n, sizeof(Ship*), ship_compareTech );
+   if (s != NULL)
+      qsort( s, array_size(s), sizeof(Ship*), ship_compareTech );
+
    return s;
 }
 
@@ -894,21 +863,18 @@ Ship** tech_getShip( tech_group_t *tech, int *n )
  *
  *    @param tech Array of techs to get from.
  *    @param num Number of elements in the array.
- *    @param[out] n The number of ships found.
- *    @return Ships found.
+ *    @return Array (array.h): Ships found.
  */
-Ship** tech_getShipArray( tech_group_t **tech, int num, int *n )
+Ship** tech_getShipArray( tech_group_t **tech, int num )
 {
    tech_group_t grp;
    Ship **s;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
    tech_createMetaGroup( &grp, tech, num );
-   s = tech_getShip( &grp, n );
+   s = tech_getShip( &grp );
    tech_freeGroup( &grp );
 
    return s;
@@ -922,21 +888,18 @@ Ship** tech_getShipArray( tech_group_t **tech, int num, int *n )
  *
  *    @param tech Array of techs to get from.
  *    @param num Number of elements in the array.
- *    @param[out] n The number of ships found.
- *    @return Ships found.
+ *    @return Array (array.h): Commodities found.
  */
-Commodity** tech_getCommodityArray( tech_group_t **tech, int num, int *n )
+Commodity** tech_getCommodityArray( tech_group_t **tech, int num )
 {
    tech_group_t grp;
    Commodity **c;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
    tech_createMetaGroup( &grp, tech, num );
-   c = tech_getCommodity( &grp, n );
+   c = tech_getCommodity( &grp );
    tech_freeGroup( &grp );
 
    return c;
@@ -949,33 +912,21 @@ Commodity** tech_getCommodityArray( tech_group_t **tech, int num, int *n )
  * @note The returned array must be freed (but not the pointers).
  *
  *    @param tech Tech group to get list of ships from.
- *    @param[out] n The number of ships found.
- *    @return The ships found.
+ *    @return Array (array.h): The commodities found.
  */
-Commodity** tech_getCommodity( tech_group_t *tech, int *n )
+Commodity** tech_getCommodity( tech_group_t *tech )
 {
-   int m;
    Commodity **c;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
    /* Get the commodities. */
-   *n = 0;
-   m  = 0;
-   c  = (Commodity**) tech_addGroupItem( NULL, TECH_TYPE_COMMODITY, tech, n, &m );
-
-   /* None found case. */
-   if (c == NULL) {
-      *n = 0;
-      return NULL;
-   }
+   c  = (Commodity**) tech_addGroupItem( NULL, TECH_TYPE_COMMODITY, tech );
 
    /* Sort. */
-   qsort( c, *n, sizeof(Commodity*), commodity_compareTech );
+   if (c != NULL)
+      qsort( c, array_size(c), sizeof(Commodity*), commodity_compareTech );
+
    return c;
 }
-
-

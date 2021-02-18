@@ -131,9 +131,9 @@ void map_system_close( unsigned int wid, char *str ) {
       gl_freeTexture( bgImages[i] );
    array_free( bgImages );
    bgImages=NULL;
-   free( cur_planet_sel_outfits );
+   array_free( cur_planet_sel_outfits );
    cur_planet_sel_outfits = NULL;
-   free( cur_planet_sel_ships );
+   array_free( cur_planet_sel_ships );
    cur_planet_sel_ships = NULL;
 
    window_close( wid, str );
@@ -307,23 +307,23 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    j=0;
    offset = h - pitch*nshow;
    for ( i=0; i<array_size(sys->planets); i++ ) {
-     p=sys->planets[i];
-     if ( planet_isKnown(p) && (p->real == ASSET_REAL) ) {
-       j++;
-       if ( p->gfx_space == NULL) {
-          WARN( _("No gfx for %s...\n"),p->name );
-       } else {
-	 ih=pitch;
-	 iw = ih;
-	 if ( p->gfx_space->w > p->gfx_space->h )
-	   ih = ih * p->gfx_space->h / p->gfx_space->w;
-	 else if ( p->gfx_space->w < p->gfx_space->h )
-	   iw = iw * p->gfx_space->w / p->gfx_space->h;
-	 gl_blitScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
-       }
-       gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-j-0.5)*pitch + offset,
-            (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., _(p->name) );
-     }
+      p=sys->planets[i];
+      if ( planet_isKnown(p) && (p->real == ASSET_REAL) ) {
+         j++;
+         if ( p->gfx_space == NULL) {
+            WARN( _("No gfx for %s...\n"),p->name );
+         } else {
+            ih=pitch;
+            iw = ih;
+            if ( p->gfx_space->w > p->gfx_space->h )
+               ih = ih * p->gfx_space->h / p->gfx_space->w;
+            else if ( p->gfx_space->w < p->gfx_space->h )
+               iw = iw * p->gfx_space->w / p->gfx_space->h;
+            gl_blitScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
+         }
+         gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-j-0.5)*pitch + offset,
+               (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., _(p->name) );
+      }
    }
    /* draw the star */
    ih=pitch;
@@ -804,21 +804,21 @@ void map_system_updateSelected( unsigned int wid )
          noutfits = 0;
          nships = 0;
          ngoods = 0;
-	 window_disableButton( wid, "btnBuyCommodPrice" );
+         window_disableButton( wid, "btnBuyCommodPrice" );
       } else {
          /* get number of each to decide how much space the lists can have */
-         outfits = tech_getOutfit( cur_planetObj_sel->tech, &noutfits );
-         free( outfits );
-         ships = tech_getShip( cur_planetObj_sel->tech, &nships );
-         free( ships );
+         outfits = tech_getOutfit( cur_planetObj_sel->tech );
+         noutfits = array_size( outfits );
+         array_free( outfits );
+         ships = tech_getShip( cur_planetObj_sel->tech );
+         nships = array_size( ships );
+         array_free( ships );
          ngoods = array_size( cur_planetObj_sel->commodities );
-	 /* to buy commodity info, need to be landed, and the selected system must sell them! */
-	 if ( landed && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_COMMODITY ) ) {
-	   window_enableButton( wid, "btnBuyCommodPrice" );
-
-	 } else {
-	   window_disableButton( wid, "btnBuyCommodPrice" );
-	 }
+         /* to buy commodity info, need to be landed, and the selected system must sell them! */
+         if ( landed && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_COMMODITY ) )
+            window_enableButton( wid, "btnBuyCommodPrice" );
+         else
+            window_disableButton( wid, "btnBuyCommodPrice" );
       }
       /* determine the ratio of space */
       s=g=o=0;
@@ -864,7 +864,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    } else {
       if ( widget_exists( wid, MAPSYS_OUTFITS ) ) {
          window_destroyWidget( wid, MAPSYS_OUTFITS );
-         free( cur_planet_sel_outfits );
+         array_free( cur_planet_sel_outfits );
          cur_planet_sel_outfits = NULL;
       }
       assert(cur_planet_sel_outfits == NULL);
@@ -872,11 +872,11 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    planetDone = cur_planetObj_sel;
 
    /* set up the outfits to buy/sell */
-   if ( cur_planetObj_sel == NULL ) {
-      noutfits = 0;
-   } else {
-      cur_planet_sel_outfits = tech_getOutfit( cur_planetObj_sel->tech, &noutfits );
-   }
+   if ( cur_planetObj_sel == NULL )
+      return;
+
+   cur_planet_sel_outfits = tech_getOutfit( cur_planetObj_sel->tech );
+   noutfits = array_size( cur_planet_sel_outfits );
 
    if (noutfits > 0) {
       coutfits = outfits_imageArrayCells( cur_planet_sel_outfits, &noutfits );
@@ -911,7 +911,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    } else {
       if ( widget_exists( wid, MAPSYS_SHIPS ) ) {
          window_destroyWidget( wid, MAPSYS_SHIPS );
-         free( cur_planet_sel_ships );
+         array_free( cur_planet_sel_ships );
          cur_planet_sel_ships = NULL;
       }
       assert(cur_planet_sel_ships == NULL);
@@ -919,11 +919,12 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    planetDone = cur_planetObj_sel;
 
    /* set up the outfits to buy/sell */
-   if ( cur_planetObj_sel == NULL ) {
-      nships = 0;
-   } else {
-      cur_planet_sel_ships = tech_getShip( cur_planetObj_sel->tech, &nships );
-   }
+   if ( cur_planetObj_sel == NULL )
+      return;
+
+   cur_planet_sel_ships = tech_getShip( cur_planetObj_sel->tech );
+   nships = array_size( cur_planet_sel_ships );
+
    if (nships > 0) {
       cships = calloc( nships, sizeof(ImageArrayCell) );
       for ( i=0; i<nships; i++ ) {
