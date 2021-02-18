@@ -771,7 +771,6 @@ static int pilotL_getPilots( lua_State *L )
 {
    int i, j, k, d;
    int *factions;
-   int nfactions;
 
    /* Whether or not to get disabled. */
    d = lua_toboolean(L,2);
@@ -779,31 +778,26 @@ static int pilotL_getPilots( lua_State *L )
    /* Check for belonging to faction. */
    if (lua_istable(L,1) || lua_isfaction(L,1)) {
       if (lua_isfaction(L,1)) {
-         nfactions = 1;
-         factions = malloc( sizeof(int) );
-         factions[0] = lua_tofaction(L,1);
+         factions = array_create( int );
+         array_push_back( &factions, lua_tofaction(L,1) );
       }
       else {
          /* Get table length and preallocate. */
-         nfactions = (int) lua_objlen(L,1);
-         factions = malloc( sizeof(int) * nfactions );
+         factions = array_create_size( int, lua_objlen(L,1) );
          /* Load up the table. */
          lua_pushnil(L);
-         i = 0;
          while (lua_next(L, -2) != 0) {
-            if (lua_isfaction(L,-1)) {
-               factions[i++] = lua_tofaction(L, -1);
-            }
+            if (lua_isfaction(L,-1))
+               array_push_back( &factions, lua_tofaction(L, -1) );
             lua_pop(L,1);
          }
-         assert( i == nfactions );
       }
 
       /* Now put all the matching pilots in a table. */
       lua_newtable(L);
       k = 1;
       for (i=0; i<array_size(pilot_stack); i++) {
-         for (j=0; j<nfactions; j++) {
+         for (j=0; j<array_size(factions); j++) {
             if ((pilot_stack[i]->faction == factions[j]) &&
                   (d || !pilot_isDisabled(pilot_stack[i])) &&
                   !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
@@ -815,7 +809,7 @@ static int pilotL_getPilots( lua_State *L )
       }
 
       /* clean up. */
-      free(factions);
+      array_free( factions );
    }
    else if ((lua_isnil(L,1)) || (lua_gettop(L) == 0)) {
       /* Now put all the matching pilots in a table. */
