@@ -56,8 +56,7 @@ typedef struct MissionAvail_s {
    char *system; /**< System name. */
 
    /* for generic cases */
-   int* factions; /**< To certain factions. */
-   int nfactions; /**< Number of factions in factions. */
+   int* factions; /**< Array (array.h): To certain factions. */
 
    char* cond; /**< Condition that must be met (Lua). */
    char* done; /**< Previous mission that must have been done. */
@@ -109,8 +108,7 @@ typedef struct Mission_ {
    char *npc; /**< Name of the NPC giving the mission. */
 
    /* mission cargo given to the player - need to cleanup */
-   unsigned int *cargo; /**< Cargos given to player. */
-   int ncargo; /**< Number of cargos given to player. */
+   unsigned int *cargo; /**< Array (array.h): Cargos given to player. */
 
    /* Markers. */
    MissionMarker *markers; /**< Markers array. */

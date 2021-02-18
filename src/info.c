@@ -843,7 +843,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       /* Get the mission. */
       f = 0;
       for (i=0; i<MISSION_MAX; i++) {
-         for (j=0; j<player_missions[i]->ncargo; j++) {
+         for (j=0; j<array_size(player_missions[i]->cargo); j++) {
             if (player_missions[i]->cargo[j] == player.p->commodities[pos].id) {
                f = 1;
                break;
