@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-02-18 08:42-0500\n"
+"POT-Creation-Date: 2021-02-18 08:47-0500\n"
 "PO-Revision-Date: 2021-02-14 02:50+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
@@ -57669,7 +57669,7 @@ msgstr "Feinde eliminieren"
 #: dat/missions/neutral/patrol.lua:82 dat/missions/pirate/patrol.lua:70
 #, fuzzy, lua-format
 #| msgid "Land on %s and collect your fee"
-msgid "Land in %s territory and collect your pay"
+msgid "Land in %s territory to collect your pay"
 msgstr "Lande auf %s und erhalte deine Belohnung"
 
 #: dat/missions/neutral/patrol.lua:85 dat/missions/pirate/patrol.lua:73
@@ -58344,7 +58344,7 @@ msgstr "Töte oder fange %s"
 #: dat/missions/proteron/dissbounty_dead.lua:91
 #, fuzzy, lua-format
 #| msgid "Land on any %s planet and collect your bounty"
-msgid "Land in %s territory and collect your bounty"
+msgid "Land in %s territory to collect your bounty"
 msgstr "Lande auf einem beliebigen „%s“-Planeten und erhalte dein Kopfgeld"
 
 #. No pirates nearby
