@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-02-18 08:47-0500\n"
+"POT-Creation-Date: 2021-02-18 18:28-0500\n"
 "PO-Revision-Date: 2021-02-07 09:50+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -9170,11 +9170,11 @@ msgstr ""
 #: src/dev_sysedit.c:1840 src/dev_sysedit.c:1877 src/dev_sysedit.c:1912
 #: src/dev_sysedit.c:1918 src/dev_uniedit.c:962 src/dev_uniedit.c:1140
 #: src/dev_uniedit.c:1363 src/dev_uniedit.c:1428 src/info.c:251 src/info.c:349
-#: src/info.c:787 src/info.c:1087 src/input.c:551 src/land_outfits.c:394
-#: src/land_outfits.c:427 src/land_outfits.c:606 src/land_shipyard.c:161
+#: src/info.c:787 src/info.c:1087 src/input.c:551 src/land_outfits.c:383
+#: src/land_outfits.c:416 src/land_outfits.c:595 src/land_shipyard.c:161
 #: src/land_shipyard.c:252 src/land_trade.c:85 src/land_trade.c:87
 #: src/land_trade.c:121 src/load.c:372 src/load.c:417 src/load.c:461
-#: src/map.c:578 src/map.c:603 src/map.c:1567 src/map_find.c:737
+#: src/map.c:578 src/map.c:603 src/map.c:1567 src/map_find.c:725
 #: src/map_system.c:620 src/map_system.c:696 src/pilot_outfit.c:897
 #, c-format
 msgid "None"
@@ -41220,7 +41220,7 @@ msgid "Finding Maikki's Father"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:70 dat/missions/minerva/maikki2.lua:75
-#: src/faction.c:1048 src/faction.c:1063 src/faction.c:1070
+#: src/faction.c:1036 src/faction.c:1051 src/faction.c:1058
 msgid "???"
 msgstr ""
 
@@ -63178,7 +63178,7 @@ msgstr ""
 #: src/dev_sysedit.c:1887 src/dev_sysedit.c:1971 src/dev_uniedit.c:1026
 #: src/dev_uniedit.c:1238 src/dev_uniedit.c:1485 src/info.c:241 src/info.c:320
 #: src/info.c:405 src/info.c:548 src/info.c:757 src/info.c:935 src/info.c:1022
-#: src/info.c:1364 src/land_outfits.c:171 src/map.c:287 src/map_find.c:1059
+#: src/info.c:1364 src/land_outfits.c:169 src/map.c:287 src/map_find.c:1036
 #: src/map_system.c:204
 msgid "Close"
 msgstr ""
@@ -63262,7 +63262,8 @@ msgid "\"On my way.\""
 msgstr ""
 
 #: src/commodity.c:77 src/commodity.c:91
-msgid "%"
+#, c-format
+msgid "%.*f ¤"
 msgstr ""
 
 #: src/commodity.c:79
@@ -63344,13 +63345,13 @@ msgstr ""
 msgid "Cannot gather material: no more cargo space available"
 msgstr ""
 
-#: src/commodity.c:590 src/faction.c:1496 src/tech.c:115
+#: src/commodity.c:590 src/faction.c:1484 src/tech.c:115
 #, c-format
 msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
-#: src/commodity.c:596 src/faction.c:1502 src/map.c:2542 src/outfit.c:1068
-#: src/ship.c:598 src/ship.c:1073 src/space.c:1732 src/space.c:3202
+#: src/commodity.c:596 src/faction.c:1490 src/map.c:2542 src/outfit.c:1068
+#: src/ship.c:598 src/ship.c:1073 src/space.c:1731 src/space.c:3201
 #: src/tech.c:122
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -63856,92 +63857,92 @@ msgstr ""
 msgid "No debris special effects found."
 msgstr ""
 
-#: src/debug.c:52
+#: src/debug.c:51
 msgid "SIGFPE (raised by program)"
 msgstr ""
 
-#: src/debug.c:53
+#: src/debug.c:52
 msgid "SIGFPE (integer divide by zero)"
 msgstr ""
 
-#: src/debug.c:54
+#: src/debug.c:53
 msgid "SIGFPE (integer overflow)"
 msgstr ""
 
-#: src/debug.c:55
+#: src/debug.c:54
 msgid "SIGFPE (floating-point divide by zero)"
 msgstr ""
 
-#: src/debug.c:56
+#: src/debug.c:55
 msgid "SIGFPE (floating-point overflow)"
 msgstr ""
 
-#: src/debug.c:57
+#: src/debug.c:56
 msgid "SIGFPE (floating-point underflow)"
 msgstr ""
 
-#: src/debug.c:58
+#: src/debug.c:57
 msgid "SIGFPE (floating-point inexact result)"
 msgstr ""
 
-#: src/debug.c:59
+#: src/debug.c:58
 msgid "SIGFPE (floating-point invalid operation)"
 msgstr ""
 
-#: src/debug.c:60
+#: src/debug.c:59
 msgid "SIGFPE (subscript out of range)"
 msgstr ""
 
-#: src/debug.c:61
+#: src/debug.c:60
 msgid "SIGFPE"
 msgstr ""
 
-#: src/debug.c:65
+#: src/debug.c:64
 msgid "SIGSEGV (raised by program)"
 msgstr ""
 
-#: src/debug.c:66
+#: src/debug.c:65
 msgid "SIGSEGV (address not mapped to object)"
 msgstr ""
 
-#: src/debug.c:67
+#: src/debug.c:66
 msgid "SIGSEGV (invalid permissions for mapped object)"
 msgstr ""
 
-#: src/debug.c:68
+#: src/debug.c:67
 msgid "SIGSEGV"
 msgstr ""
 
-#: src/debug.c:72
+#: src/debug.c:71
 msgid "SIGABRT (raised by program)"
 msgstr ""
 
-#: src/debug.c:73
+#: src/debug.c:72
 msgid "SIGABRT"
 msgstr ""
 
-#: src/debug.c:150
+#: src/debug.c:149
 #, c-format
 msgid "Naev received %s!"
 msgstr ""
 
-#: src/debug.c:158
+#: src/debug.c:157
 msgid "Report this to project maintainer with the backtrace."
 msgstr ""
 
-#: src/debug.c:204
+#: src/debug.c:203
 msgid "Unable to set up SIGSEGV signal handler."
 msgstr ""
 
-#: src/debug.c:207
+#: src/debug.c:206
 msgid "Unable to set up SIGFPE signal handler."
 msgstr ""
 
-#: src/debug.c:210
+#: src/debug.c:209
 msgid "Unable to set up SIGABRT signal handler."
 msgstr ""
 
-#: src/debug.c:211
+#: src/debug.c:210
 msgid "BFD backtrace catching enabled."
 msgstr ""
 
@@ -64238,7 +64239,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:217 src/map.c:292 src/map_find.c:1057
+#: src/dev_uniedit.c:217 src/map.c:292 src/map_find.c:1034
 msgid "Find"
 msgstr ""
 
@@ -64470,7 +64471,7 @@ msgid "Planet '%s' has saved economy data but doesn't exist!"
 msgstr ""
 
 #: src/equipment.c:268 src/land.c:289 src/land.c:566 src/land.c:1207
-#: src/land_outfits.c:166 src/land_shipyard.c:95 src/land_trade.c:74
+#: src/land_outfits.c:164 src/land_shipyard.c:95 src/land_trade.c:74
 msgid "Take Off"
 msgstr ""
 
@@ -64593,7 +64594,7 @@ msgstr ""
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1406 src/land_outfits.c:279 src/shiplog.c:477
+#: src/equipment.c:1406 src/land_outfits.c:277 src/shiplog.c:477
 #: src/shiplog.c:522
 msgid "All"
 msgstr ""
@@ -64772,7 +64773,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/event.c:576 src/faction.c:1395 src/mission.c:907 src/nxml.c:88
+#: src/event.c:576 src/faction.c:1383 src/mission.c:902 src/nxml.c:88
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr ""
@@ -64835,7 +64836,7 @@ msgstr ""
 msgid "Event with data '%s' was not created, skipping."
 msgstr ""
 
-#: src/faction.c:154 src/nlua_faction.c:122 src/nlua_faction.c:164
+#: src/faction.c:154 src/nlua_faction.c:123 src/nlua_faction.c:165
 #, c-format
 msgid "Faction '%s' not found in stack."
 msgstr ""
@@ -64849,74 +64850,74 @@ msgstr ""
 #. b is invalid
 #. a is invalid
 #. b is invalid
-#: src/faction.c:229 src/faction.c:279 src/faction.c:299 src/faction.c:323
-#: src/faction.c:341 src/faction.c:357 src/faction.c:374 src/faction.c:391
-#: src/faction.c:413 src/faction.c:450 src/faction.c:489 src/faction.c:494
-#: src/faction.c:534 src/faction.c:563 src/faction.c:568 src/faction.c:608
-#: src/faction.c:627 src/faction.c:641 src/faction.c:747 src/faction.c:785
-#: src/faction.c:809 src/faction.c:844 src/faction.c:878 src/faction.c:895
-#: src/faction.c:1153 src/faction.c:1161 src/faction.c:1203 src/faction.c:1211
+#: src/faction.c:221 src/faction.c:271 src/faction.c:291 src/faction.c:315
+#: src/faction.c:333 src/faction.c:349 src/faction.c:366 src/faction.c:383
+#: src/faction.c:404 src/faction.c:439 src/faction.c:477 src/faction.c:482
+#: src/faction.c:522 src/faction.c:551 src/faction.c:556 src/faction.c:596
+#: src/faction.c:615 src/faction.c:629 src/faction.c:735 src/faction.c:773
+#: src/faction.c:797 src/faction.c:832 src/faction.c:866 src/faction.c:883
+#: src/faction.c:1141 src/faction.c:1149 src/faction.c:1191 src/faction.c:1199
 #, c-format
 msgid "Faction id '%d' is invalid."
 msgstr ""
 
-#: src/faction.c:304 src/faction.c:1043 src/faction.c:1096
+#: src/faction.c:296 src/faction.c:1031 src/faction.c:1084
 msgid "Escort"
 msgstr ""
 
-#: src/faction.c:500 src/faction.c:504 src/faction.c:574 src/faction.c:578
+#: src/faction.c:488 src/faction.c:492 src/faction.c:562 src/faction.c:566
 #, c-format
 msgid "%d is the player faction"
 msgstr ""
 
 #. Call function.
 #. An error occurred.
-#: src/faction.c:694 src/faction.c:928 src/faction.c:975 src/faction.c:1061
-#: src/faction.c:1115
+#: src/faction.c:682 src/faction.c:916 src/faction.c:963 src/faction.c:1049
+#: src/faction.c:1103
 #, c-format
 msgid "Faction '%s': %s"
 msgstr ""
 
-#: src/faction.c:701
+#: src/faction.c:689
 #, c-format
 msgid ""
 "Lua script for faction '%s' did not return a number from 'faction_hit(...)'."
 msgstr ""
 
-#: src/faction.c:936
+#: src/faction.c:924
 #, c-format
 msgid ""
 "Lua script for faction '%s' did not return a boolean from "
 "'faction_player_friend(...)'."
 msgstr ""
 
-#: src/faction.c:983
+#: src/faction.c:971
 #, c-format
 msgid ""
 "Lua script for faction '%s' did not return a boolean from "
 "'faction_player_enemy(...)'."
 msgstr ""
 
-#: src/faction.c:1069
+#: src/faction.c:1057
 #, c-format
 msgid ""
 "Lua script for faction '%s' did not return a string from "
 "'faction_standing_text(...)'."
 msgstr ""
 
-#: src/faction.c:1123
+#: src/faction.c:1111
 #, c-format
 msgid ""
 "Lua script for faction '%s' did not return a string from "
 "'faction_standing_broad(...)'."
 msgstr ""
 
-#: src/faction.c:1307
+#: src/faction.c:1295
 #, c-format
 msgid "Faction '%s' has duplicate 'spawn' tag."
 msgstr ""
 
-#: src/faction.c:1313
+#: src/faction.c:1301
 #, c-format
 msgid ""
 "Failed to run spawn script: %s\n"
@@ -64924,12 +64925,12 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1326
+#: src/faction.c:1314
 #, c-format
 msgid "Faction '%s' has duplicate 'standing' tag."
 msgstr ""
 
-#: src/faction.c:1332
+#: src/faction.c:1320
 #, c-format
 msgid ""
 "Failed to run standing script: %s\n"
@@ -64937,12 +64938,12 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1350
+#: src/faction.c:1338
 #, c-format
 msgid "Faction '%s' has duplicate 'equip' tag."
 msgstr ""
 
-#: src/faction.c:1356
+#: src/faction.c:1344
 #, c-format
 msgid ""
 "Failed to run equip script: %s\n"
@@ -64950,27 +64951,27 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/faction.c:1369
+#: src/faction.c:1357
 #, c-format
 msgid "Faction '%s' has duplicate 'logo' tag."
 msgstr ""
 
-#: src/faction.c:1391
+#: src/faction.c:1379
 #, c-format
 msgid "Unknown node '%s' in faction '%s'"
 msgstr ""
 
-#: src/faction.c:1397
+#: src/faction.c:1385
 #, c-format
 msgid "Faction '%s' missing player tag."
 msgstr ""
 
-#: src/faction.c:1399
+#: src/faction.c:1387
 #, c-format
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1575
+#: src/faction.c:1563
 #, c-format
 msgid "Loaded %d Faction"
 msgid_plural "Loaded %d Factions"
@@ -65214,7 +65215,7 @@ msgstr ""
 msgid "Main"
 msgstr ""
 
-#: src/info.c:57 src/map_find.c:1007
+#: src/info.c:57 src/map_find.c:984
 msgid "Ship"
 msgstr ""
 
@@ -66236,7 +66237,7 @@ msgstr ""
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:973 src/map_find.c:1070 src/space.c:176
+#: src/land.c:973 src/map_find.c:1047 src/space.c:176
 msgid "Outfits"
 msgstr ""
 
@@ -66283,19 +66284,19 @@ msgstr ""
 msgid "Rescue: 'rescue' : '%s'"
 msgstr ""
 
-#: src/land_outfits.c:175 src/land_trade.c:72
+#: src/land_outfits.c:173 src/land_trade.c:72
 msgid "Sell"
 msgstr ""
 
-#: src/land_outfits.c:178 src/land_shipyard.c:101 src/land_trade.c:70
+#: src/land_outfits.c:176 src/land_shipyard.c:101 src/land_trade.c:70
 msgid "Buy"
 msgstr ""
 
-#: src/land_outfits.c:181
+#: src/land_outfits.c:179
 msgid "Find Outfits"
 msgstr ""
 
-#: src/land_outfits.c:200 src/map_find.c:668
+#: src/land_outfits.c:198 src/map_find.c:656
 msgid ""
 "#nOwned:#0\n"
 "\n"
@@ -66308,11 +66309,11 @@ msgid ""
 "#nLicense:#0\n"
 msgstr ""
 
-#: src/land_outfits.c:279
+#: src/land_outfits.c:277
 msgid "Other"
 msgstr ""
 
-#: src/land_outfits.c:384
+#: src/land_outfits.c:373
 #, c-format
 msgid ""
 "N/A\n"
@@ -66326,7 +66327,7 @@ msgid ""
 "N/A\n"
 msgstr ""
 
-#: src/land_outfits.c:441 src/map_find.c:722
+#: src/land_outfits.c:430 src/map_find.c:710
 #, c-format
 msgid ""
 "%d\n"
@@ -66340,66 +66341,66 @@ msgid ""
 "%s\n"
 msgstr ""
 
-#: src/land_outfits.c:637
+#: src/land_outfits.c:626
 msgid "#oUnique#0\n"
 msgstr ""
 
-#: src/land_outfits.c:639
+#: src/land_outfits.c:628
 #, c-format
 msgid "#oSlot %s#0\n"
 msgstr ""
 
-#: src/land_outfits.c:644
+#: src/land_outfits.c:633
 #, c-format
 msgid ""
 "\n"
 "%.0f Tonnes"
 msgstr ""
 
-#: src/land_outfits.c:688
+#: src/land_outfits.c:677
 msgid "You can only own one of this outfit."
 msgstr ""
 
-#: src/land_outfits.c:695
+#: src/land_outfits.c:684
 msgid "You already know of everything this map contains."
 msgstr ""
 
-#: src/land_outfits.c:700
+#: src/land_outfits.c:689
 msgid "You already own this GUI."
 msgstr ""
 
-#: src/land_outfits.c:705
+#: src/land_outfits.c:694
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:711 src/land_shipyard.c:423 src/land_shipyard.c:494
+#: src/land_outfits.c:700 src/land_shipyard.c:423 src/land_shipyard.c:494
 #: src/land_trade.c:239
 #, c-format
 msgid "You need %s more."
 msgstr ""
 
-#: src/land_outfits.c:717
+#: src/land_outfits.c:706
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:795
+#: src/land_outfits.c:784
 msgid "You can't sell a unique outfit."
 msgstr ""
 
-#: src/land_outfits.c:801
+#: src/land_outfits.c:790
 msgid "You can't sell a map."
 msgstr ""
 
-#: src/land_outfits.c:807
+#: src/land_outfits.c:796
 msgid "You can't sell a GUI."
 msgstr ""
 
-#: src/land_outfits.c:813
+#: src/land_outfits.c:802
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:819 src/land_trade.c:258
+#: src/land_outfits.c:808 src/land_trade.c:258
 msgid "You can't sell something you don't have!"
 msgstr ""
 
@@ -66849,7 +66850,7 @@ msgid "Map decorator has unknown node '%s'."
 msgstr ""
 
 #. Create window.
-#: src/map_find.c:227 src/map_find.c:782 src/map_find.c:915
+#: src/map_find.c:227 src/map_find.c:770 src/map_find.c:892
 msgid "Search Results"
 msgstr ""
 
@@ -66882,50 +66883,50 @@ msgstr[2] ""
 msgid "#%c%s (%s, %s)"
 msgstr ""
 
-#: src/map_find.c:784
+#: src/map_find.c:772
 #, c-format
 msgid "Search results for outfits matching '%s':"
 msgstr ""
 
-#: src/map_find.c:916
+#: src/map_find.c:893
 #, c-format
 msgid "Search results for ships matching '%s':"
 msgstr ""
 
-#: src/map_find.c:995
+#: src/map_find.c:972
 msgid "System"
 msgstr ""
 
-#: src/map_find.c:999
+#: src/map_find.c:976
 msgid "Planet"
 msgstr ""
 
-#: src/map_find.c:1003
+#: src/map_find.c:980
 msgid "Outfit"
 msgstr ""
 
-#: src/map_find.c:1013
+#: src/map_find.c:990
 #, c-format
 msgid "%s matching '%s' not found!"
 msgstr ""
 
-#: src/map_find.c:1038
+#: src/map_find.c:1015
 msgid "Find..."
 msgstr ""
 
-#: src/map_find.c:1047
+#: src/map_find.c:1024
 msgid "Enter keyword to search for:"
 msgstr ""
 
-#: src/map_find.c:1064
+#: src/map_find.c:1041
 msgid "Systems"
 msgstr ""
 
-#: src/map_find.c:1067
+#: src/map_find.c:1044
 msgid "Planets"
 msgstr ""
 
-#: src/map_find.c:1073
+#: src/map_find.c:1050
 msgid "Ships"
 msgstr ""
 
@@ -67194,50 +67195,50 @@ msgid "Unexpected call to map_system_array_update\n"
 msgstr ""
 
 #. no route
-#: src/map_system.c:1011
+#: src/map_system.c:1012
 msgid "Not available here"
 msgstr ""
 
-#: src/map_system.c:1011
+#: src/map_system.c:1012
 #, c-format
 msgid ""
 "Sorry, we don't have the commodity prices for %s available here at the "
 "moment."
 msgstr ""
 
-#: src/map_system.c:1023
+#: src/map_system.c:1024
 msgid "You can't afford that"
 msgstr ""
 
-#: src/map_system.c:1023
+#: src/map_system.c:1024
 #, c-format
 msgid ""
 "Sorry, but we are selling this information for %s, which you don't have."
 msgstr ""
 
-#: src/map_system.c:1025
+#: src/map_system.c:1026
 msgid "No commodities sold here"
 msgstr ""
 
-#: src/map_system.c:1025
+#: src/map_system.c:1026
 msgid "There are no commodities sold here, as far as we are aware!"
 msgstr ""
 
-#: src/map_system.c:1027
+#: src/map_system.c:1028
 msgid "You already have newer information"
 msgstr ""
 
-#: src/map_system.c:1027
+#: src/map_system.c:1028
 msgid ""
 "I've checked your computer, and you already have newer information than we "
 "can sell."
 msgstr ""
 
-#: src/map_system.c:1029
+#: src/map_system.c:1030
 msgid "Purchase commodity prices?"
 msgstr ""
 
-#: src/map_system.c:1029
+#: src/map_system.c:1030
 #, c-format
 msgid ""
 "For %s, that will cost %s. The latest information we have is %g periods old."
@@ -67347,38 +67348,38 @@ msgstr ""
 msgid "Mission '%s' attempting to unlink nonexistent cargo %d."
 msgstr ""
 
-#: src/mission.c:511
+#: src/mission.c:508
 #, c-format
 msgid "Failed to remove mission cargo '%d' for mission '%s'."
 msgstr ""
 
-#: src/mission.c:777
+#: src/mission.c:773
 #, c-format
 msgid "Mission in %s has invalid or no name"
 msgstr ""
 
-#: src/mission.c:794
+#: src/mission.c:790
 #, c-format
 msgid "Mission '%s' has unknown flag node '%s'."
 msgstr ""
 
-#: src/mission.c:819
+#: src/mission.c:814
 #, c-format
 msgid "Mission '%s' has unknown avail node '%s'."
 msgstr ""
 
 #. Notes for the python mission mapping script
-#: src/mission.c:825
+#: src/mission.c:820
 #, c-format
 msgid "Unknown node '%s' in mission '%s'"
 msgstr ""
 
-#: src/mission.c:829
+#: src/mission.c:824
 #, c-format
 msgid "Mission '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/mission.c:881
+#: src/mission.c:876
 #, c-format
 msgid "Loaded %d Mission"
 msgid_plural "Loaded %d Missions"
@@ -67386,47 +67387,47 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/mission.c:916
+#: src/mission.c:911
 #, c-format
 msgid "Mission '%s' has create function but no XML header!"
 msgstr ""
 
-#: src/mission.c:925
+#: src/mission.c:920
 #, c-format
 msgid "Mission file '%s' has missing XML header!"
 msgstr ""
 
-#: src/mission.c:932
+#: src/mission.c:927
 #, c-format
 msgid "Unable to parse document XML header for Mission '%s'"
 msgstr ""
 
-#: src/mission.c:938
+#: src/mission.c:933
 #, c-format
 msgid "Malformed XML header for '%s' mission: missing root element '%s'"
 msgstr ""
 
-#: src/mission.c:951
+#: src/mission.c:946
 #, c-format
 msgid "Mission Lua '%s' syntax error: %s"
 msgstr ""
 
-#: src/mission.c:1133
+#: src/mission.c:1128
 #, c-format
 msgid "Mission '%s' from saved game not found in game - ignoring."
 msgstr ""
 
-#: src/mission.c:1139
+#: src/mission.c:1134
 #, c-format
 msgid "Mission '%s' from saved game failed to load properly - ignoring."
 msgstr ""
 
-#: src/mission.c:1166
+#: src/mission.c:1161
 #, c-format
 msgid "System Marker to '%s' does not exist"
 msgstr ""
 
-#: src/mission.c:1196
+#: src/mission.c:1191
 msgid "Inconsistency with 'nitems' in save file."
 msgstr ""
 
@@ -67956,7 +67957,7 @@ msgstr ""
 msgid "Event trying to claim but already has."
 msgstr ""
 
-#: src/nlua_faction.c:662 src/nlua_faction.c:682
+#: src/nlua_faction.c:663 src/nlua_faction.c:683
 msgid "Can only add allies to dynamic factions"
 msgstr ""
 
@@ -68136,55 +68137,55 @@ msgstr ""
 msgid "Trying to remove the bloody player!"
 msgstr ""
 
-#: src/nlua_pilot.c:1629
+#: src/nlua_pilot.c:1598
 #, c-format
 msgid "Unknown slot type '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3053 src/nlua_pilot.c:3097
+#: src/nlua_pilot.c:3022 src/nlua_pilot.c:3066
 #, c-format
 msgid "Cargo '%s' does not exist!"
 msgstr ""
 
-#: src/nlua_pilot.c:3058
+#: src/nlua_pilot.c:3027
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
 
-#: src/nlua_pilot.c:3102
+#: src/nlua_pilot.c:3071
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)"
 msgstr ""
 
-#: src/nlua_pilot.c:3401
+#: src/nlua_pilot.c:3370
 msgid "pilot.memory requires 1 argument!"
 msgstr ""
 
-#: src/nlua_pilot.c:3410
+#: src/nlua_pilot.c:3379
 msgid "Pilot does not have AI."
 msgstr ""
 
-#: src/nlua_pilot.c:3455
+#: src/nlua_pilot.c:3424
 msgid "Pilot is not on manual control."
 msgstr ""
 
-#: src/nlua_pilot.c:3768
+#: src/nlua_pilot.c:3737
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
 msgstr ""
 
 #. Not found.
-#: src/nlua_pilot.c:3780
+#: src/nlua_pilot.c:3749
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3830
+#: src/nlua_pilot.c:3799
 #, c-format
 msgid "Planet '%s' not found in system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3884
+#: src/nlua_pilot.c:3853
 #, c-format
 msgid "#%c%s#0 is hailing you."
 msgstr ""
@@ -68197,17 +68198,17 @@ msgstr ""
 msgid "Attempting to get landed planet when player not landed."
 msgstr ""
 
-#: src/nlua_planet.c:280 src/nlua_planet.c:341
+#: src/nlua_planet.c:280 src/nlua_planet.c:339
 #, c-format
 msgid "Planet '%s' not found in stack"
 msgstr ""
 
-#: src/nlua_planet.c:346
+#: src/nlua_planet.c:344
 #, c-format
 msgid "Planet '%s' is not placed in a system"
 msgstr ""
 
-#: src/nlua_planet.c:351
+#: src/nlua_planet.c:349
 #, c-format
 msgid "Planet '%s' can't find system '%s'"
 msgstr ""
@@ -68334,16 +68335,12 @@ msgstr ""
 msgid "problem opening image for reading"
 msgstr ""
 
-#: src/nlua_tk.c:334
-msgid "Unable to create empty outfit merchant."
-msgstr ""
-
-#: src/nlua_tk.c:427 src/nlua_tk.c:444 src/nlua_tk.c:462 src/nlua_tk.c:482
-#: src/nlua_tk.c:498
+#: src/nlua_tk.c:423 src/nlua_tk.c:440 src/nlua_tk.c:458 src/nlua_tk.c:478
+#: src/nlua_tk.c:494
 msgid "custom dialogue not open"
 msgstr ""
 
-#: src/nlua_tk.c:537
+#: src/nlua_tk.c:533
 #, c-format
 msgid "Custom dialogue internal error: %s"
 msgstr ""
@@ -69278,7 +69275,7 @@ msgstr ""
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2118 src/outfit.c:2433 src/slots.c:74 src/space.c:3101
+#: src/outfit.c:2118 src/outfit.c:2433 src/slots.c:74 src/space.c:3100
 #: src/spfx.c:242 src/spfx.c:1038 src/start.c:74
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -69726,7 +69723,7 @@ msgstr ""
 msgid "Abilities - Toggled"
 msgstr ""
 
-#: src/pilot_weapon.c:1132
+#: src/pilot_weapon.c:1127
 #, c-format
 msgid "Shooting unknown weapon type: %s"
 msgstr ""
@@ -70805,51 +70802,51 @@ msgstr ""
 msgid "Unable to find jump in point for '%s' in '%s': not connected"
 msgstr ""
 
-#: src/space.c:806
+#: src/space.c:805
 #, c-format
 msgid "System '%s' not found in stack"
 msgstr ""
 
-#: src/space.c:867
+#: src/space.c:866
 #, c-format
 msgid "Planet '%s' not found in planetname stack"
 msgstr ""
 
-#: src/space.c:883
+#: src/space.c:882
 msgid "Trying to find NULL planet..."
 msgstr ""
 
-#: src/space.c:891
+#: src/space.c:890
 #, c-format
 msgid "Planet '%s' not found in the universe"
 msgstr ""
 
-#: src/space.c:906
+#: src/space.c:905
 #, c-format
 msgid "Planet index '%d' out of range (max %d)"
 msgstr ""
 
-#: src/space.c:1020
+#: src/space.c:1019
 msgid "Trying to find NULL jump point..."
 msgstr ""
 
-#: src/space.c:1030
+#: src/space.c:1029
 #, c-format
 msgid "Jump point '%s' not found in %s"
 msgstr ""
 
-#: src/space.c:1051
+#: src/space.c:1050
 #, c-format
 msgid "Jump point to '%s' not found in %s"
 msgstr ""
 
-#: src/space.c:1098
+#: src/space.c:1097
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'create'."
 msgstr ""
 
-#: src/space.c:1113
+#: src/space.c:1112
 #, c-format
 msgid ""
 "Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'."
@@ -70858,65 +70855,65 @@ msgstr ""
 #. f, [arg,], max
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:1125
+#: src/space.c:1124
 #, c-format
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr ""
 
-#: src/space.c:1133 src/space.c:4201
+#: src/space.c:1132 src/space.c:4200
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
 
-#: src/space.c:1145
+#: src/space.c:1144
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a table)."
 msgstr ""
 
-#: src/space.c:1153
+#: src/space.c:1152
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a pilot)."
 msgstr ""
 
-#: src/space.c:1166
+#: src/space.c:1165
 #, c-format
 msgid "Lua spawn script for faction '%s' returns invalid data (not a number)."
 msgstr ""
 
-#: src/space.c:1173
+#: src/space.c:1172
 #, c-format
 msgid "Lua spawn script for faction '%s' actually spawned a '%s' pilot."
 msgstr ""
 
-#: src/space.c:1303
+#: src/space.c:1302
 #, c-format
 msgid "You discovered #%c%s#0."
 msgstr ""
 
-#: src/space.c:1320
+#: src/space.c:1319
 msgid "You discovered a Jump Point."
 msgstr ""
 
-#: src/space.c:1462
+#: src/space.c:1461
 msgid "Cannot reinit system if there is no system previously loaded"
 msgstr ""
 
-#: src/space.c:1469
+#: src/space.c:1468
 #, c-format
 msgid "System %s not found in stack"
 msgstr ""
 
-#: src/space.c:1473
+#: src/space.c:1472
 #, c-format
 msgid "#oEntering System %s on %s."
 msgstr ""
 
-#: src/space.c:1475
+#: src/space.c:1474
 #, c-format
 msgid "#rWARNING - Volatile nebula detected in %s! Taking damage!"
 msgstr ""
 
-#: src/space.c:1706
+#: src/space.c:1705
 #, c-format
 msgid ""
 "Failed to load landing file: %s\n"
@@ -70925,54 +70922,54 @@ msgid ""
 msgstr ""
 
 #. error has occurred
-#: src/space.c:1851
+#: src/space.c:1850
 #, c-format
 msgid "Landing: '%s' : %s"
 msgstr ""
 
-#: src/space.c:1861
+#: src/space.c:1860
 #, c-format
 msgid "%s: %s (%s) -> return parameter 2 is not a string!"
 msgstr ""
 
-#: src/space.c:1862
+#: src/space.c:1861
 msgid "Invalid land message"
 msgstr ""
 
-#: src/space.c:1871
+#: src/space.c:1870
 #, c-format
 msgid "%s: %s (%s) -> return parameter 4 is not a string!"
 msgstr ""
 
-#: src/space.c:1872
+#: src/space.c:1871
 msgid "Invalid bribe message"
 msgstr ""
 
-#: src/space.c:1878
+#: src/space.c:1877
 #, c-format
 msgid "%s: %s (%s) -> return parameter 5 is not a string!"
 msgstr ""
 
-#: src/space.c:1879
+#: src/space.c:1878
 msgid "Invalid bribe ack message"
 msgstr ""
 
-#: src/space.c:1885
+#: src/space.c:1884
 #, c-format
 msgid "%s: %s (%s) -> return parameter 3 is not a number or string or nil!"
 msgstr ""
 
-#: src/space.c:2046
+#: src/space.c:2045
 #, c-format
 msgid "Planet '%s' has landing function '%s' which is not found in '%s'."
 msgstr ""
 
-#: src/space.c:2070
+#: src/space.c:2069
 #, c-format
 msgid "Planet '%s' has unknown services tag '%s'"
 msgstr ""
 
-#: src/space.c:2101
+#: src/space.c:2100
 #, c-format
 msgid "Unknown node '%s' in planet '%s'"
 msgstr ""
@@ -70980,112 +70977,112 @@ msgstr ""
 #.
 #. * verification
 #.
-#: src/space.c:2107
+#: src/space.c:2106
 #, c-format
 msgid "Planet '%s' missing '%s' element"
 msgstr ""
 
-#: src/space.c:2224
+#: src/space.c:2223
 #, c-format
 msgid "Unable to remove planet '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2236
+#: src/space.c:2235
 #, c-format
 msgid "Planet '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2257
+#: src/space.c:2256
 #, c-format
 msgid "Unable to find planet '%s' and system '%s' in planet<->system stack."
 msgstr ""
 
-#: src/space.c:2322
+#: src/space.c:2321
 #, c-format
 msgid "Unable to remove jump point '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2334
+#: src/space.c:2333
 #, c-format
 msgid "Jump point '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2537
+#: src/space.c:2536
 #, c-format
 msgid "Unknown node '%s' in star system '%s'"
 msgstr ""
 
-#: src/space.c:2543
+#: src/space.c:2542
 #, c-format
 msgid "Star System '%s' missing '%s' element"
 msgstr ""
 
-#: src/space.c:2544
+#: src/space.c:2543
 #, c-format
 msgid "Star System '%s' missing 'name' tag"
 msgstr ""
 
-#: src/space.c:2631 src/space.c:2710
+#: src/space.c:2630 src/space.c:2709
 #, c-format
 msgid "JumpPoint node for system '%s' has no target attribute."
 msgstr ""
 
-#: src/space.c:2636 src/space.c:2715
+#: src/space.c:2635 src/space.c:2714
 #, c-format
 msgid "JumpPoint node for system '%s' has invalid target '%s'."
 msgstr ""
 
-#: src/space.c:2649 src/space.c:2728
+#: src/space.c:2648 src/space.c:2727
 #, c-format
 msgid "Star System '%s' has duplicate jump point to '%s'."
 msgstr ""
 
-#: src/space.c:2772
+#: src/space.c:2771
 #, c-format
 msgid ""
 "JumpPoint in system '%s' is missing pos element but does not have autopos "
 "flag."
 msgstr ""
 
-#: src/space.c:2802
+#: src/space.c:2801
 #, c-format
 msgid "System '%s' was not found in the stack for some reason"
 msgstr ""
 
-#: src/space.c:2888
+#: src/space.c:2887
 #, c-format
 msgid "Asteroid field in %s has no position."
 msgstr ""
 
-#: src/space.c:2891
+#: src/space.c:2890
 #, c-format
 msgid "Asteroid field in %s has no radius."
 msgstr ""
 
-#: src/space.c:2952
+#: src/space.c:2951
 #, c-format
 msgid "Asteroid exclusion in %s has no position."
 msgstr ""
 
-#: src/space.c:2955
+#: src/space.c:2954
 #, c-format
 msgid "Asteroid exclusion in %s has no radius."
 msgstr ""
 
-#: src/space.c:3094
+#: src/space.c:3093
 #, c-format
 msgid "Malformed '%s' file: missing root element 'Asteroid_types'"
 msgstr ""
 
-#: src/space.c:3147
+#: src/space.c:3146
 msgid "Asteroid type's commodity lacks name or quantity."
 msgstr ""
 
-#: src/space.c:3152
+#: src/space.c:3151
 msgid "Asteroid type has no gfx associated."
 msgstr ""
 
-#: src/space.c:3240
+#: src/space.c:3239
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
@@ -71093,7 +71090,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/space.c:3241
+#: src/space.c:3240
 #, c-format
 msgid "       with %d Planet"
 msgid_plural "       with %d Planets"
@@ -71101,7 +71098,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/space.c:3640 src/space.c:3684
+#: src/space.c:3639 src/space.c:3683
 msgid "Unknown marker type."
 msgstr ""
 
@@ -71110,7 +71107,7 @@ msgstr ""
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:4193
+#: src/space.c:4192
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
