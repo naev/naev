@@ -18,6 +18,7 @@
 
 #include "nlua_faction.h"
 
+#include "array.h"
 #include "faction.h"
 #include "log.h"
 #include "nlua_col.h"
@@ -465,15 +466,15 @@ static int factionL_playerstanding( lua_State *L )
  */
 static int factionL_enemies( lua_State *L )
 {
-   int i, n, f;
+   int i, f;
    int *factions;
 
    f = luaL_validfaction(L,1);
 
    /* Push the enemies in a table. */
    lua_newtable(L);
-   factions = faction_getEnemies( f, &n );
-   for (i=0; i<n; i++) {
+   factions = faction_getEnemies( f );
+   for (i=0; i<array_size(factions); i++) {
       lua_pushnumber(L, i+1); /* key */
       lua_pushfaction(L, factions[i]); /* value */
       lua_rawset(L, -3);
@@ -493,15 +494,15 @@ static int factionL_enemies( lua_State *L )
  */
 static int factionL_allies( lua_State *L )
 {
-   int i, n, f;
+   int i, f;
    int *factions;
 
    f = luaL_validfaction(L,1);
 
    /* Push the enemies in a table. */
    lua_newtable(L);
-   factions = faction_getAllies( f, &n );
-   for (i=0; i<n; i++) {
+   factions = faction_getAllies( f );
+   for (i=0; i<array_size(factions); i++) {
       lua_pushnumber(L, i+1); /* key */
       lua_pushfaction(L, factions[i]); /* value */
       lua_rawset(L, -3);

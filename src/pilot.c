@@ -232,7 +232,7 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
 {
    /* Must not be dead. */
    if (pilot_isFlag( target, PILOT_DELETE ) ||
-         pilot_isFlag( target, PILOT_DEAD))
+         pilot_isFlag( target, PILOT_DEAD ))
       return 0;
 
    /* Must not be invisible. */
@@ -321,7 +321,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
  *    @param target_mass_UB the upper bound for target mass
  *    @return ID of their nearest enemy.
  */
-unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, double target_mass_UB)
+unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, double target_mass_UB )
 {
    unsigned int tp;
    int i;
@@ -379,9 +379,9 @@ unsigned int pilot_getNearestEnemy_heuristic( const Pilot* p,
       /* Check distance. */
       temp = range_factor *
                vect_dist2( &target->solid->pos, &p->solid->pos )
-            + FABS( pilot_relsize( p, target ) - mass_factor)
-            + FABS( pilot_relhp(   p, target ) - health_factor)
-            + FABS( pilot_reldps(  p, target ) - damage_factor);
+            + FABS( pilot_relsize( p, target ) - mass_factor )
+            + FABS( pilot_relhp(   p, target ) - health_factor )
+            + FABS( pilot_reldps(  p, target ) - damage_factor );
 
       if ((tp == 0) || (temp < current_heuristic_value)) {
          current_heuristic_value = temp;
@@ -567,7 +567,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
 
       ta = atan2( p->solid->pos.y - pilot_stack[i]->solid->pos.y,
             p->solid->pos.x - pilot_stack[i]->solid->pos.x );
-      if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
+      if (ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
          a = ta;
          *tp = pilot_stack[i]->id;
       }
@@ -1037,7 +1037,7 @@ double pilot_aimAngle( Pilot *p, Pilot *target )
  */
 void pilot_setHostile( Pilot* p )
 {
-   if ( pilot_isFriendly( p ) || pilot_isFlag( p, PILOT_BRIBED)
+   if ( pilot_isFriendly( p ) || pilot_isFlag( p, PILOT_BRIBED )
          || !pilot_isFlag( p, PILOT_HOSTILE ) ) {
       /* Time to play combat music. */
       music_choose("combat");
@@ -1344,8 +1344,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    Pilot *pshooter;
 
    /* Invincible means no damage. */
-   if (pilot_isFlag( p, PILOT_INVINCIBLE) ||
-         pilot_isFlag( p, PILOT_INVISIBLE))
+   if (pilot_isFlag( p, PILOT_INVINCIBLE ) ||
+         pilot_isFlag( p, PILOT_INVISIBLE ))
       return 0.;
 
    /* Defaults. */
@@ -2156,7 +2156,7 @@ void pilot_update( Pilot* pilot, const double dt )
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
                   pilot->afterburner->outfit->u.afb.heat_base,
                   pilot->afterburner->outfit->u.afb.heat_cap );
-            thrust = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid->mass) * efficiency;
+            thrust = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid->mass ) * efficiency;
 
             /* Adjust speed. Speed bonus falls as heat rises. */
             pilot->solid->speed_max = pilot->speed * (1. +
@@ -2360,7 +2360,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
          /* face target */
          else {
             /* Done braking or no braking required. */
-            pilot_setFlag( p, PILOT_HYP_BRAKE);
+            pilot_setFlag( p, PILOT_HYP_BRAKE );
             pilot_setThrust( p, 0. );
 
             /* Face system headed to. */
@@ -2865,7 +2865,7 @@ Pilot* pilot_copy( Pilot* src )
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
 {
    int i, j, *ind;
-   int nfact, *fact;
+   int *fact;
    double chance, limit;
    JumpPoint **validJumpPoints;
    JumpPoint *target;
@@ -2895,8 +2895,8 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
 
          limit = 0.;
          if (guerilla) {/* Test enemy presence on the other side. */
-            fact = faction_getEnemies( lf, &nfact );
-            for (j=0; j<nfact ; j++)
+            fact = faction_getEnemies( lf );
+            for (j=0; j<array_size(fact); j++)
                limit += system_getPresence( cur_system->jumps[i].target, fact[j] );
          }
 

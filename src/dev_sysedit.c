@@ -104,9 +104,9 @@ static int jp_exit   = 0; /**< Jump point exit only checkbox value. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
-static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected);
+static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected );
 static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected );
-static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y);
+static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y );
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
@@ -1861,7 +1861,7 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    unsigned int wid;
-   int i, j, y, h, n, bw, *factions;
+   int i, j, y, h, bw, *factions;
    char **str;
 
    /* Create the window. */
@@ -1869,10 +1869,10 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
    window_setCancel( wid, window_close );
 
    /* Generate factions list. */
-   factions = faction_getAll( &n );
-   str = malloc( sizeof(char*) * (n+1));
+   factions = faction_getAll();
+   str = malloc( sizeof(char*) * (array_size(factions) + 1) );
    j   = 0;
-   for (i=0; i<n; i++)
+   for (i=0; i<array_size(factions); i++)
       str[j++] = strdup( faction_name( factions[i] ) );
    str[j++] = strdup( _("None") );
 
@@ -1890,7 +1890,7 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
    window_addButton( wid, -20-(bw+15), 20, bw, BUTTON_HEIGHT,
          "btnAdd", _("Set"), sysedit_btnFactionSet );
 
-   free( factions );
+   array_free( factions );
 }
 
 
