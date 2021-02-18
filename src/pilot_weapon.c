@@ -693,16 +693,11 @@ void pilot_weapSetFree( Pilot* p )
  *
  *    @param p Pilot who owns the weapon set.
  *    @param id ID of the weapon set.
- *    @param[out] n Number of elements in the list.
- *    @return The array of pilot weaponset outfits.
+ *    @return The array (array.h) of pilot weaponset outfits.
  */
-PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id, int *n )
+PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id )
 {
-   PilotWeaponSet *ws;
-
-   ws = pilot_weapSet(p,id);
-   *n = array_size(ws->slots);
-   return ws->slots;
+   return pilot_weapSet( p, id )->slots;
 }
 
 

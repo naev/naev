@@ -3047,7 +3047,7 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
  */
 static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
 {
-   int i, j, k, n;
+   int i, j, k;
    int found;
    const char *name;
    PilotWeaponSetOutfit *weaps;
@@ -3127,7 +3127,7 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
    xmlw_attr(writer, "active_set", "%d", ship->active_set);
    xmlw_attr(writer, "aim_lines", "%d", ship->aimLines);
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
-      weaps = pilot_weapSetList( ship, i, &n );
+      weaps = pilot_weapSetList( ship, i );
       xmlw_startElem(writer,"weaponset");
       /* Inrange isn't handled by autoweap for the player. */
       xmlw_attr(writer,"inrange","%d",pilot_weapSetInrangeCheck(ship,i));
@@ -3137,7 +3137,7 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
          if (name != NULL)
             xmlw_attr(writer,"name","%s",name);
          xmlw_attr(writer,"type","%d",pilot_weapSetTypeCheck(ship,i));
-         for (j=0; j<n;j++) {
+         for (j=0; j<array_size(weaps); j++) {
             xmlw_startElem(writer,"weapon");
             xmlw_attr(writer,"level","%d",weaps[j].level);
             xmlw_str(writer,"%d",weaps[j].slot->id);

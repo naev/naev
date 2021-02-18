@@ -1111,9 +1111,6 @@ static int pilotL_weapset( lua_State *L )
    const Damage *dmg;
    int has_beamid;
 
-   /* Defaults. */
-   po_list = NULL;
-
    /* Parse parameters. */
    all = 0;
    p   = luaL_validpilot(L,1);
@@ -1141,10 +1138,8 @@ static int pilotL_weapset( lua_State *L )
    lua_pushstring( L, pilot_weapSetName( p, id ) );
 
    /* Push set. */
-   if (all)
-      n = array_size(p->outfits);
-   else
-      po_list = pilot_weapSetList( p, id, &n );
+   po_list = all ? NULL : pilot_weapSetList( p, id );
+   n = all ? array_size(p->outfits) : array_size(po_list);
 
    k = 0;
    lua_newtable(L);
@@ -1155,30 +1150,19 @@ static int pilotL_weapset( lua_State *L )
       /* Iterate over weapons. */
       for (i=0; i<n; i++) {
          /* Get base look ups. */
-         if (all) {
-            slot     = p->outfits[i];
-            o        = slot->outfit;
-            if (o == NULL)
-               continue;
-            is_lau   = outfit_isLauncher(o);
-            is_fb    = outfit_isFighterBay(o);
+         slot = all ?  p->outfits[i] : po_list[i].slot;
+         o        = slot->outfit;
+         if (o == NULL)
+            continue;
+         is_lau   = outfit_isLauncher(o);
+         is_fb    = outfit_isFighterBay(o);
 
-            /* Must be valid weapon. */
-            if (!(outfit_isBolt(o) || outfit_isBeam(o) ||
-                  is_lau || is_fb))
-               continue;
+         /* Must be valid weapon. */
+         if (all && !(outfit_isBolt(o) || outfit_isBeam(o)
+               || is_lau || is_fb))
+            continue;
 
-            level    = slot->level;
-         }
-         else {
-            slot     = po_list[i].slot;
-            o        = slot->outfit;
-            if (o == NULL)
-               continue;
-            is_lau   = outfit_isLauncher(o);
-            is_fb    = outfit_isFighterBay(o);
-            level    = po_list[i].level;
-         }
+         level    = slot->level;
 
          /* Must match level. */
          if (level != level_match)
@@ -1349,7 +1333,6 @@ static int pilotL_weapsetHeat( lua_State *L )
    double heat, heat_mean, heat_peak, nweapons;
 
    /* Defaults. */
-   po_list = NULL;
    heat_mean = 0.;
    heat_peak = 0.;
    nweapons = 0;
@@ -1372,10 +1355,8 @@ static int pilotL_weapsetHeat( lua_State *L )
    id = CLAMP( 0, PILOT_WEAPON_SETS, id );
 
    /* Push set. */
-   if (all)
-      n = array_size(p->outfits);
-   else
-      po_list = pilot_weapSetList( p, id, &n );
+   po_list = all ? NULL : pilot_weapSetList( p, id );
+   n = all ? array_size(p->outfits) : array_size(po_list);
 
    for (j=0; j<=PILOT_WEAPSET_MAX_LEVELS; j++) {
       /* Level to match. */
@@ -1384,19 +1365,13 @@ static int pilotL_weapsetHeat( lua_State *L )
        /* Iterate over weapons. */
       for (i=0; i<n; i++) {
          /* Get base look ups. */
-         if (all)
-            slot = p->outfits[i];
-         else
-            slot = po_list[i].slot;
+         slot = all ?  p->outfits[i] : po_list[i].slot;
 
          o = slot->outfit;
          if (o == NULL)
             continue;
 
-         if (all)
-            level    = slot->level;
-         else
-            level    = po_list[i].level;
+         level = all ?  slot->level : po_list[i].level;
 
          /* Must match level. */
          if (level != level_match)
