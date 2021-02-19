@@ -273,8 +273,7 @@ jobs:
 
       - name: Get Git Changelog
         id: changelog
-        uses: thenilsdev/git-log-action@1.0.4
-        if: ${{ matrix.releasetype == 'github' }}
+        uses: JantHsueh/get-git-log-action@2456ffa887012f69ca95aa874650e4863f46f08d
 
       - name: Delete old nightly tag and release.
         uses: dev-drprasad/delete-tag-and-release@v0.1.2
