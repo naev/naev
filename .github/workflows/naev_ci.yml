@@ -117,7 +117,7 @@ jobs:
         uses: actions/upload-artifact@v2
         if: ${{ (success() || steps.appimageCompile.outcome == 'failure') }}
         with:
-          name: naev-${{ github.sha }}-AppImageBuild-log
+          name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-log
           path: |
             ${{ github.workspace }}/appImageBuildLog.txt
 
