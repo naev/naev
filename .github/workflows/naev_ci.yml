@@ -90,7 +90,6 @@ jobs:
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
-        if: ${{ matrix.image != 'naev-steamruntime' }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
@@ -108,6 +107,19 @@ jobs:
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-install-log
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Compile AppImage
+        id: appimageCompile
+        run: |
+          ./source/utils/buildAppImage.sh -c -m -s source -b appImageBuild | tee ${{ github.workspace }}/appImageBuildLog.txt
+
+      - name: Upload AppImage Compile Log
+        uses: actions/upload-artifact@v2
+        if: ${{ (success() || steps.appimageCompile.outcome == 'failure') }}
+        with:
+          name: naev-${{ github.sha }}-AppImageBuild-log
+          path: |
+            ${{ github.workspace }}/appImageBuildLog.txt
 
   "Windows_Compile_Naev":
     needs: "Package_Source"
