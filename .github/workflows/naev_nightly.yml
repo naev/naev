@@ -269,12 +269,10 @@ jobs:
         uses: actions/checkout@v2
         if: ${{ matrix.releasetype == 'github' }}
 
-      - name: Generate commit changelog
-        uses: Bullrich/generate-release-changelog@2.0.1
-        if: ${{ matrix.releasetype == 'github' }}
+      - name: Get Git Changelog
         id: changelog
-        env:
-          REPO: ${{ github.repository }}
+        uses: thenilsdev/git-log-action@1.0.4
+        if: ${{ matrix.releasetype == 'github' }}
 
       - name: Delete old nightly tag and release.
         uses: dev-drprasad/delete-tag-and-release@v0.1.2
@@ -342,8 +340,7 @@ jobs:
         with:
           artifacts: "${{ github.workspace }}/build/dist/*.*"
           name: "Nightly Build"
-          body: |
-            ${{ steps.Changelog.outputs.changelog }}
+          body: ${{ steps.changelog.outputs.log }}
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
           tag: "nightly"
