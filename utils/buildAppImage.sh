@@ -77,8 +77,9 @@ if [ "$USEMESON" == "true" ]; then
     if [ "$BUILDDEBUG" == "true" ]; then
         # Setup AppImage Build Directory
         sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
-        --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
+        --native-file "$SOURCEROOT/utils/build/linux.ini" \
         --buildtype debug \
+        -Dprefix="/usr" \
         -Db_lto=true \
         -Dauto_features=enabled \
         -Ddocs_c=disabled \
@@ -91,8 +92,9 @@ if [ "$USEMESON" == "true" ]; then
     else
         # Setup AppImage Build Directory
         sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
-        --native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
+        --native-file "$SOURCEROOT/utils/build/linux.ini" \
         --buildtype release \
+        -Dprefix="/usr" \
         -Db_lto=true \
         -Dauto_features=enabled \
         -Ddocs_c=disabled \

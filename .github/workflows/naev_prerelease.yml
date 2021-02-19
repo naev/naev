@@ -21,7 +21,7 @@ jobs:
         with:
           fetch-depth: 0
           path: source
-          submodules: true
+          submodules: recursive
 
       - name: Package Dist
         run: |
@@ -89,8 +89,6 @@ jobs:
       - name: Compile AppImage
         run: |
           ./source/utils/buildAppImage.sh -m -s "source" -b "build" -o "${{ env.DESTDIR }}"
-        env:
-          APPIMAGE_EXTRACT_AND_RUN: 1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -208,8 +206,9 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              --native-file='source/utils/build/linux_steamruntime.ini' \
+              --native-file='source/utils/build/linux.ini' \
               --buildtype=release \
+              -Dprefix="/usr" \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
