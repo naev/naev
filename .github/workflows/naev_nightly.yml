@@ -82,8 +82,6 @@ jobs:
       - name: Compile AppImage
         run: |
           ./source/utils/buildAppImage.sh -m -s "source" -b "build"
-        env:
-          APPIMAGE_EXTRACT_AND_RUN: 1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
