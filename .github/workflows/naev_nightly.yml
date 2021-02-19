@@ -1,9 +1,8 @@
 on:
   repository_dispatch:
     types: manual-nightly
-  push:
-#  schedule:
-#    - cron: "0 0 * * *"
+  schedule:
+    - cron: "0 0 * * *"
 
 name: Nightly Release
 
@@ -252,8 +251,8 @@ jobs:
       matrix:
         include:
           - releasetype: github
-        #  - releasetype: steam
-        #  - releasetype: itch
+          - releasetype: steam
+          - releasetype: itch
 
     runs-on: ubuntu-latest
     needs:
@@ -264,7 +263,7 @@ jobs:
         Darwin_Naev_Release,
         Steam_Naev_Release,
       ]
-    #if: ${{ github.repository == 'naev/naev' }}
+    if: ${{ github.repository == 'naev/naev' }}
 
     steps:
       - name: Checkout Naev Repository
