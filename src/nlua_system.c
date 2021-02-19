@@ -423,7 +423,6 @@ static int systemL_jumpdistance( lua_State *L )
 {
    StarSystem *sys, *sysp;
    StarSystem **s;
-   int jumps;
    const char *start, *goal;
    int h, k;
 
@@ -444,10 +443,10 @@ static int systemL_jumpdistance( lua_State *L )
    else
       goal = cur_system->name;
 
-   s = map_getJumpPath( &jumps, start, goal, k, h, NULL );
-   free(s);
+   s = map_getJumpPath( start, goal, k, h, NULL );
+   lua_pushnumber(L,array_size(s));
 
-   lua_pushnumber(L,jumps);
+   array_free(s);
    return 1;
 }
 
@@ -477,7 +476,7 @@ static int systemL_jumpPath( lua_State *L )
    LuaJump lj;
    StarSystem *sys, *sysp;
    StarSystem **s;
-   int i, sid, jumps, pushed, h;
+   int i, sid, pushed, h;
    const char *start, *goal;
 
    h   = lua_toboolean(L,3);
@@ -504,7 +503,7 @@ static int systemL_jumpPath( lua_State *L )
       goal  = sys->name;
    }
 
-   s = map_getJumpPath( &jumps, start, goal, 1, h, NULL );
+   s = map_getJumpPath( start, goal, 1, h, NULL );
    if (s == NULL)
       return 0;
 
@@ -520,7 +519,7 @@ static int systemL_jumpPath( lua_State *L )
    lua_pushjump(L, lj);         /* value. */
    lua_rawset(L, -3);
 
-   for (i=0; i<(jumps - 1); i++) {
+   for (i=0; i<array_size(s)-1; i++) {
       lj.srcid  = s[i]->id;
       lj.destid = s[i+1]->id;
 
@@ -528,7 +527,7 @@ static int systemL_jumpPath( lua_State *L )
       lua_pushjump(L, lj);         /* value. */
       lua_rawset(L, -3);
    }
-   free(s);
+   array_free(s);
 
    return 1;
 }

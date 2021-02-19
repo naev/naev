@@ -1005,15 +1005,14 @@ void map_system_buyCommodPrice( unsigned int wid, char *str )
       cost = 500;
       njumps = 0;
    } else {
-      syslist=map_getJumpPath( &njumps, cur_system->name, cur_sys_sel->name,
-                               1, 0, NULL);
+      syslist=map_getJumpPath( cur_system->name, cur_sys_sel->name, 1, 0, NULL);
       if ( syslist == NULL ) {
          /* no route */
          dialogue_msg( _("Not available here"), _("Sorry, we don't have the commodity prices for %s available here at the moment."), _(cur_planetObj_sel->name) );
          return;
       } else {
-         free ( syslist );
-         cost = 500 + 300 * (njumps);
+         cost = 500 + 300 * array_size( syslist );
+         array_free ( syslist );
       }
    }
 

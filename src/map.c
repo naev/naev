@@ -51,8 +51,7 @@ static double map_xpos        = 0.; /**< Map X position. */
 static double map_ypos        = 0.; /**< Map Y position. */
 static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
-static StarSystem **map_path  = NULL; /**< The path to current selected system. */
-int map_npath                 = 0; /**< Number of systems in map_path. */
+static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
 static int cur_commod         = -1; /**< Current commodity selected. */
 static int cur_commod_mode    = 0; /**< 0 for difference, 1 for cost. */
@@ -319,7 +318,7 @@ void map_open (void)
     * Disable Autonav button if player lacks fuel or if target is not a valid hyperspace target.
     */
    if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP)
-         || map_selected == cur_system - systems_stack || map_npath == 0)
+         || map_selected == cur_system - systems_stack || array_size(map_path) == 0)
       window_disableButton( wid, "btnAutonav" );
 }
 
@@ -1113,12 +1112,12 @@ static void map_renderPath( double x, double y, double a )
    StarSystem *sys1, *sys0;
    int jmax, jcur;
 
-   if (map_path != NULL) {
+   if (array_size(map_path) != 0) {
       sys0 = cur_system;
       jmax = pilot_getJumps(player.p); /* Maximum jumps. */
       jcur = jmax; /* Jump range remaining. */
 
-      for (j=0; j<map_npath; j++) {
+      for (j=0; j<array_size(map_path); j++) {
          sys1 = map_path[j];
          if (jcur == jmax && jmax > 0)
             col = &cGreen;
@@ -1880,9 +1879,8 @@ void map_clear (void)
       map_xpos = 0.;
       map_ypos = 0.;
    }
-   free(map_path);
+   array_free(map_path);
    map_path = NULL;
-   map_npath = 0;
 
    /* default system is current system */
    map_selectCur();
@@ -1910,13 +1908,13 @@ static void map_selectCur (void)
  */
 StarSystem* map_getDestination( int *jumps )
 {
-   if (map_path == NULL)
+   if (array_size( map_path ) == 0)
       return NULL;
 
    if (jumps != NULL)
-      *jumps = map_npath;
+      *jumps = array_size( map_path );
 
-   return map_path[ map_npath-1 ];
+   return array_back( map_path );
 }
 
 
@@ -1934,21 +1932,16 @@ void map_jump (void)
    map_ypos = cur_system->pos.y;
 
    /* update path if set */
-   if (map_path != NULL) {
-      map_npath--;
-      if (map_npath == 0) { /* path is empty */
-         free( map_path );
-         map_path = NULL;
+   if (array_size(map_path) != 0) {
+      array_erase( &map_path, &map_path[0], &map_path[1] );
+      if (array_size(map_path) == 0)
          player_targetHyperspaceSet( -1 );
-      }
       else { /* get rid of bottom of the path */
-         memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
-
          /* set the next jump to be to the next in path */
          for (j=0; j<array_size(cur_system->jumps); j++) {
             if (map_path[0] == cur_system->jumps[j].target) {
                /* Restore selected system. */
-               map_selected = map_path[ map_npath ] - systems_stack;
+               map_selected = array_back( map_path ) - systems_stack;
 
                player_targetHyperspaceSet( j );
                break;
@@ -1989,21 +1982,15 @@ void map_select( StarSystem *sys, char shifted )
 
       /* select the current system and make a path to it */
       if (!shifted) {
-         free( map_path );
-          map_path  = NULL;
-          map_npath = 0;
+         array_free( map_path );
+         map_path  = NULL;
       }
 
       /* Try to make path if is reachable. */
       if (space_sysReachable(sys)) {
-         if (!shifted)
-            map_path = map_getJumpPath( &map_npath,
-                  cur_system->name, sys->name, 0, 1, NULL );
-         else
-            map_path = map_getJumpPath( &map_npath,
-                  cur_system->name, sys->name, 0, 1, map_path );
+         map_path = map_getJumpPath( cur_system->name, sys->name, 0, 1, map_path );
 
-         if (map_npath==0) {
+         if (array_size(map_path)==0) {
             player_hyperspacePreempt(0);
             player_targetHyperspaceSet( -1 );
             player_autonavAbortJump(NULL);
@@ -2184,19 +2171,17 @@ void map_setZoom(double zoom)
 /**
  * @brief Gets the jump path between two systems.
  *
- *    @param[out] njumps Number of jumps in the path.
  *    @param sysstart Name of the system to start from.
  *    @param sysend Name of the system to end at.
  *    @param ignore_known Whether or not to ignore if systems and jump points are known.
  *    @param show_hidden Whether or not to use hidden jumps points.
- *    @param the old star system (if we're merely extending the list)
- *    @return NULL on failure, the list of njumps elements systems in the path.
+ *    @param old_data the old path (if we're merely extending)
+ *    @return Array (array.h): the systems in the path. NULL on failure.
  */
-StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
-    const char* sysend, int ignore_known, int show_hidden,
-    StarSystem** old_data )
+StarSystem** map_getJumpPath( const char* sysstart, const char* sysend,
+    int ignore_known, int show_hidden, StarSystem** old_data )
 {
-   int i, j, cost, ojumps;
+   int i, j, cost, njumps, ojumps;
 
    StarSystem *sys, *ssys, *esys, **res;
    JumpPoint *jp;
@@ -2206,30 +2191,27 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    SysNode *ocost, *ccost;
 
    A_gc = NULL;
+   res = old_data;
+   ojumps = array_size( old_data );
 
    /* initial and target systems */
    ssys = system_get(sysstart); /* start */
    esys = system_get(sysend); /* goal */
 
    /* Set up. */
-   ojumps = 0;
-   if ((old_data != NULL) && (*njumps>0)) {
-      ssys   = system_get( old_data[ (*njumps)-1 ]->name );
-      ojumps = *njumps;
-   }
+   if (ojumps > 0)
+      ssys = system_get( array_back( old_data )->name );
 
    /* Check self. */
    if (ssys==esys || array_size(ssys->jumps)==0) {
-      (*njumps) = 0;
-      free( old_data );
+      array_free( res );
       return NULL;
    }
 
    /* system target must be known and reachable */
    if (!ignore_known && !sys_isKnown(esys) && !space_sysReachable(esys)) {
       /* can't reach - don't make path */
-      (*njumps) = 0;
-      free( old_data );
+      array_free( res );
       return NULL;
    }
 
@@ -2303,24 +2285,20 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 
    /* Build path backwards if not broken from loop. */
    if ( cur != NULL && esys == cur->sys ) {
-      (*njumps) = A_g(cur);
-      assert( *njumps > 0 );
-      if (old_data == NULL)
-         res      = malloc( sizeof(StarSystem*) * (*njumps) );
-      else {
-         *njumps  = *njumps + ojumps;
-         res      = realloc( old_data, sizeof(StarSystem*) * (*njumps) );
-      }
+      njumps = A_g(cur) + ojumps;
+      assert( njumps > ojumps );
+      if (res == NULL)
+         res = array_create_size( StarSystem*, njumps );
+      array_resize( &res, njumps );
       /* Build path. */
-      for (i=0; i<((*njumps)-ojumps); i++) {
-         res[(*njumps)-i-1] = cur->sys;
-         cur                = cur->parent;
+      for (i=0; i<njumps-ojumps; i++) {
+         res[njumps-i-1] = cur->sys;
+         cur = cur->parent;
       }
    }
    else {
-      (*njumps) = 0;
       res = NULL;
-      free( old_data );
+      array_free( old_data );
    }
 
    /* free the linked lists */
