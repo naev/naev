@@ -35,7 +35,7 @@ static void _array_resize_container(_private_container **c_, size_t e_size, size
       /* increases the reserved space */
       do
          c->_reserved *= 2;
-      while (new_size < c->_reserved);
+      while (new_size > c->_reserved);
 
       c = realloc(c, sizeof(_private_container) + e_size * c->_reserved);
    }
