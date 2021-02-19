@@ -142,12 +142,6 @@ extern Pilot** pilot_stack;
 
 
 /*
- * map stuff for autonav
- */
-extern int map_npath;
-
-
-/*
  * prototypes
  */
 /*
@@ -1800,7 +1794,7 @@ void player_brokeHyperspace (void)
    ntime_t t;
    StarSystem *sys;
    JumpPoint *jp;
-   int i;
+   int i, map_npath;
 
    /* First run jump hook. */
    hooks_run( "jumpout" );
@@ -1860,6 +1854,7 @@ void player_brokeHyperspace (void)
          player_autonavEnd();
       }
       else {
+         (void)map_getDestination( &map_npath );
          player_message( n_(
                   "#oAutonav continuing until destination (%d jump left).",
                   "#oAutonav continuing until destination (%d jumps left).",
