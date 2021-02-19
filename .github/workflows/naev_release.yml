@@ -277,7 +277,7 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              --native-file='source/utils/build/linux_steamruntime.ini' \
+              --native-file='source/utils/build/linux.ini' \
               --buildtype=release \
               -Dnightly=false \
               -Db_lto=true \

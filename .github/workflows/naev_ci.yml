@@ -35,8 +35,11 @@ jobs:
       matrix:
         include:
           - image: naev-linux-latest
+            config: linux.ini
           - image: naev-linux-lts
+            config: linux.ini
           - image: naev-steamruntime
+            config: linux.ini
 
     runs-on: ubuntu-latest
     container:
@@ -57,7 +60,7 @@ jobs:
         id: setup
         run: |
           meson setup build source \
-              --native-file='source/utils/build/linux.ini' \
+              --native-file='source/utils/build/${{ matrix.config }}' \
               --buildtype=debug \
               --wrap-mode=forcefallback \
               -Dnightly=false \
