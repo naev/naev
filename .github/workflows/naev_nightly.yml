@@ -208,6 +208,7 @@ jobs:
           meson setup build source \
               --native-file='source/utils/build/linux.ini' \
               --buildtype=release \
+              -Dprefix="/usr" \
               -Dnightly=true \
               -Db_lto=true \
               -Dauto_features=enabled \
