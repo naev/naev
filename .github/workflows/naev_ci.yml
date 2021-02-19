@@ -17,7 +17,7 @@ jobs:
         with:
           path: source
           fetch-depth: 0
-          submodules: true
+          submodules: recursive
 
       - name: Package Dist
         run: |
