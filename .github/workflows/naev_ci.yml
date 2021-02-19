@@ -6,7 +6,7 @@ jobs:
   "Package_Source":
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Checkout Naev Repository
@@ -34,7 +34,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - image: naev-linux-latest
+          - image: naev-ubuntu2004
             config: linux.ini
 
           - image: naev-steamruntime
@@ -268,7 +268,7 @@ jobs:
     needs: [Package_Source, Linux_Compile_Naev]
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+      image: "ghcr.io/projectsynchro/naev-ubuntu1604:latest"
 
     steps:
       - name: Get Source
@@ -306,7 +306,7 @@ jobs:
   "Lua_Documentation":
     runs-on: ubuntu-latest
     container:
-      image: "ghcr.io/projectsynchro/naev-linux-latest:latest"
+      image: "ghcr.io/projectsynchro/naev-ubuntu2004:latest"
     needs:
       [
         Package_Source,
