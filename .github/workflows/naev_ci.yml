@@ -96,7 +96,6 @@ jobs:
           path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
 
       - name: Upload Build Artifacts
-        if: ${{ matrix.image != 'naev-steamruntime' }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
