@@ -111,7 +111,7 @@ jobs:
       - name: Compile AppImage
         id: appimageCompile
         run: |
-          ./source/utils/buildAppImage.sh -c -m -s source -b appImageBuild | tee ${{ github.workspace }}/appImageBuildLog.txt
+          ./source/utils/buildAppImage.sh -c -m -s source -b appImageBuild | tee appImageBuildLog.txt
 
       - name: Upload AppImage Compile Log
         uses: actions/upload-artifact@v2
