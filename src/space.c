@@ -1441,7 +1441,7 @@ void space_init( const char* sysname )
    /* cleanup some stuff */
    player_clear(); /* clears targets */
    ovr_mrkClear(); /* Clear markers when jumping. */
-   pilots_clean(1); /* destroy non-persistant pilots */
+   pilots_clean(1); /* destroy non-persistent pilots */
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
    gatherable_free(); /* get rid of gatherable stuff. */
@@ -1530,8 +1530,7 @@ void space_init( const char* sysname )
    player.enemies = 0;
    player.disabled_enemies = 0;
 
-   /* Update the pilot sensor range. */
-   pilot_updateSensorRange();
+   pilots_newSystem();
 
    /* Reset any schedules and used presence. */
    for (i=0; i<array_size(cur_system->presence); i++) {

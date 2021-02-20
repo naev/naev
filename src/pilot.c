@@ -3019,7 +3019,7 @@ void pilots_free (void)
 /**
  * @brief Cleans up the pilot stack - leaves the player
  *
- *    @param persist Do not remove persistant pilots.
+ *    @param persist Do not remove persistent pilots.
  */
 void pilots_clean (int persist)
 {
@@ -3046,6 +3046,15 @@ void pilots_clean (int persist)
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();
+}
+
+
+/**
+ * @brief Updates pilot state which depends on the system (sensor range, nebula trails...)
+ */
+void pilots_newSystem (void)
+{
+   pilot_updateSensorRange();
 }
 
 

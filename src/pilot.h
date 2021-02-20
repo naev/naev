@@ -453,6 +453,7 @@ void pilot_destroy(Pilot* p);
 void pilots_init (void);
 void pilots_free (void);
 void pilots_clean (int persist);
+void pilots_newSystem (void);
 void pilots_clear (void);
 void pilots_cleanAll (void);
 void pilot_free( Pilot* p );
