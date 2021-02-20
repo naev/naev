@@ -436,9 +436,6 @@ PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
 /*
  * creation
  */
-void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, unsigned int dockpilot, int dockslot );
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );

@@ -69,6 +69,10 @@ static const double pilot_commFade     = 5.; /**< Time for text above pilot to f
 /*
  * Prototypes
  */
+/* Create. */
+static void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
+      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const PilotFlags flags, unsigned int dockpilot, int dockslot );
 /* Update. */
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
@@ -2594,7 +2598,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param dockpilot The pilot which launched this pilot (0 if N/A).
  *    @param dockslot The outfit slot which launched this pilot (-1 if N/A).
  */
-void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
+static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
