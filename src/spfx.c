@@ -131,7 +131,6 @@ static void spfx_hapticRumble( double mod );
 static void spfx_update_trails( double dt );
 static void spfx_trail_update( Trail_spfx* trail, double dt );
 static void spfx_trail_draw( const Trail_spfx* trail );
-static void spfx_trail_clear( Trail_spfx* trail );
 static void spfx_trail_free( Trail_spfx* trail );
 
 
@@ -382,7 +381,8 @@ void spfx_clear (void)
    vectnull( &shake_pos );
    vectnull( &shake_vel );
    for (i=0; i<array_size(trail_spfx_stack); i++)
-      spfx_trail_clear( trail_spfx_stack[i] );
+      spfx_trail_free( trail_spfx_stack[i] );
+   array_erase( &trail_spfx_stack, array_begin(trail_spfx_stack), array_end(trail_spfx_stack) );
 }
 
 
@@ -496,7 +496,6 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
    trail->point_ringbuf = calloc( trail->capacity, sizeof(TrailPoint) );
    trail->refcount = 1;
    trail->type = spec->type;
-   trail->nebula = spec->nebula;
    trail->r = RNGF();
 
    if ( trail_spfx_stack == NULL )
@@ -519,9 +518,7 @@ void spfx_update_trails( double dt ) {
    n = array_size( trail_spfx_stack );
    for (i=0; i<n; i++) {
       trail = trail_spfx_stack[i];
-      if (!trail->nebula  || (cur_system->nebu_density>0.))
-         spfx_trail_update( trail, dt );
-
+      spfx_trail_update( trail, dt );
       if (!trail->refcount && !trail_size(trail) ) {
          spfx_trail_free( trail );
          trail_spfx_stack[i--] = trail_spfx_stack[--n];
@@ -593,18 +590,6 @@ void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
       trail->capacity *= 2;
    }
    trail_at( trail, trail->iwrite++ ) = p;
-}
-
-
-/**
- * @brief Clears a trail.
- *
- *    @param trail Trail to clear.
- */
-static void spfx_trail_clear( Trail_spfx* trail )
-{
-   trail->iread = trail->iwrite = 0;
-   trail->dt = 0.;
 }
 
 
@@ -918,8 +903,6 @@ void spfx_render( const int layer )
    if (layer == SPFX_LAYER_BACK)
       for (i=0; i<array_size(trail_spfx_stack); i++) {
          trail = trail_spfx_stack[i];
-         if (trail->nebula && (cur_system->nebu_density<=0.))
-            continue;
          spfx_trail_draw( trail );
       }
 

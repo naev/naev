@@ -82,7 +82,9 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
-static void pilot_sample_trail( Pilot* p, int generator );
+static void pilot_init_trails( Pilot* p );
+static int pilot_trail_generated( Pilot* p, int generator );
+static void pilot_sample_trail( Pilot* p, int i, int generator );
 
 
 /**
@@ -1802,7 +1804,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  */
 void pilot_update( Pilot* pilot, const double dt )
 {
-   int i, cooling, nchg, n;
+   int i, cooling, nchg, g;
    int ammo_threshold;
    unsigned int l;
    Pilot *target;
@@ -2197,9 +2199,18 @@ void pilot_update( Pilot* pilot, const double dt )
    gatherable_gather( pilot->id );
 
    /* Update the trail. */
-   n = array_size(pilot->ship->trail_emitters);
-   for (i=0; i<n; i++)
-      pilot_sample_trail( pilot, i );
+   for (i=g=0; g<array_size(pilot->ship->trail_emitters); g++)
+      if (pilot_trail_generated( pilot, g ))
+         pilot_sample_trail( pilot, i++, g );
+}
+
+
+/**
+ * @brief Return true if the given trail_emitters index has a corresponding generated trail.
+ */
+static int pilot_trail_generated( Pilot* p, int generator )
+{
+   return !p->ship->trail_emitters[generator].trail_spec->nebula || cur_system->nebu_density>0;
 }
 
 
@@ -2207,9 +2218,10 @@ void pilot_update( Pilot* pilot, const double dt )
  * @brief Updates the indicated trail.
  *
  *    @param p Pilot.
- *    @param generator Generator index
+ *    @param i p->trails index.
+ *    @param generator p->ship->trail_emitters index.
  */
-static void pilot_sample_trail( Pilot* p, int generator )
+static void pilot_sample_trail( Pilot* p, int i, int generator )
 {
    double a, dx, dy;
    TrailStyle style;
@@ -2235,7 +2247,7 @@ static void pilot_sample_trail( Pilot* p, int generator )
    else
       style = p->ship->trail_emitters[generator].trail_spec->idle;
 
-   spfx_trail_sample( p->trail[generator], pos, style );
+   spfx_trail_sample( p->trail[i], pos, style );
 }
 
 
@@ -2601,7 +2613,7 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
-   int i, j, n;
+   int i, j;
    PilotOutfitSlot *dslot, *slot;
    PilotOutfitSlot **pilot_list_ptr[] = { &pilot->outfit_structure, &pilot->outfit_utility, &pilot->outfit_weapon };
    ShipOutfitSlot *ship_list[] = { ship->outfit_structure, ship->outfit_utility, ship->outfit_weapon };
@@ -2733,12 +2745,24 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
    pilot->shoot_indicator = 0;
+}
 
-   /* Animated trail. */
-   n = array_size(pilot->ship->trail_emitters);
-   pilot->trail = array_create_size( Trail_spfx*, n );
-   for (i=0; i<n; i++)
-      array_push_back( &pilot->trail, spfx_trail_create( pilot->ship->trail_emitters[i].trail_spec ) );
+
+/**
+ * @brief Initialize pilot's trails according to the ship type and current system characteristics.
+ */
+static void pilot_init_trails( Pilot* p )
+{
+   int n;
+
+   n = array_size(p->ship->trail_emitters);
+   if (p->trail == NULL)
+      p->trail = array_create_size( Trail_spfx*, n );
+
+   for (int g=0; g<n; g++)
+      if (pilot_trail_generated( p, g ))
+         array_push_back( &p->trail, spfx_trail_create( p->ship->trail_emitters[g].trail_spec ) );
+   array_shrink( &p->trail );
 }
 
 
@@ -2770,6 +2794,9 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
 
    /* Initialize the pilot. */
    pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, dockpilot, dockslot );
+
+   /* Animated trail. */
+   pilot_init_trails( dyn );
 
    return dyn->id;
 }
@@ -2809,6 +2836,10 @@ Pilot* pilot_stackSwap( Pilot* before, Pilot* after )
    for (int j=0; j<array_size(pilot_stack); j++) /* find pilot in stack to swap */
       if (pilot_stack[j] == before) {
          pilot_stack[j] = after;
+         for (int i=0; i<array_size(before->trail); i++)
+            spfx_trail_remove( before->trail[i] );
+         array_erase( &before->trail, array_begin(before->trail), array_end(before->trail) );
+         pilot_init_trails( after );
          return after;
       }
    return before;
@@ -2905,7 +2936,7 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
  */
 void pilot_free( Pilot* p )
 {
-   int n, i;
+   int i;
 
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
@@ -2943,8 +2974,7 @@ void pilot_free( Pilot* p )
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
    /* Free animated trail. */
-   n = array_size(p->ship->trail_emitters);
-   for (i=0; i<n; i++)
+   for (i=0; i<array_size(p->trail); i++)
       spfx_trail_remove( p->trail[i] );
    array_free(p->trail);
 
@@ -3033,10 +3063,16 @@ void pilots_clean (int persist)
          p = pilot_stack[persist_count];
          pilot_stack[persist_count] = pilot_stack[i];
          pilot_stack[i] = p;
+         p = pilot_stack[persist_count];
          /* Misc clean up. */
-         pilot_stack[persist_count]->lockons = 0; /* Clear lockons. */
-         pilot_stack[persist_count]->projectiles = 0; /* Clear projectiles. */
-         pilot_clearTimers( pilot_stack[persist_count] ); /* Reset timers. */
+         p->lockons = 0; /* Clear lockons. */
+         p->projectiles = 0; /* Clear projectiles. */
+         pilot_clearTimers( p ); /* Reset timers. */
+         /* Reset trails */
+         for (int g=0; g<array_size(p->trail); g++)
+            spfx_trail_remove( p->trail[g] );
+         array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
+         /* All done. */
          persist_count++;
       }
       else /* rest get killed */
@@ -3055,6 +3091,8 @@ void pilots_clean (int persist)
 void pilots_newSystem (void)
 {
    pilot_updateSensorRange();
+   for (int i=0; i < array_size(pilot_stack); i++)
+      pilot_init_trails( pilot_stack[i] );
 }
 
 
