@@ -84,7 +84,7 @@ static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
 static void pilot_init_trails( Pilot* p );
 static int pilot_trail_generated( Pilot* p, int generator );
-static void pilot_sample_trail( Pilot* p, int i, int generator );
+static void pilot_sample_trail( Pilot* p, int i, int g, double dircos, double dirsin );
 
 
 /**
@@ -1811,7 +1811,7 @@ void pilot_update( Pilot* pilot, const double dt )
    double a, px,py, vx,vy;
    char buf[16];
    PilotOutfitSlot *o;
-   double Q;
+   double Q, dircos, dirsin;
    Damage dmg;
    double stress_falloff;
    double efficiency, thrust;
@@ -2199,9 +2199,11 @@ void pilot_update( Pilot* pilot, const double dt )
    gatherable_gather( pilot->id );
 
    /* Update the trail. */
+   dircos = cos(pilot->solid->dir);
+   dirsin = sin(pilot->solid->dir);
    for (i=g=0; g<array_size(pilot->ship->trail_emitters); g++)
       if (pilot_trail_generated( pilot, g ))
-         pilot_sample_trail( pilot, i++, g );
+         pilot_sample_trail( pilot, i++, g, dircos, dirsin );
 }
 
 
@@ -2219,35 +2221,33 @@ static int pilot_trail_generated( Pilot* p, int generator )
  *
  *    @param p Pilot.
  *    @param i p->trails index.
- *    @param generator p->ship->trail_emitters index.
+ *    @param g p->ship->trail_emitters ("generator") index.
+ *    @param dircos == cos(p->solid->dir)
+ *    @param dirsin == sin(p->solid->dir)
  */
-static void pilot_sample_trail( Pilot* p, int i, int generator )
+static void pilot_sample_trail( Pilot* p, int i, int g, double dircos, double dirsin )
 {
-   double a, dx, dy;
+   double dx, dy;
    TrailStyle style;
-   Vector2d pos;
 
    /* Compute the engine offset. */
-   a  = p->solid->dir;
-   dx = p->ship->trail_emitters[generator].x_engine * cos(a) -
-        p->ship->trail_emitters[generator].y_engine * sin(a);
-   dy = p->ship->trail_emitters[generator].x_engine * sin(a) +
-        p->ship->trail_emitters[generator].y_engine * cos(a);
-
-   vect_cset( &pos, p->solid->pos.x + dx,
-              p->solid->pos.y + dy*M_SQRT1_2 + p->ship->trail_emitters[generator].h_engine*M_SQRT1_2 );
+   dx = p->ship->trail_emitters[g].x_engine * dircos -
+        p->ship->trail_emitters[g].y_engine * dirsin;
+   dy = p->ship->trail_emitters[g].x_engine * dirsin +
+        p->ship->trail_emitters[g].y_engine * dircos +
+	p->ship->trail_emitters[g].h_engine;
 
    /* Set the colour. */
    if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
-      style = p->ship->trail_emitters[generator].trail_spec->jmpn;
+      style = p->ship->trail_emitters[g].trail_spec->jmpn;
    else if (pilot_isFlag(p, PILOT_AFTERBURNER))
-      style = p->ship->trail_emitters[generator].trail_spec->aftb;
+      style = p->ship->trail_emitters[g].trail_spec->aftb;
    else if (p->engine_glow > 0.)
-      style = p->ship->trail_emitters[generator].trail_spec->glow;
+      style = p->ship->trail_emitters[g].trail_spec->glow;
    else
-      style = p->ship->trail_emitters[generator].trail_spec->idle;
+      style = p->ship->trail_emitters[g].trail_spec->idle;
 
-   spfx_trail_sample( p->trail[i], pos, style );
+   spfx_trail_sample( p->trail[i], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, style );
 }
 
 

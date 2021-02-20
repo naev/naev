@@ -558,18 +558,19 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
  * @brief Makes a trail grow.
  *
  *    @param trail Trail to update.
- *    @param pos Position of the new control point.
+ *    @param x X position of the new control point.
+ *    @param y Y position of the new control point.
  *    @param style Style.
  */
-void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
+void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailStyle style )
 {
    TrailPoint p;
 
    if (style.col.a <= 0.)
       return;
 
-   p.x = pos.x;
-   p.y = pos.y;
+   p.x = x;
+   p.y = y;
    p.c = style.col;
    p.t = 1.;
    p.thickness = style.thick;

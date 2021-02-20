@@ -99,7 +99,7 @@ void spfx_update( const double dt );
 void spfx_render( const int layer );
 void spfx_clear (void);
 Trail_spfx* spfx_trail_create( const TrailSpec* spec );
-void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style );
+void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailStyle style );
 void spfx_trail_remove( Trail_spfx* trail );
 
 

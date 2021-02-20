@@ -1012,14 +1012,11 @@ static void weapon_sample_trail( Weapon* w )
 {
    double a, dx, dy;
    TrailStyle style;
-   Vector2d pos;
 
    /* Compute the engine offset. */
    a  = w->solid->dir;
    dx = w->outfit->u.amm.trail_x_offset * cos(a);
    dy = w->outfit->u.amm.trail_x_offset * sin(a);
-
-   vect_cset( &pos, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2 );
 
    /* Set the colour. */
    if (w->solid->thrust > 0)
@@ -1029,7 +1026,7 @@ static void weapon_sample_trail( Weapon* w )
    else
       style = w->outfit->u.amm.trail_spec->idle;
 
-   spfx_trail_sample( w->trail, pos, style );
+   spfx_trail_sample( w->trail, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2, style );
 }
 
 
