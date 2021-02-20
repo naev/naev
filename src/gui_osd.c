@@ -29,7 +29,7 @@ typedef struct OSD_s {
    char **msg; /**< Array (array.h): Stored messages. */
    char ***items; /**< Array of array (array.h) of allocated strings. */
 
-   int active; /**< Active item. */
+   unsigned int active; /**< Active item. */
 } OSD_t;
 
 
@@ -194,20 +194,20 @@ void osd_wordwrap( OSD_t* osd )
          if (n==0) {
             if (t==1) {
                chunk = malloc(s+4);
-               nsnprintf( chunk, s+4, "   %s", &osd->msg[i][n+1] );
+               snprintf( chunk, s+4, "   %s", &osd->msg[i][n+1] );
             }
             else {
                chunk = malloc(s+3);
-               nsnprintf( chunk, s+3, "- %s", &osd->msg[i][n] );
+               snprintf( chunk, s+3, "- %s", &osd->msg[i][n] );
             }
          }
          else if (t==1) {
             chunk = malloc(s+4);
-            nsnprintf( chunk, s+4, "   %s", &osd->msg[i][n] );
+            snprintf( chunk, s+4, "   %s", &osd->msg[i][n] );
          }
          else {
             chunk = malloc(s+1);
-            nsnprintf( chunk, s+1, "%s", &osd->msg[i][n] );
+            snprintf( chunk, s+1, "%s", &osd->msg[i][n] );
          }
          array_push_back( &osd->items[i], chunk );
 
@@ -458,7 +458,7 @@ void osd_render (void)
 
       /* Print title. */
       if (duplicates > 0)
-         nsnprintf( title, sizeof(title), "%s (%d)", ll->title, duplicates + 1 );
+         snprintf( title, sizeof(title), "%s (%d)", ll->title, duplicates + 1 );
       else
          strncpy( title, ll->title, sizeof(title)-1 );
       title[sizeof(title)-1] = '\0';
@@ -474,7 +474,7 @@ void osd_render (void)
       for (i=ll->active; i<array_size(ll->items); i++) {
          x = osd_x;
          w = osd_w;
-         c = (ll->active == i) ? &cFontWhite : &cFontGrey;
+         c = (i == (int)ll->active) ? &cFontWhite : &cFontGrey;
          for (j=0; j<array_size(ll->items[i]); j++) {
             gl_printMaxRaw( &gl_smallFont, w, x, p,
                   c, -1., ll->items[i][j] );

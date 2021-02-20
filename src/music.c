@@ -48,7 +48,7 @@ static SDL_mutex *music_lock = NULL; /**< lock for music_runLua so it doesn't
                                           DO NOT CALL MIX_* FUNCTIONS WHEN
                                           LOCKED!!! */
 static int music_runchoose = 0; /**< Whether or not music should run the choose function. */
-static char music_situation[PATH_MAX]; /**< What situation music is in. */
+static char *music_situation = NULL; /**< What situation music is in. */
 
 
 /*
@@ -83,7 +83,7 @@ static void music_luaQuit (void);
  */
 void music_update( double dt )
 {
-   char buf[PATH_MAX];
+   char *buf;
 
    if (music_disabled)
       return;
@@ -102,10 +102,10 @@ void music_update( double dt )
       return;
    }
    music_runchoose = 0;
-   strncpy(buf, music_situation, PATH_MAX);
-   buf[ PATH_MAX-1 ] = '\0';
+   buf = strdup( music_situation );
    SDL_mutexV(music_lock);
    music_runLua( buf );
+   free( buf );
 
    /* Make sure music is playing. */
    if (!music_isPlaying())
@@ -150,6 +150,7 @@ int music_init (void)
       return 0;
 
    /* Start the subsystem. */
+   music_situation = strdup( "" );
    if (music_al_init())
       return -1;
 
@@ -315,7 +316,7 @@ int music_load( const char* name )
    /* Load new music. */
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
-   nsnprintf( filename, PATH_MAX, MUSIC_PATH"%s"MUSIC_SUFFIX, name);
+   snprintf( filename, sizeof(filename), MUSIC_PATH"%s"MUSIC_SUFFIX, name);
    rw = PHYSFSRWOPS_openRead( filename );
    if (rw == NULL) {
       WARN(_("Music '%s' not found."), filename);
@@ -516,8 +517,8 @@ int music_chooseDelay( const char* situation, double delay )
    SDL_mutexP(music_lock);
    music_timer       = delay;
    music_runchoose   = 0;
-   strncpy(music_situation, situation, PATH_MAX);
-   music_situation[ PATH_MAX-1 ] = '\0';
+   free(music_situation);
+   music_situation = strdup(situation);
    SDL_mutexV(music_lock);
 
    return 0;
@@ -538,8 +539,8 @@ void music_rechoose (void)
    SDL_mutexP(music_lock);
    music_timer       = 0.;
    music_runchoose   = 1;
-   strncpy(music_situation, "idle", PATH_MAX);
-   music_situation[ PATH_MAX-1 ] = '\0';
+   free(music_situation);
+   music_situation = strdup("idle");
    SDL_mutexV(music_lock);
 }
 

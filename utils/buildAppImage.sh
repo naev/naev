@@ -58,9 +58,10 @@ export DESTDIR="$(readlink -mf "$BUILDPATH")/dist/Naev.AppDir"
 # Run build
 # Setup AppImage Build Directory
 sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
---native-file "$SOURCEROOT/utils/build/linux_appimage.ini" \
+--native-file "$SOURCEROOT/utils/build/linux.ini" \
 --buildtype "$BUILDTYPE" \
 -Dnightly=$NIGHTLY \
+-Dprefix="/usr" \
 -Db_lto=true \
 -Dauto_features=enabled \
 -Ddocs_c=disabled \

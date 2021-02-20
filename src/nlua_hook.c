@@ -845,7 +845,7 @@ static int hook_pilot( lua_State *L )
    }
 
    /* actually add the hook */
-   nsnprintf( buf, sizeof(buf), "p_%s", hook_type );
+   snprintf( buf, sizeof(buf), "p_%s", hook_type );
    h = hook_generic( L, buf, 0., 3, 0 );
    if (p==0)
       pilots_addGlobalHook( type, h );

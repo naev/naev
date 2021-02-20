@@ -245,7 +245,6 @@ void conf_setVideoDefaults (void)
    /* OpenGL. */
    conf.fsaa         = FSAA_DEFAULT;
    conf.vsync        = VSYNC_DEFAULT;
-   conf.mipmaps      = MIPMAP_DEFAULT; /* Also cause for issues. */
    conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
 
    /* Window. */
@@ -254,6 +253,7 @@ void conf_setVideoDefaults (void)
    conf.height       = h;
    conf.explicit_dim = 0; /* No need for a define, this is only for first-run. */
    conf.scalefactor  = SCALE_FACTOR_DEFAULT;
+   conf.nebu_scale   = NEBULA_SCALE_FACTOR_DEFAULT;
    conf.minimize     = MINIMIZE_DEFAULT;
    conf.colorblind   = COLORBLIND_DEFAULT;
 
@@ -335,7 +335,6 @@ int conf_loadConfig ( const char* file )
       /* OpenGL. */
       conf_loadInt( lEnv, "fsaa", conf.fsaa );
       conf_loadBool( lEnv, "vsync", conf.vsync );
-      conf_loadBool( lEnv, "mipmaps", conf.mipmaps );
       conf_loadBool( lEnv, "compress", conf.compress );
 
       /* Memory. */
@@ -354,6 +353,7 @@ int conf_loadConfig ( const char* file )
          conf.height = h;
       }
       conf_loadFloat( lEnv, "scalefactor", conf.scalefactor );
+      conf_loadFloat( lEnv, "nebu_scale", conf.nebu_scale );
       conf_loadBool( lEnv, "fullscreen", conf.fullscreen );
       conf_loadBool( lEnv, "modesetting", conf.modesetting );
       conf_loadBool( lEnv, "minimize", conf.minimize );
@@ -662,7 +662,7 @@ void conf_parseCLI( int argc, char** argv )
 
 
 /**
- * @brief nsnprintf-like function to quote and escape a string for use in Lua source code
+ * @brief snprintf-like function to quote and escape a string for use in Lua source code
  *
  *    @param str The destination buffer
  *    @param size The maximum amount of space in str to use
@@ -680,7 +680,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
    /* Write a Lua nil if we are given a NULL pointer */
    if (text == NULL)
-      return nsnprintf(str, size, "nil");
+      return scnprintf(str, size, "nil");
 
    count = 0;
 
@@ -733,7 +733,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
    /* zero-terminate, if possible */
    if (count != size)
-      str[count] = '\0';   /* don't increase count, like nsnprintf */
+      str[count] = '\0';   /* don't increase count, like snprintf */
 
    /* return the amount of characters written */
    return count;
@@ -741,26 +741,26 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
 
 #define  conf_saveComment(t)     \
-pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
+pos += scnprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
 
 #define  conf_saveEmptyLine()     \
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
 
 #define  conf_saveInt(n,i)    \
-pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
+pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
 
 #define  conf_saveFloat(n,f)    \
-pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
+pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
 
 #define  conf_saveBool(n,b)    \
 if (b) \
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = true\n", n); \
+   pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = true\n", n); \
 else \
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = false\n", n);
+   pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = false\n", n);
 
 #define  conf_saveString(n,s) \
-pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = ", n); \
+pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = ", n); \
 pos += quoteLuaString(&buf[pos], sizeof(buf)-pos, s); \
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
@@ -798,14 +798,14 @@ int conf_saveConfig ( const char* file )
    if (nfile_fileExists(file) && (old = nfile_readFile(&oldsize, file)) != NULL) {
       /* See if we can find the generated section and preserve
        * whatever the user wrote before it */
-      const char *tmp = nstrnstr(old, "-- "GENERATED_START_COMMENT"\n", oldsize);
+      const char *tmp = strnstr(old, "-- "GENERATED_START_COMMENT"\n", oldsize);
       if (tmp != NULL) {
          /* Copy over the user content */
          pos = MIN(sizeof(buf), (size_t)(tmp - old));
          memcpy(buf, old, pos);
 
          /* See if we can find the end of the section */
-         tmp = nstrnstr(tmp, "-- "GENERATED_END_COMMENT"\n", oldsize-pos);
+         tmp = strnstr(tmp, "-- "GENERATED_END_COMMENT"\n", oldsize-pos);
          if (tmp != NULL) {
             /* Everything after this should also be preserved */
             oldfooter = tmp + strlen("-- "GENERATED_END_COMMENT"\n");
@@ -856,19 +856,8 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("vsync",conf.vsync);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Use OpenGL MipMaps"));
-   conf_saveBool("mipmaps",conf.mipmaps);
-   conf_saveEmptyLine();
-
    conf_saveComment(_("Use OpenGL Texture Compression"));
    conf_saveBool("compress",conf.compress);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Use OpenGL Texture Interpolation"));
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Use OpenGL Non-\"Power of Two\" textures if available"));
-   conf_saveComment(_("Lowers memory usage by a lot, but may cause slow downs on some systems"));
    conf_saveEmptyLine();
 
    /* Memory. */
@@ -891,6 +880,11 @@ int conf_saveConfig ( const char* file )
    conf_saveComment(_("Factor used to divide the above resolution with"));
    conf_saveComment(_("This is used to lower the rendering resolution, and scale to the above"));
    conf_saveFloat("scalefactor",conf.scalefactor);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Scale factor for rendered nebula backgrounds."));
+   conf_saveComment(_("Larger values can save time but lead to a blurrier appearance."));
+   conf_saveFloat("nebu_scale",conf.nebu_scale);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Run Naev in full-screen mode"));
@@ -998,13 +992,13 @@ int conf_saveConfig ( const char* file )
    /* Fonts. */
    conf_saveComment(_("Font sizes (in pixels) for Naev"));
    conf_saveComment(_("Warning, setting to other than the default can cause visual glitches!"));
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Console default: %d\n"), FONT_SIZE_CONSOLE_DEFAULT);
+   pos += scnprintf(&buf[pos], sizeof(buf)-pos, _("-- Console default: %d\n"), FONT_SIZE_CONSOLE_DEFAULT);
    conf_saveInt("font_size_console",conf.font_size_console);
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Intro default: %d\n"), FONT_SIZE_INTRO_DEFAULT);
+   pos += scnprintf(&buf[pos], sizeof(buf)-pos, _("-- Intro default: %d\n"), FONT_SIZE_INTRO_DEFAULT);
    conf_saveInt("font_size_intro",conf.font_size_intro);
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Default size: %d\n"), FONT_SIZE_DEF_DEFAULT);
+   pos += scnprintf(&buf[pos], sizeof(buf)-pos, _("-- Default size: %d\n"), FONT_SIZE_DEF_DEFAULT);
    conf_saveInt("font_size_def",conf.font_size_def);
-   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, _("-- Small size: %d\n"), FONT_SIZE_SMALL_DEFAULT);
+   pos += scnprintf(&buf[pos], sizeof(buf)-pos, _("-- Small size: %d\n"), FONT_SIZE_SMALL_DEFAULT);
    conf_saveInt("font_size_small",conf.font_size_small);
    conf_saveComment(_("Default font to use: unset"));
    if (conf.font_name_default) {
@@ -1134,10 +1128,10 @@ int conf_saveConfig ( const char* file )
          quoteLuaString(keyname, sizeof(keyname)-1, SDL_GetKeyName(key));
       /* If SDL can't describe the key, store it as an integer */
       if (type != KEYBIND_KEYBOARD || strcmp(keyname, "\"unknown key\"") == 0)
-         nsnprintf(keyname, sizeof(keyname)-1, "%d", key);
+         scnprintf(keyname, sizeof(keyname)-1, "%d", key);
 
       /* Write out a simple Lua table containing the keybind info */
-      pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
+      pos += scnprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
             keybind_info[i][0], typename, modname, keyname);
    }
    conf_saveEmptyLine();

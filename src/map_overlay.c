@@ -172,7 +172,7 @@ void ovr_refresh (void)
       if (!jp_isUsable(jp) || !jp_isKnown(jp))
          continue;
       /* Initialize the map overlay stuff. */
-      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+      snprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       moo[items].text_width = gl_printWidthRaw(&gl_smallFont, buf);
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
@@ -187,7 +187,7 @@ void ovr_refresh (void)
       if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
          continue;
       /* Initialize the map overlay stuff. */
-      nsnprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
+      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
       moo[items].text_width = gl_printWidthRaw( &gl_smallFont, buf );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;
@@ -228,6 +228,9 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    const float position_weight = .1; /**< How much to penalize the position. */
    const float object_weight = 1.; /**< Weight for overlapping with objects. */
    const float text_weight = 2.; /**< Weight for overlapping with text. */
+
+   if (items <= 0)
+      return;
 
    /* Fix radii which fit together. */
    MapOverlayRadiusConstraint cur, *fits = array_create(MapOverlayRadiusConstraint);
@@ -288,7 +291,6 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       for (i=0; i<items; i++) {
          cx = pos[i]->x / res;
          cy = pos[i]->y / res;
-         r  = mo[i]->radius;
          /* Move text if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+mo[i]->text_offx, cy+mo[i]->text_offy, moo[i].text_width, gl_smallFont.h, pos, mo, moo, items, i, 0, pixbuf, object_weight, text_weight )) {
             moo[i].text_offx += ox * update_rate;

@@ -282,14 +282,14 @@ int *generate_news( const char* faction )
          /* XXX: magic number */
          if (article_ptr->date && (article_ptr->date < 40000000000000)) {
             article_time = ntime_pretty(article_ptr->date, 1);
-            p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
+            p += scnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
                "%s: %s#0\n\n"
                , article_ptr->title, article_time, article_ptr->desc );
             free( article_time );
          }
          else {
-            p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
+            p += scnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
                "%s#0\n\n"
                , article_ptr->title, article_ptr->desc );
@@ -301,7 +301,7 @@ int *generate_news( const char* faction )
    } while (article_ptr != NULL && p < NEWS_MAX_LENGTH);
 
    if (p == 0)
-      p = nsnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));
+      p = scnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));
 
    len = MIN( p, NEWS_MAX_LENGTH );
 
@@ -336,7 +336,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
       i = gl_printWidthForText( NULL, &buf[p], w-40, NULL );
 
       /* Copy the line. */
-      array_push_back( &news_lines, nstrndup( buf+p, i ) );
+      array_push_back( &news_lines, strndup( buf+p, i ) );
       if (array_size( news_restores ) == 0)
          gl_printRestoreInit( &array_grow( &news_restores ) );
       else {
@@ -495,7 +495,7 @@ static char* make_clean( char* unclean )
    for (i=0, j=0; unclean[i] != 0; i++, j++) {
       if (unclean[i] == 27) {
          new[j++] = '\\';
-         j += nsnprintf( &new[j], l, "%.3d", unclean[i] )-1;
+         j += scnprintf( &new[j], l, "%.3d", unclean[i] )-1;
       }
       else
          new[j] = unclean[i];

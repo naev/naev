@@ -12,7 +12,6 @@
 #include "al.h"
 /** @endcond */
 
-#include "ncompat.h"
 #include "nopenal.h"
 #include "sound.h"
 

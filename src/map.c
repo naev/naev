@@ -51,8 +51,7 @@ static double map_xpos        = 0.; /**< Map X position. */
 static double map_ypos        = 0.; /**< Map Y position. */
 static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
-static StarSystem **map_path  = NULL; /**< The path to current selected system. */
-int map_npath                 = 0; /**< Number of systems in map_path. */
+static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
 static int cur_commod         = -1; /**< Current commodity selected. */
 static int cur_commod_mode    = 0; /**< 0 for difference, 1 for cost. */
@@ -319,7 +318,7 @@ void map_open (void)
     * Disable Autonav button if player lacks fuel or if target is not a valid hyperspace target.
     */
    if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP)
-         || map_selected == cur_system - systems_stack || map_npath == 0)
+         || map_selected == cur_system - systems_stack || array_size(map_path) == 0)
       window_disableButton( wid, "btnAutonav" );
 }
 
@@ -420,13 +419,13 @@ static void map_update( unsigned int wid )
    if ( cur_commod >= 0 ) {
       c = commod_known[cur_commod];
       if ( cur_commod_mode == 0 ) {
-         nsnprintf( buf, PATH_MAX,
+         snprintf( buf, sizeof(buf),
                    _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
                      "while negative/orange values mean a loss when sold at the corresponding system."),
                    _(c->name), _(sys->name) );
          window_modifyText( wid, "txtSystemStatus", buf );
       } else {
-         nsnprintf(buf, PATH_MAX, _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
+         snprintf(buf, sizeof(buf), _("Known %s prices shown. Galaxy-wide average: %.2f"), _(c->name), commod_av_gal_price);
          window_modifyText( wid, "txtSystemStatus", buf );
       }
    } else {
@@ -505,7 +504,7 @@ static void map_update( unsigned int wid )
       }
       else if (f != sys->planets[i]->faction /** @todo more verbosity */
                && (sys->planets[i]->faction > 0)) {
-         nsnprintf( buf, PATH_MAX, _("Multiple") );
+         snprintf( buf, sizeof(buf), _("Multiple") );
          break;
       }
    }
@@ -517,7 +516,7 @@ static void map_update( unsigned int wid )
    }
    else {
       if (i==array_size(sys->planets)) /* saw them all and all the same */
-         nsnprintf( buf, PATH_MAX, "%s", faction_longname(f) );
+         snprintf( buf, sizeof(buf), "%s", faction_longname(f) );
 
       /* Modify the image. */
       logo = faction_logoSmall(f);
@@ -567,14 +566,12 @@ static void map_update( unsigned int wid )
       sym = planet_getSymbol(sys->planets[i]);
 
       if (!hasPlanets)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "#%c%s%s#n",
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
       else
-         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n#%c%s%s#n",
+         p += scnprintf( &buf[p], sizeof(buf)-p, ",\n#%c%s%s#n",
                t, sym, _(sys->planets[i]->name) );
       hasPlanets = 1;
-      if (p > PATH_MAX)
-         break;
    }
    if (hasPlanets == 0) {
       strncpy( buf, _("None"), sizeof(buf)-1 );
@@ -597,12 +594,12 @@ static void map_update( unsigned int wid )
          services |= sys->planets[i]->services;
    buf[0] = '\0';
    p = 0;
-   /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
+   /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
       if (services & i)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", _(planet_getServiceName(i)) );
+         p += scnprintf( &buf[p], sizeof(buf)-p, "%s\n", _(planet_getServiceName(i)) );
    if (buf[0] == '\0')
-      p += nsnprintf( &buf[p], PATH_MAX-p, _("None"));
+      p += scnprintf( &buf[p], sizeof(buf)-p, _("None"));
    (void)p;
 
    window_modifyText( wid, "txtServices", buf );
@@ -626,32 +623,32 @@ static void map_update( unsigned int wid )
 
          /* Volatility */
          if (sys->nebu_volatility > 700.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Volatile %sNebula"), adj);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Volatile %sNebula"), adj);
          else if (sys->nebu_volatility > 300.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dangerous %sNebula"), adj);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dangerous %sNebula"), adj);
          else if (sys->nebu_volatility > 0.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Unstable %sNebula"), adj);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Unstable %sNebula"), adj);
          else
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("%sNebula"), adj);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("%sNebula"), adj);
       }
       /* Interference. */
       if (sys->interference > 0.) {
          if (buf[0] != '\0')
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
 
          if (sys->interference > 700.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Interference"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Interference"));
          else if (sys->interference < 300.)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Interference"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Interference"));
          else
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Interference"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Interference"));
       }
       /* Asteroids. */
       if (array_size(sys->asteroids) > 0) {
          double density;
 
          if (buf[0] != '\0')
-            p += nsnprintf(&buf[p], PATH_MAX-p, _(", "));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
 
          density = 0.;
          for (i=0; i<array_size(sys->asteroids); i++) {
@@ -659,11 +656,11 @@ static void map_update( unsigned int wid )
          }
 
          if (density >= 1.5)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Dense Asteroid Field"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Asteroid Field"));
          else if (density <= 0.5)
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Light Asteroid Field"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Asteroid Field"));
          else
-            p += nsnprintf(&buf[p], PATH_MAX-p, _("Asteroid Field"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("Asteroid Field"));
       }
       window_modifyText( wid, "txtSystemStatus", buf );
       (void)p;
@@ -1115,12 +1112,12 @@ static void map_renderPath( double x, double y, double a )
    StarSystem *sys1, *sys0;
    int jmax, jcur;
 
-   if (map_path != NULL) {
+   if (array_size(map_path) != 0) {
       sys0 = cur_system;
       jmax = pilot_getJumps(player.p); /* Maximum jumps. */
       jcur = jmax; /* Jump range remaining. */
 
-      for (j=0; j<map_npath; j++) {
+      for (j=0; j<array_size(map_path); j++) {
          sys1 = map_path[j];
          if (jcur == jmax && jmax > 0)
             col = &cGreen;
@@ -1215,9 +1212,9 @@ void map_renderNames( double bx, double by, double x, double y,
          /* Display. */
          n = sqrt(sys->jumps[j].hide);
          if (n == 0.)
-            nsnprintf( buf, sizeof(buf), "#gH: %.2f", n );
+            snprintf( buf, sizeof(buf), "#gH: %.2f", n );
          else
-            nsnprintf( buf, sizeof(buf), "H: %.2f", n );
+            snprintf( buf, sizeof(buf), "H: %.2f", n );
          gl_printRaw( &gl_smallFont, tx, ty, &cGrey70, -1, buf );
       }
    }
@@ -1510,7 +1507,7 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
    char buf[80], *line2;
    size_t charn;
 
-   nsnprintf( buf, 80, _("No price info for\n%s here"), _(c->name) );
+   snprintf( buf, sizeof(buf), _("No price info for\n%s here"), _(c->name) );
    line2 = u8_strchr( buf, '\n', &charn );
    if ( line2 != NULL ) {
       *line2++ = '\0';
@@ -1554,7 +1551,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          break;
       }
       /* Use map grey instead of default neutral colour */
-      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
+      l += scnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
                       omniscient ? faction_name( sys->presence[ i ].faction )
                                  : faction_shortname( sys->presence[ i ].faction ),
                       faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
@@ -1562,11 +1559,11 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          break;
    }
    if ( unknownPresence != 0 && l <= sizeof( buf ) )
-      l += nsnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
+      l += scnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
                       unknownPresence );
 
    if ( hasPresence == 0 )
-      nsnprintf( buf, sizeof( buf ), _( "None" ) );
+      snprintf( buf, sizeof( buf ), _( "None" ) );
 
    (void) l;
    window_modifyText( wid, name, buf );
@@ -1738,12 +1735,8 @@ static void map_genModeList(void)
    even_template = _("%s: Trade");
    for ( i=0; i<totGot; i++ ) {
       commod_text = _(commod_known[i]->name);
-      l = strlen(odd_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
-      array_push_back( &map_modes, malloc(l) );
-      nsnprintf( map_modes[2*i+1], l, odd_template, commod_text );
-      l = strlen(even_template) + strlen(commod_text) - 2 /*"%s"*/ + 1 /* '\0' */;
-      array_push_back( &map_modes, malloc(l) );
-      nsnprintf( map_modes[2*i+2], l, even_template, commod_text );
+      asprintf( &array_grow( &map_modes ), odd_template, commod_text );
+      asprintf( &array_grow( &map_modes ), even_template, commod_text );
    }
 }
 
@@ -1886,9 +1879,8 @@ void map_clear (void)
       map_xpos = 0.;
       map_ypos = 0.;
    }
-   free(map_path);
+   array_free(map_path);
    map_path = NULL;
-   map_npath = 0;
 
    /* default system is current system */
    map_selectCur();
@@ -1916,13 +1908,13 @@ static void map_selectCur (void)
  */
 StarSystem* map_getDestination( int *jumps )
 {
-   if (map_path == NULL)
+   if (array_size( map_path ) == 0)
       return NULL;
 
    if (jumps != NULL)
-      *jumps = map_npath;
+      *jumps = array_size( map_path );
 
-   return map_path[ map_npath-1 ];
+   return array_back( map_path );
 }
 
 
@@ -1940,21 +1932,16 @@ void map_jump (void)
    map_ypos = cur_system->pos.y;
 
    /* update path if set */
-   if (map_path != NULL) {
-      map_npath--;
-      if (map_npath == 0) { /* path is empty */
-         free( map_path );
-         map_path = NULL;
+   if (array_size(map_path) != 0) {
+      array_erase( &map_path, &map_path[0], &map_path[1] );
+      if (array_size(map_path) == 0)
          player_targetHyperspaceSet( -1 );
-      }
       else { /* get rid of bottom of the path */
-         memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
-
          /* set the next jump to be to the next in path */
          for (j=0; j<array_size(cur_system->jumps); j++) {
             if (map_path[0] == cur_system->jumps[j].target) {
                /* Restore selected system. */
-               map_selected = map_path[ map_npath ] - systems_stack;
+               map_selected = array_back( map_path ) - systems_stack;
 
                player_targetHyperspaceSet( j );
                break;
@@ -1995,21 +1982,15 @@ void map_select( StarSystem *sys, char shifted )
 
       /* select the current system and make a path to it */
       if (!shifted) {
-         free( map_path );
-          map_path  = NULL;
-          map_npath = 0;
+         array_free( map_path );
+         map_path  = NULL;
       }
 
       /* Try to make path if is reachable. */
       if (space_sysReachable(sys)) {
-         if (!shifted)
-            map_path = map_getJumpPath( &map_npath,
-                  cur_system->name, sys->name, 0, 1, NULL );
-         else
-            map_path = map_getJumpPath( &map_npath,
-                  cur_system->name, sys->name, 0, 1, map_path );
+         map_path = map_getJumpPath( cur_system->name, sys->name, 0, 1, map_path );
 
-         if (map_npath==0) {
+         if (array_size(map_path)==0) {
             player_hyperspacePreempt(0);
             player_targetHyperspaceSet( -1 );
             player_autonavAbortJump(NULL);
@@ -2190,19 +2171,17 @@ void map_setZoom(double zoom)
 /**
  * @brief Gets the jump path between two systems.
  *
- *    @param[out] njumps Number of jumps in the path.
  *    @param sysstart Name of the system to start from.
  *    @param sysend Name of the system to end at.
  *    @param ignore_known Whether or not to ignore if systems and jump points are known.
  *    @param show_hidden Whether or not to use hidden jumps points.
- *    @param the old star system (if we're merely extending the list)
- *    @return NULL on failure, the list of njumps elements systems in the path.
+ *    @param old_data the old path (if we're merely extending)
+ *    @return Array (array.h): the systems in the path. NULL on failure.
  */
-StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
-    const char* sysend, int ignore_known, int show_hidden,
-    StarSystem** old_data )
+StarSystem** map_getJumpPath( const char* sysstart, const char* sysend,
+    int ignore_known, int show_hidden, StarSystem** old_data )
 {
-   int i, j, cost, ojumps;
+   int i, j, cost, njumps, ojumps;
 
    StarSystem *sys, *ssys, *esys, **res;
    JumpPoint *jp;
@@ -2212,30 +2191,27 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    SysNode *ocost, *ccost;
 
    A_gc = NULL;
+   res = old_data;
+   ojumps = array_size( old_data );
 
    /* initial and target systems */
    ssys = system_get(sysstart); /* start */
    esys = system_get(sysend); /* goal */
 
    /* Set up. */
-   ojumps = 0;
-   if ((old_data != NULL) && (*njumps>0)) {
-      ssys   = system_get( old_data[ (*njumps)-1 ]->name );
-      ojumps = *njumps;
-   }
+   if (ojumps > 0)
+      ssys = system_get( array_back( old_data )->name );
 
    /* Check self. */
    if (ssys==esys || array_size(ssys->jumps)==0) {
-      (*njumps) = 0;
-      free( old_data );
+      array_free( res );
       return NULL;
    }
 
    /* system target must be known and reachable */
    if (!ignore_known && !sys_isKnown(esys) && !space_sysReachable(esys)) {
       /* can't reach - don't make path */
-      (*njumps) = 0;
-      free( old_data );
+      array_free( res );
       return NULL;
    }
 
@@ -2309,24 +2285,20 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 
    /* Build path backwards if not broken from loop. */
    if ( cur != NULL && esys == cur->sys ) {
-      (*njumps) = A_g(cur);
-      assert( *njumps > 0 );
-      if (old_data == NULL)
-         res      = malloc( sizeof(StarSystem*) * (*njumps) );
-      else {
-         *njumps  = *njumps + ojumps;
-         res      = realloc( old_data, sizeof(StarSystem*) * (*njumps) );
-      }
+      njumps = A_g(cur) + ojumps;
+      assert( njumps > ojumps );
+      if (res == NULL)
+         res = array_create_size( StarSystem*, njumps );
+      array_resize( &res, njumps );
       /* Build path. */
-      for (i=0; i<((*njumps)-ojumps); i++) {
-         res[(*njumps)-i-1] = cur->sys;
-         cur                = cur->parent;
+      for (i=0; i<njumps-ojumps; i++) {
+         res[njumps-i-1] = cur->sys;
+         cur = cur->parent;
       }
    }
    else {
-      (*njumps) = 0;
       res = NULL;
-      free( old_data );
+      array_free( old_data );
    }
 
    /* free the linked lists */
@@ -2360,22 +2332,28 @@ int map_map( const Outfit *map )
 
 
 /**
- * @brief Check to see if map data is already mapped (known).
+ * @brief Check to see if map data is limited to locations which are known
+ *        or in a nonexistent status for plot reasons.
  *
  *    @param map Map outfit to check.
  *    @return 1 if already mapped, 0 if it wasn't.
  */
-int map_isMapped( const Outfit* map )
+int map_isUseless( const Outfit* map )
 {
    int i;
+   Planet *p;
 
    for (i=0; i<array_size(map->u.map->systems);i++)
       if (!sys_isKnown(map->u.map->systems[i]))
          return 0;
 
-   for (i=0; i<array_size(map->u.map->assets);i++)
-      if (!planet_isKnown(map->u.map->assets[i]))
+   for (i=0; i<array_size(map->u.map->assets);i++) {
+      p = map->u.map->assets[i];
+      if (p->real != ASSET_REAL || !planet_hasSystem( p->name ) )
+         continue;
+      if (!planet_isKnown(p))
          return 0;
+   }
 
    for (i=0; i<array_size(map->u.map->jumps);i++)
       if (!jp_isKnown(map->u.map->jumps[i]))
@@ -2412,7 +2390,7 @@ int localmap_map( const Outfit *lmap )
    detect = lmap->u.lmap.asset_detect;
    for (i=0; i<array_size(cur_system->planets); i++) {
       p = cur_system->planets[i];
-      if (p->real != ASSET_REAL)
+      if (p->real != ASSET_REAL || !planet_hasSystem( p->name ) )
          continue;
       if (mod*p->hide <= detect)
          planet_setKnown( p );
@@ -2421,9 +2399,10 @@ int localmap_map( const Outfit *lmap )
 }
 
 /**
- * @brief Checks to see if the local map is mapped.
+ * @brief Checks to see if the local map is limited to locations which are known
+ *        or in a nonexistent status for plot reasons.
  */
-int localmap_isMapped( const Outfit *lmap )
+int localmap_isUseless( const Outfit *lmap )
 {
    int i;
    JumpPoint *jp;

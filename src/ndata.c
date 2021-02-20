@@ -6,7 +6,7 @@
  * @file ndata.c
  *
  * @brief Wrappers to set up and access game assets (mounted via PhysicsFS).
- *        The main search for data takes place in ndata_open().
+ *        We choose our underlying directories in ndata_setupWriteDir() and ndata_setupReadDirs().
  *        However, conf.c code may have seeded the search path based on command-line arguments.
  */
 
@@ -14,9 +14,9 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#if HAS_WIN32
+#if WIN32
 #include <windows.h>
-#endif /* HAS_WIN32 */
+#endif /* WIN32 */
 
 #include "physfs.h"
 #include "SDL.h"
@@ -29,9 +29,9 @@
 #include "array.h"
 #include "conf.h"
 #include "env.h"
-#if HAS_MACOS
+#if MACOS
 #include "glue_macos.h"
-#endif /* HAS_MACOS */
+#endif /* MACOS */
 #include "log.h"
 #include "nfile.h"
 #include "nstring.h"
@@ -97,12 +97,12 @@ void ndata_setupWriteDir (void)
       PHYSFS_setWriteDir( conf.datapath );
       return;
    }
-#if HAS_MACOS
+#if MACOS
    /* For historical reasons predating physfs adoption, this case is different. */
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "org.naev.Naev" ) );
 #else
    PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "naev" ) );
-#endif
+#endif /* MACOS */
    if (PHYSFS_getWriteDir() == NULL) {
       WARN(_("Cannot determine data path, using current directory."));
       PHYSFS_setWriteDir( "./naev/" );
@@ -120,12 +120,12 @@ void ndata_setupReadDirs (void)
    if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
       LOG(_("Added datapath from conf.lua file: %s"), conf.ndata);
 
-#if HAS_MACOS
+#if MACOS
    if ( !ndata_found() && macos_isBundle() && macos_resourcesPath( buf, PATH_MAX-4 ) >= 0 && strncat( buf, "/dat", 4 ) ) {
       LOG(_("Trying default datapath: %s"), buf);
       PHYSFS_mount( buf, NULL, 1 );
    }
-#endif /* HAS_MACOS */
+#endif /* MACOS */
 
    if ( !ndata_found() && env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >= 0 ) {
       LOG(_("Trying default datapath: %s"), buf);
@@ -258,14 +258,12 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
 {
    char *path;
    const char *fmt;
-   size_t dir_len, path_size;
+   size_t dir_len;
    PHYSFS_Stat stat;
 
    dir_len = strlen( origdir );
-   path_size = dir_len + strlen( fname ) + 2;
-   path = malloc( path_size );
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   nsnprintf( path, path_size, fmt, origdir, fname );
+   asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat )) {
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
@@ -299,7 +297,7 @@ int ndata_backupIfExists( const char *path )
    if ( !PHYSFS_exists( path ) )
       return 0;
 
-   nsnprintf(backup, PATH_MAX, "%s.backup", path);
+   snprintf(backup, sizeof(backup), "%s.backup", path);
 
    return ndata_copyIfExists( path, backup );
 }

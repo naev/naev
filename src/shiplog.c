@@ -629,9 +629,9 @@ void shiplog_listLog( int logid, const char *type,int *nentries, char ***logentr
       if ( use != NULL ) {
          n++;
          entries = realloc(entries, sizeof(char*) * n);
-         ntime_prettyBuf(buf, 5000, use->time, 2);
+         ntime_prettyBuf(buf, sizeof(buf), use->time, 2);
          pos = strlen(buf);
-         pos += nsnprintf(&buf[pos], 5000-pos, ":  %s", use->msg);
+         pos += scnprintf(&buf[pos], sizeof(buf)-pos, ":  %s", use->msg);
          entries[n-1] = strdup(buf);
       }
 

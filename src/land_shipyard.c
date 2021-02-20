@@ -37,7 +37,7 @@
 /*
  * Vars.
  */
-static Ship **shipyard_list = NULL; /**< List of available ships, valid when the shipyard image-array widget is. */
+static Ship **shipyard_list = NULL; /**< Array (array.h): Available ships, valid when the shipyard image-array widget is. */
 static Ship* shipyard_selected = NULL; /**< Currently selected shipyard ship. */
 
 
@@ -153,10 +153,10 @@ void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
-   shipyard_list = tech_getShip( land_planet->tech, &nships );
+   shipyard_list = tech_getShip( land_planet->tech );
+   nships = array_size( shipyard_list );
    cships = calloc( MAX(1,nships), sizeof(ImageArrayCell) );
    if (nships <= 0) {
-      assert(shipyard_list == NULL); /* That's how tech_getShip works, but for comfort's sake... */
       cships[0].image = NULL;
       cships[0].caption = strdup(_("None"));
       nships    = 1;
@@ -202,11 +202,11 @@ void shipyard_update( unsigned int wid, char* str )
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
 
    /* No ships */
-   if (i < 0 || shipyard_list == NULL) {
+   if (i < 0 || array_size(shipyard_list) == 0) {
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
-      nsnprintf( buf, PATH_MAX,
+      snprintf( buf, sizeof(buf),
             _("None\n"
             "N/A\n"
             "N/A\n"
@@ -253,10 +253,10 @@ void shipyard_update( unsigned int wid, char* str )
    else if (player_hasLicense( ship->license ))
       strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
    else
-      nsnprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
+      snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
    buf_license[ sizeof(buf_license)-1 ] = '\0';
 
-   nsnprintf( buf, PATH_MAX,
+   snprintf( buf, sizeof(buf),
          _("%s\n"
          "%s\n"
          "%s\n"
@@ -320,7 +320,7 @@ void shipyard_update( unsigned int wid, char* str )
  */
 void shipyard_cleanup (void)
 {
-   free( shipyard_list );
+   array_free( shipyard_list );
    shipyard_list = NULL;
    shipyard_selected = NULL;
 }
@@ -363,7 +363,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    HookParam hparam[2];
 
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
-   if (i < 0 || shipyard_list == NULL)
+   if (i < 0 || array_size(shipyard_list) == 0)
       return;
 
    ship = shipyard_list[i];

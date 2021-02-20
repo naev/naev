@@ -8,36 +8,35 @@
  * @brief Handles low-level debugging hooks.
  */
 
-/* This module uses GNU extensions to enable FPU exceptions. */
-#define _GNU_SOURCE
-
 /** @cond */
 #include "naev.h"
 
-#if defined(HAVE_FENV_H) && defined(DEBUGGING)
-#include <fenv.h>
-#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) */
-
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
+#if LINUX && HAS_BFD && DEBUGGING
 #include <signal.h>
 #include <execinfo.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <bfd.h>
 #include <assert.h>
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
+#endif /* LINUX && HAS_BFD && DEBUGGING */
 /** @endcond */
 
 #include "log.h"
 
+#if HAVE_FENV_H && DEBUGGING
+/* This module uses GNU extensions to enable FPU exceptions. */
+#define _GNU_SOURCE
+#include <fenv.h>
+#endif /* HAVE_FENV_H && DEBUGGING */
 
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
+
+#if LINUX && HAS_BFD && DEBUGGING
 static bfd *abfd      = NULL;
 static asymbol **syms = NULL;
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
+#endif /* LINUX && HAS_BFD && DEBUGGING */
 
 
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
+#if LINUX && HAS_BFD && DEBUGGING
 /**
  * @brief Gets the string related to the signal code.
  *
@@ -160,7 +159,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    /* Always exit. */
    exit(1);
 }
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
+#endif /* LINUX && HAS_BFD && DEBUGGING */
 
 
 /**
@@ -168,7 +167,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
  */
 void debug_sigInit (void)
 {
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
+#if LINUX && HAS_BFD && DEBUGGING
    char **matching;
    struct sigaction sa, so;
    long symcount;
@@ -209,7 +208,7 @@ void debug_sigInit (void)
    if (so.sa_handler == SIG_IGN)
       DEBUG( _("Unable to set up SIGABRT signal handler.") );
    DEBUG( _("BFD backtrace catching enabled.") );
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
+#endif /* LINUX && HAS_BFD && DEBUGGING */
 }
 
 
@@ -218,9 +217,9 @@ void debug_sigInit (void)
  */
 void debug_sigClose (void)
 {
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
+#if LINUX && HAS_BFD && DEBUGGING
    bfd_close( abfd );
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
+#endif /* LINUX && HAS_BFD && DEBUGGING */
 }
 
 
@@ -229,7 +228,7 @@ void debug_sigClose (void)
  */
 void debug_enableFPUExcept (void)
 {
-#if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && HAS_LINUX
+#if HAVE_FEENABLEEXCEPT && DEBUGGING
       feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
-#endif /* defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && HAS_LINUX */
+#endif /* HAVE_FEENABLEEXCEPT && DEBUGGING */
 }

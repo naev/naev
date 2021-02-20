@@ -44,7 +44,7 @@ int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o );
 double pilot_weapSetRange( Pilot* p, int id, int level );
 double pilot_weapSetSpeed( Pilot* p, int id, int level );
 void pilot_weapSetCleanup( Pilot* p, int id );
-PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id, int *n );
+PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id );
 
 
 /* Properties. */

@@ -45,7 +45,8 @@ subdir('po')
 ####
 buildExec = get_option('executable')
 if buildExec.disabled() == false
-   debug    = get_option('debug')
+   debug = get_option('debug')
+   debug_arrays = get_option('debug_arrays')
    paranoid = get_option('paranoid')
    config_data.set_quoted('PACKAGE', meson.project_name())
    config_data.set_quoted('PACKAGE_NAME', meson.project_name())
@@ -57,6 +58,7 @@ if buildExec.disabled() == false
    config_data.set('VMINOR', meson.project_version().split('.')[1])
    config_data.set('VREV', meson.project_version().split('.')[2].split('-')[0].split('+')[0])
    config_data.set('DEBUG', debug ? 1 : false)
+   config_data.set('DEBUG_ARRAYS', debug_arrays ? 1 : false)
    config_data.set('DEBUGGING', debug ? 1 : false)
    config_data.set('DEBUG_PARANOID', paranoid ? 1 : false)
    summary('Enabled' , debug   , section: 'Debug', bool_yn: true)
@@ -148,6 +150,7 @@ if buildExec.disabled() == false
    naev_deps += [openal, vorbis, vorbisfile]
 
    # Standard library feature tests
+   config_data.set10('HAVE_ASPRINTF', cc.has_function('asprintf'))
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
@@ -155,8 +158,11 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
-   config_data.set10('HAVE_OV_READ_FILTER', cc.has_header_symbol('vorbis/vorbisfile.h', 'ov_read_filter'))
-   config_data.set10('HAVE_STDALIGN_H', cc.has_header('stdalign.h'))
+   config_data.set10('HAVE_STRCASESTR', cc.has_function('strcasestr'))
+   # strndup() detectin must work around this bug: https://github.com/mesonbuild/meson/issues/3672
+   config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
+   config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))
+   config_data.set10('HAVE_VASPRINTF', cc.has_function('vasprintf'))
 
    # OS declaration (Shows which OS we built this with in the options menu)
    if host_machine.system() == 'linux'

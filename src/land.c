@@ -234,14 +234,14 @@ void land_errDialogueBuild( const char *fmt, ... )
       return;
    else { /* get the message */
       va_start(ap, fmt);
-      vsnprintf(errorreason, 512, fmt, ap);
+      vsnprintf(errorreason, sizeof(errorreason), fmt, ap);
       va_end(ap);
    }
 
    if (errorlist_ptr == NULL) /* Initialize on first run. */
-      errorappend = nsnprintf( errorlist, sizeof(errorlist), "%s", errorreason );
+      errorappend = scnprintf( errorlist, sizeof(errorlist), "%s", errorreason );
    else /* Append newest error to the existing list. */
-      nsnprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
+      scnprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
    errorlist_ptr = errorlist;
 }
 
@@ -721,7 +721,7 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
-   nsnprintf( txt, sizeof(txt), n_(
+   snprintf( txt, sizeof(txt), n_(
             "%s\n%d Tonne", "%s\n%d Tonnes", player.p->cargo_free),
          buf, player.p->cargo_free );
    free(buf);
@@ -740,7 +740,7 @@ static void misn_update( unsigned int wid, char* str )
    mission_sysComputerMark( misn );
    if (misn->markers != NULL)
       map_center( system_getIndex( misn->markers[0].sys )->name );
-   nsnprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
+   snprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
    window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
@@ -817,7 +817,7 @@ void land_updateMainTab (void)
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
-   nsnprintf( buf, sizeof(buf),
+   snprintf( buf, sizeof(buf),
          _("%s\n"
          "%s\n"
          "%s\n"
@@ -842,7 +842,7 @@ void land_updateMainTab (void)
    else {
       /* Refuel button. */
       credits2str( cred, o->price, 0 );
-      nsnprintf( buf, sizeof(buf), _("Buy Local Map (%s)"), cred );
+      snprintf( buf, sizeof(buf), _("Buy Local Map (%s)"), cred );
       window_addButtonKey( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
             LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnMap",
             buf, spaceport_buyMap, SDLK_b );
@@ -1044,7 +1044,7 @@ void land_genWindows( int load, int changetab )
       misn_open( land_getWid(LAND_WINDOW_MISSION) );
    /* Outfits. */
    if (should_open( PLANET_SERVICE_OUTFITS, LAND_WINDOW_OUTFITS ))
-      outfits_open( land_getWid(LAND_WINDOW_OUTFITS), NULL, 0 );
+      outfits_open( land_getWid(LAND_WINDOW_OUTFITS), NULL );
    /* Shipyard. */
    if (should_open( PLANET_SERVICE_SHIPYARD, LAND_WINDOW_SHIPYARD ))
       shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );

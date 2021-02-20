@@ -478,7 +478,7 @@ int ai_pinit( Pilot *p, const char *ai )
    prof = ai_getProfile(buf);
    if (prof == NULL) {
       WARN( _("AI Profile '%s' not found, using dummy fallback."), buf);
-      nsnprintf(buf, sizeof(buf), "dummy" );
+      snprintf(buf, sizeof(buf), "dummy" );
       prof = ai_getProfile(buf);
    }
    p->ai = prof;
@@ -582,7 +582,7 @@ int ai_load (void)
       if ((flen > suflen) &&
             strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
 
-         nsnprintf( path, PATH_MAX, AI_PATH"%s", files[i] );
+         snprintf( path, sizeof(path), AI_PATH"%s", files[i] );
          if (ai_loadProfile(path)) /* Load the profile */
             WARN( _("Error loading AI profile '%s'"), path);
       }
@@ -3159,7 +3159,7 @@ static int aiL_shoot_indicator( lua_State *L )
 static int aiL_distress( lua_State *L )
 {
    if (lua_isstring(L,1))
-      nsnprintf( aiL_distressmsg, PATH_MAX, "%s", lua_tostring(L,1) );
+      snprintf( aiL_distressmsg, sizeof(aiL_distressmsg), "%s", lua_tostring(L,1) );
    else if (lua_isnil(L,1))
       aiL_distressmsg[0] = '\0';
    else

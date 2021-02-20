@@ -135,9 +135,6 @@ void log_redirect (void)
    ts = localtime(&cur);
    strftime( timestr, sizeof(timestr), "%Y-%m-%d_%H-%M-%S", ts );
 
-   outfiledouble = malloc(PATH_MAX);
-   errfiledouble = malloc(PATH_MAX);
-
    PHYSFS_mkdir( "logs" );
    logout_file = PHYSFS_openWrite( "logs/stdout.txt" );
    if ( logout_file == NULL )
@@ -147,8 +144,8 @@ void log_redirect (void)
    if ( logerr_file == NULL )
       WARN(_("Unable to redirect stderr to file"));
 
-   nsnprintf( outfiledouble, PATH_MAX, "logs/%s_stdout.txt", timestr );
-   nsnprintf( errfiledouble, PATH_MAX, "logs/%s_stderr.txt", timestr );
+   asprintf( &outfiledouble, "logs/%s_stdout.txt", timestr );
+   asprintf( &errfiledouble, "logs/%s_stderr.txt", timestr );
 }
 
 
@@ -164,7 +161,7 @@ int log_isTerminal (void)
    if (isatty(fileno(stdin)) && (isatty(fileno(stdout)) || isatty(fileno(stderr))))
       return 1;
 
-#elif HAS_WIN32
+#elif WIN32
    struct stat buf;
 
    /* Not interactive if stdin isn't a FIFO or character device. */

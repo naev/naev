@@ -396,12 +396,11 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 /**
  * @brief Gets the name of all the planets that belong to factions.
  *
- *    @param factions Factions to check against.
- *    @param nfactions Number of factions in factions.
+ *    @param factions Array (array.h): Factions to check against.
  *    @param landable Whether the search is limited to landable planets.
  *    @return An array (array.h) of faction names.  Individual names are not allocated.
  */
-char** space_getFactionPlanet( int *factions, int nfactions, int landable )
+char** space_getFactionPlanet( int *factions, int landable )
 {
    int i,j,k, f;
    Planet* planet;
@@ -419,7 +418,7 @@ char** space_getFactionPlanet( int *factions, int nfactions, int landable )
 
          /* Check if it's in factions. */
          f = 0;
-         for (k=0; k<nfactions; k++) {
+         for (k=0; k<array_size(factions); k++) {
             if (planet->faction == factions[k]) {
                f = 1;
                break;
@@ -697,14 +696,13 @@ int space_sysReachable( StarSystem *sys )
  */
 int space_sysReallyReachable( char* sysname )
 {
-   int njumps;
    StarSystem** path;
 
    if (strcmp(sysname,cur_system->name)==0)
       return 1;
-   path = map_getJumpPath( &njumps, cur_system->name, sysname, 1, 1, NULL );
+   path = map_getJumpPath( cur_system->name, sysname, 1, 1, NULL );
    if (path != NULL) {
-      free(path);
+      array_free(path);
       return 1;
    }
    return 0;
@@ -738,22 +736,6 @@ StarSystem* system_getAll (void)
 
 
 /**
- * @brief Checks to see if a system exists.
- *
- *    @param sysname Name of the system to match.
- *    @return 1 if the system exists.
- */
-int system_exists( const char* sysname )
-{
-   int i;
-   for (i=0; i<array_size(systems_stack); i++)
-      if (strcmp(sysname, systems_stack[i].name)==0)
-         return 1;
-   return 0;
-}
-
-
-/**
  * @brief Checks to see if a system exists case insensitively.
  *
  *    @param sysname Name of the system to match (case insensitive).
@@ -783,7 +765,7 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<array_size(systems_stack); i++) {
-      if (nstrcasestr( _(systems_stack[i].name), sysname ) != NULL) {
+      if (strcasestr( _(systems_stack[i].name), sysname ) != NULL) {
          names[len] = systems_stack[i].name;
          len++;
       }
@@ -1004,7 +986,7 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<array_size(planet_stack); i++) {
-      if (nstrcasestr( _(planet_stack[i].name), planetname ) != NULL) {
+      if (strcasestr( _(planet_stack[i].name), planetname ) != NULL) {
          names[len] = planet_stack[i].name;
          len++;
       }
@@ -1711,7 +1693,7 @@ static int planets_load ( void )
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
-   size_t i, len;
+   size_t i;
    Commodity **stdList;
 
    /* Load landing stuff. */
@@ -1736,9 +1718,7 @@ static int planets_load ( void )
    /* Load XML stuff. */
    planet_files = PHYSFS_enumerateFiles( PLANET_DATA_PATH );
    for (i=0; planet_files[i]!=NULL; i++) {
-      len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
-      file = malloc( len );
-      nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
+      asprintf( &file, "%s%s", PLANET_DATA_PATH, planet_files[i]);
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
          free(file);
@@ -1995,13 +1975,13 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
-               nsnprintf( str, PATH_MAX, PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
+               snprintf( str, sizeof(str), PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
                planet->radius = -1.;
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
-               nsnprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
+               snprintf( str, sizeof(str), PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
                planet->gfx_exterior = strdup(str);
                planet->gfx_exteriorPath = xml_getStrd(cur);
             }
@@ -2643,9 +2623,6 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    double x, y;
    StarSystem *target;
 
-   x = 0.;
-   y = 0.;
-
    /* Get target. */
    xmlr_attr_strd( node, "target", buf );
    if (buf == NULL) {
@@ -2658,6 +2635,7 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
       free(buf);
       return -1;
    }
+   free(buf);
 
 #ifdef DEBUGGING
    int i;
@@ -2677,16 +2655,8 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    memset( j, 0, sizeof(JumpPoint) );
 
    /* Handle jump point position. We want both x and y, or we autoposition the jump point. */
-   xmlr_attr( node, "x", buf );
-   if (buf == NULL)
-      jp_setFlag(j,JP_AUTOPOS);
-   else
-      x = atof(buf);
-   xmlr_attr( node, "y", buf );
-   if (buf == NULL)
-      jp_setFlag(j,JP_AUTOPOS);
-   else
-      y = atof(buf);
+   xmlr_attr_float_def( node, "x", x, HUGE_VAL );
+   xmlr_attr_float_def( node, "y", y, HUGE_VAL );
 
    /* Handle jump point type. */
    xmlr_attr_strd( node, "type", buf );
@@ -2701,12 +2671,13 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
 
    /* Set some stuff. */
    j->target = target;
-   free(buf);
    j->targetid = j->target->id;
    j->radius = 200.;
 
-   if (!jp_isFlag(j,JP_AUTOPOS))
+   if (x < HUGE_VAL && y < HUGE_VAL)
       vect_cset( &j->pos, x, y );
+   else
+      jp_setFlag(j,JP_AUTOPOS);
 
    /* Square to allow for linear multiplication with squared distances. */
    j->hide = pow2(j->hide);
@@ -3022,7 +2993,7 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
 int space_load (void)
 {
    size_t i;
-   int j, len;
+   int j;
    int ret;
    StarSystem *sys;
    char **asteroid_files, file[PATH_MAX];
@@ -3059,8 +3030,7 @@ int space_load (void)
    asteroid_gfx = malloc( sizeof(glTexture*) * nasterogfx );
 
    for (i=0; asteroid_files[i]!=NULL; i++) {
-      len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(asteroid_files[i])+11);
-      nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",asteroid_files[i] );
+      snprintf( file, sizeof(file), "%s%s", PLANET_GFX_SPACE_PATH"asteroid/", asteroid_files[i] );
       asteroid_gfx[i] = gl_newImage( file, OPENGL_TEX_MIPMAPS );
    }
 
@@ -3105,7 +3075,7 @@ int space_load (void)
  */
 static int asteroidTypes_load (void)
 {
-   int len, namdef, qttdef;
+   int namdef, qttdef;
    AsteroidType *at;
    char *str, file[PATH_MAX];
    xmlNodePtr node, cur, child;
@@ -3144,8 +3114,7 @@ static int asteroidTypes_load (void)
          do {
             if (xml_isNode(cur,"gfx")) {
                str = xml_get(cur);
-               len  = (strlen(PLANET_GFX_SPACE_PATH)+strlen(str)+10);
-               nsnprintf( file, len,"%s%s",PLANET_GFX_SPACE_PATH"asteroid/",str);
+               snprintf( file, sizeof(file), "%s%s", PLANET_GFX_SPACE_PATH"asteroid/", str);
                array_push_back( &at->gfxs, gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
             }
 
@@ -3208,7 +3177,7 @@ static int systems_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
-   size_t i, len;
+   size_t i;
 
    /* Allocate if needed. */
    if (systems_stack == NULL)
@@ -3220,9 +3189,7 @@ static int systems_load (void)
     * First pass - loads all the star systems_stack.
     */
    for (i=0; system_files[i]!=NULL; i++) {
-      len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
-      file = malloc( len );
-      nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
+      asprintf( &file, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       doc = xml_parsePhysFS( file );
       if (doc == NULL)
@@ -3248,9 +3215,7 @@ static int systems_load (void)
     * Second pass - loads all the jump routes.
     */
    for (i=0; system_files[i]!=NULL; i++) {
-      len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
-      file = malloc( len );
-      nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
+      asprintf( &file, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       doc = xml_parsePhysFS( file );
       free( file );
@@ -3456,7 +3421,7 @@ static void space_renderAsteroid( Asteroid *a )
    for (i=0; i<array_size(at->material); i++) {
       com = at->material[i];
       gl_blitSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
-      nsnprintf(c, sizeof(c), "x%i", at->quantity[i]);
+      snprintf(c, sizeof(c), "x%i", at->quantity[i]);
       gl_printRaw( &gl_smallFont, nx+10, ny-5-10.*i, &cFontWhite, -1., c );
    }
 }
@@ -4136,7 +4101,7 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_rewa
                  50., &dmg, NULL, EXPL_MODE_SHIP );
 
    /* Play random explosion sound. */
-   nsnprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
+   snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
    sound_playPos( sound_get(buf), a->pos.x, a->pos.y, a->vel.x, a->vel.y );
 
    if ( give_reward ) {

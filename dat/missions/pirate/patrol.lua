@@ -40,7 +40,7 @@ require "missions/neutral/patrol"
 pay_title = _("Mission Completed")
 pay_text    = {}
 pay_text[1] = _("The crime boss grins and hands you your pay.")
-pay_text[2] = _("The crime boss who gave you the mission pays you for your work as promised, though not before trying (and failing) to pick your pocket.")
+pay_text[2] = _("The local crime boss pays what you were promised, though not before trying (and failing) to pick your pocket.")
 pay_text[3] = _("You are hit in the face with something and glare in the direction it came from, only to see the crime boss waving at you. When you look down, you see that it is your agreed-upon payment, so you take it and let out a grin.")
 pay_text[4] = _("You are handed your pay in what seems to be a million different credit chips by the crime boss, but sure enough, it adds up to exactly the amount promised.")
 
@@ -67,7 +67,7 @@ osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate outsiders")
-osd_msg[4] = _("Land on the nearest %s planet and collect your pay")
+osd_msg[4] = _("Land in %s territory to collect your pay")
 osd_msg["__save"] = true
 
 mark_name = _("Patrol Point")

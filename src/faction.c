@@ -157,46 +157,38 @@ int faction_get( const char* name )
 
 
 /**
- * @brief Gets all the factions.
+ * @brief Returns all faction IDs in an array (array.h).
  */
-int* faction_getAll( int *n )
+int* faction_getAll()
 {
    int i;
    int *f;
-   int m;
 
-   /* Set up. */
-   f  = malloc( sizeof(int) * array_size(faction_stack) );
+   f  = array_create_size( int, array_size(faction_stack) );
 
-   /* Get IDs. */
-   m = 0;
    for (i=0; i<array_size(faction_stack); i++)
       if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ))
-         f[m++] = i;
+         array_push_back( &f, i );
 
-   *n = m;
    return f;
 }
 
 /**
- * @brief Gets all the known factions.
+ * @brief Gets all the known factions in an array (array.h).
  */
-int* faction_getKnown( int *n )
+int* faction_getKnown()
 {
    int i;
    int *f;
-   int m;
 
    /* Set up. */
-   f  = malloc( sizeof(int) * array_size(faction_stack) );
+   f  = array_create_size( int, array_size(faction_stack) );
 
    /* Get IDs. */
-   m = 0;
    for (i=0; i<array_size(faction_stack); i++)
       if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) && faction_isKnown_( &faction_stack[i] ))
-         f[m++] = i;
+         array_push_back( &f, i );
 
-   *n = m;
    return f;
 }
 
@@ -207,8 +199,8 @@ void faction_clearKnown()
 {
    int i;
 
-   for ( i=0; i<array_size(faction_stack); i++)
-      if ( faction_isKnown_( &faction_stack[i] ))
+   for (i=0; i<array_size(faction_stack); i++)
+      if (faction_isKnown_( &faction_stack[i] ))
          faction_rmFlag( &faction_stack[i], FACTION_KNOWN );
 }
 
@@ -400,10 +392,9 @@ const glColour* faction_colour( int f )
  * @brief Gets the list of enemies of a faction.
  *
  *    @param f Faction to get enemies of.
- *    @param[out] n Number of allies.
- *    @return The enemies of the faction.
+ *    @return Array (array.h): The enemies of the faction.
  */
-int* faction_getEnemies( int f, int *n )
+int* faction_getEnemies( int f )
 {
    int i;
    int *enemies;
@@ -428,7 +419,6 @@ int* faction_getEnemies( int f, int *n )
       faction_stack[f].enemies = enemies;
    }
 
-   *n = array_size( faction_stack[f].enemies );
    return faction_stack[f].enemies;
 }
 
@@ -437,10 +427,9 @@ int* faction_getEnemies( int f, int *n )
  * @brief Gets the list of allies of a faction.
  *
  *    @param f Faction to get allies of.
- *    @param[out] n Number of allies.
- *    @return The allies of the faction.
+ *    @return Array (array.h): The allies of the faction.
  */
-int* faction_getAllies( int f, int *n )
+int* faction_getAllies( int f )
 {
    int i;
    int *allies;
@@ -465,7 +454,6 @@ int* faction_getAllies( int f, int *n )
       faction_stack[f].allies = allies;
    }
 
-   *n = array_size(faction_stack[f].allies);
    return faction_stack[f].allies;
 }
 
@@ -1139,7 +1127,7 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
  *    @param b Faction B.
  *    @return 1 if A and B are enemies, 0 otherwise.
  */
-int areEnemies( int a, int b)
+int areEnemies( int a, int b )
 {
    Faction *fa, *fb;
    int i;
@@ -1305,9 +1293,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "spawn")) {
          if (temp->sched_env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'spawn' tag."), temp->name);
-         nsnprintf( buf, sizeof(buf), FACTIONS_PATH"spawn/%s.lua", xml_raw(node) );
+         snprintf( buf, sizeof(buf), FACTIONS_PATH"spawn/%s.lua", xml_raw(node) );
          temp->sched_env = nlua_newEnv(1);
-         nlua_loadStandard( temp->sched_env);
+         nlua_loadStandard( temp->sched_env );
          dat = ndata_read( buf, &ndat );
          if (nlua_dobufenv(temp->sched_env, dat, ndat, buf) != 0) {
             WARN(_("Failed to run spawn script: %s\n"
@@ -1324,7 +1312,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "standing")) {
          if (temp->env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'standing' tag."), temp->name);
-         nsnprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", xml_raw(node) );
+         snprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", xml_raw(node) );
          temp->env = nlua_newEnv(1);
          nlua_loadStandard( temp->env );
          dat = ndata_read( buf, &ndat );
@@ -1348,7 +1336,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "equip")) {
          if (temp->equip_env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'equip' tag."), temp->name);
-         nsnprintf( buf, sizeof(buf), FACTIONS_PATH"equip/%s.lua", xml_raw(node) );
+         snprintf( buf, sizeof(buf), FACTIONS_PATH"equip/%s.lua", xml_raw(node) );
          temp->equip_env = nlua_newEnv(1);
          nlua_loadStandard( temp->equip_env );
          dat = ndata_read( buf, &ndat );
@@ -1367,9 +1355,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node,"logo")) {
          if (temp->logo_small != NULL)
             WARN(_("Faction '%s' has duplicate 'logo' tag."), temp->name);
-         nsnprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
+         snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s_small.png", xml_get(node) );
          temp->logo_small = gl_newImage(buf, 0);
-         nsnprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_tiny.png", xml_get(node));
+         snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s_tiny.png", xml_get(node) );
          temp->logo_tiny = gl_newImage(buf, 0);
          continue;
       }
@@ -1700,60 +1688,42 @@ int pfaction_load( xmlNodePtr parent )
 /**
  * @brief Returns an array of faction ids.
  *
- *    @param *n Writes the number of elements.
  *    @param which Which factions to get. (0,1,2,3 : all, friendly, neutral, hostile)
- *    @return A pointer to an array, or NULL.
+ *    @return Array (array.h): The faction IDs of the specified alignment.
  */
-int *faction_getGroup( int *n, int which )
+int *faction_getGroup( int which )
 {
    int *group;
    int i;
 
-   /* Set defaults. */
-   group = NULL;
-   *n = 0;
-
    switch(which) {
       case 0: /* 'all' */
-         *n = array_size(faction_stack);
-         group = malloc(sizeof(int) * *n);
-         for (i = 0; i < array_size(faction_stack); i++)
-            group[i] = i;
-         break;
+         return array_copy( int, faction_stack );
 
       case 1: /* 'friendly' */
+         group = array_create( int );
          for (i = 0; i < array_size(faction_stack); i++)
-            if (areAllies(FACTION_PLAYER, i)) {
-               (*n)++;
-               group = realloc(group, sizeof(int) * *n);
-               group[*n - 1] = i;
-            }
-         break;
+            if (areAllies( FACTION_PLAYER, i ))
+               array_push_back( &group, i );
+         return group;
 
       case 2: /* 'neutral' */
+         group = array_create( int );
          for (i = 0; i < array_size(faction_stack); i++)
-            if (!areAllies(FACTION_PLAYER, i) && !areEnemies(FACTION_PLAYER, i)) {
-               (*n)++;
-               group = realloc(group, sizeof(int) * *n);
-               group[*n - 1] = i;
-            }
-         break;
+            if (!areAllies( FACTION_PLAYER, i ) && !areEnemies( FACTION_PLAYER, i ))
+               array_push_back( &group, i );
+         return group;
 
       case 3: /* 'hostile' */
+         group = array_create( int );
          for (i = 0; i < array_size(faction_stack); i++)
-            if (areEnemies(FACTION_PLAYER, i)) {
-               (*n)++;
-               group = realloc(group, sizeof(int) * *n);
-               group[*n - 1] = i;
-            }
-         break;
+            if (areEnemies( FACTION_PLAYER, i ))
+               array_push_back( &group, i );
+         return group;
 
       default:
-         /* Defaults have already been set. */
-         break;
+         return NULL;
    }
-
-   return group;
 }
 
 

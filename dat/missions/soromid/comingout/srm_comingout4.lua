@@ -174,8 +174,8 @@ function ambush_timer ()
       "Hyena", "Hyena"
    }
    local leaderthug
-   for i, j in ipairs( thugships ) do
-      local p = pilot.add( j, "Comingout_thugs", misplanet, "Thug " .. j )
+   for i, shiptype in ipairs( thugships ) do
+      local p = pilot.add( shiptype, "Comingout_thugs", misplanet, _("Thug %s"):format( _(shiptype) ) )
       p:setHostile()
       p:setLeader( leaderthug )
 

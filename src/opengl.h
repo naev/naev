@@ -16,7 +16,6 @@
 /** @endcond */
 
 #include "colour.h"
-#include "ncompat.h"
 /* We put all the other opengl stuff here to only have to include one header.  */
 #include "opengl_matrix.h"
 #include "opengl_render.h"
@@ -25,20 +24,6 @@
 #include "opengl_vbo.h"
 #include "physics.h"
 #include "shaders.gen.h"
-
-/* Recommended for compatibility and such */
-#if HAS_BIGENDIAN
-#  define RMASK   0xff000000 /**< Red bit mask. */
-#  define GMASK   0x00ff0000 /**< Green bit mask. */
-#  define BMASK   0x0000ff00 /**< Blue bit mask. */
-#  define AMASK   0x000000ff /**< Alpha bit mask. */
-#else
-#  define RMASK   0x000000ff /**< Red bit mask. */
-#  define GMASK   0x0000ff00 /**< Green bit mask. */
-#  define BMASK   0x00ff0000 /**< Blue bit mask. */
-#  define AMASK   0xff000000 /**< Alpha bit mask. */
-#endif
-#define RGBAMASK  RMASK,GMASK,BMASK,AMASK
 
 
 /*
