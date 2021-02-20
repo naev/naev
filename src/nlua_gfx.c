@@ -237,7 +237,7 @@ static int gfxL_renderTexRaw( lua_State *L )
    if (top > 11)
       col = luaL_checkcolour(L, 12 );
    angle = luaL_optnumber(L,13,0.);
-   if (top > 13)
+   if ((top > 13) && !lua_isnil(L,14))
       shader = luaL_checkshader(L,14);
 
    /* Some safety checking. */

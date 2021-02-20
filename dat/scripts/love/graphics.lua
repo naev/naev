@@ -130,8 +130,12 @@ function graphics.Image:draw( ... )
    end
    x,y,w,h = _xy(x,y,w*sx,h*sy)
    -- TODO be less horribly inefficient
-   graphics._shader.shader:send( "love_ScreenSize", {love.w, love.h, 0., 0.} )
-   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r, graphics._shader.shader )
+   local shader = graphics._shader
+   if shader ~= nil then
+      shader = shader.shader
+      shader:send( "love_ScreenSize", {love.w, love.h, 0., 0.} )
+   end
+   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r, shader )
 end
 
 
