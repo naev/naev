@@ -444,7 +444,6 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
-Pilot* pilot_copy( Pilot* src );
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 

@@ -2798,66 +2798,6 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
 
 
 /**
- * @brief Copies src pilot to dest.
- *
- *    @param src Pilot to copy.
- *    @return Copy of src.
- */
-Pilot* pilot_copy( Pilot* src )
-{
-   int i;
-   Pilot *dest = malloc(sizeof(Pilot));
-
-   /* Copy data over, we'll have to reset all the pointers though. */
-   *dest = *src;
-
-   /* Copy names. */
-   if (src->name)
-      dest->name = strdup(src->name);
-
-   /* Copy solid. */
-   dest->solid = malloc(sizeof(Solid));
-   *dest->solid = *src->solid;
-
-   /* Copy outfits. */
-   dest->outfits = array_create_size( PilotOutfitSlot*, array_size(src->outfits) );
-   dest->outfit_structure = array_copy( PilotOutfitSlot, src->outfit_structure );
-   dest->outfit_utility = array_copy( PilotOutfitSlot, src->outfit_utility );
-   dest->outfit_weapon = array_copy( PilotOutfitSlot, src->outfit_weapon );
-   for (i=0; i<array_size(dest->outfit_structure); i++)
-      array_push_back( &dest->outfits, &dest->outfit_structure[i] );
-   for (i=0; i<array_size(dest->outfit_utility); i++)
-      array_push_back( &dest->outfits, &dest->outfit_utility[i] );
-   for (i=0; i<array_size(dest->outfit_weapon); i++)
-      array_push_back( &dest->outfits, &dest->outfit_weapon[i] );
-   dest->afterburner = NULL;
-
-   /* Hooks get cleared. */
-   dest->hooks           = NULL;
-
-   /* Copy has no escorts. */
-   dest->escorts         = NULL;
-
-   /* AI is not copied. */
-   dest->task            = NULL;
-   dest->shoot_indicator = 0;
-
-   /* Set pointers and friends to NULL. */
-   /* Commodities. */
-   dest->commodities     = NULL;
-   /* Calculate stats. */
-   pilot_calcStats(dest);
-
-   /* Copy commodities. */
-   for (i=0; i<array_size(src->commodities); i++)
-      pilot_cargoAdd( dest, src->commodities[i].commodity,
-            src->commodities[i].quantity, src->commodities[i].id );
-
-   return dest;
-}
-
-
-/**
  * @brief Finds a spawn point for a pilot
  *
  *
