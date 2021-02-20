@@ -21,6 +21,7 @@
 /*
  * Prototypes.
  */
+static void print_with_line_numbers( const char *str );
 static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend );
 static GLuint gl_shader_compile( GLuint type, const char *buf,
       GLint length, const char *filename);
@@ -127,6 +128,20 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, const char 
 }
 
 
+static void print_with_line_numbers( const char *str )
+{
+   int i, counter;
+   counter = 0;
+   for (i=0; str[i] != '\0'; i++) {
+      if ((i==0) || (str[i]=='\n'))
+         logprintf( stdout, 0, "\n%03d: ", ++counter );
+      else
+         logprintf( stdout, 0, "%c", str[i] );
+   }
+   logprintf( stdout, 0, "\n" );
+}
+
+
 /**
  * @brief Open and compile GLSL shader from ndata.
  */
@@ -149,6 +164,8 @@ static GLuint gl_shader_compile( GLuint type, const char *buf,
    if (log_length > 0) {
       log = malloc(log_length + 1);
       glGetShaderInfoLog(shader, log_length, &log_length, log);
+      if (filename==NULL)
+         print_with_line_numbers( buf );
       WARN("%s\n%s\n", filename, log);
       free(log);
       shader = 0;
