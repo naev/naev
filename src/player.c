@@ -136,12 +136,6 @@ static int* events_done  = NULL; /**< Array (array.h): Saves position of complet
 
 
 /*
- * Extern stuff for player ships.
- */
-extern Pilot** pilot_stack;
-
-
-/*
  * prototypes
  */
 /*
@@ -523,7 +517,7 @@ static Pilot* player_newShipMake( const char* name )
  */
 void player_swapShip( const char *shipname )
 {
-   int i, j;
+   int i;
    Pilot* ship;
    Vector2d v;
    double dir;
@@ -558,12 +552,7 @@ void player_swapShip( const char *shipname )
 
       /* now swap the players */
       player_stack[i].p = player.p;
-      for (j=0; j<array_size(pilot_stack); j++) /* find pilot in stack to swap */
-         if (pilot_stack[j] == player.p) {
-            player.p         = ship;
-            pilot_stack[j] = ship;
-            break;
-         }
+      player.p          = pilot_stackSwap( player.p, ship );
 
       /* Copy position back. */
       player.p->solid->pos = v;
@@ -1794,6 +1783,7 @@ void player_brokeHyperspace (void)
    ntime_t t;
    StarSystem *sys;
    JumpPoint *jp;
+   Pilot *const* pilot_stack;
    int i, map_npath;
 
    /* First run jump hook. */
@@ -1839,6 +1829,7 @@ void player_brokeHyperspace (void)
    map_jump();
 
    /* Add persisted pilots */
+   pilot_stack = pilot_getAll();
    for (i=0; i<array_size(pilot_stack); i++) {
       if ((pilot_stack[i] != player.p) &&
             (pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
@@ -1934,9 +1925,11 @@ void player_targetHostile (void)
    unsigned int tp;
    double d, td;
    int inRange;
+   Pilot *const* pilot_stack;
 
    tp = PLAYER_ID;
    d  = 0;
+   pilot_stack = pilot_getAll();
    for (int i=0; i<array_size(pilot_stack); i++) {
       /* Shouldn't be disabled. */
       if (pilot_isDisabled(pilot_stack[i]))
@@ -2114,8 +2107,10 @@ static void player_checkHail (void)
 {
    int i;
    Pilot *p;
+   Pilot *const* pilot_stack;
 
    /* See if a pilot is hailing. */
+   pilot_stack = pilot_getAll();
    for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
@@ -2193,6 +2188,7 @@ void player_autohail (void)
 {
    int i;
    Pilot *p;
+   Pilot *const* pilot_stack;
 
    /* Not under manual control or disabled. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
@@ -2200,6 +2196,7 @@ void player_autohail (void)
       return;
 
    /* Find pilot to autohail. */
+   pilot_stack = pilot_getAll();
    for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 

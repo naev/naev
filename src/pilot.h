@@ -378,7 +378,7 @@ typedef struct Pilot_ {
 /*
  * getting pilot stuff
  */
-Pilot** pilot_getAll (void);
+Pilot*const* pilot_getAll (void);
 Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );
@@ -441,6 +441,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
+Pilot* pilot_stackSwap( Pilot* before, Pilot* after );
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 

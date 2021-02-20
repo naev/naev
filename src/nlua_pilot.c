@@ -42,12 +42,6 @@
 #include "space.h"
 #include "weapon.h"
 
-
-/*
- * From pilot.c
- */
-extern Pilot** pilot_stack;
-
 /*
  * From ai.c
  */
@@ -771,9 +765,12 @@ static int pilotL_getPilots( lua_State *L )
 {
    int i, j, k, d;
    int *factions;
+   Pilot *const* pilot_stack;
 
    /* Whether or not to get disabled. */
    d = lua_toboolean(L,2);
+
+   pilot_stack = pilot_getAll();
 
    /* Check for belonging to faction. */
    if (lua_istable(L,1) || lua_isfaction(L,1)) {
@@ -3935,10 +3932,12 @@ static int pilotL_leader( lua_State *L ) {
 static int pilotL_setLeader( lua_State *L ) {
    Pilot *p, *leader, *prev_leader;
    PilotOutfitSlot* dockslot;
+   Pilot *const* pilot_stack;
    int i;
 
    NLUA_CHECKRW(L);
 
+   pilot_stack = pilot_getAll();
    p = luaL_validpilot(L, 1);
 
    prev_leader = pilot_get(p->parent);

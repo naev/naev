@@ -90,11 +90,6 @@ static gl_vbo *gui_planet_blink_vbo = NULL;
 
 static int gui_getMessage     = 1; /**< Whether or not the player should receive messages. */
 
-/*
- * pilot stuff for GUI
- */
-extern Pilot** pilot_stack; /**< @todo remove */
-
 
 extern unsigned int land_wid; /**< From land.c */
 
@@ -659,6 +654,7 @@ static void gui_renderBorder( double dt )
    const glColour *col;
    glColour ccol;
    double int_a;
+   Pilot *const* pilot_stack;
 
    /* Get player position. */
    hw    = SCREEN_W/2;
@@ -728,6 +724,7 @@ static void gui_renderBorder( double dt )
    }
 
    /* Draw pilots. */
+   pilot_stack = pilot_getAll();
    for (i=1; i<array_size(pilot_stack); i++) { /* skip the player */
       plt = pilot_stack[i];
 
@@ -1081,6 +1078,7 @@ void gui_radarRender( double x, double y )
    Radar *radar;
    AsteroidAnchor *ast;
    gl_Matrix4 view_matrix_prev;
+   Pilot *const* pilot_stack;
 
    /* The global radar. */
    radar = &gui_radar;
@@ -1125,6 +1123,7 @@ void gui_radarRender( double x, double y )
 
 
    /* render the pilot */
+   pilot_stack = pilot_getAll();
    j = 0;
    for (i=1; i<array_size(pilot_stack); i++) { /* skip the player */
       if (pilot_stack[i]->id == player.p->target)

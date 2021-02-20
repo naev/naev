@@ -56,8 +56,7 @@ static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniq
 
 
 /* stack of pilots */
-/* TODO make non-public? */
-Pilot** pilot_stack = NULL; /**< Not static, used in player.c, weapon.c, pause.c, space.c and ai.c */
+static Pilot** pilot_stack = NULL; /**< All the pilots in space. (Player may have other Pilot objects, e.g. backup ships.) */
 
 
 /* misc */
@@ -89,7 +88,7 @@ static void pilot_sample_trail( Pilot* p, int generator );
 /**
  * @brief Gets the pilot stack.
  */
-Pilot** pilot_getAll (void)
+Pilot*const* pilot_getAll (void)
 {
    return pilot_stack;
 }
@@ -2798,6 +2797,21 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
    pilot_setFlagRaw( flags, PILOT_EMPTY );
    pilot_init( dyn, ship, name, faction, ai, 0., NULL, NULL, flags, 0, 0 );
    return dyn;
+}
+
+
+/**
+ * @brief Replaces an existing pilot on the stack / in space with a new version.
+ * @return The new pilot on the stack.
+ */
+Pilot* pilot_stackSwap( Pilot* before, Pilot* after )
+{
+   for (int j=0; j<array_size(pilot_stack); j++) /* find pilot in stack to swap */
+      if (pilot_stack[j] == before) {
+         pilot_stack[j] = after;
+         return after;
+      }
+   return before;
 }
 
 

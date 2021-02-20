@@ -44,12 +44,6 @@
 #define WEAPON_STATUS_UNJAMMED   2 /**< Survived jamming */
 
 
-/*
- * pilot stuff
- */
-extern Pilot** pilot_stack;
-
-
 /**
  * @struct Weapon
  *
@@ -839,9 +833,11 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    AsteroidAnchor *ast;
    Asteroid *a;
    AsteroidType *at;
+   Pilot *const* pilot_stack;
 
    gfx = NULL;
    polygon = NULL;
+   pilot_stack = pilot_getAll();
 
    /* Get the sprite direction to speed up calculations. */
    b     = outfit_isBeam(w->outfit);
@@ -1048,6 +1044,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 {
    int i;
    double d;
+   Pilot *const* pilot_stack;
 
    /* Must be a valid shooter. */
    if (shooter == NULL)
@@ -1059,6 +1056,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 
    /* Player is handled differently. */
    if (shooter->faction == FACTION_PLAYER) {
+      pilot_stack = pilot_getAll();
 
       /* Increment damage done to by player. */
       p->player_damage += dmg / (p->shield_max + p->armour_max);

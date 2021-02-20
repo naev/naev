@@ -490,7 +490,7 @@ void ovr_render( double dt )
 {
    (void) dt;
    int i, j;
-   Pilot **pstk;
+   Pilot *const*pstk;
    AsteroidAnchor *ast;
    double w, h, res;
    double x,y;
