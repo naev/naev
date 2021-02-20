@@ -280,15 +280,14 @@ static int gfxL_renderTexRaw( lua_State *L )
       /* Set the vertex. */
       projection = gl_view_matrix;
       if (angle==0.){
-         projection = gl_Matrix4_Translate(projection, px, py, 0);
+         projection = gl_Matrix4_Translate(projection, px-0.5, py-0.5, 0);
          projection = gl_Matrix4_Scale(projection, pw, ph, 1);
       } else {
-         projection = gl_Matrix4_Translate(projection, px+hw, py+hh, 0);
+         projection = gl_Matrix4_Translate(projection, px+hw-0.5, py+hh-0.5, 0);
          projection = gl_Matrix4_Rotate2d(projection, angle);
          projection = gl_Matrix4_Translate(projection, -hw, -hh, 0);
          projection = gl_Matrix4_Scale(projection, pw, ph, 1);
       }
-      projection = gl_Matrix4_Identity();
       glEnableVertexAttribArray( shader->VertexPosition );
       gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexPosition,
             0, 2, GL_FLOAT, 0 );
@@ -304,7 +303,6 @@ static int gfxL_renderTexRaw( lua_State *L )
       /* Set shader uniforms. */
       gl_uniformColor( shader->ConstantColor, c );
       gl_Matrix4_Uniform( shader->ClipSpaceFromLocal, projection );
-      //glUniform4f( shader->
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );

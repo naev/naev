@@ -129,6 +129,8 @@ function graphics.Image:draw( ... )
       th = q.h
    end
    x,y,w,h = _xy(x,y,w*sx,h*sy)
+   -- TODO be less horribly inefficient
+   graphics._shader.shader:send( "love_ScreenSize", {love.w, love.h, 0., 0.} )
    naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r, graphics._shader.shader )
 end
 
@@ -448,6 +450,7 @@ vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 
 void main(void) {
     VaryingTexCoord  = VertexTexCoord;
+    VaryingTexCoord.y = 1.-VaryingTexCoord.y;
     VaryingColor     = ConstantColor;
     love_Position    = position( ClipSpaceFromLocal, VertexPosition );
 }
