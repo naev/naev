@@ -414,6 +414,7 @@ uniform mat4 ClipSpaceFromView;
 uniform mat4 ClipSpaceFromLocal;
 uniform mat3 ViewNormalFromLocal;
 uniform vec4 love_ScreenSize;
+uniform vec4 ConstantColor;
 
 // Compatibility
 #define TransformMatrix             ViewSpaceFromLocal
@@ -439,7 +440,6 @@ void main(void) {
 in vec4 VertexPosition;
 in vec4 VertexTexCoord;
 in vec4 VertexColor;
-in vec4 ConstantColor;
 
 out vec4 VaryingTexCoord;
 out vec4 VaryingColor;

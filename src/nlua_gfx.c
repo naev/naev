@@ -266,13 +266,10 @@ static int gfxL_renderTexRaw( lua_State *L )
       /* Render. */
       // Half width and height
       double hw, hh;
-      gl_Matrix4 projection, tex_mat;
+      gl_Matrix4 projection;
       const glColour *c;
 
       glUseProgram( shader->program );
-
-      /* Bind the texture. */
-      glBindTexture( GL_TEXTURE_2D, t->texture );
 
       /* Must have colour for now. */
       c = (col==NULL) ? &cWhite : col;
@@ -291,6 +288,7 @@ static int gfxL_renderTexRaw( lua_State *L )
          projection = gl_Matrix4_Translate(projection, -hw, -hh, 0);
          projection = gl_Matrix4_Scale(projection, pw, ph, 1);
       }
+      projection = gl_Matrix4_Identity();
       glEnableVertexAttribArray( shader->VertexPosition );
       gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexPosition,
             0, 2, GL_FLOAT, 0 );
@@ -300,14 +298,13 @@ static int gfxL_renderTexRaw( lua_State *L )
             0, 2, GL_FLOAT, 0 );
 
       /* Set the texture. */
-      tex_mat = (t->flags & OPENGL_TEX_VFLIP) ? gl_Matrix4_Ortho(-1, 1, 2, 0, 1, -1) : gl_Matrix4_Identity();
-      tex_mat = gl_Matrix4_Translate(tex_mat, tx, ty, 0);
-      tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
+      glBindTexture( GL_TEXTURE_2D, t->texture );
+      glUniform1i( shader->MainTex, 0 );
 
       /* Set shader uniforms. */
       gl_uniformColor( shader->ConstantColor, c );
       gl_Matrix4_Uniform( shader->ClipSpaceFromLocal, projection );
-      gl_Matrix4_Uniform( shaders.texture.tex_mat, tex_mat);
+      //glUniform4f( shader->
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
