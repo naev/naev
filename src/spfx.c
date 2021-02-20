@@ -538,15 +538,16 @@ void spfx_update_trails( double dt ) {
 static void spfx_trail_update( Trail_spfx* trail, double dt )
 {
    size_t i;
+   GLfloat rel_dt;
 
-   /* Update all elements. */
-   for (i = trail->iread; i < trail->iwrite; i++)
-      trail_at( trail, i ).t -= dt/ trail->ttl;
-
-   /* Remove first elements if they're outdated. */
-   while (trail->iread < trail->iwrite && trail_front(trail).t < 0.) {
+   rel_dt = dt/ trail->ttl;
+   /* Remove outdated elements. */
+   while (trail->iread < trail->iwrite && trail_front(trail).t < rel_dt)
       trail->iread++;
-   }
+
+   /* Update others' timestamps. */
+   for (i = trail->iread; i < trail->iwrite; i++)
+      trail_at( trail, i ).t -= rel_dt;
 
    /* Update timer. */
    trail->dt += dt;
