@@ -513,20 +513,22 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
  *    @param dt Update interval.
  */
 void spfx_update_trails( double dt ) {
-   int i;
+   int i, n;
    Trail_spfx *trail;
 
-   for (i=0; i<array_size(trail_spfx_stack); i++) {
+   n = array_size( trail_spfx_stack );
+   for (i=0; i<n; i++) {
       trail = trail_spfx_stack[i];
-      if (trail->nebula  && (cur_system->nebu_density<=0.))
-         continue;
+      if (!trail->nebula  || (cur_system->nebu_density>0.))
+         spfx_trail_update( trail, dt );
 
-      spfx_trail_update( trail, dt );
       if (!trail->refcount && !trail_size(trail) ) {
          spfx_trail_free( trail );
-         array_erase( &trail_spfx_stack, &trail_spfx_stack[i], &trail_spfx_stack[i+1] );
+         trail_spfx_stack[i--] = trail_spfx_stack[--n];
       }
    }
+   if (n < array_size( trail_spfx_stack ) )
+      array_resize( &trail_spfx_stack, n );
 }
 
 
