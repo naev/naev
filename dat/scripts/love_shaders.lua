@@ -18,6 +18,7 @@ function love_shaders.hologram( noise )
    local pixelcode = [[
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
+#include "lib/simplex2D.glsl"
 
 uniform float u_time;
 
@@ -43,8 +44,13 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    look.x = look.x + sin(look.y*10. + u_time)/100.*onOff(4.,4.,.3)*(1.+cos(u_time*80.))*window;
    float vShift = 0.4*onOff(2.,3.,.9)*(sin(u_time)*sin(u_time*20.) + (0.5 + 0.1*sin(u_time*200.)*cos(u_time)));
    look.y = mod(look.y + vShift, 1.);
-   vec4 texcolor = Texel(tex, look);
-   //vec4 texcolor = Texel(tex, uv);
+
+   /* Blur a bit. */
+   vec4 texcolor = Texel( tex, look );
+   float blurdir = snoise( vec2( 0.13*u_time, 0 ) );
+   vec2 blurvec = 9.0 * vec2( cos(blurdir), sin(blurdir) );
+   vec4 blurbg = blur9( tex, look, love_ScreenSize.xy, blurvec );
+   texcolor = mix( texcolor, blurbg, step( blurbg.a, texcolor.a ) );
 
    /* Drop to greyscale while increasing brightness and contrast */
    //float greyscale = dot( texcolor.xyz, vec3( 0.2126, 0.7152, 0.0722 ) ); // standard
