@@ -627,7 +627,7 @@ static void spfx_trail_draw( const Trail_spfx* trail )
    size_t i, n;
    GLfloat len;
    gl_Matrix4 projection;
-   double a, s;
+   double s;
 
    n = trail_size(trail);
    if (n==0)
@@ -636,6 +636,8 @@ static void spfx_trail_draw( const Trail_spfx* trail )
 
    /* Stuff that doesn't change for the entire trail. */
    glUseProgram( shaders.trail.program );
+   if (GLAD_GL_ARB_shader_subroutine)
+      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &trail->spec->type );
    glEnableVertexAttribArray( shaders.trail.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );
    glUniform1f( shaders.trail.dt, trail->dt );
@@ -651,12 +653,11 @@ static void spfx_trail_draw( const Trail_spfx* trail )
       gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
       gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
 
-      a = atan2( y2-y1, x2-x1 );
       s = hypotf( x2-x1, y2-y1 );
 
       /* Set vertex. */
       projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);
-      projection = gl_Matrix4_Rotate2d(projection, a);
+      projection = gl_Matrix4_Rotate2dv(projection, (x2-x1)/s, (y2-y1)/s);
       projection = gl_Matrix4_Scale(projection, s, z*(sp->thick+spp->thick), 1);
       projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
 
@@ -669,10 +670,6 @@ static void spfx_trail_draw( const Trail_spfx* trail )
       glUniform2f(shaders.trail.pos2, len, sp->thick);
       len += s;
       glUniform2f(shaders.trail.pos1, len, spp->thick);
-
-      /* Set the subroutine. */
-      if (GLAD_GL_ARB_shader_subroutine)
-         glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &trail->spec->type );
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );

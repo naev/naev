@@ -30,6 +30,7 @@ gl_Matrix4 gl_Matrix4_Ortho( double left, double right,
 gl_Matrix4 gl_Matrix4_Scale( gl_Matrix4 m, double x, double y, double z );
 gl_Matrix4 gl_Matrix4_Translate( gl_Matrix4 m, double x, double y, double z );
 gl_Matrix4 gl_Matrix4_Rotate2d( gl_Matrix4 m, double angle );
+gl_Matrix4 gl_Matrix4_Rotate2dv( gl_Matrix4 m, double x, double y );
 GLfloat *gl_Matrix4_Ptr( gl_Matrix4 *m );
 void gl_Matrix4_Uniform( GLint location, gl_Matrix4 m );
 
