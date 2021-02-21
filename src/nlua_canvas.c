@@ -21,6 +21,9 @@
 #include "nlua_tex.h"
 
 
+static int nlua_canvas_counter = 0;
+
+
 /* Canvas metatable methods. */
 static int canvasL_gc( lua_State *L );
 static int canvasL_eq( lua_State *L );
@@ -169,13 +172,15 @@ static int canvasL_new( lua_State *L )
    LuaCanvas_t lc;
    int w, h;
    GLenum status;
+   char *name;
 
    w = luaL_checkint(L,1);
    h = luaL_checkint(L,2);
 
    /* Create the texture. */
-   lc.tex = gl_loadImageData( NULL, w, h, 1, 1 );
-   lc.tex->name = strdup("canvas");
+   asprintf( &name, "nlua_canvas_%03d", ++nlua_canvas_counter );
+   lc.tex = gl_loadImageData( NULL, w, h, 1, 1, name );
+   free( name );
 
    /* Create the frame buffer. */
    glGenFramebuffers( 1, &lc.fbo );

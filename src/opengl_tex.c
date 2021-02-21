@@ -203,7 +203,7 @@ int gl_texHasCompress (void)
 }
 
 
-glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy )
+glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name )
 {
    glTexture *texture;
 
@@ -229,6 +229,12 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy )
    texture->sh    = texture->h / texture->sy;
    texture->srw   = texture->sw / texture->w;
    texture->srh   = texture->sh / texture->h;
+
+   /* Add to list. */
+   if (name != NULL) {
+      texture->name = strdup(name);
+      gl_texAdd( texture );
+   }
 
    return texture;
 }
