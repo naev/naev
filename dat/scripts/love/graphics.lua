@@ -141,7 +141,7 @@ function graphics.Image:draw( ... )
          s3 = 1.0
          s4 = 0.0
       end
-      shader:send( "love_ScreenSize", {love.w, love.h, s3, s4} )
+      shader:sendRaw( "love_ScreenSize", {love.w, love.h, s3, s4} )
    end
    naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r, shader )
 end

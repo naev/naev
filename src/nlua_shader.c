@@ -26,12 +26,14 @@ static int shaderL_gc( lua_State *L );
 static int shaderL_eq( lua_State *L );
 static int shaderL_new( lua_State *L );
 static int shaderL_send( lua_State *L );
+static int shaderL_sendRaw( lua_State *L );
 static int shaderL_hasUniform( lua_State *L );
 static const luaL_Reg shaderL_methods[] = {
    { "__gc", shaderL_gc },
    { "__eq", shaderL_eq },
    { "new", shaderL_new },
    { "send", shaderL_send },
+   { "sendRaw", shaderL_sendRaw },
    { "hasUniform", shaderL_hasUniform },
    {0,0}
 }; /**< Shader metatable methods. */
@@ -39,6 +41,9 @@ static const luaL_Reg shaderL_methods[] = {
 
 /* Useful stuff. */
 int shader_compareUniform( const void *a, const void *b);
+int shader_searchUniform( const void *id, const void *u );
+LuaUniform_t *shader_getUniform( LuaShader_t *ls, const char *name );
+static int shaderL_sendHelper( lua_State *L, int ignore_missing );
 
 
 /**
@@ -160,12 +165,23 @@ static int shaderL_eq( lua_State *L )
 /*
  * For qsort.
  */
-int shader_compareUniform( const void *a, const void *b)
+int shader_compareUniform( const void *a, const void *b )
 {
    const LuaUniform_t *u1, *u2;
    u1 = (const LuaUniform_t*) a;
    u2 = (const LuaUniform_t*) b;
    return strcmp(u1->name, u2->name);
+}
+
+int shader_searchUniform( const void *id, const void *u )
+{
+   return strcmp( (const char*)id, ((LuaUniform_t*)u)->name );
+}
+
+
+LuaUniform_t *shader_getUniform( LuaShader_t *ls, const char *name )
+{
+   return bsearch( name, ls->uniforms, ls->nuniforms, sizeof(LuaUniform_t), shader_searchUniform );
 }
 
 
@@ -216,6 +232,7 @@ static int shaderL_new( lua_State *L )
    for (i=0; i<shader.nuniforms; i++) {
       u = &shader.uniforms[i];
       glGetActiveUniform( shader.program, (GLuint)i, SHADER_NAME_MAXLEN, &length, &u->size, &u->type, u->name );
+      u->id = glGetUniformLocation( shader.program, u->name );
    }
    qsort( shader.uniforms, shader.nuniforms, sizeof(LuaUniform_t), shader_compareUniform );
 
@@ -223,6 +240,44 @@ static int shaderL_new( lua_State *L )
 
    lua_pushshader( L, shader );
    return 1;
+}
+
+
+void shader_parseUniformArgsFloat( GLfloat values[4], lua_State *L, int idx, int n )
+{
+   int j;
+
+   if (lua_istable(L,idx)) {
+      for (j=0; j<n; j++) {
+         lua_pushnumber(L,j+1);
+         lua_gettable(L,idx);
+         values[j] = luaL_checknumber(L,-1);
+      }
+      lua_pop(L,n);
+   }
+   else {
+      for (j=0; j<n; j++)
+         values[j] = luaL_checknumber(L,idx+j);
+   }
+}
+
+
+void shader_parseUniformArgsInt( GLint values[4], lua_State *L, int idx, int n )
+{
+   int j;
+
+   if (lua_istable(L,idx)) {
+      for (j=0; j<n; j++) {
+         lua_pushnumber(L,j+1);
+         lua_gettable(L,idx);
+         values[j] = luaL_checkint(L,-1);
+      }
+      lua_pop(L,n);
+   }
+   else {
+      for (j=0; j<n; j++)
+         values[j] = luaL_checkint(L,idx+j);
+   }
 }
 
 
@@ -235,65 +290,72 @@ static int shaderL_new( lua_State *L )
  */
 static int shaderL_send( lua_State *L )
 {
+   return shaderL_sendHelper( L, 0 );
+}
+
+static int shaderL_sendRaw( lua_State *L )
+{
+   return shaderL_sendHelper( L, 1 );
+}
+
+
+static int shaderL_sendHelper( lua_State *L, int ignore_missing )
+{
    LuaShader_t *ls;
+   LuaUniform_t *u;
    const char *name;
-   GLuint id;
-   int i, t, len, j;
-   double n;
+   int idx;
    GLfloat values[4];
+   GLint ivalues[4];
 
    ls = luaL_checkshader(L,1);
    name = luaL_checkstring(L,2);
 
-   /* TODO use uniform list. */
-   id = glGetUniformLocation( ls->program, name );
-   if (id==GL_INVALID_VALUE)
+   u = shader_getUniform( ls, name );
+   if (u==NULL) {
+      if (ignore_missing)
+         return 0;
       NLUA_ERROR(L,_("Shader does not have uniform '%s'!"), name);
-
-   t = lua_gettop(L)-2;
-   if (t>1)
-      NLUA_ERROR(L,_("Uniform arrays not supported at the moment."));
+   }
 
    /* With OpenGL 4.1 or ARB_separate_shader_objects, there
     * is no need to set the program first. */
    glUseProgram( ls->program );
-   i = 3;
-   if (lua_istable(L,i)) {
-      len = lua_objlen(L,i);
-      if (len > 4) {
-         glUseProgram( 0 );
-         NLUA_ERROR(L,_("Only up to 4 values are supported for uniforms, got %d!"), len);
-      }
-      for (j=0; j<len; j++) {
-         lua_pushnumber(L,j+1);
-         lua_gettable(L, i);
-         values[j] = luaL_checknumber(L,-1);
-         lua_pop(L,1);
-      }
-      switch (len) {
-         case 0:
-            glUseProgram( 0 );
-            NLUA_ERROR(L,_("No values specified for uniform!"));
-         case 1:
-            glUniform1f( id, values[0] );
-            break;
-         case 2:
-            glUniform2f( id, values[0], values[1] );
-            break;
-         case 3:
-            glUniform3f( id, values[0], values[1], values[2] );
-            break;
-         case 4:
-            glUniform4f( id, values[0], values[1], values[2], values[3] );
-            break;
-      }
-   }
-   else  {
-      n = lua_tonumber(L,i);
-      if ((int)floor(n) == (int)ceil(n))
-         glUniform1i( id, (int)n );
-      else
-         glUniform1f( id, n );
+   idx = 3;
+   switch (u->type) {
+      case GL_FLOAT:
+         shader_parseUniformArgsFloat( values, L, idx, 1 );
+         glUniform1f( u->id, values[0] );
+         break;
+      case GL_FLOAT_VEC2:
+         shader_parseUniformArgsFloat( values, L, idx, 2 );
+         glUniform2f( u->id, values[0], values[1] );
+         break;
+      case GL_FLOAT_VEC3:
+         shader_parseUniformArgsFloat( values, L, idx, 3 );
+         glUniform3f( u->id, values[0], values[1], values[2] );
+         break;
+      case GL_FLOAT_VEC4:
+         shader_parseUniformArgsFloat( values, L, idx, 4 );
+         glUniform4f( u->id, values[0], values[1], values[2], values[3] );
+         break;
+
+      case GL_INT:
+         shader_parseUniformArgsInt( ivalues, L, idx, 1 );
+         glUniform1i( u->id, ivalues[0] );
+         break;
+      case GL_INT_VEC2:
+         shader_parseUniformArgsInt( ivalues, L, idx, 2 );
+         glUniform2i( u->id, ivalues[0], ivalues[1] );
+         break;
+      case GL_INT_VEC3:
+         shader_parseUniformArgsInt( ivalues, L, idx, 3 );
+         glUniform3i( u->id, ivalues[0], ivalues[1], ivalues[2] );
+         break;
+      case GL_INT_VEC4:
+         shader_parseUniformArgsInt( ivalues, L, idx, 4 );
+         glUniform4i( u->id, ivalues[0], ivalues[1], ivalues[2], ivalues[3] );
+         break;
    }
    glUseProgram( 0 );
 
@@ -314,7 +376,6 @@ static int shaderL_send( lua_State *L )
 static int shaderL_hasUniform( lua_State *L )
 {
    LuaShader_t *ls;
-   LuaUniform_t *u;
    const char *name;
 
    /* Parameters. */
@@ -322,8 +383,7 @@ static int shaderL_hasUniform( lua_State *L )
    name = luaL_checkstring(L,2);
 
    /* Search. */
-   u = bsearch( name, ls->uniforms, ls->nuniforms, sizeof(LuaUniform_t), shader_compareUniform );
-   lua_pushboolean(L, u!=NULL);
+   lua_pushboolean(L, shader_getUniform(ls,name)!=NULL);
    return 1;
 }
 
