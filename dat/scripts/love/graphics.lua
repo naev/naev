@@ -468,6 +468,7 @@ void main(void) {
 }
 ]]
    local s = graphics.Shader.new()
+   vertexcode = vertexcode or pixelcode
    s.shader = naev.shader.new(
          prepend..frag..pixelcode,
          prepend..vert..vertexcode )
