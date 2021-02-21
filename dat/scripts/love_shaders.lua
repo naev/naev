@@ -46,6 +46,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    const float blurspeed = 0.31;
    const float scanlinemean = 0.85;
    const float scanlineamplitude = 0.3;
+   const float scanlinespeed = 5.0;
 #else /* HOLOGRAM_STRONG */
    const float strength = 32.0; // 64.0
    const float shadowspeed = 0.2;
@@ -60,6 +61,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    const float blurspeed = 0.13;
    const float scanlinemean = 0.9;
    const float scanlineamplitude = 0.2;
+   const float scanlinespeed = 3.0;
 #endif /* HOLOGRAM_STRONG */
 
    /* Get the texture. */
@@ -94,7 +96,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    float grain = 1.0 - (mod((mod(x, 13.0) + 1.0) * (mod(x, 123.0) + 1.0), 0.01) - 0.005) * strength;
    float flicker = max(1.0, random(u_time * uv) * 1.5);
    //float scanlines = 0.85 * clamp(sin(uv.y * 400.0), 0.25, 1.0) * random(uv * vec2(0,sin(u_time * 0.2)) * 0.1) * 2.0;
-   float scanlines = scanlinemean + scanlineamplitude*step( 0.5, sin(0.5*screen_coords.y + 3.0*u_time)-0.1 );
+   float scanlines = scanlinemean + scanlineamplitude*step( 0.5, sin(0.5*screen_coords.y + scanlinespeed*u_time)-0.1 );
 
    texcolor.xyz *= grain * flicker * scanlines * bluetint;
    return texcolor * color;
