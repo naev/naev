@@ -133,7 +133,15 @@ function graphics.Image:draw( ... )
    local shader = graphics._shader
    if shader ~= nil then
       shader = shader.shader
-      shader:send( "love_ScreenSize", {love.w, love.h, 0., 0.} )
+      local s3, s4
+      if graphics._canvas == nil then
+         s3 = -1.0
+         s4 = love.h
+      else
+         s3 = 1.0
+         s4 = 0.0
+      end
+      shader:send( "love_ScreenSize", {love.w, love.h, s3, s4} )
    end
    naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r, shader )
 end
@@ -499,6 +507,7 @@ function graphics.setCanvas( canvas )
    else
       naev.canvas.set( canvas.canvas )
    end
+   graphics._canvas = canvas
 end
 function graphics.Canvas:draw(...)     return self.t:draw(...) end
 function graphics.Canvas:setFilter(...)return self.t:setFilter(...) end
@@ -538,5 +547,6 @@ graphics.setNewFont( 12 )
 graphics.origin()
 graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
 graphics.setShader( graphics._shader_default )
+graphics.setCanvas( nil )
 
 return graphics
