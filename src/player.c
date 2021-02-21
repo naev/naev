@@ -552,7 +552,7 @@ void player_swapShip( const char *shipname )
 
       /* now swap the players */
       player_stack[i].p = player.p;
-      player.p          = pilot_stackSwap( player.p, ship );
+      player.p          = pilot_replacePlayer( ship );
 
       /* Copy position back. */
       player.p->solid->pos = v;

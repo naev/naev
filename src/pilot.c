@@ -2828,21 +2828,19 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
 
 
 /**
- * @brief Replaces an existing pilot on the stack / in space with a new version.
- * @return The new pilot on the stack.
+ * @brief Replaces the player's pilot with an alternate ship with the same ID.
+ * @return The new pilot.
  */
-Pilot* pilot_stackSwap( Pilot* before, Pilot* after )
+Pilot* pilot_replacePlayer( Pilot* after )
 {
-   for (int j=0; j<array_size(pilot_stack); j++) /* find pilot in stack to swap */
-      if (pilot_stack[j] == before) {
-         pilot_stack[j] = after;
-         for (int i=0; i<array_size(before->trail); i++)
-            spfx_trail_remove( before->trail[i] );
-         array_erase( &before->trail, array_begin(before->trail), array_end(before->trail) );
-         pilot_init_trails( after );
-         return after;
-      }
-   return before;
+   int i, j;
+   i = pilot_getStackPos( PLAYER_ID );
+   for (j=0; j<array_size(pilot_stack[i]->trail); j++)
+      spfx_trail_remove( pilot_stack[i]->trail[j] );
+   array_erase( &pilot_stack[i]->trail, array_begin(pilot_stack[i]->trail), array_end(pilot_stack[i]->trail) );
+   pilot_stack[i] = after;
+   pilot_init_trails( after );
+   return after;
 }
 
 
