@@ -212,7 +212,7 @@ static int canvasL_set( lua_State *L )
       lc = luaL_checkcanvas(L,1);
       glBindFramebuffer(GL_FRAMEBUFFER, lc->fbo);
    }
-   else if (lua_isnil(L,1)) {
+   else if ((lua_gettop(L)<=0) || lua_isnil(L,1)) {
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
    }
    else

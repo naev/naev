@@ -24,6 +24,7 @@
 #include "nlua_shader.h"
 #include "nlua_tex.h"
 #include "nlua_transform.h"
+#include "nlua_canvas.h"
 #include "nluadef.h"
 #include "opengl.h"
 
@@ -83,6 +84,7 @@ int nlua_loadGFX( nlua_env env )
    nlua_loadFont( env );
    nlua_loadTransform( env );
    nlua_loadShader( env );
+   nlua_loadCanvas( env );
 
    return 0;
 }
