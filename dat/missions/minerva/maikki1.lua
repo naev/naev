@@ -526,7 +526,7 @@ function cutscene_hail ()
    vn.clear()
    vn.scene()
    local scavB = vn.newCharacter( _("Scavenger"),
-         { image=portrait.getFullPath( scavengerb_portrait ),
+         { image=scavengerb_image,
          color=scavengerb_colour, shader=love_shaders.hologram(2.0) } )
    vn.fadein()
    vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
@@ -791,10 +791,10 @@ function scavengers_encounter ()
    vn.clear()
    vn.scene()
    local scavA = vn.newCharacter( _("Scavenger A"),
-         { image=portrait.getFullPath(scavengera_portrait),
+         { image=scavengera_image,
          color=scavengera_colour, shader=love_shaders.hologram(2.0) } )
    local scavB = vn.newCharacter( _("Scavenger B"),
-         { image=portrait.getFullPath( scavengerb_portrait ),
+         { image=scavengerb_image,
          color=scavengerb_colour, shader=love_shaders.hologram(2.0) } )
    vn.fadein()
 
