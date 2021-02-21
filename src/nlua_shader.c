@@ -26,13 +26,19 @@ static int shaderL_gc( lua_State *L );
 static int shaderL_eq( lua_State *L );
 static int shaderL_new( lua_State *L );
 static int shaderL_send( lua_State *L );
+static int shaderL_hasUniform( lua_State *L );
 static const luaL_Reg shaderL_methods[] = {
    { "__gc", shaderL_gc },
    { "__eq", shaderL_eq },
    { "new", shaderL_new },
    { "send", shaderL_send },
+   { "hasUniform", shaderL_hasUniform },
    {0,0}
 }; /**< Shader metatable methods. */
+
+
+/* Useful stuff. */
+int shader_compareUniform( const void *a, const void *b);
 
 
 /**
@@ -128,6 +134,7 @@ static int shaderL_gc( lua_State *L )
 {
    LuaShader_t *shader = luaL_checkshader(L,1);
    glDeleteProgram( shader->program );
+   free(shader->uniforms);
    return 0;
 }
 
@@ -150,6 +157,18 @@ static int shaderL_eq( lua_State *L )
 }
 
 
+/*
+ * For qsort.
+ */
+int shader_compareUniform( const void *a, const void *b)
+{
+   const LuaUniform_t *u1, *u2;
+   u1 = (const LuaUniform_t*) a;
+   u2 = (const LuaUniform_t*) b;
+   return strcmp(u1->name, u2->name);
+}
+
+
 /**
  * @brief Creates a new shader.
  *
@@ -162,6 +181,9 @@ static int shaderL_new( lua_State *L )
 {
    LuaShader_t shader;
    const char *pixelcode, *vertexcode;
+   GLint i;
+   GLsizei length;
+   LuaUniform_t *u;
 
    /* Get arguments. */
    pixelcode  = luaL_checkstring(L,1);
@@ -188,6 +210,15 @@ static int shaderL_new( lua_State *L )
    ATTRIB( VertexTexCoord );
    ATTRIB( VertexColor );
 
+   /* Do other uniforms. */
+   glGetProgramiv( shader.program, GL_ACTIVE_UNIFORMS, &shader.nuniforms );
+   shader.uniforms = calloc( shader.nuniforms, sizeof(LuaUniform_t) );
+   for (i=0; i<shader.nuniforms; i++) {
+      u = &shader.uniforms[i];
+      glGetActiveUniform( shader.program, (GLuint)i, SHADER_NAME_MAXLEN, &length, &u->size, &u->type, u->name );
+   }
+   qsort( shader.uniforms, shader.nuniforms, sizeof(LuaUniform_t), shader_compareUniform );
+
    gl_checkErr();
 
    lua_pushshader( L, shader );
@@ -213,6 +244,8 @@ static int shaderL_send( lua_State *L )
 
    ls = luaL_checkshader(L,1);
    name = luaL_checkstring(L,2);
+
+   /* TODO use uniform list. */
    id = glGetUniformLocation( ls->program, name );
    if (id==GL_INVALID_VALUE)
       NLUA_ERROR(L,_("Shader does not have uniform '%s'!"), name);
@@ -269,4 +302,28 @@ static int shaderL_send( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Checks to see if a shader has a uniform.
+ *
+ *    @luatparam Shader shader Shader to send uniform to.
+ *    @luatparam string name Name of the uniform to check.
+ *    @luatreturn boolean true if the shader has the uniform.
+ * @luafunc hasUniform
+ */
+static int shaderL_hasUniform( lua_State *L )
+{
+   LuaShader_t *ls;
+   LuaUniform_t *u;
+   const char *name;
+
+   /* Parameters. */
+   ls = luaL_checkshader(L,1);
+   name = luaL_checkstring(L,2);
+
+   /* Search. */
+   u = bsearch( name, ls->uniforms, ls->nuniforms, sizeof(LuaUniform_t), shader_compareUniform );
+   lua_pushboolean(L, u!=NULL);
+   return 1;
+}
 

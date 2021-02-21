@@ -480,6 +480,9 @@ end
 function graphics.Shader:send( name, ... )
    self.shader:send( name, ... )
 end
+function graphics.Shader:hasUniform( name )
+   return self.shader:hasUniform( name )
+end
 
 
 --[[

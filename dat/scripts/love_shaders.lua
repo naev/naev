@@ -1,9 +1,20 @@
 local love_shaders = {}
 
 local graphics = require "love.graphics"
+local love_math = require "love.math"
 
 --[[
--- Default vertex code (doesn't do anything fancy.
+-- Default fragment code that doesn't do anything fancy.
+--]]
+local _pixelcode = [[
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec4 texcolor = Texel(tex, texture_coords);
+   return texcolor * color;
+}
+]]
+--[[
+-- Default vertex code that doesn't do anything fancy.
 --]]
 local _vertexcode = [[
 vec4 position( mat4 transform_projection, vec4 vertex_position )
@@ -12,9 +23,48 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
+function love_shaders.vignette( noise )
+   noise = noise or 1.0
+   local pixelcode = [[
+#include "lib/math.glsl"
+#include "lib/blur.glsl"
+#include "lib/simplex2D.glsl"
+
+uniform float u_time;
+uniform float u_radius;
+uniform float u_softness;
+uniform float u_opacity;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec4 texcolor;
+
+   /* Main vignette. */
+   float aspect = love_ScreenSize.x / love_ScreenSize.y;
+   aspect = max(aspect, 1.0 / aspect); // use different aspect when in portrait mode
+   float v = 1.0 - smoothstep(radius, radius-softness, length((tc - vec2(0.5)) * aspect));
+   texcolor = mix( Texel(tex, uv), color, v*opacity );
+
+   /* Add grain. */
+   float x = (uv.x + 4.0) * (uv.y + 4.0) * u_time * 10.0;
+   float grain = 1.0 - (mod((mod(x, 13.0) + 1.0) * (mod(x, 123.0) + 1.0), 0.01) - 0.005) * strength;
+   texcolor.xyz *= grain;
+
+   return texcolor;
+}
+]]
+
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader._dt = 1000. * love_math.random()
+   shader.update = function (self, dt)
+      self._dt = self._dt + dt
+      self:send( "u_time", self._dt )
+   end
+   return shader
+end
+
 function love_shaders.hologram( noise )
    noise = noise or 1.0
-   -- TODO make different strengths for hologram noise
    local pixelcode = [[
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
@@ -108,7 +158,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    end
 
    local shader = graphics.newShader( pixelcode, _vertexcode )
-   shader._dt = 0
+   shader._dt = 1000. * love_math.random()
    shader.update = function (self, dt)
       self._dt = self._dt + dt
       self:send( "u_time", self._dt )

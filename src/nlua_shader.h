@@ -13,6 +13,14 @@
 
 #define SHADER_METATABLE      "shader" /**< Shader metatable identifier. */
 
+#define SHADER_NAME_MAXLEN    32
+
+typedef struct LuaUniform_s {
+   GLuint id;
+   GLint size;
+   GLenum type;
+   char name[SHADER_NAME_MAXLEN];
+} LuaUniform_t;
 
 typedef struct LuaShader_s {
    GLuint program;
@@ -29,6 +37,9 @@ typedef struct LuaShader_s {
    GLuint VertexTexCoord;
    GLuint VertexColor;
    GLuint ConstantColor;
+   /* Other uniforms. */
+   LuaUniform_t *uniforms;
+   GLint nuniforms;
 } LuaShader_t;
 
 
