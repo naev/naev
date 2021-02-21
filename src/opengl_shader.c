@@ -22,6 +22,7 @@
  * Prototypes.
  */
 static void print_with_line_numbers( const char *str );
+static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsize, const char *prepend, const char *filename );
 static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend );
 static GLuint gl_shader_compile( GLuint type, const char *buf,
       GLint length, const char *filename);
@@ -39,30 +40,47 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
  */
 static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend )
 {
-   size_t i, bufsize, ibufsize, fbufsize;
-   char *buf, *fbuf, *ibuf, *newbuf;
-   char path[PATH_MAX], include[PATH_MAX-sizeof(GLSL_PATH)-1];
-   const char *substart, *subs, *subss, *keyword;
-   int offset, len;
-
-   *size = 0;
+   size_t fbufsize;
+   char *fbuf;
+   char path[PATH_MAX];
 
    /* Load base file. */
+   *size = 0;
    snprintf(path, sizeof(path), GLSL_PATH "%s", filename);
    fbuf = ndata_read(path, &fbufsize);
    if (fbuf == NULL) {
       WARN( _("Shader '%s' not found."), path);
       return NULL;
    }
+   return gl_shader_preprocess( size, fbuf, fbufsize, prepend, filename );
+}
+
+
+/**
+ * @brief Preprocesses a GLSL string with some simple preprocessing like adding #version and handling #include.
+ *
+ *    @param[out] size Size of the loaded shader.
+ *    @param[in] fbuf Buffer to preprocess.
+ *    @param[in] fbufsize Size of the buffer.
+ *    @param[in] prepend String that should be prepended.
+ *    @param[in] filename Name of the file being loaded.
+ *    @return The loaded shader buffer.
+ */
+static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsize, const char *prepend, const char *filename )
+{
+   size_t i, bufsize, ibufsize;
+   char *buf, *ibuf, *newbuf;
+   char include[PATH_MAX-sizeof(GLSL_PATH)-1];
+   const char *substart, *subs, *subss, *keyword;
+   int offset, len;
 
    /* Prepend useful information if available. */
    if (prepend != NULL) {
       bufsize = asprintf( &buf, "%s%s", prepend, fbuf ) + 1 /* the null byte */;
-      free( fbuf );
    }
    else {
       bufsize = fbufsize;
-      buf = fbuf;
+      buf = strdup(fbuf);
    }
 
    /* Preprocess for #include.
@@ -253,9 +271,20 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
 GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size, const char *frag, size_t frag_size )
 {
    GLuint vertex_shader, fragment_shader;
+   char *vbuf, *fbuf;
+   size_t vlen, flen;
+
+   vbuf = gl_shader_preprocess( &vlen, vert, vert_size, NULL, NULL );
+   fbuf = gl_shader_preprocess( &flen, frag, frag_size, NULL, NULL );
+
    /* Compile the shaders. */
-   vertex_shader     = gl_shader_compile( GL_VERTEX_SHADER, vert, vert_size, NULL );
-   fragment_shader   = gl_shader_compile( GL_FRAGMENT_SHADER, frag, frag_size, NULL );
+   vertex_shader     = gl_shader_compile( GL_VERTEX_SHADER, vbuf, vlen, NULL );
+   fragment_shader   = gl_shader_compile( GL_FRAGMENT_SHADER, fbuf, flen, NULL );
+
+   /* Clean up. */
+   free( vbuf );
+   free( fbuf );
+
    /* Link. */
    return gl_program_make( vertex_shader, fragment_shader );
 }
