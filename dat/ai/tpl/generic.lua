@@ -117,10 +117,9 @@ function control ()
    -- Select new leader
    if ai.pilot():leader() ~= nil and not ai.pilot():leader():exists() then
       local candidate = ai.getBoss()
-      if candidate ~= nil and candidate:leader() ~= nil then
-         candidate = candidate:leader()
+      if candidate ~= nil and candidate:exists() then
+         ai.pilot():setLeader( candidate )
       end
-      ai.pilot():setLeader( candidate )
    end
 
    -- Cooldown completes silently.
