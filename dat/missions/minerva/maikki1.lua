@@ -41,6 +41,7 @@
 local minerva = require "minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
+local love_shaders = require 'love_shaders'
 require 'numstring'
 
 logidstr = minerva.log.maikki.idstr
@@ -525,8 +526,8 @@ function cutscene_hail ()
    vn.clear()
    vn.scene()
    local scavB = vn.newCharacter( _("Scavenger"),
-         { image=portrait.hologram( scavengerb_portrait ),
-         color=scavengerb_colour } )
+         { image=portrait.getFullPath( scavengerb_portrait ),
+         color=scavengerb_colour, shader=love_shaders.hologram(2.0) } )
    vn.fadein()
    vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
    scavB(_([["Thank you. I thought I was a goner. My sensors failed me at the worst time and it's impossible to see shit in this nebula."]]))
@@ -790,11 +791,11 @@ function scavengers_encounter ()
    vn.clear()
    vn.scene()
    local scavA = vn.newCharacter( _("Scavenger A"),
-         { image=portrait.hologram(scavengera_portrait),
-         color=scavengera_colour } )
+         { image=portrait.getFullPath(scavengera_portrait),
+         color=scavengera_colour, shader=love_shaders.hologram(2.0) } )
    local scavB = vn.newCharacter( _("Scavenger B"),
-         { image=portrait.hologram( scavengerb_portrait ),
-         color=scavengerb_colour } )
+         { image=portrait.getFullPath( scavengerb_portrait ),
+         color=scavengerb_colour, shader=love_shaders.hologram(2.0) } )
    vn.fadein()
 
    vn.na(_("Two angry scavengers appear on your screen."))

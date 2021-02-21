@@ -21,6 +21,7 @@ typedef struct LuaShader_s {
    GLuint ClipSpaceFromView;
    GLuint ClipSpaceFromLocal;
    GLuint ViewNormalFromLocal;
+   GLuint love_ScreenSize;
    /* Fragment Shader. */
    GLuint MainTex;
    /* Vertex Shader. */

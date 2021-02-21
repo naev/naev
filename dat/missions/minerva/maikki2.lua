@@ -37,6 +37,7 @@
 local minerva = require "minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
+local love_shaders = require 'love_shaders'
 require 'numstring'
 
 logidstr = minerva.log.maikki.idstr
@@ -740,7 +741,8 @@ function approach_eccentric ()
    vn.scene()
    vn.fadein()
    local dr = vn.newCharacter( strangelove.name,
-         { color=strangelove.colour, image=portrait.hologram( strangelove.portrait ) } )
+         { color=strangelove.colour, image=portrait.getFullPath( strangelove.portrait ),
+           shader=love_shaders.hologram() } )
 
    if not ecc_visitedonce then
       vn.na(_("The hologram projector flickers as what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))

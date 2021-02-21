@@ -129,7 +129,21 @@ function graphics.Image:draw( ... )
       th = q.h
    end
    x,y,w,h = _xy(x,y,w*sx,h*sy)
-   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r )
+   -- TODO be less horribly inefficient
+   local shader = graphics._shader
+   if shader ~= nil then
+      shader = shader.shader
+      local s3, s4
+      if graphics._canvas == nil then
+         s3 = -1.0
+         s4 = love.h
+      else
+         s3 = 1.0
+         s4 = 0.0
+      end
+      shader:send( "love_ScreenSize", {love.w, love.h, s3, s4} )
+   end
+   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r, shader )
 end
 
 
@@ -397,7 +411,6 @@ end
 graphics.Shader = class.inheritsFrom( object.Object )
 graphics.Shader._type = "Shader"
 function graphics.newShader( pixelcode, vertexcode )
-   love._unimplemented() -- Not finished yet
    local prepend = [[
 #version 140
 // Syntax sugar
@@ -415,6 +428,7 @@ uniform mat4 ClipSpaceFromView;
 uniform mat4 ClipSpaceFromLocal;
 uniform mat3 ViewNormalFromLocal;
 uniform vec4 love_ScreenSize;
+uniform vec4 ConstantColor;
 
 // Compatibility
 #define TransformMatrix             ViewSpaceFromLocal
@@ -440,7 +454,6 @@ void main(void) {
 in vec4 VertexPosition;
 in vec4 VertexTexCoord;
 in vec4 VertexColor;
-in vec4 ConstantColor;
 
 out vec4 VaryingTexCoord;
 out vec4 VaryingColor;
@@ -449,6 +462,7 @@ vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 
 void main(void) {
     VaryingTexCoord  = VertexTexCoord;
+    VaryingTexCoord.y = 1.-VaryingTexCoord.y;
     VaryingColor     = ConstantColor;
     love_Position    = position( ClipSpaceFromLocal, VertexPosition );
 }
@@ -457,9 +471,10 @@ void main(void) {
    s.shader = naev.shader.new(
          prepend..frag..pixelcode,
          prepend..vert..vertexcode )
+   return s
 end
 function graphics.setShader( shader )
-   graphics._shader = shader or graphics._shader_default
+   graphics._shader = shader
 end
 function graphics.Shader:send( name, ... )
    self.shader:send( name, ... )
@@ -492,6 +507,7 @@ function graphics.setCanvas( canvas )
    else
       naev.canvas.set( canvas.canvas )
    end
+   graphics._canvas = canvas
 end
 function graphics.Canvas:draw(...)     return self.t:draw(...) end
 function graphics.Canvas:setFilter(...)return self.t:setFilter(...) end
@@ -529,7 +545,8 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
 graphics.origin()
---graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
---graphics.setShader( graphics._shader_default )
+graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
+graphics.setShader( graphics._shader_default )
+graphics.setCanvas( nil )
 
 return graphics

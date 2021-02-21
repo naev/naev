@@ -95,7 +95,9 @@ function _draw_character( c )
       x = x + scale*w
    end
    _set_col( col, c.alpha )
+   graphics.setShader( c.shader )
    graphics.draw( c.image, x, y, 0, flip*scale, scale )
+   graphics.setShader( nil )
 end
 
 
@@ -166,6 +168,12 @@ function vn.update(dt)
 
    if vn._state < 0 then
       vn._state = 1
+   end
+
+   for k,c in ipairs( vn._characters ) do
+      if c.shader and c.shader.update then
+         c.shader:update(dt)
+      end
    end
 
    local s = vn._states[ vn._state ]
@@ -716,11 +724,14 @@ function vn.Character.new( who, params )
          end
       elseif pimage:type()=="ImageData" then
          img = graphics.newImage( pimage )
+      else
+         img = pimage
       end
       c.image = img
    else
       c.image = nil
    end
+   c.shader = params.shader
    c.hidetitle = params.hidetitle
    c.params = params
    return c
