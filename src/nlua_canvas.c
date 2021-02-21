@@ -175,6 +175,7 @@ static int canvasL_new( lua_State *L )
 
    /* Create the texture. */
    lc.tex = gl_loadImageData( NULL, w, h, 1, 1 );
+   lc.tex->name = strdup("canvas");
 
    /* Create the frame buffer. */
    glGenFramebuffers( 1, &lc.fbo );
@@ -232,7 +233,7 @@ static int canvasL_set( lua_State *L )
 static int canvasL_getTex( lua_State *L )
 {
    LuaCanvas_t *lc = luaL_checkcanvas(L,1);
-   lua_pushtex( L, lc->tex );
+   lua_pushtex( L, gl_dupTexture(lc->tex) );
    return 1;
 }
 
