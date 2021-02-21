@@ -170,6 +170,12 @@ function vn.update(dt)
       vn._state = 1
    end
 
+   for k,c in ipairs( vn._characters ) do
+      if c.shader and c.shader.update then
+         c.shader:update(dt)
+      end
+   end
+
    local s = vn._states[ vn._state ]
    s:update( dt )
 end
