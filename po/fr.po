@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-02-18 18:28-0500\n"
-"PO-Revision-Date: 2021-02-15 21:50+0000\n"
+"PO-Revision-Date: 2021-02-22 23:50+0000\n"
 "Last-Translator: rhebok-git <geneenkei@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.5\n"
 
 #: dat/intro:2
 msgid ""
@@ -198,9 +198,8 @@ msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 msgstr "Layla and Emmy « The Diligent Circle » <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:16
-#, fuzzy
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
-msgstr "Justin Blanchard « UncombedCoconut » <UncombedCoconut@gmail.com>"
+msgstr ""
 
 #: dat/AUTHORS:17
 msgid "   * Code Carnage and Bug Beating"
@@ -269,9 +268,8 @@ msgstr ""
 "de factions"
 
 #: dat/AUTHORS:48
-#, fuzzy
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
-msgstr "Felix Schneider « Scaatis » <fsfuenf@gmail.com>"
+msgstr ""
 
 #: dat/AUTHORS:49
 msgid "   * Naev logo, Lua GUI development"
@@ -286,9 +284,8 @@ msgid "   * Ships for the Soromid and the Za'lek"
 msgstr "   *  Des vaisseaux pour le Soromid et le Za'lek"
 
 #: dat/AUTHORS:54
-#, fuzzy
 msgid "Askyel"
-msgstr "Askyel"
+msgstr ""
 
 #: dat/AUTHORS:55
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
@@ -420,7 +417,7 @@ msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
 msgid "   * Sprite gimp script"
-msgstr ""
+msgstr "   * Script du sprite gimp"
 
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
@@ -484,9 +481,8 @@ msgstr ""
 "documentation de Lua."
 
 #: dat/AUTHORS:109
-#, fuzzy
 msgid "Dimitry Marakasov"
-msgstr "Dimitry Marakasov"
+msgstr ""
 
 #: dat/AUTHORS:110
 msgid "   * FreeBSD port and CMake"
@@ -498,7 +494,7 @@ msgstr "   Talentueux développeur qui a fait le premier port officiel de Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
-msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
+msgstr ""
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
@@ -514,7 +510,7 @@ msgstr ""
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
-msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
+msgstr ""
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
@@ -537,7 +533,7 @@ msgstr ""
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr "Cypher3c <cypher3c@gmail.com>"
+msgstr ""
 
 #: dat/AUTHORS:125
 msgid "   * Spiced up the boring generic cargo missios."
@@ -545,7 +541,7 @@ msgstr "   * Pimenté les missios de fret génériques ennuyeux."
 
 #: dat/AUTHORS:127
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
+msgstr ""
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
@@ -557,7 +553,7 @@ msgstr "   * Support de codage divers"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
-msgstr "Pêcheur"
+msgstr ""
 
 #: dat/AUTHORS:132
 msgid ""
@@ -593,7 +589,7 @@ msgstr "   * Artiste de la plupart des nébuleuses."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
-msgstr "Galileus"
+msgstr ""
 
 #: dat/AUTHORS:143
 msgid "   * Modeller of the Shark and Rhino"
@@ -601,7 +597,7 @@ msgstr "   * Modélisateur du requin et du rhinocéros"
 
 #: dat/AUTHORS:145
 msgid "Devin Khan"
-msgstr "Devin Khan"
+msgstr ""
 
 #: dat/AUTHORS:146
 msgid "   * Modeller of the Phalanx"
@@ -609,7 +605,7 @@ msgstr "   * Modélisateur du Phalanx"
 
 #: dat/AUTHORS:148
 msgid "Areze"
-msgstr "Areze"
+msgstr ""
 
 #: dat/AUTHORS:149
 msgid "   * Junior assistant galaxy creator"
@@ -621,7 +617,7 @@ msgstr ""
 
 #: dat/AUTHORS:152
 msgid "   * Desura Maintainer"
-msgstr ""
+msgstr "   * Mainteneur.euse Desura"
 
 #: dat/AUTHORS:154
 msgid "NeD"
@@ -637,7 +633,7 @@ msgstr ""
 
 #: dat/AUTHORS:158
 msgid "   * Event contributor"
-msgstr ""
+msgstr "   * Contributeur d'éventement"
 
 #: dat/AUTHORS:160 dat/AUTHORS:179
 msgid "PhoenixRiver"
@@ -645,7 +641,7 @@ msgstr ""
 
 #: dat/AUTHORS:162
 msgid "   * Misc fixes and typos"
-msgstr ""
+msgstr "   * Divers corrections grammaticales"
 
 #: dat/AUTHORS:164
 msgid "Alastair Basden"
@@ -653,11 +649,11 @@ msgstr ""
 
 #: dat/AUTHORS:165
 msgid "   * Economy development"
-msgstr ""
+msgstr "   * Développement d'économie"
 
 #: dat/AUTHORS:166
 msgid "   * Ship log"
-msgstr ""
+msgstr "   * Journal de bord"
 
 #: dat/AUTHORS:167
 msgid "   * Solar system information screen"
@@ -665,7 +661,7 @@ msgstr "   * Écran d'information du système solaire"
 
 #: dat/AUTHORS:169
 msgid "Music by Matthew Pablo"
-msgstr ""
+msgstr "Musique de Matthew Pablo"
 
 #: dat/AUTHORS:170
 msgid "http://www.matthewpablo.com"
@@ -735,7 +731,7 @@ msgstr ""
 
 #: dat/assets/adrian.xml:2
 msgid "Adrian"
-msgstr "Adrian"
+msgstr ""
 
 #: dat/assets/adrian.xml:27
 msgid ""
@@ -745,6 +741,11 @@ msgid ""
 "it was a matter of a few cycles before the Sirii came to power. Today Adrian "
 "persists, despite having served its only purpose."
 msgstr ""
+"Un monde froid et désagréable, les Sirius ont établi leur colonie sur Adrian "
+"à l'époque où ils venaient de s'étendre à Eiderdown. A l'époque, le système "
+"était contrôlé par l'Empire, mais avec une tête de pont solide dans le "
+"système, il a fallu quelques cycles avant que les Sirii n'arrivent au "
+"pouvoir. Aujourd’hui Adrian persiste, malgré avoir servi son seul but."
 
 #: dat/assets/adrian.xml:28
 msgid ""
@@ -802,6 +803,13 @@ msgid ""
 "who you are and cheerfully pour you a drink. Some spacers secretly suspect "
 "he has an audiovisual database installed in his head."
 msgstr ""
+"La personne qui dirige ce bar du port spatial est un Soromide corpulent "
+"nommé Alverik Sogheem. Alverik gère généralement lui-même le bar et connaît "
+"tous ses clients par leur nom et leur visage. Peu importe la durée de votre "
+"absence ou l'endroit où vous avez été dans la galaxie, à votre retour à "
+"Agino, Alverik se souviendra de qui vous êtes et vous servira joyeusement un "
+"verre. Certains espaceurs le soupçonnent secrètement d'avoir une base de "
+"données audiovisuelles installée dans sa tête."
 
 #: dat/assets/ahmed.xml:2
 msgid "Ahmed"
@@ -814,6 +822,11 @@ msgid ""
 "people not mining are doing administration or come here as traders and "
 "businessmen looking for turn a credit or two."
 msgstr ""
+"Le mois d'Ahmed est une petite colonie de gens sérieux, mais ce n'est pas "
+"surprenant étant donné que la plupart d'entre eux sont des mineurs. Les "
+"quelques personnes qui ne travaillent pas dans l'exploitation minière font "
+"de l'administration ou viennent ici en tant que commerçants et hommes "
+"d'affaires pour réaliser des profits."
 
 #: dat/assets/ahmed.xml:29
 msgid ""
@@ -840,6 +853,11 @@ msgid ""
 "valuable, and so Aillis offers a fair living for those who don't shun heavy, "
 "dangerous labor."
 msgstr ""
+"Aillis est la base d'opérations des mineurs qui exploitent Koralis VI. "
+"Koralis VI est lui-même hautement radioactif, de sorte qu'aucune habitation "
+"humaine n'est, ou ne sera jamais, possible. Cependant, certains des éléments "
+"lourds de la planète sont très précieux, et Aillis offre donc une vie "
+"équitable à ceux qui ne fuient pas les travaux lourds et dangereux."
 
 #: dat/assets/aillis.xml:29
 msgid ""
@@ -854,7 +872,7 @@ msgstr ""
 
 #: dat/assets/akios_station.xml:2
 msgid "Akios Station"
-msgstr ""
+msgstr "Station Akios"
 
 #: dat/assets/akios_station.xml:27
 msgid ""
@@ -864,6 +882,11 @@ msgid ""
 "(comparatively) little debate over the necessity over this station's "
 "existence."
 msgstr ""
+"La station Akios est une station frontalière de Za'lek destinée à empêcher "
+"les pirates du système Kretogg d'entrer dans l'espace de Za'lek. En raison "
+"de la menace réelle que les criminels détestables représentent pour la "
+"sécurité de la grande maison, il y a (comparativement) peu de débats sur la "
+"nécessité de l'existence de cette station."
 
 #: dat/assets/akra_iii.xml:2
 msgid "Akra III"
@@ -886,10 +909,13 @@ msgstr ""
 "conduisant à plus de relations personnelles interplanétaires que la normale."
 
 #: dat/assets/akra_station.xml:29
+#, fuzzy
 msgid ""
 "The bar is bustling and seemingly constantly packed, yet never seems to "
 "cause anyone any problem due to how efficient everything is."
 msgstr ""
+"Le bar est animé et semble constamment bondé, mais ne semble jamais poser de "
+"problème à personne en raison de l'efficacité de tout."
 
 #: dat/assets/akra_v.xml:2
 msgid "Akra V"
@@ -944,6 +970,13 @@ msgid ""
 "going through a mainstream colonization phase. New immigrants arrive every "
 "day and Soromid habitation centres are constantly under construction."
 msgstr ""
+"Pour un visiteur ordinaire, Aldernael peut sembler rude et désagréable. Si "
+"l'on considère que c'était autrefois une planète sans vie, avec une surface "
+"toxique et à peine une atmosphère, c'est vraiment devenu beaucoup plus "
+"hospitalier depuis que les Soromides ont commencé à le terraformer. "
+"Actuellement, la planète traverse une phase de colonisation générale. De "
+"nouveaux immigrants arrivent chaque jour et des centres d'habitation "
+"soromides sont constamment en construction."
 
 #: dat/assets/aldernael.xml:29
 msgid ""
@@ -953,6 +986,11 @@ msgid ""
 "more customers but also the occasional move from one building to another to "
 "make room for renovations."
 msgstr ""
+"En raison du fort développement sur Aldernael, le bar du port spatial est "
+"sujet à des déplacements occasionnels. Le port spatial est au centre de "
+"cela, bien sûr, et donc le bar en souffre et en profite à tour de rôle. "
+"Cette croissance conduit à plus de clients mais aussi au déménagement "
+"occasionnel d'un bâtiment à un autre pour faire place à des rénovations."
 
 #: dat/assets/aldous.xml:2
 msgid "Aldous"
@@ -967,8 +1005,16 @@ msgid ""
 "their home. The ocean may be toxic, but it also happens to be the perfect "
 "environment for producing high quality positronic circuitry."
 msgstr ""
+"La planète Aldous est une mer géante d'un fluide toxique pour l'homme. Même "
+"la moindre exposition à la matière toxique dans l'océan d'Aldous est "
+"mortelle. En ce qui concerne l'habitabilité, les planètes comme celle-ci "
+"arrivent en dernier sur la liste. Néanmoins, une poignée d'âmes courageuses "
+"ont choisi de s'installer sur cette planète. L'océan peut être toxique, mais "
+"il se trouve également être l'environnement idéal pour produire des circuits "
+"positroniques de haute qualité."
 
 #: dat/assets/aldous.xml:28
+#, fuzzy
 msgid ""
 "The spaceport facility is part of a larger structure that houses the "
 "entirety of this planet's human inhabitants. The complex, more or less, "
@@ -977,10 +1023,17 @@ msgid ""
 "occurs. Some spacers even insist on wearing breathing masks, even in the "
 "spaceport bar, just to be on the safe side."
 msgstr ""
+"Le port spatial fait partie d'une structure plus vaste qui abrite la "
+"totalité des habitants de la planète. Le complexe, plus ou moins, flotte à "
+"la surface et est hermétiquement fermé par rapport à l'environnement "
+"extérieur. De plus, le complexe est très compartimenté, au cas où une fuite "
+"se produirait d'une manière ou d'une autre. Certains espaceurs insistent "
+"même de porter des masques respiratoires, même dans la barre du port "
+"spatial, juste pour être sûrs."
 
 #: dat/assets/aldous_moon.xml:2
 msgid "Aldous' moon"
-msgstr ""
+msgstr "La lune d’Aldous"
 
 #: dat/assets/aleph.xml:2
 msgid "Aleph"
@@ -993,6 +1046,10 @@ msgid ""
 "primarily residential and sports no superheavy industry, the wastefulness of "
 "the Dvaered inhabitants more than makes up for that."
 msgstr ""
+"Dans un exploit impressionnant de dé-terraformation, les Dvaered ont "
+"transformé Aleph d'une classe M en une terre stérile et désolée. Bien que le "
+"monde soit principalement résidentiel et n'ait aucune industrie super "
+"lourde, le gaspillage des habitants de Dvaered compense largement cela."
 
 #: dat/assets/aleph.xml:28
 msgid ""
@@ -1001,6 +1058,10 @@ msgid ""
 "the staleness completely. The drinks do little to relieve the stuffiness "
 "either."
 msgstr ""
+"L'air dans le bar du port spatial est étouffant. L'air est étouffant partout "
+"sur cette planète. Aucune climatisation ni aucun filtrage ne pourra le "
+"débarrasser complètement de son odeur de renfermé. Les boissons ne font pas "
+"non plus disparaître la congestion."
 
 #: dat/assets/alexian.xml:2
 msgid "Alexian"
@@ -1017,6 +1078,11 @@ msgid ""
 "left behind. It is now barely maintained by a small contingent of Dvaered "
 "soldiers and engineers for the use of traders."
 msgstr ""
+"Allan était autrefois une station de patrouille envoyée pour patrouiller les "
+"confins sud de l'espace. Avec l'incident et la régression du pouvoir "
+"impérial, Allan a été laissé derrière. Il est maintenant à peine entretenu "
+"par un petit contingent de soldats et d'ingénieurs Dvaered à l'usage des "
+"commerçants."
 
 #: dat/assets/allan.xml:28
 msgid ""
@@ -1024,6 +1090,10 @@ msgid ""
 "with clean facilities, decent food and strong drink. For its patrons it "
 "provides a small respite from the harsh galaxy."
 msgstr ""
+"Allan n'a pas les ressources pour grand-chose mais le bar a l'air assez "
+"décent, avec des installations propres, une nourriture correcte et des "
+"boissons fortes. Pour ses clients, il offre un petit répit de la galaxie "
+"dure."
 
 #: dat/assets/alleyway.xml:2
 msgid "Alleyway"
@@ -1036,6 +1106,11 @@ msgid ""
 "hunters. Authorities have long ago given up any hope of controlling the "
 "chaos, so everyone knows to be armed and remain vigilant at all times."
 msgstr ""
+"Initialement prévue pour être un centre commercial et un point de "
+"ravitaillement pour les marchands, cette station s'est effectivement "
+"transformée en foyer pour les pirates et les chasseurs de primes. Les "
+"autorités ont depuis longtemps abandonné tout espoir de maîtriser le chaos, "
+"donc tout le monde sait être armé et rester vigilant à tout moment."
 
 #: dat/assets/alleyway.xml:28
 msgid ""
@@ -1043,6 +1118,10 @@ msgid ""
 "merchants and gamblers. Fights often break out and it's hard to tell who to "
 "trust, so most people keep to themselves and avoid eye contact with others."
 msgstr ""
+"Le bar est un mélange de pirates et de chasseurs de primes pour la plupart, "
+"avec une poignée de marchands et de parieurs. Des bagarres éclatent souvent "
+"et il est difficile de dire à qui faire confiance, alors la plupart des gens "
+"restent seuls et évitent le contact visuel avec les autres."
 
 #: dat/assets/allous_gg3.xml:2
 msgid "Allous GG-3"
@@ -1058,7 +1137,7 @@ msgstr ""
 
 #: dat/assets/allous_station.xml:2
 msgid "Allous Station"
-msgstr ""
+msgstr "Station Allous"
 
 #: dat/assets/allous_station.xml:26
 msgid ""
@@ -1070,6 +1149,14 @@ msgid ""
 "need for them to pay for it as numerous warlords, with dreams of "
 "intellectualism, are happy to offer their patronage."
 msgstr ""
+"Malgré son nom, la station Allous n'est pas un avant-poste militaire, mais "
+"plutôt un centre d'observation scientifique et un observatoire de l'espace "
+"profond. À l'origine, elle était destinée à garder un œil sur la nébuleuse à "
+"haute interférence de l'OSP. Même les Dvaered ont une communauté "
+"scientifique, et ils ont payé cette station de leur poche. Bien sûr, une "
+"fois qu'elle a été construite, ils n'ont plus eu besoin de la payer car de "
+"nombreux seigneurs de la guerre, avec des rêves d'intellectualisme, sont "
+"heureux d'offrir leur patronage."
 
 #: dat/assets/allous_station.xml:27
 msgid ""
@@ -1077,6 +1164,10 @@ msgid ""
 "and soldiers are interacting with surprising friendliness and conviviality. "
 "Of course, the local warlords would, and do, tolerate nothing less."
 msgstr ""
+"Ce bar ressemble à ce que l'on attend de l'espace Za'lek. Les scientifiques "
+"et les soldats interagissent avec une amabilité et une convivialité "
+"surprenantes. Bien sûr, les chefs de guerre locaux ne tolèrent rien de "
+"moins, et c'est ce qu'ils font."
 
 #: dat/assets/alteris_i.xml:2
 msgid "Alteris I"
@@ -13012,7 +13103,7 @@ msgstr ""
 
 #: dat/commodity.xml:4
 msgid "Food"
-msgstr ""
+msgstr "Aliments"
 
 #: dat/commodity.xml:5
 msgid ""
@@ -13020,10 +13111,13 @@ msgid ""
 "meals are rich in nutrients and able to last many cycles in their vacuum-"
 "sealed packaging."
 msgstr ""
+"Évoluant des rations militaires du passé antique, les repas emballés "
+"modernes sont riches en nutriments et capables de durer de nombreux cycles "
+"dans leur emballage sous vide."
 
 #: dat/commodity.xml:24
 msgid "Water"
-msgstr ""
+msgstr "Eau"
 
 #: dat/commodity.xml:25
 msgid ""
@@ -63978,7 +64072,7 @@ msgstr ""
 #: src/equipment.c:1852
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
-msgstr "Êtes-vous sûr de vouloir vendre votre votre vaisseau %s pour %s ?"
+msgstr "Êtes-vous sûr de vouloir vendre votre vaisseau %s pour %s ?"
 
 #. Display widget.
 #: src/equipment.c:1869
@@ -70835,39 +70929,41 @@ msgstr ""
 #: src/weapon.c:372
 #, c-format
 msgid "Unknown weapon status for '%s'"
-msgstr ""
+msgstr "État d'arme inconnu pour '%s'"
 
 #: src/weapon.c:493 src/weapon.c:627 src/weapon.c:1677 src/weapon.c:1819
 msgid "Unknown weapon layer!"
-msgstr ""
+msgstr "Couche d'arme inconnue !"
 
 #: src/weapon.c:588
 #, c-format
 msgid "Weapon of type '%s' has no update implemented yet!"
-msgstr ""
+msgstr "La mise à jour d'Arme de type '%s' n’a pas encore été implémenté !"
 
 #: src/weapon.c:747
 #, c-format
 msgid "Weapon of type '%s' has no render implemented yet!"
-msgstr ""
+msgstr "Le rendu d'Arme de type '%s' n’a pas encore été implémenté !"
 
 #: src/weapon.c:1624
 #, c-format
 msgid "Weapon of type '%s' has no create implemented yet!"
-msgstr ""
+msgstr "La création d'Arme de type '%s' n’a pas encore été implémenté !"
 
 #: src/weapon.c:1660
+#, fuzzy
 msgid "Trying to create a Weapon from a non-Weapon type Outfit"
-msgstr ""
+msgstr "Essai de création d'une Arme à partir d'un Équipement de type non-Arme."
 
 #: src/weapon.c:1720
+#, fuzzy
 msgid "Trying to create a Beam Weapon from a non-beam outfit."
-msgstr ""
+msgstr "Essai de création d'une Arme Laser à partir d'un équipement sans laser."
 
 #: src/weapon.c:1740 src/weapon.c:1784 src/weapon.c:1951
 msgid "Invalid WEAPON_LAYER specified"
-msgstr ""
+msgstr "WEAPON_LAYER non valide spécifié"
 
 #: src/weapon.c:1825
 msgid "Trying to destroy weapon not found in stack!"
-msgstr ""
+msgstr "Essai de détruire une arme non existante dans le tas !"
