@@ -128,22 +128,43 @@ function graphics.Image:draw( ... )
       tw = q.w
       th = q.h
    end
-   x,y,w,h = _xy(x,y,w*sx,h*sy)
+   --x,y,w,h = _xy(x,y,w*sx,h*sy)
    -- TODO be less horribly inefficient
-   local shader = graphics._shader
-   if shader ~= nil then
-      shader = shader.shader
-      local s3, s4
-      if graphics._canvas == nil then
-         s3 = -1.0
-         s4 = love.h
-      else
-         s3 = 1.0
-         s4 = 0.0
-      end
-      shader:sendRaw( "love_ScreenSize", {love.w, love.h, s3, s4} )
+   local shader = graphics._shader or graphics._shader_default
+   shader = shader.shader
+   local s3, s4
+   if graphics._canvas == nil then
+      s3 = -1.0
+      s4 = love.h
+   else
+      s3 = 1.0
+      s4 = 0.0
    end
-   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r, shader )
+   shader:sendRaw( "love_ScreenSize", {love.w, love.h, s3, s4} )
+
+   -- TODO don't do this for every drawing...
+   local nw, nh = naev.gfx.dim()
+   local nx = -love.x
+   local ny = love.h+love.y-nh
+   local H = naev.transform.ortho( nx, nx+nw, ny+nh, ny, -1, 1 )
+           * graphics._T[1].T
+   if r == 0 then
+      H = H:translate(x,y)
+           :scale( w*sx, -h*sy )
+           :translate(0,-1)
+   else
+      local hw = w/2
+      local hh = h/2
+      --[[H = H:translate(x,y)
+           :scale( w*sx, -h*sy )
+           :translate(hw,hh)
+           :rotate2d(r)
+           :translate(-hw,-hh)
+           :translate(0,-1)
+      --]]
+   end
+
+   naev.gfx.renderTexMatrix( self.tex, shader, H, graphics._fgcol );
 end
 
 
@@ -462,7 +483,7 @@ vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 
 void main(void) {
     VaryingTexCoord  = VertexTexCoord;
-    VaryingTexCoord.y = 1.-VaryingTexCoord.y;
+    VaryingTexCoord.y= 1.0 - VaryingTexCoord.y;
     VaryingColor     = ConstantColor;
     love_Position    = position( ClipSpaceFromLocal, VertexPosition );
 }
