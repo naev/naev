@@ -14,6 +14,10 @@
 #define COL_METATABLE      "colour" /**< COL metatable identifier. */
 
 
+/* Helper. */
+#define luaL_optcolour(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checkcolour)
+
+
 /*
  * Library loading
  */
