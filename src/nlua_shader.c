@@ -356,6 +356,9 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
          shader_parseUniformArgsInt( ivalues, L, idx, 4 );
          glUniform4i( u->id, ivalues[0], ivalues[1], ivalues[2], ivalues[3] );
          break;
+   
+      default:
+         WARN(_("Unsupported shader uniform type '%d' for uniform '%s'. Ignoring."), u->type, u->name );
    }
    glUseProgram( 0 );
 
