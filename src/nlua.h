@@ -17,6 +17,11 @@
 
 #define NLUA_DONE       "__done__"
 
+
+#define nluaL_optarg(L,ind,def,checkfunc) \
+   (lua_isnoneornil(L,ind) ? (def) : checkfunc(L,ind))
+
+
 typedef int nlua_env;
 extern lua_State *naevL;
 extern nlua_env __NLUA_CURENV;
