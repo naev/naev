@@ -111,10 +111,6 @@ function graphics.Image:draw( ... )
       r = arg[3] or 0
       sx = arg[4] or 1
       sy = arg[5] or sx
-      tx = 0
-      ty = 0
-      tw = 1
-      th = 1
    else
       -- quad, x, y, r, sx, sy
       local q = arg[1]
@@ -127,8 +123,8 @@ function graphics.Image:draw( ... )
       ty = q.y
       tw = q.w
       th = q.h
+      love._unimplemented()
    end
-   --x,y,w,h = _xy(x,y,w*sx,h*sy)
    -- TODO be less horribly inefficient
    local shader = graphics._shader or graphics._shader_default
    shader = shader.shader
@@ -153,17 +149,14 @@ function graphics.Image:draw( ... )
            :scale( w*sx, -h*sy )
            :translate(0,-1)
    else
-      local hw = w/2
-      local hh = h/2
-      --[[H = H:translate(x,y)
-           :scale( w*sx, -h*sy )
-           :translate(hw,hh)
+      local hw = sx*w/2
+      local hh = sy*h/2
+      H = H:translate(x+hw,y+hh)
            :rotate2d(r)
            :translate(-hw,-hh)
+           :scale( w*sx, -h*sy )
            :translate(0,-1)
-      --]]
    end
-
    naev.gfx.renderTexMatrix( self.tex, shader, H, graphics._fgcol );
 end
 
@@ -175,6 +168,11 @@ graphics.Quad = class.inheritsFrom( graphics.Drawable )
 graphics.Quad._type = "Quad"
 function graphics.newQuad( x, y, width, height, sw, sh )
    local q = graphics.Drawable.new()
+   if type(sw)~="number" then
+      local t = sw
+      sw = t.w
+      sh = t.h
+   end
    q.x = x/sw
    q.y = y/sh
    q.w = width/sw
@@ -557,7 +555,7 @@ end
 local _pixelcode = [[
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec4 texcolor = Texel(tex, texture_coords);
+   vec4 texcolor = texture2D(tex, texture_coords);
    return texcolor * color;
 }
 ]]
