@@ -243,6 +243,9 @@ static int shaderL_new( lua_State *L )
 }
 
 
+/**
+ * @brief Helper to parse up float vector (or arguments).
+ */
 void shader_parseUniformArgsFloat( GLfloat values[4], lua_State *L, int idx, int n )
 {
    int j;
@@ -262,6 +265,9 @@ void shader_parseUniformArgsFloat( GLfloat values[4], lua_State *L, int idx, int
 }
 
 
+/**
+ * @brief Helper to parse up integer vector (or arguments).
+ */
 void shader_parseUniformArgsInt( GLint values[4], lua_State *L, int idx, int n )
 {
    int j;
@@ -282,7 +288,7 @@ void shader_parseUniformArgsInt( GLint values[4], lua_State *L, int idx, int n )
 
 
 /**
- * @brief Allows setting values of uniforms for a shader.
+ * @brief Allows setting values of uniforms for a shader. Errors out if the uniform is unknown or unused (as in optimized out by the compiler).
  *
  *    @luatparam Shader shader Shader to send uniform to.
  *    @luatparam string name Name of the uniform.
@@ -293,12 +299,23 @@ static int shaderL_send( lua_State *L )
    return shaderL_sendHelper( L, 0 );
 }
 
+
+/**
+ * @brief Allows setting values of uniforms for a shader, while ignoring unknown (or unused) uniforms.
+ *
+ *    @luatparam Shader shader Shader to send uniform to.
+ *    @luatparam string name Name of the uniform.
+ * @luafunc send
+ */
 static int shaderL_sendRaw( lua_State *L )
 {
    return shaderL_sendHelper( L, 1 );
 }
 
 
+/**
+ * @brief Helper to set the uniform while handling unknown/inactive uniforms.
+ */
 static int shaderL_sendHelper( lua_State *L, int ignore_missing )
 {
    LuaShader_t *ls;
