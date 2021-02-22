@@ -13,7 +13,12 @@
 
 #define SHADER_METATABLE      "shader" /**< Shader metatable identifier. */
 
-#define SHADER_NAME_MAXLEN    32
+#define SHADER_NAME_MAXLEN    32 /**< Maximum length of the name of a uniform variable. */
+
+
+/* Helper. */
+#define luaL_optshader(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checkshader)
+
 
 typedef struct LuaUniform_s {
    GLuint id;
