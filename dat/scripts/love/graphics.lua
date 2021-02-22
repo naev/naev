@@ -284,6 +284,7 @@ function graphics.draw( drawable, ... )
    drawable:draw( ... )
 end
 function graphics.rectangle( mode, x, y, width, height )
+   local w,h
    x,y,w,h = _xy(x,y,width,height)
    naev.gfx.renderRect( x, y, w, h, graphics._fgcol, _mode(mode) )
 end
