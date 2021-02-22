@@ -53,6 +53,7 @@ end
 
 function love.load()
    love.window.setTitle( "Naev Overlay Demo" )
+   love.window.setMode( 0, 0, {fullscreen = true} )
    -- Set up the shader
    shader   = love.graphics.newShader(pixelcode, vertexcode)
    set_shader( 0 )
