@@ -2431,6 +2431,7 @@ dat/scripts/love/timer.lua
 dat/scripts/love/touch.lua
 dat/scripts/love/video.lua
 dat/scripts/love/window.lua
+dat/scripts/love_shaders.lua
 dat/scripts/minerva.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua

@@ -84,7 +84,7 @@ static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
 static void pilot_init_trails( Pilot* p );
 static int pilot_trail_generated( Pilot* p, int generator );
-static void pilot_sample_trail( Pilot* p, int i, int g, double dircos, double dirsin );
+static void pilot_sample_trails( Pilot* p );
 
 
 /**
@@ -1804,14 +1804,14 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  */
 void pilot_update( Pilot* pilot, const double dt )
 {
-   int i, cooling, nchg, g;
+   int i, cooling, nchg;
    int ammo_threshold;
    unsigned int l;
    Pilot *target;
    double a, px,py, vx,vy;
    char buf[16];
    PilotOutfitSlot *o;
-   double Q, dircos, dirsin;
+   double Q;
    Damage dmg;
    double stress_falloff;
    double efficiency, thrust;
@@ -2199,11 +2199,42 @@ void pilot_update( Pilot* pilot, const double dt )
    gatherable_gather( pilot->id );
 
    /* Update the trail. */
-   dircos = cos(pilot->solid->dir);
-   dirsin = sin(pilot->solid->dir);
-   for (i=g=0; g<array_size(pilot->ship->trail_emitters); g++)
-      if (pilot_trail_generated( pilot, g ))
-         pilot_sample_trail( pilot, i++, g, dircos, dirsin );
+   pilot_sample_trails( pilot );
+}
+
+
+/**
+ * @brief Updates the given pilot's trail emissions.
+ */
+static void pilot_sample_trails( Pilot* p )
+{
+   int i, g;
+   double dx, dy, dircos, dirsin;
+   TrailMode mode;
+
+   dircos = cos(p->solid->dir);
+   dirsin = sin(p->solid->dir);
+
+   /* Identify the emission type. */
+   if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
+      mode = MODE_JUMPING;
+   else if (pilot_isFlag(p, PILOT_AFTERBURNER))
+      mode = MODE_AFTERBURN;
+   else if (p->engine_glow > 0.)
+      mode = MODE_GLOW;
+   else
+      mode = MODE_IDLE;
+
+   /* Compute the engine offset. */
+   for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
+      if (pilot_trail_generated( p, g )) {
+         dx = p->ship->trail_emitters[g].x_engine * dircos -
+              p->ship->trail_emitters[g].y_engine * dirsin;
+         dy = p->ship->trail_emitters[g].x_engine * dirsin +
+              p->ship->trail_emitters[g].y_engine * dircos +
+              p->ship->trail_emitters[g].h_engine;
+         spfx_trail_sample( p->trail[i++], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, mode );
+      }
 }
 
 
@@ -2213,41 +2244,6 @@ void pilot_update( Pilot* pilot, const double dt )
 static int pilot_trail_generated( Pilot* p, int generator )
 {
    return !p->ship->trail_emitters[generator].trail_spec->nebula || cur_system->nebu_density>0;
-}
-
-
-/**
- * @brief Updates the indicated trail.
- *
- *    @param p Pilot.
- *    @param i p->trails index.
- *    @param g p->ship->trail_emitters ("generator") index.
- *    @param dircos == cos(p->solid->dir)
- *    @param dirsin == sin(p->solid->dir)
- */
-static void pilot_sample_trail( Pilot* p, int i, int g, double dircos, double dirsin )
-{
-   double dx, dy;
-   TrailStyle style;
-
-   /* Compute the engine offset. */
-   dx = p->ship->trail_emitters[g].x_engine * dircos -
-        p->ship->trail_emitters[g].y_engine * dirsin;
-   dy = p->ship->trail_emitters[g].x_engine * dirsin +
-        p->ship->trail_emitters[g].y_engine * dircos +
-	p->ship->trail_emitters[g].h_engine;
-
-   /* Set the colour. */
-   if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
-      style = p->ship->trail_emitters[g].trail_spec->jmpn;
-   else if (pilot_isFlag(p, PILOT_AFTERBURNER))
-      style = p->ship->trail_emitters[g].trail_spec->aftb;
-   else if (p->engine_glow > 0.)
-      style = p->ship->trail_emitters[g].trail_spec->glow;
-   else
-      style = p->ship->trail_emitters[g].trail_spec->idle;
-
-   spfx_trail_sample( p->trail[i], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, style );
 }
 
 
