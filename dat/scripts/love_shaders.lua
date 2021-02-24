@@ -28,7 +28,7 @@ function love_shaders.vignette( noise )
    local pixelcode = [[
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
-#include "lib/simplex2D.glsl"
+#include "lib/simplex.glsl"
 
 uniform float u_time;
 uniform float u_radius;
