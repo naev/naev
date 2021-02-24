@@ -14,7 +14,7 @@ subroutine uniform jump_func_prototype jump_func;
 
 // Libraries
 #include "lib/math.glsl"
-#include "lib/perlin2D.glsl"
+#include "lib/perlin.glsl"
 #include "lib/cellular2x2.glsl"
 
 uniform float progress;
