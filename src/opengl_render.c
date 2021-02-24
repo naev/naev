@@ -108,10 +108,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
 
-   gl_beginSolidProgram(projection, c);
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-   gl_endSolidProgram();
+   gl_renderRectH( &projection, c, 1 );
 }
 
 
@@ -132,9 +129,28 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
 
-   gl_beginSolidProgram(projection, c);
-   gl_vboActivateAttribOffset( gl_squareEmptyVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINE_STRIP, 0, 5 );
+   gl_renderRectH( &projection, c, 0 );
+}
+
+
+/**
+ * @brief Renders a rectangle.
+ *
+ *    @param H Transformation matrix to apply.
+ *    @param filled Whether or not to fill.
+ *    @param c Rectangle colour.
+ */
+void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled )
+{
+   gl_beginSolidProgram(*H, c);
+   if (filled) {
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   }
+   else {
+      gl_vboActivateAttribOffset( gl_squareEmptyVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( GL_LINE_STRIP, 0, 5 );
+   }
    gl_endSolidProgram();
 }
 

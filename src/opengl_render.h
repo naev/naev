@@ -91,6 +91,7 @@ void gl_drawLine( const double x1, const double y1,
 /* Rectangles. */
 void gl_renderRect( double x, double y, double w, double h, const glColour *c );
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c );
+void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled );
 
 /* Cross. */
 void gl_renderCross( double x, double y, double r, const glColour *c );
