@@ -305,7 +305,6 @@ void nebu_renderOverlay( const double dt )
       glBindFramebuffer(GL_FRAMEBUFFER, nebu_fbo);
       glClearColor( 0., 0., 0., 0. );
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      glDisable( GL_DEPTH_TEST );
    }
 
    /* Start the program. */
