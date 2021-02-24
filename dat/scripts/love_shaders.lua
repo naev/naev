@@ -27,28 +27,65 @@ function love_shaders.vignette( noise )
    noise = noise or 1.0
    local pixelcode = [[
 #include "lib/simplex.glsl"
+#include "lib/perlin.glsl"
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
+#include "lib/blend.glsl"
+#include "lib/colour.glsl"
 
 uniform float u_time;
-uniform float u_radius;
-uniform float u_softness;
-uniform float u_opacity;
 
+float grain(vec2 uv, vec2 mult, float frame, float multiplier) {
+   float offset = snoise(vec3(mult / multiplier, frame));
+   float n1 = pnoise(vec3(mult, offset), vec3(1.0/uv * love_ScreenSize.xy, 1.0));
+   return n1 / 2.0 + 0.5;
+}
+vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
+   const float fps = 15.0;
+   const float zoom = 0.2;
+   float frame = floor(fps*u_time) / fps;
+
+   vec3 g = vec3( grain( uv, px * zoom, frame, 2.5 ) );
+
+   // get the luminance of the image
+   float luminance = rgbToLuminance( bgcolor.rgb );
+   vec3 desaturated = vec3(luminance);
+
+   // now blend the noise over top the backround
+   // in our case soft-light looks pretty good
+   vec4 color;
+   color = vec4( vec3(1.2,1.0,0.4)*luminance, bgcolor.a );
+   color = vec4( blendSoftLight(color.rgb, g), bgcolor.a );
+
+   // and further reduce the noise strength based on some
+   // threshold of the background luminance
+   float response = smoothstep(0.05, 0.5, luminance);
+   color.rgb = mix(color.rgb, desaturated, pow(response,2.0));
+
+   // Vertical tears
+   if (distance( love_ScreenSize.x * random(vec2(frame, 0.)), px.x) < random(vec2(frame, 1000.)))
+      color.rgb *= vec3( random( vec2(frame, 5000.) ));
+
+   // Flickering
+   color.rgb *= 1.0 + 0.05*snoise( vec2(3.0*frame, M_PI) );
+
+   return color;
+}
+vec4 vignette( vec4 color, vec2 uv, vec2 px )
+{
+   uv *= 1.0 - uv.yx;   //vec2(1.0)- uv.yx; -> 1.-u.yx; Thanks FabriceNeyret !
+   float vig = uv.x*uv.y * 15.0; // multiply with sth for intensity
+   vig = pow(vig, 0.25); // change pow for modifying the extend of the  vignette
+   return vec4(vig);
+}
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 {
-   vec4 texcolor;
+   vec4 texcolor = texture2D( tex, uv );
 
-   /* Main vignette. */
-   float aspect = love_ScreenSize.x / love_ScreenSize.y;
-   aspect = max(aspect, 1.0 / aspect); // use different aspect when in portrait mode
-   float v = 1.0 - smoothstep(radius, radius-softness, length((tc - vec2(0.5)) * aspect));
-   texcolor = mix( Texel(tex, uv), color, v*opacity );
-
-   /* Add grain. */
-   float x = (uv.x + 4.0) * (uv.y + 4.0) * u_time * 10.0;
-   float grain = 1.0 - (mod((mod(x, 13.0) + 1.0) * (mod(x, 123.0) + 1.0), 0.01) - 0.005) * strength;
-   texcolor.xyz *= grain;
+   texcolor = graineffect( texcolor, uv, screen_coords );
+   vec4 v = vignette( color, uv, screen_coords );
+   texcolor *= v;
+   //texcolor = mix( texcolor, v, v.a );
 
    return texcolor;
 }
@@ -69,6 +106,7 @@ function love_shaders.hologram( noise )
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
 #include "lib/simplex.glsl"
+#include "lib/colour.glsl"
 
 uniform float u_time;
 
@@ -79,7 +117,7 @@ float onOff(float a, float b, float c)
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 {
-   const vec3 bluetint  = vec3(0.3, 0.5, 0.8);  
+   const vec3 bluetint  = vec3(0.3, 0.5, 0.8);
    const float brightness = 0.4;
    const float contrast = 2.0;
 #ifdef HOLOGRAM_STRONG
@@ -130,9 +168,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 
    /* Drop to greyscale while increasing brightness and contrast */
    //float greyscale = dot( texcolor.xyz, vec3( 0.2126, 0.7152, 0.0722 ) ); // standard
-   float greyscale = dot( texcolor.xyz, vec3( 0.2989, 0.5870, 0.1140 ) ); // percieved
+   float greyscale = rgbToLuminance( texcolor.rgb ); // percieved
    texcolor.xyz = contrast*vec3(greyscale) + brightness;
-  
+
    /* Shadows. */
    float shadow = 1.0 - shadowrange + (shadowrange * sin((uv.y + (u_time * shadowspeed)) * shadowcount));
    texcolor.xyz *= shadow;
