@@ -19,6 +19,7 @@
 #include "log.h"
 #include "nluadef.h"
 #include "nlua_tex.h"
+#include "nlua_col.h"
 
 
 static int nlua_canvas_counter = 0;
@@ -32,12 +33,14 @@ static int canvasL_eq( lua_State *L );
 static int canvasL_new( lua_State *L );
 static int canvasL_set( lua_State *L );
 static int canvasL_getTex( lua_State *L );
+static int canvasL_clear( lua_State *L );
 static const luaL_Reg canvasL_methods[] = {
    { "__gc", canvasL_gc },
    { "__eq", canvasL_eq },
    { "new", canvasL_new },
    { "set", canvasL_set },
    { "getTex", canvasL_getTex },
+   { "clear", canvasL_clear },
    {0,0}
 }; /**< Canvas metatable methods. */
 
@@ -195,10 +198,10 @@ static int canvasL_new( lua_State *L )
    status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
    if (status != GL_FRAMEBUFFER_COMPLETE)
       NLUA_ERROR( L, _("Error setting up framebuffer!"));
-      
+
    /* Restore state. */
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-  
+
    gl_checkErr();
 
    lua_pushcanvas( L, lc );
@@ -251,3 +254,20 @@ static int canvasL_getTex( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Clears a canvas.
+ *
+ *    @luatparam Canvas canvas Canvas to clear.
+ *    @luatparam Colour col Colour to clear to.
+ * @luafunc getTex
+ */
+static int canvasL_clear( lua_State *L )
+{
+   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   (void) lc;
+   const glColour *c = luaL_optcolour(L,2,&cBlack);
+   glClearColor( c->r, c->g, c->b, c->a );
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   return 0;
+}
