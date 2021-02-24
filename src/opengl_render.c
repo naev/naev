@@ -47,6 +47,7 @@
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 gl_vbo *gl_squareVBO = 0;
 static gl_vbo *gl_squareEmptyVBO = 0;
+static gl_vbo *gl_circleVBO = 0;
 static gl_vbo *gl_crossVBO = 0;
 static gl_vbo *gl_lineVBO = 0;
 static gl_vbo *gl_triangleVBO = 0;
@@ -637,19 +638,36 @@ void gl_drawCircle( const double cx, const double cy,
 
    /* Set the vertex. */
    projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, cx - r, cy - r, 0);
-   projection = gl_Matrix4_Scale(projection, 2*r, 2*r, 1);
+   projection = gl_Matrix4_Translate(projection, cx, cy, 0);
+   projection = gl_Matrix4_Scale(projection, r, r, 1);
+
+   /* Draw! */
+   gl_drawCircleH( &projection, c, filled );
+}
+
+
+/**
+ * @brief Draws a circle.
+ *
+ *    @param H Transformation matrix to draw the circle.
+ *    @param c Colour to use.
+ *    @param filled Whether or not it should be filled.
+ */
+void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
+{
+   // TODO handle shearing and different x/y scaling
+   GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
 
    if (filled) {
       glUseProgram( shaders.circle_filled.program );
 
       glEnableVertexAttribArray( shaders.circle_filled.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.circle_filled.vertex,
+      gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle_filled.vertex,
             0, 2, GL_FLOAT, 0 );
 
       /* Set shader uniforms. */
       gl_uniformColor( shaders.circle_filled.color, c );
-      gl_Matrix4_Uniform( shaders.circle_filled.projection, projection );
+      gl_Matrix4_Uniform( shaders.circle_filled.projection, *H );
       glUniform1f( shaders.circle_filled.radius, r );
 
       /* Draw. */
@@ -662,12 +680,12 @@ void gl_drawCircle( const double cx, const double cy,
       glUseProgram( shaders.circle.program );
 
       glEnableVertexAttribArray( shaders.circle.vertex );
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.circle.vertex,
+      gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle.vertex,
             0, 2, GL_FLOAT, 0 );
 
       /* Set shader uniforms. */
       gl_uniformColor( shaders.circle.color, c );
-      gl_Matrix4_Uniform( shaders.circle.projection, projection );
+      gl_Matrix4_Uniform( shaders.circle.projection, *H );
       glUniform1f( shaders.circle.radius, r );
 
       /* Draw. */
@@ -769,6 +787,16 @@ int gl_initRender (void)
    vertex[7] = 1.;
    gl_squareVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
+   vertex[0] = -1.;
+   vertex[1] = -1.;
+   vertex[2] = 1.;
+   vertex[3] = -1.;
+   vertex[4] = -1.;
+   vertex[5] = 1.;
+   vertex[6] = 1.;
+   vertex[7] = 1.;
+   gl_circleVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
+
    vertex[0] = 0.;
    vertex[1] = 0.;
    vertex[2] = 1.;
@@ -821,6 +849,7 @@ void gl_exitRender (void)
    /* Destroy the VBO. */
    gl_vboDestroy( gl_renderVBO );
    gl_vboDestroy( gl_squareVBO );
+   gl_vboDestroy( gl_circleVBO );
    gl_vboDestroy( gl_squareEmptyVBO );
    gl_vboDestroy( gl_crossVBO );
    gl_vboDestroy( gl_lineVBO );

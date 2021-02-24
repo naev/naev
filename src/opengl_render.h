@@ -82,6 +82,7 @@ void gl_endSmoothProgram (void);
 /* Circles. */
 void gl_drawCircle( const double x, const double y,
       const double r, const glColour *c, int filled );
+void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled );
 
 /* Lines. */
 void gl_drawLine( const double x1, const double y1,
