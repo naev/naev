@@ -30,6 +30,7 @@ local function _H( x, y, r, sx, sy )
       local cw = graphics._canvas.t.w
       local ch = graphics._canvas.t.h
       H = naev.transform.ortho( 0, cw, 0, ch, -1, 1 )
+          :scale( love.s, love.s )
    else
       -- Rendering to screen
       H = graphics._O
@@ -525,8 +526,10 @@ graphics.Canvas = class.inheritsFrom( object.Drawable )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
    local c = graphics.Canvas.new()
-   if width==nil then
-      width, height = graphics.getDimensions()
+   if not width then
+      local nw, nh, ns = naev.gfx.dim()
+      width = nw
+      height= nh
    end
    c.canvas = naev.canvas.new( width, height )
    -- Set texture
