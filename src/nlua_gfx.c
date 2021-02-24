@@ -45,6 +45,7 @@ static int gfxL_printfWrap( lua_State *L );
 static int gfxL_printRestoreClear( lua_State *L );
 static int gfxL_printRestoreLast( lua_State *L );
 static int gfxL_printf( lua_State *L );
+static int gfxL_printH( lua_State *L );
 static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
@@ -66,6 +67,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "printRestoreClear", gfxL_printRestoreClear },
    { "printRestoreLast", gfxL_printRestoreLast },
    { "printf", gfxL_printf },
+   { "printH", gfxL_printH },
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
@@ -644,6 +646,36 @@ static int gfxL_printf( lua_State *L )
       gl_printMaxRaw( font, max, x, y, col, 0., str );
    else
       gl_printRaw( font, x, y, col, 0., str );
+   return 0;
+}
+
+
+/**
+ * @brief Prints text on the screen using a font with a transformation matirx.
+ *
+ *    @luatparam Transform H transformation matrix to use.
+ *    @luatparam font font Font to use.
+ *    @luatparam string str String to print.
+ *    @luatparam Colour col Colour to print text.
+ * @luafunc printH
+ */
+static int gfxL_printH( lua_State *L )
+{
+   const gl_Matrix4 *H;
+   glFont *font;
+   const char *str;
+   const glColour *col;
+
+   NLUA_CHECKRW(L);
+
+   /* Parse parameters. */
+   H     = luaL_checktransform(L,1);
+   font  = luaL_checkfont(L,2);
+   str   = luaL_checkstring(L,3);
+   col   = luaL_optcolour(L,4,&cWhite);
+
+   /* Render. */
+   gl_printRawH( font, H, col, 0., str );
    return 0;
 }
 
