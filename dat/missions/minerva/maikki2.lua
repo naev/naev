@@ -42,7 +42,6 @@ require 'numstring'
 
 logidstr = minerva.log.maikki.idstr
 
--- TODO customize all the portraits/images/descriptions
 hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
 hint1_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
 hint1_portrait = "zalek1.png"
@@ -741,7 +740,7 @@ function approach_eccentric ()
    vn.scene()
    vn.fadein()
    local dr = vn.newCharacter( strangelove.name,
-         { color=strangelove.colour, image=portrait.getFullPath( strangelove.portrait ),
+         { color=strangelove.colour, image=minerva.strangelove.image,
            shader=love_shaders.hologram() } )
 
    if not ecc_visitedonce then

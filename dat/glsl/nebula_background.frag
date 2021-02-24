@@ -1,5 +1,4 @@
-#include "lib/flow2D.glsl"
-#include "lib/perlin3D.glsl"
+#include "lib/perlin.glsl"
 
 const int ITERATIONS = 3;
 const float SCALAR = pow(2., 4./3.);

@@ -21,6 +21,7 @@
 
 require "proximity"
 require "nextjump"
+require "fleethelper"
 require "chatter"
 require "selectiveclear"
 require "missions/shadow/common"

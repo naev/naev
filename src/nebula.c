@@ -139,7 +139,7 @@ int nebu_resize (void)
          WARN(_("Error setting up nebula framebuffer!"));
 
       /* Restore state. */
-      glBindFramebuffer(GL_FRAMEBUFFER, 0);
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
 
       gl_checkErr();
    }
@@ -237,7 +237,7 @@ static void nebu_renderBackground( const double dt )
 static void nebu_blitFBO (void)
 {
    if (nebu_dofbo) {
-      glBindFramebuffer(GL_FRAMEBUFFER, 0);
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
 
       glUseProgram(shaders.texture.program);
 
@@ -305,7 +305,6 @@ void nebu_renderOverlay( const double dt )
       glBindFramebuffer(GL_FRAMEBUFFER, nebu_fbo);
       glClearColor( 0., 0., 0., 0. );
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      glDisable( GL_DEPTH_TEST );
    }
 
    /* Start the program. */

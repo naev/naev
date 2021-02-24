@@ -1011,7 +1011,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 static void weapon_sample_trail( Weapon* w )
 {
    double a, dx, dy;
-   TrailStyle style;
+   TrailMode mode;
 
    /* Compute the engine offset. */
    a  = w->solid->dir;
@@ -1020,13 +1020,13 @@ static void weapon_sample_trail( Weapon* w )
 
    /* Set the colour. */
    if (w->solid->thrust > 0)
-      style = w->outfit->u.amm.trail_spec->aftb;
+      mode = MODE_AFTERBURN;
    else if (w->solid->dir_vel != 0.)
-      style = w->outfit->u.amm.trail_spec->glow;
+      mode = MODE_GLOW;
    else
-      style = w->outfit->u.amm.trail_spec->idle;
+      mode = MODE_IDLE;
 
-   spfx_trail_sample( w->trail, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2, style );
+   spfx_trail_sample( w->trail, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2, mode );
 }
 
 

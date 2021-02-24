@@ -54,6 +54,8 @@ void gl_freeFont( glFont* font );
 void gl_printRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const double outlineR , const char *text);
+void gl_printRawH( const glFont *ft_font, const gl_Matrix4 *H,
+      const glColour* c, const double outlineR , const char *text );
 int gl_printMaxRaw( const glFont *ft_font, const int max,
       const double x, const double y,
       const glColour* c, const double outlineR , const char *text);
