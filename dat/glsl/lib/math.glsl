@@ -1,5 +1,5 @@
-#ifndef _MATH_H
-#define _MATH_H
+#ifndef _MATH_GLSL
+#define _MATH_GLSL
 
 /* Taken from /usr/include/math.h */
 const float M_E         = 2.7182818284590452354;   /* e */
@@ -60,8 +60,8 @@ float random(vec2 co)
    highp float b = 78.233;
    highp float c = 43758.5453;
    highp float dt= dot(co.xy ,vec2(a,b));
-   highp float sn= mod(dt,3.14);
+   highp float sn= mod(dt,M_PI);
    return fract(sin(sn) * c);
 }
 
-#endif /* _MATH_H */
+#endif /* _MATH_GLSL */

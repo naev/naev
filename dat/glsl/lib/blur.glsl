@@ -1,5 +1,5 @@
-#ifndef _BLUR_H
-#define _BLUR_H
+#ifndef _BLUR_GLSL
+#define _BLUR_GLSL
 
 // Blur from https://github.com/Jam3/glsl-fast-gaussian-blur
 /*
@@ -45,4 +45,4 @@ vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
    return color;
 }
 
-#endif /* _BLUR_H */
+#endif /* _BLUR_GLSL */
