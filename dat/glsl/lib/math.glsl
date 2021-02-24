@@ -15,7 +15,6 @@ const float M_2_PI      = 0.63661977236758134308;  /* 2/pi */
 const float M_2_SQRTPI  = 1.12837916709551257390;  /* 2/sqrt(pi) */
 const float M_SQRT2     = 1.41421356237309504880;  /* sqrt(2) */
 const float M_SQRT1_2   = 0.70710678118654752440;  /* 1/sqrt(2) */
-#
 
 // Modulo 289 without a division (only multiplications)
 vec4 mod289(vec4 x) {
