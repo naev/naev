@@ -291,6 +291,7 @@ static int gl_createWindow( unsigned int flags )
    }
 
    /* Finish getting attributes. */
+   gl_screen.current_fbo = 0; /* No FBO set. */
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
    gl_activated = 1; /* Opengl is now activated. */
 

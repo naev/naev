@@ -65,6 +65,7 @@ typedef struct glInfo_ {
    int fsaa; /**< Full Scene Anti Aliasing level. */
    SDL_Window *window; /**< Window for SDL2. */
    SDL_GLContext context; /**< Context for OpenGL. */
+   GLuint current_fbo; /**< Current framebuffer. */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 

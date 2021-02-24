@@ -22,6 +22,8 @@
 
 
 static int nlua_canvas_counter = 0;
+static GLuint previous_fbo = 0;
+static int previous_fbo_set = 0;
 
 
 /* Canvas metatable methods. */
@@ -195,7 +197,7 @@ static int canvasL_new( lua_State *L )
       NLUA_ERROR( L, _("Error setting up framebuffer!"));
       
    /* Restore state. */
-   glBindFramebuffer(GL_FRAMEBUFFER, 0);
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
   
    gl_checkErr();
 
@@ -216,10 +218,17 @@ static int canvasL_set( lua_State *L )
 
    if (lua_iscanvas(L,1)) {
       lc = luaL_checkcanvas(L,1);
-      glBindFramebuffer(GL_FRAMEBUFFER, lc->fbo);
+      if (!previous_fbo_set) {
+         previous_fbo = gl_screen.current_fbo;
+         previous_fbo_set = 1;
+      }
+      gl_screen.current_fbo = lc->fbo;
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    }
    else if ((lua_gettop(L)<=0) || lua_isnil(L,1)) {
-      glBindFramebuffer(GL_FRAMEBUFFER, 0);
+      gl_screen.current_fbo = previous_fbo;
+      previous_fbo_set = 0;
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    }
    else
       NLUA_ERROR(L,_("Unexpected parameter"));
