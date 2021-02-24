@@ -43,6 +43,8 @@ vn._default.namebox_x = vn._default.textbox_x
 vn._default.namebox_y = vn._default.textbox_y - vn._default.namebox_h - 20
 vn._default.namebox_bg = vn._default.textbox_bg
 vn._default.namebox_alpha = 1
+vn._canvas = graphics.newCanvas()
+vn._postshader = nil
 
 
 function vn._checkstarted()
@@ -105,6 +107,11 @@ end
 -- @brief Main drawing function.
 --]]
 function vn.draw()
+   if vn._postshader then
+      graphics.setCanvas( vn._canvas )
+      graphics.clear( 0, 0, 0, 0 )
+   end
+
    -- Draw characters
    for k,c in ipairs( vn._characters ) do
       if not c.talking then
@@ -150,6 +157,15 @@ function vn.draw()
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
    s:draw()
+
+   if vn._postshader then
+      -- Draw canvas
+      graphics.setCanvas()
+      graphics.setShader( vn._postshader )
+      graphics.setColor( 1, 1, 1, 1 )
+      vn._canvas:draw( 0, 0 )
+      graphics.setShader()
+   end
 end
 
 
@@ -942,6 +958,10 @@ function vn.custom()
    local s = vn.State.new()
    table.insert( vn._states, s )
    return s
+end
+
+function vn.setShader( shader )
+   vn._postshader = shader
 end
 
 function vn._jump( label )
