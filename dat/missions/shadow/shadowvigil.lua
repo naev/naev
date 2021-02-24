@@ -114,6 +114,11 @@ osd_msg[3] = _("Follow the flight leader to the rendezvous location")
 osd_msg[4] = _("Escort the Imperial diplomat")
 osd_msg[5] = _("Report back to Rebina")
 
+osd_title0 = _("???")
+osd_msg0 = _("Fly to the %s system.")
+misn_desc0 = _([[You are invited to the system %s]])
+misn_reward0 = _("???")
+
 misn_desc = _([[Captain Rebina of the Four Winds has asked you to help Four Winds agents protect an Imperial diplomat.]])
 misn_reward = _("A sum of money.")
 
@@ -122,7 +127,23 @@ log_text_success = _([[Your attempt to escort a diplomat for the Four Winds was 
 log_text_fail = _([[You failed to escort a diplomat to safety for the Four Winds.]])
 
 
+-- After having accepted the mission from the hailing Vendetta
 function create()
+   misn.accept()
+   stage = 0
+   local rsysname = "Pas"
+   rebinasys = system.get(rsysname)
+   hook.jumpin("jumpin")
+
+    misn.setDesc(misn_desc0:format(rsysname))
+    misn.setReward(misn_reward0)
+    marker = misn.markerAdd(rebinasys, "low")
+    osd_msg0 = string.format(osd_msg0, rebinasys:name())
+    misn.osdCreate(osd_title0, {osd_msg0})
+end
+
+-- Boarding the Seiryuu at the beginning of the mission
+function meeting()
     misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refuel stop, protegee meeting point, final destination.
     misssys["__save"] = true
     
@@ -136,7 +157,7 @@ function create()
         tk.msg(title[1], string.format(text[1], player.name()))
         tk.msg(title[1], text[2])
         if tk.yesno(title[1], text[3]) then
-            accept()
+            accept_m()
         else
             tk.msg(refusetitle, refusetext)
             abort()
@@ -144,7 +165,7 @@ function create()
     else
         tk.msg(title[1], string.format(textrepeat, player.name()))
         if tk.yesno(title[1], text[3]) then
-            accept()
+            accept_m()
         else
             tk.msg(refusetitle, refusetext)
             abort()
@@ -153,7 +174,7 @@ function create()
     player.unboard()
 end
 
-function accept()
+function accept_m()
     alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
     alive["__save"] = true
     stage = 1 -- Keeps track of the mission stage
@@ -167,11 +188,8 @@ function accept()
     missend = false
     landfail = false
 
-    var.push("shadowvigil_active", true)
     tk.msg(accepttitle, string.format(accepttext, player.name(), player.name()))
     shadow_addLog( log_text_intro )
-
-    misn.accept()
 
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
@@ -181,7 +199,6 @@ function accept()
     misn.osdCreate(osd_title, osd_msg)
     
     hook.land("land")
-    hook.jumpin("jumpin")
     hook.enter("enter")
     hook.jumpout("jumpout")
     hook.takeoff("takeoff")
@@ -245,6 +262,16 @@ end
 function jumpin()
     sysclear = false -- We've just jumped in, so the ambushers, if any, are not dead.
     
+    if stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
+        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), "trader" )
+        seiryuu:control(true)
+        seiryuu:setActiveBoard(true)
+        seiryuu:setInvincible(true)
+        seiryuu:setHilight(true)
+        seiryuu:setVisplayer(true)
+        hook.pilot(seiryuu, "board", "board")
+    end
+
     if stage >= 3 and system.cur() ~= nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
         tk.msg(wrongsystitle, wrongsystext)
         shadow_addLog( log_text_fail )
@@ -582,20 +609,24 @@ end
 
 -- Function hooked to boarding. Only used on the Seiryuu.
 function board()
-    player.unboard()
-    seiryuu:control()
-    seiryuu:hyperspace()
-    seiryuu:setActiveBoard(false)
-    seiryuu:setHilight(false)
-    tk.msg(title[4], string.format(text[4], player.name(), player.name()))
-    player.pay(700000)
-    var.pop("shadowvigil_active")
-    shadow_addLog( log_text_success )
-    misn.finish(true)
+    if stage == 0 then
+       misn.markerRm(marker)
+       misn.osdDestroy()
+       meeting()
+    else
+       player.unboard()
+       seiryuu:control()
+       seiryuu:hyperspace()
+       seiryuu:setActiveBoard(false)
+       seiryuu:setHilight(false)
+       tk.msg(title[4], string.format(text[4], player.name(), player.name()))
+       player.pay(700000)
+       shadow_addLog( log_text_success )
+       misn.finish(true)
+    end
 end
 
 -- Handle the unsuccessful end of the mission.
 function abort()
-    var.pop("shadowvigil_active")
     misn.finish(false)
 end
