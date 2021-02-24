@@ -15,7 +15,7 @@ subroutine uniform beam_func_prototype beam_func;
 // Libraries
 #include "lib/math.glsl"
 #include "lib/simplex.glsl"
-#include "lib/cellular2x2.glsl"
+#include "lib/cellular.glsl"
 #include "lib/perlin.glsl"
 
 // For ideas: https://thebookofshaders.com/05/
