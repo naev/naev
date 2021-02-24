@@ -33,9 +33,11 @@
 static int gfxL_dim( lua_State *L );
 static int gfxL_renderTex( lua_State *L );
 static int gfxL_renderTexRaw( lua_State *L );
-static int gfxL_renderTexMatrix( lua_State *L );
+static int gfxL_renderTexH( lua_State *L );
 static int gfxL_renderRect( lua_State *L );
+static int gfxL_renderRectH( lua_State *L );
 static int gfxL_renderCircle( lua_State *L );
+static int gfxL_renderCircleH( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
 /* TODO get rid of printDim and print in favour of printfDim and printf */
 static int gfxL_printfDim( lua_State *L );
@@ -52,9 +54,11 @@ static const luaL_Reg gfxL_methods[] = {
    /* Render stuff. */
    { "renderTex", gfxL_renderTex },
    { "renderTexRaw", gfxL_renderTexRaw },
-   { "renderTexMatrix", gfxL_renderTexMatrix },
+   { "renderTexH", gfxL_renderTexH },
    { "renderRect", gfxL_renderRect },
+   { "renderRectH", gfxL_renderRectH },
    { "renderCircle", gfxL_renderCircle },
+   { "renderCircleH", gfxL_renderCircleH },
    /* Printing. */
    { "fontSize", gfxL_fontSize },
    { "printfDim", gfxL_printfDim },
@@ -263,7 +267,7 @@ static int gfxL_renderTexRaw( lua_State *L )
 /**
  * @brief
  */
-static int gfxL_renderTexMatrix( lua_State *L )
+static int gfxL_renderTexH( lua_State *L )
 {
    glTexture *t;
    const glColour *col;
@@ -354,6 +358,30 @@ static int gfxL_renderRect( lua_State *L )
 
 
 /**
+ * @brief Renders a rectangle given a transformation matrix.
+ *
+ *    @luatparam Transform H Transformation matrix to use.
+ *    @luatparam[opt=white] Colour col Colour to use.
+ *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
+ * @luafunc renderRectH
+ */
+static int gfxL_renderRectH( lua_State *L )
+{
+   NLUA_CHECKRW(L);
+
+   /* Parse parameters. */
+   const gl_Matrix4 *H = luaL_checktransform(L,1);
+   const glColour *col = luaL_optcolour(L,2,&cWhite);
+   int empty = lua_toboolean(L,3);
+
+   /* Render. */
+   gl_renderRectH( H, col, !empty );
+
+   return 0;
+}
+
+
+/**
  * @brief Renders a circle
  *
  *    @luatparam number x X position to render at.
@@ -380,6 +408,30 @@ static int gfxL_renderCircle( lua_State *L )
 
    /* Render. */
    gl_drawCircle( x, y, r, col, !empty );
+
+   return 0;
+}
+
+
+/**
+ * @brief Renders a circle given a transformation matrix.
+ *
+ *    @luatparam Transform H Transformation matrix to use.
+ *    @luatparam[opt=white] Colour col Colour to use.
+ *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
+ * @luafunc renderCircleH
+ */
+static int gfxL_renderCircleH( lua_State *L )
+{
+   NLUA_CHECKRW(L);
+
+   /* Parse parameters. */
+   const gl_Matrix4 *H = luaL_checktransform(L,1);
+   const glColour *col = luaL_optcolour(L,2,&cWhite);
+   int empty = lua_toboolean(L,3);
+
+   /* Render. */
+   gl_drawCircleH( H, col, !empty );
 
    return 0;
 }
