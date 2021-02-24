@@ -22,11 +22,45 @@ local function _mode(m)
    else   error( string.format(_("Unknown fill mode '%s'"), mode ) )
    end
 end
+local function _H( x, y, r, sx, sy )
+   -- TODO don't do this for every drawing...
+   local H
+   if graphics._canvas then
+      -- Rendering to canvas
+      local cw = graphics._canvas.t.w
+      local ch = graphics._canvas.t.h
+      H = naev.transform.ortho( 0, cw, 0, ch, -1, 1 )
+   else
+      -- Rendering to screen
+      local nw, nh = naev.gfx.dim()
+      local nx = -love.x
+      local ny = love.h+love.y-nh
+      H = naev.transform.ortho( nx, nx+nw, ny+nh, ny, -1, 1 )
+   end
+   H = H * graphics._T[1].T
+   if r == 0 then
+      H = H:translate(x,y)
+           :scale( sx, -sy )
+           :translate(0,-1)
+   else
+      local hw = sx/2
+      local hh = sy/2
+      H = H:translate(x+hw,y+hh)
+           :rotate2d(r)
+           :translate(-hw,-hh)
+           :scale( sx, -sy )
+           :translate(0,-1)
+   end
+   return H
+end
 local function _xy( gx, gy, gw, gh )
    local x, y = graphics._T[1]:transformPoint( gx, gy )
    local w, h = graphics._T[1]:transformDim( gw, gh )
    -- Issue here is that our coordinate system y-axis is upside-down so
    -- we have to compensate.
+   if graphics._canvas then
+      return x, graphics._canvas.t.h-y-h, w, h
+   end
    return  love.x+x, love.y+(love.h-y-h), w, h
 end
 local function _gcol( c )
@@ -138,26 +172,9 @@ function graphics.Image:draw( ... )
    end
    shader:sendRaw( "love_ScreenSize", {love.w, love.h, s3, s4} )
 
-   -- TODO don't do this for every drawing...
-   local nw, nh = naev.gfx.dim()
-   local nx = -love.x
-   local ny = love.h+love.y-nh
-   local H = naev.transform.ortho( nx, nx+nw, ny+nh, ny, -1, 1 )
-           * graphics._T[1].T
-   if r == 0 then
-      H = H:translate(x,y)
-           :scale( w*sx, -h*sy )
-           :translate(0,-1)
-   else
-      local hw = sx*w/2
-      local hh = sy*h/2
-      H = H:translate(x+hw,y+hh)
-           :rotate2d(r)
-           :translate(-hw,-hh)
-           :scale( w*sx, -h*sy )
-           :translate(0,-1)
-   end
-   naev.gfx.renderTexMatrix( self.tex, shader, H, graphics._fgcol );
+   -- Get transformation and run
+   local H = _H( x, y, r, w*sx, h*sy )
+   naev.gfx.renderTexH( self.tex, shader, H, graphics._fgcol );
 end
 
 
@@ -275,22 +292,25 @@ function graphics.clear( ... )
       local a = arg[1][1] or 1
       col = _scol( r, g, b, a )
    end
-   -- Minor optimization: just render when there is non-transparent color
-   if col:alpha()>0 then
-      naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
+   if graphics._canvas == nil then
+      -- Minor optimization: just render when there is non-transparent color
+      if col:alpha()>0 then
+         naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
+      end
+   else
+      graphics._canvas.canvas:clear( col )
    end
 end
 function graphics.draw( drawable, ... )
    drawable:draw( ... )
 end
 function graphics.rectangle( mode, x, y, width, height )
-   local w,h
-   x,y,w,h = _xy(x,y,width,height)
-   naev.gfx.renderRect( x, y, w, h, graphics._fgcol, _mode(mode) )
+   local H = _H( x, y, 0, width, height )
+   naev.gfx.renderRectH( H, graphics._fgcol, _mode(mode) )
 end
 function graphics.circle( mode, x, y, radius )
-   x,y = _xy(x,y,0,0)
-   naev.gfx.renderCircle( x, y, radius, graphics._fgcol, _mode(mode) )
+   local H = _H( x, y, 0, radius, radius )
+   naev.gfx.renderCircleH( H, graphics._fgcol, _mode(mode) )
 end
 function graphics.print( text, ... )
    local arg = {...}
