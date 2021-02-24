@@ -26,9 +26,9 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 function love_shaders.vignette( noise )
    noise = noise or 1.0
    local pixelcode = [[
+#include "lib/simplex.glsl"
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
-#include "lib/simplex.glsl"
 
 uniform float u_time;
 uniform float u_radius;
@@ -68,7 +68,7 @@ function love_shaders.hologram( noise )
    local pixelcode = [[
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
-#include "lib/simplex2D.glsl"
+#include "lib/simplex.glsl"
 
 uniform float u_time;
 
