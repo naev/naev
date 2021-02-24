@@ -32,10 +32,7 @@ local function _H( x, y, r, sx, sy )
       H = naev.transform.ortho( 0, cw, 0, ch, -1, 1 )
    else
       -- Rendering to screen
-      local nw, nh = naev.gfx.dim()
-      local nx = -love.x
-      local ny = love.h+love.y-nh
-      H = naev.transform.ortho( nx, nx+nw, ny+nh, ny, -1, 1 )
+      H = graphics._O
    end
    H = H * graphics._T[1].T
    if r == 0 then
@@ -52,16 +49,6 @@ local function _H( x, y, r, sx, sy )
            :translate(0,-1)
    end
    return H
-end
-local function _xy( gx, gy, gw, gh )
-   local x, y = graphics._T[1]:transformPoint( gx, gy )
-   local w, h = graphics._T[1]:transformDim( gw, gh )
-   -- Issue here is that our coordinate system y-axis is upside-down so
-   -- we have to compensate.
-   if graphics._canvas then
-      return x, graphics._canvas.t.h-y-h, w, h
-   end
-   return  love.x+x, love.y+(love.h-y-h), w, h
 end
 local function _gcol( c )
    local r, g, b = c:rgb()
@@ -203,6 +190,10 @@ end
 -- Transformation class
 --]]
 function graphics.origin()
+   local nw, nh = naev.gfx.dim()
+   local nx = -love.x
+   local ny = love.h+love.y-nh
+   graphics._O = naev.transform.ortho( nx, nx+nw, ny+nh, ny, -1, 1 )
    graphics._T = { love_math.newTransform() }
 end
 function graphics.push()
@@ -351,9 +342,9 @@ function graphics.printf( text, ... )
    align = align or "left"
    col = graphics._fgcol
 
-   x,y = _xy(x,y,limit,font.height)
-
-   local wrapped, maxw = naev.gfx.printfWrap( font.font, text, limit )
+   local H = _H( x, y+font.height, 0, 1, 1 )
+   local sx = graphics._T[1].T:get()[1][1] -- X scaling
+   local wrapped, maxw = naev.gfx.printfWrap( font.font, text, limit/sx )
 
    local atype
    if align=="left" then
@@ -367,15 +358,17 @@ function graphics.printf( text, ... )
    for k,v in ipairs(wrapped) do
       local tx
       if atype==1 then
-         tx = x
+         tx = 0
       elseif atype==2 then
-         tx = x + (limit-v[2])/2
+         tx = (limit-v[2])/2
       elseif atype==3 then
-         tx = x + (limit-v[2])
+         tx = (limit-v[2])
       end
       naev.gfx.printRestoreLast()
-      naev.gfx.printf( font.font, v[1], tx, y, col )
-      y = y - font.lineheight
+
+      HH = H:translate( sx*tx, 0 )
+      naev.gfx.printH( HH, font.font, v[1], col )
+      H = H:translate( 0, -font.lineheight );
    end
 end
 
@@ -588,7 +581,7 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 ]]
 graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
-graphics.origin()
+--graphics.origin()
 graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
 graphics.setShader( graphics._shader_default )
 graphics.setCanvas( nil )
