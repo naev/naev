@@ -29,11 +29,13 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
-function love_shaders.paper( width, height)
+function love_shaders.paper( width, height, sharpness )
+   sharpness = sharpness or 1
    local pixelcode = [[
 #include "lib/simplex.glsl"
 
 uniform float u_r;
+uniform float u_sharp;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
@@ -42,7 +44,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    float n = 0.0;
    for (float i=1.0; i<8.0; i=i+1.0) {
       float m = pow( 2.0, i );
-      n += snoise( px * 0.001 * m + 1000.0 * u_r ) * (1.0 / m);
+      n += snoise( px * u_sharp * 0.003 * m + 1000.0 * u_r ) * (1.0 / m);
    }
 
    texcolor.rgb *= 0.68 + 0.3 * n;
@@ -53,6 +55,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader:send( "u_r", love_math.random() )
+   shader:send( "u_sharp", sharpness );
 
    -- Render to image
    local paperbg = graphics.newCanvas( width, height )
