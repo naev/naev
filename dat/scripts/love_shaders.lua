@@ -109,7 +109,7 @@ vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
    // and further reduce the noise strength based on some
    // threshold of the background luminance
    float response = smoothstep(0.05, 0.5, luminance);
-   color.rgb = mix(color.rgb, desaturated, pow(response,2.0));
+   color.rgb = mix(desaturated, color.rgb, pow(response,2.0));
 
    // Vertical tears
    if (distance( love_ScreenSize.x * random(vec2(frame, 0.0)), px.x) < tearing*random(vec2(frame, 1000.0))-(tearing-1.0))
@@ -124,7 +124,7 @@ vec4 vignette( vec2 uv )
 {
    uv *= 1.0 - uv.yx;
    float vig = uv.x*uv.y * 15.0; // multiply with sth for intensity
-   vig = pow(vig, 0.25); // change pow for modifying the extend of the  vignette
+   vig = pow(vig, 0.3); // change pow for modifying the extend of the  vignette
    return vec4(vig);
 }
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
