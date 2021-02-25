@@ -29,7 +29,7 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
-function love_shaders.paper()
+function love_shaders.paper( width, height)
    local pixelcode = [[
 #include "lib/simplex.glsl"
 
@@ -53,7 +53,19 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader:send( "u_r", love_math.random() )
-   return shader
+
+   -- Render to image
+   local paperbg = graphics.newCanvas( width, height )
+   local oldcanvas = graphics.getCanvas()
+   local oldshader = graphics.getShader()
+   graphics.setCanvas( paperbg )
+   graphics.clear( 1, 1, 1, 1 )
+   graphics.setShader( shader )
+   love_shaders.img:draw( 0, 0, 0, width, height )
+   graphics.setShader( oldshader )
+   graphics.setCanvas( oldcanvas )
+
+   return paperbg
 end
 
 function love_shaders.vignette( noise )
