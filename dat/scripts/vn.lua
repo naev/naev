@@ -53,7 +53,7 @@ function vn._checkstarted()
    end
 end
 
-local function _set_col( col, alpha )
+function vn.setColor( col, alpha )
    local a = col[4] or 1
    alpha = alpha or 1
    a = a*alpha
@@ -63,9 +63,9 @@ end
 local function _draw_bg( x, y, w, h, col, border_col, alpha )
    col = col or {0, 0, 0, 1}
    border_col = border_col or {0.5, 0.5, 0.5, 1}
-   _set_col( border_col, alpha )
+   vn.setColor( border_col, alpha )
    graphics.rectangle( "fill", x, y, w, h )
-   _set_col( col, alpha )
+   vn.setColor( col, alpha )
    graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
@@ -96,7 +96,7 @@ function _draw_character( c )
       flip = -1
       x = x + scale*w
    end
-   _set_col( col, c.alpha )
+   vn.setColor( col, c.alpha )
    graphics.setShader( c.shader )
    graphics.draw( c.image, x, y, 0, flip*scale, scale )
    graphics.setShader()
@@ -137,7 +137,7 @@ function vn.draw()
    local bh = 20
    _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_alpha )
    -- Draw text
-   _set_col( vn._bufcol, vn.textbox_alpha )
+   vn.setColor( vn._bufcol, vn.textbox_alpha )
    graphics.printf( vn._buffer, font, x+bw, y+bw, vn.textbox_w-2*bw )
 
    -- Namebox
@@ -154,7 +154,7 @@ function vn.draw()
       end
       _draw_bg( x, y, w, h, vn.namebox_bg, nil, vn.namebox_alpha )
       -- Draw text
-      _set_col( vn._bufcol, vn.namebox_alpha )
+      vn.setColor( vn._bufcol, vn.namebox_alpha )
       graphics.print( vn._title, font, x+bw, y+bh )
    end
 
@@ -172,7 +172,7 @@ function vn.draw()
       -- Draw canvas
       graphics.setCanvas()
       graphics.setShader( vn._postshader )
-      _set_col( {1, 1, 1, 1} )
+      vn.setColor( {1, 1, 1, 1} )
       vn._canvas:draw( 0, 0 )
       graphics.setShader()
    end
@@ -463,7 +463,7 @@ function vn.StateWait:_init()
    self._y = y+h-10-self._h
 end
 function vn.StateWait:_draw()
-   _set_col( vn._bufcol )
+   vn.setColor( vn._bufcol )
    graphics.print( self._text, self._font, self._x, self._y )
 end
 --[[
@@ -538,9 +538,9 @@ function vn.StateMenu:_draw()
       else
          col = {0.2, 0.2, 0.2}
       end
-      _set_col( col )
+      vn.setColor( col )
       graphics.rectangle( "fill", gx+x, gy+y, w, h )
-      _set_col( {0.7, 0.7, 0.7} )
+      vn.setColor( {0.7, 0.7, 0.7} )
       graphics.print( text, font, gx+x+tb, gy+y+tb )
    end
 end
