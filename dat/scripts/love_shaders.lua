@@ -23,6 +23,33 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
+function love_shaders.paper()
+   local pixelcode = [[
+#include "lib/simplex.glsl"
+
+uniform float u_r;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec4 texcolor = color * texture2D( tex, uv );
+
+   float n = 0.0;
+   for (float i=1.0; i<8.0; i=i+1.0) {
+      float m = pow( 2.0, i );
+      n += snoise( st * m + 1000.0 * u_r ) * (1.0 / m);
+   }
+
+   texcolor.rgb *= 0.68 + 0.3 * n;
+
+   return texcolor;
+}
+]]
+
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader:send( "u_r", love_math.random() )
+   return shader
+end
+
 function love_shaders.vignette( noise )
    noise = noise or 1.0
    local pixelcode = [[
@@ -80,7 +107,7 @@ vec4 vignette( vec4 color, vec2 uv, vec2 px )
 }
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 {
-   vec4 texcolor = texture2D( tex, uv );
+   vec4 texcolor = color * texture2D( tex, uv );
 
    texcolor = graineffect( texcolor, uv, screen_coords );
    vec4 v = vignette( color, uv, screen_coords );
@@ -160,10 +187,11 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    look.y = mod( look.y + vShift, 1.0 );
 
    /* Blur a bit. */
-   vec4 texcolor = Texel( tex, look );
+   vec4 texcolor = color * texture2D( tex, look );
    float blurdir = snoise( vec2( blurspeed*u_time, 0 ) );
    vec2 blurvec = bluramplitude * vec2( cos(blurdir), sin(blurdir) );
    vec4 blurbg = blur9( tex, look, love_ScreenSize.xy, blurvec );
+   // TODO better mixing!
    texcolor = mix( texcolor, blurbg, step( blurbg.a, texcolor.a ) );
 
    /* Drop to greyscale while increasing brightness and contrast */
