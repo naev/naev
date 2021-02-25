@@ -71,7 +71,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    return paperbg
 end
 
-function love_shaders.vignette( noise )
+function love_shaders.oldify( noise )
    noise = noise or 1.0
    local pixelcode = [[
 #include "lib/simplex.glsl"
