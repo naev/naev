@@ -100,13 +100,27 @@ void cli_tabComplete( unsigned int wid );
 static int cli_initLua (void);
 
 
+static char* cli_escapeString( int *len_out, const char *s, int len )
+{
+   char *buf = malloc( 2*len ); /* worst case */
+   int b = 0;
+   for (int i=0; i<len; i++) {
+      if (s[i]==FONT_COLOUR_CODE)
+         buf[b++] = FONT_COLOUR_CODE;
+      buf[b++] = s[i];
+   }
+   *len_out = b;
+   return buf;
+}
+
+
 /**
  * @brief Prints a string.
  */
 static void cli_printCoreString( const char *s, int escape )
 {
-   int p, l, slen;
-   char *tmp;
+   int p, l, slen, len;
+   char *tmp, *buf;
 
    tmp = strdup(s);
    slen = strlen(s);
@@ -119,14 +133,8 @@ static void cli_printCoreString( const char *s, int escape )
          tmp[p] = ' ';
       l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40, NULL );
       if (escape) {
-         char *buf = malloc( 2*l ); /* worst case */
-         int b = 0;
-         for (int i=0; i<l; i++) {
-            if (tmp[p+i]==FONT_COLOUR_CODE)
-               buf[b++] = FONT_COLOUR_CODE;
-            buf[b++] = tmp[p+i];
-         }
-         cli_addMessageMax( buf, b );
+         buf = cli_escapeString( &len, &tmp[p], l );
+         cli_addMessageMax( buf, len );
          free(buf);
       }
       else
@@ -539,8 +547,8 @@ void cli_exit (void)
 static void cli_input( unsigned int wid, char *unused )
 {
    (void) unused;
-   int status;
-   char *str;
+   int status, len;
+   char *str, *escaped;
    char buf[CLI_MAX_INPUT+7];
 
    /* Get the input. */
@@ -551,9 +559,11 @@ static void cli_input( unsigned int wid, char *unused )
       return;
 
    /* Put the message in the console. */
+   escaped = cli_escapeString( &len, str, strlen(str) );
    snprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0",
-         cli_firstline ? "> " : ">>", str );
-   cli_printCoreString( buf, 1 );
+         cli_firstline ? "> " : ">>", escaped );
+   free(escaped);
+   cli_printCoreString( buf, 0 );
 
    /* Set up for concat. */
    if (!cli_firstline)               /* o */
