@@ -14,13 +14,43 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 /* Soft Light. */
 float blendSoftLight(float base, float blend) {
-      return (blend<0.5)?(2.0*base*blend+base*base*(1.0-2.0*blend)):(sqrt(base)*(2.0*blend-1.0)+2.0*base*(1.0-blend));
+   return (blend<0.5)?(2.0*base*blend+base*base*(1.0-2.0*blend)):(sqrt(base)*(2.0*blend-1.0)+2.0*base*(1.0-blend));
 }
 vec3 blendSoftLight(vec3 base, vec3 blend) {
-      return vec3(blendSoftLight(base.r,blend.r),blendSoftLight(base.g,blend.g),blendSoftLight(base.b,blend.b));
+   return vec3(blendSoftLight(base.r,blend.r),blendSoftLight(base.g,blend.g),blendSoftLight(base.b,blend.b));
 }
 vec3 blendSoftLight(vec3 base, vec3 blend, float opacity) {
-      return (blendSoftLight(base, blend) * opacity + base * (1.0 - opacity));
+   return (blendSoftLight(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+/* Screen. */
+float blendScreen(float base, float blend) {
+   return 1.0-((1.0-base)*(1.0-blend));
+}
+vec3 blendScreen(vec3 base, vec3 blend) {
+   return vec3(blendScreen(base.r,blend.r),blendScreen(base.g,blend.g),blendScreen(base.b,blend.b));
+}
+vec3 blendScreen(vec3 base, vec3 blend, float opacity) {
+   return (blendScreen(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+/* Reflect. */
+float blendReflect(float base, float blend) {
+   return (blend==1.0)?blend:min(base*base/(1.0-blend),1.0);
+}
+vec3 blendReflect(vec3 base, vec3 blend) {
+   return vec3(blendReflect(base.r,blend.r),blendReflect(base.g,blend.g),blendReflect(base.b,blend.b));
+}
+vec3 blendReflect(vec3 base, vec3 blend, float opacity) {
+   return (blendReflect(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+/* Glow. */
+vec3 blendGlow(vec3 base, vec3 blend) {
+   return blendReflect(blend,base);
+}
+vec3 blendGlow(vec3 base, vec3 blend, float opacity) {
+   return (blendGlow(base, blend) * opacity + base * (1.0 - opacity));
 }
 
 #endif /* _BLEND_GLSL */
