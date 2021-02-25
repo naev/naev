@@ -61,7 +61,13 @@ text[4] = _([[Captain Rebina angrily drums her fingers on her captain's chair as
     "This is bad, %s," she says when the replay shuts down. "Worse than I had even thought possible. The death of the Imperial and Dvaered diplomats is going to spark a political incident, with each faction accusing the other of treachery." She stands up and begins pacing up and down the Seiryuu's bridge. "But that's not the worst of it. You saw what happened. The diplomats were killed by their own escorts - by Four Winds operatives! This is an outrage!"
     Captain Rebina brings herself back under control through an effort of will. "%s, this does not bode well. We have a problem, and I fear I'm going to need your help again before the end. But not yet. I have a lot to do. I have to get to the bottom of this, and I have to try to keep this situation from escalating into a disaster. I will contact you again when I know more. In the mean time, you will have the time to spend your reward - it's already in your account."
     Following this, you are swiftly escorted off the Seiryuu. Back in your cockpit, you can't help feeling a little anxious about these Four Winds. Who are they, what do they want, and what is your role in all of it? Time will have to tell.]])
-    
+
+disable_title = _("The Pill of Silence")
+disable_text = _([[After having managed to bypass the ship's security system, you enter the cockpit and notice that the fighter has been sabotaged and might soon explode: you have little time to find and capture the pilot. You then head to the living cabin. Once you have crossed the manhole, you see him, floating weightlessly close to the floor. As he turns his livid face towards yours, you find yourself horrified by the awful mask of pain on his face. His googly blood-injected eyes stare at you as if they wanted to pierce your skin and his twisted mouth splits a repugnant creamy fluid while he starts to speak, in a groan:
+   "Good job out there. Hum. But, you see? You won't catch me alive. Oh, no. The pill of silence is making sure for that. Hmf. That looks painful, doesn't it? You know what? It is even more painful than it looks. I guarantee it to you. Gbf. Oh, it makes me throw up... I'm sorry about that."
+   You approach the man, and ask him why he killed the diplomats. "You have no idea what is going on, right? Uh. Let me tell you a thing: they are coming! And they won't show any mercy. Oooh! They're so close! They're so worst than your darkest nightmares! And one day they'll get you. That day, you will envy... You will envy my vomit-eating dead-painful agony! Sooooo much!"
+   The man stops speaking and moving. His grimacing face still turned towards you make you wonder if he is already dead, but in absence of any response, you leave the ship as soon as possible before it explodes.]])
+
 wrongsystitle = _("You diverged!")
 wrongsystext = _([[You have jumped to the wrong system! You are no longer part of the mission to escort the diplomat.]])
 
@@ -115,9 +121,9 @@ osd_msg[3] = _("Follow the flight leader to the rendezvous location")
 osd_msg[4] = _("Escort the Imperial diplomat")
 osd_msg[5] = _("Report back to Rebina")
 
-osd_title0 = _("???")
+osd_title0 = _("Unknown")
 osd_msg0 = _("Fly to the %s system.")
-misn_desc0 = _([[You are invited to the system %s]])
+misn_desc0 = _([[You are invited to a meeting in %s]])
 misn_reward0 = _("???")
 
 misn_desc = _([[Captain Rebina of the Four Winds has asked you to help Four Winds agents protect an Imperial diplomat.]])
@@ -606,6 +612,9 @@ function escortFlee()
             j:taskClear()
             j:rmOutfit("all")
             j:hyperspace()
+            j:setInvincible(false)
+            j:setInvincPlayer(false)
+            hook.pilot(j, "board", "board_escort")
         end
     end
     misn.osdActive(5)
@@ -631,6 +640,13 @@ function board()
        shadow_addLog( log_text_success )
        misn.finish(true)
     end
+end
+
+-- The player boards one of the escort at the end of the mission.
+function board_escort( pilot )
+   tk.msg( disable_title, disable_text )
+   player.unboard()
+   pilot:setHealth(0, 0) -- Make ship explode
 end
 
 -- Handle the unsuccessful end of the mission.
