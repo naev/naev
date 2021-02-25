@@ -108,8 +108,8 @@ vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
    color.rgb = mix(color.rgb, desaturated, pow(response,2.0));
 
    // Vertical tears
-   if (distance( love_ScreenSize.x * random(vec2(frame, 0.)), px.x) < random(vec2(frame, 1000.)))
-      color.rgb *= vec3( random( vec2(frame, 5000.) ));
+   if (distance( love_ScreenSize.x * random(vec2(frame, 0.0)), px.x) < 2.0*random(vec2(frame, 1000.0))-1.0)
+         color.rgb *= vec3( random( vec2(frame, 5000.0) ));
 
    // Flickering
    color.rgb *= 1.0 + 0.05*snoise( vec2(3.0*frame, M_PI) );
