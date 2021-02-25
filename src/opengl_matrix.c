@@ -95,28 +95,24 @@ gl_Matrix4 gl_Matrix4_Ortho( double left, double right,
 
 gl_Matrix4 gl_Matrix4_Scale( gl_Matrix4 m, double x, double y, double z ) {
    int i;
-   gl_Matrix4 res;
 
-   res = m;
    for (i = 0; i < 4; i++) {
-      res.m[0][i] *= x;
-      res.m[1][i] *= y;
-      res.m[2][i] *= z;
+      m.m[0][i] *= x;
+      m.m[1][i] *= y;
+      m.m[2][i] *= z;
    }
 
-   return res;
+   return m;
 }
 
 gl_Matrix4 gl_Matrix4_Translate( gl_Matrix4 m, double x, double y, double z ) {
    int i;
-   gl_Matrix4 res;
 
-   res = m;
    for (i = 0; i < 4; i++) {
-      res.m[3][i] += res.m[0][i] * x + res.m[1][i] * y + res.m[2][i] * z;
+      m.m[3][i] += m.m[0][i] * x + m.m[1][i] * y + m.m[2][i] * z;
    }
 
-   return res;
+   return m;
 }
 
 /**
@@ -127,19 +123,45 @@ gl_Matrix4 gl_Matrix4_Translate( gl_Matrix4 m, double x, double y, double z ) {
  *    @return New projection matrix.
  */
 gl_Matrix4 gl_Matrix4_Rotate2d( gl_Matrix4 m, double angle ) {
-   gl_Matrix4 res;
-   double c, s;
+   double c, s, x, y;
 
    c = cos(angle);
    s = sin(angle);
+   x = m.m[0][0];
+   y = m.m[1][0];
+   m.m[0][0] =  c*x + s*y;
+   m.m[1][0] = -s*x + c*y;
 
-   res = m;
-   res.m[0][0] = m.m[0][0] * c + m.m[1][0] * s;
-   res.m[0][1] = m.m[0][1] * c + m.m[1][1] * s;
-   res.m[1][0] = -m.m[0][0] * s + m.m[1][0] * c;
-   res.m[1][1] = -m.m[0][1] * s + m.m[1][1] * c;
+   x = m.m[0][1];
+   y = m.m[1][1];
+   m.m[0][1] =  c*x + s*y;
+   m.m[1][1] = -s*x + c*y;
 
-   return res;
+   return m;
+}
+
+/**
+ * @brief Rotates the +x axis to the given vector.
+ *
+ *    @param m Matrix to multiply with.
+ *    @param c Angle cosine (or x coordinate of the vector).
+ *    @param s Angle sine (or y coordinate of the vector).
+ *    @return New projection matrix.
+ */
+gl_Matrix4 gl_Matrix4_Rotate2dv( gl_Matrix4 m, double c, double s ) {
+   double x, y;
+
+   x = m.m[0][0];
+   y = m.m[1][0];
+   m.m[0][0] =  c*x + s*y;
+   m.m[1][0] = -s*x + c*y;
+
+   x = m.m[0][1];
+   y = m.m[1][1];
+   m.m[0][1] =  c*x + s*y;
+   m.m[1][1] = -s*x + c*y;
+
+   return m;
 }
 
 GLfloat *gl_Matrix4_Ptr( gl_Matrix4 *m ) {

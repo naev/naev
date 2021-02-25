@@ -22,12 +22,34 @@ local function _mode(m)
    else   error( string.format(_("Unknown fill mode '%s'"), mode ) )
    end
 end
-local function _xy( gx, gy, gw, gh )
-   local x, y = graphics._T[1]:transformPoint( gx, gy )
-   local w, h = graphics._T[1]:transformDim( gw, gh )
-   -- Issue here is that our coordinate system y-axis is upside-down so
-   -- we have to compensate.
-   return  love.x+x, love.y+(love.h-y-h), w, h
+local function _H( x, y, r, sx, sy )
+   -- TODO don't do this for every drawing...
+   local H
+   if graphics._canvas then
+      -- Rendering to canvas
+      local cw = graphics._canvas.t.w
+      local ch = graphics._canvas.t.h
+      H = naev.transform.ortho( 0, cw, 0, ch, -1, 1 )
+          :scale( love.s, love.s )
+   else
+      -- Rendering to screen
+      H = graphics._O
+   end
+   H = H * graphics._T[1].T
+   if r == 0 then
+      H = H:translate(x,y)
+           :scale( sx, -sy )
+           :translate(0,-1)
+   else
+      local hw = sx/2
+      local hh = sy/2
+      H = H:translate(x+hw,y+hh)
+           :rotate2d(r)
+           :translate(-hw,-hh)
+           :scale( sx, -sy )
+           :translate(0,-1)
+   end
+   return H
 end
 local function _gcol( c )
    local r, g, b = c:rgb()
@@ -111,10 +133,6 @@ function graphics.Image:draw( ... )
       r = arg[3] or 0
       sx = arg[4] or 1
       sy = arg[5] or sx
-      tx = 0
-      ty = 0
-      tw = 1
-      th = 1
    else
       -- quad, x, y, r, sx, sy
       local q = arg[1]
@@ -127,9 +145,25 @@ function graphics.Image:draw( ... )
       ty = q.y
       tw = q.w
       th = q.h
+      love._unimplemented()
    end
-   x,y,w,h = _xy(x,y,w*sx,h*sy)
-   naev.gfx.renderTexRaw( self.tex, x, y, w*tw, h*th, 1, 1, tx, ty, tw, th, graphics._fgcol, r )
+   -- TODO be less horribly inefficient
+   local shader = graphics._shader or graphics._shader_default
+   shader = shader.shader
+   local s3, s4
+   if graphics._canvas == nil then
+      s3 = -1.0
+      s4 = love.h
+   else
+      s3 = 1.0
+      s4 = 0.0
+   end
+   -- TODO properly solve this, what happens is it gets run before the window size gets set
+   shader:sendRaw( "love_ScreenSize", love.w, love.h, s3, s4 )
+
+   -- Get transformation and run
+   local H = _H( x, y, r, w*sx, h*sy )
+   naev.gfx.renderTexH( self.tex, shader, H, graphics._fgcol );
 end
 
 
@@ -140,6 +174,11 @@ graphics.Quad = class.inheritsFrom( graphics.Drawable )
 graphics.Quad._type = "Quad"
 function graphics.newQuad( x, y, width, height, sw, sh )
    local q = graphics.Drawable.new()
+   if type(sw)~="number" then
+      local t = sw
+      sw = t.w
+      sh = t.h
+   end
    q.x = x/sw
    q.y = y/sh
    q.w = width/sw
@@ -153,6 +192,10 @@ end
 -- Transformation class
 --]]
 function graphics.origin()
+   local nw, nh = naev.gfx.dim()
+   local nx = -love.x
+   local ny = love.h+love.y-nh
+   graphics._O = naev.transform.ortho( nx, nx+nw, ny+nh, ny, -1, 1 )
    graphics._T = { love_math.newTransform() }
 end
 function graphics.push()
@@ -242,21 +285,25 @@ function graphics.clear( ... )
       local a = arg[1][1] or 1
       col = _scol( r, g, b, a )
    end
-   -- Minor optimization: just render when there is non-transparent color
-   if col:alpha()>0 then
-      naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
+   if graphics._canvas == nil then
+      -- Minor optimization: just render when there is non-transparent color
+      if col:alpha()>0 then
+         naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
+      end
+   else
+      graphics._canvas.canvas:clear( col )
    end
 end
 function graphics.draw( drawable, ... )
    drawable:draw( ... )
 end
 function graphics.rectangle( mode, x, y, width, height )
-   x,y,w,h = _xy(x,y,width,height)
-   naev.gfx.renderRect( x, y, w, h, graphics._fgcol, _mode(mode) )
+   local H = _H( x, y, 0, width, height )
+   naev.gfx.renderRectH( H, graphics._fgcol, _mode(mode) )
 end
 function graphics.circle( mode, x, y, radius )
-   x,y = _xy(x,y,0,0)
-   naev.gfx.renderCircle( x, y, radius, graphics._fgcol, _mode(mode) )
+   local H = _H( x, y, 0, radius, radius )
+   naev.gfx.renderCircleH( H, graphics._fgcol, _mode(mode) )
 end
 function graphics.print( text, ... )
    local arg = {...}
@@ -297,9 +344,9 @@ function graphics.printf( text, ... )
    align = align or "left"
    col = graphics._fgcol
 
-   x,y = _xy(x,y,limit,font.height)
-
-   local wrapped, maxw = naev.gfx.printfWrap( font.font, text, limit )
+   local H = _H( x, y+font.height, 0, 1, 1 )
+   local sx = graphics._T[1].T:get()[1][1] -- X scaling
+   local wrapped, maxw = naev.gfx.printfWrap( font.font, text, limit/sx )
 
    local atype
    if align=="left" then
@@ -313,15 +360,17 @@ function graphics.printf( text, ... )
    for k,v in ipairs(wrapped) do
       local tx
       if atype==1 then
-         tx = x
+         tx = 0
       elseif atype==2 then
-         tx = x + (limit-v[2])/2
+         tx = (limit-v[2])/2
       elseif atype==3 then
-         tx = x + (limit-v[2])
+         tx = (limit-v[2])
       end
       naev.gfx.printRestoreLast()
-      naev.gfx.printf( font.font, v[1], tx, y, col )
-      y = y - font.lineheight
+
+      HH = H:translate( sx*tx, 0 )
+      naev.gfx.printH( HH, font.font, v[1], col )
+      H = H:translate( 0, -font.lineheight );
    end
 end
 
@@ -397,7 +446,6 @@ end
 graphics.Shader = class.inheritsFrom( object.Object )
 graphics.Shader._type = "Shader"
 function graphics.newShader( pixelcode, vertexcode )
-   love._unimplemented() -- Not finished yet
    local prepend = [[
 #version 140
 // Syntax sugar
@@ -405,9 +453,9 @@ function graphics.newShader( pixelcode, vertexcode )
 #define ArrayImage      sampler2DArray
 #define VolumeImage     sampler3D
 #define Texel           texture
-#define love_PixelColor gl_FragColor
+#define love_PixelColor color_out
 #define love_Position   gl_Position
-#define love_PixelCoord (vec2(gl_FragCoord.x, (gl_FragCoord.y * love_ScreenSize.z) + love_ScreenSize.w))
+#define love_PixelCoord love_getPixelCoord()
 
 // Uniforms shared by pixel and vertex shaders
 uniform mat4 ViewSpaceFromLocal;
@@ -415,6 +463,7 @@ uniform mat4 ClipSpaceFromView;
 uniform mat4 ClipSpaceFromLocal;
 uniform mat3 ViewNormalFromLocal;
 uniform vec4 love_ScreenSize;
+uniform vec4 ConstantColor;
 
 // Compatibility
 #define TransformMatrix             ViewSpaceFromLocal
@@ -428,6 +477,15 @@ uniform sampler2D MainTex;
 
 in vec4 VaryingTexCoord;
 in vec4 VaryingColor;
+in vec2 VaryingPosition;
+out vec4 color_out;
+
+// TODO this is still wrong with canvases :/
+vec2 love_getPixelCoord() {
+   vec2 uv = love_ScreenSize.xy * (0.5*VaryingPosition+0.5);
+   uv.y = uv.y * love_ScreenSize.z + love_ScreenSize.w;
+   return uv;
+}
 
 vec4 effect( vec4 vcolor, Image tex, vec2 texcoord, vec2 pixcoord );
 
@@ -440,29 +498,50 @@ void main(void) {
 in vec4 VertexPosition;
 in vec4 VertexTexCoord;
 in vec4 VertexColor;
-in vec4 ConstantColor;
 
 out vec4 VaryingTexCoord;
 out vec4 VaryingColor;
+out vec2 VaryingPosition;
 
 vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 
 void main(void) {
     VaryingTexCoord  = VertexTexCoord;
+    VaryingTexCoord.y= 1.0 - VaryingTexCoord.y;
     VaryingColor     = ConstantColor;
     love_Position    = position( ClipSpaceFromLocal, VertexPosition );
+    VaryingPosition  = love_Position.xy;
 }
 ]]
    local s = graphics.Shader.new()
+   vertexcode = vertexcode or pixelcode
    s.shader = naev.shader.new(
          prepend..frag..pixelcode,
          prepend..vert..vertexcode )
+   return s
 end
 function graphics.setShader( shader )
-   graphics._shader = shader or graphics._shader_default
+   graphics._shader = shader
+end
+function graphics.getShader()
+   return graphics._shader
 end
 function graphics.Shader:send( name, ... )
-   self.shader:send( name, ... )
+   local arg = {...}
+   if type(arg[1])=="table" then
+      if arg[1]._type=="Image" then
+         self.shader:send( name, arg[1].tex )
+      elseif arg[1]._type=="Canvas" then
+         self.shader:send( name, arg[1].t.tex )
+      else
+         self.shader:send( name, ... )
+      end
+   else
+      self.shader:send( name, ... )
+   end
+end
+function graphics.Shader:hasUniform( name )
+   return self.shader:hasUniform( name )
 end
 
 
@@ -473,8 +552,10 @@ graphics.Canvas = class.inheritsFrom( object.Drawable )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
    local c = graphics.Canvas.new()
-   if width==nil then
-      width, height = graphics.getDimensions()
+   if not width then
+      local nw, nh, ns = naev.gfx.dim()
+      width = nw
+      height= nh
    end
    c.canvas = naev.canvas.new( width, height )
    -- Set texture
@@ -492,6 +573,10 @@ function graphics.setCanvas( canvas )
    else
       naev.canvas.set( canvas.canvas )
    end
+   graphics._canvas = canvas
+end
+function graphics.getCanvas()
+   return graphics._canvas
 end
 function graphics.Canvas:draw(...)     return self.t:draw(...) end
 function graphics.Canvas:setFilter(...)return self.t:setFilter(...) end
@@ -516,7 +601,7 @@ end
 local _pixelcode = [[
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec4 texcolor = Texel(tex, texture_coords);
+   vec4 texcolor = texture2D(tex, texture_coords);
    return texcolor * color;
 }
 ]]
@@ -529,7 +614,8 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
 graphics.origin()
---graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
---graphics.setShader( graphics._shader_default )
+graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
+graphics.setShader( graphics._shader_default )
+graphics.setCanvas( nil )
 
 return graphics

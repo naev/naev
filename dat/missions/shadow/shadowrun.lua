@@ -24,6 +24,7 @@
 --]]
 
 local portrait = require "portrait"
+require "fleethelper"
 require "missions/shadow/common"
 
 

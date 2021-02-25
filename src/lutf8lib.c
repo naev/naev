@@ -1,5 +1,6 @@
 /*
  * Taken from https://github.com/starwing/luautf8
+ * Revision: 5627e171d79eb755f1a0c1e2913e468450c4310b
 
 MIT License
 
@@ -23,13 +24,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+#include "lutf8lib.h"
+
 /** @cond */
 #include <assert.h>
 #include <string.h>
 /** @endcond */
 
-#include "attributes.h"
-#include "lutf8lib.h"
 #include "unidata.h"
 
 /* UTF-8 string operations */
@@ -38,6 +39,7 @@ SOFTWARE.
 #define UTF8_MAX    0x7FFFFFFFu
 #define UTF8_MAXCP  0x10FFFFu
 #define iscont(p)   ((*(p) & 0xC0) == 0x80)
+#define CAST(tp,expr) ((tp)(expr))
 
 #ifndef LUA_QL
 # define LUA_QL(x) "'" x "'"
@@ -129,8 +131,8 @@ static const char *utf8_relat (const char *s, const char *e, int idx) {
 }
 
 static int utf8_range(const char *s, const char *e, lua_Integer *i, lua_Integer *j) {
-  const char *ps = utf8_relat(s, e, *i);
-  const char *pe = utf8_relat(s, e, *j);
+  const char *ps = utf8_relat(s, e, CAST(int, *i));
+  const char *pe = utf8_relat(s, e, CAST(int, *j));
   *i = (ps ? ps : (*i > 0 ? e : s)) - s;
   *j = (pe ? utf8_next(pe, e) : (*j > 0 ? e : s)) - s;
   return *i < *j;
@@ -165,7 +167,7 @@ static int find_in_range (range_table *t, size_t size, utfint ch) {
   end = size;
 
   while (begin < end) {
-    int mid = (begin + end) / 2;
+    size_t mid = (begin + end) / 2;
     if (t[mid].last < ch)
       begin = mid + 1;
     else if (t[mid].first > ch)
@@ -184,7 +186,7 @@ static int convert_char (conv_table *t, size_t size, utfint ch) {
   end = size;
 
   while (begin < end) {
-    int mid = (begin + end) / 2;
+    size_t mid = (begin + end) / 2;
     if (t[mid].last < ch)
       begin = mid + 1;
     else if (t[mid].first > ch)
@@ -317,6 +319,7 @@ static int Lutf8_sub (lua_State *L) {
 static int Lutf8_reverse (lua_State *L) {
   luaL_Buffer b;
   const char *prev, *pprev, *ends, *e, *s = check_utf8(L, 1, &e);
+  (void) ends;
   int lax = lua_toboolean(L, 2);
   luaL_buffinit(L, &b);
   if (lax) {
@@ -326,7 +329,7 @@ static int Lutf8_reverse (lua_State *L) {
     }
   } else {
     for (prev = e; s < prev; prev = pprev) {
-      utfint code;
+      utfint code = 0;
       ends = utf8_safe_decode(L, pprev = utf8_prev(s, prev), &code);
       assert(ends == prev);
       if (utf8_invalid(code))
@@ -348,12 +351,12 @@ static int Lutf8_byte (lua_State *L) {
   lua_Integer pose = luaL_optinteger(L, 3, posi);
   if (utf8_range(s, e, &posi, &pose)) {
     for (e = s + pose, s = s + posi; s < e; ++n) {
-      utfint ch;
+      utfint ch = 0;
       s = utf8_safe_decode(L, s, &ch);
       lua_pushinteger(L, ch);
     }
   }
-  return n;
+  return CAST(int, n);
 }
 
 static int Lutf8_codepoint (lua_State *L) {
@@ -374,7 +377,7 @@ static int Lutf8_codepoint (lua_State *L) {
   n = 0;  /* count the number of returns */
   se = s + pose;  /* string end */
   for (n = 0, s += posi - 1; s < se;) {
-    utfint code;
+    utfint code = 0;
     s = utf8_safe_decode(L, s, &code);
     if (!lax && utf8_invalid(code))
       return luaL_error(L, "invalid UTF-8 code");
@@ -391,7 +394,7 @@ static int Lutf8_char (lua_State *L) {
   for (i = 1; i <= n; ++i) {
     lua_Integer code = luaL_checkinteger(L, i);
     luaL_argcheck(L, code <= UTF8_MAXCP, i, "value out of range");
-    add_utf8char(&b, code);
+    add_utf8char(&b, CAST(utfint, code));
   }
   luaL_pushresult(&b);
   return 1;
@@ -401,13 +404,13 @@ static int Lutf8_char (lua_State *L) {
 static int Lutf8_##name (lua_State *L) {                        \
   int t = lua_type(L, 1);                                      \
   if (t == LUA_TNUMBER)                                        \
-    lua_pushinteger(L, utf8_to##name(lua_tointeger(L, 1)));    \
+    lua_pushinteger(L, utf8_to##name(CAST(utfint, lua_tointeger(L, 1))));    \
   else if (t == LUA_TSTRING) {                                 \
     luaL_Buffer b;                                             \
     const char *e, *s = to_utf8(L, 1, &e);                     \
     luaL_buffinit(L, &b);                                      \
     while (s < e) {                                            \
-      utfint ch;                                               \
+      utfint ch = 0;                                             \
       s = utf8_safe_decode(L, s, &ch);                         \
       add_utf8char(&b, utf8_to##name(ch));                     \
     }                                                          \
@@ -446,7 +449,7 @@ static int Lutf8_escape (lua_State *L) {
   luaL_Buffer b;
   luaL_buffinit(L, &b);
   while (s < e) {
-    utfint ch;
+    utfint ch = 0;
     s = utf8_safe_decode(L, s, &ch);
     if (ch == '%') {
       int hex = 0;
@@ -455,10 +458,9 @@ static int Lutf8_escape (lua_State *L) {
       case '4': case '5': case '6': case '7':
       case '8': case '9': case '{':
         break;
-      case 'x': case 'X': hex = 1;
-         FALLTHROUGH;
+      case 'x': case 'X': hex = 1; /* fall through */
       case 'u': case 'U': if (s+1 < e) { ++s; break; }
-         FALLTHROUGH;
+                            /* fall through */
       default:
         s = utf8_safe_decode(L, s, &ch);
         goto next;
@@ -585,10 +587,10 @@ static int Lutf8_next (lua_State *L) {
 
 static int iter_aux (lua_State *L, int strict) {
   const char *e, *s = check_utf8(L, 1, &e);
-  int n = lua_tointeger(L, 2);
+  int n = CAST(int, lua_tointeger(L, 2));
   const char *p = n <= 0 ? s : utf8_next(s+n-1, e);
   if (p < e) {
-    utfint code;
+    utfint code = 0;
     utf8_safe_decode(L, p, &code);
     if (strict && utf8_invalid(code))
       return luaL_error(L, "invalid UTF-8 code");
@@ -614,9 +616,9 @@ static int Lutf8_codes (lua_State *L) {
 static int Lutf8_width (lua_State *L) {
   int t = lua_type(L, 1);
   int ambi_is_single = !lua_toboolean(L, 2);
-  int default_width = luaL_optinteger(L, 3, 0);
+  int default_width = CAST(int, luaL_optinteger(L, 3, 0));
   if (t == LUA_TNUMBER) {
-    size_t chwidth = utf8_width(lua_tointeger(L, 1), ambi_is_single);
+    size_t chwidth = utf8_width(CAST(utfint, lua_tointeger(L, 1)), ambi_is_single);
     if (chwidth == 0) chwidth = default_width;
     lua_pushinteger(L, (lua_Integer)chwidth);
   } else if (t != LUA_TSTRING)
@@ -625,7 +627,7 @@ static int Lutf8_width (lua_State *L) {
     const char *e, *s = to_utf8(L, 1, &e);
     int width = 0;
     while (s < e) {
-      utfint ch;
+      utfint ch = 0;
       int chwidth;
       s = utf8_safe_decode(L, s, &ch);
       chwidth = utf8_width(ch, ambi_is_single);
@@ -638,17 +640,17 @@ static int Lutf8_width (lua_State *L) {
 
 static int Lutf8_widthindex (lua_State *L) {
   const char *e, *s = check_utf8(L, 1, &e);
-  int width = luaL_checkinteger(L, 2);
+  int width = CAST(int, luaL_checkinteger(L, 2));
   int ambi_is_single = !lua_toboolean(L, 3);
-  int default_width = luaL_optinteger(L, 4, 0);
+  int default_width = CAST(int, luaL_optinteger(L, 4, 0));
   size_t idx = 1;
   while (s < e) {
-    utfint ch;
+    utfint ch = 0;
     size_t chwidth;
     s = utf8_safe_decode(L, s, &ch);
     chwidth = utf8_width(ch, ambi_is_single);
     if (chwidth == 0) chwidth = default_width;
-    width -= chwidth;
+    width -= CAST(int, chwidth);
     if (width <= 0) {
       lua_pushinteger(L, idx);
       lua_pushinteger(L, width + chwidth);
@@ -735,7 +737,7 @@ static int capture_to_close (MatchState *ms) {
 }
 
 static const char *classend (MatchState *ms, const char *p) {
-  utfint ch;
+  utfint ch = 0;
   p = utf8_safe_decode(ms->L, p, &ch);
   switch (ch) {
     case L_ESC: {
@@ -781,14 +783,14 @@ static int matchbracketclass (MatchState *ms, utfint c, const char *p, const cha
     p++;  /* skip the `^' */
   }
   while (p < ec) {
-    utfint ch;
+    utfint ch = 0;
     p = utf8_safe_decode(ms->L, p, &ch);
     if (ch == L_ESC) {
       p = utf8_safe_decode(ms->L, p, &ch);
       if (match_class(c, ch))
         return sig;
     } else {
-      utfint next;
+      utfint next = 0;
       const char *np = utf8_safe_decode(ms->L, p, &next);
       if (next == '-' && np < ec) {
         p = utf8_safe_decode(ms->L, np, &next);
@@ -805,7 +807,7 @@ static int singlematch (MatchState *ms, const char *s, const char *p, const char
   if (s >= ms->src_end)
     return 0;
   else {
-    utfint ch, pch;
+    utfint ch=0, pch=0;
     utf8_safe_decode(ms->L, s, &ch);
     p = utf8_safe_decode(ms->L, p, &pch);
     switch (pch) {
@@ -819,7 +821,7 @@ static int singlematch (MatchState *ms, const char *s, const char *p, const char
 }
 
 static const char *matchbalance (MatchState *ms, const char *s, const char **p) {
-  utfint ch, begin, end;
+  utfint ch=0, begin=0, end=0;
   *p = utf8_safe_decode(ms->L, *p, &begin);
   if (*p >= ms->p_end)
     luaL_error(ms->L, "malformed pattern "
@@ -902,7 +904,7 @@ static const char *match (MatchState *ms, const char *s, const char *p) {
     luaL_error(ms->L, "pattern too complex");
   init: /* using goto's to optimize tail recursion */
   if (p != ms->p_end) {  /* end of pattern? */
-    utfint ch;
+    utfint ch = 0;
     utf8_safe_decode(ms->L, p, &ch);
     switch (ch) {
       case '(': {  /* start capture */
@@ -984,7 +986,7 @@ static const char *match (MatchState *ms, const char *s, const char *p) {
             }
             case '+':  /* 1 or more repetitions */
               s = next_s;  /* 1 match already done */
-              FALLTHROUGH;
+              /* fall through */
             case '*':  /* 0 or more repetitions */
               s = max_expand(ms, s, p, ep);
               break;
@@ -1074,7 +1076,8 @@ static int find_aux (lua_State *L, int find) {
   const char *ep, *p = check_utf8(L, 2, &ep);
   lua_Integer idx = luaL_optinteger(L, 3, 1);
   const char *init;
-  init = utf8_relat(s, es, idx);
+  if (!idx) idx = 1;
+  init = utf8_relat(s, es, CAST(int, idx));
   if (init == NULL) {
     if (idx > 0) {
       lua_pushnil(L);  /* cannot find anything */
@@ -1167,7 +1170,7 @@ static int Lutf8_gmatch (lua_State *L) {
 static void add_s (MatchState *ms, luaL_Buffer *b, const char *s, const char *e) {
   const char *new_end, *news = to_utf8(ms->L, 3, &new_end);
   while (news < new_end) {
-    utfint ch;
+    utfint ch = 0;
     news = utf8_safe_decode(ms->L, news, &ch);
     if (ch != L_ESC)
       add_utf8char(b, ch);
@@ -1247,7 +1250,7 @@ static int Lutf8_gsub (lua_State *L) {
     if (e && e > s) /* non empty match? */
       s = e;  /* skip it */
     else if (s < es) {
-      utfint ch;
+      utfint ch = 0;
       s = utf8_safe_decode(L, s, &ch);
       add_utf8char(&b, ch);
     } else break;
@@ -1303,8 +1306,7 @@ int luaopen_utf8 (lua_State *L) {
 #if LUA_VERSION_NUM >= 502
   luaL_newlib(L, libs);
 #else
-  lua_createtable(L, 0, sizeof(libs)/sizeof(libs[0]));
-  luaL_register(L, NULL, libs);
+  luaL_register(L, "utf8", libs);
 #endif
 
   lua_pushlstring(L, UTF8PATT, sizeof(UTF8PATT)-1);
@@ -1314,7 +1316,7 @@ int luaopen_utf8 (lua_State *L) {
 }
 
 /* win32cc: flags+='-Wall -Wextra -s -O2 -mdll -DLUA_BUILD_AS_DLL'
- * win32cc: libs+='-llua53.dll' output='lua-utf8.dll'
+ * win32cc: libs+='-llua54.dll' output='lua-utf8.dll'
  * win32cc: run='lua.exe test.lua'
  * maccc: run='lua -- test_compat.lua'
  * maccc: flags+='-g --coverage -bundle -undefined dynamic_lookup' output='lua-utf8.so' */

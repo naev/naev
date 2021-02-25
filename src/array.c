@@ -18,7 +18,7 @@ void *_array_create_helper(size_t e_size, size_t capacity)
       capacity = 1;
 
    _private_container *c = malloc(sizeof(_private_container) + e_size * capacity);
-#ifdef DEBUGGING
+#if DEBUG_ARRAYS
    c->_sentinel = ARRAY_SENTINEL;
 #endif
    c->_reserved = capacity;
@@ -35,7 +35,7 @@ static void _array_resize_container(_private_container **c_, size_t e_size, size
       /* increases the reserved space */
       do
          c->_reserved *= 2;
-      while (new_size < c->_reserved);
+      while (new_size > c->_reserved);
 
       c = realloc(c, sizeof(_private_container) + e_size * c->_reserved);
    }

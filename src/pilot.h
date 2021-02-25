@@ -378,7 +378,7 @@ typedef struct Pilot_ {
 /*
  * getting pilot stuff
  */
-Pilot** pilot_getAll (void);
+Pilot*const* pilot_getAll (void);
 Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );
@@ -436,15 +436,12 @@ PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
 /*
  * creation
  */
-void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, unsigned int dockpilot, int dockslot );
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
-Pilot* pilot_copy( Pilot* src );
+Pilot* pilot_replacePlayer( Pilot* after );
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 
@@ -456,6 +453,7 @@ void pilot_destroy(Pilot* p);
 void pilots_init (void);
 void pilots_free (void);
 void pilots_clean (int persist);
+void pilots_newSystem (void);
 void pilots_clear (void);
 void pilots_cleanAll (void);
 void pilot_free( Pilot* p );

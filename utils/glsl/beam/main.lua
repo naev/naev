@@ -470,7 +470,7 @@ function love.load()
    -- Set the font
    love.graphics.setNewFont( 12 )
    -- Scaling
-   love.window.setMode( 800, 900 )
+   love.window.setMode( 800, 600 )
    scaling = 2
 
    -- Beams
@@ -611,7 +611,7 @@ function love.draw ()
       lg.setColor( 1, 1, 1, 1 )
       love.graphics.print(b.name, x, y )
       y = y + 17
-      h = b.h
+      local h = b.h
       lg.setColor( 1, 1, 1, 0.5 )
       lg.rectangle( "line", x-2, y-2, w+4, h+4 )
       lg.setShader(shader)

@@ -69,7 +69,7 @@ void gl_exitTextures (void);
 /*
  * Creating.
  */
-glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy );
+glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name );
 glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
       unsigned int flags, int w, int h, int sx, int sy, int freesur );
 glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,

@@ -529,7 +529,7 @@ int player_autonavShouldResetSpeed (void)
 {
    double failpc, shield, armour;
    int i;
-   Pilot **pstk;
+   Pilot *const*pstk;
    int hostiles, will_reset;
 
    if (!player_isFlag(PLAYER_AUTONAV))

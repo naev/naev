@@ -1,4 +1,4 @@
-#include "lib/perlin3D.glsl"
+#include "lib/perlin.glsl"
 
 const float SCALAR = pow(2., 4./3.);
 

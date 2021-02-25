@@ -390,7 +390,7 @@ static int nlua_loadBasic( lua_State* L )
 static int nlua_require( lua_State* L )
 {
    const char *filename;
-   size_t bufsize;
+   size_t bufsize, len_tried_paths;
    int envtab;
    char *buf, *q;
    char path_filename[PATH_MAX], tmpname[PATH_MAX], tried_paths[STRMAX];
@@ -481,8 +481,9 @@ static int nlua_require( lua_State* L )
       }
 
       /* Didn't get to load it. */
-      strncat( tried_paths, "\n   ", sizeof(tried_paths)-1 );
-      strncat( tried_paths, path_filename, sizeof(tried_paths)-1 );
+      len_tried_paths = strlen( tried_paths );
+      strncat( tried_paths, "\n   ", sizeof(tried_paths)-len_tried_paths-1 );
+      strncat( tried_paths, path_filename, sizeof(tried_paths)-len_tried_paths-1 );
    }
 
 

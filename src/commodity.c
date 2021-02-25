@@ -74,7 +74,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent );
 void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
-      snprintf( str, ECON_CRED_STRLEN, _("%"CREDITS_PRI" ¤"), credits );
+      snprintf( str, ECON_CRED_STRLEN, _("%.*f ¤"), 0, (double)credits );
    else if (credits >= 1000000000000000000LL)
       snprintf( str, ECON_CRED_STRLEN, _("%.*f E¤"), decimals, (double)credits / 1000000000000000000. );
    else if (credits >= 1000000000000000LL)
@@ -88,7 +88,7 @@ void credits2str( char *str, credits_t credits, int decimals )
    else if (credits >= 1000)
       snprintf( str, ECON_CRED_STRLEN, _("%.*f k¤"), decimals, (double)credits / 1000. );
    else
-      snprintf (str, ECON_CRED_STRLEN, _("%"CREDITS_PRI" ¤"), credits );
+      snprintf (str, ECON_CRED_STRLEN, _("%.*f ¤"), decimals, (double)credits );
 }
 
 /**

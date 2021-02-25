@@ -111,7 +111,6 @@ static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
  * fleet spawn rate
  */
 int space_spawn = 1; /**< Spawn enabled by default. */
-extern Pilot** pilot_stack;
 
 
 /*
@@ -396,12 +395,11 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 /**
  * @brief Gets the name of all the planets that belong to factions.
  *
- *    @param factions Factions to check against.
- *    @param nfactions Number of factions in factions.
+ *    @param factions Array (array.h): Factions to check against.
  *    @param landable Whether the search is limited to landable planets.
  *    @return An array (array.h) of faction names.  Individual names are not allocated.
  */
-char** space_getFactionPlanet( int *factions, int nfactions, int landable )
+char** space_getFactionPlanet( int *factions, int landable )
 {
    int i,j,k, f;
    Planet* planet;
@@ -419,7 +417,7 @@ char** space_getFactionPlanet( int *factions, int nfactions, int landable )
 
          /* Check if it's in factions. */
          f = 0;
-         for (k=0; k<nfactions; k++) {
+         for (k=0; k<array_size(factions); k++) {
             if (planet->faction == factions[k]) {
                f = 1;
                break;
@@ -697,14 +695,13 @@ int space_sysReachable( StarSystem *sys )
  */
 int space_sysReallyReachable( char* sysname )
 {
-   int njumps;
    StarSystem** path;
 
    if (strcmp(sysname,cur_system->name)==0)
       return 1;
-   path = map_getJumpPath( &njumps, cur_system->name, sysname, 1, 1, NULL );
+   path = map_getJumpPath( cur_system->name, sysname, 1, 1, NULL );
    if (path != NULL) {
-      free(path);
+      array_free(path);
       return 1;
    }
    return 0;
@@ -1203,7 +1200,6 @@ void space_update( const double dt )
 {
    int i, j;
    double x, y;
-   Pilot *p;
    Damage dmg;
    HookParam hparam[3];
    AsteroidAnchor *ast;
@@ -1212,6 +1208,7 @@ void space_update( const double dt )
    Pilot *pplayer;
    Solid *psolid;
    int found_something;
+   Pilot *const* pilot_stack;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1232,10 +1229,9 @@ void space_update( const double dt )
       dmg.disable       = 0.;
 
       /* Damage pilots in volatile systems. */
-      for (i=0; i<array_size(pilot_stack); i++) {
-         p = pilot_stack[i];
-         pilot_hit( p, NULL, 0, &dmg, 0 );
-      }
+      pilot_stack = pilot_getAll();
+      for (i=0; i<array_size(pilot_stack); i++)
+         pilot_hit( pilot_stack[i], NULL, 0, &dmg, 0 );
    }
 
 
@@ -1445,7 +1441,7 @@ void space_init( const char* sysname )
    /* cleanup some stuff */
    player_clear(); /* clears targets */
    ovr_mrkClear(); /* Clear markers when jumping. */
-   pilots_clean(1); /* destroy non-persistant pilots */
+   pilots_clean(1); /* destroy non-persistent pilots */
    weapon_clear(); /* get rid of all the weapons */
    spfx_clear(); /* get rid of the explosions */
    gatherable_free(); /* get rid of gatherable stuff. */
@@ -1534,8 +1530,7 @@ void space_init( const char* sysname )
    player.enemies = 0;
    player.disabled_enemies = 0;
 
-   /* Update the pilot sensor range. */
-   pilot_updateSensorRange();
+   pilots_newSystem();
 
    /* Reset any schedules and used presence. */
    for (i=0; i<array_size(cur_system->presence); i++) {

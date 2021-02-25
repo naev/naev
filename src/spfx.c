@@ -131,7 +131,6 @@ static void spfx_hapticRumble( double mod );
 static void spfx_update_trails( double dt );
 static void spfx_trail_update( Trail_spfx* trail, double dt );
 static void spfx_trail_draw( const Trail_spfx* trail );
-static void spfx_trail_clear( Trail_spfx* trail );
 static void spfx_trail_free( Trail_spfx* trail );
 
 
@@ -382,7 +381,8 @@ void spfx_clear (void)
    vectnull( &shake_pos );
    vectnull( &shake_vel );
    for (i=0; i<array_size(trail_spfx_stack); i++)
-      spfx_trail_clear( trail_spfx_stack[i] );
+      spfx_trail_free( trail_spfx_stack[i] );
+   array_erase( &trail_spfx_stack, array_begin(trail_spfx_stack), array_end(trail_spfx_stack) );
 }
 
 
@@ -490,13 +490,11 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
    Trail_spfx *trail;
 
    trail = calloc( 1, sizeof(Trail_spfx) );
-   trail->ttl = spec->ttl;
+   trail->spec = spec;
    trail->capacity = 1;
    trail->iread = trail->iwrite = 0;
    trail->point_ringbuf = calloc( trail->capacity, sizeof(TrailPoint) );
    trail->refcount = 1;
-   trail->type = spec->type;
-   trail->nebula = spec->nebula;
    trail->r = RNGF();
 
    if ( trail_spfx_stack == NULL )
@@ -513,20 +511,20 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
  *    @param dt Update interval.
  */
 void spfx_update_trails( double dt ) {
-   int i;
+   int i, n;
    Trail_spfx *trail;
 
-   for (i=0; i<array_size(trail_spfx_stack); i++) {
+   n = array_size( trail_spfx_stack );
+   for (i=0; i<n; i++) {
       trail = trail_spfx_stack[i];
-      if (trail->nebula  && (cur_system->nebu_density<=0.))
-         continue;
-
       spfx_trail_update( trail, dt );
       if (!trail->refcount && !trail_size(trail) ) {
          spfx_trail_free( trail );
-         array_erase( &trail_spfx_stack, &trail_spfx_stack[i], &trail_spfx_stack[i+1] );
+         trail_spfx_stack[i--] = trail_spfx_stack[--n];
       }
    }
+   if (n < array_size( trail_spfx_stack ) )
+      array_resize( &trail_spfx_stack, n );
 }
 
 
@@ -539,15 +537,16 @@ void spfx_update_trails( double dt ) {
 static void spfx_trail_update( Trail_spfx* trail, double dt )
 {
    size_t i;
+   GLfloat rel_dt;
 
-   /* Update all elements. */
-   for (i = trail->iread; i < trail->iwrite; i++)
-      trail_at( trail, i ).t -= dt/ trail->ttl;
-
-   /* Remove first elements if they're outdated. */
-   while (trail->iread < trail->iwrite && trail_front(trail).t < 0.) {
+   rel_dt = dt/ trail->spec->ttl;
+   /* Remove outdated elements. */
+   while (trail->iread < trail->iwrite && trail_front(trail).t < rel_dt)
       trail->iread++;
-   }
+
+   /* Update others' timestamps. */
+   for (i = trail->iread; i < trail->iwrite; i++)
+      trail_at( trail, i ).t -= rel_dt;
 
    /* Update timer. */
    trail->dt += dt;
@@ -558,21 +557,21 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
  * @brief Makes a trail grow.
  *
  *    @param trail Trail to update.
- *    @param pos Position of the new control point.
- *    @param style Style.
+ *    @param x X position of the new control point.
+ *    @param y Y position of the new control point.
+ *    @param mode Type of trail emission at this point.
  */
-void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
+void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode )
 {
    TrailPoint p;
 
-   if (style.col.a <= 0.)
+   if (trail->spec->style[mode].col.a <= 0.)
       return;
 
-   p.x = pos.x;
-   p.y = pos.y;
-   p.c = style.col;
+   p.x = x;
+   p.y = y;
    p.t = 1.;
-   p.thickness = style.thick;
+   p.mode = mode;
 
    /* The "back" of the trail should always reflect our most recent state.  */
    trail_back( trail ) = p;
@@ -591,18 +590,6 @@ void spfx_trail_sample( Trail_spfx* trail, Vector2d pos, TrailStyle style )
       trail->capacity *= 2;
    }
    trail_at( trail, trail->iwrite++ ) = p;
-}
-
-
-/**
- * @brief Clears a trail.
- *
- *    @param trail Trail to clear.
- */
-static void spfx_trail_clear( Trail_spfx* trail )
-{
-   trail->iread = trail->iwrite = 0;
-   trail->dt = 0.;
 }
 
 
@@ -635,18 +622,22 @@ static void spfx_trail_free( Trail_spfx* trail )
 static void spfx_trail_draw( const Trail_spfx* trail )
 {
    double x1, y1, x2, y2, z;
-   TrailPoint *tp, *tpp;
+   const TrailPoint *tp, *tpp;
+   const TrailStyle *sp, *spp, *styles;
    size_t i, n;
    GLfloat len;
    gl_Matrix4 projection;
-   double a, s;
+   double s;
 
    n = trail_size(trail);
    if (n==0)
       return;
+   styles = trail->spec->style;
 
    /* Stuff that doesn't change for the entire trail. */
    glUseProgram( shaders.trail.program );
+   if (GLAD_GL_ARB_shader_subroutine)
+      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &trail->spec->type );
    glEnableVertexAttribArray( shaders.trail.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );
    glUniform1f( shaders.trail.dt, trail->dt );
@@ -657,31 +648,28 @@ static void spfx_trail_draw( const Trail_spfx* trail )
    for (i = trail->iread + 1; i < trail->iwrite; i++) {
       tp  = &trail_at( trail, i );
       tpp = &trail_at( trail, i-1 );
+      sp  = &styles[tp->mode];
+      spp = &styles[tpp->mode];
       gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
       gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
 
-      a = atan2( y2-y1, x2-x1 );
       s = hypotf( x2-x1, y2-y1 );
 
       /* Set vertex. */
       projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);
-      projection = gl_Matrix4_Rotate2d(projection, a);
-      projection = gl_Matrix4_Scale(projection, s, z*(tp->thickness+tpp->thickness), 1);
+      projection = gl_Matrix4_Rotate2dv(projection, (x2-x1)/s, (y2-y1)/s);
+      projection = gl_Matrix4_Scale(projection, s, z*(sp->thick+spp->thick), 1);
       projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
 
       /* Set uniforms. */
       gl_Matrix4_Uniform(shaders.trail.projection, projection);
-      gl_uniformColor(shaders.trail.c1, &tp->c);
-      gl_uniformColor(shaders.trail.c2, &tpp->c);
+      gl_uniformColor(shaders.trail.c1, &sp->col);
+      gl_uniformColor(shaders.trail.c2, &spp->col);
       glUniform1f(shaders.trail.t1, tp->t);
       glUniform1f(shaders.trail.t2, tpp->t);
-      glUniform2f(shaders.trail.pos2, len, tp->thickness );
+      glUniform2f(shaders.trail.pos2, len, sp->thick);
       len += s;
-      glUniform2f(shaders.trail.pos1, len, tpp->thickness );
-
-      /* Set the subroutine. */
-      if (GLAD_GL_ARB_shader_subroutine)
-         glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &trail->type );
+      glUniform2f(shaders.trail.pos1, len, spp->thick);
 
       /* Draw. */
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -916,8 +904,6 @@ void spfx_render( const int layer )
    if (layer == SPFX_LAYER_BACK)
       for (i=0; i<array_size(trail_spfx_stack); i++) {
          trail = trail_spfx_stack[i];
-         if (trail->nebula && (cur_system->nebu_density<=0.))
-            continue;
          spfx_trail_draw( trail );
       }
 
@@ -950,7 +936,9 @@ void spfx_render( const int layer )
  */
 static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
 {
+   static const char *mode_tags[] = MODE_TAGS;
    char *type;
+   int i;
    xmlNodePtr cur = node->children;
 
    do {
@@ -969,36 +957,19 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
       }
       else if (xml_isNode(cur, "nebula"))
          tc->nebula = xml_getInt( cur );
-      else if (xml_isNode(cur,"idle")) {
-         xmlr_attr_float_opt( cur, "r", tc->idle.col.r );
-         xmlr_attr_float_opt( cur, "g", tc->idle.col.g );
-         xmlr_attr_float_opt( cur, "b", tc->idle.col.b );
-         xmlr_attr_float_opt( cur, "a", tc->idle.col.a );
-         xmlr_attr_float_opt( cur, "scale", tc->idle.thick );
+      else {
+         for (i=0; i<MODE_MAX; i++)
+            if (xml_isNode(cur, mode_tags[i])) {
+               xmlr_attr_float_opt( cur, "r", tc->style[i].col.r );
+               xmlr_attr_float_opt( cur, "g", tc->style[i].col.g );
+               xmlr_attr_float_opt( cur, "b", tc->style[i].col.b );
+               xmlr_attr_float_opt( cur, "a", tc->style[i].col.a );
+               xmlr_attr_float_opt( cur, "scale", tc->style[i].thick );
+	       break;
+            }
+         if (i == MODE_MAX)
+            WARN(_("Trail '%s' has unknown node '%s'."), tc->name, cur->name);
       }
-      else if (xml_isNode(cur,"glow")) {
-         xmlr_attr_float_opt( cur, "r", tc->glow.col.r );
-         xmlr_attr_float_opt( cur, "g", tc->glow.col.g );
-         xmlr_attr_float_opt( cur, "b", tc->glow.col.b );
-         xmlr_attr_float_opt( cur, "a", tc->glow.col.a );
-         xmlr_attr_float_opt( cur, "scale", tc->glow.thick );
-      }
-      else if (xml_isNode(cur,"afterburn")) {
-         xmlr_attr_float_opt( cur, "r", tc->aftb.col.r );
-         xmlr_attr_float_opt( cur, "g", tc->aftb.col.g );
-         xmlr_attr_float_opt( cur, "b", tc->aftb.col.b );
-         xmlr_attr_float_opt( cur, "a", tc->aftb.col.a );
-         xmlr_attr_float_opt( cur, "scale", tc->aftb.thick );
-      }
-      else if (xml_isNode(cur,"jumping")) {
-         xmlr_attr_float_opt( cur, "r", tc->jmpn.col.r );
-         xmlr_attr_float_opt( cur, "g", tc->jmpn.col.g );
-         xmlr_attr_float_opt( cur, "b", tc->jmpn.col.b );
-         xmlr_attr_float_opt( cur, "a", tc->jmpn.col.a );
-         xmlr_attr_float_opt( cur, "scale", tc->jmpn.thick );
-      }
-      else
-         WARN(_("Trail '%s' has unknown node '%s'."), tc->name, cur->name);
    } while (xml_nextNode(cur));
 
 #define MELEMENT(o,s)   if (o) WARN(_("Trail '%s' missing '%s' element"), tc->name, s)
@@ -1047,7 +1018,8 @@ static int trailSpec_load (void)
       if (xml_isNode(node,"trail")) {
          tc = &array_grow( &trail_spec_stack );
          memset( tc, 0, sizeof(TrailSpec) );
-         tc->idle.thick = tc->glow.thick = tc->aftb.thick = tc->jmpn.thick = 1.;
+         for(int i=0; i<MODE_MAX; i++)
+            tc->style[i].thick = 1.;
          xmlr_attr_strd( node, "name", tc->name );
 
          /* Do the first pass for non-inheriting trails. */
@@ -1093,10 +1065,8 @@ static int trailSpec_load (void)
    } while (xml_nextNode(node));
 
    for (tc=array_begin(trail_spec_stack); tc!=array_end(trail_spec_stack); tc++) {
-      tc->idle.thick *= tc->def_thick;
-      tc->glow.thick *= tc->def_thick;
-      tc->aftb.thick *= tc->def_thick;
-      tc->jmpn.thick *= tc->def_thick;
+      for(int i=0; i<MODE_MAX; i++)
+         tc->style[i].thick *= tc->def_thick;
    }
    array_shrink(&trail_spec_stack);
 
@@ -1122,7 +1092,7 @@ static TrailSpec* trailSpec_getRaw( const char* name )
 
 
 /**
- * @brief Gets a trail style by name.
+ * @brief Gets a trail spec by name.
  *
  *    @return TrailSpec reference if found, else NULL.
  */

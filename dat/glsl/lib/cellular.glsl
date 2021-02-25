@@ -4,8 +4,8 @@
 // See LICENSE file for details.
 // https://github.com/stegu/webgl-noise
 
-#ifndef _CELLULAR2X2_H
-#define _CELLULAR2X2_H
+#ifndef _CELLULAR_GLSL
+#define _CELLULAR_GLSL
 
 #include "lib/math.glsl"
 
@@ -51,4 +51,4 @@ vec2 cellular2x2(vec2 P) {
 #undef K2
 #undef jitter
 
-#endif /* _CELLULAR2X2_H */
+#endif /* _CELLULAR_GLSL */

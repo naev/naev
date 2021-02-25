@@ -182,6 +182,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
  * when gl_fontRenderEnd() is called, saving lots of opengl calls.
  */
 static void gl_fontRenderStart( const glFontStash *stsh, double x, double y, const glColour *c, double outlineR );
+static void gl_fontRenderStartH( const glFontStash* stsh, const gl_Matrix4 *H, const glColour *c, double outlineR );
 static int gl_fontRenderGlyph( glFontStash *stsh, uint32_t ch, const glColour *c, int state );
 static void gl_fontRenderEnd (void);
 /* Fussy layout concerns. */
@@ -629,6 +630,38 @@ void gl_printRaw( const glFont *ft_font, double x, double y, const glColour* c,
    s = 0;
    i = 0;
    gl_fontRenderStart( stsh, x, y, c, outlineR );
+   while ((ch = u8_nextchar( text, &i )))
+      s = gl_fontRenderGlyph( stsh, ch, c, s );
+   gl_fontRenderEnd();
+}
+
+
+/**
+ * @brief Prints text on screen using a transformation matrix.
+ *
+ * Defaults ft_font to gl_defFont if NULL.
+ *
+ *    @param ft_font Font to use
+ *    @param H Transformation matrix to use.
+ *    @param c Colour to use (uses white if NULL)
+ *    @param outlineR Radius in px of outline (-1 for default, 0 for none)
+ *    @param text String to display.
+ */
+void gl_printRawH( const glFont *ft_font, const gl_Matrix4 *H,
+      const glColour* c, const double outlineR , const char *text )
+{
+   int s;
+   size_t i;
+   uint32_t ch;
+
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
+   glFontStash *stsh = gl_fontGetStash( ft_font );
+
+   /* Render it. */
+   s = 0;
+   i = 0;
+   gl_fontRenderStartH( stsh, H, c, outlineR );
    while ((ch = u8_nextchar( text, &i )))
       s = gl_fontRenderGlyph( stsh, ch, c, s );
    gl_fontRenderEnd();
@@ -1153,6 +1186,11 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
  */
 static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, const glColour *c, double outlineR )
 {
+   gl_Matrix4 H = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
+   gl_fontRenderStartH( stsh, &H, c, outlineR );
+}
+static void gl_fontRenderStartH( const glFontStash* stsh, const gl_Matrix4 *H, const glColour *c, double outlineR )
+{
    double a, scale;
    const glColour *col;
 
@@ -1174,9 +1212,8 @@ static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, con
    else
       gl_uniformAColor(shaders.font.outline_color, &cGrey10, a);
 
-   font_projection_mat = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
    scale = (double)stsh->h / FONT_DISTANCE_FIELD_SIZE;
-   font_projection_mat = gl_Matrix4_Scale(font_projection_mat, scale, scale, 1 );
+   font_projection_mat = gl_Matrix4_Scale(*H, scale, scale, 1 );
 
    font_restoreLast = 0;
    gl_fontKernStart();
@@ -1349,7 +1386,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    if ((ch == FONT_COLOUR_CODE) && (state==0)) {/* Start sequence. */
       return 1;
    }
-   if (state == 1) {
+   if ((state == 1) && (ch != FONT_COLOUR_CODE)) {
       col = gl_fontGetColour( ch );
       a = (c==NULL) ? 1. : c->a;
       if (col != NULL)

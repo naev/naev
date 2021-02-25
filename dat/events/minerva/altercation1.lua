@@ -19,8 +19,8 @@
 --
 -- Triggered from station.lua
 --]]
-local portrait = require "portrait"
 local vn = require 'vn'
+local love_shaders = require 'love_shaders'
 
 zalek_holo = "zalek_thug1.png"
 zalek_image = "zalek_thug1.png"
@@ -193,12 +193,11 @@ function zl_dead ()
 end
 
 function dv_hail ()
-   local holo = portrait.hologram( dvaered_holo )
    vn.clear()
    vn.scene()
    vn.fadein()
    local dvc = vn.newCharacter( dvaered_name,
-      { image=holo, color=dvaered_colour } )
+      { image=dvaered_holo, color=dvaered_colour, shader=love_shaders.hologram() } )
    dvc( _("\"Thank you for the help with the Za'lek scum. Let us celebrate with a drink in the bar down at Minerva Station!\"") )
    vn.fadeout()
    vn.run()
@@ -228,12 +227,11 @@ function dv_dead ()
 end
 
 function zl_hail ()
-   local holo = portrait.hologram( zalek_holo )
    vn.clear()
    vn.scene()
    vn.fadein()
    local zlc = vn.newCharacter( zalek_name,
-      { image=holo, color=zalek_colour } )
+      { image=zalek_holo, color=zalek_colour, shader=love_shaders.hologram() } )
    zlc( _("\"As my computations predicted, the Dvaered scum was no match for the Za'lek superiority. Let us celebrate with a drink down at Minerva Station\"") )
    vn.fadeout()
    vn.run()

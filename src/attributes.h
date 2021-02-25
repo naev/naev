@@ -52,6 +52,13 @@
    #define DEPRECATED( msg )
 #endif
 
+#if __has_attribute( always_inline )
+   #define ALWAYS_INLINE __attribute__( ( always_inline ) )
+#else
+   #define ALWAYS_INLINE
+#endif
+
+
 // User defined diagnosis
 #if __has_attribute( diagnose_if )
    #define WARN_IF( c, m ) __attribute__( ( diagnose_if( c, m, "warning" ) ) )

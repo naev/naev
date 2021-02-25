@@ -423,7 +423,6 @@ static int systemL_jumpdistance( lua_State *L )
 {
    StarSystem *sys, *sysp;
    StarSystem **s;
-   int jumps;
    const char *start, *goal;
    int h, k;
 
@@ -444,10 +443,10 @@ static int systemL_jumpdistance( lua_State *L )
    else
       goal = cur_system->name;
 
-   s = map_getJumpPath( &jumps, start, goal, k, h, NULL );
-   free(s);
+   s = map_getJumpPath( start, goal, k, h, NULL );
+   lua_pushnumber(L,array_size(s));
 
-   lua_pushnumber(L,jumps);
+   array_free(s);
    return 1;
 }
 
@@ -477,7 +476,7 @@ static int systemL_jumpPath( lua_State *L )
    LuaJump lj;
    StarSystem *sys, *sysp;
    StarSystem **s;
-   int i, sid, jumps, pushed, h;
+   int i, sid, pushed, h;
    const char *start, *goal;
 
    h   = lua_toboolean(L,3);
@@ -504,7 +503,7 @@ static int systemL_jumpPath( lua_State *L )
       goal  = sys->name;
    }
 
-   s = map_getJumpPath( &jumps, start, goal, 1, h, NULL );
+   s = map_getJumpPath( start, goal, 1, h, NULL );
    if (s == NULL)
       return 0;
 
@@ -520,7 +519,7 @@ static int systemL_jumpPath( lua_State *L )
    lua_pushjump(L, lj);         /* value. */
    lua_rawset(L, -3);
 
-   for (i=0; i<(jumps - 1); i++) {
+   for (i=0; i<array_size(s)-1; i++) {
       lj.srcid  = s[i]->id;
       lj.destid = s[i+1]->id;
 
@@ -528,7 +527,7 @@ static int systemL_jumpPath( lua_State *L )
       lua_pushjump(L, lj);         /* value. */
       lua_rawset(L, -3);
    }
-   free(s);
+   array_free(s);
 
    return 1;
 }
@@ -857,7 +856,6 @@ static int systemL_presence( lua_State *L )
 {
    StarSystem *sys;
    int *fct;
-   int nfct;
    double presence, v;
    int i, f, used;
    const char *cmd;
@@ -867,23 +865,23 @@ static int systemL_presence( lua_State *L )
 
    /* Allow fall-through. */
    used = 0;
+   fct  = NULL;
 
    /* Get the second parameter. */
    if (lua_isstring(L, 2)) {
       /* A string command has been given. */
       cmd  = lua_tostring(L, 2);
-      nfct = 0;
       used = 1;
 
       /* Check the command string and get the appropriate faction group.*/
       if (strcmp(cmd, "all") == 0)
-         fct = faction_getGroup(&nfct, 0);
+         fct = faction_getGroup(0);
       else if (strcmp(cmd, "friendly") == 0)
-         fct = faction_getGroup(&nfct, 1);
+         fct = faction_getGroup(1);
       else if (strcmp(cmd, "hostile") == 0)
-         fct = faction_getGroup(&nfct, 3);
+         fct = faction_getGroup(3);
       else if (strcmp(cmd, "neutral") == 0)
-         fct = faction_getGroup(&nfct, 2);
+         fct = faction_getGroup(2);
       else /* Invalid command string. */
          used = 0;
    }
@@ -891,14 +889,13 @@ static int systemL_presence( lua_State *L )
    if (!used) {
       /* A faction id was given. */
       f      = luaL_validfaction(L, 2);
-      nfct   = 1;
-      fct    = malloc(sizeof(int));
-      fct[0] = f;
+      fct    = array_create(int);
+      array_push_back(&fct, f);
    }
 
    /* Add up the presence values. */
    presence = 0;
-   for (i=0; i<nfct; i++) {
+   for (i=0; i<array_size(fct); i++) {
       /* Only count positive presences. */
       v = system_getPresence( sys, fct[i] );
       if (v > 0)
@@ -906,7 +903,7 @@ static int systemL_presence( lua_State *L )
    }
 
    /* Clean up after ourselves. */
-   free(fct);
+   array_free(fct);
 
    /* Push it back to Lua. */
    lua_pushnumber(L, presence);

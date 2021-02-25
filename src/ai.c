@@ -125,12 +125,6 @@ static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
 
 
 /*
- * extern pilot hacks
- */
-extern Pilot** pilot_stack;
-
-
-/*
  * prototypes
  */
 /* Internal C routines */
@@ -1270,8 +1264,10 @@ static int aiL_pilot( lua_State *L )
  */
 static int aiL_getrndpilot( lua_State *L )
 {
+   Pilot *const* pilot_stack;
    int p;
 
+   pilot_stack = pilot_getAll();
    p = RNG(0, array_size(pilot_stack)-1);
    /* Make sure it can't be the same pilot. */
    if (pilot_stack[p]->id == cur_pilot->id) {
@@ -1295,9 +1291,9 @@ static int aiL_getrndpilot( lua_State *L )
  */
 static int aiL_getnearestpilot( lua_State *L )
 {
-
    /*dist will be initialized to a number*/
    /*this will only seek out pilots closer than dist*/
+   Pilot *const* pilot_stack = pilot_getAll();
    int dist=1000;
    int i;
    int candidate_id = -1;
@@ -1759,8 +1755,10 @@ static int aiL_careful_face( lua_State *L )
    double k_diff, k_goal, k_enemy, k_mult,
           d, diff, dist, factor;
    int i;
+   Pilot *const* pilot_stack;
 
    /* Init some variables */
+   pilot_stack = pilot_getAll();
    p = cur_pilot;
 
    /* Get first parameter, aka what to face. */

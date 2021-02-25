@@ -29,6 +29,7 @@ static int transformL_get( lua_State *L );
 static int transformL_scale( lua_State *L );
 static int transformL_translate( lua_State *L );
 static int transformL_rotate2d( lua_State *L );
+static int transformL_ortho( lua_State *L );
 static int transformL_applyPoint( lua_State *L );
 static int transformL_applyDim( lua_State *L );
 static const luaL_Reg transformL_methods[] = {
@@ -39,6 +40,7 @@ static const luaL_Reg transformL_methods[] = {
    { "scale", transformL_scale },
    { "translate", transformL_translate },
    { "rotate2d", transformL_rotate2d },
+   { "ortho", transformL_ortho },
    { "applyPoint", transformL_applyPoint },
    { "applyDim", transformL_applyDim },
    {0,0}
@@ -224,7 +226,7 @@ static int transformL_scale( lua_State *L )
    gl_Matrix4 *M = luaL_checktransform(L, 1);
    double x = luaL_checknumber(L,2);
    double y = luaL_checknumber(L,3);
-   double z = luaL_checknumber(L,4);
+   double z = luaL_optnumber(L,4,1.);
    lua_pushtransform(L, gl_Matrix4_Scale( *M, x, y, z ) );
    return 1;
 }
@@ -245,7 +247,7 @@ static int transformL_translate( lua_State *L )
    gl_Matrix4 *M = luaL_checktransform(L, 1);
    double x = luaL_checknumber(L,2);
    double y = luaL_checknumber(L,3);
-   double z = luaL_checknumber(L,4);
+   double z = luaL_optnumber(L,4,0.);
    lua_pushtransform(L, gl_Matrix4_Translate( *M, x, y, z ) );
    return 1;
 }
@@ -268,7 +270,32 @@ static int transformL_rotate2d( lua_State *L )
 
 
 /**
- * @brief Applies a trasnformation to a point.
+ * @brief Creates an orthogonal matrix.
+ *
+ *    @luatparam number left Left value.
+ *    @luatparam number right Right value.
+ *    @luatparam number bottom Bottom value.
+ *    @luatparam number top Top value.
+ *    @luatparam number nearVal value.
+ *    @luatparam number farVal value.
+ *    @luatreturn Transform A new transformation.
+ * @luafunc translate
+ */
+static int transformL_ortho( lua_State *L )
+{
+   double left    = luaL_checknumber(L,1);
+   double right   = luaL_checknumber(L,2);
+   double bottom  = luaL_checknumber(L,3);
+   double top     = luaL_checknumber(L,4);
+   double nearVal = luaL_checknumber(L,5);
+   double farVal  = luaL_checknumber(L,6);
+   lua_pushtransform(L, gl_Matrix4_Ortho(left, right, bottom, top, nearVal, farVal) );
+   return 1;
+}
+
+
+/**
+ * @brief Applies a transformation to a point.
  *
  *    @luatparam Transform T Transform to apply.
  *    @luatparam number x Point X-coordinate.
@@ -300,7 +327,7 @@ static int transformL_applyPoint( lua_State *L )
 
 
 /**
- * @brief Applies a trasnformation to a dimension.
+ * @brief Applies a transformation to a dimension.
  *
  * @note This is similar to Transform.applyPoint, except the translation is not applied.
  *

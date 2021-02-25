@@ -19,6 +19,7 @@
 -- This is the third mission in the "shadow" series, featuring the return of SHITMAN.
 --]]
 
+require "fleethelper"
 require "proximity"
 require "missions/shadow/common"
 

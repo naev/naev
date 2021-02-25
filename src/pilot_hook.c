@@ -187,7 +187,7 @@ void pilots_clearGlobalHooks (void)
 void pilots_rmHook( unsigned int hook )
 {
    int i, j;
-   Pilot *p, **plist;
+   Pilot *p, *const*plist;
 
    /* Cleaning up a pilot's hooks. */
    if (pilot_hookCleanup)

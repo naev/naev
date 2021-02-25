@@ -44,12 +44,6 @@
 #define WEAPON_STATUS_UNJAMMED   2 /**< Survived jamming */
 
 
-/*
- * pilot stuff
- */
-extern Pilot** pilot_stack;
-
-
 /**
  * @struct Weapon
  *
@@ -839,9 +833,11 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    AsteroidAnchor *ast;
    Asteroid *a;
    AsteroidType *at;
+   Pilot *const* pilot_stack;
 
    gfx = NULL;
    polygon = NULL;
+   pilot_stack = pilot_getAll();
 
    /* Get the sprite direction to speed up calculations. */
    b     = outfit_isBeam(w->outfit);
@@ -1015,25 +1011,22 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 static void weapon_sample_trail( Weapon* w )
 {
    double a, dx, dy;
-   TrailStyle style;
-   Vector2d pos;
+   TrailMode mode;
 
    /* Compute the engine offset. */
    a  = w->solid->dir;
    dx = w->outfit->u.amm.trail_x_offset * cos(a);
    dy = w->outfit->u.amm.trail_x_offset * sin(a);
 
-   vect_cset( &pos, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2 );
-
    /* Set the colour. */
    if (w->solid->thrust > 0)
-      style = w->outfit->u.amm.trail_spec->aftb;
+      mode = MODE_AFTERBURN;
    else if (w->solid->dir_vel != 0.)
-      style = w->outfit->u.amm.trail_spec->glow;
+      mode = MODE_GLOW;
    else
-      style = w->outfit->u.amm.trail_spec->idle;
+      mode = MODE_IDLE;
 
-   spfx_trail_sample( w->trail, pos, style );
+   spfx_trail_sample( w->trail, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2, mode );
 }
 
 
@@ -1048,6 +1041,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 {
    int i;
    double d;
+   Pilot *const* pilot_stack;
 
    /* Must be a valid shooter. */
    if (shooter == NULL)
@@ -1059,6 +1053,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 
    /* Player is handled differently. */
    if (shooter->faction == FACTION_PLAYER) {
+      pilot_stack = pilot_getAll();
 
       /* Increment damage done to by player. */
       p->player_damage += dmg / (p->shield_max + p->armour_max);

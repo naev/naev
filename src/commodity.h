@@ -20,8 +20,8 @@
 
 
 typedef int64_t credits_t;
-#define CREDITS_MAX        INT64_MAX
-#define CREDITS_MIN        INT64_MIN
+#define CREDITS_MAX        (((credits_t)1) << 53) /**< Maximum credits_t value that round-trips through Lua. */
+#define CREDITS_MIN        (-CREDITS_MAX)         /**< Minimum credits_t value that round-trips through Lua. */
 #define CREDITS_PRI        PRIu64
 
 /**

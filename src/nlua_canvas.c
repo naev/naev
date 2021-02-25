@@ -19,6 +19,12 @@
 #include "log.h"
 #include "nluadef.h"
 #include "nlua_tex.h"
+#include "nlua_col.h"
+
+
+static int nlua_canvas_counter = 0;
+static GLuint previous_fbo = 0;
+static int previous_fbo_set = 0;
 
 
 /* Canvas metatable methods. */
@@ -27,12 +33,14 @@ static int canvasL_eq( lua_State *L );
 static int canvasL_new( lua_State *L );
 static int canvasL_set( lua_State *L );
 static int canvasL_getTex( lua_State *L );
+static int canvasL_clear( lua_State *L );
 static const luaL_Reg canvasL_methods[] = {
    { "__gc", canvasL_gc },
    { "__eq", canvasL_eq },
    { "new", canvasL_new },
    { "set", canvasL_set },
    { "getTex", canvasL_getTex },
+   { "clear", canvasL_clear },
    {0,0}
 }; /**< Canvas metatable methods. */
 
@@ -169,12 +177,15 @@ static int canvasL_new( lua_State *L )
    LuaCanvas_t lc;
    int w, h;
    GLenum status;
+   char *name;
 
    w = luaL_checkint(L,1);
    h = luaL_checkint(L,2);
 
    /* Create the texture. */
-   lc.tex = gl_loadImageData( NULL, w, h, 1, 1 );
+   asprintf( &name, "nlua_canvas_%03d", ++nlua_canvas_counter );
+   lc.tex = gl_loadImageData( NULL, w, h, 1, 1, name );
+   free( name );
 
    /* Create the frame buffer. */
    glGenFramebuffers( 1, &lc.fbo );
@@ -187,10 +198,10 @@ static int canvasL_new( lua_State *L )
    status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
    if (status != GL_FRAMEBUFFER_COMPLETE)
       NLUA_ERROR( L, _("Error setting up framebuffer!"));
-      
+
    /* Restore state. */
-   glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+
    gl_checkErr();
 
    lua_pushcanvas( L, lc );
@@ -210,10 +221,17 @@ static int canvasL_set( lua_State *L )
 
    if (lua_iscanvas(L,1)) {
       lc = luaL_checkcanvas(L,1);
-      glBindFramebuffer(GL_FRAMEBUFFER, lc->fbo);
+      if (!previous_fbo_set) {
+         previous_fbo = gl_screen.current_fbo;
+         previous_fbo_set = 1;
+      }
+      gl_screen.current_fbo = lc->fbo;
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    }
-   else if (lua_isnil(L,1)) {
-      glBindFramebuffer(GL_FRAMEBUFFER, 0);
+   else if ((lua_gettop(L)<=0) || lua_isnil(L,1)) {
+      gl_screen.current_fbo = previous_fbo;
+      previous_fbo_set = 0;
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    }
    else
       NLUA_ERROR(L,_("Unexpected parameter"));
@@ -232,7 +250,24 @@ static int canvasL_set( lua_State *L )
 static int canvasL_getTex( lua_State *L )
 {
    LuaCanvas_t *lc = luaL_checkcanvas(L,1);
-   lua_pushtex( L, lc->tex );
+   lua_pushtex( L, gl_dupTexture(lc->tex) );
    return 1;
 }
 
+
+/**
+ * @brief Clears a canvas.
+ *
+ *    @luatparam Canvas canvas Canvas to clear.
+ *    @luatparam Colour col Colour to clear to.
+ * @luafunc getTex
+ */
+static int canvasL_clear( lua_State *L )
+{
+   LuaCanvas_t *lc = luaL_checkcanvas(L,1);
+   (void) lc;
+   const glColour *c = luaL_optcolour(L,2,&cBlack);
+   glClearColor( c->r, c->g, c->b, c->a );
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   return 0;
+}

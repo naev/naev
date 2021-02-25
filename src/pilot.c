@@ -56,8 +56,7 @@ static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniq
 
 
 /* stack of pilots */
-/* TODO make non-public? */
-Pilot** pilot_stack = NULL; /**< Not static, used in player.c, weapon.c, pause.c, space.c and ai.c */
+static Pilot** pilot_stack = NULL; /**< All the pilots in space. (Player may have other Pilot objects, e.g. backup ships.) */
 
 
 /* misc */
@@ -69,6 +68,10 @@ static const double pilot_commFade     = 5.; /**< Time for text above pilot to f
 /*
  * Prototypes
  */
+/* Create. */
+static void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
+      const double dir, const Vector2d* pos, const Vector2d* vel,
+      const PilotFlags flags, unsigned int dockpilot, int dockslot );
 /* Update. */
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
@@ -79,13 +82,15 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
-static void pilot_sample_trail( Pilot* p, int generator );
+static void pilot_init_trails( Pilot* p );
+static int pilot_trail_generated( Pilot* p, int generator );
+static void pilot_sample_trails( Pilot* p );
 
 
 /**
  * @brief Gets the pilot stack.
  */
-Pilot** pilot_getAll (void)
+Pilot*const* pilot_getAll (void)
 {
    return pilot_stack;
 }
@@ -232,7 +237,7 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
 {
    /* Must not be dead. */
    if (pilot_isFlag( target, PILOT_DELETE ) ||
-         pilot_isFlag( target, PILOT_DEAD))
+         pilot_isFlag( target, PILOT_DEAD ))
       return 0;
 
    /* Must not be invisible. */
@@ -321,7 +326,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
  *    @param target_mass_UB the upper bound for target mass
  *    @return ID of their nearest enemy.
  */
-unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, double target_mass_UB)
+unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, double target_mass_UB )
 {
    unsigned int tp;
    int i;
@@ -379,9 +384,9 @@ unsigned int pilot_getNearestEnemy_heuristic( const Pilot* p,
       /* Check distance. */
       temp = range_factor *
                vect_dist2( &target->solid->pos, &p->solid->pos )
-            + FABS( pilot_relsize( p, target ) - mass_factor)
-            + FABS( pilot_relhp(   p, target ) - health_factor)
-            + FABS( pilot_reldps(  p, target ) - damage_factor);
+            + FABS( pilot_relsize( p, target ) - mass_factor )
+            + FABS( pilot_relhp(   p, target ) - health_factor )
+            + FABS( pilot_reldps(  p, target ) - damage_factor );
 
       if ((tp == 0) || (temp < current_heuristic_value)) {
          current_heuristic_value = temp;
@@ -567,7 +572,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
 
       ta = atan2( p->solid->pos.y - pilot_stack[i]->solid->pos.y,
             p->solid->pos.x - pilot_stack[i]->solid->pos.x );
-      if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
+      if (ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
          a = ta;
          *tp = pilot_stack[i]->id;
       }
@@ -1037,7 +1042,7 @@ double pilot_aimAngle( Pilot *p, Pilot *target )
  */
 void pilot_setHostile( Pilot* p )
 {
-   if ( pilot_isFriendly( p ) || pilot_isFlag( p, PILOT_BRIBED)
+   if ( pilot_isFriendly( p ) || pilot_isFlag( p, PILOT_BRIBED )
          || !pilot_isFlag( p, PILOT_HOSTILE ) ) {
       /* Time to play combat music. */
       music_choose("combat");
@@ -1344,8 +1349,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    Pilot *pshooter;
 
    /* Invincible means no damage. */
-   if (pilot_isFlag( p, PILOT_INVINCIBLE) ||
-         pilot_isFlag( p, PILOT_INVISIBLE))
+   if (pilot_isFlag( p, PILOT_INVINCIBLE ) ||
+         pilot_isFlag( p, PILOT_INVISIBLE ))
       return 0.;
 
    /* Defaults. */
@@ -1799,7 +1804,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  */
 void pilot_update( Pilot* pilot, const double dt )
 {
-   int i, cooling, nchg, n;
+   int i, cooling, nchg;
    int ammo_threshold;
    unsigned int l;
    Pilot *target;
@@ -2156,7 +2161,7 @@ void pilot_update( Pilot* pilot, const double dt )
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
                   pilot->afterburner->outfit->u.afb.heat_base,
                   pilot->afterburner->outfit->u.afb.heat_cap );
-            thrust = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid->mass) * efficiency;
+            thrust = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid->mass ) * efficiency;
 
             /* Adjust speed. Speed bonus falls as heat rises. */
             pilot->solid->speed_max = pilot->speed * (1. +
@@ -2194,45 +2199,51 @@ void pilot_update( Pilot* pilot, const double dt )
    gatherable_gather( pilot->id );
 
    /* Update the trail. */
-   n = array_size(pilot->ship->trail_emitters);
-   for (i=0; i<n; i++)
-      pilot_sample_trail( pilot, i );
+   pilot_sample_trails( pilot );
 }
 
 
 /**
- * @brief Updates the indicated trail.
- *
- *    @param p Pilot.
- *    @param generator Generator index
+ * @brief Updates the given pilot's trail emissions.
  */
-static void pilot_sample_trail( Pilot* p, int generator )
+static void pilot_sample_trails( Pilot* p )
 {
-   double a, dx, dy;
-   TrailStyle style;
-   Vector2d pos;
+   int i, g;
+   double dx, dy, dircos, dirsin;
+   TrailMode mode;
+
+   dircos = cos(p->solid->dir);
+   dirsin = sin(p->solid->dir);
+
+   /* Identify the emission type. */
+   if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
+      mode = MODE_JUMPING;
+   else if (pilot_isFlag(p, PILOT_AFTERBURNER))
+      mode = MODE_AFTERBURN;
+   else if (p->engine_glow > 0.)
+      mode = MODE_GLOW;
+   else
+      mode = MODE_IDLE;
 
    /* Compute the engine offset. */
-   a  = p->solid->dir;
-   dx = p->ship->trail_emitters[generator].x_engine * cos(a) -
-        p->ship->trail_emitters[generator].y_engine * sin(a);
-   dy = p->ship->trail_emitters[generator].x_engine * sin(a) +
-        p->ship->trail_emitters[generator].y_engine * cos(a);
+   for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
+      if (pilot_trail_generated( p, g )) {
+         dx = p->ship->trail_emitters[g].x_engine * dircos -
+              p->ship->trail_emitters[g].y_engine * dirsin;
+         dy = p->ship->trail_emitters[g].x_engine * dirsin +
+              p->ship->trail_emitters[g].y_engine * dircos +
+              p->ship->trail_emitters[g].h_engine;
+         spfx_trail_sample( p->trail[i++], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, mode );
+      }
+}
 
-   vect_cset( &pos, p->solid->pos.x + dx,
-              p->solid->pos.y + dy*M_SQRT1_2 + p->ship->trail_emitters[generator].h_engine*M_SQRT1_2 );
 
-   /* Set the colour. */
-   if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
-      style = p->ship->trail_emitters[generator].trail_spec->jmpn;
-   else if (pilot_isFlag(p, PILOT_AFTERBURNER))
-      style = p->ship->trail_emitters[generator].trail_spec->aftb;
-   else if (p->engine_glow > 0.)
-      style = p->ship->trail_emitters[generator].trail_spec->glow;
-   else
-      style = p->ship->trail_emitters[generator].trail_spec->idle;
-
-   spfx_trail_sample( p->trail[generator], pos, style );
+/**
+ * @brief Return true if the given trail_emitters index has a corresponding generated trail.
+ */
+static int pilot_trail_generated( Pilot* p, int generator )
+{
+   return !p->ship->trail_emitters[generator].trail_spec->nebula || cur_system->nebu_density>0;
 }
 
 
@@ -2360,7 +2371,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
          /* face target */
          else {
             /* Done braking or no braking required. */
-            pilot_setFlag( p, PILOT_HYP_BRAKE);
+            pilot_setFlag( p, PILOT_HYP_BRAKE );
             pilot_setThrust( p, 0. );
 
             /* Face system headed to. */
@@ -2594,11 +2605,11 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param dockpilot The pilot which launched this pilot (0 if N/A).
  *    @param dockslot The outfit slot which launched this pilot (-1 if N/A).
  */
-void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
+static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
-   int i, j, n;
+   int i, j;
    PilotOutfitSlot *dslot, *slot;
    PilotOutfitSlot **pilot_list_ptr[] = { &pilot->outfit_structure, &pilot->outfit_utility, &pilot->outfit_weapon };
    ShipOutfitSlot *ship_list[] = { ship->outfit_structure, ship->outfit_utility, ship->outfit_weapon };
@@ -2730,12 +2741,24 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    if (ai != NULL)
       ai_pinit( pilot, ai ); /* Must run before ai_create */
    pilot->shoot_indicator = 0;
+}
 
-   /* Animated trail. */
-   n = array_size(pilot->ship->trail_emitters);
-   pilot->trail = array_create_size( Trail_spfx*, n );
-   for (i=0; i<n; i++)
-      array_push_back( &pilot->trail, spfx_trail_create( pilot->ship->trail_emitters[i].trail_spec ) );
+
+/**
+ * @brief Initialize pilot's trails according to the ship type and current system characteristics.
+ */
+static void pilot_init_trails( Pilot* p )
+{
+   int n;
+
+   n = array_size(p->ship->trail_emitters);
+   if (p->trail == NULL)
+      p->trail = array_create_size( Trail_spfx*, n );
+
+   for (int g=0; g<n; g++)
+      if (pilot_trail_generated( p, g ))
+         array_push_back( &p->trail, spfx_trail_create( p->ship->trail_emitters[g].trail_spec ) );
+   array_shrink( &p->trail );
 }
 
 
@@ -2768,6 +2791,9 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    /* Initialize the pilot. */
    pilot_init( dyn, ship, name, faction, ai, dir, pos, vel, flags, dockpilot, dockslot );
 
+   /* Animated trail. */
+   pilot_init_trails( dyn );
+
    return dyn->id;
 }
 
@@ -2798,62 +2824,19 @@ Pilot* pilot_createEmpty( Ship* ship, const char* name,
 
 
 /**
- * @brief Copies src pilot to dest.
- *
- *    @param src Pilot to copy.
- *    @return Copy of src.
+ * @brief Replaces the player's pilot with an alternate ship with the same ID.
+ * @return The new pilot.
  */
-Pilot* pilot_copy( Pilot* src )
+Pilot* pilot_replacePlayer( Pilot* after )
 {
-   int i;
-   Pilot *dest = malloc(sizeof(Pilot));
-
-   /* Copy data over, we'll have to reset all the pointers though. */
-   *dest = *src;
-
-   /* Copy names. */
-   if (src->name)
-      dest->name = strdup(src->name);
-
-   /* Copy solid. */
-   dest->solid = malloc(sizeof(Solid));
-   *dest->solid = *src->solid;
-
-   /* Copy outfits. */
-   dest->outfits = array_create_size( PilotOutfitSlot*, array_size(src->outfits) );
-   dest->outfit_structure = array_copy( PilotOutfitSlot, src->outfit_structure );
-   dest->outfit_utility = array_copy( PilotOutfitSlot, src->outfit_utility );
-   dest->outfit_weapon = array_copy( PilotOutfitSlot, src->outfit_weapon );
-   for (i=0; i<array_size(dest->outfit_structure); i++)
-      array_push_back( &dest->outfits, &dest->outfit_structure[i] );
-   for (i=0; i<array_size(dest->outfit_utility); i++)
-      array_push_back( &dest->outfits, &dest->outfit_utility[i] );
-   for (i=0; i<array_size(dest->outfit_weapon); i++)
-      array_push_back( &dest->outfits, &dest->outfit_weapon[i] );
-   dest->afterburner = NULL;
-
-   /* Hooks get cleared. */
-   dest->hooks           = NULL;
-
-   /* Copy has no escorts. */
-   dest->escorts         = NULL;
-
-   /* AI is not copied. */
-   dest->task            = NULL;
-   dest->shoot_indicator = 0;
-
-   /* Set pointers and friends to NULL. */
-   /* Commodities. */
-   dest->commodities     = NULL;
-   /* Calculate stats. */
-   pilot_calcStats(dest);
-
-   /* Copy commodities. */
-   for (i=0; i<array_size(src->commodities); i++)
-      pilot_cargoAdd( dest, src->commodities[i].commodity,
-            src->commodities[i].quantity, src->commodities[i].id );
-
-   return dest;
+   int i, j;
+   i = pilot_getStackPos( PLAYER_ID );
+   for (j=0; j<array_size(pilot_stack[i]->trail); j++)
+      spfx_trail_remove( pilot_stack[i]->trail[j] );
+   array_erase( &pilot_stack[i]->trail, array_begin(pilot_stack[i]->trail), array_end(pilot_stack[i]->trail) );
+   pilot_stack[i] = after;
+   pilot_init_trails( after );
+   return after;
 }
 
 
@@ -2865,7 +2848,7 @@ Pilot* pilot_copy( Pilot* src )
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
 {
    int i, j, *ind;
-   int nfact, *fact;
+   int *fact;
    double chance, limit;
    JumpPoint **validJumpPoints;
    JumpPoint *target;
@@ -2895,8 +2878,8 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
 
          limit = 0.;
          if (guerilla) {/* Test enemy presence on the other side. */
-            fact = faction_getEnemies( lf, &nfact );
-            for (j=0; j<nfact ; j++)
+            fact = faction_getEnemies( lf );
+            for (j=0; j<array_size(fact); j++)
                limit += system_getPresence( cur_system->jumps[i].target, fact[j] );
          }
 
@@ -2947,7 +2930,7 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
  */
 void pilot_free( Pilot* p )
 {
-   int n, i;
+   int i;
 
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
@@ -2985,8 +2968,7 @@ void pilot_free( Pilot* p )
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
    /* Free animated trail. */
-   n = array_size(p->ship->trail_emitters);
-   for (i=0; i<n; i++)
+   for (i=0; i<array_size(p->trail); i++)
       spfx_trail_remove( p->trail[i] );
    array_free(p->trail);
 
@@ -3061,7 +3043,7 @@ void pilots_free (void)
 /**
  * @brief Cleans up the pilot stack - leaves the player
  *
- *    @param persist Do not remove persistant pilots.
+ *    @param persist Do not remove persistent pilots.
  */
 void pilots_clean (int persist)
 {
@@ -3075,10 +3057,16 @@ void pilots_clean (int persist)
          p = pilot_stack[persist_count];
          pilot_stack[persist_count] = pilot_stack[i];
          pilot_stack[i] = p;
+         p = pilot_stack[persist_count];
          /* Misc clean up. */
-         pilot_stack[persist_count]->lockons = 0; /* Clear lockons. */
-         pilot_stack[persist_count]->projectiles = 0; /* Clear projectiles. */
-         pilot_clearTimers( pilot_stack[persist_count] ); /* Reset timers. */
+         p->lockons = 0; /* Clear lockons. */
+         p->projectiles = 0; /* Clear projectiles. */
+         pilot_clearTimers( p ); /* Reset timers. */
+         /* Reset trails */
+         for (int g=0; g<array_size(p->trail); g++)
+            spfx_trail_remove( p->trail[g] );
+         array_erase( &p->trail, array_begin(p->trail), array_end(p->trail) );
+         /* All done. */
          persist_count++;
       }
       else /* rest get killed */
@@ -3088,6 +3076,17 @@ void pilots_clean (int persist)
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();
+}
+
+
+/**
+ * @brief Updates pilot state which depends on the system (sensor range, nebula trails...)
+ */
+void pilots_newSystem (void)
+{
+   pilot_updateSensorRange();
+   for (int i=0; i < array_size(pilot_stack); i++)
+      pilot_init_trails( pilot_stack[i] );
 }
 
 

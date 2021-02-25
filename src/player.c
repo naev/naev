@@ -136,18 +136,6 @@ static int* events_done  = NULL; /**< Array (array.h): Saves position of complet
 
 
 /*
- * Extern stuff for player ships.
- */
-extern Pilot** pilot_stack;
-
-
-/*
- * map stuff for autonav
- */
-extern int map_npath;
-
-
-/*
  * prototypes
  */
 /*
@@ -529,7 +517,7 @@ static Pilot* player_newShipMake( const char* name )
  */
 void player_swapShip( const char *shipname )
 {
-   int i, j;
+   int i;
    Pilot* ship;
    Vector2d v;
    double dir;
@@ -564,12 +552,7 @@ void player_swapShip( const char *shipname )
 
       /* now swap the players */
       player_stack[i].p = player.p;
-      for (j=0; j<array_size(pilot_stack); j++) /* find pilot in stack to swap */
-         if (pilot_stack[j] == player.p) {
-            player.p         = ship;
-            pilot_stack[j] = ship;
-            break;
-         }
+      player.p          = pilot_replacePlayer( ship );
 
       /* Copy position back. */
       player.p->solid->pos = v;
@@ -1800,7 +1783,8 @@ void player_brokeHyperspace (void)
    ntime_t t;
    StarSystem *sys;
    JumpPoint *jp;
-   int i;
+   Pilot *const* pilot_stack;
+   int i, map_npath;
 
    /* First run jump hook. */
    hooks_run( "jumpout" );
@@ -1845,6 +1829,7 @@ void player_brokeHyperspace (void)
    map_jump();
 
    /* Add persisted pilots */
+   pilot_stack = pilot_getAll();
    for (i=0; i<array_size(pilot_stack); i++) {
       if ((pilot_stack[i] != player.p) &&
             (pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
@@ -1860,6 +1845,7 @@ void player_brokeHyperspace (void)
          player_autonavEnd();
       }
       else {
+         (void)map_getDestination( &map_npath );
          player_message( n_(
                   "#oAutonav continuing until destination (%d jump left).",
                   "#oAutonav continuing until destination (%d jumps left).",
@@ -1939,9 +1925,11 @@ void player_targetHostile (void)
    unsigned int tp;
    double d, td;
    int inRange;
+   Pilot *const* pilot_stack;
 
    tp = PLAYER_ID;
    d  = 0;
+   pilot_stack = pilot_getAll();
    for (int i=0; i<array_size(pilot_stack); i++) {
       /* Shouldn't be disabled. */
       if (pilot_isDisabled(pilot_stack[i]))
@@ -2119,8 +2107,10 @@ static void player_checkHail (void)
 {
    int i;
    Pilot *p;
+   Pilot *const* pilot_stack;
 
    /* See if a pilot is hailing. */
+   pilot_stack = pilot_getAll();
    for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
@@ -2198,6 +2188,7 @@ void player_autohail (void)
 {
    int i;
    Pilot *p;
+   Pilot *const* pilot_stack;
 
    /* Not under manual control or disabled. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
@@ -2205,6 +2196,7 @@ void player_autohail (void)
       return;
 
    /* Find pilot to autohail. */
+   pilot_stack = pilot_getAll();
    for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
@@ -3047,7 +3039,7 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
  */
 static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
 {
-   int i, j, k, n;
+   int i, j, k;
    int found;
    const char *name;
    PilotWeaponSetOutfit *weaps;
@@ -3092,7 +3084,7 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
             /* Only check active missions. */
             if (player_missions[j]->id > 0) {
                /* Now check if it's in the cargo list. */
-               for (k=0; k<player_missions[j]->ncargo; k++) {
+               for (k=0; k<array_size(player_missions[j]->cargo); k++) {
                   /* See if it matches a cargo. */
                   if (player_missions[j]->cargo[k] == ship->commodities[i].id) {
                      found = 1;
@@ -3127,7 +3119,7 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
    xmlw_attr(writer, "active_set", "%d", ship->active_set);
    xmlw_attr(writer, "aim_lines", "%d", ship->aimLines);
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
-      weaps = pilot_weapSetList( ship, i, &n );
+      weaps = pilot_weapSetList( ship, i );
       xmlw_startElem(writer,"weaponset");
       /* Inrange isn't handled by autoweap for the player. */
       xmlw_attr(writer,"inrange","%d",pilot_weapSetInrangeCheck(ship,i));
@@ -3137,7 +3129,7 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
          if (name != NULL)
             xmlw_attr(writer,"name","%s",name);
          xmlw_attr(writer,"type","%d",pilot_weapSetTypeCheck(ship,i));
-         for (j=0; j<n;j++) {
+         for (j=0; j<array_size(weaps); j++) {
             xmlw_startElem(writer,"weapon");
             xmlw_attr(writer,"level","%d",weaps[j].level);
             xmlw_str(writer,"%d",weaps[j].slot->id);

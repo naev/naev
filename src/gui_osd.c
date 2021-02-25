@@ -29,7 +29,7 @@ typedef struct OSD_s {
    char **msg; /**< Array (array.h): Stored messages. */
    char ***items; /**< Array of array (array.h) of allocated strings. */
 
-   int active; /**< Active item. */
+   unsigned int active; /**< Active item. */
 } OSD_t;
 
 
@@ -474,7 +474,7 @@ void osd_render (void)
       for (i=ll->active; i<array_size(ll->items); i++) {
          x = osd_x;
          w = osd_w;
-         c = (ll->active == i) ? &cFontWhite : &cFontGrey;
+         c = (i == (int)ll->active) ? &cFontWhite : &cFontGrey;
          for (j=0; j<array_size(ll->items[i]); j++) {
             gl_printMaxRaw( &gl_smallFont, w, x, p,
                   c, -1., ll->items[i][j] );

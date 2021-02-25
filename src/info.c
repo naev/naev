@@ -843,7 +843,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       /* Get the mission. */
       f = 0;
       for (i=0; i<MISSION_MAX; i++) {
-         for (j=0; j<player_missions[i]->ncargo; j++) {
+         for (j=0; j<array_size(player_missions[i]->cargo); j++) {
             if (player_missions[i]->cargo[j] == player.p->commodities[pos].id) {
                f = 1;
                break;
@@ -875,7 +875,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       claim_activateAll();
 
       /* Regenerate list. */
-      mission_menu_genList( info_windows[ INFO_WIN_MISN ] ,0);
+      mission_menu_genList( info_windows[ INFO_WIN_MISN ], 0 );
    }
    else {
       /* Remove the cargo */
@@ -909,7 +909,7 @@ static void standings_close( unsigned int wid, char *str )
 {
    (void) wid;
    (void) str;
-   free(info_factions);
+   array_free(info_factions);
    info_factions = NULL;
 }
 
@@ -920,7 +920,7 @@ static void standings_close( unsigned int wid, char *str )
 static void info_openStandings( unsigned int wid )
 {
    int i;
-   int n, m;
+   int m;
    char **str;
    int w, h, lw;
 
@@ -944,19 +944,19 @@ static void info_openStandings( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* Gets the faction standings. */
-   info_factions  = faction_getKnown( &n );
-   str            = malloc( sizeof(char*) * n );
+   info_factions  = faction_getKnown();
+   str            = malloc( sizeof(char*) * array_size(info_factions) );
 
    /* Create list. */
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(info_factions); i++) {
       m = round( faction_getPlayer( info_factions[i] ) );
       asprintf( &str[i], "%s   [ %+d%% ]",
             _(faction_name( info_factions[i] )), m );
    }
 
    /* Display list. */
-   window_addList( wid, 20, -40, lw, h-60,
-         "lstStandings", str, n, 0, standings_update, NULL );
+   window_addList( wid, 20, -40, lw, h-60, "lstStandings",
+         str, array_size(info_factions), 0, standings_update, NULL );
 }
 
 
@@ -1299,7 +1299,7 @@ static void info_shiplogView( unsigned int wid, char *str )
          &logentries, 1);
 
    if ( i < nentries )
-      dialogue_msgRaw( _("Log message"), logentries[i]);
+      dialogue_msgRaw( _("Log message"), logentries[i] );
 
    for (i=0; i<nentries; i++)
       free( logentries[i] );

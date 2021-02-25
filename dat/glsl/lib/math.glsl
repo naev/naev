@@ -1,5 +1,5 @@
-#ifndef _MATH_H
-#define _MATH_H
+#ifndef _MATH_GLSL
+#define _MATH_GLSL
 
 /* Taken from /usr/include/math.h */
 const float M_E         = 2.7182818284590452354;   /* e */
@@ -15,7 +15,6 @@ const float M_2_PI      = 0.63661977236758134308;  /* 2/pi */
 const float M_2_SQRTPI  = 1.12837916709551257390;  /* 2/sqrt(pi) */
 const float M_SQRT2     = 1.41421356237309504880;  /* sqrt(2) */
 const float M_SQRT1_2   = 0.70710678118654752440;  /* 1/sqrt(2) */
-#
 
 // Modulo 289 without a division (only multiplications)
 vec4 mod289(vec4 x) {
@@ -61,8 +60,8 @@ float random(vec2 co)
    highp float b = 78.233;
    highp float c = 43758.5453;
    highp float dt= dot(co.xy ,vec2(a,b));
-   highp float sn= mod(dt,3.14);
+   highp float sn= mod(dt,M_PI);
    return fract(sin(sn) * c);
 }
 
-#endif /* _MATH_H */
+#endif /* _MATH_GLSL */

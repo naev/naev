@@ -22,7 +22,12 @@ love = {
       h = 600,
       fullscreen = false,
    },
+   x = 0,
+   y = 0,
+   s = 1,
 }
+love.w = love._default.w
+love.h = love._default.h
 function love._unimplemented() error(_("unimplemented")) end
 
 
@@ -226,6 +231,8 @@ function love.exec( path )
    if love.fullscreen then
       love.w, love.h = love.window.getDesktopDimensions()
    end
+   local gw, gh, gs = naev.gfx.dim()
+   love.s = gs
 
    -- Run set up function defined in Love2d spec
    dolua( mainpath )
