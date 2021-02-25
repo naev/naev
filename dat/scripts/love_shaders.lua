@@ -2,6 +2,12 @@ local love_shaders = {}
 
 local graphics = require "love.graphics"
 local love_math = require "love.math"
+local love_image = require "love.image"
+
+-- Tiny image for activating shaders
+local idata = love_image.newImageData( 1, 1 )
+idata:setPixel( 0, 0, 1, 1, 1, 1 )
+love_shaders.img = graphics.newImage( idata )
 
 --[[
 -- Default fragment code that doesn't do anything fancy.
