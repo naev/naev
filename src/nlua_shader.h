@@ -30,18 +30,18 @@ typedef struct LuaUniform_s {
 typedef struct LuaShader_s {
    GLuint program;
    /* Shared Uniforms. */
-   GLuint ViewSpaceFromLocal;
-   GLuint ClipSpaceFromView;
-   GLuint ClipSpaceFromLocal;
-   GLuint ViewNormalFromLocal;
-   GLuint love_ScreenSize;
+   GLint ViewSpaceFromLocal;
+   GLint ClipSpaceFromView;
+   GLint ClipSpaceFromLocal;
+   GLint ViewNormalFromLocal;
+   GLint love_ScreenSize;
    /* Fragment Shader. */
-   GLuint MainTex;
+   GLint MainTex;
    /* Vertex Shader. */
-   GLuint VertexPosition;
-   GLuint VertexTexCoord;
-   GLuint VertexColor;
-   GLuint ConstantColor;
+   GLint VertexPosition;
+   GLint VertexTexCoord;
+   GLint VertexColor;
+   GLint ConstantColor;
    /* Other uniforms. */
    LuaUniform_t *uniforms;
    GLint nuniforms;
