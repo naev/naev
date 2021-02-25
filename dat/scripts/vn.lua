@@ -25,7 +25,7 @@ local vn = {
       _globalalpha = 1,
       --_soundTalk = audio.newSource( "sfx/talk.wav" ),
       _pitchValues = {0.7, 0.8, 1.0, 1.2, 1.3},
-   }
+   },
 }
 -- Drawing
 local lw, lh = window.getDesktopDimensions()
@@ -45,6 +45,9 @@ vn._default.namebox_bg = vn._default.textbox_bg
 vn._default.namebox_alpha = 1
 vn._canvas = graphics.newCanvas()
 vn._postshader = nil
+local idata = love_image.newImageData( 1, 1)
+idata:setPixel( 0, 0, 1, 1, 1, 0 ) -- transparent
+vn._emptyimg = graphics.newImage( idata )
 
 
 function vn._checkstarted()
@@ -107,7 +110,9 @@ end
 -- @brief Main drawing function.
 --]]
 function vn.draw()
+   local prevcanvas
    if vn._postshader then
+      prevcanvas = graphics.getCanvas()
       graphics.setCanvas( vn._canvas )
       graphics.clear( 0, 0, 0, 0 )
    end
@@ -170,7 +175,7 @@ function vn.draw()
 
    if vn._postshader then
       -- Draw canvas
-      graphics.setCanvas()
+      graphics.setCanvas( prevcanvas )
       graphics.setShader( vn._postshader )
       vn.setColor( {1, 1, 1, 1} )
       vn._canvas:draw( 0, 0 )
