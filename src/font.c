@@ -1386,7 +1386,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    if ((ch == FONT_COLOUR_CODE) && (state==0)) {/* Start sequence. */
       return 1;
    }
-   if (state == 1) {
+   if ((state == 1) && (ch != FONT_COLOUR_CODE)) {
       col = gl_fontGetColour( ch );
       a = (c==NULL) ? 1. : c->a;
       if (col != NULL)
