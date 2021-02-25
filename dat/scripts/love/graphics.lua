@@ -124,8 +124,9 @@ function graphics.Image:getWidth() return self.w end
 function graphics.Image:getHeight() return self.h end
 function graphics.Image:draw( ... )
    local arg = {...}
-   local w,h = self.tex:dim()
-   local x,y,r,sx,sy,tx,ty,tw,th
+   local w = self.w
+   local h = self.h
+   local x,y,r,sx,sy
    if type(arg[1])=='number' then
       -- x, y, r, sx, sy
       x = arg[1]
@@ -135,31 +136,32 @@ function graphics.Image:draw( ... )
       sy = arg[5] or sx
    else
       -- quad, x, y, r, sx, sy
+      love._unimplemented()
       local q = arg[1]
       x = arg[2]
       y = arg[3]
       r = arg[4] or 0
       sx = arg[5] or 1
       sy = arg[6] or sx
-      tx = q.x
-      ty = q.y
-      tw = q.w
-      th = q.h
-      love._unimplemented()
    end
    -- TODO be less horribly inefficient
    local shader = graphics._shader or graphics._shader_default
    shader = shader.shader
-   local s3, s4
-   if graphics._canvas == nil then
+   local s1, s2, s3, s4
+   local canvas = graphics._canvas
+   if canvas then
+      s1 = canvas.w / love.s
+      s2 = canvas.h / love.s
       s3 = -1.0
       s4 = love.h
    else
+      s1 = love.w
+      s2 = love.h
       s3 = 1.0
       s4 = 0.0
    end
    -- TODO properly solve this, what happens is it gets run before the window size gets set
-   shader:sendRaw( "love_ScreenSize", love.w, love.h, s3, s4 )
+   shader:sendRaw( "love_ScreenSize", s1, s2, s3, s4 )
 
    -- Get transformation and run
    local H = _H( x, y, r, w*sx, h*sy )
@@ -285,13 +287,13 @@ function graphics.clear( ... )
       local a = arg[1][1] or 1
       col = _scol( r, g, b, a )
    end
-   if graphics._canvas == nil then
+   if graphics._canvas then
+      graphics._canvas.canvas:clear( col )
+   else
       -- Minor optimization: just render when there is non-transparent color
       if col:alpha()>0 then
          naev.gfx.renderRect( love.x, love.y, love.w, love.h, col )
       end
-   else
-      graphics._canvas.canvas:clear( col )
    end
 end
 function graphics.draw( drawable, ... )
@@ -558,6 +560,8 @@ function graphics.newCanvas( width, height, settings )
       height= nh
    end
    c.canvas = naev.canvas.new( width, height )
+   c.w = width
+   c.h = height
    -- Set texture
    local t = graphics.Image.new()
    t.tex = c.canvas:getTex()
@@ -601,7 +605,7 @@ end
 local _pixelcode = [[
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec4 texcolor = texture2D(tex, texture_coords);
+   vec4 texcolor = texture2D(tex, texture_coords );
    return texcolor * color;
 }
 ]]
