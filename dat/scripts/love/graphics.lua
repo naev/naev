@@ -513,6 +513,9 @@ end
 function graphics.setShader( shader )
    graphics._shader = shader
 end
+function graphics.getShader()
+   return graphics._shader
+end
 function graphics.Shader:send( name, ... )
    self.shader:send( name, ... )
 end
@@ -550,6 +553,9 @@ function graphics.setCanvas( canvas )
       naev.canvas.set( canvas.canvas )
    end
    graphics._canvas = canvas
+end
+function graphics.getCanvas()
+   return graphics._canvas
 end
 function graphics.Canvas:draw(...)     return self.t:draw(...) end
 function graphics.Canvas:setFilter(...)return self.t:setFilter(...) end
