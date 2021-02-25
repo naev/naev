@@ -187,7 +187,6 @@ local function _draw()
 end
 function vn.draw()
    local s = vn._states[ vn._state ]
-   print( s._type, s.drawoverride )
    if s.drawoverride then
       s:drawoverride()
    else
