@@ -46,9 +46,6 @@ vn._default.namebox_bg = vn._default.textbox_bg
 vn._default.namebox_alpha = 1
 vn._canvas = graphics.newCanvas()
 vn._postshader = nil
-local idata = love_image.newImageData( 1, 1)
-idata:setPixel( 0, 0, 1, 1, 1, 0 ) -- transparent
-vn._emptyimg = graphics.newImage( idata )
 vn._prevcanvas = graphics.newCanvas()
 vn._curcanvas = graphics.newCanvas()
 
@@ -196,6 +193,7 @@ end
 local function _draw_to_canvas( canvas )
    local oldcanvas = graphics.getCanvas()
    graphics.setCanvas( canvas )
+   graphics.clear( 1, 1, 1, 0 )
    _draw()
    graphics.setCanvas( oldcanvas )
 end
@@ -634,7 +632,10 @@ function vn.StateStart.new()
    return s
 end
 function vn.StateStart:_init()
-   vn._prevscene = vn._emptyimg
+   local oldcanvas = graphics.getCanvas()
+   graphics.setCanvas( vn._prevcanvas )
+   graphics.clear( 1, 1, 1, 0 )
+   graphics.setCanvas( oldcanvas )
    _finish(self)
 end
 --[[
