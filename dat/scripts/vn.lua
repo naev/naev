@@ -987,6 +987,46 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    return texcolor * color;
 }
 ]]
+   elseif name=="blur" then
+      _pixelcode = [[
+#include "lib/blur.glsl"
+
+uniform Image texprev;
+uniform float progress;
+
+const float intensity = 10.0;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+{
+   float disp = intensity*(0.5-distance(0.5, progress));
+   vec4 c1 = blur9( texprev, uv, love_ScreenSize.xy, disp );
+   vec4 c2 = blur9( MainTex, uv, love_ScreenSize.xy, disp );
+   return mix(c1, c2, progress);
+}
+]]
+   elseif name=="ripple" then
+      _pixelcode = [[
+#include "lib/blur.glsl"
+
+uniform Image texprev;
+uniform float progress;
+
+const float amplitude = 30.0;
+const float speed = 30.;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec2 dir = uv - vec2(.5);
+   float dist = length(dir);
+
+   if (dist > progress) {
+      return mix( Texel( texprev, uv ), Texel( MainTex, uv ), progress );
+   } else {
+      vec2 offset = dir * sin(dist * amplitude - progress * speed);
+      return mix( Texel( texprev, uv + offset ), Texel( MainTex, uv ), progress );
+   }
+}
+]]
    else
       error( string.format(_("vn: unknown transition type'%s'"), name ) )
    end
