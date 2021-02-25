@@ -19,6 +19,8 @@
 #include "log.h"
 #include "ndata.h"
 #include "nluadef.h"
+#include "array.h"
+#include "nlua_tex.h"
 
 
 /* Shader metatable methods. */
@@ -197,13 +199,17 @@ static int shaderL_new( lua_State *L )
 {
    LuaShader_t shader;
    const char *pixelcode, *vertexcode;
-   GLint i;
+   GLint i, ntex;
    GLsizei length;
    LuaUniform_t *u;
+   LuaTexture_t *t;
 
    /* Get arguments. */
    pixelcode  = luaL_checkstring(L,1);
    vertexcode = luaL_checkstring(L,2);
+
+   /* Initialize. */
+   memset( &shader, 0, sizeof(shader) );
 
    /* Do from string. */
    shader.program = gl_program_vert_frag_string( vertexcode, strlen(vertexcode),  pixelcode, strlen(pixelcode) );
@@ -229,12 +235,29 @@ static int shaderL_new( lua_State *L )
    /* Do other uniforms. */
    glGetProgramiv( shader.program, GL_ACTIVE_UNIFORMS, &shader.nuniforms );
    shader.uniforms = calloc( shader.nuniforms, sizeof(LuaUniform_t) );
+   ntex = 0;
    for (i=0; i<shader.nuniforms; i++) {
       u = &shader.uniforms[i];
       glGetActiveUniform( shader.program, (GLuint)i, SHADER_NAME_MAXLEN, &length, &u->size, &u->type, u->name );
       u->id = glGetUniformLocation( shader.program, u->name );
+      u->tex = -1;
+
+      /* Textures need special care. */
+      if ((u->type==GL_SAMPLER_2D) && (strcmp(u->name,"MainTex")!=0)) {
+         if (shader.tex == NULL)
+            shader.tex = array_create(LuaTexture_t);
+         t = &array_grow( &shader.tex );
+         ntex++;
+         t->active = GL_TEXTURE0+ntex;
+         t->texid = 0;
+         t->uniform = u->id;
+         t->value = ntex;
+         u->tex = ntex-1;
+      }
    }
    qsort( shader.uniforms, shader.nuniforms, sizeof(LuaUniform_t), shader_compareUniform );
+
+   /* Check if there are textures. */
 
    gl_checkErr();
 
@@ -324,6 +347,7 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
    int idx;
    GLfloat values[4];
    GLint ivalues[4];
+   glTexture *tex;
 
    ls = luaL_checkshader(L,1);
    name = luaL_checkstring(L,2);
@@ -373,7 +397,12 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
          shader_parseUniformArgsInt( ivalues, L, idx, 4 );
          glUniform4i( u->id, ivalues[0], ivalues[1], ivalues[2], ivalues[3] );
          break;
-   
+
+      case GL_SAMPLER_2D:
+         tex = luaL_checktex(L,idx);
+         ls->tex[ u->tex ].texid = tex->texture;
+         break;
+
       default:
          WARN(_("Unsupported shader uniform type '%d' for uniform '%s'. Ignoring."), u->type, u->name );
    }

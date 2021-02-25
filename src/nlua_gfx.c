@@ -27,6 +27,7 @@
 #include "nlua_canvas.h"
 #include "nluadef.h"
 #include "opengl.h"
+#include "array.h"
 
 
 /* GFX methods. */
@@ -297,9 +298,16 @@ static int gfxL_renderTexH( lua_State *L )
             0, 2, GL_FLOAT, 0 );
    }
 
-   /* Set the texture. */
+   /* Set the texture(s). */
    glBindTexture( GL_TEXTURE_2D, t->texture );
    glUniform1i( shader->MainTex, 0 );
+   for (int i=0; i<array_size(shader->tex); i++) {
+      LuaTexture_t *t = &shader->tex[i];
+      glActiveTexture( t->active );
+      glBindTexture( GL_TEXTURE_2D, t->texid );
+      glUniform1i( t->uniform, t->value );
+   }
+   glActiveTexture( GL_TEXTURE0 );
 
    /* Set shader uniforms. */
    gl_uniformColor( shader->ConstantColor, col );

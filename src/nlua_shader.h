@@ -25,7 +25,15 @@ typedef struct LuaUniform_s {
    GLint size;
    GLenum type;
    char name[SHADER_NAME_MAXLEN];
+   GLint tex;
 } LuaUniform_t;
+
+typedef struct LuaTexture_s {
+   GLenum active;
+   GLuint texid;
+   GLint uniform;
+   GLint value;
+} LuaTexture_t;
 
 typedef struct LuaShader_s {
    GLuint program;
@@ -45,6 +53,8 @@ typedef struct LuaShader_s {
    /* Other uniforms. */
    LuaUniform_t *uniforms;
    GLint nuniforms;
+   /* Other stuff. */
+   LuaTexture_t *tex;
 } LuaShader_t;
 
 
