@@ -291,9 +291,11 @@ static int gfxL_renderTexH( lua_State *L )
    gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexPosition,
          0, 2, GL_FLOAT, 0 );
 
-   glEnableVertexAttribArray( shader->VertexTexCoord );
-   gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord,
-         0, 2, GL_FLOAT, 0 );
+   if (shader->VertexTexCoord >= 0) {
+      glEnableVertexAttribArray( shader->VertexTexCoord );
+      gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord,
+            0, 2, GL_FLOAT, 0 );
+   }
 
    /* Set the texture. */
    glBindTexture( GL_TEXTURE_2D, t->texture );
@@ -308,7 +310,8 @@ static int gfxL_renderTexH( lua_State *L )
 
    /* Clear state. */
    glDisableVertexAttribArray( shader->VertexPosition );
-   glDisableVertexAttribArray( shader->VertexTexCoord );
+   if (shader->VertexTexCoord >= 0)
+      glDisableVertexAttribArray( shader->VertexTexCoord );
 
    /* anything failed? */
    gl_checkErr();
