@@ -452,7 +452,7 @@ function graphics.newShader( pixelcode, vertexcode )
 #define ArrayImage      sampler2DArray
 #define VolumeImage     sampler3D
 #define Texel           texture
-#define love_PixelColor gl_FragColor
+#define love_PixelColor color_out
 #define love_Position   gl_Position
 #define love_PixelCoord (vec2(gl_FragCoord.x, (gl_FragCoord.y * love_ScreenSize.z) + love_ScreenSize.w))
 
@@ -476,6 +476,7 @@ uniform sampler2D MainTex;
 
 in vec4 VaryingTexCoord;
 in vec4 VaryingColor;
+out vec4 color_out;
 
 vec4 effect( vec4 vcolor, Image tex, vec2 texcoord, vec2 pixcoord );
 
