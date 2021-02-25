@@ -1006,8 +1006,6 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 ]]
    elseif name=="ripple" then
       _pixelcode = [[
-#include "lib/blur.glsl"
-
 uniform Image texprev;
 uniform float progress;
 
@@ -1025,6 +1023,29 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
       vec2 offset = dir * sin(dist * amplitude - progress * speed);
       return mix( Texel( texprev, uv + offset ), Texel( MainTex, uv ), progress );
    }
+}
+]]
+   elseif name=="perlin" then
+      _pixelcode = [[
+#include "lib/perlin.glsl"
+
+uniform Image texprev;
+uniform float progress;
+
+const float scale = 0.01;
+const float smoothness = 0.1;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+{
+   float n = cnoise( scale * screen_coords )*0.5 + 0.5;
+   float p = mix(-smoothness, 1.0 + smoothness, progress);
+   float lower = p - smoothness;
+   float higher = p + smoothness;
+   float q = smoothstep(lower, higher, n);
+
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( MainTex, uv );
+   return mix(c1, c2, 1.0-q);
 }
 ]]
    else
