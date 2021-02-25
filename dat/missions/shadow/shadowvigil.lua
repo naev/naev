@@ -262,7 +262,11 @@ end
 -- Function hooked to jumpin. Handles most of the events in the various systems.
 function jumpin()
     sysclear = false -- We've just jumped in, so the ambushers, if any, are not dead.
-    
+
+    if pahook then -- Remove the hook on the player being attacked, if needed
+        hook.rm( pahook )
+    end    
+
     if stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
         seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), "trader" )
         seiryuu:control(true)
@@ -307,6 +311,7 @@ function jumpin()
                 j:setInvincPlayer()
                 hook.pilot(j, "death", "escortDeath")
                 controlled = true
+                j:memory().angle = 90*(i-2)
             end
         end
 
@@ -330,7 +335,7 @@ function jumpin()
             proxy = hook.timer(500, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortNext"})
             for i, j in ipairs(escorts) do
                 if j:exists() then
-                    j:follow(diplomat) -- Follow the diplomat.
+                    j:follow(diplomat,true) -- Follow the diplomat.
                 end
             end
             hook.timer(5000, "chatter", {pilot = escorts[1], text = commmsg[6]})
@@ -339,7 +344,7 @@ function jumpin()
         elseif system.cur() == misssys[4] then -- case rendezvous with Dvaered diplomat
             for i, j in ipairs(escorts) do
                 if j:exists() then
-                    j:follow(diplomat) -- Follow the diplomat.
+                    j:follow(diplomat,true) -- Follow the diplomat.
                 end
             end
             dvaerplomat = pilot.add( "Dvaered Vigilance", "Dvaered", vec2.new(2000, 4000) )
@@ -356,7 +361,7 @@ function jumpin()
                 if j:exists() then
                     if stage == 4 then
                         diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
-                        j:follow(diplomat) -- Follow the diplomat.
+                        j:follow(diplomat,true) -- Follow the diplomat.
                     else
                         j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
                     end
@@ -388,6 +393,7 @@ function jumpin()
                         hook.pilot(j, "attacked", "diplomatAttacked")
                     end
                 end
+                pahook = hook.pilot(player.pilot(), "attacked", "diplomatAttacked")
             end
         end
 
@@ -445,8 +451,9 @@ function attackerDeath()
         if j:exists() then
             myj = j
             j:changeAI("baddie_norun")
+            j:memory().angle = 90*(i-2)
             j:control()
-            j:follow(diplomat)
+            j:follow(diplomat,true)
             diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
             controlled = true
         end
@@ -479,7 +486,6 @@ end
 
 -- Handle the death of the diplomat. Abort the mission if the diplomat dies.
 function diplomatDeath()
-    -- TODO: abort message
     tk.msg(diplomatdeathtitle, diplomatdeathtext)
     for i, j in ipairs(escorts) do
         if j:exists() then

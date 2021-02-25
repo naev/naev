@@ -3,7 +3,7 @@
 <event name="Shadowcomm">
   <trigger>enter</trigger>
   <chance>3</chance>
-  <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadowrun") and not (player.misnDone("Shadow Vigil") or player.misnActive("Shadow Vigil"))</cond>
+  <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadowrun") and not (player.misnDone("Shadow Vigil") or player.misnActive("Shadow Vigil")) and not (system.cur() == system.get("Pas"))</cond>
   <flags>
   </flags>
   <notes>
