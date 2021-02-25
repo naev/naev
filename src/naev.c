@@ -527,7 +527,6 @@ void loadscreen_render( double done, const char *msg )
    SDL_Event event;
 
    /* Clear background. */
-   glClearColor( 0, 0, 0, 1 );
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    /* Draw stars. */

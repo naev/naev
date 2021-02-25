@@ -269,5 +269,6 @@ static int canvasL_clear( lua_State *L )
    const glColour *c = luaL_optcolour(L,2,&cBlack);
    glClearColor( c->r, c->g, c->b, c->a );
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glClearColor( 0.0, 0.0, 0.0, 1.0 );
    return 0;
 }
