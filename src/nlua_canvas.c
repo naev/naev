@@ -182,6 +182,8 @@ static int canvasL_new( lua_State *L )
    w = luaL_checkint(L,1);
    h = luaL_checkint(L,2);
 
+   memset( &lc, 0, sizeof(LuaCanvas_t) );
+
    /* Create the texture. */
    asprintf( &name, "nlua_canvas_%03d", ++nlua_canvas_counter );
    lc.tex = gl_loadImageData( NULL, w, h, 1, 1, name );
@@ -198,6 +200,9 @@ static int canvasL_new( lua_State *L )
    status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
    if (status != GL_FRAMEBUFFER_COMPLETE)
       NLUA_ERROR( L, _("Error setting up framebuffer!"));
+
+   /* Clear the canvas. */
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    /* Restore state. */
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
@@ -260,7 +265,7 @@ static int canvasL_getTex( lua_State *L )
  *
  *    @luatparam Canvas canvas Canvas to clear.
  *    @luatparam Colour col Colour to clear to.
- * @luafunc getTex
+ * @luafunc clear
  */
 static int canvasL_clear( lua_State *L )
 {
