@@ -22,7 +22,12 @@ love = {
       h = 600,
       fullscreen = false,
    },
+   x = 0,
+   y = 0,
+   s = 1,
 }
+love.w = love._default.w
+love.h = love._default.h
 function love._unimplemented() error(_("unimplemented")) end
 
 

@@ -158,7 +158,8 @@ function graphics.Image:draw( ... )
       s3 = 1.0
       s4 = 0.0
    end
-   shader:sendRaw( "love_ScreenSize", {love.w, love.h, s3, s4} )
+   -- TODO properly solve this, what happens is it gets run before the window size gets set
+   shader:sendRaw( "love_ScreenSize", love.w, love.h, s3, s4 )
 
    -- Get transformation and run
    local H = _H( x, y, r, w*sx, h*sy )
@@ -585,7 +586,7 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 ]]
 graphics.setDefaultFilter( "linear", "linear", 1 )
 graphics.setNewFont( 12 )
---graphics.origin()
+graphics.origin()
 graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
 graphics.setShader( graphics._shader_default )
 graphics.setCanvas( nil )
