@@ -98,7 +98,7 @@ vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
 
    return color;
 }
-vec4 vignette( vec4 color, vec2 uv, vec2 px )
+vec4 vignette( vec2 uv )
 {
    uv *= 1.0 - uv.yx;
    float vig = uv.x*uv.y * 15.0; // multiply with sth for intensity
@@ -110,7 +110,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    vec4 texcolor = color * texture2D( tex, uv );
 
    texcolor = graineffect( texcolor, uv, screen_coords );
-   vec4 v = vignette( color, uv, screen_coords );
+   vec4 v = vignette( uv );
    texcolor.rgb *= v.rgb;
    //texcolor = mix( texcolor, v, v.a );
 
