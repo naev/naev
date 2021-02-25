@@ -455,7 +455,7 @@ function graphics.newShader( pixelcode, vertexcode )
 #define Texel           texture
 #define love_PixelColor color_out
 #define love_Position   gl_Position
-#define love_PixelCoord (vec2(gl_FragCoord.x, (gl_FragCoord.y * love_ScreenSize.z) + love_ScreenSize.w))
+#define love_PixelCoord love_getPixelCoord()
 
 // Uniforms shared by pixel and vertex shaders
 uniform mat4 ViewSpaceFromLocal;
@@ -477,7 +477,14 @@ uniform sampler2D MainTex;
 
 in vec4 VaryingTexCoord;
 in vec4 VaryingColor;
+in vec2 VaryingPosition;
 out vec4 color_out;
+
+vec2 love_getPixelCoord() {
+   vec2 uv = love_ScreenSize.xy * (0.5*VaryingPosition+0.5);
+   uv.y = uv.y * love_ScreenSize.z + love_ScreenSize.w;
+   return uv;
+}
 
 vec4 effect( vec4 vcolor, Image tex, vec2 texcoord, vec2 pixcoord );
 
@@ -493,6 +500,7 @@ in vec4 VertexColor;
 
 out vec4 VaryingTexCoord;
 out vec4 VaryingColor;
+out vec2 VaryingPosition;
 
 vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 
@@ -501,6 +509,7 @@ void main(void) {
     VaryingTexCoord.y= 1.0 - VaryingTexCoord.y;
     VaryingColor     = ConstantColor;
     love_Position    = position( ClipSpaceFromLocal, VertexPosition );
+    VaryingPosition  = love_Position.xy;
 }
 ]]
    local s = graphics.Shader.new()
