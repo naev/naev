@@ -99,7 +99,7 @@ function _draw_character( c )
    _set_col( col, c.alpha )
    graphics.setShader( c.shader )
    graphics.draw( c.image, x, y, 0, flip*scale, scale )
-   graphics.setShader( nil )
+   graphics.setShader()
 end
 
 
@@ -110,6 +110,11 @@ function vn.draw()
    if vn._postshader then
       graphics.setCanvas( vn._canvas )
       graphics.clear( 0, 0, 0, 0 )
+   end
+
+   -- Draw background
+   if vn._draw_bg then
+      vn._draw_bg()
    end
 
    -- Draw characters
@@ -157,6 +162,11 @@ function vn.draw()
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
    s:draw()
+
+   -- Draw foreground
+   if vn._draw_fg then
+      vn._draw_fg()
+   end
 
    if vn._postshader then
       -- Draw canvas
@@ -272,6 +282,11 @@ end
 function vn.State:update( dt )
    self:_update( dt )
    vn._checkDone()
+
+   -- Update shader if necessary
+   if vn._postshader and vn._postshader.update then
+      vn._postshader:update( dt )
+   end
 end
 function vn.State:mousepressed( mx, my, button )
    self:_mousepressed( mx, my, button )
@@ -962,6 +977,14 @@ end
 
 function vn.setShader( shader )
    vn._postshader = shader
+end
+
+function vn.setBackground( drawfunc )
+   vn._draw_bg = drawfunc
+end
+
+function vn.setForeground( drawfunc )
+   vn._draw_fg = drawfunc
 end
 
 function vn._jump( label )
