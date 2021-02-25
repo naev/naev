@@ -576,8 +576,8 @@ static void cli_input( unsigned int wid, char *unused )
       else {
          /* Real error, spew message and break. */
          s = lua_tostring(naevL, -1);
-         cli_printCoreString( s, 1 );
          WARN( "%s", s );
+         cli_printCoreString( s, 1 );
          lua_settop(naevL, 0);
          cli_firstline = 1;
       }
