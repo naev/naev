@@ -527,8 +527,14 @@ function graphics.getShader()
 end
 function graphics.Shader:send( name, ... )
    local arg = {...}
-   if type(arg[1])=="table" and arg[1]._type=="Image" then
-      self.shader:send( name, arg[1].tex )
+   if type(arg[1])=="table" then
+      if arg[1]._type=="Image" then
+         self.shader:send( name, arg[1].tex )
+      elseif arg[1]._type=="Canvas" then
+         self.shader:send( name, arg[1].t.tex )
+      else
+         self.shader:send( name, ... )
+      end
    else
       self.shader:send( name, ... )
    end

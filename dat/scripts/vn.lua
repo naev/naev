@@ -49,6 +49,8 @@ vn._postshader = nil
 local idata = love_image.newImageData( 1, 1)
 idata:setPixel( 0, 0, 1, 1, 1, 0 ) -- transparent
 vn._emptyimg = graphics.newImage( idata )
+vn._prevcanvas = graphics.newCanvas()
+vn._curcanvas = graphics.newCanvas()
 
 
 function vn._checkstarted()
@@ -110,7 +112,7 @@ end
 --[[
 -- @brief Main drawing function.
 --]]
-function vn.draw()
+local function _draw()
    local prevcanvas
    if vn._postshader then
       prevcanvas = graphics.getCanvas()
@@ -165,7 +167,7 @@ function vn.draw()
    end
 
    -- Draw if necessary
-   if vn.isDone() then return end
+   --if vn.isDone() then return end
    local s = vn._states[ vn._state ]
    s:draw()
 
@@ -182,6 +184,21 @@ function vn.draw()
       vn._canvas:draw( 0, 0 )
       graphics.setShader()
    end
+end
+function vn.draw()
+   local s = vn._states[ vn._state ]
+   print( s._type, s.drawoverride )
+   if s.drawoverride then
+      s:drawoverride()
+   else
+      _draw()
+   end
+end
+local function _draw_to_canvas( canvas )
+   local oldcanvas = graphics.getCanvas()
+   graphics.setCanvas( canvas )
+   _draw()
+   graphics.setCanvas( oldcanvas )
 end
 
 
@@ -314,11 +331,17 @@ function vn.StateScene.new( background )
    return s
 end
 function vn.StateScene:_init()
+   -- Render previous scene to an image
+   local canvas = vn._prevcanvas
+   _draw_to_canvas( canvas )
+   vn._prevscene = canvas
+
    -- Reset characters
    vn._characters = {
       vn._me,
       vn._na
    }
+
    _finish(self)
 end
 --[[
@@ -607,9 +630,13 @@ end
 vn.StateStart ={}
 function vn.StateStart.new()
    local s = vn.State.new()
-   s._init = _finish
+   s._init = vn.StateStart._init
    s._type = "Start"
    return s
+end
+function vn.StateStart:_init()
+   vn._prevscene = vn._emptyimg
+   _finish(self)
 end
 --[[
 -- End
@@ -628,12 +655,16 @@ end
 -- Animation
 --]]
 vn.StateAnimation = {}
-function vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc )
+function vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc, drawoverride )
    transition = transition or "ease"
    local s = vn.State.new()
    s._init = vn.StateAnimation._init
    s._update = vn.StateAnimation._update
    s._draw = vn.StateAnimation._draw
+   if drawoverride then
+      s.drawoverride = vn.StateAnimation._drawoverride
+      s._drawoverride = drawoverride
+   end
    s._type = "Animation"
    s._seconds = seconds
    s._func = func
@@ -716,6 +747,9 @@ function vn.StateAnimation:_draw(dt)
    if self._drawfunc then
       self._drawfunc( _animation_alpha(self), self._params )
    end
+end
+function vn.StateAnimation:_drawoverride(dt)
+   self._drawoverride( _animation_alpha(self), self._params )
 end
 
 
@@ -891,6 +925,7 @@ end
 --]]
 function vn.done()
    vn._checkstarted()
+   -- TODO insert transitions automatically if necessary
    table.insert( vn._states, vn.StateEnd.new() )
 end
 
@@ -924,9 +959,54 @@ function vn.fadeout( seconds ) vn.fade( seconds, 1, 0 ) end
 --
 --    @params Seconds to perform the animation
 --]]
-function vn.animation( seconds, func, drawfunc, transition, initfunc )
+function vn.animation( seconds, func, drawfunc, transition, initfunc, drawoverride )
    vn._checkstarted()
-   table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc ) )
+   table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc, drawoverride ) )
+end
+
+function vn.transition( name, seconds, transition )
+   seconds = seconds or 0.5
+   vn._checkstarted()
+
+   local _vertexcode = [[
+vec4 position( mat4 transform_projection, vec4 vertex_position )
+{
+   return transform_projection * vertex_position;
+}
+]]
+   local _pixelcode
+   if name=="fade" then
+      _pixelcode = [[
+uniform Image texprev;
+uniform float progress;
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec4 texfrom = Texel(texprev, texture_coords);
+   vec4 texto   = Texel(tex, texture_coords);
+   vec4 texcolor= mix( texfrom, texto, progress );
+   return texcolor * color;
+}
+]]
+   else
+      error( string.format(_("vn: unknown transition type'%s'"), name ) )
+   end
+
+   local shader = graphics.newShader( _pixelcode, _vertexcode )
+   vn.animation( seconds,
+      function (progress) -- progress
+         shader:send( "progress", progress )
+      end, nil, -- no draw function
+      transition, function () -- init
+         shader:send( "texprev", vn._prevscene )
+      end, function () -- drawoverride
+         local canvas = vn._curcanvas
+         _draw_to_canvas( canvas )
+
+         local oldshader = graphics.getShader()
+         graphics.setShader( shader )
+         canvas:draw( 0, 0 )
+         graphics.setShader( oldshader )
+      end )
 end
 
 --[[
