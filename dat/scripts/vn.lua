@@ -172,7 +172,7 @@ function vn.draw()
       -- Draw canvas
       graphics.setCanvas()
       graphics.setShader( vn._postshader )
-      graphics.setColor( 1, 1, 1, 1 )
+      _set_col( {1, 1, 1, 1} )
       vn._canvas:draw( 0, 0 )
       graphics.setShader()
    end
