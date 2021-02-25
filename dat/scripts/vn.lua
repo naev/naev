@@ -9,6 +9,7 @@ local graphics = require 'love.graphics'
 local window = require 'love.window'
 local filesystem = require 'love.filesystem'
 local audio = require 'love.audio'
+local love_image = require 'love.image'
 
 local vn = {
    speed = 0.04,
