@@ -36,7 +36,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    float n = 0.0;
    for (float i=1.0; i<8.0; i=i+1.0) {
       float m = pow( 2.0, i );
-      n += snoise( px * m + 1000.0 * u_r ) * (1.0 / m);
+      n += snoise( px * 0.001 * m + 1000.0 * u_r ) * (1.0 / m);
    }
 
    texcolor.rgb *= 0.68 + 0.3 * n;
@@ -100,7 +100,7 @@ vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
 }
 vec4 vignette( vec4 color, vec2 uv, vec2 px )
 {
-   uv *= 1.0 - uv.yx;   //vec2(1.0)- uv.yx; -> 1.-u.yx; Thanks FabriceNeyret !
+   uv *= 1.0 - uv.yx;
    float vig = uv.x*uv.y * 15.0; // multiply with sth for intensity
    vig = pow(vig, 0.25); // change pow for modifying the extend of the  vignette
    return vec4(vig);
@@ -111,7 +111,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 
    texcolor = graineffect( texcolor, uv, screen_coords );
    vec4 v = vignette( color, uv, screen_coords );
-   texcolor *= v;
+   texcolor.rgb *= v.rgb;
    //texcolor = mix( texcolor, v, v.a );
 
    return texcolor;
