@@ -92,6 +92,7 @@ vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
    const float fps = 15.0;
    const float zoom = 0.2;
    float frame = floor(fps*u_time) / fps;
+   const float tearing = 3.0; /* Tears "1/tearing" of the frames. */
 
    vec3 g = vec3( grain( uv, px * zoom, frame, 2.5 ) );
 
@@ -111,8 +112,8 @@ vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
    color.rgb = mix(color.rgb, desaturated, pow(response,2.0));
 
    // Vertical tears
-   if (distance( love_ScreenSize.x * random(vec2(frame, 0.0)), px.x) < 2.0*random(vec2(frame, 1000.0))-1.0)
-         color.rgb *= vec3( random( vec2(frame, 5000.0) ));
+   if (distance( love_ScreenSize.x * random(vec2(frame, 0.0)), px.x) < tearing*random(vec2(frame, 1000.0))-(tearing-1.0))
+      color.rgb *= vec3( random( vec2(frame, 5000.0) ));
 
    // Flickering
    color.rgb *= 1.0 + 0.05*snoise( vec2(3.0*frame, M_PI) );
