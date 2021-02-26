@@ -46,9 +46,6 @@ vn._default.namebox_bg = vn._default.textbox_bg
 vn._default.namebox_alpha = 1
 vn._canvas = graphics.newCanvas()
 vn._postshader = nil
-local idata = love_image.newImageData( 1, 1)
-idata:setPixel( 0, 0, 1, 1, 1, 0 ) -- transparent
-vn._emptyimg = graphics.newImage( idata )
 vn._prevcanvas = graphics.newCanvas()
 vn._curcanvas = graphics.newCanvas()
 
@@ -187,7 +184,6 @@ local function _draw()
 end
 function vn.draw()
    local s = vn._states[ vn._state ]
-   print( s._type, s.drawoverride )
    if s.drawoverride then
       s:drawoverride()
    else
@@ -197,6 +193,7 @@ end
 local function _draw_to_canvas( canvas )
    local oldcanvas = graphics.getCanvas()
    graphics.setCanvas( canvas )
+   graphics.clear( 1, 1, 1, 0 )
    _draw()
    graphics.setCanvas( oldcanvas )
 end
@@ -635,7 +632,10 @@ function vn.StateStart.new()
    return s
 end
 function vn.StateStart:_init()
-   vn._prevscene = vn._emptyimg
+   local oldcanvas = graphics.getCanvas()
+   graphics.setCanvas( vn._prevcanvas )
+   graphics.clear( 1, 1, 1, 0 )
+   graphics.setCanvas( oldcanvas )
    _finish(self)
 end
 --[[
@@ -985,6 +985,67 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec4 texto   = Texel(tex, texture_coords);
    vec4 texcolor= mix( texfrom, texto, progress );
    return texcolor * color;
+}
+]]
+   elseif name=="blur" then
+      _pixelcode = [[
+#include "lib/blur.glsl"
+
+uniform Image texprev;
+uniform float progress;
+
+const float intensity = 10.0;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+{
+   float disp = intensity*(0.5-distance(0.5, progress));
+   vec4 c1 = blur9( texprev, uv, love_ScreenSize.xy, disp );
+   vec4 c2 = blur9( MainTex, uv, love_ScreenSize.xy, disp );
+   return mix(c1, c2, progress);
+}
+]]
+   elseif name=="ripple" then
+      _pixelcode = [[
+uniform Image texprev;
+uniform float progress;
+
+const float amplitude = 30.0;
+const float speed = 30.;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec2 dir = uv - vec2(.5);
+   float dist = length(dir);
+
+   if (dist > progress) {
+      return mix( Texel( texprev, uv ), Texel( MainTex, uv ), progress );
+   } else {
+      vec2 offset = dir * sin(dist * amplitude - progress * speed);
+      return mix( Texel( texprev, uv + offset ), Texel( MainTex, uv ), progress );
+   }
+}
+]]
+   elseif name=="perlin" then
+      _pixelcode = [[
+#include "lib/perlin.glsl"
+
+uniform Image texprev;
+uniform float progress;
+
+const float scale = 0.01;
+const float smoothness = 0.1;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+{
+   float n = cnoise( scale * screen_coords )*0.5 + 0.5;
+   float p = mix(-smoothness, 1.0 + smoothness, progress);
+   float lower = p - smoothness;
+   float higher = p + smoothness;
+   float q = smoothstep(lower, higher, n);
+
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( MainTex, uv );
+   return mix(c1, c2, 1.0-q);
 }
 ]]
    else

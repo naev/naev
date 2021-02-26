@@ -220,6 +220,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
 
    /* Copy over. */
    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_FLOAT, data );
+   glBindTexture( GL_TEXTURE_2D, 0 );
 
    /* Check errors. */
    gl_checkErr();
