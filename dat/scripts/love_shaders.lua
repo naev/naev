@@ -30,6 +30,9 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 ]]
 
 function love_shaders.paper( width, height, sharpness )
+   if width==nil then
+      width, height = naev.gfx.dim()
+   end
    sharpness = sharpness or 1
    local pixelcode = [[
 #include "lib/simplex.glsl"
