@@ -17,7 +17,7 @@
   <item>Turbolaser</item>
   <item>Razor MK1</item>
   <item>Razor MK2</item>
-  <item>Razor MK3</item>
+  <item>Slicer</item>
   <item>Razor Turret MK1</item>
   <item>Razor Turret MK2</item>
   <item>Razor Turret MK3</item>
@@ -410,7 +410,7 @@
  <tech name="Ion 2">
   <item>Heavy Ion Cannon</item>
   <item>Razor MK2</item>
-  <item>Razor MK3</item>
+  <item>Slicer</item>
   <item>Razor Turret MK2</item>
   <item>Razor Turret MK3</item>
   <item>Weapons Ionizer</item>

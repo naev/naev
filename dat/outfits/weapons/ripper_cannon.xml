@@ -20,7 +20,7 @@
   <range>1100</range>
   <falloff>950</falloff>
   <gfx_end>ripperS-end.png</gfx_end>
-  <energy>27</energy>
+  <energy>12.5</energy>
   <heatup>30</heatup>
   <track>2</track>
   <swivel>22</swivel>

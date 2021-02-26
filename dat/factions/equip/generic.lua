@@ -935,10 +935,10 @@ equip_shipOutfits_weapons = {
    ["Sirius Fidelity"] = {
       {
          num = 2;
-         "Razor MK2", "Razor MK3", "Ion Cannon"
+         "Razor MK1", "Ion Cannon"
       },
       {
-         "Razor MK2", "Razor MK3", "Ion Cannon"
+         "Razor MK1", "Ion Cannon"
       }
    },
    ["Za'lek Scout Drone"] = {

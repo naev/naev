@@ -37,7 +37,7 @@ equip_typeOutfits_weapons["Shark"] = {
    {
       varied = true;
       "Ion Cannon", "Laser Cannon MK1", "Plasma Blaster MK2", "Vulcan Gun",
-      "Shredder", "Razor MK2", "Razor MK3", "Unicorp Mace Launcher",
+      "Shredder", "Razor MK2", "Unicorp Mace Launcher",
       "Unicorp Banshee Launcher"
    }
 }
@@ -46,7 +46,7 @@ equip_typeOutfits_weapons["Lancelot"] = {
    {
       varied = true;
       "Ion Cannon", "Laser Cannon MK2", "Plasma Blaster MK2", "Vulcan Gun",
-      "Shredder", "Razor MK2", "Razor MK3", "Unicorp Mace Launcher",
+      "Razor MK2", "Unicorp Mace Launcher",
       "Unicorp Banshee Launcher", "Unicorp Medusa Launcher",
       "TeraCom Medusa Launcher", "Heavy Ion Cannon", "Unicorp Fury Launcher",
       "Unicorp Headhunter Launcher"

@@ -56,16 +56,16 @@ equip_typeOutfits_weapons["Shaman"] = {
    },
    {
       num = 1;
-      "Razor MK3", "Ion Cannon"
+      "Razor MK2", "Ion Cannon"
    },
    {
-      "Razor MK2", "Razor MK3", "Ion Cannon"
+      "Razor MK2", "Ion Cannon"
    }
 }
 equip_typeOutfits_weapons["Preacher"] = {
    {
       num = 2;
-      "Heavy Ion Cannon", "Razor MK3", "Shattershield Lance"
+      "Heavy Ion Cannon", "Slicer", "Shattershield Lance"
    },
    {
       num = 2, varied = true;
@@ -74,7 +74,7 @@ equip_typeOutfits_weapons["Preacher"] = {
    },
    {
       varied = true;
-      "Heavy Ion Cannon", "Razor MK3", "Razor Turret MK2", "Razor Turret MK3",
+      "Heavy Ion Cannon", "Slicer", "Razor Turret MK2", "Razor Turret MK3",
       "Laser Turret MK1", "Laser Turret MK2"
    }
 }
