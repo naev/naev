@@ -235,11 +235,9 @@ Hexagon hexagonFromPoint(vec2 point, float size) {
 
    Hexagon hex = createHexagon(q, r);
    return roundHexagon(hex);
-
 }
 
 vec2 pointFromHexagon(Hexagon hex, float size) {
-
    float x = (sqrt(3.0) * hex.q + (sqrt(3.0) / 2.0) * hex.r) * size + 0.5;
    float y = (0.0 * hex.q + (3.0 / 2.0) * hex.r) * size + 0.5;
 
@@ -253,7 +251,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords ) {
    float size = (sqrt(3.0) / 3.0) * dist / horizontalHexagons;
    vec2 point = dist > 0.0 ? pointFromHexagon(hexagonFromPoint(uv, size), size) : uv;
 
-   return mix( Texel( texprev, point ), Texel( MainTex, point ), progress);
+   return mix( Texel( texprev, point ), Texel( MainTex, point ), progress );
 
 }
 ]]
