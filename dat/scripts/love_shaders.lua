@@ -257,4 +257,36 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    return shader
 end
 
+
+function love_shaders.corruption( noise )
+   noise = noise or 1.0
+   local pixelcode = string.format([[
+#include "lib/math.glsl"
+
+uniform float u_time;
+
+const int    fps     = 15;
+const float strength = %f;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
+   float time = u_time - mod( u_time, 1.0 / float(fps) );
+
+   float glitchStep = mix(4.0, 32.0, random(vec2(time)));
+
+   vec4 screenColor = texture2D( tex, uv );
+   uv.x = round(uv.x * glitchStep ) / glitchStep;
+   vec4 glitchColor = texture2D( tex, uv );
+   return color * mix(screenColor, glitchColor, vec4(0.1*strength));
+}
+]], noise )
+
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader._dt = 1000 * love_math.random()
+   shader.update = function (self, dt)
+      self._dt = self._dt + dt
+      self:send( "u_time", self._dt )
+   end
+   return shader
+end
+
 return love_shaders
