@@ -10,14 +10,14 @@ local love_image = require 'love.image'
 local love_math = require 'love.math'
 
 local transitions = {}
-   
+
 local _vertexcode = [[
 vec4 position( mat4 transform_projection, vec4 vertex_position )
 {
    return transform_projection * vertex_position;
 }
 ]]
-      
+
 transitions.fade = [[
 uniform Image texprev;
 uniform float progress;
@@ -155,7 +155,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
          );
 }
 ]]
-      
+
 transitions.pixelize = [[
 // Adapted from https://gl-transitions.com/editor/pixelize
 // Author: gre
@@ -178,7 +178,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords ) {
    return mix( Texel( texprev, p ), Texel( MainTex, p ), progress);
 }
 ]]
-      
+
 transitions.hexagon = [[
 // Author: Fernando Kuteken
 // License: MIT
@@ -307,8 +307,56 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    c1 = burncolor( c1, q );
 
-   //return mix( c2, c1, q );
    return (q <= 0.0) ? c2 : c1;
+}
+]]
+
+transitions.electric = [[
+#include "lib/simplex.glsl"
+
+uniform Image texprev;
+uniform float progress;
+uniform float u_time;
+uniform float u_r;
+
+const float height = 10.0;
+const vec3 bluetint = vec3( 0.4, 0.6, 1.0 );
+
+/* Similar to smoothbeam, but more k == sharper. */
+float sharpbeam( float x, float k )
+{
+   return pow( min( cos( M_PI * x / 2. ), 1.0 - abs(x) ), k );
+}
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+{
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( MainTex, uv );
+
+   float h = height / love_ScreenSize.y;
+   float p = mix( -2.0*h, 1.0+2.0*h, progress );
+
+   const float m = 1.0;
+   float ybase, y, yoff, v;
+   vec2 ncoord = vec2( 0.03 * px.x, 5.0*u_time ) + 1000.0 * u_r;
+   // Base arcs
+   yoff = (1.0-p)*love_ScreenSize.y;
+   ybase = yoff + height*snoise( ncoord );
+   v = max( 0.0, sharpbeam( 0.3*distance(ybase,px.y), m ) );
+
+   // Extra arcs
+   ncoord = vec2( 0.03 * px.x, 10.0*u_time ) + 1000.0 * u_r;
+   y = yoff + height*snoise( 1.5*ncoord );
+   v += max( 0.0, sharpbeam( 0.5*distance(y,px.y), m ) );
+   y = yoff + height*snoise( 2.0*ncoord );
+   v += max( 0.0, sharpbeam( 0.5*distance(y,px.y), m ) );
+
+   // Create color
+   vec4 arcs = vec4( bluetint, v * max( c1.a, c2.a ) );
+
+   color = mix( c1, c2, step( ybase, px.y ) );
+   color = mix( color, arcs, v );
+   return color;
 }
 ]]
 
@@ -327,6 +375,13 @@ function transitions.get( name, seconds, transition )
    end
 
    local shader = graphics.newShader( _pixelcode, _vertexcode )
+   if shader:hasUniform("u_time") then
+      shader._dt = 1000 * love_math.random()
+      shader.update = function( self, dt )
+         self._dt = self._dt + dt
+         self:send( "u_time", self._dt )
+      end
+   end
    return shader, seconds
 end
 
