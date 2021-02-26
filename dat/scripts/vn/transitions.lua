@@ -364,7 +364,9 @@ function transitions.get( name, seconds, transition )
    -- Sane defaults
    name = name or "blur"
    transition = transition or "linear"
-   if name=="blur" or name=="electric" then
+   if name=="blur" then
+      seconds = seconds or 0.5
+   elseif name=="electric" then
       seconds = seconds or 1.0
    else
       seconds = seconds or 2.0
