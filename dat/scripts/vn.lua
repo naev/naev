@@ -968,7 +968,7 @@ end
 
 function vn.transition( name, seconds, transition )
    vn._checkstarted()
-   local shader, seconds = transitions.get( name, seconds, transition )
+   local shader, seconds, transition = transitions.get( name, seconds, transition )
 
    vn.animation( seconds,
       function (progress) -- progress

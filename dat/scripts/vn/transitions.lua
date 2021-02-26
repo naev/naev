@@ -313,6 +313,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 ]]
 
 function transitions.get( name, seconds, transition )
+   transition = transition or "linear"
+
    if name=="blur" then
       seconds = seconds or 1.0
    else
