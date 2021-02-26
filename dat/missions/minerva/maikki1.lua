@@ -135,7 +135,7 @@ function approach_maikki ()
    if misn_state==nil then
       maikki:rename( maikki_name )
    end
-   vn.fadein()
+   vn.transition("hexagon")
 
    if misn_state==nil then
       -- Start mission
@@ -257,8 +257,7 @@ She looks clearly excited at the possibility.]]))
       mission_finish = true
       shiplog.appendLog( logidstr, _("You gave Maikki the information you found in the nebula about her father.") )
    end )
-   vn.fadeout()
-   vn.done()
+   vn.done("hexagon")
 
    vn.label( "menu_msg" )
    maikki(_([["Is there anything you would like to know about?"]]))
@@ -266,7 +265,7 @@ She looks clearly excited at the possibility.]]))
 
    vn.label( "leave" )
    vn.na(_("You take your leave to continue the search for her father."))
-   vn.fadeout()
+   vn.done("hexagon")
    vn.run()
 
    -- Can't run it in the VN or it causes an error
@@ -281,7 +280,7 @@ function approach_oldman ()
    vn.scene()
    local om = vn.newCharacter( oldman_name,
          { image=oldman_image } )
-   vn.fadein()
+   vn.transition()
    vn.na( _("You see an old man casually drinking at the bar. He has a sort of self-complacent bored look on his face.") )
 
    vn.label( "menu" )
@@ -365,7 +364,6 @@ He downs his drink and orders another.]]))
 
    vn.label( "leave" )
    vn.na(_("You take your leave."))
-   vn.fadeout()
    vn.run()
 end
 
@@ -377,12 +375,11 @@ function approach_scavengers ()
          { image=scavengera_image, color=scavengera_colour } )
    local scavB = vn.newCharacter( _("Scavenger B"),
          { image=scavengerb_image, color=scavengerb_colour } )
-   vn.fadein()
+   vn.transition()
 
    if bribed_scavengers==true then
       -- TODO maybe more text?
       scavB(_([["What are you looking at?"]]))
-      vn.fadeout()
       vn.done()
    end
 
@@ -421,7 +418,6 @@ He pats his biceps in a fairly uninspiring way.]]))
    end
 
    vn.na(_("You take your leave without them noticing you."))
-   vn.fadeout()
    vn.run()
 end
 
@@ -528,7 +524,7 @@ function cutscene_hail ()
    local scavB = vn.newCharacter( _("Scavenger"),
          { image=scavengerb_image,
          color=scavengerb_colour, shader=love_shaders.hologram(2.0) } )
-   vn.fadein()
+   vn.transition("electric")
    vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
    scavB(_([["Thank you. I thought I was a goner. My sensors failed me at the worst time and it's impossible to see shit in this nebula."]]))
    scavB(string.format(_([["Could you tell me the way to %s? I have to get out of here as soon as possible."]]), _(searchsys)))
@@ -540,8 +536,7 @@ function cutscene_hail ()
    vn.label("leave")
    vn.na(_("You close the comm and leave the scavenger to his fate."))
    vn.func( function () asshole = true end )
-   vn.fadeout()
-   vn.done()
+   vn.done("electric")
 
    vn.label("help")
    scavB(_([["Thanks! I can't wait to get out of this hellhole."]]))
@@ -549,7 +544,7 @@ function cutscene_hail ()
    scavB(_([["I was told this would be easy money on the blackmarket, but this wasn't what I expected at all."]]))
    scavB(_([["Anyway, good luck scavenging."]]))
    vn.na(_("The scavenger disappears from view."))
-   vn.fadeout()
+   vn.done("electric")
    vn.run()
 
    -- Close comm immediately
@@ -796,7 +791,7 @@ function scavengers_encounter ()
    local scavB = vn.newCharacter( _("Scavenger B"),
          { image=scavengerb_image,
          color=scavengerb_colour, shader=love_shaders.hologram(2.0) } )
-   vn.fadein()
+   vn.transition("electric")
 
    vn.na(_("Two angry scavengers appear on your screen."))
    scavB(_([["You better beat it, punk. We are doing business here."]]))
@@ -845,8 +840,7 @@ He seems to be clutching his head. A headache perhaps?]]))
    scavA(_([["C'mon, let's get out of here. This place gives me the creeps. Feel like a ghost is going to pop out any minute."]]))
    scavB(_([["Next round in Doeston is on me."]]))
    vn.na(_("The scavengers disappear from your screen as you see their ships start to head back to Arandon."))
-   vn.fadeout()
-   vn.done()
+   vn.done("electric")
 
    -- Fight to the death :D
    vn.label("poor")
@@ -866,7 +860,7 @@ He seems to be clutching his head. A headache perhaps?]]))
       shiplog.appendLog( logidstr, _("You found a wreck and were attacked by scavengers.") )
    end )
 
-   vn.fadeout()
+   vn.done("electric")
    vn.run()
 end
 
@@ -887,7 +881,7 @@ function board_wreck ()
    local saw_bridge, saw_dormitory, saw_engineroom
    vn.clear()
    vn.scene()
-   vn.fadein()
+   vn.transition("hexagon")
    vn.na(_("You can see clear laser burns on the hull of the wreck as you approach the ship and prepare to board. This doesn't look like it was an accident."))
    vn.na(_("You board the wreck in your space suit and begin to investigate the insides of the ship."))
    vn.label("menu")
@@ -929,7 +923,7 @@ function board_wreck ()
 
    vn.label("leave")
    vn.na(_("After your thorough investigation, you leave the wreck behind and get back into your ship."))
-   vn.fadeout()
+   vn.done("hexagon")
    vn.run()
 
    shiplog.appendLog( logidstr, _("You boarded the wreck which seems to be Kex's ship. You found a picture of his family and signs that this was not an accident with possible Za'lek involvement.") )

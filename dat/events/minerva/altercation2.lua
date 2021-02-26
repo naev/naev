@@ -29,7 +29,7 @@ thug1_image = "scavenger1.png"
 function create ()
    vn.clear()
    vn.scene()
-   vn.fadein(1)
+   vn.transition( "hexagon" )
    local t1 = vn.newCharacter( thug1_name, { image=thug1_image } )
    local cc = vn.newCharacter( minerva.vn_cyborg_chicken() )
    t1.manualpos = true
@@ -101,7 +101,7 @@ function create ()
    chickenleft()
    t1(_([["You let the chicken get away punk! How are you going to make up for this!"]]))
    vn.na(_("You buy your time and eventually the station security comes escorting the thug away. As you go back to what you were doing, you see cyborg chicken in the distance who seems to wink at you. What was that all about?"))
-   vn.fadeout()
+   vn.done("hexagon")
    vn.run()
 
    evt.finish(true)
