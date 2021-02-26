@@ -258,6 +258,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords ) {
 }
 ]]
 
+-- TODO the noise texture in burn should be saved as a canvas and passed as a
+-- texture to speed it up
 transitions.burn = [[
 #include "lib/simplex.glsl"
 
