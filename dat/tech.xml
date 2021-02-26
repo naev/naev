@@ -38,7 +38,7 @@
   <item>Railgun Turret</item>
   <item>Plasma Blaster MK1</item>
   <item>Plasma Blaster MK2</item>
-  <item>Plasma Blaster MK3</item>
+  <item>Plasma Cannon</item>
   <item>Plasma Turret MK1</item>
   <item>Plasma Turret MK2</item>
   <item>Plasma Cluster Cannon MK1</item>
@@ -443,7 +443,7 @@
  </tech>
  <tech name="Plasma 2">
   <item>Plasma Blaster MK2</item>
-  <item>Plasma Blaster MK3</item>
+  <item>Plasma Cannon</item>
   <!-- TODO
   <item>Plasma Cluster Cannon MK1</item>
   <item>Plasma Cluster Cannon MK2</item>
