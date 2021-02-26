@@ -694,7 +694,7 @@ function vn.StateAnimation:_init()
    end
    self._accum = 0
    if self._func then
-      self._func( 0, self._params )
+      self._func( 0, 0, self._params )
    end
    if self._drawfunc then
       self._drawfunc( 0, self._params )
@@ -742,7 +742,7 @@ function vn.StateAnimation:_update(dt)
       _finish(self)
    end
    if self._func then
-      self._func( _animation_alpha(self), self._params )
+      self._func( _animation_alpha(self), dt, self._params )
    end
 end
 function vn.StateAnimation:_draw(dt)
@@ -971,8 +971,11 @@ function vn.transition( name, seconds, transition )
    local shader, seconds, transition = transitions.get( name, seconds, transition )
 
    vn.animation( seconds,
-      function (progress) -- progress
+      function (progress, dt) -- progress
          shader:send( "progress", progress )
+         if shader.update then
+            shader:update( dt )
+         end
       end, nil, -- no draw function
       transition, function () -- init
          shader:send( "texprev", vn._prevscene )

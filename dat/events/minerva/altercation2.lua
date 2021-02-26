@@ -55,7 +55,7 @@ function create ()
          end
          return { t1pos, ccpos, t1newpos, ccnewpos }
       end
-      return vn.animation( 1, function (alpha, params)
+      return vn.animation( 1, function (alpha, dt, params)
          local t1pos, ccpos, t1newpos, ccnewpos = table.unpack(params)
          t1.offset = t1newpos*alpha + t1pos*(1-alpha)
          cc.offset = ccnewpos*alpha + ccpos*(1-alpha)
@@ -92,7 +92,7 @@ function create ()
       local function runinit ()
          return cc.offset
       end
-      vn.animation( 1.5, function (alpha, ccpos)
+      vn.animation( 1.5, function (alpha, dt, ccpos)
          local ccnewpos = 1.5 * lw
          cc.offset = ccnewpos*alpha + ccpos*(1-alpha)
       end, nil, "ease-out", runinit )
