@@ -341,6 +341,9 @@ function vn.StateScene:_init()
       vn._na
    }
 
+   -- Set alpha to max (since transitions will be used in general)
+   vn._globalalpha = 1
+
    _finish(self)
 end
 --[[
@@ -638,6 +641,7 @@ function vn.StateStart:_init()
    graphics.setCanvas( vn._prevcanvas )
    graphics.clear( 1, 1, 1, 0 )
    graphics.setCanvas( oldcanvas )
+   vn._globalalpha = 0
    _finish(self)
 end
 --[[
@@ -925,9 +929,11 @@ end
 --[[
 -- @brief Finishes the VN.
 --]]
-function vn.done()
+function vn.done( ... )
    vn._checkstarted()
-   -- TODO insert transitions automatically if necessary
+   vn.scene()
+   vn.func( function () vn._globalalpha = 0 end )
+   vn.transition( ... )
    table.insert( vn._states, vn.StateEnd.new() )
 end
 
@@ -938,6 +944,7 @@ end
 --    @param fadeend Ending fade opacity.
 --]]
 function vn.fade( seconds, fadestart, fadeend )
+   print( _("[vn] using deprecated function 'fade'.") )
    seconds = seconds or 0.2
    vn._checkstarted()
    local func = function( alpha )

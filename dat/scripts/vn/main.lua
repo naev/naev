@@ -53,7 +53,8 @@ function love.load()
 
    -- Insert start and end state if necessary
    table.insert( vn._states, 1, vn.StateStart.new() )
-   table.insert( vn._states, vn.StateEnd.new() )
+   --table.insert( vn._states, vn.StateEnd.new() )
+   vn.done()
    vn._started = true
    vn._state = 1
    vn._fade = 0
