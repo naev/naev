@@ -6,12 +6,13 @@
   <size>small</size>
   <mass>5</mass>
   <price>145000</price>
-  <description>A shield generator that feeds off the ship's main energy line. It will allow you to regenerate your shield faster and give you a small shield capacity boost, at the expense of draining some of the ship's energy.</description>
+  <description>A shield generator that feeds off the ship's main energy line. It will allow you to regenerate your shield faster and give you a small shield capacity boost, at the expense of draining some of the ship's energy. Only one shield booster can be equipped to each ship.</description>
   <gfx_store>shield.png</gfx_store>
-  <cpu>-1</cpu>
+  <limit>shield_booster</limit>
+  <cpu>-2</cpu>
  </general>
  <specific type="modification">
-  <shield_regen>1</shield_regen>
-  <energy_usage>2</energy_usage>
+  <shield_regen>2</shield_regen>
+  <energy_usage>4</energy_usage>
  </specific>
 </outfit>

@@ -12,5 +12,6 @@
  </general>
  <specific type="modification">
   <misc_reverse_thrust>1</misc_reverse_thrust>
+  <energy_usage>3</energy_usage>
  </specific>
 </outfit>

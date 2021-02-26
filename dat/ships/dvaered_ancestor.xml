@@ -39,7 +39,7 @@
   <structure size="small" />
  </slots>
  <stats>
-  <cpu_mod>-20</cpu_mod>
+  <cpu_mod>-25</cpu_mod>
   <speed_mod>-20</speed_mod>
   <turn_mod>-10</turn_mod>
   <thrust_mod>-10</thrust_mod>
