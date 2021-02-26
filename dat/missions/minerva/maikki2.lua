@@ -682,8 +682,16 @@ end
 
 
 function ecc_feral_boss_dead ()
+   local paperbg = love_shaders.paper()
    vn.clear()
    vn.scene()
+   vn.func( function ()
+      vn.setBackground( function ()
+         vn.setColor( {0.2, 0.2, 0.2, 1} )
+         paperbg:draw( 0, 0 )
+      end )
+      vn.setShader( love_shaders.corruption(0.5) )
+   end )
    local voice = vn.newCharacter( _("Unknown Voice") )
    -- TODO better and creepier transition
    vn.transition( "hexagon", 3 ) -- Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
