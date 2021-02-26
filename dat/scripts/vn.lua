@@ -1006,23 +1006,26 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 ]]
    elseif name=="ripple" then
       _pixelcode = [[
+// Adapted from https://gl-transitions.com/editor/ripple
+// Author: gre
+// License: MIT
+
 uniform Image texprev;
 uniform float progress;
 
-const float amplitude = 30.0;
-const float speed = 30.;
+const float amplitude = 100.0;
+const float speed = 50.;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 {
    vec2 dir = uv - vec2(.5);
    float dist = length(dir);
-
-   if (dist > progress) {
-      return mix( Texel( texprev, uv ), Texel( MainTex, uv ), progress );
-   } else {
-      vec2 offset = dir * sin(dist * amplitude - progress * speed);
-      return mix( Texel( texprev, uv + offset ), Texel( MainTex, uv ), progress );
-   }
+   vec2 offset = dir * (sin(progress * dist * amplitude - progress * speed) + .5) / 30.;
+   return mix(
+         Texel( texprev, uv + offset ),
+         Texel( MainTex, uv ),
+         smoothstep(0.2, 1.0, progress)
+         );
 }
 ]]
    elseif name=="perlin" then
@@ -1050,6 +1053,10 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 ]]
    elseif name=="wave" then
       _pixelcode = [[
+// Adapted from https://gl-transitions.com/editor/ButterflyWaveScrawler
+// Author: mandubian
+// License: MIT
+
 #include "lib/math.glsl"
 
 uniform Image texprev;
