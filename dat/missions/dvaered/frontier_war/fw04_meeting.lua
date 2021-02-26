@@ -615,9 +615,7 @@ function equipHyena( p )
    p:setEnergy(100)
 
    -- Remove all cargo (to make them lighter)
-   for i, v in ipairs(p:cargoList()) do
-      p:cargoRm( v.name, v.q )
-   end
+   p:cargoRm( "__all" )
 end
 
 function hamelsenLanded()
