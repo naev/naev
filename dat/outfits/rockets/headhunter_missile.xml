@@ -21,7 +21,7 @@
   <resist>20</resist>
   <damage>
    <type>impact</type>
-   <penetrate>10</penetrate>
+   <penetrate>24</penetrate>
    <physical>80</physical>
    <disable>1</disable>
   </damage>

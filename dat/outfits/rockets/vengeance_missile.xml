@@ -21,7 +21,7 @@
   <resist>20</resist>
   <damage>
    <type>armourbreaker</type>
-   <penetrate>20</penetrate>
+   <penetrate>36</penetrate>
    <physical>200</physical>
    <disable>1</disable>
   </damage>

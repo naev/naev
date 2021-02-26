@@ -19,7 +19,7 @@
   <speed>250</speed>
   <damage>
    <type>impact</type>
-   <penetrate>12</penetrate>
+   <penetrate>18</penetrate>
    <physical>120</physical>
    <disable>3</disable>
   </damage>

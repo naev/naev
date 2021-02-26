@@ -19,7 +19,7 @@
   <speed>1800</speed>
   <damage>
    <type>impact</type>
-   <penetrate>0</penetrate>
+   <penetrate>12</penetrate>
    <physical>15</physical>
    <disable>0</disable>
   </damage>
