@@ -363,7 +363,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 function transitions.get( name, seconds, transition )
    transition = transition or "linear"
 
-   if name=="blur" then
+   if name=="blur" or name=="electric" then
       seconds = seconds or 1.0
    else
       seconds = seconds or 2.0
@@ -382,7 +382,7 @@ function transitions.get( name, seconds, transition )
          self:send( "u_time", self._dt )
       end
    end
-   return shader, seconds
+   return shader, seconds, transition
 end
 
 return transitions
