@@ -166,9 +166,10 @@ local function _draw()
    end
 
    -- Draw if necessary
-   if vn.isDone() then return end
-   local s = vn._states[ vn._state ]
-   s:draw()
+   if not vn.isDone() then
+      local s = vn._states[ vn._state ]
+      s:draw()
+   end
 
    -- Draw foreground
    if vn._draw_fg then
