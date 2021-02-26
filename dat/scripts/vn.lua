@@ -1087,6 +1087,24 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    return texTo*progress + texFrom*inv;
 }
 ]]
+   elseif name=="radial" then
+      _pixelcode = [[
+#include "lib/math.glsl"
+
+uniform Image texprev;
+uniform float progress;
+
+const float smoothness = 1.0;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec2 rp = uv*2.0-1.0;
+   return mix(
+         Texel( MainTex, uv ), Texel( texprev, uv ),
+         smoothstep(0., smoothness, atan(rp.y,rp.x) - (progress-0.5) * M_PI * 2.5)
+         );
+}
+]]
    else
       error( string.format(_("vn: unknown transition type'%s'"), name ) )
    end
