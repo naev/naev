@@ -10,6 +10,7 @@ local window = require 'love.window'
 local filesystem = require 'love.filesystem'
 local audio = require 'love.audio'
 local love_image = require 'love.image'
+local love_math = require 'love.math'
 
 local vn = {
    speed = 0.04,
@@ -164,7 +165,7 @@ local function _draw()
    end
 
    -- Draw if necessary
-   --if vn.isDone() then return end
+   if vn.isDone() then return end
    local s = vn._states[ vn._state ]
    s:draw()
 
@@ -184,7 +185,7 @@ local function _draw()
 end
 function vn.draw()
    local s = vn._states[ vn._state ]
-   if s.drawoverride then
+   if s and s.drawoverride then
       s:drawoverride()
    else
       _draw()
@@ -1034,13 +1035,14 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 
 uniform Image texprev;
 uniform float progress;
+uniform float u_r;
 
 const float scale = 0.01;
 const float smoothness = 0.1;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 {
-   float n = cnoise( scale * screen_coords )*0.5 + 0.5;
+   float n = cnoise( scale * screen_coords + 1000.0*u_r )*0.5 + 0.5;
    float p = mix(-smoothness, 1.0 + smoothness, progress);
    float lower = p - smoothness;
    float higher = p + smoothness;
@@ -1048,7 +1050,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 
    vec4 c1 = Texel( texprev, uv );
    vec4 c2 = Texel( MainTex, uv );
-   return mix(c1, c2, 1.0-q);
+   return mix(c2, c1, q);
 }
 ]]
    elseif name=="wave" then
@@ -1214,6 +1216,60 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords ) {
 
 }
 ]]
+   elseif name=="burn" then
+      _pixelcode = [[
+#include "lib/simplex.glsl"
+
+uniform Image texprev;
+uniform float progress;
+uniform float u_r;
+
+const float smoothness = 0.1;
+
+vec4 burncolor( vec4 color, float value )
+{
+   const vec3 cred      = vec3( 1.00, 0.13, 0.00 );
+   const vec3 corange   = vec3( 0.95, 0.47, 0.02 );
+   const vec3 cblack    = vec3( 0.00, 0.00, 0.00 );
+   const vec3 cwhite    = vec3( 1.0 );
+
+   vec4 outcol = color;
+   if (value <= 0.1)
+      outcol.rgb = mix( cred, corange, value * (1.0/0.1) );
+   else if (value < 0.4)
+      outcol.rgb = mix( corange, cblack, value * 5.0 - 1.0 );
+   else
+      outcol.rgb *= mix( cblack, cwhite, (value-0.4)*(1.0/0.6) );
+   return outcol;
+}
+
+float noisetex( vec2 px )
+{
+   float n = 0.0;
+   for (float i=1.0; i<4.0; i=i+1.0) {
+      float m = pow( 2.0, i );
+      n += snoise( px * 0.002 * m + 1000.0 * u_r ) * (1.0 / m);
+   }
+   return n;
+}
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+{
+   float n = noisetex( px )*0.5+0.5;
+   float p = mix(-smoothness, 1.0 + smoothness, progress);
+   float lower = p - smoothness;
+   float higher = p + smoothness;
+   float q = smoothstep(lower, higher, n);
+
+   vec4 c1 = Texel( texprev, uv );
+   vec4 c2 = Texel( MainTex, uv );
+
+   c1 = burncolor( c1, q );
+
+   //return mix( c2, c1, q );
+   return (q <= 0.0) ? c2 : c1;
+}
+]]
    else
       error( string.format(_("vn: unknown transition type'%s'"), name ) )
    end
@@ -1225,6 +1281,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords ) {
       end, nil, -- no draw function
       transition, function () -- init
          shader:send( "texprev", vn._prevscene )
+         if shader:hasUniform( "u_r" ) then
+            shader:send( "u_r", love_math.random() )
+         end
       end, function () -- drawoverride
          local canvas = vn._curcanvas
          _draw_to_canvas( canvas )
