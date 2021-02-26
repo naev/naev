@@ -246,7 +246,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    end
 
    local shader = graphics.newShader( pixelcode, _vertexcode )
-   shader._dt = 1000. * love_math.random()
+   shader._dt = 1000 * love_math.random()
    shader.update = function (self, dt)
       self._dt = self._dt + dt
       self:send( "u_time", self._dt )
