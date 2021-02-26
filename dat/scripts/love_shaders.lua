@@ -100,7 +100,7 @@ vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
    vec3 g = vec3( grain( uv, px * zoom, frame, 2.5 ) );
 
    // get the luminance of the image
-   float luminance = rgbToLuminance( bgcolor.rgb );
+   float luminance = rgb2lum( bgcolor.rgb );
    vec3 desaturated = vec3(luminance);
 
    // now blend the noise over top the backround
@@ -222,7 +222,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 
    /* Drop to greyscale while increasing brightness and contrast */
    //float greyscale = dot( texcolor.xyz, vec3( 0.2126, 0.7152, 0.0722 ) ); // standard
-   float greyscale = rgbToLuminance( texcolor.rgb ); // percieved
+   float greyscale = rgb2lum( texcolor.rgb ); // percieved
    texcolor.xyz = contrast*vec3(greyscale) + brightness;
 
    /* Shadows. */
