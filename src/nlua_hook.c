@@ -142,11 +142,14 @@ int nlua_loadHook( nlua_env env )
  */
 static int hookL_rm( lua_State *L )
 {
-   unsigned int h;
+   long h;
 
    /* Remove the hook. */
-   h = luaL_checklong( L, 1 );
-   hook_rm( h );
+   h = luaL_optlong( L, 1, -1 );
+   /* ... Or do a no-op if caller passes nil. */
+   if (h < 0)
+      return 0;
+   hook_rm( (unsigned int) h );
 
    /* Clean up hook data. */
    nlua_getenv(__NLUA_CURENV, "__hook_arg");
@@ -842,7 +845,7 @@ static int hook_pilot( lua_State *L )
    }
 
    /* actually add the hook */
-   nsnprintf( buf, sizeof(buf), "p_%s", hook_type );
+   snprintf( buf, sizeof(buf), "p_%s", hook_type );
    h = hook_generic( L, buf, 0., 3, 0 );
    if (p==0)
       pilots_addGlobalHook( type, h );

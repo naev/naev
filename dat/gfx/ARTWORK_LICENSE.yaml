@@ -448,11 +448,6 @@
        - bansheelauncher.png
      space:
        - empgrenade.png
-       - beam_ion.png
-       - beam_orion.png
-       - beam_orion_inv.png
-       - beam_ragnarok.png
-       - beam_ragnarok_inv.png
        - banshee.png
    spfx:
      - emps.webp

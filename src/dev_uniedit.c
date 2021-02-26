@@ -16,6 +16,7 @@
 
 #include "dev_uniedit.h"
 
+#include "array.h"
 #include "conf.h"
 #include "dev_planet.h"
 #include "dev_sysedit.h"
@@ -24,7 +25,6 @@
 #include "economy.h"
 #include "map.h"
 #include "map_find.h"
-#include "nfile.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "pause.h"
@@ -702,16 +702,14 @@ static void uniedit_renameSys (void)
 
       /* Change the name. */
       filtered = uniedit_nameFilter(sys->name);
-      oldName = malloc(14 + strlen(filtered));
-      nsnprintf(oldName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
+      asprintf(&oldName, "dat/ssys/%s.xml", filtered);
       free(filtered);
 
       filtered = uniedit_nameFilter(name);
-      newName = malloc(14 + strlen(filtered));
-      nsnprintf(newName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
+      asprintf(&newName, "dat/ssys/%s.xml", filtered);
       free(filtered);
 
-      nfile_rename(oldName,newName);
+      rename(oldName, newName);
 
       free(oldName);
       free(newName);
@@ -721,7 +719,7 @@ static void uniedit_renameSys (void)
       dsys_saveSystem(sys);
 
       /* Re-save adjacent systems. */
-      for (j=0; j<sys->njumps; j++)
+      for (j=0; j<array_size(sys->jumps); j++)
          dsys_saveSystem( sys->jumps[j].target );
    }
 }
@@ -784,7 +782,7 @@ static void uniedit_toggleJump( StarSystem *sys )
    for (i=0; i<uniedit_nsys; i++) {
       isys  = uniedit_sys[i];
       rm    = 0;
-      for (j=0; j<isys->njumps; j++) {
+      for (j=0; j<array_size(isys->jumps); j++) {
          target = isys->jumps[j].target;
          /* Target already exists, remove. */
          if (target == sys) {
@@ -826,9 +824,7 @@ static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
    JumpPoint *jp;
 
    /* Add the jump. */
-   sys->njumps++;
-   sys->jumps  = realloc( sys->jumps, sizeof(JumpPoint) * sys->njumps );
-   jp          = &sys->jumps[ sys->njumps-1 ];
+   jp          = &array_grow( &sys->jumps );
    memset( jp, 0, sizeof(JumpPoint) );
 
    /* Fill it out with basics. */
@@ -848,19 +844,18 @@ static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ )
    int i;
 
    /* Find associated jump. */
-   for (i=0; i<sys->njumps; i++)
+   for (i=0; i<array_size(sys->jumps); i++)
       if (sys->jumps[i].target == targ)
          break;
 
    /* Not found. */
-   if (i >= sys->njumps) {
+   if (i >= array_size(sys->jumps)) {
       WARN(_("Jump for system '%s' not found in system '%s' for removal."), targ->name, sys->name);
       return;
    }
 
    /* Remove the jump. */
-   sys->njumps--;
-   memmove( &sys->jumps[i], &sys->jumps[i+1], sizeof(JumpPoint) * (sys->njumps - i) );
+   array_erase( &sys->jumps, &sys->jumps[i], &sys->jumps[i+1] );
 }
 
 
@@ -950,7 +945,7 @@ void uniedit_selectText (void)
 
    l = 0;
    for (i=0; i<uniedit_nsys; i++) {
-      l += nsnprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
+      l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
             (i == uniedit_nsys-1) ? "" : ", " );
    }
    if (l == 0)
@@ -1098,7 +1093,7 @@ static void uniedit_findSearch( unsigned int wid, char *str )
       found[n].sys      = sys;
 
       /* Set fancy name. */
-      nsnprintf( found[n].display, sizeof(found[n].display),
+      snprintf( found[n].display, sizeof(found[n].display),
             _("%s (%s system)"), planets[i], sys->name );
       n++;
    }
@@ -1244,7 +1239,7 @@ static void uniedit_editSys (void)
 
    /* Rename button. */
    y = -45;
-   nsnprintf( buf, sizeof(buf), _("Name: #n%s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
+   snprintf( buf, sizeof(buf), _("Name: #n%s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", _("Rename"), uniedit_btnEditRename );
 
@@ -1308,15 +1303,15 @@ static void uniedit_editSys (void)
    (void)x;
 
    /* Load values */
-   nsnprintf( buf, sizeof(buf), "%g", sys->radius );
+   snprintf( buf, sizeof(buf), "%g", sys->radius );
    window_setInput( wid, "inpRadius", buf );
-   nsnprintf( buf, sizeof(buf), "%d", sys->stars );
+   snprintf( buf, sizeof(buf), "%d", sys->stars );
    window_setInput( wid, "inpStars", buf );
-   nsnprintf( buf, sizeof(buf), "%g", sys->interference );
+   snprintf( buf, sizeof(buf), "%g", sys->interference );
    window_setInput( wid, "inpInterference", buf );
-   nsnprintf( buf, sizeof(buf), "%g", sys->nebu_density );
+   snprintf( buf, sizeof(buf), "%g", sys->nebu_density );
    window_setInput( wid, "inpNebula", buf );
-   nsnprintf( buf, sizeof(buf), "%g", sys->nebu_volatility );
+   snprintf( buf, sizeof(buf), "%g", sys->nebu_volatility );
    window_setInput( wid, "inpVolatility", buf );
 
    /* Generate the list. */
@@ -1343,7 +1338,7 @@ static void uniedit_editGenList( unsigned int wid )
 
    /* Check to see if it actually has virtual assets. */
    sys   = uniedit_sys[0];
-   n     = sys->nplanets;
+   n     = array_size( sys->planets );
    has_assets = 0;
    for (i=0; i<n; i++) {
       p     = sys->planets[i];
@@ -1541,7 +1536,7 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused )
    uniedit_renameSys();
 
    /* Update text. */
-   nsnprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
+   snprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_modifyText( wid, "txtName", buf );
 }
 

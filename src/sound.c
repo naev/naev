@@ -592,7 +592,7 @@ static int sound_makeList (void)
          continue;
 
       /* Load the sound. */
-      nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
+      snprintf( path, sizeof(path), SOUND_PATH"%s", files[i] );
       rw = PHYSFSRWOPS_openRead( path );
 
       /* remove the suffix */

@@ -826,7 +826,7 @@ static int playerL_shipOutfits( lua_State *L )
 
    lua_newtable( L );
    j = 1;
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == NULL)
          continue;
 
@@ -1227,16 +1227,17 @@ static int playerL_teleport( lua_State *L )
    /* Get destination from string. */
    else if (lua_isstring(L,1)) {
       name = lua_tostring(L,1);
-      if (!system_exists( name )) {
-         if (!planet_exists( name )) {
+      sys = system_get( name );
+      if (sys == NULL) {
+         /* No system found, assume destination string is the name of a planet. */
+         pntname = name;
+         name = planet_getSystem( pntname );
+         pnt  = planet_get( pntname );
+         if (pnt == NULL) {
             NLUA_ERROR( L, _("'%s' is not a valid teleportation target."), name );
             return 0;
          }
 
-         /* No system found, assume destination string is the name of a planet. */
-         pntname = name;
-         name = planet_getSystem( name );
-         pnt  = planet_get( pntname );
          if (name == NULL) {
             NLUA_ERROR( L, _("Planet '%s' does not belong to a system."), pntname );
             return 0;
@@ -1247,7 +1248,7 @@ static int playerL_teleport( lua_State *L )
       NLUA_INVALID_PARAMETER(L);
 
    /* Check if system exists. */
-   if (!system_exists( name )) {
+   if (system_get( name ) == NULL) {
       NLUA_ERROR( L, _("System '%s' does not exist."), name );
       return 0;
    }

@@ -115,7 +115,7 @@ preduel_text = _([[As you sit at the table, Tam starts to speak: "I got a messag
 
 duel1_title = _("Here we go")
 duel1_text = _([[Colonel Urnus's ship broadcasts the message: "I, Colonel Urnus, have been requested by both parts of this duel to be today's commissioner. I hereby solemnly swear to be a right person, officer of the Dvaered Army, respectful of our laws and our customs, and I have never worked under the command nor as a commander of any of the generals who are having this duel. I have controlled the pedigree of the four witnesses and I can attest they are respectable officers of the Dvaered Army. Lord Battleaddict, General Klank, before proceeding to the combat, I have to ask you one last time: Are you sure your disagreement cannot be solved by any other means?"
-   A formal silence follows the words of the colonel, but soon Battleaddict and Klank respond: "It can not, mister commissioner." And Urnus continues: "I am witness to the fact that this duel is conform to the rules established by our ancestors. I have controlled both ships and I attest that no irregularity is to be noticed. Let the fight begin, may the most virtuous of you both survive."]])
+   A formal silence follows the words of the colonel, but soon Battleaddict and Klank respond: "It can not, Mister Commissioner." And Urnus continues: "I am witness to the fact that this duel conforms to the rules established by our ancestors. I have controlled both ships and I attest that I observed no irregularities. Let the fight begin, may the most virtuous of you both survive."]])
 
 epilogue_title = _("A good thing done")
 -- FIXME The "here are _ credits" language might require a full ngettext() call.

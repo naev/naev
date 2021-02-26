@@ -10,8 +10,6 @@
 /*
  * Define various paths
  */
-#define NDATA_PATH_MAX           256        /**< Length limit of relative paths in the ndata directory (or else tar won't work). */
-
 #define PLANET_GFX_SPACE_PATH    "gfx/planet/space/" /**< Location of planet space graphics. */
 #define PLANET_GFX_EXTERIOR_PATH "gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
 #define GFX_PATH                 "gfx/" /**< Location of the graphics root. */
@@ -39,6 +37,7 @@
 #define TECH_DATA_PATH           "tech.xml"   /**< XML file containing techs. */
 #define ASTERO_DATA_PATH         "asteroids.xml" /**< Asteroid types XML file. */
 #define MAP_DECORATOR_DATA_PATH  "map.xml" /**< Where the map has background images. */
+#define TRAIL_DATA_PATH          "trails.xml" /**< Trail types XML file. */
 
 #define MISSION_LUA_PATH         "missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "events/" /**< Path to Lua files. */
@@ -76,17 +75,12 @@
 #define INTRO_PATH               "intro"
 #define RESCUE_PATH              "rescue.lua"
 
-/*
- * ndata open/close
- */
-int ndata_open (void);
-void ndata_close (void);
-
-/*
- * Individual file functions.
- */
+void ndata_setupWriteDir (void);
+void ndata_setupReadDirs (void);
 void* ndata_read( const char* filename, size_t *filesize );
 char** ndata_listRecursive( const char *path );
+int ndata_backupIfExists( const char *path );
+int ndata_copyIfExists( const char *path1, const char *path2 );
 
 
 #endif /* NDATA_H */

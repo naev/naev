@@ -32,9 +32,6 @@
 #include "space.h"
 
 
-#define CHUNK_SIZE      32 /**< Size of chunk to allocate. */
-
-
 /**
  * @brief Universe diff filepath list.
  */
@@ -129,14 +126,8 @@ typedef struct UniHunk_ {
  */
 typedef struct UniDiff_ {
    char *name; /**< Name of the diff. */
-
    UniHunk_t *applied; /**< Applied hunks. */
-   int napplied; /**< Number of applied hunks. */
-   int mapplied; /**< Memory of applied hunks. */
-
    UniHunk_t *failed; /**< Failed hunks. */
-   int nfailed; /**< Number of failed hunks. */
-   int mfailed; /**< Memory of failed hunks. */
 } UniDiff_t;
 
 
@@ -622,6 +613,7 @@ static int diff_patch( xmlNodePtr parent )
    UniHunk_t *fail;
    xmlNodePtr node;
    char *target;
+   int nfailed;
 
    /* Prepare it. */
    diff = diff_newDiff();
@@ -652,11 +644,12 @@ static int diff_patch( xmlNodePtr parent )
          WARN(_("Unidiff '%s' has unknown node '%s'."), diff->name, node->name);
    } while (xml_nextNode(node));
 
-   if (diff->nfailed > 0) {
+   nfailed = array_size(diff->failed);
+   if (nfailed > 0) {
       WARN(
-         n_( "Unidiff '%s' failed to apply %d hunk.", "Unidiff '%s' failed to apply %d hunks.", diff->nfailed ),
-         diff->name, diff->nfailed );
-      for (i=0; i<diff->nfailed; i++) {
+         n_( "Unidiff '%s' failed to apply %d hunk.", "Unidiff '%s' failed to apply %d hunks.", nfailed ),
+         diff->name, nfailed );
+      for (i=0; i<nfailed; i++) {
          fail   = &diff->failed[i];
          target = fail->target.u.name;
          switch (fail->type) {
@@ -879,13 +872,9 @@ static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk )
 {
    if (diff == NULL)
       return;
-
-   diff->nfailed++;
-   if (diff->nfailed > diff->mfailed) {
-      diff->mfailed += CHUNK_SIZE;
-      diff->failed = realloc(diff->failed, sizeof(UniHunk_t) * diff->mfailed);
-   }
-   diff->failed[diff->nfailed-1] = *hunk;
+   if (diff->failed == NULL)
+      diff->failed = array_create( UniHunk_t );
+   array_grow( &diff->failed ) = *hunk;
 }
 
 
@@ -899,13 +888,9 @@ static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk )
 {
    if (diff == NULL)
       return;
-
-   diff->napplied++;
-   if (diff->napplied > diff->mapplied) {
-      diff->mapplied += CHUNK_SIZE;
-      diff->applied = realloc(diff->applied, sizeof(UniHunk_t) * diff->mapplied);
-   }
-   diff->applied[diff->napplied-1] = *hunk;
+   if (diff->applied == NULL)
+      diff->applied = array_create( UniHunk_t );
+   array_grow( &diff->applied ) = *hunk;
 }
 
 
@@ -934,9 +919,6 @@ void diff_remove( const char *name )
  */
 void diff_clear (void)
 {
-   if (diff_stack==NULL)
-      return;
-
    while (array_size(diff_stack) > 0)
       diff_removeDiff(&diff_stack[array_size(diff_stack)-1]);
 
@@ -968,7 +950,7 @@ static UniDiff_t *diff_newDiff (void)
 {
    /* Check if needs initialization. */
    if (diff_stack == NULL)
-      diff_stack = array_create(UniDiff_t);
+      diff_stack = array_create( UniDiff_t );
    return &array_grow(&diff_stack);
 }
 
@@ -984,7 +966,7 @@ static int diff_removeDiff( UniDiff_t *diff )
    int i;
    UniHunk_t hunk;
 
-   for (i=0; i<diff->napplied; i++) {
+   for (i=0; i<array_size(diff->applied); i++) {
       hunk = diff->applied[i];
       /* Invert the type for reverting. */
       switch (hunk.type) {
@@ -1062,12 +1044,12 @@ static void diff_cleanup( UniDiff_t *diff )
    int i;
 
    free(diff->name);
-   for (i=0; i<diff->napplied; i++)
+   for (i=0; i<array_size(diff->applied); i++)
       diff_cleanupHunk(&diff->applied[i]);
-   free(diff->applied);
-   for (i=0; i<diff->nfailed; i++)
+   array_free(diff->applied);
+   for (i=0; i<array_size(diff->failed); i++)
       diff_cleanupHunk(&diff->failed[i]);
-   free(diff->failed);
+   array_free(diff->failed);
    memset(diff, 0, sizeof(UniDiff_t));
 }
 

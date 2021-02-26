@@ -193,7 +193,7 @@ void opt_resize (void)
 
    /* Update the resolution input widget. */
    opt_getVideoMode( &w, &h, &fullscreen );
-   nsnprintf( buf, sizeof(buf), "%dx%d", w, h );
+   snprintf( buf, sizeof(buf), "%dx%d", w, h );
    window_setInput( opt_windows[OPT_WIN_VIDEO], "inpRes", buf );
 }
 
@@ -262,9 +262,9 @@ static void opt_gameplay( unsigned int wid )
    for (i=l=0; paths[i]!=NULL && (size_t)l < sizeof(buf); i++)
    {
       if (i == 0)
-         l = nsnprintf( buf, sizeof(buf), _("ndata: %s"), paths[i] );
+         l = scnprintf( buf, sizeof(buf), _("ndata: %s"), paths[i] );
       else
-         l += nsnprintf( &buf[l], sizeof(buf)-l, ":%s", paths[i] );
+         l += scnprintf( &buf[l], sizeof(buf)-l, ":%s", paths[i] );
    }
    PHYSFS_freeList(paths);
    paths = NULL;
@@ -299,25 +299,25 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
          &gl_smallFont, &cFontOrange,
          ""
-#ifdef DEBUGGING
-#ifdef DEBUG_PARANOID
+#if DEBUGGING
+#if DEBUG_PARANOID
          "Debug Paranoid\n"
 #else /* DEBUG_PARANOID */
          "Debug\n"
 #endif /* DEBUG_PARANOID */
 #endif /* DEBUGGING */
-#if defined(LINUX)
+#if LINUX
          "Linux\n"
-#elif defined(FREEBSD)
+#elif FREEBSD
          "FreeBSD\n"
-#elif defined(MACOS)
+#elif MACOS
          "macOS\n"
-#elif defined(WIN32)
+#elif WIN32
          "Windows\n"
 #else
          "Unknown OS\n"
 #endif
-#ifdef HAVE_LUAJIT
+#if HAVE_LUAJIT
          "Using LuaJIT\n"
 #endif
          );
@@ -461,9 +461,9 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
    window_faderValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 
    /* Input boxes. */
-   nsnprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
+   snprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
    window_setInput( wid, "inpMSG", vmsg );
-   nsnprintf( tmax, sizeof(tmax), "%d", TIME_COMPRESSION_DEFAULT_MULT );
+   snprintf( tmax, sizeof(tmax), "%d", TIME_COMPRESSION_DEFAULT_MULT );
    window_setInput( wid, "inpTMax", tmax );
 }
 
@@ -486,9 +486,9 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    window_faderValue( wid, "fadMapOverlayOpacity", conf.map_overlay_opacity );
 
    /* Input boxes. */
-   nsnprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
+   snprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
    window_setInput( wid, "inpMSG", vmsg );
-   nsnprintf( tmax, sizeof(tmax), "%g", conf.compression_mult );
+   snprintf( tmax, sizeof(tmax), "%g", conf.compression_mult );
    window_setInput( wid, "inpTMax", tmax );
 }
 
@@ -509,11 +509,11 @@ static void opt_setAutonavResetSpeed( unsigned int wid, char *str )
 
    /* Generate message. */
    if (autonav_reset_speed >= 1.)
-      nsnprintf( buf, sizeof(buf), _("Enemy Presence") );
+      snprintf( buf, sizeof(buf), _("Enemy Presence") );
    else if (autonav_reset_speed > 0.)
-      nsnprintf( buf, sizeof(buf), _("%.0f%% Shield"), autonav_reset_speed * 100 );
+      snprintf( buf, sizeof(buf), _("%.0f%% Shield"), autonav_reset_speed * 100 );
    else
-      nsnprintf( buf, sizeof(buf), _("Armour Damage") );
+      snprintf( buf, sizeof(buf), _("Armour Damage") );
 
    window_modifyText( wid, "txtAutonav", buf );
 }
@@ -605,50 +605,50 @@ static void menuKeybinds_genList( unsigned int wid )
          case KEYBIND_KEYBOARD:
             /* Generate mod text. */
             if (mod == NMOD_ALL)
-               nsnprintf( mod_text, sizeof(mod_text), "any+" );
+               snprintf( mod_text, sizeof(mod_text), "any+" );
             else {
                p = 0;
                mod_text[0] = '\0';
                if (mod & NMOD_SHIFT)
-                  p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "shift+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "shift+" );
                if (mod & NMOD_CTRL)
-                  p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "ctrl+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "ctrl+" );
                if (mod & NMOD_ALT)
-                  p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
                if (mod & NMOD_META)
-                  p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
+                  p += scnprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
                (void)p;
             }
 
             /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
             if (key < 0x100 && isalpha(key))
-               nsnprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, toupper(key) );
+               snprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, toupper(key) );
             else
-               nsnprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, _(SDL_GetKeyName(key)) );
+               snprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, _(SDL_GetKeyName(key)) );
             break;
          case KEYBIND_JAXISPOS:
-            nsnprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
             break;
          case KEYBIND_JAXISNEG:
-            nsnprintf(str[j], l, "%s <ja-%d>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <ja-%d>", keybind_info[j][1], key);
             break;
          case KEYBIND_JBUTTON:
-            nsnprintf(str[j], l, "%s <jb%d>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jb%d>", keybind_info[j][1], key);
             break;
          case KEYBIND_JHAT_UP:
-            nsnprintf(str[j], l, "%s <jh%d-up>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-up>", keybind_info[j][1], key);
             break;
          case KEYBIND_JHAT_DOWN:
-            nsnprintf(str[j], l, "%s <jh%d-down>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-down>", keybind_info[j][1], key);
             break;
          case KEYBIND_JHAT_LEFT:
-            nsnprintf(str[j], l, "%s <jh%d-left>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-left>", keybind_info[j][1], key);
             break;
          case KEYBIND_JHAT_RIGHT:
-            nsnprintf(str[j], l, "%s <jh%d-right>", keybind_info[j][1], key);
+            snprintf(str[j], l, "%s <jh%d-right>", keybind_info[j][1], key);
             break;
          default:
-            nsnprintf(str[j], l, "%s", keybind_info[j][1]);
+            snprintf(str[j], l, "%s", keybind_info[j][1]);
             break;
       }
    }
@@ -702,46 +702,46 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    /* Create the text. */
    switch (type) {
       case KEYBIND_NULL:
-         nsnprintf(binding, sizeof(binding), _("Not bound"));
+         snprintf(binding, sizeof(binding), _("Not bound"));
          break;
       case KEYBIND_KEYBOARD:
          /* Print key. Special-case ASCII letters (use uppercase, unlike SDL_GetKeyName.). */
          if (key < 0x100 && isalpha(key))
-            nsnprintf(binding, sizeof(binding), _("keyboard:   %s%s%c"),
+            snprintf(binding, sizeof(binding), _("keyboard:   %s%s%c"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
                   toupper(key));
          else
-            nsnprintf(binding, sizeof(binding), _("keyboard:   %s%s%s"),
+            snprintf(binding, sizeof(binding), _("keyboard:   %s%s%s"),
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
                   _(SDL_GetKeyName(key)));
          break;
       case KEYBIND_JAXISPOS:
-         nsnprintf(binding, sizeof(binding), _("joy axis pos:   <%d>"), key );
+         snprintf(binding, sizeof(binding), _("joy axis pos:   <%d>"), key );
          break;
       case KEYBIND_JAXISNEG:
-         nsnprintf(binding, sizeof(binding), _("joy axis neg:   <%d>"), key );
+         snprintf(binding, sizeof(binding), _("joy axis neg:   <%d>"), key );
          break;
       case KEYBIND_JBUTTON:
-         nsnprintf(binding, sizeof(binding), _("joy button:   <%d>"), key);
+         snprintf(binding, sizeof(binding), _("joy button:   <%d>"), key);
          break;
       case KEYBIND_JHAT_UP:
-         nsnprintf(binding, sizeof(binding), _("joy hat up:   <%d>"), key);
+         snprintf(binding, sizeof(binding), _("joy hat up:   <%d>"), key);
          break;
       case KEYBIND_JHAT_DOWN:
-         nsnprintf(binding, sizeof(binding), _("joy hat down: <%d>"), key);
+         snprintf(binding, sizeof(binding), _("joy hat down: <%d>"), key);
          break;
       case KEYBIND_JHAT_LEFT:
-         nsnprintf(binding, sizeof(binding), _("joy hat left: <%d>"), key);
+         snprintf(binding, sizeof(binding), _("joy hat left: <%d>"), key);
          break;
       case KEYBIND_JHAT_RIGHT:
-         nsnprintf(binding, sizeof(binding), _("joy hat right:<%d>"), key);
+         snprintf(binding, sizeof(binding), _("joy hat right:<%d>"), key);
          break;
    }
 
    /* Update text. */
-   nsnprintf(buf, 1024, "%s\n\n%s\n", desc, binding);
+   snprintf(buf, sizeof(buf), "%s\n\n%s\n", desc, binding);
    window_modifyText( wid, "txtDesc", buf );
 }
 
@@ -840,10 +840,10 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
    vol = type ? music_getVolumeLog() : sound_getVolumeLog();
 
    if (vol == 0.)
-      nsnprintf( buf, max, str, _("Muted") );
+      snprintf( buf, max, str, _("Muted") );
    else {
       magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
-      nsnprintf( buf, max, _("%s: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
+      snprintf( buf, max, _("%s: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
    }
 }
 
@@ -1209,14 +1209,12 @@ static void opt_video( unsigned int wid )
    nres  = 0;
    res_def = 0;
    if (j) {
-      res[0]   = malloc(16);
-      nsnprintf( res[0], 16, "%dx%d", conf.width, conf.height );
+      asprintf( &res[0], "%dx%d", conf.width, conf.height );
       nres     = 1;
    }
    for (i=0; i<n; i++) {
       SDL_GetDisplayMode( display_index, i, &mode  );
-      res[ nres ] = malloc(16);
-      nsnprintf( res[ nres ], 16, "%dx%d", mode.w, mode.h );
+      asprintf( &res[ nres ], "%dx%d", mode.w, mode.h );
 
       /* Make sure doesn't already exist. */
       for (k=0; k<nres; k++)
@@ -1252,7 +1250,7 @@ static void opt_video( unsigned int wid )
    window_addInput( wid, x+l+20, y, 40, 20, "inpFPS", 4, 1, NULL );
    toolkit_setListPos( wid, "lstRes", res_def);
    window_setInputFilter( wid, "inpFPS", INPUT_FILTER_NUMBER );
-   nsnprintf( buf, sizeof(buf), "%d", conf.fps_max );
+   snprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
@@ -1269,9 +1267,6 @@ static void opt_video( unsigned int wid )
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkVSync", _("Vertical Sync"), NULL, conf.vsync );
-   y -= 20;
-   window_addCheckbox( wid, x, y, cw, 20,
-         "chkMipmaps", _("Mipmaps*"), NULL, conf.mipmaps );
    y -= 20;
    window_addText( wid, x, y, cw, 20, 1,
          "txtSCompat", NULL, NULL, _("*Disable for compatibility.") );
@@ -1368,11 +1363,6 @@ static int opt_videoSave( unsigned int wid, char *str )
    f = window_checkboxState( wid, "chkVSync" );
    if (conf.vsync != f) {
       conf.vsync = f;
-      opt_needRestart();
-   }
-   f = window_checkboxState( wid, "chkMipmaps" );
-   if (conf.mipmaps != f) {
-      conf.mipmaps = f;
       opt_needRestart();
    }
 
@@ -1493,15 +1483,14 @@ static void opt_videoDefaults( unsigned int wid, char *str )
 
    /* Restore settings. */
    /* Inputs. */
-   nsnprintf( buf, sizeof(buf), "%dx%d", RESOLUTION_W_DEFAULT, RESOLUTION_H_DEFAULT );
+   snprintf( buf, sizeof(buf), "%dx%d", RESOLUTION_W_DEFAULT, RESOLUTION_H_DEFAULT );
    window_setInput( wid, "inpRes", buf );
-   nsnprintf( buf, sizeof(buf), "%d", FPS_MAX_DEFAULT );
+   snprintf( buf, sizeof(buf), "%d", FPS_MAX_DEFAULT );
    window_setInput( wid, "inpFPS", buf );
 
    /* Checkboxes. */
    window_checkboxSet( wid, "chkFullscreen", FULLSCREEN_DEFAULT );
    window_checkboxSet( wid, "chkVSync", VSYNC_DEFAULT );
-   window_checkboxSet( wid, "chkMipmaps", MIPMAP_DEFAULT );
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
    window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
    window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
@@ -1525,7 +1514,7 @@ static void opt_setScalefactor( unsigned int wid, char *str )
    if (FABS(conf.scalefactor-scale) > 1e-4)
       opt_needRestart();
    conf.scalefactor = scale;
-   nsnprintf( buf, sizeof(buf), _("Scaling: %.1fx"), conf.scalefactor );
+   snprintf( buf, sizeof(buf), _("Scaling: %.1fx"), conf.scalefactor );
    window_modifyText( wid, "txtScale", buf );
 }
 
@@ -1545,7 +1534,7 @@ static void opt_setMapOverlayOpacity( unsigned int wid, char *str )
    /* Set fader. */
    map_overlay_opacity = window_getFaderValue(wid, str);
 
-   nsnprintf( buf, sizeof(buf), _("%.0f%%"), map_overlay_opacity * 100 );
+   snprintf( buf, sizeof(buf), _("%.0f%%"), map_overlay_opacity * 100 );
 
    window_modifyText( wid, "txtMOpacity", buf );
 }

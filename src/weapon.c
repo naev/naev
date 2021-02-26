@@ -38,19 +38,10 @@
 
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
-#define WEAPON_CHUNK_MAX      16384 /**< Maximum size to increase array with */
-#define WEAPON_CHUNK_MIN      256 /**< Minimum size to increase array with */
-
 /* Weapon status */
 #define WEAPON_STATUS_OK         0 /**< Weapon is fine */
 #define WEAPON_STATUS_JAMMED     1 /**< Got jammed */
 #define WEAPON_STATUS_UNJAMMED   2 /**< Survived jamming */
-
-
-/*
- * pilot stuff
- */
-extern Pilot** pilot_stack;
 
 
 /**
@@ -75,12 +66,14 @@ typedef struct Weapon_ {
    double life; /**< Total life. */
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
+   GLfloat r; /**< Unique random value . */
    int sprite; /**< Used for spinning outfits. */
    PilotOutfitSlot *mount; /**< Used for beam weapons. */
    double falloff; /**< Point at which damage falls off. */
    double strength; /**< Calculated with falloff. */
    int sx; /**< Current X sprite to use. */
    int sy; /**< Current Y sprite to use. */
+   Trail_spfx *trail; /**< Trail graphic if applicable, else NULL. */
 
    /* position update and render */
    void (*update)(struct Weapon_*, const double, WeaponLayer); /**< Updates the weapon */
@@ -123,6 +116,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
 static void weapon_render( Weapon* w, const double dt );
 static void weapons_updateLayer( const double dt, const WeaponLayer layer );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
+static void weapon_sample_trail( Weapon* w );
 /* Destruction. */
 static void weapon_destroy( Weapon* w, WeaponLayer layer );
 static void weapon_free( Weapon* w );
@@ -516,7 +510,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                if (spfx != -1) {
                   spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
                         w->solid->vel.x, w->solid->vel.y,
-                        SPFX_LAYER_BACK ); /* presume back. */
+                        SPFX_LAYER_MIDDLE ); /* presume middle. */
                   /* Add sound if explodes and has it. */
                   s = outfit_soundHit(w->outfit);
                   if (s != -1)
@@ -546,7 +540,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                if (spfx != -1) {
                   spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
                         w->solid->vel.x, w->solid->vel.y,
-                        SPFX_LAYER_BACK ); /* presume back. */
+                        SPFX_LAYER_MIDDLE ); /* presume middle. */
                   /* Add sound if explodes and has it. */
                   s = outfit_soundHit(w->outfit);
                   if (s != -1)
@@ -634,44 +628,41 @@ void weapons_render( const WeaponLayer layer, const double dt )
 
 
 static void weapon_renderBeam( Weapon* w, const double dt ) {
-   double x, y, z, cx, cy, gx, gy;
-   glTexture *gfx;
-   gl_Matrix4 projection, tex_mat;
+   double x, y, z;
+   gl_Matrix4 projection;
+
+   /* Animation. */
+   w->anim += dt;
 
    /* Load GLSL program */
    glUseProgram(shaders.beam.program);
-
-   gfx = outfit_gfx(w->outfit);
 
    /* Zoom. */
    z = cam_getZoom();
 
    /* Position. */
-   cam_getPos( &cx, &cy );
-   gui_getOffset( &gx, &gy );
-   x = (w->solid->pos.x - cx)*z + gx;
-   y = (w->solid->pos.y - cy)*z + gy;
+   gl_gameToScreenCoords( &x, &y, w->solid->pos.x, w->solid->pos.y );
 
-   projection = gl_Matrix4_Translate( gl_view_matrix, SCREEN_W/2.+x, SCREEN_H/2.+y, 0. );
+   projection = gl_Matrix4_Translate( gl_view_matrix, x, y, 0. );
    projection = gl_Matrix4_Rotate2d( projection, w->solid->dir );
-   projection = gl_Matrix4_Scale( projection, w->outfit->u.bem.range*z,gfx->sh * z, 1 );
-
-   /* Bind the texture. */
-   glBindTexture( GL_TEXTURE_2D, gfx->texture);
+   projection = gl_Matrix4_Scale( projection, w->outfit->u.bem.range*z,w->outfit->u.bem.width * z, 1 );
+   projection = gl_Matrix4_Translate( projection, 0., -0.5, 0. );
 
    /* Set the vertex. */
    glEnableVertexAttribArray( shaders.beam.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.beam.vertex,
          0, 2, GL_FLOAT, 0 );
 
-   /* Set the texture. */
-   tex_mat = gl_Matrix4_Identity();
-   tex_mat = gl_Matrix4_Translate(tex_mat, w->anim, 0, 0);
-   tex_mat = gl_Matrix4_Scale(tex_mat, w->outfit->u.bem.range / gfx->sw, 1, 1);
-
    /* Set shader uniforms. */
    gl_Matrix4_Uniform(shaders.beam.projection, projection);
-   gl_Matrix4_Uniform(shaders.beam.tex_mat, tex_mat);
+   gl_uniformColor(shaders.beam.color, &w->outfit->u.bem.colour);
+   glUniform2f(shaders.beam.dimensions, w->outfit->u.bem.range, w->outfit->u.bem.width);
+   glUniform1f(shaders.beam.dt, w->anim);
+   glUniform1f(shaders.beam.r, w->r);
+
+   /* Set the subroutine. */
+   if (GLAD_GL_ARB_shader_subroutine)
+      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &w->outfit->u.bem.shader );
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -682,12 +673,6 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
 
    /* anything failed? */
    gl_checkErr();
-
-   /* Do the beam movement. */
-   gfx = outfit_gfx(w->outfit);
-   w->anim -= 5. * dt;
-   if (w->anim <= -gfx->sw)
-      w->anim += gfx->sw;
 }
 
 
@@ -848,9 +833,11 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    AsteroidAnchor *ast;
    Asteroid *a;
    AsteroidType *at;
+   Pilot *const* pilot_stack;
 
    gfx = NULL;
    polygon = NULL;
+   pilot_stack = pilot_getAll();
 
    /* Get the sprite direction to speed up calculations. */
    b     = outfit_isBeam(w->outfit);
@@ -863,11 +850,11 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
       /* See if the outfit has a collision polygon. */
       if (outfit_isBolt(w->outfit)) {
-         if (w->outfit->u.blt.npolygon == 0)
+         if (array_size(w->outfit->u.blt.polygon) == 0)
             usePoly = 0;
       }
       else if (outfit_isAmmo(w->outfit)) {
-         if (w->outfit->u.amm.npolygon == 0)
+         if (array_size(w->outfit->u.amm.polygon) == 0)
             usePoly = 0;
       }
    }
@@ -881,7 +868,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       if (w->parent == pilot_stack[i]->id) continue; /* pilot is self */
 
       /* See if the ship has a collision polygon. */
-      if (p->ship->npolygon == 0)
+      if (array_size(p->ship->polygon) == 0)
          usePoly = 0;
 
       /* Beam weapons have special collisions. */
@@ -951,7 +938,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    /* Collide with asteroids*/
    if (outfit_isAmmo(w->outfit)) {
-      for (i=0; i<cur_system->nasteroids; i++) {
+      for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
@@ -967,7 +954,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
    else if (outfit_isBolt(w->outfit)) {
-      for (i=0; i<cur_system->nasteroids; i++) {
+      for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
@@ -983,7 +970,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
    else if (b) { /* Beam */
-      for (i=0; i<cur_system->nasteroids; i++) {
+      for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
@@ -1011,6 +998,35 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    /* Update the sound. */
    sound_updatePos(w->voice, w->solid->pos.x, w->solid->pos.y,
          w->solid->vel.x, w->solid->vel.y);
+
+   /* Update the trail. */
+   if (w->trail != NULL)
+      weapon_sample_trail( w );
+}
+
+
+/**
+ * @brief Updates the animated trail for a weapon.
+ */
+static void weapon_sample_trail( Weapon* w )
+{
+   double a, dx, dy;
+   TrailMode mode;
+
+   /* Compute the engine offset. */
+   a  = w->solid->dir;
+   dx = w->outfit->u.amm.trail_x_offset * cos(a);
+   dy = w->outfit->u.amm.trail_x_offset * sin(a);
+
+   /* Set the colour. */
+   if (w->solid->thrust > 0)
+      mode = MODE_AFTERBURN;
+   else if (w->solid->dir_vel != 0.)
+      mode = MODE_GLOW;
+   else
+      mode = MODE_IDLE;
+
+   spfx_trail_sample( w->trail, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2, mode );
 }
 
 
@@ -1025,6 +1041,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 {
    int i;
    double d;
+   Pilot *const* pilot_stack;
 
    /* Must be a valid shooter. */
    if (shooter == NULL)
@@ -1036,6 +1053,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 
    /* Player is handled differently. */
    if (shooter->faction == FACTION_PLAYER) {
+      pilot_stack = pilot_getAll();
 
       /* Increment damage done to by player. */
       p->player_damage += dmg / (p->shield_max + p->armour_max);
@@ -1114,7 +1132,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
 
    /* Get the layer. */
-   spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+   spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
    /* Choose spfx. */
    if (p->shield > 0.)
       spfx = outfit_spfxShield(w->outfit);
@@ -1204,7 +1222,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->exp_timer == -1.) {
       /* Get the layer. */
-      spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
+      spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
 
       /* Choose spfx. */
       if (p->shield > 0.)
@@ -1257,9 +1275,9 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
 
       /* Add graphic. */
       spfx_add( spfx, pos[0].x, pos[0].y,
-            VX(a->vel), VY(a->vel), SPFX_LAYER_BACK );
+            VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
       spfx_add( spfx, pos[1].x, pos[1].y,
-            VX(a->vel), VY(a->vel), SPFX_LAYER_BACK );
+            VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
       w->exp_timer = -2;
    }
 }
@@ -1500,6 +1518,10 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    /* Set facing direction. */
    gfx = outfit_gfx( w->outfit );
    gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
+
+   /* Set up trails. */
+   if (ammo->u.amm.trail_spec != NULL)
+      w->trail = spfx_trail_create( ammo->u.amm.trail_spec );
 }
 
 
@@ -1575,6 +1597,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
          else if (rdir >= 2.*M_PI)
             rdir -= 2.*M_PI;
          mass = 1.; /**< Needs a mass. */
+         w->r     = RNGF(); /* Set unique value. */
          w->solid = solid_create( mass, rdir, pos, vel, SOLID_UPDATE_EULER );
          w->think = think_beam;
          w->timer = outfit->u.bem.duration;
@@ -1833,6 +1856,9 @@ static void weapon_free( Weapon* w )
 
    /* Free the solid. */
    solid_free(w->solid);
+
+   /* Free the trail, if any. */
+   spfx_trail_remove(w->trail);
 
 #ifdef DEBUGGING
    memset(w, 0, sizeof(Weapon));

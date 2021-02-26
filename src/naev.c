@@ -25,21 +25,6 @@
 #include <time.h>
 #include <unistd.h>
 #endif /* HAS_POSIX */
-
-#if defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE)
-#include <fenv.h>
-#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
-
-#include <locale.h>
-
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
-#include <signal.h>
-#include <execinfo.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <bfd.h>
-#include <assert.h>
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 /** @endcond */
 
 #include "ai.h"
@@ -49,6 +34,7 @@
 #include "conf.h"
 #include "console.h"
 #include "damagetype.h"
+#include "debug.h"
 #include "dev.h"
 #include "dialogue.h"
 #include "economy.h"
@@ -127,11 +113,6 @@ const double fps_min    = 1./30.; /**< Minimum fps to run at. */
 static double fps_x     =  15.; /**< FPS X position. */
 static double fps_y     = -15.; /**< FPS Y position. */
 
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
-static bfd *abfd      = NULL;
-static asymbol **syms = NULL;
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
-
 /*
  * prototypes
  */
@@ -143,8 +124,6 @@ static void load_all (void);
 static void unload_all (void);
 static void display_fps( const double dt );
 static void window_caption (void);
-static void debug_sigInit (void);
-static void debug_sigClose (void);
 /* update */
 static void fps_init (void);
 static double fps_elapsed (void);
@@ -152,7 +131,7 @@ static void fps_control (void);
 static void update_all (void);
 static void render_all (void);
 /* Misc. */
-void loadscreen_render( double done, const char *msg ); /* nebula.c */
+static void loadscreen_render( double done, const char *msg );
 void main_loop( int update ); /* dialogue.c */
 
 
@@ -174,7 +153,7 @@ void naev_quit (void)
  */
 int main( int argc, char** argv )
 {
-   char buf[PATH_MAX];
+   char conf_file_path[PATH_MAX], **search_path, **p;
 
    env_detect( argc, argv );
 
@@ -249,10 +228,13 @@ int main( int argc, char** argv )
       WARN( _("Unable to create config directory '%s'"), nfile_configPath());
 
    /* Set the configuration. */
-   nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
+   snprintf(conf_file_path, sizeof(conf_file_path), "%s"CONF_FILE, nfile_configPath());
 
-   conf_loadConfig(buf); /* Lua to parse the configuration file */
+   conf_loadConfig(conf_file_path); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
+
+   /* Set up I/O. */
+   ndata_setupWriteDir();
 
    if (conf.redirect_file && log_copying()) {
       log_redirect();
@@ -261,18 +243,21 @@ int main( int argc, char** argv )
    else
       log_purge();
 
+   ndata_setupReadDirs();
+   gettext_setLanguage( conf.language ); /* now that we can find translations */
+   LOG( _("Loaded configuration: %s"), conf_file_path );
+   search_path = PHYSFS_getSearchPath();
+   LOG( "%s", _("Read locations, searched in order:") );
+   for (p = search_path; *p != NULL; p++)
+      LOG( "    %s", *p );
+   PHYSFS_freeList( search_path );
+   /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
+   DEBUG( _("Cache location: %s"), nfile_cachePath() );
+   LOG( _("Write location: %s\n"), PHYSFS_getWriteDir() );
+
    /* Enable FPU exceptions. */
-#if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && defined(_GNU_SOURCE)
    if (conf.fpu_except)
-      feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
-#endif /* defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
-
-   /* Open data. */
-   if (ndata_open() != 0)
-      ERR( _("Failed to open ndata.") );
-
-   /* We now know which translations to use. */
-   gettext_setLanguage( conf.language );
+      debug_enableFPUExcept();
 
    /* Load the start info. */
    if (start_load())
@@ -435,7 +420,7 @@ int main( int argc, char** argv )
    }
 
    /* Save configuration. */
-   conf_saveConfig(buf);
+   conf_saveConfig(conf_file_path);
 
    /* data unloading */
    unload_all();
@@ -463,8 +448,6 @@ int main( int argc, char** argv )
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
 
-   ndata_close(); /* Free PhysicsFS resources. */
-
    /* Free the icon. */
    if (naev_icon)
       SDL_FreeSurface(naev_icon);
@@ -475,13 +458,13 @@ int main( int argc, char** argv )
    /* Clean up parser. */
    xmlCleanupParser();
 
-   PHYSFS_deinit();
-
    /* Clean up signal handler. */
    debug_sigClose();
 
    /* Delete logs if empty. */
    log_clean();
+
+   PHYSFS_deinit();
 
    /* all is well */
    exit(EXIT_SUCCESS);
@@ -512,7 +495,7 @@ void loadscreen_load (void)
    cam_setZoom( conf.zoom_far );
 
    /* Load the texture */
-   nsnprintf( file_path, PATH_MAX, GFX_PATH"loading/%s", loadscreens[ RNG_BASE(0,nload-1) ] );
+   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s", loadscreens[ RNG_BASE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
 
    /* Create the stars. */
@@ -716,12 +699,7 @@ void main_loop( int update )
     * Handle render.
     */
    /* Clear buffer. */
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    render_all();
-   /* Toolkit is rendered on top. */
-   if (toolkit_isOpen())
-      toolkit_render();
-   gl_checkErr(); /* check error every loop */
    /* Draw buffer. */
    SDL_GL_SwapWindow( gl_screen.window );
 }
@@ -758,14 +736,11 @@ void naev_resize (void)
    /* Reload the GUI (may regenerate land window) */
    gui_reload();
 
-   /* Resets the overlay dimensions. */
+   /* Resets dimensions in other components which care. */
    ovr_refresh();
-
-   /* Re-center windows. */
    toolkit_reposition();
-
-   /* Reposition main menu, if open. */
    menu_main_resize();
+   nebu_resize();
 }
 
 /*
@@ -959,20 +934,22 @@ void update_routine( double dt, int enter_sys )
 static void render_all (void)
 {
    double dt;
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    dt = (paused) ? 0. : game_dt;
 
    /* setup */
    spfx_begin(dt, real_dt);
-   /* BG */
-   space_render(dt);
+   /* Background stuff */
+   space_render( real_dt ); /* Nebula looks really weird otherwise. */
    planets_render();
+   spfx_render(SPFX_LAYER_BACK);
    weapons_render(WEAPON_LAYER_BG, dt);
-   /* N */
+   /* Middle stuff */
    pilots_render(dt);
    weapons_render(WEAPON_LAYER_FG, dt);
-   spfx_render(SPFX_LAYER_BACK);
-   /* FG */
+   spfx_render(SPFX_LAYER_MIDDLE);
+   /* Foreground stuff */
    player_render(dt);
    spfx_render(SPFX_LAYER_FRONT);
    space_renderOverlay(dt);
@@ -980,8 +957,14 @@ static void render_all (void)
    pilots_renderOverlay(dt);
    spfx_end();
    gui_render(dt);
+
+   /* Top stuff. */
    ovr_render(dt);
-   display_fps( real_dt ); /* Exception. */
+   display_fps( real_dt ); /* Exception using real_dt. */
+   toolkit_render();
+
+   /* check error every loop */
+   gl_checkErr();
 }
 
 
@@ -1058,7 +1041,7 @@ static void window_caption (void)
    }
 
    /* Set caption. */
-   nsnprintf(buf, PATH_MAX, APPNAME" - %s", start_name());
+   snprintf(buf, sizeof(buf), APPNAME" - %s", start_name());
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
 }
@@ -1075,7 +1058,7 @@ char *naev_version( int long_version )
    /* Set up the long version. */
    if (long_version) {
       if (version_human[0] == '\0')
-         nsnprintf( version_human, sizeof(version_human),
+         snprintf( version_human, sizeof(version_human),
                " "APPNAME" v%s%s - %s", VERSION,
 #ifdef DEBUGGING
                _(" debug"),
@@ -1146,191 +1129,4 @@ static void print_SDLversion (void)
       WARN( _("SDL is newer than compiled version") );
    if (version_linked < version_compiled)
       WARN( _("SDL is older than compiled version.") );
-}
-
-
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
-/**
- * @brief Gets the string related to the signal code.
- *
- *    @param sig Signal to which code belongs.
- *    @param sig_code Signal code to get string of.
- *    @return String of signal code.
- */
-static const char* debug_sigCodeToStr( int sig, int sig_code )
-{
-   if (sig == SIGFPE)
-      switch (sig_code) {
-         case SI_USER: return _("SIGFPE (raised by program)");
-         case FPE_INTDIV: return _("SIGFPE (integer divide by zero)");
-         case FPE_INTOVF: return _("SIGFPE (integer overflow)");
-         case FPE_FLTDIV: return _("SIGFPE (floating-point divide by zero)");
-         case FPE_FLTOVF: return _("SIGFPE (floating-point overflow)");
-         case FPE_FLTUND: return _("SIGFPE (floating-point underflow)");
-         case FPE_FLTRES: return _("SIGFPE (floating-point inexact result)");
-         case FPE_FLTINV: return _("SIGFPE (floating-point invalid operation)");
-         case FPE_FLTSUB: return _("SIGFPE (subscript out of range)");
-         default: return _("SIGFPE");
-      }
-   else if (sig == SIGSEGV)
-      switch (sig_code) {
-         case SI_USER: return _("SIGSEGV (raised by program)");
-         case SEGV_MAPERR: return _("SIGSEGV (address not mapped to object)");
-         case SEGV_ACCERR: return _("SIGSEGV (invalid permissions for mapped object)");
-         default: return _("SIGSEGV");
-      }
-   else if (sig == SIGABRT)
-      switch (sig_code) {
-         case SI_USER: return _("SIGABRT (raised by program)");
-         default: return _("SIGABRT");
-      }
-
-   /* No suitable code found. */
-   return strsignal(sig);
-}
-
-/**
- * @brief Translates and displays the address as something humans can enjoy.
- *
- * @TODO Remove the conditional defines which are to support old BFD (namely Ubuntu 16.04).
- */
-static void debug_translateAddress( const char *symbol, bfd_vma address )
-{
-   const char *file, *func;
-   unsigned int line;
-   asection *section;
-
-   for (section = abfd->sections; section != NULL; section = section->next) {
-#ifdef bfd_get_section_flags
-      if ((bfd_get_section_flags(abfd, section) & SEC_ALLOC) == 0)
-#else /* bfd_get_section_flags */
-      if ((bfd_section_flags(section) & SEC_ALLOC) == 0)
-#endif /* bfd_get_section_flags */
-         continue;
-
-#ifdef bfd_get_section_vma
-      bfd_vma vma = bfd_get_section_vma(abfd, section);
-#else /* bfd_get_section_vma */
-      bfd_vma vma = bfd_section_vma(section);
-#endif /* bfd_get_section_vma */
-
-#ifdef bfd_get_section_size
-      bfd_size_type size = bfd_get_section_size(section);
-#else /* bfd_get_section_size */
-      bfd_size_type size = bfd_section_size(section);
-#endif /* bfd_get_section_size */
-      if (address < vma || address >= vma + size)
-         continue;
-
-      if (!bfd_find_nearest_line(abfd, section, syms, address - vma,
-            &file, &func, &line))
-         continue;
-
-      do {
-         if (func == NULL || func[0] == '\0')
-            func = "??";
-         if (file == NULL || file[0] == '\0')
-            file = "??";
-         DEBUG("%s %s(...):%u %s", symbol, func, line, file);
-      } while (bfd_find_inliner_info(abfd, &file, &func, &line));
-
-      return;
-   }
-
-   DEBUG("%s %s(...):%u %s", symbol, "??", 0, "??");
-}
-
-
-/**
- * @brief Backtrace signal handler for Linux.
- *
- *    @param sig Signal.
- *    @param info Signal information.
- *    @param unused Unused.
- */
-static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
-{
-   (void)sig;
-   (void)unused;
-   int i, num;
-   void *buf[64];
-   char **symbols;
-
-   num      = backtrace(buf, 64);
-   symbols  = backtrace_symbols(buf, num);
-
-   DEBUG( _("Naev received %s!"),
-         debug_sigCodeToStr(info->si_signo, info->si_code) );
-   for (i=0; i<num; i++) {
-      if (abfd != NULL)
-         debug_translateAddress(symbols[i], (bfd_vma) (bfd_hostptr_t) buf[i]);
-      else
-         DEBUG("   %s", symbols[i]);
-   }
-   DEBUG( _("Report this to project maintainer with the backtrace.") );
-
-   /* Always exit. */
-   exit(1);
-}
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
-
-
-/**
- * @brief Sets up the SignalHandler for Linux.
- */
-static void debug_sigInit (void)
-{
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
-   char **matching;
-   struct sigaction sa, so;
-   long symcount;
-   unsigned int size;
-
-   bfd_init();
-
-   /* Read the executable */
-   abfd = bfd_openr("/proc/self/exe", NULL);
-   if (abfd != NULL) {
-      bfd_check_format_matches(abfd, bfd_object, &matching);
-
-      /* Read symbols */
-      if (bfd_get_file_flags(abfd) & HAS_SYMS) {
-
-         /* static */
-         symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
-         if ( symcount == 0 && abfd != NULL ) /* dynamic */
-            symcount = bfd_read_minisymbols (abfd, TRUE, (void **)&syms, &size);
-         assert(symcount >= 0);
-      }
-   }
-
-   /* Set up handler. */
-   sa.sa_handler   = NULL;
-   sa.sa_sigaction = debug_sigHandler;
-   sigemptyset(&sa.sa_mask);
-   sa.sa_flags     = SA_SIGINFO;
-
-   /* Attach signals. */
-   sigaction(SIGSEGV, &sa, &so);
-   if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up SIGSEGV signal handler.") );
-   sigaction(SIGFPE, &sa, &so);
-   if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up SIGFPE signal handler.") );
-   sigaction(SIGABRT, &sa, &so);
-   if (so.sa_handler == SIG_IGN)
-      DEBUG( _("Unable to set up SIGABRT signal handler.") );
-   DEBUG( _("BFD backtrace catching enabled.") );
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
-}
-
-
-/**
- * @brief Closes the SignalHandler for Linux.
- */
-static void debug_sigClose (void)
-{
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
-   bfd_close( abfd );
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
 }

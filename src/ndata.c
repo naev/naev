@@ -6,7 +6,7 @@
  * @file ndata.c
  *
  * @brief Wrappers to set up and access game assets (mounted via PhysicsFS).
- *        The main search for data takes place in ndata_open().
+ *        We choose our underlying directories in ndata_setupWriteDir() and ndata_setupReadDirs().
  *        However, conf.c code may have seeded the search path based on command-line arguments.
  */
 
@@ -14,10 +14,9 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <string.h>
-#if HAS_WIN32
+#if WIN32
 #include <windows.h>
-#endif /* HAS_WIN32 */
+#endif /* WIN32 */
 
 #include "physfs.h"
 #include "SDL.h"
@@ -30,9 +29,9 @@
 #include "array.h"
 #include "conf.h"
 #include "env.h"
-#if HAS_MACOS
+#if MACOS
 #include "glue_macos.h"
-#endif /* HAS_MACOS */
+#endif /* MACOS */
 #include "log.h"
 #include "nfile.h"
 #include "nstring.h"
@@ -89,23 +88,44 @@ static void ndata_testVersion (void)
 
 
 /**
- * @brief Opens the ndata directory.
- *
- *    @return 0 on success.
+ * @brief Gets Naev's data path (for user data such as saves and screenshots)
  */
-int ndata_open (void)
+void ndata_setupWriteDir (void)
+{
+   /* Global override is set. */
+   if (conf.datapath) {
+      PHYSFS_setWriteDir( conf.datapath );
+      return;
+   }
+#if MACOS
+   /* For historical reasons predating physfs adoption, this case is different. */
+   PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "org.naev.Naev" ) );
+#else
+   PHYSFS_setWriteDir( PHYSFS_getPrefDir( ".", "naev" ) );
+#endif /* MACOS */
+   if (PHYSFS_getWriteDir() == NULL) {
+      WARN(_("Cannot determine data path, using current directory."));
+      PHYSFS_setWriteDir( "./naev/" );
+   }
+}
+
+
+/**
+ * @brief Sets up the PhysicsFS search path.
+ */
+void ndata_setupReadDirs (void)
 {
    char buf[ PATH_MAX ];
 
    if ( conf.ndata != NULL && PHYSFS_mount( conf.ndata, NULL, 1 ) )
       LOG(_("Added datapath from conf.lua file: %s"), conf.ndata);
 
-#if HAS_MACOS
+#if MACOS
    if ( !ndata_found() && macos_isBundle() && macos_resourcesPath( buf, PATH_MAX-4 ) >= 0 && strncat( buf, "/dat", 4 ) ) {
       LOG(_("Trying default datapath: %s"), buf);
       PHYSFS_mount( buf, NULL, 1 );
    }
-#endif /* HAS_MACOS */
+#endif /* MACOS */
 
    if ( !ndata_found() && env.isAppImage && nfile_concatPaths( buf, PATH_MAX, env.appdir, PKGDATADIR, "dat" ) >= 0 ) {
       LOG(_("Trying default datapath: %s"), buf);
@@ -122,17 +142,8 @@ int ndata_open (void)
       PHYSFS_mount( buf, NULL, 1 );
    }
 
+   PHYSFS_mount( PHYSFS_getWriteDir(), NULL, 0 );
    ndata_testVersion();
-   return 0;
-}
-
-
-/**
- * @brief Closes and cleans up the ndata directory.
- */
-void ndata_close (void)
-{
-   PHYSFS_deinit();
 }
 
 
@@ -247,14 +258,12 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
 {
    char *path;
    const char *fmt;
-   size_t dir_len, path_size;
+   size_t dir_len;
    PHYSFS_Stat stat;
 
    dir_len = strlen( origdir );
-   path_size = dir_len + strlen( fname ) + 2;
-   path = malloc( path_size );
    fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
-   nsnprintf( path, path_size, fmt, origdir, fname );
+   asprintf( &path, fmt, origdir, fname );
    if (!PHYSFS_stat( path, &stat )) {
       WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
             PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
@@ -269,4 +278,87 @@ static int ndata_enumerateCallback( void* data, const char* origdir, const char*
    else
       free( path );
    return PHYSFS_ENUM_OK;
+}
+
+
+/**
+ * @brief Backup a file, if it exists.
+ *
+ *    @param path PhysicsFS relative pathname to back up.
+ *    @return 0 on success, or if file does not exist, -1 on error.
+ */
+int ndata_backupIfExists( const char *path )
+{
+   char backup[ PATH_MAX ];
+
+   if ( path == NULL )
+      return -1;
+
+   if ( !PHYSFS_exists( path ) )
+      return 0;
+
+   snprintf(backup, sizeof(backup), "%s.backup", path);
+
+   return ndata_copyIfExists( path, backup );
+}
+
+
+/**
+ * @brief Copy a file, if it exists.
+ *
+ *    @param file1 PhysicsFS relative pathname to copy from.
+ *    @param file2 PhysicsFS relative pathname to copy to.
+ *    @return 0 on success, or if file1 does not exist, -1 on error.
+ */
+int ndata_copyIfExists( const char* file1, const char* file2 )
+{
+   PHYSFS_File *f_in, *f_out;
+   char buf[ 8*1024 ];
+   PHYSFS_sint64 lr, lw;
+
+   if (file1 == NULL)
+      return -1;
+
+   /* Check if input file exists */
+   if (!PHYSFS_exists(file1))
+      return 0;
+
+   /* Open files. */
+   f_in  = PHYSFS_openRead( file1 );
+   f_out = PHYSFS_openWrite( file2 );
+   if ((f_in==NULL) || (f_out==NULL)) {
+      WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      if (f_in!=NULL)
+         PHYSFS_close(f_in);
+      return -1;
+   }
+
+   /* Copy data over. */
+   do {
+      lr = PHYSFS_readBytes( f_in, buf, sizeof(buf) );
+      if (lr == -1)
+         goto err;
+      else if (!lr) {
+         if (PHYSFS_eof( f_in ))
+            break;
+         goto err;
+      }
+
+      lw = PHYSFS_writeBytes( f_out, buf, lr );
+      if (lr != lw)
+         goto err;
+   } while (lr > 0);
+
+   /* Close files. */
+   PHYSFS_close( f_in );
+   PHYSFS_close( f_out );
+
+   return 0;
+
+err:
+   WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+   PHYSFS_close( f_in );
+   PHYSFS_close( f_out );
+
+   return -1;
 }

@@ -13,6 +13,7 @@
   <sound_hit>bansheeexp</sound_hit>
   <spfx_shield>EmpS</spfx_shield>
   <spfx_armour>EmpS</spfx_armour>
+  <trail_generator x="0">fire-missile</trail_generator>
   <duration blowup="shield">7</duration>
   <thrust>0</thrust>
   <speed>250</speed>

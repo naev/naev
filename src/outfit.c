@@ -152,7 +152,7 @@ char **outfit_searchFuzzyCase( const char* name, int *n )
    /* Do fuzzy search. */
    len = 0;
    for (i=0; i<nstack; i++) {
-      if (nstrcasestr( _(outfit_stack[i].name), name ) != NULL) {
+      if (strcasestr( _(outfit_stack[i].name), name ) != NULL) {
          names[len] = outfit_stack[i].name;
          len++;
       }
@@ -548,7 +548,6 @@ int outfit_isSecondary( const Outfit* o )
 glTexture* outfit_gfx( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.gfx_space;
-   else if (outfit_isBeam(o)) return o->u.bem.gfx;
    else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
    return NULL;
 }
@@ -1040,20 +1039,11 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
 static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
 {
    char *file;
-   int sl;
    CollPoly *polygon;
    xmlDocPtr doc;
    xmlNodePtr node, cur;
 
-   if (bolt)
-      temp->u.blt.npolygon = 0;
-   else
-      temp->u.amm.npolygon = 0;
-
-   sl   = strlen(buf)+strlen(OUTFIT_POLYGON_PATH)+strlen(".xml")+1;
-   file = malloc( sl );
-
-   nsnprintf( file, sl, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
+   asprintf( &file, "%s%s.xml", OUTFIT_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
    if (!PHYSFS_exists(file)) {
@@ -1086,12 +1076,10 @@ that can be found in Naev's artwork repo."), file);
       do { /* load the polygon data */
          if (xml_isNode(node,"polygons")) {
             cur = node->children;
-            temp->u.blt.polygon = malloc( sizeof(CollPoly) );
+            temp->u.blt.polygon = array_create_size( CollPoly, 36 );
             do {
                if (xml_isNode(cur,"polygon")) {
-                  temp->u.blt.npolygon++;
-                  temp->u.blt.polygon = realloc( temp->u.blt.polygon, sizeof(CollPoly) * temp->u.blt.npolygon );
-                  polygon = &temp->u.blt.polygon[temp->u.blt.npolygon-1];
+                  polygon = &array_grow( &temp->u.blt.polygon );
                   LoadPolygon( polygon, cur );
                }
             } while (xml_nextNode(cur));
@@ -1102,12 +1090,10 @@ that can be found in Naev's artwork repo."), file);
       do { /* Second case: outfit is an ammo */
          if (xml_isNode(node,"polygons")) {
             cur = node->children;
-            temp->u.amm.polygon = malloc( sizeof(CollPoly) );
+            temp->u.amm.polygon = array_create_size( CollPoly, 36 );
             do {
                if (xml_isNode(cur,"polygon")) {
-                  temp->u.amm.npolygon++;
-                  temp->u.amm.polygon = realloc( temp->u.amm.polygon, sizeof(CollPoly) * temp->u.amm.npolygon );
-                  polygon = &temp->u.amm.polygon[temp->u.amm.npolygon-1];
+                  polygon = &array_grow( &temp->u.amm.polygon );
                   LoadPolygon( polygon, cur );
                }
             } while (xml_nextNode(cur));
@@ -1184,10 +1170,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          outfit_loadPLG( temp, buf, 1 );
 
          /* Validity check: there must be 1 polygon per sprite. */
-         if (temp->u.blt.npolygon != 36) {
+         if (array_size(temp->u.blt.polygon) != 36) {
             WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
-                    temp->name, temp->u.blt.npolygon, 36);
+                    temp->name, array_size(temp->u.blt.polygon), 36);
          }
          continue;
       }
@@ -1249,7 +1235,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = scnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s [%s]\n"
          "%.0f CPU\n"
          "%.0f%% Penetration\n"
@@ -1259,11 +1245,11 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.dmg.penetration*100.,
          1./temp->u.blt.delay * temp->u.blt.dmg.damage, temp->u.blt.dmg.damage );
    if (temp->u.blt.dmg.disable > 0.) {
-      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.2f Disable/s [%.0f Disable]\n"),
          1./temp->u.blt.delay * temp->u.blt.dmg.disable, temp->u.blt.dmg.disable );
    }
-   l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+   l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range\n"
@@ -1273,7 +1259,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.range,
          temp->u.blt.heatup);
    if (!outfit_isTurret(temp)) {
-      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("\n%.1f degree swivel"),
          temp->u.blt.swivel*180./M_PI );
    }
@@ -1311,6 +1297,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    int l;
    xmlNodePtr node;
    double C, area;
+   char *shader;
 
    /* Defaults. */
    temp->u.bem.spfx_armour = -1;
@@ -1341,9 +1328,18 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       }
 
       /* Graphic stuff. */
-      if (xml_isNode(node,"gfx")) {
-         temp->u.bem.gfx = xml_parseTexture( node,
-               OUTFIT_GFX_PATH"space/%s", 1, 1, OPENGL_TEX_MIPMAPS );
+      if (xml_isNode(node,"shader")) {
+         xmlr_attr_float(node, "r", temp->u.bem.colour.r);
+         xmlr_attr_float(node, "g", temp->u.bem.colour.g);
+         xmlr_attr_float(node, "b", temp->u.bem.colour.b);
+         xmlr_attr_float(node, "a", temp->u.bem.colour.a);
+         xmlr_attr_float(node, "width", temp->u.bem.width);
+         shader = xml_get(node);
+         if (GLAD_GL_ARB_shader_subroutine) {
+            temp->u.bem.shader = glad_glGetSubroutineIndex( shaders.beam.program, GL_FRAGMENT_SHADER, shader );
+            if (temp->u.bem.shader == GL_INVALID_INDEX)
+               WARN("Beam outfit '%s' has unknown shader function '%s'", temp->name, shader);
+         }
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
@@ -1385,7 +1381,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = scnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s\n"
          "%.0f CPU\n"
          "%.0f%% Penetration\n"
@@ -1395,11 +1391,11 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.dmg.penetration*100.,
          temp->u.bem.dmg.damage, _(dtype_damageTypeToStr(temp->u.bem.dmg.type) ) );
    if (temp->u.blt.dmg.disable > 0.) {
-      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.0f Disable/s\n"),
          temp->u.bem.dmg.disable );
    }
-   l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+   l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.1f EPS\n"
          "%.1f Duration %.1f Cooldown\n"
          "%.0f Range\n"
@@ -1412,7 +1408,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
-   MELEMENT(temp->u.bem.gfx==NULL,"gfx");
+   MELEMENT(temp->u.bem.width==0.,"shader width");
    MELEMENT(temp->u.bem.spfx_shield==-1,"spfx_shield");
    MELEMENT(temp->u.bem.spfx_armour==-1,"spfx_armour");
    MELEMENT((sound_disabled!=0) && (temp->u.bem.warmup > 0.) && (temp->u.bem.sound<0),"sound_warmup");
@@ -1494,6 +1490,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->u.amm.spfx_shield = -1;
    temp->u.amm.sound       = -1;
    temp->u.amm.sound_hit   = -1;
+   temp->u.amm.trail_spec  = NULL;
    temp->u.amm.ai          = -1;
 
    do { /* load all the data */
@@ -1532,10 +1529,10 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          outfit_loadPLG( temp, buf, 0 );
 
          /* Validity check: there must be 1 polygon per sprite. */
-         if (temp->u.amm.npolygon != 36) {
+         if (array_size(temp->u.amm.polygon) != 36) {
             WARN(_("Outfit '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
-                    temp->name, temp->u.amm.npolygon, 36);
+                    temp->name, array_size(temp->u.amm.polygon), 36);
          }
          continue;
       }
@@ -1559,10 +1556,17 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.amm.dmg, node );
          continue;
       }
+      if (xml_isNode(node,"trail_generator")) {
+         xmlr_attr_float( node, "x", temp->u.amm.trail_x_offset );
+         buf = xml_get(node);
+         if (buf == NULL)
+            buf = "default";
+         temp->u.amm.trail_spec = trailSpec_get( buf );
+         continue;
+      }
       if (xml_isNode(node,"ai")) {
          buf = xml_get(node);
          if (buf != NULL) {
-
             if (strcmp(buf,"unguided")==0)
                temp->u.amm.ai = AMMO_AI_UNGUIDED;
             else if (strcmp(buf,"seek")==0)
@@ -1666,7 +1670,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   i = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   i = scnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s"
          "%s",
          _(outfit_getType(temp)),
@@ -1675,9 +1679,9 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 #define DESC_ADD(x, s) \
 if ((x) != 0) \
    do { \
-      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n#%c", ((x)>0)?'g':'r' ); \
-      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, s, x ); \
-      i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "#0" ); \
+      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n#%c", ((x)>0)?'g':'r' ); \
+      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, s, x ); \
+      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "#0" ); \
    } while(0)
    DESC_ADD( temp->cpu,                _("%+.0f CPU") );
    DESC_ADD( temp->u.mod.thrust,       _("%+.0f Thrust") );
@@ -1757,7 +1761,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s\n"
          "#rActivated Outfit#0\n"
          "%.0f CPU\n"
@@ -1825,7 +1829,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s\n"
          "%.0f CPU\n"
          "%.1f Launches Per Second\n"
@@ -1867,7 +1871,7 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s",
          _(outfit_getType(temp)) );
 
@@ -1944,15 +1948,15 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
       }
       else if (xml_isNode(node,"short_desc")) {
          temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-         nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX, "%s", xml_get(node) );
+         snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX, "%s", xml_get(node) );
       }
       else if (xml_isNode(node,"all")) { /* Add everything to the map */
          system_stack = system_getAll();
          for (i=0;i<array_size(system_stack);i++) {
             array_grow( &temp->u.map->systems ) = &system_stack[i];
-            for (j=0;j<system_stack[i].nplanets;j++)
+            for (j=0;j<array_size(system_stack[i].planets);j++)
                array_grow( &temp->u.map->assets ) = system_stack[i].planets[j];
-            for (j=0;j<system_stack[i].njumps;j++)
+            for (j=0;j<array_size(system_stack[i].jumps);j++)
                array_grow( &temp->u.map->jumps ) = &system_stack[i].jumps[j];
          }
       }
@@ -1967,7 +1971,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    if (temp->desc_short == NULL) {
       /* Set short description based on type. */
       temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-      nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+      snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
             "%s", _(outfit_getType(temp)) );
    }
 
@@ -2007,7 +2011,7 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s",
          _(outfit_getType(temp)) );
 
@@ -2043,7 +2047,7 @@ static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          _("GUI (Graphical User Interface)") );
 
 #define MELEMENT(o,s) \
@@ -2077,7 +2081,7 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s",
          _(outfit_getType(temp)) );
 
@@ -2102,7 +2106,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    xmlNodePtr cur, ccur, node, parent;
    char *prop, *desc_extra;
    const char *cprop;
-   int group, m, l;
+   int group, l;
    ShipStatList *ll;
 
    xmlDocPtr doc = xml_parsePhysFS( file );
@@ -2155,19 +2159,12 @@ static int outfit_parse( Outfit* temp, const char* file )
             }
             else if (xml_isNode(cur,"gfx_overlays")) {
                ccur = cur->children;
-               m = 2;
-               temp->gfx_overlays = malloc( m*sizeof(glTexture*) );
+               temp->gfx_overlays = array_create_size( glTexture*, 2 );
                do {
                   xml_onlyNodes(ccur);
-                  if (xml_isNode(ccur,"gfx_overlay")) {
-                     temp->gfx_noverlays += 1;
-                     if (temp->gfx_noverlays > m) {
-                        m *= 2;
-                        temp->gfx_overlays = realloc( temp->gfx_overlays, m * sizeof( glTexture * ) );
-                     }
-                     temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( ccur,
-                           OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
-                  }
+                  if (xml_isNode(ccur,"gfx_overlay"))
+                     array_push_back( &temp->gfx_overlays,
+                           xml_parseTexture( ccur, OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS ) );
                } while (xml_nextNode(ccur));
                continue;
             }
@@ -2234,7 +2231,7 @@ static int outfit_parse( Outfit* temp, const char* file )
          }
 
          /* Check for manually-defined group. */
-         xmlr_attr_atoi_neg1(node, "group", group);
+         xmlr_attr_int_def(node, "group", group, -1);
          if (group != -1) {
             if (group > PILOT_WEAPON_SETS || group < 1) {
                WARN(_("Outfit '%s' has group '%d', should be in the 1-%d range"),
@@ -2284,7 +2281,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             /* Add extra description task if available. */
             if (desc_extra != NULL) {
                l = strlen(temp->desc_short);
-               nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", desc_extra );
+               snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, "\n%s", desc_extra );
                free( desc_extra );
                desc_extra = NULL;
             }
@@ -2414,7 +2411,7 @@ int outfit_load (void)
 int outfit_mapParse (void)
 {
    Outfit *o;
-   size_t i, len;
+   size_t i;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    char **map_files;
@@ -2422,9 +2419,7 @@ int outfit_mapParse (void)
 
    map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );
    for (i=0; map_files[i]!=NULL; i++) {
-      len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
-      file = malloc( len );
-      nsnprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
+      asprintf( &file, "%s%s", MAP_DATA_PATH, map_files[i] );
 
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
@@ -2490,18 +2485,18 @@ static void outfit_launcherDesc( Outfit* o )
    a = o->u.lau.ammo;
 
    o->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = nsnprintf( o->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = scnprintf( o->desc_short, OUTFIT_SHORTDESC_MAX,
          _("%s [%s]\n"
          "%.0f CPU\n"),
          _(outfit_getType(o)), _(dtype_damageTypeToStr(a->u.amm.dmg.type)),
          o->cpu );
 
    if (outfit_isSeeker(o))
-      l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+      l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("%.1f Second Lock-on\n"),
             o->u.lau.lockon );
 
-   l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+   l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
          _("Holds %d %s:\n"
          "%.0f%% Penetration\n"
          "%.2f DPS [%.0f Damage]\n"),
@@ -2510,11 +2505,11 @@ static void outfit_launcherDesc( Outfit* o )
          1. / o->u.lau.delay * a->u.amm.dmg.damage, a->u.amm.dmg.damage );
 
    if (a->u.amm.dmg.disable > 0.)
-      l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+      l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("%.1f Disable/s [%.0f Disable]\n"),
             1. / o->u.lau.delay * a->u.amm.dmg.disable, a->u.amm.dmg.disable );
 
-   l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+   l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
          _("%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range [%.1f duration]\n"
@@ -2535,7 +2530,7 @@ static void outfit_launcherDesc( Outfit* o )
 glTexture* rarity_texture( int rarity )
 {
    char s[PATH_MAX];
-   nsnprintf( s, sizeof(s), OVERLAY_GFX_PATH"rarity_%d.png", rarity );
+   snprintf( s, sizeof(s), OVERLAY_GFX_PATH"rarity_%d.png", rarity );
    return gl_newImage( s, OPENGL_TEX_MIPMAPS );
 }
 
@@ -2562,25 +2557,21 @@ void outfit_free (void)
 
       if (outfit_isAmmo(o)) {
          /* Free collision polygons. */
-         if (o->u.amm.npolygon != 0) {
-            for (j=0; j<o->u.amm.npolygon; j++) {
-               free(o->u.amm.polygon[j].x);
-               free(o->u.amm.polygon[j].y);
-            }
-            free(o->u.amm.polygon);
+         for (j=0; j<array_size(o->u.amm.polygon); j++) {
+            free(o->u.amm.polygon[j].x);
+            free(o->u.amm.polygon[j].y);
          }
+         array_free(o->u.amm.polygon);
       }
       /* Type specific. */
       if (outfit_isBolt(o)) {
          gl_freeTexture(o->u.blt.gfx_end);
          /* Free collision polygons. */
-         if (o->u.blt.npolygon != 0) {
-            for (j=0; j<o->u.blt.npolygon; j++) {
-               free(o->u.blt.polygon[j].x);
-               free(o->u.blt.polygon[j].y);
-            }
-            free(o->u.blt.polygon);
+         for (j=0; j<array_size(o->u.blt.polygon); j++) {
+            free(o->u.blt.polygon[j].x);
+            free(o->u.blt.polygon[j].y);
          }
+         array_free(o->u.blt.polygon);
       }
       if (outfit_isLauncher(o))
          free(o->u.lau.ammo_name);
@@ -2605,9 +2596,9 @@ void outfit_free (void)
       free(o->license);
       free(o->name);
       gl_freeTexture(o->gfx_store);
-      for (j=0; j<o->gfx_noverlays; j++)
+      for (j=0; j<array_size(o->gfx_overlays); j++)
          gl_freeTexture(o->gfx_overlays[j]);
-      free(o->gfx_overlays);
+      array_free(o->gfx_overlays);
    }
 
    array_free(outfit_stack);

@@ -11,6 +11,7 @@
  * Init/Exit
  */
 int nebu_init (void);
+int nebu_resize (void);
 void nebu_exit (void);
 
 /*
@@ -27,7 +28,6 @@ void nebu_update( double dt );
 /*
  * Misc
  */
-void nebu_genOverlay (void);
 double nebu_getSightRadius (void);
 void nebu_prep( double density, double volatility );
 void nebu_movePuffs( double x, double y );

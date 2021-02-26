@@ -217,11 +217,11 @@ void ntime_prettyBuf( char *str, int max, ntime_t t, int d )
    periods = ntime_getPeriods( nt );
    seconds = ntime_getSeconds( nt );
    if ((cycles == 0) && (periods == 0)) /* only seconds */
-      nsnprintf( str, max, _("%04d s"), seconds );
+      snprintf( str, max, _("%04d s"), seconds );
    else if ((cycles == 0) || (d==0))
-      nsnprintf( str, max, _("%.*f p"), d, periods + 0.0001 * seconds );
+      snprintf( str, max, _("%.*f p"), d, periods + 0.0001 * seconds );
    else /* UST format */
-      nsnprintf( str, max, _("UST %d:%.*f"), cycles, d, periods + 0.0001 * seconds );
+      snprintf( str, max, _("UST %d:%.*f"), cycles, d, periods + 0.0001 * seconds );
 }
 
 

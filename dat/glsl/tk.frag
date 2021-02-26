@@ -21,7 +21,7 @@ void main(void) {
    // Distance from rounded rectangle edge
    float d = mix(d2, d1, step(corner_radius, max(diff.x, diff.y)));
 
-   // Gradiant body
+   // Gradient body
    color_out = mix(dc, c, ratio);
    // Inner border
    color_out = mix(lc, color_out, clamp(d - 2, 0., 1.));

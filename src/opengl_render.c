@@ -47,6 +47,7 @@
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 gl_vbo *gl_squareVBO = 0;
 static gl_vbo *gl_squareEmptyVBO = 0;
+static gl_vbo *gl_circleVBO = 0;
 static gl_vbo *gl_crossVBO = 0;
 static gl_vbo *gl_lineVBO = 0;
 static gl_vbo *gl_triangleVBO = 0;
@@ -56,9 +57,6 @@ static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
 /*
  * prototypes
  */
-static void gl_drawCircleEmpty( const double cx, const double cy,
-      const double r, const glColour *c );
-
 
 void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c)
 {
@@ -110,10 +108,7 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
 
-   gl_beginSolidProgram(projection, c);
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-   gl_endSolidProgram();
+   gl_renderRectH( &projection, c, 1 );
 }
 
 
@@ -134,9 +129,28 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
 
-   gl_beginSolidProgram(projection, c);
-   gl_vboActivateAttribOffset( gl_squareEmptyVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINE_STRIP, 0, 5 );
+   gl_renderRectH( &projection, c, 0 );
+}
+
+
+/**
+ * @brief Renders a rectangle.
+ *
+ *    @param H Transformation matrix to apply.
+ *    @param filled Whether or not to fill.
+ *    @param c Rectangle colour.
+ */
+void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled )
+{
+   gl_beginSolidProgram(*H, c);
+   if (filled) {
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   }
+   else {
+      gl_vboActivateAttribOffset( gl_squareEmptyVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( GL_LINE_STRIP, 0, 5 );
+   }
    gl_endSolidProgram();
 }
 
@@ -211,7 +225,7 @@ void gl_blitTexture(  const glTexture* texture,
       const double tw, const double th, const glColour *c, const double angle )
 {
    // Half width and height
-   double hw, hh; 
+   double hw, hh;
    gl_Matrix4 projection, tex_mat;
 
    glUseProgram(shaders.texture.program);
@@ -223,9 +237,8 @@ void gl_blitTexture(  const glTexture* texture,
    if (c == NULL)
       c = &cWhite;
 
-   hw = w/2.0;
-   hh = h/2.0;
-
+   hw = w/2.;
+   hh = h/2.;
 
    /* Set the vertex. */
    projection = gl_view_matrix;
@@ -626,79 +639,9 @@ void gl_blitStatic( const glTexture* texture,
 
 
 /**
- * @brief Draws an empty circle.
- *
- *    @param cx X position of the center in screen coordinates..
- *    @param cy Y position of the center in screen coordinates.
- *    @param r Radius of the circle.
- *    @param c Colour to use.
- */
-static void gl_drawCircleEmpty( const double cx, const double cy,
-      const double r, const glColour *c )
-{
-   gl_Matrix4 projection;
-
-   glUseProgram(shaders.circle.program);
-
-   /* Set the vertex. */
-   projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, cx - r - 1, cy - r - 1, 0);
-   projection = gl_Matrix4_Scale(projection, 2*(r+1), 2*(r+1), 1);
-   glEnableVertexAttribArray( shaders.circle.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.circle.vertex,
-         0, 2, GL_FLOAT, 0 );
-
-   /* Set shader uniforms. */
-   gl_uniformColor(shaders.circle.color, c);
-   gl_Matrix4_Uniform(shaders.circle.projection, projection);
-   glUniform1f(shaders.circle.radius, r + 1);
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   glDisableVertexAttribArray( shaders.circle.vertex );
-   glUseProgram(0);
-
-   /* Check errors. */
-   gl_checkErr();
-}
-
-static void gl_drawCircleFilled( const double cx, const double cy,
-      const double r, const glColour *c )
-{
-   gl_Matrix4 projection;
-
-   glUseProgram(shaders.circle_filled.program);
-
-   /* Set the vertex. */
-   projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, cx - r, cy - r, 0);
-   projection = gl_Matrix4_Scale(projection, 2*r, 2*r, 1);
-   glEnableVertexAttribArray( shaders.circle_filled.vertex );
-   gl_vboActivateAttribOffset( gl_squareVBO, shaders.circle_filled.vertex,
-         0, 2, GL_FLOAT, 0 );
-
-   /* Set shader uniforms. */
-   gl_uniformColor(shaders.circle_filled.color, c);
-   gl_Matrix4_Uniform(shaders.circle_filled.projection, projection);
-   glUniform1f(shaders.circle_filled.radius, r);
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   glDisableVertexAttribArray( shaders.circle_filled.vertex );
-   glUseProgram(0);
-
-   /* Check errors. */
-   gl_checkErr();
-}
-
-/**
  * @brief Draws a circle.
  *
- *    @param cx X position of the center in screen coordinates..
+ *    @param cx X position of the center in screen coordinates.
  *    @param cy Y position of the center in screen coordinates.
  *    @param r Radius of the circle.
  *    @param c Colour to use.
@@ -707,10 +650,70 @@ static void gl_drawCircleFilled( const double cx, const double cy,
 void gl_drawCircle( const double cx, const double cy,
       const double r, const glColour *c, int filled )
 {
-   if (filled)
-      gl_drawCircleFilled( cx, cy, r, c );
-   else
-      gl_drawCircleEmpty( cx, cy, r, c );
+   gl_Matrix4 projection;
+
+   /* Set the vertex. */
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, cx, cy, 0);
+   projection = gl_Matrix4_Scale(projection, r, r, 1);
+
+   /* Draw! */
+   gl_drawCircleH( &projection, c, filled );
+}
+
+
+/**
+ * @brief Draws a circle.
+ *
+ *    @param H Transformation matrix to draw the circle.
+ *    @param c Colour to use.
+ *    @param filled Whether or not it should be filled.
+ */
+void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
+{
+   // TODO handle shearing and different x/y scaling
+   GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
+
+   if (filled) {
+      glUseProgram( shaders.circle_filled.program );
+
+      glEnableVertexAttribArray( shaders.circle_filled.vertex );
+      gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle_filled.vertex,
+            0, 2, GL_FLOAT, 0 );
+
+      /* Set shader uniforms. */
+      gl_uniformColor( shaders.circle_filled.color, c );
+      gl_Matrix4_Uniform( shaders.circle_filled.projection, *H );
+      glUniform1f( shaders.circle_filled.radius, r );
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.circle_filled.vertex );
+   }
+   else {
+      glUseProgram( shaders.circle.program );
+
+      glEnableVertexAttribArray( shaders.circle.vertex );
+      gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle.vertex,
+            0, 2, GL_FLOAT, 0 );
+
+      /* Set shader uniforms. */
+      gl_uniformColor( shaders.circle.color, c );
+      gl_Matrix4_Uniform( shaders.circle.projection, *H );
+      glUniform1f( shaders.circle.radius, r );
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.circle.vertex );
+   }
+   glUseProgram(0);
+
+   /* Check errors. */
+   gl_checkErr();
 }
 
 
@@ -800,6 +803,16 @@ int gl_initRender (void)
    vertex[7] = 1.;
    gl_squareVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
+   vertex[0] = -1.;
+   vertex[1] = -1.;
+   vertex[2] = 1.;
+   vertex[3] = -1.;
+   vertex[4] = -1.;
+   vertex[5] = 1.;
+   vertex[6] = 1.;
+   vertex[7] = 1.;
+   gl_circleVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
+
    vertex[0] = 0.;
    vertex[1] = 0.;
    vertex[2] = 1.;
@@ -852,6 +865,7 @@ void gl_exitRender (void)
    /* Destroy the VBO. */
    gl_vboDestroy( gl_renderVBO );
    gl_vboDestroy( gl_squareVBO );
+   gl_vboDestroy( gl_circleVBO );
    gl_vboDestroy( gl_squareEmptyVBO );
    gl_vboDestroy( gl_crossVBO );
    gl_vboDestroy( gl_lineVBO );

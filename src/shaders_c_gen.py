@@ -2,7 +2,7 @@
 
 import collections
 
-Shader = collections.namedtuple("Shader", "name vs_path fs_path attributes uniforms")
+Shader = collections.namedtuple("Shader", "name vs_path fs_path attributes uniforms subroutines")
 
 SHADERS = [
    Shader(
@@ -10,84 +10,140 @@ SHADERS = [
       vs_path = "circle.vert",
       fs_path = "circle.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "radius"]
+      uniforms = ["projection", "color", "radius"],
+      subroutines = {},
    ),
    Shader(
       name = "circle_filled",
       vs_path = "circle.vert",
       fs_path = "circle_filled.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "radius"]
+      uniforms = ["projection", "color", "radius"],
+      subroutines = {},
    ),
    Shader(
       name = "solid",
       vs_path = "solid.vert",
       fs_path = "solid.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color"]
+      uniforms = ["projection", "color"],
+      subroutines = {},
+   ),
+   Shader(
+      name = "trail",
+      vs_path = "trail.vert",
+      fs_path = "trail.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "c1", "c2", "t1", "t2", "dt", "pos1", "pos2", "r" ],
+      subroutines = {
+        "trail_func" : [
+            "trail_default",
+            "trail_pulse",
+            "trail_wave",
+            "trail_flame",
+            "trail_nebula",
+            "trail_arc",
+            "trail_bubbles",
+        ]
+      }
    ),
    Shader(
       name = "smooth",
       vs_path = "smooth.vert",
       fs_path = "smooth.frag",
       attributes = ["vertex", "vertex_color"],
-      uniforms = ["projection"]
+      uniforms = ["projection"],
+      subroutines = {},
    ),
    Shader(
       name = "texture",
       vs_path = "texture.vert",
       fs_path = "texture.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat"]
+      uniforms = ["projection", "color", "tex_mat"],
+      subroutines = {},
    ),
    Shader(
       name = "texture_interpolate",
       vs_path = "texture.vert",
       fs_path = "texture_interpolate.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat", "sampler1", "sampler2", "inter"]
+      uniforms = ["projection", "color", "tex_mat", "sampler1", "sampler2", "inter"],
+      subroutines = {},
    ),
    Shader(
       name = "nebula",
       vs_path = "nebula.vert",
-      fs_path = "nebula.frag",
+      fs_path = "nebula_overlay.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "center", "radius"]
+      uniforms = ["projection", "color", "horizon", "eddy_scale", "time"],
+      subroutines = {},
    ),
    Shader(
       name = "nebula_background",
       vs_path = "nebula.vert",
       fs_path = "nebula_background.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "center", "radius", "time"]
+      uniforms = ["projection", "color", "eddy_scale", "time"],
+      subroutines = {},
    ),
    Shader(
       name = "stars",
       vs_path = "stars.vert",
       fs_path = "stars.frag",
       attributes = ["vertex", "brightness"],
-      uniforms = ["projection", "star_xy", "wh", "xy", "scale"]
+      uniforms = ["projection", "star_xy", "wh", "xy", "scale"],
+      subroutines = {},
    ),
    Shader(
       name = "font",
       vs_path = "font.vert",
       fs_path = "font.frag",
       attributes = ["vertex", "tex_coord"],
-      uniforms = ["projection", "color", "outline_color"]
+      uniforms = ["projection", "color", "outline_color"],
+      subroutines = {},
    ),
    Shader(
       name = "beam",
       vs_path = "beam.vert",
       fs_path = "beam.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "tex_mat"]
+      uniforms = ["projection", "color", "dt", "r", "dimensions" ],
+      subroutines = {
+        "beam_func" : [
+            "beam_default",
+            "beam_wave",
+            "beam_arc",
+            "beam_helix",
+            "beam_organic",
+            "beam_unstable",
+            "beam_fuzzy",
+        ]
+      }
    ),
    Shader(
       name = "tk",
       vs_path = "tk.vert",
       fs_path = "tk.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "c", "dc", "lc", "oc", "wh", "corner_radius"]
+      uniforms = ["projection", "c", "dc", "lc", "oc", "wh", "corner_radius"],
+      subroutines = {},
+   ),
+   Shader(
+      name = "jump",
+      vs_path = "jump.vert",
+      fs_path = "jump.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "progress", "direction", "dimensions"],
+      subroutines = {
+        "jump_func" : [
+            "jump_default",
+            "jump_nebula",
+            "jump_organic",
+            "jump_circular",
+            "jump_wind",
+        ]
+      }
    ),
 ]
 
@@ -114,6 +170,13 @@ def generate_h_file(f):
 
         for uniform in shader.uniforms:
             f.write("      GLuint {};\n".format(uniform))
+
+        for subroutine, routines in shader.subroutines.items():
+            f.write("      struct {\n")
+            f.write("         GLuint uniform;\n")
+            for r in routines:
+                f.write(f"         GLuint {r};\n")
+            f.write(f"      }} {subroutine};\n")
 
         f.write("   }} {};\n".format(shader.name))
     f.write("} Shaders;\n\n")
@@ -153,6 +216,13 @@ def generate_c_file(f):
                     uniform,
                     shader.name,
                     uniform))
+
+        f.write("   if (GLAD_GL_ARB_shader_subroutine) {\n")
+        for subroutine, routines in shader.subroutines.items():
+            f.write(f"      shaders.{shader.name}.{subroutine}.uniform = glGetSubroutineUniformLocation( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n")
+            for r in routines:
+                f.write(f"      shaders.{shader.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n")
+        f.write("   }\n");
 
         if i != len(SHADERS) - 1:
             f.write("\n")

@@ -79,7 +79,7 @@ osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate hostiles")
-osd_msg[4] = _("Land on the nearest %s planet and collect your pay")
+osd_msg[4] = _("Land in %s territory to collect your pay")
 osd_msg["__save"] = true
 
 mark_name = _("Patrol Point")

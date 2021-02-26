@@ -19,6 +19,7 @@
 
 #include "land_outfits.h"
 
+#include "array.h"
 #include "dialogue.h"
 #include "equipment.h"
 #include "hook.h"
@@ -42,13 +43,12 @@
 
 
 typedef struct LandOutfitData_ {
-   Outfit *outfits;
-   int noutfits;
+   Outfit **outfits;
 } LandOutfitData;
 
 
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
-static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
+static Outfit ***iar_outfits = NULL; /**< C-array of Arrays: Outfits associated with the image array cells. */
 
 /* Modifier for buying and selling quantity. */
 static int outfits_mod = 1;
@@ -108,7 +108,7 @@ static void outfits_onClose( unsigned int wid, char *str )
    LandOutfitData *data = window_getData( wid );
    if (data==NULL)
       return;
-   free( data->outfits );
+   array_free( data->outfits );
    free( data );
 }
 
@@ -118,10 +118,10 @@ static void outfits_onClose( unsigned int wid, char *str )
  * @brief Opens the outfit exchange center window.
  *
  *    @param wid Window ID to open at.
- *    @param outfits Outfit list to sell. Set to NULL if this is the landed player store.
- *    @param noutfits Length of \p outfits.
+ *    @param outfits Array (array.h): Outfits to sell. Will be freed.
+ *                   Set to NULL if this is the landed player store.
  */
-void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
+void outfits_open( unsigned int wid, Outfit **outfits )
 {
    int w, h, iw, ih, bw, bh, off;
    LandOutfitData *data = NULL;
@@ -129,9 +129,7 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
    /* Set up window data. */
    if (outfits!=NULL) {
       data           = malloc( sizeof( LandOutfitData ) );
-      data->noutfits = noutfits;
-      data->outfits  = malloc( data->noutfits * sizeof( Outfit* ) );
-      memcpy( data->outfits, outfits, data->noutfits * sizeof( Outfit* ) );
+      data->outfits  = outfits;
       window_setData( wid, data );
       window_onClose( wid, outfits_onClose );
    }
@@ -144,17 +142,15 @@ void outfits_open( unsigned int wid, Outfit **outfits, int noutfits )
    outfits_getSize( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Initialize stored positions. */
-   if (outfits==NULL) {
-      if (iar_data == NULL)
-         iar_data = calloc( OUTFITS_NTABS, sizeof(iar_data_t) );
-      else
-         memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
-   }
+   if (iar_data == NULL)
+      iar_data = calloc( OUTFITS_NTABS, sizeof(iar_data_t) );
+   else
+      memset( iar_data, 0, sizeof(iar_data_t) * OUTFITS_NTABS );
    if (iar_outfits == NULL)
       iar_outfits = calloc( OUTFITS_NTABS, sizeof(Outfit**) );
    else {
       for (int i=0; i<OUTFITS_NTABS; i++)
-         free( iar_outfits[i] );
+         array_free( iar_outfits[i] );
       memset( iar_outfits, 0, sizeof(Outfit**) * OUTFITS_NTABS );
    }
 
@@ -328,19 +324,10 @@ static void outfits_genList( unsigned int wid )
 
    /* Set up the outfits to buy/sell */
    data = window_getData( wid );
-   free( iar_outfits[active] );
-   if (data == NULL) {
-      /* Use landed outfits. */
-      iar_outfits[active] = tech_getOutfit( land_planet->tech, &noutfits );
-   }
-   else {
-      /* Use custom list. */
-      noutfits = data->noutfits;
-      iar_outfits[active] = calloc( noutfits, sizeof(Outfit*) );
-      memcpy( iar_outfits[active], data->outfits, sizeof(Outfit*)*noutfits );
-   }
-   noutfits = outfits_filter( iar_outfits[active], noutfits,
-         tabfilters[active], filtertext );
+   array_free( iar_outfits[active] );
+   /* Use custom list; default to landed outfits. */
+   iar_outfits[active] = data!=NULL ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_planet->tech );
+   noutfits = outfits_filter( iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
 
    if (!conf.big_icons && (((iw*ih)/(128*128)) < noutfits))
@@ -378,11 +365,11 @@ void outfits_update( unsigned int wid, char* str )
    /* Get and set parameters. */
    active = window_tabWinGetActive( wid, OUTFITS_TAB );
    i = toolkit_getImageArrayPos( wid, OUTFITS_IAR );
-   if (i < 0 || iar_outfits[active] == NULL) { /* No outfits */
+   if (i < 0 || array_size(iar_outfits[active]) == 0) { /* No outfits */
       window_modifyImage( wid, "imgOutfit", NULL, 192, 192 );
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
-      nsnprintf( buf, PATH_MAX,
+      snprintf( buf, sizeof(buf),
             _("N/A\n"
             "\n"
             "N/A\n"
@@ -430,7 +417,7 @@ void outfits_update( unsigned int wid, char* str )
    else if (player_hasLicense( outfit->license ))
       strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
    else
-      nsnprintf( buf_license, sizeof(buf_license), "#r%s#0", _(outfit->license) );
+      snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(outfit->license) );
    buf_license[ sizeof(buf_license)-1 ] = '\0';
 
    mass = outfit->mass;
@@ -439,7 +426,7 @@ void outfits_update( unsigned int wid, char* str )
       mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
    }
 
-   nsnprintf( buf, PATH_MAX,
+   snprintf( buf, sizeof(buf),
          _("%d\n"
          "\n"
          "%s\n"
@@ -546,7 +533,7 @@ int outfits_filter( Outfit **outfits, int n,
       if ((filter != NULL) && !filter(outfits[i]))
          continue;
 
-      if ((name != NULL) && (nstrcasestr( outfits[i]->name, name ) == NULL))
+      if ((name != NULL) && (strcasestr( outfits[i]->name, name ) == NULL))
          continue;
 
       /* Shift matches downward. */
@@ -634,16 +621,15 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
 
             l = strlen(o->desc_short) + 128;
             coutfits[i].alt = malloc( l );
-            p  = nsnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
+            p  = scnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
             if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-               p += nsnprintf( &coutfits[i].alt[p], l-p, _("#oUnique#0\n") );
-            if ((o->slot.spid!=0) && (p < l))
-               p += nsnprintf( &coutfits[i].alt[p], l-p, _("#oSlot %s#0\n"),
+               p += scnprintf( &coutfits[i].alt[p], l-p, _("#oUnique#0\n") );
+            if (o->slot.spid!=0)
+               p += scnprintf( &coutfits[i].alt[p], l-p, _("#oSlot %s#0\n"),
                      _( sp_display( o->slot.spid ) ) );
-            if (p < l)
-               p += nsnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
+            p += scnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
             if ((o->mass > 0.) && (p < l))
-               nsnprintf( &coutfits[i].alt[p], l-p,
+               scnprintf( &coutfits[i].alt[p], l-p,
                      _("\n%.0f Tonnes"),
                      mass );
          }
@@ -658,7 +644,7 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
          }
 
          /* Layers. */
-         coutfits[i].layers = gl_copyTexArray( o->gfx_overlays, o->gfx_noverlays, &coutfits[i].nlayers );
+         coutfits[i].layers = gl_copyTexArray( o->gfx_overlays, &coutfits[i].nlayers );
          if (o->rarity > 0) {
             t = rarity_texture( o->rarity );
             coutfits[i].layers = gl_addTexArray( coutfits[i].layers, &coutfits[i].nlayers, t );
@@ -693,8 +679,8 @@ int outfit_canBuy( const char *name, Planet *planet )
    }
 
    /* Map already mapped */
-   if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
-         (outfit_isLocalMap(outfit) && localmap_isMapped(outfit))) {
+   if ((outfit_isMap(outfit) && map_isUseless(outfit)) ||
+         (outfit_isLocalMap(outfit) && localmap_isUseless(outfit))) {
       land_errDialogueBuild( _("You already know of everything this map contains.") );
       return 0;
    }
@@ -751,7 +737,7 @@ static void outfits_buy( unsigned int wid, char* str )
 
    active = window_tabWinGetActive( wid, OUTFITS_TAB );
    i = toolkit_getImageArrayPos( wid, OUTFITS_IAR );
-   if (i < 0 || iar_outfits[active] == NULL)
+   if (i < 0 || array_size(iar_outfits[active]) == 0)
       return;
 
    outfit = iar_outfits[active][i];
@@ -840,7 +826,7 @@ static void outfits_sell( unsigned int wid, char* str )
 
    active = window_tabWinGetActive( wid, OUTFITS_TAB );
    i = toolkit_getImageArrayPos( wid, OUTFITS_IAR );
-   if (i < 0 || iar_outfits[active] == NULL)
+   if (i < 0 || array_size(iar_outfits[active]) == 0)
       return;
 
    outfit      = iar_outfits[active][i];
@@ -905,7 +891,7 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
    }
    if (q==1) return; /* Ignore no modifier. */
 
-   nsnprintf( buf, 8, "%dx", q );
+   snprintf( buf, 8, "%dx", q );
    gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }
 
@@ -920,7 +906,7 @@ void outfits_cleanup(void)
    iar_data = NULL;
    if (iar_outfits != NULL) {
       for (int i=0; i<OUTFITS_NTABS; i++)
-         free( iar_outfits[i] );
+         array_free( iar_outfits[i] );
       free(iar_outfits);
       iar_outfits = NULL;
    }

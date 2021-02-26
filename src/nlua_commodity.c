@@ -16,6 +16,7 @@
 
 #include "nlua_commodity.h"
 
+#include "array.h"
 #include "log.h"
 #include "nlua_planet.h"
 #include "nlua_time.h"
@@ -226,21 +227,21 @@ static int commodityL_get( lua_State *L )
  */
 static int commodityL_getStandard( lua_State *L )
 {
-   unsigned int i, nb;
+   int i;
    Commodity **standard;
 
    /* Get commodity. */
-   standard = standard_commodities( &nb );
+   standard = standard_commodities();
 
    /* Push. */
    lua_newtable( L );                       /* Stack: t */
-   for (i=0; i<nb; i++) {
+   for (i=0; i<array_size(standard); i++) {
       lua_pushnumber( L, i+1 );            /* Stack: t, i (1-based index) */
       lua_pushcommodity( L, standard[i] ); /* Stack: t, i, c */
       lua_rawset( L, -3 );                 /* Stack: t */
    }
 
-   free( standard );
+   array_free( standard );
    return 1;
 }
 
@@ -384,6 +385,3 @@ static int commodityL_priceAtTime( lua_State *L )
    lua_pushnumber( L, planet_commodityPriceAtTime( p, c, t ) );
    return 1;
 }
-
-
-

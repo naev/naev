@@ -26,10 +26,10 @@ typedef struct OSD_s {
    int priority; /**< Priority level. */
    char *title; /**< Title of the OSD. */
 
-   char **msg; /**< Stored messages. */
+   char **msg; /**< Array (array.h): Stored messages. */
    char ***items; /**< Array of array (array.h) of allocated strings. */
 
-   int active; /**< Active item. */
+   unsigned int active; /**< Active item. */
 } OSD_t;
 
 
@@ -140,11 +140,11 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    /* Copy text. */
    osd->title  = strdup(title);
    osd->priority = priority;
-   osd->msg = malloc( sizeof(char*) * nitems );
+   osd->msg = array_create_size( char*, nitems );
    osd->items = array_create_size( char**, nitems );
    for (i=0; i<nitems; i++) {
-      osd->msg[i] = strdup( items[i] );
-      array_push_back( &osd->items, array_create(char*));
+      array_push_back( &osd->msg, strdup( items[i] ) );
+      array_push_back( &osd->items, array_create(char*) );
    }
 
    osd_wordwrap( osd );
@@ -194,20 +194,20 @@ void osd_wordwrap( OSD_t* osd )
          if (n==0) {
             if (t==1) {
                chunk = malloc(s+4);
-               nsnprintf( chunk, s+4, "   %s", &osd->msg[i][n+1] );
+               snprintf( chunk, s+4, "   %s", &osd->msg[i][n+1] );
             }
             else {
                chunk = malloc(s+3);
-               nsnprintf( chunk, s+3, "- %s", &osd->msg[i][n] );
+               snprintf( chunk, s+3, "- %s", &osd->msg[i][n] );
             }
          }
          else if (t==1) {
             chunk = malloc(s+4);
-            nsnprintf( chunk, s+4, "   %s", &osd->msg[i][n] );
+            snprintf( chunk, s+4, "   %s", &osd->msg[i][n] );
          }
          else {
             chunk = malloc(s+1);
-            nsnprintf( chunk, s+1, "%s", &osd->msg[i][n] );
+            snprintf( chunk, s+1, "%s", &osd->msg[i][n] );
          }
          array_push_back( &osd->items[i], chunk );
 
@@ -254,7 +254,7 @@ static int osd_free( OSD_t *osd )
          free(osd->items[i][j]);
       array_free(osd->items[i]);
    }
-   free(osd->msg);
+   array_free(osd->msg);
    array_free(osd->items);
 
    return 0;
@@ -458,7 +458,7 @@ void osd_render (void)
 
       /* Print title. */
       if (duplicates > 0)
-         nsnprintf( title, sizeof(title), "%s (%d)", ll->title, duplicates + 1 );
+         snprintf( title, sizeof(title), "%s (%d)", ll->title, duplicates + 1 );
       else
          strncpy( title, ll->title, sizeof(title)-1 );
       title[sizeof(title)-1] = '\0';
@@ -474,7 +474,7 @@ void osd_render (void)
       for (i=ll->active; i<array_size(ll->items); i++) {
          x = osd_x;
          w = osd_w;
-         c = (ll->active == i) ? &cFontWhite : &cFontGrey;
+         c = (i == (int)ll->active) ? &cFontWhite : &cFontGrey;
          for (j=0; j<array_size(ll->items[i]); j++) {
             gl_printMaxRaw( &gl_smallFont, w, x, p,
                   c, -1., ll->items[i][j] );
@@ -586,19 +586,15 @@ char *osd_getTitle( unsigned int osd )
  * @brief Gets the items of an OSD.
  *
  *    @param osd OSD to get items of.
- *    @param[out] nitems Number of OSD items.
+ *    @return Array (array.h) of OSD strings.
  */
-char **osd_getItems( unsigned int osd, int *nitems )
+char **osd_getItems( unsigned int osd )
 {
    OSD_t *o;
 
    o = osd_get(osd);
-   if (o == NULL) {
-      *nitems = 0;
+   if (o == NULL)
       return NULL;
-   }
-
-   *nitems = array_size(o->items);
    return o->msg;
 }
 

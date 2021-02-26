@@ -15,14 +15,15 @@ accompanying everything from planets to equipment.
 
 ## DEPENDENCIES
 
-Naev's dependencies are intended to be relatively common. In addition to
-an OpenGL-capable graphics card and driver, Naev requires the following:
+Naev's dependencies are intended to be relatively common. In addition to an
+OpenGL-capable graphics card and driver with support for at least OpenGL 3.1,
+Naev requires the following:
 * SDL 2
 * libxml2
 * freetype2
 * libpng
 * OpenAL
-* libvorbis
+* libvorbis >= 1.2.2
 * binutils
 * intltool
 
@@ -95,6 +96,16 @@ meson compile
 If you need special settings you can run `meson configure` in your build
 directory to see a list of all available options.
 
+**For installation**, try: `meson configure --buildtype=release -Db_lto=true`
+
+**For Windows packaging**, try adding: `--bindir=bin -Dndata_path=bin`
+
+**For macOS**, try adding: `--prefix="$(pwd)"/build/dist/Naev.app --bindir=Contents/MacOS -Dndata_path=Contents/Resources`
+
+**For normal development**, try adding: `--buildtype=debug -Db_sanitize=address` (adding `-Db_lundef=false` if compiling with Clang, substituting `-Ddebug_arrays=true` for `-Db_sanitize=...` on Windows if you can't use Clang).
+
+**For faster debug builds** (but harder to trace with gdb/lldb), try `--buildtype=debugoptimized -Db_lto=true -Db_lto_mode=thin` in place of the corresponding values above.
+
 ## INSTALLATION
 
 Naev currently supports `meson install` which will install everything that
@@ -149,8 +160,19 @@ meson compile naev-pot        # necessary if translatable strings changed
 meson compile naev-update-po  # necessary outside the main line, where Weblate handles it
 ```
 
-This wil allow you to edit the translation files in `po/` manually to modify
+This will allow you to edit the translation files in `po/` manually to modify
 translations.
+
+If you like, you can set up commmit hooks to handle the `potfiles` step. For instance:
+```bash
+# .git/hooks/pre-commit
+#!/bin/bash
+. utils/update-po.sh
+
+# .git/hooks/post-commit
+#!/bin/sh
+git diff --exit-code po/POTFILES.in || exec git commit --amend -C HEAD po/POTFILES.in
+```
 
 ## CRASHES & PROBLEMS
 

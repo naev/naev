@@ -2097,6 +2097,7 @@ dat/ssys/zintar.xml
 dat/ssys/zylex.xml
 dat/start.xml
 dat/tech.xml
+dat/trails.xml
 dat/ai/advertiser.lua
 dat/ai/baddie.lua
 dat/ai/baddie_norun.lua
@@ -2430,6 +2431,7 @@ dat/scripts/love/timer.lua
 dat/scripts/love/touch.lua
 dat/scripts/love/video.lua
 dat/scripts/love/window.lua
+dat/scripts/love_shaders.lua
 dat/scripts/minerva.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
@@ -2483,6 +2485,8 @@ src/damagetype.c
 src/damagetype.h
 src/debris.c
 src/debris.h
+src/debug.c
+src/debug.h
 src/dev.c
 src/dev.h
 src/dev_mapedit.c
@@ -2600,6 +2604,8 @@ src/nlua_bkg.c
 src/nlua_bkg.h
 src/nlua_camera.c
 src/nlua_camera.h
+src/nlua_canvas.c
+src/nlua_canvas.h
 src/nlua_cli.c
 src/nlua_cli.h
 src/nlua_col.c

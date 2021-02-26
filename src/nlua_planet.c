@@ -243,19 +243,15 @@ static int planetL_getBackend( lua_State *L, int landable )
 {
    int i;
    int *factions;
-   int nfactions;
    char **planets;
-   int nplanets;
    const char *rndplanet;
    LuaSystem luasys;
-   LuaFaction f;
    Planet *pnt;
    StarSystem *sys;
    char *sysname;
 
    rndplanet = NULL;
    planets   = NULL;
-   nplanets  = 0;
 
    /* If boolean return random. */
    if (lua_isboolean(L,1)) {
@@ -268,8 +264,10 @@ static int planetL_getBackend( lua_State *L, int landable )
 
    /* Get a planet by faction */
    else if (lua_isfaction(L,1)) {
-      f        = lua_tofaction(L,1);
-      planets  = space_getFactionPlanet( &nplanets, &f, 1, landable );
+      factions = array_create( int );
+      array_push_back( &factions, lua_tofaction(L,1) );
+      planets  = space_getFactionPlanet( factions, landable );
+      array_free( factions );
    }
 
    /* Get a planet by name */
@@ -293,32 +291,27 @@ static int planetL_getBackend( lua_State *L, int landable )
    /* Get a planet from faction list */
    else if (lua_istable(L,1)) {
       /* Get table length and preallocate. */
-      nfactions = (int) lua_objlen(L,1);
-      factions = malloc( sizeof(int) * nfactions );
+      factions = array_create_size( int, lua_objlen(L,1) );
       /* Load up the table. */
       lua_pushnil(L);
-      i = 0;
       while (lua_next(L, -2) != 0) {
          if (lua_isfaction(L, -1))
-            factions[i++] = lua_tofaction(L, -1);
+            array_push_back( &factions, lua_tofaction(L, -1) );
          lua_pop(L,1);
       }
 
       /* get the planets */
-      planets = space_getFactionPlanet( &nplanets, factions, nfactions, landable );
-      free(factions);
+      planets = space_getFactionPlanet( factions, landable );
+      array_free(factions);
    }
    else
       NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
 
-   /* No suitable planet found */
-   if ((rndplanet == NULL) && ((planets == NULL) || nplanets == 0))
-      return 0;
    /* Pick random planet */
-   else if (rndplanet == NULL) {
-      planets = (char**) arrayShuffle( (void**)planets, nplanets );
+   if (rndplanet == NULL) {
+      arrayShuffle( (void**)planets );
 
-      for (i=0; i<nplanets; i++) {
+      for (i=0; i<array_size(planets); i++) {
          if (landable) {
             /* Check landing. */
             pnt = planet_get( planets[i] );
@@ -333,8 +326,12 @@ static int planetL_getBackend( lua_State *L, int landable )
          rndplanet = planets[i];
          break;
       }
-      free(planets);
    }
+   array_free(planets);
+
+   /* No suitable planet found */
+   if (rndplanet == NULL && array_size( planets ) == 0)
+      return 0;
 
    /* Push the planet */
    pnt = planet_get(rndplanet); /* The real planet */
@@ -620,7 +617,7 @@ static int planetL_services( lua_State *L )
       if (planet_hasService(p, i)) {
          name = planet_getServiceName(i);
          len = strlen(name) + 1;
-         nsnprintf( lower, MIN(len,sizeof(lower)), "%c%s", tolower(name[0]), &name[1] );
+         snprintf( lower, MIN(len,sizeof(lower)), "%c%s", tolower(name[0]), &name[1] );
 
          lua_pushstring(L, name);
          lua_setfield(L, -2, lower );
@@ -769,21 +766,22 @@ static int planetL_gfxExterior( lua_State *L )
 static int planetL_shipsSold( lua_State *L )
 {
    Planet *p;
-   int i, n;
+   int i;
    Ship **s;
 
    /* Get result and tech. */
    p = luaL_validplanet(L,1);
-   s = tech_getShip( p->tech, &n );
+   s = tech_getShip( p->tech );
 
    /* Push results in a table. */
    lua_newtable(L);
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(s); i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
       lua_pushship(L,s[i]); /* value = LuaShip */
       lua_rawset(L,-3); /* store the value in the table */
    }
 
+   array_free(s);
    return 1;
 }
 
@@ -798,21 +796,22 @@ static int planetL_shipsSold( lua_State *L )
 static int planetL_outfitsSold( lua_State *L )
 {
    Planet *p;
-   int i, n;
+   int i;
    Outfit **o;
 
    /* Get result and tech. */
    p = luaL_validplanet(L,1);
-   o = tech_getOutfit( p->tech, &n );
+   o = tech_getOutfit( p->tech );
 
    /* Push results in a table. */
    lua_newtable(L);
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(o); i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
       lua_pushoutfit(L,o[i]); /* value = LuaOutfit */
       lua_rawset(L,-3); /* store the value in the table */
    }
 
+   array_free(o);
    return 1;
 }
 
@@ -834,7 +833,7 @@ static int planetL_commoditiesSold( lua_State *L )
 
    /* Push results in a table. */
    lua_newtable(L);
-   for (i=0; i<p->ncommodities; i++) {
+   for (i=0; i<array_size(p->commodities); i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
       lua_pushcommodity(L,p->commodities[i]); /* value = LuaCommodity */
       lua_rawset(L,-3); /* store the value in the table */

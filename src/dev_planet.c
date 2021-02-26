@@ -35,7 +35,7 @@ int dpl_savePlanet( const Planet *p )
 {
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
-   char file[PATH_MAX], *cleanName;
+   char *file, *cleanName;
    int i;
 
    /* Create the writer. */
@@ -115,7 +115,7 @@ int dpl_savePlanet( const Planet *p )
       if (planet_hasService( p, PLANET_SERVICE_LAND )) {
          if (p->faction > 0) {
             xmlw_startElem( writer, "commodities" );
-            for (i=0; i<p->ncommodities; i++) {
+            for (i=0; i<array_size(p->commodities); i++) {
                if (p->commodities[i]->standard == 0)
                   xmlw_elem( writer, "commodity", "%s", p->commodities[i]->name );
             }
@@ -141,12 +141,13 @@ int dpl_savePlanet( const Planet *p )
 
    /* Write data. */
    cleanName = uniedit_nameFilter( p->name );
-   nsnprintf( file, sizeof(file), "%s/%s.xml", conf.dev_save_asset, cleanName );
+   asprintf( &file, "%s/%s.xml", conf.dev_save_asset, cleanName );
    xmlSaveFileEnc( file, doc, "UTF-8" );
 
    /* Clean up. */
    xmlFreeDoc(doc);
    free(cleanName);
+   free(file);
 
    return 0;
 }

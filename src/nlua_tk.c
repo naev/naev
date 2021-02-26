@@ -17,6 +17,7 @@
 
 #include "nlua_tk.h"
 
+#include "array.h"
 #include "dialogue.h"
 #include "input.h"
 #include "land.h"
@@ -319,7 +320,6 @@ static int tk_list( lua_State *L )
 static int tk_merchantOutfit( lua_State *L )
 {
    Outfit **outfits;
-   int i, noutfits;
    unsigned int wid;
    const char *name;
    int w, h;
@@ -329,15 +329,11 @@ static int tk_merchantOutfit( lua_State *L )
    if (!lua_istable(L,2))
       NLUA_INVALID_PARAMETER(L);
 
-   noutfits = (int) lua_objlen(L,2);
-   if (noutfits == 0)
-      NLUA_ERROR(L, _("Unable to create empty outfit merchant."));
-   outfits = malloc( sizeof(Outfit*) * noutfits );
+   outfits = array_create_size( Outfit*, lua_objlen(L,2) );
    /* Iterate over table. */
    lua_pushnil(L);
-   i = 0;
    while (lua_next(L, -2) != 0) {
-      outfits[i++] = luaL_validoutfit(L, -1);
+      array_push_back( &outfits, luaL_validoutfit(L, -1) );
       lua_pop(L,1);
    }
 
@@ -351,7 +347,7 @@ static int tk_merchantOutfit( lua_State *L )
       h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
    wid = window_create( "wdwMerchantOutfit", name, -1, -1, w, h );
-   outfits_open( wid, outfits, noutfits );
+   outfits_open( wid, outfits );
 
    return 0;
 }
@@ -505,7 +501,7 @@ static int tk_customDone( lua_State *L )
 static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t *cf )
 {
    /* I would like to propagate the error to the original function calling the
-    * dialogue, however, tthat causes the game to segfault. Code is disabled
+    * dialogue, however, that causes the game to segfault. Code is disabled
     * for now. TODO Fix the error propagation. */
 #if 0
    if (lua_pcall(L, nargs, nresults, 0)) {

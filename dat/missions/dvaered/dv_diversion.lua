@@ -47,7 +47,7 @@ text[1] = _([[You walk up to the Dvaered official at his table. He mentions that
 "I am looking for a skilled pilot to do a simple job for me, interested?"]])
 
 title[2] = _("A small distraction")
-text[2] = _([["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces do not seem sufficient enough to take on any existing planetary defense forces head on.  
+text[2] = _([["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces seem insufficient to take on any existing planetary defense forces head on.  
       "However, it looks like there may be an opportunity for us in %s. Warlord Khan of %s has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself.  
 "To protect himself and the Hawk, Khan will have deployed a substantial escort fighter fleet to defend against any surprise attack."]])
 text[3] = _([["That is where you come in. You will jump into %s and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]])
@@ -74,7 +74,7 @@ npc_desc = _("A high ranking Dvaered officer. It looks like he might have a job 
 
 misn_title = _("A Small Distraction")
 osd_desc[1] = _("Fly to the %s system")
-osd_desc[2] = _("Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet jumps in and destroys the Hawk")  
+osd_desc[2] = _("Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet jumps in and destroys the Hawk")
 misn_desc = _("You have been recruited to distract the Dvaered fighter escorts and lead them away from the jump gate and the capital ship Hawk. The Dvaered task force will jump in and attempt to destroy the Hawk before the escort ships can return. The mission will fail if the Hawk survives or the Dvaered task force is eliminated.")
 misn_reward = _("Some good money, hopefully")
 
@@ -141,6 +141,11 @@ function enter()
       j = jump.get(destsysname, destjumpname)
       v = j:pos()
       hawk = pilot.add( "Dvaered Goddard", "Dvaered", v-vec2.new(1500,8000), nil, "dvaered_norun" )
+      hawk:rmOutfit("all")
+      hawk:rmOutfit("cores")
+      hawk:addOutfit("Unicorp PT-1000 Core System")
+      hawk:addOutfit("Unicorp Eagle 6500 Engine")
+      hawk:addOutfit("Unicorp Mace Launcher", 3) -- Half finished installing weapons. :)
       hawk:rename(_("Hawk"))
       hawk:setHilight(true)
       hawk:setVisible(true)

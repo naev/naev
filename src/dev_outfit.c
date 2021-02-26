@@ -42,7 +42,7 @@ void dout_csvBolt( const char *path )
    }
 
    /* Write "header" */
-   l = nsnprintf( buf, sizeof(buf),
+   l = scnprintf( buf, sizeof(buf),
          "name,type,slot,size,"
          "license,mass,price,cpu,"
          "delay,speed,range,falloff,"
@@ -61,7 +61,7 @@ void dout_csvBolt( const char *path )
          continue;
 
       dmg = &o->u.blt.dmg;
-      l = nsnprintf( buf, sizeof(buf),
+      l = scnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
             "%s,%f,%"CREDITS_PRI",%f,"
             "%f,%f,%f,%f,"
@@ -102,7 +102,7 @@ void dout_csvBeam( const char *path )
    }
 
    /* Write "header" */
-   l = nsnprintf( buf, sizeof(buf),
+   l = scnprintf( buf, sizeof(buf),
       "name,type,slot,size,"
       "license,mass,price,cpu,"
       "delay,warmup,duration,min_duration,"
@@ -120,7 +120,7 @@ void dout_csvBeam( const char *path )
          continue;
 
       dmg = &o->u.bem.dmg;
-      l = nsnprintf( buf, sizeof(buf),
+      l = scnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
             "%s,%f,%"CREDITS_PRI",%f,"
             "%f,%f,%f,%f,"
@@ -158,7 +158,7 @@ void dout_csvLauncher( const char *path )
    }
 
    /* Write "header" */
-   l = nsnprintf( buf, sizeof(buf),
+   l = scnprintf( buf, sizeof(buf),
          "name,type,slot,size,"
          "license,mass,price,cpu,"
          "delay,ammo_name,amount,"
@@ -174,7 +174,7 @@ void dout_csvLauncher( const char *path )
       if (!outfit_isLauncher(o))
          continue;
 
-      l = nsnprintf( buf, sizeof(buf),
+      l = scnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
             "%s,%f,%"CREDITS_PRI",%f,"
             "%f,%s,%d,"
@@ -212,7 +212,7 @@ void dout_csvAmmo( const char *path )
    }
 
    /* Write "header" */
-   l = nsnprintf( buf, sizeof(buf),
+   l = scnprintf( buf, sizeof(buf),
          "name,type,license,"
          "mass,price,"
          "duration,resist,ai,"
@@ -236,7 +236,7 @@ void dout_csvAmmo( const char *path )
       for (j=0; j<(int)strlen(ai); j++)
          ai[j] = tolower(ai[j]);
 
-      l = nsnprintf( buf, sizeof(buf),
+      l = scnprintf( buf, sizeof(buf),
             "%s,%s,%s,"
             "%f,%"CREDITS_PRI","
             "%f,%f,%s,"
@@ -282,7 +282,7 @@ void dout_csvMod( const char *path )
    }
 
    /* Write "header" */
-   l = nsnprintf( buf, sizeof(buf),
+   l = scnprintf( buf, sizeof(buf),
          "name,type,slot,size,"
          "license,mass,price,cpu,cpu_max,"
          "thrust,turn,speed,fuel,energy_usage,"
@@ -306,7 +306,7 @@ void dout_csvMod( const char *path )
       stats = base;
       ss_statsModFromList( &stats, o->stats, NULL );
 
-      l = nsnprintf( buf, sizeof(buf),
+      l = scnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
             "%s,%f,%"CREDITS_PRI",%f,%f,"
             "%f,%f,%f,%d,%f,"

@@ -15,8 +15,6 @@
  *  the main loop until it's over, making these functions seem to be blocking
  *  without really being blocking.
  *
- * @todo Make dialogue system more flexible.
- *
  * @sa toolkit.c
  */
 
@@ -321,7 +319,7 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
 
    /* Get the desired texture */
    /* IMPORTANT : texture must not be freed here, it will be freed when the widget closes */
-   nsnprintf( buf, sizeof(buf), "%s%s", GFX_PATH, img );
+   snprintf( buf, sizeof(buf), "%s%s", GFX_PATH, img );
    gfx = gl_newImage( buf, 0 );
    if (gfx == NULL)
       return;

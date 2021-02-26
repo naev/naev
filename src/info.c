@@ -216,7 +216,7 @@ static void info_openMain( unsigned int wid )
          "#nFuel:#0")
          );
    credits2str( creds, player.p->credits, 2 );
-   nsnprintf( str, sizeof(str),
+   snprintf( str, sizeof(str),
          _("%s\n"
          "%s\n"
          "%s\n"
@@ -451,7 +451,7 @@ static void ship_update( unsigned int wid )
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
    hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
-   len = nsnprintf( buf, sizeof(buf),
+   len = scnprintf( buf, sizeof(buf),
          _("%s\n"
          "%s\n"
          "%s\n"
@@ -575,9 +575,9 @@ static void weapons_genList( unsigned int wid )
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       str = pilot_weapSetName( info_eq_weaps.selected, i );
       if (str == NULL)
-         nsnprintf( tbuf, sizeof(tbuf), "%d - ??", (i+1)%10 );
+         snprintf( tbuf, sizeof(tbuf), "%d - ??", (i+1)%10 );
       else
-         nsnprintf( tbuf, sizeof(tbuf), "%d - %s", (i+1)%10, str );
+         snprintf( tbuf, sizeof(tbuf), "%d - %s", (i+1)%10, str );
       buf[i] = strdup( tbuf );
    }
    window_addList( wid, 20+180+20, -40,
@@ -781,7 +781,7 @@ static void cargo_genList( unsigned int wid )
       window_destroyWidget( wid, "lstCargo" );
 
    /* List */
-   if (player.p->ncommodities==0) {
+   if (array_size(player.p->commodities)==0) {
       /* No cargo */
       buf = malloc(sizeof(char*));
       buf[0] = strdup(_("None"));
@@ -789,15 +789,14 @@ static void cargo_genList( unsigned int wid )
    }
    else {
       /* List the player's cargo */
-      buf = malloc(sizeof(char*)*player.p->ncommodities);
-      for (i=0; i<player.p->ncommodities; i++) {
-         buf[i] = malloc(128);
-         nsnprintf(buf[i],128, "%s%s %d",
+      buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
+      for (i=0; i<array_size(player.p->commodities); i++) {
+         asprintf(&buf[i], "%s%s %d",
                _(player.p->commodities[i].commodity->name),
                (player.p->commodities[i].id != 0) ? "*" : "",
                player.p->commodities[i].quantity);
       }
-      nbuf = player.p->ncommodities;
+      nbuf = array_size(player.p->commodities);
    }
    window_addList( wid, 20, -40,
          w - 40, h - BUTTON_HEIGHT - 80,
@@ -811,7 +810,7 @@ static void cargo_update( unsigned int wid, char* str )
 {
    (void)str;
 
-   if (player.p->ncommodities==0)
+   if (array_size(player.p->commodities)==0)
       return; /* No cargo */
 
    /* Can jettison all but mission cargo when not landed*/
@@ -830,7 +829,7 @@ static void cargo_jettison( unsigned int wid, char* str )
    int i, j, f, pos, ret;
    Mission *misn;
 
-   if (player.p->ncommodities==0)
+   if (array_size(player.p->commodities)==0)
       return; /* No cargo, redundant check */
 
    pos = toolkit_getListPos( wid, "lstCargo" );
@@ -844,7 +843,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       /* Get the mission. */
       f = 0;
       for (i=0; i<MISSION_MAX; i++) {
-         for (j=0; j<player_missions[i]->ncargo; j++) {
+         for (j=0; j<array_size(player_missions[i]->cargo); j++) {
             if (player_missions[i]->cargo[j] == player.p->commodities[pos].id) {
                f = 1;
                break;
@@ -876,7 +875,7 @@ static void cargo_jettison( unsigned int wid, char* str )
       claim_activateAll();
 
       /* Regenerate list. */
-      mission_menu_genList( info_windows[ INFO_WIN_MISN ] ,0);
+      mission_menu_genList( info_windows[ INFO_WIN_MISN ], 0 );
    }
    else {
       /* Remove the cargo */
@@ -910,7 +909,7 @@ static void standings_close( unsigned int wid, char *str )
 {
    (void) wid;
    (void) str;
-   free(info_factions);
+   array_free(info_factions);
    info_factions = NULL;
 }
 
@@ -921,7 +920,7 @@ static void standings_close( unsigned int wid, char *str )
 static void info_openStandings( unsigned int wid )
 {
    int i;
-   int n, m;
+   int m;
    char **str;
    int w, h, lw;
 
@@ -945,20 +944,19 @@ static void info_openStandings( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* Gets the faction standings. */
-   info_factions  = faction_getKnown( &n );
-   str            = malloc( sizeof(char*) * n );
+   info_factions  = faction_getKnown();
+   str            = malloc( sizeof(char*) * array_size(info_factions) );
 
    /* Create list. */
-   for (i=0; i<n; i++) {
-      str[i] = malloc( 256 );
+   for (i=0; i<array_size(info_factions); i++) {
       m = round( faction_getPlayer( info_factions[i] ) );
-      nsnprintf( str[i], 256, "%s   [ %+d%% ]",
+      asprintf( &str[i], "%s   [ %+d%% ]",
             _(faction_name( info_factions[i] )), m );
    }
 
    /* Display list. */
-   window_addList( wid, 20, -40, lw, h-60,
-         "lstStandings", str, n, 0, standings_update, NULL );
+   window_addList( wid, 20, -40, lw, h-60, "lstStandings",
+         str, array_size(info_factions), 0, standings_update, NULL );
 }
 
 
@@ -999,7 +997,7 @@ static void standings_update( unsigned int wid, char* str )
    window_moveWidget( wid, "txtName", lw+40, y );
    y -= 40;
    m = round( faction_getPlayer( info_factions[p] ) );
-   nsnprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m,
+   snprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m,
       faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtStanding", buf );
    window_moveWidget( wid, "txtStanding", lw+40, y );
@@ -1022,9 +1020,9 @@ static void info_openMissions( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeMissions", _("Close"), info_close );
-   window_addButton( wid, -20, 40 + BUTTON_HEIGHT,
+   window_addButtonKey( wid, -20, 40 + BUTTON_HEIGHT,
          BUTTON_WIDTH, BUTTON_HEIGHT, "btnAbortMission", _("Abort"),
-         mission_menu_abort );
+         mission_menu_abort, SDLK_a );
 
    /* text */
    window_addText( wid, 300+40, -60,
@@ -1270,7 +1268,7 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
       return;
    }
    
-   nsnprintf( buf, 256,
+   snprintf( buf, 256,
          _("This will delete ALL \"%s\" log entries. This operation cannot be undone. Are you sure?"),
          logs[selectedLog]);
    ret = dialogue_YesNoRaw( "", buf );
@@ -1301,7 +1299,7 @@ static void info_shiplogView( unsigned int wid, char *str )
          &logentries, 1);
 
    if ( i < nentries )
-      dialogue_msgRaw( _("Log message"), logentries[i]);
+      dialogue_msgRaw( _("Log message"), logentries[i] );
 
    for (i=0; i<nentries; i++)
       free( logentries[i] );

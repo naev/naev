@@ -14,6 +14,8 @@
 
 #define TRANSFORM_METATABLE      "transform" /**< Transform metatable identifier. */
 
+#define luaL_opttransform(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checktransform)
+
 
 /*
  * Library loading

@@ -36,7 +36,7 @@ static int map_find_ships   = 0; /**< Ships checkbox value. */
 /* Current found stuff. */
 static map_find_t *map_found_cur    = NULL;  /**< Pointer to found stuff. */
 static int map_found_ncur           = 0;     /**< Number of found stuff. */
-static char **map_foundOutfitNames  = NULL; /**< Internal names of outfits in the search results. */
+static char **map_foundOutfitNames  = NULL; /**< Array (array.h): Internal names of outfits in the search results. */
 /* Tech hack. */
 static tech_group_t **map_known_techs = NULL; /**< Array (array.h) of known techs. */
 static Planet **map_known_planets   = NULL;  /**< Array (array.h) of known planets with techs. */
@@ -62,10 +62,10 @@ static int map_sortCompare( const void *p1, const void *p2 );
 static void map_sortFound( map_find_t *found, int n );
 static char map_getPlanetColourChar( Planet *p );
 /* Fuzzy outfit/ship stuff. */
-static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len );
-static char **map_outfitsMatch( const char *name, int *len );
-static char **map_fuzzyShips( Ship **o, int n, const char *name, int *len );
-static char **map_shipsMatch( const char *name, int *len );
+static char **map_fuzzyOutfits( Outfit **o, const char *name );
+static char **map_outfitsMatch( const char *name );
+static char **map_fuzzyShips( Ship **o, const char *name );
+static char **map_shipsMatch( const char *name );
 
 
 /**
@@ -88,7 +88,7 @@ static int map_knownInit (void)
       if (!sys_isKnown( &sys[i] ))
          continue;
 
-      for (j=0; j<sys[i].nplanets; j++) {
+      for (j=0; j<array_size(sys[i].planets); j++) {
          pnt = sys[i].planets[j];
 
          /* Must be real. */
@@ -306,14 +306,15 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
    }
 
    /* Calculate jump path. */
-   slist = map_getJumpPath( jumps, cur_system->name, sys->name, 0, 1, NULL );
+   slist = map_getJumpPath( cur_system->name, sys->name, 0, 1, NULL );
+   *jumps = array_size( slist );
    if (slist==NULL)
       /* Unknown. */
       return -1;
 
    /* Distance to first jump point. */
    vs = &player.p->solid->pos;
-   for (j=0; j < cur_system->njumps; j++) {
+   for (j=0; j < array_size(cur_system->jumps); j++) {
       if (cur_system->jumps[j].target == slist[0]) {
          ve = &cur_system->jumps[j].pos;
          break;
@@ -331,7 +332,7 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
       ss = slist[i];
 
       /* Search jump points. */
-      for (j=0; j < ss->njumps; j++) {
+      for (j=0; j < array_size(ss->jumps); j++) {
 
          /* Get previous jump. */
          if (i == 0) {
@@ -369,7 +370,7 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
    if (pnt != NULL) {
       if (i > 0) {
          ss = slist[ i ];
-         for (j=0; j < ss->njumps; j++) {
+         for (j=0; j < array_size(ss->jumps); j++) {
             if (ss->jumps[j].target == slist[i-1]) {
                vs = &ss->jumps[j].pos;
                break;
@@ -386,7 +387,7 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
    }
 
    /* Cleanup. */
-   free(slist);
+   array_free(slist);
 
    *distance = d;
    return 0;
@@ -416,19 +417,19 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
    if (ret) {
       found[n].jumps    = 10000;
       found[n].distance = 1e6;
-      nsnprintf( route_info, sizeof(route_info), "%s", _("unknown route") );
+      snprintf( route_info, sizeof(route_info), "%s", _("unknown route") );
    }
    else
-      nsnprintf( route_info, sizeof(route_info),
+      snprintf( route_info, sizeof(route_info),
             n_( "%d jump, %.0fk distance", "%d jumps, %.0fk distance", found[n].jumps ),
             found[n].jumps, found[n].distance/1000. );
 
    /* Set fancy name. */
    if (pnt == NULL)
-      nsnprintf( found[n].display, sizeof(found[n].display),
+      snprintf( found[n].display, sizeof(found[n].display),
             _("%s (%s)"), _(sys->name), route_info );
    else
-      nsnprintf( found[n].display, sizeof(found[n].display),
+      snprintf( found[n].display, sizeof(found[n].display),
             _("#%c%s (%s, %s)"), map_getPlanetColourChar(pnt),
             _(pnt->name), _(sys->name), route_info );
 }
@@ -594,47 +595,35 @@ static char map_getPlanetColourChar( Planet *p )
 
 
 /**
- * @brief Does fuzzy name matching for outfits. Searches translated names but returns internal names.
+ * @brief Does fuzzy name matching for outfits in an Array. Searches translated names but returns internal names.
  */
-static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
+static char **map_fuzzyOutfits( Outfit **o, const char *name )
 {
-   int i, l;
+   int i;
    char **names;
 
-   /* Overallocate to maximum. */
-   names = malloc( sizeof(char*) * n );
+   names = array_create( char* );
 
    /* Do fuzzy search. */
-   l = 0;
-   for (i=0; i<n; i++) {
-      if (nstrcasestr( _(o[i]->name), name ) != NULL) {
-         names[l] = o[i]->name;
-         l++;
-      }
-   }
+   for (i=0; i<array_size(o); i++)
+      if (strcasestr( _(o[i]->name), name ) != NULL)
+         array_push_back( &names, o[i]->name );
 
-   /* Free if empty. */
-   if (l == 0) {
-      free(names);
-      names = NULL;
-   }
-
-   *len = l;
    return names;
 }
+
 /**
  * @brief Gets the possible names the outfit name matches.
  */
-static char **map_outfitsMatch( const char *name, int *len )
+static char **map_outfitsMatch( const char *name )
 {
-   int n;
    Outfit **o;
    char **names;
 
    /* Get outfits and names. */
-   o     = tech_getOutfitArray( map_known_techs, array_size( map_known_techs ), &n );
-   names = map_fuzzyOutfits( o, n, name, len );
-   free(o);
+   o     = tech_getOutfitArray( map_known_techs, array_size( map_known_techs ) );
+   names = map_fuzzyOutfits( o, name );
+   array_free(o);
 
    return names;
 }
@@ -718,7 +707,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    window_modifyText( wid, "txtDescription", _(outfit->description) );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
-   nsnprintf( buf, PATH_MAX,
+   snprintf( buf, sizeof(buf),
          _("%d\n"
          "\n"
          "%s\n"
@@ -761,14 +750,14 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    const char *oname, *sysname;
    char **list;
    Outfit *o, **olist;
-   int nolist;
 
-   assert( map_foundOutfitNames == NULL /* else our reentrancy guard failed and we're about to crash. */ );
+   assert( "Outfit search is not reentrant!" && map_foundOutfitNames == NULL );
 
    /* Match planet first. */
    o     = NULL;
    oname = outfit_existsCase( name );
-   map_foundOutfitNames = map_outfitsMatch( name, &len );
+   map_foundOutfitNames = map_outfitsMatch( name );
+   len = array_size( map_foundOutfitNames );
    if (len <= 0)
       return -1;
    else if ((oname != NULL) && (len == 1))
@@ -783,13 +772,13 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
             map_addOutfitDetailFields, map_showOutfitDetail,
             _("Search results for outfits matching '%s':"), name );
       if (i < 0) {
-         free(map_foundOutfitNames);
+         array_free( map_foundOutfitNames );
          map_foundOutfitNames = NULL;
          return 0;
       }
       o = outfit_get( map_foundOutfitNames[i] );
    }
-   free(map_foundOutfitNames);
+   array_free( map_foundOutfitNames );
    map_foundOutfitNames = NULL;
    if (o == NULL)
       return -1;
@@ -797,14 +786,16 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    /* Construct found table. */
    found = NULL;
    n = 0;
-   for (i=0; i<array_size(map_known_techs); i++) {
+   len = array_size(map_known_techs);
+   for (i=0; i<len; i++) {
       /* Try to find the outfit in the planet. */
-      olist = tech_getOutfit( map_known_techs[i], &nolist );
-      for (j=0; j<nolist; j++)
+      olist = tech_getOutfit( map_known_techs[i] );
+      for (j=array_size(olist)-1; j>=0; j--)
          if (olist[j] == o)
             break;
-      free(olist);
-      if (j >= nolist)
+      array_free( olist );
+      olist = NULL;
+      if (j < 0)
          continue;
       pnt = map_known_planets[i];
 
@@ -817,7 +808,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
          continue;
 
       if (found == NULL) /* Allocate results array on first match. */
-         found = malloc( sizeof(map_find_t) * array_size(map_known_techs) );
+         found = malloc( sizeof(map_find_t) * len );
 
       map_findAccumulateResult( found, n, sys, pnt );
       n++;
@@ -834,50 +825,38 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
 
 
 /**
- * @brief Does fuzzy name matching for ships. Searches translated names but returns internal names.
+ * @brief Does fuzzy name matching for ships in an Array. Searches translated names but returns internal names.
  */
-static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
+static char **map_fuzzyShips( Ship **s, const char *name )
 {
-   int i, l;
+   int i;
    char **names;
 
-   /* Overallocate to maximum. */
-   names = malloc( sizeof(char*) * n );
+   names = array_create( char* );
 
    /* Do fuzzy search. */
-   l = 0;
-   for (i=0; i<n; i++) {
-      if (nstrcasestr( _(s[i]->name), name ) != NULL) {
-         names[l] = s[i]->name;
-         l++;
-      }
-   }
+   for (i=0; i<array_size(s); i++)
+      if (strcasestr( _(s[i]->name), name ) != NULL)
+         array_push_back( &names, s[i]->name );
 
-   /* Free if empty. */
-   if (l == 0) {
-      free(names);
-      names = NULL;
-   }
-
-   *len = l;
    return names;
 }
 /**
  * @brief Gets the possible names the ship name matches.
  */
-static char **map_shipsMatch( const char *name, int *len )
+static char **map_shipsMatch( const char *name )
 {
-   int n;
    Ship **s;
    char **names;
 
    /* Get ships and names. */
-   s     = tech_getShipArray( map_known_techs, array_size( map_known_techs ), &n );
-   names = map_fuzzyShips( s, n, name, len );
-   free(s);
+   s     = tech_getShipArray( map_known_techs, array_size( map_known_techs ) );
+   names = map_fuzzyShips( s, name );
+   array_free(s);
 
    return names;
 }
+
 /**
  * @brief Searches for a ship.
  *
@@ -895,12 +874,12 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    const char *sname, *sysname;
    char **list;
    Ship *s, **slist;
-   int nslist;
 
    /* Match planet first. */
    s     = NULL;
    sname = ship_existsCase( name );
-   names = map_shipsMatch( name, &len );
+   names = map_shipsMatch( name );
+   len = array_size( names );
    if (len <= 0)
       return -1;
    else if ((sname != NULL) && (len == 1))
@@ -914,12 +893,12 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       i = dialogue_list( _("Search Results"), list, len,
             _("Search results for ships matching '%s':"), name );
       if (i < 0) {
-         free(names);
+         array_free(names);
          return 0;
       }
       s = ship_get( names[i] );
    }
-   free(names);
+   array_free(names);
    names = NULL;
    if (s == NULL)
       return -1;
@@ -927,15 +906,16 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    /* Construct found table. */
    found = NULL;
    n = 0;
-   for (i=0; i<array_size(map_known_techs); i++) {
+   len = array_size(map_known_techs);
+   for (i=0; i<len; i++) {
       /* Try to find the ship in the planet. */
-      slist = tech_getShip( map_known_techs[i], &nslist );
-      for (j=0; j<nslist; j++)
+      slist = tech_getShip( map_known_techs[i] );
+      for (j=array_size(slist)-1; j>=0; j--)
          if (slist[j] == s)
             break;
-      free(slist);
+      array_free(slist);
       slist = NULL;
-      if (j >= nslist)
+      if (j < 0)
          continue;
       pnt = map_known_planets[i];
 
@@ -948,7 +928,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
          continue;
 
       if (found == NULL) /* Allocate results array on first match. */
-         found = malloc( sizeof(map_find_t) * array_size(map_known_techs) );
+         found = malloc( sizeof(map_find_t) * len );
 
       map_findAccumulateResult( found, n, sys, pnt );
       n++;

@@ -27,6 +27,9 @@
 #include "nluadef.h"
 
 
+static int nlua_tex_counter = 0;
+
+
 /* Helpers. */
 static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y);
 
@@ -189,6 +192,7 @@ static int texL_new( lua_State *L )
    LuaData_t *ld;
    int sx, sy;
    SDL_RWops *rw;
+   char *name;
 
    NLUA_CHECKRW(L);
 
@@ -214,7 +218,9 @@ static int texL_new( lua_State *L )
          NLUA_ERROR( L, _("Data has invalid type for texture") );
       if (w*h*ld->elem*4 != ld->size)
          NLUA_ERROR( L, _("Texture dimensions don't match data size!") );
-      tex = gl_loadImageData( (void*)ld->data, w, h, sx, sy );
+      asprintf( &name, "nlua_texture_%03d", ++nlua_tex_counter );
+      tex = gl_loadImageData( (void*)ld->data, w, h, sx, sy, name  );
+      free( name );
       if (tex==NULL)
          return 0;
       lua_pushtex(L, tex);

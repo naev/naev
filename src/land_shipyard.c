@@ -20,6 +20,7 @@
 
 #include "land_shipyard.h"
 
+#include "array.h"
 #include "dialogue.h"
 #include "hook.h"
 #include "land_takeoff.h"
@@ -36,7 +37,7 @@
 /*
  * Vars.
  */
-static Ship **shipyard_list = NULL; /**< List of available ships, valid when the shipyard image-array widget is. */
+static Ship **shipyard_list = NULL; /**< Array (array.h): Available ships, valid when the shipyard image-array widget is. */
 static Ship* shipyard_selected = NULL; /**< Currently selected shipyard ship. */
 
 
@@ -47,7 +48,7 @@ static void shipyard_buy( unsigned int wid, char* str );
 static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
-static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s, int n );
+static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s );
 static void shipyard_find( unsigned int wid, char* str );
 
 
@@ -152,10 +153,10 @@ void shipyard_open( unsigned int wid )
          &gl_smallFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
-   shipyard_list = tech_getShip( land_planet->tech, &nships );
+   shipyard_list = tech_getShip( land_planet->tech );
+   nships = array_size( shipyard_list );
    cships = calloc( MAX(1,nships), sizeof(ImageArrayCell) );
    if (nships <= 0) {
-      assert(shipyard_list == NULL); /* That's how tech_getShip works, but for comfort's sake... */
       cships[0].image = NULL;
       cships[0].caption = strdup(_("None"));
       nships    = 1;
@@ -164,7 +165,7 @@ void shipyard_open( unsigned int wid )
       for (i=0; i<nships; i++) {
          cships[i].caption = strdup( _(shipyard_list[i]->name) );
          cships[i].image = gl_dupTexture(shipyard_list[i]->gfx_store);
-         cships[i].layers = gl_copyTexArray( shipyard_list[i]->gfx_overlays, shipyard_list[i]->gfx_noverlays, &cships[i].nlayers );
+         cships[i].layers = gl_copyTexArray( shipyard_list[i]->gfx_overlays, &cships[i].nlayers );
          if (shipyard_list[i]->rarity > 0) {
             t = rarity_texture( shipyard_list[i]->rarity );
             cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
@@ -201,11 +202,11 @@ void shipyard_update( unsigned int wid, char* str )
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
 
    /* No ships */
-   if (i < 0 || shipyard_list == NULL) {
+   if (i < 0 || array_size(shipyard_list) == 0) {
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
-      nsnprintf( buf, PATH_MAX,
+      snprintf( buf, sizeof(buf),
             _("None\n"
             "N/A\n"
             "N/A\n"
@@ -252,10 +253,10 @@ void shipyard_update( unsigned int wid, char* str )
    else if (player_hasLicense( ship->license ))
       strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
    else
-      nsnprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
+      snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
    buf_license[ sizeof(buf_license)-1 ] = '\0';
 
-   nsnprintf( buf, PATH_MAX,
+   snprintf( buf, sizeof(buf),
          _("%s\n"
          "%s\n"
          "%s\n"
@@ -319,7 +320,7 @@ void shipyard_update( unsigned int wid, char* str )
  */
 void shipyard_cleanup (void)
 {
-   free( shipyard_list );
+   array_free( shipyard_list );
    shipyard_list = NULL;
    shipyard_selected = NULL;
 }
@@ -362,7 +363,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    HookParam hparam[2];
 
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
-   if (i < 0 || shipyard_list == NULL)
+   if (i < 0 || array_size(shipyard_list) == 0)
       return;
 
    ship = shipyard_list[i];
@@ -591,22 +592,22 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
 
    /* Weapon slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_WEAPON), ship->outfit_weapon, ship->outfit_nweapon );
+   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_WEAPON), ship->outfit_weapon );
 
    /* Utility slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_UTILITY), ship->outfit_utility, ship->outfit_nutility );
+   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_UTILITY), ship->outfit_utility );
 
    /* Structure slots. */
    y -= 20;
-   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure, ship->outfit_nstructure );
+   shipyard_renderSlotsRow( x, y, w, _(OUTFIT_LABEL_STRUCTURE), ship->outfit_structure );
 }
 
 
 /**
  * @brief Renders a row of ship slots.
  */
-static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s, int n )
+static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s )
 {
    (void) bw;
    int i;
@@ -619,7 +620,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, const char
    gl_printMidRaw( &gl_smallFont, 30, bx-15, by, &cFontWhite, -1, str );
 
    /* Draw squares. */
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(s); i++) {
       c = outfit_slotSizeColour( &s[i].slot );
       if (c == NULL)
          c = &cBlack;

@@ -159,12 +159,11 @@ function bargreeter()
    vn.scene()
    local g = vn.newCharacter( _("Greeter"),
          { image=portrait.getFullPath( greeter_portrait ) } )
-   vn.fadein()
+   vn.transition()
    vn.na( _("As soon as you enter the spaceport bar, a neatly dressed individual runs up to you and hands you a complementary drink. It is hard to make out what he is saying over all the background noise created by other patrons and gambling machines, but you try to make it out as best as you can.") )
    g:say( _("\"Welcome to the Minerva Station resort! It appears to be your first time here. As you enjoy your complementary drink, let me briefly explain to you how this wonderful place works. It is all very exciting!\"") )
    g:say( _("\"The currency we use on this station are Minerva Tokens. Unlike credits, they are physical and so very pretty! You can not buy Minerva Tokens directly, however, by participating and betting credits in the various fine games available, you can obtain Minerva Tokens. When you have enough Minerva Tokens, you are able to buy fabulous prizes and enjoy more exclusive areas of our resort. To start out your fun Minerva Adventure®, please enjoy these 10 complementary Minerva Tokens!\"") )
    g:say( _("\"If you want more information or want to check your balance. Please use the terminals located throughout the station. I highly recommend you check out our universe-famous Cyborg Chicken at the blackjack table, and always remember, 'life is short, spend it at Minerva Station'®!\"") )
-   vn.fadeout()
    vn.run()
 
    minerva.tokens_pay( 10 )
@@ -184,7 +183,7 @@ function approach_terminal()
    vn.clear()
    vn.scene()
    local t = vn.newCharacter( minerva.vn_terminal() )
-   vn.fadein()
+   vn.transition()
    vn.label( "start" )
    t:say( function() return string.format(
          n_("\"VALUED CUSTOMER, YOU HAVE #p%d MINERVA TOKEN#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"",
@@ -355,7 +354,6 @@ function approach_terminal()
    vn.jump("trade_consumate")
 
    vn.label( "leave" )
-   vn.fadeout()
    vn.run()
 
    -- Handle random bar events if necessary
@@ -369,7 +367,7 @@ function approach_blackjack()
    vn.clear()
    vn.scene()
    if firsttime then
-      vn.fadein()
+      vn.transition()
       vn.na( _("You make your way to the blackjack table which seems to be surrounded by many patrons, some of which are apparently taking pictures of something. You eventually have to elbow your way to the front to get a view of what is going on." ) )
       vn.appear( cc )
       vn.na( _("When you make it to the front you are greeted by the cold eyes of what apparently seems to be the Cyborg Chicken you were told about. It seems to be sizing the crowd while playing against a patron. The way it moves is very uncanny with short precise mechanical motions. You can tell it has been doing this for a while. You watch as the game progresses and the patron loses all his credits to the chicken, who seems unfazed.") )
@@ -377,7 +375,7 @@ function approach_blackjack()
    end
    if not firsttime then
       vn.newCharacter( cc )
-      vn.fadein()
+      vn.transition()
       vn.na( _("You elbow your way to the front of the table and are once again greeted by the cold mechanical eyes of Cyborg Chicken.") )
    end
    vn.na( "", true ) -- Clear buffer without waiting
@@ -443,7 +441,6 @@ function approach_blackjack()
    vn.animation( 0.5, function (alpha) setup_blackjack(1-alpha) end )
    vn.label( "leave" )
    vn.na( _("You leave the blackjack table behind and head back to the main area.") )
-   vn.fadeout()
    vn.run()
 
    -- Handle random bar events if necessary
@@ -455,7 +452,7 @@ function approach_chuckaluck ()
    vn.clear()
    vn.scene()
    local dealer = vn.newCharacter( _("Dealer"), {image=chuckaluck_image} )
-   vn.fadein()
+   vn.transition()
    vn.na(_("You approach the chuck-a-luck table."))
    vn.na( "", true ) -- Clear buffer without waiting
    vn.label("menu")
@@ -519,7 +516,6 @@ function approach_chuckaluck ()
    vn.animation( 0.5, function (alpha) setup_chuckaluck(1-alpha) end )
    vn.label( "leave" )
    vn.na( _("You leave the chuck-a-luck table behind and head back to the main area.") )
-   vn.fadeout()
    vn.run()
 
    -- Handle random bar events if necessary
@@ -532,9 +528,8 @@ function approach_patron( id )
    vn.clear()
    vn.scene()
    local patron = vn.newCharacter( npcdata.name, { image=npcdata.image } )
-   vn.fadein()
+   vn.transition()
    patron( npcdata.message )
-   vn.fadeout()
    vn.run()
 end
 

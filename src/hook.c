@@ -44,9 +44,6 @@
 #include "space.h"
 
 
-#define HOOK_CHUNK   32 /**< Size to grow by when out of space */
-
-
 /**
  * @brief Hook queue to delay execution.
  */

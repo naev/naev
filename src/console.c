@@ -94,19 +94,33 @@ static const luaL_Reg cli_methods[] = {
  */
 static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void cli_render( double bx, double by, double w, double h, void *data );
-static void cli_printCoreString( const char *s );
+static void cli_printCoreString( const char *s, int escape );
 static int cli_printCore( lua_State *L, int cli_only );
 void cli_tabComplete( unsigned int wid );
 static int cli_initLua (void);
 
 
+static char* cli_escapeString( int *len_out, const char *s, int len )
+{
+   char *buf = malloc( 2*len ); /* worst case */
+   int b = 0;
+   for (int i=0; i<len; i++) {
+      if (s[i]==FONT_COLOUR_CODE)
+         buf[b++] = FONT_COLOUR_CODE;
+      buf[b++] = s[i];
+   }
+   *len_out = b;
+   return buf;
+}
+
+
 /**
  * @brief Prints a string.
  */
-static void cli_printCoreString( const char *s )
+static void cli_printCoreString( const char *s, int escape )
 {
-   int p, l, slen;
-   char *tmp;
+   int p, l, slen, len;
+   char *tmp, *buf;
 
    tmp = strdup(s);
    slen = strlen(s);
@@ -118,7 +132,13 @@ static void cli_printCoreString( const char *s )
       if (tmp[p]=='\t')
          tmp[p] = ' ';
       l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40, NULL );
-      cli_addMessageMax( &tmp[p], l );
+      if (escape) {
+         buf = cli_escapeString( &len, &tmp[p], l );
+         cli_addMessageMax( buf, len );
+         free(buf);
+      }
+      else
+         cli_addMessageMax( &tmp[p], l );
       p += l;
    } while (p < slen);
 
@@ -150,7 +170,7 @@ static int cli_printCore( lua_State *L, int cli_only )
          LOG( "%s", s );
 
       /* Add to console. */
-      cli_printCoreString( s );
+      cli_printCoreString( s, 1 );
 
       lua_pop(L, 1);  /* pop result */
    }
@@ -243,11 +263,14 @@ static int cli_script( lua_State *L )
  */
 void cli_addMessage( const char *msg )
 {
+   char *buf;
    /* Not initialized. */
    if (cli_env == LUA_NOREF)
       return;
-   array_grow(&cli_buffer) = strdup((msg != NULL) ? msg : "");
+   buf = strdup((msg != NULL) ? msg : "");
+   array_grow(&cli_buffer) = buf;
    cli_history = array_size(cli_buffer) - 1;
+   DEBUG("%s",buf);
 }
 
 
@@ -259,11 +282,14 @@ void cli_addMessage( const char *msg )
  */
 void cli_addMessageMax( const char *msg, const int l )
 {
+   char *buf;
    /* Not initialized. */
    if (cli_env == LUA_NOREF)
       return;
-   array_grow(&cli_buffer) = nstrndup((msg != NULL) ? msg : "", l);
+   buf = strndup((msg != NULL) ? msg : "", l);
+   array_grow(&cli_buffer) = buf;
    cli_history = array_size(cli_buffer) - 1;
+   DEBUG("%s",buf);
 }
 
 
@@ -303,7 +329,7 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
          for (i=cli_history; i>=0; i--) {
             if (strncmp(cli_buffer[i], "#C>", 3) == 0) {
                /* Strip escape codes from beginning and end */
-               str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
+               str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                if (i == cli_history &&
                   strcmp(window_getInput(wid, "inpInput"), str) == 0) {
                   free(str);
@@ -328,7 +354,7 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
          /* Find next buffer. */
          for (i=cli_history+1; i<array_size(cli_buffer); i++) {
             if (strncmp(cli_buffer[i], "#C>", 3) == 0) {
-               str = nstrndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
+               str = strndup(cli_buffer[i]+5, strlen(cli_buffer[i])-7);
                window_setInput( wid, "inpInput", str );
                free(str);
                cli_history = i;
@@ -521,8 +547,8 @@ void cli_exit (void)
 static void cli_input( unsigned int wid, char *unused )
 {
    (void) unused;
-   int status;
-   char *str;
+   int status, len;
+   char *str, *escaped;
    char buf[CLI_MAX_INPUT+7];
 
    /* Get the input. */
@@ -533,9 +559,11 @@ static void cli_input( unsigned int wid, char *unused )
       return;
 
    /* Put the message in the console. */
-   nsnprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0",
-         cli_firstline ? "> " : ">>", str );
-   cli_printCoreString( buf );
+   escaped = cli_escapeString( &len, str, strlen(str) );
+   snprintf( buf, CLI_MAX_INPUT+7, "#C%s %s#0",
+         cli_firstline ? "> " : ">>", escaped );
+   free(escaped);
+   cli_printCoreString( buf, 0 );
 
    /* Set up for concat. */
    if (!cli_firstline)               /* o */
@@ -564,8 +592,8 @@ static void cli_input( unsigned int wid, char *unused )
       else {
          /* Real error, spew message and break. */
          s = lua_tostring(naevL, -1);
-         cli_printCoreString( s );
          WARN( "%s", s );
+         cli_printCoreString( s, 1 );
          lua_settop(naevL, 0);
          cli_firstline = 1;
       }
@@ -579,7 +607,7 @@ static void cli_input( unsigned int wid, char *unused )
       lua_setfenv(naevL, -2);
 
       if (nlua_pcall(cli_env, 0, LUA_MULTRET)) {
-         cli_printCoreString( lua_tostring(naevL, -1) );
+         cli_printCoreString( lua_tostring(naevL, -1), 1 );
          lua_pop(naevL, 1);
       }
 
@@ -625,11 +653,12 @@ void cli_open (void)
 
    /* Put a friendly message at first. */
    if (cli_firstOpen) {
-      char buf[256];
+      char *buf;
       cli_addMessage( "" );
       cli_addMessage( _("#gWelcome to the Lua console!") );
-      nsnprintf( buf, sizeof(buf), "#g "APPNAME" v%s", naev_version(0) );
-      cli_printCoreString( buf );
+      asprintf( &buf, "#g "APPNAME" v%s", naev_version(0) );
+      cli_printCoreString( buf, 0 );
+      free( buf );
       cli_addMessage( "" );
       cli_firstOpen = 0;
    }

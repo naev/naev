@@ -345,7 +345,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
    }
 
    /* Switch to the selected tab if it exists. */
-   if (change != -1) {
+   if (change >= 0 && change < tab->dat.tab.ntabs) {
       old = tab->dat.tab.active;
       tab->dat.tab.active = change;
       /* Create event. */

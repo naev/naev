@@ -48,8 +48,6 @@
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
 #define XML_EVENT_TAG         "event" /**< XML event tag. */
 
-#define EVENT_CHUNK           32 /**< Size to grow event data by. */
-
 
 #define EVENT_FLAG_UNIQUE     (1<<0) /**< Unique event. */
 
@@ -580,9 +578,9 @@ static int event_parseFile( const char* file )
    }
 
    /* Skip if no XML. */
-   pos = nstrnstr( filebuf, "</event>", bufsize );
+   pos = strnstr( filebuf, "</event>", bufsize );
    if (pos==NULL) {
-      pos = nstrnstr( filebuf, "function create", bufsize );
+      pos = strnstr( filebuf, "function create", bufsize );
       if ((pos != NULL) && !strncmp(pos,"--common",bufsize))
          WARN(_("Event '%s' has create function but no XML header!"), file);
       free(filebuf);
@@ -590,8 +588,8 @@ static int event_parseFile( const char* file )
    }
 
    /* Separate XML header and Lua. */
-   start_pos = nstrnstr( filebuf, "<?xml ", bufsize );
-   pos = nstrnstr( filebuf, "--]]", bufsize );
+   start_pos = strnstr( filebuf, "<?xml ", bufsize );
+   pos = strnstr( filebuf, "--]]", bufsize );
    if (pos == NULL || start_pos == NULL) {
       WARN(_("Event file '%s' has missing XML header!"), file);
       return -1;

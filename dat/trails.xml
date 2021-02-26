@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Trail_types>
+ <!-- Defalut Type trails -->
+ <trail name="default">
+  <type>trail_default</type>
+  <thickness>6</thickness>
+  <ttl>1.5</ttl>
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="0" g="1" b="1" a="0.7" />
+  <afterburn r="1" g="0.5" b="0" a="0.85" scale="2" />
+  <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="3"/>
+ </trail>
+ <trail name="thin" inherits="default">
+  <thickness>2</thickness>
+  <ttl>1</ttl>
+ </trail>
+ <trail name="missile" inherits="default">
+  <thickness>2</thickness>
+  <ttl>0.3</ttl>
+ </trail>
+ <trail name="missileL" inherits="default">
+  <thickness>4</thickness>
+  <ttl>0.5</ttl>
+ </trail>
+
+ <!-- Fire type of engines-->
+ <trail name="fire">
+  <type>trail_flame</type>
+  <thickness>8</thickness>
+  <ttl>1.5</ttl>
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="1" g="0.84" b="0" a="0.7" />
+  <afterburn r="1" g="0.5" b="0" a="0.85" scale="2" />
+  <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="3" />
+ </trail>
+ <trail name="fire-thin" inherits="fire">
+  <thickness>4</thickness>
+  <ttl>1</ttl>
+ </trail>
+ <trail name="fire-missile" inherits="fire">
+  <thickness>3</thickness>
+  <ttl>0.3</ttl>
+ </trail>
+ <trail name="fire-missileL" inherits="fire">
+  <thickness>5</thickness>
+  <ttl>0.5</ttl>
+ </trail>
+
+ <!-- Sirius type of engines -->
+ <trail name="sirius">
+  <type>trail_wave</type>
+  <thickness>10</thickness>
+  <ttl>1.1</ttl>
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="1" g="0.9" b="0.6" a="0.7" />
+  <afterburn r="1" g="0.5" b="0" a="0.85" scale="2" />
+  <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="3" />
+ </trail>
+
+ <!-- Za'lek type of engines -->
+ <trail name="zalek">
+  <type>trail_pulse</type>
+  <thickness>10</thickness>
+  <ttl>1.1</ttl>
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="1" g="0.3" b="0.3" a="0.7" />
+  <afterburn r="1" g="0.5" b="0" a="0.85" scale="2" />
+  <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="3" />
+ </trail>
+ <trail name="zalekXS" inherits="zalek">
+  <thickness>8</thickness>
+  <ttl>1.0</ttl>
+ </trail>
+ <trail name="zalekS" inherits="zalek">
+  <thickness>10</thickness>
+  <ttl>1.0</ttl>
+ </trail>
+ <trail name="zalekL" inherits="zalek">
+  <thickness>14</thickness>
+  <ttl>1.4</ttl>
+ </trail>
+ <trail name="zalekXL" inherits="zalek">
+  <thickness>18</thickness>
+  <ttl>1.8</ttl>
+ </trail>
+ <trail name="zalek-missile" inherits="zalek">
+  <thickness>2</thickness>
+  <ttl>0.3</ttl>
+ </trail>
+ <trail name="zalek-missileL" inherits="zalek">
+  <thickness>4</thickness>
+  <ttl>0.5</ttl>
+ </trail>
+
+ <!-- Soromid type of engines -->
+ <trail name="soromid">
+  <type>trail_bubbles</type>
+  <thickness>7</thickness>
+  <ttl>1.1</ttl>
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="0.5" g="0.9" b="0.2" a="0.7" />
+  <afterburn r="1" g="0.5" b="0" a="0.85" scale="2" />
+  <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="3" />
+ </trail>
+ <trail name="soromidS" inherits="soromid">
+  <thickness>5</thickness>
+  <ttl>1.0</ttl>
+ </trail>
+
+ <!-- Pirate type of engines -->
+ <trail name="pirate">
+  <type>trail_arc</type>
+  <thickness>6</thickness>
+  <ttl>1.1</ttl>
+  <idle r="1" g="1" b="1" a="0.05" />
+  <glow r="0.9" g="0.1" b="0.4" a="0.7" />
+  <afterburn r="1" g="0.5" b="0" a="0.85" scale="2" />
+  <jumping r="0.9" g="0.1" b="0.9" a="0.85" scale="3" />
+ </trail>
+ <trail name="pirateS" inherits="pirate">
+  <thickness>3</thickness>
+  <ttl>1.0</ttl>
+ </trail>
+
+ <!-- Nebula trail! -->
+ <trail name="nebula">
+  <type>trail_nebula</type>
+  <nebula>1</nebula>
+  <thickness>9</thickness>
+  <ttl>2</ttl>
+  <idle r="0.4" g="0.4" b="0.9" a="0.7" />
+  <glow r="0.4" g="0.4" b="0.9" a="0.7" />
+  <afterburn r="0.4" g="0.4" b="0.9" a="0.9" scale="2" />
+  <jumping r="0.4" g="0.4" b="0.9" a="0.9" scale="3" />
+ </trail>
+</Trail_types>

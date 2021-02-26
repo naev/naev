@@ -90,11 +90,6 @@ static gl_vbo *gui_planet_blink_vbo = NULL;
 
 static int gui_getMessage     = 1; /**< Whether or not the player should receive messages. */
 
-/*
- * pilot stuff for GUI
- */
-extern Pilot** pilot_stack; /**< @todo remove */
-
 
 extern unsigned int land_wid; /**< From land.c */
 
@@ -382,12 +377,12 @@ void player_messageRaw( const char *str )
 
       /* Add the new one */
       if (p == 0) {
-         nsnprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
+         snprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
          gl_printRestoreInit( &mesg_stack[mesg_pointer].restore );
       }
       else {
          mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
-         nsnprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
+         snprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
          gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, p );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
@@ -450,7 +445,7 @@ static void gui_renderPlanetTarget( double dt )
       return;
 
    /* Make sure target exists. */
-   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0) 
+   if ((player.p->nav_planet < 0) && (player.p->nav_hyperspace < 0)
        && (player.p->nav_asteroid < 0))
       return;
 
@@ -491,7 +486,7 @@ static void gui_renderPlanetTarget( double dt )
 
       /* Recover the right gfx */
       at = space_getType( ast->type );
-      if (ast->gfxID > at->ngfx+1)
+      if (ast->gfxID >= array_size(at->gfxs))
          WARN(_("Gfx index out of range"));
 
       x = ast->pos.x - at->gfxs[ast->gfxID]->w / 2.;
@@ -659,6 +654,7 @@ static void gui_renderBorder( double dt )
    const glColour *col;
    glColour ccol;
    double int_a;
+   Pilot *const* pilot_stack;
 
    /* Get player position. */
    hw    = SCREEN_W/2;
@@ -674,7 +670,7 @@ static void gui_renderBorder( double dt )
    gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &cBlackHilight );
 
    /* Draw planets. */
-   for (i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       /* Check that it's real. */
       if (cur_system->planets[i]->real != ASSET_REAL)
          continue;
@@ -701,7 +697,7 @@ static void gui_renderBorder( double dt )
    }
 
    /* Draw jump routes. */
-   for (i=0; i<cur_system->njumps; i++) {
+   for (i=0; i<array_size(cur_system->jumps); i++) {
       jp  = &cur_system->jumps[i];
 
       /* Skip if unknown or exit-only. */
@@ -728,6 +724,7 @@ static void gui_renderBorder( double dt )
    }
 
    /* Draw pilots. */
+   pilot_stack = pilot_getAll();
    for (i=1; i<array_size(pilot_stack); i++) { /* skip the player */
       plt = pilot_stack[i];
 
@@ -857,8 +854,8 @@ static int can_jump = 0; /**< Stores whether or not the player is able to jump. 
 void gui_render( double dt )
 {
    int i;
-   double x;
-   glColour col;
+   gl_Matrix4 projection;
+   double fade, direction;
 
    /* If player is dead just render the cinematic mode. */
    if (!menu_isOpen(MENU_MAIN) &&
@@ -926,15 +923,52 @@ void gui_render( double dt )
       can_jump = i;
    }
 
-   /* Hyperspace. */
+   /* Determine if we need to fade in/out. */
+   fade = direction = 0.;
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
          (player.p->ptimer < HYPERSPACE_FADEOUT)) {
-      x = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
-      col.r = 1.;
-      col.g = 1.;
-      col.b = 1.;
-      col.a = x;
-      gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &col );
+      fade = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
+      direction = VANGLE(player.p->solid->vel);
+   }
+   else if (pilot_isFlag(player.p, PILOT_HYP_END) &&
+         player.p->ptimer > 0.) {
+      fade = player.p->ptimer / HYPERSPACE_FADEIN;
+      direction = VANGLE(player.p->solid->vel) + M_PI;
+   }
+   /* Perform the fade. */
+   if (fade > 0.) {
+      /* Set up the program. */
+      glUseProgram( shaders.jump.program );
+      glEnableVertexAttribArray( shaders.jump.vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.jump.vertex, 0, 2, GL_FLOAT, 0 );
+
+      /* Set up the projection. */
+      projection = gl_view_matrix;
+      projection = gl_Matrix4_Scale(projection, gl_screen.nw, gl_screen.nh, 1. );
+
+      /* Pass stuff over. */
+      gl_Matrix4_Uniform( shaders.jump.projection, projection );
+      glUniform1f( shaders.jump.progress, fade );
+      glUniform1f( shaders.jump.direction, direction );
+      glUniform2f( shaders.jump.dimensions, gl_screen.nw, gl_screen.nh );
+
+      /* Set the subroutine. */
+      if (GLAD_GL_ARB_shader_subroutine) {
+         if (cur_system->nebu_density > 0.)
+            glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shaders.jump.jump_func.jump_nebula );
+         else
+            glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shaders.jump.jump_func.jump_wind );
+      }
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.jump.vertex );
+      glUseProgram(0);
+
+      /* Check errors. */
+      gl_checkErr();
    }
 
    /* Reset viewport. */
@@ -963,7 +997,7 @@ void gui_cooldownEnd (void)
  *    @param bottom Bottom boundary in pixels
  *    @param left Left boundary in pixels
  *
- *    @return 0 on success 
+ *    @return 0 on success
  */
 void gui_setMapOverlayBounds( int top, int right, int bottom, int left )
 {
@@ -1044,6 +1078,7 @@ void gui_radarRender( double x, double y )
    Radar *radar;
    AsteroidAnchor *ast;
    gl_Matrix4 view_matrix_prev;
+   Pilot *const* pilot_stack;
 
    /* The global radar. */
    radar = &gui_radar;
@@ -1065,7 +1100,7 @@ void gui_radarRender( double x, double y )
    /*
     * planets
     */
-   for (i=0; i<cur_system->nplanets; i++)
+   for (i=0; i<array_size(cur_system->planets); i++)
       if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
          gui_renderPlanet( i, radar->shape, radar->w, radar->h, radar->res, 0 );
    if (player.p->nav_planet > -1)
@@ -1074,7 +1109,7 @@ void gui_radarRender( double x, double y )
    /*
     * Jump points.
     */
-   for (i=0; i<cur_system->njumps; i++)
+   for (i=0; i<array_size(cur_system->jumps); i++)
       if (i != player.p->nav_hyperspace && jp_isUsable(&cur_system->jumps[i]))
          gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 0 );
    if (player.p->nav_hyperspace > -1)
@@ -1088,6 +1123,7 @@ void gui_radarRender( double x, double y )
 
 
    /* render the pilot */
+   pilot_stack = pilot_getAll();
    j = 0;
    for (i=1; i<array_size(pilot_stack); i++) { /* skip the player */
       if (pilot_stack[i]->id == player.p->target)
@@ -1100,7 +1136,7 @@ void gui_radarRender( double x, double y )
       gui_renderPilot( pilot_stack[j], radar->shape, radar->w, radar->h, radar->res, 0 );
 
    /* render the asteroids */
-   for (i=0; i<cur_system->nasteroids; i++) {
+   for (i=0; i<array_size(cur_system->asteroids); i++) {
       ast = &cur_system->asteroids[i];
       for (j=0; j<ast->nb; j++)
          gui_renderAsteroid( &ast->asteroids[j], radar->w, radar->h, radar->res, 0 );
@@ -1346,7 +1382,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
    }
 
-   if (p->id == player.p->target) 
+   if (p->id == player.p->target)
       col = cRadar_hilight;
    else if (pilot_isFlag(p, PILOT_HILIGHT))
       col = cRadar_tPilot;
@@ -1644,7 +1680,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    if (ind == player.p->nav_planet)
       gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet);
 
-   /* 
+   /*
    gl_beginSolidProgram(gl_Matrix4_Scale(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), vr, vr, 1), &col);
    gl_vboActivateAttribOffset( gui_planet_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINE_STRIP, 0, 5 );
@@ -1664,7 +1700,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    //glLineWidth(1.);
 
    if (overlay) {
-      nsnprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
+      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
       gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, buf );
    }
 }
@@ -1761,7 +1797,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Render name. */
    if (overlay) {
-      nsnprintf(
+      snprintf(
             buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
             sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       gl_printMarkerRaw( &gl_smallFont, cx+jp->mo.text_offx, cy+jp->mo.text_offy, &col, buf );
@@ -1785,10 +1821,6 @@ void gui_setViewport( double x, double y, double w, double h )
 
    /* Run border calculations. */
    gui_calcBorders();
-
-   /* Regenerate the Nebula stuff. */
-   if ((cur_system != NULL) && (cur_system->nebu_density > 0.))
-      nebu_genOverlay();
 }
 
 
@@ -2016,7 +2048,7 @@ void gui_setCargo (void)
 
 
 /**
- * @brief PlNULLayer just changed their nav computer target.
+ * @brief Player just changed their nav computer target.
  */
 void gui_setNav (void)
 {
@@ -2115,7 +2147,7 @@ int gui_load( const char* name )
    gui_cleanup();
 
    /* Open file. */
-   nsnprintf( path, sizeof(path), GUI_PATH"%s.lua", name );
+   snprintf( path, sizeof(path), GUI_PATH"%s.lua", name );
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
       WARN(_("Unable to find GUI '%s'."), path );

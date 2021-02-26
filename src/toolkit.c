@@ -8,8 +8,6 @@
  * @brief Handles windows and widgets.
  */
 
-/* TODO: better rendering with static VBO and smooth corners */
-
 /** @cond */
 #include <stdarg.h>
 
@@ -1523,6 +1521,10 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
 void toolkit_render (void)
 {
    Window *w;
+
+   /* Only render if open. */
+   if (!toolkit_isOpen())
+      return;
 
    /* Render base. */
    for (w = windows; w!=NULL; w = w->next) {

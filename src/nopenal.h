@@ -12,7 +12,6 @@
 /** @endcond */
 
 #include "log.h"
-#include "ncompat.h"
 
 /*
  * EFX stuff.

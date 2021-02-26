@@ -55,8 +55,8 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
-static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine );
-static int ship_loadPLG( Ship *temp, char *buf );
+static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine );
+static int ship_loadPLG( Ship *temp, const char *buf, int size_hint );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -301,17 +301,17 @@ credits_t ship_buyPrice( const Ship* s )
    /* Get base price. */
    price = ship_basePrice(s);
 
-   for (i=0; i<s->outfit_nstructure; i++) {
+   for (i=0; i<array_size(s->outfit_structure); i++) {
       o = s->outfit_structure[i].data;
       if (o != NULL)
          price += o->price;
    }
-   for (i=0; i<s->outfit_nutility; i++) {
+   for (i=0; i<array_size(s->outfit_utility); i++) {
       o = s->outfit_utility[i].data;
       if (o != NULL)
          price += o->price;
    }
-   for (i=0; i<s->outfit_nweapon; i++) {
+   for (i=0; i<array_size(s->outfit_weapon); i++) {
       o = s->outfit_weapon[i].data;
       if (o != NULL)
          price += o->price;
@@ -409,7 +409,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    /* Copy over for target. */
    gl_getSpriteFromDir( &x, &y, temp->gfx_space, M_PI* 5./4. );
    rtemp.x = sw * x;
-   rtemp.y = sh * (temp->gfx_space->sy-y-1);
+   rtemp.y = sh * y;
    rtemp.w = sw;
    rtemp.h = sh;
    dstrect.x = 0;
@@ -426,8 +426,8 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    SDL_BlitSurface( surface, &rtemp, gfx_store, &dstrect );
 
    /* Load the store surface. */
-   nsnprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
-   temp->gfx_store = gl_loadImagePad( buf, gfx_store, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
+   snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
+   temp->gfx_store = gl_loadImagePad( buf, gfx_store, OPENGL_TEX_VFLIP, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
 #if 0 /* Disabled for now due to issues with larger sprites. */
    /* Some filtering. */
@@ -461,8 +461,8 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 #endif
 
    /* Load the surface. */
-   nsnprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
-   temp->gfx_target = gl_loadImagePad( buf, gfx, 0, sw, sh, 1, 1, 1 );
+   snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
+   temp->gfx_target = gl_loadImagePad( buf, gfx, OPENGL_TEX_VFLIP, sw, sh, 1, 1, 1 );
 
    return 0;
 }
@@ -531,38 +531,28 @@ static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
  *    @param sy Number of Y sprites in image.
  *    @param engine Whether there is also an engine image to load.
  */
-static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
+static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine )
 {
-   char base[NDATA_PATH_MAX], str[PATH_MAX];
-   size_t i;
+   char str[PATH_MAX], *base, *delim;
 
    /* Get base path. */
-   for (i=0; i<sizeof(base); i++) {
-      if ((buf[i] == '\0') || (buf[i] == '_')) {
-         base[i] = '\0';
-         break;
-      }
-      base[i] = buf[i];
-   }
-   if (i>=sizeof(base)) {
-      WARN(_("Failed to get base path of '%s'."), buf);
-      return -1;
-   }
+   delim = strchr( buf, '_' );
+   base = delim==NULL ? strdup( buf ) : strndup( buf, delim-buf );
 
-   nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_EXT, base, buf );
+   snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_EXT, base, buf );
    ship_loadSpaceImage( temp, str, sx, sy );
 
    /* Load the engine sprite .*/
    if (engine && conf.engineglow) {
-      nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+      snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
       ship_loadEngineImage( temp, str, sx, sy );
       if (temp->gfx_engine == NULL)
          WARN(_("Ship '%s' does not have an engine sprite (%s)."), temp->name, str );
    }
 
    /* Get the comm graphic for future loading. */
-   nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
-   temp->gfx_comm = strdup(str);
+   asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+   free( base );
 
    return 0;
 }
@@ -573,21 +563,16 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
  *
  *    @param temp Ship to load into.
  *    @param buf Name of the file.
+ *    @param size_hint Expected array length required.
  */
-static int ship_loadPLG( Ship *temp, char *buf )
+static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
 {
    char *file;
-   int sl;
    CollPoly *polygon;
    xmlDocPtr doc;
    xmlNodePtr node, cur;
 
-   temp->npolygon = 0;
-
-   sl   = strlen(buf)+strlen(SHIP_POLYGON_PATH)+strlen(".xml")+1;
-   file = malloc( sl );
-
-   nsnprintf( file, sl, "%s%s.xml", SHIP_POLYGON_PATH, buf );
+   asprintf( &file, "%s%s.xml", SHIP_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
    if (!PHYSFS_exists(file)) {
@@ -620,13 +605,10 @@ static int ship_loadPLG( Ship *temp, char *buf )
    do { /* load the polygon data */
       if (xml_isNode(node,"polygons")) {
          cur = node->children;
-         temp->polygon = malloc( sizeof(CollPoly) );
+         temp->polygon = array_create_size( CollPoly, size_hint );
          do {
             if (xml_isNode(cur,"polygon")) {
-               temp->npolygon++;
-               temp->polygon = realloc( temp->polygon, sizeof(CollPoly) * temp->npolygon );
-               polygon = &temp->polygon[temp->npolygon-1];
-
+               polygon = &array_grow( &temp->polygon );
                LoadPolygon( polygon, cur );
             }
          } while (xml_nextNode(cur));
@@ -653,6 +635,8 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    char *buf, *typ;
    Outfit *o;
 
+   /* Initialize. */
+   memset( slot, 0, sizeof(ShipOutfitSlot) );
    /* Parse size. */
    xmlr_attr_strd( node, "size", buf );
    if (buf != NULL)
@@ -744,8 +728,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    int sx, sy;
    char *buf;
    char str[PATH_MAX];
-   int l, m, h, noengine;
+   int noengine;
    ShipStatList *ll;
+   ShipTrailEmitter trail;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -768,6 +753,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       }
    } while (xml_nextNode(node));
 
+   /* Default offsets for the engine. */
+   temp->trail_emitters = NULL;
+
    /* Load the rest of the data. */
    node = parent->xmlChildrenNode;
    do { /* load all the data */
@@ -785,12 +773,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          }
 
          /* Get sprite size. */
-         xmlr_attr_atoi_neg1( node, "sx", sx );
-         if (sx == -1)
-            sx = 8;
-         xmlr_attr_atoi_neg1( node, "sy", sy );
-         if (sy == -1)
-            sy = 8;
+         xmlr_attr_int_def( node, "sx", sx, 8 );
+         xmlr_attr_int_def( node, "sy", sy, 8 );
 
          xmlr_attr_int(node, "noengine", noengine );
 
@@ -798,13 +782,13 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          ship_loadGFX( temp, buf, sx, sy, !noengine );
 
          /* Load the polygon. */
-         ship_loadPLG( temp, buf );
+         ship_loadPLG( temp, buf, sx*sy );
 
          /* Validity check: there must be 1 polygon per sprite. */
-         if (temp->npolygon != sx*sy) {
+         if (array_size(temp->polygon) != sx*sy) {
             WARN(_("Ship '%s': the number of collision polygons is wrong.\n \
                     npolygon = %i and sx*sy = %i"),
-                    temp->name, temp->npolygon, sx*sy);
+                    temp->name, array_size(temp->polygon), sx*sy);
          }
 
          continue;
@@ -818,15 +802,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             WARN(_("Ship '%s': gfx_space element is NULL"), temp->name);
             continue;
          }
-         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+         snprintf( str, sizeof(str), GFX_PATH"%s", buf );
 
          /* Get sprite size. */
-         xmlr_attr_atoi_neg1( node, "sx", sx );
-         if (sx == -1)
-            sx = 8;
-         xmlr_attr_atoi_neg1( node, "sy", sy );
-         if (sy == -1)
-            sy = 8;
+         xmlr_attr_int_def( node, "sx", sx, 8 );
+         xmlr_attr_int_def( node, "sy", sy, 8 );
 
          /* Load the graphics. */
          ship_loadSpaceImage( temp, str, sx, sy );
@@ -842,15 +822,11 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             WARN(_("Ship '%s': gfx_engine element is NULL"), temp->name);
             continue;
          }
-         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+         snprintf( str, sizeof(str), GFX_PATH"%s", buf );
 
          /* Get sprite size. */
-         xmlr_attr_atoi_neg1( node, "sx", sx );
-         if (sx == -1)
-            sx = 8;
-         xmlr_attr_atoi_neg1( node, "sy", sy );
-         if (sy == -1)
-            sy = 8;
+         xmlr_attr_int_def( node, "sx", sx, 8 );
+         xmlr_attr_int_def( node, "sy", sy, 8 );
 
          /* Load the graphics. */
          ship_loadEngineImage( temp, str, sx, sy );
@@ -865,25 +841,18 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             WARN(_("Ship '%s': gfx_comm element is NULL"), temp->name);
             continue;
          }
-         nsnprintf( str, PATH_MAX, GFX_PATH"%s", buf );
+         snprintf( str, sizeof(str), GFX_PATH"%s", buf );
          temp->gfx_comm = strdup(str);
          continue;
       }
       if (xml_isNode(node,"gfx_overlays")) {
          cur = node->children;
-         m = 2;
-         temp->gfx_overlays = malloc( m*sizeof(glTexture*) );
+         temp->gfx_overlays = array_create_size( glTexture*, 2 );
          do {
             xml_onlyNodes(cur);
-            if (xml_isNode(cur,"gfx_overlay")) {
-               temp->gfx_noverlays += 1;
-               if (temp->gfx_noverlays > m) {
-                  m *= 2;
-                  temp->gfx_overlays = realloc( temp->gfx_overlays, m * sizeof( glTexture * ) );
-               }
-               temp->gfx_overlays[ temp->gfx_noverlays-1 ] = xml_parseTexture( cur,
-                     OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS );
-            }
+            if (xml_isNode(cur,"gfx_overlay"))
+               array_push_back( &temp->gfx_overlays,
+                     xml_parseTexture( cur, OVERLAY_GFX_PATH"%s", 1, 1, OPENGL_TEX_MIPMAPS ) );
          } while (xml_nextNode(cur));
          continue;
       }
@@ -904,6 +873,23 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
       xmlr_int(node,"rarity",temp->rarity);
+
+      if (xml_isNode(node,"trail_generator")) {
+         xmlr_attr_float( node, "x", trail.x_engine );
+         xmlr_attr_float( node, "y", trail.y_engine );
+         xmlr_attr_float( node, "h", trail.h_engine );
+         if (temp->trail_emitters == NULL) {
+            temp->trail_emitters = array_create( ShipTrailEmitter );
+         }
+         buf = xml_get(node);
+         if (buf == NULL)
+            buf = "default";
+         trail.trail_spec = trailSpec_get( buf );
+         if (trail.trail_spec != NULL)
+            array_push_back( &temp->trail_emitters, trail );
+         continue;
+      }
+
       if (xml_isNode(node,"movement")) {
          cur = node->children;
          do {
@@ -948,42 +934,27 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node,"slots")) {
-         /* First pass, get number of mounts. */
+         /* Allocate the space. */
+         temp->outfit_structure  = array_create( ShipOutfitSlot );
+         temp->outfit_utility    = array_create( ShipOutfitSlot );
+         temp->outfit_weapon     = array_create( ShipOutfitSlot );
+
+         /* Initialize the mounts. */
          cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"structure"))
-               temp->outfit_nstructure++;
-            else if (xml_isNode(cur,"utility"))
-               temp->outfit_nutility++;
-            else if (xml_isNode(cur,"weapon"))
-               temp->outfit_nweapon++;
+               ship_parseSlot( temp, &array_grow(&temp->outfit_structure), OUTFIT_SLOT_STRUCTURE, cur );
+	    else if (xml_isNode(cur,"utility"))
+               ship_parseSlot( temp, &array_grow(&temp->outfit_utility), OUTFIT_SLOT_UTILITY, cur );
+	    else if (xml_isNode(cur,"weapon"))
+               ship_parseSlot( temp, &array_grow(&temp->outfit_weapon), OUTFIT_SLOT_WEAPON, cur );
             else
                WARN(_("Ship '%s' has unknown slot node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
-
-         /* Allocate the space. */
-         temp->outfit_structure  = calloc( temp->outfit_nstructure, sizeof(ShipOutfitSlot) );
-         temp->outfit_utility    = calloc( temp->outfit_nutility, sizeof(ShipOutfitSlot) );
-         temp->outfit_weapon     = calloc( temp->outfit_nweapon, sizeof(ShipOutfitSlot) );
-         /* Second pass, initialize the mounts. */
-         l = m = h = 0;
-         cur = node->children;
-         do {
-            xml_onlyNodes(cur);
-            if (xml_isNode(cur,"structure")) {
-               ship_parseSlot( temp, &temp->outfit_structure[l], OUTFIT_SLOT_STRUCTURE, cur );
-               l++;
-            }
-            if (xml_isNode(cur,"utility")) {
-               ship_parseSlot( temp, &temp->outfit_utility[m], OUTFIT_SLOT_UTILITY, cur );
-               m++;
-            }
-            if (xml_isNode(cur,"weapon")) {
-               ship_parseSlot( temp, &temp->outfit_weapon[h], OUTFIT_SLOT_WEAPON, cur );
-               h++;
-            }
-         } while (xml_nextNode(cur));
+         array_shrink( &temp->outfit_structure );
+         array_shrink( &temp->outfit_utility );
+         array_shrink( &temp->outfit_weapon );
          continue;
       }
 
@@ -1069,7 +1040,7 @@ int ships_load (void)
 {
    size_t nfiles;
    char **ship_files, *file;
-   int i, sl;
+   int i;
    xmlNodePtr node;
    xmlDocPtr doc;
 
@@ -1086,9 +1057,7 @@ int ships_load (void)
 
    for (i=0; ship_files[i]!=NULL; i++) {
       /* Get the file name .*/
-      sl   = strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+1;
-      file = malloc( sl );
-      nsnprintf( file, sl, "%s%s", SHIP_DATA_PATH, ship_files[i] );
+      asprintf( &file, "%s%s", SHIP_DATA_PATH, ship_files[i] );
 
       /* Load the XML. */
       doc  = xml_parsePhysFS( file );
@@ -1147,15 +1116,15 @@ void ships_free (void)
       free(s->desc_stats);
 
       /* Free outfits. */
-      for (j=0; j<s->outfit_nstructure; j++)
+      for (j=0; j<array_size(s->outfit_structure); j++)
          outfit_freeSlot( &s->outfit_structure[j].slot );
-      for (j=0; j<s->outfit_nutility; j++)
+      for (j=0; j<array_size(s->outfit_utility); j++)
          outfit_freeSlot( &s->outfit_utility[j].slot );
-      for (j=0; j<s->outfit_nweapon; j++)
+      for (j=0; j<array_size(s->outfit_weapon); j++)
          outfit_freeSlot( &s->outfit_weapon[j].slot );
-      free(s->outfit_structure);
-      free(s->outfit_utility);
-      free(s->outfit_weapon);
+      array_free(s->outfit_structure);
+      array_free(s->outfit_utility);
+      array_free(s->outfit_weapon);
 
       ss_free( s->stats );
 
@@ -1165,18 +1134,18 @@ void ships_free (void)
       gl_freeTexture(s->gfx_target);
       gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
-      for (j=0; j<s->gfx_noverlays; j++)
+      for (j=0; j<array_size(s->gfx_overlays); j++)
          gl_freeTexture(s->gfx_overlays[j]);
-      free(s->gfx_overlays);
+      array_free(s->gfx_overlays);
 
       /* Free collision polygons. */
-      if (s->npolygon != 0) {
-         for (j=0; j<s->npolygon; j++) {
-            free(s->polygon[j].x);
-            free(s->polygon[j].y);
-         }
-         free(s->polygon);
+      for (j=0; j<array_size(s->polygon); j++) {
+         free(s->polygon[j].x);
+         free(s->polygon[j].y);
       }
+
+      array_free(s->trail_emitters);
+      array_free(s->polygon);
    }
 
    array_free(ship_stack);

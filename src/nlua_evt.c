@@ -193,9 +193,9 @@ static int evt_npcAdd( lua_State *L )
    bg   = luaL_optstring(L,6,NULL);
 
    /* Set path. */
-   nsnprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s", gfx );
+   snprintf( portrait, sizeof(portrait), GFX_PATH"portraits/%s", gfx );
    if (bg!=NULL)
-      nsnprintf( background, PATH_MAX, GFX_PATH"portraits/%s", bg );
+      snprintf( background, sizeof(background), GFX_PATH"portraits/%s", bg );
 
    cur_event = event_getFromLua(L);
 

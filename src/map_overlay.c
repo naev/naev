@@ -160,19 +160,19 @@ void ovr_refresh (void)
 
    /* Calculate max size. */
    items = 0;
-   pos = calloc(cur_system->njumps + cur_system->nplanets, sizeof(Vector2d*));
-   mo  = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPos*));
-   moo = calloc(cur_system->njumps + cur_system->nplanets, sizeof(MapOverlayPosOpt));
+   pos = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(Vector2d*));
+   mo  = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(MapOverlayPos*));
+   moo = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(MapOverlayPosOpt));
    max_x = 0.;
    max_y = 0.;
-   for (i=0; i<cur_system->njumps; i++) {
+   for (i=0; i<array_size(cur_system->jumps); i++) {
       jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
       max_y = MAX( max_y, ABS(jp->pos.y) );
       if (!jp_isUsable(jp) || !jp_isKnown(jp))
          continue;
       /* Initialize the map overlay stuff. */
-      nsnprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
+      snprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       moo[items].text_width = gl_printWidthRaw(&gl_smallFont, buf);
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
@@ -180,14 +180,14 @@ void ovr_refresh (void)
       items++;
    }
    jumpitems = items;
-   for (i=0; i<cur_system->nplanets; i++) {
+   for (i=0; i<array_size(cur_system->planets); i++) {
       pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
       if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
          continue;
       /* Initialize the map overlay stuff. */
-      nsnprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
+      snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
       moo[items].text_width = gl_printWidthRaw( &gl_smallFont, buf );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;
@@ -228,6 +228,9 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    const float position_weight = .1; /**< How much to penalize the position. */
    const float object_weight = 1.; /**< Weight for overlapping with objects. */
    const float text_weight = 2.; /**< Weight for overlapping with text. */
+
+   if (items <= 0)
+      return;
 
    /* Fix radii which fit together. */
    MapOverlayRadiusConstraint cur, *fits = array_create(MapOverlayRadiusConstraint);
@@ -288,7 +291,6 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       for (i=0; i<items; i++) {
          cx = pos[i]->x / res;
          cy = pos[i]->y / res;
-         r  = mo[i]->radius;
          /* Move text if overlap. */
          if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+mo[i]->text_offx, cy+mo[i]->text_offy, moo[i].text_width, gl_smallFont.h, pos, mo, moo, items, i, 0, pixbuf, object_weight, text_weight )) {
             moo[i].text_offx += ox * update_rate;
@@ -488,7 +490,7 @@ void ovr_render( double dt )
 {
    (void) dt;
    int i, j;
-   Pilot **pstk;
+   Pilot *const*pstk;
    AsteroidAnchor *ast;
    double w, h, res;
    double x,y;
@@ -511,14 +513,14 @@ void ovr_render( double dt )
    gl_renderRect( (double)gui_getMapOverlayBoundLeft(), (double)gui_getMapOverlayBoundRight(), w, h, &c );
 
    /* Render planets. */
-   for (i=0; i<cur_system->nplanets; i++)
+   for (i=0; i<array_size(cur_system->planets); i++)
       if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
          gui_renderPlanet( i, RADAR_RECT, w, h, res, 1 );
    if (player.p->nav_planet > -1)
       gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res, 1 );
 
    /* Render jump points. */
-   for (i=0; i<cur_system->njumps; i++)
+   for (i=0; i<array_size(cur_system->jumps); i++)
       if ((i != player.p->nav_hyperspace) && !jp_isFlag(&cur_system->jumps[i], JP_EXITONLY))
          gui_renderJumpPoint( i, RADAR_RECT, w, h, res, 1 );
    if (player.p->nav_hyperspace > -1)
@@ -548,7 +550,7 @@ void ovr_render( double dt )
    }
 
    /* render the asteroids */
-   for (i=0; i<cur_system->nasteroids; i++) {
+   for (i=0; i<array_size(cur_system->asteroids); i++) {
       ast = &cur_system->asteroids[i];
       for (j=0; j<ast->nb; j++)
          gui_renderAsteroid( &ast->asteroids[j], w, h, res, 1 );
@@ -606,11 +608,9 @@ void ovr_mrkFree (void)
 void ovr_mrkClear (void)
 {
    int i;
-   if (ovr_markers == NULL)
-      return;
    for (i=0; i<array_size(ovr_markers); i++)
       ovr_mrkCleanup( &ovr_markers[i] );
-   array_erase( &ovr_markers, ovr_markers, &ovr_markers[ array_size(ovr_markers) ] );
+   array_erase( &ovr_markers, array_begin(ovr_markers), array_end(ovr_markers) );
 }
 
 

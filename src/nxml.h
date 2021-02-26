@@ -89,19 +89,27 @@
          WARN("Node '%s' already loaded and being replaced from '%s' to '%s'", \
                s, str, xml_raw(n) ); } \
       str = ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n))); continue; }}
-/** DEPRECATED synonym for xmlr_attr_strd. (This one just isn't explicit about being a malloc.)
- * It's still used by old code that needs to be reviewed or deleted for other reasons. */
-#define xmlr_attr(n,s,a) \
+
+#define xmlr_attr_strd(n,s,a) \
    a = (char*)xmlGetProp(n,(xmlChar*)s)
-#define xmlr_attr_int(n,s,a)     do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtol(  T, NULL, 10); free(T);} while(0)
-#define xmlr_attr_int(n,s,a)     do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtol(  T, NULL, 10); free(T);} while(0)
-#define xmlr_attr_uint(n,s,a)    do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtoul( T, NULL, 10); free(T);} while(0)
-#define xmlr_attr_long(n,s,a)    do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtoll( T, NULL, 10); free(T);} while(0)
-#define xmlr_attr_ulong(n,s,a)   do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 : strtoull(T, NULL, 10); free(T);} while(0)
-#define xmlr_attr_float(n,s,a)   do {xmlr_attr(n,s,char*T); a = T==NULL ? 0 :     atof(T          ); free(T);} while(0)
-#define xmlr_attr_strd(n,s,a)    xmlr_attr(n,s,a)
-/** DEPRECATED common pattern for optional ints (actually of type int) */
-#define xmlr_attr_atoi_neg1(n,s,a) do {xmlr_attr(n,s,char*T); a = T==NULL ? -1 : atoi(T); free(T);} while(0)
+/* Attribute readers with defaults. */
+#define xmlr_attr_int_def(n,s,a,def)   do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def: strtol( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_uint_def(n,s,a,def)  do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:strtoul( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_long_def(n,s,a,def)  do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:strtoll( T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_ulong_def(n,s,a,def) do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:strtoull(T, NULL, 10); free(T);} while(0)
+#define xmlr_attr_float_def(n,s,a,def) do {xmlr_attr_strd(n,s,char*T); a = T==NULL?def:    atof(T          ); free(T);} while(0)
+/* Attribute readers defaulting to zero. */
+#define xmlr_attr_int(n,s,a)     xmlr_attr_int_def(n,s,a,0)
+#define xmlr_attr_uint(n,s,a)    xmlr_attr_uint_def(n,s,a,0)
+#define xmlr_attr_long(n,s,a)    xmlr_attr_long_def(n,s,a,0)
+#define xmlr_attr_ulong(n,s,a)   xmlr_attr_ulong_def(n,s,a,0)
+#define xmlr_attr_float(n,s,a)   xmlr_attr_float_def(n,s,a,0.)
+/* Attribute readers for optional values. */
+#define xmlr_attr_int_opt(n,s,a)     xmlr_attr_int_def(n,s,a,a)
+#define xmlr_attr_uint_opt(n,s,a)    xmlr_attr_uint_def(n,s,a,a)
+#define xmlr_attr_long_opt(n,s,a)    xmlr_attr_long_def(n,s,a,a)
+#define xmlr_attr_ulong_opt(n,s,a)   xmlr_attr_ulong_def(n,s,a,a)
+#define xmlr_attr_float_opt(n,s,a)   xmlr_attr_float_def(n,s,a,a)
 
 /*
  * writer crap

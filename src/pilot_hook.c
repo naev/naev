@@ -68,7 +68,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
 
    /* Run pilot specific hooks. */
    run = 0;
-   for (i=0; i<p->nhooks; i++) {
+   for (i=0; i<array_size(p->hooks); i++) {
       if (p->hooks[i].type != hook_type)
          continue;
 
@@ -123,10 +123,16 @@ int pilot_runHook( Pilot* p, int hook_type )
  */
 void pilot_addHook( Pilot *pilot, int type, unsigned int hook )
 {
-   pilot->nhooks++;
-   pilot->hooks = realloc( pilot->hooks, sizeof(PilotHook) * pilot->nhooks );
-   pilot->hooks[pilot->nhooks-1].type  = type;
-   pilot->hooks[pilot->nhooks-1].id    = hook;
+   PilotHook *phook;
+
+   /* Allocate memory. */
+   if (pilot->hooks == NULL)
+      pilot->hooks = array_create( PilotHook );
+
+   /* Create the new hook. */
+   phook        = &array_grow( &pilot->hooks );
+   phook->type  = type;
+   phook->id    = hook;
 }
 
 
@@ -169,11 +175,7 @@ void pilots_rmGlobalHook( unsigned int hook )
  */
 void pilots_clearGlobalHooks (void)
 {
-   /* Must exist pilot hook.s */
-   if (pilot_globalHooks == NULL )
-      return;
-
-   array_erase( &pilot_globalHooks, pilot_globalHooks, &pilot_globalHooks[ array_size(pilot_globalHooks) ] );
+   array_erase( &pilot_globalHooks, array_begin(pilot_globalHooks), array_end(pilot_globalHooks) );
 }
 
 
@@ -185,7 +187,7 @@ void pilots_clearGlobalHooks (void)
 void pilots_rmHook( unsigned int hook )
 {
    int i, j;
-   Pilot *p, **plist;
+   Pilot *p, *const*plist;
 
    /* Cleaning up a pilot's hooks. */
    if (pilot_hookCleanup)
@@ -198,13 +200,12 @@ void pilots_rmHook( unsigned int hook )
    for (i=0; i<array_size(plist); i++) {
       p = plist[i];
 
-      for (j=0; j<p->nhooks; j++) {
+      for (j=0; j<array_size(p->hooks); j++) {
          /* Hook not found. */
          if (p->hooks[j].id != hook)
             continue;
 
-         p->nhooks--;
-         memmove( &p->hooks[j], &p->hooks[j+1], sizeof(PilotHook) * (p->nhooks-j) );
+         array_erase( &p->hooks, &p->hooks[j], &p->hooks[j+1] );
          j--; /* Dun like it but we have to keep iterator safe. */
       }
    }
@@ -222,13 +223,12 @@ void pilot_clearHooks( Pilot *p )
 
    /* Remove the hooks. */
    pilot_hookCleanup = 1;
-   for (i=0; i<p->nhooks; i++)
+   for (i=0; i<array_size(p->hooks); i++)
       hook_rm( p->hooks[i].id );
    pilot_hookCleanup = 0;
 
-   free(p->hooks);
+   array_free(p->hooks);
    p->hooks  = NULL;
-   p->nhooks = 0;
 }
 
 

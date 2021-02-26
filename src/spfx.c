@@ -20,6 +20,7 @@
 #include "spfx.h"
 
 #include "array.h"
+#include "camera.h"
 #include "debris.h"
 #include "log.h"
 #include "ndata.h"
@@ -28,21 +29,24 @@
 #include "pause.h"
 #include "perlin.h"
 #include "physics.h"
-#include "pilot.h"
 #include "rng.h"
+#include "space.h"
 
 
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
 #define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
-
-#define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
-#define SPFX_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
 
 #define SHAKE_MASS      (1./400.) /** Shake mass. */
 #define SHAKE_K         (1./50.) /**< Constant for virtual spring. */
 #define SHAKE_B         (3.*sqrt(SHAKE_K*SHAKE_MASS)) /**< Constant for virtual dampener. */
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
+
+
+/* Trail stuff. */
+#define TRAIL_UPDATE_DT       0.05
+static TrailSpec* trail_spec_stack;
+static Trail_spfx** trail_spfx_stack;
 
 
 /*
@@ -58,12 +62,20 @@ static int shake_off = 1; /**< 1 if shake is not active. */
 static perlin_data_t *shake_noise = NULL; /**< Shake noise. */
 static const double shake_fps_min   = 1./10.; /**< Minimum fps to run shake update at. */
 
-
+/* Haptic stuff. */
 extern SDL_Haptic *haptic; /**< From joystick.c */
 extern unsigned int haptic_query; /**< From joystick.c */
 static int haptic_rumble         = -1; /**< Haptic rumble effect ID. */
 static SDL_HapticEffect haptic_rumbleEffect; /**< Haptic rumble effect. */
 static double haptic_lastUpdate  = 0.; /**< Timer to update haptic effect again. */
+
+
+/*
+ * Trail colours handling.
+ */
+static int trailSpec_load (void);
+static void trailSpec_parse( xmlNodePtr cur, TrailSpec *tc );
+static TrailSpec* trailSpec_getRaw( const char* name );
 
 
 /**
@@ -101,6 +113,7 @@ typedef struct SPFX_ {
 
 /* front stack is for effects on player, back is for the rest */
 static SPFX *spfx_stack_front = NULL; /**< Frontal special effect layer. */
+static SPFX *spfx_stack_middle = NULL; /**< Middle special effect layer. */
 static SPFX *spfx_stack_back = NULL; /**< Back special effect layer. */
 
 
@@ -114,6 +127,11 @@ static void spfx_update_layer( SPFX *layer, const double dt );
 /* Haptic. */
 static int spfx_hapticInit (void);
 static void spfx_hapticRumble( double mod );
+/* Trail. */
+static void spfx_update_trails( double dt );
+static void spfx_trail_update( Trail_spfx* trail, double dt );
+static void spfx_trail_draw( const Trail_spfx* trail );
+static void spfx_trail_free( Trail_spfx* trail );
 
 
 /**
@@ -240,6 +258,8 @@ int spfx_load (void)
    /* Clean up. */
    xmlFreeDoc(doc);
 
+   /* Trail colour sets. */
+   trailSpec_load();
 
    /*
     * Now initialize force feedback.
@@ -249,6 +269,7 @@ int spfx_load (void)
 
    /* Stacks. */
    spfx_stack_front = array_create( SPFX );
+   spfx_stack_middle = array_create( SPFX );
    spfx_stack_back = array_create( SPFX );
 
    return 0;
@@ -269,6 +290,8 @@ void spfx_free (void)
    spfx_clear();
    array_free(spfx_stack_front);
    spfx_stack_front = NULL;
+   array_free(spfx_stack_middle);
+   spfx_stack_middle = NULL;
    array_free(spfx_stack_back);
    spfx_stack_back = NULL;
 
@@ -280,6 +303,16 @@ void spfx_free (void)
 
    /* Free the noise. */
    noise_delete( shake_noise );
+
+   /* Free the trails. */
+   for (i=0; i<array_size(trail_spfx_stack); i++)
+      spfx_trail_free( trail_spfx_stack[i] );
+   array_free( trail_spfx_stack );
+
+   /* Free the trail styles. */
+   for (i=0; i<array_size(trail_spec_stack); i++)
+      free( trail_spec_stack[i].name );
+   array_free( trail_spec_stack );
 }
 
 
@@ -311,6 +344,8 @@ void spfx_add( int effect,
     */
    if (layer == SPFX_LAYER_FRONT) /* front layer */
       cur_spfx = &array_grow( &spfx_stack_front );
+   else if (layer == SPFX_LAYER_MIDDLE) /* middle layer */
+      cur_spfx = &array_grow( &spfx_stack_middle );
    else if (layer == SPFX_LAYER_BACK) /* back layer */
       cur_spfx = &array_grow( &spfx_stack_back );
    else {
@@ -337,12 +372,17 @@ void spfx_add( int effect,
  */
 void spfx_clear (void)
 {
+   int i;
+
    /* Clear rumble */
    shake_set = 0;
    shake_off = 1;
    shake_force_mod = 0.;
    vectnull( &shake_pos );
    vectnull( &shake_vel );
+   for (i=0; i<array_size(trail_spfx_stack); i++)
+      spfx_trail_free( trail_spfx_stack[i] );
+   array_erase( &trail_spfx_stack, array_begin(trail_spfx_stack), array_end(trail_spfx_stack) );
 }
 
 
@@ -354,7 +394,9 @@ void spfx_clear (void)
 void spfx_update( const double dt )
 {
    spfx_update_layer( spfx_stack_front, dt );
+   spfx_update_layer( spfx_stack_middle, dt );
    spfx_update_layer( spfx_stack_back, dt );
+   spfx_update_trails( dt );
 }
 
 
@@ -435,6 +477,210 @@ static void spfx_updateShake( double dt )
 
    /* Update position. */
    vect_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
+}
+
+
+/**
+ * @brief Initalizes a trail.
+ *
+ *    @return Pointer to initialized trail. When done (due e.g. to pilot death), call spfx_trail_remove.
+ */
+Trail_spfx* spfx_trail_create( const TrailSpec* spec )
+{
+   Trail_spfx *trail;
+
+   trail = calloc( 1, sizeof(Trail_spfx) );
+   trail->spec = spec;
+   trail->capacity = 1;
+   trail->iread = trail->iwrite = 0;
+   trail->point_ringbuf = calloc( trail->capacity, sizeof(TrailPoint) );
+   trail->refcount = 1;
+   trail->r = RNGF();
+
+   if ( trail_spfx_stack == NULL )
+      trail_spfx_stack = array_create( Trail_spfx* );
+   array_push_back( &trail_spfx_stack, trail );
+
+   return trail;
+}
+
+
+/**
+ * @brief Updates all trails (handling dispersal/fadeout).
+ *
+ *    @param dt Update interval.
+ */
+void spfx_update_trails( double dt ) {
+   int i, n;
+   Trail_spfx *trail;
+
+   n = array_size( trail_spfx_stack );
+   for (i=0; i<n; i++) {
+      trail = trail_spfx_stack[i];
+      spfx_trail_update( trail, dt );
+      if (!trail->refcount && !trail_size(trail) ) {
+         spfx_trail_free( trail );
+         trail_spfx_stack[i--] = trail_spfx_stack[--n];
+      }
+   }
+   if (n < array_size( trail_spfx_stack ) )
+      array_resize( &trail_spfx_stack, n );
+}
+
+
+/**
+ * @brief Updates a trail.
+ *
+ *    @param trail Trail to update.
+ *    @param dt Update interval.
+ */
+static void spfx_trail_update( Trail_spfx* trail, double dt )
+{
+   size_t i;
+   GLfloat rel_dt;
+
+   rel_dt = dt/ trail->spec->ttl;
+   /* Remove outdated elements. */
+   while (trail->iread < trail->iwrite && trail_front(trail).t < rel_dt)
+      trail->iread++;
+
+   /* Update others' timestamps. */
+   for (i = trail->iread; i < trail->iwrite; i++)
+      trail_at( trail, i ).t -= rel_dt;
+
+   /* Update timer. */
+   trail->dt += dt;
+}
+
+
+/**
+ * @brief Makes a trail grow.
+ *
+ *    @param trail Trail to update.
+ *    @param x X position of the new control point.
+ *    @param y Y position of the new control point.
+ *    @param mode Type of trail emission at this point.
+ */
+void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode )
+{
+   TrailPoint p;
+
+   if (trail->spec->style[mode].col.a <= 0.)
+      return;
+
+   p.x = x;
+   p.y = y;
+   p.t = 1.;
+   p.mode = mode;
+
+   /* The "back" of the trail should always reflect our most recent state.  */
+   trail_back( trail ) = p;
+
+   /* We may need to insert a control point, but not if our last sample was recent enough. */
+   if (trail_size(trail) > 1 && trail_at( trail, trail->iwrite-2 ).t >= 1.-TRAIL_UPDATE_DT)
+      return;
+
+   /* If the last time we inserted a control point was recent enough, we don't need a new one. */
+   if (trail_size(trail) == trail->capacity) {
+      /* Full! Double capacity, and make the elements contiguous. (We've made space to grow rightward.) */
+      trail->point_ringbuf = realloc( trail->point_ringbuf, 2 * trail->capacity * sizeof(TrailPoint) );
+      trail->iread %= trail->capacity;
+      trail->iwrite = trail->iread + trail->capacity;
+      memmove( &trail->point_ringbuf[trail->capacity], trail->point_ringbuf, trail->iread * sizeof(TrailPoint) );
+      trail->capacity *= 2;
+   }
+   trail_at( trail, trail->iwrite++ ) = p;
+}
+
+
+/**
+ * @brief Removes a trail.
+ *
+ *    @param trail Trail to remove.
+ */
+void spfx_trail_remove( Trail_spfx* trail )
+{
+   if (trail != NULL)
+      trail->refcount--;
+}
+
+
+/**
+ * @brief Deallocates an unreferenced, expired trail.
+ */
+static void spfx_trail_free( Trail_spfx* trail )
+{
+   assert(trail->refcount == 0);
+   free(trail->point_ringbuf);
+   free(trail);
+}
+
+
+/**
+ * @brief Draws a trail on screen.
+ */
+static void spfx_trail_draw( const Trail_spfx* trail )
+{
+   double x1, y1, x2, y2, z;
+   const TrailPoint *tp, *tpp;
+   const TrailStyle *sp, *spp, *styles;
+   size_t i, n;
+   GLfloat len;
+   gl_Matrix4 projection;
+   double s;
+
+   n = trail_size(trail);
+   if (n==0)
+      return;
+   styles = trail->spec->style;
+
+   /* Stuff that doesn't change for the entire trail. */
+   glUseProgram( shaders.trail.program );
+   if (GLAD_GL_ARB_shader_subroutine)
+      glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &trail->spec->type );
+   glEnableVertexAttribArray( shaders.trail.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );
+   glUniform1f( shaders.trail.dt, trail->dt );
+   glUniform1f( shaders.trail.r, trail->r );
+
+   z   = cam_getZoom();
+   len = 0.;
+   for (i = trail->iread + 1; i < trail->iwrite; i++) {
+      tp  = &trail_at( trail, i );
+      tpp = &trail_at( trail, i-1 );
+      sp  = &styles[tp->mode];
+      spp = &styles[tpp->mode];
+      gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
+      gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
+
+      s = hypotf( x2-x1, y2-y1 );
+
+      /* Set vertex. */
+      projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);
+      projection = gl_Matrix4_Rotate2dv(projection, (x2-x1)/s, (y2-y1)/s);
+      projection = gl_Matrix4_Scale(projection, s, z*(sp->thick+spp->thick), 1);
+      projection = gl_Matrix4_Translate(projection, 0., -.5, 0);
+
+      /* Set uniforms. */
+      gl_Matrix4_Uniform(shaders.trail.projection, projection);
+      gl_uniformColor(shaders.trail.c1, &sp->col);
+      gl_uniformColor(shaders.trail.c2, &spp->col);
+      glUniform1f(shaders.trail.t1, tp->t);
+      glUniform1f(shaders.trail.t2, tpp->t);
+      glUniform2f(shaders.trail.pos2, len, sp->thick);
+      len += s;
+      glUniform2f(shaders.trail.pos1, len, spp->thick);
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   }
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.trail.vertex );
+   glUseProgram(0);
+
+   /* Check errors. */
+   gl_checkErr();
 }
 
 
@@ -633,12 +879,16 @@ void spfx_render( const int layer )
    SPFX_Base *effect;
    int sx, sy;
    double time;
-
+   Trail_spfx *trail;
 
    /* get the appropriate layer */
    switch (layer) {
       case SPFX_LAYER_FRONT:
          spfx_stack = spfx_stack_front;
+         break;
+
+      case SPFX_LAYER_MIDDLE:
+         spfx_stack = spfx_stack_middle;
          break;
 
       case SPFX_LAYER_BACK:
@@ -649,6 +899,13 @@ void spfx_render( const int layer )
          WARN(_("Rendering invalid SPFX layer."));
          return;
    }
+
+   /* Trails are special (for now?). */
+   if (layer == SPFX_LAYER_BACK)
+      for (i=0; i<array_size(trail_spfx_stack); i++) {
+         trail = trail_spfx_stack[i];
+         spfx_trail_draw( trail );
+      }
 
    /* Now render the layer */
    for (i=array_size(spfx_stack)-1; i>=0; i--) {
@@ -672,3 +929,174 @@ void spfx_render( const int layer )
    }
 }
 
+
+/**
+ * @brief Parses raw values out of a "trail" element.
+ * \warning This means values like idle->thick aren't ready to use.
+ */
+static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
+{
+   static const char *mode_tags[] = MODE_TAGS;
+   char *type;
+   int i;
+   xmlNodePtr cur = node->children;
+
+   do {
+      xml_onlyNodes(cur);
+      if (xml_isNode(cur,"thickness"))
+         tc->def_thick = xml_getFloat( cur );
+      else if (xml_isNode(cur, "ttl"))
+         tc->ttl = xml_getFloat( cur );
+      else if (xml_isNode(cur, "type")) {
+         type = xml_get(cur);
+         if (GLAD_GL_ARB_shader_subroutine) {
+            tc->type = glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );
+            if (tc->type == GL_INVALID_INDEX)
+               WARN("Trail '%s' has unknown type '%s'", tc->name, type );
+         }
+      }
+      else if (xml_isNode(cur, "nebula"))
+         tc->nebula = xml_getInt( cur );
+      else {
+         for (i=0; i<MODE_MAX; i++)
+            if (xml_isNode(cur, mode_tags[i])) {
+               xmlr_attr_float_opt( cur, "r", tc->style[i].col.r );
+               xmlr_attr_float_opt( cur, "g", tc->style[i].col.g );
+               xmlr_attr_float_opt( cur, "b", tc->style[i].col.b );
+               xmlr_attr_float_opt( cur, "a", tc->style[i].col.a );
+               xmlr_attr_float_opt( cur, "scale", tc->style[i].thick );
+	       break;
+            }
+         if (i == MODE_MAX)
+            WARN(_("Trail '%s' has unknown node '%s'."), tc->name, cur->name);
+      }
+   } while (xml_nextNode(cur));
+
+#define MELEMENT(o,s)   if (o) WARN(_("Trail '%s' missing '%s' element"), tc->name, s)
+   MELEMENT( tc->def_thick==0, "thickness" );
+   MELEMENT( tc->ttl==0, "ttl" );
+#undef MELEMENT
+}
+
+
+/**
+ * @brief Loads the trail colour sets.
+ *
+ *    @return 0 on success.
+ */
+static int trailSpec_load (void)
+{
+   TrailSpec *tc, *parent;
+   xmlNodePtr first, node;
+   xmlDocPtr doc;
+   char *name, *inherits;
+
+   /* Load the data. */
+   doc = xml_parsePhysFS( TRAIL_DATA_PATH );
+   if (doc == NULL)
+      return -1;
+
+   /* Get the root node. */
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,"Trail_types")) {
+      WARN( _("Malformed '%s' file: missing root element 'Trail_types'"), TRAIL_DATA_PATH);
+      return -1;
+   }
+
+   /* Get the first node. */
+   first = node->xmlChildrenNode; /* first event node */
+   if (node == NULL) {
+      WARN( _("Malformed '%s' file: does not contain elements"), TRAIL_DATA_PATH);
+      return -1;
+   }
+
+   trail_spec_stack = array_create( TrailSpec );
+
+   node = first;
+   do {
+      xml_onlyNodes( node );
+      if (xml_isNode(node,"trail")) {
+         tc = &array_grow( &trail_spec_stack );
+         memset( tc, 0, sizeof(TrailSpec) );
+         for(int i=0; i<MODE_MAX; i++)
+            tc->style[i].thick = 1.;
+         xmlr_attr_strd( node, "name", tc->name );
+
+         /* Do the first pass for non-inheriting trails. */
+         xmlr_attr_strd( node, "inherits", inherits );
+         if (inherits == NULL)
+            trailSpec_parse( node, tc );
+         else
+            free( inherits );
+      }
+   } while (xml_nextNode(node));
+
+   /* Second pass to complete inheritance. */
+   node = first;
+   do {
+      xml_onlyNodes( node );
+      if (xml_isNode(node,"trail")) {
+         /* Only interested in inherits. */
+         xmlr_attr_strd( node, "inherits", inherits );
+         if (inherits == NULL)
+            continue;
+         parent = trailSpec_getRaw( inherits );
+
+         /* Get the style itself. */
+         xmlr_attr_strd( node, "name", name );
+         tc = trailSpec_getRaw( name );
+
+         /* Make sure we found stuff. */
+         if ((tc==NULL) || (parent==NULL)) {
+            WARN(_("Trail '%s' that inherits from '%s' has missing reference!"), name, inherits );
+            continue;
+         }
+         free( inherits );
+         free( name );
+
+         /* Set properties. */
+         name = tc->name;
+         memcpy( tc, parent, sizeof(TrailSpec) );
+         tc->name = name;
+
+         /* Load remaining properties (overrides parent). */
+         trailSpec_parse( node, tc );
+      }
+   } while (xml_nextNode(node));
+
+   for (tc=array_begin(trail_spec_stack); tc!=array_end(trail_spec_stack); tc++) {
+      for(int i=0; i<MODE_MAX; i++)
+         tc->style[i].thick *= tc->def_thick;
+   }
+   array_shrink(&trail_spec_stack);
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
+
+   return 0;
+}
+
+
+static TrailSpec* trailSpec_getRaw( const char* name )
+{
+   int i;
+
+   for (i=0; i<array_size(trail_spec_stack); i++) {
+      if ( strcmp(trail_spec_stack[i].name, name)==0 )
+         return &trail_spec_stack[i];
+   }
+
+   WARN(_("Trail type '%s' not found in stack"), name);
+   return NULL;
+}
+
+
+/**
+ * @brief Gets a trail spec by name.
+ *
+ *    @return TrailSpec reference if found, else NULL.
+ */
+const TrailSpec* trailSpec_get( const char* name )
+{
+   return trailSpec_getRaw( name );
+}

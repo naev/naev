@@ -3,8 +3,6 @@
 *.a
 *.pyc
 .hgignore
-mkspr
-mkspr.exe
 build/*
 naev_csv
 naikari_csv

@@ -17,6 +17,7 @@
 #include "ship.h"
 #include "sound.h"
 #include "space.h"
+#include "spfx.h"
 
 
 #define PLAYER_ID       1 /**< Player pilot ID. */
@@ -28,8 +29,9 @@
 #define HYPERSPACE_STARS_BLUR    3. /**< How long it takes for stars to start blurring (seconds). */
 #define HYPERSPACE_STARS_LENGTH  250 /**< Length the stars blur to at max (pixels). */
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
+#define HYPERSPACE_FADEIN        1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
-#define HYPERSPACE_VEL           2 * HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY /**< Velocity at hyperspace. */
+#define HYPERSPACE_VEL           2. * HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY /**< Velocity at hyperspace. */
 #define HYPERSPACE_ENTER_MIN     HYPERSPACE_VEL*0.3 /**< Minimum entering distance. */
 #define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.4 /**< Maximum entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
@@ -209,7 +211,6 @@ typedef struct Pilot_ {
 
    unsigned int id;  /**< pilot's id, used for many functions */
    char* name;       /**< pilot's name (if unique) */
-   char* title;      /**< title - usually indicating special properties - @todo use */
 
    /* Fleet/faction management. */
    int faction;      /**< Pilot's faction. */
@@ -223,6 +224,7 @@ typedef struct Pilot_ {
    double mass_outfit; /**< Amount of outfit mass added. */
    int tsx;          /**< current sprite x position, calculated on update. */
    int tsy;          /**< current sprite y position, calculated on update. */
+   Trail_spfx** trail;  /**< Array of pointers to pilot's trails. */
 
    /* Properties. */
    int cpu;       /**< Amount of CPU the pilot has left. */
@@ -290,14 +292,10 @@ typedef struct Pilot_ {
    void (*render_overlay)(struct Pilot_*, const double); /**< For rendering the pilot overlay. */
 
    /* Outfit management */
-   int noutfits;     /**< Total amount of slots. */
-   int outfit_nstructure; /**< Number of structure slots. */
-   int outfit_nutility; /**< Number of utility slots. */
-   int outfit_nweapon; /**< Number of weapon slots. */
-   PilotOutfitSlot **outfits;        /**< Total outfits. */
-   PilotOutfitSlot * outfit_structure; /**< The structure slots. */
-   PilotOutfitSlot * outfit_utility;   /**< The utility slots. */
-   PilotOutfitSlot *outfit_weapon; /**< The weapon slots. */
+   PilotOutfitSlot **outfits;        /**< Array (array.h): Pointers to all outfits. */
+   PilotOutfitSlot * outfit_structure; /**< Array (array.h): The structure slots. */
+   PilotOutfitSlot * outfit_utility;   /**< Array (array.h): The utility slots. */
+   PilotOutfitSlot * outfit_weapon; /**< Array (array.h): The weapon slots. */
 
    /* Primarily for AI usage. */
    int ncannons;      /**< Number of cannons equipped. */
@@ -317,17 +315,14 @@ typedef struct Pilot_ {
    /* Cargo */
    credits_t credits; /**< monies the pilot has */
    PilotCommodity* commodities; /**< commodity and quantity */
-   int ncommodities; /**< number of commodities. */
    int cargo_free;   /**< Free commodity space. */
 
    /* Hook attached to the pilot */
-   PilotHook *hooks; /**< Pilot hooks. */
-   int nhooks;       /**< Number of pilot hooks. */
+   PilotHook *hooks; /**< Array (array.h): Pilot hooks. */
 
    /* Escort stuff. */
    unsigned int parent; /**< Pilot's parent. */
-   Escort_t *escorts; /**< Pilot's escorts. */
-   int nescorts;     /**< Number of pilot escorts. */
+   Escort_t *escorts; /**< Array (array.h): Pilot's escorts. */
    unsigned int dockpilot; /**< Pilot's dock pilot (the pilot it originates from). This is
                           separate from parent because it needs to be set in sync with
                           dockslot (below). Used to unset dockslot when the dock pilot
@@ -383,7 +378,7 @@ typedef struct Pilot_ {
 /*
  * getting pilot stuff
  */
-Pilot** pilot_getAll (void);
+Pilot*const* pilot_getAll (void);
 Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );
@@ -441,15 +436,12 @@ PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
 /*
  * creation
  */
-void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
-      const double dir, const Vector2d* pos, const Vector2d* vel,
-      const PilotFlags flags, unsigned int dockpilot, int dockslot );
 unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 Pilot* pilot_createEmpty( Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
-Pilot* pilot_copy( Pilot* src );
+Pilot* pilot_replacePlayer( Pilot* after );
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 
@@ -461,6 +453,7 @@ void pilot_destroy(Pilot* p);
 void pilots_init (void);
 void pilots_free (void);
 void pilots_clean (int persist);
+void pilots_newSystem (void);
 void pilots_clear (void);
 void pilots_cleanAll (void);
 void pilot_free( Pilot* p );

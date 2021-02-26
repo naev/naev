@@ -15,6 +15,7 @@
 
 #include "board.h"
 
+#include "array.h"
 #include "commodity.h"
 #include "damagetype.h"
 #include "hook.h"
@@ -242,7 +243,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
 
    p = pilot_get(player.p->target);
 
-   if (p->ncommodities==0) { /* no cargo */
+   if (array_size(p->commodities)==0) { /* no cargo */
       player_message(_("#oThe ship has no cargo."));
       return;
    }
@@ -255,7 +256,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
 
    /** steal as much as possible until full - @todo let player choose */
    q = 1;
-   while ((p->ncommodities > 0) && (q!=0)) {
+   while ((array_size(p->commodities) > 0) && (q!=0)) {
       q = pilot_cargoAdd( player.p, p->commodities[0].commodity,
             p->commodities[0].quantity, 0 );
       pilot_cargoRm( p, p->commodities[0].commodity, q );
@@ -334,7 +335,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
      if (board_fail(wdw))
         return;
      /* Steal the ammo */
-     for (i=0; i<p->noutfits; i++) {
+     for (i=0; i<array_size(p->outfits); i++) {
         target_outfit_slot = p->outfits[i];
         if (target_outfit_slot == NULL)
            continue;
@@ -353,7 +354,7 @@ static void board_stealAmmo( unsigned int wdw, char* str )
         if (nammo <= 0) {
            continue;
         }
-        for (x=0; x<player.p->noutfits; x++) {
+        for (x=0; x<array_size(player.p->outfits); x++) {
            int nadded = 0;
            player_outfit_slot = player.p->outfits[x];
            if (player_outfit_slot == NULL)
@@ -473,43 +474,33 @@ static void board_update( unsigned int wdw )
 
    /* Credits. */
    credits2str( cred, p->credits, 2 );
-   j += nsnprintf( &str[j], PATH_MAX, "%s\n", cred );
+   j += scnprintf( &str[j], sizeof(str), "%s\n", cred );
 
    /* Commodities. */
-   if ((p->ncommodities==0) && (j < PATH_MAX))
-      j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
+   if ((array_size(p->commodities)==0))
+      j += scnprintf( &str[j], sizeof(str)-j, _("none\n") );
    else {
       total_cargo = 0;
-      for (i=0; i<p->ncommodities; i++) {
-         if (j > PATH_MAX)
-            break;
+      for (i=0; i<array_size(p->commodities); i++) {
          if (p->commodities[i].commodity == NULL)
             continue;
          total_cargo += p->commodities[i].quantity;
       }
-      j += nsnprintf( &str[ j ], PATH_MAX - j, n_( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
+      j += scnprintf( &str[ j ], sizeof(str) - j, n_( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
    }
 
    /* Fuel. */
-   if (p->fuel <= 0) {
-      if (j < PATH_MAX)
-         j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
-   }
-   else {
-      if (j < PATH_MAX)
-         j += nsnprintf( &str[ j ], PATH_MAX - j, n_( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
-   }
+   if (p->fuel <= 0)
+      j += scnprintf( &str[j], sizeof(str)-j, _("none\n") );
+   else
+      j += scnprintf( &str[ j ], sizeof(str) - j, n_( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
 
    /* Missiles */
    int nmissiles = pilot_countAmmo(p);
-   if (nmissiles <= 0) {
-      if (j < PATH_MAX)
-        j += nsnprintf( &str[j], PATH_MAX-j, _("none\n") );
-   }
-   else {
-      if (j < PATH_MAX)
-         j += nsnprintf( &str[ j ], PATH_MAX - j, n_( "%d missile\n", "%d missiles\n", nmissiles ), nmissiles );
-   }
+   if (nmissiles <= 0)
+      j += scnprintf( &str[j], sizeof(str)-j, _("none\n") );
+   else
+      j += scnprintf( &str[ j ], sizeof(str) - j, n_( "%d missile\n", "%d missiles\n", nmissiles ), nmissiles );
    (void)j;
 
    window_modifyText( wdw, "txtData", str );

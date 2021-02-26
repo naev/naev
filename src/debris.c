@@ -49,7 +49,7 @@ static int debris_load (void)
    /* Calculate amount. */
    i = 0;
    do {
-      nsnprintf( buf, sizeof(buf), "Dbr%d", i );
+      snprintf( buf, sizeof(buf), "Dbr%d", i );
       i++;
    } while (spfx_get(buf) != -1);
    debris_nspfx = i-1;
@@ -65,7 +65,7 @@ static int debris_load (void)
 
    /* Second pass to fill. */
    for (i=0; i<debris_nspfx; i++) {
-      nsnprintf( buf, sizeof(buf), "Dbr%d", i );
+      snprintf( buf, sizeof(buf), "Dbr%d", i );
       debris_spfx[i] = spfx_get(buf);
    }
 

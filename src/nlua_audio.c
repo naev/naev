@@ -306,10 +306,11 @@ static int audioL_getVolume( lua_State *L )
    LuaAudio_t *la;
    double volume, master;
    ALfloat alvol;
-   if (lua_gettop(L)>0) {
+   if (conf.nosound)
+      volume = 0.;
+   else if (lua_gettop(L)>0) {
       la = luaL_checkaudio(L,1);
-      if (!conf.nosound)
-         alGetSourcef( la->source, AL_GAIN, &alvol );
+      alGetSourcef( la->source, AL_GAIN, &alvol );
       master = sound_getVolumeLog();
       volume = alvol / master;
    }
@@ -371,7 +372,6 @@ static int audioL_setPitch( lua_State *L )
 static int audioL_soundPlay( lua_State *L )
 {
    const char *name;
-   char buf[PATH_MAX];
    Vector2d *pos, *vel, vel0;
    int dopos;
 
@@ -392,12 +392,10 @@ static int audioL_soundPlay( lua_State *L )
       }
    }
 
-   nsnprintf(buf, PATH_MAX, "%s", name);
-
    if (dopos)
-      sound_playPos( sound_get(buf), pos->x, pos->y, vel->x, vel->y );
+      sound_playPos( sound_get(name), pos->x, pos->y, vel->x, vel->y );
    else
-      sound_play( sound_get(buf) );
+      sound_play( sound_get(name) );
 
    return 0;
 }

@@ -483,9 +483,8 @@ function talkNPC(id)
    vn.clear()
    vn.scene()
    local npc = vn.newCharacter( npcdata.name, { image=npcdata.image } )
-   vn.fadein()
+   vn.transition()
    npc( npcdata.msg )
-   vn.fadeout()
    vn.run()
 
    -- Reduce jump message chance

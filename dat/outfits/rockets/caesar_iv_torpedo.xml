@@ -13,6 +13,7 @@
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>ExpM2</spfx_shield>
   <spfx_armour>ExpM2</spfx_armour>
+  <trail_generator x="0">fire-missileL</trail_generator>
   <duration blowup="armour">33</duration>
   <thrust>0</thrust>
   <turn>25</turn>

@@ -43,8 +43,6 @@
 
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
 
-#define MISSION_CHUNK         32 /**< Chunk allocation. */
-
 
 /*
  * current player missions
@@ -452,9 +450,9 @@ void mission_sysComputerMark( Mission* misn )
  */
 int mission_linkCargo( Mission* misn, unsigned int cargo_id )
 {
-   misn->ncargo++;
-   misn->cargo = realloc( misn->cargo, sizeof(unsigned int) * misn->ncargo);
-   misn->cargo[ misn->ncargo-1 ] = cargo_id;
+   if (misn->cargo == NULL)
+      misn->cargo = array_create( unsigned int );
+   array_push_back( &misn->cargo, cargo_id );
 
    return 0;
 }
@@ -470,20 +468,18 @@ int mission_linkCargo( Mission* misn, unsigned int cargo_id )
 int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 {
    int i;
-   for (i=0; i<misn->ncargo; i++)
+   for (i=0; i<array_size(misn->cargo); i++)
       if (misn->cargo[i] == cargo_id)
          break;
 
-   if (i>=misn->ncargo) { /* not found */
+   if (i>=array_size(misn->cargo)) { /* not found */
       DEBUG(_("Mission '%s' attempting to unlink nonexistent cargo %d."),
             misn->title, cargo_id);
       return 1;
    }
 
-   /* shrink cargo size - no need to realloc */
-   memmove( &misn->cargo[i], &misn->cargo[i+1],
-         sizeof(unsigned int) * (misn->ncargo-i-1) );
-   misn->ncargo--;
+   /* shrink cargo size. */
+   array_erase( &misn->cargo, &misn->cargo[i], &misn->cargo[i+1] );
 
    return 0;
 }
@@ -505,16 +501,14 @@ void mission_cleanup( Mission* misn )
    }
 
    /* Cargo. */
-   if (misn->cargo != NULL) {
-      for (i=0; i<misn->ncargo; i++) { /* must unlink all the cargo */
-         if (player.p != NULL) { /* Only remove if player exists. */
-            ret = pilot_rmMissionCargo( player.p, misn->cargo[i], 0 );
-            if (ret)
-               WARN(_("Failed to remove mission cargo '%d' for mission '%s'."), misn->cargo[i], misn->title);
-         }
+   for (i=0; i<array_size(misn->cargo); i++) { /* must unlink all the cargo */
+      if (player.p != NULL) { /* Only remove if player exists. */
+         ret = pilot_rmMissionCargo( player.p, misn->cargo[i], 0 );
+         if (ret)
+            WARN(_("Failed to remove mission cargo '%d' for mission '%s'."), misn->cargo[i], misn->title);
       }
-      free(misn->cargo);
    }
+   array_free(misn->cargo);
    if (misn->osd > 0)
       osd_destroy(misn->osd);
    /*
@@ -580,7 +574,7 @@ static void mission_freeData( MissionData* mission )
    free(mission->sourcefile);
    free(mission->avail.planet);
    free(mission->avail.system);
-   free(mission->avail.factions);
+   array_free(mission->avail.factions);
    free(mission->avail.cond);
    free(mission->avail.done);
 
@@ -603,11 +597,11 @@ static int mission_matchFaction( MissionData* misn, int faction )
    int i;
 
    /* No faction always accepted. */
-   if (misn->avail.nfactions <= 0)
+   if (array_size(misn->avail.factions) == 0)
       return 1;
 
    /* Check factions. */
-   for (i=0; i<misn->avail.nfactions; i++)
+   for (i=0; i<array_size(misn->avail.factions); i++)
       if (faction == misn->avail.factions[i])
          return 1;
 
@@ -809,10 +803,9 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
             xmlr_strd(cur,"planet",temp->avail.planet);
             xmlr_strd(cur,"system",temp->avail.system);
             if (xml_isNode(cur,"faction")) {
-               temp->avail.factions = realloc( temp->avail.factions,
-                     sizeof(int) * ++temp->avail.nfactions );
-               temp->avail.factions[temp->avail.nfactions-1] =
-                     faction_get( xml_get(cur) );
+               if (temp->avail.factions == NULL)
+                  temp->avail.factions = array_create( int );
+               array_push_back( &temp->avail.factions, faction_get( xml_get(cur) ) );
                continue;
             }
             xmlr_strd(cur,"cond",temp->avail.cond);
@@ -911,9 +904,9 @@ static int mission_parseFile( const char* file )
    }
 
    /* Skip if no XML. */
-   pos = nstrnstr( filebuf, "</mission>", bufsize );
+   pos = strnstr( filebuf, "</mission>", bufsize );
    if (pos==NULL) {
-      pos = nstrnstr( filebuf, "function create", bufsize );
+      pos = strnstr( filebuf, "function create", bufsize );
       if ((pos != NULL) && !strncmp(pos,"--common",bufsize))
          WARN(_("Mission '%s' has create function but no XML header!"), file);
       free(filebuf);
@@ -921,8 +914,8 @@ static int mission_parseFile( const char* file )
    }
 
    /* Separate XML header and Lua. */
-   start_pos = nstrnstr( filebuf, "<?xml ", bufsize );
-   pos = nstrnstr( filebuf, "--]]", bufsize );
+   start_pos = strnstr( filebuf, "<?xml ", bufsize );
+   pos = strnstr( filebuf, "--]]", bufsize );
    if (pos == NULL || start_pos == NULL) {
       WARN(_("Mission file '%s' has missing XML header!"), file);
       return -1;
@@ -1008,7 +1001,6 @@ void missions_cleanup (void)
 int missions_saveActive( xmlTextWriterPtr writer )
 {
    int i,j,n;
-   int nitems;
    char **items;
 
    xmlw_startElem(writer,"missions");
@@ -1039,7 +1031,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
          /* Cargo */
          xmlw_startElem(writer,"cargos");
-         for (j=0; j<player_missions[i]->ncargo; j++)
+         for (j=0; j<array_size(player_missions[i]->cargo); j++)
             xmlw_elem(writer,"cargo","%u", player_missions[i]->cargo[j]);
          xmlw_endElem(writer); /* "cargos" */
 
@@ -1048,13 +1040,13 @@ int missions_saveActive( xmlTextWriterPtr writer )
             xmlw_startElem(writer,"osd");
 
             /* Save attributes. */
-            items = osd_getItems(player_missions[i]->osd, &nitems);
+            items = osd_getItems(player_missions[i]->osd);
             xmlw_attr(writer,"title","%s",osd_getTitle(player_missions[i]->osd));
-            xmlw_attr(writer,"nitems","%d",nitems);
+            xmlw_attr(writer,"nitems","%d",array_size(items));
             xmlw_attr(writer,"active","%d",osd_getActive(player_missions[i]->osd));
 
             /* Save messages. */
-            for (j=0; j<nitems; j++)
+            for (j=0; j<array_size(items); j++)
                xmlw_elem(writer,"msg","%s",items[j]);
 
             xmlw_endElem(writer); /* "osd" */
@@ -1161,8 +1153,8 @@ static int missions_parseActive( xmlNodePtr parent )
                nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"marker")) {
-                     xmlr_attr_atoi_neg1(nest,"id",id);
-                     xmlr_attr_atoi_neg1(nest,"type",type);
+                     xmlr_attr_int_def( nest, "id", id, -1 );
+                     xmlr_attr_int_def( nest, "type", type, -1 );
                      /* Get system. */
                      ssys = system_get( xml_get( nest ));
                      if (ssys == NULL) {
@@ -1186,7 +1178,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* OSD. */
             if (xml_isNode(cur,"osd")) {
-               xmlr_attr_atoi_neg1(cur,"nitems",nitems);
+               xmlr_attr_int_def( cur, "nitems", nitems, -1 );
                if (nitems == -1)
                   continue;
                xmlr_attr_strd(cur,"title",title);
@@ -1210,7 +1202,7 @@ static int missions_parseActive( xmlNodePtr parent )
                free(title);
 
                /* Set active. */
-               xmlr_attr_atoi_neg1(cur,"active",active);
+               xmlr_attr_int_def( cur, "active", active, -1 );
                if (active != -1)
                   osd_active( misn->osd, active );
             }

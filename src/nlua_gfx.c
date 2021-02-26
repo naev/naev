@@ -24,16 +24,21 @@
 #include "nlua_shader.h"
 #include "nlua_tex.h"
 #include "nlua_transform.h"
+#include "nlua_canvas.h"
 #include "nluadef.h"
 #include "opengl.h"
+#include "array.h"
 
 
 /* GFX methods. */
 static int gfxL_dim( lua_State *L );
 static int gfxL_renderTex( lua_State *L );
 static int gfxL_renderTexRaw( lua_State *L );
+static int gfxL_renderTexH( lua_State *L );
 static int gfxL_renderRect( lua_State *L );
+static int gfxL_renderRectH( lua_State *L );
 static int gfxL_renderCircle( lua_State *L );
+static int gfxL_renderCircleH( lua_State *L );
 static int gfxL_fontSize( lua_State *L );
 /* TODO get rid of printDim and print in favour of printfDim and printf */
 static int gfxL_printfDim( lua_State *L );
@@ -41,6 +46,7 @@ static int gfxL_printfWrap( lua_State *L );
 static int gfxL_printRestoreClear( lua_State *L );
 static int gfxL_printRestoreLast( lua_State *L );
 static int gfxL_printf( lua_State *L );
+static int gfxL_printH( lua_State *L );
 static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
@@ -50,8 +56,11 @@ static const luaL_Reg gfxL_methods[] = {
    /* Render stuff. */
    { "renderTex", gfxL_renderTex },
    { "renderTexRaw", gfxL_renderTexRaw },
+   { "renderTexH", gfxL_renderTexH },
    { "renderRect", gfxL_renderRect },
+   { "renderRectH", gfxL_renderRectH },
    { "renderCircle", gfxL_renderCircle },
+   { "renderCircleH", gfxL_renderCircleH },
    /* Printing. */
    { "fontSize", gfxL_fontSize },
    { "printfDim", gfxL_printfDim },
@@ -59,6 +68,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "printRestoreClear", gfxL_printRestoreClear },
    { "printRestoreLast", gfxL_printRestoreLast },
    { "printf", gfxL_printf },
+   { "printH", gfxL_printH },
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
@@ -83,6 +93,7 @@ int nlua_loadGFX( nlua_env env )
    nlua_loadFont( env );
    nlua_loadTransform( env );
    nlua_loadShader( env );
+   nlua_loadCanvas( env );
 
    return 0;
 }
@@ -209,17 +220,14 @@ static int gfxL_renderTex( lua_State *L )
 static int gfxL_renderTexRaw( lua_State *L )
 {
    glTexture *t;
-   glColour *col;
+   const glColour *col;
    double px,py, pw,ph, tx,ty, tw,th;
    double angle;
    int sx, sy;
-   int top;
 
    NLUA_CHECKRW(L);
 
    /* Parameters. */
-   top = lua_gettop(L);
-   col = NULL;
    t  = luaL_checktex( L, 1 );
    px = luaL_checknumber( L, 2 );
    py = luaL_checknumber( L, 3 );
@@ -231,8 +239,7 @@ static int gfxL_renderTexRaw( lua_State *L )
    ty = luaL_checknumber( L, 9 );
    tw = luaL_checknumber( L, 10 );
    th = luaL_checknumber( L, 11 );
-   if (top > 11)
-      col = luaL_checkcolour(L, 12 );
+   col = luaL_optcolour(L, 12, &cWhite );
    angle = luaL_optnumber(L,13,0.);
 
    /* Some safety checking. */
@@ -255,8 +262,70 @@ static int gfxL_renderTexRaw( lua_State *L )
    if (th < 0)
       ty -= th;
 
-   /* Render. */
    gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col, angle );
+   return 0;
+}
+
+
+/**
+ * @brief
+ */
+static int gfxL_renderTexH( lua_State *L )
+{
+   glTexture *t;
+   const glColour *col;
+   LuaShader_t *shader;
+   gl_Matrix4 *H;
+
+   NLUA_CHECKRW(L);
+
+   /* Parameters. */
+   t     = luaL_checktex( L,1 );
+   shader = luaL_checkshader( L,2 );
+   H     = luaL_checktransform( L,3 );
+   col   = luaL_optcolour(L,4,&cWhite);
+
+   glUseProgram( shader->program );
+
+   /* Set the vertex. */
+   glEnableVertexAttribArray( shader->VertexPosition );
+   gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexPosition,
+         0, 2, GL_FLOAT, 0 );
+
+   if (shader->VertexTexCoord >= 0) {
+      glEnableVertexAttribArray( shader->VertexTexCoord );
+      gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord,
+            0, 2, GL_FLOAT, 0 );
+   }
+
+   /* Set the texture(s). */
+   glBindTexture( GL_TEXTURE_2D, t->texture );
+   glUniform1i( shader->MainTex, 0 );
+   for (int i=0; i<array_size(shader->tex); i++) {
+      LuaTexture_t *t = &shader->tex[i];
+      glActiveTexture( t->active );
+      glBindTexture( GL_TEXTURE_2D, t->texid );
+      glUniform1i( t->uniform, t->value );
+   }
+   glActiveTexture( GL_TEXTURE0 );
+
+   /* Set shader uniforms. */
+   gl_uniformColor( shader->ConstantColor, col );
+   gl_Matrix4_Uniform( shader->ClipSpaceFromLocal, *H );
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shader->VertexPosition );
+   if (shader->VertexTexCoord >= 0)
+      glDisableVertexAttribArray( shader->VertexTexCoord );
+
+   /* anything failed? */
+   gl_checkErr();
+
+   glUseProgram(0);
+
    return 0;
 }
 
@@ -302,6 +371,30 @@ static int gfxL_renderRect( lua_State *L )
 
 
 /**
+ * @brief Renders a rectangle given a transformation matrix.
+ *
+ *    @luatparam Transform H Transformation matrix to use.
+ *    @luatparam[opt=white] Colour col Colour to use.
+ *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
+ * @luafunc renderRectH
+ */
+static int gfxL_renderRectH( lua_State *L )
+{
+   NLUA_CHECKRW(L);
+
+   /* Parse parameters. */
+   const gl_Matrix4 *H = luaL_checktransform(L,1);
+   const glColour *col = luaL_optcolour(L,2,&cWhite);
+   int empty = lua_toboolean(L,3);
+
+   /* Render. */
+   gl_renderRectH( H, col, !empty );
+
+   return 0;
+}
+
+
+/**
  * @brief Renders a circle
  *
  *    @luatparam number x X position to render at.
@@ -328,6 +421,30 @@ static int gfxL_renderCircle( lua_State *L )
 
    /* Render. */
    gl_drawCircle( x, y, r, col, !empty );
+
+   return 0;
+}
+
+
+/**
+ * @brief Renders a circle given a transformation matrix.
+ *
+ *    @luatparam Transform H Transformation matrix to use.
+ *    @luatparam[opt=white] Colour col Colour to use.
+ *    @luatparam[opt=false] boolean empty Whether or not it should be empty.
+ * @luafunc renderCircleH
+ */
+static int gfxL_renderCircleH( lua_State *L )
+{
+   NLUA_CHECKRW(L);
+
+   /* Parse parameters. */
+   const gl_Matrix4 *H = luaL_checktransform(L,1);
+   const glColour *col = luaL_optcolour(L,2,&cWhite);
+   int empty = lua_toboolean(L,3);
+
+   /* Render. */
+   gl_drawCircleH( H, col, !empty );
 
    return 0;
 }
@@ -423,7 +540,7 @@ static int gfxL_printfWrap( lua_State *L )
    const char *s;
    int width, outw, maxw;
    glFont *font;
-   int lp, p, l, slen;
+   int p, l, slen;
    int linenum;
    char *tmp;
 
@@ -438,12 +555,11 @@ static int gfxL_printfWrap( lua_State *L )
    lua_newtable(L);
    tmp = strdup(s);
    slen = strlen(s);
-   lp = 0;
    p = 0;
    linenum = 1;
    maxw = 0;
    do {
-      lp = p;
+      int lp = p;
       if ((tmp[p] == ' ') || (tmp[p] == '\n'))
          p++;
       /* Don't handle tab for now. */
@@ -546,6 +662,36 @@ static int gfxL_printf( lua_State *L )
 
 
 /**
+ * @brief Prints text on the screen using a font with a transformation matirx.
+ *
+ *    @luatparam Transform H transformation matrix to use.
+ *    @luatparam font font Font to use.
+ *    @luatparam string str String to print.
+ *    @luatparam Colour col Colour to print text.
+ * @luafunc printH
+ */
+static int gfxL_printH( lua_State *L )
+{
+   const gl_Matrix4 *H;
+   glFont *font;
+   const char *str;
+   const glColour *col;
+
+   NLUA_CHECKRW(L);
+
+   /* Parse parameters. */
+   H     = luaL_checktransform(L,1);
+   font  = luaL_checkfont(L,2);
+   str   = luaL_checkstring(L,3);
+   col   = luaL_optcolour(L,4,&cWhite);
+
+   /* Render. */
+   gl_printRawH( font, H, col, 0., str );
+   return 0;
+}
+
+
+/**
  * @brief Prints text on the screen.
  *
  * @usage gfx.print( nil, _("Hello World!"), 50, 50, colour.new("Red") ) -- Displays text in red at 50,50.
@@ -631,7 +777,4 @@ static int gfxL_printText( lua_State *L )
 
    return 0;
 }
-
-
-
 

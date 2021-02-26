@@ -381,8 +381,8 @@ static int dataL_convolve2d( lua_State *L )
 
 #define POS(U,V,W)   (4*((V)*(W)+(U)))
    /* Create buffer. */
-   bw = ow+kw2;
-   bh = oh+kh2;
+   bw = ow+2*kw2;
+   bh = oh+2*kh2;
    B = calloc( bw*bh*4, sizeof(float) );
    for (v=0; v<ih; v++)
       memcpy( &B[ POS(kw2, v+kh2, bw) ],
@@ -394,8 +394,8 @@ static int dataL_convolve2d( lua_State *L )
       for (u=0; u<ow; u++) {
          for (kv=0; kv<kh; kv++) {
             for (ku=0; ku<kw; ku++) {
-               bu = u + ku + kw2;
-               bv = v + kv + kh2;
+               bu = u + ku;
+               bv = v + kv;
                for (p=0; p<4; p++)
                   O[ POS( u, v, ow )+p ] +=
                         B[ POS( bu, bv, bw )+p ]

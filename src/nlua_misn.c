@@ -523,7 +523,7 @@ static int misn_setNPC( lua_State *L )
    cur_mission->npc = strdup(name);
 
    /* Set portrait. */
-   nsnprintf( buf, PATH_MAX, GFX_PATH"portraits/%s", str );
+   snprintf( buf, sizeof(buf), GFX_PATH"portraits/%s", str );
    cur_mission->portrait = gl_newImage( buf, 0 );
 
    return 0;
@@ -549,7 +549,7 @@ static int misn_factions( lua_State *L )
 
    /* we'll push all the factions in table form */
    lua_newtable(L);
-   for (i=0; i<dat->avail.nfactions; i++) {
+   for (i=0; i<array_size(dat->avail.factions); i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
       f = dat->avail.factions[i];
       lua_pushfaction(L, f); /* value */
@@ -849,8 +849,7 @@ static int misn_osdGetActiveItem( lua_State *L )
    Mission *cur_mission;
    cur_mission = misn_getFromLua(L);
 
-   int nitems;
-   char **items = osd_getItems(cur_mission->osd, &nitems);
+   char **items = osd_getItems(cur_mission->osd);
    int active   = osd_getActive(cur_mission->osd);
 
    if (!items || active < 0) {
@@ -898,9 +897,9 @@ static int misn_npcAdd( lua_State *L )
    bg   = luaL_optstring(L,6,NULL);
 
    /* Set path. */
-   nsnprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s", gfx );
+   snprintf( portrait, sizeof(portrait), GFX_PATH"portraits/%s", gfx );
    if (bg!=NULL)
-      nsnprintf( background, PATH_MAX, GFX_PATH"portraits/%s", bg );
+      snprintf( background, sizeof(background), GFX_PATH"portraits/%s", bg );
 
    cur_mission = misn_getFromLua(L);
 

@@ -13,21 +13,48 @@
 
 #define SHADER_METATABLE      "shader" /**< Shader metatable identifier. */
 
+#define SHADER_NAME_MAXLEN    32 /**< Maximum length of the name of a uniform variable. */
+
+
+/* Helper. */
+#define luaL_optshader(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checkshader)
+
+
+typedef struct LuaUniform_s {
+   GLuint id;
+   GLint size;
+   GLenum type;
+   char name[SHADER_NAME_MAXLEN];
+   GLint tex;
+} LuaUniform_t;
+
+typedef struct LuaTexture_s {
+   GLenum active;
+   GLuint texid;
+   GLint uniform;
+   GLint value;
+} LuaTexture_t;
 
 typedef struct LuaShader_s {
    GLuint program;
    /* Shared Uniforms. */
-   GLuint ViewSpaceFromLocal;
-   GLuint ClipSpaceFromView;
-   GLuint ClipSpaceFromLocal;
-   GLuint ViewNormalFromLocal;
+   GLint ViewSpaceFromLocal;
+   GLint ClipSpaceFromView;
+   GLint ClipSpaceFromLocal;
+   GLint ViewNormalFromLocal;
+   GLint love_ScreenSize;
    /* Fragment Shader. */
-   GLuint MainTex;
+   GLint MainTex;
    /* Vertex Shader. */
-   GLuint VertexPosition;
-   GLuint VertexTexCoord;
-   GLuint VertexColor;
-   GLuint ConstantColor;
+   GLint VertexPosition;
+   GLint VertexTexCoord;
+   GLint VertexColor;
+   GLint ConstantColor;
+   /* Other uniforms. */
+   LuaUniform_t *uniforms;
+   GLint nuniforms;
+   /* Other stuff. */
+   LuaTexture_t *tex;
 } LuaShader_t;
 
 

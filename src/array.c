@@ -18,7 +18,7 @@ void *_array_create_helper(size_t e_size, size_t capacity)
       capacity = 1;
 
    _private_container *c = malloc(sizeof(_private_container) + e_size * capacity);
-#ifdef DEBUGGING
+#if DEBUG_ARRAYS
    c->_sentinel = ARRAY_SENTINEL;
 #endif
    c->_reserved = capacity;
@@ -35,7 +35,7 @@ static void _array_resize_container(_private_container **c_, size_t e_size, size
       /* increases the reserved space */
       do
          c->_reserved *= 2;
-      while (new_size < c->_reserved);
+      while (new_size > c->_reserved);
 
       c = realloc(c, sizeof(_private_container) + e_size * c->_reserved);
    }
@@ -68,6 +68,8 @@ void _array_erase_helper(void **a, size_t e_size, void *first, void *last)
 {
    intptr_t diff = (char *)last - (char *)first;
 
+   if (!diff)
+      return;
    /* copies the memory */
    _private_container *c = _array_private_container(*a);
    char *end = c->_array + c->_size * e_size;
@@ -96,6 +98,14 @@ void _array_free_helper(void *a)
    if (a==NULL)
       return;
    free(_array_private_container(a));
+}
+
+void *_array_copy_helper(size_t e_size, void *a)
+{
+   _private_container *c = _array_private_container(a);
+   void *copy = _array_create_helper( e_size, c->_size );
+   _array_resize_helper( &copy, e_size, c->_size );
+   return memcpy( copy, a, e_size * c->_size );
 }
 
 #if 0
@@ -163,7 +173,7 @@ int main() {
       assert(array[i - 1] == i + size / 2);
 
    /* erases all elements */
-   array_erase(&array, array, array + array_size(array));
+   array_erase(&array, array_begin(array), array_end(array));
    assert(array_size(array) == 0);
 
    /* shrinks */

@@ -9,7 +9,6 @@
 
 int save_all (void);
 void save_reload (void);
-int save_hasSave (void);
 
 
 #endif /* SAVE_H */

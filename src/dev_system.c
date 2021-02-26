@@ -84,7 +84,7 @@ int dsys_saveSystem( StarSystem *sys )
    const JumpPoint **sorted_jumps, *jp;
    const AsteroidAnchor *ast;
    const AsteroidExclusion *aexcl;
-   char file[PATH_MAX], *cleanName;
+   char *file, *cleanName;
 
    /* Reconstruct jumps so jump pos are updated. */
    system_reconstructJumps(sys);
@@ -126,22 +126,22 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_endElem( writer ); /* "pos" */
 
    /* Planets. */
-   sorted_planets = malloc( sizeof(Planet*) * sys->nplanets);
-   memcpy( sorted_planets, sys->planets, sizeof(Planet*) * sys->nplanets );
-   qsort( sorted_planets, sys->nplanets, sizeof(Planet*), dsys_compPlanet );
+   sorted_planets = malloc( sizeof(Planet*) * array_size(sys->planets) );
+   memcpy( sorted_planets, sys->planets, sizeof(Planet*) * array_size(sys->planets) );
+   qsort( sorted_planets, array_size(sys->planets), sizeof(Planet*), dsys_compPlanet );
    xmlw_startElem( writer, "assets" );
-   for (i=0; i<sys->nplanets; i++)
+   for (i=0; i<array_size(sys->planets); i++)
       xmlw_elem( writer, "asset", "%s", sorted_planets[i]->name );
    xmlw_endElem( writer ); /* "assets" */
    free(sorted_planets);
 
    /* Jumps. */
-   sorted_jumps = malloc( sizeof(JumpPoint*) * sys->njumps );
-   for (i=0; i<sys->njumps; i++)
+   sorted_jumps = malloc( sizeof(JumpPoint*) * array_size(sys->jumps) );
+   for (i=0; i<array_size(sys->jumps); i++)
       sorted_jumps[i] = &sys->jumps[i];
-   qsort( sorted_jumps, sys->njumps, sizeof(JumpPoint*), dsys_compJump );
+   qsort( sorted_jumps, array_size(sys->jumps), sizeof(JumpPoint*), dsys_compJump );
    xmlw_startElem( writer, "jumps" );
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp = sorted_jumps[i];
       xmlw_startElem( writer, "jump" );
       xmlw_attr( writer, "target", "%s", jp->target->name );
@@ -169,9 +169,9 @@ int dsys_saveSystem( StarSystem *sys )
    free(sorted_jumps);
 
    /* Asteroids. */
-   if (sys->nasteroids > 0 || sys->nastexclude > 0) {
+   if (array_size(sys->asteroids) > 0 || array_size(sys->astexclude) > 0) {
       xmlw_startElem( writer, "asteroids" );
-      for (i=0; i<sys->nasteroids; i++) {
+      for (i=0; i<array_size(sys->asteroids); i++) {
          ast = &sys->asteroids[i];
          xmlw_startElem( writer, "asteroid" );
 
@@ -196,7 +196,7 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_elem( writer, "density", "%f", ast->density );
          xmlw_endElem( writer ); /* "asteroid" */
       }
-      for (i=0; i<sys->nastexclude; i++) {
+      for (i=0; i<array_size(sys->astexclude); i++) {
          aexcl = &sys->astexclude[i];
          xmlw_startElem( writer, "exclusion" );
 
@@ -220,12 +220,13 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Write data. */
    cleanName = uniedit_nameFilter( sys->name );
-   nsnprintf( file, sizeof(file), "%s/%s.xml", conf.dev_save_sys, cleanName );
+   asprintf( &file, "%s/%s.xml", conf.dev_save_sys, cleanName );
    xmlSaveFileEnc( file, doc, "UTF-8" );
 
    /* Clean up. */
    xmlFreeDoc(doc);
    free(cleanName);
+   free(file);
 
    return 0;
 }

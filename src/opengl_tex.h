@@ -13,22 +13,14 @@
 /** @endcond */
 
 #include "colour.h"
-#include "ncompat.h"
 #include "physics.h"
 
 
 /* Recommended for compatibility and such */
-#if HAS_BIGENDIAN
-#  define RMASK   0xff000000 /**< Red bit mask. */
-#  define GMASK   0x00ff0000 /**< Green bit mask. */
-#  define BMASK   0x0000ff00 /**< Blue bit mask. */
-#  define AMASK   0x000000ff /**< Alpha bit mask. */
-#else
-#  define RMASK   0x000000ff /**< Red bit mask. */
-#  define GMASK   0x0000ff00 /**< Green bit mask. */
-#  define BMASK   0x00ff0000 /**< Blue bit mask. */
-#  define AMASK   0xff000000 /**< Alpha bit mask. */
-#endif
+#define RMASK   SDL_SwapLE32(0x000000ff) /**< Red bit mask. */
+#define GMASK   SDL_SwapLE32(0x0000ff00) /**< Green bit mask. */
+#define BMASK   SDL_SwapLE32(0x00ff0000) /**< Blue bit mask. */
+#define AMASK   SDL_SwapLE32(0xff000000) /**< Alpha bit mask. */
 #define RGBAMASK  RMASK,GMASK,BMASK,AMASK
 
 
@@ -77,7 +69,7 @@ void gl_exitTextures (void);
 /*
  * Creating.
  */
-glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy );
+glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name );
 glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
       unsigned int flags, int w, int h, int sx, int sy, int freesur );
 glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWops *rw,
@@ -99,7 +91,6 @@ void gl_freeTexture( glTexture* texture );
 /*
  * Info.
  */
-int gl_texHasMipmaps (void);
 int gl_texHasCompress (void);
 
 /*
@@ -107,7 +98,7 @@ int gl_texHasCompress (void);
  */
 int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
-glTexture** gl_copyTexArray( glTexture **tex, int texn, int *n );
+glTexture** gl_copyTexArray( glTexture **tex, int *n );
 glTexture** gl_addTexArray( glTexture **tex, int *n, glTexture *t );
 
 

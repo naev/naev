@@ -8,7 +8,7 @@
  * @brief Provides macros to work with dynamic arrays.
  *
  * @note Except were noted, macros do not have side effects from
- * expations.
+ * expansions.
  *
  * Usage example:
  *
@@ -23,7 +23,7 @@
  *    need_fill = fill_array_member( &array_grow( &my_array ) );
  *
  * // Shrink to minimum (if static it's a good idea).
- * array_shrink( my_array );
+ * array_shrink( &my_array );
  *
  * // Do stuff
  * for (i=0; i<array_size( my_array ); i++)
@@ -41,35 +41,24 @@
 /** @cond */
 #include <assert.h>
 #include <stddef.h>
-#include <stdint.h>
-
-#ifdef HAVE_STDALIGN_H
 #include <stdalign.h>
-#endif /* HAVE_STDALIGN_H */
+#include <stdint.h>
 /** @endcond */
 
-#ifdef DEBUGGING
-#define ARRAY_SENTINEL ((int)0xbabecafe) /**< Badass sentinel. */
-#endif
+#include "attributes.h"
+
+#define ARRAY_SENTINEL 0x15bada55 /**< Badass sentinel. */
 
 /**
  * @brief Private container type for the arrays.
  */
 typedef struct {
-#ifdef DEBUGGING
+#if DEBUG_ARRAYS
    int _sentinel;         /**< Sentinel for when debugging. */
 #endif
    size_t _reserved;      /**< Number of elements reserved */
    size_t _size;          /**< Number of elements in the array */
-   /* The following check is fairly nasty and is here to handle cases
-    * when being compiled with too old versions of gcc. Note that this
-    * does lead to undefined behaviour, but at the current time it is
-    * necessary to compile for Steam. */
-#ifdef HAVE_STDALIGN_H
    char alignas(max_align_t) _array[0];  /**< Begin of the array */
-#else /* HAVE_STDALIGN_H */
-   char _array[0]; /* Undefined behaviour that seems to "work" */
-#endif /* HAVE_STDALIGN_H */
 } _private_container;
 
 
@@ -79,6 +68,7 @@ void _array_resize_helper(void **a, size_t e_size, size_t new_size);
 void _array_erase_helper(void **a, size_t e_size, void *first, void *last);
 void _array_shrink_helper(void **a, size_t e_size);
 void _array_free_helper(void *a);
+void *_array_copy_helper(size_t e_size, void *a);
 
 /**
  * @brief Gets the container of an array.
@@ -86,29 +76,13 @@ void _array_free_helper(void *a);
  *    @param a Array to get container of.
  *    @return The container of the array a.
  */
-__inline__ static _private_container *_array_private_container(void *a)
+static inline _private_container *_array_private_container(void *a)
 {
    assert("NULL array!" && (a != NULL));
 
    _private_container *c = (_private_container *)a - 1;
 
-#ifdef DEBUGGING
-   assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == ARRAY_SENTINEL));
-#endif
-
-   return c;
-}
-
-/**
- * @brief Gets the container of an array, given a const pointer.
- */
-__inline__ static const _private_container *_array_private_container_const(const void *a)
-{
-   assert("NULL array!" && (a != NULL));
-
-   _private_container *c = (_private_container *)a - 1;
-
-#ifdef DEBUGGING
+#if DEBUG_ARRAYS
    assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == ARRAY_SENTINEL));
 #endif
 
@@ -195,7 +169,19 @@ __inline__ static const _private_container *_array_private_container_const(const
  *    @param array Array being manipulated.
  *    @return The size of the array (number of elements).
  */
-#define array_size(array) (int)((array==NULL) ? 0 : _array_private_container_const(array)->_size)
+ALWAYS_INLINE static inline int array_size(const void *array)
+{
+   const _private_container *c1 = array;
+
+   if (c1 == NULL)
+      return 0;
+
+#if DEBUG_ARRAYS
+   assert("Sentinel not found. Use array_create() to create the array." && (c1[-1]._sentinel == ARRAY_SENTINEL));
+#endif
+
+   return c1[-1]._size;
+}
 /**
  * @brief Returns number of elements reserved.
  *
@@ -232,6 +218,9 @@ __inline__ static const _private_container *_array_private_container_const(const
  *    @return The last element in the array.
  */
 #define array_back(ptr_array) (*(array_end(ptr_array) - 1))
+/** @brief Returns a shallow copy of the input array.  */
+#define array_copy(basic_type, ptr_array) \
+      ((basic_type *)(_array_copy_helper(sizeof(basic_type), (void *)(ptr_array))))
 
 
 #endif /* ARRAY_H */

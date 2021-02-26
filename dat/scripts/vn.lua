@@ -9,6 +9,8 @@ local graphics = require 'love.graphics'
 local window = require 'love.window'
 local filesystem = require 'love.filesystem'
 local audio = require 'love.audio'
+local love_image = require 'love.image'
+local transitions = require 'vn.transitions'
 
 local vn = {
    speed = 0.04,
@@ -25,7 +27,8 @@ local vn = {
       _globalalpha = 1,
       --_soundTalk = audio.newSource( "sfx/talk.wav" ),
       _pitchValues = {0.7, 0.8, 1.0, 1.2, 1.3},
-   }
+   },
+   transitions = transitions,
 }
 -- Drawing
 local lw, lh = window.getDesktopDimensions()
@@ -43,6 +46,10 @@ vn._default.namebox_x = vn._default.textbox_x
 vn._default.namebox_y = vn._default.textbox_y - vn._default.namebox_h - 20
 vn._default.namebox_bg = vn._default.textbox_bg
 vn._default.namebox_alpha = 1
+vn._canvas = graphics.newCanvas()
+vn._postshader = nil
+vn._prevcanvas = graphics.newCanvas()
+vn._curcanvas = graphics.newCanvas()
 
 
 function vn._checkstarted()
@@ -51,7 +58,7 @@ function vn._checkstarted()
    end
 end
 
-local function _set_col( col, alpha )
+function vn.setColor( col, alpha )
    local a = col[4] or 1
    alpha = alpha or 1
    a = a*alpha
@@ -61,9 +68,9 @@ end
 local function _draw_bg( x, y, w, h, col, border_col, alpha )
    col = col or {0, 0, 0, 1}
    border_col = border_col or {0.5, 0.5, 0.5, 1}
-   _set_col( border_col, alpha )
+   vn.setColor( border_col, alpha )
    graphics.rectangle( "fill", x, y, w, h )
-   _set_col( col, alpha )
+   vn.setColor( col, alpha )
    graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
@@ -94,15 +101,29 @@ function _draw_character( c )
       flip = -1
       x = x + scale*w
    end
-   _set_col( col, c.alpha )
+   vn.setColor( col, c.alpha )
+   graphics.setShader( c.shader )
    graphics.draw( c.image, x, y, 0, flip*scale, scale )
+   graphics.setShader()
 end
 
 
 --[[
 -- @brief Main drawing function.
 --]]
-function vn.draw()
+local function _draw()
+   local prevcanvas
+   if vn._postshader then
+      prevcanvas = graphics.getCanvas()
+      graphics.setCanvas( vn._canvas )
+      graphics.clear( 0, 0, 0, 0 )
+   end
+
+   -- Draw background
+   if vn._draw_bg then
+      vn._draw_bg()
+   end
+
    -- Draw characters
    for k,c in ipairs( vn._characters ) do
       if not c.talking then
@@ -123,7 +144,7 @@ function vn.draw()
    local bh = 20
    _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_alpha )
    -- Draw text
-   _set_col( vn._bufcol, vn.textbox_alpha )
+   vn.setColor( vn._bufcol, vn.textbox_alpha )
    graphics.printf( vn._buffer, font, x+bw, y+bw, vn.textbox_w-2*bw )
 
    -- Namebox
@@ -140,14 +161,44 @@ function vn.draw()
       end
       _draw_bg( x, y, w, h, vn.namebox_bg, nil, vn.namebox_alpha )
       -- Draw text
-      _set_col( vn._bufcol, vn.namebox_alpha )
+      vn.setColor( vn._bufcol, vn.namebox_alpha )
       graphics.print( vn._title, font, x+bw, y+bh )
    end
 
    -- Draw if necessary
-   if vn.isDone() then return end
+   if not vn.isDone() then
+      local s = vn._states[ vn._state ]
+      s:draw()
+   end
+
+   -- Draw foreground
+   if vn._draw_fg then
+      vn._draw_fg()
+   end
+
+   if vn._postshader then
+      -- Draw canvas
+      graphics.setCanvas( prevcanvas )
+      graphics.setShader( vn._postshader )
+      vn.setColor( {1, 1, 1, 1} )
+      vn._canvas:draw( 0, 0 )
+      graphics.setShader()
+   end
+end
+function vn.draw()
    local s = vn._states[ vn._state ]
-   s:draw()
+   if s and s.drawoverride then
+      s:drawoverride()
+   else
+      _draw()
+   end
+end
+local function _draw_to_canvas( canvas )
+   local oldcanvas = graphics.getCanvas()
+   graphics.setCanvas( canvas )
+   graphics.clear( 1, 1, 1, 0 )
+   _draw()
+   graphics.setCanvas( oldcanvas )
 end
 
 
@@ -166,6 +217,12 @@ function vn.update(dt)
 
    if vn._state < 0 then
       vn._state = 1
+   end
+
+   for k,c in ipairs( vn._characters ) do
+      if c.shader and c.shader.update then
+         c.shader:update(dt)
+      end
    end
 
    local s = vn._states[ vn._state ]
@@ -248,6 +305,11 @@ end
 function vn.State:update( dt )
    self:_update( dt )
    vn._checkDone()
+
+   -- Update shader if necessary
+   if vn._postshader and vn._postshader.update then
+      vn._postshader:update( dt )
+   end
 end
 function vn.State:mousepressed( mx, my, button )
    self:_mousepressed( mx, my, button )
@@ -269,11 +331,20 @@ function vn.StateScene.new( background )
    return s
 end
 function vn.StateScene:_init()
+   -- Render previous scene to an image
+   local canvas = vn._prevcanvas
+   _draw_to_canvas( canvas )
+   vn._prevscene = canvas
+
    -- Reset characters
    vn._characters = {
       vn._me,
       vn._na
    }
+
+   -- Set alpha to max (since transitions will be used in general)
+   vn._globalalpha = 1
+
    _finish(self)
 end
 --[[
@@ -424,7 +495,7 @@ function vn.StateWait:_init()
    self._y = y+h-10-self._h
 end
 function vn.StateWait:_draw()
-   _set_col( vn._bufcol )
+   vn.setColor( vn._bufcol )
    graphics.print( self._text, self._font, self._x, self._y )
 end
 --[[
@@ -499,9 +570,9 @@ function vn.StateMenu:_draw()
       else
          col = {0.2, 0.2, 0.2}
       end
-      _set_col( col )
+      vn.setColor( col )
       graphics.rectangle( "fill", gx+x, gy+y, w, h )
-      _set_col( {0.7, 0.7, 0.7} )
+      vn.setColor( {0.7, 0.7, 0.7} )
       graphics.print( text, font, gx+x+tb, gy+y+tb )
    end
 end
@@ -562,9 +633,17 @@ end
 vn.StateStart ={}
 function vn.StateStart.new()
    local s = vn.State.new()
-   s._init = _finish
+   s._init = vn.StateStart._init
    s._type = "Start"
    return s
+end
+function vn.StateStart:_init()
+   local oldcanvas = graphics.getCanvas()
+   graphics.setCanvas( vn._prevcanvas )
+   graphics.clear( 1, 1, 1, 0 )
+   graphics.setCanvas( oldcanvas )
+   vn._globalalpha = 0
+   _finish(self)
 end
 --[[
 -- End
@@ -583,12 +662,16 @@ end
 -- Animation
 --]]
 vn.StateAnimation = {}
-function vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc )
+function vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc, drawoverride )
    transition = transition or "ease"
    local s = vn.State.new()
    s._init = vn.StateAnimation._init
    s._update = vn.StateAnimation._update
    s._draw = vn.StateAnimation._draw
+   if drawoverride then
+      s.drawoverride = vn.StateAnimation._drawoverride
+      s._drawoverride = drawoverride
+   end
    s._type = "Animation"
    s._seconds = seconds
    s._func = func
@@ -616,7 +699,7 @@ function vn.StateAnimation:_init()
    end
    self._accum = 0
    if self._func then
-      self._func( 0, self._params )
+      self._func( 0, 0, self._params )
    end
    if self._drawfunc then
       self._drawfunc( 0, self._params )
@@ -664,13 +747,16 @@ function vn.StateAnimation:_update(dt)
       _finish(self)
    end
    if self._func then
-      self._func( _animation_alpha(self), self._params )
+      self._func( _animation_alpha(self), dt, self._params )
    end
 end
 function vn.StateAnimation:_draw(dt)
    if self._drawfunc then
       self._drawfunc( _animation_alpha(self), self._params )
    end
+end
+function vn.StateAnimation:_drawoverride(dt)
+   self._drawoverride( _animation_alpha(self), self._params )
 end
 
 
@@ -716,11 +802,14 @@ function vn.Character.new( who, params )
          end
       elseif pimage:type()=="ImageData" then
          img = graphics.newImage( pimage )
+      else
+         img = pimage
       end
       c.image = img
    else
       c.image = nil
    end
+   c.shader = params.shader
    c.hidetitle = params.hidetitle
    c.params = params
    return c
@@ -841,44 +930,49 @@ end
 --[[
 -- @brief Finishes the VN.
 --]]
-function vn.done()
+function vn.done( ... )
    vn._checkstarted()
+   vn.scene()
+   vn.func( function () vn._globalalpha = 0 end )
+   vn.transition( ... )
    table.insert( vn._states, vn.StateEnd.new() )
 end
-
---[[
--- @brief Inserts a fade.
---    @param seconds Number of seconds to fade.
---    @param fadestart Starting fade opacity.
---    @param fadeend Ending fade opacity.
---]]
-function vn.fade( seconds, fadestart, fadeend )
-   seconds = seconds or 0.2
-   vn._checkstarted()
-   local func = function( alpha )
-      vn._globalalpha = fadestart + (fadeend-fadestart)*alpha
-   end
-   table.insert( vn._states, vn.StateAnimation.new( seconds, func ) )
-end
---[[
--- @brief Wrapper to fade in.
---    @param seconds Number of seconds to fully fade in.
---]]
-function vn.fadein( seconds ) vn.fade( seconds, 0, 1 ) end
---[[
--- @brief Wrapper to fade out.
---    @param seconds Number of seconds to fully fade out.
---]]
-function vn.fadeout( seconds ) vn.fade( seconds, 1, 0 ) end
 
 --[[
 -- @brief Allows doing arbitrary animations.
 --
 --    @params Seconds to perform the animation
 --]]
-function vn.animation( seconds, func, drawfunc, transition, initfunc )
+function vn.animation( seconds, func, drawfunc, transition, initfunc, drawoverride )
    vn._checkstarted()
-   table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc ) )
+   table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc, drawoverride ) )
+end
+
+function vn.transition( name, seconds, transition )
+   vn._checkstarted()
+   local shader, seconds, transition = transitions.get( name, seconds, transition )
+
+   vn.animation( seconds,
+      function (progress, dt) -- progress
+         shader:send( "progress", progress )
+         if shader.update then
+            shader:update( dt )
+         end
+      end, nil, -- no draw function
+      transition, function () -- init
+         shader:send( "texprev", vn._prevscene )
+         if shader:hasUniform( "u_r" ) then
+            shader:send( "u_r", love_math.random() )
+         end
+      end, function () -- drawoverride
+         local canvas = vn._curcanvas
+         _draw_to_canvas( canvas )
+
+         local oldshader = graphics.getShader()
+         graphics.setShader( shader )
+         canvas:draw( 0, 0 )
+         graphics.setShader( oldshader )
+      end )
 end
 
 --[[
@@ -931,6 +1025,18 @@ function vn.custom()
    local s = vn.State.new()
    table.insert( vn._states, s )
    return s
+end
+
+function vn.setShader( shader )
+   vn._postshader = shader
+end
+
+function vn.setBackground( drawfunc )
+   vn._draw_bg = drawfunc
+end
+
+function vn.setForeground( drawfunc )
+   vn._draw_fg = drawfunc
 end
 
 function vn._jump( label )

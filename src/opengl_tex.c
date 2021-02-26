@@ -18,6 +18,7 @@
 #include "naev.h"
 /** @endcond */
 
+#include "array.h"
 #include "conf.h"
 #include "gui.h"
 #include "log.h"
@@ -87,11 +88,11 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
          break;
 
       case 3:
-#if HAS_BIGENDIAN
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
          pixelcolour = p[0] << 16 | p[1] << 8 | p[2];
-#else /* HAS_BIGENDIAN */
+#else /* SDL_BYTEORDER == SDL_BIG_ENDIAN */
          pixelcolour = p[0] | p[1] << 8 | p[2] << 16;
-#endif /* HAS_BIGENDIAN */
+#endif /* SDL_BYTEORDER == SDL_BIG_ENDIAN */
          break;
 
       case 4:
@@ -192,16 +193,6 @@ static GLuint gl_texParameters( unsigned int flags )
 }
 
 /**
- * @brief Checks to see if mipmaps are supported and enabled.
- *
- *    @return 1 if mipmaps are supported and enabled.
- */
-int gl_texHasMipmaps (void)
-{
-   return 1;
-}
-
-/**
  * @brief Checks to see if texture compression is available and enabled.
  *
  *    @return 1 if texture compression is available and enabled.
@@ -212,7 +203,7 @@ int gl_texHasCompress (void)
 }
 
 
-glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy )
+glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name )
 {
    glTexture *texture;
 
@@ -229,6 +220,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy )
 
    /* Copy over. */
    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_FLOAT, data );
+   glBindTexture( GL_TEXTURE_2D, 0 );
 
    /* Check errors. */
    gl_checkErr();
@@ -238,6 +230,12 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy )
    texture->sh    = texture->h / texture->sy;
    texture->srw   = texture->sw / texture->w;
    texture->srh   = texture->sh / texture->h;
+
+   /* Add to list. */
+   if (name != NULL) {
+      texture->name = strdup(name);
+      gl_texAdd( texture );
+   }
 
    return texture;
 }
@@ -273,7 +271,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    SDL_UnlockSurface( surface );
 
    /* Create mipmaps. */
-   if ((flags & OPENGL_TEX_MIPMAPS) && gl_texHasMipmaps()) {
+   if (flags & OPENGL_TEX_MIPMAPS) {
       /* Do fancy stuff. */
       if (GLAD_GL_ARB_texture_filter_anisotropic) {
          glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &param);
@@ -357,11 +355,10 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
       md5_finish( &md5, md5val );
 
       for (i=0; i<16; i++)
-         nsnprintf( &digest[i * 2], 3, "%02x", md5val[i] );
+         snprintf( &digest[i * 2], 3, "%02x", md5val[i] );
       free(md5val);
 
-      cachefile = malloc( PATH_MAX );
-      nsnprintf( cachefile, PATH_MAX, "%scollisions/%s",
+      asprintf( &cachefile, "%scollisions/%s",
          nfile_cachePath(), digest );
 
       /* Attempt to find a cached transparency map. */
@@ -394,7 +391,9 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
 
       if (cachefile != NULL) {
          /* Cache newly-generated transparency map. */
-         nfile_dirMakeExist( nfile_cachePath(), "collisions/" );
+         char dirpath[PATH_MAX];
+	 snprintf( dirpath, sizeof(dirpath), "%s/%s", nfile_cachePath(), "collisions/" );
+         nfile_dirMakeExist( dirpath );
          nfile_writeFile( (char*)trans, cachesize, cachefile );
          free(cachefile);
       }
@@ -855,20 +854,20 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
 /**
  * @brief Copy a texture array.
  */
-glTexture** gl_copyTexArray( glTexture **tex, int texn, int *n )
+glTexture** gl_copyTexArray( glTexture **tex, int *n )
 {
    int i;
    glTexture **t;
 
-   if (texn == 0) {
+   if (array_size(tex) == 0) {
       *n = 0;
       return NULL;
    }
 
-   t = malloc( texn * sizeof(glTexture*) );
-   for (i=0; i<texn; i++)
+   t = malloc( array_size(tex) * sizeof(glTexture*) );
+   for (i=0; i<array_size(tex); i++)
       t[i] = gl_dupTexture( tex[i] );
-   *n = texn;
+   *n = array_size(tex);
    return t;
 }
 

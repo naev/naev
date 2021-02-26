@@ -19,8 +19,8 @@
 --
 -- Triggered from station.lua
 --]]
-local portrait = require "portrait"
 local vn = require 'vn'
+local love_shaders = require 'love_shaders'
 
 zalek_holo = "zalek_thug1.png"
 zalek_image = "zalek_thug1.png"
@@ -41,7 +41,7 @@ function create ()
          { image=dvaered_image, color=dvaered_colour } )
    vn.clear()
    vn.scene()
-   vn.fadein(1)
+   vn.transition( nil, 1 )
    vn.na( _("You hear a large commotion in one of the wings of Minerva Station. As you approach you can make out what seems to be an altercation between a group of Za'lek and Dvaered ruffians.") )
    vn.appear( {zl, dv} )
    dv( _("\"You were using a bloody computation drone to cheat your dirty Za'lek stink!\"") )
@@ -52,7 +52,6 @@ function create ()
    zl( _("\"When you are getting eviscerated by my drones, I hope you realize you have brought this upon yourself, Dvaered trash!\"") )
    vn.disappear( {zl, dv} )
    vn.na( _("The Za'lek and Dvaered ruffians storm off to their ships to apparently fight to the death to solve their quarrel. Truly civilized individuals.\nIt seems like it could be an opportunity to curry favour with either one of the factions if you wished to intervene in their fight.") )
-   vn.fadeout()
    vn.run()
 
    hook.takeoff( "takeoff" )
@@ -193,14 +192,13 @@ function zl_dead ()
 end
 
 function dv_hail ()
-   local holo = portrait.hologram( dvaered_holo )
    vn.clear()
    vn.scene()
-   vn.fadein()
    local dvc = vn.newCharacter( dvaered_name,
-      { image=holo, color=dvaered_colour } )
+      { image=dvaered_holo, color=dvaered_colour, shader=love_shaders.hologram() } )
+   vn.transition("electric")
    dvc( _("\"Thank you for the help with the Za'lek scum. Let us celebrate with a drink in the bar down at Minerva Station!\"") )
-   vn.fadeout()
+   vn.done("electric")
    vn.run()
    var.push( "minerva_altercation_helped", "dvaered" )
    dv:land( planet.get("Minerva Station") )
@@ -228,14 +226,13 @@ function dv_dead ()
 end
 
 function zl_hail ()
-   local holo = portrait.hologram( zalek_holo )
    vn.clear()
    vn.scene()
-   vn.fadein()
    local zlc = vn.newCharacter( zalek_name,
-      { image=holo, color=zalek_colour } )
+      { image=zalek_holo, color=zalek_colour, shader=love_shaders.hologram() } )
+   vn.transition("electric")
    zlc( _("\"As my computations predicted, the Dvaered scum was no match for the Za'lek superiority. Let us celebrate with a drink down at Minerva Station\"") )
-   vn.fadeout()
+   vn.done("electric")
    vn.run()
    var.push( "minerva_altercation_helped", "zalek" )
    zl:land( planet.get("Minerva Station") )
