@@ -99,7 +99,7 @@ function approach_pir ()
    vn.clear()
    vn.scene()
    local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
-   vn.fadein()
+   vn.transition()
 
    if misn_state==nil then
       -- Not accepted
@@ -112,7 +112,6 @@ function approach_pir ()
 
       vn.label("decline")
       vn.na(_("You decline their offer and take your leave."))
-      vn.fadeout()
       vn.done()
 
       vn.label("accept")
@@ -193,7 +192,6 @@ They start frantically typing into their portable holo-deck. It makes weird beep
 
    end )
    vn.sfxVictory()
-   vn.fadeout()
    vn.done()
 
    vn.label("leave")
@@ -202,7 +200,6 @@ They start frantically typing into their portable holo-deck. It makes weird beep
    else
       vn.na(_("You take your leave."))
    end
-   vn.fadeout()
    vn.run()
 
    misn.finish(true)
@@ -212,7 +209,7 @@ end
 function enter ()
    if misn_state==3 and not harper_nospawn and system.cur()==system.get("Limbo") then
       -- Spawn Harper Bowdoin and stuff
-      local pos = ...
+      local pos = foo
       harper = pilot.add("Gawain", "Independent", pos, "Harper", "civilian" )
       local mem = harper:memory()
       mem.loiter = math.huge -- Should make them loiter forever
@@ -239,9 +236,8 @@ function harper_board ()
 
    vn.clear()
    vn.scene()
-   vn.fadein()
+   vn.transition()
    vn.na(_("Foo."))
-   vn.fadeout()
    vn.run()
 end
 
@@ -255,7 +251,7 @@ function harper_hail ()
    vn.scene()
    local h = vn.newCharacter( _("Harper"),
          { image=portrait.hologram( harper_portrait ) } )
-   vn.fadein()
+   vn.transition("electric")
    vn.na(_("You hail Harper's vessel and you see him appear into view."))
    h(_([["What do you want? Can't you see I'm celebrating my luck?"]]))
    vn.menu( {
@@ -266,7 +262,7 @@ function harper_hail ()
       harper_gotticket = true
       harper_nospawn = true
    end )
-   vn.fadeout()
+   vn.done("electric")
    vn.run()
 end
 

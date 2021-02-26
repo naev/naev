@@ -28,7 +28,7 @@ function create()
    vn.clear()
    vn.scene()
    local t = vn.newCharacter( minerva.vn_terminal() )
-   vn.fadein()
+   vn.transition()
    vn.na(_("You are minding your own business when suddenly a big fanfare plays while the lights begin strobing."))
    t(_([[The terminals all turn on in union and start blasting out their loudspeakers.
 "WELCOME LADIES AND GENTLEMEN. ARE YOU HAVING A GOOD TIME?"
@@ -42,7 +42,6 @@ The terminal pauses for effect.]]))
    t(_([["TO PARTICIPATE BUY A TICKET AT ANY MINERVA STATION TERMINAL. PARTICIPATION COST IS #p100 MINERVA TOKENS#0. ONLY ONE TICKET PER PARTICIPANT. SOME TERMS AND CONDITIONS MAY APPLY."]]))
    t(_([["AND REMEMBER, LIFE IS SHORT, SPEND IT AT MINERVA STATION."]]))
    vn.na(_("As if nothing happened, Minerva Station returns to normality."))
-   vn.fadeout()
    vn.run()
 
    -- One off event
