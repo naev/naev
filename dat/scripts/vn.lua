@@ -1048,6 +1048,45 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    return mix(c1, c2, 1.0-q);
 }
 ]]
+   elseif name=="wave" then
+      _pixelcode = [[
+#include "lib/math.glsl"
+
+uniform Image texprev;
+uniform float progress;
+
+const float amplitude = 1.0;
+const float waves = 30.0;
+const float colorSeparation = 0.3;
+
+float compute(vec2 p, float progress, vec2 center) {
+   vec2 o = p*sin(progress * amplitude)-center;
+   // horizontal vector
+   vec2 h = vec2(1., 0.);
+   // butterfly polar function (don't ask me why this one :))
+   float theta = acos(dot(o, h)) * waves;
+   return (exp(cos(theta)) - 2.*cos(4.*theta) + pow(sin((2.*theta - M_PI) / 24.), 5.)) / 10.;
+}
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+{
+   vec2 p = uv / vec2(1.0);
+   float inv = 1. - progress;
+   vec2 dir = p - vec2(0.5);
+   float dist = length(dir);
+   float disp = compute(p, progress, vec2(0.5)) ;
+   vec4 texTo = Texel( MainTex, p + inv*disp );
+
+   float pdisp = progress*disp;
+   vec4 texFromCenter = Texel( texprev, p + pdisp );
+   vec4 texFrom = vec4(
+         Texel( texprev, p + pdisp*(1.0 - colorSeparation)).r,
+         texFromCenter.g,
+         Texel( texprev, p + pdisp*(1.0 + colorSeparation)).b,
+         texFromCenter.a );
+   return texTo*progress + texFrom*inv;
+}
+]]
    else
       error( string.format(_("vn: unknown transition type'%s'"), name ) )
    end
