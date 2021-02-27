@@ -61,7 +61,13 @@ text[4] = _([[Captain Rebina angrily drums her fingers on her captain's chair as
     "This is bad, %s," she says when the replay shuts down. "Worse than I had even thought possible. The death of the Imperial and Dvaered diplomats is going to spark a political incident, with each faction accusing the other of treachery." She stands up and begins pacing up and down the Seiryuu's bridge. "But that's not the worst of it. You saw what happened. The diplomats were killed by their own escorts - by Four Winds operatives! This is an outrage!"
     Captain Rebina brings herself back under control through an effort of will. "%s, this does not bode well. We have a problem, and I fear I'm going to need your help again before the end. But not yet. I have a lot to do. I have to get to the bottom of this, and I have to try to keep this situation from escalating into a disaster. I will contact you again when I know more. In the mean time, you will have the time to spend your reward - it's already in your account."
     Following this, you are swiftly escorted off the Seiryuu. Back in your cockpit, you can't help feeling a little anxious about these Four Winds. Who are they, what do they want, and what is your role in all of it? Time will have to tell.]])
-    
+
+disable_title = _("The Pill of Silence")
+disable_text = _([[After managing to bypass the ship's security system, you enter the cockpit and notice that the fighter has been sabotaged and might soon explode: you have little time to find and capture the pilot. You head to the living cabin. As you cross the access hatch, you see him, floating weightlessly close to the floor. As he turns his livid face towards yours, you find yourself horrified by the awful mask of pain on his face. His bulging, bloodshot eyes stare at you, as if they wanted to pierce your skin. His twisted mouth splits a repugnant creamy fluid as he starts to speak, in a groan:
+   "Good job out there. Hum. But, you see? You won't catch me alive. Oh, no. The pill of silence will make sure of that. Hmf. It looks painful, doesn't it? You know what? It's even worse than it looks. I guarantee it. Gbf. Oh, it makes me throw up... I'm sorry about that."
+   You approach the man, and ask him why he killed the diplomats. "You have no idea what is going on, right? Uh. Let me tell you something: they are coming! And they won't show any mercy. Oooh! They're so close! They're far worse than your darkest nightmares! And one day they'll get you. That day, you will envy... You will envy my vomit-eating agony! Sooooo much!"
+   The man stops speaking and moving. His grimacing face still turned towards you makes you wonder if he's fully dead, but in absence of any response, you first think about leaving the ship as soon as possible before it explodes. You then decide instead to take the opportunity to loot around a bit, and finally go back to your ship with what looks like a fancy vacuum cleaner.]])
+
 wrongsystitle = _("You diverged!")
 wrongsystext = _([[You have jumped to the wrong system! You are no longer part of the mission to escort the diplomat.]])
 
@@ -115,6 +121,11 @@ osd_msg[3] = _("Follow the flight leader to the rendezvous location")
 osd_msg[4] = _("Escort the Imperial diplomat")
 osd_msg[5] = _("Report back to Rebina")
 
+osd_title0 = _("Unknown")
+osd_msg0 = _("Fly to the %s system.")
+misn_desc0 = _([[You are invited to a meeting in %s]])
+misn_reward0 = _("???")
+
 misn_desc = _([[Captain Rebina of the Four Winds has asked you to help Four Winds agents protect an Imperial diplomat.]])
 misn_reward = _("A sum of money.")
 
@@ -123,7 +134,23 @@ log_text_success = _([[Your attempt to escort a diplomat for the Four Winds was 
 log_text_fail = _([[You failed to escort a diplomat to safety for the Four Winds.]])
 
 
+-- After having accepted the mission from the hailing Vendetta
 function create()
+   misn.accept()
+   stage = 0
+   local rsysname = "Pas"
+   rebinasys = system.get(rsysname)
+   hook.jumpin("jumpin")
+
+    misn.setDesc(misn_desc0:format(rsysname))
+    misn.setReward(misn_reward0)
+    marker = misn.markerAdd(rebinasys, "low")
+    osd_msg0 = string.format(osd_msg0, rebinasys:name())
+    misn.osdCreate(osd_title0, {osd_msg0})
+end
+
+-- Boarding the Seiryuu at the beginning of the mission
+function meeting()
     misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refuel stop, protegee meeting point, final destination.
     misssys["__save"] = true
     
@@ -137,7 +164,7 @@ function create()
         tk.msg(title[1], string.format(text[1], player.name()))
         tk.msg(title[1], text[2])
         if tk.yesno(title[1], text[3]) then
-            accept()
+            accept_m()
         else
             tk.msg(refusetitle, refusetext)
             abort()
@@ -145,7 +172,7 @@ function create()
     else
         tk.msg(title[1], string.format(textrepeat, player.name()))
         if tk.yesno(title[1], text[3]) then
-            accept()
+            accept_m()
         else
             tk.msg(refusetitle, refusetext)
             abort()
@@ -154,7 +181,7 @@ function create()
     player.unboard()
 end
 
-function accept()
+function accept_m()
     alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
     alive["__save"] = true
     stage = 1 -- Keeps track of the mission stage
@@ -168,11 +195,8 @@ function accept()
     missend = false
     landfail = false
 
-    var.push("shadowvigil_active", true)
     tk.msg(accepttitle, string.format(accepttext, player.name(), player.name()))
     shadow_addLog( log_text_intro )
-
-    misn.accept()
 
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
@@ -182,7 +206,6 @@ function accept()
     misn.osdCreate(osd_title, osd_msg)
     
     hook.land("land")
-    hook.jumpin("jumpin")
     hook.enter("enter")
     hook.jumpout("jumpout")
     hook.takeoff("takeoff")
@@ -245,7 +268,21 @@ end
 -- Function hooked to jumpin. Handles most of the events in the various systems.
 function jumpin()
     sysclear = false -- We've just jumped in, so the ambushers, if any, are not dead.
-    
+
+    if pahook then -- Remove the hook on the player being attacked, if needed
+        hook.rm( pahook )
+    end    
+
+    if stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
+        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), "trader" )
+        seiryuu:control(true)
+        seiryuu:setActiveBoard(true)
+        seiryuu:setInvincible(true)
+        seiryuu:setHilight(true)
+        seiryuu:setVisplayer(true)
+        hook.pilot(seiryuu, "board", "board")
+    end
+
     if stage >= 3 and system.cur() ~= nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
         tk.msg(wrongsystitle, wrongsystext)
         shadow_addLog( log_text_fail )
@@ -280,6 +317,7 @@ function jumpin()
                 j:setInvincPlayer()
                 hook.pilot(j, "death", "escortDeath")
                 controlled = true
+                j:memory().angle = 90*(i-2)
             end
         end
 
@@ -303,7 +341,7 @@ function jumpin()
             proxy = hook.timer(500, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortNext"})
             for i, j in ipairs(escorts) do
                 if j:exists() then
-                    j:follow(diplomat) -- Follow the diplomat.
+                    j:follow(diplomat,true) -- Follow the diplomat.
                 end
             end
             hook.timer(5000, "chatter", {pilot = escorts[1], text = commmsg[6]})
@@ -312,7 +350,7 @@ function jumpin()
         elseif system.cur() == misssys[4] then -- case rendezvous with Dvaered diplomat
             for i, j in ipairs(escorts) do
                 if j:exists() then
-                    j:follow(diplomat) -- Follow the diplomat.
+                    j:follow(diplomat,true) -- Follow the diplomat.
                 end
             end
             dvaerplomat = pilot.add( "Dvaered Vigilance", "Dvaered", vec2.new(2000, 4000) )
@@ -329,7 +367,7 @@ function jumpin()
                 if j:exists() then
                     if stage == 4 then
                         diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
-                        j:follow(diplomat) -- Follow the diplomat.
+                        j:follow(diplomat,true) -- Follow the diplomat.
                     else
                         j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
                     end
@@ -361,6 +399,7 @@ function jumpin()
                         hook.pilot(j, "attacked", "diplomatAttacked")
                     end
                 end
+                pahook = hook.pilot(player.pilot(), "attacked", "diplomatAttacked")
             end
         end
 
@@ -418,8 +457,9 @@ function attackerDeath()
         if j:exists() then
             myj = j
             j:changeAI("baddie_norun")
+            j:memory().angle = 90*(i-2)
             j:control()
-            j:follow(diplomat)
+            j:follow(diplomat,true)
             diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
             controlled = true
         end
@@ -452,7 +492,6 @@ end
 
 -- Handle the death of the diplomat. Abort the mission if the diplomat dies.
 function diplomatDeath()
-    -- TODO: abort message
     tk.msg(diplomatdeathtitle, diplomatdeathtext)
     for i, j in ipairs(escorts) do
         if j:exists() then
@@ -573,8 +612,13 @@ function escortFlee()
             j:taskClear()
             j:rmOutfit("all")
             j:hyperspace()
+            j:setInvincible(false)
+            j:setInvincPlayer(false)
+            hook.pilot(j, "board", "board_escort")
         end
     end
+    boarded_escort = false
+
     misn.osdActive(5)
     marker = misn.markerAdd(seirsys, "low")
     stage = 1 -- no longer spawn things
@@ -583,20 +627,35 @@ end
 
 -- Function hooked to boarding. Only used on the Seiryuu.
 function board()
-    player.unboard()
-    seiryuu:control()
-    seiryuu:hyperspace()
-    seiryuu:setActiveBoard(false)
-    seiryuu:setHilight(false)
-    tk.msg(title[4], string.format(text[4], player.name(), player.name()))
-    player.pay(700000)
-    var.pop("shadowvigil_active")
-    shadow_addLog( log_text_success )
-    misn.finish(true)
+    if stage == 0 then
+       misn.markerRm(marker)
+       misn.osdDestroy()
+       meeting()
+    else
+       player.unboard()
+       seiryuu:control()
+       seiryuu:hyperspace()
+       seiryuu:setActiveBoard(false)
+       seiryuu:setHilight(false)
+       tk.msg(title[4], string.format(text[4], player.name(), player.name()))
+       player.pay(700000)
+       shadow_addLog( log_text_success )
+       misn.finish(true)
+    end
+end
+
+-- The player boards one of the escort at the end of the mission.
+function board_escort( pilot )
+   if not boarded_escort then
+      tk.msg( disable_title, disable_text )
+      player.unboard()
+      player.addOutfit("Vacuum Cleaner?")
+      pilot:setHealth(0, 0) -- Make ship explode
+      boarded_escort = true
+   end
 end
 
 -- Handle the unsuccessful end of the mission.
 function abort()
-    var.pop("shadowvigil_active")
     misn.finish(false)
 end

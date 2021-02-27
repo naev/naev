@@ -339,6 +339,44 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
 }
 
 /**
+ * @brief Gets rid of all cargo from pilot.  Can remove mission cargo.
+ *
+ *    @param pilot Pilot to get rid of cargo.
+ *    @param cleanup Whether we're cleaning up or not (removes mission cargo).
+ *    @return Amount of cargo gotten rid of.
+ */
+int pilot_cargoRmAll( Pilot* pilot, int cleanup )
+{
+   int i;
+   int q;
+
+   /* check if pilot has it */
+   q = 0;
+   for (i=array_size(pilot->commodities)-1; i>=0; i--) {
+
+      /* Must not be mission cargo unless cleaning up. */
+      if (!cleanup && (pilot->commodities[i].id != 0))
+         continue;
+
+      q += pilot->commodities[i].quantity;
+      array_erase( &pilot->commodities, &pilot->commodities[i], &pilot->commodities[i+1] );
+   }
+
+   if (array_size(pilot->commodities) <= 0) {
+      array_free( pilot->commodities );
+      pilot->commodities = NULL;
+   }
+
+   pilot->cargo_free    += q;
+   pilot->mass_cargo    -= q;
+   pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
+   pilot_updateMass( pilot );
+
+   gui_setGeneric( pilot );
+   return q;
+}
+
+/**
  * @brief Tries to get rid of quantity cargo from pilot.
  *
  *    @param pilot Pilot to get rid of cargo.

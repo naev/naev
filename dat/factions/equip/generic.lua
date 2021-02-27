@@ -1,6 +1,24 @@
 require "jumpdist"
 
 
+-- Probability of cargo by class.
+equip_classCargo = {
+   ["Yacht"] = .7,
+   ["Luxury Yacht"] = .6,
+   ["Scout"] = .05,
+   ["Courier"] = .8,
+   ["Freighter"] = .8,
+   ["Armoured Transport"] = .8,
+   ["Fighter"] = .1,
+   ["Bomber"] = .1,
+   ["Corvette"] = .15,
+   ["Destroyer"] = .2,
+   ["Cruiser"] = .2,
+   ["Carrier"] = .3,
+   ["Drone"] = .05,
+   ["Heavy Drone"] = .05
+}
+
 -- Table of available core systems by class.
 equip_classOutfits_coreSystems = {
    ["Yacht"] = {
@@ -1170,20 +1188,15 @@ function equip_generic( p )
    equip_set( p, equip_classOutfits_structurals[class] )
 
    -- Add cargo
-   local avail_cargo = {}
-   local systems = getsysatdistance( nil, 0, 4 )
-   for i, sys in ipairs( systems ) do
-      for j, pl in ipairs( sys:planets() ) do
-         for k, com in ipairs( pl:commoditiesSold() ) do
-            avail_cargo[ #avail_cargo + 1 ] = com
-         end
-      end
-   end
+   local pb = equip_classCargo[class]
+   if rnd.rnd() < pb then
+      local avail_cargo = commodity.getStandard()
 
-   if #avail_cargo > 0 then
-      for i=1,rnd.rnd(1,3) do
-         local ncargo = rnd.rnd( 0, p:cargoFree() )
-         p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:nameRaw(), ncargo )
+      if #avail_cargo > 0 then
+         for i=1,rnd.rnd(1,3) do
+            local ncargo = rnd.rnd( 0, math.floor(p:cargoFree()*pb) )
+            p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:nameRaw(), ncargo )
+         end
       end
    end
 end
