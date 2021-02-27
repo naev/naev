@@ -286,7 +286,7 @@ Her eyes sparkle with determination.]]))
       minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
       shiplog.appendLog( logidstr, _("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
    end )
-   vn.na(_("You recieve #p500 Minerva Tokens#0."))
+   vn.na(string.format(_("You recieve %s."), minerva.tokens_get(500)))
    maikki(_([["I'll be around here if you find anything."]]))
    vn.na(_("You take your leave. Without any leads, it might prove hard to find where Kex is. You wonder what your next steps should be..."))
    vn.done("hexagon")

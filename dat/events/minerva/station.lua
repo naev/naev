@@ -36,6 +36,9 @@ chuckaluck_image = "minervaceo.png" -- TODO replace
 chuckaluck_desc = _("A fast-paced luck-based betting game using dice.")
 greeter_portrait = portrait.get() -- TODO replace?
 
+-- Special
+spaticketcost = 100
+
 patron_names = {
    _("Patron"),
 }
@@ -171,7 +174,6 @@ function bargreeter()
 end
 
 function approach_terminal()
-   local spaticketcost = 100
 
    local msgs = {
       _(" TODAY MIGHT BE YOUR LUCKY DAY."),
@@ -298,12 +300,12 @@ function approach_terminal()
          if soldout then
             opts[k] = { string.format(_("%s (#rSOLD OUT#0)"), _(v[1])), -1 }
          else
-            opts[k] = { string.format(_("%s (#p%d Tokens#0)"), _(v[1]), tokens), k }
+            opts[k] = { string.format(_("%s (%s)"), _(v[1]), minerva.tokens_str(tokens)), k }
          end
       end
       -- Add special ticket
       if player.evtDone("Spa Propaganda") and var.peek("minerva_spa_ticket")==nil then
-         table.insert( opts, 1, {_("Special Spa Ticket (#p100 Tokens#0)"), "spaticket"} )
+         table.insert( opts, 1, {string.format(_("Special Spa Ticket (%s)"), minerva.tokens_str(spaticketcost)), "spaticket"} )
       end
       table.insert( opts, {_("Back"), "start"} )
       return opts

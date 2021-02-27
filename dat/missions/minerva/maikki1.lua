@@ -172,7 +172,7 @@ She gives out a heavy sigh.]]))
       maikki:rename( minerva.maikki.name )
       maikki(_([["My name is Maisie, but you can call me Maikki."]]))
       vn.menu( {
-         { _("Offer her a drink (#p10 Minerva Tokens#0)"), "drink" },
+         { string.format(_("Offer her a drink (%s)"), minerva.tokens_str(10)), "drink" },
          { _("Ask her who she is looking for"), "nodrink" },
       } )
       vn.label( "drink" )
