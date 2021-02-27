@@ -3055,22 +3055,30 @@ static int pilotL_cargoRm( lua_State *L )
    /* Parse parameters. */
    p = luaL_validpilot(L,1);
    str      = luaL_checkstring( L, 2 );
-   quantity = luaL_checknumber( L, 3 );
 
-   /* Get cargo. */
-   cargo    = commodity_get( str );
-   if (cargo == NULL) {
-      NLUA_ERROR( L, _("Cargo '%s' does not exist!"), str );
-      return 0;
+   if (strcmp(str, "__allExceptMisn") == 0)
+      quantity = pilot_cargoRmAll( p, 0 );
+   else if (strcmp(str, "__all") == 0)
+      quantity = pilot_cargoRmAll( p, 1 );
+   else {
+      quantity = luaL_checknumber( L, 3 );
+
+      /* Get cargo. */
+      cargo    = commodity_get( str );
+      if (cargo == NULL) {
+         NLUA_ERROR( L, _("Cargo '%s' does not exist!"), str );
+         return 0;
+      }
+
+      if (quantity < 0) {
+         NLUA_ERROR( L, _("Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)") );
+         return 0;
+      }
+
+      /* Try to remove the cargo. */
+      quantity = pilot_cargoRm( p, cargo, quantity );
    }
 
-   if (quantity < 0) {
-      NLUA_ERROR( L, _("Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)") );
-      return 0;
-   }
-
-   /* Try to add the cargo. */
-   quantity = pilot_cargoRm( p, cargo, quantity );
    lua_pushnumber( L, quantity );
    return 1;
 }

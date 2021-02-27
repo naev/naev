@@ -100,7 +100,7 @@ vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
    vec3 g = vec3( grain( uv, px * zoom, frame, 2.5 ) );
 
    // get the luminance of the image
-   float luminance = rgbToLuminance( bgcolor.rgb );
+   float luminance = rgb2lum( bgcolor.rgb );
    vec3 desaturated = vec3(luminance);
 
    // now blend the noise over top the backround
@@ -157,6 +157,7 @@ function love_shaders.hologram( noise )
    local pixelcode = [[
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
+#include "lib/blend.glsl"
 #include "lib/simplex.glsl"
 #include "lib/colour.glsl"
 
@@ -216,12 +217,12 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    float blurdir = snoise( vec2( blurspeed*u_time, 0 ) );
    vec2 blurvec = bluramplitude * vec2( cos(blurdir), sin(blurdir) );
    vec4 blurbg = blur9( tex, look, love_ScreenSize.xy, blurvec );
-   // TODO better mixing!
-   texcolor = mix( texcolor, blurbg, step( blurbg.a, texcolor.a ) );
+   texcolor.rgb = blendSoftLight( texcolor.rgb, blurbg.rgb );
+   texcolor.a = max( texcolor.a, blurbg.a );
 
    /* Drop to greyscale while increasing brightness and contrast */
    //float greyscale = dot( texcolor.xyz, vec3( 0.2126, 0.7152, 0.0722 ) ); // standard
-   float greyscale = rgbToLuminance( texcolor.rgb ); // percieved
+   float greyscale = rgb2lum( texcolor.rgb ); // percieved
    texcolor.xyz = contrast*vec3(greyscale) + brightness;
 
    /* Shadows. */

@@ -1201,6 +1201,7 @@ dat/outfits/accessory/star_of_valor.xml
 dat/outfits/accessory/swamp_bombing.xml
 dat/outfits/accessory/toy_drone.xml
 dat/outfits/accessory/ugly_statue.xml
+dat/outfits/accessory/vacuum_cleaner.xml
 dat/outfits/activated/emergency_shield_booster.xml
 dat/outfits/activated/generic_afterburner.xml
 dat/outfits/activated/hellburner.xml
@@ -2451,6 +2452,7 @@ dat/scripts/swapship.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/main.lua
+dat/scripts/vn/transitions.lua
 dat/snd/music.lua
 src/ai.c
 src/ai.h

@@ -26,6 +26,7 @@ void pilot_cargoCalc( Pilot* pilot );
  * Normal cargo below the abstractions.
  */
 int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
+int pilot_cargoRmAll( Pilot* pilot, int cleanup );
 int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id );
 
