@@ -8,6 +8,7 @@ local love = require 'love'
 local graphics = require 'love.graphics'
 local love_image = require 'love.image'
 local love_math = require 'love.math'
+local love_shaders = require 'love_shaders'
 
 local transitions = {
    _t = {}
@@ -259,11 +260,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords ) {
 ]]
 
 transitions._t.burn = [[
-#include "lib/simplex.glsl"
-
 uniform Image texprev;
 uniform float progress;
-uniform float u_r;
+uniform Image noisetex;
 
 const float smoothness = 0.1;
 
@@ -284,19 +283,9 @@ vec4 burncolor( vec4 color, float value )
    return outcol;
 }
 
-float noisetex( vec2 px )
-{
-   float n = 0.0;
-   for (float i=1.0; i<8.0; i=i+1.0) {
-      float m = pow( 2.0, i );
-      n += snoise( px * 0.002 * m + 1000.0 * u_r ) * (1.0 / m);
-   }
-   return n;
-}
-
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
-   float n = noisetex( px )*0.5+0.5;
+   float n = Texel( noisetex, uv ).r;
    float p = mix(-smoothness, 1.0 + smoothness, progress);
    float lower = p - smoothness;
    float higher = p + smoothness;
@@ -310,6 +299,34 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    return (q <= 0.0) ? c2 : c1;
 }
 ]]
+local function _burn_noise ()
+   local pixelcode = [[
+#include "lib/simplex.glsl"
+uniform float u_r;
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+{
+   float n = 0.0;
+   for (float i=1.0; i<8.0; i=i+1.0) {
+      float m = pow( 2.0, i );
+      n += snoise( px * 0.002 * m + 1000.0 * u_r ) * (1.0 / m);
+   }
+   return vec4( vec3(n)*0.5+0.5, 1.0 );
+}
+]]
+   local width, height = naev.gfx.dim()
+   local noisetex = graphics.newCanvas( width, height )
+   local noiseshader = graphics.newShader( pixelcode, _vertexcode )
+   noiseshader:send( "u_r", love_math.random() )
+   local oldcanvas = graphics.getCanvas()
+   local oldshader = graphics.getShader()
+   graphics.setCanvas( noisetex )
+   graphics.clear( 1, 1, 1, 1 )
+   graphics.setShader( noiseshader )
+   love_shaders.img:draw( 0, 0, 0, width, height )
+   graphics.setShader( oldshader )
+   graphics.setCanvas( oldcanvas )
+   return noisetex
+end
 
 transitions._t.electric = [[
 #include "lib/simplex.glsl"
@@ -378,6 +395,10 @@ function transitions.get( name, seconds, transition )
    end
 
    local shader = graphics.newShader( _pixelcode, _vertexcode )
+   if name=="burn" then
+      local noisetex = _burn_noise()
+      shader:send( "noisetex", noisetex )
+   end
    if shader:hasUniform("u_time") then
       shader._dt = 1000 * love_math.random()
       shader.update = function( self, dt )
