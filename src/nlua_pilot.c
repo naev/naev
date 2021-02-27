@@ -3794,7 +3794,7 @@ static int pilotL_land( lua_State *L )
       t = pilotL_newtask( L, p, "__land" );
 
    if (pnt != NULL) {
-      /* Find the jump. */
+      /* Find the planet. */
       for (i=0; i < array_size(cur_system->planets); i++) {
          if (cur_system->planets[i] == pnt) {
             break;
