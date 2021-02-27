@@ -2205,6 +2205,7 @@ dat/factions/equip/proteron.lua
 dat/factions/equip/sirius.lua
 dat/factions/equip/soromid.lua
 dat/factions/equip/thurion.lua
+dat/factions/equip/trader.lua
 dat/factions/equip/zalek.lua
 dat/factions/spawn/civilian.lua
 dat/factions/spawn/collective.lua
