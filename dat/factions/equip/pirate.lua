@@ -1,6 +1,24 @@
 require("factions/equip/generic")
 
 
+-- Probability of cargo by class.
+equip_classCargo = {
+   ["Yacht"] = .5,
+   ["Luxury Yacht"] = .5,
+   ["Scout"] = .5,
+   ["Courier"] = .5,
+   ["Freighter"] = .5,
+   ["Armoured Transport"] = .5,
+   ["Fighter"] = .5,
+   ["Bomber"] = .5,
+   ["Corvette"] = .5,
+   ["Destroyer"] = .5,
+   ["Cruiser"] = .5,
+   ["Carrier"] = .5,
+   ["Drone"] = .5,
+   ["Heavy Drone"] = .5
+}
+
 equip_typeOutfits_coreSystems["Hyena"] = {
    "Unicorp PT-100 Core System", "Milspec Prometheus 2203 Core System"
 }
