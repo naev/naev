@@ -301,6 +301,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 ]]
 local function _burn_noise ()
    local pixelcode = [[
+precision highp float;
 #include "lib/simplex.glsl"
 uniform float u_r;
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )

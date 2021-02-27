@@ -35,6 +35,8 @@ function love_shaders.paper( width, height, sharpness )
    end
    sharpness = sharpness or 1
    local pixelcode = [[
+precision highp float;
+
 #include "lib/simplex.glsl"
 
 uniform float u_r;
