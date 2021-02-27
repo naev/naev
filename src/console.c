@@ -102,13 +102,14 @@ static int cli_initLua (void);
 
 static char* cli_escapeString( int *len_out, const char *s, int len )
 {
-   char *buf = malloc( 2*len ); /* worst case */
+   char *buf = malloc( 2*len+1 ); /* worst case */
    int b = 0;
    for (int i=0; i<len; i++) {
       if (s[i]==FONT_COLOUR_CODE)
          buf[b++] = FONT_COLOUR_CODE;
       buf[b++] = s[i];
    }
+   buf[b] = '\0';
    *len_out = b;
    return buf;
 }
