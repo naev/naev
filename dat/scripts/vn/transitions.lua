@@ -9,7 +9,9 @@ local graphics = require 'love.graphics'
 local love_image = require 'love.image'
 local love_math = require 'love.math'
 
-local transitions = {}
+local transitions = {
+   _t = {}
+}
 
 local _vertexcode = [[
 vec4 position( mat4 transform_projection, vec4 vertex_position )
@@ -18,7 +20,7 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
-transitions.fade = [[
+transitions._t.fade = [[
 uniform Image texprev;
 uniform float progress;
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -30,7 +32,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 }
 ]]
 
-transitions.blur = [[
+transitions._t.blur = [[
 #include "lib/blur.glsl"
 
 uniform Image texprev;
@@ -47,7 +49,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 }
 ]]
 
-transitions.ripple = [[
+transitions._t.ripple = [[
 // Adapted from https://gl-transitions.com/editor/ripple
 // Author: gre
 // License: MIT
@@ -71,7 +73,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 }
 ]]
 
-transitions.perlin = [[
+transitions._t.perlin = [[
 #include "lib/perlin.glsl"
 
 uniform Image texprev;
@@ -95,8 +97,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 }
 ]]
 
-transitions.wave = [[
-// Adapted from https://gl-transitions.com/editor/ButterflyWaveScrawler
+transitions._t.wave = [[
+// Adapted from https://gl-transitions._t.com/editor/ButterflyWaveScrawler
 // Author: mandubian
 // License: MIT
 
@@ -138,7 +140,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 }
 ]]
 
-transitions.radial = [[
+transitions._t.radial = [[
 #include "lib/math.glsl"
 
 uniform Image texprev;
@@ -156,7 +158,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 }
 ]]
 
-transitions.pixelize = [[
+transitions._t.pixelize = [[
 // Adapted from https://gl-transitions.com/editor/pixelize
 // Author: gre
 // License: MIT
@@ -179,7 +181,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords ) {
 }
 ]]
 
-transitions.hexagon = [[
+transitions._t.hexagon = [[
 // Author: Fernando Kuteken
 // License: MIT
 // Hexagonal math from: http://www.redblobgames.com/grids/hexagons/
@@ -256,9 +258,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords ) {
 }
 ]]
 
--- TODO the noise texture in burn should be saved as a canvas and passed as a
--- texture to speed it up
-transitions.burn = [[
+transitions._t.burn = [[
 #include "lib/simplex.glsl"
 
 uniform Image texprev;
@@ -311,7 +311,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 }
 ]]
 
-transitions.electric = [[
+transitions._t.electric = [[
 #include "lib/simplex.glsl"
 
 uniform Image texprev;
@@ -372,7 +372,7 @@ function transitions.get( name, seconds, transition )
       seconds = seconds or 2.0
    end
 
-   local _pixelcode = transitions[name]
+   local _pixelcode = transitions._t[name]
    if not _pixelcode then
       error( string.format(_("vn: unknown transition type'%s'"), name ) )
    end
