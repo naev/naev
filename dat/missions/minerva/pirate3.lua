@@ -35,6 +35,9 @@ misn_desc = _("Someone wants you to find a Dvaered spy that appears to be locate
 reward_amount = 200000 -- 200k
 
 harper_portrait = portrait.get() -- TODO replace?
+harper_bribe_big = 1e7
+harper_bribe_sml = 1e6
+harper_bribe_tkn = 1000
 
 mainsys = "Limbo"
 -- Mission states:
@@ -188,8 +191,7 @@ They start frantically typing into their portable holo-deck. It makes weird beep
    vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
    vn.func( function ()
       player.pay( reward_amount )
-      shiplog.appendLog( logidstr, "win log" )
-
+      shiplog.appendLog( logidstr, "TODO win log" )
    end )
    vn.sfxVictory()
    vn.done()
@@ -220,13 +222,20 @@ function enter ()
       hook.pilot( harper, "death", "harper_death" )
       hook.pilot( harper, "board", "harper_board" )
       hook.pilot( harper, "hail", "harper_hail" )
+      hook.pilot( harper, "land", "harper_land" )
+
+      -- Clear variables to be kind to the player
+      harper_almostdied = false
+      harper_talked = false
    end
 end
 
 
 function harper_death ()
-   harper_killed = true
-   harper_nospawn = true
+   if not harper_gotticket then
+      player.msg(_("#rMISSION FAILED! You were supposed to get the ticket but they are dead now!"))
+      misn.finish(false)
+   end
 end
 
 
@@ -241,29 +250,177 @@ function harper_board ()
    vn.run()
 end
 
+function harper_neardeath()
+   if not harper:exists() then
+      return false
+   end
+   local a, s, stress, disabled = harper:getHeight()
+   if disabled then
+      return true
+   end
+   return (a+s < 0.4)
+end
 
-function harper_attacked ()
+
+function harper_attacked( pilot, attacker )
+   if attacker == pilot.player() then
+      if not harper_attacked then
+         -- Run to land at the station
+         harper:setNoLand(false)
+         harper:control()
+         harper:land( planet.get("Minerva Station") )
+         harper_attacked = true
+      end
+
+      if harper_neardeath() then
+         harper_almostdied = true
+
+      end
+   end
+end
+
+
+function harper_land ()
+   if not harper_gotticket then
+      player.msg(_("#rMISSION FAILED! You were supposed to get the ticket but they got away!"))
+      misn.finish(false)
+   end
+end
+
+function harper_hologram ()
+   return vn.newCharacter( _("Harper"),
+         { image=portrait.hologram( harper_portrait ) } )
 end
 
 
 function harper_hail ()
+   if harper_attacked then
+      harper:msg( player.pilot(), _("Get away from me!") )
+      player.commClose()
+      return
+   end
+
+   if harper_almostdied then
+      vn.clear()
+      vn.scene()
+      local h = harper_hologram()
+      vn.transition("electric")
+      vn.na(_("You see Harper's hologram appear into view paler than usual."))
+      vn.done("electric")
+      vn.run()
+
+      player.commClose()
+      return
+   end
+
+   if harper_talked then
+      vn.clear()
+      vn.scene()
+      local h = harper_hologram()
+      vn.transition("electric")
+      vn.na(_("An impatient man appears into view."))
+      h(_([["You again? I don't have time to deal with you."]]))
+      vn.na(_("The comm goes silent..."))
+      vn.done("electric")
+      vn.run()
+
+      player.commClose()
+      return
+   end
+
    vn.clear()
    vn.scene()
-   local h = vn.newCharacter( _("Harper"),
-         { image=portrait.hologram( harper_portrait ) } )
+   local h = harper_hologram()
    vn.transition("electric")
    vn.na(_("You hail Harper's vessel and you see him appear into view."))
    h(_([["What do you want? Can't you see I'm celebrating my luck?"]]))
    vn.menu( {
-      {_("Foo."), "foo" },
+      {_([["Luck?"]]), "luck" },
+      {_([["Celebrating?"]]), "luck" },
+   } )
+   vn.label("luck")
+   h(_([["Yeah, you may have heard the news, but I'm the big winner of the Minerva hot spring event! On my first time to Minerva Station too! Maybe this will finally cure my back pains once and for all. The ticket is even made of pure gold!"
+As he boasts, he looks triumphant.]]))
+   vn.menu( {
+      {_([["About the ticket..."]]), "ticket" },
+      {_("End transmission"), "leave" },
+   } )
+   vn.label("ticket")
+   h(_([["What about it?"]]))
+   vn.menu( {
+      {_([["Give it to me. Now."]]), "threaten" },
+      {_([["I would like to take it off your hands."]]), "haggle"},
+      {_("End transmission"), "leave" },
    } )
 
+   vn.label("threaten")
+   h(_([["What are you going to do? Shoot me?"
+He scoffs at you and closes the transmission.]]))
    vn.func( function ()
-      harper_gotticket = true
-      harper_nospawn = true
+      harper_attacked = true
    end )
    vn.done("electric")
+
+   vn.label("haggle")
+   h(_([["I don't know. This is very valuable you know? What would you trade for it?"]]))
+   vn.menu( function ()
+      local opts = {
+         { string.format(_([[#%sOffer %s]]), creditstring(harper_bribe_big),
+            player.credits()>=harper_bribe_big and "0" or "r" ), "money_big" },
+         { string.format(_([[#%sOffer %s]]), creditstring(harper_bribe_sml),
+            player.credits()>=harper_bribe_sml and "0" or "r" ), "money_sml" },
+         {_("End transmission"), "leave" },
+      }
+      if minerva.tokens_get() > harper_bribe_tkn then
+         table.insert( opts, 1,
+            { string.format(_([[Offer %s (have %s)]]),
+               minerva.tokens_str( harper_bribe_tkn ),
+               minerva.tokens_str( minerva.tokens_get() ) ),
+            "money_tkn" } )
+      end
+      return opts
+   end )
+
+   local function _harper_done ()
+      harper_gotticket = true
+      harper_nospawn = true
+      -- He goes land now
+      harper:setNoLand(false)
+      harper:control()
+      harper:land( planet.get("Minerva Station") )
+   end
+
+   vn.label("money_big")
+   h(_([["Actually, swimming in a chicken sounds like a bit of a drag. I think I might be allergic them anyway."]]))
+   vn.sfxMoney()
+   vn.func( function ()
+      _harper_done()
+      player.pay( -harper_bribe_big )
+      harper:credits( harper_bribe_big ) -- Player can theoretically board to loot it back
+   end )
+   vn.na(_("You wire him the money and he gives you the digital code that represents the ticket. Looks like you are set."))
+   vn.jump("leave")
+
+   vn.label("money_tkn")
+   h(_([["Actually, swimming in a chicken sounds like a bit of a drag. I think I might be allergic them anyway."]]))
+   vn.sfxMoney()
+   vn.func( function ()
+      _harper_done()
+      minerva.tokens_pay( -harper_bribe_tkn )
+   end )
+   vn.na(_("You wire him the tokens and he gives you the digital code that represents the ticket. Looks like you are set."))
+
+   vn.label("money_small")
+   h(_([[""]]))
+
+   vn.label("leave")
+   vn.na(_("You close the transmission channel."))
+   vn.done("electric")
    vn.run()
+
+   harper_talked = true
+
+   player.commClose()
 end
 
 
