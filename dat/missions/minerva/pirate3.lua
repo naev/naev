@@ -45,7 +45,7 @@ mainsys = "Limbo"
 --    0: try to find out how to plant listening device
 --    1. hear about chicken spa event
 --    2. enter chicken spa event
---    3. capture chicken spa event winner
+--    3. obtain spa event ticket from harper
 --    4. do chicken spa event
 --    5. planted listening device
 --    6. kidnap spy and take to torture ship
@@ -300,12 +300,81 @@ function harper_hail ()
       return
    end
 
+   local function enoughcreds( amount )
+      if player.credits() < amount then
+         return " (#rnot enough!#0)"
+      end
+      return ""
+   end
+
+   local function _harper_done ()
+      harper_gotticket = true
+      harper_nospawn = true
+      -- He goes land now
+      harper:setNoLand(false)
+      harper:control()
+      harper:land( planet.get("Minerva Station") )
+   end
+
    if harper_almostdied then
       vn.clear()
       vn.scene()
       local h = harper_hologram()
       vn.transition("electric")
       vn.na(_("You see Harper's hologram appear into view paler than usual."))
+      h(string.format(_([["I have had a change of mind."
+He gulps.
+"How about I give you the ticket for a mere %s?]]), creditstring(harper_bribe_sml)))
+      vn.menu( {
+         { string.format(_("Pay him %s%s"),creditstring(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
+         { _("Threaten him"), "threaten" },
+      } )
+
+      vn.label("pay")
+      vn.func( function ()
+         if player.credits() < harper_bribe_sml then
+            vn.jump("broke")
+         end
+      end )
+      h(_([["Actually, swimming in a chicken sounds like a bit of a drag. I think I might be allergic them anyway."
+He coughs nervously.]]))
+      vn.sfxMoney()
+      vn.func( function ()
+         _harper_done()
+         player.pay( -harper_bribe_sml )
+         harper:credits( harper_bribe_sml )
+      end )
+      vn.na(_("You wire him the money and he gives you the digital code that represents the ticket. Looks like you are set."))
+      vn.done("electric")
+
+      vn.label("threaten")
+      h(_([[He laughs nervously.
+"You have to be killing right? You wouldn't kill me in cold blood would you? I have a family waiting for me back home.]]))
+      vn.menu( {
+         { string.format(_("Pay him %s%s"),creditstring(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
+         { _("Aim your weapons at him"), "threaten2" },
+      } )
+
+      vn.label("threaten2")
+      h(_([["I have a daughter! She is turning 5 soon. You wouldn't be so cold-hearted to leave her an orphan would you?"
+He is sweating profusely.]]))
+      vn.menu( {
+         { string.format(_("Pay him %s%s"),creditstring(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
+         { _("Prime your weapon systems"), "threaten3" },
+      } )
+
+      vn.label("threaten3")
+      h(_([["Ah, damn this! I've still got things worth living for. Here, just take the damn thing."]]))
+      vn.na(_("He gives you the digital code that represents the ticket. Looks like you are set."))
+      vn.func( function () _harper_done() end )
+      vn.done("electric")
+
+      vn.label("broke")
+      h(_([["Wait do you mean you don't have the money?"
+He looks around nervously.
+"Ah, damn this. I've still got things worth living for. Here, just take the damn thing."]]))
+      vn.na(_("He gives you the digital code that represents the ticket. Looks like you are set."))
+      vn.func( function () _harper_done() end )
       vn.done("electric")
       vn.run()
 
@@ -365,10 +434,10 @@ He scoffs at you and closes the transmission.]]))
    h(_([["I don't know. This is very valuable you know? What would you trade for it?"]]))
    vn.menu( function ()
       local opts = {
-         { string.format(_([[#%sOffer %s]]), creditstring(harper_bribe_big),
-            player.credits()>=harper_bribe_big and "0" or "r" ), "money_big" },
-         { string.format(_([[#%sOffer %s]]), creditstring(harper_bribe_sml),
-            player.credits()>=harper_bribe_sml and "0" or "r" ), "money_sml" },
+         { string.format(_([[Offer %s%s]]), creditstring(harper_bribe_big),
+            enoughcreds(harper_bribe_big)), "money_big" },
+         { string.format(_([[Offer %s%s]]), creditstring(harper_bribe_sml),
+            enoughcreds(harper_bribe_sml)), "money_sml" },
          {_("End transmission"), "leave" },
       }
       if minerva.tokens_get() > harper_bribe_tkn then
@@ -381,16 +450,12 @@ He scoffs at you and closes the transmission.]]))
       return opts
    end )
 
-   local function _harper_done ()
-      harper_gotticket = true
-      harper_nospawn = true
-      -- He goes land now
-      harper:setNoLand(false)
-      harper:control()
-      harper:land( planet.get("Minerva Station") )
-   end
-
    vn.label("money_big")
+   vn.func( function ()
+      if player.credits() < harper_bribe_big then
+         vn.jump("broke")
+      end
+   end )
    h(_([["Actually, swimming in a chicken sounds like a bit of a drag. I think I might be allergic them anyway."]]))
    vn.sfxMoney()
    vn.func( function ()
@@ -411,7 +476,22 @@ He scoffs at you and closes the transmission.]]))
    vn.na(_("You wire him the tokens and he gives you the digital code that represents the ticket. Looks like you are set."))
 
    vn.label("money_small")
-   h(_([[""]]))
+   vn.func( function ()
+      if player.credits() < harper_bribe_sml then
+         vn.jump("broke")
+      end
+   end )
+   h(string.format(_([["%s only? I spent more than that gambling just to get this ticket."]]), creditstring(harper_bribe_sml)))
+   vn.menu( {
+      { string.format(_([[Offer %s%s]]), creditstring(harper_bribe_big),
+         enoughcreds(harper_bribe_big)), "money_big" },
+      {_("End transmission"), "leave" },
+   } )
+
+   vn.label("broke")
+   h(_([["You trying to pull my leg or something? You don't have enough credits. Anyway, I'm busy now."
+He cuts the transmission.]]))
+   vn.done("electric")
 
    vn.label("leave")
    vn.na(_("You close the transmission channel."))
