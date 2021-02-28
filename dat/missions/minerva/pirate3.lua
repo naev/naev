@@ -287,17 +287,17 @@ function harper_land ()
    end
 end
 
-function harper_hologram ()
-   return vn.newCharacter( _("Harper"),
-         { image=portrait.hologram( harper_portrait ) } )
-end
-
 
 function harper_hail ()
    if harper_attacked then
       harper:msg( player.pilot(), _("Get away from me!") )
       player.commClose()
       return
+   end
+
+   local function harper_hologram ()
+      return vn.newCharacter( _("Harper"),
+            { image=portrait.hologram( harper_portrait ) } )
    end
 
    local function enoughcreds( amount )
