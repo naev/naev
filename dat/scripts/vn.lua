@@ -180,8 +180,10 @@ local function _draw()
       -- Draw canvas
       graphics.setCanvas( prevcanvas )
       graphics.setShader( vn._postshader )
-      vn.setColor( {1, 1, 1, 1} )
+      vn.setColor( {1, 1, 1, 1} ) -- TODO: Really?
+      graphics.setBlendMode( "alpha", "premultiplied" )
       vn._canvas:draw( 0, 0 )
+      graphics.setBlendMode( "alpha" )
       graphics.setShader()
    end
 end
@@ -196,7 +198,7 @@ end
 local function _draw_to_canvas( canvas )
    local oldcanvas = graphics.getCanvas()
    graphics.setCanvas( canvas )
-   graphics.clear( 1, 1, 1, 0 )
+   graphics.clear( 0, 0, 0, 0 )
    _draw()
    graphics.setCanvas( oldcanvas )
 end
@@ -640,7 +642,7 @@ end
 function vn.StateStart:_init()
    local oldcanvas = graphics.getCanvas()
    graphics.setCanvas( vn._prevcanvas )
-   graphics.clear( 1, 1, 1, 0 )
+   graphics.clear( 0, 0, 0, 0 )
    graphics.setCanvas( oldcanvas )
    vn._globalalpha = 0
    _finish(self)
@@ -970,7 +972,9 @@ function vn.transition( name, seconds, transition )
 
          local oldshader = graphics.getShader()
          graphics.setShader( shader )
+         graphics.setBlendMode( "alpha", "premultiplied" )
          canvas:draw( 0, 0 )
+         graphics.setBlendMode( "alpha" )
          graphics.setShader( oldshader )
       end )
 end
