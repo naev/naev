@@ -245,9 +245,13 @@ end
 
 function enter ()
    if misn_state==3 and not harper_nospawn and system.cur()==system.get("Limbo") then
+      -- Don't stop spawns
+      -- TODO maybe add Minerva patrols that aggro ta make it a bit harder?
       -- Spawn Harper Bowdoin and stuff
-      local pos = foo
-      harper = pilot.add("Gawain", "Independent", pos, "Harper", "civilian" )
+      local pos = planet.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.rnd(360) )
+
+      local fharper = faction.dynAdd( nil, "Harper Bowdoin" )
+      harper = pilot.add( "Gawain", fharper, pos, "Harper", "civilian" )
       local mem = harper:memory()
       mem.loiter = math.huge -- Should make them loiter forever
       harper:setHilight(true)
