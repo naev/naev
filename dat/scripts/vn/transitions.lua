@@ -24,12 +24,11 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 transitions._t.fade = [[
 uniform Image texprev;
 uniform float progress;
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+vec4 effect( vec4 unused, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec4 texfrom = Texel(texprev, texture_coords);
    vec4 texto   = Texel(tex, texture_coords);
-   vec4 texcolor= mix( texfrom, texto, progress );
-   return texcolor * color;
+   return mix( texfrom, texto, progress );
 }
 ]]
 
@@ -41,7 +40,7 @@ uniform float progress;
 
 const float intensity = 10.0;
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    float disp = intensity*(0.5-distance(0.5, progress));
    vec4 c1 = blur9( texprev, uv, love_ScreenSize.xy, disp );
@@ -61,7 +60,7 @@ uniform float progress;
 const float amplitude = 100.0;
 const float speed = 50.;
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    vec2 dir = uv - vec2(.5);
    float dist = length(dir);
@@ -84,7 +83,7 @@ uniform float u_r;
 const float scale = 0.01;
 const float smoothness = 0.1;
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    float n = cnoise( scale * screen_coords + 1000.0*u_r )*0.5 + 0.5;
    float p = mix(-smoothness, 1.0 + smoothness, progress);
@@ -121,7 +120,7 @@ float compute(vec2 p, float progress, vec2 center) {
    return (exp(cos(theta)) - 2.*cos(4.*theta) + pow(sin((2.*theta - M_PI) / 24.), 5.)) / 10.;
 }
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    vec2 p = uv / vec2(1.0);
    float inv = 1. - progress;
@@ -149,7 +148,7 @@ uniform float progress;
 
 const float smoothness = 1.0;
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    vec2 rp = uv*2.0-1.0;
    return mix(
@@ -173,7 +172,7 @@ uniform float progress;
 const ivec2 squaresMin = ivec2(20);
 const int steps = 50;
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords ) {
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
    float d = min(progress, 1.0 - progress);
    float dist = steps>0 ? ceil(d * float(steps)) / float(steps) : d;
    vec2 squareSize = 2.0 * dist / vec2(squaresMin);
@@ -247,7 +246,7 @@ vec2 pointFromHexagon(Hexagon hex, float size) {
    return vec2(x, y * ratio);
 }
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords ) {
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
 
    float dist = 2.0 * min(progress, 1.0 - progress);
    dist = steps > 0 ? ceil(dist * float(steps)) / float(steps) : dist;
@@ -346,7 +345,7 @@ float sharpbeam( float x, float k )
    return pow( min( cos( M_PI * x / 2. ), 1.0 - abs(x) ), k );
 }
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 {
    vec4 c1 = Texel( texprev, uv );
    vec4 c2 = Texel( MainTex, uv );
@@ -372,7 +371,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    // Create color
    vec4 arcs = vec4( bluetint, v * max( c1.a, c2.a ) );
 
-   color = mix( c1, c2, step( ybase, px.y ) );
+   vec4 color = mix( c1, c2, step( ybase, px.y ) );
    color = mix( color, arcs, v );
    return color;
 }

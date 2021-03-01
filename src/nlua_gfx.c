@@ -50,6 +50,7 @@ static int gfxL_printH( lua_State *L );
 static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
+static int gfxL_setBlendMode( lua_State *L );
 static const luaL_Reg gfxL_methods[] = {
    /* Information. */
    { "dim", gfxL_dim },
@@ -72,6 +73,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
+   { "setBlendMode", gfxL_setBlendMode },
    {0,0}
 }; /**< GFX methods. */
 
@@ -778,3 +780,64 @@ static int gfxL_printText( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Sets the OpenGL blending mode. See https://love2d.org/wiki/love.graphics.setBlendMode as of version 0.10.
+ *
+ * @usage gfx.setBlendMode( "alpha", "premultiplied" )
+ *
+ *    @luatparam string mode One of: "alpha", "replace", "screen", "add", "subtract", "multiply", "lighten", or "darken".
+ *    @luatparam[opt="alphamultiply"] string alphamode Override to "premulitplied" when drawing canvases; see https://love2d.org/wiki/BlendAlphaMode.
+ * @luafunc setBlendMode
+ */
+static int gfxL_setBlendMode( lua_State *L )
+{
+   const char *mode, *alphamode;
+   GLenum func, srcRGB, srcA, dstRGB, dstA;
+
+   /* Parse parameters. */
+   mode     = luaL_checkstring(L,1);
+   alphamode= luaL_optstring(L,2,"alphamultiply");
+
+   /* Translate to OpenGL enums. */
+   func   = GL_FUNC_ADD;
+   srcRGB = GL_ONE;
+   srcA   = GL_ONE;
+   dstRGB = GL_ZERO;
+   dstA   = GL_ZERO;
+
+   if (!strcmp( alphamode, "alphamultiply" ))
+      srcRGB = GL_SRC_ALPHA;
+   else if (!strcmp( alphamode, "premultiplied" )) {
+      if (!strcmp( mode, "lighten" ) || !strcmp( mode, "darken" ) || !strcmp( mode, "multiply" ))
+         NLUA_INVALID_PARAMETER(L);
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   if (!strcmp( mode, "alpha" ))
+      dstRGB = dstA = GL_ONE_MINUS_SRC_ALPHA;
+   else if (!strcmp( mode, "multiply" ))
+      srcRGB = srcA = GL_DST_COLOR;
+   else if (!strcmp( mode, "subtract" ))
+      func = GL_FUNC_REVERSE_SUBTRACT;
+   else if (!strcmp( mode, "add" ) ) {
+      func = GL_FUNC_REVERSE_SUBTRACT;
+      srcA = GL_ZERO;
+      dstRGB = dstA = GL_ONE;
+   }
+   else if (!strcmp( mode, "lighten" ))
+      func = GL_MAX;
+   else if (!strcmp( mode, "darken" ))
+      func = GL_MIN;
+   else if (!strcmp( mode, "screen" ))
+      dstRGB = dstA = GL_ONE_MINUS_SRC_COLOR;
+   else if (strcmp( mode, "replace" ))
+      NLUA_INVALID_PARAMETER(L);
+
+   glBlendEquation(func);
+   glBlendFuncSeparate(srcRGB, dstRGB, srcA, dstA);
+   gl_checkErr();
+
+   return 0;
+}

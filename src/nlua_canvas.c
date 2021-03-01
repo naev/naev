@@ -219,6 +219,7 @@ static int canvasL_new( lua_State *L )
  *
  *    @luatparam Canvas|nil arg Either a canvas object or nil to disable.
  * @luafunc set
+ * @todo Add actual graphics state maintenance! For now, just disable the scissor region.
  */
 static int canvasL_set( lua_State *L )
 {
@@ -231,11 +232,13 @@ static int canvasL_set( lua_State *L )
          previous_fbo_set = 1;
       }
       gl_screen.current_fbo = lc->fbo;
+      glDisable(GL_SCISSOR_TEST);
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    }
    else if ((lua_gettop(L)<=0) || lua_isnil(L,1)) {
       gl_screen.current_fbo = previous_fbo;
       previous_fbo_set = 0;
+      glEnable(GL_SCISSOR_TEST);
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    }
    else

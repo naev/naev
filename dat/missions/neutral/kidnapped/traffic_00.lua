@@ -1,6 +1,9 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Kidnapped">
+ <flags>
+  <unique />
+ </flags>
  <avail>
   <priority>4</priority>
   <chance>100</chance>
@@ -117,7 +120,6 @@ end
 
 function accept()
   misn.accept()
-  var.push("traffic_00_active", true)
   
   tk.msg(title[2], text[2]:format(sysname3, bar1))
   misn.setTitle(mistitle)
@@ -267,6 +269,5 @@ function land3()
 end
 
 function abort()
-  var.pop("traffic_00_active")
   misn.finish(false)
 end
