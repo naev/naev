@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-02-26 22:11-0500\n"
+"POT-Creation-Date: 2021-03-01 01:24-0500\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -3123,7 +3123,7 @@ msgid ""
 "still part of the Empire."
 msgstr ""
 
-#: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:609
+#: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:611
 #, fuzzy
 msgid "Dvaered High Command"
 msgstr "드 베어드 경계"
@@ -6604,8 +6604,8 @@ msgstr ""
 msgid "Mida Proxima"
 msgstr ""
 
-#: dat/assets/minerva_station.xml:2 dat/scripts/minerva.lua:47
-#: dat/scripts/minerva.lua:52
+#: dat/assets/minerva_station.xml:2 dat/scripts/minerva.lua:48
+#: dat/scripts/minerva.lua:53
 #, fuzzy
 msgid "Minerva Station"
 msgstr "투리온의 불꽃"
@@ -13177,7 +13177,7 @@ msgstr ""
 msgid "Dummy"
 msgstr ""
 
-#: dat/faction.xml:14 dat/faction.xml:641
+#: dat/faction.xml:14 dat/faction.xml:643
 msgid "Independent"
 msgstr ""
 
@@ -13188,7 +13188,7 @@ msgstr ""
 #. End event on takeoff.
 #. Spawns an NPC.
 #. Select a faction for the NPC. NPCs may not have a specific faction.
-#: dat/faction.xml:31 dat/faction.xml:85 dat/events/neutral/npc.lua:307
+#: dat/faction.xml:31 dat/faction.xml:86 dat/events/neutral/npc.lua:307
 msgid "Civilian"
 msgstr ""
 
@@ -13198,59 +13198,59 @@ msgstr ""
 msgid "Trader"
 msgstr ""
 
-#: dat/faction.xml:65
+#: dat/faction.xml:66
 msgid "Miner"
 msgstr ""
 
-#: dat/faction.xml:83
+#: dat/faction.xml:84
 #, fuzzy
 msgid "Proteron Dissident"
 msgstr "프로 테론 유도체"
 
-#: dat/faction.xml:102 dat/faction.xml:344 dat/faction.xml:387
-#: dat/faction.xml:469 dat/faction.xml:553
-#: dat/missions/neutral/kidnapped/traffic_00.lua:143
-#: dat/missions/neutral/kidnapped/traffic_00.lua:144
-#: dat/missions/neutral/kidnapped/traffic_00.lua:150
-#: dat/missions/neutral/kidnapped/traffic_00.lua:151
+#: dat/faction.xml:103 dat/faction.xml:346 dat/faction.xml:389
+#: dat/faction.xml:471 dat/faction.xml:555
+#: dat/missions/neutral/kidnapped/traffic_00.lua:145
+#: dat/missions/neutral/kidnapped/traffic_00.lua:146
+#: dat/missions/neutral/kidnapped/traffic_00.lua:152
+#: dat/missions/neutral/kidnapped/traffic_00.lua:153
 #: dat/missions/pirate/common.lua:30
 msgid "Pirate"
 msgstr ""
 
-#: dat/faction.xml:106 dat/faction.xml:349 dat/faction.xml:418
+#: dat/faction.xml:107 dat/faction.xml:351 dat/faction.xml:420
 msgid "Galactic Pirates"
 msgstr ""
 
-#: dat/faction.xml:137 dat/missions/empire/common.lua:19
+#: dat/faction.xml:138 dat/missions/empire/common.lua:19
 #: dat/missions/empire/common.lua:25
 msgid "Empire"
 msgstr ""
 
-#: dat/faction.xml:156 dat/faction.xml:159 dat/ships/proteron_archimedes.xml:17
+#: dat/faction.xml:157 dat/faction.xml:160 dat/ships/proteron_archimedes.xml:17
 #: dat/ships/proteron_derivative.xml:14 dat/ships/proteron_kahan.xml:13
 #: dat/ships/proteron_watson.xml:13
 #, fuzzy
 msgid "Proteron"
 msgstr "프로 테론 카한"
 
-#: dat/faction.xml:174 dat/missions/flf/flf_common.lua:82
+#: dat/faction.xml:175 dat/missions/flf/flf_common.lua:82
 msgid "Frontier"
 msgstr ""
 
-#: dat/faction.xml:178
+#: dat/faction.xml:179
 #, fuzzy
 msgid "Frontier Alliance"
 msgstr "프론티어 얼라이언스의 소식입니다."
 
-#: dat/faction.xml:190
+#: dat/faction.xml:191
 msgid "Traders Guild"
 msgstr ""
 
-#: dat/faction.xml:194
+#: dat/faction.xml:195
 msgid "Space Traders Guild"
 msgstr ""
 
-#: dat/faction.xml:207 dat/ships/soromid_arx.xml:17
+#: dat/faction.xml:209 dat/ships/soromid_arx.xml:17
 #: dat/ships/soromid_brigand.xml:12 dat/ships/soromid_ira.xml:17
 #: dat/ships/soromid_marauder.xml:13 dat/ships/soromid_nyx.xml:13
 #: dat/ships/soromid_odium.xml:14 dat/ships/soromid_reaver.xml:12
@@ -13258,11 +13258,11 @@ msgstr ""
 msgid "Soromid"
 msgstr ""
 
-#: dat/faction.xml:222
+#: dat/faction.xml:224
 msgid "Thurion"
 msgstr ""
 
-#: dat/faction.xml:235
+#: dat/faction.xml:237
 msgid "Collective"
 msgstr ""
 
@@ -13291,16 +13291,16 @@ msgstr ""
 #. Get a system with both FLF and Pirate presence.
 #. Change the reputation cap for the FLF.
 #. Add an entry to the FLF campaign log.
-#: dat/faction.xml:250 dat/missions/flf/flf_common.lua:82
+#: dat/faction.xml:252 dat/missions/flf/flf_common.lua:82
 msgid "FLF"
 msgstr ""
 
-#: dat/faction.xml:254
+#: dat/faction.xml:256
 #, fuzzy
 msgid "Frontier Liberation Front"
 msgstr "프론티어 순찰대"
 
-#: dat/faction.xml:268 dat/events/dvaered/fwA_treason.lua:131
+#: dat/faction.xml:270 dat/events/dvaered/fwA_treason.lua:131
 #: dat/events/dvaered/fwA_treason.lua:140 dat/events/dvaered/fwB_repay.lua:47
 #: dat/missions/dvaered/common.lua:11
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:325
@@ -13311,53 +13311,53 @@ msgstr "프론티어 순찰대"
 msgid "Dvaered"
 msgstr ""
 
-#: dat/faction.xml:273 dat/ships/ancestor.xml:13
-#: dat/ships/dvaered_ancestor.xml:14 dat/ships/dvaered_phalanx.xml:12
+#: dat/faction.xml:275 dat/ships/ancestor.xml:13
+#: dat/ships/dvaered_ancestor.xml:14 dat/ships/dvaered_phalanx.xml:15
 #: dat/ships/dvaered_vendetta.xml:15 dat/ships/dvaered_vigilance.xml:12
-#: dat/ships/phalanx.xml:11 dat/ships/vendetta.xml:14
+#: dat/ships/phalanx.xml:14 dat/ships/vendetta.xml:14
 #: dat/ships/vigilance.xml:11
 msgid "House Dvaered"
 msgstr ""
 
-#: dat/faction.xml:288 dat/ssys/zalek.xml:2
+#: dat/faction.xml:290 dat/ssys/zalek.xml:2
 #: dat/missions/minerva/pirate2.lua:186 dat/missions/zalek/common.lua:21
 #: dat/missions/zalek/common.lua:26 dat/missions/zalek/common.lua:32
 msgid "Za'lek"
 msgstr ""
 
-#: dat/faction.xml:293
+#: dat/faction.xml:295
 msgid "House Za'lek"
 msgstr ""
 
-#: dat/faction.xml:305 dat/faction.xml:525 dat/missions/sirius/common.lua:22
+#: dat/faction.xml:307 dat/faction.xml:527 dat/missions/sirius/common.lua:22
 #: dat/missions/sirius/common.lua:28
 msgid "Sirius"
 msgstr ""
 
-#: dat/faction.xml:310
+#: dat/faction.xml:312
 msgid "House Sirius"
 msgstr ""
 
-#: dat/faction.xml:324 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
+#: dat/faction.xml:326 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
 #, fuzzy
 msgid "Goddard"
 msgstr "드 베어드 고다드"
 
-#: dat/faction.xml:329 dat/ships/dvaered_goddard.xml:15
+#: dat/faction.xml:331 dat/ships/dvaered_goddard.xml:15
 #: dat/ships/goddard.xml:14
 #, fuzzy
 msgid "House Goddard"
 msgstr "드 베어드 고다드"
 
-#: dat/faction.xml:342
+#: dat/faction.xml:344
 msgid "Wanted Pirate"
 msgstr ""
 
-#: dat/faction.xml:371 dat/missions/flf/flf_rogue.lua:49
+#: dat/faction.xml:373 dat/missions/flf/flf_rogue.lua:49
 msgid "Rogue FLF"
 msgstr ""
 
-#: dat/faction.xml:385
+#: dat/faction.xml:387
 msgid "Rogue Pirate"
 msgstr ""
 
@@ -13393,7 +13393,7 @@ msgstr ""
 #. spawning Admonishers
 #. spawning a Kestrel with massive missile weaponry
 #. spawning Ancestors
-#: dat/faction.xml:401 dat/faction.xml:579
+#: dat/faction.xml:403 dat/faction.xml:581
 #: dat/missions/neutral/kidnapped/traffic_01.lua:226
 #: dat/missions/neutral/kidnapped/traffic_01.lua:245
 #: dat/missions/neutral/kidnapped/traffic_01.lua:266
@@ -13405,80 +13405,80 @@ msgstr ""
 msgid "Mercenary"
 msgstr ""
 
-#: dat/faction.xml:412
+#: dat/faction.xml:414
 msgid "Raider"
 msgstr ""
 
-#: dat/faction.xml:429
+#: dat/faction.xml:431
 #, fuzzy
 msgid "Derelict"
 msgstr "빈 휴지통"
 
-#: dat/faction.xml:439 dat/faction.xml:455
+#: dat/faction.xml:441 dat/faction.xml:457
 msgid "Four Winds"
 msgstr ""
 
-#: dat/faction.xml:453
+#: dat/faction.xml:455
 msgid "Rogue Four Winds"
 msgstr ""
 
-#: dat/faction.xml:467
+#: dat/faction.xml:469
 msgid "Shadow_pirates"
 msgstr ""
 
-#: dat/faction.xml:483
+#: dat/faction.xml:485
 #, fuzzy
 msgid "Diplomatic"
 msgstr "외교 선박"
 
-#: dat/faction.xml:497
+#: dat/faction.xml:499
 #, fuzzy
 msgid "Associates"
 msgstr "해적 황조롱이"
 
-#: dat/faction.xml:510 dat/faction.xml:539 dat/faction.xml:593
+#: dat/faction.xml:512 dat/faction.xml:541 dat/faction.xml:595
 msgid "Thugs"
 msgstr ""
 
-#: dat/faction.xml:523
+#: dat/faction.xml:525
 msgid "Achack_sirius"
 msgstr ""
 
-#: dat/faction.xml:537
+#: dat/faction.xml:539
 msgid "Achack_thugs"
 msgstr ""
 
-#: dat/faction.xml:551
+#: dat/faction.xml:553
 msgid "Kidnappers"
 msgstr ""
 
-#: dat/faction.xml:565
+#: dat/faction.xml:567
 msgid "Nasin"
 msgstr ""
 
-#: dat/faction.xml:577
+#: dat/faction.xml:579
 msgid "Comingout_associates"
 msgstr ""
 
-#: dat/faction.xml:591
+#: dat/faction.xml:593
 msgid "Comingout_thugs"
 msgstr ""
 
-#: dat/faction.xml:605
+#: dat/faction.xml:607
 msgid "DHC"
 msgstr ""
 
-#: dat/faction.xml:623
+#: dat/faction.xml:625
 msgid "Warlords"
 msgstr ""
 
-#: dat/faction.xml:627
+#: dat/faction.xml:629
 #, fuzzy
 #| msgid "Dvaered Patrol"
 msgid "Dvaered Warlords"
 msgstr "드바에레드 순찰대"
 
-#: dat/faction.xml:639
+#: dat/faction.xml:641
 msgid "Strangelove"
 msgstr ""
 
@@ -13621,7 +13621,7 @@ msgstr ""
 #. <event name="Kidnapped">
 #. <trigger>enter</trigger>
 #. <chance>15</chance>
-#. <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur() == system.get("Arcturus") and player.numOutfit("Mercenary License") &gt; 0</cond>
+#. <cond>player.misnDone("Kidnapped") == false and player.misnActive("Kidnapped") == false and system.cur() == system.get("Arcturus") and player.numOutfit("Mercenary License") &gt; 0</cond>
 #. <notes>
 #. <campaign>Kidnapping</campaign>
 #. <tier>3</tier>
@@ -13715,7 +13715,7 @@ msgstr ""
 #. Decides what to do when player either takes off starting planet or jumps into another system
 #: dat/fleet.xml:126 dat/fleet.xml:168 dat/fleet.xml:943
 #: dat/missions/neutral/dts_02.lua:163
-#: dat/missions/neutral/kidnapped/traffic_00.lua:191
+#: dat/missions/neutral/kidnapped/traffic_00.lua:193
 msgid "Trader Koala"
 msgstr ""
 
@@ -13987,9 +13987,9 @@ msgstr "랜슬롯"
 #: dat/fleet.xml:294 dat/fleet.xml:1066 dat/fleet.xml:1067 dat/fleet.xml:1068
 #: dat/fleet.xml:1069 dat/missions/flf/dvk/flf_dvk02.lua:278
 #: dat/missions/neutral/dts_02.lua:265
-#: dat/missions/neutral/kidnapped/traffic_00.lua:221
-#: dat/missions/neutral/kidnapped/traffic_00.lua:222
 #: dat/missions/neutral/kidnapped/traffic_00.lua:223
+#: dat/missions/neutral/kidnapped/traffic_00.lua:224
+#: dat/missions/neutral/kidnapped/traffic_00.lua:225
 #: dat/missions/shadow/shadowrun.lua:265 dat/missions/shadow/shadowrun.lua:269
 #: dat/missions/shark/sh07_pirates.lua:218
 #: dat/missions/shark/sh07_pirates.lua:233
@@ -19229,7 +19229,7 @@ msgstr ""
 "House Dvaered는 House Goddard의 가장 큰 고객이며,이 군용 등급 버전은 질량과 "
 "에너지 소비를 증가시키면서 더 나은 갑옷과 무기 손상을 특징으로합니다."
 
-#: dat/ships/dvaered_phalanx.xml:14
+#: dat/ships/dvaered_phalanx.xml:17
 msgid ""
 "This military grade version of the Phalanx has slightly stronger armour "
 "compared to its standard counterpart, and it also features a special cooling "
@@ -19417,7 +19417,7 @@ msgid "Koala"
 msgstr "코알라"
 
 #: dat/ships/koala.xml:13 dat/ships/llama.xml:15 dat/ships/mule.xml:15
-#: dat/ships/quicksilver.xml:13 dat/ships/rhino.xml:14
+#: dat/ships/quicksilver.xml:14 dat/ships/rhino.xml:14
 msgid "Melendez Corp."
 msgstr "메렌데즈 회사."
 
@@ -19499,7 +19499,7 @@ msgstr ""
 msgid "Phalanx"
 msgstr "지골"
 
-#: dat/ships/phalanx.xml:13
+#: dat/ships/phalanx.xml:16
 msgid ""
 "While somewhat technologically antiquated, the Phalanx's large energy "
 "capacity and heavy armour allow it to remain an effective combat vessel."
@@ -19508,7 +19508,7 @@ msgstr ""
 "투함으로 남을 수 있습니다."
 
 #: dat/ships/pirate_admonisher.xml:17 dat/ships/pirate_ancestor.xml:14
-#: dat/ships/pirate_kestrel.xml:15 dat/ships/pirate_phalanx.xml:12
+#: dat/ships/pirate_kestrel.xml:15 dat/ships/pirate_phalanx.xml:15
 #: dat/ships/pirate_rhino.xml:15 dat/ships/pirate_shark.xml:16
 #: dat/ships/pirate_vendetta.xml:15
 msgid "Skull and Bones"
@@ -19548,7 +19548,7 @@ msgstr ""
 "첩하지만 제국의 권위에 의문을 제기하는 데 필요한 화력이 부족하지 않습니다. 그"
 "것을 감당할 수있는 해적들에게 매우 강한 배입니다."
 
-#: dat/ships/pirate_phalanx.xml:13
+#: dat/ships/pirate_phalanx.xml:16
 msgid ""
 "Building upon the already-capable Phalanx chassis, the Skull and Bones "
 "engineers have substantially improved the ship's performance, while only "
@@ -19641,7 +19641,7 @@ msgstr ""
 msgid "Quicksilver"
 msgstr "수은"
 
-#: dat/ships/quicksilver.xml:14
+#: dat/ships/quicksilver.xml:15
 msgid ""
 "While still a cargo hauler, the Quicksilver is quite different from "
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
@@ -23508,7 +23508,6 @@ msgstr "옛 제국과 함께 죽어라!"
 #. Settings
 #. Not too many credits.
 #. Get refuel chance
-#. Some stuff has more chance then others
 #. Finish up creation
 #. We’ll consider the Za'lek prefer to turn a bad (i.e. battle) situation into
 #. a profitable one by getting money and selling fuel if possible if the player
@@ -25409,12 +25408,101 @@ msgstr ""
 #. </flags>
 #. <notes>
 #. <campaign>Minerva</campaign>
+#. <done_evt name="Spa Propaganda" />
+#. <requires name="Chicken Rendezvous" />
 #. </notes>
 #. </event>
 #. --
 #.
 #. -- Triggered from station.lua
 #. --
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Spa Propaganda">
+#. <trigger>none</trigger>
+#. <chance>0</chance>
+#. <flags>
+#. <unique />
+#. </flags>
+#. <notes>
+#. <campaign>Minerva</campaign>
+#. <requires name="Spa Propaganda" />
+#. <done_evt name="Minerva Station Altercation 2">Random Event</done_evt>
+#. </notes>
+#. </event>
+#. --
+#.
+#. -- Triggered from station.lua
+#. --
+#. TODO some announcement/happy music
+#: dat/events/minerva/spa_propaganda.lua:32
+msgid ""
+"You are minding your own business when suddenly a big fanfare plays while "
+"the lights begin strobing."
+msgstr ""
+
+#: dat/events/minerva/spa_propaganda.lua:33
+msgid ""
+"The terminals all turn on in union and start blasting out their "
+"loudspeakers.\n"
+"\"WELCOME LADIES AND GENTLEMEN. ARE YOU HAVING A GOOD TIME?\"\n"
+"Some of the patrons cheer the terminals."
+msgstr ""
+
+#: dat/events/minerva/spa_propaganda.lua:36
+msgid ""
+"\"MINERVA STATION IS PROUD TO ANNOUNCE A VERY SPECIAL OPPORTUNITY FOR "
+"EVERYONE. TO CELEBRATE THE FIRST CYCLE SINCE THE INAUGURATION OF THE "
+"LUXURIOUS MINERVA STATION NATURAL HOT SPRINGS AND THERMAL SPA, WE WOULD LIKE "
+"TO GIVE EVERYONE AN OPPORTUNITY TO BE ABLE TO ENJOY THE HEALING AND LIFE "
+"EXTENDING PROPERTIES OF THE NEBULA-DUST INFUSED MINERAL WATER.\""
+msgstr ""
+
+#: dat/events/minerva/spa_propaganda.lua:37
+msgid ""
+"\"IN TRADITIONAL MINERVA FASHION, WE WILL DO A LOTTERY WHERE EVERYONE WHO "
+"BUYS A TICKET WILL BE ENTERED TO SPEND AN UNFORGETTABLE NIGHT AT THE SPA, "
+"THE FAVOURITE OF THE EMPEROR'S THIRD PET IGUANA'S CARETAKER.\""
+msgstr ""
+
+#: dat/events/minerva/spa_propaganda.lua:38
+msgid ""
+"\"AND IF YOU THINK THAT IS ALREADY EXCITING ENOUGH, PREPARE TO DROP YOUR JAW "
+"IN DISBELIEF. NOT ONLY WILL YOU BE ABLE TO ENJOY THE SPA, WE HAVE A VERY "
+"SPECIAL SURPRISE FOR YOU!\"\n"
+"The terminal pauses for effect."
+msgstr ""
+
+#: dat/events/minerva/spa_propaganda.lua:40
+msgid ""
+"\"YOU WILL BE ABLE TO SPEND YOUR TIME AT THE SPA WITH OUR ONE AND ONLY "
+"CYBORG CHICKEN, THE BELOVED MASCOT OF MINERVA STATION, AND 3 TIME BACK TO "
+"BACK WINNER OF THE 'I WOULD EAT THIS IF IT WEREN'T ILLEGAL' POPULAR HOLO-"
+"CAST SHOW.\""
+msgstr ""
+
+#: dat/events/minerva/spa_propaganda.lua:41
+msgid ""
+"\"EVEN IF YOU HAVE BEEN TO THE SPA BEFORE, THIS IS A ONCE IN A LIFETIME "
+"OPPORTUNITY THAT MANY WOULD DIE FOR. I KNOW I WOULD.\""
+msgstr ""
+
+#: dat/events/minerva/spa_propaganda.lua:42
+msgid ""
+"\"TO PARTICIPATE BUY A TICKET AT ANY MINERVA STATION TERMINAL. PARTICIPATION "
+"COST IS #p100 MINERVA TOKENS#0. ONLY ONE TICKET PER PARTICIPANT. SOME TERMS "
+"AND CONDITIONS MAY APPLY.\""
+msgstr ""
+
+#: dat/events/minerva/spa_propaganda.lua:43
+msgid "\"AND REMEMBER, LIFE IS SHORT, SPEND IT AT MINERVA STATION.\""
+msgstr ""
+
+#: dat/events/minerva/spa_propaganda.lua:44
+msgid "As if nothing happened, Minerva Station returns to normality."
+msgstr ""
+
+#. One off event
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Minerva Station Gambling">
@@ -25452,158 +25540,159 @@ msgid "A fast-paced luck-based betting game using dice."
 msgstr ""
 
 #. TODO replace?
-#: dat/events/minerva/station.lua:40
+#. Special
+#: dat/events/minerva/station.lua:43
 msgid "Patron"
 msgstr ""
 
-#: dat/events/minerva/station.lua:43
+#: dat/events/minerva/station.lua:46
 msgid "A gambling patron enjoying his time at the station."
 msgstr ""
 
-#: dat/events/minerva/station.lua:44
+#: dat/events/minerva/station.lua:47
 msgid ""
 "A tourist looking a bit bewildered at all the noises and shiny lights all "
 "over."
 msgstr ""
 
-#: dat/events/minerva/station.lua:45
+#: dat/events/minerva/station.lua:48
 msgid "A patron who seems down on his luck."
 msgstr ""
 
-#: dat/events/minerva/station.lua:46
+#: dat/events/minerva/station.lua:49
 msgid "A patron who looks exhilarated as if they won big today."
 msgstr ""
 
-#: dat/events/minerva/station.lua:47
+#: dat/events/minerva/station.lua:50
 msgid ""
 "A patron that looks like they have spend a lot of time at the station. There "
 "are clear dark circles under their eyes."
 msgstr ""
 
-#: dat/events/minerva/station.lua:48
+#: dat/events/minerva/station.lua:51
 msgid "A patron that looks strangely out of place."
 msgstr ""
 
-#: dat/events/minerva/station.lua:49
+#: dat/events/minerva/station.lua:52
 msgid "A patron that fits in perfectly into the gambling station."
 msgstr ""
 
-#: dat/events/minerva/station.lua:52
+#: dat/events/minerva/station.lua:55
 msgid ""
 "\"This place is totally what I thought it would be. The lights, the sounds, "
 "the action! I feel like I'm in Heaven!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:53
+#: dat/events/minerva/station.lua:56
 msgid ""
 "\"It's incredible! Who would have thought to make money physical! These "
 "Minerva Tokens defy all logic!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:57
+#: dat/events/minerva/station.lua:60
 msgid " Wait, what? What do you mean they are sold out!?"
 msgstr ""
 
-#: dat/events/minerva/station.lua:59
+#: dat/events/minerva/station.lua:62
 #, lua-format
 msgid ""
 "\"I really have my eyes on the Fuzzy Dice available at the terminal. I "
 "always wanted to own a piece of history!%s\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:60
+#: dat/events/minerva/station.lua:63
 msgid ""
 "\"I played 20 hands of blackjack with that Cyborg Chicken. I may have lost "
 "them all, but that was worth every credit!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:61
+#: dat/events/minerva/station.lua:64
 msgid ""
 "\"This place is great! I still have no idea how to play blackjack, but I "
 "just keep on playing again and again against that Cyborg Chicken.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:63
+#: dat/events/minerva/station.lua:66
 #, lua-format
 msgid ""
 "\"I came all the way from %s to be here! We don't have anything like this "
 "back at home.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:66
+#: dat/events/minerva/station.lua:69
 msgid ""
 "\"Critics of Minerva Station say that being able to acquire nice outfits "
 "here without needing licenses increases piracy. I think they are all lame!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:67
+#: dat/events/minerva/station.lua:70
 msgid ""
 "\"I really want to go to the VIP hot springs they have, but I don't have the "
 "tokens. How does that even work in a space station?\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:68
+#: dat/events/minerva/station.lua:71
 msgid ""
 "\"I hear you can do all sorts of crazy stuff here if you have enough tokens. "
 "Need... to.. get.. more...!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:69
+#: dat/events/minerva/station.lua:72
 msgid ""
 "\"I have never seen robots talk so roboty like the terminals here. That is "
 "so retro!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:70
+#: dat/events/minerva/station.lua:73
 msgid ""
 "\"I scrounged up my lifetime savings to get a ticket here, but I forgot to "
 "bring extra to gamble...\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:71
+#: dat/events/minerva/station.lua:74
 msgid ""
 "\"I gambled all my savings away... I'm going to get killed when I get back "
 "home...\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:72
+#: dat/events/minerva/station.lua:75
 msgid ""
 "\"They say you shouldn't gamble more than you can afford to lose. I wish "
 "someone had told me that yesterday. I don't even own a ship anymore!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:73
+#: dat/events/minerva/station.lua:76
 msgid ""
 "\"I like to play blackjack. I'm not addicted to gambling. I'm addicted to "
 "sitting in a semi-circle.\""
 msgstr ""
 
 #. Mitch Hedberg
-#: dat/events/minerva/station.lua:74
+#: dat/events/minerva/station.lua:77
 msgid ""
 "\"Gambling has brought our family together. We had to move to a smaller "
 "house.\""
 msgstr ""
 
 #. Tommy Cooper
-#: dat/events/minerva/station.lua:75
+#: dat/events/minerva/station.lua:78
 msgid "\"You don’t gamble to win. You gamble so you can gamble the next day.\""
 msgstr ""
 
 #. Bert Ambrose
-#: dat/events/minerva/station.lua:76
+#: dat/events/minerva/station.lua:79
 msgid "\"A credit won is twice as sweet as a credit earned!\""
 msgstr ""
 
 #. Paul Newman (dollar -> credit)
-#: dat/events/minerva/station.lua:77
+#: dat/events/minerva/station.lua:80
 msgid ""
 "\"There is a very easy way to return from Minerva Station with a small "
 "fortune: come here with a large one!\""
 msgstr ""
 
 #. Jack Yelton (paraphrased)
-#: dat/events/minerva/station.lua:78
+#: dat/events/minerva/station.lua:81
 msgid "\"Luck always seems to be against the ones who depends on it.\""
 msgstr ""
 
@@ -25619,13 +25708,14 @@ msgstr ""
 #. --
 #. Conditional helpers
 #. Altercations
+#. Spa Propaganda
 #. TODO probably a bug, but we should be able to pass a hook argument instead of hardcoding the function
 #. Doesn't seem to work however
-#: dat/events/minerva/station.lua:152
+#: dat/events/minerva/station.lua:163
 msgid "Greeter"
 msgstr ""
 
-#: dat/events/minerva/station.lua:155
+#: dat/events/minerva/station.lua:166
 msgid ""
 "As soon as you enter the spaceport bar, a neatly dressed individual runs up "
 "to you and hands you a complementary drink. It is hard to make out what he "
@@ -25633,14 +25723,14 @@ msgid ""
 "gambling machines, but you try to make it out as best as you can."
 msgstr ""
 
-#: dat/events/minerva/station.lua:156
+#: dat/events/minerva/station.lua:167
 msgid ""
 "\"Welcome to the Minerva Station resort! It appears to be your first time "
 "here. As you enjoy your complementary drink, let me briefly explain to you "
 "how this wonderful place works. It is all very exciting!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:157
+#: dat/events/minerva/station.lua:168
 msgid ""
 "\"The currency we use on this station are Minerva Tokens. Unlike credits, "
 "they are physical and so very pretty! You can not buy Minerva Tokens "
@@ -25651,7 +25741,7 @@ msgid ""
 "10 complementary Minerva Tokens!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:158
+#: dat/events/minerva/station.lua:169
 msgid ""
 "\"If you want more information or want to check your balance. Please use the "
 "terminals located throughout the station. I highly recommend you check out "
@@ -25660,72 +25750,72 @@ msgid ""
 msgstr ""
 
 #. Have to remove
-#: dat/events/minerva/station.lua:167
+#: dat/events/minerva/station.lua:179
 msgid " TODAY MIGHT BE YOUR LUCKY DAY."
 msgstr ""
 
-#: dat/events/minerva/station.lua:168
+#: dat/events/minerva/station.lua:180
 msgid " THIS IS SO EXCITING."
 msgstr ""
 
-#: dat/events/minerva/station.lua:169
+#: dat/events/minerva/station.lua:181
 msgid " YOU SEEM LIKE YOU MIGHT ENJOY A GAME OF BLACKJACK."
 msgstr ""
 
-#: dat/events/minerva/station.lua:170
+#: dat/events/minerva/station.lua:182
 msgid " FORTUNE FAVOURS THE PERSISTENT."
 msgstr ""
 
-#: dat/events/minerva/station.lua:171
+#: dat/events/minerva/station.lua:183
 msgid " LIFE IS SHORT, SPEND IT AT MINERVA STATION."
 msgstr ""
 
-#: dat/events/minerva/station.lua:180
+#: dat/events/minerva/station.lua:191
 #, lua-format
 msgid ""
-"\"VALUED CUSTOMER, YOU HAVE #p%d MINERVA TOKEN#0.%s\n"
+"\"VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKEN#0.%s\n"
 "\n"
 "WHAT DO YOU WISH TO DO TODAY?\""
 msgid_plural ""
-"\"VALUED CUSTOMER, YOU HAVE #p%d MINERVA TOKENS#0.%s\n"
+"\"VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKENS#0.%s\n"
 "\n"
 "WHAT DO YOU WISH TO DO TODAY?\""
 msgstr[0] ""
 
-#: dat/events/minerva/station.lua:184
+#: dat/events/minerva/station.lua:195
 msgid "Information"
 msgstr ""
 
-#: dat/events/minerva/station.lua:185 dat/events/minerva/station.lua:197
+#: dat/events/minerva/station.lua:196 dat/events/minerva/station.lua:208
 #, fuzzy
 msgid "Trade-in"
 msgstr "해적 코뿔소"
 
-#: dat/events/minerva/station.lua:186 dat/events/minerva/station.lua:347
-#: dat/events/minerva/station.lua:423 dat/missions/minerva/maikki1.lua:206
+#: dat/events/minerva/station.lua:197 dat/events/minerva/station.lua:388
+#: dat/events/minerva/station.lua:464 dat/missions/minerva/maikki1.lua:206
 #: dat/missions/minerva/maikki1.lua:291 dat/missions/minerva/maikki1.lua:533
 #: dat/missions/minerva/maikki1.lua:901 dat/missions/minerva/maikki2.lua:242
 #: dat/missions/minerva/maikki2.lua:508 dat/missions/minerva/maikki2.lua:772
-#: src/board.c:174
+#: dat/missions/minerva/pirate3.lua:142 src/board.c:174
 msgid "Leave"
 msgstr ""
 
-#: dat/events/minerva/station.lua:189
+#: dat/events/minerva/station.lua:200
 msgid ""
 "\"I AM PROGRAMMED TO EXPLAIN ABOUT THE WONDERFUL MINERVA STATION GAMBLING "
 "FACILITIES. WHAT WOULD YOU LIKE TO KNOW ABOUT?\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:192
+#: dat/events/minerva/station.lua:203
 msgid "\"WHAT ELSE WOULD YOU LIKE TO KNOW?\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:195
+#: dat/events/minerva/station.lua:206
 #, fuzzy
 msgid "Station"
 msgstr "투리온의 불꽃"
 
-#: dat/events/minerva/station.lua:196
+#: dat/events/minerva/station.lua:207
 msgid "Gambling"
 msgstr ""
 
@@ -25805,16 +25895,16 @@ msgstr ""
 #. -- Helper functions and defines for the Minerva Station campaigns
 #. --
 #. Main Characters
-#: dat/events/minerva/station.lua:198 dat/scripts/minerva.lua:11
+#: dat/events/minerva/station.lua:209 dat/scripts/minerva.lua:12
 msgid "Cyborg Chicken"
 msgstr ""
 
-#: dat/events/minerva/station.lua:199 dat/events/minerva/station.lua:284
+#: dat/events/minerva/station.lua:210 dat/events/minerva/station.lua:310
 #: src/load.c:386
 msgid "Back"
 msgstr "뒤"
 
-#: dat/events/minerva/station.lua:202
+#: dat/events/minerva/station.lua:213
 msgid ""
 "\"MINERVA STATION IS THE BEST PLACE TO SIT BACK AND ENJOY RELAXING GAMBLING "
 "ACTIVITIES. ALTHOUGH THE AREA IS HEAVILY DISPUTED BY THE ZA'LEK AND DVAERED, "
@@ -25822,7 +25912,7 @@ msgid ""
 "THE STATION.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:205
+#: dat/events/minerva/station.lua:216
 msgid ""
 "\"WHILE GAMBLING IS NOT ALLOWED IN MOST OF THE EMPIRE, MINERVA STATION "
 "BOASTS OF AN EXCLUSIVE STATUS THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE "
@@ -25831,7 +25921,7 @@ msgid ""
 "TRADED IN FOR GOODS AND SERVICES ANY TERMINAL THROUGHOUT THE STATION.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:208
+#: dat/events/minerva/station.lua:219
 msgid ""
 "\"IT IS POSSIBLE TO TRADE MINERVA TOKENS FOR GOODS AND SERVICES AT TERMINALS "
 "THROUGHOUT THE STATION. THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 "
@@ -25840,66 +25930,75 @@ msgid ""
 "Station' ENGRAVED ON THEM.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:211
+#: dat/events/minerva/station.lua:222
 msgid ""
 "\"CYBORG CHICKEN IS OUR MOST POPULAR BLACKJACK DEALER. NO WHERE ELSE IN THE "
 "UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN "
 "CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:216
+#: dat/events/minerva/station.lua:227
 #, lua-format
 msgid ""
 "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR "
-"REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d "
+"REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s "
 "MINERVA TOKEN#0.\""
 msgid_plural ""
 "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR "
-"REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d "
+"REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s "
 "MINERVA TOKENS#0.\""
 msgstr[0] ""
 
-#: dat/events/minerva/station.lua:222
+#: dat/events/minerva/station.lua:233
 #, lua-format
 msgid ""
 "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD "
-"OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA "
+"OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA "
 "TOKEN#0.\""
 msgid_plural ""
 "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD "
-"OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA "
+"OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA "
 "TOKENS#0.\""
 msgstr[0] ""
 
-#: dat/events/minerva/station.lua:228
+#: dat/events/minerva/station.lua:239
 #, lua-format
 msgid ""
-"\"YOU CAN TRADE IN YOUR PRECIOUS #p%d MINERVA TOKEN#0 FOR THE FOLLOWING "
+"\"YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKEN#0 FOR THE FOLLOWING "
 "GOODS.\""
 msgid_plural ""
-"\"YOU CAN TRADE IN YOUR PRECIOUS #p%d MINERVA TOKENS#0 FOR THE FOLLOWING "
+"\"YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKENS#0 FOR THE FOLLOWING "
 "GOODS.\""
 msgstr[0] ""
 
 #. Jump in case of 'Back'
+#. Special case
 #. Not enough money.
-#: dat/events/minerva/station.lua:268 dat/events/minerva/station.lua:307
+#. Not enough money.
+#: dat/events/minerva/station.lua:290 dat/events/minerva/station.lua:333
 #, fuzzy
 msgid "unknown tradein type"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: dat/events/minerva/station.lua:279
+#: dat/events/minerva/station.lua:301
 #, lua-format
 msgid "%s (#rSOLD OUT#0)"
 msgstr ""
 
-#: dat/events/minerva/station.lua:281
+#: dat/events/minerva/station.lua:303
+#: dat/missions/empire/collective/ec03.lua:62 src/map_find.c:430
+#, c-format, lua-format
+msgid "%s (%s)"
+msgstr ""
+
+#. Add special ticket
+#: dat/events/minerva/station.lua:308
 #, lua-format
-msgid "%s (#p%d Tokens#0)"
+msgid "Special Spa Ticket (%s)"
 msgstr ""
 
 #. Buying stuff
-#: dat/events/minerva/station.lua:292
+#: dat/events/minerva/station.lua:318
 #, lua-format
 msgid ""
 "\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w%s#0'? THE DESCRIPTION IS AS "
@@ -25907,7 +26006,7 @@ msgid ""
 "#w%s#0"
 msgstr ""
 
-#: dat/events/minerva/station.lua:295
+#: dat/events/minerva/station.lua:321 dat/events/minerva/station.lua:348
 msgid "Trade"
 msgstr ""
 
@@ -25918,29 +26017,38 @@ msgstr ""
 #. "Cancel"
 #. Only "Cancel" remains, nothing to do.
 #. Run callback.
-#: dat/events/minerva/station.lua:296 dat/rescue.lua:43 dat/rescue.lua:53
-#: dat/rescue.lua:113 dat/rescue.lua:162 src/dialogue.c:747 src/escort.c:270
-#: src/map_find.c:243 src/options.c:248 src/options.c:762 src/options.c:869
-#: src/options.c:1127 src/options.c:1181
+#: dat/events/minerva/station.lua:322 dat/events/minerva/station.lua:349
+#: dat/rescue.lua:43 dat/rescue.lua:53 dat/rescue.lua:113 dat/rescue.lua:162
+#: src/dialogue.c:747 src/escort.c:270 src/map_find.c:243 src/options.c:248
+#: src/options.c:762 src/options.c:869 src/options.c:1127 src/options.c:1181
 msgid "Cancel"
 msgstr ""
 
-#: dat/events/minerva/station.lua:303
+#: dat/events/minerva/station.lua:329
 msgid "Gambling Bounty"
 msgstr ""
 
-#: dat/events/minerva/station.lua:303
+#: dat/events/minerva/station.lua:329
 #, lua-format
 msgid "Obtained: %s"
 msgstr ""
 
-#: dat/events/minerva/station.lua:314
-msgid "\"THANK YOU FOR YOUR BUSINESS.\""
+#: dat/events/minerva/station.lua:340
+msgid "\"\"THANK YOU FOR YOUR BUSINESS.\""
+msgstr ""
+
+#. Buying the ticket
+#: dat/events/minerva/station.lua:345
+msgid ""
+"\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE PREMIUM AND EXCLUSIVE SPECIAL "
+"SPA TICKET?\"\n"
+"\"THIS TICKET WILL ALLOW YOU TO ENTER A LOTTERY TO WIN AN EXCLUSIVE RELAXING "
+"TIME AT THE MINERVA STATION ALL NATURAL SPA WITH CYBORG CHICKEN.\""
 msgstr ""
 
 #. Handle random bar events if necessary
 #. Not adding to queue first
-#: dat/events/minerva/station.lua:332
+#: dat/events/minerva/station.lua:373
 msgid ""
 "You make your way to the blackjack table which seems to be surrounded by "
 "many patrons, some of which are apparently taking pictures of something. You "
@@ -25948,7 +26056,7 @@ msgid ""
 "going on."
 msgstr ""
 
-#: dat/events/minerva/station.lua:334
+#: dat/events/minerva/station.lua:375
 msgid ""
 "When you make it to the front you are greeted by the cold eyes of what "
 "apparently seems to be the Cyborg Chicken you were told about. It seems to "
@@ -25958,23 +26066,23 @@ msgid ""
 "loses all his credits to the chicken, who seems unfazed."
 msgstr ""
 
-#: dat/events/minerva/station.lua:340
+#: dat/events/minerva/station.lua:381
 msgid ""
 "You elbow your way to the front of the table and are once again greeted by "
 "the cold mechanical eyes of Cyborg Chicken."
 msgstr ""
 
 #. Clear buffer without waiting
-#: dat/events/minerva/station.lua:345 dat/events/minerva/station.lua:421
+#: dat/events/minerva/station.lua:386 dat/events/minerva/station.lua:462
 msgid "Play"
 msgstr ""
 
-#: dat/events/minerva/station.lua:346 dat/events/minerva/station.lua:422
+#: dat/events/minerva/station.lua:387 dat/events/minerva/station.lua:463
 #, fuzzy
 msgid "Explanation"
 msgstr "옵션"
 
-#: dat/events/minerva/station.lua:346 dat/events/minerva/station.lua:422
+#: dat/events/minerva/station.lua:387 dat/events/minerva/station.lua:463
 #, fuzzy
 msgid "explanation"
 msgstr "옵션"
@@ -25986,22 +26094,22 @@ msgstr "옵션"
 #. Horrible hack where we draw ontop of the textbox a background
 #. Draw blackjack game
 #. Undo the resize
-#: dat/events/minerva/station.lua:404
+#: dat/events/minerva/station.lua:445
 msgid "You leave the blackjack table behind and head back to the main area."
 msgstr ""
 
 #. Handle random bar events if necessary
 #. Not adding to queue first
-#: dat/events/minerva/station.lua:415
+#: dat/events/minerva/station.lua:456
 #, fuzzy
 msgid "Dealer"
 msgstr "렌더링: %s"
 
-#: dat/events/minerva/station.lua:417
+#: dat/events/minerva/station.lua:458
 msgid "You approach the chuck-a-luck table."
 msgstr ""
 
-#: dat/events/minerva/station.lua:426
+#: dat/events/minerva/station.lua:467
 msgid ""
 "\"Chuck-a-luck is a straight-forward game. You make your bet and then place "
 "a wager on what number the dice will come up as. If the number you chose "
@@ -26017,7 +26125,7 @@ msgstr ""
 #. Horrible hack where we draw ontop of the textbox a background
 #. Draw chuckaluck game
 #. Undo the resize
-#: dat/events/minerva/station.lua:479
+#: dat/events/minerva/station.lua:520
 msgid "You leave the chuck-a-luck table behind and head back to the main area."
 msgstr ""
 
@@ -29931,6 +30039,7 @@ msgstr ""
 #. }
 #. end
 #. --
+#. Probability of cargo by class.
 #. Table of available core systems by class.
 #. Table of available engines by class.
 #. Table of available hulls by class.
@@ -29965,7 +30074,7 @@ msgstr ""
 #.
 #. -- @brief Wrapper for pilot.addOutfit that prints a warning if no outfits added.
 #. --
-#: dat/factions/equip/generic.lua:1000
+#: dat/factions/equip/generic.lua:1018
 #, lua-format
 msgid "Could not equip %s on pilot %s!"
 msgstr ""
@@ -30025,6 +30134,7 @@ msgstr ""
 #. --
 #. --    @param p Pilot to equip
 #. --
+#. Probability of cargo by class.
 #.
 #. -- @brief Does pirate pilot equipping
 #. --
@@ -30062,6 +30172,12 @@ msgstr ""
 #. --
 #.
 #. -- @brief Does Thurion pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. Probability of cargo by class.
+#.
+#. -- @brief Does trader pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
@@ -31722,6 +31838,7 @@ msgstr ""
 #. skip back to message if already accepted job
 #: dat/missions/baron/baron_baron.lua:85 dat/missions/minerva/maikki2.lua:799
 #: dat/missions/minerva/pirate1.lua:70 dat/missions/minerva/pirate2.lua:66
+#: dat/missions/minerva/pirate3.lua:113
 msgid "Accept the job"
 msgstr ""
 
@@ -31789,8 +31906,8 @@ msgstr ""
 
 #: dat/missions/baron/baron_baron.lua:103
 #: dat/missions/neutral/animaltransport.lua:50
-#: dat/missions/neutral/kidnapped/traffic_00.lua:90
-#: dat/missions/neutral/kidnapped/traffic_00.lua:91
+#: dat/missions/neutral/kidnapped/traffic_00.lua:93
+#: dat/missions/neutral/kidnapped/traffic_00.lua:94
 #, lua-format
 msgid "Fly to the %s system and land on planet %s"
 msgstr ""
@@ -37229,11 +37346,6 @@ msgstr ""
 msgid "Return to %s"
 msgstr ""
 
-#: dat/missions/empire/collective/ec03.lua:62 src/map_find.c:430
-#, c-format, lua-format
-msgid "%s (%s)"
-msgstr ""
-
 #: dat/missions/empire/collective/ec03.lua:64
 msgid ""
 "You delivered a commando team to Eiroik for the Empire to set up more "
@@ -41473,7 +41585,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:70 dat/missions/minerva/maikki2.lua:74
-#: dat/scripts/minerva.lua:46
+#: dat/scripts/minerva.lua:47
 msgid "Finding Maikki's Father"
 msgstr ""
 
@@ -41564,7 +41676,8 @@ msgid "\"My name is Maisie, but you can call me Maikki.\""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:175
-msgid "Offer her a drink (#p10 Minerva Tokens#0)"
+#, lua-format
+msgid "Offer her a drink (%s)"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:176
@@ -41891,6 +42004,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:366 dat/missions/minerva/maikki2.lua:581
+#: dat/missions/minerva/pirate3.lua:204
 msgid "You take your leave."
 msgstr ""
 
@@ -42540,7 +42654,7 @@ msgstr ""
 msgid "Hologram Projector"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:72 dat/scripts/minerva.lua:31
+#: dat/missions/minerva/maikki2.lua:72 dat/scripts/minerva.lua:32
 msgid ""
 "A terminal with which you can check your current token balance and buy items "
 "with tokens."
@@ -42823,7 +42937,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:289
-msgid "You recieve #p500 Minerva Tokens#0."
+#, lua-format
+msgid "You recieve %s."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:290
@@ -43428,7 +43543,7 @@ msgstr "%s (알수없는 경로)"
 #. Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
 #: dat/missions/minerva/maikki2.lua:698
 msgid ""
-"While the drone is blowing up, you receive a faint voice-only transmission"
+"While the drone is blowing up, you receive a faint voice-only transmission."
 msgstr ""
 
 #: dat/missions/minerva/maikki2.lua:700
@@ -43916,6 +44031,7 @@ msgid "Dvaered Thugs"
 msgstr "드 베어드 팔랑스"
 
 #: dat/missions/minerva/pirate1.lua:32 dat/missions/minerva/pirate2.lua:31
+#: dat/missions/minerva/pirate3.lua:33
 msgid "Cold hard credits"
 msgstr ""
 
@@ -43952,10 +44068,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:71 dat/missions/minerva/pirate2.lua:67
+#: dat/missions/minerva/pirate3.lua:114
 msgid "Kindly decline"
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:75 dat/missions/minerva/pirate2.lua:71
+#: dat/missions/minerva/pirate3.lua:118
 msgid "You decline their offer and take your leave."
 msgstr ""
 
@@ -44054,6 +44172,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:123 dat/missions/minerva/pirate2.lua:113
+#: dat/missions/minerva/pirate3.lua:192
 #, lua-format
 msgid "You have received #g%s."
 msgstr ""
@@ -44228,6 +44347,454 @@ msgstr ""
 
 #: dat/missions/minerva/pirate2.lua:252
 msgid "#oZa'lek reinforcements have arrived!"
+msgstr ""
+
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Minerva Pirates 3">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <chance>100</chance>
+#. <location>Bar</location>
+#. <planet>Minerva Station</planet>
+#. <done>Minerva Pirates 2</done>
+#. </avail>
+#. <notes>
+#. <campaign>Minerva</campaign>
+#. <provides name="Spa Propaganda" />
+#. <provides name="Chicken Rendezvous">Kidnapped Winner</provides>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. -- Find the Dvaered spy
+#. --
+#: dat/missions/minerva/pirate3.lua:32
+msgid "Finding the Dvaered Spy"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:34
+msgid ""
+"Someone wants you to find a Dvaered spy that appears to be located at "
+"Minerva Station."
+msgstr ""
+
+#. 200k
+#. TODO replace?
+#. Mission states:
+#. nil: mission not accepted yet
+#. 0: try to find out how to plant listening device
+#. 1. hear about chicken spa event
+#. 2. enter chicken spa event
+#. 3. obtain spa event ticket from harper
+#. 4. do chicken spa event
+#. 5. planted listening device
+#. 6. kidnap spy and take to torture ship
+#. 7. defend torture ship
+#. Disabled for now
+#. If not accepted, misn_state will still be nil
+#: dat/missions/minerva/pirate3.lua:79 dat/missions/minerva/pirate3.lua:184
+#, fuzzy
+msgid "Minerva Moles"
+msgstr "코알라"
+
+#: dat/missions/minerva/pirate3.lua:80 dat/missions/minerva/pirate3.lua:186
+msgid "Plant a listening device in a VIP room."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:82
+msgid ""
+"You accepted another job from the shady individual to uncover moles at "
+"Minerva Station."
+msgstr ""
+
+#. Not accepted
+#: dat/missions/minerva/pirate3.lua:110
+msgid ""
+"You approach the sketch individual who seems to be calling your attention "
+"yet once again."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:111
+msgid ""
+"Hello again, we have another job for you. Our previous actions has led us to "
+"believe that there are several Dvaered and Za'lek spies deeply infiltrated "
+"into the station infrastructure. Would you be up to the challenge of helping "
+"us get rid of them?"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:123
+msgid ""
+"\"Glad to have you onboard again. From the few intercepted Dvaered and "
+"Za'lek communications we were able to decode, it seems like we might have "
+"some moles at Minerva Station. They are probably really deep so it won't be "
+"an easy task to drive them out.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:124
+msgid ""
+"\"That's where this comes in to place.\"\n"
+"They take out a metallic object from their pocket and show it to you. You "
+"don't know what to make of it.\n"
+"\"Ain't she a beauty?\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:127
+msgid ""
+"\"This is some high tech shit that we got from some geeks. It is a latest "
+"gen signal capturing device. It should be able to bypass most of the "
+"jamming, however, we're going to need you to plant it in a VIP room or some "
+"place where we might catch the mole.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:128
+msgid ""
+"\"The main issue we have now is that VIP rooms and such are not of easy "
+"access, so we're going to have to keep our eyes open and see if we can spot "
+"an opportunity.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:129
+msgid ""
+"They hand you the signal capturing device and explain briefly how it works.\n"
+"\"Take the device and see if you can find an opportunity to place it. I'll "
+"be at the spaceport bar if you figure out anything.\""
+msgstr ""
+
+#. Accepted.
+#: dat/missions/minerva/pirate3.lua:133
+msgid "You approach the shady character you have become familiarized with."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:137
+msgid "\"Is there anything you would like to know?\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:140
+#, fuzzy
+msgid "Ask about the job"
+msgstr "네뷸라에 온것을 환영합니다"
+
+#: dat/missions/minerva/pirate3.lua:141
+#, fuzzy
+msgid "Ask about Minerva Station"
+msgstr "투리온의 불꽃"
+
+#: dat/missions/minerva/pirate3.lua:146
+#, fuzzy
+msgid "Ask them about the Spa"
+msgstr "네뷸라에 온것을 환영합니다"
+
+#: dat/missions/minerva/pirate3.lua:148
+msgid "Show them the Spa Ticket"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:156
+msgid "\"From intercepted Dvaered and Za'lek communication it seems like \""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:160
+msgid ""
+"\"Isn't this place great? They managed to set up an incredibly successful "
+"business model here. The way the Empire basically turns an eye to everything "
+"that goes on here is just incurable. Makes you want to root for their "
+"success you no?\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:161
+msgid ""
+"\"The issue is that even though the set-up is great, all the Dvaered and "
+"Za'lek bickering is just messing it all up. It would be a real shame if "
+"things went tits up and either the Dvaered or Za'lek were able to take over "
+"this wonderful place.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:162
+msgid ""
+"\"So me and my investors thought to ourselves, what could we do to ensure "
+"the success of such a wonderful place? This led to that and here we are.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:166
+msgid ""
+"\"Ah, so you heard the news too? The spa sounds like a perfect place to set "
+"up the signal capturing device. Nobody will suspect a thing! You should buy "
+"a ticket and see if we can get lucky. If  not, we may have to take other "
+"measures to ensure success.\"\n"
+"They wink at you."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:171
+msgid "Our chances of getting into the Spa can't be that bad can they?"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:174
+msgid ""
+"Suddenly, the terminals around you blast a fanfare and begin to talk on the "
+"loudspeakers.\n"
+"\"WE ARE HAPPY TO ANNOUNCE THE WINNER OF THE FABULOUS SPA WITH CYBORG "
+"CHICKEN EVENT!\"\n"
+"The terminal pauses for emphasis."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:177
+msgid ""
+"\"THE WINNER IS HARPER BOWDOIN! PLEASE COME TO YOUR NEAREST TERMINAL TO "
+"COLLECT YOUR PRIZE.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:179
+msgid ""
+"\"Shit! I thought we had that rigged. Damn it. Give me one second.\"\n"
+"They start frantically typing into their portable holo-deck. It makes weird "
+"beeps and noises."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:181
+msgid ""
+"\"OK, so we aren't so bad off. It seems like the winner was doing some space "
+"tourism around the system. Not like there is anything to see here.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:182
+msgid ""
+"\"So change of plans, I need you to go pay this guy a visit, see if you can "
+"'encourage' them to give the ticket to you. Everyone has a price at Minerva "
+"Station.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:185
+msgid "Get Harper Bowdoin's ticket in Limbo."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:202
+msgid ""
+"You take your leave and ponder where you should start looking. The casino "
+"seems to be your best bet."
+msgstr ""
+
+#. Spawn Harper Bowdoin and stuff
+#. Should make them loiter forever
+#. Clear variables to be kind to the player
+#: dat/missions/minerva/pirate3.lua:237
+msgid ""
+"#rMISSION FAILED! You were supposed to get the ticket but they are dead now!"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:250
+msgid "Foo."
+msgstr ""
+
+#. Run to land at the station
+#: dat/missions/minerva/pirate3.lua:286
+msgid ""
+"#rMISSION FAILED! You were supposed to get the ticket but they got away!"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:294
+#, fuzzy
+#| msgid "\"Get away from me!\""
+msgid "Get away from me!"
+msgstr "\"내게서 도망쳐!\""
+
+#: dat/missions/minerva/pirate3.lua:300
+msgid "Harper"
+msgstr ""
+
+#. He goes land now
+#: dat/missions/minerva/pirate3.lua:325
+msgid "You see Harper's hologram appear into view paler than usual."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:326
+#, lua-format
+msgid ""
+"\"I have had a change of mind.\"\n"
+"He gulps.\n"
+"\"How about I give you the ticket for a mere %s?"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:330 dat/missions/minerva/pirate3.lua:355
+#: dat/missions/minerva/pirate3.lua:363
+#, lua-format
+msgid "Pay him %s%s"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:331
+msgid "Threaten him"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:340
+msgid ""
+"\"Actually, swimming in a chicken sounds like a bit of a drag. I think I "
+"might be allergic them anyway.\"\n"
+"He coughs nervously."
+msgstr ""
+
+#. Player can theoretically board to loot it back
+#: dat/missions/minerva/pirate3.lua:348 dat/missions/minerva/pirate3.lua:467
+msgid ""
+"You wire him the money and he gives you the digital code that represents the "
+"ticket. Looks like you are set."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:352
+msgid ""
+"He laughs nervously.\n"
+"\"You have to be killing right? You wouldn't kill me in cold blood would "
+"you? I have a family waiting for me back home."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:356
+msgid "Aim your weapons at him"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:360
+msgid ""
+"\"I have a daughter! She is turning 5 soon. You wouldn't be so cold-hearted "
+"to leave her an orphan would you?\"\n"
+"He is sweating profusely."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:364
+#, fuzzy
+#| msgid "Empire core systems"
+msgid "Prime your weapon systems"
+msgstr "제국 코어 시스템"
+
+#: dat/missions/minerva/pirate3.lua:368
+msgid ""
+"\"Ah, damn this! I've still got things worth living for. Here, just take the "
+"damn thing.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:369 dat/missions/minerva/pirate3.lua:377
+msgid ""
+"He gives you the digital code that represents the ticket. Looks like you are "
+"set."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:374
+msgid ""
+"\"Wait do you mean you don't have the money?\"\n"
+"He looks around nervously.\n"
+"\"Ah, damn this. I've still got things worth living for. Here, just take the "
+"damn thing.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:391
+msgid "An impatient man appears into view."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:392
+msgid "\"You again? I don't have time to deal with you.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:393
+msgid "The comm goes silent..."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:405
+msgid "You hail Harper's vessel and you see him appear into view."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:406
+msgid "\"What do you want? Can't you see I'm celebrating my luck?\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:408
+msgid "\"Luck?\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:409
+msgid "\"Celebrating?\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:412
+msgid ""
+"\"Yeah, you may have heard the news, but I'm the big winner of the Minerva "
+"hot spring event! On my first time to Minerva Station too! Maybe this will "
+"finally cure my back pains once and for all. The ticket is even made of pure "
+"gold!\"\n"
+"As he boasts, he looks triumphant."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:415
+msgid "\"About the ticket...\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:416 dat/missions/minerva/pirate3.lua:423
+#: dat/missions/minerva/pirate3.lua:442 dat/missions/minerva/pirate3.lua:489
+msgid "End transmission"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:419
+#, fuzzy
+#| msgid "\"What do you want from me!?\""
+msgid "\"What about it?\""
+msgstr "\"원하는게 뭐야!?\""
+
+#: dat/missions/minerva/pirate3.lua:421
+msgid "\"Give it to me. Now.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:422
+#, fuzzy
+msgid "\"I would like to take it off your hands.\""
+msgstr "\"%d 크레딧에 당신의 우주선에 연료를 주입할 수 있을 것이다.\""
+
+#: dat/missions/minerva/pirate3.lua:427
+msgid ""
+"\"What are you going to do? Shoot me?\"\n"
+"He scoffs at you and closes the transmission."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:435
+msgid ""
+"\"I don't know. This is very valuable you know? What would you trade for it?"
+"\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:438 dat/missions/minerva/pirate3.lua:440
+#: dat/missions/minerva/pirate3.lua:487
+#, lua-format
+msgid "Offer %s%s"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:446
+#, lua-format
+msgid "Offer %s (have %s)"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:460 dat/missions/minerva/pirate3.lua:471
+msgid ""
+"\"Actually, swimming in a chicken sounds like a bit of a drag. I think I "
+"might be allergic them anyway.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:477
+msgid ""
+"You wire him the tokens and he gives you the digital code that represents "
+"the ticket. Looks like you are set."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:485
+#, lua-format
+msgid "\"%s only? I spent more than that gambling just to get this ticket.\""
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:493
+msgid ""
+"\"You trying to pull my leg or something? You don't have enough credits. "
+"Anyway, I'm busy now.\"\n"
+"He cuts the transmission."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:498
+msgid "You close the transmission channel."
 msgstr ""
 
 #.
@@ -46594,6 +47161,9 @@ msgstr ""
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Kidnapped">
+#. <flags>
+#. <unique />
+#. </flags>
 #. <avail>
 #. <priority>4</priority>
 #. <chance>100</chance>
@@ -46611,11 +47181,11 @@ msgstr ""
 #.
 #. The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions.
 #. --
-#: dat/missions/neutral/kidnapped/traffic_00.lua:38
+#: dat/missions/neutral/kidnapped/traffic_00.lua:41
 msgid "Help!"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:39
+#: dat/missions/neutral/kidnapped/traffic_00.lua:42
 #, lua-format
 msgid ""
 "\"Hello %s, thank you so much for answering our hail! We really could use "
@@ -46634,11 +47204,11 @@ msgid ""
 "heard of your skills; will you please help us?\""
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:43
+#: dat/missions/neutral/kidnapped/traffic_00.lua:46
 msgid "Thank you!"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:44
+#: dat/missions/neutral/kidnapped/traffic_00.lua:47
 #, lua-format
 msgid ""
 "The two parents immediately begin thanking you quite profusely, spending a "
@@ -46655,11 +47225,11 @@ msgid ""
 "farewell, break communication, and get on your way."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:46
+#: dat/missions/neutral/kidnapped/traffic_00.lua:49
 msgid "Rumors"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:47
+#: dat/missions/neutral/kidnapped/traffic_00.lua:50
 #, lua-format
 msgid ""
 "You sit down at a table adjacent to these two pirates, ordering a drink and "
@@ -46683,11 +47253,11 @@ msgid ""
 "again, and having a lead you decide to take it."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:54
+#: dat/missions/neutral/kidnapped/traffic_00.lua:57
 msgid "The Dirt"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:55
+#: dat/missions/neutral/kidnapped/traffic_00.lua:58
 #, lua-format
 msgid ""
 "You don't even bother sitting down too close to these two pirates "
@@ -46710,11 +47280,11 @@ msgid ""
 "what will happen to those children if you don't rescue them."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:60
+#: dat/missions/neutral/kidnapped/traffic_00.lua:63
 msgid "You did it!"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:61
+#: dat/missions/neutral/kidnapped/traffic_00.lua:64
 #, lua-format
 msgid ""
 "After disabling the ship, you take your small crew along with you and go in "
@@ -46727,12 +47297,12 @@ msgid ""
 "back to %s and reunite the parents with their children."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:63
-#: dat/missions/neutral/kidnapped/traffic_00.lua:67
+#: dat/missions/neutral/kidnapped/traffic_00.lua:66
+#: dat/missions/neutral/kidnapped/traffic_00.lua:70
 msgid "Reunited"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:64
+#: dat/missions/neutral/kidnapped/traffic_00.lua:67
 #, lua-format
 msgid ""
 "As you step off the landing deck with a couple dozen children in tow, the "
@@ -46751,7 +47321,7 @@ msgid ""
 "for you, feel free to ask me, my friend.\""
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:68
+#: dat/missions/neutral/kidnapped/traffic_00.lua:71
 #, lua-format
 msgid ""
 "You assure him that it is alright, and you will not hesitate to take him up "
@@ -46774,11 +47344,11 @@ msgid ""
 "climb up into your ship."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:72
+#: dat/missions/neutral/kidnapped/traffic_00.lua:75
 msgid "Another Time"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:73
+#: dat/missions/neutral/kidnapped/traffic_00.lua:76
 msgid ""
 "You can hear that the the man is quite disappointed. \"I'm sure you have a "
 "good reason to not want to help us. Perhaps you have something else more "
@@ -46786,11 +47356,11 @@ msgid ""
 "and the man consoling her."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:75
+#: dat/missions/neutral/kidnapped/traffic_00.lua:78
 msgid "You killed the children"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:76
+#: dat/missions/neutral/kidnapped/traffic_00.lua:79
 msgid ""
 "Having just destroyed the kidnappers, you also just killed the children. As "
 "you sit there in space, with your head against the dash, a tear rolls down "
@@ -46799,59 +47369,59 @@ msgid ""
 "time you would be more cautious. If only it were so easy..."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:78
+#: dat/missions/neutral/kidnapped/traffic_00.lua:81
 msgid "Rescue those children!"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:79
+#: dat/missions/neutral/kidnapped/traffic_00.lua:82
 msgid "Politely refuse"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:81
+#: dat/missions/neutral/kidnapped/traffic_00.lua:84
 msgid "You are damaging the goods! You are dead!"
 msgstr ""
 
 #. Details for the mission
 #. OSD
-#: dat/missions/neutral/kidnapped/traffic_00.lua:84
-#: dat/missions/neutral/kidnapped/traffic_00.lua:89
+#: dat/missions/neutral/kidnapped/traffic_00.lua:87
+#: dat/missions/neutral/kidnapped/traffic_00.lua:92
 msgid "Kidnapped"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:85
+#: dat/missions/neutral/kidnapped/traffic_00.lua:88
 msgid "A Reunited Family"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:86
+#: dat/missions/neutral/kidnapped/traffic_00.lua:89
 msgid ""
 "Search for the kidnapped children, then rescue the children and return them "
 "to their parents."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:92
+#: dat/missions/neutral/kidnapped/traffic_00.lua:95
 #, lua-format
 msgid "Fly to the %s system and disable (do not destroy) that Koala"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:93
+#: dat/missions/neutral/kidnapped/traffic_00.lua:96
 #, lua-format
 msgid "Return the children to the %s system on planet %s"
 msgstr ""
 
 #. NPCs
-#: dat/missions/neutral/kidnapped/traffic_00.lua:96
+#: dat/missions/neutral/kidnapped/traffic_00.lua:99
 msgid ""
 "The two pirates seem to be talking rather quietly, but loud enough for you "
 "to overhear if you are careful."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:97
+#: dat/missions/neutral/kidnapped/traffic_00.lua:100
 msgid ""
 "The pirates have both drank their wallet's worth today, so overhearing "
 "shouldn't be too much of an issue."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:99
+#: dat/missions/neutral/kidnapped/traffic_00.lua:102
 msgid ""
 "You successfully rescued a couple dozen children who were kidnapped by a "
 "child trafficking ring after two parents asked for your help rescuing their "
@@ -46860,7 +47430,7 @@ msgid ""
 "again in the future on Brooks if you're willing to aid them in this quest."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_00.lua:192
+#: dat/missions/neutral/kidnapped/traffic_00.lua:194
 msgid "Progeny"
 msgstr ""
 
@@ -60432,36 +61002,36 @@ msgstr ""
 msgid "failed to set fallback font"
 msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 
-#: dat/scripts/minerva.lua:17
+#: dat/scripts/minerva.lua:18
 msgid "Maikki"
 msgstr ""
 
-#: dat/scripts/minerva.lua:18
+#: dat/scripts/minerva.lua:19
 msgid ""
 "You see a very cutely dressed young woman. She seems to have a worried "
 "expression on her face."
 msgstr ""
 
-#: dat/scripts/minerva.lua:24
+#: dat/scripts/minerva.lua:25
 msgid "Dr. Strangelove"
 msgstr ""
 
 #. Purplish (close to nebula?)
-#: dat/scripts/minerva.lua:30
+#: dat/scripts/minerva.lua:31
 msgid "Terminal"
 msgstr ""
 
-#: dat/scripts/minerva.lua:37
+#: dat/scripts/minerva.lua:38
 msgid "Sketchy Individual"
 msgstr ""
 
 #. REPLACE
-#: dat/scripts/minerva.lua:39
+#: dat/scripts/minerva.lua:40
 msgid ""
 "You see a sketchy-looking individual, they seem to have their gaze on you."
 msgstr ""
 
-#: dat/scripts/minerva.lua:51
+#: dat/scripts/minerva.lua:52
 msgid "Shady Jobs at Minerva"
 msgstr ""
 
@@ -60469,6 +61039,12 @@ msgstr ""
 #. Token stuff
 #. Roughly 1 token is 1000 credits
 #. Store lifetime earnings
+#: dat/scripts/minerva.lua:91
+#, lua-format
+msgid "#p%s Minerva Token#0"
+msgid_plural "#p%s Minerva Tokens#0"
+msgstr[0] ""
+
 #. Maikki stuff
 #. too lazy to write blackjack over and over
 #. Compute position stuff
@@ -62946,7 +63522,8 @@ msgstr ""
 #. _soundTalk = audio.newSource( "sfx/talk.wav" ),
 #. Drawing
 #. Autosize
-#: dat/scripts/vn.lua:57
+#. These are implicitly dependent on lw, lh, so should be recalculated with the above.
+#: dat/scripts/vn.lua:62
 msgid "vn: can't modify states when running"
 msgstr ""
 
@@ -62963,6 +63540,7 @@ msgstr ""
 #. Draw if necessary
 #. Draw foreground
 #. Draw canvas
+#. TODO: Really?
 #.
 #. -- @brief Main updating function.
 #. --    @param dt Update tick.
@@ -63004,14 +63582,14 @@ msgstr ""
 #.
 #. -- Character
 #. --
-#: dat/scripts/vn.lua:373
+#: dat/scripts/vn.lua:380
 #, fuzzy
 msgid "character not found to remove!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 
 #. reset name
 #. TODO better centering
-#: dat/scripts/vn.lua:402
+#: dat/scripts/vn.lua:409
 msgid "vn: unsupported number of characters"
 msgstr ""
 
@@ -63069,7 +63647,7 @@ msgstr ""
 #. --    @param params Parameter table.
 #. --    @return New character.
 #. --
-#: dat/scripts/vn.lua:801
+#: dat/scripts/vn.lua:808
 #, fuzzy, lua-format
 msgid "vn: character image '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
@@ -63135,12 +63713,12 @@ msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 #.
 #. -- @brief Custom states. Only use if you know what you are doing.
 #. --
-#: dat/scripts/vn.lua:1052
+#: dat/scripts/vn.lua:1061
 #, fuzzy, lua-format
 msgid "vn: unable to find label '%s'"
 msgstr "'%s' 파일을 접근 할 수 없습니다. %s"
 
-#: dat/scripts/vn.lua:1062
+#: dat/scripts/vn.lua:1071
 #, fuzzy, lua-format
 msgid "vn: character '%s' not found!"
 msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
@@ -63156,7 +63734,7 @@ msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 #. -- @note You have to set up the states first.
 #. -- @note This function doesn't return until the VN is done running.
 #. --
-#: dat/scripts/vn.lua:1098
+#: dat/scripts/vn.lua:1107
 msgid "vn: run without any states"
 msgstr ""
 
@@ -63165,7 +63743,7 @@ msgstr ""
 #. --
 #. -- @note Leaves customization to colors and positions untouched.
 #. --
-#. Have to create new tables
+#. Have to create new tables. Reset canvases in case the game was resized.
 #.
 #. -- @brief Fully resets the VN environment to default values.
 #. --
@@ -63185,10 +63763,8 @@ msgstr ""
 #. --
 #. -- Based on Love2D API
 #. --
-#. TODO the noise texture in burn should be saved as a canvas and passed as a
-#. texture to speed it up
 #. Sane defaults
-#: dat/scripts/vn/transitions.lua:377
+#: dat/scripts/vn/transitions.lua:394
 #, fuzzy, lua-format
 msgid "vn: unknown transition type'%s'"
 msgstr "알 수없는 Lua 데이터 유형!"
@@ -63514,7 +64090,7 @@ msgstr ""
 msgid "Communication Channel"
 msgstr ""
 
-#: src/comm.c:375 src/console.c:681 src/dev_sysedit.c:1344
+#: src/comm.c:375 src/console.c:682 src/dev_sysedit.c:1344
 #: src/dev_sysedit.c:1454 src/dev_sysedit.c:1517 src/dev_sysedit.c:1712
 #: src/dev_sysedit.c:1887 src/dev_sysedit.c:1971 src/dev_uniedit.c:1026
 #: src/dev_uniedit.c:1238 src/dev_uniedit.c:1485 src/info.c:241 src/info.c:320
@@ -64150,22 +64726,22 @@ msgid ""
 "copying your backup configuration over your current configuration."
 msgstr ""
 
-#: src/console.c:192
+#: src/console.c:193
 #, c-format
 msgid "Warning: %s\n"
 msgstr ""
 
-#: src/console.c:618
+#: src/console.c:619
 msgid "Error printing results."
 msgstr ""
 
-#: src/console.c:658
+#: src/console.c:659
 #, fuzzy
 msgid "#gWelcome to the Lua console!"
 msgstr "네뷸라에 온것을 환영합니다"
 
 #. Create the window.
-#: src/console.c:667 src/input.c:118
+#: src/console.c:668 src/input.c:118
 msgid "Lua Console"
 msgstr ""
 
@@ -68234,7 +68810,7 @@ msgstr "include (): %s이 (가) ndata에 없습니다."
 msgid "Error setting up framebuffer!"
 msgstr ""
 
-#: src/nlua_canvas.c:242
+#: src/nlua_canvas.c:245
 msgid "Unexpected parameter"
 msgstr ""
 
@@ -68328,19 +68904,19 @@ msgstr ""
 msgid "failed to load font '%s'"
 msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/nlua_gfx.c:182 src/nlua_gfx.c:248
+#: src/nlua_gfx.c:184 src/nlua_gfx.c:250
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."
 msgstr "경계를 벗어난 (X 위치) 스프라이트를 렌더링하려는 텍스처 '%s': %d> %d."
 
-#: src/nlua_gfx.c:185 src/nlua_gfx.c:251
+#: src/nlua_gfx.c:187 src/nlua_gfx.c:253
 #, c-format
 msgid ""
 "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."
 msgstr "경계를 벗어난 (Y 위치) 스프라이트를 렌더링하려는 텍스처 '%s': %d> %d."
 
-#: src/nlua_gfx.c:552
+#: src/nlua_gfx.c:554
 msgid "width has to be a positive value."
 msgstr ""
 
@@ -68468,84 +69044,84 @@ msgstr ""
 msgid "Outfit '%s' not found!"
 msgstr ""
 
-#: src/nlua_pilot.c:352
+#: src/nlua_pilot.c:354
 msgid "Pilot is invalid."
 msgstr ""
 
-#: src/nlua_pilot.c:474 src/nlua_ship.c:222
+#: src/nlua_pilot.c:476 src/nlua_ship.c:222
 #, c-format
 msgid "Ship '%s' not found!"
 msgstr ""
 
-#: src/nlua_pilot.c:486
+#: src/nlua_pilot.c:488
 #, c-format
 msgid "Fleet '%s' doesn't exist."
 msgstr ""
 
-#: src/nlua_pilot.c:509
+#: src/nlua_pilot.c:511
 #, c-format
 msgid "Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."
 msgstr ""
 
-#: src/nlua_pilot.c:514
+#: src/nlua_pilot.c:516
 #, c-format
 msgid ""
 "Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."
 msgstr ""
 
-#: src/nlua_pilot.c:673
+#: src/nlua_pilot.c:675
 msgid "Trying to remove the bloody player!"
 msgstr ""
 
-#: src/nlua_pilot.c:1595
+#: src/nlua_pilot.c:1597
 #, fuzzy, c-format
 msgid "Unknown slot type '%s'"
 msgstr "알 수없는 Lua 데이터 유형!"
 
-#: src/nlua_pilot.c:3019 src/nlua_pilot.c:3069
+#: src/nlua_pilot.c:3021 src/nlua_pilot.c:3071
 #, c-format
 msgid "Cargo '%s' does not exist!"
 msgstr ""
 
-#: src/nlua_pilot.c:3024
+#: src/nlua_pilot.c:3026
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
 
-#: src/nlua_pilot.c:3074
+#: src/nlua_pilot.c:3076
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)"
 msgstr ""
 
-#: src/nlua_pilot.c:3375
+#: src/nlua_pilot.c:3395
 msgid "pilot.memory requires 1 argument!"
 msgstr ""
 
-#: src/nlua_pilot.c:3384
+#: src/nlua_pilot.c:3404
 msgid "Pilot does not have AI."
 msgstr ""
 
-#: src/nlua_pilot.c:3429
+#: src/nlua_pilot.c:3449
 msgid "Pilot is not on manual control."
 msgstr ""
 
-#: src/nlua_pilot.c:3742
+#: src/nlua_pilot.c:3762
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
 msgstr ""
 
 #. Not found.
-#: src/nlua_pilot.c:3754
+#: src/nlua_pilot.c:3774
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3804
+#: src/nlua_pilot.c:3824
 #, c-format
 msgid "Planet '%s' not found in system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3858
+#: src/nlua_pilot.c:3878
 #, c-format
 msgid "#%c%s#0 is hailing you."
 msgstr ""
