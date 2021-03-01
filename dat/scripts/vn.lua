@@ -391,31 +391,20 @@ function vn.StateCharacter:_init()
       c.alpha = 1
       c.displayname = c.who -- reset name
    end
-   if not self.character.manualpos then
-      -- TODO better centering
-      local lw, lh = graphics.getDimensions()
-      local nimg = 0
-      for k,c in ipairs(vn._characters) do
-         if c.image ~= nil then
-            nimg = nimg+1
-         end
-      end
-      local n = 0
-      for k,c in ipairs(vn._characters) do
-         if c.image ~= nil then
-            n = n+1
-            local w, h = c.image:getDimensions()
-            if nimg == 1 then
-               c.offset = lw/2
-            elseif nimg == 2 then
-               c.offset = ((n-1)*0.5 + 0.25)*lw
-            elseif nimg == 3 then
-               c.offset = ((n-1)*0.35 + 0.15)*lw
-            else
-               error(_("vn: unsupported number of characters"))
-            end
-         end
-      end
+   local pos = self.character.pos or "center"
+   local lw, lh = graphics.getDimensions()
+   if type(pos)=="number" then
+      self.character.offset = pos
+   elseif pos == "center" then
+      self.character.offset = 0.5*lw
+   elseif pos == "left" then
+      self.character.offset = 0.25*lw
+   elseif pos == "right" then
+      self.character.offset = 0.75*lw
+   elseif pos == "farleft" then
+      self.character.offset = 0.15*lw
+   elseif pos == "farright" then
+      self.character.offset = 0.85*lw
    end
    _finish(self)
 end
@@ -824,6 +813,7 @@ function vn.Character.new( who, params )
    end
    c.shader = params.shader
    c.hidetitle = params.hidetitle
+   c.pos = params.pos
    c.params = params
    return c
 end

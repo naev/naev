@@ -36,9 +36,9 @@ function create ()
 
    -- Create scuffle
    local zl = vn.Character.new( zalek_name,
-         { image=zalek_image, color=zalek_colour } )
+         { image=zalek_image, color=zalek_colour, pos="left" } )
    local dv = vn.Character.new( dvaered_name,
-         { image=dvaered_image, color=dvaered_colour } )
+         { image=dvaered_image, color=dvaered_colour, pos="right" } )
    vn.clear()
    vn.scene()
    vn.transition( nil, 1 )
