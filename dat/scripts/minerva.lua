@@ -55,18 +55,33 @@ local minerva = {
    },
 }
 
+local function _merge_tables( p, params )
+   params = params or {}
+   for k,v in pairs(params) do p[k] = v end
+   return p
+end
+
 -- Helpers to create main characters
-function minerva.vn_cyborg_chicken()
+function minerva.vn_cyborg_chicken( params )
    return vn.Character.new( minerva.chicken.name,
-         { image=minerva.chicken.image, color=minerva.chicken.colour } )
+         _merge_tables( {
+            image=minerva.chicken.image,
+            color=minerva.chicken.colour,
+         }, params) )
 end
-function minerva.vn_maikki()
+function minerva.vn_maikki( params )
    return vn.Character.new( minerva.maikki.name,
-         { image=minerva.maikki.image, color=minerva.maikki.colour } )
+         _merge_tables( {
+            image=minerva.maikki.image,
+            color=minerva.maikki.colour,
+         }, params) )
 end
-function minerva.vn_terminal()
+function minerva.vn_terminal( params )
    return vn.Character.new( minerva.terminal.name,
-         { image=minerva.terminal.image, color=minerva.terminal.colour } )
+         _merge_tables( {
+            image=minerva.terminal.image,
+            color=minerva.terminal.colour,
+         }, params) )
 end
 
 -- Token stuff
