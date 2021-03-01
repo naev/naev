@@ -54,6 +54,7 @@ misn_state = nil
 
 
 function create ()
+   misn.finish( false ) -- Disabled for now
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
