@@ -105,8 +105,10 @@ function approach_spa ()
 end
 function start_spa ()
    naev.eventStart( "Chicken Rendezvous" )
-   misn.npcRm( npc_spa )
-   misn_state = 5
+   if player.evtDone( "Chicken Rendezvous" ) then
+      misn.npcRm( npc_spa )
+      misn_state = 5
+   end
 end
 
 
