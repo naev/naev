@@ -15,7 +15,7 @@
 
 #define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
 #define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
-#define GLSL_COLORBLIND "#define COLORBLIND_MODE ROD_MONOCHROMACY 1\n" /**< Line to enable colorblind mode. */
+#define GLSL_COLORBLIND "#define COLORBLIND_MODE ROD_MONOCHROMACY\n" /**< Line to enable colorblind mode. */
 
 
 /*
@@ -236,11 +236,11 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
    size_t vert_size, frag_size;
    GLuint vertex_shader, fragment_shader, program;
 
-   strncpy( prepend, GLSL_VERSION, sizeof(prepend) );
+   strncpy( prepend, GLSL_VERSION, sizeof(prepend)-1 );
    if (conf.colorblind)
-      strncat( prepend, GLSL_COLORBLIND, strlen(prepend)-strlen(GLSL_COLORBLIND) );
+      strncat( prepend, GLSL_COLORBLIND, sizeof(prepend)-strlen(prepend)-1 );
    if (GLAD_GL_ARB_shader_subroutine)
-      strncat( prepend, GLSL_SUBROUTINE, strlen(prepend)-strlen(GLSL_SUBROUTINE) );
+      strncat( prepend, GLSL_SUBROUTINE, sizeof(prepend)-strlen(prepend)-1 );
 
    vert_str = gl_shader_loadfile( vertfile, &vert_size, prepend );
    frag_str = gl_shader_loadfile( fragfile, &frag_size, prepend );
