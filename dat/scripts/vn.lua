@@ -105,7 +105,7 @@ function _draw_character( c )
    if c.talking then
       col = { 1, 1, 1 }
    else
-      col = { 0.8, 0.8, 0.8 }
+      col = { 0.9, 0.9, 0.9 }
    end
    local flip = 1
    if c.offset > 0.5*lw then
