@@ -394,7 +394,7 @@ function vn.StateCharacter:_init()
    local pos = self.character.pos or "center"
    local lw, lh = graphics.getDimensions()
    if type(pos)=="number" then
-      self.character.offset = pos
+      self.character.offset = pos*lw
    elseif pos == "center" then
       self.character.offset = 0.5*lw
    elseif pos == "left" then
