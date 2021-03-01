@@ -239,7 +239,7 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
    strncpy( prepend, GLSL_VERSION, sizeof(prepend)-1 );
    if (conf.colorblind)
       strncat( prepend, GLSL_COLORBLIND, sizeof(prepend)-strlen(prepend)-1 );
-   if (GLAD_GL_ARB_shader_subroutine)
+   if (gl_has( OPENGL_SUBROUTINES ))
       strncat( prepend, GLSL_SUBROUTINE, sizeof(prepend)-strlen(prepend)-1 );
 
    vert_str = gl_shader_loadfile( vertfile, &vert_size, prepend );

@@ -1335,8 +1335,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          xmlr_attr_float(node, "a", temp->u.bem.colour.a);
          xmlr_attr_float(node, "width", temp->u.bem.width);
          shader = xml_get(node);
-         if (GLAD_GL_ARB_shader_subroutine) {
-            temp->u.bem.shader = glad_glGetSubroutineIndex( shaders.beam.program, GL_FRAGMENT_SHADER, shader );
+         if (gl_has( OPENGL_SUBROUTINES )) {
+            temp->u.bem.shader = glGetSubroutineIndex( shaders.beam.program, GL_FRAGMENT_SHADER, shader );
             if (temp->u.bem.shader == GL_INVALID_INDEX)
                WARN("Beam outfit '%s' has unknown shader function '%s'", temp->name, shader);
          }

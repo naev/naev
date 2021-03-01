@@ -636,7 +636,7 @@ static void spfx_trail_draw( const Trail_spfx* trail )
 
    /* Stuff that doesn't change for the entire trail. */
    glUseProgram( shaders.trail.program );
-   if (GLAD_GL_ARB_shader_subroutine)
+   if (gl_has( OPENGL_SUBROUTINES ))
       glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &trail->spec->type );
    glEnableVertexAttribArray( shaders.trail.vertex );
    gl_vboActivateAttribOffset( gl_squareVBO, shaders.trail.vertex, 0, 2, GL_FLOAT, 0 );
@@ -949,7 +949,7 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
          tc->ttl = xml_getFloat( cur );
       else if (xml_isNode(cur, "type")) {
          type = xml_get(cur);
-         if (GLAD_GL_ARB_shader_subroutine) {
+         if (gl_has( OPENGL_SUBROUTINES )) {
             tc->type = glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );
             if (tc->type == GL_INVALID_INDEX)
                WARN("Trail '%s' has unknown type '%s'", tc->name, type );

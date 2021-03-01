@@ -321,6 +321,8 @@ static int gl_getGLInfo (void)
    SDL_GL_GetAttribute( SDL_GL_MULTISAMPLESAMPLES, &gl_screen.fsaa );
    if (doublebuf)
       gl_screen.flags |= OPENGL_DOUBLEBUF;
+   if (GLAD_GL_ARB_shader_subroutine && glGetSubroutineIndex && glGetSubroutineUniformLocation && glUniformSubroutinesuiv)
+      gl_screen.flags |= OPENGL_SUBROUTINES;
    /* Calculate real depth. */
    gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
 

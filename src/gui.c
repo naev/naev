@@ -953,7 +953,7 @@ void gui_render( double dt )
       glUniform2f( shaders.jump.dimensions, gl_screen.nw, gl_screen.nh );
 
       /* Set the subroutine. */
-      if (GLAD_GL_ARB_shader_subroutine) {
+      if (gl_has( OPENGL_SUBROUTINES )) {
          if (cur_system->nebu_density > 0.)
             glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shaders.jump.jump_func.jump_nebula );
          else

@@ -217,7 +217,7 @@ def generate_c_file(f):
                     shader.name,
                     uniform))
 
-        f.write("   if (GLAD_GL_ARB_shader_subroutine) {\n")
+        f.write("   if (gl_has( OPENGL_SUBROUTINES )) {\n")
         for subroutine, routines in shader.subroutines.items():
             f.write(f"      shaders.{shader.name}.{subroutine}.uniform = glGetSubroutineUniformLocation( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n")
             for r in routines:
