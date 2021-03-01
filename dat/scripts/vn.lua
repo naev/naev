@@ -54,6 +54,12 @@ local function _setdefaults()
    vn._canvas = graphics.newCanvas()
    vn._prevcanvas = graphics.newCanvas()
    vn._curcanvas = graphics.newCanvas()
+   -- Empty canvas used for some transitions
+   vn._emptycanvas = graphics.newCanvas()
+   local oldcanvas = graphics.getCanvas()
+   graphics.setCanvas( vn._emptycanvas )
+   graphics.clear( 0, 0, 0, 0 )
+   graphics.setCanvas( oldcanvas )
 end
 
 
@@ -846,32 +852,78 @@ function vn.newCharacter( who, params )
    table.insert( vn._states, vn.StateCharacter.new( c ) )
    return c
 end
-function vn.appear( c, seconds )
-   seconds = seconds or 0.2
+
+local function _appear_setup( c, shader )
+   -- Create new drawables
+   vn.func( function ()
+      shader:send( "texprev", vn._emptycanvas )
+      for k,v in ipairs(c) do
+         local d = graphics.Drawable.new()
+         d.image = v.image
+         d.getDimensions = function ( self, ... )
+            return self.image:getDimensions(...)
+         end
+         d.draw = function ( self, ... )
+            local oldcanvas = graphics.getCanvas()
+            graphics.setCanvas( vn._curcanvas )
+            graphics.clear( 0, 0, 0, 0 )
+            self.image:draw( ... )
+            graphics.setCanvas( oldcanvas )
+
+            --local oldshader = graphics.getShader()
+            graphics.setShader( shader )
+            vn.setColor( {1, 1, 1, 1} )
+            graphics.setBlendMode( "alpha", "premultiplied" )
+            vn._curcanvas:draw( 0, 0 )
+            graphics.setBlendMode( "alpha" )
+            graphics.setShader( oldshader )
+         end
+         v.image = d
+      end
+   end )
+end
+local function _appear_cleanup( c )
+   -- Undo new drawables
+   vn.func( function ()
+      for k,v in ipairs(c) do
+         v.image = v.image.image
+      end
+   end )
+end
+function vn.appear( c, name, seconds, transition )
+   local shader, seconds, transition = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
       c = {c}
    end
-   local func = function( alpha )
-      for k,v in ipairs(c) do
-         v.alpha = alpha
-      end
-   end
+
+   -- New character
    for k,v in ipairs(c) do
       vn.newCharacter(v)
    end
-   vn.animation( seconds, func )
+
+   _appear_setup( c, shader )
+   -- Create the transition
+   vn.animation( seconds, function( progress, dt )
+      shader:send( "progress", progress )
+      if shader.update then
+         shader:update( dt )
+      end
+   end )
+   _appear_cleanup( c )
 end
-function vn.disappear( c, seconds )
-   seconds = seconds or 0.2
+function vn.disappear( c, name, seconds, transition )
+   local shader, seconds, transition = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
       c = {c}
    end
-   local func = function( alpha )
-      for k,v in ipairs(c) do
-         v.alpha = 1-alpha
+   _appear_setup( c, shader )
+   vn.animation( seconds, function( progress, dt )
+      shader:send( "progress", 1-progress )
+      if shader.update then
+         shader:update( dt )
       end
-   end
-   vn.animation( seconds, func )
+   end )
+   _appear_cleanup( c )
    for k,v in ipairs(c) do
       table.insert( vn._states, vn.StateCharacter.new( v, true ) )
    end
