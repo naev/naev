@@ -97,6 +97,7 @@ function generate_npc ()
       npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
       if misn_state == 4 then
          npc_spa = misn.npcAdd( "approach_spa", spa_name, spa_portrait, spa_description )
+      end
    end
 end
 
