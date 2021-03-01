@@ -31,27 +31,30 @@ local vn = {
    transitions = transitions,
 }
 -- Drawing
-local lw, lh = window.getDesktopDimensions()
-vn._default.textbox_font = graphics.newFont(16)
-vn._default.textbox_w = 800
-vn._default.textbox_h = 200
-vn._default.textbox_x = (lw-vn._default.textbox_w)/2
-vn._default.textbox_y = lh-230
-vn._default.textbox_bg = {0, 0, 0, 1}
-vn._default.textbox_alpha = 1
-vn._default.namebox_font = graphics.newFont(20)
-vn._default.namebox_w = -1 -- Autosize
-vn._default.namebox_h = 20*2+vn._default.namebox_font:getHeight()
-vn._default.namebox_x = vn._default.textbox_x
-vn._default.namebox_y = vn._default.textbox_y - vn._default.namebox_h - 20
-vn._default.namebox_bg = vn._default.textbox_bg
-vn._default.namebox_alpha = 1
-vn._canvas = graphics.newCanvas()
-vn._postshader = nil
-vn._draw_fg = nil
-vn._draw_bg = nil
-vn._prevcanvas = graphics.newCanvas()
-vn._curcanvas = graphics.newCanvas()
+local function _setdefaults()
+   local lw, lh = window.getDesktopDimensions()
+   vn._default.textbox_font = graphics.newFont(16)
+   vn._default.textbox_w = 800
+   vn._default.textbox_h = 200
+   vn._default.textbox_x = (lw-vn._default.textbox_w)/2
+   vn._default.textbox_y = lh-230
+   vn._default.textbox_bg = {0, 0, 0, 1}
+   vn._default.textbox_alpha = 1
+   vn._default.namebox_font = graphics.newFont(20)
+   vn._default.namebox_w = -1 -- Autosize
+   vn._default.namebox_h = 20*2+vn._default.namebox_font:getHeight()
+   vn._default.namebox_x = vn._default.textbox_x
+   vn._default.namebox_y = vn._default.textbox_y - vn._default.namebox_h - 20
+   vn._default.namebox_bg = vn._default.textbox_bg
+   vn._default.namebox_alpha = 1
+   vn._default._postshader = nil
+   vn._default._draw_fg = nil
+   vn._default._draw_bg = nil
+   -- These are implicitly dependent on lw, lh, so should be recalculated with the above.
+   vn._canvas = graphics.newCanvas()
+   vn._prevcanvas = graphics.newCanvas()
+   vn._curcanvas = graphics.newCanvas()
+end
 
 
 function vn._checkstarted()
@@ -1125,10 +1128,12 @@ function vn.clear()
       "_draw_fg",
       "_draw_bg",
    }
+
+   _setdefaults()
    for k,v in ipairs(var) do
       vn[v] = vn._default[v]
    end
-   -- Have to create new tables
+   -- Have to create new tables. Reset canvases in case the game was resized.
    vn._characters = {}
    vn._states = {}
 end
@@ -1139,10 +1144,10 @@ end
 -- @note This automatically does vn.clear() too.
 --]]
 function vn.reset()
+   vn.clear()
    for k,v in pairs(vn._default) do
       vn[k] = v
    end
-   vn.clear()
 end
 
 -- Default characters
