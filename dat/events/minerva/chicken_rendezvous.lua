@@ -8,6 +8,8 @@
  </flags>
  <notes>
   <campaign>Minerva</campaign>
+  <done_evt name="Spa Propaganda" />
+  <requires name="Chicken Rendezvous" />
  </notes>
 </event>
 --]]

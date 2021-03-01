@@ -30,7 +30,7 @@ function love.load()
       local d = vn.newCharacter( "Developer", { color={1,0,0}, image="gfx/portraits/neutral/scientist.png" } )
       local me = vn.me
       local na = vn.na
-      vn.fadein()
+      vn.transition()
       na( "You reach an empty space, it almost feels like an implemented visual novel game!" )
       d( '"What are you doing here? This is still under development!"' )
       vn.menu( {
@@ -45,7 +45,6 @@ function love.load()
       vn.label( "lostcake" )
       me( '"About the cake..."' )
       na( "You see the developer give you a troublesome look..." )
-      vn.fadeout()
 
       -- Set up
       love._vn = true
@@ -53,7 +52,8 @@ function love.load()
 
    -- Insert start and end state if necessary
    table.insert( vn._states, 1, vn.StateStart.new() )
-   table.insert( vn._states, vn.StateEnd.new() )
+   --table.insert( vn._states, vn.StateEnd.new() )
+   vn.done()
    vn._started = true
    vn._state = 1
    vn._fade = 0

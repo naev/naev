@@ -10,6 +10,7 @@ local window = require 'love.window'
 local filesystem = require 'love.filesystem'
 local audio = require 'love.audio'
 local love_image = require 'love.image'
+local transitions = require 'vn.transitions'
 
 local vn = {
    speed = 0.04,
@@ -27,27 +28,33 @@ local vn = {
       --_soundTalk = audio.newSource( "sfx/talk.wav" ),
       _pitchValues = {0.7, 0.8, 1.0, 1.2, 1.3},
    },
+   transitions = transitions,
 }
 -- Drawing
-local lw, lh = window.getDesktopDimensions()
-vn._default.textbox_font = graphics.newFont(16)
-vn._default.textbox_w = 800
-vn._default.textbox_h = 200
-vn._default.textbox_x = (lw-vn._default.textbox_w)/2
-vn._default.textbox_y = lh-230
-vn._default.textbox_bg = {0, 0, 0, 1}
-vn._default.textbox_alpha = 1
-vn._default.namebox_font = graphics.newFont(20)
-vn._default.namebox_w = -1 -- Autosize
-vn._default.namebox_h = 20*2+vn._default.namebox_font:getHeight()
-vn._default.namebox_x = vn._default.textbox_x
-vn._default.namebox_y = vn._default.textbox_y - vn._default.namebox_h - 20
-vn._default.namebox_bg = vn._default.textbox_bg
-vn._default.namebox_alpha = 1
-vn._canvas = graphics.newCanvas()
-vn._postshader = nil
-vn._prevcanvas = graphics.newCanvas()
-vn._curcanvas = graphics.newCanvas()
+local function _setdefaults()
+   local lw, lh = window.getDesktopDimensions()
+   vn._default.textbox_font = graphics.newFont(16)
+   vn._default.textbox_w = 800
+   vn._default.textbox_h = 200
+   vn._default.textbox_x = (lw-vn._default.textbox_w)/2
+   vn._default.textbox_y = lh-230
+   vn._default.textbox_bg = {0, 0, 0, 1}
+   vn._default.textbox_alpha = 1
+   vn._default.namebox_font = graphics.newFont(20)
+   vn._default.namebox_w = -1 -- Autosize
+   vn._default.namebox_h = 20*2+vn._default.namebox_font:getHeight()
+   vn._default.namebox_x = vn._default.textbox_x
+   vn._default.namebox_y = vn._default.textbox_y - vn._default.namebox_h - 20
+   vn._default.namebox_bg = vn._default.textbox_bg
+   vn._default.namebox_alpha = 1
+   vn._default._postshader = nil
+   vn._default._draw_fg = nil
+   vn._default._draw_bg = nil
+   -- These are implicitly dependent on lw, lh, so should be recalculated with the above.
+   vn._canvas = graphics.newCanvas()
+   vn._prevcanvas = graphics.newCanvas()
+   vn._curcanvas = graphics.newCanvas()
+end
 
 
 function vn._checkstarted()
@@ -164,9 +171,10 @@ local function _draw()
    end
 
    -- Draw if necessary
-   --if vn.isDone() then return end
-   local s = vn._states[ vn._state ]
-   s:draw()
+   if not vn.isDone() then
+      local s = vn._states[ vn._state ]
+      s:draw()
+   end
 
    -- Draw foreground
    if vn._draw_fg then
@@ -177,14 +185,16 @@ local function _draw()
       -- Draw canvas
       graphics.setCanvas( prevcanvas )
       graphics.setShader( vn._postshader )
-      vn.setColor( {1, 1, 1, 1} )
+      vn.setColor( {1, 1, 1, 1} ) -- TODO: Really?
+      graphics.setBlendMode( "alpha", "premultiplied" )
       vn._canvas:draw( 0, 0 )
+      graphics.setBlendMode( "alpha" )
       graphics.setShader()
    end
 end
 function vn.draw()
    local s = vn._states[ vn._state ]
-   if s.drawoverride then
+   if s and s.drawoverride then
       s:drawoverride()
    else
       _draw()
@@ -193,7 +203,7 @@ end
 local function _draw_to_canvas( canvas )
    local oldcanvas = graphics.getCanvas()
    graphics.setCanvas( canvas )
-   graphics.clear( 1, 1, 1, 0 )
+   graphics.clear( 0, 0, 0, 0 )
    _draw()
    graphics.setCanvas( oldcanvas )
 end
@@ -338,6 +348,9 @@ function vn.StateScene:_init()
       vn._me,
       vn._na
    }
+
+   -- Set alpha to max (since transitions will be used in general)
+   vn._globalalpha = 1
 
    _finish(self)
 end
@@ -634,8 +647,9 @@ end
 function vn.StateStart:_init()
    local oldcanvas = graphics.getCanvas()
    graphics.setCanvas( vn._prevcanvas )
-   graphics.clear( 1, 1, 1, 0 )
+   graphics.clear( 0, 0, 0, 0 )
    graphics.setCanvas( oldcanvas )
+   vn._globalalpha = 0
    _finish(self)
 end
 --[[
@@ -692,7 +706,7 @@ function vn.StateAnimation:_init()
    end
    self._accum = 0
    if self._func then
-      self._func( 0, self._params )
+      self._func( 0, 0, self._params )
    end
    if self._drawfunc then
       self._drawfunc( 0, self._params )
@@ -740,7 +754,7 @@ function vn.StateAnimation:_update(dt)
       _finish(self)
    end
    if self._func then
-      self._func( _animation_alpha(self), self._params )
+      self._func( _animation_alpha(self), dt, self._params )
    end
 end
 function vn.StateAnimation:_draw(dt)
@@ -923,36 +937,13 @@ end
 --[[
 -- @brief Finishes the VN.
 --]]
-function vn.done()
+function vn.done( ... )
    vn._checkstarted()
-   -- TODO insert transitions automatically if necessary
+   vn.scene()
+   vn.func( function () vn._globalalpha = 0 end )
+   vn.transition( ... )
    table.insert( vn._states, vn.StateEnd.new() )
 end
-
---[[
--- @brief Inserts a fade.
---    @param seconds Number of seconds to fade.
---    @param fadestart Starting fade opacity.
---    @param fadeend Ending fade opacity.
---]]
-function vn.fade( seconds, fadestart, fadeend )
-   seconds = seconds or 0.2
-   vn._checkstarted()
-   local func = function( alpha )
-      vn._globalalpha = fadestart + (fadeend-fadestart)*alpha
-   end
-   table.insert( vn._states, vn.StateAnimation.new( seconds, func ) )
-end
---[[
--- @brief Wrapper to fade in.
---    @param seconds Number of seconds to fully fade in.
---]]
-function vn.fadein( seconds ) vn.fade( seconds, 0, 1 ) end
---[[
--- @brief Wrapper to fade out.
---    @param seconds Number of seconds to fully fade out.
---]]
-function vn.fadeout( seconds ) vn.fade( seconds, 1, 0 ) end
 
 --[[
 -- @brief Allows doing arbitrary animations.
@@ -965,107 +956,30 @@ function vn.animation( seconds, func, drawfunc, transition, initfunc, drawoverri
 end
 
 function vn.transition( name, seconds, transition )
-   seconds = seconds or 0.5
    vn._checkstarted()
+   local shader, seconds, transition = transitions.get( name, seconds, transition )
 
-   local _vertexcode = [[
-vec4 position( mat4 transform_projection, vec4 vertex_position )
-{
-   return transform_projection * vertex_position;
-}
-]]
-   local _pixelcode
-   if name=="fade" then
-      _pixelcode = [[
-uniform Image texprev;
-uniform float progress;
-vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
-{
-   vec4 texfrom = Texel(texprev, texture_coords);
-   vec4 texto   = Texel(tex, texture_coords);
-   vec4 texcolor= mix( texfrom, texto, progress );
-   return texcolor * color;
-}
-]]
-   elseif name=="blur" then
-      _pixelcode = [[
-#include "lib/blur.glsl"
-
-uniform Image texprev;
-uniform float progress;
-
-const float intensity = 10.0;
-
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
-{
-   float disp = intensity*(0.5-distance(0.5, progress));
-   vec4 c1 = blur9( texprev, uv, love_ScreenSize.xy, disp );
-   vec4 c2 = blur9( MainTex, uv, love_ScreenSize.xy, disp );
-   return mix(c1, c2, progress);
-}
-]]
-   elseif name=="ripple" then
-      _pixelcode = [[
-uniform Image texprev;
-uniform float progress;
-
-const float amplitude = 30.0;
-const float speed = 30.;
-
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
-{
-   vec2 dir = uv - vec2(.5);
-   float dist = length(dir);
-
-   if (dist > progress) {
-      return mix( Texel( texprev, uv ), Texel( MainTex, uv ), progress );
-   } else {
-      vec2 offset = dir * sin(dist * amplitude - progress * speed);
-      return mix( Texel( texprev, uv + offset ), Texel( MainTex, uv ), progress );
-   }
-}
-]]
-   elseif name=="perlin" then
-      _pixelcode = [[
-#include "lib/perlin.glsl"
-
-uniform Image texprev;
-uniform float progress;
-
-const float scale = 0.01;
-const float smoothness = 0.1;
-
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
-{
-   float n = cnoise( scale * screen_coords )*0.5 + 0.5;
-   float p = mix(-smoothness, 1.0 + smoothness, progress);
-   float lower = p - smoothness;
-   float higher = p + smoothness;
-   float q = smoothstep(lower, higher, n);
-
-   vec4 c1 = Texel( texprev, uv );
-   vec4 c2 = Texel( MainTex, uv );
-   return mix(c1, c2, 1.0-q);
-}
-]]
-   else
-      error( string.format(_("vn: unknown transition type'%s'"), name ) )
-   end
-
-   local shader = graphics.newShader( _pixelcode, _vertexcode )
    vn.animation( seconds,
-      function (progress) -- progress
+      function (progress, dt) -- progress
          shader:send( "progress", progress )
+         if shader.update then
+            shader:update( dt )
+         end
       end, nil, -- no draw function
       transition, function () -- init
          shader:send( "texprev", vn._prevscene )
+         if shader:hasUniform( "u_r" ) then
+            shader:send( "u_r", love_math.random() )
+         end
       end, function () -- drawoverride
          local canvas = vn._curcanvas
          _draw_to_canvas( canvas )
 
          local oldshader = graphics.getShader()
          graphics.setShader( shader )
+         graphics.setBlendMode( "alpha", "premultiplied" )
          canvas:draw( 0, 0 )
+         graphics.setBlendMode( "alpha" )
          graphics.setShader( oldshader )
       end )
 end
@@ -1209,12 +1123,17 @@ function vn.clear()
       "_bufcol",
       "_buffer",
       "_title",
-      "_globalalpha"
+      "_globalalpha",
+      "_postshader",
+      "_draw_fg",
+      "_draw_bg",
    }
+
+   _setdefaults()
    for k,v in ipairs(var) do
       vn[v] = vn._default[v]
    end
-   -- Have to create new tables
+   -- Have to create new tables. Reset canvases in case the game was resized.
    vn._characters = {}
    vn._states = {}
 end
@@ -1225,10 +1144,10 @@ end
 -- @note This automatically does vn.clear() too.
 --]]
 function vn.reset()
+   vn.clear()
    for k,v in pairs(vn._default) do
       vn[k] = v
    end
-   vn.clear()
 end
 
 -- Default characters

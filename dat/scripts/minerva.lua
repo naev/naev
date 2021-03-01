@@ -4,6 +4,7 @@
 local vn = require 'vn'
 local colour = require 'colour'
 local portrait = require 'portrait'
+require 'numstring'
 
 local minerva = {
    -- Main Characters
@@ -63,6 +64,10 @@ function minerva.vn_maikki()
    return vn.Character.new( minerva.maikki.name,
          { image=minerva.maikki.image, color=minerva.maikki.colour } )
 end
+function minerva.vn_terminal()
+   return vn.Character.new( minerva.terminal.name,
+         { image=minerva.terminal.image, color=minerva.terminal.colour } )
+end
 
 -- Token stuff
 -- Roughly 1 token is 1000 credits
@@ -80,6 +85,12 @@ function minerva.tokens_pay( amount )
       v = var.peek( "minerva_tokens_gained" ) or 0
       var.push( "minerva_tokens_gained", v+amount )
    end
+end
+function minerva.tokens_str( amount )
+   return gettext.ngettext(
+      "#p%s Minerva Token#0",
+      "#p%s Minerva Tokens#0", amount ):format(
+         numstring(amount) )
 end
 
 -- Maikki stuff

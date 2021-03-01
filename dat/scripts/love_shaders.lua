@@ -30,8 +30,13 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 ]]
 
 function love_shaders.paper( width, height, sharpness )
+   if width==nil then
+      width, height = naev.gfx.dim()
+   end
    sharpness = sharpness or 1
    local pixelcode = [[
+precision highp float;
+
 #include "lib/simplex.glsl"
 
 uniform float u_r;
@@ -97,7 +102,7 @@ vec4 graineffect( vec4 bgcolor, vec2 uv, vec2 px ) {
    vec3 g = vec3( grain( uv, px * zoom, frame, 2.5 ) );
 
    // get the luminance of the image
-   float luminance = rgbToLuminance( bgcolor.rgb );
+   float luminance = rgb2lum( bgcolor.rgb );
    vec3 desaturated = vec3(luminance);
 
    // now blend the noise over top the backround
@@ -154,6 +159,7 @@ function love_shaders.hologram( noise )
    local pixelcode = [[
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
+#include "lib/blend.glsl"
 #include "lib/simplex.glsl"
 #include "lib/colour.glsl"
 
@@ -213,12 +219,12 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    float blurdir = snoise( vec2( blurspeed*u_time, 0 ) );
    vec2 blurvec = bluramplitude * vec2( cos(blurdir), sin(blurdir) );
    vec4 blurbg = blur9( tex, look, love_ScreenSize.xy, blurvec );
-   // TODO better mixing!
-   texcolor = mix( texcolor, blurbg, step( blurbg.a, texcolor.a ) );
+   texcolor.rgb = blendSoftLight( texcolor.rgb, blurbg.rgb );
+   texcolor.a = max( texcolor.a, blurbg.a );
 
    /* Drop to greyscale while increasing brightness and contrast */
    //float greyscale = dot( texcolor.xyz, vec3( 0.2126, 0.7152, 0.0722 ) ); // standard
-   float greyscale = rgbToLuminance( texcolor.rgb ); // percieved
+   float greyscale = rgb2lum( texcolor.rgb ); // percieved
    texcolor.xyz = contrast*vec3(greyscale) + brightness;
 
    /* Shadows. */
@@ -246,7 +252,39 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    end
 
    local shader = graphics.newShader( pixelcode, _vertexcode )
-   shader._dt = 1000. * love_math.random()
+   shader._dt = 1000 * love_math.random()
+   shader.update = function (self, dt)
+      self._dt = self._dt + dt
+      self:send( "u_time", self._dt )
+   end
+   return shader
+end
+
+
+function love_shaders.corruption( noise )
+   noise = noise or 1.0
+   local pixelcode = string.format([[
+#include "lib/math.glsl"
+
+uniform float u_time;
+
+const int    fps     = 15;
+const float strength = %f;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
+   float time = u_time - mod( u_time, 1.0 / float(fps) );
+
+   float glitchStep = mix(4.0, 32.0, random(vec2(time)));
+
+   vec4 screenColor = texture2D( tex, uv );
+   uv.x = round(uv.x * glitchStep ) / glitchStep;
+   vec4 glitchColor = texture2D( tex, uv );
+   return color * mix(screenColor, glitchColor, vec4(0.1*strength));
+}
+]], noise )
+
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader._dt = 1000 * love_math.random()
    shader.update = function (self, dt)
       self._dt = self._dt + dt
       self:send( "u_time", self._dt )

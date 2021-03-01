@@ -98,9 +98,9 @@ function hail ()
       vn.scene()
       local mm = vn.newCharacter( trader_name,
          { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
-      vn.fadein()
+      vn.transition("electric")
       mm:say( first_hail_message )
-      vn.fadeout()
+      vn.done("electric")
       vn.run()
 
       var.push('travelling_trader_hailed', true)
@@ -111,9 +111,8 @@ end
 function board ()
    vn.clear()
    vn.scene()
-   vn.fadein()
+   vn.transition()
    vn.na( board_message )
-   vn.fadeout()
    vn.run()
 
    --[[

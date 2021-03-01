@@ -36,6 +36,9 @@ chuckaluck_image = "minervaceo.png" -- TODO replace
 chuckaluck_desc = _("A fast-paced luck-based betting game using dice.")
 greeter_portrait = portrait.get() -- TODO replace?
 
+-- Special
+spaticketcost = 100
+
 patron_names = {
    _("Patron"),
 }
@@ -126,6 +129,7 @@ function random_event()
    local alter_prob = var.peek("minerva_altercation_probability") or 0.4
    local alter2 = has_event("Minerva Station Altercation 2")
    local maikki2 = player.misnDone("Maikki's Father 2")
+   local spapropaganda = has_event("Spa Propaganda")
    local r = rnd.rnd()
    -- Altercations
    if not alter1 and minerva.tokens_get_gained() > 10 and r < 0.5 then
@@ -134,6 +138,10 @@ function random_event()
       hook.safe( "start_alter2" )
    elseif not alter1 and alter2 and not alter_helped and r < alter_prob then
       hook.safe( "start_alter1" )
+
+   -- Spa Propaganda
+   elseif maikki2 and player.misnActive("Minerva Pirates 3") then
+      hook.safe( "start_spapropaganda" )
    end
 end
 
@@ -145,18 +153,20 @@ end
 function start_alter2 ()
    naev.eventStart( "Minerva Station Altercation 2" )
 end
+function start_spapropaganda ()
+   naev.eventStart( "Spa Propaganda" )
+end
 
 function bargreeter()
    vn.clear()
    vn.scene()
    local g = vn.newCharacter( _("Greeter"),
          { image=portrait.getFullPath( greeter_portrait ) } )
-   vn.fadein()
+   vn.transition()
    vn.na( _("As soon as you enter the spaceport bar, a neatly dressed individual runs up to you and hands you a complementary drink. It is hard to make out what he is saying over all the background noise created by other patrons and gambling machines, but you try to make it out as best as you can.") )
    g:say( _("\"Welcome to the Minerva Station resort! It appears to be your first time here. As you enjoy your complementary drink, let me briefly explain to you how this wonderful place works. It is all very exciting!\"") )
    g:say( _("\"The currency we use on this station are Minerva Tokens. Unlike credits, they are physical and so very pretty! You can not buy Minerva Tokens directly, however, by participating and betting credits in the various fine games available, you can obtain Minerva Tokens. When you have enough Minerva Tokens, you are able to buy fabulous prizes and enjoy more exclusive areas of our resort. To start out your fun Minerva Adventure®, please enjoy these 10 complementary Minerva Tokens!\"") )
    g:say( _("\"If you want more information or want to check your balance. Please use the terminals located throughout the station. I highly recommend you check out our universe-famous Cyborg Chicken at the blackjack table, and always remember, 'life is short, spend it at Minerva Station'®!\"") )
-   vn.fadeout()
    vn.run()
 
    minerva.tokens_pay( 10 )
@@ -164,6 +174,7 @@ function bargreeter()
 end
 
 function approach_terminal()
+
    local msgs = {
       _(" TODAY MIGHT BE YOUR LUCKY DAY."),
       _(" THIS IS SO EXCITING."),
@@ -173,14 +184,13 @@ function approach_terminal()
    }
    vn.clear()
    vn.scene()
-   local t = vn.newCharacter( terminal.name,
-         { image=terminal.image, color=terminal.colour } )
-   vn.fadein()
+   local t = vn.newCharacter( minerva.vn_terminal() )
+   vn.transition()
    vn.label( "start" )
    t:say( function() return string.format(
-         n_("\"VALUED CUSTOMER, YOU HAVE #p%d MINERVA TOKEN#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"",
-            "\"VALUED CUSTOMER, YOU HAVE #p%d MINERVA TOKENS#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"", minerva.tokens_get()),
-               minerva.tokens_get(), msgs[rnd.rnd(1,#msgs)]) end )
+         n_("\"VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKEN#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"",
+            "\"VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKENS#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"", minerva.tokens_get()),
+               numstring(minerva.tokens_get()), msgs[rnd.rnd(1,#msgs)]) end )
    vn.menu( {
       {_("Information"), "info"},
       {_("Trade-in"), "trade"},
@@ -214,21 +224,21 @@ function approach_terminal()
 
    vn.label( "trade_notenough" )
    t:say( function() return string.format(
-         n_("\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKEN#0.\"",
-            "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKENS#0.\"", minerva.tokens_get()),
-         minerva.tokens_get() ) end )
+         n_("\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKEN#0.\"",
+            "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKENS#0.\"", minerva.tokens_get()),
+         numstring(minerva.tokens_get()) ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade_soldout" )
    t:say( function() return string.format(
-         n_("\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKEN#0.\"",
-            "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%d MINERVA TOKENS#0.\"", minerva.tokens_get()),
-         minerva.tokens_get() ) end )
+         n_("\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKEN#0.\"",
+            "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKENS#0.\"", minerva.tokens_get()),
+         numstring(minerva.tokens_get()) ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade" )
    t:say( function() return string.format(
-         n_("\"YOU CAN TRADE IN YOUR PRECIOUS #p%d MINERVA TOKEN#0 FOR THE FOLLOWING GOODS.\"",
-            "\"YOU CAN TRADE IN YOUR PRECIOUS #p%d MINERVA TOKENS#0 FOR THE FOLLOWING GOODS.\"", minerva.tokens_get()),
-            minerva.tokens_get() ) end )
+         n_("\"YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKEN#0 FOR THE FOLLOWING GOODS.\"",
+            "\"YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKENS#0 FOR THE FOLLOWING GOODS.\"", minerva.tokens_get()),
+            numstring(minerva.tokens_get()) ) end )
    local trades = {
       {"Ripper Cannon", {100, "outfit"}},
       {"TeraCom Fury Launcher", {500, "outfit"}},
@@ -242,6 +252,17 @@ function approach_terminal()
       -- Jump in case of 'Back'
       if idx=="start" then
          vn.jump(idx)
+         return
+      end
+
+      -- Special case
+      if idx=="spaticket" then
+         if spaticketcost > minerva.tokens_get() then
+            -- Not enough money.
+            vn.jump( "trade_notenough" )
+         else
+            vn.jump(idx)
+         end
          return
       end
 
@@ -279,8 +300,12 @@ function approach_terminal()
          if soldout then
             opts[k] = { string.format(_("%s (#rSOLD OUT#0)"), _(v[1])), -1 }
          else
-            opts[k] = { string.format(_("%s (#p%d Tokens#0)"), _(v[1]), tokens), k }
+            opts[k] = { string.format(_("%s (%s)"), _(v[1]), minerva.tokens_str(tokens)), k }
          end
+      end
+      -- Add special ticket
+      if player.evtDone("Spa Propaganda") and var.peek("minerva_spa_ticket")==nil then
+         table.insert( opts, 1, {string.format(_("Special Spa Ticket (%s)"), minerva.tokens_str(spaticketcost)), "spaticket"} )
       end
       table.insert( opts, {_("Back"), "start"} )
       return opts
@@ -312,11 +337,25 @@ function approach_terminal()
    end )
    vn.label("trade_consumate")
    vn.sfxMoney()
-   t:say( _("\"THANK YOU FOR YOUR BUSINESS.\"") )
+   t:say(_([[""THANK YOU FOR YOUR BUSINESS."]]))
    vn.jump("trade")
 
+   -- Buying the ticket
+   vn.label("spaticket")
+   t(_([["ARE YOU SURE YOU WANT TO TRADE IN FOR THE PREMIUM AND EXCLUSIVE SPECIAL SPA TICKET?"
+"THIS TICKET WILL ALLOW YOU TO ENTER A LOTTERY TO WIN AN EXCLUSIVE RELAXING TIME AT THE MINERVA STATION ALL NATURAL SPA WITH CYBORG CHICKEN."]]))
+   vn.menu( {
+      {_("Trade"), "spabuyyes" },
+      {_("Cancel"), "trade" },
+   } )
+   vn.label("spabuyyes")
+   vn.func( function ()
+      minerva.tokens_pay( -spaticketcost )
+      var.push( "minerva_spa_ticket", true )
+   end )
+   vn.jump("trade_consumate")
+
    vn.label( "leave" )
-   vn.fadeout()
    vn.run()
 
    -- Handle random bar events if necessary
@@ -330,7 +369,7 @@ function approach_blackjack()
    vn.clear()
    vn.scene()
    if firsttime then
-      vn.fadein()
+      vn.transition()
       vn.na( _("You make your way to the blackjack table which seems to be surrounded by many patrons, some of which are apparently taking pictures of something. You eventually have to elbow your way to the front to get a view of what is going on." ) )
       vn.appear( cc )
       vn.na( _("When you make it to the front you are greeted by the cold eyes of what apparently seems to be the Cyborg Chicken you were told about. It seems to be sizing the crowd while playing against a patron. The way it moves is very uncanny with short precise mechanical motions. You can tell it has been doing this for a while. You watch as the game progresses and the patron loses all his credits to the chicken, who seems unfazed.") )
@@ -338,7 +377,7 @@ function approach_blackjack()
    end
    if not firsttime then
       vn.newCharacter( cc )
-      vn.fadein()
+      vn.transition()
       vn.na( _("You elbow your way to the front of the table and are once again greeted by the cold mechanical eyes of Cyborg Chicken.") )
    end
    vn.na( "", true ) -- Clear buffer without waiting
@@ -404,7 +443,6 @@ function approach_blackjack()
    vn.animation( 0.5, function (alpha) setup_blackjack(1-alpha) end )
    vn.label( "leave" )
    vn.na( _("You leave the blackjack table behind and head back to the main area.") )
-   vn.fadeout()
    vn.run()
 
    -- Handle random bar events if necessary
@@ -416,7 +454,7 @@ function approach_chuckaluck ()
    vn.clear()
    vn.scene()
    local dealer = vn.newCharacter( _("Dealer"), {image=chuckaluck_image} )
-   vn.fadein()
+   vn.transition()
    vn.na(_("You approach the chuck-a-luck table."))
    vn.na( "", true ) -- Clear buffer without waiting
    vn.label("menu")
@@ -480,7 +518,6 @@ function approach_chuckaluck ()
    vn.animation( 0.5, function (alpha) setup_chuckaluck(1-alpha) end )
    vn.label( "leave" )
    vn.na( _("You leave the chuck-a-luck table behind and head back to the main area.") )
-   vn.fadeout()
    vn.run()
 
    -- Handle random bar events if necessary
@@ -493,9 +530,8 @@ function approach_patron( id )
    vn.clear()
    vn.scene()
    local patron = vn.newCharacter( npcdata.name, { image=npcdata.image } )
-   vn.fadein()
+   vn.transition()
    patron( npcdata.message )
-   vn.fadeout()
    vn.run()
 end
 

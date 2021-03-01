@@ -127,6 +127,7 @@ static int pilotL_cargoHas( lua_State *L );
 static int pilotL_cargoAdd( lua_State *L );
 static int pilotL_cargoRm( lua_State *L );
 static int pilotL_cargoList( lua_State *L );
+static int pilotL_credits( lua_State *L );
 static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
@@ -225,6 +226,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "cargoAdd", pilotL_cargoAdd },
    { "cargoRm", pilotL_cargoRm },
    { "cargoList", pilotL_cargoList },
+   { "credits", pilotL_credits },
    /* Manual AI control. */
    { "idle", pilotL_idle },
    { "control", pilotL_control },
@@ -3055,22 +3057,30 @@ static int pilotL_cargoRm( lua_State *L )
    /* Parse parameters. */
    p = luaL_validpilot(L,1);
    str      = luaL_checkstring( L, 2 );
-   quantity = luaL_checknumber( L, 3 );
 
-   /* Get cargo. */
-   cargo    = commodity_get( str );
-   if (cargo == NULL) {
-      NLUA_ERROR( L, _("Cargo '%s' does not exist!"), str );
-      return 0;
+   if (strcmp(str, "__allExceptMisn") == 0)
+      quantity = pilot_cargoRmAll( p, 0 );
+   else if (strcmp(str, "__all") == 0)
+      quantity = pilot_cargoRmAll( p, 1 );
+   else {
+      quantity = luaL_checknumber( L, 3 );
+
+      /* Get cargo. */
+      cargo    = commodity_get( str );
+      if (cargo == NULL) {
+         NLUA_ERROR( L, _("Cargo '%s' does not exist!"), str );
+         return 0;
+      }
+
+      if (quantity < 0) {
+         NLUA_ERROR( L, _("Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)") );
+         return 0;
+      }
+
+      /* Try to remove the cargo. */
+      quantity = pilot_cargoRm( p, cargo, quantity );
    }
 
-   if (quantity < 0) {
-      NLUA_ERROR( L, _("Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)") );
-      return 0;
-   }
-
-   /* Try to add the cargo. */
-   quantity = pilot_cargoRm( p, cargo, quantity );
    lua_pushnumber( L, quantity );
    return 1;
 }
@@ -3122,6 +3132,24 @@ static int pilotL_cargoList( lua_State *L )
    }
    return 1;
 
+}
+
+
+/**
+ * @brief Handles the pilots credits
+ *
+ *    @luatparam Pilot p Pilot to manipulate credits of.
+ *    @luatparam[opt=0] number cred Credits to give to the pilot.
+ *    @luatreturn number The credits the pilot has.
+ * @luafunc credits
+ */
+static int pilotL_credits( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   p->credits += luaL_optlong( L, 2, 0 );
+   p->credits = MAX( 0, p->credits ); /* Make sure it's not negative. */
+   lua_pushnumber( L, p->credits );
+   return 1;
 }
 
 
@@ -3786,7 +3814,7 @@ static int pilotL_land( lua_State *L )
       t = pilotL_newtask( L, p, "__land" );
 
    if (pnt != NULL) {
-      /* Find the jump. */
+      /* Find the planet. */
       for (i=0; i < array_size(cur_system->planets); i++) {
          if (cur_system->planets[i] == pnt) {
             break;

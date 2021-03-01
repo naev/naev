@@ -1201,6 +1201,7 @@ dat/outfits/accessory/star_of_valor.xml
 dat/outfits/accessory/swamp_bombing.xml
 dat/outfits/accessory/toy_drone.xml
 dat/outfits/accessory/ugly_statue.xml
+dat/outfits/accessory/vacuum_cleaner.xml
 dat/outfits/activated/emergency_shield_booster.xml
 dat/outfits/activated/generic_afterburner.xml
 dat/outfits/activated/hellburner.xml
@@ -2172,6 +2173,7 @@ dat/events/flf/flf_catastrophe.lua
 dat/events/minerva/altercation1.lua
 dat/events/minerva/altercation2.lua
 dat/events/minerva/chicken_rendezvous.lua
+dat/events/minerva/spa_propaganda.lua
 dat/events/minerva/station.lua
 dat/events/naev_needs_YOU.lua
 dat/events/neutral/animaltrouble.lua
@@ -2204,6 +2206,7 @@ dat/factions/equip/proteron.lua
 dat/factions/equip/sirius.lua
 dat/factions/equip/soromid.lua
 dat/factions/equip/thurion.lua
+dat/factions/equip/trader.lua
 dat/factions/equip/zalek.lua
 dat/factions/spawn/civilian.lua
 dat/factions/spawn/collective.lua
@@ -2305,6 +2308,7 @@ dat/missions/minerva/maikki1.lua
 dat/missions/minerva/maikki2.lua
 dat/missions/minerva/pirate1.lua
 dat/missions/minerva/pirate2.lua
+dat/missions/minerva/pirate3.lua
 dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
@@ -2451,6 +2455,7 @@ dat/scripts/swapship.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/main.lua
+dat/scripts/vn/transitions.lua
 dat/snd/music.lua
 src/ai.c
 src/ai.h

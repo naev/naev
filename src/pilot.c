@@ -2945,9 +2945,7 @@ void pilot_free( Pilot* p )
    array_free(p->outfit_utility);
    array_free(p->outfit_weapon);
 
-   while (p->commodities != NULL)
-      pilot_cargoRmRaw( p, p->commodities[0].commodity,
-            p->commodities[0].quantity, 1 );
+   pilot_cargoRmAll( p, 1 );
 
    /* Clean up data. */
    if (p->ai != NULL)

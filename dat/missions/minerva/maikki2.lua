@@ -179,7 +179,7 @@ and %s in the %s system."]]),
          hint3_name, _(hintsys[3])
       ))
    end
-   vn.fadein()
+   vn.transition("hexagon")
 
    vn.na(_("You approach Maikki who seems to have a fierce determination in her look."))
    if misn_state==nil then
@@ -286,10 +286,10 @@ Her eyes sparkle with determination.]]))
       minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
       shiplog.appendLog( logidstr, _("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
    end )
-   vn.na(_("You recieve #p500 Minerva Tokens#0."))
+   vn.na(string.format(_("You recieve %s."), minerva.tokens_get(500)))
    maikki(_([["I'll be around here if you find anything."]]))
    vn.na(_("You take your leave. Without any leads, it might prove hard to find where Kex is. You wonder what your next steps should be..."))
-   vn.done()
+   vn.done("hexagon")
 
    vn.label( "menu_msg" )
    maikki(_([["Is there anything you would like to know about?"]]))
@@ -297,7 +297,7 @@ Her eyes sparkle with determination.]]))
 
    vn.label( "leave" )
    vn.na(_("You take your leave to continue the search for her father."))
-   vn.fadeout()
+   vn.done("hexagon")
    vn.run()
 
    -- Can't run it in the VN or it causes an error
@@ -375,7 +375,7 @@ function approach_hint1 ()
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint1_name, { image=hint1_image, color=hint1_colour } )
-   vn.fadein()
+   vn.transition()
 
    vn.na(_("You approach the professor."))
    prof(_([["Hello, how can I help you?"]]))
@@ -391,7 +391,6 @@ Their excitement grows.]]))
    vn.na(_("They don't seem like they will stop talking anytime soon... You take your leave as they start rambling in a trance-like state."))
    lasthint( prof )
 
-   vn.fadeout()
    vn.run()
 end
 
@@ -406,7 +405,7 @@ function approach_hint2 ()
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint2_name, { image=hint2_image, color=hint2_colour } )
-   vn.fadein()
+   vn.transition()
 
    vn.na(_("You approach the professor."))
    prof(_([["What can I do for you?"]]))
@@ -425,7 +424,6 @@ They shudder when they says the word "work packages".]]))
    vn.na(_("You get away as fast as you can from them as they keep on rambling."))
    lasthint( prof )
 
-   vn.fadeout()
    vn.run()
 end
 
@@ -440,7 +438,7 @@ function approach_hint3 ()
    vn.clear()
    vn.scene()
    local prof = vn.newCharacter( hint3_name, { image=hint3_image, color=hint3_colour } )
-   vn.fadein()
+   vn.transition()
 
    vn.na(_("You approach the professor."))
    prof(_([["Hello."]]))
@@ -456,7 +454,6 @@ function approach_hint3 ()
    vn.na(_("You thank them and run away while they keeps on talking to themself."))
    lasthint( prof )
 
-   vn.fadeout()
    vn.run()
 end
 
@@ -473,7 +470,7 @@ function approach_hint4 ()
    vn.scene()
    local drshrimp = vn.newCharacter( name, { image=hint4_image, color=hint4_colour } )
    local shrimp = vn.newCharacter( _("Floating Shrimp"), { color={0.4, 0.6, 1.0} } )
-   vn.fadein()
+   vn.transition()
 
    vn.na(_("You approach the young man who has POST-DOCTORAL RESEARCHER written on his lab coat. He seems to be really into a book titled 'SHRIMP: Anatomical studies of the Neo-neo-neocaridina species'."))
    drshrimp(_([["..."]]))
@@ -582,7 +579,6 @@ He activates her food activation system and a pellet drops out.]]))
 
    vn.label("leave")
    vn.na(_("You take your leave."))
-   vn.fadeout()
    vn.run()
 end
 
@@ -686,16 +682,25 @@ end
 
 
 function ecc_feral_boss_dead ()
+   local paperbg = love_shaders.paper()
    vn.clear()
    vn.scene()
+   vn.func( function ()
+      vn.setBackground( function ()
+         vn.setColor( {0.2, 0.2, 0.2, 0.8} )
+         paperbg:draw( 0, 0 )
+      end )
+      vn.setShader( love_shaders.corruption(0.5) )
+   end )
    local voice = vn.newCharacter( _("Unknown Voice") )
-   vn.fadein( 3 ) -- Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
-   vn.na(_("While the drone is blowing up, you receive a faint voice-only transmission"))
+   -- TODO better and creepier transition
+   vn.transition( "hexagon", 3 ) -- Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
+   vn.na(_("While the drone is blowing up, you receive a faint voice-only transmission."))
    vn.sfxEerie()
    voice(_([["Thank you for setting me free..."]]))
    vn.na(_("You wonder what that was about as you watch the drone thrash while it blows up. Westhaven is a really weird place."))
    vn.na(_("From the ship scraps you are able to find a very damaged, you guess this is what Dr. Strangelove was referring to as a nebula artifact. Strangely, your ship sensors are identifying it as mainly biological material..."))
-   vn.fadeout()
+   vn.done( "hexagon" )
    vn.run()
 
    nebula_artifacts = misn.cargoAdd( "Nebula Artifact?", 0 )
@@ -738,10 +743,10 @@ end
 function approach_eccentric ()
    vn.clear()
    vn.scene()
-   vn.fadein()
    local dr = vn.newCharacter( strangelove.name,
          { color=strangelove.colour, image=minerva.strangelove.image,
            shader=love_shaders.hologram() } )
+   vn.transition( "electric" )
 
    if not ecc_visitedonce then
       vn.na(_("The hologram projector flickers as what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))
@@ -872,12 +877,11 @@ His voice gets softer and softer as he keeps on mumbling.]]))
       shiplog.appendLog( logidstr, _("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )
    end )
    vn.na(_("You leave behind the hologram project and hope you won't have to deal with Dr. Strangelove in the future."))
-   vn.fadeout()
-   vn.done()
+   vn.done( "electric" )
 
    vn.label("leave")
    vn.na(_("You turn off the hologram projector and Dr. Strangelove's image flickers and disappears."))
-   vn.fadeout()
+   vn.done( "electric" )
    vn.run()
 end
 

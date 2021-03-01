@@ -596,8 +596,8 @@ function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
 function graphics.setLineStyle( style )
    love._unimplemented()
 end
-function graphics.setBlendMode( mode )
-   love._unimplemented()
+function graphics.setBlendMode( mode, alphamode )
+   naev.gfx.setBlendMode( mode, alphamode )
 end
 
 
