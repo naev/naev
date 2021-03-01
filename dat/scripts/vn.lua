@@ -48,6 +48,8 @@ vn._default.namebox_bg = vn._default.textbox_bg
 vn._default.namebox_alpha = 1
 vn._canvas = graphics.newCanvas()
 vn._postshader = nil
+vn._draw_fg = nil
+vn._draw_bg = nil
 vn._prevcanvas = graphics.newCanvas()
 vn._curcanvas = graphics.newCanvas()
 
@@ -1118,7 +1120,10 @@ function vn.clear()
       "_bufcol",
       "_buffer",
       "_title",
-      "_globalalpha"
+      "_globalalpha",
+      "_postshader",
+      "_draw_fg",
+      "_draw_bg",
    }
    for k,v in ipairs(var) do
       vn[v] = vn._default[v]
