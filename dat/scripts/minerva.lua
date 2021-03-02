@@ -36,7 +36,7 @@ local minerva = {
    },
    pirate = {
       name = _("Sketchy Individual"),
-      portrait = "pirate/pirate5.png", -- REPLACE
+      portrait = "pirate/pirate5.png", -- TODO REPLACE
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
       image = portrait.getFullPath("pirate/pirate5.png"),
       colour = nil,
