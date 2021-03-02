@@ -29,6 +29,23 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
+local function _shader2canvas( shader, image, w, h, sx, sy )
+   sx = sx or 1
+   sy = sy or sx
+   -- Render to image
+   local newcanvas = graphics.newCanvas( w, h )
+   local oldcanvas = graphics.getCanvas()
+   local oldshader = graphics.getShader()
+   graphics.setCanvas( newcanvas )
+   graphics.clear( 0, 0, 0, 0 )
+   graphics.setShader( shader )
+   image:draw( 0, 0, 0, sx, sy )
+   graphics.setShader( oldshader )
+   graphics.setCanvas( oldcanvas )
+
+   return newcanvas
+end
+
 --[[
 -- @brief Renders a shader to a canvas.
 --
@@ -40,19 +57,7 @@ function love_shaders.shader2canvas( shader, width, height )
    local lw, lh = naev.gfx.dim()
    width = width or lw
    height = height or lh
-
-   -- Render to image
-   local newcanvas = graphics.newCanvas( width, height )
-   local oldcanvas = graphics.getCanvas()
-   local oldshader = graphics.getShader()
-   graphics.setCanvas( newcanvas )
-   graphics.clear( 1, 1, 1, 1 )
-   graphics.setShader( shader )
-   love_shaders.img:draw( 0, 0, 0, width, height )
-   graphics.setShader( oldshader )
-   graphics.setCanvas( oldcanvas )
-
-   return newcanvas
+   return _shader2canvas( shader, love_shaders.img, width, height, width, height )
 end
 
 function love_shaders.paper( width, height, sharpness )
