@@ -806,7 +806,7 @@ function vn.Character.new( who, params )
          if img == nil then
             error(string.format(_("vn: character image '%s' not found!"),pimage))
          end
-      elseif pimage:type()=="ImageData" then
+      elseif pimage._type=="ImageData" then
          img = graphics.newImage( pimage )
       else
          img = pimage
