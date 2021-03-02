@@ -282,7 +282,7 @@ vec4 burncolor( vec4 color, float value )
    return outcol;
 }
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 {
    float n = Texel( noisetex, uv ).r;
    float p = mix(-smoothness, 1.0 + smoothness, progress);
@@ -303,7 +303,7 @@ local function _burn_noise ()
 precision highp float;
 #include "lib/simplex.glsl"
 uniform float u_r;
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 {
    float n = 0.0;
    for (float i=1.0; i<8.0; i=i+1.0) {
