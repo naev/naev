@@ -482,7 +482,6 @@ in vec4 VaryingColor;
 in vec2 VaryingPosition;
 out vec4 color_out;
 
-// TODO this is still wrong with canvases :/
 vec2 love_getPixelCoord() {
    vec2 uv = love_ScreenSize.xy * (0.5*VaryingPosition+0.5);
    uv.y = uv.y * love_ScreenSize.z + love_ScreenSize.w;
