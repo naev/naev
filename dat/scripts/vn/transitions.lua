@@ -376,6 +376,9 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 
    vec4 color = mix( c1, c2, step( ybase, px.y ) );
    color = mix( color, arcs, v );
+
+   // We need this line to compensate the fact we are premultiplying
+   color.rgb *= max( c1.a, c2.a );
    return color;
 }
 ]]
