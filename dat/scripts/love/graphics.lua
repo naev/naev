@@ -207,7 +207,7 @@ end
 function graphics.pop()
    table.remove( graphics._T, 1 )
    if graphics._T[1] == nil then
-      graphics._T[1] = love.math.newTransform()
+      graphics._T[1] = love_math.newTransform()
    end
 end
 function graphics.translate( dx, dy ) graphics._T[1]:translate( dx, dy ) end
