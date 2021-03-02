@@ -553,11 +553,9 @@ graphics.Canvas = class.inheritsFrom( object.Drawable )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
    local c = graphics.Canvas.new()
-   if not width then
-      local nw, nh, ns = naev.gfx.dim()
-      width = nw
-      height= nh
-   end
+   local nw, nh, ns = naev.gfx.dim()
+   width  = width or nw
+   height = height or nh
    c.canvas = naev.canvas.new( width, height )
    c.w = width
    c.h = height
