@@ -823,12 +823,9 @@ function vn.Character.new( who, params )
 end
 function vn.Character:rename( newname )
    vn._checkstarted()
-   local s = vn.State.new()
-   s._init = function (state)
+   vn.func( function (state)
       self.displayname = newname
-      _finish(state)
-   end
-   table.insert( vn._states, s )
+   end )
 end
 --[[
 -- @brief Creates a new character.
