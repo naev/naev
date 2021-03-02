@@ -387,6 +387,55 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 }
 ]]
 
+transitions._t.slideleft = [[
+uniform Image texprev;
+uniform float progress;
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   uv -= vec2( 1.0-progress, 0.0 );
+   return (uv.x < 0.0) ?
+         Texel( texprev, uv + vec2(1.0, 0.0) ) :
+         Texel( MainTex, uv );
+}
+]]
+
+transitions._t.slideright = [[
+uniform Image texprev;
+uniform float progress;
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   uv += vec2( 1.0-progress, 0.0 );
+   return (uv.x > 1.0) ?
+         Texel( texprev, uv - vec2(1.0, 0.0) ) :
+         Texel( MainTex, uv );
+}
+]]
+
+transitions._t.slidedown = [[
+uniform Image texprev;
+uniform float progress;
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   uv += vec2( 0.0, 1.0-progress );
+   return (uv.y > 1.0) ?
+         Texel( texprev, uv - vec2(0.0, 1.0) ) :
+         Texel( MainTex, uv );
+}
+]]
+
+transitions._t.slideup = [[
+uniform Image texprev;
+uniform float progress;
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   uv -= vec2( 0.0, 1.0-progress );
+   return (uv.y < 0.0) ?
+         Texel( texprev, uv - vec2(0.0, 1.0) ) :
+         Texel( MainTex, uv );
+}
+]]
+
+
 function transitions.get( name, seconds, transition )
    -- Sane defaults
    name = name or "blur"
