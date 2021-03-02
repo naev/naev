@@ -50,6 +50,7 @@ local function _setdefaults()
    vn._default._postshader = nil
    vn._default._draw_fg = nil
    vn._default._draw_bg = nil
+   vn._default._updatefunc = nil
    -- These are implicitly dependent on lw, lh, so should be recalculated with the above.
    vn._canvas = graphics.newCanvas()
    vn._prevcanvas = graphics.newCanvas()
@@ -238,6 +239,16 @@ function vn.update(dt)
       end
    end
 
+   -- Update shader if necessary
+   if vn._postshader and vn._postshader.update then
+      vn._postshader:update( dt )
+   end
+
+   -- Custom update function
+   if vn._updatefunc then
+      vn._updatefunc(dt)
+   end
+
    local s = vn._states[ vn._state ]
    s:update( dt )
 end
@@ -318,11 +329,6 @@ end
 function vn.State:update( dt )
    self:_update( dt )
    vn._checkDone()
-
-   -- Update shader if necessary
-   if vn._postshader and vn._postshader.update then
-      vn._postshader:update( dt )
-   end
 end
 function vn.State:mousepressed( mx, my, button )
    self:_mousepressed( mx, my, button )
@@ -1088,6 +1094,10 @@ end
 
 function vn.setForeground( drawfunc )
    vn._draw_fg = drawfunc
+end
+
+function vn.setUpdateFunc( updatefunc )
+   vn._updatefunc = updatefunc
 end
 
 function vn._jump( label )
