@@ -396,8 +396,8 @@ function transitions.get( name, seconds, transition )
 
    local shader = graphics.newShader( _pixelcode, _vertexcode )
    if name=="burn" then
-      local noisetex = _burn_noise()
-      shader:send( "noisetex", noisetex )
+      shader._noisetex = _burn_noise()
+      shader:send( "noisetex", shader._noisetex )
    end
    if shader:hasUniform("u_time") then
       shader._dt = 1000 * love_math.random()
