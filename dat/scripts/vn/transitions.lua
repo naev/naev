@@ -298,7 +298,11 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 
    c1 = burncolor( c1, q );
 
-   return (q <= 0.0) ? c2 : c1;
+   vec4 color = (q <= 0.0) ? c2 : c1;
+
+   // We need this line to compensate the fact we are premultiplying
+   color.rgb *= max( c1.a, c2.a );
+   return color;
 }
 ]]
 local function _burn_noise ()
