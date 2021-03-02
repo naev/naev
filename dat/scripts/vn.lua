@@ -822,7 +822,6 @@ function vn.Character.new( who, params )
    return c
 end
 function vn.Character:rename( newname )
-   vn._checkstarted()
    vn.func( function (state)
       self.displayname = newname
    end )
