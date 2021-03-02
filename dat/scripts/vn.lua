@@ -1177,6 +1177,7 @@ function vn.clear()
       "_postshader",
       "_draw_fg",
       "_draw_bg",
+      "_updatefunc",
    }
 
    _setdefaults()
