@@ -306,10 +306,10 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 }
 ]]
 local function _burn_noise ()
-   local pixelcode = [[
+   local pixelcode = string.format([[
 precision highp float;
 #include "lib/simplex.glsl"
-uniform float u_r;
+const float u_r = %f;
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 {
    float n = 0.0;
@@ -319,20 +319,9 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
    }
    return vec4( vec3(n)*0.5+0.5, 1.0 );
 }
-]]
-   local width, height = naev.gfx.dim()
-   local noisetex = graphics.newCanvas( width, height )
+]], love_math.random() )
    local noiseshader = graphics.newShader( pixelcode, _vertexcode )
-   noiseshader:send( "u_r", love_math.random() )
-   local oldcanvas = graphics.getCanvas()
-   local oldshader = graphics.getShader()
-   graphics.setCanvas( noisetex )
-   graphics.clear( 1, 1, 1, 1 )
-   graphics.setShader( noiseshader )
-   love_shaders.img:draw( 0, 0, 0, width, height )
-   graphics.setShader( oldshader )
-   graphics.setCanvas( oldcanvas )
-   return noisetex
+   return love_shaders.shader2canvas( shader )
 end
 
 transitions._t.electric = [[

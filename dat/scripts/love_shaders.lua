@@ -29,18 +29,41 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 }
 ]]
 
+--[[
+-- @brief Renders a shader to a canvas.
+--
+--    @param shader Shader to render.
+--    @param width Width of the canvas to create (or nil for fullscreen).
+--    @param height Height of the canvas to create (or nil for fullscreen).
+--]]
+function love_shaders.shader2canvas( shader, width, height )
+   local lw, lh = naev.gfx.dim()
+   width = width or lw
+   height = height or lh
+
+   -- Render to image
+   local newcanvas = graphics.newCanvas( width, height )
+   local oldcanvas = graphics.getCanvas()
+   local oldshader = graphics.getShader()
+   graphics.setCanvas( newcanvas )
+   graphics.clear( 1, 1, 1, 1 )
+   graphics.setShader( shader )
+   love_shaders.img:draw( 0, 0, 0, width, height )
+   graphics.setShader( oldshader )
+   graphics.setCanvas( oldcanvas )
+
+   return newcanvas
+end
+
 function love_shaders.paper( width, height, sharpness )
-   if width==nil then
-      width, height = naev.gfx.dim()
-   end
    sharpness = sharpness or 1
-   local pixelcode = [[
+   local pixelcode = string.format([[
 precision highp float;
 
 #include "lib/simplex.glsl"
 
-uniform float u_r;
-uniform float u_sharp;
+const float u_r = %f;
+const float u_sharp = %f;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
@@ -56,24 +79,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    return texcolor;
 }
-]]
-
+]], love_math.random(), sharpness )
    local shader = graphics.newShader( pixelcode, _vertexcode )
-   shader:send( "u_r", love_math.random() )
-   shader:send( "u_sharp", sharpness );
-
-   -- Render to image
-   local paperbg = graphics.newCanvas( width, height )
-   local oldcanvas = graphics.getCanvas()
-   local oldshader = graphics.getShader()
-   graphics.setCanvas( paperbg )
-   graphics.clear( 1, 1, 1, 1 )
-   graphics.setShader( shader )
-   love_shaders.img:draw( 0, 0, 0, width, height )
-   graphics.setShader( oldshader )
-   graphics.setCanvas( oldcanvas )
-
-   return paperbg
+   return love_shaders.shader2canvas( shader, width, height )
 end
 
 function love_shaders.oldify( noise )
