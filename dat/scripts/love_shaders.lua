@@ -97,16 +97,14 @@ function love_shaders.blur( image, kernel_size )
 precision highp float;
 #include "lib/blur.glsl"
 uniform vec2 u_blurdir;
-uniform vec2 wh;
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = blur13( tex, uv, wh, u_blurdir );
+   vec4 texcolor = blur13( tex, uv, love_ScreenSize.xy, u_blurdir );
    return texcolor;
 }
 ]]
    local shader = graphics.newShader( pixelcode, _vertexcode )
    local w, h = image:getDimensions()
-   shader:send( "wh", w, h )
    shader:send( "u_blurdir", kernel_size, 0 )
    local pass1 = _shader2canvas( shader, image, w, h )
    shader:send( "u_blurdir", 0, kernel_size )
