@@ -192,10 +192,8 @@ local function _draw()
       -- Draw canvas
       graphics.setCanvas( prevcanvas )
       graphics.setShader( vn._postshader )
-      vn.setColor( {1, 1, 1, 1} ) -- TODO: Really?
-      graphics.setBlendMode( "alpha", "premultiplied" )
+      vn.setColor( {1, 1, 1, 1} )
       vn._canvas:draw( 0, 0 )
-      graphics.setBlendMode( "alpha" )
       graphics.setShader()
    end
 end
