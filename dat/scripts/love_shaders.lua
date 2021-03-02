@@ -342,4 +342,69 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
+function love_shaders.aura( color, strength )
+   color = color or {1, 0, 0}
+   strength = strength or 1
+   local pixelcode = string.format([[
+#include "lib/math.glsl"
+#include "lib/blur.glsl"
+#include "lib/simplex.glsl"
+#include "lib/blend.glsl"
+
+uniform float u_time;
+//uniform Image blurtex;
+
+const vec3 basecolor = vec3( %f, %f, %f );
+const float strength = %f;
+const float u_r = %f;
+
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+{
+
+   const float blur = 10.0;
+   vec4 blurcolor;
+   blurcolor  = blur9( tex, uv, love_ScreenSize.xy, vec2(blur, 0) );
+   blurcolor += blur9( tex, uv, love_ScreenSize.xy, vec2(0, blur) );
+   blurcolor += blur9( tex, uv, love_ScreenSize.xy, vec2(blur, blur)*M_SQRT1_2 );
+   blurcolor += blur9( tex, uv, love_ScreenSize.xy, vec2(blur, -blur)*M_SQRT1_2 );
+   blurcolor += blur9( tex, uv, love_ScreenSize.xy, vec2(-blur, blur)*M_SQRT1_2 );
+   blurcolor += blur9( tex, uv, love_ScreenSize.xy, vec2(-blur, -blur)*M_SQRT1_2 );
+   blurcolor *= 1.0/6.0;
+
+   if (blurcolor.a <= 0.0)
+      return vec4(0.0);
+
+   //vec4 blurcolor = texture2D( blurtex, uv );
+   vec4 texcolor = texture2D( tex, uv );
+
+   const float speed = 1.0;
+   const float strength = 1.0;
+   vec2 offset = vec2( 50.0*sin( M_PI*u_time * 0.001 * speed ), -3.0*u_time*speed );
+
+   float n = 0.0;
+   for (float i=1.0; i<4.0; i=i+1.0) {
+      float m = pow( 2.0, i );
+      n += snoise( offset +  px * strength * 0.009 * m + 1000.0 * u_r ) * (1.0 / m);
+   }
+   n = 0.5*n + 0.5;
+
+   blurcolor.a = 1.0-2.0*distance( 0.5, blurcolor.a );
+   blurcolor.a *= n;
+
+   texcolor.rgb = blendScreen( texcolor.rgb, basecolor, blurcolor.a );
+   texcolor.a = max( texcolor.a, blurcolor.a );
+   return color * texcolor;
+}
+]], color[1], color[2], color[3], strength, love_math.random() )
+
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader._dt = 1000 * love_math.random()
+   shader.update = function (self, dt)
+      self._dt = self._dt + dt
+      self:send( "u_time", self._dt )
+   end
+   return shader
+end
+
+
 return love_shaders
