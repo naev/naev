@@ -89,6 +89,31 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    return love_shaders.shader2canvas( shader, width, height )
 end
 
+-- TODO fix this...
+function love_shaders.blur( image, kernel_size )
+   kernel_size = kernel_size or 5
+   kernel_size = 0
+   local pixelcode = [[
+precision highp float;
+#include "lib/blur.glsl"
+uniform vec2 u_blurdir;
+uniform vec2 wh;
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+{
+   vec4 texcolor = blur13( tex, uv, wh, u_blurdir );
+   return texcolor;
+}
+]]
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   local w, h = image:getDimensions()
+   shader:send( "wh", w, h )
+   shader:send( "u_blurdir", kernel_size, 0 )
+   local pass1 = _shader2canvas( shader, image, w, h )
+   shader:send( "u_blurdir", 0, kernel_size )
+   local pass2 = _shader2canvas( shader, pass1, w, h )
+   return pass1
+end
+
 function love_shaders.oldify( noise )
    noise = noise or 1.0
    local pixelcode = [[
