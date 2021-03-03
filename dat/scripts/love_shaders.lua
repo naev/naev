@@ -421,7 +421,12 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    shader.prerender = function( self, image )
       self._blurtex = love_shaders.blur( image, size )
       self:send( "blurtex", self._blurtex )
-      self.prerender = nil -- Run once
+      -- Horrible hack, not sure why this is necessary...
+      if not self.runonce then
+         self.runonce = true
+      else
+         self.prerender = nil -- Run once
+      end
    end
    shader._dt = 1000 * love_math.random()
    shader.update = function (self, dt)
