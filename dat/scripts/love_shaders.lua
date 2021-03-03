@@ -90,26 +90,27 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    return love_shaders.shader2canvas( shader, width, height )
 end
 
-function love_shaders.blur( image, kernel_size )
+function love_shaders.blur( image, kernel_size, blurtype )
    kernel_size = kernel_size or 5
-   local pixelcode = [[
+   blurtype = blurtype or "gaussian"
+   local w, h = image:getDimensions()
+   local pixelcode = string.format([[
 precision highp float;
 #include "lib/blur.glsl"
-uniform vec2 wh;
 uniform vec2 blurvec;
+const vec2 wh = vec2( %f, %f );
+const float strength = %f;
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = blur13( tex, uv, wh, blurvec );
+   vec4 texcolor = blur%s( tex, uv, wh, blurvec, strength );
    return texcolor;
 }
-]]
+]], w, h, kernel_size, blurtype )
    local shader = graphics.newShader( pixelcode, _vertexcode )
-   local w, h = image:getDimensions()
-   shader:send( "wh", w, h )
    -- Since the kernel is separable we need two passes, one for x and one for y
-   shader:send( "blurvec", kernel_size, 0 )
+   shader:send( "blurvec", 1, 0 )
    pass1 = _shader2canvas( shader, image, w, h )
-   shader:send( "blurvec", 0, kernel_size )
+   shader:send( "blurvec", 0, 1 )
    pass2 = _shader2canvas( shader, pass1, w, h )
    return pass2
 end
@@ -376,7 +377,7 @@ function love_shaders.aura( color, size, strength, speed )
    color = color or {1, 0, 0}
    strength = strength or 1
    speed = speed or 1
-   size = size or 20 -- in px
+   size = size or 20 -- Gaussian blur sigma
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 #include "lib/simplex.glsl"
