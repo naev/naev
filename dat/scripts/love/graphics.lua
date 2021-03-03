@@ -29,7 +29,7 @@ local function _H( x, y, r, sx, sy )
       -- Rendering to canvas
       local cw = graphics._canvas.t.w
       local ch = graphics._canvas.t.h
-      H = naev.transform.ortho( 0, cw, 0, ch, -1, 1 )
+      H = naev.transform.ortho( 0, cw, 0, ch, 1, -1 )
           :scale( love.s, love.s )
    else
       -- Rendering to screen
@@ -197,7 +197,7 @@ function graphics.origin()
    local nw, nh = naev.gfx.dim()
    local nx = -love.x
    local ny = love.h+love.y-nh
-   graphics._O = naev.transform.ortho( nx, nx+nw, ny+nh, ny, -1, 1 )
+   graphics._O = naev.transform.ortho( nx, nx+nw, ny+nh, ny, 1, -1 )
    graphics._T = { love_math.newTransform() }
 end
 function graphics.push()
