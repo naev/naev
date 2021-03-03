@@ -110,8 +110,10 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    -- Since the kernel is separable we need two passes, one for x and one for y
    shader:send( "blurvec", 1, 0 )
    pass1 = _shader2canvas( shader, image, w, h )
+   graphics.setBlendMode( "alpha", "premultiplied" )
    shader:send( "blurvec", 0, 1 )
    pass2 = _shader2canvas( shader, pass1, w, h )
+   graphics.setBlendMode( "alpha" )
    return pass2
 end
 
@@ -421,12 +423,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    shader.prerender = function( self, image )
       self._blurtex = love_shaders.blur( image, size )
       self:send( "blurtex", self._blurtex )
-      -- Horrible hack, not sure why this is necessary...
-      if not self.runonce then
-         self.runonce = true
-      else
-         self.prerender = nil -- Run once
-      end
+      self.prerender = nil -- Run once
    end
    shader._dt = 1000 * love_math.random()
    shader.update = function (self, dt)
