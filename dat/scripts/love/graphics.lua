@@ -30,7 +30,6 @@ local function _H( x, y, r, sx, sy )
       local cw = graphics._canvas.t.w
       local ch = graphics._canvas.t.h
       H = naev.transform.ortho( 0, cw, 0, ch, 1, -1 )
-          :scale( love.s, love.s )
    else
       -- Rendering to screen
       H = graphics._O
