@@ -321,7 +321,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 }
 ]], love_math.random() )
    local noiseshader = graphics.newShader( pixelcode, _vertexcode )
-   return love_shaders.shader2canvas( shader )
+   return love_shaders.shader2canvas( noiseshader )
 end
 
 transitions._t.electric = [[
