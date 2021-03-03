@@ -149,9 +149,11 @@ function graphics.Image:draw( ... )
    shader = shader.shader
    local s1, s2, s3, s4
    local canvas = graphics._canvas
+   local oldscale = love.s
    if canvas then
-      s1 = canvas.w / love.s
-      s2 = canvas.h / love.s
+      love.s = 1
+      s1 = canvas.w
+      s2 = canvas.h
       s3 = -1.0
       s4 = love.h
    else
@@ -166,6 +168,7 @@ function graphics.Image:draw( ... )
    -- Get transformation and run
    local H = _H( x, y, r, w*sx, h*sy )
    naev.gfx.renderTexH( self.tex, shader, H, graphics._fgcol );
+   love.s = oldscale
 end
 
 
