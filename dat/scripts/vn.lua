@@ -113,6 +113,9 @@ function _draw_character( c )
       flip = -1
       x = x + scale*w
    end
+   if c.shader and c.shader.prerender then
+      c.shader:prerender( c.image )
+   end
    vn.setColor( col, c.alpha )
    graphics.setShader( c.shader )
    graphics.draw( c.image, x, y, 0, flip*scale, scale )
