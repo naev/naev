@@ -57,4 +57,40 @@ vec4 blur13( sampler2D image, vec2 uv, vec2 resolution, float strength ) {
         + 0.5 * blur13( image, uv, resolution, strength * vec2(0,1) );
 }
 
+/*
+ * These two implementations below are computed per pixel and much slower.
+ * Meant for offline use (e.g., to create canvases)
+ */
+vec4 blurlinear( sampler2D image, vec2 uv, vec2 resolution, vec2 direction, float strength ) {
+   vec4 color = texture2D( image, uv );
+
+   float step = 1.0 / dot( resolution, direction );
+   float sum = 1.0;
+   for (float i = 1.0; i<=strength; i++ ) {
+      vec2 off = direction*i*step;
+      color += texture2D( image, uv+off );
+      color += texture2D( image, uv-off );
+      sum += 2.0;
+   }
+   color /= sum;
+   return color;
+}
+vec4 blurgaussian( sampler2D image, vec2 uv, vec2 resolution, vec2 direction, float sigma ) {
+   const float threshold = 0.01; // Threshold to ignore pixels at
+
+   vec4 color = texture2D( image, uv );
+   float step = 1.0 / dot( resolution, direction );
+   float g = 1.0; // exp( 0.0 )
+   float sum = g;
+   float den = 1.0 / (2.0 * pow(sigma, 2.0));
+   for (float i = 1.0; (g=exp( -pow(i,2.0)*den )) > threshold; i++ ) {
+      vec2 off = direction*i*step;
+      color += texture2D( image, uv+off ) * g;
+      color += texture2D( image, uv-off ) * g;
+      sum += 2.0 * g;
+   }
+   color /= sum;
+   return color;
+}
+
 #endif /* _BLUR_GLSL */
