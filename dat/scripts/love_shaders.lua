@@ -366,43 +366,33 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
-function love_shaders.aura( color, strength )
+function love_shaders.aura( color, size, strength, speed )
    color = color or {1, 0, 0}
    strength = strength or 1
+   speed = speed or 1
+   size = size or 20 -- in px
    local pixelcode = string.format([[
 #include "lib/math.glsl"
-#include "lib/blur.glsl"
 #include "lib/simplex.glsl"
 #include "lib/blend.glsl"
 
 uniform float u_time;
-//uniform Image blurtex;
+uniform Image blurtex;
 
 const vec3 basecolor = vec3( %f, %f, %f );
 const float strength = %f;
+const float speed = %f;
 const float u_r = %f;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
+   vec4 blurcolor = texture2D( blurtex, uv );
+   vec4 texcolor = texture2D( tex, uv );
 
-   const float blur = 10.0;
-   vec4 blurcolor;
-   blurcolor  = blur9( tex, uv, love_ScreenSize.xy, vec2(blur, 0) );
-   blurcolor += blur9( tex, uv, love_ScreenSize.xy, vec2(0, blur) );
-   blurcolor += blur9( tex, uv, love_ScreenSize.xy, vec2(blur, blur)*M_SQRT1_2 );
-   blurcolor += blur9( tex, uv, love_ScreenSize.xy, vec2(blur, -blur)*M_SQRT1_2 );
-   blurcolor += blur9( tex, uv, love_ScreenSize.xy, vec2(-blur, blur)*M_SQRT1_2 );
-   blurcolor += blur9( tex, uv, love_ScreenSize.xy, vec2(-blur, -blur)*M_SQRT1_2 );
-   blurcolor *= 1.0/6.0;
-
+   // Hack to hopefully speed up
    if (blurcolor.a <= 0.0)
       return vec4(0.0);
 
-   //vec4 blurcolor = texture2D( blurtex, uv );
-   vec4 texcolor = texture2D( tex, uv );
-
-   const float speed = 1.0;
-   const float strength = 1.0;
    vec2 offset = vec2( 50.0*sin( M_PI*u_time * 0.001 * speed ), -3.0*u_time*speed );
 
    float n = 0.0;
@@ -419,9 +409,13 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    texcolor.a = max( texcolor.a, blurcolor.a );
    return color * texcolor;
 }
-]], color[1], color[2], color[3], strength, love_math.random() )
-
+]], color[1], color[2], color[3], strength, speed, love_math.random() )
    local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader.prerender = function( self, image )
+      self._blurtex = love_shaders.blur( image, size )
+      self:send( "blurtex", self._blurtex )
+      self.prerender = nil -- Run once
+   end
    shader._dt = 1000 * love_math.random()
    shader.update = function (self, dt)
       self._dt = self._dt + dt
