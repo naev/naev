@@ -39,6 +39,7 @@ local function _shader2canvas( shader, image, w, h, sx, sy )
    graphics.setCanvas( newcanvas )
    graphics.clear( 0, 0, 0, 0 )
    graphics.setShader( shader )
+   graphics.setColor( 1, 1, 1, 1 )
    image:draw( 0, 0, 0, sx, sy )
    graphics.setShader( oldshader )
    graphics.setCanvas( oldcanvas )
@@ -94,18 +95,23 @@ function love_shaders.blur( image, kernel_size )
    local pixelcode = [[
 precision highp float;
 #include "lib/blur.glsl"
-uniform float strength;
+uniform vec2 wh;
+uniform vec2 blurvec;
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = blur13( tex, uv, love_ScreenSize.xy, strength );
+   vec4 texcolor = blur13( tex, uv, wh, blurvec );
    return texcolor;
 }
 ]]
    local shader = graphics.newShader( pixelcode, _vertexcode )
    local w, h = image:getDimensions()
-   shader:send( "strength", kernel_size )
-   image = _shader2canvas( shader, image, w, h )
-   return image
+   shader:send( "wh", w, h )
+   -- Since the kernel is separable we need two passes, one for x and one for y
+   shader:send( "blurvec", kernel_size, 0 )
+   pass1 = _shader2canvas( shader, image, w, h )
+   shader:send( "blurvec", 0, kernel_size )
+   pass2 = _shader2canvas( shader, pass1, w, h )
+   return pass2
 end
 
 function love_shaders.oldify( noise )
@@ -387,12 +393,12 @@ const float u_r = %f;
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
    vec4 blurcolor = texture2D( blurtex, uv );
-   vec4 texcolor = texture2D( tex, uv );
 
    // Hack to hopefully speed up
    if (blurcolor.a <= 0.0)
       return vec4(0.0);
 
+   vec4 texcolor = texture2D( tex, uv );
    vec2 offset = vec2( 50.0*sin( M_PI*u_time * 0.001 * speed ), -3.0*u_time*speed );
 
    float n = 0.0;
