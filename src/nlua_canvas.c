@@ -233,12 +233,14 @@ static int canvasL_set( lua_State *L )
       }
       gl_screen.current_fbo = lc->fbo;
       glDisable(GL_SCISSOR_TEST);
+      glViewport( 0, 0, lc->tex->w, lc->tex->h );
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    }
    else if ((lua_gettop(L)<=0) || lua_isnil(L,1)) {
       gl_screen.current_fbo = previous_fbo;
       previous_fbo_set = 0;
       glEnable(GL_SCISSOR_TEST);
+      glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    }
    else
