@@ -69,7 +69,7 @@ gl_Matrix4 gl_view_matrix = {0};
  * prototypes
  */
 /* gl */
-static int gl_setupAttributes (void);
+static int gl_setupAttributes( int fallback );
 static int gl_createWindow( unsigned int flags );
 static int gl_getFullscreenMode (void);
 static int gl_getGLInfo (void);
@@ -190,10 +190,10 @@ void gl_checkHandleError( const char *func, int line )
  *
  *    @return 0 on success.
  */
-static int gl_setupAttributes (void)
+static int gl_setupAttributes( int fallback )
 {
-   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, fallback ? 3 : 4);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, fallback ? 1 : 0);
    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
    if (conf.fsaa > 1) {
@@ -262,7 +262,7 @@ static int gl_getFullscreenMode (void)
  */
 static int gl_createWindow( unsigned int flags )
 {
-   int ret;
+   int ret, fallback;
 
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
@@ -277,7 +277,12 @@ static int gl_createWindow( unsigned int flags )
          conf.minimize ? "1" : "0" );
 
    /* Create the OpenGL context, note we don't need an actual renderer. */
-   gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
+   for (fallback = 0; fallback <= 1; fallback++) {
+      gl_setupAttributes( fallback );
+      gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
+      if (gl_screen.context != NULL)
+         break;
+   }
    if (!gl_screen.context)
       ERR(_("Unable to create OpenGL context! %s"), SDL_GetError());
 
@@ -316,6 +321,8 @@ static int gl_getGLInfo (void)
    SDL_GL_GetAttribute( SDL_GL_MULTISAMPLESAMPLES, &gl_screen.fsaa );
    if (doublebuf)
       gl_screen.flags |= OPENGL_DOUBLEBUF;
+   if (GLAD_GL_ARB_shader_subroutine && glGetSubroutineIndex && glGetSubroutineUniformLocation && glUniformSubroutinesuiv)
+      gl_screen.flags |= OPENGL_SUBROUTINES;
    /* Calculate real depth. */
    gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
 
@@ -448,9 +455,6 @@ int gl_init (void)
       WARN(_("Unable to initialize SDL Video: %s"), SDL_GetError());
       return -1;
    }
-
-   /* Set opengl flags. */
-   gl_setupAttributes();
 
    /* Create the window. */
    gl_createWindow( flags );

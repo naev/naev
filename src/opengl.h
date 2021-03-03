@@ -31,6 +31,7 @@
  */
 #define OPENGL_DOUBLEBUF   (1<<1) /**< Doublebuffer. */
 #define OPENGL_VSYNC       (1<<2) /**< Sync to monitor vertical refresh rate. */
+#define OPENGL_SUBROUTINES (1<<3) /**< Ability to use shader subroutines. */
 #define gl_has(f)    (gl_screen.flags & (f)) /**< Check for the flag */
 /**
  * @brief Stores data about the current opengl environment.

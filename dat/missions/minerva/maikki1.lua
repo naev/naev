@@ -372,9 +372,9 @@ function approach_scavengers ()
    vn.clear()
    vn.scene()
    local scavA = vn.newCharacter( _("Scavenger A"),
-         { image=scavengera_image, color=scavengera_colour } )
+         { image=scavengera_image, color=scavengera_colour, pos="left" } )
    local scavB = vn.newCharacter( _("Scavenger B"),
-         { image=scavengerb_image, color=scavengerb_colour } )
+         { image=scavengerb_image, color=scavengerb_colour, pos="right" } )
    vn.transition()
 
    if bribed_scavengers==true then
@@ -787,10 +787,10 @@ function scavengers_encounter ()
    vn.scene()
    local scavA = vn.newCharacter( _("Scavenger A"),
          { image=scavengera_image,
-         color=scavengera_colour, shader=love_shaders.hologram(2.0) } )
+         color=scavengera_colour, shader=love_shaders.hologram(2.0), pos="left" } )
    local scavB = vn.newCharacter( _("Scavenger B"),
          { image=scavengerb_image,
-         color=scavengerb_colour, shader=love_shaders.hologram(2.0) } )
+         color=scavengerb_colour, shader=love_shaders.hologram(2.0), pos="right" } )
    vn.transition("electric")
 
    vn.na(_("Two angry scavengers appear on your screen."))

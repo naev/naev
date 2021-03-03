@@ -50,10 +50,17 @@ local function _setdefaults()
    vn._default._postshader = nil
    vn._default._draw_fg = nil
    vn._default._draw_bg = nil
+   vn._default._updatefunc = nil
    -- These are implicitly dependent on lw, lh, so should be recalculated with the above.
    vn._canvas = graphics.newCanvas()
    vn._prevcanvas = graphics.newCanvas()
    vn._curcanvas = graphics.newCanvas()
+   -- Empty canvas used for some transitions
+   vn._emptycanvas = graphics.newCanvas()
+   local oldcanvas = graphics.getCanvas()
+   graphics.setCanvas( vn._emptycanvas )
+   graphics.clear( 0, 0, 0, 0 )
+   graphics.setCanvas( oldcanvas )
 end
 
 
@@ -99,12 +106,15 @@ function _draw_character( c )
    if c.talking then
       col = { 1, 1, 1 }
    else
-      col = { 0.8, 0.8, 0.8 }
+      col = { 0.9, 0.9, 0.9 }
    end
    local flip = 1
    if c.offset > 0.5*lw then
       flip = -1
       x = x + scale*w
+   end
+   if c.shader and c.shader.prerender then
+      c.shader:prerender( c.image )
    end
    vn.setColor( col, c.alpha )
    graphics.setShader( c.shader )
@@ -185,10 +195,8 @@ local function _draw()
       -- Draw canvas
       graphics.setCanvas( prevcanvas )
       graphics.setShader( vn._postshader )
-      vn.setColor( {1, 1, 1, 1} ) -- TODO: Really?
-      graphics.setBlendMode( "alpha", "premultiplied" )
+      vn.setColor( {1, 1, 1, 1} )
       vn._canvas:draw( 0, 0 )
-      graphics.setBlendMode( "alpha" )
       graphics.setShader()
    end
 end
@@ -230,6 +238,16 @@ function vn.update(dt)
       if c.shader and c.shader.update then
          c.shader:update(dt)
       end
+   end
+
+   -- Update shader if necessary
+   if vn._postshader and vn._postshader.update then
+      vn._postshader:update( dt )
+   end
+
+   -- Custom update function
+   if vn._updatefunc then
+      vn._updatefunc(dt)
    end
 
    local s = vn._states[ vn._state ]
@@ -312,11 +330,6 @@ end
 function vn.State:update( dt )
    self:_update( dt )
    vn._checkDone()
-
-   -- Update shader if necessary
-   if vn._postshader and vn._postshader.update then
-      vn._postshader:update( dt )
-   end
 end
 function vn.State:mousepressed( mx, my, button )
    self:_mousepressed( mx, my, button )
@@ -385,31 +398,20 @@ function vn.StateCharacter:_init()
       c.alpha = 1
       c.displayname = c.who -- reset name
    end
-   if not self.character.manualpos then
-      -- TODO better centering
-      local lw, lh = graphics.getDimensions()
-      local nimg = 0
-      for k,c in ipairs(vn._characters) do
-         if c.image ~= nil then
-            nimg = nimg+1
-         end
-      end
-      local n = 0
-      for k,c in ipairs(vn._characters) do
-         if c.image ~= nil then
-            n = n+1
-            local w, h = c.image:getDimensions()
-            if nimg == 1 then
-               c.offset = lw/2
-            elseif nimg == 2 then
-               c.offset = ((n-1)*0.5 + 0.25)*lw
-            elseif nimg == 3 then
-               c.offset = ((n-1)*0.35 + 0.15)*lw
-            else
-               error(_("vn: unsupported number of characters"))
-            end
-         end
-      end
+   local pos = self.character.pos or "center"
+   local lw, lh = graphics.getDimensions()
+   if type(pos)=="number" then
+      self.character.offset = pos*lw
+   elseif pos == "center" then
+      self.character.offset = 0.5*lw
+   elseif pos == "left" then
+      self.character.offset = 0.25*lw
+   elseif pos == "right" then
+      self.character.offset = 0.75*lw
+   elseif pos == "farleft" then
+      self.character.offset = 0.15*lw
+   elseif pos == "farright" then
+      self.character.offset = 0.85*lw
    end
    _finish(self)
 end
@@ -807,7 +809,7 @@ function vn.Character.new( who, params )
          if img == nil then
             error(string.format(_("vn: character image '%s' not found!"),pimage))
          end
-      elseif pimage:type()=="ImageData" then
+      elseif pimage._type=="ImageData" then
          img = graphics.newImage( pimage )
       else
          img = pimage
@@ -818,17 +820,14 @@ function vn.Character.new( who, params )
    end
    c.shader = params.shader
    c.hidetitle = params.hidetitle
+   c.pos = params.pos
    c.params = params
    return c
 end
 function vn.Character:rename( newname )
-   vn._checkstarted()
-   local s = vn.State.new()
-   s._init = function (state)
+   vn.func( function (state)
       self.displayname = newname
-      _finish(state)
-   end
-   table.insert( vn._states, s )
+   end )
 end
 --[[
 -- @brief Creates a new character.
@@ -846,32 +845,78 @@ function vn.newCharacter( who, params )
    table.insert( vn._states, vn.StateCharacter.new( c ) )
    return c
 end
-function vn.appear( c, seconds )
-   seconds = seconds or 0.2
+
+local function _appear_setup( c, shader )
+   -- Create new drawables
+   vn.func( function ()
+      shader:send( "texprev", vn._emptycanvas )
+      for k,v in ipairs(c) do
+         local d = graphics.Drawable.new()
+         d.image = v.image
+         d.getDimensions = function ( self, ... )
+            return self.image:getDimensions(...)
+         end
+         d.draw = function ( self, ... )
+            local oldcanvas = graphics.getCanvas()
+            graphics.setCanvas( vn._curcanvas )
+            graphics.clear( 0, 0, 0, 0 )
+            self.image:draw( ... )
+            graphics.setCanvas( oldcanvas )
+
+            --local oldshader = graphics.getShader()
+            graphics.setShader( shader )
+            vn.setColor( {1, 1, 1, 1} )
+            graphics.setBlendMode( "alpha", "premultiplied" )
+            vn._curcanvas:draw( 0, 0 )
+            graphics.setBlendMode( "alpha" )
+            graphics.setShader( oldshader )
+         end
+         v.image = d
+      end
+   end )
+end
+local function _appear_cleanup( c )
+   -- Undo new drawables
+   vn.func( function ()
+      for k,v in ipairs(c) do
+         v.image = v.image.image
+      end
+   end )
+end
+function vn.appear( c, name, seconds, transition )
+   local shader, seconds, transition = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
       c = {c}
    end
-   local func = function( alpha )
-      for k,v in ipairs(c) do
-         v.alpha = alpha
-      end
-   end
+
+   -- New character
    for k,v in ipairs(c) do
       vn.newCharacter(v)
    end
-   vn.animation( seconds, func )
+
+   _appear_setup( c, shader )
+   -- Create the transition
+   vn.animation( seconds, function( progress, dt )
+      shader:send( "progress", progress )
+      if shader.update then
+         shader:update( dt )
+      end
+   end )
+   _appear_cleanup( c )
 end
-function vn.disappear( c, seconds )
-   seconds = seconds or 0.2
+function vn.disappear( c, name, seconds, transition )
+   local shader, seconds, transition = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
       c = {c}
    end
-   local func = function( alpha )
-      for k,v in ipairs(c) do
-         v.alpha = 1-alpha
+   _appear_setup( c, shader )
+   vn.animation( seconds, function( progress, dt )
+      shader:send( "progress", 1-progress )
+      if shader.update then
+         shader:update( dt )
       end
-   end
-   vn.animation( seconds, func )
+   end )
+   _appear_cleanup( c )
    for k,v in ipairs(c) do
       table.insert( vn._states, vn.StateCharacter.new( v, true ) )
    end
@@ -1048,6 +1093,10 @@ function vn.setForeground( drawfunc )
    vn._draw_fg = drawfunc
 end
 
+function vn.setUpdateFunc( updatefunc )
+   vn._updatefunc = updatefunc
+end
+
 function vn._jump( label )
    for k,v in ipairs(vn._states) do
       if v:type() == "Label" and v.label == label then
@@ -1127,6 +1176,7 @@ function vn.clear()
       "_postshader",
       "_draw_fg",
       "_draw_bg",
+      "_updatefunc",
    }
 
    _setdefaults()

@@ -661,7 +661,7 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
    glUniform1f(shaders.beam.r, w->r);
 
    /* Set the subroutine. */
-   if (GLAD_GL_ARB_shader_subroutine)
+   if (gl_has( OPENGL_SUBROUTINES ))
       glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &w->outfit->u.bem.shader );
 
    /* Draw. */

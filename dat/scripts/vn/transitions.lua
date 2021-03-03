@@ -26,9 +26,9 @@ uniform Image texprev;
 uniform float progress;
 vec4 effect( vec4 unused, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec4 texfrom = Texel(texprev, texture_coords);
-   vec4 texto   = Texel(tex, texture_coords);
-   return mix( texfrom, texto, progress );
+   vec4 c1 = Texel(texprev, texture_coords);
+   vec4 c2 = Texel(tex, texture_coords);
+   return mix( c1, c2, progress );
 }
 ]]
 
@@ -65,11 +65,9 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
    vec2 dir = uv - vec2(.5);
    float dist = length(dir);
    vec2 offset = dir * (sin(progress * dist * amplitude - progress * speed) + .5) / 30.;
-   return mix(
-         Texel( texprev, uv + offset ),
-         Texel( MainTex, uv ),
-         smoothstep(0.2, 1.0, progress)
-         );
+   vec4 c1 = Texel( texprev, uv + offset );
+   vec4 c2 = Texel( MainTex, uv );
+   return mix( c1, c2, smoothstep(0.2, 1.0, progress) );
 }
 ]]
 
@@ -151,8 +149,9 @@ const float smoothness = 1.0;
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    vec2 rp = uv*2.0-1.0;
-   return mix(
-         Texel( MainTex, uv ), Texel( texprev, uv ),
+   vec4 c1 = Texel( MainTex, uv );
+   vec4 c2 = Texel( texprev, uv ),
+   return mix( c1, c2,
          smoothstep(0., smoothness, atan(rp.y,rp.x) - (progress-0.5) * M_PI * 2.5)
          );
 }
@@ -177,7 +176,10 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
    float dist = steps>0 ? ceil(d * float(steps)) / float(steps) : d;
    vec2 squareSize = 2.0 * dist / vec2(squaresMin);
    vec2 p = dist>0.0 ? (floor(uv / squareSize) + 0.5) * squareSize : uv;
-   return mix( Texel( texprev, p ), Texel( MainTex, p ), progress);
+
+   vec4 c1 = Texel( texprev, p );
+   vec4 c2 = Texel( MainTex, p )
+   return mix( c1, c2, progress);
 }
 ]]
 
@@ -253,8 +255,9 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
    float size = (sqrt(3.0) / 3.0) * dist / horizontalHexagons;
    vec2 point = dist > 0.0 ? pointFromHexagon(hexagonFromPoint(uv, size), size) : uv;
 
-   return mix( Texel( texprev, point ), Texel( MainTex, point ), progress );
-
+   vec4 c1 = Texel( texprev, point );
+   vec4 c2 = Texel( MainTex, point );
+   return mix( c1, c2, progress );
 }
 ]]
 
@@ -282,7 +285,7 @@ vec4 burncolor( vec4 color, float value )
    return outcol;
 }
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 {
    float n = Texel( noisetex, uv ).r;
    float p = mix(-smoothness, 1.0 + smoothness, progress);
@@ -295,15 +298,19 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    c1 = burncolor( c1, q );
 
-   return (q <= 0.0) ? c2 : c1;
+   vec4 color = (q <= 0.0) ? c2 : c1;
+
+   // We need this line to compensate the fact we are premultiplying
+   color.rgb *= max( c1.a, c2.a );
+   return color;
 }
 ]]
 local function _burn_noise ()
-   local pixelcode = [[
+   local pixelcode = string.format([[
 precision highp float;
 #include "lib/simplex.glsl"
-uniform float u_r;
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+const float u_r = %f;
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 {
    float n = 0.0;
    for (float i=1.0; i<8.0; i=i+1.0) {
@@ -312,20 +319,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    }
    return vec4( vec3(n)*0.5+0.5, 1.0 );
 }
-]]
-   local width, height = naev.gfx.dim()
-   local noisetex = graphics.newCanvas( width, height )
+]], love_math.random() )
    local noiseshader = graphics.newShader( pixelcode, _vertexcode )
-   noiseshader:send( "u_r", love_math.random() )
-   local oldcanvas = graphics.getCanvas()
-   local oldshader = graphics.getShader()
-   graphics.setCanvas( noisetex )
-   graphics.clear( 1, 1, 1, 1 )
-   graphics.setShader( noiseshader )
-   love_shaders.img:draw( 0, 0, 0, width, height )
-   graphics.setShader( oldshader )
-   graphics.setCanvas( oldcanvas )
-   return noisetex
+   return love_shaders.shader2canvas( noiseshader )
 end
 
 transitions._t.electric = [[
@@ -373,9 +369,61 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 
    vec4 color = mix( c1, c2, step( ybase, px.y ) );
    color = mix( color, arcs, v );
+
+   // We need this line to compensate the fact we are premultiplying
+   color.rgb *= max( c1.a, c2.a );
    return color;
 }
 ]]
+
+transitions._t.slideleft = [[
+uniform Image texprev;
+uniform float progress;
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   uv -= vec2( 1.0-progress, 0.0 );
+   return (uv.x < 0.0) ?
+         Texel( texprev, uv + vec2(1.0, 0.0) ) :
+         Texel( MainTex, uv );
+}
+]]
+
+transitions._t.slideright = [[
+uniform Image texprev;
+uniform float progress;
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   uv += vec2( 1.0-progress, 0.0 );
+   return (uv.x > 1.0) ?
+         Texel( texprev, uv - vec2(1.0, 0.0) ) :
+         Texel( MainTex, uv );
+}
+]]
+
+transitions._t.slidedown = [[
+uniform Image texprev;
+uniform float progress;
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   uv += vec2( 0.0, 1.0-progress );
+   return (uv.y > 1.0) ?
+         Texel( texprev, uv - vec2(0.0, 1.0) ) :
+         Texel( MainTex, uv );
+}
+]]
+
+transitions._t.slideup = [[
+uniform Image texprev;
+uniform float progress;
+vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
+{
+   uv -= vec2( 0.0, 1.0-progress );
+   return (uv.y < 0.0) ?
+         Texel( texprev, uv - vec2(0.0, 1.0) ) :
+         Texel( MainTex, uv );
+}
+]]
+
 
 function transitions.get( name, seconds, transition )
    -- Sane defaults
@@ -396,8 +444,8 @@ function transitions.get( name, seconds, transition )
 
    local shader = graphics.newShader( _pixelcode, _vertexcode )
    if name=="burn" then
-      local noisetex = _burn_noise()
-      shader:send( "noisetex", noisetex )
+      shader._noisetex = _burn_noise()
+      shader:send( "noisetex", shader._noisetex )
    end
    if shader:hasUniform("u_time") then
       shader._dt = 1000 * love_math.random()

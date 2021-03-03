@@ -30,13 +30,9 @@ function create ()
    vn.clear()
    vn.scene()
    vn.transition( "hexagon" )
-   local t1 = vn.newCharacter( thug1_name, { image=thug1_image } )
-   local cc = vn.newCharacter( minerva.vn_cyborg_chicken() )
-   t1.manualpos = true
-   cc.manualpos = true
+   local t1 = vn.newCharacter( thug1_name, { image=thug1_image, pos="left" } )
+   local cc = vn.newCharacter( minerva.vn_cyborg_chicken({pos="right"}) )
    local lw, lh = window.getDesktopDimensions()
-   t1.offset = 0.25*lw
-   cc.offset = 0.75*lw
    vn.na(_("You once again hear a large commotion in one of the wings of Minerva station. As you get closer you see what seems to be a group of people chasing something small... Wait, is that a chicken?"))
    local function runaround ( left, right )
       local lw, lh = window.getDesktopDimensions()

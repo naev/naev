@@ -12,14 +12,14 @@ local minerva = {
       name = _("Cyborg Chicken"),
       portrait = "cyborg_chicken.png",
       image = "cyborg_chicken.png",
-      colour = nil,
+      colour = {0.9, 0.5, 0.1}, -- Orangish
    },
    maikki = {
       name = _("Maikki"),
       description = _("You see a very cutely dressed young woman. She seems to have a worried expression on her face."),
       portrait = "maikki.png",
       image = "maikki.png",
-      colour = {1, 0.73, 0.97},
+      colour = {1, 0.73, 0.97}, -- Pink :D
    },
    strangelove = {
       name = _("Dr. Strangelove"),
@@ -36,9 +36,10 @@ local minerva = {
    },
    pirate = {
       name = _("Sketchy Individual"),
-      portrait = "pirate/pirate5.png", -- REPLACE
+      portrait = "pirate/pirate5.png", -- TODO REPLACE
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
       image = portrait.getFullPath("pirate/pirate5.png"),
+      colour = nil,
    },
 
    log = {
@@ -55,18 +56,33 @@ local minerva = {
    },
 }
 
+local function _merge_tables( p, params )
+   params = params or {}
+   for k,v in pairs(params) do p[k] = v end
+   return p
+end
+
 -- Helpers to create main characters
-function minerva.vn_cyborg_chicken()
+function minerva.vn_cyborg_chicken( params )
    return vn.Character.new( minerva.chicken.name,
-         { image=minerva.chicken.image, color=minerva.chicken.colour } )
+         _merge_tables( {
+            image=minerva.chicken.image,
+            color=minerva.chicken.colour,
+         }, params) )
 end
-function minerva.vn_maikki()
+function minerva.vn_maikki( params )
    return vn.Character.new( minerva.maikki.name,
-         { image=minerva.maikki.image, color=minerva.maikki.colour } )
+         _merge_tables( {
+            image=minerva.maikki.image,
+            color=minerva.maikki.colour,
+         }, params) )
 end
-function minerva.vn_terminal()
+function minerva.vn_terminal( params )
    return vn.Character.new( minerva.terminal.name,
-         { image=minerva.terminal.image, color=minerva.terminal.colour } )
+         _merge_tables( {
+            image=minerva.terminal.image,
+            color=minerva.terminal.colour,
+         }, params) )
 end
 
 -- Token stuff

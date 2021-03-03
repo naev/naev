@@ -39,6 +39,10 @@ harper_bribe_big = 1e7
 harper_bribe_sml = 1e6
 harper_bribe_tkn = 1000
 
+spa_name = _("Minerva Station Spa")
+spa_portrait = minerva.terminal.portrait
+spa_description = _("Present your winning ticket at the terminal to enter the Minerva Station Spa.")
+
 mainsys = "Limbo"
 -- Mission states:
 --  nil: mission not accepted yet
@@ -91,6 +95,20 @@ end
 function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
+      if misn_state == 4 then
+         npc_spa = misn.npcAdd( "approach_spa", spa_name, spa_portrait, spa_description )
+      end
+   end
+end
+
+function approach_spa ()
+   hook.safe( "start_spa" )
+end
+function start_spa ()
+   naev.eventStart( "Chicken Rendezvous" )
+   if player.evtDone( "Chicken Rendezvous" ) then
+      misn.npcRm( npc_spa )
+      misn_state = 5
    end
 end
 
@@ -133,6 +151,18 @@ They take out a metallic object from their pocket and show it to you. You don't 
       vn.na(_("You approach the shady character you have become familiarized with."))
    end
 
+   if misn_state == 5 then
+      vn.na(_("You explain to them that you were able to successfully plant the device in the Minerva Spa."))
+      pir(_([["Great job! I knew you had it in you. Catching the mole now should be just a matter of time. After we collect some data and process them, we can see how to catch the asshole. Meet me again at the bar in a bit, I have a feeling we will catch them soon."]]))
+      vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
+      vn.func( function ()
+         player.pay( reward_amount )
+         shiplog.appendLog( logidstr, _("You planted a listening device in the Minerva Spa to catch a mole and were rewarded for your actions.") )
+      end )
+      vn.sfxVictory()
+      vn.done()
+   end
+
    vn.label("menu_msg")
    pir(_([["Is there anything you would like to know?"]]))
    vn.menu( function ()
@@ -141,7 +171,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
          {_("Ask about Minerva Station"), "station"},
          {_("Leave"), "leave"},
       }
-      if player.evtDone("Spa Propaganda") then
+      if misn_state < 3 and player.evtDone("Spa Propaganda") then
          if var.peek("minerva_spa_ticket")==nil then
             table.insert( opts, 1, {_("Ask them about the Spa"), "spa" } ) 
          else
@@ -149,6 +179,9 @@ They take out a metallic object from their pocket and show it to you. You don't 
          end
       end
 
+      if misn_state == 3 and harper_gotticket then
+         table.insert( opts, 1, {_("Show them the winning Ticket"), "trueticket" } )
+      end
       return opts
    end )
 
@@ -185,17 +218,21 @@ They start frantically typing into their portable holo-deck. It makes weird beep
          {_("Get Harper Bowdoin's ticket in Limbo.")},
          {_("Plant a listening device in a VIP room.") } )
       misn_state = 3
+      shiplog.appendLog( logidstr, _("You obtained the winning ticket to enter the Minerva Spa.") )
    end )
    vn.jump("menu_msg")
 
-   pir("victory msg")
-   vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
+   vn.label("trueticket")
+   vn.na(_("You show them the winning ticket you took from Harper Bowdoin."))
+   pir(_([["Great job out there. It's like taking candy from a baby."
+She beams you a smile.
+"Now go enjoy yourself at the spa and don't forget to plant the listening device!"]]))
    vn.func( function ()
-      player.pay( reward_amount )
-      shiplog.appendLog( logidstr, "TODO win log" )
+      misn_state = 4
+      misn.osdActive(2)
+      npc_spa = misn.npcAdd( "approach_spa", spa_name, spa_portrait, spa_description )
    end )
-   vn.sfxVictory()
-   vn.done()
+   vn.jump("menu_msg")
 
    vn.label("leave")
    if misn_state==0 then
@@ -211,9 +248,13 @@ end
 
 function enter ()
    if misn_state==3 and not harper_nospawn and system.cur()==system.get("Limbo") then
+      -- Don't stop spawns
+      -- TODO maybe add Minerva patrols that aggro ta make it a bit harder?
       -- Spawn Harper Bowdoin and stuff
-      local pos = foo
-      harper = pilot.add("Gawain", "Independent", pos, "Harper", "civilian" )
+      local pos = planet.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.rnd(360) )
+
+      local fharper = faction.dynAdd( nil, "Harper Bowdoin" )
+      harper = pilot.add( "Gawain", fharper, pos, "Harper", "civilian" )
       local mem = harper:memory()
       mem.loiter = math.huge -- Should make them loiter forever
       harper:setHilight(true)
@@ -234,22 +275,34 @@ end
 
 function harper_death ()
    if not harper_gotticket then
-      player.msg(_("#rMISSION FAILED! You were supposed to get the ticket but they are dead now!"))
+      player.msg(_("#rMISSION FAILED! You were supposed to get the ticket, but you blew up Harper's ship!"))
+      misn.finish(false)
+   end
+end
+
+
+function harper_land ()
+   -- Case harper lands with the ticket, i.e., ran away
+   if not harper_gotticket then
+      player.msg(_("#rMISSION FAILED! You were supposed to get the ticket but they got away!"))
       misn.finish(false)
    end
 end
 
 
 function harper_board ()
-   harper_gotticket = true
-   harper_nospawn = true
+   if not harper_gotticket then
+      harper_gotticket = true
+      harper_nospawn = true
 
-   vn.clear()
-   vn.scene()
-   vn.transition()
-   vn.na(_("Foo."))
-   vn.run()
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.na(_("You violently enter Harper's ship and plunder the ticket which you were after, while Harper spends his time cowering in the corner of the cockpit."))
+      vn.run()
+   end
 end
+
 
 function harper_neardeath()
    if not harper:exists() then
@@ -277,14 +330,6 @@ function harper_attacked( pilot, attacker )
          harper_almostdied = true
 
       end
-   end
-end
-
-
-function harper_land ()
-   if not harper_gotticket then
-      player.msg(_("#rMISSION FAILED! You were supposed to get the ticket but they got away!"))
-      misn.finish(false)
    end
 end
 
