@@ -1,7 +1,8 @@
---[[
+---[[
 -- Visual Novel API for Naev
 --
 -- Based on Love2D API
+-- @module vn
 --]]
 local utf8 = require 'utf8'
 local love = require 'love'
@@ -123,7 +124,7 @@ function _draw_character( c )
 end
 
 
---[[
+---[[
 -- @brief Main drawing function.
 --]]
 local function _draw()
@@ -217,7 +218,7 @@ local function _draw_to_canvas( canvas )
 end
 
 
---[[
+---[[
 -- @brief Main updating function.
 --    @param dt Update tick.
 --]]
@@ -255,7 +256,7 @@ function vn.update(dt)
 end
 
 
---[[
+---[[
 -- @brief Key press handler.
 --    @param key Name of the key pressed.
 --]]
@@ -273,7 +274,7 @@ function vn.keypressed( key )
 end
 
 
---[[
+---[[
 -- @brief Mouse press handler.
 --    @param mx X position of the click.
 --    @param my Y position of the click.
@@ -287,16 +288,16 @@ end
 
 
 -- Helpers
---[[
+---[[
 -- @brief Makes the player say something.
 --]]
 function vn.me( what, nowait ) vn.say( "me", what, nowait ) end
---[[
+---[[
 -- @brief Makes the narrator say something.
 --]]
 function vn.na( what, nowait ) vn.say( "narrator", what, nowait ) end
 
---[[
+---[[
 -- State
 --]]
 vn.State = {}
@@ -340,7 +341,7 @@ function vn.State:keypressed( key )
    vn._checkDone()
 end
 function vn.State:isDone() return self.done end
---[[
+---[[
 -- Scene
 --]]
 vn.StateScene ={}
@@ -367,7 +368,7 @@ function vn.StateScene:_init()
 
    _finish(self)
 end
---[[
+---[[
 -- Character
 --]]
 vn.StateCharacter ={}
@@ -415,7 +416,7 @@ function vn.StateCharacter:_init()
    end
    _finish(self)
 end
---[[
+---[[
 -- Say
 --]]
 vn.StateSay = {}
@@ -480,7 +481,7 @@ function vn.StateSay:_finish()
    vn._buffer = self._text
    _finish( self )
 end
---[[
+---[[
 -- Wait
 --]]
 vn.StateWait ={}
@@ -507,7 +508,7 @@ function vn.StateWait:_draw()
    vn.setColor( vn._bufcol )
    graphics.print( self._text, self._font, self._x, self._y )
 end
---[[
+---[[
 -- Menu
 --]]
 vn.StateMenu = {}
@@ -610,7 +611,7 @@ function vn.StateMenu:_choose( n )
    self.handler( self._items[n][2] )
    _finish( self )
 end
---[[
+---[[
 -- Label
 --]]
 vn.StateLabel ={}
@@ -621,7 +622,7 @@ function vn.StateLabel.new( label )
    s.label = label
    return s
 end
---[[
+---[[
 -- Jump
 --]]
 vn.StateJump ={}
@@ -636,7 +637,7 @@ function vn.StateJump:_init()
    vn._jump( self.label )
    _finish(self)
 end
---[[
+---[[
 -- Start
 --]]
 vn.StateStart ={}
@@ -654,7 +655,7 @@ function vn.StateStart:_init()
    vn._globalalpha = 0
    _finish(self)
 end
---[[
+---[[
 -- End
 --]]
 vn.StateEnd ={}
@@ -667,7 +668,7 @@ end
 function vn.StateEnd:_init()
    vn._state = #vn._states+1
 end
---[[
+---[[
 -- Animation
 --]]
 vn.StateAnimation = {}
@@ -769,16 +770,16 @@ function vn.StateAnimation:_drawoverride(dt)
 end
 
 
---[[
+---[[
 -- Character
 --]]
 vn.Character = {}
---[[
+---[[
 -- @brief Makes a player say something.
 --]]
 function vn.Character:say( what, nowait ) return vn.say( self.who, what, nowait ) end
 vn.Character_mt = { __index = vn.Character, __call = vn.Character.say }
---[[
+---[[
 -- @brief Creates a new character without adding it to the VN.
 -- @note The character can be added with vn.newCharacter.
 --    @param who Name of the character to add.
@@ -829,7 +830,7 @@ function vn.Character:rename( newname )
       self.displayname = newname
    end )
 end
---[[
+---[[
 -- @brief Creates a new character.
 --    @param who Name (or previously created character) to add.
 --    @param params Parameter table.
@@ -922,7 +923,7 @@ function vn.disappear( c, name, seconds, transition )
    end
 end
 
---[[
+---[[
 -- @brief Starts a new scene.
 --    @param background Background image to set or none if nil.
 --]]
@@ -931,7 +932,7 @@ function vn.scene( background )
    table.insert( vn._states, vn.StateScene.new( background ) )
 end
 
---[[
+---[[
 -- @brief Has a character say something.
 --
 -- @note "me" and "narrator" are specila meta-characters.
@@ -948,7 +949,7 @@ function vn.say( who, what, nowait )
    end
 end
 
---[[
+---[[
 -- @brief Opens a menu the player can select from.
 --    @param items Table of items to select from, they should be of the form "{text, label}" where "text" is what is displayed and "label" is what is passed to the handler.
 --    @param handler Function to handle what happens when an item is selecetdd. Defaults to vn.jump.
@@ -959,7 +960,7 @@ function vn.menu( items, handler )
    table.insert( vn._states, vn.StateMenu.new( items, handler ) )
 end
 
---[[
+---[[
 -- @brief Inserts a label. This does nothing but serve as a reference for vn.jump
 --    @param label Name of the label to insert.
 --]]
@@ -968,7 +969,7 @@ function vn.label( label )
    table.insert( vn._states, vn.StateLabel.new( label ) )
 end
 
---[[
+---[[
 -- @brief Inserts a jump. This skips to a certain label.
 --    @param label Name of the label to jump to.
 --]]
@@ -979,7 +980,7 @@ function vn.jump( label )
    table.insert( vn._states, vn.StateJump.new( label ) )
 end
 
---[[
+---[[
 -- @brief Finishes the VN.
 --]]
 function vn.done( ... )
@@ -990,7 +991,7 @@ function vn.done( ... )
    table.insert( vn._states, vn.StateEnd.new() )
 end
 
---[[
+---[[
 -- @brief Allows doing arbitrary animations.
 --
 --    @params Seconds to perform the animation
@@ -1029,7 +1030,7 @@ function vn.transition( name, seconds, transition )
       end )
 end
 
---[[
+---[[
 -- @brief Runs a function and continues execution.
 --]]
 function vn.func( func )
@@ -1042,7 +1043,7 @@ function vn.func( func )
    table.insert( vn._states, s )
 end
 
---[[
+---[[
 -- @brief Plays a sound.
 --]]
 function vn.sfx( sfx )
@@ -1071,7 +1072,7 @@ function vn.sfxEerie()
    -- return vn.sfx( vn._sfx.eerie )
 end
 
---[[
+---[[
 -- @brief Custom states. Only use if you know what you are doing.
 --]]
 function vn.custom()
@@ -1136,7 +1137,7 @@ function vn._checkDone()
 end
 
 
---[[
+---[[
 -- @brief Checks to see if the VN is done running or not.
 --    @return true if it is done running, false otherwise
 --]]
@@ -1145,7 +1146,7 @@ function vn.isDone()
 end
 
 
---[[
+---[[
 -- @brief Runs the visual novel environment.
 --
 -- @note You have to set up the states first.
@@ -1161,7 +1162,7 @@ function vn.run()
    vn._started = false
 end
 
---[[
+---[[
 -- @brief Clears the fundamental running variables. Run before starting a new VN instance.
 --
 -- @note Leaves customization to colors and positions untouched.
@@ -1188,7 +1189,7 @@ function vn.clear()
    vn._states = {}
 end
 
---[[
+---[[
 -- @brief Fully resets the VN environment to default values.
 --
 -- @note This automatically does vn.clear() too.

@@ -2,7 +2,7 @@ local graphics = require "love.graphics"
 local love_math = require "love.math"
 local love_image = require "love.image"
 
---[[
+---[[
 @module love_shaders
 
 @brief A module containing a diversity of Love2D shaders for use in Naev.
@@ -21,7 +21,7 @@ local idata = love_image.newImageData( 1, 1 )
 idata:setPixel( 0, 0, 1, 1, 1, 1 )
 love_shaders.img = graphics.newImage( idata )
 
---[[
+---[[
 @brief Default fragment code that doesn't do anything fancy.
 --]]
 local _pixelcode = [[
@@ -31,7 +31,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    return texcolor * color;
 }
 ]]
---[[
+---[[
 @brief Default vertex code that doesn't do anything fancy.
 --]]
 local _vertexcode = [[
@@ -59,7 +59,7 @@ local function _shader2canvas( shader, image, w, h, sx, sy )
    return newcanvas
 end
 
---[[
+---[[
 @brief Renders a shader to a canvas.
 
 @tparam Shader shader Shader to render.
@@ -104,7 +104,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
---[[
+---[[
 @brief Blur shader applied to an image.
 
 @tparam Drawable image A drawable to blur.
@@ -142,7 +142,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
---[[
+---[[
 @brief Creates an oldify effect, meant for full screen effects.
 
 @tparam { strength=number } params Parameter table.
@@ -229,7 +229,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 end
 
 
---[[
+---[[
 @brief A hologram effect, mainly meant for VN characters.
 
 @tparam { strength=number } params Parameter table.
@@ -342,7 +342,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 end
 
 
---[[
+---[[
 @brief A corruption effect applies a noisy pixelated effect.
 
 @tparam { strength=number } params Parameter table.
@@ -380,7 +380,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
 end
 
 
---[[
+---[[
 @brief A rolling steamy effect. Meant as/for backgrounds.
 
 @tparam { strength=number, speed=number } params Parameter table.
@@ -427,7 +427,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
---[[
+---[[
 @brief An aura effect for characters.
 
 @tparam { strength=number, speed=number, color=Color, size=number } params Parameter table.
