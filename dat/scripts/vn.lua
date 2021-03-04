@@ -1,9 +1,9 @@
 --[[--
--- Visual Novel API for Naev
---
--- Based on Love2D API
--- @module vn
---]]
+Visual Novel API for Naev
+
+Based on Love2D API
+@module vn
+]]
 local utf8 = require 'utf8'
 local love = require 'love'
 local graphics = require 'love.graphics'
@@ -219,9 +219,9 @@ end
 
 
 --[[--
--- Main updating function.
---    @param dt Update tick.
---]]
+Main updating function.
+   @param dt Update tick.
+]]
 function vn.update(dt)
    -- Out of states
    if vn._state > #vn._states then
@@ -256,9 +256,9 @@ function vn.update(dt)
 end
 
 
----[[
--- Key press handler.
---    @param key Name of the key pressed.
+--[[--
+Key press handler.
+   @tparam string key Name of the key pressed.
 --]]
 function vn.keypressed( key )
    --[[
@@ -274,11 +274,11 @@ function vn.keypressed( key )
 end
 
 
----[[
--- Mouse press handler.
---    @param mx X position of the click.
---    @param my Y position of the click.
---    @param button Button that was pressed.
+--[[--
+Mouse press handler.
+   @tparam number mx X position of the click.
+   @tparam number my Y position of the click.
+   @tparam number button Button that was pressed.
 --]]
 function vn.mousepressed( mx, my, button )
    if vn.isDone() then return end
@@ -288,16 +288,16 @@ end
 
 
 -- Helpers
----[[
--- Makes the player say something.
---]]
+--[[--
+Makes the player say something.
+]]
 function vn.me( what, nowait ) vn.say( "me", what, nowait ) end
----[[
--- Makes the narrator say something.
---]]
+--[[--
+Makes the narrator say something.
+]]
 function vn.na( what, nowait ) vn.say( "narrator", what, nowait ) end
 
----[[
+--[[
 -- State
 --]]
 vn.State = {}
@@ -341,7 +341,7 @@ function vn.State:keypressed( key )
    vn._checkDone()
 end
 function vn.State:isDone() return self.done end
----[[
+--[[
 -- Scene
 --]]
 vn.StateScene ={}
@@ -368,7 +368,7 @@ function vn.StateScene:_init()
 
    _finish(self)
 end
----[[
+--[[
 -- Character
 --]]
 vn.StateCharacter ={}
@@ -416,7 +416,7 @@ function vn.StateCharacter:_init()
    end
    _finish(self)
 end
----[[
+--[[
 -- Say
 --]]
 vn.StateSay = {}
@@ -481,7 +481,7 @@ function vn.StateSay:_finish()
    vn._buffer = self._text
    _finish( self )
 end
----[[
+--[[
 -- Wait
 --]]
 vn.StateWait ={}
@@ -508,7 +508,7 @@ function vn.StateWait:_draw()
    vn.setColor( vn._bufcol )
    graphics.print( self._text, self._font, self._x, self._y )
 end
----[[
+--[[
 -- Menu
 --]]
 vn.StateMenu = {}
@@ -611,7 +611,7 @@ function vn.StateMenu:_choose( n )
    self.handler( self._items[n][2] )
    _finish( self )
 end
----[[
+--[[
 -- Label
 --]]
 vn.StateLabel ={}
@@ -622,7 +622,7 @@ function vn.StateLabel.new( label )
    s.label = label
    return s
 end
----[[
+--[[
 -- Jump
 --]]
 vn.StateJump ={}
@@ -637,7 +637,7 @@ function vn.StateJump:_init()
    vn._jump( self.label )
    _finish(self)
 end
----[[
+--[[
 -- Start
 --]]
 vn.StateStart ={}
@@ -655,7 +655,7 @@ function vn.StateStart:_init()
    vn._globalalpha = 0
    _finish(self)
 end
----[[
+--[[
 -- End
 --]]
 vn.StateEnd ={}
@@ -668,7 +668,7 @@ end
 function vn.StateEnd:_init()
    vn._state = #vn._states+1
 end
----[[
+--[[
 -- Animation
 --]]
 vn.StateAnimation = {}
@@ -770,21 +770,24 @@ function vn.StateAnimation:_drawoverride(dt)
 end
 
 
----[[
+--[[
 -- Character
 --]]
 vn.Character = {}
----[[
--- Makes a player say something.
+--[[--
+Makes a player say something.
+
+   @tparam string what What the player will say.
+   @tparam bool Whether or not to wait for player input after saying something.
 --]]
 function vn.Character:say( what, nowait ) return vn.say( self.who, what, nowait ) end
 vn.Character_mt = { __index = vn.Character, __call = vn.Character.say }
----[[
--- Creates a new character without adding it to the VN.
--- <em>Note</em> The character can be added with vn.newCharacter.
---    @param who Name of the character to add.
---    @param params Parameter table.
---    @return New character.
+--[[--
+Creates a new character without adding it to the VN.
+<em>Note</em> The character can be added with vn.newCharacter.
+   @tparam string who Name of the character to add.
+   @tparam tab params Parameter table.
+   @return New character.
 --]]
 function vn.Character.new( who, params )
    local c = {}
@@ -830,12 +833,12 @@ function vn.Character:rename( newname )
       self.displayname = newname
    end )
 end
----[[
--- Creates a new character.
---    @param who Name (or previously created character) to add.
---    @param params Parameter table.
---    @return New character.
---]]
+--[[
+Creates a new character.
+   @tparam string who Name (or previously created character) to add.
+   @tparam tab params Parameter table.
+   @return New character.
+]]
 function vn.newCharacter( who, params )
    local c
    if type(who)=="string" then
