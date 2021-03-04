@@ -110,10 +110,11 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    -- Since the kernel is separable we need two passes, one for x and one for y
    shader:send( "blurvec", 1, 0 )
    pass1 = _shader2canvas( shader, image, w, h )
+   local mode, alphamode = graphics.getBlendMode()
    graphics.setBlendMode( "alpha", "premultiplied" )
    shader:send( "blurvec", 0, 1 )
    pass2 = _shader2canvas( shader, pass1, w, h )
-   graphics.setBlendMode( "alpha" )
+   graphics.setBlendMode( mode, alphamode )
    return pass2
 end
 
