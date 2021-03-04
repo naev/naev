@@ -523,7 +523,7 @@ function cutscene_hail ()
    vn.scene()
    local scavB = vn.newCharacter( _("Scavenger"),
          { image=scavengerb_image,
-         color=scavengerb_colour, shader=love_shaders.hologram(2.0) } )
+         color=scavengerb_colour, shader=love_shaders.hologram{strength=2.0} } )
    vn.transition("electric")
    vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
    scavB(_([["Thank you. I thought I was a goner. My sensors failed me at the worst time and it's impossible to see shit in this nebula."]]))
@@ -787,10 +787,10 @@ function scavengers_encounter ()
    vn.scene()
    local scavA = vn.newCharacter( _("Scavenger A"),
          { image=scavengera_image,
-         color=scavengera_colour, shader=love_shaders.hologram(2.0), pos="left" } )
+         color=scavengera_colour, shader=love_shaders.hologram{strength=2.0}, pos="left" } )
    local scavB = vn.newCharacter( _("Scavenger B"),
          { image=scavengerb_image,
-         color=scavengerb_colour, shader=love_shaders.hologram(2.0), pos="right" } )
+         color=scavengerb_colour, shader=love_shaders.hologram{strength=2.0}, pos="right" } )
    vn.transition("electric")
 
    vn.na(_("Two angry scavengers appear on your screen."))

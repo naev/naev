@@ -1,8 +1,9 @@
---[[
--- Visual Novel API for Naev
---
--- Based on Love2D API
---]]
+--[[--
+Visual Novel API for Naev
+
+Based on Love2D API
+@module vn
+]]
 local utf8 = require 'utf8'
 local love = require 'love'
 local graphics = require 'love.graphics'
@@ -63,13 +64,24 @@ local function _setdefaults()
    graphics.setCanvas( oldcanvas )
 end
 
+--[[--
+Checks to see if the VN has started and errors if it does.
 
+@local
+--]]
 function vn._checkstarted()
    if vn._started then
       error( _("vn: can't modify states when running") )
    end
 end
 
+
+--[[--
+Sets the current drawing colour of the VN.
+
+   @tparam tab col Colour table consisting of 3 or 4 number values.
+   @tparam[opt=1] number alpha Additional alpha to multiply by.
+--]]
 function vn.setColor( col, alpha )
    local a = col[4] or 1
    alpha = alpha or 1
@@ -86,7 +98,7 @@ local function _draw_bg( x, y, w, h, col, border_col, alpha )
    graphics.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
-function _draw_character( c )
+local function _draw_character( c )
    if c.image == nil then return end
    local w, h = c.image:getDimensions()
    local isportrait = (w>h)
@@ -124,7 +136,7 @@ end
 
 
 --[[
--- @brief Main drawing function.
+-- Main drawing function.
 --]]
 local function _draw()
    local prevcanvas
@@ -200,6 +212,9 @@ local function _draw()
       graphics.setShader()
    end
 end
+--[[--
+Drawing function for the VN. Has to be called each loop in "love.draw".
+--]]
 function vn.draw()
    local s = vn._states[ vn._state ]
    if s and s.drawoverride then
@@ -217,10 +232,10 @@ local function _draw_to_canvas( canvas )
 end
 
 
---[[
--- @brief Main updating function.
---    @param dt Update tick.
---]]
+--[[--
+Main updating function. Has to be called each loop in "love.update"
+   @tparam number dt Update tick in seconds.
+]]
 function vn.update(dt)
    -- Out of states
    if vn._state > #vn._states then
@@ -255,9 +270,9 @@ function vn.update(dt)
 end
 
 
---[[
--- @brief Key press handler.
---    @param key Name of the key pressed.
+--[[--
+Key press handler.
+   @tparam string key Name of the key pressed.
 --]]
 function vn.keypressed( key )
    --[[
@@ -273,11 +288,11 @@ function vn.keypressed( key )
 end
 
 
---[[
--- @brief Mouse press handler.
---    @param mx X position of the click.
---    @param my Y position of the click.
---    @param button Button that was pressed.
+--[[--
+Mouse press handler.
+   @tparam number mx X position of the click.
+   @tparam number my Y position of the click.
+   @tparam number button Button that was pressed.
 --]]
 function vn.mousepressed( mx, my, button )
    if vn.isDone() then return end
@@ -287,13 +302,19 @@ end
 
 
 -- Helpers
---[[
--- @brief Makes the player say something.
---]]
+--[[--
+Makes the player say something.
+
+   @tparam string what What is being said.
+   @tparam bool nowait Whether or not to wait for player input when said.
+]]
 function vn.me( what, nowait ) vn.say( "me", what, nowait ) end
---[[
--- @brief Makes the narrator say something.
---]]
+--[[--
+Makes the narrator say something.
+
+   @tparam string what What is being said.
+   @tparam bool nowait Whether or not to wait for player input when said.
+]]
 function vn.na( what, nowait ) vn.say( "narrator", what, nowait ) end
 
 --[[
@@ -769,21 +790,25 @@ function vn.StateAnimation:_drawoverride(dt)
 end
 
 
---[[
--- Character
+--[[--
+A visual novel character.
+
+@type Character
 --]]
 vn.Character = {}
---[[
--- @brief Makes a player say something.
+--[[--
+Makes a character say something.
+   @tparam string what What is being said.
+   @tparam bool nowait Whether or not to wait for player input when said.
 --]]
 function vn.Character:say( what, nowait ) return vn.say( self.who, what, nowait ) end
 vn.Character_mt = { __index = vn.Character, __call = vn.Character.say }
---[[
--- @brief Creates a new character without adding it to the VN.
--- @note The character can be added with vn.newCharacter.
---    @param who Name of the character to add.
---    @param params Parameter table.
---    @return New character.
+--[[--
+Creates a new character without adding it to the VN.
+<em>Note</em> The character can be added with vn.newCharacter.
+   @tparam string who Name of the character to add.
+   @tparam tab params Parameter table.
+   @treturn Character New character.
 --]]
 function vn.Character.new( who, params )
    local c = {}
@@ -824,17 +849,21 @@ function vn.Character.new( who, params )
    c.params = params
    return c
 end
+--[[--
+Renames a character on the fly.
+   @tparam string newname New name to give the character.
+--]]
 function vn.Character:rename( newname )
    vn.func( function (state)
       self.displayname = newname
    end )
 end
---[[
--- @brief Creates a new character.
---    @param who Name (or previously created character) to add.
---    @param params Parameter table.
---    @return New character.
---]]
+--[[--
+Creates a new character.
+   @tparam string who Name (or previously created character) to add.
+   @tparam tab params Parameter table.
+   @treturn Character New character.
+]]
 function vn.newCharacter( who, params )
    local c
    if type(who)=="string" then
@@ -883,6 +912,16 @@ local function _appear_cleanup( c )
       end
    end )
 end
+
+--[[--
+Makes a character appear in the VN.
+   @see vn.transition
+   @see vn.appear
+   @tparam Character c Character to make appear.
+   @tparam[opt="fade"] string name Name of the transition effect to use (see vn.transition)
+   @tparam number seconds Seconds to do the transition.
+   @tparam[opt="linear"] string transition Name of the CSS transition to use.
+--]]
 function vn.appear( c, name, seconds, transition )
    local shader, seconds, transition = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
@@ -904,6 +943,15 @@ function vn.appear( c, name, seconds, transition )
    end )
    _appear_cleanup( c )
 end
+--[[--
+Makes a character disappear in the VN.
+   @see vn.transition
+   @see vn.disappear
+   @tparam Character c Character to make disappear.
+   @tparam[opt="fade"] string name Name of the transition effect to use (see vn.transition)
+   @tparam number seconds Seconds to do the transition.
+   @tparam[opt="linear"] string transition Name of the CSS transition to use.
+--]]
 function vn.disappear( c, name, seconds, transition )
    local shader, seconds, transition = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
@@ -922,24 +970,24 @@ function vn.disappear( c, name, seconds, transition )
    end
 end
 
---[[
--- @brief Starts a new scene.
---    @param background Background image to set or none if nil.
+--[[--
+Starts a new scene.
+   @param background Background image to set or none if nil.
 --]]
 function vn.scene( background )
    vn._checkstarted()
    table.insert( vn._states, vn.StateScene.new( background ) )
 end
 
---[[
--- @brief Has a character say something.
---
--- @note "me" and "narrator" are specila meta-characters.
---
---    @param who The name of the character that is saying something.
---    @param what What the character is saying.
---    @param nowait Whether or not to introduce a wait or just skip to the next text right away (defaults to false).
---]]
+--[[--
+Has a character say something.
+
+<em>Note</em> "me" and "narrator" are specila meta-characters.
+
+   @tparam string who The name of the character that is saying something.
+   @tparam string what What the character is saying.
+   @tparam[opt=false] bool nowait Whether or not to introduce a wait or just skip to the next text right away (defaults to false).
+]]
 function vn.say( who, what, nowait )
    vn._checkstarted()
    table.insert( vn._states, vn.StateSay.new( who, what ) )
@@ -948,10 +996,10 @@ function vn.say( who, what, nowait )
    end
 end
 
---[[
--- @brief Opens a menu the player can select from.
---    @param items Table of items to select from, they should be of the form "{text, label}" where "text" is what is displayed and "label" is what is passed to the handler.
---    @param handler Function to handle what happens when an item is selecetdd. Defaults to vn.jump.
+--[[--
+Opens a menu the player can select from.
+   @tparam tab items Table of items to select from, they should be of the form "{text, label}" where "text" is what is displayed and "label" is what is passed to the handler.
+   @tparam[opt=vn.jump] func handler Function to handle what happens when an item is selecetdd. Defaults to vn.jump.
 --]]
 function vn.menu( items, handler )
    vn._checkstarted()
@@ -959,18 +1007,20 @@ function vn.menu( items, handler )
    table.insert( vn._states, vn.StateMenu.new( items, handler ) )
 end
 
---[[
--- @brief Inserts a label. This does nothing but serve as a reference for vn.jump
---    @param label Name of the label to insert.
+--[[--
+Inserts a label. This does nothing but serve as a reference for vn.jump
+   @see vn.jump
+   @tparam string label Name of the label to insert.
 --]]
 function vn.label( label )
    vn._checkstarted()
    table.insert( vn._states, vn.StateLabel.new( label ) )
 end
 
---[[
--- @brief Inserts a jump. This skips to a certain label.
---    @param label Name of the label to jump to.
+--[[--
+Inserts a jump. This skips to a certain label.
+   @see vn.label
+   @tparam string label Name of the label to jump to.
 --]]
 function vn.jump( label )
    if vn._started then
@@ -979,8 +1029,10 @@ function vn.jump( label )
    table.insert( vn._states, vn.StateJump.new( label ) )
 end
 
---[[
--- @brief Finishes the VN.
+--[[--
+Finishes the VN.
+   @see vn.transition
+   @param ... Uses the parameters as vn.transition.
 --]]
 function vn.done( ... )
    vn._checkstarted()
@@ -990,16 +1042,28 @@ function vn.done( ... )
    table.insert( vn._states, vn.StateEnd.new() )
 end
 
---[[
--- @brief Allows doing arbitrary animations.
---
---    @params Seconds to perform the animation
+--[[--
+Allows doing arbitrary animations.
+   @tparam number seconds Seconds to perform the animation
+   @tparam func func Function to call when progress is being done.
+   @tparam func drawfunc Function to call when drawing.
+   @tparam string|tab transition A CSS transition to use. Can be one of "ease", "ease-in", "ease-out", "ease-in-out", "linear", or a table defining the bezier curve parameters.
+   @tparam func initfunc Function run once at the beginning.
+   @tparam func drawoverride Function that overrides the drawing function for the VN.
 --]]
 function vn.animation( seconds, func, drawfunc, transition, initfunc, drawoverride )
    vn._checkstarted()
    table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc, drawoverride ) )
 end
 
+
+--[[--
+Creates a transition state.
+   @see vn.animation
+   @tparam[opt="fade"] string name Name of the transition to use.
+   @tparam[opt] number seconds Seconds for the transition to last. The default value depends on the type of transition.
+   @tparam[opt="linear"] string transition The name of the CSS transition to use. See vn.animation.
+--]]
 function vn.transition( name, seconds, transition )
    vn._checkstarted()
    local shader, seconds, transition = transitions.get( name, seconds, transition )
@@ -1029,8 +1093,10 @@ function vn.transition( name, seconds, transition )
       end )
 end
 
---[[
--- @brief Runs a function and continues execution.
+--[[--
+Runs a specified function and continues execution.
+
+   @tparam func func Function to run.
 --]]
 function vn.func( func )
    vn._checkstarted()
@@ -1042,8 +1108,10 @@ function vn.func( func )
    table.insert( vn._states, s )
 end
 
---[[
--- @brief Plays a sound.
+--[[--
+Plays a sound.
+
+   @tparam Audio sfx Sound to play.
 --]]
 function vn.sfx( sfx )
    vn._checkstarted()
@@ -1054,25 +1122,37 @@ function vn.sfx( sfx )
    end
    table.insert( vn._states, s )
 end
+--[[--
+Plays a money sound.
+--]]
 function vn.sfxMoney()
    -- TODO
    -- return vn.sfx( vn._sfx.money )
 end
+--[[--
+Plays a victory sound.
+--]]
 function vn.sfxVictory()
    -- TODO
    -- return vn.sfx( vn._sfx.victory )
 end
+--[[--
+Plays a bingo sound.
+--]]
 function vn.sfxBingo()
    -- TODO
    -- return vn.sfx( vn._sfx.bingo )
 end
+--[[--
+Plays an eerie sound.
+--]]
 function vn.sfxEerie()
    -- TODO
    -- return vn.sfx( vn._sfx.eerie )
 end
 
---[[
--- @brief Custom states. Only use if you know what you are doing.
+--[[--
+Custom states. Only use if you know what you are doing.
 --]]
 function vn.custom()
    vn._checkstarted()
@@ -1081,18 +1161,40 @@ function vn.custom()
    return s
 end
 
+
+--[[--
+Sets the shader to be used for post-processing the VN.
+
+   @see love_shaders
+   @tparam Shader shader Shader to use for post-processing or nil to disable.
+--]]
 function vn.setShader( shader )
    vn._postshader = shader
 end
 
+--[[--
+Sets the background drawing function. Drawn behind the VN stuff.
+
+   @tparam func drawfunc Function to call to draw the background or nil to disable.
+--]]
 function vn.setBackground( drawfunc )
    vn._draw_bg = drawfunc
 end
 
+--[[--
+Sets the foreground drawing function. Drawn behind the VN stuff.
+
+   @tparam func drawfunc Function to call to draw the foreground or nil to disable.
+--]]
 function vn.setForeground( drawfunc )
    vn._draw_fg = drawfunc
 end
 
+--[[--
+Sets a custom update function. This gets run every frame.
+
+   @tparam func updatefunc Update function to run every frame.
+--]]
 function vn.setUpdateFunc( updatefunc )
    vn._updatefunc = updatefunc
 end
@@ -1136,20 +1238,20 @@ function vn._checkDone()
 end
 
 
---[[
--- @brief Checks to see if the VN is done running or not.
---    @return true if it is done running, false otherwise
+--[[--
+Checks to see if the VN is done running or not.
+   @treturn bool true if it is done running, false otherwise
 --]]
 function vn.isDone()
    return vn._state > #vn._states
 end
 
 
---[[
--- @brief Runs the visual novel environment.
---
--- @note You have to set up the states first.
--- @note This function doesn't return until the VN is done running.
+--[[--
+Runs the visual novel environment.
+
+<em>Note</em> You have to set up the states first.
+<em>Note</em> This function doesn't return until the VN is done running.
 --]]
 function vn.run()
    if #vn._states == 0 then
@@ -1161,10 +1263,10 @@ function vn.run()
    vn._started = false
 end
 
---[[
--- @brief Clears the fundamental running variables. Run before starting a new VN instance.
---
--- @note Leaves customization to colors and positions untouched.
+--[[--
+Clears the fundamental running variables. Run before starting a new VN instance.
+
+<em>Note</em> Leaves customization to colors and positions untouched.
 --]]
 function vn.clear()
    local var = {
@@ -1188,10 +1290,10 @@ function vn.clear()
    vn._states = {}
 end
 
---[[
--- @brief Fully resets the VN environment to default values.
---
--- @note This automatically does vn.clear() too.
+--[[--
+Fully resets the VN environment to default values.
+
+<em>Note</em> This automatically does vn.clear() too.
 --]]
 function vn.reset()
    vn.clear()

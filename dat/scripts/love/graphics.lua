@@ -263,6 +263,18 @@ end
 function graphics.getDefaultFilter()
    return graphics._minfilter, graphics._magfilter, graphics._anisotropy
 end
+function graphics.setBlendMode( mode, alphamode )
+   naev.gfx.setBlendMode( mode, alphamode )
+   graphics._mode = mode
+   graphics._alphamode = alphamode
+end
+function graphics.getBlendMode()
+   return graphics._mode, graphics._alphamode
+end
+-- unimplemented
+function graphics.setLineStyle( style )
+   love._unimplemented()
+end
 
 
 --[[
@@ -588,15 +600,6 @@ function graphics.Canvas:getWidth(...) return self.t:getWidth(...) end
 function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
 
 
--- unimplemented
-function graphics.setLineStyle( style )
-   love._unimplemented()
-end
-function graphics.setBlendMode( mode, alphamode )
-   naev.gfx.setBlendMode( mode, alphamode )
-end
-
-
 -- Set some sane defaults.
 local _pixelcode = [[
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -617,5 +620,7 @@ graphics.origin()
 graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
 graphics.setShader( graphics._shader_default )
 graphics.setCanvas( nil )
+graphics._mode = "alpha"
+graphics._alphamode = "alphamultiply"
 
 return graphics

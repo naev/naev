@@ -1,16 +1,35 @@
-local love_shaders = {}
+--[[--
+A module containing a diversity of Love2D shaders for use in Naev. These are
+designed to be used with the different aspects of the VN framework.
 
+In general all shaders have a "strength" parameter indicating the strength
+of the effect. Furthermore, those that have a temporal component have a
+"speed" parameter. These are all normalized such that 1 is the default
+value. Temporal component can also be inverted by setting a negative value.
+@module love_shaders
+--]]
 local graphics = require "love.graphics"
 local love_math = require "love.math"
 local love_image = require "love.image"
+
+local love_shaders = {}
+
+--[[--
+Shader common parameter table.
+@tfield number strength Strength of the effect normalized such that 1.0 is the default value.
+@tfield number speed Speed of the effect normalized such that 1.0 is the default value. Negative values run the effect backwards. Only used for those shaders with temporal components.
+@tfield Color color Color component to be used. Should be in the form of {r, g, b} where r, g, and b are numbers.
+@tfield number size Affects the size of the effect.
+@table shaderparams
+--]]
 
 -- Tiny image for activating shaders
 local idata = love_image.newImageData( 1, 1 )
 idata:setPixel( 0, 0, 1, 1, 1, 1 )
 love_shaders.img = graphics.newImage( idata )
 
---[[
--- Default fragment code that doesn't do anything fancy.
+--[[--
+Default fragment code that doesn't do anything fancy.
 --]]
 local _pixelcode = [[
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -19,8 +38,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    return texcolor * color;
 }
 ]]
---[[
--- Default vertex code that doesn't do anything fancy.
+--[[--
+Default vertex code that doesn't do anything fancy.
 --]]
 local _vertexcode = [[
 vec4 position( mat4 transform_projection, vec4 vertex_position )
@@ -47,12 +66,13 @@ local function _shader2canvas( shader, image, w, h, sx, sy )
    return newcanvas
 end
 
---[[
--- @brief Renders a shader to a canvas.
---
---    @param shader Shader to render.
---    @param width Width of the canvas to create (or nil for fullscreen).
---    @param height Height of the canvas to create (or nil for fullscreen).
+--[[--
+Renders a shader to a canvas.
+
+@tparam Shader shader Shader to render.
+@tparam[opt=love.w] number width Width of the canvas to create (or nil for fullscreen).
+@tparam[opt=love.h] number height Height of the canvas to create (or nil for fullscreen).
+@treturn Canvas Generated canvas.
 --]]
 function love_shaders.shader2canvas( shader, width, height )
    local lw, lh = naev.gfx.dim()
@@ -90,6 +110,16 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    return love_shaders.shader2canvas( shader, width, height )
 end
 
+
+--[[--
+Blur shader applied to an image.
+
+@tparam Drawable image A drawable to blur.
+@tparam[opt=5] number kernel_size The size of the kernel to use to blur. This
+   is the number of pixels in the linear case or the standard deviation in the
+   Gaussian case.
+@tparam[opt="gaussian"] string blurtype Either "linear" or "gaussian".
+--]]
 function love_shaders.blur( image, kernel_size, blurtype )
    kernel_size = kernel_size or 5
    blurtype = blurtype or "gaussian"
@@ -110,16 +140,24 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    -- Since the kernel is separable we need two passes, one for x and one for y
    shader:send( "blurvec", 1, 0 )
    pass1 = _shader2canvas( shader, image, w, h )
+   local mode, alphamode = graphics.getBlendMode()
    graphics.setBlendMode( "alpha", "premultiplied" )
    shader:send( "blurvec", 0, 1 )
    pass2 = _shader2canvas( shader, pass1, w, h )
-   graphics.setBlendMode( "alpha" )
+   graphics.setBlendMode( mode, alphamode )
    return pass2
 end
 
-function love_shaders.oldify( noise )
-   noise = noise or 1.0
-   local pixelcode = [[
+--[[--
+Creates an oldify effect, meant for full screen effects.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "strength" field is used.
+--]]
+function love_shaders.oldify( params )
+   params = params or {}
+   strength = params.strength or 1.0
+   local pixelcode = string.format( [[
 #include "lib/simplex.glsl"
 #include "lib/perlin.glsl"
 #include "lib/math.glsl"
@@ -128,6 +166,8 @@ function love_shaders.oldify( noise )
 #include "lib/colour.glsl"
 
 uniform float u_time;
+
+const float strength = %f;
 
 float grain(vec2 uv, vec2 mult, float frame, float multiplier) {
    float offset = snoise(vec3(mult / multiplier, frame));
@@ -184,7 +224,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 
    return texcolor;
 }
-]]
+]], strength )
 
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader._dt = 1000. * love_math.random()
@@ -195,8 +235,16 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    return shader
 end
 
-function love_shaders.hologram( noise )
-   noise = noise or 1.0
+
+--[[--
+A hologram effect, mainly meant for VN characters.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "strength" field is used.
+--]]
+function love_shaders.hologram( params )
+   params = params or {}
+   strength = params.strength or 1.0
    local pixelcode = [[
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
@@ -288,7 +336,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 }
 ]]
 
-   if noise >= 2.0 then
+   if strength  >= 2.0 then
       pixelcode = "#define HOLOGRAM_STRONG 1\n"..pixelcode
    end
 
@@ -302,8 +350,15 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 end
 
 
-function love_shaders.corruption( noise )
-   noise = noise or 1.0
+--[[--
+A corruption effect applies a noisy pixelated effect.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "strength" field is used.
+--]]
+function love_shaders.corruption( params )
+   paramas = params or {}
+   strength = strength or 1.0
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 
@@ -322,7 +377,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
    vec4 glitchColor = texture2D( tex, uv );
    return color * mix(screenColor, glitchColor, vec4(0.1*strength));
 }
-]], noise )
+]], strength )
 
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader._dt = 1000 * love_math.random()
@@ -334,9 +389,16 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
 end
 
 
-function love_shaders.steam( strength, speed )
-   strength = strength or 1.0
-   speed = speed or 1.0
+--[[--
+A rolling steamy effect. Meant as/for backgrounds.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "strength" and "speed" fields is used.
+--]]
+function love_shaders.steam( params )
+   params = params or {}
+   strength = params.strength or 1.0
+   speed = params.speed or 1.0
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 #include "lib/simplex.glsl"
@@ -375,11 +437,20 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
-function love_shaders.aura( color, size, strength, speed )
-   color = color or {1, 0, 0}
-   strength = strength or 1
-   speed = speed or 1
-   size = size or 20 -- Gaussian blur sigma
+--[[--
+An aura effect for characters.
+
+The default size is 40 and refers to the standard deviation of the Gaussian blur being applied.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "strength", "speed", "color", and "size" fields are used.
+--]]
+function love_shaders.aura( params )
+   params = params or {}
+   color = params.color or {1, 0, 0}
+   strength = params.strength or 1
+   speed = params.speed or 1
+   size = params.size or 40 -- Gaussian blur sigma
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 #include "lib/simplex.glsl"

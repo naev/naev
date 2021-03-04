@@ -8,7 +8,7 @@
  <class>Bomber</class>
  <price>525000</price>
  <time_mod>1</time_mod>
- <trail_generator x="-15" y="0" h="0" >sirius</trail_generator>
+ <trail_generator x="-13" y="0" h="0" >sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>
  <license>Light Combat Vessel License</license>
  <description>Though its relatively sleek form may cause it to be mistaken for a light fighter from a distance, the Shaman is anything but. A purpose-built light missile platform, few enemies escape the reach of the Shaman.</description>
@@ -24,10 +24,10 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="4" y="0" h="0" />
-  <weapon size="small" x="4" y="0" h="0" />
-  <weapon size="small" x="-2" y="4" h="-1" />
-  <weapon size="small" x="-2" y="-4" h="-1" />
+  <weapon size="medium" x="-2" y="4" h="-1" />
+  <weapon size="medium" x="-2" y="-4" h="-1" />
+  <weapon size="small" x="4" y="2" h="0" />
+  <weapon size="small" x="4" y="-2" h="0" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-80 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
@@ -46,6 +46,6 @@
   <shield_mod>10</shield_mod>
   <launch_rate>10</launch_rate>
   <launch_range>15</launch_range>
-  <ammo_capacity>50</ammo_capacity>
+  <ammo_capacity>40</ammo_capacity>
  </stats>
 </ship>
