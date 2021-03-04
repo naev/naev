@@ -9,27 +9,27 @@
   <price>47500</price>
   <description>By modulating the frequency of the basic Ripper Cannon, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Heavy Ripper Cannon. The main drawback to this model is its increased bulk, which makes it unsuitable for smaller ships.</description>
   <gfx_store>ripper.png</gfx_store>
-  <cpu>-15</cpu>
+  <cpu>-50</cpu>
  </general>
  <specific type="bolt">
   <gfx>ripperM.png</gfx>
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>1.25</delay>
+  <delay>1.4</delay>
   <speed>700</speed>
   <range>1300</range>
-  <falloff>850</falloff>
+  <falloff>1100</falloff>
   <gfx_end>ripperM-end.png</gfx_end>
-  <energy>40</energy>
-  <heatup>35</heatup>
+  <energy>28</energy>
+  <heatup>50</heatup>
   <track>2</track>
   <swivel>22</swivel>
   <damage>
    <type>normal</type>
-   <penetrate>36</penetrate>
-   <physical>42</physical>
-   <disable>2</disable>
+   <penetrate>48</penetrate>
+   <physical>48</physical>
+   <disable>2.8</disable>
   </damage>
  </specific>
 </outfit>
