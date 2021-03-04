@@ -22,8 +22,6 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
 ]]
 
 transitions._t.fade = [[
-uniform Image texprev;
-uniform float progress;
 vec4 effect( vec4 unused, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    vec4 c1 = Texel(texprev, texture_coords);
@@ -34,9 +32,6 @@ vec4 effect( vec4 unused, Image tex, vec2 texture_coords, vec2 screen_coords )
 
 transitions._t.blur = [[
 #include "lib/blur.glsl"
-
-uniform Image texprev;
-uniform float progress;
 
 const float intensity = 10.0;
 
@@ -54,9 +49,6 @@ transitions._t.ripple = [[
 // Author: gre
 // License: MIT
 
-uniform Image texprev;
-uniform float progress;
-
 const float amplitude = 100.0;
 const float speed = 50.;
 
@@ -73,10 +65,6 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 
 transitions._t.perlin = [[
 #include "lib/perlin.glsl"
-
-uniform Image texprev;
-uniform float progress;
-uniform float u_r;
 
 const float scale = 0.01;
 const float smoothness = 0.1;
@@ -101,9 +89,6 @@ transitions._t.wave = [[
 // License: MIT
 
 #include "lib/math.glsl"
-
-uniform Image texprev;
-uniform float progress;
 
 const float amplitude = 1.0;
 const float waves = 30.0;
@@ -141,9 +126,6 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 transitions._t.radial = [[
 #include "lib/math.glsl"
 
-uniform Image texprev;
-uniform float progress;
-
 const float smoothness = 1.0;
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
@@ -165,9 +147,6 @@ transitions._t.pixelize = [[
 
 #include "lib/math.glsl"
 
-uniform Image texprev;
-uniform float progress;
-
 const ivec2 squaresMin = ivec2(20);
 const int steps = 50;
 
@@ -187,9 +166,6 @@ transitions._t.hexagon = [[
 // Author: Fernando Kuteken
 // License: MIT
 // Hexagonal math from: http://www.redblobgames.com/grids/hexagons/
-
-uniform Image texprev;
-uniform float progress;
 
 const int steps = 50;
 uniform float horizontalHexagons = 20;
@@ -262,8 +238,6 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
 ]]
 
 transitions._t.burn = [[
-uniform Image texprev;
-uniform float progress;
 uniform Image noisetex;
 
 const float smoothness = 0.1;
@@ -326,11 +300,7 @@ end
 
 transitions._t.electric = [[
 #include "lib/simplex.glsl"
-
-uniform Image texprev;
-uniform float progress;
 uniform float u_time;
-uniform float u_r;
 
 const float height = 10.0;
 const vec3 bluetint = vec3( 0.4, 0.6, 1.0 );
@@ -377,8 +347,6 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 ]]
 
 transitions._t.slideleft = [[
-uniform Image texprev;
-uniform float progress;
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    uv -= vec2( 1.0-progress, 0.0 );
@@ -389,8 +357,6 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 ]]
 
 transitions._t.slideright = [[
-uniform Image texprev;
-uniform float progress;
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    uv += vec2( 1.0-progress, 0.0 );
@@ -401,8 +367,6 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 ]]
 
 transitions._t.slidedown = [[
-uniform Image texprev;
-uniform float progress;
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    uv += vec2( 0.0, 1.0-progress );
@@ -413,8 +377,6 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 ]]
 
 transitions._t.slideup = [[
-uniform Image texprev;
-uniform float progress;
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    uv -= vec2( 0.0, 1.0-progress );
@@ -437,7 +399,13 @@ function transitions.get( name, seconds, transition )
       seconds = seconds or 2.0
    end
 
-   local _pixelcode = transitions._t[name]
+   local prefix = string.format( [[
+uniform Image texprev;
+uniform float progress;
+const float u_r = %f;
+   ]], love_math.random() )
+
+   local _pixelcode = prefix..transitions._t[name]
    if not _pixelcode then
       error( string.format(_("vn: unknown transition type'%s'"), name ) )
    end
