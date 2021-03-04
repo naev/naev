@@ -29,8 +29,7 @@ local function _H( x, y, r, sx, sy )
       -- Rendering to canvas
       local cw = graphics._canvas.t.w
       local ch = graphics._canvas.t.h
-      H = naev.transform.ortho( 0, cw, 0, ch, -1, 1 )
-          :scale( love.s, love.s )
+      H = naev.transform.ortho( 0, cw, 0, ch, 1, -1 )
    else
       -- Rendering to screen
       H = graphics._O
@@ -150,8 +149,8 @@ function graphics.Image:draw( ... )
    local s1, s2, s3, s4
    local canvas = graphics._canvas
    if canvas then
-      s1 = canvas.w / love.s
-      s2 = canvas.h / love.s
+      s1 = canvas.w
+      s2 = canvas.h
       s3 = -1.0
       s4 = love.h
    else
@@ -197,7 +196,7 @@ function graphics.origin()
    local nw, nh = naev.gfx.dim()
    local nx = -love.x
    local ny = love.h+love.y-nh
-   graphics._O = naev.transform.ortho( nx, nx+nw, ny+nh, ny, -1, 1 )
+   graphics._O = naev.transform.ortho( nx, nx+nw, ny+nh, ny, 1, -1 )
    graphics._T = { love_math.newTransform() }
 end
 function graphics.push()
@@ -207,7 +206,7 @@ end
 function graphics.pop()
    table.remove( graphics._T, 1 )
    if graphics._T[1] == nil then
-      graphics._T[1] = love.math.newTransform()
+      graphics._T[1] = love_math.newTransform()
    end
 end
 function graphics.translate( dx, dy ) graphics._T[1]:translate( dx, dy ) end
@@ -263,6 +262,18 @@ function graphics.setDefaultFilter( min, mag, anisotropy )
 end
 function graphics.getDefaultFilter()
    return graphics._minfilter, graphics._magfilter, graphics._anisotropy
+end
+function graphics.setBlendMode( mode, alphamode )
+   naev.gfx.setBlendMode( mode, alphamode )
+   graphics._mode = mode
+   graphics._alphamode = alphamode
+end
+function graphics.getBlendMode()
+   return graphics._mode, graphics._alphamode
+end
+-- unimplemented
+function graphics.setLineStyle( style )
+   love._unimplemented()
 end
 
 
@@ -553,11 +564,9 @@ graphics.Canvas = class.inheritsFrom( object.Drawable )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
    local c = graphics.Canvas.new()
-   if not width then
-      local nw, nh, ns = naev.gfx.dim()
-      width = nw
-      height= nh
-   end
+   local nw, nh, ns = naev.gfx.dim()
+   width  = width or nw
+   height = height or nh
    c.canvas = naev.canvas.new( width, height )
    c.w = width
    c.h = height
@@ -591,15 +600,6 @@ function graphics.Canvas:getWidth(...) return self.t:getWidth(...) end
 function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
 
 
--- unimplemented
-function graphics.setLineStyle( style )
-   love._unimplemented()
-end
-function graphics.setBlendMode( mode, alphamode )
-   naev.gfx.setBlendMode( mode, alphamode )
-end
-
-
 -- Set some sane defaults.
 local _pixelcode = [[
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -620,5 +620,7 @@ graphics.origin()
 graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
 graphics.setShader( graphics._shader_default )
 graphics.setCanvas( nil )
+graphics._mode = "alpha"
+graphics._alphamode = "alphamultiply"
 
 return graphics

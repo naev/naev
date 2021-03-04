@@ -37,6 +37,7 @@ summary('NData Path', ndata_path, section: 'Features')
 
 # Subdirs
 subdir('src')
+subdir('dat/scripts')
 subdir('docs')
 subdir('po')
 

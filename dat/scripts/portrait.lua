@@ -1,3 +1,8 @@
+--[[--
+Functions for handling portraits in Naev.
+
+@module portrait
+--]]
 --[[
 
    Portrait Common
@@ -185,14 +190,11 @@ portraits_mil_m["Pirate"] = portraits_m["Pirate"]
 portraits_mil_f["Pirate"] = portraits_f["Pirate"]
 
 
---[[
--- @brief Choose a random male civilian portrait.
---
--- @usage misn.setNPC( "Sam", getMale( "Pirate" ) )
---
---    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
---
--- @luafunc getMale( faction )
+--[[--
+Choose a random male civilian portrait.
+
+@usage misn.setNPC( "Sam", getMale( "Pirate" ) )
+   @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.getMale( faction )
    if portraits_m[faction] ~= nil then
@@ -203,14 +205,11 @@ function portrait.getMale( faction )
 end
 
 
---[[
--- @brief Choose a random female civilian portrait.
---
--- @usage misn.setNPC( "Sam", getFemale() )
---
---    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
---
--- @luafunc getFemale( faction )
+--[[--
+Choose a random female civilian portrait.
+
+@usage misn.setNPC( "Sam", getFemale() )
+   @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.getFemale( faction )
    if portraits_f[faction] ~= nil then
@@ -221,14 +220,11 @@ function portrait.getFemale( faction )
 end
 
 
---[[
--- @brief Choose a random civilian portrait of any gender.
---
--- @usage misn.setNPC( "Sam", get( "Empire" ) )
---
---    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
---
--- @luafunc get( faction )
+--[[--
+Choose a random civilian portrait of any gender.
+
+@usage misn.setNPC( "Sam", get( "Empire" ) )
+   @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.get( faction )
    if rnd.rnd() < 0.5 then
@@ -239,14 +235,11 @@ function portrait.get( faction )
 end
 
 
---[[
--- @brief Choose a random male military portrait.
---
--- @usage misn.setNPC( "Sam", getMaleMil( "Pirate" ) )
---
---    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
---
--- @luafunc getMaleMil( faction )
+--[[--
+Choose a random male military portrait.
+
+@usage misn.setNPC( "Sam", getMaleMil( "Pirate" ) )
+   @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.getMaleMil( faction )
    if portraits_mil_m[faction] ~= nil then
@@ -257,14 +250,11 @@ function portrait.getMaleMil( faction )
 end
 
 
---[[
--- @brief Choose a random female military portrait.
---
--- @usage misn.setNPC( "Sam", getFemaleMil( "Dvaered" ) )
---
---    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
---
--- @luafunc getFemaleMil( faction )
+--[[--
+Choose a random female military portrait.
+
+@usage misn.setNPC( "Sam", getFemaleMil( "Dvaered" ) )
+   @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.getFemaleMil( faction )
    if portraits_mil_f[faction] ~= nil then
@@ -275,14 +265,11 @@ function portrait.getFemaleMil( faction )
 end
 
 
---[[
--- @brief Choose a random military portrait of any gender.
---
--- @usage misn.setNPC( "Sam", getMil( "Empire" ) )
---
---    @luaparam faction Name of faction to get a portrait for, or nil for neutral.
---
--- @luafunc getMil( faction )
+--[[--
+Choose a random military portrait of any gender.
+
+@usage misn.setNPC( "Sam", getMil( "Empire" ) )
+   @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.getMil( faction )
    if rnd.rnd() < 0.5 then
@@ -293,8 +280,11 @@ function portrait.getMil( faction )
 end
 
 
---[[
--- @brief Gets the full path of a portrait relative to the data directory.
+--[[--
+Gets the full path of a portrait relative to the data directory.
+
+@usage portrait.getFullPath( portrait.get() )
+   @tparam string str Name of the portrait image to get.
 --]]
 function portrait.getFullPath( str )
    return "gfx/portraits/"..str

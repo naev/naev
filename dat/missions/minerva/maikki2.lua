@@ -690,7 +690,7 @@ function ecc_feral_boss_dead ()
          vn.setColor( {0.2, 0.2, 0.2, 0.8} )
          paperbg:draw( 0, 0 )
       end )
-      vn.setShader( love_shaders.corruption(0.5) )
+      vn.setShader( love_shaders.corruption{ strength=0.5 } )
    end )
    local voice = vn.newCharacter( _("Unknown Voice") )
    -- TODO better and creepier transition
