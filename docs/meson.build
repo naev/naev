@@ -43,13 +43,23 @@ if genLDoc.disabled() == false
             output   : '@BASENAME@.luadoc'
         )
 
+        # WARNING: half-assed way to ensure the same directory contains the Lua sources we want to document.
+        # Using @PLAINNAME@ forces a flat structure, which is no loss yet. (I think the @module directive is what counts,
+	# in which case we want to leave the nested structure and collision-proof ourselves.)
+        direct = generator(
+            find_program('cp', required: true),
+            arguments: ['@INPUT@', '@OUTPUT@'],
+            output   : '@PLAINNAME@'
+        )
+
         clua_source = c2luadoc.process(nlua_source)
+        llua_source = direct.process(lua_source)
 
         lconfig = files('lua/config.ld')
 
         ldoc = custom_target(
             'ldoc',
-            input: [clua_source, lua_source],
+            input: [clua_source, llua_source],
             output : 'lua',
             command: [
             ldoc,
