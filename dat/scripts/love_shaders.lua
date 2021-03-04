@@ -2,17 +2,15 @@ local graphics = require "love.graphics"
 local love_math = require "love.math"
 local love_image = require "love.image"
 
----[[
-@module love_shaders
-
-A module containing a diversity of Love2D shaders for use in Naev.
-   These are designed to be used with the different aspects of the VN
-   framework.
-
-In general all shaders have a "strength" parameter indicating the strength
-of the effect. Furthermore, those that have a temporal component have a
-"speed" parameter. These are all normalized such that 1 is the default
-value. Temporal component can also be inverted by setting a negative value.
+--[[
+-- A module containing a diversity of Love2D shaders for use in Naev. These are
+-- designed to be used with the different aspects of the VN framework.
+-- 
+-- In general all shaders have a "strength" parameter indicating the strength
+-- of the effect. Furthermore, those that have a temporal component have a
+-- "speed" parameter. These are all normalized such that 1 is the default
+-- value. Temporal component can also be inverted by setting a negative value.
+-- @module love_shaders
 --]]
 local love_shaders = {}
 
@@ -21,7 +19,7 @@ local idata = love_image.newImageData( 1, 1 )
 idata:setPixel( 0, 0, 1, 1, 1, 1 )
 love_shaders.img = graphics.newImage( idata )
 
----[[
+--[[
 Default fragment code that doesn't do anything fancy.
 --]]
 local _pixelcode = [[
@@ -31,7 +29,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    return texcolor * color;
 }
 ]]
----[[
+--[[
 Default vertex code that doesn't do anything fancy.
 --]]
 local _vertexcode = [[
@@ -59,7 +57,7 @@ local function _shader2canvas( shader, image, w, h, sx, sy )
    return newcanvas
 end
 
----[[
+--[[
 Renders a shader to a canvas.
 
 @tparam Shader shader Shader to render.
@@ -104,7 +102,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
----[[
+--[[
 Blur shader applied to an image.
 
 @tparam Drawable image A drawable to blur.
@@ -142,7 +140,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
----[[
+--[[
 Creates an oldify effect, meant for full screen effects.
 
 @tparam { strength=number } params Parameter table.
@@ -229,7 +227,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 end
 
 
----[[
+--[[
 A hologram effect, mainly meant for VN characters.
 
 @tparam { strength=number } params Parameter table.
@@ -342,7 +340,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 end
 
 
----[[
+--[[
 A corruption effect applies a noisy pixelated effect.
 
 @tparam { strength=number } params Parameter table.
@@ -380,7 +378,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
 end
 
 
----[[
+--[[
 A rolling steamy effect. Meant as/for backgrounds.
 
 @tparam { strength=number, speed=number } params Parameter table.
@@ -427,7 +425,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
----[[
+--[[
 An aura effect for characters.
 
 @tparam { strength=number, speed=number, color=Color, size=number } params Parameter table.
