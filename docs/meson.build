@@ -23,7 +23,7 @@ if genCDoc.disabled() == false
 
         cdoc = custom_target(
             'cdoc',
-            input      : [source, lua_source, mac_source, headers],
+            input      : [source, nlua_source, mac_source, headers],
             output     : doxy_output,
             command    : [doxygen, doxyfile],
             install    : true,
@@ -43,13 +43,13 @@ if genLDoc.disabled() == false
             output   : '@BASENAME@.luadoc'
         )
 
-        ldoc_source = c2luadoc.process(lua_source)
+        clua_source = c2luadoc.process(nlua_source)
 
         lconfig = files('lua/config.ld')
 
         ldoc = custom_target(
             'ldoc',
-            input: ldoc_source,
+            input: [clua_source, lua_source],
             output : 'lua',
             command: [
             ldoc,
