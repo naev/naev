@@ -7,7 +7,7 @@
   <priority>7</priority>
   <mass>160</mass>
   <price>100000</price>
-  <description>A heavy-duty variant of the PT-500, the PT-600 exceeds its predecessor in all respects. Its considerably higher mass restricts its use to larger medium vessels such as destroyers.</description>
+  <description>A heavy-duty variant of the PT-280, the PT-400 exceeds its predecessor in all respects. Its considerably higher mass restricts its use to larger medium vessels such as destroyers.</description>
   <gfx_store>core_system_basic_m2.png</gfx_store>
  </general>
  <specific type="modification">
