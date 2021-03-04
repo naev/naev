@@ -790,8 +790,6 @@ function vn.StateAnimation:_drawoverride(dt)
 end
 
 
---- @section Character
-
 --[[--
 A visual novel character.
 
@@ -914,8 +912,6 @@ local function _appear_cleanup( c )
       end
    end )
 end
-
----@section States
 
 --[[--
 Makes a character appear in the VN.
