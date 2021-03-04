@@ -335,9 +335,10 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
 end
 
 
-function love_shaders.steam( strength, speed )
-   strength = strength or 1.0
-   speed = speed or 1.0
+function love_shaders.steam( params )
+   params = params or {}
+   strength = params.strength or 1.0
+   speed = params.speed or 1.0
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 #include "lib/simplex.glsl"
@@ -376,11 +377,12 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
-function love_shaders.aura( color, size, strength, speed )
-   color = color or {1, 0, 0}
-   strength = strength or 1
-   speed = speed or 1
-   size = size or 20 -- Gaussian blur sigma
+function love_shaders.aura( params )
+   params = params or {}
+   color = params.color or {1, 0, 0}
+   strength = params.strength or 1
+   speed = params.speed or 1
+   size = params.size or 40 -- Gaussian blur sigma
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 #include "lib/simplex.glsl"
