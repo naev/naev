@@ -1,7 +1,6 @@
---[[
--- Visual Novel API for Naev
---
--- Based on Love2D API
+--[[--
+Transitions for the Visual Novel framework.
+@submodule vn
 --]]
 local utf8 = require 'utf8'
 local love = require 'love'

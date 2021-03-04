@@ -151,6 +151,7 @@ end
 --[[--
 Creates an oldify effect, meant for full screen effects.
 
+@see shaderparams
 @tparam @{shaderparams} params Parameter table where "strength" field is used.
 --]]
 function love_shaders.oldify( params )
@@ -238,6 +239,7 @@ end
 --[[--
 A hologram effect, mainly meant for VN characters.
 
+@see shaderparams
 @tparam @{shaderparams} params Parameter table where "strength" field is used.
 --]]
 function love_shaders.hologram( params )
@@ -351,6 +353,7 @@ end
 --[[--
 A corruption effect applies a noisy pixelated effect.
 
+@see shaderparams
 @tparam @{shaderparams} params Parameter table where "strength" field is used.
 --]]
 function love_shaders.corruption( params )
@@ -389,6 +392,7 @@ end
 --[[--
 A rolling steamy effect. Meant as/for backgrounds.
 
+@see shaderparams
 @tparam @{shaderparams} params Parameter table where "strength" and "speed" fields is used.
 --]]
 function love_shaders.steam( params )
@@ -438,6 +442,7 @@ An aura effect for characters.
 
 The default size is 40 and refers to the standard deviation of the Gaussian blur being applied.
 
+@see shaderparams
 @tparam @{shaderparams} params Parameter table where "strength", "speed", "color", and "size" fields are used.
 --]]
 function love_shaders.aura( params )
