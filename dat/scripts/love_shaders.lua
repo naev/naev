@@ -5,7 +5,7 @@ local love_image = require "love.image"
 ---[[
 @module love_shaders
 
-@brief A module containing a diversity of Love2D shaders for use in Naev.
+A module containing a diversity of Love2D shaders for use in Naev.
    These are designed to be used with the different aspects of the VN
    framework.
 
@@ -22,7 +22,7 @@ idata:setPixel( 0, 0, 1, 1, 1, 1 )
 love_shaders.img = graphics.newImage( idata )
 
 ---[[
-@brief Default fragment code that doesn't do anything fancy.
+Default fragment code that doesn't do anything fancy.
 --]]
 local _pixelcode = [[
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -32,7 +32,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 }
 ]]
 ---[[
-@brief Default vertex code that doesn't do anything fancy.
+Default vertex code that doesn't do anything fancy.
 --]]
 local _vertexcode = [[
 vec4 position( mat4 transform_projection, vec4 vertex_position )
@@ -60,7 +60,7 @@ local function _shader2canvas( shader, image, w, h, sx, sy )
 end
 
 ---[[
-@brief Renders a shader to a canvas.
+Renders a shader to a canvas.
 
 @tparam Shader shader Shader to render.
 @tparam number width Width of the canvas to create (or nil for fullscreen).
@@ -105,7 +105,7 @@ end
 
 
 ---[[
-@brief Blur shader applied to an image.
+Blur shader applied to an image.
 
 @tparam Drawable image A drawable to blur.
 @tparam[opt=5] number kernel_size The size of the kernel to use to blur. This
@@ -143,7 +143,7 @@ end
 
 
 ---[[
-@brief Creates an oldify effect, meant for full screen effects.
+Creates an oldify effect, meant for full screen effects.
 
 @tparam { strength=number } params Parameter table.
 --]]
@@ -230,7 +230,7 @@ end
 
 
 ---[[
-@brief A hologram effect, mainly meant for VN characters.
+A hologram effect, mainly meant for VN characters.
 
 @tparam { strength=number } params Parameter table.
 --]]
@@ -343,7 +343,7 @@ end
 
 
 ---[[
-@brief A corruption effect applies a noisy pixelated effect.
+A corruption effect applies a noisy pixelated effect.
 
 @tparam { strength=number } params Parameter table.
 --]]
@@ -381,7 +381,7 @@ end
 
 
 ---[[
-@brief A rolling steamy effect. Meant as/for backgrounds.
+A rolling steamy effect. Meant as/for backgrounds.
 
 @tparam { strength=number, speed=number } params Parameter table.
 --]]
@@ -428,7 +428,7 @@ end
 
 
 ---[[
-@brief An aura effect for characters.
+An aura effect for characters.
 
 @tparam { strength=number, speed=number, color=Color, size=number } params Parameter table.
 --]]

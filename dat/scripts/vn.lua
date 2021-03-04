@@ -125,7 +125,7 @@ end
 
 
 ---[[
--- @brief Main drawing function.
+-- Main drawing function.
 --]]
 local function _draw()
    local prevcanvas
@@ -219,7 +219,7 @@ end
 
 
 ---[[
--- @brief Main updating function.
+-- Main updating function.
 --    @param dt Update tick.
 --]]
 function vn.update(dt)
@@ -257,7 +257,7 @@ end
 
 
 ---[[
--- @brief Key press handler.
+-- Key press handler.
 --    @param key Name of the key pressed.
 --]]
 function vn.keypressed( key )
@@ -275,7 +275,7 @@ end
 
 
 ---[[
--- @brief Mouse press handler.
+-- Mouse press handler.
 --    @param mx X position of the click.
 --    @param my Y position of the click.
 --    @param button Button that was pressed.
@@ -289,11 +289,11 @@ end
 
 -- Helpers
 ---[[
--- @brief Makes the player say something.
+-- Makes the player say something.
 --]]
 function vn.me( what, nowait ) vn.say( "me", what, nowait ) end
 ---[[
--- @brief Makes the narrator say something.
+-- Makes the narrator say something.
 --]]
 function vn.na( what, nowait ) vn.say( "narrator", what, nowait ) end
 
@@ -775,13 +775,13 @@ end
 --]]
 vn.Character = {}
 ---[[
--- @brief Makes a player say something.
+-- Makes a player say something.
 --]]
 function vn.Character:say( what, nowait ) return vn.say( self.who, what, nowait ) end
 vn.Character_mt = { __index = vn.Character, __call = vn.Character.say }
 ---[[
--- @brief Creates a new character without adding it to the VN.
--- @note The character can be added with vn.newCharacter.
+-- Creates a new character without adding it to the VN.
+-- <em>Note</em> The character can be added with vn.newCharacter.
 --    @param who Name of the character to add.
 --    @param params Parameter table.
 --    @return New character.
@@ -831,7 +831,7 @@ function vn.Character:rename( newname )
    end )
 end
 ---[[
--- @brief Creates a new character.
+-- Creates a new character.
 --    @param who Name (or previously created character) to add.
 --    @param params Parameter table.
 --    @return New character.
@@ -924,7 +924,7 @@ function vn.disappear( c, name, seconds, transition )
 end
 
 ---[[
--- @brief Starts a new scene.
+-- Starts a new scene.
 --    @param background Background image to set or none if nil.
 --]]
 function vn.scene( background )
@@ -933,9 +933,9 @@ function vn.scene( background )
 end
 
 ---[[
--- @brief Has a character say something.
+-- Has a character say something.
 --
--- @note "me" and "narrator" are specila meta-characters.
+-- <em>Note</em> "me" and "narrator" are specila meta-characters.
 --
 --    @param who The name of the character that is saying something.
 --    @param what What the character is saying.
@@ -950,7 +950,7 @@ function vn.say( who, what, nowait )
 end
 
 ---[[
--- @brief Opens a menu the player can select from.
+-- Opens a menu the player can select from.
 --    @param items Table of items to select from, they should be of the form "{text, label}" where "text" is what is displayed and "label" is what is passed to the handler.
 --    @param handler Function to handle what happens when an item is selecetdd. Defaults to vn.jump.
 --]]
@@ -961,7 +961,7 @@ function vn.menu( items, handler )
 end
 
 ---[[
--- @brief Inserts a label. This does nothing but serve as a reference for vn.jump
+-- Inserts a label. This does nothing but serve as a reference for vn.jump
 --    @param label Name of the label to insert.
 --]]
 function vn.label( label )
@@ -970,7 +970,7 @@ function vn.label( label )
 end
 
 ---[[
--- @brief Inserts a jump. This skips to a certain label.
+-- Inserts a jump. This skips to a certain label.
 --    @param label Name of the label to jump to.
 --]]
 function vn.jump( label )
@@ -981,7 +981,7 @@ function vn.jump( label )
 end
 
 ---[[
--- @brief Finishes the VN.
+-- Finishes the VN.
 --]]
 function vn.done( ... )
    vn._checkstarted()
@@ -992,9 +992,9 @@ function vn.done( ... )
 end
 
 ---[[
--- @brief Allows doing arbitrary animations.
+-- Allows doing arbitrary animations.
 --
---    @params Seconds to perform the animation
+--    @param seconds Seconds to perform the animation
 --]]
 function vn.animation( seconds, func, drawfunc, transition, initfunc, drawoverride )
    vn._checkstarted()
@@ -1031,7 +1031,7 @@ function vn.transition( name, seconds, transition )
 end
 
 ---[[
--- @brief Runs a function and continues execution.
+-- Runs a function and continues execution.
 --]]
 function vn.func( func )
    vn._checkstarted()
@@ -1044,7 +1044,7 @@ function vn.func( func )
 end
 
 ---[[
--- @brief Plays a sound.
+-- Plays a sound.
 --]]
 function vn.sfx( sfx )
    vn._checkstarted()
@@ -1073,7 +1073,7 @@ function vn.sfxEerie()
 end
 
 ---[[
--- @brief Custom states. Only use if you know what you are doing.
+-- Custom states. Only use if you know what you are doing.
 --]]
 function vn.custom()
    vn._checkstarted()
@@ -1138,7 +1138,7 @@ end
 
 
 ---[[
--- @brief Checks to see if the VN is done running or not.
+-- Checks to see if the VN is done running or not.
 --    @return true if it is done running, false otherwise
 --]]
 function vn.isDone()
@@ -1147,10 +1147,10 @@ end
 
 
 ---[[
--- @brief Runs the visual novel environment.
+-- Runs the visual novel environment.
 --
--- @note You have to set up the states first.
--- @note This function doesn't return until the VN is done running.
+-- <em>Note</em> You have to set up the states first.
+-- <em>Note</em> This function doesn't return until the VN is done running.
 --]]
 function vn.run()
    if #vn._states == 0 then
@@ -1163,9 +1163,9 @@ function vn.run()
 end
 
 ---[[
--- @brief Clears the fundamental running variables. Run before starting a new VN instance.
+-- Clears the fundamental running variables. Run before starting a new VN instance.
 --
--- @note Leaves customization to colors and positions untouched.
+-- <em>Note</em> Leaves customization to colors and positions untouched.
 --]]
 function vn.clear()
    local var = {
@@ -1190,9 +1190,9 @@ function vn.clear()
 end
 
 ---[[
--- @brief Fully resets the VN environment to default values.
+-- Fully resets the VN environment to default values.
 --
--- @note This automatically does vn.clear() too.
+-- <em>Note</em> This automatically does vn.clear() too.
 --]]
 function vn.reset()
    vn.clear()
