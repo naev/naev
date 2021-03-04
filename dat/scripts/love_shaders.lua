@@ -2,7 +2,7 @@ local graphics = require "love.graphics"
 local love_math = require "love.math"
 local love_image = require "love.image"
 
---[[
+--[[--
 -- A module containing a diversity of Love2D shaders for use in Naev. These are
 -- designed to be used with the different aspects of the VN framework.
 -- 
@@ -57,7 +57,7 @@ local function _shader2canvas( shader, image, w, h, sx, sy )
    return newcanvas
 end
 
---[[
+--[[--
 Renders a shader to a canvas.
 
 @tparam Shader shader Shader to render.

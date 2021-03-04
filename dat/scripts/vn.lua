@@ -1,4 +1,4 @@
----[[
+--[[--
 -- Visual Novel API for Naev
 --
 -- Based on Love2D API
@@ -124,7 +124,7 @@ function _draw_character( c )
 end
 
 
----[[
+--[[
 -- Main drawing function.
 --]]
 local function _draw()
@@ -218,7 +218,7 @@ local function _draw_to_canvas( canvas )
 end
 
 
----[[
+--[[--
 -- Main updating function.
 --    @param dt Update tick.
 --]]
