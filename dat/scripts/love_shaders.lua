@@ -14,6 +14,15 @@ local love_image = require "love.image"
 
 local love_shaders = {}
 
+--[[--
+Shader common parameter table.
+@tfield number strength Strength of the effect normalized such that 1.0 is the default value.
+@tfield number speed Speed of the effect normalized such that 1.0 is the default value. Negative values run the effect backwards. Only used for those shaders with temporal components.
+@tfield Color color Color component to be used. Should be in the form of {r, g, b} where r, g, and b are numbers.
+@tfield number size Affects the size of the effect.
+@table shaderparams
+--]]
+
 -- Tiny image for activating shaders
 local idata = love_image.newImageData( 1, 1 )
 idata:setPixel( 0, 0, 1, 1, 1, 1 )
@@ -139,11 +148,10 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    return pass2
 end
 
-
 --[[--
 Creates an oldify effect, meant for full screen effects.
 
-@tparam { strength=number } params Parameter table.
+@tparam @{shaderparams} params Parameter table where "strength" field is used.
 --]]
 function love_shaders.oldify( params )
    params = params or {}
@@ -230,7 +238,7 @@ end
 --[[--
 A hologram effect, mainly meant for VN characters.
 
-@tparam { strength=number } params Parameter table.
+@tparam @{shaderparams} params Parameter table where "strength" field is used.
 --]]
 function love_shaders.hologram( params )
    params = params or {}
@@ -343,7 +351,7 @@ end
 --[[--
 A corruption effect applies a noisy pixelated effect.
 
-@tparam { strength=number } params Parameter table.
+@tparam @{shaderparams} params Parameter table where "strength" field is used.
 --]]
 function love_shaders.corruption( params )
    paramas = params or {}
@@ -381,7 +389,7 @@ end
 --[[--
 A rolling steamy effect. Meant as/for backgrounds.
 
-@tparam { strength=number, speed=number } params Parameter table.
+@tparam @{shaderparams} params Parameter table where "strength" and "speed" fields is used.
 --]]
 function love_shaders.steam( params )
    params = params or {}
@@ -428,7 +436,9 @@ end
 --[[--
 An aura effect for characters.
 
-@tparam { strength=number, speed=number, color=Color, size=number } params Parameter table.
+The default size is 40 and refers to the standard deviation of the Gaussian blur being applied.
+
+@tparam @{shaderparams} params Parameter table where "strength", "speed", "color", and "size" fields are used.
 --]]
 function love_shaders.aura( params )
    params = params or {}
