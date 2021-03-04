@@ -18,7 +18,7 @@ local prng_mt = { __index = prng, __call = prng.call }
 --[[--
 Creates a new pseudo random number generator.
 
-   @tparam[opt=1] string|number Seed to initialize with.
+   @tparam[opt=1] string|number seed Seed to initialize with.
    @treturn prng A new PRNG object.
 --]]
 function prng.new( seed )
@@ -32,7 +32,7 @@ end
 --[[--
 Sets the seed of a PRNG object.
 
-   @tparam string|number Seed to set.
+   @tparam string|number seed Seed to set.
 --]]
 function prng:setSeed( seed )
    if type(seed)=="number" then
