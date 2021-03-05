@@ -25,6 +25,7 @@ local window = require 'love.window'
 
 -- NPC Stuff
 gambling_priority = 3
+important_npc_priority = 4
 terminal = minerva.terminal
 blackjack_name = _("Blackjack")
 blackjack_portrait = "blackjack.png"
@@ -87,6 +88,20 @@ function create()
    npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
    npc_blackjack = evt.npcAdd( "approach_blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
    npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
+
+   -- Some conditional NPCs
+   if player.misnDone("Maikki's Father 2") then
+      local desclist = {
+         _("You see Maikki enjoying a parfait."),
+         _("You see Maikki talking on a transponder."),
+         _("You see Maikki looking thoughtfully into the distance."),
+      }
+      local desc = desclist[ rnd.rnd(1,#desclist) ]
+      npc_maikki = evt.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, desc, important_npc_priority )
+   end
+   if player.evtDone("Chicken Rendezvous") then
+      npc_kex = evt.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description, important_npc_priority )
+   end
 
    -- Create random noise NPCs
    local npatrons = rnd.rnd(3,5)
@@ -532,6 +547,47 @@ function approach_patron( id )
    local patron = vn.newCharacter( npcdata.name, { image=npcdata.image } )
    vn.transition()
    patron( npcdata.message )
+   vn.run()
+end
+
+function approach_maikki ()
+   vn.clear()
+   vn.scene()
+   local maikki = vn.newCharacter( minerva.vn_maikki() )
+   vn.transition()
+   vn.na(_("You find Maikki, who beams you a smile as you approach."))
+
+   vn.menu( function ()
+      local opts = {
+         { _("Leave"), "leave" },
+      }
+      return opts
+   end)
+
+   vn.label("leave")
+   vn.na(_("You take your leave."))
+   vn.done()
+   vn.run()
+end
+
+function approach_kex ()
+   vn.clear()
+   vn.scene()
+   local kex = vn.newCharacter( minerva.vn_kex() )
+   vn.transition()
+   vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
+
+   vn.label("menu_msg")
+   vn.menu( function ()
+      local opts = {
+         { _("Leave"), "leave" },
+      }
+      return opts
+   end )
+
+   vn.label("leave")
+   vn.na(_("You take your leave."))
+   vn.done()
    vn.run()
 end
 
