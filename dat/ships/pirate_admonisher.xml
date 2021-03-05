@@ -51,5 +51,7 @@
   <cargo_mod>15</cargo_mod>
   <armour_mod>-10</armour_mod>
   <ew_hide>10</ew_hide>
+  <launch_range>20</launch_range>
+  <ammo_capacity>25</ammo_capacity>
  </stats>
 </ship>

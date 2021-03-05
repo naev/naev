@@ -48,5 +48,7 @@
   <shield_mod>10</shield_mod>
   <shield_regen_mod>15</shield_regen_mod>
   <heat_dissipation>10</heat_dissipation>
+  <launch_range>20</launch_range>
+  <ammo_capacity>25</ammo_capacity>
  </stats>
 </ship>
