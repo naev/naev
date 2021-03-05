@@ -44,6 +44,7 @@ function create()
    vn.na(_("The airlock opens as you approach it, and you find yourself at the entrance of the changing rooms. You get rid of your clothes, take a small towel, and proceed to enter the Spa area."))
    -- Start the fancy spa scene!
    vn.scene()
+   -- TODO add running water sound.
    vn.func( function ()
       local lw, lh = love.graphics.getDimensions()
       vn.setBackground( function ()
@@ -137,12 +138,16 @@ His eyes get a bit teary as he starts to recall the past.
    cc(_([["Sometimes the implants start ringing really loud in my head, and I pass out from the pain… I never asked for this. I'm condemned to live my days in solitude. Can't bear to think of letting my family see me in this sorry state."
 He looks depressed.]]))
    cc(_([["Apparently, the bastard had some outstanding debt or something, and I was taken by some cretins who brought me here as their slave pet. I was able to feign stupidity to avoid any issues. Pretending I had some blackjack software or something also saved me from potentially worse fates."]]))
-   cc(_([[""]]))
-
+   cc(_([["However, I'm fed up with this bullshit. This isn't living, this is rotting away. I yearn for the stars. Maybe getting back out in space will make me forget all this mockery of an existence."]]))
+   cc(_([[Sighing, he looks you in the eyes.
+"You only value what you have when you lose it, kid. You should make most of what you have, lady fortune sometimes will deal you a bad one and there might not be any coming back."]]))
+   cc(_([["I'll tell you what. Talking to you has been therapeutic or some shit like that. We could talk some time or something. Here, I'll give you the address to a place I like to hang out at the station. It's quiet enough that nobody will give us trouble. You can find me there when I'm off my shifts."]]))
+   cc(_([["Speaking of shifts, I believe I am late to my next one. See ya."
+Kex slides out of the water, ruffles his feather and fades into the steam. You hear the sound of his duck feet grow fainter until it is quiet except for the sound of running water.]]))
    vn.disappear( cc, "blur" )
 
-
-   vn.na("blah")
+   vn.na(_("You are left once more alone in the spa to unpack all the information unleashed to you by Kex. With nothing better to do, you once again melt into the thermal water and let your mind wander."))
+   vn.na(_("Eventually you leave the baths, get changed back into your space clothes and head out towards the station."))
    -- Go back to normal BG
    vn.scene()
    vn.func( function ()
@@ -150,7 +155,7 @@ He looks depressed.]]))
       vn.setUpdateFunc()
    end )
    vn.transition()
-   vn.na("blah")
+   vn.na(_("The noise and lights once again jar you back to reality harshly. At least you feel younger from the anti-aging nanobots. Maybe you should get a spa for your ship…"))
    vn.done("hexagon")
    vn.run()
 
