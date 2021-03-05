@@ -435,7 +435,7 @@ He looks around nervously.
       vn.transition("electric")
       vn.na(_("An impatient man appears into view."))
       h(_([["You again? I don't have time to deal with you."]]))
-      vn.na(_("The comm goes silent..."))
+      vn.na(_("The comm goes silent…"))
       vn.done("electric")
       vn.run()
 
@@ -457,7 +457,7 @@ He looks around nervously.
    h(_([["Yeah, you may have heard the news, but I'm the big winner of the Minerva hot spring event! On my first time to Minerva Station too! Maybe this will finally cure my back pains once and for all. The ticket is even made of pure gold!"
 As he boasts, he looks triumphant.]]))
    vn.menu( {
-      {_([["About the ticket..."]]), "ticket" },
+      {_([["About the ticket…"]]), "ticket" },
       {_("End transmission"), "leave" },
    } )
    vn.label("ticket")

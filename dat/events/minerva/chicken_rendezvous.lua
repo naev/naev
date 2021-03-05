@@ -32,7 +32,7 @@ function create()
    -- TODO fancier intro?
    vn.na(_("You show the winning ticket to the nearest terminal. It suddenly starts blasting music and flashing lights before triumphantly announcing to everyone in the vicinity."))
    t(_([["CONGRATULATIONS MISTER HARPER BOWDOIN ON WINNING THE EXCLUSIVE STAY AT THE MINERVA SPA."]]))
-   vn.na(_("If only the terminal could be more discrete... You follow the terminal as it leads you towards the spa facilities, as all the rooms have the same gaudy decorations and similar patrons, you wonder if you will be able to make it back to where you came from."))
+   vn.na(_("If only the terminal could be more discrete… You follow the terminal as it leads you towards the spa facilities, as all the rooms have the same gaudy decorations and similar patrons, you wonder if you will be able to make it back to where you came from."))
    t(_([[The terminal glides around the maze while its head rotates backwards to face you.
 "I BELIEVE YOU WILL BE VERY IMPRESSED WITH THE ACCOMMODATIONS AT THE SPA. THE RENOVATIONS TOOK ALMOST A CYCLE AND IT IS MORE BEAUTIFUL THAN EVER."]]))
    t(_([["TODAY THE WATER IS INFUSED WITH NANOBOTS THAT SPECIALIZE IN ANTI-AGING, AFTER A DIP YOU WILL LOOK YOUNGER THAN EVER. THESE HAVE BEEN DEVELOPED BY THE ZA'LEK AND SHOULD SURPASS THE ANTI-AGING PROPERTIES OF THE SOROMID SKIN LEECHES, WITHOUT EVEN CLOUDING THE WATER."]]))
