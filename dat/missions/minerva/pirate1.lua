@@ -119,8 +119,9 @@ function land ()
       vn.transition()
       vn.na(_("After you land on Minerva Station you are once again greeted by the shady character that gave you the job dealing with the Dvaered thugs."))
       pir(_([["I hear it went rather well. This should cause more tension between the Za'lek and the Dvaered so we can get them off this station. However, this is only the beginning."]]))
-      pir(_([["If you are interested, I may have another job for you which I believe you are more than capable of handling. Meet me up at the bar if you are interested. I have also transferred"]]))
-      vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
+      pir(_([["If you are interested, I may have another job for you which I believe you are more than capable of handling. Meet me up at the bar if you want more information. I have also transferred a sum of credits to your account as a reward for your services."
+She winks at you and walks way.]]))
+      vn.na(string.format(_("You have received #g%s#0."), creditstring(reward_amount)))
       vn.func( function ()
          player.pay( reward_amount )
       end )
@@ -205,6 +206,7 @@ end
 function thugs_attacked ()
    if misn_state==0 then
       player.msg(_("#rMISSION FAILED! You were supposed to harass the thugs with the drone."))
+      pilot.toggleSpawn(true)
       misn.finish(false)
    elseif misn_state==1 then
       faction.dynEnemy( fdrone, fthugs ) -- Make enemies
@@ -222,6 +224,7 @@ end
 
 function thugs_dead ()
    player.msg(_("#rMISSION FAILED! You were supposed to harass the thugs, not kill them!"))
+   pilot.toggleSpawn(true)
    misn.finish(false)
 end
 
@@ -230,8 +233,18 @@ function harassed ()
    local pp = player.pilot()
    local dist = pp:pos():dist( thugpos )
    if dist > 5000 then
-      player.msg(_("#rMISSION FAILED! You moved too far away from the harassment location!"))
-      misn.finish(false)
+      if failingdistance==nil then
+         player.msg(_("#rYou are moving too far away from the harassment point!"))
+         failingdistance = 0
+      end
+      failingdistance = failingdistance + 1
+      if failingdistance > 6 then
+         player.msg(_("#rMISSION FAILED! You moved too far away from the harassment location!"))
+         pilot.toggleSpawn(true)
+         misn.finish(false)
+      end
+   else
+      failingdistance = nil
    end
    total_harassment = total_harassment + 1
    if total_harassment > time_needed then
