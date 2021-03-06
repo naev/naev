@@ -142,10 +142,10 @@ function approach_pir ()
       pir(_([["That's where this comes in to place."
 They take out a metallic object from their pocket and show it to you. You don't know what to make of it.
 "Ain't she a beauty?"]]))
-      pir(_([["This is some high tech shit that we got from some geeks. It is a latest gen signal capturing device. It should be able to bypass most of the jamming, however, we're going to need you to plant it in a VIP room or some place where we might catch the mole."]]))
-      pir(_([["The main issue we have now is that VIP rooms and such are not of easy access, so we're going to have to keep our eyes open and see if we can spot an opportunity."]]))
+      pir(_([["This is some high-tech shit that we got from some geeks. It's a latest gen signal capturing device, and should be able to bypass most jammers, however, we're going to need you to plant it in a VIP room or some place where we might catch the mole."]]))
+      pir(_([["The main issue we have right now is that VIP rooms and such are not of easy access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
       pir(_([[They hand you the signal capturing device and explain briefly how it works.
-"Take the device and see if you can find an opportunity to place it. I'll be at the spaceport bar if you figure out anything."]]))
+"Take the device and see if you can find a chance to place it. I'll be at the spaceport bar if you figure anything out."]]))
    else
       -- Accepted.
       vn.na(_("You approach the shady character you have become familiarized with."))
@@ -187,10 +187,11 @@ They take out a metallic object from their pocket and show it to you. You don't 
 
    vn.label("job")
    pir(_([["From intercepted Dvaered and Za'lek communication it seems like "]]))
+   -- TODO
    vn.jump("menu_msg")
 
    vn.label("station")
-   pir(_([["Isn't this place great? They managed to set up an incredibly successful business model here. The way the Empire basically turns an eye to everything that goes on here is just incurable. Makes you want to root for their success you no?"]]))
+   pir(_([["Isn't this place great? They managed to set up an incredibly successful business model here. The way the Empire basically turns an eye to everything that goes on here is just incredible! Makes you want to root for their success you no?"]]))
    pir(_([["The issue is that even though the set-up is great, all the Dvaered and Za'lek bickering is just messing it all up. It would be a real shame if things went tits up and either the Dvaered or Za'lek were able to take over this wonderful place."]]))
    pir(_([["So me and my investors thought to ourselves, what could we do to ensure the success of such a wonderful place? This led to that and here we are."]]))
    vn.jump("menu_msg")
