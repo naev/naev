@@ -188,8 +188,18 @@ They take out a metallic object from their pocket and show it to you. You don't 
    end )
 
    vn.label("job")
-   pir(_([["From intercepted Dvaered and Za'lek communication it seems like "]]))
-   -- TODO
+   pir(_([["From the few intercepted Dvaered and Za'lek communications we were able to decode, it seems like we might have some moles at Minerva Station. They are probably really deep so it won't be an easy task to drive them out."]]))
+   pir(_([["The high-tech latest gen signal capturing device I gave should be able to bypass moste jammers. However, you're going to have to plant it in a VIP room or in some place where we might be able to catch the mole."]]))
+   if misn_state==0 then
+      pir(_([["The main issue we have right now is that VIP rooms and such are not of easy access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
+   elseif misn_state==1 then
+      pir(_([["The spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket to the Spa and see if we can get lucky. If  not, we may have to take other measures to ensure success."]]))
+   elseif misn_state==3 then
+      pir(_([["I can't believe we didn't win a ticket to the Spa. However, it seems like this guy called Harper Bowdown managed to get it instead."]]))
+      pir(_([["I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
+   elseif misn_state==4 then
+      pir(_([["You got the ticket to the Minerva spa, so all you have to do now is go in, plant the listening device, and enjoy the thermal waters."]]))
+   end
    vn.jump("menu_msg")
 
    vn.label("station")
@@ -215,7 +225,7 @@ The terminal pauses for emphasis.]]))
    pir(_([["Shit! I thought we had that rigged. Damn it. Give me one second."
 They start frantically typing into their portable holo-deck. It makes weird beeps and noises.]]))
    pir(_([["OK, so we aren't so bad off. It seems like the winner was doing some space tourism around the system. Not like there is anything to see here."]]))
-   pir(_([["So change of plans, I need you to go pay this guy a visit, see if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
+   pir(_([["So change of plans, I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
    vn.func( function ()
       osd = misn.osdCreate( _("Minerva Moles"),
          {_("Get Harper Bowdoin's ticket in Limbo.")},
