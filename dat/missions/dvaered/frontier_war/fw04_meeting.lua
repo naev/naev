@@ -266,6 +266,9 @@ function land()
       tk.msg( debrief_title, debrief_text2:format(creditstring(reward)), ("portraits/"..portrait_tam) )
       player.pay(reward)
 
+      local t = time.get():tonumber()
+      var.push( "invasion_time", t ) -- Timer for the next mission
+
       shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
       shiplog.appendLog( "frontier_war", log_text )
       misn.finish(true)

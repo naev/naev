@@ -378,21 +378,6 @@ function equipGoddard( pilot, repeating )
    pilot:setFuel(true)
 end
 
-function equipVendetta( pilot )
-   pilot:rmOutfit("all")
-   pilot:rmOutfit("cores")
-   pilot:addOutfit("S&K Light Combat Plating")
-   pilot:addOutfit("Tricon Zephyr II Engine")
-   pilot:addOutfit("Shield Capacitor")
-   pilot:addOutfit("Milspec Aegis 3601 Core System")
-   pilot:addOutfit("Small Shield Booster")
-   pilot:addOutfit("Unicorp Mace Launcher", 6)
-
-   pilot:setHealth(100,100)
-   pilot:setEnergy(100)
-   pilot:setFuel(true)
-end
-
 function enter1_message()
    tk.msg(enter1_title, enter1_text:format(sabotpla:name()))
 end
@@ -584,7 +569,7 @@ function fighterDuel()
    klank2:rename( "General Klank" )
    klank2:control(true)
    klank2:setFaction("DHC")
-   equipVendetta( klank2 ) -- Klank's superior equipment should ensure victory once more
+   equipVendettaMace( klank2 ) -- Klank's superior equipment should ensure victory once more
 
    battleaddict2 = pilot.add( "Dvaered Vendetta", "Dvaered", battleaddict:pos() )
    battleaddict2:rename( "Lord Battleaddict" )

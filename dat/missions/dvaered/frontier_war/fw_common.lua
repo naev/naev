@@ -84,3 +84,19 @@ function message( arg )
       pilot:broadcast( msg )
    end
 end
+
+-- Equips a Vendetta with full mace rockets
+function equipVendettaMace( pilot )
+   pilot:rmOutfit("all")
+   pilot:rmOutfit("cores")
+   pilot:addOutfit("S&K Light Combat Plating")
+   pilot:addOutfit("Tricon Zephyr II Engine")
+   pilot:addOutfit("Shield Capacitor")
+   pilot:addOutfit("Milspec Aegis 3601 Core System")
+   pilot:addOutfit("Small Shield Booster")
+   pilot:addOutfit("Unicorp Mace Launcher", 6)
+
+   pilot:setHealth(100,100)
+   pilot:setEnergy(100)
+   pilot:setFuel(true)
+end
