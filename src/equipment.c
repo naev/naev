@@ -1380,13 +1380,14 @@ static void equipment_genShipList( unsigned int wid )
          }
       }
 
-      /* See how many there are. */
-      if (!conf.big_icons && (((sw*sh)/(96*96)) < nships))
-         iconsize = 64;
-      else
-         iconsize = 96;
-
       /* Create the image array. */
+      iconsize = 96;
+      if (!conf.big_icons) {
+         if (toolkit_simImageArrayVisibleElements(sw,sh,iconsize,iconsize) < nships)
+            iconsize = 80;
+         if (toolkit_simImageArrayVisibleElements(sw,sh,iconsize,iconsize) < nships)
+            iconsize = 64;
+      }
       window_addImageArray( wid, 20, -40,
             sw, sh, EQUIPMENT_SHIPS, iconsize, iconsize,
             cships, nships, equipment_updateShips, NULL, equipment_transChangeShip );
@@ -1473,19 +1474,24 @@ static void equipment_genOutfitList( unsigned int wid )
    noutfits = player_getOutfitsFiltered( iar_outfits[active], tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
 
-   /* See how many there are. */
-   if (!conf.big_icons && (((ow*oh)/(96*96)) < noutfits))
-      iconsize = 64;
-   else
-      iconsize = 96;
 
    /* Create the actual image array. */
-   window_addImageArray( wid, x + 4, y + 3, ow - 6, oh - 37,
+   iw = ow - 6;
+   ih = oh - 37;
+   iconsize = 96;
+   if (!conf.big_icons) {
+      if (toolkit_simImageArrayVisibleElements(iw,ih,iconsize,iconsize) < noutfits)
+         iconsize = 80;
+      if (toolkit_simImageArrayVisibleElements(iw,ih,iconsize,iconsize) < noutfits)
+         iconsize = 64;
+   }
+   window_addImageArray( wid, x + 4, y + 3, iw, ih,
          EQUIPMENT_OUTFITS, iconsize, iconsize,
          coutfits, noutfits,
          equipment_updateOutfits,
          equipment_rightClickOutfits,
          equipment_rightClickOutfits );
+
    toolkit_setImageArrayAccept( wid, EQUIPMENT_OUTFITS, equipment_rightClickOutfits );
 }
 
