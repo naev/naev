@@ -161,6 +161,8 @@ They take out a metallic object from their pocket and show it to you. You don't 
       end )
       vn.sfxVictory()
       vn.done()
+
+      misn.finish(true)
    end
 
    vn.label("menu_msg")
@@ -243,8 +245,6 @@ She beams you a smile.
       vn.na(_("You take your leave."))
    end
    vn.run()
-
-   misn.finish(true)
 end
 
 
