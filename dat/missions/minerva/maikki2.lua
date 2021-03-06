@@ -271,9 +271,9 @@ Her eyes sparkle with determination.]]))
    vn.jump( "menu_msg" )
 
    vn.label("news")
-   vn.na(_("You tell her your plight with the Za'lek researchers and Dr. Strangelove in particular, including the good news that Kex should be at Minerva Station, taken custody by some thugs."))
+   vn.na(_("You tell her about your plight with the Za'lek researchers and Dr. Strangelove, in particular. This includes the good news that Kex should be at Minerva Station, taken custody by some thugs."))
    maikki(_([["The Za'leks were assholes as expected, but I'm glad you found out what I thought: that he's somewhere here being held captive or something… This is still all very weird though."]]))
-   maikki(_([["I'm a bit worried about that Dr. Strangelove, what exactly did he mean? Is he even a real doctor? We still even don't know happened in the nebula nor what they want with my father. Instead of answering questions we keep on finding new questions. I suppose that is progress?…"]]))
+   maikki(_([["I'm a bit worried about that Dr. Strangelove, what exactly did he mean? Is he even a real doctor? We still even don't know happened in the nebula nor what they want with my father. Instead of answering questions we keep on finding new questions. I suppose that this is progress?…"]]))
    maikki(_([["Anyway, if we can believe Dr. Strangelove, my father is alive and somewhere here! I don't think we have any reason to doubt him, Za'leks don't tend to lie, they only bend the truth. All we have to do is find my father now and everything should fall in place."]]))
    maikki(_([[She is visibly exciting.
 "It is all coming together! I will finally be able to meet him again! This is so great! I don't know what to tell him first. Do you think he'll recognize me?"]]))
@@ -286,7 +286,7 @@ Her eyes sparkle with determination.]]))
       minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
       shiplog.appendLog( logidstr, _("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
    end )
-   vn.na(string.format(_("You recieve %s."), minerva.tokens_get(500)))
+   vn.na(string.format(_("You recieve %s.", minerva.tokens_str(500)), minerva.tokens_get(500)))
    maikki(_([["I'll be around here if you find anything."]]))
    vn.na(_("You take your leave. Without any leads, it might prove hard to find where Kex is. You wonder what your next steps should be…"))
    vn.done("hexagon")
@@ -649,6 +649,7 @@ function ecc_dist ()
          hook.pilot( p, "death", "ecc_drone_dead" )
          table.insert( defense_systems, p )
       end
+      player.autonavAbort(_("Hostiles detected!"))
       defense_systems[1]:broadcast(_("UNAUTHORIZED VESSEL DETECTED. ELIMINATING."))
       return
    end
@@ -699,7 +700,7 @@ function ecc_feral_boss_dead ()
    vn.sfxEerie()
    voice(_([["Thank you for setting me free…"]]))
    vn.na(_("You wonder what that was about as you watch the drone thrash while it blows up. Westhaven is a really weird place."))
-   vn.na(_("From the ship scraps you are able to find a very damaged, you guess this is what Dr. Strangelove was referring to as a nebula artifact. Strangely, your ship sensors are identifying it as mainly biological material…"))
+   vn.na(_("From the ship scraps you are able to find a very damaged… thing… You guess this is what Dr. Strangelove was referring to as a nebula artifact. Strangely, your ship sensors are identifying it as mainly biological material…"))
    vn.done( "hexagon" )
    vn.run()
 
@@ -752,7 +753,7 @@ function approach_eccentric ()
       vn.na(_("The hologram projector flickers as what appears to be a grumpy old man appears into view. He doesn't look very pleased to be disturbed."))
       dr(_([["How did you get in there? Who are you!"]]))
       vn.na(_("You explain to him that you are looking for information about nebula artifacts."))
-      dr(_([["You sent you here? Was it Dr. Bob? That weasel was always after my precious artifacts. Well, he can't have them! I got all this with my hard worked sweat and tears! They're all mine!"
+      dr(_([["Who sent you here? Was it Dr. Bob? That weasel was always after my precious artifacts. Well, he can't have them! I got all this with my hard worked, sweat, and tears! They're all mine!"
 He cackles manically.]]))
       dr(_([["I have hidden them very well, even though you somehow got past my security system and made it into my laboratory, you'll never find them!"
 You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room.]]))
@@ -781,10 +782,10 @@ You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room
 
    vn.label("nebula")
    dr(_([["Ah yes, the nebula. The pinnacle of human creation! Isn't it just mesmerizing and beautiful to look at? I've always been attracted to it even since the incident destroyed my university. Destruction is so pretty, is it not?"]]))
-   dr(_([["I recently had the great opportunity to work directly on nebula research. Was a fabulous project with hundreds of the brightest Za'lek minds working in tandem! Not as brilliant as me, but the numbers were what mattered."
-He smiles as nostalgia takes him over.]]))
+   dr(_([["I recently had the great opportunity to work directly on nebula research. It was a fabulous project with hundreds of the brightest Za'lek minds working in tandem! Not as brilliant as me, but the numbers were what mattered."
+He grins as nostalgia takes him over.]]))
    dr(_([["We were able to have dedicated teams recovering all sorts of incredible items! We even found the remains of a Proteron replicator! It was only able to replicate cheese fondue, but it was incredible. I integrated it with a drone platform and that has kept me healthy and in shape since! It should be in the bar if you want to try it."
-You see a greasy robot in the corner that is boiling some sort of brown liquid. Is that.. cheese?]]))
+You see a greasy robot in the corner that is boiling some sort of brown liquid. Is that… cheese?]]))
    dr(_([["Anyway, it is a real shame that the bureaucrats in central station killed the project in its prime. At least I was able to bring most of the devices here and keep acquiring more artifacts afterwards. Haven't found anything as fancy as the replicator yet, but the bodies have been very interesting."
 He coughs, wracking his body.]]))
    vn.menu( {
@@ -825,7 +826,7 @@ He glares at you.]]))
 He smiles mischievously.]]))
    dr(_([["My drones dug it out and it's the cosiest place I have ever lived in, but I don't get many guests. In fact, you are my…"
 He starts counting on his fingers intently.
-"…first guest! Yes that's it, first true biological living being other than me to visit!"
+"…first guest! Yes, that's it, the first true biological living being other than me to visit!"
 You don't like how he puts emphasis on 'biological living'…]]))
    dr(_([["Feel free to use the facilities as you please, but stay out of the backroom."
 Given the smell of the entire laboratory and especially the horrible wafts emanating from the backroom, you feel like it is best to heed his advice for your own safety.]]))
@@ -845,24 +846,24 @@ no vitals… not very good… mmmm… nebula radiation at minimum… can't be he
    dr(_([["I see… You don't grasp the incredibleness of this artifact. I guess it can't be helped with such an inferior intellect as yours."
 He sneers.]]))
    dr(_([["This is my latest creation, an amalgamate of ancient nebula technology and life. Think of this as something that not only surpasses any of the Soromid biotechnology, but also Za'lek cybertechnology. It is the peak of technological advancement!"]]))
-   dr(_([["While it has an incredible potential, there are… some complications still. The mental faculties tend to lack stability. While this one is a very interesting failure, it is a failure at heart. Most of my other creations have had much more success."]]))
+   dr(_([["While it has an incredible potential, there are… some complications still. The mental faculties tend to lack stability. While this one is a very interesting failure, it is still a failure at heart. Most of my other creations have had much more success."]]))
    dr(_([["What was it you wanted?"]]))
    vn.na(_("You ask him if he knows anything about Kex's ship in the nebula."))
-   dr(_([["Ah yes! I remember that wreck. A very very curious one indeed, at that time I was exploring the nebula myself. We came upon this most curious wreck that had clear signs of fighting. While it is not uncommon for scavengers to squabble among themselves, this one had most of the damage on the inside. The damage on the outside was clearly done later to confuse people who were investigating like us."
+   dr(_([["Ah yes! I remember that wreck. A very very curious one indeed. At that time I was exploring the nebula myself, and we came upon this most curious wreck that had clear signs of fighting. While it is not uncommon for scavengers to squabble among themselves, this one had most of the damage on the inside. The damage on the outside was clearly done later to confuse people who were investigating like us."
 He coughs.]]))
-   dr(_([["While it was not a pre-incident ship nor had any interesting characteristics, what was inside was surprising. There were two bodies still warm to the touch, it seems like time passes differently in such deep nebula. While normally I would ignore such things, they had been infused with so much nebula radiation that they seemed so interesting."
+   dr(_([["While it was not a pre-incident ship nor had any interesting characteristics, what was inside was surprising. There were two bodies still warm to the touch, it seems like time passes differently in such deep nebula. Normally I would ignore such things, however, they had been infused with so much nebula radiation that they seemed to have potential!"
 He starts to get excited.]]))
-   dr(_([["That's when I realized it, humankind and the nebula are one and the same. Our futures are intertwined! By absorbing the nebula into the body one can transcend humanity and be live among the stars! There is no limit to the potential infused in the nebula! All my research had led up to this!"]]))
-   dr(_([["And that's when it hit me, by amalgamating nebula and flesh, we transcend ourselves! I had to do it, it had to be done! And it worked, oh boy did it work. There were some difficulties with flesh incompatibility, but with suitable replacements I was able to solve it."
+   dr(_([["That's when I realized it, humankind and the nebula are one and the same. Our futures are intertwined! By absorbing the nebula into the body, one can transcend humanity and live forever among the stars! There is no limit to the potential infused in the nebula! Now I get it! All my research had led up to this!"]]))
+   dr(_([["And that's when it hit me, by amalgamating nebula and flesh, we can transcend ourselves! I had to do it; it had to be done! And it worked, oh boy did it work. There were some difficulties with flesh incompatibility, but with suitable replacements I was able to solve it."
 He laughs manically.]]))
-   dr(_([["They were oh so perfect, like Adam and Eve, ready to create a new perfect humanity. However, it isn't as simple as that. The man, an ingrateful fool, had too much attachment to his previous life. How weak… that's when I realized it. You need a perfect mind and perfect flesh to become the perfect being. With the nebula, the perfect flesh can be done, but the mind must also be perfect. It was so simple!"
+   dr(_([["They were oh so perfect, like Adam and Eve, ready to create a new perfect humanity. However, it isn't as simple as that. The man, an ungrateful fool, had too much attachment to his previous life. How weak… that's when I realized it. You need a perfect mind and perfect flesh to become the perfect being. With the nebula, the perfect flesh can be done, but the mind must also be perfect. It was so simple!"
 He seems delirious.]]))
    dr(_([["So I did it. I tried to upgrade myself. But it isn't so simple, you see, it's the near-death experience that is necessary. On healthy flesh it just deteriorates the body."
-He coughs convulsing.]]))
-   dr(_([["The mind was good enough but not my body. No, and I don't have much time. I'm wasting away. So close and here wasting away. What uselessness."
+He coughs, convulsing.]]))
+   dr(_([["The mind was good enough, but not my body. No, and I don't have much time. I'm wasting away. So close and here wasting away. What uselessness."
 He lowers his gaze.]]))
    vn.na(_("You ask what happened to the 'individuals' in the experiments."))
-   dr(_([["I did try to track him down, last I checked he got caught by thugs at Minerva Station. Nasty place Limbo. No nebula and very stale space. Not beautiful at all."
+   dr(_([["I did try to track him down, last I checked he got caught by thugs at Minerva Station. Nasty place in the Limbo system. No nebula and very stale space. Not beautiful at all."
 He coughs softly.]]))
    dr(_([["She tried to help me, but she too was weak of mind, and one day left for the stars. I couldn't stop her, but I thought I was close enough. I just need more time. One more cycle…"
 His voice gets softer and softer as he keeps on mumbling.]]))
