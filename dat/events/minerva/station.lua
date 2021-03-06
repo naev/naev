@@ -352,7 +352,7 @@ function approach_terminal()
    end )
    vn.label("trade_consumate")
    vn.sfxMoney()
-   t:say(_([[""THANK YOU FOR YOUR BUSINESS."]]))
+   t:say(_([["THANK YOU FOR YOUR BUSINESS."]]))
    vn.jump("trade")
 
    -- Buying the ticket

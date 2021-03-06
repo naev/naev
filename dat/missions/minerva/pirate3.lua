@@ -214,7 +214,7 @@ They wink at you.]]))
    vn.jump("menu_msg")
 
    vn.label("spaticket")
-   pir(_("Our chances of getting into the Spa can't be that bad can they?"))
+   pir(_("Our chances of getting into the Spa can't be that bad, can they?"))
    local t = minerva.vn_terminal()
    vn.appear( t )
    t(_([[Suddenly, the terminals around you blast a fanfare and begin to talk on the loudspeakers.
