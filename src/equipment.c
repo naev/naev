@@ -1329,6 +1329,7 @@ static void equipment_genShipList( unsigned int wid )
    const PlayerShip_t *ps;
    char r[PATH_MAX];
    glTexture *t;
+   int iconsize;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, NULL, NULL,
@@ -1379,8 +1380,15 @@ static void equipment_genShipList( unsigned int wid )
          }
       }
 
+      /* See how many there are. */
+      if (!conf.big_icons && (((sw*sh)/(96*96)) < nships))
+         iconsize = 64;
+      else
+         iconsize = 96;
+
+      /* Create the image array. */
       window_addImageArray( wid, 20, -40,
-            sw, sh, EQUIPMENT_SHIPS, 96., 96.,
+            sw, sh, EQUIPMENT_SHIPS, iconsize, iconsize,
             cships, nships, equipment_updateShips, NULL, equipment_transChangeShip );
    }
 }
@@ -1408,6 +1416,7 @@ static void equipment_genOutfitList( unsigned int wid )
 
    int noutfits, active;
    ImageArrayCell *coutfits;
+   int iconsize;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1463,9 +1472,15 @@ static void equipment_genOutfitList( unsigned int wid )
    noutfits = player_getOutfitsFiltered( iar_outfits[active], tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
 
+   /* See how many there are. */
+   if (!conf.big_icons && (((ow*oh)/(96*96)) < noutfits))
+      iconsize = 64;
+   else
+      iconsize = 96;
+
    /* Create the actual image array. */
    window_addImageArray( wid, x + 4, y + 3, ow - 6, oh - 37,
-         EQUIPMENT_OUTFITS, 96., 96.,
+         EQUIPMENT_OUTFITS, iconsize, iconsize,
          coutfits, noutfits,
          equipment_updateOutfits,
          equipment_rightClickOutfits,
