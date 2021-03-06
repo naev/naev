@@ -139,6 +139,7 @@ static int pilotL_brake( lua_State *L );
 static int pilotL_follow( lua_State *L );
 static int pilotL_attack( lua_State *L );
 static int pilotL_runaway( lua_State *L );
+static int pilotL_gather( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
@@ -238,6 +239,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "follow", pilotL_follow },
    { "attack", pilotL_attack },
    { "runaway", pilotL_runaway },
+   { "gather", pilotL_gather },
    { "hyperspace", pilotL_hyperspace },
    { "land", pilotL_land },
    /* Misc. */
@@ -3707,6 +3709,31 @@ static int pilotL_runaway( lua_State *L )
    /* Set the task. */
    t        = pilotL_newtask( L, p, (nojump) ? "__runaway_nojump" : "__runaway" );
    lua_pushpilot(L, pt->id);
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+
+   return 0;
+}
+
+
+/**
+ * @brief Makes the pilot gather stuff.
+ *
+ * @usage p:gather( ) -- Try to gather stuff
+ * @luasee control
+ * @luafunc gather
+ */
+static int pilotL_gather( lua_State *L )
+{
+   Pilot *p;
+   Task *t;
+
+   NLUA_CHECKRW(L);
+
+   /* Get parameters. */
+   p      = luaL_validpilot(L,1);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "gather" );
    t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;

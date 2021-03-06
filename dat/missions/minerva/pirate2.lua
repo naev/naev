@@ -60,7 +60,7 @@ function accept ()
    vn.label( "leave" )
    vn.na(_("You approach the sketch individual who seems to be calling your attention once again."))
    pir(_([["It seems like our last job worked better than we thought. The Dvaered are all riled up, just as planned. However, there is still a lot left to do."]]))
-   pir(_([["I have another job if you are interested, it should be simpler than last time, only this time we target the Za'lek instead of the Dvaered to try to... improve the situation."
+   pir(_([["I have another job if you are interested, it should be simpler than last time, only this time we target the Za'lek instead of the Dvaered to try to… improve the situation."
 They smiles at you.]]))
    vn.menu( {
       {_("Accept the job"), "accept"},
@@ -73,7 +73,7 @@ They smiles at you.]]))
 
    vn.label("accept")
    vn.func( function () misn_state=0 end )
-   pir(_([["Glad to have you onboard again! So the idea is very simple, we've seen that the Za'lek are setting up some reconnaissance stuff around the system. Noting very conspicuous, but there are some scout drones here and there. I want you to take them out."]]))
+   pir(_([["Glad to have you onboard again! So the idea is very simple, we've seen that the Za'lek are setting up some reconnaissance stuff around the system. Nothing very conspicuous, but there are some scout drones here and there. I want you to take them out."]]))
    pir(_([["Just destroying them won't cut it though, we need to make it look like the Dvaered did it this time. However, that should be simple. Make sure to use Dvaered weapons to take the drones out. You know, Mace Launchers, Vulcan Guns, Shredders, Mass Drivers, Railguns and such. Make sure to not use any non-Dvaered weapons!"]]))
    pir(_([["There should be two drones out there. I have given you the locations where they were last seen. Try to take out the drones as fast as possible and get back here in one piece."]]))
    vn.run()
@@ -107,10 +107,10 @@ function land ()
       vn.transition()
       vn.na(_("After you land on Minerva Station you are once again greeted by the shady character that gave you the job to clear the Za'lek drones."))
       pir(_([["Excellent piloting there. We didn't think that the Za'lek would catch on so fast and send in reinforcements, however, it all worked out in the end."]]))
-      pir(_([["This should make bring suspicions to a new high between Dvaered and Za'lek. There have already been 20 casualties from fighting this period! At this rate they will basically solve themselves. However, that might be a bit slow, so let us try to accelerate the process a bit more."
+      pir(_([["This should bring suspicions to a new high between Dvaered and Za'lek. There have already been 20 casualties from fighting this period! At this rate they will basically solve themselves. However, that might be a bit slow, so let us try to accelerate the process a bit more."
 They wink at you.]]))
       pir(_([["I've wired you some credits for your efforts. Meet me up at the bar for a new potential job."]]))
-      vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
+      vn.na(string.format(_("You have received #g%s#0."), creditstring(reward_amount)))
       vn.func( function ()
          player.pay( reward_amount )
       end )

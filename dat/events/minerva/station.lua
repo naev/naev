@@ -25,6 +25,7 @@ local window = require 'love.window'
 
 -- NPC Stuff
 gambling_priority = 3
+important_npc_priority = 4
 terminal = minerva.terminal
 blackjack_name = _("Blackjack")
 blackjack_portrait = "blackjack.png"
@@ -68,10 +69,10 @@ patron_messages = {
    ) end,
    _([["Critics of Minerva Station say that being able to acquire nice outfits here without needing licenses increases piracy. I think they are all lame!"]]),
    _([["I really want to go to the VIP hot springs they have, but I don't have the tokens. How does that even work in a space station?"]]),
-   _([["I hear you can do all sorts of crazy stuff here if you have enough tokens. Need... to.. get.. more...!"]]),
+   _([["I hear you can do all sorts of crazy stuff here if you have enough tokens. Need… to… get… more…!"]]),
    _([["I have never seen robots talk so roboty like the terminals here. That is so retro!"]]),
-   _([["I scrounged up my lifetime savings to get a ticket here, but I forgot to bring extra to gamble..."]]),
-   _([["I gambled all my savings away... I'm going to get killed when I get back home..."]]),
+   _([["I scrounged up my lifetime savings to get a ticket here, but I forgot to bring extra to gamble…"]]),
+   _([["I gambled all my savings away… I'm going to get killed when I get back home…"]]),
    _([["They say you shouldn't gamble more than you can afford to lose. I wish someone had told me that yesterday. I don't even own a ship anymore!"]]),
    _([["I like to play blackjack. I'm not addicted to gambling. I'm addicted to sitting in a semi-circle."]]), -- Mitch Hedberg
    _([["Gambling has brought our family together. We had to move to a smaller house."]]), -- Tommy Cooper
@@ -87,6 +88,20 @@ function create()
    npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
    npc_blackjack = evt.npcAdd( "approach_blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
    npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
+
+   -- Some conditional NPCs
+   if player.misnDone("Maikki's Father 2") then
+      local desclist = {
+         _("You see Maikki enjoying a parfait."),
+         _("You see Maikki talking on a transponder."),
+         _("You see Maikki looking thoughtfully into the distance."),
+      }
+      local desc = desclist[ rnd.rnd(1,#desclist) ]
+      npc_maikki = evt.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, desc, important_npc_priority )
+   end
+   if player.evtDone("Chicken Rendezvous") then
+      npc_kex = evt.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description, important_npc_priority )
+   end
 
    -- Create random noise NPCs
    local npatrons = rnd.rnd(3,5)
@@ -388,7 +403,7 @@ function approach_blackjack()
       { _("Leave"), "leave" },
    } )
    vn.label( "explanation" )
-   vn.na( "Cyborg Chicken's eyes blink one second and go blank as a pre-recorded explanation is played from its back. Wait... are those embedded speakers?" )
+   vn.na( "Cyborg Chicken's eyes blink one second and go blank as a pre-recorded explanation is played from its back. Wait… are those embedded speakers?" )
    cc("\"Welcome to MINERVA STATIONS blackjack table. The objective of this card game is to get as close to a value of 21 without going over. All cards are worth their rank except for Jack, Queen, and King which are all worth 10, and ace is either worth 1 or 11. You win if you have a higher value than CYBORG CHICKEN without going over 21.\"")
    vn.na( "Cyborg Chicken eyes flutter as it seems like conciousness returns to its body." )
    vn.jump("menu")
@@ -532,6 +547,51 @@ function approach_patron( id )
    local patron = vn.newCharacter( npcdata.name, { image=npcdata.image } )
    vn.transition()
    patron( npcdata.message )
+   vn.run()
+
+   -- Handle random bar events if necessary
+   -- TODO should patrons also generate random events?
+   random_event()
+end
+
+function approach_maikki ()
+   vn.clear()
+   vn.scene()
+   local maikki = vn.newCharacter( minerva.vn_maikki() )
+   vn.transition()
+   vn.na(_("You find Maikki, who beams you a smile as you approach."))
+
+   vn.menu( function ()
+      local opts = {
+         { _("Leave"), "leave" },
+      }
+      return opts
+   end)
+
+   vn.label("leave")
+   vn.na(_("You take your leave."))
+   vn.done()
+   vn.run()
+end
+
+function approach_kex ()
+   vn.clear()
+   vn.scene()
+   local kex = vn.newCharacter( minerva.vn_kex() )
+   vn.transition()
+   vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
+
+   vn.label("menu_msg")
+   vn.menu( function ()
+      local opts = {
+         { _("Leave"), "leave" },
+      }
+      return opts
+   end )
+
+   vn.label("leave")
+   vn.na(_("You take your leave."))
+   vn.done()
    vn.run()
 end
 

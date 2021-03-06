@@ -2132,9 +2132,6 @@ dat/ai/include/atk_generic.lua
 dat/ai/include/atk_target.lua
 dat/ai/include/atk_util.lua
 dat/ai/include/attack.lua
-dat/ai/include/attack_bomber.lua
-dat/ai/include/attack_generic.lua
-dat/ai/include/attack_profiles.lua
 dat/ai/include/basic.lua
 dat/ai/independent.lua
 dat/ai/mercenary.lua

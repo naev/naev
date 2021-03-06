@@ -140,7 +140,7 @@ function approach_maikki ()
    if misn_state==nil then
       -- Start mission
       vn.na(_("You approach a young woman who seems somewhat distraught. It looks like she has something important on her mind."))
-      maikki(_([["You wouldn't happen to be from around here? I'm looking for someone. I was told they would be here, but I never expected this place to be so..."
+      maikki(_([["You wouldn't happen to be from around here? I'm looking for someone. I was told they would be here, but I never expected this place to be so…"
 She trails off.]]) )
       vn.menu( {
          { _([["spacious?"]]), "menu1done" },
@@ -148,7 +148,7 @@ She trails off.]]) )
       } )
       vn.label( "menu1done" )
       maikki(_([[She frowns a bit.
-"...unsubstantial. Furthermore, it is all so tacky! I thought such a famous gambling world would be much more cute!"]]))
+"…unsubstantial. Furthermore, it is all so tacky! I thought such a famous gambling world would be much more cute!"]]))
       maikki(_([[She suddenly remembers why she came here and your eyes light up.
 "You wouldn't happen to be familiar with the station? I'm looking for someone"]]))
       vn.menu( {
@@ -239,11 +239,12 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    vn.na(_("You show her the picture you found in Zerantix of her and her parents."))
    maikki(_([[As she stares deeply at the picture, her eyes tear up.]]))
    maikki(_([["I'm sorry, I shouldn't be crying. I hardly even know the man. It's just seeing us together just brings back some memories which I had thought I had forgotten."]]))
-   maikki(_([["He looks so goofy in this picture, and my mother looks so happy... This is what should have been my childhood..."
+   maikki(_([["He looks so goofy in this picture, and my mother looks so happy… This is what should have been my childhood…"
 She reminisces.]]))
+   -- TODO flashback with her family
    vn.na(_("You give a few moments to recover before explaining her what you saw in the wreck and your encounter with the scavengers."))
    maikki(_([[She dries her eyes with a handkerchief trying unsuccessfully not to smear her makeup.
-"From what you tell me, it seems like it wasn't an accident..."
+"From what you tell me, it seems like it wasn't an accident…"
 She looks up expectantly.]]))
    maikki(_([["If you didn't find a body I'm sure he survived! He shouldn't be a guy that dies that easily!"
 She looks clearly excited at the possibility.]]))
@@ -392,7 +393,7 @@ function approach_scavengers ()
 He takes another long swig of his drink and burps.]]))
    else
       -- Blabber target to player
-      scavA(_([["...and then I said to him 'while that may look like a hamster, it's got a bite like a moose!'"]]))
+      scavA(_([["…and then I said to him 'while that may look like a hamster, it's got a bite like a moose!'"]]))
       vn.na(_("The scavengers hoot with laughter."))
       scavB(_([["That's a great story. Them space hamsters be wicked."]]))
       scavA(_([["About tomorrow, you sure the info is correct? Going that deep into the nebula always gives me the chills."
@@ -614,7 +615,7 @@ function stealthbroadcast ()
       { pscavA, 4000, _("This place always gives me the creeps.") },
       { pscavB, 4000, _("C'mon, the guy said that this was a great wreck.") },
       { pscavB, 4000, _("You know the Za'lek pay premium for this sort of shit, right?") },
-      { pscavA, 4000, _("Yeah, yeah...  just hope we don't see any ghosts.") },
+      { pscavA, 4000, _("Yeah, yeah…  just hope we don't see any ghosts.") },
       { pscavB, 4000, _("You don't really believe in them do you?") },
       { pscavA, 4000, _("Dude, there's really freaky shit out there.") },
       { pscavB, 4000, _("Yeah, but most of that freaky shit are Soromid bioengineered crap.") },
@@ -629,7 +630,7 @@ function stealthbroadcast ()
       { pscavA, -1, _("C'mon!") },
       -- Cut off point here, restarts at heading to waypoint[4]
       { pscavB, 3000, _("We should be there soon.") },
-      { pscavA, 3000, _("I swear I'll never come to the nebula again after this...") },
+      { pscavA, 3000, _("I swear I'll never come to the nebula again after this…") },
       { pscavB, -1, _("That's what you said last time too!") }
    }
 
@@ -670,7 +671,7 @@ function stealthheartbeat ()
    elseif dist > 2000 * stats.ew_detect then
       if stealthfailing==nil then
          stealthfailing = 0
-         player.msg("#rYou are about to lose track of the scavengers!!")
+         player.msg( _("#rYou are about to lose track of the scavengers!!") )
       end
       stealthfailing = stealthfailing+1
       if stealthfailing > 6 then
@@ -762,9 +763,9 @@ function wreckcutscene ()
    if wreckscene==1 then
       pscavB:broadcast( _("Looks like we made it!"), true )
    elseif wreckscene==2 then
-      pscavA:broadcast( _("We came all the way for this wreck? It better be worth it..."), true )
+      pscavA:broadcast( _("We came all the way for this wreck? It better be worth it…"), true )
    elseif wreckscene==3 then
-      pscavB:broadcast( _("They said it was whatshisname... Xex? Vex? Some famous guy's wreck."), true )
+      pscavB:broadcast( _("They said it was whatshisname… Xex? Vex? Some famous guy's wreck."), true )
    elseif wreckscene==4 then
       pscavA:broadcast( _("Wait, someone is there!"), true )
    elseif wreckscene==5 then

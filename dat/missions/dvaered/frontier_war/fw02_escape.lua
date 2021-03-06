@@ -41,7 +41,7 @@
 require "nextjump"
 require "selectiveclear"
 require "proximity"
-require "portrait"
+local portrait = require "portrait"
 require "missions/dvaered/frontier_war/fw_common"
 require "numstring"
 
@@ -309,8 +309,8 @@ function land()
    -- Land at an Imperial planet and meet the agents
    elseif stage == 5 and planet.cur():faction() == faction.get("Empire") then
       tk.msg(pirate_title, pirate_text1:format(numstring(pirate_price), creditstring(pirate_price)))
-      pirag = misn.npcAdd("pirateDealer", pir_name, getPortrait("Pirate"), pir_desc)
-      impag = misn.npcAdd("imperialAgent", imp_name, getPortrait(), imp_desc)
+      pirag = misn.npcAdd("pirateDealer", pir_name, portrait.get("Pirate"), pir_desc)
+      impag = misn.npcAdd("imperialAgent", imp_name, portrait.get(), imp_desc)
       stage = 6
 
    -- Land to end the mission

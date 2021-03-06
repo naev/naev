@@ -33,7 +33,7 @@
 
 require "missions/dvaered/frontier_war/fw_common"
 require "proximity"
-require "portrait"
+local portrait = require "portrait"
 require "numstring"
 
 -- TODO: hooks to penalize attacking people
@@ -257,7 +257,7 @@ function land()
 
    -- Landing on Laars after Hamelsen
    elseif stage == 2 then
-      npc = misn.npcAdd("discussOff", dv_name, getMilPortrait( "Dvaered" ), dv_desc)
+      npc = misn.npcAdd("discussOff", dv_name, portrait.getMil( "Dvaered" ), dv_desc)
       stage = 3
 
    -- Player killed attackers, and can finally land for reward

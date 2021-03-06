@@ -23,13 +23,14 @@ mem.distress       = true -- AI distresses
 mem.distressrate   = 3 -- Number of ticks before calling for help
 mem.distressmsg    = nil -- Message when calling for help
 mem.distressmsgfunc = nil -- Function to call when distressing
-mem.weapset = 3 -- Weapon set that should be used (tweaked based on heat).
+mem.weapset        = 3 -- Weapon set that should be used (tweaked based on heat).
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
-mem.norun = false -- Do not run away.
+mem.norun         = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
 
 mem.formation     = "circle" -- Formation to use when commanding fleet
 mem.form_pos      = nil -- Position in formation (for follower)
+mem.gather_range  = 800 -- Radius in which the pilot looks for gatherables
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates 
 of the point the pilot has to follow when using follow_accurate.
