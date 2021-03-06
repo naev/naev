@@ -1390,6 +1390,7 @@ static void equipment_genShipList( unsigned int wid )
       window_addImageArray( wid, 20, -40,
             sw, sh, EQUIPMENT_SHIPS, iconsize, iconsize,
             cships, nships, equipment_updateShips, NULL, equipment_transChangeShip );
+      toolkit_setImageArrayAccept( wid, EQUIPMENT_SHIPS, equipment_transChangeShip );
    }
 }
 
@@ -1485,6 +1486,7 @@ static void equipment_genOutfitList( unsigned int wid )
          equipment_updateOutfits,
          equipment_rightClickOutfits,
          equipment_rightClickOutfits );
+   toolkit_setImageArrayAccept( wid, EQUIPMENT_OUTFITS, equipment_rightClickOutfits );
 }
 
 
