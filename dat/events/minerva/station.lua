@@ -548,6 +548,10 @@ function approach_patron( id )
    vn.transition()
    patron( npcdata.message )
    vn.run()
+
+   -- Handle random bar events if necessary
+   -- TODO should patrons also generate random events?
+   random_event()
 end
 
 function approach_maikki ()
