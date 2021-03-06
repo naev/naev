@@ -142,7 +142,7 @@ function approach_pir ()
       pir(_([["That's where this comes in to place."
 They take out a metallic object from their pocket and show it to you. You don't know what to make of it.
 "Ain't she a beauty?"]]))
-      pir(_([["This is some high-tech shit that we got from some geeks. It's a latest gen signal capturing device, and should be able to bypass most jammers, however, we're going to need you to plant it in a VIP room or some place where we might catch the mole."]]))
+      pir(_([["This is some high-tech shit that we got from some geeks. It's a latest gen signal capturing device, and should be able to bypass most jammers. However, we're going to need you to plant it in a VIP room or some place where we might catch the mole."]]))
       pir(_([["The main issue we have right now is that VIP rooms and such are not of easy access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
       pir(_([[They hand you the signal capturing device and explain briefly how it works.
 "Take the device and see if you can find a chance to place it. I'll be at the spaceport bar if you figure anything out."]]))
