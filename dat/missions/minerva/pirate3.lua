@@ -52,6 +52,7 @@ mainsys = "Limbo"
 --    3. obtain spa event ticket from harper
 --    4. do chicken spa event
 --    5. planted listening device
+-- These two will be done in another mission
 --    6. kidnap spy and take to torture ship
 --    7. defend torture ship
 misn_state = nil
@@ -107,8 +108,8 @@ end
 function start_spa ()
    naev.eventStart( "Chicken Rendezvous" )
    if player.evtDone( "Chicken Rendezvous" ) then
-      misn.npcRm( npc_spa )
       misn_state = 5
+      misn.npcRm( npc_spa )
    end
 end
 
@@ -248,7 +249,7 @@ end
 
 function enter ()
    if misn_state==3 and not harper_nospawn and system.cur()==system.get("Limbo") then
-      -- Don't stop spawns
+      -- Don't stop spawns, but claimed in case something else stops spawns
       -- TODO maybe add Minerva patrols that aggro ta make it a bit harder?
       -- Spawn Harper Bowdoin and stuff
       local pos = planet.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.rnd(360) )
