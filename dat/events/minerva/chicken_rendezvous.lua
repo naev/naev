@@ -22,7 +22,6 @@ local minerva = require "minerva"
 local love_shaders = require "love_shaders"
 
 function create()
-   evt.finish(false)
    local steamshader = love_shaders.steam()
 
    vn.clear()
@@ -158,6 +157,10 @@ Kex slides out of the water, ruffles his feather and fades into the steam. You h
    vn.na(_("The noise and lights once again jar you back to reality harshly. At least you feel younger from the anti-aging nanobots. Maybe you should get a spa for your ship…"))
    vn.done("hexagon")
    vn.run()
+
+   local logidstr = minerva.log.kex.idstr
+   shiplog.createLog( logidstr, minerva.log.kex.logname, minerva.log.kex.logtype, true )
+   shiplog.appendLog( logidstr, _("You found out that Cyborg Chicken is Kex, Maikki's father. He told you of a spot you can meet up with him on Minerva station.") )
 
    evt.finish(true)
 end

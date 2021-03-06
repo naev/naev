@@ -59,7 +59,6 @@ misn_state = nil
 
 
 function create ()
-   misn.finish( false ) -- Disabled for now
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
@@ -219,7 +218,7 @@ They start frantically typing into their portable holo-deck. It makes weird beep
          {_("Get Harper Bowdoin's ticket in Limbo.")},
          {_("Plant a listening device in a VIP room.") } )
       misn_state = 3
-      shiplog.appendLog( logidstr, _("You obtained the winning ticket to enter the Minerva Spa.") )
+      shiplog.appendLog( logidstr, _("You did not obtain the winning ticket of the Minerva Spa event and were tasked with obtaining it from a so called Harper Bowdoin.") )
    end )
    vn.jump("menu_msg")
 
@@ -232,6 +231,7 @@ She beams you a smile.
       misn_state = 4
       misn.osdActive(2)
       npc_spa = misn.npcAdd( "approach_spa", spa_name, spa_portrait, spa_description )
+      shiplog.appendLog( logidstr, _("You obtained the winning ticket to enter the Minerva Spa.") )
    end )
    vn.jump("menu_msg")
 
