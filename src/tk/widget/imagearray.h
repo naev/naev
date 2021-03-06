@@ -77,6 +77,8 @@ int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
       iar_data_t *iar_data );
 int toolkit_unsetSelection( const unsigned int wid, const char *name );
 void toolkit_setImageArrayAccept( const unsigned int wid, const char *name, void (*fptr)(unsigned int,char*) );
+int toolkit_getImageArrayVisibleElements( const unsigned int wid, const char *name );
+int toolkit_simImageArrayVisibleElements( int w, int h, int iw, int ih );
 
 #endif /* WGT_IMAGEARRAY_H */
 

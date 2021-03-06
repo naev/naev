@@ -904,3 +904,37 @@ void toolkit_setImageArrayAccept( const unsigned int wid, const char *name, void
       return;
    wgt->dat.iar.accept = fptr;
 }
+
+
+/**
+ * @brief Gets the number of visible elements in an image array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @return The number of totally visible elements.
+ */
+int toolkit_getImageArrayVisibleElements( const unsigned int wid, const char *name )
+{
+   Widget *iar = iar_getWidget( wid, name );
+   if (iar == NULL)
+      return -1;
+   return toolkit_simImageArrayVisibleElements( iar->w, iar->h, iar->dat.iar.iw, iar->dat.iar.ih );
+}
+
+/**
+ * @brief Simulates the number of visible elements in an image array.
+ *
+ *    @param w Width.
+ *    @param h Height.
+ *    @param iw Image width to use.
+ *    @param ih Image height to use.
+ */
+int toolkit_simImageArrayVisibleElements( int w, int h, int iw, int ih )
+{
+    int xelem, yelem;
+
+    xelem = floor((w - 10) / (iw+10));
+    yelem = floor( (h - 10) / (ih + 10 + 2 + gl_smallFont.h) );
+
+    return xelem * yelem;
+}
