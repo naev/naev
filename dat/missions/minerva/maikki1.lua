@@ -670,7 +670,7 @@ function stealthheartbeat ()
    elseif dist > 2000 * stats.ew_detect then
       if stealthfailing==nil then
          stealthfailing = 0
-         player.msg("#rYou are about to lose track of the scavengers!!")
+         player.msg( _("#rYou are about to lose track of the scavengers!!") )
       end
       stealthfailing = stealthfailing+1
       if stealthfailing > 6 then
