@@ -332,6 +332,14 @@ static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod )
          iar->dat.iar.selected -= 1;
          break;
 
+      case SDLK_RETURN:
+      case SDLK_KP_ENTER:
+         if (iar->dat.iar.accept != NULL) {
+            iar->dat.iar.accept( iar->wdw, iar->name ); 
+            return 1;
+         }
+         FALLTHROUGH;
+
       default:
          return 0;
    }
@@ -341,7 +349,7 @@ static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod )
 
    /* Run function pointer if needed. */
    if (iar->dat.iar.fptr)
-      iar->dat.iar.fptr( iar->wdw, iar->name);
+      iar->dat.iar.fptr( iar->wdw, iar->name );
 
    iar_centerSelected( iar );
    return 1;
@@ -879,4 +887,20 @@ int toolkit_unsetSelection( const unsigned int wid, const char *name )
   wgt->dat.iar.selected = -1;
 
   return 0;
+}
+
+
+/**
+ * @brief Sets the accept function of an Image Array.
+ *
+ *    @param wid Window where image array is.
+ *    @param name Name of the image array.
+ *    @param fptr Accept function to set.
+ */
+void toolkit_setImageArrayAccept( const unsigned int wid, const char *name, void (*fptr)(unsigned int,char*) )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return;
+   wgt->dat.iar.accept = fptr;
 }
