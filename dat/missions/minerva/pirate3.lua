@@ -274,6 +274,7 @@ function enter ()
       harper = pilot.add( "Quicksilver", fharper, pos, "Harper", "civilian" )
       local mem = harper:memory()
       mem.loiter = math.huge -- Should make them loiter forever
+      mem.distress = false -- Don't distress or everyone aggros
       harper:setHilight(true)
       harper:setVisplayer(true)
       harper:setNoLand(true)
