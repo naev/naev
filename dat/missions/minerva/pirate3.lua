@@ -348,7 +348,7 @@ function harper_gotattacked( plt, attacker )
 
       if harper_neardeath() then
          harper_almostdied = true
-         harper:msg( player.pilot(), _("Stop shooting! Maybe we can reach an agreement!") )
+         harper:comm( _("Stop shooting! Maybe we can reach an agreement!") )
          harper:hailPlayer()
       end
    end
@@ -445,7 +445,7 @@ He looks around nervously.
    end
 
    if harper_attacked then
-      harper:msg( player.pilot(), _("Get away from me!") )
+      harper:comm( _("Get away from me!") )
       player.commClose()
       return
    end
