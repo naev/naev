@@ -3855,7 +3855,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                continue;
             }
             weapid = xml_getInt(ccur);
-            weapid++; /* TODO I have no idea why this line is necessary, but without it, everything catches on fire... */
             if ((weapid < 0) || (weapid >= array_size(ship->outfits))) {
                WARN(_("Player ship '%s' has invalid weapon id %d [max %d]."),
                      ship->name, weapid, array_size(ship->outfits)-1 );
