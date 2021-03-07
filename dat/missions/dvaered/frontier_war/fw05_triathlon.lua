@@ -132,15 +132,15 @@ function create()
    portrait_pvt = portrait.getMil("Dvaered")
 
    -- Prepare storing of total scores of competitors
-   score_total = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+   score_total = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } -- TODO: display the score when landed
    score_total["__save"] = true
    competitors_names = { _("Major Tam"),
                          _("Captain Leblanc"),
                          _("General Klank"),
                          _("Sergeant Strafer"),
-                         _("Corporal Caros"),
+                         _("Sergeant Garcia"),
                          _("Private Micoult"),
-                         _("Sergeant Johnson"),
+                         _("Corporal Johnson"),
                          _("Private Ernst"),
                          _("Lieutenant Guo"),
                          player.name(), }
@@ -166,6 +166,8 @@ function spawnNpcs()
             tam = misn.npcAdd("tamStage2", tam_name, portrait_tam, tam_desc)
          elseif stage == 5 then
             tam = misn.npcAdd("tamStage3", tam_name, portrait_tam, tam_desc)
+         elseif stage == 7 then -- TODO: reward: 1: Dvaered Vendetta, 2: Vendetta, 3: Zephir II + Power Regul Override, 4: Milspec Orion + Shield Capacitor, 5: Small Combat Plating, 6: Shredders, 7: Hellburner, 8: Reactor, 9: Shield Booster, 10: Battery
+            
          end
       end
    end
@@ -223,7 +225,7 @@ function tamStage1()
    stage = 2
 end
 function tamStage2()
-   tk.msg( "", text_stage[2] )
+   tk.msg( "", text_stage[2]:format(16) )
    stage = 4
 end
 function tamStage3()
@@ -243,13 +245,13 @@ function takeoff()
       score_throw = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
       pilot.toggleSpawn(false)
       pilot.clear()
-      spawnCompetitors( false ) -- TODO: comm
+      spawnCompetitors( ) -- TODO: comm
 
       hook.timer( 500, "dehostilify" )
       targets = {}
       for i = 1, 30 do
          pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
-         targets[i] = pilot.add( "Llama", "FLF", pos, "Target "..tostring(i))
+         targets[i] = pilot.add( "Llama", "Warlords", pos, "Target "..tostring(i))
          targets[i]:control()
          targets[i]:setHostile() -- Just in case
          pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
@@ -267,14 +269,62 @@ function takeoff()
       score_stadion = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
       pilot.toggleSpawn(false)
       pilot.clear()
-      spawnCompetitors( false ) -- TODO: comm
+      spawnCompetitors( ) -- TODO: comm
 
       for i, p in ipairs(competitors) do
-         p:setInvincible() -- Yes, they are cheating.
+         p:setInvincible() -- Bouuuh! they r cheating!
          p:control()
+         p:memory().gather_range = 4*radius
+         hook.pilot( p, "idle", "competitorIdle" )
+         p:gather()
       end
 
       annoyers = {}
+      for i = 1, 10 do
+         pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+         annoyers[i] = pilot.add( "Dvaered Vendetta", "Warlords", pos, "Shooter")
+         equipVendettaMace( annoyers[i] )
+         annoyers[i]:setSpeedLimit( .0001 )
+      end -- TODO: if player has zero shield, eliminated
+
+      for i = 1, 30 do
+         pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+         print(i)
+         print( system.addGatherable( "Ore", 1, pos, vec2.new(0,0), 3600 ) )
+      end
+
+      hook.timer( 100000, "endStadion" ) -- TODO: explain there is a timer
+
+   elseif stage == 6 then -- Mace Pankration: competitors and make teams
+      -- TODO: check the player only has mace rockets
+      -- TODO: OSD
+      -- TODO: timer before it begins
+
+      score_pankration = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+      pilot.toggleSpawn(false)
+      pilot.clear()
+      spawnCompetitors( ) -- TODO: comm
+
+      -- Make people attack each other. TODO: see if we put everyone is the same time
+      competitors[5]:memory().atk = atk_generic -- A very agressive AI
+      competitors[5]:control()
+      competitors[5]:setHostile()
+      competitors[5]:setHilight()
+      competitors[5]:attack(player.pilot())
+      playerHitHook = hook.attacked( "playerHit" )
+      compHitHook = {nil,nil,nil,nil,nil,nil,nil,nil,nil}
+      compHitHook[5] = hook.pilot( competitors[5], "attacked", "compHit" )
+      for i = 1, 4 do
+         competitors[i]:control()
+         competitors[i]:attack(competitors[i+5])
+         competitors[i+5]:control()
+         competitors[i+5]:attack(competitors[i])
+         compHitHook[i]   = hook.pilot( competitors[i], "attacked", "compHit" )
+         compHitHook[i+5] = hook.pilot( competitors[i+5], "attacked", "compHit" )
+         competitors[i]:memory().atk = atk_generic 
+         competitors[i+5]:memory().atk = atk_generic 
+      end
+      duelsEnded = 0
    end
 end
 
@@ -288,31 +338,13 @@ function dehostilify()
 end
 
 -- Spawn Competitors
-function spawnCompetitors( inCircle ) -- TODO: always in circle
-   local dest = {}
-   if inCircle then
-   else
-      dest = {}
-      for i = 1, 9 do
-         dest[i] = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
-      end
-   end
-
-   -- TODO: remove this shit and put it in the loop
-   tam = pilot.add( "Dvaered Vendetta", "Dvaered", dest[1], competitors_names[1])
-   leblanc = pilot.add( "Dvaered Vendetta", "Dvaered", dest[2], competitors_names[2])
-   klank = pilot.add( "Dvaered Vendetta", "Dvaered", dest[3], competitors_names[3])
-   strafer = pilot.add( "Dvaered Vendetta", "Dvaered", dest[4], competitors_names[4])
-   caros = pilot.add( "Dvaered Vendetta", "Dvaered", dest[5], competitors_names[5])
-   micoult = pilot.add( "Dvaered Vendetta", "Dvaered", dest[6], competitors_names[6])
-   johnson = pilot.add( "Dvaered Vendetta", "Dvaered", dest[7], competitors_names[7])
-   ernst = pilot.add( "Dvaered Vendetta", "Dvaered", dest[8], competitors_names[8])
-   guo = pilot.add( "Dvaered Vendetta", "Dvaered", dest[9], competitors_names[9])
-
+function spawnCompetitors( )
    competitors = {tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo}
-   for i, p in ipairs(competitors) do
-      equipVendettaMace( p )
-      p:memory().Cindex = i -- Store their index
+   for i = 1, 9 do
+      pos = center + vec2.newP( radius, i*360/10 - 90 )
+      competitors[i] = pilot.add( "Dvaered Vendetta", "DHC", pos, competitors_names[1])
+      equipVendettaMace( competitors[i] )
+      competitors[i]:memory().Cindex = i -- Store their index
    end
 end
 
@@ -333,9 +365,11 @@ function targetHit( victim, attacker )
    if attacker == player.pilot() then
       -- TODO: play a sound, be happy
       score_throw[10] = score_throw[10] + 1
+      score_total[10] = score_total[10] + 1
    else
       ind = attacker:memory().Cindex
       score_throw[ind] = score_throw[ind] + 1
+      score_total[ind] = score_total[ind] + 1
    end
 
    targetShot = targetShot + 1
@@ -347,11 +381,105 @@ function targetHit( victim, attacker )
       stage = 3
       -- TODO: osd
 
+      -- TODO: use table.sort
       throwTitle = _("Scores for the Mace Throw")
       throwString = ""
       for i = 1, 10 do
          throwString = (throwString..competitors_names[i]..": "..score_throw[i].."\n")
       end
       tk.msg( throwTitle, throwString )
+   end
+end
+
+-- One of the competitors is Idle (Mace Stadion)
+function competitorIdle( self )
+   self:gather()
+end
+
+-- End of the Mace Stadion -- TODO: warn the player
+function endStadion()
+   for i, p in ipairs(competitors) do
+      p:taskClear()
+      p:land(destpla)
+   end
+   stage = 5
+   -- TODO: osd
+
+   for i = 1, 9 do
+      score_stadion[i] = competitors[i]:cargoHas("Ore")
+      score_total[i] = score_total[i] + score_stadion[i]
+   end
+   score_stadion[10] = player.pilot():cargoHas("Ore") -- TODO: it should be changed to Flowers
+   score_total[10]   = score_total[10] + score_stadion[10]
+
+   stadionTitle = _("Scores for the Mace Stadion")
+   stadionString = ""
+   for i = 1, 10 do
+      stadionString = (stadionString..competitors_names[i]..": "..score_stadion[i].."\n")
+   end
+   tk.msg( stadionTitle, stadionString )
+end
+
+-- One of the competitors (or the player) is hit (Mace Pankration)
+function playerHit()
+   if player.pilot():health() < 100 then -- Player has lost
+      hook.rm(playerHitHook)
+      hook.rm(compHitHook[5])
+      duelsEnded = duelsEnded + 1
+      score_pankration[5] = score_pankration[5] + 10
+      score_total[5] = score_total[5] + 10
+      competitors[5].taskClear()
+      competitors[5].land(destpla)
+      endPankration()
+   end
+end
+function compHit( victim )
+   if victim:health() < 100 then -- Identify who has lost
+      ind = victim:memory().Cindex
+      if ind == 5 then -- Player won
+         hook.rm(playerHitHook)
+         hook.rm(compHitHook[5])
+         duelsEnded = duelsEnded + 1
+         score_pankration[10] = score_pankration[10] + 10
+         score_total[10] = score_total[10] + 10
+         competitors[5].taskClear()
+         competitors[5].land(destpla)
+         endPankration()
+      elseif ind < 5 then
+         hook.rm(compHitHook[ind+5])
+         hook.rm(compHitHook[ind])
+         duelsEnded = duelsEnded + 1
+         score_pankration[ind+5] = score_pankration[ind+5] + 10
+         score_total[ind+5] = score_total[ind+5] + 10
+         competitors[ind].taskClear()
+         competitors[ind].land(destpla)
+         competitors[ind+5].taskClear()
+         competitors[ind+5].land(destpla)
+         endPankration()
+      else
+         hook.rm(compHitHook[ind-5])
+         hook.rm(compHitHook[ind])
+         duelsEnded = duelsEnded + 1
+         score_pankration[ind-5] = score_pankration[ind-5] + 10
+         score_total[ind-5] = score_total[ind-5] + 10
+         competitors[ind].taskClear()
+         competitors[ind].land(destpla)
+         competitors[ind-5].taskClear()
+         competitors[ind-5].land(destpla)
+         endPankration()
+      end
+   end
+end
+
+-- See if all duels are over
+function endPankration()
+   if duelsEnded >= 5 then
+      stage = 7
+      pankrationTitle = _("Scores for the Mace Pankration")
+      pankrationString = ""
+      for i = 1, 10 do
+         pankrationString = (pankrationString..competitors_names[i]..": "..score_pankration[i].."\n")
+      end
+      tk.msg( pankrationTitle, pankrationString )
    end
 end
