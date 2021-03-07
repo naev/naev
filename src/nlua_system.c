@@ -763,7 +763,8 @@ static int systemL_addGatherable( lua_State *L )
       return 0;
    }
 
-   return gatherable_init( commodity, *pos, *vel, lifelength, nb );
+   lua_pushnumber( L, gatherable_init( commodity, *pos, *vel, lifelength, nb ) );
+   return 1;
 }
 
 

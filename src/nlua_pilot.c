@@ -3918,6 +3918,8 @@ static int pilotL_hailPlayer( lua_State *L )
 /**
  * @brief Sends a message to another pilot.
  *
+ * Do not confuse with pilot.comm! This is meant to be used by AI and other scripts.
+ *
  *    @luatparam Pilot p Pilot to send message.
  *    @luatparam Pilot|{Pilot,...} receiver Pilot(s) to receive message.
  *    @luatparam string type Type of message.

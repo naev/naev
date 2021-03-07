@@ -25,6 +25,7 @@
 local minerva = require "minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
+local love_shaders = require "love_shaders"
 require 'numstring'
 
 logidstr = minerva.log.pirate.idstr
@@ -34,9 +35,9 @@ misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to find a Dvaered spy that appears to be located at Minerva Station.")
 reward_amount = 200000 -- 200k
 
-harper_portrait = portrait.get() -- TODO replace?
-harper_bribe_big = 1e7
-harper_bribe_sml = 1e6
+harper_image = portrait.getFullPath( portrait.get() ) -- TODO replace?
+harper_bribe_big = 1e6
+harper_bribe_sml = 1e5
 harper_bribe_tkn = 1000
 
 spa_name = _("Minerva Station Spa")
@@ -93,6 +94,8 @@ end
 
 
 function generate_npc ()
+   npc_pir = nil
+   npc_spa = nil
    if planet.cur() == planet.get("Minerva Station") then
       npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
       if misn_state == 4 then
@@ -161,6 +164,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
       end )
       vn.sfxVictory()
       vn.done()
+      vn.run()
 
       misn.finish(true)
    end
@@ -175,14 +179,14 @@ They take out a metallic object from their pocket and show it to you. You don't 
       }
       if misn_state < 3 and player.evtDone("Spa Propaganda") then
          if var.peek("minerva_spa_ticket")==nil then
-            table.insert( opts, 1, {_("Ask them about the Spa"), "spa" } ) 
+            table.insert( opts, 1, {_("Ask them about the spa"), "spa" } )
          else
-            table.insert( opts, 1, {_("Show them the Spa Ticket"), "spaticket" } ) 
+            table.insert( opts, 1, {_("Show them the spa ticket"), "spaticket" } )
          end
       end
 
       if misn_state == 3 and harper_gotticket then
-         table.insert( opts, 1, {_("Show them the winning Ticket"), "trueticket" } )
+         table.insert( opts, 1, {_("Show them the winning ticket"), "trueticket" } )
       end
       return opts
    end )
@@ -214,7 +218,7 @@ They wink at you.]]))
    vn.jump("menu_msg")
 
    vn.label("spaticket")
-   pir(_("Our chances of getting into the Spa can't be that bad can they?"))
+   pir(_("Our chances of getting into the Spa can't be that bad, can they?"))
    local t = minerva.vn_terminal()
    vn.appear( t )
    t(_([[Suddenly, the terminals around you blast a fanfare and begin to talk on the loudspeakers.
@@ -242,7 +246,8 @@ She beams you a smile.
 "Now go enjoy yourself at the spa and don't forget to plant the listening device!"]]))
    vn.func( function ()
       misn_state = 4
-      misn.osdActive(2)
+      osd = misn.osdCreate( _("Minerva Moles"),
+         {_("Plant a listening device in the Spa.") } )
       npc_spa = misn.npcAdd( "approach_spa", spa_name, spa_portrait, spa_description )
       shiplog.appendLog( logidstr, _("You obtained the winning ticket to enter the Minerva Spa.") )
    end )
@@ -266,13 +271,15 @@ function enter ()
       local pos = planet.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.rnd(360) )
 
       local fharper = faction.dynAdd( nil, "Harper Bowdoin" )
-      harper = pilot.add( "Gawain", fharper, pos, "Harper", "civilian" )
+      harper = pilot.add( "Quicksilver", fharper, pos, "Harper", "civilian" )
       local mem = harper:memory()
       mem.loiter = math.huge -- Should make them loiter forever
+      mem.distress = false -- Don't distress or everyone aggros
       harper:setHilight(true)
+      harper:setVisplayer(true)
       harper:setNoLand(true)
       harper:setNoJump(true)
-      hook.pilot( harper, "attacked", "harper_attacked" )
+      hook.pilot( harper, "attacked", "harper_gotattacked" )
       hook.pilot( harper, "death", "harper_death" )
       hook.pilot( harper, "board", "harper_board" )
       hook.pilot( harper, "hail", "harper_hail" )
@@ -281,6 +288,7 @@ function enter ()
       -- Clear variables to be kind to the player
       harper_almostdied = false
       harper_talked = false
+      harper_attacked = false
    end
 end
 
@@ -320,16 +328,16 @@ function harper_neardeath()
    if not harper:exists() then
       return false
    end
-   local a, s, stress, disabled = harper:getHeight()
+   local a, s, stress, disabled = harper:health()
    if disabled then
       return true
    end
-   return (a+s < 0.4)
+   return (a+s-stress < 80)
 end
 
 
-function harper_attacked( pilot, attacker )
-   if attacker == pilot.player() then
+function harper_gotattacked( plt, attacker )
+   if attacker == player.pilot() then
       if not harper_attacked then
          -- Run to land at the station
          harper:setNoLand(false)
@@ -340,22 +348,18 @@ function harper_attacked( pilot, attacker )
 
       if harper_neardeath() then
          harper_almostdied = true
-
+         harper:comm( _("Stop shooting! Maybe we can reach an agreement!") )
+         harper:hailPlayer()
       end
    end
 end
 
 
 function harper_hail ()
-   if harper_attacked then
-      harper:msg( player.pilot(), _("Get away from me!") )
-      player.commClose()
-      return
-   end
 
    local function harper_hologram ()
       return vn.newCharacter( _("Harper"),
-            { image=portrait.hologram( harper_portrait ) } )
+            { image=harper_image, shader=love_shaders.hologram() } )
    end
 
    local function enoughcreds( amount )
@@ -440,6 +444,12 @@ He looks around nervously.
       return
    end
 
+   if harper_attacked then
+      harper:comm( _("Get away from me!") )
+      player.commClose()
+      return
+   end
+
    if harper_talked then
       vn.clear()
       vn.scene()
@@ -467,7 +477,7 @@ He looks around nervously.
    } )
    vn.label("luck")
    h(_([["Yeah, you may have heard the news, but I'm the big winner of the Minerva hot spring event! On my first time to Minerva Station too! Maybe this will finally cure my back pains once and for all. The ticket is even made of pure gold!"
-As he boasts, he looks triumphant.]]))
+He looks triumphant as he boasts.]]))
    vn.menu( {
       {_([["About the ticket…"]]), "ticket" },
       {_("End transmission"), "leave" },
@@ -533,7 +543,7 @@ He scoffs at you and closes the transmission.]]))
    end )
    vn.na(_("You wire him the tokens and he gives you the digital code that represents the ticket. Looks like you are set."))
 
-   vn.label("money_small")
+   vn.label("money_sml")
    vn.func( function ()
       if player.credits() < harper_bribe_sml then
          vn.jump("broke")
