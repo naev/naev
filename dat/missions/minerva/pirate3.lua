@@ -94,6 +94,8 @@ end
 
 
 function generate_npc ()
+   npc_pir = nil
+   npc_spa = nil
    if planet.cur() == planet.get("Minerva Station") then
       npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
       if misn_state == 4 then
@@ -162,6 +164,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
       end )
       vn.sfxVictory()
       vn.done()
+      vn.run()
 
       misn.finish(true)
    end
