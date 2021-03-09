@@ -34,6 +34,8 @@ static int audioL_new( lua_State *L );
 static int audioL_play( lua_State *L );
 static int audioL_pause( lua_State *L );
 static int audioL_stop( lua_State *L );
+static int audioL_rewind( lua_State *L );
+static int audioL_seek( lua_State *L );
 static int audioL_setVolume( lua_State *L );
 static int audioL_getVolume( lua_State *L );
 static int audioL_setLooping( lua_State *L );
@@ -48,6 +50,8 @@ static const luaL_Reg audioL_methods[] = {
    { "play", audioL_play },
    { "pause", audioL_pause },
    { "stop", audioL_stop },
+   { "rewind", audioL_rewind },
+   { "seek", audioL_seek },
    { "setVolume", audioL_setVolume },
    { "getVolume", audioL_getVolume },
    { "setLooping", audioL_setLooping },
@@ -268,7 +272,6 @@ static int audioL_pause( lua_State *L )
  * @brief Stops a source.
  *
  *    @luatparam Audio source Source to stop.
- *    @luatreturn boolean True on success.
  * @luafunc stop
  */
 static int audioL_stop( lua_State *L )
@@ -276,6 +279,46 @@ static int audioL_stop( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!conf.nosound)
       alSourceStop( la->source );
+   return 0;
+}
+
+
+/**
+ * @brief Rewinds a source.
+ *
+ *    @luatparam Audio source Source to rewind.
+ * @luafunc rewind
+ */
+static int audioL_rewind( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (!conf.nosound)
+      alSourceRewind( la->source );
+   return 0;
+}
+
+
+/**
+ * @brief Seeks a source.
+ *
+ *    @luatparam Audio source Source to seek.
+ *    @luatparam number offset Offset to seek to.
+ *    @luatparam[opt="seconds"] string unit Either "seconds" or "samples" indicating the type to seek to.
+ * @luafunc seek
+ */
+static int audioL_seek( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   double offset = luaL_checknumber(L,2);
+   const char *unit = luaL_optstring(L,3,"seconds");
+   if (!conf.nosound) {
+      if (strcmp(unit,"seconds")==0)
+         alSourcef( la->source, AL_SEC_OFFSET, offset );
+      else if (strcmp(unit,"samples")==0)
+         alSourcef( la->source, AL_SAMPLE_OFFSET, offset );
+      else
+         NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
+   }
    return 0;
 }
 
