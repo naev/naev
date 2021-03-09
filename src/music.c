@@ -62,6 +62,7 @@ static int music_runLua( const char *situation );
 static char *music_name       = NULL; /**< Current music name. */
 static unsigned int music_start = 0; /**< Music start playing time. */
 static double music_timer     = 0.; /**< Music timer. */
+static int music_temp_disabled     = 0; /**< Music is temporarily disabled. */
 
 
 /*
@@ -83,6 +84,9 @@ void music_update( double dt )
    char *buf;
 
    if (music_disabled)
+      return;
+
+   if (music_temp_disabled)
       return;
 
    /* Timer stuff. */
@@ -491,6 +495,7 @@ int music_choose( const char* situation )
       return 0;
 
    music_timer = 0.;
+   music_temp_disabled = 0;
    music_runLua( situation );
 
    return 0;
@@ -513,6 +518,7 @@ int music_chooseDelay( const char* situation, double delay )
    /* Lock so it doesn't run in between an update. */
    SDL_mutexP(music_lock);
    music_timer       = delay;
+   music_temp_disabled = 0;
    music_runchoose   = 0;
    free(music_situation);
    music_situation = strdup(situation);
@@ -532,12 +538,24 @@ void music_rechoose (void)
    if (music_disabled)
       return;
 
+   if (music_temp_disabled)
+      return;
+
    /* Lock so it doesn't run in between an update. */
    SDL_mutexP(music_lock);
    music_timer       = 0.;
    music_runchoose   = 1;
+   music_temp_disabled = 0;
    free(music_situation);
    music_situation = strdup("idle");
    SDL_mutexV(music_lock);
 }
 
+
+/**
+ * @brief Temporarily disables the music.
+ */
+void music_tempDisable( int disable )
+{
+   music_temp_disabled = disable;
+}

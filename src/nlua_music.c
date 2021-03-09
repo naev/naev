@@ -111,6 +111,7 @@ static int musicL_load( lua_State *L )
       NLUA_ERROR(L,_("Music '%s' invalid or failed to load."), str );
       return 0;
    }
+   music_tempDisable( 0 );
 
    return 0;
 }
@@ -124,6 +125,7 @@ static int musicL_load( lua_State *L )
 static int musicL_play( lua_State *L )
 {
    (void)L;
+   music_tempDisable( 0 );
    music_play();
    return 0;
 }
@@ -160,6 +162,7 @@ static int musicL_stop( lua_State *L )
 {
    (void)L;
    music_stop();
+   music_tempDisable( 1 );
    return 0;
 }
 
