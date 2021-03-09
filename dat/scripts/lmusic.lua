@@ -80,8 +80,10 @@ function lmusic.update( dt )
 end
 
 local function _stop( m )
-   m.state = "fadeout"
-   m.progess = 0
+   if m.state ~= "fadeout" then
+      m.state = "fadeout"
+      m.progess = 0
+   end
 end
 
 --[[---
