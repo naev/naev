@@ -27,12 +27,13 @@
 #include "sound_openal.h"
 
 
-/* Camera methods. */
+/* Audio methods. */
 static int audioL_gc( lua_State *L );
 static int audioL_eq( lua_State *L );
 static int audioL_new( lua_State *L );
 static int audioL_play( lua_State *L );
 static int audioL_pause( lua_State *L );
+static int audioL_isPaused( lua_State *L );
 static int audioL_stop( lua_State *L );
 static int audioL_isStopped( lua_State *L );
 static int audioL_rewind( lua_State *L );
@@ -41,7 +42,7 @@ static int audioL_tell( lua_State *L );
 static int audioL_setVolume( lua_State *L );
 static int audioL_getVolume( lua_State *L );
 static int audioL_setLooping( lua_State *L );
-static int audioL_getLooping( lua_State *L );
+static int audioL_isLooping( lua_State *L );
 static int audioL_setPitch( lua_State *L );
 static int audioL_getPitch( lua_State *L );
 static int audioL_soundPlay( lua_State *L );
@@ -51,6 +52,7 @@ static const luaL_Reg audioL_methods[] = {
    { "new", audioL_new },
    { "play", audioL_play },
    { "pause", audioL_pause },
+   { "isPaused", audioL_isPaused },
    { "stop", audioL_stop },
    { "isStopped", audioL_isStopped },
    { "rewind", audioL_rewind },
@@ -59,13 +61,27 @@ static const luaL_Reg audioL_methods[] = {
    { "setVolume", audioL_setVolume },
    { "getVolume", audioL_getVolume },
    { "setLooping", audioL_setLooping },
-   { "getLooping", audioL_getLooping },
+   { "isLooping", audioL_isLooping },
    { "setPitch", audioL_setPitch },
    { "getPitch", audioL_getPitch },
    { "soundPlay", audioL_soundPlay }, /* Old API */
    {0,0}
 }; /**< AudioLua methods. */
 
+
+/**
+ * @brief Checks to see a boolean property of a source.
+ */
+static int audioL_isBool( lua_State *L, ALenum param )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   int b = 1;
+   if (!conf.nosound)
+      alGetSourcei( la->source, param, &b );
+   al_checkErr();
+   lua_pushboolean(L,b);
+   return 1;
+}
 
 
 
@@ -277,6 +293,19 @@ static int audioL_pause( lua_State *L )
 
 
 /**
+ * @brief Checks to see if a source is paused.
+ *
+ *    @luatparam Audio source Source to check to see if is paused.
+ *    @luatreturn boolean Whether or not the source is paused.
+ * @luafunc isPaused
+ */
+static int audioL_isPaused( lua_State *L )
+{
+   return audioL_isBool( L, AL_PAUSED );
+}
+
+
+/**
  * @brief Stops a source.
  *
  *    @luatparam Audio source Source to stop.
@@ -301,13 +330,7 @@ static int audioL_stop( lua_State *L )
  */
 static int audioL_isStopped( lua_State *L )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   int b = 1;
-   if (!conf.nosound)
-      alGetSourcei( la->source, AL_STOPPED, &b );
-   al_checkErr();
-   lua_pushboolean(L,b);
-   return 1;
+   return audioL_isBool( L, AL_STOPPED );
 }
 
 
@@ -450,17 +473,11 @@ static int audioL_setLooping( lua_State *L )
  *
  *    @luatparam Audio source Source to get looping state of.
  *    @luatreturn boolean Whether or not the source is looping.
- * @luafunc getLooping
+ * @luafunc isLooping
  */
-static int audioL_getLooping( lua_State *L )
+static int audioL_isLooping( lua_State *L )
 {
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   int b = 0;
-   if (!conf.nosound)
-      alGetSourcei( la->source, AL_LOOPING, &b );
-   al_checkErr();
-   lua_pushboolean(L,b);
-   return 1;
+   return audioL_isBool( L, AL_LOOPING );
 }
 
 
