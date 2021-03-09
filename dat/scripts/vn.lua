@@ -11,6 +11,7 @@ local window = require 'love.window'
 local filesystem = require 'love.filesystem'
 local audio = require 'love.audio'
 local love_image = require 'love.image'
+local lmusic = require 'lmusic'
 local transitions = require 'vn.transitions'
 
 local vn = {
@@ -237,6 +238,8 @@ Main updating function. Has to be called each loop in "love.update"
    @tparam number dt Update tick in seconds.
 ]]
 function vn.update(dt)
+   lmusic.update( dt )
+
    -- Out of states
    if vn._state > #vn._states then
       love.event.quit()
