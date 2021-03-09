@@ -61,7 +61,6 @@ function lmusic.update( dt )
       elseif m.state=="fadeout" then
          m.progress = m.progress + dt / m.p.fadeout
          local v = (1-m.progress) * m.p.volume
-         print(v)
          if m.progress >= 1 then
             m.source:stop()
             m.state = "stop"
