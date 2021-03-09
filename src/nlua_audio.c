@@ -161,6 +161,7 @@ static int audioL_gc( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    alDeleteSources( 1, &la->source );
    alDeleteBuffers( 1, &la->buffer );
+   al_checkErr();
    return 0;
 }
 
@@ -232,6 +233,7 @@ static int audioL_new( lua_State *L )
    else
       memset( &la, 0, sizeof(LuaAudio_t) );
 
+   al_checkErr();
    lua_pushaudio(L, la);
    return 1;
 }
@@ -249,6 +251,7 @@ static int audioL_play( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!conf.nosound)
       alSourcePlay( la->source );
+   al_checkErr();
    lua_pushboolean(L,1);
    return 1;
 }
@@ -266,6 +269,7 @@ static int audioL_pause( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!conf.nosound)
       alSourcePause( la->source );
+   al_checkErr();
    return 0;
 }
 
@@ -281,6 +285,7 @@ static int audioL_stop( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!conf.nosound)
       alSourceStop( la->source );
+   al_checkErr();
    return 0;
 }
 
@@ -296,6 +301,7 @@ static int audioL_rewind( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!conf.nosound)
       alSourceRewind( la->source );
+   al_checkErr();
    return 0;
 }
 
@@ -321,6 +327,7 @@ static int audioL_seek( lua_State *L )
       else
          NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
    }
+   al_checkErr();
    return 0;
 }
 
@@ -346,6 +353,7 @@ static int audioL_tell( lua_State *L )
       else
          NLUA_ERROR(L, _("Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"), unit );
    }
+   al_checkErr();
    lua_pushnumber(L, offset);
    return 1;
 }
@@ -365,6 +373,7 @@ static int audioL_setVolume( lua_State *L )
    double master = sound_getVolumeLog();
    if (!conf.nosound)
       alSourcef( la->source, AL_GAIN, master * volume );
+   al_checkErr();
    return 0;
 }
 
@@ -391,6 +400,7 @@ static int audioL_getVolume( lua_State *L )
    }
    else
       volume = sound_getVolume();
+   al_checkErr();
    lua_pushnumber(L, volume);
    return 1;
 }
@@ -409,6 +419,7 @@ static int audioL_setLooping( lua_State *L )
    int b = lua_toboolean(L,2);
    if (!conf.nosound)
       alSourcei( la->source, AL_LOOPING, b );
+   al_checkErr();
    return 0;
 }
 
@@ -426,6 +437,7 @@ static int audioL_getLooping( lua_State *L )
    int b = 0;
    if (!conf.nosound)
       alGetSourcei( la->source, AL_LOOPING, &b );
+   al_checkErr();
    lua_pushboolean(L,b);
    return 1;
 }
@@ -444,6 +456,7 @@ static int audioL_setPitch( lua_State *L )
    double pitch = luaL_checknumber(L,2);
    if (!conf.nosound)
       alSourcef( la->source, AL_PITCH, pitch );
+   al_checkErr();
    return 0;
 }
 
@@ -461,6 +474,7 @@ static int audioL_getPitch( lua_State *L )
    float p = 1.0;
    if (!conf.nosound)
       alGetSourcef( la->source, AL_PITCH, &p );
+   al_checkErr();
    lua_pushnumber(L,p);
    return 1;
 }
