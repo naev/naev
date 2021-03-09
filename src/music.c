@@ -32,9 +32,6 @@
 #define MUSIC_SUFFIX       ".ogg" /**< Suffix of musics. */
 
 
-#define CHUNK_SIZE         32 /**< Size of a chunk to allocate. */
-
-
 int music_disabled = 0; /**< Whether or not music is disabled. */
 
 
