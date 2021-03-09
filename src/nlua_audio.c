@@ -34,6 +34,7 @@ static int audioL_new( lua_State *L );
 static int audioL_play( lua_State *L );
 static int audioL_pause( lua_State *L );
 static int audioL_stop( lua_State *L );
+static int audioL_isStopped( lua_State *L );
 static int audioL_rewind( lua_State *L );
 static int audioL_seek( lua_State *L );
 static int audioL_tell( lua_State *L );
@@ -51,6 +52,7 @@ static const luaL_Reg audioL_methods[] = {
    { "play", audioL_play },
    { "pause", audioL_pause },
    { "stop", audioL_stop },
+   { "isStopped", audioL_isStopped },
    { "rewind", audioL_rewind },
    { "seek", audioL_seek },
    { "tell", audioL_tell },
@@ -287,6 +289,25 @@ static int audioL_stop( lua_State *L )
       alSourceStop( la->source );
    al_checkErr();
    return 0;
+}
+
+
+/**
+ * @brief Checks to see if a source is stopped.
+ *
+ *    @luatparam Audio source Source to check to see if is stopped.
+ *    @luatreturn boolean Whether or not the source is stopped.
+ * @luafunc isStopped
+ */
+static int audioL_isStopped( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   int b = 1;
+   if (!conf.nosound)
+      alGetSourcei( la->source, AL_STOPPED, &b );
+   al_checkErr();
+   lua_pushboolean(L,b);
+   return 1;
 }
 
 
