@@ -1049,20 +1049,27 @@ Plays music. This will stop all other playing music unless dontstop is set to tr
 This gets automatically reset when the VN finishes.
 
    @see lmusic.play
-   @tparam string filename Name of the music to play.
+   @tparam string|nil filename Name of the music to play. If nil, it tries to restore the music again.
    @tparam tab params Same as lmusic.play()
    @tparam boolean dontstop Don't stop other music.
 --]]
 function vn.music( filename, params, dontstop )
    vn._checkstarted()
-   vn.func( function ()
-      if not donstop then
-         music.stop()
+   if filename == nil then
+      vn.func( function ()
+         music.play()
          lmusic.stop()
-      end
-      vn._handle_music = true
-      lmusic.play( filename, params )
-   end )
+      end )
+   else
+      vn.func( function ()
+         if not donstop then
+            music.stop()
+            lmusic.stop()
+         end
+         vn._handle_music = true
+         lmusic.play( filename, params )
+      end )
+   end
 end
 
 --[[--
@@ -1077,7 +1084,9 @@ function vn.done( ... )
       vn._globalalpha = 0
       if vn._handle_music then
          lmusic.stop()
-         music.play()
+         if not music.isPlaying() then
+            music.play()
+         end
       end
    end )
    vn.transition( ... )
