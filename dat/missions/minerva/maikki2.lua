@@ -674,8 +674,7 @@ end
 
 function ecc_timer_dead ()
    player.msg(_("Your ships detect that one of the asteroids isn't what it seems…"))
-   -- TODO play eerie sound
-   --vn._sfx.eerie:play()
+   vn.sfxEerie()
    diff.apply( eccdiff )
    misn_state = 3
    shiplog.appendLog( logidstr, _("You were attacked by a Za'lek security system and found a laboratory disguised as an asteroid in Westhaven.") )
@@ -686,6 +685,7 @@ function ecc_feral_boss_dead ()
    local paperbg = love_shaders.paper()
    vn.clear()
    vn.scene()
+   vn.music( 'snd/sounds/loops/creepy_guitar.ogg' )
    vn.func( function ()
       vn.setBackground( function ()
          vn.setColor( {0.2, 0.2, 0.2, 0.8} )
@@ -694,7 +694,6 @@ function ecc_feral_boss_dead ()
       vn.setShader( love_shaders.corruption{ strength=0.5 } )
    end )
    local voice = vn.newCharacter( _("Unknown Voice") )
-   -- TODO better and creepier transition
    vn.transition( "hexagon", 3 ) -- Really slow fade in so the player stops mashing keys due to combat (keypresses aren't processed in animations)
    vn.na(_("While the drone is blowing up, you receive a faint voice-only transmission."))
    vn.sfxEerie()
