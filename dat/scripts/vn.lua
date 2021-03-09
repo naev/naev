@@ -27,10 +27,18 @@ local vn = {
       _buffer = "",
       _title = nil,
       _globalalpha = 1,
-      --_soundTalk = audio.newSource( "sfx/talk.wav" ),
+      --_soundTalk = audio.newSource( "snd/sounds/ui/letter0.wav" ),
       _pitchValues = {0.7, 0.8, 1.0, 1.2, 1.3},
    },
    transitions = transitions,
+   _sfx = {
+      victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
+      bingo = audio.newSource( 'snd/sounds/jingles/success.ogg' ),
+      eerie = audio.newSource( 'snd/sounds/jingles/eerie.ogg' ),
+      ui = {
+         option = audio.newSource( 'snd/sounds/ui/happy.wav' ),
+      },
+   },
 }
 -- Drawing
 local function _setdefaults()
@@ -631,6 +639,7 @@ function vn.StateMenu:_keypressed( key )
    self:_choose(n)
 end
 function vn.StateMenu:_choose( n )
+   vn._sfx.ui.option:play()
    self.handler( self._items[n][2] )
    _finish( self )
 end
@@ -1136,22 +1145,19 @@ end
 Plays a victory sound.
 --]]
 function vn.sfxVictory()
-   -- TODO
-   -- return vn.sfx( vn._sfx.victory )
+   return vn.sfx( vn._sfx.victory )
 end
 --[[--
 Plays a bingo sound.
 --]]
 function vn.sfxBingo()
-   -- TODO
-   -- return vn.sfx( vn._sfx.bingo )
+   return vn.sfx( vn._sfx.bingo )
 end
 --[[--
 Plays an eerie sound.
 --]]
 function vn.sfxEerie()
-   -- TODO
-   -- return vn.sfx( vn._sfx.eerie )
+    return vn.sfx( vn._sfx.eerie )
 end
 
 --[[--
