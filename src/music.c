@@ -62,7 +62,8 @@ static int music_runLua( const char *situation );
 static char *music_name       = NULL; /**< Current music name. */
 static unsigned int music_start = 0; /**< Music start playing time. */
 static double music_timer     = 0.; /**< Music timer. */
-static int music_temp_disabled     = 0; /**< Music is temporarily disabled. */
+static int music_temp_disabled= 0; /**< Music is temporarily disabled. */
+static int music_temp_repeat  = 0; /**< Music is repeating. */
 
 
 /*
@@ -124,6 +125,11 @@ static int music_runLua( const char *situation )
 {
    if (music_disabled)
       return 0;
+
+   if (music_temp_repeat) {
+      music_play();
+      return 0;
+   }
 
    /* Run the choose function in Lua. */
    nlua_getenv( music_env, "choose" );
@@ -495,6 +501,7 @@ int music_choose( const char* situation )
       return 0;
 
    music_timer = 0.;
+   music_temp_repeat = 0;
    music_temp_disabled = 0;
    music_runLua( situation );
 
@@ -558,4 +565,13 @@ void music_rechoose (void)
 void music_tempDisable( int disable )
 {
    music_temp_disabled = disable;
+}
+
+
+/**
+ * @brief Temporarily makse the music repeat.
+ */
+void music_repeat( int repeat )
+{
+   music_temp_repeat = repeat;
 }

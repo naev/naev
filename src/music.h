@@ -57,6 +57,7 @@ int music_choose( const char* situation );
 int music_chooseDelay( const char* situation, double delay );
 void music_rechoose (void);
 void music_tempDisable( int disable );
+void music_repeat( int repeat );
 
 
 #endif /* MUSIC_H */
