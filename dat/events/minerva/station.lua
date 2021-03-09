@@ -128,6 +128,7 @@ function create()
    -- Custom music
    music.load( "meeting_mtfox" )
    music.play()
+   music.setRepeat(true)
 end
 
 local function has_event( name )
