@@ -84,6 +84,21 @@ static int audioL_isBool( lua_State *L, ALenum param )
 }
 
 
+/**
+ * @brief Checks to see the state of the source.
+ */
+static int audioL_isState( lua_State *L, ALenum state )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   int s = AL_STOPPED;
+   if (!conf.nosound)
+      alGetSourcei( la->source, AL_SOURCE_STATE, &s );
+   al_checkErr();
+   lua_pushboolean(L, s==state );
+   return 1;
+}
+
+
 
 /**
  * @brief Loads the audio library.
@@ -301,7 +316,7 @@ static int audioL_pause( lua_State *L )
  */
 static int audioL_isPaused( lua_State *L )
 {
-   return audioL_isBool( L, AL_PAUSED );
+   return audioL_isState( L, AL_PAUSED );
 }
 
 
@@ -330,7 +345,7 @@ static int audioL_stop( lua_State *L )
  */
 static int audioL_isStopped( lua_State *L )
 {
-   return audioL_isBool( L, AL_STOPPED );
+   return audioL_isState( L, AL_STOPPED );
 }
 
 
