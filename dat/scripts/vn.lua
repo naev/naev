@@ -71,6 +71,8 @@ local function _setdefaults()
    graphics.setCanvas( vn._emptycanvas )
    graphics.clear( 0, 0, 0, 0 )
    graphics.setCanvas( oldcanvas )
+   -- Music stuff
+   vn._handle_music = false
 end
 
 --[[--
@@ -1042,6 +1044,28 @@ function vn.jump( label )
 end
 
 --[[--
+Plays music. This will stop all other playing music unless dontstop is set to true.
+
+This gets automatically reset when the VN finishes.
+
+   @see lmusic.play
+   @tparam string filename Name of the music to play.
+   @tparam tab params Same as lmusic.play()
+   @tparam boolean dontstop Don't stop other music.
+--]]
+function vn.music( filename, params, dontstop )
+   vn._checkstarted()
+   vn.func( function ()
+      if not donstop then
+         music.stop()
+         lmusic.stop()
+      end
+      vn._handle_music = true
+      lmusic.play( filename, params )
+   end )
+end
+
+--[[--
 Finishes the VN.
    @see vn.transition
    @param ... Uses the parameters as vn.transition.
@@ -1049,7 +1073,13 @@ Finishes the VN.
 function vn.done( ... )
    vn._checkstarted()
    vn.scene()
-   vn.func( function () vn._globalalpha = 0 end )
+   vn.func( function ()
+      vn._globalalpha = 0
+      if vn._handle_music then
+         lmusic.stop()
+         music.play()
+      end
+   end )
    vn.transition( ... )
    table.insert( vn._states, vn.StateEnd.new() )
 end
@@ -1270,6 +1300,10 @@ function vn.run()
    love.exec( 'scripts/vn' )
    love._vn = nil
    vn._started = false
+   -- Destroy remaining lmusic stuff if necessary
+   if vn._handle_music then
+      lmusic.clear()
+   end
 end
 
 --[[--
