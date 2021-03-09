@@ -43,7 +43,7 @@ function create()
    vn.na(_("The airlock opens as you approach it, and you find yourself at the entrance of the changing rooms. You get rid of your clothes, take a small towel, and proceed to enter the spa area."))
    -- Start the fancy spa scene!
    vn.scene()
-   -- TODO add running water sound.
+   vn.music( 'snd/sounds/loops/riviere.ogg' )
    vn.func( function ()
       local lw, lh = love.graphics.getDimensions()
       vn.setBackground( function ()
@@ -149,6 +149,7 @@ Kex slides out of the water, ruffles his feather and fades into the steam. You h
    vn.na(_("Eventually you leave the baths, get changed back into your space clothes and head out towards the station."))
    -- Go back to normal BG
    vn.scene()
+   vn.music()
    vn.func( function ()
       vn.setBackground()
       vn.setUpdateFunc()
