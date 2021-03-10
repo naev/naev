@@ -2411,6 +2411,7 @@ dat/scripts/fleethelper.lua
 dat/scripts/formation.lua
 dat/scripts/imageproc.lua
 dat/scripts/jumpdist.lua
+dat/scripts/lmusic.lua
 dat/scripts/love.lua
 dat/scripts/love/audio.lua
 dat/scripts/love/data.lua
