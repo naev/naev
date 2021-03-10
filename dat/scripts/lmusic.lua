@@ -37,6 +37,7 @@ function lmusic.play( filename, params )
    source:play()
 
    local m = {
+      filename = filename,
       source = source,
       state = "fadein",
       progress = 0,
@@ -93,11 +94,24 @@ Stops a playing music (or all of them)
 --]]
 function lmusic.stop( m )
    if m==nil then
-      for k,m in pairs(lmusic._sources) do
-         _stop( m )
+      for k,v in pairs(lmusic._sources) do
+         _stop( v )
       end
    else
-      _stop( m )
+      if type(m)=="string" then
+         local stopped = false
+         for k,v in pairs(lmusic._sources) do
+            if v.filename==m then
+               _stop(v)
+               stopped = true
+            end
+         end
+         if not stopped then
+            print(string.format(_("lmusic: Trying to stop music '%s', but it is not playing!"), m))
+         end
+      else
+         _stop( m )
+      end
    end
 end
 

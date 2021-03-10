@@ -1055,6 +1055,7 @@ This gets automatically reset when the VN finishes.
 --]]
 function vn.music( filename, params, dontstop )
    vn._checkstarted()
+   local m = {}
    if filename == nil then
       vn.func( function ()
          music.play()
@@ -1062,14 +1063,26 @@ function vn.music( filename, params, dontstop )
       end )
    else
       vn.func( function ()
-         if not donstop then
+         if not dontstop then
             music.stop()
             lmusic.stop()
          end
          vn._handle_music = true
-         lmusic.play( filename, params )
+         m.m = lmusic.play( filename, params )
       end )
    end
+   return m
+end
+
+--[[--
+Stops certain playing music.
+
+   @tparam string|nil filename Name of the music to stop. If nil, it tries to stop all playing music.
+--]]
+function vn.musicStop( filename )
+   vn.func( function ()
+      lmusic.stop( filename )
+   end )
 end
 
 --[[--
