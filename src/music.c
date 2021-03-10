@@ -127,6 +127,9 @@ static int music_runLua( const char *situation )
    if (music_disabled)
       return 0;
 
+   if (music_temp_disabled)
+      return 0;
+
    if (music_temp_repeat) {
       music_load( music_temp_repeatname );
       music_play();
