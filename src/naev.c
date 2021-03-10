@@ -235,14 +235,7 @@ int main( int argc, char** argv )
 
    /* Set up I/O. */
    ndata_setupWriteDir();
-
-   if (conf.redirect_file && log_copying()) {
-      log_redirect();
-      log_copy(0);
-   }
-   else
-      log_purge();
-
+   log_redirect();
    ndata_setupReadDirs();
    gettext_setLanguage( conf.language ); /* now that we can find translations */
    LOG( _("Loaded configuration: %s"), conf_file_path );

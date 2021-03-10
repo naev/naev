@@ -24,6 +24,7 @@
 
 #include "log.h"
 
+#include "conf.h"
 #include "console.h"
 #include "ndata.h"
 #include "nstring.h"
@@ -56,6 +57,7 @@ static PHYSFS_File *logerr_file = NULL;
  */
 static void log_append( FILE *stream, char *str );
 static void log_cleanStream( PHYSFS_File **file, const char *fname, const char *filedouble );
+static void log_purge (void);
 
 /**
  * @brief Like fprintf but also prints to the naev console.
@@ -121,16 +123,18 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
 
 
 /**
- * @brief Redirects stdout and stderr to files.
- *
- * Should only be performed if conf.redirect_file is true and Naev isn't
- * running in a terminal.
+ * @brief Sets up redirection of stdout and stderr to files.
  */
 void log_redirect (void)
 {
    time_t cur;
    struct tm *ts;
    char timestr[20];
+
+   if (!conf.redirect_file || !copying) {
+      log_purge();
+      return;
+   }
 
    time(&cur);
    ts = localtime(&cur);
@@ -147,6 +151,8 @@ void log_redirect (void)
 
    asprintf( &outfiledouble, "logs/%s_stdout.txt", timestr );
    asprintf( &errfiledouble, "logs/%s_stderr.txt", timestr );
+
+   log_copy(0);
 }
 
 
@@ -227,20 +233,9 @@ void log_copy( int enable )
 
 
 /**
- * @brief Whether log copying is enabled.
- *
- *    @return 1 if copying is enabled, 0 otherwise.
- */
-int log_copying (void)
-{
-   return copying;
-}
-
-
-/**
  * @brief Deletes copied output without printing the contents.
  */
-void log_purge (void)
+static void log_purge (void)
 {
    if (!copying)
       return;
