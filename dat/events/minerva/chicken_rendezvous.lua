@@ -23,6 +23,8 @@ local love_shaders = require "love_shaders"
 
 function create()
    local steamshader = love_shaders.steam()
+   local angrysong = 'snd/sounds/songs/feeling-good-08.ogg'
+   local bgsong = 'snd/sounds/songs/feeling-good-05.ogg'
 
    vn.clear()
    vn.scene()
@@ -91,17 +93,20 @@ function create()
    cc(_([[Cyborg Chicken stares at you intensely.]]))
    vn.na(_([[You once again wonder about what the entire point of swimming with a chicken is, even if it is a cyborg one.]]))
    cc(_([[They still are staring at you with a creepy fixation.]]))
-   cc(_([[Finally, after what seems like an eternity of being stared down by a chicken, you hear a small faint sound come out of it.]]))
+   cc(_([[Finally, after what seems like an eternity of being stared down by a chicken, you hear a small faint sound come out of it. However, you can't make out what the sound was.]]))
    vn.me(([["Pardon me?"]]))
    cc:rename(_("Cyborg Duck?"))
-   cc(_([["Actually, I'm not a chicken: I'm a duck. Well, genetically speaking, mostly a duck."]]))
+   cc(_([[
+They look at you straight in the eyes and begin to speak, slowly getting louder.
+"Actually, I'm not a chicken: I'm a duck. Well, genetically speaking, mostly a duck."]]))
    vn.menu( {
       { _("…"), "menu2" },
       { _([["A duck?"]]), "menu2" },
    } )
    vn.label("menu2")
    vn.func( function () cc.shader = love_shaders.aura() end )
-   cc(_([["A bloody duck! With this stupid excuse for a cybernetic implant that can't do shit. What the hell am I supposed to do as a duck? Shit on the floor? Eat bird food? What kind of life is that? Maybe I can shit out eggs and sell them for a living?"
+   vn.music( angrysong, nil, true )
+   cc(_([["A bloody duck! With this stupid excuse for a cybernetic implant that can't do shit. What the hell am I supposed to do as a duck? Shit on the floor? Eat bird food? What kind of life is that? Maybe I can pop out eggs and sell them for a living? Oh wait, I'm a damn male."
 They continue rambling furiously.]]))
    vn.menu( {
       { _([["Are you okay?…"]]), "menu3_ok" },
@@ -114,29 +119,35 @@ They continue rambling furiously.]]))
    cc(_([["Bloody hell! What did I deserve to get mocked in a space station in the middle of no where!"]]))
    vn.jump("menu3")
    vn.label("menu3")
-   cc(_([["Bloody forced to serve blackjack cards all day to idiots who think they can get rich in a rigged game. No, you are not going to surprise your spouse or lover or whatever with a ton of credits, you're going to end up broke crying in the toilet stall. Bloody who do they think they are."]]))
-   cc(_([["Is this what is to become of me? Bloody attraction of a perverse station lit up with neon lights that attracts idiots as surely as moths to flame. Whatever happened to me, Kex, intrepid explorer of the nebula…"]]))
+   cc(_([["Forced to serve blackjack cards all day to idiots who think they can get rich in a rigged game. No, you are not going to surprise your spouse or lover or whatever with a ton of credits, you're going to end up broke crying in the toilet stall. Bloody who do they think they are."]]))
+   cc(_([["Is this what is to become of me? The damn attraction of a perverse station lit up with neon lights that attracts idiots as surely as moths to flame. Whatever happened to me, Kex, intrepid explorer of the nebula…"]]))
    vn.menu( {
       { _([["Kex…!"]]), "menu4" },
       { _([["Intrepid explorer…?"]]), "menu4" },
    } )
    vn.label("menu4")
    vn.func( function () cc.shader = nil end )
+   vn.musicStop( angrysong )
+   vn.music( bgsong, nil, true )
    cc:rename(_("Kex"))
-   cc(_([["Yeah, the one and only. I guess you want to hear the full story. You look like a good kid, and I'm bloody fed up with everything to give a shit anymore."]]))
+   cc(_([["Yeah, the one and only. I guess you want to hear the full story."
+They take a deep sigh.
+"You look like a good kid, and I'm bloody fed up with everything to give a shit anymore."]]))
    cc(_([["I am Kex McPherson… scratch that… more like was Kex McPherson before I was turned into this travesty. Brave explorer of the nebula."
 His eyes get a bit teary as he starts to recall the past.
 "You see, I was lucky enough to not get caught in the Incident, although most of my friends and family were caught up in it."]]))
-   cc(_([["I knew I couldn't just sit still and decided to see if I could find anything about what happened or any clues or pretty much anything. I was young and naïve, my daughter had recently been born, and I wanted to make sure the world would e a better place for her. You know, like not repeating the mistakes of the past."]]))
+   cc(_([["I knew I couldn't just sit still and decided to see if I could find anything about what happened or any clues or pretty much anything. I was young and naïve, my daughter had recently been born, and I wanted to make sure the world would e a better place for her. You know, like not repeating the mistakes of the past, and figure out what went wrong."]]))
    cc(_([["But the nebula was not a kind mistress. It sort of gets into your bones you know? Especially right after the incident, it was very unstable. Lost a lot of good fellow explorers due to explosions and the Nebula madness. It sort of turns you into a monster, incapable of rational thought, and they would usually succumb to their own uncontrolled greed."]]))
    cc(_([["Horrible thing to see, but I was careful and never caught it. We were bringing back many artefacts, some of things that we could make out, like parts of civilian vessels, but sometimes we found really weird shit, you know? Stuff that we had no idea where it came from."]]))
-   cc(_([["I still had to make a living, and would sell many of those artefacts to the Za'lek. They would buy pretty much anything. No idea what the hell they were doing with it, but I still had my wife and daughter to tend to, and it paid the bills"]]))
-   cc(_([["Me and my first mate Mireia Sibeko, we would spend most of our days travelling in and out of the nebula. Once Cerberus station in Doeston got set up, it was much easier to do stuff, but we were already exploring the new reality much  before that station was up and running."]]))
-   cc(_([["One day, I don't remember what happened, but apparently we got caught up into an accident or something. Everything went dark, and when I woke up, I was in that sick bastards laboratory being chopped up and rebuilt. I don't really have much memory of all that traumatic experience."]]))
-   cc(_([["However, I will never forget his bloody name, Strangelove. He experimented on me, torturing me, and turned me into this monstrosity. I'm a bloody fusion of hell knows what poultry and horrible Za'lek technology."]]))
-   cc(_([["Sometimes the implants start ringing really loud in my head, and I pass out from the pain… I never asked for this. I'm condemned to live my days in solitude. Can't bear to think of letting my family see me in this sorry state."
+   cc(_([["I still had to make a living, and would sell many of those artefacts to the Za'lek. They would buy pretty much anything. No idea what the hell they were doing with it, but I still had my wife and daughter to tend to, and it paid the bills. Sometimes life doesn't really give you options, you just have to make do."]]))
+   cc(_([["Me and my first mate Mireia Sibeko, we would spend most of our days travelling in and out of the nebula. Once Cerberus station in Doeston got set up, it was much easier to do stuff, but we were already exploring the new reality much before that station was up and running. I miss those days, the good old times."]]))
+   cc(_([["One day, I don't remember what happened, but apparently we got caught up into an accident or something. Everything went dark, and when I woke up, I was in that sick bastards laboratory being chopped up and rebuilt. I don't really have much memory of all that traumatic experience. You can't really expect to remember much when you are blacking out from pure agony."]]))
+   cc(_([["However, I will never forget his bloody name. The guy who did this to me, Strangelove, he experimented on me, torturing me, and turned me into this monstrosity. I'm a bloody fusion of hell knows what poultry and horrible Za'lek technology."]]))
+   cc(_([["Sometimes the implants start ringing really loud in my head, and I pass out from the pain… I never asked for this. I'm condemned to live my days in solitude. Can't bear to think of letting my family see me in this sorry state. I'd rather have them think I died a great explorer."
 He looks depressed.]]))
    cc(_([["Apparently, the bastard had some outstanding debt or something, and I was taken by some cretins who brought me here as their slave pet. I was able to feign stupidity to avoid any issues. Pretending I had some blackjack software or something also saved me from potentially worse fates."]]))
+   cc(_([["And now here I am, just watching time go back, incapable of doing anything."
+He seems to be fidgety.]]))
    cc(_([["However, I'm fed up with this bullshit. This isn't living, this is rotting away. I yearn for the stars. Maybe getting back out in space will make me forget all this mockery of an existence."]]))
    cc(_([[Sighing, he looks you in the eyes.
 "You only value what you have when you lose it, kid. You should make most of what you have, lady fortune sometimes will deal you a bad one and there might not be any coming back."]]))
@@ -144,6 +155,7 @@ He looks depressed.]]))
    cc(_([["Speaking of shifts, I believe I am late to my next one. See ya."
 Kex slides out of the water, ruffles his feather and fades into the steam. You hear the sound of his duck feet grow fainter until it is quiet except for the sound of running water.]]))
    vn.disappear( cc, "blur" )
+   vn.musicStop( bgsong )
 
    vn.na(_("You are left once more alone in the spa to unpack all the information unleashed to you by Kex. With nothing better to do, you once again melt into the thermal water and let your mind wander."))
    vn.na(_("Eventually you leave the baths, get changed back into your space clothes and head out towards the station."))
