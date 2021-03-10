@@ -55,6 +55,7 @@ static PHYSFS_File *logerr_file = NULL;
  * Prototypes
  */
 static void log_append( FILE *stream, char *str );
+static void log_cleanStream( PHYSFS_File **file, const char *fname, const char *filedouble );
 
 /**
  * @brief Like fprintf but also prints to the naev console.
@@ -255,31 +256,35 @@ void log_purge (void)
 
 
 /**
- * @brief Deletes the current session's log pair if stderr is empty.
+ * @brief Deletes useless (empty) log files from the current session.
  */
 void log_clean (void)
 {
-   PHYSFS_Stat err;
+   log_cleanStream( &logout_file, "logs/stdout.txt", outfiledouble );
+   log_cleanStream( &logerr_file, "logs/stderr.txt", errfiledouble );
+}
 
-   /* We assume redirection is only done in pairs. */
-   if ((logout_file == NULL) || (logerr_file == NULL))
+
+/**
+ * @brief \see log_clean
+ */
+static void log_cleanStream( PHYSFS_File **file, const char *fname, const char *filedouble )
+{
+   PHYSFS_Stat stat;
+
+   if (*file == NULL)
       return;
 
-   PHYSFS_close( logout_file );
-   logout_file = NULL;
-   PHYSFS_close( logerr_file );
-   logerr_file = NULL;
+   PHYSFS_close( *file );
+   *file = NULL;
 
-   if (PHYSFS_stat( "logs/stderr.txt", &err) == 0)
+   if (PHYSFS_stat( fname, &stat ) == 0)
       return;
 
-   if (err.filesize == 0) {
-      PHYSFS_delete( "logs/stdout.txt" );
-      PHYSFS_delete( "logs/stderr.txt" );
-   } else {
-      ndata_copyIfExists( "logs/stdout.txt", outfiledouble );
-      ndata_copyIfExists( "logs/stderr.txt", errfiledouble );
-   }
+   if (stat.filesize == 0)
+      PHYSFS_delete( fname );
+   else
+      ndata_copyIfExists( fname, filedouble );
 }
 
 
