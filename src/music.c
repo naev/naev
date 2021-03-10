@@ -64,6 +64,7 @@ static unsigned int music_start = 0; /**< Music start playing time. */
 static double music_timer     = 0.; /**< Music timer. */
 static int music_temp_disabled= 0; /**< Music is temporarily disabled. */
 static int music_temp_repeat  = 0; /**< Music is repeating. */
+static char *music_temp_repeatname = NULL; /**< Repeating song name. */
 
 
 /*
@@ -127,6 +128,7 @@ static int music_runLua( const char *situation )
       return 0;
 
    if (music_temp_repeat) {
+      music_load( music_temp_repeatname );
       music_play();
       return 0;
    }
@@ -469,6 +471,8 @@ static int music_luaInit (void)
    }
    free(buf);
 
+   free( music_temp_repeatname );
+
    return 0;
 }
 
@@ -574,4 +578,6 @@ void music_tempDisable( int disable )
 void music_repeat( int repeat )
 {
    music_temp_repeat = repeat;
+   free( music_temp_repeatname );
+   music_temp_repeatname = strdup( music_name );
 }
