@@ -11,15 +11,10 @@
 /** @cond */
 #include <stdarg.h>
 #include <stdio.h>
-#include <sys/stat.h>
 #include <time.h> /* strftime */
 #include "physfs.h"
 
 #include "naev.h"
-
-#if HAS_POSIX
-#include <unistd.h> /* isatty */
-#endif
 /** @endcond */
 
 #include "log.h"
@@ -55,6 +50,7 @@ static PHYSFS_File *logerr_file = NULL;
 /*
  * Prototypes
  */
+static void log_copy( int enable );
 static void log_append( FILE *stream, char *str );
 static void log_cleanStream( PHYSFS_File **file, const char *fname, const char *filedouble );
 static void log_purge (void);
@@ -124,6 +120,7 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
 
 /**
  * @brief Sets up redirection of stdout and stderr to files.
+ * PhysicsFS must be initialized for this to work.
  */
 void log_redirect (void)
 {
@@ -131,10 +128,8 @@ void log_redirect (void)
    struct tm *ts;
    char timestr[20];
 
-   if (!conf.redirect_file || !copying) {
-      log_purge();
+   if (!conf.redirect_file)
       return;
-   }
 
    time(&cur);
    ts = localtime(&cur);
@@ -157,39 +152,14 @@ void log_redirect (void)
 
 
 /**
- * @brief Checks whether Naev is connected to a terminal.
- *
- *    @return 1 if Naev is connected to a terminal, 0 otherwise.
+ * @brief Sets up the logging subsystem.
+ * (Calling this ensures logging output is preserved until we have a place to save it.
+ * That happens after we set up PhysicsFS and call log_redirect().)
+ * \see log_copy
  */
-int log_isTerminal (void)
+void log_init (void)
 {
-#if HAS_POSIX
-   /* stdin and (stdout or stderr) are connected to a TTY */
-   if (isatty(fileno(stdin)) && (isatty(fileno(stdout)) || isatty(fileno(stderr))))
-      return 1;
-
-#elif WIN32
-   struct stat buf;
-
-   /* Not interactive if stdin isn't a FIFO or character device. */
-   if (fstat(_fileno(stdin), &buf) ||
-         !((buf.st_mode & S_IFMT) & (S_IFIFO | S_IFCHR)))
-      return 0;
-
-   /* Interactive if stdout is a FIFO or character device. */
-   if (!fstat(_fileno(stdout), &buf) &&
-         ((buf.st_mode & S_IFMT) & (S_IFIFO | S_IFCHR)))
-      return 1;
-
-   /* Interactive if stderr is a FIFO or character device. */
-   if (!fstat(_fileno(stderr), &buf) &&
-         ((buf.st_mode & S_IFMT) & (S_IFIFO | S_IFCHR)))
-      return 1;
-
-#else
-#error "Feature needs implementation on this Operating System for Naev to work."
-#endif
-   return 0;
+   log_copy( conf.redirect_file );
 }
 
 

@@ -157,8 +157,7 @@ int main( int argc, char** argv )
 
    env_detect( argc, argv );
 
-   if (!log_isTerminal())
-      log_copy(1);
+   log_init();
 
    /* Set up PhysicsFS. */
    if( PHYSFS_init( env.argv0 ) == 0 ) {
