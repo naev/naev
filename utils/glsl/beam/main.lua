@@ -215,16 +215,12 @@ float sharpbeam( float x, float k )
    return pow( min( cos( M_PI * x / 2. ), 1.0 - abs(x) ), k );
 }
 
-float beamfade( float x )
+float beamfade( float p, float x )
 {
-   /*
-   if (x < .1)
-      return x / 0.1;
-   else if (x > .8)
-      return 1. - ((x - .8) / .2);
-   return 1.;
-   */
-   return 1. - smoothstep( 0., 0.2, x-0.8 );
+   const float fadein_pixels = 7.0;
+   if (p < fadein_pixels)
+      return p / fadein_pixels;
+   return 1.0 - smoothstep( 0.0, 0.2, x-0.8 );
 }
 
 BEAM_FUNC_PROTOTYPE
@@ -234,7 +230,7 @@ vec4 beam_default( vec4 color, vec2 pos_tex, vec2 pos_px )
    float m;
    const float range = 0.3;
 
-   color.a *= beamfade( pos_tex.x );
+   color.a *= beamfade( pos_px.x, pos_tex.x );
 
    // Normal beam
    coords = pos_px / 500. + vec2( -3.*dt, 0 );
@@ -275,7 +271,7 @@ vec4 beam_unstable( vec4 color, vec2 pos_tex, vec2 pos_px )
    a = min( a, 1 );
    color.xyz = mix( color.xyz, vec3(1,1,1), 3.*smoothbeam( pos_tex.y, 0.1 ) );
    color.a *= a;
-   color.a *= beamfade( pos_tex.x );
+   color.a *= beamfade( pos_px.x, pos_tex.x );
 
    // Do fancy noise effect
    coords = pos_px * vec2( 0.03, 5. ) + vec2( -10.*dt, 0 ) + 1000. * r;
@@ -299,7 +295,7 @@ vec4 beam_fuzzy( vec4 color, vec2 pos_tex, vec2 pos_px )
    float a = smoothbeam( pos_tex.y, m );
    color.xyz += 3. * a * smoothbeam( pos_tex.y, 0.1 );
    color.a *= a;
-   color.a *= beamfade( pos_tex.x );
+   color.a *= beamfade( pos_px.x, pos_tex.x );
 
    // Perlin noise
    coords = 0.2 * pos_px + vec2( -45.*dt, 0 ) + 1000*r;
@@ -322,7 +318,7 @@ vec4 beam_wave( vec4 color, vec2 pos_tex, vec2 pos_px )
    vec2 coords;
    const float range = 0.3;
 
-   color.a *= beamfade( pos_tex.x );
+   color.a *= beamfade( pos_px.x, pos_tex.x );
 
    coords = pos_px / 500. + vec2( -3.*dt, 0 );
    m = 2 + snoise( coords );
@@ -347,7 +343,7 @@ vec4 beam_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    vec2 ncoord;
 
    // Modulate alpha base on length
-   color.a *= beamfade( pos_tex.x );
+   color.a *= beamfade( pos_px.x, pos_tex.x );
 
    // Modulate alpha based on dispersion
    m = 3.;
@@ -374,7 +370,7 @@ vec4 beam_helix( vec4 color, vec2 pos_tex, vec2 pos_px )
    vec2 coords;
    const float range = 0.3;
 
-   color.a *= beamfade( pos_tex.x );
+   color.a *= beamfade( pos_px.x, pos_tex.x );
 
    m = 0.6 * (0.8 + 0.2*sin( 2*M_PI * (dt*0.5) ) );
    p = 2*M_PI * (pos_px.x/40.- dt * 6. + r);
@@ -403,7 +399,7 @@ vec4 beam_organic( vec4 color, vec2 pos_tex, vec2 pos_px )
    vec2 coords;
    const float range = 0.3;
 
-   color.a *= beamfade( pos_tex.x );
+   color.a *= beamfade( pos_px.x, pos_tex.x );
 
    // Modulate alpha based on dispersion
    m = 1;
@@ -470,7 +466,7 @@ function love.load()
    -- Set the font
    love.graphics.setNewFont( 12 )
    -- Scaling
-   love.window.setMode( 800, 600 )
+   love.window.setMode( 800, 900 )
    scaling = 2
 
    -- Beams
