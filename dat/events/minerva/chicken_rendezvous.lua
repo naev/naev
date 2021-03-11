@@ -24,7 +24,7 @@ local love_shaders = require "love_shaders"
 function create()
    local steamshader = love_shaders.steam()
    local angrysong = 'snd/sounds/songs/feeling-good-08.ogg'
-   local bgsong = 'snd/sounds/songs/feeling-good-05.ogg'
+   local bgsong = minerva.loops.kex
 
    vn.clear()
    vn.scene()

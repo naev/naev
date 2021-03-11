@@ -66,6 +66,10 @@ local minerva = {
          logtype = _("Minerva Station"),
       },
    },
+
+   loops = {
+      kex = 'snd/sounds/songs/feeling-good-05.ogg',
+   },
 }
 
 local function _merge_tables( p, params )
