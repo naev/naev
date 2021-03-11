@@ -32,13 +32,13 @@ out vec4 color_out;
  * Good default is 3.0 */
 float smoothbeam( float x, float k )
 {
-   return 1. - pow( abs( sin( M_PI * x / 2. ) ), k );
+   return 1.0 - pow( abs( sin( M_PI * x / 2.0 ) ), k );
 }
 
 /* Similar to smoothbeam, but more k == sharper. */
 float sharpbeam( float x, float k )
 {
-   return pow( min( cos( M_PI * x / 2. ), 1.0 - abs(x) ), k );
+   return pow( min( cos( M_PI * x / 2.0 ), 1.0 - abs(x) ), k );
 }
 
 float beamfade( float p, float x )
