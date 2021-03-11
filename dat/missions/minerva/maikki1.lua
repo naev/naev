@@ -135,6 +135,7 @@ function approach_maikki ()
    if misn_state==nil then
       maikki:rename( maikki_name )
    end
+   vn.music( minerva.loops.maikki )
    vn.transition("hexagon")
 
    if misn_state==nil then

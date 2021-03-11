@@ -559,6 +559,7 @@ function approach_maikki ()
    vn.clear()
    vn.scene()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
+   vn.music( minerva.loops.maikki )
    vn.transition()
    vn.na(_("You find Maikki, who beams you a smile as you approach."))
 

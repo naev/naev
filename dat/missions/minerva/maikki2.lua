@@ -169,6 +169,7 @@ function approach_maikki ()
    vn.clear()
    vn.scene()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
+   vn.music( minerva.loops.maikki )
    local function seekoutmsg ()
       maikki(string.format(_([["The three Za'lek researchers you should seek out are:
 %s in the %s system,
