@@ -237,6 +237,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
 
    vn.label( "showloot" )
    vn.na(_("You show her the picture you found in Zerantix of her and her parents."))
+   -- TODO show picture
    maikki(_([[As she stares deeply at the picture, her eyes tear up.]]))
    maikki(_([["I'm sorry, I shouldn't be crying. I hardly even know the man. It's just seeing us together just brings back some memories which I had thought I had forgotten."]]))
    maikki(_([["He looks so goofy in this picture, and my mother looks so happy… This is what should have been my childhood…"
