@@ -85,6 +85,7 @@ void update_routine( double dt, int enter_sys );
 char *naev_version( int long_version );
 int naev_versionCompare( const char *version );
 void naev_quit (void);
+double naev_getrealdt (void);
 
 
 #endif /* NAEV_H */

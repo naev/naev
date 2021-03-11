@@ -1122,3 +1122,9 @@ static void print_SDLversion (void)
    if (version_linked < version_compiled)
       WARN( _("SDL is older than compiled version.") );
 }
+
+double naev_getrealdt (void)
+{
+   return real_dt;
+}
+
