@@ -71,6 +71,8 @@ local minerva = {
       maikki = 'snd/sounds/songs/mushroom-background.ogg',
       kex = 'snd/sounds/songs/feeling-good-05.ogg',
       pirate = 'snd/sounds/songs/hip-hop-background.ogg',
+      conflict = "snd/sounds/songs/run-for-your-life-00.ogg",
+      news = "snd/sounds/songs/news.ogg",
    },
 }
 

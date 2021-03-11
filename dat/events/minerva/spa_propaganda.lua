@@ -28,6 +28,7 @@ function create()
    vn.clear()
    vn.scene()
    local t = vn.newCharacter( minerva.vn_terminal() )
+   vn.music( minerva.loops.news )
    vn.transition()
    vn.na(_("You are minding your own business when suddenly a big fanfare plays while the lights begin strobing."))
    t(_([[The terminals all turn on in union and start blasting out their loudspeakers.
