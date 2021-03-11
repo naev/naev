@@ -975,6 +975,7 @@ void map_renderFactionDisks( double x, double y, int editor)
       }
 
       /* Draw background. */
+      /* TODO draw asteroids too! */
       if (sys->nebu_density > 0.) {
          sw = (50. + sys->nebu_density * 50. / 1000.) * map_zoom;
          sh = sw;
