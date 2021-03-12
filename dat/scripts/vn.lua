@@ -909,7 +909,7 @@ local function _appear_setup( c, shader )
             self.image:draw( ... )
             graphics.setCanvas( oldcanvas )
 
-            --local oldshader = graphics.getShader()
+            local oldshader = graphics.getShader()
             graphics.setShader( shader )
             vn.setColor( {1, 1, 1, 1} )
             graphics.setBlendMode( "alpha", "premultiplied" )
@@ -962,6 +962,8 @@ function vn.appear( c, name, seconds, transition )
 end
 --[[--
 Makes a character disappear in the VN.
+
+The way it works is that the transition is played backwards, so if you want the character to slide left, use "slideright"!
    @see vn.transition
    @see vn.disappear
    @tparam Character c Character to make disappear.
