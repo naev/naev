@@ -136,12 +136,14 @@ local function _draw_character( c )
       flip = -1
       x = x + scale*w
    end
+   local r = c.rotation or 0
+   -- TODO why does rotation not work with shaders??
    if c.shader and c.shader.prerender then
       c.shader:prerender( c.image )
    end
    vn.setColor( col, c.alpha )
    graphics.setShader( c.shader )
-   graphics.draw( c.image, x, y, 0, flip*scale, scale )
+   graphics.draw( c.image, x, y, r, flip*scale, scale )
    graphics.setShader()
 end
 
@@ -860,6 +862,7 @@ function vn.Character.new( who, params )
    c.shader = params.shader
    c.hidetitle = params.hidetitle
    c.pos = params.pos
+   c.rotation = params.rotation
    c.params = params
    return c
 end
