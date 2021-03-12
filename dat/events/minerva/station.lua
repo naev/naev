@@ -584,7 +584,7 @@ function approach_maikki ()
    vn.na(_("As you are about to talk, you notice Kex out of the corner of your eye."))
    kex(_([[As he stares directly at you, he makes a gesture that you should watch your back.]]))
    vn.na(_("You decide against telling Maikki anything. It does not seem like it is the time, unless you wish to get murdered by a rampant cyborg duck."))
-   vn.disappear(kex, "slideleft")
+   vn.disappear(kex, "slideright")
    vn.jump("menu_msg")
 
    vn.label("leave")
