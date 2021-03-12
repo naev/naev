@@ -22,6 +22,7 @@ local blackjack = require 'minigames.blackjack'
 local chuckaluck = require 'minigames.chuckaluck'
 local lg = require 'love.graphics'
 local window = require 'love.window'
+local love_shaders = require 'love_shaders'
 
 -- NPC Stuff
 gambling_priority = 3
@@ -559,16 +560,32 @@ function approach_maikki ()
    vn.clear()
    vn.scene()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
+   --local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180., shader=love_shaders.aura() }
+   local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180. }
    vn.music( minerva.loops.maikki )
    vn.transition()
    vn.na(_("You find Maikki, who beams you a smile as you approach."))
 
+   maikki(_([["Did you find anything new?"]]))
+   vn.label("menu")
    vn.menu( function ()
       local opts = {
+         { _("Talk about Kex"), "kex" },
          { _("Leave"), "leave" },
       }
       return opts
    end)
+   vn.label("menu_msg")
+   maikki(_([["Anything else?"]]))
+   vn.jump("menu")
+
+   vn.label("kex")
+   vn.appear(kex, "slideright")
+   vn.na(_("As you are about to talk, you notice Kex out of the corner of your eye."))
+   kex(_([[As he stares directly at you, he makes a gesture that you should watch your back.]]))
+   vn.na(_("You decide against telling Maikki anything. It does not seem like it is the time, unless you wish to get murdered by a rampant cyborg duck."))
+   vn.disappear(kex, "slideleft")
+   vn.jump("menu_msg")
 
    vn.label("leave")
    vn.na(_("You take your leave."))
