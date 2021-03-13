@@ -3074,7 +3074,7 @@ static int asteroidTypes_load (void)
 {
    int namdef, qttdef;
    AsteroidType *at;
-   char *str, file[PATH_MAX];
+   char *str;
    xmlNodePtr node, cur, child;
    xmlDocPtr doc;
 
@@ -3109,11 +3109,8 @@ static int asteroidTypes_load (void)
 
          cur = node->children;
          do {
-            if (xml_isNode(cur,"gfx")) {
-               str = xml_get(cur);
-               snprintf( file, sizeof(file), "%s%s", PLANET_GFX_SPACE_PATH"asteroid/", str);
-               array_push_back( &at->gfxs, gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
-            }
+            if (xml_isNode(cur,"gfx"))
+               array_push_back( &at->gfxs, xml_parseTexture( cur, PLANET_GFX_SPACE_PATH"asteroid/%s", 1, 1,  OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
 
             else if (xml_isNode(cur,"id"))
                at->ID = xml_getStrd(cur);
