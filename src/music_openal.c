@@ -101,7 +101,7 @@ typedef struct alMusic_ {
  */
 static alMusic music_vorbis; /**< Current music. */
 static ALuint music_buffer[2]; /**< Front and back buffer. */
-ALuint music_source                    = 0; /**< Source associated to music. */
+static ALuint music_source = 0; /**< Source associated to music. */
 
 
 /*
@@ -596,7 +596,8 @@ int music_al_init (void)
 
    soundLock();
 
-   /* music_source created in sound_al_init. */
+   /* Allocate source for music. */
+   alGenSources( 1, &music_source );
 
    /* Generate buffers and sources. */
    alGenBuffers( 2, music_buffer );

@@ -60,6 +60,7 @@ static Commodity **commod_known = NULL; /**< index of known commodities */
 static char** map_modes = NULL; /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
 static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
 static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
+static double map_nebu_dt     = 0.; /***< Nebula animation stuff. */
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 static gl_vbo *marker_vbo = NULL;
@@ -84,7 +85,7 @@ static void map_render( double bx, double by, double w, double h, void *data );
 static void map_renderPath( double x, double y, double a );
 static void map_renderMarkers( double x, double y, double r, double a );
 static void map_renderCommod( double bx, double by, double x, double y,
-                              double w, double h, double r, int editor);
+                              double w, double h, double r, int editor );
 static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c );
 static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type );
@@ -803,12 +804,11 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   if ( cur_commod == -1 )
+   if (cur_commod == -1) {
       map_renderDecorators( x, y, 0 );
-
-   /* Render faction disks. */
-   if ( cur_commod == -1 )
+      /* Render faction disks. */
       map_renderFactionDisks( x, y, 0 );
+   }
 
    /* Render jump routes. */
    map_renderJumps( x, y, 0 );
@@ -872,7 +872,7 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
 /**
  * @brief Renders the map background decorators.
  */
-void map_renderDecorators( double x, double y, int editor)
+void map_renderDecorators( double x, double y, int editor )
 {
    int i,j;
    int sw, sh;
@@ -941,35 +941,70 @@ void map_renderFactionDisks( double x, double y, int editor)
    double tx, ty, presence;
    /* Fade in the disks to allow toggling between commodity and nothing */
    double cc = cos ( commod_counter / 200. * M_PI );
+   gl_Matrix4 projection;
+
+   /* Update timer. */
+   map_nebu_dt += naev_getrealdt();
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
-      /* System has no faction, or isn't known and we aren't in the editor. */
-      if (sys->faction == -1 || (!sys_isKnown(sys) && !editor))
-         continue;
-
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
 
-      /* Cache to avoid repeated sqrt() */
-      presence = sqrt(sys->ownerpresence);
+      /* System has faction and is known or we are in editor. */
+      if ((sys->faction != -1) && (sys_isKnown(sys) || editor)) {
+         /* Cache to avoid repeated sqrt() */
+         presence = sqrt(sys->ownerpresence);
 
-      /* draws the disk representing the faction */
-      sw = (60 + presence * 3) * map_zoom;
-      sh = (60 + presence * 3) * map_zoom;
+         /* draws the disk representing the faction */
+         sw = (60 + presence * 3) * map_zoom;
+         sh = sw;
 
-      col = faction_colour(sys->faction);
-      c.r = col->r;
-      c.g = col->g;
-      c.b = col->b;
-      //c.a = CLAMP( .6, .75, 20 / presence ) * cc;
-      c.a = CLAMP( .4, .5, 13.3 / presence ) * cc;
+         col = faction_colour(sys->faction);
+         c.r = col->r;
+         c.g = col->g;
+         c.b = col->b;
+         //c.a = CLAMP( .6, .75, 20 / presence ) * cc;
+         c.a = CLAMP( .4, .5, 13.3 / presence ) * cc;
 
-      gl_blitTexture(
-            gl_faction_disk,
-            tx - sw/2, ty - sh/2, sw, sh,
-            0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c, 0.);
+         gl_blitTexture(
+               gl_faction_disk,
+               tx - sw/2, ty - sh/2, sw, sh,
+               0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c, 0.);
+      }
+
+      /* Draw background. */
+      /* TODO draw asteroids too! */
+      if (sys->nebu_density > 0.) {
+         sw = (50. + sys->nebu_density * 50. / 1000.) * map_zoom;
+         sh = sw;
+
+         /* Set the vertex. */
+         projection = gl_view_matrix;
+         projection = gl_Matrix4_Translate(projection, tx-sw/2., ty-sh/2., 0);
+         projection = gl_Matrix4_Scale(projection, sw, sh, 1);
+
+         /* Start the program. */
+         glUseProgram(shaders.nebula_map.program);
+
+         /* Set shader uniforms. */
+         gl_uniformColor(shaders.nebula_map.color, &cBlue);
+         gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
+         glUniform1f(shaders.nebula_map.eddy_scale, map_zoom * 50. );
+         glUniform1f(shaders.nebula_map.time, map_nebu_dt / 5.0);
+         glUniform2f(shaders.nebula_map.globalpos, x, y );
+
+         /* Draw. */
+         glEnableVertexAttribArray( shaders.nebula_map.vertex );
+         gl_vboActivateAttribOffset( gl_squareVBO, shaders.nebula_map.vertex, 0, 2, GL_FLOAT, 0 );
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+         /* Clean up. */
+         glDisableVertexAttribArray( shaders.nebula_map.vertex );
+         glUseProgram(0);
+         gl_checkErr();
+      }
    }
 }
 

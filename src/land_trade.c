@@ -122,10 +122,13 @@ void commodity_exchange_open( unsigned int wid )
    }
 
    /* set up the goods to buy/sell */
-   if (!conf.big_icons && (((iw*ih)/(128*128)) < ngoods))
-      iconsize = 96;
-   else
-      iconsize = 128;
+   iconsize = 128;
+   if (!conf.big_icons) {
+      if (toolkit_simImageArrayVisibleElements(iw,ih,iconsize,iconsize) < ngoods)
+         iconsize = 96;
+      if (toolkit_simImageArrayVisibleElements(iw,ih,iconsize,iconsize) < ngoods)
+         iconsize = 64;
+   }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarTrade", iconsize, iconsize,
          cgoods, ngoods, commodity_update, commodity_update, commodity_update );

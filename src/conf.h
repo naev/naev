@@ -55,9 +55,9 @@
 #define SOUND_VOLUME_DEFAULT                 0.6   /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT                 0.8   /**< Default music volume. */
 /* Editor Options */
-#define DEV_SAVE_SYSTEM_DEFAULT           "ssys/"
-#define DEV_SAVE_ASSET_DEFAULT            "assets/"
-#define DEV_SAVE_MAP_DEFAULT              "outfits/maps/"
+#define DEV_SAVE_SYSTEM_DEFAULT           "../ssys/"
+#define DEV_SAVE_ASSET_DEFAULT            "../assets/"
+#define DEV_SAVE_MAP_DEFAULT              "../outfits/maps/"
 
 
 /**

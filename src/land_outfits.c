@@ -330,10 +330,13 @@ static void outfits_genList( unsigned int wid )
    noutfits = outfits_filter( iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
 
-   if (!conf.big_icons && (((iw*ih)/(128*128)) < noutfits))
-      iconsize = 96;
-   else
-      iconsize = 128;
+   iconsize = 128;
+   if (!conf.big_icons) {
+      if (toolkit_simImageArrayVisibleElements(iw,ih-34,iconsize,iconsize) < noutfits)
+         iconsize = 96;
+      if (toolkit_simImageArrayVisibleElements(iw,ih-34,iconsize,iconsize) < noutfits)
+         iconsize = 64;
+   }
    window_addImageArray( wid, 20, 20,
          iw, ih - 34, OUTFITS_IAR, iconsize, iconsize,
          coutfits, noutfits, outfits_update, outfits_rmouse, NULL );

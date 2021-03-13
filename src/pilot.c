@@ -2654,7 +2654,7 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
       for (j=0; j<array_size(ship_list[i]); j++) {
          slot = &array_grow( pilot_list_ptr[i] );
          memset( slot, 0, sizeof(PilotOutfitSlot) );
-         slot->id    = array_size(pilot->outfits)-1;
+         slot->id    = array_size(pilot->outfits);
          slot->sslot = &ship_list[i][j];
          array_push_back( &pilot->outfits, slot );
          if (pilot_list_ptr[i] != &pilot->outfit_weapon)

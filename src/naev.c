@@ -157,8 +157,7 @@ int main( int argc, char** argv )
 
    env_detect( argc, argv );
 
-   if (!log_isTerminal())
-      log_copy(1);
+   log_init();
 
    /* Set up PhysicsFS. */
    if( PHYSFS_init( env.argv0 ) == 0 ) {
@@ -235,14 +234,7 @@ int main( int argc, char** argv )
 
    /* Set up I/O. */
    ndata_setupWriteDir();
-
-   if (conf.redirect_file && log_copying()) {
-      log_redirect();
-      log_copy(0);
-   }
-   else
-      log_purge();
-
+   log_redirect();
    ndata_setupReadDirs();
    gettext_setLanguage( conf.language ); /* now that we can find translations */
    LOG( _("Loaded configuration: %s"), conf_file_path );
@@ -1130,3 +1122,9 @@ static void print_SDLversion (void)
    if (version_linked < version_compiled)
       WARN( _("SDL is older than compiled version.") );
 }
+
+double naev_getrealdt (void)
+{
+   return real_dt;
+}
+

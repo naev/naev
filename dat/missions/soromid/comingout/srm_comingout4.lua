@@ -185,7 +185,7 @@ function ambush_timer ()
    end
 
    if stage == 2 then
-      leaderthug:msg( player.pilot(), ambush_msg )
+      leaderthug:comm( ambush_msg )
       stage = 3
    end
 end

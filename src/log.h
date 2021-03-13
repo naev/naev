@@ -38,11 +38,8 @@
 
 
 PRINTF_FORMAT( 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
+void log_init (void);
 void log_redirect (void);
-int log_isTerminal (void);
-void log_copy( int enable );
-int log_copying (void);
-void log_purge (void);
 void log_clean (void);
 
 

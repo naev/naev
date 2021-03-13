@@ -2132,9 +2132,6 @@ dat/ai/include/atk_generic.lua
 dat/ai/include/atk_target.lua
 dat/ai/include/atk_util.lua
 dat/ai/include/attack.lua
-dat/ai/include/attack_bomber.lua
-dat/ai/include/attack_generic.lua
-dat/ai/include/attack_profiles.lua
 dat/ai/include/basic.lua
 dat/ai/independent.lua
 dat/ai/mercenary.lua
@@ -2414,6 +2411,7 @@ dat/scripts/fleethelper.lua
 dat/scripts/formation.lua
 dat/scripts/imageproc.lua
 dat/scripts/jumpdist.lua
+dat/scripts/lmusic.lua
 dat/scripts/love.lua
 dat/scripts/love/audio.lua
 dat/scripts/love/data.lua

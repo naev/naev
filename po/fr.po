@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-03-01 01:24-0500\n"
-"PO-Revision-Date: 2021-02-22 23:50+0000\n"
+"PO-Revision-Date: 2021-03-08 14:02+0000\n"
 "Last-Translator: rhebok-git <geneenkei@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.5\n"
+"X-Generator: Weblate 4.5.1\n"
 
 #: dat/intro:2
 msgid ""
@@ -13127,28 +13127,39 @@ msgid ""
 "leading to heavy concentrations in some areas and a complete absence of "
 "water in other areas."
 msgstr ""
+"Un produit chimique inhabituel que nous, les humains, prenons pour acquis, "
+"l'eau est nécessaire au maintien de la vie humaine et utile dans de "
+"nombreuses industries en raison de ses propriétés uniques. Bien qu'elle soit "
+"commune, elle n'est pas uniformément dispersée dans toute la galaxie, ce qui "
+"entraîne de fortes concentrations dans certaines régions et une absence "
+"totale d'eau dans d'autres régions."
 
 #: dat/commodity.xml:52
 msgid "Medicine"
-msgstr ""
+msgstr "Médecine"
 
 #: dat/commodity.xml:53
 msgid "An assortment of medicines suitable for curing all sorts of ailments."
 msgstr ""
+"Un assortiment de médicaments permettant de soigner toutes sortes de "
+"maladies."
 
 #: dat/commodity.xml:69
 msgid "Ore"
-msgstr ""
+msgstr "Minerai"
 
 #: dat/commodity.xml:70
 msgid ""
 "Ore is a key material in many industries. Smelted into metals, without ore, "
 "the ship-building industry and many others would grind to a halt."
 msgstr ""
+"Le minerai est un matériau clé dans de nombreuses industries. Fusionnée en "
+"métaux, sans minerai, l'industrie de la construction de vaisseaux et bien "
+"d'autres s'arrêteraient."
 
 #: dat/commodity.xml:95 dat/ssys/gold.xml:2
 msgid "Gold"
-msgstr ""
+msgstr "Or"
 
 #: dat/commodity.xml:96
 msgid ""
@@ -13157,10 +13168,14 @@ msgid ""
 "its most demanding application is as a component in decorative articles, "
 "such as jewelry."
 msgstr ""
+"L’or est prisé pour sa combinaison de la résistance à la corrosion et la "
+"conductivité, qui est utilisé pour améliorer la durée de vie de l’"
+"électronique, bien que son application la plus exigeante est comme un "
+"composant dans les articles décoratifs, tels que les bijoux."
 
 #: dat/commodity.xml:114
 msgid "Diamond"
-msgstr ""
+msgstr "Diamant"
 
 #: dat/commodity.xml:115
 msgid ""
@@ -13171,28 +13186,37 @@ msgid ""
 "enough to produce synthetically that it is not as sought after as much as it "
 "once was."
 msgstr ""
+"Le diamant est une autre forme de graphite qui a été cristallisé en raison "
+"de la pression et de la chaleur intenses qui règnent dans les profondeurs de "
+"la surface de certains types de planètes. Ce matériau est utile dans "
+"certaines applications de coupe en raison de sa dureté, et il est couramment "
+"utilisé dans des applications décoratives, mais le diamant est maintenant "
+"assez facile à produire synthétiquement pour qu'il ne soit plus aussi "
+"recherché qu'il l'était autrefois."
 
 #: dat/commodity.xml:136
 msgid "Industrial Goods"
-msgstr ""
+msgstr "Biens Industriels"
 
 #: dat/commodity.xml:137
 msgid ""
 "An assortment of industrial goods, ranging from cutting lasers to processed "
 "metals."
 msgstr ""
+"Un assortiment de produits industriels, allant des lasers de découpe aux "
+"métaux traités."
 
 #: dat/commodity.xml:151
 msgid "Luxury Goods"
-msgstr ""
+msgstr "Produits de luxe"
 
 #: dat/commodity.xml:152
 msgid "All sorts of high quality luxury goods."
-msgstr ""
+msgstr "Toutes sortes de produits de luxe de haute qualité."
 
 #: dat/commodity.xml:172
 msgid "Ancient Artifact"
-msgstr ""
+msgstr "Artefact Ancien"
 
 #: dat/commodity.xml:175
 msgid "Artifact? A"
@@ -13208,55 +13232,56 @@ msgstr ""
 
 #: dat/commodity.xml:184
 msgid "Bomb"
-msgstr ""
+msgstr "Bombe"
 
 #: dat/commodity.xml:187
 msgid "Box"
-msgstr ""
+msgstr "Boîte"
 
 #: dat/commodity.xml:190
 msgid "Colonists"
-msgstr ""
+msgstr "Colonistes"
 
 #: dat/commodity.xml:193
 msgid "Commando"
-msgstr ""
+msgstr "Commando"
 
 #: dat/commodity.xml:196
 msgid "Civilians"
-msgstr ""
+msgstr "Civils"
 
 #: dat/commodity.xml:199
 msgid "Datapad"
 msgstr ""
 
 #: dat/commodity.xml:202 dat/missions/pirate/pir_cargo.lua:70
+#, fuzzy
 msgid "Drugs"
-msgstr ""
+msgstr "Drogues"
 
 #: dat/commodity.xml:205
 msgid "Dvaered ship crew"
-msgstr ""
+msgstr "Équipage du vaisseau Dvaered"
 
 #: dat/commodity.xml:208 src/land.c:984
 msgid "Equipment"
-msgstr ""
+msgstr "Équipement"
 
 #: dat/commodity.xml:211 dat/missions/pirate/pir_cargo.lua:71
 msgid "Exotic Animals"
-msgstr ""
+msgstr "Animaux Exotiques"
 
 #: dat/commodity.xml:214
 msgid "FLF IFF Transponder"
-msgstr ""
+msgstr "Transpondeur FLF IFF"
 
 #: dat/commodity.xml:217 dat/missions/shadow/darkshadow.lua:241
 msgid "Four Winds Informant"
-msgstr ""
+msgstr "Informateur de Quatre Vents"
 
 #: dat/commodity.xml:220 src/board.c:170
 msgid "Fuel"
-msgstr ""
+msgstr "Carburant"
 
 #: dat/commodity.xml:224
 msgid "Gregar"
@@ -13268,32 +13293,32 @@ msgstr ""
 
 #: dat/commodity.xml:230
 msgid "Goods"
-msgstr ""
+msgstr "Biens"
 
 #: dat/commodity.xml:233
 msgid "Group of Nerds"
-msgstr ""
+msgstr "Groupe d'Intellos"
 
 #: dat/commodity.xml:236
 msgid "Love Letters"
-msgstr ""
+msgstr "Lettres d’Amour"
 
 #: dat/commodity.xml:239
 msgid "Message"
-msgstr ""
+msgstr "Message"
 
 #: dat/commodity.xml:242
 msgid "Packages"
-msgstr ""
+msgstr "Paquets"
 
 #: dat/commodity.xml:245
 msgid "Parcels"
-msgstr ""
+msgstr "Colis"
 
 #: dat/commodity.xml:248 dat/missions/neutral/runaway/runaway_cynthia.lua:30
 #: dat/missions/neutral/runaway/runaway_search.lua:35
 msgid "Person"
-msgstr ""
+msgstr "Personne"
 
 #: dat/commodity.xml:251
 msgid "Phosphine"
@@ -13301,11 +13326,11 @@ msgstr ""
 
 #: dat/commodity.xml:254
 msgid "Pilgrims"
-msgstr ""
+msgstr "Pèlerins"
 
 #: dat/commodity.xml:257
 msgid "Prisoners"
-msgstr ""
+msgstr "Prisonniers"
 
 #: dat/commodity.xml:260
 msgid "Prototype"
@@ -13313,15 +13338,15 @@ msgstr ""
 
 #: dat/commodity.xml:263 dat/missions/pirate/pir_cargo.lua:72
 msgid "Radioactive Materials"
-msgstr ""
+msgstr "Matériaux Radioactifs"
 
 #: dat/commodity.xml:266
 msgid "Recipes"
-msgstr ""
+msgstr "Recettes"
 
 #: dat/commodity.xml:269
 msgid "Refugees"
-msgstr ""
+msgstr "Réfugiés"
 
 #: dat/commodity.xml:272
 msgid "Satellite"
@@ -13329,27 +13354,27 @@ msgstr ""
 
 #: dat/commodity.xml:275
 msgid "Secret Technology"
-msgstr ""
+msgstr "Technologie Secrète"
 
 #: dat/commodity.xml:278
 msgid "Small Arms"
-msgstr ""
+msgstr "Armes Légères"
 
 #: dat/commodity.xml:281
 msgid "Teenagers"
-msgstr ""
+msgstr "Adolescents"
 
 #: dat/commodity.xml:284
 msgid "The Baron's holopainting"
-msgstr ""
+msgstr "L'holopeinture de Baron"
 
 #: dat/commodity.xml:287
 msgid "The Rescued Children"
-msgstr ""
+msgstr "Les Enfants Sauvés"
 
 #: dat/commodity.xml:290
 msgid "Tourists"
-msgstr ""
+msgstr "Touristes"
 
 #. Use hidden jumps
 #. Always available
@@ -13363,7 +13388,7 @@ msgstr ""
 #. We’re redefining the cargo
 #: dat/commodity.xml:293 dat/missions/pirate/pir_cargo.lua:68
 msgid "Unmarked Boxes"
-msgstr ""
+msgstr "Boîtes Non Marquées"
 
 #. Clear velocity
 #: dat/commodity.xml:296 dat/missions/empire/shipping/es02.lua:169
@@ -13372,27 +13397,27 @@ msgstr ""
 
 #: dat/commodity.xml:299
 msgid "Waste Containers"
-msgstr ""
+msgstr "Conteneurs de Déchets"
 
 #: dat/commodity.xml:302 dat/missions/pirate/pir_cargo.lua:69 src/info.c:58
 msgid "Weapons"
-msgstr ""
+msgstr "Armes"
 
 #: dat/commodity.xml:305
 msgid "Nebula Sensor Suit"
-msgstr ""
+msgstr "Combinaison de Capteur de Nébuleuse"
 
 #: dat/commodity.xml:308
 msgid "Nebula Artifact?"
-msgstr ""
+msgstr "Artefact de Nébuleuse ?"
 
 #: dat/faction.xml:4
 msgid "Dummy"
-msgstr ""
+msgstr "Mannequin"
 
 #: dat/faction.xml:14 dat/faction.xml:643
 msgid "Independent"
-msgstr ""
+msgstr "Indépendant"
 
 #. Logic to decide what to spawn, if anything.
 #. TODO: Do not spawn any NPCs on restricted assets.
@@ -13409,15 +13434,15 @@ msgstr ""
 #: dat/faction.xml:48 dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:120
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:122
 msgid "Trader"
-msgstr ""
+msgstr "Marchand"
 
 #: dat/faction.xml:66
 msgid "Miner"
-msgstr ""
+msgstr "Mineur"
 
 #: dat/faction.xml:84
 msgid "Proteron Dissident"
-msgstr ""
+msgstr "Dissident de Proteron"
 
 #: dat/faction.xml:103 dat/faction.xml:346 dat/faction.xml:389
 #: dat/faction.xml:471 dat/faction.xml:555
@@ -13431,7 +13456,7 @@ msgstr ""
 
 #: dat/faction.xml:107 dat/faction.xml:351 dat/faction.xml:420
 msgid "Galactic Pirates"
-msgstr ""
+msgstr "Pirates Galactiques"
 
 #: dat/faction.xml:138 dat/missions/empire/common.lua:19
 #: dat/missions/empire/common.lua:25
@@ -13446,19 +13471,19 @@ msgstr ""
 
 #: dat/faction.xml:175 dat/missions/flf/flf_common.lua:82
 msgid "Frontier"
-msgstr ""
+msgstr "Frontière"
 
 #: dat/faction.xml:179
 msgid "Frontier Alliance"
-msgstr ""
+msgstr "Alliance de la Frontière"
 
 #: dat/faction.xml:191
 msgid "Traders Guild"
-msgstr ""
+msgstr "Guilde des Marchands"
 
 #: dat/faction.xml:195
 msgid "Space Traders Guild"
-msgstr ""
+msgstr "Guilde des Commerçants de l’Espace"
 
 #: dat/faction.xml:209 dat/ships/soromid_arx.xml:17
 #: dat/ships/soromid_brigand.xml:12 dat/ships/soromid_ira.xml:17
@@ -13507,7 +13532,7 @@ msgstr ""
 
 #: dat/faction.xml:256
 msgid "Frontier Liberation Front"
-msgstr ""
+msgstr "Front de Libération de la Frontière"
 
 #: dat/faction.xml:270 dat/events/dvaered/fwA_treason.lua:131
 #: dat/events/dvaered/fwA_treason.lua:140 dat/events/dvaered/fwB_repay.lua:47
@@ -13526,7 +13551,7 @@ msgstr ""
 #: dat/ships/phalanx.xml:14 dat/ships/vendetta.xml:14
 #: dat/ships/vigilance.xml:11
 msgid "House Dvaered"
-msgstr ""
+msgstr "Maison Dvaered"
 
 #: dat/faction.xml:290 dat/ssys/zalek.xml:2
 #: dat/missions/minerva/pirate2.lua:186 dat/missions/zalek/common.lua:21
@@ -13536,7 +13561,7 @@ msgstr ""
 
 #: dat/faction.xml:295
 msgid "House Za'lek"
-msgstr ""
+msgstr "Maison Za’lek"
 
 #: dat/faction.xml:307 dat/faction.xml:527 dat/missions/sirius/common.lua:22
 #: dat/missions/sirius/common.lua:28
@@ -13545,7 +13570,7 @@ msgstr ""
 
 #: dat/faction.xml:312
 msgid "House Sirius"
-msgstr ""
+msgstr "Maison Sirius"
 
 #: dat/faction.xml:326 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
 msgid "Goddard"
@@ -13554,11 +13579,11 @@ msgstr ""
 #: dat/faction.xml:331 dat/ships/dvaered_goddard.xml:15
 #: dat/ships/goddard.xml:14
 msgid "House Goddard"
-msgstr ""
+msgstr "Maison Goddard"
 
 #: dat/faction.xml:344
 msgid "Wanted Pirate"
-msgstr ""
+msgstr "Pirate Recherché"
 
 #: dat/faction.xml:373 dat/missions/flf/flf_rogue.lua:49
 msgid "Rogue FLF"
@@ -13566,7 +13591,7 @@ msgstr ""
 
 #: dat/faction.xml:387
 msgid "Rogue Pirate"
-msgstr ""
+msgstr "Pirate Voleur"
 
 #. just some moving around, stolen from baron missions ;D
 #. get point between jumpgate and broship to spawn mercenaries disencouraging him from following
@@ -13610,11 +13635,11 @@ msgstr ""
 #: dat/missions/shark/sh02_tapping.lua:310
 #: dat/missions/shark/sh02_tapping.lua:335
 msgid "Mercenary"
-msgstr ""
+msgstr "Mercenaire"
 
 #: dat/faction.xml:414
 msgid "Raider"
-msgstr ""
+msgstr "Maraudeur"
 
 #: dat/faction.xml:431
 msgid "Derelict"
@@ -13622,11 +13647,11 @@ msgstr ""
 
 #: dat/faction.xml:441 dat/faction.xml:457
 msgid "Four Winds"
-msgstr ""
+msgstr "Quatre Vents"
 
 #: dat/faction.xml:455
 msgid "Rogue Four Winds"
-msgstr ""
+msgstr "Voleur de Quatre Vents"
 
 #: dat/faction.xml:469
 msgid "Shadow_pirates"
@@ -13634,15 +13659,15 @@ msgstr ""
 
 #: dat/faction.xml:485
 msgid "Diplomatic"
-msgstr ""
+msgstr "Diplomatique"
 
 #: dat/faction.xml:499
 msgid "Associates"
-msgstr ""
+msgstr "Associés"
 
 #: dat/faction.xml:512 dat/faction.xml:541 dat/faction.xml:595
 msgid "Thugs"
-msgstr ""
+msgstr "Voyous"
 
 #: dat/faction.xml:525
 msgid "Achack_sirius"

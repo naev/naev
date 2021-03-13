@@ -260,9 +260,6 @@ int sound_al_init (void)
       al_info.efx_echo   = AL_FALSE;
    }
 
-   /* Allocate source for music. */
-   alGenSources( 1, &music_source );
-
    /* Check for errors. */
    al_checkErr();
 

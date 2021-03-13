@@ -139,6 +139,7 @@ static int pilotL_brake( lua_State *L );
 static int pilotL_follow( lua_State *L );
 static int pilotL_attack( lua_State *L );
 static int pilotL_runaway( lua_State *L );
+static int pilotL_gather( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
@@ -238,6 +239,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "follow", pilotL_follow },
    { "attack", pilotL_attack },
    { "runaway", pilotL_runaway },
+   { "gather", pilotL_gather },
    { "hyperspace", pilotL_hyperspace },
    { "land", pilotL_land },
    /* Misc. */
@@ -3714,6 +3716,31 @@ static int pilotL_runaway( lua_State *L )
 
 
 /**
+ * @brief Makes the pilot gather stuff.
+ *
+ * @usage p:gather( ) -- Try to gather stuff
+ * @luasee control
+ * @luafunc gather
+ */
+static int pilotL_gather( lua_State *L )
+{
+   Pilot *p;
+   Task *t;
+
+   NLUA_CHECKRW(L);
+
+   /* Get parameters. */
+   p      = luaL_validpilot(L,1);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "gather" );
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+
+   return 0;
+}
+
+
+/**
  * @brief Tells the pilot to hyperspace.
  *
  * Pilot must be under manual control for this to work.
@@ -3890,6 +3917,8 @@ static int pilotL_hailPlayer( lua_State *L )
 
 /**
  * @brief Sends a message to another pilot.
+ *
+ * Do not confuse with pilot.comm! This is meant to be used by AI and other scripts.
  *
  *    @luatparam Pilot p Pilot to send message.
  *    @luatparam Pilot|{Pilot,...} receiver Pilot(s) to receive message.

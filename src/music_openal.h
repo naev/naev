@@ -14,12 +14,6 @@
 
 
 /*
- * Shared.
- */
-extern ALuint music_source;
-
-
-/*
  * Init/exit.
  */
 int music_al_init (void);

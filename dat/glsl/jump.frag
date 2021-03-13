@@ -101,13 +101,8 @@ vec4 jump_wind (void)
    return mix( colour_from, colour_to, q );
 }
 
-void main(void) {
-
-   //color_out = jump_default();
-   //color_out = jump_nebula();
-   //color_out = jump_organic();
-   //color_out = jump_circular();
-   //color_out = jump_wind();
+void main(void)
+{
 #ifdef HAS_GL_ARB_shader_subroutine
    // Use subroutines
    color_out = jump_func();

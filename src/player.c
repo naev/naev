@@ -3616,7 +3616,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
 static int player_parseShip( xmlNodePtr parent, int is_player )
 {
    char *name, *model;
-   int i, n;
+   int i, n, id;
    int fuel;
    Ship *ship_parsed;
    Pilot* ship;
@@ -3808,21 +3808,21 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          }
 
          /* Get id. */
-         xmlr_attr_int_def(cur, "id", i, -1);
-         if (i == -1) {
+         xmlr_attr_int_def(cur, "id", id, -1);
+         if (id == -1) {
             WARN(_("Player ship '%s' missing 'id' tag for weapon set."),ship->name);
             continue;
          }
-         if ((i < 0) || (i >= PILOT_WEAPON_SETS)) {
+         if ((id < 0) || (id >= PILOT_WEAPON_SETS)) {
             WARN(_("Player ship '%s' has invalid weapon set id '%d' [max %d]."),
-                  ship->name, i, PILOT_WEAPON_SETS-1 );
+                  ship->name, id, PILOT_WEAPON_SETS-1 );
             continue;
          }
 
          /* Set inrange mode. */
          xmlr_attr_int( cur, "inrange", in_range );
          if (in_range > 0)
-            pilot_weapSetInrange( ship, i, in_range );
+            pilot_weapSetInrange( ship, id, in_range );
 
          if (autoweap) /* Autoweap handles everything except inrange. */
             continue;
@@ -3833,7 +3833,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             WARN(_("Player ship '%s' missing 'type' tag for weapon set."),ship->name);
             continue;
          }
-         pilot_weapSetType( ship, i, weap_type );
+         pilot_weapSetType( ship, id, weap_type );
 
          /* Parse individual weapons. */
          ccur = cur->xmlChildrenNode;
@@ -3862,7 +3862,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             }
 
             /* Add the weapon set. */
-            pilot_weapSetAdd( ship, i, ship->outfits[weapid], level );
+            pilot_weapSetAdd( ship, id, ship->outfits[weapid], level );
 
          } while (xml_nextNode(ccur));
       } while (xml_nextNode(cur));

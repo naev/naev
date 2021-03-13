@@ -11,19 +11,15 @@
 /** @cond */
 #include <stdarg.h>
 #include <stdio.h>
-#include <sys/stat.h>
 #include <time.h> /* strftime */
 #include "physfs.h"
 
 #include "naev.h"
-
-#if HAS_POSIX
-#include <unistd.h> /* isatty */
-#endif
 /** @endcond */
 
 #include "log.h"
 
+#include "conf.h"
 #include "console.h"
 #include "ndata.h"
 #include "nstring.h"
@@ -54,7 +50,10 @@ static PHYSFS_File *logerr_file = NULL;
 /*
  * Prototypes
  */
+static void log_copy( int enable );
 static void log_append( FILE *stream, char *str );
+static void log_cleanStream( PHYSFS_File **file, const char *fname, const char *filedouble );
+static void log_purge (void);
 
 /**
  * @brief Like fprintf but also prints to the naev console.
@@ -120,16 +119,17 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
 
 
 /**
- * @brief Redirects stdout and stderr to files.
- *
- * Should only be performed if conf.redirect_file is true and Naev isn't
- * running in a terminal.
+ * @brief Sets up redirection of stdout and stderr to files.
+ * PhysicsFS must be initialized for this to work.
  */
 void log_redirect (void)
 {
    time_t cur;
    struct tm *ts;
    char timestr[20];
+
+   if (!conf.redirect_file)
+      return;
 
    time(&cur);
    ts = localtime(&cur);
@@ -146,43 +146,20 @@ void log_redirect (void)
 
    asprintf( &outfiledouble, "logs/%s_stdout.txt", timestr );
    asprintf( &errfiledouble, "logs/%s_stderr.txt", timestr );
+
+   log_copy(0);
 }
 
 
 /**
- * @brief Checks whether Naev is connected to a terminal.
- *
- *    @return 1 if Naev is connected to a terminal, 0 otherwise.
+ * @brief Sets up the logging subsystem.
+ * (Calling this ensures logging output is preserved until we have a place to save it.
+ * That happens after we set up PhysicsFS and call log_redirect().)
+ * \see log_copy
  */
-int log_isTerminal (void)
+void log_init (void)
 {
-#if HAS_POSIX
-   /* stdin and (stdout or stderr) are connected to a TTY */
-   if (isatty(fileno(stdin)) && (isatty(fileno(stdout)) || isatty(fileno(stderr))))
-      return 1;
-
-#elif WIN32
-   struct stat buf;
-
-   /* Not interactive if stdin isn't a FIFO or character device. */
-   if (fstat(_fileno(stdin), &buf) ||
-         !((buf.st_mode & S_IFMT) & (S_IFIFO | S_IFCHR)))
-      return 0;
-
-   /* Interactive if stdout is a FIFO or character device. */
-   if (!fstat(_fileno(stdout), &buf) &&
-         ((buf.st_mode & S_IFMT) & (S_IFIFO | S_IFCHR)))
-      return 1;
-
-   /* Interactive if stderr is a FIFO or character device. */
-   if (!fstat(_fileno(stderr), &buf) &&
-         ((buf.st_mode & S_IFMT) & (S_IFIFO | S_IFCHR)))
-      return 1;
-
-#else
-#error "Feature needs implementation on this Operating System for Naev to work."
-#endif
-   return 0;
+   log_copy( conf.redirect_file );
 }
 
 
@@ -226,20 +203,9 @@ void log_copy( int enable )
 
 
 /**
- * @brief Whether log copying is enabled.
- *
- *    @return 1 if copying is enabled, 0 otherwise.
- */
-int log_copying (void)
-{
-   return copying;
-}
-
-
-/**
  * @brief Deletes copied output without printing the contents.
  */
-void log_purge (void)
+static void log_purge (void)
 {
    if (!copying)
       return;
@@ -255,31 +221,35 @@ void log_purge (void)
 
 
 /**
- * @brief Deletes the current session's log pair if stderr is empty.
+ * @brief Deletes useless (empty) log files from the current session.
  */
 void log_clean (void)
 {
-   PHYSFS_Stat err;
+   log_cleanStream( &logout_file, "logs/stdout.txt", outfiledouble );
+   log_cleanStream( &logerr_file, "logs/stderr.txt", errfiledouble );
+}
 
-   /* We assume redirection is only done in pairs. */
-   if ((logout_file == NULL) || (logerr_file == NULL))
+
+/**
+ * @brief \see log_clean
+ */
+static void log_cleanStream( PHYSFS_File **file, const char *fname, const char *filedouble )
+{
+   PHYSFS_Stat stat;
+
+   if (*file == NULL)
       return;
 
-   PHYSFS_close( logout_file );
-   logout_file = NULL;
-   PHYSFS_close( logerr_file );
-   logerr_file = NULL;
+   PHYSFS_close( *file );
+   *file = NULL;
 
-   if (PHYSFS_stat( "logs/stderr.txt", &err) == 0)
+   if (PHYSFS_stat( fname, &stat ) == 0)
       return;
 
-   if (err.filesize == 0) {
-      PHYSFS_delete( "logs/stdout.txt" );
-      PHYSFS_delete( "logs/stderr.txt" );
-   } else {
-      ndata_copyIfExists( "logs/stdout.txt", outfiledouble );
-      ndata_copyIfExists( "logs/stderr.txt", errfiledouble );
-   }
+   if (stat.filesize == 0)
+      PHYSFS_delete( fname );
+   else
+      ndata_copyIfExists( fname, filedouble );
 }
 
 

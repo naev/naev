@@ -88,6 +88,14 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "nebula_map",
+      vs_path = "nebula_map.vert",
+      fs_path = "nebula_map.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "color", "eddy_scale", "time", "globalpos"],
+      subroutines = {},
+   ),
+   Shader(
       name = "stars",
       vs_path = "stars.vert",
       fs_path = "stars.frag",

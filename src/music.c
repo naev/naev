@@ -32,9 +32,6 @@
 #define MUSIC_SUFFIX       ".ogg" /**< Suffix of musics. */
 
 
-#define CHUNK_SIZE         32 /**< Size of a chunk to allocate. */
-
-
 int music_disabled = 0; /**< Whether or not music is disabled. */
 
 
@@ -65,6 +62,9 @@ static int music_runLua( const char *situation );
 static char *music_name       = NULL; /**< Current music name. */
 static unsigned int music_start = 0; /**< Music start playing time. */
 static double music_timer     = 0.; /**< Music timer. */
+static int music_temp_disabled= 0; /**< Music is temporarily disabled. */
+static int music_temp_repeat  = 0; /**< Music is repeating. */
+static char *music_temp_repeatname = NULL; /**< Repeating song name. */
 
 
 /*
@@ -86,6 +86,9 @@ void music_update( double dt )
    char *buf;
 
    if (music_disabled)
+      return;
+
+   if (music_temp_disabled)
       return;
 
    /* Timer stuff. */
@@ -123,6 +126,15 @@ static int music_runLua( const char *situation )
 {
    if (music_disabled)
       return 0;
+
+   if (music_temp_disabled)
+      return 0;
+
+   if (music_temp_repeat) {
+      music_load( music_temp_repeatname );
+      music_play();
+      return 0;
+   }
 
    /* Run the choose function in Lua. */
    nlua_getenv( music_env, "choose" );
@@ -462,6 +474,8 @@ static int music_luaInit (void)
    }
    free(buf);
 
+   free( music_temp_repeatname );
+
    return 0;
 }
 
@@ -494,6 +508,8 @@ int music_choose( const char* situation )
       return 0;
 
    music_timer = 0.;
+   music_temp_repeat = 0;
+   music_temp_disabled = 0;
    music_runLua( situation );
 
    return 0;
@@ -516,6 +532,7 @@ int music_chooseDelay( const char* situation, double delay )
    /* Lock so it doesn't run in between an update. */
    SDL_mutexP(music_lock);
    music_timer       = delay;
+   music_temp_disabled = 0;
    music_runchoose   = 0;
    free(music_situation);
    music_situation = strdup(situation);
@@ -535,12 +552,35 @@ void music_rechoose (void)
    if (music_disabled)
       return;
 
+   if (music_temp_disabled)
+      return;
+
    /* Lock so it doesn't run in between an update. */
    SDL_mutexP(music_lock);
    music_timer       = 0.;
    music_runchoose   = 1;
+   music_temp_disabled = 0;
    free(music_situation);
    music_situation = strdup("idle");
    SDL_mutexV(music_lock);
 }
 
+
+/**
+ * @brief Temporarily disables the music.
+ */
+void music_tempDisable( int disable )
+{
+   music_temp_disabled = disable;
+}
+
+
+/**
+ * @brief Temporarily makse the music repeat.
+ */
+void music_repeat( int repeat )
+{
+   music_temp_repeat = repeat;
+   free( music_temp_repeatname );
+   music_temp_repeatname = strdup( music_name );
+}
