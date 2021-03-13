@@ -142,7 +142,8 @@ int dpl_savePlanet( const Planet *p )
    /* Write data. */
    cleanName = uniedit_nameFilter( p->name );
    asprintf( &file, "%s/%s.xml", conf.dev_save_asset, cleanName );
-   xmlSaveFileEnc( file, doc, "UTF-8" );
+   if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
+      WARN("Failed writing '%s'!", file);
 
    /* Clean up. */
    xmlFreeDoc(doc);
