@@ -570,21 +570,29 @@ function approach_maikki ()
    vn.label("menu")
    vn.menu( function ()
       local opts = {
-         { _("Talk about Kex"), "kex" },
          { _("Leave"), "leave" },
       }
+      if player.evtDone("Chicken Rendezvous") then
+         table.insert( opts, 1, { _("Talk about Kex"), "kex" } )
+      end
+      --table.insert( opts, 1, { _("Ask about her father"), "memory" } )
       return opts
    end)
    vn.label("menu_msg")
    maikki(_([["Anything else?"]]))
    vn.jump("menu")
 
+   vn.label("memory")
+   vn.na(_("You ask to see if she remembered anything else about her father."))
+   -- TODO
+   vn.jump("menu_msg")
+
    vn.label("kex")
    vn.appear(kex, "slideright")
    vn.na(_("As you are about to talk, you notice Kex out of the corner of your eye."))
    kex(_([[As he stares directly at you, he makes a gesture that you should watch your back.]]))
    vn.na(_("You decide against telling Maikki anything. It does not seem like it is the time, unless you wish to get murdered by a rampant cyborg duck."))
-   vn.disappear(kex, "slideright")
+   vn.disappear(kex, "slideright") -- played backwards so slides left
    vn.jump("menu_msg")
 
    vn.label("leave")
@@ -594,6 +602,7 @@ function approach_maikki ()
 end
 
 function approach_kex ()
+   -- TODO should be handled in the kex mission line probably
    vn.clear()
    vn.scene()
    vn.music( minerva.loops.kex )
@@ -602,12 +611,17 @@ function approach_kex ()
    vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
 
    vn.label("menu_msg")
+   kex(_("What's up kid?"))
    vn.menu( function ()
       local opts = {
+         --{ _("Ask about the station"), "station" },
          { _("Leave"), "leave" },
       }
       return opts
    end )
+
+   vn.label("station")
+   vn.jump("menu_msg")
 
    vn.label("leave")
    vn.na(_("You take your leave."))
