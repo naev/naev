@@ -315,7 +315,7 @@ function graphics.rectangle( mode, x, y, width, height )
    naev.gfx.renderRectH( H, graphics._fgcol, _mode(mode) )
 end
 function graphics.circle( mode, x, y, radius )
-   local H = _H( x, y, 0, radius, radius )
+   local H = _H( x, y-radius, 0, radius, radius )
    naev.gfx.renderCircleH( H, graphics._fgcol, _mode(mode) )
 end
 function graphics.print( text, ... )
