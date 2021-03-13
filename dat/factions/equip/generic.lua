@@ -223,7 +223,7 @@ equip_classOutfits_weapons = {
    ["Fighter"] = {
       {
          num = 1;
-         "Mass Driver MK1", "Ion Cannon", "Unicorp Mace Launcher",
+         "Mass Driver", "Ion Cannon", "Unicorp Mace Launcher",
          "Unicorp Banshee Launcher", "Orion Lance", "Shattershield Lance",
          "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
          "Unicorp Medusa Launcher", "Laser Cannon MK2"
@@ -252,7 +252,7 @@ equip_classOutfits_weapons = {
       },
       {
          num = 2;
-         "Mass Driver MK1", "Mass Driver MK2", "Heavy Ion Cannon",
+         "Mass Driver", "Heavy Ion Cannon",
          "Laser Turret MK1", "Plasma Turret MK2", "Razor Turret MK2"
       },
       {
@@ -877,15 +877,15 @@ equip_typeOutfits_weapons = {
       },
       {
          varied = true;
-         "Turreted Vulcan Gun", "Mass Driver MK2", "Unicorp Mace Launcher",
-         "Heavy Ion Cannon"
+         "Turreted Vulcan Gun", "Mass Driver", "Unicorp Mace Launcher",
+         "Heavy Ion Cannon",
       }
    },
    ["Goddard"] = {
       {
          varied = true;
-         "Railgun Turret", "Railgun", "Repeating Railgun", "Mass Driver MK3",
-         "Mass Driver MK2", "Heavy Laser", "Grave Beam"
+         "Railgun Turret", "Railgun", "Repeating Railgun", "Mass Driver",
+         "Heavy Laser", "Grave Beam",
       }
    }
 }
@@ -903,7 +903,7 @@ equip_typeOutfits_structurals = {
          varied = true, probability = {
             ["Cargo Pod"] = 9, ["Fuel Pod"] = 2
          };
-         "Cargo Pod", "Fuel Pod", "Improved Refrigeration Cycle"
+         "Cargo Pod", "Fuel Pod", "Improved Refrigeration Cycle",
       }
    }
 }

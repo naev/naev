@@ -95,7 +95,7 @@ equip_typeOutfits_weapons["Phalanx"] = {
       varied = true;
       "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
       "TeraCom Medusa Launcher", "Unicorp Medusa Launcher", "Heavy Ion Cannon",
-      "Mass Driver MK1", "Mass Driver MK2", "Plasma Turret MK2",
+      "Mass Driver", "Plasma Turret MK2",
       "Plasma Blaster MK2", "Laser Turret MK1", "Shredder", "Ion Cannon",
       "Heavy Ripper Cannon", "Ripper Cannon"
    }
@@ -107,7 +107,7 @@ equip_typeOutfits_weapons["Kestrel"] = {
       varied = true;
       "Repeating Railgun", "Railgun", "Heavy Laser", "Railgun Turret",
       "Laser Turret MK3", "Heavy Ion Turret", "EMP Grenade Launcher",
-      "Mass Driver MK2", "Mass Driver MK3", "Heavy Ion Cannon",
+      "Mass Driver", "Heavy Ion Cannon",
       "Turreted Vulcan Gun", "Orion Beam", "Unicorp Caesar IV Launcher",
       "TeraCom Medusa Launcher", "Razor Turret MK3"
    }

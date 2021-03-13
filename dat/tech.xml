@@ -30,9 +30,7 @@
   <item>Shredder</item>
   <item>Turreted Gauss Gun</item>
   <item>Turreted Vulcan Gun</item>
-  <item>Mass Driver MK1</item>
-  <item>Mass Driver MK2</item>
-  <item>Mass Driver MK3</item>
+  <item>Mass Driver</item>
   <item>Railgun</item>
   <item>Repeating Railgun</item>
   <item>Railgun Turret</item>
@@ -41,9 +39,7 @@
   <item>Plasma Cannon</item>
   <item>Plasma Turret MK1</item>
   <item>Plasma Turret MK2</item>
-  <item>Plasma Cluster Cannon MK1</item>
-  <item>Plasma Cluster Cannon MK2</item>
-  <item>Plasma Cluster Cannon MK3</item>
+  <item>Plasma Cluster Cannon</item>
   <item>Ragnarok Beam</item>
   <item>Grave Beam</item>
   <item>Orion Beam</item>
@@ -423,14 +419,12 @@
  <tech name="Kinetic 1">
   <item>Gauss Gun</item>
   <item>Turreted Gauss Gun</item>
-  <item>Mass Driver MK1</item>
  </tech>
  <tech name="Kinetic 2">
   <item>Vulcan Gun</item>
   <item>Turreted Vulcan Gun</item>
   <item>Shredder</item>
-  <item>Mass Driver MK2</item>
-  <item>Mass Driver MK3</item>
+  <item>Mass Driver</item>
  </tech>
  <tech name="Kinetic 3">
   <item>Railgun</item>
@@ -444,11 +438,7 @@
  <tech name="Plasma 2">
   <item>Plasma Blaster MK2</item>
   <item>Plasma Cannon</item>
-  <!-- TODO
-  <item>Plasma Cluster Cannon MK1</item>
-  <item>Plasma Cluster Cannon MK2</item>
-  <item>Plasma Cluster Cannon MK3</item>
-  -->
+  <item>Plasma Cluster Cannon</item>
   <item>Plasma Turret MK2</item>
  </tech>
  <tech name="Beam 1">
@@ -582,7 +572,7 @@
  <tech name="Heavy Weapons 2">
   <item>Laser PD MK2</item>
   <item>Laser Turret MK2</item>
-  <item>Mass Driver MK1</item>
+  <item>Mass Driver</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
   <item>Railgun Turret</item>

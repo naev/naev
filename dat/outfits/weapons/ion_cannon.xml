@@ -20,7 +20,7 @@
   <falloff>750</falloff>
   <gfx_end>ionM-end.png</gfx_end>
   <energy>8</energy>
-  <heatup>50</heatup>
+  <heatup>40</heatup>
   <track>2</track>
   <swivel>22</swivel>
   <damage>

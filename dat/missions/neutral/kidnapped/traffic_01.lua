@@ -253,7 +253,7 @@ function spawn_baddies(sp)
       badguys[i]:addOutfit("Unicorp PT-80 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
       
-      badguys[i]:addOutfit("Mass Driver MK1")
+      badguys[i]:addOutfit("Mass Driver")
       badguys[i]:addOutfit("Shredder",2)
       badguys[i]:addOutfit("Ripper Cannon")
       badguys[i]:addOutfit("Shield Capacitor",2)
