@@ -484,6 +484,10 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
 
    /* Load the space sprite. */
    rw    = PHYSFSRWOPS_openRead( str );
+   if (rw==NULL) {
+      WARN(_("Unable to open '%s' for reading!"), str);
+      return -1;
+   }
    surface = IMG_Load_RW( rw, 0 );
 
    /* Load the texture. */
