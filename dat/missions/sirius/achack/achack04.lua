@@ -121,6 +121,7 @@ function create()
    misn.setDesc(misn_desc:format(startplanet:name(), startsys:name()))
    hook.land("land")
    hook.load("land")
+   mark = misn.markerAdd( startsys, "low" )
 end
 
 -- Land hook.
@@ -162,6 +163,7 @@ function talkJoanne()
       stage = stage + 1
       tk.msg(title3, text4:format(player.name()))
       osd_msg[3] = osd_msg[3]:format(startplanet:name(), startsys:name())
+      misn.markerRm(mark)
       misn.osdCreate(osd_title, osd_msg)
       misn.setDesc(misn_desc2)
       misn.npcRm(joanne_npc)
@@ -189,7 +191,7 @@ function talkHarja()
       
       misn.osdActive(3)
       misn.npcRm(harja_npc)
-      misn.markerMove(marker, harjasys)
+      misn.markerMove(marker, startsys)
       
       hook.enter("enter")
       hook.jumpout("jumpout")
