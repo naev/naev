@@ -537,25 +537,30 @@ static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
  */
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine )
 {
-   char str[PATH_MAX], *base, *delim;
+   char str[PATH_MAX], *ext, *base, *delim;
 
    /* Get base path. */
    delim = strchr( buf, '_' );
    base = delim==NULL ? strdup( buf ) : strndup( buf, delim-buf );
 
-   snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_EXT, base, buf );
+   ext = ".png";
+   snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
+   if (!PHYSFS_exists(str)) {
+      ext = ".webp";
+      snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
+   }
    ship_loadSpaceImage( temp, str, sx, sy );
 
    /* Load the engine sprite .*/
    if (engine && conf.engineglow) {
-      snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+      snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_ENGINE"%s", base, buf, ext );
       ship_loadEngineImage( temp, str, sx, sy );
       if (temp->gfx_engine == NULL)
          WARN(_("Ship '%s' does not have an engine sprite (%s)."), temp->name, str );
    }
 
    /* Get the comm graphic for future loading. */
-   asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+   asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM"%s", base, buf, ext );
    free( base );
 
    return 0;
