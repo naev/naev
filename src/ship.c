@@ -543,10 +543,10 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    delim = strchr( buf, '_' );
    base = delim==NULL ? strdup( buf ) : strndup( buf, delim-buf );
 
-   ext = ".png";
+   ext = ".webp";
    snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
    if (!PHYSFS_exists(str)) {
-      ext = ".webp";
+      ext = ".png";
       snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
    }
    ship_loadSpaceImage( temp, str, sx, sy );
