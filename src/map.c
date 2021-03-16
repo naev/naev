@@ -185,7 +185,8 @@ void map_open (void)
    /* Destroy window if exists. */
    wid = window_get(MAP_WDWNAME);
    if (wid > 0) {
-      window_destroy( wid );
+      if (window_isTop(wid))
+         window_destroy( wid );
       return;
    }
 
