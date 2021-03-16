@@ -110,6 +110,7 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
+      dependency('libwebp', required: true),
       libxml2,
    ]
 
@@ -144,11 +145,13 @@ if buildExec.disabled() == false
    # Appstream (Used for generating desktop files and verifying metadata)
    ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
 
-   # OpenAL
+   # Audio
    openal    = dependency('openal', required: true)
    vorbis = dependency('vorbis', required: true)
    vorbisfile = dependency('vorbisfile', required: true)
-   naev_deps += [openal, vorbis, vorbisfile]
+   ogg = dependency('ogg', required: true)  # Transitive dependency. At least some MSYS2 build envs may miss it.
+
+   naev_deps += [openal, ogg, vorbis, vorbisfile]
 
    # Standard library feature tests
    config_data.set10('HAVE_ASPRINTF', cc.has_function('asprintf'))
