@@ -517,6 +517,20 @@ void window_resizeWidget( const unsigned int wid,
 
 
 /**
+ * @brief Checks to see if a window is at the top.
+ *
+ *    @param wid indow ID to see if is top.
+ */
+int window_isTop( const unsigned int wid )
+{
+   Window *w = window_wget(wid);
+   if (w==NULL)
+      return 0;
+   return (w->next == NULL);
+}
+
+
+/**
  * @brief Checks to see if a window exists.
  *
  *    @param wdwname Name of the window to check.
