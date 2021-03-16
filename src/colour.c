@@ -127,9 +127,9 @@ const glColour cFontOrange    =  { .r = 1.0, .g = 0.7, .b = 0.3, .a = 1.  }; /**
  *    @param s Saturation to convert.
  *    @param v Value to convert.
  */
-void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v )
+void col_hsv2rgb( float *r, float *g, float *b, float h, float s, float v )
 {
-   double var_h, var_i, var_1, var_2, var_3;
+   float var_h, var_i, var_1, var_2, var_3;
 
    if (v > 1)
       v = 1;
@@ -170,13 +170,13 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
  *    @param G Green to convert.
  *    @param B Blue to convert.
  */
-void col_rgb2hsv( double *H, double *S, double *V, double R, double G, double B )
+void col_rgb2hsv( float *H, float *S, float *V, float R, float G, float B )
 {
-   double H1, S1, V1;
+   float H1, S1, V1;
 #ifdef HSV_TRAVIS
-   double R1, G1, B1;
+   float R1, G1, B1;
 #endif /* HSV_TRAVIS */
-   double max, min, diff;
+   float max, min, diff;
 
    max = max3( R, G, B );
    min = min3( R, G, B );
@@ -248,7 +248,7 @@ void col_rgb2hsv( double *H, double *S, double *V, double R, double G, double B 
  *    @param bg Background colour.
  *    @param alpha Alpha value to use (0 to 1).
  */
-void col_blend( glColour *blend, const glColour *fg, const glColour *bg, double alpha )
+void col_blend( glColour *blend, const glColour *fg, const glColour *bg, float alpha )
 {
    blend->r = (1. - alpha) * bg->r + alpha * fg->r;
    blend->g = (1. - alpha) * bg->g + alpha * fg->g;
