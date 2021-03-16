@@ -151,6 +151,11 @@ int nebu_resize (void)
    nebu_render_P = gl_Matrix4_Identity();
    nebu_render_P = gl_Matrix4_Translate(nebu_render_P, -nebu_render_w/2., -nebu_render_h/2., 0. );
    nebu_render_P = gl_Matrix4_Scale(nebu_render_P, nebu_render_w, nebu_render_h, 1);
+   glUseProgram(shaders.nebula_background.program);
+   gl_Matrix4_Uniform(shaders.nebula_background.projection, nebu_render_P);
+   glUseProgram(shaders.nebula.program);
+   gl_Matrix4_Uniform(shaders.nebula.projection, nebu_render_P);
+   glUseProgram(0);
 
    return 0;
 }
@@ -216,8 +221,6 @@ static void nebu_renderBackground( const double dt )
    glUseProgram(shaders.nebula_background.program);
 
    /* Set shader uniforms. */
-   gl_Matrix4_Uniform(shaders.nebula_background.projection, nebu_render_P);
-   glUniform1f(shaders.nebula_background.hue, nebu_hue);
    glUniform1f(shaders.nebula_background.eddy_scale, nebu_view * cam_getZoom() / nebu_scale);
    glUniform1f(shaders.nebula_background.time, nebu_time);
 
@@ -314,8 +317,6 @@ void nebu_renderOverlay( const double dt )
    glUseProgram(shaders.nebula.program);
 
    /* Set shader uniforms. */
-   gl_Matrix4_Uniform(shaders.nebula.projection, nebu_render_P);
-   glUniform1f(shaders.nebula.hue, nebu_hue);
    glUniform1f(shaders.nebula.horizon, nebu_view * z / nebu_scale);
    glUniform1f(shaders.nebula.eddy_scale, nebu_dx * z / nebu_scale);
    glUniform1f(shaders.nebula.time, nebu_time);
@@ -404,7 +405,15 @@ void nebu_prep( double density, double volatility, double hue )
    int i;
    float puffhue;
 
+   /* Set the hue. */
    nebu_hue = hue;
+   glUseProgram(shaders.nebula.program);
+   glUniform1f(shaders.nebula.hue, nebu_hue);
+   glUseProgram(shaders.nebula_background.program);
+   glUniform1f(shaders.nebula_background.hue, nebu_hue);
+   glUseProgram(0);
+
+   /* Set density parameters. */
    nebu_density = density;
    nebu_update( 0. );
    nebu_dt   = (2.*density + 200.) / 10000.; /* Faster at higher density */
