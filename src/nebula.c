@@ -86,6 +86,7 @@ static void nebu_blitFBO (void);
  */
 int nebu_init (void)
 {
+   nebu_time = -1000.0 * RNGF();
    nebu_generatePuffs();
    return nebu_resize();
 }
