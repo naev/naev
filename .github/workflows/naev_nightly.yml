@@ -379,8 +379,8 @@ jobs:
         if: ${{ matrix.releasetype == 'steam' }}
         run: |
           chmod -R +x build/staging/naev-steam-deployment
-          cp -r build/staging/naev-steam-deployment/* 
-          ./SteamDeploy.sh -c -n -t "build/staging" -o "build/dist"
+          cp -r build/staging/naev-steam-deployment/* "$(pwd)"
+          ./SteamDeploy.sh -c -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
