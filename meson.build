@@ -103,6 +103,7 @@ if buildExec.disabled() == false
 
    naev_deps += [
       dependency('freetype2', required: true),
+      libxml2,
       dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
       sdl,
       sdl_image,
@@ -110,8 +111,8 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      dependency('libwebp', required: true),
-      libxml2,
+      # Transitive dependency, probably can/should be marked as required after adding it to our naev-linux containers..
+      dependency('libwebp', required: false),
    ]
 
    # Lua
