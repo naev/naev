@@ -990,7 +990,7 @@ void map_renderFactionDisks( double x, double y, int editor)
          glUseProgram(shaders.nebula_map.program);
 
          /* Set shader uniforms. */
-         glUniform1f(shaders.nebula_map.hue, 240.0/360.0);
+         glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
          gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
          glUniform1f(shaders.nebula_map.eddy_scale, map_zoom * 50. );
          glUniform1f(shaders.nebula_map.time, map_nebu_dt / 5.0);

@@ -285,6 +285,7 @@ struct StarSystem_ {
    Vector2d pos; /**< position */
    int stars; /**< Amount of "stars" it has. */
    double interference; /**< in % @todo implement interference. */
+   double nebu_hue; /**< Hue of the nebula (0. - 1.) */
    double nebu_density; /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
    double radius; /**< Default system radius for standard jump points. */

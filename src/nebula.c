@@ -31,6 +31,7 @@
 
 
 /* Nebula properties */
+static double nebu_hue = 0.; /**< The hue. */
 static double nebu_density = 0.; /**< The density. */
 static double nebu_dx   = 0.; /**< Length scale (space coords) for turbulence/eddies we draw. */
 static double nebu_view = 0.; /**< How far player can see. */
@@ -214,8 +215,8 @@ static void nebu_renderBackground( const double dt )
    glUseProgram(shaders.nebula_background.program);
 
    /* Set shader uniforms. */
-   glUniform1f(shaders.nebula_background.hue, 240.0/360.0 );
    gl_Matrix4_Uniform(shaders.nebula_background.projection, nebu_render_P);
+   glUniform1f(shaders.nebula_background.hue, nebu_hue);
    glUniform1f(shaders.nebula_background.eddy_scale, nebu_view * cam_getZoom() / nebu_scale);
    glUniform1f(shaders.nebula_background.time, nebu_time);
 
@@ -312,8 +313,8 @@ void nebu_renderOverlay( const double dt )
    glUseProgram(shaders.nebula.program);
 
    /* Set shader uniforms. */
-   glUniform1f(shaders.nebula.hue, 240.0/360.0);
    gl_Matrix4_Uniform(shaders.nebula.projection, nebu_render_P);
+   glUniform1f(shaders.nebula.hue, nebu_hue);
    glUniform1f(shaders.nebula.horizon, nebu_view * z / nebu_scale);
    glUniform1f(shaders.nebula.eddy_scale, nebu_dx * z / nebu_scale);
    glUniform1f(shaders.nebula.time, nebu_time);
@@ -391,12 +392,14 @@ void nebu_movePuffs( double x, double y )
  *
  *    @param density Density of the nebula (0-1000).
  *    @param volatility Volatility of the nebula (0-1000).
+ *    @param hue Hue of the nebula (0-1).
  */
-void nebu_prep( double density, double volatility )
+void nebu_prep( double density, double volatility, double hue )
 {
    (void)volatility;
    int i;
 
+   nebu_hue = hue;
    nebu_density = density;
    nebu_update( 0. );
    nebu_dt   = (2.*density + 200.) / 10000.; /* Faster at higher density */

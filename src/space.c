@@ -1475,7 +1475,7 @@ void space_init( const char* sysname )
       /* Handle background */
       if (cur_system->nebu_density > 0.) {
          /* Background is Nebula */
-         nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility );
+         nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility, cur_system->nebu_hue );
 
          /* Set up sound. */
          sound_env( SOUND_ENV_NEBULA, cur_system->nebu_density );
@@ -2473,6 +2473,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    flags          = 0;
    sys->presence  = array_create( SystemPresence );
    sys->ownerpresence = 0.;
+   sys->nebu_hue  = NEBULA_DEFAULT_HUE;
 
    xmlr_attr_strd( parent, "name", sys->name );
 
@@ -2508,6 +2509,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
             }
             else if (xml_isNode(cur,"nebula")) {
                xmlr_attr_float( cur, "volatility", sys->nebu_volatility );
+               xmlr_attr_float_def( cur, "hue", sys->nebu_hue, NEBULA_DEFAULT_HUE );
                sys->nebu_density = xml_getFloat(cur);
             }
          } while (xml_nextNode(cur));
@@ -2534,6 +2536,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
    array_shrink( &sys->planets );
    array_shrink( &sys->planetsid );
+
+   /* Convert hue from 0 to 359 value to 0 to 1 value. */
+   sys->nebu_hue /= 360.;
 
 #define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
    if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
