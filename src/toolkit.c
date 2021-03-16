@@ -523,10 +523,16 @@ void window_resizeWidget( const unsigned int wid,
  */
 int window_isTop( const unsigned int wid )
 {
-   Window *w = window_wget(wid);
+   Window *n, *w = window_wget(wid);
    if (w==NULL)
       return 0;
-   return (w->next == NULL);
+   n = w->next;
+   while (n != NULL) {
+      if (!window_isFlag(n,WINDOW_KILL) && !window_isFlag(n,WINDOW_NORENDER))
+         return 0;
+      n = n->next;
+   }
+   return 1;
 }
 
 
