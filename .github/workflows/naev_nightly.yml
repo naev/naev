@@ -1,8 +1,9 @@
 on:
-  repository_dispatch:
-    types: manual-nightly
-  schedule:
-    - cron: "0 0 * * *"
+  push:
+#  repository_dispatch:
+#    types: manual-nightly
+#  schedule:
+#    - cron: "0 0 * * *"
 
 name: Nightly Release
 
@@ -368,9 +369,9 @@ jobs:
 
           # Push builds to itch.io via butler
 
-          butler push --userversion="$SUFFIX" build/dist/lin64 naev/naev:linux-x86-64-nightly
-          butler push --userversion="$SUFFIX" build/dist/macos naev/naev:macos-x86-64-nightly
-          butler push --userversion="$SUFFIX" build/dist/win64 naev/naev:windows-x86-64-nightly
+#          butler push --userversion="$SUFFIX" build/dist/lin64 naev/naev:linux-x86-64-nightly
+#          butler push --userversion="$SUFFIX" build/dist/macos naev/naev:macos-x86-64-nightly
+#          butler push --userversion="$SUFFIX" build/dist/win64 naev/naev:windows-x86-64-nightly
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
@@ -378,8 +379,8 @@ jobs:
         if: ${{ matrix.releasetype == 'steam' }}
         run: |
           chmod -R +x build/staging/naev-steam-deployment
-          cp -r build/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -n -t "${{ github.workspace }}/build/staging" -o "${{ github.workspace }}/build/dist"
+          cp -r build/staging/naev-steam-deployment/* 
+          ./SteamDeploy.sh -c -n -t "build/staging" -o "build/dist"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
