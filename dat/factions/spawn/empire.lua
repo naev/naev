@@ -1,5 +1,5 @@
 local scom = require "factions/spawn/lib/common"
-local merc = require "factions/spawn/lib/mercenary_helper"
+local merc = require "factions/spawn/lib/mercenary"
 
 local formation = require "scripts/formation"
 
