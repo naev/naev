@@ -1,7 +1,4 @@
-#include "lib/perlin.glsl"
-
-const int ITERATIONS = 3;
-const float SCALAR = pow(2., 4./3.);
+#include "lib/nebula.glsl"
 
 uniform vec4 color;
 uniform mat4 projection;
@@ -19,16 +16,9 @@ void main(void) {
 
    // Calculate coordinates
    vec2 rel_pos = gl_FragCoord.xy + projection[3].xy - globalpos;
-   uv.xy = rel_pos / eddy_scale;
-   uv.z = time;
-
-   // Create the noise
-   for (int i=0; i<ITERATIONS; i++) {
-      float scale = pow(SCALAR, i);
-      f += abs( cnoise( uv * scale ) ) / scale;
-   }
-
-   color_out = mix( vec4( 0.0 ), color, 0.2 + f );
+   rel_pos /= eddy_scale;
+   float hue = 240.0/360.0;
+   color_out = nebula( vec4(0.0), rel_pos, time, hue, 0.5 );
 
    // Fallout
    float dist = length(localpos);
