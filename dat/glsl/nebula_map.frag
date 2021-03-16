@@ -1,6 +1,6 @@
 #include "lib/nebula.glsl"
 
-uniform vec4 color;
+uniform float hue;
 uniform mat4 projection;
 uniform float eddy_scale;
 uniform float time;
@@ -17,7 +17,6 @@ void main(void) {
    // Calculate coordinates
    vec2 rel_pos = gl_FragCoord.xy + projection[3].xy - globalpos;
    rel_pos /= eddy_scale;
-   float hue = 240.0/360.0;
    color_out = nebula( vec4(0.0), rel_pos, time, hue, 0.5 );
 
    // Fallout
