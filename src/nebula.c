@@ -345,9 +345,14 @@ void nebu_renderOverlay( const double dt )
 static void nebu_renderPuffs( int below_player )
 {
    int i;
+   glColour col = { .a = 1.0 };
 
    /* Main menu shouldn't have puffs */
-   if (menu_isOpen(MENU_MAIN)) return;
+   if (menu_isOpen(MENU_MAIN))
+      return;
+
+   /* Set the colour, with less saturation. */
+   col_hsv2rgb( &col, nebu_hue * 360.0, 0.6, 1.0 );
 
    for (i=0; i<nebu_npuffs; i++) {
 
@@ -371,7 +376,7 @@ static void nebu_renderPuffs( int below_player )
 
          /* Render */
          gl_blitStatic( nebu_pufftexs[nebu_puffs[i].tex],
-               nebu_puffs[i].x, nebu_puffs[i].y, &cLightBlue );
+               nebu_puffs[i].x, nebu_puffs[i].y, &col );
       }
    }
 }
