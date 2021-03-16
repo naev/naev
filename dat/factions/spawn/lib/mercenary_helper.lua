@@ -1,5 +1,5 @@
 --This script chooses the mercenaries that spawn
-local scom = require "factions/spawn/common"
+local scom = require "factions/spawn/lib/common"
 
 local merc = {}
 
