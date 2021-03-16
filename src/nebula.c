@@ -61,6 +61,7 @@ typedef struct NebulaPuff_ {
    double y; /**< Y position */
    double height; /**< height vs player */
    int tex; /**< Texture */
+   glColour col; /**< Colour. */
 } NebulaPuff;
 static NebulaPuff *nebu_puffs = NULL; /**< Stack of puffs. */
 static int nebu_npuffs        = 0; /**< Number of puffs. */
@@ -345,38 +346,36 @@ void nebu_renderOverlay( const double dt )
 static void nebu_renderPuffs( int below_player )
 {
    int i;
-   glColour col = { .a = 1.0 };
+   NebulaPuff *puff;
 
    /* Main menu shouldn't have puffs */
    if (menu_isOpen(MENU_MAIN))
       return;
 
-   /* Set the colour, with less saturation. */
-   col_hsv2rgb( &col, nebu_hue * 360.0, 0.6, 1.0 );
-
    for (i=0; i<nebu_npuffs; i++) {
+      puff = &nebu_puffs[i];
 
       /* Separate by layers */
-      if ((below_player && (nebu_puffs[i].height < 1.)) ||
-            (!below_player && (nebu_puffs[i].height > 1.))) {
+      if ((below_player && (puff->height < 1.)) ||
+            (!below_player && (puff->height > 1.))) {
 
          /* calculate new position */
-         nebu_puffs[i].x += puff_x * nebu_puffs[i].height;
-         nebu_puffs[i].y += puff_y * nebu_puffs[i].height;
+         puff->x += puff_x * puff->height;
+         puff->y += puff_y * puff->height;
 
          /* Check boundaries */
-         if (nebu_puffs[i].x > SCREEN_W + NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].x -= SCREEN_W + 2*NEBULA_PUFF_BUFFER;
-         else if (nebu_puffs[i].y > SCREEN_H + NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].y -= SCREEN_H + 2*NEBULA_PUFF_BUFFER;
-         else if (nebu_puffs[i].x < -NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].x += SCREEN_W + 2*NEBULA_PUFF_BUFFER;
-         else if (nebu_puffs[i].y < -NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].y += SCREEN_H + 2*NEBULA_PUFF_BUFFER;
+         if (puff->x > SCREEN_W + NEBULA_PUFF_BUFFER)
+            puff->x -= SCREEN_W + 2*NEBULA_PUFF_BUFFER;
+         else if (puff->y > SCREEN_H + NEBULA_PUFF_BUFFER)
+            puff->y -= SCREEN_H + 2*NEBULA_PUFF_BUFFER;
+         else if (puff->x < -NEBULA_PUFF_BUFFER)
+            puff->x += SCREEN_W + 2*NEBULA_PUFF_BUFFER;
+         else if (puff->y < -NEBULA_PUFF_BUFFER)
+            puff->y += SCREEN_H + 2*NEBULA_PUFF_BUFFER;
 
          /* Render */
-         gl_blitStatic( nebu_pufftexs[nebu_puffs[i].tex],
-               nebu_puffs[i].x, nebu_puffs[i].y, &col );
+         gl_blitStatic( nebu_pufftexs[puff->tex],
+               puff->x, puff->y, &puff->col );
       }
    }
 }
@@ -403,6 +402,7 @@ void nebu_prep( double density, double volatility, double hue )
 {
    (void)volatility;
    int i;
+   float puffhue;
 
    nebu_hue = hue;
    nebu_density = density;
@@ -423,6 +423,11 @@ void nebu_prep( double density, double volatility, double hue )
       /* Maybe make size related? */
       nebu_puffs[i].tex = RNG(0,NEBULA_PUFFS-1);
       nebu_puffs[i].height = RNGF() + 0.2;
+
+      /* Set the colour, with less saturation. */
+      puffhue = nebu_hue * 360.0 + 0.1*(RNGF()*2.-1.);
+      col_hsv2rgb( &nebu_puffs[i].col, puffhue, 0.6, 1.0 );
+      nebu_puffs[i].col.a = 1.0;
    }
 }
 
