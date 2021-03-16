@@ -1407,7 +1407,7 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
    sys->interference    = atof(window_getInput( wid, "inpInterference" ));
    sys->nebu_density    = atof(window_getInput( wid, "inpNebula" ));
    sys->nebu_volatility = atof(window_getInput( wid, "inpVolatility" ));
-   sys->nebu_hue        = atof(window_getInput( wid, "inpVolatility" )) / 360.;
+   sys->nebu_hue        = atof(window_getInput( wid, "inpHue" )) / 360.;
 
    /* Reconstruct universe presences. */
    space_reconstructPresences();
