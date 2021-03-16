@@ -120,14 +120,12 @@ const glColour cFontOrange    =  { .r = 1.0, .g = 0.7, .b = 0.3, .a = 1.  }; /**
  *
  * All values go from 0 to 1, except H which is 0-360.
  *
- *    @param[out] r Stores R.
- *    @param[out] g Stores G.
- *    @param[out] b Stores B.
+ *    @param[out] c Colour to be converted to from hsv.
  *    @param h Hue to convert.
  *    @param s Saturation to convert.
  *    @param v Value to convert.
  */
-void col_hsv2rgb( float *r, float *g, float *b, float h, float s, float v )
+void col_hsv2rgb( glColour *c, float h, float s, float v )
 {
    float var_h, var_i, var_1, var_2, var_3;
 
@@ -135,9 +133,9 @@ void col_hsv2rgb( float *r, float *g, float *b, float h, float s, float v )
       v = 1;
 
    if (s == 0) {
-      *r = v;
-      *g = v;
-      *b = v;
+      c->r = v;
+      c->g = v;
+      c->b = v;
    }
    else {
       var_h = h * 6 / 360.;
@@ -146,12 +144,12 @@ void col_hsv2rgb( float *r, float *g, float *b, float h, float s, float v )
       var_2 = v * (1 - s * (var_h - var_i));
       var_3 = v * (1 - s * (1 - (var_h - var_i)));
 
-      if      (var_i == 0) { *r = v     ; *g = var_3 ; *b = var_1; }
-      else if (var_i == 1) { *r = var_2 ; *g = v     ; *b = var_1; }
-      else if (var_i == 2) { *r = var_1 ; *g = v     ; *b = var_3; }
-      else if (var_i == 3) { *r = var_1 ; *g = var_2 ; *b = v;     }
-      else if (var_i == 4) { *r = var_3 ; *g = var_1 ; *b = v;     }
-      else                 { *r = v     ; *g = var_1 ; *b = var_2; }
+      if      (var_i == 0) { c->r = v     ; c->g = var_3 ; c->b = var_1; }
+      else if (var_i == 1) { c->r = var_2 ; c->g = v     ; c->b = var_1; }
+      else if (var_i == 2) { c->r = var_1 ; c->g = v     ; c->b = var_3; }
+      else if (var_i == 3) { c->r = var_1 ; c->g = var_2 ; c->b = v;     }
+      else if (var_i == 4) { c->r = var_3 ; c->g = var_1 ; c->b = v;     }
+      else                 { c->r = v     ; c->g = var_1 ; c->b = var_2; }
    }
 }
 
