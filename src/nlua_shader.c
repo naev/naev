@@ -21,6 +21,7 @@
 #include "nluadef.h"
 #include "array.h"
 #include "nlua_tex.h"
+#include "render.h"
 
 
 /* Shader metatable methods. */
@@ -30,6 +31,8 @@ static int shaderL_new( lua_State *L );
 static int shaderL_send( lua_State *L );
 static int shaderL_sendRaw( lua_State *L );
 static int shaderL_hasUniform( lua_State *L );
+static int shaderL_setPostProcess( lua_State *L );
+static int shaderL_rmPostProcess( lua_State *L );
 static const luaL_Reg shaderL_methods[] = {
    { "__gc", shaderL_gc },
    { "__eq", shaderL_eq },
@@ -37,6 +40,8 @@ static const luaL_Reg shaderL_methods[] = {
    { "send", shaderL_send },
    { "sendRaw", shaderL_sendRaw },
    { "hasUniform", shaderL_hasUniform },
+   { "setPPShader", shaderL_setPostProcess },
+   { "rmPPShader", shaderL_rmPostProcess },
    {0,0}
 }; /**< Shader metatable methods. */
 
@@ -433,6 +438,39 @@ static int shaderL_hasUniform( lua_State *L )
 
    /* Search. */
    lua_pushboolean(L, shader_getUniform(ls,name)!=NULL);
+   return 1;
+}
+
+
+/**
+ * @brief Sets a post-processing shader.
+ *
+ *    @luatparam Shader shader Shader to set as post-processing shader.
+ *    @luatparam[opt=0] number priority Priority of the shader to set. Higher values mean it is run later.
+ *    @luatreturn number ID of the post-processing shader.
+ * @luafunc setPostProcess
+ */
+static int shaderL_setPostProcess( lua_State *L )
+{
+   LuaShader_t *ls = luaL_checkshader(L,1);
+   int priority = luaL_optinteger(L,2,0);
+   unsigned int id = render_postprocessAdd( ls, priority );
+   lua_pushinteger(L, id);
+   return 1;
+}
+
+
+/**
+ * @brief Removes a post-processing shader.
+ *
+ *    @luatparam number id ID of the post-processing shader to remove.
+ *    @luatreturn boolean True on success.
+ * @luafunc rmPostProcess
+ */
+static int shaderL_rmPostProcess( lua_State *L )
+{
+   unsigned int id = luaL_checkinteger(L,1);
+   lua_pushboolean( L, render_postprocessRm( id ) );
    return 1;
 }
 

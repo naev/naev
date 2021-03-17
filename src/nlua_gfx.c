@@ -73,6 +73,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
+   /* Misc. */
    { "setBlendMode", gfxL_setBlendMode },
    {0,0}
 }; /**< GFX methods. */
