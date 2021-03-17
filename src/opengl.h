@@ -67,6 +67,8 @@ typedef struct glInfo_ {
    SDL_Window *window; /**< Window for SDL2. */
    SDL_GLContext context; /**< Context for OpenGL. */
    GLuint current_fbo; /**< Current framebuffer. */
+   GLuint fbo[2]; /**< Framebuffers. */
+   GLuint fbo_tex[2]; /**< Texture for framebuffers. */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 
@@ -113,6 +115,7 @@ int gl_setupFullscreen (void);
 /*
  * misc
  */
+void gl_colorblind( int enable );
 GLint gl_stringToFilter( const char *s );
 GLint gl_stringToClamp( const char *s );
 void gl_screenshot( const char *filename );

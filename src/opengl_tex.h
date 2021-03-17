@@ -94,6 +94,11 @@ void gl_freeTexture( glTexture* texture );
 int gl_texHasCompress (void);
 
 /*
+ * FBO stuff.
+ */
+int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height );
+
+/*
  * Misc.
  */
 int gl_isTrans( const glTexture* t, const int x, const int y );

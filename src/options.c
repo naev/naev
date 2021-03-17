@@ -1381,7 +1381,7 @@ static int opt_videoSave( unsigned int wid, char *str )
    f = window_checkboxState( wid, "chkColorblind" );
    if (conf.colorblind != f) {
       conf.colorblind = f;
-      opt_needRestart();
+      gl_colorblind( conf.colorblind );
    }
 
    /* GUI. */
