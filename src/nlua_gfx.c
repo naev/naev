@@ -73,6 +73,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
+   /* Misc. */
    { "setBlendMode", gfxL_setBlendMode },
    {0,0}
 }; /**< GFX methods. */
@@ -270,7 +271,13 @@ static int gfxL_renderTexRaw( lua_State *L )
 
 
 /**
- * @brief
+ * @brief Renders a texture using a transformation matrix.
+ *
+ *    @luatparam Tex tex Texture to render.
+ *    @luatparam Shader shader Shader to use when rendering.
+ *    @luatparam Transformation H Transformation matrix to use.
+ *    @luatparam[opt=white] Colour colour Colour to use or white if not set.
+ * @luafunc renderTexH
  */
 static int gfxL_renderTexH( lua_State *L )
 {

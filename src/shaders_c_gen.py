@@ -76,7 +76,7 @@ SHADERS = [
       vs_path = "nebula.vert",
       fs_path = "nebula_overlay.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "horizon", "eddy_scale", "time"],
+      uniforms = ["projection", "hue", "horizon", "eddy_scale", "time"],
       subroutines = {},
    ),
    Shader(
@@ -84,7 +84,7 @@ SHADERS = [
       vs_path = "nebula.vert",
       fs_path = "nebula_background.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "eddy_scale", "time"],
+      uniforms = ["projection", "hue", "eddy_scale", "time"],
       subroutines = {},
    ),
    Shader(
@@ -92,7 +92,7 @@ SHADERS = [
       vs_path = "nebula_map.vert",
       fs_path = "nebula_map.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "eddy_scale", "time", "globalpos"],
+      uniforms = ["projection", "hue", "eddy_scale", "time", "globalpos"],
       subroutines = {},
    ),
    Shader(
@@ -152,6 +152,14 @@ SHADERS = [
             "jump_wind",
         ]
       }
+   ),
+   Shader(
+      name = "colorblind",
+      vs_path = "colorblind.vert",
+      fs_path = "colorblind.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex"],
+      subroutines = {},
    ),
 ]
 

@@ -56,6 +56,7 @@
 #include "pilot.h"
 #include "pilot.h"
 #include "player.h"
+#include "render.h"
 #include "rng.h"
 #include "sound.h"
 #include "space.h"

@@ -1,6 +1,6 @@
 --more of a dummy file to help avoid errors. Nasin should not actually spawn.
 
-scom = {}
+local scom = {}
 
 
 -- @brief Calculates when next spawn should occur
@@ -107,5 +107,3 @@ end
 scom.decrease = function( cur, max, timer )
    return timer
 end
-
-

@@ -270,7 +270,7 @@ static int colL_rgb( lua_State *L )
  */
 static int colL_hsv( lua_State *L )
 {
-   double h, s, v;
+   float h, s, v;
    glColour *col;
    col = luaL_checkcolour(L,1);
    col_rgb2hsv( &h, &s, &v, col->r, col->g, col->b );
@@ -321,17 +321,14 @@ static int colL_setrgb( lua_State *L )
  */
 static int colL_sethsv( lua_State *L )
 {
-   double r, g, b, h, s, v;
+   float h, s, v;
    glColour *col;
    NLUA_CHECKRW(L);
    col = luaL_checkcolour(L,1);
    h  = luaL_checknumber(L,2);
    s  = luaL_checknumber(L,3);
    v  = luaL_checknumber(L,4);
-   col_hsv2rgb( &r, &g, &b,  h, s, v );
-   col->r = r;
-   col->g = g;
-   col->b = b;
+   col_hsv2rgb( col, h, s, v );
    return 0;
 }
 

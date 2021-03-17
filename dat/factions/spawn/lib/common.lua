@@ -1,6 +1,4 @@
-
-
-scom = {}
+local scom = {}
 
 
 -- @brief Calculates when next spawn should occur

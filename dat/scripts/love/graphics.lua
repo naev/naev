@@ -530,6 +530,9 @@ void main(void) {
    s.shader = naev.shader.new(
          prepend..frag..pixelcode,
          prepend..vert..vertexcode )
+   -- Set some default uniform values for when post-process shaders are used
+   s.shader:sendRaw( "ConstantColor", 1.0, 1.0, 1.0, 1.0 )
+   s.shader:sendRaw( "love_ScreenSize", love.w, love.h, 1.0, 0.0 )
    return s
 end
 function graphics.setShader( shader )
