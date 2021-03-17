@@ -8,19 +8,19 @@
   <price>16000</price>
   <description>The Orion Lance is a fixed-mount weapon designed to be mounted on fighters and up. Based on a heavily-modified, liquid-cooled laser, it's capable of bursts of continuous fire, resulting in a destructive beam.</description>
   <gfx_store>orion.png</gfx_store>
-  <cpu>-8</cpu>
+  <cpu>-24</cpu>
  </general>
  <specific type="beam">
   <delay>3</delay>
   <duration>4</duration>
   <range>400</range>
-  <energy>45</energy>
-  <heatup>40</heatup>
+  <energy>10</energy>
+  <heatup>35</heatup>
   <damage>
    <type>normal</type>
-   <penetrate>30</penetrate>
-   <physical>45</physical>
-   <disable>5</disable>
+   <penetrate>12</penetrate>
+   <physical>52</physical>
+   <disable>4</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
