@@ -32,11 +32,11 @@ typedef struct PPShader_s {
    GLuint program; /**< Main shader program. */
    /* Shared uniforms. */
    GLint ClipSpaceFromLocal;
-   GLint love_ScreenSize;
    /* Fragment Shader. */
    GLint MainTex;
    /* Vertex shader. */
    GLint VertexPosition;
+   GLint VertexTexCoord;
    /* Textures. */
    LuaTexture_t *tex;
 } PPShader;
@@ -59,6 +59,10 @@ static void render_fbo( GLuint fbo, GLuint tex, PPShader *shader )
    /* Set up stuff .*/
    glEnableVertexAttribArray( shader->VertexPosition );
    gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexPosition, 0, 2, GL_FLOAT, 0 );
+   if (shader->VertexTexCoord >= 0) {
+      glEnableVertexAttribArray( shader->VertexTexCoord );
+      gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord, 0, 2, GL_FLOAT, 0 );
+   }
 
    /* Set the texture(s). */
    glBindTexture( GL_TEXTURE_2D, tex );
@@ -72,13 +76,15 @@ static void render_fbo( GLuint fbo, GLuint tex, PPShader *shader )
    glActiveTexture( GL_TEXTURE0 );
 
    /* Set shader uniforms. */
-   gl_Matrix4_Uniform(shader->ClipSpaceFromLocal, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
+   gl_Matrix4_Uniform(shader->ClipSpaceFromLocal, gl_Matrix4_Ortho(0, 1, 1, 0, 1, -1));
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
    glDisableVertexAttribArray( shader->VertexPosition );
+   if (shader->VertexTexCoord >= 0)
+      glDisableVertexAttribArray( shader->VertexTexCoord );
 }
 
 
@@ -193,9 +199,9 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int priority )
    pp->priority         = priority;
    pp->program          = shader->program;
    pp->ClipSpaceFromLocal = shader->ClipSpaceFromLocal;
-   pp->love_ScreenSize  = shader->love_ScreenSize;
    pp->MainTex          = shader->MainTex;
    pp->VertexPosition   = shader->VertexPosition;
+   pp->VertexTexCoord   = shader->VertexTexCoord;
    if (shader->tex != NULL)
       pp->tex = array_copy( LuaTexture_t, shader->tex );
    else
