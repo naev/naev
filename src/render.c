@@ -54,7 +54,6 @@ static void render_fbo( GLuint fbo, GLuint tex, PPShader *shader )
    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
    glUseProgram( shader->program );
-   glBindTexture( GL_TEXTURE_2D, tex );
 
    /* Set up stuff .*/
    glEnableVertexAttribArray( shader->VertexPosition );
@@ -85,6 +84,7 @@ static void render_fbo( GLuint fbo, GLuint tex, PPShader *shader )
    glDisableVertexAttribArray( shader->VertexPosition );
    if (shader->VertexTexCoord >= 0)
       glDisableVertexAttribArray( shader->VertexTexCoord );
+   glUseProgram( 0 );
 }
 
 
@@ -112,16 +112,14 @@ void render_all( double game_dt, double real_dt )
    int i, postprocess, next;
    int cur = 0;
 
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    postprocess = (array_size(pp_shaders) > 0);
 
-   if (postprocess) {
-      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.fbo[cur]);
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   if (postprocess)
       gl_screen.current_fbo = gl_screen.fbo[cur];
-   }
    else
       gl_screen.current_fbo = 0;
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
    dt = (paused) ? 0. : game_dt;
 
@@ -158,6 +156,8 @@ void render_all( double game_dt, double real_dt )
       }
       /* Final render is to the screen. */
       render_fbo( 0, gl_screen.fbo_tex[cur], &pp_shaders[i] );
+      gl_screen.current_fbo = 0;
+      glBindFramebuffer(GL_FRAMEBUFFER, 0);
    }
 
    /* check error every loop */
