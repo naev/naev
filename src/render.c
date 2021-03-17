@@ -160,6 +160,22 @@ void render_all( double game_dt, double real_dt )
 
 
 /**
+ * @brief Sorts shaders by priority.
+ */
+static int ppshader_compare( const void *a, const void *b )
+{
+   PPShader *ppa, *ppb;
+   ppa = (PPShader*) a;
+   ppb = (PPShader*) b;
+   if (ppa->priority > ppb->priority)
+      return +1;
+   if (ppa->priority < ppb->priority)
+      return -1;
+   return 0;
+}
+
+
+/**
  * @brief Adds a new post-processing shader.
  *
  *    @param shader Shader to add.
@@ -184,6 +200,9 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int priority )
       pp->tex = array_copy( LuaTexture_t, shader->tex );
    else
       pp->tex = NULL;
+
+   /* Resort n case stuff is weird. */
+   qsort( pp_shaders, array_size(pp_shaders), sizeof(PPShader), ppshader_compare );
 
    return pp->id;
 }
@@ -212,6 +231,7 @@ int render_postprocessRm( unsigned int id )
       return -1;
    }
 
+   /* No need to resort. */
    array_erase( &pp_shaders, &pp_shaders[found], &pp_shaders[found+1] );
    return 0;
 }
