@@ -436,6 +436,7 @@ int main( int argc, char** argv )
    input_exit(); /* Cleans up keybindings */
    nebu_exit(); /* Destroys the nebula */
    lua_exit(); /* Closes Lua state. */
+   render_exit(); /* Cleans up post-processing. */
    gl_exit(); /* Kills video output */
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
