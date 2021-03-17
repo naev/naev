@@ -103,7 +103,6 @@ int nebu_resize (void)
 {
    double scale;
    GLfloat fbo_w, fbo_h;
-   GLenum status;
 
    scale = conf.nebu_scale * gl_screen.scale;
    fbo_w = round(gl_screen.nw/scale);
@@ -118,34 +117,8 @@ int nebu_resize (void)
    glDeleteTextures( 1, &nebu_tex );
    glDeleteFramebuffers( 1, &nebu_fbo );
 
-   if (nebu_dofbo) {
-      /* Create the render buffer. */
-      glGenTextures(1, &nebu_tex);
-      glBindTexture(GL_TEXTURE_2D, nebu_tex);
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nebu_render_w, nebu_render_h, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-      glBindTexture(GL_TEXTURE_2D, 0);
-
-      /* Create the frame buffer. */
-      glGenFramebuffers( 1, &nebu_fbo );
-      glBindFramebuffer(GL_FRAMEBUFFER, nebu_fbo);
-
-      /* Attach the colour buffer. */
-      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, nebu_tex, 0);
-
-      /* Check status. */
-      status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-      if (status != GL_FRAMEBUFFER_COMPLETE)
-         WARN(_("Error setting up nebula framebuffer!"));
-
-      /* Restore state. */
-      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-
-      gl_checkErr();
-   }
+   if (nebu_dofbo)
+      gl_fboCreate( &nebu_fbo, &nebu_tex, nebu_render_w, nebu_render_h );
 
    /* Set up the matrices. */
    nebu_render_P = gl_Matrix4_Identity();

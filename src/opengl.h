@@ -67,8 +67,8 @@ typedef struct glInfo_ {
    SDL_Window *window; /**< Window for SDL2. */
    SDL_GLContext context; /**< Context for OpenGL. */
    GLuint current_fbo; /**< Current framebuffer. */
-   GLuint fbo; /**< Framebuffer. */
-   GLuint fbo_tex; /**< Texture for framebuffer. */
+   GLuint fbo[2]; /**< Framebuffers. */
+   GLuint fbo_tex[2]; /**< Texture for framebuffers. */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 

@@ -297,8 +297,10 @@ static int gl_createWindow( unsigned int flags )
 
    /* Finish getting attributes. */
    gl_screen.current_fbo = 0; /* No FBO set. */
-   gl_screen.fbo = GL_INVALID_VALUE;
-   gl_screen.fbo_tex = GL_INVALID_VALUE;
+   gl_screen.fbo[0] = GL_INVALID_VALUE;
+   gl_screen.fbo_tex[0] = GL_INVALID_VALUE;
+   gl_screen.fbo[1] = GL_INVALID_VALUE;
+   gl_screen.fbo_tex[1] = GL_INVALID_VALUE;
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
    gl_activated = 1; /* Opengl is now activated. */
 
@@ -514,7 +516,7 @@ int gl_init (void)
  */
 void gl_resize (void)
 {
-   GLenum status;
+   int i;
 
    gl_setupScaling();
    glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
@@ -522,35 +524,13 @@ void gl_resize (void)
    gl_defViewport();
 
    /* Set up framebuffer. */
-   if (gl_screen.fbo != GL_INVALID_VALUE) {
-      glDeleteTextures( 1, &gl_screen.fbo );
-      glDeleteTextures( 1, &gl_screen.fbo_tex );
+   for (i=0; i<2; i++) {
+      if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
+         glDeleteTextures( 1, &gl_screen.fbo[i] );
+         glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
+      }
+      gl_fboCreate( &gl_screen.fbo[i], &gl_screen.fbo_tex[i], gl_screen.rw, gl_screen.rh );
    }
-   /* Create the render buffer. */
-   glGenTextures(1, &gl_screen.fbo_tex);
-   glBindTexture(GL_TEXTURE_2D, gl_screen.fbo_tex);
-   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, gl_screen.rw, gl_screen.rh, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-   glBindTexture(GL_TEXTURE_2D, 0);
-
-   /* Create the frame buffer. */
-   glGenFramebuffers( 1, &gl_screen.fbo );
-   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.fbo);
-
-   /* Attach the colour buffer. */
-   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gl_screen.fbo_tex, 0);
-
-   /* Check status. */
-   status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-   if (status != GL_FRAMEBUFFER_COMPLETE)
-      WARN(_("Error setting up nebula framebuffer!"));
-
-   /* Restore state. */
-   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-
 
    gl_checkErr();
 }

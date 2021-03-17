@@ -41,11 +41,12 @@ void render_all( double game_dt, double real_dt )
    double dt;
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    int postprocess = 0;
+   int cur = 0;
 
    if (postprocess) {
-      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.fbo);
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.fbo[cur]);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      gl_screen.current_fbo = gl_screen.fbo;
+      gl_screen.current_fbo = gl_screen.fbo[cur];
    }
    else
       gl_screen.current_fbo = 0;
@@ -81,7 +82,7 @@ void render_all( double game_dt, double real_dt )
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
       glUseProgram(shaders.texture.program);
-      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex );
+      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[cur] );
 
       /* Set up stuff .*/
       glEnableVertexAttribArray( shaders.texture.vertex );

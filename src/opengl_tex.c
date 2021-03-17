@@ -203,6 +203,50 @@ int gl_texHasCompress (void)
 }
 
 
+/**
+ * @brief Creates a framebuffer and its associated texture.
+ *
+ *    @param[out] fbo Framebuffer object id.
+ *    @param[out] tex Texture id.
+ *    @param width Width to use.
+ *    @param height Height to use.
+ *    @return 0 on success.
+ */
+int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
+{
+   GLenum status;
+
+   /* Create the render buffer. */
+   glGenTextures(1, tex);
+   glBindTexture(GL_TEXTURE_2D, *tex);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+   glBindTexture(GL_TEXTURE_2D, 0);
+
+   /* Create the frame buffer. */
+   glGenFramebuffers( 1, fbo );
+   glBindFramebuffer(GL_FRAMEBUFFER, *fbo);
+
+   /* Attach the colour buffer. */
+   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *tex, 0);
+
+   /* Check status. */
+   status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+   if (status != GL_FRAMEBUFFER_COMPLETE)
+      WARN(_("Error setting up framebuffer!"));
+
+   /* Restore state. */
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+
+   gl_checkErr();
+
+   return (status==GL_FRAMEBUFFER_COMPLETE);
+}
+
+
 glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name )
 {
    glTexture *texture;
