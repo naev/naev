@@ -27,7 +27,9 @@
  * It is a sort of minimal version of a LuaShader_t.
  */
 typedef struct PPShader_s {
-   GLuint program;
+   unsigned int id; /*< Global id (greater than 0). */
+   int priority; /**< Used when sorting, lower is more important. */
+   GLuint program; /**< Main shader program. */
    /* Shared uniforms. */
    GLint ClipSpaceFromLocal;
    GLint love_ScreenSize;
@@ -35,12 +37,12 @@ typedef struct PPShader_s {
    GLint MainTex;
    /* Vertex shader. */
    GLint VertexPosition;
-   GLint VertexTexCoord;
    /* Textures. */
    LuaTexture_t *tex;
 } PPShader;
 
 
+static unsigned int pp_shaders_id = 0;
 static PPShader *pp_shaders = NULL; /**< Post-processing shaders. */
 
 
@@ -154,6 +156,64 @@ void render_all( double game_dt, double real_dt )
 
    /* check error every loop */
    gl_checkErr();
+}
+
+
+/**
+ * @brief Adds a new post-processing shader.
+ *
+ *    @param shader Shader to add.
+ *    @param priority When it should be run (lower is sooner).
+ *    @return The shader ID.
+ */
+unsigned int render_postprocessAdd( LuaShader_t *shader, int priority )
+{
+   PPShader *pp;
+
+   if (pp_shaders==NULL)
+      pp_shaders = array_create( PPShader );
+   pp = &array_grow( &pp_shaders );
+   pp->id               = ++pp_shaders_id;
+   pp->priority         = priority;
+   pp->program          = shader->program;
+   pp->ClipSpaceFromLocal = shader->ClipSpaceFromLocal;
+   pp->love_ScreenSize  = shader->love_ScreenSize;
+   pp->MainTex          = shader->MainTex;
+   pp->VertexPosition   = shader->VertexPosition;
+   if (shader->tex != NULL)
+      pp->tex = array_copy( LuaTexture_t, shader->tex );
+   else
+      pp->tex = NULL;
+
+   return pp->id;
+}
+
+
+/**
+ * @brief Removes a post-process shader by ID.
+ *
+ *    @param id ID of shader to remove.
+ *    @return 0 on success.
+ */
+int render_postprocessRm( unsigned int id )
+{
+   int i, found;
+   PPShader *pp;
+   found = 0;
+   for (i=0; i<array_size(pp_shaders); i++) {
+      pp = &pp_shaders[i];
+      if (pp->id != id)
+         continue;
+      found = i;
+      break;
+   }
+   if (found==0) {
+      WARN(_("Trying to remove non-existant post-processing shader with id '%d'!"), id);
+      return -1;
+   }
+
+   array_erase( &pp_shaders, &pp_shaders[found], &pp_shaders[found+1] );
+   return 0;
 }
 
 
