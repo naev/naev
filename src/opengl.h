@@ -115,6 +115,7 @@ int gl_setupFullscreen (void);
 /*
  * misc
  */
+void gl_colorblind( int enable );
 GLint gl_stringToFilter( const char *s );
 GLint gl_stringToClamp( const char *s );
 void gl_screenshot( const char *filename );

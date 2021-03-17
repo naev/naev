@@ -30,6 +30,4 @@ void main(void) {
    dist = length(rel_pos);
    color_out = mix( color_out, color, smoothstep( 0, 2*horizon, dist ) );
    color_out.a *= smoothstep( 0, horizon, dist );
-
-#include "colorblind.glsl"
 }

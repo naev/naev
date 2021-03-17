@@ -199,7 +199,7 @@ int render_postprocessRm( unsigned int id )
 {
    int i, found;
    PPShader *pp;
-   found = 0;
+   found = -1;
    for (i=0; i<array_size(pp_shaders); i++) {
       pp = &pp_shaders[i];
       if (pp->id != id)
@@ -207,7 +207,7 @@ int render_postprocessRm( unsigned int id )
       found = i;
       break;
    }
-   if (found==0) {
+   if (found==-1) {
       WARN(_("Trying to remove non-existant post-processing shader with id '%d'!"), id);
       return -1;
    }

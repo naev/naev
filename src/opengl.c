@@ -43,6 +43,7 @@
 
 #include "conf.h"
 #include "log.h"
+#include "render.h"
 
 
 /*
@@ -53,6 +54,9 @@
 
 glInfo gl_screen; /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
+
+
+static unsigned int colorblind_pp = 0; /**< Colorblind post-process shader id. */
 
 
 /*
@@ -505,6 +509,9 @@ int gl_init (void)
 
    shaders_load();
 
+   /* Set colorblind shader if necessary. */
+   gl_colorblind( conf.colorblind );
+
    /* Cosmetic new line. */
    DEBUG_BLANK();
 
@@ -644,6 +651,31 @@ GLint gl_stringToClamp( const char *s )
    else if (strcmp(s,"mirroredrepeat")==0)
       return GL_MIRRORED_REPEAT;
    return 0;
+}
+
+
+/**
+ * @brief Enables or disables the colorblind shader.
+ *
+ *    @param enable Whether or not to enable or disable the colorblind shader.
+ */
+void gl_colorblind( int enable )
+{
+   LuaShader_t shader;
+   if (enable) {
+      if (colorblind_pp != 0)
+         return;
+      memset( &shader, 0, sizeof(LuaShader_t) );
+      shader.program    = shaders.colorblind.program;
+      shader.VertexPosition = shaders.colorblind.VertexPosition;
+      shader.ClipSpaceFromLocal = shaders.colorblind.ClipSpaceFromLocal;
+      shader.MainTex    = shaders.colorblind.MainTex;
+      colorblind_pp = render_postprocessAdd( &shader, 99 );
+   } else {
+      if (colorblind_pp != 0)
+         render_postprocessRm( colorblind_pp );
+      colorblind_pp = 0;
+   }
 }
 
 

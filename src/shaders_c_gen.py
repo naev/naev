@@ -153,6 +153,14 @@ SHADERS = [
         ]
       }
    ),
+   Shader(
+      name = "colorblind",
+      vs_path = "colorblind.vert",
+      fs_path = "colorblind.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex"],
+      subroutines = {},
+   ),
 ]
 
 def write_header(f):
