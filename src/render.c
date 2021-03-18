@@ -97,6 +97,31 @@ static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
 
 
 /**
+ * @brief Renders a list of FBOs.
+ */
+static void render_fbo_list( double dt, PPShader *list, int *current, int done )
+{
+   PPShader *pp;
+   int i, cur, next;
+   cur = *current;
+
+   for (i=0; i<array_size(list)-1; i++) {
+      pp = &list[i];
+      next = 1-cur;
+      render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pp );
+      cur = next;
+   }
+   /* Final render is to the screen. */
+   pp = &list[i];
+   gl_screen.current_fbo = (done) ? 0 : gl_screen.fbo[cur];
+   render_fbo( dt, gl_screen.current_fbo, gl_screen.fbo_tex[cur], pp );
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+
+   *current = cur;
+}
+
+
+/**
  * @brief Renders the game itself (player flying around and friends).
  *
  * Blitting order (layers):
@@ -117,9 +142,8 @@ static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
 void render_all( double game_dt, double real_dt )
 {
    double dt;
-   int i, pp_final, pp_game, next;
+   int pp_final, pp_game;
    int cur = 0;
-   PPShader *pp;
 
    pp_game  = (array_size(pp_shaders_list[PP_LAYER_GAME]) > 0);
    pp_final = (array_size(pp_shaders_list[PP_LAYER_FINAL]) > 0);
@@ -153,19 +177,8 @@ void render_all( double game_dt, double real_dt )
    spfx_end();
 
    /* Process game stuff only. */
-   if (pp_game) {
-      for (i=0; i<array_size(pp_shaders_list[PP_LAYER_GAME])-1; i++) {
-         pp = &pp_shaders_list[PP_LAYER_GAME][i];
-         next = 1-cur;
-         render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pp );
-         cur = next;
-      }
-      /* Final render is to the screen. */
-      pp = &pp_shaders_list[PP_LAYER_GAME][i];
-      gl_screen.current_fbo = (pp_final) ? gl_screen.fbo[cur] : 0;
-      render_fbo( dt, gl_screen.current_fbo, gl_screen.fbo_tex[cur], pp );
-      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-   }
+   if (pp_game)
+      render_fbo_list( dt, pp_shaders_list[PP_LAYER_GAME], &cur, !pp_final );
 
    /* GUi stuff. */
    gui_render(dt);
@@ -175,19 +188,9 @@ void render_all( double game_dt, double real_dt )
    display_fps( real_dt ); /* Exception using real_dt. */
    toolkit_render();
 
-   if (pp_final) {
-      for (i=0; i<array_size(pp_shaders_list[PP_LAYER_FINAL])-1; i++) {
-         pp = &pp_shaders_list[PP_LAYER_FINAL][i];
-         next = 1-cur;
-         render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pp );
-         cur = next;
-      }
-      /* Final render is to the screen. */
-      pp = &pp_shaders_list[PP_LAYER_FINAL][i];
-      render_fbo( dt, 0, gl_screen.fbo_tex[cur], pp );
-      gl_screen.current_fbo = 0;
-      glBindFramebuffer(GL_FRAMEBUFFER, 0);
-   }
+   /* Final post-processing. */
+   if (pp_final)
+      render_fbo_list( dt, pp_shaders_list[PP_LAYER_FINAL], &cur, 1 );
 
    /* check error every loop */
    gl_checkErr();
