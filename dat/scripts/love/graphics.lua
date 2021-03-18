@@ -476,7 +476,7 @@ uniform mat4 ClipSpaceFromView;
 uniform mat4 ClipSpaceFromLocal;
 uniform mat3 ViewNormalFromLocal;
 uniform vec4 love_ScreenSize;
-uniform vec4 ConstantColor;
+uniform vec4 ConstantColor = vec4(1.0);
 
 // Compatibility
 #define TransformMatrix             ViewSpaceFromLocal
@@ -531,7 +531,6 @@ void main(void) {
          prepend..frag..pixelcode,
          prepend..vert..vertexcode )
    -- Set some default uniform values for when post-process shaders are used
-   s.shader:sendRaw( "ConstantColor", 1.0, 1.0, 1.0, 1.0 )
    s.shader:sendRaw( "love_ScreenSize", love.w, love.h, 1.0, 0.0 )
    return s
 end
