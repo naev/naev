@@ -60,6 +60,7 @@ static LuaShader_t shake_shader;
 static Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
 static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
 static double shake_force_mod = 0.; /**< Shake force modifier. */
+static double shake_force_mean = 0.; /**< Running mean of the force. */
 static float shake_force_ang = 0.; /**< Shake force angle. */
 static perlin_data_t *shake_noise = NULL; /**< Shake noise. */
 
@@ -388,13 +389,13 @@ void spfx_clear (void)
 
    /* Clear rumble */
    shake_force_mod = 0.;
+   shake_force_mean = 0.;
    vectnull( &shake_pos );
    vectnull( &shake_vel );
    if (shake_shader_pp_id > 0) {
       render_postprocessRm( shake_shader_pp_id );
       shake_shader_pp_id = 0;
    }
-
 
    for (i=0; i<array_size(trail_spfx_stack); i++)
       spfx_trail_free( trail_spfx_stack[i] );
@@ -472,6 +473,7 @@ static void spfx_updateShake( double dt )
       else
          forced            = 1;
    }
+   shake_force_mean = 0.1*shake_force_mod + 0.9*shake_force_mean;
 
    /* See if it's settled down. */
    mod      = VMOD( shake_pos );
@@ -506,6 +508,7 @@ static void spfx_updateShake( double dt )
    glUseProgram( shaders.shake.program );
    glUniform2f( shaders.shake.shake_pos, shake_pos.x / SCREEN_W, shake_pos.y / SCREEN_H );
    glUniform2f( shaders.shake.shake_vel, shake_vel.x / SCREEN_W, shake_vel.y / SCREEN_H );
+   glUniform1f( shaders.shake.shake_force, shake_force_mean );
    glUseProgram( 0 );
 }
 
@@ -724,9 +727,7 @@ static void spfx_trail_draw( const Trail_spfx* trail )
 void spfx_shake( double mod )
 {
    /* Add the modifier. */
-   shake_force_mod += mod;
-   if (shake_force_mod  > SHAKE_MAX)
-      shake_force_mod = SHAKE_MAX;
+   shake_force_mod = MIN( SHAKE_MAX, shake_force_mod+mod );
 
    /* Rumble if it wasn't rumbling before. */
    spfx_hapticRumble(mod);
