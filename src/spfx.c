@@ -471,7 +471,7 @@ static void spfx_updateShake( double dt )
       shake_off      = 1;
       render_postprocessRm( shake_shader_pp_id );
       shake_shader_pp_id = 0;
-      if (shake_force_ang > 1e3)
+      if (fabs(shake_force_ang) > 1e3)
          shake_force_ang = RNGF();
       return;
    }
@@ -497,6 +497,7 @@ static void spfx_updateShake( double dt )
    /* Set the uniform. */
    glUseProgram( shaders.shake.program );
    glUniform2f( shaders.shake.shake_pos, shake_pos.x / SCREEN_W, shake_pos.y / SCREEN_H );
+   glUniform2f( shaders.shake.shake_vel, shake_vel.x / SCREEN_W, shake_vel.y / SCREEN_H );
    glUseProgram( 0 );
 }
 

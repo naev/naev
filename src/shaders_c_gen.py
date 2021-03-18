@@ -166,7 +166,7 @@ SHADERS = [
       vs_path = "shake.vert",
       fs_path = "shake.frag",
       attributes = ["VertexPosition"],
-      uniforms = ["ClipSpaceFromLocal", "MainTex", "shake_pos"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "shake_pos", "shake_vel"],
       subroutines = {},
    ),
 ]
