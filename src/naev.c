@@ -423,7 +423,6 @@ int main( int argc, char** argv )
    gl_freeFont(&gl_defFontMono);
 
    start_cleanup(); /* Cleanup from start.c, not the first cleanup step. :) */
-   conf_cleanup(); /* Free some memory the configuration allocated. */
 
    /* exit subsystems */
    cli_exit(); /* Clean up the console. */
@@ -440,6 +439,9 @@ int main( int argc, char** argv )
    gl_exit(); /* Kills video output */
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
+
+   /* Has to be run last or it will mess up sound settings. */
+   conf_cleanup(); /* Free some memory the configuration allocated. */
 
    /* Free the icon. */
    if (naev_icon)
