@@ -61,7 +61,6 @@ static Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. *
 static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
 static double shake_force_mod = 0.; /**< Shake force modifier. */
 static float shake_force_ang = 0.; /**< Shake force angle. */
-static int shake_off = 1; /**< 1 if shake is not active. */
 static perlin_data_t *shake_noise = NULL; /**< Shake noise. */
 
 /* Haptic stuff. */
@@ -388,7 +387,6 @@ void spfx_clear (void)
    int i;
 
    /* Clear rumble */
-   shake_off = 1;
    shake_force_mod = 0.;
    vectnull( &shake_pos );
    vectnull( &shake_vel );
@@ -462,7 +460,7 @@ static void spfx_updateShake( double dt )
    int forced;
 
    /* Must still be on. */
-   if (shake_off)
+   if (shake_shader_pp_id == 0)
       return;
 
    /* The shake decays over time */
@@ -479,7 +477,6 @@ static void spfx_updateShake( double dt )
    mod      = VMOD( shake_pos );
    vmod     = VMOD( shake_vel );
    if (!forced && (mod < 0.01) && (vmod < 0.01)) {
-      shake_off      = 1;
       render_postprocessRm( shake_shader_pp_id );
       shake_shader_pp_id = 0;
       if (fabs(shake_force_ang) > 1e3)
@@ -734,31 +731,9 @@ void spfx_shake( double mod )
    /* Rumble if it wasn't rumbling before. */
    spfx_hapticRumble(mod);
 
-   /* Notify that rumble is active. */
-   shake_off = 0;
-
    /* Create the shake. */
    if (shake_shader_pp_id==0)
       shake_shader_pp_id = render_postprocessAdd( &shake_shader, PP_LAYER_GAME, 99 );
-}
-
-
-/**
- * @brief Gets the current shake position.
- *
- *    @param[out] x X shake position.
- *    @param[out] y Y shake position.
- */
-void spfx_getShake( double *x, double *y )
-{
-   if (shake_off) {
-      *x = 0.;
-      *y = 0.;
-   }
-   else {
-      *x = shake_pos.x;
-      *y = shake_pos.y;
-   }
 }
 
 
@@ -808,7 +783,7 @@ static void spfx_hapticRumble( double mod )
    if (haptic_rumble >= 0) {
 
       /* Not time to update yet. */
-      if ((haptic_lastUpdate > 0.) || shake_off || (mod > SHAKE_MAX/3.))
+      if ((haptic_lastUpdate > 0.) || (shake_shader_pp_id==0) || (mod > SHAKE_MAX/3.))
          return;
 
       /* Stop the effect if it was playing. */
