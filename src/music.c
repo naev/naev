@@ -580,6 +580,14 @@ void music_tempDisable( int disable )
  */
 void music_repeat( int repeat )
 {
+   if (music_disabled)
+      return;
+
+   if (music_name == NULL) {
+      WARN(_("Trying to set music on repeat when no music is loaded!"));
+      return;
+   }
+
    music_temp_repeat = repeat;
    free( music_temp_repeatname );
    music_temp_repeatname = strdup( music_name );
