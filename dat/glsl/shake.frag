@@ -14,4 +14,5 @@ void main (void)
    color_out += texture( MainTex, uv - 1.0 * VEL_FACTOR * shake_vel ) * 0.3;
    color_out += texture( MainTex, uv - 2.0 * VEL_FACTOR * shake_vel ) * 0.2;
    color_out += texture( MainTex, uv - 3.0 * VEL_FACTOR * shake_vel ) * 0.1;
+   /*color_out = blur9( MainTex, uv, vec2(16.0), shake_vel );*/
 }
