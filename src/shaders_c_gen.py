@@ -161,6 +161,14 @@ SHADERS = [
       uniforms = ["ClipSpaceFromLocal", "MainTex"],
       subroutines = {},
    ),
+   Shader(
+      name = "shake",
+      vs_path = "shake.vert",
+      fs_path = "shake.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "shake_pos"],
+      subroutines = {},
+   ),
 ]
 
 def write_header(f):

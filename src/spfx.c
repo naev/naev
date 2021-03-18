@@ -29,8 +29,10 @@
 #include "pause.h"
 #include "perlin.h"
 #include "physics.h"
+#include "render.h"
 #include "rng.h"
 #include "space.h"
+#include "nlua_shader.h"
 
 
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
@@ -53,6 +55,8 @@ static Trail_spfx** trail_spfx_stack;
  * special hard-coded special effects
  */
 /* shake aka rumble */
+static unsigned int shake_shader_pp_id = 0;
+static LuaShader_t shake_shader;
 static int shake_set = 0; /**< Is shake set? */
 static Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
 static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
@@ -264,6 +268,11 @@ int spfx_load (void)
    /*
     * Now initialize force feedback.
     */
+   memset( &shake_shader, 0, sizeof(LuaShader_t) );
+   shake_shader.program       = shaders.shake.program;
+   shake_shader.VertexPosition= shaders.shake.VertexPosition;
+   shake_shader.ClipSpaceFromLocal = shaders.shake.ClipSpaceFromLocal;
+   shake_shader.MainTex       = shaders.shake.MainTex;
    spfx_hapticInit();
    shake_noise = noise_new( 1, NOISE_DEFAULT_HURST, NOISE_DEFAULT_LACUNARITY );
 
@@ -380,6 +389,12 @@ void spfx_clear (void)
    shake_force_mod = 0.;
    vectnull( &shake_pos );
    vectnull( &shake_vel );
+   if (shake_shader_pp_id > 0) {
+      render_postprocessRm( shake_shader_pp_id );
+      shake_shader_pp_id = 0;
+   }
+
+
    for (i=0; i<array_size(trail_spfx_stack); i++)
       spfx_trail_free( trail_spfx_stack[i] );
    array_erase( &trail_spfx_stack, array_begin(trail_spfx_stack), array_end(trail_spfx_stack) );
@@ -454,6 +469,8 @@ static void spfx_updateShake( double dt )
    vmod     = VMOD( shake_vel );
    if (!forced && (mod < 0.01) && (vmod < 0.01)) {
       shake_off      = 1;
+      render_postprocessRm( shake_shader_pp_id );
+      shake_shader_pp_id = 0;
       if (shake_force_ang > 1e3)
          shake_force_ang = RNGF();
       return;
@@ -471,12 +488,16 @@ static void spfx_updateShake( double dt )
       force_y          += shake_force_mod * sin(angle);
    }
 
-
    /* Update velocity. */
    vect_cadd( &shake_vel, (1./SHAKE_MASS) * force_x * dt, (1./SHAKE_MASS) * force_y * dt );
 
    /* Update position. */
    vect_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
+
+   /* Set the uniform. */
+   glUseProgram( shaders.shake.program );
+   glUniform2f( shaders.shake.shake_pos, shake_pos.x / SCREEN_W, shake_pos.y / SCREEN_H );
+   glUseProgram( 0 );
 }
 
 
@@ -718,7 +739,6 @@ void spfx_begin( const double dt, const double real_dt )
       spfx_updateShake( dt );
 
    /* set the new viewport */
-   gl_view_matrix = gl_Matrix4_Translate( gl_view_matrix, shake_pos.x, shake_pos.y, 0 );
    shake_set = 1;
 }
 
@@ -758,6 +778,10 @@ void spfx_shake( double mod )
 
    /* Notify that rumble is active. */
    shake_off = 0;
+
+   /* Create the shake. */
+   if (shake_shader_pp_id==0)
+      shake_shader_pp_id = render_postprocessAdd( &shake_shader, PP_LAYER_GAME, 99 );
 }
 
 
