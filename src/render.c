@@ -45,7 +45,7 @@ typedef struct PPShader_s {
 
 
 static unsigned int pp_shaders_id = 0;
-static PPShader *pp_shaders = NULL; /**< Post-processing shaders. */
+static PPShader *pp_shaders_list[PP_LAYER_MAX] = {NULL, NULL}; /**< Post-processing shaders for game layer. */
 
 
 /**
@@ -117,12 +117,14 @@ static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
 void render_all( double game_dt, double real_dt )
 {
    double dt;
-   int i, postprocess, next;
+   int i, pp_final, pp_game, next;
    int cur = 0;
+   PPShader *pp;
 
-   postprocess = (array_size(pp_shaders) > 0);
+   pp_game  = (array_size(pp_shaders_list[PP_LAYER_GAME]) > 0);
+   pp_final = (array_size(pp_shaders_list[PP_LAYER_FINAL]) > 0);
 
-   if (postprocess)
+   if (pp_game || pp_final)
       gl_screen.current_fbo = gl_screen.fbo[cur];
    else
       gl_screen.current_fbo = 0;
@@ -149,6 +151,23 @@ void render_all( double game_dt, double real_dt )
    gui_renderReticles(dt);
    pilots_renderOverlay(dt);
    spfx_end();
+
+   /* Process game stuff only. */
+   if (pp_game) {
+      for (i=0; i<array_size(pp_shaders_list[PP_LAYER_GAME])-1; i++) {
+         pp = &pp_shaders_list[PP_LAYER_GAME][i];
+         next = 1-cur;
+         render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pp );
+         cur = next;
+      }
+      /* Final render is to the screen. */
+      pp = &pp_shaders_list[PP_LAYER_GAME][i];
+      gl_screen.current_fbo = (pp_final) ? gl_screen.fbo[cur] : 0;
+      render_fbo( dt, gl_screen.current_fbo, gl_screen.fbo_tex[cur], pp );
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+   }
+
+   /* GUi stuff. */
    gui_render(dt);
 
    /* Top stuff. */
@@ -156,14 +175,16 @@ void render_all( double game_dt, double real_dt )
    display_fps( real_dt ); /* Exception using real_dt. */
    toolkit_render();
 
-   if (postprocess) {
-      for (i=0; i<array_size(pp_shaders)-1; i++) {
+   if (pp_final) {
+      for (i=0; i<array_size(pp_shaders_list[PP_LAYER_FINAL])-1; i++) {
+         pp = &pp_shaders_list[PP_LAYER_FINAL][i];
          next = 1-cur;
-         render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], &pp_shaders[i] );
+         render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pp );
          cur = next;
       }
       /* Final render is to the screen. */
-      render_fbo( dt, 0, gl_screen.fbo_tex[cur], &pp_shaders[i] );
+      pp = &pp_shaders_list[PP_LAYER_FINAL][i];
+      render_fbo( dt, 0, gl_screen.fbo_tex[cur], pp );
       gl_screen.current_fbo = 0;
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
    }
@@ -196,13 +217,20 @@ static int ppshader_compare( const void *a, const void *b )
  *    @param priority When it should be run (lower is sooner).
  *    @return The shader ID.
  */
-unsigned int render_postprocessAdd( LuaShader_t *shader, int priority )
+unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority )
 {
-   PPShader *pp;
+   PPShader *pp, **pp_shaders;
 
-   if (pp_shaders==NULL)
-      pp_shaders = array_create( PPShader );
-   pp = &array_grow( &pp_shaders );
+   /* Select the layer. */
+   if (layer < 0 || layer >= PP_LAYER_MAX) {
+      WARN(_("Unknown post-processing shader layer '%d'!"), layer);
+      return 0;
+   }
+   pp_shaders = &pp_shaders_list[layer];
+
+   if (*pp_shaders==NULL)
+      *pp_shaders = array_create( PPShader );
+   pp = &array_grow( pp_shaders );
    pp->id               = ++pp_shaders_id;
    pp->priority         = priority;
    pp->program          = shader->program;
@@ -219,7 +247,7 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int priority )
    pp->dt = 0.;
 
    /* Resort n case stuff is weird. */
-   qsort( pp_shaders, array_size(pp_shaders), sizeof(PPShader), ppshader_compare );
+   qsort( *pp_shaders, array_size(*pp_shaders), sizeof(PPShader), ppshader_compare );
 
    return pp->id;
 }
@@ -233,15 +261,21 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int priority )
  */
 int render_postprocessRm( unsigned int id )
 {
-   int i, found;
-   PPShader *pp;
+   int i, j, found;
+   PPShader *pp, *pp_shaders;
+
    found = -1;
-   for (i=0; i<array_size(pp_shaders); i++) {
-      pp = &pp_shaders[i];
-      if (pp->id != id)
-         continue;
-      found = i;
-      break;
+   for (j=0; j<PP_LAYER_MAX; j++) {
+      pp_shaders = pp_shaders_list[j];
+      for (i=0; i<array_size(pp_shaders); i++) {
+         pp = &pp_shaders[i];
+         if (pp->id != id)
+            continue;
+         found = i;
+         break;
+      }
+      if (found>=0)
+         break;
    }
    if (found==-1) {
       WARN(_("Trying to remove non-existant post-processing shader with id '%d'!"), id);
@@ -249,7 +283,7 @@ int render_postprocessRm( unsigned int id )
    }
 
    /* No need to resort. */
-   array_erase( &pp_shaders, &pp_shaders[found], &pp_shaders[found+1] );
+   array_erase( &pp_shaders_list[j], &pp_shaders_list[j][found], &pp_shaders_list[j][found+1] );
    return 0;
 }
 
@@ -259,7 +293,10 @@ int render_postprocessRm( unsigned int id )
  */
 void render_exit (void)
 {
-   array_free( pp_shaders );
-   pp_shaders = NULL;
+   int i;
+   for (i=0; i<PP_LAYER_MAX; i++) {
+      array_free( pp_shaders_list[i] );
+      pp_shaders_list[i] = NULL;
+   }
 }
 

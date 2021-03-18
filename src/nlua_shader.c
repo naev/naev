@@ -448,6 +448,7 @@ static int shaderL_hasUniform( lua_State *L )
  * @brief Sets a shader as a post-processing shader.
  *
  *    @luatparam Shader shader Shader to set as a post-processing shader.
+ *    @luatparam[opt="final"] string layer Layer to add the shader to.
  *    @luatparam[opt=0] number priority Priority of the shader to set. Higher values mean it is run later.
  *    @luatreturn boolean true on success.
  * @luafunc addPPShader
@@ -455,9 +456,19 @@ static int shaderL_hasUniform( lua_State *L )
 static int shaderL_addPostProcess( lua_State *L )
 {
    LuaShader_t *ls = luaL_checkshader(L,1);
-   int priority = luaL_optinteger(L,2,0);
+   const char *str = luaL_optstring(L,2,"final");
+   int priority = luaL_optinteger(L,3,0);
+   int layer;
+
+   if (strcmp(str,"final")==0)
+      layer = PP_LAYER_FINAL;
+   else if (strcmp(str,"game")==0)
+      layer = PP_LAYER_GAME;
+   else
+      NLUA_ERROR(L,_("Layer was '%s', but must be one of 'final' or 'game'"), str);
+
    if (ls->pp_id == 0)
-      ls->pp_id = render_postprocessAdd( ls, priority );
+      ls->pp_id = render_postprocessAdd( ls, layer, priority );
    lua_pushboolean(L, ls->pp_id>0);
    return 1;
 }
