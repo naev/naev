@@ -16,7 +16,7 @@ void main (void)
    float noise2 = snoise( fract( uv + vec2(random(t), 0.78) * 10.0 ) * 0.5 );
 
    float offset = step( 0.5 * (noise1 + noise2), 0.5 );
-   offset = (2.0 * offset + 1.0) * 0.1 * damage_strength;
+   offset = (2.0 * offset + 1.0) * damage_strength;
 
    color_out.r = texture( MainTex, uv + vec2(offset,0.0) ).r;
    color_out.g = texture( MainTex, uv ).g;
