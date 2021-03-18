@@ -192,8 +192,10 @@ int lua_isaudio( lua_State *L, int ind )
 static int audioL_gc( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   alDeleteSources( 1, &la->source );
-   alDeleteBuffers( 1, &la->buffer );
+   if (!conf.nosound) {
+      alDeleteSources( 1, &la->source );
+      alDeleteBuffers( 1, &la->buffer );
+   }
    al_checkErr();
    return 0;
 }
@@ -244,6 +246,7 @@ static int audioL_new( lua_State *L )
    else
       NLUA_INVALID_PARAMETER(L);
 
+   memset( &la, 0, sizeof(LuaAudio_t) );
    if (!conf.nosound) {
       rw = PHYSFSRWOPS_openRead( name );
       if (rw==NULL)
@@ -263,8 +266,6 @@ static int audioL_new( lua_State *L )
 
       SDL_RWclose( rw );
    }
-   else
-      memset( &la, 0, sizeof(LuaAudio_t) );
 
    al_checkErr();
    lua_pushaudio(L, la);
