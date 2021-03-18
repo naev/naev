@@ -110,9 +110,10 @@ void spfx_trail_remove( Trail_spfx* trail );
 
 
 /*
- * get ready to rumble
+ * Misc effects.
  */
 void spfx_shake( double mod );
+void spfx_damage( double mod );
 
 
 /*

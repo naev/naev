@@ -249,6 +249,8 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority
    /* Resort n case stuff is weird. */
    qsort( *pp_shaders, array_size(*pp_shaders), sizeof(PPShader), ppshader_compare );
 
+   gl_checkErr();
+
    return pp->id;
 }
 
