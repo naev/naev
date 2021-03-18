@@ -157,8 +157,6 @@ void render_all( double game_dt, double real_dt )
 
    dt = (paused) ? 0. : game_dt;
 
-   /* setup */
-   spfx_begin(dt, real_dt);
    /* Background stuff */
    space_render( real_dt ); /* Nebula looks really weird otherwise. */
    planets_render();
@@ -174,7 +172,6 @@ void render_all( double game_dt, double real_dt )
    space_renderOverlay(dt);
    gui_renderReticles(dt);
    pilots_renderOverlay(dt);
-   spfx_end();
 
    /* Process game stuff only. */
    if (pp_game)

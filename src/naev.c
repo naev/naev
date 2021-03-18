@@ -947,7 +947,7 @@ void update_routine( double dt, int enter_sys )
    /* Update engine stuff. */
    space_update(dt);
    weapons_update(dt);
-   spfx_update(dt);
+   spfx_update(dt, real_dt);
    pilots_update(dt);
 
    /* Update camera. */

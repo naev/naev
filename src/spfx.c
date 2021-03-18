@@ -57,14 +57,12 @@ static Trail_spfx** trail_spfx_stack;
 /* shake aka rumble */
 static unsigned int shake_shader_pp_id = 0;
 static LuaShader_t shake_shader;
-static int shake_set = 0; /**< Is shake set? */
 static Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
 static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
 static double shake_force_mod = 0.; /**< Shake force modifier. */
 static float shake_force_ang = 0.; /**< Shake force angle. */
 static int shake_off = 1; /**< 1 if shake is not active. */
 static perlin_data_t *shake_noise = NULL; /**< Shake noise. */
-static const double shake_fps_min   = 1./10.; /**< Minimum fps to run shake update at. */
 
 /* Haptic stuff. */
 extern SDL_Haptic *haptic; /**< From joystick.c */
@@ -80,6 +78,12 @@ static double haptic_lastUpdate  = 0.; /**< Timer to update haptic effect again.
 static int trailSpec_load (void);
 static void trailSpec_parse( xmlNodePtr cur, TrailSpec *tc );
 static TrailSpec* trailSpec_getRaw( const char* name );
+
+
+/*
+ * Shake handling.
+ */
+static void spfx_updateShake( double dt );
 
 
 /**
@@ -384,7 +388,6 @@ void spfx_clear (void)
    int i;
 
    /* Clear rumble */
-   shake_set = 0;
    shake_off = 1;
    shake_force_mod = 0.;
    vectnull( &shake_pos );
@@ -405,13 +408,21 @@ void spfx_clear (void)
  * @brief Updates all the spfx.
  *
  *    @param dt Current delta tick.
+ *    @param real_dt Real delta tick.
  */
-void spfx_update( const double dt )
+void spfx_update( const double dt, const double real_dt )
 {
    spfx_update_layer( spfx_stack_front, dt );
    spfx_update_layer( spfx_stack_middle, dt );
    spfx_update_layer( spfx_stack_back, dt );
    spfx_update_trails( dt );
+
+   /* Decrement the haptic timer. */
+   if (haptic_lastUpdate > 0.)
+      haptic_lastUpdate -= real_dt; /* Based on real delta-tick. */
+
+   /* Shake. */
+   spfx_updateShake( dt );
 }
 
 
@@ -703,60 +714,6 @@ static void spfx_trail_draw( const Trail_spfx* trail )
 
    /* Check errors. */
    gl_checkErr();
-}
-
-
-/**
- * @brief Prepares the rendering for the special effects.
- *
- * Should be called at the beginning of the rendering loop.
- *
- *    @param dt Current delta tick.
- *    @param real_dt Real delta tick.
- */
-void spfx_begin( const double dt, const double real_dt )
-{
-   double ddt;
-
-   /* Defaults. */
-   shake_set = 0;
-   if (shake_off)
-      return;
-
-   /* Decrement the haptic timer. */
-   if (haptic_lastUpdate > 0.)
-      haptic_lastUpdate -= real_dt; /* Based on real delta-tick. */
-
-   /* Micro basic simple control loop. */
-   if (dt > shake_fps_min) {
-      ddt = dt;
-      while (ddt > shake_fps_min) {
-         spfx_updateShake( shake_fps_min );
-         ddt -= shake_fps_min;
-      }
-      spfx_updateShake( ddt ); /* Leftover. */
-   }
-   else
-      spfx_updateShake( dt );
-
-   /* set the new viewport */
-   shake_set = 1;
-}
-
-
-/**
- * @brief Indicates the end of the spfx loop.
- *
- * Should be called before the HUD.
- */
-void spfx_end (void)
-{
-   /* Save cycles. */
-   if (shake_set == 0)
-      return;
-
-   /* set the new viewport */
-   gl_defViewport();
 }
 
 
