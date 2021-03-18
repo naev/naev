@@ -29,9 +29,11 @@
 typedef struct PPShader_s {
    unsigned int id; /*< Global id (greater than 0). */
    int priority; /**< Used when sorting, lower is more important. */
+   double dt; /**< Used when computing u_time. */
    GLuint program; /**< Main shader program. */
    /* Shared uniforms. */
    GLint ClipSpaceFromLocal;
+   GLint u_time; /**< Special uniform. */
    /* Fragment Shader. */
    GLint MainTex;
    /* Vertex shader. */
@@ -49,11 +51,17 @@ static PPShader *pp_shaders = NULL; /**< Post-processing shaders. */
 /**
  * @brief Renders an FBO.
  */
-static void render_fbo( GLuint fbo, GLuint tex, PPShader *shader )
+static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
 {
    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
    glUseProgram( shader->program );
+
+   /* Time stuff. */
+   if (shader->u_time >= 0) {
+      shader->dt += dt;
+      glUniform1f( shader->u_time, shader->dt );
+   }
 
    /* Set up stuff .*/
    glEnableVertexAttribArray( shader->VertexPosition );
@@ -151,11 +159,11 @@ void render_all( double game_dt, double real_dt )
    if (postprocess) {
       for (i=0; i<array_size(pp_shaders)-1; i++) {
          next = 1-cur;
-         render_fbo( gl_screen.fbo[next], gl_screen.fbo_tex[cur], &pp_shaders[i] );
+         render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], &pp_shaders[i] );
          cur = next;
       }
       /* Final render is to the screen. */
-      render_fbo( 0, gl_screen.fbo_tex[cur], &pp_shaders[i] );
+      render_fbo( dt, 0, gl_screen.fbo_tex[cur], &pp_shaders[i] );
       gl_screen.current_fbo = 0;
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
    }
@@ -206,6 +214,9 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int priority )
       pp->tex = array_copy( LuaTexture_t, shader->tex );
    else
       pp->tex = NULL;
+   /* Special uniforms. */
+   pp->u_time = glGetUniformLocation( pp->program, "u_time" );
+   pp->dt = 0.;
 
    /* Resort n case stuff is weird. */
    qsort( pp_shaders, array_size(pp_shaders), sizeof(PPShader), ppshader_compare );
