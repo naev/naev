@@ -588,6 +588,7 @@ static int sound_al_loadWav( ALuint *buf, SDL_RWops *rw )
 
    /* Clean up. */
    free( wav_buffer );
+   al_checkErr();
    return 0;
 }
 
@@ -656,6 +657,7 @@ static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    alGenBuffers( 1, buf );
    /* Put into buffer. */
    alBufferData( *buf, format, data, len, info->rate );
+   al_checkErr();
    soundUnlock();
 
    /* Clean up. */
@@ -758,6 +760,7 @@ void sound_al_free( alSound *snd )
 
    /* free the stuff */
    alDeleteBuffers( 1, &snd->buf );
+   al_checkErr();
 
    soundUnlock();
 }
@@ -785,6 +788,7 @@ static void sound_al_volumeUpdate (void)
       for (j=0; j<g->nsources; j++)
          alSourcef( g->sources[j], AL_GAIN, v );
    }
+   al_checkErr();
    soundUnlock();
 }
 
