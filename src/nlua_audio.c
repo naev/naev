@@ -94,9 +94,12 @@ static int audioL_isState( lua_State *L, ALenum state )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    int s = AL_STOPPED;
-   if (!conf.nosound)
+   if (!conf.nosound) {
+      soundLock();
       alGetSourcei( la->source, AL_SOURCE_STATE, &s );
-   al_checkErr();
+      al_checkErr();
+      soundUnlock();
+   }
    lua_pushboolean(L, s==state );
    return 1;
 }
