@@ -24,7 +24,6 @@ local vn = require 'vn'
 terminal = minerva.terminal
 
 function create()
-   -- TODO some announcement/happy music
    vn.clear()
    vn.scene()
    local t = vn.newCharacter( minerva.vn_terminal() )
