@@ -82606,8 +82606,8 @@ msgstr "Interferenz: Leicht\n"
 
 #: src/map_system.c:439
 #, c-format
-msgid " Asteroid Field density %g\n"
-msgstr " Asterioidenfelddichte: %g\n"
+msgid "Asteroid field density: %.2g\n"
+msgstr "Asterioidenfelddichte: %.2g\n"
 
 #: src/map_system.c:448
 msgid "Faction: Multiple\n"

@@ -282,7 +282,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    glColour ccol;
    char buf[1000];
    int cnt;
-   double density;
+   double ast_nb, ast_area;
    double f;
    int hasPresence = 0;
    double unknownPresence = 0;
@@ -432,11 +432,12 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       }
       /* Asteroids. */
       if (array_size(sys->asteroids) > 0 ) {
-         density = 0.;
+         ast_nb = ast_area = 0.;
          for ( i=0; i<array_size(sys->asteroids); i++ ) {
-            density += sys->asteroids[i].area * sys->asteroids[i].density;
+            ast_nb += sys->asteroids[i].nb;
+            ast_area = MAX( ast_area, sys->asteroids[i].area );
          }
-         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _(" Asteroid Field density %g\n"), density );
+         cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Asteroid field density: %.2g\n"), ast_nb*ASTEROID_REF_AREA/ast_area );
       }
       /* Faction */
       f = -1;
