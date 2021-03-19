@@ -480,6 +480,7 @@ static void spfx_updateShake( double dt )
 {
    double mod, vmod, angle;
    double force_x, force_y;
+   double dupdate;
    int forced;
 
    /* Must still be on. */
@@ -495,7 +496,8 @@ static void spfx_updateShake( double dt )
       else
          forced            = 1;
    }
-   shake_force_mean = 0.1*shake_force_mod + 0.9*shake_force_mean;
+   dupdate = dt*2.0;
+   shake_force_mean = dupdate*shake_force_mod + (1.0-dupdate)*shake_force_mean;
 
    /* See if it's settled down. */
    mod      = VMOD( shake_pos );
