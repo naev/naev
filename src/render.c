@@ -145,6 +145,7 @@ void render_all( double game_dt, double real_dt )
    int pp_final, pp_game;
    int cur = 0;
 
+   /* See what post-processing is up. */
    pp_game  = (array_size(pp_shaders_list[PP_LAYER_GAME]) > 0);
    pp_final = (array_size(pp_shaders_list[PP_LAYER_FINAL]) > 0);
 
