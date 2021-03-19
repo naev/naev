@@ -95,7 +95,7 @@ They beam a smile at you.]]),_(runawaysys)))
    end
 
    shiplog.createLog( logidstr, minerva.log.pirate.logname, minerva.log.pirate.logtype, true )
-   shiplog.appendLog( logidstr, _("You accepted a job from a shady individual to harass Dvaered thugs and make it seem like the Za'lek were involved.") )
+   shiplog.appendLog( logidstr, _("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
 
    misn.accept()
    misn.setDesc( misn_desc )
