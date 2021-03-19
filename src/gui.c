@@ -1341,7 +1341,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    glColour col;
 
    /* Make sure is in range. */
-   if (!pilot_inRangePilot( player.p, p, NULL ))
+   if (!pilot_validTarget( player.p, p ))
       return;
 
    /* Get position. */

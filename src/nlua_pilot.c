@@ -95,6 +95,7 @@ static int pilotL_setFriendly( lua_State *L );
 static int pilotL_setInvincible( lua_State *L );
 static int pilotL_setInvincPlayer( lua_State *L );
 static int pilotL_setHide( lua_State *L );
+static int pilotL_setInvisible( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
@@ -204,6 +205,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setInvincible", pilotL_setInvincible },
    { "setInvincPlayer", pilotL_setInvincPlayer },
    { "setHide", pilotL_setHide },
+   { "setInvisible", pilotL_setInvisible },
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
    { "setHilight", pilotL_setHilight },
@@ -2101,22 +2103,38 @@ static int pilotL_setInvincPlayer( lua_State *L )
 
 
 /**
- * @brief Sets the pilot's invisibility status.
+ * @brief Sets the pilot's hide status.
  *
- * An invisible pilot is neither updated nor drawn. It stays frozen in time
- *  until the invisibility is lifted.
+ * A hidden pilot is neither updated nor drawn. It stays frozen in time
+ *  until the hide is lifted.
  *
  * @usage p:setHide() -- p will disappear
  * @usage p:setHide(true) -- p will disappear
  * @usage p:setHide(false) -- p will appear again
  *
- *    @luatparam Pilot p Pilot to set invisibility status of.
- *    @luatparam boolean state State to set invisibility.
+ *    @luatparam Pilot p Pilot to set hidden status of.
+ *    @luatparam boolean state State to set hide.
  * @luafunc setHide
  */
 static int pilotL_setHide( lua_State *L )
 {
    return pilotL_setFlagWrapper( L, PILOT_HIDE );
+}
+
+
+/**
+ * @brief Sets the pilot's invisibility status.
+ *
+ * An invisible pilot is neither updated nor drawn. It stays frozen in time
+ *  until the invisibility is lifted.
+ *
+ *    @luatparam Pilot p Pilot to set invisibility status of.
+ *    @luatparam boolean state State to set invisibility.
+ * @luafunc setInvisible
+ */
+static int pilotL_setInvisible( lua_State *L )
+{
+   return pilotL_setFlagWrapper( L, PILOT_INVISIBLE );
 }
 
 
