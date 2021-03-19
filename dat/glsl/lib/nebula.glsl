@@ -9,7 +9,7 @@ const int ITERATIONS = 3;
 const float SCALAR = pow(2., 4./3.);
 const float COLOUR_DISPERSION = 0.05;
 
-vec4 nebula( vec4 bg, vec2 rel_pos, float time, float hue, float brightness )
+vec4 nebula( vec4 bg, vec2 rel_pos, float time, float hue, float value, float brightness )
 {
    float f, scale;
    vec3 uv, rgb, hsv;
@@ -35,7 +35,7 @@ vec4 nebula( vec4 bg, vec2 rel_pos, float time, float hue, float brightness )
    /* Choose the colour. */
    hue += COLOUR_DISPERSION * snoise( 0.1 * uv );
    hue = fract(hue);
-   hsv = vec3( hue, 1.0, 1.0 );
+   hsv = vec3( hue, value, 1.0 );
    rgb = hsv2rgb( hsv );
 
    return mix( bg, vec4( rgb, 1.0 ), brightness+(1.0-brightness)*f );
