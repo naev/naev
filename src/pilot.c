@@ -2157,7 +2157,8 @@ void pilot_update( Pilot* pilot, const double dt )
                pilot->afterburner->outfit->u.afb.heat_cap)==0)
             pilot_afterburnOver(pilot);
          else {
-            if (pilot->id == PLAYER_ID) spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+            if (pilot->id == PLAYER_ID)
+               spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
                   pilot->afterburner->outfit->u.afb.heat_base,
                   pilot->afterburner->outfit->u.afb.heat_cap );

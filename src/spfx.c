@@ -38,11 +38,16 @@
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
 #define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
 
+/*
+ * Effect parameters.
+ */
 #define SHAKE_MASS      (1./400.) /** Shake mass. */
 #define SHAKE_K         (1./50.) /**< Constant for virtual spring. */
 #define SHAKE_B         (3.*sqrt(SHAKE_K*SHAKE_MASS)) /**< Constant for virtual dampener. */
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
+
+#define DAMAGE_DECAY    0.5 /**< Rate at which the damage strength goes down. */
 
 
 /* Trail stuff. */
@@ -52,7 +57,7 @@ static Trail_spfx** trail_spfx_stack;
 
 
 /*
- * special hard-coded special effects
+ * Special hard-coded special effects
  */
 /* shake aka rumble */
 static unsigned int shake_shader_pp_id = 0; /**< ID of the post-processing shader for the shake. */
@@ -539,7 +544,7 @@ static void spfx_updateDamage( double dt )
       return;
 
    /* Decrement and turn off if necessary. */
-   damage_strength -= dt; /**< Really fast decay. */
+   damage_strength -= DAMAGE_DECAY * dt;
    if (damage_strength < 0.) {
       damage_strength = 0.;
       render_postprocessRm( damage_shader_pp_id );
