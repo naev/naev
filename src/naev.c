@@ -953,8 +953,12 @@ void update_routine( double dt, int enter_sys )
    /* Update camera. */
    cam_update( dt );
 
-   if (!enter_sys)
+   if (!enter_sys) {
       hook_exclusionEnd( dt );
+
+      /* Run the update hook. */
+      hooks_run( "update" );
+   }
 }
 
 
