@@ -76,7 +76,7 @@ local function _chatter( chat_type )
          text = nil
       else
          local textlist = {
-            _("Cyborg Chicken looks a bit slum."),
+            _("Cyborg Chicken looks a bit glum."),
             _("Cyborg Chicken squints at you."),
             _("Cyborg Chicken pecks at the ground."),
             _("Cyborg Chicken kicks at the blackjack table."),
