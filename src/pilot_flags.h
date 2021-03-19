@@ -61,8 +61,8 @@ enum {
    /* Visibility stuff. */
    PILOT_VISPLAYER,     /**< Pilot is always visible to the player (only player). */
    PILOT_VISIBLE,       /**< Pilot is always visible to other pilots. */
+   PILOT_HIDE,          /**< Pilot is invisible to other pilots, nor is it updated. */
    PILOT_HILIGHT,       /**< Pilot is hilighted when visible (this does not increase visibility). */
-   PILOT_INVISIBLE,     /**< Pilot is invisible to other pilots, nor is it updated. */
    /* Outfit stuff. */
    PILOT_AFTERBURNER,   /**< Pilot has their afterburner activated. */
    /* Refueling. */

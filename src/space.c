@@ -1551,7 +1551,7 @@ void space_init( const char* sysname )
    /* Simulate system. */
    space_simulating = 1;
    if (player.p != NULL)
-      pilot_setFlag( player.p, PILOT_INVISIBLE );
+      pilot_setFlag( player.p, PILOT_HIDE );
    player_messageToggle( 0 );
    s = sound_disabled;
    sound_disabled = 1;
@@ -1563,7 +1563,7 @@ void space_init( const char* sysname )
    sound_disabled = s;
    player_messageToggle( 1 );
    if (player.p != NULL)
-      pilot_rmFlag( player.p, PILOT_INVISIBLE );
+      pilot_rmFlag( player.p, PILOT_HIDE );
    space_simulating = 0;
 
    /* Refresh overlay if necessary (player kept it open). */

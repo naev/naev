@@ -94,7 +94,7 @@ static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
 static int pilotL_setInvincible( lua_State *L );
 static int pilotL_setInvincPlayer( lua_State *L );
-static int pilotL_setInvisible( lua_State *L );
+static int pilotL_setHide( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
@@ -203,7 +203,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setFriendly", pilotL_setFriendly },
    { "setInvincible", pilotL_setInvincible },
    { "setInvincPlayer", pilotL_setInvincPlayer },
-   { "setInvisible", pilotL_setInvisible },
+   { "setHide", pilotL_setHide },
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
    { "setHilight", pilotL_setHilight },
@@ -2106,17 +2106,17 @@ static int pilotL_setInvincPlayer( lua_State *L )
  * An invisible pilot is neither updated nor drawn. It stays frozen in time
  *  until the invisibility is lifted.
  *
- * @usage p:setInvisible() -- p will disappear
- * @usage p:setInvisible(true) -- p will disappear
- * @usage p:setInvisible(false) -- p will appear again
+ * @usage p:setHide() -- p will disappear
+ * @usage p:setHide(true) -- p will disappear
+ * @usage p:setHide(false) -- p will appear again
  *
  *    @luatparam Pilot p Pilot to set invisibility status of.
  *    @luatparam boolean state State to set invisibility.
- * @luafunc setInvisible
+ * @luafunc setHide
  */
-static int pilotL_setInvisible( lua_State *L )
+static int pilotL_setHide( lua_State *L )
 {
-   return pilotL_setFlagWrapper( L, PILOT_INVISIBLE );
+   return pilotL_setFlagWrapper( L, PILOT_HIDE );
 }
 
 
@@ -3218,7 +3218,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "visible", .id = PILOT_VISIBLE },
    { .name = "visplayer", .id = PILOT_VISPLAYER },
    { .name = "hilight", .id = PILOT_HILIGHT },
-   { .name = "invisible", .id = PILOT_INVISIBLE },
+   { .name = "hide", .id = PILOT_HIDE },
    { .name = "invincible", .id = PILOT_INVINCIBLE },
    { .name = "invinc_player", .id = PILOT_INVINC_PLAYER },
    { .name = "friendly", .id = PILOT_FRIENDLY },
