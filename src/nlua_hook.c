@@ -762,6 +762,9 @@ static int hook_safe( lua_State *L )
  *
  * It is closely related to hook.safe(), but you have to manually remove it or it continues forever.
  *
+ * The current delta-tick (time passed in game) and real delta-tick (independent of game status) are passed as parameters:<br/>
+ * function f( dt, real_dt, args )
+ *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
  *    @luatreturn number Hook identifier.

@@ -937,6 +937,8 @@ static void update_all (void)
  */
 void update_routine( double dt, int enter_sys )
 {
+   HookParam h[3];
+
    if (!enter_sys) {
       hook_exclusionStart();
 
@@ -956,8 +958,14 @@ void update_routine( double dt, int enter_sys )
    if (!enter_sys) {
       hook_exclusionEnd( dt );
 
+      /* Hook set up. */
+      h[0].type = HOOK_PARAM_NUMBER;
+      h[0].u.num = dt;
+      h[1].type = HOOK_PARAM_NUMBER;
+      h[1].u.num = real_dt;
+      h[2].type = HOOK_PARAM_SENTINEL;
       /* Run the update hook. */
-      hooks_run( "update" );
+      hooks_runParam( "update", h );
    }
 }
 
