@@ -240,8 +240,9 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
          pilot_isFlag( target, PILOT_DEAD ))
       return 0;
 
-   /* Must not be invisible. */
-   if (pilot_isFlag( target, PILOT_HIDE ))
+   /* Must not be hidden nor invisible. */
+   if (pilot_isFlag( target, PILOT_HIDE ) ||
+         pilot_isFlag( target, PILOT_INVISIBLE))
       return 0;
 
    /* Must be in range. */
