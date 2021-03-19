@@ -27,6 +27,8 @@ typedef struct JumpPoint_ JumpPoint;
 #define ASSET_VIRTUAL         0 /**< The asset is virtual. */
 #define ASSET_REAL            1 /**< The asset is real. */
 
+#define ASTEROID_REF_AREA     500000 /**< The "density" value in an asteroid field means 1 rock per this area. */
+
 
 /* Asteroid status enum */
 enum {

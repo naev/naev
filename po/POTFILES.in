@@ -2735,6 +2735,8 @@ src/player_gui.c
 src/player_gui.h
 src/queue.c
 src/queue.h
+src/render.c
+src/render.h
 src/rng.c
 src/rng.h
 src/save.c
