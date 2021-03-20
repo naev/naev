@@ -30,10 +30,6 @@ function formations.buffer(leader)
    local class_count = count_classes(pilots)
    local angle, radius
 
---   local radii = {["Armoured Transport"] = -500, Scout = 1200, Drone = 1500, Fighter = 900,
---                  Bomber = 850, Corvette = 700, Destroyer = 500, Cruiser = 350, Carrier = 250} -- Different radii for each class.
---   local count = {["Armoured Transport"] = 1, Scout = 1, Drone = 1, Fighter = 1,
---                  Bomber = 1, Corvette = 1, Destroyer = 1, Cruiser = 1, Carrier = 1} 
    local radii = {["Yacht"] = -500,
                   ["Luxury Yacht"] = -400,
                   ["Courier"] = -300,
