@@ -82,6 +82,7 @@ static int opt_videoSave( unsigned int wid, char *str );
 static void opt_videoDefaults( unsigned int wid, char *str );
 static void opt_getVideoMode( int *w, int *h, int *fullscreen );
 static void opt_setScalefactor( unsigned int wid, char *str );
+static void opt_checkColorblind( unsigned int wid, char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
 static int opt_audioSave( unsigned int wid, char *str );
@@ -1284,7 +1285,7 @@ static void opt_video( unsigned int wid )
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkColorblind", _("Colorblind mode"), NULL,
+         "chkColorblind", _("Colorblind mode"), opt_checkColorblind,
          conf.colorblind );
    y -= 40;
 
@@ -1378,16 +1379,22 @@ static int opt_videoSave( unsigned int wid, char *str )
       SDL_SetHint( SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
             conf.minimize ? "1" : "0" );
    }
-   f = window_checkboxState( wid, "chkColorblind" );
-   if (conf.colorblind != f) {
-      conf.colorblind = f;
-      opt_needRestart();
-   }
 
    /* GUI. */
    conf.big_icons = window_checkboxState( wid, "chkBigIcons" );
 
    return 0;
+}
+
+
+/**
+ * @brief Handles the colorblind checkbox being checked.
+ */
+static void opt_checkColorblind( unsigned int wid, char *str )
+{
+   int f = window_checkboxState( wid, str );
+   conf.colorblind = f;
+   gl_colorblind( f );
 }
 
 

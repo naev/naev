@@ -73,6 +73,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "printDim", gfxL_printDim },
    { "print", gfxL_print },
    { "printText", gfxL_printText },
+   /* Misc. */
    { "setBlendMode", gfxL_setBlendMode },
    {0,0}
 }; /**< GFX methods. */
@@ -270,14 +271,22 @@ static int gfxL_renderTexRaw( lua_State *L )
 
 
 /**
- * @brief
+ * @brief Renders a texture using a transformation matrix.
+ *
+ *    @luatparam Tex tex Texture to render.
+ *    @luatparam Shader shader Shader to use when rendering.
+ *    @luatparam Transformation H Transformation matrix to use.
+ *    @luatparam[opt=white] Colour colour Colour to use or white if not set.
+ * @luafunc renderTexH
  */
 static int gfxL_renderTexH( lua_State *L )
 {
    glTexture *t;
    const glColour *col;
    LuaShader_t *shader;
-   gl_Matrix4 *H;
+   gl_Matrix4 *H, *TH, ID;
+
+   ID = gl_Matrix4_Identity();
 
    NLUA_CHECKRW(L);
 
@@ -286,6 +295,7 @@ static int gfxL_renderTexH( lua_State *L )
    shader = luaL_checkshader( L,2 );
    H     = luaL_checktransform( L,3 );
    col   = luaL_optcolour(L,4,&cWhite);
+   TH    = luaL_opttransform( L,5,&ID );
 
    glUseProgram( shader->program );
 
@@ -294,7 +304,9 @@ static int gfxL_renderTexH( lua_State *L )
    gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexPosition,
          0, 2, GL_FLOAT, 0 );
 
+   /* Set up texture vertices if necessary. */
    if (shader->VertexTexCoord >= 0) {
+      gl_Matrix4_Uniform( shader->ViewSpaceFromLocal, *TH );
       glEnableVertexAttribArray( shader->VertexTexCoord );
       gl_vboActivateAttribOffset( gl_squareVBO, shader->VertexTexCoord,
             0, 2, GL_FLOAT, 0 );

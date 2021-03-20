@@ -201,6 +201,9 @@ function cl.play( value )
       won = won*10
       msg = string.format(n_("#gYou won #p%d Minerva Token#g (matched one)!#0", "#gYou won #p%d Minerva Tokens#g (matched three)!#0", won), won)
    end
+   if won > 0 then
+      minerva.tokens_pay( won )
+   end
    cl.msg = msg
    cl.betting = true
    _chatter( matches )

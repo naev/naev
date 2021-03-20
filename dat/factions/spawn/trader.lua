@@ -1,4 +1,4 @@
-require("factions/spawn/common")
+local scom = require "factions/spawn/lib/common"
 
 
 -- @brief Spawns a small trade fleet.

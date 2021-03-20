@@ -2207,14 +2207,14 @@ dat/factions/equip/trader.lua
 dat/factions/equip/zalek.lua
 dat/factions/spawn/civilian.lua
 dat/factions/spawn/collective.lua
-dat/factions/spawn/common.lua
 dat/factions/spawn/dvaered.lua
 dat/factions/spawn/empire.lua
 dat/factions/spawn/flf.lua
 dat/factions/spawn/frontier.lua
 dat/factions/spawn/goddard.lua
 dat/factions/spawn/independent.lua
-dat/factions/spawn/mercenary_helper.lua
+dat/factions/spawn/lib/common.lua
+dat/factions/spawn/lib/mercenary.lua
 dat/factions/spawn/miner.lua
 dat/factions/spawn/nasin.lua
 dat/factions/spawn/pirate.lua
@@ -2735,6 +2735,8 @@ src/player_gui.c
 src/player_gui.h
 src/queue.c
 src/queue.h
+src/render.c
+src/render.h
 src/rng.c
 src/rng.h
 src/save.c

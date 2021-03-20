@@ -280,9 +280,9 @@ Her eyes sparkle with determination.]]))
 "It is all coming together! I will finally be able to meet him again! This is so great! I don't know what to tell him first. Do you think he'll recognize me?"]]))
    maikki(_([["I don't have a lead at the moment, but it can't be far. Keep your eyes open and if you find anything look suspicious, please get in touch with me! I'll also be keeping my eyes open."]]))
    maikki(_([["Oh, I almost forgot. I got lucky with a Pachinko machine and won a lot of Minerva Tokens and a lifetime supply of parfaits! Since I don't need the tokens to buy anything anymore, here, you can take them."]]))
+   vn.sfxVictory()
    vn.func( function ()
       -- no reward, yet...
-      vn.sfxVictory()
       mission_finish = true
       minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
       shiplog.appendLog( logidstr, _("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )

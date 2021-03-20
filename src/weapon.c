@@ -761,7 +761,7 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
       return 0;
 
    /* Can't hit invisible stuff. */
-   if (pilot_isFlag(p, PILOT_INVISIBLE))
+   if (pilot_isFlag(p, PILOT_HIDE))
       return 0;
 
    /* Can never hit same faction. */
@@ -1087,6 +1087,11 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
          /* Set as hostile. */
          pilot_setHostile(p);
       }
+   }
+   /* Do damage effect if it is the player. */
+   else if (p->faction == FACTION_PLAYER) {
+      if (p->shield < 0.) /**< Only play effect on armour. */
+         spfx_damage( dmg / p->armour_max );
    }
    /* Otherwise just inform of being attacked. */
    else

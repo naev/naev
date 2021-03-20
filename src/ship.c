@@ -429,37 +429,6 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
    temp->gfx_store = gl_loadImagePad( buf, gfx_store, OPENGL_TEX_VFLIP, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
-#if 0 /* Disabled for now due to issues with larger sprites. */
-   /* Some filtering. */
-   for (j=0; j<sh; j++) {
-      for (i=0; i<sw; i++) {
-         pix   = (uint32_t*) ((uint8_t*) gfx->pixels + j*gfx->pitch + i*gfx->format->BytesPerPixel);
-         r     = ((double) (*pix & RMASK)) / (double) RMASK;
-         g     = ((double) (*pix & GMASK)) / (double) GMASK;
-         b     = ((double) (*pix & BMASK)) / (double) BMASK;
-         a     = ((double) (*pix & AMASK)) / (double) AMASK;
-         if (j%2) /* Add scanlines. */
-            a *= 0.5;
-
-         /* Convert to HSV. */
-         col_rgb2hsv( &h, &s, &v, r, g, b );
-
-         h  = 0.0;
-         s  = 1.0;
-         v *= 1.5;
-
-         /* Convert back to RGB. */
-         col_hsv2rgb( &r, &g, &b, h, s, v );
-
-         /* Convert to pixel. */
-         *pix =   ((uint32_t) (r*RMASK) & RMASK) |
-                  ((uint32_t) (g*GMASK) & GMASK) |
-                  ((uint32_t) (b*BMASK) & BMASK) |
-                  ((uint32_t) (a*AMASK) & AMASK);
-      }
-   }
-#endif
-
    /* Load the surface. */
    snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
    temp->gfx_target = gl_loadImagePad( buf, gfx, OPENGL_TEX_VFLIP, sw, sh, 1, 1, 1 );
@@ -543,10 +512,10 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    delim = strchr( buf, '_' );
    base = delim==NULL ? strdup( buf ) : strndup( buf, delim-buf );
 
-   ext = ".png";
+   ext = ".webp";
    snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
    if (!PHYSFS_exists(str)) {
-      ext = ".webp";
+      ext = ".png";
       snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
    }
    ship_loadSpaceImage( temp, str, sx, sy );

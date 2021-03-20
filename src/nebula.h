@@ -7,6 +7,9 @@
 #  define NEBULA_H
 
 
+#define NEBULA_DEFAULT_HUE    260.0 /**< Default hue (in degrees) for the nebula. */
+
+
 /*
  * Init/Exit
  */
@@ -29,7 +32,7 @@ void nebu_update( double dt );
  * Misc
  */
 double nebu_getSightRadius (void);
-void nebu_prep( double density, double volatility );
+void nebu_prep( double density, double volatility, double hue );
 void nebu_movePuffs( double x, double y );
 
 

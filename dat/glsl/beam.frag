@@ -259,6 +259,4 @@ void main(void) {
    //* Just use default
    color_out = beam_default( color, pos_tex, pos_px );
 #endif /* HAS_GL_ARB_shader_subroutine */
-
-#include "colorblind.glsl"
 }

@@ -1300,6 +1300,14 @@ static void uniedit_editSys (void)
    window_setInputFilter( wid, "inpVolatility", INPUT_FILTER_NUMBER );
    x += 50 + 12;
 
+   s = _("Hue");
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtHue",
+         NULL, NULL, s );
+   window_addInput( wid, x += l + 7, y, 50, 20, "inpHue", 4, 1, NULL );
+   window_setInputFilter( wid, "inpHue", INPUT_FILTER_NUMBER );
+   x += 50 + 12;
+
    (void)x;
 
    /* Load values */
@@ -1313,6 +1321,8 @@ static void uniedit_editSys (void)
    window_setInput( wid, "inpNebula", buf );
    snprintf( buf, sizeof(buf), "%g", sys->nebu_volatility );
    window_setInput( wid, "inpVolatility", buf );
+   snprintf( buf, sizeof(buf), "%g", sys->nebu_hue*360. );
+   window_setInput( wid, "inpHue", buf );
 
    /* Generate the list. */
    uniedit_editGenList( wid );
@@ -1397,6 +1407,7 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
    sys->interference    = atof(window_getInput( wid, "inpInterference" ));
    sys->nebu_density    = atof(window_getInput( wid, "inpNebula" ));
    sys->nebu_volatility = atof(window_getInput( wid, "inpVolatility" ));
+   sys->nebu_hue        = atof(window_getInput( wid, "inpHue" )) / 360.;
 
    /* Reconstruct universe presences. */
    space_reconstructPresences();

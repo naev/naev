@@ -31,6 +31,7 @@
 
 
 /* Nebula properties */
+static double nebu_hue = 0.; /**< The hue. */
 static double nebu_density = 0.; /**< The density. */
 static double nebu_dx   = 0.; /**< Length scale (space coords) for turbulence/eddies we draw. */
 static double nebu_view = 0.; /**< How far player can see. */
@@ -60,6 +61,7 @@ typedef struct NebulaPuff_ {
    double y; /**< Y position */
    double height; /**< height vs player */
    int tex; /**< Texture */
+   glColour col; /**< Colour. */
 } NebulaPuff;
 static NebulaPuff *nebu_puffs = NULL; /**< Stack of puffs. */
 static int nebu_npuffs        = 0; /**< Number of puffs. */
@@ -86,6 +88,7 @@ static void nebu_blitFBO (void);
  */
 int nebu_init (void)
 {
+   nebu_time = -1000.0 * RNGF();
    nebu_generatePuffs();
    return nebu_resize();
 }
@@ -100,7 +103,6 @@ int nebu_resize (void)
 {
    double scale;
    GLfloat fbo_w, fbo_h;
-   GLenum status;
 
    scale = conf.nebu_scale * gl_screen.scale;
    fbo_w = round(gl_screen.nw/scale);
@@ -115,39 +117,18 @@ int nebu_resize (void)
    glDeleteTextures( 1, &nebu_tex );
    glDeleteFramebuffers( 1, &nebu_fbo );
 
-   if (nebu_dofbo) {
-      /* Create the render buffer. */
-      glGenTextures(1, &nebu_tex);
-      glBindTexture(GL_TEXTURE_2D, nebu_tex);
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nebu_render_w, nebu_render_h, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-      glBindTexture(GL_TEXTURE_2D, 0);
-
-      /* Create the frame buffer. */
-      glGenFramebuffers( 1, &nebu_fbo );
-      glBindFramebuffer(GL_FRAMEBUFFER, nebu_fbo);
-
-      /* Attach the colour buffer. */
-      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, nebu_tex, 0);
-
-      /* Check status. */
-      status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-      if (status != GL_FRAMEBUFFER_COMPLETE)
-         WARN(_("Error setting up nebula framebuffer!"));
-
-      /* Restore state. */
-      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-
-      gl_checkErr();
-   }
+   if (nebu_dofbo)
+      gl_fboCreate( &nebu_fbo, &nebu_tex, nebu_render_w, nebu_render_h );
 
    /* Set up the matrices. */
    nebu_render_P = gl_Matrix4_Identity();
    nebu_render_P = gl_Matrix4_Translate(nebu_render_P, -nebu_render_w/2., -nebu_render_h/2., 0. );
    nebu_render_P = gl_Matrix4_Scale(nebu_render_P, nebu_render_w, nebu_render_h, 1);
+   glUseProgram(shaders.nebula_background.program);
+   gl_Matrix4_Uniform(shaders.nebula_background.projection, nebu_render_P);
+   glUseProgram(shaders.nebula.program);
+   gl_Matrix4_Uniform(shaders.nebula.projection, nebu_render_P);
+   glUseProgram(0);
 
    return 0;
 }
@@ -213,8 +194,6 @@ static void nebu_renderBackground( const double dt )
    glUseProgram(shaders.nebula_background.program);
 
    /* Set shader uniforms. */
-   gl_uniformColor(shaders.nebula_background.color, &cBlue);
-   gl_Matrix4_Uniform(shaders.nebula_background.projection, nebu_render_P);
    glUniform1f(shaders.nebula_background.eddy_scale, nebu_view * cam_getZoom() / nebu_scale);
    glUniform1f(shaders.nebula_background.time, nebu_time);
 
@@ -300,7 +279,6 @@ void nebu_renderOverlay( const double dt )
    nebu_renderPuffs( 0 );
 
    /* Prepare the matrix */
-   /* TODO: translate according to spfx_getShake()? */
    if (nebu_dofbo) {
       glBindFramebuffer(GL_FRAMEBUFFER, nebu_fbo);
       glClearColor( 0., 0., 0., 0. );
@@ -311,8 +289,6 @@ void nebu_renderOverlay( const double dt )
    glUseProgram(shaders.nebula.program);
 
    /* Set shader uniforms. */
-   gl_uniformColor(shaders.nebula.color, &cDarkBlue);
-   gl_Matrix4_Uniform(shaders.nebula.projection, nebu_render_P);
    glUniform1f(shaders.nebula.horizon, nebu_view * z / nebu_scale);
    glUniform1f(shaders.nebula.eddy_scale, nebu_dx * z / nebu_scale);
    glUniform1f(shaders.nebula.time, nebu_time);
@@ -343,33 +319,36 @@ void nebu_renderOverlay( const double dt )
 static void nebu_renderPuffs( int below_player )
 {
    int i;
+   NebulaPuff *puff;
 
    /* Main menu shouldn't have puffs */
-   if (menu_isOpen(MENU_MAIN)) return;
+   if (menu_isOpen(MENU_MAIN))
+      return;
 
    for (i=0; i<nebu_npuffs; i++) {
+      puff = &nebu_puffs[i];
 
       /* Separate by layers */
-      if ((below_player && (nebu_puffs[i].height < 1.)) ||
-            (!below_player && (nebu_puffs[i].height > 1.))) {
+      if ((below_player && (puff->height < 1.)) ||
+            (!below_player && (puff->height > 1.))) {
 
          /* calculate new position */
-         nebu_puffs[i].x += puff_x * nebu_puffs[i].height;
-         nebu_puffs[i].y += puff_y * nebu_puffs[i].height;
+         puff->x += puff_x * puff->height;
+         puff->y += puff_y * puff->height;
 
          /* Check boundaries */
-         if (nebu_puffs[i].x > SCREEN_W + NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].x -= SCREEN_W + 2*NEBULA_PUFF_BUFFER;
-         else if (nebu_puffs[i].y > SCREEN_H + NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].y -= SCREEN_H + 2*NEBULA_PUFF_BUFFER;
-         else if (nebu_puffs[i].x < -NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].x += SCREEN_W + 2*NEBULA_PUFF_BUFFER;
-         else if (nebu_puffs[i].y < -NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].y += SCREEN_H + 2*NEBULA_PUFF_BUFFER;
+         if (puff->x > SCREEN_W + NEBULA_PUFF_BUFFER)
+            puff->x -= SCREEN_W + 2*NEBULA_PUFF_BUFFER;
+         else if (puff->y > SCREEN_H + NEBULA_PUFF_BUFFER)
+            puff->y -= SCREEN_H + 2*NEBULA_PUFF_BUFFER;
+         else if (puff->x < -NEBULA_PUFF_BUFFER)
+            puff->x += SCREEN_W + 2*NEBULA_PUFF_BUFFER;
+         else if (puff->y < -NEBULA_PUFF_BUFFER)
+            puff->y += SCREEN_H + 2*NEBULA_PUFF_BUFFER;
 
          /* Render */
-         gl_blitStatic( nebu_pufftexs[nebu_puffs[i].tex],
-               nebu_puffs[i].x, nebu_puffs[i].y, &cLightBlue );
+         gl_blitStatic( nebu_pufftexs[puff->tex],
+               puff->x, puff->y, &puff->col );
       }
    }
 }
@@ -390,12 +369,23 @@ void nebu_movePuffs( double x, double y )
  *
  *    @param density Density of the nebula (0-1000).
  *    @param volatility Volatility of the nebula (0-1000).
+ *    @param hue Hue of the nebula (0-1).
  */
-void nebu_prep( double density, double volatility )
+void nebu_prep( double density, double volatility, double hue )
 {
    (void)volatility;
    int i;
+   float puffhue;
 
+   /* Set the hue. */
+   nebu_hue = hue;
+   glUseProgram(shaders.nebula.program);
+   glUniform1f(shaders.nebula.hue, nebu_hue);
+   glUseProgram(shaders.nebula_background.program);
+   glUniform1f(shaders.nebula_background.hue, nebu_hue);
+   glUseProgram(0);
+
+   /* Set density parameters. */
    nebu_density = density;
    nebu_update( 0. );
    nebu_dt   = (2.*density + 200.) / 10000.; /* Faster at higher density */
@@ -414,6 +404,11 @@ void nebu_prep( double density, double volatility )
       /* Maybe make size related? */
       nebu_puffs[i].tex = RNG(0,NEBULA_PUFFS-1);
       nebu_puffs[i].height = RNGF() + 0.2;
+
+      /* Set the colour, with less saturation. */
+      puffhue = nebu_hue * 360.0 + 0.1*(RNGF()*2.-1.);
+      col_hsv2rgb( &nebu_puffs[i].col, puffhue, 0.6, 1.0 );
+      nebu_puffs[i].col.a = 1.0;
    }
 }
 

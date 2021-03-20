@@ -55,6 +55,7 @@ typedef struct LuaShader_s {
    GLint nuniforms;
    /* Other stuff. */
    LuaTexture_t *tex;
+   unsigned int pp_id; /**< Post-processing ID if set. */
 } LuaShader_t;
 
 

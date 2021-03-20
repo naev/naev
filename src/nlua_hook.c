@@ -56,6 +56,9 @@ static int hook_shipsell( lua_State *L );
 static int hook_input( lua_State *L );
 static int hook_mouse( lua_State *L );
 static int hook_safe( lua_State *L );
+static int hook_update( lua_State *L );
+static int hook_renderbg( lua_State *L );
+static int hook_renderfg( lua_State *L );
 static int hook_standing( lua_State *L );
 static int hook_discover( lua_State *L );
 static int hook_pay( lua_State *L );
@@ -83,6 +86,9 @@ static const luaL_Reg hook_methods[] = {
    { "input", hook_input },
    { "mouse", hook_mouse },
    { "safe", hook_safe },
+   { "update", hook_update },
+   { "renderbg", hook_renderbg },
+   { "renderfg", hook_renderfg },
    { "standing", hook_standing },
    { "discover", hook_discover },
    { "pay", hook_pay },
@@ -735,7 +741,7 @@ static int hook_pay( lua_State *L )
    return 1;
 }
 /**
- * @brief Hook run at the end of each frame.
+ * @brief Hook run once at the end of the next frame regardless of anything that can happen.
  *
  * This hook is a good way to do possibly breaking stuff like for example player.teleport().
  *
@@ -748,6 +754,56 @@ static int hook_safe( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "safe", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hook run at the end of each frame when the update routine is run (game is not paused, etc.).
+ *
+ * It is closely related to hook.safe(), but you have to manually remove it or it continues forever.
+ *
+ * The current delta-tick (time passed in game) and real delta-tick (independent of game status) are passed as parameters:<br/>
+ * function f( dt, real_dt, args )
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc update
+ */
+static int hook_update( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "update", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hook that runs during rendering the background (just above the static background stuff). Meant to be only for rendering things.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc renderbg
+ */
+static int hook_renderbg( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "renderbg", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hook that runs during rendering the foreground (just below the gui stuff). Meant to be only for rendering things.
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc renderbg
+ */
+static int hook_renderfg( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "renderfg", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
