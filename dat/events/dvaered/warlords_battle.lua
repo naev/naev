@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Warlords battle">
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>5</chance>
   <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
   <flags>
   </flags>
@@ -133,10 +133,7 @@ function attack ()
    attackers[2*n+7]:memory().shield_return = 99
 
    attackers = arrangeList(attackers)  --The heaviest ships will surround the leader
-
-   -- Cannot use random key because buffer doesn't recognize Armored Transport.
-   formations = {"echelon_left", "cross", "echelon_right", "wedge", "wall", "vee", "column", "circle", "fishbone", "chevron"}
-   form = formations[rnd.rnd(1,#formations)]
+   form = formation.random_key()
 
    for i, j in ipairs(attackers) do
       j:rename("Invader")
@@ -208,15 +205,17 @@ end
 
 -- Both fleets are close enough: start the epic battle
 function startBattle()
-   for i, p in ipairs(attackers) do
-      p:memory().aggressive = true
+   if inForm then
+      for i, p in ipairs(attackers) do
+         p:memory().aggressive = true
+      end
+      getLeader(attackers):control(false)
+      for i, p in ipairs(defenders) do
+         p:memory().aggressive = true
+      end
+      getLeader(defenders):control(false)
+      inForm = false
    end
-   getLeader(attackers):control(false)
-   for i, p in ipairs(defenders) do
-      p:memory().aggressive = true
-   end
-   getLeader(defenders):control(false)
-   inForm = false
 end
 
 function defenderAttacked(victim, attacker)
