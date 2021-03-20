@@ -272,6 +272,7 @@ static int audioL_new( lua_State *L )
       /* Defaults. */
       master = sound_getVolumeLog();
       alSourcef( la.source, AL_GAIN, master );
+      alSourcei( la.source, AL_SOURCE_RELATIVE, 0 );
       al_checkErr();
       soundUnlock();
 
