@@ -8,6 +8,7 @@
 #include "array.h"
 #include "font.h"
 #include "gui.h"
+#include "hook.h"
 #include "map_overlay.h"
 #include "naev.h"
 #include "opengl.h"
