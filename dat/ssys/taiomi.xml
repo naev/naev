@@ -20,8 +20,8 @@
  </jumps>
  <asteroids>
   <asteroid>
-   <type>scrap</type>
-   <type>scrap</type>
+   <type>default</type>
+   <type>default</type>
    <type>default</type>
    <type>default</type>
    <type>liquid</type>
