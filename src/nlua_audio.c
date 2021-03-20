@@ -272,7 +272,16 @@ static int audioL_new( lua_State *L )
       /* Defaults. */
       master = sound_getVolumeLog();
       alSourcef( la.source, AL_GAIN, master );
-      alSourcei( la.source, AL_SOURCE_RELATIVE, AL_FALSE );
+      /* The behaviour of sources depends on whether or not they are mono or
+       * stereo. In the case they are stereo, no position stuff is actually
+       * done. However, if they are mono, they are played with absolute
+       * position and the sound heard depends on the listener. We can disable
+       * this by setting AL_SOURCE_RELATIVE which puts the listener always at
+       * the origin, and then setting the source at the same origin. It should
+       * be noted that depending on the sound model this can be bad if it is
+       * not bounded. */
+      alSourcei( la.source, AL_SOURCE_RELATIVE, AL_TRUE );
+      alSource3f( la.source, AL_POSITION, 0., 0., 0. );
       al_checkErr();
       soundUnlock();
 
