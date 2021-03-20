@@ -188,7 +188,7 @@ function graphics.newQuad( x, y, width, height, sw, sh )
    q.h = height/sh
    q.quad = true
    local H = love_math.newTransform()
-   H:scale( q.w, q.h ):translate( q.x, q.y )
+   H:translate( q.x, q.y ):scale( q.w, q.h )
    q.H = H
    return q
 end
