@@ -629,6 +629,7 @@ static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    ALenum format;
    ogg_int64_t len;
    char *data;
+   long bytes_read;
 
    /* Finish opening the file. */
    ret = ov_test_open(vf);
@@ -647,9 +648,13 @@ static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
 
    /* Fill buffer. */
    i = 0;
-   while (i < len) {
-      /* Fill buffer with data in the 16 bit signed samples format. */
-      i += ov_read( vf, &data[i], len-i, (SDL_BYTEORDER == SDL_BIG_ENDIAN), 2, 1, &section );
+   bytes_read = 1;
+   while (bytes_read > 0) {
+      /* Fill buffer with data ibytes_read the 16 bit signed samples format. */
+      bytes_read = ov_read( vf, &data[i], 4096, (SDL_BYTEORDER == SDL_BIG_ENDIAN), 2, 1, &section );
+      if (bytes_read < 0)
+         WARN(_("Error reading from OGG file!"));
+      i += bytes_read;
    }
 
    soundLock();
