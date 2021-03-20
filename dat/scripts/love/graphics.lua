@@ -125,7 +125,7 @@ function graphics.Image:draw( ... )
    local arg = {...}
    local w = self.w
    local h = self.h
-   local x,y,r,sx,sy
+   local x,y,r,sx,sy,TH
    if type(arg[1])=='number' then
       -- x, y, r, sx, sy
       x = arg[1]
@@ -135,13 +135,15 @@ function graphics.Image:draw( ... )
       sy = arg[5] or sx
    else
       -- quad, x, y, r, sx, sy
-      love._unimplemented()
       local q = arg[1]
       x = arg[2]
       y = arg[3]
       r = arg[4] or 0
       sx = arg[5] or 1
       sy = arg[6] or sx
+      TH = q.H.T
+      w  = w * q.w
+      h  = h * q.h
    end
    -- TODO be less horribly inefficient
    local shader = graphics._shader or graphics._shader_default
@@ -164,7 +166,7 @@ function graphics.Image:draw( ... )
 
    -- Get transformation and run
    local H = _H( x, y, r, w*sx, h*sy )
-   naev.gfx.renderTexH( self.tex, shader, H, graphics._fgcol );
+   naev.gfx.renderTexH( self.tex, shader, H, graphics._fgcol, TH );
 end
 
 
@@ -185,6 +187,9 @@ function graphics.newQuad( x, y, width, height, sw, sh )
    q.w = width/sw
    q.h = height/sh
    q.quad = true
+   local H = love_math.newTransform()
+   H:scale( q.w, q.h ):translate( q.x, q.y )
+   q.H = H
    return q
 end
 
@@ -520,6 +525,7 @@ vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 void main(void) {
     VaryingTexCoord  = VertexTexCoord;
     VaryingTexCoord.y= 1.0 - VaryingTexCoord.y;
+    VaryingTexCoord  = ViewSpaceFromLocal * VaryingTexCoord;
     VaryingColor     = ConstantColor;
     love_Position    = position( ClipSpaceFromLocal, VertexPosition );
     VaryingPosition  = love_Position.xy;
