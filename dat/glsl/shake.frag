@@ -14,7 +14,7 @@ void main (void)
 
    /* Lens Distortion. */
    float aberration = pow( length( uv * 2.0 - 1.0 ), 2.0 );
-   uv = uv - (uv * 2.0 - 1.0) * aberration * shake_force * 0.125;
+   uv = uv - (uv * 2.0 - 1.0) * aberration * shake_force * (1.0 / 16.0);
 
    /* Blur. */
    color_out  = texture( MainTex, uv ) * 0.4;

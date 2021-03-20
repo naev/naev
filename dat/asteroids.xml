@@ -91,4 +91,13 @@
    <quantity>4</quantity>
   </commodity>
  </asteroid>
+ <asteroid>
+  <id>scrap</id>
+  <gfx sx="6" sy="6">debris0.webp</gfx>
+  <armour>300</armour>
+  <commodity>
+   <name>Ore</name>
+   <quantity>2</quantity>
+  </commodity>
+ </asteroid>
 </Asteroid_types>

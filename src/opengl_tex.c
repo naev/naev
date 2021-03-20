@@ -38,6 +38,10 @@ typedef struct glTexList_ {
    struct glTexList_ *next; /**< Next in linked list */
    glTexture *tex; /**< associated texture */
    int used; /**< counts how many times texture is being used */
+   /* TODO We currently treat images with different number of sprites as
+    * different images, i.e., they get reloaded and use more memory. However,
+    * it should be possible to do something fancier and share the texture to
+    * avoid this increase of memory (without sharing other parameters). */
    int sx; /**< X sprites */
    int sy; /**< Y sprites */
 } glTexList;
