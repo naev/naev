@@ -78,7 +78,7 @@ function handle_messages ()
          elseif msgtype == "hyperspace" then
             ai.pushtask("hyperspace", data)
          elseif msgtype == "land" then
-            mem.land = ai.planetfrompos(data):pos()--data--ai.nearestplanet():pos()--
+            mem.land = ai.planetfrompos(data):pos()
             ai.pushtask("land")
          -- Escort commands
          -- Attack target
