@@ -189,7 +189,7 @@ ov_callbacks sound_al_ovcall_noclose = {
    .seek_func  = ovpack_seek,
    .close_func = ovpack_closeFake,
    .tell_func  = ovpack_tell
-}; /**< Vorbis call structure to handl rwops without closing. */
+}; /**< Vorbis call structure to handle rwops without closing. */
 
 
 /**
@@ -641,7 +641,7 @@ static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    /* Get file information. */
    info   = ov_info( vf, -1 );
    format = (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-   len    = ov_pcm_total( vf, -1 ) * info->channels * 2;
+   len    = ov_pcm_total( vf, -1 ) * info->channels * sizeof(short);
 
    /* Allocate memory. */
    data = malloc( len );
@@ -652,8 +652,10 @@ static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    while (bytes_read > 0) {
       /* Fill buffer with data ibytes_read the 16 bit signed samples format. */
       bytes_read = ov_read( vf, &data[i], 4096, (SDL_BYTEORDER == SDL_BIG_ENDIAN), 2, 1, &section );
-      if (bytes_read < 0)
+      if (bytes_read==OV_HOLE || bytes_read==OV_EBADLINK || bytes_read==OV_EINVAL) {
          WARN(_("Error reading from OGG file!"));
+         continue;
+      }
       i += bytes_read;
    }
 
