@@ -14,6 +14,7 @@ local lg = require 'love.graphics'
 local audio = require 'love.audio'
 local love_math = require 'love.math'
 local love_shaders = require 'love_shaders'
+local transitions = require 'vn.transitions'
 
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
@@ -100,7 +101,7 @@ end
 text_fadein = 1.5
 text_fadeout = 3
 function textinit( titletext, subtitletext )
-   local fontname = _("fonts/CormorantUnicase-Regular.ttf")
+   local fontname = _("fonts/CormorantUnicase-Medium.ttf")
    -- Title
    title = { text=titletext, h=48 }
    title.font = lg.newFont( title.h )
@@ -112,10 +113,21 @@ function textinit( titletext, subtitletext )
       subtitle = { text=subtitletext, h=32 }
       subtitle.font = lg.newFont( subtitle.h )
       --subtitle.font = lg.newFont( fontname, subtitle.h )
-      subtitle.font:setOutline(3)
+      subtitle.font:setOutline(2)
       subtitle.w = subtitle.font:getWidth( subtitle.text )
    end
 
+   local oldcanvas = lg.getCanvas()
+   local emptycanvas = lg.newCanvas()
+   lg.setCanvas( emptycanvas )
+   lg.clear( 0, 0, 0, 0 )
+   lg.setCanvas( oldcanvas )
+
+   -- TODO probably rewrite the shader as this is being computed with the full
+   -- screen resolution, breaks with all transitions that use love_ScreenSize...
+   textshader  = transitions.get( "perlin" )
+   textshader:send( "texprev", emptycanvas )
+   textshader._emptycanvas = emptycanvas
    texttimer   = 0
    textlength  = 8
 
@@ -180,25 +192,33 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    hook.timer( textlength*1000, "endevent")
 end
 function textfg ()
-   local alpha = 1
+   local progress
    if texttimer < text_fadein then
-      alpha = texttimer / text_fadein
+      progress = texttimer / text_fadein
    elseif texttimer > textlength-text_fadeout then
-      alpha = (textlength-texttimer) / text_fadeout
+      progress = (textlength-texttimer) / text_fadeout
    end
 
-   lg.setColor( 1, 1, 1, alpha )
+   if progress then
+      lg.setShader( textshader )
+      textshader:send( "progress", progress )
+   end
+
+   lg.setColor( 1, 1, 1, 1 )
 
    local x = (love.w-textcanvas.w)*0.5
    local y = (love.h-textcanvas.h)*0.3
    x = math.floor(x)
    y = math.floor(y)
    lg.draw( textcanvas, x, y )
+   if progress then
+      lg.setShader()
+   end
 
    -- Horrible hack, but since the canvas is being scaled by Naev's scale stuff,
    -- we actually draw pretty text ontop using the signed distance transform shader
-   -- when it is at full alpha
-   if alpha == 1 then
+   -- when it is fully drawn
+   if not progress then
       lg.print( title.text, title.font, x+title.x, y+title.y )
       if subtitle then
          lg.print( subtitle.text, subtitle.font, x+subtitle.x, y+subtitle.y )
