@@ -30,6 +30,12 @@ system_events = {
    --[[
    -- Unique / Interesting systems
    --]]
+   Sol = {
+      type = "enter",
+      name = "disc_sol",
+      title = _("Sol"),
+      subtitle = _("Home"),
+   },
    ["Gamma Polaris"] = {
       type = "distance",
       dist = 5000,
@@ -79,6 +85,12 @@ system_events = {
       name = "disc_newhaven",
       title = _("New Haven"),
       subtitle = _("They Will Never Destroy Us"),
+   },
+   Kretogg = {
+      type = "enter",
+      name = "disc_kretogg",
+      title = _("Kretogg"),
+      subtitle = _("Any Business is Good Business"),
    },
 }
 -- These trigger for specific factions controlled systems
