@@ -1,5 +1,6 @@
 * 0.9.0 (unreleased)
    * Gameplay
+      * Added discovery messages as you explore the universe
       * New fancy system rendering effects
       * Ships and rockets now have engine trails
       * Beam visuals have been made more flexible and pretty
