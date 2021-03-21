@@ -45,6 +45,14 @@ function endevent () evt.finish() end
 -- Taiomi, Ship Graveyard
 --]]
 function taiomi_init ()
+   -- Music is fixed
+   -- TODO make this not be a horrible hack :/
+   music.stop()
+   song = audio.new('snd/sounds/songs/inca-spa.ogg')
+   song:setLooping( true )
+   song:play()
+
+
    -- Create particles and buffer
    local density = 200*200
    buffer = 500
