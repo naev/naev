@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Warlords battle">
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>5</chance>
   <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
   <flags>
   </flags>
