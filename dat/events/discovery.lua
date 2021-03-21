@@ -235,7 +235,7 @@ function discover_trigger( event )
 end
 
 text_fadein = 1.5
-text_fadeout = 3
+text_fadeout = 1.5
 function textinit( titletext, subtitletext )
    local fontname = _("fonts/CormorantUnicase-Medium.ttf")
    -- Title
