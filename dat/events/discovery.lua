@@ -223,11 +223,17 @@ end
 
 
 function discover_trigger( event )
+   local msg  = string.format(_("You found #o%s!"),event.title)
+   -- Log and message
+   player.msg( msg )
+   local logid = shiplog.createLog( "discovery", _("Travel Log"), _("Discovery") )
+   shiplog.appendLog( "discovery", msg )
+
    -- Break autonav
-   player.autonavAbort(string.format(_("You found #o%s!"),event.title))
+   player.autonavAbort( msg )
 
    -- Mark as done
-   --var.push( event.name, true )
+   var.push( event.name, true )
 
    -- Play sound and show message
    sfxDiscovery()
