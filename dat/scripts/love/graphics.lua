@@ -387,7 +387,7 @@ function graphics.printf( text, ... )
       naev.gfx.printRestoreLast()
 
       HH = H:translate( sx*tx, 0 )
-      naev.gfx.printH( HH, font.font, v[1], col )
+      naev.gfx.printH( HH, font.font, v[1], col, font.outline )
       H = H:translate( 0, -font.lineheight );
    end
 end
@@ -417,6 +417,7 @@ function graphics.newFont( ... )
    f.height= f.font:height()
    f.lineheight = f.height*1.5 -- Naev default
    f:setFilter( graphics._minfilter, graphics._magfilter )
+   f:setOutline( 0 )
    return f
 end
 function graphics.Font:setFallbacks( ... )
@@ -449,10 +450,14 @@ function graphics.Font:setFilter( min, mag, anisotropy )
    self.mag = mag
    self.anisotropy = anisotropy
 end
+-- setOutline is a Naev extension!!
+function graphics.Font:setOutline( size )
+   self.outline = size
+end
 function graphics.setFont( fnt ) graphics._font = fnt end
 function graphics.getFont() return graphics._font end
-function graphics.setNewFont( file, size )
-   local font = graphics.newFont( file, size )
+function graphics.setNewFont( file, size, ...  )
+   local font = graphics.newFont( file, size, ... )
    graphics.setFont( font )
    return font
 end
