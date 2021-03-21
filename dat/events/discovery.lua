@@ -1,10 +1,10 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Discovery">
-  <trigger>enter</trigger>
-  <chance>100</chance>
- </event>
- --]]
+ <trigger>enter</trigger>
+ <chance>100</chance>
+</event>
+--]]
 --[[
 -- Shows the player fancy messages as they discover things. Meant to be flavourful.
 --]]
