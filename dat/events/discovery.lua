@@ -31,6 +31,9 @@ event_list = {
       text = "Taiomi, Ship Graveyard",
    },
    Limbo = {
+      -- Discover will not work if the planet is found through maps
+      --type = "discover",
+      --asset = planet.get("Minerva Station"),
       type = "distance",
       dist = 5000,
       pos  = planet.get("Minerva Station"):pos(),
@@ -50,7 +53,9 @@ function create()
    if event == nil then endevent() end
 
    if event.type=="enter" then
-      discover_enter( event )
+      discover_trigger( event )
+   elseif event.type=="discover" then
+      hook.discover( "discovered", event )
    elseif event.type=="distance" then
       hook.timer( 500, "heartbeat", event )
    end
@@ -60,17 +65,22 @@ function create()
    hook.land("endevent")
 end
 function endevent () evt.finish() end
+function discovered( type, discovery, event )
+   if event.asset and type=="asset" and discovery==event.asset then
+      discover_trigger( event )
+   end
+end
 function heartbeat( event )
    local dist = player.pilot():pos():dist( event.pos )
    if dist < event.dist then
-      discover_enter( event )
+      discover_trigger( event )
    else
       hook.timer( 500, "heartbeat", event )
    end
 end
 
 
-function discover_enter( event )
+function discover_trigger( event )
    -- Break autonav
    player.autonavAbort(string.format(_("You found #o%s#0!"),event.text))
 
