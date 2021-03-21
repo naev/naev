@@ -28,7 +28,8 @@ event_list = {
    Taiomi = {
       type = "enter",
       name = "disc_taiomi",
-      text = "Taiomi, Ship Graveyard",
+      title = _("Taiomi"),
+      subtitle = _("- Ship Graveyard -"),
    },
    Limbo = {
       -- Discover will not work if the planet is found through maps
@@ -38,7 +39,8 @@ event_list = {
       dist = 5000,
       pos  = planet.get("Minerva Station"):pos(),
       name = "disc_minerva",
-      text = "Minerva Station, Gambler's Paradise",
+      title = _("Minerva Station"),
+      subtitle = _("- Gambler's Paradise -"),
    },
 }
 
@@ -92,20 +94,30 @@ function discover_trigger( event )
 
    -- Play sound and show message
    sfxDiscovery()
-   textinit( event.text )
+   textinit( event.title, event.subtitle )
 end
 
 text_fadein = 1.5
 text_fadeout = 3
-function textinit( text )
-   textshow    = text
-   textsize    = 48
-   textfont    = lg.newFont(textsize)
-   --textfont    = lg.newFont(_("fonts/CormorantUnicase-Regular.ttf"), textsize)
-   textfont:setOutline(1)
+function textinit( titletext, subtitletext )
+   local fontname = _("fonts/CormorantUnicase-Regular.ttf")
+   -- Title
+   title = { text=titletext, h=48 }
+   title.font = lg.newFont( title.h )
+   --title.font = lg.newFont( fontname, title.h )
+   title.font:setOutline(3)
+   title.w = title.font:getWidth( title.text )
+   -- Subtitle
+   if subtitletext then
+      subtitle = { text=subtitletext, h=32 }
+      subtitle.font = lg.newFont( subtitle.h )
+      --subtitle.font = lg.newFont( fontname, subtitle.h )
+      subtitle.font:setOutline(3)
+      subtitle.w = subtitle.font:getWidth( subtitle.text )
+   end
+
    texttimer   = 0
    textlength  = 8
-   textwidth   = textfont:getWidth( text )
 
    -- Render to canvas
    local pixelcode = string.format([[
@@ -136,16 +148,31 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    texcolor *= 0.4*n+0.8;
    texcolor.a *= vignette( uv );
-   texcolor.rgb *= 0.3;
+   texcolor.rgb *= 0.0;
 
    return texcolor;
 }
 ]], love_math.random(), 3 )
    local shader = lg.newShader( pixelcode, love_shaders.vertexcode )
-   textcanvas = love_shaders.shader2canvas( shader, textwidth*1.5, textsize*2 )
+   local w, h
+   if subtitle then
+      w = math.max( title.w, subtitle.w )*1.5
+      h = (title.h * 1.5 + subtitle.h)*2
+   else
+      w = title.w*1.5
+      h = title.h*2
+   end
+   textcanvas = love_shaders.shader2canvas( shader, w, h )
 
    lg.setCanvas( textcanvas )
-   lg.print( textshow, textfont, textwidth*0.25, textsize*0.3 )
+   title.x = (w-title.w)/2
+   title.y = h*0.2
+   lg.print( title.text, title.font, title.x, title.y )
+   if subtitle then
+      subtitle.x = (w-subtitle.w)/2
+      subtitle.y = title.y + title.h*1.5
+      lg.print( subtitle.text, subtitle.font, subtitle.x, subtitle.y )
+   end
    lg.setCanvas()
 
    hook.renderfg( "textfg" )
@@ -163,14 +190,19 @@ function textfg ()
    lg.setColor( 1, 1, 1, alpha )
 
    local x = (love.w-textcanvas.w)*0.5
-   local y = (love.h-textcanvas.h)*0.35
+   local y = (love.h-textcanvas.h)*0.3
+   x = math.floor(x)
+   y = math.floor(y)
    lg.draw( textcanvas, x, y )
 
    -- Horrible hack, but since the canvas is being scaled by Naev's scale stuff,
    -- we actually draw pretty text ontop using the signed distance transform shader
    -- when it is at full alpha
    if alpha == 1 then
-      lg.print( textshow, textfont, x+textwidth*0.25, y+textsize*0.3 )
+      lg.print( title.text, title.font, x+title.x, y+title.y )
+      if subtitle then
+         lg.print( subtitle.text, subtitle.font, x+subtitle.x, y+subtitle.y )
+      end
    end
 end
 function textupdate( dt )
