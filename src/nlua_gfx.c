@@ -681,7 +681,8 @@ static int gfxL_printf( lua_State *L )
  *    @luatparam Transform H transformation matrix to use.
  *    @luatparam font font Font to use.
  *    @luatparam string str String to print.
- *    @luatparam Colour col Colour to print text.
+ *    @luatparam[opt=white] Colour col Colour to print text.
+ *    @luatparam[opt=0] number outline How big to make an outline.
  * @luafunc printH
  */
 static int gfxL_printH( lua_State *L )
@@ -690,6 +691,7 @@ static int gfxL_printH( lua_State *L )
    glFont *font;
    const char *str;
    const glColour *col;
+   double outline;
 
    NLUA_CHECKRW(L);
 
@@ -698,9 +700,10 @@ static int gfxL_printH( lua_State *L )
    font  = luaL_checkfont(L,2);
    str   = luaL_checkstring(L,3);
    col   = luaL_optcolour(L,4,&cWhite);
+   outline = luaL_optnumber(L,5,0.);
 
    /* Render. */
-   gl_printRawH( font, H, col, 0., str );
+   gl_printRawH( font, H, col, outline, str );
    return 0;
 }
 
