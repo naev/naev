@@ -224,7 +224,7 @@ end
 
 function discover_trigger( event )
    -- Break autonav
-   player.autonavAbort(string.format(_("You found #o%s#0!"),event.title))
+   player.autonavAbort(string.format(_("You found #o%s!"),event.title))
 
    -- Mark as done
    --var.push( event.name, true )
