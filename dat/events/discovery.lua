@@ -247,14 +247,14 @@ function textinit( titletext, subtitletext )
    -- Title
    title = { text=titletext, h=48 }
    title.font = lg.newFont( title.h )
-   title.font = lg.newFont( fontname, title.h )
+   --title.font = lg.newFont( fontname, title.h )
    title.font:setOutline(3)
    title.w = title.font:getWidth( title.text )
    -- Subtitle
    if subtitletext then
       subtitle = { text=subtitletext, h=32 }
       subtitle.font = lg.newFont( subtitle.h )
-      subtitle.font = lg.newFont( fontname, subtitle.h )
+      --subtitle.font = lg.newFont( fontname, subtitle.h )
       subtitle.font:setOutline(2)
       subtitle.w = subtitle.font:getWidth( subtitle.text )
    end
