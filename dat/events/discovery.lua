@@ -36,7 +36,7 @@ system_events = {
       pos  = planet.get("Emperor's Wrath"):pos(),
       name = "disc_emperorswrath",
       title = _("Emperor's Wrath"),
-      subtitle = _("Human made Divine"),
+      subtitle = _("Human Made Divine"),
    },
    ["Za'lek"] = {
       type = "distance",
@@ -67,7 +67,7 @@ system_events = {
       type = "enter",
       name = "disc_haven",
       title = _("The Devastation of Haven"),
-      subtitle = _("The Old Wound that never Heals"),
+      subtitle = _("The Old Wound That Never Heals"),
    },
    --[[
    -- Pirate Strongholds
@@ -78,7 +78,7 @@ system_events = {
       pos  = planet.get("New Haven"):pos(),
       name = "disc_newhaven",
       title = _("New Haven"),
-      subtitle = _("They will never Destroy Us"),
+      subtitle = _("They Will Never Destroy Us"),
    },
 }
 -- These trigger for specific factions controlled systems
@@ -87,7 +87,7 @@ faction_events = {
       type = "enter",
       name = "disc_zalek",
       title = _("The Za'lek Territories"),
-      subtitle = _("Knowledge at all Costs"),
+      subtitle = _("Knowledge at All Costs"),
    },
    Dvaered = {
       type = "enter",
@@ -99,31 +99,31 @@ faction_events = {
       type = "enter",
       name = "disc_soromid",
       title = _("The Soromid Territories"),
-      subtitle = _("Human is just an Ephemeral Condition"),
+      subtitle = _("Human is Just an Ephemeral Condition"),
    },
    Sirius = {
       type = "enter",
       name = "disc_sirius",
       title = _("The Sirius Territories"),
-      subtitle = _("Sirichana will lead the way"),
+      subtitle = _("Sirichana Will Lead the Way"),
    },
    Proteron = {
       type = "enter",
       name = "disc_proteron",
       title = _("The Proteron Territories"),
-      subtitle = _("United through sacrifice"),
+      subtitle = _("United through Sacrifice"),
    },
    Thurion = {
       type = "enter",
       name = "disc_thurion",
       title = _("The Thurion Space"),
-      subtitle = _("We shall all become one"),
+      subtitle = _("We Shall All Become One"),
    },
    Frontier = {
       type = "enter",
       name = "disc_frontier",
       title = _("The Frontier"),
-      subtitle = _("Leading to a new future"),
+      subtitle = _("Leading to a New Future"),
    },
    Collective = {
       type = "enter",
@@ -156,7 +156,7 @@ custom_events = {
       type = "enter",
       name = "disc_nebula",
       title = _("The Nebula"),
-      subtitle = _("Grim Reminder of our Fragility"),
+      subtitle = _("Grim Reminder of Our Fragility"),
    },
 }
 
