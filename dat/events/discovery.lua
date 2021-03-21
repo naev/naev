@@ -27,6 +27,25 @@ lg.origin()
 
 -- These trigger at specific places
 system_events = {
+   --[[
+   -- Unique / Interesting systems
+   --]]
+   ["Gamma Polaris"] = {
+      type = "distance",
+      dist = 5000,
+      pos  = planet.get("Emperor's Wrath"):pos(),
+      name = "disc_emperorswrath",
+      title = _("Emperor's Wrath"),
+      subtitle = _("Human made Divine"),
+   },
+   ["Za'lek"] = {
+      type = "distance",
+      dist = 5000,
+      pos  = planet.get("House Za'lek Central Station"):pos(),
+      name = "disc_zalekcentral",
+      title = _("House Za'lek Central Station"),
+      subtitle = _("Bastion of Knowledge"),
+   },
    Taiomi = {
       type = "enter",
       name = "disc_taiomi",
@@ -48,8 +67,11 @@ system_events = {
       type = "enter",
       name = "disc_haven",
       title = _("The Devastation of Haven"),
-      subtitle = _("Some Wounds never Heal"),
+      subtitle = _("The Old Wound that never Heals"),
    },
+   --[[
+   -- Pirate Strongholds
+   -- ]]
    ["New Haven"] = {
       type = "distance",
       dist = 5000,
@@ -77,7 +99,7 @@ faction_events = {
       type = "enter",
       name = "disc_soromid",
       title = _("The Soromid Territories"),
-      subtitle = _("Transcending the Human Condition"),
+      subtitle = _("Human is just an Ephemeral Condition"),
    },
    Sirius = {
       type = "enter",
@@ -103,11 +125,19 @@ faction_events = {
       title = _("The Frontier"),
       subtitle = _("Leading to a new future"),
    },
+   Collective = {
+      type = "enter",
+      name = "disc_collective",
+      title = _("The Collective"),
+      subtitle = _("Do Robots Dream of Electric Sheep?"),
+   },
 }
 -- Custom events can handle custom triggers such as nebula systems
 custom_events = {
    Nebula = {
       test = function ()
+         -- These are currently the only systems from which the player can
+         -- enter the nebula
          local nsys = {
             "Thirty Stars",
             "Raelid",
@@ -194,7 +224,7 @@ end
 
 function discover_trigger( event )
    -- Break autonav
-   player.autonavAbort(string.format(_("You found #o%s#0!"),event.text))
+   player.autonavAbort(string.format(_("You found #o%s#0!"),event.title))
 
    -- Mark as done
    --var.push( event.name, true )
@@ -295,7 +325,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    hook.renderfg( "textfg" )
    hook.update( "textupdate" )
-   hook.timer( textlength*1000, "endevent")
+   --hook.timer( textlength*1000, "endevent")
 end
 function textfg ()
    local progress
@@ -331,6 +361,7 @@ function textfg ()
       end
    end
 end
-function textupdate( dt )
-   texttimer = texttimer + dt
+function textupdate( dt, real_dt )
+   -- We want to show it regardless of the time compression and such
+   texttimer = texttimer + real_dt
 end
