@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Warlords battle">
   <trigger>enter</trigger>
-  <chance>5</chance>
+  <chance>100</chance>
   <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
   <flags>
   </flags>
@@ -16,7 +16,7 @@
 require "fleethelper"
 require "proximity"
 require "numstring"
-local formation = require "scripts/formation"
+local formation = require "formation"
 
 
 title = {}
@@ -70,11 +70,11 @@ function begin ()
    hook.timer(3000, "merchant")
    hook.timer(7000, "attack")
    hook.timer(12000, "defense")
-   inForm = true
+   inForm       = true -- People are in formation
+   batInProcess = true -- Battle is happening
 
    hook.rm(jumphook)
    hook.jumpout("leave")
-
 end
 
 --Spawns a merchant ship that explains what happens
@@ -135,9 +135,12 @@ function attack ()
    attackers = arrangeList(attackers)  --The heaviest ships will surround the leader
    form = formation.random_key()
 
+   -- I use Thugs and Associates based factions because they won't interact with anybody
+   f1 = faction.dynAdd( "Thugs", "Invaders", _("Warlords") )
+
    for i, j in ipairs(attackers) do
       j:rename("Invader")
-      j:setFaction("Thugs") -- I use Thugs and Associates because they won't interact with anybody
+      j:setFaction("Invaders")
       j:memory().formation = form
       j:memory().aggressive = false
       
@@ -174,9 +177,13 @@ function defense ()
    defenders = arrangeList(defenders)  --The heaviest ships will surround the leader
    form = formation.random_key()
 
+   f2 = faction.dynAdd( "Associates", "Locals", _("Warlords") )
+   faction.dynEnemy (f1, f2)
+   faction.dynEnemy (f2, f1)
+
    for i, j in ipairs(defenders) do
       j:rename("Local Warlord's Force")
-      j:setFaction("Associates")
+      j:setFaction("Locals")
       j:memory().formation = form
       j:memory().aggressive = false
 
@@ -255,43 +262,49 @@ function attackerAttacked(victim, attacker)
 end
 
 function attackerDeath(victim, attacker)
-   attdeath = attdeath + 1
+   if batInProcess then
+      attdeath = attdeath + 1
 
-   if attacker == player.pilot() then
-      attkilled = attkilled + victim:stats().mass
-   end
+      if attacker == player.pilot() then
+         attkilled = attkilled + victim:stats().mass
+      end
 
-   if attdeath >= attnum then  --all the enemies are dead
-      local lead = getLeader(defenders)
-      lead:control()
-      lead:land(source_planet)
+      if attdeath >= attnum then  --all the enemies are dead
+         local lead = getLeader(defenders)
+         lead:control()
+         lead:land(source_planet)
+         batInProcess = false -- Battle ended
 
-      --Time to get rewarded
-      if side == "defender" then
-         warrior = chooseInList(defenders)
-         computeReward(true, attkilled)
-         hook.timer(1000, "hailmeagain")
+         --Time to get rewarded
+         if side == "defender" then
+            warrior = chooseInList(defenders)
+            computeReward(true, attkilled)
+            hook.timer(1000, "hailmeagain")
+         end
       end
    end
 end
 
 function defenderDeath(victim, attacker)
-   defdeath = defdeath + 1
+   if batInProcess then
+      defdeath = defdeath + 1
 
-   if attacker == player.pilot() then
-      defkilled = defkilled + victim:stats().mass
-   end
+      if attacker == player.pilot() then
+         defkilled = defkilled + victim:stats().mass
+      end
 
-   if defdeath >= defnum then  -- all the defenders died : the winner lands on his planet
-      local lead = getLeader(attackers)
-      lead:control()
-      lead:land(source_planet)
+      if defdeath >= defnum then  -- all the defenders died : the winner lands on his planet
+         local lead = getLeader(attackers)
+         lead:control()
+         lead:land(source_planet)
+         batInProcess = false -- Battle ended
 
-      --Time to get rewarded
-      if side == "attacker" then
-         warrior = chooseInList(attackers)
-         computeReward(true, defkilled)
-         hook.timer(1000, "hailmeagain")
+         --Time to get rewarded
+         if side == "attacker" then
+            warrior = chooseInList(attackers)
+            computeReward(true, defkilled)
+            hook.timer(1000, "hailmeagain")
+         end
       end
    end
 end
