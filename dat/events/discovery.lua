@@ -25,12 +25,13 @@ love.w = nw
 love.h = nh
 lg.origin()
 
-event_list = {
+-- These trigger at specific places
+system_events = {
    Taiomi = {
       type = "enter",
       name = "disc_taiomi",
       title = _("Taiomi"),
-      subtitle = _("- Ship Graveyard -"),
+      subtitle = _("Ship Graveyard"),
    },
    Limbo = {
       -- Discover will not work if the planet is found through maps
@@ -41,7 +42,91 @@ event_list = {
       pos  = planet.get("Minerva Station"):pos(),
       name = "disc_minerva",
       title = _("Minerva Station"),
-      subtitle = _("- Gambler's Paradise -"),
+      subtitle = _("Gambler's Paradise"),
+   },
+   Haven = {
+      type = "enter",
+      name = "disc_haven",
+      title = _("The Devastation of Haven"),
+      subtitle = _("Some Wounds never Heal"),
+   },
+   ["New Haven"] = {
+      type = "distance",
+      dist = 5000,
+      pos  = planet.get("New Haven"):pos(),
+      name = "disc_newhaven",
+      title = _("New Haven"),
+      subtitle = _("They will never Destroy Us"),
+   },
+}
+-- These trigger for specific factions controlled systems
+faction_events = {
+   ["Za'lek"] = {
+      type = "enter",
+      name = "disc_zalek",
+      title = _("The Za'lek Territories"),
+      subtitle = _("Knowledge but at what Cost?"),
+   },
+   Dvaered = {
+      type = "enter",
+      name = "disc_dvaered",
+      title = _("The Dvaered Territories"),
+      subtitle = _("The Warlords are Eager for Blood"),
+   },
+   Soromid = {
+      type = "enter",
+      name = "disc_soromid",
+      title = _("The Soromid Territories"),
+      subtitle = _("Transcending the Human Condition"),
+   },
+   Sirius = {
+      type = "enter",
+      name = "disc_sirius",
+      title = _("The Sirius Territories"),
+      subtitle = _("Sirichana will lead the way"),
+   },
+   Proteron = {
+      type = "enter",
+      name = "disc_proteron",
+      title = _("The Proteron Territories"),
+      subtitle = _("United through sacrifice"),
+   },
+   Thurion = {
+      type = "enter",
+      name = "disc_thurion",
+      title = _("The Thurion Space"),
+      subtitle = _("We shall all become one"),
+   },
+   Frontier = {
+      type = "enter",
+      name = "disc_frontier",
+      title = _("The Frontier"),
+      subtitle = _("Leading to a new future"),
+   },
+}
+-- Custom events can handle custom triggers such as nebula systems
+custom_events = {
+   Nebula = {
+      test = function ()
+         local nsys = {
+            "Thirty Stars",
+            "Raelid",
+            "Toaxis",
+            "Myad",
+            "Tormulex",
+         }
+         local n = system.cur():nameRaw()
+         for k,v in ipairs(nsys) do
+            if v==n then
+               return true
+            end
+         end
+         return false
+      end,
+      type = "enter",
+      name = "disc_nebula",
+      title = _("The Nebula"),
+      subtitle = _("Grim Reminder of our Fragility"),
    },
 }
 
@@ -51,16 +136,40 @@ function sfxDiscovery()
    sfx:play()
 end
 
-function create()
-   local event = event_list[ system.cur():nameRaw() ]
-   if event == nil then endevent() end
+function handle_event( event )
+   -- Don't trigger if already done
+   if var.peek( event.name ) then return false end
 
+   -- Trigger
    if event.type=="enter" then
       discover_trigger( event )
    elseif event.type=="discover" then
       hook.discover( "discovered", event )
    elseif event.type=="distance" then
       hook.timer( 500, "heartbeat", event )
+   end
+   return true
+end
+
+function create()
+   local event = system_events[ system.cur():nameRaw() ]
+   local hasevent = false
+   if event then
+      hasevent = handle_event( event )
+   end
+   local event = faction_events[ system.cur():faction():nameRaw() ]
+   if event then
+      hasevent = handle_event( event )
+   end
+   for k,v in pairs(custom_events) do
+      if not var.peek( v.name ) and v.test() then
+         hasevent = handle_event( v )
+      end
+   end
+
+   -- Nothing triggered
+   if not hasevent then
+      endevent()
    end
 
    -- Ends when player lands or leaves either way
@@ -87,10 +196,7 @@ function discover_trigger( event )
    -- Break autonav
    player.autonavAbort(string.format(_("You found #o%s#0!"),event.text))
 
-   -- Do event
-   if var.peek( event.name ) then
-      endevent()
-   end
+   -- Mark as done
    --var.push( event.name, true )
 
    -- Play sound and show message
