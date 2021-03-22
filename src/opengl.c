@@ -533,7 +533,7 @@ void gl_resize (void)
    /* Set up framebuffer. */
    for (i=0; i<2; i++) {
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
-         glDeleteTextures( 1, &gl_screen.fbo[i] );
+         glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
       }
       gl_fboCreate( &gl_screen.fbo[i], &gl_screen.fbo_tex[i], gl_screen.rw, gl_screen.rh );
