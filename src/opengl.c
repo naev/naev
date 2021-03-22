@@ -687,7 +687,7 @@ void gl_exit (void)
    int i;
    for (i=0; i<2; i++) {
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
-         glDeleteTextures( 1, &gl_screen.fbo[i] );
+         glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
          gl_screen.fbo[i] = GL_INVALID_VALUE;
          gl_screen.fbo_tex[i] = GL_INVALID_VALUE;
