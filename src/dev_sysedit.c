@@ -1954,6 +1954,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    int w, h, land;
    Planet *p;
    glColour c;
+   PHYSFS_Stat path_stat;
 
    land = (strcmp(wgt,"btnLandGFX") == 0);
 
@@ -1983,6 +1984,14 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    j              = 0;
    for (i=0; i<nfiles; i++) {
       snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
+      /* Ignore directories. */
+      if (!PHYSFS_stat( buf, &path_stat )) {
+         WARN(_("Unable to check file type for '%s'!"), buf);
+         continue;
+      }
+      if (path_stat.filetype != PHYSFS_FILETYPE_REGULAR)
+         continue;
+
       t              = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
       if (t != NULL) {
          cells[j].image   = t;
