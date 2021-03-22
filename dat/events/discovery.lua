@@ -194,12 +194,14 @@ function handle_event( event )
 end
 
 function create()
-   local event = system_events[ system.cur():nameRaw() ]
+   local sc = system.cur()
+   local event = system_events[ sc:nameRaw() ]
    local hasevent = false
    if event then
       hasevent = handle_event( event )
    end
-   local event = faction_events[ system.cur():faction():nameRaw() ]
+   local sf = sc:faction()
+   local event = sf and faction_events[ sf:nameRaw() ] or false
    if event then
       hasevent = handle_event( event )
    end
