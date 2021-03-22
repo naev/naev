@@ -105,7 +105,7 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
    }
 
    if ( stream == stderr && logerr_file != NULL ) {
-      PHYSFS_writeBytes( logerr_file, &buf[2], newline ? n+1 : n );
+      PHYSFS_writeBytes( logerr_file, &buf[2], newline ? n+2 : n+1 );
       if ( newline )
          PHYSFS_flush( logerr_file );
    }
