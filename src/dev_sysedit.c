@@ -1993,13 +1993,13 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
          continue;
 
       t              = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
-      if (t != NULL) {
-         cells[j].image   = t;
-         cells[j].caption = strdup( files[i] );
-         c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
-         memcpy( &cells[j].bg, &c, sizeof(glColour) );
-         j++;
-      }
+      if (t == NULL)
+         continue;
+      cells[j].image   = t;
+      cells[j].caption = strdup( files[i] );
+      c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
+      memcpy( &cells[j].bg, &c, sizeof(glColour) );
+      j++;
    }
    PHYSFS_freeList( files );
 
