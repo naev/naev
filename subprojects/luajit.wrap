@@ -1,5 +1,5 @@
 [wrap-git]
 url = https://luajit.org/git/luajit-2.0.git
-revision = 1e66d0f9e6698fdee672c40a9a5b4159c9254091
+revision = ad65934fa08a65bfb0eb9528731a4394842cc173
 
 patch_directory = luajit
