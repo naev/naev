@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-03-19 08:57-0400\n"
+"POT-Creation-Date: 2021-03-22 20:44-0400\n"
 "PO-Revision-Date: 2021-02-07 09:50+0000\n"
 "Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -3956,7 +3956,7 @@ msgid ""
 "workers."
 msgstr ""
 
-#: dat/assets/emperors_wrath.xml:2
+#: dat/assets/emperors_wrath.xml:2 dat/events/discovery.lua:44
 msgid "Emperor's Wrath"
 msgstr ""
 
@@ -5231,7 +5231,7 @@ msgid ""
 "in bad circumstances. There's nothing much to do here for offworlders."
 msgstr ""
 
-#: dat/assets/house_zalek_central_station.xml:2
+#: dat/assets/house_zalek_central_station.xml:2 dat/events/discovery.lua:52
 msgid "House Za'lek Central Station"
 msgstr ""
 
@@ -7076,8 +7076,12 @@ msgstr ""
 msgid "Mida Proxima"
 msgstr ""
 
-#: dat/assets/minerva_station.xml:2 dat/scripts/minerva.lua:56
-#: dat/scripts/minerva.lua:61 dat/scripts/minerva.lua:66
+#. Discover will not work if the planet is found through maps
+#. type = "discover",
+#. asset = planet.get("Minerva Station"),
+#: dat/assets/minerva_station.xml:2 dat/events/discovery.lua:69
+#: dat/scripts/minerva.lua:56 dat/scripts/minerva.lua:61
+#: dat/scripts/minerva.lua:66
 msgid "Minerva Station"
 msgstr ""
 
@@ -7595,7 +7599,11 @@ msgid ""
 "people to New Dortmund. So far, it hasn't."
 msgstr ""
 
+#.
+#. -- Pirate Strongholds
+#. --
 #: dat/assets/new_haven.xml:2 dat/ssys/new_haven.xml:2
+#: dat/events/discovery.lua:86
 msgid "New Haven"
 msgstr ""
 
@@ -13788,6 +13796,7 @@ msgstr ""
 msgid "Rogue Pirate"
 msgstr ""
 
+#. fast Gawain
 #. just some moving around, stolen from baron missions ;D
 #. get point between jumpgate and broship to spawn mercenaries disencouraging him from following
 #. set spawn point between the broship and jumppoint
@@ -13821,9 +13830,9 @@ msgstr ""
 #. spawning a Kestrel with massive missile weaponry
 #. spawning Ancestors
 #: dat/faction.xml:403 dat/faction.xml:581
-#: dat/missions/neutral/kidnapped/traffic_01.lua:226
-#: dat/missions/neutral/kidnapped/traffic_01.lua:245
-#: dat/missions/neutral/kidnapped/traffic_01.lua:266
+#: dat/missions/neutral/kidnapped/traffic_01.lua:238
+#: dat/missions/neutral/kidnapped/traffic_01.lua:256
+#: dat/missions/neutral/kidnapped/traffic_01.lua:276
 #: dat/missions/shark/sh02_tapping.lua:242
 #: dat/missions/shark/sh02_tapping.lua:265
 #: dat/missions/shark/sh02_tapping.lua:290
@@ -14054,21 +14063,6 @@ msgstr ""
 msgid "Civilian Llama"
 msgstr ""
 
-#.
-#. Mission entry point.
-#. --
-#. Mission details:
-#. Some variables for keeping track of the mission
-#. Set mission details
-#. Some flavour text
-#. randomly select spawn system and planet where brother will be
-#. Set hooks
-#. Entering a system
-#. checking if it is right system, updating OSD, if right system: create ship and wait for hail
-#. Check to see if reaching target system
-#. we can break, we found what we were looking for
-#. if we visited a system without the brother: update OSD
-#. update OSD
 #. Randomly spawn the Gawain in the system
 #. creates the scientist at the bar
 #. description
@@ -14084,9 +14078,8 @@ msgstr ""
 #. adds cargo
 #. destination
 #. OSD
-#: dat/fleet.xml:63 dat/fleet.xml:1253
-#: dat/missions/neutral/kidnapped/traffic_01.lua:155
-#: dat/missions/neutral/teenager.lua:92 dat/missions/zalek/zlk_cargorun.lua:162
+#: dat/fleet.xml:63 dat/fleet.xml:1253 dat/missions/neutral/teenager.lua:92
+#: dat/missions/zalek/zlk_cargorun.lua:162
 msgid "Civilian Gawain"
 msgstr ""
 
@@ -16401,7 +16394,7 @@ msgstr ""
 msgid ""
 "Built by Za'lek Fabricators, this engine doesn't aim to be an efficient "
 "engine. Its goal is to be easily moddable in order to allow Za'lek "
-"scinetists to test new refrigeration and propulsion systems. These engines "
+"scientists to test new refrigeration and propulsion systems. These engines "
 "are very often modded by students, which makes them unreliable."
 msgstr ""
 
@@ -20785,7 +20778,7 @@ msgstr ""
 msgid "Kraft"
 msgstr ""
 
-#: dat/ssys/kretogg.xml:2
+#: dat/ssys/kretogg.xml:2 dat/events/discovery.lua:92
 msgid "Kretogg"
 msgstr ""
 
@@ -21273,7 +21266,24 @@ msgstr ""
 msgid "Sleuth"
 msgstr ""
 
-#: dat/ssys/sol.xml:2
+#. event ends on player leaving the system or landing
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Discovery">
+#. <trigger>enter</trigger>
+#. <chance>100</chance>
+#. </event>
+#. --
+#.
+#. -- Shows the player fancy messages as they discover things. Meant to be flavourful.
+#. --
+#. Since we don't actually activate the Love framework we have to fake the
+#. the dimensions and width, and set up the origins.
+#. These trigger at specific places
+#.
+#. -- Unique / Interesting systems
+#. --
+#: dat/ssys/sol.xml:2 dat/events/discovery.lua:36
 msgid "Sol"
 msgstr ""
 
@@ -21351,6 +21361,10 @@ msgstr ""
 
 #: dat/ssys/symm.xml:2
 msgid "Symm"
+msgstr ""
+
+#: dat/ssys/taiomi.xml:2 dat/events/discovery.lua:58
+msgid "Taiomi"
 msgstr ""
 
 #: dat/ssys/tandar.xml:2
@@ -23753,7 +23767,160 @@ msgstr ""
 "prohlásili, že vyhráli. Vrchní velení Dvaered využilo událost jako záminku k "
 "výzvě k vojenské akci proti pohraničním světům."
 
-#. event ends on player leaving the system or landing
+#: dat/events/discovery.lua:37
+msgid "Home"
+msgstr ""
+
+#: dat/events/discovery.lua:45
+msgid "Human Made Divine"
+msgstr ""
+
+#: dat/events/discovery.lua:53
+msgid "Bastion of Knowledge"
+msgstr ""
+
+#: dat/events/discovery.lua:59
+msgid "Ship Graveyard"
+msgstr ""
+
+#: dat/events/discovery.lua:70
+msgid "Gambler's Paradise"
+msgstr ""
+
+#: dat/events/discovery.lua:75
+msgid "The Devastation of Haven"
+msgstr ""
+
+#: dat/events/discovery.lua:76
+msgid "The Old Wound That Never Heals"
+msgstr ""
+
+#: dat/events/discovery.lua:87
+msgid "They Will Never Destroy Us"
+msgstr ""
+
+#: dat/events/discovery.lua:93
+msgid "Any Business is Good Business"
+msgstr ""
+
+#. These trigger for specific factions controlled systems
+#: dat/events/discovery.lua:101
+msgid "The Za'lek Territories"
+msgstr ""
+
+#: dat/events/discovery.lua:102
+msgid "Knowledge at All Costs"
+msgstr ""
+
+#: dat/events/discovery.lua:107
+msgid "The Dvaered Territories"
+msgstr ""
+
+#: dat/events/discovery.lua:108
+msgid "The Warlords are Eager for Blood"
+msgstr ""
+
+#: dat/events/discovery.lua:113
+msgid "The Soromid Territories"
+msgstr ""
+
+#: dat/events/discovery.lua:114
+msgid "Human is Just an Ephemeral Condition"
+msgstr ""
+
+#: dat/events/discovery.lua:119
+msgid "The Sirius Territories"
+msgstr ""
+
+#: dat/events/discovery.lua:120
+msgid "Sirichana Will Lead the Way"
+msgstr ""
+
+#: dat/events/discovery.lua:125
+msgid "The Proteron Territories"
+msgstr ""
+
+#: dat/events/discovery.lua:126
+msgid "United through Sacrifice"
+msgstr ""
+
+#: dat/events/discovery.lua:131
+msgid "The Thurion Space"
+msgstr ""
+
+#: dat/events/discovery.lua:132
+msgid "We Shall All Become One"
+msgstr ""
+
+#: dat/events/discovery.lua:137
+#, fuzzy
+#| msgid "For the Frontier!"
+msgid "The Frontier"
+msgstr "Za Pohraničí!"
+
+#: dat/events/discovery.lua:138
+msgid "Leading to a New Future"
+msgstr ""
+
+#: dat/events/discovery.lua:143
+msgid "The Collective"
+msgstr ""
+
+#: dat/events/discovery.lua:144
+msgid "Do Robots Dream of Electric Sheep?"
+msgstr ""
+
+#. Custom events can handle custom triggers such as nebula systems
+#. These are currently the only systems from which the player can
+#. enter the nebula
+#: dat/events/discovery.lua:170
+#, fuzzy
+#| msgid "Welcome To the Nebula"
+msgid "The Nebula"
+msgstr "Vítejte v mlhovině"
+
+#: dat/events/discovery.lua:171
+msgid "Grim Reminder of Our Fragility"
+msgstr ""
+
+#. sfx = audio.newSource( 'snd/sounds/jingles/success.ogg' )
+#. Don't trigger if already done
+#. Trigger
+#. Nothing triggered
+#. Ends when player lands or leaves either way
+#: dat/events/discovery.lua:240
+#, lua-format
+msgid "You found #o%s!"
+msgstr ""
+
+#. Log and message
+#: dat/events/discovery.lua:243 dat/events/shiplog.lua:41
+msgid "Travel Log"
+msgstr ""
+
+#: dat/events/discovery.lua:243
+msgid "Discovery"
+msgstr ""
+
+#. Break autonav
+#. Mark as done
+#. Play sound and show message
+#: dat/events/discovery.lua:260
+msgid "fonts/CormorantUnicase-Medium.ttf"
+msgstr ""
+
+#. Title
+#. title.font = lg.newFont( fontname, title.h )
+#. Subtitle
+#. subtitle.font = lg.newFont( fontname, subtitle.h )
+#. TODO probably rewrite the shader as this is being computed with the full
+#. screen resolution, breaks with all transitions that use love_ScreenSize...
+#. Render to canvas
+#. hook.timer( textlength*1000, "endevent")
+#. Horrible hack, but since the canvas is being scaled by Naev's scale stuff,
+#. we actually draw pretty text ontop using the signed distance transform shader
+#. when it is fully drawn
+#. We want to show it regardless of the time compression and such
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Betray General Klank">
@@ -26047,6 +26214,7 @@ msgstr ""
 msgid "Gambling"
 msgstr ""
 
+#. setOutline is a Naev extension!!
 #.
 #. -- Shader class
 #. --
@@ -26136,6 +26304,7 @@ msgstr ""
 #. --
 #. Default vertex code that doesn't do anything fancy.
 #. --
+#. Make default shaders visible.
 #. Render to image
 #. --
 #. Renders a shader to a canvas.
@@ -26705,6 +26874,40 @@ msgstr ""
 #. -- Prowl Event for the Baron mission string. Only used when NOT doing any Baron missions.
 #. --
 #. TODO: Change this to the Krieger once the Baron has it. Needs "King" mission first.
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Cool Space Stuff">
+#. <trigger>enter</trigger>
+#. <chance>100</chance>
+#. </event>
+#. --
+#.
+#. -- This script handles cool background effects by being created every time the
+#. -- player enters a system. Afterwards if necessary, it will render fancy
+#. -- things or just end.
+#. --
+#. Since we don't actually activate the Love framework we have to fake the
+#. the dimensions and width, and set up the origins.
+#. List of special systems, for other systems this event just finishes
+#.
+#. -- Taiomi, Ship Graveyard
+#. --
+#. Music is fixed
+#. TODO make this not be a horrible hack :/
+#. Create particles and buffer
+#. Load graphics
+#. Debris
+#. Neutral
+#. Pirate
+#. Empire
+#. Create background
+#. Create foreground
+#. Set up hooks
+#. Computes
+#. Calculate player motion
+#. Update the parts
+#. Update background
+#. Update foreground
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Derelict">
@@ -29392,10 +29595,6 @@ msgstr ""
 #: dat/events/shiplog.lua:37
 #, lua-format
 msgid "Landed on %s in the %s system"
-msgstr ""
-
-#: dat/events/shiplog.lua:41
-msgid "Travel Log"
 msgstr ""
 
 #. The player takes contact with the Hawking
@@ -44099,7 +44298,7 @@ msgstr ""
 #: dat/missions/minerva/pirate1.lua:84
 msgid ""
 "\"I know what you're thinking, that's a great idea right? So it's very "
-"simple. Some Dvaered thugs are station around the system, they are not the "
+"simple. Some Dvaered thugs are stationed around the system, they are not the "
 "cleverest of folks, so I want you to provoke them. You know, just rough them "
 "up a little and get out of there.\""
 msgstr ""
@@ -44108,17 +44307,17 @@ msgstr ""
 msgid ""
 "\"Sounds naïve, yes? Might be so, I've managed to get a Za'lek drone shell, "
 "all it has is the engine and some basic following software, but no weapons "
-"nor gear. If you were drag it along while harassing the thugs, they probably "
-"would think that there is some kind  of Za'lek involvement. They're not the "
-"smartest fellows in the world if you catch my drift.\""
+"nor gear. If you were to drag it along while harassing the thugs, they "
+"probably would think that there is some kind  of Za'lek involvement. They're "
+"not the smartest fellows in the world if you catch my drift.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:86
 msgid ""
 "\"To make sure they are all riled up, I want you to spend 15 seconds "
 "harassing them near their original location. Make sure to harass them, but "
-"not kill them! We want them to tell the other Dvaereds about this. Once the "
-"time is up, get the hell away from there, in one piece if possible.\""
+"don't kill them! We want them to tell the other Dvaereds about this. Once "
+"the time is up, get the hell away from there, in one piece if possible.\""
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:87
@@ -44134,8 +44333,8 @@ msgstr ""
 #. If not accepted, misn_state will still be nil
 #: dat/missions/minerva/pirate1.lua:98
 msgid ""
-"You accepted a job from a shady individual to harass Dvaered thugs and make "
-"it seem like the Za'lek were involved."
+"You accepted a job from a shady individual to harass Dvaered thugs in the "
+"Limbo system and make it seem like the Za'lek were involved."
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:102
@@ -47697,14 +47896,27 @@ msgid ""
 "note that simply said, \"Sorry.\""
 msgstr ""
 
-#. Note: this mission does not make any system claims.
+#. randomly select spawn system and planet where brother will be
 #. Spaceport bar stuff
-#: dat/missions/neutral/kidnapped/traffic_01.lua:83
+#: dat/missions/neutral/kidnapped/traffic_01.lua:91
 msgid "Ordinary Woman"
 msgstr ""
 
-#. fast Gawain
-#: dat/missions/neutral/kidnapped/traffic_01.lua:158
+#.
+#. Mission entry point.
+#. --
+#. Mission details:
+#. Some variables for keeping track of the mission
+#. Set mission details
+#. Some flavour text
+#. Set hooks
+#. Entering a system
+#. checking if it is right system, updating OSD, if right system: create ship and wait for hail
+#. Check to see if reaching target system
+#. we can break, we found what we were looking for
+#. if we visited a system without the brother: update OSD
+#. update OSD
+#: dat/missions/neutral/kidnapped/traffic_01.lua:161
 msgid "Poppy Seed"
 msgstr ""
 
@@ -61165,7 +61377,7 @@ msgstr ""
 #. Trick to set path
 #. newFont( size )
 #. Naev default
-#: dat/scripts/love/graphics.lua:422
+#: dat/scripts/love/graphics.lua:428
 msgid "failed to set fallback font"
 msgstr ""
 
@@ -64418,10 +64630,10 @@ msgstr ""
 
 #: src/comm.c:375 src/console.c:682 src/dev_sysedit.c:1344
 #: src/dev_sysedit.c:1454 src/dev_sysedit.c:1517 src/dev_sysedit.c:1712
-#: src/dev_sysedit.c:1887 src/dev_sysedit.c:1971 src/dev_uniedit.c:1026
+#: src/dev_sysedit.c:1887 src/dev_sysedit.c:1972 src/dev_uniedit.c:1026
 #: src/dev_uniedit.c:1238 src/dev_uniedit.c:1496 src/info.c:243 src/info.c:322
 #: src/info.c:407 src/info.c:550 src/info.c:759 src/info.c:937 src/info.c:1024
-#: src/info.c:1366 src/land_outfits.c:169 src/map.c:288 src/map_find.c:1037
+#: src/info.c:1366 src/land_outfits.c:169 src/map.c:288 src/map_find.c:1033
 #: src/map_system.c:204
 msgid "Close"
 msgstr ""
@@ -65452,13 +65664,18 @@ msgid "Set"
 msgstr ""
 
 #. Create the window.
-#: src/dev_sysedit.c:1962
+#: src/dev_sysedit.c:1963
 #, c-format
 msgid "%s - Planet Properties"
 msgstr ""
 
-#: src/dev_sysedit.c:1975
+#: src/dev_sysedit.c:1976
 msgid "Apply"
+msgstr ""
+
+#: src/dev_sysedit.c:1989
+#, c-format
+msgid "Unable to check file type for '%s'!"
 msgstr ""
 
 #. Create the window.
@@ -65482,7 +65699,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:217 src/map.c:293 src/map_find.c:1035
+#: src/dev_uniedit.c:217 src/map.c:293 src/map_find.c:1031
 msgid "Find"
 msgstr ""
 
@@ -65698,7 +65915,7 @@ msgid "Unable to create economy G Matrix."
 msgstr ""
 
 #: src/economy.c:506 src/gui.c:1890 src/ndata.c:199 src/news.c:102
-#: src/nfile.c:490 src/opengl_tex.c:135 src/opengl_tex.c:393 src/perlin.c:399
+#: src/nfile.c:490 src/opengl_tex.c:141 src/opengl_tex.c:399 src/perlin.c:399
 #: src/perlin.c:460 src/physics.c:485
 msgid "Out of Memory"
 msgstr ""
@@ -66462,7 +66679,7 @@ msgstr ""
 msgid "Main"
 msgstr ""
 
-#: src/info.c:57 src/map_find.c:985
+#: src/info.c:57 src/map_find.c:981
 msgid "Ship"
 msgstr ""
 
@@ -67331,7 +67548,7 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: src/input.c:557 src/opengl_tex.c:670
+#: src/input.c:557 src/opengl_tex.c:681
 msgid "unknown"
 msgstr ""
 
@@ -67484,7 +67701,7 @@ msgstr ""
 msgid "Landing Main"
 msgstr ""
 
-#: src/land.c:973 src/map_find.c:1048 src/space.c:175
+#: src/land.c:973 src/map_find.c:1044 src/space.c:175
 msgid "Outfits"
 msgstr ""
 
@@ -68097,7 +68314,7 @@ msgid "Map decorator has unknown node '%s'."
 msgstr ""
 
 #. Create window.
-#: src/map_find.c:227 src/map_find.c:771 src/map_find.c:893
+#: src/map_find.c:227 src/map_find.c:769 src/map_find.c:889
 msgid "Search Results"
 msgstr ""
 
@@ -68130,50 +68347,50 @@ msgstr[2] ""
 msgid "#%c%s (%s, %s)"
 msgstr ""
 
-#: src/map_find.c:773
+#: src/map_find.c:771
 #, c-format
 msgid "Search results for outfits matching '%s':"
 msgstr ""
 
-#: src/map_find.c:894
+#: src/map_find.c:890
 #, c-format
 msgid "Search results for ships matching '%s':"
 msgstr ""
 
-#: src/map_find.c:973
+#: src/map_find.c:969
 msgid "System"
 msgstr ""
 
-#: src/map_find.c:977
+#: src/map_find.c:973
 msgid "Planet"
 msgstr ""
 
-#: src/map_find.c:981
+#: src/map_find.c:977
 msgid "Outfit"
 msgstr ""
 
-#: src/map_find.c:991
+#: src/map_find.c:987
 #, c-format
 msgid "%s matching '%s' not found!"
 msgstr ""
 
-#: src/map_find.c:1016
+#: src/map_find.c:1012
 msgid "Find..."
 msgstr ""
 
-#: src/map_find.c:1025
+#: src/map_find.c:1021
 msgid "Enter keyword to search for:"
 msgstr ""
 
-#: src/map_find.c:1042
+#: src/map_find.c:1038
 msgid "Systems"
 msgstr ""
 
-#: src/map_find.c:1045
+#: src/map_find.c:1041
 msgid "Planets"
 msgstr ""
 
-#: src/map_find.c:1051
+#: src/map_find.c:1047
 msgid "Ships"
 msgstr ""
 
@@ -68567,7 +68784,7 @@ msgstr ""
 msgid "Exit to Main Menu"
 msgstr ""
 
-#: src/mission.c:116 src/nlua_player.c:1088 src/nlua_player.c:1117
+#: src/mission.c:116 src/nlua_player.c:1085 src/nlua_player.c:1114
 #, c-format
 msgid "Mission '%s' not found in stack"
 msgstr ""
@@ -68739,7 +68956,7 @@ msgstr ""
 msgid "Music thread did not exit when asked, ignoring..."
 msgstr ""
 
-#: src/naev.c:174 src/naev.c:1031
+#: src/naev.c:174 src/naev.c:1043
 #, c-format
 msgid "Failed to parse version string '%s'!"
 msgstr ""
@@ -68934,28 +69151,28 @@ msgstr ""
 msgid "PAUSED"
 msgstr ""
 
-#: src/naev.c:972
+#: src/naev.c:984
 msgid "Icon (icon.png) not found!"
 msgstr ""
 
-#: src/naev.c:977
+#: src/naev.c:989
 msgid "Unable to load icon.png!"
 msgstr ""
 
-#: src/naev.c:1002
+#: src/naev.c:1014
 msgid " debug"
 msgstr ""
 
-#: src/naev.c:1057
+#: src/naev.c:1069
 #, c-format
 msgid "SDL: %d.%d.%d [compiled: %d.%d.%d]"
 msgstr ""
 
-#: src/naev.c:1067
+#: src/naev.c:1079
 msgid "SDL is newer than compiled version"
 msgstr ""
 
-#: src/naev.c:1069
+#: src/naev.c:1081
 msgid "SDL is older than compiled version."
 msgstr ""
 
@@ -69119,12 +69336,12 @@ msgid ""
 "Tried:%s"
 msgstr ""
 
-#: src/nlua_audio.c:411 src/nlua_audio.c:439
+#: src/nlua_audio.c:421 src/nlua_audio.c:449
 #, c-format
 msgid "Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"
 msgstr ""
 
-#: src/nlua_canvas.c:202 src/opengl_tex.c:239
+#: src/nlua_canvas.c:202 src/opengl_tex.c:245
 msgid "Error setting up framebuffer!"
 msgstr ""
 
@@ -69146,8 +69363,8 @@ msgstr ""
 msgid "Commodity '%s' not found!"
 msgstr ""
 
-#: src/nlua_commodity.c:340 src/nlua_commodity.c:376 src/nlua_player.c:1223
-#: src/nlua_player.c:1242
+#: src/nlua_commodity.c:340 src/nlua_commodity.c:376 src/nlua_player.c:1220
+#: src/nlua_player.c:1239
 #, c-format
 msgid "Planet '%s' does not belong to a system."
 msgstr ""
@@ -69234,7 +69451,7 @@ msgid ""
 "Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."
 msgstr ""
 
-#: src/nlua_gfx.c:561
+#: src/nlua_gfx.c:566
 msgid "width has to be a positive value."
 msgstr ""
 
@@ -69243,24 +69460,24 @@ msgstr ""
 msgid "Invalid window info name '%s'."
 msgstr ""
 
-#: src/nlua_hook.c:280
+#: src/nlua_hook.c:286
 msgid "Mission not in stack trying to hook, forgot to run misn.accept()?"
 msgstr ""
 
-#: src/nlua_hook.c:300
+#: src/nlua_hook.c:306
 msgid "Attempting to set a hook outside of a mission or event."
 msgstr ""
 
-#: src/nlua_hook.c:305
+#: src/nlua_hook.c:311
 msgid "No hook target was set."
 msgstr ""
 
-#: src/nlua_hook.c:824
+#: src/nlua_hook.c:880
 msgid "Invalid parameter #1 for hook.pilot, expecting pilot or nil."
 msgstr ""
 
 #. hook_type not valid
-#: src/nlua_hook.c:843
+#: src/nlua_hook.c:899
 #, c-format
 msgid "Invalid pilot hook type: '%s'"
 msgstr ""
@@ -69360,84 +69577,84 @@ msgstr ""
 msgid "Outfit '%s' not found!"
 msgstr ""
 
-#: src/nlua_pilot.c:356
+#: src/nlua_pilot.c:358
 msgid "Pilot is invalid."
 msgstr ""
 
-#: src/nlua_pilot.c:478 src/nlua_ship.c:222
+#: src/nlua_pilot.c:480 src/nlua_ship.c:222
 #, c-format
 msgid "Ship '%s' not found!"
 msgstr ""
 
-#: src/nlua_pilot.c:490
+#: src/nlua_pilot.c:492
 #, c-format
 msgid "Fleet '%s' doesn't exist."
 msgstr ""
 
-#: src/nlua_pilot.c:513
+#: src/nlua_pilot.c:515
 #, c-format
 msgid "Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."
 msgstr ""
 
-#: src/nlua_pilot.c:518
+#: src/nlua_pilot.c:520
 #, c-format
 msgid ""
 "Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."
 msgstr ""
 
-#: src/nlua_pilot.c:677
+#: src/nlua_pilot.c:679
 msgid "Trying to remove the bloody player!"
 msgstr ""
 
-#: src/nlua_pilot.c:1599
+#: src/nlua_pilot.c:1601
 #, c-format
 msgid "Unknown slot type '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3023 src/nlua_pilot.c:3073
+#: src/nlua_pilot.c:3041 src/nlua_pilot.c:3091
 #, c-format
 msgid "Cargo '%s' does not exist!"
 msgstr ""
 
-#: src/nlua_pilot.c:3028
+#: src/nlua_pilot.c:3046
 msgid ""
 "Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)"
 msgstr ""
 
-#: src/nlua_pilot.c:3078
+#: src/nlua_pilot.c:3096
 msgid ""
 "Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)"
 msgstr ""
 
-#: src/nlua_pilot.c:3397
+#: src/nlua_pilot.c:3415
 msgid "pilot.memory requires 1 argument!"
 msgstr ""
 
-#: src/nlua_pilot.c:3406
+#: src/nlua_pilot.c:3424
 msgid "Pilot does not have AI."
 msgstr ""
 
-#: src/nlua_pilot.c:3451
+#: src/nlua_pilot.c:3469
 msgid "Pilot is not on manual control."
 msgstr ""
 
-#: src/nlua_pilot.c:3789
+#: src/nlua_pilot.c:3807
 #, c-format
 msgid "Pilot '%s' can't jump out exit only jump '%s'"
 msgstr ""
 
 #. Not found.
-#: src/nlua_pilot.c:3801
+#: src/nlua_pilot.c:3819
 #, c-format
 msgid "System '%s' is not adjacent to current system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3851
+#: src/nlua_pilot.c:3869
 #, c-format
 msgid "Planet '%s' not found in system '%s'"
 msgstr ""
 
-#: src/nlua_pilot.c:3905
+#: src/nlua_pilot.c:3923
 #, c-format
 msgid "#%c%s#0 is hailing you."
 msgstr ""
@@ -69465,46 +69682,46 @@ msgstr ""
 msgid "Planet '%s' can't find system '%s'"
 msgstr ""
 
-#: src/nlua_player.c:562
+#: src/nlua_player.c:559
 msgid "Second parameter to cinematics should be a table of options or omitted!"
 msgstr ""
 
-#: src/nlua_player.c:640
+#: src/nlua_player.c:637
 msgid "Player must be landed to force takeoff."
 msgstr ""
 
-#: src/nlua_player.c:716
+#: src/nlua_player.c:713
 msgid "Must be landed to set the active land window."
 msgstr ""
 
-#: src/nlua_player.c:823
+#: src/nlua_player.c:820
 #, c-format
 msgid "Player does not own a ship named '%s'"
 msgstr ""
 
-#: src/nlua_player.c:1143 src/nlua_player.c:1173
+#: src/nlua_player.c:1140 src/nlua_player.c:1170
 #, c-format
 msgid "Event '%s' not found in stack"
 msgstr ""
 
-#: src/nlua_player.c:1205
+#: src/nlua_player.c:1202
 msgid "Can not teleport the player while landed!"
 msgstr ""
 
-#: src/nlua_player.c:1207
+#: src/nlua_player.c:1204
 msgid "Can not teleport the player while the comm is open!"
 msgstr ""
 
-#: src/nlua_player.c:1209
+#: src/nlua_player.c:1206
 msgid "Can not teleport the player while they are boarded!"
 msgstr ""
 
-#: src/nlua_player.c:1237
+#: src/nlua_player.c:1234
 #, c-format
 msgid "'%s' is not a valid teleportation target."
 msgstr ""
 
-#: src/nlua_player.c:1252
+#: src/nlua_player.c:1249
 #, c-format
 msgid "System '%s' does not exist."
 msgstr ""
@@ -69787,12 +70004,12 @@ msgstr ""
 msgid "Shader '%s' not found."
 msgstr ""
 
-#: src/opengl_shader.c:99 src/opengl_shader.c:108
+#: src/opengl_shader.c:101 src/opengl_shader.c:110
 #, c-format
 msgid "Invalid #include syntax in '%s%s'!"
 msgstr ""
 
-#: src/opengl_shader.c:253
+#: src/opengl_shader.c:255
 #, c-format
 msgid "Failed to link vertex shader '%s' and fragment shader '%s'!"
 msgstr ""
@@ -69800,53 +70017,53 @@ msgstr ""
 #. We could hash raw pixel data here, but that's slower than just
 #. * generating the map from scratch.
 #.
-#: src/opengl_tex.c:428
+#: src/opengl_tex.c:434
 #, c-format
 msgid "Texture '%s' has no RWops"
 msgstr ""
 
-#: src/opengl_tex.c:637
+#: src/opengl_tex.c:648
 msgid "Trying to load image from NULL path."
 msgstr ""
 
-#: src/opengl_tex.c:644
+#: src/opengl_tex.c:655
 #, c-format
 msgid "Failed to load surface '%s' from ndata."
 msgstr ""
 
-#: src/opengl_tex.c:675
+#: src/opengl_tex.c:686
 #, c-format
 msgid "Unable to load image '%s'."
 msgstr ""
 
-#: src/opengl_tex.c:680
+#: src/opengl_tex.c:691
 #, c-format
 msgid "'%s' could not be opened"
 msgstr ""
 
 #. Not found
 #. Surfaces will have NULL names
-#: src/opengl_tex.c:794
+#: src/opengl_tex.c:805
 #, c-format
 msgid "Attempting to free texture '%s' not found in stack!"
 msgstr ""
 
 #. Invalid texture.
-#: src/opengl_tex.c:831
+#: src/opengl_tex.c:842
 #, c-format
 msgid "Unable to duplicate texture '%s'."
 msgstr ""
 
-#: src/opengl_tex.c:873
+#: src/opengl_tex.c:884
 #, c-format
 msgid "Angle not between 0 and 2.*M_PI [%f]."
 msgstr ""
 
-#: src/opengl_tex.c:939
+#: src/opengl_tex.c:950
 msgid "Texture leak detected!"
 msgstr ""
 
-#: src/opengl_tex.c:941
+#: src/opengl_tex.c:952
 #, c-format
 msgid "   '%s' opened %d time"
 msgid_plural "   '%s' opened %d times"
@@ -70525,7 +70742,7 @@ msgid "GUI (Graphical User Interface)"
 msgstr ""
 
 #: src/outfit.c:2118 src/outfit.c:2433 src/slots.c:74 src/space.c:3101
-#: src/spfx.c:259 src/spfx.c:1032 src/start.c:74
+#: src/spfx.c:259 src/spfx.c:1034 src/start.c:74
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
@@ -70678,56 +70895,56 @@ msgstr ""
 msgid "Solid initialization did not specify correct update function!"
 msgstr ""
 
-#: src/pilot.c:893
+#: src/pilot.c:894
 msgid "#oActive cooldown engaged."
 msgstr ""
 
-#: src/pilot.c:948
+#: src/pilot.c:949
 msgid "#oActive cooldown completed."
 msgstr ""
 
-#: src/pilot.c:951
+#: src/pilot.c:952
 #, c-format
 msgid "#rActive cooldown aborted: %s!"
 msgstr ""
 
-#: src/pilot.c:953
+#: src/pilot.c:954
 msgid "#rActive cooldown aborted!"
 msgstr ""
 
-#: src/pilot.c:1116
+#: src/pilot.c:1117
 #, c-format
 msgid "#%cComm %s>#0 \"%s\""
 msgstr ""
 
-#: src/pilot.c:1144
+#: src/pilot.c:1145
 #, c-format
 msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
-#: src/pilot.c:2338 src/pilot.c:2365
+#: src/pilot.c:2339 src/pilot.c:2366
 msgid "#rStrayed too far from jump point: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2345
+#: src/pilot.c:2346
 msgid "#rAfterburner active: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2385
+#: src/pilot.c:2386
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 
-#: src/pilot.c:2693
+#: src/pilot.c:2694
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr ""
 
-#: src/pilot.c:2784 src/pilot.c:2818
+#: src/pilot.c:2785 src/pilot.c:2819
 msgid "Unable to allocate memory"
 msgstr ""
 
-#: src/pilot.c:2903
+#: src/pilot.c:2904
 msgid "Creating pilot in system with no jumps nor planets to take off from!"
 msgstr ""
 
@@ -71461,12 +71678,12 @@ msgstr ""
 msgid "GUI '%s' does not exist as a file: '%s' not found."
 msgstr ""
 
-#: src/render.c:226
+#: src/render.c:230
 #, c-format
 msgid "Unknown post-processing shader layer '%d'!"
 msgstr ""
 
-#: src/render.c:283
+#: src/render.c:287
 #, c-format
 msgid "Trying to remove non-existant post-processing shader with id '%d'!"
 msgstr ""
@@ -72028,27 +72245,31 @@ msgstr ""
 msgid "Unknown vorbisfile error."
 msgstr ""
 
-#: src/sound_openal.c:636
+#: src/sound_openal.c:637
 #, c-format
 msgid "Failed to finish loading Ogg file: %s"
 msgstr ""
 
-#: src/sound_openal.c:698 src/sound_openal.c:727
+#: src/sound_openal.c:656
+msgid "Error reading from OGG file!"
+msgstr ""
+
+#: src/sound_openal.c:705 src/sound_openal.c:734
 #, c-format
 msgid "Failed to load sound file '%s'."
 msgstr ""
 
-#: src/sound_openal.c:739
+#: src/sound_openal.c:746
 #, c-format
 msgid "Something went wrong when loading sound file '%s'."
 msgstr ""
 
-#: src/sound_openal.c:1258 src/sound_openal.c:1327
+#: src/sound_openal.c:1265 src/sound_openal.c:1334
 #, c-format
 msgid "Group '%d' not found."
 msgstr ""
 
-#: src/sound_openal.c:1320
+#: src/sound_openal.c:1327
 #, c-format
 msgid "Group '%d' has no free sounds."
 msgstr ""
@@ -72394,41 +72615,41 @@ msgstr ""
 msgid "Invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:831
+#: src/spfx.c:833
 #, c-format
 msgid "Unable to upload haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:868
+#: src/spfx.c:870
 #, c-format
 msgid "Failed to update haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:922
+#: src/spfx.c:924
 msgid "Rendering invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:994
+#: src/spfx.c:996
 #, c-format
 msgid "Trail '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/spfx.c:998
+#: src/spfx.c:1000
 #, c-format
 msgid "Trail '%s' missing '%s' element"
 msgstr ""
 
-#: src/spfx.c:1025
+#: src/spfx.c:1027
 #, c-format
 msgid "Malformed '%s' file: missing root element 'Trail_types'"
 msgstr ""
 
-#: src/spfx.c:1074
+#: src/spfx.c:1076
 #, c-format
 msgid "Trail '%s' that inherits from '%s' has missing reference!"
 msgstr ""
 
-#: src/spfx.c:1112
+#: src/spfx.c:1114
 #, fuzzy, c-format
 #| msgid "Formation '%s' not found"
 msgid "Trail type '%s' not found in stack"
