@@ -2409,7 +2409,6 @@ dat/scripts/colour.lua
 dat/scripts/coreprofile.lua
 dat/scripts/debug/debug.lua
 dat/scripts/enum.lua
-dat/scripts/fleet_form.lua
 dat/scripts/fleethelper.lua
 dat/scripts/formation.lua
 dat/scripts/imageproc.lua
