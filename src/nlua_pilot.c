@@ -3058,6 +3058,8 @@ static int pilotL_cargoAdd( lua_State *L )
  * @brief Tries to remove cargo from the pilot's ship.
  *
  * @usage n = pilot.cargoRm( player.pilot(), "Food", 20 )
+ * @usage n = pilot.cargoRm( player.pilot(), "__allExceptMisn" ) -- Removes all cargo from the player, excepted mission cargo
+ * @usage n = pilot.cargoRm( player.pilot(), "__all" ) -- Removes all cargo from the player
  *
  *    @luatparam Pilot p The pilot to remove cargo from.
  *    @luatparam string type Raw (untranslated) name of the cargo to remove.
