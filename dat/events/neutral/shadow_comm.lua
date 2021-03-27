@@ -37,6 +37,12 @@ yesnotxt = _("Do you have for to respond to the invitation?")
 
 
 function create ()
+     -- Claim: duplicates the claims in the mission.
+    misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")}
+    if not evt.claim(misssys) then
+        abort()
+    end
+
     sysname = "Pas"
 
     -- Create a Vendetta who hails the player after a bit
