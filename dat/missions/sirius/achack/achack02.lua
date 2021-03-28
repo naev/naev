@@ -40,7 +40,7 @@ text1r = _([["Hello again, %s," Joanne greets you. "I'm afraid I still find myse
 text2 = _([["See, this is the situation," she continues. "My duties as a Sirian administration officer require me to pay visits to several military outposts throughout Sirius space. It's a long trek every time, but that just comes with the job. Now, the trouble is that Harja's assassins might have many opportunities to ambush me along the way. I've had combat training, of course, just like every other Serra soldier, but I'm afraid I have little actual fighting experience, and I'm not sure I could survive an attack unassisted. You, however, seem to have seen quite some action. If you were to escort me while I make my rounds, I would feel a lot more secure. I can reward you, of course. Let's see... Another 750,000 credits seems a fair sum. What do you think, are you willing to do it?"]])
     
 title2 = _("Joanne's escort")
-text3 = _([["That's wonderful! Thank you so much. As I said, my job requires that I travel between Sirian military bases. You're going to need fuel to make the necessary jumps, of course. Now that you have agreed to be my personal escort I can give you clearance to dock with those bases if you don't have it already so you can automatically refuel, but either way I won't be on station long, so you won't have time to disembark and do other things while you're there.
+text3 = _([["That's wonderful! Thank you so much. As I said, my job requires that I travel between Sirian military bases. You're going to need fuel to make the necessary jumps, of course (up to 7 jumps maximum). Now that you have agreed to be my personal escort I can give you clearance to dock with those bases if you don't have it already so you can automatically refuel, but either way I won't be on station long, so you won't have time to disembark and do other things while you're there.
     "Also, I think this goes without saying, but I need you to stick close to me so your ship must be fast enough. Also don't jump to any systems before I do, don't jump to the wrong systems, and don't land on any planets I don't land on. If we meet any unpleasantries along the way I will rely on you to help me fight them off. That's about it. I'll finish up a few things here, and then I'll head to my ship. I'll be in the air when you are."
     Joanne leaves the bar. You will meet up with her in orbit.]])
     
@@ -82,6 +82,9 @@ landmsg = _("Joanne has docked with %s. Follow her!")
 
 ambushmsg = _("That's our target! Get her, boys!")
 
+fuel_title = _("Fuel Warning")
+fuel_text = _("You don't have enough fuel for making 5 jumps. You'll have to buy some from civilian ships on the way.")
+
 -- Mission info stuff
 joannename1 = _("The Serra military officer")
 joannedesc1 = _("You know this woman. She's the military officer from before, the one you were hired to assassinate.")
@@ -120,10 +123,10 @@ function player_has_fast_ship()
   local stats = player.pilot():stats()
   playershipspeed = stats.speed_max
   local has_fast_ship = false
-     if playershipspeed > 200 then
-        has_fast_ship = true
-     end
-     return has_fast_ship
+  if playershipspeed > 200 then
+     has_fast_ship = true
+  end
+  return has_fast_ship
 end
 
 function accept()
@@ -147,6 +150,8 @@ function accept()
    nextsys = system.cur() -- This variable holds the system the player is supposed to jump to NEXT. This is the current system when taking off.
    origin = planet.cur() -- Determines where Joanne spawns from. Can be a planet or system.
    joannejumped = true -- Determines if Joanne has jumped. Needs to be set when landed.
+   mark = misn.markerAdd( destsys, "low" )
+   warnFuel = true
    
    misn.accept()
    misn.setDesc(misn_desc)
@@ -163,6 +168,7 @@ function land()
    if planet.cur() == destplanet and joannelanded and stage < 4 then
       stage = stage + 1
       destplanet, destsys = planet.get(route[stage])
+      misn.markerMove( mark, destsys )
       origin = planet.cur()
       player.refuel(200)
       tk.msg(stoptitle, stoptext:format(planet.cur():name()))
@@ -174,6 +180,7 @@ function land()
       misn.osdCreate(osd_title, osd_final)
       origin = planet.cur()
       destplanet, destsys = planet.get(route[stage])
+      misn.markerMove( mark, destsys )
       joannejumped = true -- She "jumped" into the current system by taking off.
       misn.osdCreate(osd_title, osd_final)
       player.takeoff()
@@ -181,6 +188,7 @@ function land()
       tk.msg(destfailtitle, planetfailtext)
       misn.finish(false)
    elseif stage == 5 and planet.cur() == planet.get("Sroolu") then
+      misn.markerRm(mark)
       tk.msg(title4, text5:format(player.name(), player.name()))
       tk.msg(title5, text6)
       tk.msg(title5, text7:format(player.name()))
@@ -201,13 +209,29 @@ function enter()
       tk.msg(toslowshiptitle, toslowshipmsg)
       misn.finish(false)
    end
+
+   -- Warn the player if fuel is not sufficient
+   if warnFuel then
+      if player.pilot():stats().fuel < 7*player.pilot():stats().fuel_consumption then
+         tk.msg(fuel_title,fuel_text)
+      end
+      warnFuel = false
+   end
    
    joanne = addShips(1, "Sirius Fidelity", "Achack_sirius", origin, _("Joanne"))[1]
    joanne:control()
+   joanne:rmOutfit("cores")
    joanne:rmOutfit("all")
-   joanne:addOutfit("Razor MK2", 3)
+   joanne:addOutfit("Tricon Zephyr Engine")
+   joanne:addOutfit("Milspec Aegis 2201 Core System")
+   joanne:addOutfit("S&K Ultralight Combat Plating")
+   joanne:cargoRm( "__all" )
+   joanne:addOutfit("Razor MK2", 4)
    joanne:addOutfit("Reactor Class I", 1)
    joanne:addOutfit("Shield Capacitor", 1)
+   joanne:setHealth(100,100)
+   joanne:setEnergy(100)
+   joanne:setFuel(true)
    joanne:setVisplayer()
    joanne:setHilight()
    joanne:setInvincPlayer()
@@ -216,7 +240,6 @@ function enter()
    if playershipspeed < joanneshipspeed then
      joanne:setSpeedLimit(playershipspeed)
    end
- 
    
    pilot.toggleSpawn("Pirate")
    pilot.clearSelect("Pirate") -- Not sure if we need a claim for this.
@@ -235,9 +258,9 @@ function enter()
    end
    hook.pilot(joanne, "death", "joanneDead")
    
-   if system.cur() == system.get("Valur Gem") and stage == 3 then
-      ambushSet({"Hyena", "Hyena"}, vec2.new(880, -140))
-   elseif system.cur() == system.get("Humdrum") then
+   if system.cur() == system.get("Druss") and stage == 3 then
+      ambushSet({"Hyena", "Hyena"}, vec2.new(-12000, 9000))
+   elseif system.cur() == system.get("Humdrum") and stage == 4 then
       ambushSet({"Vendetta", "Vendetta"}, vec2.new(2230, -15000))
    end
 end

@@ -1118,7 +1118,8 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
 
    /* Actually write data */
    asprintf( &file, "dat/outfits/maps/%s", ns->fileName );
-   xmlSaveFileEnc( file, doc, "UTF-8" );
+   if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
+      WARN("Failed writing '%s'!", file);
    free( file );
 
    /* Clean up. */

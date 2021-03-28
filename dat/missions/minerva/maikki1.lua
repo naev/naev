@@ -135,6 +135,7 @@ function approach_maikki ()
    if misn_state==nil then
       maikki:rename( maikki_name )
    end
+   vn.music( minerva.loops.maikki )
    vn.transition("hexagon")
 
    if misn_state==nil then
@@ -237,6 +238,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
 
    vn.label( "showloot" )
    vn.na(_("You show her the picture you found in Zerantix of her and her parents."))
+   -- TODO show picture
    maikki(_([[As she stares deeply at the picture, her eyes tear up.]]))
    maikki(_([["I'm sorry, I shouldn't be crying. I hardly even know the man. It's just seeing us together just brings back some memories which I had thought I had forgotten."]]))
    maikki(_([["He looks so goofy in this picture, and my mother looks so happy… This is what should have been my childhood…"
@@ -252,9 +254,9 @@ She looks clearly excited at the possibility.]]))
 "The scavengers were selling to the Za'lek right? What could the Za'lek have to do with my father so far away? I always thought those creeps couldn't be up to anything good."]]))
    maikki(_([[Her face glows.
 "I think I have an idea for our next steps. Meet me up here in a bit. I have to get some information first."]]))
+   vn.sfxVictory()
    vn.func( function ()
       -- no reward, yet...
-      vn.sfxVictory()
       mission_finish = true
       shiplog.appendLog( logidstr, _("You gave Maikki the information you found in the nebula about her father.") )
    end )
@@ -882,6 +884,7 @@ function board_wreck ()
    local saw_bridge, saw_dormitory, saw_engineroom
    vn.clear()
    vn.scene()
+   vn.music( 'snd/sounds/loops/alienplanet.ogg' )
    vn.transition("hexagon")
    vn.na(_("You can see clear laser burns on the hull of the wreck as you approach the ship and prepare to board. This doesn't look like it was an accident."))
    vn.na(_("You board the wreck in your space suit and begin to investigate the insides of the ship."))

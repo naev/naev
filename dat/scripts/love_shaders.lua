@@ -47,6 +47,9 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
    return transform_projection * vertex_position;
 }
 ]]
+-- Make default shaders visible.
+love_shaders.pixelcode = _pixelcode
+love_shaders.vertexcode = _vertexcode
 
 local function _shader2canvas( shader, image, w, h, sx, sy )
    sx = sx or 1

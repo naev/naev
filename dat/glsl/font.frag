@@ -19,6 +19,4 @@ void main(void) {
    float beta = smoothstep(outline_center-outline_stepsize, outline_center+outline_stepsize, dist);
    vec4 fg_c = mix(outline_color, color, alpha);
    color_out = vec4(fg_c.rgb, beta*fg_c.a);
-
-#include "colorblind.glsl"
 }

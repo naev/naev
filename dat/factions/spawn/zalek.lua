@@ -1,5 +1,5 @@
-require("factions/spawn/common")
-require("factions/spawn/mercenary_helper")
+local scom = require "factions/spawn/lib/common"
+local merc = require "factions/spawn/lib/mercenary"
 
 
 -- @brief Spawns a small patrol fleet.
@@ -8,7 +8,7 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < pbm then
-       pilots = spawnLtMerc("Za'lek")
+       pilots = merc.spawnLtMerc("Za'lek")
     elseif r < 0.5 then
        scom.addPilot( pilots, "Za'lek Light Drone", 10 );
        scom.addPilot( pilots, "Za'lek Heavy Drone", 15 );

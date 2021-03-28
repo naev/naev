@@ -236,6 +236,4 @@ void main(void) {
    //* Just use default
    color_out = trail_default( color_out, pos_tex, pos_px );
 #endif /* HAS_GL_ARB_shader_subroutine */
-
-#include "colorblind.glsl"
 }

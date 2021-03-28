@@ -517,6 +517,26 @@ void window_resizeWidget( const unsigned int wid,
 
 
 /**
+ * @brief Checks to see if a window is at the top.
+ *
+ *    @param wid indow ID to see if is top.
+ */
+int window_isTop( const unsigned int wid )
+{
+   Window *n, *w = window_wget(wid);
+   if (w==NULL)
+      return 0;
+   n = w->next;
+   while (n != NULL) {
+      if (!window_isFlag(n,WINDOW_KILL) && !window_isFlag(n,WINDOW_NORENDER))
+         return 0;
+      n = n->next;
+   }
+   return 1;
+}
+
+
+/**
  * @brief Checks to see if a window exists.
  *
  *    @param wdwname Name of the window to check.
@@ -1348,7 +1368,7 @@ void toolkit_drawTriangle( int x1, int y1, int x2, int y2, int x3, int y3,
 void toolkit_drawAltText( int bx, int by, const char *alt )
 {
    double w, h;
-   double x, y, o;
+   double x, y;
    glColour c;
    glColour c2;
 
@@ -1359,10 +1379,10 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    /* Choose position. */
    x = bx + 10.;
    y = by - h - gl_smallFont.h - 10.;
-   if (y < -SCREEN_H/2+10) {
-      o  = -(SCREEN_H/2 + y) + 10;
-      y += o;
-   }
+   if (y < 10.)
+      y += -y+10.;
+   if (x+w+10. > SCREEN_W)
+      x -= w;
 
    /* Set colours. */
    c.r = cGrey20.r;

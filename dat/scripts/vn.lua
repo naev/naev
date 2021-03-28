@@ -11,6 +11,7 @@ local window = require 'love.window'
 local filesystem = require 'love.filesystem'
 local audio = require 'love.audio'
 local love_image = require 'love.image'
+local lmusic = require 'lmusic'
 local transitions = require 'vn.transitions'
 
 local vn = {
@@ -26,10 +27,18 @@ local vn = {
       _buffer = "",
       _title = nil,
       _globalalpha = 1,
-      --_soundTalk = audio.newSource( "sfx/talk.wav" ),
+      --_soundTalk = audio.newSource( "snd/sounds/ui/letter0.wav" ),
       _pitchValues = {0.7, 0.8, 1.0, 1.2, 1.3},
    },
    transitions = transitions,
+   _sfx = {
+      victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
+      bingo = audio.newSource( 'snd/sounds/jingles/success.ogg' ),
+      eerie = audio.newSource( 'snd/sounds/jingles/eerie.ogg' ),
+      ui = {
+         option = audio.newSource( 'snd/sounds/ui/happy.wav' ),
+      },
+   },
 }
 -- Drawing
 local function _setdefaults()
@@ -62,6 +71,8 @@ local function _setdefaults()
    graphics.setCanvas( vn._emptycanvas )
    graphics.clear( 0, 0, 0, 0 )
    graphics.setCanvas( oldcanvas )
+   -- Music stuff
+   vn._handle_music = false
 end
 
 --[[--
@@ -125,12 +136,14 @@ local function _draw_character( c )
       flip = -1
       x = x + scale*w
    end
+   local r = c.rotation or 0
+   -- TODO why does rotation not work with shaders??
    if c.shader and c.shader.prerender then
       c.shader:prerender( c.image )
    end
    vn.setColor( col, c.alpha )
    graphics.setShader( c.shader )
-   graphics.draw( c.image, x, y, 0, flip*scale, scale )
+   graphics.draw( c.image, x, y, r, flip*scale, scale )
    graphics.setShader()
 end
 
@@ -237,6 +250,8 @@ Main updating function. Has to be called each loop in "love.update"
    @tparam number dt Update tick in seconds.
 ]]
 function vn.update(dt)
+   lmusic.update( dt )
+
    -- Out of states
    if vn._state > #vn._states then
       love.event.quit()
@@ -628,6 +643,7 @@ function vn.StateMenu:_keypressed( key )
    self:_choose(n)
 end
 function vn.StateMenu:_choose( n )
+   vn._sfx.ui.option:play()
    self.handler( self._items[n][2] )
    _finish( self )
 end
@@ -846,6 +862,7 @@ function vn.Character.new( who, params )
    c.shader = params.shader
    c.hidetitle = params.hidetitle
    c.pos = params.pos
+   c.rotation = params.rotation
    c.params = params
    return c
 end
@@ -892,7 +909,7 @@ local function _appear_setup( c, shader )
             self.image:draw( ... )
             graphics.setCanvas( oldcanvas )
 
-            --local oldshader = graphics.getShader()
+            local oldshader = graphics.getShader()
             graphics.setShader( shader )
             vn.setColor( {1, 1, 1, 1} )
             graphics.setBlendMode( "alpha", "premultiplied" )
@@ -945,6 +962,8 @@ function vn.appear( c, name, seconds, transition )
 end
 --[[--
 Makes a character disappear in the VN.
+
+The way it works is that the transition is played backwards, so if you want the character to slide left, use "slideright"!
    @see vn.transition
    @see vn.disappear
    @tparam Character c Character to make disappear.
@@ -1030,6 +1049,48 @@ function vn.jump( label )
 end
 
 --[[--
+Plays music. This will stop all other playing music unless dontstop is set to true.
+
+This gets automatically reset when the VN finishes.
+
+   @see lmusic.play
+   @tparam string|nil filename Name of the music to play. If nil, it tries to restore the music again.
+   @tparam tab params Same as lmusic.play()
+   @tparam boolean dontstop Don't stop other music.
+--]]
+function vn.music( filename, params, dontstop )
+   vn._checkstarted()
+   local m = {}
+   if filename == nil then
+      vn.func( function ()
+         music.play()
+         lmusic.stop()
+      end )
+   else
+      vn.func( function ()
+         if not dontstop then
+            music.stop()
+            lmusic.stop()
+         end
+         vn._handle_music = true
+         m.m = lmusic.play( filename, params )
+      end )
+   end
+   return m
+end
+
+--[[--
+Stops certain playing music.
+
+   @tparam string|nil filename Name of the music to stop. If nil, it tries to stop all playing music.
+--]]
+function vn.musicStop( filename )
+   vn.func( function ()
+      lmusic.stop( filename )
+   end )
+end
+
+--[[--
 Finishes the VN.
    @see vn.transition
    @param ... Uses the parameters as vn.transition.
@@ -1037,7 +1098,15 @@ Finishes the VN.
 function vn.done( ... )
    vn._checkstarted()
    vn.scene()
-   vn.func( function () vn._globalalpha = 0 end )
+   vn.func( function ()
+      vn._globalalpha = 0
+      if vn._handle_music then
+         lmusic.stop()
+         if not music.isPlaying() then
+            music.play()
+         end
+      end
+   end )
    vn.transition( ... )
    table.insert( vn._states, vn.StateEnd.new() )
 end
@@ -1133,22 +1202,19 @@ end
 Plays a victory sound.
 --]]
 function vn.sfxVictory()
-   -- TODO
-   -- return vn.sfx( vn._sfx.victory )
+   return vn.sfx( vn._sfx.victory )
 end
 --[[--
 Plays a bingo sound.
 --]]
 function vn.sfxBingo()
-   -- TODO
-   -- return vn.sfx( vn._sfx.bingo )
+   return vn.sfx( vn._sfx.bingo )
 end
 --[[--
 Plays an eerie sound.
 --]]
 function vn.sfxEerie()
-   -- TODO
-   -- return vn.sfx( vn._sfx.eerie )
+    return vn.sfx( vn._sfx.eerie )
 end
 
 --[[--
@@ -1261,6 +1327,10 @@ function vn.run()
    love.exec( 'scripts/vn' )
    love._vn = nil
    vn._started = false
+   -- Destroy remaining lmusic stuff if necessary
+   if vn._handle_music then
+      lmusic.clear()
+   end
 end
 
 --[[--

@@ -758,12 +758,10 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    oname = outfit_existsCase( name );
    map_foundOutfitNames = map_outfitsMatch( name );
    len = array_size( map_foundOutfitNames );
-   if (len <= 0)
-      return -1;
-   else if ((oname != NULL) && (len == 1))
+   if ((oname != NULL) && (len == 1))
       o = outfit_get( oname );
    /* Do fuzzy match. */
-   else {
+   else if (len > 0) {
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
@@ -880,12 +878,10 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    sname = ship_existsCase( name );
    names = map_shipsMatch( name );
    len = array_size( names );
-   if (len <= 0)
-      return -1;
-   else if ((sname != NULL) && (len == 1))
+   if ((sname != NULL) && (len == 1))
       s = ship_get( sname );
    /* Handle fuzzy matching. */
-   else {
+   else if (len > 0) {
       /* Ask which one player wants. */
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)

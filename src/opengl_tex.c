@@ -38,6 +38,12 @@ typedef struct glTexList_ {
    struct glTexList_ *next; /**< Next in linked list */
    glTexture *tex; /**< associated texture */
    int used; /**< counts how many times texture is being used */
+   /* TODO We currently treat images with different number of sprites as
+    * different images, i.e., they get reloaded and use more memory. However,
+    * it should be possible to do something fancier and share the texture to
+    * avoid this increase of memory (without sharing other parameters). */
+   int sx; /**< X sprites */
+   int sy; /**< Y sprites */
 } glTexList;
 static glTexList* texture_list = NULL; /**< Texture list. */
 
@@ -55,8 +61,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
 static glTexture* gl_loadNewImage( const char* path, unsigned int flags );
 static glTexture* gl_loadNewImageRWops( const char *path, SDL_RWops *rw, unsigned int flags );
 /* List. */
-static glTexture* gl_texExists( const char* path );
-static int gl_texAdd( glTexture *tex );
+static glTexture* gl_texExists( const char* path, int sx, int sy );
+static int gl_texAdd( glTexture *tex, int sx, int sy );
 
 
 /**
@@ -203,6 +209,50 @@ int gl_texHasCompress (void)
 }
 
 
+/**
+ * @brief Creates a framebuffer and its associated texture.
+ *
+ *    @param[out] fbo Framebuffer object id.
+ *    @param[out] tex Texture id.
+ *    @param width Width to use.
+ *    @param height Height to use.
+ *    @return 0 on success.
+ */
+int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height )
+{
+   GLenum status;
+
+   /* Create the render buffer. */
+   glGenTextures(1, tex);
+   glBindTexture(GL_TEXTURE_2D, *tex);
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+   glBindTexture(GL_TEXTURE_2D, 0);
+
+   /* Create the frame buffer. */
+   glGenFramebuffers( 1, fbo );
+   glBindFramebuffer(GL_FRAMEBUFFER, *fbo);
+
+   /* Attach the colour buffer. */
+   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *tex, 0);
+
+   /* Check status. */
+   status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+   if (status != GL_FRAMEBUFFER_COMPLETE)
+      WARN(_("Error setting up framebuffer!"));
+
+   /* Restore state. */
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+
+   gl_checkErr();
+
+   return (status==GL_FRAMEBUFFER_COMPLETE);
+}
+
+
 glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const char* name )
 {
    glTexture *texture;
@@ -234,7 +284,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
    /* Add to list. */
    if (name != NULL) {
       texture->name = strdup(name);
-      gl_texAdd( texture );
+      gl_texAdd( texture, sx, sy );
    }
 
    return texture;
@@ -320,7 +370,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
    md5_byte_t *md5val;
 
    if (name != NULL) {
-      texture = gl_texExists( name );
+      texture = gl_texExists( name, sx, sy );
       if (texture != NULL) {
          if (freesur)
             SDL_FreeSurface( surface );
@@ -425,7 +475,7 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
 
    /* Make sure doesn't already exist. */
    if (name != NULL) {
-      texture = gl_texExists( name );
+      texture = gl_texExists( name, sx, sy );
       if (texture != NULL)
          return texture;
    }
@@ -452,7 +502,7 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
 
    if (name != NULL) {
       texture->name = strdup(name);
-      gl_texAdd( texture );
+      gl_texAdd( texture, sx, sy );
    }
    else
       texture->name = NULL;
@@ -478,9 +528,11 @@ glTexture* gl_loadImage( SDL_Surface* surface, unsigned int flags )
  * @brief Check to see if a texture matching a path already exists.
  *
  *    @param path Path to the texture.
+ *    @param sx X sprites.
+ *    @param sy Y sprites.
  *    @return The texture, or NULL if none was found.
  */
-static glTexture* gl_texExists( const char* path )
+static glTexture* gl_texExists( const char* path, int sx, int sy )
 {
    glTexList *cur;
 
@@ -491,7 +543,8 @@ static glTexture* gl_texExists( const char* path )
    /* check to see if it already exists */
    if (texture_list != NULL) {
       for (cur=texture_list; cur!=NULL; cur=cur->next) {
-         if (strcmp(path,cur->tex->name)==0) {
+         if ((strcmp(path,cur->tex->name)==0) &&
+               (cur->sx==sx) && (cur->sy==sy)) {
             cur->used += 1;
             return cur->tex;
          }
@@ -505,7 +558,7 @@ static glTexture* gl_texExists( const char* path )
 /**
  * @brief Adds a texture to the list under the name of path.
  */
-static int gl_texAdd( glTexture *tex )
+static int gl_texAdd( glTexture *tex, int sx, int sy )
 {
    glTexList *new, *last = texture_list;
 
@@ -514,6 +567,8 @@ static int gl_texAdd( glTexture *tex )
    new->next = NULL;
    new->used = 1;
    new->tex  = tex;
+   new->sx   = sx;
+   new->sy   = sy;
 
    if (texture_list == NULL) /* special condition - creating new list */
       texture_list = new;
@@ -542,7 +597,7 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
    glTexture *t;
 
    /* Check if it already exists. */
-   t = gl_texExists( path );
+   t = gl_texExists( path, 1, 1 );
    if (t != NULL)
       return t;
 
@@ -568,7 +623,7 @@ glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int
    glTexture *t;
 
    /* Check if it already exists. */
-   t = gl_texExists( path );
+   t = gl_texExists( path, 1, 1 );
    if (t != NULL)
       return t;
 

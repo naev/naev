@@ -255,6 +255,10 @@ jobs:
           - releasetype: itch
 
     runs-on: ubuntu-latest
+
+    container:
+      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+
     needs:
       [
         Package_Source,
@@ -296,27 +300,6 @@ jobs:
         run: |
           mkdir -p temp build/{staging,dist/{lin64,macos,win64}}
         working-directory: ${{ github.workspace }}
-
-      - name: Update APT Cache
-        if: ${{ matrix.releasetype == 'steam' }}
-        run: |
-          sudo add-apt-repository multiverse
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-
-      - name: Install SteamCMD
-        if: ${{ matrix.releasetype == 'steam' }}
-        run: |
-          echo steamcmd steam/question select "I AGREE" | sudo debconf-set-selections
-          sudo apt-get install lib32gcc1 libsdl2-2.0-0:i386 steamcmd
-
-      - name: Install Butler
-        if: ${{ matrix.releasetype == 'itch' }}
-        run: |
-          wget -O temp/butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-          unzip temp/butler.zip
-          chmod +x butler
-          ./butler -V
 
       - name: Download Artifacts
         uses: actions/download-artifact@v2
@@ -385,9 +368,9 @@ jobs:
 
           # Push builds to itch.io via butler
 
-          ./butler push --userversion="$SUFFIX" build/dist/lin64 naev/naev:linux-x86-64-nightly
-          ./butler push --userversion="$SUFFIX" build/dist/macos naev/naev:macos-x86-64-nightly
-          ./butler push --userversion="$SUFFIX" build/dist/win64 naev/naev:windows-x86-64-nightly
+          butler push --userversion="$SUFFIX" build/dist/lin64 naev/naev:linux-x86-64-nightly
+          butler push --userversion="$SUFFIX" build/dist/macos naev/naev:macos-x86-64-nightly
+          butler push --userversion="$SUFFIX" build/dist/win64 naev/naev:windows-x86-64-nightly
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
@@ -395,8 +378,8 @@ jobs:
         if: ${{ matrix.releasetype == 'steam' }}
         run: |
           chmod -R +x build/staging/naev-steam-deployment
-          cp -r build/staging/naev-steam-deployment/* ${{ github.workspace }}
-          ./SteamDeploy.sh -n -t "${{ github.workspace }}/build/staging" -o "${{ github.workspace }}/build/dist"
+          cp -r build/staging/naev-steam-deployment/* "$(pwd)"
+          ./SteamDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist"
         env:
           STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
           STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}

@@ -136,6 +136,13 @@ log_text_fail = _([[You failed to escort a diplomat to safety for the Four Winds
 
 -- After having accepted the mission from the hailing Vendetta
 function create()
+   misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refuel stop, protegee meeting point, final destination.
+   misssys["__save"] = true
+    
+   if not misn.claim(misssys) then
+      abort()
+   end
+
    misn.accept()
    stage = 0
    local rsysname = "Pas"
@@ -150,14 +157,7 @@ function create()
 end
 
 -- Boarding the Seiryuu at the beginning of the mission
-function meeting()
-    misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refuel stop, protegee meeting point, final destination.
-    misssys["__save"] = true
-    
-    if not misn.claim(misssys) then
-        abort()
-    end
-    
+function meeting()    
     first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
     if first then
         var.push("shadowvigil_first", false)

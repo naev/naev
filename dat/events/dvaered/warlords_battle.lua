@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Warlords battle">
   <trigger>enter</trigger>
-  <chance>10</chance>
+  <chance>5</chance>
   <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
   <flags>
   </flags>
@@ -14,9 +14,9 @@
 --  A battle between two Dvaered warlords. The player can join one of them and get a reward
 
 require "fleethelper"
-require "fleet_form"
 require "proximity"
 require "numstring"
+local formation = require "formation"
 
 
 title = {}
@@ -35,7 +35,6 @@ function create ()
 end
 
 function begin ()  
-
    thissystem = system.cur()
 
    -- thissystem and source_system must be adjacent (for those who use player.teleport)
@@ -71,10 +70,11 @@ function begin ()
    hook.timer(3000, "merchant")
    hook.timer(7000, "attack")
    hook.timer(12000, "defense")
+   inForm       = true -- People are in formation
+   batInProcess = true -- Battle is happening
 
    hook.rm(jumphook)
    hook.jumpout("leave")
-
 end
 
 --Spawns a merchant ship that explains what happens
@@ -107,19 +107,19 @@ function hailagain()
 end
 
 function attack ()
-
    attAttHook = {}
    local n = rnd.rnd(3,6)
 
-   attackers = addShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_system)
+   attackers = addShips(n, {"Dvaered Vendetta", "Dvaered Ancestor"}, "Dvaered", source_system) -- Give them Dvaered equipment
    attackers[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system )
    attackers[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_system )
    attackers[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system )
-   attackers[2*n+4] = pilot.add("Rhino", "Thugs", source_system) --some transport ships
-   attackers[2*n+5] = pilot.add("Rhino", "Thugs", source_system)
-   attackers[2*n+6] = pilot.add("Rhino", "Thugs", source_system)
-   attackers[2*n+7] = pilot.add("Rhino", "Thugs", source_system)
-   attackers[2*n+8] = pilot.add( "Dvaered Goddard", "Dvaered", source_system )
+   attackers[2*n+4] = pilot.add("Rhino", "Dvaered", source_system) --some transport ships
+   attackers[2*n+5] = pilot.add("Rhino", "Dvaered", source_system)
+   attackers[2*n+6] = pilot.add("Rhino", "Dvaered", source_system)
+   attackers[2*n+7] = pilot.add("Rhino", "Dvaered", source_system)
+   goda             = pilot.add( "Dvaered Goddard", "Dvaered", source_system )
+   attackers[2*n+8] = goda
 
    -- The transport ships tend to run away
    attackers[2*n+4]:memory().shield_run = 70
@@ -133,10 +133,20 @@ function attack ()
    attackers[2*n+7]:memory().shield_return = 99
 
    attackers = arrangeList(attackers)  --The heaviest ships will surround the leader
+   form = formation.random_key()
+
+   -- I use Thugs and Associates based factions because they won't interact with anybody
+   f1 = faction.dynAdd( "Thugs", "Invaders", _("Warlords") )
 
    for i, j in ipairs(attackers) do
       j:rename("Invader")
-      j:setFaction("Thugs")  --I use Thugs and Associates because they won't interact with anybody
+      j:setFaction("Invaders")
+      j:memory().formation = form
+      j:memory().aggressive = false
+      
+      if j ~= goda then
+         j:setLeader(goda)
+      end
 
       attAttHook[i] = hook.pilot(j, "attacked", "attackerAttacked")
       hook.pilot(j, "death", "attackerDeath")
@@ -144,19 +154,16 @@ function attack ()
       hook.pilot(j, "land", "attackerDeath")
    end
 
-   formations = {"echelon left", "cross", "echelon right", "wedge", "wall", "vee", "column", "circle", "fishbone", "chevron"}
-   form = formations[rnd.rnd(9)+1]
    attnum = table.getn(attackers)
    attdeath = 0
    attkilled = 0  --mass of the player's victims
 
-   atFleet = Forma:new(attackers, form, 3000)
-   atFleet:setTask("land",source_planet)
-
+   local lead = getLeader(attackers)
+   lead:control()
+   lead:land(source_planet)
 end
 
 function defense ()
-
    defAttHook = {}
    local n = rnd.rnd(3,6)
 
@@ -164,13 +171,25 @@ function defense ()
    defenders[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet )
    defenders[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet )
    defenders[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_planet )
-   defenders[2*n+4] = pilot.add( "Dvaered Goddard", "Dvaered", source_planet )
+   godd             = pilot.add( "Dvaered Goddard", "Dvaered", source_planet )
+   defenders[2*n+4] = godd
 
    defenders = arrangeList(defenders)  --The heaviest ships will surround the leader
+   form = formation.random_key()
+
+   f2 = faction.dynAdd( "Associates", "Locals", _("Warlords") )
+   faction.dynEnemy (f1, f2)
+   faction.dynEnemy (f2, f1)
 
    for i, j in ipairs(defenders) do
       j:rename("Local Warlord's Force")
-      j:setFaction("Associates")
+      j:setFaction("Locals")
+      j:memory().formation = form
+      j:memory().aggressive = false
+
+      if j ~= godd then
+         j:setLeader(godd)
+      end
 
       defAttHook[i] = hook.pilot(j, "attacked", "defenderAttacked")
       hook.pilot(j, "death", "defenderDeath")
@@ -181,12 +200,29 @@ function defense ()
    defnum = table.getn(defenders)
    defdeath = 0
    defkilled = 0 --mass of the player's victims
-   formations = {"echelon left", "cross", "echelon right", "wedge", "wall", "vee", "column", "circle", "fishbone", "chevron", "buffer"}
-   form = formations[rnd.rnd(9)+1]
 
-   deFleet = Forma:new(defenders, form, 3000)
-   deFleet:setTask("follow", chooseInList(attackers))
+   local alead = getLeader(attackers)
+   local dlead = getLeader(defenders)
+   alead:taskClear()
+   dlead:control()
+   alead:attack(dlead)
+   dlead:attack(alead)
+   hook.timer(500, "proximity", {anchor = alead, radius = 5000, funcname = "startBattle", focus = dlead})
+end
 
+-- Both fleets are close enough: start the epic battle
+function startBattle()
+   if inForm then
+      for i, p in ipairs(attackers) do
+         p:memory().aggressive = true
+      end
+      getLeader(attackers):control(false)
+      for i, p in ipairs(defenders) do
+         p:memory().aggressive = true
+      end
+      getLeader(defenders):control(false)
+      inForm = false
+   end
 end
 
 function defenderAttacked(victim, attacker)
@@ -201,6 +237,9 @@ function defenderAttacked(victim, attacker)
          elseif side == nil then
          side = "attacker"
       end
+   end
+   if inForm then
+      startBattle()
    end
 end
 
@@ -217,44 +256,55 @@ function attackerAttacked(victim, attacker)
          side = "defender"
       end
    end
+   if inForm then
+      startBattle()
+   end
 end
 
 function attackerDeath(victim, attacker)
-   attdeath = attdeath + 1
+   if batInProcess then
+      attdeath = attdeath + 1
 
-   if attacker == player.pilot() then
-      attkilled = attkilled + victim:stats().mass
-   end
+      if attacker == player.pilot() then
+         attkilled = attkilled + victim:stats().mass
+      end
 
-   if attdeath < attnum then
-      deFleet:setTask("follow", chooseInList(attackers))
+      if attdeath >= attnum then  --all the enemies are dead
+         local lead = getLeader(defenders)
+         lead:control()
+         lead:land(source_planet)
+         batInProcess = false -- Battle ended
 
-   else  --all the enemies are dead
-      deFleet:setTask("land", source_planet)
-
-      --Time to get rewarded
-      if side == "defender" then
-         warrior = chooseInList(defenders)
-         computeReward(true, attkilled)
-         hook.timer(1000, "hailmeagain")
+         --Time to get rewarded
+         if side == "defender" then
+            warrior = chooseInList(defenders)
+            computeReward(true, attkilled)
+            hook.timer(1000, "hailmeagain")
+         end
       end
    end
 end
 
 function defenderDeath(victim, attacker)
-   defdeath = defdeath + 1
+   if batInProcess then
+      defdeath = defdeath + 1
 
-   if attacker == player.pilot() then
-      defkilled = defkilled + victim:stats().mass
-   end
+      if attacker == player.pilot() then
+         defkilled = defkilled + victim:stats().mass
+      end
 
-   if defdeath >= defnum then   --all the defenders died : the winner lands on his planet
+      if defdeath >= defnum then  -- all the defenders died : the winner lands on his planet
+         local lead = getLeader(attackers)
+         lead:control()
+         lead:land(source_planet)
+         batInProcess = false -- Battle ended
 
-      --Time to get rewarded
-      if side == "attacker" then
-         warrior = chooseInList(attackers)
-         computeReward(true, defkilled)
-         hook.timer(1000, "hailmeagain")
+         --Time to get rewarded
+         if side == "attacker" then
+            warrior = chooseInList(attackers)
+            computeReward(true, defkilled)
+            hook.timer(1000, "hailmeagain")
+         end
       end
    end
 end
@@ -267,6 +317,16 @@ function computeReward(attack, massOfVictims)
    baserew = baserew + 60*massOfVictims
 
    reward = baserew + rnd.sigma() * (baserew/3)
+end
+
+-- Returns leader of fleet
+function getLeader(list)
+   local p = chooseInList(list)
+   if p:leader() == nil or not p:leader():exists() then
+      return p
+   else
+      return p:leader()
+   end
 end
 
 --chooses the first non nil pilot in a list

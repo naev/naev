@@ -1954,6 +1954,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    int w, h, land;
    Planet *p;
    glColour c;
+   PHYSFS_Stat path_stat;
 
    land = (strcmp(wgt,"btnLandGFX") == 0);
 
@@ -1983,14 +1984,22 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    j              = 0;
    for (i=0; i<nfiles; i++) {
       snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
-      t              = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
-      if (t != NULL) {
-         cells[j].image   = t;
-         cells[j].caption = strdup( files[i] );
-         c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
-         memcpy( &cells[j].bg, &c, sizeof(glColour) );
-         j++;
+      /* Ignore directories. */
+      if (!PHYSFS_stat( buf, &path_stat )) {
+         WARN(_("Unable to check file type for '%s'!"), buf);
+         continue;
       }
+      if (path_stat.filetype != PHYSFS_FILETYPE_REGULAR)
+         continue;
+
+      t              = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
+      if (t == NULL)
+         continue;
+      cells[j].image   = t;
+      cells[j].caption = strdup( files[i] );
+      c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
+      memcpy( &cells[j].bg, &c, sizeof(glColour) );
+      j++;
    }
    PHYSFS_freeList( files );
 

@@ -965,7 +965,7 @@ static int misn_claim( lua_State *L )
    cur_mission = misn_getFromLua(L);
 
    /* Check to see if already claimed. */
-   if (cur_mission->claims != NULL) {
+   if (!claim_isNull(cur_mission->claims)) {
       NLUA_ERROR(L, _("Mission trying to claim but already has."));
       return 0;
    }

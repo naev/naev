@@ -43,6 +43,7 @@
 
 #include "conf.h"
 #include "log.h"
+#include "render.h"
 
 
 /*
@@ -53,6 +54,9 @@
 
 glInfo gl_screen; /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
+
+
+static unsigned int colorblind_pp = 0; /**< Colorblind post-process shader id. */
 
 
 /*
@@ -297,6 +301,10 @@ static int gl_createWindow( unsigned int flags )
 
    /* Finish getting attributes. */
    gl_screen.current_fbo = 0; /* No FBO set. */
+   gl_screen.fbo[0] = GL_INVALID_VALUE;
+   gl_screen.fbo_tex[0] = GL_INVALID_VALUE;
+   gl_screen.fbo[1] = GL_INVALID_VALUE;
+   gl_screen.fbo_tex[1] = GL_INVALID_VALUE;
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
    gl_activated = 1; /* Opengl is now activated. */
 
@@ -501,6 +509,9 @@ int gl_init (void)
 
    shaders_load();
 
+   /* Set colorblind shader if necessary. */
+   gl_colorblind( conf.colorblind );
+
    /* Cosmetic new line. */
    DEBUG_BLANK();
 
@@ -512,10 +523,21 @@ int gl_init (void)
  */
 void gl_resize (void)
 {
+   int i;
+
    gl_setupScaling();
    glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
    gl_setDefViewport( 0, 0, gl_screen.nw, gl_screen.nh );
    gl_defViewport();
+
+   /* Set up framebuffer. */
+   for (i=0; i<2; i++) {
+      if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
+         glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
+         glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
+      }
+      gl_fboCreate( &gl_screen.fbo[i], &gl_screen.fbo_tex[i], gl_screen.rw, gl_screen.rh );
+   }
 
    gl_checkErr();
 }
@@ -633,10 +655,45 @@ GLint gl_stringToClamp( const char *s )
 
 
 /**
+ * @brief Enables or disables the colorblind shader.
+ *
+ *    @param enable Whether or not to enable or disable the colorblind shader.
+ */
+void gl_colorblind( int enable )
+{
+   LuaShader_t shader;
+   if (enable) {
+      if (colorblind_pp != 0)
+         return;
+      memset( &shader, 0, sizeof(LuaShader_t) );
+      shader.program    = shaders.colorblind.program;
+      shader.VertexPosition = shaders.colorblind.VertexPosition;
+      shader.ClipSpaceFromLocal = shaders.colorblind.ClipSpaceFromLocal;
+      shader.MainTex    = shaders.colorblind.MainTex;
+      colorblind_pp = render_postprocessAdd( &shader, PP_LAYER_FINAL, 99 );
+   } else {
+      if (colorblind_pp != 0)
+         render_postprocessRm( colorblind_pp );
+      colorblind_pp = 0;
+   }
+}
+
+
+/**
  * @brief Cleans up OpenGL, the works.
  */
 void gl_exit (void)
 {
+   int i;
+   for (i=0; i<2; i++) {
+      if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
+         glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
+         glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
+         gl_screen.fbo[i] = GL_INVALID_VALUE;
+         gl_screen.fbo_tex[i] = GL_INVALID_VALUE;
+      }
+   }
+
    /* Exit the OpenGL subsystems. */
    gl_exitRender();
    gl_exitVBO();

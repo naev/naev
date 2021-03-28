@@ -1,9 +1,11 @@
 --This script chooses the mercenaries that spawn
-require("factions/spawn/common")
+local scom = require "factions/spawn/lib/common"
+
+local merc = {}
 
 pbm = 0.05   --5% mercenaries
 
-function spawnLtMerc(faction)
+function merc.spawnLtMerc(faction)
     local pilots = {}
     local r = rnd.rnd()
 
@@ -89,3 +91,5 @@ function spawnBgMerc(faction)
 
     return pilots
 end
+
+return merc

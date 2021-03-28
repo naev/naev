@@ -22,6 +22,7 @@ local blackjack = require 'minigames.blackjack'
 local chuckaluck = require 'minigames.chuckaluck'
 local lg = require 'love.graphics'
 local window = require 'love.window'
+local love_shaders = require 'love_shaders'
 
 -- NPC Stuff
 gambling_priority = 3
@@ -128,6 +129,7 @@ function create()
    -- Custom music
    music.load( "meeting_mtfox" )
    music.play()
+   music.setRepeat(true)
 end
 
 local function has_event( name )
@@ -558,15 +560,40 @@ function approach_maikki ()
    vn.clear()
    vn.scene()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
+   --local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180., shader=love_shaders.aura() }
+   local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180. }
+   vn.music( minerva.loops.maikki )
    vn.transition()
    vn.na(_("You find Maikki, who beams you a smile as you approach."))
 
+   maikki(_([["Did you find anything new?"]]))
+   vn.label("menu")
    vn.menu( function ()
       local opts = {
          { _("Leave"), "leave" },
       }
+      if player.evtDone("Chicken Rendezvous") then
+         table.insert( opts, 1, { _("Talk about Kex"), "kex" } )
+      end
+      --table.insert( opts, 1, { _("Ask about her father"), "memory" } )
       return opts
    end)
+   vn.label("menu_msg")
+   maikki(_([["Anything else?"]]))
+   vn.jump("menu")
+
+   vn.label("memory")
+   vn.na(_("You ask to see if she remembered anything else about her father."))
+   -- TODO
+   vn.jump("menu_msg")
+
+   vn.label("kex")
+   vn.appear(kex, "slideright")
+   vn.na(_("As you are about to talk, you notice Kex out of the corner of your eye."))
+   kex(_([[As he stares directly at you, he makes a gesture that you should watch your back.]]))
+   vn.na(_("You decide against telling Maikki anything. It does not seem like it is the time, unless you wish to get murdered by a rampant cyborg duck."))
+   vn.disappear(kex, "slideright") -- played backwards so slides left
+   vn.jump("menu_msg")
 
    vn.label("leave")
    vn.na(_("You take your leave."))
@@ -575,19 +602,26 @@ function approach_maikki ()
 end
 
 function approach_kex ()
+   -- TODO should be handled in the kex mission line probably
    vn.clear()
    vn.scene()
+   vn.music( minerva.loops.kex )
    local kex = vn.newCharacter( minerva.vn_kex() )
    vn.transition()
    vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
 
    vn.label("menu_msg")
+   kex(_("What's up kid?"))
    vn.menu( function ()
       local opts = {
+         --{ _("Ask about the station"), "station" },
          { _("Leave"), "leave" },
       }
       return opts
    end )
+
+   vn.label("station")
+   vn.jump("menu_msg")
 
    vn.label("leave")
    vn.na(_("You take your leave."))

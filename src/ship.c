@@ -429,37 +429,6 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
    temp->gfx_store = gl_loadImagePad( buf, gfx_store, OPENGL_TEX_VFLIP, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
-#if 0 /* Disabled for now due to issues with larger sprites. */
-   /* Some filtering. */
-   for (j=0; j<sh; j++) {
-      for (i=0; i<sw; i++) {
-         pix   = (uint32_t*) ((uint8_t*) gfx->pixels + j*gfx->pitch + i*gfx->format->BytesPerPixel);
-         r     = ((double) (*pix & RMASK)) / (double) RMASK;
-         g     = ((double) (*pix & GMASK)) / (double) GMASK;
-         b     = ((double) (*pix & BMASK)) / (double) BMASK;
-         a     = ((double) (*pix & AMASK)) / (double) AMASK;
-         if (j%2) /* Add scanlines. */
-            a *= 0.5;
-
-         /* Convert to HSV. */
-         col_rgb2hsv( &h, &s, &v, r, g, b );
-
-         h  = 0.0;
-         s  = 1.0;
-         v *= 1.5;
-
-         /* Convert back to RGB. */
-         col_hsv2rgb( &r, &g, &b, h, s, v );
-
-         /* Convert to pixel. */
-         *pix =   ((uint32_t) (r*RMASK) & RMASK) |
-                  ((uint32_t) (g*GMASK) & GMASK) |
-                  ((uint32_t) (b*BMASK) & BMASK) |
-                  ((uint32_t) (a*AMASK) & AMASK);
-      }
-   }
-#endif
-
    /* Load the surface. */
    snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
    temp->gfx_target = gl_loadImagePad( buf, gfx, OPENGL_TEX_VFLIP, sw, sh, 1, 1, 1 );
@@ -484,6 +453,10 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
 
    /* Load the space sprite. */
    rw    = PHYSFSRWOPS_openRead( str );
+   if (rw==NULL) {
+      WARN(_("Unable to open '%s' for reading!"), str);
+      return -1;
+   }
    surface = IMG_Load_RW( rw, 0 );
 
    /* Load the texture. */
@@ -533,25 +506,30 @@ static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
  */
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine )
 {
-   char str[PATH_MAX], *base, *delim;
+   char str[PATH_MAX], *ext, *base, *delim;
 
    /* Get base path. */
    delim = strchr( buf, '_' );
    base = delim==NULL ? strdup( buf ) : strndup( buf, delim-buf );
 
-   snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_EXT, base, buf );
+   ext = ".webp";
+   snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
+   if (!PHYSFS_exists(str)) {
+      ext = ".png";
+      snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s%s", base, buf, ext );
+   }
    ship_loadSpaceImage( temp, str, sx, sy );
 
    /* Load the engine sprite .*/
    if (engine && conf.engineglow) {
-      snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+      snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_ENGINE"%s", base, buf, ext );
       ship_loadEngineImage( temp, str, sx, sy );
       if (temp->gfx_engine == NULL)
          WARN(_("Ship '%s' does not have an engine sprite (%s)."), temp->name, str );
    }
 
    /* Get the comm graphic for future loading. */
-   asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+   asprintf( &temp->gfx_comm, SHIP_GFX_PATH"%s/%s"SHIP_COMM"%s", base, buf, ext );
    free( base );
 
    return 0;
