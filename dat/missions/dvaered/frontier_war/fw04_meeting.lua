@@ -701,12 +701,8 @@ function StraferNspy()
    alpha[2]:attack( spy )
 
    -- Remove all cargo (to control their speed)
-   for i, v in ipairs(alpha[2]:cargoList()) do
-      alpha[2]:cargoRm( v.name, v.q )
-   end
-   for i, v in ipairs(spy:cargoList()) do
-      spy:cargoRm( v.name, v.q )
-   end
+   alpha[2]:cargoRm( "__all" )
+   spy:cargoRm( "__all" )
 end
 
 -- Many enemies jump and kill Strafer

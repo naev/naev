@@ -116,6 +116,11 @@ reward_text1 = _("You recieve a %s as a reward.")
 reward_text2 = _("You recieve a %s and a %s as a reward.")
 reward_text3 = _("You recieve three Shredders as a reward.")
 
+warn_title = _("Major Tam warns you, and gives you a new task")
+warn_text1 = _([[After the results have been announced, Major Tam gets close to you. He seems to have something important to say: "It was your first ballet, right? You performed very good out there, citizen. 
+   "Anyway, there is a matter I need to discuss with you: one of my informants told me that the ex-colonel Hamelsen has put a price on your head. Yes. This knod of things just happends, you know. It looks scary, doesn't it? Actually, many people here already have a price on their head, including me, General Klank and Captain Leblanc. And one can live very well with it. The only thing is to be a bit more careful as usual.
+   "As Hamelsen has got so many mercenaries killed under her command, it is in fact rather unlikely that unrelated pilots jump in and try to kill you. I am pretty sure that the ones that will attack you are motivated by something more than money. And I want to know what makes them continue to attack us after having recieved so many losses. So your mission will be the following: if some bounty hunter tries to kill you, catch them alive and bring them to me."]])
+
 hit_msg = _("You have been eliminated. You won't be allowed to move any more until the time runs out. Your score will be equal to the number of flowers you already collected.")
 cheater_title = _("This is not allowed!")
 cheater_text = _("You are not supposed to shoot at the other competitors durnig the Mace Stadion. The Stadion has to be interrupted and you recieve 5 points of penalty. Land and speak again with Major Tam.")
@@ -130,7 +135,7 @@ pankrationWinner = _("%s won against %s!")
 
 misn_desc = _("You are invited to a Mace Rocket Ballet in memory of Lieutenant Strafer.")
 misn_reward = _("Say goodbye to Lieutenant Strafer")
-log_text = _("You took part to a Mace Rocket Ballet in memory of Lieutenant Strafer.")
+log_text = _("You took part to a Mace Rocket Ballet in memory of Lieutenant Strafer, and won an atonishing prize. Major Tam warned you that hitmen are on your tracks and requested you to catch one of them alive.")
 
 osd_title = _("Dvaered Ballet")
 osd_text1 = _("Fly to %s")
@@ -322,9 +327,13 @@ function spawnNpcs()
                tk.msg("",reward_text1:format(_("Shield Capacitor")))
                player.addOutfit("Shield Capacitor")
             end
+            tk.msg(warn_title,warn_text1)
             tk.msg(end_title,end_text1)
             tk.msg(end_title,end_text2)
             tk.msg(end_title,end_text3)
+
+            shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
+            shiplog.appendLog( "frontier_war", log_text )
             misn.finish(true)
          end
       end
