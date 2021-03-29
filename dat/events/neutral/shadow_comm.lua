@@ -33,7 +33,7 @@ text[1] = _([["Greetings, %s," the pilot of the Vendetta says to you as soon as 
 
 log_text = _([[Someone has invited you to meet with her in the Pas system, supposedly an acquaintance of yours. The pilot who told you this said that there's no rush, "but I suggest you go see her at the earliest opportunity".]])
 
-yesnotxt = _("Do you have for to respond to the invitation?")
+yesnotxt = _("Do you intend to respond to the invitation?")
 
 
 function create ()
