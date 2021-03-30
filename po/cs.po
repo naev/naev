@@ -8,23 +8,23 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-03-22 20:44-0400\n"
-"PO-Revision-Date: 2021-02-07 09:50+0000\n"
-"Last-Translator: David Doubek <David.Doubek@protonmail.com>\n"
+"PO-Revision-Date: 2021-03-31 01:26+0000\n"
+"Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.6-dev\n"
 
 #: dat/intro:2
 msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
-"Noční obloha vždy přitahuje naše oči. Lidé vzhlížejí s otázkou nebo s údivem "
-"a někdy i se snem: vydat se mezi hvězdy."
+"Noční obloha vždy přitahuje naše oči. Lidé k ní vzhlížejí s otázkou nebo s "
+"údivem a někdy i se snem: vydat se mezi hvězdy."
 
 #: dat/intro:4
 msgid ""
@@ -42,9 +42,9 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
-"Muži a ženy tedy uzamkli spící těla do mohutných kovových krabic. Vrhli se "
-"do prázdna. Po příjezdu se dekantovali a probudili se, aby našli nové hvězdy "
-"chladně hledící dolů z cizí oblohy."
+"Muži a ženy tedy uzamkli spící těla do mohutných kovových krabic a vrhli se "
+"do prázdna. Když se po příletu probudili, nalezli nové hvězdy, jak chladně "
+"shlíží z cizí oblohy."
 
 #: dat/intro:10
 msgid ""
@@ -133,8 +133,8 @@ msgid ""
 msgstr ""
 "Ze Země proběhla vesmírem kataklyzmatická exploze, ničící hvězdy, vypařující "
 "světy. Miliardy zemřely. Desítky systémů zmizely v tajemné mlhovině po sobě "
-"zanechané. Nyní velká civilizace rozkládající se po galaxiích přežívá jako "
-"stín své bývalé slávy."
+"zanechané. Předtím velká civilizace rozkládající se po galaxiích nyní "
+"přežívá jako stín své bývalé slávy."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
@@ -314,7 +314,7 @@ msgstr "   * Zvuky"
 
 #: dat/AUTHORS:67
 msgid "   * Planet images"
-msgstr "   * Obrázky Planet"
+msgstr "   * Obrázky planet"
 
 #: dat/AUTHORS:68
 msgid ""
@@ -359,8 +359,8 @@ msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
-"   I když nepoužíváme samotnou knihovnu SDL_collide, bylo to inspirativní "
-"pro vlastní kolizní rutiny Naev."
+"   I když knihovnu SDL_collide jako takovou nepoužíváme, byla inspirací pro "
+"kolize, které používáme."
 
 #: dat/AUTHORS:80
 msgid "Pete Shinners <pete@shinners.org>"
@@ -551,7 +551,7 @@ msgstr "   * Mimořádný programátor Pythonu"
 
 #: dat/AUTHORS:135
 msgid "His utilities save gray hairs for everyone."
-msgstr "Jeho nástroje ušetřili šedé vlasy všem."
+msgstr "Jeho nástroje nás zachránily před zešednutím."
 
 #: dat/AUTHORS:137
 msgid "Josh Combs"
@@ -635,7 +635,7 @@ msgstr "   * Informační obrazovka sluneční soustavy"
 
 #: dat/AUTHORS:167
 msgid "Music by Matthew Pablo"
-msgstr "Hudba od Matthew Pablo"
+msgstr "Hudba: Matthew Pablo"
 
 #: dat/AUTHORS:168
 msgid "http://www.matthewpablo.com"
@@ -760,7 +760,7 @@ msgid ""
 "highlight."
 msgstr ""
 "Agino je rušná planeta většinou plná Soromidských občanů střední třídy. "
-"Planeta nevyniká v žádné oblasti ve srovnání se světy v jádru říše Soromid, "
+"Planeta nevyniká v žádné oblasti ve srovnání se světy v jádru říše Soromidů, "
 "ale jelikož jde o vzdálenou část Soromidského prostoru, je stále místním "
 "vrcholem."
 
@@ -773,12 +773,12 @@ msgid ""
 "who you are and cheerfully pour you a drink. Some spacers secretly suspect "
 "he has an audiovisual database installed in his head."
 msgstr ""
-"Osoba, která provozuje tento kosmodrom, je statný Soromidský muž jménem "
-"Alverik Sogheem. Alverik obvykle obsluhuje bar sám a všechny své zákazníky "
-"zná podle jména a obličeje. Nezáleží na tom, jak dlouho jste pryč nebo kde "
-"jste byli v galaxii, při vašem návratu do Agino si Alverik pamatuje, kdo "
-"jste, a vesele vám nalije drink. Někteří vesmírní cestovatelé ho tajně "
-"podezřívají, že má v hlavě nainstalovanou audiovizuální databázi."
+"Osoba, která provozuje tento bar, je statný Soromidský muž jménem Alverik "
+"Sogheem. Alverik obvykle obsluhuje bar sám a všechny své zákazníky zná podle "
+"jména a obličeje. Nezáleží na tom, jak dlouho jste pryč nebo kde jste byli v "
+"galaxii, při vašem návratu do Agina si Alverik pamatuje, kdo jste, a vesele "
+"vám nalije drink. Někteří vesmírní cestovatelé ho tajně podezřívají, že má v "
+"hlavě nainstalovanou audiovizuální databázi."
 
 #: dat/assets/ahmed.xml:2
 msgid "Ahmed"
@@ -793,8 +793,8 @@ msgid ""
 msgstr ""
 "Měsíc Ahmed je malá kolonie vážně smýšlejících lidí, ale vzhledem k tomu, že "
 "jsou to většinou horníci, tak to není příliš překvapivé. Těch pár lidí, "
-"kteří netěží, dělají administrativu nebo sem přicházejí jako obchodníci a "
-"obchodníci, kteří hledají kde otočit kredit nebo dva."
+"kteří netěží, dělají administrativu nebo sem přicházejí za obchodem a "
+"hledají, kde otočit kredit nebo dva."
 
 #: dat/assets/ahmed.xml:29
 msgid ""
@@ -805,8 +805,8 @@ msgid ""
 msgstr ""
 "Velmi utilitární bar s poměrně laxním přístupem k pohodlí, přinejmenším "
 "podle standardů Impéria. Lidé sem chodí obchodovat a mluvit o těžbě rud, "
-"minerálů a plynu. Soromidové možná chápou pohodlí a jak se dobře bavit, ale "
-"zjevně toto není místo, kde to dělají."
+"minerálů a plynu. Soromidové možná chápou pojmy jako pohodlí nebo zábava, "
+"ale zjevně si je dopřávají někde jinde."
 
 #: dat/assets/aillis.xml:2
 msgid "Aillis"
@@ -821,8 +821,8 @@ msgid ""
 "dangerous labor."
 msgstr ""
 "Aillis je operační základnou pro horníky, kteří těží Koralis VI. Samotný "
-"Koralis VI je vysoce radioaktivní, takže žádné lidské bydlení zde není možné "
-"ani nikdy nebude možné. Některé z těžkých prvků na planetě jsou však docela "
+"Koralis VI je vysoce radioaktivní, takže trvalé obydlení planety je i do "
+"budoucna vyloučeno. Některé z těžkých prvků na planetě jsou však docela "
 "cenné, a proto Aillis nabízí spravedlivý život těm, kteří se nevyhýbají "
 "těžké a nebezpečné práci."
 
@@ -832,9 +832,9 @@ msgid ""
 "very welcome. Running costs are kept low which means maintenance and service "
 "suffer. Nevertheless, it's quite possible to have a good time here."
 msgstr ""
-"Ačkoli tento bar není zrovna nehostinný, nedělá vám ani pocit, že jste zde "
-"zrovna vítáni. Provozní náklady jsou udržovány na nízké úrovni, což znamená, "
-"že utrpí údržba a servis. Přesto je docela možné se zde dobře pobavit."
+"Ačkoli tento bar není zrovna nehostinný, nevyvolává ani pocit, že jste tu "
+"vítáni. Provozní náklady jsou udržovány na nízké úrovni, což znamená, že "
+"utrpí údržba a servis. Přesto je docela možné se zde dobře pobavit."
 
 #: dat/assets/akios_station.xml:2
 msgid "Akios Station"
@@ -848,11 +848,11 @@ msgid ""
 "(comparatively) little debate over the necessity over this station's "
 "existence."
 msgstr ""
-"Stanice Akios je hraniční stanice Za'lek, která má zabránit pirátům "
+"Stanice Akios je hraniční stanice Za'leků, která má zabránit pirátům "
 "expandovat ze systému Kretogg, který je mimo za'lekský vesmír. Kvůli "
 "skutečné hrozbě, kterou odporní zločinci představují pro bezpečnost této "
-"velké frakce, se o nutnosti existence této stanice vede (poměrně) malá "
-"debata."
+"velké frakce, se o nutnosti existence této stanice nevedou (relativně vzato) "
+"žádné spory."
 
 #: dat/assets/akra_iii.xml:2
 msgid "Akra III"
@@ -869,7 +869,7 @@ msgid ""
 "system congregate here, leading to more inter-planetary personal "
 "relationships than normal."
 msgstr ""
-"Stanice Akra, postavená pro obsluhu lodí v této oblasti, slouží také jako "
+"Stanice Akra, postavená pro údržbu lodí v této oblasti, slouží také jako "
 "základní komunikační a obchodní uzel pro obyvatele Akry. Shromažďují se zde "
 "lidé z celého systému, což vede k více meziplanetárním osobním vztahům, než "
 "je obvyklé."
@@ -916,9 +916,9 @@ msgid ""
 "public for comfort. The music here can also be a bit grating on the ears."
 msgstr ""
 "Kosmodromový bar na Aldarusu nabízí celou řadu rekreačních aktivit, jako "
-"jsou hazardní hry a soutěžní hry. K dispozici jsou také zděné kabiny pro "
-"soukromé rozhovory, pro případ, že by hlavní oblast baru byla pro pohodlí "
-"příliš veřejná. Hudba zde může být také trochu drsná na uši."
+"jsou hazardní hry a soutěže. K dispozici jsou také salonky pro soukromé "
+"rozhovory, pro případ, že by hlavní oblast baru byla pro pohodlí příliš "
+"veřejná. Místní hudba může být také trochu drsná na uši."
 
 #: dat/assets/aldernael.xml:2
 msgid "Aldernael"
@@ -934,8 +934,8 @@ msgid ""
 "day and Soromid habitation centres are constantly under construction."
 msgstr ""
 "Obyčejnému návštěvníkovi se Aldernael může zdát drsný a nepříjemný. Když "
-"vezmete v úvahu, že svět býval neživá planeta s toxickým povrchem a sotva "
-"jakoukoli atmosférou, o které by se dalo mluvit, stal se skutečně mnohem "
+"vezmete v úvahu, že svět býval neživá planeta s toxickým povrchem a téměř "
+"bez atmosféry, o které by se dalo mluvit, stal se skutečně mnohem "
 "pohostinnějším, protože Soromidé jej začali terraformovat. V současné době "
 "planeta prochází fází kolonizace hlavního proudu. Každý den přicházejí noví "
 "přistěhovalci a centra osídlení Soromidů jsou neustále ve výstavbě."
@@ -984,11 +984,10 @@ msgid ""
 "spaceport bar, just to be on the safe side."
 msgstr ""
 "Zařízení kosmodromu je součástí větší stavby, ve které sídlí celé lidské "
-"obyvatelstvo této planety. Komplex víceméně plave na povrchu a je těsně "
-"utěsněn proti vnějšímu prostředí. Kromě toho je komplex velmi rozčleněný, "
-"pro případ, že by nějak došlo k úniku. Někteří vesmířané dokonce trvají na "
-"tom, aby na sobě nosily dýchací masky, a to i v baru kosmodromu, jen pro "
-"jistotu."
+"obyvatelstvo této planety. Komplex víceméně plave na povrchu a je proti "
+"vnějšímu prostředí vzduchotěsný. Kromě toho je komplex velmi rozčleněný, pro "
+"případ, že by nějak došlo k úniku. Někteří vesmířané dokonce i uvnitř pro "
+"jistotu nosí dýchací masky - dokonce i v místním baru."
 
 #: dat/assets/aldous_moon.xml:2
 msgid "Aldous' moon"
@@ -1005,10 +1004,10 @@ msgid ""
 "primarily residential and sports no superheavy industry, the wastefulness of "
 "the Dvaered inhabitants more than makes up for that."
 msgstr ""
-"V působivém deterraformingu, Dvaeredové transformovali Aleph z hraniční "
-"třídy M na pustou pustinu. Ačkoli svět je primárně rezidenční a sportovní, "
-"není tu žádný těžký průmysl, marnotratnost Dvaeredských obyvatel to více než "
-"vynahradí."
+"Dvaeredové přeměnili Aleph z hraniční planety třídy M na holou pustinu. "
+"Opravdu úctyhodný výkon v oblasti deterraformace. I když je planeta hlavně "
+"obytnou a sportovní zónou bez supertěžkého průmyslu, jeho následky více než "
+"nahrazuje prosté plýtvání Dvaeredského obyvatelstva."
 
 #: dat/assets/aleph.xml:28
 msgid ""
@@ -1048,7 +1047,7 @@ msgid ""
 "provides a small respite from the harsh galaxy."
 msgstr ""
 "Allan nemá mnoho prostředků, ale bar vypadá dost slušně, s čistým zařízením, "
-"slušným jídlem a silnými nápoji. Pro své patrony poskytuje malou úlevu od "
+"slušným jídlem a silnými nápoji. Svým štamgastům poskytuje malou úlevu od "
 "drsné galaxie."
 
 #: dat/assets/alleyway.xml:2
@@ -1062,10 +1061,10 @@ msgid ""
 "hunters. Authorities have long ago given up any hope of controlling the "
 "chaos, so everyone knows to be armed and remain vigilant at all times."
 msgstr ""
-"Tato stanice, která měla být původně obchodním uzlem a zastávkou doplňování "
-"paliva pro obchodníky, se skutečně změnila v uzel pro piráty i lovce odměn. "
-"Úřady se již dávno vzdaly jakékoli naděje na ovládnutí chaosu, takže každý "
-"ví, že je ozbrojen a je stále v bdělosti."
+"I když byla stanice vybudována jako obchodní a zásobovací, nyní je z ní "
+"doupě pirátů, korzárů a lovců odměn. Úřady se již dávno vzdaly jakékoli "
+"naděje na ovládnutí chaosu. Když se něco přihodí, jste v tom sami, takže "
+"každý chodí ozbrojený a všichni si pečlivě hlídají okolí."
 
 #: dat/assets/alleyway.xml:28
 msgid ""
@@ -1255,9 +1254,10 @@ msgid ""
 "known for its temperature, that's not to say you can't get a mean Pan-"
 "Galactic Gargle Blaster."
 msgstr ""
-"Bar na Ammu, známý jako „Chladič“ kvůli jeho chladným teplotám, je "
-"kontrastem se zbytkem stanice. I když je primárně známý svou teplotou, "
-"neznamená to, že nemůžete získat průměrný Pan-Galactic Gargle Blaster."
+"Bar na Ammu, známý jako „mrazák“ (kvůli chladu, který tu neustále panuje) "
+"ostře kontrastuje se zbytkem stanice. I když je známý hlavně pro svou "
+"teplotou, neznamená to, že tu není k dostání obyčejný Pangalaktický "
+"megacloumák."
 
 #: dat/assets/amphion.xml:2
 msgid "Amphion"
@@ -1271,9 +1271,9 @@ msgid ""
 "calm and the many underwater cities are famous all over the Empire for their "
 "grandeur and opulence."
 msgstr ""
-"Amphion je oblíbeným místem odchodu do důchodu pro důstojníky Impéria. Je "
-"dostatečně blízko k jádru Impéria, aby vyvolalo uznatelné vzpomínky na "
-"službu, ale dost daleko na poklidný život. Oceány, které dominují na povrchu "
+"Amphion je oblíbeným místem, kde důstojníci Impéria tráví svůj důchod. Je "
+"dostatečně blízko k jádru Impéria, aby vyvolalo příjemné vzpomínky na "
+"službu, ale dost daleko na poklidný život. Oceány, dominující povrchu "
 "planety, jsou klidné a mnoho podmořských měst je proslulých po celé říši "
 "svou majestátností a bohatstvím."
 
@@ -1284,9 +1284,9 @@ msgid ""
 "cheery. You wind up making easy friends in the amiable and relaxing "
 "atmosphere."
 msgstr ""
-"Průměrný věk patronů se zde jeví jako pozdního středního věku. Samotný bar "
-"je připraven ve starosvětské hospůdce, nízký a temný, útulný a veselý. "
-"Nakonec se zde snadno spřátelíte v příjemné a uvolňující atmosféře."
+"Průměrný věk zdejších štamgastů je někde v pozdním středním věku. Bar sám je "
+"zařízený ve stylu starozemské hospůdky, s nízkým stropem a přítmím je tu "
+"veselo a útulno. V takovém prostředí se dá velmi snadno skamarádit."
 
 #: dat/assets/anarbalis_ii.xml:2
 msgid "Anarbalis II"
@@ -1323,9 +1323,9 @@ msgid ""
 "resources. Unlike more developed Za'lek settlements, there is little in the "
 "way of scholarly presence here."
 msgstr ""
-"Tento pustý svět má pod minerálními kilometry ledu pohřben bohatý nerost a "
-"Za'lek nasadil značné zdroje, aby mohl své zdroje využít. Na rozdíl od "
-"rozvinutějších Za'lekských sídel se zde vědecké přítomnosti moc nenajde."
+"Tento pustý svět má pod kilometry ledu ukryté přírodní bohatství a Za'lekové "
+"nasadili značné zdroje, aby se k cenným minerálům dostali. Na rozdíl od více "
+"rozvinutých Za'lekských sídel tu není zrovna moc vědeckých pracovníků."
 
 #: dat/assets/andors.xml:31
 msgid ""
@@ -1334,9 +1334,9 @@ msgid ""
 "beverages and hearty food, and the patrons are almost exclusively off-duty "
 "Za'lek workers."
 msgstr ""
-"Tento bar slouží jako vítaná úleva od ostrých větrů a mrazivých teplot, "
+"V tomto baru naleznete vítanou úlevu od ostrých větrů a mrazivých teplot, "
 "které prostupují planetu. Nabídka se z velké části skládá z teplých nápojů a "
-"vydatného jídla a patrony jsou téměř výlučně pracovníci Za'leku mimo službu."
+"vydatného jídla a štamgasti jsou téměř výlučně Za'lekští pracovníci po směně."
 
 #: dat/assets/andors_refining.xml:2
 msgid "Andors Refining"
@@ -1365,11 +1365,11 @@ msgid ""
 "which use the high pressure of the water as a benchmark against which ships "
 "can be measured."
 msgstr ""
-"Anecu je zcela vodní planeta. Jeho povrch je zcela pokryt vodou, ale v "
-"mělkých oblastech jsou vybudována velká podmořská města. Klima nad vodou "
-"může být velmi drsné; Byly zaznamenány vlny vysoké až dva kilometry. Planeta "
-"se může pochlubit rozsáhlými konstrukcemi lodí, které snášejí tak vysoký "
-"tlak vody proti lodím jaký lze vůbec měřit."
+"Anecu je vodní svět. Celý povrch planety je pokrytý vodou, ale v mělkých "
+"oblastech jsou vybudována velká podmořská města. Klima nad vodou může být "
+"velmi drsné; byly zaznamenány vlny vysoké až dva kilometry. Na planetě se "
+"nachází proslulé zkušebny, které testují lodě na namáhání v tlaku ponořením "
+"pod vodu."
 
 #: dat/assets/anecu.xml:31
 msgid ""
@@ -1417,6 +1417,7 @@ msgid "Antica"
 msgstr "Antica"
 
 #: dat/assets/antica.xml:30
+#, fuzzy
 msgid ""
 "Though the orbiting military installation is all business, Antica mixes "
 "business and pleasure quite readily. Given its location, a vast number of "
@@ -1435,10 +1436,10 @@ msgid ""
 "finest food and drink, this Arcturian bar is often a traveller's "
 "introduction to Empire cuisine."
 msgstr ""
-"Bar na Antice je poměrně bohatá záležitost, na rozdíl od drsného exteriéru "
+"Bar na Antice je poměrně luxusní záležitost, na rozdíl od drsného exteriéru "
 "obíhající vojenské stanice. Tento Arkturiánský bar, který podává některé z "
-"nejlepších pokrmů a nápojů Impéria, je často cestovatelským úvodem do "
-"empírové kuchyně."
+"nejlepších pokrmů a nápojů Impéria, je často vstupenkou do světa imperiální "
+"kuchyně."
 
 #: dat/assets/anubis.xml:2
 msgid "Anubis"
@@ -1455,14 +1456,14 @@ msgid ""
 "House Dvaered. Today, the Dvaered use Anubis to produce ammunition and light "
 "combat ships to supply Raelid Outpost."
 msgstr ""
-"Pojmenován podle egyptského boha smrti, Anubis byl založen jako těžební "
-"základna těžební frakce ještě před Válkou Frakcí. Díky hojnosti "
-"radioaktivních a těžkých prvků byla planeta dobrým místem pro výrobu zbraní, "
-"což je lukrativní podnik vzhledem k jeho blízkosti k Sol. Během Frakčních "
-"Válek byl Anubis anektován Impériem, ale místní obyvatelstvo se následně "
-"připojilo k protestnímu hnutí, které nakonec vedlo k založení rodu Dvaeredů. "
-"Dnes dvaeredové používají Anubis k výrobě munice a lehkých bojových lodí k "
-"zásobování Raelidské Základny."
+"Anubis, pojmenovaný podle egyptského boha smrti, byl používaný jako základna "
+"těžařů hornickou frakcí už před válkou frakcí. Díky hojnosti radioaktivních "
+"a těžkých prvků byla planeta dobrým místem pro výrobu zbraní, což, vzhledem "
+"k blízkosti Sol, byl celkem výnosný podnik. Během válek frakcí byl Anubis "
+"anektován Impériem, ale místní obyvatelstvo se následně připojilo k "
+"protestnímu hnutí, které nakonec vedlo k ustanovení rodu Dvaeredů. Dnes "
+"Dvaeredové používají Anubis k výrobě munice a lehkých bojových lodí k "
+"zásobování Raelidské základny."
 
 #: dat/assets/anubis.xml:31
 msgid ""
@@ -1475,9 +1476,9 @@ msgid ""
 msgstr ""
 "To, co je krásné, je často nebezpečné, ale někdy to funguje i naopak. Bar "
 "kosmodromu na Anubisu má výhled na rokli na povrchu planety a radioaktivní "
-"bouře, které jím často zuří, jsou docela na pohled. Oceňují to však pouze "
-"cizinci, většina místních obyvatel ví, jak nepříjemné je muset pracovat v "
-"takových zuřivých, radioaktivních podmínkách."
+"bouře, které tam často zuří, jsou na pohled docela působivé. Oceňují je však "
+"pouze cizinci, většina místních obyvatel ví, jak nepříjemné je muset "
+"pracovat v takových zuřivých, radioaktivních podmínkách."
 
 #: dat/assets/anya.xml:2
 msgid "Anya"
@@ -1495,10 +1496,10 @@ msgid ""
 msgstr ""
 "Anya je dvojče planety Sabe, obíhající kolem jejich společného gravitačního "
 "pole v tandemu. Anya je však v důsledku geologické činnosti zahalena "
-"permanentní oblačností popela a sněhu. Malý počet Thurionů žije na povrchu "
-"Anyy, ale dosud nebylo zahájeno žádné kolonizační úsilí, a to navzdory "
-"blízkosti planety k Sabe, thurianskému hlavnímu světu. Důvodem je, alespoň "
-"zčásti, geologická nestabilita planety."
+"permanentní oblačností popela a sněhu. Na povrchu Anyy žije malý počet "
+"Thurionů, ale dosud nebylo zahájeno žádné kolonizační úsilí, a to navzdory "
+"blízkosti planety k Sabe, thurianskému hlavnímu světu. Kolonizaci brání, "
+"mimo jiné, geologická nestabilita."
 
 #: dat/assets/anya.xml:29
 msgid ""
@@ -1563,11 +1564,12 @@ msgid ""
 "activity."
 msgstr ""
 "Arashu je zvláštní planeta, je oceánská i vysoce vulkanická. Oceánská kůra "
-"planety je náchylná k zemětřesení, což způsobuje přílivové vlny, které se "
-"omývají několika oblastmi souše. Sirianská korporace investovala do využití "
-"energií uvolněných tímto procesem a přeměnila planetu na ziskový závod na "
-"výrobu zbraní. Veškerá výroba probíhá na plovoucích plošinách, takže "
-"pracovníci a vybavení jsou v bezpečí před neustálou seismickou činností."
+"planety je náchylná k zemětřesení, což způsobuje přílivové vlny, které "
+"omývají těch pár oblastí souše. Jedna sirianská korporace investovala do "
+"využití energie, kterou v sobě vlny skrývají, a přeměnila planetu na ziskový "
+"závod na výrobu zbraní. Veškerá výroba probíhá na plovoucích plošinách, "
+"takže pracovníci a vybavení jsou v bezpečí před neustálou seismickou "
+"činností."
 
 #: dat/assets/arashu.xml:31
 msgid ""
@@ -1577,15 +1579,15 @@ msgid ""
 "at the moment, so it is actually quite fascinating interesting to watch, "
 "especially once you can place the spaceport and bar!"
 msgstr ""
-"Bar je vybaven velkým displejem, který zobrazuje geologickou mapu planety, "
-"která díky tomu, že je většina světa pokryta oceánem, vytváří docela "
-"nezajímavou mapu. Displej také zobrazuje veškerou sopečnou činnost "
-"probíhající v aktuálním čase, takže je ve skutečnosti docela fascinující ho "
-"sledovat, zvláště když na něm vidíte kosmodrom a bar!"
+"Bar je vybaven velkým displejem, který zobrazuje geologickou mapu planety. "
+"Ten díky tomu, že je většina světa pokryta oceánem, na první pohled zajímavě "
+"nepůsobí. Zobrazuje ale také veškerou sopečnou činnost v reálném čase, takže "
+"je ve skutečnosti docela fascinující ho sledovat, zvláště když na něm "
+"najdete bar a kosmoport!"
 
 #: dat/assets/arcadia.xml:2
 msgid "Arcadia"
-msgstr "Arcadia"
+msgstr "Arkádie"
 
 #: dat/assets/arcadia.xml:28
 msgid ""
@@ -1596,12 +1598,12 @@ msgid ""
 "technology and procedures. The project was in fact so successful that "
 "Arcadia became a hub for food distribution throughout localized Za'lek space."
 msgstr ""
-"Ironicky, přesto výstižně pojmenovaný, je svět Arcadie bombardovaný kyselými "
-"dešti a dalšími, stejně nepříjemnými povětrnostními podmínkami. Jako takový "
-"byl základním světem úspěšného experimentu, aby se zjistilo, zda takové "
-"prostředí může stále podporovat masivní kampaň pěstování plodin při správné "
-"izolační technologii a postupech. Projekt byl ve skutečnosti tak úspěšný, že "
-"se Arcadia stala centrem distribuce potravin v lokalizovaném Za'leckském "
+"Svět, pojmenovaný ironicky - i když výstižně - Arkádie, je pravidelně "
+"bombardovaný kyselým deštěm a dalšími, stejně ošklilvými výkyvy počasí. Díky "
+"extrémnímu klimatu byla Arkádie vybrána jako dějiště experimentu, který "
+"zkoumal, jak takové prostředí ovlivňuje růst plodin, pěstovaných na "
+"izolovaných polích. Tento experiment se setkal s tak velkým úspěchem, že se "
+"Arkádie stala centrálním uzlem pro distribuci potravin v místním Za'lekském "
 "prostoru."
 
 #: dat/assets/arcadia.xml:29
@@ -1610,15 +1612,16 @@ msgid ""
 "discussing new and better ways to improve farming technology and get more "
 "and better food for less cost."
 msgstr ""
-"Mnoho kapitánů, zemědělců a vědců v nákladní dopravě se zde mírumilovně mísí "
-"a diskutují o nových a lepších způsobech, jak zlepšit zemědělskou "
-"technologii a získat více kvalitnějšího jídla za nižší cenu."
+"Mnoho kapitánů obchodního loďstva, farmářů i vědců se zde mírumilovně mísí a "
+"diskutují o nových a lepších farmářských technikách, aby vyprodukovali co "
+"nejvíce kvalitního jídla za co nejmenší ceny."
 
 #: dat/assets/arch_arai.xml:2
 msgid "Arch Arai"
 msgstr "Arch Arai"
 
 #: dat/assets/arch_arai.xml:30
+#, fuzzy
 msgid ""
 "Once an independent world, home to pirates and black market traders, Arch "
 "Arai has long since fallen under the spell of the Touched. Now it is a "
@@ -1828,6 +1831,7 @@ msgstr ""
 "důvod zůstat na tomto světě příliš dlouho kromě baru."
 
 #: dat/assets/astana_iiv.xml:2
+#, fuzzy
 msgid "Astana IIV"
 msgstr "Astana IIV"
 
@@ -2605,7 +2609,7 @@ msgstr ""
 
 #: dat/assets/castellan_vi.xml:2
 msgid "Castellan VI"
-msgstr ""
+msgstr "Castellan VI"
 
 #: dat/assets/cerberus.xml:2 dat/ssys/cerberus.xml:2
 msgid "Cerberus"
@@ -2634,15 +2638,15 @@ msgstr ""
 
 #: dat/assets/cerberus_ii.xml:2
 msgid "Cerberus II"
-msgstr ""
+msgstr "Cerberus II"
 
 #: dat/assets/cerberus_iia.xml:2
 msgid "Cerberus IIa"
-msgstr ""
+msgstr "Cerberus IIa"
 
 #: dat/assets/cerberus_iv.xml:2
 msgid "Cerberus IV"
-msgstr ""
+msgstr "Cerberus IV"
 
 #: dat/assets/cetrat.xml:2
 msgid "Cetrat"
@@ -2656,6 +2660,10 @@ msgid ""
 "that field. Cetrat was colonized by the eighth colony ship launched during "
 "the First Growth, Brooklyn."
 msgstr ""
+"Cetrat je vodní svět, známý pro řasy, co našly použití v medicíně. Ještě se "
+"je nepodařilo pěstovat v umělém prostředí, ale protože se jim daří v celém "
+"planetárním oceánu, na pokrok není žádný velký tlak. Cerat byl kolonizován "
+"osmou z kolonizačních lodí První diaspory, Brooklynem."
 
 #: dat/assets/cetrat.xml:30
 msgid ""
@@ -2665,10 +2673,15 @@ msgid ""
 "but sometimes small cephalopods or more exotic beings. As exotic cultures "
 "go, Cetrat is among the stranger."
 msgstr ""
+"Bar je opravdu rozlehlý, ale štamgastů je tu málo. Na nápojovém lístku je "
+"stránka s \"Živými drinky\". Když se zeptáš barmana, odpoví, že takové "
+"drinky míchají s živými tvory. Většinou s medůzami, ale používají se také "
+"malí hlavonožci a další, ještě exotičtější \"přísady\". Jsou různé exotické "
+"kultury, Cerat zjevně patří ke světům na divnější straně spektra."
 
 #: dat/assets/charcoal.xml:2
 msgid "Charcoal"
-msgstr ""
+msgstr "Dřevěné uhlí"
 
 #: dat/assets/charred.xml:2
 msgid "Charred"
@@ -2676,7 +2689,7 @@ msgstr ""
 
 #: dat/assets/chriik.xml:2
 msgid "Chriik"
-msgstr ""
+msgstr "Chriik"
 
 #: dat/assets/chriik.xml:29
 msgid ""
@@ -2697,7 +2710,7 @@ msgstr ""
 
 #: dat/assets/churchill_i.xml:2
 msgid "Churchill I"
-msgstr ""
+msgstr "Churchill I"
 
 #: dat/assets/churchill_ii.xml:2
 msgid "Churchill II"
@@ -2739,6 +2752,9 @@ msgid ""
 "look as alert as they have ever been and you feel their eyes look you over "
 "as you sit down to order a drink."
 msgstr ""
+"Průměrný věk zdejších štamgastů šplhá k sedmdesáti, ale osazenstvo vypadá, "
+"jako kdyby ani na vteřinu nepřestali být na stráži, a ty na sobě cítíš "
+"jejich oči, zatímco si sedáš a objednáváš si pití."
 
 #: dat/assets/coral_station.xml:2
 msgid "Coral Station"
@@ -3605,7 +3621,7 @@ msgstr ""
 
 #: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:611
 msgid "Dvaered High Command"
-msgstr ""
+msgstr "Dvaeredské vrchní velení"
 
 #: dat/assets/dvaered_high_command.xml:27
 msgid ""
@@ -13735,7 +13751,7 @@ msgstr ""
 
 #: dat/faction.xml:256
 msgid "Frontier Liberation Front"
-msgstr ""
+msgstr "Pohraniční osvobozenecká fronta"
 
 #: dat/faction.xml:270 dat/events/dvaered/fwA_treason.lua:131
 #: dat/events/dvaered/fwA_treason.lua:140 dat/events/dvaered/fwB_repay.lua:47
@@ -23853,10 +23869,8 @@ msgid "We Shall All Become One"
 msgstr ""
 
 #: dat/events/discovery.lua:137
-#, fuzzy
-#| msgid "For the Frontier!"
 msgid "The Frontier"
-msgstr "Za Pohraničí!"
+msgstr "Pohraničí"
 
 #: dat/events/discovery.lua:138
 msgid "Leading to a New Future"
@@ -23874,10 +23888,8 @@ msgstr ""
 #. These are currently the only systems from which the player can
 #. enter the nebula
 #: dat/events/discovery.lua:170
-#, fuzzy
-#| msgid "Welcome To the Nebula"
 msgid "The Nebula"
-msgstr "Vítejte v mlhovině"
+msgstr "Mlhovina"
 
 #: dat/events/discovery.lua:171
 msgid "Grim Reminder of Our Fragility"
@@ -25277,19 +25289,13 @@ msgid "Thug"
 msgstr "Rváč"
 
 #: dat/events/minerva/altercation2.lua:37
-#, fuzzy
-#| msgid ""
-#| "You once again hear a large commotion in one of the wings of Minerva "
-#| "station. As you get closer you see what seems to be a group of people "
-#| "chasing something small... Wait, is that a chicken?"
 msgid ""
 "You once again hear a large commotion in one of the wings of Minerva "
 "station. As you get closer you see what seems to be a group of people "
 "chasing something small… Wait, is that a chicken?"
 msgstr ""
 "V jednom z křídel stanice Minerva znovu uslyšíš velký rozruch. Když se "
-"přiblížíš, uvidíš skupinu lidí, kteří honí něco malého ... Počkat, je to "
-"kuře?"
+"přiblížíš, uvidíš skupinu lidí, kteří honí něco malého... Počkat, je to kuře?"
 
 #: dat/events/minerva/altercation2.lua:61
 msgid "\"Get back here you thief! Give me back my tokens! There is no way \""
@@ -45000,10 +45006,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/pirate3.lua:449
-#, fuzzy
-#| msgid "\"Get away from me!\""
 msgid "Get away from me!"
-msgstr "\"Jdi ode mně pryč!\""
+msgstr "Jdi ode mně pryč!"
 
 #: dat/missions/minerva/pirate3.lua:459
 msgid "An impatient man appears into view."
