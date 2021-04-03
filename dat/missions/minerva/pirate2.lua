@@ -101,7 +101,7 @@ end
 
 
 function land ()
-   if misn_state==1 then
+   if misn_state==1 and planet.cur() == planet.get("Minerva Station") then
       vn.clear()
       vn.scene()
       local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
