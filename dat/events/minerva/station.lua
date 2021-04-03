@@ -157,7 +157,7 @@ function random_event()
       hook.safe( "start_alter1" )
 
    -- Spa Propaganda
-   elseif maikki2 and player.misnActive("Minerva Pirates 3") then
+   elseif maikki2 and player.misnActive("Minerva Pirates 3") and not spapropaganda then
       hook.safe( "start_spapropaganda" )
    end
 end
