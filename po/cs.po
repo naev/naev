@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-03-22 20:44-0400\n"
-"PO-Revision-Date: 2021-03-31 14:26+0000\n"
+"PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
 "Language: cs\n"
@@ -1831,7 +1831,6 @@ msgstr ""
 "důvod zůstat na tomto světě příliš dlouho kromě baru."
 
 #: dat/assets/astana_iiv.xml:2
-#, fuzzy
 msgid "Astana IIV"
 msgstr "Astana IIV"
 
@@ -22102,7 +22101,7 @@ msgstr "„Zmiz, než si to rozmyslím.“"
 #: dat/ai/flf.lua:39
 #, lua-format
 msgid "\"I should be able to spare some fuel for %s.\""
-msgstr "„Měl bych být schopen postrádat nějaké palivo za %s.“"
+msgstr "„Můžu postrádat nějaké palivo. Za %s.“"
 
 #: dat/ai/flf.lua:41
 msgid "\"I can't spare fuel for you.\""
@@ -22118,7 +22117,7 @@ msgstr "Za Pohraničí!"
 
 #: dat/ai/flf.lua:62
 msgid "You'll make great target practice!"
-msgstr "bude z tebe skvělý cvičný terč!"
+msgstr "Bude z tebe skvělý cvičný terč!"
 
 #: dat/ai/flf.lua:63
 msgid "Purge the oppressors!"
