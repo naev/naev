@@ -285,7 +285,9 @@ static int music_thread( void* unused )
          case MUSIC_CMD_KILL:
             mal_stop( &m );
             music_state = MUSIC_STATE_DEAD;
-            break;
+            SDL_CondBroadcast( music_state_cond );
+            musicUnlock();
+            return 0;
 
          case MUSIC_CMD_STOP:    mal_stop( &m ); break;
          case MUSIC_CMD_PLAY:    mal_play( &m ); break;
