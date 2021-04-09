@@ -45,7 +45,7 @@
    <type>liquid</type>
    <radius>4000.000000</radius>
    <pos x="13000.000000" y="5000.000000"/>
-   <density>0.7777</density>
+   <density>0.777700</density>
   </asteroid>
  </asteroids>
 </ssys>
