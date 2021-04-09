@@ -134,6 +134,14 @@ function taiomi_init ()
    end
    table.sort( fgparts, parts_sort )
 
+   -- Special
+   wing = {
+      x = 200,
+      y = 100,
+      i = lg.newImage( 'gfx/spfx/derelict_goddard_wing.png' ),
+      s = 2,
+   }
+
    -- Set up hooks
    pos = camera.get() -- Computes
    hook.renderbg( "taiomi_renderbg" )
@@ -185,4 +193,10 @@ function taiomi_renderfg ()
    for k,p in ipairs( fgparts ) do
       lg.draw( p.i.i, p.q, p.x, p.y, 0, p.s )
    end
+
+   -- Special
+   local x, y = pos:get()
+   x = (wing.x - x) * wing.s
+   y = (wing.y + y) * wing.s
+   lg.draw( wing.i, x, y, 0, wing.s )
 end
