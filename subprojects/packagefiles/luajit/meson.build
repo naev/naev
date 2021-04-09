@@ -4,6 +4,16 @@
 project('luajit', 'c', version : '2.1.0-beta3', default_options : ['c_winlibs='])
 
 cc = meson.get_compiler('c')
+
+# GetProcAddress() in the Windows API requires typecasts from FARPROC to other function pointer types.
+if host_machine.system() == 'windows' and cc.has_argument('-Wno-cast-function-type')
+   add_project_arguments('-Wno-cast-function-type', language : 'c')
+endif
+# LuaJIT bootstraps its build using a minified Lua interpreter. This code is harmlessly somewhat messy.
+if meson.get_compiler('c', native: true).has_argument('-Wno-implicit-fallthrough')
+   add_project_arguments('-Wno-implicit-fallthrough', language : 'c', native: true)
+endif
+
 libm = cc.find_library('m', required : false)
 libdl = cc.find_library('dl', required : false)
 luajit_dependencies = [libm, libdl]

@@ -533,7 +533,7 @@ void gl_resize (void)
    /* Set up framebuffer. */
    for (i=0; i<2; i++) {
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
-         glDeleteTextures( 1, &gl_screen.fbo[i] );
+         glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
       }
       gl_fboCreate( &gl_screen.fbo[i], &gl_screen.fbo_tex[i], gl_screen.rw, gl_screen.rh );
@@ -670,7 +670,7 @@ void gl_colorblind( int enable )
       shader.VertexPosition = shaders.colorblind.VertexPosition;
       shader.ClipSpaceFromLocal = shaders.colorblind.ClipSpaceFromLocal;
       shader.MainTex    = shaders.colorblind.MainTex;
-      colorblind_pp = render_postprocessAdd( &shader, 99 );
+      colorblind_pp = render_postprocessAdd( &shader, PP_LAYER_FINAL, 99 );
    } else {
       if (colorblind_pp != 0)
          render_postprocessRm( colorblind_pp );
@@ -687,7 +687,7 @@ void gl_exit (void)
    int i;
    for (i=0; i<2; i++) {
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
-         glDeleteTextures( 1, &gl_screen.fbo[i] );
+         glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
          gl_screen.fbo[i] = GL_INVALID_VALUE;
          gl_screen.fbo_tex[i] = GL_INVALID_VALUE;

@@ -40,7 +40,7 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
 static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend )
 {
    size_t fbufsize;
-   char *fbuf;
+   char *buf, *fbuf;
    char path[PATH_MAX];
 
    /* Load base file. */
@@ -51,7 +51,9 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, const char 
       WARN( _("Shader '%s' not found."), path);
       return NULL;
    }
-   return gl_shader_preprocess( size, fbuf, fbufsize, prepend, filename );
+   buf = gl_shader_preprocess( size, fbuf, fbufsize, prepend, filename );
+   free( fbuf );
+   return buf;
 }
 
 

@@ -937,7 +937,7 @@ void player_render( double dt )
     * Render the player.
     */
    if ((player.p != NULL) && !player_isFlag(PLAYER_CREATING) &&
-         !pilot_isFlag( player.p, PILOT_INVISIBLE)) {
+         !pilot_isFlag( player.p, PILOT_HIDE)) {
 
       /* Render the aiming lines. */
       if ((player.p->target != PLAYER_ID) && player.p->aimLines) {

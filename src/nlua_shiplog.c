@@ -75,7 +75,7 @@ int nlua_loadShiplog( nlua_env env )
  *
  * A typical example would be:
  * @code
- * logid = shiplog.createLog( "idstring", "log name", "log type", 0, 0 )
+ * shiplog.createLog( "idstring", "log name", "log type", 0, 0 )
  * shiplog.appendLog( "idstring", "message to append to log" )
  * @endcode
  *

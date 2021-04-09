@@ -78,8 +78,7 @@ function handle_messages ()
          elseif msgtype == "hyperspace" then
             ai.pushtask("hyperspace", data)
          elseif msgtype == "land" then
-            -- TODO: Made sure planet is the same
-            mem.land = ai.landplanet():pos()
+            mem.land = ai.planetfrompos(data):pos()
             ai.pushtask("land")
          -- Escort commands
          -- Attack target
@@ -120,6 +119,8 @@ function control ()
       local candidate = ai.getBoss()
       if candidate ~= nil and candidate:exists() then
          ai.pilot():setLeader( candidate )
+      else -- Indicate this pilot has no leader
+         ai.pilot():setLeader( nil )
       end
    end
 

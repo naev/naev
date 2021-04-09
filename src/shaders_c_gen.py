@@ -155,10 +155,26 @@ SHADERS = [
    ),
    Shader(
       name = "colorblind",
-      vs_path = "colorblind.vert",
+      vs_path = "postprocess.vert",
       fs_path = "colorblind.frag",
       attributes = ["VertexPosition"],
       uniforms = ["ClipSpaceFromLocal", "MainTex"],
+      subroutines = {},
+   ),
+   Shader(
+      name = "shake",
+      vs_path = "postprocess.vert",
+      fs_path = "shake.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "shake_pos", "shake_vel", "shake_force"],
+      subroutines = {},
+   ),
+   Shader(
+      name = "damage",
+      vs_path = "postprocess.vert",
+      fs_path = "damage.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "damage_strength"],
       subroutines = {},
    ),
 ]

@@ -423,7 +423,6 @@ int main( int argc, char** argv )
    gl_freeFont(&gl_defFontMono);
 
    start_cleanup(); /* Cleanup from start.c, not the first cleanup step. :) */
-   conf_cleanup(); /* Free some memory the configuration allocated. */
 
    /* exit subsystems */
    cli_exit(); /* Clean up the console. */
@@ -440,6 +439,9 @@ int main( int argc, char** argv )
    gl_exit(); /* Kills video output */
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
+
+   /* Has to be run last or it will mess up sound settings. */
+   conf_cleanup(); /* Free some memory the configuration allocated. */
 
    /* Free the icon. */
    if (naev_icon)
@@ -935,6 +937,8 @@ static void update_all (void)
  */
 void update_routine( double dt, int enter_sys )
 {
+   HookParam h[3];
+
    if (!enter_sys) {
       hook_exclusionStart();
 
@@ -945,14 +949,24 @@ void update_routine( double dt, int enter_sys )
    /* Update engine stuff. */
    space_update(dt);
    weapons_update(dt);
-   spfx_update(dt);
+   spfx_update(dt, real_dt);
    pilots_update(dt);
 
    /* Update camera. */
    cam_update( dt );
 
-   if (!enter_sys)
+   if (!enter_sys) {
       hook_exclusionEnd( dt );
+
+      /* Hook set up. */
+      h[0].type = HOOK_PARAM_NUMBER;
+      h[0].u.num = dt;
+      h[1].type = HOOK_PARAM_NUMBER;
+      h[1].u.num = real_dt;
+      h[2].type = HOOK_PARAM_SENTINEL;
+      /* Run the update hook. */
+      hooks_runParam( "update", h );
+   }
 }
 
 

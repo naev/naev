@@ -279,7 +279,6 @@ void nebu_renderOverlay( const double dt )
    nebu_renderPuffs( 0 );
 
    /* Prepare the matrix */
-   /* TODO: translate according to spfx_getShake()? */
    if (nebu_dofbo) {
       glBindFramebuffer(GL_FRAMEBUFFER, nebu_fbo);
       glClearColor( 0., 0., 0., 0. );

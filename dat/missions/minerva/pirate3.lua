@@ -200,8 +200,12 @@ They take out a metallic object from their pocket and show it to you. You don't 
    elseif misn_state==1 then
       pir(_([["The spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket to the Spa and see if we can get lucky. If  not, we may have to take other measures to ensure success."]]))
    elseif misn_state==3 then
-      pir(_([["I can't believe we didn't win a ticket to the Spa. However, it seems like this guy called Harper Bowdown managed to get it instead."]]))
-      pir(_([["I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
+      if not harper_gotticket then
+         pir(_([["I can't believe we didn't win a ticket to the Spa. However, it seems like this guy called Harper Bowdown managed to get it instead."]]))
+         pir(_([["I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
+      else
+         vn.jump("trueticket")
+      end
    elseif misn_state==4 then
       pir(_([["You got the ticket to the Minerva spa, so all you have to do now is go in, plant the listening device, and enjoy the thermal waters."]]))
    end

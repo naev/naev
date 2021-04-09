@@ -27,9 +27,11 @@
 
 /* Camera methods. */
 static int camL_set( lua_State *L );
+static int camL_get( lua_State *L );
 static int camL_shake( lua_State *L );
 static const luaL_Reg cameraL_methods[] = {
    { "set", camL_set },
+   { "get", camL_get },
    { "shake", camL_shake },
    {0,0}
 }; /**< Camera Lua methods. */
@@ -110,6 +112,21 @@ static int camL_set( lua_State *L )
          cam_setTargetPilot( player.p->id, soft_over*speed );
    }
    return 0;
+}
+
+
+/**
+ * @brief Gets the camera position.
+ *
+ *    @luatreturn Vec2 Position of the camera.
+ * @luafunc get
+ */
+static int camL_get( lua_State *L )
+{
+   Vector2d v;
+   cam_getPos( &v.x, &v.y );
+   lua_pushvector( L, v );
+   return 1;
 }
 
 

@@ -94,6 +94,7 @@ static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
 static int pilotL_setInvincible( lua_State *L );
 static int pilotL_setInvincPlayer( lua_State *L );
+static int pilotL_setHide( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
@@ -203,6 +204,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setFriendly", pilotL_setFriendly },
    { "setInvincible", pilotL_setInvincible },
    { "setInvincPlayer", pilotL_setInvincPlayer },
+   { "setHide", pilotL_setHide },
    { "setInvisible", pilotL_setInvisible },
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
@@ -2101,14 +2103,30 @@ static int pilotL_setInvincPlayer( lua_State *L )
 
 
 /**
+ * @brief Sets the pilot's hide status.
+ *
+ * A hidden pilot is neither updated nor drawn. It stays frozen in time
+ *  until the hide is lifted.
+ *
+ * @usage p:setHide() -- p will disappear
+ * @usage p:setHide(true) -- p will disappear
+ * @usage p:setHide(false) -- p will appear again
+ *
+ *    @luatparam Pilot p Pilot to set hidden status of.
+ *    @luatparam boolean state State to set hide.
+ * @luafunc setHide
+ */
+static int pilotL_setHide( lua_State *L )
+{
+   return pilotL_setFlagWrapper( L, PILOT_HIDE );
+}
+
+
+/**
  * @brief Sets the pilot's invisibility status.
  *
  * An invisible pilot is neither updated nor drawn. It stays frozen in time
  *  until the invisibility is lifted.
- *
- * @usage p:setInvisible() -- p will disappear
- * @usage p:setInvisible(true) -- p will disappear
- * @usage p:setInvisible(false) -- p will appear again
  *
  *    @luatparam Pilot p Pilot to set invisibility status of.
  *    @luatparam boolean state State to set invisibility.
@@ -3040,6 +3058,8 @@ static int pilotL_cargoAdd( lua_State *L )
  * @brief Tries to remove cargo from the pilot's ship.
  *
  * @usage n = pilot.cargoRm( player.pilot(), "Food", 20 )
+ * @usage n = pilot.cargoRm( player.pilot(), "__allExceptMisn" ) -- Removes all cargo from the player, excepted mission cargo
+ * @usage n = pilot.cargoRm( player.pilot(), "__all" ) -- Removes all cargo from the player
  *
  *    @luatparam Pilot p The pilot to remove cargo from.
  *    @luatparam string type Raw (untranslated) name of the cargo to remove.
@@ -3218,7 +3238,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "visible", .id = PILOT_VISIBLE },
    { .name = "visplayer", .id = PILOT_VISPLAYER },
    { .name = "hilight", .id = PILOT_HILIGHT },
-   { .name = "invisible", .id = PILOT_INVISIBLE },
+   { .name = "hide", .id = PILOT_HIDE },
    { .name = "invincible", .id = PILOT_INVINCIBLE },
    { .name = "invinc_player", .id = PILOT_INVINC_PLAYER },
    { .name = "friendly", .id = PILOT_FRIENDLY },

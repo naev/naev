@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="One-Wing Goddard">
+ <pos>
+  <x>0.000000</x>
+  <y>0.000000</y>
+ </pos>
+ <presence>
+  <faction>Derelict</faction>
+  <value>0.000000</value>
+  <range>0</range>
+ </presence>
+ <GFX>
+  <space>derelict_goddard.png</space>
+  <exterior>snow.webp</exterior>
+ </GFX>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <description>(null)</description>
+ </general>
+</asset>
