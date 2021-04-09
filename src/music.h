@@ -53,6 +53,8 @@ double music_playingTime (void);
 /*
  * Lua control
  */
+int music_luaFile( const char *filename );
+int music_luaString( const char *str );
 int music_choose( const char* situation );
 int music_chooseDelay( const char* situation, double delay );
 void music_rechoose (void);
