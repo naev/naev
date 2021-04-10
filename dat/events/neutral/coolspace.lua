@@ -128,9 +128,9 @@ function taiomi_init ()
 
    -- Special
    wing = {
-      x = 200,
-      y = 100,
-      i = lg.newImage( 'gfx/spfx/derelict_goddard_wing.png' ),
+      x = 100,
+      y = 150,
+      i = lg.newImage( 'gfx/spfx/derelict_goddard_wing.webp' ),
       s = 2,
    }
 
