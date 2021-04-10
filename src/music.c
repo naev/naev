@@ -325,10 +325,15 @@ int music_load( const char* name )
    /* Free current music if needed. */
    music_free();
 
+   /* Determine the filename. */
+   if (name[0]=='/')
+      snprintf( filename, sizeof(filename), "%s", &name[1]);
+   else
+      snprintf( filename, sizeof(filename), MUSIC_PATH"%s"MUSIC_SUFFIX, name);
+
    /* Load new music. */
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
-   snprintf( filename, sizeof(filename), MUSIC_PATH"%s"MUSIC_SUFFIX, name);
    rw = PHYSFSRWOPS_openRead( filename );
    if (rw == NULL) {
       WARN(_("Music '%s' not found."), filename);
