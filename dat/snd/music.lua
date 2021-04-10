@@ -26,6 +26,7 @@ factional = {
 -- Planet-specific songs
 planet_songs = {
    ["Minerva Station"] = { "meeting_mtfox" },
+   ["Strangelove Lab"] = { "landing_sinister" },
 }
 
 -- System-specific songs

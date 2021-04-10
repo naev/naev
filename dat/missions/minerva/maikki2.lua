@@ -326,8 +326,6 @@ function generate_npc ()
 
    elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) and misn_state < 6 then
       npc_ecc = misn.npcAdd( "approach_eccentric", ecc_barname, ecc_portrait, ecc_description )
-      music.load("landing_sinister")
-      music.play()
    end
 end
 
