@@ -28,6 +28,11 @@ planet_songs = {
    ["Minerva Station"] = { "meeting_mtfox" },
 }
 
+-- System-specific songs
+system_songs = {
+   Taiomi = { "/snd/sounds/songs/inca-spa.ogg" },
+}
+
 function choose( str )
    -- Stores all the available sound types and their functions
    choose_table = {
@@ -221,6 +226,14 @@ function choose_ambient ()
    local sys                  = system.cur()
    local factions             = sys:presences()
    local nebu_dens, nebu_vol  = sys:nebula()
+
+   -- System
+   local override = system_songs[ sys:nameRaw() ]
+   if override then
+      music.load( override[ rnd.rnd(1, #override) ] )
+      music.play()
+      return true
+   end
 
    local strongest = var.peek("music_ambient_force")
    if strongest == nil then
