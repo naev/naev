@@ -29,7 +29,7 @@ planet_songs = {
 }
 
 -- System-specific songs
-system_songs = {
+system_ambient_songs = {
    Taiomi = { "/snd/sounds/songs/inca-spa.ogg" },
 }
 
@@ -228,7 +228,7 @@ function choose_ambient ()
    local nebu_dens, nebu_vol  = sys:nebula()
 
    -- System
-   local override = system_songs[ sys:nameRaw() ]
+   local override = system_ambient_songs[ sys:nameRaw() ]
    if override then
       music.load( override[ rnd.rnd(1, #override) ] )
       music.play()
