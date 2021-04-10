@@ -23,6 +23,11 @@ factional = {
    Proteron   = { "heartofmachine", "imminent_threat", "ambient4" },
 }
 
+-- Planet-specific songs
+planet_songs = {
+   ["Minerva Station"] = { "meeting_mtfox" },
+}
+
 function choose( str )
    -- Stores all the available sound types and their functions
    choose_table = {
@@ -136,6 +141,15 @@ function choose_land ()
    local pnt   = planet.cur()
    local class = pnt:class()
 
+   -- Planet override
+   local override = planet_songs[ pnt:nameRaw() ]
+   if override then
+      music.load( override[ rnd.rnd(1, #override) ] )
+      music.play()
+      return true
+   end
+
+   -- Standard to do it based on type of planet
    if class == "M" then
       mus = { "agriculture" }
    elseif class == "O" then
