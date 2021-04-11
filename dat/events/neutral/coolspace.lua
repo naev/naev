@@ -173,9 +173,9 @@ function taiomi_init ()
    end
    -- Create three layers using parallax, this lets us cut down significantly
    -- on the number of ships we have to render to create them
-   add_bkg( 1000, 0.03, 1.5, 0.5, 6, 3 )
-   add_bkg( 1000, 0.05, 1.5, 0.6, 5, 3 )
-   add_bkg( 1000, 0.08, 1.5, 0.7, 4, 3 )
+   add_bkg( 333, 0.03, 1.5, 0.5, 6, 3 )
+   add_bkg( 333, 0.05, 1.5, 0.6, 5, 3 )
+   add_bkg( 333, 0.08, 1.5, 0.7, 4, 3 )
 
    -- Standard nebula (prng would generate the same one)
    local neb = tex.open( "gfx/bkg/nebula23.webp" )
