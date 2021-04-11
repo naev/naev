@@ -391,6 +391,26 @@ function graphics.printf( text, ... )
       H = H:translate( 0, -font.lineheight );
    end
 end
+function graphics.setScissor( x, y, width, height )
+   if x then
+      y = y or 0
+      width = width or love.w
+      height = height or love.h
+
+      y = love.h - y - height
+      naev.gfx.setScissor( love.x+x, love.y+y, width, height )
+   else
+      x = 0
+      y = 0
+      width = love.w
+      height = love.h
+      naev.gfx.setScissor()
+   end
+   graphics._scissor = {x, y, width, height}
+end
+function graphics.getScissor ()
+   return unpack( graphics._scissor )
+end
 
 
 --[[
@@ -635,5 +655,6 @@ graphics.setShader( graphics._shader_default )
 graphics.setCanvas( nil )
 graphics._mode = "alpha"
 graphics._alphamode = "alphamultiply"
+graphics.setScissor()
 
 return graphics

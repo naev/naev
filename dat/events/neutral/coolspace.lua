@@ -45,14 +45,6 @@ function endevent () evt.finish() end
 -- Taiomi, Ship Graveyard
 --]]
 function taiomi_init ()
-   -- Music is fixed
-   -- TODO make this not be a horrible hack :/
-   music.stop()
-   song = audio.new('snd/sounds/songs/inca-spa.ogg')
-   song:setLooping( true )
-   song:play()
-
-
    -- Create particles and buffer
    local density = 200*200
    buffer = 500
@@ -136,9 +128,9 @@ function taiomi_init ()
 
    -- Special
    wing = {
-      x = 200,
-      y = 100,
-      i = lg.newImage( 'gfx/spfx/derelict_goddard_wing.png' ),
+      x = 100,
+      y = 150,
+      i = lg.newImage( 'gfx/spfx/derelict_goddard_wing.webp' ),
       s = 2,
    }
 

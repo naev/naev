@@ -68,7 +68,7 @@ function create()
       vn.na(_("Before you enjoy yourself, you plant the listening device you were supposed to in a corner of the room so that it won't be noticed. That should make your current employer happy and get your work out of the way."))
    end
 
-   vn.na(_("There is a sign with instructions on how to properly bath. It seems like you're supposed to wash your body first in small individual stalls before getting into the large baths. You proceed to wash your body thoroughly, getting rid of all the junk from your travels off. It's amazing how much dirt accumulates by space travel, probably obtained on all sorts of different planets."))
+   vn.na(_("There is a sign with instructions on how to properly bath. It seems like you're supposed to wash your body first in small individual stalls before getting into the large baths. You proceed to wash your body thoroughly, getting rid of all the grime from your travels off. It's amazing how much dirt accumulates by space travel, probably obtained on all sorts of different planets."))
    vn.na(_("You enter the first bath you find. The hot water seems to seep into every pore of your skin in an incredibly relaxing and soothing manner. You melt into the water and let it all flow in. You should come here more often."))
    vn.na(_("As you lose yourself in space and time, you are brought back to reality by a faint sound of splashing. That's right, you were supposed to be joined in the spa by Cyborg Chicken. Given how great the spa is, you can't help but to question why the management decided to include Cyborg Chicken into this renovation event deal."))
    vn.na(_("The splashing sound stops, and you hear the pit-pat sound of chicken feet approaching you."))
