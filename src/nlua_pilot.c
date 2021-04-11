@@ -3786,7 +3786,7 @@ static int pilotL_hyperspace( lua_State *L )
    /* Get parameters. */
    p = luaL_validpilot(L,1);
    if ((lua_gettop(L) > 1) && !lua_isnil(L,2))
-      ss = system_getIndex( luaL_checksystem( L, 2 ) );
+      ss = luaL_validsystem(L,2);
    else
       ss = NULL;
    shoot = lua_toboolean(L,3);
