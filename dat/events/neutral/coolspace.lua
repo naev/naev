@@ -141,33 +141,43 @@ function taiomi_init ()
    hook.update( "taiomi_update" )
 
    -- Create a canvas background
-   local w = 2048
-   local h = 2048
-   local cvs = lg.newCanvas( w, h )
-   local move = 0.03
-   local scale = 1.5
-   lg.setCanvas( cvs )
-   lg.clear( 0, 0, 0, 0 )
-   local g = 0.5
-   lg.setColor( g, g, g, 1 )
-   local a = math.rad( 30 )
-   local c = math.cos(a)
-   local s = math.sin(a)
-   for i = 1,100000 do
-      local p = parts_create()
-      p.s = 1 / (5 + 3*rnd.rnd())
-      local xr = 0.8 * naev.rnd.threesigma()
-      local yr = 0.6 * naev.rnd.threesigma()
-      local x = xr*c-yr*s
-      local y = xr*c+yr*s
-      p.x = w*(x+3) / 6
-      p.y = h*(y+3) / 6
-      lg.draw( p.i.i, p.q, p.x, p.y, 0, p.s )
+   local function add_bkg( n, move, scale, g, salpha, sbeta )
+      n = n or 100000
+      move = move or 0.03
+      scale = scale or 1.5
+      g = g or 0.5
+      salpha = salpha or 5
+      sbeta = sbeta or 3
+      local w = 2048
+      local h = 2048
+      local cvs = lg.newCanvas( w, h )
+      lg.setCanvas( cvs )
+      lg.clear( 0, 0, 0, 0 )
+      lg.setColor( g, g, g, 1 )
+      local a = math.rad( 20 + 10 * rnd.rnd() )
+      local c = math.cos(a)
+      local s = math.sin(a)
+      for i = 1,100000 do
+         local p = parts_create()
+         p.s = 1 / (salpha + sbeta*rnd.rnd())
+         local xr = 0.8 * naev.rnd.threesigma()
+         local yr = 0.7 * naev.rnd.threesigma()
+         local x = xr*c-yr*s
+         local y = xr*c+yr*s
+         p.x = w*(x+3) / 6
+         p.y = h*(y+3) / 6
+         lg.draw( p.i.i, p.q, p.x, p.y, 0, p.s )
+      end
+      lg.setCanvas()
+      naev.bkg.image( cvs.t.tex, 0, 0, move, scale )
    end
-   lg.setCanvas()
-   naev.bkg.image( cvs.t.tex, 0, 0, move, scale )
+   -- Create three layers using parallax, this lets us cut down significantly
+   -- on the number of ships we have to render to create them
+   add_bkg( 1000, 0.03, 1.5, 0.5, 6, 3 )
+   add_bkg( 1000, 0.05, 1.5, 0.6, 5, 3 )
+   add_bkg( 1000, 0.08, 1.5, 0.7, 4, 3 )
 
-   -- Standard nebula
+   -- Standard nebula (prng would generate the same one)
    local neb = tex.open( "gfx/bkg/nebula23.webp" )
    bkg.image( neb, 377, 1344, 0.013, 1.9 )
 end
