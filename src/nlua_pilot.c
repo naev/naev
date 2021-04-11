@@ -2125,8 +2125,8 @@ static int pilotL_setHide( lua_State *L )
 /**
  * @brief Sets the pilot's invisibility status.
  *
- * An invisible pilot is neither updated nor drawn. It stays frozen in time
- *  until the invisibility is lifted.
+ * An invisible pilot is not shown on the radar nor targettable, however, it
+ * renders and updates just like normal.
  *
  *    @luatparam Pilot p Pilot to set invisibility status of.
  *    @luatparam boolean state State to set invisibility.
