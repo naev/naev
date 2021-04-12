@@ -65,7 +65,7 @@ equip_typeOutfits_weapons["Shaman"] = {
 equip_typeOutfits_weapons["Preacher"] = {
    {
       num = 2;
-      "Heavy Ion Cannon", "Slicer", "Shattershield Lance"
+      "Heavy Ion Cannon", "Slicer",
    },
    {
       num = 2, varied = true;

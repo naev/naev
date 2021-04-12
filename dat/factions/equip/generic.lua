@@ -222,9 +222,9 @@ equip_classOutfits_weapons = {
       {
          num = 1;
          "Mass Driver", "Ion Cannon", "Unicorp Mace Launcher",
-         "Unicorp Banshee Launcher", "Orion Lance", "Shattershield Lance",
+         "Unicorp Banshee Launcher", "Orion Lance",
          "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
-         "Unicorp Medusa Launcher", "Laser Cannon MK2"
+         "Unicorp Medusa Launcher", "Laser Cannon MK2",
       },
       {
          "Plasma Blaster MK1", "Plasma Blaster MK2", "Gauss Gun",

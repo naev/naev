@@ -45,7 +45,6 @@
   <item>Particle Beam</item>
   <item>Particle Lance</item>
   <item>Orion Lance</item>
-  <item>Shattershield Lance</item>
   <item>Neutron Disruptor</item>
   <item>Heavy Neutron Disruptor</item>
   <item>Energy Dart</item>
@@ -439,7 +438,6 @@
   <item>Orion Lance</item>
   <item>Orion Beam</item>
   <item>Pulse Beam</item>
-  <item>Shattershield Lance</item>
  </tech>
  <tech name="Beam 2">
   <item>Grave Lance</item>
@@ -569,7 +567,6 @@
   <item>Heavy Ion Turret</item>
   <item>Railgun Turret</item>
   <item>Orion Lance</item>
-  <item>Shattershield Lance</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
