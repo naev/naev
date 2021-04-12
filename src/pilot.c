@@ -667,7 +667,8 @@ int pilot_isNeutral( const Pilot *p )
 int pilot_isFriendly( const Pilot *p )
 {
    if ( pilot_isFlag( p, PILOT_FRIENDLY ) ||
-         areAllies( FACTION_PLAYER,p->faction ) )
+         ( areAllies( FACTION_PLAYER,p->faction ) &&
+         !pilot_isFlag( p, PILOT_HOSTILE ) ) )
       return 1;
 
    return 0;

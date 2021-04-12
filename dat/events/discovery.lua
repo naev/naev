@@ -244,7 +244,7 @@ function discover_trigger( event )
    shiplog.appendLog( "discovery", msg )
 
    -- Break autonav
-   player.autonavAbort( msg )
+   player.autonavReset( 5 )
 
    -- Mark as done
    var.push( event.name, true )
@@ -256,6 +256,7 @@ end
 
 text_fadein = 1.5
 text_fadeout = 1.5
+text_length = 8.0
 function textinit( titletext, subtitletext )
    local fontname = _("fonts/CormorantUnicase-Medium.ttf")
    -- Title
@@ -285,7 +286,6 @@ function textinit( titletext, subtitletext )
    textshader:send( "texprev", emptycanvas )
    textshader._emptycanvas = emptycanvas
    texttimer   = 0
-   textlength  = 8
 
    -- Render to canvas
    local pixelcode = string.format([[
@@ -345,14 +345,14 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    hook.renderfg( "textfg" )
    hook.update( "textupdate" )
-   --hook.timer( textlength*1000, "endevent")
+   --hook.timer( text_length*1000, "endevent")
 end
 function textfg ()
    local progress
    if texttimer < text_fadein then
       progress = texttimer / text_fadein
-   elseif texttimer > textlength-text_fadeout then
-      progress = (textlength-texttimer) / text_fadeout
+   elseif texttimer > text_length-text_fadeout then
+      progress = (text_length-texttimer) / text_fadeout
    end
 
    if progress then

@@ -318,6 +318,7 @@ static void background_renderImages( background_image_t *bkg_arr )
       gl_gameToScreenCoords( &xs, &ys, x, y );
       z = cam_getZoom();
       z *= bkg->scale;
+      /* TODO add rotation too! */
       gl_blitScale( bkg->image, xs, ys,
             z*bkg->image->sw, z*bkg->image->sh, &bkg->col );
    }

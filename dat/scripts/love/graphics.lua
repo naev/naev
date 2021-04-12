@@ -397,7 +397,9 @@ function graphics.setScissor( x, y, width, height )
       width = width or love.w
       height = height or love.h
 
-      y = love.h - y - height
+      if graphics._canvas == nil then
+         y = love.h - y - height
+      end
       naev.gfx.setScissor( love.x+x, love.y+y, width, height )
    else
       x = 0

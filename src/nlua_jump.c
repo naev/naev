@@ -235,40 +235,25 @@ static int jumpL_get( lua_State *L )
    LuaJump lj;
    StarSystem *a, *b;
 
-   /* Defaults. */
-   a = NULL;
-   b = NULL;
+   a = luaL_validsystem(L,1);
+   b = luaL_validsystem(L,2);
 
-   if (lua_gettop(L) > 1) {
-      if (lua_isstring(L, 1))
-         a = system_get( lua_tostring(L, 1));
-      else if (lua_issystem(L, 1))
-         a = system_getIndex( lua_tosystem(L, 1) );
-
-      if (lua_isstring(L, 2))
-         b = system_get( lua_tostring(L, 2));
-      else if (lua_issystem(L, 2))
-         b = system_getIndex( lua_tosystem(L, 2) );
-
-      if ((a == NULL) || (b == NULL)) {
-         NLUA_ERROR(L, _("No matching jump points found."));
-         return 0;
-      }
-
-      if (jump_getTarget(b, a) != NULL) {
-         lj.srcid  = a->id;
-         lj.destid = b->id;
-         lua_pushjump(L, lj);
-
-         /* The inverse. If it doesn't exist, there are bigger problems. */
-         lj.srcid  = b->id;
-         lj.destid = a->id;
-         lua_pushjump(L, lj);
-         return 2;
-      }
+   if ((a == NULL) || (b == NULL)) {
+      NLUA_ERROR(L, _("No matching jump points found."));
+      return 0;
    }
-   else
-      NLUA_INVALID_PARAMETER(L);
+
+   if (jump_getTarget(b, a) != NULL) {
+      lj.srcid  = a->id;
+      lj.destid = b->id;
+      lua_pushjump(L, lj);
+
+      /* The inverse. If it doesn't exist, there are bigger problems. */
+      lj.srcid  = b->id;
+      lj.destid = a->id;
+      lua_pushjump(L, lj);
+      return 2;
+   }
 
    return 0;
 }

@@ -45,13 +45,15 @@ local vn = {
 local function _setdefaults()
    local lw, lh = window.getDesktopDimensions()
    vn._default.textbox_font = graphics.newFont(16)
+   vn._default.textbox_font:setOutline( 0.5 )
    vn._default.textbox_w = 800
    local fonth = vn._default.textbox_font:getLineHeight()
    vn._default.textbox_h = math.floor(200 / fonth) * fonth + 20*2
    vn._default.textbox_x = (lw-vn._default.textbox_w)/2
    vn._default.textbox_y = lh-30-vn._default.textbox_h
    vn._default.textbox_bg = {0, 0, 0, 1}
-   vn._default.textbox_alpha = 1
+   vn._default.textbox_bg_alpha = 1
+   vn._default.textbox_text_alpha = 1
    vn._default.namebox_font = graphics.newFont(20)
    vn._default.namebox_w = -1 -- Autosize
    vn._default.namebox_h = 20*2+vn._default.namebox_font:getHeight()
@@ -184,14 +186,20 @@ local function _draw()
    local x, y, w, h = vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
    local bw = 20
    local bh = 20
-   _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_alpha )
+   _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_bg_alpha )
    -- Draw text
-   vn.setColor( vn._bufcol, vn.textbox_alpha )
-
-   graphics.setScissor( x, y+bh, vn.textbox_w, vn.textbox_h-2*bh )
+   vn.setColor( vn._bufcol, vn.textbox_text_alpha )
+   if not vn._postshader then
+      -- TODO fix this not working during with postshaders. This is caused by
+      -- the fact that if scaling is enabled, the canvas is running at a lower
+      -- resolution (true pixels instead of scaled pixels )
+      graphics.setScissor( x, y+bh, vn.textbox_w, vn.textbox_h-2*bh )
+   end
    y = y + vn._buffer_y
-   graphics.printf( vn._buffer, font, x+bw, y+bw, vn.textbox_w-2*bw )
-   graphics.setScissor()
+   graphics.printf( vn._buffer, font, x+bw, y+bh, vn.textbox_w-2*bw )
+   if not vn._postshader then
+      graphics.setScissor()
+   end
 
    -- Namebox
    if vn._title ~= nil and utf8.len(vn._title)>0 then
