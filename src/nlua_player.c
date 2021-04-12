@@ -67,6 +67,7 @@ static int playerL_refuel( lua_State *L );
 static int playerL_autonav( lua_State *L );
 static int playerL_autonavDest( lua_State *L );
 static int playerL_autonavAbort( lua_State *L );
+static int playerL_autonavReset( lua_State *L );
 /* Cinematics. */
 static int playerL_cinematics( lua_State *L );
 /* Board stuff. */
@@ -110,6 +111,7 @@ static const luaL_Reg playerL_methods[] = {
    { "autonav", playerL_autonav },
    { "autonavDest", playerL_autonavDest },
    { "autonavAbort", playerL_autonavAbort },
+   { "autonavReset", playerL_autonavReset },
    { "cinematics", playerL_cinematics },
    { "unboard", playerL_unboard },
    { "takeoff", playerL_takeoff },
@@ -506,13 +508,13 @@ static int playerL_autonavDest( lua_State *L )
 
 
 /**
- * @brief Gets the player's long term autonav destination.
+ * @brief Stops the players autonav if active.
  *
  * @usage sys, jumps = player.autonavAbort()
  *
  * @note Does not do anything if the player is not in autonav.
  *
- *    @luatreturn string Abort message.
+ *    @luatparam string msg Abort message.
  * @luafunc autonavAbort
  */
 static int playerL_autonavAbort( lua_State *L )
@@ -521,6 +523,24 @@ static int playerL_autonavAbort( lua_State *L )
    player_autonavAbort( str );
    return 0;
 }
+
+
+/**
+ * @brief Resets the game speed without disabling autonav.
+ *
+ * @note Does not do anything if the player is not in autonav.
+ *
+ *    @luatparam[opt=0.] number timer How many seconds to wait before starting autonav up again.
+ * @luafunc autonavReset
+ */
+static int playerL_autonavReset( lua_State *L )
+{
+   double timer = luaL_optnumber(L,1,0.);
+   player_autonavResetSpeed();
+   player.autonav_timer = timer;
+   return 0;
+}
+
 
 
 /**
