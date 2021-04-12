@@ -10,7 +10,7 @@ equip_classOutfits_weapons["Yacht"] = {
 
 equip_classOutfits_weapons["Courier"] = {
    {
-      "Turreted Gauss Gun", "Laser PD MK2"
+      "Turreted Gauss Gun", "Laser Turret MK1"
    }
 }
 

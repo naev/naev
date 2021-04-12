@@ -39,7 +39,7 @@ equip_typeOutfits_weapons["Taciturnity"] = {
    },
    {
       varied = true;
-      "Turreted Gauss Gun", "Laser PD MK1"
+      "Turreted Gauss Gun", "Laser Turret MK1"
    }
 }
 equip_typeOutfits_weapons["Apprehension"] = {

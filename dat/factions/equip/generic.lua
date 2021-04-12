@@ -180,24 +180,22 @@ equip_classOutfits_weapons = {
    ["Yacht"] = {
       {
          "Laser Cannon MK1", "Razor MK1", "Razor MK2",
-         "Laser PD MK1", "Turreted Gauss Gun"
+         "Laser Turret MK1", "Turreted Gauss Gun",
       }
    },
    ["Luxury Yacht"] = {
       {
-         "Laser Cannon MK1", "Razor MK1", "Razor MK2"
+         "Laser Cannon MK1", "Razor MK1", "Razor MK2",
       }
    },
    ["Scout"] = {
       {
-         "Laser PD MK1", "Laser PD MK2", "Razor Turret MK1",
-         "Turreted Gauss Gun"
+         "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
       }
    },
    ["Courier"] = {
       {
-         "Laser PD MK1", "Laser PD MK2", "Razor Turret MK1",
-         "Turreted Gauss Gun"
+         "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
       }
    },
    ["Freighter"] = {

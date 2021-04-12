@@ -143,7 +143,7 @@ function spawnChelseaShip( param )
    chelsea:addOutfit( "Unicorp PT-80 Core System" )
    chelsea:addOutfit( "Unicorp Hawk 300 Engine" )
    chelsea:addOutfit( "Unicorp D-4 Light Plating" )
-   chelsea:addOutfit( "Laser PD MK2", 2 )
+   chelsea:addOutfit( "Laser Turret MK1", 2 )
    chelsea:addOutfit( "Small Shield Booster", 2 )
    chelsea:addOutfit( "Cargo Pod", 2 )
 
