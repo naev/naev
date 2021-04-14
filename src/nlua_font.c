@@ -163,6 +163,8 @@ static int fontL_eq( lua_State *L )
  *    @luatparam String|Number fontname Name of the font.
  *    @luatparam[opt=1.] size Number Font height.
  *    @luatreturn Font A newly created font.
+ *    @luatreturn String Name of the newly created font.
+ *    @luatreturn String Prefix of the newly created font.
  * @luafunc new
  */
 static int fontL_new( lua_State *L )
@@ -191,7 +193,9 @@ static int fontL_new( lua_State *L )
       NLUA_ERROR(L, _("failed to load font '%s'"), fname);
 
    lua_pushfont( L, font );
-   return 1;
+   lua_pushstring( L, fname );
+   lua_pushstring( L, prefix );
+   return 3;
 }
 
 
@@ -260,13 +264,15 @@ static int fontL_setFilter( lua_State *L )
  *
  *    @luatparam Font font Font to set fallback to.
  *    @luatparam string filename Name of the font to add.
+ *    @luatparam[opt=""] string prefix Prefix to use for the fonts.
  * @luafunc addFallback
  */
 static int fontL_addFallback( lua_State *L )
 {
    glFont *font = luaL_checkfont(L,1);
    const char *s = luaL_checkstring(L,2);
-   int ret = gl_fontAddFallback( font, s );
+   const char *prefix = luaL_optstring(L,3,"");
+   int ret = gl_fontAddFallback( font, s, prefix );
    lua_pushboolean(L, !ret);
    return 1;
 }

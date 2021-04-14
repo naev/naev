@@ -1581,12 +1581,32 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
  *
  *    @param font Font to add fallback to.
  *    @param fname Name of the fallback to add.
+ *    @param prefix Prefix to use.
  *    @return 0 on success.
  */
-int gl_fontAddFallback( glFont* font, const char *fname )
+int gl_fontAddFallback( glFont* font, const char *fname, const char *prefix )
 {
+   size_t i, len, plen;
+   int ch, ret;
+   char fullname[PATH_MAX];
    glFontStash *stsh = gl_fontGetStash( font );
-   return gl_fontstashAddFallback( stsh, fname, font->h );
+
+   ret = 0;
+   ch = 0;
+   len = strlen(fname);
+   plen = strlen(prefix);
+   for (i=0; i<=len; i++) {
+      if ((fname[i]=='\0') || (fname[i]==',')) {
+         strncpy( fullname, prefix, PATH_MAX-1 );
+         strncat( fullname, &fname[ch], MIN( PATH_MAX-1-plen, i-ch ) );
+         ret |= gl_fontstashAddFallback( stsh, fullname, font->h );
+         ch = i;
+         if (fname[i]==',')
+            ch++;
+      }
+   }
+
+   return ret;
 }
 
 
