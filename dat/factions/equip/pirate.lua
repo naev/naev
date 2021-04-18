@@ -106,7 +106,7 @@ equip_typeOutfits_weapons["Kestrel"] = {
    {
       varied = true;
       "Repeating Railgun", "Railgun", "Heavy Laser", "Railgun Turret",
-      "Laser Turret MK3", "Heavy Ion Turret", "EMP Grenade Launcher",
+      "Laser Turret MK2", "Heavy Ion Turret", "EMP Grenade Launcher",
       "Mass Driver", "Heavy Ion Cannon",
       "Turreted Vulcan Gun", "Orion Beam", "Unicorp Caesar IV Launcher",
       "TeraCom Medusa Launcher", "Razor Turret MK2",

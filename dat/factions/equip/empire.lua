@@ -94,10 +94,10 @@ equip_typeOutfits_weapons["Pacifier"] = {
    },
    {
       num = 1;
-      "Heavy Ripper Cannon", "Laser Turret MK3", "Orion Beam", "Pulse Beam"
+      "Heavy Ripper Cannon", "Laser Turret MK2", "Orion Beam", "Pulse Beam"
    },
    {
-      "Heavy Ripper Cannon", "Laser Turret MK3"
+      "Heavy Ripper Cannon", "Laser Turret MK2"
    }
 }
 equip_typeOutfits_weapons["Hawking"] = {
@@ -142,7 +142,7 @@ function equip( p )
          },
          {
             varied = true;
-            "Heavy Ripper Turret", "Laser Turret MK3"
+            "Heavy Ripper Turret", "Laser Turret MK2"
          }
       }
    else
@@ -157,7 +157,7 @@ function equip( p )
          },
          {
             varied = true;
-            "Heavy Ripper Turret", "Laser Turret MK3"
+            "Heavy Ripper Turret", "Laser Turret MK2"
          }
       }
    end

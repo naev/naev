@@ -215,7 +215,7 @@ equip_classOutfits_weapons = {
          "Heavy Laser", "Heavy Ripper Turret"
       },
       {
-         "Laser Turret MK2", "Laser Turret MK3"
+         "Laser Turret MK2",
       }
    },
    ["Fighter"] = {
@@ -251,7 +251,7 @@ equip_classOutfits_weapons = {
       {
          num = 2;
          "Mass Driver", "Heavy Ion Cannon",
-         "Laser Turret MK1", "Plasma Turret MK2", "Razor Turret MK2"
+         "Laser Turret MK1", "Plasma Turret MK2", "Razor Turret MK2",
       },
       {
          "Ripper Cannon", "Plasma Blaster MK2", "Shredder", "Ion Cannon"
@@ -261,7 +261,7 @@ equip_classOutfits_weapons = {
       {
          num = 2;
          "Railgun", "Heavy Ripper Turret", "Heavy Laser", "Orion Beam",
-         "Grave Beam", "Laser Turret MK3", "Razor Turret MK2"
+         "Grave Beam", "Laser Turret MK2", "Razor Turret MK2",
       },
       {
          num = 1;
@@ -269,7 +269,7 @@ equip_classOutfits_weapons = {
          "Unicorp Headhunter Launcher", "TeraCom Medusa Launcher"
       },
       {
-         "Laser Turret MK2", "Laser Turret MK3", "Turreted Vulcan Gun"
+         "Laser Turret MK2", "Laser Turret MK2", "Turreted Vulcan Gun",
       }
    },
    ["Cruiser"] = {
@@ -281,7 +281,7 @@ equip_classOutfits_weapons = {
          "Heavy Laser", "Heavy Ripper Turret", "Railgun Turret"
       },
       {
-         "Laser Turret MK3", "Turreted Vulcan Gun"
+         "Laser Turret MK2", "Turreted Vulcan Gun",
       }
    },
    ["Carrier"] = {
@@ -297,7 +297,7 @@ equip_classOutfits_weapons = {
 --         "Lancelot Fighter Bay"
 --      },
       {
-         "Laser Turret MK3", "Turreted Vulcan Gun"
+         "Laser Turret MK2", "Turreted Vulcan Gun",
       }
    },
    ["Drone"] = {

@@ -45,7 +45,7 @@ equip_typeOutfits_weapons["Taciturnity"] = {
 equip_typeOutfits_weapons["Apprehension"] = {
    {
       varied = true;
-       "Laser Turret MK3", "Railgun", "Energy Torpedo", "Turreted Convulsion Launcher"
+       "Laser Turret MK2", "Railgun", "Energy Torpedo", "Turreted Convulsion Launcher"
    }
 }
 equip_typeOutfits_weapons["Certitude"] = {
