@@ -25,7 +25,7 @@ lg.origin()
 
 -- List of special systems, for other systems this event just finishes
 systems = {
-   Taiomi = "taiomi_init"
+   Taiomi = "taiomi_init",
 }
 
 function create ()
@@ -142,7 +142,18 @@ function taiomi_init ()
    hook.update( "taiomi_update" )
 
    -- Create a canvas background
-   local function add_bkg( n, move, scale, g, salpha, sbeta )
+   local function add_bkg( id, n, move, scale, g, salpha, sbeta )
+      --[[
+      local filename = string.format("cache/taiomi%02d.png",id)
+      local ftype = naev.file.filetype( filename )
+      if ftype=="file" then
+         print("read from data")
+         local tex = naev.tex.open( filename )
+         naev.bkg.image( tex, 0, 0, move, scale )
+         return
+      end
+      --]]
+
       n = n or 100000
       move = move or 0.03
       scale = scale or 1.5
@@ -158,7 +169,7 @@ function taiomi_init ()
       local a = math.rad( 20 + 10 * rnd.rnd() )
       local c = math.cos(a)
       local s = math.sin(a)
-      for i = 1,100000 do
+      for i = 1,n do
          local p = parts_create()
          p.s = 1 / (salpha + sbeta*rnd.rnd())
          local xr = 0.8 * naev.rnd.threesigma()
@@ -171,12 +182,14 @@ function taiomi_init ()
       end
       lg.setCanvas()
       naev.bkg.image( cvs.t.tex, 0, 0, move, scale )
+      --cvs.t.tex:writeData( filename )
    end
    -- Create three layers using parallax, this lets us cut down significantly
    -- on the number of ships we have to render to create them
-   add_bkg( 333, 0.03, 1.5, 0.5, 6, 3 )
-   add_bkg( 333, 0.05, 1.5, 0.6, 5, 3 )
-   add_bkg( 333, 0.08, 1.5, 0.7, 4, 3 )
+   naev.file.mkdir("cache/")
+   add_bkg( 0, 6e4, 0.03, 1.5, 0.3, 6, 3 )
+   add_bkg( 1, 5e4, 0.05, 1.5, 0.4, 5, 3 )
+   add_bkg( 2, 3e4, 0.08, 1.5, 0.5, 4, 3 )
 
    -- Standard nebula (prng would generate the same one)
    local neb = tex.open( "gfx/bkg/nebula23.webp" )
