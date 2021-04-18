@@ -38,6 +38,7 @@ static inline uint32_t get_pixel(SDL_Surface *surface, int x, int y);
 static int texL_close( lua_State *L );
 static int texL_new( lua_State *L );
 static int texL_readData( lua_State *L );
+static int texL_writeData( lua_State *L );
 static int texL_dim( lua_State *L );
 static int texL_sprites( lua_State *L );
 static int texL_spriteFromDir( lua_State *L );
@@ -48,6 +49,7 @@ static const luaL_Reg texL_methods[] = {
    { "new", texL_new },
    { "open", texL_new },
    { "readData", texL_readData },
+   { "writeData", texL_writeData },
    { "dim", texL_dim },
    { "sprites", texL_sprites },
    { "spriteFromDir", texL_spriteFromDir },
@@ -356,6 +358,54 @@ static int texL_readData( lua_State *L )
    SDL_FreeSurface( surface );
 
    return 3;
+}
+
+
+/**
+ * @brief Saves texture data as a png.
+ *
+ *    @luatparam Tex t Texture to convert to string.
+ *    @luatreturn string Texture as a string.
+ * @luafunc toData
+ */
+static int texL_writeData( lua_State *L )
+{
+   glTexture *tex = luaL_checktex(L,1);
+   const char *filename = luaL_checkstring(L,2);
+   int i, w, h;
+   size_t len;
+   char *data;
+   SDL_Surface *surface;
+   SDL_RWops *rw;
+
+   w = tex->w;
+   h = tex->h;
+   len = w * h * 4 * sizeof(GLubyte);
+   data = malloc( len );
+
+   /* Read raw data. */
+   glBindTexture( GL_TEXTURE_2D, tex->texture );
+   glGetTexImage( GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, data );
+   gl_checkErr();
+
+   /* Convert to PNG. */
+   surface = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
+   for (i=0; i<h; i++)
+      memcpy( (GLubyte*)surface->pixels + i * (4*w), &data[ (h - i - 1) * (4*w) ], 4*w );
+
+   /* Free buffer. */
+   free( data );
+
+   /* Save to file. */
+   if (!(rw = PHYSFSRWOPS_openWrite( filename )))
+      NLUA_ERROR(L,_("Unable to open '%s' for writing!"),filename);
+   else
+      IMG_SavePNG_RW( surface, rw, 1 );
+
+   SDL_FreeSurface( surface );
+
+   lua_pushboolean(L,1);
+   return 1;
 }
 
 
