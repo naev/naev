@@ -37,7 +37,7 @@ require "missions/neutral/common"
 text = {}
 
 a_commodity = commodity.get( "Water" )
-an_outfit = outfit.get( "Heavy Laser" )
+an_outfit = outfit.get( "Heavy Laser Turret" )
 
 intro_title = _("Passing The Sky")
 intro_text  = _([["Congratulations on your first space ship, %s!" Captain T. Practice, who sold the %s to you, says through the radio. "You have made an excellent decision to purchase from Melendez Corporation! Our ships are prized for their reliability and affordability. I promise, you won't be disappointed!" You are skeptical of the sales pitch, of course; you really only bought this ship because it was the only one you could afford. Still, you tactfully thank the salesperson.

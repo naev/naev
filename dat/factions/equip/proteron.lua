@@ -43,12 +43,12 @@ equip_typeOutfits_weapons["Derivative"] = {
 equip_typeOutfits_weapons["Kahan"] = {
    {
       num = 1;
-      "Turbolaser", "Railgun Turret", "Heavy Laser",
+      "Turbolaser", "Railgun Turret", "Heavy Laser Turret",
    },
    {
       num = 1;
       "Ragnarok Beam", "Grave Beam", "Turbolaser", "Railgun Turret",
-      "Heavy Laser", "TeraCom Imperator Launcher",
+      "Heavy Laser Turret", "TeraCom Imperator Launcher",
    },
    {
       "Enygma Systems Turreted Fury Launcher",
@@ -58,11 +58,11 @@ equip_typeOutfits_weapons["Kahan"] = {
 equip_typeOutfits_weapons["Archimedes"] = {
    {
       num = 1;
-      "Heavy Laser", "Heavy Ripper Turret",
+      "Heavy Laser Turret", "Heavy Ripper Turret",
    },
    {
       num = 2;
-      "Turbolaser", "Railgun Turret", "Heavy Laser",
+      "Turbolaser", "Railgun Turret", "Heavy Laser Turret",
    },
    {
       num = 2;

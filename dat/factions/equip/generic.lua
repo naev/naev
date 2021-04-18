@@ -212,7 +212,7 @@ equip_classOutfits_weapons = {
       {
          num = 2, varied = true;
          "Pulse Beam", "Enygma Systems Turreted Fury Launcher",
-         "Heavy Laser", "Heavy Ripper Turret"
+         "Heavy Laser Turret", "Heavy Ripper Turret"
       },
       {
          "Laser Turret MK2",
@@ -260,7 +260,7 @@ equip_classOutfits_weapons = {
    ["Destroyer"] = {
       {
          num = 2;
-         "Railgun", "Heavy Ripper Turret", "Heavy Laser", "Orion Beam",
+         "Railgun", "Heavy Ripper Turret", "Heavy Laser Turret", "Orion Beam",
          "Grave Beam", "Laser Turret MK2", "Razor Turret MK2",
       },
       {
@@ -278,7 +278,7 @@ equip_classOutfits_weapons = {
          "Turbolaser", "Ragnarok Beam", "Grave Beam", "Railgun Turret"
       },
       {
-         "Heavy Laser", "Heavy Ripper Turret", "Railgun Turret"
+         "Heavy Laser Turret", "Heavy Ripper Turret", "Railgun Turret"
       },
       {
          "Laser Turret MK2", "Turreted Vulcan Gun",
@@ -291,7 +291,7 @@ equip_classOutfits_weapons = {
       },
       {
 --         num = 2;
-         "Heavy Laser", "Grave Beam", "Railgun Turret"
+         "Heavy Laser Turret", "Grave Beam", "Railgun Turret"
       },
 --      {
 --         "Lancelot Fighter Bay"
@@ -883,7 +883,7 @@ equip_typeOutfits_weapons = {
       {
          varied = true;
          "Railgun Turret", "Railgun", "Repeating Railgun", "Mass Driver",
-         "Heavy Laser", "Grave Beam",
+         "Heavy Laser Turret", "Grave Beam",
       }
    }
 }

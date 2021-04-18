@@ -9,7 +9,7 @@
   <item>Laser Turret MK1</item>
   <item>Laser Turret MK2</item>
   <item>Heavy Ripper Turret</item>
-  <item>Heavy Laser</item>
+  <item>Heavy Laser Turret</item>
   <item>Turbolaser</item>
   <item>Razor MK1</item>
   <item>Razor MK2</item>
@@ -385,7 +385,7 @@
  </tech>
  <tech name="Laser 3">
   <item>Heavy Ripper Turret</item>
-  <item>Heavy Laser</item>
+  <item>Heavy Laser Turret</item>
   <item>Turbolaser</item>
  </tech>
  <tech name="Ion 1">

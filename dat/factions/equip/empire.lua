@@ -103,7 +103,7 @@ equip_typeOutfits_weapons["Pacifier"] = {
 equip_typeOutfits_weapons["Hawking"] = {
    {
       num = 2;
-      "Heavy Laser"
+      "Heavy Laser Turret",
    },
    {
       num = 2;
@@ -115,10 +115,10 @@ equip_typeOutfits_weapons["Hawking"] = {
    },
    {
       num = 1;
-      "Turbolaser", "Heavy Laser"
+      "Turbolaser", "Heavy Laser Turret",
    },
    {
-      "Heavy Laser"
+      "Heavy Laser Turret",
    }
 }
 equip_typeOutfits_weapons["Peacemaker"] = equip_typeOutfits_weapons["Hawking"]
@@ -134,7 +134,7 @@ function equip( p )
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
             num = 2, varied = true;
-            "Turbolaser", "Heavy Laser", "Ragnarok Beam", "Grave Beam"
+            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam", "Grave Beam"
          },
          {
             varied = true;
@@ -149,7 +149,7 @@ function equip( p )
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
             num = 2, varied = true;
-            "Turbolaser", "Heavy Laser", "Ragnarok Beam", "Grave Beam"
+            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam", "Grave Beam"
          },
          {
             varied = true;

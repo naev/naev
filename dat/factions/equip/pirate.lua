@@ -105,7 +105,7 @@ equip_typeOutfits_weapons["Pacifier"] = equip_typeOutfits_weapons["Phalanx"]
 equip_typeOutfits_weapons["Kestrel"] = {
    {
       varied = true;
-      "Repeating Railgun", "Railgun", "Heavy Laser", "Railgun Turret",
+      "Repeating Railgun", "Railgun", "Heavy Laser Turret", "Railgun Turret",
       "Laser Turret MK2", "Heavy Ion Turret", "EMP Grenade Launcher",
       "Mass Driver", "Heavy Ion Cannon",
       "Turreted Vulcan Gun", "Orion Beam", "Unicorp Caesar IV Launcher",
