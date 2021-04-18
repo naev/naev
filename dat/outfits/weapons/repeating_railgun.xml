@@ -23,7 +23,7 @@
   <falloff>1600</falloff>
   <gfx_end>massL-end.png</gfx_end>
   <energy>65</energy>
-  <heatup>90</heatup>
+  <heatup>60</heatup>
   <track>0.6</track>
   <swivel>22</swivel>
   <damage>
