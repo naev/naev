@@ -74,14 +74,14 @@ equip_typeOutfits_weapons["Preacher"] = {
    },
    {
       varied = true;
-      "Heavy Ion Cannon", "Slicer", "Razor Turret MK2", "Razor Turret MK3",
-      "Laser Turret MK1", "Laser Turret MK2"
+      "Heavy Ion Cannon", "Slicer", "Razor Turret MK2",
+      "Laser Turret MK1", "Laser Turret MK2",
    }
 }
 equip_typeOutfits_weapons["Dogma"] = {
    {
       varied = true;
-      "Heavy Razor Turret", "Heavy Ion Cannon", "Razor Turret MK3"
+      "Heavy Razor Turret", "Heavy Ion Cannon", "Razor Turret MK2",
    }
 }
 equip_typeOutfits_weapons["Divinity"] = equip_typeOutfits_weapons["Dogma"] --[[ {

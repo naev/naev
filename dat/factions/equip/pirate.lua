@@ -109,7 +109,7 @@ equip_typeOutfits_weapons["Kestrel"] = {
       "Laser Turret MK3", "Heavy Ion Turret", "EMP Grenade Launcher",
       "Mass Driver", "Heavy Ion Cannon",
       "Turreted Vulcan Gun", "Orion Beam", "Unicorp Caesar IV Launcher",
-      "TeraCom Medusa Launcher", "Razor Turret MK3"
+      "TeraCom Medusa Launcher", "Razor Turret MK2",
    }
 }
 

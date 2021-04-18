@@ -297,7 +297,7 @@ function corvette()
       badguys[i]:addOutfit("Unicorp PT-280 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
 
-      badguys[i]:addOutfit("Razor Turret MK3",2)
+      badguys[i]:addOutfit("Razor Turret MK2",2)
       badguys[i]:addOutfit("Unicorp Headhunter Launcher",2)
 
       badguys[i]:setHealth(100,100)
