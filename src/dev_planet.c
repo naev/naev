@@ -111,6 +111,8 @@ int dpl_savePlanet( const Planet *p )
          xmlw_elemEmpty( writer, "shipyard" );
       if (planet_hasService( p, PLANET_SERVICE_BLACKMARKET ))
          xmlw_elemEmpty( writer, "blackmarket" );
+      if (planet_isFlag( p, PLANET_NOMISNSPAWN ))
+         xmlw_elemEmpty( writer, "nomissionspawn" );
       xmlw_endElem( writer ); /* "services" */
       if (planet_hasService( p, PLANET_SERVICE_LAND )) {
          if (p->faction > 0) {
@@ -142,7 +144,8 @@ int dpl_savePlanet( const Planet *p )
    /* Write data. */
    cleanName = uniedit_nameFilter( p->name );
    asprintf( &file, "%s/%s.xml", conf.dev_save_asset, cleanName );
-   xmlSaveFileEnc( file, doc, "UTF-8" );
+   if (xmlSaveFileEnc( file, doc, "UTF-8" ) < 0)
+      WARN("Failed writing '%s'!", file);
 
    /* Clean up. */
    xmlFreeDoc(doc);

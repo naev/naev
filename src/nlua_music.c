@@ -27,16 +27,22 @@
 static int musicL_delay( lua_State* L );
 static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );
+static int musicL_pause( lua_State* L );
+static int musicL_resume( lua_State* L );
 static int musicL_stop( lua_State* L );
 static int musicL_isPlaying( lua_State* L );
 static int musicL_current( lua_State* L );
+static int musicL_setRepeat( lua_State* L );
 static const luaL_Reg music_methods[] = {
    { "delay", musicL_delay },
    { "load", musicL_load },
    { "play", musicL_play },
+   { "pause", musicL_pause },
+   { "resume", musicL_resume },
    { "stop", musicL_stop },
    { "isPlaying", musicL_isPlaying },
    { "current", musicL_current },
+   { "setRepeat", musicL_setRepeat },
    {0,0}
 }; /**< Music specific methods. */
 
@@ -107,6 +113,7 @@ static int musicL_load( lua_State *L )
       NLUA_ERROR(L,_("Music '%s' invalid or failed to load."), str );
       return 0;
    }
+   music_tempDisable( 0 );
 
    return 0;
 }
@@ -120,7 +127,30 @@ static int musicL_load( lua_State *L )
 static int musicL_play( lua_State *L )
 {
    (void)L;
+   music_tempDisable( 0 );
    music_play();
+   return 0;
+}
+
+
+/**
+ * @brief Pauses the music engine.
+ */
+static int musicL_pause( lua_State* L )
+{
+   (void)L;
+   music_pause();
+   return 0;
+}
+
+
+/**
+ * @brief Resumes the music engine.
+ */
+static int musicL_resume( lua_State* L )
+{
+   (void)L;
+   music_resume();
    return 0;
 }
 
@@ -134,6 +164,7 @@ static int musicL_stop( lua_State *L )
 {
    (void)L;
    music_stop();
+   music_tempDisable( 1 );
    return 0;
 }
 
@@ -173,4 +204,15 @@ static int musicL_current( lua_State* L )
 }
 
 
-
+/**
+ * @brief Makes the music repeat. This gets turned of when a new music is chosen, e.g., take-off or landing.
+ *
+ *    @luatparam boolean repeat Whether or not repeat should be set.
+ * @luafunc setRepeat
+ */
+static int musicL_setRepeat( lua_State* L )
+{
+   int b = lua_toboolean(L,1);
+   music_repeat( b );
+   return 0;
+}

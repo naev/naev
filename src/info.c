@@ -130,6 +130,8 @@ void menu_info( int window )
 
    /* Open closes when previously opened. */
    if (menu_isOpen(MENU_INFO) || dialogue_isOpen()) {
+      if ((info_wid > 0) && !window_isTop(info_wid))
+         return;
       info_close( 0, NULL );
       return;
    }

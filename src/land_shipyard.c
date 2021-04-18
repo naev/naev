@@ -174,10 +174,13 @@ void shipyard_open( unsigned int wid )
    }
 
 
-   if (!conf.big_icons && (((iw*ih)/(128*128)) < nships))
-      iconsize = 96;
-   else
-      iconsize = 128;
+   iconsize = 128;
+   if (!conf.big_icons) {
+      if (toolkit_simImageArrayVisibleElements(iw,ih,iconsize,iconsize) < nships)
+         iconsize = 96;
+      if (toolkit_simImageArrayVisibleElements(iw,ih,iconsize,iconsize) < nships)
+         iconsize = 64;
+   }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarShipyard", iconsize, iconsize,
          cships, nships, shipyard_update, shipyard_rmouse, NULL );

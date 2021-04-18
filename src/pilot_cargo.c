@@ -372,7 +372,10 @@ int pilot_cargoRmAll( Pilot* pilot, int cleanup )
    pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
    pilot_updateMass( pilot );
 
-   gui_setGeneric( pilot );
+   /* If we're updating this ship's status, communicate the update to the GUI.
+    * Caution: it could make sense to communicate a deletion, but particularly in the middle of pilots_clean() that's unsafe. */
+   if (!cleanup)
+      gui_setGeneric( pilot );
    return q;
 }
 

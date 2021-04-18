@@ -21,6 +21,7 @@
 #include "nluadef.h"
 #include "array.h"
 #include "nlua_tex.h"
+#include "render.h"
 
 
 /* Shader metatable methods. */
@@ -30,6 +31,8 @@ static int shaderL_new( lua_State *L );
 static int shaderL_send( lua_State *L );
 static int shaderL_sendRaw( lua_State *L );
 static int shaderL_hasUniform( lua_State *L );
+static int shaderL_addPostProcess( lua_State *L );
+static int shaderL_rmPostProcess( lua_State *L );
 static const luaL_Reg shaderL_methods[] = {
    { "__gc", shaderL_gc },
    { "__eq", shaderL_eq },
@@ -37,6 +40,8 @@ static const luaL_Reg shaderL_methods[] = {
    { "send", shaderL_send },
    { "sendRaw", shaderL_sendRaw },
    { "hasUniform", shaderL_hasUniform },
+   { "addPPShader", shaderL_addPostProcess },
+   { "rmPPShader", shaderL_rmPostProcess },
    {0,0}
 }; /**< Shader metatable methods. */
 
@@ -140,6 +145,8 @@ int lua_isshader( lua_State *L, int ind )
 static int shaderL_gc( lua_State *L )
 {
    LuaShader_t *shader = luaL_checkshader(L,1);
+   if (shader->pp_id > 0)
+      render_postprocessRm( shader->pp_id );
    glDeleteProgram( shader->program );
    free(shader->uniforms);
    return 0;
@@ -433,6 +440,52 @@ static int shaderL_hasUniform( lua_State *L )
 
    /* Search. */
    lua_pushboolean(L, shader_getUniform(ls,name)!=NULL);
+   return 1;
+}
+
+
+/**
+ * @brief Sets a shader as a post-processing shader.
+ *
+ *    @luatparam Shader shader Shader to set as a post-processing shader.
+ *    @luatparam[opt="final"] string layer Layer to add the shader to.
+ *    @luatparam[opt=0] number priority Priority of the shader to set. Higher values mean it is run later.
+ *    @luatreturn boolean true on success.
+ * @luafunc addPPShader
+ */
+static int shaderL_addPostProcess( lua_State *L )
+{
+   LuaShader_t *ls = luaL_checkshader(L,1);
+   const char *str = luaL_optstring(L,2,"final");
+   int priority = luaL_optinteger(L,3,0);
+   int layer;
+
+   if (strcmp(str,"final")==0)
+      layer = PP_LAYER_FINAL;
+   else if (strcmp(str,"game")==0)
+      layer = PP_LAYER_GAME;
+   else
+      NLUA_ERROR(L,_("Layer was '%s', but must be one of 'final' or 'game'"), str);
+
+   if (ls->pp_id == 0)
+      ls->pp_id = render_postprocessAdd( ls, layer, priority );
+   lua_pushboolean(L, ls->pp_id>0);
+   return 1;
+}
+
+
+/**
+ * @brief Removes a shader as a post-processing shader.
+ *
+ *    @luatparam Shader shader Shader to disable as post-processing shader.
+ *    @luatreturn boolean True on success.
+ * @luafunc rmPPShader
+ */
+static int shaderL_rmPostProcess( lua_State *L )
+{
+   LuaShader_t *ls = luaL_checkshader(L,1);
+   lua_pushboolean( L, render_postprocessRm( ls->pp_id ) );
+   ls->pp_id = 0;
    return 1;
 }
 

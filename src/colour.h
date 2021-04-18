@@ -115,9 +115,9 @@ const glColour* col_fromName( const char* name );
 /*
  * Colour space conversion routines.
  */
-void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v );
-void col_rgb2hsv( double *h, double *s, double *v, double r, double g, double b );
-void col_blend( glColour *blend, const glColour *fg, const glColour *bg, double alpha );
+void col_hsv2rgb( glColour *c, float h, float s, float v );
+void col_rgb2hsv( float *h, float *s, float *v, float r, float g, float b );
+void col_blend( glColour *blend, const glColour *fg, const glColour *bg, float alpha );
 
 
 

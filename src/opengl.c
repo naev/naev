@@ -43,6 +43,7 @@
 
 #include "conf.h"
 #include "log.h"
+#include "render.h"
 
 
 /*
@@ -53,6 +54,9 @@
 
 glInfo gl_screen; /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
+
+
+static unsigned int colorblind_pp = 0; /**< Colorblind post-process shader id. */
 
 
 /*
@@ -69,7 +73,7 @@ gl_Matrix4 gl_view_matrix = {0};
  * prototypes
  */
 /* gl */
-static int gl_setupAttributes (void);
+static int gl_setupAttributes( int fallback );
 static int gl_createWindow( unsigned int flags );
 static int gl_getFullscreenMode (void);
 static int gl_getGLInfo (void);
@@ -190,10 +194,10 @@ void gl_checkHandleError( const char *func, int line )
  *
  *    @return 0 on success.
  */
-static int gl_setupAttributes (void)
+static int gl_setupAttributes( int fallback )
 {
-   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, fallback ? 3 : 4);
+   SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, fallback ? 1 : 0);
    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); /* Ideally want double buffering. */
    if (conf.fsaa > 1) {
@@ -262,7 +266,7 @@ static int gl_getFullscreenMode (void)
  */
 static int gl_createWindow( unsigned int flags )
 {
-   int ret;
+   int ret, fallback;
 
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
@@ -277,7 +281,12 @@ static int gl_createWindow( unsigned int flags )
          conf.minimize ? "1" : "0" );
 
    /* Create the OpenGL context, note we don't need an actual renderer. */
-   gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
+   for (fallback = 0; fallback <= 1; fallback++) {
+      gl_setupAttributes( fallback );
+      gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
+      if (gl_screen.context != NULL)
+         break;
+   }
    if (!gl_screen.context)
       ERR(_("Unable to create OpenGL context! %s"), SDL_GetError());
 
@@ -292,6 +301,10 @@ static int gl_createWindow( unsigned int flags )
 
    /* Finish getting attributes. */
    gl_screen.current_fbo = 0; /* No FBO set. */
+   gl_screen.fbo[0] = GL_INVALID_VALUE;
+   gl_screen.fbo_tex[0] = GL_INVALID_VALUE;
+   gl_screen.fbo[1] = GL_INVALID_VALUE;
+   gl_screen.fbo_tex[1] = GL_INVALID_VALUE;
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
    gl_activated = 1; /* Opengl is now activated. */
 
@@ -316,6 +329,8 @@ static int gl_getGLInfo (void)
    SDL_GL_GetAttribute( SDL_GL_MULTISAMPLESAMPLES, &gl_screen.fsaa );
    if (doublebuf)
       gl_screen.flags |= OPENGL_DOUBLEBUF;
+   if (GLAD_GL_ARB_shader_subroutine && glGetSubroutineIndex && glGetSubroutineUniformLocation && glUniformSubroutinesuiv)
+      gl_screen.flags |= OPENGL_SUBROUTINES;
    /* Calculate real depth. */
    gl_screen.depth = gl_screen.r + gl_screen.g + gl_screen.b + gl_screen.a;
 
@@ -449,9 +464,6 @@ int gl_init (void)
       return -1;
    }
 
-   /* Set opengl flags. */
-   gl_setupAttributes();
-
    /* Create the window. */
    gl_createWindow( flags );
 
@@ -497,6 +509,9 @@ int gl_init (void)
 
    shaders_load();
 
+   /* Set colorblind shader if necessary. */
+   gl_colorblind( conf.colorblind );
+
    /* Cosmetic new line. */
    DEBUG_BLANK();
 
@@ -508,10 +523,21 @@ int gl_init (void)
  */
 void gl_resize (void)
 {
+   int i;
+
    gl_setupScaling();
    glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
    gl_setDefViewport( 0, 0, gl_screen.nw, gl_screen.nh );
    gl_defViewport();
+
+   /* Set up framebuffer. */
+   for (i=0; i<2; i++) {
+      if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
+         glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
+         glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
+      }
+      gl_fboCreate( &gl_screen.fbo[i], &gl_screen.fbo_tex[i], gl_screen.rw, gl_screen.rh );
+   }
 
    gl_checkErr();
 }
@@ -629,10 +655,45 @@ GLint gl_stringToClamp( const char *s )
 
 
 /**
+ * @brief Enables or disables the colorblind shader.
+ *
+ *    @param enable Whether or not to enable or disable the colorblind shader.
+ */
+void gl_colorblind( int enable )
+{
+   LuaShader_t shader;
+   if (enable) {
+      if (colorblind_pp != 0)
+         return;
+      memset( &shader, 0, sizeof(LuaShader_t) );
+      shader.program    = shaders.colorblind.program;
+      shader.VertexPosition = shaders.colorblind.VertexPosition;
+      shader.ClipSpaceFromLocal = shaders.colorblind.ClipSpaceFromLocal;
+      shader.MainTex    = shaders.colorblind.MainTex;
+      colorblind_pp = render_postprocessAdd( &shader, PP_LAYER_FINAL, 99 );
+   } else {
+      if (colorblind_pp != 0)
+         render_postprocessRm( colorblind_pp );
+      colorblind_pp = 0;
+   }
+}
+
+
+/**
  * @brief Cleans up OpenGL, the works.
  */
 void gl_exit (void)
 {
+   int i;
+   for (i=0; i<2; i++) {
+      if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
+         glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
+         glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
+         gl_screen.fbo[i] = GL_INVALID_VALUE;
+         gl_screen.fbo_tex[i] = GL_INVALID_VALUE;
+      }
+   }
+
    /* Exit the OpenGL subsystems. */
    gl_exitRender();
    gl_exitVBO();

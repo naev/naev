@@ -186,6 +186,7 @@ static int aiL_idir( lua_State *L ); /* idir(number/pointer) */
 static int aiL_drift_facing( lua_State *L ); /* drift_facing(number/pointer) */
 static int aiL_brake( lua_State *L ); /* brake() */
 static int aiL_getnearestplanet( lua_State *L ); /* Vec2 getnearestplanet() */
+static int aiL_getplanetfrompos( lua_State *L ); /* Vec2 getplanetfrompos() */
 static int aiL_getrndplanet( lua_State *L ); /* Vec2 getrndplanet() */
 static int aiL_getlandplanet( lua_State *L ); /* Vec2 getlandplanet() */
 static int aiL_land( lua_State *L ); /* bool land() */
@@ -273,6 +274,7 @@ static const luaL_Reg aiL_methods[] = {
    { "instantJump", aiL_instantJump },
    /* movement */
    { "nearestplanet", aiL_getnearestplanet },
+   { "planetfrompos", aiL_getplanetfrompos },
    { "rndplanet", aiL_getrndplanet },
    { "landplanet", aiL_getlandplanet },
    { "land", aiL_land },
@@ -2114,6 +2116,45 @@ static int aiL_getnearestplanet( lua_State *L )
       if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
          continue;
       d = vect_dist( &cur_system->planets[i]->pos, &cur_pilot->solid->pos );
+      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->faction)) &&
+            (d < dist)) { /* closer friendly planet */
+         j = i;
+         dist = d;
+      }
+   }
+
+   /* no friendly planet found */
+   if (j == -1) return 0;
+
+   cur_pilot->nav_planet = j;
+   planet = cur_system->planets[j]->id;
+   lua_pushplanet(L, planet);
+
+   return 1;
+}
+
+
+/**
+ * @brief Get the nearest friendly planet to a given position.
+ *
+ *    @luatparam vec2 pos Position close to the planet.
+ *    @luatreturn Planet|nil
+ *    @luafunc planetfrompos
+ */
+static int aiL_getplanetfrompos( lua_State *L )
+{
+   Vector2d *pos;
+   double dist, d;
+   int i, j;
+   LuaPlanet planet;
+
+   pos = luaL_checkvector(L,1);
+
+   /* cycle through planets */
+   for (dist=HUGE_VAL, j=-1, i=0; i<array_size(cur_system->planets); i++) {
+      if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
+         continue;
+      d = vect_dist( &cur_system->planets[i]->pos, pos );
       if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->faction)) &&
             (d < dist)) { /* closer friendly planet */
          j = i;

@@ -124,7 +124,7 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
    m  = 0;
    while (n < l) {
       s  = gl_printWidthForText( font, &msg[n], omsg_center_w, NULL );
-      omsg->msg[m] = strndup( &msg[n], s+1 );
+      omsg->msg[m] = strndup( &msg[n], s );
       m++;
       n += s+1;
    }

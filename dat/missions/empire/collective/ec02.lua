@@ -132,7 +132,7 @@ function takeoff()
     misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
 
     -- Build the actual cutscene
-    player.pilot():setInvisible(true)
+    player.pilot():setHide(true)
     player.cinematics(true)
     swarm1 = pilot.addFleet("Collective Sml Swarm", vec2.new(-11000, 4000))
     moveSwarm(swarm1, vec2.new(-8000, -7500))
@@ -187,7 +187,7 @@ function endCutscene()
     tk.msg(title[1], text[5])
     misn_stage = 1
     misn.markerMove( misn_marker, misn_base_sys )
-    player.pilot():setInvisible(false)
+    player.pilot():setHide(false)
     player.cinematics(false)
     misn.osdActive(2)
     music.delay("ambient", 0)

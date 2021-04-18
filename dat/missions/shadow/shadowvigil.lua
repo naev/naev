@@ -141,23 +141,27 @@ function create()
    local rsysname = "Pas"
    rebinasys = system.get(rsysname)
    hook.jumpin("jumpin")
+   hook.timer(1000, "delayedClaim")
 
-    misn.setDesc(misn_desc0:format(rsysname))
-    misn.setReward(misn_reward0)
-    marker = misn.markerAdd(rebinasys, "low")
-    osd_msg0 = string.format(osd_msg0, rebinasys:name())
-    misn.osdCreate(osd_title0, {osd_msg0})
+   misn.setDesc(misn_desc0:format(rsysname))
+   misn.setReward(misn_reward0)
+   marker = misn.markerAdd(rebinasys, "low")
+   osd_msg0 = string.format(osd_msg0, rebinasys:name())
+   misn.osdCreate(osd_title0, {osd_msg0})
+end
+
+-- Delayed claim to let time for the event's claim to disappear
+function delayedClaim()
+   misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refuel stop, protegee meeting point, final destination.
+   misssys["__save"] = true
+    
+   if not misn.claim(misssys) then
+      abort()
+   end
 end
 
 -- Boarding the Seiryuu at the beginning of the mission
-function meeting()
-    misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refuel stop, protegee meeting point, final destination.
-    misssys["__save"] = true
-    
-    if not misn.claim(misssys) then
-        abort()
-    end
-    
+function meeting()    
     first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
     if first then
         var.push("shadowvigil_first", false)

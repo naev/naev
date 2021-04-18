@@ -56,6 +56,7 @@
 #include "pilot.h"
 #include "pilot.h"
 #include "player.h"
+#include "render.h"
 #include "rng.h"
 #include "sound.h"
 #include "space.h"
@@ -953,7 +954,7 @@ void gui_render( double dt )
       glUniform2f( shaders.jump.dimensions, gl_screen.nw, gl_screen.nh );
 
       /* Set the subroutine. */
-      if (GLAD_GL_ARB_shader_subroutine) {
+      if (gl_has( OPENGL_SUBROUTINES )) {
          if (cur_system->nebu_density > 0.)
             glUniformSubroutinesuiv( GL_FRAGMENT_SHADER, 1, &shaders.jump.jump_func.jump_nebula );
          else
@@ -1340,7 +1341,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    glColour col;
 
    /* Make sure is in range. */
-   if (!pilot_inRangePilot( player.p, p, NULL ))
+   if (!pilot_validTarget( player.p, p ))
       return;
 
    /* Get position. */

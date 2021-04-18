@@ -15,7 +15,6 @@
 
 #define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
 #define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
-#define GLSL_COLORBLIND "#define COLORBLIND_MODE ROD_MONOCHROMACY 1\n" /**< Line to enable colorblind mode. */
 
 
 /*
@@ -41,7 +40,7 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
 static char* gl_shader_loadfile( const char *filename, size_t *size, const char *prepend )
 {
    size_t fbufsize;
-   char *fbuf;
+   char *buf, *fbuf;
    char path[PATH_MAX];
 
    /* Load base file. */
@@ -52,7 +51,9 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, const char 
       WARN( _("Shader '%s' not found."), path);
       return NULL;
    }
-   return gl_shader_preprocess( size, fbuf, fbufsize, prepend, filename );
+   buf = gl_shader_preprocess( size, fbuf, fbufsize, prepend, filename );
+   free( fbuf );
+   return buf;
 }
 
 
@@ -236,11 +237,9 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
    size_t vert_size, frag_size;
    GLuint vertex_shader, fragment_shader, program;
 
-   strncpy( prepend, GLSL_VERSION, sizeof(prepend) );
-   if (conf.colorblind)
-      strncat( prepend, GLSL_COLORBLIND, strlen(prepend)-strlen(GLSL_COLORBLIND) );
-   if (GLAD_GL_ARB_shader_subroutine)
-      strncat( prepend, GLSL_SUBROUTINE, strlen(prepend)-strlen(GLSL_SUBROUTINE) );
+   strncpy( prepend, GLSL_VERSION, sizeof(prepend)-1 );
+   if (gl_has( OPENGL_SUBROUTINES ))
+      strncat( prepend, GLSL_SUBROUTINE, sizeof(prepend)-strlen(prepend)-1 );
 
    vert_str = gl_shader_loadfile( vertfile, &vert_size, prepend );
    frag_str = gl_shader_loadfile( fragfile, &frag_size, prepend );

@@ -37,6 +37,7 @@ summary('NData Path', ndata_path, section: 'Features')
 
 # Subdirs
 subdir('src')
+subdir('dat/scripts')
 subdir('docs')
 subdir('po')
 
@@ -102,6 +103,7 @@ if buildExec.disabled() == false
 
    naev_deps += [
       dependency('freetype2', required: true),
+      libxml2,
       dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
       sdl,
       sdl_image,
@@ -109,7 +111,8 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      libxml2,
+      # Transitive dependency, probably can/should be marked as required after adding it to our naev-linux containers..
+      dependency('libwebp', required: false),
    ]
 
    # Lua
@@ -143,11 +146,13 @@ if buildExec.disabled() == false
    # Appstream (Used for generating desktop files and verifying metadata)
    ascli_exe = find_program('appstreamcli', version: '>=0.12.9', required: false)
 
-   # OpenAL
+   # Audio
    openal    = dependency('openal', required: true)
    vorbis = dependency('vorbis', required: true)
    vorbisfile = dependency('vorbisfile', required: true)
-   naev_deps += [openal, vorbis, vorbisfile]
+   ogg = dependency('ogg', required: true)  # Transitive dependency. At least some MSYS2 build envs may miss it.
+
+   naev_deps += [openal, ogg, vorbis, vorbisfile]
 
    # Standard library feature tests
    config_data.set10('HAVE_ASPRINTF', cc.has_function('asprintf'))

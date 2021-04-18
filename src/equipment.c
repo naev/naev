@@ -1329,6 +1329,7 @@ static void equipment_genShipList( unsigned int wid )
    const PlayerShip_t *ps;
    char r[PATH_MAX];
    glTexture *t;
+   int iconsize;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, NULL, NULL,
@@ -1379,9 +1380,18 @@ static void equipment_genShipList( unsigned int wid )
          }
       }
 
+      /* Create the image array. */
+      iconsize = 96;
+      if (!conf.big_icons) {
+         if (toolkit_simImageArrayVisibleElements(sw,sh,iconsize,iconsize) < nships)
+            iconsize = 80;
+         if (toolkit_simImageArrayVisibleElements(sw,sh,iconsize,iconsize) < nships)
+            iconsize = 64;
+      }
       window_addImageArray( wid, 20, -40,
-            sw, sh, EQUIPMENT_SHIPS, 96., 96.,
+            sw, sh, EQUIPMENT_SHIPS, iconsize, iconsize,
             cships, nships, equipment_updateShips, NULL, equipment_transChangeShip );
+      toolkit_setImageArrayAccept( wid, EQUIPMENT_SHIPS, equipment_transChangeShip );
    }
 }
 
@@ -1408,6 +1418,7 @@ static void equipment_genOutfitList( unsigned int wid )
 
    int noutfits, active;
    ImageArrayCell *coutfits;
+   int iconsize;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1463,13 +1474,25 @@ static void equipment_genOutfitList( unsigned int wid )
    noutfits = player_getOutfitsFiltered( iar_outfits[active], tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
 
+
    /* Create the actual image array. */
-   window_addImageArray( wid, x + 4, y + 3, ow - 6, oh - 37,
-         EQUIPMENT_OUTFITS, 96., 96.,
+   iw = ow - 6;
+   ih = oh - 37;
+   iconsize = 96;
+   if (!conf.big_icons) {
+      if (toolkit_simImageArrayVisibleElements(iw,ih,iconsize,iconsize) < noutfits)
+         iconsize = 80;
+      if (toolkit_simImageArrayVisibleElements(iw,ih,iconsize,iconsize) < noutfits)
+         iconsize = 64;
+   }
+   window_addImageArray( wid, x + 4, y + 3, iw, ih,
+         EQUIPMENT_OUTFITS, iconsize, iconsize,
          coutfits, noutfits,
          equipment_updateOutfits,
          equipment_rightClickOutfits,
          equipment_rightClickOutfits );
+
+   toolkit_setImageArrayAccept( wid, EQUIPMENT_OUTFITS, equipment_rightClickOutfits );
 }
 
 

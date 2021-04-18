@@ -1475,7 +1475,7 @@ void space_init( const char* sysname )
       /* Handle background */
       if (cur_system->nebu_density > 0.) {
          /* Background is Nebula */
-         nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility );
+         nebu_prep( cur_system->nebu_density, cur_system->nebu_volatility, cur_system->nebu_hue );
 
          /* Set up sound. */
          sound_env( SOUND_ENV_NEBULA, cur_system->nebu_density );
@@ -1551,7 +1551,7 @@ void space_init( const char* sysname )
    /* Simulate system. */
    space_simulating = 1;
    if (player.p != NULL)
-      pilot_setFlag( player.p, PILOT_INVISIBLE );
+      pilot_setFlag( player.p, PILOT_HIDE );
    player_messageToggle( 0 );
    s = sound_disabled;
    sound_disabled = 1;
@@ -1563,7 +1563,7 @@ void space_init( const char* sysname )
    sound_disabled = s;
    player_messageToggle( 1 );
    if (player.p != NULL)
-      pilot_rmFlag( player.p, PILOT_INVISIBLE );
+      pilot_rmFlag( player.p, PILOT_HIDE );
    space_simulating = 0;
 
    /* Refresh overlay if necessary (player kept it open). */
@@ -2473,6 +2473,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    flags          = 0;
    sys->presence  = array_create( SystemPresence );
    sys->ownerpresence = 0.;
+   sys->nebu_hue  = NEBULA_DEFAULT_HUE;
 
    xmlr_attr_strd( parent, "name", sys->name );
 
@@ -2508,6 +2509,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
             }
             else if (xml_isNode(cur,"nebula")) {
                xmlr_attr_float( cur, "volatility", sys->nebu_volatility );
+               xmlr_attr_float_def( cur, "hue", sys->nebu_hue, NEBULA_DEFAULT_HUE );
                sys->nebu_density = xml_getFloat(cur);
             }
          } while (xml_nextNode(cur));
@@ -2534,6 +2536,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
    array_shrink( &sys->planets );
    array_shrink( &sys->planetsid );
+
+   /* Convert hue from 0 to 359 value to 0 to 1 value. */
+   sys->nebu_hue /= 360.;
 
 #define MELEMENT(o,s)      if (o) WARN(_("Star System '%s' missing '%s' element"), sys->name, s)
    if (sys->name == NULL) WARN(_("Star System '%s' missing 'name' tag"), sys->name);
@@ -2896,7 +2901,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->area = M_PI * a->radius * a->radius;
 
    /* Compute number of asteroids */
-   a->nb      = floor( ABS(a->area) / 500000 * a->density );
+   a->nb      = floor( ABS(a->area) / ASTEROID_REF_AREA * a->density );
    a->ndebris = floor(100*a->density);
 
    return 0;
@@ -3074,7 +3079,7 @@ static int asteroidTypes_load (void)
 {
    int namdef, qttdef;
    AsteroidType *at;
-   char *str, file[PATH_MAX];
+   char *str;
    xmlNodePtr node, cur, child;
    xmlDocPtr doc;
 
@@ -3109,11 +3114,8 @@ static int asteroidTypes_load (void)
 
          cur = node->children;
          do {
-            if (xml_isNode(cur,"gfx")) {
-               str = xml_get(cur);
-               snprintf( file, sizeof(file), "%s%s", PLANET_GFX_SPACE_PATH"asteroid/", str);
-               array_push_back( &at->gfxs, gl_newImage( file, OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
-            }
+            if (xml_isNode(cur,"gfx"))
+               array_push_back( &at->gfxs, xml_parseTexture( cur, PLANET_GFX_SPACE_PATH"asteroid/%s", 1, 1,  OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS ) );
 
             else if (xml_isNode(cur,"id"))
                at->ID = xml_getStrd(cur);

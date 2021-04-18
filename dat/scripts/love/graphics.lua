@@ -29,8 +29,7 @@ local function _H( x, y, r, sx, sy )
       -- Rendering to canvas
       local cw = graphics._canvas.t.w
       local ch = graphics._canvas.t.h
-      H = naev.transform.ortho( 0, cw, 0, ch, -1, 1 )
-          :scale( love.s, love.s )
+      H = naev.transform.ortho( 0, cw, 0, ch, 1, -1 )
    else
       -- Rendering to screen
       H = graphics._O
@@ -126,7 +125,7 @@ function graphics.Image:draw( ... )
    local arg = {...}
    local w = self.w
    local h = self.h
-   local x,y,r,sx,sy
+   local x,y,r,sx,sy,TH
    if type(arg[1])=='number' then
       -- x, y, r, sx, sy
       x = arg[1]
@@ -136,13 +135,15 @@ function graphics.Image:draw( ... )
       sy = arg[5] or sx
    else
       -- quad, x, y, r, sx, sy
-      love._unimplemented()
       local q = arg[1]
       x = arg[2]
       y = arg[3]
       r = arg[4] or 0
       sx = arg[5] or 1
       sy = arg[6] or sx
+      TH = q.H.T
+      w  = w * q.w
+      h  = h * q.h
    end
    -- TODO be less horribly inefficient
    local shader = graphics._shader or graphics._shader_default
@@ -150,8 +151,8 @@ function graphics.Image:draw( ... )
    local s1, s2, s3, s4
    local canvas = graphics._canvas
    if canvas then
-      s1 = canvas.w / love.s
-      s2 = canvas.h / love.s
+      s1 = canvas.w
+      s2 = canvas.h
       s3 = -1.0
       s4 = love.h
    else
@@ -165,7 +166,7 @@ function graphics.Image:draw( ... )
 
    -- Get transformation and run
    local H = _H( x, y, r, w*sx, h*sy )
-   naev.gfx.renderTexH( self.tex, shader, H, graphics._fgcol );
+   naev.gfx.renderTexH( self.tex, shader, H, graphics._fgcol, TH );
 end
 
 
@@ -186,6 +187,9 @@ function graphics.newQuad( x, y, width, height, sw, sh )
    q.w = width/sw
    q.h = height/sh
    q.quad = true
+   local H = love_math.newTransform()
+   H:translate( q.x, q.y ):scale( q.w, q.h )
+   q.H = H
    return q
 end
 
@@ -197,7 +201,7 @@ function graphics.origin()
    local nw, nh = naev.gfx.dim()
    local nx = -love.x
    local ny = love.h+love.y-nh
-   graphics._O = naev.transform.ortho( nx, nx+nw, ny+nh, ny, -1, 1 )
+   graphics._O = naev.transform.ortho( nx, nx+nw, ny+nh, ny, 1, -1 )
    graphics._T = { love_math.newTransform() }
 end
 function graphics.push()
@@ -207,7 +211,7 @@ end
 function graphics.pop()
    table.remove( graphics._T, 1 )
    if graphics._T[1] == nil then
-      graphics._T[1] = love.math.newTransform()
+      graphics._T[1] = love_math.newTransform()
    end
 end
 function graphics.translate( dx, dy ) graphics._T[1]:translate( dx, dy ) end
@@ -264,6 +268,18 @@ end
 function graphics.getDefaultFilter()
    return graphics._minfilter, graphics._magfilter, graphics._anisotropy
 end
+function graphics.setBlendMode( mode, alphamode )
+   naev.gfx.setBlendMode( mode, alphamode )
+   graphics._mode = mode
+   graphics._alphamode = alphamode
+end
+function graphics.getBlendMode()
+   return graphics._mode, graphics._alphamode
+end
+-- unimplemented
+function graphics.setLineStyle( style )
+   love._unimplemented()
+end
 
 
 --[[
@@ -304,7 +320,7 @@ function graphics.rectangle( mode, x, y, width, height )
    naev.gfx.renderRectH( H, graphics._fgcol, _mode(mode) )
 end
 function graphics.circle( mode, x, y, radius )
-   local H = _H( x, y, 0, radius, radius )
+   local H = _H( x, y-radius, 0, radius, radius )
    naev.gfx.renderCircleH( H, graphics._fgcol, _mode(mode) )
 end
 function graphics.print( text, ... )
@@ -371,9 +387,31 @@ function graphics.printf( text, ... )
       naev.gfx.printRestoreLast()
 
       HH = H:translate( sx*tx, 0 )
-      naev.gfx.printH( HH, font.font, v[1], col )
+      naev.gfx.printH( HH, font.font, v[1], col, font.outline )
       H = H:translate( 0, -font.lineheight );
    end
+end
+function graphics.setScissor( x, y, width, height )
+   if x then
+      y = y or 0
+      width = width or love.w
+      height = height or love.h
+
+      if graphics._canvas == nil then
+         y = love.h - y - height
+      end
+      naev.gfx.setScissor( love.x+x, love.y+y, width, height )
+   else
+      x = 0
+      y = 0
+      width = love.w
+      height = love.h
+      naev.gfx.setScissor()
+   end
+   graphics._scissor = {x, y, width, height}
+end
+function graphics.getScissor ()
+   return unpack( graphics._scissor )
 end
 
 
@@ -387,7 +425,8 @@ function graphics.newFont( ... )
    local filename, size
    if type(arg[1])=="string" then
       -- newFont( filename, size )
-      filename = filesystem.newFile( arg[1] ):getFilename() -- Trick to set path
+      filename = arg[1]
+      --filename = filesystem.newFile( arg[1] ):getFilename() -- Trick to set path
       size = arg[2] or 12
    else
       -- newFont( size )
@@ -396,18 +435,17 @@ function graphics.newFont( ... )
    end
 
    local f = graphics.Font.new()
-   f.font = naev.font.new( filename, size )
-   f.filename = filename
+   f.font, f.filename, f.prefix = naev.font.new( filename, size )
    f.height= f.font:height()
    f.lineheight = f.height*1.5 -- Naev default
    f:setFilter( graphics._minfilter, graphics._magfilter )
+   f:setOutline( 0 )
    return f
 end
 function graphics.Font:setFallbacks( ... )
    local arg = {...}
    for k,v in ipairs(arg) do
-      local filename = v.filename
-      if not self.font:addFallback( filename ) then
+      if not self.font:addFallback( v.filename, v.prefix ) then
          error(_("failed to set fallback font"))
       end
    end
@@ -433,10 +471,14 @@ function graphics.Font:setFilter( min, mag, anisotropy )
    self.mag = mag
    self.anisotropy = anisotropy
 end
+-- setOutline is a Naev extension!!
+function graphics.Font:setOutline( size )
+   self.outline = size
+end
 function graphics.setFont( fnt ) graphics._font = fnt end
 function graphics.getFont() return graphics._font end
-function graphics.setNewFont( file, size )
-   local font = graphics.newFont( file, size )
+function graphics.setNewFont( file, size, ...  )
+   local font = graphics.newFont( file, size, ... )
    graphics.setFont( font )
    return font
 end
@@ -465,7 +507,7 @@ uniform mat4 ClipSpaceFromView;
 uniform mat4 ClipSpaceFromLocal;
 uniform mat3 ViewNormalFromLocal;
 uniform vec4 love_ScreenSize;
-uniform vec4 ConstantColor;
+uniform vec4 ConstantColor = vec4(1.0);
 
 // Compatibility
 #define TransformMatrix             ViewSpaceFromLocal
@@ -482,7 +524,6 @@ in vec4 VaryingColor;
 in vec2 VaryingPosition;
 out vec4 color_out;
 
-// TODO this is still wrong with canvases :/
 vec2 love_getPixelCoord() {
    vec2 uv = love_ScreenSize.xy * (0.5*VaryingPosition+0.5);
    uv.y = uv.y * love_ScreenSize.z + love_ScreenSize.w;
@@ -510,6 +551,7 @@ vec4 position( mat4 clipSpaceFromLocal, vec4 localPosition );
 void main(void) {
     VaryingTexCoord  = VertexTexCoord;
     VaryingTexCoord.y= 1.0 - VaryingTexCoord.y;
+    VaryingTexCoord  = ViewSpaceFromLocal * VaryingTexCoord;
     VaryingColor     = ConstantColor;
     love_Position    = position( ClipSpaceFromLocal, VertexPosition );
     VaryingPosition  = love_Position.xy;
@@ -520,6 +562,8 @@ void main(void) {
    s.shader = naev.shader.new(
          prepend..frag..pixelcode,
          prepend..vert..vertexcode )
+   -- Set some default uniform values for when post-process shaders are used
+   s.shader:sendRaw( "love_ScreenSize", love.w, love.h, 1.0, 0.0 )
    return s
 end
 function graphics.setShader( shader )
@@ -554,11 +598,9 @@ graphics.Canvas = class.inheritsFrom( object.Drawable )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
    local c = graphics.Canvas.new()
-   if not width then
-      local nw, nh, ns = naev.gfx.dim()
-      width = nw
-      height= nh
-   end
+   local nw, nh, ns = naev.gfx.dim()
+   width  = width or nw
+   height = height or nh
    c.canvas = naev.canvas.new( width, height )
    c.w = width
    c.h = height
@@ -592,15 +634,6 @@ function graphics.Canvas:getWidth(...) return self.t:getWidth(...) end
 function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
 
 
--- unimplemented
-function graphics.setLineStyle( style )
-   love._unimplemented()
-end
-function graphics.setBlendMode( mode, alphamode )
-   naev.gfx.setBlendMode( mode, alphamode )
-end
-
-
 -- Set some sane defaults.
 local _pixelcode = [[
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
@@ -621,5 +654,8 @@ graphics.origin()
 graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
 graphics.setShader( graphics._shader_default )
 graphics.setCanvas( nil )
+graphics._mode = "alpha"
+graphics._alphamode = "alphamultiply"
+graphics.setScissor()
 
 return graphics

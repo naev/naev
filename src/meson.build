@@ -101,6 +101,7 @@ source = files(
    'player_autonav.c',
    'player_gui.c',
    'queue.c',
+   'render.c',
    'rng.c',
    'save.c',
    'semver.c',
@@ -132,7 +133,7 @@ source = files(
    'tk/widget/list.c',
 )
 
-lua_source = files(
+nlua_source = files(
    'ai.c',
    'nlua_audio.c',
    'nlua_bkg.c',
@@ -176,7 +177,7 @@ mac_source = files('glue_macos.m')
 
 naev_source = [
    source,
-   lua_source
+   nlua_source
 ]
 
 # Headers aren't needed for running the builds,
@@ -326,6 +327,7 @@ headers = files(
    'player_autonav.h',
    'player_gui.h',
    'queue.h',
+   'render.h',
    'rng.h',
    'save.h',
    'ship.h',

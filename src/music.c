@@ -32,9 +32,6 @@
 #define MUSIC_SUFFIX       ".ogg" /**< Suffix of musics. */
 
 
-#define CHUNK_SIZE         32 /**< Size of a chunk to allocate. */
-
-
 int music_disabled = 0; /**< Whether or not music is disabled. */
 
 
@@ -65,6 +62,9 @@ static int music_runLua( const char *situation );
 static char *music_name       = NULL; /**< Current music name. */
 static unsigned int music_start = 0; /**< Music start playing time. */
 static double music_timer     = 0.; /**< Music timer. */
+static int music_temp_disabled= 0; /**< Music is temporarily disabled. */
+static int music_temp_repeat  = 0; /**< Music is repeating. */
+static char *music_temp_repeatname = NULL; /**< Repeating song name. */
 
 
 /*
@@ -86,6 +86,9 @@ void music_update( double dt )
    char *buf;
 
    if (music_disabled)
+      return;
+
+   if (music_temp_disabled)
       return;
 
    /* Timer stuff. */
@@ -123,6 +126,15 @@ static int music_runLua( const char *situation )
 {
    if (music_disabled)
       return 0;
+
+   if (music_temp_disabled)
+      return 0;
+
+   if (music_temp_repeat) {
+      music_load( music_temp_repeatname );
+      music_play();
+      return 0;
+   }
 
    /* Run the choose function in Lua. */
    nlua_getenv( music_env, "choose" );
@@ -313,10 +325,15 @@ int music_load( const char* name )
    /* Free current music if needed. */
    music_free();
 
+   /* Determine the filename. */
+   if (name[0]=='/')
+      snprintf( filename, sizeof(filename), "%s", &name[1]);
+   else
+      snprintf( filename, sizeof(filename), MUSIC_PATH"%s"MUSIC_SUFFIX, name);
+
    /* Load new music. */
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
-   snprintf( filename, sizeof(filename), MUSIC_PATH"%s"MUSIC_SUFFIX, name);
    rw = PHYSFSRWOPS_openRead( filename );
    if (rw == NULL) {
       WARN(_("Music '%s' not found."), filename);
@@ -438,8 +455,6 @@ void music_setPos( double sec )
  */
 static int music_luaInit (void)
 {
-   char *buf;
-   size_t bufsize;
 
    if (music_disabled)
       return 0;
@@ -447,20 +462,77 @@ static int music_luaInit (void)
    if (music_env != LUA_NOREF)
       music_luaQuit();
 
+   /* Load default file. */
+   music_luaFile( MUSIC_LUA_PATH );
+
+   return 0;
+}
+
+
+static int music_luaSetup (void)
+{
+   /* Reset the environment. */
+   if (music_env != LUA_NOREF)
+      nlua_freeEnv(music_env);
    music_env = nlua_newEnv(1);
    nlua_loadStandard(music_env);
    nlua_loadMusic(music_env); /* write it */
+   return 0;
+}
+
+
+/**
+ * @brief Loads the music Lua handler from a file.
+ *
+ *    @param filename File to load.
+ *    @return 0 on success.
+ */
+int music_luaFile( const char *filename )
+{
+   char *buf;
+   size_t bufsize;
+
+   music_luaSetup();
 
    /* load the actual Lua music code */
-   buf = ndata_read( MUSIC_LUA_PATH, &bufsize );
-   if (nlua_dobufenv(music_env, buf, bufsize, MUSIC_LUA_PATH) != 0) {
+   buf = ndata_read( filename, &bufsize );
+   if (nlua_dobufenv(music_env, buf, bufsize, filename) != 0) {
       ERR(_("Error loading music file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check"),
-            MUSIC_LUA_PATH, lua_tostring(naevL,-1) );
+            filename, lua_tostring(naevL,-1) );
       return -1;
    }
    free(buf);
+
+   /* Free repeatname. */
+   free( music_temp_repeatname );
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the music Lua handler from a string
+ *
+ *    @param str String to load.
+ *    @return 0 on success.
+ */
+int music_luaString( const char *str )
+{
+   music_luaSetup();
+
+   /* load the actual Lua music code */
+   if (nlua_dobufenv(music_env, str, strlen(str), "string") != 0) {
+      ERR(_("Error loading music string:\n"
+          "%s\n"
+          "Most likely Lua file has improper syntax, please check"),
+            lua_tostring(naevL,-1) );
+      return -1;
+   }
+
+   /* Free repeatname. */
+   free( music_temp_repeatname );
 
    return 0;
 }
@@ -494,6 +566,8 @@ int music_choose( const char* situation )
       return 0;
 
    music_timer = 0.;
+   music_temp_repeat = 0;
+   music_temp_disabled = 0;
    music_runLua( situation );
 
    return 0;
@@ -516,6 +590,7 @@ int music_chooseDelay( const char* situation, double delay )
    /* Lock so it doesn't run in between an update. */
    SDL_mutexP(music_lock);
    music_timer       = delay;
+   music_temp_disabled = 0;
    music_runchoose   = 0;
    free(music_situation);
    music_situation = strdup(situation);
@@ -535,12 +610,43 @@ void music_rechoose (void)
    if (music_disabled)
       return;
 
+   if (music_temp_disabled)
+      return;
+
    /* Lock so it doesn't run in between an update. */
    SDL_mutexP(music_lock);
    music_timer       = 0.;
    music_runchoose   = 1;
+   music_temp_disabled = 0;
    free(music_situation);
    music_situation = strdup("idle");
    SDL_mutexV(music_lock);
 }
 
+
+/**
+ * @brief Temporarily disables the music.
+ */
+void music_tempDisable( int disable )
+{
+   music_temp_disabled = disable;
+}
+
+
+/**
+ * @brief Temporarily makse the music repeat.
+ */
+void music_repeat( int repeat )
+{
+   if (music_disabled)
+      return;
+
+   if (music_name == NULL) {
+      WARN(_("Trying to set music on repeat when no music is loaded!"));
+      return;
+   }
+
+   music_temp_repeat = repeat;
+   free( music_temp_repeatname );
+   music_temp_repeatname = strdup( music_name );
+}

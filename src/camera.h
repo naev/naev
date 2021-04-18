@@ -22,6 +22,7 @@ int cam_getTarget( void );
 /*
  * Set targets.
  */
+void cam_zoomOverride( int enable );
 void cam_setZoom( double zoom );
 void cam_setZoomTarget( double zoom );
 void cam_setTargetPilot( unsigned int follow, int soft_over );

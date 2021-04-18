@@ -21,6 +21,7 @@
 --]]
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
+local minerva = require 'minerva'
 
 zalek_holo = "zalek_thug1.png"
 zalek_image = "zalek_thug1.png"
@@ -41,6 +42,7 @@ function create ()
          { image=dvaered_image, color=dvaered_colour, pos="right" } )
    vn.clear()
    vn.scene()
+   vn.music( minerva.loops.conflict )
    vn.transition( nil, 1 )
    vn.na( _("You hear a large commotion in one of the wings of Minerva Station. As you approach you can make out what seems to be an altercation between a group of Za'lek and Dvaered ruffians.") )
    vn.appear( {zl, dv} )

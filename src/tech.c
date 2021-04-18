@@ -661,8 +661,6 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
    tech_item_t *item;
 
    /* Set up. */
-   if (items == NULL)
-      items = array_create( void* );
    size  = array_size( tech->items );
 
    /* Load commodities first, then we handle groups. */
@@ -685,6 +683,8 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
          continue;
 
       /* Add. */
+      if (items == NULL)
+         items = array_create( void* );
       array_push_back( &items, item->u.ptr );
    }
 

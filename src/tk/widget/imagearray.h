@@ -43,6 +43,7 @@ typedef struct WidgetImageArrayData_ {
    void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
    void (*rmptr) (unsigned int,char*); /**< Right click callback. */
    void (*dblptr) (unsigned int,char*); /**< Double click callback (for one selection). */
+   void (*accept) (unsigned int, char*); /**< Accept function pointer (when hitting enter). */
 } WidgetImageArrayData;
 
 
@@ -75,7 +76,9 @@ int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, doubl
 int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
       iar_data_t *iar_data );
 int toolkit_unsetSelection( const unsigned int wid, const char *name );
-
+void toolkit_setImageArrayAccept( const unsigned int wid, const char *name, void (*fptr)(unsigned int,char*) );
+int toolkit_getImageArrayVisibleElements( const unsigned int wid, const char *name );
+int toolkit_simImageArrayVisibleElements( int w, int h, int iw, int ih );
 
 #endif /* WGT_IMAGEARRAY_H */
 

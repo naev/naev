@@ -29,6 +29,7 @@
 
 
 static unsigned int camera_followpilot = 0; /**< Pilot to follow. */
+static int zoom_override   = 0; /**< Whether or not to override the zoom. */
 /* Current camera position. */
 static double camera_Z     = 1.; /**< Current in-game zoom. */
 static double camera_X     = 0.; /**< X position of camera. */
@@ -51,6 +52,17 @@ static void cam_updateFly( double x, double y, double dt );
 static void cam_updatePilot( Pilot *follow, double dt );
 static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt );
 static void cam_updateManualZoom( double dt );
+
+
+/**
+ * @brief Overrides the zoom system.
+ *
+ *    @param enable Whether or not to override the zoom system.
+ */
+void cam_zoomOverride( int enable )
+{
+   zoom_override = enable;
+}
 
 
 /**
@@ -234,7 +246,7 @@ void cam_update( double dt )
    }
 
    /* Update manual zoom. */
-   if (conf.zoom_manual)
+   if (conf.zoom_manual || zoom_override)
       cam_updateManualZoom( dt );
 
    /* Set the sound. */
@@ -401,7 +413,7 @@ static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
    double c;
 
    /* Must have auto zoom enabled. */
-   if (conf.zoom_manual)
+   if (conf.zoom_manual || zoom_override)
       return;
 
    /* Minimum depends on velocity normally.

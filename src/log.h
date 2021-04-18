@@ -20,7 +20,7 @@
 
 #define LOG(str, args...)  (logprintf(stdout, 1, str, ## args))
 #ifdef DEBUG_PARANOID /* Will cause WARNs to blow up */
-#define WARN(str, args...) (logprintf(stderr, 0, _("WARNING %s:%d [%s]: "), __FILE__, __LINE__, __func__), logprintf( stderr, 1, str, ## args), abort())
+#define WARN(str, args...) (logprintf(stderr, 0, _("WARNING %s:%d [%s]: "), __FILE__, __LINE__, __func__), logprintf( stderr, 1, str, ## args), raise(SIGINT))
 #else /* DEBUG_PARANOID */
 #define WARN(str, args...) (logprintf(stderr, 0, _("Warning: [%s] "), __func__), logprintf( stderr, 1, str, ## args))
 #endif /* DEBUG_PARANOID */
@@ -38,11 +38,8 @@
 
 
 PRINTF_FORMAT( 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt, ... );
+void log_init (void);
 void log_redirect (void);
-int log_isTerminal (void);
-void log_copy( int enable );
-int log_copying (void);
-void log_purge (void);
 void log_clean (void);
 
 

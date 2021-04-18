@@ -421,7 +421,7 @@ function __landstop ()
       if not ai.land() then
          ai.popsubtask()
       else
-         ai.pilot():msg(ai.pilot():followers(), "land")
+         ai.pilot():msg(ai.pilot():followers(), "land", mem.land)
          ai.poptask() -- Done, pop task
       end
    end
@@ -927,7 +927,7 @@ function gather ()
       return
    end
 
-   local gat = ai.getgatherable( ai.getweaprange() )
+   local gat = ai.getgatherable( mem.gather_range )
 
    if gat == nil then -- Nothing to gather
       ai.poptask()

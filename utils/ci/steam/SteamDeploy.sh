@@ -120,8 +120,7 @@ elif [ "$DRYRUN" == "true" ]; then
             ls -l -R "$STEAMPATH"
         elif [ "$PRERELEASE" == "false" ]; then 
             # Move soundtrack stuff to deployment area
-            cp -v "$TEMPPATH"/naev-steam-soundtrack/*.mp3 "$STEAMPATH/content/soundtrack"
-            cp -v "$TEMPPATH"/naev-steam-soundtrack/*.png "$STEAMPATH/content/soundtrack"
+            echo "copy soundtrack files"
 
             # Run steam upload with 2fa key
             echo "steamcmd release build"

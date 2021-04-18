@@ -29,8 +29,35 @@ function formations.buffer(leader)
    local pilots = leader:followers()
    local class_count = count_classes(pilots)
    local angle, radius
-   local radii = {Scout = 1200, Drone = 1500, Fighter = 900, Bomber = 850, Corvette = 700, Destroyer = 500, Cruiser = 350, Carrier = 250} -- Different radii for each class.
-   local count = {Scout = 1, Drone = 1, Fighter = 1, Bomber = 1, Corvette = 1, Destroyer = 1, Cruiser = 1, Carrier = 1} -- Need to keep track of positions already iterated through.
+
+   local radii = {["Yacht"] = -500,
+                  ["Luxury Yacht"] = -400,
+                  ["Courier"] = -300,
+                  ["Armoured Transport"] = -200,
+                  ["Freighter"] = -100,
+                  ["Carrier"] = 100,
+                  ["Cruiser"] = 200,
+                  ["Destroyer"] = 300,
+                  ["Corvette"] = 400,
+                  ["Bomber"] = 500,
+                  ["Heavy Drone"] = 600,
+                  ["Fighter"] = 700,
+                  ["Drone"] = 800,
+                  ["Scout"] = 900 } -- Different radii for each class.
+   local count = {["Yacht"] = 1,
+                  ["Luxury Yacht"] = 1,
+                  ["Courier"] = 1,
+                  ["Armoured Transport"] = 1,
+                  ["Freighter"] = 1,
+                  ["Carrier"] = 1,
+                  ["Cruiser"] = 1,
+                  ["Destroyer"] = 1,
+                  ["Corvette"] = 1,
+                  ["Bomber"] = 1,
+                  ["Heavy Drone"] = 1,
+                  ["Fighter"] = 1,
+                  ["Drone"] = 1,
+                  ["Scout"] = 1 } -- Need to keep track of positions already iterated through.
    for i, p in ipairs(pilots) do
       ship_class = p:ship():class() -- For readability.
       if class_count[ship_class] == 1 then -- If there's only one ship in this specific class...

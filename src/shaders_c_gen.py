@@ -76,7 +76,7 @@ SHADERS = [
       vs_path = "nebula.vert",
       fs_path = "nebula_overlay.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "horizon", "eddy_scale", "time"],
+      uniforms = ["projection", "hue", "horizon", "eddy_scale", "time"],
       subroutines = {},
    ),
    Shader(
@@ -84,7 +84,15 @@ SHADERS = [
       vs_path = "nebula.vert",
       fs_path = "nebula_background.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "eddy_scale", "time"],
+      uniforms = ["projection", "hue", "eddy_scale", "time"],
+      subroutines = {},
+   ),
+   Shader(
+      name = "nebula_map",
+      vs_path = "nebula_map.vert",
+      fs_path = "nebula_map.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "hue", "eddy_scale", "time", "globalpos"],
       subroutines = {},
    ),
    Shader(
@@ -144,6 +152,30 @@ SHADERS = [
             "jump_wind",
         ]
       }
+   ),
+   Shader(
+      name = "colorblind",
+      vs_path = "postprocess.vert",
+      fs_path = "colorblind.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex"],
+      subroutines = {},
+   ),
+   Shader(
+      name = "shake",
+      vs_path = "postprocess.vert",
+      fs_path = "shake.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "shake_pos", "shake_vel", "shake_force"],
+      subroutines = {},
+   ),
+   Shader(
+      name = "damage",
+      vs_path = "postprocess.vert",
+      fs_path = "damage.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "damage_strength"],
+      subroutines = {},
    ),
 ]
 
@@ -217,7 +249,7 @@ def generate_c_file(f):
                     shader.name,
                     uniform))
 
-        f.write("   if (GLAD_GL_ARB_shader_subroutine) {\n")
+        f.write("   if (gl_has( OPENGL_SUBROUTINES )) {\n")
         for subroutine, routines in shader.subroutines.items():
             f.write(f"      shaders.{shader.name}.{subroutine}.uniform = glGetSubroutineUniformLocation( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n")
             for r in routines:

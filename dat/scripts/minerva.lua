@@ -12,14 +12,21 @@ local minerva = {
       name = _("Cyborg Chicken"),
       portrait = "cyborg_chicken.png",
       image = "cyborg_chicken.png",
-      colour = nil,
+      colour = {0.9, 0.5, 0.1}, -- Orangish
+   },
+   kex = {
+      name = _("Kex"),
+      description = _("You see Kex taking a break at his favourite spot at Minerva station."),
+      portrait = "cyborg_chicken.png",
+      image = "cyborg_chicken.png",
+      colour = {0.9, 0.5, 0.1}, -- Orangish
    },
    maikki = {
       name = _("Maikki"),
       description = _("You see a very cutely dressed young woman. She seems to have a worried expression on her face."),
       portrait = "maikki.png",
       image = "maikki.png",
-      colour = {1, 0.73, 0.97},
+      colour = {1, 0.73, 0.97}, -- Pink :D
    },
    strangelove = {
       name = _("Dr. Strangelove"),
@@ -36,12 +43,18 @@ local minerva = {
    },
    pirate = {
       name = _("Sketchy Individual"),
-      portrait = "pirate/pirate5.png", -- REPLACE
+      portrait = "pirate/pirate5.png", -- TODO REPLACE
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
       image = portrait.getFullPath("pirate/pirate5.png"),
+      colour = nil,
    },
 
    log = {
+      kex = {
+         idstr = "log_minerva_kex",
+         logname = _("Kex"),
+         logtype = _("Minerva Station"),
+      },
       maikki = {
          idstr = "log_minerva_maikki",
          logname = _("Finding Maikki's Father"),
@@ -52,6 +65,15 @@ local minerva = {
          logname = _("Shady Jobs at Minerva"),
          logtype = _("Minerva Station"),
       },
+   },
+
+   loops = {
+      maikki = 'snd/sounds/songs/mushroom-background.ogg',
+      kex = 'snd/sounds/songs/feeling-good-05.ogg',
+      pirate = 'snd/sounds/songs/hip-hop-background.ogg',
+      strangelove = 'snd/sounds/songs/space-exploration-08.ogg',
+      conflict = "snd/sounds/songs/run-for-your-life-00.ogg",
+      news = "snd/sounds/songs/news.ogg",
    },
 }
 
@@ -67,6 +89,13 @@ function minerva.vn_cyborg_chicken( params )
          _merge_tables( {
             image=minerva.chicken.image,
             color=minerva.chicken.colour,
+         }, params) )
+end
+function minerva.vn_kex( params )
+   return vn.Character.new( minerva.kex.name,
+         _merge_tables( {
+            image=minerva.kex.image,
+            color=minerva.kex.colour,
          }, params) )
 end
 function minerva.vn_maikki( params )
