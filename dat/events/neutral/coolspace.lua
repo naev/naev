@@ -47,9 +47,10 @@ function endevent () evt.finish() end
 function taiomi_init ()
    -- Create particles and buffer
    local density = 200*200
+   local z, zmax, zmin = camera.getZoom()
    buffer = 500
-   tw = love.w+2*buffer
-   th = love.h+2*buffer
+   tw = zmax*nw+2*buffer
+   th = zmax*nh+2*buffer
    local nparts = math.floor( tw * th / density + 0.5 )
 
    -- Load graphics
@@ -215,21 +216,30 @@ function taiomi_update ()
       update_part( p )
    end
 end
+local function draw_part( p, s, z )
+   local x = (p.x - nw/2 - buffer) / z + nw/2
+   local y = (p.y - nh/2 - buffer) / z + nh/2
+   lg.draw( p.i.i, p.q, x, y, 0, p.s * s / z )
+end
 function taiomi_renderbg ()
+   local z = camera.getZoom()
    lg.setColor( 1, 1, 1, 1 )
    for k,p in ipairs( bgparts ) do
-      lg.draw( p.i.i, p.q, p.x, p.y, 0, p.s * 2 )
+      draw_part( p, 2, z )
    end
 end
 function taiomi_renderfg ()
+   local z = camera.getZoom()
    lg.setColor( 1, 1, 1, 1 )
    for k,p in ipairs( fgparts ) do
-      lg.draw( p.i.i, p.q, p.x, p.y, 0, p.s )
+      draw_part( p, 1, z )
    end
 
    -- Special
    local x, y = pos:get()
    x = (wing.x - x) * wing.s
    y = (wing.y + y) * wing.s
-   lg.draw( wing.i, x, y, 0, wing.s )
+   x = (x - nw/2) / z + nw/2
+   y = (y - nh/2) / z + nh/2
+   lg.draw( wing.i, x, y, 0, wing.s / z )
 end
