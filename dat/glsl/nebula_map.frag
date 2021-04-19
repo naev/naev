@@ -17,7 +17,7 @@ void main(void) {
 
    // Calculate coordinates
    vec2 rel_pos = localpos + globalpos;
-   rel_pos /= eddy_scale;
+   //rel_pos *= eddy_scale;
    color_out = nebula( vec4(0.0), rel_pos, time, hue, value, brightness );
 
    // Fallout
