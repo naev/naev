@@ -63,13 +63,6 @@ int nlua_loadNaev( nlua_env env )
 /**
  * @brief Naev generic Lua bindings.
  *
- * An example would be:
- * @code
- * if naev.lang() == "en" then
- *    --Language is English.
- * end
- * @endcode
- *
  * @luamod naev
  */
 
