@@ -101,8 +101,6 @@ int save_all (void)
    char file[PATH_MAX];
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
-   time_t t = time(NULL);
-   struct tm *local = localtime(&t);;
 
    /* Do not save if saving is off. */
    if (player_isFlag(PLAYER_NOSAVE))
@@ -129,11 +127,7 @@ int save_all (void)
    xmlw_endElem(writer); /* "version" */
 
    /* Save last played. */
-   xmlw_startElem(writer,"last_played");
-   xmlw_elem( writer, "year", "%d", local->tm_year+1900 );
-   xmlw_elem( writer, "month", "%d", local->tm_mon );
-   xmlw_elem( writer, "day", "%d", local->tm_mday );
-   xmlw_endElem(writer); /* "last_played" */
+   xmlw_saveTime( writer, "last_played", NULL );
 
    /* Save the data. */
    if (save_data(writer) < 0) {

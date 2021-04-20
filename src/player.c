@@ -3166,9 +3166,7 @@ Planet* player_load( xmlNodePtr parent )
    /* Load time just in case. */
    t = time(NULL);
    local = localtime(&t);
-   player.last_played.tm_year = local->tm_year+1900;
-   player.last_played.tm_mon = local->tm_mon;
-   player.last_played.tm_mday = local->tm_mday;
+   memcpy( &player.last_played, local, sizeof(struct tm) );
 
    if (player_stack==NULL)
       player_stack = array_create( PlayerShip_t );
@@ -3177,11 +3175,8 @@ Planet* player_load( xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"last_played")) {
-         xmlr_int(node, "year", player.last_played.tm_year);
-         xmlr_int(node, "month", player.last_played.tm_mon);
-         xmlr_int(node, "day", player.last_played.tm_mday);
-      }
+      if (xml_isNode(node,"last_played"))
+         xml_parseTime(node, &player.last_played);
       else if (xml_isNode(node,"player"))
          pnt = player_parse( node );
       else if (xml_isNode(node,"missions_done"))
@@ -3191,9 +3186,6 @@ Planet* player_load( xmlNodePtr parent )
       else if (xml_isNode(node,"escorts"))
          player_parseEscorts(node);
    } while (xml_nextNode(node));
-
-   /* Correct it internally. */
-   player.last_played.tm_year -= 1900;
 
    return pnt;
 }

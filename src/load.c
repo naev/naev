@@ -114,9 +114,7 @@ static int load_load( nsave_t *save, const char *path )
    /* Load time just in case. */
    t = time(NULL);
    local = localtime(&t);
-   save->last_played.tm_year = local->tm_year+1900;
-   save->last_played.tm_mon = local->tm_mon;
-   save->last_played.tm_mday = local->tm_mday;
+   memcpy( &save->last_played, local, sizeof(struct tm) );
 
    /* Load the XML. */
    doc = load_xml_parsePhysFS( path );
@@ -150,15 +148,8 @@ static int load_load( nsave_t *save, const char *path )
       }
 
       /* Last played. */
-      else if (xml_isNode(parent, "last_played")) {
-         node = parent->xmlChildrenNode;
-         do {
-            xmlr_int(node, "year", save->last_played.tm_year);
-            xmlr_int(node, "month", save->last_played.tm_mon);
-            xmlr_int(node, "day", save->last_played.tm_mday);
-         } while (xml_nextNode(node));
-         continue;
-      }
+      else if (xml_isNode(parent, "last_played"))
+         xml_parseTime(parent, &save->last_played);
 
       else if (xml_isNode(parent, "player")) {
          /* Get name. */
