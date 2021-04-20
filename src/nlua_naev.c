@@ -96,7 +96,7 @@ static int naev_Lversion( lua_State *L )
  */
 static int naev_lastplayed( lua_State *L )
 {
-   double d = difftime( time(NULL), mktime(&player.last_played) );
+   double d = difftime( time(NULL), player.last_played );
    lua_pushnumber(L, d/(3600.*24.)); /*< convert to days */
    return 1;
 }

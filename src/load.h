@@ -36,7 +36,7 @@ typedef struct nsave_s {
    char *shipmodel; /**< Model of the ship. */
 
    /* Last played information. */
-   struct tm last_played;
+   time_t last_played;
 } nsave_t;
 
 

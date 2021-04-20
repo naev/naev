@@ -155,13 +155,13 @@ xmlDocPtr xml_parsePhysFS( const char* filename );
 glTexture* xml_parseTexture( xmlNodePtr node,
       const char *path, int defsx, int defsy,
       const unsigned int flags );
-int xml_parseTime( xmlNodePtr node, struct tm *tm_time );
+int xml_parseTime( xmlNodePtr node, time_t *t );
 
 /*
  * Functions for generic complex writing.
  */
 void xmlw_setParams( xmlTextWriterPtr writer );
-int xmlw_saveTime( xmlTextWriterPtr writer, const char *name, struct tm *tm_time );
+int xmlw_saveTime( xmlTextWriterPtr writer, const char *name, time_t t );
 
 
 #endif /* XML_H */

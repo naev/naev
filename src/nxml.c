@@ -95,42 +95,15 @@ xmlDocPtr xml_parsePhysFS( const char* filename )
    return doc;
 }
 
-int xmlw_saveTime( xmlTextWriterPtr writer, const char *name, struct tm *tm_time )
+int xmlw_saveTime( xmlTextWriterPtr writer, const char *name, time_t t )
 {
-   time_t t;
-
-   /* Save current time if NULL. */
-   if (tm_time==NULL) {
-      t = time(NULL);
-      tm_time = localtime(&t);
-   }
-
-   xmlw_startElem(writer,name);
-
-   xmlw_attr( writer, "year", "%d", tm_time->tm_year+1900 );
-   xmlw_attr( writer, "month", "%d", tm_time->tm_mon );
-   xmlw_attr( writer, "day", "%d", tm_time->tm_mday );
-   xmlw_attr( writer, "hour", "%d", tm_time->tm_hour );
-   xmlw_attr( writer, "minute", "%d", tm_time->tm_min );
-   xmlw_attr( writer, "second", "%d", tm_time->tm_sec );
-
-   xmlw_endElem(writer); /* name */
-
+   xmlw_elem( writer, name, "%lu", t );
    return 0;
 }
 
 
-int xml_parseTime( xmlNodePtr node, struct tm *tm_time )
+int xml_parseTime( xmlNodePtr node, time_t *t )
 {
-   time_t t = time(NULL);
-   struct tm *local = localtime(&t);
-
-   xmlr_attr_int_def( node, "year", tm_time->tm_year, local->tm_year );
-   xmlr_attr_int_def( node, "month", tm_time->tm_mon, local->tm_mon );
-   xmlr_attr_int_def( node, "day", tm_time->tm_mday, local->tm_mday );
-   xmlr_attr_int_def( node, "hour", tm_time->tm_hour, local->tm_hour );
-   xmlr_attr_int_def( node, "minute", tm_time->tm_min, local->tm_min );
-   xmlr_attr_int_def( node, "second", tm_time->tm_sec, local->tm_sec );
-   tm_time->tm_year -= 1900; /**< Correct it. */
+   *t = xml_getULong( node );
    return 0;
 }

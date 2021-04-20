@@ -3155,8 +3155,6 @@ Planet* player_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
    Planet *pnt;
-   time_t t;
-   struct tm *local;
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
@@ -3164,9 +3162,7 @@ Planet* player_load( xmlNodePtr parent )
    map_cleanup();
 
    /* Load time just in case. */
-   t = time(NULL);
-   local = localtime(&t);
-   memcpy( &player.last_played, local, sizeof(struct tm) );
+   player.last_played = time(NULL);
 
    if (player_stack==NULL)
       player_stack = array_create( PlayerShip_t );

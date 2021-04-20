@@ -127,7 +127,7 @@ int save_all (void)
    xmlw_endElem(writer); /* "version" */
 
    /* Save last played. */
-   xmlw_saveTime( writer, "last_played", NULL );
+   xmlw_saveTime( writer, "last_played", time(NULL) );
 
    /* Save the data. */
    if (save_data(writer) < 0) {

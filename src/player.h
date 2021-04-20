@@ -88,7 +88,7 @@ typedef struct Player_s {
 
    /* Loaded game version. */
    char *loaded_version; /**< Version of the loaded save game. */
-   struct tm last_played; /**< Date the save was last played. */
+   time_t last_played; /**< Date the save was last played. */
 } Player_t;
 
 

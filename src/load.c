@@ -106,15 +106,11 @@ static int load_load( nsave_t *save, const char *path )
    xmlDocPtr doc;
    xmlNodePtr root, parent, node, cur;
    int cycles, periods, seconds;
-   time_t t;
-   struct tm *local;
 
    memset( save, 0, sizeof(nsave_t) );
 
    /* Load time just in case. */
-   t = time(NULL);
-   local = localtime(&t);
-   memcpy( &save->last_played, local, sizeof(struct tm) );
+   save->last_played = time(NULL);
 
    /* Load the XML. */
    doc = load_xml_parsePhysFS( path );
