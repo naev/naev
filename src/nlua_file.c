@@ -36,6 +36,7 @@ static int fileL_mode( lua_State *L );
 static int fileL_size( lua_State *L );
 static int fileL_isopen( lua_State *L );
 static int fileL_filetype( lua_State *L );
+static int fileL_mkdir( lua_State *L );
 static const luaL_Reg fileL_methods[] = {
    { "__gc", fileL_gc },
    { "__eq", fileL_eq },
@@ -50,6 +51,7 @@ static const luaL_Reg fileL_methods[] = {
    { "getSize", fileL_size },
    { "isOpen", fileL_isopen },
    { "filetype", fileL_filetype },
+   { "mkdir", fileL_mkdir },
    {0,0}
 }; /**< File metatable methods. */
 
@@ -430,4 +432,18 @@ static int fileL_filetype( lua_State *L )
 }
 
 
+/**
+ * @brief Makes a directory.
+ *
+ *    @luatparam string dir Name of the directory to make.
+ *    @luatreturn boolean True on success.
+ * @luafunc mkdir
+ */
+static int fileL_mkdir( lua_State *L )
+{
+   const char *path = luaL_checkstring(L,1);
+   int ret = PHYSFS_mkdir( path );
+   lua_pushboolean(L,ret==0);
+   return 1;
+}
 

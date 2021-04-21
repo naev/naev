@@ -189,7 +189,7 @@ ov_callbacks sound_al_ovcall_noclose = {
    .seek_func  = ovpack_seek,
    .close_func = ovpack_closeFake,
    .tell_func  = ovpack_tell
-}; /**< Vorbis call structure to handl rwops without closing. */
+}; /**< Vorbis call structure to handle rwops without closing. */
 
 
 /**
@@ -588,6 +588,7 @@ static int sound_al_loadWav( ALuint *buf, SDL_RWops *rw )
 
    /* Clean up. */
    free( wav_buffer );
+   al_checkErr();
    return 0;
 }
 
@@ -628,6 +629,7 @@ static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    ALenum format;
    ogg_int64_t len;
    char *data;
+   long bytes_read;
 
    /* Finish opening the file. */
    ret = ov_test_open(vf);
@@ -639,16 +641,22 @@ static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    /* Get file information. */
    info   = ov_info( vf, -1 );
    format = (info->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-   len    = ov_pcm_total( vf, -1 ) * info->channels * 2;
+   len    = ov_pcm_total( vf, -1 ) * info->channels * sizeof(short);
 
    /* Allocate memory. */
    data = malloc( len );
 
    /* Fill buffer. */
    i = 0;
-   while (i < len) {
-      /* Fill buffer with data in the 16 bit signed samples format. */
-      i += ov_read( vf, &data[i], len-i, (SDL_BYTEORDER == SDL_BIG_ENDIAN), 2, 1, &section );
+   bytes_read = 1;
+   while (bytes_read > 0) {
+      /* Fill buffer with data ibytes_read the 16 bit signed samples format. */
+      bytes_read = ov_read( vf, &data[i], 4096, (SDL_BYTEORDER == SDL_BIG_ENDIAN), 2, 1, &section );
+      if (bytes_read==OV_HOLE || bytes_read==OV_EBADLINK || bytes_read==OV_EINVAL) {
+         WARN(_("Error reading from OGG file!"));
+         continue;
+      }
+      i += bytes_read;
    }
 
    soundLock();
@@ -656,6 +664,7 @@ static int sound_al_loadOgg( ALuint *buf, OggVorbis_File *vf )
    alGenBuffers( 1, buf );
    /* Put into buffer. */
    alBufferData( *buf, format, data, len, info->rate );
+   al_checkErr();
    soundUnlock();
 
    /* Clean up. */
@@ -758,6 +767,7 @@ void sound_al_free( alSound *snd )
 
    /* free the stuff */
    alDeleteBuffers( 1, &snd->buf );
+   al_checkErr();
 
    soundUnlock();
 }
@@ -785,6 +795,7 @@ static void sound_al_volumeUpdate (void)
       for (j=0; j<g->nsources; j++)
          alSourcef( g->sources[j], AL_GAIN, v );
    }
+   al_checkErr();
    soundUnlock();
 }
 

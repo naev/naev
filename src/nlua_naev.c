@@ -28,6 +28,7 @@
 
 /* Naev methods. */
 static int naev_Lversion( lua_State *L );
+static int naev_lastplayed( lua_State *L );
 static int naev_ticks( lua_State *L );
 static int naev_keyGet( lua_State *L );
 static int naev_keyEnable( lua_State *L );
@@ -37,6 +38,7 @@ static int naev_eventStart( lua_State *L );
 static int naev_missionStart( lua_State *L );
 static const luaL_Reg naev_methods[] = {
    { "version", naev_Lversion },
+   { "lastplayed", naev_lastplayed },
    { "ticks", naev_ticks },
    { "keyGet", naev_keyGet },
    { "keyEnable", naev_keyEnable },
@@ -63,13 +65,6 @@ int nlua_loadNaev( nlua_env env )
 /**
  * @brief Naev generic Lua bindings.
  *
- * An example would be:
- * @code
- * if naev.lang() == "en" then
- *    --Language is English.
- * end
- * @endcode
- *
  * @luamod naev
  */
 
@@ -91,6 +86,21 @@ static int naev_Lversion( lua_State *L )
       lua_pushstring( L, player.loaded_version );
    return 2;
 }
+
+
+/**
+ * @brief Gets how many days it has been since the player last played Naev.
+ *
+ *    @luatreturn number Number of days since the player last played.
+ * @luafunc lastplayed
+ */
+static int naev_lastplayed( lua_State *L )
+{
+   double d = difftime( time(NULL), player.last_played );
+   lua_pushnumber(L, d/(3600.*24.)); /*< convert to days */
+   return 1;
+}
+
 
 /**
  * @brief Gets the SDL ticks.

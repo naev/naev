@@ -69,7 +69,7 @@ hint4_colour = nil
 strangelove = minerva.strangelove
 ecc_barname = _("Hologram Projector")
 ecc_portrait = strangelove.portrait
-ecc_description = _("A terminal with which you can check your current token balance and buy items with tokens.")
+ecc_description = _("An old decrepit hologram projector sits in the corner. It looks like you could use this to communicate with the owner of the station.")
 
 misn_title = _("Finding Maikki's Father")
 misn_reward = _("???")
@@ -276,13 +276,13 @@ Her eyes sparkle with determination.]]))
    maikki(_([["The Za'leks were assholes as expected, but I'm glad you found out what I thought: that he's somewhere here being held captive or something… This is still all very weird though."]]))
    maikki(_([["I'm a bit worried about that Dr. Strangelove, what exactly did he mean? Is he even a real doctor? We still even don't know happened in the nebula nor what they want with my father. Instead of answering questions we keep on finding new questions. I suppose that this is progress?…"]]))
    maikki(_([["Anyway, if we can believe Dr. Strangelove, my father is alive and somewhere here! I don't think we have any reason to doubt him, Za'leks don't tend to lie, they only bend the truth. All we have to do is find my father now and everything should fall in place."]]))
-   maikki(_([[She is visibly exciting.
+   maikki(_([[She is visibly excited.
 "It is all coming together! I will finally be able to meet him again! This is so great! I don't know what to tell him first. Do you think he'll recognize me?"]]))
    maikki(_([["I don't have a lead at the moment, but it can't be far. Keep your eyes open and if you find anything look suspicious, please get in touch with me! I'll also be keeping my eyes open."]]))
    maikki(_([["Oh, I almost forgot. I got lucky with a Pachinko machine and won a lot of Minerva Tokens and a lifetime supply of parfaits! Since I don't need the tokens to buy anything anymore, here, you can take them."]]))
+   vn.sfxVictory()
    vn.func( function ()
       -- no reward, yet...
-      vn.sfxVictory()
       mission_finish = true
       minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
       shiplog.appendLog( logidstr, _("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
@@ -326,8 +326,6 @@ function generate_npc ()
 
    elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) and misn_state < 6 then
       npc_ecc = misn.npcAdd( "approach_eccentric", ecc_barname, ecc_portrait, ecc_description )
-      music.load("landing_sinister")
-      music.play()
    end
 end
 
@@ -419,7 +417,7 @@ They shudder when they says the word "work packages".]]))
    prof(_([["At the end, we were just chaining meetings and answering e-mails and not getting anything done. We ended up handing in a 5 page report written by an intern for the mid-project evaluation and almost lost all the funding. The project leader panicked and it all went to hell from there."]]))
    prof(_([["All nebula research is doomed to end that way. I haven't seen a project succeed yet, despite all the proposal calls attempting to address the issue."]]))
    vn.na(_("You inquire about other project members."))
-   prof(_([["The only logical step after that traumatic experience is to get as far away as possible fro nebula research. As far as I know all the project members moved to new topics, although none as exciting as mine."]]))
+   prof(_([["The only logical step after that traumatic experience is to get as far away as possible from nebula research. As far as I know all the project members moved to new topics, although none as exciting as mine."]]))
    prof(_([["Have you heard of graphene infused hydro nano lattices? By taking sheets of graphene and creating strong lateral strain under the effect of intense Coriolis electro-magnetic induction fields, it is possible to obtain a behaviour similar to turbulent hydrofoils. And what's even better is that they naturally form octahedral quasi-lattices that allow absorbing most low-spectrum frequencies!"]]))
    prof(_([["They could change material science as we know it! Image being able to create materials with almost any property you can desire! We do still have to solve the problem of the subatomic crystallite implosion, but once I finish recovering the notes from the crater left at my last laboratory, I should be able to solve it in no time. By the way, since the accident with my last assistant, I'm looking for a new one. Would you be interested?"]]))
    vn.na(_("You get away as fast as you can from them as they keep on rambling."))
@@ -486,7 +484,7 @@ function approach_hint4 ()
       shrimp(_([["PERSON. PERSON. PERSON."]]))
       drshrimp(_([["C'mon Calliope, I already know that. Here, have a pellet."]]))
       shrimp:rename("Calliope")
-      shrimp(_([[A pellet of shrimp food releases into the floating aquarium. The shrimp wastes no time in getting scarfing it down.
+      shrimp(_([[A pellet of shrimp food is released into the floating aquarium. The shrimp wastes no time in getting scarfing it down.
    "HAPPY. GOOD."]]))
       drshrimp(_([["What do you want?"]]))
       vn.na(_("You explain to him that you are looking for information related to nebula artifacts."))

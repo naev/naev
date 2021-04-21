@@ -44,6 +44,7 @@ static int systemL_jumpdistance( lua_State *L );
 static int systemL_jumpPath( lua_State *L );
 static int systemL_adjacent( lua_State *L );
 static int systemL_jumps( lua_State *L );
+static int systemL_asteroidFields( lua_State *L );
 static int systemL_asteroid( lua_State *L );
 static int systemL_asteroidPos( lua_State *L );
 static int systemL_asteroidDestroyed( lua_State *L );
@@ -71,6 +72,7 @@ static const luaL_Reg system_methods[] = {
    { "jumpPath", systemL_jumpPath },
    { "adjacentSystems", systemL_adjacent },
    { "jumps", systemL_jumps },
+   { "asteroidFields", systemL_asteroidFields },
    { "asteroid", systemL_asteroid },
    { "asteroidPos", systemL_asteroidPos },
    { "asteroidDestroyed", systemL_asteroidDestroyed },
@@ -603,6 +605,46 @@ static int systemL_jumps( lua_State *L )
       lj.destid = s->jumps[i].targetid;
       lua_pushnumber(L,++pushed); /* key. */
       lua_pushjump(L,lj); /* value. */
+      lua_rawset(L,-3);
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets all the asteroid fields in a system.
+ *
+ * @usage for i, s in ipairs( sys:asteroidFields() ) do -- Iterate over asteroid fields
+ *
+ *    @luatparam System s System to get the asteroid fields of.
+ *    @luatreturn {Table,...} An ordered table with all the asteroid fields.
+ * @luafunc asteroidFields
+ */
+static int systemL_asteroidFields( lua_State *L )
+{
+   int i, pushed;
+   StarSystem *s = luaL_validsystem(L,1);
+
+   /* Push all jumps. */
+   pushed = 0;
+   lua_newtable(L);
+   for (i=0; i<array_size(s->asteroids); i++) {
+      lua_pushnumber(L,++pushed);   /* key. */
+      lua_newtable(L);              /* key, t */
+
+      lua_pushstring(L,"pos");      /* key, t, k */
+      lua_pushvector(L,s->asteroids[i].pos); /* key, t, k, v */
+      lua_rawset(L,-3);
+
+      lua_pushstring(L,"density");      /* key, t, k */
+      lua_pushnumber(L,s->asteroids[i].density); /* key, t, k, v */
+      lua_rawset(L,-3);
+
+      lua_pushstring(L,"radius");      /* key, t, k */
+      lua_pushnumber(L,s->asteroids[i].radius); /* key, t, k, v */
+      lua_rawset(L,-3);
+
       lua_rawset(L,-3);
    }
 

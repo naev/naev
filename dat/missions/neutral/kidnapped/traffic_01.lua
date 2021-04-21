@@ -73,9 +73,17 @@ log_text = _([[You were tricked into aiding an assassination. A woman claimed sh
 
 
 function create ()
-   -- Note: this mission does not make any system claims.
-
    targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
+   targetsys["__save"] = true
+
+   -- randomly select spawn system and planet where brother will be
+   brosys = targetsys[math.random(3)]
+   bropla = brosys:planets()[math.random(#brosys:planets())]
+
+   if not misn.claim(brosys) then
+      misn.finish(false)
+   end
+
    misn_marker = {}
    reward = rnd.rnd(40,60)*1000
 
@@ -112,9 +120,7 @@ function accept ()
 
    -- Some flavour text
    tk.msg( title[1], text[2] )
-   -- randomly select spawn system and planet where brother will be
-   brosys = targetsys[math.random(3)]
-   bropla = brosys:planets()[math.random(#brosys:planets())]
+
    -- Set hooks
    hook.jumpin("sys_enter")
 end
@@ -152,13 +158,19 @@ function sys_enter ()
       end
    else
       hook.timer( 3000,"do_msg2")
-      broship = pilot.add( "Gawain", "Civilian", bropla:pos() + vec2.new(-200,-200), _("Civilian Gawain"), "trader" ) -- fast Gawain
-      broship:addOutfit("Tricon Zephyr II Engine")
-      broship:setFaction("Civilian")
-      broship:rename(_("Poppy Seed"))
+      broship = pilot.add( "Gawain", "Civilian", bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), "trader" ) -- fast Gawain
+      broship:rmOutfit("cores")
+      broship:cargoRm("__all")
+      broship:addOutfit("Unicorp D-2 Light Plating")
+      broship:addOutfit("Unicorp PT-100 Core System")
+      broship:addOutfit("Tricon Zephyr Engine")
+      broship:setHealth(100,100)
+      broship:setEnergy(100)
       broship:setInvincible(true)
       broship:control()
       broship:setHilight(true)
+      broship:setVisible(true)
+      broship:setFuel(true)
       broship:moveto(bropla:pos() + vec2.new( 400, -400), false)
       -- just some moving around, stolen from baron missions ;D
       idlehook = hook.pilot(broship, "idle", "idle",broship,bropla)
@@ -220,7 +232,7 @@ function do_msg2 ()
 end
 
 function spawn_baddies(sp)
-   badguys = {}
+   local badguys = {}
    --hyenas
    for i=1,2 do
       badguys[i] = pilot.add("Za'lek Light Drone", "Mercenary", sp, _("Mercenary") )
@@ -234,8 +246,7 @@ function spawn_baddies(sp)
       badguys[i]:addOutfit("Unicorp PT-100 Core System")
       badguys[i]:addOutfit("Tricon Zephyr Engine")
       
-      badguys[i]:addOutfit("Laser Cannon MK2",2)
-      badguys[i]:addOutfit("Unicorp Fury Launcher")
+      badguys[i]:addOutfit("Laser Cannon MK2",3)
       badguys[i]:addOutfit("Improved Stabilizer") -- Just try to avoid fight with these fellas
       
       badguys[i]:setHealth(100,100)
@@ -261,7 +272,6 @@ function spawn_baddies(sp)
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end
-
    for i=5,6 do
       badguys[i] = pilot.add( "Admonisher", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)

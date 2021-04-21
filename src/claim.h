@@ -26,6 +26,7 @@ int claim_test( Claim_t *claim );
 int claim_testStr( Claim_t *claim, const char *str );
 int claim_testSys( Claim_t *claim, int sys );
 void claim_destroy( Claim_t *claim );
+int claim_isNull( Claim_t *claim );
 
 
 /*

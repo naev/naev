@@ -125,11 +125,6 @@ function create()
    -- End event on takeoff.
    tokens_landed = minerva.tokens_get()
    hook.takeoff( "leave" )
-
-   -- Custom music
-   music.load( "meeting_mtfox" )
-   music.play()
-   music.setRepeat(true)
 end
 
 local function has_event( name )
@@ -157,7 +152,7 @@ function random_event()
       hook.safe( "start_alter1" )
 
    -- Spa Propaganda
-   elseif maikki2 and player.misnActive("Minerva Pirates 3") then
+   elseif maikki2 and player.misnActive("Minerva Pirates 3") and not spapropaganda then
       hook.safe( "start_spapropaganda" )
    end
 end

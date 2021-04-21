@@ -1,8 +1,11 @@
 * 0.9.0 (unreleased)
    * Gameplay
+      * Added discovery messages as you explore the universe
+      * New fancy system rendering effects
       * Ships and rockets now have engine trails
       * Beam visuals have been made more flexible and pretty
       * Jumping visuals improved
+      * Redid the shake visuals and added a small damage visual
       * Added outfits that allow converting damage to disable
       * Added gambling resort "Minerva Station"
       * New missions
@@ -10,6 +13,8 @@
          * Invade the frontier with the Dvaered
       * New translation(s) in progress: Czech, French, and Korean
    * Engine
+      * Support for post-processing shaders
+      * Added rendering and update hooks in the Lua API
       * Added image format support beyond PNG (notably WebP)
       * Game data now handled by PhysicsFS, allowing for multiple sources and easier modding
       * Meson is now the only build system, and development builds can integrate all assets/translations without being installed

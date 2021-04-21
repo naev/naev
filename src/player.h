@@ -7,6 +7,9 @@
 #  define PLAYER_H
 
 
+#include <time.h>
+
+
 #include "nstring.h"
 #include "pilot.h"
 
@@ -85,6 +88,7 @@ typedef struct Player_s {
 
    /* Loaded game version. */
    char *loaded_version; /**< Version of the loaded save game. */
+   time_t last_played; /**< Date the save was last played. */
 } Player_t;
 
 

@@ -2033,6 +2033,7 @@ dat/ssys/suna.xml
 dat/ssys/surano.xml
 dat/ssys/sylph.xml
 dat/ssys/symm.xml
+dat/ssys/taiomi.xml
 dat/ssys/tandar.xml
 dat/ssys/tarmak.xml
 dat/ssys/tarsus.xml
@@ -2162,6 +2163,7 @@ dat/ai/zalek.lua
 dat/bkg/default.lua
 dat/events/bioship_upgrade.lua
 dat/events/cinematic/DvdFLFbattle.lua
+dat/events/discovery.lua
 dat/events/dvaered/fwA_treason.lua
 dat/events/dvaered/fwB_repay.lua
 dat/events/dvaered/warlords_battle.lua
@@ -2177,6 +2179,7 @@ dat/events/neutral/animaltrouble.lua
 dat/events/neutral/baron_comm.lua
 dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
+dat/events/neutral/coolspace.lua
 dat/events/neutral/derelict.lua
 dat/events/neutral/kidnapped.lua
 dat/events/neutral/news.lua
@@ -2207,14 +2210,14 @@ dat/factions/equip/trader.lua
 dat/factions/equip/zalek.lua
 dat/factions/spawn/civilian.lua
 dat/factions/spawn/collective.lua
-dat/factions/spawn/common.lua
 dat/factions/spawn/dvaered.lua
 dat/factions/spawn/empire.lua
 dat/factions/spawn/flf.lua
 dat/factions/spawn/frontier.lua
 dat/factions/spawn/goddard.lua
 dat/factions/spawn/independent.lua
-dat/factions/spawn/mercenary_helper.lua
+dat/factions/spawn/lib/common.lua
+dat/factions/spawn/lib/mercenary.lua
 dat/factions/spawn/miner.lua
 dat/factions/spawn/nasin.lua
 dat/factions/spawn/pirate.lua
@@ -2406,7 +2409,6 @@ dat/scripts/colour.lua
 dat/scripts/coreprofile.lua
 dat/scripts/debug/debug.lua
 dat/scripts/enum.lua
-dat/scripts/fleet_form.lua
 dat/scripts/fleethelper.lua
 dat/scripts/formation.lua
 dat/scripts/imageproc.lua
@@ -2735,6 +2737,8 @@ src/player_gui.c
 src/player_gui.h
 src/queue.c
 src/queue.h
+src/render.c
+src/render.h
 src/rng.c
 src/rng.h
 src/save.c

@@ -27,6 +27,8 @@ typedef struct JumpPoint_ JumpPoint;
 #define ASSET_VIRTUAL         0 /**< The asset is virtual. */
 #define ASSET_REAL            1 /**< The asset is real. */
 
+#define ASTEROID_REF_AREA     500000 /**< The "density" value in an asteroid field means 1 rock per this area. */
+
 
 /* Asteroid status enum */
 enum {
@@ -285,6 +287,7 @@ struct StarSystem_ {
    Vector2d pos; /**< position */
    int stars; /**< Amount of "stars" it has. */
    double interference; /**< in % @todo implement interference. */
+   double nebu_hue; /**< Hue of the nebula (0. - 1.) */
    double nebu_density; /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
    double radius; /**< Default system radius for standard jump points. */

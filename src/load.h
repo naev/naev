@@ -9,6 +9,7 @@
 
 /** @cond */
 #include <stdint.h>
+#include <time.h>
 /** @endcond */
 
 #include "ntime.h"
@@ -33,6 +34,9 @@ typedef struct nsave_s {
    /* Ship info. */
    char *shipname; /**< Name of the ship. */
    char *shipmodel; /**< Model of the ship. */
+
+   /* Last played information. */
+   time_t last_played;
 } nsave_t;
 
 

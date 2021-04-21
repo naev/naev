@@ -29,18 +29,25 @@
 #include "pause.h"
 #include "perlin.h"
 #include "physics.h"
+#include "render.h"
 #include "rng.h"
 #include "space.h"
+#include "nlua_shader.h"
 
 
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
 #define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
 
+/*
+ * Effect parameters.
+ */
 #define SHAKE_MASS      (1./400.) /** Shake mass. */
 #define SHAKE_K         (1./50.) /**< Constant for virtual spring. */
 #define SHAKE_B         (3.*sqrt(SHAKE_K*SHAKE_MASS)) /**< Constant for virtual dampener. */
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
+
+#define DAMAGE_DECAY    0.5 /**< Rate at which the damage strength goes down. */
 
 
 /* Trail stuff. */
@@ -50,24 +57,27 @@ static Trail_spfx** trail_spfx_stack;
 
 
 /*
- * special hard-coded special effects
+ * Special hard-coded special effects
  */
 /* shake aka rumble */
-static int shake_set = 0; /**< Is shake set? */
+static unsigned int shake_shader_pp_id = 0; /**< ID of the post-processing shader for the shake. */
+static LuaShader_t shake_shader; /**< Shader to use for shake effects. */
 static Vector2d shake_pos = { .x = 0., .y = 0. }; /**< Current shake position. */
 static Vector2d shake_vel = { .x = 0., .y = 0. }; /**< Current shake velocity. */
 static double shake_force_mod = 0.; /**< Shake force modifier. */
+static double shake_force_mean = 0.; /**< Running mean of the force. */
 static float shake_force_ang = 0.; /**< Shake force angle. */
-static int shake_off = 1; /**< 1 if shake is not active. */
 static perlin_data_t *shake_noise = NULL; /**< Shake noise. */
-static const double shake_fps_min   = 1./10.; /**< Minimum fps to run shake update at. */
-
 /* Haptic stuff. */
 extern SDL_Haptic *haptic; /**< From joystick.c */
 extern unsigned int haptic_query; /**< From joystick.c */
 static int haptic_rumble         = -1; /**< Haptic rumble effect ID. */
 static SDL_HapticEffect haptic_rumbleEffect; /**< Haptic rumble effect. */
 static double haptic_lastUpdate  = 0.; /**< Timer to update haptic effect again. */
+/* damage effect */
+static unsigned int damage_shader_pp_id = 0; /**< ID of the post-processing shader (0 when disabled) */
+static LuaShader_t damage_shader; /**< Shader to use. */
+static double damage_strength = 0.; /**< Damage shader strength intensity. */
 
 
 /*
@@ -76,6 +86,14 @@ static double haptic_lastUpdate  = 0.; /**< Timer to update haptic effect again.
 static int trailSpec_load (void);
 static void trailSpec_parse( xmlNodePtr cur, TrailSpec *tc );
 static TrailSpec* trailSpec_getRaw( const char* name );
+
+
+/*
+ * Misc functions.
+ */
+static void spfx_updateShake( double dt );
+static void spfx_updateDamage( double dt );
+
 
 
 /**
@@ -264,8 +282,22 @@ int spfx_load (void)
    /*
     * Now initialize force feedback.
     */
+   memset( &shake_shader, 0, sizeof(LuaShader_t) );
+   shake_shader.program       = shaders.shake.program;
+   shake_shader.VertexPosition= shaders.shake.VertexPosition;
+   shake_shader.ClipSpaceFromLocal = shaders.shake.ClipSpaceFromLocal;
+   shake_shader.MainTex       = shaders.shake.MainTex;
    spfx_hapticInit();
    shake_noise = noise_new( 1, NOISE_DEFAULT_HURST, NOISE_DEFAULT_LACUNARITY );
+
+   /*
+    * Misc shaders.
+    */
+   memset( &damage_shader, 0, sizeof(LuaShader_t) );
+   damage_shader.program       = shaders.damage.program;
+   damage_shader.VertexPosition= shaders.damage.VertexPosition;
+   damage_shader.ClipSpaceFromLocal = shaders.damage.ClipSpaceFromLocal;
+   damage_shader.MainTex       = shaders.damage.MainTex;
 
    /* Stacks. */
    spfx_stack_front = array_create( SPFX );
@@ -375,11 +407,15 @@ void spfx_clear (void)
    int i;
 
    /* Clear rumble */
-   shake_set = 0;
-   shake_off = 1;
    shake_force_mod = 0.;
+   shake_force_mean = 0.;
    vectnull( &shake_pos );
    vectnull( &shake_vel );
+   if (shake_shader_pp_id > 0) {
+      render_postprocessRm( shake_shader_pp_id );
+      shake_shader_pp_id = 0;
+   }
+
    for (i=0; i<array_size(trail_spfx_stack); i++)
       spfx_trail_free( trail_spfx_stack[i] );
    array_erase( &trail_spfx_stack, array_begin(trail_spfx_stack), array_end(trail_spfx_stack) );
@@ -390,13 +426,24 @@ void spfx_clear (void)
  * @brief Updates all the spfx.
  *
  *    @param dt Current delta tick.
+ *    @param real_dt Real delta tick.
  */
-void spfx_update( const double dt )
+void spfx_update( const double dt, const double real_dt )
 {
    spfx_update_layer( spfx_stack_front, dt );
    spfx_update_layer( spfx_stack_middle, dt );
    spfx_update_layer( spfx_stack_back, dt );
    spfx_update_trails( dt );
+
+   /* Decrement the haptic timer. */
+   if (haptic_lastUpdate > 0.)
+      haptic_lastUpdate -= real_dt; /* Based on real delta-tick. */
+
+   /* Shake. */
+   spfx_updateShake( dt );
+
+   /* Damage. */
+   spfx_updateDamage( dt );
 }
 
 
@@ -433,10 +480,11 @@ static void spfx_updateShake( double dt )
 {
    double mod, vmod, angle;
    double force_x, force_y;
+   double dupdate;
    int forced;
 
    /* Must still be on. */
-   if (shake_off)
+   if (shake_shader_pp_id == 0)
       return;
 
    /* The shake decays over time */
@@ -448,13 +496,16 @@ static void spfx_updateShake( double dt )
       else
          forced            = 1;
    }
+   dupdate = dt*2.0;
+   shake_force_mean = dupdate*shake_force_mod + (1.0-dupdate)*shake_force_mean;
 
    /* See if it's settled down. */
    mod      = VMOD( shake_pos );
    vmod     = VMOD( shake_vel );
    if (!forced && (mod < 0.01) && (vmod < 0.01)) {
-      shake_off      = 1;
-      if (shake_force_ang > 1e3)
+      render_postprocessRm( shake_shader_pp_id );
+      shake_shader_pp_id = 0;
+      if (fabs(shake_force_ang) > 1e3)
          shake_force_ang = RNGF();
       return;
    }
@@ -471,12 +522,44 @@ static void spfx_updateShake( double dt )
       force_y          += shake_force_mod * sin(angle);
    }
 
-
    /* Update velocity. */
    vect_cadd( &shake_vel, (1./SHAKE_MASS) * force_x * dt, (1./SHAKE_MASS) * force_y * dt );
 
    /* Update position. */
    vect_cadd( &shake_pos, shake_vel.x * dt, shake_vel.y * dt );
+
+   /* Set the uniform. */
+   glUseProgram( shaders.shake.program );
+   glUniform2f( shaders.shake.shake_pos, shake_pos.x / SCREEN_W, shake_pos.y / SCREEN_H );
+   glUniform2f( shaders.shake.shake_vel, shake_vel.x / SCREEN_W, shake_vel.y / SCREEN_H );
+   glUniform1f( shaders.shake.shake_force, shake_force_mean );
+   glUseProgram( 0 );
+
+   gl_checkErr();
+}
+
+
+static void spfx_updateDamage( double dt )
+{
+   /* Must still be on. */
+   if (damage_shader_pp_id == 0)
+      return;
+
+   /* Decrement and turn off if necessary. */
+   damage_strength -= DAMAGE_DECAY * dt;
+   if (damage_strength < 0.) {
+      damage_strength = 0.;
+      render_postprocessRm( damage_shader_pp_id );
+      damage_shader_pp_id = 0;
+      return;
+   }
+
+   /* Set the uniform. */
+   glUseProgram( shaders.damage.program );
+   glUniform1f( shaders.damage.damage_strength, damage_strength );
+   glUseProgram( 0 );
+
+   gl_checkErr();
 }
 
 
@@ -685,98 +768,40 @@ static void spfx_trail_draw( const Trail_spfx* trail )
 
 
 /**
- * @brief Prepares the rendering for the special effects.
- *
- * Should be called at the beginning of the rendering loop.
- *
- *    @param dt Current delta tick.
- *    @param real_dt Real delta tick.
- */
-void spfx_begin( const double dt, const double real_dt )
-{
-   double ddt;
-
-   /* Defaults. */
-   shake_set = 0;
-   if (shake_off)
-      return;
-
-   /* Decrement the haptic timer. */
-   if (haptic_lastUpdate > 0.)
-      haptic_lastUpdate -= real_dt; /* Based on real delta-tick. */
-
-   /* Micro basic simple control loop. */
-   if (dt > shake_fps_min) {
-      ddt = dt;
-      while (ddt > shake_fps_min) {
-         spfx_updateShake( shake_fps_min );
-         ddt -= shake_fps_min;
-      }
-      spfx_updateShake( ddt ); /* Leftover. */
-   }
-   else
-      spfx_updateShake( dt );
-
-   /* set the new viewport */
-   gl_view_matrix = gl_Matrix4_Translate( gl_view_matrix, shake_pos.x, shake_pos.y, 0 );
-   shake_set = 1;
-}
-
-
-/**
- * @brief Indicates the end of the spfx loop.
- *
- * Should be called before the HUD.
- */
-void spfx_end (void)
-{
-   /* Save cycles. */
-   if (shake_set == 0)
-      return;
-
-   /* set the new viewport */
-   gl_defViewport();
-}
-
-
-/**
  * @brief Increases the current rumble level.
  *
  * Rumble will decay over time.
  *
- *    @param mod Modifier to increase level by.
+ *    @param mod Modifier to increase the level by.
  */
 void spfx_shake( double mod )
 {
    /* Add the modifier. */
-   shake_force_mod += mod;
-   if (shake_force_mod  > SHAKE_MAX)
-      shake_force_mod = SHAKE_MAX;
+   shake_force_mod = MIN( SHAKE_MAX, shake_force_mod+mod );
 
    /* Rumble if it wasn't rumbling before. */
    spfx_hapticRumble(mod);
 
-   /* Notify that rumble is active. */
-   shake_off = 0;
+   /* Create the shake. */
+   if (shake_shader_pp_id==0)
+      shake_shader_pp_id = render_postprocessAdd( &shake_shader, PP_LAYER_GAME, 99 );
 }
 
 
 /**
- * @brief Gets the current shake position.
+ * @brief Increases the current damage level.
  *
- *    @param[out] x X shake position.
- *    @param[out] y Y shake position.
+ * Damage will decay over time.
+ *
+ *    @param mod Modifier to increase the level by.
  */
-void spfx_getShake( double *x, double *y )
+void spfx_damage( double mod )
 {
-   if (shake_off) {
-      *x = 0.;
-      *y = 0.;
-   }
-   else {
-      *x = shake_pos.x;
-      *y = shake_pos.y;
-   }
+   damage_strength = MIN( 1.0, damage_strength + mod );
+
+   /* Create the damage. */
+   if (damage_shader_pp_id==0)
+      damage_shader_pp_id = render_postprocessAdd( &damage_shader, PP_LAYER_FINAL, 98 );
 }
 
 
@@ -826,7 +851,7 @@ static void spfx_hapticRumble( double mod )
    if (haptic_rumble >= 0) {
 
       /* Not time to update yet. */
-      if ((haptic_lastUpdate > 0.) || shake_off || (mod > SHAKE_MAX/3.))
+      if ((haptic_lastUpdate > 0.) || (shake_shader_pp_id==0) || (mod > SHAKE_MAX/3.))
          return;
 
       /* Stop the effect if it was playing. */

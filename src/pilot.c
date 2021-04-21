@@ -149,7 +149,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
       while (p < array_size(pilot_stack)) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   pilot_isDisabled(pilot_stack[p])) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
+               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p], NULL ))
             return pilot_stack[p]->id;
          p++;
@@ -159,7 +159,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    if (mode == 1) {
       while (p < array_size(pilot_stack)) {
          if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
+               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
                pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
@@ -203,7 +203,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
       while (p >= 0) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   (pilot_isDisabled(pilot_stack[p]))) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
+               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p], NULL ))
             return pilot_stack[p]->id;
          p--;
@@ -213,7 +213,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    else if (mode == 1) {
       while (p >= 0) {
          if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_INVISIBLE ) &&
+               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
                pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
                pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
@@ -240,8 +240,9 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
          pilot_isFlag( target, PILOT_DEAD ))
       return 0;
 
-   /* Must not be invisible. */
-   if (pilot_isFlag( target, PILOT_INVISIBLE ))
+   /* Must not be hidden nor invisible. */
+   if (pilot_isFlag( target, PILOT_HIDE ) ||
+         pilot_isFlag( target, PILOT_INVISIBLE))
       return 0;
 
    /* Must be in range. */
@@ -666,7 +667,8 @@ int pilot_isNeutral( const Pilot *p )
 int pilot_isFriendly( const Pilot *p )
 {
    if ( pilot_isFlag( p, PILOT_FRIENDLY ) ||
-         areAllies( FACTION_PLAYER,p->faction ) )
+         ( areAllies( FACTION_PLAYER,p->faction ) &&
+         !pilot_isFlag( p, PILOT_HOSTILE ) ) )
       return 1;
 
    return 0;
@@ -1350,7 +1352,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
    /* Invincible means no damage. */
    if (pilot_isFlag( p, PILOT_INVINCIBLE ) ||
-         pilot_isFlag( p, PILOT_INVISIBLE ))
+         pilot_isFlag( p, PILOT_HIDE ))
       return 0.;
 
    /* Defaults. */
@@ -2157,7 +2159,8 @@ void pilot_update( Pilot* pilot, const double dt )
                pilot->afterburner->outfit->u.afb.heat_cap)==0)
             pilot_afterburnOver(pilot);
          else {
-            if (pilot->id == PLAYER_ID) spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+            if (pilot->id == PLAYER_ID)
+               spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
                   pilot->afterburner->outfit->u.afb.heat_base,
                   pilot->afterburner->outfit->u.afb.heat_cap );
@@ -3136,7 +3139,7 @@ void pilots_update( double dt )
       }
 
       /* Invisible, not doing anything. */
-      if (pilot_isFlag(p, PILOT_INVISIBLE))
+      if (pilot_isFlag(p, PILOT_HIDE))
          continue;
 
       /* See if should think. */
@@ -3173,7 +3176,7 @@ void pilots_update( double dt )
          continue;
 
       /* Invisible, not doing anything. */
-      if (pilot_isFlag(p, PILOT_INVISIBLE))
+      if (pilot_isFlag(p, PILOT_HIDE))
          continue;
 
       /* Just update the pilot. */
@@ -3194,7 +3197,7 @@ void pilots_render( double dt )
    for (i=0; i<array_size(pilot_stack); i++) {
 
       /* Invisible, not doing anything. */
-      if (pilot_isFlag(pilot_stack[i], PILOT_INVISIBLE))
+      if (pilot_isFlag(pilot_stack[i], PILOT_HIDE))
          continue;
 
       if (pilot_stack[i]->render != NULL) /* render */
@@ -3214,7 +3217,7 @@ void pilots_renderOverlay( double dt )
    for (i=0; i<array_size(pilot_stack); i++) {
 
       /* Invisible, not doing anything. */
-      if (pilot_isFlag(pilot_stack[i], PILOT_INVISIBLE))
+      if (pilot_isFlag(pilot_stack[i], PILOT_HIDE))
          continue;
 
       if (pilot_stack[i]->render_overlay != NULL) /* render */

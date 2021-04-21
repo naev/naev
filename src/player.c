@@ -937,7 +937,7 @@ void player_render( double dt )
     * Render the player.
     */
    if ((player.p != NULL) && !player_isFlag(PLAYER_CREATING) &&
-         !pilot_isFlag( player.p, PILOT_INVISIBLE)) {
+         !pilot_isFlag( player.p, PILOT_HIDE)) {
 
       /* Render the aiming lines. */
       if ((player.p->target != PLAYER_ID) && player.p->aimLines) {
@@ -3161,6 +3161,9 @@ Planet* player_load( xmlNodePtr parent )
    pnt = NULL;
    map_cleanup();
 
+   /* Load time just in case. */
+   player.last_played = time(NULL);
+
    if (player_stack==NULL)
       player_stack = array_create( PlayerShip_t );
    if (player_outfits==NULL)
@@ -3168,7 +3171,9 @@ Planet* player_load( xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"player"))
+      if (xml_isNode(node,"last_played"))
+         xml_parseTime(node, &player.last_played);
+      else if (xml_isNode(node,"player"))
          pnt = player_parse( node );
       else if (xml_isNode(node,"missions_done"))
          player_parseDoneMissions( node );

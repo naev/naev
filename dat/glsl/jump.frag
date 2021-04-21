@@ -110,6 +110,4 @@ void main(void)
    //* Just use default
    color_out = jump_wind();
 #endif /* HAS_GL_ARB_shader_subroutine */
-
-#include "colorblind.glsl"
 }

@@ -950,11 +950,14 @@ void map_renderFactionDisks( double x, double y, int editor)
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
+      if (!sys_isKnown(sys) && !editor)
+         continue;
+
       tx = x + sys->pos.x*map_zoom;
       ty = y + sys->pos.y*map_zoom;
 
       /* System has faction and is known or we are in editor. */
-      if ((sys->faction != -1) && (sys_isKnown(sys) || editor)) {
+      if (sys->faction != -1) {
          /* Cache to avoid repeated sqrt() */
          presence = sqrt(sys->ownerpresence);
 
@@ -990,11 +993,11 @@ void map_renderFactionDisks( double x, double y, int editor)
          glUseProgram(shaders.nebula_map.program);
 
          /* Set shader uniforms. */
-         gl_uniformColor(shaders.nebula_map.color, &cBlue);
+         glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
          gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
-         glUniform1f(shaders.nebula_map.eddy_scale, map_zoom * 50. );
-         glUniform1f(shaders.nebula_map.time, map_nebu_dt / 5.0);
-         glUniform2f(shaders.nebula_map.globalpos, x, y );
+         glUniform1f(shaders.nebula_map.eddy_scale, map_zoom );
+         glUniform1f(shaders.nebula_map.time, map_nebu_dt / 10.0);
+         glUniform2f(shaders.nebula_map.globalpos, sys->pos.x, sys->pos.y );
 
          /* Draw. */
          glEnableVertexAttribArray( shaders.nebula_map.vertex );

@@ -72,6 +72,7 @@
 #include "physics.h"
 #include "pilot.h"
 #include "player.h"
+#include "render.h"
 #include "rng.h"
 #include "semver.h"
 #include "ship.h"
@@ -102,16 +103,17 @@ static semver_t version_binary; /**< Naev binary version. */
 //static semver_t version_data; /**< Naev data version. */
 static char version_human[256]; /**< Human readable version. */
 
-
 /*
  * FPS stuff.
  */
 static double fps_dt    = 1.; /**< Display fps accumulator. */
 static double game_dt   = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt   = 0.; /**< Real deltatick. */
-const double fps_min    = 1./30.; /**< Minimum fps to run at. */
+static double fps     = 0.; /**< FPS to finally display. */
+static double fps_cur = 0.; /**< FPS accumulator to trigger change. */
 static double fps_x     =  15.; /**< FPS X position. */
 static double fps_y     = -15.; /**< FPS Y position. */
+const double fps_min    = 1./30.; /**< Minimum fps to run at. */
 
 /*
  * prototypes
@@ -122,14 +124,12 @@ static void loadscreen_load (void);
 static void loadscreen_unload (void);
 static void load_all (void);
 static void unload_all (void);
-static void display_fps( const double dt );
 static void window_caption (void);
 /* update */
 static void fps_init (void);
 static double fps_elapsed (void);
 static void fps_control (void);
 static void update_all (void);
-static void render_all (void);
 /* Misc. */
 static void loadscreen_render( double done, const char *msg );
 void main_loop( int update ); /* dialogue.c */
@@ -423,7 +423,6 @@ int main( int argc, char** argv )
    gl_freeFont(&gl_defFontMono);
 
    start_cleanup(); /* Cleanup from start.c, not the first cleanup step. :) */
-   conf_cleanup(); /* Free some memory the configuration allocated. */
 
    /* exit subsystems */
    cli_exit(); /* Clean up the console. */
@@ -436,9 +435,13 @@ int main( int argc, char** argv )
    input_exit(); /* Cleans up keybindings */
    nebu_exit(); /* Destroys the nebula */
    lua_exit(); /* Closes Lua state. */
+   render_exit(); /* Cleans up post-processing. */
    gl_exit(); /* Kills video output */
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
+
+   /* Has to be run last or it will mess up sound settings. */
+   conf_cleanup(); /* Free some memory the configuration allocated. */
 
    /* Free the icon. */
    if (naev_icon)
@@ -691,7 +694,7 @@ void main_loop( int update )
     * Handle render.
     */
    /* Clear buffer. */
-   render_all();
+   render_all( game_dt, real_dt );
    /* Draw buffer. */
    SDL_GL_SwapWindow( gl_screen.window );
 }
@@ -832,6 +835,56 @@ static void fps_control (void)
 
 
 /**
+ * @brief Sets the position to display the FPS.
+ */
+void fps_setPos( double x, double y )
+{
+   fps_x = x;
+   fps_y = y;
+}
+
+
+/**
+ * @brief Displays FPS on the screen.
+ *
+ *    @param[in] dt Current delta tick.
+ */
+void display_fps( const double dt )
+{
+   double x,y;
+   double dt_mod_base = 1.;
+
+   fps_dt  += dt;
+   fps_cur += 1.;
+   if (fps_dt > 1.) { /* recalculate every second */
+      fps = fps_cur / fps_dt;
+      fps_dt = fps_cur = 0.;
+   }
+
+   x = fps_x;
+   y = fps_y;
+   if (conf.fps_show) {
+      gl_print( NULL, x, y, NULL, "%3.2f", fps );
+      y -= gl_defFont.h + 5.;
+   }
+
+   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+         !player_isFlag(PLAYER_CREATING)) {
+      dt_mod_base = player_dt_default();
+   }
+   if (dt_mod != dt_mod_base)
+      gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod / dt_mod_base);
+
+   if (!paused || !player_paused || !conf.pause_show)
+      return;
+
+   y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
+   gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
+         NULL, -1., _("PAUSED") );
+}
+
+
+/**
  * @brief Updates the game itself (player flying around and friends).
  *
  *    @brief Mainly uses game dt.
@@ -884,6 +937,8 @@ static void update_all (void)
  */
 void update_routine( double dt, int enter_sys )
 {
+   HookParam h[3];
+
    if (!enter_sys) {
       hook_exclusionStart();
 
@@ -894,121 +949,24 @@ void update_routine( double dt, int enter_sys )
    /* Update engine stuff. */
    space_update(dt);
    weapons_update(dt);
-   spfx_update(dt);
+   spfx_update(dt, real_dt);
    pilots_update(dt);
 
    /* Update camera. */
    cam_update( dt );
 
-   if (!enter_sys)
+   if (!enter_sys) {
       hook_exclusionEnd( dt );
-}
 
-
-/**
- * @brief Renders the game itself (player flying around and friends).
- *
- * Blitting order (layers):
- *   - BG
- *     - stars and planets
- *     - background player stuff (planet targeting)
- *     - background particles
- *     - back layer weapons
- *   - N
- *     - NPC ships
- *     - front layer weapons
- *     - normal layer particles (above ships)
- *   - FG
- *     - player
- *     - foreground particles
- *     - text and GUI
- */
-static void render_all (void)
-{
-   double dt;
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-   dt = (paused) ? 0. : game_dt;
-
-   /* setup */
-   spfx_begin(dt, real_dt);
-   /* Background stuff */
-   space_render( real_dt ); /* Nebula looks really weird otherwise. */
-   planets_render();
-   spfx_render(SPFX_LAYER_BACK);
-   weapons_render(WEAPON_LAYER_BG, dt);
-   /* Middle stuff */
-   pilots_render(dt);
-   weapons_render(WEAPON_LAYER_FG, dt);
-   spfx_render(SPFX_LAYER_MIDDLE);
-   /* Foreground stuff */
-   player_render(dt);
-   spfx_render(SPFX_LAYER_FRONT);
-   space_renderOverlay(dt);
-   gui_renderReticles(dt);
-   pilots_renderOverlay(dt);
-   spfx_end();
-   gui_render(dt);
-
-   /* Top stuff. */
-   ovr_render(dt);
-   display_fps( real_dt ); /* Exception using real_dt. */
-   toolkit_render();
-
-   /* check error every loop */
-   gl_checkErr();
-}
-
-
-static double fps     = 0.; /**< FPS to finally display. */
-static double fps_cur = 0.; /**< FPS accumulator to trigger change. */
-/**
- * @brief Displays FPS on the screen.
- *
- *    @param[in] dt Current delta tick.
- */
-static void display_fps( const double dt )
-{
-   double x,y;
-   double dt_mod_base = 1.;
-
-   fps_dt  += dt;
-   fps_cur += 1.;
-   if (fps_dt > 1.) { /* recalculate every second */
-      fps = fps_cur / fps_dt;
-      fps_dt = fps_cur = 0.;
+      /* Hook set up. */
+      h[0].type = HOOK_PARAM_NUMBER;
+      h[0].u.num = dt;
+      h[1].type = HOOK_PARAM_NUMBER;
+      h[1].u.num = real_dt;
+      h[2].type = HOOK_PARAM_SENTINEL;
+      /* Run the update hook. */
+      hooks_runParam( "update", h );
    }
-
-   x = fps_x;
-   y = fps_y;
-   if (conf.fps_show) {
-      gl_print( NULL, x, y, NULL, "%3.2f", fps );
-      y -= gl_defFont.h + 5.;
-   }
-
-   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-         !player_isFlag(PLAYER_CREATING)) {
-      dt_mod_base = player_dt_default();
-   }
-   if (dt_mod != dt_mod_base)
-      gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod / dt_mod_base);
-
-   if (!paused || !player_paused || !conf.pause_show)
-      return;
-
-   y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
-   gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
-         NULL, -1., _("PAUSED") );
-}
-
-
-/**
- * @brief Sets the position to display the FPS.
- */
-void fps_setPos( double x, double y )
-{
-   fps_x = x;
-   fps_y = y;
 }
 
 

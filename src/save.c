@@ -126,6 +126,9 @@ int save_all (void)
    xmlw_elem( writer, "data", "%s", start_name() );
    xmlw_endElem(writer); /* "version" */
 
+   /* Save last played. */
+   xmlw_saveTime( writer, "last_played", time(NULL) );
+
    /* Save the data. */
    if (save_data(writer) < 0) {
       ERR(_("Trying to save game data"));

@@ -254,9 +254,9 @@ She looks clearly excited at the possibility.]]))
 "The scavengers were selling to the Za'lek right? What could the Za'lek have to do with my father so far away? I always thought those creeps couldn't be up to anything good."]]))
    maikki(_([[Her face glows.
 "I think I have an idea for our next steps. Meet me up here in a bit. I have to get some information first."]]))
+   vn.sfxVictory()
    vn.func( function ()
       -- no reward, yet...
-      vn.sfxVictory()
       mission_finish = true
       shiplog.appendLog( logidstr, _("You gave Maikki the information you found in the nebula about her father.") )
    end )

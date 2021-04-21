@@ -101,7 +101,7 @@ void spfx_add( const int effect,
 /*
  * stack mass manipulation functions
  */
-void spfx_update( const double dt );
+void spfx_update( const double dt, const double real_dt );
 void spfx_render( const int layer );
 void spfx_clear (void);
 Trail_spfx* spfx_trail_create( const TrailSpec* spec );
@@ -110,12 +110,10 @@ void spfx_trail_remove( Trail_spfx* trail );
 
 
 /*
- * get ready to rumble
+ * Misc effects.
  */
-void spfx_begin( const double dt, const double real_dt );
-void spfx_end (void);
 void spfx_shake( double mod );
-void spfx_getShake( double *x, double *y );
+void spfx_damage( double mod );
 
 
 /*

@@ -29,5 +29,23 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Taiomi">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>massive</type>
+   <type>massive</type>
+   <type>liquid</type>
+   <radius>4000.000000</radius>
+   <pos x="13000.000000" y="5000.000000"/>
+   <density>0.777700</density>
+  </asteroid>
+ </asteroids>
 </ssys>

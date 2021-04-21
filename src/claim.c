@@ -96,6 +96,24 @@ int claim_addSys( Claim_t *claim, int ss_id )
 
 
 /**
+ * @brief See if a claim actually contains data.
+ *
+ *    @param claim to test.
+ *    @return 0 if claim contains something, 1 otherwise.
+ */
+int claim_isNull( Claim_t *claim )
+{
+   if (claim == NULL)
+      return 1;
+
+   if (array_size(claim->ids) == 0)
+      return 1;
+
+   return 0;
+}
+
+
+/**
  * @brief Tests to see if a system claim would have collisions.
  *
  *    @param claim System to test.
