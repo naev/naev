@@ -45,6 +45,22 @@ while getopts dnpc:s:t:o: OPTION "$@"; do
     esac
 done
 
+retry() {
+    local -r -i max_attempts="$1"; shift
+    local -i attempt_num=1
+    until "$@"
+    do
+        if ((attempt_num==max_attempts))
+        then
+            echo "Attempt $attempt_num failed and there are no more attempts left!"
+            return 1
+        else
+            echo "Attempt $attempt_num failed! Trying again in $attempt_num seconds..."
+            sleep $((attempt_num++))
+        fi
+    done
+}
+
 # Make Steam dist path if it does not exist
 mkdir -p "$STEAMPATH"/content/lin64
 mkdir -p "$STEAMPATH"/content/macos
@@ -83,11 +99,11 @@ if [ "$DRYRUN" == "false" ]; then
 
     if [ "$NIGHTLY" == "true" ]; then
         # Run steam upload with 2fa key
-        steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_nightly.vdf" +quit
+        retry 5 "steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_nightly.vdf +quit"
     else
         if [ "$PRERELEASE" == "true" ]; then 
             # Run steam upload with 2fa key
-            steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_prerelease.vdf" +quit
+            retry 5 "steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_prerelease.vdf +quit"
 
         elif [ "$PRERELEASE" == "false" ]; then 
             mkdir -p "$STEAMPATH"/content/soundtrack
@@ -95,8 +111,8 @@ if [ "$DRYRUN" == "false" ]; then
             cp "$TEMPPATH"/naev-steam-soundtrack/*.* "$STEAMPATH/content/soundtrack"
 
             # Run steam upload with 2fa key
-            steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http "$STEAMPATH/scripts/app_build_598530_release.vdf" +quit
-            steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http "$STEAMPATH/scripts/app_build_1411430_soundtrack.vdf" +quit
+            retry 5 "steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS $STEAMCMD_TFA +run_app_build_http $STEAMPATH/scripts/app_build_598530_release.vdf +quit"
+            retry 5 "steamcmd +login $STEAMCMD_USER $STEAMCMD_PASS +run_app_build_http $STEAMPATH/scripts/app_build_1411430_soundtrack.vdf +quit"
 
         else
             echo "Something went wrong determining if this is a PRERELEASE or not."
