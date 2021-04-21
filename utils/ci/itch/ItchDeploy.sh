@@ -88,9 +88,9 @@ fi
 
 run_butler () {
     if [ "$BUTLER" = *"$BUTLERDIR"* ]; then
-        ./$BUTLER $@
+        retry 5 ./$BUTLER $@
     else
-        $BUTLER $@
+        retry 5 $BUTLER $@
     fi
 }
 
@@ -137,30 +137,30 @@ sed -i 's/%PLATFORM%/windows/' "$OUTDIR"/win64/.itch.toml
 # Push builds to itch.io via butler
 
 if [ "$DRYRUN" == "false" ]; then
-    retry 5 "run_butler -V"
+    run_butler -V
     if [ "$NIGHTLY" == "true" ]; then
-        retry 5 "run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64-nightly"
-        retry 5 "run_butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64-nightly"
-        retry 5 "run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64-nightly"
+        run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64-nightly
+        run_butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64-nightly
+        run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64-nightly
 
     else
         if [ "$PRERELEASE" == "true" ]; then 
-            retry 5 "run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64-beta"
-            retry 5 "butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64-beta"
-            retry 5 "run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64-beta"
+            run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64-beta
+            run_butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64-beta
+            run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64-beta
 
         elif [ "$PRERELEASE" == "false" ]; then 
-            retry 5 "run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64"
-            retry 5 "run_butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64"
-            retry 5 "run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64"
-            retry 5 "run_butler push --userversion="$SUFFIX" "$OUTDIR"/soundtrack naev/naev:soundtrack"
+            run_butler push --userversion="$SUFFIX" "$OUTDIR"/lin64 naev/naev:linux-x86-64
+            run_butler push --userversion="$SUFFIX" "$OUTDIR"/macos naev/naev:macos-x86-64
+            run_butler push --userversion="$SUFFIX" "$OUTDIR"/win64 naev/naev:windows-x86-64
+            run_butler push --userversion="$SUFFIX" "$OUTDIR"/soundtrack naev/naev:soundtrack
 
         else
             echo "Something went wrong determining if this is a PRERELEASE or not."
         fi
     fi
 elif [ "$DRYRUN" == "true" ]; then
-    retry 5 "run_butler -V"
+    run_butler -V
     if [ "$NIGHTLY" == "true" ]; then
         # Run butler nightly upload
         echo "butler nightly upload"
