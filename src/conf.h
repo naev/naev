@@ -25,8 +25,8 @@
 /* Video options */
 #define RESOLUTION_W_MIN                     1280  /**< Minimum screen width (below which graphics are downscaled). */
 #define RESOLUTION_H_MIN                     720   /**< Minimum screen height (below which graphics are downscaled). */
-#define RESOLUTION_W_DEFAULT                 1280  /**< Default screen width. */
-#define RESOLUTION_H_DEFAULT                 720   /**< Default screen height. */
+#define RESOLUTION_W_DEFAULT                 RESOLUTION_W_MIN /**< Default screen width. */
+#define RESOLUTION_H_DEFAULT                 RESOLUTION_H_MIN /**< Default screen height. */
 #define FULLSCREEN_DEFAULT                   0     /**< Whether to run in fullscreen mode. */
 #define FULLSCREEN_MODESETTING               0     /**< Whether fullscreen uses video modesetting. */
 #define FSAA_DEFAULT                         1     /**< Whether to use Full Screen Anti-Aliasing. */
