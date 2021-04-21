@@ -247,7 +247,7 @@ jobs:
 
   "Upload_Naev_Release":
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         include:
           - releasetype: github
