@@ -247,7 +247,7 @@ jobs:
 
   "Upload_Naev_Release":
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         include:
           - releasetype: github
@@ -334,43 +334,9 @@ jobs:
       - name: Build and Upload itch.io Release
         if: ${{ matrix.releasetype == 'itch' }}
         run: |
-          # Collect BUILD_DATE, VERSION and assemble SUFFIX for naming files.
-
-          BUILD_DATE="$(date +%Y%m%d)"
-          VERSION="$(<"build/staging/naev-version/VERSION")"
-          SUFFIX="$VERSION.$BUILD_DATE"
-
-          # Build Linux Release
-
-          cp build/staging/naev-itch-deployment/.itch.toml build/dist/lin64
-          sed -i "s/%EXECNAME%/naev-$SUFFIX-linux-x86-64.AppImage/" build/dist/lin64/.itch.toml
-          sed -i 's/%PLATFORM%/linux/' build/dist/lin64/.itch.toml
-          
-          cp build/staging/naev-linux-x86-64/*.AppImage build/dist/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-          chmod +x build/dist/lin64/naev-$SUFFIX-linux-x86-64.AppImage
-
-          # Build macOS Release
-
-          cp build/staging/naev-itch-deployment/.itch.toml build/dist/macos
-          sed -i 's/%EXECNAME%/Naev.app/' build/dist/macos/.itch.toml
-          sed -i 's/%PLATFORM%/osx/' build/dist/macos/.itch.toml
-
-          unzip build/staging/naev-macos/*.zip -d build/dist/macos
-
-          # Build Windows Release
-
-          cp build/staging/naev-itch-deployment/.itch.toml build/dist/win64
-          sed -i "s/%EXECNAME%/naev-$SUFFIX-win64.exe/" build/dist/win64/.itch.toml
-          sed -i 's/%PLATFORM%/windows/' build/dist/win64/.itch.toml
-
-          tar -Jxf "build/staging/naev-win64/steam-win64.tar.xz" -C "build/dist/win64"
-          tar -Jxf "build/staging/naev-ndata/steam-ndata.tar.xz" -C "build/dist/win64"
-
-          # Push builds to itch.io via butler
-
-          butler push --userversion="$SUFFIX" build/dist/lin64 naev/naev:linux-x86-64-nightly
-          butler push --userversion="$SUFFIX" build/dist/macos naev/naev:macos-x86-64-nightly
-          butler push --userversion="$SUFFIX" build/dist/win64 naev/naev:windows-x86-64-nightly
+          chmod -R +x build/staging/naev-itch-deployment
+          cp -r build/staging/naev-itch-deployment/* "$(pwd)"
+          ./ItchDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist"
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
