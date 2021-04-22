@@ -53,7 +53,7 @@ local minerva = {
       name = _("Minerva CEO"),
       portrait = "minervaceo.png",
       image = "minervaceo.png",
-      desc = _("The CEO of Minerva Station."),
+      description = _("The CEO of Minerva Station."),
       colour = nil,
    },
 
