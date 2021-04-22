@@ -480,7 +480,12 @@ end
 
 -- create news
 function create()
-   local f = planet.cur():faction()
+   local p = planet.cur()
+   local s = p:services()
+   -- Needs to be inhabited and have a bar for there to be news
+   if not s["inhabited"] or not s["bar"] then evt.finish(false) end
+   -- Needs a faction for there to be news
+   local f = p:faction()
    if f == nil then evt.finish(false) end
    local my_faction = f:nameRaw()
 
