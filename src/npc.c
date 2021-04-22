@@ -119,6 +119,20 @@ static unsigned int npc_add_giver( Mission *misn )
 {
    NPC_t npc;
 
+   /* Sanity check. */
+   if (misn->npc == NULL) {
+      WARN(_("Mission '%s' trying to create NPC with no name!"), misn->data->name);
+      return 0;
+   }
+   if (misn->portrait == NULL) {
+      WARN(_("Mission '%s' trying to create NPC with no portrait!"), misn->data->name);
+      return 0;
+   }
+   if (misn->desc == NULL) {
+      WARN(_("Mission '%s' trying to create NPC with no description!"), misn->data->name);
+      return 0;
+   }
+
    /* Set up the data. */
    npc.type       = NPC_TYPE_GIVER;
    npc.name       = strdup(misn->npc);
