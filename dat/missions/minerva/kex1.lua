@@ -21,11 +21,13 @@
 local minerva = require "minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
-local love_shaders = require 'love_shaders'
 require 'numstring'
 
 -- Mission states:
 --  nil: mission not accepted yet
+--  0: mission accepted go to targetsys
+--  1: have to destroy all the enemy ships
+--  2: return to kex
 misn_state = nil
 
 targetsys = "Provectus Nova"
@@ -54,6 +56,7 @@ function accept ()
 
    hook.land("generate_npc")
    hook.load("generate_npc")
+   hook.enter("enter")
 
    -- Re-add Maikki if accepted
    generate_npc()
@@ -78,6 +81,17 @@ function approach_kex ()
    vn.transition()
    vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
 
+   --[[
+   if done_cond then
+      -- Remove unnecessary variables to keep it clean
+      var.pop( "kex_talk_station" )
+      var.pop( "kex_talk_ceo" )
+      var.pop( "ceo_talk_intro" )
+      misn.finish( true )
+      return
+   end
+   --]]
+
    vn.label("menu_msg")
    kex(_([["What's up kid?"]]))
    vn.menu( function ()
@@ -85,8 +99,11 @@ function approach_kex ()
          { _("Ask about the station"), "station" },
          { _("Leave"), "leave" },
       }
-      if var.peek("kex_talk_station") then
+      if var.peek("kex_talk_station") and misn_state == nil then
          table.insert( opts, 1, { _("Ask about the CEO"), "ceo" } )
+      end
+      if misn_state == 0 then
+         table.insert( opts, 1, { _("Ask about the job"), "job" } )
       end
       return opts
    end )
@@ -122,7 +139,7 @@ He lets out a sigh."]]))
       end
    end )
    vn.jump("menu_msg")
-  
+
    vn.label("talked_ceo")
    kex(_([["Oh, you already talked to them? How did it go?"
 He looks at you expectantly.]]))
@@ -130,7 +147,33 @@ He looks at you expectantly.]]))
    kex(_([[He looks a bit glum.
 "Yeah, I don't think there is talking sense into that one… Maybe if we…"
 He stops to think a bit.]]))
-   kex(_([["This may sound crazy, but I think it might work. You're a good pilot from what I hear right?]]))
+   kex(_([["This may sound crazy, but I think it might work. You're a good pilot from what I hear right?"
+You looks at you with determination.
+"Given that the issue is the CEO, if we can somehow get rid of the CEO, there should be no issue, right?"]]))
+   kex(_([["Since I know for a certainly that he is involved in, let's call it, unsavory business, all we have to do is get him bust and in the confusion it should be more than easy for me to go free."]]))
+   kex(_([[He looks down at the floor.
+"I know we've known each other for a relatively short time, but wouldn't you help a duck out? I might be able to make it worth your time afterwards."]]))
+   vn.menu({
+      { _("Help a duck out."), "help" },
+      { _("Maybe later."), "nohelp" },
+   })
+
+   vn.label("help")
+   kex(string.format(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could could go to the %s system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), _(targetsys)))
+   kex(_([["Hope"]]))
+   vn.func( function ()
+      misn_state = 0
+   end )
+   vn.jump("menu_msg")
+
+   vn.label("nohelp")
+   kex(_([[He looks dejected.
+"I see. If you change your mind, I'll be around."]]))
+   vn.jump("menu_msg")
+
+   vn.label("job")
+   kex(_([["We have to find the dirt on the CEO and get him removed. It is the only change I have for freedom."]]))
+   kex(string.format(_([[They should be receiving a delivery. You should go intercept it at the %s system before it gets here. I have sent you all the precise information. It should be a breeze with with your piloting skills.]]), _(targetsys)))
    vn.jump("menu_msg")
 
    vn.label("leave")
@@ -168,4 +211,9 @@ He takes another swig from his drinks.]]))
 
    vn.done()
    vn.run()
+end
+
+function enter ()
+   if system.cur() == system.get(targetsys) then
+   end
 end
