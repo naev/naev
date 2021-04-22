@@ -55,7 +55,7 @@ function enter ()
    elseif evt_state==1 then
       drones_create() -- Not disable as they move
    elseif evt_state==2 then
-      drones_create()
+      drones_create(9) -- fewer drones
 
       -- Drones just run around
       for k,d in ipairs(drones) do
@@ -67,11 +67,12 @@ function enter ()
    end
 end
 
-function drones_create ()
+function drones_create( n )
+   n = n or 20
 
    -- Add frozen and invincible drones
    drones = {}
-   for i = 1,20 do
+   for i = 1,n do
       local pos = vec2.newP( 150+2000*rnd.rnd(), 359*rnd.rnd() )
       local d = pilot.add( "Drone", drone_faction, pos )
       d:setInvisible(true)
