@@ -3,7 +3,7 @@
 <event name="Minerva Station Gambling">
  <trigger>land</trigger>
  <chance>100</chance>
- <cond>planet.cur():name()=="Minerva Station"</cond>
+ <cond>planet.cur()==planet.get("Minerva Station")</cond>
  <notes>
   <campaign>Minerva</campaign>
   <provides name="Minerva Station" />
@@ -99,9 +99,6 @@ function create()
       }
       local desc = desclist[ rnd.rnd(1,#desclist) ]
       npc_maikki = evt.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, desc, important_npc_priority )
-   end
-   if player.evtDone("Chicken Rendezvous") then
-      npc_kex = evt.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description, important_npc_priority )
    end
 
    -- Create random noise NPCs
@@ -579,7 +576,7 @@ function approach_maikki ()
 
    vn.label("memory")
    vn.na(_("You ask to see if she remembered anything else about her father."))
-   -- TODO
+   maikki("TODO")
    vn.jump("menu_msg")
 
    vn.label("kex")
@@ -596,33 +593,6 @@ function approach_maikki ()
    vn.run()
 end
 
-function approach_kex ()
-   -- TODO should be handled in the kex mission line probably
-   vn.clear()
-   vn.scene()
-   vn.music( minerva.loops.kex )
-   local kex = vn.newCharacter( minerva.vn_kex() )
-   vn.transition()
-   vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
-
-   vn.label("menu_msg")
-   kex(_("What's up kid?"))
-   vn.menu( function ()
-      local opts = {
-         --{ _("Ask about the station"), "station" },
-         { _("Leave"), "leave" },
-      }
-      return opts
-   end )
-
-   vn.label("station")
-   vn.jump("menu_msg")
-
-   vn.label("leave")
-   vn.na(_("You take your leave."))
-   vn.done()
-   vn.run()
-end
 
 --[[
 -- Event is over when player takes off.
