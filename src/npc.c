@@ -561,7 +561,7 @@ static int npc_approach_giver( NPC_t *npc )
    misn = &npc->u.g;
    id   = npc->id;
    ret  = mission_accept( misn );
-   if ((ret==0) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
+   if ((ret==2) || (ret==-1)) { /* success in accepting the mission */
       if (ret==-1)
          mission_cleanup( misn );
       npc_rm( npc_arrayGet(id) );
