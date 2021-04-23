@@ -904,7 +904,7 @@ static int misn_npcAdd( lua_State *L )
    cur_mission = misn_getFromLua(L);
 
    /* Add npc. */
-   id = npc_add_mission( cur_mission, func, name, priority, portrait, desc, (bg==NULL) ? bg :background );
+   id = npc_add_mission( cur_mission->id, func, name, priority, portrait, desc, (bg==NULL) ? bg :background );
 
    /* Return ID. */
    if (id > 0) {
@@ -931,7 +931,7 @@ static int misn_npcRm( lua_State *L )
 
    id = luaL_checklong(L, 1);
    cur_mission = misn_getFromLua(L);
-   ret = npc_rm_mission( id, cur_mission );
+   ret = npc_rm_mission( id, cur_mission->id );
 
    if (ret != 0)
       NLUA_ERROR(L, _("Invalid NPC ID!"));

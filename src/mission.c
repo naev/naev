@@ -497,7 +497,7 @@ void mission_cleanup( Mission* misn )
    /* Hooks and missions. */
    if (misn->id != 0) {
       hook_rmMisnParent( misn->id ); /* remove existing hooks */
-      npc_rm_parentMission( misn ); /* remove existing npc */
+      npc_rm_parentMission( misn->id ); /* remove existing npc */
    }
 
    /* Cargo. */

@@ -15,7 +15,7 @@
 /*
  * Adding.
  */
-unsigned int npc_add_mission( Mission *misn, const char *func, const char *name,
+unsigned int npc_add_mission( unsigned int mid, const char *func, const char *name,
       int priority, const char *portrait, const char *desc, const char *background );
 unsigned int npc_add_event( unsigned int evt, const char *func, const char *name,
       int priority, const char *portrait, const char *desc, const char *background );
@@ -24,9 +24,9 @@ unsigned int npc_add_event( unsigned int evt, const char *func, const char *name
  * Removing.
  */
 int npc_rm_event( unsigned int id, unsigned int evt );
-int npc_rm_mission( unsigned int id, Mission *misn );
+int npc_rm_mission( unsigned int id, unsigned int mid );
 int npc_rm_parentEvent( unsigned int id );
-int npc_rm_parentMission( Mission *misn );
+int npc_rm_parentMission( unsigned int mid );
 
 /*
  * Control.
