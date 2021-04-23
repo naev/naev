@@ -403,6 +403,8 @@ void bar_regen (void)
 {
    if (!landed)
       return;
+   if (!land_loaded)
+      return;
    bar_genList( land_getWid(LAND_WINDOW_BAR) );
 }
 /**
@@ -1143,6 +1145,9 @@ void land( Planet* p, int load )
    /* Hack so that load can run player.takeoff(). */
    if (load)
       hooks_run( "load" );
+
+   /* Just in case? */
+   bar_regen();
 
    /* Mission forced take off. */
    if (land_takeoff)

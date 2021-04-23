@@ -319,6 +319,8 @@ int npc_rm_parentEvent( unsigned int id )
       n++;
    }
 
+   bar_regen();
+
    return n;
 }
 
@@ -344,6 +346,8 @@ int npc_rm_parentMission( unsigned int mid )
       i--;
       n++;
    }
+   
+   bar_regen();
 
    return n;
 }
