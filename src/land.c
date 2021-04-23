@@ -101,8 +101,8 @@ static int last_window = 0; /**< Default window. */
 /*
  * Error handling.
  */
-static char errorlist[512];
-static char errorreason[512];
+static char errorlist[STRMAX_SHORT];
+static char errorreason[STRMAX_SHORT];
 static int errorappend;
 static char *errorlist_ptr;
 
