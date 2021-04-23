@@ -39,27 +39,10 @@ function create ()
    if not misn.claim( system.get(targetsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( minerva.kex.name, minerva.kex.portrait )
-   misn.setDesc( minerva.kex.description )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
-end
 
-
-function accept ()
-   approach_kex()
-
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
-      return
-   end
-
-   hook.land("generate_npc")
-   hook.load("generate_npc")
-   hook.enter("enter")
-
-   -- Re-add Maikki if accepted
-   generate_npc()
+   generate_npc ()
 end
 
 
@@ -162,7 +145,13 @@ You looks at you with determination.
    kex(string.format(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could could go to the %s system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), _(targetsys)))
    kex(_([["Hope"]]))
    vn.func( function ()
-      misn_state = 0
+      if misn_state==nil then
+         misn_state = 0
+         misn.accept()
+         hook.land("generate_npc")
+         hook.load("generate_npc")
+         hook.enter("enter")
+      end
    end )
    vn.jump("menu_msg")
 
