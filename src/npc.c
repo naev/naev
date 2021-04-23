@@ -483,14 +483,26 @@ static void npc_free( NPC_t *npc )
  */
 void npc_clear (void)
 {
-   int i;
+   int i, j;
 
-   /* First pass to clear the data. */
+   /* Clear the npcs. */
    for (i=0; i<array_size( npc_array ); i++)
       npc_free( &npc_array[i] );
-
    array_free( npc_array );
    npc_array = NULL;
+
+   /* Clear all the missions. */
+   for (i=0; i<array_size( npc_missions ); i++) {
+      /* TODO this is horrible and should be removed */
+      /* Clean up all missions that haven't been moved to the active missions. */
+      for (j=0; j<MISSION_MAX; j++)
+         if (player_missions[i]->id == npc_missions[i].id)
+            break;
+      if (j>=MISSION_MAX)
+         mission_cleanup( &npc_missions[i] );
+   }
+   array_free( npc_missions );
+   npc_missions = NULL;
 }
 
 
