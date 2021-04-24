@@ -21,6 +21,9 @@
 local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local graphics = require 'love.graphics'
+local taiomi = require 'taiomi'
+
+logidstr = taiomi.log.main.idstr
 
 --[[
 -- Event states:
@@ -48,6 +51,9 @@ function enter ()
    if system.cur() ~= system.get("Taiomi") then return end
 
    if evt_state==0 then
+      shiplog.createLog( logidstr, taiomi.log.main.logname, taiomi.log.main.logtype, true )
+      shiplog.appendLog( logidstr, _("You have entered Taiomi for the first time.") )
+
       drones_create()
       for k,d in ipairs(drones) do
          d:disable()
@@ -106,6 +112,8 @@ function land ()
       vn.na(_("You see how the Drone elegantly and carefully is able to maneuver out of the Goddard without scratching a single wall."))
       vn.done()
       vn.run()
+
+      shiplog.appendLog( logidstr, _("You have met the robotic inhabitants of Taiomi.") )
 
       -- Since we finish here, next time the player takes off the Taiomi
       -- System event will take over and spawn NPCs
