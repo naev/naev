@@ -102,7 +102,7 @@ static Mission* npc_getMisn( const NPC_t *npc )
    for (i=0; i<array_size(npc_missions); i++)
       if (npc_missions[i].id == npc->u.m.id)
          return &npc_missions[i];
-   
+
    return NULL;
 }
 
@@ -346,7 +346,7 @@ int npc_rm_parentMission( unsigned int mid )
       i--;
       n++;
    }
-   
+
    bar_regen();
 
    return n;
@@ -410,6 +410,8 @@ void npc_generateMissions (void)
    missions = missions_genList( &nmissions,
          land_planet->faction, land_planet->name, cur_system->name,
          MIS_AVAIL_BAR );
+   /* Mission sshould already be generated and have had their 'create' function
+    * run, so NPCs should be running wild (except givers). */
 
    /* Add to the bar NPC stack and add npc. */
    for (i=0; i<nmissions; i++) {
@@ -419,6 +421,22 @@ void npc_generateMissions (void)
       /* See if need to add NPC. */
       if (m->npc)
          npc_add_giver( m );
+
+#if DEBUGGING
+      /* Make sure the mission has created an NPC or it won't be able to do anything. */
+      int found = 0;
+      NPC_t *npc;
+      for (int j=0; j<array_size(npc_array); j++) {
+         npc = &npc_array[j];
+         if ((npc->type == NPC_TYPE_MISSION || npc->type == NPC_TYPE_GIVER) &&
+               npc->u.m.id == m->id) {
+            found = 1;
+            break;
+         }
+      }
+      if (!found)
+         WARN(_("Mission '%s' was created at the spaceport bar but didn't create any NPC!"), m->data->name);
+#endif /* DEBUGGING */
    }
 
    /* Clean up. */
