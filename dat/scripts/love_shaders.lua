@@ -508,4 +508,26 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 end
 
 
+--[[--
+Simple color modulation shader.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "color" field is used.
+--]]
+function love_shaders.color( params )
+   color = params.color or {1, 1, 1, 1}
+   color[4] = color[4] or 1
+   local pixelcode = string.format([[
+const vec4 basecolor = vec4( %f, %f, %f, %f );
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+{
+   vec4 texcolor = Texel(tex, uv);
+   return basecolor * color * texcolor;
+}
+]], color[1], color[2], color[3], color[4] )
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   return shader
+end
+
+
 return love_shaders
