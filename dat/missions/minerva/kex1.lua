@@ -37,8 +37,9 @@ targetsys = "Provectus Nova"
 jumpinsys = "Waterhole"
 jumpoutsys = "Limbo"
 
-misn_reward = "A step closer to Kex's freedom"
-misn_title = "Freeing Kex"
+misn_reward = _("A step closer to Kex's freedom")
+misn_title = _("Freeing Kex")
+misn_desc = _("Maikki wants you to help her find her father.")
 
 function create ()
    if not misn.claim( system.get(targetsys) ) then
@@ -46,6 +47,7 @@ function create ()
    end
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
+   misn.setDesc( misn_desc )
 
    -- We avoid creating a giver NPC and directly use "normal NPC"
    -- Have to make sure to check if misn.accept() works
@@ -195,7 +197,7 @@ You looks at you with determination.
          end
          shiplog.appendLog( logidstr, _("You agreed to help Kex to find dirt on the Minerva Station CEO to try to get him free."))
          misn_marker = misn.markerAdd( system.get(targetsys) )
-         misn.osdCreate( _("Kex's Freedom"),
+         misn.osdCreate( misn_title,
             { string.format(_("Intercept the transport at %s"), _(targetsys)),
             _("Return to Kex at Minerva Station") } )
          misn_state = 0
