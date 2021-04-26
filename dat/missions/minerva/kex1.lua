@@ -39,7 +39,7 @@ jumpoutsys = "Limbo"
 
 misn_reward = _("A step closer to Kex's freedom")
 misn_title = _("Freeing Kex")
-misn_desc = _("Maikki wants you to help her find her father.")
+misn_desc = _("Kex wants you to help him find dirt on the Minerva CEO by raiding a transport headed to Minerva Station.")
 
 function create ()
    if not misn.claim( system.get(targetsys) ) then
