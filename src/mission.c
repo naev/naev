@@ -525,6 +525,7 @@ void mission_cleanup( Mission* misn )
    free(misn->reward);
    gl_freeTexture(misn->portrait);
    free(misn->npc);
+   free(misn->npc_desc);
 
    /* Markers. */
    array_free( misn->markers );

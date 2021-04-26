@@ -495,12 +495,13 @@ static int misn_markerRm( lua_State *L )
  *
  *    @luatparam string name Name of the NPC.
  *    @luatparam string portrait File name of the portrait to use for the NPC.
+ *    @luatparam string desc Description of the NPC to use.
  * @luafunc setNPC
  */
 static int misn_setNPC( lua_State *L )
 {
    char buf[PATH_MAX];
-   const char *name, *str;
+   const char *name, *str, *desc;
    Mission *cur_mission;
 
    cur_mission = misn_getFromLua(L);
@@ -511,6 +512,9 @@ static int misn_setNPC( lua_State *L )
    free(cur_mission->npc);
    cur_mission->npc = NULL;
 
+   free(cur_mission->npc_desc);
+   cur_mission->npc_desc = NULL;
+
    /* For no parameters just leave having freed NPC. */
    if (lua_gettop(L) == 0)
       return 0;
@@ -518,9 +522,11 @@ static int misn_setNPC( lua_State *L )
    /* Get parameters. */
    name = luaL_checkstring(L,1);
    str  = luaL_checkstring(L,2);
+   desc = luaL_checkstring(L,3);
 
-   /* Set NPC name. */
+   /* Set NPC name and description. */
    cur_mission->npc = strdup(name);
+   cur_mission->npc_desc = strdup(desc);
 
    /* Set portrait. */
    snprintf( buf, sizeof(buf), GFX_PATH"portraits/%s", str );

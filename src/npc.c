@@ -152,7 +152,7 @@ static unsigned int npc_add_giver( Mission *misn )
       WARN(_("Mission '%s' trying to create NPC with no portrait!"), misn->data->name);
       return 0;
    }
-   if (misn->desc == NULL) {
+   if (misn->npc_desc == NULL) {
       WARN(_("Mission '%s' trying to create NPC with no description!"), misn->data->name);
       return 0;
    }
@@ -163,7 +163,7 @@ static unsigned int npc_add_giver( Mission *misn )
    npc.priority   = misn->data->avail.priority;
    npc.portrait   = gl_dupTexture(misn->portrait);
    npc.background = NULL;
-   npc.desc       = strdup(misn->desc);
+   npc.desc       = strdup(misn->npc_desc);
    npc.u.m.id     = misn->id;
    npc.u.m.func   = strdup("accept");
 
