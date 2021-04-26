@@ -215,7 +215,7 @@ You looks at you with determination.
    vn.label("nohelp")
    kex(_([[He looks dejected.
 "I see. If you change your mind, I'll be around."]]))
-   vn.jump("menu_msg")
+   vn.done()
 
    vn.label("job")
    kex(_([["We have to find the dirt on the CEO and get him removed. It is the only change I have for freedom."]]))
