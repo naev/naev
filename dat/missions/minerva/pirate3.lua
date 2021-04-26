@@ -58,7 +58,6 @@ mainsys = "Limbo"
 --    7. defend torture ship
 misn_state = nil
 
-
 function create ()
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
@@ -75,7 +74,6 @@ function accept ()
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
-      misn.finish(false)
       return
    end
 

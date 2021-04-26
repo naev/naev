@@ -1138,6 +1138,9 @@ static void mission_menu_abort( unsigned int wid, char* str )
 
       /* Regenerate list. */
       mission_menu_genList(wid ,0);
+
+      /* Regenerate bar if landed. */
+      bar_regen();
    }
 }
 

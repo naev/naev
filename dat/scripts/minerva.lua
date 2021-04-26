@@ -48,6 +48,14 @@ local minerva = {
       image = portrait.getFullPath("pirate/pirate5.png"),
       colour = nil,
    },
+   -- Secondary characters
+   ceo = {
+      name = _("Minerva CEO"),
+      portrait = "minervaceo.png",
+      image = "minervaceo.png",
+      description = _("The CEO of Minerva Station."),
+      colour = nil,
+   },
 
    log = {
       kex = {
@@ -110,6 +118,13 @@ function minerva.vn_terminal( params )
          _merge_tables( {
             image=minerva.terminal.image,
             color=minerva.terminal.colour,
+         }, params) )
+end
+function minerva.vn_ceo( params )
+   return vn.Character.new( minerva.ceo.name,
+         _merge_tables( {
+            image=minerva.ceo.image,
+            color=minerva.ceo.colour,
          }, params) )
 end
 

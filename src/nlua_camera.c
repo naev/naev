@@ -17,6 +17,7 @@
 #include "nlua_camera.h"
 
 #include "camera.h"
+#include "conf.h"
 #include "log.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
@@ -170,12 +171,16 @@ static int camL_setZoom( lua_State *L )
  * @brief Gets the camera zoom.
  *
  *    @luatreturn number Zoom level of the camera.
+ *    @luatreturn number Maximum zoom level of the camera (furthest).
+ *    @luatreturn number Minimum zoom level of the camera (closest).
  * @luafunc get
  */
 static int camL_getZoom( lua_State *L )
 {
    lua_pushnumber( L, 1.0/cam_getZoom() );
-   return 1;
+   lua_pushnumber( L, 1.0/conf.zoom_far );
+   lua_pushnumber( L, 1.0/conf.zoom_near );
+   return 3;
 }
 
 

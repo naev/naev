@@ -995,9 +995,9 @@ void map_renderFactionDisks( double x, double y, int editor)
          /* Set shader uniforms. */
          glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
          gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
-         glUniform1f(shaders.nebula_map.eddy_scale, map_zoom * 50. );
-         glUniform1f(shaders.nebula_map.time, map_nebu_dt / 5.0);
-         glUniform2f(shaders.nebula_map.globalpos, x, y );
+         glUniform1f(shaders.nebula_map.eddy_scale, map_zoom );
+         glUniform1f(shaders.nebula_map.time, map_nebu_dt / 10.0);
+         glUniform2f(shaders.nebula_map.globalpos, sys->pos.x, sys->pos.y );
 
          /* Draw. */
          glEnableVertexAttribArray( shaders.nebula_map.vertex );

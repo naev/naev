@@ -885,7 +885,7 @@ static int hook_pilot( lua_State *L )
    /* Check to see if hook_type is valid */
    if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
    else if (strcmp(hook_type,"exploded")==0) type = PILOT_HOOK_EXPLODED;
-   else if (strcmp(hook_type,"boarditf")==0) type = PILOT_HOOK_BOARDING;
+   else if (strcmp(hook_type,"boarding")==0) type = PILOT_HOOK_BOARDING;
    else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
    else if (strcmp(hook_type,"undisable")==0) type = PILOT_HOOK_UNDISABLE;

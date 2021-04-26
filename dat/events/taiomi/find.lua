@@ -7,6 +7,9 @@
  </flags>
  <chance>100</chance>
  <cond>system.cur() == system.get("Bastion")</cond>
+ <notes>
+  <campaign>Taiomi</campaign>
+ </notes>
 </event>
 --]]
 --[[
@@ -101,7 +104,7 @@ function heartbeat ()
          pp:control()
          pp:brake()
          camera.set( derelict_mule:pos(), true )
-         camera.setZoom( 2 )
+         camera.setZoom( math.max(1.5,camera.getZoom()) )
          vn._sfx.eerie:play()
          hook.timer( 6000, "drone_runaway" )
          hook.timer( 10000, "returncontrol", 2 )
@@ -115,7 +118,7 @@ function heartbeat ()
          pp:control()
          pp:brake()
          camera.set( drone:pos(), true )
-         camera.setZoom( 2 )
+         camera.setZoom( math.max(1.5,camera.getZoom()) )
          drone:taskClear()
          drone:hyperspace( "Taiomi" )
          vn._sfx.eerie:play()

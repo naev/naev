@@ -20,6 +20,7 @@
 #include "nlua_evt.h"
 
 #include "event.h"
+#include "land.h"
 #include "log.h"
 #include "mission.h"
 #include "ndata.h"
@@ -202,6 +203,8 @@ static int evt_npcAdd( lua_State *L )
    /* Add npc. */
    id = npc_add_event( cur_event->id, func, name, priority, portrait, desc, (bg==NULL) ? bg : background );
 
+   bar_regen();
+
    /* Return ID. */
    if (id > 0) {
       lua_pushnumber( L, id );
@@ -229,6 +232,8 @@ static int evt_npcRm( lua_State *L )
 
    cur_event = event_getFromLua(L);
    ret = npc_rm_event( id, cur_event->id );
+
+   bar_regen();
 
    if (ret != 0)
       NLUA_ERROR(L, _("Invalid NPC ID!"));

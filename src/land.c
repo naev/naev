@@ -101,8 +101,8 @@ static int last_window = 0; /**< Default window. */
 /*
  * Error handling.
  */
-static char errorlist[512];
-static char errorreason[512];
+static char errorlist[STRMAX_SHORT];
+static char errorreason[STRMAX_SHORT];
 static int errorappend;
 static char *errorlist_ptr;
 
@@ -402,6 +402,8 @@ static int bar_genList( unsigned int wid )
 void bar_regen (void)
 {
    if (!landed)
+      return;
+   if (!land_loaded)
       return;
    bar_genList( land_getWid(LAND_WINDOW_BAR) );
 }
@@ -1143,6 +1145,9 @@ void land( Planet* p, int load )
    /* Hack so that load can run player.takeoff(). */
    if (load)
       hooks_run( "load" );
+
+   /* Just in case? */
+   bar_regen();
 
    /* Mission forced take off. */
    if (land_takeoff)
