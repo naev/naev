@@ -120,6 +120,13 @@ function minerva.vn_maikki( params )
             color=minerva.maikki.colour,
          }, params) )
 end
+function minerva.vn_maikkiP( params )
+   return vn.Character.new( minerva.maikkiP.name,
+         _merge_tables( {
+            image=minerva.maikkiP.image,
+            color=minerva.maikkiP.colour,
+         }, params) )
+end
 function minerva.vn_terminal( params )
    return vn.Character.new( minerva.terminal.name,
          _merge_tables( {
