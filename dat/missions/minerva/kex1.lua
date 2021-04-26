@@ -192,6 +192,10 @@ You looks at you with determination.
             return
          end
          shiplog.appendLog( logidstr, _("You agreed to help Kex to find dirt on the Minerva Station CEO to try to get him free."))
+         misn_marker = misn.markerAdd( system.get(targetsys) )
+         misn.osdCreate( _("Kex's Freedom"),
+            { string.format(_("Intercept the transport at %s"), _(targetsys)),
+            _("Return to Kex at Minerva Station") } )
          misn_state = 0
          hook.land("generate_npc")
          hook.load("generate_npc")
@@ -261,6 +265,7 @@ function enter ()
          local joutsys = system.get(jumpoutsys)
          mainguy = pilot.add( "Rhino", fthugs, jinsys, _("Transport") )
          mainguy:setVisplayer(true)
+         mainguy:setHilight(true)
          mainguy:control()
          mainguy:hyperspace( joutsys, true )
          hook.pilot( mainguy, "death", "mainguy_dead" )
@@ -307,6 +312,7 @@ function mainguy_board ()
    vn.run()
 
    misn_state = 2
+   misn.osdActive(2)
    player.unboard()
 end
 
@@ -317,5 +323,6 @@ end
 function mainguy_dead_scanned ()
    player.msg(_("You scan the debris of the transport for any potential cargo, but can't find anything."))
    misn_state = 2
+   misn.osdActive(2)
 end
 
