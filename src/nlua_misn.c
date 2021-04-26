@@ -353,7 +353,7 @@ static int misn_setReward( lua_State *L )
  *  - "computer": Mission computer marker.<br/>
  *
  *    @luatparam System sys System to mark.
- *    @luatparam string type Colouring scheme to use.
+ *    @luatparam[opt="high"] string type Colouring scheme to use.
  *    @luatreturn number A marker ID to be used with markerMove and markerRm.
  * @luafunc markerAdd
  */
@@ -367,7 +367,7 @@ static int misn_markerAdd( lua_State *L )
 
    /* Check parameters. */
    sys   = luaL_checksystem( L, 1 );
-   stype = luaL_checkstring( L, 2 );
+   stype = luaL_optstring( L, 2, "high" );
 
    /* Handle types. */
    if (strcmp(stype, "computer")==0)
