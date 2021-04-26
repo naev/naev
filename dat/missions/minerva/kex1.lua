@@ -41,6 +41,8 @@ misn_reward = _("A step closer to Kex's freedom")
 misn_title = _("Freeing Kex")
 misn_desc = _("Kex wants you to help him find dirt on the Minerva CEO by raiding a transport headed to Minerva Station.")
 
+money_reward = 200e3
+
 function create ()
    if not misn.claim( system.get(targetsys) ) then
       misn.finish( false )
@@ -102,8 +104,10 @@ The crate opens unceremoniously and Kex peers.
 "The next shipment will be larger than expected, but I presume you will be able to deal with it as usual. Please take this commission and do whatever you like with it."
 It is signed "Baroness Eve".]]))
       kex(_([["I'm not too sure who this 'Baroness Eve' is, but let me see if I can get some information on them and we can see what we can do from there on."]]))
-      vn.sfxMoney()
       kex(_([["Oh, I almost forgot. There's quite a few credits in the crate too, I think it's only fair to give you most of them as a reward for your help."]]))
+      vn.sfxMoney()
+      vn.func( function () player.pay( money_reward ) end )
+      vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
       kex(_([["Meet me up here again in a bit, I'm going to go get some information."
 Kex runs off and disappears into the station.]]))
       vn.sfxVictory()
