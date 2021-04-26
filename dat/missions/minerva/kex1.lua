@@ -107,6 +107,8 @@ Kex runs off and disappears into the station.]]))
       vn.sfxVictory()
       vn.run()
 
+      shiplog.appendLog( logidstr, _("You managed to find a crate destined to the Minerva CEO through luck, and found that it was sent by Baroness Eve."))
+
       -- Remove unnecessary variables to keep it clean
       var.pop( "kex_talk_station" )
       var.pop( "kex_talk_ceo" )
@@ -311,6 +313,7 @@ function mainguy_board ()
    vn.na(_("It might be best to report back to Kex to see if his information was incorrect."))
    vn.run()
 
+   shiplog.appendLog( logidstr, _("You boarded a transport destined to the Minerva CEO, but didn't find anything."))
    misn_state = 2
    misn.osdActive(2)
    player.unboard()
@@ -322,6 +325,7 @@ end
 
 function mainguy_dead_scanned ()
    player.msg(_("You scan the debris of the transport for any potential cargo, but can't find anything."))
+   shiplog.appendLog( logidstr, _("You destroyed a transport destined to the Minerva Ceo, but didn't find anything in the debris."))
    misn_state = 2
    misn.osdActive(2)
 end
