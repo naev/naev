@@ -865,8 +865,6 @@ static int misn_osdGetActiveItem( lua_State *L )
 /**
  * @brief Adds an NPC.
  *
- * @note Do not use this at all in the "create" function. Use setNPC, setDesc and the "accept" function instead.
- *
  * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none.png", "A test." ) -- Creates an NPC.
  *
  *    @luatparam string func Name of the function to run when approaching, gets passed the npc_id when called.
