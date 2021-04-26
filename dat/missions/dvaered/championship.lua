@@ -143,9 +143,7 @@ function create ()
    end
 
    officialFace = portrait.getMil( "Dvaered" )
-   official = misn.setNPC(npc_desc[1], officialFace)
-   misn.setDesc(bar_desc[1])
-
+   official = misn.setNPC(npc_desc[1], officialFace, bar_desc[1])
 end
 
 function populate_bar() --add some random npcs

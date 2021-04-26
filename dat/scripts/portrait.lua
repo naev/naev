@@ -193,7 +193,7 @@ portraits_mil_f["Pirate"] = portraits_f["Pirate"]
 --[[--
 Choose a random male civilian portrait.
 
-@usage misn.setNPC( "Sam", getMale( "Pirate" ) )
+@usage misn.setNPC( "Sam", getMale( "Pirate" ), description )
    @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.getMale( faction )
@@ -208,7 +208,7 @@ end
 --[[--
 Choose a random female civilian portrait.
 
-@usage misn.setNPC( "Sam", getFemale() )
+@usage misn.setNPC( "Sam", getFemale(), description )
    @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.getFemale( faction )
@@ -223,7 +223,7 @@ end
 --[[--
 Choose a random civilian portrait of any gender.
 
-@usage misn.setNPC( "Sam", get( "Empire" ) )
+@usage misn.setNPC( "Sam", get( "Empire" ), description )
    @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.get( faction )
@@ -238,7 +238,7 @@ end
 --[[--
 Choose a random male military portrait.
 
-@usage misn.setNPC( "Sam", getMaleMil( "Pirate" ) )
+@usage misn.setNPC( "Sam", getMaleMil( "Pirate" ), description )
    @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.getMaleMil( faction )
@@ -253,7 +253,7 @@ end
 --[[--
 Choose a random female military portrait.
 
-@usage misn.setNPC( "Sam", getFemaleMil( "Dvaered" ) )
+@usage misn.setNPC( "Sam", getFemaleMil( "Dvaered" ), description )
    @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.getFemaleMil( faction )
@@ -268,7 +268,7 @@ end
 --[[--
 Choose a random military portrait of any gender.
 
-@usage misn.setNPC( "Sam", getMil( "Empire" ) )
+@usage misn.setNPC( "Sam", getMil( "Empire" ), description )
    @tparam[opt="neutral"] string faction Name of faction to get a portrait for, or nil for neutral.
 --]]
 function portrait.getMil( faction )

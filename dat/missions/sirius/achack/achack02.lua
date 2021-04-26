@@ -111,11 +111,9 @@ function create()
    end
    
    if var.peek("achack02repeat") then
-      misn.setNPC(joannename2, "sirius/unique/joanne.png")
-      misn.setDesc(joannedesc2)
+      misn.setNPC(joannename2, "sirius/unique/joanne.png", joannedesc2)
    else
-      misn.setNPC(joannename1, "sirius/unique/joanne.png")
-      misn.setDesc(joannedesc1)
+      misn.setNPC(joannename1, "sirius/unique/joanne.png", joannedesc1)
    end
 end
 

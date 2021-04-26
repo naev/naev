@@ -109,8 +109,7 @@ function create()
         abort()
     end
 
-    misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"))
-    misn.setDesc(npc_desc)
+    misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"), npc_desc)
 end
 
 function accept()

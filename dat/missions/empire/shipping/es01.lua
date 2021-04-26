@@ -71,8 +71,7 @@ function create ()
    end
 
    -- Bar NPC
-   misn.setNPC( _("Soldner"), "empire/unique/soldner.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Soldner"), "empire/unique/soldner.png", bar_desc )
 end
 
 function accept ()

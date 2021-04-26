@@ -141,8 +141,7 @@ log_text = _([[Baron Sauterfeldt sent you on a wild goose chase to find some anc
 
 function create ()
    -- Note: this mission makes no system claims.
-   misn.setNPC(npc_desc, "neutral/unique/unfamiliarman.png")
-   misn.setDesc(bar_desc)
+   misn.setNPC(npc_desc, "neutral/unique/unfamiliarman.png", bar_desc)
 end
 
 function accept()

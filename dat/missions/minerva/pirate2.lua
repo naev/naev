@@ -45,8 +45,8 @@ function create ()
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait )
-   misn.setDesc( minerva.pirate.description )
+   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
+   misn.setDesc( misn_desc )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
 end
@@ -86,7 +86,6 @@ They smiles at you.]]))
    end
 
    misn.accept()
-   misn.setDesc( misn_desc )
    osd = misn.osdCreate( _("Za'lek Scout Drone"),
          {_("Destroy the scout drone with Dvaered weapons"),
           _("Go back to Minerva Station") } )

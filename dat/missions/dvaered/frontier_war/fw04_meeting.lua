@@ -214,8 +214,7 @@ function create()
        misn.finish(false)
    end
 
-   misn.setNPC(npc_name, portrait_strafer)
-   misn.setDesc(npc_desc1)
+   misn.setNPC(npc_name, portrait_strafer, npc_desc1)
 end
 
 function accept()
