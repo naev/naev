@@ -485,6 +485,7 @@ static void npc_free( NPC_t *npc )
 
    /* Type-specific free stuff. */
    switch (npc->type) {
+      case NPC_TYPE_GIVER:
       case NPC_TYPE_MISSION:
          free(npc->u.m.func);
          break;
