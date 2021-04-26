@@ -99,7 +99,7 @@ function land ()
 
       vn.clear()
       vn.scene()
-      local d = vn.newCharacter( "Scavenger Drone", { image='gfx/ship/drone/drone_hyena_comm.webp' } )
+      local d = vn.newCharacter( taiomi.vn_scavenger() )
       vn.transition()
       vn.na(_("You dock with the one-winged Goddard and once again get out in your atmospheric suit. Once you exit the narrow hallways and entire the command room, you are once again met with the Drone which is a lot more intimidating in person."))
       d(_([["Hello again and welcome to our refuge. It may not seem like much, but it has been our home for generations now."]]))
@@ -190,7 +190,7 @@ end
 function cutscene03 ()
    vn.clear()
    vn.scene()
-   local d = vn.newCharacter( "Scavenger Drone", { image='gfx/ship/drone/drone_hyena_comm.webp' } )
+   local d = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition()
    vn.na(_("As you get into your ship and undock, you quickly find yourself surrounded by many sleek white small ships. As you stare at the ships sorrounding you, your comm channel flashes open, however, it is audio only."))
    d(_([["Salutations."
