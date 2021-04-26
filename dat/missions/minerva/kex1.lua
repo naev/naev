@@ -74,7 +74,7 @@ function approach_kex ()
    if misn_state==2 then
       local maikki = minerva.vn_maikkiP{
             shader = love_shaders.color{ color={0,0,0,1} },
-            pos = "right"}
+            pos = "right" }
 
       vn.na(_("You tell Kex about you encounter with the transports and how you weren't able to find the supposed cargo."))
       kex(_([["Damn it. That must have been a decoy. The delivery logs are always a mess and there always seem to be mainly repeated by modified entries. I picked the most likely, but there was also another at the same time and it could have been that one. "]]))
@@ -93,8 +93,18 @@ function approach_kex ()
 "Let me see if I can this open. Mmmm… fairly shoddy Nexus lock. I don't think they make these anymore. Shouldn't be a problem for my implant system."]]))
       kex(_([[He puts his wing on the lock and you hear some sort of click. His eyes close and he begins to hum an old tune, almost sounds like a nursery rhyme. This goes on for a while before he suddenly jolts back with his eyes open.]]))
       vn.sfxBingo()
-      kex(_([[]]))
-
+      kex(_([["OK, let us see what we have here."
+The crate opens unceremoniously and Kex peers.
+"Damn, looks like we have no incriminating evidence, however, it does seem like we can use this as a starting point."]]))
+      vn.na(_([[He passes you the document which reads:
+"The next shipment will be larger than expected, but I presume you will be able to deal with it as usual. Please take this commission and do whatever you like with it."
+It is signed "Baroness Eve".]]))
+      kex(_([["I'm not too sure who this 'Baroness Eve' is, but let me see if I can get some information on them and we can see what we can do from there on."]]))
+      vn.sfxMoney()
+      kex(_([["Oh, I almost forgot. There's quite a few credits in the crate too, I think it's only fair to give you most of them as a reward for your help."]]))
+      kex(_([["Meet me up here again in a bit, I'm going to go get some information."
+Kex runs off and disappears into the station.]]))
+      vn.sfxVictory()
       vn.run()
 
       -- Remove unnecessary variables to keep it clean
