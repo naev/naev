@@ -21,7 +21,7 @@
   <range>2200</range>
   <falloff>1600</falloff>
   <gfx_end>massL-end.png</gfx_end>
-  <energy>77</energy>
+  <energy>153</energy>
   <heatup>60</heatup>
   <track>0.25</track>
   <damage>
