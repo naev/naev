@@ -81,7 +81,6 @@ They smiles at you.]]))
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
-      misn.finish(false)
       return
    end
 
