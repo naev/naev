@@ -282,9 +282,9 @@ function enter ()
             return p
          end
 
-         escort1 = addescort( "Vendetta" )
-         escort2 = addescort( "Shark" )
-         escorts = { escort1, escort2 }
+         escorts = { addescort("Admonisher"),
+                     addescort("Shark"),
+                     addescort("Shark") }
 
          misn_state = 1
       end
