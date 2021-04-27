@@ -228,8 +228,8 @@ void misn_runStart( Mission *misn, const char *func )
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
  *    @param nargs Number of arguments to pass.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
- *            and 0 normally.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
+ *          3 if the mission got accepted, and 0 normally.
  */
 int misn_runFunc( Mission *misn, const char *func, int nargs )
 {
@@ -238,7 +238,12 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    int misn_delete;
    Mission *cur_mission;
    nlua_env env;
+   int isaccepted;
 
+   /* Check to see if it is accepted first. */
+   isaccepted = misn->accepted;
+
+   /* Set up and run function. */
    env = misn->env;
    ret = nlua_pcall(env, nargs, 0);
 
@@ -264,7 +269,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    misn_delete = lua_toboolean(naevL,-1);
    lua_pop(naevL,1);
 
-   /* mission is finished */
+   /* Mission is finished */
    if (misn_delete) {
       ret = 2;
       mission_cleanup( cur_mission );
@@ -276,6 +281,9 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
          break;
       }
    }
+   /* Mission became accepted. */
+   else if (!isaccepted && cur_mission->accepted)
+      ret = 3;
 
    return ret;
 }
