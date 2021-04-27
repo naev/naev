@@ -75,7 +75,6 @@ function accept ()
    hook.load("generate_npc")
    hook.enter("enter")
 
-   -- Re-add Maikki if accepted
    generate_npc()
 end
 
