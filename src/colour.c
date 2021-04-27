@@ -79,6 +79,13 @@ const glColour cAqua       = { .r=0.00, .g=0.75, .b=1.00, .a=1. }; /**< Aqua */
 const glColour cBlackHilight  =  { .r = 0.0, .g = 0.0, .b = 0.0, .a = 0.4 }; /**< Hilight colour over black background. */
 /* toolkit */
 const glColour cHilight       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 0.6 }; /**< Hilight colour */
+/* outfit slot colours.
+ * Taken from https://cran.r-project.org/web/packages/khroma/vignettes/tol.html#muted
+ */
+const glColour cOutfitHeavy = { 0.8, 0.4, 0.46, 1.0 }; /**< Heavy outfit colour (reddish). */
+const glColour cOutfitMedium = { 0.2, 0.73, 0.93, 1.0 }; /**< Medium outfit colour (blueish). */
+//const glColour cOutfitMedium = { 0.55, 0.8, 0.93, 1.0 }; /**< Medium outfit colour (blueish). Technically color safe but doesn't work with our colorblind filter. */
+const glColour cOutfitLight = { 0.86, 0.8, 0.46, 1.0 }; /**< Light outfit colour (yellowish). */
 /* objects */
 const glColour cInert         =  { .r=221./255., .g=221./255., .b=221./255., .a=1. }; /**< Inert object colour */
 const glColour cNeutral       =  { .r=221./255., .g=204./255., .b=119./255., .a=1. }; /**< Neutral object colour */
