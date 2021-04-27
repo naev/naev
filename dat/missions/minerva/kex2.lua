@@ -189,8 +189,10 @@ He plugs in the program directly into a port under his wing and his eyes go blan
    kex(_([["I would like to think that I'm used to it after all these cycles, but you never get used to it. There's a moment of bliss when you wake up first thing in the morning, and you still haven't remembered you're a duck, but it soon comes crashing down. You just can't get used to it."]]))
    kex(_([["I do take it a bit better these days, but the beginning was especially hard. You just lose all the will to live. There's like no going back, right? All the things I used to have and cherish, they're all gone. My work, my friends, my family…"]]))
    kex(_([["I never chose to be in this state and often think that it would have been better if I had never been saved from the wreckage, but here I am."]]))
+   vn.func( function () kex.shader = love_shaders.aura() end )
    kex(_([[His expression darkens.
 "The only real thing that keeps me ticking is revenge on the bastard who did this to me. Turning me into this is beyond humiliating and I intend to have him suffer as much as I have."]]))
+   vn.func( function () kex.shader = nil end )
    kex(_([["If you can avoid, don't become a duck kid."
 He seems to lighten up a bit.]]))
    vn.jump("menu_msg")
