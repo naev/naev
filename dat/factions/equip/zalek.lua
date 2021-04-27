@@ -92,7 +92,7 @@ equip_typeOutfits_weapons["Mephisto"] = {
 	  "Za'lek Hunter Launcher", "Za'lek Reaper Launcher"
    }
 }
-equip_typeOutfits_weapons["Diablo"] = equip_typeOutfits_weapons["Mephisto"] --[[ {
+equip_typeOutfits_weapons["Diablo"] = {
    {
       num = 2, varied = true;
       "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
@@ -108,8 +108,7 @@ equip_typeOutfits_weapons["Diablo"] = equip_typeOutfits_weapons["Mephisto"] --[[
       "Za'lek Bomber Drone Fighter Bay"
    }
 }
---]]
-equip_typeOutfits_weapons["Hephaestus"] = equip_typeOutfits_weapons["Mephisto"] --[[ {
+equip_typeOutfits_weapons["Hephaestus"] = {
    {
       num = 2, varied = true;
       "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
@@ -125,7 +124,6 @@ equip_typeOutfits_weapons["Hephaestus"] = equip_typeOutfits_weapons["Mephisto"] 
       "Za'lek Bomber Drone Fighter Bay"
    }
 }
---]]
 
 equip_typeOutfits_utilities["Demon"] = {
    {
