@@ -499,6 +499,9 @@ static int misn_markerRm( lua_State *L )
  *  the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.png
  *  you would use "none.png".)
  *
+ * Note that this NPC will disappear when either misn.accept() or misn.finish()
+ *  is called.
+ *
  * @usage misn.setNPC( "Invisible Man", "none.png" )
  *
  *    @luatparam string name Name of the NPC.
