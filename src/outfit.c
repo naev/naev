@@ -326,7 +326,7 @@ const glColour *outfit_slotSizeColour( const OutfitSlot* os )
 
 
 /**
- * @brief Gets a font colour character that roughly matches an outfit slot colour.
+ * @brief Gets a font colour character that roughly matches an outfit slot size colour.
  *
  *    @param os Outfit slot to get the slot size font colour of.
  *    @return The slot size font colour of the outfit slot.
@@ -339,6 +339,24 @@ char outfit_slotSizeColourFont( const OutfitSlot* os )
       return 'b';
    else if (os->size == OUTFIT_SLOT_SIZE_LIGHT)
       return 'y';
+   return '0';
+}
+
+
+/**
+ * @brief Gets a font colour character that roughly matches an outfit slot type colour.
+ *
+ *    @param os Outfit slot to get the slot type font colour of.
+ *    @return The slot type font colour of the outfit slot.
+ */
+char outfit_slotTypeColourFont( const OutfitSlot* os )
+{
+   if (os->type == OUTFIT_SLOT_WEAPON)
+      return 'p';
+   else if (os->type == OUTFIT_SLOT_UTILITY)
+      return 'g';
+   else if (os->type == OUTFIT_SLOT_STRUCTURE)
+      return 'n';
    return '0';
 }
 
