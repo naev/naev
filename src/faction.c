@@ -1138,7 +1138,7 @@ int areEnemies( int a, int b )
    if (faction_isFaction(a))
       fa = &faction_stack[a];
    else { /* a is invalid */
-      WARN(_("Faction id '%d' is invalid."), a);
+      //WARN(_("Faction id '%d' is invalid."), a);
       return 0;
    }
 
@@ -1146,7 +1146,7 @@ int areEnemies( int a, int b )
    if (faction_isFaction(b))
       fb = &faction_stack[b];
    else { /* b is invalid */
-      WARN(_("Faction id '%d' is invalid."), b);
+      //WARN(_("Faction id '%d' is invalid."), b);
       return 0;
    }
 
@@ -1188,7 +1188,7 @@ int areAllies( int a, int b )
    if (faction_isFaction(a))
       fa = &faction_stack[a];
    else { /* a is invalid */
-      WARN(_("Faction id '%d' is invalid."), a);
+      //WARN(_("Faction id '%d' is invalid."), a);
       return 0;
    }
 
@@ -1196,7 +1196,7 @@ int areAllies( int a, int b )
    if (faction_isFaction(b))
       fb = &faction_stack[b];
    else { /* b is invalid */
-      WARN(_("Faction id '%d' is invalid."), b);
+      //WARN(_("Faction id '%d' is invalid."), b);
       return 0;
    }
 
