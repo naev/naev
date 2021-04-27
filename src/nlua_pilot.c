@@ -3363,7 +3363,7 @@ static int pilotL_idle( lua_State *L )
 static int pilotL_control( lua_State *L )
 {
    Pilot *p;
-   int enable;
+   int enable, hasflag;
 
    NLUA_CHECKRW(L);
 
@@ -3374,6 +3374,7 @@ static int pilotL_control( lua_State *L )
    else
       enable = lua_toboolean(L, 2);
 
+   hasflag = pilot_isFlag(p, PILOT_MANUAL_CONTROL);
    if (enable) {
       pilot_setFlag(p, PILOT_MANUAL_CONTROL);
       if (pilot_isPlayer(p))
@@ -3389,8 +3390,9 @@ static int pilotL_control( lua_State *L )
        * has to have an AI even if it's the player for things to work. */
    }
 
-   /* Clear task. */
-   pilotL_taskclear( L );
+   /* Clear task if changing state. */
+   if (hasflag != enable)
+      pilotL_taskclear( L );
 
    return 0;
 }
