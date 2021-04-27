@@ -17,6 +17,9 @@
 --]]
 
 --[[
+   Freeing Kex 1
+
+   Simple mission where the player has to raid a small transport to start to get clues.
 --]]
 local minerva = require "minerva"
 local portrait = require 'portrait'

@@ -17,6 +17,10 @@
 --]]
 
 --[[
+   Freeing Kex 2
+
+   Fairly straight forward mission where the player has to go to the objective
+   to steal some stuff before running away from tons of enemy ships.
 --]]
 local minerva = require "minerva"
 local portrait = require 'portrait'
