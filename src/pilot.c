@@ -1255,7 +1255,7 @@ void pilot_rmHostile( Pilot* p )
       }
 
       /* Set "bribed" flag if faction has poor reputation */
-      if ( areEnemies( FACTION_PLAYER, p->faction ) )
+      if (areEnemies( FACTION_PLAYER, p->faction ))
          pilot_setFlag(p, PILOT_BRIBED);
    }
 }
