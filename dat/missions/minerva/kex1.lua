@@ -320,6 +320,7 @@ function mainguy_board ()
    vn.run()
 
    shiplog.appendLog( logidstr, _("You boarded a transport destined to the Minerva CEO, but didn't find anything."))
+   misn.markerMove( misn_marker, system.get("Limbo") )
    misn_state = 2
    misn.osdActive(2)
    player.unboard()
@@ -332,6 +333,7 @@ end
 function mainguy_dead_scanned ()
    player.msg(_("You scan the debris of the transport for any potential cargo, but can't find anything."))
    shiplog.appendLog( logidstr, _("You destroyed a transport destined to the Minerva Ceo, but didn't find anything in the debris."))
+   misn.markerMove( misn_marker, system.get("Limbo") )
    misn_state = 2
    misn.osdActive(2)
 end
