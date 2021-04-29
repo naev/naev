@@ -101,6 +101,7 @@ end
 -- valid undeveloped part, or nil otherwise.
 function undeveloped_bioship_part_index( s )
    for i, p in ipairs( bioship_parts ) do
+      local pat = p[1]:gsub ("-", "[-]")
       if string.match( s, p[1]:format( "%d" ) ) then
          return i
       end
@@ -136,6 +137,7 @@ end
 
 
 function pay( amount )
+   local pp = player.pilot()
    local exp_gain = math.floor(amount / 10000)
    if amount > 0 and has_bioship() then
       local exp = var.peek( "_bioship_exp" ) or 0
@@ -159,7 +161,7 @@ function pay( amount )
 
             local new_level = current_level + 1
 
-            player.pilot():rmOutfit( part )
+            pp:rmOutfit( part )
             local new_part
             if new_level > max_level then
                new_part = bioship_parts[index][1]:format( "X" ) 
@@ -167,13 +169,13 @@ function pay( amount )
                local sn = string.format( "%d", new_level )
                new_part = bioship_parts[index][1]:format( sn )
             end
-            player.pilot():addOutfit( new_part )
+            pp:addOutfit( new_part, 1, true )
 
             -- Reset stats since we leveled up (prevents gameplay problems)
-            player.pilot():setHealth( 100, 100 )
-            player.pilot():setEnergy( 100 )
-            player.pilot():setTemp( 0 )
-            player.pilot():setFuel( true )
+            pp:setHealth( 100, 100 )
+            pp:setEnergy( 100 )
+            pp:setTemp( 0 )
+            pp:setFuel( true )
          end
       end 
    end
