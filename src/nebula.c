@@ -376,6 +376,7 @@ void nebu_prep( double density, double volatility, double hue )
    (void)volatility;
    int i;
    float puffhue;
+   glColour col;
 
    /* Set the hue. */
    nebu_hue = hue;
@@ -383,6 +384,12 @@ void nebu_prep( double density, double volatility, double hue )
    glUniform1f(shaders.nebula.hue, nebu_hue);
    glUseProgram(shaders.nebula_background.program);
    glUniform1f(shaders.nebula_background.hue, nebu_hue);
+   glUseProgram(0);
+
+   /* Also set the hue for trail.s */
+   col_hsv2rgb( &col, nebu_hue*360., 0.7, 1.0 );
+   glUseProgram(shaders.trail.program);
+   glUniform3f( shaders.trail.nebu_col, col.r, col.g, col.b );
    glUseProgram(0);
 
    /* Set density parameters. */

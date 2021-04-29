@@ -28,6 +28,7 @@ uniform float dt; // Current time (in seconds)
 uniform vec2 pos1;// Start position
 uniform vec2 pos2;// End position
 uniform float r;  // Unique value per trail [0,1]
+uniform vec3 nebu_col; // Base colour of the nebula, only changes when entering new system
 
 in vec2 pos;
 out vec4 color_out;
@@ -145,6 +146,8 @@ vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos_px )
    const float SCALAR = pow(2., 4./3. );
    float m, f;
    vec2 coords;
+
+   color.rgb = nebu_col;
 
    // Modulate alpha base on length
    color.a *= fastdropoff( pos_tex.x, 1 );
