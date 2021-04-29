@@ -393,9 +393,9 @@ int main( int argc, char** argv )
 
    /* primary loop */
    while (!quit) {
-      while (SDL_PollEvent(&event)) { /* event loop */
+      while (!quit && SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) {
-            if (menu_askQuit()) {
+            if (quit || menu_askQuit()) {
                quit = 1; /* quit is handled here */
                break;
             }

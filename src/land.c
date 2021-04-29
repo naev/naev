@@ -519,6 +519,9 @@ static void bar_approach( unsigned int wid, char *str )
 
    n = npc_getArraySize();
    npc_approach( pos );
+   /* This check is necessary if the player quits the game in the middle of an NPC approach. */
+   if (land_planet==NULL)
+      return;
    bar_genList( wid ); /* Always just in case. */
 
    /* Focus the news if the number of NPCs has changed. */
