@@ -315,22 +315,40 @@ function baTotext()
 end
 
 function abort()
-   rmTheOutfit()
+   rmTheOutfit( true )
    misn.finish(false)
 end
 
-function rmTheOutfit()
+function rmTheOutfit( addengine )
    if isMounted("Za'lek Test Engine") then
       player.pilot():rmOutfit("Za'lek Test Engine")
    end
-   while isOwned("Za'lek Test Engine") do  --to avoid remaining test engines if some error occurs
+
+   -- Give them a bad engine just in case they are landed or on a planet
+   -- where they can't equip. The bad engine is free so it shouldn't matter.
+   if addengine then
+      player.pilot():addOutfit("Beat Up Small Engine")
+   end
+
+   -- TODO Remove copies from all ships
+   --[[
+   for k,v in ipairs(player.ships()) do
+      local o = player.shipOutfits(v)
+      if isMounted("Za'lek Test Engine", o) then
+      end
+   end
+   --]]
+
+   -- Remove owned copies
+   while isOwned("Za'lek Test Engine") do
       player.rmOutfit("Za'lek Test Engine")
    end
 end
 
 --Check if the player has an outfit mounted
-function isMounted(itemName)
-   for i, j in ipairs(player.pilot():outfits()) do
+function isMounted( itemName, outfits )
+   outfits = outfits or player.pilot():outfits()
+   for i, j in ipairs(outfits) do
       if j == outfit.get(itemName) then
          return true
       end
