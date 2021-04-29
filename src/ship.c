@@ -161,7 +161,19 @@ int ship_compareTech( const void *arg1, const void *arg2 )
  */
 const char* ship_class( const Ship* s )
 {
-   switch (s->class) {
+   return ship_classToString( s->class );
+}
+
+
+/**
+ * @brief Gets the ship class name in human readable form.
+ *
+ *    @param class Class to get name of.
+ *    @return The human readable class name.
+ */
+const char *ship_classToString( ShipClass class )
+{
+   switch (class) {
       case SHIP_CLASS_NULL:
          return "NULL";
 
@@ -219,7 +231,7 @@ const char* ship_class( const Ship* s )
  *
  *    @param str String to extract ship class identifier from.
  */
-ShipClass ship_classFromString( char* str )
+ShipClass ship_classFromString( const char* str )
 {
    if ( str != NULL ) {
       /* Civilian */

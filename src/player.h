@@ -97,6 +97,7 @@ typedef struct Player_s {
    double dmg_done_armour; /**< Total damage done to armour. */
    double dmg_taken_shield; /**< Total damage taken to shields. */
    double dmg_taken_armour; /**< Total damage taken to armour. */
+   unsigned int ships_destroyed[SHIP_CLASS_TOTAL]; /**< Total number of ships destroyed. */
 
    /* Meta-meta-data. */
    time_t time_since_save; /**< Time since last saved. */

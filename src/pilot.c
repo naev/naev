@@ -1485,6 +1485,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
             /* Modify faction for him and friends. */
             faction_modPlayer( p->faction, -mod, "kill" );
+
+            /* Note that player destroyed the ship. */
+            player.ships_destroyed[p->ship->class]++;
          }
       }
    }
