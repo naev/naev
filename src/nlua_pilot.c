@@ -2363,13 +2363,8 @@ static int pilotL_addOutfit( lua_State *L )
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
    o      = luaL_validoutfit(L,2);
-   q      = 1;
-   if (lua_gettop(L) > 2 && !lua_isnil(L,2))
-      q = luaL_checkint(L,3);
-   if (lua_gettop(L) > 3)
-      bypass = lua_toboolean(L, 4);
-   else
-      bypass = 0;
+   q      = luaL_optinteger(L,3,1);
+   bypass = lua_toboolean(L,4);
 
    /* Add outfit. */
    added = 0;
