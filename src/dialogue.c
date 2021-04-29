@@ -1019,11 +1019,11 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
    dialogue_open++;
 
    *loop_done = 0;
-   while (!(*loop_done) && toolkit_isOpen()) {
+   while (!(*loop_done) && toolkit_isOpen() && !naev_isQuit()) {
       /* Loop first so exit condition is checked before next iteration. */
       main_loop( 0 );
 
-      while (SDL_PollEvent(&event)) { /* event loop */
+      while (!naev_isQuit() && SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) {
             if (menu_askQuit()) {
                naev_quit(); /* Quit is handled here */

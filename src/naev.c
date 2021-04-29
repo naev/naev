@@ -145,6 +145,15 @@ void naev_quit (void)
 
 
 /**
+ * @brief Get if Naev is trying to quit.
+ */
+int naev_isQuit (void)
+{
+   return quit;
+}
+
+
+/**
  * @brief The entry point of Naev.
  *
  *    @param[in] argc Number of arguments.
