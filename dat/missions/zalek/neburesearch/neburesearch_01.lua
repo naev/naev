@@ -167,11 +167,7 @@ function jumpin()
      if system.cur() ~= nextsys then
         fail(_("MISSION FAILED! You jumped into the wrong system. You failed science miserably!"))
     else
-        if destsys == nil then
-            nextsys = system.cur()
-        else
-            nextsys = getNextSystem(system.cur(), destsys)
-        end
+        nextsys = getNextSystem(system.cur(), destsys)
         updateGoalDisplay()
         spawnTransporter()
         if not ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then
