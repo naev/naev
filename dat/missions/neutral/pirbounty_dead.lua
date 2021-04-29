@@ -399,6 +399,8 @@ function spawn_pirate( param )
          pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
          pir_land_hook = hook.pilot( target_ship, "land", "pilot_jump" )
 
+
+         --[[
          local pir_crew = target_ship:stats().crew
          local pl_crew = player.pilot():stats().crew
          if rnd.rnd() > (0.5 * (10 + pir_crew) / (10 + pl_crew)) then
@@ -406,6 +408,10 @@ function spawn_pirate( param )
          else
             can_capture = false
          end
+         --]]
+         -- Disabling and boarding is hard enough as is to randomly fail
+         -- TODO potentially do a small capturing minigame here
+         can_capture = true
       else
          fail( msg[1]:format( name ) )
       end
