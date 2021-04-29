@@ -152,6 +152,7 @@ static void player_initSound (void);
 static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
 static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship );
+static int player_saveMetadata( xmlTextWriterPtr writer );
 static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
@@ -159,6 +160,7 @@ static int player_parseLicenses( xmlNodePtr parent );
 static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot );
 static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
+static int player_parseMetadata( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
 static int player_filterSuitablePlanet( Planet *p );
@@ -236,6 +238,9 @@ void player_new (void)
 
    /* Set up new player. */
    player_newSetup();
+
+   /* Some meta-data. */
+   player.date_created = time(NULL);
 
    /* Get the name. */
    player.name = dialogue_input( _("Player Name"), 1, 60,
@@ -3006,6 +3011,11 @@ int player_save( xmlTextWriterPtr writer )
    player_saveEscorts(writer);
    xmlw_endElem(writer); /* "escorts" */
 
+   /* Metadata. */
+   xmlw_startElem(writer,"metadata");
+   player_saveMetadata( writer );
+   xmlw_endElem(writer); /* "metadata" */
+
    return 0;
 }
 
@@ -3145,6 +3155,30 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
    return 0;
 }
 
+
+/**
+ * @brief Saves the player meta-data.
+ *
+ *    @param writer XML writer.
+ *    @return 0 on success.
+ */
+static int player_saveMetadata( xmlTextWriterPtr writer )
+{
+   time_t t = time(NULL);
+
+   /* Compute elapsed time. */
+   player.time_played += difftime( t, player.time_since_save );
+   player.time_since_save = t;
+
+   /* Save the stuff. */
+   xmlw_saveTime(writer, "last_played", time(NULL));
+   xmlw_saveTime(writer, "date_created", player.date_created);
+   xmlw_elem(writer,"time_played","%f",player.time_played);
+
+   return 0;
+}
+
+
 /**
  * @brief Loads the player stuff.
  *
@@ -3161,8 +3195,10 @@ Planet* player_load( xmlNodePtr parent )
    pnt = NULL;
    map_cleanup();
 
-   /* Load time just in case. */
+   /* Sane time defaults. */
    player.last_played = time(NULL);
+   player.date_created = player.last_played;
+   player.time_since_save = player.last_played;
 
    if (player_stack==NULL)
       player_stack = array_create( PlayerShip_t );
@@ -3171,8 +3207,8 @@ Planet* player_load( xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"last_played"))
-         xml_parseTime(node, &player.last_played);
+      if (xml_isNode(node,"metadata"))
+         player_parseMetadata(node);
       else if (xml_isNode(node,"player"))
          pnt = player_parse( node );
       else if (xml_isNode(node,"missions_done"))
@@ -3182,6 +3218,9 @@ Planet* player_load( xmlNodePtr parent )
       else if (xml_isNode(node,"escorts"))
          player_parseEscorts(node);
    } while (xml_nextNode(node));
+
+   /* Set up meta-data. */
+   player.time_since_save = time(NULL);
 
    return pnt;
 }
@@ -3535,6 +3574,31 @@ static int player_parseEscorts( xmlNodePtr parent )
          /* Add escort to the list. */
          escort_addList( player.p, ship, type, 0, 1 );
       }
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses the player metadata.
+ *
+ *    @param parent "metadata" node to parse.
+ *    @return 0 on success.
+ */
+static int player_parseMetadata( xmlNodePtr parent )
+{
+   xmlNodePtr node = parent->xmlChildrenNode;
+   do {
+      xml_onlyNodes(node);
+
+      if (xml_isNode(node,"last_played"))
+         xml_parseTime(node, &player.last_played);
+      else if (xml_isNode(node,"time_played"))
+         player.time_played = xml_getFloat(node);
+      else if (xml_isNode(node,"date_created"))
+         xml_parseTime(node, &player.date_created);
+
    } while (xml_nextNode(node));
 
    return 0;

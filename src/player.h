@@ -88,7 +88,14 @@ typedef struct Player_s {
 
    /* Loaded game version. */
    char *loaded_version; /**< Version of the loaded save game. */
+
+   /* Meta-data. */
    time_t last_played; /**< Date the save was last played. */
+   double time_played; /**< Total time the player has played the game. */
+   time_t date_created; /**< When the player was created. */
+
+   /* Meta-meta-data. */
+   time_t time_since_save; /**< Time since last saved. */
 } Player_t;
 
 

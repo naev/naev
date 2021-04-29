@@ -109,9 +109,6 @@ static int load_load( nsave_t *save, const char *path )
 
    memset( save, 0, sizeof(nsave_t) );
 
-   /* Load time just in case. */
-   save->last_played = time(NULL);
-
    /* Load the XML. */
    doc = load_xml_parsePhysFS( path );
    if (doc == NULL) {
@@ -142,10 +139,6 @@ static int load_load( nsave_t *save, const char *path )
          } while (xml_nextNode(node));
          continue;
       }
-
-      /* Last played. */
-      else if (xml_isNode(parent, "last_played"))
-         xml_parseTime(parent, &save->last_played);
 
       else if (xml_isNode(parent, "player")) {
          /* Get name. */
