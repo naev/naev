@@ -606,7 +606,8 @@ static int planetL_services( lua_State *L )
    int i;
    size_t len;
    Planet *p;
-   char *name, lower[256];
+   const char *name;
+   char lower[256];
    p = luaL_validplanet(L,1);
 
    /* Return result in table */

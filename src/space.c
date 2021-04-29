@@ -163,7 +163,7 @@ int space_sysLoad( xmlNodePtr parent );
  * @return English name, reversible via \p planet_getService()
  * and presentable via \p _().
  */
-char* planet_getServiceName( int service )
+const char* planet_getServiceName( int service )
 {
    switch (service) {
       case PLANET_SERVICE_LAND:        return N_("Land");
