@@ -332,7 +332,9 @@ end
 
 function returnFLFControl()
    for i, j in ipairs( fleetFLF ) do
-      j:control( false )
+      if j:exists() then
+         j:control( false )
+      end
    end
 end
 
