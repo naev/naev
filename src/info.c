@@ -201,9 +201,15 @@ static void info_openMain( unsigned int wid )
    int i;
    char *nt;
    int w, h;
+   unsigned int destroyed;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
+
+   /* Compute ships destroyed. */
+   destroyed = 0;
+   for (i=0; i<SHIP_CLASS_TOTAL; i++)
+      destroyed += player.ships_destroyed[i];
 
    /* pilot generics */
    nt = ntime_pretty( ntime_get(), 2 );
@@ -214,7 +220,12 @@ static void info_openMain( unsigned int wid )
          "\n"
          "Money:\n"
          "Ship:\n"
-         "Fuel:")
+         "Fuel:\n"
+         "\n"
+         "Time played:\n"
+         "Damage done:\n"
+         "Damage taken:\n"
+         "Ships destroyed:")
          );
    credits2str( creds, player.p->credits, 2 );
    snprintf( str, sizeof(str),
@@ -223,12 +234,21 @@ static void info_openMain( unsigned int wid )
          "\n"
          "%s\n"
          "%s\n"
-         "%d (%d jumps)"),
+         "%d (%d jumps)\n"
+         "\n"
+         "%.1f hours\n"
+         "%.0f\n"
+         "%.0f\n"
+         "%u"),
          player.name,
          nt,
          creds,
          player.p->name,
-         player.p->fuel, pilot_getJumps(player.p) );
+         player.p->fuel, pilot_getJumps(player.p),
+         player.time_played / 3600.,
+         player.dmg_done_shield + player.dmg_done_armour,
+         player.dmg_taken_shield + player.dmg_taken_armour,
+         destroyed );
    window_addText( wid, 180, 20,
          w-80-200-40+20-180, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
