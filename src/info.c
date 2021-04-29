@@ -211,7 +211,6 @@ static void info_openMain( unsigned int wid )
          0, "txtDPilot", &gl_smallFont, NULL,
          _("#nPilot:#0\n"
          "#nDate:#0\n"
-         "#nCombat Rating:#0\n"
          "\n"
          "#nMoney:#0\n"
          "#nShip:#0\n"
@@ -221,14 +220,12 @@ static void info_openMain( unsigned int wid )
    snprintf( str, sizeof(str),
          _("%s\n"
          "%s\n"
-         "%s\n"
          "\n"
          "%s\n"
          "%s\n"
          "%d (%d jumps)"),
          player.name,
          nt,
-         player_rating(),
          creds,
          player.p->name,
          player.p->fuel, pilot_getJumps(player.p) );

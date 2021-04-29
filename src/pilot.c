@@ -1532,8 +1532,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
  */
 void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 {
-   int mod;
-   Pilot *pshooter;
    HookParam hparam;
 
    if ((!pilot_isFlag(p, PILOT_DISABLED)) &&
@@ -1557,17 +1555,6 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       /* If hostile, must add counter. */
       if (pilot_isHostile(p))
          player.disabled_enemies++;
-
-      /* Modify player combat rating if applicable. */
-      /* TODO: Base off something more sensible than mass. */
-      pshooter = pilot_get(shooter);
-      if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
-         /* About 3 for a llama, 26 for hawking. */
-         mod = pow(p->base_mass, 0.4) - 1.;
-
-         /* Modify combat rating. */
-         player.crating += 2*mod;
-      }
 
       /* Disabled ships don't use up presence. */
       if (p->presence > 0) {

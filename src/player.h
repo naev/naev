@@ -75,7 +75,6 @@ typedef struct Player_s {
    PlayerFlags flags; /**< Player's flags. */
    int enemies; /**< Amount of enemies the player has. */
    int disabled_enemies; /**< Amount of enemies that are disabled. */
-   double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */
    Vector2d autonav_pos; /**< Target autonav position. */
    const char *autonavmsg; /**< String to print on arrival. */
@@ -179,7 +178,6 @@ void player_checkLandAck (void);
 void player_nolandMsg( const char *str );
 void player_clear (void);
 void player_warp( const double x, const double y );
-const char* player_rating (void);
 int player_hasCredits( credits_t amount );
 credits_t player_modCredits( credits_t amount );
 void player_hailStart (void);

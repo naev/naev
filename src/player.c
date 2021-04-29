@@ -718,7 +718,6 @@ void player_cleanup (void)
 
    /* Reset some player stuff. */
    player_creds   = 0;
-   player.crating = 0;
    free( player.gui );
    player.gui = NULL;
 
@@ -859,39 +858,6 @@ void player_clear (void)
 
    /* Clear the noland flag. */
    player_rmFlag( PLAYER_NOLAND );
-}
-
-static char* player_ratings[] = {
-      gettext_noop("Harmless"),
-      gettext_noop("Mostly Harmless"),
-      gettext_noop("Smallfry"),
-      gettext_noop("Average"),
-      gettext_noop("Above Average"),
-      gettext_noop("Major"),
-      gettext_noop("Intimidating"),
-      gettext_noop("Fearsome"),
-      gettext_noop("Terrifying"),
-      gettext_noop("Unstoppable"),
-      gettext_noop("Godlike")
-}; /**< Combat ratings. */
-/**
- * @brief Gets the player's combat rating in a human-readable string.
- *
- *    @return The player's combat rating in a human readable string.
- */
-const char* player_rating (void)
-{
-   if (player.crating == 0.) return _(player_ratings[0]);
-   else if (player.crating < 25.) return _(player_ratings[1]);
-   else if (player.crating < 50.) return _(player_ratings[2]);
-   else if (player.crating < 100.) return _(player_ratings[3]);
-   else if (player.crating < 200.) return _(player_ratings[4]);
-   else if (player.crating < 500.) return _(player_ratings[5]);
-   else if (player.crating < 1000.) return _(player_ratings[6]);
-   else if (player.crating < 2000.) return _(player_ratings[7]);
-   else if (player.crating < 5000.) return _(player_ratings[8]);
-   else if (player.crating < 10000.) return _(player_ratings[9]);
-   else return _(player_ratings[10]);
 }
 
 
@@ -2937,7 +2903,6 @@ int player_save( xmlTextWriterPtr writer )
    /* Standard player details. */
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_attr(writer,"dt_mod","%f",player.dt_mod);
-   xmlw_elem(writer,"rating","%f",player.crating);
    xmlw_elem(writer,"credits","%"CREDITS_PRI,player.p->credits);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
@@ -3293,7 +3258,6 @@ static Planet* player_parse( xmlNodePtr parent )
 
       /* global stuff */
       xmlr_float(node, "dt_mod", player.dt_mod);
-      xmlr_float(node, "rating", player.crating);
       xmlr_ulong(node, "credits", player_creds);
       xmlr_strd(node, "gui", player.gui);
       xmlr_int(node, "guiOverride", player.guiOverride);
