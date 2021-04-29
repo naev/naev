@@ -3175,6 +3175,12 @@ static int player_saveMetadata( xmlTextWriterPtr writer )
    xmlw_saveTime(writer, "date_created", player.date_created);
    xmlw_elem(writer,"time_played","%f",player.time_played);
 
+   /* Damage stuff. */
+   xmlw_elem(writer, "dmg_done_shield", "%f", player.dmg_done_shield);
+   xmlw_elem(writer, "dmg_done_armour", "%f", player.dmg_done_armour);
+   xmlw_elem(writer, "dmg_taken_shield", "%f", player.dmg_taken_shield);
+   xmlw_elem(writer, "dmg_taken_armour", "%f", player.dmg_taken_armour);
+
    return 0;
 }
 
@@ -3598,6 +3604,14 @@ static int player_parseMetadata( xmlNodePtr parent )
          player.time_played = xml_getFloat(node);
       else if (xml_isNode(node,"date_created"))
          xml_parseTime(node, &player.date_created);
+      else if (xml_isNode(node,"dmg_done_shield"))
+         player.dmg_done_shield = xml_getFloat(node);
+      else if (xml_isNode(node,"dmg_done_armour"))
+         player.dmg_done_armour = xml_getFloat(node);
+      else if (xml_isNode(node,"dmg_taken_shield"))
+         player.dmg_taken_shield = xml_getFloat(node);
+      else if (xml_isNode(node,"dmg_taken_armour"))
+         player.dmg_taken_armour = xml_getFloat(node);
 
    } while (xml_nextNode(node));
 

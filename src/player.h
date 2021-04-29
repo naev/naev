@@ -93,6 +93,10 @@ typedef struct Player_s {
    time_t last_played; /**< Date the save was last played. */
    double time_played; /**< Total time the player has played the game. */
    time_t date_created; /**< When the player was created. */
+   double dmg_done_shield; /**< Total damage done to shields. */
+   double dmg_done_armour; /**< Total damage done to armour. */
+   double dmg_taken_shield; /**< Total damage taken to shields. */
+   double dmg_taken_armour; /**< Total damage taken to armour. */
 
    /* Meta-meta-data. */
    time_t time_since_save; /**< Time since last saved. */
