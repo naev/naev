@@ -209,12 +209,12 @@ static void info_openMain( unsigned int wid )
    nt = ntime_pretty( ntime_get(), 2 );
    window_addText( wid, 40, 20, 120, h-80,
          0, "txtDPilot", &gl_smallFont, NULL,
-         _("#nPilot:#0\n"
-         "#nDate:#0\n"
+         _("#nPilot:\n"
+         "Date:\n"
          "\n"
-         "#nMoney:#0\n"
-         "#nShip:#0\n"
-         "#nFuel:#0")
+         "Money:\n"
+         "Ship:\n"
+         "Fuel:")
          );
    credits2str( creds, player.p->credits, 2 );
    snprintf( str, sizeof(str),
@@ -406,26 +406,26 @@ static void info_openShip( unsigned int wid )
    /* Text. */
    window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
          NULL,
-         _("#nName:#0\n"
-         "#nModel:#0\n"
-         "#nClass:#0\n"
-         "#nCrew:#0\n"
+         _("#nName:\n"
+         "Model:\n"
+         "Class:\n"
+         "Crew:\n"
          "\n"
-         "#nMass:#0\n"
-         "#nJump Time:#0\n"
-         "#nThrust:#0\n"
-         "#nSpeed:#0\n"
-         "#nTurn:#0\n"
-         "#nTime Constant:#0\n"
+         "Mass:\n"
+         "Jump Time:\n"
+         "Thrust:\n"
+         "Speed:\n"
+         "Turn:\n"
+         "Time Constant:\n"
          "\n"
-         "#nAbsorption:#0\n"
-         "#nShield:#0\n"
-         "#nArmour:#0\n"
-         "#nEnergy:#0\n"
-         "#nCargo Space:#0\n"
-         "#nFuel:#0\n"
+         "Absorption:\n"
+         "Shield:\n"
+         "Armour:\n"
+         "Energy:\n"
+         "Cargo Space:\n"
+         "Fuel:\n"
          "\n"
-         "#nStats:#0\n")
+         "Stats:\n")
          );
    window_addText( wid, 180, -60, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
