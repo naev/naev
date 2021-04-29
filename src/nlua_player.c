@@ -73,6 +73,7 @@ static int playerL_cinematics( lua_State *L );
 /* Board stuff. */
 static int playerL_unboard( lua_State *L );
 /* Land stuff. */
+static int playerL_isLanded( lua_State *L );
 static int playerL_takeoff( lua_State *L );
 static int playerL_allowLand( lua_State *L );
 static int playerL_landWindow( lua_State *L );
@@ -114,6 +115,7 @@ static const luaL_Reg playerL_methods[] = {
    { "autonavReset", playerL_autonavReset },
    { "cinematics", playerL_cinematics },
    { "unboard", playerL_unboard },
+   { "isLanded", playerL_isLanded },
    { "takeoff", playerL_takeoff },
    { "allowLand", playerL_allowLand },
    { "landWindow", playerL_landWindow },
@@ -638,6 +640,19 @@ static int playerL_unboard( lua_State *L )
    NLUA_CHECKRW(L);
    board_unboard();
    return 0;
+}
+
+
+/**
+ * @brief Checks to see if the player is landed or not.
+ *
+ *    @luatreturn boolean Whether or not the player is currently landed.
+ * @luafunc isLanded
+ */
+static int playerL_isLanded( lua_State *L )
+{
+   lua_pushboolean( L, landed );
+   return 1;
 }
 
 
