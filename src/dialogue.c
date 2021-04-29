@@ -1027,7 +1027,6 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
          if (event.type == SDL_QUIT) {
             if (menu_askQuit()) {
                naev_quit(); /* Quit is handled here */
-               SDL_PushEvent(&event); /* Propagate event. */
                *loop_done = 1; /* Exit loop and exit game. */
                break;
             }
