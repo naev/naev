@@ -3150,6 +3150,10 @@ void pilots_update( double dt )
       if (pilot_isFlag(p,PILOT_DEAD))
          continue;
 
+      /* Ignore persisting pilots during simulation since they don't get cleared. */
+      if (space_isSimulation() && (pilot_isFlag(p,PILOT_PERSIST)))
+         continue;
+
       /* Hyperspace gets special treatment */
       if (pilot_isFlag(p, PILOT_HYP_PREP))
          pilot_hyperspace(p, dt);
