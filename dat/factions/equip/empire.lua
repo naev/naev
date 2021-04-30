@@ -129,7 +129,6 @@ equip_typeOutfits_weapons["Peacemaker"] = equip_typeOutfits_weapons["Hawking"]
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   --[[
    if diff.isApplied( "collective_dead" ) then
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
@@ -161,7 +160,6 @@ function equip( p )
          }
       }
    end
-   --]]
    
    equip_generic( p )
 end

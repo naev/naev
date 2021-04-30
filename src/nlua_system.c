@@ -463,12 +463,12 @@ static int systemL_jumpdistance( lua_State *L )
  *    <li>system : Gets path to system</li>
  * </ul>
  *
- * @usage jumps = sys:jumpPath() -- Path from sys to current system.
+ * @usage jumps = sys:jumpPath( system.cur() ) -- Path from sys to current system.
  * @usage jumps = sys:jumpPath( "Draygar" ) -- Path from sys to Draygar.
  * @usage jumps = system.jumpPath( "Draygar", another_sys ) -- Path from Draygar to another_sys.
  *
  *    @luatparam System s Starting system.
- *    @luatparam nil|string|Goal system param See description.
+ *    @luatparam System goal Goal system param See description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden jumps.
  *    @luatreturn {Jump,...} Table of jumps.
  * @luafunc jumpPath
@@ -484,26 +484,11 @@ static int systemL_jumpPath( lua_State *L )
    h   = lua_toboolean(L,3);
 
    /* Foo to Bar */
-   if (lua_gettop(L) > 1) {
-      sys   = luaL_validsystem(L,1);
-      start = sys->name;
-      sid   = sys->id;
-
-      if (lua_isstring(L,2))
-         goal = lua_tostring(L,2);
-      else if (lua_issystem(L,2)) {
-         sysp = luaL_validsystem(L,2);
-         goal = sysp->name;
-      }
-      else NLUA_INVALID_PARAMETER(L);
-   }
-   /* Current to Foo */
-   else {
-      start = cur_system->name;
-      sid   = cur_system->id;
-      sys   = luaL_validsystem(L,1);
-      goal  = sys->name;
-   }
+   sys   = luaL_validsystem(L,1);
+   start = sys->name;
+   sid   = sys->id;
+   sysp  = luaL_validsystem(L,2);
+   goal  = sysp->name;
 
    s = map_getJumpPath( start, goal, 1, h, NULL );
    if (s == NULL)

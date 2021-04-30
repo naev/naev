@@ -73,6 +73,10 @@ extern const glColour cAqua;
 extern const glColour cBlackHilight;
 /* toolkit */
 extern const glColour cHilight;
+/* outfit slot colours. */
+extern const glColour cOutfitHeavy;
+extern const glColour cOutfitMedium;
+extern const glColour cOutfitLight;
 /* objects */
 extern const glColour cInert;
 extern const glColour cNeutral;

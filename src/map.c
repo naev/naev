@@ -815,7 +815,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    map_renderJumps( x, y, 0 );
 
    /* Cause alpha to move smoothly between 0-1. */
-   col.a = ( ABS(MAP_MARKER_CYCLE - (int)SDL_GetTicks() % (2*MAP_MARKER_CYCLE))
+   col.a = 0.5 + 0.5 * ( ABS(MAP_MARKER_CYCLE - (int)SDL_GetTicks() % (2*MAP_MARKER_CYCLE))
          / (double)MAP_MARKER_CYCLE );
 
    /* Render the player's jump route. */

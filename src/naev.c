@@ -145,6 +145,15 @@ void naev_quit (void)
 
 
 /**
+ * @brief Get if Naev is trying to quit.
+ */
+int naev_isQuit (void)
+{
+   return quit;
+}
+
+
+/**
  * @brief The entry point of Naev.
  *
  *    @param[in] argc Number of arguments.
@@ -393,9 +402,9 @@ int main( int argc, char** argv )
 
    /* primary loop */
    while (!quit) {
-      while (SDL_PollEvent(&event)) { /* event loop */
+      while (!quit && SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) {
-            if (menu_askQuit()) {
+            if (quit || menu_askQuit()) {
                quit = 1; /* quit is handled here */
                break;
             }

@@ -28,11 +28,12 @@ local minerva = {
       image = "maikki.png",
       colour = {1, 0.73, 0.97}, -- Pink :D
    },
-   strangelove = {
-      name = _("Dr. Strangelove"),
-      portrait = "strangelove.png",
-      image = "strangelove.png",
-      colour = colour.FontPurple, -- Purplish (close to nebula?)
+   maikkiP = {
+      name = _("Pirate Lord Maikki"),
+      description = _("TODO"),
+      portrait = "maikki.png",
+      image = "maikki.png",
+      colour = {1, 0.73, 0.97}, -- Pink :D
    },
    terminal = {
       name = _("Terminal"),
@@ -49,6 +50,12 @@ local minerva = {
       colour = nil,
    },
    -- Secondary characters
+   strangelove = {
+      name = _("Dr. Strangelove"),
+      portrait = "strangelove.png",
+      image = "strangelove.png",
+      colour = colour.FontPurple, -- Purplish (close to nebula?)
+   },
    ceo = {
       name = _("Minerva CEO"),
       portrait = "minervaceo.png",
@@ -111,6 +118,13 @@ function minerva.vn_maikki( params )
          _merge_tables( {
             image=minerva.maikki.image,
             color=minerva.maikki.colour,
+         }, params) )
+end
+function minerva.vn_maikkiP( params )
+   return vn.Character.new( minerva.maikkiP.name,
+         _merge_tables( {
+            image=minerva.maikkiP.image,
+            color=minerva.maikkiP.colour,
          }, params) )
 end
 function minerva.vn_terminal( params )

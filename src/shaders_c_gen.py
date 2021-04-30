@@ -34,7 +34,7 @@ SHADERS = [
       vs_path = "trail.vert",
       fs_path = "trail.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "c1", "c2", "t1", "t2", "dt", "pos1", "pos2", "r" ],
+      uniforms = ["projection", "c1", "c2", "t1", "t2", "dt", "pos1", "pos2", "r", "nebu_col" ],
       subroutines = {
         "trail_func" : [
             "trail_default",

@@ -106,8 +106,8 @@ function create ()
    if not misn.claim( system.get(eccsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( minerva.maikki.name, minerva.maikki.portrait )
-   misn.setDesc( minerva.maikki.description )
+   misn.setNPC( minerva.maikki.name, minerva.maikki.portrait, minerva,maikki.description )
+   misn.setDesc( misn_desc )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
 end
@@ -118,7 +118,6 @@ function accept ()
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
-      misn.finish(false)
       return
    end
 
@@ -197,7 +196,6 @@ and %s in the %s system."]]),
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
-         misn.setDesc( misn_desc )
          misn_state = 0
          shiplog.appendLog( logidstr, _("You agreed to continue helping Maikki find her father. She told you to try to find hints from three Za'lek researchers.") )
       end )

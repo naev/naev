@@ -677,6 +677,7 @@ dat/assets/omar.xml
 dat/assets/omega_station.xml
 dat/assets/onar.xml
 dat/assets/onasan.xml
+dat/assets/onewing_goddard.xml
 dat/assets/oni.xml
 dat/assets/onyx_shipyard.xml
 dat/assets/oort_farming_station.xml
@@ -1640,6 +1641,7 @@ dat/ships/ancestor.xml
 dat/ships/diplomatic_vessel.xml
 dat/ships/drone.xml
 dat/ships/drone_heavy.xml
+dat/ships/drone_hyena.xml
 dat/ships/dvaered_ancestor.xml
 dat/ships/dvaered_goddard.xml
 dat/ships/dvaered_phalanx.xml
@@ -2193,6 +2195,9 @@ dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
 dat/events/start.lua
+dat/events/taiomi/find.lua
+dat/events/taiomi/intro.lua
+dat/events/taiomi/system.lua
 dat/events/travelling_merchant.lua
 dat/events/tutorial/tutorial_common.lua
 dat/events/tutorial/tutorial_enter.lua
@@ -2304,6 +2309,8 @@ dat/missions/flf/flf_pirates.lua
 dat/missions/flf/flf_pre01.lua
 dat/missions/flf/flf_pre02.lua
 dat/missions/flf/flf_rogue.lua
+dat/missions/minerva/kex1.lua
+dat/missions/minerva/kex2.lua
 dat/missions/minerva/maikki1.lua
 dat/missions/minerva/maikki2.lua
 dat/missions/minerva/pirate1.lua
@@ -2452,6 +2459,7 @@ dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
 dat/scripts/swapship.lua
+dat/scripts/taiomi.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/main.lua

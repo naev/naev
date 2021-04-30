@@ -625,10 +625,14 @@ ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
             l = strlen(o->desc_short) + 128;
             coutfits[i].alt = malloc( l );
             p  = scnprintf( &coutfits[i].alt[0], l, "%s\n", _(o->name) );
+            if (o->slot.type != OUTFIT_SLOT_NA)
+               p += scnprintf( &coutfits[i].alt[p], l-p, _("#%c%s #%c%s #0slot\n"),
+                     outfit_slotSizeColourFont(&o->slot), outfit_slotSize(o),
+                     outfit_slotTypeColourFont(&o->slot), outfit_slotName(o) );
             if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
                p += scnprintf( &coutfits[i].alt[p], l-p, _("#oUnique#0\n") );
             if (o->slot.spid!=0)
-               p += scnprintf( &coutfits[i].alt[p], l-p, _("#oSlot %s#0\n"),
+               p += scnprintf( &coutfits[i].alt[p], l-p, _("#o%s#0\n"),
                      _( sp_display( o->slot.spid ) ) );
             p += scnprintf( &coutfits[i].alt[p], l-p, "\n%s", o->desc_short );
             if ((o->mass > 0.) && (p < l))

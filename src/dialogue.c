@@ -115,9 +115,6 @@ static void dialogue_close( unsigned int wid, char* str )
    loop_done = window_getData( wid );
    window_destroy( wid );
    *loop_done = 1;
-   dialogue_open--;
-   if (dialogue_open < 0)
-      WARN(_("Dialogue counter not in sync!"));
 }
 
 
@@ -131,9 +128,6 @@ static void dialogue_cancel( unsigned int wid, char* str )
    loop_done = window_getData( wid );
    window_destroy( wid );
    *loop_done = -1;
-   dialogue_open--;
-   if (dialogue_open < 0)
-      WARN(_("Dialogue counter not in sync!"));
 }
 
 
@@ -166,7 +160,6 @@ void dialogue_alert( const char *fmt, ... )
    window_addButton( wdw, 135, 20, 50, 30, "btnOK", _("OK"),
          dialogue_close );
 
-   dialogue_open++;
    toolkit_loop( &done, NULL );
 }
 
@@ -294,7 +287,6 @@ void dialogue_msgRaw( const char* caption, const char *msg )
    window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", _("OK"),
          dialogue_close );
 
-   dialogue_open++;
    toolkit_loop( &done, NULL );
 }
 
@@ -352,7 +344,6 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
    window_addButton( msg_wid, (img_width+w -50)/2, 20, 50, 30, "btnOK", _("OK"),
          dialogue_close );
 
-   dialogue_open++;
    toolkit_loop( &done, NULL );
 }
 
@@ -409,7 +400,6 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
          dialogue_YesNoClose, SDLK_n );
 
    /* tricky secondary loop */
-   dialogue_open++;
    done[1] = -1; /* Default to negative. */
    toolkit_loop( done, NULL );
 
@@ -509,7 +499,6 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          "btnClose", _("Done"), dialogue_inputClose );
 
    /* tricky secondary loop */
-   dialogue_open++;
    done  = 0;
    input = NULL;
    while ((done >= 0) && (!input ||
@@ -524,8 +513,9 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
          input = NULL;
       }
 
-      if (toolkit_loop( &done, NULL ) != 0) /* error in loop -> quit */
+      if (toolkit_loop( &done, NULL ) != 0) { /* error in loop -> quit */
          return NULL;
+      }
 
       /* save the input */
       if (done < 0)
@@ -537,7 +527,6 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    /* cleanup */
    if (input != NULL) {
       window_destroy( input_dialogue.input_wid );
-      dialogue_open--;
    }
    input_dialogue.input_wid = 0;
 
@@ -746,7 +735,6 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
    window_addButton( wid, -20-120-20, 20, 120, 30,
          "btnCancel", _("Cancel"), dialogue_listCancel );
 
-   dialogue_open++;
    toolkit_loop( &done, NULL );
    /* cleanup */
    input_dialogue.x = 0;
@@ -818,7 +806,6 @@ char *dialogue_runChoice (void)
 
    /* tricky secondary loop */
    window_setData( choice_wid, &done );
-   dialogue_open++;
    toolkit_loop( &done, NULL );
 
    /* Save value. */
@@ -846,8 +833,6 @@ static void dialogue_choiceClose( unsigned int wid, char* str )
    /* destroy the window */
    choice_wid = 0;
    window_destroy( wid );
-   dialogue_open--;
-
 }
 
 
@@ -937,7 +922,6 @@ void dialogue_custom( const char* caption, int width, int height,
    du.update = update;
    du.data   = data;
    du.wid    = wid;
-   dialogue_open++;
    toolkit_loop( &done, &du );
 }
 
@@ -1031,18 +1015,21 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
    /* Delay a toolkit iteration. */
    toolkit_delay();
 
+   /* Increment dialogues. */
+   dialogue_open++;
+
    *loop_done = 0;
-   while (!(*loop_done) && toolkit_isOpen()) {
+   while (!(*loop_done) && toolkit_isOpen() && !naev_isQuit()) {
       /* Loop first so exit condition is checked before next iteration. */
       main_loop( 0 );
 
-      while (SDL_PollEvent(&event)) { /* event loop */
-         if (event.type == SDL_QUIT) { /* pass quit event to main engine */
-            /* Don't do menu_askQuit here, as it can mess up lots of stuff.
-             * Just propagate the event downwards and close the dialogue. */
-            *loop_done = 1;
-            SDL_PushEvent(&event);
-            return -1;
+      while (!naev_isQuit() && SDL_PollEvent(&event)) { /* event loop */
+         if (event.type == SDL_QUIT) {
+            if (menu_askQuit()) {
+               naev_quit(); /* Quit is handled here */
+               *loop_done = 1; /* Exit loop and exit game. */
+               break;
+            }
          }
          else if (event.type == SDL_WINDOWEVENT &&
                event.window.event == SDL_WINDOWEVENT_RESIZED) {
@@ -1074,6 +1061,11 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
          }
       }
    }
+
+   /* Close dialogue. */
+   dialogue_open--;
+   if (dialogue_open < 0)
+      WARN(_("Dialogue counter not in sync!"));
 
    return 0;
 }

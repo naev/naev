@@ -87,8 +87,7 @@ log_text = _([[You helped Dr. Geller retrieve his lost prototype drone.]])
 
 function create ()
    -- Spaceport bar stuff
-   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.png")
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.png", bar_desc )
 end
 function accept()
    -- Mission details:

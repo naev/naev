@@ -77,7 +77,7 @@ end
 function hail_philosopher ()
    vn.clear()
    vn.scene()
-   local d = vn.newCharacter( "Philosopher Drone", { image='gfx/ship/drone/drone_comm.png' } )
+   local d = vn.newCharacter( taiomi.vn_philosopher() )
    vn.transition()
 
    vn.label("menu")
@@ -126,7 +126,7 @@ end
 function hail_scavenger ()
    vn.clear()
    vn.scene()
-   local d = vn.newCharacter( "Scavenger Drone", { image='gfx/ship/drone/drone_hyena_comm.webp' } )
+   local d = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition()
    d("TODO")
 
@@ -138,7 +138,7 @@ end
 function hail_wornout ()
    vn.clear()
    vn.scene()
-   local d = vn.newCharacter( "Worn-out Drone", { image='gfx/ship/drone/drone_comm.png' } )
+   local d = vn.newCharacter( taiomi.vn_wornout() )
    vn.transition()
    vn.na("The drone seems fairly beaten and immobile. You can see some slight movement when you begin communication.")
    d("TODO")

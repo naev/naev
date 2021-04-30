@@ -163,7 +163,7 @@ int space_sysLoad( xmlNodePtr parent );
  * @return English name, reversible via \p planet_getService()
  * and presentable via \p _().
  */
-char* planet_getServiceName( int service )
+const char* planet_getServiceName( int service )
 {
    switch (service) {
       case PLANET_SERVICE_LAND:        return N_("Land");
@@ -200,6 +200,64 @@ int planet_getService( char *name )
    else if (strcmp(name,"Blackmarket")==0)
       return PLANET_SERVICE_BLACKMARKET;
    return -1;
+}
+
+
+/**
+ * @brief Gets the long class name for a planet.
+ *
+ *    @param class Name of the class to process.
+ *    @return Long name of the class.
+ */
+const char* planet_getClassName( const char *class )
+{
+   if (strcmp(class,"0")==0)
+      return _("Civilian Station");
+   else if (strcmp(class,"1")==0)
+      return _("Military Station");
+   else if (strcmp(class,"2")==0)
+      return _("Pirate Station");
+   else if (strcmp(class,"A")==0)
+      return _("Geothermal");
+   else if (strcmp(class,"B")==0)
+      return _("Geomorteus");
+   else if (strcmp(class,"C")==0)
+      return _("Geoinactive");
+   else if (strcmp(class,"D")==0)
+      return _("Asteroid/Moon");
+   else if (strcmp(class,"E")==0)
+      return _("Geoplastic");
+   else if (strcmp(class,"F")==0)
+      return _("Geometallic");
+   else if (strcmp(class,"G")==0)
+      return _("Geocrystaline");
+   else if (strcmp(class,"H")==0)
+      return _("Desert");
+   else if (strcmp(class,"I")==0)
+      return _("Gas Supergiant");
+   else if (strcmp(class,"J")==0)
+      return _("Gas Giant");
+   else if (strcmp(class,"K")==0)
+      return _("Adaptable");
+   else if (strcmp(class,"L")==0)
+      return _("Marginal");
+   else if (strcmp(class,"M")==0)
+      return _("Terrestrial");
+   else if (strcmp(class,"N")==0)
+      return _("Reducing");
+   else if (strcmp(class,"O")==0)
+      return _("Pelagic");
+   else if (strcmp(class,"P")==0)
+      return _("Glaciated");
+   else if (strcmp(class,"Q")==0)
+      return _("Variable");
+   else if (strcmp(class,"R")==0)
+      return _("Rogue");
+   else if (strcmp(class,"S")==0 || strcmp(class,"T")==0)
+      return _("Ultragiants");
+   else if (strcmp(class,"X")==0 || strcmp(class,"Y")==0 || strcmp(class,"Z")==0)
+      return _("Demon");
+   return class;
 }
 
 

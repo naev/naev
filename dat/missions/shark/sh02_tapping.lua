@@ -97,8 +97,7 @@ function create ()
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png")
-   misn.setDesc(bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png", bar_desc[1])
 end
 
 function accept()

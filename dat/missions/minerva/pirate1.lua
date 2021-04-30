@@ -50,8 +50,8 @@ function create ()
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait )
-   misn.setDesc( minerva.pirate.description )
+   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
+   misn.setDesc( misn_desc )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
 end
@@ -90,7 +90,6 @@ They beam a smile at you.]]),_(runawaysys)))
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
-      misn.finish(false)
       return
    end
 
@@ -98,7 +97,6 @@ They beam a smile at you.]]),_(runawaysys)))
    shiplog.appendLog( logidstr, _("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
 
    misn.accept()
-   misn.setDesc( misn_desc )
    osd = misn.osdCreate( _("Thug Decoy"),
          {_("Get the drone to follow you"),
           _("Harass the thugs"),

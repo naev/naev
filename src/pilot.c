@@ -1255,7 +1255,7 @@ void pilot_rmHostile( Pilot* p )
       }
 
       /* Set "bribed" flag if faction has poor reputation */
-      if ( areEnemies( FACTION_PLAYER, p->faction ) )
+      if (areEnemies( FACTION_PLAYER, p->faction ))
          pilot_setFlag(p, PILOT_BRIBED);
    }
 }
@@ -1348,6 +1348,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 {
    int mod;
    double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod, start;
+   double tdshield, tdarmour;
    Pilot *pshooter;
 
    /* Invincible means no damage. */
@@ -1401,6 +1402,10 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
        * biases towards high-damage, low-ROF weapons.
        */
       p->stress += disable * (.5 + (.5 - ((start+p->shield) / p->shield_max) / 4.));
+
+      /* True damage. */
+      tdshield = damage_shield;
+      tdarmour = 0.0;
    }
    /*
     * Shields take part of the blow.
@@ -1409,6 +1414,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       start      = p->shield;
       dmod        = (1. - p->shield/damage_shield);
       ddmg        = p->shield + dmod * damage_armour;
+      tdshield    = p->shield;
       p->shield   = 0.;
 
       /* Leak some disabling damage through the remaining bit of shields. */
@@ -1416,7 +1422,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
       /* Reduce stress as armour is eaten away. */
       p->stress  *= (p->armour - dmod * damage_armour) / p->armour;
-      p->armour  -= dmod * damage_armour;
+      tdarmour    = dmod * damage_armour;
+      p->armour  -= tdarmour;
       p->stress  += dmod * disable;
       dam_mod     = (damage_shield + damage_armour) /
                    ((p->shield_max + p->armour_max) / 2.);
@@ -1442,6 +1449,10 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          p->stimer  = 3.;
          p->sbonus  = 3.;
       }
+
+      /* True damage. */
+      tdshield = 0.;
+      tdarmour = ddmg;
    }
 
    /* Ensure stress never exceeds remaining armour. */
@@ -1466,8 +1477,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          pilot_dead( p, shooter );
 
          /* adjust the combat rating based on pilot mass and ditto faction */
-         if (pshooter == NULL)
-            pshooter = pilot_get(shooter);
+         pshooter = pilot_get(shooter);
          if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
 
             /* About 6 for a llama, 52 for hawking. */
@@ -1475,18 +1485,33 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
             /* Modify faction for him and friends. */
             faction_modPlayer( p->faction, -mod, "kill" );
+
+            /* Note that player destroyed the ship. */
+            player.ships_destroyed[p->ship->class]++;
          }
       }
    }
 
    /* Some minor effects and stuff. */
    else if (p->shield <= 0.) {
-      dam_mod = damage_armour/p->armour_max;
-
-      if (p->id == PLAYER_ID) /* a bit of shaking */
+      if (p->id == PLAYER_ID) { /* a bit of shaking */
+         dam_mod = tdarmour/p->armour_max;
          spfx_shake( SHAKE_MAX*dam_mod );
+         spfx_damage( dam_mod );
+      }
    }
 
+   /* Update player meta-data if applicable. */
+   if (p->id == PLAYER_ID) {
+      player.dmg_taken_shield += tdshield;
+      player.dmg_taken_armour += tdarmour;
+   }
+   /* TODO we might want to actually resolve shooter and check for
+    * FACTION_PLAYER so that escorts also get counted... */
+   else if (shooter == PLAYER_ID) {
+      player.dmg_done_shield += tdshield;
+      player.dmg_done_armour += tdarmour;
+   }
 
    if (w != NULL)
       /* knock back effect is dependent on both damage and mass of the weapon
@@ -1507,8 +1532,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
  */
 void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 {
-   int mod;
-   Pilot *pshooter;
    HookParam hparam;
 
    if ((!pilot_isFlag(p, PILOT_DISABLED)) &&
@@ -1532,17 +1555,6 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       /* If hostile, must add counter. */
       if (pilot_isHostile(p))
          player.disabled_enemies++;
-
-      /* Modify player combat rating if applicable. */
-      /* TODO: Base off something more sensible than mass. */
-      pshooter = pilot_get(shooter);
-      if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
-         /* About 3 for a llama, 26 for hawking. */
-         mod = pow(p->base_mass, 0.4) - 1.;
-
-         /* Modify combat rating. */
-         player.crating += 2*mod;
-      }
 
       /* Disabled ships don't use up presence. */
       if (p->presence > 0) {
@@ -3148,6 +3160,10 @@ void pilots_update( double dt )
       if (pilot_isDisabled(p))
          continue;
       if (pilot_isFlag(p,PILOT_DEAD))
+         continue;
+
+      /* Ignore persisting pilots during simulation since they don't get cleared. */
+      if (space_isSimulation() && (pilot_isFlag(p,PILOT_PERSIST)))
          continue;
 
       /* Hyperspace gets special treatment */

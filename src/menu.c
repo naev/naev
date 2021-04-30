@@ -240,7 +240,7 @@ void menu_main (void)
          "btnCredits", p_("Menu|", "Credits"), menu_main_credits, SDLK_c );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", _("Exit"), menu_exit, SDLK_x );
+         "btnExit", _("Exit Game"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
    if (array_size( load_getList() ) == 0) {
@@ -434,7 +434,7 @@ void menu_small (void)
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", _("Options"), menu_options_button, SDLK_o );
    window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", _("Exit"), menu_small_exit, SDLK_x );
+         "btnExit", _("Exit to Title"), menu_small_exit, SDLK_x );
 
    menu_Open(MENU_SMALL);
 }

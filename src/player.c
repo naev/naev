@@ -152,6 +152,7 @@ static void player_initSound (void);
 static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
 static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship );
+static int player_saveMetadata( xmlTextWriterPtr writer );
 static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
@@ -159,6 +160,7 @@ static int player_parseLicenses( xmlNodePtr parent );
 static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot );
 static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
+static int player_parseMetadata( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
 static int player_filterSuitablePlanet( Planet *p );
@@ -236,6 +238,9 @@ void player_new (void)
 
    /* Set up new player. */
    player_newSetup();
+
+   /* Some meta-data. */
+   player.date_created = time(NULL);
 
    /* Get the name. */
    player.name = dialogue_input( _("Player Name"), 1, 60,
@@ -713,7 +718,6 @@ void player_cleanup (void)
 
    /* Reset some player stuff. */
    player_creds   = 0;
-   player.crating = 0;
    free( player.gui );
    player.gui = NULL;
 
@@ -854,39 +858,6 @@ void player_clear (void)
 
    /* Clear the noland flag. */
    player_rmFlag( PLAYER_NOLAND );
-}
-
-static char* player_ratings[] = {
-      gettext_noop("Harmless"),
-      gettext_noop("Mostly Harmless"),
-      gettext_noop("Smallfry"),
-      gettext_noop("Average"),
-      gettext_noop("Above Average"),
-      gettext_noop("Major"),
-      gettext_noop("Intimidating"),
-      gettext_noop("Fearsome"),
-      gettext_noop("Terrifying"),
-      gettext_noop("Unstoppable"),
-      gettext_noop("Godlike")
-}; /**< Combat ratings. */
-/**
- * @brief Gets the player's combat rating in a human-readable string.
- *
- *    @return The player's combat rating in a human readable string.
- */
-const char* player_rating (void)
-{
-   if (player.crating == 0.) return _(player_ratings[0]);
-   else if (player.crating < 25.) return _(player_ratings[1]);
-   else if (player.crating < 50.) return _(player_ratings[2]);
-   else if (player.crating < 100.) return _(player_ratings[3]);
-   else if (player.crating < 200.) return _(player_ratings[4]);
-   else if (player.crating < 500.) return _(player_ratings[5]);
-   else if (player.crating < 1000.) return _(player_ratings[6]);
-   else if (player.crating < 2000.) return _(player_ratings[7]);
-   else if (player.crating < 5000.) return _(player_ratings[8]);
-   else if (player.crating < 10000.) return _(player_ratings[9]);
-   else return _(player_ratings[10]);
 }
 
 
@@ -2932,7 +2903,6 @@ int player_save( xmlTextWriterPtr writer )
    /* Standard player details. */
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_attr(writer,"dt_mod","%f",player.dt_mod);
-   xmlw_elem(writer,"rating","%f",player.crating);
    xmlw_elem(writer,"credits","%"CREDITS_PRI,player.p->credits);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
@@ -3005,6 +2975,11 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_startElem(writer, "escorts");
    player_saveEscorts(writer);
    xmlw_endElem(writer); /* "escorts" */
+
+   /* Metadata. */
+   xmlw_startElem(writer,"metadata");
+   player_saveMetadata( writer );
+   xmlw_endElem(writer); /* "metadata" */
 
    return 0;
 }
@@ -3145,6 +3120,50 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
    return 0;
 }
 
+
+/**
+ * @brief Saves the player meta-data.
+ *
+ *    @param writer XML writer.
+ *    @return 0 on success.
+ */
+static int player_saveMetadata( xmlTextWriterPtr writer )
+{
+   int i;
+   size_t j;
+   char buf[STRMAX_SHORT];
+   time_t t = time(NULL);
+
+   /* Compute elapsed time. */
+   player.time_played += difftime( t, player.time_since_save );
+   player.time_since_save = t;
+
+   /* Save the stuff. */
+   xmlw_saveTime(writer, "last_played", time(NULL));
+   xmlw_saveTime(writer, "date_created", player.date_created);
+   xmlw_elem(writer,"time_played","%f",player.time_played);
+
+   /* Damage stuff. */
+   xmlw_elem(writer, "dmg_done_shield", "%f", player.dmg_done_shield);
+   xmlw_elem(writer, "dmg_done_armour", "%f", player.dmg_done_armour);
+   xmlw_elem(writer, "dmg_taken_shield", "%f", player.dmg_taken_shield);
+   xmlw_elem(writer, "dmg_taken_armour", "%f", player.dmg_taken_armour);
+
+   /* Ships destroyed by class. */
+   xmlw_startElem(writer,"ships_destroyed");
+   for (i=SHIP_CLASS_NULL+1; i<SHIP_CLASS_TOTAL; i++) {
+      strncpy( buf, ship_classToString(i), sizeof(buf) );
+      for (j=0; j<strlen(buf); j++)
+         if (buf[j]==' ')
+            buf[j]='_';
+      xmlw_elem(writer, buf, "%u", player.ships_destroyed[i]);
+   }
+   xmlw_endElem(writer); /* "ships_destroyed" */
+
+   return 0;
+}
+
+
 /**
  * @brief Loads the player stuff.
  *
@@ -3161,8 +3180,10 @@ Planet* player_load( xmlNodePtr parent )
    pnt = NULL;
    map_cleanup();
 
-   /* Load time just in case. */
+   /* Sane time defaults. */
    player.last_played = time(NULL);
+   player.date_created = player.last_played;
+   player.time_since_save = player.last_played;
 
    if (player_stack==NULL)
       player_stack = array_create( PlayerShip_t );
@@ -3171,8 +3192,8 @@ Planet* player_load( xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"last_played"))
-         xml_parseTime(node, &player.last_played);
+      if (xml_isNode(node,"metadata"))
+         player_parseMetadata(node);
       else if (xml_isNode(node,"player"))
          pnt = player_parse( node );
       else if (xml_isNode(node,"missions_done"))
@@ -3182,6 +3203,9 @@ Planet* player_load( xmlNodePtr parent )
       else if (xml_isNode(node,"escorts"))
          player_parseEscorts(node);
    } while (xml_nextNode(node));
+
+   /* Set up meta-data. */
+   player.time_since_save = time(NULL);
 
    return pnt;
 }
@@ -3234,7 +3258,6 @@ static Planet* player_parse( xmlNodePtr parent )
 
       /* global stuff */
       xmlr_float(node, "dt_mod", player.dt_mod);
-      xmlr_float(node, "rating", player.crating);
       xmlr_ulong(node, "credits", player_creds);
       xmlr_strd(node, "gui", player.gui);
       xmlr_int(node, "guiOverride", player.guiOverride);
@@ -3534,6 +3557,62 @@ static int player_parseEscorts( xmlNodePtr parent )
 
          /* Add escort to the list. */
          escort_addList( player.p, ship, type, 0, 1 );
+      }
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses the player metadata.
+ *
+ *    @param parent "metadata" node to parse.
+ *    @return 0 on success.
+ */
+static int player_parseMetadata( xmlNodePtr parent )
+{
+   xmlNodePtr node, cur;
+   size_t i;
+   int class;
+   char buf[STRMAX_SHORT];
+
+   node = parent->xmlChildrenNode;
+   do {
+      xml_onlyNodes(node);
+
+      if (xml_isNode(node,"last_played"))
+         xml_parseTime(node, &player.last_played);
+      else if (xml_isNode(node,"time_played"))
+         player.time_played = xml_getFloat(node);
+      else if (xml_isNode(node,"date_created"))
+         xml_parseTime(node, &player.date_created);
+      else if (xml_isNode(node,"dmg_done_shield"))
+         player.dmg_done_shield = xml_getFloat(node);
+      else if (xml_isNode(node,"dmg_done_armour"))
+         player.dmg_done_armour = xml_getFloat(node);
+      else if (xml_isNode(node,"dmg_taken_shield"))
+         player.dmg_taken_shield = xml_getFloat(node);
+      else if (xml_isNode(node,"dmg_taken_armour"))
+         player.dmg_taken_armour = xml_getFloat(node);
+      else if (xml_isNode(node,"ships_destroyed")) {
+         cur = node->xmlChildrenNode;
+         do {
+            xml_onlyNodes(cur);
+
+            strncpy( buf, (const char*)cur->name, sizeof(buf) );
+            for (i=0; i<strlen(buf); i++)
+               if (buf[i]=='_')
+                  buf[i] = ' ';
+
+            class = ship_classFromString( buf );
+            if (class==SHIP_CLASS_NULL) {
+               WARN(_("Unknown ship class '%s' when pasing 'ships_destroyed' node!"), (const char*)cur->name );
+               continue;
+            }
+
+            player.ships_destroyed[class] = xml_getULong(cur);
+         } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
 

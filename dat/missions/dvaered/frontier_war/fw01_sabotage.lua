@@ -192,8 +192,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(portrait_name, portrait_tam)
-   misn.setDesc(portrait_desc)
+   misn.setNPC(portrait_name, portrait_tam, portrait_desc)
 end
 
 function accept()

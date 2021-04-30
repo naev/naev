@@ -1088,11 +1088,6 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
          pilot_setHostile(p);
       }
    }
-   /* Do damage effect if it is the player. */
-   else if (p->faction == FACTION_PLAYER) {
-      if (p->shield < 0.) /**< Only play effect on armour. */
-         spfx_damage( dmg / p->armour_max );
-   }
    /* Otherwise just inform of being attacked. */
    else
       ai_attacked( p, shooter->id, dmg );

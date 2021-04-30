@@ -106,6 +106,7 @@ typedef struct Mission_ {
    char *reward; /**< Rewards in text */
    glTexture *portrait; /**< Portrait of the mission giver if applicable. */
    char *npc; /**< Name of the NPC giving the mission. */
+   char *npc_desc; /**< Description of the giver NPC. */
 
    /* mission cargo given to the player - need to cleanup */
    unsigned int *cargo; /**< Array (array.h): Cargos given to player. */

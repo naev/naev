@@ -91,10 +91,10 @@ function create ()
    if not misn.claim( {system.get(cutscenesys), system.get(stealthsys)} ) then
       misn.finish( false )
    end
-   misn.setNPC( maikki_name, maikki_portrait )
-   misn.setDesc( maikki_description )
+   misn.setNPC( maikki_name, maikki_portrait, maikki_description )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
+   misn.setDesc( misn_desc )
 end
 
 
@@ -103,7 +103,6 @@ function accept ()
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
-      misn.finish(false)
       return
    end
 
@@ -163,7 +162,6 @@ She trails off.]]) )
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
-         misn.setDesc( misn_desc )
          misn_state = -1
          shiplog.createLog( logidstr, minerva.log.maikki.logname, minerva.log.maikki.logtype, true )
          shiplog.appendLog( logidstr, _("You have agreed to help Maikki find her father (Kex).") )

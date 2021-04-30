@@ -17,11 +17,17 @@
 --]]
 
 --[[
+   Freeing Kex 1
+
+   Simple mission where the player has to raid a small transport to start to get clues.
 --]]
 local minerva = require "minerva"
 local portrait = require 'portrait'
+local love_shaders = require 'love_shaders'
 local vn = require 'vn'
 require 'numstring'
+
+logidstr = minerva.log.kex.idstr
 
 -- Mission states:
 --  nil: mission not accepted yet
@@ -31,9 +37,14 @@ require 'numstring'
 misn_state = nil
 
 targetsys = "Provectus Nova"
+jumpinsys = "Waterhole"
+jumpoutsys = "Limbo"
 
-misn_reward = "A step closer to Kex's freedom"
-misn_title = "Freeing Kex"
+misn_reward = _("A step closer to Kex's freedom")
+misn_title = _("Freeing Kex")
+misn_desc = _("Kex wants you to help him find dirt on the Minerva CEO by raiding a transport headed to Minerva Station.")
+
+money_reward = 150e3
 
 function create ()
    if not misn.claim( system.get(targetsys) ) then
@@ -41,7 +52,10 @@ function create ()
    end
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
+   misn.setDesc( misn_desc )
 
+   -- We avoid creating a giver NPC and directly use "normal NPC"
+   -- Have to make sure to check if misn.accept() works
    generate_npc ()
 end
 
@@ -64,8 +78,46 @@ function approach_kex ()
    vn.transition()
    vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
 
-   --[[
-   if done_cond then
+   if misn_state==2 then
+      local maikki = minerva.vn_maikkiP{
+            shader = love_shaders.color{ color={0,0,0,1} },
+            pos = "right" }
+
+      vn.na(_("You tell Kex about you encounter with the transports and how you weren't able to find the supposed cargo."))
+      kex(_([["Damn it. That must have been a decoy. The delivery logs are always a mess and there always seem to be mainly repeated by modified entries. I picked the most likely, but there was also another at the same time and it could have been that one. "]]))
+
+      vn.appear( maikki, "slideleft", 1, "linear" )
+      vn.sfxEerie()
+      vn.na(_("You suddenly hear a large thump. You are only able to catch a glimpse of a shadow before it runs away."))
+      vn.disappear( maikki, "slideleft", 1, "linear" )
+
+      vn.na(_("You go investigate what happened and find a secured crate. Kex quietly follows and looks surprised when he sees the crate."))
+      kex(_([["This is one of the secured crates that I was talking about! How the hell did it get here?"]]))
+      vn.na(_("You look around but there seems to be nobody else other than the two of you."))
+      kex(_([[Kex looks at you in the eyes.
+"In cases like this it's probably best not to ask questions, and just take it as some kind of blessing. Had things like this happen all the time in the nebula and nothing good ever came from investigating. Just remember to keep an eye open."]]))
+      kex(_([[He now looks at the crate.
+"Let me see if I can this open. Mmmm… fairly shoddy Nexus lock. I don't think they make these anymore. Shouldn't be a problem for my implant system."]]))
+      kex(_([[He puts his wing on the lock and you hear some sort of click. His eyes close and he begins to hum an old tune, almost sounds like a nursery rhyme. This goes on for a while before he suddenly jolts back with his eyes open.]]))
+      vn.sfxBingo()
+      kex(_([["OK, let us see what we have here."
+The crate opens unceremoniously and Kex peers.
+"Damn, looks like we have no incriminating evidence, however, it does seem like we can use this as a starting point."]]))
+      vn.na(_([[He passes you the document which reads:
+"The next shipment will be larger than expected, but I presume you will be able to deal with it as usual. Please take this commission and do whatever you like with it."
+It is signed "Baroness Eve".]]))
+      kex(_([["I'm not too sure who this 'Baroness Eve' is, but let me see if I can get some information on them and we can see what we can do from there on."]]))
+      kex(_([["Oh, I almost forgot. There's quite a few credits in the crate too, I think it's only fair to give you most of them as a reward for your help."]]))
+      vn.sfxMoney()
+      vn.func( function () player.pay( money_reward ) end )
+      vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
+      kex(_([["Meet me up here again in a bit, I'm going to go get some information."
+Kex runs off and disappears into the station.]]))
+      vn.sfxVictory()
+      vn.run()
+
+      shiplog.appendLog( logidstr, _("You managed to find a crate destined to the Minerva CEO through luck, and found that it was sent by Baroness Eve."))
+
       -- Remove unnecessary variables to keep it clean
       var.pop( "kex_talk_station" )
       var.pop( "kex_talk_ceo" )
@@ -73,7 +125,6 @@ function approach_kex ()
       misn.finish( true )
       return
    end
-   --]]
 
    vn.label("menu_msg")
    kex(_([["What's up kid?"]]))
@@ -143,11 +194,20 @@ You looks at you with determination.
 
    vn.label("help")
    kex(string.format(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could could go to the %s system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), _(targetsys)))
-   kex(_([["Hope"]]))
+   kex(_([["If you can disable the ship and find the evidence itself it would be ideal, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.func( function ()
       if misn_state==nil then
+         if not misn.accept() then
+            tk.msg(_("You have too many active missions."))
+            vn.jump("menu_msg")
+            return
+         end
+         shiplog.appendLog( logidstr, _("You agreed to help Kex to find dirt on the Minerva Station CEO to try to get him free."))
+         misn_marker = misn.markerAdd( system.get(targetsys) )
+         misn.osdCreate( misn_title,
+            { string.format(_("Intercept the transport at %s"), _(targetsys)),
+            _("Return to Kex at Minerva Station") } )
          misn_state = 0
-         misn.accept()
          hook.land("generate_npc")
          hook.load("generate_npc")
          hook.enter("enter")
@@ -158,11 +218,12 @@ You looks at you with determination.
    vn.label("nohelp")
    kex(_([[He looks dejected.
 "I see. If you change your mind, I'll be around."]]))
-   vn.jump("menu_msg")
+   vn.done()
 
    vn.label("job")
    kex(_([["We have to find the dirt on the CEO and get him removed. It is the only change I have for freedom."]]))
    kex(string.format(_([[They should be receiving a delivery. You should go intercept it at the %s system before it gets here. I have sent you all the precise information. It should be a breeze with with your piloting skills.]]), _(targetsys)))
+   kex(_([["If you can disable the ship and find the evidence itself it would be ideal, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.jump("menu_msg")
 
    vn.label("leave")
@@ -203,6 +264,80 @@ He takes another swig from his drinks.]]))
 end
 
 function enter ()
+   if misn_state==1 then
+      player.msg(_("#rMISSION FAILED! You were supposed to raid the transport!"))
+      misn.finish(false)
+   end
    if system.cur() == system.get(targetsys) then
+      if misn_state == 0 then
+         fthugs = faction.dynAdd( "Mercenary", "Convoy", _("Convoy") )
+
+         local jinsys = system.get(jumpinsys)
+         local joutsys = system.get(jumpoutsys)
+         mainguy = pilot.add( "Rhino", fthugs, jinsys, _("Transport") )
+         mainguy:setVisplayer(true)
+         mainguy:setHilight(true)
+         mainguy:control()
+         mainguy:hyperspace( joutsys, true )
+         hook.pilot( mainguy, "death", "mainguy_dead" )
+         hook.pilot( mainguy, "board", "mainguy_board" )
+         hook.pilot( mainguy, "jump", "mainguy_left" )
+
+         local function addescort( shipname )
+            local p = pilot.add( shipname, fthugs, jinsys, _("Escort") )
+            p:setLeader( mainguy )
+            return p
+         end
+
+         escorts = { addescort("Admonisher"),
+                     addescort("Shark"),
+                     addescort("Shark") }
+
+         misn_state = 1
+      end
    end
 end
+
+function mainguy_left ()
+   player.msg(_("#rMISSION FAILED! The transport got away!"))
+end
+
+function mainguy_attacked ()
+   if not mainguy:exists() then return end
+   if mainguy_attacked_msg then return end
+
+   mainguy:broadcast(_("Transport under attack! Help requested immediately!"))
+
+   mainguy_attacked_msg = true
+end
+
+function mainguy_board ()
+   local reward = 50e3 + rnd.rnd()*50e3
+
+   vn.clear()
+   vn.scene()
+   vn.transition()
+   vn.na(_("You storm the transport and head towards the cargo bay, however, once you get there you find it is empty. Given that it is likely not to be large, you proceed to explore the rest of the ship to see if there is anything of interest."))
+   vn.na(string.format(_("You are not able to find what you were looking for, but you were able to find %s that likely won't be necessary to the crew anymore."), creditstring(reward)))
+   vn.na(_("It might be best to report back to Kex to see if his information was incorrect."))
+   vn.run()
+
+   shiplog.appendLog( logidstr, _("You boarded a transport destined to the Minerva CEO, but didn't find anything."))
+   misn.markerMove( misn_marker, system.get("Limbo") )
+   misn_state = 2
+   misn.osdActive(2)
+   player.unboard()
+end
+
+function mainguy_dead ()
+   hook.timer( 3000, "mainguy_dead_scanned" )
+end
+
+function mainguy_dead_scanned ()
+   player.msg(_("You scan the debris of the transport for any potential cargo, but can't find anything."))
+   shiplog.appendLog( logidstr, _("You destroyed a transport destined to the Minerva Ceo, but didn't find anything in the debris."))
+   misn.markerMove( misn_marker, system.get("Limbo") )
+   misn_state = 2
+   misn.osdActive(2)
+end
+

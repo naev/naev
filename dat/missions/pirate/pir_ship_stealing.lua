@@ -275,8 +275,7 @@ function create ()
 
    theship.system = theship.planet:system()
 
-   misn.setNPC( _("A Pirate informer"), portrait.get("Pirate") )
-   misn.setDesc( informer.description )
+   misn.setNPC( _("A Pirate informer"), portrait.get("Pirate"), informer.description )
 end
 
 function accept()

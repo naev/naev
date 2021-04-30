@@ -52,9 +52,10 @@ typedef enum ShipClass_ {
    /* Robotic */
    SHIP_CLASS_DRONE,       /**< Unmanned small robotic ship. */
    SHIP_CLASS_HEAVY_DRONE, /**< Unmanned medium robotic ship. */
-   SHIP_CLASS_MOTHERSHIP   /**< Unmanned large robotic carrier. */
+   SHIP_CLASS_MOTHERSHIP,  /**< Unmanned large robotic carrier. */
    /* Hybrid */
    /** @todo hybrid ship classification. */
+   SHIP_CLASS_TOTAL,       /**< Sentinal for total amount of ship classes. */
 } ShipClass;
 
 
@@ -176,7 +177,8 @@ Ship* ship_getW( const char* name );
 const char *ship_existsCase( const char* name );
 const Ship* ship_getAll (void);
 const char* ship_class( const Ship* s );
-ShipClass ship_classFromString( char* str );
+const char *ship_classToString( ShipClass class );
+ShipClass ship_classFromString( const char* str );
 credits_t ship_basePrice( const Ship* s );
 credits_t ship_buyPrice( const Ship* s );
 glTexture* ship_loadCommGFX( Ship* s );

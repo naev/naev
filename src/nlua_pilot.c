@@ -2363,13 +2363,8 @@ static int pilotL_addOutfit( lua_State *L )
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
    o      = luaL_validoutfit(L,2);
-   q      = 1;
-   if (lua_gettop(L) > 2 && !lua_isnil(L,2))
-      q = luaL_checkint(L,3);
-   if (lua_gettop(L) > 3)
-      bypass = lua_toboolean(L, 4);
-   else
-      bypass = 0;
+   q      = luaL_optinteger(L,3,1);
+   bypass = lua_toboolean(L,4);
 
    /* Add outfit. */
    added = 0;
@@ -3346,6 +3341,8 @@ static int pilotL_idle( lua_State *L )
 /**
  * @brief Sets manual control of the pilot.
  *
+ * Note that this will reset the pilot's current task when the state changes.
+ *
  * @usage p:control() -- Same as p:control(true), enables manual control of the pilot
  * @usage p:control(false) -- Restarts AI control of the pilot
  *
@@ -3363,7 +3360,7 @@ static int pilotL_idle( lua_State *L )
 static int pilotL_control( lua_State *L )
 {
    Pilot *p;
-   int enable;
+   int enable, hasflag;
 
    NLUA_CHECKRW(L);
 
@@ -3374,6 +3371,7 @@ static int pilotL_control( lua_State *L )
    else
       enable = lua_toboolean(L, 2);
 
+   hasflag = pilot_isFlag(p, PILOT_MANUAL_CONTROL);
    if (enable) {
       pilot_setFlag(p, PILOT_MANUAL_CONTROL);
       if (pilot_isPlayer(p))
@@ -3389,8 +3387,9 @@ static int pilotL_control( lua_State *L )
        * has to have an AI even if it's the player for things to work. */
    }
 
-   /* Clear task. */
-   pilotL_taskclear( L );
+   /* Clear task if changing state. */
+   if (hasflag != enable)
+      pilotL_taskclear( L );
 
    return 0;
 }

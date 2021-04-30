@@ -519,6 +519,9 @@ static void bar_approach( unsigned int wid, char *str )
 
    n = npc_getArraySize();
    npc_approach( pos );
+   /* This check is necessary if the player quits the game in the middle of an NPC approach. */
+   if (land_planet==NULL)
+      return;
    bar_genList( wid ); /* Always just in case. */
 
    /* Focus the news if the number of NPCs has changed. */
@@ -813,18 +816,33 @@ static void spaceport_buyMap( unsigned int wid, char *str )
  */
 void land_updateMainTab (void)
 {
-   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
+   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT], pop[STRMAX_SHORT];
    Outfit *o;
+   uint64_t p = land_planet->population;
+
+   if (p > (uint64_t)10e9)
+      snprintf( pop, sizeof(pop), _("%lu biillion"), p / (uint64_t)1e9 );
+   else if (p > (uint64_t)10e6)
+      snprintf( pop, sizeof(pop), _("%lu million"), p / (uint64_t)1e6 );
+   else if (p > (uint64_t)10e3)
+      snprintf( pop, sizeof(pop), _("%lu thousand"), p / (uint64_t)1e3 );
+   else
+      snprintf( pop, sizeof(pop), "%lu", p );
 
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
    snprintf( buf, sizeof(buf),
-         _("%s\n"
+         _("%s (%s system)\n"
+         "%s (%s-class)\n"
          "%s\n"
+         "roughly %s\n"
+         "\n"
          "%s\n"
          "%s"),
-         _(land_planet->name), _(cur_system->name), tons, cred );
+         _(land_planet->name), _(cur_system->name),
+         planet_getClassName(land_planet->class), _(land_planet->class),
+         _(faction_name(land_planet->faction)), pop, tons, cred );
    window_modifyText( land_windows[0], "txtDInfo", buf );
 
    /* Maps are only offered if the planet provides fuel. */
@@ -1193,14 +1211,17 @@ static void land_createMainTab( unsigned int wid )
 
    /* Player stats. */
    bufSInfo = _(
-         "Stationed at:\n"
-         "System:\n"
+         "#nStationed at:\n"
+         "Class:\n"
+         "Faction:\n"
+         "Population:\n"
+         "\n"
          "Free Space:\n"
          "Money:" );
    th = gl_printHeightRaw( &gl_defFont, 200, bufSInfo );
    window_addText( wid, 20, 20, 200, th,
          0, "txtSInfo", &gl_defFont, NULL, bufSInfo );
-   window_addText( wid, 20+200, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,
+   window_addText( wid, 20+120, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,
          th, 0, "txtDInfo", &gl_defFont, NULL, NULL );
 
    /*

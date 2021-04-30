@@ -60,8 +60,7 @@ function create ()
    dest = planets[index][1]
    sys = planets[index][2]
 
-   misn.setNPC( _("Pirate Lord"), portrait.getMil("Pirate") )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Pirate Lord"), portrait.getMil("Pirate"), bar_desc )
 end
 
 

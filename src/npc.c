@@ -152,7 +152,7 @@ static unsigned int npc_add_giver( Mission *misn )
       WARN(_("Mission '%s' trying to create NPC with no portrait!"), misn->data->name);
       return 0;
    }
-   if (misn->desc == NULL) {
+   if (misn->npc_desc == NULL) {
       WARN(_("Mission '%s' trying to create NPC with no description!"), misn->data->name);
       return 0;
    }
@@ -163,7 +163,7 @@ static unsigned int npc_add_giver( Mission *misn )
    npc.priority   = misn->data->avail.priority;
    npc.portrait   = gl_dupTexture(misn->portrait);
    npc.background = NULL;
-   npc.desc       = strdup(misn->desc);
+   npc.desc       = strdup(misn->npc_desc);
    npc.u.m.id     = misn->id;
    npc.u.m.func   = strdup("accept");
 
@@ -485,6 +485,7 @@ static void npc_free( NPC_t *npc )
 
    /* Type-specific free stuff. */
    switch (npc->type) {
+      case NPC_TYPE_GIVER:
       case NPC_TYPE_MISSION:
          free(npc->u.m.func);
          break;
@@ -636,7 +637,7 @@ static int npc_approach_giver( NPC_t *npc )
    }
    id   = npc->id;
    ret  = mission_accept( misn );
-   if ((ret==2) || (ret==-1)) { /* success in accepting the mission */
+   if ((ret==3) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
       if (ret==-1)
          mission_cleanup( misn );
       npc_rm( npc_arrayGet(id) );

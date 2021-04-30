@@ -89,8 +89,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Merchant"), portrait.get("Trader")) -- creates the merchant at the bar
-   misn.setDesc(bar_desc) -- merchant's description
+   misn.setNPC(_("Merchant"), portrait.get("Trader"), bar_desc) -- creates the merchant at the bar
 
    stu_distance = 0.2 * travel_dist
    stu_jumps = 10300 * num_jumps

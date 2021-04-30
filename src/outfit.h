@@ -31,11 +31,11 @@
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_WEAPON            N_("#b W ")
+#define OUTFIT_LABEL_WEAPON            N_("#p W ")
 /** Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_UTILITY           N_("#g U ")
 /** Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_STRUCTURE         N_("#p S ")
+#define OUTFIT_LABEL_STRUCTURE         N_("#n S ")
 /** Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_CORE              N_("#oCore")
 
@@ -426,6 +426,8 @@ const char *outfit_slotName( const Outfit* o );
 const char *outfit_slotSize( const Outfit* o );
 const char *slotSize( const OutfitSlotSize o );
 const glColour *outfit_slotSizeColour( const OutfitSlot* os );
+char outfit_slotSizeColourFont( const OutfitSlot* os );
+char outfit_slotTypeColourFont( const OutfitSlot* os );
 OutfitSlotSize outfit_toSlotSize( const char *s );
 glTexture* outfit_gfx( const Outfit* o );
 CollPoly* outfit_plg( const Outfit* o );
