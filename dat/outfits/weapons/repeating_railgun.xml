@@ -19,8 +19,8 @@
   <spfx_armour>ExpM</spfx_armour>
   <delay>1.4</delay>
   <speed>700</speed>
-  <range>2200</range>
-  <falloff>1600</falloff>
+  <range>2400</range>
+  <falloff>1800</falloff>
   <gfx_end>massL-end.png</gfx_end>
   <energy>65</energy>
   <heatup>60</heatup>

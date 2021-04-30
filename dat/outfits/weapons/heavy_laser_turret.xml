@@ -17,7 +17,7 @@
   <spfx_shield>ShiM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
   <delay>1.7</delay>
-  <speed>700</speed>
+  <speed>650</speed>
   <range>2200</range>
   <falloff>1600</falloff>
   <gfx_end>laser2L.png</gfx_end>
