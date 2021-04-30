@@ -21,7 +21,7 @@
   <range>2400</range>
   <falloff>1800</falloff>
   <gfx_end>laser3L.png</gfx_end>
-  <energy>165</energy>
+  <energy>174</energy>
   <heatup>60</heatup>
   <track>0.2</track>
   <damage>
