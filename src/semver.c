@@ -550,7 +550,7 @@ semver_bump_patch (semver_t *x) {
 
 static int
 has_valid_length (const char *s) {
-  return strlen(s) <= MAX_SIZE;
+  return s != NULL && strlen(s) <= MAX_SIZE;
 }
 
 /**
