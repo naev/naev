@@ -130,7 +130,7 @@ function spawnBaddies ()
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:setHostile(true) --they don't like you
       pilot_object:rmOutfit("all") --strip them down
-      pilot_object:addOutfit("Laser Cannon MK2") --add everything but rockets
+      pilot_object:addOutfit("Ripper Cannon") --add everything but rockets
       pilot_object:addOutfit("Plasma Blaster MK2", 2)
       pilot_object:addOutfit("Vulcan Gun", 2)
       pilot_object:addOutfit("Reactor Class II", 2)

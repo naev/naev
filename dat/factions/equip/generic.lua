@@ -22,37 +22,37 @@ equip_classCargo = {
 -- Table of available core systems by class.
 equip_classOutfits_coreSystems = {
    ["Yacht"] = {
-      "Unicorp PT-100 Core System"
+      "Unicorp PT-18 Core System"
    },
    ["Luxury Yacht"] = {
-      "Unicorp PT-100 Core System"
+      "Unicorp PT-18 Core System"
    },
    ["Scout"] = {
-      "Unicorp PT-100 Core System", "Milspec Aegis 2201 Core System"
+      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System"
    },
    ["Courier"] = {
-      "Unicorp PT-200 Core System", "Milspec Aegis 3601 Core System"
+      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System"
    },
    ["Freighter"] = {
-      "Unicorp PT-600 Core System", "Milspec Aegis 5401 Core System"
+      "Unicorp PT-400 Core System", "Milspec Aegis 5401 Core System"
    },
    ["Armoured Transport"] = {
       "Milspec Aegis 5401 Core System", "Milspec Orion 5501 Core System"
    },
    ["Fighter"] = {
-      "Unicorp PT-200 Core System", "Milspec Orion 3701 Core System"
+      "Unicorp PT-80 Core System", "Milspec Orion 3701 Core System"
    },
    ["Bomber"] = {
-      "Unicorp PT-200 Core System", "Milspec Orion 3701 Core System"
+      "Unicorp PT-80 Core System", "Milspec Orion 3701 Core System"
    },
    ["Corvette"] = {
-      "Unicorp PT-500 Core System", "Milspec Orion 4801 Core System"
+      "Unicorp PT-280 Core System", "Milspec Orion 4801 Core System"
    },
    ["Destroyer"] = {
-      "Unicorp PT-600 Core System", "Milspec Orion 5501 Core System"
+      "Unicorp PT-400 Core System", "Milspec Orion 5501 Core System"
    },
    ["Cruiser"] = {
-      "Unicorp PT-1000 Core System", "Milspec Orion 9901 Core System"
+      "Unicorp PT-3400 Core System", "Milspec Orion 9901 Core System"
    },
    ["Carrier"] = {
       "Milspec Orion 9901 Core System"
@@ -97,7 +97,7 @@ equip_classOutfits_engines = {
       "Tricon Zephyr II Engine"
    },
    ["Corvette"] = {
-      "Unicorp Falcon 550 Engine", "Nexus Arrow 550 Engine",
+      "Unicorp Falcon 700 Engine", "Nexus Arrow 700 Engine",
       "Tricon Cyclone Engine"
    },
    ["Destroyer"] = {
@@ -137,7 +137,7 @@ equip_classOutfits_hulls = {
       "Unicorp D-4 Light Plating", "S&K Small Cargo Hull"
    },
    ["Freighter"] = {
-      "Unicorp D-12 Medium Plating", "S&K Medium Cargo Hull"
+      "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull"
    },
    ["Armoured Transport"] = {
       "S&K Medium Cargo Hull"
@@ -151,19 +151,19 @@ equip_classOutfits_hulls = {
       "S&K Light Stealth Plating", "S&K Light Combat Plating"
    },
    ["Corvette"] = {
-      "Unicorp D-8 Medium Plating", "Unicorp B-8 Medium Plating",
+      "Unicorp D-12 Medium Plating", "Unicorp B-12 Medium Plating",
       "S&K Medium Stealth Plating", "S&K Medium Combat Plating"
    },
    ["Destroyer"] = {
-      "Unicorp D-12 Medium Plating", "Unicorp B-12 Medium Plating",
+      "Unicorp D-24 Medium Plating", "Unicorp B-24 Medium Plating",
       "S&K Medium-Heavy Stealth Plating", "S&K Medium-Heavy Combat Plating"
    },
    ["Cruiser"] = {
-      "Unicorp D-20 Heavy Plating", "Unicorp B-20 Heavy Plating",
+      "Unicorp D-72 Heavy Plating", "Unicorp B-72 Heavy Plating",
       "S&K Superheavy Combat Plating"
    },
    ["Carrier"] = {
-      "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
+      "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating"
    },
    ["Drone"] = {
       "S&K Ultralight Stealth Plating"
@@ -179,25 +179,23 @@ equip_classOutfits_hulls = {
 equip_classOutfits_weapons = {
    ["Yacht"] = {
       {
-         "Laser Cannon MK1", "Laser Cannon MK2", "Razor MK1", "Razor MK2",
-         "Laser PD MK1", "Turreted Gauss Gun"
+         "Laser Cannon MK1", "Razor MK1", "Razor MK2",
+         "Laser Turret MK1", "Turreted Gauss Gun",
       }
    },
    ["Luxury Yacht"] = {
       {
-         "Laser Cannon MK1", "Laser Cannon MK2", "Razor MK1", "Razor MK2"
+         "Laser Cannon MK1", "Razor MK1", "Razor MK2",
       }
    },
    ["Scout"] = {
       {
-         "Laser PD MK1", "Laser PD MK2", "Razor Turret MK1",
-         "Turreted Gauss Gun"
+         "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
       }
    },
    ["Courier"] = {
       {
-         "Laser PD MK1", "Laser PD MK2", "Razor Turret MK1",
-         "Turreted Gauss Gun"
+         "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
       }
    },
    ["Freighter"] = {
@@ -214,23 +212,23 @@ equip_classOutfits_weapons = {
       {
          num = 2, varied = true;
          "Pulse Beam", "Enygma Systems Turreted Fury Launcher",
-         "Heavy Laser", "Heavy Ripper Turret"
+         "Heavy Laser Turret", "Heavy Ripper Turret"
       },
       {
-         "Laser Turret MK2", "Laser Turret MK3"
+         "Laser Turret MK2",
       }
    },
    ["Fighter"] = {
       {
          num = 1;
-         "Mass Driver MK1", "Ion Cannon", "Unicorp Mace Launcher",
-         "Unicorp Banshee Launcher", "Orion Lance", "Shattershield Lance",
+         "Mass Driver", "Ion Cannon", "Unicorp Mace Launcher",
+         "Unicorp Banshee Launcher", "Orion Lance",
          "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
-         "Unicorp Medusa Launcher", "Ripper Cannon"
+         "Unicorp Medusa Launcher", "Laser Cannon MK2",
       },
       {
          "Plasma Blaster MK1", "Plasma Blaster MK2", "Gauss Gun",
-         "Vulcan Gun", "Ripper Cannon"
+         "Vulcan Gun", "Laser Cannon MK2"
       }
    },
    ["Bomber"] = {
@@ -252,19 +250,18 @@ equip_classOutfits_weapons = {
       },
       {
          num = 2;
-         "Mass Driver MK1", "Mass Driver MK2", "Heavy Ion Cannon",
-         "Laser Turret MK1", "Plasma Turret MK2", "Razor Turret MK2"
+         "Mass Driver", "Heavy Ion Cannon",
+         "Laser Turret MK1", "Plasma Turret MK2", "Razor Turret MK2",
       },
       {
-         "Ripper Cannon", "Plasma Blaster MK2", "Laser Cannon MK2",
-         "Vulcan Gun", "Ion Cannon"
+         "Ripper Cannon", "Plasma Blaster MK2", "Shredder", "Ion Cannon"
       }
    },
    ["Destroyer"] = {
       {
          num = 2;
-         "Railgun", "Heavy Ripper Turret", "Heavy Laser", "Orion Beam",
-         "Grave Beam", "Laser Turret MK3", "Razor Turret MK2"
+         "Railgun", "Heavy Ripper Turret", "Heavy Laser Turret", "Orion Beam",
+         "Grave Beam", "Laser Turret MK2", "Razor Turret MK2",
       },
       {
          num = 1;
@@ -272,7 +269,7 @@ equip_classOutfits_weapons = {
          "Unicorp Headhunter Launcher", "TeraCom Medusa Launcher"
       },
       {
-         "Laser Turret MK2", "Laser Turret MK3", "Turreted Vulcan Gun"
+         "Laser Turret MK2", "Laser Turret MK2", "Turreted Vulcan Gun",
       }
    },
    ["Cruiser"] = {
@@ -281,10 +278,10 @@ equip_classOutfits_weapons = {
          "Turbolaser", "Ragnarok Beam", "Grave Beam", "Railgun Turret"
       },
       {
-         "Heavy Laser", "Heavy Ripper Turret", "Railgun Turret"
+         "Heavy Laser Turret", "Heavy Ripper Turret", "Railgun Turret"
       },
       {
-         "Laser Turret MK3", "Turreted Vulcan Gun"
+         "Laser Turret MK2", "Turreted Vulcan Gun",
       }
    },
    ["Carrier"] = {
@@ -294,13 +291,13 @@ equip_classOutfits_weapons = {
       },
       {
 --         num = 2;
-         "Heavy Laser", "Grave Beam", "Railgun Turret"
+         "Heavy Laser Turret", "Grave Beam", "Railgun Turret"
       },
 --      {
 --         "Lancelot Fighter Bay"
 --      },
       {
-         "Laser Turret MK3", "Turreted Vulcan Gun"
+         "Laser Turret MK2", "Turreted Vulcan Gun",
       }
    },
    ["Drone"] = {
@@ -542,25 +539,25 @@ equip_classOutfits_structurals = {
 -- Table of available core systems by base type.
 equip_typeOutfits_coreSystems = {
    ["Hyena"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Shark"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Brigand"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Fidelity"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Perspicacity"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Derivative"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System"
    },
    ["Kestrel"] = {
-      "Unicorp PT-900 Core System", "Milspec Orion 8601 Core System"
+      "Unicorp PT-750 Core System", "Milspec Orion 8601 Core System"
    },
    ["Brigand"] = {
       probability = {
@@ -783,7 +780,7 @@ equip_typeOutfits_hulls = {
       "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
    },
    ["Kestrel"] = {
-      "Unicorp D-16 Heavy Plating", "Unicorp B-16 Heavy Plating",
+      "Unicorp D-48 Heavy Plating", "Unicorp B-48 Heavy Plating",
       "S&K Heavy Combat Plating"
    },
    ["Brigand"] = {
@@ -878,15 +875,15 @@ equip_typeOutfits_weapons = {
       },
       {
          varied = true;
-         "Turreted Vulcan Gun", "Mass Driver MK2", "Unicorp Mace Launcher",
-         "Heavy Ion Cannon"
+         "Turreted Vulcan Gun", "Mass Driver", "Unicorp Mace Launcher",
+         "Heavy Ion Cannon",
       }
    },
    ["Goddard"] = {
       {
          varied = true;
-         "Railgun Turret", "Railgun", "Repeating Railgun", "Mass Driver MK3",
-         "Mass Driver MK2", "Heavy Laser", "Grave Beam"
+         "Railgun Turret", "Railgun", "Repeating Railgun", "Mass Driver",
+         "Heavy Laser Turret", "Grave Beam",
       }
    }
 }
@@ -904,7 +901,7 @@ equip_typeOutfits_structurals = {
          varied = true, probability = {
             ["Cargo Pod"] = 9, ["Fuel Pod"] = 2
          };
-         "Cargo Pod", "Fuel Pod", "Improved Refrigeration Cycle"
+         "Cargo Pod", "Fuel Pod", "Improved Refrigeration Cycle",
       }
    }
 }
@@ -948,16 +945,16 @@ equip_shipOutfits_weapons = {
          "Heavy Ripper Cannon"
       },
       {
-         "Ripper Cannon"
+         "Laser Cannon MK2"
       }
    },
    ["Sirius Fidelity"] = {
       {
          num = 2;
-         "Razor MK2", "Razor MK3", "Ion Cannon"
+         "Razor MK1", "Ion Cannon"
       },
       {
-         "Razor MK2", "Razor MK3", "Ion Cannon"
+         "Razor MK1", "Ion Cannon"
       }
    },
    ["Za'lek Scout Drone"] = {
@@ -1133,7 +1130,7 @@ function equip_generic( p )
       success = equip_warn( p, o[rnd.rnd(1, #o)] )
    end
    if not success then
-      equip_warn( p, "Unicorp PT-100 Core System" )
+      equip_warn( p, "Unicorp PT-18 Core System" )
    end
 
    -- Engines

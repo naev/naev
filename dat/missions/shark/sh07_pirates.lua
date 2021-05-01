@@ -202,7 +202,7 @@ function enter()
       baddie:addOutfit("Small Shield Booster")
       baddie:addOutfit("Milspec Scrambler")
 
-      baddie:addOutfit("Laser Cannon MK3",2)
+      baddie:addOutfit("Laser Cannon MK1",2)
 
       hook.pilot(baddie, "idle", "idle", pos)
       hook.pilot(baddie, "attacked", "attacked")

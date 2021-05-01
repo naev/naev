@@ -8,7 +8,6 @@ equip_typeOutfits_weapons["Brigand"] = {
       };
       "BioPlasma Organ Stage 1", "BioPlasma Organ Stage 2",
       "BioPlasma Organ Stage 3", "BioPlasma Organ Stage X",
-      "Plasma Blaster MK3"
    }
 }
 

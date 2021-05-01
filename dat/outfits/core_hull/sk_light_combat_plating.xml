@@ -12,7 +12,7 @@
  </general>
  <specific type="modification">
   <cargo>8</cargo>
-  <absorb>8</absorb>
+  <absorb>6</absorb>
   <armour>110</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>

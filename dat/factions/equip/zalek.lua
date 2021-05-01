@@ -40,13 +40,13 @@ equip_typeOutfits_hulls["Demon"] = {
    "S&K Medium Stealth Plating"
 }
 equip_typeOutfits_hulls["Mephisto"] = {
-   "Unicorp B-16 Heavy Plating"
+   "Unicorp B-48 Heavy Plating"
 }
 equip_typeOutfits_hulls["Diablo"] = {
-   "Unicorp B-20 Heavy Plating"
+   "Unicorp B-72 Heavy Plating"
 }
 equip_typeOutfits_hulls["Hephaestus"] = {
-   "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
+   "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating"
 }
 
 equip_typeOutfits_weapons["Sting"] = {

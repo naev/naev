@@ -42,7 +42,7 @@ equip_typeOutfits_weapons["Ancestor"] = {
 equip_typeOutfits_weapons["Phalanx"] = {
    {
       num = 3;
-      "Mass Driver MK2", "Mass Driver MK3"
+      "Mass Driver",
    },
    {
       varied = true;
@@ -56,14 +56,14 @@ equip_typeOutfits_weapons["Vigilance"] = {
    },
    {
       varied = true;
-      "Turreted Vulcan Gun", "Mass Driver MK2", "Mass Driver MK3",
+      "Turreted Vulcan Gun", "Mass Driver",
       "Unicorp Mace Launcher"
    }
 }
 equip_typeOutfits_weapons["Goddard"] = {
    {
       varied = true;
-      "Railgun Turret", "Repeating Railgun", "Mass Driver MK3",
+      "Railgun Turret", "Repeating Railgun", "Mass Driver",
       "Turreted Vulcan Gun", "Unicorp Mace Launcher"
    }
 }

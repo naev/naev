@@ -29,7 +29,7 @@
   <weapon size="medium" x="8" y="0" h="0" />
   <weapon size="small" x="-2" y="9" h="-1" />
   <weapon size="small" x="-2" y="-9" h="-1" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-80 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
@@ -38,6 +38,7 @@
   <structure size="small" />
  </slots>
  <stats>
+  <cpu_mod>-25</cpu_mod>
   <speed_mod>-20</speed_mod>
   <turn_mod>-10</turn_mod>
   <thrust_mod>-10</thrust_mod>

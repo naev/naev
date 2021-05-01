@@ -52,7 +52,7 @@ equip_typeOutfits_hulls["Pacifier"] = {
    "S&K Medium-Heavy Combat Plating"
 }
 equip_typeOutfits_hulls["Hawking"] = {
-   "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
+   "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating"
 }
 equip_typeOutfits_hulls["Peacemaker"] = {
    "S&K Superheavy Combat Plating"
@@ -64,7 +64,7 @@ equip_typeOutfits_weapons["Shark"] = {
       "Unicorp Banshee Launcher", "Ripper Cannon"
    },
    {
-      "Ripper Cannon", "Laser Cannon MK3"
+      "Laser Cannon MK1"
    }
 }
 equip_typeOutfits_weapons["Lancelot"] = equip_shipOutfits_weapons["Empire Lancelot"]
@@ -94,16 +94,16 @@ equip_typeOutfits_weapons["Pacifier"] = {
    },
    {
       num = 1;
-      "Heavy Ripper Cannon", "Laser Turret MK3", "Orion Beam", "Pulse Beam"
+      "Heavy Ripper Cannon", "Laser Turret MK2", "Orion Beam", "Pulse Beam"
    },
    {
-      "Heavy Ripper Cannon", "Laser Turret MK3"
+      "Heavy Ripper Cannon", "Laser Turret MK2"
    }
 }
 equip_typeOutfits_weapons["Hawking"] = {
    {
       num = 2;
-      "Heavy Laser"
+      "Heavy Laser Turret",
    },
    {
       num = 2;
@@ -115,10 +115,10 @@ equip_typeOutfits_weapons["Hawking"] = {
    },
    {
       num = 1;
-      "Turbolaser", "Heavy Laser"
+      "Turbolaser", "Heavy Laser Turret",
    },
    {
-      "Heavy Laser"
+      "Heavy Laser Turret",
    }
 }
 equip_typeOutfits_weapons["Peacemaker"] = equip_typeOutfits_weapons["Hawking"]
@@ -133,7 +133,7 @@ function equip( p )
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
             num = 2, varied = true;
-            "Turbolaser", "Heavy Laser", "Ragnarok Beam", "Grave Beam"
+            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam", "Grave Beam"
          },
          {
             varied = true;
@@ -141,14 +141,14 @@ function equip( p )
          },
          {
             varied = true;
-            "Heavy Ripper Turret", "Laser Turret MK3"
+            "Heavy Ripper Turret", "Laser Turret MK2"
          }
       }
    else
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
             num = 2, varied = true;
-            "Turbolaser", "Heavy Laser", "Ragnarok Beam", "Grave Beam"
+            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam", "Grave Beam"
          },
          {
             varied = true;
@@ -156,7 +156,7 @@ function equip( p )
          },
          {
             varied = true;
-            "Heavy Ripper Turret", "Laser Turret MK3"
+            "Heavy Ripper Turret", "Laser Turret MK2"
          }
       }
    end

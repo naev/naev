@@ -15,19 +15,19 @@
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
   <delay>1</delay>
-  <speed>500</speed>
-  <range>700</range>
-  <falloff>500</falloff>
+  <speed>600</speed>
+  <range>900</range>
+  <falloff>750</falloff>
   <gfx_end>ionM-end.png</gfx_end>
-  <energy>20</energy>
-  <heatup>50</heatup>
+  <energy>8</energy>
+  <heatup>40</heatup>
   <track>2</track>
   <swivel>22</swivel>
   <damage>
    <type>ion</type>
-   <penetrate>11</penetrate>
-   <physical>3.5</physical>
-   <disable>10</disable>
+   <penetrate>0</penetrate>
+   <physical>2</physical>
+   <disable>21</disable>
   </damage>
  </specific>
 </outfit>
