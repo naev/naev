@@ -1049,7 +1049,10 @@ int naev_versionCompare( const char *version )
    semver_t sv;
 
    if (semver_parse( version, &sv ))
+   {
       WARN( _("Failed to parse version string '%s'!"), version );
+      return -1;
+   }
 
    if ((res = 3*binary_comparison(version_binary.major, sv.major)) == 0) {
       if ((res = 2*binary_comparison(version_binary.minor, sv.minor)) == 0) {
