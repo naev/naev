@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon License</license>
-  <mass>20</mass>
+  <mass>40</mass>
   <price>50000</price>
   <description>The Plasma Cluster Cannon takes the refinement of the Plasma Cannon even further. By confining a massive cluster of superheated plasma into a small space within a specialized "membrane shield", the impact creates large explosions which tear through even the strongest hulls. The downside to this design, however, is that a lot of space is required, which limits its use to medium mounts.</description>
   <gfx_store>plasma2.png</gfx_store>
