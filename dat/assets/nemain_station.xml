@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Nemain Station">
+ <pos>
+  <x>5005.186657</x>
+  <y>-6059.829239</y>
+ </pos>
+ <GFX>
+  <space>station-battlestation.webp</space>
+  <exterior>station03.webp</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>50.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>50000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Nemain Station is a place where ship captains gather together from all over the universe to test their prowess in combat in the asteroid field nearby. Due to the large number of ships that are constantly landing and taking off, the docks are oversized compared to most stations. This also allows the crowds that form whenever a tournament winner lands on the stations. Given the amount of action going on, this attracts the attention of tourists and gamblers who bet on tournament outcomes making for a very lively station.</description>
+  <bar>The Nemain Station bar is lined with pictures of winners of different tournaments. A large screen in the center projects the current tournament with wagering information displayed and updated in real-time. A highlight of the bar is  a refurbished defused mace rocket that has been cut in half in order to serve as a counter for drinks.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+  <item>Engines Medium</item>
+ </tech>
+</asset>
