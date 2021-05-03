@@ -169,7 +169,7 @@ function pay( amount )
                local sn = string.format( "%d", new_level )
                new_part = bioship_parts[index][1]:format( sn )
             end
-            local q = pp:addOutfit( new_part, 1, true )
+            local q = pp:addOutfit( new_part, 1, true ) -- Only check slot stuff, ignore CPU and the rest.
             if q<=0 then
                warn(string.format(_("Unable to upgrade Soromid outfit to %s!"), new_part))
                pp:addOutfit( part, 1, true ) -- Try to add previous one
