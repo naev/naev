@@ -114,9 +114,16 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
    }
    /* Final render is to the screen. */
    pp = &list[i];
-   gl_screen.current_fbo = (done) ? 0 : gl_screen.fbo[cur];
+   if (done) {
+      gl_screen.current_fbo = 0;
+      glBlendFuncSeparate( GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO );
+   }
+   else
+      gl_screen.current_fbo = gl_screen.fbo[cur];
    render_fbo( dt, gl_screen.current_fbo, gl_screen.fbo_tex[cur], pp );
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+   if (done)
+      glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO );
 
    *current = cur;
 }
@@ -150,8 +157,11 @@ void render_all( double game_dt, double real_dt )
    pp_game  = (array_size(pp_shaders_list[PP_LAYER_GAME]) > 0);
    pp_final = (array_size(pp_shaders_list[PP_LAYER_FINAL]) > 0);
 
-   if (pp_game || pp_final)
+   if (pp_game || pp_final) {
+      glBindFramebuffer(GL_FRAMEBUFFER, 0);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       gl_screen.current_fbo = gl_screen.fbo[cur];
+   }
    else
       gl_screen.current_fbo = 0;
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
