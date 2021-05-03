@@ -699,7 +699,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    double tw;
    int n, m;
    PilotOutfitSlot *slot;
-   char alt[1024];
+   char alt[STRMAX];
    int pos;
    Outfit *o;
    CstSlotWidget *wgt;
@@ -778,20 +778,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Get text. */
    if (o->desc_short == NULL)
       return;
-   pos = scnprintf( alt, sizeof(alt),
-         "%s",
-         _(o->name) );
-   if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-      pos += scnprintf( &alt[pos], sizeof(alt)-pos, _("\n#oUnique#0") );
-   if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += scnprintf( &alt[pos], sizeof(alt)-pos, _("\n#oSlot %s#0"),
-            _( sp_display( o->slot.spid ) ) );
-   if (pos < (int)sizeof(alt))
-      pos += scnprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
-   if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
-      scnprintf( &alt[pos], sizeof(alt)-pos,
-            n_("\n%.0f Tonne", "\n%.0f Tonnes", mass),
-            mass );
+   outfit_altText( alt, sizeof(alt), o );
 
    /* Draw the text. */
    toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
