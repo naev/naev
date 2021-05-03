@@ -35,7 +35,7 @@ vec4 jump_default (void)
 JUMP_FUNC_PROTOTYPE
 vec4 jump_nebula (void)
 {
-   const float size        = 0.1;
+   const float size        = 0.2;
    const float scale       = 4.;
    const float smoothness  = 0.1;
    const vec2 center       = vec2( 0.5, 0.5 );
