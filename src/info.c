@@ -234,7 +234,7 @@ static void info_openMain( unsigned int wid )
          "\n"
          "%s\n"
          "%s\n"
-         "%d (%d jumps)\n"
+         "%d (%d %s)\n"
          "\n"
          "%.1f hours\n"
          "%.0f\n"
@@ -245,6 +245,7 @@ static void info_openMain( unsigned int wid )
          creds,
          player.p->name,
          player.p->fuel, pilot_getJumps(player.p),
+         n_( "jump", "jumps", pilot_getJumps(player.p) ),
          player.time_played / 3600.,
          player.dmg_done_shield + player.dmg_done_armour,
          player.dmg_taken_shield + player.dmg_taken_armour,
