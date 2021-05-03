@@ -2,7 +2,7 @@
 <outfit name="Power Regulation Override">
  <general>
   <typename>Weapon Modifier (Forward)</typename>
-  <slot>structure</slot>
+  <slot>utility</slot>
   <size>small</size>
   <mass>0</mass>
   <price>55000</price>

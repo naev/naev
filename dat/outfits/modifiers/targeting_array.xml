@@ -2,7 +2,7 @@
 <outfit name="Targeting Array">
  <general>
   <typename>Weapon Modifier (Turret)</typename>
-  <slot>structure</slot>
+  <slot>utility</slot>
   <size>medium</size>
   <mass>15</mass>
   <price>125000</price>

@@ -2,7 +2,7 @@
 <outfit name="Forward Shock Absorbers">
  <general>
   <typename>Weapon Modifier (Forward)</typename>
-  <slot>structure</slot>
+  <slot>utility</slot>
   <size>small</size>
   <mass>1</mass>
   <price>35000</price>
