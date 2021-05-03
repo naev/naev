@@ -602,7 +602,7 @@ int outfit_altText( char *buf, int n, const Outfit *o )
    p += scnprintf( &buf[p], n-p, "\n%s", o->desc_short );
    if ((o->mass > 0.) && (p < n))
       scnprintf( &buf[p], n-p,
-            _("\n%.0f Tonnes"),
+            n_("\n%.0f Tonne", "\n%.0f Tonnes", mass),
             mass );
    return 0;
 }
