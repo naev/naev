@@ -102,7 +102,7 @@ end
 function undeveloped_bioship_part_index( s )
    for i, p in ipairs( bioship_parts ) do
       local pat = p[1]:gsub ("-", "[-]")
-      if string.match( s, p[1]:format( "%d" ) ) then
+      if string.match( s, pat:format( "%d" ) ) then
          return i
       end
    end
