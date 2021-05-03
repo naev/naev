@@ -1523,7 +1523,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    Pilot *ship;
    char *nt;
    int onboard;
-   int cargo;
+   int cargo, jumps;
 
    /* Clear defaults. */
    eq_wgt.slot          = -1;
@@ -1550,6 +1550,8 @@ void equipment_updateShips( unsigned int wid, char* str )
    /* Get ship error report. */
    pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
 
+   jumps = floor(ship->fuel_max / ship->fuel_consumption);
+
    /* Fill the buffer. */
    asprintf( &buf,
          _("%s\n"
@@ -1558,7 +1560,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "#%c%s%.0f#0\n"
          "%s\n"
          "\n"
-         "%.0f#0 tonnes\n"
+         "%.0f#0 %s\n"
          "%s average\n"
          "#%c%s%.0f#0 kN/tonne\n"
          "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)\n"
@@ -1569,8 +1571,8 @@ void equipment_updateShips( unsigned int wid, char* str )
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
-         "%d / #%c%s%d#0 tonnes\n"
-         "%d units (%d jumps)\n"
+         "%d / #%c%s%d#0 %s\n"
+         "%d %s (%d %s)\n"
          "\n"
          "#%c%s#0"),
          /* Generic. */
@@ -1580,7 +1582,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->crew, ship->ship->crew, 0 ),
       buf2,
       /* Movement. */
-      ship->solid->mass,
+      ship->solid->mass, n_( "tonne", "tonnes", ship->solid->mass ),
       nt,
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
@@ -1598,7 +1600,9 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ),
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
-      ship->fuel_max, ship->fuel_max / ship->fuel_consumption,
+      n_( "tonne", "tonnes", ship->ship->cap_cargo ),
+      ship->fuel_max, n_( "unit", "units", ship->fuel_max ),
+      jumps, n_( "jump", "jumps", jumps ),
       pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
    window_modifyText( wid, "txtDDesc", buf );
 
