@@ -265,8 +265,8 @@ void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%d\n"
          "\n"
-         "%.0f teraflops\n"
-         "%.0f tonnes\n"
+         "%.0f %s\n"
+         "%.0f %s\n"
          "%.0f kN/tonne\n"
          "%.0f m/s\n"
          "%.0f deg/s\n"
@@ -276,7 +276,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
-         "%.0f tonnes\n"
+         "%.0f %s\n"
          "%d %s\n"
          "%d %s\n"
          "%s\n"
@@ -287,8 +287,8 @@ void shipyard_update( unsigned int wid, char* str )
          _(ship->fabricator),
          ship->crew,
          /* Weapons & Manoeuvrability */
-         ship->cpu,
-         ship->mass,
+         ship->cpu, n_( "teraflop", "teraflops", ship->cpu ),
+         ship->mass, n_( "tonne", "tonnes", ship->mass ),
          ship->thrust,
          ship->speed,
          ship->turn*180/M_PI,
@@ -298,7 +298,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->shield, ship->shield_regen,
          ship->armour, ship->armour_regen,
          ship->energy, ship->energy_regen,
-         ship->cap_cargo,
+         ship->cap_cargo, n_( "tonne", "tonnes", ship->cap_cargo ),
          ship->fuel, n_( "unit", "units", ship->fuel ),
          ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ),
          buf2,

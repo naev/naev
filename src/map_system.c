@@ -667,9 +667,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "#nShield:#0 %.0f MJ (%.1f MW)    "
                    "#nArmour:#0 %.0f MJ (%.1f MW)\n"
                    "#nEnergy:#0 %.0f MJ (%.1f MW)\n"
-                   "#nCargo Space:#0 %.0f tonnes\n"
-                   "#nFuel:#0 %d units  "
-                   "#nFuel Use:#0 %d units\n"
+                   "#nCargo Space:#0 %.0f %s\n"
+                   "#nFuel:#0 %d %s  "
+                   "#nFuel Use:#0 %d %s\n"
                    "#nPrice:#0 %s  "
                    "#nLicense:#0 %s\n"
                    "%s"),
@@ -690,9 +690,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  ship->shield, ship->shield_regen,
                  ship->armour, ship->armour_regen,
                  ship->energy, ship->energy_regen,
-                 ship->cap_cargo,
-                 ship->fuel,
-                 ship->fuel_consumption,
+                 ship->cap_cargo, n_( "tonne", "tonnes", ship->cap_cargo ),
+                 ship->fuel, n_( "unit", "units", ship->fuel ),
+                 ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ),
                  buf_price,
                  (ship->license != NULL) ? _(ship->license) : _("None"),
                  ship->desc_stats
