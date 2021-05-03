@@ -1729,6 +1729,7 @@ if ((x) != 0) \
    DESC_ADD( temp->u.mod.armour_regen, _("%+.1f Armour Per Second") );
    DESC_ADD( temp->u.mod.shield_regen, _("%+.1f Shield Per Second") );
    DESC_ADD( temp->u.mod.energy_regen, _("%+.1f Energy Per Second") );
+   DESC_ADD(-temp->u.mod.energy_loss,  _("%+.1f Energy Per Second") );
    DESC_ADD( temp->u.mod.absorb,       _("%+.0f Absorption") );
    DESC_ADD( temp->u.mod.cargo,        _("%+.0f Cargo") );
    DESC_ADD( temp->u.mod.crew_rel,     _("%+.0f %% Crew") );
