@@ -477,7 +477,7 @@ static void ship_update( unsigned int wid )
          "%s\n"
          "%d\n"
          "\n"
-         "%.0f tonnes\n"
+         "%.0f %s\n"
          "%s average\n"
          "%.0f kN/tonne\n"
          "%.0f m/s (max %.0f m/s)\n"
@@ -488,8 +488,8 @@ static void ship_update( unsigned int wid )
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
-         "%d / %d tonnes\n"
-         "%d / %d units (%d jumps)\n"
+         "%d / %d %s\n"
+         "%d / %d %s (%d %s)\n"
          "\n"),
          /* Generic */
          player.p->name,
@@ -497,7 +497,7 @@ static void ship_update( unsigned int wid )
          _(ship_class(player.p->ship)),
          (int)floor(player.p->crew),
          /* Movement. */
-         player.p->solid->mass,
+         player.p->solid->mass, n_( "tonne", "tonnes", player.p->solid->mass ),
          hyp_delay,
          player.p->thrust / player.p->solid->mass,
          player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
@@ -508,8 +508,9 @@ static void ship_update( unsigned int wid )
          player.p->shield, player.p->shield_max, player.p->shield_regen,
          player.p->armour, player.p->armour_max, player.p->armour_regen,
          player.p->energy, player.p->energy_max, player.p->energy_regen,
-         pilot_cargoUsed( player.p ), cargo,
-         player.p->fuel, player.p->fuel_max, pilot_getJumps(player.p));
+         pilot_cargoUsed( player.p ), cargo, n_( "tonne", "tonnes", cargo ),
+         player.p->fuel, player.p->fuel_max, n_( "unit", "units", player.p->fuel_max ),
+         pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ));
    equipment_shipStats( &buf[len], sizeof(buf)-len, player.p, 1 );
    window_modifyText( wid, "txtDDesc", buf );
    free( hyp_delay );
