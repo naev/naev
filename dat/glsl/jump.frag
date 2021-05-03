@@ -35,15 +35,31 @@ vec4 jump_default (void)
 JUMP_FUNC_PROTOTYPE
 vec4 jump_nebula (void)
 {
+   const float size        = 0.1;
    const float scale       = 4.;
    const float smoothness  = 0.1;
+   const vec2 center       = vec2( 0.5, 0.5 );
 
-   float n = abs( cnoise( pos * scale ) );
-   float p = mix( -smoothness, 1. + smoothness, progress );
+   // Create rotation matrix
+   float s = sin(direction);
+   float c = cos(direction);
+   float l = sqrt( s*s + c*c );
+   mat2 R = mat2( c, -s, s, c );
+
+   // Compute new scaled coordinates
+   vec2 lpos = pos * dimensions / dimensions.x;
+   lpos = l * (1.0-2.0*(smoothness+size)) * lpos + smoothness + size;
+   vec2 uv = R * (lpos - center) + center;
+
+   // Compute noise
+   float n = uv.x + 2*size*abs( cnoise( pos * scale ) );
+
+   // Magic!
+   float p = mix( -smoothness, 1. + smoothness, 1-progress );
    float lower = p - smoothness;
    float higher = p + smoothness;
    float q = smoothstep( lower, higher, n );
-   return mix( colour_from, colour_to, 1-q );
+   return mix( colour_from, colour_to, q );
 }
 
 JUMP_FUNC_PROTOTYPE
