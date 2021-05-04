@@ -206,7 +206,7 @@ equip_classOutfits_weapons = {
    },
    ["Armoured Transport"] = {
       {
-         "Heavy Ripper Turret", "Grave Beam"
+         "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
       },
       {
          num = 1;
@@ -215,7 +215,7 @@ equip_classOutfits_weapons = {
       },
       {
          "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
-         "Plasma Turret MK2", "Orion Beam",
+         "Plasma Turret MK2", "Orion Beam", "EMP Grenade Launcher",
          "Enygma Systems Turreted Fury Launcher",
          "Enygma Systems Turreted Headhunter Launcher",
       },
@@ -376,8 +376,7 @@ equip_classOutfits_utilities = {
          "Reactor Class I", "Unicorp Scrambler", "Generic Afterburner",
          "Hellburner", "Small Shield Booster", "Solar Panel",
          "Forward Shock Absorbers", "Power Regulation Override",
-         "Weapons Ionizer", "Reverse Thrusters", "Hellburner",
-         "Emergency Shield Booster",
+         "Weapons Ionizer", "Reverse Thrusters", "Emergency Shield Booster",
       },
    },
    ["Bomber"] = {
@@ -387,7 +386,7 @@ equip_classOutfits_utilities = {
          "Hellburner", "Small Shield Booster", "Solar Panel",
          "Forward Shock Absorbers", "Power Regulation Override",
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
-         "Reverse Thrusters", "Hellburner", "Emergency Shield Booster",
+         "Reverse Thrusters", "Emergency Shield Booster",
       },
    },
    ["Corvette"] = {
@@ -890,6 +889,7 @@ equip_typeOutfits_weapons = {
       {
          num = 1;
          "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
       },
       {
          "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
@@ -900,6 +900,7 @@ equip_typeOutfits_weapons = {
       {
          num = 1;
          "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
       },
       {
          "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
@@ -910,6 +911,7 @@ equip_typeOutfits_weapons = {
       {
          num = 1;
          "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
       },
       {
          "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
@@ -920,6 +922,7 @@ equip_typeOutfits_weapons = {
       {
          num = 1;
          "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
       },
       {
          "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
@@ -930,16 +933,16 @@ equip_typeOutfits_weapons = {
       {
          num = 2;
          "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
-         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher", "Ion Cannon",
       },
       {
          num = 2;
          "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
-         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher", "Ion Cannon",
       },
       {
          "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
-         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher", "Ion Cannon",
       },
    },
    ["Vigilance"] = {
