@@ -2,7 +2,7 @@
 <outfit name="Improved Refrigeration Cycle">
  <general>
   <typename>Weapon Modfier (Turret)</typename>
-  <slot>structure</slot>
+  <slot>utility</slot>
   <size>small</size>
   <mass>5</mass>
   <price>190000</price>
