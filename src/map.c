@@ -959,9 +959,6 @@ void map_renderFactionDisks( double x, double y, int editor)
    /* Fade in the disks to allow toggling between commodity and nothing */
    double cc = cos ( commod_counter / 200. * M_PI );
 
-   /* Update timer. */
-   map_nebu_dt += naev_getrealdt();
-
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
