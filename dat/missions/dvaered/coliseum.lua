@@ -40,8 +40,32 @@ function create ()
       misn.finish( false )
    end
 
-   misn.setNPC( npc_name, npc_portrait, npc_description )
+   -- We'll have different NPCs for each tournament type
+   npc_1v1 = misn.npcAdd( "approach_1v1", npc_name, npc_portrait, npc_description )
 end
+function cleanup_npc ()
+   misn.npcRm( npc_1v1 )
+end
+
+
+-- Land is unified for all types of combat
+function land ()
+   if misn_state==3 then
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.sfxMoney()
+      vn.func( function () player.pay( rewardcredits ) end )
+      vn.na(string.format(_("You received #g%s#0."), creditstring( rewardcredits )))
+      vn.run()
+
+      misn.finish(true)
+   elseif misn_state>0 then
+      player.msg(_("#rMISSION FAILED! You were not supposed to land after the fight started!!"))
+      misn.finish(false)
+   end
+end
+
 
 function pairsByKeys( t, f )
    local a = {}
@@ -58,15 +82,18 @@ function pairsByKeys( t, f )
 end
 
 
-function accept ()
+function approach_1v1 ()
    vn.clear()
    vn.scene()
    local dv = vn.newCharacter( npc_name, {image=npc_image} )
    vn.transition()
 
+   -- TODO first time message
+
    dv("Yo")
    vn.menu{
       { "Enter the Tournament", "enter" },
+      { "Ask for more information", "info" },
       { "Maybe later", "leave" },
    }
 
@@ -143,24 +170,9 @@ function accept ()
 
    hook.enter("enter")
    hook.land("land")
-end
 
-
-function land ()
-   if misn_state==3 then
-      vn.clear()
-      vn.scene()
-      vn.transition()
-      vn.sfxMoney()
-      vn.func( function () player.pay( rewardcredits ) end )
-      vn.na(string.format(_("You received #g%s#0."), creditstring( rewardcredits )))
-      vn.run()
-
-      misn.finish(true)
-   elseif misn_state>0 then
-      player.msg(_("#rMISSION FAILED! You were not supposed to land after the fight started!!"))
-      misn.finish(false)
-   end
+   -- Remove npcs
+   cleanup_npc()
 end
 
 
