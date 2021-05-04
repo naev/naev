@@ -1142,7 +1142,7 @@ void map_renderJumps( double x, double y, int editor)
 void map_renderSystems( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
 {
-   int i;
+   int i, j, known;
    const glColour *col;
    StarSystem *sys;
    double tx, ty;
@@ -1165,8 +1165,13 @@ void map_renderSystems( double bx, double by, double x, double y,
       /* Draw an outer ring. */
       gl_drawCircle( tx, ty, r, &cInert, 0 );
 
-      /* If system is known fill it. */
-      if ((editor || sys_isKnown(sys)) && (system_hasPlanet(sys))) {
+      /* Ignore not known systems when not in the editor. */
+      if (!editor && !sys_isKnown(sys))
+         continue;
+
+      if (editor || map_mode == MAPMODE_TRAVEL) {
+         if (!system_hasPlanet(sys))
+            continue;
          /* Planet colours */
          if (!editor && !sys_isKnown(sys)) col = &cInert;
          else if (sys->faction < 0) col = &cInert;
@@ -1179,6 +1184,37 @@ void map_renderSystems( double bx, double by, double x, double y,
          }
          else
             gl_drawCircle( tx, ty, 0.65 * r, col, 1 );
+      }
+      else if (map_mode == MAPMODE_DISCOVER) {
+         known = 1;
+
+         /* TODO optimize this by caching the result when opening the map. */
+         /* Check jumps. */
+         for (j=0; j<array_size(sys->jumps); j++) {
+            JumpPoint *jp = &sys->jumps[j];
+            if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
+               continue;
+            if (!jp_isFlag(jp, JP_KNOWN)) {
+               known = 0;
+               break;
+            }
+         }
+         if (!known)
+            continue;
+         /* Check planets. */
+         for (j=0; j<array_size(sys->planets); j++) {
+            Planet *p = sys->planets[j];
+            if (p->real != ASSET_REAL)
+               continue;
+            if (!planet_isKnown(p)) {
+               known = 0;
+               break;
+            }
+         }
+         if (!known)
+            continue;
+
+         gl_drawCircle( tx, ty, 0.65 * r, &cGreen, 1 );
       }
    }
 }
