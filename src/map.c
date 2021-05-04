@@ -815,11 +815,16 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   if (map_mode != MAPMODE_TRADE) {
+   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER)
       map_renderDecorators( x, y, 0 );
-      /* Render faction disks. */
+
+   /* Render faction disks. */
+   if (map_mode == MAPMODE_TRAVEL)
       map_renderFactionDisks( x, y, 0 );
-   }
+
+   /* Render enviromental features. */
+   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER)
+      map_renderSystemEnviroment( x, y, 0 );
 
    /* Render jump routes. */
    map_renderJumps( x, y, 0 );
@@ -829,7 +834,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
          / (double)MAP_MARKER_CYCLE );
 
    /* Render the player's jump route. */
-   if (map_mode != MAPMODE_TRADE)
+   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER)
       map_renderPath( x, y, col.a );
 
    /* Render systems. */
@@ -839,7 +844,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    map_renderNames( bx, by, x, y, w, h, 0 );
 
    /* Render system markers. */
-   if (map_mode != MAPMODE_TRADE)
+   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER)
      map_renderMarkers( x, y, r, col.a );
 
    /* Render commodity info. */
@@ -988,6 +993,36 @@ void map_renderFactionDisks( double x, double y, int editor)
                tx - sw/2, ty - sh/2, sw, sh,
                0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c, 0.);
       }
+   }
+}
+
+
+/**
+ * @brief Renders the faction disks.
+ */
+void map_renderSystemEnviroment( double x, double y, int editor )
+{
+   int i;
+   const glColour *col;
+   glColour c;
+   StarSystem *sys;
+   int sw, sh;
+   double tx, ty, presence;
+   /* Fade in the disks to allow toggling between commodity and nothing */
+   double cc = cos ( commod_counter / 200. * M_PI );
+   gl_Matrix4 projection;
+
+   /* Update timer. */
+   map_nebu_dt += naev_getrealdt();
+
+   for (i=0; i<array_size(systems_stack); i++) {
+      sys = system_getIndex( i );
+
+      if (!sys_isKnown(sys) && !editor)
+         continue;
+
+      tx = x + sys->pos.x*map_zoom;
+      ty = y + sys->pos.y*map_zoom;
 
       /* Draw background. */
       /* TODO draw asteroids too! */

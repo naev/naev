@@ -415,6 +415,9 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    /* Render faction disks. */
    map_renderFactionDisks( x, y, 1 );
 
+   /* Render enviroment stuff. */
+   map_renderSystemEnviroment( x, y, 1 );
+
    /* Render jump paths. */
    map_renderJumps( x, y, 1 );
 
