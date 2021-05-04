@@ -958,7 +958,6 @@ void map_renderFactionDisks( double x, double y, int editor)
    double tx, ty, presence;
    /* Fade in the disks to allow toggling between commodity and nothing */
    double cc = cos ( commod_counter / 200. * M_PI );
-   gl_Matrix4 projection;
 
    /* Update timer. */
    map_nebu_dt += naev_getrealdt();
@@ -1003,13 +1002,10 @@ void map_renderFactionDisks( double x, double y, int editor)
 void map_renderSystemEnviroment( double x, double y, int editor )
 {
    int i;
-   const glColour *col;
-   glColour c;
    StarSystem *sys;
    int sw, sh;
-   double tx, ty, presence;
+   double tx, ty;
    /* Fade in the disks to allow toggling between commodity and nothing */
-   double cc = cos ( commod_counter / 200. * M_PI );
    gl_Matrix4 projection;
 
    /* Update timer. */
