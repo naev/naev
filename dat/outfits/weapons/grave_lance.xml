@@ -15,13 +15,13 @@
   <delay>5</delay>
   <duration min="3.5">4.5</duration>
   <range>700</range>
-  <energy>42</energy>
+  <energy>30</energy>
   <heatup>50</heatup>
   <damage>
    <type>normal</type>
    <penetrate>48</penetrate>
-   <physical>96</physical>
-   <disable>5.6</disable>
+   <physical>70</physical>
+   <disable>4</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

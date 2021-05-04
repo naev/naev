@@ -14,15 +14,15 @@
  <specific type="turret beam">
   <delay>8</delay>
   <duration min="2">6</duration>
-  <range>500</range>
+  <range>800</range>
   <turn>35</turn>
   <energy>160</energy>
   <heatup>60</heatup>
   <damage>
    <type>normal</type>
-   <penetrate>90</penetrate>
-   <physical>130</physical>
-   <disable>18</disable>
+   <penetrate>72</penetrate>
+   <physical>90</physical>
+   <disable>4</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
