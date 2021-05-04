@@ -25,7 +25,7 @@
   <track>2</track>
   <damage>
    <type>ion</type>
-   <penetrate>0</penetrate>
+   <penetrate>6</penetrate>
    <physical>17</physical>
    <disable>1.6</disable>
   </damage>

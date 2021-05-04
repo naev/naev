@@ -27,7 +27,7 @@
   <damage>
    <type>normal</type>
    <penetrate>100</penetrate>
-   <physical>95</physical>
+   <physical>80</physical>
    <disable>4</disable>
   </damage>
  </specific>
