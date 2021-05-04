@@ -1283,6 +1283,13 @@ function equip_generic( p )
 
    -- Add cargo
    local pb = equip_classCargo[class]
+   if pb == nil then
+      warn( string.format(
+            "Class %s not handled by equip_classCargo in equip script",
+            class ) )
+      return
+   end
+
    if rnd.rnd() < pb then
       local avail_cargo = commodity.getStandard()
 
