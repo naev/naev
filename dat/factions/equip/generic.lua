@@ -286,8 +286,7 @@ equip_classOutfits_weapons = {
          "Enygma Systems Turreted Headhunter Launcher",
       },
       {
-         "Repeating Railgun", "Heavy Laser Turret", "Railgun Turret",
-         "Ragnarok Beam",
+         "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
       },
       {
          "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
@@ -577,6 +576,9 @@ equip_typeOutfits_coreSystems = {
    ["Kestrel"] = {
       "Unicorp PT-750 Core System", "Milspec Orion 8601 Core System",
    },
+   ["Hawking"] = {
+      "Unicorp PT-750 Core System", "Milspec Orion 8601 Core System",
+   },
    ["Brigand"] = {
       probability = {
          ["Ultralight Bioship Brain Stage X"] = 2
@@ -684,6 +686,9 @@ equip_typeOutfits_engines = {
       "Nexus Bolt 4500 Engine", "Krain Remige Engine",
       "Tricon Typhoon Engine",
    },
+   ["Hawking"] = {
+      "Nexus Bolt 4500 Engine", "Tricon Typhoon Engine",
+   },
    ["Brigand"] = {
       probability = {
          ["Ultralight Bioship Fast Fin Stage X"] = 2
@@ -788,6 +793,9 @@ equip_typeOutfits_hulls = {
       "S&K Ultralight Combat Plating",
    },
    ["Kestrel"] = {
+      "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating",
+   },
+   ["Hawking"] = {
       "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating",
    },
    ["Brigand"] = {
@@ -958,6 +966,26 @@ equip_typeOutfits_weapons = {
          varied = true;
          "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
          "Heavy Ripper Cannon", "Mass Driver", "Plasma Cluster Cannon",
+      },
+   },
+   ["Kestrel"] = {
+      {
+         "Railgun",
+      },
+      {
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+         "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+      },
+   },
+   ["Hawking"] = {
+      {
+         num = 1;
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
       },
    },
    ["Goddard"] = {

@@ -2,70 +2,62 @@ require "factions/equip/generic"
 
 
 equip_typeOutfits_coreSystems["Shark"] = {
-   "Milspec Orion 2301 Core System"
-}
-equip_typeOutfits_coreSystems["Lancelot"] = {
-   "Milspec Orion 3701 Core System"
+   "Milspec Orion 2301 Core System",
 }
 equip_typeOutfits_coreSystems["Admonisher"] = {
-   "Milspec Orion 4801 Core System"
+   "Milspec Orion 4801 Core System",
 }
 equip_typeOutfits_coreSystems["Pacifier"] = {
-   "Milspec Orion 5501 Core System"
+   "Milspec Orion 5501 Core System",
 }
 equip_typeOutfits_coreSystems["Hawking"] = {
-   "Milspec Orion 9901 Core System"
+   "Milspec Orion 8601 Core System",
 }
 equip_typeOutfits_coreSystems["Peacemaker"] = {
-   "Milspec Hermes 9802 Core System"
+   "Milspec Orion 9901 Core System",
 }
 
 equip_typeOutfits_engines["Shark"] = {
-   "Tricon Zephyr Engine"
-}
-equip_typeOutfits_engines["Lancelot"] = {
-   "Tricon Zephyr II Engine"
+   "Tricon Zephyr Engine",
 }
 equip_typeOutfits_engines["Admonisher"] = {
-   "Tricon Cyclone Engine"
+   "Tricon Cyclone Engine",
 }
 equip_typeOutfits_engines["Pacifier"] = {
-   "Tricon Cyclone II Engine"
+   "Tricon Cyclone II Engine",
 }
 equip_typeOutfits_engines["Hawking"] = {
-   "Tricon Typhoon II Engine", "Unicorp Eagle 6500 Engine",
+   "Tricon Typhoon Engine",
 }
 equip_typeOutfits_engines["Peacemaker"] = {
-   "Melendez Mammoth XL Engine"
+   "Melendez Mammoth XL Engine",
 }
 
 equip_typeOutfits_hulls["Shark"] = {
-   "S&K Ultralight Combat Plating"
-}
-equip_typeOutfits_hulls["Lancelot"] = {
-   "S&K Light Combat Plating"
+   "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating",
 }
 equip_typeOutfits_hulls["Admonisher"] = {
-   "S&K Medium Combat Plating"
+   "S&K Medium Stealth Plating", "S&K Medium Combat Plating",
 }
 equip_typeOutfits_hulls["Pacifier"] = {
-   "S&K Medium-Heavy Combat Plating"
+   "S&K Medium-Heavy Stealth Plating", "S&K Medium-Heavy Combat Plating",
 }
 equip_typeOutfits_hulls["Hawking"] = {
-   "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating"
+   "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating",
 }
 equip_typeOutfits_hulls["Peacemaker"] = {
-   "S&K Superheavy Combat Plating"
+   "S&K Superheavy Combat Plating",
 }
 
 equip_typeOutfits_weapons["Shark"] = {
    {
       num = 1;
-      "Unicorp Banshee Launcher", "Ripper Cannon"
+      "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+      "Unicorp Mace Launcher", "TeraCom Mace Launcher",
    },
    {
-      "Laser Cannon MK1"
-   }
+      "Laser Cannon MK1", "Plasma Blaster MK1", "Ion Cannon",
+   },
 }
 equip_typeOutfits_weapons["Lancelot"] = equip_shipOutfits_weapons["Empire Lancelot"]
 equip_typeOutfits_weapons["Admonisher"] = {
@@ -100,28 +92,6 @@ equip_typeOutfits_weapons["Pacifier"] = {
       "Heavy Ripper Cannon", "Laser Turret MK2"
    }
 }
-equip_typeOutfits_weapons["Hawking"] = {
-   {
-      num = 2;
-      "Heavy Laser Turret",
-   },
-   {
-      num = 2;
-      "Turbolaser", "Ragnarok Beam", "Grave Beam"
-   },
-   {
-      num = 1;
-      "Turbolaser", "Ragnarok Beam", "Grave Beam"
-   },
-   {
-      num = 1;
-      "Turbolaser", "Heavy Laser Turret",
-   },
-   {
-      "Heavy Laser Turret",
-   }
-}
-equip_typeOutfits_weapons["Peacemaker"] = equip_typeOutfits_weapons["Hawking"]
 
 --[[
 -- @brief Does empire pilot equipping
@@ -132,31 +102,28 @@ function equip( p )
    if diff.isApplied( "collective_dead" ) then
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
-            num = 2, varied = true;
-            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam", "Grave Beam"
+            num = 2;
+            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam",
          },
          {
             varied = true;
-            "Empire Lancelot Fighter Bay", "Drone Fighter Bay"
+            "Empire Lancelot Fighter Bay", "Drone Fighter Bay",
          },
          {
-            varied = true;
-            "Heavy Ripper Turret", "Laser Turret MK2"
+            "Heavy Ripper Turret",
          }
       }
    else
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
-            num = 2, varied = true;
-            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam", "Grave Beam"
+            num = 2;
+            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam",
          },
          {
-            varied = true;
-            "Empire Lancelot Fighter Bay"
+            "Empire Lancelot Fighter Bay",
          },
          {
-            varied = true;
-            "Heavy Ripper Turret", "Laser Turret MK2"
+            "Heavy Ripper Turret",
          }
       }
    end
