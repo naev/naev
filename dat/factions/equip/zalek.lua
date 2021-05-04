@@ -24,7 +24,7 @@ equip_typeOutfits_engines["Demon"] = {
    "Tricon Cyclone II Engine"
 }
 equip_typeOutfits_engines["Mephisto"] = {
-   "Nexus Bolt 6500 Engine", "Tricon Typhoon II Engine"
+   "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine"
 }
 equip_typeOutfits_engines["Diablo"] = {
    "Melendez Mammoth XL Engine"

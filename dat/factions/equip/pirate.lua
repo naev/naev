@@ -40,8 +40,7 @@ equip_typeOutfits_coreSystems["Kestrel"] = {
 }
 
 equip_typeOutfits_engines["Rhino"] = {
-   "Unicorp Falcon 1200 Engine", "Nexus Arrow 1200 Engine",
-   "Tricon Cyclone II Engine"
+   "Unicorp Falcon 1200 Engine", "Tricon Cyclone II Engine",
 }
 
 equip_typeOutfits_weapons["Hyena"] = {

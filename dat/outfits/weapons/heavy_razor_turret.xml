@@ -5,7 +5,7 @@
   <size>large</size>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
-  <mass>65</mass>
+  <mass>75</mass>
   <price>120000</price>
   <description>House Sirius typically equips its heaviest vessels with Heavy Razor Turrets. Where the standard razor turrets are ineffective, the heavy razor turret provides the necessary firepower to batter down virtually any shielding.</description>
   <gfx_store>ionturret.png</gfx_store>

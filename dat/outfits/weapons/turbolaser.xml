@@ -5,7 +5,7 @@
   <size>large</size>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
-  <mass>65</mass>
+  <mass>75</mass>
   <price>125000</price>
   <description>This special model of the Heavy Laser Turret is one of the heaviest weapons found in the galaxy. Imperial Capital ships use it to lay down devastating barrages against enemy vessels.</description>
   <gfx_store>laserturret2.png</gfx_store>

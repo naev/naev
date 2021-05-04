@@ -33,7 +33,7 @@ equip_typeOutfits_engines["Pacifier"] = {
    "Tricon Cyclone II Engine"
 }
 equip_typeOutfits_engines["Hawking"] = {
-   "Tricon Typhoon II Engine", "Nexus Bolt 6500 Engine"
+   "Tricon Typhoon II Engine", "Unicorp Eagle 6500 Engine",
 }
 equip_typeOutfits_engines["Peacemaker"] = {
    "Melendez Mammoth XL Engine"

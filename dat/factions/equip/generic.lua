@@ -69,18 +69,17 @@ equip_classOutfits_coreSystems = {
 -- Table of available engines by class.
 equip_classOutfits_engines = {
    ["Yacht"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine"
+      "Nexus Dart 150 Engine",
    },
    ["Luxury Yacht"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine"
+      "Nexus Dart 150 Engine",
    },
    ["Scout"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Courier"] = {
-      "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine",
-      "Tricon Zephyr II Engine", "Melendez Ox XL Engine"
+      "Unicorp Hawk 300 Engine", "Tricon Zephyr II Engine",
+      "Melendez Ox XL Engine",
    },
    ["Freighter"] = {
       "Unicorp Falcon 1200 Engine", "Melendez Buffalo XL Engine"
@@ -89,27 +88,22 @@ equip_classOutfits_engines = {
       "Melendez Buffalo XL Engine"
    },
    ["Fighter"] = {
-      "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine",
-      "Tricon Zephyr II Engine"
+      "Unicorp Hawk 300 Engine", "Tricon Zephyr II Engine",
    },
    ["Bomber"] = {
-      "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine",
-      "Tricon Zephyr II Engine"
+      "Unicorp Hawk 300 Engine", "Tricon Zephyr II Engine",
    },
    ["Corvette"] = {
-      "Unicorp Falcon 700 Engine", "Nexus Arrow 700 Engine",
-      "Tricon Cyclone Engine"
+      "Nexus Arrow 700 Engine", "Tricon Cyclone Engine",
    },
    ["Destroyer"] = {
-      "Unicorp Falcon 1200 Engine", "Nexus Arrow 1200 Engine",
-      "Tricon Cyclone II Engine"
+      "Unicorp Falcon 1200 Engine", "Tricon Cyclone II Engine",
    },
    ["Cruiser"] = {
-      "Unicorp Eagle 6500 Engine", "Nexus Bolt 6500 Engine",
-      "Tricon Typhoon II Engine"
+      "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
    },
    ["Carrier"] = {
-      "Nexus Bolt 6500 Engine", "Tricon Typhoon II Engine",
+      "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
       "Melendez Mammoth XL Engine"
    },
    ["Drone"] = {
@@ -644,32 +638,26 @@ equip_typeOutfits_coreSystems = {
 -- Table of available engines by base type.
 equip_typeOutfits_engines = {
    ["Hyena"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Shark"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Brigand"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Fidelity"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Perspicacity"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Derivative"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Kestrel"] = {
-      "Unicorp Eagle 4500 Engine", "Nexus Bolt 4500 Engine",
-      "Krain Remige Engine", "Tricon Typhoon Engine"
+      "Nexus Bolt 4500 Engine", "Krain Remige Engine",
+      "Tricon Typhoon Engine"
    },
    ["Brigand"] = {
       probability = {
@@ -1148,7 +1136,7 @@ function equip_generic( p )
       success = equip_warn( p, o[rnd.rnd(1, #o)] )
    end
    if not success then
-      equip_warn( p, "Unicorp Hawk 150 Engine" )
+      equip_warn( p, "Unicorp Hawk 300 Engine" )
    end
 
    -- Hulls

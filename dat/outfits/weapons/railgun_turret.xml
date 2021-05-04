@@ -3,7 +3,7 @@
  <general>
   <slot>weapon</slot>
   <size>large</size>
-  <mass>60</mass>
+  <mass>65</mass>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
   <price>105000</price>
