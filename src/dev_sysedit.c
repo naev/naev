@@ -2056,3 +2056,29 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
    /* For now we close. */
    sysedit_btnGFXClose( wid, wgt );
 }
+
+/* @brief Renders important map stuff.
+ */
+void sysedit_renderMap( double bx, double by, double w, double h, double x, double y, double r )
+{
+   /* background */
+   gl_renderRect( bx, by, w, h, &cBlack );
+
+   map_renderDecorators( x, y, 1 );
+
+   /* Render faction disks. */
+   map_renderFactionDisks( x, y, 1 );
+
+   /* Render enviroment stuff. */
+   map_renderSystemEnviroment( x, y, 1 );
+
+   /* Render jump paths. */
+   map_renderJumps( x, y, 1 );
+
+   /* Render systems. */
+   map_renderSystems( bx, by, x, y, w, h, r, 1 );
+
+   /* Render system names. */
+   map_renderNames( bx, by, x, y, w, h, 1 );
+}
+
