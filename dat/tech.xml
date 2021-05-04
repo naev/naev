@@ -56,7 +56,6 @@
   <item>Enygma Systems Turreted Headhunter Launcher</item>
   <item>Unicorp Vengeance Launcher</item>
   <item>TeraCom Vengeance Launcher</item>
-  <item>Enygma Systems Turreted Vengeance Launcher</item>
   <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
   <item>Unicorp Banshee Launcher</item>
@@ -656,6 +655,7 @@
   <item>TeraCom Medusa Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
+  <item>Enygma Systems Turreted Headhunter Launcher</item>
   <item>Unicorp Vengeance Launcher</item>
  </tech>
  <tech name="Star Maps">

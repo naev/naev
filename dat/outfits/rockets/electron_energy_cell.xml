@@ -19,7 +19,7 @@
   <speed>1500</speed>
   <damage>
    <type>shieldbreaker</type>
-   <penetrate>10</penetrate>
+   <penetrate>24</penetrate>
    <physical>15</physical>
    <disable>5</disable>
   </damage>

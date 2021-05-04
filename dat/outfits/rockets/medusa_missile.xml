@@ -20,9 +20,9 @@
   <resist>20</resist>
   <damage>
    <type>emp</type>
-   <penetrate>15</penetrate>
+   <penetrate>24</penetrate>
    <physical>20</physical>
-   <disable>100</disable>
+   <disable>150</disable>
   </damage>
   <ai>smart</ai>
  </specific>
