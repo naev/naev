@@ -34,6 +34,14 @@
 #include "toolkit.h"
 #include "utf8.h"
 
+
+typedef enum MapMode_ {
+   MAPMODE_TRAVEL,
+   MAPMODE_DISCOVER,
+   MAPMODE_TRADE,
+} MapMode;
+
+
 #define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
@@ -51,6 +59,7 @@ static double map_xpos        = 0.; /**< Map X position. */
 static double map_ypos        = 0.; /**< Map Y position. */
 static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
+static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
 static int cur_commod         = -1; /**< Current commodity selected. */
@@ -176,6 +185,7 @@ void map_open (void)
    int w, h, x, y, rw;
    /* Not displaying commodities */
    cur_commod = -1;
+   map_mode = MAPMODE_TRAVEL;
    listMapModeVisible = 0;
 
    /* Not under manual control. */
@@ -418,7 +428,7 @@ static void map_update( unsigned int wid )
    map_update_commod_av_price();
 
    /* Economy button */
-   if ( cur_commod >= 0 ) {
+   if (map_mode == MAPMODE_TRADE) {
       c = commod_known[cur_commod];
       if ( cur_commod_mode == 0 ) {
          snprintf( buf, sizeof(buf),
@@ -610,7 +620,7 @@ static void map_update( unsigned int wid )
    /*
     * System Status, if not showing commodity info
     */
-   if (cur_commod == -1) {
+   if (map_mode != MAPMODE_TRAVEL) {
       buf[0] = '\0';
       p = 0;
       /* Nebula. */
@@ -805,7 +815,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   if (cur_commod == -1) {
+   if (map_mode != MAPMODE_TRADE) {
       map_renderDecorators( x, y, 0 );
       /* Render faction disks. */
       map_renderFactionDisks( x, y, 0 );
@@ -819,7 +829,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
          / (double)MAP_MARKER_CYCLE );
 
    /* Render the player's jump route. */
-   if ( cur_commod == -1 )
+   if (map_mode != MAPMODE_TRADE)
       map_renderPath( x, y, col.a );
 
    /* Render systems. */
@@ -829,11 +839,12 @@ static void map_render( double bx, double by, double w, double h, void *data )
    map_renderNames( bx, by, x, y, w, h, 0 );
 
    /* Render system markers. */
-   if ( cur_commod == -1 )
+   if (map_mode != MAPMODE_TRADE)
      map_renderMarkers( x, y, r, col.a );
 
    /* Render commodity info. */
-   map_renderCommod(  bx, by, x, y, w, h, r, 0 );
+   if (map_mode == MAPMODE_TRADE)
+      map_renderCommod(  bx, by, x, y, w, h, r, 0 );
 
    /* Initialize with values from cRed */
    col.r = cRed.r;
@@ -1134,7 +1145,6 @@ void map_renderSystems( double bx, double by, double x, double y,
          else
             gl_drawCircle( tx, ty, 0.65 * r, col, 1 );
       }
-
    }
 }
 
@@ -1365,7 +1375,7 @@ void map_renderCommod( double bx, double by, double x, double y,
       return;
 
    c=commod_known[cur_commod];
-   if ( cur_commod_mode == 0 ) {/*showing price difference to selected system*/
+   if (cur_commod_mode == 0) {/*showing price difference to selected system*/
      /* Get commodity price in selected system.  If selected system is current
         system, and if landed, then get price of commodity where we are */
       curMaxPrice=0.;
@@ -1769,6 +1779,7 @@ static void map_genModeList(void)
    array_free ( map_modes );
    map_modes = array_create_size( char*, 2*totGot + 1 );
    array_push_back( &map_modes, strdup(_("Travel (Default)")) );
+   array_push_back( &map_modes, strdup(_("Discovery")) );
 
    odd_template = _("%s: Cost");
    even_template = _("%s: Trade");
@@ -1793,15 +1804,24 @@ static void map_modeUpdate( unsigned int wid, char* str )
    if ( listMapModeVisible==2) {
       listMapModeVisible=1;
    } else if ( listMapModeVisible == 1 ) {
-      if ( listpos == 0) {
+      /* TODO: make this more robust. */
+      if (listpos == 0) {
+         map_mode = MAPMODE_TRAVEL;
          cur_commod = -1;
          cur_commod_mode = 0;
-      } else {
-         cur_commod = (listpos - 1 ) / 2;
+      }
+      else if (listpos == 1) {
+         map_mode = MAPMODE_DISCOVER;
+         cur_commod = -1;
+         cur_commod_mode = 0;
+      }
+      else {
+         map_mode = MAPMODE_TRADE;
+         cur_commod = (listpos - MAPMODE_TRADE) / 2;
          cur_commod_mode = listpos % 2 ; /* if 1, showing cost, if 0 showing difference */
       }
    }
-   if ( cur_commod == -1 )
+   if (cur_commod == -1)
       commod_counter = 101;
    map_update(wid);
 
@@ -1820,29 +1840,33 @@ static void map_buttonCommodity( unsigned int wid, char* str )
    char **this_map_modes;
    static int cur_commod_last = 0;
    static int cur_commod_mode_last = 0;
+   static int map_mode_last = MAPMODE_TRAVEL;
    int defpos;
    /* Clicking the mode button - by default will show (or remove) the list of map modes.
       If ctrl is pressed, will toggle between current mode and default */
    mods = SDL_GetModState();
    if (mods & (KMOD_LCTRL | KMOD_RCTRL)) {/* toggle on/off */
-      if ( cur_commod == -1 ) {
+      if (map_mode == MAPMODE_TRAVEL) {
+         map_mode = map_mode_last;
          cur_commod = cur_commod_last;
-         if ( cur_commod == -1 )
+         if (cur_commod == -1)
             cur_commod = 0;
          cur_commod_mode = cur_commod_mode_last;
       } else {
+         map_mode_last = map_mode;
+         map_mode = MAPMODE_TRAVEL;
          cur_commod_last = cur_commod;
          cur_commod_mode_last = cur_commod_mode;
          cur_commod = -1;
       }
-      if ( cur_commod >= (array_size(map_modes)-1)/2 )
+      if (cur_commod >= (array_size(map_modes)-1)/2 )
          cur_commod = -1;
       /* And hide the list if it was visible. */
-      if ( listMapModeVisible) {
+      if (listMapModeVisible) {
          listMapModeVisible = 0;
          window_destroyWidget( wid, "lstMapMode" );
       }
-      if ( cur_commod == -1 )
+      if (cur_commod == -1)
          commod_counter = 101;
       map_update(wid);
    } else {/* no keyboard modifier */
@@ -1855,10 +1879,12 @@ static void map_buttonCommodity( unsigned int wid, char* str )
             this_map_modes[i]=strdup(map_modes[i]);
          }
          listMapModeVisible = 2;
-         if ( cur_commod == -1 )
+         if (map_mode == MAPMODE_TRAVEL)
             defpos = 0;
+         else if (map_mode == MAPMODE_DISCOVER)
+            defpos = 1;
          else
-            defpos = cur_commod*2 + 2 - cur_commod_mode;
+            defpos = cur_commod*2 + MAPMODE_TRADE - cur_commod_mode;
 
          window_addList( wid, -10, 60, 200, 200, "lstMapMode",
                          this_map_modes, array_size(map_modes), defpos, map_modeUpdate, NULL );
@@ -1879,6 +1905,7 @@ static void map_window_close( unsigned int wid, char *str )
       free ( map_modes[i] );
    array_free ( map_modes );
    map_modes = NULL;
+   map_mode = MAPMODE_TRAVEL;
    cur_commod = -1;
    window_close(wid,str);
 }
@@ -1910,6 +1937,7 @@ void map_clear (void)
 {
    map_setZoom(1.);
    cur_commod = -1;
+   map_mode = MAPMODE_TRAVEL;
    if (cur_system != NULL) {
       map_xpos = cur_system->pos.x;
       map_ypos = cur_system->pos.y;
