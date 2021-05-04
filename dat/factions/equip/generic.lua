@@ -970,7 +970,7 @@ equip_typeOutfits_weapons = {
    },
    ["Kestrel"] = {
       {
-         "Railgun",
+         "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
       },
       {
          "Enygma Systems Turreted Fury Launcher",
