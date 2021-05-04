@@ -59,12 +59,12 @@ static double map_xpos        = 0.; /**< Map X position. */
 static double map_ypos        = 0.; /**< Map Y position. */
 static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
+static double map_bg_alpha    = 1.; /**< Alpha value of background stuff. */
 static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
 static int cur_commod         = -1; /**< Current commodity selected. */
 static int cur_commod_mode    = 0; /**< 0 for difference, 1 for cost. */
-static int commod_counter = 0; /**< used to fade back in the faction smudges */
 static Commodity **commod_known = NULL; /**< index of known commodities */
 static char** map_modes = NULL; /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
 static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
@@ -186,6 +186,7 @@ void map_open (void)
    /* Not displaying commodities */
    cur_commod = -1;
    map_mode = MAPMODE_TRAVEL;
+   map_bg_alpha = 1.;
    listMapModeVisible = 0;
 
    /* Not under manual control. */
@@ -807,24 +808,27 @@ static void map_render( double bx, double by, double w, double h, void *data )
    double x,y,r;
    glColour col;
    StarSystem *sys;
-   if ( commod_counter > 0 )
-      commod_counter--;
+
+   if (map_mode == MAPMODE_TRADE)
+      map_bg_alpha = MAX( 0., map_bg_alpha - naev_getrealdt() );
+   else
+      map_bg_alpha = MIN( 1., map_bg_alpha + naev_getrealdt() );
+
    /* Parameters. */
    map_renderParams( bx, by, map_xpos, map_ypos, w, h, map_zoom, &x, &y, &r );
 
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER)
+   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER || map_bg_alpha>0.)
       map_renderDecorators( x, y, 0 );
 
-   /* Render faction disks. */
-   if (map_mode == MAPMODE_TRAVEL)
+   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER || map_bg_alpha>0.) {
+      /* Render faction disks. */
       map_renderFactionDisks( x, y, 0 );
-
-   /* Render enviromental features. */
-   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER)
+      /* Render enviromental features. */
       map_renderSystemEnviroment( x, y, 0 );
+   }
 
    /* Render jump routes. */
    map_renderJumps( x, y, 0 );
@@ -897,11 +901,10 @@ void map_renderDecorators( double x, double y, int editor )
    int visible;
    MapDecorator *decorator;
    StarSystem *sys;
-   glColour ccol = { .r=1.00, .g=1.00, .b=1.00, .a=1. }; /**< White */
+   glColour ccol = { .r=1.00, .g=1.00, .b=1.00, .a=2./3. }; /**< White */
 
    /* Fade in the decorators to allow toggling between commodity and nothing */
-   double cc = cos ( commod_counter / 200. * M_PI );
-   ccol.a = 2./3.*cc;
+   ccol.a *= map_bg_alpha;
 
    for (i=0; i<array_size(decorator_stack); i++) {
 
@@ -948,7 +951,7 @@ void map_renderDecorators( double x, double y, int editor )
 /**
  * @brief Renders the faction disks.
  */
-void map_renderFactionDisks( double x, double y, int editor)
+void map_renderFactionDisks( double x, double y, int editor )
 {
    int i;
    const glColour *col;
@@ -956,8 +959,6 @@ void map_renderFactionDisks( double x, double y, int editor)
    StarSystem *sys;
    int sw, sh;
    double tx, ty, presence;
-   /* Fade in the disks to allow toggling between commodity and nothing */
-   double cc = cos ( commod_counter / 200. * M_PI );
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
@@ -982,7 +983,7 @@ void map_renderFactionDisks( double x, double y, int editor)
          c.g = col->g;
          c.b = col->b;
          //c.a = CLAMP( .6, .75, 20 / presence ) * cc;
-         c.a = CLAMP( .4, .5, 13.3 / presence ) * cc;
+         c.a = CLAMP( .4, .5, 13.3 / presence ) * map_bg_alpha;
 
          gl_blitTexture(
                gl_faction_disk,
@@ -1033,6 +1034,7 @@ void map_renderSystemEnviroment( double x, double y, int editor )
 
          /* Set shader uniforms. */
          glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
+         glUniform1f(shaders.nebula_map.alpha, map_bg_alpha);
          gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
          glUniform1f(shaders.nebula_map.eddy_scale, map_zoom );
          glUniform1f(shaders.nebula_map.time, map_nebu_dt / 10.0);
@@ -1885,8 +1887,6 @@ static void map_modeUpdate( unsigned int wid, char* str )
          cur_commod_mode = listpos % 2 ; /* if 1, showing cost, if 0 showing difference */
       }
    }
-   if (cur_commod == -1)
-      commod_counter = 101;
    map_update(wid);
 
 }
@@ -1930,8 +1930,6 @@ static void map_buttonCommodity( unsigned int wid, char* str )
          listMapModeVisible = 0;
          window_destroyWidget( wid, "lstMapMode" );
       }
-      if (cur_commod == -1)
-         commod_counter = 101;
       map_update(wid);
    } else {/* no keyboard modifier */
       if ( listMapModeVisible) {/* Hide the list widget */
@@ -1970,6 +1968,7 @@ static void map_window_close( unsigned int wid, char *str )
    array_free ( map_modes );
    map_modes = NULL;
    map_mode = MAPMODE_TRAVEL;
+   map_bg_alpha = 1.;
    cur_commod = -1;
    window_close(wid,str);
 }

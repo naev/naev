@@ -92,7 +92,7 @@ SHADERS = [
       vs_path = "nebula_map.vert",
       fs_path = "nebula_map.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "hue", "eddy_scale", "time", "globalpos"],
+      uniforms = ["projection", "hue", "eddy_scale", "time", "globalpos", "alpha"],
       subroutines = {},
    ),
    Shader(
