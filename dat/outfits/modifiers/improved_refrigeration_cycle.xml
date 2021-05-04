@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Improved Refrigeration Cycle">
  <general>
-  <typename>Weapon Modfier (Turret)</typename>
+  <typename>Weapon Modifier (Turret)</typename>
   <slot>utility</slot>
   <size>small</size>
   <mass>5</mass>
@@ -11,7 +11,7 @@
   <cpu>-2</cpu>
  </general>
  <specific type="modification">
-  <tur_heat>-10</tur_heat>
+  <tur_heat>-15</tur_heat>
   <tur_damage>-5</tur_damage>
  </specific>
 </outfit>
