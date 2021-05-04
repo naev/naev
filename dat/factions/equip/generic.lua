@@ -104,13 +104,13 @@ equip_classOutfits_engines = {
    },
    ["Carrier"] = {
       "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
-      "Melendez Mammoth XL Engine"
+      "Melendez Mammoth XL Engine",
    },
    ["Drone"] = {
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine",
    },
    ["Heavy Drone"] = {
-      "Tricon Zephyr II Engine"
+      "Unicorp Hawk 300 Engine",
    },
 }
 

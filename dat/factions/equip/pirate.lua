@@ -14,6 +14,8 @@ equip_classCargo["Corvette"] = .5
 equip_classCargo["Destroyer"] = .5
 equip_classCargo["Cruiser"] = .5
 equip_classCargo["Carrier"] = .5
+equip_classCargo["Drone"] = .1
+equip_classCargo["Heavy Drone"] = .1
 
 equip_typeOutfits_coreSystems["Hyena"] = {
    "Unicorp PT-18 Core System", "Milspec Prometheus 2203 Core System",
