@@ -95,6 +95,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,             gettext_noop("CPU Capacity") ),
 
    DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,          gettext_noop("Jump Time") ),
+   DI_ELEM( SS_TYPE_D_LAND_DELAY,         land_delay,          gettext_noop("Landing Time") ),
    DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia,       gettext_noop("Cargo Inertia") ),
 
    D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             gettext_noop("Cloaking") ),

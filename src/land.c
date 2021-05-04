@@ -1342,7 +1342,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
  */
 void takeoff( int delay )
 {
-   int h;
+   int h, stu;
    char *nt;
    double a, r;
 
@@ -1351,7 +1351,7 @@ void takeoff( int delay )
 
    /* Player's ship is not able to fly. */
    if (!player_canTakeoff()) {
-      char message[512];
+      char message[STRMAX_SHORT];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
       dialogue_msgRaw( _("Ship not fit for flight"), message );
 
@@ -1409,8 +1409,11 @@ void takeoff( int delay )
       dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
    /* time goes by, triggers hook before takeoff */
-   if (delay)
-      ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 period */
+   if (delay) {
+      /* TODO should this depend on something else? */
+      stu = (int)(NT_PERIOD_SECONDS * player.p->stats.land_delay);
+      ntime_inc( ntime_create( 0, 0, stu ) );
+   }
    nt = ntime_pretty( 0, 2 );
    player_message( _("#oTaking off from %s on %s."), _(land_planet->name), nt);
    free(nt);

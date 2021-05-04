@@ -407,22 +407,8 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    /* Parameters. */
    map_renderParams( bx, by, uniedit_xpos, uniedit_ypos, w, h, uniedit_zoom, &x, &y, &r );
 
-   /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
-
-   map_renderDecorators( x, y, 1 );
-
-   /* Render faction disks. */
-   map_renderFactionDisks( x, y, 1 );
-
-   /* Render jump paths. */
-   map_renderJumps( x, y, 1 );
-
-   /* Render systems. */
-   map_renderSystems( bx, by, x, y, w, h, r, 1 );
-
-   /* Render system names. */
-   map_renderNames( bx, by, x, y, w, h, 1 );
+   /* Render map stuff. */
+   sysedit_renderMap( bx, by, w, h, x, y, r );
 
    /* Render the selected system selections. */
    for (i=0; i<uniedit_nsys; i++) {
