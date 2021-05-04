@@ -1380,6 +1380,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    }
    else
       disable       *= absorb;
+   tdshield = 0.;
+   tdarmour = 0.;
+
 
    /*
     * Shields take entire blow.
@@ -1405,7 +1408,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
       /* True damage. */
       tdshield = damage_shield;
-      tdarmour = 0.0;
    }
    /*
     * Shields take part of the blow.
@@ -1451,7 +1453,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       }
 
       /* True damage. */
-      tdshield = 0.;
       tdarmour = ddmg;
    }
 

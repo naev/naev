@@ -990,6 +990,7 @@ void pilot_calcStats( Pilot* pilot )
       /* Add stats. */
       ss_statsModFromList( s, o->stats, &amount );
 
+      /* TODO these mods should probably be all moved into shipstats. */
       if (outfit_isMod(o)) { /* Modification */
          /* Movement. */
          pilot->thrust_base   += o->u.mod.thrust;

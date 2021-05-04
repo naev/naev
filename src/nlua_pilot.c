@@ -2338,15 +2338,15 @@ static int pilotL_setNoLand( lua_State *L )
 /**
  * @brief Adds an outfit to a pilot.
  *
- * This by default tries to add them to the first empty or defaultly equipped slot.
+ * This by default tries to add them to the first empty or defaultly equipped slot. Will not overwrite existing non-default outfits.
  *
  * @usage added = p:addOutfit( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luatparam Pilot p Pilot to add outfit to.
  *    @luatparam string|outfit outfit Outfit or name of the outfit to add.
  *    @luatparam[opt=1] number q Quantity of the outfit to add.
- *    @luatparam[opt=false] boolean bypass Whether to skip CPU and slot size checks before adding an outfit.
- *              Will not overwrite existing non-default outfits.
+ *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks when adding an outfit.
+ *    @luatparam[opt=false] boolean bypass_slot Whether or not to skip slot size checks before adding an outfit. Not that this implies skipping the CPU checks.
  *    @luatreturn number The number of outfits added.
  * @luafunc addOutfit
  */
@@ -2356,7 +2356,7 @@ static int pilotL_addOutfit( lua_State *L )
    Pilot *p;
    Outfit *o;
    int ret;
-   int q, added, bypass;
+   int q, added, bypass_cpu, bypass_slot;
 
    NLUA_CHECKRW(L);
 
@@ -2364,7 +2364,8 @@ static int pilotL_addOutfit( lua_State *L )
    p      = luaL_validpilot(L,1);
    o      = luaL_validoutfit(L,2);
    q      = luaL_optinteger(L,3,1);
-   bypass = lua_toboolean(L,4);
+   bypass_cpu = lua_toboolean(L,4);
+   bypass_slot = lua_toboolean(L,5);
 
    /* Add outfit. */
    added = 0;
@@ -2378,7 +2379,17 @@ static int pilotL_addOutfit( lua_State *L )
             (p->outfits[i]->outfit != p->outfits[i]->sslot->data))
          continue;
 
-      if (!bypass) {
+      /* Only do a basic check. */
+      if (bypass_slot) {
+         if (!outfit_fitsSlotType( o, &p->outfits[i]->sslot->slot ))
+            continue;
+      }
+      else if (bypass_cpu) {
+         if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
+            continue;
+      }
+      /* Full check. */
+      else {
          /* Must fit slot. */
          if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
             continue;
@@ -2388,10 +2399,6 @@ static int pilotL_addOutfit( lua_State *L )
          if (ret)
             break;
       }
-      /* Only do a basic check. */
-      else
-         if (!outfit_fitsSlotType( o, &p->outfits[i]->sslot->slot ))
-            continue;
 
       /* Add outfit - already tested. */
       ret = pilot_addOutfitRaw( p, o, p->outfits[i] );

@@ -55,8 +55,6 @@
 #define BUTTON_WIDTH    200 /**< Default button width. */
 #define BUTTON_HEIGHT   40 /**< Default button height. */
 
-#define SHIP_ALT_MAX    512 /**< Maximum ship alt text. */
-
 
 /*
  * equipment stuff
@@ -699,7 +697,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    double tw;
    int n, m;
    PilotOutfitSlot *slot;
-   char alt[1024];
+   char alt[STRMAX];
    int pos;
    Outfit *o;
    CstSlotWidget *wgt;
@@ -778,20 +776,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Get text. */
    if (o->desc_short == NULL)
       return;
-   pos = scnprintf( alt, sizeof(alt),
-         "%s",
-         _(o->name) );
-   if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
-      pos += scnprintf( &alt[pos], sizeof(alt)-pos, _("\n#oUnique#0") );
-   if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += scnprintf( &alt[pos], sizeof(alt)-pos, _("\n#oSlot %s#0"),
-            _( sp_display( o->slot.spid ) ) );
-   if (pos < (int)sizeof(alt))
-      pos += scnprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
-   if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
-      scnprintf( &alt[pos], sizeof(alt)-pos,
-            n_("\n%.0f Tonne", "\n%.0f Tonnes", mass),
-            mass );
+   outfit_altText( alt, sizeof(alt), o );
 
    /* Draw the text. */
    toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
@@ -1371,9 +1356,9 @@ static void equipment_genShipList( unsigned int wid )
       /* Ship stats in alt text. */
       for (i=0; i<nships; i++) {
          s        = player_getShip( cships[i].caption );
-         cships[i].alt = malloc( SHIP_ALT_MAX );
-         l        = snprintf( &cships[i].alt[0], SHIP_ALT_MAX, _("Ship Stats\n") );
-         l        = equipment_shipStats( &cships[i].alt[0], SHIP_ALT_MAX-l, s, 1 );
+         cships[i].alt = malloc( STRMAX_SHORT );
+         l        = snprintf( &cships[i].alt[0], STRMAX_SHORT, _("Ship Stats\n") );
+         l        = equipment_shipStats( &cships[i].alt[0], STRMAX_SHORT-l, s, 1 );
          if (l == 0) {
             free( cships[i].alt );
             cships[i].alt = NULL;
@@ -1538,7 +1523,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    Pilot *ship;
    char *nt;
    int onboard;
-   int cargo;
+   int cargo, jumps;
 
    /* Clear defaults. */
    eq_wgt.slot          = -1;
@@ -1565,6 +1550,8 @@ void equipment_updateShips( unsigned int wid, char* str )
    /* Get ship error report. */
    pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
 
+   jumps = floor(ship->fuel_max / ship->fuel_consumption);
+
    /* Fill the buffer. */
    asprintf( &buf,
          _("%s\n"
@@ -1573,7 +1560,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "#%c%s%.0f#0\n"
          "%s\n"
          "\n"
-         "%.0f#0 tonnes\n"
+         "%.0f#0 %s\n"
          "%s average\n"
          "#%c%s%.0f#0 kN/tonne\n"
          "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)\n"
@@ -1584,8 +1571,8 @@ void equipment_updateShips( unsigned int wid, char* str )
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
-         "%d / #%c%s%d#0 tonnes\n"
-         "%d units (%d jumps)\n"
+         "%d / #%c%s%d#0 %s\n"
+         "%d %s (%d %s)\n"
          "\n"
          "#%c%s#0"),
          /* Generic. */
@@ -1595,7 +1582,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->crew, ship->ship->crew, 0 ),
       buf2,
       /* Movement. */
-      ship->solid->mass,
+      ship->solid->mass, n_( "tonne", "tonnes", ship->solid->mass ),
       nt,
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
@@ -1613,7 +1600,9 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->energy_regen, ship->ship->energy_regen, 0 ),
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
-      ship->fuel_max, ship->fuel_max / ship->fuel_consumption,
+      n_( "tonne", "tonnes", ship->ship->cap_cargo ),
+      ship->fuel_max, n_( "unit", "units", ship->fuel_max ),
+      jumps, n_( "jump", "jumps", jumps ),
       pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
    window_modifyText( wid, "txtDDesc", buf );
 
