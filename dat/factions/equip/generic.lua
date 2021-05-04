@@ -173,124 +173,136 @@ equip_classOutfits_hulls = {
 equip_classOutfits_weapons = {
    ["Yacht"] = {
       {
-         "Laser Cannon MK1", "Razor MK1", "Razor MK2",
-         "Laser Turret MK1", "Turreted Gauss Gun",
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
       }
    },
    ["Luxury Yacht"] = {
       {
-         "Laser Cannon MK1", "Razor MK1", "Razor MK2",
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
       }
    },
    ["Scout"] = {
       {
          "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
+         "Plasma Turret MK1", "Particle Beam",
       }
    },
    ["Courier"] = {
       {
          "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
+         "Plasma Turret MK1", "Particle Beam",
       }
    },
    ["Freighter"] = {
       {
          num = 1;
-         "Laser Turret MK2", "Enygma Systems Turreted Fury Launcher"
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
       },
       {
-         "Laser Turret MK1", "Laser Turret MK2", "EMP Grenade Launcher",
+         "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
+         "Plasma Turret MK2", "Orion Beam",
       }
    },
    ["Armoured Transport"] = {
       {
-         num = 2, varied = true;
-         "Enygma Systems Turreted Fury Launcher",
-         "Heavy Laser Turret", "Heavy Ripper Turret"
+         "Heavy Ripper Turret", "Grave Beam"
       },
       {
-         "Laser Turret MK2",
+         num = 1;
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
+         "Plasma Turret MK2", "Orion Beam",
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
       }
    },
    ["Fighter"] = {
       {
          num = 1;
-         "Mass Driver", "Ion Cannon", "Unicorp Mace Launcher",
-         "Unicorp Banshee Launcher", "Orion Lance",
          "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
-         "Unicorp Medusa Launcher", "Laser Cannon MK2",
+         "Unicorp Medusa Launcher",
       },
       {
-         "Plasma Blaster MK1", "Plasma Blaster MK2", "Gauss Gun",
-         "Vulcan Gun", "Laser Cannon MK2"
+         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Orion Lance", "Ion Cannon",
+      },
+      {
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Unicorp Mace Launcher", "Unicorp Banshee Launcher",
       }
    },
    ["Bomber"] = {
       {
          num = 3, varied = true;
          "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
-         "Unicorp Headhunter Launcher", "Unicorp Mace Launcher",
-         "Unicorp Banshee Launcher"
+         "Unicorp Headhunter Launcher",
       },
       {
-         "Gauss Gun", "Vulcan Gun", "Laser Cannon MK2", "Plasma Blaster MK2"
-      }
+         num = 1;
+         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+      },
+      {
+         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Unicorp Mace Launcher", "Unicorp Banshee Launcher",
+      },
    },
    ["Corvette"] = {
       {
-         num = 1;
-         "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
-         "TeraCom Medusa Launcher"
+         num = 3, varued = true;
+         "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
+         "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
+         "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
+         "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
       },
       {
-         num = 2;
-         "Mass Driver", "Heavy Ion Cannon",
-         "Laser Turret MK1", "Plasma Turret MK2", "Razor Turret MK2",
-      },
-      {
-         "Ripper Cannon", "Plasma Blaster MK2", "Shredder", "Ion Cannon"
+         "Ripper Cannon", "Slicer", "Shredder", "Plasma Cannon",
       }
    },
    ["Destroyer"] = {
       {
-         num = 2;
-         "Railgun", "Heavy Ripper Turret", "Heavy Laser Turret", "Orion Beam",
-         "Grave Beam", "Laser Turret MK2", "Razor Turret MK2",
+         "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
       },
       {
          num = 1;
-         "Enygma Systems Turreted Fury Launcher", "Unicorp Caesar IV Launcher",
-         "Unicorp Headhunter Launcher", "TeraCom Medusa Launcher"
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
       },
       {
-         "Laser Turret MK2", "Laser Turret MK2", "Turreted Vulcan Gun",
+         "Heavy Ripper Cannon", "Mass Driver", "Plasma Cluster Cannon",
+         "Grave Lance", "Heavy Ion Cannon", "Laser Turret MK2",
+         "Razor Turret MK2", "Turreted Vulcan Gun", "Plasma Turret MK2",
+         "Orion Beam", "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
       }
    },
    ["Cruiser"] = {
       {
-         num = 2;
-         "Turbolaser", "Ragnarok Beam", "Grave Beam", "Railgun Turret"
+         num = 1;
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
       },
       {
-         "Heavy Laser Turret", "Heavy Ripper Turret", "Railgun Turret"
+         "Repeating Railgun", "Heavy Laser Turret", "Railgun Turret",
+         "Ragnarok Beam",
       },
       {
-         "Laser Turret MK2", "Turreted Vulcan Gun",
+         "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
       }
    },
    ["Carrier"] = {
       {
          num = 2;
-         "Turbolaser", "Ragnarok Beam"
+         "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
       },
       {
---         num = 2;
-         "Heavy Laser Turret", "Grave Beam", "Railgun Turret"
+         "Lancelot Fighter Bay"
       },
---      {
---         "Lancelot Fighter Bay"
---      },
       {
-         "Laser Turret MK2", "Turreted Vulcan Gun",
+         "Heavy Ripper Turret", "Grave Beam",
       }
    },
    ["Drone"] = {
