@@ -41,6 +41,7 @@ typedef enum ShipStatsType_ {
 
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */
+   SS_TYPE_D_LAND_DELAY,      /**< Modulates the time that passes during landing. */
    SS_TYPE_D_CARGO_INERTIA,   /**< Modifies the effect of cargo_mass. */
 
    /* Stealth. */
@@ -184,6 +185,7 @@ typedef struct ShipStats_ {
 
    /* Freighter-type. */
    double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */
+   double land_delay;      /**< Modulates the time that passes during landing. */
    double cargo_inertia;   /**< Lowers the effect of cargo mass. */
 
    /* Stealth. */
