@@ -5,30 +5,30 @@
   <size>small</size>
   <license>Medium Weapon License</license>
   <rarity>1</rarity>
-  <mass>7</mass>
-  <price>18000</price>
-  <description>The BioPlasma Organ is the most basic organic weaponry available, and one of the most common. While it is not especially powerful and lags slightly behind its synthetic cousin, the Plasma Blaster MK3, in terms of raw power, it is prized for its reliability and low cognitive requirements. As with all organs, it starts out weak, but over time it grows and improves.</description>
+  <mass>6</mass>
+  <price>24000</price>
+  <description>The BioPlasma Organ is the most basic organic weaponry available, and one of the most common. While it is not especially powerful, it is prized for its reliability and low cognitive requirements. As with all organs, it starts out weak, but over time it grows and improves.</description>
   <gfx_store>plasma.png</gfx_store>
   <cpu>-1</cpu>
  </general>
  <specific type="bolt">
-  <gfx>plasma2.png</gfx>
+  <gfx>plasma.png</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS2</spfx_armour>
-  <delay>0.7</delay>
-  <speed>500</speed>
-  <range>630</range>
-  <falloff>380</falloff>
+  <delay>0.8</delay>
+  <speed>600</speed>
+  <range>800</range>
+  <falloff>550</falloff>
   <gfx_end>plasma2-end.png</gfx_end>
-  <energy>15</energy>
+  <energy>4</energy>
   <heatup>30</heatup>
-  <track>2</track>
+  <track>3</track>
   <swivel>22</swivel>
   <damage>
    <type>normal</type>
-   <penetrate>7</penetrate>
-   <physical>8</physical>
+   <penetrate>0</penetrate>
+   <physical>11</physical>
    <disable>1</disable>
   </damage>
  </specific>
