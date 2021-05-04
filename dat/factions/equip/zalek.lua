@@ -73,14 +73,14 @@ equip_typeOutfits_weapons["Demon"] = {
       "Za'lek Hunter Launcher"
    },
    {
-      "Orion Beam", "Pulse Beam",
+      "Orion Beam",
       "Za'lek Hunter Launcher"
    }
 }
 equip_typeOutfits_weapons["Mephisto"] = {
    {
       num = 2, varied = true;
-      "Ragnarok Beam", "Grave Beam", "Orion Beam", "Pulse Beam"
+      "Ragnarok Beam", "Grave Beam", "Orion Beam",
    },
    {
       num = 1;
@@ -88,7 +88,7 @@ equip_typeOutfits_weapons["Mephisto"] = {
    },
    {
       varied = true;
-      "Ragnarok Beam", "Grave Beam", "Orion Beam", "Pulse Beam",
+      "Ragnarok Beam", "Grave Beam", "Orion Beam",
 	  "Za'lek Hunter Launcher", "Za'lek Reaper Launcher"
    }
 }

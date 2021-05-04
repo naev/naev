@@ -199,13 +199,12 @@ equip_classOutfits_weapons = {
       },
       {
          "Laser Turret MK1", "Laser Turret MK2", "EMP Grenade Launcher",
-         "Pulse Beam"
       }
    },
    ["Armoured Transport"] = {
       {
          num = 2, varied = true;
-         "Pulse Beam", "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Fury Launcher",
          "Heavy Laser Turret", "Heavy Ripper Turret"
       },
       {

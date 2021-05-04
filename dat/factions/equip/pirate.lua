@@ -84,7 +84,7 @@ equip_typeOutfits_weapons["Ancestor"] = {
 equip_typeOutfits_weapons["Rhino"] = {
    {
       varied = true;
-      "Pulse Beam", "Heavy Ripper Turret", "Laser Turret MK2",
+      "Heavy Ripper Turret", "Laser Turret MK2",
       "EMP Grenade Launcher", "Enygma Systems Turreted Fury Launcher",
       "Heavy Ion Turret", "Razor Turret MK2"
    }

@@ -38,7 +38,6 @@
   <item>Ragnarok Beam</item>
   <item>Grave Beam</item>
   <item>Orion Beam</item>
-  <item>Pulse Beam</item>
   <item>Grave Lance</item>
   <item>Particle Beam</item>
   <item>Particle Lance</item>
@@ -425,7 +424,6 @@
   <item>Orion Lance</item>
   <item>Particle Beam</item>
   <item>Orion Beam</item>
-  <item>Pulse Beam</item>
  </tech>
  <tech name="Beam 2">
   <item>Grave Lance</item>

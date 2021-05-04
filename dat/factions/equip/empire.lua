@@ -94,7 +94,7 @@ equip_typeOutfits_weapons["Pacifier"] = {
    },
    {
       num = 1;
-      "Heavy Ripper Cannon", "Laser Turret MK2", "Orion Beam", "Pulse Beam"
+      "Heavy Ripper Cannon", "Laser Turret MK2", "Orion Beam",
    },
    {
       "Heavy Ripper Cannon", "Laser Turret MK2"
