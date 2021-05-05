@@ -373,7 +373,6 @@
  <tech name="Laser 3">
   <item>Heavy Ripper Turret</item>
   <item>Heavy Laser Turret</item>
-  <item>Turbolaser</item>
  </tech>
  <tech name="Ion 1">
   <item>Ion Cannon</item>
@@ -389,7 +388,6 @@
  </tech>
  <tech name="Ion 3">
   <item>Heavy Ion Turret</item>
-  <item>Heavy Razor Turret</item>
   <item>Weapons Ionizer</item>
  </tech>
  <tech name="Kinetic 1">
@@ -404,7 +402,6 @@
  </tech>
  <tech name="Kinetic 3">
   <item>Railgun</item>
-  <item>Repeating Railgun</item>
   <item>Railgun Turret</item>
  </tech>
  <tech name="Plasma 1">
@@ -664,6 +661,36 @@
   <item>Local System Map</item>
  </tech>
 
+ <!-- Faction outfits -->
+ <tech name="Empire Military Outfits">
+  <item>Turbolaser</item>
+  <item>Empire Lancelot Fighter Bay</item>
+ </tech>
+ <tech name="Dvaered Military Outfits">
+  <item>Repeating Railgun</item>
+  <item>Active Plating</item>
+ </tech>
+ <tech name="Sirius Military Outfits">
+  <item>Heavy Razor Turret</item>
+  <item>Fidelity Fighter Bay</item>
+ </tech>
+ <tech name="Za'lek Military Outfits">
+  <item>Za'lek Hunter Launcher</item>
+  <item>Za'lek Reaper Launcher</item>
+  <item>Za'lek Light Drone Fighter Bay</item>
+  <item>Za'lek Heavy Drone Fighter Bay</item>
+  <item>Za'lek Bomber Drone Fighter Bay</item>
+ </tech>
+ <tech name="Thurion Outfits">
+  <item>Convulsion Launcher</item>
+  <item>Turreted Convulsion Launcher</item>
+  <item>Adaptive Stealth Plating</item>
+  <item>Map: Thurion Core</item>
+ </tech>
+ <tech name="Thurion Military Outfits">
+  <item>Nebular Shielding Prototype</item>
+ </tech>
+
  <!-- Bioship outfits -->
  <tech name="Bioship Outfits">
   <item>BioPlasma Organ Stage 1</item>
@@ -803,18 +830,6 @@
   <item>Za'lek Diablo</item>
   <item>Za'lek Hephaestus</item>
  </tech>
- <tech name="Thurion Outfits">
-  <item>Energy Dart</item>
-  <item>Convulsion Launcher</item>
-  <item>Turreted Convulsion Launcher</item>
-  <item>Adaptive Stealth Plating</item>
-  <item>Map: Thurion Core</item>
- </tech>
- <tech name="Thurion Military Outfits">
-  <item>Energy Missile</item>
-  <item>Energy Torpedo</item>
-  <item>Nebular Shielding Prototype</item>
- </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>
  </tech>
@@ -828,11 +843,7 @@
   <item>Drone</item>
   <item>Heavy Drone</item>
  </tech>
- 
- <tech name="__Za'lek Launchers"> 
-  <item>Za'lek Hunter Launcher</item>
-  <item>Za'lek Reaper Launcher</item>
- </tech>
+
  <tech name="Systems Low">
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
