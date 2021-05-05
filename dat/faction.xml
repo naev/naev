@@ -214,7 +214,6 @@
   <player>0</player>
   <spawn>soromid</spawn>
   <standing>soromid</standing>
-  <equip>soromid</equip>
   <allies/>
   <enemies>
    <enemy>Pirate</enemy>
@@ -258,7 +257,6 @@
   <colour>yellow</colour>
   <spawn>flf</spawn>
   <standing>flf</standing>
-  <equip>pirate</equip>
   <enemies>
    <enemy>Dvaered</enemy>
    <enemy>Rogue FLF</enemy>

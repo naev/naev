@@ -78,7 +78,7 @@ bioship_parts = {
    { "Superheavy Bioship Strong Fin Stage %s", 7 },
 
    -- Weapons
-   { "BioPlasma Organ Stage %s", 3 },
+   { "Ultralight BioPlasma Organ Stage %s", 3 },
 }
 
 

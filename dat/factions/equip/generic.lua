@@ -1022,6 +1022,21 @@ equip_typeOutfits_weapons = {
          "TeraCom Mace Launcher",
       },
    },
+   ["Brigand"] = {
+      {
+         "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Organ Stage X"] = 3,
+         };
+         "Ultralight BioPlasma Organ Stage 1",
+         "Ultralight BioPlasma Organ Stage 2",
+         "Ultralight BioPlasma Organ Stage 3",
+         "Ultralight BioPlasma Organ Stage X",
+      },
+   },
 }
 
 
