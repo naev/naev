@@ -11,8 +11,9 @@
 
 
 enum {
-   PP_LAYER_GAME,
-   PP_LAYER_FINAL,
+   PP_LAYER_GAME, /**< Applied ontop of the in-game graphics. */
+   PP_LAYER_GUI, /**< Applied ontop of the in-game GUI. */
+   PP_LAYER_FINAL, /**< Applied ontop of everything! */
    PP_LAYER_MAX,
 };
 

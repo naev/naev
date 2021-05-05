@@ -173,15 +173,16 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
 void render_all( double game_dt, double real_dt )
 {
    double dt;
-   int pp_final, pp_game;
+   int pp_final, pp_gui, pp_game;
    int cur = 0;
 
    /* See what post-processing is up. */
    pp_game  = (array_size(pp_shaders_list[PP_LAYER_GAME]) > 0);
+   pp_gui   = (array_size(pp_shaders_list[PP_LAYER_GUI]) > 0);
    pp_final = (array_size(pp_shaders_list[PP_LAYER_FINAL]) > 0);
 
    /* Case we have a post-processing shader we use the framebuffers. */
-   if (pp_game || pp_final) {
+   if (pp_game || pp_gui || pp_final) {
       /* Clear main screen. */
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -222,10 +223,13 @@ void render_all( double game_dt, double real_dt )
 
    /* Process game stuff only. */
    if (pp_game)
-      render_fbo_list( dt, pp_shaders_list[PP_LAYER_GAME], &cur, !pp_final );
+      render_fbo_list( dt, pp_shaders_list[PP_LAYER_GAME], &cur, !(pp_final || pp_gui) );
 
    /* GUi stuff. */
    gui_render(dt);
+
+   if (pp_gui)
+      render_fbo_list( dt, pp_shaders_list[PP_LAYER_GUI], &cur, !pp_final );
 
    /* Top stuff. */
    ovr_render(dt);
