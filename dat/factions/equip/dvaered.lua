@@ -108,6 +108,11 @@ equip_typeOutfits_structurals["Phalanx"] = {
 equip_typeOutfits_structurals["Vigilance"] = {
    {
       varied = true;
+      "Large Fuel Pod", "Battery III", "Shield Capacitor IV",
+      "Shield Capacitor III", "Nanobond Plating",
+   },
+   {
+      varied = true;
       "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
       "Plasteel Plating", "Active Plating",
    },
