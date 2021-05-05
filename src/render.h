@@ -10,9 +10,11 @@
 #include "nlua_shader.h"
 
 
-#define PP_LAYER_GAME      0
-#define PP_LAYER_FINAL     1
-#define PP_LAYER_MAX       2 /**< Sentinal. */
+enum {
+   PP_LAYER_GAME,
+   PP_LAYER_FINAL,
+   PP_LAYER_MAX,
+};
 
 
 void fps_setPos( double x, double y );
