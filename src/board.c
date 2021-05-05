@@ -410,7 +410,8 @@ static int board_trySteal( Pilot *p )
       return 1;
 
    /* See if was successful. */
-   if (RNGF() > (0.5 * (10. + target->crew)/(10. + p->crew)))
+   /* TODO probably replace the interface and rehaul it all. */
+   /*if (RNGF() > (0.5 * (10. + target->crew)/(10. + p->crew)))*/
       return 0;
 
    /* Triggered self destruct. */
