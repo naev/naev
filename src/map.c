@@ -59,7 +59,12 @@ static double map_xpos        = 0.; /**< Map X position. */
 static double map_ypos        = 0.; /**< Map Y position. */
 static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
-static double map_bg_alpha    = 1.; /**< Alpha value of background stuff. */
+double map_alpha_decorators   = 1.;
+double map_alpha_faction      = 1.;
+double map_alpha_env          = 1.;
+double map_alpha_path         = 1.;
+double map_alpha_names        = 1.;
+double map_alpha_markers      = 1.;
 static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
@@ -91,7 +96,7 @@ extern Planet* land_planet;
 static void map_update( unsigned int wid );
 /* Render. */
 static void map_render( double bx, double by, double w, double h, void *data );
-static void map_renderPath( double x, double y, double a );
+static void map_renderPath( double x, double y, double a, double alpha );
 static void map_renderMarkers( double x, double y, double r, double a );
 static void map_renderCommod( double bx, double by, double x, double y,
                               double w, double h, double r, int editor );
@@ -102,6 +107,7 @@ static void map_drawMarker( double x, double y, double r, double a,
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
+static void map_reset (void);
 static glTexture *gl_genFactionDisk( int radius );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
@@ -184,10 +190,9 @@ void map_open (void)
    StarSystem *cur;
    int i, j;
    int w, h, x, y, rw;
+
    /* Not displaying commodities */
-   cur_commod = -1;
-   map_mode = MAPMODE_TRAVEL;
-   map_bg_alpha = 1.;
+   map_reset();
    listMapModeVisible = 0;
 
    /* Not under manual control. */
@@ -839,13 +844,46 @@ static void map_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
    double x,y,r;
+   double dt = naev_getrealdt();
    glColour col;
    StarSystem *sys;
 
-   if (map_mode == MAPMODE_TRADE)
-      map_bg_alpha = MAX( 0., map_bg_alpha - naev_getrealdt() );
-   else
-      map_bg_alpha = MIN( 1., map_bg_alpha + naev_getrealdt() );
+#define AMAX(x) (x) = MIN( 1., (x) + dt )
+#define AMIN(x) (x) = MAX( 0., (x) - dt )
+#define ATAR(x,y) \
+if ((x) < y) (x) = MIN( y, (x) + dt ); \
+else (x) = MAX( y, (x) - dt )
+   switch (map_mode) {
+      case MAPMODE_TRAVEL:
+         AMAX( map_alpha_decorators );
+         AMAX( map_alpha_faction );
+         AMAX( map_alpha_env );
+         AMAX( map_alpha_path );
+         AMAX( map_alpha_names );
+         AMAX( map_alpha_markers );
+         break;
+
+      case MAPMODE_DISCOVER:
+         ATAR( map_alpha_decorators, 0.5 );
+         ATAR( map_alpha_faction, 0.5 );
+         AMIN( map_alpha_env );
+         AMIN( map_alpha_path );
+         AMAX( map_alpha_names );
+         AMIN( map_alpha_markers );
+         break;
+
+      case MAPMODE_TRADE:
+         AMIN( map_alpha_decorators );
+         AMIN( map_alpha_faction );
+         AMIN( map_alpha_env );
+         AMIN( map_alpha_path );
+         AMIN( map_alpha_names );
+         AMIN( map_alpha_markers );
+         break;
+   }
+#undef AMAX
+#undef AMIN
+#undef ATAR
 
    /* Parameters. */
    map_renderParams( bx, by, map_xpos, map_ypos, w, h, map_zoom, &x, &y, &r );
@@ -853,15 +891,16 @@ static void map_render( double bx, double by, double w, double h, void *data )
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER || map_bg_alpha>0.)
-      map_renderDecorators( x, y, 0 );
+   if (map_alpha_decorators > 0.)
+      map_renderDecorators( x, y, 0, map_alpha_decorators );
 
-   if (map_mode == MAPMODE_TRAVEL || map_bg_alpha>0.) {
-      /* Render faction disks. */
-      map_renderFactionDisks( x, y, 0 );
+   /* Render faction disks. */
+   if (map_alpha_faction > 0.)
+      map_renderFactionDisks( x, y, 0, map_alpha_faction );
+
       /* Render enviromental features. */
-      map_renderSystemEnviroment( x, y, 0 );
-   }
+   if (map_alpha_env > 0.)
+      map_renderSystemEnviroment( x, y, 0, map_alpha_env );
 
    /* Render jump routes. */
    map_renderJumps( x, y, 0 );
@@ -871,18 +910,19 @@ static void map_render( double bx, double by, double w, double h, void *data )
          / (double)MAP_MARKER_CYCLE );
 
    /* Render the player's jump route. */
-   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER)
-      map_renderPath( x, y, col.a );
+   if (map_alpha_path > 0.)
+      map_renderPath( x, y, col.a, map_alpha_path );
 
    /* Render systems. */
    map_renderSystems( bx, by, x, y, w, h, r, 0 );
 
    /* Render system names. */
-   map_renderNames( bx, by, x, y, w, h, 0 );
+   if (map_alpha_names > 0.)
+      map_renderNames( bx, by, x, y, w, h, 0, map_alpha_names );
 
    /* Render system markers. */
-   if (map_mode == MAPMODE_TRAVEL)
-     map_renderMarkers( x, y, r, col.a );
+   if (map_alpha_markers > 0.)
+     map_renderMarkers( x, y, r, col.a * map_alpha_markers );
 
    /* Render commodity info. */
    if (map_mode == MAPMODE_TRADE)
@@ -926,7 +966,7 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
 /**
  * @brief Renders the map background decorators.
  */
-void map_renderDecorators( double x, double y, int editor )
+void map_renderDecorators( double x, double y, int editor, double alpha )
 {
    int i,j;
    int sw, sh;
@@ -937,7 +977,7 @@ void map_renderDecorators( double x, double y, int editor )
    glColour ccol = { .r=1.00, .g=1.00, .b=1.00, .a=2./3. }; /**< White */
 
    /* Fade in the decorators to allow toggling between commodity and nothing */
-   ccol.a *= map_bg_alpha;
+   ccol.a *= alpha;
 
    for (i=0; i<array_size(decorator_stack); i++) {
 
@@ -984,7 +1024,7 @@ void map_renderDecorators( double x, double y, int editor )
 /**
  * @brief Renders the faction disks.
  */
-void map_renderFactionDisks( double x, double y, int editor )
+void map_renderFactionDisks( double x, double y, int editor, double alpha )
 {
    int i;
    const glColour *col;
@@ -1016,7 +1056,7 @@ void map_renderFactionDisks( double x, double y, int editor )
          c.g = col->g;
          c.b = col->b;
          //c.a = CLAMP( .6, .75, 20 / presence ) * cc;
-         c.a = CLAMP( .4, .5, 13.3 / presence ) * map_bg_alpha;
+         c.a = CLAMP( .4, .5, 13.3 / presence ) * alpha;
 
          gl_blitTexture(
                gl_faction_disk,
@@ -1030,7 +1070,7 @@ void map_renderFactionDisks( double x, double y, int editor )
 /**
  * @brief Renders the faction disks.
  */
-void map_renderSystemEnviroment( double x, double y, int editor )
+void map_renderSystemEnviroment( double x, double y, int editor, double alpha )
 {
    int i;
    StarSystem *sys;
@@ -1067,7 +1107,7 @@ void map_renderSystemEnviroment( double x, double y, int editor )
 
          /* Set shader uniforms. */
          glUniform1f(shaders.nebula_map.hue, sys->nebu_hue);
-         glUniform1f(shaders.nebula_map.alpha, map_bg_alpha);
+         glUniform1f(shaders.nebula_map.alpha, alpha);
          gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
          glUniform1f(shaders.nebula_map.eddy_scale, map_zoom );
          glUniform1f(shaders.nebula_map.time, map_nebu_dt / 10.0);
@@ -1191,14 +1231,14 @@ void map_renderSystems( double bx, double by, double x, double y,
          continue;
 
       /* Draw an outer ring. */
-      if (map_mode == MAPMODE_TRAVEL)
+      if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_TRADE)
          gl_drawCircle( tx, ty, r, &cInert, 0 );
 
       /* Ignore not known systems when not in the editor. */
       if (!editor && !sys_isKnown(sys))
          continue;
 
-      if (editor || map_mode == MAPMODE_TRAVEL) {
+      if (editor || map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_TRADE) {
          if (!system_hasPlanet(sys))
             continue;
          /* Planet colours */
@@ -1215,14 +1255,9 @@ void map_renderSystems( double bx, double by, double x, double y,
             gl_drawCircle( tx, ty, 0.65 * r, col, 1 );
       }
       else if (map_mode == MAPMODE_DISCOVER) {
-
-         if (!sys_isFlag( sys, SYSTEM_DISCOVERED )) {
-            gl_drawCircle( tx, ty, r, &cInert, 0 );
-            continue;
-         }
-
          gl_drawCircle( tx, ty, r, &cInert, 0 );
-         gl_drawCircle( tx, ty, 0.65 * r, &cGreen, 1 );
+         if (sys_isFlag( sys, SYSTEM_DISCOVERED ))
+            gl_drawCircle( tx, ty,  0.65 * r, &cGreen, 1 );
       }
    }
 }
@@ -1231,7 +1266,7 @@ void map_renderSystems( double bx, double by, double x, double y,
 /**
  * @brief Render the map path.
  */
-static void map_renderPath( double x, double y, double a )
+static void map_renderPath( double x, double y, double a, double alpha )
 {
    int j, k, sign;
    const glColour *col;
@@ -1272,7 +1307,7 @@ static void map_renderPath( double x, double y, double a )
             vertex[4*k+12] = col->r;
             vertex[4*k+13] = col->g;
             vertex[4*k+14] = col->b;
-            vertex[4*k+15] = a/4. + .25 + h0*h1; /* More solid in the middle for some reason. */
+            vertex[4*k+15] = (a/4. + .25 + h0*h1) * alpha; /* More solid in the middle for some reason. */
          }
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 6*(2+4), vertex );
 
@@ -1293,13 +1328,14 @@ static void map_renderPath( double x, double y, double a )
  * @brief Renders the system names on the map.
  */
 void map_renderNames( double bx, double by, double x, double y,
-      double w, double h, int editor )
+      double w, double h, int editor, double alpha )
 {
    double tx,ty, vx,vy, d,n;
    int textw;
    StarSystem *sys, *jsys;
    int i, j;
    char buf[32];
+   glColour col;
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
@@ -1316,7 +1352,9 @@ void map_renderNames( double bx, double by, double x, double y,
       if (!rectOverlap(tx, ty, textw, gl_smallFont.h, bx, by, w, h))
          continue;
 
-      gl_printRaw( &gl_smallFont, tx, ty, &cWhite, -1, _(sys->name) );
+      col = cWhite;
+      col.a = alpha;
+      gl_printRaw( &gl_smallFont, tx, ty, &col, -1, _(sys->name) );
 
    }
 
@@ -1343,7 +1381,9 @@ void map_renderNames( double bx, double by, double x, double y,
             snprintf( buf, sizeof(buf), "#gH: %.2f", n );
          else
             snprintf( buf, sizeof(buf), "H: %.2f", n );
-         gl_printRaw( &gl_smallFont, tx, ty, &cGrey70, -1, buf );
+         col = cGrey70;
+         col.a = alpha;
+         gl_printRaw( &gl_smallFont, tx, ty, &col, -1, buf );
       }
    }
 }
@@ -1980,9 +2020,7 @@ static void map_window_close( unsigned int wid, char *str )
       free ( map_modes[i] );
    array_free ( map_modes );
    map_modes = NULL;
-   map_mode = MAPMODE_TRAVEL;
-   map_bg_alpha = 1.;
-   cur_commod = -1;
+   map_reset();
    window_close(wid,str);
 }
 
@@ -2027,6 +2065,18 @@ void map_clear (void)
 
    /* default system is current system */
    map_selectCur();
+}
+
+static void map_reset (void)
+{
+   cur_commod = -1;
+   map_mode = MAPMODE_TRAVEL;
+   map_alpha_decorators   = 1.;
+   map_alpha_faction      = 1.;
+   map_alpha_env          = 1.;
+   map_alpha_path         = 1.;
+   map_alpha_names        = 1.;
+   map_alpha_markers      = 1.;
 }
 
 
