@@ -47,8 +47,6 @@
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
 
-#define DAMAGE_DECAY    0.3 /**< Rate at which the damage strength goes down. */
-
 
 /* Trail stuff. */
 #define TRAIL_UPDATE_DT       0.05
@@ -546,7 +544,7 @@ static void spfx_updateDamage( double dt )
       return;
 
    /* Decrement and turn off if necessary. */
-   damage_strength -= DAMAGE_DECAY * dt;
+   damage_strength -= SPFX_DAMAGE_DECAY * dt;
    if (damage_strength < 0.) {
       damage_strength = 0.;
       render_postprocessRm( damage_shader_pp_id );
@@ -797,7 +795,7 @@ void spfx_shake( double mod )
  */
 void spfx_damage( double mod )
 {
-   damage_strength = MIN( 1.0, damage_strength + mod );
+   damage_strength = MIN( SPFX_DAMAGE_MAX, damage_strength + mod );
 
    /* Create the damage. */
    if (damage_shader_pp_id==0)
