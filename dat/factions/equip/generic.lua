@@ -22,46 +22,54 @@ equip_classCargo = {
 -- Table of available core systems by class.
 equip_classOutfits_coreSystems = {
    ["Yacht"] = {
-      "Unicorp PT-18 Core System"
+      "Unicorp PT-18 Core System", "Unicorp PT-80 Core System",
+      "Milspec Aegis 3601 Core System",
    },
    ["Luxury Yacht"] = {
-      "Unicorp PT-18 Core System"
+      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
    },
    ["Scout"] = {
-      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System"
+      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
    },
    ["Courier"] = {
-      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System"
+      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System",
    },
    ["Freighter"] = {
-      "Unicorp PT-400 Core System", "Milspec Aegis 5401 Core System"
+      "Unicorp PT-400 Core System", "Milspec Aegis 5401 Core System",
    },
    ["Armoured Transport"] = {
-      "Milspec Aegis 5401 Core System", "Milspec Orion 5501 Core System"
+      "Unicorp PT-400 Core System", "Milspec Aegis 5401 Core System",
+      "Milspec Aegis 5401 Core System", "Milspec Orion 5501 Core System",
    },
    ["Fighter"] = {
-      "Unicorp PT-80 Core System", "Milspec Orion 3701 Core System"
+      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System",
+      "Milspec Prometheus 3603 Core System", "Milspec Orion 3701 Core System",
    },
    ["Bomber"] = {
-      "Unicorp PT-80 Core System", "Milspec Orion 3701 Core System"
+      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System",
+      "Milspec Orion 3701 Core System",
    },
    ["Corvette"] = {
-      "Unicorp PT-280 Core System", "Milspec Orion 4801 Core System"
+      "Unicorp PT-280 Core System", "Milspec Aegis 4701 Core System",
+      "Milspec Orion 4801 Core System",
    },
    ["Destroyer"] = {
-      "Unicorp PT-400 Core System", "Milspec Orion 5501 Core System"
+      "Unicorp PT-400 Core System", "Milspec Aegis 5401 Core System",
+      "Milspec Prometheus 5403 Core System", "Milspec Orion 5501 Core System",
    },
    ["Cruiser"] = {
-      "Unicorp PT-3400 Core System", "Milspec Orion 9901 Core System"
+      "Unicorp PT-3400 Core System", "Milspec Aegis 8501 Core System",
+      "Milspec Prometheus 8503 Core System", "Milspec Orion 9901 Core System",
    },
    ["Carrier"] = {
-      "Milspec Orion 9901 Core System"
+      "Unicorp PT-3400 Core System", "Milspec Aegis 8501 Core System",
+      "Milspec Orion 9901 Core System",
    },
    ["Drone"] = {
-      "Milspec Orion 2301 Core System"
+      "Milspec Orion 2301 Core System",
    },
    ["Heavy Drone"] = {
-      "Milspec Orion 3701 Core System"
+      "Milspec Orion 3701 Core System",
    },
 }
 
@@ -69,10 +77,11 @@ equip_classOutfits_coreSystems = {
 -- Table of available engines by class.
 equip_classOutfits_engines = {
    ["Yacht"] = {
-      "Nexus Dart 150 Engine",
+      "Nexus Dart 150 Engine", "Unicorp Hawk 300 Engine",
+      "Tricon Zephyr II Engine",
    },
    ["Luxury Yacht"] = {
-      "Nexus Dart 150 Engine",
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Scout"] = {
       "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
@@ -82,16 +91,17 @@ equip_classOutfits_engines = {
       "Melendez Ox XL Engine",
    },
    ["Freighter"] = {
-      "Unicorp Falcon 1200 Engine", "Melendez Buffalo XL Engine"
+      "Unicorp Falcon 1200 Engine", "Melendez Buffalo XL Engine",
    },
    ["Armoured Transport"] = {
-      "Melendez Buffalo XL Engine"
+      "Unicorp Falcon 1200 Engine", "Melendez Buffalo XL Engine",
    },
    ["Fighter"] = {
       "Unicorp Hawk 300 Engine", "Tricon Zephyr II Engine",
    },
    ["Bomber"] = {
       "Unicorp Hawk 300 Engine", "Tricon Zephyr II Engine",
+      "Melendez Ox XL Engine",
    },
    ["Corvette"] = {
       "Nexus Arrow 700 Engine", "Tricon Cyclone Engine",
@@ -118,22 +128,23 @@ equip_classOutfits_engines = {
 -- Table of available hulls by class.
 equip_classOutfits_hulls = {
    ["Yacht"] = {
-      "Unicorp D-2 Light Plating",
+      "Unicorp D-2 Light Plating", "Unicorp D-4 Light Plating",
+      "S&K Small Cargo Hull",
    },
    ["Luxury Yacht"] = {
-      "Unicorp D-2 Light Plating",
+      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
    },
    ["Scout"] = {
-      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating"
+      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
    },
    ["Courier"] = {
-      "Unicorp D-4 Light Plating", "S&K Small Cargo Hull"
+      "Unicorp D-4 Light Plating", "S&K Small Cargo Hull",
    },
    ["Freighter"] = {
-      "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull"
+      "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull",
    },
    ["Armoured Transport"] = {
-      "S&K Medium Cargo Hull"
+      "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull",
    },
    ["Fighter"] = {
       "Unicorp D-4 Light Plating", "S&K Light Stealth Plating",
@@ -172,6 +183,8 @@ equip_classOutfits_weapons = {
    ["Yacht"] = {
       {
          "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
+         "Plasma Turret MK1", "Particle Beam",
       },
    },
    ["Luxury Yacht"] = {
@@ -181,8 +194,7 @@ equip_classOutfits_weapons = {
    },
    ["Scout"] = {
       {
-         "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
-         "Plasma Turret MK1", "Particle Beam",
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
       },
    },
    ["Courier"] = {
@@ -561,29 +573,38 @@ equip_classOutfits_structurals = {
 -- Table of available core systems by base type.
 equip_typeOutfits_coreSystems = {
    ["Hyena"] = {
-      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System",
+      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
+      "Milspec Prometheus 2203 Core System", "Milspec Orion 2301 Core System",
    },
    ["Shark"] = {
-      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System",
+      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
+      "Milspec Hermes 2202 Core System", "Milspec Prometheus 2203 Core System",
+      "Milspec Orion 2301 Core System",
    },
    ["Fidelity"] = {
-      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System",
+      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
+      "Milspec Prometheus 2203 Core System", "Milspec Orion 2301 Core System",
    },
    ["Perspicacity"] = {
-      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System",
+      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
+      "Milspec Prometheus 2203 Core System", "Milspec Orion 2301 Core System",
    },
    ["Derivative"] = {
-      "Unicorp PT-18 Core System", "Milspec Orion 2301 Core System",
+      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
+      "Milspec Prometheus 2203 Core System", "Milspec Orion 2301 Core System",
    },
    ["Vendetta"] = {
-      "Unicorp PT-80 Core System", "Milspec Hermes 3602 Core System",
+      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System",
+      "Milspec Hermes 3602 Core System", "Milspec Prometheus 3603 Core System",
       "Milspec Orion 3701 Core System",
    },
    ["Kestrel"] = {
-      "Unicorp PT-750 Core System", "Milspec Orion 8601 Core System",
+      "Unicorp PT-750 Core System", "Milspec Aegis 8501 Core System",
+      "Milspec Prometheus 8503 Core System", "Milspec Orion 8601 Core System",
    },
    ["Hawking"] = {
-      "Unicorp PT-750 Core System", "Milspec Orion 8601 Core System",
+      "Unicorp PT-750 Core System", "Milspec Aegis 8501 Core System",
+      "Milspec Prometheus 8503 Core System", "Milspec Orion 8601 Core System",
    },
    ["Brigand"] = {
       probability = {
