@@ -81,6 +81,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_CREW,            /**< Ship crew. */
    SS_TYPE_D_MASS,            /**< Ship mass. */
    SS_TYPE_D_ENGINE_LIMIT_REL, /**< Modifier for the ship's engine limit. */
+   SS_TYPE_D_LOOT_MOD,        /* Affects boarding rewards. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -232,6 +233,7 @@ typedef struct ShipStats_ {
    int misc_reverse_thrust;  /**< Slows down the ship instead of turning it around. */
    int misc_asteroid_scan;   /**< Able to scan asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
+   double loot_mod;           /**< Boarding loot reward bonus. */
 } ShipStats;
 
 
