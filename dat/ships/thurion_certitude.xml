@@ -5,7 +5,7 @@
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Carrier</class>
+ <class>Cruiser</class>
  <price>9000000</price>
  <time_mod>2</time_mod>
  <trail_generator x="-40" y="5" h="5" />
@@ -57,7 +57,6 @@
   <shield_mod>10</shield_mod>
   <shield_regen_mod>15</shield_regen_mod>
   <heat_dissipation>10</heat_dissipation>
-  <cpu_mod>50</cpu_mod>
   <ew_hide>30</ew_hide>
   <misc_instant_jump>1</misc_instant_jump>
   <nebu_absorb_shield>80</nebu_absorb_shield>

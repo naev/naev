@@ -45,7 +45,6 @@
  <stats>
   <shield_mod>10</shield_mod>
   <shield_regen_mod>15</shield_regen_mod>
-  <cpu_mod>30</cpu_mod>
   <ew_hide>30</ew_hide>
   <nebu_absorb_shield>80</nebu_absorb_shield>
   <nebu_absorb_armour>97</nebu_absorb_armour>

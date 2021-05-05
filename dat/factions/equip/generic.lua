@@ -195,6 +195,7 @@ equip_classOutfits_weapons = {
    ["Scout"] = {
       {
          "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
       },
    },
    ["Courier"] = {
@@ -247,7 +248,7 @@ equip_classOutfits_weapons = {
    },
    ["Bomber"] = {
       {
-         num = 2, varied = true;
+         varied = true;
          "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
          "Unicorp Headhunter Launcher",
       },
@@ -257,11 +258,13 @@ equip_classOutfits_weapons = {
    },
    ["Corvette"] = {
       {
-         num = 3, varied = true;
+         varied = true;
          "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
          "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
          "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
-         "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
+         "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+         "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
+         "TeraCom Imperator Launcher",
       },
       {
          probability = {
@@ -345,6 +348,7 @@ equip_classOutfits_utilities = {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
          "Generic Afterburner", "Small Shield Booster", "Solar Panel",
+         "Sensor Array",
       },
    },
    ["Luxury Yacht"] = {
@@ -352,6 +356,7 @@ equip_classOutfits_utilities = {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
          "Generic Afterburner", "Small Shield Booster", "Solar Panel",
+         "Sensor Array",
       },
    },
    ["Scout"] = {
@@ -359,7 +364,7 @@ equip_classOutfits_utilities = {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
          "Generic Afterburner", "Small Shield Booster", "Solar Panel",
-         "Unicorp Jammer", "Reverse Thrusters",
+         "Unicorp Jammer", "Reverse Thrusters", "Sensor Array",
       },
    },
    ["Courier"] = {
@@ -393,6 +398,7 @@ equip_classOutfits_utilities = {
          "Hellburner", "Small Shield Booster", "Solar Panel",
          "Forward Shock Absorbers", "Power Regulation Override",
          "Weapons Ionizer", "Reverse Thrusters", "Emergency Shield Booster",
+         "Sensor Array",
       },
    },
    ["Bomber"] = {
@@ -402,7 +408,7 @@ equip_classOutfits_utilities = {
          "Hellburner", "Small Shield Booster", "Solar Panel",
          "Forward Shock Absorbers", "Power Regulation Override",
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
-         "Reverse Thrusters", "Emergency Shield Booster",
+         "Reverse Thrusters", "Emergency Shield Booster", "Sensor Array",
       },
    },
    ["Corvette"] = {
@@ -412,7 +418,7 @@ equip_classOutfits_utilities = {
          "Forward Shock Absorbers", "Power Regulation Override",
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
          "Solar Panel", "Reverse Thrusters", "Hellburner",
-         "Emergency Shield Booster",
+         "Emergency Shield Booster", "Sensor Array",
       },
    },
    ["Destroyer"] = {
@@ -423,6 +429,7 @@ equip_classOutfits_utilities = {
          "Forward Shock Absorbers", "Power Regulation Override",
          "Targeting Array", "Improved Power Regulator", "Weapons Ionizer",
          "Solar Panel", "Hellburner", "Emergency Shield Booster",
+         "Sensor Array",
       },
    },
    ["Cruiser"] = {
@@ -430,19 +437,19 @@ equip_classOutfits_utilities = {
          varied = true;
          "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
          "Targeting Array", "Improved Power Regulator", "Weapons Ionizer",
-         "Solar Panel",
+         "Solar Panel", "Sensor Array",
       },
    },
    ["Carrier"] = {
       {
          varied = true;
          "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
-         "Targeting Array", "Weapons Ionizer",
+         "Targeting Array", "Weapons Ionizer", "Sensor Array",
       },
    },
    ["Drone"] = {
       {
-         "Solar Panel"
+         "Solar Panel",
       },
    },
    ["Heavy Drone"] = {
@@ -591,10 +598,6 @@ equip_typeOutfits_coreSystems = {
       "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
       "Milspec Prometheus 2203 Core System", "Milspec Orion 2301 Core System",
    },
-   ["Perspicacity"] = {
-      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
-      "Milspec Prometheus 2203 Core System", "Milspec Orion 2301 Core System",
-   },
    ["Derivative"] = {
       "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
       "Milspec Prometheus 2203 Core System", "Milspec Orion 2301 Core System",
@@ -705,9 +708,6 @@ equip_typeOutfits_engines = {
    ["Fidelity"] = {
       "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
-   ["Perspicacity"] = {
-      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
-   },
    ["Derivative"] = {
       "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
@@ -814,10 +814,6 @@ equip_typeOutfits_hulls = {
       "S&K Ultralight Combat Plating",
    },
    ["Fidelity"] = {
-      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
-      "S&K Ultralight Combat Plating",
-   },
-   ["Perspicacity"] = {
       "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
       "S&K Ultralight Combat Plating",
    },
@@ -938,17 +934,6 @@ equip_typeOutfits_weapons = {
       },
    },
    ["Fidelity"] = {
-      {
-         num = 1;
-         "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
-         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
-      },
-      {
-         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
-         "Ion Cannon",
-      },
-   },
-   ["Perspicacity"] = {
       {
          num = 1;
          "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",

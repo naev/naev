@@ -27,9 +27,9 @@
  </characteristics>
  <slots>
   <weapon size="medium" x="16" y="0" h="-2" />
+  <weapon size="medium" x="-5" y="11" h="0" />
+  <weapon size="medium" x="-5" y="-11" h="0" />
   <weapon size="small" x="24" y="0" h="-2" />
-  <weapon size="small" x="-5" y="11" h="0" />
-  <weapon size="small" x="-5" y="-11" h="0" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-280 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="medium" />
@@ -43,7 +43,6 @@
   <structure size="medium" />
  </slots>
  <stats>
-  <cpu_mod>15</cpu_mod>
   <ew_hide>30</ew_hide>
   <nebu_absorb_shield>80</nebu_absorb_shield>
   <nebu_absorb_armour>97</nebu_absorb_armour>
