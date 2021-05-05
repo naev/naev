@@ -39,6 +39,7 @@
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-24 Medium Plating</structure>
   <structure size="large" />
   <structure size="large" />
+  <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />
  </slots>
