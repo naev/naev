@@ -182,6 +182,7 @@ void map_open (void)
 {
    unsigned int wid;
    StarSystem *cur;
+   int i, j;
    int w, h, x, y, rw;
    /* Not displaying commodities */
    cur_commod = -1;
@@ -199,6 +200,38 @@ void map_open (void)
       if (window_isTop(wid))
          window_destroy( wid );
       return;
+   }
+
+   /* Mark systems as discovered as necessary. */
+   for (i=0; i<array_size(systems_stack); i++) {
+      StarSystem *sys = &systems_stack[i];
+      sys_rmFlag( sys, SYSTEM_DISCOVERED );
+
+      int known = 1;
+      for (j=0; j<array_size(sys->jumps); j++) {
+         JumpPoint *jp = &sys->jumps[j];
+         if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
+            continue;
+         if (!jp_isFlag(jp, JP_KNOWN)) {
+            known = 0;
+            break;
+         }
+      }
+      if (known) {
+         /* Check planets. */
+         for (j=0; j<array_size(sys->planets); j++) {
+            Planet *p = sys->planets[j];
+            if (p->real != ASSET_REAL)
+               continue;
+            if (!planet_isKnown(p)) {
+               known = 0;
+               break;
+            }
+         }
+      }
+
+      if (known)
+         sys_setFlag( sys, SYSTEM_DISCOVERED );
    }
 
    /* set position to focus on current system */
@@ -823,7 +856,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER || map_bg_alpha>0.)
       map_renderDecorators( x, y, 0 );
 
-   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER || map_bg_alpha>0.) {
+   if (map_mode == MAPMODE_TRAVEL || map_bg_alpha>0.) {
       /* Render faction disks. */
       map_renderFactionDisks( x, y, 0 );
       /* Render enviromental features. */
@@ -848,7 +881,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    map_renderNames( bx, by, x, y, w, h, 0 );
 
    /* Render system markers. */
-   if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_DISCOVER)
+   if (map_mode == MAPMODE_TRAVEL)
      map_renderMarkers( x, y, r, col.a );
 
    /* Render commodity info. */
@@ -1137,7 +1170,7 @@ void map_renderJumps( double x, double y, int editor)
 void map_renderSystems( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
 {
-   int i, j, known;
+   int i;
    const glColour *col;
    StarSystem *sys;
    double tx, ty;
@@ -1158,7 +1191,8 @@ void map_renderSystems( double bx, double by, double x, double y,
          continue;
 
       /* Draw an outer ring. */
-      gl_drawCircle( tx, ty, r, &cInert, 0 );
+      if (map_mode == MAPMODE_TRAVEL)
+         gl_drawCircle( tx, ty, r, &cInert, 0 );
 
       /* Ignore not known systems when not in the editor. */
       if (!editor && !sys_isKnown(sys))
@@ -1181,34 +1215,13 @@ void map_renderSystems( double bx, double by, double x, double y,
             gl_drawCircle( tx, ty, 0.65 * r, col, 1 );
       }
       else if (map_mode == MAPMODE_DISCOVER) {
-         known = 1;
 
-         /* TODO optimize this by caching the result when opening the map. */
-         /* Check jumps. */
-         for (j=0; j<array_size(sys->jumps); j++) {
-            JumpPoint *jp = &sys->jumps[j];
-            if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
-               continue;
-            if (!jp_isFlag(jp, JP_KNOWN)) {
-               known = 0;
-               break;
-            }
-         }
-         if (!known)
+         if (!sys_isFlag( sys, SYSTEM_DISCOVERED )) {
+            gl_drawCircle( tx, ty, r, &cInert, 0 );
             continue;
-         /* Check planets. */
-         for (j=0; j<array_size(sys->planets); j++) {
-            Planet *p = sys->planets[j];
-            if (p->real != ASSET_REAL)
-               continue;
-            if (!planet_isKnown(p)) {
-               known = 0;
-               break;
-            }
          }
-         if (!known)
-            continue;
 
+         gl_drawCircle( tx, ty, r, &cInert, 0 );
          gl_drawCircle( tx, ty, 0.65 * r, &cGreen, 1 );
       }
    }
