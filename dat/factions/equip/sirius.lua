@@ -2,100 +2,105 @@ require("factions/equip/generic")
 
 
 equip_typeOutfits_coreSystems["Fidelity"] = {
-   "Milspec Prometheus 2203 Core System"
+   "Milspec Prometheus 2203 Core System",
 }
 equip_typeOutfits_coreSystems["Shaman"] = {
-   "Milspec Prometheus 3603 Core System"
+   "Milspec Prometheus 3603 Core System",
 }
 equip_typeOutfits_coreSystems["Preacher"] = {
-   "Milspec Orion 4801 Core System"
+   "Milspec Orion 4801 Core System",
 }
 equip_typeOutfits_coreSystems["Dogma"] = {
-   "Milspec Orion 9901 Core System"
+   "Milspec Orion 9901 Core System",
 }
-equip_typeOutfits_coreSystems["Divinity"] = equip_typeOutfits_coreSystems["Dogma"]
+equip_typeOutfits_coreSystems["Divinity"] = {
+   "Milspec Orion 9901 Core System",
+}
 
 equip_typeOutfits_engines["Fidelity"] = {
-   "Tricon Zephyr Engine"
+   "Tricon Zephyr Engine",
 }
 equip_typeOutfits_engines["Shaman"] = {
-   "Tricon Zephyr II Engine"
+   "Tricon Zephyr II Engine",
 }
 equip_typeOutfits_engines["Preacher"] = {
-   "Tricon Cyclone Engine"
+   "Tricon Cyclone Engine",
 }
 equip_typeOutfits_engines["Dogma"] = {
-   "Tricon Typhoon II Engine", "Unicorp Eagle 6500 Engine"
+   "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
 }
 equip_typeOutfits_engines["Divinity"] = {
-   "Melendez Mammoth XL Engine"
+   "Melendez Mammoth XL Engine",
 }
 
 equip_typeOutfits_hulls["Fidelity"] = {
-   "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
+   "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating",
 }
 equip_typeOutfits_hulls["Shaman"] = {
-   "S&K Light Combat Plating"
+   "S&K Light Stealth Plating", "S&K Light Combat Plating",
 }
 equip_typeOutfits_hulls["Preacher"] = {
-   "S&K Medium Combat Plating"
+   "S&K Medium Combat Plating",
 }
 equip_typeOutfits_hulls["Dogma"] = {
-   "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating"
+   "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating",
 }
 equip_typeOutfits_hulls["Divinity"] = {
-   "S&K Superheavy Combat Plating"
+   "S&K Superheavy Combat Plating",
 }
 
 equip_typeOutfits_weapons["Fidelity"] = equip_shipOutfits_weapons["Sirius Fidelity"]
 equip_typeOutfits_weapons["Shaman"] = {
    {
-      num = 1;
-      "Heavy Ion Cannon", "Unicorp Medusa Launcher", "TeraCom Medusa Launcher",
-      "Enygma Systems Spearhead Launcher", "Unicorp Headhunter Launcher"
+      varied = true;
+      "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
+      "Unicorp Headhunter Launcher",
    },
    {
-      num = 1;
-      "Razor MK2", "Ion Cannon"
+      "Razor MK2", "Ion Cannon",
    },
-   {
-      "Razor MK2", "Ion Cannon"
-   }
 }
 equip_typeOutfits_weapons["Preacher"] = {
    {
-      num = 2;
-      "Heavy Ion Cannon", "Slicer",
-   },
-   {
-      num = 2, varied = true;
-      "Heavy Ion Cannon", "Unicorp Medusa Launcher", "TeraCom Medusa Launcher",
-      "Enygma Systems Spearhead Launcher", "Unicorp Headhunter Launcher"
-   },
-   {
       varied = true;
-      "Heavy Ion Cannon", "Slicer", "Razor Turret MK2",
-      "Laser Turret MK1", "Laser Turret MK2",
-   }
+      "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
+      "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
+      "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
+      "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+      "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
+      "TeraCom Imperator Launcher",
+   },
+   {
+      probability = {
+         ["Slicer"] = 8,
+      };
+      "Slicer", "Razor MK2",
+   },
 }
 equip_typeOutfits_weapons["Dogma"] = {
    {
-      varied = true;
-      "Heavy Razor Turret", "Heavy Ion Cannon", "Razor Turret MK2",
-   }
+      num = 1;
+      "Enygma Systems Turreted Fury Launcher",
+      "Enygma Systems Turreted Headhunter Launcher",
+   },
+   {
+      "Heavy Razor Turret",
+   },
+   {
+      "Heavy Ion Turret", "Grave Beam",
+   },
 }
 equip_typeOutfits_weapons["Divinity"] = {
    {
-      num = 1;
-      "Fidelity Fighter Bay"
-   },
-   {
       num = 2;
-      "Heavy Razor Turret"
+      "Heavy Razor Turret", "Ragnarok Beam",
    },
    {
       "Fidelity Fighter Bay"
-   }
+   },
+   {
+      "Heavy Ion Turret", "Grave Beam",
+   },
 }
 
 

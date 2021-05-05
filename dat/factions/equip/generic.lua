@@ -233,7 +233,6 @@ equip_classOutfits_weapons = {
    },
    ["Fighter"] = {
       {
-         num = 1;
          "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
          "Unicorp Medusa Launcher",
       },
@@ -254,6 +253,7 @@ equip_classOutfits_weapons = {
       },
       {
          "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Ion Cannon",
       },
    },
    ["Corvette"] = {
@@ -1060,12 +1060,8 @@ equip_typeOutfits_structurals = {
 
 -- Table of available core systems by ship.
 equip_shipOutfits_coreSystems = {
-   ["Empire Lancelot"] = {
-      "Milspec Orion 3701 Core System",
-   },
-   ["Sirius Fidelity"] = {
-      "Milspec Aegis 2201 Core System", "Milspec Prometheus 2203 Core System",
-   },
+   ["Empire Lancelot"] = { "Milspec Orion 3701 Core System" },
+   ["Sirius Fidelity"] = { "Milspec Prometheus 2203 Core System" },
    ["Za'lek Scout Drone"] = { "Milspec Aegis 2201 Core System" },
    ["Za'lek Light Drone"] = { "Milspec Orion 2301 Core System" },
    ["Za'lek Heavy Drone"] = {  "Milspec Orion 3701 Core System" },
