@@ -37,6 +37,7 @@ typedef struct PPShader_s {
    GLint u_time; /**< Special uniform. */
    /* Fragment Shader. */
    GLint MainTex;
+   GLint love_ScreenSize;
    /* Vertex shader. */
    GLint VertexPosition;
    GLint VertexTexCoord;
@@ -57,6 +58,11 @@ static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
    glUseProgram( shader->program );
+
+   /* Screen size. */
+   if (shader->love_ScreenSize >= 0)
+      /* TODO don't have to upload this every frame, only when resized... */
+      glUniform4f( shader->love_ScreenSize, SCREEN_W, SCREEN_H, 1., 0. );
 
    /* Time stuff. */
    if (shader->u_time >= 0) {
@@ -258,6 +264,7 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority
       pp->tex = NULL;
    /* Special uniforms. */
    pp->u_time = glGetUniformLocation( pp->program, "u_time" );
+   pp->love_ScreenSize = glGetUniformLocation( pp->program, "love_ScreenSize" );
    pp->dt = 0.;
 
    /* Resort n case stuff is weird. */
