@@ -19,8 +19,8 @@
   <speed>850</speed>
   <resist>50</resist>
   <damage>
-   <type>shieldbreaker</type>
-   <penetrate>5</penetrate>
+   <type>ion</type>
+   <penetrate>12</penetrate>
    <physical>75</physical>
    <disable>5</disable>
   </damage>
