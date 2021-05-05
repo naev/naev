@@ -174,7 +174,7 @@ SHADERS = [
       vs_path = "postprocess.vert",
       fs_path = "damage.frag",
       attributes = ["VertexPosition"],
-      uniforms = ["ClipSpaceFromLocal", "MainTex", "damage_strength"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "damage_strength", "love_ScreenSize"],
       subroutines = {},
    ),
 ]
