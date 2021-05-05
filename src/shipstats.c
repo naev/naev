@@ -121,6 +121,10 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,          gettext_noop("Energy Usage (Turret)") ),
    D__ELEM( SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, tur_dam_as_dis,gettext_noop("Damage as Disable (Turret)") ),
 
+   D__ELEM( SS_TYPE_D_BEAM_DAMAGE,        bm_damage,           gettext_noop("Damage (Beam)") ),
+   DI_ELEM( SS_TYPE_D_BEAM_ENERGY,        bm_energy,           gettext_noop("Energy Usage (Beam)") ),
+   D__ELEM( SS_TYPE_D_BEAM_DAMAGE_AS_DISABLE, bm_dam_as_dis,   gettext_noop("Damage as Disable (Beam)") ),
+
    D__ELEM( SS_TYPE_D_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   gettext_noop("Nebula Resistance (Shield)") ),
    D__ELEM( SS_TYPE_D_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   gettext_noop("Nebula Resistance (Armour)") ),
 
