@@ -47,7 +47,7 @@
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
 
-#define DAMAGE_DECAY    0.5 /**< Rate at which the damage strength goes down. */
+#define DAMAGE_DECAY    0.3 /**< Rate at which the damage strength goes down. */
 
 
 /* Trail stuff. */
