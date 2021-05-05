@@ -418,7 +418,8 @@ equip_classOutfits_utilities = {
    ["Destroyer"] = {
       {
          varied = true;
-         "Reactor Class II", "Medium Shield Booster", "Droid Repair Crew",
+         "Reactor Class III", "Large Shield Booster", "Reactor Class II",
+         "Medium Shield Booster", "Droid Repair Crew",
          "Forward Shock Absorbers", "Power Regulation Override",
          "Targeting Array", "Improved Power Regulator", "Weapons Ionizer",
          "Solar Panel", "Hellburner", "Emergency Shield Booster",
@@ -528,6 +529,11 @@ equip_classOutfits_structurals = {
       },
    },
    ["Destroyer"] = {
+      {
+         varied = true;
+         "Large Fuel Pod", "Battery III", "Shield Capacitor IV",
+         "Shield Capacitor III", "Nanobond Plating",
+      },
       {
          varied = true;
          "Medium Fuel Pod", "Battery II", "Shield Capacitor II",

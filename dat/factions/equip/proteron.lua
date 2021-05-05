@@ -10,6 +10,9 @@ equip_typeOutfits_coreSystems["Kahan"] = {
 equip_typeOutfits_coreSystems["Archimedes"] = {
    "Milspec Orion 9901 Core System"
 }
+equip_typeOutfits_coreSystems["Watson"] = {
+   "Milspec Orion 9901 Core System"
+}
 
 equip_typeOutfits_engines["Derivative"] = {
    "Tricon Zephyr Engine",
@@ -20,35 +23,36 @@ equip_typeOutfits_engines["Kahan"] = {
 equip_typeOutfits_engines["Archimedes"] = {
    "Tricon Typhoon II Engine",
 }
+equip_typeOutfits_engines["Watson"] = {
+   "Melendez Mammoth XL Engine",
+}
 
 equip_typeOutfits_hulls["Derivative"] = {
-   "S&K Ultralight Combat Plating",
+   "S&K Ultralight Stealth Plating",
 }
 equip_typeOutfits_hulls["Kahan"] = {
-   "S&K Medium-Heavy Combat Plating",
+   "S&K Medium-Heavy Stealth Plating",
 }
 equip_typeOutfits_hulls["Archimedes"] = {
-   "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating",
+   "S&K Superheavy Combat Plating",
+}
+equip_typeOutfits_hulls["Watson"] = {
+   "S&K Superheavy Combat Plating",
 }
 
 equip_typeOutfits_weapons["Derivative"] = {
    {
       num = 1;
-      "Unicorp Banshee Launcher", "Laser Cannon MK1",
+      "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
    },
    {
-      "Laser Cannon MK1",
+      "Laser Cannon MK1", "Plasma Blaster MK1",
    }
 }
 equip_typeOutfits_weapons["Kahan"] = {
    {
-      num = 1;
-      "Turbolaser", "Railgun Turret", "Heavy Laser Turret",
-   },
-   {
-      num = 1;
-      "Ragnarok Beam", "Grave Beam", "Turbolaser", "Railgun Turret",
-      "Heavy Laser Turret", "TeraCom Imperator Launcher",
+      num = 2;
+      "Railgun", "Heavy Razor Turret", "Grave Beam",
    },
    {
       "Enygma Systems Turreted Fury Launcher",
@@ -56,22 +60,30 @@ equip_typeOutfits_weapons["Kahan"] = {
    }
 }
 equip_typeOutfits_weapons["Archimedes"] = {
+   
    {
       num = 1;
-      "Heavy Laser Turret", "Heavy Ripper Turret",
-   },
-   {
-      num = 2;
-      "Turbolaser", "Railgun Turret", "Heavy Laser Turret",
-   },
-   {
-      num = 2;
-      "Ragnarok Beam", "Grave Beam", "Turbolaser", "Railgun Turret",
-   },
-   {
       "Enygma Systems Turreted Fury Launcher",
       "Enygma Systems Turreted Headhunter Launcher",
-   }
+   },
+   {
+      "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
+   },
+   {
+      "Heavy Razor Turret", "Grave Beam",
+   },
+}
+equip_typeOutfits_weapons["Watson"] = {
+   {
+      num = 2;
+      "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
+   },
+   {
+      "Lancelot Fighter Bay",
+   },
+   {
+      "Heavy Razor Turret", "Grave Beam",
+   },
 }
 
 
