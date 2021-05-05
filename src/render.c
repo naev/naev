@@ -112,25 +112,35 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
    int i, cur, next;
    cur = *current;
 
+   /* Render all except the last post-process shader. */
    for (i=0; i<array_size(list)-1; i++) {
       pp = &list[i];
       next = 1-cur;
       render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pp );
       cur = next;
    }
+
    /* Final render is to the screen. */
    pp = &list[i];
    if (done) {
       gl_screen.current_fbo = 0;
+      /* Have to consider that alpha is premultiplied. */
       glBlendFuncSeparate( GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO );
    }
    else
       gl_screen.current_fbo = gl_screen.fbo[cur];
+
+   /* Draw the last shader. */
    render_fbo( dt, gl_screen.current_fbo, gl_screen.fbo_tex[cur], pp );
+
+   /* Set the framebuffer again. */
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+
+   /* Restore the normal mode. */
    if (done)
       glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO );
 
+   /* Set the new current framebuffer. */
    *current = cur;
 }
 
