@@ -318,7 +318,7 @@ equip_classOutfits_weapons = {
          "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
       },
       {
-         "Lancelot Fighter Bay"
+         "Lancelot Fighter Bay",
       },
       {
          "Heavy Ripper Turret", "Grave Beam",

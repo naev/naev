@@ -6,7 +6,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
- <price>8000000</price>
+ <price>15000000</price>
  <time_mod>1.75</time_mod>
  <trail_generator x="-40" y="8" h="0">zalek</trail_generator>
  <trail_generator x="-40" y="-8" h="0">zalek</trail_generator>
