@@ -2064,13 +2064,13 @@ void sysedit_renderMap( double bx, double by, double w, double h, double x, doub
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   map_renderDecorators( x, y, 1 );
+   map_renderDecorators( x, y, 1, 1. );
 
    /* Render faction disks. */
-   map_renderFactionDisks( x, y, 1 );
+   map_renderFactionDisks( x, y, 1, 1. );
 
    /* Render enviroment stuff. */
-   map_renderSystemEnviroment( x, y, 1 );
+   map_renderSystemEnviroment( x, y, 1, 1. );
 
    /* Render jump paths. */
    map_renderJumps( x, y, 1 );
@@ -2079,6 +2079,6 @@ void sysedit_renderMap( double bx, double by, double w, double h, double x, doub
    map_renderSystems( bx, by, x, y, w, h, r, 1 );
 
    /* Render system names. */
-   map_renderNames( bx, by, x, y, w, h, 1 );
+   map_renderNames( bx, by, x, y, w, h, 1, 1. );
 }
 
