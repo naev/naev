@@ -1487,7 +1487,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
-   temp->u.lau.arc *= M_PI/180.;
+   temp->u.lau.arc *= (M_PI/180.) / 2.; /* Note we convert from arc to semi-arc. */
    temp->u.lau.ew_target2 = pow2( temp->u.lau.ew_target );
 
    /* Set default outfit size if necessary. */
