@@ -55,6 +55,9 @@ static PPShader *pp_shaders_list[PP_LAYER_MAX] = {NULL, NULL}; /**< Post-process
  */
 static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
 {
+   /* Have to consider alpha premultiply. */
+   glBlendFuncSeparate( GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO );
+
    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
    glUseProgram( shader->program );
@@ -100,6 +103,9 @@ static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
    if (shader->VertexTexCoord >= 0)
       glDisableVertexAttribArray( shader->VertexTexCoord );
    glUseProgram( 0 );
+
+   /* Restore the normal mode. */
+   glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO );
 }
 
 
@@ -116,6 +122,7 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
    for (i=0; i<array_size(list)-1; i++) {
       pp = &list[i];
       next = 1-cur;
+      /* Render cur to next. */
       render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pp );
       cur = next;
    }
@@ -124,21 +131,21 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
    pp = &list[i];
    if (done) {
       gl_screen.current_fbo = 0;
-      /* Have to consider that alpha is premultiplied. */
-      glBlendFuncSeparate( GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO );
+      /* Do the render. */
+      render_fbo( dt, gl_screen.current_fbo, gl_screen.fbo_tex[cur], pp );
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+      return;
+
    }
-   else
-      gl_screen.current_fbo = gl_screen.fbo[cur];
 
    /* Draw the last shader. */
-   render_fbo( dt, gl_screen.current_fbo, gl_screen.fbo_tex[cur], pp );
+   next = 1-cur;
+   render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pp );
+   cur = next;
 
    /* Set the framebuffer again. */
+   gl_screen.current_fbo = gl_screen.fbo[cur];
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-
-   /* Restore the normal mode. */
-   if (done)
-      glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO );
 
    /* Set the new current framebuffer. */
    *current = cur;
@@ -173,13 +180,23 @@ void render_all( double game_dt, double real_dt )
    pp_game  = (array_size(pp_shaders_list[PP_LAYER_GAME]) > 0);
    pp_final = (array_size(pp_shaders_list[PP_LAYER_FINAL]) > 0);
 
+   /* Case we have a post-processing shader we use the framebuffers. */
    if (pp_game || pp_final) {
+      /* Clear main screen. */
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+      /* Clear back buffer. */
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.fbo[1]);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+      /* Set to front buffer. */
       gl_screen.current_fbo = gl_screen.fbo[cur];
    }
    else
       gl_screen.current_fbo = 0;
+
+   /* Bind and clear new drawing area. */
    glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
