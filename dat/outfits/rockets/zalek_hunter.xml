@@ -19,10 +19,10 @@
   <speed>550</speed>
   <resist>35</resist>
   <damage>
-   <type>ion</type>
-   <penetrate>20</penetrate>
+   <type>impact</type>
+   <penetrate>36</penetrate>
    <physical>200</physical>
-   <disable>11</disable>
+   <disable>1</disable>
   </damage>
   <ai>smart</ai>
  </specific>
