@@ -21,8 +21,9 @@
 #define SPFX_DAMAGE_MOD    1.5 /**< How damage spfx gets modified (base is armour_dmg / total_armour */
 #define SPFX_DAMAGE_MAX    1.0 /**< Maximum value of the damage strength. */
 
-#define SHAKE_DECAY        0.3 /**< Rumble decay parameter */
-#define SHAKE_MAX          1.0 /**< Rumblemax parameter */
+#define SPFX_SHAKE_DECAY   0.3 /**< Rumble decay parameter */
+#define SPFX_SHAKE_MOD     1.0 /**< Rumblemax parameter */
+#define SPFX_SHAKE_MAX     1.0 /**< Rumblemax parameter */
 
 
 /**

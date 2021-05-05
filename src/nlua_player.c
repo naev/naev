@@ -636,8 +636,8 @@ static int playerL_cinematics( lua_State *L )
 static int playerL_damageSPFX( lua_State *L )
 {
    double spfx_mod = luaL_checknumber(L,1);
-   spfx_shake( SHAKE_MAX*spfx_mod );
-   spfx_damage( SPFX_DAMAGE_MOD*spfx_mod );
+   spfx_shake( spfx_mod );
+   spfx_damage( spfx_mod );
    return 0;
 }
 
