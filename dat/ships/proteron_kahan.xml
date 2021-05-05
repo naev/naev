@@ -46,6 +46,6 @@
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
   <heat_dissipation>15</heat_dissipation>
-  <engine_limit_rel>10</engine_limit_rel>
+  <engine_limit_rel>20</engine_limit_rel>
  </stats>
 </ship>
