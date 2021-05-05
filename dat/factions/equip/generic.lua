@@ -118,14 +118,13 @@ equip_classOutfits_engines = {
 -- Table of available hulls by class.
 equip_classOutfits_hulls = {
    ["Yacht"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating"
+      "Unicorp D-2 Light Plating",
    },
    ["Luxury Yacht"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating"
+      "Unicorp D-2 Light Plating",
    },
    ["Scout"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
-      "S&K Ultralight Stealth Plating"
+      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating"
    },
    ["Courier"] = {
       "Unicorp D-4 Light Plating", "S&K Small Cargo Hull"
@@ -137,27 +136,26 @@ equip_classOutfits_hulls = {
       "S&K Medium Cargo Hull"
    },
    ["Fighter"] = {
-      "Unicorp D-4 Light Plating", "Unicorp B-4 Light Plating",
-      "S&K Light Stealth Plating", "S&K Light Combat Plating"
+      "Unicorp D-4 Light Plating", "S&K Light Stealth Plating",
+      "S&K Light Combat Plating"
    },
    ["Bomber"] = {
-      "Unicorp D-4 Light Plating", "Unicorp B-4 Light Plating",
-      "S&K Light Stealth Plating", "S&K Light Combat Plating"
+      "Unicorp D-4 Light Plating", "S&K Light Stealth Plating",
+      "S&K Light Combat Plating"
    },
    ["Corvette"] = {
-      "Unicorp D-12 Medium Plating", "Unicorp B-12 Medium Plating",
-      "S&K Medium Stealth Plating", "S&K Medium Combat Plating"
+      "Unicorp D-12 Medium Plating", "S&K Medium Stealth Plating",
+      "S&K Medium Combat Plating"
    },
    ["Destroyer"] = {
-      "Unicorp D-24 Medium Plating", "Unicorp B-24 Medium Plating",
-      "S&K Medium-Heavy Stealth Plating", "S&K Medium-Heavy Combat Plating"
+      "Unicorp D-24 Medium Plating", "S&K Medium-Heavy Stealth Plating",
+      "S&K Medium-Heavy Combat Plating"
    },
    ["Cruiser"] = {
-      "Unicorp D-72 Heavy Plating", "Unicorp B-72 Heavy Plating",
-      "S&K Superheavy Combat Plating"
+      "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating"
    },
    ["Carrier"] = {
-      "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating"
+      "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating"
    },
    ["Drone"] = {
       "S&K Ultralight Stealth Plating"
@@ -237,29 +235,29 @@ equip_classOutfits_weapons = {
    },
    ["Bomber"] = {
       {
-         num = 3, varied = true;
+         num = 2, varied = true;
          "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
          "Unicorp Headhunter Launcher",
       },
       {
-         num = 1;
          "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
-      },
-      {
-         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
-         "Unicorp Mace Launcher", "Unicorp Banshee Launcher",
       },
    },
    ["Corvette"] = {
       {
-         num = 3, varued = true;
+         num = 3, varied = true;
          "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
          "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
          "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
          "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
       },
       {
+         probability = {
+            ["Ripper Cannon"] = 8, ["Slicer"] = 8, ["Shredder"] = 8,
+            ["Plasma Cannon"] = 8,
+         };
          "Ripper Cannon", "Slicer", "Shredder", "Plasma Cannon",
+         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
       },
    },
    ["Destroyer"] = {
@@ -272,11 +270,18 @@ equip_classOutfits_weapons = {
          "Enygma Systems Turreted Headhunter Launcher",
       },
       {
+         num = 1;
          "Heavy Ripper Cannon", "Mass Driver", "Plasma Cluster Cannon",
          "Grave Lance", "Heavy Ion Cannon", "Laser Turret MK2",
          "Razor Turret MK2", "Turreted Vulcan Gun", "Plasma Turret MK2",
          "Orion Beam", "Enygma Systems Turreted Fury Launcher",
          "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         "Heavy Ripper Cannon", "Mass Driver", "Plasma Cluster Cannon",
+         "Grave Lance", "Heavy Ion Cannon", "Laser Turret MK2",
+         "Razor Turret MK2", "Turreted Vulcan Gun", "Plasma Turret MK2",
+         "Orion Beam",
       },
    },
    ["Cruiser"] = {
@@ -572,6 +577,7 @@ equip_typeOutfits_coreSystems = {
    },
    ["Vendetta"] = {
       "Unicorp PT-80 Core System", "Milspec Hermes 3602 Core System",
+      "Milspec Orion 3701 Core System",
    },
    ["Kestrel"] = {
       "Unicorp PT-750 Core System", "Milspec Orion 8601 Core System",
@@ -941,15 +947,18 @@ equip_typeOutfits_weapons = {
       {
          num = 2;
          "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
          "Unicorp Mace Launcher", "TeraCom Mace Launcher", "Ion Cannon",
       },
       {
          num = 2;
          "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
          "Unicorp Mace Launcher", "TeraCom Mace Launcher", "Ion Cannon",
       },
       {
          "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
          "Unicorp Mace Launcher", "TeraCom Mace Launcher", "Ion Cannon",
       },
    },
