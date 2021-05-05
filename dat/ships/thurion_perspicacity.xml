@@ -13,7 +13,6 @@
  <license>Light Combat Vessel License</license>
  <description>The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms.</description>
  <health>
-  <absorb>6</absorb>
   <armour>50</armour>
   <armour_regen>0</armour_regen>
  </health>

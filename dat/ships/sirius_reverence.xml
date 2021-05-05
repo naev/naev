@@ -19,7 +19,6 @@
   <speed>100</speed>
  </movement>
  <health>
-  <absorb>50</absorb>
   <armour>150</armour>
   <armour_regen>0</armour_regen>
  </health>

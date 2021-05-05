@@ -14,7 +14,6 @@
  <license>Heavy Combat Vessel License</license>
  <description>The heart of the Proteron battle fleet is formed by the Watsons. Acting as a mobile launch base as well as a command and control unit, this vessel coordinates the others in the fight for dominance over the galaxy.</description>
  <health>
-  <absorb>24</absorb>
   <armour>1200</armour>
   <armour_regen>0</armour_regen>
  </health>

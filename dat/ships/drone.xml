@@ -12,7 +12,6 @@
  <fabricator>Robosys</fabricator>
  <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
  <health>
-  <absorb>5</absorb>
   <armour>40</armour>
   <armour_regen>7</armour_regen>
  </health>

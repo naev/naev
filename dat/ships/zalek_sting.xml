@@ -14,7 +14,6 @@
  <license>Medium Combat Vessel License</license>
  <description>The Sting Corvette is rather large for its size, but its advanced sensor suite, impressive weapons loadout, and tough shields makes it a good backbone to the fleet of House Za'lek.</description>
  <health>
-  <absorb>14</absorb>
   <armour>230</armour>
   <armour_regen>0</armour_regen>
  </health>

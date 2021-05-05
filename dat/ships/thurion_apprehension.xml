@@ -15,7 +15,6 @@
  <license>Medium Combat Vessel License</license>
  <description>...</description>
  <health>
-  <absorb>22</absorb>
   <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>

@@ -15,7 +15,6 @@
  <description>This is an experimental type of cruiser developed by Za'lek engineers. Little is known about it outside of the development team, but it is rumoured to have powerful upgrades and enhancements over much of the competition.</description>
  <mission />
  <health>
-  <absorb>40</absorb>
   <armour>1300</armour>
   <armour_regen>3.4</armour_regen>
  </health>

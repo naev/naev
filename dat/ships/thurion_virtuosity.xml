@@ -14,7 +14,6 @@
  <license>Medium Combat Vessel License</license>
  <description>The Thurion Virtuosity is a medium-size ship used by the Thurion for frontal assaults. While weapon space is less than stellar, the vessel's superior electronics and resistance to the harsh nebula more than make up for it.</description>
  <health>
-  <absorb>16</absorb>
   <armour>300</armour>
   <armour_regen>0</armour_regen>
  </health>

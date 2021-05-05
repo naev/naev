@@ -12,7 +12,6 @@
  <fabricator>Robosys</fabricator>
  <description>This Collective heavy drone has been modified by engineers to support a human pilot.</description>
  <health>
-  <absorb>8</absorb>
   <armour>60</armour>
   <armour_regen>11</armour_regen>
  </health>
