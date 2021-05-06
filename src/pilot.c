@@ -2643,6 +2643,7 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    pilot->aimLines = 0;
    pilot->dockpilot = dockpilot;
    pilot->dockslot = dockslot;
+   ss_statsInit( &pilot->intrinsic_stats );
 
    /* Basic information. */
    pilot->ship = ship;

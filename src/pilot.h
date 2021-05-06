@@ -283,6 +283,7 @@ typedef struct Pilot_ {
    double heat_start; /**< Temperature at the start of a cooldown. */
 
    /* Ship statistics. */
+   ShipStats intrinsic_stats; /**< Intrinsic statistics to the ship create on the fly. */
    ShipStats stats;  /**< Pilot's copy of ship statistics. */
 
    /* Associated functions */

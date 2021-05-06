@@ -1022,6 +1022,9 @@ void pilot_calcStats( Pilot* pilot )
    if (!pilot_isFlag( pilot, PILOT_AFTERBURNER ))
       pilot->solid->speed_max = pilot->speed;
 
+   /* Merge stats. */
+   ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
+
    /* Slot voodoo. */
    s = &pilot->stats;
    default_s = &pilot->ship->stats_array;
