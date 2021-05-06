@@ -3177,6 +3177,7 @@ Planet* player_load( xmlNodePtr parent )
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
+   player.speed = 1.;
    pnt = NULL;
    map_cleanup();
 
