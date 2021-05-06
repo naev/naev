@@ -146,6 +146,23 @@ unsigned int escort_create( Pilot *p, char *ship,
    pe = pilot_get(e);
    pe->parent = parent;
 
+   /* Computer fighter bay bonuses. */
+   if (pilot_isFlagRaw( f, PILOT_CARRIED )) {
+      /* Damage. */
+      pe->intrinsic_stats.launch_damage *= p->stats.fbay_damage;
+      pe->intrinsic_stats.fwd_damage *= p->stats.fbay_damage;
+      pe->intrinsic_stats.tur_damage *= p->stats.fbay_damage;
+      /* Health. */
+      pe->intrinsic_stats.armour_mod *= p->stats.fbay_health;
+      pe->intrinsic_stats.shield_mod *= p->stats.fbay_health;
+      /* Movement. */
+      pe->intrinsic_stats.speed_mod  *= p->stats.fbay_movement;
+      pe->intrinsic_stats.turn_mod   *= p->stats.fbay_movement;
+      pe->intrinsic_stats.thrust_mod *= p->stats.fbay_movement;
+      /* Update stats. */
+      pilot_calcStats( pe );
+   }
+
    /* Add to escort list. */
    if (add != 0)
       escort_addList( p, ship, type, e, 1 );

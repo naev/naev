@@ -22,6 +22,7 @@
 #include "nstring.h"
 #include "nxml.h"
 #include "outfit.h"
+#include "pause.h"
 #include "pilot.h"
 #include "player.h"
 #include "slots.h"
@@ -1022,6 +1023,9 @@ void pilot_calcStats( Pilot* pilot )
    if (!pilot_isFlag( pilot, PILOT_AFTERBURNER ))
       pilot->solid->speed_max = pilot->speed;
 
+   /* Merge stats. */
+   ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
+
    /* Slot voodoo. */
    s = &pilot->stats;
    default_s = &pilot->ship->stats_array;
@@ -1117,6 +1121,10 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Update GUI as necessary. */
    gui_setGeneric( pilot );
+
+   /* In case the time_mod has changed. */
+   if (pilot_isPlayer(pilot))
+      player_resetSpeed();
 }
 
 

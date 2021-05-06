@@ -2069,8 +2069,8 @@ void sysedit_renderMap( double bx, double by, double w, double h, double x, doub
    /* Render faction disks. */
    map_renderFactionDisks( x, y, 1, 1. );
 
-   /* Render enviroment stuff. */
-   map_renderSystemEnviroment( x, y, 1, 1. );
+   /* Render environment stuff. */
+   map_renderSystemEnvironment( x, y, 1, 1. );
 
    /* Render jump paths. */
    map_renderJumps( x, y, 1 );

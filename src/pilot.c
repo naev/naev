@@ -1817,7 +1817,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  *    @param pilot Pilot to update.
  *    @param dt Current delta tick.
  */
-void pilot_update( Pilot* pilot, const double dt )
+void pilot_update( Pilot* pilot, double dt )
 {
    int i, cooling, nchg;
    int ammo_threshold;
@@ -1830,6 +1830,9 @@ void pilot_update( Pilot* pilot, const double dt )
    Damage dmg;
    double stress_falloff;
    double efficiency, thrust;
+
+   /* Modify the dt with speedup. */
+   dt *= pilot->stats.time_speedup;
 
    /* Check target validity. */
    if (pilot->target != pilot->id) {
@@ -2643,6 +2646,7 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    pilot->aimLines = 0;
    pilot->dockpilot = dockpilot;
    pilot->dockslot = dockslot;
+   ss_statsInit( &pilot->intrinsic_stats );
 
    /* Basic information. */
    pilot->ship = ship;

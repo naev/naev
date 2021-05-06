@@ -1646,7 +1646,7 @@ int player_getHypPreempt(void)
 double player_dt_default (void)
 {
    if (player.p != NULL && player.p->ship != NULL)
-      return player.p->ship->dt_default * player.dt_mod;
+      return player.p->stats.time_mod * player.p->ship->dt_default * player.dt_mod;
 
    return player.dt_mod;
 }
@@ -2302,8 +2302,8 @@ void player_destroyed (void)
    player_autonavEnd();
 
    /* Reset time compression when player dies. */
-   pause_setSpeed( 1. );
-   sound_setSpeed( 1. );
+   pause_setSpeed(1.);
+   sound_setSpeed(1.);
 }
 
 
@@ -3177,6 +3177,7 @@ Planet* player_load( xmlNodePtr parent )
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
+   player.speed = 1.;
    pnt = NULL;
    map_cleanup();
 

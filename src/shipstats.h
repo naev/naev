@@ -56,6 +56,11 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */
    SS_TYPE_D_LAUNCH_LOCKON,   /**< Lock-on speed of launchers. */
 
+   /* Fighter Bays. */
+   SS_TYPE_D_FBAY_DAMAGE,     /**< Fighter bay fighter damage bonus (all weapons). */
+   SS_TYPE_D_FBAY_HEALTH,     /**< Fighter bay fighter health bonus (shield and armour). */
+   SS_TYPE_D_FBAY_MOVEMENT,   /**< Fighter bay fighter movement bonus (turn, thrust, and speed). */
+
    /* Forward mounts. */
    SS_TYPE_D_FORWARD_HEAT,    /**< Heat generation for cannons. */
    SS_TYPE_D_FORWARD_DAMAGE,  /**< Damage done by cannons. */
@@ -81,7 +86,9 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_CREW,            /**< Ship crew. */
    SS_TYPE_D_MASS,            /**< Ship mass. */
    SS_TYPE_D_ENGINE_LIMIT_REL, /**< Modifier for the ship's engine limit. */
-   SS_TYPE_D_LOOT_MOD,        /* Affects boarding rewards. */
+   SS_TYPE_D_LOOT_MOD,        /**< Affects boarding rewards. */
+   SS_TYPE_D_TIME_MOD,        /**< Time dilation modifier. */
+   SS_TYPE_D_TIME_SPEEDUP,    /**< Makes the pilot operate at a higher dt. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -207,6 +214,11 @@ typedef struct ShipStats_ {
    double ammo_capacity;   /**< Capacity of launchers. */
    double launch_lockon;   /**< Lock on speed of launchers. */
 
+   /* Fighter bays. */
+   double fbay_damage;     /**< Fighter bay fighter damage (all weapons). */
+   double fbay_health;     /**< Fighter bay fighter health (armour and shield). */
+   double fbay_movement;   /**< Fighter bay fighter movement (thrust, turn, and speed). */
+
    /* Fighter/Corvette type. */
    double fwd_heat;        /**< Heat of forward mounts. */
    double fwd_damage;      /**< Damage of forward mounts. */
@@ -234,6 +246,8 @@ typedef struct ShipStats_ {
    int misc_asteroid_scan;   /**< Able to scan asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
    double loot_mod;           /**< Boarding loot reward bonus. */
+   double time_mod;           /**< Time dilation modifier. */
+   double time_speedup;       /**< Makes the pilot operate at higher speeds. */
 } ShipStats;
 
 
@@ -252,6 +266,7 @@ void ss_free( ShipStatList *ll );
  * Manipulation
  */
 int ss_statsInit( ShipStats *stats );
+int ss_statsMerge( ShipStats *dest, const ShipStats *src );
 int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipStats *amount );
 int ss_statsModFromList( ShipStats *stats, const ShipStatList* list, const ShipStats *amount );
 

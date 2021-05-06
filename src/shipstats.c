@@ -108,6 +108,10 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       gettext_noop("Ammo Capacity") ),
    D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       gettext_noop("Launch Lock-on") ),
 
+   D__ELEM( SS_TYPE_D_FBAY_DAMAGE,        fbay_damage,         gettext_noop("Fighter Damage") ),
+   D__ELEM( SS_TYPE_D_FBAY_HEALTH,        fbay_health,         gettext_noop("Fighter Health") ),
+   D__ELEM( SS_TYPE_D_FBAY_MOVEMENT,      fbay_movement,       gettext_noop("Fighter Movement") ),
+
    DI_ELEM( SS_TYPE_D_FORWARD_HEAT,       fwd_heat,            gettext_noop("Heat (Cannon)") ),
    D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,     fwd_damage,          gettext_noop("Damage (Cannon)") ),
    D__ELEM( SS_TYPE_D_FORWARD_FIRERATE,   fwd_firerate,        gettext_noop("Fire Rate (Cannon)") ),
@@ -129,7 +133,9 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_CREW,               crew_mod,            gettext_noop("Crew") ),
    DI_ELEM( SS_TYPE_D_MASS,               mass_mod,            gettext_noop("Ship Mass") ),
    D__ELEM( SS_TYPE_D_ENGINE_LIMIT_REL,   engine_limit_rel,    gettext_noop("Engine Mass Limit") ),
-   D__ELEM( SS_TYPE_D_LOOT_MOD,           loot_mod,            gettext_noop("Boarding bonus") ),
+   D__ELEM( SS_TYPE_D_LOOT_MOD,           loot_mod,            gettext_noop("Boarding Bonus") ),
+   D__ELEM( SS_TYPE_D_TIME_MOD,           time_mod,            gettext_noop("Time Constant") ),
+   D__ELEM( SS_TYPE_D_TIME_SPEEDUP,       time_speedup,        gettext_noop("Speed-Up") ),
 
    A__ELEM( SS_TYPE_A_ENERGY_FLAT,        energy_flat,         gettext_noop("Energy Capacity") ),
    AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        gettext_noop("Energy Usage") ),
@@ -263,6 +269,59 @@ int ss_statsInit( ShipStats *stats )
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
          case SS_DATA_TYPE_INTEGER:
          case SS_DATA_TYPE_BOOLEAN:
+            break;
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Merges two different ship stats.
+ *
+ *    @param dest Destination ship stats.
+ *    @param src Source to be merged with destination.
+ */
+int ss_statsMerge( ShipStats *dest, const ShipStats *src )
+{
+   int i;
+   int *destint;
+   const int *srcint;
+   double *destdbl;
+   const double *srcdbl;
+   char *destptr;
+   const char *srcptr;
+   const ShipStatsLookup *sl;
+
+   destptr = (char*) dest;
+   srcptr = (const char*) src;
+   for (i=0; i<SS_TYPE_SENTINEL; i++) {
+      sl = &ss_lookup[ i ];
+
+      switch (sl->data) {
+         case SS_DATA_TYPE_DOUBLE:
+            destdbl = (double*) &destptr[ sl->offset ];
+            srcdbl = (const double*) &srcptr[ sl->offset ];
+            *destdbl = (*destdbl) * (*srcdbl);
+            break;
+
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+            destdbl = (double*) &destptr[ sl->offset ];
+            srcdbl = (const double*) &srcptr[ sl->offset ];
+            *destdbl = (*destdbl) + (*srcdbl);
+            break;
+
+         case SS_DATA_TYPE_INTEGER:
+            destint = (int*) &destptr[ sl->offset ];
+            srcint = (const int*) &srcptr[ sl->offset ];
+            *destint = (*destint) + (*srcint);
+            break;
+
+         case SS_DATA_TYPE_BOOLEAN:
+            destint = (int*) &destptr[ sl->offset ];
+            srcint = (const int*) &srcptr[ sl->offset ];
+            *destint = !!((*destint) + (*srcint));
             break;
       }
    }
