@@ -22,6 +22,7 @@
 #include "nstring.h"
 #include "nxml.h"
 #include "outfit.h"
+#include "pause.h"
 #include "pilot.h"
 #include "player.h"
 #include "slots.h"
@@ -1120,6 +1121,10 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Update GUI as necessary. */
    gui_setGeneric( pilot );
+
+   /* In case the time_mod has changed. */
+   if (pilot_isPlayer(pilot))
+      player_resetSpeed();
 }
 
 
