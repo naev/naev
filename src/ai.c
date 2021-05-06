@@ -757,7 +757,8 @@ void ai_think( Pilot* pilot, const double dt )
     * over. Now, this is a horrible hack so shit works and needs a proper fix.
     * TODO fix. */
    /* pilot_setTarget( cur_pilot, cur_pilot->id ); */
-   pilot_weapSetAIClear( cur_pilot );
+   if (cur_pilot->id != PLAYER_ID)
+      pilot_weapSetAIClear( cur_pilot );
 
    /* Get current task. */
    t = ai_curTask( cur_pilot );
@@ -781,6 +782,10 @@ void ai_think( Pilot* pilot, const double dt )
       /* Task may have changed due to control tick. */
       t = ai_curTask( cur_pilot );
    }
+
+   if (pilot_isFlag(pilot,PILOT_PLAYER) &&
+       !pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL))
+      return;
 
    /* pilot has a currently running task */
    if (t != NULL) {
