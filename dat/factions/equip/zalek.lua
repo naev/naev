@@ -2,127 +2,129 @@ require "factions/equip/generic"
 
 
 equip_typeOutfits_coreSystems["Sting"] = {
-   "Milspec Orion 4801 Core System"
+   "Milspec Aegis 4701 Core System",
 }
 equip_typeOutfits_coreSystems["Demon"] = {
-   "Milspec Orion 5501 Core System"
+   "Milspec Prometheus 5403 Core System",
 }
 equip_typeOutfits_coreSystems["Mephisto"] = {
-   "Milspec Orion 9901 Core System"
+   "Milspec Prometheus 8503 Core System",
 }
 equip_typeOutfits_coreSystems["Diablo"] = {
-   "Milspec Orion 9901 Core System"
+   "Milspec Orion 9901 Core System",
 }
 equip_typeOutfits_coreSystems["Hephaestus"] = {
-   "Milspec Orion 9901 Core System"
+   "Milspec Hermes 9802 Core System",
+}
+equip_typeOutfits_coreSystems["Prototype"] = {
+   "Milspec Orion 9901 Core System",
 }
 
 equip_typeOutfits_engines["Sting"] = {
-   "Tricon Cyclone Engine"
+   "Tricon Cyclone Engine",
 }
 equip_typeOutfits_engines["Demon"] = {
-   "Tricon Cyclone II Engine"
+   "Tricon Cyclone II Engine",
 }
 equip_typeOutfits_engines["Mephisto"] = {
-   "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine"
+   "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
 }
 equip_typeOutfits_engines["Diablo"] = {
-   "Melendez Mammoth XL Engine"
+   "Tricon Typhoon II Engine",
 }
 equip_typeOutfits_engines["Hephaestus"] = {
-   "Melendez Mammoth XL Engine"
+   "Melendez Mammoth XL Engine",
+}
+equip_typeOutfits_engines["Prototype"] = {
+   "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
 }
 
 equip_typeOutfits_hulls["Sting"] = {
-   "S&K Medium Stealth Plating"
+   "S&K Medium Stealth Plating", "S&K Medium Combat Plating",
 }
 equip_typeOutfits_hulls["Demon"] = {
-   "S&K Medium Stealth Plating"
+   "S&K Medium-Heavy Stealth Plating", "S&K Medium-Heavy Combat Plating",
 }
 equip_typeOutfits_hulls["Mephisto"] = {
-   "Unicorp B-48 Heavy Plating"
+   "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating",
 }
 equip_typeOutfits_hulls["Diablo"] = {
-   "Unicorp B-72 Heavy Plating"
+   "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating",
 }
 equip_typeOutfits_hulls["Hephaestus"] = {
-   "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating"
+   "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating",
+}
+equip_typeOutfits_hulls["Prototype"] = {
+   "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating",
 }
 
 equip_typeOutfits_weapons["Sting"] = {
    {
-      num = 1;
-      "Grave Lance"
+      varied = true;
+      "Enygma Systems Spearhead Launcher", "TeraCom Fury Launcher",
+      "TeraCom Headhunter Launcher", "TeraCom Medusa Launcher",
+      "TeraCom Vengeance Launcher", "Za'lek Hunter Launcher",
+      "Za'lek Reaper Launcher",
    },
    {
-      num = 2;
-      "Orion Lance"
-   },
-   {
-      num = 1;
-      "Za'lek Hunter Launcher"
+      "Orion Lance",
    },
 }
 equip_typeOutfits_weapons["Demon"] = {
    {
-      num = 2;
-      "Grave Lance",
+      "Grave Beam",
    },
    {
       num = 1;
-      "Za'lek Hunter Launcher"
-   },
-   {
-      "Orion Beam",
-      "Za'lek Hunter Launcher"
-   }
-}
-equip_typeOutfits_weapons["Mephisto"] = {
-   {
-      num = 2, varied = true;
-      "Ragnarok Beam", "Grave Beam", "Orion Beam",
+      "Enygma Systems Turreted Fury Launcher",
+      "Enygma Systems Turreted Headhunter Launcher",
    },
    {
       num = 1;
-      "Za'lek Hunter Launcher", "Za'lek Reaper Launcher"
+      "Enygma Systems Turreted Fury Launcher",
+      "Enygma Systems Turreted Headhunter Launcher",
+      "Grave Lance", "Orion Beam",
    },
    {
-      varied = true;
-      "Ragnarok Beam", "Grave Beam", "Orion Beam",
-	  "Za'lek Hunter Launcher", "Za'lek Reaper Launcher"
-   }
+      "Grave Lance", "Orion Beam",
+   },
 }
 equip_typeOutfits_weapons["Diablo"] = {
    {
-      num = 2, varied = true;
-      "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
-      "Za'lek Bomber Drone Fighter Bay"
-   },
-   {
-      varied = true;
-      "Ragnarok Beam", "Grave Beam"
-   },
-   {
       varied = true;
       "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
-      "Za'lek Bomber Drone Fighter Bay"
-   }
+      "Za'lek Bomber Drone Fighter Bay",
+   },
+   {
+      "Ragnarok Beam",
+   },
+   {
+      "Grave Beam",
+   },
+}
+equip_typeOutfits_weapons["Mephisto"] = {
+   {
+      num = 1;
+      "Enygma Systems Turreted Fury Launcher",
+      "Enygma Systems Turreted Headhunter Launcher",
+      "Za'lek Hunter Launcher",
+   },
+   {
+      "Grave Beam",
+   },
 }
 equip_typeOutfits_weapons["Hephaestus"] = {
    {
-      num = 2, varied = true;
-      "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
-      "Za'lek Bomber Drone Fighter Bay"
-   },
-   {
-      varied = true;
-      "Ragnarok Beam", "Grave Beam"
-   },
-   {
       varied = true;
       "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
-      "Za'lek Bomber Drone Fighter Bay"
-   }
+      "Za'lek Bomber Drone Fighter Bay",
+   },
+   {
+      "Ragnarok Beam",
+   },
+   {
+      "Grave Beam",
+   },
 }
 
 equip_typeOutfits_utilities["Demon"] = {
@@ -137,23 +139,6 @@ equip_typeOutfits_utilities["Demon"] = {
    {
       varied = true;
       "Droid Repair Crew", "Milspec Scrambler", "Boarding Androids MK1"
-   }
-}
-
-equip_typeOutfits_structurals["Demon"] = {
-   {
-      "Shield Capacitor IV"
-   },
-   {
-      varied = true;
-      "Battery II", "Shield Capacitor II"
-   }
-}
-equip_typeOutfits_structurals["Diablo"] = {
-   {
-      varied = true;
-      "Large Fuel Pod", "Battery III", "Shield Capacitor IV",
-      "Shield Capacitor III"
    }
 }
 

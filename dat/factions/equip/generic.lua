@@ -314,6 +314,7 @@ equip_classOutfits_weapons = {
    },
    ["Carrier"] = {
       {
+         varied = true;
          "Lancelot Fighter Bay",
       },
       {

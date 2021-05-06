@@ -4,6 +4,7 @@ require "factions/equip/generic"
 equip_typeOutfits_coreSystems["Shark"] = {
    "Milspec Orion 2301 Core System",
 }
+equip_typeOutfits_coreSystems["Lancelot"] = equip_shipOutfits_coreSystems["Empire Lancelot"]
 equip_typeOutfits_coreSystems["Admonisher"] = {
    "Milspec Orion 4801 Core System",
 }
@@ -20,6 +21,7 @@ equip_typeOutfits_coreSystems["Peacemaker"] = {
 equip_typeOutfits_engines["Shark"] = {
    "Tricon Zephyr Engine",
 }
+equip_typeOutfits_engines["Lancelot"] = equip_shipOutfits_engines["Empire Lancelot"]
 equip_typeOutfits_engines["Admonisher"] = {
    "Tricon Cyclone Engine",
 }
@@ -36,6 +38,7 @@ equip_typeOutfits_engines["Peacemaker"] = {
 equip_typeOutfits_hulls["Shark"] = {
    "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating",
 }
+equip_typeOutfits_hulls["Lancelot"] = equip_shipOutfits_hulls["Empire Lancelot"]
 equip_typeOutfits_hulls["Admonisher"] = {
    "S&K Medium Stealth Plating", "S&K Medium Combat Plating",
 }
@@ -110,11 +113,12 @@ function equip( p )
          },
          {
             "Heavy Ripper Turret",
-         }
+         },
       }
    else
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
+            varied = true;
             "Empire Lancelot Fighter Bay",
          },
          {
@@ -122,7 +126,7 @@ function equip( p )
          },
          {
             "Heavy Ripper Turret",
-         }
+         },
       }
    end
    
