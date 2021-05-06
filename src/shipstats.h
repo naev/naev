@@ -88,6 +88,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_ENGINE_LIMIT_REL, /**< Modifier for the ship's engine limit. */
    SS_TYPE_D_LOOT_MOD,        /**< Affects boarding rewards. */
    SS_TYPE_D_TIME_MOD,        /**< Time dilation modifier. */
+   SS_TYPE_D_TIME_SPEEDUP,    /**< Makes the pilot operate at a higher dt. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -246,6 +247,7 @@ typedef struct ShipStats_ {
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
    double loot_mod;           /**< Boarding loot reward bonus. */
    double time_mod;           /**< Time dilation modifier. */
+   double time_speedup;       /**< Makes the pilot operate at higher speeds. */
 } ShipStats;
 
 

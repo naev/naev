@@ -469,7 +469,7 @@ void pilot_setTurn( Pilot *p, double turn );
 /*
  * update
  */
-void pilot_update( Pilot* pilot, const double dt );
+void pilot_update( Pilot* pilot, double dt );
 void pilots_update( double dt );
 void pilots_render( double dt );
 void pilots_renderOverlay( double dt );
