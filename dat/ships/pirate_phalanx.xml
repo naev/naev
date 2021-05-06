@@ -15,7 +15,6 @@
  <fabricator>Skull and Bones</fabricator>
  <description>Building upon the already-capable Phalanx chassis, the Skull and Bones engineers have substantially improved the ship's performance, while only minorly sacrificing protection.</description>
  <health>
-  <absorb>14</absorb>
   <armour>190</armour>
   <armour_regen>0</armour_regen>
  </health>

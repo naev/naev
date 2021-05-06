@@ -95,6 +95,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,             gettext_noop("CPU Capacity") ),
 
    DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,          gettext_noop("Jump Time") ),
+   DI_ELEM( SS_TYPE_D_LAND_DELAY,         land_delay,          gettext_noop("Landing Time") ),
    DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia,       gettext_noop("Cargo Inertia") ),
 
    D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             gettext_noop("Cloaking") ),
@@ -120,6 +121,10 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,          gettext_noop("Energy Usage (Turret)") ),
    D__ELEM( SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, tur_dam_as_dis,gettext_noop("Damage as Disable (Turret)") ),
 
+   D__ELEM( SS_TYPE_D_BEAM_DAMAGE,        bm_damage,           gettext_noop("Damage (Beam)") ),
+   DI_ELEM( SS_TYPE_D_BEAM_ENERGY,        bm_energy,           gettext_noop("Energy Usage (Beam)") ),
+   D__ELEM( SS_TYPE_D_BEAM_DAMAGE_AS_DISABLE, bm_dam_as_dis,   gettext_noop("Damage as Disable (Beam)") ),
+
    D__ELEM( SS_TYPE_D_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   gettext_noop("Nebula Resistance (Shield)") ),
    D__ELEM( SS_TYPE_D_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   gettext_noop("Nebula Resistance (Armour)") ),
 
@@ -128,6 +133,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_CREW,               crew_mod,            gettext_noop("Crew") ),
    DI_ELEM( SS_TYPE_D_MASS,               mass_mod,            gettext_noop("Ship Mass") ),
    D__ELEM( SS_TYPE_D_ENGINE_LIMIT_REL,   engine_limit_rel,    gettext_noop("Engine Mass Limit") ),
+   D__ELEM( SS_TYPE_D_LOOT_MOD,           loot_mod,            gettext_noop("Boarding bonus") ),
 
    A__ELEM( SS_TYPE_A_ENERGY_FLAT,        energy_flat,         gettext_noop("Energy Capacity") ),
    AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        gettext_noop("Energy Usage") ),

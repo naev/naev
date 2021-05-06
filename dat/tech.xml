@@ -38,16 +38,12 @@
   <item>Ragnarok Beam</item>
   <item>Grave Beam</item>
   <item>Orion Beam</item>
-  <item>Pulse Beam</item>
   <item>Grave Lance</item>
   <item>Particle Beam</item>
   <item>Particle Lance</item>
   <item>Orion Lance</item>
   <item>Neutron Disruptor</item>
   <item>Heavy Neutron Disruptor</item>
-  <item>Energy Dart</item>
-  <item>Energy Missile</item>
-  <item>Energy Torpedo</item>
   <item>Electron Burst Cannon</item>
   <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
@@ -57,7 +53,6 @@
   <item>Enygma Systems Turreted Headhunter Launcher</item>
   <item>Unicorp Vengeance Launcher</item>
   <item>TeraCom Vengeance Launcher</item>
-  <item>Enygma Systems Turreted Vengeance Launcher</item>
   <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
   <item>Unicorp Banshee Launcher</item>
@@ -72,8 +67,8 @@
   <item>Turreted Convulsion Launcher</item>
   <item>Za'lek Hunter Launcher</item>
   <item>Za'lek Reaper Launcher</item>
-  <item>BioPlasma Organ Stage 1</item>
-  <item>BioPlasma Organ Stage X</item>
+  <item>Ultralight BioPlasma Organ Stage 1</item>
+  <item>Ultralight BioPlasma Organ Stage X</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -108,8 +103,6 @@
   <item>Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
-  <item>Boarding Androids MK1</item>
-  <item>Boarding Androids MK2</item>
   <item>Targeting Array</item>
   <item>Asteroid Scanner</item>
   <item>Forward Shock Absorbers</item>
@@ -190,29 +183,20 @@
   <item>Milspec Prometheus 9803 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
   <item>Beat Up Small Engine</item>
-  <item>Unicorp Hawk 150 Engine</item>
   <item>Unicorp Hawk 300 Engine</item>
-  <item>Melendez Ox Engine</item>
-  <item>Nexus Dart 300 Engine</item>
   <item>Nexus Dart 150 Engine</item>
   <item>Melendez Ox XL Engine</item>
   <item>Tricon Zephyr Engine</item>
   <item>Tricon Zephyr II Engine</item>
   <item>Beat Up Medium Engine</item>
-  <item>Unicorp Falcon 700 Engine</item>
   <item>Unicorp Falcon 1200 Engine</item>
-  <item>Melendez Buffalo Engine</item>
   <item>Nexus Arrow 700 Engine</item>
-  <item>Nexus Arrow 1200 Engine</item>
   <item>Melendez Buffalo XL Engine</item>
   <item>Tricon Cyclone Engine</item>
   <item>Tricon Cyclone II Engine</item>
   <item>Beat Up Large Engine</item>
-  <item>Unicorp Eagle 4500 Engine</item>
   <item>Unicorp Eagle 6500 Engine</item>
-  <item>Melendez Mammoth Engine</item>
   <item>Nexus Bolt 4500 Engine</item>
-  <item>Nexus Bolt 6500 Engine</item>
   <item>Melendez Mammoth XL Engine</item>
   <item>Krain Remige Engine</item>
   <item>Tricon Typhoon Engine</item>
@@ -386,7 +370,6 @@
  <tech name="Laser 3">
   <item>Heavy Ripper Turret</item>
   <item>Heavy Laser Turret</item>
-  <item>Turbolaser</item>
  </tech>
  <tech name="Ion 1">
   <item>Ion Cannon</item>
@@ -402,7 +385,6 @@
  </tech>
  <tech name="Ion 3">
   <item>Heavy Ion Turret</item>
-  <item>Heavy Razor Turret</item>
   <item>Weapons Ionizer</item>
  </tech>
  <tech name="Kinetic 1">
@@ -417,7 +399,6 @@
  </tech>
  <tech name="Kinetic 3">
   <item>Railgun</item>
-  <item>Repeating Railgun</item>
   <item>Railgun Turret</item>
  </tech>
  <tech name="Plasma 1">
@@ -432,8 +413,8 @@
  </tech>
  <tech name="Beam 1">
   <item>Orion Lance</item>
+  <item>Particle Beam</item>
   <item>Orion Beam</item>
-  <item>Pulse Beam</item>
  </tech>
  <tech name="Beam 2">
   <item>Grave Lance</item>
@@ -476,11 +457,11 @@
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
-  <item>Unicorp Hawk 150 Engine</item>
+  <item>Nexus Dart 150 Engine</item>
   <item>Unicorp Hawk 300 Engine</item>
-  <item>Unicorp Falcon 700 Engine</item>
+  <item>Nexus Arrow 700 Engine</item>
   <item>Unicorp Falcon 1200 Engine</item>
-  <item>Unicorp Eagle 4500 Engine</item>
+  <item>Nexus Bolt 4500 Engine</item>
   <item>Unicorp Eagle 6500 Engine</item>
   <item>Patchwork Light Plating</item>
   <item>Unicorp D-2 Light Plating</item>
@@ -504,7 +485,6 @@
   <item>Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
-  <item>Boarding Androids MK1</item>
   <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
@@ -525,11 +505,11 @@
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
-  <item>Unicorp Hawk 150 Engine</item>
+  <item>Nexus Dart 150 Engine</item>
   <item>Unicorp Hawk 300 Engine</item>
-  <item>Unicorp Falcon 700 Engine</item>
+  <item>Nexus Arrow 700 Engine</item>
   <item>Unicorp Falcon 1200 Engine</item>
-  <item>Unicorp Eagle 4500 Engine</item>
+  <item>Nexus Bolt 4500 Engine</item>
   <item>Unicorp Eagle 6500 Engine</item>
   <item>Patchwork Light Plating</item>
   <item>Unicorp D-2 Light Plating</item>
@@ -580,8 +560,6 @@
   <item>Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
-  <item>Boarding Androids MK1</item>
-  <item>Boarding Androids MK2</item>
   <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
@@ -611,8 +589,6 @@
   <item>Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
-  <item>Boarding Androids MK1</item>
-  <item>Boarding Androids MK2</item>
   <item>Targeting Array</item>
   <item>Forward Shock Absorbers</item>
   <item>Power Regulation Override</item>
@@ -666,6 +642,7 @@
   <item>TeraCom Medusa Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
+  <item>Enygma Systems Turreted Headhunter Launcher</item>
   <item>Unicorp Vengeance Launcher</item>
  </tech>
  <tech name="Star Maps">
@@ -681,9 +658,39 @@
   <item>Local System Map</item>
  </tech>
 
+ <!-- Faction outfits -->
+ <tech name="Empire Military Outfits">
+  <item>Turbolaser</item>
+  <item>Empire Lancelot Fighter Bay</item>
+ </tech>
+ <tech name="Dvaered Military Outfits">
+  <item>Repeating Railgun</item>
+  <item>Active Plating</item>
+ </tech>
+ <tech name="Sirius Military Outfits">
+  <item>Heavy Razor Turret</item>
+  <item>Fidelity Fighter Bay</item>
+ </tech>
+ <tech name="Za'lek Military Outfits">
+  <item>Za'lek Hunter Launcher</item>
+  <item>Za'lek Reaper Launcher</item>
+  <item>Za'lek Light Drone Fighter Bay</item>
+  <item>Za'lek Heavy Drone Fighter Bay</item>
+  <item>Za'lek Bomber Drone Fighter Bay</item>
+ </tech>
+ <tech name="Thurion Outfits">
+  <item>Convulsion Launcher</item>
+  <item>Turreted Convulsion Launcher</item>
+  <item>Adaptive Stealth Plating</item>
+  <item>Map: Thurion Core</item>
+ </tech>
+ <tech name="Thurion Military Outfits">
+  <item>Nebular Shielding Prototype</item>
+ </tech>
+
  <!-- Bioship outfits -->
  <tech name="Bioship Outfits">
-  <item>BioPlasma Organ Stage 1</item>
+  <item>Ultralight BioPlasma Organ Stage 1</item>
   <item>Ultralight Bioship Brain Stage 1</item>
   <item>Light Bioship Brain Stage 1</item>
   <item>Medium Bioship Brain Stage 1</item>
@@ -820,18 +827,6 @@
   <item>Za'lek Diablo</item>
   <item>Za'lek Hephaestus</item>
  </tech>
- <tech name="Thurion Outfits">
-  <item>Energy Dart</item>
-  <item>Convulsion Launcher</item>
-  <item>Turreted Convulsion Launcher</item>
-  <item>Adaptive Stealth Plating</item>
-  <item>Map: Thurion Core</item>
- </tech>
- <tech name="Thurion Military Outfits">
-  <item>Energy Missile</item>
-  <item>Energy Torpedo</item>
-  <item>Nebular Shielding Prototype</item>
- </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>
  </tech>
@@ -845,11 +840,7 @@
   <item>Drone</item>
   <item>Heavy Drone</item>
  </tech>
- 
- <tech name="__Za'lek Launchers"> 
-  <item>Za'lek Hunter Launcher</item>
-  <item>Za'lek Reaper Launcher</item>
- </tech>
+
  <tech name="Systems Low">
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
@@ -895,28 +886,28 @@
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
-  <item>Unicorp Hawk 150 Engine</item>
+  <item>Nexus Dart 150 Engine</item>
   <item>Unicorp Hawk 300 Engine</item>
-  <item>Unicorp Falcon 700 Engine</item>
+  <item>Nexus Arrow 700 Engine</item>
   <item>Unicorp Falcon 1200 Engine</item>
-  <item>Unicorp Eagle 4500 Engine</item>
+  <item>Nexus Bolt 4500 Engine</item>
   <item>Unicorp Eagle 6500 Engine</item>
  </tech>
  <tech name="Engines Cargo">
-  <item>Melendez Ox Engine</item>
-  <item>Melendez Buffalo Engine</item>
-  <item>Melendez Mammoth Engine</item>
   <item>Melendez Ox XL Engine</item>
   <item>Melendez Buffalo XL Engine</item>
   <item>Melendez Mammoth XL Engine</item>
  </tech>
  <tech name="Engines Medium">
+  <item>Beat Up Small Engine</item>
+  <item>Beat Up Medium Engine</item>
+  <item>Beat Up Large Engine</item>
   <item>Nexus Dart 150 Engine</item>
-  <item>Nexus Dart 300 Engine</item>
+  <item>Unicorp Hawk 300 Engine</item>
   <item>Nexus Arrow 700 Engine</item>
-  <item>Nexus Arrow 1200 Engine</item>
+  <item>Unicorp Falcon 1200 Engine</item>
   <item>Nexus Bolt 4500 Engine</item>
-  <item>Nexus Bolt 6500 Engine</item>
+  <item>Unicorp Eagle 6500 Engine</item>
  </tech>
  <tech name="Engines High">
   <item>Tricon Zephyr Engine</item>

@@ -16,7 +16,6 @@
  <license>Heavy Combat Vessel License</license>
  <description>Once, the Goddard Battlecruiser was commissioned by the Empire for military service. However, during the Dvaered Revolts most Goddard captains sided with the insurgents, and after the establishment of House Dvaered the Empire ceded the license for the aging vessel to them. Today, House Dvaered is House Goddard's biggest client, and this military grade version has been developed which features better armour and weapon damage at the cost of increased mass and energy consumption.</description>
  <health>
-  <absorb>35</absorb>
   <armour>2000</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -32,8 +31,8 @@
   <weapon size="large" x="-15" y="-25" h="3" />
   <weapon size="large" x="-15" y="25" h="3" />
   <weapon size="large" x="16" y="0" h="3" />
-  <weapon size="large" x="0" y="0" h="5" />
-  <weapon size="large" x="-20" y="0" h="5" />
+  <weapon size="large" prop="fighter_bay" x="0" y="0" h="5" />
+  <weapon size="large" prop="fighter_bay" x="-20" y="0" h="5" />
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-3400 Core System</utility>
   <utility size="large" prop="accessory" exclusive="1" />
   <utility size="large" />

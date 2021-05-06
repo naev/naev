@@ -15,7 +15,6 @@
  <fabricator>Skull and Bones</fabricator>
  <description>The Kestrel is the best ship offered by the Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirates who can afford it.</description>
  <health>
-  <absorb>28</absorb>
   <armour>950</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -28,8 +27,8 @@
  <slots>
   <weapon size="large" x="-23" y="-15" h="5" />
   <weapon size="large" x="-23" y="15" h="5" />
-  <weapon size="large" x="44" y="0" h="0" />
-  <weapon size="large" x="-6" y="0" h="12" />
+  <weapon size="large" prop="fighter_bay" x="44" y="0" h="0" />
+  <weapon size="large" prop="fighter_bay" x="-6" y="0" h="12" />
   <weapon size="medium" x="-24" y="-8" h="8" />
   <weapon size="medium" x="-24" y="8" h="8" />
   <utility size="large" prop="systems" exclusive="1" required="1">Previous Generation Large Systems</utility>

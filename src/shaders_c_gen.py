@@ -92,7 +92,7 @@ SHADERS = [
       vs_path = "nebula_map.vert",
       fs_path = "nebula_map.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "hue", "eddy_scale", "time", "globalpos"],
+      uniforms = ["projection", "hue", "eddy_scale", "time", "globalpos", "alpha"],
       subroutines = {},
    ),
    Shader(
@@ -174,7 +174,7 @@ SHADERS = [
       vs_path = "postprocess.vert",
       fs_path = "damage.frag",
       attributes = ["VertexPosition"],
-      uniforms = ["ClipSpaceFromLocal", "MainTex", "damage_strength"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "damage_strength", "love_ScreenSize"],
       subroutines = {},
    ),
 ]

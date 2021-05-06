@@ -12,7 +12,7 @@
   <cpu>-2</cpu>
  </general>
  <specific type="modification">
-  <armour_mod>10</armour_mod>
+  <armour_mod>15</armour_mod>
   <mass_mod>2.5</mass_mod>
   <energy_usage>8</energy_usage>
  </specific>

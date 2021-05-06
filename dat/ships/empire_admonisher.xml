@@ -18,7 +18,6 @@
  <license>Medium Combat Vessel License</license>
  <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
-  <absorb>15</absorb>
   <armour>240</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -39,7 +38,7 @@
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 700 Engine</structure>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Nexus Arrow 700 Engine</structure>
   <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />

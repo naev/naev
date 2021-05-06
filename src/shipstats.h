@@ -41,6 +41,7 @@ typedef enum ShipStatsType_ {
 
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */
+   SS_TYPE_D_LAND_DELAY,      /**< Modulates the time that passes during landing. */
    SS_TYPE_D_CARGO_INERTIA,   /**< Modifies the effect of cargo_mass. */
 
    /* Stealth. */
@@ -70,6 +71,11 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TURRET_ENERGY,   /**< Energy usage of turrets. */
    SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, /**< Damage converted to disable. */
 
+   /* Beams. */
+   SS_TYPE_D_BEAM_DAMAGE,     /**< Damage done by cannons. */
+   SS_TYPE_D_BEAM_ENERGY,     /**< Energy usage of cannons. */
+   SS_TYPE_D_BEAM_DAMAGE_AS_DISABLE, /**< Damage converted to disable. */
+
    /* Nebula. */
    SS_TYPE_D_NEBULA_ABSORB_SHIELD, /**< Shield nebula resistance. */
    SS_TYPE_D_NEBULA_ABSORB_ARMOUR, /**< Armour nebula resistance. */
@@ -80,6 +86,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_CREW,            /**< Ship crew. */
    SS_TYPE_D_MASS,            /**< Ship mass. */
    SS_TYPE_D_ENGINE_LIMIT_REL, /**< Modifier for the ship's engine limit. */
+   SS_TYPE_D_LOOT_MOD,        /* Affects boarding rewards. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -184,6 +191,7 @@ typedef struct ShipStats_ {
 
    /* Freighter-type. */
    double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */
+   double land_delay;      /**< Modulates the time that passes during landing. */
    double cargo_inertia;   /**< Lowers the effect of cargo mass. */
 
    /* Stealth. */
@@ -219,6 +227,11 @@ typedef struct ShipStats_ {
    double tur_energy;      /**< Consumption rate of turrets. */
    double tur_dam_as_dis;  /**< Damage as disable for turrets. */
 
+   /* Beam modifiers. */
+   double bm_damage;       /**< Damage of beams. */
+   double bm_energy;       /**< Consumption rate of beams. */
+   double bm_dam_as_dis;   /**< Damage as disable for beams. */
+
    /* Engine limits. */
    double engine_limit_rel; /**< Engine limit modifier. */
    double engine_limit;     /**< Engine limit. */
@@ -230,6 +243,7 @@ typedef struct ShipStats_ {
    int misc_reverse_thrust;  /**< Slows down the ship instead of turning it around. */
    int misc_asteroid_scan;   /**< Able to scan asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
+   double loot_mod;           /**< Boarding loot reward bonus. */
 } ShipStats;
 
 

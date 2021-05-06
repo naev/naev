@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Power Regulation Override">
  <general>
-  <typename>Weapon Modifier (Forward)</typename>
-  <slot>structure</slot>
+  <typename>Weapon Modifier (Cannon)</typename>
+  <slot>utility</slot>
   <size>small</size>
   <mass>0</mass>
   <price>55000</price>
   <description>This outfit allows your forward mounts to dump more power into the weapons, providing greatly enhanced destructive potential. Unfortunately, exceeding design specifications results in increased heat production.</description>
+  <cpu>-1</cpu>
   <gfx_store>damage_forward.png</gfx_store>
  </general>
  <specific type="modification">

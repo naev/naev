@@ -13,13 +13,12 @@
  <license>Light Combat Vessel License</license>
  <description>The Thurion Ingenuity is a fighter built for survival. Like all Thurian ships, it puts defensive capabilities first, and offensive capabilities second. However, by no means is the Ingenuity a poor combat craft. It is capable of staying in combat and slugging it out, and when things get too hot, it can quickly retreat to recharge and regenerate. Also, like every Thurian ship, the electronics are well above average.</description>
  <health>
-  <absorb>8</absorb>
   <armour>100</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>2</crew>
-  <mass>75</mass>
+  <mass>45</mass>
   <fuel>600</fuel>
   <fuel_consumption>100</fuel_consumption>
   <cargo>15</cargo>
@@ -38,7 +37,6 @@
   <structure size="small" />
  </slots>
  <stats>
-  <cpu_mod>10</cpu_mod>
   <ew_hide>30</ew_hide>
   <nebu_absorb_shield>80</nebu_absorb_shield>
   <nebu_absorb_armour>97</nebu_absorb_armour>

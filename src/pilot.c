@@ -1380,6 +1380,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    }
    else
       disable       *= absorb;
+   tdshield = 0.;
+   tdarmour = 0.;
+
 
    /*
     * Shields take entire blow.
@@ -1405,7 +1408,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
       /* True damage. */
       tdshield = damage_shield;
-      tdarmour = 0.0;
    }
    /*
     * Shields take part of the blow.
@@ -1451,7 +1453,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       }
 
       /* True damage. */
-      tdshield = 0.;
       tdarmour = ddmg;
    }
 
@@ -1495,9 +1496,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    /* Some minor effects and stuff. */
    else if (p->shield <= 0.) {
       if (p->id == PLAYER_ID) { /* a bit of shaking */
-         dam_mod = tdarmour/p->armour_max;
-         spfx_shake( SHAKE_MAX*dam_mod );
-         spfx_damage( dam_mod );
+         double spfx_mod = tdarmour/p->armour_max;
+         spfx_shake( spfx_mod );
+         spfx_damage( spfx_mod );
       }
    }
 
@@ -1700,7 +1701,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
 
          /* Shock wave from the explosion. */
          if (p->id == PILOT_PLAYER)
-            spfx_shake( pow2(ddmg.damage) / pow2(100.) * SHAKE_MAX );
+            spfx_shake( pow2(ddmg.damage) / pow2(100.) );
       }
    }
 }
@@ -2172,7 +2173,7 @@ void pilot_update( Pilot* pilot, const double dt )
             pilot_afterburnOver(pilot);
          else {
             if (pilot->id == PLAYER_ID)
-               spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+               spfx_shake( 0.75*SPFX_SHAKE_DECAY * dt); /* shake goes down at quarter speed */
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
                   pilot->afterburner->outfit->u.afb.heat_base,
                   pilot->afterburner->outfit->u.afb.heat_cap );

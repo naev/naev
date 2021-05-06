@@ -271,7 +271,6 @@ void cli_addMessage( const char *msg )
    buf = strdup((msg != NULL) ? msg : "");
    array_grow(&cli_buffer) = buf;
    cli_history = array_size(cli_buffer) - 1;
-   DEBUG("%s",buf);
 }
 
 
@@ -290,7 +289,6 @@ void cli_addMessageMax( const char *msg, const int l )
    buf = strndup((msg != NULL) ? msg : "", l);
    array_grow(&cli_buffer) = buf;
    cli_history = array_size(cli_buffer) - 1;
-   DEBUG("%s",buf);
 }
 
 

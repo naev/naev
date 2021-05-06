@@ -5,7 +5,7 @@
   <size>large</size>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
-  <mass>40</mass>
+  <mass>50</mass>
   <price>68000</price>
   <description>While limited in range compared to true capital-class weaponry, the heavy ripper turret's pair of heavy ripper cannons deliver exceptional firepower for dealing with lighter threats such as corvettes.</description>
   <gfx_store>ripperturret.png</gfx_store>
@@ -26,7 +26,7 @@
   <track>1</track>
   <damage>
    <type>normal</type>
-   <penetrate>48</penetrate>
+   <penetrate>62</penetrate>
    <physical>48</physical>
    <disable>2.8</disable>
   </damage>

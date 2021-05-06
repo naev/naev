@@ -4,6 +4,7 @@ uniform float hue;
 uniform float eddy_scale;
 uniform float time;
 uniform vec2 globalpos;
+uniform float alpha;
 in vec2 localpos;
 out vec4 color_out;
 
@@ -23,5 +24,5 @@ void main(void) {
    // Fallout
    float dist = length(localpos);
    dist = (dist < 1.0-smoothness) ? 1.0 : (1.0 - dist) / smoothness;
-   color_out.a *= smoothstep( 0.0, 1.0, dist );
+   color_out.a *= smoothstep( 0.0, 1.0, dist ) * alpha;
 }

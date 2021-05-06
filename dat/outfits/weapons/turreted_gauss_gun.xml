@@ -24,7 +24,7 @@
   <track>2</track>
   <damage>
    <type>impact</type>
-   <penetrate>0</penetrate>
+   <penetrate>6</penetrate>
    <physical>4</physical>
    <disable>0.25</disable>
   </damage>

@@ -13,6 +13,8 @@
 #include "tk/widget/imagearray.h"
 
 
+int outfit_altText( char *buf, int n, const Outfit *o );
+
 void outfits_open( unsigned int wid, Outfit **outfits );
 void outfits_regenList( unsigned int wid, char *str );
 void outfits_update( unsigned int wid, char* str );

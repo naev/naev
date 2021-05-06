@@ -15,7 +15,6 @@
  <license>Medium Combat Vessel License</license>
  <description>...</description>
  <health>
-  <absorb>22</absorb>
   <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -28,7 +27,7 @@
  <slots>
   <weapon size="large" x="23" y="0" h="4" />
   <weapon size="large" x="6" y="0" h="6" />
-  <weapon size="medium" x="8" y="0" h="-6" />
+  <weapon size="medium" prop="fighter_bay" x="8" y="0" h="-6" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-400 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="large" />
@@ -45,7 +44,6 @@
  <stats>
   <shield_mod>10</shield_mod>
   <shield_regen_mod>15</shield_regen_mod>
-  <cpu_mod>30</cpu_mod>
   <ew_hide>30</ew_hide>
   <nebu_absorb_shield>80</nebu_absorb_shield>
   <nebu_absorb_armour>97</nebu_absorb_armour>

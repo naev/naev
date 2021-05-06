@@ -1482,12 +1482,12 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"ew_target",temp->u.lau.ew_target);
       xmlr_float(node,"lockon",temp->u.lau.lockon);
       if (!outfit_isTurret(temp))
-         xmlr_float(node,"arc",temp->u.lau.arc);
+         xmlr_float(node,"arc",temp->u.lau.arc); /* This is full arc in degrees, so we have to correct it to semi-arc in radians for internal usage. */
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
-   temp->u.lau.arc *= M_PI/180.;
+   temp->u.lau.arc *= (M_PI/180.) / 2.; /* Note we convert from arc to semi-arc. */
    temp->u.lau.ew_target2 = pow2( temp->u.lau.ew_target );
 
    /* Set default outfit size if necessary. */
@@ -1729,6 +1729,7 @@ if ((x) != 0) \
    DESC_ADD( temp->u.mod.armour_regen, _("%+.1f Armour Per Second") );
    DESC_ADD( temp->u.mod.shield_regen, _("%+.1f Shield Per Second") );
    DESC_ADD( temp->u.mod.energy_regen, _("%+.1f Energy Per Second") );
+   DESC_ADD(-temp->u.mod.energy_loss,  _("%+.1f Energy Per Second") ); /* Bypasses RC stuff. The same as energy_regen but always negative. */
    DESC_ADD( temp->u.mod.absorb,       _("%+.0f Absorption") );
    DESC_ADD( temp->u.mod.cargo,        _("%+.0f Cargo") );
    DESC_ADD( temp->u.mod.crew_rel,     _("%+.0f %% Crew") );

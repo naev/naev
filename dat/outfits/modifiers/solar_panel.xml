@@ -2,11 +2,12 @@
 <outfit name="Solar Panel">
  <general>
   <typename>Energy Modifier</typename>
-  <slot>structure</slot>
+  <slot>utility</slot>
   <size>small</size>
   <mass>3</mass>
   <price>25000</price>
   <description>A large panel that generates energy by collecting light and converting it into electricity. This will allow your ship to regenerate its energy supplies more quickly.</description>
+  <cpu>-1</cpu>
   <gfx_store>solar.png</gfx_store>
  </general>
  <specific type="modification">

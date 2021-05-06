@@ -11,7 +11,6 @@
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by the player.</description>
  <health>
-  <absorb>5</absorb>
   <armour>35</armour>
  </health>
  <characteristics>
@@ -30,7 +29,7 @@
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />

@@ -16,7 +16,6 @@
  <license>Medium Combat Vessel License</license>
  <description>This military grade version of the Pacifier is mostly identical in function to a standard Pacifier, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
-  <absorb>22</absorb>
   <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -30,8 +29,8 @@
   <weapon size="large" x="-15" y="-10" h="-10" />
   <weapon size="large" x="-15" y="10" h="-10" />
   <weapon size="medium" x="20" y="0" h="-10" />
-  <weapon size="medium" x="4" y="-5" h="-10" />
-  <weapon size="medium" x="4" y="5" h="-10" />
+  <weapon size="medium" prop="fighter_bay" x="4" y="-5" h="-10" />
+  <weapon size="medium" prop="fighter_bay" x="4" y="5" h="-10" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-400 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="large" />

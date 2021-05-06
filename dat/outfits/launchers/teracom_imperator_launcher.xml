@@ -16,7 +16,7 @@
   <delay>11</delay>
   <reload_time>120</reload_time>
   <lockon>18</lockon>
-  <arc>6</arc>
+  <arc>120</arc>
   <ew_target>0.3</ew_target>
   <amount>5</amount>
  </specific>
