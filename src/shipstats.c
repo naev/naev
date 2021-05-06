@@ -272,6 +272,59 @@ int ss_statsInit( ShipStats *stats )
 
 
 /**
+ * @brief Merges two different ship stats.
+ *
+ *    @param dest Destination ship stats.
+ *    @param src Source to be merged with destination.
+ */
+int ss_statsMerge( ShipStats *dest, const ShipStats *src )
+{
+   int i;
+   int *destint;
+   const int *srcint;
+   double *destdbl;
+   const double *srcdbl;
+   char *destptr;
+   const char *srcptr;
+   const ShipStatsLookup *sl;
+
+   destptr = (char*) dest;
+   srcptr = (const char*) src;
+   for (i=0; i<SS_TYPE_SENTINEL; i++) {
+      sl = &ss_lookup[ i ];
+
+      switch (sl->data) {
+         case SS_DATA_TYPE_DOUBLE:
+            destdbl = (double*) &destptr[ sl->offset ];
+            srcdbl = (const double*) &srcptr[ sl->offset ];
+            *destdbl = (*destdbl) * (*srcdbl);
+            break;
+
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+            destdbl = (double*) &destptr[ sl->offset ];
+            srcdbl = (const double*) &srcptr[ sl->offset ];
+            *destdbl = (*destdbl) + (*srcdbl);
+            break;
+
+         case SS_DATA_TYPE_INTEGER:
+            destint = (int*) &destptr[ sl->offset ];
+            srcint = (const int*) &srcptr[ sl->offset ];
+            *destint = (*destint) + (*srcint);
+            break;
+
+         case SS_DATA_TYPE_BOOLEAN:
+            destint = (int*) &destptr[ sl->offset ];
+            srcint = (const int*) &srcptr[ sl->offset ];
+            *destint = !!((*destint) + (*srcint));
+            break;
+      }
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Modifies a stat structure using a single element.
  *
  *    @param stats Stat structure to modify.

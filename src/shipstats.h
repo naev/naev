@@ -252,6 +252,7 @@ void ss_free( ShipStatList *ll );
  * Manipulation
  */
 int ss_statsInit( ShipStats *stats );
+int ss_statsMerge( ShipStats *dest, const ShipStats *src );
 int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipStats *amount );
 int ss_statsModFromList( ShipStats *stats, const ShipStatList* list, const ShipStats *amount );
 
