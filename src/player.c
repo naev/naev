@@ -1646,7 +1646,7 @@ int player_getHypPreempt(void)
 double player_dt_default (void)
 {
    if (player.p != NULL && player.p->ship != NULL)
-      return player.p->ship->dt_default * player.dt_mod;
+      return player.p->stats.time_mod * player.p->ship->dt_default * player.dt_mod;
 
    return player.dt_mod;
 }
