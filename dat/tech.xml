@@ -67,8 +67,8 @@
   <item>Turreted Convulsion Launcher</item>
   <item>Za'lek Hunter Launcher</item>
   <item>Za'lek Reaper Launcher</item>
-  <item>Ultralight BioPlasma Organ Stage 1</item>
-  <item>Ultralight BioPlasma Organ Stage X</item>
+  <item>BioPlasma Stinger Stage 1</item>
+  <item>BioPlasma Stinger Stage X</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -693,7 +693,7 @@
 
  <!-- Bioship outfits -->
  <tech name="Bioship Outfits">
-  <item>Ultralight BioPlasma Organ Stage 1</item>
+  <item>BioPlasma Stinger Stage 1</item>
   <item>Ultralight Bioship Brain Stage 1</item>
   <item>Light Bioship Brain Stage 1</item>
   <item>Medium Bioship Brain Stage 1</item>

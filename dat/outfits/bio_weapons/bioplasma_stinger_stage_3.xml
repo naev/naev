@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Ultralight BioPlasma Organ Stage 3">
+<outfit name="BioPlasma Stinger Stage 3">
  <general>
   <slot prop="bio_weapon">weapon</slot>
   <size>small</size>
@@ -7,7 +7,7 @@
   <rarity>1</rarity>
   <mass>6</mass>
   <price>30000</price>
-  <description>The BioPlasma Organ is the most basic organic weaponry available, and one of the most common. While it is not especially powerful, it is prized for its reliability and low cognitive requirements. As with all organs, it starts out weak, but over time it grows and improves.</description>
+  <description>The BioPlasma Stinger is the most basic organic weaponry available, and one of the most common. While it is not especially powerful, it is prized for its reliability and low cognitive requirements. As with all organs, it starts out weak, but over time it grows and improves.</description>
   <gfx_store>plasma.png</gfx_store>
   <cpu>-1</cpu>
  </general>
