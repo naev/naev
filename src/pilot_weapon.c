@@ -1147,10 +1147,12 @@ void pilot_getRateMod( double *rate_mod, double* energy_mod,
 {
    switch (o->type) {
       case OUTFIT_TYPE_BOLT:
+      case OUTFIT_TYPE_BEAM:
          *rate_mod   = 2. - p->stats.fwd_firerate; /* Invert. */
          *energy_mod = p->stats.fwd_energy;
          break;
       case OUTFIT_TYPE_TURRET_BOLT:
+      case OUTFIT_TYPE_TURRET_BEAM:
          *rate_mod   = 2. - p->stats.tur_firerate; /* Invert. */
          *energy_mod = p->stats.tur_energy;
          break;
