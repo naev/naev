@@ -2302,8 +2302,8 @@ void player_destroyed (void)
    player_autonavEnd();
 
    /* Reset time compression when player dies. */
-   pause_setSpeed( 1. );
-   sound_setSpeed( 1. );
+   pause_setSpeed(1.);
+   sound_setSpeed(1.);
 }
 
 
