@@ -1029,7 +1029,7 @@ equip_typeOutfits_weapons = {
       },
       {
          varied = true, probability = {
-            ["BioPlasma Organ Stage X"] = 3,
+            ["BioPlasma Stinger Stage X"] = 3,
          };
          "BioPlasma Stinger Stage 1",
          "BioPlasma Stinger Stage 2",
