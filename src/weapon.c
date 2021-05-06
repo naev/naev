@@ -399,7 +399,7 @@ static void think_beam( Weapon* w, const double dt )
    }
 
    /* Check if pilot has enough energy left to keep beam active. */
-   p->energy -= dt * w->outfit->u.bem.energy * p->stats.bm_energy;
+   p->energy -= dt*w->outfit->u.bem.energy;
    if (p->energy < 0.) {
       p->energy = 0.;
       w->timer = -1;
@@ -1606,13 +1606,6 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
                w->solid->pos.y,
                w->solid->vel.x,
                w->solid->vel.y);
-         
-         w->dam_mod *= parent->stats.bm_damage;
-         /* dam_as_dis is computed as multiplier, must be corrected. */
-         w->dam_as_dis_mod = parent->stats.bm_dam_as_dis-1.;
-
-         /* Clamping, but might not actually be necessary if weird things want to be done. */
-         w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
          break;
 
       /* Treat seekers together. */

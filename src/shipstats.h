@@ -71,11 +71,6 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TURRET_ENERGY,   /**< Energy usage of turrets. */
    SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, /**< Damage converted to disable. */
 
-   /* Beams. */
-   SS_TYPE_D_BEAM_DAMAGE,     /**< Damage done by cannons. */
-   SS_TYPE_D_BEAM_ENERGY,     /**< Energy usage of cannons. */
-   SS_TYPE_D_BEAM_DAMAGE_AS_DISABLE, /**< Damage converted to disable. */
-
    /* Nebula. */
    SS_TYPE_D_NEBULA_ABSORB_SHIELD, /**< Shield nebula resistance. */
    SS_TYPE_D_NEBULA_ABSORB_ARMOUR, /**< Armour nebula resistance. */
@@ -226,11 +221,6 @@ typedef struct ShipStats_ {
    double tur_firerate;    /**< Rate of fire of turrets. */
    double tur_energy;      /**< Consumption rate of turrets. */
    double tur_dam_as_dis;  /**< Damage as disable for turrets. */
-
-   /* Beam modifiers. */
-   double bm_damage;       /**< Damage of beams. */
-   double bm_energy;       /**< Consumption rate of beams. */
-   double bm_dam_as_dis;   /**< Damage as disable for beams. */
 
    /* Engine limits. */
    double engine_limit_rel; /**< Engine limit modifier. */
