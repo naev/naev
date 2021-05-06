@@ -12,7 +12,7 @@
   <gfx_store>core_system_organic_s2.png</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>50</cpu_max>
+  <cpu_max>20</cpu_max>
   <shield>235</shield>
   <shield_regen>7</shield_regen>
   <energy>310</energy>
