@@ -56,6 +56,11 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */
    SS_TYPE_D_LAUNCH_LOCKON,   /**< Lock-on speed of launchers. */
 
+   /* Fighter Bays. */
+   SS_TYPE_D_FBAY_DAMAGE,     /**< Fighter bay fighter damage bonus (all weapons). */
+   SS_TYPE_D_FBAY_HEALTH,     /**< Fighter bay fighter health bonus (shield and armour). */
+   SS_TYPE_D_FBAY_MOVEMENT,   /**< Fighter bay fighter movement bonus (turn, thrust, and speed). */
+
    /* Forward mounts. */
    SS_TYPE_D_FORWARD_HEAT,    /**< Heat generation for cannons. */
    SS_TYPE_D_FORWARD_DAMAGE,  /**< Damage done by cannons. */
@@ -206,6 +211,11 @@ typedef struct ShipStats_ {
    double launch_damage;   /**< Damage of launchers. */
    double ammo_capacity;   /**< Capacity of launchers. */
    double launch_lockon;   /**< Lock on speed of launchers. */
+
+   /* Fighter bays. */
+   double fbay_damage;     /**< Fighter bay fighter damage (all weapons). */
+   double fbay_health;     /**< Fighter bay fighter health (armour and shield). */
+   double fbay_movement;   /**< Fighter bay fighter movement (thrust, turn, and speed). */
 
    /* Fighter/Corvette type. */
    double fwd_heat;        /**< Heat of forward mounts. */
