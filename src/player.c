@@ -991,6 +991,8 @@ void player_think( Pilot* pplayer, const double dt )
       return;
    }
 
+   /* We always have to run ai_think in the case the player has escorts so that
+    * they properly form formations. */
    ai_think( pplayer, dt );
 
    /* Under manual control is special. */
