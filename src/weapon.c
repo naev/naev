@@ -388,7 +388,7 @@ static void think_beam( Weapon* w, const double dt )
    Pilot *p, *t;
    AsteroidAnchor *field;
    Asteroid *ast;
-   double diff;
+   double diff, mod;
    Vector2d v;
 
    /* Get pilot, if pilot is dead beam is destroyed. */
@@ -399,7 +399,8 @@ static void think_beam( Weapon* w, const double dt )
    }
 
    /* Check if pilot has enough energy left to keep beam active. */
-   p->energy -= dt*w->outfit->u.bem.energy;
+   mod = (w->outfit->type == OUTFIT_TYPE_BEAM) ? p->stats.fwd_energy : p->stats.tur_energy;
+   p->energy -= mod * dt*w->outfit->u.bem.energy;
    if (p->energy < 0.) {
       p->energy = 0.;
       w->timer = -1;
@@ -1546,7 +1547,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    Pilot *pilot_target;
    AsteroidAnchor *field;
    Asteroid *ast;
-   
+
    Weapon* w;
 
    /* Create basic features */
@@ -1606,6 +1607,17 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
                w->solid->pos.y,
                w->solid->vel.x,
                w->solid->vel.y);
+
+         if (outfit->type == OUTFIT_TYPE_BEAM) {
+            w->dam_mod       *= parent->stats.fwd_damage;
+            w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis-1.;
+         }
+         else {
+            w->dam_mod       *= parent->stats.tur_damage;
+            w->dam_as_dis_mod = parent->stats.tur_dam_as_dis-1.;
+         }
+         w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
+
          break;
 
       /* Treat seekers together. */
