@@ -1116,24 +1116,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       }
 
       /* Create the escort. */
-      unsigned int e = escort_create( p, w->u.ammo.outfit->u.fig.ship,
+      escort_create( p, w->u.ammo.outfit->u.fig.ship,
             &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1, dockslot );
-
-      /* Computer fighter bay bonuses. */
-      Pilot *pe = pilot_get( e );
-      /* Damage. */
-      pe->intrinsic_stats.launch_damage *= p->stats.fbay_damage;
-      pe->intrinsic_stats.fwd_damage *= p->stats.fbay_damage;
-      pe->intrinsic_stats.tur_damage *= p->stats.fbay_damage;
-      /* Health. */
-      pe->intrinsic_stats.armour_mod *= p->stats.fbay_health;
-      pe->intrinsic_stats.shield_mod *= p->stats.fbay_health;
-      /* Movement. */
-      pe->intrinsic_stats.speed_mod  *= p->stats.fbay_movement;
-      pe->intrinsic_stats.turn_mod   *= p->stats.fbay_movement;
-      pe->intrinsic_stats.thrust_mod *= p->stats.fbay_movement;
-      /* Update stats. */
-      pilot_calcStats( pe );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;
