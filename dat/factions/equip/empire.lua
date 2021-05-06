@@ -102,12 +102,11 @@ function equip( p )
    if diff.isApplied( "collective_dead" ) then
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
-            num = 2;
-            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam",
-         },
-         {
             varied = true;
             "Empire Lancelot Fighter Bay", "Drone Fighter Bay",
+         },
+         {
+            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam",
          },
          {
             "Heavy Ripper Turret",
@@ -116,11 +115,10 @@ function equip( p )
    else
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
-            num = 2;
-            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam",
+            "Empire Lancelot Fighter Bay",
          },
          {
-            "Empire Lancelot Fighter Bay",
+            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam",
          },
          {
             "Heavy Ripper Turret",

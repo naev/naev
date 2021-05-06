@@ -314,11 +314,10 @@ equip_classOutfits_weapons = {
    },
    ["Carrier"] = {
       {
-         num = 2;
-         "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
+         "Lancelot Fighter Bay",
       },
       {
-         "Lancelot Fighter Bay",
+         "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
       },
       {
          "Heavy Ripper Turret", "Grave Beam",

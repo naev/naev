@@ -115,11 +115,10 @@ equip_typeOutfits_weapons["Dogma"] = {
 }
 equip_typeOutfits_weapons["Divinity"] = {
    {
-      num = 2;
-      "Heavy Razor Turret", "Ragnarok Beam",
+      "Fidelity Fighter Bay"
    },
    {
-      "Fidelity Fighter Bay"
+      "Heavy Razor Turret", "Ragnarok Beam",
    },
    {
       "Heavy Ion Turret", "Grave Beam",
