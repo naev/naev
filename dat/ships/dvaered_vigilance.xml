@@ -23,12 +23,12 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" prop="fighter_bay" x="28" y="-3" h="-0" />
-  <weapon size="large" prop="fighter_bay" x="28" y="3" h="-0" />
+  <weapon size="large" x="28" y="-3" h="-0" />
+  <weapon size="large" x="28" y="3" h="-0" />
   <weapon size="medium" x="10" y="-3" h="2" />
   <weapon size="medium" x="10" y="3" h="2" />
-  <weapon size="medium" x="-22" y="-8" h="-0" />
-  <weapon size="medium" x="-22" y="8" h="-0" />
+  <weapon size="medium" prop="fighter_bay" x="-22" y="-8" h="-0" />
+  <weapon size="medium" prop="fighter_bay" x="-22" y="8" h="-0" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-400 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="large" />

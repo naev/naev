@@ -25,9 +25,9 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" prop="fighter_bay" x="23" y="0" h="4" />
-  <weapon size="large" prop="fighter_bay" x="6" y="0" h="6" />
-  <weapon size="medium" x="8" y="0" h="-6" />
+  <weapon size="large" x="23" y="0" h="4" />
+  <weapon size="large" x="6" y="0" h="6" />
+  <weapon size="medium" prop="fighter_bay" x="8" y="0" h="-6" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-400 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="large" />
