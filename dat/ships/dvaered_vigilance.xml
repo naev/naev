@@ -23,8 +23,8 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="28" y="-3" h="-0" />
-  <weapon size="large" x="28" y="3" h="-0" />
+  <weapon size="large" prop="fighter_bay" x="28" y="-3" h="-0" />
+  <weapon size="large" prop="fighter_bay" x="28" y="3" h="-0" />
   <weapon size="medium" x="10" y="-3" h="2" />
   <weapon size="medium" x="10" y="3" h="2" />
   <weapon size="medium" x="-22" y="-8" h="-0" />

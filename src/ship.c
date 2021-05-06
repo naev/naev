@@ -677,9 +677,12 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 
    /* Parse exclusive flag, default false. */
    xmlr_attr_int( node, "exclusive", slot->exclusive );
-   //TODO: decide if exclusive should even belong in ShipOutfitSlot, remove this hack, and fix slot->exclusive to slot->slot.exclusive in it's two previous occurrences, meaning three lines above and 12 lines above
+   /* TODO: decide if exclusive should even belong in ShipOutfitSlot,
+    * remove this hack, and fix slot->exclusive to slot->slot.exclusive
+    * in it's two previous occurrences, meaning three lines above and 12
+    * lines above */
    /* hack */
-   slot->slot.exclusive=slot->exclusive;
+   slot->slot.exclusive = slot->exclusive;
 
    /* Parse required flag, default false. */
    xmlr_attr_int( node, "required", slot->required );

@@ -25,8 +25,8 @@
   <cargo>90</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="25" y="-3" h="4" />
-  <weapon size="large" x="25" y="3" h="4" />
+  <weapon size="large" prop="fighter_bay" x="25" y="-3" h="4" />
+  <weapon size="large" prop="fighter_bay" x="25" y="3" h="4" />
   <weapon size="medium" x="-15" y="-3" h="4" />
   <weapon size="medium" x="-15" y="3" h="4" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Previous Generation Medium Systems</utility>
