@@ -26,6 +26,9 @@ equip_typeOutfits_engines["Shaman"] = {
 equip_typeOutfits_engines["Preacher"] = {
    "Tricon Cyclone Engine",
 }
+equip_typeOutfits_engines["Reverence"] = {
+   "Tricon Cyclone Engine",
+}
 equip_typeOutfits_engines["Dogma"] = {
    "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
 }
@@ -40,6 +43,9 @@ equip_typeOutfits_hulls["Shaman"] = {
    "S&K Light Stealth Plating", "S&K Light Combat Plating",
 }
 equip_typeOutfits_hulls["Preacher"] = {
+   "S&K Medium Combat Plating",
+}
+equip_typeOutfits_hulls["Reverence"] = {
    "S&K Medium Combat Plating",
 }
 equip_typeOutfits_hulls["Dogma"] = {
@@ -61,6 +67,23 @@ equip_typeOutfits_weapons["Shaman"] = {
    },
 }
 equip_typeOutfits_weapons["Preacher"] = {
+   {
+      varied = true;
+      "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
+      "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
+      "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
+      "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+      "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
+      "TeraCom Imperator Launcher",
+   },
+   {
+      probability = {
+         ["Slicer"] = 8,
+      };
+      "Slicer", "Razor MK2",
+   },
+}
+equip_typeOutfits_weapons["Reverence"] = {
    {
       varied = true;
       "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
