@@ -81,6 +81,7 @@ bioship_parts = {
    { "BioPlasma Stinger Stage %s", 3 },
    { "BioPlasma Claw Stage %s", 4 },
    { "BioPlasma Fang Stage %s", 5 },
+   { "BioPlasma Talon Stage %s", 6 },
 }
 
 
