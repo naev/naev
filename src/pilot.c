@@ -1898,9 +1898,11 @@ void pilot_update( Pilot* pilot, double dt )
          if (outfit_isLauncher(o->outfit))
             ammo_threshold = round( (double)ammo_threshold * pilot->stats.ammo_capacity );
 
-         /* Adjust for deployed fighters if needed */
-         if ( outfit_isFighterBay( o->outfit ) )
+         if ( outfit_isFighterBay( o->outfit ) ) {
+            ammo_threshold = round( (double)ammo_threshold * pilot->stats.fbay_capacity );
+            /* Adjust for deployed fighters if needed */
             ammo_threshold -= o->u.ammo.deployed;
+         }
 
          /* Don't allow accumulation of the timer before reload allowed */
          if ( o->u.ammo.quantity >= ammo_threshold ) {
