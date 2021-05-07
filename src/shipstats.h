@@ -162,15 +162,6 @@ typedef struct ShipStatList_ {
  *  1 or 0 values wher 1 indicates property is set.
  */
 typedef struct ShipStats_ {
-#if 0
-   /* Corvette type. */
-   double afterburner_energy; /**< Energy used by afterburner. */
-
-   /* Carrier type. */
-   double fighterbay_cpu; /**< CPU usage by fighter bays. */
-   double fighterbay_rate; /**< Launch rate of fighter bay. */
-#endif
-
    /* General */
    double speed_mod;          /**< Speed multiplier. */
    double turn_mod;           /**< Turn multiplier. */
