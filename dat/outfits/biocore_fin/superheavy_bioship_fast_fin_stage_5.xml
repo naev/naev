@@ -12,9 +12,9 @@
   <gfx_store>organic_engine_fast_l2.png</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>44</thrust>
-  <turn>56</turn>
-  <speed>76</speed>
+  <thrust>39</thrust>
+  <turn>46</turn>
+  <speed>69</speed>
   <fuel>1600</fuel>
   <energy_usage>50</energy_usage>
   <engine_limit>6500</engine_limit>
