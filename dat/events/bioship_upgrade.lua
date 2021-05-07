@@ -79,6 +79,7 @@ bioship_parts = {
 
    -- Weapons
    { "BioPlasma Stinger Stage %s", 3 },
+   { "BioPlasma Claw Stage %s", 4 },
 }
 
 

@@ -69,6 +69,8 @@
   <item>Za'lek Reaper Launcher</item>
   <item>BioPlasma Stinger Stage 1</item>
   <item>BioPlasma Stinger Stage X</item>
+  <item>BioPlasma Claw Stage 1</item>
+  <item>BioPlasma Claw Stage X</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -694,6 +696,7 @@
  <!-- Bioship outfits -->
  <tech name="Bioship Outfits">
   <item>BioPlasma Stinger Stage 1</item>
+  <item>BioPlasma Claw Stage 1</item>
   <item>Ultralight Bioship Brain Stage 1</item>
   <item>Light Bioship Brain Stage 1</item>
   <item>Medium Bioship Brain Stage 1</item>
