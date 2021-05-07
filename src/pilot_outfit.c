@@ -330,6 +330,9 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
    /* Update heat. */
    pilot_heatCalcSlot( s );
 
+   /* Disable lua for now. */
+   s->lua_mem = LUA_NOREF;
+
    return 0;
 }
 
@@ -993,6 +996,10 @@ void pilot_calcStats( Pilot* pilot )
       if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
 
+      /* Lua mods apply their stats. */
+      if (slot->lua_mem != LUA_NOREF)
+         ss_statsMerge( &pilot->stats, &slot->lua_stats );
+
       /* Active outfits must be on to affect stuff. */
       if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          continue;
@@ -1196,6 +1203,7 @@ void pilot_outfitLInit( Pilot *pilot )
 {
    int i;
    PilotOutfitSlot *po;
+   pilotoutfit_modified = 0;
    for (i=0; i<array_size(pilot->outfits); i++) {
       po = pilot->outfits[i];
       if (po->outfit==NULL || !outfit_isMod(po->outfit))
@@ -1203,8 +1211,9 @@ void pilot_outfitLInit( Pilot *pilot )
       if (po->outfit->u.mod.lua_init == LUA_NOREF)
          continue;
 
-      /* Create the memory if necessary. */
+      /* Create the memory if necessary and initialize stats. */
       if (po->lua_mem == LUA_NOREF) {
+         ss_statsInit( &po->lua_stats );
          lua_newtable(naevL); /* mem */
          po->lua_mem = lua_ref(naevL,-1); /* mem */
       }
@@ -1217,10 +1226,13 @@ void pilot_outfitLInit( Pilot *pilot )
       lua_pushpilot(naevL, pilot->id); /* f, p */
       lua_pushpilotoutfit(naevL, po); /* f, p, po */
       if (nlua_pcall( po->outfit->u.mod.lua_env, 2, 0 )) { /* */
-         WARN( _("Pilot '%s''s outfit '%s' -> 'init': %s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         WARN( _("Pilot '%s''s outfit '%s' -> 'init':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
          lua_pop(naevL, 1);
       }
    }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
 }
 
 
@@ -1234,6 +1246,7 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
 {
    int i;
    PilotOutfitSlot *po;
+   pilotoutfit_modified = 0;
    for (i=0; i<array_size(pilot->outfits); i++) {
       po = pilot->outfits[i];
       if (po->outfit==NULL || !outfit_isMod(po->outfit))
@@ -1253,9 +1266,12 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
       lua_pushpilotoutfit(naevL, po); /* f, p, po */
       lua_pushnumber(naevL, dt); /* f, p, po, dt */
       if (nlua_pcall( env, 3, 0 )) { /* */
-         WARN( _("Pilot '%s''s outfit '%s' -> 'update': %s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         WARN( _("Pilot '%s''s outfit '%s' -> 'update':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
          lua_pop(naevL, 1);
       }
    }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
 }
 
