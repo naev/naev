@@ -412,7 +412,7 @@ int outfit_isActive( const Outfit* o )
 {
    if (outfit_isForward(o) || outfit_isTurret(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
       return 1;
-   if (outfit_isMod(o) && o->u.mod.active)
+   if (outfit_isMod(o) && (o->u.mod.active || o->u.mod.lua_env != LUA_NOREF))
       return 1;
    if (outfit_isAfterburner(o))
       return 1;
@@ -1663,6 +1663,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->u.mod.lua_env = LUA_NOREF;
    temp->u.mod.lua_init = LUA_NOREF;
    temp->u.mod.lua_update = LUA_NOREF;
+   temp->u.mod.lua_ontoggle = LUA_NOREF;
    temp->u.mod.lua_onhit = LUA_NOREF;
 
    do { /* load all the data */
@@ -1732,6 +1733,12 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          nlua_getenv( env, "update" );
          if (!lua_isnil( naevL, -1 ))
             temp->u.mod.lua_update = lua_ref(naevL,-1);
+         else
+            lua_pop(naevL,1);
+
+         nlua_getenv( env, "ontoggle" );
+         if (!lua_isnil( naevL, -1 ))
+            temp->u.mod.lua_ontoggle = lua_ref(naevL,-1);
          else
             lua_pop(naevL,1);
 

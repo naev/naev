@@ -1195,6 +1195,26 @@ void pilot_updateMass( Pilot *pilot )
 
 
 /**
+ * @brief Checks to see if a slot has an active outfit that can be toggleable.
+ *
+ *    @param o Outfit slot to check.
+ *    @return 1 if can toggle, 0 otherwise.
+ */
+int pilot_slotIsActive( const PilotOutfitSlot *o )
+{
+   Outfit *oo;
+   if (!o->active)
+      return 0;
+
+   oo = o->outfit;
+   if (outfit_isMod(oo) && !oo->u.mod.active && oo->u.mod.lua_ontoggle == LUA_NOREF)
+      return 0;
+
+   return 1;
+}
+
+
+/**
  * @brief Runs the pilot's Lua outfits init script.
  *
  *    @param pilot Pilot to run Lua outfits for.

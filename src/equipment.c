@@ -35,6 +35,7 @@
 #include "nstring.h"
 #include "ntime.h"
 #include "player.h"
+#include "pilot_outfit.h"
 #include "shipstats.h"
 #include "slots.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
@@ -384,7 +385,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             dc = &cFontRed;
          else if (level == 1)
             dc = &cFontYellow;
-         else if (lst[i].active)
+         else if (pilot_slotIsActive( &lst[i] ))
             dc = &cFontBlue;
          else
             dc = &cFontGrey;
