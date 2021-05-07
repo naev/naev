@@ -280,5 +280,10 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline );
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline );
 int ss_csv( const ShipStats *s, char *buf, int len );
 
+/*
+ * Manipulation.
+ */
+int ss_statsSet( ShipStats *s, const char *name, double value );
+double ss_statsGet( ShipStats *s, const char *name );
 
 #endif /* SHIPSTATS_H */

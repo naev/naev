@@ -732,3 +732,83 @@ void ss_free( ShipStatList *ll )
 
 
 
+/**
+ * @brief Sets a ship stat by name.
+ */
+int ss_statsSet( ShipStats *s, const char *name, double value )
+{
+   const ShipStatsLookup *sl;
+   ShipStatsType type;
+   char *ptr;
+   double *destdbl;
+   int *destint;
+
+   type = ss_typeFromName( name );
+   if (type == SS_TYPE_NIL) {
+      WARN(_("Unknown ship stat type '%s'!"), name );
+      return -1;
+   }
+
+   sl = &ss_lookup[ type ];
+   ptr = (char*) s;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         destdbl = (double*) &ptr[ sl->offset ];
+         *destdbl = 1.0 + value / 100.;
+         break;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         destdbl  = (double*) &ptr[ sl->offset ];
+         *destdbl = value;
+         break;
+
+      case SS_DATA_TYPE_BOOLEAN:
+         destint  = (int*) &ptr[ sl->offset ];
+         *destint = !(fabs(value) > 1e-5);
+         break;
+
+      case SS_DATA_TYPE_INTEGER:
+         destint  = (int*) &ptr[ sl->offset ];
+         *destint = round(value);
+         break;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Gets a ship stat value by name.
+ */
+double ss_statsGet( ShipStats *s, const char *name )
+{
+   const ShipStatsLookup *sl;
+   ShipStatsType type;
+   const char *ptr;
+   const double *destdbl;
+   const int *destint;
+
+   type = ss_typeFromName( name );
+   if (type == SS_TYPE_NIL) {
+      WARN(_("Unknown ship stat type '%s'!"), name );
+      return 0;
+   }
+
+   sl = &ss_lookup[ type ];
+   ptr = (const char*) s;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         destdbl = (const double*) &ptr[ sl->offset ];
+         return 100.*((*destdbl) - 1.0);
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         destdbl  = (const double*) &ptr[ sl->offset ];
+         return *destdbl;
+
+      case SS_DATA_TYPE_BOOLEAN:
+      case SS_DATA_TYPE_INTEGER:
+         destint  = (const int*) &ptr[ sl->offset ];
+         return *destint;
+   }
+   return 0;
+}
