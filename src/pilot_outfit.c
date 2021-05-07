@@ -1283,9 +1283,9 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
       /* Set up the function: update( p, po, dt ) */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_update); /* f */
       lua_pushpilot(naevL, pilot->id); /* f, p */
-      lua_pushpilotoutfit(naevL, po); /* f, p, po */
-      lua_pushnumber(naevL, dt); /* f, p, po, dt */
-      if (nlua_pcall( env, 3, 0 )) { /* */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      lua_pushnumber(naevL, dt);       /* f, p, po, dt */
+      if (nlua_pcall( env, 3, 0 )) {   /* */
          WARN( _("Pilot '%s''s outfit '%s' -> 'update':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
          lua_pop(naevL, 1);
       }
@@ -1324,10 +1324,10 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield )
       /* Set up the function: onhit( p, po, armour, shield ) */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_onhit); /* f */
       lua_pushpilot(naevL, pilot->id); /* f, p */
-      lua_pushpilotoutfit(naevL, po); /* f, p, po */
-      lua_pushnumber(naevL, armour ); /* f, p, po, a */
-      lua_pushnumber(naevL, shield ); /* f, p, po, a, s */
-      if (nlua_pcall( env, 4, 0 )) { /* */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      lua_pushnumber(naevL, armour );  /* f, p, po, a */
+      lua_pushnumber(naevL, shield );  /* f, p, po, a, s */
+      if (nlua_pcall( env, 4, 0 )) {   /* */
          WARN( _("Pilot '%s''s outfit '%s' -> 'onhit':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
          lua_pop(naevL, 1);
       }
@@ -1337,3 +1337,37 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield )
       pilot_calcStats( pilot );
 }
 
+
+/**
+ * @brief Handle thes manual toggle of an outfit.
+ *
+ *    @param pilot Pilot to toggle outfit of.
+ *    @param po Outfit to be toggling.
+ *    @param on Whether to toggle on or off.
+ *    @return 1 if was able to toggle it, 0 otherwise.
+ */
+int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
+{
+   nlua_env env = po->outfit->u.mod.lua_env;
+   int ret;
+
+   /* Set the memory. */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+   nlua_setenv(env, "mem"); /* */
+
+   /* Set up the function: ontoggle( p, po, armour, shield ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_ontoggle); /* f */
+   lua_pushpilot(naevL, pilot->id); /* f, p */
+   lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+   lua_pushboolean(naevL, on);      /* f, p, po, on */
+   if (nlua_pcall( env, 3, 1 )) {   /* */
+      WARN( _("Pilot '%s''s outfit '%s' -> 'ontoggle':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+      return 0;
+   }
+
+   /* Handle return boolean. */
+   ret = lua_toboolean(naevL, -1);
+   lua_pop(naevL, 1);
+   return ret;
+}

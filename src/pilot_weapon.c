@@ -1364,9 +1364,12 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       /* Beams use stimer to represent minimum time until shutdown. */
       o->stimer = -1;
    }
-   else if (!pilot_slotIsActive(o))
+   else if (!o->active)
       /* Case of a mod we can't toggle. */
       return 0;
+   else if (outfit_isMod(o->outfit) && o->outfit->u.mod.lua_ontoggle != LUA_NOREF)
+      /* TODO toggle Lua outfit. */
+      return pilot_outfitLOntoggle( p, o, 0 );
    else {
       o->stimer = outfit_cooldown( o->outfit );
       o->state  = PILOT_OUTFIT_COOLDOWN;
@@ -1388,7 +1391,7 @@ int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o )
       pilot_afterburn( p );
    else if (outfit_isMod(o->outfit) && o->outfit->u.mod.lua_ontoggle != LUA_NOREF)
       /* TODO toggle Lua outfit. */
-      return 0;
+      return pilot_outfitLOntoggle( p, o, 1 );
    else {
       o->state  = PILOT_OUTFIT_ON;
       o->stimer = outfit_duration( o->outfit );

@@ -55,6 +55,7 @@ int pilot_slotIsActive( const PilotOutfitSlot *o );
 void pilot_outfitLInit( Pilot *pilot );
 void pilot_outfitLUpdate( Pilot *pilot, double dt );
 void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield );
+int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on );
 
 
 #endif /* PILOT_OUTFIT_H */
