@@ -229,13 +229,8 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             for (i=0; i<l; i++) {
                if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF)
                   continue;
-               if (outfit_isAfterburner(ws->slots[i].slot->outfit))
-                  pilot_afterburn( p );
-               else {
-                  ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
-                  ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
-               }
-               n++;
+
+               n += pilot_outfitOn( p, ws->slots[i].slot );
             }
          }
          /* Must recalculate stats. */
@@ -428,7 +423,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
       return;
 
    /* Make sure outfit type is weapon (or usable). */
-   if (!outfit_isActive(oo))
+   if (!pilot_slotIsActive(o))
       return;
 
    /* Create if needed. */
@@ -1369,9 +1364,37 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       /* Beams use stimer to represent minimum time until shutdown. */
       o->stimer = -1;
    }
+   else if (!o->active)
+      /* Case of a mod we can't toggle. */
+      return 0;
+   else if (outfit_isMod(o->outfit) && o->outfit->u.mod.lua_ontoggle != LUA_NOREF)
+      /* TODO toggle Lua outfit. */
+      return pilot_outfitLOntoggle( p, o, 0 );
    else {
       o->stimer = outfit_cooldown( o->outfit );
       o->state  = PILOT_OUTFIT_COOLDOWN;
+   }
+
+   return 1;
+}
+
+/**
+ * @brief Enable a given active outfit.
+ *
+ * @param p Pilot whose outfit we are enabling.
+ * @param o Outfit to enable.
+ * @return Whether the outfit was actually enabled.
+ */
+int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o )
+{
+   if (outfit_isAfterburner(o->outfit))
+      pilot_afterburn( p );
+   else if (outfit_isMod(o->outfit) && o->outfit->u.mod.lua_ontoggle != LUA_NOREF)
+      /* TODO toggle Lua outfit. */
+      return pilot_outfitLOntoggle( p, o, 1 );
+   else {
+      o->state  = PILOT_OUTFIT_ON;
+      o->stimer = outfit_duration( o->outfit );
    }
 
    return 1;
@@ -1394,8 +1417,6 @@ int pilot_outfitOffAll( Pilot *p )
       o = p->outfits[i];
       /* Picky about our outfits. */
       if (o->outfit == NULL)
-         continue;
-      if (!o->active)
          continue;
       if (o->state == PILOT_OUTFIT_ON)
          nchg += pilot_outfitOff( p, o );

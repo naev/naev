@@ -81,6 +81,7 @@ void* ndata_read( const char* filename, size_t *filesize );
 char** ndata_listRecursive( const char *path );
 int ndata_backupIfExists( const char *path );
 int ndata_copyIfExists( const char *path1, const char *path2 );
+int ndata_matchExt( const char *path, const char *ext );
 
 
 #endif /* NDATA_H */

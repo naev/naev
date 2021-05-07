@@ -1438,6 +1438,9 @@ void takeoff( int delay )
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );
 
+   /* Update lua stuff. */
+   pilot_outfitLInit( player.p );
+
    /* Reset speed */
    player_autonavResetSpeed();
 }
