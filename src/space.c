@@ -1773,6 +1773,9 @@ static int planets_load ( void )
    /* Load XML stuff. */
    planet_files = PHYSFS_enumerateFiles( PLANET_DATA_PATH );
    for (i=0; planet_files[i]!=NULL; i++) {
+      if (!ndata_matchExt( planet_files[i], "xml" ))
+         continue;
+
       asprintf( &file, "%s%s", PLANET_DATA_PATH, planet_files[i]);
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
@@ -3246,6 +3249,9 @@ static int systems_load (void)
     * First pass - loads all the star systems_stack.
     */
    for (i=0; system_files[i]!=NULL; i++) {
+      if (!ndata_matchExt( system_files[i], "xml" ))
+         continue;
+
       asprintf( &file, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       doc = xml_parsePhysFS( file );
