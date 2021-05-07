@@ -52,5 +52,6 @@
   <turn_mod>-10</turn_mod>
   <armour_mod>-10</armour_mod>
   <ew_hide>10</ew_hide>
+  <fbay_capacity>100</fbay_capacity>
  </stats>
 </ship>
