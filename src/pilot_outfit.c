@@ -1275,3 +1275,45 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
       pilot_calcStats( pilot );
 }
 
+
+/**
+ * @brief Runs the pilot's Lua outfits onhit script.
+ *
+ *    @param pilot Pilot to run Lua outfits for.
+ *    @param armour Armour amage taken by pilot.
+ *    @param shield Shield amage taken by pilot.
+ */
+void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield )
+{
+   int i;
+   PilotOutfitSlot *po;
+   pilotoutfit_modified = 0;
+   for (i=0; i<array_size(pilot->outfits); i++) {
+      po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_onhit == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: onhit( p, po, armour, shield ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_onhit); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po); /* f, p, po */
+      lua_pushnumber(naevL, armour ); /* f, p, po, a */
+      lua_pushnumber(naevL, shield ); /* f, p, po, a, s */
+      if (nlua_pcall( env, 4, 0 )) { /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'onhit':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
+}
+

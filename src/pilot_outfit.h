@@ -53,6 +53,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );
 /* Lua outfit stuff. */
 void pilot_outfitLInit( Pilot *pilot );
 void pilot_outfitLUpdate( Pilot *pilot, double dt );
+void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield );
 
 
 #endif /* PILOT_OUTFIT_H */

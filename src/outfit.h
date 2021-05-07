@@ -275,6 +275,7 @@ typedef struct OutfitModificationData_ {
    nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    int lua_init;     /**< Run when player enters a system. */
    int lua_update;   /**< Run periodically. */
+   int lua_onhit;    /**< Run when pilot takes damage. */
 } OutfitModificationData;
 
 /**
