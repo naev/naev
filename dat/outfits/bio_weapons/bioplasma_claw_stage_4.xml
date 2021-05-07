@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="BioPlasma Claw Stage 1">
+<outfit name="BioPlasma Claw Stage 4">
  <general>
-  <slot>weapon</slot>
+  <slot prop="bio_weapon">weapon</slot>
   <size>small</size>
   <license>Medium Weapon License</license>
   <mass>18</mass>
@@ -21,7 +21,7 @@
   <falloff>800</falloff>
   <gfx_end>plasma2-end.png</gfx_end>
   <energy>10</energy>
-  <heatup>20</heatup>
+  <heatup>31</heatup>
   <track>3</track>
   <swivel>22</swivel>
   <damage>
