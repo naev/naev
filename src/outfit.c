@@ -1724,25 +1724,25 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          /* Check functions as necessary. */
          nlua_getenv( env, "init" );
          if (!lua_isnil( naevL, -1 ))
-            temp->u.mod.lua_init = lua_ref(naevL,-1);
+            temp->u.mod.lua_init = luaL_ref(naevL,LUA_REGISTRYINDEX);
          else
             lua_pop(naevL,1);
 
          nlua_getenv( env, "update" );
          if (!lua_isnil( naevL, -1 ))
-            temp->u.mod.lua_update = lua_ref(naevL,-1);
+            temp->u.mod.lua_update = luaL_ref(naevL,LUA_REGISTRYINDEX);
          else
             lua_pop(naevL,1);
 
          nlua_getenv( env, "ontoggle" );
          if (!lua_isnil( naevL, -1 ))
-            temp->u.mod.lua_ontoggle = lua_ref(naevL,-1);
+            temp->u.mod.lua_ontoggle = luaL_ref(naevL,LUA_REGISTRYINDEX);
          else
             lua_pop(naevL,1);
 
          nlua_getenv( env, "onhit" );
          if (!lua_isnil( naevL, -1 ))
-            temp->u.mod.lua_onhit = lua_ref(naevL,-1);
+            temp->u.mod.lua_onhit = luaL_ref(naevL,LUA_REGISTRYINDEX);
          else
             lua_pop(naevL,1);
          continue;

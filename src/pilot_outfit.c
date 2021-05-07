@@ -1233,7 +1233,7 @@ void pilot_outfitLInit( Pilot *pilot )
       if (po->lua_mem == LUA_NOREF) {
          ss_statsInit( &po->lua_stats );
          lua_newtable(naevL); /* mem */
-         po->lua_mem = lua_ref(naevL,-1); /* mem */
+         po->lua_mem = luaL_ref(naevL,LUA_REGISTRYINDEX); /* */
       }
       /* Set the memory. */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
