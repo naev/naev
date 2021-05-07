@@ -30,6 +30,8 @@
 #include "mapData.h"
 #include "ndata.h"
 #include "nfile.h"
+#include "nlua.h"
+#include "nlua_pilotoutfit.h"
 #include "nstring.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -1708,6 +1710,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          temp->u.mod.lua_env = env;
          /* TODO limit libraries here. */
          nlua_loadStandard( env );
+         nlua_loadPilotOutfit( env );
 
          /* Run code. */
          if (nlua_dobufenv( env, dat, sz, xml_get(node) ) != 0) {
