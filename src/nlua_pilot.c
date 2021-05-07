@@ -838,10 +838,11 @@ static int pilotL_getPilots( lua_State *L )
 
 
 /**
- * @brief Gets the pilots available in the system by a certain criteria.
+ * @brief Gets hostile pilots to a pilot within a certain distance.
  *
  *    @luatparam Pilot pilot Pilot to get hostiles of.
- *    @luatparam[opt=infinity] number Distance to look for hostiles.
+ *    @luatparam[opt=infinity] number dist Distance to look for hostiles.
+ *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc get
  */
@@ -850,6 +851,7 @@ static int pilotL_getHostiles( lua_State *L )
    int i, k, dd;
    Pilot *p = luaL_validpilot(L,1);
    double dist = luaL_optnumber(L,2,-1.);
+   int dis = lua_toboolean(L,3);
    Pilot *const* pilot_stack;
 
    if (dist >= 0.)
@@ -864,6 +866,9 @@ static int pilotL_getHostiles( lua_State *L )
       if ( !( areEnemies( pilot_stack[i]->faction, p->faction )
                || ( (p->id == PLAYER_ID)
                   && pilot_isHostile(pilot_stack[i]) ) ) )
+         continue;
+      /* Check if disabled. */
+      if (dis && pilot_isDisabled(pilot_stack[i]))
          continue;
       /* Check distance if necessary. */
       if (dist >= 0. &&
