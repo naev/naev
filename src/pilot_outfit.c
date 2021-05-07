@@ -1302,8 +1302,9 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
  *    @param pilot Pilot to run Lua outfits for.
  *    @param armour Armour amage taken by pilot.
  *    @param shield Shield amage taken by pilot.
+ *    @param attacker The attacker that hit the pilot.
  */
-void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield )
+void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned int attacker )
 {
    int i;
    PilotOutfitSlot *po;
@@ -1327,7 +1328,8 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield )
       lua_pushpilotoutfit(naevL, po);  /* f, p, po */
       lua_pushnumber(naevL, armour );  /* f, p, po, a */
       lua_pushnumber(naevL, shield );  /* f, p, po, a, s */
-      if (nlua_pcall( env, 4, 0 )) {   /* */
+      lua_pushpilot(naevL, attacker);  /* f, p, po, a, s, attacker */
+      if (nlua_pcall( env, 5, 0 )) {   /* */
          WARN( _("Pilot '%s''s outfit '%s' -> 'onhit':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
          lua_pop(naevL, 1);
       }

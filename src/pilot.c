@@ -1522,7 +1522,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
    /* On hit Lua outfits activate. */
-   pilot_outfitLOnhit( p, tdarmour, tdshield );
+   pilot_outfitLOnhit( p, tdarmour, tdshield, shooter );
 
    return ddmg;
 }
