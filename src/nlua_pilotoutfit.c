@@ -145,19 +145,28 @@ int lua_ispilotoutfit( lua_State *L, int ind )
 }
 
 
+/**
+ * @brief Gets the outfit of the PilotOutfit.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to get the outfit of.
+ *    @luatparam Outfit Outfit corresponding to the Pilot outfit.
+ * @luafunc outfit
+ */
 static int poL_outfit( lua_State *L )
 {
-   PilotOutfitSlot *po;
-
-   /* Get the outfit. */
-   po  = luaL_validpilotoutfit(L,1);
-
-   /* Return the outfit. */
+   PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
    lua_pushoutfit(L, po->outfit );
    return 1;
 }
 
 
+/**
+ * @brief Sets the state of the PilotOutfit.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to set the state of.
+ *    @luatparam string state State to set the pilot outfit to. Can be either "off", "warmup", "on", or "cooldown".
+ * @luafunc state
+ */
 static int poL_state( lua_State *L )
 {
    PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
@@ -183,13 +192,21 @@ static int poL_state( lua_State *L )
 }
 
 
+/**
+ * @brief Sets a temporary ship stat modifier of the pilot outfit.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to set the modifier of.
+ *    @luatparam string mod Modifier name to set to. Same as in the XML definition.
+ *    @luatparam number val Value to set the modifier to. In the case of booleans, 0 indicates false, while 1 indicates true.
+ * @luafunc set
+ */
 static int poL_set( lua_State *L )
 {
    PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
    const char *name = luaL_checkstring(L,2);
    double value = luaL_checknumber(L,3);
    ss_statsSet( &po->lua_stats, name, value );
-   pilotoutfit_modified = 1; 
+   pilotoutfit_modified = 1;
    return 0;
 }
 
