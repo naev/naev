@@ -1115,10 +1115,11 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    /* Get general details. */
    odmg              = outfit_damage( w->outfit );
    parent            = pilot_get( w->parent );
-   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * (1.-w->dam_as_dis_mod) );
+   damage            = w->dam_mod * w->strength * odmg->damage;
+   dmg.damage        = MAX( 0., damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = MAX( 0., odmg->disable + dmg.damage * w->dam_as_dis_mod );
+   dmg.disable       = MAX( 0., odmg->disable + damage * w->dam_as_dis_mod );
 
    /* Play sound if they have it. */
    s = outfit_soundHit(w->outfit);

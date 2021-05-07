@@ -267,8 +267,6 @@ typedef struct OutfitModificationData_ {
 
    /* Misc. */
    double cargo;     /**< Cargo space modifier. */
-   double crew_rel;  /**< Relative crew modification. */
-   double mass_rel;  /**< Relative mass modification. */
    int fuel;         /**< Maximum fuel modifier. */
 
    /* Lua function references. Set to LUA_NOREF if not used. */
