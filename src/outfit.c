@@ -1657,6 +1657,11 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    ShipStatList *ll;
    node = parent->children;
 
+   /* Defaults. */
+   temp->u.mod.lua_env = LUA_NOREF;
+   temp->u.mod.lua_init = LUA_NOREF;
+   temp->u.mod.lua_update = LUA_NOREF;
+
    do { /* load all the data */
       xml_onlyNodes(node);
       if (xml_isNode(node,"active")) {
@@ -1688,6 +1693,46 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"cargo",temp->u.mod.cargo);
       xmlr_float(node,"crew_rel", temp->u.mod.crew_rel);
       xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
+
+      /* Lua stuff. */
+      if (xml_isNode(node,"lua")) {
+         nlua_env env;
+         size_t sz;
+         char *dat = ndata_read( xml_get(node), &sz );
+         if (dat==NULL) {
+            WARN(_("Outfit '%s' failed to read Lua '%s'!"), temp->name, xml_get(node) );
+            continue;
+         }
+
+         env = nlua_newEnv(1);
+         temp->u.mod.lua_env = env;
+         /* TODO limit libraries here. */
+         nlua_loadStandard( env );
+
+         /* Run code. */
+         if (nlua_dobufenv( env, dat, sz, xml_get(node) ) != 0) {
+            WARN(_("Outfit '%s' Lua error:\n%s"), temp->name, lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+            nlua_freeEnv( temp->u.mod.lua_env );
+            temp->u.mod.lua_env = LUA_NOREF;
+            continue;
+         }
+
+         /* Check functions as necessary. */
+         nlua_getenv( env, "init" );
+         if (!lua_isnil( naevL, -1 ))
+            temp->u.mod.lua_init = lua_ref(naevL,-1);
+         else
+            lua_pop(naevL,1);
+
+         nlua_getenv( env, "update" );
+         if (!lua_isnil( naevL, -1 ))
+            temp->u.mod.lua_update = lua_ref(naevL,-1);
+         else
+            lua_pop(naevL,1);
+         continue;
+      }
+
       /* Stats. */
       ll = ss_listFromXML( node );
       if (ll != NULL) {
@@ -2359,6 +2404,9 @@ static int outfit_loadDir( char *dir )
 
    outfit_files = ndata_listRecursive( dir );
    for ( i = 0; i < array_size( outfit_files ); i++ ) {
+      if (!ndata_matchExt( outfit_files[i], "xml" ))
+         continue;
+
       ret = outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
       if (ret < 0) {
          n = array_size(outfit_stack);
@@ -2622,6 +2670,11 @@ void outfit_free (void)
          array_free( o->u.map->assets );
          array_free( o->u.map->jumps );
          free( o->u.map );
+      }
+      if (outfit_isMod(o)) {
+         if (o->u.mod.lua_env != LUA_NOREF)
+            nlua_freeEnv( o->u.mod.lua_env );
+         o->u.mod.lua_env = LUA_NOREF;
       }
 
       /* strings */

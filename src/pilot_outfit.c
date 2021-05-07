@@ -27,6 +27,9 @@
 #include "player.h"
 #include "slots.h"
 #include "space.h"
+#include "nlua.h"
+#include "nlua_pilot.h"
+#include "nlua_pilotoutfit.h"
 
 
 /*
@@ -426,6 +429,12 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
    /* Remove secondary and such if necessary. */
    if (pilot->afterburner == s)
       pilot->afterburner = NULL;
+
+   /* Clear Lua if necessary. */
+   if (s->lua_mem != LUA_NOREF) {
+      luaL_unref( naevL, LUA_REGISTRYINDEX, s->lua_mem );
+      s->lua_mem = LUA_NOREF;
+   }
 
    return ret;
 }
@@ -1177,4 +1186,76 @@ void pilot_updateMass( Pilot *pilot )
    pilot_ewUpdateStatic( pilot );
 }
 
+
+/**
+ * @brief Runs the pilot's Lua outfits init script.
+ *
+ *    @param pilot Pilot to run Lua outfits for.
+ */
+void pilot_outfitLInit( Pilot *pilot )
+{
+   int i;
+   PilotOutfitSlot *po;
+   for (i=0; i<array_size(pilot->outfits); i++) {
+      po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_init == LUA_NOREF)
+         continue;
+
+      /* Create the memory if necessary. */
+      if (po->lua_mem == LUA_NOREF) {
+         lua_newtable(naevL); /* mem */
+         po->lua_mem = lua_ref(naevL,-1); /* mem */
+      }
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(po->outfit->u.mod.lua_env, "mem"); /* */
+
+      /* Set up the function: init( p, po ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_init); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po); /* f, p, po */
+      if (nlua_pcall( po->outfit->u.mod.lua_env, 2, 0 )) { /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'init': %s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+}
+
+
+/**
+ * @brief Runs the pilot's Lua outfits update script.
+ *
+ *    @param pilot Pilot to run Lua outfits for.
+ *    @param dt Delta-tick from last time it was run.
+ */
+void pilot_outfitLUpdate( Pilot *pilot, double dt )
+{
+   int i;
+   PilotOutfitSlot *po;
+   for (i=0; i<array_size(pilot->outfits); i++) {
+      po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_update == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: update( p, po, dt ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_update); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po); /* f, p, po */
+      lua_pushnumber(naevL, dt); /* f, p, po, dt */
+      if (nlua_pcall( env, 3, 0 )) { /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'update': %s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+}
 

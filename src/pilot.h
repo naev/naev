@@ -132,6 +132,9 @@ typedef struct PilotOutfitSlot_ {
       unsigned int beamid;    /**< ID of the beam used in this outfit, only used for beams. */
       PilotOutfitAmmo ammo;   /**< Ammo for launchers. */
    } u; /**< Stores type specific data. */
+
+   /* In the case of Lua stuff. */
+   int lua_mem; /**< Lua reference to the memory table of the specific outfit. */
 } PilotOutfitSlot;
 
 
@@ -357,6 +360,7 @@ typedef struct Pilot_ {
    double sbonus;    /**< Shield regeneration bonus. */
    double dtimer;    /**< Disable timer. */
    double dtimer_accum; /**< Accumulated disable timer. */
+   double otimer;    /**< Lua outfit timer. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
    int projectiles;      /**< Stores how many weapons are after the pilot */

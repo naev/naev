@@ -2219,6 +2219,13 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Update the trail. */
    pilot_sample_trails( pilot );
+
+   /* Update outfits if necessary. */
+   pilot->otimer += dt;
+   while (pilot->otimer > PILOT_OUTFIT_LUA_UPDATE_DT) {
+      pilot_outfitLUpdate( pilot, PILOT_OUTFIT_LUA_UPDATE_DT );
+      pilot->otimer -= PILOT_OUTFIT_LUA_UPDATE_DT;
+   }
 }
 
 
@@ -2814,6 +2821,9 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    /* Animated trail. */
    pilot_init_trails( dyn );
 
+   /* Run Lua stuff. */
+   pilot_outfitLInit( dyn );
+
    return dyn->id;
 }
 
@@ -2856,6 +2866,8 @@ Pilot* pilot_replacePlayer( Pilot* after )
    array_erase( &pilot_stack[i]->trail, array_begin(pilot_stack[i]->trail), array_end(pilot_stack[i]->trail) );
    pilot_stack[i] = after;
    pilot_init_trails( after );
+   /* Run Lua stuff. */
+   pilot_outfitLInit( after );
    return after;
 }
 
@@ -3261,6 +3273,7 @@ void pilot_clearTimers( Pilot *pilot )
    pilot->tcontrol   = 0.; /* AI control timer. */
    pilot->stimer     = 0.; /* Shield timer. */
    pilot->dtimer     = 0.; /* Disable timer. */
+   pilot->otimer     = 0.; /* Outfit timer. */
    for (i=0; i<MAX_AI_TIMERS; i++)
       pilot->timer[i] = 0.; /* Specific AI timers. */
    n = 0;

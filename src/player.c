@@ -1806,6 +1806,9 @@ void player_brokeHyperspace (void)
             (pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
          space_calcJumpInPos( cur_system, sys, &pilot_stack[i]->solid->pos, &pilot_stack[i]->solid->vel, &pilot_stack[i]->solid->dir );
          ai_cleartasks(pilot_stack[i]);
+
+         /* Run Lua stuff. */
+         pilot_outfitLInit( pilot_stack[i] );
       }
    }
 
@@ -1824,6 +1827,9 @@ void player_brokeHyperspace (void)
                map_npath );
       }
    }
+
+   /* Update lua stuff. */
+   pilot_outfitLInit( player.p );
 
    /* Safe since this is run in the player hook section. */
    hooks_run( "jumpin" );
