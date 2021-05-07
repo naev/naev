@@ -61,7 +61,7 @@ function update( p, po, dt )
 
    -- Check if need to turn it off
    if mem.active then
-      
+
       -- Active time over
       if mem.timer < 0 then
          disable( po )
