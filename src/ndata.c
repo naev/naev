@@ -362,3 +362,16 @@ err:
 
    return -1;
 }
+
+
+int ndata_matchExt( const char *path, const char *ext )
+{
+   int i;
+   /* Find the dot. */
+   for (i=strlen(path)-1; i>0; i--)
+      if (path[i] == '.')
+         break;
+   if (i<=0)
+      return 0;
+   return strcmp( &path[i+1], ext )==0;
+}

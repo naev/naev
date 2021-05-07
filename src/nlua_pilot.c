@@ -64,6 +64,7 @@ static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
 static int pilotL_getPilots( lua_State *L );
+static int pilotL_getHostiles( lua_State *L );
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
@@ -156,6 +157,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "addFleet", pilotL_addFleet },
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
+   { "getHostiles", pilotL_getHostiles },
    { "__eq", pilotL_eq },
    /* Info. */
    { "name", pilotL_name },
@@ -829,6 +831,53 @@ static int pilotL_getPilots( lua_State *L )
    }
    else {
       NLUA_INVALID_PARAMETER(L);
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets hostile pilots to a pilot within a certain distance.
+ *
+ *    @luatparam Pilot pilot Pilot to get hostiles of.
+ *    @luatparam[opt=infinity] number dist Distance to look for hostiles.
+ *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
+ *    @luatreturn {Pilot,...} A table containing the pilots.
+ * @luafunc get
+ */
+static int pilotL_getHostiles( lua_State *L )
+{
+   int i, k, dd;
+   Pilot *p = luaL_validpilot(L,1);
+   double dist = luaL_optnumber(L,2,-1.);
+   int dis = lua_toboolean(L,3);
+   Pilot *const* pilot_stack;
+
+   if (dist >= 0.)
+      dd = dist*dist;
+
+   /* Now put all the matching pilots in a table. */
+   pilot_stack = pilot_getAll();
+   lua_newtable(L);
+   k = 1;
+   for (i=0; i<array_size(pilot_stack); i++) {
+      /* Must be hostile. */
+      if ( !( areEnemies( pilot_stack[i]->faction, p->faction )
+               || ( (p->id == PLAYER_ID)
+                  && pilot_isHostile(pilot_stack[i]) ) ) )
+         continue;
+      /* Check if disabled. */
+      if (dis && pilot_isDisabled(pilot_stack[i]))
+         continue;
+      /* Check distance if necessary. */
+      if (dist >= 0. &&
+            vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos) > dd)
+         continue;
+
+      lua_pushnumber(L, k++); /* key */
+      lua_pushpilot(L, pilot_stack[i]->id); /* value */
+      lua_rawset(L,-3); /* table[key] = value */
    }
 
    return 1;

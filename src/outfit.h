@@ -14,6 +14,7 @@
 #include "shipstats.h"
 #include "sound.h"
 #include "spfx.h"
+#include "nlua.h"
 
 
 /*
@@ -268,7 +269,14 @@ typedef struct OutfitModificationData_ {
    double cargo;     /**< Cargo space modifier. */
    double crew_rel;  /**< Relative crew modification. */
    double mass_rel;  /**< Relative mass modification. */
-   int fuel;      /**< Maximum fuel modifier. */
+   int fuel;         /**< Maximum fuel modifier. */
+
+   /* Lua function references. Set to LUA_NOREF if not used. */
+   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
+   int lua_init;     /**< Run when player enters a system. */
+   int lua_update;   /**< Run periodically. */
+   int lua_ontoggle; /**< Run when toggled. */
+   int lua_onhit;    /**< Run when pilot takes damage. */
 } OutfitModificationData;
 
 /**
