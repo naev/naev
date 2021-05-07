@@ -1026,8 +1026,6 @@ void pilot_calcStats( Pilot* pilot )
          pilot->fuel_max      += o->u.mod.fuel;
          /* Misc. */
          pilot->cap_cargo     += o->u.mod.cargo;
-         pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
-         pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew;
 
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */

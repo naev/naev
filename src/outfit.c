@@ -1695,8 +1695,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"absorb", temp->u.mod.absorb );
       /* misc */
       xmlr_float(node,"cargo",temp->u.mod.cargo);
-      xmlr_float(node,"crew_rel", temp->u.mod.crew_rel);
-      xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
 
       /* Lua stuff. */
       if (xml_isNode(node,"lua")) {
@@ -1794,8 +1792,6 @@ if ((x) != 0) \
    DESC_ADD(-temp->u.mod.energy_loss,  _("%+.1f Energy Per Second") ); /* Bypasses RC stuff. The same as energy_regen but always negative. */
    DESC_ADD( temp->u.mod.absorb,       _("%+.0f Absorption") );
    DESC_ADD( temp->u.mod.cargo,        _("%+.0f Cargo") );
-   DESC_ADD( temp->u.mod.crew_rel,     _("%+.0f %% Crew") );
-   DESC_ADD( temp->u.mod.mass_rel,     _("%+.0f %% Mass") );
 #undef DESC_ADD
 
    /* More processing. */
@@ -1806,8 +1802,6 @@ if ((x) != 0) \
    temp->u.mod.armour_rel /= 100.;
    temp->u.mod.shield_rel /= 100.;
    temp->u.mod.energy_rel /= 100.;
-   temp->u.mod.mass_rel   /= 100.;
-   temp->u.mod.crew_rel   /= 100.;
 }
 
 
