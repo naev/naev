@@ -1119,7 +1119,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    dmg.damage        = MAX( 0., damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = MAX( 0., odmg->disable + damage * w->dam_as_dis_mod );
+   dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable + damage * w->dam_as_dis_mod );
 
    /* Play sound if they have it. */
    s = outfit_soundHit(w->outfit);
@@ -1216,7 +1216,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * dt );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = odmg->disable * dt;
+   dmg.disable       = w->dam_mod * w->strength * odmg->disable * dt;
 
    /* Have pilot take damage and get real damage done. */
    damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
