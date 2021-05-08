@@ -83,6 +83,7 @@ static int pilotL_velocity( lua_State *L );
 static int pilotL_dir( lua_State *L );
 static int pilotL_ew( lua_State *L );
 static int pilotL_temp( lua_State *L );
+static int pilotL_mass( lua_State *L );
 static int pilotL_faction( lua_State *L );
 static int pilotL_spaceworthy( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
@@ -177,6 +178,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "dir", pilotL_dir },
    { "ew", pilotL_ew },
    { "temp", pilotL_temp },
+   { "mass", pilotL_mass },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
    { "spaceworthy", pilotL_spaceworthy },
@@ -1803,6 +1805,22 @@ static int pilotL_temp( lua_State *L )
 
    /* Push direction. */
    lua_pushnumber( L, p->heat_T );
+   return 1;
+}
+
+/**
+ * @brief Gets the mass of a pilot.
+ *
+ * @usage m = p:mass()
+ *
+ *    @luatparam Pilot p Pilot to get mass of.
+ *    @luatreturn number The pilot's current mass (in tonnes).
+ * @luafunc mass
+ */
+static int pilotL_mass( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushnumber( L, p->solid->mass );
    return 1;
 }
 
