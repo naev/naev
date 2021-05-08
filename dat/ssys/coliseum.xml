@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ssys name="Morrigan">
+<ssys name="Coliseum">
  <general>
   <radius>10000.000000</radius>
   <stars>400</stars>
@@ -11,7 +11,7 @@
   <y>-561.000000</y>
  </pos>
  <assets>
-  <asset>Nemain Station</asset>
+  <asset>Morrigan Station</asset>
  </assets>
  <jumps>
   <jump target="Dvaer">

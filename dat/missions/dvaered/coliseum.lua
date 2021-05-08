@@ -5,7 +5,7 @@
   <priority>3</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Nemain Station</planet>
+  <planet>Morrigan Station</planet>
  </avail>
 </mission>
 --]]
@@ -24,7 +24,7 @@ npc_description= _("The Morrigan Tournament organizer.")
 npc_colour     = {1, 0.7, 0.3}
 
 misn_title  = _("Morrigan Tournament")
-misn_desc   = _("Annihilate all enemies in Morrigan.")
+misn_desc   = _("Annihilate all enemies in Coliseum.")
 
 --[[
  0. Go to start position
@@ -163,9 +163,9 @@ function approach_1v1 ()
 
    -- Create the OSD
    osd = misn.osdCreate( _("Thug Decoy"),
-         {_("Go towards the center of Morrigan system"),
+         {_("Go towards the center of the Coliseum system"),
           _("Defeat all the other adversaries"),
-          _("Return no Nemain Station") } )
+          _("Return no Morrigan Station") } )
    misn.osdActive(1)
 
    hook.enter("enter")
@@ -177,8 +177,8 @@ end
 
 
 function enter ()
-   if system.cur() ~= system.get("Morrigan") then
-      player.msg(_("#rMISSION FAILED! You were not supposed to leave Morrigan!"))
+   if system.cur() ~= system.get("Coliseum") then
+      player.msg(_("#rMISSION FAILED! You were not supposed to leave Coliseum!"))
       misn.finish(false)
    end
 
