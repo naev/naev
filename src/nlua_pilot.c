@@ -70,6 +70,7 @@ static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
 static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
+static int pilotL_setTarget( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_activeWeapset( lua_State *L );
@@ -168,6 +169,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "id", pilotL_id },
    { "exists", pilotL_exists },
    { "target", pilotL_target },
+   { "setTarget", pilotL_setTarget },
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "activeWeapset", pilotL_activeWeapset },
@@ -1013,6 +1015,27 @@ static int pilotL_target( lua_State *L )
    /* Push target. */
    lua_pushpilot(L, p->target);
    return 1;
+}
+
+
+/**
+ * @brief Sets the pilot target of the pilot.
+ *
+ *    @luatparam Pilot p Pilot to get target of.
+ *    @luatparam Pilot|nil t Pilot to set the target to or nil to set no target.
+ * @luafunc setTarget
+ */
+static int pilotL_setTarget( lua_State *L )
+{
+   Pilot *p;
+   unsigned int t;
+   p = luaL_validpilot(L,1);
+   if (lua_gettop(L)>1)
+      t = luaL_validpilot(L,2)->id;
+   else
+      t = p->id;
+   p->target = t;
+   return 0;
 }
 
 
