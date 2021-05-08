@@ -9,6 +9,7 @@ API and must be set in the XML file.
 * They are run in a shared state. All global variables will be the same for all outfits of the same type.
 * You can use the 'mem' table to access memory for the particular outfit being used.
 * You have access to the pilotoutfit API which is meant for manipulating po.
+* Use the <desc_extra> field in the XML when describing what the Lua does.
 --]]
 
 -- The init is run when the pilot is created
