@@ -586,12 +586,12 @@ static void map_update( unsigned int wid )
 
    /* Faction */
    window_moveWidget( wid, "txtSFaction", x, y);
-   window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtFaction", x + 50, y-gl_smallFont.h - 5 );
    y -= gl_smallFont.h + h + 5 + 15;
 
    /* Standing */
    window_moveWidget( wid, "txtSStanding", x, y );
-   window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtStanding", x + 50, y-gl_smallFont.h - 5 );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    window_moveWidget( wid, "txtSPresence", x, y );
@@ -1710,7 +1710,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
    unknownPresence = 0;
 
    for (i = 0; i < array_size(sys->presence); i++) {
-      if (sys->presence[ i ].value <= 0)
+      if (sys->presence[i].value <= 0)
          continue;
 
       hasPresence = 1;
@@ -1719,7 +1719,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          break;
       }
       /* Use map grey instead of default neutral colour */
-      l += scnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
+      l += scnprintf( &buf[l], sizeof(buf) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
                       omniscient ? faction_name( sys->presence[ i ].faction )
                                  : faction_shortname( sys->presence[ i ].faction ),
                       faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
@@ -1727,11 +1727,11 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          break;
    }
    if (unknownPresence != 0 && l <= sizeof( buf ))
-      l += scnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
+      l += scnprintf( &buf[l], sizeof(buf) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
                       unknownPresence );
 
    if (hasPresence == 0)
-      snprintf( buf, sizeof( buf ), _( "None" ) );
+      snprintf( buf, sizeof(buf), _("None") );
 
    window_modifyText( wid, name, buf );
 }
