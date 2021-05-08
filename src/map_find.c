@@ -430,7 +430,8 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
             _("%s (%s)"), _(sys->name), route_info );
    else
       snprintf( found[n].display, sizeof(found[n].display),
-            _("#%c%s (%s, %s)"), map_getPlanetColourChar(pnt),
+            _("#%c%s%s (%s, %s)"), map_getPlanetColourChar(pnt),
+            planet_getSymbol(pnt),
             _(pnt->name), _(sys->name), route_info );
 }
 
