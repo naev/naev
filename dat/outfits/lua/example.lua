@@ -20,6 +20,13 @@ end
 function update( p, po, dt )
 end
 
+-- When the pilot is out of energy, this function triggers. Note that before
+-- this triggers, 'ontoggle( p, po false )' will be run if it exists.
+-- This is especially useful for outfits that can't be toggled, but want to
+-- turn off when they run out of energy.
+function outofenergy( p, po )
+end
+
 -- The onhit function is run when the pilot 'p' takes damage
 -- armour is the amount of armour damage taken (in MJ)
 -- shield is the amount of shield damage taken (in MJ)
@@ -64,13 +71,6 @@ function update( p, po, dt )
 
       -- Active time over
       if mem.timer < 0 then
-         disable( po )
-         return
-      end
-
-      -- Out of energy
-      local e = p:energy()
-      if e <= 0 then
          disable( po )
          return
       end

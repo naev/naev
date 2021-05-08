@@ -1665,6 +1665,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->u.mod.lua_update = LUA_NOREF;
    temp->u.mod.lua_ontoggle = LUA_NOREF;
    temp->u.mod.lua_onhit = LUA_NOREF;
+   temp->u.mod.lua_outofenergy = LUA_NOREF;
 
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -1743,6 +1744,12 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          nlua_getenv( env, "onhit" );
          if (!lua_isnil( naevL, -1 ))
             temp->u.mod.lua_onhit = luaL_ref(naevL,LUA_REGISTRYINDEX);
+         else
+            lua_pop(naevL,1);
+
+         nlua_getenv( env, "outofenergy" );
+         if (!lua_isnil( naevL, -1 ))
+            temp->u.mod.lua_outofenergy = luaL_ref(naevL,LUA_REGISTRYINDEX);
          else
             lua_pop(naevL,1);
          continue;

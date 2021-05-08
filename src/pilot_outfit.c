@@ -1295,6 +1295,44 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
 
 
 /**
+ * @brief Handles when the pilot runs out of energy.
+ *
+ *    @param pilot Pilot that ran out of energy.
+ */
+void pilot_outfitLOutfofenergy( Pilot *pilot )
+{
+   int i;
+   PilotOutfitSlot *po;
+   pilotoutfit_modified = 0;
+   for (i=0; i<array_size(pilot->outfits); i++) {
+      po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_outofenergy == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: outofenergy( p, po ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_outofenergy); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      if (nlua_pcall( env, 2, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'outofenergy':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
+}
+
+
+/**
  * @brief Runs the pilot's Lua outfits onhit script.
  *
  *    @param pilot Pilot to run Lua outfits for.
@@ -1339,7 +1377,7 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned in
 
 
 /**
- * @brief Handle thes manual toggle of an outfit.
+ * @brief Handle the manual toggle of an outfit.
  *
  *    @param pilot Pilot to toggle outfit of.
  *    @param po Outfit to be toggling.
