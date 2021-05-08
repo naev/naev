@@ -10,7 +10,7 @@
   <gfx_store>ioncannon.png</gfx_store>
   <cpu>-60</cpu>
  </general>
- <specific type="bolt" secondary="1">
+ <specific type="bolt">
   <gfx>ionL.png</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>

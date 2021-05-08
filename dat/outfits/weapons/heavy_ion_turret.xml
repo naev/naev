@@ -11,7 +11,7 @@
   <gfx_store>ionturret.png</gfx_store>
   <cpu>-75</cpu>
  </general>
- <specific type="turret bolt" secondary="1">
+ <specific type="turret bolt">
   <gfx>ionL.png</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>
