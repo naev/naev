@@ -41,6 +41,7 @@ typedef enum ShipStatsType_ {
 
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */
+   SS_TYPE_D_LAND_DELAY,      /**< Modulates the time that passes during landing. */
    SS_TYPE_D_CARGO_INERTIA,   /**< Modifies the effect of cargo_mass. */
 
    /* Stealth. */
@@ -54,6 +55,11 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LAUNCH_DAMAGE,   /**< Launch damage for missiles. */
    SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */
    SS_TYPE_D_LAUNCH_LOCKON,   /**< Lock-on speed of launchers. */
+
+   /* Fighter Bays. */
+   SS_TYPE_D_FBAY_DAMAGE,     /**< Fighter bay fighter damage bonus (all weapons). */
+   SS_TYPE_D_FBAY_HEALTH,     /**< Fighter bay fighter health bonus (shield and armour). */
+   SS_TYPE_D_FBAY_MOVEMENT,   /**< Fighter bay fighter movement bonus (turn, thrust, and speed). */
 
    /* Forward mounts. */
    SS_TYPE_D_FORWARD_HEAT,    /**< Heat generation for cannons. */
@@ -80,6 +86,9 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_CREW,            /**< Ship crew. */
    SS_TYPE_D_MASS,            /**< Ship mass. */
    SS_TYPE_D_ENGINE_LIMIT_REL, /**< Modifier for the ship's engine limit. */
+   SS_TYPE_D_LOOT_MOD,        /**< Affects boarding rewards. */
+   SS_TYPE_D_TIME_MOD,        /**< Time dilation modifier. */
+   SS_TYPE_D_TIME_SPEEDUP,    /**< Makes the pilot operate at a higher dt. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -153,15 +162,6 @@ typedef struct ShipStatList_ {
  *  1 or 0 values wher 1 indicates property is set.
  */
 typedef struct ShipStats_ {
-#if 0
-   /* Corvette type. */
-   double afterburner_energy; /**< Energy used by afterburner. */
-
-   /* Carrier type. */
-   double fighterbay_cpu; /**< CPU usage by fighter bays. */
-   double fighterbay_rate; /**< Launch rate of fighter bay. */
-#endif
-
    /* General */
    double speed_mod;          /**< Speed multiplier. */
    double turn_mod;           /**< Turn multiplier. */
@@ -184,6 +184,7 @@ typedef struct ShipStats_ {
 
    /* Freighter-type. */
    double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */
+   double land_delay;      /**< Modulates the time that passes during landing. */
    double cargo_inertia;   /**< Lowers the effect of cargo mass. */
 
    /* Stealth. */
@@ -203,6 +204,11 @@ typedef struct ShipStats_ {
    double launch_damage;   /**< Damage of launchers. */
    double ammo_capacity;   /**< Capacity of launchers. */
    double launch_lockon;   /**< Lock on speed of launchers. */
+
+   /* Fighter bays. */
+   double fbay_damage;     /**< Fighter bay fighter damage (all weapons). */
+   double fbay_health;     /**< Fighter bay fighter health (armour and shield). */
+   double fbay_movement;   /**< Fighter bay fighter movement (thrust, turn, and speed). */
 
    /* Fighter/Corvette type. */
    double fwd_heat;        /**< Heat of forward mounts. */
@@ -230,6 +236,9 @@ typedef struct ShipStats_ {
    int misc_reverse_thrust;  /**< Slows down the ship instead of turning it around. */
    int misc_asteroid_scan;   /**< Able to scan asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
+   double loot_mod;           /**< Boarding loot reward bonus. */
+   double time_mod;           /**< Time dilation modifier. */
+   double time_speedup;       /**< Makes the pilot operate at higher speeds. */
 } ShipStats;
 
 
@@ -248,6 +257,7 @@ void ss_free( ShipStatList *ll );
  * Manipulation
  */
 int ss_statsInit( ShipStats *stats );
+int ss_statsMerge( ShipStats *dest, const ShipStats *src );
 int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipStats *amount );
 int ss_statsModFromList( ShipStats *stats, const ShipStatList* list, const ShipStats *amount );
 
@@ -261,5 +271,10 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline );
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline );
 int ss_csv( const ShipStats *s, char *buf, int len );
 
+/*
+ * Manipulation.
+ */
+int ss_statsSet( ShipStats *s, const char *name, double value );
+double ss_statsGet( ShipStats *s, const char *name );
 
 #endif /* SHIPSTATS_H */

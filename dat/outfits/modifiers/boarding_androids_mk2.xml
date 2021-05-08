@@ -10,6 +10,6 @@
   <gfx_store>cargo_pod.png</gfx_store>
  </general>
  <specific type="modification">
-  <crew_mod>35</crew_mod>
+  <loot_mod>50</loot_mod>
  </specific>
 </outfit>

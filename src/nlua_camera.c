@@ -208,7 +208,7 @@ static int camL_shake( lua_State *L )
          NLUA_INVALID_PARAMETER(L);
    }
 
-   spfx_shake( SHAKE_MAX * amplitude );
+   spfx_shake( amplitude );
    return 0;
 }
 

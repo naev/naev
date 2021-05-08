@@ -1473,6 +1473,8 @@ dat/outfits/launchers/zalek_heavy_drone_fighter_bay.xml
 dat/outfits/launchers/zalek_hunter_launcher.xml
 dat/outfits/launchers/zalek_light_drone_fighter_bay.xml
 dat/outfits/launchers/zalek_reaper_launcher.xml
+dat/outfits/lua/emergency_stasis_inducer.xml
+dat/outfits/lua/weakness_harmonizer_ai.xml
 dat/outfits/maps/localmap.xml
 dat/outfits/maps/map_collective_space.xml
 dat/outfits/maps/map_dvaered_core.xml
@@ -2408,6 +2410,9 @@ dat/missions/zalek/sciencegonewrong/02_sciwrong.lua
 dat/missions/zalek/zlk_cargorun.lua
 dat/missions/zalek/zlk_rehab.lua
 dat/missions/zalek/zlk_test.lua
+dat/outfits/lua/emergency_stasis_inducer.lua
+dat/outfits/lua/example.lua
+dat/outfits/lua/weakness_harmonizer_ai.lua
 dat/rescue.lua
 dat/scripts/cargo_common.lua
 dat/scripts/chatter.lua
@@ -2657,6 +2662,8 @@ src/nlua_outfit.c
 src/nlua_outfit.h
 src/nlua_pilot.c
 src/nlua_pilot.h
+src/nlua_pilotoutfit.c
+src/nlua_pilotoutfit.h
 src/nlua_planet.c
 src/nlua_planet.h
 src/nlua_player.c

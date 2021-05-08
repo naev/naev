@@ -95,6 +95,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,             gettext_noop("CPU Capacity") ),
 
    DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,          gettext_noop("Jump Time") ),
+   DI_ELEM( SS_TYPE_D_LAND_DELAY,         land_delay,          gettext_noop("Landing Time") ),
    DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia,       gettext_noop("Cargo Inertia") ),
 
    D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             gettext_noop("Cloaking") ),
@@ -106,6 +107,10 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE,      launch_damage,       gettext_noop("Damage (Launcher)") ),
    D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       gettext_noop("Ammo Capacity") ),
    D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       gettext_noop("Launch Lock-on") ),
+
+   D__ELEM( SS_TYPE_D_FBAY_DAMAGE,        fbay_damage,         gettext_noop("Fighter Damage") ),
+   D__ELEM( SS_TYPE_D_FBAY_HEALTH,        fbay_health,         gettext_noop("Fighter Health") ),
+   D__ELEM( SS_TYPE_D_FBAY_MOVEMENT,      fbay_movement,       gettext_noop("Fighter Movement") ),
 
    DI_ELEM( SS_TYPE_D_FORWARD_HEAT,       fwd_heat,            gettext_noop("Heat (Cannon)") ),
    D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,     fwd_damage,          gettext_noop("Damage (Cannon)") ),
@@ -128,6 +133,9 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_CREW,               crew_mod,            gettext_noop("Crew") ),
    DI_ELEM( SS_TYPE_D_MASS,               mass_mod,            gettext_noop("Ship Mass") ),
    D__ELEM( SS_TYPE_D_ENGINE_LIMIT_REL,   engine_limit_rel,    gettext_noop("Engine Mass Limit") ),
+   D__ELEM( SS_TYPE_D_LOOT_MOD,           loot_mod,            gettext_noop("Boarding Bonus") ),
+   DI_ELEM( SS_TYPE_D_TIME_MOD,           time_mod,            gettext_noop("Time Constant") ),
+   D__ELEM( SS_TYPE_D_TIME_SPEEDUP,       time_speedup,        gettext_noop("Speed-Up") ),
 
    A__ELEM( SS_TYPE_A_ENERGY_FLAT,        energy_flat,         gettext_noop("Energy Capacity") ),
    AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        gettext_noop("Energy Usage") ),
@@ -261,6 +269,59 @@ int ss_statsInit( ShipStats *stats )
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
          case SS_DATA_TYPE_INTEGER:
          case SS_DATA_TYPE_BOOLEAN:
+            break;
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Merges two different ship stats.
+ *
+ *    @param dest Destination ship stats.
+ *    @param src Source to be merged with destination.
+ */
+int ss_statsMerge( ShipStats *dest, const ShipStats *src )
+{
+   int i;
+   int *destint;
+   const int *srcint;
+   double *destdbl;
+   const double *srcdbl;
+   char *destptr;
+   const char *srcptr;
+   const ShipStatsLookup *sl;
+
+   destptr = (char*) dest;
+   srcptr = (const char*) src;
+   for (i=0; i<SS_TYPE_SENTINEL; i++) {
+      sl = &ss_lookup[ i ];
+
+      switch (sl->data) {
+         case SS_DATA_TYPE_DOUBLE:
+            destdbl = (double*) &destptr[ sl->offset ];
+            srcdbl = (const double*) &srcptr[ sl->offset ];
+            *destdbl = (*destdbl) * (*srcdbl);
+            break;
+
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+            destdbl = (double*) &destptr[ sl->offset ];
+            srcdbl = (const double*) &srcptr[ sl->offset ];
+            *destdbl = (*destdbl) + (*srcdbl);
+            break;
+
+         case SS_DATA_TYPE_INTEGER:
+            destint = (int*) &destptr[ sl->offset ];
+            srcint = (const int*) &srcptr[ sl->offset ];
+            *destint = (*destint) + (*srcint);
+            break;
+
+         case SS_DATA_TYPE_BOOLEAN:
+            destint = (int*) &destptr[ sl->offset ];
+            srcint = (const int*) &srcptr[ sl->offset ];
+            *destint = !!((*destint) + (*srcint));
             break;
       }
    }
@@ -671,3 +732,83 @@ void ss_free( ShipStatList *ll )
 
 
 
+/**
+ * @brief Sets a ship stat by name.
+ */
+int ss_statsSet( ShipStats *s, const char *name, double value )
+{
+   const ShipStatsLookup *sl;
+   ShipStatsType type;
+   char *ptr;
+   double *destdbl;
+   int *destint;
+
+   type = ss_typeFromName( name );
+   if (type == SS_TYPE_NIL) {
+      WARN(_("Unknown ship stat type '%s'!"), name );
+      return -1;
+   }
+
+   sl = &ss_lookup[ type ];
+   ptr = (char*) s;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         destdbl = (double*) &ptr[ sl->offset ];
+         *destdbl = 1.0 + value / 100.;
+         break;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         destdbl  = (double*) &ptr[ sl->offset ];
+         *destdbl = value;
+         break;
+
+      case SS_DATA_TYPE_BOOLEAN:
+         destint  = (int*) &ptr[ sl->offset ];
+         *destint = !(fabs(value) > 1e-5);
+         break;
+
+      case SS_DATA_TYPE_INTEGER:
+         destint  = (int*) &ptr[ sl->offset ];
+         *destint = round(value);
+         break;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Gets a ship stat value by name.
+ */
+double ss_statsGet( ShipStats *s, const char *name )
+{
+   const ShipStatsLookup *sl;
+   ShipStatsType type;
+   const char *ptr;
+   const double *destdbl;
+   const int *destint;
+
+   type = ss_typeFromName( name );
+   if (type == SS_TYPE_NIL) {
+      WARN(_("Unknown ship stat type '%s'!"), name );
+      return 0;
+   }
+
+   sl = &ss_lookup[ type ];
+   ptr = (const char*) s;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         destdbl = (const double*) &ptr[ sl->offset ];
+         return 100.*((*destdbl) - 1.0);
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         destdbl  = (const double*) &ptr[ sl->offset ];
+         return *destdbl;
+
+      case SS_DATA_TYPE_BOOLEAN:
+      case SS_DATA_TYPE_INTEGER:
+         destint  = (const int*) &ptr[ sl->offset ];
+         return *destint;
+   }
+   return 0;
+}

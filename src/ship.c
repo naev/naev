@@ -1041,11 +1041,13 @@ int ships_load (void)
    for (nfiles=0; ship_files[nfiles]!=NULL; nfiles++) {}
 
    /* Initialize stack if needed. */
-   if (ship_stack == NULL) {
+   if (ship_stack == NULL)
       ship_stack = array_create_size(Ship, nfiles);
-   }
 
    for (i=0; ship_files[i]!=NULL; i++) {
+      if (!ndata_matchExt( ship_files[i], "xml" ))
+         continue;
+
       /* Get the file name .*/
       asprintf( &file, "%s%s", SHIP_DATA_PATH, ship_files[i] );
 

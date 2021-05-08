@@ -991,9 +991,12 @@ void player_think( Pilot* pplayer, const double dt )
       return;
    }
 
+   /* We always have to run ai_think in the case the player has escorts so that
+    * they properly form formations. */
+   ai_think( pplayer, dt );
+
    /* Under manual control is special. */
    if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL )) {
-      ai_think( pplayer, dt );
       return;
    }
 
@@ -1646,7 +1649,7 @@ int player_getHypPreempt(void)
 double player_dt_default (void)
 {
    if (player.p != NULL && player.p->ship != NULL)
-      return player.p->ship->dt_default * player.dt_mod;
+      return player.p->stats.time_mod * player.p->ship->dt_default * player.dt_mod;
 
    return player.dt_mod;
 }
@@ -1806,6 +1809,9 @@ void player_brokeHyperspace (void)
             (pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
          space_calcJumpInPos( cur_system, sys, &pilot_stack[i]->solid->pos, &pilot_stack[i]->solid->vel, &pilot_stack[i]->solid->dir );
          ai_cleartasks(pilot_stack[i]);
+
+         /* Run Lua stuff. */
+         pilot_outfitLInit( pilot_stack[i] );
       }
    }
 
@@ -1824,6 +1830,9 @@ void player_brokeHyperspace (void)
                map_npath );
       }
    }
+
+   /* Update lua stuff. */
+   pilot_outfitLInit( player.p );
 
    /* Safe since this is run in the player hook section. */
    hooks_run( "jumpin" );
@@ -2302,8 +2311,8 @@ void player_destroyed (void)
    player_autonavEnd();
 
    /* Reset time compression when player dies. */
-   pause_setSpeed( 1. );
-   sound_setSpeed( 1. );
+   pause_setSpeed(1.);
+   sound_setSpeed(1.);
 }
 
 
@@ -3177,6 +3186,7 @@ Planet* player_load( xmlNodePtr parent )
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
+   player.speed = 1.;
    pnt = NULL;
    map_cleanup();
 
