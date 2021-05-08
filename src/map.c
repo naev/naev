@@ -1700,7 +1700,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
 {
    int    i;
    size_t l;
-   char   buf[ 1024 ];
+   char   buf[STRMAX_SHORT];
    int    hasPresence;
    double unknownPresence;
 
@@ -1709,12 +1709,12 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
    hasPresence     = 0;
    unknownPresence = 0;
 
-   for ( i = 0; i < array_size(sys->presence); i++ ) {
-      if ( sys->presence[ i ].value <= 0 )
+   for (i = 0; i < array_size(sys->presence); i++) {
+      if (sys->presence[ i ].value <= 0)
          continue;
 
       hasPresence = 1;
-      if ( !omniscient && !faction_isKnown( sys->presence[ i ].faction ) ) {
+      if (!omniscient && !faction_isKnown( sys->presence[ i ].faction )) {
          unknownPresence += sys->presence[ i ].value;
          break;
       }
@@ -1723,17 +1723,16 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
                       omniscient ? faction_name( sys->presence[ i ].faction )
                                  : faction_shortname( sys->presence[ i ].faction ),
                       faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
-      if ( l > sizeof( buf ) )
+      if (l > sizeof( buf ))
          break;
    }
-   if ( unknownPresence != 0 && l <= sizeof( buf ) )
+   if (unknownPresence != 0 && l <= sizeof( buf ))
       l += scnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
                       unknownPresence );
 
-   if ( hasPresence == 0 )
+   if (hasPresence == 0)
       snprintf( buf, sizeof( buf ), _( "None" ) );
 
-   (void) l;
    window_modifyText( wid, name, buf );
 }
 
