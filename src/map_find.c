@@ -61,6 +61,7 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
 static int map_sortCompare( const void *p1, const void *p2 );
 static void map_sortFound( map_find_t *found, int n );
 static char map_getPlanetColourChar( Planet *p );
+static const char *map_getPlanetSymbol( Planet *p );
 /* Fuzzy outfit/ship stuff. */
 static char **map_fuzzyOutfits( Outfit **o, const char *name );
 static char **map_outfitsMatch( const char *name );
@@ -431,7 +432,7 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
    else
       snprintf( found[n].display, sizeof(found[n].display),
             _("#%c%s%s (%s, %s)"), map_getPlanetColourChar(pnt),
-            planet_getSymbol(pnt),
+            map_getPlanetSymbol(pnt),
             _(pnt->name), _(sys->name), route_info );
 }
 
@@ -592,6 +593,16 @@ static char map_getPlanetColourChar( Planet *p )
    colcode = planet_getColourChar(p);
 
    return colcode;
+}
+
+
+/**
+ * @brief Gets a symbol for a planet, simplified for map use.
+ */
+static const char *map_getPlanetSymbol( Planet *p )
+{
+   planet_updateLand(p);
+   return planet_getSymbol(p);
 }
 
 
