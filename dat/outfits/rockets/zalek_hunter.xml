@@ -19,7 +19,7 @@
   <speed>550</speed>
   <resist>35</resist>
   <damage>
-   <type>impact</type>
+   <type>normal</type>
    <penetrate>36</penetrate>
    <physical>200</physical>
    <disable>1</disable>

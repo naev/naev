@@ -49,7 +49,7 @@ equip_typeOutfits_hulls["Reverence"] = {
    "S&K Medium Combat Plating",
 }
 equip_typeOutfits_hulls["Dogma"] = {
-   "Unicorp B-72 Heavy Plating", "S&K Superheavy Combat Plating",
+   "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating",
 }
 equip_typeOutfits_hulls["Divinity"] = {
    "S&K Superheavy Combat Plating",

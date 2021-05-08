@@ -314,6 +314,7 @@ equip_classOutfits_weapons = {
    },
    ["Carrier"] = {
       {
+         varied = true;
          "Lancelot Fighter Bay",
       },
       {
@@ -656,16 +657,15 @@ equip_typeOutfits_coreSystems = {
    },
    ["Ira"] = {
       probability = {
-         ["Superheavy Bioship Brain Stage X"] = 7
+         ["Heavy Bioship Brain Stage X"] = 6
       };
-      "Superheavy Bioship Brain Stage 1",
-      "Superheavy Bioship Brain Stage 2",
-      "Superheavy Bioship Brain Stage 3",
-      "Superheavy Bioship Brain Stage 4",
-      "Superheavy Bioship Brain Stage 5",
-      "Superheavy Bioship Brain Stage 6",
-      "Superheavy Bioship Brain Stage 7",
-      "Superheavy Bioship Brain Stage X",
+      "Heavy Bioship Brain Stage 1",
+      "Heavy Bioship Brain Stage 2",
+      "Heavy Bioship Brain Stage 3",
+      "Heavy Bioship Brain Stage 4",
+      "Heavy Bioship Brain Stage 5",
+      "Heavy Bioship Brain Stage 6",
+      "Heavy Bioship Brain Stage X",
    },
    ["Arx"] = {
       probability = {
@@ -763,16 +763,15 @@ equip_typeOutfits_engines = {
    },
    ["Ira"] = {
       probability = {
-         ["Superheavy Bioship Fast Fin Stage X"] = 7
+         ["Heavy Bioship Fast Fin Stage X"] = 6
       };
-      "Superheavy Bioship Fast Fin Stage 1",
-      "Superheavy Bioship Fast Fin Stage 2",
-      "Superheavy Bioship Fast Fin Stage 3",
-      "Superheavy Bioship Fast Fin Stage 4",
-      "Superheavy Bioship Fast Fin Stage 5",
-      "Superheavy Bioship Fast Fin Stage 6",
-      "Superheavy Bioship Fast Fin Stage 7",
-      "Superheavy Bioship Fast Fin Stage X",
+      "Heavy Bioship Fast Fin Stage 1",
+      "Heavy Bioship Fast Fin Stage 2",
+      "Heavy Bioship Fast Fin Stage 3",
+      "Heavy Bioship Fast Fin Stage 4",
+      "Heavy Bioship Fast Fin Stage 5",
+      "Heavy Bioship Fast Fin Stage 6",
+      "Heavy Bioship Fast Fin Stage X",
    },
    ["Arx"] = {
       probability = {
@@ -868,16 +867,15 @@ equip_typeOutfits_hulls = {
    },
    ["Ira"] = {
       probability = {
-         ["Superheavy Bioship Shell Stage X"] = 7,
+         ["Heavy Bioship Shell Stage X"] = 6,
       };
-      "Superheavy Bioship Shell Stage 1",
-      "Superheavy Bioship Shell Stage 2",
-      "Superheavy Bioship Shell Stage 3",
-      "Superheavy Bioship Shell Stage 4",
-      "Superheavy Bioship Shell Stage 5",
-      "Superheavy Bioship Shell Stage 6",
-      "Superheavy Bioship Shell Stage 7",
-      "Superheavy Bioship Shell Stage X",
+      "Heavy Bioship Shell Stage 1",
+      "Heavy Bioship Shell Stage 2",
+      "Heavy Bioship Shell Stage 3",
+      "Heavy Bioship Shell Stage 4",
+      "Heavy Bioship Shell Stage 5",
+      "Heavy Bioship Shell Stage 6",
+      "Heavy Bioship Shell Stage X",
    },
    ["Arx"] = {
       probability = {
@@ -1028,12 +1026,159 @@ equip_typeOutfits_weapons = {
       },
       {
          varied = true, probability = {
-            ["BioPlasma Organ Stage X"] = 3,
+            ["BioPlasma Stinger Stage X"] = 3,
          };
-         "Ultralight BioPlasma Organ Stage 1",
-         "Ultralight BioPlasma Organ Stage 2",
-         "Ultralight BioPlasma Organ Stage 3",
-         "Ultralight BioPlasma Organ Stage X",
+         "BioPlasma Stinger Stage 1", "BioPlasma Stinger Stage 2",
+         "BioPlasma Stinger Stage 3", "BioPlasma Stinger Stage X",
+      },
+   },
+   ["Reaver"] = {
+      {
+         "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
+         "Unicorp Medusa Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Stinger Stage X"] = 4,
+         };
+         "BioPlasma Claw Stage 1", "BioPlasma Claw Stage 2",
+         "BioPlasma Claw Stage 3", "BioPlasma Claw Stage 4",
+         "BioPlasma Claw Stage X",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Stinger Stage X"] = 3,
+         };
+         "BioPlasma Stinger Stage 1", "BioPlasma Stinger Stage 2",
+         "BioPlasma Stinger Stage 3", "BioPlasma Stinger Stage X",
+      },
+   },
+   ["Marauder"] = {
+      {
+         varied = true;
+         "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
+         "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
+         "Unicorp Medusa Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Claw Stage X"] = 4,
+         };
+         "BioPlasma Claw Stage 1", "BioPlasma Claw Stage 2",
+         "BioPlasma Claw Stage 3", "BioPlasma Claw Stage 4",
+         "BioPlasma Claw Stage X",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Stinger Stage X"] = 3,
+         };
+         "BioPlasma Stinger Stage 1", "BioPlasma Stinger Stage 2",
+         "BioPlasma Stinger Stage 3", "BioPlasma Stinger Stage X",
+      },
+   },
+   ["Odium"] = {
+      {
+         varied = true;
+         "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
+         "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
+         "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
+         "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+         "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
+         "TeraCom Imperator Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Fang Stage X"] = 5,
+         };
+         "BioPlasma Fang Stage 1", "BioPlasma Fang Stage 2",
+         "BioPlasma Fang Stage 3", "BioPlasma Fang Stage 4",
+         "BioPlasma Fang Stage 5", "BioPlasma Fang Stage X",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Claw Stage X"] = 4,
+         };
+         "BioPlasma Claw Stage 1", "BioPlasma Claw Stage 2",
+         "BioPlasma Claw Stage 3", "BioPlasma Claw Stage 4",
+         "BioPlasma Claw Stage X",
+      },
+   },
+   ["Nyx"] = {
+      {
+         varied = true, probability = {
+            ["BioPlasma Talon Stage X"] = 6,
+         };
+         "BioPlasma Talon Stage 1", "BioPlasma Talon Stage 2",
+         "BioPlasma Talon Stage 3", "BioPlasma Talon Stage 4",
+         "BioPlasma Talon Stage 5", "BioPlasma Talon Stage 6",
+         "BioPlasma Talon Stage X",
+      },
+      {
+         num = 1;
+         "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+      },
+      {
+         "Plasma Cluster Cannon",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Claw Stage X"] = 4,
+         };
+         "BioPlasma Claw Stage 1", "BioPlasma Claw Stage 2",
+         "BioPlasma Claw Stage 3", "BioPlasma Claw Stage 4",
+         "BioPlasma Claw Stage X",
+      },
+   },
+   ["Ira"] = {
+      {
+         num = 1;
+         "TeraCom Fury Launcher", "Enygma Systems Turreted Fury Launcher",
+         "TeraCom Headhunter Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Talon Stage X"] = 6,
+         };
+         "BioPlasma Talon Stage 1", "BioPlasma Talon Stage 2",
+         "BioPlasma Talon Stage 3", "BioPlasma Talon Stage 4",
+         "BioPlasma Talon Stage 5", "BioPlasma Talon Stage 6",
+         "BioPlasma Talon Stage X",
+      },
+   },
+   ["Arx"] = {
+      {
+         varied = true;
+         -- TODO: Replace this with Soromid Brigand fighter bays.
+         "Lancelot Fighter Bay",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Tentacle Stage X"] = 7,
+         };
+         "BioPlasma Tentacle Stage 1", "BioPlasma Tentacle Stage 2",
+         "BioPlasma Tentacle Stage 3", "BioPlasma Tentacle Stage 4",
+         "BioPlasma Tentacle Stage 5", "BioPlasma Tentacle Stage 6",
+         "BioPlasma Tentacle Stage 7", "BioPlasma Tentacle Stage X",
+      },
+      {
+         "Heavy Ripper Turret", "Grave Beam",
+      },
+   },
+   ["Vox"] = {
+      {
+         num = 1;
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Tentacle Stage X"] = 7,
+         };
+         "BioPlasma Tentacle Stage 1", "BioPlasma Tentacle Stage 2",
+         "BioPlasma Tentacle Stage 3", "BioPlasma Tentacle Stage 4",
+         "BioPlasma Tentacle Stage 5", "BioPlasma Tentacle Stage 6",
+         "BioPlasma Tentacle Stage 7", "BioPlasma Tentacle Stage X",
       },
    },
 }

@@ -67,8 +67,16 @@
   <item>Turreted Convulsion Launcher</item>
   <item>Za'lek Hunter Launcher</item>
   <item>Za'lek Reaper Launcher</item>
-  <item>Ultralight BioPlasma Organ Stage 1</item>
-  <item>Ultralight BioPlasma Organ Stage X</item>
+  <item>BioPlasma Stinger Stage 1</item>
+  <item>BioPlasma Stinger Stage X</item>
+  <item>BioPlasma Claw Stage 1</item>
+  <item>BioPlasma Claw Stage X</item>
+  <item>BioPlasma Fang Stage 1</item>
+  <item>BioPlasma Fang Stage X</item>
+  <item>BioPlasma Talon Stage 1</item>
+  <item>BioPlasma Talon Stage X</item>
+  <item>BioPlasma Tentacle Stage 1</item>
+  <item>BioPlasma Tentacle Stage X</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -136,6 +144,7 @@
   <item>Sensor Array</item>
   <item>Jump Scanner</item>
   <item>Lancelot Fighter Bay</item>
+  <item>Mini Lancelot Fighter Bay</item>
   <item>Empire Lancelot Fighter Bay</item>
   <item>Fidelity Fighter Bay</item>
   <item>Drone Fighter Bay</item>
@@ -204,9 +213,7 @@
   <item>Za'lek Test Engine</item>
   <item>Patchwork Light Plating</item>
   <item>Unicorp D-2 Light Plating</item>
-  <item>Unicorp B-2 Light Plating</item>
   <item>Unicorp D-4 Light Plating</item>
-  <item>Unicorp B-4 Light Plating</item>
   <item>S&amp;K Ultralight Combat Plating</item>
   <item>S&amp;K Ultralight Stealth Plating</item>
   <item>S&amp;K Light Combat Plating</item>
@@ -214,9 +221,7 @@
   <item>S&amp;K Small Cargo Hull</item>
   <item>Patchwork Medium Plating</item>
   <item>Unicorp D-12 Medium Plating</item>
-  <item>Unicorp B-12 Medium Plating</item>
   <item>Unicorp D-24 Medium Plating</item>
-  <item>Unicorp B-24 Medium Plating</item>
   <item>S&amp;K Medium Combat Plating</item>
   <item>S&amp;K Medium Stealth Plating</item>
   <item>S&amp;K Medium Cargo Hull</item>
@@ -224,9 +229,7 @@
   <item>S&amp;K Medium-Heavy Combat Plating</item>
   <item>Patchwork Heavy Plating</item>
   <item>Unicorp D-48 Heavy Plating</item>
-  <item>Unicorp B-48 Heavy Plating</item>
   <item>Unicorp D-72 Heavy Plating</item>
-  <item>Unicorp B-72 Heavy Plating</item>
   <item>S&amp;K Heavy Combat Plating</item>
   <item>S&amp;K Large Cargo Hull</item>
   <item>S&amp;K Superheavy Combat Plating</item>
@@ -596,6 +599,7 @@
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Lancelot Fighter Bay</item>
+  <item>Mini Lancelot Fighter Bay</item>
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
@@ -617,6 +621,7 @@
   <item>Milspec Scrambler</item>
   <item>Milspec Jammer</item>
   <item>Lancelot Fighter Bay</item>
+  <item>Mini Lancelot Fighter Bay</item>
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
@@ -690,7 +695,11 @@
 
  <!-- Bioship outfits -->
  <tech name="Bioship Outfits">
-  <item>Ultralight BioPlasma Organ Stage 1</item>
+  <item>BioPlasma Stinger Stage 1</item>
+  <item>BioPlasma Claw Stage 1</item>
+  <item>BioPlasma Fang Stage 1</item>
+  <item>BioPlasma Talon Stage 1</item>
+  <item>BioPlasma Tentacle Stage 1</item>
   <item>Ultralight Bioship Brain Stage 1</item>
   <item>Light Bioship Brain Stage 1</item>
   <item>Medium Bioship Brain Stage 1</item>
@@ -930,12 +939,12 @@
   <item>Unicorp D-72 Heavy Plating</item>
  </tech>
  <tech name="Hulls Medium">
-  <item>Unicorp B-2 Light Plating</item>
-  <item>Unicorp B-4 Light Plating</item>
-  <item>Unicorp B-12 Medium Plating</item>
-  <item>Unicorp B-24 Medium Plating</item>
-  <item>Unicorp B-48 Heavy Plating</item>
-  <item>Unicorp B-72 Heavy Plating</item>
+  <item>Unicorp D-2 Light Plating</item>
+  <item>Unicorp D-4 Light Plating</item>
+  <item>Unicorp D-12 Medium Plating</item>
+  <item>Unicorp D-24 Medium Plating</item>
+  <item>Unicorp D-48 Heavy Plating</item>
+  <item>Unicorp D-72 Heavy Plating</item>
  </tech>
  <tech name="Hulls High">
   <item>S&amp;K Ultralight Combat Plating</item>

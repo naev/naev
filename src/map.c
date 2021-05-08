@@ -898,9 +898,9 @@ else (x) = MAX( y, (x) - dt )
    if (map_alpha_faction > 0.)
       map_renderFactionDisks( x, y, 0, map_alpha_faction );
 
-      /* Render enviromental features. */
+      /* Render environmental features. */
    if (map_alpha_env > 0.)
-      map_renderSystemEnviroment( x, y, 0, map_alpha_env );
+      map_renderSystemEnvironment( x, y, 0, map_alpha_env );
 
    /* Render jump routes. */
    map_renderJumps( x, y, 0 );
@@ -1070,7 +1070,7 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
 /**
  * @brief Renders the faction disks.
  */
-void map_renderSystemEnviroment( double x, double y, int editor, double alpha )
+void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
 {
    int i;
    StarSystem *sys;

@@ -1521,6 +1521,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
             knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
+   /* On hit Lua outfits activate. */
+   pilot_outfitLOnhit( p, tdarmour, tdshield, shooter );
+
    return ddmg;
 }
 
@@ -1817,7 +1820,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  *    @param pilot Pilot to update.
  *    @param dt Current delta tick.
  */
-void pilot_update( Pilot* pilot, const double dt )
+void pilot_update( Pilot* pilot, double dt )
 {
    int i, cooling, nchg;
    int ammo_threshold;
@@ -1830,6 +1833,9 @@ void pilot_update( Pilot* pilot, const double dt )
    Damage dmg;
    double stress_falloff;
    double efficiency, thrust;
+
+   /* Modify the dt with speedup. */
+   dt *= pilot->stats.time_speedup;
 
    /* Check target validity. */
    if (pilot->target != pilot->id) {
@@ -1892,9 +1898,11 @@ void pilot_update( Pilot* pilot, const double dt )
          if (outfit_isLauncher(o->outfit))
             ammo_threshold = round( (double)ammo_threshold * pilot->stats.ammo_capacity );
 
-         /* Adjust for deployed fighters if needed */
-         if ( outfit_isFighterBay( o->outfit ) )
+         if ( outfit_isFighterBay( o->outfit ) ) {
+            ammo_threshold = round( (double)ammo_threshold * pilot->stats.fbay_capacity );
+            /* Adjust for deployed fighters if needed */
             ammo_threshold -= o->u.ammo.deployed;
+         }
 
          /* Don't allow accumulation of the timer before reload allowed */
          if ( o->u.ammo.quantity >= ammo_threshold ) {
@@ -2216,6 +2224,13 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* Update the trail. */
    pilot_sample_trails( pilot );
+
+   /* Update outfits if necessary. */
+   pilot->otimer += dt;
+   while (pilot->otimer > PILOT_OUTFIT_LUA_UPDATE_DT) {
+      pilot_outfitLUpdate( pilot, PILOT_OUTFIT_LUA_UPDATE_DT );
+      pilot->otimer -= PILOT_OUTFIT_LUA_UPDATE_DT;
+   }
 }
 
 
@@ -2643,6 +2658,7 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    pilot->aimLines = 0;
    pilot->dockpilot = dockpilot;
    pilot->dockslot = dockslot;
+   ss_statsInit( &pilot->intrinsic_stats );
 
    /* Basic information. */
    pilot->ship = ship;
@@ -2810,6 +2826,9 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    /* Animated trail. */
    pilot_init_trails( dyn );
 
+   /* Run Lua stuff. */
+   pilot_outfitLInit( dyn );
+
    return dyn->id;
 }
 
@@ -2852,6 +2871,8 @@ Pilot* pilot_replacePlayer( Pilot* after )
    array_erase( &pilot_stack[i]->trail, array_begin(pilot_stack[i]->trail), array_end(pilot_stack[i]->trail) );
    pilot_stack[i] = after;
    pilot_init_trails( after );
+   /* Run Lua stuff. */
+   pilot_outfitLInit( after );
    return after;
 }
 
@@ -3257,6 +3278,7 @@ void pilot_clearTimers( Pilot *pilot )
    pilot->tcontrol   = 0.; /* AI control timer. */
    pilot->stimer     = 0.; /* Shield timer. */
    pilot->dtimer     = 0.; /* Disable timer. */
+   pilot->otimer     = 0.; /* Outfit timer. */
    for (i=0; i<MAX_AI_TIMERS; i++)
       pilot->timer[i] = 0.; /* Specific AI timers. */
    n = 0;

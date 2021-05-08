@@ -7,7 +7,7 @@
   <rarity>2</rarity>
   <priority>7</priority>
   <mass>12</mass>
-  <price>110000</price>
+  <price>220000</price>
   <description>The fin is a Soromid bioship's equivalent to engines in synthetic ships. It is charged with moving the organism through space and comes in either a strong form (for heavy loads) or a fast form (for greater speed and agility). This fin has reached Stage X, its full potential.</description>
   <gfx_store>organic_engine_fast_s2.png</gfx_store>
  </general>
@@ -16,7 +16,7 @@
   <turn>140</turn>
   <speed>290</speed>
   <fuel>400</fuel>
-  <energy_usage>16</energy_usage>
+  <energy_usage>8</energy_usage>
   <engine_limit>300</engine_limit>
  </specific>
 </outfit>
