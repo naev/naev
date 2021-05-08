@@ -1217,40 +1217,52 @@ int pilot_slotIsActive( const PilotOutfitSlot *o )
  *
  *    @param pilot Pilot to run Lua outfits for.
  */
-void pilot_outfitLInit( Pilot *pilot )
+void pilot_outfitLInitAll( Pilot *pilot )
 {
    int i;
-   PilotOutfitSlot *po;
    pilotoutfit_modified = 0;
-   for (i=0; i<array_size(pilot->outfits); i++) {
-      po = pilot->outfits[i];
-      if (po->outfit==NULL || !outfit_isMod(po->outfit))
-         continue;
-      if (po->outfit->u.mod.lua_init == LUA_NOREF)
-         continue;
-
-      /* Create the memory if necessary and initialize stats. */
-      if (po->lua_mem == LUA_NOREF) {
-         ss_statsInit( &po->lua_stats );
-         lua_newtable(naevL); /* mem */
-         po->lua_mem = luaL_ref(naevL,LUA_REGISTRYINDEX); /* */
-      }
-      /* Set the memory. */
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
-      nlua_setenv(po->outfit->u.mod.lua_env, "mem"); /* */
-
-      /* Set up the function: init( p, po ) */
-      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_init); /* f */
-      lua_pushpilot(naevL, pilot->id); /* f, p */
-      lua_pushpilotoutfit(naevL, po); /* f, p, po */
-      if (nlua_pcall( po->outfit->u.mod.lua_env, 2, 0 )) { /* */
-         WARN( _("Pilot '%s''s outfit '%s' -> 'init':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
-         lua_pop(naevL, 1);
-      }
-   }
+   for (i=0; i<array_size(pilot->outfits); i++)
+      pilot_outfitLInit( pilot, pilot->outfits[i] );
    /* Recalculate if anything changed. */
    if (pilotoutfit_modified)
       pilot_calcStats( pilot );
+}
+
+
+/**
+ * @brief Runs the pilot's Lua outfits init script for an outfit.
+ *
+ *    @param pilot Pilot to run Lua outfits for.
+ *    @param po Pilot outfit to check.
+ *    @return 0 if nothing was done, 1 if script was run, and -1 on error.
+ */
+int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
+{
+   if (po->outfit==NULL || !outfit_isMod(po->outfit))
+      return 0;
+   if (po->outfit->u.mod.lua_init == LUA_NOREF)
+      return 0;
+
+   /* Create the memory if necessary and initialize stats. */
+   if (po->lua_mem == LUA_NOREF) {
+      ss_statsInit( &po->lua_stats );
+      lua_newtable(naevL); /* mem */
+      po->lua_mem = luaL_ref(naevL,LUA_REGISTRYINDEX); /* */
+   }
+   /* Set the memory. */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+   nlua_setenv(po->outfit->u.mod.lua_env, "mem"); /* */
+
+   /* Set up the function: init( p, po ) */
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_init); /* f */
+   lua_pushpilot(naevL, pilot->id); /* f, p */
+   lua_pushpilotoutfit(naevL, po); /* f, p, po */
+   if (nlua_pcall( po->outfit->u.mod.lua_env, 2, 0 )) { /* */
+      WARN( _("Pilot '%s''s outfit '%s' -> 'init':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+      lua_pop(naevL, 1);
+      return -1;
+   }
+   return 1;
 }
 
 
