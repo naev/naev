@@ -1642,6 +1642,9 @@ static void pilot_dead( Pilot* p, unsigned int killer )
    pilot_rmFlag(p,PILOT_HYP_BRAKE);
    pilot_rmFlag(p,PILOT_HYPERSPACE);
 
+   /* Turn off all outfits, should disable Lua stuff as necssary. */
+   pilot_outfitOffAll( p );
+
    /* Pilot must die before setting death flag and probably messing with other flags. */
    if (killer > 0) {
       hparam.type       = HOOK_PARAM_PILOT;
