@@ -1714,8 +1714,8 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          continue;
 
       hasPresence = 1;
-      if (!omniscient && !faction_isKnown( sys->presence[ i ].faction )) {
-         unknownPresence += sys->presence[ i ].value;
+      if (!omniscient && !faction_isKnown( sys->presence[i].faction )) {
+         unknownPresence += sys->presence[i].value;
          break;
       }
       /* Use map grey instead of default neutral colour */
@@ -1726,7 +1726,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
       if (l > sizeof( buf ))
          break;
    }
-   if (unknownPresence != 0 && l <= sizeof( buf ))
+   if (unknownPresence != 0 && l <= sizeof(buf))
       l += scnprintf( &buf[l], sizeof(buf) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
                       unknownPresence );
 
