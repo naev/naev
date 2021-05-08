@@ -1024,7 +1024,7 @@ void map_inputFind( unsigned int parent, char* str )
 
    /* Create input. */
    window_addInput( wid, 30, y, w - 60, 20,
-         "inpSearch", 32, 1, &gl_defFont );
+         "inpSearch", 32, 1, &gl_smallFont );
    y -= 40;
 
    /* Create buttons. */
