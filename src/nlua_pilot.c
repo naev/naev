@@ -2649,16 +2649,34 @@ static int pilotL_intrinsicReset( lua_State *L )
  *    @luatparam Pilot p Pilot to set stat of.
  *    @luatparam string name Name of the stat to set. It is the same as in the xml.
  *    @luatparam number value Value to set the stat to.
- *    @luatparam boolean overwrite Whether or not to add to the stat or replace it.
+ *    @luatparam boolean replace Whether or not to add to the stat or replace it.
  * @luafunc intrinsicSet
  */
 static int pilotL_intrinsicSet( lua_State *L )
 {
-   Pilot *p          = luaL_validpilot(L,1);
-   const char *name  = luaL_checkstring(L,2);
-   double value      = luaL_checknumber(L,3);
-   int overwrite     = lua_toboolean(L,4);
-   ss_statsSet( &p->intrinsic_stats, name, value, overwrite );
+   Pilot *p = luaL_validpilot(L,1);
+   const char *name;
+   double value;
+   int replace;
+   /* Case individual parameter. */
+   if (!lua_istable(L,2)) {
+      name     = luaL_checkstring(L,2);
+      value    = luaL_checknumber(L,3);
+      replace  = lua_toboolean(L,4);
+      ss_statsSet( &p->intrinsic_stats, name, value, replace );
+      pilot_calcStats( p );
+      return 0;
+   }
+   replace = lua_toboolean(L,4);
+   /* Case set of parameters. */
+   lua_pushnil(L);
+   while (lua_next(L,2) != 0) {
+      name     = luaL_checkstring(L,-2);
+      value    = luaL_checknumber(L,-1);
+      ss_statsSet( &p->intrinsic_stats, name, value, replace );
+      lua_pop(L,1);
+   }
+   lua_pop(L,1);
    pilot_calcStats( p );
    return 0;
 }
