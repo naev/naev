@@ -736,13 +736,15 @@ void ss_free( ShipStatList *ll )
 /**
  * @brief Sets a ship stat by name.
  */
-int ss_statsSet( ShipStats *s, const char *name, double value )
+int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
 {
    const ShipStatsLookup *sl;
    ShipStatsType type;
    char *ptr;
    double *destdbl;
    int *destint;
+   double v;
+   int i;
 
    type = ss_typeFromName( name );
    if (type == SS_TYPE_NIL) {
@@ -755,22 +757,35 @@ int ss_statsSet( ShipStats *s, const char *name, double value )
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
          destdbl = (double*) &ptr[ sl->offset ];
-         *destdbl = 1.0 + value / 100.;
+         v = 1.0 + value / 100.;
+         if (overwrite)
+            *destdbl = v;
+         else
+            *destdbl *= v;
          break;
 
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
          destdbl  = (double*) &ptr[ sl->offset ];
-         *destdbl = value;
+         if (overwrite)
+            *destdbl = value;
+         else
+            *destdbl += value;
          break;
 
       case SS_DATA_TYPE_BOOLEAN:
          destint  = (int*) &ptr[ sl->offset ];
-         *destint = !(fabs(value) > 1e-5);
+         if (overwrite)
+            *destint = !(fabs(value) > 1e-5);
+         else
+            *destint |= !(fabs(value) > 1e-5);
          break;
 
       case SS_DATA_TYPE_INTEGER:
          destint  = (int*) &ptr[ sl->offset ];
-         *destint = round(value);
+         if (overwrite)
+            *destint = round(value);
+         else
+            *destint += round(value);
          break;
    }
 
