@@ -217,6 +217,8 @@ const char* planet_getClassName( const char *class )
       return _("Military Station");
    else if (strcmp(class,"2")==0)
       return _("Pirate Station");
+   else if (strcmp(class,"3")==0)
+      return _("Robotic Station");
    else if (strcmp(class,"A")==0)
       return _("Geothermal");
    else if (strcmp(class,"B")==0)

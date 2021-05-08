@@ -9,6 +9,7 @@ API and must be set in the XML file.
 * They are run in a shared state. All global variables will be the same for all outfits of the same type.
 * You can use the 'mem' table to access memory for the particular outfit being used.
 * You have access to the pilotoutfit API which is meant for manipulating po.
+* Use the <desc_extra> field in the XML when describing what the Lua does.
 --]]
 
 -- The init is run when the pilot is created
@@ -18,6 +19,13 @@ end
 -- The update function is run periodically every 1/3 seconds
 -- 'dt' is the time elapsed since last time run in seconds
 function update( p, po, dt )
+end
+
+-- When the pilot is out of energy, this function triggers. Note that before
+-- this triggers, 'ontoggle( p, po false )' will be run if it exists.
+-- This is especially useful for outfits that can't be toggled, but want to
+-- turn off when they run out of energy.
+function outofenergy( p, po )
 end
 
 -- The onhit function is run when the pilot 'p' takes damage
@@ -64,13 +72,6 @@ function update( p, po, dt )
 
       -- Active time over
       if mem.timer < 0 then
-         disable( po )
-         return
-      end
-
-      -- Out of energy
-      local e = p:energy()
-      if e <= 0 then
          disable( po )
          return
       end

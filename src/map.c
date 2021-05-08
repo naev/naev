@@ -301,35 +301,35 @@ void map_open (void)
    /* Faction */
    window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
          &gl_smallFont, NULL, _("Faction:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtFaction",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
    window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
          &gl_smallFont, NULL, _("Standing:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtStanding",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
    window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
          &gl_smallFont, NULL, _("Presence:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtPresence",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Planets */
    window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
          &gl_smallFont, NULL, _("Planets:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 150, 0, "txtPlanets",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtPlanets",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
    window_addText( wid, x, y, 90, 20, 0, "txtSServices",
          &gl_smallFont, NULL, _("Services:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtServices",
          &gl_smallFont, NULL, NULL );
 
    /* Close button */
@@ -586,12 +586,12 @@ static void map_update( unsigned int wid )
 
    /* Faction */
    window_moveWidget( wid, "txtSFaction", x, y);
-   window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtFaction", x + 50, y-gl_smallFont.h - 5 );
    y -= gl_smallFont.h + h + 5 + 15;
 
    /* Standing */
    window_moveWidget( wid, "txtSStanding", x, y );
-   window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtStanding", x + 50, y-gl_smallFont.h - 5 );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    window_moveWidget( wid, "txtSPresence", x, y );
@@ -1700,7 +1700,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
 {
    int    i;
    size_t l;
-   char   buf[ 1024 ];
+   char   buf[STRMAX_SHORT];
    int    hasPresence;
    double unknownPresence;
 
@@ -1709,31 +1709,30 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
    hasPresence     = 0;
    unknownPresence = 0;
 
-   for ( i = 0; i < array_size(sys->presence); i++ ) {
-      if ( sys->presence[ i ].value <= 0 )
+   for (i = 0; i < array_size(sys->presence); i++) {
+      if (sys->presence[i].value <= 0)
          continue;
 
       hasPresence = 1;
-      if ( !omniscient && !faction_isKnown( sys->presence[ i ].faction ) ) {
-         unknownPresence += sys->presence[ i ].value;
+      if (!omniscient && !faction_isKnown( sys->presence[i].faction )) {
+         unknownPresence += sys->presence[i].value;
          break;
       }
       /* Use map grey instead of default neutral colour */
-      l += scnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
+      l += scnprintf( &buf[l], sizeof(buf) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
                       omniscient ? faction_name( sys->presence[ i ].faction )
                                  : faction_shortname( sys->presence[ i ].faction ),
                       faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
-      if ( l > sizeof( buf ) )
+      if (l > sizeof( buf ))
          break;
    }
-   if ( unknownPresence != 0 && l <= sizeof( buf ) )
-      l += scnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
+   if (unknownPresence != 0 && l <= sizeof(buf))
+      l += scnprintf( &buf[l], sizeof(buf) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
                       unknownPresence );
 
-   if ( hasPresence == 0 )
-      snprintf( buf, sizeof( buf ), _( "None" ) );
+   if (hasPresence == 0)
+      snprintf( buf, sizeof(buf), _("None") );
 
-   (void) l;
    window_modifyText( wid, name, buf );
 }
 

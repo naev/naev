@@ -54,6 +54,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );
 int pilot_slotIsActive( const PilotOutfitSlot *o );
 void pilot_outfitLInit( Pilot *pilot );
 void pilot_outfitLUpdate( Pilot *pilot, double dt );
+void pilot_outfitLOutfofenergy( Pilot *pilot );
 void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned int attacker );
 int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on );
 
