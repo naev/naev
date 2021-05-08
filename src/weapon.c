@@ -1027,7 +1027,7 @@ static void weapon_sample_trail( Weapon* w )
    else
       mode = MODE_IDLE;
 
-   spfx_trail_sample( w->trail, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2, mode );
+   spfx_trail_sample( w->trail, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2, mode, 0 );
 }
 
 

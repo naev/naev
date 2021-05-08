@@ -1888,6 +1888,9 @@ static int pilotL_setPosition( lua_State *L )
    p     = luaL_validpilot(L,1);
    vec   = luaL_checkvector(L,2);
 
+   /* Insert skip in trail. */
+   pilot_sample_trails( p, 1 );
+
    /* Warp pilot to new position. */
    p->solid->pos = *vec;
 
