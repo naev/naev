@@ -228,9 +228,11 @@ end
 function defenderAttacked(victim, attacker)
    --The player chose his side
    if attacker == player.pilot() then
-      for i, j in ipairs(defenders) do
-         hook.rm(defAttHook[i])
-         j:setHostile()
+      for i, p in ipairs(defenders) do
+         if p ~= nil and p:exists() then
+            hook.rm(defAttHook[i])
+            p:setHostile()
+         end
       end
       if side == "defender" then
          side = nil
@@ -246,9 +248,11 @@ end
 function attackerAttacked(victim, attacker)
    --The player chose his side
    if attacker == player.pilot() then
-      for i, j in ipairs(attackers) do
-         hook.rm(attAttHook[i])
-         j:setHostile()
+      for i, p in ipairs(attackers) do
+         if p ~= nil and p:exists() then
+            hook.rm(defAttHook[i])
+            p:setHostile()
+         end
       end
       if side == "attacker" then
          side = nil
@@ -331,9 +335,9 @@ end
 
 --chooses the first non nil pilot in a list
 function chooseInList(list)
-   for i, j in ipairs(list) do
-      if j:exists() then
-         return j
+   for i, p in ipairs(list) do
+      if p ~= nil and p:exists() then
+         return p
       end
    end
 end
