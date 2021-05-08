@@ -301,35 +301,35 @@ void map_open (void)
    /* Faction */
    window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
          &gl_smallFont, NULL, _("Faction:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtFaction",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
    window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
          &gl_smallFont, NULL, _("Standing:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtStanding",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
    window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
          &gl_smallFont, NULL, _("Presence:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtPresence",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Planets */
    window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
          &gl_smallFont, NULL, _("Planets:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 150, 0, "txtPlanets",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtPlanets",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
    window_addText( wid, x, y, 90, 20, 0, "txtSServices",
          &gl_smallFont, NULL, _("Services:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtServices",
          &gl_smallFont, NULL, NULL );
 
    /* Close button */
