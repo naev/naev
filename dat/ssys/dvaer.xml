@@ -34,10 +34,6 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Morrigan">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Radix">
    <autopos/>
    <hide>1.250000</hide>

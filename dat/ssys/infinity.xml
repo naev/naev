@@ -20,6 +20,10 @@
   <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
+  <jump target="Coliseum">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Gruz">
    <autopos/>
    <hide>1.250000</hide>
