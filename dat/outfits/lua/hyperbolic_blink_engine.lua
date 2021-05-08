@@ -25,6 +25,7 @@ function update( p, po, dt )
          end
          -- Direction is random
          p:setPos( p:pos() + vec2.newP( dist, 359*rnd.rnd() ) )
+         -- TODO Add blink effect and sound effect
 
          -- Set cooldown and maluses
          po:state("cooldown")
@@ -51,4 +52,5 @@ function ontoggle( p, po, on )
    -- Start the warmup
    mem.warmup = true
    mem.timer = warmup
+   -- TODO add warm-up sound effect
 end
