@@ -1,5 +1,5 @@
-cooldown = 8
-active = 30
+cooldown = 20
+active = 15
 dist = 3000 -- Distance to possible change target of hostiles
 hologram = outfit.get("Combat Hologram Projector")
 
@@ -30,11 +30,11 @@ function turnon( p, po )
    -- No damage and low health
    np:intrinsicSet( {
       launch_damage  = -1000,
-      fbay_damage    = -1000,
+      fbay_damage    = -1000, -- shouldn't have fighter bays, but just incase
       fwd_damage     = -1000,
       tur_damage     = -1000,
-      armour_mod     = -80,
-      shield_mod     = -80,
+      armour_mod     = -50,
+      shield_mod     = -50,
    }, true ) -- overwrite all
    -- Don't let player attack their own hologram
    if mem.isp then
