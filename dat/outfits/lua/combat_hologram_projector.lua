@@ -14,7 +14,8 @@ function turnon( p, po )
 
    -- Create hologram at the same position
    -- TODO hologram-specific AI?
-   local np = pilot.add( p:ship():nameRaw(), p:faction(), p:pos(), p:name(), "escort" )
+   local s = p:ship()
+   local np = pilot.add( s:nameRaw(), p:faction(), p:pos(), p:name(), "escort" )
    mem.p = np
    np:setHealth( p:health() ) -- Copy health
    np:setNoDeath( true ) -- Dosen't die
@@ -42,9 +43,15 @@ function turnon( p, po )
    -- Exact same position and direction as pilot
    np:setDir( p:dir() )
    np:setVel( p:vel() )
-   -- Attacks pilot's target
    np:control( true )
-   np:attack( t )
+   local bt = s:baseType()
+   if bt=="Yacht" or bt=="Luxury Yacht" or bt=="Cruise Ship" or bt=="Courier" or bt=="Freighter" or bt=="Bulk Carrier" then
+      -- Run away for civilian ships
+      np:runaway( t, true )
+   else
+      -- Attacks pilot's target for non civilian ships
+      np:attack( t )
+   end
 
    -- Modify randomly targetting of hostiles (probably don't have to go over all ships)
    for k,v in ipairs(p:getHostiles(dist)) do
