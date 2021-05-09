@@ -2996,22 +2996,27 @@ static int pilotL_setSpeedLimit(lua_State* L)
  * @usage armour, shield, stress, dis = p:health()
  *
  *    @luatparam Pilot p Pilot to get health of.
- *    @luatreturn number The armour in % [0:100].
- *    @luatreturn number The shield in % [0:100].
+ *    @luatparam[opt=false] boolean nonrel Whether or not it shouldn't be relative.
+ *    @luatreturn number The armour in % [0:100] if relative or absolute value otherwise.
+ *    @luatreturn number The shield in % [0:100] if relative or absolute value otherwise.
  *    @luatreturn number The stress in % [0:100].
  *    @luatreturn boolean Indicates if pilot is disabled.
  * @luafunc health
  */
 static int pilotL_getHealth( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
+   int nonrel = lua_toboolean(L,2);
 
    /* Return parameters. */
-   lua_pushnumber(L,(p->armour_max > 0.) ? p->armour / p->armour_max * 100. : 0. );
-   lua_pushnumber(L,(p->shield_max > 0.) ? p->shield / p->shield_max * 100. : 0. );
+   if (nonrel) {
+      lua_pushnumber(L, p->armour );
+      lua_pushnumber(L, p->shield );
+   }
+   else {
+      lua_pushnumber(L,(p->armour_max > 0.) ? p->armour / p->armour_max * 100. : 0. );
+      lua_pushnumber(L,(p->shield_max > 0.) ? p->shield / p->shield_max * 100. : 0. );
+   }
    lua_pushnumber(L, MIN( 1., p->stress / p->armour ) * 100. );
    lua_pushboolean(L, pilot_isDisabled(p));
 
