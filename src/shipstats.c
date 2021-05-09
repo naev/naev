@@ -744,7 +744,6 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
    double *destdbl;
    int *destint;
    double v;
-   int i;
 
    type = ss_typeFromName( name );
    if (type == SS_TYPE_NIL) {
