@@ -75,7 +75,7 @@ end
 function update( p, po, dt )
    mem.timer = mem.timer - dt
    if mem.p then
-      if mem.timer < 0 then
+      if not mem.p:exists() or mem.timer < 0 then
          turnoff( po )
       end
    else
