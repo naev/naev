@@ -6,12 +6,18 @@ hologram = outfit.get("Combat Hologram Projector")
 function turnon( p, po )
    -- Make sure pilot has a target
    local t = p:target()
-   if t == nil then return false end 
+   if t == nil then return false end
+
+   -- Set outfit state
+   mem.timer = active
+   po:state("on")
 
    -- Create hologram at the same position
    -- TODO hologram-specific AI?
    local np = pilot.add( p:ship():nameRaw(), p:faction(), p:pos(), p:name(), "escort" )
+   mem.p = np
    np:setHealth( p:health() ) -- Copy health
+   np:setNoDeath( true ) -- Dosen't die
    -- Copy outfits
    np:rmOutfit("all")
    for k,v in ipairs(p:outfits()) do
@@ -39,7 +45,6 @@ function turnon( p, po )
    -- Attacks pilot's target
    np:control( true )
    np:attack( t )
-   mem.p = np
 
    -- Modify randomly targetting of hostiles (probably don't have to go over all ships)
    for k,v in ipairs(p:getHostiles(dist)) do
@@ -48,9 +53,6 @@ function turnon( p, po )
       end
    end
 
-   -- Set outfit state
-   mem.timer = active
-   po:state("on")
    return true
 end
 function turnoff( po )
@@ -75,7 +77,7 @@ end
 function update( p, po, dt )
    mem.timer = mem.timer - dt
    if mem.p then
-      if not mem.p:exists() or mem.timer < 0 then
+      if not mem.p:exists() or mem.timer < 0 or mem.p:health(true) < 5 then
          turnoff( po )
       end
    else
