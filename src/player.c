@@ -1811,7 +1811,7 @@ void player_brokeHyperspace (void)
          ai_cleartasks(pilot_stack[i]);
 
          /* Run Lua stuff. */
-         pilot_outfitLInit( pilot_stack[i] );
+         pilot_outfitLInitAll( pilot_stack[i] );
       }
    }
 
@@ -1832,7 +1832,7 @@ void player_brokeHyperspace (void)
    }
 
    /* Update lua stuff. */
-   pilot_outfitLInit( player.p );
+   pilot_outfitLInitAll( player.p );
 
    /* Safe since this is run in the player hook section. */
    hooks_run( "jumpin" );

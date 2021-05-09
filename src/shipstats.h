@@ -276,7 +276,8 @@ int ss_csv( const ShipStats *s, char *buf, int len );
 /*
  * Manipulation.
  */
-int ss_statsSet( ShipStats *s, const char *name, double value );
+int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite );
 double ss_statsGet( ShipStats *s, const char *name );
+
 
 #endif /* SHIPSTATS_H */

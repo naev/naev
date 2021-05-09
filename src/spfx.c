@@ -641,12 +641,13 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
  *    @param x X position of the new control point.
  *    @param y Y position of the new control point.
  *    @param mode Type of trail emission at this point.
+ *    @param force Whether or not to force the addition of the sample.
  */
-void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode )
+void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode, int force )
 {
    TrailPoint p;
 
-   if (trail->spec->style[mode].col.a <= 0.)
+   if (!force && trail->spec->style[mode].col.a <= 0.)
       return;
 
    p.x = x;
@@ -658,7 +659,7 @@ void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode )
    trail_back( trail ) = p;
 
    /* We may need to insert a control point, but not if our last sample was recent enough. */
-   if (trail_size(trail) > 1 && trail_at( trail, trail->iwrite-2 ).t >= 1.-TRAIL_UPDATE_DT)
+   if (!force && trail_size(trail) > 1 && trail_at( trail, trail->iwrite-2 ).t >= 1.-TRAIL_UPDATE_DT)
       return;
 
    /* If the last time we inserted a control point was recent enough, we don't need a new one. */
@@ -729,6 +730,11 @@ static void spfx_trail_draw( const Trail_spfx* trail )
    for (i = trail->iread + 1; i < trail->iwrite; i++) {
       tp  = &trail_at( trail, i );
       tpp = &trail_at( trail, i-1 );
+
+      /* Ignore none modes. */
+      if (tp->mode == MODE_NONE || tpp->mode == MODE_NONE)
+         continue;
+
       sp  = &styles[tp->mode];
       spp = &styles[tpp->mode];
       gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
