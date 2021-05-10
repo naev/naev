@@ -1,11 +1,11 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Morrigan Tournament">
+<mission name="Totoran Tournament">
  <avail>
   <priority>3</priority>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Morrigan Station</planet>
+  <planet>Totoran</planet>
  </avail>
 </mission>
 --]]
@@ -14,32 +14,21 @@ local vn = require 'vn'
 require 'numstring'
 
 logidstr = "log_morrigan"
-logname  = _("Morrigan Tournament")
-logtype  = _("Morrigan Tournament")
+logname  = _("Totoran Tournament")
+logtype  = _("Totoran Tournament")
 
 npc_portrait   = "dvaered_thug1.png"
 npc_image      = "dvaered_thug1.png"
 npc_name       = _("Tournament Organizer")
-npc_description= _("The Morrigan Tournament organizer.")
+npc_description= _("The Totoran Tournament organizer.")
 npc_colour     = {1, 0.7, 0.3}
 
-misn_title  = _("Morrigan Tournament")
+misn_title  = _("Totoran Tournament")
 misn_desc   = _("Annihilate all enemies in Coliseum.")
 
---[[
- 0. Go to start position
- 1. Timer counting down
- 2. FIGHT!
- 3. Won
---]]
-misn_state = nil
+coliseum = system.get("Coliseum")
 
 function create ()
-   -- Must claim this system
-   if not misn.claim( system.cur() ) then
-      misn.finish( false )
-   end
-
    -- We'll have different NPCs for each tournament type
    npc_1v1 = misn.npcAdd( "approach_1v1", npc_name, npc_portrait, npc_description )
 end
@@ -162,24 +151,39 @@ function approach_1v1 ()
    shiplog.createLog( logidstr, logname, logtype )
 
    -- Create the OSD
-   osd = misn.osdCreate( _("Thug Decoy"),
-         {_("Go towards the center of the Coliseum system"),
-          _("Defeat all the other adversaries"),
-          _("Return no Morrigan Station") } )
-   misn.osdActive(1)
+   osd = misn.osdCreate( _("Totoran Tournament"),
+         { _("Defeat all the other adversaries!") } )
 
+   hook.safe("enter_the_ring")
+   player.allowSave( false ) -- Don't want to save the mission
+   player.takeoff() -- take off and enter the ring!
+end
+function enter_the_ring ()
+   -- Teleport the player to the Coliseum and hide the rest of the universe
+   local sys = coliseum
    hook.enter("enter")
+   for k,s in ipairs(system.getAll()) do
+      s:setHidden(true)
+   end
+   sys:setHidden(false)
+   player.pilot():setPos( vec2.new( 0, 0 ) )
+   player.allowSave(true)
+   player.teleport(coliseum)
+end
+function leave_the_ring ()
+   local sys = coliseum
+   sys:setKnown(false)
+   for k,s in ipairs(system.getAll()) do
+      s:setHidden(false)
+   end
    hook.land("land")
-
-   -- Remove npcs
-   cleanup_npc()
+   player.land( planet.get("Totoran") )
 end
 
 
 function enter ()
    if system.cur() ~= system.get("Coliseum") then
-      player.msg(_("#rMISSION FAILED! You were not supposed to leave Coliseum!"))
-      misn.finish(false)
+      return
    end
 
    -- Get rid of pilots
@@ -209,7 +213,7 @@ function enter ()
 end
 function enemy_out( p )
    if misn_state==3 then return end
-   
+
    local idx = nil
    for k,v in ipairs(enemies) do
       if v==p then
@@ -222,8 +226,8 @@ function enemy_out( p )
       misn_state = 3
       -- TODO play sound and cooler text
       player.omsgAdd( _("YOU ARE VICTORIOUS!"), 5 )
-      misn.osdActive(3)
       shiplog.appendLog( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
+      hook.timer( 5000, "leave_the_ring")
    end
 end
 function p_disabled( p )
@@ -259,7 +263,6 @@ function countdown_done ()
    -- TODO play sound and cooler text
    player.omsgAdd( _("FIGHT!"), 3 )
    misn_state = 2
-   misn.osdActive(2)
 
    for k,p in ipairs(enemies) do
       p:setInvincible(false)
