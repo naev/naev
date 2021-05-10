@@ -1,17 +1,24 @@
-cooldown = 8
-active = 30
+cooldown = 20
+active = 15
 dist = 3000 -- Distance to possible change target of hostiles
 hologram = outfit.get("Combat Hologram Projector")
 
 function turnon( p, po )
    -- Make sure pilot has a target
    local t = p:target()
-   if t == nil then return false end 
+   if t == nil then return false end
+
+   -- Set outfit state
+   mem.timer = active
+   po:state("on")
 
    -- Create hologram at the same position
    -- TODO hologram-specific AI?
-   local np = pilot.add( p:ship():nameRaw(), p:faction(), p:pos(), p:name(), "escort" )
+   local s = p:ship()
+   local np = pilot.add( s:nameRaw(), p:faction(), p:pos(), p:name(), "escort" )
+   mem.p = np
    np:setHealth( p:health() ) -- Copy health
+   np:setNoDeath( true ) -- Dosen't die
    -- Copy outfits
    np:rmOutfit("all")
    for k,v in ipairs(p:outfits()) do
@@ -23,11 +30,11 @@ function turnon( p, po )
    -- No damage and low health
    np:intrinsicSet( {
       launch_damage  = -1000,
-      fbay_damage    = -1000,
+      fbay_damage    = -1000, -- shouldn't have fighter bays, but just incase
       fwd_damage     = -1000,
       tur_damage     = -1000,
-      armour_mod     = -80,
-      shield_mod     = -80,
+      armour_mod     = -50,
+      shield_mod     = -50,
    }, true ) -- overwrite all
    -- Don't let player attack their own hologram
    if mem.isp then
@@ -36,10 +43,15 @@ function turnon( p, po )
    -- Exact same position and direction as pilot
    np:setDir( p:dir() )
    np:setVel( p:vel() )
-   -- Attacks pilot's target
    np:control( true )
-   np:attack( t )
-   mem.p = np
+   local bt = s:baseType()
+   if bt=="Yacht" or bt=="Luxury Yacht" or bt=="Cruise Ship" or bt=="Courier" or bt=="Freighter" or bt=="Bulk Carrier" then
+      -- Run away for civilian ships
+      np:runaway( t, true )
+   else
+      -- Attacks pilot's target for non civilian ships
+      np:attack( t )
+   end
 
    -- Modify randomly targetting of hostiles (probably don't have to go over all ships)
    for k,v in ipairs(p:getHostiles(dist)) do
@@ -48,9 +60,6 @@ function turnon( p, po )
       end
    end
 
-   -- Set outfit state
-   mem.timer = active
-   po:state("on")
    return true
 end
 function turnoff( po )
@@ -75,7 +84,7 @@ end
 function update( p, po, dt )
    mem.timer = mem.timer - dt
    if mem.p then
-      if mem.timer < 0 then
+      if not mem.p:exists() or mem.timer < 0 or mem.p:health(true) < 5 then
          turnoff( po )
       end
    else
