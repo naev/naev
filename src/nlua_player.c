@@ -76,6 +76,7 @@ static int playerL_unboard( lua_State *L );
 /* Land stuff. */
 static int playerL_isLanded( lua_State *L );
 static int playerL_takeoff( lua_State *L );
+static int playerL_land( lua_State *L );
 static int playerL_allowLand( lua_State *L );
 static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
@@ -119,6 +120,7 @@ static const luaL_Reg playerL_methods[] = {
    { "unboard", playerL_unboard },
    { "isLanded", playerL_isLanded },
    { "takeoff", playerL_takeoff },
+   { "land", playerL_land },
    { "allowLand", playerL_allowLand },
    { "landWindow", playerL_landWindow },
    { "commClose", playerL_commclose },
@@ -692,6 +694,45 @@ static int playerL_takeoff( lua_State *L )
 
    land_queueTakeoff();
 
+   return 0;
+}
+
+
+/**
+ * @brief Automagically lands the player on a planet.
+ *
+ * Note that this will teleport the player to the system in question as necessary.
+ *
+ *    @luatparam Planet pnt Planet to land the player on.
+ * @luafunc land
+ */
+static int playerL_land( lua_State *L )
+{
+   NLUA_CHECKRW(L);
+   Planet *pnt = luaL_validplanet(L,1);
+   const char *sysname = planet_getSystem( pnt->name );
+   if (sysname == NULL)
+      NLUA_ERROR(L,_("Planet '%s' is not in a system!"), pnt->name);
+
+   if (strcmp(sysname,cur_system->name) != 0) {
+      /* Refer to playerL_teleport for the voodoo that happens here. */
+      pilot_rmFlag( player.p, PILOT_HYPERSPACE );
+      pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
+      pilot_rmFlag( player.p, PILOT_HYP_BRAKE );
+      pilot_rmFlag( player.p, PILOT_HYP_PREP );
+
+      space_gfxUnload( cur_system );
+
+      player_targetHyperspaceSet( -1 );
+      player_targetPlanetSet( -1 );
+
+      space_init( sysname );
+
+      map_clear();
+
+      player.p->solid->pos = pnt->pos;
+   }
+   land( pnt, 0 );
    return 0;
 }
 
