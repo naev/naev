@@ -894,15 +894,17 @@ void gui_render( double dt )
 
    /* Run Lua. */
    if (gui_env != LUA_NOREF) {
-      gui_prepFunc( "render" );
-      lua_pushnumber( naevL, dt );
-      lua_pushnumber( naevL, dt_mod );
-      gui_runFunc( "render", 2, 0 );
+      if (gui_prepFunc( "render" )==0) {
+         lua_pushnumber( naevL, dt );
+         lua_pushnumber( naevL, dt_mod );
+         gui_runFunc( "render", 2, 0 );
+      }
       if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
-         gui_prepFunc( "render_cooldown" );
-         lua_pushnumber( naevL, player.p->ctimer / player.p->cdelay  );
-         lua_pushnumber( naevL, player.p->ctimer );
-         gui_runFunc( "render_cooldown", 2, 0 );
+         if (gui_prepFunc( "render_cooldown" )==0) {
+            lua_pushnumber( naevL, player.p->ctimer / player.p->cdelay  );
+            lua_pushnumber( naevL, player.p->ctimer );
+            gui_runFunc( "render_cooldown", 2, 0 );
+         }
       }
    }
 
@@ -1977,7 +1979,9 @@ int gui_init (void)
  */
 static int gui_doFunc( const char* func )
 {
-   gui_prepFunc( func );
+   int ret = gui_prepFunc( func );
+   if (ret)
+      return ret;
    return gui_runFunc( func, 0, 0 );
 }
 
@@ -1996,6 +2000,13 @@ static int gui_prepFunc( const char* func )
 
    /* Set up function. */
    nlua_getenv( gui_env, func );
+#if DEBUGGING
+   if (lua_isnil( naevL, -1 )) {
+      WARN(_("GUI doesn't have function '%s' defined!"), func );
+      lua_pop(naevL,1);
+      return -1;
+   }
+#endif /* DEBUGGING */
    return 0;
 }
 
