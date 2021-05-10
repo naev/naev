@@ -144,11 +144,12 @@ typedef struct Planet_ {
 #define SYSTEM_CMARKED     (1<<2) /**< System is marked by a computer mission. */
 #define SYSTEM_CLAIMED     (1<<3) /**< System is claimed by a mission. */
 #define SYSTEM_DISCOVERED  (1<<4) /**< System has been discovered. This is a temporary flag used by the map. */
+#define SYSTEM_HIDDEN      (1<<5) /**< System is temporarily hidden from view. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
-#define sys_isKnown(s)     sys_isFlag(s,SYSTEM_KNOWN) /**< Checks if system is known. */
-#define sys_isMarked(s)    sys_isFlag(s,SYSTEM_MARKED) /**< Checks if system is marked. */
+#define sys_isKnown(s)     (sys_isFlag((s),SYSTEM_KNOWN)) /**< Checks if system is known. */
+#define sys_isMarked(s)    sys_isFlag((s),SYSTEM_MARKED) /**< Checks if system is marked. */
 
 
 /*

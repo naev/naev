@@ -1036,6 +1036,9 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
+
       if (!sys_isKnown(sys) && !editor)
          continue;
 
@@ -1084,6 +1087,9 @@ void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
+
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
 
       if (!sys_isKnown(sys) && !editor)
          continue;
@@ -1143,6 +1149,9 @@ void map_renderJumps( double x, double y, int editor)
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
+
       if (!sys_isKnown(sys) && !editor)
          continue; /* we don't draw hyperspace lines */
 
@@ -1153,6 +1162,8 @@ void map_renderJumps( double x, double y, int editor)
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
       for (j = 0; j < array_size(sys->jumps); j++) {
          jsys = sys->jumps[j].target;
+         if (sys_isFlag(jsys,SYSTEM_HIDDEN))
+            continue;
          if (!space_sysReachableFromSys(jsys,sys) && !editor)
             continue;
 
@@ -1218,6 +1229,9 @@ void map_renderSystems( double bx, double by, double x, double y,
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
+
       /* if system is not known, reachable, or marked. and we are not in the editor */
       if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
            && !space_sysReachable(sys)) && !editor)
@@ -1282,6 +1296,8 @@ static void map_renderPath( double x, double y, double a, double alpha )
 
       for (j=0; j<array_size(map_path); j++) {
          sys1 = map_path[j];
+         if (sys_isFlag(sys0,SYSTEM_HIDDEN) || sys_isFlag(sys1,SYSTEM_HIDDEN))
+            continue;
          if (jcur == jmax && jmax > 0)
             col = &cGreen;
          else if (jcur < 1)
@@ -1339,6 +1355,9 @@ void map_renderNames( double bx, double by, double x, double y,
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
+
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
 
       /* Skip system. */
       if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
@@ -1454,6 +1473,9 @@ static void map_renderSysBlack(double bx, double by, double x,double y, double w
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
+
       /* if system is not known, reachable, or marked. and we are not in the editor */
       if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
            && !space_sysReachable(sys)) && !editor)
@@ -1548,6 +1570,8 @@ void map_renderCommod( double bx, double by, double x, double y,
       }
       for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex( i );
+         if (sys_isFlag(sys,SYSTEM_HIDDEN))
+            continue;
 
          /* if system is not known, reachable, or marked. and we are not in the editor */
          if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
@@ -1610,6 +1634,8 @@ void map_renderCommod( double bx, double by, double x, double y,
       /* Now display the costs */
       for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex( i );
+         if (sys_isFlag(sys,SYSTEM_HIDDEN))
+            continue;
 
          /* if system is not known, reachable, or marked. and we are not in the editor */
          if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
@@ -1785,6 +1811,9 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
          for (i=0; i<array_size(systems_stack); i++) {
             sys = system_getIndex( i );
+
+            if (sys_isFlag(sys, SYSTEM_HIDDEN))
+               continue;
 
             /* must be reachable */
             if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)

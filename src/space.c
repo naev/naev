@@ -3633,6 +3633,7 @@ void space_clearKnown (void)
    for (i=0; i<array_size(systems_stack); i++) {
       sys = &systems_stack[i];
       sys_rmFlag(sys,SYSTEM_KNOWN);
+      sys_rmFlag(sys,SYSTEM_HIDDEN);
       for (j=0; j<array_size(sys->jumps); j++)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
    }
