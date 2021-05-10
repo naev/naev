@@ -732,7 +732,7 @@ static int playerL_land( lua_State *L )
 
       player.p->solid->pos = pnt->pos;
    }
-   land( pnt, 0 );
+   space_queueLand( pnt );
    return 0;
 }
 

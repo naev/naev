@@ -26,6 +26,7 @@
 #include "economy.h"
 #include "gui.h"
 #include "hook.h"
+#include "land.h"
 #include "log.h"
 #include "map.h"
 #include "map_overlay.h"
@@ -106,6 +107,7 @@ static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary cal
 static int space_simulating = 0; /**< Are we simulating space? */
 glTexture **asteroid_gfx = NULL;
 static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
+static Planet *space_landQueuePlanet = NULL;
 
 /*
  * fleet spawn rate
@@ -1273,6 +1275,12 @@ void space_update( const double dt )
    /* Needs a current system. */
    if (cur_system == NULL)
       return;
+
+   if (space_landQueuePlanet != NULL) {
+      land( space_landQueuePlanet, 0 );
+      space_landQueuePlanet = NULL;
+      return;
+   }
 
    /* If spawning is enabled, call the scheduler. */
    if (space_spawn)
@@ -4272,4 +4280,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 }
 
 
-
+void space_queueLand( Planet *pnt )
+{
+   space_landQueuePlanet = pnt;
+}
