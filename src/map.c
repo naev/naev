@@ -993,6 +993,9 @@ void map_renderDecorators( double x, double y, int editor, double alpha )
          for (j=0; j<array_size(systems_stack) && visible==0; j++) {
             sys = system_getIndex( j );
 
+            if (sys_isFlag(sys, SYSTEM_HIDDEN))
+               continue;
+
             if (!sys_isKnown(sys))
                continue;
 
