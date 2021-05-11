@@ -26,6 +26,7 @@
 #include "economy.h"
 #include "gui.h"
 #include "hook.h"
+#include "land.h"
 #include "log.h"
 #include "map.h"
 #include "map_overlay.h"
@@ -106,6 +107,7 @@ static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary cal
 static int space_simulating = 0; /**< Are we simulating space? */
 glTexture **asteroid_gfx = NULL;
 static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
+static Planet *space_landQueuePlanet = NULL;
 
 /*
  * fleet spawn rate
@@ -217,6 +219,8 @@ const char* planet_getClassName( const char *class )
       return _("Military Station");
    else if (strcmp(class,"2")==0)
       return _("Pirate Station");
+   else if (strcmp(class,"3")==0)
+      return _("Robotic Station");
    else if (strcmp(class,"A")==0)
       return _("Geothermal");
    else if (strcmp(class,"B")==0)
@@ -1246,6 +1250,18 @@ static void system_scheduler( double dt, int init )
 void space_factionChange (void)
 {
    space_fchg = 1;
+}
+
+
+/**
+ * @brief Handles landing if necessary.
+ */
+void space_checkLand (void)
+{
+   if (space_landQueuePlanet != NULL) {
+      land( space_landQueuePlanet, 0 );
+      space_landQueuePlanet = NULL;
+   }
 }
 
 
@@ -3356,6 +3372,9 @@ void space_renderOverlay( const double dt )
       }
    }
 
+   /* Render overlay if necessary. */
+   background_renderOverlay( dt );
+
    if ((cur_system->nebu_density > 0.) &&
          !menu_isOpen( MENU_MAIN ))
       nebu_renderOverlay(dt);
@@ -3631,6 +3650,7 @@ void space_clearKnown (void)
    for (i=0; i<array_size(systems_stack); i++) {
       sys = &systems_stack[i];
       sys_rmFlag(sys,SYSTEM_KNOWN);
+      sys_rmFlag(sys,SYSTEM_HIDDEN);
       for (j=0; j<array_size(sys->jumps); j++)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
    }
@@ -4269,4 +4289,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 }
 
 
-
+void space_queueLand( Planet *pnt )
+{
+   space_landQueuePlanet = pnt;
+}

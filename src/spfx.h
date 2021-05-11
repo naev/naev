@@ -39,11 +39,11 @@ typedef struct TrailStyle_ {
  * @brief IDs for the type of emission. (It's modal: one trail can have segments of different types.)
  */
 typedef enum TrailMode_ {
-   MODE_IDLE, MODE_GLOW, MODE_AFTERBURN, MODE_JUMPING,
+   MODE_IDLE, MODE_GLOW, MODE_AFTERBURN, MODE_JUMPING, MODE_NONE,
    MODE_MAX
 } TrailMode;
 
-#define MODE_TAGS {"idle", "glow", "afterburn", "jumping"}
+#define MODE_TAGS {"idle", "glow", "afterburn", "jumping", "none",}
 
 
 /**
@@ -110,7 +110,7 @@ void spfx_update( const double dt, const double real_dt );
 void spfx_render( const int layer );
 void spfx_clear (void);
 Trail_spfx* spfx_trail_create( const TrailSpec* spec );
-void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode );
+void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode, int force );
 void spfx_trail_remove( Trail_spfx* trail );
 
 

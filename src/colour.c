@@ -99,7 +99,7 @@ const glColour cMarkerLow     =  { .r=234./255., .g=240./255., .b=181./255., .a=
 const glColour cMarkerHigh    =  { .r=252./255., .g=247./255., .b=213./255., .a=1. }; /**< High priority mission marker colour. */
 const glColour cMarkerPlot    =  { .r=255./255., .g=255./255., .b=255./255., .a=1. }; /**< Plot mission marker colour. */
 /* radar */
-const glColour cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1.  }; /**< Player colour on radar. */
+const glColour cRadar_player  =  { .r = 0.9, .g = 0.1, .b = 0.9, .a = 1.  }; /**< Player colour on radar. */
 const glColour cRadar_tPilot  =  { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Targeted object colour on radar. */
 const glColour cRadar_tPlanet =  { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Targeted planet colour. */
 const glColour cRadar_weap    =  { .r = 0.8, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Weapon colour on radar. */

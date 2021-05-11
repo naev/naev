@@ -640,7 +640,7 @@ static int factionL_dynAdd( lua_State *L )
 
    /* Check if exists. */
    if (faction_exists(name))
-      NLUA_ERROR(L,"Faction '%s' already exists!");
+      NLUA_ERROR(L,_("Faction '%s' already exists!"), name);
 
    lua_pushfaction( L, faction_dynAdd( fac, name, display, ai ) );
    return 1;

@@ -645,7 +645,7 @@ static void misn_accept( unsigned int wid, char* str )
       pos = toolkit_getListPos( wid, "lstMission" );
       misn = &mission_computer[pos];
       ret = mission_accept( misn );
-      if ((ret==0) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
+      if ((ret==0) || (ret==3) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
          if (ret==-1)
             mission_cleanup( &mission_computer[pos] );
          memmove( &mission_computer[pos], &mission_computer[pos+1],
@@ -1439,7 +1439,7 @@ void takeoff( int delay )
    pilot_setTurn( player.p, 0. );
 
    /* Update lua stuff. */
-   pilot_outfitLInit( player.p );
+   pilot_outfitLInitAll( player.p );
 
    /* Reset speed */
    player_autonavResetSpeed();

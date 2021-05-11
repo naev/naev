@@ -133,6 +133,8 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
       return;
 
    o = iar_outfits[active][i];
+   if (o==NULL)
+      return;
 
    /* Figure out which slot this stuff fits into */
    switch (o->slot.type) {

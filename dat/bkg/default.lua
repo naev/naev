@@ -43,22 +43,12 @@ stars = {
 }
 
 
-blacklist = {
-   Taiomi = true,
-}
-
-
 function background ()
 
    -- We can do systems without nebula
    cur_sys = system.cur()
    local nebud, nebuv = cur_sys:nebula()
    if nebud > 0 then
-      return
-   end
-
-   -- Avoid blacklisted systems
-   if blacklist[ cur_sys:nameRaw() ] then
       return
    end
 

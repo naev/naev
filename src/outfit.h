@@ -275,6 +275,7 @@ typedef struct OutfitModificationData_ {
    int lua_update;   /**< Run periodically. */
    int lua_ontoggle; /**< Run when toggled. */
    int lua_onhit;    /**< Run when pilot takes damage. */
+   int lua_outofenergy; /**< Run when the pilot runs out of energy. */
 } OutfitModificationData;
 
 /**

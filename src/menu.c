@@ -651,6 +651,9 @@ static void menu_editors_open( unsigned int wid, char *unused )
    menu_main_close();
    unpause_game();
 
+   /* Clear known flags - specifically for the SYSTEM_HIDDEN flag. */
+   space_clearKnown();
+
    /* Set dimensions */
    y  = 20 + (BUTTON_HEIGHT+20)*2;
    h  = y + 80;
@@ -681,13 +684,13 @@ static void menu_editors_open( unsigned int wid, char *unused )
 static void menu_editors_close( unsigned int wid, char* str )
 {
    (void)str;
-   
+
    /* Close the Editors Menu and mark it as closed */
    window_destroy( wid );
    menu_Close( MENU_EDITORS );
-   
+
    /* Restores Main Menu */
    menu_main();
-   
+
    return;
 }

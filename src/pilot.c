@@ -84,7 +84,6 @@ static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
 static void pilot_init_trails( Pilot* p );
 static int pilot_trail_generated( Pilot* p, int generator );
-static void pilot_sample_trails( Pilot* p );
 
 
 /**
@@ -149,8 +148,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
       while (p < array_size(pilot_stack)) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   pilot_isDisabled(pilot_stack[p])) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ))
+               pilot_validTarget( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
       }
@@ -158,10 +156,9 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    if (mode == 1) {
       while (p < array_size(pilot_stack)) {
-         if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
-               pilot_isHostile( pilot_stack[p] ) )
+         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+               pilot_validTarget( player.p, pilot_stack[p] ) &&
+               pilot_isHostile( pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
       }
@@ -203,8 +200,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
       while (p >= 0) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   (pilot_isDisabled(pilot_stack[p]))) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ))
+               pilot_validTarget( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p--;
       }
@@ -214,7 +210,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
       while (p >= 0) {
          if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
                !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
+               pilot_validTarget( player.p, pilot_stack[p] ) &&
                pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
          p--;
@@ -1643,6 +1639,9 @@ static void pilot_dead( Pilot* p, unsigned int killer )
    pilot_rmFlag(p,PILOT_HYP_BRAKE);
    pilot_rmFlag(p,PILOT_HYPERSPACE);
 
+   /* Turn off all outfits, should disable Lua stuff as necssary. */
+   pilot_outfitOffAll( p );
+
    /* Pilot must die before setting death flag and probably messing with other flags. */
    if (killer > 0) {
       hparam.type       = HOOK_PARAM_PILOT;
@@ -2134,6 +2133,8 @@ void pilot_update( Pilot* pilot, double dt )
       pilot->energy = 0.;
       /* Stop all on outfits. */
       nchg += pilot_outfitOffAll( pilot );
+      /* Run Lua stuff. */
+      pilot_outfitLOutfofenergy( pilot );
    }
 
    /* Must recalculate stats because something changed state. */
@@ -2223,7 +2224,7 @@ void pilot_update( Pilot* pilot, double dt )
    gatherable_gather( pilot->id );
 
    /* Update the trail. */
-   pilot_sample_trails( pilot );
+   pilot_sample_trails( pilot, 0 );
 
    /* Update outfits if necessary. */
    pilot->otimer += dt;
@@ -2237,7 +2238,7 @@ void pilot_update( Pilot* pilot, double dt )
 /**
  * @brief Updates the given pilot's trail emissions.
  */
-static void pilot_sample_trails( Pilot* p )
+void pilot_sample_trails( Pilot* p, int none )
 {
    int i, g;
    double dx, dy, dircos, dirsin;
@@ -2247,14 +2248,18 @@ static void pilot_sample_trails( Pilot* p )
    dirsin = sin(p->solid->dir);
 
    /* Identify the emission type. */
-   if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
-      mode = MODE_JUMPING;
-   else if (pilot_isFlag(p, PILOT_AFTERBURNER))
-      mode = MODE_AFTERBURN;
-   else if (p->engine_glow > 0.)
-      mode = MODE_GLOW;
-   else
-      mode = MODE_IDLE;
+   if (none)
+      mode = MODE_NONE;
+   else {
+      if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
+         mode = MODE_JUMPING;
+      else if (pilot_isFlag(p, PILOT_AFTERBURNER))
+         mode = MODE_AFTERBURN;
+      else if (p->engine_glow > 0.)
+         mode = MODE_GLOW;
+      else
+         mode = MODE_IDLE;
+   }
 
    /* Compute the engine offset. */
    for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
@@ -2264,7 +2269,7 @@ static void pilot_sample_trails( Pilot* p )
          dy = p->ship->trail_emitters[g].x_engine * dirsin +
               p->ship->trail_emitters[g].y_engine * dircos +
               p->ship->trail_emitters[g].h_engine;
-         spfx_trail_sample( p->trail[i++], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, mode );
+         spfx_trail_sample( p->trail[i++], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, mode, mode==MODE_NONE );
       }
 }
 
@@ -2827,7 +2832,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    pilot_init_trails( dyn );
 
    /* Run Lua stuff. */
-   pilot_outfitLInit( dyn );
+   pilot_outfitLInitAll( dyn );
 
    return dyn->id;
 }
@@ -2872,7 +2877,7 @@ Pilot* pilot_replacePlayer( Pilot* after )
    pilot_stack[i] = after;
    pilot_init_trails( after );
    /* Run Lua stuff. */
-   pilot_outfitLInit( after );
+   pilot_outfitLInitAll( after );
    return after;
 }
 

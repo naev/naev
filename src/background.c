@@ -24,6 +24,7 @@
 #include "nlua_bkg.h"
 #include "nlua_col.h"
 #include "nlua_tex.h"
+#include "nlua_camera.h"
 #include "nluadef.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -57,6 +58,8 @@ static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
  */
 static nlua_env bkg_cur_env = LUA_NOREF; /**< Current Lua state. */
 static nlua_env bkg_def_env = LUA_NOREF; /**< Default Lua state. */
+static int bkg_L_renderbg = LUA_NOREF; /**< Background rendering function. */
+static int bkg_L_renderfg = LUA_NOREF; /**< Overlay rendering function. */
 
 
 /*
@@ -235,6 +238,31 @@ void background_render( double dt )
    background_renderImages( bkg_image_arr_bk );
    background_renderStars(dt);
    background_renderImages( bkg_image_arr_ft );
+
+   if (bkg_L_renderbg != LUA_NOREF) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
+      lua_pushnumber( naevL, dt );
+      if (nlua_pcall( bkg_cur_env, 1, 0 )) {
+         WARN( _("Background script 'renderbg' error:\n%s"), lua_tostring(naevL,-1));
+         lua_pop( naevL, 1 );
+      }
+   }
+}
+
+
+/**
+ * @brief Renders the background overlay.
+ */
+void background_renderOverlay( double dt )
+{
+   if (bkg_L_renderfg != LUA_NOREF) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderfg );
+      lua_pushnumber( naevL, dt );
+      if (nlua_pcall( bkg_cur_env, 1, 0 )) {
+         WARN( _("Background script 'renderfg' error:\n%s"), lua_tostring(naevL,-1));
+         lua_pop( naevL, 1 );
+      }
+   }
 }
 
 
@@ -344,11 +372,12 @@ static nlua_env background_create( const char *name )
    nlua_loadTex(env);
    nlua_loadCol(env);
    nlua_loadBackground(env);
+   nlua_loadCamera(env);
 
    /* Open file. */
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
-      WARN( _("Default background script '%s' not found."), path);
+      WARN( _("Background script '%s' not found."), path);
       nlua_freeEnv(env);
       return LUA_NOREF;
    }
@@ -414,6 +443,11 @@ int background_load( const char *name )
             (err) ? err : _("unknown error"));
       lua_pop(naevL, 1);
    }
+
+   /* See if there are render functions. */
+   bkg_L_renderbg = nlua_refenv( env, "renderbg" );
+   bkg_L_renderfg = nlua_refenv( env, "renderfg" );
+
    return ret;
 }
 
@@ -428,6 +462,11 @@ static void background_clearCurrent (void)
          nlua_freeEnv( bkg_cur_env );
    }
    bkg_cur_env = LUA_NOREF;
+
+   luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderfg );
+   bkg_L_renderbg = LUA_NOREF;
+   bkg_L_renderfg = LUA_NOREF;
 }
 
 

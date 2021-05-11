@@ -1811,7 +1811,7 @@ void player_brokeHyperspace (void)
          ai_cleartasks(pilot_stack[i]);
 
          /* Run Lua stuff. */
-         pilot_outfitLInit( pilot_stack[i] );
+         pilot_outfitLInitAll( pilot_stack[i] );
       }
    }
 
@@ -1832,7 +1832,7 @@ void player_brokeHyperspace (void)
    }
 
    /* Update lua stuff. */
-   pilot_outfitLInit( player.p );
+   pilot_outfitLInitAll( player.p );
 
    /* Safe since this is run in the player hook section. */
    hooks_run( "jumpin" );
@@ -1961,7 +1961,8 @@ void player_targetPrev( int mode )
 void player_targetClear (void)
 {
    gui_forceBlink();
-   if (player.p->target == PLAYER_ID && (preemption == 1 || player.p->nav_planet == -1)
+   if ((player.p->target == PLAYER_ID) && (player.p->nav_planet < 0)
+         && (preemption == 1 || player.p->nav_planet == -1)
          && !pilot_isFlag(player.p, PILOT_HYP_PREP)) {
       player.p->nav_hyperspace = -1;
       player_hyperspacePreempt(0);
@@ -2282,8 +2283,6 @@ void player_dead (void)
    /* Explode at normal speed. */
    pause_setSpeed(1.);
    sound_setSpeed(1.);
-
-   gui_cleanup();
 
    /* Close the overlay. */
    ovr_setOpen(0);

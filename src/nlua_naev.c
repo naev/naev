@@ -26,6 +26,9 @@
 #include "player.h"
 
 
+static int cache_table = LUA_NOREF; /* No reference. */
+
+
 /* Naev methods. */
 static int naev_Lversion( lua_State *L );
 static int naev_lastplayed( lua_State *L );
@@ -36,6 +39,7 @@ static int naev_keyEnableAll( lua_State *L );
 static int naev_keyDisableAll( lua_State *L );
 static int naev_eventStart( lua_State *L );
 static int naev_missionStart( lua_State *L );
+static int naevL_cache( lua_State *L );
 static const luaL_Reg naev_methods[] = {
    { "version", naev_Lversion },
    { "lastplayed", naev_lastplayed },
@@ -46,6 +50,7 @@ static const luaL_Reg naev_methods[] = {
    { "keyDisableAll", naev_keyDisableAll },
    { "eventStart", naev_eventStart },
    { "missionStart", naev_missionStart },
+   { "cache", naevL_cache },
    {0,0}
 }; /**< Naev Lua methods. */
 
@@ -59,6 +64,13 @@ static const luaL_Reg naev_methods[] = {
 int nlua_loadNaev( nlua_env env )
 {
    nlua_register(env, "naev", naev_methods, 0);
+
+   /* Create cache. */
+   if (cache_table == LUA_NOREF) {
+      lua_newtable( naevL );
+      cache_table = luaL_ref(naevL, LUA_REGISTRYINDEX);
+   }
+
    return 0;
 }
 
@@ -252,5 +264,17 @@ static int naev_missionStart( lua_State *L )
 }
 
 
-
-
+/**
+ * @brief Gets the global Lua runtime cache. This is shared among all
+ * environments and is cleared when the game is closed.
+ *
+ * @usage c = naev.cache()
+ *
+ *    @luatreturn table The Lua global cache.
+ * @luafunc cache
+ */
+static int naevL_cache( lua_State *L )
+{
+   lua_rawgeti( L, LUA_REGISTRYINDEX, cache_table );
+   return 1;
+}

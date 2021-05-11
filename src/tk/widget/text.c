@@ -145,7 +145,7 @@ int window_getTextHeight( const unsigned int wid, const char *name )
 
    /* Get the widget. */
    wgt = window_getwgt( wid, name );
-   if ( wgt == NULL || wgt->type != WIDGET_TEXT )
+   if (wgt == NULL || wgt->type != WIDGET_TEXT)
       return 0;
 
    return gl_printHeightRaw( wgt->dat.txt.font, wgt->w, wgt->dat.txt.text );

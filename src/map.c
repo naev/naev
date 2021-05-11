@@ -301,35 +301,35 @@ void map_open (void)
    /* Faction */
    window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
          &gl_smallFont, NULL, _("Faction:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtFaction",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
    window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
          &gl_smallFont, NULL, _("Standing:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtStanding",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
    window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
          &gl_smallFont, NULL, _("Presence:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtPresence",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Planets */
    window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
          &gl_smallFont, NULL, _("Planets:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 150, 0, "txtPlanets",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtPlanets",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
    window_addText( wid, x, y, 90, 20, 0, "txtSServices",
          &gl_smallFont, NULL, _("Services:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtServices",
          &gl_smallFont, NULL, NULL );
 
    /* Close button */
@@ -586,12 +586,12 @@ static void map_update( unsigned int wid )
 
    /* Faction */
    window_moveWidget( wid, "txtSFaction", x, y);
-   window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtFaction", x + 50, y-gl_smallFont.h - 5 );
    y -= gl_smallFont.h + h + 5 + 15;
 
    /* Standing */
    window_moveWidget( wid, "txtSStanding", x, y );
-   window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtStanding", x + 50, y-gl_smallFont.h - 5 );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    window_moveWidget( wid, "txtSPresence", x, y );
@@ -993,6 +993,9 @@ void map_renderDecorators( double x, double y, int editor, double alpha )
          for (j=0; j<array_size(systems_stack) && visible==0; j++) {
             sys = system_getIndex( j );
 
+            if (sys_isFlag(sys, SYSTEM_HIDDEN))
+               continue;
+
             if (!sys_isKnown(sys))
                continue;
 
@@ -1035,6 +1038,9 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
+
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
 
       if (!sys_isKnown(sys) && !editor)
          continue;
@@ -1084,6 +1090,9 @@ void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
+
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
 
       if (!sys_isKnown(sys) && !editor)
          continue;
@@ -1143,6 +1152,9 @@ void map_renderJumps( double x, double y, int editor)
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
+
       if (!sys_isKnown(sys) && !editor)
          continue; /* we don't draw hyperspace lines */
 
@@ -1153,6 +1165,8 @@ void map_renderJumps( double x, double y, int editor)
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
       for (j = 0; j < array_size(sys->jumps); j++) {
          jsys = sys->jumps[j].target;
+         if (sys_isFlag(jsys,SYSTEM_HIDDEN))
+            continue;
          if (!space_sysReachableFromSys(jsys,sys) && !editor)
             continue;
 
@@ -1218,6 +1232,9 @@ void map_renderSystems( double bx, double by, double x, double y,
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
+
       /* if system is not known, reachable, or marked. and we are not in the editor */
       if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
            && !space_sysReachable(sys)) && !editor)
@@ -1282,6 +1299,8 @@ static void map_renderPath( double x, double y, double a, double alpha )
 
       for (j=0; j<array_size(map_path); j++) {
          sys1 = map_path[j];
+         if (sys_isFlag(sys0,SYSTEM_HIDDEN) || sys_isFlag(sys1,SYSTEM_HIDDEN))
+            continue;
          if (jcur == jmax && jmax > 0)
             col = &cGreen;
          else if (jcur < 1)
@@ -1339,6 +1358,9 @@ void map_renderNames( double bx, double by, double x, double y,
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
+
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
 
       /* Skip system. */
       if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
@@ -1454,6 +1476,9 @@ static void map_renderSysBlack(double bx, double by, double x,double y, double w
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
+      if (sys_isFlag(sys,SYSTEM_HIDDEN))
+         continue;
+
       /* if system is not known, reachable, or marked. and we are not in the editor */
       if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
            && !space_sysReachable(sys)) && !editor)
@@ -1548,6 +1573,8 @@ void map_renderCommod( double bx, double by, double x, double y,
       }
       for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex( i );
+         if (sys_isFlag(sys,SYSTEM_HIDDEN))
+            continue;
 
          /* if system is not known, reachable, or marked. and we are not in the editor */
          if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
@@ -1610,6 +1637,8 @@ void map_renderCommod( double bx, double by, double x, double y,
       /* Now display the costs */
       for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex( i );
+         if (sys_isFlag(sys,SYSTEM_HIDDEN))
+            continue;
 
          /* if system is not known, reachable, or marked. and we are not in the editor */
          if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
@@ -1700,7 +1729,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
 {
    int    i;
    size_t l;
-   char   buf[ 1024 ];
+   char   buf[STRMAX_SHORT];
    int    hasPresence;
    double unknownPresence;
 
@@ -1709,31 +1738,30 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
    hasPresence     = 0;
    unknownPresence = 0;
 
-   for ( i = 0; i < array_size(sys->presence); i++ ) {
-      if ( sys->presence[ i ].value <= 0 )
+   for (i = 0; i < array_size(sys->presence); i++) {
+      if (sys->presence[i].value <= 0)
          continue;
 
       hasPresence = 1;
-      if ( !omniscient && !faction_isKnown( sys->presence[ i ].faction ) ) {
-         unknownPresence += sys->presence[ i ].value;
+      if (!omniscient && !faction_isKnown( sys->presence[i].faction )) {
+         unknownPresence += sys->presence[i].value;
          break;
       }
       /* Use map grey instead of default neutral colour */
-      l += scnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
+      l += scnprintf( &buf[l], sizeof(buf) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
                       omniscient ? faction_name( sys->presence[ i ].faction )
                                  : faction_shortname( sys->presence[ i ].faction ),
                       faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
-      if ( l > sizeof( buf ) )
+      if (l > sizeof( buf ))
          break;
    }
-   if ( unknownPresence != 0 && l <= sizeof( buf ) )
-      l += scnprintf( &buf[ l ], sizeof( buf ) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
+   if (unknownPresence != 0 && l <= sizeof(buf))
+      l += scnprintf( &buf[l], sizeof(buf) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
                       unknownPresence );
 
-   if ( hasPresence == 0 )
-      snprintf( buf, sizeof( buf ), _( "None" ) );
+   if (hasPresence == 0)
+      snprintf( buf, sizeof(buf), _("None") );
 
-   (void) l;
    window_modifyText( wid, name, buf );
 }
 
@@ -1786,6 +1814,9 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 
          for (i=0; i<array_size(systems_stack); i++) {
             sys = system_getIndex( i );
+
+            if (sys_isFlag(sys, SYSTEM_HIDDEN))
+               continue;
 
             /* must be reachable */
             if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)

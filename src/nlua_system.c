@@ -55,6 +55,8 @@ static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
 static int systemL_isknown( lua_State *L );
 static int systemL_setknown( lua_State *L );
+static int systemL_hidden( lua_State *L );
+static int systemL_setHidden( lua_State *L );
 static int systemL_mrkClear( lua_State *L );
 static int systemL_mrkAdd( lua_State *L );
 static int systemL_mrkRm( lua_State *L );
@@ -83,6 +85,8 @@ static const luaL_Reg system_methods[] = {
    { "radius", systemL_radius },
    { "known", systemL_isknown },
    { "setKnown", systemL_setknown },
+   { "hidden", systemL_hidden },
+   { "setHidden", systemL_setHidden },
    { "mrkClear", systemL_mrkClear },
    { "mrkAdd", systemL_mrkAdd },
    { "mrkRm", systemL_mrkRm },
@@ -1024,6 +1028,44 @@ static int systemL_setknown( lua_State *L )
    /* Update outfits image array. */
    outfits_updateEquipmentOutfits();
 
+   return 0;
+}
+
+
+/**
+ * @brief Checks to see if a system is hidden by the player.
+ *
+ * @usage b = s:hidden()
+ *
+ *    @luatparam System s System to check if the player knows.
+ *    @luatreturn boolean true if the player knows the system.
+ * @luafunc hidden
+ */
+static int systemL_hidden( lua_State *L )
+{
+   StarSystem *sys = luaL_validsystem(L, 1);
+   lua_pushboolean(L, sys_isFlag( sys, SYSTEM_HIDDEN ));
+   return 1;
+}
+
+
+/**
+ * @brief Sets a system to be hidden to the player.
+ *
+ * @usage s:setHidden( true )
+ *
+ *    @luatparam System s System to check if the player knows.
+ *    @luatparam boolean hide Whether or not to hide the system.
+ * @luafunc hidden
+ */
+static int systemL_setHidden( lua_State *L )
+{
+   StarSystem *sys = luaL_validsystem(L, 1);
+   int b = lua_toboolean(L,2);
+   if (b)
+      sys_setFlag( sys, SYSTEM_HIDDEN );
+   else
+      sys_rmFlag( sys, SYSTEM_HIDDEN );
    return 0;
 }
 

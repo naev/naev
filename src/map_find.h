@@ -17,7 +17,7 @@
 typedef struct map_find_s {
    Planet *pnt;         /**< Planet available at. */
    StarSystem *sys;     /**< System available at. */
-   char display[128];   /**< Name to display. */
+   char display[STRMAX_SHORT];   /**< Name to display. */
    int jumps;           /**< Jumps to system. */
    double distance;     /**< Distance to system. */
 } map_find_t;

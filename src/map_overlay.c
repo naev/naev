@@ -200,6 +200,10 @@ void ovr_refresh (void)
    for (i=0; i<items; i++)
       mo[i]->radius = MAX( mo[i]->radius / ovr_res, i<jumpitems ? 10. : 15. );
 
+   /* Nothing in the system so we just set a default value. */
+   if (items == 0)
+      ovr_res = 50.;
+
    /* Compute text overlap and try to minimize it. */
    ovr_optimizeLayout( items, pos, mo, moo, ovr_res );
 

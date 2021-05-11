@@ -699,6 +699,9 @@ void main_loop( int update )
    /* Safe hook should be run every frame regardless of whether game is paused or not. */
    hooks_run( "safe" );
 
+   /* Checks to see if we want to land. */
+   space_checkLand();
+
    /*
     * Handle render.
     */
