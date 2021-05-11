@@ -148,8 +148,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
       while (p < array_size(pilot_stack)) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   pilot_isDisabled(pilot_stack[p])) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ))
+               pilot_validTarget( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
       }
@@ -157,10 +156,9 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    if (mode == 1) {
       while (p < array_size(pilot_stack)) {
-         if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
-               pilot_isHostile( pilot_stack[p] ) )
+         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+               pilot_validTarget( player.p, pilot_stack[p] ) &&
+               pilot_isHostile( pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
       }
@@ -202,8 +200,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
       while (p >= 0) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   (pilot_isDisabled(pilot_stack[p]))) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ))
+               pilot_validTarget( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p--;
       }
@@ -213,7 +210,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
       while (p >= 0) {
          if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
                !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
+               pilot_validTarget( player.p, pilot_stack[p] ) &&
                pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
          p--;
