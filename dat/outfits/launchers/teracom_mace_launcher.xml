@@ -12,7 +12,7 @@ TeraCom's Mace launcher uses an advanced reload mechanism that allows the launch
   <gfx_store>macelauncher.png</gfx_store>
   <cpu>-5</cpu>
  </general>
- <specific type="launcher" secondary="1">
+ <specific type="launcher">
   <ammo>Mace Rocket</ammo>
   <delay>0.3</delay>
   <reload_time>6</reload_time>
