@@ -86,14 +86,22 @@ function approach_wave ()
    dv("Yo")
    vn.menu{
       { "Enter in the Light Category", "light" },
-      --{ "Enter in the Medium Category", "medium" },
-      --{ "Enter in the Heavy Category", "heavy" },
+      { "Enter in the Medium Category", "medium" },
+      { "Enter in the Heavy Category", "heavy" },
       { "More Information", "info" },
       { "Maybe later", "leave" },
    }
 
    vn.label("light")
    vn.func( function () wave_category = "light" end )
+   vn.done()
+
+   vn.label("medium")
+   vn.func( function () wave_category = "medium" end )
+   vn.done()
+
+   vn.label("heavy")
+   vn.func( function () wave_category = "heavy" end )
    vn.done()
 
    -- TODO info
@@ -170,11 +178,11 @@ function leave_the_ring ()
       s:setHidden(false)
    end
    hook.land("land")
-   player.land( planet.get("Totoran") )
    local pp = player.pilot()
    pp:setHide( true ) -- clear hidden flag
    pp:setInvincible( false )
    player.cinematics( false )
+   player.land( planet.get("Totoran") )
 end
 
 --[[
