@@ -798,7 +798,7 @@ static int hook_renderbg( lua_State *L )
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
  *    @luatreturn number Hook identifier.
- * @luafunc renderbg
+ * @luafunc renderfg
  */
 static int hook_renderfg( lua_State *L )
 {
