@@ -1,15 +1,8 @@
 --[[
-<?xml version='1.0' encoding='utf8'?>
-<event name="Cool Space Stuff">
-  <trigger>enter</trigger>
-  <chance>100</chance>
- </event>
- --]]
- --[[
- -- This script handles cool background effects by being created every time the
- -- player enters a system. Afterwards if necessary, it will render fancy
- -- things or just end.
- --]]
+   Taiomi, Ship Graveyard
+
+   Dead ships floating everywhere with fancy custom background.
+--]]
 
 local love = require 'love'
 local lg = require 'love.graphics'
@@ -23,28 +16,7 @@ love.w = nw
 love.h = nh
 lg.origin()
 
--- List of special systems, for other systems this event just finishes
-systems = {
-   Taiomi = "taiomi_init",
-}
-
-function create ()
-   local syshooks = systems[ system.cur():nameRaw() ]
-   if not syshooks then
-      evt.finish()
-   end
-   _G[syshooks]()
-
-   hook.enter("endevent")
-   hook.land("endevent")
-end
-function endevent () evt.finish() end
-
-
---[[
--- Taiomi, Ship Graveyard
---]]
-function taiomi_init ()
+function background ()
    -- Create particles and buffer
    local density = 200*200
    local z, zmax, zmin = camera.getZoom()
@@ -137,9 +109,6 @@ function taiomi_init ()
 
    -- Set up hooks
    pos = camera.get() -- Computes
-   hook.renderbg( "taiomi_renderbg" )
-   hook.renderfg( "taiomi_renderfg" )
-   hook.update( "taiomi_update" )
 
    -- Use cache
    local cache = naev.cache()
@@ -199,7 +168,7 @@ function taiomi_init ()
    local neb = tex.open( "gfx/bkg/nebula23.webp" )
    bkg.image( neb, 377, 1344, 0.013, 1.9 )
 end
-function taiomi_update ()
+function update ()
    -- Calculate player motion
    local npos = camera.get()
    local diff = npos - pos
@@ -238,14 +207,17 @@ local function draw_part( p, s, z )
    local y = (p.y - nh/2 - buffer) / z + nh/2
    lg.draw( p.i.i, p.q, x, y, 0, p.s * s / z )
 end
-function taiomi_renderbg ()
+function renderbg ()
+   -- Run the update stuff here
+   update()
+
    local z = camera.getZoom()
    lg.setColor( 1, 1, 1, 1 )
    for k,p in ipairs( bgparts ) do
       draw_part( p, 2, z )
    end
 end
-function taiomi_renderfg ()
+function renderfg ()
    local z = camera.getZoom()
    lg.setColor( 1, 1, 1, 1 )
    for k,p in ipairs( fgparts ) do
