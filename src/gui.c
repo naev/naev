@@ -555,8 +555,8 @@ static void gui_renderPilotTarget( double dt )
       return;
    }
 
-   /* Make sure target is still in range. */
-   if (!pilot_inRangePilot( player.p, p, NULL )) {
+   /* Make sure target is still valid and in range. */
+   if (!pilot_validTarget( player.p, p )) {
       pilot_setTarget( player.p, player.p->id );
       gui_setTarget();
       return;
