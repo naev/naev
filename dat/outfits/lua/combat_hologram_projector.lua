@@ -75,6 +75,10 @@ function turnoff( po )
 end
 
 function init( p, po )
+   -- get rid of hologram if exists
+   if mem.p and mem.p:exists() then
+      mem.p:rm()
+   end
    po:state("off")
    mem.p = nil
    mem.timer = 0
