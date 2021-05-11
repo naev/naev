@@ -649,3 +649,20 @@ int nlua_pcall( nlua_env env, int nargs, int nresults ) {
 
    return ret;
 }
+
+
+/**
+ * @brief Gets the reference of a global in a lua environment.
+ *
+ *    @param env Environment.
+ *    @param name Name of the global to get.
+ *    @return LUA_NOREF if no global found, reference otherwise.
+ */
+int nlua_refenv( nlua_env env, const char *name )
+{
+   nlua_getenv( env, name );
+   if (!lua_isnil( naevL, -1 ))
+      return luaL_ref( naevL, LUA_REGISTRYINDEX );
+   lua_pop(naevL, 1);
+   return LUA_NOREF;
+}
