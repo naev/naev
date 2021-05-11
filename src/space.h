@@ -470,6 +470,7 @@ AsteroidType *space_getType ( int ID );
  * Misc.
  */
 void system_setFaction( StarSystem *sys );
+void space_checkLand (void);
 void space_factionChange (void);
 void space_queueLand( Planet *pnt );
 

@@ -1254,6 +1254,18 @@ void space_factionChange (void)
 
 
 /**
+ * @brief Handles landing if necessary.
+ */
+void space_checkLand (void)
+{
+   if (space_landQueuePlanet != NULL) {
+      land( space_landQueuePlanet, 0 );
+      space_landQueuePlanet = NULL;
+   }
+}
+
+
+/**
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
@@ -1275,12 +1287,6 @@ void space_update( const double dt )
    /* Needs a current system. */
    if (cur_system == NULL)
       return;
-
-   if (space_landQueuePlanet != NULL) {
-      land( space_landQueuePlanet, 0 );
-      space_landQueuePlanet = NULL;
-      return;
-   }
 
    /* If spawning is enabled, call the scheduler. */
    if (space_spawn)
