@@ -2119,6 +2119,10 @@ void gui_setGeneric( Pilot* pilot )
    if (gui_env == LUA_NOREF)
       return;
 
+   if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
+      (player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD))
+      return;
+
    if ((player.p->target != PLAYER_ID) && (pilot->id == player.p->target))
       gui_setTarget();
    else if (pilot_isPlayer(pilot)) {
