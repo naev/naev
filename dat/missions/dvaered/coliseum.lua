@@ -29,7 +29,9 @@ misn_desc   = _("Annihilate all enemies in Coliseum.")
 coliseum = system.get("Coliseum")
 
 function create ()
-   misn.finish(false) -- Disabled for now
+   if not var.peek("testing") then
+      misn.finish(false) -- Disabled for now
+   end
    -- We'll have different NPCs for each tournament type
    npc_1v1 = misn.npcAdd( "approach_1v1", npc_name, npc_portrait, npc_description )
 end
