@@ -271,6 +271,7 @@ function wave_round_setup ()
    pp:setEnergy( 100 )
    pp:setTemp( 0 )
    pp:fillAmmo()
+   -- TODO reset outfit cooldown stuff
 
    local function addenemy( shipname, pos )
       local p = pilot.add( shipname, enemy_faction, pos, nil, "baddie_norun" )
@@ -309,6 +310,16 @@ function wave_round_setup ()
          { "Lancelot", "Hyena" },
          { "Hyena", "Hyena", "Hyena" },
          { "Admonisher" }, -- 10
+         { "Shark", "Hyena", "Hyena" },
+         { "Shark", "Shark" },
+         { "Shark", "Lancelot" },
+         { "Lancelot", "Lancelot" },
+         { "Vendetta", "Hyena", "Hyena" }, -- 15
+         { "Vendetta", "Lancelot" },
+         { "Vendetta", "Vendetta" },
+         { "Lancelot", "Shark", "Shark" },
+         { "Hyena", "Hyena", "Hyena", "Hyena", "Hyena" },
+         { "Pacifier" }, --20
       }
    end
    enemies = addenemies( round_enemies[wave_round] )
@@ -369,7 +380,7 @@ function wave_compute_score ()
    return str, score
 end
 function wave_end ()
-   if wave_round < 10 then
+   if wave_round < 20 then
       -- TODO Cooler animation or something
       local score_str, score = wave_compute_score()
       player.omsgAdd( string.format( _("#pWAVE %d CLEAR#0\n%s"), wave_round, score_str ), 4.5 )
