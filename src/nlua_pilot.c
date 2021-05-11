@@ -2838,6 +2838,15 @@ static int pilotL_setHealth( lua_State *L )
    p->shield = s * p->shield_max;
    p->stress = st * p->armour;
 
+   /* Clear death hooks if not dead. */
+   if (p->armour > 0.) {
+      pilot_rmFlag( p, PILOT_DEAD );
+      pilot_rmFlag( p, PILOT_EXPLODED );
+      pilot_rmFlag( p, PILOT_DELETE );
+      if (pilot_isPlayer(p))
+         player_rmFlag( PLAYER_DESTROYED );
+   }
+
    /* Update disable status. */
    pilot_updateDisable(p, 0);
 
