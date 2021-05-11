@@ -2284,8 +2284,6 @@ void player_dead (void)
    pause_setSpeed(1.);
    sound_setSpeed(1.);
 
-   gui_cleanup();
-
    /* Close the overlay. */
    ovr_setOpen(0);
 }
