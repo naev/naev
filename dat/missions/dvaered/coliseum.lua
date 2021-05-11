@@ -234,7 +234,7 @@ function p_death( p )
 end
 function player_lost ()
    local pp = player.pilot()
-   pp:setHealth( 1, 0 ) -- Heal up to avoid game over if necessary
+   pp:setHealth( 100, 0 ) -- Heal up to avoid game over if necessary
    pp:setHide( true )
    pp:setInvincible( true )
    player.cinematics( true )
@@ -267,7 +267,13 @@ end
 function wave_round_setup ()
    pilot.clear() -- clear remaining pilots if necessary
 
+   -- Heal up and be nice to the player
    local pp = player.pilot()
+   pp:setHealth( 100, 100, 0 )
+   pp:setEnergy( 100 )
+   pp:setTemp( 0 )
+   pp:fillAmmo()
+
    local function addenemy( shipname, pos )
       local p = pilot.add( shipname, enemy_faction, pos, nil, "baddie_norun" )
       p:setInvincible(true)
