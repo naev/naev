@@ -2764,7 +2764,7 @@ static int pilotL_changeAI( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to set health of.
  *    @luatparam number temp Value to set temperature to. Values below base temperature will be clamped.
- *    @luatparam[opt=true] boolean slots Whether slots should also be set to this temperature.
+ *    @luatparam[opt=false] boolean noslots Whether slots should also be set to this temperature.
  * @luafunc setTemp
  */
 static int pilotL_setTemp( lua_State *L )
@@ -2778,10 +2778,7 @@ static int pilotL_setTemp( lua_State *L )
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
    kelvins  = luaL_checknumber(L, 2);
-   if (lua_gettop(L) < 3)
-      setOutfits = 1;
-   else
-      setOutfits = lua_toboolean(L, 3);
+   setOutfits = !lua_toboolean(L,3);
 
    /* Temperature must not go below base temp. */
    kelvins = MAX(kelvins, CONST_SPACE_STAR_TEMP);
