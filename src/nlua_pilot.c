@@ -493,8 +493,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          return 0;
       }
       /* Get pilotname argument if provided. */
-      if ((lua_gettop(L) >= 4) && !lua_isnil(L,4))
-         fltname = luaL_checkstring(L,4);
+      fltname = luaL_optstring( L, 4, fltname );
       /* Get faction from string or number. */
       lf = luaL_validfaction(L,2);
    }
@@ -571,10 +570,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    }
 
    /* Parse final argument - Fleet AI Override */
-   if ((lua_gettop(L) < 3+2*from_ship) || lua_isnil(L,3+2*from_ship))
-      fltai = NULL;
-   else
-      fltai = luaL_checkstring(L,3+2*from_ship);
+   fltai = luaL_optstring( L, 3+2*from_ship, NULL );
 
    /* Set up velocities and such. */
    if (jump != NULL) {
