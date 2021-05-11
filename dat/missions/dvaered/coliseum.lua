@@ -42,20 +42,15 @@ end
 
 -- Land is unified for all types of combat
 function land ()
-   if misn_state==3 then
-      vn.clear()
-      vn.scene()
-      vn.transition()
-      vn.sfxMoney()
-      vn.func( function () player.pay( rewardcredits ) end )
-      vn.na(string.format(_("You received #g%s#0."), creditstring( rewardcredits )))
-      vn.run()
+   vn.clear()
+   vn.scene()
+   vn.transition()
+   vn.sfxMoney()
+   vn.func( function () player.pay( rewardcredits ) end )
+   vn.na(string.format(_("You received #g%s#0."), creditstring( rewardcredits )))
+   vn.run()
 
-      misn.finish(true)
-   elseif misn_state>0 then
-      player.msg(_("#rMISSION FAILED! You were not supposed to land after the fight started!!"))
-      misn.finish(false)
-   end
+   misn.finish(true)
 end
 
 
