@@ -141,18 +141,21 @@ function taiomi_init ()
    hook.renderfg( "taiomi_renderfg" )
    hook.update( "taiomi_update" )
 
+   -- Use cache
+   local cache = naev.cache()
+
    -- Create a canvas background
    local function add_bkg( id, n, move, scale, g, salpha, sbeta )
-      --[[
-      local filename = string.format("cache/taiomi%02d.png",id)
-      local ftype = naev.file.filetype( filename )
-      if ftype=="file" then
-         print("read from data")
-         local tex = naev.tex.open( filename )
-         naev.bkg.image( tex, 0, 0, move, scale )
-         return
+      -- Try to use cache as necessary
+      local ct = cache.taiomi
+      if ct then
+         if ct[id] then
+            naev.bkg.image( ct[id].t.tex, 0, 0, move, scale )
+            return
+         end
+      else
+         cache.taiomi = {}
       end
-      --]]
 
       n = n or 100000
       move = move or 0.03
@@ -182,11 +185,12 @@ function taiomi_init ()
       end
       lg.setCanvas()
       naev.bkg.image( cvs.t.tex, 0, 0, move, scale )
-      --cvs.t.tex:writeData( filename )
+
+      -- Store in cache
+      cache.taiomi[ id ] = cvs
    end
    -- Create three layers using parallax, this lets us cut down significantly
    -- on the number of ships we have to render to create them
-   naev.file.mkdir("cache/")
    add_bkg( 0, 6e4, 0.03, 1.5, 0.3, 6, 3 )
    add_bkg( 1, 5e4, 0.05, 1.5, 0.4, 5, 3 )
    add_bkg( 2, 3e4, 0.08, 1.5, 0.5, 4, 3 )
