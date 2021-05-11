@@ -205,8 +205,6 @@ end
    Common functions
 --]]
 function enemy_out( p )
-   if misn_state==3 then return end
-
    local idx = nil
    for k,v in ipairs(enemies) do
       if v==p then
@@ -214,7 +212,9 @@ function enemy_out( p )
          break
       end
    end
-   table.remove( enemies, idx )
+   if idx then
+      table.remove( enemies, idx )
+   end
    if wave_started and #enemies == 0 then
       wave_started = false
       hook.timer( 3000, "enemy_out_delay" )
@@ -265,8 +265,9 @@ function enter_wave ()
    wave_round_setup()
 end
 function wave_round_setup ()
+   pilot.clear() -- clear remaining pilots if necessary
+
    local pp = player.pilot()
-   enemies = {}
    local function addenemy( shipname, pos )
       local p = pilot.add( shipname, enemy_faction, pos, nil, "baddie_norun" )
       p:setInvincible(true)
@@ -278,14 +279,17 @@ function wave_round_setup ()
       mem.comm_no = _("No response.") -- Don't allow talking
       hook.pilot( p, "disable", "p_disabled" )
       hook.pilot( p, "death", "p_death" )
-      table.insert( enemies, p )
+      return p
    end
    local function addenemies( ships )
+      local e = {}
       local pos = vec2.new( -500, 500 )
       for k,v in ipairs(ships) do
          local shipname = v
-         addenemy( shipname, pos )
+         local p = addenemy( shipname, pos )
+         table.insert( e, p )
       end
+      return e
    end
 
    local round_enemies
@@ -303,7 +307,7 @@ function wave_round_setup ()
          { "Admonisher" }, -- 10
       }
    end
-   addenemies( round_enemies[wave_round] )
+   enemies = addenemies( round_enemies[wave_round] )
 
    -- Count down
    player.omsgAdd( string.format( _("WAVE %d"), wave_round ), 8 )
