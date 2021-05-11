@@ -203,10 +203,12 @@ function enter ()
    enemies = {}
    local function addenemy( shipname, name )
       local pos = vec2.new( -500, 500 )
-      local p = pilot.add( shipname, fact, pos, name )
+      local p = pilot.add( shipname, fact, pos, name, "baddie_norun" )
       p:setInvincible(true)
       p:control(true)
       p:brake()
+      local mem = p:memory()
+      mem.comm_no = _("No response.") -- Don't allow talking
       hook.pilot( p, "disable", "p_disabled" )
       hook.pilot( p, "death", "p_death" )
       table.insert( enemies, p )
@@ -234,7 +236,7 @@ function enemy_out( p )
    end
 end
 function p_disabled( p )
-   p:disable()
+   p:disable() -- don't let them come back
    enemy_out( p )
 end
 function p_death( p )
