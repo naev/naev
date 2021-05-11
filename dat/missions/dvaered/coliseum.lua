@@ -134,6 +134,9 @@ function approach_wave ()
    coliseum_enter = "enter_wave"
    wave_round = 1
 end
+function abort ()
+   leave_the_ring()
+end
 
 --[[
    Common Teleporting Functions
