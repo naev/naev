@@ -217,11 +217,8 @@ function enemy_out( p )
    end
    if wave_started and #enemies == 0 then
       wave_started = false
-      hook.timer( 3000, "enemy_out_delay" )
+      all_enemies_dead()
    end
-end
-function enemy_out_delay ()
-   all_enemies_dead()
 end
 function p_disabled( p )
    p:disable() -- don't let them come back
@@ -262,6 +259,7 @@ function enter_wave ()
    enemy_faction = faction.dynAdd( "Mercenary", "Combatant", _("Combatant") )
 
    -- Start round
+   total_score = 0
    wave_round_setup()
 end
 function wave_round_setup ()
@@ -314,17 +312,69 @@ function wave_round_setup ()
       }
    end
    enemies = addenemies( round_enemies[wave_round] )
+   wave_enemies = round_enemies[wave_round]
 
    -- Count down
-   player.omsgAdd( string.format( _("WAVE %d"), wave_round ), 8 )
+   player.omsgAdd( string.format( _("#pWAVE %d#0"), wave_round ), 8 )
    countdown_start()
 
    all_enemies_dead = wave_end
 end
+function wave_compute_score ()
+   local pp = player.pilot()
+   local score = 0
+   local bonus = 100
+   local str = ""
+
+   local score_table = {
+      Hyena = 100,
+      Shark = 200,
+      Lancelot = 300,
+      Vendetta = 400,
+      Admonisher = 600,
+   }
+   for k,n in ipairs(wave_enemies) do
+      local s = score_table[n]
+      str = string.format("#o%s %d#0\n", _(n), s )
+      score = score + s
+   end
+
+   local function newbonus( s, b )
+      local h
+      if b > 0 then
+         h = "#g"
+      else
+         h = "#r"
+      end
+      str = str .. h .. string.format(s,b) .. "#0\n"
+      bonus = bonus + b
+   end
+   if wave_category == "light" then
+      local c = pp:ship():class()
+      if c=="Corvette" then
+         newbonus( "Corvette %d%%", -20 )
+      elseif c=="Destroyer" then
+         newbonus( "Destroyer %d%%", -40 )
+      elseif c=="Cruiser" then
+         newbonus( "Cruiser %d%%", -80 )
+      elseif c=="Carrier" then
+         newbonus( "Carrier %d%%", -90 )
+      end
+   end
+
+   score = math.max( 0, score * bonus / 100 )
+
+   total_score = total_score + score
+   str = str..string.format("TOTAL %d (#g+%d#0)", total_score, score )
+   return str, score
+end
 function wave_end ()
    if wave_round < 10 then
+      -- TODO Cooler animation or something
+      local score_str, score = wave_compute_score()
+      player.omsgAdd( string.format( _("#pWAVE %d CLEAR#0\n%s"), wave_round, score_str ), 4.5 )
       wave_round = wave_round + 1
-      wave_round_setup()
+      hook.timer( 5000, "wave_round_setup" )
       return
    end
 
