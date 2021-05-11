@@ -12,6 +12,7 @@
 
 local vn = require 'vn'
 require 'numstring'
+require 'missions.dvaered.coliseum_tables'
 
 logidstr = "log_morrigan"
 logname  = _("Totoran Tournament")
@@ -300,31 +301,7 @@ function wave_round_setup ()
       return e
    end
 
-   local round_enemies
-   if wave_category == "light" then
-      round_enemies = {
-         { "Hyena" }, -- 1
-         { "Hyena" },
-         { "Shark" },
-         { "Lancelot" },
-         { "Vendetta" }, -- 5
-         { "Hyena", "Hyena" },
-         { "Shark", "Hyena" },
-         { "Lancelot", "Hyena" },
-         { "Hyena", "Hyena", "Hyena" },
-         { "Admonisher" }, -- 10
-         { "Shark", "Hyena", "Hyena" },
-         { "Shark", "Shark" },
-         { "Shark", "Lancelot" },
-         { "Lancelot", "Lancelot" },
-         { "Vendetta", "Hyena", "Hyena" }, -- 15
-         { "Vendetta", "Lancelot" },
-         { "Vendetta", "Vendetta" },
-         { "Lancelot", "Shark", "Shark" },
-         { "Hyena", "Hyena", "Hyena", "Hyena", "Hyena" },
-         { "Pacifier" }, --20
-      }
-   end
+   local round_enemies = wave_round_enemies[wave_category]
    enemies = addenemies( round_enemies[wave_round] )
    wave_enemies = round_enemies[wave_round]
 
@@ -340,15 +317,8 @@ function wave_compute_score ()
    local bonus = 100
    local str = ""
 
-   local score_table = {
-      Hyena = 100,
-      Shark = 200,
-      Lancelot = 300,
-      Vendetta = 400,
-      Admonisher = 600,
-   }
    for k,n in ipairs(wave_enemies) do
-      local s = score_table[n]
+      local s = wave_score_table[n]
       str = string.format("#o%s %d#0\n", _(n), s )
       score = score + s
    end
@@ -383,7 +353,7 @@ function wave_compute_score ()
    return str, score
 end
 function wave_end ()
-   if wave_round < 20 then
+   if wave_round < #wave_round_enemies[wave_category] then
       -- TODO Cooler animation or something
       local score_str, score = wave_compute_score()
       player.omsgAdd( string.format( _("#pWAVE %d CLEAR#0\n%s"), wave_round, score_str ), 4.5 )
