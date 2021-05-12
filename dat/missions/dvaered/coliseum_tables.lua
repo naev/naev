@@ -52,20 +52,20 @@ wave_round_enemies = {
       { "Admonisher", "Admonisher" },
       { "Phalanx", "Ancestor", "Ancestor", "Hyena", "Hyena" },
       { "Pacifier", "Lancelot", "Lancelot" },
-      { "Lancelot", "Shark", "Shark", "Shark", "Shark", "Shark", "Shark", "Shark" },
+      { "Lancelot", "Shark", "Shark", "Shark", "Shark", "Shark" },
       { "Kestrel" } -- 10
    },
    heavy = {
       { "Kestrel" }, -- 1
       { "Hawking" },
       { "Kestrel", "Lancelot", "Lancelot" },
-      { "Pacifier", "Pacifier", "Pacifier", "Admonisher", "Admonisher" },
+      { "Pacifier", "Pacifier", "Admonisher", "Admonisher" },
       { "Goddard" }, -- 5
       { "Hawking", "Admonisher", "Admonisher" },
       { "Pacifier", "Admonisher", "Admonisher", "Ancestor", "Ancestor", "Ancestor", "Lancelot", "Lancelot" },
       { "Kestrel", "Kestrel" },
       { "Hawking", "Pacifier", "Pacifier" },
-      { "Dvaered Goddard", "Dvaered Vigilance", "Dvaerd Vigilance" },
+      { "Dvaered Goddard", "Dvaered Vigilance", "Dvaered Vigilance" },
    }
 }
 
