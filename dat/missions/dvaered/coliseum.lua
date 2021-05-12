@@ -167,8 +167,8 @@ function enter_the_ring ()
 
    -- Player lost info
    local pp = player.pilot()
-   --hook.pilot( pp, "disable", "player_lost" )
-   hook.pilot( pp, "exploded", "player_lost" )
+   pp_hook_disable = hook.pilot( pp, "disable", "player_lost_disable" )
+   pp_hook_dead = hook.pilot( pp, "exploded", "player_lost" )
 end
 -- Goes back to Totoran (landed)
 function leave_the_ring ()
@@ -181,6 +181,7 @@ function leave_the_ring ()
    local pp = player.pilot()
    pp:setHide( true ) -- clear hidden flag
    pp:setInvincible( false )
+   pp:setInvisible( false )
    player.cinematics( false )
    player.land( planet.get("Totoran") )
 end
@@ -236,12 +237,25 @@ function p_disabled( p )
    p:disable() -- don't let them come back
    p:setInvisible( true ) -- can't target
    p:setInvincible( true ) -- just stays there
+   p:control()
+   p:brake()
    enemy_out( p )
 end
 function p_death( p )
    enemy_out( p )
 end
+function player_lost_disable ()
+   hook.rm( pp_hook_dead )
+   local pp = player.pilot()
+   player.cinematics( true )
+   pp:setInvincible( true )
+   pp:setInvisible( true )
+   -- omsg does not display so we need a custom solution
+   --player.omsgAdd( _("YOU LOST!"), 4.5 )
+   hook.timer( 5000, "leave_the_ring" )
+end
 function player_lost ()
+   hook.rm( pp_hook_disable )
    local pp = player.pilot()
    pp:setHealth( 100, 0 ) -- Heal up to avoid game over if necessary
    pp:setHide( true )
@@ -327,7 +341,7 @@ function wave_compute_score ()
 
    for k,n in ipairs(wave_enemies) do
       local s = wave_score_table[n]
-      str = string.format("#o%s %d#0\n", _(n), s )
+      str = str .. string.format("#o%s %d#0\n", _(n), s )
       score = score + s
    end
 
