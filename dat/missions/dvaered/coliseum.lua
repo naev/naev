@@ -58,22 +58,6 @@ function land ()
    misn.finish(true)
 end
 
-
-function pairsByKeys( t, f )
-   local a = {}
-   for n in pairs(t) do table.insert(a, n) end
-      table.sort(a, f)
-      local i = 0      -- iterator variable
-      local iter = function ()   -- iterator function
-      i = i + 1
-      if a[i] == nil then return nil
-      else return a[i], t[a[i]]
-      end
-   end
-   return iter
-end
-
-
 function approach_wave ()
    vn.clear()
    vn.scene()
@@ -338,14 +322,19 @@ function wave_compute_score ()
    local pp = player.pilot()
    local score = 0
    local bonus = 100
+   local str = {}
 
    local elapsed = (naev.ticks()-wave_started_time) / 1000
-   local str = string.format(_("%.1f seconds\n"), elapsed)
+   table.insert( str, string.format(_("%.1f seconds"), elapsed) )
 
+   wave_killed = wave_killed or {}
    for k,n in ipairs(wave_enemies) do
       local s = wave_score_table[n]
-      str = str .. string.format("#o%s %d#0\n", _(n), s )
+      table.insert( str, string.format("#o%s %d", _(n), s ) )
       score = score + s
+      -- Store all the stuff the pilot killed
+      local k = wave_killed[n] or 0
+      wave_killed[n] = k+1
    end
 
    local function newbonus( s, b )
@@ -355,7 +344,7 @@ function wave_compute_score ()
       else
          h = "#r"
       end
-      str = str .. h .. string.format(s,b) .. "#0\n"
+      table.insert( str, h .. string.format(s,b) )
       bonus = bonus + b
    end
    local c = pp:ship():class()
@@ -411,16 +400,27 @@ function wave_compute_score ()
    score = math.max( 0, score * bonus / 100 )
 
    total_score = total_score + score
-   str = str..string.format("TOTAL %d (#g+%d#0)", total_score, score )
+   table.insert( str, string.format("TOTAL %d (#g+%d#0)", total_score, score ) )
    return str, score
+end
+function wave_end_msg( d )
+   player.omsgAdd( d[1], d[2] )
 end
 function wave_end ()
    if wave_round < #wave_round_enemies[wave_category] then
       -- TODO Cooler animation or something
       local score_str, score = wave_compute_score()
-      player.omsgAdd( string.format( _("#pWAVE %d CLEAR#0\n%s"), wave_round, score_str ), 4.5 )
+      local n = #score_str
+      local s = 1.2 -- time to display each message
+      local f = (n+2)*s
+      --player.omsgAdd( string.format( _("#pWAVE %d CLEAR#0\n%s"), wave_round, score_str ), (n+1)*s )
+      player.omsgAdd( string.format( _("#pWAVE %d CLEAR#0"), wave_round ), f )
+      for k,v in pairs(score_str) do
+         local start = k*s
+         hook.timer( 1000*start, "wave_end_msg", {v, f-start} )
+      end
       wave_round = wave_round + 1
-      hook.timer( 5000, "wave_round_setup" )
+      hook.timer( (f+1)*1000, "wave_round_setup" )
       return
    end
 
