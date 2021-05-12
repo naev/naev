@@ -663,7 +663,11 @@ function render( dt )
    if wset_id == 10 then wset_id = 0 end
    wset = {}
    aset = pp:actives( true )
-   table.sort( aset, function(v) return v.weapset end )
+   table.sort( aset, function(a,b)
+      local aset = a.weapset or 99
+      local bset = b.weapset or 99
+      return aset < bset
+   end )
 
    for k, v in ipairs( pwset ) do
       v.is_outfit = false
