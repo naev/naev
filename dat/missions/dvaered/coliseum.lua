@@ -205,6 +205,7 @@ function countdown_done ()
    -- TODO play sound and cooler text
    player.omsgChange( omsg_id, _("FIGHT!"), 3 )
    wave_started = true
+   wave_started_time = naev.ticks()
 
    for k,p in ipairs(enemies) do
       p:setInvincible(false)
@@ -337,7 +338,9 @@ function wave_compute_score ()
    local pp = player.pilot()
    local score = 0
    local bonus = 100
-   local str = ""
+
+   local elapsed = (naev.ticks()-wave_started_time) / 1000
+   local str = string.format(_("%.1f seconds\n"), elapsed)
 
    for k,n in ipairs(wave_enemies) do
       local s = wave_score_table[n]
@@ -355,8 +358,8 @@ function wave_compute_score ()
       str = str .. h .. string.format(s,b) .. "#0\n"
       bonus = bonus + b
    end
+   local c = pp:ship():class()
    if wave_category == "light" then
-      local c = pp:ship():class()
       if c=="Corvette" then
          newbonus( "Corvette %d%%", -20 )
       elseif c=="Destroyer" then
@@ -365,6 +368,43 @@ function wave_compute_score ()
          newbonus( "Cruiser %d%%", -80 )
       elseif c=="Carrier" then
          newbonus( "Carrier %d%%", -90 )
+      end
+      if elapsed < 30 then
+         newbonus( "Fast Clear (<30s) %d%%", 25 )
+      elseif elapsed > 300 then
+         newbonus( "Slow Clear (>300s) %d%%", -25 )
+      end
+   elseif wave_category == "medium" then
+      if c=="Fighter" then
+         newbonus( "Fighter %d%%", 100 )
+      elseif c=="Bomber" then
+         newbonus( "Bomber %d%%", 100 )
+      elseif c=="Corvette" then
+         newbonus( "Corvette %d%%", 25 )
+      elseif c=="Cruiser" then
+         newbonus( "Cruiser %d%%", -20 )
+      elseif c=="Carrier" then
+         newbonus( "Carrier %d%%", -30 )
+      end
+      if elapsed < 45 then
+         newbonus( "Fast Clear (<45s) %d%%", 25 )
+      elseif elapsed > 450 then
+         newbonus( "Slow Clear (>450s) %d%%", -25 )
+      end
+   elseif wave_category == "heavy" then
+      if c=="Fighter" then -- I'd love to see someone take down a kestrel in a fighter
+         newbonus( "Fighter %d%%", 500 )
+      elseif c=="Bomber" then
+         newbonus( "Bomber %d%%", 400 )
+      elseif c=="Corvette" then
+         newbonus( "Corvette %d%%", 100 )
+      elseif c=="Destroyer" then
+         newbonus( "Destroyer %d%%", 50 )
+      end
+      if elapsed < 60 then
+         newbonus( "Fast Clear (<60s) %d%%", 25 )
+      elseif elapsed > 600 then
+         newbonus( "Slow Clear (>600s) %d%%", -25 )
       end
    end
 
