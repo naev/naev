@@ -2593,17 +2593,17 @@ static void outfit_launcherDesc( Outfit* o )
             1. / o->u.lau.delay * a->u.amm.dmg.disable, a->u.amm.dmg.disable );
 
    l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
-         _("%.1f Shots Per Second"),
-         1. / o->u.lau.delay );
+         _("%.1f Shots Per Second\n"
+         "%.0f Range [%.1f duration]\n"
+         "%.0f Maximum Speed"),
+         1. / o->u.lau.delay,
+         outfit_range(a), a->u.amm.duration,
+         a->u.amm.speed );
 
    if (a->u.amm.energy > 0.)
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("\n%.1f EPS [%.0f Energy]"),
             o->u.lau.delay * a->u.amm.energy, a->u.amm.energy );
-
-   l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
-         _("\n%.0f Maximum Speed"),
-         a->u.amm.speed );
 
    if (a->u.amm.resist > 0.)
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
