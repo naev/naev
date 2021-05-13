@@ -1,4 +1,4 @@
-threshold = 30
+threshold = 50
 
 function init( p, po )
    mem.t = nil
