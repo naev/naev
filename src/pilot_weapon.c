@@ -1078,11 +1078,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       weapon_add( w->outfit, w->heat_T, p->solid->dir,
             &vp, &p->solid->vel, p, p->target, time );
 
-      w->u.ammo.quantity -= 1; /* we just shot it */
-      p->mass_outfit     -= w->u.ammo.outfit->mass;
-      p->solid->mass     -= w->u.ammo.outfit->mass;
-
-      pilot_updateMass( p );
+      pilot_rmAmmo( p, w, 1 );
 
       /* Make the AI aware a seeker has been shot */
       if (outfit_isSeeker(w->outfit))
