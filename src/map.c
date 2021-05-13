@@ -69,7 +69,7 @@ static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
 static int cur_commod         = -1; /**< Current commodity selected. */
-static int cur_commod_mode    = 0; /**< 0 for difference, 1 for cost. */
+static int cur_commod_mode    = 0; /**< 0 for cost, 1 for difference. */
 static Commodity **commod_known = NULL; /**< index of known commodities */
 static char** map_modes = NULL; /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
 static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
@@ -387,8 +387,8 @@ static void map_update_commod_av_price()
       commod_av_gal_price = 0;
       return;
    }
-   c=commod_known[cur_commod];
-   if ( cur_commod_mode !=0 ) {
+   c = commod_known[cur_commod];
+   if ( cur_commod_mode == 0 ) {
       double totPrice = 0;
       int totPriceCnt = 0;
       for (i=0; i<array_size(systems_stack); i++) {
@@ -469,7 +469,7 @@ static void map_update( unsigned int wid )
    /* Economy button */
    if (map_mode == MAPMODE_TRADE) {
       c = commod_known[cur_commod];
-      if ( cur_commod_mode == 0 ) {
+      if ( cur_commod_mode == 1 ) {
          snprintf( buf, sizeof(buf),
                    _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
                      "while negative/orange values mean a loss when sold at the corresponding system."),
@@ -1519,7 +1519,7 @@ void map_renderCommod( double bx, double by, double x, double y,
       return;
 
    c=commod_known[cur_commod];
-   if (cur_commod_mode == 0) {/*showing price difference to selected system*/
+   if (cur_commod_mode == 1) {/*showing price difference to selected system*/
      /* Get commodity price in selected system.  If selected system is current
         system, and if landed, then get price of commodity where we are */
       curMaxPrice=0.;
@@ -1631,10 +1631,10 @@ void map_renderCommod( double bx, double by, double x, double y,
             }
          }
       }
-   } else { /* cur_commod_mode == 1, showing actual prices */
-      /*First calculate av price in all systems */
-      /* This has already been done in map_update_commod_av_price */
-      /* Now display the costs */
+   } else { /* cur_commod_mode == 0, showing actual prices */
+      /* First calculate av price in all systems
+       * This has already been done in map_update_commod_av_price
+       * Now display the costs */
       for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex( i );
          if (sys_isFlag(sys,SYSTEM_HIDDEN))
@@ -1931,12 +1931,12 @@ static void map_genModeList(void)
    array_push_back( &map_modes, strdup(_("Travel (Default)")) );
    array_push_back( &map_modes, strdup(_("Discovery")) );
 
-   odd_template = _("%s: Cost");
-   even_template = _("%s: Trade");
+   even_template = _("%s: Cost");
+   odd_template = _("%s: Trade");
    for ( i=0; i<totGot; i++ ) {
       commod_text = _(commod_known[i]->name);
-      asprintf( &array_grow( &map_modes ), odd_template, commod_text );
       asprintf( &array_grow( &map_modes ), even_template, commod_text );
+      asprintf( &array_grow( &map_modes ), odd_template, commod_text );
    }
 }
 
@@ -1968,7 +1968,7 @@ static void map_modeUpdate( unsigned int wid, char* str )
       else {
          map_mode = MAPMODE_TRADE;
          cur_commod = (listpos - MAPMODE_TRADE) / 2;
-         cur_commod_mode = listpos % 2 ; /* if 1, showing cost, if 0 showing difference */
+         cur_commod_mode = (listpos - MAPMODE_TRADE) % 2 ; /* if 0, showing cost, if 1 showing difference */
       }
    }
    map_update(wid);
