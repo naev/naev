@@ -30,7 +30,7 @@ misn_reward = _("Great riches!")
 
 coliseum = system.get("Coliseum")
 
-sfx_clear = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
+sfx_clear = audio.newSource( 'snd/sounds/jingles/victory.ogg' )
 
 function create ()
    if not var.peek("testing") then
