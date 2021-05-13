@@ -13,7 +13,7 @@
   <sound_hit>grenade</sound_hit>
   <spfx_shield>ExpM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
-  <duration blowup="armour">33</duration>
+  <duration blowup="armour">6</duration>
   <thrust>0</thrust>
   <turn>50</turn>
   <speed>550</speed>
