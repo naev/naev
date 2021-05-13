@@ -487,8 +487,6 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
             bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
 
-      (void)cnt;
-
       /* Jumps. */
       for (  i=0; i<array_size(sys->jumps); i++ ) {
          if ( jp_isUsable ( &sys->jumps[i] ) ) {
@@ -499,12 +497,11 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             } else {
                infopos+=scnprintf( &infobuf[infopos], sizeof(infobuf)-infopos, _("     Unknown system\n") );
             }
-            (void)infopos;
          }
       }
    } else {
      /* display planet info */
-     p=cur_planetObj_sel;
+     p = cur_planetObj_sel;
      if (p->faction > 0 ) {/* show the faction */
         char factionBuf[64];
         logo = faction_logoSmall( p->faction );
@@ -529,7 +526,6 @@ static void map_system_render( double bx, double by, double w, double h, void *d
      }
      /* Add a description */
      cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):_(p->description)) );
-     (void)cnt;
 
      txtHeight=gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
 
@@ -549,7 +545,6 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         if ( p->bar_description && planet_hasService( p, PLANET_SERVICE_BAR ) ) {
            infocnt+=scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
         }
-        (void)infocnt;
      }
      gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
          bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
