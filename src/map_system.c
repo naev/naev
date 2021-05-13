@@ -573,19 +573,15 @@ static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, doub
    (void) data;
    (void) rx;
    (void) ry;
-   int offset;
    switch (event->type) {
    case SDL_MOUSEBUTTONDOWN:
      /* Must be in bounds. */
      if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
      if (mx < pitch && my > 0) {
-        offset = h - pitch*nshow;
-
-        if ( cur_planet_sel != (h-my-offset ) / pitch ) {
-           cur_planet_sel = ( h-my-offset ) / pitch  ;
+        if ( cur_planet_sel != (h-my) / pitch ) {
+           cur_planet_sel = ( h-my) / pitch;
            map_system_updateSelected( wid );
-
         }
        return 1;
      }
