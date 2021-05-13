@@ -115,7 +115,7 @@ class OutfitBalancer(Balancer):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Tool to save Naev xml file data to an csv file and viceversa.')
     parser.add_argument('mode', choices=['outfit','ship'], help="Either 'outfit' to process outfits or 'ship' to process ships.")
-    parser.add_argument('readwrite', choices=['w','r'], help="Either 'r' to read from the xml or 'w' to write to the xml.")
+    parser.add_argument('readwrite', choices=['w','r'], help="Either 'r' to read from the naev data or 'w' to write to the naev data.")
     parser.add_argument('filename', type=str, help="CSV file to either read from or write to.")
     args = parser.parse_args()
 
