@@ -362,10 +362,10 @@ function wave_compute_score ()
       elseif c=="Carrier" then
          newbonus( "Carrier %d%%", -90 )
       end
-      if elapsed < 30 then
-         newbonus( "Fast Clear (<30s) %d%%", 25 )
-      elseif elapsed > 300 then
-         newbonus( "Slow Clear (>300s) %d%%", -25 )
+      if elapsed < 15 then
+         newbonus( "Fast Clear (<15s) %d%%", 25 )
+      elseif elapsed > 90 then
+         newbonus( "Slow Clear (>90s) %d%%", -25 )
       end
    elseif wave_category == "medium" then
       if c=="Fighter" then
@@ -379,10 +379,10 @@ function wave_compute_score ()
       elseif c=="Carrier" then
          newbonus( "Carrier %d%%", -30 )
       end
-      if elapsed < 45 then
-         newbonus( "Fast Clear (<45s) %d%%", 25 )
-      elseif elapsed > 450 then
-         newbonus( "Slow Clear (>450s) %d%%", -25 )
+      if elapsed < 25 then
+         newbonus( "Fast Clear (<25s) %d%%", 25 )
+      elseif elapsed > 120 then
+         newbonus( "Slow Clear (>120s) %d%%", -25 )
       end
    elseif wave_category == "heavy" then
       if c=="Fighter" then -- I'd love to see someone take down a kestrel in a fighter
@@ -394,10 +394,10 @@ function wave_compute_score ()
       elseif c=="Destroyer" then
          newbonus( "Destroyer %d%%", 50 )
       end
-      if elapsed < 60 then
-         newbonus( "Fast Clear (<60s) %d%%", 25 )
-      elseif elapsed > 600 then
-         newbonus( "Slow Clear (>600s) %d%%", -25 )
+      if elapsed < 40 then
+         newbonus( "Fast Clear (<40s) %d%%", 25 )
+      elseif elapsed > 180 then
+         newbonus( "Slow Clear (>180s) %d%%", -25 )
       end
    end
 
