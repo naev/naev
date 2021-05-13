@@ -1209,7 +1209,6 @@ dat/outfits/activated/hellburner.xml
 dat/outfits/activated/hidden_jump_scanner.xml
 dat/outfits/activated/milspec_jammer.xml
 dat/outfits/activated/unicorp_jammer.xml
-dat/outfits/activated/weapons_ionizer.xml
 dat/outfits/bio_weapons/bioplasma_organ_stage_1.xml
 dat/outfits/bio_weapons/bioplasma_organ_stage_2.xml
 dat/outfits/bio_weapons/bioplasma_organ_stage_3.xml
@@ -1473,8 +1472,14 @@ dat/outfits/launchers/zalek_heavy_drone_fighter_bay.xml
 dat/outfits/launchers/zalek_hunter_launcher.xml
 dat/outfits/launchers/zalek_light_drone_fighter_bay.xml
 dat/outfits/launchers/zalek_reaper_launcher.xml
+dat/outfits/lua/blink_drive.xml
+dat/outfits/lua/combat_hologram_projector.xml
+dat/outfits/lua/droid_repair_crew.xml
 dat/outfits/lua/emergency_stasis_inducer.xml
+dat/outfits/lua/hyperbolic_blink_engine.xml
+dat/outfits/lua/targeting_conduit.xml
 dat/outfits/lua/weakness_harmonizer_ai.xml
+dat/outfits/lua/weapons_ionizer.xml
 dat/outfits/maps/localmap.xml
 dat/outfits/maps/map_collective_space.xml
 dat/outfits/maps/map_dvaered_core.xml
@@ -1516,7 +1521,6 @@ dat/outfits/modifiers/biometal_armour.xml
 dat/outfits/modifiers/boarding_androids_mk1.xml
 dat/outfits/modifiers/boarding_androids_mk2.xml
 dat/outfits/modifiers/cargo_pod.xml
-dat/outfits/modifiers/droid_repair_crew.xml
 dat/outfits/modifiers/engine_reroute.xml
 dat/outfits/modifiers/forward_shock_absorbers.xml
 dat/outfits/modifiers/fuel_pod.xml
@@ -1779,6 +1783,7 @@ dat/ssys/chloe.xml
 dat/ssys/chraan.xml
 dat/ssys/churchill.xml
 dat/ssys/cleai.xml
+dat/ssys/coliseum.xml
 dat/ssys/copernicus.xml
 dat/ssys/corinth.xml
 dat/ssys/coriolis.xml
@@ -2165,6 +2170,7 @@ dat/ai/tpl/scout.lua
 dat/ai/trader.lua
 dat/ai/zalek.lua
 dat/bkg/default.lua
+dat/bkg/taiomi.lua
 dat/events/bioship_upgrade.lua
 dat/events/cinematic/DvdFLFbattle.lua
 dat/events/discovery.lua
@@ -2183,7 +2189,6 @@ dat/events/neutral/animaltrouble.lua
 dat/events/neutral/baron_comm.lua
 dat/events/neutral/baron_flintley.lua
 dat/events/neutral/baron_prowl.lua
-dat/events/neutral/coolspace.lua
 dat/events/neutral/derelict.lua
 dat/events/neutral/kidnapped.lua
 dat/events/neutral/news.lua
@@ -2262,6 +2267,8 @@ dat/missions/baron/baron_prince.lua
 dat/missions/baron/common.lua
 dat/missions/dvaered/assault_on_unicorn.lua
 dat/missions/dvaered/championship.lua
+dat/missions/dvaered/coliseum.lua
+dat/missions/dvaered/coliseum_tables.lua
 dat/missions/dvaered/common.lua
 dat/missions/dvaered/dv_antiflf01.lua
 dat/missions/dvaered/dv_antiflf02.lua
@@ -2410,9 +2417,15 @@ dat/missions/zalek/sciencegonewrong/02_sciwrong.lua
 dat/missions/zalek/zlk_cargorun.lua
 dat/missions/zalek/zlk_rehab.lua
 dat/missions/zalek/zlk_test.lua
+dat/outfits/lua/blink_drive.lua
+dat/outfits/lua/combat_hologram_projector.lua
+dat/outfits/lua/droid_repair_crew.lua
 dat/outfits/lua/emergency_stasis_inducer.lua
 dat/outfits/lua/example.lua
+dat/outfits/lua/hyperbolic_blink_engine.lua
+dat/outfits/lua/targeting_conduit.lua
 dat/outfits/lua/weakness_harmonizer_ai.lua
+dat/outfits/lua/weapons_ionizer.lua
 dat/rescue.lua
 dat/scripts/cargo_common.lua
 dat/scripts/chatter.lua
