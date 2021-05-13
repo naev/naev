@@ -187,7 +187,6 @@ void map_system_open( int sys_selected )
    /* get the selected system. */
    cur_sys_sel = system_getIndex( sys_selected );
    cur_planet_sel = 0;
-   cur_planetObj_sel = (Planet*)-1;
    /* Set up window size. */
    w = MAX(600, SCREEN_W - 140);
    h = MAX(540, SCREEN_H - 140);
@@ -734,7 +733,6 @@ static void map_system_array_update( unsigned int wid, char* str ) {
    }
    else
       WARN( _("Unexpected call to map_system_array_update\n") );
-   (void) i;
 }
 
 void map_system_updateSelected( unsigned int wid )
