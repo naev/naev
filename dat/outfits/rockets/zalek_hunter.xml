@@ -21,7 +21,7 @@
   <damage>
    <type>normal</type>
    <penetrate>36</penetrate>
-   <physical>200</physical>
+   <physical>50</physical>
    <disable>1</disable>
   </damage>
   <ai>smart</ai>
