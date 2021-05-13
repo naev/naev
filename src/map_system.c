@@ -779,8 +779,9 @@ void map_system_updateSelected( unsigned int wid )
          planetObjChanged = 1;
       }
    }
-   if ( cur_planet_sel == 0 ) {
+   if ( cur_planet_sel <= 0 ) {
       /* star selected */
+      cur_planet_sel = 0;
       if ( cur_planetObj_sel != NULL ) {
          cur_planetObj_sel = NULL;
          planetObjChanged = 1;
