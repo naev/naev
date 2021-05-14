@@ -295,6 +295,8 @@ end
 
 
 function pay( amount )
+   if amount <= 0 then return end
+
    for i, edata in ipairs(escorts) do
       if edata.alive and edata.royalty then
          player.pay(-amount * edata.royalty, true)
