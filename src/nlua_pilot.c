@@ -2706,11 +2706,11 @@ static int pilotL_intrinsicSet( lua_State *L )
 
 
 /**
- * @brief Allows getting intrinsic stats of a pilot.
+ * @brief Allows getting an intrinsic stats of a pilot.
  *
- *    @luatparam Pilot p Pilot to set stat of.
- *    @luatparam string name Name of the stat to set. It is the same as in the xml.
- *    @luatparam number value Value to set the stat to.
+ *    @luatparam Pilot p Pilot to get stat of.
+ *    @luatparam string name Name of the stat to get. It is the same as in the xml.
+ *    @luatparam number value Value to get the stat to.
  *    @luatparam boolean overwrite Whether or not to add to the stat or replace it.
  * @luafunc intrinsicGet
  */
