@@ -385,7 +385,8 @@ function hail_ad()
 end
 
 -- Player hails a ship for info
-function hail( target )
+function hail( p )
+   target = p
    if target:leader() == player.pilot() then
       -- Don't want the player hailing their own escorts.
       return
