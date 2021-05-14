@@ -168,6 +168,10 @@ function land ()
       hook.rm(standing_hook)
       standing_hook = nil
    end
+   if hail_hook ~= nil then
+      hook.rm(hail_hook)
+      hail_hook = nil
+   end
 
    -- Clean up dead escorts so it doesn't build up, and create NPCs for
    -- existing escorts.
@@ -220,6 +224,9 @@ end
 function enter ()
    if standing_hook == nil then
       standing_hook = hook.standing("standing")
+   end
+   if hail_hook == nil then
+      hail_hook = hook.hail("hail")
    end
 
    local spawnpoint
@@ -301,6 +308,34 @@ function standing ()
             and edata.pilot:exists() then
          local f = faction.get(edata.faction)
          if f ~= nil and f:playerStanding() < 0 then
+            escorts[i].alive = false
+            edata.pilot:setLeader(nil)
+            edata.pilot:setNoClear(false)
+            edata.pilot:hookClear()
+         end
+      end
+   end
+end
+
+
+function hail( p )
+   for i, edata in ipairs(escorts) do
+      if edata.alive and edata.pilot == p then
+         player.commClose()
+
+         local approachtext = (
+               pilot_action_text .. "\n\n" .. credentials:format(
+                  edata.name, edata.ship, creditstring(edata.deposit),
+                  edata.royalty * 100, creditstring(player.credits()),
+                  getTotalRoyalties() * 100 ) )
+
+         local n, s = tk.choice(
+               "", approachtext, _("Fire pilot"), _("Do nothing") )
+         if n == 1 and tk.yesno(
+               "", string.format(
+                  _("Are you sure you want to fire %s? This cannot be undone."),
+                  edata.name ) ) then
+            escorts[edata.index].alive = false
             edata.pilot:setLeader(nil)
             edata.pilot:setNoClear(false)
             edata.pilot:hookClear()
@@ -323,7 +358,7 @@ function approachEscort( npc_id )
    end
 
    local approachtext = (
-         pilot_action_text:format(edata.name) .. "\n\n" .. credentials:format(
+         pilot_action_text .. "\n\n" .. credentials:format(
             edata.name, edata.ship, creditstring(edata.deposit),
             edata.royalty * 100, creditstring(player.credits()),
             getTotalRoyalties() * 100 ) )
