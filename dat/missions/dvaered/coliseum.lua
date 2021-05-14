@@ -304,9 +304,15 @@ function wave_round_setup ()
    local function addenemies( ships )
       local e = {}
       local pos = vec2.new( -500, 500 )
+      local boss = nil
       for k,v in ipairs(ships) do
          local shipname = v
          local p = addenemy( shipname, pos )
+         if boss then
+            p:setLeader( boss )
+         else
+            boss = p
+         end
          table.insert( e, p )
       end
       return e
