@@ -322,6 +322,10 @@ function mainguy_board ()
    vn.na(_("It might be best to report back to Kex to see if his information was incorrect."))
    vn.run()
 
+   -- Permanently disable mainguy
+   mainguy:disable()
+
+   -- Message update
    shiplog.appendLog( logidstr, _("You boarded a transport destined to the Minerva CEO, but didn't find anything."))
    misn.markerMove( misn_marker, system.get("Limbo") )
    misn_state = 2
