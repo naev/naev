@@ -100,7 +100,8 @@
   <item>Engine Reroute</item>
   <item>Improved Stabilizer</item>
   <item>Steering Thrusters</item>
-  <item>Generic Afterburner</item>
+  <item>Unicorp Light Afterburner</item>
+  <item>Unicorp Medium Afterburner</item>
   <item>Hellburner</item>
   <item>Emergency Shield Booster</item>
   <item>Hidden Jump Scanner</item>
@@ -463,7 +464,8 @@
   <item>Shield Capacitor</item>
   <item>Plasteel Plating</item>
   <item>Engine Reroute</item>
-  <item>Generic Afterburner</item>
+  <item>Unicorp Light Afterburner</item>
+  <item>Unicorp Medium Afterburner</item>
   <item>Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
@@ -565,7 +567,8 @@
   <item>Nanobond Plating</item>
   <item>Engine Reroute</item>
   <item>Improved Stabilizer</item>
-  <item>Generic Afterburner</item>
+  <item>Unicorp Light Afterburner</item>
+  <item>Unicorp Medium Afterburner</item>
   <item>Fuel Pod</item>
   <item>Medium Fuel Pod</item>
   <item>Cargo Pod</item>

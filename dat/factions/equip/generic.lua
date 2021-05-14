@@ -342,7 +342,7 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
-         "Generic Afterburner", "Small Shield Booster", "Solar Panel",
+         "Unicorp Light Afterburner", "Small Shield Booster", "Solar Panel",
          "Sensor Array",
       },
    },
@@ -350,7 +350,7 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
-         "Generic Afterburner", "Small Shield Booster", "Solar Panel",
+         "Unicorp Light Afterburner", "Small Shield Booster", "Solar Panel",
          "Sensor Array",
       },
    },
@@ -358,7 +358,7 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
-         "Generic Afterburner", "Small Shield Booster", "Solar Panel",
+         "Unicorp Light Afterburner", "Small Shield Booster", "Solar Panel",
          "Unicorp Jammer", "Reverse Thrusters", "Sensor Array",
       },
    },
@@ -366,7 +366,7 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
-         "Generic Afterburner", "Small Shield Booster", "Solar Panel",
+         "Unicorp Light Afterburner", "Small Shield Booster", "Solar Panel",
          "Improved Refrigeration Cycle",
       },
    },
@@ -389,7 +389,7 @@ equip_classOutfits_utilities = {
    ["Fighter"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Generic Afterburner",
+         "Reactor Class I", "Unicorp Scrambler", "Unicorp Light Afterburner",
          "Hellburner", "Small Shield Booster", "Solar Panel",
          "Forward Shock Absorbers", "Power Regulation Override",
          "Weapons Ionizer", "Reverse Thrusters", "Emergency Shield Booster",
@@ -399,7 +399,7 @@ equip_classOutfits_utilities = {
    ["Bomber"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Generic Afterburner",
+         "Reactor Class I", "Unicorp Scrambler", "Unicorp Light Afterburner",
          "Hellburner", "Small Shield Booster", "Solar Panel",
          "Forward Shock Absorbers", "Power Regulation Override",
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
@@ -413,7 +413,7 @@ equip_classOutfits_utilities = {
          "Forward Shock Absorbers", "Power Regulation Override",
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
          "Solar Panel", "Reverse Thrusters", "Hellburner",
-         "Emergency Shield Booster", "Sensor Array",
+         "Emergency Shield Booster", "Sensor Array", "Unicorp Medium Afterburner",
       },
    },
    ["Destroyer"] = {

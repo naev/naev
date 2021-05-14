@@ -136,7 +136,7 @@ function takeoff()
    end
    if choice ~= 1 then
       for k,v in ipairs(player.pilot():outfits()) do
-         if v == outfit.get("Generic Afterburner") or v == outfit.get("Hellburner") then
+         if v == outfit.get("Unicorp Light Afterburner") or v == outfit.get("Hellburner") then
             tk.msg(ftitle[4], ftext[4])
             misn.finish(false)
          end
