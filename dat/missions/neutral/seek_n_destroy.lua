@@ -385,8 +385,11 @@ function hail_ad()
 end
 
 -- Player hails a ship for info
-function hail ()
-    target = player.pilot():target()
+function hail( target )
+   if target:leader() == player.pilot() then
+      -- Don't want the player hailing their own escorts.
+      return
+   end
 
    if system.cur() == mysys[cursys] and stage == 0 and not elt_inlist( target, hailed ) then
 
