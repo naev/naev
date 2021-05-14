@@ -1,0 +1,309 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Escort Handler">
+ <trigger>enter</trigger>
+ <chance>100</chance>
+ <flags>
+  <unique />
+ </flags>
+</event>
+--]]
+--[[
+
+   Escort Handler Event
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+--
+
+   This event runs constantly in the background and manages escorts
+   hired from the bar, including generating NPCs at the bar and managing
+   escort creation and behavior in space.
+
+--]]
+
+local portrait = require "portrait"
+require "pilot/generic"
+require "pilot/pirate"
+
+
+npctext = {}
+npctext[1] = _([["Hi there! My callsign is %s and I'm looking to get some piloting experience. Here are my credentials. Would you be interested in hiring me?"]])
+npctext[2] = _([["Hello! I'm known as %s and I'm looking to join someone's fleet. Here's my credentials. What do you say, would you like me on board?"]])
+npctext[3] = _([["Hi! You look like you could use a pilot! I'm available and charge some of the best rates in the galaxy, and I promise you I'm perfect for the job! The alias I go by is %s; here's my info. Well, what do you think? Would you like to add me to your fleet?"]])
+
+credentials = _([[
+Ship: %s
+Deposit: %s
+Royalty: %.1f%% of mission earnings
+
+Current total royalties: %.1f%% of mission earnings]])
+
+pilot_action_text = _([[Would you like to do something with this pilot?
+
+Credentials for %s:]])
+
+
+function create ()
+   lastplanet = nil
+   lastsys = system.cur()
+   npcs = {}
+   escorts = {}
+   escorts["__save"] = true
+
+   hook.land("land")
+   hook.enter("enter")
+   hook.pay("pay")
+end
+
+
+function createPilotNPCs ()
+   local ship_choices = {
+      { ship = "Hyena", royalty = 0.1 },
+      { ship = "Shark", royalty = 0.15 },
+      { ship = "Vendetta", royalty = 0.2 },
+      { ship = "Lancelot", royalty = 0.2 },
+      { ship = "Ancestor", royalty = 0.25 },
+      { ship = "Admonisher", royalty = 0.3 },
+      { ship = "Phalanx", royalty = 0.3 },
+      { ship = "Pacifier", royalty = 0.4 },
+      { ship = "Vigilance", royalty = 0.4 },
+   }
+   local num_pilots = rnd.rnd(0, 5)
+   local fac = faction.get("Mercenary")
+   local name_func = pilot_name
+   local portrait_arg = nil
+
+   if planet.cur():faction() == faction.get("Pirate") then
+      ship_choices = {
+         { ship = "Hyena", royalty = 0.1 },
+         { ship = "Pirate Shark", royalty = 0.15 },
+         { ship = "Pirate Vendetta", royalty = 0.2 },
+         { ship = "Pirate Ancestor", royalty = 0.25 },
+         { ship = "Pirate Admonisher", royalty = 0.3 },
+         { ship = "Pirate Phalanx", royalty = 0.3 },
+      }
+      fac = faction.get("Pirate")
+      name_func = pirate_name
+      portrait_arg = "Pirate"
+   elseif planet.cur():faction() == faction.get("Thurion") then
+      ship_choices = {
+         { ship = "Thurion Ingenuity", royalty = 0.15 },
+         { ship = "Thurion Scintillation", royalty = 0.25 },
+         { ship = "Thurion Virtuosity", royalty = 0.3 },
+         { ship = "Thurion Apprehension", royalty = 0.4 },
+      }
+      fac = faction.get("Thurion")
+      portrait_arg = "Thurion"
+   end
+
+   if fac == nil or fac:playerStanding() < 0 then
+      return
+   end
+
+   if num_pilots then
+      for i=1, num_pilots do
+         local newpilot = {}
+         local shipchoice = ship_choices[rnd.rnd(1, #ship_choices)]
+         local p = pilot.add(shipchoice.ship, fac)
+         local deposit = p:ship():price()[2]
+         newpilot.outfits = {}
+         newpilot.outfits["__save"] = true
+
+         for j, o in ipairs(p:outfits()) do
+            deposit = deposit + outfit.get(o):price()
+            newpilot.outfits[#newpilot.outfits + 1] = o
+         end
+
+         deposit = math.floor((deposit + 0.2*deposit*rnd.sigma()) / 2)
+         if deposit <= player.credits()[1] then
+            local newpilot = {}
+            newpilot.ship = shipchoice.ship
+            newpilot.deposit = deposit
+            newpilot.royalty = (
+                  shipchoice.royalty + 0.1*shipchoice.royalty*rnd.sigma() )
+            newpilot.name = name_func()
+            newpilot.portrait = portrait.get(portrait_arg)
+            newpilot.faction = fac:name()
+            local atxt = npctext[rnd.rnd(1, #npctext)]:format(newpilot.name)
+            newpilot.approachtext = atxt
+            local id = evt.npcAdd(
+                  "approachPilot", _("Pilot"), newpilot.portrait,
+                  _("This pilot seems to be looking for work."), 9 )
+            npcs[id] = newpilot
+         end
+      end
+   end
+end
+
+
+function getTotalRoyalties ()
+   local royalties = 0
+   for i, edata in ipairs(escorts) do
+      if edata.alive then
+         royalties = royalties + edata.royalty
+      end
+   end
+end
+
+
+function land ()
+   lastplanet = planet.cur()
+   npcs = {}
+   if standing_hook ~= nil then
+      hook.rm(standing_hook)
+      standing_hook = nil
+   end
+
+   -- No sense continuing is there is no bar on the planet.
+   if not planet.cur():services()["bar"] then return end
+
+   -- Clean up dead escorts so it doesn't build up, and create NPCs for
+   -- existing escorts.
+   local new_escorts = {}
+   new_escorts["__save"] = true
+   for i, edata in ipairs(escorts) do
+      if edata.alive then
+         local j = #new_escorts + 1
+         edata.index = j
+         edata.pilot = nil
+         local id = evt.npcAdd(
+               "approachEscort", edata.name, edata.portrait,
+               _("This is one of the pilots currently under your wing."), 8 )
+         npcs[id] = edata
+         new_escorts[j] = edata
+      end
+   end
+   escorts = new_escorts
+
+   -- Create NPCs for pilots you can hire.
+   createPilotNPCs()
+end
+
+
+function enter ()
+   if standing_hook == nil then
+      standing_hook = hook.standing("standing")
+   end
+
+   local spawnpoint
+   if lastsys == system.cur() then
+      spawnpoint = lastplanet
+   else
+      spawnpoint = lastsys
+   end
+   lastsys = system.cur()
+
+   for i, edata in ipairs(escorts) do
+      if edata.alive then
+         local f = faction.get(edata.faction)
+         edata.pilot = pilot.add(edata.ship, f, spawnpoint, edata.name)
+         edata.pilot:rmOutfit("all")
+         edata.pilot:rmOutfit("cores")
+         for j, o in ipairs(edata.outfits) do
+            edata.pilot:addOutfit(o)
+         end
+         if f == nil or f:playerStanding() >= 0 then
+            edata.pilot:setLeader(player.pilot())
+            hook.pilot(edata.pilot, "death", "pilot_death", i)
+         else
+            escorts[i].alive = false
+         end
+      end
+   end
+end
+
+
+function pay( amount )
+   for i, edata in ipairs(escorts) do
+      if edata.alive and edata.royalty then
+         player.pay(-amount * edata.royalty, true)
+      end
+   end
+end
+
+
+function standing ()
+   for i, edata in ipairs(escorts) do
+      if edata.alive and edata.faction ~= nil and edata.pilot ~= nil
+            and edata.pilot:exists() then
+         local f = faction.get(edata.faction)
+         if f ~= nil and f:playerStanding() < 0 then
+            edata.pilot:setLeader(nil)
+            edata.pilot:hookClear()
+         end
+      end
+   end
+end
+
+
+function pilot_death( p, attacker, arg )
+   escorts[i].alive = false
+end
+
+
+function approachEscort( npc_id )
+   local edata = npcs[npc_id]
+   if edata == nil then return end
+
+   local approachtext = (
+         pilot_action_text:format(edata.name) .. "\n" .. credentials:format(
+            edata.ship, edata.deposit, edata.royalty * 100,
+            getTotalRoyalties() * 100 ) )
+
+   local n, s = tk.choice("", approachtext),
+         _("Fire pilot"), _("Do nothing") )
+   if n == 1 then
+      if tk.yesno(
+            "", string.format(
+               _("Are you sure you want to fire %s? This cannot be undone."),
+               edata.name ) ) then
+         evt.npcRm(npc_id)
+         npcs[npc_id] = nil
+         -- We just set alive to false for now and let them get cleaned
+         -- up next time we land.
+         escorts[edata.index].alive = false
+      end
+   end
+end
+
+
+function approachPilot( npc_id )
+   local pdata = npcs[npc_id]
+   if pdata == nil then return end
+
+   local approachtext = credentials:format(
+         pdata.ship, pdata.deposit, pdata.royalty * 100,
+         getTotalRoyalties() * 100 )
+
+   if tk.yesno("", approachtext) then
+      if getTotalRoyalties() + pdata.royalty > 1 then
+         if not tk.yesno("", _("Hiring this pilot will lead to you paying more in royalties than you earn from missions, meaning you will lose credits when doing missions. Are you sure you want to hire this pilot?")) then
+            return
+         end
+      end
+
+      local i = #escorts + 1
+      pdata.index = i
+      pdata.alive = true
+      escorts[i] = pdata
+      evt.npcRm(npc_id)
+      npcs[npc_id] = nil
+      local id = evt.npcAdd(
+            "approachEscort", pdata.name, pdata.portrait,
+            _("This is one of the pilots currently under your wing."), 8 )
+      npcs[id] = pdata
+   end
+end
+
