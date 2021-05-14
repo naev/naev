@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Weakness Harmonizer AI">
  <general>
+  <typename>System Improvement</typename>
   <slot>utility</slot>
   <size>medium</size>
   <mass>1</mass>

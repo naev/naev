@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Droid Repair Crew">
  <general>
-  <typename>Energy Modifier</typename>
   <slot>utility</slot>
   <size>medium</size>
   <mass>3</mass>
