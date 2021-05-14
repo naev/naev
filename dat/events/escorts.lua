@@ -275,6 +275,7 @@ function enter ()
 
          if f == nil or f:playerStanding() >= 0 then
             edata.pilot:setLeader(player.pilot())
+            edata.pilot:setNoClear(true)
             hook.pilot(edata.pilot, "death", "pilot_death", i)
          else
             escorts[i].alive = false
@@ -300,6 +301,7 @@ function standing ()
          local f = faction.get(edata.faction)
          if f ~= nil and f:playerStanding() < 0 then
             edata.pilot:setLeader(nil)
+            edata.pilot:setNoClear(false)
             edata.pilot:hookClear()
          end
       end
