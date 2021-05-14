@@ -583,6 +583,7 @@ int outfit_altText( char *buf, int n, const Outfit *o )
    int p;
    double mass;
 
+   /* Compute total mass of launcher and ammo if necessary. */
    mass = o->mass;
    if ((outfit_isLauncher(o) || outfit_isFighterBay(o)) &&
          (outfit_ammo(o) != NULL)) {
@@ -596,9 +597,11 @@ int outfit_altText( char *buf, int n, const Outfit *o )
             outfit_slotTypeColourFont(&o->slot), outfit_slotName(o) );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
       p += scnprintf( &buf[p], n-p, _("#oUnique#0\n") );
-   if (o->slot.spid!=0)
+   if (o->slot.spid != 0)
       p += scnprintf( &buf[p], n-p, _("#o%s#0\n"),
             _( sp_display( o->slot.spid ) ) );
+   if (o->limit != NULL)
+      p += scnprintf( &buf[p], n-p, _("#rOnly 1 of type per ship#0\n") );
    p += scnprintf( &buf[p], n-p, "\n%s", o->desc_short );
    if ((o->mass > 0.) && (p < n))
       scnprintf( &buf[p], n-p,
