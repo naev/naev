@@ -12,7 +12,7 @@
   <cpu>-16</cpu>
  </general>
  <specific type="launcher" secondary="1">
-  <ammo>Caesar IV Torpedo</ammo>
+  <ammo>Huntsman Torpedo</ammo>
   <delay>5</delay>
   <reload_time>90</reload_time>
   <lockon>10</lockon>
