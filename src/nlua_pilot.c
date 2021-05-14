@@ -2343,6 +2343,8 @@ static int pilotL_disable( lua_State *L )
 
    if (permanent)
       pilot_setFlag(p, PILOT_DISABLED_PERM);
+   else
+      pilot_rmFlag(p, PILOT_DISABLED_PERM);
 
    return 0;
 }
