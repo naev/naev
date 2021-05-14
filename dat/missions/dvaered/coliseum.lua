@@ -123,13 +123,16 @@ function approach_wave ()
    osd = misn.osdCreate( _("Totoran Tournament"),
          { _("Defeat all the other adversaries!") } )
 
+   hook.load( "loaded" )
    hook.safe("enter_the_ring")
-   player.allowSave( false ) -- Don't want to save the mission
    player.takeoff() -- take off and enter the ring!
 
    -- Wave meta-information
    coliseum_enter = "enter_wave"
    wave_round = 1
+end
+function loaded ()
+   misn.finish(false)
 end
 function abort ()
    leave_the_ring()
@@ -150,7 +153,6 @@ function enter_the_ring ()
 
    -- Set up player stuff
    player.pilot():setPos( vec2.new( 0, 0 ) )
-   player.allowSave(true)
    player.teleport(coliseum)
 
    -- Player lost info
