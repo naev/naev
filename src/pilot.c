@@ -1581,7 +1581,6 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       }
       else {
          hparam.type       = HOOK_PARAM_NIL;
-         pilot_setFlag(p, PILOT_DISABLED_PERM ); /* Set as permanently disabled, since the disable was script-induced. */
       }
       pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam, 1 ); /* Already disabled. */
    }

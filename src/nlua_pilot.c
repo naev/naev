@@ -2322,21 +2322,27 @@ static int pilotL_setNoDeath( lua_State *L )
  * @usage p:disable()
  *
  *    @luatparam Pilot p Pilot to disable.
+ *    @luatparam[opt=false] boolean nopermanent Whether or not the disable should be permanent.
  * @luafunc disable
  */
 static int pilotL_disable( lua_State *L )
 {
    Pilot *p;
+   int permanent;
 
    NLUA_CHECKRW(L);
 
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
+   permanent = !lua_toboolean(L,2);
 
    /* Disable the pilot. */
    p->shield = 0.;
    p->stress = p->armour;
    pilot_updateDisable(p, 0);
+
+   if (permanent)
+      pilot_setFlag(p, PILOT_DISABLED_PERM);
 
    return 0;
 }
@@ -2845,6 +2851,7 @@ static int pilotL_setHealth( lua_State *L )
       if (pilot_isPlayer(p))
          player_rmFlag( PLAYER_DESTROYED );
    }
+   pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Remove permanent disable. */
 
    /* Update disable status. */
    pilot_updateDisable(p, 0);
