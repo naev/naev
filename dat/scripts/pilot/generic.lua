@@ -4,7 +4,7 @@ require "numstring"
 --[[
 -- @brief Generates generic pilot names
 --]]
-function mercenary_name ()
+function pilot_name ()
    -- For translation, please keep in mind that these are names. It is
    -- better to translate in an inaccurate way than to translate in a
    -- way that works less well as a name. %s is replaced by a number or
