@@ -82,7 +82,9 @@ function jumpin()
 end
 
 function death(pilot,killer)
-   if pilot:faction() == faction.get("Pirate") and killer == player.pilot() then
+   if pilot:faction() == faction.get("Pirate")
+         and (killer == player.pilot()
+            or killer:leader() == player.pilot()) then
       reward_table = {
          ["Hyena"]             =  10000,
          ["Pirate Shark"]      =  30000,

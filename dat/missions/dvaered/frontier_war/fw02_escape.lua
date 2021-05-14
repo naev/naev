@@ -395,7 +395,9 @@ end
 
 -- Test to see if the player killed a zlk inhabited ship
 function killed_zlk(pilot,killer)
-   if pilot:faction() == faction.get("Za'lek") and killer == player.pilot() then
+   if pilot:faction() == faction.get("Za'lek")
+         and (killer == player.pilot()
+            or killer:leader() == player.pilot()) then
       killed_ship = pilot:ship():nameRaw()
       if (elt_inlist( killed_ship, {"Za'lek Scout Drone", "Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"} ) == 0) then
          tk.msg(kill_title, kill_text)
