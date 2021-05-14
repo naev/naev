@@ -180,7 +180,7 @@ function lets_go()
    sharkboy:rmOutfit("cores")
 
    sharkboy:addOutfit("S&K Light Combat Plating")
-   sharkboy:addOutfit("Milspec Prometheus 3603 Core System")
+   sharkboy:addOutfit("Milspec Orion 3701 Core System")
    sharkboy:addOutfit("Tricon Zephyr II Engine")
 
    sharkboy:addOutfit("Reactor Class I",3)

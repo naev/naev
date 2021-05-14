@@ -22,47 +22,42 @@ equip_classCargo = {
 -- Table of available core systems by class.
 equip_classOutfits_coreSystems = {
    ["Yacht"] = {
-      "Unicorp PT-18 Core System", "Unicorp PT-80 Core System",
-      "Milspec Aegis 3601 Core System",
-   },
-   ["Luxury Yacht"] = {
-      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
-   },
-   ["Scout"] = {
-      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
-   },
-   ["Courier"] = {
-      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System",
-   },
-   ["Freighter"] = {
-      "Unicorp PT-400 Core System", "Milspec Aegis 5401 Core System",
-   },
-   ["Armoured Transport"] = {
-      "Unicorp PT-400 Core System", "Milspec Aegis 5401 Core System",
-      "Milspec Aegis 5401 Core System", "Milspec Orion 5501 Core System",
-   },
-   ["Fighter"] = {
-      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System",
-      "Milspec Prometheus 3603 Core System", "Milspec Orion 3701 Core System",
-   },
-   ["Bomber"] = {
-      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System",
+      "Unicorp PT-24 Core System", "Unicorp PT-100 Core System",
       "Milspec Orion 3701 Core System",
    },
+   ["Luxury Yacht"] = {
+      "Unicorp PT-24 Core System", "Milspec Orion 2301 Core System",
+   },
+   ["Scout"] = {
+      "Unicorp PT-24 Core System", "Milspec Orion 2301 Core System",
+   },
+   ["Courier"] = {
+      "Unicorp PT-100 Core System", "Milspec Orion 3701 Core System",
+   },
+   ["Freighter"] = {
+      "Unicorp PT-420 Core System", "Milspec Orion 5501 Core System",
+   },
+   ["Armoured Transport"] = {
+      "Unicorp PT-420 Core System", "Milspec Orion 5501 Core System",
+   },
+   ["Fighter"] = {
+      "Unicorp PT-100 Core System", "Milspec Orion 3701 Core System",
+   },
+   ["Bomber"] = {
+      "Unicorp PT-100 Core System", "Milspec Orion 3701 Core System",
+   },
    ["Corvette"] = {
-      "Unicorp PT-280 Core System", "Milspec Aegis 4701 Core System",
-      "Milspec Orion 4801 Core System",
+      "Unicorp PT-300 Core System", "Milspec Orion 4801 Core System",
    },
    ["Destroyer"] = {
-      "Unicorp PT-400 Core System", "Milspec Aegis 5401 Core System",
-      "Milspec Prometheus 5403 Core System", "Milspec Orion 5501 Core System",
+      "Unicorp PT-420 Core System", "Milspec Orion 5501 Core System",
    },
    ["Cruiser"] = {
-      "Unicorp PT-3400 Core System", "Milspec Aegis 8501 Core System",
-      "Milspec Prometheus 8503 Core System", "Milspec Orion 9901 Core System",
+      "Milspec Orion 8601 Core System", "Milspec Orion 9901 Core System",
+      "Unicorp PT-3500 Core System",
    },
    ["Carrier"] = {
-      "Unicorp PT-3400 Core System", "Milspec Aegis 8501 Core System",
+      "Unicorp PT-3500 Core System", "Milspec Orion 8601 Core System",
       "Milspec Orion 9901 Core System",
    },
    ["Drone"] = {
@@ -77,7 +72,7 @@ equip_classOutfits_coreSystems = {
 -- Table of available engines by class.
 equip_classOutfits_engines = {
    ["Yacht"] = {
-      "Nexus Dart 150 Engine", "Unicorp Hawk 300 Engine",
+      "Nexus Dart 150 Engine", "Unicorp Hawk 350 Engine",
       "Tricon Zephyr II Engine",
    },
    ["Luxury Yacht"] = {
@@ -87,40 +82,40 @@ equip_classOutfits_engines = {
       "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Courier"] = {
-      "Unicorp Hawk 300 Engine", "Tricon Zephyr II Engine",
+      "Unicorp Hawk 350 Engine", "Tricon Zephyr II Engine",
       "Melendez Ox XL Engine",
    },
    ["Freighter"] = {
-      "Unicorp Falcon 1200 Engine", "Melendez Buffalo XL Engine",
+      "Unicorp Falcon 1300 Engine", "Melendez Buffalo XL Engine",
    },
    ["Armoured Transport"] = {
-      "Unicorp Falcon 1200 Engine", "Melendez Buffalo XL Engine",
+      "Unicorp Falcon 1300 Engine", "Melendez Buffalo XL Engine",
    },
    ["Fighter"] = {
-      "Unicorp Hawk 300 Engine", "Tricon Zephyr II Engine",
+      "Unicorp Hawk 350 Engine", "Tricon Zephyr II Engine",
    },
    ["Bomber"] = {
-      "Unicorp Hawk 300 Engine", "Tricon Zephyr II Engine",
+      "Unicorp Hawk 350 Engine", "Tricon Zephyr II Engine",
       "Melendez Ox XL Engine",
    },
    ["Corvette"] = {
       "Nexus Arrow 700 Engine", "Tricon Cyclone Engine",
    },
    ["Destroyer"] = {
-      "Unicorp Falcon 1200 Engine", "Tricon Cyclone II Engine",
+      "Unicorp Falcon 1300 Engine", "Tricon Cyclone II Engine",
    },
    ["Cruiser"] = {
-      "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
+      "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine",
    },
    ["Carrier"] = {
-      "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
+      "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine",
       "Melendez Mammoth XL Engine",
    },
    ["Drone"] = {
       "Nexus Dart 150 Engine",
    },
    ["Heavy Drone"] = {
-      "Unicorp Hawk 300 Engine",
+      "Unicorp Hawk 350 Engine",
    },
 }
 
@@ -586,34 +581,25 @@ equip_classOutfits_structurals = {
 -- Table of available core systems by base type.
 equip_typeOutfits_coreSystems = {
    ["Hyena"] = {
-      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
-      "Milspec Prometheus 2203 Core System", "Milspec Orion 2301 Core System",
+      "Unicorp PT-24 Core System", "Milspec Orion 2301 Core System",
    },
    ["Shark"] = {
-      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
-      "Milspec Hermes 2202 Core System", "Milspec Prometheus 2203 Core System",
-      "Milspec Orion 2301 Core System",
+      "Unicorp PT-24 Core System", "Milspec Orion 2301 Core System",
    },
    ["Fidelity"] = {
-      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
-      "Milspec Prometheus 2203 Core System", "Milspec Orion 2301 Core System",
+      "Unicorp PT-24 Core System", "Milspec Orion 2301 Core System",
    },
    ["Derivative"] = {
-      "Unicorp PT-18 Core System", "Milspec Aegis 2201 Core System",
-      "Milspec Prometheus 2203 Core System", "Milspec Orion 2301 Core System",
+      "Unicorp PT-24 Core System", "Milspec Orion 2301 Core System",
    },
    ["Vendetta"] = {
-      "Unicorp PT-80 Core System", "Milspec Aegis 3601 Core System",
-      "Milspec Hermes 3602 Core System", "Milspec Prometheus 3603 Core System",
-      "Milspec Orion 3701 Core System",
+      "Unicorp PT-100 Core System", "Milspec Orion 3701 Core System",
    },
    ["Kestrel"] = {
-      "Unicorp PT-750 Core System", "Milspec Aegis 8501 Core System",
-      "Milspec Prometheus 8503 Core System", "Milspec Orion 8601 Core System",
+      "Unicorp PT-850 Core System", "Milspec Orion 8601 Core System",
    },
    ["Hawking"] = {
-      "Unicorp PT-750 Core System", "Milspec Aegis 8501 Core System",
-      "Milspec Prometheus 8503 Core System", "Milspec Orion 8601 Core System",
+      "Unicorp PT-850 Core System", "Milspec Orion 8601 Core System",
    },
    ["Brigand"] = {
       probability = {
@@ -711,7 +697,7 @@ equip_typeOutfits_engines = {
       "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Vendetta"] = {
-      "Unicorp Hawk 300 Engine", "Melendez Ox XL Engine",
+      "Unicorp Hawk 350 Engine", "Melendez Ox XL Engine",
       "Tricon Zephyr II Engine",
    },
    ["Kestrel"] = {
@@ -1205,11 +1191,11 @@ equip_typeOutfits_structurals = {
 -- Table of available core systems by ship.
 equip_shipOutfits_coreSystems = {
    ["Empire Lancelot"] = { "Milspec Orion 3701 Core System" },
-   ["Sirius Fidelity"] = { "Milspec Prometheus 2203 Core System" },
-   ["Za'lek Scout Drone"] = { "Milspec Aegis 2201 Core System" },
+   ["Sirius Fidelity"] = { "Milspec Orion 2301 Core System" },
+   ["Za'lek Scout Drone"] = { "Milspec Orion 2301 Core System" },
    ["Za'lek Light Drone"] = { "Milspec Orion 2301 Core System" },
    ["Za'lek Heavy Drone"] = {  "Milspec Orion 3701 Core System" },
-   ["Za'lek Bomber Drone"] = { "Milspec Aegis 3601 Core System" },
+   ["Za'lek Bomber Drone"] = { "Milspec Orion 3701 Core System" },
 }
 
 
@@ -1434,7 +1420,7 @@ function equip_generic( p )
       success = equip_warn( p, o[rnd.rnd(1, #o)] )
    end
    if not success then
-      equip_warn( p, "Unicorp PT-18 Core System" )
+      equip_warn( p, "Unicorp PT-24 Core System" )
    end
 
    -- Engines
@@ -1452,7 +1438,7 @@ function equip_generic( p )
       success = equip_warn( p, o[rnd.rnd(1, #o)] )
    end
    if not success then
-      equip_warn( p, "Unicorp Hawk 300 Engine" )
+      equip_warn( p, "Unicorp Hawk 350 Engine" )
    end
 
    -- Hulls

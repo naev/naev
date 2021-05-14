@@ -2,19 +2,19 @@ require "factions/equip/generic"
 
 
 equip_typeOutfits_coreSystems["Sting"] = {
-   "Milspec Aegis 4701 Core System",
+   "Milspec Orion 4801 Core System",
 }
 equip_typeOutfits_coreSystems["Demon"] = {
-   "Milspec Prometheus 5403 Core System",
+   "Milspec Orion 5501 Core System",
 }
 equip_typeOutfits_coreSystems["Mephisto"] = {
-   "Milspec Prometheus 8503 Core System",
+   "Milspec Orion 8601 Core System",
 }
 equip_typeOutfits_coreSystems["Diablo"] = {
    "Milspec Orion 9901 Core System",
 }
 equip_typeOutfits_coreSystems["Hephaestus"] = {
-   "Milspec Hermes 9802 Core System",
+   "Milspec Orion 9901 Core System",
 }
 equip_typeOutfits_coreSystems["Prototype"] = {
    "Milspec Orion 9901 Core System",
@@ -27,7 +27,7 @@ equip_typeOutfits_engines["Demon"] = {
    "Tricon Cyclone II Engine",
 }
 equip_typeOutfits_engines["Mephisto"] = {
-   "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
+   "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine",
 }
 equip_typeOutfits_engines["Diablo"] = {
    "Tricon Typhoon II Engine",
@@ -36,7 +36,7 @@ equip_typeOutfits_engines["Hephaestus"] = {
    "Melendez Mammoth XL Engine",
 }
 equip_typeOutfits_engines["Prototype"] = {
-   "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
+   "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine",
 }
 
 equip_typeOutfits_hulls["Sting"] = {

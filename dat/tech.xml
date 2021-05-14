@@ -159,52 +159,34 @@
   <item>Heavy Combat Vessel License</item>
   <item>Mercenary License</item>
   <item>Previous Generation Small Systems</item>
-  <item>Unicorp PT-18 Core System</item>
-  <item>Unicorp PT-80 Core System</item>
-  <item>Milspec Hermes 2202 Core System</item>
-  <item>Milspec Aegis 2201 Core System</item>
-  <item>Milspec Prometheus 2203 Core System</item>
+  <item>Unicorp PT-24 Core System</item>
+  <item>Unicorp PT-100 Core System</item>
   <item>Milspec Orion 2301 Core System</item>
-  <item>Milspec Hermes 3602 Core System</item>
-  <item>Milspec Aegis 3601 Core System</item>
-  <item>Milspec Prometheus 3603 Core System</item>
   <item>Milspec Orion 3701 Core System</item>
   <item>Previous Generation Medium Systems</item>
-  <item>Unicorp PT-280 Core System</item>
-  <item>Unicorp PT-400 Core System</item>
-  <item>Milspec Hermes 4702 Core System</item>
-  <item>Milspec Aegis 4701 Core System</item>
-  <item>Milspec Prometheus 4703 Core System</item>
+  <item>Unicorp PT-300 Core System</item>
+  <item>Unicorp PT-420 Core System</item>
   <item>Milspec Orion 4801 Core System</item>
-  <item>Milspec Hermes 5402 Core System</item>
-  <item>Milspec Aegis 5401 Core System</item>
-  <item>Milspec Prometheus 5403 Core System</item>
   <item>Milspec Orion 5501 Core System</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-750 Core System</item>
-  <item>Unicorp PT-3400 Core System</item>
-  <item>Milspec Hermes 8502 Core System</item>
-  <item>Milspec Aegis 8501 Core System</item>
-  <item>Milspec Prometheus 8503 Core System</item>
+  <item>Unicorp PT-850 Core System</item>
+  <item>Unicorp PT-3500 Core System</item>
   <item>Milspec Orion 8601 Core System</item>
-  <item>Milspec Hermes 9802 Core System</item>
-  <item>Milspec Aegis 9801 Core System</item>
-  <item>Milspec Prometheus 9803 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
   <item>Beat Up Small Engine</item>
-  <item>Unicorp Hawk 300 Engine</item>
+  <item>Unicorp Hawk 350 Engine</item>
   <item>Nexus Dart 150 Engine</item>
   <item>Melendez Ox XL Engine</item>
   <item>Tricon Zephyr Engine</item>
   <item>Tricon Zephyr II Engine</item>
   <item>Beat Up Medium Engine</item>
-  <item>Unicorp Falcon 1200 Engine</item>
+  <item>Unicorp Falcon 1300 Engine</item>
   <item>Nexus Arrow 700 Engine</item>
   <item>Melendez Buffalo XL Engine</item>
   <item>Tricon Cyclone Engine</item>
   <item>Tricon Cyclone II Engine</item>
   <item>Beat Up Large Engine</item>
-  <item>Unicorp Eagle 6500 Engine</item>
+  <item>Unicorp Eagle 7000 Engine</item>
   <item>Nexus Bolt 4500 Engine</item>
   <item>Melendez Mammoth XL Engine</item>
   <item>Krain Remige Engine</item>
@@ -448,21 +430,21 @@
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-18 Core System</item>
-  <item>Unicorp PT-80 Core System</item>
-  <item>Unicorp PT-280 Core System</item>
-  <item>Unicorp PT-400 Core System</item>
-  <item>Unicorp PT-750 Core System</item>
-  <item>Unicorp PT-3400 Core System</item>
+  <item>Unicorp PT-24 Core System</item>
+  <item>Unicorp PT-100 Core System</item>
+  <item>Unicorp PT-300 Core System</item>
+  <item>Unicorp PT-420 Core System</item>
+  <item>Unicorp PT-850 Core System</item>
+  <item>Unicorp PT-3500 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
   <item>Nexus Dart 150 Engine</item>
-  <item>Unicorp Hawk 300 Engine</item>
+  <item>Unicorp Hawk 350 Engine</item>
   <item>Nexus Arrow 700 Engine</item>
-  <item>Unicorp Falcon 1200 Engine</item>
+  <item>Unicorp Falcon 1300 Engine</item>
   <item>Nexus Bolt 4500 Engine</item>
-  <item>Unicorp Eagle 6500 Engine</item>
+  <item>Unicorp Eagle 7000 Engine</item>
   <item>Patchwork Light Plating</item>
   <item>Unicorp D-2 Light Plating</item>
   <item>Unicorp D-4 Light Plating</item>
@@ -496,21 +478,21 @@
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-18 Core System</item>
-  <item>Unicorp PT-80 Core System</item>
-  <item>Unicorp PT-280 Core System</item>
-  <item>Unicorp PT-400 Core System</item>
-  <item>Unicorp PT-750 Core System</item>
-  <item>Unicorp PT-3400 Core System</item>
+  <item>Unicorp PT-24 Core System</item>
+  <item>Unicorp PT-100 Core System</item>
+  <item>Unicorp PT-300 Core System</item>
+  <item>Unicorp PT-420 Core System</item>
+  <item>Unicorp PT-850 Core System</item>
+  <item>Unicorp PT-3500 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
   <item>Nexus Dart 150 Engine</item>
-  <item>Unicorp Hawk 300 Engine</item>
+  <item>Unicorp Hawk 350 Engine</item>
   <item>Nexus Arrow 700 Engine</item>
-  <item>Unicorp Falcon 1200 Engine</item>
+  <item>Unicorp Falcon 1300 Engine</item>
   <item>Nexus Bolt 4500 Engine</item>
-  <item>Unicorp Eagle 6500 Engine</item>
+  <item>Unicorp Eagle 7000 Engine</item>
   <item>Patchwork Light Plating</item>
   <item>Unicorp D-2 Light Plating</item>
   <item>Unicorp D-4 Light Plating</item>
@@ -851,53 +833,35 @@
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-18 Core System</item>
-  <item>Unicorp PT-80 Core System</item>
-  <item>Unicorp PT-280 Core System</item>
-  <item>Unicorp PT-400 Core System</item>
-  <item>Unicorp PT-750 Core System</item>
-  <item>Unicorp PT-3400 Core System</item>
+  <item>Unicorp PT-24 Core System</item>
+  <item>Unicorp PT-300 Core System</item>
+  <item>Unicorp PT-850 Core System</item>
  </tech>
  <tech name="Systems Medium">
-  <item>Milspec Hermes 2202 Core System</item>
-  <item>Milspec Hermes 4702 Core System</item>
-  <item>Milspec Aegis 2201 Core System</item>
-  <item>Milspec Aegis 4701 Core System</item>
-  <item>Milspec Prometheus 2203 Core System</item>
-  <item>Milspec Prometheus 4703 Core System</item>
+  <item>Unicorp PT-100 Core System</item>
+  <item>Unicorp PT-420 Core System</item>
+  <item>Unicorp PT-3500 Core System</item>
  </tech>
  <tech name="Systems High">
   <item>Milspec Orion 2301 Core System</item>
   <item>Milspec Orion 3701 Core System</item>
   <item>Milspec Orion 4801 Core System</item>
-  <item>Milspec Hermes 3602 Core System</item>
-  <item>Milspec Hermes 5402 Core System</item>
-  <item>Milspec Aegis 3601 Core System</item>
-  <item>Milspec Aegis 5401 Core System</item>
-  <item>Milspec Prometheus 3603 Core System</item>
-  <item>Milspec Prometheus 5403 Core System</item>
  </tech>
  <tech name="Systems Elite">
   <item>Milspec Orion 5501 Core System</item>
   <item>Milspec Orion 8601 Core System</item>
-  <item>Milspec Hermes 8502 Core System</item>
-  <item>Milspec Aegis 8501 Core System</item>
-  <item>Milspec Prometheus 8503 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
-  <item>Milspec Hermes 9802 Core System</item>
-  <item>Milspec Aegis 9801 Core System</item>
-  <item>Milspec Prometheus 9803 Core System</item>
  </tech>
  <tech name="Engines Low">
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
   <item>Nexus Dart 150 Engine</item>
-  <item>Unicorp Hawk 300 Engine</item>
+  <item>Unicorp Hawk 350 Engine</item>
   <item>Nexus Arrow 700 Engine</item>
-  <item>Unicorp Falcon 1200 Engine</item>
+  <item>Unicorp Falcon 1300 Engine</item>
   <item>Nexus Bolt 4500 Engine</item>
-  <item>Unicorp Eagle 6500 Engine</item>
+  <item>Unicorp Eagle 7000 Engine</item>
  </tech>
  <tech name="Engines Cargo">
   <item>Melendez Ox XL Engine</item>
@@ -909,11 +873,11 @@
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
   <item>Nexus Dart 150 Engine</item>
-  <item>Unicorp Hawk 300 Engine</item>
+  <item>Unicorp Hawk 350 Engine</item>
   <item>Nexus Arrow 700 Engine</item>
-  <item>Unicorp Falcon 1200 Engine</item>
+  <item>Unicorp Falcon 1300 Engine</item>
   <item>Nexus Bolt 4500 Engine</item>
-  <item>Unicorp Eagle 6500 Engine</item>
+  <item>Unicorp Eagle 7000 Engine</item>
  </tech>
  <tech name="Engines High">
   <item>Tricon Zephyr Engine</item>

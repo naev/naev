@@ -2,10 +2,10 @@ require("factions/equip/generic")
 
 
 equip_typeOutfits_coreSystems["Fidelity"] = {
-   "Milspec Prometheus 2203 Core System",
+   "Milspec Orion 2301 Core System",
 }
 equip_typeOutfits_coreSystems["Shaman"] = {
-   "Milspec Prometheus 3603 Core System",
+   "Milspec Orion 3701 Core System",
 }
 equip_typeOutfits_coreSystems["Preacher"] = {
    "Milspec Orion 4801 Core System",
@@ -30,7 +30,7 @@ equip_typeOutfits_engines["Reverence"] = {
    "Tricon Cyclone Engine",
 }
 equip_typeOutfits_engines["Dogma"] = {
-   "Unicorp Eagle 6500 Engine", "Tricon Typhoon II Engine",
+   "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine",
 }
 equip_typeOutfits_engines["Divinity"] = {
    "Melendez Mammoth XL Engine",

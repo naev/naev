@@ -18,27 +18,27 @@ equip_classCargo["Drone"] = .1
 equip_classCargo["Heavy Drone"] = .1
 
 equip_typeOutfits_coreSystems["Hyena"] = {
-   "Unicorp PT-18 Core System", "Milspec Prometheus 2203 Core System",
+   "Unicorp PT-24 Core System", "Milspec Orion 2301 Core System",
 }
 equip_typeOutfits_coreSystems["Shark"] = equip_typeOutfits_coreSystems["Hyena"]
 equip_typeOutfits_coreSystems["Vendetta"] = {
-   "Unicorp PT-80 Core System", "Milspec Prometheus 3603 Core System",
+   "Unicorp PT-100 Core System", "Milspec Orion 3701 Core System",
 }
 equip_typeOutfits_coreSystems["Lancelot"] = equip_typeOutfits_coreSystems["Vendetta"]
 equip_typeOutfits_coreSystems["Ancestor"] = equip_typeOutfits_coreSystems["Vendetta"]
 equip_typeOutfits_coreSystems["Phalanx"] = {
-   "Unicorp PT-280 Core System", "Milspec Prometheus 4703 Core System",
+   "Unicorp PT-300 Core System", "Milspec Orion 4801 Core System",
 }
 equip_typeOutfits_coreSystems["Admonisher"] = equip_typeOutfits_coreSystems["Phalanx"]
 equip_typeOutfits_coreSystems["Pacifier"] = {
-   "Unicorp PT-400 Core System", "Milspec Prometheus 5403 Core System",
+   "Unicorp PT-420 Core System", "Milspec Orion 5501 Core System",
 }
 equip_typeOutfits_coreSystems["Kestrel"] = {
-   "Unicorp PT-3400 Core System", "Milspec Prometheus 8503 Core System",
+   "Unicorp PT-3500 Core System", "Milspec Orion 8601 Core System",
 }
 
 equip_typeOutfits_engines["Rhino"] = {
-   "Unicorp Falcon 1200 Engine", "Tricon Cyclone II Engine",
+   "Unicorp Falcon 1300 Engine", "Tricon Cyclone II Engine",
 }
 
 equip_typeOutfits_hulls["Shark"] = {

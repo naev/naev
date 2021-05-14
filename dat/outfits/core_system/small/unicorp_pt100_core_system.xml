@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="Unicorp PT-80 Core System">
+<outfit name="Unicorp PT-100 Core System">
  <general>
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
@@ -7,15 +7,14 @@
   <priority>7</priority>
   <mass>40</mass>
   <price>35000</price>
-  <description>The PT-80 is an economical core system providing decent performance to small-to-medium vessels.</description>
+  <description>The PT-100 is an economical core system providing decent performance to small-to-medium vessels.</description>
   <gfx_store>core_system_basic_s2.png</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>80</cpu_max>
-  <shield>225</shield>
-  <shield_regen>7</shield_regen>
+  <cpu_max>100</cpu_max>
   <energy>300</energy>
-  <energy_regen>27</energy_regen>
-  <ew_hide>0</ew_hide>
+  <energy_regen>25</energy_regen>
+  <shield>225</shield>
+  <shield_regen>6</shield_regen>
  </specific>
 </outfit>

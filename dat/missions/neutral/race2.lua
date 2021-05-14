@@ -185,7 +185,7 @@ function takeoff()
          racers[i]:rmOutfit("all")
          racers[i]:rmOutfit("cores")
          
-         racers[i]:addOutfit("Unicorp PT-18 Core System")
+         racers[i]:addOutfit("Unicorp PT-24 Core System")
          racers[i]:addOutfit("Unicorp D-2 Light Plating")
          local en_choices = {
             "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }

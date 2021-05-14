@@ -246,7 +246,7 @@ function interceptors()
       badguys[i]:rmOutfit("cores")
 
       badguys[i]:addOutfit("S&K Ultralight Combat Plating")
-      badguys[i]:addOutfit("Milspec Prometheus 2203 Core System")
+      badguys[i]:addOutfit("Milspec Orion 2301 Core System")
       badguys[i]:addOutfit("Tricon Zephyr Engine")
 
       badguys[i]:addOutfit("Shredder",3)
@@ -269,7 +269,7 @@ function hvy_intercept()
       badguys[i]:rmOutfit("cores")
 
       badguys[i]:addOutfit("Unicorp D-4 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-80 Core System")
+      badguys[i]:addOutfit("Unicorp PT-100 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
 
       badguys[i]:addOutfit("TeraCom Fury Launcher")
@@ -293,7 +293,7 @@ function corvette()
       badguys[i]:rmOutfit("cores")
 
       badguys[i]:addOutfit("Unicorp D-12 Medium Plating")
-      badguys[i]:addOutfit("Unicorp PT-280 Core System")
+      badguys[i]:addOutfit("Unicorp PT-300 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
 
       badguys[i]:addOutfit("Razor Turret MK2",2)
@@ -313,7 +313,7 @@ function cruiser()
    badguy:rmOutfit("cores")
 
    badguy:addOutfit("Unicorp D-48 Heavy Plating")
-   badguy:addOutfit("Unicorp PT-750 Core System")
+   badguy:addOutfit("Unicorp PT-850 Core System")
    badguy:addOutfit("Krain Remige Engine")
 
    badguy:addOutfit("Heavy Ripper Turret",2)
@@ -338,7 +338,7 @@ function bombers()
       badguys[i]:rmOutfit("cores")
 
       badguys[i]:addOutfit("S&K Ultralight Combat Plating")
-      badguys[i]:addOutfit("Milspec Prometheus 2203 Core System")
+      badguys[i]:addOutfit("Milspec Orion 2301 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
 
       badguys[i]:addOutfit("Unicorp Caesar IV Launcher",2)
