@@ -11,11 +11,13 @@
   <gfx_store>engine01.png</gfx_store>
  </general>
  <specific type="modification">
+  <energy_usage>15</energy_usage>
+  <engine_limit>400</engine_limit>
+  <fuel>500</fuel>
+  <speed>225</speed>
   <thrust>115</thrust>
   <turn>95</turn>
-  <speed>225</speed>
-  <fuel>500</fuel>
-  <energy_usage>7</energy_usage>
-  <engine_limit>400</engine_limit>
+  <land_delay>-25</land_delay>
+  <time_mod>10</time_mod>
  </specific>
 </outfit>

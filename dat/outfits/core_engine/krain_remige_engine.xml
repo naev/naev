@@ -11,11 +11,11 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <thrust>70</thrust>
-  <turn>80</turn>
-  <speed>125</speed>
-  <fuel>1600</fuel>
   <energy_usage>21</energy_usage>
   <engine_limit>3800</engine_limit>
+  <fuel>1600</fuel>
+  <speed>125</speed>
+  <thrust>70</thrust>
+  <turn>80</turn>
  </specific>
 </outfit>
