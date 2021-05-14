@@ -11,10 +11,9 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <cargo>16</cargo>
+  <cargo>12</cargo>
   <absorb>15</absorb>
-  <armour>300</armour>
-  <armour_regen>0</armour_regen>
-  <ew_hide>0</ew_hide>
+  <armour>320</armour>
+  <heat_dissipation>10</heat_dissipation>
  </specific>
 </outfit>

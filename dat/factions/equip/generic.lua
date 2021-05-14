@@ -132,10 +132,10 @@ equip_classOutfits_hulls = {
       "S&K Small Cargo Hull",
    },
    ["Luxury Yacht"] = {
-      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
    },
    ["Scout"] = {
-      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
    },
    ["Courier"] = {
       "Unicorp D-4 Light Plating", "S&K Small Cargo Hull",
@@ -147,32 +147,32 @@ equip_classOutfits_hulls = {
       "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull",
    },
    ["Fighter"] = {
-      "Unicorp D-4 Light Plating", "S&K Light Stealth Plating",
+      "Unicorp D-4 Light Plating", "Nexus Light Stealth Plating",
       "S&K Light Combat Plating"
    },
    ["Bomber"] = {
-      "Unicorp D-4 Light Plating", "S&K Light Stealth Plating",
+      "Unicorp D-4 Light Plating", "Nexus Light Stealth Plating",
       "S&K Light Combat Plating"
    },
    ["Corvette"] = {
-      "Unicorp D-12 Medium Plating", "S&K Medium Stealth Plating",
+      "Unicorp D-12 Medium Plating", "Nexus Medium Stealth Plating",
       "S&K Medium Combat Plating"
    },
    ["Destroyer"] = {
-      "Unicorp D-24 Medium Plating", "S&K Medium-Heavy Stealth Plating",
+      "Unicorp D-24 Medium Plating", "Nexus Medium Stealth Plating",
       "S&K Medium-Heavy Combat Plating"
    },
    ["Cruiser"] = {
-      "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating"
+      "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating"
    },
    ["Carrier"] = {
-      "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating"
+      "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating"
    },
    ["Drone"] = {
-      "S&K Ultralight Stealth Plating"
+      "Nexus Light Stealth Plating"
    },
    ["Heavy Drone"] = {
-      "S&K Light Stealth Plating"
+      "Nexus Light Stealth Plating", "S&K Light Combat Plating"
    },
 }
 
@@ -805,25 +805,25 @@ equip_typeOutfits_engines = {
 -- Table of available hulls by base type.
 equip_typeOutfits_hulls = {
    ["Hyena"] = {
-      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
    },
    ["Shark"] = {
-      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
       "S&K Ultralight Combat Plating",
    },
    ["Fidelity"] = {
-      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
       "S&K Ultralight Combat Plating",
    },
    ["Derivative"] = {
-      "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
       "S&K Ultralight Combat Plating",
    },
    ["Kestrel"] = {
-      "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating",
+      "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating",
    },
    ["Hawking"] = {
-      "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating",
+      "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating",
    },
    ["Brigand"] = {
       probability = {
@@ -1227,15 +1227,15 @@ equip_shipOutfits_engines = {
 -- Table of available hulls by ship.
 equip_shipOutfits_hulls = {
    ["Empire Lancelot"] = {
-      "S&K Light Stealth Plating", "S&K Light Combat Plating",
+      "Nexus Light Stealth Plating", "S&K Light Combat Plating",
    },
    ["Sirius Fidelity"] = {
-      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating",
+      "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating",
    },
-   ["Za'lek Scout Drone"] = { "S&K Ultralight Stealth Plating" },
+   ["Za'lek Scout Drone"] = { "Nexus Light Stealth Plating" },
    ["Za'lek Light Drone"] = { "S&K Ultralight Combat Plating" },
    ["Za'lek Heavy Drone"] = { "S&K Light Combat Plating" },
-   ["Za'lek Bomber Drone"] = { "S&K Light Stealth Plating" },
+   ["Za'lek Bomber Drone"] = { "Nexus Light Stealth Plating" },
 }
 
 

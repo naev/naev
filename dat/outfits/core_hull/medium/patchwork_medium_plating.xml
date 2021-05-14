@@ -5,16 +5,14 @@
   <slot prop="hull">structure</slot>
   <size>medium</size>
   <priority>3</priority>
-  <mass>90</mass>
+  <mass>130</mass>
   <price>0</price>
   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
   <gfx_store>plating_patchwork.png</gfx_store>
  </general>
  <specific type="modification">
   <cargo>12</cargo>
-  <absorb>10</absorb>
-  <armour>180</armour>
-  <armour_regen>0</armour_regen>
-  <ew_hide>0</ew_hide>
+  <absorb>8</absorb>
+  <armour>160</armour>
  </specific>
 </outfit>

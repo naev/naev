@@ -37,10 +37,10 @@ equip_typeOutfits_engines["Divinity"] = {
 }
 
 equip_typeOutfits_hulls["Fidelity"] = {
-   "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating",
+   "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating",
 }
 equip_typeOutfits_hulls["Shaman"] = {
-   "S&K Light Stealth Plating", "S&K Light Combat Plating",
+   "Nexus Light Stealth Plating", "S&K Light Combat Plating",
 }
 equip_typeOutfits_hulls["Preacher"] = {
    "S&K Medium Combat Plating",
@@ -49,7 +49,7 @@ equip_typeOutfits_hulls["Reverence"] = {
    "S&K Medium Combat Plating",
 }
 equip_typeOutfits_hulls["Dogma"] = {
-   "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating",
+   "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating",
 }
 equip_typeOutfits_hulls["Divinity"] = {
    "S&K Superheavy Combat Plating",

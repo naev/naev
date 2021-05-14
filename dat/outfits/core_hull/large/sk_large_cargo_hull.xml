@@ -11,10 +11,9 @@
   <gfx_store>large_cargo_hull.png</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>300</cargo>
-  <absorb>48</absorb>
-  <armour>1200</armour>
-  <armour_regen>0</armour_regen>
-  <ew_hide>0</ew_hide>
+  <cargo>400</cargo>
+  <absorb>42</absorb>
+  <armour>1100</armour>
+  <cargo_inertia>-25</cargo_inertia>
  </specific>
 </outfit>

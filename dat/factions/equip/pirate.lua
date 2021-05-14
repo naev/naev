@@ -42,7 +42,7 @@ equip_typeOutfits_engines["Rhino"] = {
 }
 
 equip_typeOutfits_hulls["Shark"] = {
-   "Unicorp D-2 Light Plating", "S&K Ultralight Stealth Plating",
+   "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
 }
 
 equip_typeOutfits_weapons["Shark"] = {

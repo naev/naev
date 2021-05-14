@@ -11,10 +11,9 @@
   <gfx_store>combat_hull_h.png</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>32</cargo>
+  <cargo>18</cargo>
   <absorb>30</absorb>
   <armour>660</armour>
-  <armour_regen>0</armour_regen>
-  <ew_hide>0</ew_hide>
+  <heat_dissipation>10</heat_dissipation>
  </specific>
 </outfit>

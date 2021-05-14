@@ -13,8 +13,7 @@
  <specific type="modification">
   <cargo>30</cargo>
   <absorb>2</absorb>
-  <armour>45</armour>
-  <armour_regen>0</armour_regen>
-  <ew_hide>0</ew_hide>
+  <armour>55</armour>
+  <cargo_inertia>-25</cargo_inertia>
  </specific>
 </outfit>

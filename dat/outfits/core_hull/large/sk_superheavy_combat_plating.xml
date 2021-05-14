@@ -14,7 +14,6 @@
   <cargo>80</cargo>
   <absorb>80</absorb>
   <armour>2400</armour>
-  <armour_regen>0</armour_regen>
-  <ew_hide>0</ew_hide>
+  <heat_dissipation>10</heat_dissipation>
  </specific>
 </outfit>

@@ -40,22 +40,22 @@ equip_typeOutfits_engines["Prototype"] = {
 }
 
 equip_typeOutfits_hulls["Sting"] = {
-   "S&K Medium Stealth Plating", "S&K Medium Combat Plating",
+   "Nexus Medium Stealth Plating", "S&K Medium Combat Plating",
 }
 equip_typeOutfits_hulls["Demon"] = {
-   "S&K Medium-Heavy Stealth Plating", "S&K Medium-Heavy Combat Plating",
+   "Nexus Medium Stealth Plating", "S&K Medium-Heavy Combat Plating",
 }
 equip_typeOutfits_hulls["Mephisto"] = {
-   "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating",
+   "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating",
 }
 equip_typeOutfits_hulls["Diablo"] = {
-   "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating",
+   "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating",
 }
 equip_typeOutfits_hulls["Hephaestus"] = {
-   "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating",
+   "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating",
 }
 equip_typeOutfits_hulls["Prototype"] = {
-   "Unicorp D-72 Heavy Plating", "S&K Superheavy Combat Plating",
+   "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating",
 }
 
 equip_typeOutfits_weapons["Sting"] = {

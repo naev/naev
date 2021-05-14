@@ -28,10 +28,10 @@ equip_typeOutfits_engines["Watson"] = {
 }
 
 equip_typeOutfits_hulls["Derivative"] = {
-   "S&K Ultralight Stealth Plating",
+   "Nexus Light Stealth Plating",
 }
 equip_typeOutfits_hulls["Kahan"] = {
-   "S&K Medium-Heavy Stealth Plating",
+   "Nexus Medium Stealth Plating",
 }
 equip_typeOutfits_hulls["Archimedes"] = {
    "S&K Superheavy Combat Plating",

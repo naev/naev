@@ -11,10 +11,8 @@
   <gfx_store>base_hull_h.png</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>40</cargo>
+  <cargo>50</cargo>
   <absorb>24</absorb>
   <armour>470</armour>
-  <armour_regen>0</armour_regen>
-  <ew_hide>0</ew_hide>
  </specific>
 </outfit>

@@ -36,17 +36,17 @@ equip_typeOutfits_engines["Peacemaker"] = {
 }
 
 equip_typeOutfits_hulls["Shark"] = {
-   "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating",
+   "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating",
 }
 equip_typeOutfits_hulls["Lancelot"] = equip_shipOutfits_hulls["Empire Lancelot"]
 equip_typeOutfits_hulls["Admonisher"] = {
-   "S&K Medium Stealth Plating", "S&K Medium Combat Plating",
+   "Nexus Medium Stealth Plating", "S&K Medium Combat Plating",
 }
 equip_typeOutfits_hulls["Pacifier"] = {
-   "S&K Medium-Heavy Stealth Plating", "S&K Medium-Heavy Combat Plating",
+   "Nexus Medium Stealth Plating", "S&K Medium-Heavy Combat Plating",
 }
 equip_typeOutfits_hulls["Hawking"] = {
-   "Unicorp D-48 Heavy Plating", "S&K Heavy Combat Plating",
+   "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating"
 }
 equip_typeOutfits_hulls["Peacemaker"] = {
    "S&K Superheavy Combat Plating",
