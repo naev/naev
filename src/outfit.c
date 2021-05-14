@@ -1874,7 +1874,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
    MELEMENT(temp->u.afb.thrust==0.,"thrust");
    MELEMENT(temp->u.afb.speed==0.,"speed");
    MELEMENT(temp->u.afb.energy==0.,"energy");
-   MELEMENT(temp->cpu==0.,"cpu");
+   //MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT(temp->u.afb.mass_limit==0.,"mass_limit");
    MELEMENT(temp->u.afb.heatup==0.,"heatup");
 #undef MELEMENT
