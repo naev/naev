@@ -226,8 +226,6 @@ function p_disabled( p )
    p:disable() -- don't let them come back
    p:setInvisible( true ) -- can't target
    p:setInvincible( true ) -- just stays there
-   p:control()
-   p:brake()
    enemy_out( p )
 end
 function p_death( p )
