@@ -262,8 +262,7 @@ function approachEscort( npc_id )
             edata.ship, edata.deposit, edata.royalty * 100,
             getTotalRoyalties() * 100 ) )
 
-   local n, s = tk.choice("", approachtext),
-         _("Fire pilot"), _("Do nothing") )
+   local n, s = tk.choice("", approachtext, _("Fire pilot"), _("Do nothing"))
    if n == 1 then
       if tk.yesno(
             "", string.format(
