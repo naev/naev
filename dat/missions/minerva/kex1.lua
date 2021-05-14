@@ -97,7 +97,7 @@ function approach_kex ()
       kex(_([[Kex looks at you in the eyes.
 "In cases like this it's probably best not to ask questions, and just take it as some kind of blessing. Had things like this happen all the time in the nebula and nothing good ever came from investigating. Just remember to keep an eye open."]]))
       kex(_([[He now looks at the crate.
-"Let me see if I can this open. Mmmm… fairly shoddy Nexus lock. I don't think they make these anymore. Shouldn't be a problem for my implant system."]]))
+"Let me see if I can get this open. Mmmm… fairly shoddy Nexus lock. I don't think they make these anymore. Shouldn't be a problem for my implant system."]]))
       kex(_([[He puts his wing on the lock and you hear some sort of click. His eyes close and he begins to hum an old tune, almost sounds like a nursery rhyme. This goes on for a while before he suddenly jolts back with his eyes open.]]))
       vn.sfxBingo()
       kex(_([["OK, let us see what we have here."
@@ -322,6 +322,10 @@ function mainguy_board ()
    vn.na(_("It might be best to report back to Kex to see if his information was incorrect."))
    vn.run()
 
+   -- Permanently disable mainguy
+   mainguy:disable()
+
+   -- Message update
    shiplog.appendLog( logidstr, _("You boarded a transport destined to the Minerva CEO, but didn't find anything."))
    misn.markerMove( misn_marker, system.get("Limbo") )
    misn_state = 2
