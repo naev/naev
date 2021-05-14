@@ -272,6 +272,7 @@ function enter ()
          edata.pilot:setTemp(temp, true)
          edata.pilot:setHealth(armor, shield, stress)
          edata.pilot:setEnergy(energy)
+         edata.pilot:setFuel(true)
 
          if f == nil or f:playerStanding() >= 0 then
             edata.pilot:setLeader(player.pilot())
