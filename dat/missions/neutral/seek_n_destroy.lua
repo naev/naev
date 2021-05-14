@@ -482,6 +482,8 @@ function space_clue ()
          if isScared (target) then
             tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
             next_sys()
+            target:control()
+            target:runaway(player.pilot())
          else
             tk.msg( not_scared_title, not_scared_text[rnd.rnd(1,#not_scared_text)]:format( name, mysys[cursys+1]:name() ) )
             target:comm(not_scared_comm[rnd.rnd(1,#not_scared_comm)])
