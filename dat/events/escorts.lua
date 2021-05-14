@@ -180,7 +180,6 @@ function land ()
    for i, edata in ipairs(escorts) do
       if edata.alive then
          local j = #new_escorts + 1
-         edata.index = j
          edata.pilot = nil
          edata.temp = nil
          edata.armor = nil
@@ -214,6 +213,8 @@ function jumpout ()
          edata.temp = edata.pilot:temp()
          edata.armor, edata.shield, edata.stress = edata.pilot:health()
          edata.energy = edata.pilot:energy()
+         edata.pilot:rm()
+         edata.pilot = nil
       else
          edata.alive = false
       end
@@ -286,7 +287,7 @@ function enter ()
             edata.pilot:setNoClear(true)
             hook.pilot(edata.pilot, "death", "pilot_death", i)
          else
-            escorts[i].alive = false
+            edata.alive = false
          end
       end
    end
@@ -308,7 +309,7 @@ function standing ()
             and edata.pilot:exists() then
          local f = faction.get(edata.faction)
          if f ~= nil and f:playerStanding() < 0 then
-            escorts[i].alive = false
+            edata.alive = false
             edata.pilot:setLeader(nil)
             edata.pilot:setNoClear(false)
             edata.pilot:hookClear()
@@ -335,7 +336,7 @@ function hail( p )
                "", string.format(
                   _("Are you sure you want to fire %s? This cannot be undone."),
                   edata.name ) ) then
-            escorts[edata.index].alive = false
+            edata.alive = false
             edata.pilot:setLeader(nil)
             edata.pilot:setNoClear(false)
             edata.pilot:hookClear()
@@ -346,7 +347,7 @@ end
 
 
 function pilot_death( p, attacker, arg )
-   escorts[i].alive = false
+   escorts[arg].alive = false
 end
 
 
@@ -373,7 +374,7 @@ function approachEscort( npc_id )
          npcs[npc_id] = nil
          -- We just set alive to false for now and let them get cleaned
          -- up next time we land.
-         escorts[edata.index].alive = false
+         edata.alive = false
       end
    end
 end
@@ -407,7 +408,6 @@ function approachPilot( npc_id )
       end
 
       local i = #escorts + 1
-      pdata.index = i
       pdata.alive = true
       escorts[i] = pdata
       evt.npcRm(npc_id)
