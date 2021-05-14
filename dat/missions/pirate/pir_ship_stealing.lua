@@ -285,7 +285,7 @@ function accept()
          tk.msg( approval.title, approval.message:format(
             theship.planet:name(), theship.system:name() ) )
 
-         player.pay( -theship.price )
+         player.pay( -theship.price, true )
          misn.accept()
 
          -- Mission title, reward, description

@@ -458,7 +458,7 @@ function space_clue ()
 
       if choice == 1 then
          if player.credits() >= price then
-            player.pay(-price)
+            player.pay(-price, true)
             tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
             next_sys()
             target:setHostile( false )
@@ -572,7 +572,7 @@ function clue_bar()
 
          if choice == 1 then
             if player.credits() >= price then
-               player.pay(-price)
+               player.pay(-price, true)
                tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
                next_sys()
             else
