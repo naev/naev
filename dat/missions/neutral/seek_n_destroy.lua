@@ -34,6 +34,7 @@
 require "numstring"
 require "jumpdist"
 local portrait = require "portrait"
+require "pilot/generic"
 require "pilot/pirate"
 
 clue_title   = _("I know the pilot you're looking for")
@@ -207,15 +208,16 @@ function create ()
       misn.finish(false)
    end
 
-   name = pirate_name()
-   if target_faction == faction.get("Pirate") then
-      ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
-      aship = "Pirate Phalanx"
-      bship = "Pirate Hyena"
-   else -- FLF
+   if target_faction == faction.get("FLF") then
+      name = pilot_name()
       ships = {"FLF Lancelot", "FLF Vendetta", "FLF Pacifier"}
       aship = "FLF Pacifier"
       bship = "FLF Lancelot"
+   else -- default Pirate
+      name = pirate_name()
+      ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
+      aship = "Pirate Phalanx"
+      bship = "Pirate Hyena"
    end
 
    ship = ships[rnd.rnd(1,#ships)]
