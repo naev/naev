@@ -13,6 +13,6 @@
  <specific type="modification">
   <launch_rate>25</launch_rate>
   <launch_range>-10</launch_range>
-  <lua>outfits/lua/targeting_conduit.lua</lua>
+  <lua>outfits/utility/targeting_conduit.lua</lua>
  </specific>
 </outfit>

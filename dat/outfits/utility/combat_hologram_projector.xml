@@ -11,6 +11,6 @@
   <desc_extra>Creates a hologram of the current ship to distract the enemy ship target.</desc_extra>
  </general>
  <specific type="modification">
-  <lua>outfits/lua/combat_hologram_projector.lua</lua>
+  <lua>outfits/utility/combat_hologram_projector.lua</lua>
  </specific>
 </outfit>

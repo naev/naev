@@ -20,6 +20,6 @@
   <tur_damage>-70</tur_damage>
   <tur_energy>20</tur_energy>
   <tur_heat>20</tur_heat>
-  <lua>outfits/lua/weapons_ionizer.lua</lua>
+  <lua>outfits/utility/weapons_ionizer.lua</lua>
  </specific>
 </outfit>

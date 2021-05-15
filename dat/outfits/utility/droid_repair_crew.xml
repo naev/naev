@@ -11,6 +11,6 @@
  </general>
  <specific type="modification">
   <armour_regen>5</armour_regen>
-  <lua>outfits/lua/droid_repair_crew.lua</lua>
+  <lua>outfits/utility/droid_repair_crew.lua</lua>
  </specific>
 </outfit>

@@ -13,6 +13,6 @@
   <energy_regen_mod>-50</energy_regen_mod>
   <time_mod>-80</time_mod>
   <time_speedup>200</time_speedup>
-  <lua>outfits/lua/emergency_stasis_inducer.lua</lua>
+  <lua>outfits/utility/emergency_stasis_inducer.lua</lua>
  </specific>
 </outfit>

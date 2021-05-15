@@ -11,6 +11,6 @@
   <desc_extra>Blinks you 500 units in the direction you are facing. Can only be run once every 8 seconds. Performance degrades over 800 tonnes of mass.</desc_extra>
  </general>
  <specific type="modification">
-  <lua>outfits/lua/blink_drive.lua</lua>
+  <lua>outfits/utility/blink_drive.lua</lua>
  </specific>
 </outfit>

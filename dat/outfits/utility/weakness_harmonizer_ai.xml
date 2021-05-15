@@ -14,6 +14,6 @@
   <fwd_damage>10</fwd_damage>
   <tur_damage>10</tur_damage>
   <launch_damage>10</launch_damage>
-  <lua>outfits/lua/weakness_harmonizer_ai.lua</lua>
+  <lua>outfits/utility/weakness_harmonizer_ai.lua</lua>
  </specific>
 </outfit>
