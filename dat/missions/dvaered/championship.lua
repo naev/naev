@@ -407,7 +407,8 @@ function land_everyone()
 end
 
 function oppo_attacked(pilot, attacker)  --The player tries to cheat by attacking before the signal
-   if stage == 0 and attacker == player.pilot() then
+   if stage == 0 and (attacker == player.pilot()
+            or attacker:leader() == player.pilot()) then
       land_everyone()
       tk.msg(dismisstitle, cheetext)
       system.mrkRm(mark)
@@ -526,7 +527,7 @@ function escort_attacked(pilot,attacker) --someone attacked the escort
       k:land(mispla)
    end
 
-   if attacker == player.pilot() then
+   if attacker == player.pilot() or attacker:leader() == player.pilot() then
       misn.finish(false)
    end
 

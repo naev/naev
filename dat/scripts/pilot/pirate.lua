@@ -1,5 +1,5 @@
 --[[
--- @brief Generates pilot names
+-- @brief Generates pirate names
 --]]
 function pirate_name ()
    -- For translation, just transliterate if necessary. (Note the space
