@@ -354,7 +354,9 @@ function spawnConvoy ()
 
    if minspeed ~= nil then
       for i, p in ipairs(convoy) do
-         p:setSpeedLimit( minspeed )
+         if p ~= nil and p:exists() then
+            p:setSpeedLimit( minspeed )
+         end
       end
    end
 

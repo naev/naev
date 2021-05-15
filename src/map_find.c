@@ -708,7 +708,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
 
    outfit = outfit_get( map_foundOutfitNames[toolkit_getListPos(wid, wgtname)] );
    window_modifyText( wid, "txtOutfitName", _(outfit->name) );
-   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
+   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
 
    mass = outfit->mass;
    if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
