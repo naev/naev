@@ -284,6 +284,7 @@ function enter ()
 
          if f == nil or f:playerStanding() >= 0 then
             edata.pilot:setLeader(player.pilot())
+            edata.pilot:setVisplayer(true)
             edata.pilot:setNoClear(true)
             hook.pilot(edata.pilot, "death", "pilot_death", i)
          else
@@ -313,6 +314,7 @@ function standing ()
          if f ~= nil and f:playerStanding() < 0 then
             edata.alive = false
             edata.pilot:setLeader(nil)
+            edata.pilot:setVisplayer(false)
             edata.pilot:setNoClear(false)
             edata.pilot:hookClear()
          end
@@ -340,6 +342,7 @@ function hail( p )
                   edata.name ) ) then
             edata.alive = false
             edata.pilot:setLeader(nil)
+            edata.pilot:setVisplayer(false)
             edata.pilot:setNoClear(false)
             edata.pilot:hookClear()
          end
