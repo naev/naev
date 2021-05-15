@@ -112,6 +112,7 @@ static int pilotL_cooldown( lua_State *L );
 static int pilotL_setCooldown( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
 static int pilotL_setNoLand( lua_State *L );
+static int pilotL_setNoClear( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
@@ -226,6 +227,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setCooldown", pilotL_setCooldown },
    { "setNoJump", pilotL_setNoJump },
    { "setNoLand", pilotL_setNoLand },
+   { "setNoClear", pilotL_setNoClear },
    /* Talk. */
    { "broadcast", pilotL_broadcast },
    { "comm", pilotL_comm },
@@ -2437,6 +2439,21 @@ static int pilotL_setNoJump( lua_State *L )
 static int pilotL_setNoLand( lua_State *L )
 {
    return pilotL_setFlagWrapper( L, PILOT_NOLAND );
+}
+
+
+/**
+ * @brief Enables or disables making the the pilot exempt from pilot.clear().
+ *
+ * @usage p:setNoClear( true )
+ *
+ *    @luatparam Pilot p Pilot to modify.
+ *    @luatparam[opt] boolean state true or false
+ * @luafunc setNoClear
+ */
+static int pilotL_setNoClear( lua_State *L )
+{
+   return pilotL_setFlagWrapper( L, PILOT_NOCLEAR );
 }
 
 

@@ -79,6 +79,7 @@ enum {
    PILOT_HASSPEEDLIMIT, /**< Speed limiting is activated for Pilot.*/
    PILOT_BRAKING,       /**< Pilot is braking. */
    PILOT_PERSIST,       /**< Persist pilot on jump. */
+   PILOT_NOCLEAR,       /**< Pilot isn't removed by pilots_clear(). */
    /* Sentinal. */
    PILOT_FLAGS_MAX      /**< Maximum number of flags. */
 };
