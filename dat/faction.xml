@@ -257,6 +257,7 @@
   <colour>yellow</colour>
   <spawn>flf</spawn>
   <standing>flf</standing>
+  <equip>mercenary</equip>
   <enemies>
    <enemy>Dvaered</enemy>
    <enemy>Rogue FLF</enemy>
@@ -405,6 +406,7 @@
   <known />
   <player>0</player>
   <standing>static</standing>
+  <equip>mercenary</equip>
   <allies />
   <enemies />
  </faction>
@@ -582,6 +584,7 @@
   <known />
   <player>70</player>
   <standing>static</standing>
+  <equip>mercenary</equip>
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Comingout_thugs</enemy>
