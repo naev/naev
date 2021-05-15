@@ -1,5 +1,29 @@
 require "numstring"
 
+--[[
+-- @brief Encodes a number as a roman numeral.
+--
+--    @param k Number to encode.
+--    @return String representing the number as a roman numeral.
+--]]
+function roman_encode( k )
+   local romans = {
+      {1000, "M"},
+      {900, "CM"}, {500, "D"}, {400, "CD"}, {100, "C"},
+      {90, "XC"}, {50, "L"}, {40, "XL"}, {10, "X"},
+      {9, "IX"}, {5, "V"}, {4, "IV"}, {1, "I"} }
+
+   local s = ""
+   for _, v in ipairs(romans) do --note that this is -not- ipairs.
+      local val, let = table.unpack(v)
+      while k >= val do
+         k = k - val
+         s = s .. let
+      end
+   end
+   return s
+end
+
 
 --[[
 -- @brief Generates generic pilot names
@@ -101,5 +125,19 @@ function pilot_name ()
       _("Zombie %s"),
    }
    local name = names[rnd.rnd(1, #names)]
-   return name:format(rnd.rnd(1, 99))
+   local num = rnd.rnd(1, 99)
+   local str
+   local r = rnd.rnd()
+   if r < 0.5 then
+      str = tostring(num)
+   elseif r < 0.85 then
+      str = roman_encode(num)
+   else
+      local greek = { "α","β", "γ", "δ", "ε", "ζ", "Δ", "Σ", "Ψ", "Ω" }
+      str = greek[ math.mod( num, #greek )+1 ]
+      if rnd.rnd() < 0.5 then
+         str = str .. string.format("-%d", math.floor(num/#greek+0.5)+1)
+      end
+   end
+   return name:format(str)
 end
