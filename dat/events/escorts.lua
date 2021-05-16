@@ -329,11 +329,11 @@ function hail( p )
       if edata.alive and edata.pilot == p then
          player.commClose()
 
+         local credits, scredits = player.credits(2)
          local approachtext = (
                pilot_action_text .. "\n\n" .. credentials:format(
                   edata.name, edata.ship, creditstring(edata.deposit),
-                  edata.royalty * 100, creditstring(player.credits()),
-                  getTotalRoyalties() * 100 ) )
+                  edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
 
          local n, s = tk.choice(
                "", approachtext, _("Fire pilot"), _("Do nothing") )
@@ -364,11 +364,11 @@ function approachEscort( npc_id )
       return
    end
 
+   local credits, scredits = player.credits(2)
    local approachtext = (
          pilot_action_text .. "\n\n" .. credentials:format(
             edata.name, edata.ship, creditstring(edata.deposit),
-            edata.royalty * 100, creditstring(player.credits()),
-            getTotalRoyalties() * 100 ) )
+            edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
 
    local n, s = tk.choice("", approachtext, _("Fire pilot"), _("Do nothing"))
    if n == 1 then
@@ -393,10 +393,10 @@ function approachPilot( npc_id )
       return
    end
 
+   local credits, scredits = player.credits(2)
    local cstr = credentials:format(
          pdata.name, pdata.ship, creditstring(pdata.deposit),
-         pdata.royalty * 100, creditstring(player.credits()),
-         getTotalRoyalties() * 100 )
+         pdata.royalty * 100, scredits, getTotalRoyalties() * 100 )
 
    if tk.yesno("", pdata.approachtext .. "\n\n" .. cstr) then
       if pdata.deposit and pdata.deposit > player.credits() then
