@@ -19,7 +19,7 @@
   <delay>0.35</delay>
   <speed>500</speed>
   <range blowup="armour">1900</range>
-  <energy>38</energy>
+  <energy>10.5</energy>
   <heatup>50</heatup>
   <track>1.5</track>
   <swivel>22</swivel>
