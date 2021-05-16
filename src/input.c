@@ -927,8 +927,10 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("land") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) {
          if (player.p->nav_planet != -1) {
-            player_rmFlag(PLAYER_BASICAPPROACH);
-            player_autonavPnt(cur_system->planets[player.p->nav_planet]->name);
+            if (!player_land(0)) {
+               player_rmFlag(PLAYER_BASICAPPROACH);
+               player_autonavPnt(cur_system->planets[player.p->nav_planet]->name);
+            }
          } else
             player_land(1);
       }
