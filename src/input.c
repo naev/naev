@@ -186,7 +186,7 @@ void input_setDefault ( int wasd )
       input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_w, NMOD_ALL );
       input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
       input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_d, NMOD_ALL );
-      input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_s, NMOD_NONE );
+      input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_s, NMOD_ALL );
    }
    else {
       input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, NMOD_ALL );
