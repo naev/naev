@@ -3,16 +3,20 @@
 --]]
 
 require "numstring"
-playerform = require "scripts/playerform"
+local playerform = require "scripts/playerform"
+local formation = require "scripts/formation"
 
 function create()
-
    --Get Player
    pp = player.pilot()
    pp = player.pilot()
    pfact = pp:faction()
    pname = player.name()
    pship = pp:ship()
+
+   -- Set default formation
+   local savedform = var.peek("player_formation") or "Circle"
+   player.pilot():memory().formation = formation.keys[savedform]
 
    --Get sizes
    screen_w, screen_h = gfx.dim()
