@@ -1,31 +1,30 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Bomber Drone">
  <base_type>Za'lek Bomber Drone</base_type>
- <GFX>zalek_drone_bomber</GFX>
+ <GFX>zalek_drone_bomber.webp</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
- <price>500000</price>
+ <price>250000</price>
  <time_mod>1</time_mod>
  <trail_generator x="-15" y="0" h="0">zalekS</trail_generator>
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Bomber Drone. Built for attacking heavy ships. Not to be flown by the player.</description>
  <health>
-  <absorb>6</absorb>
-  <armour>50</armour>
+  <absorb>3</absorb>
+  <armour>25</armour>
  </health>
  <characteristics>
   <crew>1</crew>
-  <mass>30</mass>
+  <mass>20</mass>
   <fuel>100</fuel>
   <cargo>0</cargo>
   <fuel_consumption>1</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="medium" x="0" y="5" h="0" />
-  <weapon size="medium" x="0" y="-5" h="0" />
-  <weapon size="small" x="" y="9" h="-2" />
+  <weapon size="small" x="0" y="9" h="-2" />
   <weapon size="small" x="0" y="-9" h="-2" />
+  <weapon size="small" x="0" y="0" h="0" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
@@ -35,8 +34,8 @@
  </slots>
  <stats>
   <speed_mod>-10</speed_mod>
-  <armour_mod>-60</armour_mod>
-  <shield_mod>-40</shield_mod>
+  <armour_mod>-80</armour_mod>
+  <shield_mod>-50</shield_mod>
   <launch_rate>10</launch_rate>
   <launch_range>15</launch_range>
   <ammo_capacity>50</ammo_capacity>

@@ -1,28 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Heavy Drone">
  <base_type>Za'lek Heavy Drone</base_type>
- <GFX>zalek_drone_heavy</GFX>
+ <GFX>zalek_drone_heavy.webp</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Heavy Drone</class>
- <price>190000</price>
+ <price>150000</price>
  <time_mod>1</time_mod>
  <trail_generator x="-15" y="0" h="0">zalekS</trail_generator>
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by the player.</description>
  <health>
-  <absorb>5</absorb>
-  <armour>35</armour>
+  <absorb>4</absorb>
+  <armour>25</armour>
  </health>
  <characteristics>
   <crew>1</crew>
-  <mass>25</mass>
+  <mass>20</mass>
   <fuel>100</fuel>
   <cargo>0</cargo>
   <fuel_consumption>1</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="medium" x="-12" y="8" h="0" />
   <weapon size="small" x="-12" y="6" h="0" />
   <weapon size="small" x="15" y="-8" h="2" />
   <weapon size="small" x="15" y="-6" h="2" />
@@ -39,8 +38,8 @@
   <speed_mod>10</speed_mod>
   <turn_mod>10</turn_mod>
   <thrust_mod>10</thrust_mod>
-  <armour_mod>-50</armour_mod>
-  <shield_mod>40</shield_mod>
+  <armour_mod>-70</armour_mod>
+  <shield_mod>-15</shield_mod>
   <shield_regen_mod>30</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
  </stats>

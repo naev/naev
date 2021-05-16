@@ -967,28 +967,22 @@ equip_shipOutfits_weapons = {
    },
    ["Za'lek Light Drone"] = {
       {
-         "Particle Lance", "Orion Lance"
+         "Particle Lance"
       }
    },
    ["Za'lek Heavy Drone"] = {
       {
-         "Grave Lance"
-      },
-      {
-         num = 1;
+         num = 2;
          "Orion Lance"
       },
       {
+         num = 1;
          "Electron Burst Cannon"
       }
    },
    ["Za'lek Bomber Drone"] = {
       {
-         varied = true;
-         "Unicorp Fury Launcher", "TeraCom Fury Launcher",
-         "Unicorp Headhunter Launcher", "Unicorp Vengeance Launcher"
-      },
-      {
+         num = 2;
          "Electron Burst Cannon"
       },
       {
