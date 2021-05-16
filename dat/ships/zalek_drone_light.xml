@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Light Drone">
  <base_type>Za'lek Light Drone</base_type>
- <GFX>zalek_drone_light</GFX>
+ <GFX>zalek_drone_light.webp</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Drone</class>
- <price>120000</price>
+ <price>90000</price>
  <time_mod>1</time_mod>
  <trail_generator x="-15" y="0" h="0">zalekXS</trail_generator>
  <fabricator>Za'lek Robotics</fabricator>
@@ -23,8 +23,6 @@
  </characteristics>
  <slots>
   <weapon size="small" x="10" y="-1" h="-3" />
-  <weapon size="small" x="10" y="-1" h="-3" />
-  <weapon size="small" x="10" y="-1" h="-3" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
@@ -36,8 +34,8 @@
   <speed_mod>15</speed_mod>
   <turn_mod>15</turn_mod>
   <thrust_mod>15</thrust_mod>
-  <armour_mod>-70</armour_mod>
-  <shield_mod>0</shield_mod>
+  <armour_mod>-90</armour_mod>
+  <shield_mod>-30</shield_mod>
   <shield_regen_mod>30</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
  </stats>

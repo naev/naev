@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Scout Drone">
  <base_type>Za'lek Scout Drone</base_type>
- <GFX>zalek_drone_scout</GFX>
+ <GFX>zalek_drone_scout.webp</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Scout</class>
