@@ -25,8 +25,8 @@
  </characteristics>
  <slots>
   <weapon size="medium" x="15" y="0" h="2" />
-  <weapon size="medium" x="4" y="2" h="-5" />
-  <weapon size="medium" x="4" y="-2" h="-5" />
+  <weapon size="medium" prop="fighter_bay" x="4" y="2" h="-5" />
+  <weapon size="medium" prop="fighter_bay" x="4" y="-2" h="-5" />
   <weapon size="small" x="-9" y="-5" h="-9" />
   <weapon size="small" x="-9" y="5" h="-9" />
   <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-300 Core System</utility>
