@@ -1153,6 +1153,7 @@ that can be found in Naev's artwork repo."), file);
  */
 static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 {
+   ShipStatList *ll;
    xmlNodePtr node;
    char *buf;
    double C, area;
@@ -1246,6 +1247,14 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          outfit_parseDamage( &temp->u.blt.dmg, node );
          continue;
       }
+
+      /* Stats. */
+      ll = ss_listFromXML( node );
+      if (ll != NULL) {
+         ll->next    = temp->stats;
+         temp->stats = ll;
+         continue;
+      }
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
 
@@ -1333,6 +1342,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
  */
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 {
+   ShipStatList *ll;
    int l;
    xmlNodePtr node;
    double C, area;
@@ -1401,6 +1411,14 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       }
       if (xml_isNode(node,"sound_off")) {
          temp->u.bem.sound_off = sound_get( xml_get(node) );
+         continue;
+      }
+
+      /* Stats. */
+      ll = ss_listFromXML( node );
+      if (ll != NULL) {
+         ll->next    = temp->stats;
+         temp->stats = ll;
          continue;
       }
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
@@ -1474,6 +1492,7 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
  */
 static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 {
+   ShipStatList *ll;
    xmlNodePtr node;
 
    node  = parent->xmlChildrenNode;
@@ -1487,6 +1506,14 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"lockon",temp->u.lau.lockon);
       if (!outfit_isTurret(temp))
          xmlr_float(node,"arc",temp->u.lau.arc); /* This is full arc in degrees, so we have to correct it to semi-arc in radians for internal usage. */
+
+      /* Stats. */
+      ll = ss_listFromXML( node );
+      if (ll != NULL) {
+         ll->next    = temp->stats;
+         temp->stats = ll;
+         continue;
+      }
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
 
@@ -1798,6 +1825,7 @@ if ((x) != 0) \
  */
 static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 {
+   ShipStatList *ll;
    xmlNodePtr node;
    node = parent->children;
    double C, area;
@@ -1833,6 +1861,14 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"heatup",temp->u.afb.heatup);
       xmlr_float(node,"heat_cap",temp->u.afb.heat_cap);
       xmlr_float(node,"heat_base",temp->u.afb.heat_base);
+
+      /* Stats. */
+      ll = ss_listFromXML( node );
+      if (ll != NULL) {
+         ll->next    = temp->stats;
+         temp->stats = ll;
+         continue;
+      }
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
 
@@ -1888,6 +1924,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
  */
 static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 {
+   ShipStatList *ll;
    xmlNodePtr node;
    node = parent->children;
 
@@ -1897,6 +1934,14 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       xmlr_int(node,"reload_time",temp->u.lau.reload_time);
       xmlr_strd(node,"ammo",temp->u.bay.ammo_name);
       xmlr_int(node,"amount",temp->u.bay.amount);
+
+      /* Stats. */
+      ll = ss_listFromXML( node );
+      if (ll != NULL) {
+         ll->next    = temp->stats;
+         temp->stats = ll;
+         continue;
+      }
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
 

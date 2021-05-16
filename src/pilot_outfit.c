@@ -1000,15 +1000,14 @@ void pilot_calcStats( Pilot* pilot )
       if (slot->lua_mem != LUA_NOREF)
          ss_statsMerge( &pilot->stats, &slot->lua_stats );
 
-      /* Active outfits must be on to affect stuff. */
-      if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
-         continue;
-
-      /* Add stats. */
-      ss_statsModFromList( s, o->stats, &amount );
 
       /* TODO these mods should probably be all moved into shipstats. */
       if (outfit_isMod(o)) { /* Modification */
+         /* Active outfits must be on to affect stuff. */
+         if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
+            continue;
+         /* Add stats. */
+         ss_statsModFromList( s, o->stats, &amount );
          /* Movement. */
          pilot->thrust_base   += o->u.mod.thrust;
          pilot->turn_base     += o->u.mod.turn;
@@ -1029,8 +1028,17 @@ void pilot_calcStats( Pilot* pilot )
 
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */
+         /* Active outfits must be on to affect stuff. */
+         if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
+            continue;
+         /* Add stats. */
+         ss_statsModFromList( s, o->stats, &amount );
          pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
          pilot->energy_loss += pilot->afterburner->outfit->u.afb.energy; /* energy loss */
+      }
+      else {
+         /* Always add stats for non mod/afterburners. */
+         ss_statsModFromList( s, o->stats, &amount );
       }
    }
 
