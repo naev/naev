@@ -517,7 +517,7 @@ int conf_loadConfig ( const char* file )
                   else if (strcmp(mod,"shift")==0)   m = NMOD_SHIFT;
                   else if (strcmp(mod,"alt")==0)     m = NMOD_ALT;
                   else if (strcmp(mod,"meta")==0)    m = NMOD_META;
-                  else if (strcmp(mod,"any")==0)     m = NMOD_ALL;
+                  else if (strcmp(mod,"any")==0)     m = NMOD_ANY;
                   else if (strcmp(mod,"none")==0)    m = NMOD_NONE;
                   else {
                      WARN(_("Unknown keybinding mod of type %s"), mod);
@@ -1119,7 +1119,7 @@ int conf_saveConfig ( const char* file )
          case NMOD_SHIFT: modname = "shift";  break;
          case NMOD_ALT:   modname = "alt";    break;
          case NMOD_META:  modname = "meta";   break;
-         case NMOD_ALL:   modname = "any";     break;
+         case NMOD_ANY:   modname = "any";     break;
          default:         modname = "none";    break;
       }
 

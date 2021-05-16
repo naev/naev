@@ -605,7 +605,7 @@ static void menuKeybinds_genList( unsigned int wid )
       switch (type) {
          case KEYBIND_KEYBOARD:
             /* Generate mod text. */
-            if (mod == NMOD_ALL)
+            if (mod == NMOD_ANY)
                snprintf( mod_text, sizeof(mod_text), "any+" );
             else {
                p = 0;
@@ -1016,7 +1016,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          }
          type = KEYBIND_KEYBOARD;
          if (window_checkboxState( wid, "chkAny" ))
-            mod = NMOD_ALL;
+            mod = NMOD_ANY;
          else {
             ev_mod = event->key.keysym.mod;
             mod    = 0;
@@ -1041,13 +1041,13 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          else
             return 0; /* Not handled. */
          key  = event->jaxis.axis;
-         mod  = NMOD_ALL;
+         mod  = NMOD_ANY;
          break;
 
       case SDL_JOYBUTTONDOWN:
          type = KEYBIND_JBUTTON;
          key  = event->jbutton.button;
-         mod  = NMOD_ALL;
+         mod  = NMOD_ANY;
          break;
 
       case SDL_JOYHATMOTION:
@@ -1068,7 +1068,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
                return 0; /* Not handled. */
          }
          key  = event->jhat.hat;
-         mod  = NMOD_ALL;
+         mod  = NMOD_ANY;
          break;
 
       /* Not handled. */
