@@ -61,6 +61,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_FBAY_HEALTH,     /**< Fighter bay fighter health bonus (shield and armour). */
    SS_TYPE_D_FBAY_MOVEMENT,   /**< Fighter bay fighter movement bonus (turn, thrust, and speed). */
    SS_TYPE_D_FBAY_CAPACITY,   /**< Capacity of fighter bays. */
+   SS_TYPE_D_FBAY_RATE,       /**< Launch rate for fighter bays. */
 
    /* Forward mounts. */
    SS_TYPE_D_FORWARD_HEAT,    /**< Heat generation for cannons. */
@@ -211,6 +212,7 @@ typedef struct ShipStats_ {
    double fbay_health;     /**< Fighter bay fighter health (armour and shield). */
    double fbay_movement;   /**< Fighter bay fighter movement (thrust, turn, and speed). */
    double fbay_capacity;   /**< Capacity of fighter bays. */
+   double fbay_rate;       /**< Launch rate of fighter bays. */
 
    /* Fighter/Corvette type. */
    double fwd_heat;        /**< Heat of forward mounts. */

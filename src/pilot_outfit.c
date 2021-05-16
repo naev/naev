@@ -1044,6 +1044,7 @@ void pilot_calcStats( Pilot* pilot )
    s = &pilot->stats;
    default_s = &pilot->ship->stats_array;
 
+   /* TODO fix these formulas to not be bad. */
    /* Fire rate:
     *  amount = p * exp( -0.15 * (n-1) )
     *  1x 15% -> 15%
@@ -1061,6 +1062,10 @@ void pilot_calcStats( Pilot* pilot )
    /* Launchers. */
    if (amount.launch_rate > 0) {
       s->launch_rate = default_s->launch_rate + (s->launch_rate-default_s->launch_rate) * exp( -0.15 * (double)(MAX(amount.launch_rate-1.,0)) );
+   }
+   /* Fighter bays. */
+   if (amount.fbay_rate > 0) {
+      s->fbay_rate = default_s->fbay_rate + (s->fbay_rate-default_s->fbay_rate) * exp( -0.15 * (double)(MAX(amount.fbay_rate-1.,0)) );
    }
    /*
     * Electronic warfare setting base parameters.

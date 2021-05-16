@@ -1154,6 +1154,11 @@ void pilot_getRateMod( double *rate_mod, double* energy_mod,
          *energy_mod = 1.;
          break;
 
+      case OUTFIT_TYPE_FIGHTER_BAY:
+         *rate_mod   = 2. - p->stats.fbay_rate;
+         *energy_mod = 1.;
+         break;
+
       default:
          *rate_mod   = 1.;
          *energy_mod = 1.;
