@@ -425,14 +425,15 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
 
       /* Must rechoose colour based on slot properties. */
-      if (lst[i].sslot->required)
-         rc = &cBrightRed;
-      else if (lst[i].sslot->exclusive)
-         rc = &cWhite;
-      else if (lst[i].sslot->slot.spid != 0)
-         rc = &cBlack;
-      else
-         rc = dc;
+      rc = dc;
+      if (wgt->canmodify) {
+         if (lst[i].sslot->required)
+            rc = &cBrightRed;
+         else if (lst[i].sslot->exclusive)
+            rc = &cWhite;
+         else if (lst[i].sslot->slot.spid != 0)
+            rc = &cBlack;
+      }
 
       /* Draw outline. */
       toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
