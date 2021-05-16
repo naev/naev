@@ -925,8 +925,12 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) player_targetPlanet();
    /* target nearest planet or attempt to land */
    } else if (KEY("land") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
-      if (value==KEY_PRESS)
-         player_land();
+      if (value==KEY_PRESS) {
+         if (player.p->nav_planet != -1)
+            player_autonavPnt(cur_system->planets[player.p->nav_planet]->name);
+         else
+            player_land(1);
+      }
    } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS)
          player_targetHyperspace();
@@ -1422,16 +1426,19 @@ int input_clickedPlanet( int planet, int autonav )
       return 0;
 
    if (autonav) {
-      player_targetPlanetSet( planet );
-      player_autonavPnt( pnt->name );
+      player_targetPlanetSet(planet);
+      player_setFlag(PLAYER_BASICAPPROACH);
+      player_autonavPnt(pnt->name);
       return 1;
    }
 
    if (planet == player.p->nav_planet && input_isDoubleClick((void*)pnt)) {
       player_hyperspacePreempt(0);
       if ((pnt->faction < 0) || pnt->can_land || pnt->bribed ||
-            (pnt->land_override > 0))
-         player_land();
+            (pnt->land_override > 0)) {
+         if (!player_land(0))
+            player_autonavPnt(pnt->name);
+      }
       else
          player_hailPlanet();
    }

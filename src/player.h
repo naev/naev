@@ -25,6 +25,7 @@ enum {
    PLAYER_PRIMARY_L,    /**< player shot primary weapon last frame. */
    PLAYER_SECONDARY,    /**< player is shooting secondary weapon */
    PLAYER_SECONDARY_L,  /**< player shot secondary last frame. */
+   PLAYER_BASICAPPROACH, /**< player is only doing a basic approach, no auto-landing (cleared on approach end). */
    PLAYER_LANDACK,      /**< player has permission to land */
    PLAYER_CREATING,     /**< player is being created */
    PLAYER_AUTONAV,      /**< player has autonavigation on. */
@@ -284,7 +285,7 @@ void player_targetEscort( int prev );
  * keybind actions
  */
 void player_weapSetPress( int id, double value, int repeat );
-void player_land (void);
+int player_land( int loud );
 int player_jump (void);
 void player_screenshot (void);
 void player_accel( double acc );
