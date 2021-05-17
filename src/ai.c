@@ -1000,8 +1000,7 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
    /* Create the new task. */
    t           = calloc( 1, sizeof(Task) );
    t->name     = strdup(func);
-   lua_pushnil(naevL);
-   t->dat      = luaL_ref(naevL, LUA_REGISTRYINDEX);
+   t->dat      = LUA_NOREF;
 
    /* Handle subtask and general task. */
    if (!subtask) {
@@ -1045,7 +1044,8 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
  */
 void ai_freetask( Task* t )
 {
-   luaL_unref(naevL, LUA_REGISTRYINDEX, t->dat);
+   if (t->dat != LUA_NOREF)
+      luaL_unref(naevL, LUA_REGISTRYINDEX, t->dat);
 
    /* Recursive subtask freeing. */
    if (t->subtask != NULL) {
@@ -1080,6 +1080,7 @@ static Task* ai_createTask( lua_State *L, int subtask )
 
    /* Set the data. */
    if (lua_gettop(L) > 1) {
+      lua_pushvalue(L,2);
       t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
    }
 
@@ -1092,6 +1093,8 @@ static Task* ai_createTask( lua_State *L, int subtask )
  */
 static int ai_tasktarget( lua_State *L, Task *t )
 {
+   if (t->dat == LUA_NOREF)
+      return 0;
    lua_rawgeti(L, LUA_REGISTRYINDEX, t->dat);
    return 1;
 }
@@ -1159,7 +1162,7 @@ static int aiL_taskname( lua_State *L )
 
 /**
  * @brief Gets the pilot's task target.
- *    @luareturn The pilot's target ship identifier or nil if no target.
+ *    @luareturn The pilot's task target or nil if there is not target.
  *    @luasee pushtask
  * @luafunc target
  *    @return Number of Lua parameters.
