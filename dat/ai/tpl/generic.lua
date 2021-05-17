@@ -30,6 +30,7 @@ mem.careful       = false -- Should the pilot try to avoid enemies?
 
 mem.formation     = "circle" -- Formation to use when commanding fleet
 mem.form_pos      = nil -- Position in formation (for follower)
+mem.leadermaxdist = nil -- Distance from leader to run back to leader
 mem.gather_range  = 800 -- Radius in which the pilot looks for gatherables
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates 
@@ -44,9 +45,34 @@ mem.angle          = 180 --  Requested angle between follower and target's veloc
 mem.Kp             = 10 --  First control coefficient
 mem.Kd             = 20 -- Second control coefficient
 
-
--- Required control rate
+-- Required control rate that represents the number of seconds between each
+-- control() call
 control_rate   = 2
+
+stateinfo = {
+   attack = {
+      fighting = true,
+   },
+   runaway = {
+      fighting = true,
+      noattack = true,
+   },
+   refuel = {
+      noattack = true,
+   },
+   hold = {
+      noattack = true,
+   },
+   flyback = {
+      noattack = true,
+   },
+}
+function _stateinfo( task )
+   if task == nil then
+      return {}
+   end
+   return stateinfo[ task ] or {}
+end
 
 function lead_fleet ()
    if #ai.pilot():followers() ~= 0 then
@@ -70,9 +96,10 @@ function control_manual ()
 end
 
 function handle_messages ()
+   local p = ai.pilot()
    for _, v in ipairs(ai.messages()) do
       local sender, msgtype, data = table.unpack(v)
-      if sender == ai.pilot():leader() then
+      if sender == p:leader() then
          if msgtype == "form-pos" then
             mem.form_pos = data
          elseif msgtype == "hyperspace" then
@@ -92,12 +119,12 @@ function handle_messages ()
             ai.pushtask("hold" )
          -- Return to carrier
          elseif msgtype == "e_return" then
-            if ai.pilot():flags().carried then
-               ai.pushtask("flyback" )
+            if p:flags().carried then
+               ai.pushtask("flyback", true)
             end
          -- Clear orders
          elseif msgtype == "e_clear" then
-            ai.pilot():taskClear()
+            p:taskClear()
          end
       end
    end
@@ -105,6 +132,7 @@ end
 
 -- Required "control" function
 function control ()
+   local p = ai.pilot()
    local enemy = ai.getenemy()
 
    local parmour, pshield = ai.pilot():health()
@@ -112,15 +140,18 @@ function control ()
    lead_fleet()
    handle_messages()
 
+   -- Task information stuff
    local task = ai.taskname()
+   local si = _stateinfo( task )
 
    -- Select new leader
-   if ai.pilot():leader() ~= nil and not ai.pilot():leader():exists() then
+   local l = p:leader()
+   if l ~= nil and not l:exists() then
       local candidate = ai.getBoss()
       if candidate ~= nil and candidate:exists() then
-         ai.pilot():setLeader( candidate )
+         p:setLeader( candidate )
       else -- Indicate this pilot has no leader
-         ai.pilot():setLeader( nil )
+         p:setLeader( nil )
       end
    end
 
@@ -128,7 +159,7 @@ function control ()
    if mem.cooldown then
       mem.tickssincecooldown = 0
 
-      cooldown, braking = ai.pilot():cooldown()
+      cooldown, braking = p:cooldown()
       if not (cooldown or braking) then
          mem.cooldown = false
       end
@@ -137,9 +168,8 @@ function control ()
    end
 
    -- Reset distress if not fighting/running
-   if task ~= "attack" and task ~= "runaway" then
+   if not si.fighting then
       mem.attacked = nil
-      local p = ai.pilot()
 
       -- Cooldown shouldn't preempt boarding, either.
       if task ~= "board" then
@@ -160,6 +190,21 @@ function control ()
                p:setCooldown(true)
                return
             end
+         end
+      end
+   end
+
+   -- Escorts return if too far away from carrier
+   local lmd = mem.leadermaxdist
+   if mem.escort and lmd then
+      local l = p:leader()
+      if l then
+         local dist = ai.dist( l )
+         if lmd < dist then
+            if task ~= "flyback" then
+               ai.pushtask("flyback", false)
+            end
+            return
          end
       end
    end
@@ -186,7 +231,7 @@ function control ()
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
-      elseif ai.pilot():leader() and ai.pilot():leader():exists() then
+      elseif p:leader() and p:leader():exists() then
          ai.pushtask("follow_fleet")
       else
          idle()
@@ -199,7 +244,7 @@ function control ()
 
    -- Think for attacking
    elseif task == "attack" then
-      target = ai.target()
+      local target = ai.target()
 
       -- Needs to have a target
       if not target:exists() then
@@ -238,7 +283,7 @@ function control ()
          ai.poptask()
          return
       end
-      target = ai.target()
+      local target = ai.target()
 
       -- Needs to have a target
       if not target:exists() then
@@ -264,7 +309,7 @@ function control ()
    -- Enemy sighted, handled after running away
    elseif enemy ~= nil and mem.aggressive then
       -- Don't start new attacks while refueling.
-      if task == "refuel" then
+      if si.noattack then
          return
       end
 
@@ -292,6 +337,7 @@ end
 -- Required "attacked" function
 function attacked ( attacker )
    local task = ai.taskname()
+   local si = _stateinfo( task )
    local target = ai.target()
 
    -- Notify that pilot has been attacked before
@@ -313,7 +359,7 @@ function attacked ( attacker )
       return
    end
 
-   if task ~= "attack" and task ~= "runaway" then
+   if not si.fighting then
 
       if mem.defensive then
          -- Some taunting
@@ -570,9 +616,14 @@ function hold ()
 end
 
 
--- Tries to fly back to carrier
+-- Flies back and tries to either dock or stops when back at leader
 function flyback ()
+   local dock = ai.target()
    local target = ai.pilot():leader()
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
    local goal = ai.follow_accurate(target, 0, 0, mem.Kp, mem.Kd)
 
    local dir  = ai.face( goal )
@@ -583,6 +634,10 @@ function flyback ()
          ai.accel()
       end
    else -- Time to dock
-      ai.dock(target)
+      if dock then
+         ai.dock(target)
+      else
+         ai.poptask()
+      end
    end
 end
