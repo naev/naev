@@ -2,10 +2,10 @@ require "factions/equip/generic"
 
 
 equip_typeOutfits_coreSystems["Sting"] = {
-   "Milspec Orion 4801 Core System",
+   "Unicorp PT-300 Core System",
 }
 equip_typeOutfits_coreSystems["Demon"] = {
-   "Milspec Orion 5501 Core System",
+   "Milspec Orion 5501 Core System", "Unicorp PT-420 Core System",
 }
 equip_typeOutfits_coreSystems["Mephisto"] = {
    "Milspec Orion 8601 Core System",
@@ -60,6 +60,10 @@ equip_typeOutfits_hulls["Prototype"] = {
 
 equip_typeOutfits_weapons["Sting"] = {
    {
+      probability = {
+         ["Za'lek Hunter Launcher"] = 4,
+      };
+      num = 1;
       varied = true;
       "Enygma Systems Spearhead Launcher", "TeraCom Fury Launcher",
       "TeraCom Headhunter Launcher", "TeraCom Medusa Launcher",
@@ -67,7 +71,24 @@ equip_typeOutfits_weapons["Sting"] = {
       "Za'lek Reaper Launcher",
    },
    {
+      probability = {
+         ["Za'lek Light Drone Fighter Bay"] = 3,
+         ["Za'lek Bomber Drone Fighter Bay"] = 2,
+      };
+      varied = true;
+      num = 2;
+      "Za'lek Heavy Drone Fighter Bay",
+      "Za'lek Light Drone Fighter Bay",
+      "Za'lek Bomber Drone Fighter Bay",
+      "Za'lek Reaper Launcher",
+      "Za'lek Hunter Launcher",
+   },
+   {
+      varied = true;
+      num = 3,
+      "Grave Lance",
       "Orion Lance",
+      "Particle Beam",
    },
 }
 equip_typeOutfits_weapons["Demon"] = {
@@ -75,40 +96,35 @@ equip_typeOutfits_weapons["Demon"] = {
       "Grave Beam",
    },
    {
-      num = 1;
+      probability = {
+         ["Za'lek Light Drone Fighter Bay"] = 3,
+         ["Za'lek Bomber Drone Fighter Bay"] = 2,
+         ["Za'lek Hunter Launcher"] = 2,
+      };
+      varied = true;
+      "Za'lek Heavy Drone Fighter Bay",
+      "Za'lek Light Drone Fighter Bay",
+      "Za'lek Bomber Drone Fighter Bay",
+      "Za'lek Hunter Launcher",
       "Enygma Systems Turreted Fury Launcher",
       "Enygma Systems Turreted Headhunter Launcher",
-   },
-   {
-      num = 1;
-      "Enygma Systems Turreted Fury Launcher",
-      "Enygma Systems Turreted Headhunter Launcher",
-      "Grave Lance", "Orion Beam",
-   },
-   {
       "Grave Lance", "Orion Beam",
    },
 }
 equip_typeOutfits_weapons["Diablo"] = {
-   {
-      varied = true;
-      "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
-      "Za'lek Bomber Drone Fighter Bay",
-   },
    {
       "Ragnarok Beam",
    },
    {
       "Grave Beam",
    },
+   {
+      varied = true;
+      "Za'lek Light Drone Fighter Dock", "Za'lek Heavy Drone Fighter Dock",
+      "Za'lek Bomber Drone Fighter Dock",
+   },
 }
 equip_typeOutfits_weapons["Mephisto"] = {
-   {
-      num = 1;
-      "Enygma Systems Turreted Fury Launcher",
-      "Enygma Systems Turreted Headhunter Launcher",
-      "Za'lek Hunter Launcher",
-   },
    {
       "Grave Beam",
    },
@@ -116,8 +132,8 @@ equip_typeOutfits_weapons["Mephisto"] = {
 equip_typeOutfits_weapons["Hephaestus"] = {
    {
       varied = true;
-      "Za'lek Light Drone Fighter Bay", "Za'lek Heavy Drone Fighter Bay",
-      "Za'lek Bomber Drone Fighter Bay",
+      "Za'lek Light Drone Fighter Dock", "Za'lek Heavy Drone Fighter Dock",
+      "Za'lek Bomber Drone Fighter Dock",
    },
    {
       "Ragnarok Beam",
