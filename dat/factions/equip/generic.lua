@@ -1353,12 +1353,10 @@ function equip_set( p, set )
 
          -- Add entries based on "probability".
          if probability ~= nil then
-            chance = probability[ choice ]
-            if chance ~= nil then
-               -- Starting at 2 because the first one is already in the table.
-               for j=2,chance do
-                  choices[ #choices + 1 ] = choice
-               end
+            chance = probability[ choice ] or 0
+            -- Starting at 2 because the first one is already in the table.
+            for j=2,chance do
+               choices[ #choices + 1 ] = choice
             end
          end
       end
@@ -1367,9 +1365,12 @@ function equip_set( p, set )
       i = 1
       while #choices > 0 and (num == nil or i <= num) do
          i = i + 1
+
+         -- If varied we switch up the outfit next iteration
          if varied then c = rnd.rnd( 1, #choices ) end
 
          equipped = p:addOutfit( choices[c] )
+         -- Failed to equip
          if equipped <= 0 then
             if varied or num == nil then
                table.remove( choices, c )
