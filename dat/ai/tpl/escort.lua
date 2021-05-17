@@ -2,6 +2,7 @@ require("ai/tpl/generic")
 
 -- Don't run away from master ship
 mem.norun = true
+mem.escort = true -- True if is an escort
 
 
 -- Simple create function
