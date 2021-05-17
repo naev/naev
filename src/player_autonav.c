@@ -400,8 +400,10 @@ static void player_autonav (void)
 
          /* Try to land. */
          if (ret) {
-            player_land(0);
-            player.autonav = AUTONAV_PNT_APPROACH;
+            if (player_land(0) == 2)
+               player_autonavAbort(NULL);
+            else
+               player.autonav = AUTONAV_PNT_APPROACH;
          }
 
          /* See if should ramp down. */

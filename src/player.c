@@ -1475,7 +1475,7 @@ void player_targetPlanet (void)
  * @brief Try to land or target closest planet if no land target.
  * 
  *    @param loud Whether or not to show messages irrelevant when auto-landing.
- *    @return 1 if actually landed.
+ *    @return 0 if actually landed, 1 if could not land due to position, 2 if cannot land at all.
  */
 int player_land( int loud )
 {
@@ -1488,23 +1488,23 @@ int player_land( int loud )
 
    if (landed) { /* player is already landed */
       takeoff(1);
-      return 0;
+      return 2;
    }
 
    /* Not under manual control or disabled. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
          pilot_isDisabled(player.p))
-      return 0;
+      return 2;
 
    /* Already landing. */
    if ((pilot_isFlag( player.p, PILOT_LANDING) ||
          pilot_isFlag( player.p, PILOT_TAKEOFF)))
-      return 0;
+      return 2;
 
    /* Check if there are planets to land on. */
    if (array_size(cur_system->planets) == 0) {
       player_messageRaw( _("#rThere are no planets to land on.") );
-      return 0;
+      return 2;
    }
 
    if (player.p->nav_planet == -1) { /* get nearest planet target */
@@ -1525,30 +1525,30 @@ int player_land( int loud )
 
       /* no landable planet */
       if (player.p->nav_planet < 0)
-         return 0;
+         return 2;
 
       silent = 1; /* Suppress further targeting noises. */
    }
    /*check if planet is in range*/
    else if (!pilot_inRangePlanet( player.p, player.p->nav_planet)) {
       player_planetOutOfRangeMsg();
-      return 0;
+      return 1;
    }
 
    if (player_isFlag(PLAYER_NOLAND)) {
       player_message( "#r%s", player_message_noland );
-      return 0;
+      return 2;
    }
    else if (pilot_isFlag( player.p, PILOT_NOLAND)) {
       player_message( _("#rDocking stabilizers malfunctioning, cannot land.") );
-      return 0;
+      return 2;
    }
 
    /* attempt to land at selected planet */
    planet = cur_system->planets[player.p->nav_planet];
    if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
       player_messageRaw( _("#rYou can't land here.") );
-      return 0;
+      return 2;
    }
    else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
       if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
@@ -1561,7 +1561,7 @@ int player_land( int loud )
          else { /* Hostile */
             player_message( "#%c%s>#0 %s", planet_getColourChar(planet),
                   _(planet->name), planet->land_msg );
-            return;
+            return 2;
          }
       }
       else /* No shoes, no shirt, no lifeforms, no service. */
@@ -1571,18 +1571,18 @@ int player_land( int loud )
       if (!silent)
          player_soundPlayGUI(snd_nav, 1);
 
-      return player_land(0);
+      return player_land(loud);
    }
    else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
       if (loud)
          player_message(_("#rYou are too far away to land on %s."), _(planet->name));
-      return 0;
+      return 1;
    }
    else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
       if (loud)
          player_message(_("#rYou are going too fast to land on %s."), _(planet->name));
-      return 0;
+      return 1;
    }
 
    /* End autonav. */
@@ -1607,7 +1607,7 @@ int player_land( int loud )
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );
 
-   return 1;
+   return 0;
 }
 
 

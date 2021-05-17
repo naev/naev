@@ -927,7 +927,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("land") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS) {
          if (player.p->nav_planet != -1) {
-            if (!player_land(0)) {
+            if (player_land(0) == 1) {
                player_rmFlag(PLAYER_BASICAPPROACH);
                player_autonavPnt(cur_system->planets[player.p->nav_planet]->name);
             }
@@ -1423,6 +1423,7 @@ int input_clickedJump( int jump, int autonav )
 int input_clickedPlanet( int planet, int autonav )
 {
    Planet *pnt;
+   int ret;
    pnt = cur_system->planets[ planet ];
 
    if (!planet_isKnown(pnt))
@@ -1439,8 +1440,13 @@ int input_clickedPlanet( int planet, int autonav )
       player_hyperspacePreempt(0);
       if ((pnt->faction < 0) || pnt->can_land || pnt->bribed ||
             (pnt->land_override > 0)) {
-         if (!player_land(0)) {
+         ret = player_land(0);
+         if (ret == 1) {
             player_rmFlag(PLAYER_BASICAPPROACH);
+            player_autonavPnt(pnt->name);
+         }
+         else if (ret == 2) {
+            player_setFlag(PLAYER_BASICAPPROACH);
             player_autonavPnt(pnt->name);
          }
       }
