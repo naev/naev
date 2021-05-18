@@ -335,6 +335,11 @@ static void background_renderImages( background_image_t *bkg_arr )
    int i;
    background_image_t *bkg;
    double px,py, x,y, xs,ys, z;
+   glColour col;
+
+   /* Skip rendering altogether if disabled. */
+   if (conf.bg_brightness <= 0.)
+      return;
 
    /* Render images in order. */
    for (i=0; i<array_size(bkg_arr); i++) {
@@ -347,8 +352,12 @@ static void background_renderImages( background_image_t *bkg_arr )
       z = cam_getZoom();
       z *= bkg->scale;
       /* TODO add rotation too! */
+      col.r = bkg->col.r * conf.bg_brightness;
+      col.g = bkg->col.g * conf.bg_brightness;
+      col.b = bkg->col.b * conf.bg_brightness;
+      col.a = bkg->col.a;
       gl_blitScale( bkg->image, xs, ys,
-            z*bkg->image->sw, z*bkg->image->sh, &bkg->col );
+            z*bkg->image->sw, z*bkg->image->sh, &col );
    }
 }
 

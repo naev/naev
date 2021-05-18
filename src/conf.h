@@ -40,6 +40,7 @@
 #define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
 #define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
 #define COLORBLIND_DEFAULT                   0     /**< Whether to enable colorblindness simulation. */
+#define BG_BRIGHTNESS_DEFAULT                1.    /**< How much to darken (or lighten) the backgrounds. */
 #define BIG_ICONS_DEFAULT                    0     /**< Whether to display BIGGER icons. */
 #define FONT_SIZE_CONSOLE_DEFAULT            10    /**< Default console font size. */
 #define FONT_SIZE_INTRO_DEFAULT              18    /**< Default intro font size. */
@@ -93,6 +94,7 @@ typedef struct PlayerConf_s {
    int modesetting; /**< Whether to use modesetting for fullscreen. */
    int minimize; /**< Whether to minimize on focus loss. */
    int colorblind; /**< Whether to enable colorblindness simulation. */
+   double bg_brightness; /**< How much to darken the background stuff. */
 
    /* Sound. */
    int snd_voices; /**< Number of sound voices to use. */

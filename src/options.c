@@ -82,6 +82,7 @@ static int opt_videoSave( unsigned int wid, char *str );
 static void opt_videoDefaults( unsigned int wid, char *str );
 static void opt_getVideoMode( int *w, int *h, int *fullscreen );
 static void opt_setScalefactor( unsigned int wid, char *str );
+static void opt_setBGBrightness( unsigned int wid, char *str );
 static void opt_checkColorblind( unsigned int wid, char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
@@ -1287,6 +1288,13 @@ static void opt_video( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkColorblind", _("Colorblind mode"), opt_checkColorblind,
          conf.colorblind );
+   y -= 20;
+   window_addText( wid, x+15, y-3, cw-20, 20, 0, "txtBGBrightness",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+40, y, cw-60, 20, "fadBGBrightness", 0., 1.,
+         conf.bg_brightness, opt_setBGBrightness );
+   opt_setBGBrightness( wid, "fadBGBrightness" );
    y -= 40;
 
    /* GUI */
@@ -1505,6 +1513,7 @@ static void opt_videoDefaults( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadScale", SCALE_FACTOR_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
 }
 
 /**
@@ -1515,7 +1524,7 @@ static void opt_videoDefaults( unsigned int wid, char *str )
  */
 static void opt_setScalefactor( unsigned int wid, char *str )
 {
-   char buf[32];
+   char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
    scale = round(scale * 10) / 10;     // Reasonable precision. Clearer value.
    if (FABS(conf.scalefactor-scale) > 1e-4)
@@ -1523,6 +1532,21 @@ static void opt_setScalefactor( unsigned int wid, char *str )
    conf.scalefactor = scale;
    snprintf( buf, sizeof(buf), _("Scaling: %.1fx"), conf.scalefactor );
    window_modifyText( wid, "txtScale", buf );
+}
+
+/**
+ * @brief Callback to set the background brightness.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setBGBrightness( unsigned int wid, char *str )
+{
+   char buf[STRMAX_SHORT];
+   double scale = window_getFaderValue(wid, str);
+   conf.bg_brightness = scale;
+   snprintf( buf, sizeof(buf), _("BG (Nebula, etc.) brightness: %.1f"), conf.bg_brightness );
+   window_modifyText( wid, "txtBGBrightness", buf );
 }
 
 
