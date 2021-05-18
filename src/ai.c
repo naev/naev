@@ -128,7 +128,7 @@ static nlua_env equip_env = LUA_NOREF; /**< Equipment enviornment. */
  * prototypes
  */
 /* Internal C routines */
-static void ai_run( nlua_env env, const char *funcname );
+static void ai_run( nlua_env env, int nargs );
 static int ai_loadProfile( const char* filename );
 static void ai_setMemory (void);
 static void ai_create( Pilot* pilot );
@@ -148,11 +148,11 @@ static int ai_tasktarget( lua_State *L, Task *t );
 static int aiL_pushtask( lua_State *L ); /* pushtask( string, number/pointer ) */
 static int aiL_poptask( lua_State *L ); /* poptask() */
 static int aiL_taskname( lua_State *L ); /* string taskname() */
-static int aiL_gettarget( lua_State *L ); /* pointer gettarget() */
+static int aiL_taskdata( lua_State *L ); /* pointer subtaskdata() */
 static int aiL_pushsubtask( lua_State *L ); /* pushsubtask( string, number/pointer, number ) */
 static int aiL_popsubtask( lua_State *L ); /* popsubtask() */
 static int aiL_subtaskname( lua_State *L ); /* string subtaskname() */
-static int aiL_getsubtarget( lua_State *L ); /* pointer subtarget() */
+static int aiL_subtaskdata( lua_State *L ); /* pointer subtaskdata() */
 
 /* consult values */
 static int aiL_pilot( lua_State *L ); /* number pilot() */
@@ -249,11 +249,11 @@ static const luaL_Reg aiL_methods[] = {
    { "pushtask", aiL_pushtask },
    { "poptask", aiL_poptask },
    { "taskname", aiL_taskname },
-   { "target", aiL_gettarget },
+   { "taskdata", aiL_taskdata },
    { "pushsubtask", aiL_pushsubtask },
    { "popsubtask", aiL_popsubtask },
    { "subtaskname", aiL_subtaskname },
-   { "subtarget", aiL_getsubtarget },
+   { "subtaskdata", aiL_subtaskdata },
    /* is */
    { "ismaxvel", aiL_ismaxvel },
    { "isstopped", aiL_isstopped },
@@ -431,23 +431,12 @@ void ai_setPilot( Pilot *p )
  * @brief Attempts to run a function.
  *
  *    @param[in] env Lua env to run function in.
- *    @param[in] funcname Function to run.
+ *    @param[in] nargs Number of arguments to run.
  */
-static void ai_run( nlua_env env, const char *funcname )
+static void ai_run( nlua_env env, int nargs )
 {
-   nlua_getenv(env, funcname);
-
-#ifdef DEBUGGING
-   if (lua_isnil(naevL, -1)) {
-      WARN( _("Pilot '%s' ai -> '%s': attempting to run non-existent function"),
-            cur_pilot->name, funcname );
-      lua_pop(naevL,1);
-      return;
-   }
-#endif /* DEBUGGING */
-
-   if (nlua_pcall(env, 0, 0)) { /* error has occurred */
-      WARN( _("Pilot '%s' ai -> '%s': %s"), cur_pilot->name, funcname, lua_tostring(naevL,-1));
+   if (nlua_pcall(env, nargs, 0)) { /* error has occurred */
+      WARN( _("Pilot '%s' ai error: %s"), cur_pilot->name, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 }
@@ -485,7 +474,7 @@ int ai_pinit( Pilot *p, const char *ai )
    lua_pushvalue(naevL, -1);         /* pm, nt, nt */
    lua_rawseti(naevL, -3, p->id);    /* pm, nt */
 
-   /* Copy defaults over. */
+   /* Copy defaults over from the global memory table. */
    lua_pushstring(naevL, AI_MEM_DEF);/* pm, nt, s */
    lua_gettable(naevL, -3);          /* pm, nt, dt */
 #if DEBUGGING
@@ -639,6 +628,7 @@ static int ai_loadProfile( const char* filename )
    nlua_env env;
    AI_Profile *prof;
    size_t len;
+   const char *str;
 
    /* Grow array. */
    prof = &array_grow(&profiles);
@@ -657,7 +647,7 @@ static int ai_loadProfile( const char* filename )
    /* Register C functions in Lua */
    nlua_register(env, "ai", aiL_methods, 0);
 
-   /* Add the player memory table. */
+   /* Add the pilot memory table. */
    lua_newtable(naevL);              /* pm */
    lua_pushvalue(naevL, -1);         /* pm, pm */
    nlua_setenv(env, AI_MEM);         /* pm */
@@ -683,6 +673,15 @@ static int ai_loadProfile( const char* filename )
       return -1;
    }
    free(buf);
+
+   /* Find and set up the necessary references. */
+   str = _("AI Profile '%s' is missing '%s' function!");
+   prof->ref_control = nlua_refenv( env, "control" );
+   if (prof->ref_control == LUA_NOREF)
+      WARN( str, filename, "control" );
+   prof->ref_control_manual = nlua_refenv( env, "control_manual" );
+   if (prof->ref_control == LUA_NOREF)
+      WARN( str, filename, "control_manual" );
 
    return 0;
 }
@@ -738,6 +737,7 @@ void ai_think( Pilot* pilot, const double dt )
 {
    nlua_env env;
    (void) dt;
+   int data;
 
    Task *t;
 
@@ -767,12 +767,11 @@ void ai_think( Pilot* pilot, const double dt )
    if ((cur_pilot->tcontrol < 0.) || (t == NULL)) {
       if (pilot_isFlag(pilot,PILOT_PLAYER) ||
           pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
-         nlua_getenv(env, "control_manual");
-         if (!lua_isnil(naevL, -1))
-            ai_run(env, "control_manual");
-         lua_pop(naevL, 1);
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_control_manual );
+         ai_run(env, 0);
       } else {
-         ai_run(env, "control"); /* run control */
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_control );
+         ai_run(env, 0); /* run control */
       }
 
       nlua_getenv(env, "control_rate");
@@ -790,10 +789,22 @@ void ai_think( Pilot* pilot, const double dt )
    /* pilot has a currently running task */
    if (t != NULL) {
       /* Run subtask if available, otherwise run main task. */
-      if (t->subtask != NULL)
-         ai_run(env, t->subtask->name);
-      else
-         ai_run(env, t->name);
+      if (t->subtask != NULL) {
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, t->subtask->func );
+         /* Use subtask data or task data if subtask is not set. */
+         data = t->subtask->dat;
+         if (data == LUA_NOREF)
+            data = t->dat;
+      }
+      else {
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, t->func );
+         data = t->dat;
+      }
+      if (data != LUA_NOREF) {
+         lua_rawgeti( naevL, LUA_REGISTRYINDEX, data );
+         ai_run(env, 1);
+      } else
+         ai_run(env, 0);
 
       /* Manual control must check if IDLE hook has to be run. */
       if (pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
@@ -996,10 +1007,16 @@ static void ai_create( Pilot* pilot )
 Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
 {
    Task *t, *curtask, *pointer;
+   nlua_env env = p->ai->env;
+
+   /* Check if the function is good. */
+   nlua_getenv( env, func );
+   luaL_checktype( naevL, -1, LUA_TFUNCTION );
 
    /* Create the new task. */
    t           = calloc( 1, sizeof(Task) );
    t->name     = strdup(func);
+   t->func     = luaL_ref(naevL, LUA_REGISTRYINDEX);
    t->dat      = LUA_NOREF;
 
    /* Handle subtask and general task. */
@@ -1044,6 +1061,9 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
  */
 void ai_freetask( Task* t )
 {
+   if (t->func != LUA_NOREF)
+      luaL_unref(naevL, LUA_REGISTRYINDEX, t->func);
+
    if (t->dat != LUA_NOREF)
       luaL_unref(naevL, LUA_REGISTRYINDEX, t->dat);
 
@@ -1161,13 +1181,13 @@ static int aiL_taskname( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's task target.
- *    @luareturn The pilot's task target or nil if there is not target.
+ * @brief Gets the pilot's task data.
+ *    @luareturn The pilot's task data or nil if there is no task data.
  *    @luasee pushtask
- * @luafunc target
+ * @luafunc taskdata
  *    @return Number of Lua parameters.
  */
-static int aiL_gettarget( lua_State *L )
+static int aiL_taskdata( lua_State *L )
 {
    Task *t = ai_curTask( cur_pilot );
 
@@ -1239,10 +1259,10 @@ static int aiL_subtaskname( lua_State *L )
  * @brief Gets the pilot's subtask target.
  *    @luareturn The pilot's target ship identifier or nil if no target.
  *    @luasee pushsubtask
- * @luafunc subtarget
+ * @luafunc subtaskdata
  *    @return Number of Lua parameters.
  */
-static int aiL_getsubtarget( lua_State *L )
+static int aiL_subtaskdata( lua_State *L )
 {
    Task *t = ai_curTask( cur_pilot );
    /* Must have a subtask. */

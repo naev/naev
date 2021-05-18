@@ -21,7 +21,7 @@ function control ()
 
    -- Try to jump when far enough away
    elseif task == "runaway" then
-      target = ai.target()
+      target = ai.taskdata()
 
       -- Check if should still run.
       if not target:exists() then

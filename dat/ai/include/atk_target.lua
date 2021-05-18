@@ -42,7 +42,7 @@ function atk_topdown_think ()
       dist = ai.dist(nearest_enemy)
    end
 
-   local target = ai.target()
+   local target = ai.taskdata()
 
    -- Stop attacking if it doesn't exist
    if not target:exists() then
@@ -103,7 +103,7 @@ end
 function atk_heuristic_big_game_think ()
    local enemy         = ai.getenemy_heuristic(0.9, 0.9, 0.9, 20000)
    local nearest_enemy = ai.getenemy()
-   local target = ai.target()
+   local target = ai.taskdata()
 
    -- Stop attacking if it doesn't exist
    if not target:exists() then
