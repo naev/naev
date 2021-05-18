@@ -329,21 +329,6 @@ static void opt_gameplay( unsigned int wid )
 
    /* Options. */
 
-   /* MOpacity abort. */
-   window_addText( wid, x, y, cw, 20, 0, "txtAMOpacity",
-         NULL, NULL, _("Map Overlay Opacity:") );
-   y -= 20;
-
-   /* MOpacity abort fader. */
-   window_addText( wid, x, y, cw, 20, 1, "txtMOpacity",
-         &gl_smallFont, NULL, NULL );
-   y -= 20;
-   window_addFader( wid, x, y, cw, 20, "fadMapOverlayOpacity", 0., 1.,
-         conf.map_overlay_opacity, opt_setMapOverlayOpacity );
-   y -= 40;
-
-
-   (void) y;
    x = 20 + cw + 20;
    y  = by;
    cw += 80;
@@ -430,7 +415,6 @@ static int opt_gameplaySave( unsigned int wid, char *str )
 
    /* Faders. */
    conf.autonav_reset_speed = window_getFaderValue(wid, "fadAutonav");
-   conf.map_overlay_opacity = window_getFaderValue(wid, "fadMapOverlayOpacity");
 
    /* Input boxes. */
    vmsg = window_getInput( wid, "inpMSG" );
@@ -460,7 +444,6 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderValue( wid, "fadAutonav", AUTONAV_RESET_SPEED_DEFAULT );
-   window_faderValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 
    /* Input boxes. */
    snprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
@@ -485,7 +468,6 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderValue( wid, "fadAutonav", conf.autonav_reset_speed );
-   window_faderValue( wid, "fadMapOverlayOpacity", conf.map_overlay_opacity );
 
    /* Input boxes. */
    snprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
@@ -1291,6 +1273,13 @@ static void opt_video( unsigned int wid )
    window_addFader( wid, x+40, y, cw-60, 20, "fadBGBrightness", 0., 1.,
          conf.bg_brightness, opt_setBGBrightness );
    opt_setBGBrightness( wid, "fadBGBrightness" );
+   y -= 20;
+   window_addText( wid, x+15, y-3, cw-20, 20, 0, "txtMOpacity",
+         &gl_smallFont, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+40, y, cw-60, 20, "fadMapOverlayOpacity", 0., 1.,
+         conf.map_overlay_opacity, opt_setMapOverlayOpacity );
+   opt_setMapOverlayOpacity( wid ,"fadMapOverlayOpacity" );
    y -= 40;
 
    /* GUI */
@@ -1504,6 +1493,7 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadScale", SCALE_FACTOR_DEFAULT );
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 }
 
 /**
@@ -1533,9 +1523,9 @@ static void opt_setScalefactor( unsigned int wid, char *str )
 static void opt_setBGBrightness( unsigned int wid, char *str )
 {
    char buf[STRMAX_SHORT];
-   double scale = window_getFaderValue(wid, str);
-   conf.bg_brightness = scale;
-   snprintf( buf, sizeof(buf), _("BG (Nebula, etc.) brightness: %.0f%%"), 100.*conf.bg_brightness );
+   double fad = window_getFaderValue(wid, str);
+   conf.bg_brightness = fad;
+   snprintf( buf, sizeof(buf), _("BG (Nebula, etc.) brightness: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtBGBrightness", buf );
 }
 
@@ -1549,14 +1539,13 @@ static void opt_setBGBrightness( unsigned int wid, char *str )
  */
 static void opt_setMapOverlayOpacity( unsigned int wid, char *str )
 {
-   char buf[PATH_MAX];
-   double map_overlay_opacity;
+   char buf[STRMAX_SHORT];
+   double fad;
 
    /* Set fader. */
-   map_overlay_opacity = window_getFaderValue(wid, str);
-
-   snprintf( buf, sizeof(buf), _("%.0f%%"), map_overlay_opacity * 100 );
-
+   fad = window_getFaderValue(wid, str);
+   conf.map_overlay_opacity = fad;
+   snprintf( buf, sizeof(buf), _("Map Overlay Opacity: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtMOpacity", buf );
 }
 
