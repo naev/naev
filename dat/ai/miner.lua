@@ -1,6 +1,6 @@
 require("ai/tpl/generic")
 require("ai/personality/miner")
-require("ai/distress_behaviour")
+require("ai/include/distress_behaviour")
 require "numstring"
 
 
