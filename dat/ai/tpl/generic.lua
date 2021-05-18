@@ -49,9 +49,22 @@ mem.Kd             = 20 -- Second control coefficient
 -- control() call
 control_rate   = 2
 
+--[[
+   Binary flags for the different states that default to nil (false).
+   - attack: the pilot is attacked their target
+   - fighting: the pilot is engaged in combat (including running away )
+   - noattack: do not try to find new targets to attack
+--]]
 stateinfo = {
    attack = {
       fighting = true,
+      attack = true,
+   },
+   attack_forced = {
+      forced = true,
+      fighting = true,
+      attack = true,
+      noattack = true,
    },
    runaway = {
       fighting = true,
@@ -61,9 +74,11 @@ stateinfo = {
       noattack = true,
    },
    hold = {
+      forced = true,
       noattack = true,
    },
    flyback = {
+      forced = true,
       noattack = true,
    },
 }
@@ -112,7 +127,7 @@ function handle_messages ()
          elseif msgtype == "e_attack" then
             if data ~= nil and data:exists() then
                clean_task( ai.taskname() )
-               ai.pushtask("attack", data)
+               ai.pushtask("attack_forced", data)
             end
          -- Hold position
          elseif msgtype == "e_hold" then
@@ -130,12 +145,45 @@ function handle_messages ()
    end
 end
 
+function control_attack( si )
+   local target = ai.taskdata()
+   -- Needs to have a target
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+
+   local target_parmour, target_pshield = target:health()
+   local parmour, pshield = ai.pilot():health()
+
+   -- Pick an appropriate weapon set.
+   choose_weapset()
+
+   -- Runaway if needed
+   if (mem.shield_run > 0 and pshield < mem.shield_run
+            and pshield < target_pshield ) or
+         (mem.armour_run > 0 and parmour < mem.armour_run
+            and parmour < target_parmour ) then
+      ai.pushtask("runaway", target)
+
+   -- Think like normal
+   else
+      -- Cool down, if necessary.
+      should_cooldown()
+
+      attack_think( target, si )
+   end
+
+   -- Handle distress
+   if mem.distress then
+      gen_distress()
+   end
+end
+
 -- Required "control" function
 function control ()
    local p = ai.pilot()
    local enemy = ai.getenemy()
-
-   local parmour, pshield = ai.pilot():health()
 
    lead_fleet()
    handle_messages()
@@ -153,6 +201,14 @@ function control ()
       else -- Indicate this pilot has no leader
          p:setLeader( nil )
       end
+   end
+
+   -- If command is forced we basically override everything
+   if si.forced then
+      if si.attack then
+         control_attack( si )
+      end
+      return
    end
 
    -- Cooldown completes silently.
@@ -176,8 +232,8 @@ function control ()
          -- Cooldown preempts everything we haven't explicitly checked for.
          if mem.cooldown then
             return
-         -- If the ship is hot and shields are high, consider cooling down.
-         elseif pshield > 50 and p:temp() > 300 then
+         -- If the ship is hot, consider cooling down.
+         elseif p:temp() > 300 then
             -- Ship is quite hot, better cool down.
             if p:temp() > 400 then
                mem.cooldown = true
@@ -194,9 +250,9 @@ function control ()
       end
    end
 
-   -- Escorts return if too far away from carrier
+   -- Pilots return if too far away from leader
    local lmd = mem.leadermaxdist
-   if mem.escort and lmd then
+   if lmd then
       local l = p:leader()
       if l then
          local dist = ai.dist( l )
@@ -239,43 +295,17 @@ function control ()
 
    -- Don't stop boarding
    elseif task == "board" then
-      -- We want to think in case another attacker gets close
-      attack_think()
-
-   -- Think for attacking
-   elseif task == "attack" then
-      local target = ai.taskdata()
-
       -- Needs to have a target
       if not target:exists() then
          ai.poptask()
          return
       end
+      -- We want to think in case another attacker gets close
+      attack_think( ai.taskdata(), si )
 
-      local target_parmour, target_pshield = target:health()
-
-      -- Pick an appropriate weapon set.
-      choose_weapset()
-
-      -- Runaway if needed
-      if (mem.shield_run > 0 and pshield < mem.shield_run
-               and pshield < target_pshield ) or
-            (mem.armour_run > 0 and parmour < mem.armour_run
-               and parmour < target_parmour ) then
-         ai.pushtask("runaway", target)
-
-      -- Think like normal
-      else
-         -- Cool down, if necessary.
-         should_cooldown()
-
-         attack_think()
-      end
-
-      -- Handle distress
-      if mem.distress then
-         gen_distress()
-      end
+   -- Think for attacking
+   elseif si.attack then
+      control_attack( si )
 
    -- Pilot is running away
    elseif task == "runaway" then
@@ -294,6 +324,7 @@ function control ()
       local dist = ai.dist( target )
 
       -- Should return to combat?
+      local parmour, pshield = ai.pilot():health()
       if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
             (mem.armour_return > 0 and parmour >= mem.armour_return)) then
          ai.poptask() -- "attack" should be above "runaway"
@@ -335,10 +366,10 @@ function control ()
 end
 
 -- Required "attacked" function
-function attacked ( attacker )
+function attacked( attacker )
    local task = ai.taskname()
    local si = _stateinfo( task )
-   local target = ai.taskdata()
+   if si.forced then return end
 
    -- Notify that pilot has been attacked before
    mem.attacked = true
@@ -376,7 +407,7 @@ function attacked ( attacker )
       end
 
    -- Let attacker profile handle it.
-   elseif task == "attack" then
+   elseif si.attack then
       attack_attacked( attacker )
 
    elseif task == "runaway" then
@@ -422,13 +453,13 @@ function distress ( pilot, attacker )
       return
    end
 
-   pfact  = pilot:faction()
-   afact  = attacker:faction()
-   aifact = ai.pilot():faction()
-   p_ally  = aifact:areAllies(pfact)
-   a_ally  = aifact:areAllies(afact)
-   p_enemy = aifact:areEnemies(pfact)
-   a_enemy = aifact:areEnemies(afact)
+   local pfact  = pilot:faction()
+   local afact  = attacker:faction()
+   local aifact = ai.pilot():faction()
+   local p_ally  = aifact:areAllies(pfact)
+   local a_ally  = aifact:areAllies(afact)
+   local p_enemy = aifact:areEnemies(pfact)
+   local a_enemy = aifact:areEnemies(afact)
 
    -- Ships should always defend their brethren.
    if pfact == aifact then
@@ -477,8 +508,10 @@ function distress ( pilot, attacker )
    end
 
    local task = ai.taskname()
-   -- We're sort of busy. inspect_follow means we're getting close to a distressed ship
-   if task == "attack" then
+   local si   = _stateinfo( task )
+   -- Already fighting
+   if si.attack then
+      if si.noattack then return end
       local target = ai.taskdata()
 
       if not target:exists() or ai.dist(target) > ai.dist(t) then
@@ -488,7 +521,7 @@ function distress ( pilot, attacker )
       end
    -- If not fleeing or refueling, begin attacking
    elseif task ~= "runaway" and task ~= "refuel" then
-      if mem.aggressive then
+      if not si.noattack and mem.aggressive then
          if ai.pilot():inrange( t ) then -- TODO: something to help in the other case
             clean_task( task )
             ai.pushtask( "attack", t )
@@ -600,7 +633,6 @@ end
 -- Decide if the task is likely to become obsolete once attack is finished
 function clean_task( task )
    if task == "brake" or task == "inspect_moveto" then
-      --print(task)
       ai.poptask()
    end
 end

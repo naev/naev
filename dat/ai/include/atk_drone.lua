@@ -13,15 +13,7 @@ end
 --[[
 -- Mainly targets small drones.
 --]]
-function atk_drone_think ()
-   local target = ai.taskdata()
-
-   -- Stop attacking if it doesn't exist
-   if not target:exists() then
-      ai.poptask()
-      return
-   end
-
+function atk_drone_think( target, si )
    local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
@@ -74,8 +66,8 @@ end
 --[[
 -- Main control function for drone behavior.
 --]]
-function atk_drone ()
-   local target = _atk_com_think()
+function atk_drone( target )
+   target = _atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff

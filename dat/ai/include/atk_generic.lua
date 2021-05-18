@@ -15,17 +15,9 @@ end
 --[[
 -- Mainly manages targeting nearest enemy.
 --]]
-function atk_generic_think ()
-   local enemy  = ai.getenemy()
-   local target = ai.taskdata()
-
-   -- Stop attacking if it doesn't exist
-   if not target:exists() then
-      ai.poptask()
-      return
-   end
-
+function atk_generic_think( target, si )
    -- Get new target if it's closer
+   local enemy  = ai.getenemy()
    if enemy ~= target and enemy ~= nil then
       local dist  = ai.dist( target )
       local range = ai.getweaprange( 3 )
@@ -42,18 +34,24 @@ end
 -- Attacked function.
 --]]
 function atk_generic_attacked( attacker )
-   local target = ai.taskdata()
+   local task = ai.taskname()
+   local si = _stateinfo( ai.taskname() )
 
    if mem.recharge then
       mem.recharge = false
    end
 
    -- If no target automatically choose it
-   if not target:exists() then
+   if not si.attack then
       ai.pushtask("attack", attacker)
       return
    end
 
+   local target = ai.taskdata()
+   if not target:exists() then
+      ai.pushtask("attack", attacker)
+      return
+   end
    local tdist  = ai.dist(target)
    local dist   = ai.dist(attacker)
    local range  = ai.getweaprange( 0 )
@@ -68,8 +66,8 @@ end
 --[[
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
-function atk_generic ()
-   local target = _atk_com_think()
+function atk_generic( target )
+   target = _atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff

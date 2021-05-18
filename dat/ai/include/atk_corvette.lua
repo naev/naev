@@ -7,8 +7,8 @@ end
 --[[
 -- Main control function for corvette behavior.
 --]]
-function atk_corvette ()
-   local target = _atk_com_think()
+function atk_corvette( target )
+   target = _atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff

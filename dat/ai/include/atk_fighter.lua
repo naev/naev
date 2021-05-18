@@ -13,15 +13,7 @@ end
 --[[
 -- Mainly targets small fighters.
 --]]
-function atk_fighter_think ()
-   local target = ai.taskdata()
-
-   -- Stop attacking if it doesn't exist
-   if not target:exists() then
-      ai.poptask()
-      return
-   end
-
+function atk_fighter_think( target, si )
    local enemy    = ai.getenemy_size(0, 200)
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
@@ -47,8 +39,8 @@ end
 --[[
 -- Main control function for fighter behavior.
 --]]
-function atk_fighter ()
-   local target = _atk_com_think()
+function atk_fighter( target )
+   target = _atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff
