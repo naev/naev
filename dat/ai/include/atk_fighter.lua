@@ -14,7 +14,7 @@ end
 -- Mainly targets small fighters.
 --]]
 function atk_fighter_think ()
-   local target = ai.target()
+   local target = ai.taskdata()
 
    -- Stop attacking if it doesn't exist
    if not target:exists() then

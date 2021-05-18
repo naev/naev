@@ -17,7 +17,7 @@ end
 --]]
 function atk_generic_think ()
    local enemy  = ai.getenemy()
-   local target = ai.target()
+   local target = ai.taskdata()
 
    -- Stop attacking if it doesn't exist
    if not target:exists() then
@@ -42,7 +42,7 @@ end
 -- Attacked function.
 --]]
 function atk_generic_attacked( attacker )
-   local target = ai.target()
+   local target = ai.taskdata()
 
    if mem.recharge then
       mem.recharge = false
