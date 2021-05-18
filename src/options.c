@@ -1535,7 +1535,7 @@ static void opt_setBGBrightness( unsigned int wid, char *str )
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
    conf.bg_brightness = scale;
-   snprintf( buf, sizeof(buf), _("BG (Nebula, etc.) brightness: %.1f"), conf.bg_brightness );
+   snprintf( buf, sizeof(buf), _("BG (Nebula, etc.) brightness: %.0f%%"), 100.*conf.bg_brightness );
    window_modifyText( wid, "txtBGBrightness", buf );
 }
 
