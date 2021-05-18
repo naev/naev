@@ -1279,10 +1279,6 @@ static void opt_video( unsigned int wid )
          NULL, NULL, _("Features") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkEngineGlow", _("Engine Glow (More RAM)"), NULL, conf.engineglow );
-
-   y -= 20;
-   window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
@@ -1376,11 +1372,6 @@ static int opt_videoSave( unsigned int wid, char *str )
    }
 
    /* Features. */
-   f = window_checkboxState( wid, "chkEngineGlow" );
-   if (conf.engineglow != f) {
-      conf.engineglow = f;
-      opt_needRestart();
-   }
    f = window_checkboxState( wid, "chkMinimize" );
    if (conf.minimize != f) {
       conf.minimize = f;
@@ -1507,7 +1498,6 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkFullscreen", FULLSCREEN_DEFAULT );
    window_checkboxSet( wid, "chkVSync", VSYNC_DEFAULT );
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
-   window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
    window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
    window_checkboxSet( wid, "chkBigIcons", BIG_ICONS_DEFAULT );
 
