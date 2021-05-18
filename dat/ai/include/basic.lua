@@ -226,7 +226,8 @@ end
 
 -- Default action for non-leader pilot in fleet
 function follow_fleet ()
-   local leader = ai.pilot():leader()
+   local plt    = ai.pilot()
+   local leader = plt:leader()
  
    if leader == nil or not leader:exists() then
       ai.poptask()
@@ -280,7 +281,7 @@ function follow_fleet ()
          if dist > 300 then   -- Must approach
             mem.app = 1
          else   -- Face forward
-            goal = ai.pilot():pos() + leader:vel()
+            goal = plt:pos() + leader:vel()
             ai.face(goal)
          end
       end
@@ -421,7 +422,8 @@ function __landstop ()
       if not ai.land() then
          ai.popsubtask()
       else
-         ai.pilot():msg(ai.pilot():followers(), "land", mem.land)
+         local p = ai.pilot()
+         p:msg(p:followers(), "land", mem.land)
          ai.poptask() -- Done, pop task
       end
    end
@@ -472,7 +474,7 @@ function runaway_nojump ()
 end
 function __run_target ()
    local target = ai.taskdata()
-   local pilot  = ai.pilot()
+   local plt    = ai.pilot()
 
    -- Target must exist
    if not target:exists() then
@@ -484,8 +486,8 @@ function __run_target ()
    ai.settarget( target )
 
    -- See whether we have a chance to outrun the attacker
-   local relspe = pilot:stats().speed_max/target:stats().speed_max
-   if pilot:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and (not ai.hasafterburner()) then
+   local relspe = plt:stats().speed_max/target:stats().speed_max
+   if plt:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and (not ai.hasafterburner()) then
       -- Pilot is agile, but too slow to outrun the enemy: dodge
       local dir = ai.dir(target) + 180      -- Reverse (run away)
       if dir > 180 then dir = dir - 360 end -- Because of periodicity
@@ -496,7 +498,7 @@ function __run_target ()
    end
 
    -- Afterburner handling.         
-   if ai.hasafterburner() and pilot:energy() > 10 then
+   if ai.hasafterburner() and plt:energy() > 10 then
       ai.weapset( 8, true )
    end
 
@@ -527,14 +529,14 @@ function __run_hyp ()
    local jdir
    local bdist    = ai.minbrakedist()
    local jdist    = ai.dist(jump)
-   local pilot    = ai.pilot()
+   local plt      = ai.pilot()
 
    if jdist > bdist then
 
       local dozigzag = false
       if ai.taskdata():exists() then
-         local relspe = pilot:stats().speed_max/ai.taskdata():stats().speed_max
-         if pilot:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and
+         local relspe = plt:stats().speed_max/ai.taskdata():stats().speed_max
+         if plt:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and
             (not ai.hasafterburner()) and jdist > 3*bdist then
             dozigzag = true
          end
@@ -545,7 +547,7 @@ function __run_hyp ()
          local dir = ai.dir(jump)
          __zigzag(dir, 70)
       else
-         if jdist > 3*bdist and pilot:stats().mass < 600 then
+         if jdist > 3*bdist and plt:stats().mass < 600 then
             jdir = ai.careful_face(jump)
          else --Heavy ships should rush to jump point
             jdir = ai.face( jump, nil, true )
@@ -563,7 +565,7 @@ function __run_hyp ()
    end
 
    --Afterburner: activate while far away from jump
-   if ai.hasafterburner() and pilot:energy() > 10 then
+   if ai.hasafterburner() and plt:energy() > 10 then
       if jdist > 3 * bdist then
          ai.weapset( 8, true )
       else
@@ -589,7 +591,7 @@ function __run_landgo ()
    local target   = mem.land
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
-   local pilot    = ai.pilot()
+   local plt      = ai.pilot()
 
    if dist < bdist then -- Need to start braking
       ai.pushsubtask( "__landstop" )
@@ -597,8 +599,8 @@ function __run_landgo ()
 
       local dozigzag = false
       if ai.taskdata():exists() then
-         local relspe = pilot:stats().speed_max/ai.taskdata():stats().speed_max
-         if pilot:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and
+         local relspe = plt:stats().speed_max/ai.taskdata():stats().speed_max
+         if plt:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and
             (not ai.hasafterburner()) and dist > 3*bdist then
             dozigzag = true
          end
@@ -624,7 +626,7 @@ function __run_landgo ()
    end
 
    --Afterburner
-   if ai.hasafterburner() and pilot:energy() > 10 then
+   if ai.hasafterburner() and plt:energy() > 10 then
       if dist > 3 * bdist then
          ai.weapset( 8, true )
       else
@@ -684,7 +686,8 @@ function __hyp_brake ()
 end
 function __hyp_jump ()
    if ai.hyperspace() == nil then
-      ai.pilot():msg(ai.pilot():followers(), "hyperspace", ai.nearhyptarget())
+      local p = ai.pilot()
+      p:msg(p:followers(), "hyperspace", ai.nearhyptarget())
    end
    ai.popsubtask() -- Keep the task even if succeeding in case pilot gets pushed away.
 end
@@ -814,12 +817,13 @@ function __refuelstop ()
    ai.settarget(target)
 
    -- See if finished refueling
-   if not ai.pilot():flags().refueling then
-      ai.pilot():comm(target, _("Finished fuel transfer."))
+   local p = ai.pilot()
+   if not p:flags().refueling then
+      p:comm(target, _("Finished fuel transfer."))
       ai.poptask()
 
       -- Untarget
-      ai.settarget( ai.pilot() )
+      ai.settarget( p )
       return
    end
 
