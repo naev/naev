@@ -1142,7 +1142,6 @@ static int ai_tasktarget( lua_State *L, Task *t )
 static int aiL_pushtask( lua_State *L )
 {
    ai_createTask( L, 0 );
-
    return 0;
 }
 /**

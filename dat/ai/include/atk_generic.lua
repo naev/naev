@@ -42,18 +42,24 @@ end
 -- Attacked function.
 --]]
 function atk_generic_attacked( attacker )
-   local target = ai.taskdata()
+   local task = ai.taskname()
+   local si = _stateinfo( ai.taskname() )
 
    if mem.recharge then
       mem.recharge = false
    end
 
    -- If no target automatically choose it
-   if not target:exists() then
+   if not si.attack then
       ai.pushtask("attack", attacker)
       return
    end
 
+   local target = ai.taskdata()
+   if not target:exists() then
+      ai.pushtask("attack", attacker)
+      return
+   end
    local tdist  = ai.dist(target)
    local dist   = ai.dist(attacker)
    local range  = ai.getweaprange( 0 )
