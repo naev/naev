@@ -525,7 +525,7 @@ function __run_hyp ()
    __run_turret()
 
    -- Go towards jump
-   local jump     = ai.subtarget()
+   local jump     = ai.subtaskdata()
    local jdir
    local bdist    = ai.minbrakedist()
    local jdist    = ai.dist(jump)
@@ -652,7 +652,7 @@ function hyperspace ()
    ai.pushsubtask( "__hyp_approach", pos )
 end
 function __hyp_approach ()
-   local target   = ai.subtarget()
+   local target   = ai.subtaskdata()
    local dir
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
