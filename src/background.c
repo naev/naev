@@ -337,6 +337,10 @@ static void background_renderImages( background_image_t *bkg_arr )
    double px,py, x,y, xs,ys, z;
    glColour col;
 
+   /* Skip rendering altogether if disabled. */
+   if (conf.bg_brightness <= 0.)
+      return;
+
    /* Render images in order. */
    for (i=0; i<array_size(bkg_arr); i++) {
       bkg = &bkg_arr[i];
