@@ -15,17 +15,9 @@ end
 --[[
 -- Mainly manages targeting nearest enemy.
 --]]
-function atk_generic_think ()
-   local enemy  = ai.getenemy()
-   local target = ai.taskdata()
-
-   -- Stop attacking if it doesn't exist
-   if not target:exists() then
-      ai.poptask()
-      return
-   end
-
+function atk_generic_think( target, si )
    -- Get new target if it's closer
+   local enemy  = ai.getenemy()
    if enemy ~= target and enemy ~= nil then
       local dist  = ai.dist( target )
       local range = ai.getweaprange( 3 )

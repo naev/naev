@@ -145,11 +145,45 @@ function handle_messages ()
    end
 end
 
+function control_attack( si )
+   local target = ai.taskdata()
+   -- Needs to have a target
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+
+   local target_parmour, target_pshield = target:health()
+   local parmour, pshield = ai.pilot():health()
+
+   -- Pick an appropriate weapon set.
+   choose_weapset()
+
+   -- Runaway if needed
+   if (mem.shield_run > 0 and pshield < mem.shield_run
+            and pshield < target_pshield ) or
+         (mem.armour_run > 0 and parmour < mem.armour_run
+            and parmour < target_parmour ) then
+      ai.pushtask("runaway", target)
+
+   -- Think like normal
+   else
+      -- Cool down, if necessary.
+      should_cooldown()
+
+      attack_think( target, si )
+   end
+
+   -- Handle distress
+   if mem.distress then
+      gen_distress()
+   end
+end
+
 -- Required "control" function
 function control ()
    local p = ai.pilot()
    local enemy = ai.getenemy()
-   local parmour, pshield = ai.pilot():health()
 
    lead_fleet()
    handle_messages()
@@ -171,18 +205,9 @@ function control ()
 
    -- If command is forced we basically override everything
    if si.forced then
-      --[[
       if si.attack then
-         local target = ai.taskdata()
-         -- Needs to have a target
-         if not target:exists() then
-            ai.poptask()
-            return
-         end
-         choose_weapset()
-         attack_think()
+         control_attack( si )
       end
-      --]]
       return
    end
 
@@ -207,8 +232,8 @@ function control ()
          -- Cooldown preempts everything we haven't explicitly checked for.
          if mem.cooldown then
             return
-         -- If the ship is hot and shields are high, consider cooling down.
-         elseif pshield > 50 and p:temp() > 300 then
+         -- If the ship is hot, consider cooling down.
+         elseif p:temp() > 300 then
             -- Ship is quite hot, better cool down.
             if p:temp() > 400 then
                mem.cooldown = true
@@ -225,9 +250,9 @@ function control ()
       end
    end
 
-   -- Escorts return if too far away from carrier
+   -- Pilots return if too far away from leader
    local lmd = mem.leadermaxdist
-   if mem.escort and lmd then
+   if lmd then
       local l = p:leader()
       if l then
          local dist = ai.dist( l )
@@ -270,43 +295,17 @@ function control ()
 
    -- Don't stop boarding
    elseif task == "board" then
-      -- We want to think in case another attacker gets close
-      attack_think()
-
-   -- Think for attacking
-   elseif si.attack then
-      local target = ai.taskdata()
-
       -- Needs to have a target
       if not target:exists() then
          ai.poptask()
          return
       end
+      -- We want to think in case another attacker gets close
+      attack_think( ai.taskdata(), si )
 
-      local target_parmour, target_pshield = target:health()
-
-      -- Pick an appropriate weapon set.
-      choose_weapset()
-
-      -- Runaway if needed
-      if (mem.shield_run > 0 and pshield < mem.shield_run
-               and pshield < target_pshield ) or
-            (mem.armour_run > 0 and parmour < mem.armour_run
-               and parmour < target_parmour ) then
-         ai.pushtask("runaway", target)
-
-      -- Think like normal
-      else
-         -- Cool down, if necessary.
-         should_cooldown()
-
-         attack_think()
-      end
-
-      -- Handle distress
-      if mem.distress then
-         gen_distress()
-      end
+   -- Think for attacking
+   elseif si.attack then
+      control_attack( si )
 
    -- Pilot is running away
    elseif task == "runaway" then
@@ -325,6 +324,7 @@ function control ()
       local dist = ai.dist( target )
 
       -- Should return to combat?
+      local parmour, pshield = ai.pilot():health()
       if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
             (mem.armour_return > 0 and parmour >= mem.armour_return)) then
          ai.poptask() -- "attack" should be above "runaway"

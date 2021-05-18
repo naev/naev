@@ -35,11 +35,14 @@ mem.recharge          = false --whether to hold off shooting to avoid running dr
 --[[
 -- Wrapper for the think functions.
 --]]
-function attack_think ()
+function attack_think( target, si )
+   -- Ignore other enemies
+   if si.noattack then return end
+
    if mem.atk_think ~= nil then
-      mem.atk_think()
+      mem.atk_think( target, si )
    else
-      atk_generic_think()
+      atk_generic_think( target, si )
    end
 end
 

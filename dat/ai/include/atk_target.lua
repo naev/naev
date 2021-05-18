@@ -7,8 +7,7 @@
 --[[
 -- Mainly targets in biggest-to-smallest priority.
 --]]
-function atk_topdown_think ()
-
+function atk_topdown_think( target, si )
    local enemy_cat1 = ai.getenemy_size(2500, 10000)
    local enemy_cat2 = ai.getenemy_size(1000, 2500)
    local enemy_cat3 = ai.getenemy_size(600, 1000)
@@ -39,14 +38,6 @@ function atk_topdown_think ()
    
    if  nearest_enemy ~= nil then   
       dist = ai.dist(nearest_enemy)
-   end
-
-   local target = ai.taskdata()
-
-   -- Stop attacking if it doesn't exist
-   if not target:exists() then
-      ai.poptask()
-      return
    end
 
    local range  = ai.getweaprange(3, 1)
@@ -87,7 +78,6 @@ function atk_topdown_think ()
       
    elseif nearest_enemy ~= target and nearest_enemy ~= nil then
 
-
       -- Shouldn't switch targets if close
       if dist > range * mem.atk_changetarget then
          ai.pushtask("attack", nearest_enemy )
@@ -99,16 +89,9 @@ end
 --[[
 -- big game hunter attack pattern using heuristic target identification.
 --]]
-function atk_heuristic_big_game_think ()
+function atk_heuristic_big_game_think( target, si )
    local enemy         = ai.getenemy_heuristic(0.9, 0.9, 0.9, 20000)
    local nearest_enemy = ai.getenemy()
-   local target = ai.taskdata()
-
-   -- Stop attacking if it doesn't exist
-   if not target:exists() then
-      ai.poptask()
-      return
-   end
 
    local dist = ai.dist(target)
    local range = ai.getweaprange(3, 0)
