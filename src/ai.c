@@ -791,7 +791,10 @@ void ai_think( Pilot* pilot, const double dt )
       /* Run subtask if available, otherwise run main task. */
       if (t->subtask != NULL) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, t->subtask->func );
+         /* Use subtask data or task data if subtask is not set. */
          data = t->subtask->dat;
+         if (data == LUA_NOREF)
+            data = t->dat;
       }
       else {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, t->func );
@@ -1004,10 +1007,16 @@ static void ai_create( Pilot* pilot )
 Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
 {
    Task *t, *curtask, *pointer;
+   nlua_env env = p->ai->env;
+
+   /* Check if the function is good. */
+   nlua_getenv( env, func );
+   luaL_checktype( naevL, -1, LUA_TFUNCTION );
 
    /* Create the new task. */
    t           = calloc( 1, sizeof(Task) );
    t->name     = strdup(func);
+   t->func     = luaL_ref(naevL, LUA_REGISTRYINDEX);
    t->dat      = LUA_NOREF;
 
    /* Handle subtask and general task. */
@@ -1082,18 +1091,12 @@ static Task* ai_createTask( lua_State *L, int subtask )
 {
    const char *func;
    Task *t;
-   nlua_env env;
 
    /* Parse basic parameters. */
    func  = luaL_checkstring(L,1);
 
    /* Creates a new AI task. */
    t     = ai_newtask( cur_pilot, func, subtask, 0 );
-
-   /* Get the function. */
-   env = cur_pilot->ai->env;
-   nlua_getenv( env, func );
-   t->func = luaL_ref(L, LUA_REGISTRYINDEX);
 
    /* Set the data. */
    if (lua_gettop(L) > 1) {
