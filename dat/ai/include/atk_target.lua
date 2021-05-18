@@ -14,7 +14,6 @@ function atk_topdown_think ()
    local enemy_cat3 = ai.getenemy_size(600, 1000)
    local enemy_cat4 = ai.getenemy_size(250, 600)
    
-   
    local nearest_enemy = ai.getenemy()
    local dist = 0
    local cat1dist = 0

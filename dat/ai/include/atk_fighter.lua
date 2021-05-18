@@ -47,8 +47,8 @@ end
 --[[
 -- Main control function for fighter behavior.
 --]]
-function atk_fighter ()
-   local target = _atk_com_think()
+function atk_fighter( target )
+   target = _atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff

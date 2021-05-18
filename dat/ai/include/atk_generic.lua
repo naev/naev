@@ -68,8 +68,8 @@ end
 --[[
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
-function atk_generic ()
-   local target = _atk_com_think()
+function atk_generic( target )
+   target = _atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff

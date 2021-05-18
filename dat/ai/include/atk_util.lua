@@ -116,9 +116,7 @@ end
 --[[
 -- Common control stuff
 --]]
-function _atk_com_think ()
-   local target = ai.taskdata()
-
+function _atk_com_think( target )
    -- make sure pilot exists
    if not target:exists() then
       ai.poptask()

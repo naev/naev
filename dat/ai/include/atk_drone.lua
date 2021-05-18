@@ -74,8 +74,8 @@ end
 --[[
 -- Main control function for drone behavior.
 --]]
-function atk_drone ()
-   local target = _atk_com_think()
+function atk_drone( target )
+   target = _atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff

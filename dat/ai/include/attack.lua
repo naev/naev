@@ -47,7 +47,7 @@ end
 --[[
 -- Wrapper for the attack functions.
 --]]
-function attack ()
+function attack( target )
    -- Don't go on the offensive when in the middle of cooling.
    if mem.cooldown then
       ai.poptask()
@@ -55,9 +55,9 @@ function attack ()
    end
 
    if mem.atk ~= nil then
-      mem.atk()
+      mem.atk( target )
    else
-      atk_generic()
+      atk_generic( target )
    end
 end
 
