@@ -20,6 +20,6 @@ function sos ()
       _("Mayday! Ship taking damage!"),
       string.format(_("Mayday! %s %s being assaulted!"), ai.pilot():faction(), string.lower( ai.pilot():ship():class() ))
    }
-   ai.settarget( ai.target() )
+   ai.settarget( ai.taskdata() )
    ai.distress( msg[ rnd.int(1,#msg) ])
 end

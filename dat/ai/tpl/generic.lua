@@ -244,7 +244,7 @@ function control ()
 
    -- Think for attacking
    elseif task == "attack" then
-      local target = ai.target()
+      local target = ai.taskdata()
 
       -- Needs to have a target
       if not target:exists() then
@@ -283,7 +283,7 @@ function control ()
          ai.poptask()
          return
       end
-      local target = ai.target()
+      local target = ai.taskdata()
 
       -- Needs to have a target
       if not target:exists() then
@@ -338,7 +338,7 @@ end
 function attacked ( attacker )
    local task = ai.taskname()
    local si = _stateinfo( task )
-   local target = ai.target()
+   local target = ai.taskdata()
 
    -- Notify that pilot has been attacked before
    mem.attacked = true
@@ -380,7 +380,7 @@ function attacked ( attacker )
       attack_attacked( attacker )
 
    elseif task == "runaway" then
-      if ai.target() ~= attacker then
+      if ai.taskdata() ~= attacker then
          ai.poptask()
          ai.pushtask("runaway", attacker)
       end
@@ -479,7 +479,7 @@ function distress ( pilot, attacker )
    local task = ai.taskname()
    -- We're sort of busy. inspect_follow means we're getting close to a distressed ship
    if task == "attack" then
-      local target = ai.target()
+      local target = ai.taskdata()
 
       if not target:exists() or ai.dist(target) > ai.dist(t) then
          if ai.pilot():inrange( t ) then
@@ -618,7 +618,7 @@ end
 
 -- Flies back and tries to either dock or stops when back at leader
 function flyback ()
-   local dock = ai.target()
+   local dock = ai.taskdata()
    local target = ai.pilot():leader()
    if not target:exists() then
       ai.poptask()

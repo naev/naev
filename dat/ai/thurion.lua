@@ -22,7 +22,7 @@ function sos ()
       _("Mayday! Ship taking damage!"),
       _("01010101011011100110010001100101011100100010000001100001011101000111010001100001011000110110101100100001") -- "Under attack!" in binary
    }
-   ai.settarget( ai.target() )
+   ai.settarget( ai.taskdata() )
    ai.distress( msg[ rnd.int(1,#msg) ])
 end
 

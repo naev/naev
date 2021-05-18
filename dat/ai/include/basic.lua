@@ -10,11 +10,11 @@
 -- Faces the target.
 --]]
 function __face ()
-   local target = ai.target()
+   local target = ai.taskdata()
    ai.face( target )
 end
 function __face_towards ()
-   local target = ai.target()
+   local target = ai.taskdata()
    local off = ai.face( target )
    if math.abs(off) < 5 then
       ai.poptask()
@@ -80,7 +80,7 @@ end
 -- Goes to a target position without braking
 --]]
 function __moveto_nobrake ()
-   local target   = ai.target()
+   local target   = ai.taskdata()
    local dir      = ai.face( target, nil, true )
    __moveto_generic( target, dir, false )
 end
@@ -90,7 +90,7 @@ end
 -- Goes to a target position without braking
 --]]
 function __moveto_nobrake_raw ()
-   local target   = ai.target()
+   local target   = ai.taskdata()
    local dir      = ai.face( target )
    __moveto_generic( target, dir, false )
 end
@@ -100,7 +100,7 @@ end
 -- Goes to a precise position.
 --]]
 function __moveto_precise ()
-   local target   = ai.target()
+   local target   = ai.taskdata()
    local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
 
@@ -129,7 +129,7 @@ end
 -- Goes to a target position roughly
 --]]
 function moveto ()
-   local target   = ai.target()
+   local target   = ai.taskdata()
    local dir      = ai.face( target, nil, true )
    __moveto_generic( target, dir, true )
 end
@@ -147,7 +147,7 @@ end
 -- moveto without velocity compensation.
 --]]
 function moveto_raw ()
-   local target   = ai.target()
+   local target   = ai.taskdata()
    local dir      = ai.face( target )
    __moveto_generic( target, dir, true )
 end
@@ -184,7 +184,7 @@ end
 -- Follows it's target.
 --]]
 function follow ()
-   local target = ai.target()
+   local target = ai.taskdata()
  
    -- Will just float without a target to escort.
    if not target:exists() then
@@ -201,7 +201,7 @@ function follow ()
    end
 end
 function follow_accurate ()
-   local target = ai.target()
+   local target = ai.taskdata()
    local p = ai.pilot()
  
    -- Will just float without a target to escort.
@@ -309,7 +309,7 @@ function __hyperspace ()
    hyperspace()
 end
 function __hyperspace_shoot ()
-   local target = ai.target()
+   local target = ai.taskdata()
    if target == nil then
       target = ai.rndhyptarget()
       if target == nil then
@@ -365,7 +365,7 @@ function __choose_land_target ()
    end
 
    -- Set target if necessary
-   local target = ai.target()
+   local target = ai.taskdata()
    if target ~= nil then
       mem.land = target
    end
@@ -434,7 +434,7 @@ end
 function runaway ()
 
    -- Target must exist
-   local target = ai.target()
+   local target = ai.taskdata()
    if not target:exists() then
       ai.poptask()
       return
@@ -471,7 +471,7 @@ function runaway_nojump ()
    __run_turret()
 end
 function __run_target ()
-   local target = ai.target()
+   local target = ai.taskdata()
    local pilot  = ai.pilot()
 
    -- Target must exist
@@ -504,7 +504,7 @@ function __run_target ()
 end
 function __run_turret ()
    -- Shoot the target
-   local target   = ai.target()
+   local target   = ai.taskdata()
    if target:exists() then
       ai.hostile(target)
       ai.settarget( target )
@@ -532,8 +532,8 @@ function __run_hyp ()
    if jdist > bdist then
 
       local dozigzag = false
-      if ai.target():exists() then
-         local relspe = pilot:stats().speed_max/ai.target():stats().speed_max
+      if ai.taskdata():exists() then
+         local relspe = pilot:stats().speed_max/ai.taskdata():stats().speed_max
          if pilot:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and
             (not ai.hasafterburner()) and jdist > 3*bdist then
             dozigzag = true
@@ -596,8 +596,8 @@ function __run_landgo ()
    else
 
       local dozigzag = false
-      if ai.target():exists() then
-         local relspe = pilot:stats().speed_max/ai.target():stats().speed_max
+      if ai.taskdata():exists() then
+         local relspe = pilot:stats().speed_max/ai.taskdata():stats().speed_max
          if pilot:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and
             (not ai.hasafterburner()) and dist > 3*bdist then
             dozigzag = true
@@ -639,7 +639,7 @@ end
 -- Starts heading away to try to hyperspace.
 --]]
 function hyperspace ()
-   local target = ai.target()
+   local target = ai.taskdata()
    if target == nil then
       target = ai.rndhyptarget()
       if target == nil then
@@ -694,7 +694,7 @@ end
 -- Boards the target
 --]]
 function board ()
-   local target = ai.target()
+   local target = ai.taskdata()
 
    -- Make sure pilot exists
    if not target:exists() then
@@ -727,7 +727,7 @@ end
 -- Attempts to brake on the target.
 --]]
 function __boardstop ()
-   target = ai.target()
+   target = ai.taskdata()
 
    -- make sure pilot exists
    if not target:exists() then
@@ -770,7 +770,7 @@ end
 function refuel ()
 
    -- Get the target
-   local target = ai.target()
+   local target = ai.taskdata()
 
    -- make sure pilot exists
    if not target:exists() then
@@ -802,7 +802,7 @@ end
 -- Attempts to brake on the target.
 --]]
 function __refuelstop ()
-   local target = ai.target()
+   local target = ai.taskdata()
 
    -- make sure pilot exists
    if not target:exists() then
@@ -842,7 +842,7 @@ end
 --]]
 function mine ()
    ai.weapset( 1 )
-   local fieldNast = ai.target()
+   local fieldNast = ai.taskdata()
    local field     = fieldNast[1]
    local ast       = fieldNast[2]
    local p         = ai.pilot()
@@ -883,7 +883,7 @@ function mine ()
    end
 end
 function __killasteroid ()
-   local fieldNast = ai.target()
+   local fieldNast = ai.taskdata()
    local field     = fieldNast[1]
    local ast       = fieldNast[2]
    local wrange    = ai.getweaprange()

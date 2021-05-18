@@ -148,7 +148,7 @@ static int ai_tasktarget( lua_State *L, Task *t );
 static int aiL_pushtask( lua_State *L ); /* pushtask( string, number/pointer ) */
 static int aiL_poptask( lua_State *L ); /* poptask() */
 static int aiL_taskname( lua_State *L ); /* string taskname() */
-static int aiL_gettarget( lua_State *L ); /* pointer gettarget() */
+static int aiL_taskdata( lua_State *L ); /* pointer gettarget() */
 static int aiL_pushsubtask( lua_State *L ); /* pushsubtask( string, number/pointer, number ) */
 static int aiL_popsubtask( lua_State *L ); /* popsubtask() */
 static int aiL_subtaskname( lua_State *L ); /* string subtaskname() */
@@ -249,7 +249,7 @@ static const luaL_Reg aiL_methods[] = {
    { "pushtask", aiL_pushtask },
    { "poptask", aiL_poptask },
    { "taskname", aiL_taskname },
-   { "target", aiL_gettarget },
+   { "taskdata", aiL_taskdata },
    { "pushsubtask", aiL_pushsubtask },
    { "popsubtask", aiL_popsubtask },
    { "subtaskname", aiL_subtaskname },
@@ -1161,13 +1161,13 @@ static int aiL_taskname( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's task target.
- *    @luareturn The pilot's task target or nil if there is not target.
+ * @brief Gets the pilot's task data.
+ *    @luareturn The pilot's task data or nil if there is no task data.
  *    @luasee pushtask
- * @luafunc target
+ * @luafunc taskdata
  *    @return Number of Lua parameters.
  */
-static int aiL_gettarget( lua_State *L )
+static int aiL_taskdata( lua_State *L )
 {
    Task *t = ai_curTask( cur_pilot );
 

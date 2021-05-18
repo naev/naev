@@ -14,7 +14,7 @@ end
 -- Mainly targets small drones.
 --]]
 function atk_drone_think ()
-   local target = ai.target()
+   local target = ai.taskdata()
 
    -- Stop attacking if it doesn't exist
    if not target:exists() then
