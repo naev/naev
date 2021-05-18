@@ -51,6 +51,7 @@ static const char *opt_names[] = {
 
 
 static int opt_restart = 0;
+static PlayerConf_t local_conf;
 
 
 /*
@@ -114,6 +115,9 @@ void opt_menu (void)
    int w, h;
    const char **names;
 
+   /* Save current configuration over. */
+   memcpy( &local_conf, &conf, sizeof(PlayerConf_t) );
+
    /* Dimensions. */
    w = 680;
    h = 525;
@@ -149,6 +153,9 @@ static void opt_OK( unsigned int wid, char *str )
 {
    int ret, prompted_restart;
 
+   /* Save current configuration over. */
+   memcpy( &local_conf, &conf, sizeof(PlayerConf_t) );
+
    prompted_restart = opt_restart;
    ret = 0;
    ret |= opt_gameplaySave( opt_windows[ OPT_WIN_GAMEPLAY ], str);
@@ -170,6 +177,9 @@ static void opt_close( unsigned int wid, char *name )
 {
    (void) wid;
    (void) name;
+
+   /* Load old config again. */
+   memcpy( &conf, &local_conf, sizeof(PlayerConf_t) );
 
    /* At this point, set sound levels as defined in the config file.
     * This ensures that sound volumes are reset on "Cancel". */
@@ -1540,10 +1550,7 @@ static void opt_setBGBrightness( unsigned int wid, char *str )
 static void opt_setMapOverlayOpacity( unsigned int wid, char *str )
 {
    char buf[STRMAX_SHORT];
-   double fad;
-
-   /* Set fader. */
-   fad = window_getFaderValue(wid, str);
+   double fad = window_getFaderValue(wid, str);
    conf.map_overlay_opacity = fad;
    snprintf( buf, sizeof(buf), _("Map Overlay Opacity: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtMOpacity", buf );
