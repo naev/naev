@@ -17,7 +17,7 @@
 #define SPFX_LAYER_MIDDLE  1 /**< Middle spfx layer. */
 #define SPFX_LAYER_BACK    2 /**< Back spfx layer. */
 
-#define SPFX_DAMAGE_DECAY  0.3 /**< Rate at which the damage strength goes down. */
+#define SPFX_DAMAGE_DECAY  0.5 /**< Rate at which the damage strength goes down. */
 #define SPFX_DAMAGE_MOD    1.5 /**< How damage spfx gets modified (base is armour_dmg / total_armour */
 #define SPFX_DAMAGE_MAX    1.0 /**< Maximum value of the damage strength. */
 
