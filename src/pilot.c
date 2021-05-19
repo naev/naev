@@ -1895,14 +1895,14 @@ void pilot_update( Pilot* pilot, double dt )
          if (outfit_isLauncher(o->outfit)) {
             ammo_threshold = o->outfit->u.lau.amount;
             ammo_threshold = round( (double)ammo_threshold * pilot->stats.ammo_capacity );
-            reload_time = o->outfit->u.lau.reload_time * pilot->stats.launch_reload;
+            reload_time = o->outfit->u.lau.reload_time * (2.-pilot->stats.launch_reload);
          }
          else { /* if (outfit_isFighterBay( o->outfit)) { */ /* Commented to shut up warning. */
             ammo_threshold = o->outfit->u.bay.amount;
             ammo_threshold = round( (double)ammo_threshold * pilot->stats.fbay_capacity );
             /* Adjust for deployed fighters if needed */
             ammo_threshold -= o->u.ammo.deployed;
-            reload_time = o->outfit->u.bay.reload_time * pilot->stats.fbay_reload;
+            reload_time = o->outfit->u.bay.reload_time * (2.-pilot->stats.fbay_reload);
          }
 
          /* Add to timer. */
