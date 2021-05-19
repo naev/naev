@@ -1590,8 +1590,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       pilot_rmFlag( p, PILOT_BOARDING ); /* Can get boarded again. */
 
       /* If hostile, must remove counter. */
-      if (pilot_isHostile(p))
-      {
+      if (pilot_isHostile(p)) {
          player.disabled_enemies--;
          /* Time to play combat music. */
          music_choose("combat");
@@ -1638,7 +1637,7 @@ static void pilot_dead( Pilot* p, unsigned int killer )
    pilot_rmFlag(p,PILOT_HYP_BRAKE);
    pilot_rmFlag(p,PILOT_HYPERSPACE);
 
-   /* Turn off all outfits, should disable Lua stuff as necssary. */
+   /* Turn off all outfits, should disable Lua stuff as necessary. */
    pilot_outfitOffAll( p );
 
    /* Pilot must die before setting death flag and probably messing with other flags. */
@@ -1650,8 +1649,10 @@ static void pilot_dead( Pilot* p, unsigned int killer )
       hparam.type       = HOOK_PARAM_NIL;
    pilot_runHookParam( p, PILOT_HOOK_DEATH, &hparam, 1 );
 
-   /* PILOT R OFFICIALLY DEADZ0R */
-   pilot_setFlag( p, PILOT_DEAD );
+   /* Need a check here in case the hook "regenerates" the pilot. */
+   if (p->armour <= 0.)
+      /* PILOT R OFFICIALLY DEADZ0R */
+      pilot_setFlag( p, PILOT_DEAD );
 }
 
 
@@ -2014,10 +2015,13 @@ void pilot_update( Pilot* pilot, double dt )
          pilot_setFlag(pilot,PILOT_EXPLODED);
          pilot_runHook( pilot, PILOT_HOOK_EXPLODED );
 
-         /* Release cargo */
-         for (i=0; i<array_size(pilot->commodities); i++)
-            commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
-                  pilot->commodities[i].quantity );
+         /* We do a check here in case the pilot was regenerated. */
+         if (pilot_isFlag(pilot, PILOT_EXPLODED)) {
+            /* Release cargo */
+            for (i=0; i<array_size(pilot->commodities); i++)
+               commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
+                     pilot->commodities[i].quantity );
+         }
       }
       /* reset random explosion timer */
       else if (pilot->timer[1] <= 0.) {
@@ -2040,7 +2044,7 @@ void pilot_update( Pilot* pilot, double dt )
       }
 
       /* completely destroyed with final explosion */
-      if (pilot->ptimer < 0.) {
+      if (pilot_isFlag(pilot,PILOT_DEAD) && (pilot->ptimer < 0.)) {
          if (pilot->id==PLAYER_ID) /* player.p handled differently */
             player_destroyed();
          pilot_delete(pilot);
