@@ -55,6 +55,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LAUNCH_DAMAGE,   /**< Launch damage for missiles. */
    SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */
    SS_TYPE_D_LAUNCH_LOCKON,   /**< Lock-on speed of launchers. */
+   SS_TYPE_D_LAUNCH_RELOAD,   /**< Regeneration rate of launcher ammo. */
 
    /* Fighter Bays. */
    SS_TYPE_D_FBAY_DAMAGE,     /**< Fighter bay fighter damage bonus (all weapons). */
@@ -62,6 +63,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_FBAY_MOVEMENT,   /**< Fighter bay fighter movement bonus (turn, thrust, and speed). */
    SS_TYPE_D_FBAY_CAPACITY,   /**< Capacity of fighter bays. */
    SS_TYPE_D_FBAY_RATE,       /**< Launch rate for fighter bays. */
+   SS_TYPE_D_FBAY_RELOAD,     /**< Regeneration rate of fighters. */
 
    /* Forward mounts. */
    SS_TYPE_D_FORWARD_HEAT,    /**< Heat generation for cannons. */
@@ -206,6 +208,7 @@ typedef struct ShipStats_ {
    double launch_damage;   /**< Damage of launchers. */
    double ammo_capacity;   /**< Capacity of launchers. */
    double launch_lockon;   /**< Lock on speed of launchers. */
+   double launch_reload;   /**< Reload rate of launchers. */
 
    /* Fighter bays. */
    double fbay_damage;     /**< Fighter bay fighter damage (all weapons). */
@@ -213,6 +216,7 @@ typedef struct ShipStats_ {
    double fbay_movement;   /**< Fighter bay fighter movement (thrust, turn, and speed). */
    double fbay_capacity;   /**< Capacity of fighter bays. */
    double fbay_rate;       /**< Launch rate of fighter bays. */
+   double fbay_reload;     /**< Reload rate of fighters. */
 
    /* Fighter/Corvette type. */
    double fwd_heat;        /**< Heat of forward mounts. */

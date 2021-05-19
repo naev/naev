@@ -107,12 +107,14 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE,      launch_damage,       gettext_noop("Damage (Launcher)") ),
    D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       gettext_noop("Ammo Capacity") ),
    D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       gettext_noop("Launch Lock-on") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RELOAD,      launch_reload,       gettext_noop("Ammo Reload Rate") ),
 
    D__ELEM( SS_TYPE_D_FBAY_DAMAGE,        fbay_damage,         gettext_noop("Fighter Damage") ),
    D__ELEM( SS_TYPE_D_FBAY_HEALTH,        fbay_health,         gettext_noop("Fighter Health") ),
    D__ELEM( SS_TYPE_D_FBAY_MOVEMENT,      fbay_movement,       gettext_noop("Fighter Movement") ),
    D__ELEM( SS_TYPE_D_FBAY_CAPACITY,      fbay_capacity,       gettext_noop("Fighter Bay Capacity") ),
    D__ELEM( SS_TYPE_D_FBAY_RATE,          fbay_rate,           gettext_noop("Fighter Bay Launch Rate") ),
+   D__ELEM( SS_TYPE_D_FBAY_RELOAD,        fbay_reload,         gettext_noop("Fighter Reload Rate") ),
 
    DI_ELEM( SS_TYPE_D_FORWARD_HEAT,       fwd_heat,            gettext_noop("Heat (Cannon)") ),
    D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,     fwd_damage,          gettext_noop("Damage (Cannon)") ),
