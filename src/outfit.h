@@ -305,6 +305,7 @@ typedef struct OutfitFighterBayData_ {
    struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
    int amount;       /**< Amount of ammo it can store. */
+   double reload_time; /**< Time it takes to reload 1 ammo. */
 } OutfitFighterBayData;
 
 /**
