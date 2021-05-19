@@ -1832,6 +1832,7 @@ void pilot_update( Pilot* pilot, double dt )
    Damage dmg;
    double stress_falloff;
    double efficiency, thrust;
+   double reload_time;
 
    /* Modify the dt with speedup. */
    dt *= pilot->stats.time_speedup;
@@ -1889,32 +1890,36 @@ void pilot_update( Pilot* pilot, double dt )
       if ( ( o->outfit != NULL ) &&
             ( outfit_isLauncher( o->outfit ) || outfit_isFighterBay( o->outfit ) ) &&
             ( outfit_ammo( o->outfit ) != NULL ) ) {
-         if (o->rtimer < o->outfit->u.lau.reload_time)
-            o->rtimer += dt;
 
          /* Initial (raw) ammo threshold */
          ammo_threshold = o->outfit->u.lau.amount;
-         if (outfit_isLauncher(o->outfit))
+         if (outfit_isLauncher(o->outfit)) {
             ammo_threshold = round( (double)ammo_threshold * pilot->stats.ammo_capacity );
+            reload_time = o->outfit->u.lau.reload_time * pilot->stats.launch_reload;
+         }
 
-         if ( outfit_isFighterBay( o->outfit ) ) {
+         if (outfit_isFighterBay( o->outfit)) {
             ammo_threshold = round( (double)ammo_threshold * pilot->stats.fbay_capacity );
             /* Adjust for deployed fighters if needed */
             ammo_threshold -= o->u.ammo.deployed;
+            reload_time = o->outfit->u.lau.reload_time * pilot->stats.fbay_reload;
          }
+
+         /* Add to timer. */
+         if (o->rtimer < reload_time)
+            o->rtimer += dt;
 
          /* Don't allow accumulation of the timer before reload allowed */
-         if ( o->u.ammo.quantity >= ammo_threshold ) {
+         if ( o->u.ammo.quantity >= ammo_threshold )
             o->rtimer = 0;
-         }
 
-         while ( ( o->rtimer >= o->outfit->u.lau.reload_time ) &&
-               ( o->u.ammo.quantity < ammo_threshold ) ) {
-            o->rtimer -= o->outfit->u.lau.reload_time;
+         while ((o->rtimer >= reload_time) &&
+               (o->u.ammo.quantity < ammo_threshold)) {
+            o->rtimer -= reload_time;
             pilot_addAmmo( pilot, o, outfit_ammo( o->outfit ), 1 );
          }
 
-         o->rtimer = MIN( o->rtimer, o->outfit->u.lau.reload_time );
+         o->rtimer = MIN( o->rtimer, reload_time );
       }
 
       /* Handle state timer. */
