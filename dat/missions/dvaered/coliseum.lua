@@ -18,6 +18,7 @@ logidstr = "log_totoran"
 logname  = _("Totoran Tournament")
 logtype  = _("Totoran Tournament")
 
+-- TODO replace portraits/images
 npc_portrait   = "dvaered_thug1.png"
 npc_image      = "dvaered_thug1.png"
 npc_name       = _("Tournament Organizer")
@@ -234,19 +235,20 @@ function p_death( p )
    enemy_out( p )
 end
 function player_lost_disable ()
-   hook.rm( pp_hook_dead )
    local pp = player.pilot()
    player.cinematics( true )
    pp:setInvincible( true )
    pp:setInvisible( true )
    -- omsg does not display so we need a custom solution
    --player.omsgAdd( _("YOU LOST!"), 4.5 )
-   hook.timer( 5000, "leave_the_ring" )
+   if not leave_hook then
+      leave_hook = hook.timer( 5000, "leave_the_ring" )
+   end
 end
 function player_lost ()
    hook.rm( pp_hook_disable )
    local pp = player.pilot()
-   pp:setHealth( 100, 0 ) -- Heal up to avoid game over if necessary
+   pp:setHealth( 100, 100 ) -- Heal up to avoid game over if necessary
    pp:setHide( true )
    pp:setInvincible( true )
    player.cinematics( true )
@@ -254,7 +256,9 @@ function player_lost ()
    -- omsg does not display so we need a custom solution
    --player.omsgAdd( _("YOU LOST!"), 5 )
    --shiplog.appendLog( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
-   exploded_hook = hook.timer( 5000, "leave_the_ring")
+   if not leave_hook then
+      leave_hook = hook.timer( 3000, "leave_the_ring")
+   end
 end
 
 

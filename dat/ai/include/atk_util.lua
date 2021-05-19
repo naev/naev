@@ -34,20 +34,21 @@ end
 -- But the clean way would require to have stored the target position into memory
 -- This test should be put in any subtask of the attack task.
 --]]
-function _atk_check_seeable()
+function _atk_check_seeable( target )
    local self   = ai.pilot()
-   local target = ai.taskdata()
 
-   -- Pilot still sees the target: continue attack
-   if self:inrange( target ) then
-      return true
-   end
+   if not target:flags().hide then
+      -- Pilot still sees the target: continue attack
+      if self:inrange( target ) then
+         return true
+      end
 
-   -- Pilots on manual control (in missions or events) never loose target
-   -- /!\ This is not necessary desirable all the time /!\
-   -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control 
-   if self:flags().manualcontrol then
-      return true
+      -- Pilots on manual control (in missions or events) never loose target
+      -- /!\ This is not necessary desirable all the time /!\
+      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control 
+      if self:flags().manualcontrol then
+         return true
+      end
    end
 
    ai.settarget(self) -- Un-target
@@ -92,7 +93,7 @@ function _atk_zigzag()
    end
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable() then return end
+   if not _atk_check_seeable( target ) then return end
 
    -- Is there something to dodge?
    if (not ai.hasprojectile()) then

@@ -2864,7 +2864,9 @@ static int pilotL_setHealth( lua_State *L )
 
    /* Clear death hooks if not dead. */
    if (p->armour > 0.) {
+      pilot_rmFlag( p, PILOT_DISABLED );
       pilot_rmFlag( p, PILOT_DEAD );
+      pilot_rmFlag( p, PILOT_DEATH_SOUND );
       pilot_rmFlag( p, PILOT_EXPLODED );
       pilot_rmFlag( p, PILOT_DELETE );
       if (pilot_isPlayer(p))
