@@ -53,6 +53,7 @@
   <shield_mod>40</shield_mod>
   <shield_regen_mod>30</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
-  <fbay_capacity>100</fbay_capacity>
+  <fbay_rate>50</fbay_rate>
+  <fbay_reload>50</fbay_reload>
  </stats>
 </ship>
