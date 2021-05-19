@@ -34,9 +34,8 @@ end
 -- But the clean way would require to have stored the target position into memory
 -- This test should be put in any subtask of the attack task.
 --]]
-function _atk_check_seeable()
+function _atk_check_seeable( target )
    local self   = ai.pilot()
-   local target = ai.taskdata()
 
    -- Pilot still sees the target: continue attack
    if self:inrange( target ) then
@@ -92,7 +91,7 @@ function _atk_zigzag()
    end
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable() then return end
+   if not _atk_check_seeable( target ) then return end
 
    -- Is there something to dodge?
    if (not ai.hasprojectile()) then

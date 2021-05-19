@@ -50,7 +50,7 @@ function _atk_drone_ranged( target, dist )
    else
       -- First test if we should zz
       if _atk_decide_zz() then
-         ai.pushsubtask("_atk_zigzag")
+         ai.pushsubtask("_atk_zigzag", target)
       end
    end
 
@@ -75,7 +75,7 @@ function atk_drone( target )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable() then return end
+   if not _atk_check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -108,7 +108,7 @@ function _atk_d_flyby( target, dist )
 
    -- First test if we should zz
    if _atk_decide_zz() then
-      ai.pushsubtask("_atk_zigzag")
+      ai.pushsubtask("_atk_zigzag", target)
    end
 
    -- Far away, must approach
@@ -172,7 +172,7 @@ function _atk_d_space_sup( target, dist )
 
    -- First test if we should zz
    if _atk_decide_zz() then
-      ai.pushsubtask("_atk_zigzag")
+      ai.pushsubtask("_atk_zigzag", target)
    end
 
    --if we're far away from the target, then turn and approach

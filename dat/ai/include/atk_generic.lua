@@ -75,7 +75,7 @@ function atk_generic( target )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable() then return end
+   if not _atk_check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -110,7 +110,7 @@ function _atk_g_ranged_dogfight( target, dist )
    else
       -- Test if we should zz
       if ai.pilot():stats().mass < 400 and _atk_decide_zz() then
-         ai.pushsubtask("_atk_zigzag")
+         ai.pushsubtask("_atk_zigzag", target)
       end
    end
 
