@@ -37,16 +37,18 @@ end
 function _atk_check_seeable( target )
    local self   = ai.pilot()
 
-   -- Pilot still sees the target: continue attack
-   if self:inrange( target ) then
-      return true
-   end
+   if not target:flags().hide then
+      -- Pilot still sees the target: continue attack
+      if self:inrange( target ) then
+         return true
+      end
 
-   -- Pilots on manual control (in missions or events) never loose target
-   -- /!\ This is not necessary desirable all the time /!\
-   -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control 
-   if self:flags().manualcontrol then
-      return true
+      -- Pilots on manual control (in missions or events) never loose target
+      -- /!\ This is not necessary desirable all the time /!\
+      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control 
+      if self:flags().manualcontrol then
+         return true
+      end
    end
 
    ai.settarget(self) -- Un-target
