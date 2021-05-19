@@ -57,6 +57,6 @@
   <shield_regen_mod>35</shield_regen_mod>
   <fbay_capacity>50</fbay_capacity>
   <fbay_rate>50</fbay_rate>
-  <fbay_reload>50</fbay_reload>
+  <fbay_reload>25</fbay_reload>
  </stats>
 </ship>
