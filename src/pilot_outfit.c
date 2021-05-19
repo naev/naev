@@ -1075,6 +1075,7 @@ void pilot_calcStats( Pilot* pilot )
    if (amount.fbay_rate > 0) {
       s->fbay_rate = default_s->fbay_rate + (s->fbay_rate-default_s->fbay_rate) * exp( -0.15 * (double)(MAX(amount.fbay_rate-1.,0)) );
    }
+   /* TODO reload rates should also be handled here. */
    /*
     * Electronic warfare setting base parameters.
     */
