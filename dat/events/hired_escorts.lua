@@ -390,8 +390,9 @@ end
 
 -- Escort got killed
 function pilot_death( p, attacker, arg )
+   local edata = escorts[arg]
    shiplog.appendLog( logidstr, string.format(_("'%s' (%s) was killed in combat."), edata.name, edata.ship) )
-   pilot_disbanded( escorts[arg] )
+   pilot_disbanded( edata )
 end
 
 -- Approaching hired pilot at the bar
