@@ -37,6 +37,9 @@ local portrait = require "portrait"
 require "pilot/generic"
 require "pilot/pirate"
 
+logidstr = "log_hiredescort"
+logname = _("Hired Escorts")
+logtype = _("Hired Escorts")
 
 npctext = {}
 npctext[1] = _([["Hi there! I'm looking to get some piloting experience. Here are my credentials. Would you be interested in hiring me?"]])
@@ -317,6 +320,7 @@ function standing ()
             and edata.pilot:exists() then
          local f = faction.get(edata.faction)
          if f ~= nil and f:playerStanding() < 0 then
+            shiplog.appendLog( logidstr, string.format(_("'%s' (%s) has left your employment."), edata.name, edata.ship) )
             pilot_disbanded( edata )
          end
       end
@@ -353,6 +357,7 @@ function pilot_askFire( edata, npc_id )
          evt.npcRm(npc_id)
          npcs[npc_id] = nil
       end
+      shiplog.appendLog( logidstr, string.format(_("You fired '%s' (%s)."), edata.name, edata.ship) )
       pilot_disbanded( edata )
    end
 end
@@ -378,6 +383,7 @@ function pilot_attacked( p, attacker, dmg, arg )
          -- Since all the escorts will turn on the player, we might as well
          -- just have them all disband at once and attack.
          for i, edata in ipairs(escorts) do
+            shiplog.appendLog( logidstr, string.format(_("You turned on your hired escort '%s' (%s)."), edata.name, edata.ship) )
             pilot_disbanded( edata )
             edata.pilot:setHostile()
          end
@@ -387,6 +393,7 @@ end
 
 -- Escort got killed
 function pilot_death( p, attacker, arg )
+   shiplog.appendLog( logidstr, string.format(_("'%s' (%s) was killed in combat."), edata.name, edata.ship) )
    pilot_disbanded( escorts[arg] )
 end
 
@@ -442,5 +449,9 @@ function approachPilot( npc_id )
          _("This is one of the pilots currently under your wing."), 8 )
    npcs[id] = pdata
    evt.save(true)
+
+   local edata = escorts[i]
+   shiplog.createLog( logidstr, logname, logtype )
+   shiplog.appendLog( logidstr, string.format(_("You hired a %s ship named '%s' for %s and %.1f%% of mission earnings."), edata.ship, edata.name, creditstring(edata.deposit), edata.royalty * 100 ) )
 end
 
