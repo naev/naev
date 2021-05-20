@@ -21,7 +21,7 @@
 
 
 #define TAB_HEIGHT   30
-#define TAB_HMARGIN 3
+#define TAB_HMARGIN  3
 #define TAB_HPADDING 15
 
 
@@ -88,9 +88,9 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->dat.tab.font       = &gl_smallFont;
 
    /* position/size */
-   wgt->x = (double) (x<0) ? 0 : x;
-   wgt->y = (double) (y<0) ? 0 : y;
-   wgt->w = (double) (w<0) ? wdw->w : w;
+   wgt->x = (double) (x<0) ? 3. : x;
+   wgt->y = (double) (y<0) ? 3. : y;
+   wgt->w = (double) (w<0) ? wdw->w-6. : w;
    wgt->h = (double) (h<0) ? wdw->h : h;
 
    /* Calculate window position and size. */
@@ -250,7 +250,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       if (x < p)
          break;
 
-      p += (TAB_HPADDING * 2) + tab->dat.tab.namelen[i];
+      p += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
 
       /* Too far right, try next tab. */
       if (x >= p)
@@ -383,31 +383,24 @@ static void tab_render( Widget* tab, double bx, double by )
 
    /* Render tabs ontop. */
    dx = 0;
-   x = bx+tab->x+1;
-   y = by+tab->y+1;
+   x = bx+tab->x;
+   y = by+tab->y;
    if (tab->dat.tab.tabpos == 1)
       y += tab->h-TAB_HEIGHT;
 
    /* Draw tab bar backgrund */
-   toolkit_drawRect( x, y, wdw->w, TAB_HEIGHT+2, &cGrey10, NULL);
+   toolkit_drawRect( x, y, wdw->w, TAB_HEIGHT+2, &cBlack, NULL);
 
    /* Iterate through tabs */
    for (i=0; i<tab->dat.tab.ntabs; i++) {
 
-      /* Draw border rect - first tab doesn't have left border */
-      /* toolkit_drawRect( 
-          (i == 0 ? x : x-2), 
-          y, 
-          (i == 0 ? 2 : 4 ) + tab->dat.tab.namelen[i] + (TAB_HPADDING * 2),
-          TAB_HEIGHT + 2, &cGrey10, NULL ); */
-
       /* Draw contents rect */
-      toolkit_drawRect( 
+      toolkit_drawRect(
           x, y, tab->dat.tab.namelen[i] + (TAB_HPADDING * 2),
-          ( i == tab->dat.tab.active ? TAB_HEIGHT  + 2: TAB_HEIGHT ), 
-          ( i == tab->dat.tab.active ? tab_active : tab_inactive), 
+          (i == tab->dat.tab.active ? TAB_HEIGHT  + 2: TAB_HEIGHT),
+          (i == tab->dat.tab.active ? tab_active : tab_inactive),
           NULL );
-      
+
       /* Draw text. */
       gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
             y + (TAB_HEIGHT-tab->dat.tab.font->h)/2, &cFontWhite, -1.,
