@@ -656,7 +656,7 @@ end
 -- Flies back and tries to either dock or stops when back at leader
 function flyback( dock )
    local target = ai.pilot():leader()
-   if not target:exists() then
+   if not target or not target:exists() then
       ai.poptask()
       return
    end
