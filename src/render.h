@@ -20,10 +20,14 @@ enum {
 
 void fps_setPos( double x, double y );
 void render_all( double game_dt, double real_dt );
+void render_init (void);
 void render_exit (void);
 
 unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority );
 int render_postprocessRm( unsigned int id );
+
+/* Special post-processing shaders. */
+void render_setGamma( double gamma );
 
 
 #endif /* RENDER_H */

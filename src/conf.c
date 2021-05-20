@@ -257,6 +257,7 @@ void conf_setVideoDefaults (void)
    conf.minimize     = MINIMIZE_DEFAULT;
    conf.colorblind   = COLORBLIND_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
+   conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
 
    /* FPS. */
    conf.fps_show     = SHOW_FPS_DEFAULT;
@@ -360,6 +361,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
+      conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
 
       /* FPS */
       conf_loadBool( lEnv, "showfps", conf.fps_show );
@@ -906,7 +908,11 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment(_("Background brightness. 1 is normal brightness while setting it to 0 would make the backgrounds pitch black."));
-   conf_saveBool("bg_brightness",conf.bg_brightness);
+   conf_saveFloat("bg_brightness",conf.bg_brightness);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Gamma correction parameter. A value of 1 disables it (no curve)."))
+   conf_saveFloat("gamma_correction",conf.gamma_correction);
    conf_saveEmptyLine();
 
    /* FPS */
