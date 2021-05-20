@@ -333,6 +333,7 @@ int main( int argc, char** argv )
    fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
 
    /* Misc graphics init */
+   render_init();
    if (nebu_init() != 0) { /* Initializes the nebula */
       /* An error has happened */
       ERR( _("Unable to initialize the Nebula subsystem!") );

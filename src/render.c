@@ -50,6 +50,10 @@ static unsigned int pp_shaders_id = 0;
 static PPShader *pp_shaders_list[PP_LAYER_MAX] = {NULL, NULL}; /**< Post-processing shaders for game layer. */
 
 
+static LuaShader_t gamma_correction_shader;
+static int pp_gamma_correction = 0; /**< Gamma correction shader. */
+
+
 /**
  * @brief Renders an FBO.
  */
@@ -343,6 +347,21 @@ int render_postprocessRm( unsigned int id )
 
 
 /**
+ * @brief Sets up the post-processing stuff.
+ */
+void render_init (void)
+{
+   LuaShader_t *s;
+   s = &gamma_correction_shader;
+   memset( s, 0, sizeof(LuaShader_t) );
+   s->program            = shaders.gamma_correction.program;
+   s->VertexPosition     = shaders.gamma_correction.VertexPosition;
+   s->ClipSpaceFromLocal = shaders.gamma_correction.ClipSpaceFromLocal;
+   s->MainTex            = shaders.gamma_correction.MainTex;
+}
+
+
+/**
  * @brief Cleans up the post-processing stuff.
  */
 void render_exit (void)
@@ -354,3 +373,24 @@ void render_exit (void)
    }
 }
 
+
+/**
+ * @brief Sets the gamma.
+ */
+void render_setGamma( double gamma )
+{
+   if (pp_gamma_correction > 0) {
+      render_postprocessRm( pp_gamma_correction );
+      pp_gamma_correction = 0;
+   }
+
+   /* Ignore small gamma. */
+   if (fabs(gamma-1.) < 1e-3)
+      return;
+
+   /* Set gamma and upload. */
+   glUseProgram( shaders.gamma_correction.program );
+   glUniform1f( shaders.gamma_correction.gamma, gamma );
+   glUseProgram( 0 );
+   pp_gamma_correction = render_postprocessAdd( &gamma_correction_shader, PP_LAYER_FINAL, 98 );
+}
