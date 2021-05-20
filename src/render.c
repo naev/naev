@@ -6,6 +6,7 @@
 #include "render.h"
 
 #include "array.h"
+#include "conf.h"
 #include "font.h"
 #include "gui.h"
 #include "hook.h"
@@ -358,6 +359,9 @@ void render_init (void)
    s->VertexPosition     = shaders.gamma_correction.VertexPosition;
    s->ClipSpaceFromLocal = shaders.gamma_correction.ClipSpaceFromLocal;
    s->MainTex            = shaders.gamma_correction.MainTex;
+
+   /* Initialize the gamma. */
+   render_setGamma( conf.gamma_correction );
 }
 
 
