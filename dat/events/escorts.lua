@@ -327,11 +327,13 @@ end
 function pilot_disbanded( e )
    e.alive = false
    local p = e.pilot
-   p:setLeader(nil)
-   p:setVisplayer(false)
-   p:setNoClear(false)
-   p:setFriendly(false)
-   p:hookClear()
+   if p:exists() then
+      p:setLeader(nil)
+      p:setVisplayer(false)
+      p:setNoClear(false)
+      p:setFriendly(false)
+      p:hookClear()
+   end
 end
 
 -- Pilot was hailed by the player
