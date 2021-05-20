@@ -908,7 +908,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment(_("Background brightness. 1 is normal brightness while setting it to 0 would make the backgrounds pitch black."));
-   conf_saveBool("bg_brightness",conf.bg_brightness);
+   conf_saveFloat("bg_brightness",conf.bg_brightness);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Gamma correction parameter. A value of 1 disables it (no curve)."))
