@@ -136,6 +136,8 @@ function handle_messages ()
          elseif msgtype == "e_return" then
             if p:flags().carried then
                ai.pushtask("flyback", true)
+            else
+               ai.pushtask("flyback", false)
             end
          -- Clear orders
          elseif msgtype == "e_clear" then
