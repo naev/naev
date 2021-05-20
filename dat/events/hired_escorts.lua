@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<event name="Escort Handler">
+<event name="Hired Escort Handler">
  <trigger>load</trigger>
  <chance>100</chance>
  <flags>
@@ -222,6 +222,8 @@ end
 
 
 function enter ()
+   if var.peek( "hired_escorts_disabled" ) then return end
+
    if standing_hook == nil then
       standing_hook = hook.standing("standing")
    end

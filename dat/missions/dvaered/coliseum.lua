@@ -154,7 +154,10 @@ function enter_the_ring ()
 
    -- Set up player stuff
    player.pilot():setPos( vec2.new( 0, 0 ) )
+   -- Disable escorts if they exist
+   var.push("hired_escorts_disabled",true)
    player.teleport(coliseum)
+   var.pop("hired_escorts_disabled")
 
    -- Player lost info
    local pp = player.pilot()
