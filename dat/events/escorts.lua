@@ -292,7 +292,8 @@ function enter ()
             hook.pilot(edata.pilot, "attacked", "pilot_attacked", i)
             hook.pilot(edata.pilot, "hail", "pilot_hail", i)
          else
-            edata.alive = false
+            shiplog.appendLog( logidstr, string.format(_("'%s' (%s) has left your employment."), edata.name, edata.ship) )
+            pilot_disbanded( edata )
          end
       end
    end
