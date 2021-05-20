@@ -77,16 +77,16 @@ end
 
 function createPilotNPCs ()
    local ship_choices = {
-      --{ ship = "Llama", royalty = 0.05 },
-      { ship = "Hyena", royalty = 0.1 },
-      { ship = "Shark", royalty = 0.15 },
-      { ship = "Vendetta", royalty = 0.2 },
-      { ship = "Lancelot", royalty = 0.2 },
-      { ship = "Ancestor", royalty = 0.25 },
-      { ship = "Admonisher", royalty = 0.35 },
-      { ship = "Phalanx", royalty = 0.35 },
-      { ship = "Pacifier", royalty = 0.45 },
-      { ship = "Vigilance", royalty = 0.45 },
+      --{ ship = "Llama",       royalty = 0.05 },
+      { ship = "Hyena",       royalty = 0.1 },
+      { ship = "Shark",       royalty = 0.15 },
+      { ship = "Vendetta",    royalty = 0.2 },
+      { ship = "Lancelot",    royalty = 0.2 },
+      { ship = "Ancestor",    royalty = 0.25 },
+      { ship = "Admonisher",  royalty = 0.35 },
+      { ship = "Phalanx",     royalty = 0.35 },
+      { ship = "Pacifier",    royalty = 0.45 },
+      { ship = "Vigilance",   royalty = 0.45 },
    }
    local num_pilots = rnd.rnd(0, 5)
    local fac = faction.get("Mercenary")
@@ -96,22 +96,22 @@ function createPilotNPCs ()
    local pf = planet.cur():faction()
    if pf == faction.get("Pirate") then
       ship_choices = {
-         { ship = "Hyena", royalty = 0.1 },
-         { ship = "Pirate Shark", royalty = 0.15 },
-         { ship = "Pirate Vendetta", royalty = 0.2 },
-         { ship = "Pirate Ancestor", royalty = 0.25 },
+         { ship = "Hyena",             royalty = 0.1 },
+         { ship = "Pirate Shark",      royalty = 0.15 },
+         { ship = "Pirate Vendetta",   royalty = 0.2 },
+         { ship = "Pirate Ancestor",   royalty = 0.25 },
          { ship = "Pirate Admonisher", royalty = 0.35 },
-         { ship = "Pirate Phalanx", royalty = 0.35 },
+         { ship = "Pirate Phalanx",    royalty = 0.35 },
       }
       fac = faction.get("Pirate")
       name_func = pirate_name
       portrait_arg = "Pirate"
    elseif pf == faction.get("Thurion") then
       ship_choices = {
-         { ship = "Thurion Ingenuity", royalty = 0.15 },
+         { ship = "Thurion Ingenuity",     royalty = 0.15 },
          { ship = "Thurion Scintillation", royalty = 0.25 },
-         { ship = "Thurion Virtuosity", royalty = 0.35 },
-         { ship = "Thurion Apprehension", royalty = 0.5 },
+         { ship = "Thurion Virtuosity",    royalty = 0.35 },
+         { ship = "Thurion Apprehension",  royalty = 0.5 },
       }
       fac = faction.get("Thurion")
       portrait_arg = "Thurion"
