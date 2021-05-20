@@ -90,7 +90,8 @@ function createPilotNPCs ()
    local name_func = pilot_name
    local portrait_arg = nil
 
-   if planet.cur():faction() == faction.get("Pirate") then
+   local pf = planet.cur():faction()
+   if pf == faction.get("Pirate") then
       ship_choices = {
          { ship = "Hyena", royalty = 0.1 },
          { ship = "Pirate Shark", royalty = 0.15 },
@@ -102,7 +103,7 @@ function createPilotNPCs ()
       fac = faction.get("Pirate")
       name_func = pirate_name
       portrait_arg = "Pirate"
-   elseif planet.cur():faction() == faction.get("Thurion") then
+   elseif pf == faction.get("Thurion") then
       ship_choices = {
          { ship = "Thurion Ingenuity", royalty = 0.15 },
          { ship = "Thurion Scintillation", royalty = 0.25 },
@@ -255,6 +256,7 @@ function enter ()
             edata.pilot:addOutfit(o)
          end
          edata.pilot:fillAmmo()
+         edata.pilot:setFriendly()
 
          local temp = 250
          local armor = 100
@@ -271,7 +273,7 @@ function enter ()
             shield = edata.shield
          end
          if edata.stress ~= nil then
-            -- Limit this to 99 so we don't have the weridness of a
+            -- Limit this to 99 so we don't have the weirdness of a
             -- disabled ship warping in.
             stress = math.min(edata.stress, 99)
          end
