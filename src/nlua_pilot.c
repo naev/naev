@@ -872,6 +872,9 @@ static int pilotL_getHostiles( lua_State *L )
    lua_newtable(L);
    k = 1;
    for (i=0; i<array_size(pilot_stack); i++) {
+      /* Check if dead. */
+      if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+         continue;
       /* Must be hostile. */
       if ( !( areEnemies( pilot_stack[i]->faction, p->faction )
                || ( (p->id == PLAYER_ID)
