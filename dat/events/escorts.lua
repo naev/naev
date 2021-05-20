@@ -228,9 +228,6 @@ function enter ()
    if standing_hook == nil then
       standing_hook = hook.standing("standing")
    end
-   if hail_hook == nil then
-      hail_hook = hook.hail("hail")
-   end
 
    local spawnpoint
    if lastsys == system.cur() then
@@ -291,6 +288,7 @@ function enter ()
             edata.pilot:setNoClear(true)
             hook.pilot(edata.pilot, "death", "pilot_death", i)
             hook.pilot(edata.pilot, "attacked", "pilot_attacked", i)
+            hook.pilot(edata.pilot, "hail", "pilot_hail", i)
          else
             edata.alive = false
          end
@@ -324,30 +322,6 @@ function standing ()
    end
 end
 
-
-function hail( p )
-   for i, edata in ipairs(escorts) do
-      if edata.alive and edata.pilot == p then
-         player.commClose()
-
-         local credits, scredits = player.credits(2)
-         local approachtext = (
-               pilot_action_text .. "\n\n" .. credentials:format(
-                  edata.name, edata.ship, creditstring(edata.deposit),
-                  edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
-
-         local n, s = tk.choice(
-               "", approachtext, _("Fire pilot"), _("Do nothing") )
-         if n == 1 and tk.yesno(
-               "", string.format(
-                  _("Are you sure you want to fire %s? This cannot be undone."),
-                  edata.name ) ) then
-            pilot_disbanded( edata )
-         end
-      end
-   end
-end
-
 -- Pilot is no longer employed by the player
 function pilot_disbanded( e )
    e.alive = false
@@ -357,6 +331,29 @@ function pilot_disbanded( e )
    p:setNoClear(false)
    p:setFriendly(false)
    p:hookClear()
+end
+
+-- Pilot was hailed by the player
+function pilot_hail( p, arg )
+   local edata = escorts[arg]
+   if edata.alive then
+      player.commClose()
+
+      local credits, scredits = player.credits(2)
+      local approachtext = (
+            pilot_action_text .. "\n\n" .. credentials:format(
+               edata.name, edata.ship, creditstring(edata.deposit),
+               edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
+
+      local n, s = tk.choice(
+            "", approachtext, _("Fire pilot"), _("Do nothing") )
+      if n == 1 and tk.yesno(
+            "", string.format(
+               _("Are you sure you want to fire %s? This cannot be undone."),
+               edata.name ) ) then
+         pilot_disbanded( edata )
+      end
+   end
 end
 
 -- Check if player attacked his own escort
