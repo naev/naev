@@ -2,12 +2,10 @@ require("ai/tpl/generic")
 
 -- Don't run away from master ship
 mem.norun = true
-mem.escort = true -- True if is an escort
-
+mem.carrier = true -- Is a carried fighter
 
 -- Simple create function
 function create ()
-   mem.carrier = true
    attack_choose()
 
    -- Disable thinking
