@@ -171,7 +171,7 @@ function land ()
       standing_hook = nil
    end
    if hail_hook ~= nil then
-      hook.rm(hail_hook)
+      nook.rm(hail_hook)
       hail_hook = nil
    end
 
@@ -318,11 +318,7 @@ function standing ()
             and edata.pilot:exists() then
          local f = faction.get(edata.faction)
          if f ~= nil and f:playerStanding() < 0 then
-            edata.alive = false
-            edata.pilot:setLeader(nil)
-            edata.pilot:setVisplayer(false)
-            edata.pilot:setNoClear(false)
-            edata.pilot:hookClear()
+            pilot_disbanded( edata )
          end
       end
    end
@@ -346,28 +342,34 @@ function hail( p )
                "", string.format(
                   _("Are you sure you want to fire %s? This cannot be undone."),
                   edata.name ) ) then
-            edata.alive = false
-            edata.pilot:setLeader(nil)
-            edata.pilot:setVisplayer(false)
-            edata.pilot:setNoClear(false)
-            edata.pilot:hookClear()
+            pilot_disbanded( edata )
          end
       end
    end
 end
 
+-- Pilot is no longer employed by the player
+function pilot_disbanded( e )
+   e.alive = false
+   local p = e.pilot
+   p:setLeader(nil)
+   p:setVisplayer(false)
+   p:setNoClear(false)
+   p:setFriendly(false)
+   p:hookClear()
+end
 
+-- Check if player attacked his own escort
 function pilot_attacked( p, attacker, dmg, arg )
    if attacker and attacker:leader() == p:leader() then
-      escorts[arg].alive = false
+      pilot_disbanded( escorts[arg] )
    end
 end
 
-
+-- Escort got killed
 function pilot_death( p, attacker, arg )
-   escorts[arg].alive = false
+   pilot_disbanded( escorts[arg] )
 end
-
 
 function approachEscort( npc_id )
    local edata = npcs[npc_id]
