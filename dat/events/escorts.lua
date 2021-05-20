@@ -337,23 +337,24 @@ end
 -- Pilot was hailed by the player
 function pilot_hail( p, arg )
    local edata = escorts[arg]
-   if edata.alive then
-      player.commClose()
+   if not edata.alive then
+      return
+   end
 
-      local credits, scredits = player.credits(2)
-      local approachtext = (
-            pilot_action_text .. "\n\n" .. credentials:format(
-               edata.name, edata.ship, creditstring(edata.deposit),
-               edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
+   player.commClose()
+   local credits, scredits = player.credits(2)
+   local approachtext = (
+         pilot_action_text .. "\n\n" .. credentials:format(
+            edata.name, edata.ship, creditstring(edata.deposit),
+            edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
 
-      local n, s = tk.choice(
-            "", approachtext, _("Fire pilot"), _("Do nothing") )
-      if n == 1 and tk.yesno(
-            "", string.format(
-               _("Are you sure you want to fire %s? This cannot be undone."),
-               edata.name ) ) then
-         pilot_disbanded( edata )
-      end
+   local n, s = tk.choice(
+         "", approachtext, _("Fire pilot"), _("Do nothing") )
+   if n == 1 and tk.yesno(
+         "", string.format(
+            _("Are you sure you want to fire %s? This cannot be undone."),
+            edata.name ) ) then
+      pilot_disbanded( edata )
    end
 end
 
