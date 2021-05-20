@@ -403,12 +403,12 @@ static int opt_gameplaySave( unsigned int wid, char *str )
 
    /* List. */
    p = toolkit_getListPos( wid, "lstLanguage" );
-   s = p==0 ? NULL : toolkit_getList( wid, "lstLanguage" );
+   s = (p==0) ? NULL : toolkit_getList( wid, "lstLanguage" );
    newlang = ((s != NULL) != (conf.language != NULL))
 	  || ((s != NULL) && (strcmp( s, conf.language) != 0));
    if (newlang) {
       free( conf.language );
-      conf.language = s==NULL ? NULL : strdup( s );
+      conf.language = (s==NULL) ? NULL : strdup( s );
       /* Apply setting going forward; advise restart to regen other text. */
       gettext_setLanguage( conf.language );
       opt_needRestart();
