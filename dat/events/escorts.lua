@@ -134,12 +134,12 @@ function createPilotNPCs ()
          newpilot.outfits[#newpilot.outfits + 1] = o:nameRaw()
       end
 
-      deposit = math.floor((deposit + 0.2*deposit*rnd.sigma()) / 4)
+      deposit = math.floor((deposit + 0.1*deposit*rnd.sigma()) / 4)
       if deposit <= player.credits() then
          newpilot.ship = shipchoice.ship
          newpilot.deposit = deposit
          newpilot.royalty = (
-               shipchoice.royalty + 0.1*shipchoice.royalty*rnd.sigma() )
+               shipchoice.royalty + 0.05*shipchoice.royalty*rnd.sigma() )
          newpilot.name = name_func()
          newpilot.portrait = portrait.get(portrait_arg)
          newpilot.faction = fac:name()
