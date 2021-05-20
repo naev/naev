@@ -290,6 +290,7 @@ function enter ()
             edata.pilot:setVisplayer(true)
             edata.pilot:setNoClear(true)
             hook.pilot(edata.pilot, "death", "pilot_death", i)
+            hook.pilot(edata.pilot, "attacked", "pilot_attacked", i)
          else
             edata.alive = false
          end
@@ -350,6 +351,13 @@ function hail( p )
             edata.pilot:hookClear()
          end
       end
+   end
+end
+
+
+function pilot_attacked( p, attacker, dmg, arg )
+   if attacker and attacker:leader() == p:leader() then
+      escorts[arg].alive = false
    end
 end
 
