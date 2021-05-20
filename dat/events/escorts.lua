@@ -242,6 +242,7 @@ function enter ()
    end
    lastsys = system.cur()
 
+   local pp = player.pilot()
    for i, edata in ipairs(escorts) do
       if edata.alive then
          local f = faction.get(edata.faction)
@@ -283,7 +284,7 @@ function enter ()
          edata.pilot:setFuel(true)
 
          if f == nil or f:playerStanding() >= 0 then
-            edata.pilot:setLeader(player.pilot())
+            edata.pilot:setLeader(pp)
             edata.pilot:setVisplayer(true)
             edata.pilot:setNoClear(true)
             hook.pilot(edata.pilot, "death", "pilot_death", i)
@@ -358,8 +359,18 @@ end
 
 -- Check if player attacked his own escort
 function pilot_attacked( p, attacker, dmg, arg )
-   if attacker and attacker:leader() == p:leader() then
-      pilot_disbanded( escorts[arg] )
+   -- Must have an attacker
+   if attacker then
+      local l = p:leader()
+      -- Either the attacker or the attacker's leader should be their leader
+      if attacker == l or attacker:leader() == l then
+         -- Since all the escorts will turn on the player, we might as well
+         -- just have them all disband at once and attack.
+         for i, edata in ipairs(escorts) do
+            pilot_disbanded( edata )
+            edata.pilot:setHostile()
+         end
+      end
    end
 end
 
