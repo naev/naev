@@ -733,6 +733,10 @@ int event_testClaims( unsigned int eventid, int sys )
 {
    Event_t *ev;
    ev = event_get( eventid );
+   if (ev==NULL) {
+      WARN(_("Trying to test claims of unknown event with id '%d'!"), eventid);
+      return 0;
+   }
    return claim_testSys( ev->claims, sys );
 }
 
