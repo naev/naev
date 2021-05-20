@@ -112,9 +112,10 @@ end
 
 function handle_messages ()
    local p = ai.pilot()
+   local l = p:leader()
    for _, v in ipairs(ai.messages()) do
       local sender, msgtype, data = table.unpack(v)
-      if sender == p:leader() then
+      if sender == l then
          if msgtype == "form-pos" then
             mem.form_pos = data
          elseif msgtype == "hyperspace" then
@@ -126,8 +127,10 @@ function handle_messages ()
          -- Attack target
          elseif msgtype == "e_attack" then
             if data ~= nil and data:exists() then
-               clean_task( ai.taskname() )
-               ai.pushtask("attack_forced", data)
+               if data:leader() ~= l then
+                  clean_task( ai.taskname() )
+                  ai.pushtask("attack_forced", data)
+               end
             end
          -- Hold position
          elseif msgtype == "e_hold" then
@@ -136,6 +139,8 @@ function handle_messages ()
          elseif msgtype == "e_return" then
             if p:flags().carried then
                ai.pushtask("flyback", true)
+            else
+               ai.pushtask("flyback", false)
             end
          -- Clear orders
          elseif msgtype == "e_clear" then
@@ -651,7 +656,7 @@ end
 -- Flies back and tries to either dock or stops when back at leader
 function flyback( dock )
    local target = ai.pilot():leader()
-   if not target:exists() then
+   if not target or not target:exists() then
       ai.poptask()
       return
    end
