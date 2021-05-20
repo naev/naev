@@ -319,19 +319,12 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
    (void) x;
    (void) rx;
    (void) ry;
-   int psel;
    double p;
-   int h;
 
    /* Handle the scrolling if scrolling. */
    if (lst->status == WIDGET_STATUS_SCROLLING) {
       /* Make sure Y inbounds. */
       y = CLAMP( 15., lst->h-15., lst->h - y );
-
-      h = lst->h / CELLHEIGHT - 1;
-
-      /* Save previous position. */
-      psel = lst->dat.lst.pos;
 
       /* Find absolute position. */
       p  = (y - 15. ) / (lst->h - 30.) * (lst->dat.lst.height - lst->h);
