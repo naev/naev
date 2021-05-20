@@ -222,6 +222,8 @@ end
 
 
 function enter ()
+   if var.peek( "hired_escorts_disabled" ) then return end
+
    if standing_hook == nil then
       standing_hook = hook.standing("standing")
    end
