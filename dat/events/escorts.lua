@@ -171,10 +171,6 @@ function land ()
       hook.rm(standing_hook)
       standing_hook = nil
    end
-   if hail_hook ~= nil then
-      nook.rm(hail_hook)
-      hail_hook = nil
-   end
 
    -- Clean up dead escorts so it doesn't build up, and create NPCs for
    -- existing escorts.
