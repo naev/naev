@@ -1526,7 +1526,7 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
    double sy;
 
    /* scrollbar background */
-   toolkit_drawRect( x, y, w, h, toolkit_colDark, NULL );
+   toolkit_drawRect( x, y, w, h, &cGrey10, NULL );
 
    /* Bar itself. */
    sy = y + (h - 30.) * (1.-pos);
