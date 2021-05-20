@@ -135,7 +135,7 @@ function createPilotNPCs ()
             newpilot.outfits[#newpilot.outfits + 1] = o:nameRaw()
          end
 
-         deposit = math.floor((deposit + 0.2*deposit*rnd.sigma()) / 2)
+         deposit = math.floor((deposit + 0.2*deposit*rnd.sigma()) / 4)
          if deposit <= player.credits() then
             newpilot.ship = shipchoice.ship
             newpilot.deposit = deposit
