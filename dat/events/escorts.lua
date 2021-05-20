@@ -121,35 +121,33 @@ function createPilotNPCs ()
       return
    end
 
-   if num_pilots then
-      for i=1, num_pilots do
-         local newpilot = {}
-         local shipchoice = ship_choices[rnd.rnd(1, #ship_choices)]
-         local p = pilot.add(shipchoice.ship, fac)
-         local n, deposit = p:ship():price()
-         newpilot.outfits = {}
-         newpilot.outfits["__save"] = true
+   for i=1, num_pilots do
+      local newpilot = {}
+      local shipchoice = ship_choices[rnd.rnd(1, #ship_choices)]
+      local p = pilot.add(shipchoice.ship, fac)
+      local n, deposit = p:ship():price()
+      newpilot.outfits = {}
+      newpilot.outfits["__save"] = true
 
-         for j, o in ipairs(p:outfits()) do
-            deposit = deposit + o:price()
-            newpilot.outfits[#newpilot.outfits + 1] = o:nameRaw()
-         end
+      for j, o in ipairs(p:outfits()) do
+         deposit = deposit + o:price()
+         newpilot.outfits[#newpilot.outfits + 1] = o:nameRaw()
+      end
 
-         deposit = math.floor((deposit + 0.2*deposit*rnd.sigma()) / 4)
-         if deposit <= player.credits() then
-            newpilot.ship = shipchoice.ship
-            newpilot.deposit = deposit
-            newpilot.royalty = (
-                  shipchoice.royalty + 0.1*shipchoice.royalty*rnd.sigma() )
-            newpilot.name = name_func()
-            newpilot.portrait = portrait.get(portrait_arg)
-            newpilot.faction = fac:name()
-            newpilot.approachtext = npctext[rnd.rnd(1, #npctext)]
-            local id = evt.npcAdd(
-                  "approachPilot", _("Pilot"), newpilot.portrait,
-                  _("This pilot seems to be looking for work."), 9 )
-            npcs[id] = newpilot
-         end
+      deposit = math.floor((deposit + 0.2*deposit*rnd.sigma()) / 4)
+      if deposit <= player.credits() then
+         newpilot.ship = shipchoice.ship
+         newpilot.deposit = deposit
+         newpilot.royalty = (
+               shipchoice.royalty + 0.1*shipchoice.royalty*rnd.sigma() )
+         newpilot.name = name_func()
+         newpilot.portrait = portrait.get(portrait_arg)
+         newpilot.faction = fac:name()
+         newpilot.approachtext = npctext[rnd.rnd(1, #npctext)]
+         local id = evt.npcAdd(
+               "approachPilot", _("Pilot"), newpilot.portrait,
+               _("This pilot seems to be looking for work."), 9 )
+         npcs[id] = newpilot
       end
    end
 end
