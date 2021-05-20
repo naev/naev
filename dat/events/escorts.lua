@@ -324,15 +324,36 @@ function standing ()
 end
 
 -- Pilot is no longer employed by the player
-function pilot_disbanded( e )
-   e.alive = false
-   local p = e.pilot
-   if p:exists() then
+function pilot_disbanded( edata )
+   edata.alive = false
+   local p = edata.pilot
+   if p and p:exists() then
       p:setLeader(nil)
       p:setVisplayer(false)
       p:setNoClear(false)
       p:setFriendly(false)
       p:hookClear()
+   end
+end
+
+-- Asks the player whether or not they want to fire the pilot
+function pilot_askFire( edata, npc_id )
+   local credits, scredits = player.credits(2)
+   local approachtext = (
+         pilot_action_text .. "\n\n" .. credentials:format(
+            edata.name, edata.ship, creditstring(edata.deposit),
+            edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
+
+   local n, s = tk.choice( "", approachtext, _("Fire pilot"), _("Do nothing") )
+   if n == 1 and tk.yesno(
+         "", string.format(
+            _("Are you sure you want to fire %s? This cannot be undone."),
+            edata.name ) ) then
+      if npc_id then
+         evt.npcRm(npc_id)
+         npcs[npc_id] = nil
+      end
+      pilot_disbanded( edata )
    end
 end
 
@@ -344,20 +365,7 @@ function pilot_hail( p, arg )
    end
 
    player.commClose()
-   local credits, scredits = player.credits(2)
-   local approachtext = (
-         pilot_action_text .. "\n\n" .. credentials:format(
-            edata.name, edata.ship, creditstring(edata.deposit),
-            edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
-
-   local n, s = tk.choice(
-         "", approachtext, _("Fire pilot"), _("Do nothing") )
-   if n == 1 and tk.yesno(
-         "", string.format(
-            _("Are you sure you want to fire %s? This cannot be undone."),
-            edata.name ) ) then
-      pilot_disbanded( edata )
-   end
+   pilot_askFire( edata )
 end
 
 -- Check if player attacked his own escort
@@ -382,6 +390,7 @@ function pilot_death( p, attacker, arg )
    pilot_disbanded( escorts[arg] )
 end
 
+-- Approaching hired pilot at the bar
 function approachEscort( npc_id )
    local edata = npcs[npc_id]
    if edata == nil then
@@ -389,28 +398,10 @@ function approachEscort( npc_id )
       return
    end
 
-   local credits, scredits = player.credits(2)
-   local approachtext = (
-         pilot_action_text .. "\n\n" .. credentials:format(
-            edata.name, edata.ship, creditstring(edata.deposit),
-            edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
-
-   local n, s = tk.choice("", approachtext, _("Fire pilot"), _("Do nothing"))
-   if n == 1 then
-      if tk.yesno(
-            "", string.format(
-               _("Are you sure you want to fire %s? This cannot be undone."),
-               edata.name ) ) then
-         evt.npcRm(npc_id)
-         npcs[npc_id] = nil
-         -- We just set alive to false for now and let them get cleaned
-         -- up next time we land.
-         edata.alive = false
-      end
-   end
+   pilot_askFire( edata, npc_id )
 end
 
-
+-- Approaching unhired pilot at the bar
 function approachPilot( npc_id )
    local pdata = npcs[npc_id]
    if pdata == nil then
@@ -423,31 +414,33 @@ function approachPilot( npc_id )
          pdata.name, pdata.ship, creditstring(pdata.deposit),
          pdata.royalty * 100, scredits, getTotalRoyalties() * 100 )
 
-   if tk.yesno("", pdata.approachtext .. "\n\n" .. cstr) then
-      if pdata.deposit and pdata.deposit > player.credits() then
-         tk.msg("", _("You don't have enough credits to pay for this pilot's deposit."))
+   if not tk.yesno("", pdata.approachtext .. "\n\n" .. cstr) then
+      return -- Player rejected offer
+   end
+
+   if pdata.deposit and pdata.deposit > player.credits() then
+      tk.msg("", _("You don't have enough credits to pay for this pilot's deposit."))
+      return
+   end
+   if getTotalRoyalties() + pdata.royalty > 1 then
+      if not tk.yesno("", _("Hiring this pilot will lead to you paying more in royalties than you earn from missions, meaning you will lose credits when doing missions. Are you sure you want to hire this pilot?")) then
          return
       end
-      if getTotalRoyalties() + pdata.royalty > 1 then
-         if not tk.yesno("", _("Hiring this pilot will lead to you paying more in royalties than you earn from missions, meaning you will lose credits when doing missions. Are you sure you want to hire this pilot?")) then
-            return
-         end
-      end
-
-      if pdata.deposit then
-         player.pay(-pdata.deposit, true)
-      end
-
-      local i = #escorts + 1
-      pdata.alive = true
-      escorts[i] = pdata
-      evt.npcRm(npc_id)
-      npcs[npc_id] = nil
-      local id = evt.npcAdd(
-            "approachEscort", pdata.name, pdata.portrait,
-            _("This is one of the pilots currently under your wing."), 8 )
-      npcs[id] = pdata
-      evt.save(true)
    end
+
+   if pdata.deposit then
+      player.pay(-pdata.deposit, true)
+   end
+
+   local i = #escorts + 1
+   pdata.alive = true
+   escorts[i] = pdata
+   evt.npcRm(npc_id)
+   npcs[npc_id] = nil
+   local id = evt.npcAdd(
+         "approachEscort", pdata.name, pdata.portrait,
+         _("This is one of the pilots currently under your wing."), 8 )
+   npcs[id] = pdata
+   evt.save(true)
 end
 
