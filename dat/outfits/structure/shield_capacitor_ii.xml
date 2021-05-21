@@ -4,12 +4,12 @@
   <typename>Shield Modifier</typename>
   <slot>structure</slot>
   <size>medium</size>
-  <mass>18</mass>
+  <mass>80</mass>
   <price>110000</price>
   <description>A more powerful shield enhancer, providing better protection during skirmishes.</description>
   <gfx_store>capacitor2.png</gfx_store>
  </general>
  <specific type="modification">
-  <shield>75</shield>
+  <shield>200</shield>
  </specific>
 </outfit>
