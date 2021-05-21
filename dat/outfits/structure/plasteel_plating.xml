@@ -3,7 +3,7 @@
  <general>
   <typename>Armour Modifier</typename>
   <slot>structure</slot>
-  <size>medium</size>
+  <size>small</size>
   <mass />
   <price>65000</price>
   <gfx_store>plasteel.png</gfx_store>
