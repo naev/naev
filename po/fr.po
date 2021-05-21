@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-03-22 20:44-0400\n"
-"PO-Revision-Date: 2021-03-17 07:18+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2021-05-21 23:32+0000\n"
+"Last-Translator: rhebok-git <geneenkei@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -214,8 +214,6 @@ msgid "Jack Greiner <jack@emoss.org>"
 msgstr "Jack Greiner <jack@emoss.org>"
 
 #: dat/AUTHORS:23
-#, fuzzy
-#| msgid "   * Bringer of automated releases"
 msgid "   * CI dude and Bringer of automated releases"
 msgstr "   * A apporté les versions automatisées"
 
@@ -527,7 +525,7 @@ msgstr ""
 
 #: dat/AUTHORS:122
 msgid "Cypher3c <cypher3c@gmail.com>"
-msgstr ""
+msgstr "Cypher3c <cypher3c@gmail.com>"
 
 #: dat/AUTHORS:123
 msgid "   * Spiced up the boring generic cargo missios."
@@ -535,7 +533,7 @@ msgstr "   * Pimenté les missios de fret génériques ennuyeux."
 
 #: dat/AUTHORS:125
 msgid "Nathan Loewen <loewen.nathan@gmail.com>"
-msgstr ""
+msgstr "Nathan Loewen <loewen.nathan@gmail.com>"
 
 #: dat/AUTHORS:126
 msgid "   * Missions"
@@ -547,7 +545,7 @@ msgstr "   * Support de codage divers"
 
 #: dat/AUTHORS:129
 msgid "Fisherman"
-msgstr ""
+msgstr "Fisherman"
 
 #: dat/AUTHORS:130
 msgid ""
@@ -563,7 +561,7 @@ msgstr "   * Mission de hot-dog"
 
 #: dat/AUTHORS:133
 msgid "Ludovic Bellière \"xrogaan\""
-msgstr ""
+msgstr "Ludovic Bellière \"xrogaan\""
 
 #: dat/AUTHORS:134
 msgid "   * Python programmer extraordinaire"
@@ -575,7 +573,7 @@ msgstr "Ses utilitaires sauvent les cheveux gris pour tout le monde."
 
 #: dat/AUTHORS:137
 msgid "Josh Combs"
-msgstr ""
+msgstr "Josh Combs"
 
 #: dat/AUTHORS:138
 msgid "   * Artist of most of the nebulae."
@@ -583,7 +581,7 @@ msgstr "   * Artiste de la plupart des nébuleuses."
 
 #: dat/AUTHORS:140
 msgid "Galileus"
-msgstr ""
+msgstr "Galileus"
 
 #: dat/AUTHORS:141
 msgid "   * Modeller of the Shark and Rhino"
@@ -591,7 +589,7 @@ msgstr "   * Modélisateur du requin et du rhinocéros"
 
 #: dat/AUTHORS:143
 msgid "Devin Khan"
-msgstr ""
+msgstr "Devin Khan"
 
 #: dat/AUTHORS:144
 msgid "   * Modeller of the Phalanx"
@@ -599,7 +597,7 @@ msgstr "   * Modélisateur du Phalanx"
 
 #: dat/AUTHORS:146
 msgid "Areze"
-msgstr ""
+msgstr "Areze"
 
 #: dat/AUTHORS:147
 msgid "   * Junior assistant galaxy creator"
@@ -607,7 +605,7 @@ msgstr "   * Assistant créateur de galaxie junior"
 
 #: dat/AUTHORS:149
 msgid "Old Man <oldtopman@gmail.com>"
-msgstr ""
+msgstr "Old Man <oldtopman@gmail.com>"
 
 #: dat/AUTHORS:150
 msgid "   * Desura Maintainer"
@@ -615,7 +613,7 @@ msgstr "   * Mainteneur.euse Desura"
 
 #: dat/AUTHORS:152
 msgid "NeD"
-msgstr ""
+msgstr "NeD"
 
 #: dat/AUTHORS:153 dat/AUTHORS:159
 msgid "   * Mission contributor"
@@ -623,7 +621,7 @@ msgstr "   * Contributeur à la mission"
 
 #: dat/AUTHORS:155
 msgid "Sudarshan S"
-msgstr ""
+msgstr "Sudarshan S"
 
 #: dat/AUTHORS:156
 msgid "   * Event contributor"
@@ -631,7 +629,7 @@ msgstr "   * Contributeur d'éventement"
 
 #: dat/AUTHORS:158 dat/AUTHORS:177
 msgid "PhoenixRiver"
-msgstr ""
+msgstr "PhoenixRiver"
 
 #: dat/AUTHORS:160
 msgid "   * Misc fixes and typos"
@@ -639,7 +637,7 @@ msgstr "   * Divers corrections grammaticales"
 
 #: dat/AUTHORS:162
 msgid "Alastair Basden"
-msgstr ""
+msgstr "Alastair Basden"
 
 #: dat/AUTHORS:163
 msgid "   * Economy development"
@@ -659,7 +657,7 @@ msgstr "Musique de Matthew Pablo"
 
 #: dat/AUTHORS:168
 msgid "http://www.matthewpablo.com"
-msgstr ""
+msgstr "http://www.matthewpablo.com"
 
 #: dat/AUTHORS:171
 msgid "Testers"
@@ -667,19 +665,19 @@ msgstr "Testeurs"
 
 #: dat/AUTHORS:174
 msgid "John Schwartfeger"
-msgstr ""
+msgstr "John Schwartfeger"
 
 #: dat/AUTHORS:175
 msgid "Leonardo Valeri Manera"
-msgstr ""
+msgstr "Leonardo Valeri Manera"
 
 #: dat/AUTHORS:176
 msgid "EvanR"
-msgstr ""
+msgstr "EvanR"
 
 #: dat/assets/abacus.xml:2
 msgid "Abacus"
-msgstr ""
+msgstr "Abacus"
 
 #: dat/assets/abacus.xml:26
 msgid ""
@@ -701,7 +699,7 @@ msgstr "Station abandonnée"
 
 #: dat/assets/adham.xml:2
 msgid "Adham"
-msgstr ""
+msgstr "Adham"
 
 #: dat/assets/adham.xml:25
 msgid ""
@@ -721,11 +719,11 @@ msgstr ""
 
 #: dat/assets/adius.xml:2
 msgid "Adius"
-msgstr ""
+msgstr "Adius"
 
 #: dat/assets/adrian.xml:2
 msgid "Adrian"
-msgstr ""
+msgstr "Adrian"
 
 #: dat/assets/adrian.xml:27
 msgid ""
@@ -754,7 +752,7 @@ msgstr ""
 
 #: dat/assets/aera.xml:2
 msgid "Aera"
-msgstr ""
+msgstr "Aera"
 
 #: dat/assets/aera.xml:26
 msgid ""
@@ -770,11 +768,11 @@ msgstr ""
 
 #: dat/assets/aesir_iv.xml:2
 msgid "Aesir IV"
-msgstr ""
+msgstr "Aesir IV"
 
 #: dat/assets/agino.xml:2
 msgid "Agino"
-msgstr ""
+msgstr "Agino"
 
 #: dat/assets/agino.xml:29
 msgid ""
@@ -807,7 +805,7 @@ msgstr ""
 
 #: dat/assets/ahmed.xml:2
 msgid "Ahmed"
-msgstr ""
+msgstr "Ahmed"
 
 #: dat/assets/ahmed.xml:28
 msgid ""
@@ -837,7 +835,7 @@ msgstr ""
 
 #: dat/assets/aillis.xml:2
 msgid "Aillis"
-msgstr ""
+msgstr "Aillis"
 
 #: dat/assets/aillis.xml:28
 msgid ""
@@ -884,7 +882,7 @@ msgstr ""
 
 #: dat/assets/akra_iii.xml:2
 msgid "Akra III"
-msgstr ""
+msgstr "Akra III"
 
 #: dat/assets/akra_station.xml:2
 msgid "Akra Station"
@@ -903,25 +901,24 @@ msgstr ""
 "conduisant à plus de relations personnelles interplanétaires que la normale."
 
 #: dat/assets/akra_station.xml:29
-#, fuzzy
 msgid ""
 "The bar is bustling and seemingly constantly packed, yet never seems to "
 "cause anyone any problem due to how efficient everything is."
 msgstr ""
-"Le bar est animé et semble constamment bondé, mais ne semble jamais poser de "
-"problème à personne en raison de l'efficacité de tout."
+"Le bar est animé et semble être constamment en surpopulation, mais cela ne "
+"semble poser problème à personne en raison de l'efficacité de l'ensemble."
 
 #: dat/assets/akra_v.xml:2
 msgid "Akra V"
-msgstr ""
+msgstr "Akra V"
 
 #: dat/assets/akrikos.xml:2
 msgid "Akrikos"
-msgstr ""
+msgstr "Akrikos"
 
 #: dat/assets/aldarus.xml:2
 msgid "Aldarus"
-msgstr ""
+msgstr "Aldarus"
 
 #: dat/assets/aldarus.xml:29
 msgid ""
@@ -953,7 +950,7 @@ msgstr ""
 
 #: dat/assets/aldernael.xml:2
 msgid "Aldernael"
-msgstr ""
+msgstr "Aldernael"
 
 #: dat/assets/aldernael.xml:28
 msgid ""
@@ -988,7 +985,7 @@ msgstr ""
 
 #: dat/assets/aldous.xml:2
 msgid "Aldous"
-msgstr ""
+msgstr "Aldous"
 
 #: dat/assets/aldous.xml:27
 msgid ""
@@ -1008,7 +1005,6 @@ msgstr ""
 "positroniques de haute qualité."
 
 #: dat/assets/aldous.xml:28
-#, fuzzy
 msgid ""
 "The spaceport facility is part of a larger structure that houses the "
 "entirety of this planet's human inhabitants. The complex, more or less, "
@@ -1031,7 +1027,7 @@ msgstr "La lune d’Aldous"
 
 #: dat/assets/aleph.xml:2
 msgid "Aleph"
-msgstr ""
+msgstr "Aleph"
 
 #: dat/assets/aleph.xml:27
 msgid ""
@@ -1059,11 +1055,11 @@ msgstr ""
 
 #: dat/assets/alexian.xml:2
 msgid "Alexian"
-msgstr ""
+msgstr "Alexian"
 
 #: dat/assets/allan.xml:2
 msgid "Allan"
-msgstr ""
+msgstr "Allan"
 
 #: dat/assets/allan.xml:27
 msgid ""
@@ -1091,7 +1087,7 @@ msgstr ""
 
 #: dat/assets/alleyway.xml:2
 msgid "Alleyway"
-msgstr ""
+msgstr "Alleyway"
 
 #: dat/assets/alleyway.xml:27
 msgid ""
@@ -1119,15 +1115,15 @@ msgstr ""
 
 #: dat/assets/allous_gg3.xml:2
 msgid "Allous GG-3"
-msgstr ""
+msgstr "Allous GG-3"
 
 #: dat/assets/allous_i.xml:2
 msgid "Allous I"
-msgstr ""
+msgstr "Allous I"
 
 #: dat/assets/allous_ii.xml:2
 msgid "Allous II"
-msgstr ""
+msgstr "Allous II"
 
 #: dat/assets/allous_station.xml:2
 msgid "Allous Station"
@@ -1165,43 +1161,43 @@ msgstr ""
 
 #: dat/assets/alteris_i.xml:2
 msgid "Alteris I"
-msgstr ""
+msgstr "Alteris I"
 
 #: dat/assets/alteris_iv.xml:2
 msgid "Alteris IV"
-msgstr ""
+msgstr "Alteris IV"
 
 #: dat/assets/alteris_v.xml:2
 msgid "Alteris V"
-msgstr ""
+msgstr "Alteris V"
 
 #: dat/assets/aluben.xml:2
 msgid "Aluben"
-msgstr ""
+msgstr "Aluben"
 
 #: dat/assets/amaroq_i.xml:2
 msgid "Amaroq I"
-msgstr ""
+msgstr "Amaroq I"
 
 #: dat/assets/amaroq_iii.xml:2
 msgid "Amaroq III"
-msgstr ""
+msgstr "Amaroq III"
 
 #: dat/assets/amatiri_i.xml:2
 msgid "Amatiri I"
-msgstr ""
+msgstr "Amatiri I"
 
 #: dat/assets/amatiri_ia.xml:2
 msgid "Amatiri Ia"
-msgstr ""
+msgstr "Amatiri Ia"
 
 #: dat/assets/amatiri_ii.xml:2
 msgid "Amatiri II"
-msgstr ""
+msgstr "Amatiri II"
 
 #: dat/assets/ambre.xml:2
 msgid "Ambre"
-msgstr ""
+msgstr "Ambre"
 
 #: dat/assets/ambre.xml:29
 msgid ""
@@ -13222,15 +13218,15 @@ msgstr "Artefact Ancien"
 
 #: dat/commodity.xml:175
 msgid "Artifact? A"
-msgstr ""
+msgstr "Artefact ? A"
 
 #: dat/commodity.xml:178
 msgid "Artifact? B"
-msgstr ""
+msgstr "Artefact? B"
 
 #: dat/commodity.xml:181
 msgid "Artifact? C"
-msgstr ""
+msgstr "Artefact? C"
 
 #: dat/commodity.xml:184
 msgid "Bomb"
@@ -13254,7 +13250,7 @@ msgstr "Civils"
 
 #: dat/commodity.xml:199
 msgid "Datapad"
-msgstr ""
+msgstr "Datapad"
 
 #: dat/commodity.xml:202 dat/missions/pirate/pir_cargo.lua:70
 #, fuzzy
@@ -13287,11 +13283,11 @@ msgstr "Carburant"
 
 #: dat/commodity.xml:224
 msgid "Gregar"
-msgstr ""
+msgstr "Gregar"
 
 #: dat/commodity.xml:227
 msgid "Jorek"
-msgstr ""
+msgstr "Jorek"
 
 #: dat/commodity.xml:230
 msgid "Goods"
@@ -13324,7 +13320,7 @@ msgstr "Personne"
 
 #: dat/commodity.xml:251
 msgid "Phosphine"
-msgstr ""
+msgstr "Phosphine"
 
 #: dat/commodity.xml:254
 msgid "Pilgrims"
@@ -13336,7 +13332,7 @@ msgstr "Prisonniers"
 
 #: dat/commodity.xml:260
 msgid "Prototype"
-msgstr ""
+msgstr "Prototype"
 
 #: dat/commodity.xml:263 dat/missions/pirate/pir_cargo.lua:72
 msgid "Radioactive Materials"
@@ -13352,7 +13348,7 @@ msgstr "Réfugiés"
 
 #: dat/commodity.xml:272
 msgid "Satellite"
-msgstr ""
+msgstr "Satellite"
 
 #: dat/commodity.xml:275
 msgid "Secret Technology"
@@ -13395,7 +13391,7 @@ msgstr "Boîtes Non Marquées"
 #. Clear velocity
 #: dat/commodity.xml:296 dat/missions/empire/shipping/es02.lua:169
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: dat/commodity.xml:299
 msgid "Waste Containers"
@@ -13430,7 +13426,7 @@ msgstr "Indépendant"
 #. Select a faction for the NPC. NPCs may not have a specific faction.
 #: dat/faction.xml:31 dat/faction.xml:86 dat/events/neutral/npc.lua:307
 msgid "Civilian"
-msgstr ""
+msgstr "Civil"
 
 #. Mission details:
 #: dat/faction.xml:48 dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:120
@@ -13454,7 +13450,7 @@ msgstr "Dissident de Proteron"
 #: dat/missions/neutral/kidnapped/traffic_00.lua:153
 #: dat/missions/pirate/common.lua:30
 msgid "Pirate"
-msgstr ""
+msgstr "Pirate"
 
 #: dat/faction.xml:107 dat/faction.xml:351 dat/faction.xml:420
 msgid "Galactic Pirates"
@@ -13463,13 +13459,13 @@ msgstr "Pirates Galactiques"
 #: dat/faction.xml:138 dat/missions/empire/common.lua:19
 #: dat/missions/empire/common.lua:25
 msgid "Empire"
-msgstr ""
+msgstr "Empire"
 
 #: dat/faction.xml:157 dat/faction.xml:160 dat/ships/proteron_archimedes.xml:17
 #: dat/ships/proteron_derivative.xml:14 dat/ships/proteron_kahan.xml:13
 #: dat/ships/proteron_watson.xml:13
 msgid "Proteron"
-msgstr ""
+msgstr "Protéron"
 
 #: dat/faction.xml:175 dat/missions/flf/flf_common.lua:82
 msgid "Frontier"
@@ -13493,15 +13489,15 @@ msgstr "Guilde des Commerçants de l’Espace"
 #: dat/ships/soromid_odium.xml:14 dat/ships/soromid_reaver.xml:12
 #: dat/ships/soromid_vox.xml:16 dat/missions/soromid/common.lua:22
 msgid "Soromid"
-msgstr ""
+msgstr "Soromid"
 
 #: dat/faction.xml:224
 msgid "Thurion"
-msgstr ""
+msgstr "Thurion"
 
 #: dat/faction.xml:237
 msgid "Collective"
-msgstr ""
+msgstr "Collectif"
 
 #.
 #.
@@ -13530,7 +13526,7 @@ msgstr ""
 #. Add an entry to the FLF campaign log.
 #: dat/faction.xml:252 dat/missions/flf/flf_common.lua:82
 msgid "FLF"
-msgstr ""
+msgstr "FLF"
 
 #: dat/faction.xml:256
 msgid "Frontier Liberation Front"
@@ -13545,7 +13541,7 @@ msgstr "Front de Libération de la Frontière"
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:673
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:269
 msgid "Dvaered"
-msgstr ""
+msgstr "Dvaered"
 
 #: dat/faction.xml:275 dat/ships/ancestor.xml:13
 #: dat/ships/dvaered_ancestor.xml:14 dat/ships/dvaered_phalanx.xml:15
@@ -13559,7 +13555,7 @@ msgstr "Maison Dvaered"
 #: dat/missions/minerva/pirate2.lua:188 dat/missions/zalek/common.lua:21
 #: dat/missions/zalek/common.lua:26 dat/missions/zalek/common.lua:32
 msgid "Za'lek"
-msgstr ""
+msgstr "Za'lek"
 
 #: dat/faction.xml:295
 msgid "House Za'lek"
@@ -13568,7 +13564,7 @@ msgstr "Maison Za’lek"
 #: dat/faction.xml:307 dat/faction.xml:527 dat/missions/sirius/common.lua:22
 #: dat/missions/sirius/common.lua:28
 msgid "Sirius"
-msgstr ""
+msgstr "Sirius"
 
 #: dat/faction.xml:312
 msgid "House Sirius"
@@ -13576,7 +13572,7 @@ msgstr "Maison Sirius"
 
 #: dat/faction.xml:326 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
 msgid "Goddard"
-msgstr ""
+msgstr "Goddard"
 
 #: dat/faction.xml:331 dat/ships/dvaered_goddard.xml:15
 #: dat/ships/goddard.xml:14
@@ -13589,7 +13585,7 @@ msgstr "Pirate Recherché"
 
 #: dat/faction.xml:373 dat/missions/flf/flf_rogue.lua:49
 msgid "Rogue FLF"
-msgstr ""
+msgstr "Voleur FLF"
 
 #: dat/faction.xml:387
 msgid "Rogue Pirate"
@@ -13646,7 +13642,7 @@ msgstr "Maraudeur"
 
 #: dat/faction.xml:431
 msgid "Derelict"
-msgstr ""
+msgstr "Vagabond"
 
 #: dat/faction.xml:441 dat/faction.xml:457
 msgid "Four Winds"
@@ -13658,7 +13654,7 @@ msgstr "Voleur de Quatre Vents"
 
 #: dat/faction.xml:469
 msgid "Shadow_pirates"
-msgstr ""
+msgstr "Shadow_pirates"
 
 #: dat/faction.xml:485
 msgid "Diplomatic"
@@ -13674,7 +13670,7 @@ msgstr "Voyous"
 
 #: dat/faction.xml:525
 msgid "Achack_sirius"
-msgstr ""
+msgstr "Achack_sirius"
 
 #: dat/faction.xml:539
 msgid "Achack_thugs"
@@ -26932,8 +26928,10 @@ msgid ""
 msgstr ""
 
 #: dat/events/neutral/news.lua:151
+#, fuzzy
 msgid "Former Pirate Writes Target Management Self-Help Book"
 msgstr ""
+"Un ancien pirate écrit un livre d'auto-assistance sur la gestion des cibles"
 
 #: dat/events/neutral/news.lua:153
 #, lua-format
@@ -31666,27 +31664,33 @@ msgid ""
 msgstr ""
 
 #: dat/missions/baron/baron_baron.lua:107
+#, fuzzy
 msgid ""
 "You were offered a sketchy-looking job by a nondescript pilot, but you "
 "angrily refused to accept the job. It seems whoever the pilot worked for "
 "won't be contacting you again."
 msgstr ""
+"Un pilote anonyme vous a proposé un emploi à l'apparence douteuse, mais vous "
+"avez refusé avec colère d'accepter le poste. Il semble que la personne pour "
+"qui travaillait le pilote ne vous contactera plus."
 
 #: dat/missions/baron/baron_baron.lua:161
 #: dat/missions/baron/baron_baron.lua:162
 #: dat/missions/baron/baron_baron.lua:163
+#, fuzzy
 msgid "Sauterfeldt's agents"
-msgstr ""
+msgstr "Agents de Sauterfeldt"
 
 #: dat/missions/baron/baron_baron.lua:171
 #: dat/missions/baron/baron_prince.lua:336
+#, fuzzy
 msgid "Pinnacle"
-msgstr ""
+msgstr "Sommet"
 
 #: dat/missions/baron/baron_baron.lua:240
 #: dat/missions/baron/baron_baron.lua:241
 msgid "Dvaered Police Vendetta"
-msgstr ""
+msgstr "Vendetta policière Dvaered"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -31714,7 +31718,7 @@ msgstr ""
 #. --
 #: dat/missions/baron/baron_prince.lua:37
 msgid "His Baronship remembers you"
-msgstr ""
+msgstr "Sa baronnie se souvient de vous"
 
 #: dat/missions/baron/baron_prince.lua:38
 #, lua-format
@@ -35702,33 +35706,35 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:125
 msgid "All right, let's wait for Tam"
-msgstr ""
+msgstr "Très bien, attendons Tam"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:126
 msgid "There will be roasted Tam for lunch today!"
-msgstr ""
+msgstr "Il y aura du Tam rôti pour le déjeuner aujourd'hui !"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:128
 msgid "What about I cook you to death?"
-msgstr ""
+msgstr "Et si je te cuisais à mort ?"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:129
 msgid "Tam is in place, folks! don't miss him, this time!"
-msgstr ""
+msgstr "Tam est en place, les gars! Ne le manquez pas, cette fois!"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:130
 msgid "You won't catch me alive! Never!"
-msgstr ""
+msgstr "Vous ne m'attraperez pas vivant ! Jamais !"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:133
 msgid ""
 "You take part of an operation whose goal is to trap and destroy a group of "
 "well armed henchmen who are after Major Tam."
 msgstr ""
+"Vous participez à une opération dont le but est de piéger et de détruire un "
+"groupe d'acolytes bien armés qui en veulent au Majeur Tam."
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:134
 msgid "It depends how many of your wingmen come back."
-msgstr ""
+msgstr "Cela dépend de combien de vos ailiers reviennent."
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:135
 msgid ""
@@ -35736,52 +35742,59 @@ msgid ""
 "For now, we don't know who has paid them, but they were led by Colonel "
 "Hamelsen, who has managed to escape."
 msgstr ""
+"Un groupe de tueurs, qui en avait après le Major Tam, a été piégé et tué. "
+"Pour l'instant, nous ne savons pas qui les a payés, mais ils étaient dirigés "
+"par le colonel Hamelsen, qui a réussi à s'échapper."
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:137
 msgid "Dvaered Diplomacy"
-msgstr ""
+msgstr "Diplomatie de Dvaered"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:138
 msgid "Go to next system"
-msgstr ""
+msgstr "Aller au système suivant"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:140
 msgid "Wait for Tam and destroy the highlighted hostile ships"
-msgstr ""
+msgstr "Attendez Tam et détruisez les navires hostiles mis en évidence"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:141
 msgid "Land anywhere to collect your pay"
-msgstr ""
+msgstr "Atterrissez n'importe où pour toucher votre paie"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:142
 msgid "Clean the current system"
-msgstr ""
+msgstr "Nettoyer le système actuel"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:143
 #, lua-format
 msgid "Jump to %s to follow your target"
-msgstr ""
+msgstr "Sauter à %s pour suivre votre cible"
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:144
 #, lua-format
 msgid "Land on %s to follow your target"
-msgstr ""
+msgstr "Atterrissez sur %s pour suivre votre cible"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:42
 msgid ""
 "Judging by how he looks at you, Strafer needs you for another mission along "
 "with the Dvaered Space Force."
 msgstr ""
+"À en juger par la façon dont il vous regarde, Strafer a besoin de vous pour "
+"une autre mission avec la Force Spatiale de Dvaered."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:43
 msgid ""
 "Harsh voice, frank gaze and easy trigger. The lieutenant Strafer is a "
 "Dvaered pilot."
 msgstr ""
+"Voix dure, regard franc et gâchette facile. Le lieutenant Strafer est un "
+"pilote Dvaered."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:45
 msgid "We need you once more"
-msgstr ""
+msgstr "Nous avons besoin de vous une fois de plus"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:46
 msgid ""
