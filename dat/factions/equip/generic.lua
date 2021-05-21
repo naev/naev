@@ -342,23 +342,21 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
-         "Unicorp Light Afterburner", "Small Shield Booster", "Solar Panel",
-         "Sensor Array",
+         "Unicorp Light Afterburner", "Sensor Array",
       },
    },
    ["Luxury Yacht"] = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
-         "Unicorp Light Afterburner", "Small Shield Booster", "Solar Panel",
-         "Sensor Array",
+         "Unicorp Light Afterburner", "Sensor Array",
       },
    },
    ["Scout"] = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
-         "Unicorp Light Afterburner", "Small Shield Booster", "Solar Panel",
+         "Unicorp Light Afterburner",
          "Unicorp Jammer", "Reverse Thrusters", "Sensor Array",
       },
    },
@@ -366,94 +364,83 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
-         "Unicorp Light Afterburner", "Small Shield Booster", "Solar Panel",
+         "Unicorp Light Afterburner",
          "Improved Refrigeration Cycle",
       },
    },
    ["Freighter"] = {
       {
          varied = true;
-         "Reactor Class II", "Medium Shield Booster", "Droid Repair Crew",
-         "Targeting Array", "Improved Power Regulator",  "Milspec Scrambler",
-         "Milspec Jammer", "Emergency Shield Booster",
+         "Droid Repair Crew", "Targeting Array", "Improved Power Regulator",
+         "Milspec Jammer", "Emergency Shield Booster", "Milspec Scrambler",
       },
    },
    ["Armoured Transport"] = {
       {
          varied = true;
-         "Reactor Class II", "Medium Shield Booster", "Droid Repair Crew",
          "Targeting Array", "Improved Power Regulator",  "Milspec Scrambler",
-         "Milspec Jammer", "Emergency Shield Booster",
+         "Milspec Jammer", "Emergency Shield Booster", "Droid Repair Crew",
       },
    },
    ["Fighter"] = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Unicorp Light Afterburner",
-         "Hellburner", "Small Shield Booster", "Solar Panel",
          "Forward Shock Absorbers", "Power Regulation Override",
          "Weapons Ionizer", "Reverse Thrusters", "Emergency Shield Booster",
-         "Sensor Array",
+         "Sensor Array", "Hellburner",
       },
    },
    ["Bomber"] = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Unicorp Light Afterburner",
-         "Hellburner", "Small Shield Booster", "Solar Panel",
          "Forward Shock Absorbers", "Power Regulation Override",
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
          "Reverse Thrusters", "Emergency Shield Booster", "Sensor Array",
+         "Hellburner",
       },
    },
    ["Corvette"] = {
       {
          varied = true;
-         "Reactor Class II", "Medium Shield Booster", "Droid Repair Crew",
          "Forward Shock Absorbers", "Power Regulation Override",
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
-         "Solar Panel", "Reverse Thrusters", "Hellburner",
+         "Reverse Thrusters", "Hellburner",
          "Emergency Shield Booster", "Sensor Array", "Unicorp Medium Afterburner",
+         "Droid Repair Crew",
       },
    },
    ["Destroyer"] = {
       {
          varied = true;
-         "Reactor Class III", "Large Shield Booster", "Reactor Class II",
-         "Medium Shield Booster", "Droid Repair Crew",
          "Forward Shock Absorbers", "Power Regulation Override",
          "Targeting Array", "Improved Power Regulator", "Weapons Ionizer",
-         "Solar Panel", "Hellburner", "Emergency Shield Booster",
-         "Sensor Array",
+         "Hellburner", "Emergency Shield Booster",
+         "Sensor Array", "Droid Repair Crew",
       },
    },
    ["Cruiser"] = {
       {
          varied = true;
-         "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
          "Targeting Array", "Improved Power Regulator", "Weapons Ionizer",
-         "Solar Panel", "Sensor Array",
+         "Sensor Array", "Droid Repair Crew",
       },
    },
    ["Carrier"] = {
       {
          varied = true;
-         "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
-         "Targeting Array", "Weapons Ionizer", "Sensor Array",
+         "Targeting Array", "Sensor Array", "Droid Repair Crew",
       },
    },
    ["Drone"] = {
       {
-         "Solar Panel",
       },
    },
    ["Heavy Drone"] = {
       {
          num = 1;
          "Unicorp Scrambler"
-      },
-      {
-         "Reactor Class I"
       },
    }
 }

@@ -2,7 +2,7 @@
 <outfit name="Small Shield Booster">
  <general>
   <typename>Energy Modifier</typename>
-  <slot>utility</slot>
+  <slot>structure</slot>
   <size>small</size>
   <mass>5</mass>
   <price>145000</price>

@@ -2,7 +2,7 @@
 <outfit name="Large Shield Booster">
  <general>
   <typename>Energy Modifier</typename>
-  <slot>utility</slot>
+  <slot>structure</slot>
   <size>large</size>
   <mass>25</mass>
   <price>220000</price>

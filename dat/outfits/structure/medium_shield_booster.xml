@@ -2,7 +2,7 @@
 <outfit name="Medium Shield Booster">
  <general>
   <typename>Energy Modifier</typename>
-  <slot>utility</slot>
+  <slot>structure</slot>
   <size>medium</size>
   <mass>15</mass>
   <price>185000</price>

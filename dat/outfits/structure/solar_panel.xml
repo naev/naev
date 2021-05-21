@@ -2,7 +2,7 @@
 <outfit name="Solar Panel">
  <general>
   <typename>Energy Modifier</typename>
-  <slot>utility</slot>
+  <slot>structure</slot>
   <size>small</size>
   <mass>3</mass>
   <price>25000</price>

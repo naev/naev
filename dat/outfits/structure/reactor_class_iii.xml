@@ -2,7 +2,7 @@
 <outfit name="Reactor Class III">
  <general>
   <typename>Energy Modifier</typename>
-  <slot>utility</slot>
+  <slot>structure</slot>
   <size>large</size>
   <mass>90</mass>
   <price>970000</price>
