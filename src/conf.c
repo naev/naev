@@ -150,8 +150,6 @@ void conf_setDefaults (void)
    conf.font_size_intro   = FONT_SIZE_INTRO_DEFAULT;
    conf.font_size_def     = FONT_SIZE_DEF_DEFAULT;
    conf.font_size_small   = FONT_SIZE_SMALL_DEFAULT;
-   conf.font_name_default = NULL;
-   conf.font_name_monospace = NULL;
 
    /* Misc. */
    conf.redirect_file = 1;
@@ -276,17 +274,7 @@ void conf_setVideoDefaults (void)
  */
 void conf_cleanup (void)
 {
-   free(conf.datapath);
-   free(conf.ndata);
-   free(conf.language);
-   free(conf.joystick_nam);
-   free(conf.lastversion);
-   free(conf.dev_save_sys);
-   free(conf.dev_save_map);
-   free(conf.dev_save_asset);
-
-   /* Clear memory. */
-   memset( &conf, 0, sizeof(conf) );
+   conf_free( &conf );
 }
 
 
@@ -412,8 +400,6 @@ int conf_loadConfig ( const char* file )
       conf_loadInt( lEnv, "font_size_intro", conf.font_size_intro );
       conf_loadInt( lEnv, "font_size_def", conf.font_size_def );
       conf_loadInt( lEnv, "font_size_small", conf.font_size_small );
-      conf_loadString( lEnv, "font_name_default", conf.font_name_default );
-      conf_loadString( lEnv, "font_name_monospace", conf.font_name_monospace );
 
       /* Misc. */
       conf_loadFloat( lEnv, "compression_velocity", conf.compression_velocity );
@@ -1012,21 +998,6 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("font_size_def",conf.font_size_def);
    pos += scnprintf(&buf[pos], sizeof(buf)-pos, _("-- Small size: %d\n"), FONT_SIZE_SMALL_DEFAULT);
    conf_saveInt("font_size_small",conf.font_size_small);
-   conf_saveComment(_("Default font to use: unset"));
-   if (conf.font_name_default) {
-      conf_saveString("font_name_default",conf.font_name_default);
-   }
-   else {
-      conf_saveComment(_("font_name_default = \"/path/to/file.ttf\""));
-   }
-   conf_saveComment("Default monospace font to use: unset");
-   if (conf.font_name_monospace) {
-      conf_saveString("font_name_monospace",conf.font_name_monospace);
-   }
-   else {
-      conf_saveComment("font_name_monospace = \"/path/to/file.ttf\"");
-   }
-   conf_saveEmptyLine();
 
    /* Misc. */
    conf_saveComment(_("Sets the velocity (px/s) to compress up to when time compression is enabled."));
@@ -1167,5 +1138,44 @@ int conf_saveConfig ( const char* file )
    }
 
    return 0;
+}
+
+
+/**
+ * @brief Copies a configuration over another.
+ */
+void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src )
+{
+   conf_free( dest );
+   memcpy( dest, src, sizeof(PlayerConf_t) );
+#define STRDUP(s) dest->s = ((src->s==NULL)?NULL:strdup(src->s))
+   STRDUP(ndata);
+   STRDUP(datapath);
+   STRDUP(language);
+   STRDUP(joystick_nam);
+   STRDUP(lastversion);
+   STRDUP(dev_save_sys);
+   STRDUP(dev_save_map);
+   STRDUP(dev_save_asset);
+#undef STRDUP
+}
+
+
+/**
+ * @brief Frees a configuration.
+ */
+void conf_free( PlayerConf_t *config )
+{
+   free(config->ndata);
+   free(config->datapath);
+   free(config->language);
+   free(config->joystick_nam);
+   free(config->lastversion);
+   free(config->dev_save_sys);
+   free(config->dev_save_map);
+   free(config->dev_save_asset);
+
+   /* Clear memory. */
+   memset( config, 0, sizeof(PlayerConf_t) );
 }
 

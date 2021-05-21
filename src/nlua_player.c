@@ -199,25 +199,40 @@ static int playerL_shipname( lua_State *L )
  * @usage player.pay( 500 ) -- Gives player 500 credits
  *
  *    @luatparam number amount Amount of money to pay the player in credits.
- *    @luatparam[opt] boolean nohooks Set to true to not trigger pay hooks.
+ *    @luatparam[opt] boolean|string nohooks Set to true to not trigger pay hooks, or a strig value to pass that to the pay hook instead.
  * @luafunc pay
  */
 static int playerL_pay( lua_State *L )
 {
-   HookParam p[2];
+   HookParam p[3];
    credits_t money;
    int nohooks;
+   const char *reason;
 
    NLUA_CHECKRW(L);
 
    money = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
    player_modCredits( money );
-   nohooks = lua_toboolean(L,2);
+   if (lua_isstring(L,2)) {
+      nohooks = 0;
+      reason = lua_tostring(L,2);
+   }
+   else {
+      nohooks = lua_toboolean(L,2);
+      reason = NULL;
+   }
 
    if (!nohooks) {
       p[0].type = HOOK_PARAM_NUMBER;
       p[0].u.num = (double)money;
-      p[1].type = HOOK_PARAM_SENTINEL;
+      if (reason != NULL) {
+         p[1].type = HOOK_PARAM_STRING;
+         p[1].u.str = reason;
+      }
+      else {
+         p[1].type = HOOK_PARAM_NIL;
+      }
+      p[2].type = HOOK_PARAM_SENTINEL;
       hooks_runParam( "pay", p );
    }
 

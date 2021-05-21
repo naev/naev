@@ -116,7 +116,7 @@ void opt_menu (void)
    const char **names;
 
    /* Save current configuration over. */
-   memcpy( &local_conf, &conf, sizeof(PlayerConf_t) );
+   conf_copy( &local_conf, &conf );
 
    /* Dimensions. */
    w = 680;
@@ -154,7 +154,7 @@ static void opt_OK( unsigned int wid, char *str )
    int ret, prompted_restart;
 
    /* Save current configuration over. */
-   memcpy( &local_conf, &conf, sizeof(PlayerConf_t) );
+   conf_copy( &local_conf, &conf );
 
    prompted_restart = opt_restart;
    ret = 0;
@@ -179,7 +179,7 @@ static void opt_close( unsigned int wid, char *name )
    (void) name;
 
    /* Load old config again. */
-   memcpy( &conf, &local_conf, sizeof(PlayerConf_t) );
+   conf_copy( &conf, &local_conf );
 
    /* At this point, set sound levels as defined in the config file.
     * This ensures that sound volumes are reset on "Cancel". */
@@ -188,6 +188,9 @@ static void opt_close( unsigned int wid, char *name )
 
    window_destroy( opt_wid );
    opt_wid = 0;
+
+   /* Free config. */
+   conf_free( &local_conf );
 }
 
 
@@ -303,8 +306,8 @@ static void opt_gameplay( unsigned int wid )
       if (i>=n)
          i = 0;
    }
-   window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL, NULL );
-   y -= 90;
+   window_addList( wid, x+l+20, y, cw-l-50, 100, "lstLanguage", ls, n, i, NULL, NULL );
+   y -= 120;
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
          NULL, NULL, _("Compilation Flags:") );
    y -= 30;
@@ -403,12 +406,12 @@ static int opt_gameplaySave( unsigned int wid, char *str )
 
    /* List. */
    p = toolkit_getListPos( wid, "lstLanguage" );
-   s = p==0 ? NULL : toolkit_getList( wid, "lstLanguage" );
+   s = (p==0) ? NULL : toolkit_getList( wid, "lstLanguage" );
    newlang = ((s != NULL) != (conf.language != NULL))
 	  || ((s != NULL) && (strcmp( s, conf.language) != 0));
    if (newlang) {
       free( conf.language );
-      conf.language = s==NULL ? NULL : strdup( s );
+      conf.language = (s==NULL) ? NULL : strdup( s );
       /* Apply setting going forward; advise restart to regen other text. */
       gettext_setLanguage( conf.language );
       opt_needRestart();

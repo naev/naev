@@ -298,7 +298,7 @@ function enter ()
 end
 
 
-function pay( amount )
+function pay( amount, reason )
    if amount <= 0 then return end
 
    local royalty = 0

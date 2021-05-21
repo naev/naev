@@ -1182,7 +1182,7 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* 
             w->solid->vel.y);
 
    /* Add the spfx */
-   spfx = outfit_spfxShield(w->outfit);
+   spfx = outfit_spfxArmour(w->outfit);
    spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
 
    weapon_destroy(w,layer);

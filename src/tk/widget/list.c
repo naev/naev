@@ -139,9 +139,9 @@ static void lst_render( Widget* lst, double bx, double by )
    }
 
    /* draw selected item background */
-   toolkit_drawRect( x + 1, y - 1 + lst->h -
-         (1 + lst->dat.lst.selected - lst->dat.lst.pos)*CELLHEIGHT,
-         w-1, CELLHEIGHT, &cHilight, NULL );
+   ty = y - 1 + lst->h - (1 + lst->dat.lst.selected - lst->dat.lst.pos)*CELLHEIGHT;
+   if (ty > y && ty < y+lst->h-CELLHEIGHT)
+      toolkit_drawRect( x + 1, ty, w-1, CELLHEIGHT, &cHilight, NULL );
 
    /* draw content */
    tx = x + 6.;
@@ -319,33 +319,17 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
    (void) x;
    (void) rx;
    (void) ry;
-   int psel;
    double p;
-   int h;
 
    /* Handle the scrolling if scrolling. */
    if (lst->status == WIDGET_STATUS_SCROLLING) {
       /* Make sure Y inbounds. */
       y = CLAMP( 15., lst->h-15., lst->h - y );
 
-      h = lst->h / CELLHEIGHT - 1;
-
-      /* Save previous position. */
-      psel = lst->dat.lst.pos;
-
       /* Find absolute position. */
       p  = (y - 15. ) / (lst->h - 30.) * (lst->dat.lst.height - lst->h);
       p /= CELLHEIGHT;
       lst->dat.lst.pos = CLAMP( 0, lst->dat.lst.noptions, (int)ceil(p) );
-
-      /* Does boundary checks. */
-      lst->dat.lst.selected = CLAMP( lst->dat.lst.pos,
-            lst->dat.lst.pos+h, lst->dat.lst.selected );
-
-      /* Run change if position changed. */
-      if (lst->dat.lst.selected != psel)
-         if (lst->dat.lst.onSelect)
-            lst->dat.lst.onSelect( lst->wdw, lst->name );
 
       return 1;
    }

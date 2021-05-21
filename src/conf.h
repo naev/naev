@@ -139,8 +139,6 @@ typedef struct PlayerConf_s {
    int font_size_intro;   /**< Intro text font size. */
    int font_size_def;     /**< Default large font size. */
    int font_size_small;   /**< Default small font size. */
-   char *font_name_default; /**< Default font filename. */
-   char *font_name_monospace; /**< Monospace font filename. */
 
    /* Misc. */
    double compression_velocity; /**< Velocity to compress to. */
@@ -180,6 +178,14 @@ void conf_loadConfigPath( void );
 int conf_loadConfig( const char* file );
 void conf_parseCLI( int argc, char** argv );
 void conf_cleanup (void);
+
+
+/*
+ * Some handling.
+ */
+void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src );
+void conf_free( PlayerConf_t *config );
+
 
 /*
  * saving
