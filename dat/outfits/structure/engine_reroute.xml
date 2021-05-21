@@ -10,8 +10,9 @@
   <gfx_store>reroute.png</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>10</thrust>
-  <thrust_mod>10</thrust_mod>
-  <energy_usage>2</energy_usage>
+  <thrust>20</thrust>
+  <thrust_mod>20</thrust_mod>
+  <energy_regen_mod>-20</energy_regen_mod>
+  <energy_mod>-20</energy_mod>
  </specific>
 </outfit>

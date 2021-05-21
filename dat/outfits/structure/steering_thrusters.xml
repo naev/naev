@@ -10,8 +10,6 @@
   <gfx_store>thruster.png</gfx_store>
  </general>
  <specific type="modification">
-  <turn>10</turn>
   <turn_mod>20</turn_mod>
-  <energy_usage>1</energy_usage>
  </specific>
 </outfit>
