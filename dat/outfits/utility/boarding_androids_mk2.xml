@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Boarding Androids MK2">
  <general>
-  <typename>Crew enhancement</typename>
+  <typename>Boarding Androids</typename>
   <slot>utility</slot>
   <size>large</size>
   <mass>3</mass>
