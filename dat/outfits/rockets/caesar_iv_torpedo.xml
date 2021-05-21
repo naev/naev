@@ -9,7 +9,7 @@
  </general>
  <specific type="ammo">
   <gfx>caesar.png</gfx>
-  <sound>mace</sound>
+  <sound>torpedo</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>ExpM2</spfx_shield>
   <spfx_armour>ExpM2</spfx_armour>
