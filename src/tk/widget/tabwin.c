@@ -384,7 +384,7 @@ static void tab_render( Widget* tab, double bx, double by )
    /* Render tabs ontop. */
    dx = 0;
    x = bx+tab->x+3.;
-   y = by+tab->y;
+   y = by+tab->y+3.;
    if (tab->dat.tab.tabpos == 1)
       y += tab->h-TAB_HEIGHT;
 
