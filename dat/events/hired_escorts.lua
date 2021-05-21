@@ -299,7 +299,11 @@ end
 
 
 function pay( amount, reason )
+   -- Ignore negative amounts
    if amount <= 0 then return end
+
+   -- Ignore payments made without escorts (Dvaered Coliseum, etc.)
+   if reason == "noescorts" then return end
 
    local royalty = 0
    for i, edata in ipairs(escorts) do
