@@ -43,6 +43,6 @@
  </slots>
  <stats>
   <cargo_mod>20</cargo_mod>
-  <cargo_inertia>-30</cargo_inertia>
+  <cargo_inertia>-10</cargo_inertia>
  </stats>
 </ship>
