@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Small Shield Booster">
  <general>
-  <typename>Energy Modifier</typename>
+  <typename>Shield Booster</typename>
   <slot>structure</slot>
   <size>small</size>
   <mass>5</mass>

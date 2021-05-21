@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Nebular Shielding Prototype">
  <general>
-  <typename>Shield Power Modifier</typename>
+  <typename>Shield Modifier</typename>
   <slot>structure</slot>
   <size>medium</size>
   <rarity>3</rarity>

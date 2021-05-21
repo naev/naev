@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Reactor Class III">
  <general>
-  <typename>Energy Modifier</typename>
+  <typename>Power Modifier</typename>
   <slot>structure</slot>
   <size>large</size>
   <mass>90</mass>

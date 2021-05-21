@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Shield Capacitor II">
  <general>
-  <typename>Shield Power Modifier</typename>
+  <typename>Shield Modifier</typename>
   <slot>structure</slot>
   <size>medium</size>
   <mass>18</mass>
