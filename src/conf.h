@@ -181,6 +181,14 @@ int conf_loadConfig( const char* file );
 void conf_parseCLI( int argc, char** argv );
 void conf_cleanup (void);
 
+
+/*
+ * Some handling.
+ */
+void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src );
+void conf_free( PlayerConf_t *config );
+
+
 /*
  * saving
  */

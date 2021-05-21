@@ -276,17 +276,7 @@ void conf_setVideoDefaults (void)
  */
 void conf_cleanup (void)
 {
-   free(conf.datapath);
-   free(conf.ndata);
-   free(conf.language);
-   free(conf.joystick_nam);
-   free(conf.lastversion);
-   free(conf.dev_save_sys);
-   free(conf.dev_save_map);
-   free(conf.dev_save_asset);
-
-   /* Clear memory. */
-   memset( &conf, 0, sizeof(conf) );
+   conf_free( &conf );
 }
 
 
@@ -1167,5 +1157,48 @@ int conf_saveConfig ( const char* file )
    }
 
    return 0;
+}
+
+
+/**
+ * @brief Copies a configuration over another.
+ */
+void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src )
+{
+   conf_free( dest );
+   memcpy( dest, src, sizeof(PlayerConf_t) );
+#define STRDUP(s) dest->s = ((src->s==NULL)?NULL:strdup(src->s))
+   STRDUP(ndata);
+   STRDUP(datapath);
+   STRDUP(language);
+   STRDUP(joystick_nam);
+   STRDUP(font_name_default);
+   STRDUP(font_name_monospace);
+   STRDUP(lastversion);
+   STRDUP(dev_save_sys);
+   STRDUP(dev_save_map);
+   STRDUP(dev_save_asset);
+#undef STRDUP
+}
+
+
+/**
+ * @brief Frees a configuration.
+ */
+void conf_free( PlayerConf_t *config )
+{
+   free(config->ndata);
+   free(config->datapath);
+   free(config->language);
+   free(config->joystick_nam);
+   free(config->font_name_default);
+   free(config->font_name_monospace);
+   free(config->lastversion);
+   free(config->dev_save_sys);
+   free(config->dev_save_map);
+   free(config->dev_save_asset);
+
+   /* Clear memory. */
+   memset( config, 0, sizeof(PlayerConf_t) );
 }
 

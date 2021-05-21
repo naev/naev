@@ -116,7 +116,7 @@ void opt_menu (void)
    const char **names;
 
    /* Save current configuration over. */
-   memcpy( &local_conf, &conf, sizeof(PlayerConf_t) );
+   conf_copy( &local_conf, &conf );
 
    /* Dimensions. */
    w = 680;
@@ -154,7 +154,7 @@ static void opt_OK( unsigned int wid, char *str )
    int ret, prompted_restart;
 
    /* Save current configuration over. */
-   memcpy( &local_conf, &conf, sizeof(PlayerConf_t) );
+   conf_copy( &local_conf, &conf );
 
    prompted_restart = opt_restart;
    ret = 0;
@@ -179,7 +179,7 @@ static void opt_close( unsigned int wid, char *name )
    (void) name;
 
    /* Load old config again. */
-   memcpy( &conf, &local_conf, sizeof(PlayerConf_t) );
+   conf_copy( &conf, &local_conf );
 
    /* At this point, set sound levels as defined in the config file.
     * This ensures that sound volumes are reset on "Cancel". */
@@ -188,6 +188,9 @@ static void opt_close( unsigned int wid, char *name )
 
    window_destroy( opt_wid );
    opt_wid = 0;
+
+   /* Free config. */
+   conf_free( &local_conf );
 }
 
 
