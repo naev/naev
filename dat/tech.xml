@@ -217,54 +217,54 @@
   <item>Unicorp D-68 Heavy Plating</item>
   <item>S&amp;K Large Cargo Hull</item>
   <item>S&amp;K Superheavy Combat Plating</item>
-  <item>Ultralight Bioship Brain Stage 1</item>
-  <item>Light Bioship Brain Stage 1</item>
-  <item>Medium Bioship Brain Stage 1</item>
-  <item>Medium-Heavy Bioship Brain Stage 1</item>
-  <item>Heavy Bioship Brain Stage 1</item>
-  <item>Superheavy Bioship Brain Stage 1</item>
-  <item>Ultralight Bioship Shell Stage 1</item>
-  <item>Light Bioship Shell Stage 1</item>
-  <item>Medium Bioship Shell Stage 1</item>
-  <item>Medium-Heavy Bioship Shell Stage 1</item>
-  <item>Heavy Bioship Shell Stage 1</item>
-  <item>Superheavy Bioship Shell Stage 1</item>
-  <item>Ultralight Bioship Fast Gene Drive Stage 1</item>
-  <item>Light Bioship Fast Gene Drive Stage 1</item>
-  <item>Medium Bioship Fast Gene Drive Stage 1</item>
-  <item>Medium-Heavy Bioship Fast Gene Drive Stage 1</item>
-  <item>Heavy Bioship Fast Gene Drive Stage 1</item>
-  <item>Superheavy Bioship Fast Gene Drive Stage 1</item>
-  <item>Ultralight Bioship Strong Gene Drive Stage 1</item>
-  <item>Light Bioship Strong Gene Drive Stage 1</item>
-  <item>Medium Bioship Strong Gene Drive Stage 1</item>
-  <item>Medium-Heavy Bioship Strong Gene Drive Stage 1</item>
-  <item>Heavy Bioship Strong Gene Drive Stage 1</item>
-  <item>Superheavy Bioship Strong Gene Drive Stage 1</item>
-  <item>Ultralight Bioship Brain Stage X</item>
-  <item>Light Bioship Brain Stage X</item>
-  <item>Medium Bioship Brain Stage X</item>
-  <item>Medium-Heavy Bioship Brain Stage X</item>
-  <item>Heavy Bioship Brain Stage X</item>
-  <item>Superheavy Bioship Brain Stage X</item>
-  <item>Ultralight Bioship Shell Stage X</item>
-  <item>Light Bioship Shell Stage X</item>
-  <item>Medium Bioship Shell Stage X</item>
-  <item>Medium-Heavy Bioship Shell Stage X</item>
-  <item>Heavy Bioship Shell Stage X</item>
-  <item>Superheavy Bioship Shell Stage X</item>
-  <item>Ultralight Bioship Fast Gene Drive Stage X</item>
-  <item>Light Bioship Fast Gene Drive Stage X</item>
-  <item>Medium Bioship Fast Gene Drive Stage X</item>
-  <item>Medium-Heavy Bioship Fast Gene Drive Stage X</item>
-  <item>Heavy Bioship Fast Gene Drive Stage X</item>
-  <item>Superheavy Bioship Fast Gene Drive Stage X</item>
-  <item>Ultralight Bioship Strong Gene Drive Stage X</item>
-  <item>Light Bioship Strong Gene Drive Stage X</item>
-  <item>Medium Bioship Strong Gene Drive Stage X</item>
-  <item>Medium-Heavy Bioship Strong Gene Drive Stage X</item>
-  <item>Heavy Bioship Strong Gene Drive Stage X</item>
-  <item>Superheavy Bioship Strong Gene Drive Stage X</item>
+  <item>Ultralight Brain Stage 1</item>
+  <item>Light Brain Stage 1</item>
+  <item>Medium Brain Stage 1</item>
+  <item>Medium-Heavy Brain Stage 1</item>
+  <item>Heavy Brain Stage 1</item>
+  <item>Superheavy Brain Stage 1</item>
+  <item>Ultralight Shell Stage 1</item>
+  <item>Light Shell Stage 1</item>
+  <item>Medium Shell Stage 1</item>
+  <item>Medium-Heavy Shell Stage 1</item>
+  <item>Heavy Shell Stage 1</item>
+  <item>Superheavy Shell Stage 1</item>
+  <item>Ultralight Fast Gene Drive Stage 1</item>
+  <item>Light Fast Gene Drive Stage 1</item>
+  <item>Medium Fast Gene Drive Stage 1</item>
+  <item>Medium-Heavy Fast Gene Drive Stage 1</item>
+  <item>Heavy Fast Gene Drive Stage 1</item>
+  <item>Superheavy Fast Gene Drive Stage 1</item>
+  <item>Ultralight Strong Gene Drive Stage 1</item>
+  <item>Light Strong Gene Drive Stage 1</item>
+  <item>Medium Strong Gene Drive Stage 1</item>
+  <item>Medium-Heavy Strong Gene Drive Stage 1</item>
+  <item>Heavy Strong Gene Drive Stage 1</item>
+  <item>Superheavy Strong Gene Drive Stage 1</item>
+  <item>Ultralight Brain Stage X</item>
+  <item>Light Brain Stage X</item>
+  <item>Medium Brain Stage X</item>
+  <item>Medium-Heavy Brain Stage X</item>
+  <item>Heavy Brain Stage X</item>
+  <item>Superheavy Brain Stage X</item>
+  <item>Ultralight Shell Stage X</item>
+  <item>Light Shell Stage X</item>
+  <item>Medium Shell Stage X</item>
+  <item>Medium-Heavy Shell Stage X</item>
+  <item>Heavy Shell Stage X</item>
+  <item>Superheavy Shell Stage X</item>
+  <item>Ultralight Fast Gene Drive Stage X</item>
+  <item>Light Fast Gene Drive Stage X</item>
+  <item>Medium Fast Gene Drive Stage X</item>
+  <item>Medium-Heavy Fast Gene Drive Stage X</item>
+  <item>Heavy Fast Gene Drive Stage X</item>
+  <item>Superheavy Fast Gene Drive Stage X</item>
+  <item>Ultralight Strong Gene Drive Stage X</item>
+  <item>Light Strong Gene Drive Stage X</item>
+  <item>Medium Strong Gene Drive Stage X</item>
+  <item>Medium-Heavy Strong Gene Drive Stage X</item>
+  <item>Heavy Strong Gene Drive Stage X</item>
+  <item>Superheavy Strong Gene Drive Stage X</item>
   <item>Weapons Ionizer</item>
  </tech>
  <tech name="All Ships">
@@ -680,37 +680,37 @@
   <item>Nebular Shielding Prototype</item>
  </tech>
 
- <!-- Bioship outfits -->
+ <!-- outfits -->
  <tech name="Bioship Outfits">
   <item>BioPlasma Stinger Stage 1</item>
   <item>BioPlasma Claw Stage 1</item>
   <item>BioPlasma Fang Stage 1</item>
   <item>BioPlasma Talon Stage 1</item>
   <item>BioPlasma Tentacle Stage 1</item>
-  <item>Ultralight Bioship Brain Stage 1</item>
-  <item>Light Bioship Brain Stage 1</item>
-  <item>Medium Bioship Brain Stage 1</item>
-  <item>Medium-Heavy Bioship Brain Stage 1</item>
-  <item>Heavy Bioship Brain Stage 1</item>
-  <item>Superheavy Bioship Brain Stage 1</item>
-  <item>Ultralight Bioship Shell Stage 1</item>
-  <item>Light Bioship Shell Stage 1</item>
-  <item>Medium Bioship Shell Stage 1</item>
-  <item>Medium-Heavy Bioship Shell Stage 1</item>
-  <item>Heavy Bioship Shell Stage 1</item>
-  <item>Superheavy Bioship Shell Stage 1</item>
-  <item>Ultralight Bioship Fast Gene Drive Stage 1</item>
-  <item>Light Bioship Fast Gene Drive Stage 1</item>
-  <item>Medium Bioship Fast Gene Drive Stage 1</item>
-  <item>Medium-Heavy Bioship Fast Gene Drive Stage 1</item>
-  <item>Heavy Bioship Fast Gene Drive Stage 1</item>
-  <item>Superheavy Bioship Fast Gene Drive Stage 1</item>
-  <item>Ultralight Bioship Strong Gene Drive Stage 1</item>
-  <item>Light Bioship Strong Gene Drive Stage 1</item>
-  <item>Medium Bioship Strong Gene Drive Stage 1</item>
-  <item>Medium-Heavy Bioship Strong Gene Drive Stage 1</item>
-  <item>Heavy Bioship Strong Gene Drive Stage 1</item>
-  <item>Superheavy Bioship Strong Gene Drive Stage 1</item>
+  <item>Ultralight Brain Stage 1</item>
+  <item>Light Brain Stage 1</item>
+  <item>Medium Brain Stage 1</item>
+  <item>Medium-Heavy Brain Stage 1</item>
+  <item>Heavy Brain Stage 1</item>
+  <item>Superheavy Brain Stage 1</item>
+  <item>Ultralight Shell Stage 1</item>
+  <item>Light Shell Stage 1</item>
+  <item>Medium Shell Stage 1</item>
+  <item>Medium-Heavy Shell Stage 1</item>
+  <item>Heavy Shell Stage 1</item>
+  <item>Superheavy Shell Stage 1</item>
+  <item>Ultralight Fast Gene Drive Stage 1</item>
+  <item>Light Fast Gene Drive Stage 1</item>
+  <item>Medium Fast Gene Drive Stage 1</item>
+  <item>Medium-Heavy Fast Gene Drive Stage 1</item>
+  <item>Heavy Fast Gene Drive Stage 1</item>
+  <item>Superheavy Fast Gene Drive Stage 1</item>
+  <item>Ultralight Strong Gene Drive Stage 1</item>
+  <item>Light Strong Gene Drive Stage 1</item>
+  <item>Medium Strong Gene Drive Stage 1</item>
+  <item>Medium-Heavy Strong Gene Drive Stage 1</item>
+  <item>Heavy Strong Gene Drive Stage 1</item>
+  <item>Superheavy Strong Gene Drive Stage 1</item>
  </tech>
 
  <!-- Ships -->
