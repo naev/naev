@@ -426,7 +426,6 @@
   <item>Gauss Gun</item>
   <item>Unicorp Fury Launcher</item>
   <item>Battery</item>
-  <item>Solar Panel</item>
   <item>Fuel Pod</item>
   <item>Star Maps</item>
   <item>Large Civilian Vessel License</item>
@@ -536,7 +535,6 @@
  </tech>
  <tech name="Low Tech Upgrades">
   <item>Battery</item>
-  <item>Solar Panel</item>
   <item>Reactor Class I</item>
   <item>Shield Capacitor</item>
   <item>Small Shield Booster</item>
@@ -558,7 +556,6 @@
  <tech name="High Tech Upgrades 1">
   <item>Battery</item>
   <item>Battery II</item>
-  <item>Solar Panel</item>
   <item>Reactor Class I</item>
   <item>Reactor Class II</item>
   <item>Shield Capacitor</item>
