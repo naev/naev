@@ -145,14 +145,6 @@ equip_typeOutfits_weapons["Hephaestus"] = {
 
 equip_typeOutfits_utilities["Demon"] = {
    {
-      num = 1;
-      "Reactor Class III"
-   },
-   {
-      num = 1;
-      "Large Shield Booster"
-   },
-   {
       varied = true;
       "Droid Repair Crew", "Milspec Scrambler", "Boarding Androids MK1"
    }
