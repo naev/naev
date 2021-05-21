@@ -30,7 +30,7 @@
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="bio_engines" exclusive="1" required="1">Ultralight Bioship Fast Fin Stage 1</structure>
+  <structure size="small" prop="bio_engines" exclusive="1" required="1">Ultralight Bioship Fast Gene Drive Stage 1</structure>
   <structure size="small" prop="bio_hull" exclusive="1" required="1">Ultralight Bioship Shell Stage 1</structure>
   <structure size="small" />
   <structure size="small" />
