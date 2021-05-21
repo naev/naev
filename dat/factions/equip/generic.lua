@@ -590,81 +590,81 @@ equip_typeOutfits_coreSystems = {
    },
    ["Brigand"] = {
       probability = {
-         ["Ultralight Bioship Brain Stage X"] = 2
+         ["Ultralight Brain Stage X"] = 2
       };
-      "Ultralight Bioship Brain Stage 1", "Ultralight Bioship Brain Stage 2",
-      "Ultralight Bioship Brain Stage X",
+      "Ultralight Brain Stage 1", "Ultralight Brain Stage 2",
+      "Ultralight Brain Stage X",
    },
    ["Reaver"] = {
       probability = {
-         ["Light Bioship Brain Stage X"] = 3
+         ["Light Brain Stage X"] = 3
       };
-      "Light Bioship Brain Stage 1", "Light Bioship Brain Stage 2",
-      "Light Bioship Brain Stage 3", "Light Bioship Brain Stage X",
+      "Light Brain Stage 1", "Light Brain Stage 2",
+      "Light Brain Stage 3", "Light Brain Stage X",
    },
    ["Marauder"] = {
       probability = {
-         ["Light Bioship Brain Stage X"] = 3
+         ["Light Brain Stage X"] = 3
       };
-      "Light Bioship Brain Stage 1", "Light Bioship Brain Stage 2",
-      "Light Bioship Brain Stage 3", "Light Bioship Brain Stage X",
+      "Light Brain Stage 1", "Light Brain Stage 2",
+      "Light Brain Stage 3", "Light Brain Stage X",
    },
    ["Odium"] = {
       probability = {
-         ["Medium Bioship Brain Stage X"] = 4
+         ["Medium Brain Stage X"] = 4
       };
-      "Medium Bioship Brain Stage 1", "Medium Bioship Brain Stage 2",
-      "Medium Bioship Brain Stage 3", "Medium Bioship Brain Stage 4",
-      "Medium Bioship Brain Stage X",
+      "Medium Brain Stage 1", "Medium Brain Stage 2",
+      "Medium Brain Stage 3", "Medium Brain Stage 4",
+      "Medium Brain Stage X",
    },
    ["Nyx"] = {
       probability = {
-         ["Medium-Heavy Bioship Brain Stage X"] = 5
+         ["Medium-Heavy Brain Stage X"] = 5
       };
-      "Medium-Heavy Bioship Brain Stage 1",
-      "Medium-Heavy Bioship Brain Stage 2",
-      "Medium-Heavy Bioship Brain Stage 3",
-      "Medium-Heavy Bioship Brain Stage 4",
-      "Medium-Heavy Bioship Brain Stage 5",
-      "Medium-Heavy Bioship Brain Stage X",
+      "Medium-Heavy Brain Stage 1",
+      "Medium-Heavy Brain Stage 2",
+      "Medium-Heavy Brain Stage 3",
+      "Medium-Heavy Brain Stage 4",
+      "Medium-Heavy Brain Stage 5",
+      "Medium-Heavy Brain Stage X",
    },
    ["Ira"] = {
       probability = {
-         ["Heavy Bioship Brain Stage X"] = 6
+         ["Heavy Brain Stage X"] = 6
       };
-      "Heavy Bioship Brain Stage 1",
-      "Heavy Bioship Brain Stage 2",
-      "Heavy Bioship Brain Stage 3",
-      "Heavy Bioship Brain Stage 4",
-      "Heavy Bioship Brain Stage 5",
-      "Heavy Bioship Brain Stage 6",
-      "Heavy Bioship Brain Stage X",
+      "Heavy Brain Stage 1",
+      "Heavy Brain Stage 2",
+      "Heavy Brain Stage 3",
+      "Heavy Brain Stage 4",
+      "Heavy Brain Stage 5",
+      "Heavy Brain Stage 6",
+      "Heavy Brain Stage X",
    },
    ["Arx"] = {
       probability = {
-         ["Superheavy Bioship Brain Stage X"] = 7
+         ["Superheavy Brain Stage X"] = 7
       };
-      "Superheavy Bioship Brain Stage 1",
-      "Superheavy Bioship Brain Stage 2",
-      "Superheavy Bioship Brain Stage 3",
-      "Superheavy Bioship Brain Stage 4",
-      "Superheavy Bioship Brain Stage 5",
-      "Superheavy Bioship Brain Stage 6",
-      "Superheavy Bioship Brain Stage 7",
-      "Superheavy Bioship Brain Stage X",
+      "Superheavy Brain Stage 1",
+      "Superheavy Brain Stage 2",
+      "Superheavy Brain Stage 3",
+      "Superheavy Brain Stage 4",
+      "Superheavy Brain Stage 5",
+      "Superheavy Brain Stage 6",
+      "Superheavy Brain Stage 7",
+      "Superheavy Brain Stage X",
    },
    ["Vox"] = {
       probability = {
-         ["Superheavy Bioship Brain Stage X"] = 7
+         ["Superheavy Brain Stage X"] = 7
       };
-      "Superheavy Bioship Brain Stage 1",
-      "Superheavy Bioship Brain Stage 2",
-      "Superheavy Bioship Brain Stage 3",
-      "Superheavy Bioship Brain Stage 4",
-      "Superheavy Bioship Brain Stage 5",
-      "Superheavy Bioship Brain Stage 6",
-      "Superheavy Bioship Brain Stage 7",
-      "Superheavy Bioship Brain Stage X",
+      "Superheavy Brain Stage 1",
+      "Superheavy Brain Stage 2",
+      "Superheavy Brain Stage 3",
+      "Superheavy Brain Stage 4",
+      "Superheavy Brain Stage 5",
+      "Superheavy Brain Stage 6",
+      "Superheavy Brain Stage 7",
+      "Superheavy Brain Stage X",
    },
 }
 
@@ -696,81 +696,81 @@ equip_typeOutfits_engines = {
    },
    ["Brigand"] = {
       probability = {
-         ["Ultralight Bioship Fast Fin Stage X"] = 2
+         ["Ultralight Fast Gene Drive Stage X"] = 2
       };
-      "Ultralight Bioship Fast Fin Stage 1", "Ultralight Bioship Fast Fin Stage 2",
-      "Ultralight Bioship Fast Fin Stage X",
+      "Ultralight Fast Gene Drive Stage 1", "Ultralight Fast Gene Drive Stage 2",
+      "Ultralight Fast Gene Drive Stage X",
    },
    ["Reaver"] = {
       probability = {
-         ["Light Bioship Fast Fin Stage X"] = 3
+         ["Light Fast Gene Drive Stage X"] = 3
       };
-      "Light Bioship Fast Fin Stage 1", "Light Bioship Fast Fin Stage 2",
-      "Light Bioship Fast Fin Stage 3", "Light Bioship Fast Fin Stage X",
+      "Light Fast Gene Drive Stage 1", "Light Fast Gene Drive Stage 2",
+      "Light Fast Gene Drive Stage 3", "Light Fast Gene Drive Stage X",
    },
    ["Marauder"] = {
       probability = {
-         ["Light Bioship Fast Fin Stage X"] = 3
+         ["Light Fast Gene Drive Stage X"] = 3
       };
-      "Light Bioship Fast Fin Stage 1", "Light Bioship Fast Fin Stage 2",
-      "Light Bioship Fast Fin Stage 3", "Light Bioship Fast Fin Stage X",
+      "Light Fast Gene Drive Stage 1", "Light Fast Gene Drive Stage 2",
+      "Light Fast Gene Drive Stage 3", "Light Fast Gene Drive Stage X",
    },
    ["Odium"] = {
       probability = {
-         ["Medium Bioship Fast Fin Stage X"] = 4
+         ["Medium Fast Gene Drive Stage X"] = 4
       };
-      "Medium Bioship Fast Fin Stage 1", "Medium Bioship Fast Fin Stage 2",
-      "Medium Bioship Fast Fin Stage 3", "Medium Bioship Fast Fin Stage 4",
-      "Medium Bioship Fast Fin Stage X",
+      "Medium Fast Gene Drive Stage 1", "Medium Fast Gene Drive Stage 2",
+      "Medium Fast Gene Drive Stage 3", "Medium Fast Gene Drive Stage 4",
+      "Medium Fast Gene Drive Stage X",
    },
    ["Nyx"] = {
       probability = {
-         ["Medium-Heavy Bioship Fast Fin Stage X"] = 5
+         ["Medium-Heavy Fast Gene Drive Stage X"] = 5
       };
-      "Medium-Heavy Bioship Fast Fin Stage 1",
-      "Medium-Heavy Bioship Fast Fin Stage 2",
-      "Medium-Heavy Bioship Fast Fin Stage 3",
-      "Medium-Heavy Bioship Fast Fin Stage 4",
-      "Medium-Heavy Bioship Fast Fin Stage 5",
-      "Medium-Heavy Bioship Fast Fin Stage X",
+      "Medium-Heavy Fast Gene Drive Stage 1",
+      "Medium-Heavy Fast Gene Drive Stage 2",
+      "Medium-Heavy Fast Gene Drive Stage 3",
+      "Medium-Heavy Fast Gene Drive Stage 4",
+      "Medium-Heavy Fast Gene Drive Stage 5",
+      "Medium-Heavy Fast Gene Drive Stage X",
    },
    ["Ira"] = {
       probability = {
-         ["Heavy Bioship Fast Fin Stage X"] = 6
+         ["Heavy Fast Gene Drive Stage X"] = 6
       };
-      "Heavy Bioship Fast Fin Stage 1",
-      "Heavy Bioship Fast Fin Stage 2",
-      "Heavy Bioship Fast Fin Stage 3",
-      "Heavy Bioship Fast Fin Stage 4",
-      "Heavy Bioship Fast Fin Stage 5",
-      "Heavy Bioship Fast Fin Stage 6",
-      "Heavy Bioship Fast Fin Stage X",
+      "Heavy Fast Gene Drive Stage 1",
+      "Heavy Fast Gene Drive Stage 2",
+      "Heavy Fast Gene Drive Stage 3",
+      "Heavy Fast Gene Drive Stage 4",
+      "Heavy Fast Gene Drive Stage 5",
+      "Heavy Fast Gene Drive Stage 6",
+      "Heavy Fast Gene Drive Stage X",
    },
    ["Arx"] = {
       probability = {
-         ["Superheavy Bioship Strong Fin Stage X"] = 7
+         ["Superheavy Strong Gene Drive Stage X"] = 7
       };
-      "Superheavy Bioship Strong Fin Stage 1",
-      "Superheavy Bioship Strong Fin Stage 2",
-      "Superheavy Bioship Strong Fin Stage 3",
-      "Superheavy Bioship Strong Fin Stage 4",
-      "Superheavy Bioship Strong Fin Stage 5",
-      "Superheavy Bioship Strong Fin Stage 6",
-      "Superheavy Bioship Strong Fin Stage 7",
-      "Superheavy Bioship Strong Fin Stage X",
+      "Superheavy Strong Gene Drive Stage 1",
+      "Superheavy Strong Gene Drive Stage 2",
+      "Superheavy Strong Gene Drive Stage 3",
+      "Superheavy Strong Gene Drive Stage 4",
+      "Superheavy Strong Gene Drive Stage 5",
+      "Superheavy Strong Gene Drive Stage 6",
+      "Superheavy Strong Gene Drive Stage 7",
+      "Superheavy Strong Gene Drive Stage X",
    },
    ["Vox"] = {
       probability = {
-         ["Superheavy Bioship Strong Fin Stage X"] = 7
+         ["Superheavy Strong Gene Drive Stage X"] = 7
       };
-      "Superheavy Bioship Strong Fin Stage 1",
-      "Superheavy Bioship Strong Fin Stage 2",
-      "Superheavy Bioship Strong Fin Stage 3",
-      "Superheavy Bioship Strong Fin Stage 4",
-      "Superheavy Bioship Strong Fin Stage 5",
-      "Superheavy Bioship Strong Fin Stage 6",
-      "Superheavy Bioship Strong Fin Stage 7",
-      "Superheavy Bioship Strong Fin Stage X",
+      "Superheavy Strong Gene Drive Stage 1",
+      "Superheavy Strong Gene Drive Stage 2",
+      "Superheavy Strong Gene Drive Stage 3",
+      "Superheavy Strong Gene Drive Stage 4",
+      "Superheavy Strong Gene Drive Stage 5",
+      "Superheavy Strong Gene Drive Stage 6",
+      "Superheavy Strong Gene Drive Stage 7",
+      "Superheavy Strong Gene Drive Stage X",
    },
 }
 
@@ -800,81 +800,81 @@ equip_typeOutfits_hulls = {
    },
    ["Brigand"] = {
       probability = {
-         ["Ultralight Bioship Shell Stage X"] = 2,
+         ["Ultralight Shell Stage X"] = 2,
       };
-      "Ultralight Bioship Shell Stage 1", "Ultralight Bioship Shell Stage 2",
-      "Ultralight Bioship Shell Stage X",
+      "Ultralight Shell Stage 1", "Ultralight Shell Stage 2",
+      "Ultralight Shell Stage X",
    },
    ["Reaver"] = {
       probability = {
-         ["Light Bioship Shell Stage X"] = 3,
+         ["Light Shell Stage X"] = 3,
       };
-      "Light Bioship Shell Stage 1", "Light Bioship Shell Stage 2",
-      "Light Bioship Shell Stage 3", "Light Bioship Shell Stage X",
+      "Light Shell Stage 1", "Light Shell Stage 2",
+      "Light Shell Stage 3", "Light Shell Stage X",
    },
    ["Marauder"] = {
       probability = {
-         ["Light Bioship Shell Stage X"] = 3,
+         ["Light Shell Stage X"] = 3,
       };
-      "Light Bioship Shell Stage 1", "Light Bioship Shell Stage 2",
-      "Light Bioship Shell Stage 3", "Light Bioship Shell Stage X",
+      "Light Shell Stage 1", "Light Shell Stage 2",
+      "Light Shell Stage 3", "Light Shell Stage X",
    },
    ["Odium"] = {
       probability = {
-         ["Medium Bioship Shell Stage X"] = 4,
+         ["Medium Shell Stage X"] = 4,
       };
-      "Medium Bioship Shell Stage 1", "Medium Bioship Shell Stage 2",
-      "Medium Bioship Shell Stage 3", "Medium Bioship Shell Stage 4",
-      "Medium Bioship Shell Stage X",
+      "Medium Shell Stage 1", "Medium Shell Stage 2",
+      "Medium Shell Stage 3", "Medium Shell Stage 4",
+      "Medium Shell Stage X",
    },
    ["Nyx"] = {
       probability = {
-         ["Medium-Heavy Bioship Shell Stage X"] = 5,
+         ["Medium-Heavy Shell Stage X"] = 5,
       };
-      "Medium-Heavy Bioship Shell Stage 1",
-      "Medium-Heavy Bioship Shell Stage 2",
-      "Medium-Heavy Bioship Shell Stage 3",
-      "Medium-Heavy Bioship Shell Stage 4",
-      "Medium-Heavy Bioship Shell Stage 5",
-      "Medium-Heavy Bioship Shell Stage X",
+      "Medium-Heavy Shell Stage 1",
+      "Medium-Heavy Shell Stage 2",
+      "Medium-Heavy Shell Stage 3",
+      "Medium-Heavy Shell Stage 4",
+      "Medium-Heavy Shell Stage 5",
+      "Medium-Heavy Shell Stage X",
    },
    ["Ira"] = {
       probability = {
-         ["Heavy Bioship Shell Stage X"] = 6,
+         ["Heavy Shell Stage X"] = 6,
       };
-      "Heavy Bioship Shell Stage 1",
-      "Heavy Bioship Shell Stage 2",
-      "Heavy Bioship Shell Stage 3",
-      "Heavy Bioship Shell Stage 4",
-      "Heavy Bioship Shell Stage 5",
-      "Heavy Bioship Shell Stage 6",
-      "Heavy Bioship Shell Stage X",
+      "Heavy Shell Stage 1",
+      "Heavy Shell Stage 2",
+      "Heavy Shell Stage 3",
+      "Heavy Shell Stage 4",
+      "Heavy Shell Stage 5",
+      "Heavy Shell Stage 6",
+      "Heavy Shell Stage X",
    },
    ["Arx"] = {
       probability = {
-         ["Superheavy Bioship Shell Stage X"] = 7,
+         ["Superheavy Shell Stage X"] = 7,
       };
-      "Superheavy Bioship Shell Stage 1",
-      "Superheavy Bioship Shell Stage 2",
-      "Superheavy Bioship Shell Stage 3",
-      "Superheavy Bioship Shell Stage 4",
-      "Superheavy Bioship Shell Stage 5",
-      "Superheavy Bioship Shell Stage 6",
-      "Superheavy Bioship Shell Stage 7",
-      "Superheavy Bioship Shell Stage X",
+      "Superheavy Shell Stage 1",
+      "Superheavy Shell Stage 2",
+      "Superheavy Shell Stage 3",
+      "Superheavy Shell Stage 4",
+      "Superheavy Shell Stage 5",
+      "Superheavy Shell Stage 6",
+      "Superheavy Shell Stage 7",
+      "Superheavy Shell Stage X",
    },
    ["Vox"] = {
       probability = {
-         ["Superheavy Bioship Shell Stage X"] = 7,
+         ["Superheavy Shell Stage X"] = 7,
       };
-      "Superheavy Bioship Shell Stage 1",
-      "Superheavy Bioship Shell Stage 2",
-      "Superheavy Bioship Shell Stage 3",
-      "Superheavy Bioship Shell Stage 4",
-      "Superheavy Bioship Shell Stage 5",
-      "Superheavy Bioship Shell Stage 6",
-      "Superheavy Bioship Shell Stage 7",
-      "Superheavy Bioship Shell Stage X",
+      "Superheavy Shell Stage 1",
+      "Superheavy Shell Stage 2",
+      "Superheavy Shell Stage 3",
+      "Superheavy Shell Stage 4",
+      "Superheavy Shell Stage 5",
+      "Superheavy Shell Stage 6",
+      "Superheavy Shell Stage 7",
+      "Superheavy Shell Stage X",
    },
 }
 
