@@ -56,7 +56,7 @@ function land ()
    vn.transition()
    vn.na( result_str )
    vn.sfxMoney()
-   vn.func( function () player.pay( rewardcredits ) end )
+   vn.func( function () player.pay( rewardcredits, "noescorts" ) end )
    vn.na(string.format(_("You received #g%s#0."), creditstring( rewardcredits )))
    vn.run()
 
