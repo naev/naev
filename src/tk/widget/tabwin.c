@@ -88,9 +88,9 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->dat.tab.font       = &gl_smallFont;
 
    /* position/size */
-   wgt->x = (double) (x<0) ? 3. : x;
-   wgt->y = (double) (y<0) ? 3. : y;
-   wgt->w = (double) (w<0) ? wdw->w-6. : w;
+   wgt->x = (double) (x<0) ? 0. : x;
+   wgt->y = (double) (y<0) ? 0. : y;
+   wgt->w = (double) (w<0) ? wdw->w : w;
    wgt->h = (double) (h<0) ? wdw->h : h;
 
    /* Calculate window position and size. */
@@ -383,13 +383,13 @@ static void tab_render( Widget* tab, double bx, double by )
 
    /* Render tabs ontop. */
    dx = 0;
-   x = bx+tab->x;
+   x = bx+tab->x+3.;
    y = by+tab->y;
    if (tab->dat.tab.tabpos == 1)
       y += tab->h-TAB_HEIGHT;
 
    /* Draw tab bar backgrund */
-   toolkit_drawRect( x, y, wdw->w, TAB_HEIGHT+2, &cBlack, NULL);
+   toolkit_drawRect( x, y, wdw->w-6., TAB_HEIGHT+2, &cBlack, NULL);
 
    /* Iterate through tabs */
    for (i=0; i<tab->dat.tab.ntabs; i++) {
