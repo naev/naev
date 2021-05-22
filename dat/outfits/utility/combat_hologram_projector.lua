@@ -31,7 +31,7 @@ function turnon( p, po )
    -- No damage and low health
    np:intrinsicSet( {
       launch_damage  = -1000,
-      fbay_damage    = -1000, -- shouldn't have fighter bays, but just incase
+      fbay_damage    = -1000,
       fwd_damage     = -1000,
       tur_damage     = -1000,
       armour_mod     = -50,
@@ -45,6 +45,7 @@ function turnon( p, po )
    np:setDir( p:dir() )
    np:setVel( p:vel() )
    np:control( true )
+   --[[
    local bt = s:baseType()
    if bt=="Yacht" or bt=="Luxury Yacht" or bt=="Cruise Ship" or bt=="Courier" or bt=="Freighter" or bt=="Bulk Carrier" then
       -- Run away for civilian ships
@@ -53,6 +54,8 @@ function turnon( p, po )
       -- Attacks pilot's target for non civilian ships
       np:attack( t )
    end
+   --]]
+   np:attack( t )
 
    -- Modify randomly targetting of hostiles (probably don't have to go over all ships)
    for k,v in ipairs(p:getHostiles(dist)) do
