@@ -31,6 +31,7 @@
 #include "ndata.h"
 #include "nfile.h"
 #include "nlua.h"
+#include "nlua_gfx.h"
 #include "nlua_pilotoutfit.h"
 #include "nstring.h"
 #include "nstring.h"
@@ -1740,6 +1741,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          temp->u.mod.lua_env = env;
          /* TODO limit libraries here. */
          nlua_loadStandard( env );
+         nlua_loadGFX( env );
          nlua_loadPilotOutfit( env );
 
          /* Run code. */
