@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Emergency Stasis Inducer">
  <general>
+  <typename>Speed Modifier</typename>
   <slot>utility</slot>
   <size>small</size>
   <mass>2</mass>
@@ -11,7 +12,7 @@
   </general>
  <specific type="modification" group="8">
   <energy_regen_mod>-50</energy_regen_mod>
-  <time_mod>-80</time_mod>
+  <time_mod>-67</time_mod>
   <time_speedup>100</time_speedup>
   <lua>outfits/utility/emergency_stasis_inducer.lua</lua>
  </specific>
