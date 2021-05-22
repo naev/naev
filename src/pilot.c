@@ -2115,8 +2115,7 @@ void pilot_update( Pilot* pilot, double dt )
       pilot->shield += pilot->shield_regen * dt;
       if (pilot->sbonus > 0.)
          pilot->shield += dt * (pilot->shield_regen * (pilot->sbonus / 1.5));
-      if (pilot->shield > pilot->shield_max)
-         pilot->shield = pilot->shield_max;
+      pilot->shield = CLAMP( 0., pilot->shield_max, pilot->shield );
    }
 
    /*
