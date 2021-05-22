@@ -1446,6 +1446,7 @@ dat/outfits/launchers/empire_lancelot_fighter_bay.xml
 dat/outfits/launchers/energy_torpedo_mk1.xml
 dat/outfits/launchers/energy_torpedo_mk2.xml
 dat/outfits/launchers/energy_torpedo_mk3.xml
+dat/outfits/launchers/enygma_systems_huntsman_launcher.xml
 dat/outfits/launchers/enygma_systems_spearhead_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml
@@ -1571,6 +1572,7 @@ dat/outfits/rockets/energy_cell_iii.xml
 dat/outfits/rockets/fidelity_fighter.xml
 dat/outfits/rockets/fury_missile.xml
 dat/outfits/rockets/headhunter_missile.xml
+dat/outfits/rockets/huntsman_torpedo.xml
 dat/outfits/rockets/imperator_torpedo.xml
 dat/outfits/rockets/lancelot_fighter.xml
 dat/outfits/rockets/mace_rocket.xml
@@ -2116,7 +2118,6 @@ dat/ai/base.lua
 dat/ai/civilian.lua
 dat/ai/collective.lua
 dat/ai/collective_norun.lua
-dat/ai/distress_behaviour.lua
 dat/ai/drone_miner.lua
 dat/ai/dummy.lua
 dat/ai/dvaered.lua
@@ -2143,6 +2144,7 @@ dat/ai/include/atk_target.lua
 dat/ai/include/atk_util.lua
 dat/ai/include/attack.lua
 dat/ai/include/basic.lua
+dat/ai/include/distress_behaviour.lua
 dat/ai/independent.lua
 dat/ai/mercenary.lua
 dat/ai/miner.lua
@@ -2179,6 +2181,7 @@ dat/events/dvaered/fwB_repay.lua
 dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
+dat/events/hired_escorts.lua
 dat/events/minerva/altercation1.lua
 dat/events/minerva/altercation2.lua
 dat/events/minerva/chicken_rendezvous.lua

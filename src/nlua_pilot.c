@@ -3398,8 +3398,7 @@ static int pilotL_cargoList( lua_State *L )
 static int pilotL_credits( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   p->credits += luaL_optlong( L, 2, 0 );
-   p->credits = MAX( 0, p->credits ); /* Make sure it's not negative. */
+   pilot_modCredits( p, luaL_optlong( L, 2, 0 ) );
    lua_pushnumber( L, p->credits );
    return 1;
 }
