@@ -15,15 +15,16 @@ function turnon( p, po )
    -- Create hologram at the same position
    -- TODO hologram-specific AI?
    local s = p:ship()
-   local np = pilot.add( s:nameRaw(), p:faction(), p:pos(), p:name(), "escort" )
+   local pos = p:pos() + vec2.newP( 0.1, rnd.rnd()*359 )
+   local np = pilot.add( s:nameRaw(), p:faction(), pos, p:name(), "escort" )
    mem.p = np
    np:setHealth( p:health() ) -- Copy health
    np:setNoDeath( true ) -- Dosen't die
    -- Copy outfits
    np:rmOutfit("all")
    for k,v in ipairs(p:outfits()) do
-      -- We don't want holograms and fighter bays to create weird loops
-      if v ~= hologram and v:typeBroad()~="Fighter Bay" then
+      -- We don't want holograms
+      if v ~= hologram then
          np:addOutfit( v, 1, true )
       end
    end
@@ -63,24 +64,27 @@ function turnon( p, po )
    return true
 end
 function turnoff( po )
-   -- Get rid of hologram
-   if mem.p:exists() then
-      mem.p:rm()
-   end
-   mem.p = nil
+   removehologram()
 
    -- Set outfit state
    mem.timer = cooldown
    po:state("cooldown")
 end
-
-function init( p, po )
+function removehologram()
    -- get rid of hologram if exists
    if mem.p and mem.p:exists() then
+      -- Remove all potential escorts
+      for k,p in ipairs(mem.p:followers()) do
+         p:rm()
+      end
       mem.p:rm()
    end
-   po:state("off")
    mem.p = nil
+end
+
+function init( p, po )
+   removehologram()
+   po:state("off")
    mem.timer = 0
    mem.isp = player.pilot()==p -- is player?
 end
