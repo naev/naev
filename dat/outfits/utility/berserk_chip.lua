@@ -13,7 +13,7 @@ uniform float u_time = 0;
 
 void main (void)
 {
-   vec4 mod = mix( vec4(1), colmod, min(2.0*u_time, 1.0) );
+   vec4 mod = mix( vec4(1), colmod, min(3.0*u_time, 1.0) );
    color_out = mod * texture( MainTex, VaryingTexCoord.st );
 }
 ]], "#version 140\n"..f:read() )
@@ -68,6 +68,12 @@ function turnoff( p, po )
    mem.shader = nil
    po:set( "armour_damage", 0 )
    po:set( "shield_usage",  0 )
+   po:set( "launch_damage", -20 )
+   po:set( "fwd_damage", -20 )
+   po:set( "tur_damage", -20 )
+   po:set( "turn_mod", -20 )
+   po:set( "thrust_mod", -20 )
+   po:set( "speed_mod", -20 )
    return true
 end
 
@@ -75,6 +81,7 @@ function init( p, po )
    turnoff()
    mem.timer = 0
    po:state("off")
+   po:clear() -- clear stat modifications
    mem.isp = (p == player.pilot())
 end
 
@@ -91,6 +98,7 @@ function update( p, po, dt )
       mem.timer = mem.timer - dt
       if mem.timer < 0 then
          po:state("off")
+         po:clear() -- clear stat modifications
       end
    end
 end
