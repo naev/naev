@@ -2981,6 +2981,9 @@ void pilot_free( Pilot* p )
 {
    int i;
 
+   /* Stop all outfits. */
+   pilot_outfitOffAll(p);
+
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
 
@@ -3286,6 +3289,9 @@ void pilot_clearTimers( Pilot *pilot )
 {
    int i, n;
    PilotOutfitSlot *o;
+
+   /* Clear outfits first to not leave some outfits in dangling states. */
+   pilot_outfitOffAll(pilot);
 
    pilot->ptimer     = 0.; /* Pilot timer. */
    pilot->tcontrol   = 0.; /* AI control timer. */
