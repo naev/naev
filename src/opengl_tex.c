@@ -307,8 +307,9 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    /* Get texture. */
    texture = gl_texParameters( flags );
 
-   /* now lead the texture data up */
+   /* now load the texture data up */
    SDL_LockSurface( surface );
+   glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
    if (gl_texHasCompress()) {
       glTexImage2D( GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA,
             surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB,
