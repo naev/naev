@@ -262,7 +262,6 @@ typedef struct OutfitModificationData_ {
    double energy;       /**< Maximum energy modifier. */
    double energy_rel;   /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
-   double energy_loss;  /**< Energy regeneration modifier. */
    double absorb;       /**< Absorption factor. */
 
    /* Misc. */

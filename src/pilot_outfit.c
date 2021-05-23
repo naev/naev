@@ -1020,7 +1020,6 @@ void pilot_calcStats( Pilot* pilot )
          pilot->shield_regen  += o->u.mod.shield_regen;
          pilot->energy_max    += o->u.mod.energy;
          pilot->energy_regen  += o->u.mod.energy_regen;
-         pilot->energy_loss   += o->u.mod.energy_loss;
          /* Fuel. */
          pilot->fuel_max      += o->u.mod.fuel;
          /* Misc. */
@@ -1122,6 +1121,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_max   += s->energy_flat;
    pilot->energy       += s->energy_flat;
    pilot->energy_regen -= s->energy_usage;
+   pilot->energy_loss  += s->energy_loss;
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb + s->absorb_flat/100. );
 
    /* Give the pilot his health proportion back */

@@ -1722,7 +1722,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"armour_regen", temp->u.mod.armour_regen );
       xmlr_float(node,"shield_regen", temp->u.mod.shield_regen );
       xmlr_float(node,"energy_regen", temp->u.mod.energy_regen );
-      xmlr_float(node,"energy_loss", temp->u.mod.energy_loss );
       xmlr_float(node,"absorb", temp->u.mod.absorb );
       /* misc */
       xmlr_float(node,"cargo",temp->u.mod.cargo);
@@ -1803,7 +1802,6 @@ if ((x) != 0) \
    DESC_ADD( temp->u.mod.armour_regen, _("%+.1f Armour Per Second") );
    DESC_ADD( temp->u.mod.shield_regen, _("%+.1f Shield Per Second") );
    DESC_ADD( temp->u.mod.energy_regen, _("%+.1f Energy Per Second") );
-   DESC_ADD(-temp->u.mod.energy_loss,  _("%+.1f Energy Per Second") ); /* Bypasses RC stuff. The same as energy_regen but always negative. */
    DESC_ADD( temp->u.mod.absorb,       _("%+.0f Absorption") );
    DESC_ADD( temp->u.mod.cargo,        _("%+.0f Cargo") );
 #undef DESC_ADD
