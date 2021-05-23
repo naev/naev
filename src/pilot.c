@@ -924,6 +924,9 @@ void pilot_cooldown( Pilot *p )
    p->ctimer = p->cdelay;
    p->heat_start = p->heat_T;
    pilot_setFlag(p, PILOT_COOLDOWN);
+
+   /* Run outfit cooldown start hook. */
+   pilot_outfitLCooldown(p, 0, 0);
 }
 
 
@@ -955,10 +958,13 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    pilot_rmFlag(p, PILOT_COOLDOWN);
 
    /* Cooldown finished naturally, reset heat just in case. */
-   if (p->ctimer < 0.)
-   {
+   if (p->ctimer < 0.) {
       pilot_heatReset( p );
       pilot_fillAmmo( p );
+      pilot_outfitLCooldown(p,1,1);
+   }
+   else {
+      pilot_outfitLCooldown(p,1,0);
    }
 }
 

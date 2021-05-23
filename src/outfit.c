@@ -1696,6 +1696,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->u.mod.lua_ontoggle = LUA_NOREF;
    temp->u.mod.lua_onhit = LUA_NOREF;
    temp->u.mod.lua_outofenergy = LUA_NOREF;
+   temp->u.mod.lua_cooldown = LUA_NOREF;
 
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -1758,6 +1759,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          temp->u.mod.lua_ontoggle = nlua_refenv( env, "ontoggle" );
          temp->u.mod.lua_onhit = nlua_refenv( env, "onhit" );
          temp->u.mod.lua_outofenergy = nlua_refenv( env, "outofenergy" );
+         temp->u.mod.lua_cooldown = nlua_refenv( env, "cooldown" );
          continue;
       }
 
