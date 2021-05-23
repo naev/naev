@@ -1445,8 +1445,9 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
  *    @param pilot Pilot being handled.
  *    @param done Whether or not cooldown is starting or done.
  *    @param success Whether or not it completed successfully.
+ *    @param timer How much time is necessary to cooldown. Only used if done is false.
  */
-void pilot_outfitLCooldown( Pilot *pilot, int done, int success )
+void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer )
 {
    int i;
    PilotOutfitSlot *po;
@@ -1464,12 +1465,15 @@ void pilot_outfitLCooldown( Pilot *pilot, int done, int success )
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
       nlua_setenv(env, "mem"); /* */
 
-      /* Set up the function: cooldown( p, po, done, success ) */
+      /* Set up the function: cooldown( p, po, done, success/timer ) */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_cooldown); /* f */
       lua_pushpilot(naevL, pilot->id); /* f, p */
       lua_pushpilotoutfit(naevL, po);  /* f, p, po */
       lua_pushboolean(naevL, done); /* f, p, po, done */
-      lua_pushboolean(naevL, success); /* f, p, po, done, success */
+      if (done)
+         lua_pushboolean(naevL, success); /* f, p, po, done, success */
+      else
+         lua_pushnumber(naevL, timer); /* f, p, po, done, timer */
       if (nlua_pcall( env, 4, 0 )) {   /* */
          WARN( _("Pilot '%s''s outfit '%s' -> 'cooldown':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
          lua_pop(naevL, 1);
