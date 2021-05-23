@@ -2089,28 +2089,6 @@ void pilot_update( Pilot* pilot, double dt )
       }
    }
 
-   /* purpose fallthrough to get the movement like disabled */
-   if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
-      /* Do the slow brake thing */
-      pilot->solid->speed_max = 0.;
-      pilot_setThrust( pilot, 0. );
-      pilot_setTurn( pilot, 0. );
-
-      /* update the solid */
-      pilot->solid->update( pilot->solid, dt );
-      gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
-            pilot->ship->gfx_space, pilot->solid->dir );
-
-      /* Engine glow decay. */
-      if (pilot->engine_glow > 0.) {
-         pilot->engine_glow -= pilot->speed / pilot->thrust * dt * pilot->solid->mass;
-         if (pilot->engine_glow < 0.)
-            pilot->engine_glow = 0.;
-      }
-
-      return;
-   }
-
    /* Pilot is still alive */
    pilot->armour += pilot->armour_regen * dt;
    if (pilot->armour > pilot->armour_max)
@@ -2153,6 +2131,28 @@ void pilot_update( Pilot* pilot, double dt )
    /* Must recalculate stats because something changed state. */
    if (nchg > 0)
       pilot_calcStats( pilot );
+
+   /* purpose fallthrough to get the movement like disabled */
+   if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
+      /* Do the slow brake thing */
+      pilot->solid->speed_max = 0.;
+      pilot_setThrust( pilot, 0. );
+      pilot_setTurn( pilot, 0. );
+
+      /* update the solid */
+      pilot->solid->update( pilot->solid, dt );
+      gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
+            pilot->ship->gfx_space, pilot->solid->dir );
+
+      /* Engine glow decay. */
+      if (pilot->engine_glow > 0.) {
+         pilot->engine_glow -= pilot->speed / pilot->thrust * dt * pilot->solid->mass;
+         if (pilot->engine_glow < 0.)
+            pilot->engine_glow = 0.;
+      }
+
+      return;
+   }
 
    /* Player damage decay. */
    if (pilot->player_damage > 0.)
