@@ -352,29 +352,6 @@
        - \*
      - watson:
        - \*
-   loading:
-     - admonisher.png
-     - ancestor_pirate.png
-     - admonisher_pirate.png
-     - ancestor.png
-     - ancestor_pirate.png
-     - archimedes.png
-     - derivative.png
-     - drone.png
-     - gawain.png
-     - goddard.png
-     - hawking.png
-     - kahan.png
-     - koala.png
-     - lancelot.png
-     - llama.png
-     - mule.png
-     - pacifier.png
-     - quicksilver.png
-     - schroedinger.png
-     - vendetta.png
-     - vendetta_pirate.png
-     - vigilance.png
 - Joel Hans:
    license: PD
    planet:
