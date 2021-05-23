@@ -2732,8 +2732,13 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    /* Safety check. */
 #ifdef DEBUGGING
    const char *str = pilot_checkSpaceworthy( pilot );
-   if (str != NULL)
+   if (str != NULL) {
       DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, str );
+      for (i=0; i<array_size(pilot->outfits); i++) {
+         if (pilot->outfits[i]->outfit != NULL)
+            DEBUG(_("   [%d] %s"), i, _(pilot->outfits[i]->outfit->name) );
+      }
+   }
 #endif /* DEBUGGING */
 
    /* set flags and functions */
