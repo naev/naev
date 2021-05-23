@@ -18,7 +18,7 @@ images  = list(map( lambda x: os.path.basename(x), images ))
 
 imgdict = {}
 for i in images:
-    imgdict[i] = 0
+    imgdict[i] = [0, []]
 
 for file in glob(prefix+"/dat/outfits/**/*.xml"):
     with open( file, 'r' ) as f:
@@ -27,17 +27,19 @@ for file in glob(prefix+"/dat/outfits/**/*.xml"):
             s = m.group(1)
             v = imgdict.get(s)
             if not v:
-                v = 0
-            imgdict[s] = v+1
+                v = [ 0, [] ]
+            v[0] += 1
+            v[1] += [os.path.basename(file)]
+            imgdict[s] = v
 
 overused = []
 underused = []
 for k,v in imgdict.items():
     if "organic" in k:
         continue
-    if v > 1:
+    if v[0] > 1:
         overused += [k]
-    elif v==0:
+    elif v[0]==0:
         underused += [k]
 
 with open( "outfit_gfx.html", "w" ) as out:
@@ -52,16 +54,23 @@ with open( "outfit_gfx.html", "w" ) as out:
         path = prefix+"/dat/gfx/outfit/store/"+k
         if not os.path.isfile( path ):
            path = prefix+"/artwork/gfx/outfit/store/"+k
-        out.write(f"<div><img src='{path}' /> {k}: {imgdict[k]}</div>\n")
+        v = imgdict[k]
+        out.write(f"""
+  <div>
+   <img src='{path}' />
+   <span>{k}: {v[0]}</span><br/>
+   <span>{', '.join(v[1])}</span>
+  </div>
+""")
     out.write( """
 </body>
 </html>
     """ )
 
 print( "OVERUSED ASSETS:")
-s = sorted(overused, key=lambda x: imgdict[x], reverse=True)
+s = sorted(overused, key=lambda x: imgdict[x][0], reverse=True)
 for k in s:
-    print( f"   {k}: {imgdict[k]}" )
+    print( f"   {k}: {imgdict[k][0]} ({', '.join(imgdict[k][1])})" )
 
 print( "UNDERUSED ASSETS:")
 for k in underused:
