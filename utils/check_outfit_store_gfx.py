@@ -20,7 +20,8 @@ imgdict = {}
 for i in images:
     imgdict[i] = [0, []]
 
-for file in glob(prefix+"/dat/outfits/**/*.xml"):
+for file in glob(prefix+"/dat/outfits/**/*.xml", recursive=True):
+    print( file )
     with open( file, 'r' ) as f:
         m = re.search( "<gfx_store>(.+?)</gfx_store>", f.read() )
         if m:
