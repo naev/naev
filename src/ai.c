@@ -676,10 +676,10 @@ static int ai_loadProfile( const char* filename )
 
    /* Find and set up the necessary references. */
    str = _("AI Profile '%s' is missing '%s' function!");
-   prof->ref_control = nlua_refenv( env, "control" );
+   prof->ref_control = nlua_refenvtype( env, "control", LUA_TFUNCTION );
    if (prof->ref_control == LUA_NOREF)
       WARN( str, filename, "control" );
-   prof->ref_control_manual = nlua_refenv( env, "control_manual" );
+   prof->ref_control_manual = nlua_refenvtype( env, "control_manual", LUA_TFUNCTION );
    if (prof->ref_control == LUA_NOREF)
       WARN( str, filename, "control_manual" );
 
