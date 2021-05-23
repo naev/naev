@@ -10,7 +10,7 @@
   <description>The Hades Torch would be an exceptional afterburner except for the minor detail that to obtain maximum performance it has a tendency to burn the hull of the ship it is attached too.</description>
   <gfx_store>afterburner2.png</gfx_store>
   <limit>afterburner</limit>
-  <cpu>-6</cpu>
+  <cpu>0</cpu>
   <desc_extra>#rHot hot hot!#0</desc_extra>
  </general>
  <stats>
