@@ -93,6 +93,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LOOT_MOD,        /**< Affects boarding rewards. */
    SS_TYPE_D_TIME_MOD,        /**< Time dilation modifier. */
    SS_TYPE_D_TIME_SPEEDUP,    /**< Makes the pilot operate at a higher dt. */
+   SS_TYPE_D_COOLDOWN_TIME,   /**< Speeds up or slows down the cooldown time. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -251,6 +252,7 @@ typedef struct ShipStats_ {
    double loot_mod;           /**< Boarding loot reward bonus. */
    double time_mod;           /**< Time dilation modifier. */
    double time_speedup;       /**< Makes the pilot operate at higher speeds. */
+   double cooldown_time;      /**< Modifies cooldown time. */
 } ShipStats;
 
 

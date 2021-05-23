@@ -921,7 +921,7 @@ void pilot_cooldown( Pilot *p )
     */
    p->cdelay = (5. + sqrt(p->base_mass) / 2.) *
          (1. + pow(heat_mean / CONST_SPACE_STAR_TEMP - 1., 1.25));
-   p->ctimer = p->cdelay;
+   p->ctimer = p->cdelay * p->stats.cooldown_time;
    p->heat_start = p->heat_T;
    pilot_setFlag(p, PILOT_COOLDOWN);
 
