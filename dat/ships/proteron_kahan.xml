@@ -28,7 +28,7 @@
   <weapon size="large" x="18" y="0" h="5" />
   <weapon size="medium" prop="fighter_bay" x="-30" y="-8" h="3" />
   <weapon size="medium" prop="fighter_bay" x="-30" y="8" h="3" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-420 Core System</utility>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-310 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="large" />
   <utility size="large" />

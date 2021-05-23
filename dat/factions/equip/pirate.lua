@@ -18,23 +18,24 @@ equip_classCargo["Drone"] = .1
 equip_classCargo["Heavy Drone"] = .1
 
 equip_typeOutfits_coreSystems["Hyena"] = {
-   "Unicorp PT-24 Core System", "Milspec Orion 2301 Core System",
+   "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System",
 }
 equip_typeOutfits_coreSystems["Shark"] = equip_typeOutfits_coreSystems["Hyena"]
 equip_typeOutfits_coreSystems["Vendetta"] = {
-   "Unicorp PT-100 Core System", "Milspec Orion 3701 Core System",
+   "Unicorp PT-68 Core System", "Milspec Orion 3701 Core System",
+   "Milspec Thalos 3602 Core System",
 }
 equip_typeOutfits_coreSystems["Lancelot"] = equip_typeOutfits_coreSystems["Vendetta"]
 equip_typeOutfits_coreSystems["Ancestor"] = equip_typeOutfits_coreSystems["Vendetta"]
 equip_typeOutfits_coreSystems["Phalanx"] = {
-   "Unicorp PT-300 Core System", "Milspec Orion 4801 Core System",
+   "Unicorp PT-200 Core System", "Milspec Orion 4801 Core System",
 }
 equip_typeOutfits_coreSystems["Admonisher"] = equip_typeOutfits_coreSystems["Phalanx"]
 equip_typeOutfits_coreSystems["Pacifier"] = {
-   "Unicorp PT-420 Core System", "Milspec Orion 5501 Core System",
+   "Unicorp PT-310 Core System", "Milspec Orion 5501 Core System",
 }
 equip_typeOutfits_coreSystems["Kestrel"] = {
-   "Unicorp PT-3500 Core System", "Milspec Orion 8601 Core System",
+   "Unicorp PT-2200 Core System", "Milspec Orion 8601 Core System",
 }
 
 equip_typeOutfits_engines["Rhino"] = {

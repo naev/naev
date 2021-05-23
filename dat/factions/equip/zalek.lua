@@ -2,19 +2,19 @@ require "factions/equip/generic"
 
 
 equip_typeOutfits_coreSystems["Sting"] = {
-   "Unicorp PT-300 Core System",
+   "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System",
 }
 equip_typeOutfits_coreSystems["Demon"] = {
-   "Milspec Orion 5501 Core System", "Unicorp PT-420 Core System",
+   "Milspec Orion 5501 Core System", "Milspec Thalos 5402 Core System",
 }
 equip_typeOutfits_coreSystems["Mephisto"] = {
    "Milspec Orion 8601 Core System",
 }
 equip_typeOutfits_coreSystems["Diablo"] = {
-   "Milspec Orion 9901 Core System",
+   "Milspec Thalos 9802 Core System",
 }
 equip_typeOutfits_coreSystems["Hephaestus"] = {
-   "Milspec Orion 9901 Core System",
+   "Milspec Thalos 9802 Core System",
 }
 equip_typeOutfits_coreSystems["Prototype"] = {
    "Milspec Orion 9901 Core System",

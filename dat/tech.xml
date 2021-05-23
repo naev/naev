@@ -163,20 +163,26 @@
   <item>Heavy Combat Vessel License</item>
   <item>Mercenary License</item>
   <item>Previous Generation Small Systems</item>
-  <item>Unicorp PT-24 Core System</item>
-  <item>Unicorp PT-100 Core System</item>
+  <item>Unicorp PT-16 Core System</item>
+  <item>Unicorp PT-68 Core System</item>
   <item>Milspec Orion 2301 Core System</item>
   <item>Milspec Orion 3701 Core System</item>
+  <item>Milspec Thalos 2202 Core System</item>
+  <item>Milspec Thalos 3602 Core System</item>
   <item>Previous Generation Medium Systems</item>
-  <item>Unicorp PT-300 Core System</item>
-  <item>Unicorp PT-420 Core System</item>
+  <item>Unicorp PT-200 Core System</item>
+  <item>Unicorp PT-310 Core System</item>
   <item>Milspec Orion 4801 Core System</item>
   <item>Milspec Orion 5501 Core System</item>
+  <item>Milspec Thalos 4702 Core System</item>
+  <item>Milspec Thalos 5402 Core System</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-850 Core System</item>
-  <item>Unicorp PT-3500 Core System</item>
+  <item>Unicorp PT-500 Core System</item>
+  <item>Unicorp PT-2200 Core System</item>
   <item>Milspec Orion 8601 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
+  <item>Milspec Thalos 8502 Core System</item>
+  <item>Milspec Thalos 9802 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Unicorp Hawk 350 Engine</item>
   <item>Nexus Dart 150 Engine</item>
@@ -448,12 +454,12 @@
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-24 Core System</item>
-  <item>Unicorp PT-100 Core System</item>
-  <item>Unicorp PT-300 Core System</item>
-  <item>Unicorp PT-420 Core System</item>
-  <item>Unicorp PT-850 Core System</item>
-  <item>Unicorp PT-3500 Core System</item>
+  <item>Unicorp PT-16 Core System</item>
+  <item>Unicorp PT-68 Core System</item>
+  <item>Unicorp PT-200 Core System</item>
+  <item>Unicorp PT-310 Core System</item>
+  <item>Unicorp PT-500 Core System</item>
+  <item>Unicorp PT-2200 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
@@ -497,12 +503,12 @@
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-24 Core System</item>
-  <item>Unicorp PT-100 Core System</item>
-  <item>Unicorp PT-300 Core System</item>
-  <item>Unicorp PT-420 Core System</item>
-  <item>Unicorp PT-850 Core System</item>
-  <item>Unicorp PT-3500 Core System</item>
+  <item>Unicorp PT-16 Core System</item>
+  <item>Unicorp PT-68 Core System</item>
+  <item>Unicorp PT-200 Core System</item>
+  <item>Unicorp PT-310 Core System</item>
+  <item>Unicorp PT-500 Core System</item>
+  <item>Unicorp PT-2200 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
@@ -851,24 +857,30 @@
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Unicorp PT-24 Core System</item>
-  <item>Unicorp PT-300 Core System</item>
-  <item>Unicorp PT-850 Core System</item>
+  <item>Unicorp PT-16 Core System</item>
+  <item>Unicorp PT-200 Core System</item>
+  <item>Unicorp PT-500 Core System</item>
  </tech>
  <tech name="Systems Medium">
-  <item>Unicorp PT-100 Core System</item>
-  <item>Unicorp PT-420 Core System</item>
-  <item>Unicorp PT-3500 Core System</item>
+  <item>Unicorp PT-68 Core System</item>
+  <item>Unicorp PT-310 Core System</item>
+  <item>Unicorp PT-2200 Core System</item>
  </tech>
  <tech name="Systems High">
   <item>Milspec Orion 2301 Core System</item>
   <item>Milspec Orion 3701 Core System</item>
   <item>Milspec Orion 4801 Core System</item>
+  <item>Milspec Thalos 2202 Core System</item>
+  <item>Milspec Thalos 3602 Core System</item>
+  <item>Milspec Thalos 4702 Core System</item>
  </tech>
  <tech name="Systems Elite">
   <item>Milspec Orion 5501 Core System</item>
   <item>Milspec Orion 8601 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
+  <item>Milspec Thalos 5402 Core System</item>
+  <item>Milspec Thalos 8502 Core System</item>
+  <item>Milspec Thalos 9802 Core System</item>
  </tech>
  <tech name="Engines Low">
   <item>Beat Up Small Engine</item>

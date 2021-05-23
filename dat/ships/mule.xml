@@ -28,7 +28,7 @@
  <slots>
   <weapon size="medium" prop="fighter_bay" x="-15" y="0" h="4" />
   <weapon size="medium" prop="fighter_bay" x="15" y="0" h="4" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-300 Core System</utility>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="medium" />
   <utility size="medium" />
