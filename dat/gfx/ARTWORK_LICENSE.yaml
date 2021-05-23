@@ -952,14 +952,6 @@
        - frame_planet_top.png
        - outfit.png
        - speedDouble.png
-- The Diligent Circle, based on work from Vega Strike and work by Enigmatic:
-   license: GPLv3
-   map:
-      - proteron.png
-- The Diligent Circle, based on work from Josh Combs:
-   license: CC-by-sa 3.0
-   map:
-     - nebula.png
 - Nikola Whallon <6.saturn.6@gmail.com>:
    license: GPLv3 / CC-by 3
    planet:
@@ -1415,10 +1407,6 @@
        - snowy_cliffs.webp
        - rocky_small.webp
        - uninhabited-jungle.webp
-- Kinniken:
-   license: GPLv3
-   map:
-     - empire.png
 - Unnamed <https://opengameart.org/users/unnamed>:
    license: CC-by 3.0
    intro:
@@ -1454,12 +1442,6 @@
      - portrait_exclamation.png
 - nenau (based on work from Vega Strike and Kinniken):
    license: GPLv3+
-   map:
-     - dvaered.png
-     - frontier.png
-     - sirius.png
-     - soromid.png
-     - zalek.png
    commodity:
      - space:
        - fuel.png

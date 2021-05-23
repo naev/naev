@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map>
   <decorator>
-    <image>empire.png</image>
+    <image>empire.webp</image>
     <x>-320.200000</x>
     <y>-313.800000</y>
     <detection_radius>100</detection_radius>
   </decorator>
   <decorator>
-    <image>soromid.png</image>
+    <image>soromid.webp</image>
     <x>144.000000</x>
     <y>624.000000</y>
     <detection_radius>100</detection_radius>
   </decorator>
   <decorator>
-    <image>dvaered.png</image>
+    <image>dvaered.webp</image>
     <x>240.000000</x>
     <y>-573.000000</y>
     <detection_radius>100</detection_radius>
   </decorator>
   <decorator>
-    <image>zalek.png</image>
+    <image>zalek.webp</image>
     <x>-582.606486</x>
     <y>-881.496039</y>
     <detection_radius>100</detection_radius>
   </decorator>
   <decorator>
-    <image>sirius.png</image>
+    <image>sirius.webp</image>
     <x>1015.589870</x>
     <y>-624.818459</y>
     <detection_radius>100</detection_radius>
   </decorator>
   <decorator>
-    <image>frontier.png</image>
+    <image>frontier.webp</image>
     <x>619.000000</x>
     <y>-389.000000</y>
     <detection_radius>100</detection_radius>
   </decorator>
   <decorator>
-    <image>nebula.png</image>
+    <image>nebula.webp</image>
     <x>588.000000</x>
     <y>94.000000</y>
     <detection_radius>300</detection_radius>
   </decorator>
   <decorator>
-    <image>proteron.png</image>
+    <image>proteron.webp</image>
     <x>1196.000000</x>
     <y>510.000000</y>
     <detection_radius>100</detection_radius>
