@@ -28,7 +28,7 @@ logidstr = taiomi.log.main.idstr
 --[[
 -- Event states:
 -- 0: player entered system
--- 1: player landed on the goddard and took off
+-- 1: player landed on the Goddard and took off
 -- 2: player finished cutscene and is asked to land on the Goddard
 --]]
 evt_state = 0
@@ -192,13 +192,13 @@ function cutscene03 ()
    vn.scene()
    local d = vn.newCharacter( taiomi.vn_scavenger() )
    vn.transition()
-   vn.na(_("As you get into your ship and undock, you quickly find yourself surrounded by many sleek white small ships. As you stare at the ships sorrounding you, your comm channel flashes open, however, it is audio only."))
+   vn.na(_("As you get into your ship and undock, you quickly find yourself surrounded by many sleek white small ships. As you stare at the ships surrounding you, your comm channel flashes open, however, it is audio only."))
    d(_([["Salutations."
 The voice sounds uncanny, almost human but something sets it apart.]]))
-   -- Special case player has done parts of the collective campaign
+   -- Special case player has done parts of the Collective campaign
    --[[
    if player.misnDone("Collective Scouting") then -- this is the first mission
-      vn.na(_("You clearly identify the ships as collective drones. How the hell did they get over here?"))
+      vn.na(_("You clearly identify the ships as Collective drones. How the hell did they get over here?"))
    end
    --]]
    vn.menu({

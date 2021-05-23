@@ -3616,7 +3616,7 @@ static int player_parseMetadata( xmlNodePtr parent )
 
             class = ship_classFromString( buf );
             if (class==SHIP_CLASS_NULL) {
-               WARN(_("Unknown ship class '%s' when pasing 'ships_destroyed' node!"), (const char*)cur->name );
+               WARN(_("Unknown ship class '%s' when parsing 'ships_destroyed' node!"), (const char*)cur->name );
                continue;
             }
 
