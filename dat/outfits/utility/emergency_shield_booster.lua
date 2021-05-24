@@ -49,7 +49,7 @@ function update( p, po, dt )
    if mem.active then
       po:progress( mem.timer / active )
       local a, s = p:health()
-      if mem.timer < 0 or s > 0.99 then
+      if mem.timer < 0 or s > 99 then
          turnoff( p, po )
       end
    else
