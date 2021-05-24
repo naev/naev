@@ -48,7 +48,7 @@ typedef struct PPShader_s {
 
 
 static unsigned int pp_shaders_id = 0;
-static PPShader *pp_shaders_list[PP_LAYER_MAX] = {NULL, NULL}; /**< Post-processing shaders for game layer. */
+static PPShader *pp_shaders_list[PP_LAYER_MAX]; /**< Post-processing shaders for game layer. */
 
 
 static LuaShader_t gamma_correction_shader;
@@ -61,7 +61,7 @@ static int pp_gamma_correction = 0; /**< Gamma correction shader. */
 static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
 {
    /* Have to consider alpha premultiply. */
-   glBlendFuncSeparate( GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO );
+   glBlendFuncSeparate( GL_ONE, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
 
    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
