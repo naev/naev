@@ -206,7 +206,7 @@ static int poL_state( lua_State *L )
 static int poL_progress( lua_State *L )
 {
    PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
-   po->progress = luaL_checknumber(L,2);
+   po->progress = CLAMP( 0., 1., luaL_checknumber(L,2) );
    return 0;
 }
 
