@@ -20,7 +20,7 @@
  </health>
  <characteristics>
   <crew>27</crew>
-  <mass>1400</mass>
+  <mass>1100</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>80</cargo>
  </characteristics>
@@ -46,6 +46,9 @@
   <structure size="medium" />
  </slots>
  <stats>
+  <shield_mod>5</shield_mod>
+  <speed_mod>5</speed_mod>
+  <turn_mod>5</turn_mod>
   <ew_hide>5</ew_hide>
  </stats>
 </ship>
