@@ -29,11 +29,13 @@ int pilotoutfit_modified = 0;
 /* Pilot outfit metatable methods. */
 static int poL_outfit( lua_State *L );
 static int poL_state( lua_State *L );
+static int poL_progress( lua_State *L );
 static int poL_set( lua_State *L );
 static int poL_clear( lua_State *L );
 static const luaL_Reg poL_methods[] = {
    { "outfit", poL_outfit },
    { "state", poL_state },
+   { "progress", poL_progress },
    { "set", poL_set },
    { "clear", poL_clear },
    {0,0}
@@ -190,6 +192,21 @@ static int poL_state( lua_State *L )
    if (pos != po->state)
       pilotoutfit_modified = 1;
 
+   return 0;
+}
+
+
+/**
+ * @brief Sets the state progress of the PilotOutfit.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to set the state of.
+ *    @luatparam number progress Progress of the current state with 1 being started and 0 being done.
+ * @luafunc progress
+ */
+static int poL_progress( lua_State *L )
+{
+   PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
+   po->progress = luaL_checknumber(L,2);
    return 0;
 }
 
