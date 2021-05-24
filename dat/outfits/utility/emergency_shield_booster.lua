@@ -10,6 +10,7 @@ function turnon( p, po )
       return false
    end
    po:state("on")
+   po:progress(1)
    mem.active = true
 
    -- Apply effect
@@ -30,6 +31,7 @@ function turnoff( p, po )
       return false
    end
    po:state("cooldown")
+   po:progress(1)
    po:clear() -- clear stat modifications
    mem.timer = cooldown
    mem.active = false
@@ -45,11 +47,13 @@ end
 function update( p, po, dt )
    mem.timer = mem.timer - dt
    if mem.active then
+      po:progress( mem.timer / active )
       local a, s = p:health()
       if mem.timer < 0 or s > 0.99 then
          turnoff( p, po )
       end
    else
+      po:progress( mem.timer / cooldown )
       if mem.timer < 0 then
          po:state("off")
       end

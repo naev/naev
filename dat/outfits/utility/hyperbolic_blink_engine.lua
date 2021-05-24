@@ -29,6 +29,7 @@ function update( p, po, dt )
 
          -- Set cooldown and maluses
          po:state("cooldown")
+         po:progress(1)
          po:set("thrust_mod", penalty)
          po:set("turn_mod", penalty)
       else
@@ -38,6 +39,13 @@ function update( p, po, dt )
          -- Cancel maluses
          po:set("thrust_mod", 0)
          po:set("turn_mod", 0)
+      end
+   else
+      -- Update progress
+      if mem.warmup then
+         po:progress( mem.timer / warmup )
+      else
+         po:progress( mem.timer / cooldown )
       end
    end
 end
@@ -52,5 +60,7 @@ function ontoggle( p, po, on )
    -- Start the warmup
    mem.warmup = true
    mem.timer = warmup
+   po:state("warmup")
+   po:progress(1)
    -- TODO add warm-up sound effect
 end

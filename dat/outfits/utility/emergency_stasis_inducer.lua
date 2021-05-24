@@ -17,9 +17,13 @@ function update( p, po, dt )
          mem.timer = cooldown
          mem.active = false
          po:state( "cooldown" )
+         po:progress(1)
          return
+      else
+         po:progress( mem.timer / ontime )
       end
    else
+      po:progress( mem.timer / cooldown )
       if mem.timer <= 0 then
          po:state( "off" )
       end
@@ -33,5 +37,6 @@ function onhit( p, po, armour, shield )
       mem.timer = ontime
       mem.active = true
       po:state( "on" )
+      po:progress(1)
    end
 end

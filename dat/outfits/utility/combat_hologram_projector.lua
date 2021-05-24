@@ -11,6 +11,7 @@ function turnon( p, po )
    -- Set outfit state
    mem.timer = active
    po:state("on")
+   po:progress(1)
 
    -- Create hologram at the same position
    -- TODO hologram-specific AI?
@@ -72,6 +73,7 @@ function turnoff( po )
    -- Set outfit state
    mem.timer = cooldown
    po:state("cooldown")
+   po:progress(1)
 end
 function removehologram()
    -- get rid of hologram if exists
@@ -95,10 +97,12 @@ end
 function update( p, po, dt )
    mem.timer = mem.timer - dt
    if mem.p then
+      po:progress( mem.timer / active )
       if not mem.p:exists() or mem.timer < 0 or mem.p:health(true) < 5 then
          turnoff( po )
       end
    else
+      po:progress( mem.timer / cooldown )
       if mem.timer < 0 then
          po:state("off")
       end

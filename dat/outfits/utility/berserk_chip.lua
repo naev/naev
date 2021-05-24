@@ -37,6 +37,7 @@ function turnon( p, po )
       return false
    end
    po:state("on")
+   po:progress(0) -- No progress so just fill out the bar
    mem.active = true
 
    -- Apply damaging effect
@@ -60,6 +61,7 @@ function turnoff( p, po )
       return false
    end
    po:state("cooldown")
+   po:progress(1)
    mem.timer = cooldown
    mem.active = false
    if mem.shader then
@@ -96,6 +98,7 @@ function update( p, po, dt )
       end
    else
       mem.timer = mem.timer - dt
+      po:progress( mem.timer / cooldown )
       if mem.timer < 0 then
          po:state("off")
          po:clear() -- clear stat modifications
