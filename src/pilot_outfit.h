@@ -10,7 +10,7 @@
 #include "pilot.h"
 
 
-#define PILOT_OUTFIT_LUA_UPDATE_DT     (1.0/3.0)
+#define PILOT_OUTFIT_LUA_UPDATE_DT     (1.0/10.0)   /* How often the Lua outfits run their update script (in seconds).  */
 
 
 /* Raw changes. */
