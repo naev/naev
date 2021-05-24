@@ -861,16 +861,18 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    }
    else {
       p = pilot_get( w->parent );
-      /* Beams need to update their properties online. */
-      if (w->outfit->type == OUTFIT_TYPE_BEAM) {
-         w->dam_mod        = p->stats.fwd_damage;
-         w->dam_as_dis_mod = p->stats.fwd_dam_as_dis-1.;
+      if (p != NULL) {
+         /* Beams need to update their properties online. */
+         if (w->outfit->type == OUTFIT_TYPE_BEAM) {
+            w->dam_mod        = p->stats.fwd_damage;
+            w->dam_as_dis_mod = p->stats.fwd_dam_as_dis-1.;
+         }
+         else {
+            w->dam_mod        = p->stats.tur_damage;
+            w->dam_as_dis_mod = p->stats.tur_dam_as_dis-1.;
+         }
+         w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
       }
-      else {
-         w->dam_mod        = p->stats.tur_damage;
-         w->dam_as_dis_mod = p->stats.tur_dam_as_dis-1.;
-      }
-      w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
    }
 
    for (i=0; i<array_size(pilot_stack); i++) {
