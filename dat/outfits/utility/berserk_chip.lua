@@ -28,7 +28,7 @@ ppshader = setup_shader()
 
 function turnon( p, po )
    -- Still on cooldown
-   if mem.timer > 0 then
+   if mem.timer and mem.timer > 0 then
       return false
    end
    -- Must be above armour threshold
@@ -81,7 +81,7 @@ end
 
 function init( p, po )
    turnoff()
-   mem.timer = 0
+   mem.timer = nil
    po:state("off")
    po:clear() -- clear stat modifications
    mem.isp = (p == player.pilot())
@@ -97,11 +97,14 @@ function update( p, po, dt )
          po:set( "armour_damage", mem.admg )
       end
    else
-      mem.timer = mem.timer - dt
-      po:progress( mem.timer / cooldown )
-      if mem.timer < 0 then
-         po:state("off")
-         po:clear() -- clear stat modifications
+      if mem.timer then
+         mem.timer = mem.timer - dt
+         po:progress( mem.timer / cooldown )
+         if mem.timer < 0 then
+            po:state("off")
+            po:clear() -- clear stat modifications
+            mem.timer = nil
+         end
       end
    end
 end
