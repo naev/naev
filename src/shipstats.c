@@ -356,12 +356,29 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
    ptr = (char*) stats;
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&dbl, &fieldptr, sizeof(double*));
+         *dbl *= 1.0+list->d.d;
+         if (*dbl < 0.) /* Don't let the values go negative. */
+            *dbl = 0.;
+
+         /* We'll increment amount. */
+         if (amount != NULL) {
+            if ((sl->inverted && (list->d.d < 0.)) ||
+                  (!sl->inverted && (list->d.d > 0.))) {
+               memcpy(&ptr, &amount, sizeof(char*));
+               fieldptr = &ptr[ sl->offset ];
+               memcpy(&dbl, &fieldptr, sizeof(double*));
+               (*dbl)  += 1.0;
+            }
+         }
+         break;
+
+
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
          fieldptr = &ptr[ sl->offset ];
          memcpy(&dbl, &fieldptr, sizeof(double*));
          *dbl += list->d.d;
-         if ((sl->data==SS_DATA_TYPE_DOUBLE) && (*dbl < 0.)) /* Don't let the values go negative. */
-            *dbl = 0.;
 
          /* We'll increment amount. */
          if (amount != NULL) {
