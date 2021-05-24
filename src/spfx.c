@@ -413,6 +413,10 @@ void spfx_clear (void)
       render_postprocessRm( shake_shader_pp_id );
       shake_shader_pp_id = 0;
    }
+   if (damage_shader_pp_id > 0) {
+      render_postprocessRm( damage_shader_pp_id );
+      damage_shader_pp_id = 0;
+   }
 
    for (i=0; i<array_size(trail_spfx_stack); i++)
       spfx_trail_free( trail_spfx_stack[i] );
