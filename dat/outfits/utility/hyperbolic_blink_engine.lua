@@ -32,13 +32,16 @@ function update( p, po, dt )
          po:progress(1)
          po:set("thrust_mod", penalty)
          po:set("turn_mod", penalty)
+         mem.cooldown = true
+         mem.timer = cooldown
       else
          -- Cooldown is over
-         po:state("off")
-
-         -- Cancel maluses
-         po:set("thrust_mod", 0)
-         po:set("turn_mod", 0)
+         if mem.cooldown then
+            po:state("off")
+            -- Cancel maluses
+            po:clear()
+            mem.cooldown = false
+         end
       end
    else
       -- Update progress
