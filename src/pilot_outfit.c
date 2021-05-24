@@ -926,7 +926,7 @@ void pilot_calcStats( Pilot* pilot )
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec; /* temporary health coefficients to set */
-   ShipStats amount, *s, *default_s;
+   ShipStats amount, *s;
 
    /*
     * set up the basic stuff
@@ -1047,17 +1047,6 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Merge stats. */
    ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
-
-   /* Slot voodoo. */
-   s = &pilot->stats;
-   default_s = &pilot->ship->stats_array;
-
-   /*
-    * Electronic warfare setting base parameters.
-    */
-   s->ew_hide           = default_s->ew_hide + (s->ew_hide-default_s->ew_hide)                      * exp( -0.2 * (double)(MAX(amount.ew_hide-1.,0)) );
-   s->ew_detect         = default_s->ew_detect + (s->ew_detect-default_s->ew_detect)                * exp( -0.2 * (double)(MAX(amount.ew_detect-1.,0)) );
-   s->ew_jump_detect    = default_s->ew_jump_detect + (s->ew_jump_detect-default_s->ew_jump_detect) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1.,0)) );
 
    /* Square the internal values to speed up comparisons. */
    pilot->ew_base_hide   = pow2( s->ew_hide );
