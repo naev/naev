@@ -925,7 +925,7 @@ void pilot_calcStats( Pilot* pilot )
    int i;
    Outfit* o;
    PilotOutfitSlot *slot;
-   double ac, sc, ec; /* temporary health coefficients to set */
+   double ac, sc, ec, tm; /* temporary health coefficients to set */
    ShipStats *s;
 
    /*
@@ -963,8 +963,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_loss   = 0.; /* Initially no net loss. */
    /* Stats. */
    s = &pilot->stats;
+   tm = s->time_mod;
    *s = pilot->ship->stats_array;
-   ss_statsInit( s );
 
    /*
     * Now add outfit changes
@@ -1116,7 +1116,7 @@ void pilot_calcStats( Pilot* pilot )
    gui_setGeneric( pilot );
 
    /* In case the time_mod has changed. */
-   if (pilot_isPlayer(pilot))
+   if (pilot_isPlayer(pilot) && (tm != s->time_mod))
       player_resetSpeed();
 }
 
