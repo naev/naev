@@ -37,7 +37,7 @@ end
 function _atk_check_seeable( target )
    local self   = ai.pilot()
 
-   if not target:flags().hide then
+   if not target:flags().invisible then
       -- Pilot still sees the target: continue attack
       if self:inrange( target ) then
          return true
