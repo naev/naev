@@ -983,7 +983,7 @@ static int pilotL_exists( lua_State *L )
    /* Must still be kicking and alive. */
    if (p==NULL)
       exists = 0;
-   else if (pilot_isFlag( p, PILOT_DEAD ))
+   else if (pilot_isFlag( p, PILOT_DEAD ) || pilot_isFlag( p, PILOT_HIDE ))
       exists = 0;
    else
       exists = 1;
