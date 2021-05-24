@@ -276,6 +276,7 @@ static int ppshader_compare( const void *a, const void *b )
 unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority )
 {
    PPShader *pp, **pp_shaders;
+   unsigned int id;
 
    /* Select the layer. */
    if (layer < 0 || layer >= PP_LAYER_MAX) {
@@ -287,7 +288,8 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority
    if (*pp_shaders==NULL)
       *pp_shaders = array_create( PPShader );
    pp = &array_grow( pp_shaders );
-   pp->id               = ++pp_shaders_id;
+   id = ++pp_shaders_id;
+   pp->id               = id;
    pp->priority         = priority;
    pp->program          = shader->program;
    pp->ClipSpaceFromLocal = shader->ClipSpaceFromLocal;
@@ -308,7 +310,7 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority
 
    gl_checkErr();
 
-   return pp->id;
+   return id;
 }
 
 
