@@ -99,6 +99,7 @@ static int pilotL_setInvincible( lua_State *L );
 static int pilotL_setInvincPlayer( lua_State *L );
 static int pilotL_setHide( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
+static int pilotL_setNoRender( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
@@ -218,6 +219,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setInvincPlayer", pilotL_setInvincPlayer },
    { "setHide", pilotL_setHide },
    { "setInvisible", pilotL_setInvisible },
+   { "setNoRender", pilotL_setNoRender },
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
    { "setHilight", pilotL_setHilight },
@@ -2256,6 +2258,22 @@ static int pilotL_setInvisible( lua_State *L )
 
 
 /**
+ * @brief Sets the pilot's norender status.
+ *
+ * The pilot still acts normally but is just not visible and can still take
+ * damage. Meant to be used in conjunction with other flags like "invisible".
+ *
+ *    @luatparam Pilot p Pilot to set norender status of.
+ *    @luatparam boolean state State to set norender.
+ * @luafunc setInvisible
+ */
+static int pilotL_setNoRender( lua_State *L )
+{
+   return pilotL_setFlagWrapper( L, PILOT_NORENDER );
+}
+
+
+/**
  * @brief Marks the pilot as always visible for the player.
  *
  * This cancels out ewarfare visibility ranges and only affects the visibility of the player.
@@ -3486,6 +3504,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "visplayer", .id = PILOT_VISPLAYER },
    { .name = "hilight", .id = PILOT_HILIGHT },
    { .name = "invisible", .id = PILOT_INVISIBLE }, 
+   { .name = "norender", .id = PILOT_NORENDER },
    { .name = "hide", .id = PILOT_HIDE },
    { .name = "invincible", .id = PILOT_INVINCIBLE },
    { .name = "invinc_player", .id = PILOT_INVINC_PLAYER },

@@ -1726,6 +1726,10 @@ void pilot_render( Pilot* p, const double dt )
    (void) dt;
    double scalew, scaleh;
 
+   /* Don't render the pilot. */
+   if (pilot_isFlag( p, PILOT_NORENDER ))
+      return;
+
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
       scalew = CLAMP( 0., 1., p->ptimer / p->landing_delay );
@@ -1761,6 +1765,10 @@ void pilot_renderOverlay( Pilot* p, const double dt )
    double dx, dy;
    int sx, sy;
    glColour c;
+
+   /* Don't render the pilot. */
+   if (pilot_isFlag( p, PILOT_NORENDER ))
+      return;
 
    /* Render the hailing graphic if needed. */
    if (pilot_isFlag( p, PILOT_HAILING )) {

@@ -18,7 +18,7 @@ enum {
     */
    PILOT_PLAYER,        /**< Pilot is a player. */
    PILOT_CARRIED,       /**< Pilot usually resides in a fighter bay. */
-   PILOT_CREATED_AI,    /** Pilot has already created AI. */
+   PILOT_CREATED_AI,    /**< Pilot has already created AI. */
    PILOT_EMPTY,         /**< Do not add pilot to stack. */
    PILOT_NO_OUTFITS,    /**< Do not create the pilot with outfits. */
    /*
@@ -59,6 +59,7 @@ enum {
    PILOT_LANDING,       /**< Pilot is landing. */
    PILOT_TAKEOFF,       /**< Pilot is taking off. */
    /* Visibility stuff. */
+   PILOT_NORENDER,      /**< Pilot does not get rendered. */
    PILOT_VISPLAYER,     /**< Pilot is always visible to the player (only player). */
    PILOT_VISIBLE,       /**< Pilot is always visible to other pilots. */
    PILOT_INVISIBLE,     /**< Pilot doesn't appear on the radar nor can be targetted, however, it still can do stuff and is rendered. */

@@ -761,7 +761,7 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (pilot_isFlag(p, PILOT_INVINCIBLE))
       return 0;
 
-   /* Can't hit invisible stuff. */
+   /* Can't hit hidden stuff. */
    if (pilot_isFlag(p, PILOT_HIDE))
       return 0;
 
