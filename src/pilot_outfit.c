@@ -964,6 +964,7 @@ void pilot_calcStats( Pilot* pilot )
    /* Stats. */
    s = &pilot->stats;
    *s = pilot->ship->stats_array;
+   ss_statsInit( s );
    memset( &amount, 0, sizeof(ShipStats) );
 
    /*
@@ -1051,30 +1052,6 @@ void pilot_calcStats( Pilot* pilot )
    s = &pilot->stats;
    default_s = &pilot->ship->stats_array;
 
-   /* TODO fix these formulas to not be bad. */
-   /* Fire rate:
-    *  amount = p * exp( -0.15 * (n-1) )
-    *  1x 15% -> 15%
-    *  2x 15% -> 25.82%
-    *  3x 15% -> 33.33%
-    *  6x 15% -> 42.51%
-    */
-   if (amount.fwd_firerate > 0) {
-      s->fwd_firerate = default_s->fwd_firerate + (s->fwd_firerate-default_s->fwd_firerate) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1.,0)) );
-   }
-   /* Cruiser. */
-   if (amount.tur_firerate > 0) {
-      s->tur_firerate = default_s->tur_firerate + (s->tur_firerate-default_s->tur_firerate) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1.,0)) );
-   }
-   /* Launchers. */
-   if (amount.launch_rate > 0) {
-      s->launch_rate = default_s->launch_rate + (s->launch_rate-default_s->launch_rate) * exp( -0.15 * (double)(MAX(amount.launch_rate-1.,0)) );
-   }
-   /* Fighter bays. */
-   if (amount.fbay_rate > 0) {
-      s->fbay_rate = default_s->fbay_rate + (s->fbay_rate-default_s->fbay_rate) * exp( -0.15 * (double)(MAX(amount.fbay_rate-1.,0)) );
-   }
-   /* TODO reload rates should also be handled here. */
    /*
     * Electronic warfare setting base parameters.
     */
