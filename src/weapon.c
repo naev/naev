@@ -859,6 +859,19 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             usePoly = 0;
       }
    }
+   else {
+      p = pilot_get( w->parent );
+      /* Beams need to update their properties online. */
+      if (w->outfit->type == OUTFIT_TYPE_BEAM) {
+         w->dam_mod        = p->stats.fwd_damage;
+         w->dam_as_dis_mod = p->stats.fwd_dam_as_dis-1.;
+      }
+      else {
+         w->dam_mod        = p->stats.tur_damage;
+         w->dam_as_dis_mod = p->stats.tur_dam_as_dis-1.;
+      }
+      w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
+   }
 
    for (i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
@@ -1213,10 +1226,11 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    /* Get general details. */
    odmg              = outfit_damage( w->outfit );
    parent            = pilot_get( w->parent );
-   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * dt );
+   damage            = w->dam_mod * w->strength * odmg->damage * dt ;
+   dmg.damage        = MAX( 0., damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = w->dam_mod * w->strength * odmg->disable * dt;
+   dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * dt + damage * w->dam_as_dis_mod );
 
    /* Have pilot take damage and get real damage done. */
    damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
