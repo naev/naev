@@ -926,7 +926,7 @@ void pilot_calcStats( Pilot* pilot )
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec; /* temporary health coefficients to set */
-   ShipStats amount, *s;
+   ShipStats *s;
 
    /*
     * set up the basic stuff
@@ -965,7 +965,6 @@ void pilot_calcStats( Pilot* pilot )
    s = &pilot->stats;
    *s = pilot->ship->stats_array;
    ss_statsInit( s );
-   memset( &amount, 0, sizeof(ShipStats) );
 
    /*
     * Now add outfit changes
@@ -1008,7 +1007,7 @@ void pilot_calcStats( Pilot* pilot )
          if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
             continue;
          /* Add stats. */
-         ss_statsModFromList( s, o->stats, &amount );
+         ss_statsModFromList( s, o->stats );
          /* Movement. */
          pilot->thrust_base   += o->u.mod.thrust;
          pilot->turn_base     += o->u.mod.turn;
@@ -1032,13 +1031,13 @@ void pilot_calcStats( Pilot* pilot )
          if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
             continue;
          /* Add stats. */
-         ss_statsModFromList( s, o->stats, &amount );
+         ss_statsModFromList( s, o->stats );
          pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
          pilot->energy_loss += pilot->afterburner->outfit->u.afb.energy; /* energy loss */
       }
       else {
          /* Always add stats for non mod/afterburners. */
-         ss_statsModFromList( s, o->stats, &amount );
+         ss_statsModFromList( s, o->stats );
       }
    }
 

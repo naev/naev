@@ -304,7 +304,7 @@ void dout_csvMod( const char *path )
          continue;
 
       stats = base;
-      ss_statsModFromList( &stats, o->stats, NULL );
+      ss_statsModFromList( &stats, o->stats );
 
       l = scnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
