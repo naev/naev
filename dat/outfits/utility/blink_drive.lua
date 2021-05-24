@@ -34,4 +34,5 @@ function ontoggle( p, po, on )
    p:setPos( p:pos() + vec2.newP( dist, p:dir() ) )
    mem.timer = cooldown
    po:state("cooldown")
+   po:progress(1)
 end
