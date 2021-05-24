@@ -63,7 +63,7 @@ function ontoggle( p, po, on )
    -- Start the warmup
    mem.warmup = true
    mem.timer = warmup
-   po:state("warmup")
+   po:state("on")
    po:progress(1)
    -- TODO add warm-up sound effect
 end
