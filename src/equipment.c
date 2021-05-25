@@ -1255,10 +1255,22 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
             case OUTFIT_TYPE_BEAM:
             case OUTFIT_TYPE_TURRET_BEAM:
                /* Special case due to continuous fire. */
-               dps += outfit_damage(o)->damage;
-               eps += outfit_energy(o);
-
+               if (o->type == OUTFIT_TYPE_BEAM) {
+                  mod_energy = s->stats.fwd_energy;
+                  mod_damage = s->stats.fwd_damage;
+                  mod_shots  = 1. / s->stats.fwd_firerate;
+               }
+               else {
+                  mod_energy = s->stats.tur_energy;
+                  mod_damage = s->stats.tur_damage;
+                  mod_shots  = 1. / s->stats.tur_firerate;
+               }
+               shots = outfit_duration(o);
+               mod_shots = shots / (shots + mod_shots * outfit_delay(o));
+               dps += mod_shots * mod_damage * outfit_damage(o)->damage;
+               eps += mod_shots * mod_energy * outfit_energy(o);
                continue;
+
             default:
                continue;
          }
