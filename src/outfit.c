@@ -1784,7 +1784,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          "%s"
          "%s",
          _(outfit_getType(temp)),
-         (temp->u.mod.active) ? _("\n#rActivated Outfit#0") : "" );
+         (temp->u.mod.active || temp->u.mod.lua_ontoggle != LUA_NOREF) ? _("\n#rActivated Outfit#0") : "" );
 
 #define DESC_ADD(x, s) \
 if ((x) != 0) \
