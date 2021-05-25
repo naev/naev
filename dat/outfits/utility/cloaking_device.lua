@@ -100,6 +100,13 @@ function update( p, po, dt )
    end
 end
 
+-- Disable on hit
+function onhit( p, po, armour, shield )
+   if mem.active then
+      turnoff( p, po )
+   end
+end
+
 function ontoggle( p, po, on )
    if on then
       return turnon( p, po )
