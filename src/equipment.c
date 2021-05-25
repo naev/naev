@@ -1239,18 +1239,18 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
             case OUTFIT_TYPE_BOLT:
                mod_energy = s->stats.fwd_energy;
                mod_damage = s->stats.fwd_damage;
-               mod_shots  = 2. - s->stats.fwd_firerate;
+               mod_shots  = 1. / s->stats.fwd_firerate;
                break;
             case OUTFIT_TYPE_TURRET_BOLT:
                mod_energy = s->stats.tur_energy;
                mod_damage = s->stats.tur_damage;
-               mod_shots  = 2. - s->stats.tur_firerate;
+               mod_shots  = 1. / s->stats.tur_firerate;
                break;
             case OUTFIT_TYPE_LAUNCHER:
             case OUTFIT_TYPE_TURRET_LAUNCHER:
                mod_energy = 1.;
                mod_damage = s->stats.launch_damage;
-               mod_shots  = 2. - s->stats.launch_rate;
+               mod_shots  = 1. / s->stats.launch_rate;
                break;
             case OUTFIT_TYPE_BEAM:
             case OUTFIT_TYPE_TURRET_BEAM:
