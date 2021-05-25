@@ -6,13 +6,19 @@
    some post-processing shaders with minimal code overhead.
 
 --]]
-
 local pp_shaders = {}
 
+-- We load the C-side shader for the vertex shader
 local f = file.new( 'glsl/postprocess.vert' )
 f:open('r')
 pp_shaders.vertexcode = "#version 140\n"..f:read()
 
+--[[
+-- @brief Creates a new post-processing shader.
+--
+--    @tparam string fragcode Fragment shader code.
+--    @return The newly created shader.
+--]]
 function pp_shaders.newShader( fragcode )
    return shader.new([[
 #version 140
