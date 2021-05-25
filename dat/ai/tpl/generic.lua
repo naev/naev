@@ -301,7 +301,8 @@ function control ()
    -- Don't stop boarding
    elseif task == "board" then
       -- Needs to have a target
-      if not target:exists() then
+      local target = ai.taskdata()
+      if not target or not target:exists() then
          ai.poptask()
          return
       end
