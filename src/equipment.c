@@ -706,6 +706,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    Outfit *o;
    CstSlotWidget *wgt;
    double mass;
+   size_t slen;
 
    /* Get data. */
    wgt = (CstSlotWidget*) data;
@@ -781,6 +782,12 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    if (o->desc_short == NULL)
       return;
    outfit_altText( alt, sizeof(alt), o );
+
+   /* Display temporary bonuses. */
+   if (slot->lua_mem != LUA_NOREF) {
+      slen = strlen(alt);
+      ss_statsDesc( &slot->lua_stats, &alt[slen], sizeof(alt)-slen, 1 );
+   }
 
    /* Draw the text. */
    toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
