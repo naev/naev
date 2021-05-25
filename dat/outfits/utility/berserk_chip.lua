@@ -3,17 +3,21 @@ local function setup_shader()
    f:open('r')
    return shader.new([[
 #version 140
+
+#include "lib/blend.glsl"
+
 uniform sampler2D MainTex;
 in vec4 VaryingTexCoord;
 out vec4 color_out;
 
-const vec3 colmod = vec3( 1.0, 0.5, 0.5 );
+const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
 uniform float u_time = 0;
 
 void main (void)
 {
+   float opacity = min( 3.0*u_time, 1.0 );
    color_out = texture( MainTex, VaryingTexCoord.st );
-   color_out.rgb *= mix( vec3(1), colmod, min(3.0*u_time, 1.0) );
+   color_out.rgb = blendSoftLight( color_out.rgb, colmod, opacity );
 }
 ]], "#version 140\n"..f:read() )
 end
