@@ -1,32 +1,21 @@
-local function setup_shader()
-   local f = file.new( 'glsl/postprocess.vert' )
-   f:open('r')
-   return shader.new([[
-#version 140
-
-#include "lib/blend.glsl"
-
-uniform sampler2D MainTex;
-in vec4 VaryingTexCoord;
-out vec4 color_out;
-
-const vec3 colmod = vec3( 0.0, 0.5, 1.0 );
-uniform float u_time = 0;
-
-void main (void)
-{
-   float opacity = min(u_time, 0.5);
-   color_out = texture( MainTex, VaryingTexCoord.st );
-   color_out.rgb = blendGlow( color_out.rgb, colmod, opacity );
-}
-]], "#version 140\n"..f:read() )
-end
+local pp_shaders = require 'pp_shaders'
 
 active = 10 -- active time in seconds
 cooldown = 15 -- cooldown time in seconds
 shielddrain = 2 -- How fast shield drains
 energydrain = 0.1 -- How much energy per ton of mess
-ppshader = setup_shader()
+ppshader = pp_shaders.newShader([[
+#include "lib/blend.glsl"
+const vec3 colmod = vec3( 0.0, 0.5, 1.0 );
+uniform float u_time = 0;
+vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
+{
+   vec4 color = texture( tex, texcoord );
+   float opacity = min( u_time, 0.5 );
+   color.rgb = blendGlow( color.rgb, colmod, opacity );
+   return color;
+}
+]])
 
 
 function turnon( p, po )

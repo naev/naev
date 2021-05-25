@@ -1,32 +1,21 @@
-local function setup_shader()
-   local f = file.new( 'glsl/postprocess.vert' )
-   f:open('r')
-   return shader.new([[
-#version 140
-
-#include "lib/blend.glsl"
-
-uniform sampler2D MainTex;
-in vec4 VaryingTexCoord;
-out vec4 color_out;
-
-const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
-uniform float u_time = 0;
-
-void main (void)
-{
-   float opacity = min( 3.0*u_time, 1.0 );
-   color_out = texture( MainTex, VaryingTexCoord.st );
-   color_out.rgb = blendSoftLight( color_out.rgb, colmod, opacity );
-}
-]], "#version 140\n"..f:read() )
-end
+local pp_shaders = require 'pp_shaders'
 
 threshold = 30 -- armour shield damage to turn off at
 cooldown = 8 -- cooldown time in seconds
 drain_shield = 1.0 / 2.0 -- inverse of number of seconds needed to drain shield
 drain_armour = 1.0 / 50.0 -- inverse of number of seconds needed to drain armour (this is accelerated by this amount every second)
-ppshader = setup_shader()
+ppshader = pp_shaders.newShader([[
+#include "lib/blend.glsl"
+const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
+uniform float u_time = 0;
+vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
+{
+   vec4 color = texture( tex, texcoord );
+   float opacity = min( 3.0*u_time, 1.0 );
+   color.rgb = blendSoftLight( color.rgb, colmod, opacity );
+   return color;
+}
+]])
 
 
 function turnon( p, po )
