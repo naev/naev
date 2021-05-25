@@ -466,7 +466,7 @@ static void info_openShip( unsigned int wid )
  */
 static void ship_update( unsigned int wid )
 {
-   char buf[1024], *hyp_delay;
+   char buf[STRMAX_SHORT], *hyp_delay;
    int cargo, len;
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
@@ -576,7 +576,7 @@ static void info_openWeapons( unsigned int wid )
 static void weapons_genList( unsigned int wid )
 {
    const char *str;
-   char **buf, tbuf[256];
+   char **buf, tbuf[STRMAX_SHORT];
    int i, n;
    int w, h;
 
