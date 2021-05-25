@@ -425,7 +425,7 @@ static void info_openShip( unsigned int wid )
          "closeOutfits", _("Close"), info_close );
 
    /* Text. */
-   window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
+   window_addText( wid, 40, -40, 100, h-60, 0, "txtSDesc", &gl_smallFont,
          NULL,
          _("#nName:\n"
          "Model:\n"
@@ -448,7 +448,7 @@ static void info_openShip( unsigned int wid )
          "\n"
          "Stats:\n")
          );
-   window_addText( wid, 180, -60, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
+   window_addText( wid, 180, -40, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
 
    /* Custom widget. */
