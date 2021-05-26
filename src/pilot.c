@@ -1970,7 +1970,7 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Update stress. */
    if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
-      stress_falloff = 0.5*sqrt(pilot->mass); /* Should be about 23 seconds for a 300 mass ship with 200 armour, and 103 seconds for a 6000 mass ship with 4000 armour. */
+      stress_falloff = 0.5*sqrt(pilot->solid->mass); /* Should be about 23 seconds for a 300 mass ship with 200 armour, and 103 seconds for a 6000 mass ship with 4000 armour. */
       pilot->stress -= stress_falloff * pilot->stats.stress_dissipation * dt;
       pilot->stress = MAX(pilot->stress, 0);
    }
