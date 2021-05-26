@@ -279,15 +279,15 @@
   <item>Blink Drive</item>
   <item>Hyperbolic Blink Engine</item>
   <item>Weakness Harmonizer AI</item>
+  <item>Neural Accelerator Interface</item>
+  <item>Berserk Chip</item>
+  <item>Cryogenic Repair Nanobots</item>
+  <item>Cloaking Device</item>
   <item>Faraday Tempest Coating</item>
   <item>Lattice Thermal Coating</item>
   <item>MilSpec Impacto-plastic Coating</item>
   <item>Nexus Stealth Coating</item>
   <item>Photo-Voltaic Nanobot Coating</item>
-  <item>Neural Accelerator Interface</item>
-  <item>Berserk Chip</item>
-  <item>Cryogenic Repair Nanobots</item>
-  <item>Cloaking Device</item>
   <item>Bio-Neural Combat AI</item>
   <item>Cyclic Combat AI</item>
   <item>Hive Combat AI</item>
@@ -615,6 +615,7 @@
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
   <item>Asteroid Scanner</item>
+  <item>Agility Combat AI</item>
  </tech>
  <tech name="High Tech Upgrades 2">
   <item>Battery III</item>
@@ -675,17 +676,33 @@
  </tech>
 
  <!-- Faction outfits -->
+ <tech name="Empire Elite Outfits">
+  <item>Photo-Voltaic Nanobot Coating</item>
+  <item>Hunting Combat AI</item>
+ </tech>
  <tech name="Empire Military Outfits">
   <item>Turbolaser</item>
   <item>Empire Lancelot Fighter Bay</item>
+ </tech>
+ <tech name="Dvaered Elite Outfits">
+  <item>MilSpec Impacto-plastic Coating</item>
+  <item>Cyclic Combat AI</item>
  </tech>
  <tech name="Dvaered Military Outfits">
   <item>Repeating Railgun</item>
   <item>Active Plating</item>
  </tech>
+ <tech name="Sirius Elite Outfits">
+  <item>Lattice Thermal Coating</item>
+  <item>Pinpoint Combat AI</item>
+ </tech>
  <tech name="Sirius Military Outfits">
   <item>Heavy Razor Turret</item>
   <item>Fidelity Fighter Bay</item>
+ </tech>
+ <tech name="Za'lek Elite Outfits">
+  <item>Faraday Tempest Coating</item>
+  <item>Hive Combat AI</item>
  </tech>
  <tech name="Za'lek Military Outfits">
   <item>Za'lek Hunter Launcher</item>
@@ -693,6 +710,12 @@
   <item>Za'lek Light Drone Fighter Bay</item>
   <item>Za'lek Heavy Drone Fighter Bay</item>
   <item>Za'lek Bomber Drone Fighter Bay</item>
+ </tech>
+ <tech name="Soromid Elite Outfits">
+  <item>Nexus Stealth Coating</item>
+  <item>Bio-Neural Combat AI</item>
+ </tech>
+ <tech name="Thurion Elite Outfits">
  </tech>
  <tech name="Thurion Outfits">
   <item>Convulsion Launcher</item>
