@@ -288,6 +288,12 @@
   <item>Berserk Chip</item>
   <item>Cryogenic Repair Nanobots</item>
   <item>Cloaking Device</item>
+  <item>Bio-Neural Combat AI</item>
+  <item>Cyclic Combat AI</item>
+  <item>Hive Combat AI</item>
+  <item>Agility Combat AI</item>
+  <item>Pinpoint Combat AI</item>
+  <item>Hunting Combat AI</item>
  </tech>
  <tech name="All Ships">
   <item>Llama</item>
