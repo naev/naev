@@ -13,7 +13,7 @@
   <sound_hit>grenade</sound_hit>
   <spfx_shield>ExpM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
-  <trail_generator x="0">zalek-missileL</trail_generator>
+  <trail_generator x="0">zalek-missile</trail_generator>
   <duration blowup="armour">7</duration>
   <thrust>0</thrust>
   <turn>70</turn>
@@ -22,7 +22,7 @@
   <damage>
    <type>normal</type>
    <penetrate>36</penetrate>
-   <physical>65</physical>
+   <physical>70</physical>
    <disable>1</disable>
   </damage>
   <ai>smart</ai>
