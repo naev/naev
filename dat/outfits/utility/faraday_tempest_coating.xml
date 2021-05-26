@@ -11,6 +11,6 @@
   <limit>hullcoat</limit>
  </general>
  <specific type="modification">
-  <stress_dissipation>30</stress_dissipation>
+  <stress_dissipation>50</stress_dissipation>
  </specific>
 </outfit>

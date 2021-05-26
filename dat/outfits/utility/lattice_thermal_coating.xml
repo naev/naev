@@ -11,6 +11,6 @@
   <limit>hullcoat</limit>
  </general>
  <specific type="modification">
-  <heat_dissipation>30</heat_dissipation>
+  <heat_dissipation>50</heat_dissipation>
  </specific>
 </outfit>
