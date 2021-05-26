@@ -12,20 +12,20 @@
   <cpu>-350</cpu>
  <rarity>6</rarity></general>
  <stats>
-  <shield_usage>30</shield_usage>
+  <shield_usage>8</shield_usage>
   <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <specific type="turret beam">
   <delay>10</delay>
   <duration min="2">5</duration>
-  <range>600</range>
+  <range>700</range>
   <turn>25</turn>
   <energy>160</energy>
   <heatup>60</heatup>
   <damage>
    <type>normal</type>
    <penetrate>95</penetrate>
-   <physical>280</physical>
+   <physical>300</physical>
    <disable>18</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
