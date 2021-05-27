@@ -17,7 +17,7 @@ equip_typeOutfits_weapons["Scintillation"] = {
    {
       varied = true;
       "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
-      "Unicorp Headhunter Launcher", "Convulsion Missile Launcher",
+      "Unicorp Headhunter Launcher", "Convulsion Launcher",
    },
    {
       "Laser Cannon MK2", "Razor MK2",
@@ -31,7 +31,7 @@ equip_typeOutfits_weapons["Virtuosity"] = {
       "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
       "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
       "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
-      "TeraCom Imperator Launcher", "Convulsion Missile Launcher",
+      "TeraCom Imperator Launcher", "Convulsion Launcher",
    },
    {
       probability = {
