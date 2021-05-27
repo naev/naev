@@ -1,16 +1,16 @@
-local pp_shaders = require 'pp_shaders'
+require 'outfits.shaders'
 
 active = 5 -- active time in seconds
 cooldown = 20 -- cooldown time in seconds
-ppshader = pp_shaders.newShader([[
+ppshader = shader_new([[
 #include "lib/blend.glsl"
 #include "lib/colour.glsl"
 const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
-uniform float u_time = 0;
+uniform float progress = 0;
 vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 {
    vec4 color     = texture( tex, texcoord );
-   float opacity  = min( 2.0*u_time, 0.8 );
+   float opacity  = 0.8 * clamp( progress, 0.0, 1.0 );
    vec3 grayscale = vec3(rgb2lum(color.rgb));
    color.rgb      = mix( color.rgb, grayscale, opacity );
    return color;
@@ -29,10 +29,7 @@ function turnon( p, po )
    mem.active = true
 
    -- Visual effect
-   if mem.isp then
-      ppshader:send( "u_time", 0 )
-      mem.shader = shader.addPPShader( ppshader, "game" )
-   end
+   if mem.isp then shader_on() end
    return true
 end
 
@@ -44,10 +41,7 @@ function turnoff( p, po )
    po:progress(1)
    mem.timer = cooldown
    mem.active = false
-   if mem.shader then
-      shader.rmPPShader( ppshader )
-   end
-   mem.shader = nil
+   shader_off()
    return true
 end
 
@@ -57,24 +51,26 @@ function init( p, po )
    po:state("off")
    po:clear() -- clear stat modifications
    mem.isp = (p == player.pilot())
+   shader_force_off()
 end
 
 function update( p, po, dt )
-   if not mem.timer then
-      return
-   end
+   if not mem.timer then return end
 
    mem.timer = mem.timer - dt
    if mem.active then
+      shader_update_on( dt )
       po:progress( mem.timer / active )
       if mem.timer < 0 then
          turnoff( p, po )
       end
    else
+      shader_update_cooldown( dt )
       po:progress( mem.timer / cooldown )
       if mem.timer < 0 then
          po:state("off")
          mem.timer = nil
+         shader_force_off()
       end
    end
 end
