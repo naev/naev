@@ -59,14 +59,17 @@ end
 local cooldown = 10 -- 10 seconds cooldown
 local active = 5 -- 5 seconds active
 local function enable( po )
+   if mem.timer and mem.timer > 0 then return true end
    mem.active = true
    mem.timer = active
    po:state( "on" )
+   return true
 end
 local function disable( po )
    mem.active = false
    mem.timer = cooldown
    po:state( "cooldown" )
+   return true
 end
 function init( p, po )
    disable(po)
@@ -85,7 +88,6 @@ function update( p, po, dt )
       -- Active time over
       if mem.timer < 0 then
          disable( po )
-         return
       end
    else
       po:progress( mem.timer / cooldown )
@@ -100,12 +102,10 @@ function ontoggle( p, po, on )
    if on then
       -- Ignore already active
       if mem.active then return end
-      -- Cooldown not over yet
-      if mem.timer > 0 then return end
-      enable()
+      return enable()
    else
       -- Ignore already not active
       if not mem.active then return end
-      disable()
+      return disable()
    end
 end
