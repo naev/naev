@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Nebula Resistant Coating">
+ <general>
+  <typename>Hull Coating</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <rarity>3</rarity>
+  <mass>0</mass>
+  <price>1200000</price>
+  <description>Protecting ships from the nebula radiation is not an easy task given the fluctuations and parameters of the different types of radiation being emitted, which are yet not fully understood. While not making a ship immune to the nebula effects, this hull coating does make a ship significantly more resistant, although prolonged exposure is still not recommended.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+  <limit>hullcoat</limit>
+ </general>
+ <specific type="modification">
+  <nebu_absorb_shield>20</nebu_absorb_shield>
+  <nebu_absorb_armour>60</nebu_absorb_armour>
+ </specific>
+</outfit>

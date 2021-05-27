@@ -285,6 +285,7 @@
   <item>MilSpec Impacto-plastic Coating</item>
   <item>Nexus Stealth Coating</item>
   <item>Photo-Voltaic Nanobot Coating</item>
+  <item>Nebula Resistant Coating</item>
   <item>Bio-Neural Combat AI</item>
   <item>Cyclic Combat AI</item>
   <item>Hive Combat AI</item>
@@ -720,6 +721,7 @@
   <item>Bio-Neural Combat AI</item>
  </tech>
  <tech name="Thurion Elite Outfits">
+  <item>Nebula Resistant Coating</item>
  </tech>
  <tech name="Thurion Outfits">
   <item>Convulsion Launcher</item>
