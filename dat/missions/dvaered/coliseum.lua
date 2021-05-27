@@ -49,7 +49,7 @@ end
 function land ()
    -- TODO something better than this
    local result_str = string.format(_("You obtained %d points!"), total_score )
-   local rewardcredits = total_score
+   local rewardcredits = total_score*10
 
    vn.clear()
    vn.scene()
@@ -294,6 +294,8 @@ function wave_round_setup ()
    pp:setTemp( 0 )
    pp:fillAmmo()
    -- TODO reset outfit cooldown stuff
+   pp:setPos( vec2.new( 0, 0 ) ) -- teleport to middle
+   pp:setVel( vec2.new( 0, 0 ) )
 
    local function addenemy( shipname, pos )
       local p = pilot.add( shipname, enemy_faction, pos, nil, "baddie_norun" )
@@ -310,9 +312,31 @@ function wave_round_setup ()
    end
    local function addenemies( ships )
       local e = {}
-      local pos = vec2.new( -500, 500 )
+      local posbase = vec2.new( -1500, 1500 )
       local boss = nil
+      local layout = ships.layout or "cluster"
+      local pos = posbase
       for k,v in ipairs(ships) do
+         -- Determine position
+         if layout=="circle" then
+            local d,a = posbase:polar()
+            a = a + k * 360 / #ships
+            pos = vec2.newP( d, a )
+         elseif layout=="pincer" then
+            local offset = vec2.newP( 300+200*rnd.rnd(), rnd.rnd()*359 )
+            if math.mod(k,2)==1 then
+               pos = posbase + offset
+            else
+               local x, y = posbase:get()
+               pos = vec2.new(-x,-y) + offset
+            end
+         elseif layout=="cluster" then
+            pos = posbase + vec2.newP( 300+200*rnd.rnd(), rnd.rnd()*359 )
+         else
+            warn(string.format("unknown layout '%s'",layout))
+         end
+
+         -- Add ship
          local shipname = v
          local p = addenemy( shipname, pos )
          if boss then
