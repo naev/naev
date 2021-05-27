@@ -145,5 +145,7 @@ equip_typeOutfits_structurals["Apprehension"] = {
 --    @param p Pilot to equip
 --]]
 function equip( p )
+   -- They all get the nebula resistant coating
+   equip_set( p, { { "Nebula Resistant Coating", } } )
    equip_generic( p )
 end
