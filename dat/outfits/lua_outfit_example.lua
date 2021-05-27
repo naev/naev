@@ -44,6 +44,15 @@ function ontoggle( p, po, on )
 end
 
 
+-- The cooldown function is triggered when both cooldown starts and when
+-- it ends. The done is a boolean value which indicates whether or not it
+-- finished. In the case done is false, opt will indicate the number of
+-- seconds the cooldown will take. If done is true, then opt will be a
+-- a boolean indicating whether or not it successfully completed.
+function cooldown( p, po, done, opt )
+end
+
+
 --[[
    Example of an activated outfit implemented fully in Lua
 --]]
@@ -60,26 +69,30 @@ local function disable( po )
    po:state( "cooldown" )
 end
 function init( p, po )
-   mem.active = false
+   disable(po)
    po:state( "off" )
+   mem.timer = nil
 end
 function update( p, po, dt )
+   if not mem.timer then return end
+
    -- Update timer
    mem.timer = mem.timer - dt
 
    -- Check if need to turn it off
    if mem.active then
-
+      po:progress( mem.timer / active )
       -- Active time over
       if mem.timer < 0 then
          disable( po )
          return
       end
    else
-
+      po:progress( mem.timer / cooldown )
       -- Mark cooldown is over
       if mem.timer < 0 then
          po:state( "off" )
+         mem.timer = nil
       end
    end
 end
