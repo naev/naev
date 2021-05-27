@@ -48,7 +48,7 @@
  <stats>
   <speed_mod>-10</speed_mod>
   <shield_mod>20</shield_mod>
-  <armor_mod>20</armor_mod>
+  <armour_mod>20</armour_mod>
   <stress_dissipation>20</stress_dissipation>
  </stats>
 </ship>
