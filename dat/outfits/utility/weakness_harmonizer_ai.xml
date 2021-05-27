@@ -4,6 +4,7 @@
   <typename>System Improvement</typename>
   <slot>utility</slot>
   <size>medium</size>
+  <license>Medium Weapon License</license>
   <mass>1</mass>
   <price>100000</price>
   <description>This is an upgrade to the sensor systems that is able to learn from nearby hostile ship common weaknesses. The AI is able to extract subtle features that the human eye misses and extrapolate into great detail to point out weaknesses in enemy ships. The more ships it is able to analyze and extrapolate from, the stronger the effect.</description>
