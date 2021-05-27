@@ -4,6 +4,7 @@
   <typename>Speed Modifier</typename>
   <slot>utility</slot>
   <size>small</size>
+  <rarity>1</rarity>
   <license>Medium Weapon License</license>
   <mass>1</mass>
   <price>450000</price>
