@@ -10,7 +10,7 @@
   <gfx_store>stabilizer.png</gfx_store>
  </general>
  <specific type="modification">
-  <speed_mod>20</speed_mod>
+  <speed_mod>10</speed_mod>
   <turn_mod>10</turn_mod>
   <energy_regen_mod>-20</energy_regen_mod>
   <energy_mod>-20</energy_mod>
