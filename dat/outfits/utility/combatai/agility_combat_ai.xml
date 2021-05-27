@@ -4,6 +4,7 @@
   <typename>Combat AI</typename>
   <slot>utility</slot>
   <size>medium</size>
+  <license>Heavy Weapon License</license>
   <mass>0</mass>
   <price>850000</price>
   <description>This Combat AI augments the normal ship functionality with a focus on agility. Through careful regulation of the ship's thrusters, the AI is able to increase both the overall thrust and turn of the ship without actually modifying the hardware nor increasing the energy consumption.</description>
