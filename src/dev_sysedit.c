@@ -551,7 +551,8 @@ void sysedit_sysScale( StarSystem *sys, double factor )
    /* Scale radius. */
    sys->radius *= factor;
    snprintf( buf, sizeof(buf), _("Radius: %.0f"), sys->radius );
-   window_modifyText( sysedit_wid, "txtSelected", buf );
+   if (sysedit_wid > 0)
+      window_modifyText( sysedit_wid, "txtSelected", buf );
 
    /* Scale planets. */
    for (i=0; i<array_size(sys->planets); i++) {
