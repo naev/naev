@@ -359,7 +359,7 @@ equip_classOutfits_utilities = {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
          "Unicorp Light Afterburner",
-         "Unicorp Jammer", "Reverse Thrusters", "Sensor Array",
+         "Unicorp Jammer", "Sensor Array",
       },
    },
    ["Courier"] = {
@@ -367,20 +367,19 @@ equip_classOutfits_utilities = {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
          "Unicorp Light Afterburner",
-         "Improved Refrigeration Cycle",
       },
    },
    ["Freighter"] = {
       {
          varied = true;
-         "Droid Repair Crew", "Targeting Array", "Improved Power Regulator",
+         "Droid Repair Crew", "Targeting Array",
          "Milspec Jammer", "Emergency Shield Booster", "Milspec Scrambler",
       },
    },
    ["Armoured Transport"] = {
       {
          varied = true;
-         "Targeting Array", "Improved Power Regulator",  "Milspec Scrambler",
+         "Targeting Array", "Milspec Scrambler",
          "Milspec Jammer", "Emergency Shield Booster", "Droid Repair Crew",
       },
    },
@@ -388,8 +387,7 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Unicorp Light Afterburner",
-         "Forward Shock Absorbers", "Power Regulation Override",
-         "Weapons Ionizer", "Reverse Thrusters", "Emergency Shield Booster",
+         "Weapons Ionizer", "Emergency Shield Booster",
          "Sensor Array", "Hellburner",
       },
    },
@@ -397,18 +395,16 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Reactor Class I", "Unicorp Scrambler", "Unicorp Light Afterburner",
-         "Forward Shock Absorbers", "Power Regulation Override",
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
-         "Reverse Thrusters", "Emergency Shield Booster", "Sensor Array",
+         "Emergency Shield Booster", "Sensor Array",
          "Hellburner",
       },
    },
    ["Corvette"] = {
       {
          varied = true;
-         "Forward Shock Absorbers", "Power Regulation Override",
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
-         "Reverse Thrusters", "Hellburner",
+         "Hellburner",
          "Emergency Shield Booster", "Sensor Array", "Unicorp Medium Afterburner",
          "Droid Repair Crew",
       },
@@ -416,8 +412,7 @@ equip_classOutfits_utilities = {
    ["Destroyer"] = {
       {
          varied = true;
-         "Forward Shock Absorbers", "Power Regulation Override",
-         "Targeting Array", "Improved Power Regulator", "Weapons Ionizer",
+         "Targeting Array", "Weapons Ionizer",
          "Hellburner", "Emergency Shield Booster",
          "Sensor Array", "Droid Repair Crew",
       },
@@ -425,7 +420,7 @@ equip_classOutfits_utilities = {
    ["Cruiser"] = {
       {
          varied = true;
-         "Targeting Array", "Improved Power Regulator", "Weapons Ionizer",
+         "Targeting Array", "Weapons Ionizer",
          "Sensor Array", "Droid Repair Crew",
       },
    },
