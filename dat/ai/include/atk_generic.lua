@@ -82,7 +82,7 @@ function atk_generic( target )
    local range = ai.getweaprange( 3 )
 
    -- We first bias towards range
-   if dist > range * mem.atk_approach then
+   if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
       _atk_g_ranged( target, dist )
 
    -- Now we do an approach
@@ -190,7 +190,7 @@ function _atk_g_ranged_kite( target, dist )
    local p = ai.pilot()
 
    -- Estimate the range
-   local range = ai.getweaprange( 4 )
+   local range = ai.getweaprange( 5 )
 
    -- Try to keep velocity vector away from enemy
    local targetpos = target:pos()

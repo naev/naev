@@ -28,7 +28,7 @@ function atk_corvette( target )
    end
 
    -- We first bias towards range
-   if dist > range * mem.atk_approach then
+   if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
       _atk_g_ranged( target, dist )
 
    -- Close enough to melee

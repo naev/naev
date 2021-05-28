@@ -28,6 +28,7 @@ mem.atk_approach      = 1.4 -- Distance that marks approach
 mem.atk_aim           = 1.0 -- Distance that marks aim
 mem.atk_board         = false -- Whether or not to board the target
 mem.atk_kill          = true -- Whether or not to finish off the target
+mem.atk_minammo       = 0.1 -- Percent of ammo necessary to do ranged attacks
 mem.aggressive        = true --whether to take the more aggressive or more evasive option when given
 mem.recharge          = false --whether to hold off shooting to avoid running dry of energy
 
@@ -38,6 +39,9 @@ mem.recharge          = false --whether to hold off shooting to avoid running dr
 function attack_think( target, si )
    -- Ignore other enemies
    if si.noattack then return end
+
+   -- Update some high level stats
+   mem.ranged_ammo = ai.getweapammo(4)
 
    if mem.atk_think ~= nil then
       mem.atk_think( target, si )
@@ -99,6 +103,9 @@ end
 -- ]]
 function attack_choose ()
    local class = ai.pilot():ship():class()
+
+   -- Set initial variables
+   mem.ranged_ammo = ai.getweapammo(4)
 
    -- Lighter ships
    if class == "Bomber" then
