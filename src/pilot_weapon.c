@@ -652,6 +652,37 @@ double pilot_weapSetSpeed( Pilot* p, int id, int level )
 
 
 /**
+ * @brief Gets the ammo of the current pilot weapon set.
+ *
+ *    @param p Pilot to get the speed of.
+ *    @param id ID of weapon set to get the speed of.
+ *    @param level Level of the weapons to get the speed of (-1 for all).
+ */
+double pilot_weapSetAmmo( Pilot* p, int id, int level )
+{
+   PilotWeaponSet *ws;
+   PilotOutfitSlot *s;
+   int i, amount, nammo;
+   double ammo;
+
+   ammo = 0.;
+   nammo = 0;
+   ws = pilot_weapSet(p,id);
+   for (i=0; i<array_size(ws->slots); i++) {
+      if ((level >= 0) && (ws->slots[i].level != level))
+         continue;
+      s = ws->slots[i].slot;
+      amount = pilot_maxAmmoO( p, s->outfit );
+      if (amount > 0) {
+         ammo += (double)s->u.ammo.quantity / (double)amount;
+         nammo++;
+      }
+   }
+   return (nammo==0) ? 0. : ammo / (double)nammo;
+}
+
+
+/**
  * @brief Cleans up a weapon set.
  *
  *    @param p Pilot who owns the weapon set.
