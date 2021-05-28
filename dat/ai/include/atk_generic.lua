@@ -190,7 +190,7 @@ function _atk_g_ranged_kite( target, dist )
    local p = ai.pilot()
 
    -- Estimate the range
-   local range = ai.getweaprange( 5 )
+   local range = ai.getweaprange( 4 )
 
    -- Try to keep velocity vector away from enemy
    local targetpos = target:pos()
