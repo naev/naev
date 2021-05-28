@@ -150,6 +150,14 @@ equip_typeOutfits_utilities["Demon"] = {
    }
 }
 
+local zlk_util_medplus = { { varied=true;
+      "Faraday Tempest Coating", "Hive Combat AI" } }
+equip_shipOutfits_utilities["Za'lek Sting"]     = zlk_util_medplus
+equip_shipOutfits_utilities["Za'lek Demon"]     = zlk_util_medplus
+equip_shipOutfits_utilities["Za'lek Mephisto"]  = zlk_util_medplus
+equip_shipOutfits_utilities["Za'lek Diablo"]    = zlk_util_medplus
+equip_shipOutfits_utilities["Za'lek Hephaestus"]= zlk_util_medplus
+equip_shipOutfits_utilities["Za'lek Prototype"] = zlk_util_medplus
 
 --[[
 -- @brief Does Za'lek pilot equipping

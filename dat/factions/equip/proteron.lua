@@ -60,7 +60,6 @@ equip_typeOutfits_weapons["Kahan"] = {
    }
 }
 equip_typeOutfits_weapons["Archimedes"] = {
-   
    {
       num = 1;
       "Enygma Systems Turreted Fury Launcher",

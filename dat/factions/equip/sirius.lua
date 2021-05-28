@@ -125,6 +125,15 @@ equip_typeOutfits_weapons["Divinity"] = {
    },
 }
 
+local sir_util_small = { { "Lattice Thermal Coating" } }
+local sir_util_medplus = { { varied=true;
+   "Pinpoint Combat AI", "Lattice Thermal Coating" } }
+equip_shipOutfits_utilities["Sirius Fidelity"]  = sir_util_small
+equip_shipOutfits_utilities["Sirius Shaman"]    = sir_util_small
+equip_shipOutfits_utilities["Sirius Preacher"]  = sir_util_medplus
+equip_shipOutfits_utilities["Sirius Reverence"] = sir_util_medplus
+equip_shipOutfits_utilities["Sirius Dogma"]     = sir_util_medplus
+equip_shipOutfits_utilities["Sirius Divinity"]  = sir_util_medplus
 
 --[[
 -- @brief Does sirius pilot equipping

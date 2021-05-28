@@ -119,6 +119,16 @@ equip_typeOutfits_structurals["Vigilance"] = {
 }
 
 
+local dva_util_small = { { "MilSpec Impacto-Plastic Coating" } }
+local dva_util_medplus = { { varied = true;
+   "Cyclic Combat AI", "MilSpec Impacto-Plastic Coating" } }
+equip_shipOutfits_utilities["Dvaered Vendetta"] = dva_util_small
+equip_shipOutfits_utilities["Dvaered Ancestor"] = dva_util_small
+equip_shipOutfits_utilities["Dvaered Phalanx"]  = dva_util_medplus
+equip_shipOutfits_utilities["Dvaered Vigilance"]= dva_util_medplus
+equip_shipOutfits_utilities["Dvaered Goddard"]  = dva_util_medplus
+
+
 --[[
 -- @brief Does Dvaered pilot equipping
 --

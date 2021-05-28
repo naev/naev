@@ -343,21 +343,21 @@ equip_classOutfits_utilities = {
    ["Yacht"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
+         "Unicorp Scrambler", "Jump Scanner",
          "Unicorp Light Afterburner", "Sensor Array",
       },
    },
    ["Luxury Yacht"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
+         "Unicorp Scrambler", "Jump Scanner",
          "Unicorp Light Afterburner", "Sensor Array",
       },
    },
    ["Scout"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
+         "Unicorp Scrambler", "Jump Scanner",
          "Unicorp Light Afterburner",
          "Unicorp Jammer", "Sensor Array",
       },
@@ -365,7 +365,7 @@ equip_classOutfits_utilities = {
    ["Courier"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
+         "Unicorp Scrambler", "Jump Scanner",
          "Unicorp Light Afterburner",
       },
    },
@@ -379,14 +379,14 @@ equip_classOutfits_utilities = {
    ["Armoured Transport"] = {
       {
          varied = true;
-         "Targeting Array", "Milspec Scrambler",
+         "Targeting Array", "Milspec Scrambler", "Agility Combat AI",
          "Milspec Jammer", "Emergency Shield Booster", "Droid Repair Crew",
       },
    },
    ["Fighter"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Unicorp Light Afterburner",
+         "Unicorp Scrambler", "Unicorp Light Afterburner",
          "Weapons Ionizer", "Emergency Shield Booster",
          "Sensor Array", "Hellburner",
       },
@@ -394,7 +394,7 @@ equip_classOutfits_utilities = {
    ["Bomber"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Unicorp Light Afterburner",
+         "Unicorp Scrambler", "Unicorp Light Afterburner",
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
          "Emergency Shield Booster", "Sensor Array",
          "Hellburner",
@@ -404,9 +404,9 @@ equip_classOutfits_utilities = {
       {
          varied = true;
          "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
-         "Hellburner",
-         "Emergency Shield Booster", "Sensor Array", "Unicorp Medium Afterburner",
-         "Droid Repair Crew",
+         "Hellburner", "Agility Combat AI",
+         "Emergency Shield Booster", "Sensor Array",
+         "Unicorp Medium Afterburner", "Droid Repair Crew",
       },
    },
    ["Destroyer"] = {
@@ -415,6 +415,7 @@ equip_classOutfits_utilities = {
          "Targeting Array", "Weapons Ionizer",
          "Hellburner", "Emergency Shield Booster",
          "Sensor Array", "Droid Repair Crew",
+         "Agility Combat AI",
       },
    },
    ["Cruiser"] = {
@@ -422,12 +423,14 @@ equip_classOutfits_utilities = {
          varied = true;
          "Targeting Array", "Weapons Ionizer",
          "Sensor Array", "Droid Repair Crew",
+         "Agility Combat AI",
       },
    },
    ["Carrier"] = {
       {
          varied = true;
          "Targeting Array", "Sensor Array", "Droid Repair Crew",
+         "Agility Combat AI",
       },
    },
    ["Drone"] = {
@@ -497,33 +500,33 @@ equip_classOutfits_structurals = {
             ["Improved Stabilizer"] = 4, ["Engine Reroute"] = 4,
          };
          "Fuel Pod", "Improved Stabilizer", "Engine Reroute",
-         "Battery", "Shield Capacitor",
+         "Battery", "Shield Capacitor", "Reactor Class I",
       },
    },
    ["Bomber"] = {
       {
          varied = true;
          "Fuel Pod", "Improved Stabilizer", "Engine Reroute",
-         "Shield Capacitor",
+         "Shield Capacitor", "Reactor Class I",
       },
    },
    ["Corvette"] = {
       {
          varied = true;
          "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
-         "Plasteel Plating",
+         "Plasteel Plating", "Reactor Class II",
       },
    },
    ["Destroyer"] = {
       {
          varied = true;
          "Large Fuel Pod", "Battery III", "Shield Capacitor IV",
-         "Shield Capacitor III", "Nanobond Plating",
+         "Shield Capacitor III", "Nanobond Plating", "Reactor Class III",
       },
       {
          varied = true;
          "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
-         "Plasteel Plating",
+         "Plasteel Plating", "Reactor Class II",
       },
    },
    ["Cruiser"] = {
@@ -533,6 +536,7 @@ equip_classOutfits_structurals = {
          };
          "Large Fuel Pod", "Biometal Armour", "Nanobond Plating",
          "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
+         "Reactor Class III",
       },
    },
    ["Carrier"] = {

@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<outfit name="MilSpec Impacto-plastic Coating">
+<outfit name="MilSpec Impacto-Plastic Coating">
  <general>
   <typename>Hull Coating</typename>
   <slot>utility</slot>
   <size>small</size>
   <mass>0</mass>
   <price>315000</price>
-  <description>The MilSpec Impacto-plastic coating is based on memory nano-alloys that resist both impact and damage, quickly restoring the protected surface to its original state.</description>
+  <description>The MilSpec Impacto-Plastic Coating is based on memory nano-alloys that resist both impact and damage, quickly restoring the protected surface to its original state.</description>
   <gfx_store>placeholder.webp</gfx_store>
   <limit>hullcoat</limit>
  </general>

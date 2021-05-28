@@ -96,6 +96,16 @@ equip_typeOutfits_weapons["Pacifier"] = {
    }
 }
 
+local emp_util_small = { { "Photo-Voltaic Nanobot Coating" } }
+local emp_util_medplus = { { varied=true;
+   "Hunting Combat AI", "Photo-Voltaic Nanobot Coating" } }
+equip_shipOutfits_utilities["Empire Shark"]     = emp_util_small
+equip_shipOutfits_utilities["Empire Lancelot"]  = emp_util_small
+equip_shipOutfits_utilities["Empire Admonisher"]= emp_util_medplus
+equip_shipOutfits_utilities["Empire Pacifier"]  = emp_util_medplus
+equip_shipOutfits_utilities["Empire Hawking"]   = emp_util_medplus
+equip_shipOutfits_utilities["Empire Peacemaker"]= emp_util_medplus
+
 --[[
 -- @brief Does empire pilot equipping
 --
@@ -129,6 +139,6 @@ function equip( p )
          },
       }
    end
-   
+
    equip_generic( p )
 end

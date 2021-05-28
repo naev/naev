@@ -282,7 +282,7 @@
   <item>Cloaking Device</item>
   <item>Faraday Tempest Coating</item>
   <item>Lattice Thermal Coating</item>
-  <item>MilSpec Impacto-plastic Coating</item>
+  <item>MilSpec Impacto-Plastic Coating</item>
   <item>Nexus Stealth Coating</item>
   <item>Photo-Voltaic Nanobot Coating</item>
   <item>Nebula Resistant Coating</item>
@@ -688,7 +688,7 @@
   <item>Empire Lancelot Fighter Bay</item>
  </tech>
  <tech name="Dvaered Elite Outfits">
-  <item>MilSpec Impacto-plastic Coating</item>
+  <item>MilSpec Impacto-Plastic Coating</item>
   <item>Cyclic Combat AI</item>
  </tech>
  <tech name="Dvaered Military Outfits">
