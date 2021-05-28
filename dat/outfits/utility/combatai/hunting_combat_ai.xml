@@ -13,7 +13,6 @@
   <limit>combatai</limit>
  </general>
  <specific type="modification">
-  <tur_damage>20</tur_damage>
-  <tur_firerate>-10</tur_firerate>
+  <tur_damage>10</tur_damage>
  </specific>
 </outfit>
