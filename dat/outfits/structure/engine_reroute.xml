@@ -6,13 +6,13 @@
   <size>small</size>
   <mass>0</mass>
   <price>125000</price>
-  <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>
+  <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not directly increase the ship's max speed nor turning abilities, however, a curious effet is that the engines can now also be run in reverse to allow braking with a small loss in reverse thrust capability.</description>
   <gfx_store>reroute.png</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>20</thrust>
-  <thrust_mod>20</thrust_mod>
+  <thrust_mod>30</thrust_mod>
   <energy_regen_mod>-20</energy_regen_mod>
   <energy_mod>-20</energy_mod>
+  <misc_reverse_thrust>1</misc_reverse_thrust>
  </specific>
 </outfit>
