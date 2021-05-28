@@ -449,13 +449,13 @@ equip_classOutfits_structurals = {
       {
          varied = true;
          "Cargo Pod", "Fuel Pod", "Battery", "Shield Capacitor",
-         "Improved Stabilizer", "Engine Reroute", "Steering Thrusters",
+         "Improved Stabilizer", "Engine Reroute",
       },
    },
    ["Luxury Yacht"] = {
       {
          varied = true;
-         "Improved Stabilizer", "Engine Reroute", "Steering Thrusters",
+         "Improved Stabilizer", "Engine Reroute",
       },
    },
    ["Scout"] = {
@@ -494,16 +494,16 @@ equip_classOutfits_structurals = {
    ["Fighter"] = {
       {
          varied = true, probability = {
-            ["Steering Thrusters"] = 4, ["Engine Reroute"] = 4,
+            ["Improved Stabilizer"] = 4, ["Engine Reroute"] = 4,
          };
-         "Fuel Pod", "Steering Thrusters", "Engine Reroute",
+         "Fuel Pod", "Improved Stabilizer", "Engine Reroute",
          "Battery", "Shield Capacitor",
       },
    },
    ["Bomber"] = {
       {
          varied = true;
-         "Fuel Pod", "Steering Thrusters", "Engine Reroute",
+         "Fuel Pod", "Improved Stabilizer", "Engine Reroute",
          "Shield Capacitor",
       },
    },
@@ -547,7 +547,6 @@ equip_classOutfits_structurals = {
    },
    ["Drone"] = {
       {
-         "Steering Thrusters"
       },
    },
    ["Heavy Drone"] = {
@@ -556,7 +555,6 @@ equip_classOutfits_structurals = {
          "Battery"
       },
       {
-         "Steering Thrusters"
       },
    }
 }
