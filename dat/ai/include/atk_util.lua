@@ -25,7 +25,7 @@ function _atk_keep_distance()
       ai.turn(1)
    elseif perp_distance > 0 and perp_distance < 50 then
       ai.turn(-1)
-   end    
+   end
 end
 
 --[[
@@ -45,7 +45,7 @@ function _atk_check_seeable( target )
 
       -- Pilots on manual control (in missions or events) never loose target
       -- /!\ This is not necessary desirable all the time /!\
-      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control 
+      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
       if self:flags().manualcontrol then
          return true
       end
@@ -141,7 +141,7 @@ function _atk_com_think( target )
       ai.poptask()
       return
    end
-   
+
    return target
 end
 

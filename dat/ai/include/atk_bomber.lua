@@ -29,7 +29,7 @@ function atk_bomber( target )
       _atk_g_ranged( target, dist )
 
    else
-      _atk_f_flyby( target, dist )   
+      _atk_f_flyby( target, dist )
    end
 end
 

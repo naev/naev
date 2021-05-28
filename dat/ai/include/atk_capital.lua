@@ -26,7 +26,7 @@ function atk_capital( target )
    if dist > range * mem.atk_approach then
       _atk_g_ranged( target, dist )
    -- Close enough to melee
-   else   
+   else
      _atk_g_capital(target, dist)
    end
 end
@@ -51,19 +51,19 @@ function _atk_g_capital( target, dist )
       mem.recharge = false
    end
 
-   --if we're far from the target, then turn and approach 
+   --if we're far from the target, then turn and approach
    if dist > range then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         _atk_keep_distance()     
+         _atk_keep_distance()
          ai.accel()
-      else  
+      else
          dir = ai.iface(target)
       end
 
    --at moderate range from the target, prepare to intercept and engage with turrets
    elseif dist > 0.6* range then
-      --drifting away from target, so emphasize intercept 
+      --drifting away from target, so emphasize intercept
       --course facing and accelerate to close
       aimdir = ai.aim(target)
       dir    = ai.iface(target)

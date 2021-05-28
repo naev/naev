@@ -185,7 +185,7 @@ end
 --]]
 function follow ()
    local target = ai.taskdata()
- 
+
    -- Will just float without a target to escort.
    if not target:exists() then
       ai.poptask()
@@ -194,7 +194,7 @@ function follow ()
 
    local dir   = ai.face(target)
    local dist  = ai.dist(target)
- 
+
    -- Must approach
    if dir < 10 and dist > 300 then
       ai.accel()
@@ -203,14 +203,14 @@ end
 function follow_accurate ()
    local target = ai.taskdata()
    local p = ai.pilot()
- 
+
    -- Will just float without a target to escort.
    if not target:exists() then
       ai.poptask()
       return
    end
 
-   local goal = ai.follow_accurate(target, mem.radius, 
+   local goal = ai.follow_accurate(target, mem.radius,
          mem.angle, mem.Kp, mem.Kd)
 
    local mod = vec2.mod(goal - p:pos())
@@ -228,7 +228,7 @@ end
 function follow_fleet ()
    local plt    = ai.pilot()
    local leader = plt:leader()
- 
+
    if leader == nil or not leader:exists() then
       ai.poptask()
       return
@@ -393,7 +393,7 @@ function land ()
 end
 function __landgo ()
    local target   = mem.land
-   
+
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
 
@@ -454,10 +454,10 @@ function runaway ()
    elseif t == nil then
       mem.land = p:pos()
       ai.pushsubtask( "__landgo" )
-   else 
+   else
       -- find which one is the closest
       local pilpos = ai.pilot():pos()
-      local modt = vec2.mod(t:pos()-pilpos) 
+      local modt = vec2.mod(t:pos()-pilpos)
       local modp = vec2.mod(p:pos()-pilpos)
       if modt < modp then
          local pos = ai.sethyptarget(t)
@@ -497,7 +497,7 @@ function __run_target ()
       ai.accel()
    end
 
-   -- Afterburner handling.         
+   -- Afterburner handling.
    if ai.hasafterburner() and plt:energy() > 10 then
       ai.weapset( 8, true )
    end
@@ -552,7 +552,7 @@ function __run_hyp ()
          else --Heavy ships should rush to jump point
             jdir = ai.face( jump, nil, true )
          end
-         if jdir < 10 then       
+         if jdir < 10 then
             ai.accel()
          end
       end
@@ -878,7 +878,7 @@ function mine ()
    if dir < 10 and mod > mbd then
       ai.accel()
    end
-   
+
    local relpos = vec2.add( p:pos(), vec2.mul(target,-1) ):mod()
    local relvel = vec2.add( p:vel(), vec2.mul(vel,-1) ):mod()
 
