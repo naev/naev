@@ -152,7 +152,7 @@ misn_cargo2 = "Box"
 misn_cargoamount2 = 4
 
 -- the outfit name as in outfit.xml
-outfit = "Unicorp PT-24 Core System"
+outfit = "Unicorp PT-16 Core System"
 
 function create ()
    misn.setNPC( _("Young People"), "neutral/unique/mia.png", bar_desc )

@@ -142,7 +142,7 @@ function takeoff()
    racers[1] = pilot.add("Llama", "Civilian", curplanet)
    racers[1]:addOutfit("Engine Reroute")
    racers[2] = pilot.add("Llama", "Civilian", curplanet)
-   racers[2]:addOutfit("Steering Thrusters")
+   racers[2]:addOutfit("Engine Reroute")
    racers[3] = pilot.add("Llama", "Civilian", curplanet)
    racers[3]:addOutfit("Improved Stabilizer")
    for i, j in ipairs(racers) do

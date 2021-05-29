@@ -136,7 +136,6 @@ function spawnBaddies ()
       pilot_object:addOutfit("Reactor Class II", 2)
       pilot_object:addOutfit("Milspec Jammer")
       pilot_object:addOutfit("Engine Reroute")
-      pilot_object:addOutfit("Steering Thrusters")
       pilot_object:addOutfit("Shield Capacitor II")
       if system.cur() ~= targetsystem then
          pilot_object:control() --switch to manual control

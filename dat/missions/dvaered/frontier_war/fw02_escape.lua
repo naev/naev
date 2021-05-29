@@ -452,7 +452,6 @@ function enter()
       strafer:addOutfit("Tricon Zephyr II Engine")
       strafer:addOutfit("Reactor Class I")
       strafer:addOutfit("Milspec Orion 3701 Core System")
-      strafer:addOutfit("Power Regulation Override")
       strafer:addOutfit("Shredder", 4)
       strafer:addOutfit("Vulcan Gun", 2)
 

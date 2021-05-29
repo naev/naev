@@ -184,8 +184,6 @@ function spawnDV()
         j:rmOutfit("all")
         j:addOutfit("Turreted Gauss Gun", 1)
         j:addOutfit("Small Shield Booster", 1)
-        j:addOutfit("Steering Thrusters", 1)
-        j:addOutfit("Solar Panel", 1)
         hook.pilot(j, "disable", "disableDV")
     end
     

@@ -164,7 +164,6 @@ function spawn ()
    chelsea:addOutfit( "Small Shield Booster" )
    chelsea:addOutfit( "Forward Shock Absorbers" )
    chelsea:addOutfit( "Engine Reroute" )
-   chelsea:addOutfit( "Steering Thrusters" )
 
    chelsea:setHealth( 100, 100 )
    chelsea:setEnergy( 100 )
