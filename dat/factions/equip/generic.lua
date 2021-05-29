@@ -313,6 +313,7 @@ equip_classOutfits_weapons = {
       {
          varied = true;
          "Lancelot Fighter Bay",
+         "Hyena Fighter Dock",
       },
       {
          "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
@@ -1122,8 +1123,7 @@ equip_typeOutfits_weapons = {
    ["Arx"] = {
       {
          varied = true;
-         -- TODO: Replace this with Soromid Brigand fighter bays.
-         "Lancelot Fighter Bay",
+         "Soromid Brigand Fighter Bay",
       },
       {
          varied = true, probability = {

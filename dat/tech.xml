@@ -142,7 +142,8 @@
   <item>Sensor Array</item>
   <item>Jump Scanner</item>
   <item>Lancelot Fighter Bay</item>
-  <item>Mini Lancelot Fighter Bay</item>
+  <item>Hyena Fighter Bay</item>
+  <item>Hyena Fighter Dock</item>
   <item>Empire Lancelot Fighter Bay</item>
   <item>Fidelity Fighter Bay</item>
   <item>Drone Fighter Bay</item>
@@ -152,6 +153,9 @@
   <item>Za'lek Light Drone Fighter Dock</item>
   <item>Za'lek Heavy Drone Fighter Dock</item>
   <item>Za'lek Bomber Drone Fighter Dock</item>
+  <item>Thurion Perspicacity Fighter Bay</item>
+  <item>Proteron Derivative Fighter Bay</item>
+  <item>Soromid Brigand Fighter Bay</item>
   <item>Large Civilian Vessel License</item>
   <item>Medium Weapon License</item>
   <item>Heavy Weapon License</item>
@@ -548,6 +552,8 @@
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
   <item>Weapons Ionizer</item>
+  <item>Hyena Fighter Bay</item>
+  <item>Hyena Fighter Dock</item>
   </tech>
  <tech name="Heavy Weapons 2">
   <item>Laser Turret MK2</item>
@@ -559,6 +565,7 @@
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   <item>Mercenary License</item>
+  <item>Lancelot Fighter Bay</item>
  </tech>
  <tech name="Low Tech Upgrades">
   <item>Battery</item>
@@ -605,8 +612,6 @@
   <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
-  <item>Lancelot Fighter Bay</item>
-  <item>Mini Lancelot Fighter Bay</item>
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Asteroid Scanner</item>
@@ -629,8 +634,6 @@
   <item>Star Maps</item>
   <item>Milspec Scrambler</item>
   <item>Milspec Jammer</item>
-  <item>Lancelot Fighter Bay</item>
-  <item>Mini Lancelot Fighter Bay</item>
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Medium Fuel Pod</item>
@@ -713,6 +716,9 @@
   <item>Za'lek Light Drone Fighter Bay</item>
   <item>Za'lek Heavy Drone Fighter Bay</item>
   <item>Za'lek Bomber Drone Fighter Bay</item>
+  <item>Za'lek Light Drone Fighter Dock</item>
+  <item>Za'lek Heavy Drone Fighter Dock</item>
+  <item>Za'lek Bomber Drone Fighter Dock</item>
  </tech>
  <tech name="Soromid Elite Outfits">
   <item>Nexus Stealth Coating</item>
@@ -725,10 +731,14 @@
   <item>Convulsion Launcher</item>
   <item>Turreted Convulsion Launcher</item>
   <item>Adaptive Stealth Plating</item>
+  <item>Thurion Perspicacity Fighter Bay</item>
   <item>Map: Thurion Core</item>
  </tech>
  <tech name="Thurion Military Outfits">
   <item>Nebular Shielding Prototype</item>
+ </tech>
+ <tech name="Proteron Military Outfits">
+  <item>Proteron Derivative Fighter Bay</item>
  </tech>
 
  <!-- outfits -->
@@ -762,6 +772,7 @@
   <item>Medium-Heavy Strong Gene Drive Stage 1</item>
   <item>Heavy Strong Gene Drive Stage 1</item>
   <item>Superheavy Strong Gene Drive Stage 1</item>
+  <item>Soromid Brigand Fighter Bay</item>
  </tech>
 
  <!-- Ships -->

@@ -78,6 +78,7 @@ equip_typeOutfits_weapons["Certitude"] = {
    },
    {
       "Heavy Laser Turret", "Ragnarok Beam",
+      "Thurion Perspicacity Fighter Bay",
    },
    {
       "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
