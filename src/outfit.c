@@ -1957,11 +1957,12 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
          _("%s\n"
          "%.0f CPU\n"
          "%.1f Seconds Per Launch\n"
-         "Holds %d %s"),
+         "Holds %d %s\n"
+         "%.1f Seconds to Reload"),
          _(outfit_getType(temp)),
-         temp->cpu,
-         temp->u.bay.delay,
-         temp->u.bay.amount, _(temp->u.bay.ammo_name) );
+         temp->cpu, temp->u.bay.delay,
+         temp->u.bay.amount, _(temp->u.bay.ammo_name),
+         temp->u.bay.reload_time);
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -2642,10 +2643,11 @@ static void outfit_launcherDesc( Outfit* o )
    l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
          _("%.1f Shots Per Second\n"
          "%.0f Range [%.1f duration]\n"
-         "%.0f Maximum Speed"),
+         "%.0f Maximum Speed\n"
+         "%.1f Seconds to Reload"),
          1. / o->u.lau.delay,
          outfit_range(a), a->u.amm.duration,
-         a->u.amm.speed );
+         a->u.amm.speed, o->u.lau.reload_time );
 
    if (a->u.amm.energy > 0.)
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
