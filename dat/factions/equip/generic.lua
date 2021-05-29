@@ -1180,7 +1180,6 @@ equip_shipOutfits_coreSystems = {
    ["Empire Lancelot"] = { "Milspec Orion 3701 Core System" },
    ["Sirius Fidelity"] = { "Milspec Orion 2301 Core System" },
    ["Za'lek Scout Drone"] = { "Milspec Orion 2301 Core System" },
-   ["Za'lek Light Drone"] = { "Milspec Orion 2301 Core System" },
    ["Za'lek Heavy Drone"] = {  "Milspec Orion 3701 Core System" },
    ["Za'lek Bomber Drone"] = { "Milspec Orion 3701 Core System" },
 }
@@ -1191,7 +1190,6 @@ equip_shipOutfits_engines = {
    ["Empire Lancelot"] = { "Tricon Zephyr II Engine" },
    ["Sirius Fidelity"] = { "Tricon Zephyr Engine" },
    ["Za'lek Scout Drone"] = { "Tricon Zephyr Engine" },
-   ["Za'lek Light Drone"] = { "Tricon Zephyr Engine" },
    ["Za'lek Heavy Drone"] = { "Tricon Zephyr II Engine" },
    ["Za'lek Bomber Drone"] = { "Tricon Zephyr II Engine" },
 }
@@ -1206,7 +1204,6 @@ equip_shipOutfits_hulls = {
       "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating",
    },
    ["Za'lek Scout Drone"] = { "Nexus Light Stealth Plating" },
-   ["Za'lek Light Drone"] = { "S&K Ultralight Combat Plating" },
    ["Za'lek Heavy Drone"] = { "S&K Light Combat Plating" },
    ["Za'lek Bomber Drone"] = { "Nexus Light Stealth Plating" },
 }
@@ -1273,6 +1270,13 @@ equip_shipOutfits_utilities = {}
 -- Tables of available structurals by ship.
 -- See equip_set function for more info.
 equip_shipOutfits_structurals = {}
+
+equip_nocores = {
+   ["Za'lek Scout Drone"] = true,
+   ["Za'lek Light Drone"] = true,
+   ["Za'lek Heavy Drone"] = true,
+   ["Za'lek Bomber Drone"] = true,
+}
 
 
 --[[
@@ -1387,58 +1391,60 @@ function equip_generic( p )
    local success
    local o
 
-   -- Core systems
-   success = false
-   o = equip_shipOutfits_coreSystems[shipname]
-   if o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_typeOutfits_coreSystems[basetype]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_classOutfits_coreSystems[class]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   if not success then
-      equip_warn( p, "Unicorp PT-16 Core System" )
-   end
+   if not equip_nocores[shipname] then
+      -- Core systems
+      success = false
+      o = equip_shipOutfits_coreSystems[shipname]
+      if o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_typeOutfits_coreSystems[basetype]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_classOutfits_coreSystems[class]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      if not success then
+         equip_warn( p, "Unicorp PT-16 Core System" )
+      end
 
-   -- Engines
-   success = false
-   o = equip_shipOutfits_engines[shipname]
-   if o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_typeOutfits_engines[basetype]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_classOutfits_engines[class]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   if not success then
-      equip_warn( p, "Unicorp Hawk 350 Engine" )
-   end
+      -- Engines
+      success = false
+      o = equip_shipOutfits_engines[shipname]
+      if o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_typeOutfits_engines[basetype]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_classOutfits_engines[class]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      if not success then
+         equip_warn( p, "Unicorp Hawk 350 Engine" )
+      end
 
-   -- Hulls
-   success = false
-   o = equip_shipOutfits_hulls[shipname]
-   if o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_typeOutfits_hulls[basetype]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_classOutfits_hulls[class]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   if not success then
-      equip_warn( p, "Unicorp D-2 Light Plating" )
+      -- Hulls
+      success = false
+      o = equip_shipOutfits_hulls[shipname]
+      if o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_typeOutfits_hulls[basetype]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_classOutfits_hulls[class]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      if not success then
+         equip_warn( p, "Unicorp D-2 Light Plating" )
+      end
    end
 
    -- Weapons
