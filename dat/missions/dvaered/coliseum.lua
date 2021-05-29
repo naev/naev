@@ -166,11 +166,15 @@ function enter_the_ring ()
 end
 -- Goes back to Totoran (landed)
 function leave_the_ring ()
+   -- Clear pilots so escorts get docked
+   pilot.clear()
+   -- Fix the map up
    local sys = coliseum
    sys:setKnown(false)
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
    end
+   -- Undo player invincibility stuff and land
    hook.land("land")
    local pp = player.pilot()
    pp:setHide( true ) -- clear hidden flag
