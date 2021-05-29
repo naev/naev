@@ -41,5 +41,8 @@
   <ew_detect>25</ew_detect>
   <ew_jump_detect>25</ew_jump_detect>
   <misc_instant_jump>1</misc_instant_jump>
+  <fwd_damage>-20</fwd_damage>
+  <tur_damage>-20</tur_damage>
+  <launch_damage>-20</launch_damage>
  </stats>
 </ship>

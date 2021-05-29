@@ -1233,7 +1233,7 @@ equip_shipOutfits_weapons = {
    },
    ["Za'lek Scout Drone"] = {
       {
-         "Electron Burst Cannon",
+         "Particle Lance",
       },
    },
    ["Za'lek Light Drone"] = {
