@@ -44,9 +44,12 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LAND_DELAY,      /**< Modulates the time that passes during landing. */
    SS_TYPE_D_CARGO_INERTIA,   /**< Modifies the effect of cargo_mass. */
 
-   /* Stealth. */
-   SS_TYPE_D_EW_HIDE,         /**< Electronic warfare hide modifier. */
+   /* Electronic warfare. */
+   SS_TYPE_D_EW_HIDE,         /**< Electronic warfare hide modifier. (affects ew_detection) */
+   SS_TYPE_D_EW_EVADE,        /**< Electronic warfare evasion modifier. (affects ew_evasion) */
+   SS_TYPE_D_EW_STEALTH,      /**< Electronic warfare stealth modifier. (affects ew_stealth) */
    SS_TYPE_D_EW_DETECT,       /**< Electronic warfare detection modifier. */
+   SS_TYPE_D_EW_TRACK,        /**< Electronic warfare tracking modifier. */
    SS_TYPE_D_EW_JUMPDETECT,   /**< Electronic warfare jump point detection modifier. */
 
    /* Launchers. */
@@ -198,7 +201,10 @@ typedef struct ShipStats_ {
 
    /* Stealth. */
    double ew_hide;         /**< Electronic warfare hide modifier. */
+   double ew_evade;
+   double ew_stealth;
    double ew_detect;       /**< Electronic warfare detection modifier. */
+   double ew_track;
    double ew_jump_detect;  /**< Electronic warfare jump point detection modifier. */
 
    /* Military type. */

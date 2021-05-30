@@ -36,9 +36,9 @@ static double pilot_ewAsteroid( Pilot *p );
 
 static void pilot_ewUpdate( Pilot *p )
 {
-   p->ew_detection = p->ew_mass * p->ew_asteroid;
-   p->ew_evasion   = p->ew_detection * 0.5 * ew_interference;
-   p->ew_stealth   = p->ew_detection * 0.25;
+   p->ew_detection = p->ew_mass * p->ew_asteroid * p->stats.ew_hide;
+   p->ew_evasion   = p->ew_detection * 0.5 * ew_interference * p->stats.ew_evade;
+   p->ew_stealth   = p->ew_detection * 0.25 * p->stats.ew_stealth;
 }
 
 
@@ -182,9 +182,9 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2)
    if (dist2 == NULL)
       d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
-   if (d < p->stats.ew_detect * p->stats.ew_track * t->ew_evasion)
+   if (d < p->stats.ew_detect * p->stats.ew_track * target->ew_evasion)
       return 1;
-   else if  (d < p->stats.ew_detect * t->ew_detection)
+   else if  (d < p->stats.ew_detect * target->ew_detection)
       return -1;
 
    return 0;
