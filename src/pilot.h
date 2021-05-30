@@ -266,15 +266,15 @@ typedef struct Pilot_ {
    double energy_tau; /**< Tau regeneration rate for energy. */
    double energy_loss; /**< Linear loss that bypasses the actual RC circuit stuff. */
 
-   /* Electronic warfare. */
-   double ew_base_hide; /**< Base static hide factor. */
-   double ew_mass;   /**< Mass factor. */
-   double ew_heat;   /**< Heat factor, affects hide. */
-   double ew_asteroid;   /**< Asteroid field factor, affects hide. */
-   double ew_hide;   /**< Static hide factor. */
-   double ew_movement; /**< Movement factor. */
-   double ew_evasion; /**< Dynamic evasion factor. */
-   double ew_detect; /**< Static detection factor. */
+   /* Defensive Electronic Warfare. */
+   double ew_detection; /**< Main detection. */
+   double ew_evasion;   /**< Evasion. */
+   double ew_stealth;   /**< Stealth. */
+   /* Defensive Electronic Warfare. */
+   double ew_mass;      /**< Mass factor. */
+   double ew_asteroid;  /**< Asteroid field factor, affects hide. */
+   double ew_movement;  /**< Movement factor. */
+   /* misc. */
    double ew_jump_detect; /** Static jump detection factor */
 
    /* Heat. */

@@ -22,11 +22,25 @@
 #include "player.h"
 #include "space.h"
 
-static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
-                                         what is in range and what isn't. */
 
-#define EVASION_SCALE        1.3225 /**< 1.15 squared. Ensures that ships have higher evasion than hide. */
-#define SENSOR_DEFAULT_RANGE 7500   /**< The default sensor range for all ships. */
+static double ew_interference = 1.; /**< Interference factor. */
+
+
+/*
+ * Prototypes.
+ */
+static double pilot_ewMovement( double vmod );
+static double pilot_ewMass( double mass );
+static double pilot_ewAsteroid( Pilot *p );
+
+
+static void pilot_ewUpdate( Pilot *p )
+{
+   p->ew_detection = p->ew_mass * p->ew_asteroid;
+   p->ew_evasion   = p->ew_detection * 0.5 * ew_interference;
+   p->ew_stealth   = p->ew_detection * 0.25;
+}
+
 
 /**
  * @brief Updates the pilot's static electronic warfare properties.
@@ -35,15 +49,9 @@ static double sensor_curRange    = 0.; /**< Current base sensor range, used to c
  */
 void pilot_ewUpdateStatic( Pilot *p )
 {
-   /*
-    * Unlike the other values, heat isn't squared. The ew_hide formula is thus
-    * equivalent to: ew_base_hide * ew_mass * sqrt(ew_heat)
-    */
-   p->ew_mass     = pow2( pilot_ewMass( p->solid->mass ) );
-   p->ew_heat     = pilot_ewHeat( p->heat_T );
-   p->ew_asteroid = pilot_ewAsteroid( p );
-   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat * p->ew_asteroid;
-   p->ew_evasion  = p->ew_hide * EVASION_SCALE;
+   p->ew_mass     = pilot_ewMass( p->solid->mass );
+
+   pilot_ewUpdate( p );
 }
 
 
@@ -54,14 +62,10 @@ void pilot_ewUpdateStatic( Pilot *p )
  */
 void pilot_ewUpdateDynamic( Pilot *p )
 {
-   /* Update hide. */
-   p->ew_heat     = pilot_ewHeat( p->heat_T );
-   p->ew_asteroid = pilot_ewAsteroid( p );
-   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat * p->ew_asteroid;
-
-   /* Update evasion. */
    p->ew_movement = pilot_ewMovement( VMOD(p->solid->vel) );
-   p->ew_evasion  = p->ew_hide * EVASION_SCALE;
+   p->ew_asteroid = pilot_ewAsteroid( p );
+
+   pilot_ewUpdate( p );
 }
 
 
@@ -71,21 +75,9 @@ void pilot_ewUpdateDynamic( Pilot *p )
  *    @param vmod Velocity to get electronic warfare movement modifier of.
  *    @return The electronic warfare movement modifier.
  */
-double pilot_ewMovement( double vmod )
+static double pilot_ewMovement( double vmod )
 {
-   return 1. + vmod / 100.;
-}
-
-
-/**
- * @brief Gets the electronic warfare heat modifier for a given temperature.
- *
- *    @param T Temperature of the ship.
- *    @return The electronic warfare heat modifier.
- */
-double pilot_ewHeat( double T )
-{
-   return 1. - 0.001 * (T - CONST_SPACE_STAR_TEMP);
+   return 1. / (1. + vmod / 100.);
 }
 
 
@@ -97,7 +89,7 @@ double pilot_ewHeat( double T )
  */
 double pilot_ewMass( double mass )
 {
-   return 1. / (.3 + sqrt(mass) / 30. );
+   return pow(mass, 1./2.4) * 650.;
 }
 
 
@@ -113,7 +105,7 @@ double pilot_ewAsteroid( Pilot *p )
 
    i = space_isInField(&p->solid->pos);
    if ( i>=0 )
-      return 1. + cur_system->asteroids[i].density;
+      return 1. / (1. + 0.5*cur_system->asteroids[i].density);
    else
       return 1.;
 }
@@ -124,13 +116,7 @@ double pilot_ewAsteroid( Pilot *p )
  */
 void pilot_updateSensorRange (void)
 {
-   /* Adjust sensor range based on system interference. */
-   /* See: http://www.wolframalpha.com/input/?i=y+%3D+7500+%2F+%28%28x+%2B+200%29+%2F+200%29+from+x%3D0+to+1000 */
-   sensor_curRange = SENSOR_DEFAULT_RANGE / ((cur_system->interference + 200) / 200.);
-
-   /* Speeds up calculations as we compare it against vectors later on
-    * and we want to avoid actually calculating the sqrt(). */
-   sensor_curRange = pow2(sensor_curRange);
+   ew_interference = 400. / (cur_system->interference + 400.);
 }
 
 
@@ -141,7 +127,7 @@ void pilot_updateSensorRange (void)
  */
 double pilot_sensorRange( void )
 {
-   return sensor_curRange;
+   return pilot_ewMovement( 100. );
 }
 
 
@@ -160,7 +146,7 @@ int pilot_inRange( const Pilot *p, double x, double y )
    /* Get distance. */
    d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
 
-   sense = sensor_curRange * p->ew_detect;
+   sense = pilot_sensorRange() * p->stats.ew_detect;
    if (d < sense)
       return 1;
 
@@ -178,7 +164,7 @@ int pilot_inRange( const Pilot *p, double x, double y )
  */
 int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2)
 {
-   double d, sense;
+   double d;
 
    /* Get distance if needed. */
    if (dist2 != NULL) {
@@ -196,10 +182,9 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2)
    if (dist2 == NULL)
       d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
-   sense = sensor_curRange * p->ew_detect;
-   if (d * target->ew_evasion < sense)
+   if (d < p->stats.ew_detect * p->stats.ew_track * t->ew_evasion)
       return 1;
-   else if  (d * target->ew_hide < sense)
+   else if  (d < p->stats.ew_detect * t->ew_detection)
       return -1;
 
    return 0;
@@ -230,12 +215,13 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( !pnt->real )
       return 0;
 
-   sense = sensor_curRange * p->ew_detect;
+   /* TODO something better than this. */
+   sense =  pilot_ewMass(10e3);
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
 
-   if (d * pnt->hide < sense )
+   if (d / p->stats.ew_detect < sense )
       return 1;
 
    return 0;
@@ -265,12 +251,13 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
    f = &cur_system->asteroids[fie];
    as = &f->asteroids[ast];
 
-   sense = sensor_curRange * p->ew_detect;
+   /* TODO something better than this. */
+   sense = pilot_ewMass( 500. );
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &as->pos );
 
-   if (d < sense ) /* By default, asteroid's hide score is 1. It could be made changeable via xml.*/
+   if (d / p->stats.ew_detect < sense ) /* By default, asteroid's hide score is 1. It could be made changeable via xml.*/
       return 1;
 
    return 0;
@@ -306,7 +293,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
    if (jp_isFlag(jp, JP_HIDDEN))
       sense = pow(p->stats.misc_hidden_jump_detect, 2);
    else
-      sense = sensor_curRange * p->ew_jump_detect;
+      sense = 7500. * p->ew_jump_detect;
 
    hide = jp->hide;
 

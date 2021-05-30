@@ -104,7 +104,8 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    max = -o->outfit->u.lau.lockon/3.;
    if (o->u.ammo.lockon_timer > max) {
       /* Compensate for enemy hide factor. */
-      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target2 / t->ew_hide) * p->stats.launch_lockon;
+      double mod = o->outfit->u.lau.ew_target / t->ew_evasion;
+      o->u.ammo.lockon_timer -= dt * mod * p->stats.launch_lockon;
 
       /* Cap at -max/3. */
       if (o->u.ammo.lockon_timer < max)
@@ -1046,11 +1047,6 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Merge stats. */
    ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
-
-   /* Square the internal values to speed up comparisons. */
-   pilot->ew_base_hide   = pow2( s->ew_hide );
-   pilot->ew_detect      = pow2( s->ew_detect );
-   pilot->ew_jump_detect = pow2( s->ew_jump_detect );
 
    /*
     * Relative increases.
