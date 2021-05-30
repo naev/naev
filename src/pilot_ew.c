@@ -104,7 +104,7 @@ double pilot_ewAsteroid( Pilot *p )
    int i;
 
    i = space_isInField(&p->solid->pos);
-   if ( i>=0 )
+   if (i>=0)
       return 1. / (1. + 0.5*cur_system->asteroids[i].density);
    else
       return 1.;
@@ -147,7 +147,7 @@ int pilot_inRange( const Pilot *p, double x, double y )
    d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
 
    sense = pilot_sensorRange() * p->stats.ew_detect;
-   if (d < sense)
+   if (d < pow2(sense))
       return 1;
 
    return 0;
@@ -182,9 +182,9 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2)
    if (dist2 == NULL)
       d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
-   if (d < p->stats.ew_detect * p->stats.ew_track * target->ew_evasion)
+   if (d < pow2(p->stats.ew_detect * p->stats.ew_track * target->ew_evasion))
       return 1;
-   else if  (d < p->stats.ew_detect * target->ew_detection)
+   else if  (d < pow2(p->stats.ew_detect * target->ew_detection))
       return -1;
 
    return 0;
@@ -316,6 +316,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
  */
 double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
 {
+   /*
    double limit, lead;
 
    limit = track;
@@ -327,7 +328,6 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
    else
       lead = MAX( 0., 1. - 0.5*((t->ew_evasion * t->ew_movement)/limit - 1.));
    return lead;
+   */
+   return 1.;
 }
-
-
-
