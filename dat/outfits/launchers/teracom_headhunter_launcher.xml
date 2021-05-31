@@ -19,6 +19,6 @@ This is TeraCom's model Headhunter launcher. Though somewhat pricey and demandin
   <amount>25</amount>
   <lockon>6</lockon>
   <arc>120</arc>
-  <ew_target>1.5</ew_target>
+  <ew_target>6000</ew_target>
  </specific>
 </outfit>

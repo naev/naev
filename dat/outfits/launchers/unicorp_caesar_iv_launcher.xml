@@ -17,7 +17,7 @@
   <reload_time>90</reload_time>
   <lockon>16</lockon>
   <arc>120</arc>
-  <ew_target>0.5</ew_target>
+  <ew_target>25000</ew_target>
   <amount>6</amount>
  </specific>
 </outfit>

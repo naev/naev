@@ -202,7 +202,6 @@ typedef struct OutfitLauncherData_ {
    /* Lock-on information. */
    double lockon;    /**< Time it takes to lock on the target */
    double ew_target; /**< Target ewarfare at which it the lockon time is based off of. */
-   double ew_target2; /**< Target ewarfare squared for quicker comparisons. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
 } OutfitLauncherData;
 

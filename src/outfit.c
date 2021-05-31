@@ -1520,7 +1520,6 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.lau.arc *= (M_PI/180.) / 2.; /* Note we convert from arc to semi-arc. */
-   temp->u.lau.ew_target2 = pow2( temp->u.lau.ew_target );
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -2621,8 +2620,9 @@ static void outfit_launcherDesc( Outfit* o )
 
    if (outfit_isSeeker(o))
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
-            _("%.1f Second Lock-on\n"),
-            o->u.lau.lockon );
+            _("%.1f Second Lock-on\n"
+            "%'.0f Optimal Tracking\n"),
+            o->u.lau.lockon, o->u.lau.ew_target );
    else
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("No Tracking\n") );

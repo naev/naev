@@ -17,6 +17,6 @@
   <amount>25</amount>
   <lockon>6</lockon>
   <arc>120</arc>
-  <ew_target>3</ew_target>
+  <ew_target>5000</ew_target>
  </specific>
 </outfit>
