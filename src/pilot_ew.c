@@ -23,6 +23,10 @@
 #include "space.h"
 
 
+#define EW_JUMPDETECT_DIST    7500.
+#define EW_PLANETDETECT_DIST  pilot_ewMass(10e3) /* TODO something better than this. */
+
+
 static double ew_interference = 1.; /**< Interference factor. */
 
 
@@ -37,7 +41,7 @@ static double pilot_ewAsteroid( Pilot *p );
 static void pilot_ewUpdate( Pilot *p )
 {
    p->ew_detection = p->ew_mass * p->ew_asteroid * p->stats.ew_hide;
-   p->ew_evasion   = p->ew_detection * 0.5 * ew_interference * p->stats.ew_evade;
+   p->ew_evasion   = p->ew_detection * 0.75 * ew_interference * p->stats.ew_evade;
    p->ew_stealth   = p->ew_detection * 0.25 * p->ew_movement * p->stats.ew_stealth;
 }
 
@@ -215,8 +219,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( !pnt->real )
       return 0;
 
-   /* TODO something better than this. */
-   sense =  pilot_ewMass(10e3);
+   sense = EW_PLANETDETECT_DIST;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
@@ -293,7 +296,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
    if (jp_isFlag(jp, JP_HIDDEN))
       sense = pow(p->stats.misc_hidden_jump_detect, 2);
    else
-      sense = 7500. * p->ew_jump_detect;
+      sense = EW_JUMPDETECT_DIST * p->ew_jump_detect;
 
    hide = jp->hide;
 
