@@ -651,8 +651,7 @@ end
 function stealthheartbeat ()
    local pp = player.pilot()
    local dist= math.min ( pscavA:pos():dist(pp:pos()), pscavB:pos():dist(pp:pos()) )
-   local stats = pp:stats()
-   if dist < 1000 / stats.ew_hide then
+   if dist < 1000 / (1+pp:shipstat("ew_hide")/100) then
       if stealthfailing==nil then
          stealthfailing = 0
          player.msg("#rYou are about to be discovered!")
@@ -668,7 +667,7 @@ function stealthheartbeat ()
          player.msg( _("#rYou have been detected! Stealth failed!") )
          return
       end
-   elseif dist > 2000 * stats.ew_detect then
+   elseif dist > 2000 * (1+pp:shipstat("ew_detect")/100) then
       if stealthfailing==nil then
          stealthfailing = 0
          player.msg( _("#rYou are about to lose track of the scavengers!!") )
