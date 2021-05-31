@@ -2729,8 +2729,11 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    /* Initialize heat. */
    pilot_heatReset( pilot );
 
-   /* set the pilot stats based on their ship and outfits */
+   /* Set the pilot stats based on their ship and outfits */
    pilot_calcStats( pilot );
+
+   /* Update dynamic electronic warfare (static should have already been done). */
+   pilot_ewUpdateDynamic( pilot );
 
    /* Heal up the ship. */
    pilot->armour = pilot->armour_max;

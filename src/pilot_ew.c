@@ -89,7 +89,7 @@ static double pilot_ewMovement( double vmod )
  */
 double pilot_ewMass( double mass )
 {
-   return pow(mass, 1./2.4) * 650.;
+   return pow(mass, 1./1.5) * 150.;
 }
 
 
