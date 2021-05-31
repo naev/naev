@@ -1301,7 +1301,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
-         "%.0f Range\n"
+         "%'.0f Range\n"
          "%.1f second heat up"),
          1./temp->u.blt.delay,
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy,
@@ -1457,7 +1457,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.1f EPS\n"
          "%.1f Duration %.1f Cooldown\n"
-         "%.0f Range\n"
+         "%'.0f Range\n"
          "%.1f second heat up"),
          temp->u.bem.energy,
          temp->u.bem.duration, temp->u.bem.delay,
@@ -2642,7 +2642,7 @@ static void outfit_launcherDesc( Outfit* o )
 
    l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
          _("%.1f Shots Per Second\n"
-         "%.0f Range [%.1f duration]\n"
+         "%'.0f Range [%.1f duration]\n"
          "%.0f Maximum Speed\n"
          "%.1f Seconds to Reload"),
          1. / o->u.lau.delay,
