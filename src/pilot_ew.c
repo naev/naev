@@ -40,9 +40,9 @@ static double pilot_ewAsteroid( Pilot *p );
 
 static void pilot_ewUpdate( Pilot *p )
 {
-   p->ew_detection = p->ew_mass * p->ew_asteroid * p->stats.ew_hide;
-   p->ew_evasion   = p->ew_detection * 0.75 * ew_interference * p->stats.ew_evade;
-   p->ew_stealth   = p->ew_detection * 0.25 * p->ew_movement * p->stats.ew_stealth;
+   p->ew_detection = p->ew_mass * p->ew_asteroid / p->stats.ew_hide;
+   p->ew_evasion   = p->ew_detection * 0.75 * ew_interference / p->stats.ew_evade;
+   p->ew_stealth   = p->ew_detection * 0.25 * p->ew_movement / p->stats.ew_stealth;
 }
 
 
