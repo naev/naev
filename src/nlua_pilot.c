@@ -132,6 +132,7 @@ static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
+static int pilotL_getShipStat( lua_State *L );
 static int pilotL_cargoFree( lua_State *L );
 static int pilotL_cargoHas( lua_State *L );
 static int pilotL_cargoAdd( lua_State *L );
@@ -194,6 +195,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
    { "stats", pilotL_getStats },
+   { "shipstat", pilotL_getShipStat },
    { "colour", pilotL_getColour },
    { "hostile", pilotL_getHostile },
    { "flags", pilotL_flags },
@@ -3236,6 +3238,23 @@ static int pilotL_getStats( lua_State *L )
 }
 #undef PUSH_DOUBLE
 #undef PUSH_INT
+
+
+/**
+ * @brief Gets a shipstat from a Pilot by name.
+ *
+ *    @luatparam Pilot p Pilot to get ship stat of.
+ *    @luatparam string name Name of the ship stat to get.
+ *    @luatreturn number Number corresponding to the ship stat.
+ * @luafunc shipstat
+ */
+static int pilotL_getShipStat( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   const char *str = luaL_checkstring(L,2);
+   lua_pushnumber(L, ss_statsGet(&p->stats,str) );
+   return 1;
+}
 
 
 /**
