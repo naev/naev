@@ -513,7 +513,7 @@ function __run_turret ()
       local dist    = ai.dist(target)
       -- See if we have some turret to use
       if ai.hasturrets() then
-         if dist < ai.getweaprange(true) then
+         if dist < ai.getweaprange() then
             ai.weapset( 3 )
             ai.shoot( true )
          end
