@@ -1313,8 +1313,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          _("\n%.1f degree swivel"),
          temp->u.blt.swivel*180./M_PI );
    }
-   (void)l;
-
+   l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      _("\n%'.f Optimal Tracking\n"
+      "%'.f Minimal Tracking"),
+      temp->u.blt.trackmax, temp->u.blt.trackmin );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
