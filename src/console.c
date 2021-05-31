@@ -81,7 +81,7 @@ static int cli_firstline   = 1; /**< Is this the first line? */
 static int cli_script( lua_State *L );
 static int cli_printOnly( lua_State *L );
 static const luaL_Reg cli_methods[] = {
-   { "print", cli_printOnly },
+   { "print", cli_print },
    { "script", cli_script },
    { "warn", cli_warn },
    {NULL, NULL}
