@@ -293,6 +293,9 @@ void equipment_open( unsigned int wid )
       "Speed:\n"
       "Turn:\n"
       "Time Constant:\n"
+      "Detected at:\n"
+      "Evasion:\n"
+      "Stealth:\n"
       "\n"
       "Absorption:\n"
       "Shield:\n"
@@ -1589,6 +1592,9 @@ void equipment_updateShips( unsigned int wid, char* str )
          "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)\n"
          "#%c%s%.0f#0 deg/s\n"
          "%.0f%%\n"
+         "%.0f\n"
+         "%.0f\n"
+         "%.0f\n"
          "\n"
          "#%c%s%.0f%%\n"
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
@@ -1613,6 +1619,9 @@ void equipment_updateShips( unsigned int wid, char* str )
             solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ),
       EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
       ship->ship->dt_default * 100,
+      ship->ew_detection,
+      ship->ew_evasion,
+      ship->ew_stealth,
       /* Health. */
       EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ),
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),
@@ -1638,7 +1647,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       window_disableButton( wid, "btnSellShip" );
       window_disableButton( wid, "btnChangeShip" );
    }
-   else {\
+   else {
       window_enableButton( wid, "btnChangeShip" );
       window_enableButton( wid, "btnSellShip" );
    }
