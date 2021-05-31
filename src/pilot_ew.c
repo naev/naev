@@ -38,7 +38,7 @@ static void pilot_ewUpdate( Pilot *p )
 {
    p->ew_detection = p->ew_mass * p->ew_asteroid * p->stats.ew_hide;
    p->ew_evasion   = p->ew_detection * 0.5 * ew_interference * p->stats.ew_evade;
-   p->ew_stealth   = p->ew_detection * 0.25 * p->stats.ew_stealth;
+   p->ew_stealth   = p->ew_detection * 0.25 * p->ew_movement * p->stats.ew_stealth;
 }
 
 
@@ -77,7 +77,7 @@ void pilot_ewUpdateDynamic( Pilot *p )
  */
 static double pilot_ewMovement( double vmod )
 {
-   return 1. / (1. + vmod / 100.);
+   return 1. + vmod / 100.;
 }
 
 
