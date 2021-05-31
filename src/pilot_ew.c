@@ -109,7 +109,7 @@ double pilot_ewAsteroid( Pilot *p )
 
    i = space_isInField(&p->solid->pos);
    if (i>=0)
-      return 1. / (1. + 0.5*cur_system->asteroids[i].density);
+      return 1. / (1. + 0.4*cur_system->asteroids[i].density);
    else
       return 1.;
 }
@@ -120,7 +120,7 @@ double pilot_ewAsteroid( Pilot *p )
  */
 void pilot_updateSensorRange (void)
 {
-   ew_interference = 400. / (cur_system->interference + 400.);
+   ew_interference = 800. / (cur_system->interference + 800.);
 }
 
 
@@ -166,7 +166,7 @@ int pilot_inRange( const Pilot *p, double x, double y )
  *    @param[out] dist2 Distance squared of the two pilots. Set to NULL if you're not interested.
  *    @return 1 if they are in range, 0 if they aren't and -1 if they are detected fuzzily.
  */
-int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2)
+int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
 {
    double d;
 
