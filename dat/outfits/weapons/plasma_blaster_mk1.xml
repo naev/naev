@@ -20,7 +20,8 @@
   <falloff>750</falloff>
   <energy>4</energy>
   <heatup>40</heatup>
-  <track>3</track>
+  <trackmin>0</trackmin>
+  <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>impact</type>

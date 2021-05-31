@@ -22,7 +22,8 @@
   <gfx_end>laser1M.png</gfx_end>
   <energy>30</energy>
   <heatup>50</heatup>
-  <track>1.75</track>
+  <trackmin>4000</trackmin>
+  <trackmax>14000</trackmax>
   <damage>
    <type>normal</type>
    <penetrate>36</penetrate>

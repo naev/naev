@@ -21,7 +21,8 @@
   <falloff>750</falloff>
   <energy>8</energy>
   <heatup>35</heatup>
-  <track>2</track>
+  <trackmin>1000</trackmin>
+  <trackmax>4000</trackmax>
   <damage>
    <type>impact</type>
    <penetrate>6</penetrate>

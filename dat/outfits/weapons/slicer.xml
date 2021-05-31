@@ -22,7 +22,8 @@
   <gfx_end>razorS-end.png</gfx_end>
   <energy>30</energy>
   <heatup>30</heatup>
-  <track>2</track>
+  <trackmin>2000</trackmin>
+  <trackmax>8000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>ion</type>

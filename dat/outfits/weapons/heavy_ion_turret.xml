@@ -23,7 +23,8 @@
   <gfx_end>ionL-end.png</gfx_end>
   <energy>54</energy>
   <heatup>60</heatup>
-  <track>0.9</track>
+  <trackmin>7000</trackmin>
+  <trackmax>14000</trackmax>
   <damage>
    <type>ion</type>
    <penetrate>48</penetrate>

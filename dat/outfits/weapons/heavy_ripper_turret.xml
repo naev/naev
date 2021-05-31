@@ -23,7 +23,8 @@
   <gfx_end>ripperM-end.png</gfx_end>
   <energy>49</energy>
   <heatup>75</heatup>
-  <track>1</track>
+  <trackmin>7000</trackmin>
+  <trackmax>20000</trackmax>
   <damage>
    <type>normal</type>
    <penetrate>62</penetrate>

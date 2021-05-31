@@ -22,7 +22,8 @@
   <gfx_end>plasma2-end.png</gfx_end>
   <energy>10</energy>
   <heatup>27</heatup>
-  <track>3</track>
+  <trackmin>1000</trackmin>
+  <trackmax>4000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>impact</type>

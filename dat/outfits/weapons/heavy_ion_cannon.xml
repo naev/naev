@@ -22,7 +22,8 @@
   <gfx_end>ionL-end.png</gfx_end>
   <energy>42</energy>
   <heatup>60</heatup>
-  <track>2</track>
+  <trackmin>2000</trackmin>
+  <trackmax>8000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>ion</type>
