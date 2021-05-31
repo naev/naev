@@ -137,13 +137,13 @@ typedef struct OutfitBoltData_ {
    double speed;     /**< How fast it goes. */
    double range;     /**< How far it goes. */
    double falloff;   /**< Point at which damage falls off. */
-   double ew_lockon; /**< Electronic warfare lockon parameter. */
    double energy;    /**< Energy usage */
    Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per shot. */
-   double track;     /**< Ewarfare to track. */
-   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct. */
+   double trackmin;  /**< Ewarfare minimal tracking. */
+   double trackmax;  /**< Ewarfare maximal tracking. */
+   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct). */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */

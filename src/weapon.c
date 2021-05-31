@@ -310,7 +310,7 @@ static void think_seeker( Weapon* w, const double dt )
    Pilot *p;
    Vector2d v;
    double t, turn_max;
-   double ewtrack;
+   //double ewtrack;
 
    if (w->target == w->parent)
       return; /* no self shooting */
@@ -322,7 +322,7 @@ static void think_seeker( Weapon* w, const double dt )
       return;
    }
 
-   ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p, w->outfit->u.amm.resist );
+   //ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p, w->outfit->u.amm.resist );
 
    /* Handle by status. */
    switch (w->status) {
@@ -353,7 +353,7 @@ static void think_seeker( Weapon* w, const double dt )
          }
 
          /* Set turn. */
-         turn_max = w->outfit->u.amm.turn * ewtrack;
+         turn_max = w->outfit->u.amm.turn;// * ewtrack;
          weapon_setTurn( w, CLAMP( -turn_max, turn_max,
                   10 * diff * w->outfit->u.amm.turn ));
          break;
@@ -1358,7 +1358,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
    if (pilot_target != NULL) {
       /* Lead angle is determined from ewarfare. */
-      lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.track );
+      lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.trackmin, outfit->u.blt.trackmax );
 
       /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
       if (lead_angle && FABS( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {

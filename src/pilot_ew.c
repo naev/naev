@@ -314,23 +314,12 @@ int pilot_inRangeJump( const Pilot *p, int i )
  *
  *    @param p Pilot tracking.
  *    @param t Pilot being tracked.
- *    @param track Track limit of the weapon.
+ *    @param trackmin Minimum track limit of the weapon.
+ *    @param trackmax Maximum track limit of the weapon.
  *    @return The lead angle of the weapon.
  */
-double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
+double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, double trackmax )
 {
-   /*
-   double limit, lead;
-
-   limit = track;
-   if (p != NULL)
-      limit *= p->ew_detect;
-
-   if (t->ew_evasion * t->ew_movement < limit)
-      lead = 1.;
-   else
-      lead = MAX( 0., 1. - 0.5*((t->ew_evasion * t->ew_movement)/limit - 1.));
-   return lead;
-   */
-   return 1.;
+   double mod = p->stats.ew_track * p->stats.ew_detect;
+   return (t->ew_evasion * mod - trackmin) / (trackmax - trackmin);
 }

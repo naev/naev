@@ -1166,17 +1166,18 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->u.blt.sound          = -1;
    temp->u.blt.sound_hit      = -1;
    temp->u.blt.falloff        = -1.;
-   temp->u.blt.ew_lockon      = 1.;
+   temp->u.blt.trackmin       = -1.;
+   temp->u.blt.trackmax       = -1.;
 
    node = parent->xmlChildrenNode;
    do { /* load all the data */
       xml_onlyNodes(node);
       xmlr_float(node,"speed",temp->u.blt.speed);
       xmlr_float(node,"delay",temp->u.blt.delay);
-      xmlr_float(node,"ew_lockon",temp->u.blt.ew_lockon);
       xmlr_float(node,"energy",temp->u.blt.energy);
       xmlr_float(node,"heatup",temp->u.blt.heatup);
-      xmlr_float(node,"track",temp->u.blt.track);
+      xmlr_float(node,"trackmin",temp->u.blt.trackmin);
+      xmlr_float(node,"trackmax",temp->u.blt.trackmax);
       xmlr_float(node,"swivel",temp->u.blt.swivel);
       if (xml_isNode(node,"range")) {
          xmlr_attr_strd(node,"blowup",buf);
@@ -1330,7 +1331,8 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
    MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT(temp->u.blt.falloff > temp->u.blt.range,"falloff");
    MELEMENT(temp->u.blt.heatup==0.,"heatup");
-   MELEMENT(((temp->u.blt.swivel > 0.) || outfit_isTurret(temp)) && (temp->u.blt.track==0.),"track");
+   MELEMENT(((temp->u.blt.swivel > 0.) || outfit_isTurret(temp)) && (temp->u.blt.trackmin<0.),"trackmin");
+   MELEMENT(((temp->u.blt.swivel > 0.) || outfit_isTurret(temp)) && (temp->u.blt.trackmax<0.),"trackmax");
 #undef MELEMENT
 }
 

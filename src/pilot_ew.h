@@ -25,7 +25,7 @@ int pilot_inRangeJump( const Pilot *p, int target );
 /*
  * Weapon tracking.
  */
-double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track );
+double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, double trackmax );
 
 /*
  * Electronic warfare updating.
