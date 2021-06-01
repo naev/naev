@@ -1547,6 +1547,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    char errorReport[STRMAX_SHORT];
    char *shipname;
    char sdet[NUM2STRLEN], seva[NUM2STRLEN], sste[NUM2STRLEN];
+   char smass[NUM2STRLEN], sfuel[NUM2STRLEN];
    Pilot *ship;
    char *nt;
    int onboard;
@@ -1583,6 +1584,8 @@ void equipment_updateShips( unsigned int wid, char* str )
    num2str( sdet, ship->ew_detection, 0 );
    num2str( seva, ship->ew_evasion, 0 );
    num2str( sste, ship->ew_stealth, 0 );
+   num2str( smass, ship->solid->mass, 0 );
+   num2str( sfuel, ship->fuel_max, 0 );
 
    /* Fill the buffer. */
    asprintf( &buf,
@@ -1592,7 +1595,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "#%c%s%.0f#0\n"
          "%s\n"
          "\n"
-         "%.0f#0 %s\n"
+         "%s#0 %s\n"
          "%s average\n"
          "#%c%s%.0f#0 kN/tonne\n"
          "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)\n"
@@ -1607,7 +1610,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
          "%d / #%c%s%d#0 %s\n"
-         "%d %s (%d %s)\n"
+         "%s %s (%d %s)\n"
          "\n"
          "#%c%s#0"),
          /* Generic. */
@@ -1617,7 +1620,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->crew, ship->ship->crew, 0 ),
       buf2,
       /* Movement. */
-      ship->solid->mass, n_( "tonne", "tonnes", ship->solid->mass ),
+      smass, n_( "tonne", "tonnes", ship->solid->mass ),
       nt,
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
@@ -1636,7 +1639,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
       n_( "tonne", "tonnes", ship->ship->cap_cargo ),
-      ship->fuel_max, n_( "unit", "units", ship->fuel_max ),
+      sfuel, n_( "unit", "units", ship->fuel_max ),
       jumps, n_( "jump", "jumps", jumps ),
       pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
    window_modifyText( wid, "txtDDesc", buf );
