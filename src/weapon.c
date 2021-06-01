@@ -1496,18 +1496,14 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    else {
       rdir = dir;
    }
-
-   /* Launcher damage. */
-   w->dam_mod *= parent->stats.launch_damage;
-   /*if (ammo->u.amm.accuracy != 0.) {
-      rdir += RNG_2SIGMA() * ammo->u.amm.accuracy/2. * 1./180.*M_PI;
-      if ((rdir > 2.*M_PI) || (rdir < 0.))
-         rdir = fmod(rdir, 2.*M_PI);
-   }*/
+   /* TODO is this check needed? */
    if (rdir < 0.)
       rdir += 2.*M_PI;
    else if (rdir >= 2.*M_PI)
       rdir -= 2.*M_PI;
+
+   /* Launcher damage. */
+   w->dam_mod *= parent->stats.launch_damage;
 
    /* If thrust is 0. we assume it starts out at speed. */
    v = *vel;
