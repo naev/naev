@@ -62,6 +62,7 @@
   <item>Enygma Systems Huntsman Launcher</item>
   <item>TeraCom Imperator Launcher</item>
   <item>EMP Grenade Launcher</item>
+  <item>Shatterer Launcher</item>
   <item>Unicorp Medusa Launcher</item>
   <item>TeraCom Medusa Launcher</item>
   <item>Enygma Systems Spearhead Launcher</item>
@@ -437,6 +438,7 @@
   <item>Grave Lance</item>
   <item>Grave Beam</item>
   <item>Ragnarok Beam</item>
+  <item>Electron Burst Cannon</item>
  </tech>
 
  <!-- Generic Outfits -->
@@ -893,7 +895,7 @@
  </tech>
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
-  <item>Electron Burst Cannon</item>
+  <item>Shatterer Launcher</item>
   <item>Drone Fighter Bay</item>
   <item>Drone</item>
   <item>Heavy Drone</item>

@@ -332,7 +332,7 @@ equip_classOutfits_weapons = {
          "Heavy Neutron Disruptor"
       },
       {
-         "Electron Burst Cannon"
+         "Shatterer Launcher"
       },
    }
 }
