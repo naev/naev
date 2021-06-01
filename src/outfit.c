@@ -1514,7 +1514,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"trackmax",temp->u.lau.trackmax);
       xmlr_float(node,"lockon",temp->u.lau.lockon);
       if (!outfit_isTurret(temp))
-         xmlr_float(node,"arc",temp->u.lau.arc); /* This is full arc in degrees, so we have to correct it to semi-arc in radians for internal usage. */
+         xmlr_float(node,"arc",temp->u.lau.arc); /* This is in semi-arc like swivel. */
 
       /* Stats. */
       ll = ss_listFromXML( node );
@@ -1527,7 +1527,8 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
-   temp->u.lau.arc *= (M_PI/180.) / 2.; /* Note we convert from arc to semi-arc. */
+   temp->u.lau.arc *= M_PI/180.;
+   /* Note that arc will be 0. for turrets. */
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
