@@ -204,6 +204,7 @@ typedef struct OutfitLauncherData_ {
    double trackmin;  /**< Ewarfare minimal tracking. */
    double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
+   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct when launched). */
 } OutfitLauncherData;
 
 /**
@@ -451,6 +452,8 @@ double outfit_cpu( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );
 double outfit_spin( const Outfit* o );
+double outfit_trackmin( const Outfit* o );
+double outfit_trackmax( const Outfit* o );
 int outfit_sound( const Outfit* o );
 int outfit_soundHit( const Outfit* o );
 /* Active outfits. */

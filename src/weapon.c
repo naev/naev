@@ -1324,7 +1324,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    Vector2d relative_location;
    double rdir, lead_angle;
    double x, y, t;
-   double off;
+   double off, trackmin, trackmax;
 
    if (pilot_target != NULL) {
       target_pos = pilot_target->solid->pos;
@@ -1358,7 +1358,9 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
    if (pilot_target != NULL) {
       /* Lead angle is determined from ewarfare. */
-      lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.trackmin, outfit->u.blt.trackmax );
+      trackmin = outfit_trackmin(outfit);
+      trackmax = outfit_trackmax(outfit);
+      lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
 
       /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
       if (lead_angle && FABS( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
@@ -1477,15 +1479,23 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    glTexture *gfx;
    Outfit* ammo;
 
-   pilot_target = NULL;
+   /* Only difference is the direction of fire */
+   if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */
+      pilot_target = pilot_get(w->target);
+   else /* fire straight or at asteroid */
+      pilot_target = NULL;
+
    ammo = launcher->u.lau.ammo;
    if (w->outfit->type == OUTFIT_TYPE_AMMO &&
             launcher->type == OUTFIT_TYPE_TURRET_LAUNCHER) {
-      pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( ammo, parent, pilot_target, pos, vel, dir, M_PI, time );
+      rdir = weapon_aimTurret( launcher, parent, pilot_target, pos, vel, dir, M_PI, time );
    }
-   else
+   else if (launcher->u.lau.swivel > 0.) {
+      rdir = weapon_aimTurret( launcher, parent, pilot_target, pos, vel, dir, launcher->u.lau.swivel, time );
+   }
+   else {
       rdir = dir;
+   }
 
    /* Launcher damage. */
    w->dam_mod *= parent->stats.launch_damage;

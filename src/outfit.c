@@ -768,6 +768,28 @@ double outfit_spin( const Outfit* o )
    return -1.;
 }
 /**
+ * @brief Gets the outfit's minimal tracking.
+ *    @param o Outfit to get information from.
+ *    @return Outfit's minimal tracking.
+ */
+double outfit_trackmin( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.trackmin;
+   else if (outfit_isLauncher(o)) return o->u.lau.trackmin;
+   return -1.;
+}
+/**
+ * @brief Gets the outfit's minimal tracking.
+ *    @param o Outfit to get information from.
+ *    @return Outfit's minimal tracking.
+ */
+double outfit_trackmax( const Outfit* o )
+{
+   if (outfit_isBolt(o)) return o->u.blt.trackmax;
+   else if (outfit_isLauncher(o)) return o->u.lau.trackmax;
+   return -1.;
+}
+/**
  * @brief Gets the outfit's sound.
  *    @param o Outfit to get sound from.
  *    @return Outfit's sound.
@@ -1513,6 +1535,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"trackmin",temp->u.lau.trackmin);
       xmlr_float(node,"trackmax",temp->u.lau.trackmax);
       xmlr_float(node,"lockon",temp->u.lau.lockon);
+      xmlr_float(node,"swivel",temp->u.lau.swivel);
       if (!outfit_isTurret(temp))
          xmlr_float(node,"arc",temp->u.lau.arc); /* This is in semi-arc like swivel. */
 
@@ -1527,6 +1550,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
+   temp->u.lau.swivel *= M_PI/180.;
    temp->u.lau.arc *= M_PI/180.;
    /* Note that arc will be 0. for turrets. */
 
