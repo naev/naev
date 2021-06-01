@@ -3,15 +3,15 @@
  <general>
   <typename>Armour Modifier</typename>
   <slot>structure</slot>
-  <size>small</size>
+  <size>medium</size>
   <rarity>3</rarity>
   <mass />
-  <price>150000</price>
+  <price>750000</price>
   <gfx_store>stealth_plating.png</gfx_store>
   <description>This armour plating does not provide any protection, instead it makes the ship harder to detect. It has integrated sensors that measure the ambient radiation around the ship and is able to emit space-resolved the right amount of radiation to appear invisible for passive sensors.</description>
  </general>
  <specific type="modification">
-  <ew_hide>20</ew_hide>
-  <mass_mod>3</mass_mod>
+  <ew_hide>15</ew_hide>
+  <mass_limit_mod>-10</mass_limit_mod>
  </specific>
 </outfit>
