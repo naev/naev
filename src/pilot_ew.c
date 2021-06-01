@@ -131,7 +131,7 @@ void pilot_updateSensorRange (void)
  */
 double pilot_sensorRange( void )
 {
-   return pilot_ewMovement( 100. );
+   return 7500 / ew_interference;
 }
 
 
