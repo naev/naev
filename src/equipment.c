@@ -1546,6 +1546,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    char *buf, buf2[ECON_CRED_STRLEN];
    char errorReport[STRMAX_SHORT];
    char *shipname;
+   char sdet[EW_STRLEN], seva[EW_STRLEN], sste[EW_STRLEN];
    Pilot *ship;
    char *nt;
    int onboard;
@@ -1578,6 +1579,11 @@ void equipment_updateShips( unsigned int wid, char* str )
 
    jumps = floor(ship->fuel_max / ship->fuel_consumption);
 
+   /* Stealth stuff. */
+   ew_tostring( sdet, ship->ew_detection );
+   ew_tostring( seva, ship->ew_evasion );
+   ew_tostring( sste, ship->ew_stealth );
+
    /* Fill the buffer. */
    asprintf( &buf,
          _("%s\n"
@@ -1592,9 +1598,9 @@ void equipment_updateShips( unsigned int wid, char* str )
          "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)\n"
          "#%c%s%.0f#0 deg/s\n"
          "%.0f%%\n"
-         "%.0f\n"
-         "%.0f\n"
-         "%.0f\n"
+         "%s\n"
+         "%s\n"
+         "%s\n"
          "\n"
          "#%c%s%.0f%%\n"
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
@@ -1618,10 +1624,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
             solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ),
       EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
-      ship->ship->dt_default * 100,
-      ship->ew_detection,
-      ship->ew_evasion,
-      ship->ew_stealth,
+      ship->ship->dt_default * 100, sdet, seva, sste,
       /* Health. */
       EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ),
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),

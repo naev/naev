@@ -38,5 +38,4 @@ PRINTF_FORMAT( 3, 4 ) int scnprintf( char* text, size_t maxlen, const char* fmt,
 
 int strsort( const void *p1, const void *p2 );
 
-
 #endif /* NSTRING_H */
