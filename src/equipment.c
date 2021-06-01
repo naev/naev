@@ -1546,7 +1546,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    char *buf, buf2[ECON_CRED_STRLEN];
    char errorReport[STRMAX_SHORT];
    char *shipname;
-   char sdet[EW_STRLEN], seva[EW_STRLEN], sste[EW_STRLEN];
+   char sdet[NUM2STRLEN], seva[NUM2STRLEN], sste[NUM2STRLEN];
    Pilot *ship;
    char *nt;
    int onboard;
@@ -1580,9 +1580,9 @@ void equipment_updateShips( unsigned int wid, char* str )
    jumps = floor(ship->fuel_max / ship->fuel_consumption);
 
    /* Stealth stuff. */
-   ew_tostring( sdet, ship->ew_detection );
-   ew_tostring( seva, ship->ew_evasion );
-   ew_tostring( sste, ship->ew_stealth );
+   num2str( sdet, ship->ew_detection, 0 );
+   num2str( seva, ship->ew_evasion, 0 );
+   num2str( sste, ship->ew_stealth, 0 );
 
    /* Fill the buffer. */
    asprintf( &buf,

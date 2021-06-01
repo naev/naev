@@ -1178,7 +1178,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 {
    ShipStatList *ll;
    xmlNodePtr node;
-   char *buf, stmin[EW_STRLEN], stmax[EW_STRLEN];
+   char *buf, stmin[NUM2STRLEN], stmax[NUM2STRLEN];
    double C, area;
    int l;
 
@@ -1321,7 +1321,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          _("%.2f Disable/s [%.0f Disable]\n"),
          1./temp->u.blt.delay * temp->u.blt.dmg.disable, temp->u.blt.dmg.disable );
    }
-   ew_tostring( stmin, temp->u.blt.range );
+   num2str( stmin, temp->u.blt.range, 0 );
    l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
@@ -1335,8 +1335,8 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          _("\n%.1f Degree Swivel"),
          temp->u.blt.swivel*180./M_PI );
    }
-   ew_tostring( stmin, temp->u.blt.trackmin );
-   ew_tostring( stmax, temp->u.blt.trackmax );
+   num2str( stmin, temp->u.blt.trackmin, 0 );
+   num2str( stmax, temp->u.blt.trackmax, 0 );
    l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
       _("\n%s Optimal Tracking\n"
       "%s Minimal Tracking"),
@@ -2640,7 +2640,7 @@ static void outfit_launcherDesc( Outfit* o )
 {
    int l;
    Outfit *a; /* Launcher's ammo. */
-   char stmin[EW_STRLEN], stmax[EW_STRLEN];
+   char stmin[NUM2STRLEN], stmax[NUM2STRLEN];
 
    if (o->desc_short != NULL) {
       WARN(_("Outfit '%s' already has a short description"), o->name);
@@ -2656,8 +2656,8 @@ static void outfit_launcherDesc( Outfit* o )
          _(outfit_getType(o)), _(dtype_damageTypeToStr(a->u.amm.dmg.type)),
          o->cpu );
 
-   ew_tostring( stmin, o->u.lau.trackmin );
-   ew_tostring( stmax, o->u.lau.trackmax );
+   num2str( stmin, o->u.lau.trackmin, 0 );
+   num2str( stmax, o->u.lau.trackmax, 0 );
    if (outfit_isSeeker(o))
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("%.1f Second Lock-on\n"
@@ -2692,7 +2692,7 @@ static void outfit_launcherDesc( Outfit* o )
             _("%.1f Disable/s [%.0f Disable]\n"),
             1. / o->u.lau.delay * a->u.amm.dmg.disable, a->u.amm.dmg.disable );
 
-   ew_tostring( stmin, outfit_range(a) );
+   num2str( stmin, outfit_range(a), 0 );
    l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
          _("%.1f Shots Per Second\n"
          "%s Range [%.1f duration]\n"

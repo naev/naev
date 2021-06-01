@@ -323,14 +323,3 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, dou
    double mod = p->stats.ew_track * p->stats.ew_detect;
    return (t->ew_evasion * mod - trackmin) / (trackmax - trackmin);
 }
-
-
-/**
- * @brief Converts an electronic warfare value to a string.
- */
-int ew_tostring( char buf[EW_STRLEN], double value )
-{
-   if (value > 1000.)
-      return snprintf( buf, EW_STRLEN, _("%.0f,%03.0f"), value/1000., fmod(value,1000.) );
-   return snprintf( buf, EW_STRLEN, "%.0f", value );
-}

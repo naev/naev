@@ -34,8 +34,4 @@ void pilot_ewUpdateStatic( Pilot *p );
 void pilot_ewUpdateDynamic( Pilot *p );
 
 
-#define EW_STRLEN 16
-int ew_tostring( char buf[EW_STRLEN], double value );
-
-
 #endif /* PILOT_EW_H */
