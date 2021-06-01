@@ -1111,6 +1111,9 @@ void pilot_calcStats( Pilot* pilot )
    /* Update GUI as necessary. */
    gui_setGeneric( pilot );
 
+   /* Update weapon set range. */
+   pilot_weapSetUpdateStats( pilot );
+
    /* In case the time_mod has changed. */
    if (pilot_isPlayer(pilot) && (tm != s->time_mod))
       player_resetSpeed();

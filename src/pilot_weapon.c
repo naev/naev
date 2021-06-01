@@ -49,7 +49,7 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id );
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
 static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, int level, double time );
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time );
-static void pilot_weapSetUpdateRange( PilotWeaponSet *ws );
+static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
 
 
 /**
@@ -460,7 +460,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    }
 
    /* Update range. */
-   pilot_weapSetUpdateRange( ws );
+   pilot_weapSetUpdateRange( p, ws );
 
    /* Update if needed. */
    if (id == p->active_set)
@@ -488,7 +488,7 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
       array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
 
       /* Update range. */
-      pilot_weapSetUpdateRange( ws );
+      pilot_weapSetUpdateRange( p, ws );
 
       /* Update if needed. */
       if (id == p->active_set)
@@ -532,11 +532,25 @@ int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o )
 
 
 /**
+ * @brief Update the weapon sets given pilot stat changes.
+ *
+ *    @param p Pilot to update.
+ */
+void pilot_weapSetUpdateStats( Pilot *p )
+{
+   int i;
+   for (i=0; i<PILOT_WEAPON_SETS; i++)
+      pilot_weapSetUpdateRange( p, &p->weapon_sets[i] );
+}
+
+
+/**
  * @brief Updates the weapon range for a pilot weapon set.
  *
+ *    @param p Pilot whos weapon set is being updated.
  *    @param ws Weapon Set to update range for.
  */
-static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
+static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
 {
    int i, lev;
    double range, speed;
@@ -567,6 +581,8 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
 
       /* Get range. */
       range = outfit_range(ws->slots[i].slot->outfit);
+      if (outfit_isLauncher(ws->slots[i].slot->outfit))
+         range *= p->stats.launch_range;
       if (range >= 0.) {
          /* Calculate. */
          range_accum[ lev ] += range;
@@ -698,7 +714,7 @@ void pilot_weapSetCleanup( Pilot* p, int id )
    ws->slots = NULL;
 
    /* Update range. */
-   pilot_weapSetUpdateRange( ws );
+   pilot_weapSetUpdateRange( p, ws );
 }
 
 
@@ -1118,7 +1134,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       /* If last ammo was shot, update the range */
       if (w->u.ammo.quantity <= 0) {
          for (j=0; j<PILOT_WEAPON_SETS; j++)
-            pilot_weapSetUpdateRange( &p->weapon_sets[j] );
+            pilot_weapSetUpdateRange( p, &p->weapon_sets[j] );
       }
    }
 
@@ -1253,7 +1269,7 @@ void pilot_weaponAuto( Pilot *p )
       for (i=0; i<PILOT_WEAPON_SETS; i++) {
          pilot_weapSetInrange( p, i, 1 );
          /* Update range and speed (at 0)*/
-         pilot_weapSetUpdateRange( &p->weapon_sets[i] );
+         pilot_weapSetUpdateRange( p, &p->weapon_sets[i] );
       }
 
    /* Iterate through all the outfits. */
@@ -1380,7 +1396,7 @@ void pilot_weaponSafe( Pilot *p )
    }
 
    /* Update range. */
-   pilot_weapSetUpdateRange( ws );
+   pilot_weapSetUpdateRange( p, ws );
 }
 
 /**
