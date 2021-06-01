@@ -1324,7 +1324,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
-         "%'.0f Range\n"
+         "%.0f Range\n"
          "%.1f second heat up"),
          1./temp->u.blt.delay,
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy,
@@ -1336,8 +1336,8 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.swivel*180./M_PI );
    }
    l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-      _("\n%'.f Optimal Tracking\n"
-      "%'.f Minimal Tracking"),
+      _("\n%.f Optimal Tracking\n"
+      "%.f Minimal Tracking"),
       temp->u.blt.trackmax, temp->u.blt.trackmin );
 
 #define MELEMENT(o,s) \
@@ -1483,7 +1483,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          _("%.1f EPS\n"
          "%.1f Duration %.1f Cooldown\n"
-         "%'.0f Range\n"
+         "%.0f Range\n"
          "%.1f second heat up"),
          temp->u.bem.energy,
          temp->u.bem.duration, temp->u.bem.delay,
@@ -2656,16 +2656,16 @@ static void outfit_launcherDesc( Outfit* o )
    if (outfit_isSeeker(o))
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("%.1f Second Lock-on\n"
-            "%'.0f Optimal Tracking\n"
-            "%'.0f Minimum Tracking\n"),
+            "%.0f Optimal Tracking\n"
+            "%.0f Minimum Tracking\n"),
             o->u.lau.lockon, o->u.lau.trackmax, o->u.lau.trackmin );
    else {
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("No Tracking\n"));
       if (outfit_isTurret(o) || o->u.lau.swivel > 0.) {
          l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
-               _("%'.0f Optimal Tracking\n"
-               "%'.0f Minimum Tracking\n"),
+               _("%.0f Optimal Tracking\n"
+               "%.0f Minimum Tracking\n"),
                o->u.lau.trackmax, o->u.lau.trackmin );
          if (o->u.lau.swivel > 0.)
             l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
@@ -2689,7 +2689,7 @@ static void outfit_launcherDesc( Outfit* o )
 
    l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
          _("%.1f Shots Per Second\n"
-         "%'.0f Range [%.1f duration]\n"
+         "%.0f Range [%.1f duration]\n"
          "%.0f Maximum Speed\n"
          "%.1f Seconds to Reload"),
          1. / o->u.lau.delay,
