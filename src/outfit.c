@@ -1500,6 +1500,9 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    ShipStatList *ll;
    xmlNodePtr node;
 
+   temp->u.lau.trackmin = -1.;
+   temp->u.lau.trackmax = -1.;
+
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -1507,7 +1510,8 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
       xmlr_int(node,"amount",temp->u.lau.amount);
       xmlr_int(node,"reload_time",temp->u.lau.reload_time);
-      xmlr_float(node,"ew_target",temp->u.lau.ew_target);
+      xmlr_float(node,"trackmin",temp->u.lau.trackmin);
+      xmlr_float(node,"trackmax",temp->u.lau.trackmax);
       xmlr_float(node,"lockon",temp->u.lau.lockon);
       if (!outfit_isTurret(temp))
          xmlr_float(node,"arc",temp->u.lau.arc); /* This is full arc in degrees, so we have to correct it to semi-arc in radians for internal usage. */
@@ -2492,8 +2496,10 @@ int outfit_load (void)
          o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
          if (outfit_isSeeker(o) && /* Smart seekers. */
                (o->u.lau.ammo->u.amm.ai)) {
-            if (o->u.lau.ew_target == 0.)
-               WARN(_("Outfit '%s' missing/invalid 'ew_target' element"), o->name);
+            if (o->u.lau.trackmin < 0.)
+               WARN(_("Outfit '%s' missing/invalid 'trackmin' element"), o->name);
+            if (o->u.lau.trackmax < 0.)
+               WARN(_("Outfit '%s' missing/invalid 'trackmax' element"), o->name);
             if (o->u.lau.lockon == 0.)
                WARN(_("Outfit '%s' missing/invalid 'lockon' element"), o->name);
             if (!outfit_isTurret(o) && (o->u.lau.arc == 0.))
@@ -2625,8 +2631,9 @@ static void outfit_launcherDesc( Outfit* o )
    if (outfit_isSeeker(o))
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("%.1f Second Lock-on\n"
-            "%'.0f Optimal Tracking\n"),
-            o->u.lau.lockon, o->u.lau.ew_target );
+            "%'.0f Optimal Tracking\n"
+            "%'.0f Minimum Tracking\n"),
+            o->u.lau.lockon, o->u.lau.trackmax, o->u.lau.trackmin );
    else
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
             _("No Tracking\n") );

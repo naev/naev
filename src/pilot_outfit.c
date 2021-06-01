@@ -104,7 +104,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    max = -o->outfit->u.lau.lockon/3.;
    if (o->u.ammo.lockon_timer > max) {
       /* Targetting is linear and can't be faster than the time specified (can be slower though). */
-      double mod = MIN( 1., o->outfit->u.lau.ew_target / t->ew_evasion );
+      double mod = pilot_ewWeaponTrack( p, t, o->outfit->u.lau.trackmin, o->outfit->u.lau.trackmax );
       o->u.ammo.lockon_timer -= dt * mod * p->stats.launch_lockon;
 
       /* Cap at -max/3. */

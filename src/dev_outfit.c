@@ -31,7 +31,7 @@ void dout_csvBolt( const char *path )
    const Outfit *o, *o_all;
    int i, l;
    SDL_RWops *rw;
-   char buf[ 1024 ];
+   char buf[STRMAX_SHORT];
    const Damage *dmg;
 
    /* File to output to. */
@@ -91,7 +91,7 @@ void dout_csvBeam( const char *path )
    const Outfit *o, *o_all;
    int i, l;
    SDL_RWops *rw;
-   char buf[ 1024 ];
+   char buf[STRMAX_SHORT];
    const Damage *dmg;
 
    /* File to output to. */
@@ -148,7 +148,7 @@ void dout_csvLauncher( const char *path )
    const Outfit *o, *o_all;
    int i, l;
    SDL_RWops *rw;
-   char buf[ 1024 ];
+   char buf[STRMAX_SHORT];
 
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
@@ -162,7 +162,7 @@ void dout_csvLauncher( const char *path )
          "name,type,slot,size,"
          "license,mass,price,cpu,"
          "delay,ammo_name,amount,"
-         "lockon,ew_target,arc\n"
+         "lockon,trackmin,trackmax,arc\n"
          );
    SDL_RWwrite( rw, buf, l, 1 );
 
@@ -182,7 +182,7 @@ void dout_csvLauncher( const char *path )
             o->name, outfit_getType(o), outfit_slotName(o), outfit_slotSize(o),
             o->license, o->mass, o->price, o->cpu,
             o->u.lau.delay, o->u.lau.ammo_name, o->u.lau.amount,
-            o->u.lau.lockon, o->u.lau.ew_target, o->u.lau.arc * 180 / M_PI
+            o->u.lau.lockon, o->u.lau.trackmin, o->u.lau.trackmax, o->u.lau.arc * 180 / M_PI
             );
       SDL_RWwrite( rw, buf, l, 1 );
    }
@@ -200,7 +200,7 @@ void dout_csvAmmo( const char *path )
    const Outfit *o, *o_all;
    int i, j, l;
    SDL_RWops *rw;
-   char buf[ 1024 ];
+   char buf[STRMAX_SHORT];
    char *ai;
    const Damage *dmg;
 
@@ -271,7 +271,7 @@ void dout_csvMod( const char *path )
    const Outfit *o, *o_all;
    int i, l;
    SDL_RWops *rw;
-   char buf[ 1024 ];
+   char buf[STRMAX_SHORT];
    ShipStats base, stats;
 
    /* File to output to. */

@@ -142,7 +142,7 @@ typedef struct OutfitBoltData_ {
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per shot. */
    double trackmin;  /**< Ewarfare minimal tracking. */
-   double trackmax;  /**< Ewarfare maximal tracking. */
+   double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct). */
 
    /* Sound and graphics. */
@@ -201,7 +201,8 @@ typedef struct OutfitLauncherData_ {
 
    /* Lock-on information. */
    double lockon;    /**< Time it takes to lock on the target */
-   double ew_target; /**< Target ewarfare at which it the lockon time is based off of. */
+   double trackmin;  /**< Ewarfare minimal tracking. */
+   double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
 } OutfitLauncherData;
 
