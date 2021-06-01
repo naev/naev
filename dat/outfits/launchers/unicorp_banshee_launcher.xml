@@ -15,5 +15,8 @@
   <delay>4</delay>
   <reload_time>90</reload_time>
   <amount>20</amount>
+  <swivel>22</swivel>
+  <trackmin>2000</trackmin>
+  <trackmax>8000</trackmax>
  </specific>
 </outfit>

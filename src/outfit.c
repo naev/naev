@@ -1332,7 +1332,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.heatup);
    if (!outfit_isTurret(temp)) {
       l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         _("\n%.1f degree swivel"),
+         _("\n%.1f Degree Swivel"),
          temp->u.blt.swivel*180./M_PI );
    }
    l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
@@ -2659,9 +2659,20 @@ static void outfit_launcherDesc( Outfit* o )
             "%'.0f Optimal Tracking\n"
             "%'.0f Minimum Tracking\n"),
             o->u.lau.lockon, o->u.lau.trackmax, o->u.lau.trackmin );
-   else
+   else {
       l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
-            _("No Tracking\n") );
+            _("No Tracking\n"));
+      if (outfit_isTurret(o) || o->u.lau.swivel > 0.) {
+         l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+               _("%'.0f Optimal Tracking\n"
+               "%'.0f Minimum Tracking\n"),
+               o->u.lau.trackmax, o->u.lau.trackmin );
+         if (o->u.lau.swivel > 0.)
+            l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+                  _("%.1f Degree Swivel\n"),
+                  o->u.lau.swivel*180./M_PI );
+      }
+   }
 
    l += scnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
          _("Holds %d %s:\n"

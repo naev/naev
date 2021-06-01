@@ -14,5 +14,7 @@
   <delay>2</delay>
   <reload_time>40</reload_time>
   <amount>18</amount>
+  <trackmin>2000</trackmin>
+  <trackmax>8000</trackmax>
  </specific>
 </outfit>
