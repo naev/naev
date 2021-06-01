@@ -13,7 +13,7 @@ cd $ROOT
 # Otherwise, xgettext's language detection "sticks" across files and *-format flags get wrongly applied to text containing '%'.
 
 # Step 1: extract the lines of our intro/AUTHORS files (plain text).
-python "$ROOT/po/credits_pot.py" dat/intro dat/AUTHORS > "$ROOT/po/credits.pot"
+python "$ROOT/po/credits_pot.py" dat/intro dat/AUTHORS artwork/gfx/loading/*.txt > "$ROOT/po/credits.pot"
 echo po/credits.pot > "$ROOT/po/POTFILES.in"
 
 # Steps 2/3: list out the xml/source files in the tree.
