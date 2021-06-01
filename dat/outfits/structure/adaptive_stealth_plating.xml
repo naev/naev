@@ -12,6 +12,6 @@
  </general>
  <specific type="modification">
   <ew_hide>15</ew_hide>
-  <mass_limit_mod>-10</mass_limit_mod>
+  <engine_limit_rel>-15</engine_limit_rel>
  </specific>
 </outfit>
