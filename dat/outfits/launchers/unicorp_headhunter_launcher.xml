@@ -17,6 +17,7 @@
   <amount>15</amount>
   <lockon>8</lockon>
   <arc>120</arc>
-  <ew_target>6000</ew_target>
+  <trackmin>0</trackmin>
+  <trackmax>6000</trackmax>
  </specific>
 </outfit>

@@ -17,7 +17,8 @@
   <reload_time>90</reload_time>
   <lockon>16</lockon>
   <arc>120</arc>
-  <ew_target>25000</ew_target>
+  <trackmin>5000</trackmin>
+  <trackmax>25000</trackmax>
   <amount>6</amount>
  </specific>
 </outfit>

@@ -19,7 +19,8 @@ The Za'lek do not share the secrets of their 'missile' drones lightly. Only trus
   <reload_time>120</reload_time>
   <lockon>6</lockon>
   <arc>120</arc>
-  <ew_target>25000</ew_target>
+  <trackmin>0</trackmin>
+  <trackmax>25000</trackmax>
   <amount>5</amount>
  </specific>
 </outfit>

@@ -18,6 +18,7 @@
   <amount>20</amount>
   <lockon>4</lockon>
   <arc>120</arc>
-  <ew_target>5000</ew_target>
+  <trackmin>0</trackmin>
+  <trackmax>5000</trackmax>
  </specific>
 </outfit>

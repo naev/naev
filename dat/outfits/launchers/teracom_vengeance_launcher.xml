@@ -19,6 +19,7 @@ TeraCom's patented launcher hardware considerably reduces the time it takes to a
   <amount>10</amount>
   <lockon>8</lockon>
   <arc>120</arc>
-  <ew_target>10000</ew_target>
+  <trackmin>0</trackmin>
+  <trackmax>10000</trackmax>
  </specific>
 </outfit>
