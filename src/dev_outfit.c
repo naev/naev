@@ -178,7 +178,7 @@ void dout_csvLauncher( const char *path )
             "%s,%s,%s,%s,"
             "%s,%f,%"CREDITS_PRI",%f,"
             "%f,%s,%d,"
-            "%f,%f,%f\n",
+            "%f,%f,%f,%f\n",
             o->name, outfit_getType(o), outfit_slotName(o), outfit_slotSize(o),
             o->license, o->mass, o->price, o->cpu,
             o->u.lau.delay, o->u.lau.ammo_name, o->u.lau.amount,
