@@ -2097,48 +2097,51 @@ void pilot_update( Pilot* pilot, double dt )
       }
    }
 
-   /* Pilot is still alive */
-   pilot->armour += pilot->armour_regen * dt;
-   if (pilot->armour > pilot->armour_max)
-      pilot->armour = pilot->armour_max;
+   /* Healing and energy usage is only done if not disabled. */
+   if (!pilot_isDisabled(pilot)) {
+      /* Pilot is still alive */
+      pilot->armour += pilot->armour_regen * dt;
+      if (pilot->armour > pilot->armour_max)
+         pilot->armour = pilot->armour_max;
 
-   /* Regen shield */
-   if (pilot->stimer <= 0.) {
-      pilot->shield += pilot->shield_regen * dt;
-      if (pilot->sbonus > 0.)
-         pilot->shield += dt * (pilot->shield_regen * (pilot->sbonus / 1.5));
-      pilot->shield = CLAMP( 0., pilot->shield_max, pilot->shield );
+      /* Regen shield */
+      if (pilot->stimer <= 0.) {
+         pilot->shield += pilot->shield_regen * dt;
+         if (pilot->sbonus > 0.)
+            pilot->shield += dt * (pilot->shield_regen * (pilot->sbonus / 1.5));
+         pilot->shield = CLAMP( 0., pilot->shield_max, pilot->shield );
+      }
+
+      /*
+      * Using RC circuit energy loading.
+      *
+      * Calculations (using y = [0:1])
+      *
+      *                                          \
+      *    y = 1 - exp( -x / tau )               |
+      *    y + dy = 1 - exp( -( x + dx ) / tau ) |  ==>
+      *                                          /
+      *
+      *    ==> dy = exp( -x / tau ) * ( 1 - exp( -dx / tau ) ==>
+      *    ==> [ dy = (1 - y) * ( 1 - exp( -dx / tau ) ) ]
+      */
+      pilot->energy += (pilot->energy_max - pilot->energy) *
+            (1. - exp( -dt / pilot->energy_tau));
+      pilot->energy -= pilot->energy_loss * dt;
+      if (pilot->energy > pilot->energy_max)
+         pilot->energy = pilot->energy_max;
+      else if (pilot->energy < 0.) {
+         pilot->energy = 0.;
+         /* Stop all on outfits. */
+         nchg += pilot_outfitOffAll( pilot );
+         /* Run Lua stuff. */
+         pilot_outfitLOutfofenergy( pilot );
+      }
+
+      /* Must recalculate stats because something changed state. */
+      if (nchg > 0)
+         pilot_calcStats( pilot );
    }
-
-   /*
-    * Using RC circuit energy loading.
-    *
-    * Calculations (using y = [0:1])
-    *
-    *                                          \
-    *    y = 1 - exp( -x / tau )               |
-    *    y + dy = 1 - exp( -( x + dx ) / tau ) |  ==>
-    *                                          /
-    *
-    *    ==> dy = exp( -x / tau ) * ( 1 - exp( -dx / tau ) ==>
-    *    ==> [ dy = (1 - y) * ( 1 - exp( -dx / tau ) ) ]
-    */
-   pilot->energy += (pilot->energy_max - pilot->energy) *
-         (1. - exp( -dt / pilot->energy_tau));
-   pilot->energy -= pilot->energy_loss * dt;
-   if (pilot->energy > pilot->energy_max)
-      pilot->energy = pilot->energy_max;
-   else if (pilot->energy < 0.) {
-      pilot->energy = 0.;
-      /* Stop all on outfits. */
-      nchg += pilot_outfitOffAll( pilot );
-      /* Run Lua stuff. */
-      pilot_outfitLOutfofenergy( pilot );
-   }
-
-   /* Must recalculate stats because something changed state. */
-   if (nchg > 0)
-      pilot_calcStats( pilot );
 
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
@@ -2242,7 +2245,8 @@ void pilot_update( Pilot* pilot, double dt )
          pilot->ship->gfx_space, pilot->solid->dir );
 
    /* See if there is commodities to gather. */
-   gatherable_gather( pilot->id );
+   if (!pilot_isDisabled(pilot))
+      gatherable_gather( pilot->id );
 
    /* Update the trail. */
    pilot_sample_trails( pilot, 0 );
