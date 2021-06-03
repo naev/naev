@@ -377,7 +377,7 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
 
    /* Increases if nobody nearby. */
    if (n == 0) {
-      p->ew_stealth_timer += dt * p->ew_stealth / 5000.;
+      p->ew_stealth_timer += dt * 5000. / p->ew_stealth;
       if (p->ew_stealth_timer > 1.)
          p->ew_stealth_timer = 1.;
    }

@@ -927,19 +927,26 @@ void player_render( double dt )
 static void player_renderStealthOverlay( double dt )
 {
    (void) dt;
-   double x, y, st;
+   double x, y, r, st;
    double angle, arc;
    glColour col;
 
    gl_gameToScreenCoords( &x, &y, player.p->solid->pos.x, player.p->solid->pos.y );
 
+   /* Determine the arcs. */
    st    = player.p->ew_stealth_timer;
    arc   = 2.*M_PI * st;
    angle = -M_PI/2. - arc;
 
+   /* We do red to yellow. */
    col_blend( &col, &cYellow, &cRed, st );
    col.a = 0.5;
-   gl_drawCirclePartial( x, y, 30., &col, angle, arc );
+
+   /* Determine size. */
+   r = PILOT_SIZE_APROX/2. * (double)player.p->ship->gfx_space->sw;
+
+   /* Draw the main circle. */
+   gl_drawCirclePartial( x, y, r, &col, angle, arc );
 
 }
 
