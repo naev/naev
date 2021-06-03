@@ -36,7 +36,7 @@ static double ew_interference = 1.; /**< Interference factor. */
  */
 static double pilot_ewMass( double mass );
 static double pilot_ewAsteroid( Pilot *p );
-static int pilot_ewStealthGetNearby( const Pilot *p );
+static int pilot_ewStealthGetNearby( const Pilot *p, double *mod );
 
 
 static void pilot_ewUpdate( Pilot *p )
@@ -321,13 +321,16 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, dou
 }
 
 
-static int pilot_ewStealthGetNearby( const Pilot *p )
+static int pilot_ewStealthGetNearby( const Pilot *p, double *mod )
 {
    Pilot *t;
    Pilot *const* ps;
    int i, n;
+   double dist;
 
    /* Check nearby non-allies. */
+   if (mod != NULL)
+      *mod = 0.;
    n = 0;
    ps = pilot_getAll();
    for (i=0; i<array_size(ps); i++) {
@@ -337,8 +340,15 @@ static int pilot_ewStealthGetNearby( const Pilot *p )
          continue;
       if (pilot_isDisabled(t))
          continue;
-      if (!pilot_validTarget(t,p)) /* does inrange check */
+      if (!pilot_canTarget(t))
          continue;
+
+      dist = vect_dist2( &p->solid->pos, &t->solid->pos );
+      if (dist > pow2(p->ew_stealth * t->stats.ew_detect))
+         continue;
+
+      if (mod != NULL)
+         *mod += 1.0 - sqrt(dist) / (p->ew_stealth * t->stats.ew_detect);
 
       /* We found a pilot that is in range. */
       n++;
@@ -354,12 +364,13 @@ static int pilot_ewStealthGetNearby( const Pilot *p )
 void pilot_ewUpdateStealth( Pilot *p, double dt )
 {
    int n;
+   double mod;
 
    if (!pilot_isFlag( p, PILOT_STEALTH ))
       return;
 
    /* Get nearby pilots. */
-   n = pilot_ewStealthGetNearby( p );
+   n = pilot_ewStealthGetNearby( p, &mod );
 
    /* Increases if nobody nearby. */
    if (n == 0) {
@@ -372,7 +383,7 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
       if (pilot_isPlayer(p))
          player_autonavResetSpeed();
 
-      p->ew_stealth_timer -= dt * p->ew_stealth / 10000. * (double)n;
+      p->ew_stealth_timer -= dt * (p->ew_stealth / 10000. + mod);
       if (p->ew_stealth_timer < 0.) {
          pilot_destealth( p );
          if (pilot_isPlayer(p))
@@ -394,7 +405,7 @@ int pilot_stealth( Pilot *p )
 
    /* Can't stealth if pilots nearby. */
    pilot_setFlag( p, PILOT_STEALTH );
-   n = pilot_ewStealthGetNearby( p );
+   n = pilot_ewStealthGetNearby( p, NULL );
    if (n>0) {
       pilot_rmFlag( p, PILOT_STEALTH );
       return 0;
