@@ -927,9 +927,20 @@ void player_render( double dt )
 static void player_renderStealthOverlay( double dt )
 {
    (void) dt;
-   double x, y;
+   double x, y, st;
+   double angle, arc;
+   glColour col;
+
    gl_gameToScreenCoords( &x, &y, player.p->solid->pos.x, player.p->solid->pos.y );
-   gl_drawCircle( x, y, 30., &cYellow, 1 );
+
+   st    = player.p->ew_stealth_timer;
+   arc   = 2.*M_PI * st;
+   angle = -M_PI/2. - arc;
+
+   col_blend( &col, &cYellow, &cRed, st );
+   col.a = 0.5;
+   gl_drawCirclePartial( x, y, 30., &col, angle, arc );
+
 }
 
 

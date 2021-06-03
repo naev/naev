@@ -377,13 +377,13 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
 
    /* Increases if nobody nearby. */
    if (n == 0) {
-      p->ew_stealth_timer += dt;
+      p->ew_stealth_timer += dt * p->ew_stealth / 5000.;
       if (p->ew_stealth_timer > 1.)
          p->ew_stealth_timer = 1.;
    }
    /* Otherwise decreases. */
    else {
-      p->ew_stealth_timer -= dt * 5000. / p->ew_stealth * (double)n;
+      p->ew_stealth_timer -= dt * p->ew_stealth / 5000. * (double)n;
       if (p->ew_stealth_timer < 0.) {
          pilot_destealth( p );
          if (pilot_isPlayer(p))
@@ -412,7 +412,7 @@ int pilot_stealth( Pilot *p )
    }
 
    /* Got into stealth. */
-   p->ew_stealth_timer = 1.;
+   p->ew_stealth_timer = 0.;
    return 1;
 }
 
