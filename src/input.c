@@ -195,7 +195,7 @@ void input_setDefault ( int wasd )
       input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ANY );
       input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ANY );
    }
-   input_setKeybind( "stealth", KEYBIND_KEYBOARD, SDLK_s, NMOD_NONE );
+   input_setKeybind( "stealth", KEYBIND_KEYBOARD, SDLK_f, NMOD_NONE );
 
    /* Targeting */
    if (wasd) {
