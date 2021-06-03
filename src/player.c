@@ -162,6 +162,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
 static int player_parseMetadata( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
+/* Render. */
+static void player_renderStealthOverlay( double dt );
+static void player_renderAimHelper( double dt );
 /* Misc. */
 static int player_filterSuitablePlanet( Planet *p );
 static void player_planetOutOfRangeMsg (void);
@@ -890,10 +893,6 @@ credits_t player_modCredits( credits_t amount )
  */
 void player_render( double dt )
 {
-   double a, b, d, x1, y1, x2, y2, r, theta;
-   glColour c;
-   Pilot *target;
-
    /*
     * Check to see if the death menu should pop up.
     */
@@ -910,66 +909,90 @@ void player_render( double dt )
       return;
 
    /* Render stealth overlay. */
-   if (pilot_isFlag( player.p, PILOT_STEALTH )) {
-      gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
-      gl_drawCircle( x1, y1, 30., &cYellow, 1 );
-   }
+   if (pilot_isFlag( player.p, PILOT_STEALTH ))
+      player_renderStealthOverlay( dt );
 
    /* Render the aiming lines. */
-   if ((player.p->target != PLAYER_ID) && player.p->aimLines) {
-      target = pilot_get(player.p->target);
-      if (target != NULL) {
-         a = player.p->solid->dir;
-         r = 200.;
-         gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
-
-         b = pilot_aimAngle( player.p, target );
-
-         theta = 22*M_PI/180;
-
-         /* The angular error will give the exact colour that is used. */
-         d = ABS( angle_diff(a,b) / (2*theta) );
-         d = MIN( 1, d );
-
-         c = cInert;
-         c.a = .3;
-         gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a+theta ),
-                                 player.p->solid->pos.y + r*sin( a+theta ) );
-         gl_drawLine( x1, y1, x2, y2, &c );
-         gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a-theta ),
-                                 player.p->solid->pos.y + r*sin( a-theta ) );
-         gl_drawLine( x1, y1, x2, y2, &c );
-
-         c.r = d*.9;
-         c.g = d*.2 + (1-d)*.8;
-         c.b = (1-d)*.2;
-         c.a = 0.9;
-         gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a ),
-                                 player.p->solid->pos.y + r*sin( a ) );
-
-         gl_drawLine( x1, y1, x2, y2, &c );
-
-         gl_renderCross( x2 - 1, y2 - 1, 6., &cBlack );
-         gl_renderCross( x2 - 1, y2 + 1, 6., &cBlack );
-         gl_renderCross( x2 + 1, y2 - 1, 6., &cBlack );
-         gl_renderCross( x2 + 1, y2 + 1, 6., &cBlack );
-         gl_renderCross( x2, y2, 7., &cBlack );
-         gl_renderCross( x2, y2, 6., &cWhite );
-
-         gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( b ),
-                                 player.p->solid->pos.y + r*sin( b ) );
-
-         c.a = .4;
-         gl_drawLine( x1, y1, x2, y2, &c );
-
-         gl_drawCircle( x2, y2, 8., &cBlack, 0 );
-         gl_drawCircle( x2, y2, 10., &cBlack, 0 );
-         gl_drawCircle( x2, y2, 9., &cWhite, 0 );
-      }
-   }
+   if ((player.p->target != PLAYER_ID) && player.p->aimLines)
+      player_renderAimHelper( dt );
 
    /* Render the player's pilot. */
    pilot_render(player.p, dt);
+}
+
+
+/**
+ * @brief Renders the stealth overlay for the player.
+ */
+static void player_renderStealthOverlay( double dt )
+{
+   (void) dt;
+   double x, y;
+   gl_gameToScreenCoords( &x, &y, player.p->solid->pos.x, player.p->solid->pos.y );
+   gl_drawCircle( x, y, 30., &cYellow, 1 );
+}
+
+
+/**
+ * @brief Renders the aim helper.
+ */
+static void player_renderAimHelper( double dt )
+{
+   (void) dt;
+   double a, b, d, x1, y1, x2, y2, r, theta;
+   glColour c;
+   Pilot *target;
+
+   target = pilot_get(player.p->target);
+   if (target == NULL)
+      return;
+
+   a = player.p->solid->dir;
+   r = 200.;
+   gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
+
+   b = pilot_aimAngle( player.p, target );
+
+   theta = 22*M_PI/180;
+
+   /* The angular error will give the exact colour that is used. */
+   d = ABS( angle_diff(a,b) / (2*theta) );
+   d = MIN( 1, d );
+
+   c = cInert;
+   c.a = .3;
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a+theta ),
+                           player.p->solid->pos.y + r*sin( a+theta ) );
+   gl_drawLine( x1, y1, x2, y2, &c );
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a-theta ),
+                           player.p->solid->pos.y + r*sin( a-theta ) );
+   gl_drawLine( x1, y1, x2, y2, &c );
+
+   c.r = d*.9;
+   c.g = d*.2 + (1-d)*.8;
+   c.b = (1-d)*.2;
+   c.a = 0.9;
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a ),
+                           player.p->solid->pos.y + r*sin( a ) );
+
+   gl_drawLine( x1, y1, x2, y2, &c );
+
+   gl_renderCross( x2 - 1, y2 - 1, 6., &cBlack );
+   gl_renderCross( x2 - 1, y2 + 1, 6., &cBlack );
+   gl_renderCross( x2 + 1, y2 - 1, 6., &cBlack );
+   gl_renderCross( x2 + 1, y2 + 1, 6., &cBlack );
+   gl_renderCross( x2, y2, 7., &cBlack );
+   gl_renderCross( x2, y2, 6., &cWhite );
+
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( b ),
+                           player.p->solid->pos.y + r*sin( b ) );
+
+   c.a = .4;
+   gl_drawLine( x1, y1, x2, y2, &c );
+
+   gl_drawCircle( x2, y2, 8., &cBlack, 0 );
+   gl_drawCircle( x2, y2, 10., &cBlack, 0 );
+   gl_drawCircle( x2, y2, 9., &cWhite, 0 );
 }
 
 
@@ -3993,16 +4016,16 @@ void player_stealth (void)
    /* Handle destealth first. */
    if (pilot_isFlag(player.p, PILOT_STEALTH)) {
       pilot_destealth( player.p );
-      player_message("You have destealthed");
+      player_message(_("You have destealthed"));
       return;
    }
 
    /* Stealth case. */
    if (pilot_stealth( player.p )) {
-      player_message("#gYou have entered stealth mode.");
+      player_message(_("#gYou have entered stealth mode."));
    }
    else {
       /* Stealth failed. */
-      player_message("#rUnable to stealth!");
+      player_message(_("#rUnable to stealth!"));
    }
 }

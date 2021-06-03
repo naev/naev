@@ -384,8 +384,11 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
    /* Otherwise decreases. */
    else {
       p->ew_stealth_timer -= dt * 5000. / p->ew_stealth * (double)n;
-      if (p->ew_stealth_timer < 0.)
+      if (p->ew_stealth_timer < 0.) {
          pilot_destealth( p );
+         if (pilot_isPlayer(p))
+            player_message(_("You have been discovered!"));
+      }
    }
 }
 
