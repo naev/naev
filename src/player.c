@@ -934,6 +934,10 @@ static void player_renderStealthOverlay( double dt )
    Pilot *const* ps;
    int i;
 
+   /* Don't display if overlay is open. */
+   if (ovr_isOpen())
+      return;
+
    z = cam_getZoom();
    gl_gameToScreenCoords( &x, &y, player.p->solid->pos.x, player.p->solid->pos.y );
 

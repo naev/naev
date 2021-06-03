@@ -497,7 +497,8 @@ void ovr_render( double dt )
    Pilot *const*pstk;
    AsteroidAnchor *ast;
    double w, h, res;
-   double x,y;
+   double x,y, r,detect;
+   glColour col;
 
    /* Must be open. */
    if (!ovr_open)
@@ -532,6 +533,25 @@ void ovr_render( double dt )
 
    /* Render pilots. */
    pstk  = pilot_getAll();
+   /* First do the overlays if in stealth. */
+   if (pilot_isFlag( player.p, PILOT_STEALTH )) {
+      detect = player.p->ew_stealth;
+      col = cRed;
+      col.a = 0.2;
+      for (i=0; i<array_size(pstk); i++) {
+         x = map_overlay_center_x() + (int)(pstk[i]->solid->pos.x / res);
+         y = map_overlay_center_y() + (int)(pstk[i]->solid->pos.y / res);
+         if (areAllies( player.p->faction, pstk[i]->faction ) || pilot_isFriendly(pstk[i]))
+            continue;
+         if (pilot_isDisabled(pstk[i]))
+            continue;
+         /* Only show pilots the player can see. */
+         if (!pilot_validTarget( player.p, pstk[i] ))
+            continue;
+         r = detect * pstk[i]->stats.ew_detect / res;
+         gl_drawCircle( x, y, r, &col, 1 );
+      }
+   }
    j     = 0;
    for (i=0; i<array_size(pstk); i++) {
       if (pstk[i]->id == PLAYER_ID) /* Skip player. */
