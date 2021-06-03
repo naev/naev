@@ -927,9 +927,12 @@ void player_render( double dt )
 static void player_renderStealthOverlay( double dt )
 {
    (void) dt;
-   double x, y, r, st;
+   double detect, x, y, r, st, z;
    double angle, arc;
    glColour col;
+   Pilot *t;
+   Pilot *const* ps;
+   int i;
 
    gl_gameToScreenCoords( &x, &y, player.p->solid->pos.x, player.p->solid->pos.y );
 
@@ -948,6 +951,26 @@ static void player_renderStealthOverlay( double dt )
    /* Draw the main circle. */
    gl_drawCirclePartial( x, y, r, &col, angle, arc );
 
+   /* Iterate and draw for all pilots. */
+   detect = player.p->ew_stealth;
+   z = cam_getZoom();
+   col = cRed;
+   col.a = 0.15;
+   ps = pilot_getAll();
+   for (i=0; i<array_size(ps); i++) {
+      t = ps[i];
+      if (areAllies( player.p->faction, t->faction ) || pilot_isFriendly(t))
+         continue;
+      if (pilot_isDisabled(t))
+         continue;
+      /* Only show pilots the player can see. */
+      if (!pilot_validTarget( player.p, t ))
+         continue;
+
+      gl_gameToScreenCoords( &x, &y, t->solid->pos.x, t->solid->pos.y );
+      r = detect * t->stats.ew_detect * z;
+      gl_drawCircle( x, y, r, &col, 1 );
+   }
 }
 
 

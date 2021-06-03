@@ -83,7 +83,8 @@ void pilot_ewUpdateDynamic( Pilot *p )
  */
 static double pilot_ewMovement( double vmod )
 {
-   return 1. + vmod / 100.;
+   //return 1. + vmod / 100.;
+   return 1.;
 }
 
 

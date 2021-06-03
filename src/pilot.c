@@ -253,6 +253,26 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
 
 
 /**
+ * @brief Same as pilot_validTarget but without the range check.
+ */
+int pilot_canTarget( const Pilot* p )
+{
+   /* Must not be dead. */
+   if (pilot_isFlag( p, PILOT_DELETE ) ||
+         pilot_isFlag( p, PILOT_DEAD ))
+      return 0;
+
+   /* Must not be hidden nor invisible. */
+   if (pilot_isFlag( p, PILOT_HIDE ) ||
+         pilot_isFlag( p, PILOT_INVISIBLE))
+      return 0;
+
+   /* Pilot is a valid target. */
+   return 1;
+}
+
+
+/**
  * @brief Checks to see if a pilot is a valid enemy for another pilot.
  *
  *    @param p Reference pilot.
