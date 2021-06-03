@@ -17,6 +17,7 @@
 #include "naev.h"
 /** @endcond */
 
+#include "array.h"
 #include "log.h"
 #include "pilot.h"
 #include "player.h"
@@ -36,6 +37,7 @@ static double ew_interference = 1.; /**< Interference factor. */
 static double pilot_ewMovement( double vmod );
 static double pilot_ewMass( double mass );
 static double pilot_ewAsteroid( Pilot *p );
+static int pilot_ewStealthGetNearby( const Pilot *p );
 
 
 static void pilot_ewUpdate( Pilot *p )
@@ -186,10 +188,18 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
    if (dist2 == NULL)
       d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
-   if (d < pow2(p->stats.ew_detect * p->stats.ew_track * target->ew_evasion))
-      return 1;
-   else if  (d < pow2(p->stats.ew_detect * target->ew_detection))
-      return -1;
+   /* Stealth detection. */
+   if (pilot_isFlag( p, PILOT_STEALTH )) {
+      if (d < pow2(p->stats.ew_detect * target->ew_stealth))
+         return 1;
+   }
+   /* No stealth so normal detection. */
+   else {
+      if (d < pow2(p->stats.ew_detect * p->stats.ew_track * target->ew_evasion))
+         return 1;
+      else if  (d < pow2(p->stats.ew_detect * target->ew_detection))
+         return -1;
+   }
 
    return 0;
 }
@@ -322,4 +332,84 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, dou
 {
    double mod = p->stats.ew_track * p->stats.ew_detect;
    return CLAMP( 0., 1., (t->ew_evasion * mod - trackmin) / (trackmax - trackmin) );
+}
+
+
+static int pilot_ewStealthGetNearby( const Pilot *p )
+{
+   Pilot *t;
+   Pilot *const* ps;
+   int i, n;
+
+   /* Check nearby non-allies. */
+   n = 0;
+   ps = pilot_getAll();
+   for (i=0; i<array_size(ps); i++) {
+      t = ps[i];
+      if (areAllies( p->faction, t->faction ) ||
+            ((p->id == PLAYER_ID) && pilot_isFriendly(t)))
+         continue;
+      if (pilot_isDisabled(t))
+         continue;
+      if (!pilot_validTarget(p,t)) /* does inrange check */
+         continue;
+
+      /* We found a pilot that is in range. */
+      n++;
+   }
+
+   return n;
+}
+
+
+/**
+ * @brief Updates the stealth mode and checks to see if it is getting broken.
+ */
+void pilot_ewUpdateStealth( Pilot *p, double dt )
+{
+   int n;
+
+   if (!pilot_isFlag( p, PILOT_STEALTH ))
+      return;
+
+   /* Get nearby pilots. */
+   n = pilot_ewStealthGetNearby( p );
+
+   p->ew_stealth_timer -= dt * 5000. / p->ew_stealth * (double)n;
+   if (p->ew_stealth_timer < 0.)
+      pilot_destealth( p );
+}
+
+
+/**
+ * @brief Stealths a pilot.
+ */
+int pilot_stealth( Pilot *p )
+{
+   int n;
+
+   if (pilot_isFlag( p, PILOT_STEALTH ))
+      return 0;
+
+   /* Can't stealth if pilots nearby. */
+   n = pilot_ewStealthGetNearby( p );
+   if (n>0)
+      return 0;
+
+   /* Got into stealth. */
+   pilot_setFlag( p, PILOT_STEALTH );
+   p->ew_stealth_timer = 1.;
+   return 1;
+}
+
+
+/**
+ * @brief Destealths a pilot.
+ */
+void pilot_destealth( Pilot *p )
+{
+   if (!pilot_isFlag( p, PILOT_STEALTH ))
+      return;
+   pilot_rmFlag( p, PILOT_STEALTH );
+   p->ew_stealth_timer = 0.;
 }

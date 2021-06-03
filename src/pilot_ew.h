@@ -33,5 +33,12 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, dou
 void pilot_ewUpdateStatic( Pilot *p );
 void pilot_ewUpdateDynamic( Pilot *p );
 
+/*
+ * Stealth.
+ */
+void pilot_ewUpdateStealth( Pilot *p, double dt );
+int pilot_stealth( Pilot *p );
+void pilot_destealth( Pilot *p );
+
 
 #endif /* PILOT_EW_H */

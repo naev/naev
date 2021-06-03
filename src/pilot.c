@@ -225,6 +225,8 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
 /**
  * @brief Checks to see if a pilot is a valid target for another pilot.
  *
+ * @TODO this calls inRangePilot which can be called again right after. This should probably be optimized.
+ *
  *    @param p Reference pilot.
  *    @param target Pilot to see if is a valid target of the reference.
  *    @return 1 if it is valid, 0 otherwise.
