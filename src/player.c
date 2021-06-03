@@ -934,6 +934,7 @@ static void player_renderStealthOverlay( double dt )
    Pilot *const* ps;
    int i;
 
+   z = cam_getZoom();
    gl_gameToScreenCoords( &x, &y, player.p->solid->pos.x, player.p->solid->pos.y );
 
    /* Determine the arcs. */
@@ -946,16 +947,15 @@ static void player_renderStealthOverlay( double dt )
    col.a = 0.5;
 
    /* Determine size. */
-   r = PILOT_SIZE_APROX/2. * (double)player.p->ship->gfx_space->sw;
+   r = 1.2/2. * (double)player.p->ship->gfx_space->sw;
 
    /* Draw the main circle. */
-   gl_drawCirclePartial( x, y, r, &col, angle, arc );
+   gl_drawCirclePartial( x, y, r * z, &col, angle, arc );
 
    /* Iterate and draw for all pilots. */
    detect = player.p->ew_stealth;
-   z = cam_getZoom();
    col = cRed;
-   col.a = 0.15;
+   col.a = 0.2;
    ps = pilot_getAll();
    for (i=0; i<array_size(ps); i++) {
       t = ps[i];
