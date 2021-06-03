@@ -43,7 +43,7 @@ static void pilot_ewUpdate( Pilot *p )
 {
    p->ew_detection = p->ew_mass * p->ew_asteroid / p->stats.ew_hide;
    p->ew_evasion   = p->ew_detection * 0.75 * ew_interference / p->stats.ew_evade;
-   p->ew_stealth   = p->ew_detection * 0.25 / p->stats.ew_stealth;
+   p->ew_stealth   = MAX( 1000., p->ew_detection * 0.25 / p->stats.ew_stealth );
 }
 
 
@@ -401,6 +401,10 @@ int pilot_stealth( Pilot *p )
    int n;
 
    if (pilot_isFlag( p, PILOT_STEALTH ))
+      return 0;
+
+   /* Can't stealth if locked on. */
+   if (p->lockons > 0)
       return 0;
 
    /* Can't stealth if pilots nearby. */
