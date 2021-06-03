@@ -206,18 +206,20 @@ int num2str( char dest[NUM2STRLEN], double n, int decimals )
    else if (n > 1e9)
       return snprintf( dest, NUM2STRLEN,
             _("%.0f,%.0f,%.0f,%03.*f"),
-            n/1e9, fmod(fabs(n/1e6),1e3),
-            fmod(fabs(n/1e3),1e3),
+            floor(n/1e9),
+            floor(fmod(fabs(n/1e6),1e3)),
+            floor(fmod(fabs(n/1e3),1e3)),
             decimals, fmod(fabs(n),1e3) );
    else if (n > 1e6)
       return snprintf( dest, NUM2STRLEN,
             _("%.0f,%.0f,%03.*f"),
-            n/1e6, fmod(fabs(n/1e3),1e3),
+            floor(n/1e6),
+            floor(fmod(fabs(n/1e3),1e3)),
             decimals, fmod(fabs(n),1e3) );
    else if (n > 1e3)
       return snprintf( dest, NUM2STRLEN,
             _("%.0f,%03.*f"),
-            n/1e3, decimals, fmod(fabs(n),1e3) );
+            floor(n/1e3), decimals, fmod(fabs(n),1e3) );
    return snprintf( dest, NUM2STRLEN, "%.*f", decimals, n );
 
 }
