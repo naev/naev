@@ -812,7 +812,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* try to enter stealth mode. */
    } else if (KEY("stealth") && !repeat && NOHYP() && NODEAD() && INGAME()) {
-      player_stealth();
+      if (value==KEY_PRESS) player_stealth();
 
    /*
     * combat

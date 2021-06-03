@@ -189,7 +189,7 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
       d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
    /* Stealth detection. */
-   if (pilot_isFlag( p, PILOT_STEALTH )) {
+   if (pilot_isFlag( target, PILOT_STEALTH )) {
       if (d < pow2(p->stats.ew_detect * target->ew_stealth))
          return 1;
    }
@@ -351,7 +351,7 @@ static int pilot_ewStealthGetNearby( const Pilot *p )
          continue;
       if (pilot_isDisabled(t))
          continue;
-      if (!pilot_validTarget(p,t)) /* does inrange check */
+      if (!pilot_validTarget(t,p)) /* does inrange check */
          continue;
 
       /* We found a pilot that is in range. */
@@ -375,9 +375,18 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
    /* Get nearby pilots. */
    n = pilot_ewStealthGetNearby( p );
 
-   p->ew_stealth_timer -= dt * 5000. / p->ew_stealth * (double)n;
-   if (p->ew_stealth_timer < 0.)
-      pilot_destealth( p );
+   /* Increases if nobody nearby. */
+   if (n == 0) {
+      p->ew_stealth_timer += dt;
+      if (p->ew_stealth_timer > 1.)
+         p->ew_stealth_timer = 1.;
+   }
+   /* Otherwise decreases. */
+   else {
+      p->ew_stealth_timer -= dt * 5000. / p->ew_stealth * (double)n;
+      if (p->ew_stealth_timer < 0.)
+         pilot_destealth( p );
+   }
 }
 
 
@@ -392,12 +401,14 @@ int pilot_stealth( Pilot *p )
       return 0;
 
    /* Can't stealth if pilots nearby. */
+   pilot_setFlag( p, PILOT_STEALTH );
    n = pilot_ewStealthGetNearby( p );
-   if (n>0)
+   if (n>0) {
+      pilot_rmFlag( p, PILOT_STEALTH );
       return 0;
+   }
 
    /* Got into stealth. */
-   pilot_setFlag( p, PILOT_STEALTH );
    p->ew_stealth_timer = 1.;
    return 1;
 }

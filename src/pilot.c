@@ -1553,6 +1553,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       /* Clear other active states. */
       pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
       pilot_rmFlag(p, PILOT_BRAKING);
+      pilot_rmFlag(p, PILOT_STEALTH);
 
       /* Clear hyperspace flags. */
       pilot_rmFlag(p, PILOT_HYP_PREP);
@@ -2101,6 +2102,8 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Healing and energy usage is only done if not disabled. */
    if (!pilot_isDisabled(pilot)) {
+      pilot_ewUpdateStealth(pilot, dt);
+
       /* Pilot is still alive */
       pilot->armour += pilot->armour_regen * dt;
       if (pilot->armour > pilot->armour_max)
