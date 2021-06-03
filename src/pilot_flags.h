@@ -59,6 +59,7 @@ enum {
    PILOT_LANDING,       /**< Pilot is landing. */
    PILOT_TAKEOFF,       /**< Pilot is taking off. */
    /* Visibility stuff. */
+   PILOT_STEALTH,       /**< Pilot is in stealth mode. */
    PILOT_NORENDER,      /**< Pilot does not get rendered. */
    PILOT_VISPLAYER,     /**< Pilot is always visible to the player (only player). */
    PILOT_VISIBLE,       /**< Pilot is always visible to other pilots. */

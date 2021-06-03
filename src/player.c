@@ -3976,3 +3976,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    return 0;
 }
+
+
+void player_stealth (void)
+{
+}
