@@ -1748,6 +1748,7 @@ void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
    double scalew, scaleh;
+   glColour c = {.r=1., .g=1., .b=1., .a=1.};
 
    /* Don't render the pilot. */
    if (pilot_isFlag( p, PILOT_NORENDER ))
@@ -1767,11 +1768,14 @@ void pilot_render( Pilot* p, const double dt )
       scaleh = 1.;
    }
 
+   if (pilot_isFlag(p, PILOT_STEALTH))
+      c.a = 0.5;
+
    /* Base ship. */
    gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
          1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
          scalew, scaleh,
-         p->tsx, p->tsy, NULL );
+         p->tsx, p->tsy, &c );
 }
 
 
