@@ -369,6 +369,9 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
    }
    /* Otherwise decreases. */
    else {
+      if (pilot_isPlayer(p))
+         player_autonavResetSpeed();
+
       p->ew_stealth_timer -= dt * p->ew_stealth / 10000. * (double)n;
       if (p->ew_stealth_timer < 0.) {
          pilot_destealth( p );
