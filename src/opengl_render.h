@@ -73,6 +73,7 @@ void gl_blitStatic( const glTexture* texture,
 
 
 extern gl_vbo *gl_squareVBO;
+extern gl_vbo *gl_circleVBO;
 void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c);
 void gl_endSolidProgram (void);
 void gl_beginSmoothProgram(gl_Matrix4 projection);
@@ -83,6 +84,9 @@ void gl_endSmoothProgram (void);
 void gl_drawCircle( const double x, const double y,
       const double r, const glColour *c, int filled );
 void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled );
+void gl_drawCirclePartial( const double x, const double y,
+      const double r, const glColour *c, double angle, double arc );
+void gl_drawCirclePartialH( const gl_Matrix4 *H, const glColour *c, double angle, double arc );
 
 /* Lines. */
 void gl_drawLine( const double x1, const double y1,

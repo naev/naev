@@ -47,7 +47,7 @@
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 gl_vbo *gl_squareVBO = 0;
 static gl_vbo *gl_squareEmptyVBO = 0;
-static gl_vbo *gl_circleVBO = 0;
+gl_vbo *gl_circleVBO = 0;
 static gl_vbo *gl_crossVBO = 0;
 static gl_vbo *gl_lineVBO = 0;
 static gl_vbo *gl_triangleVBO = 0;
@@ -713,6 +713,69 @@ void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
    glUseProgram(0);
 
    /* Check errors. */
+   gl_checkErr();
+}
+
+
+/**
+ * @brief Draws a partial circle.
+ *
+ *    @param cx X position of the center in screen coordinates.
+ *    @param cy Y position of the center in screen coordinates.
+ *    @param r Radius of the circle.
+ *    @param c Colour to use.
+ *    @param angle Starting angle in radians.
+ *    @param arc Length of the arc (0 to 2 pi)
+ */
+void gl_drawCirclePartial( const double cx, const double cy,
+      const double r, const glColour *c, double angle, double arc )
+{
+   gl_Matrix4 projection;
+
+   /* Set the vertex. */
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, cx, cy, 0);
+   projection = gl_Matrix4_Scale(projection, r, r, 1);
+
+   /* Draw! */
+   gl_drawCirclePartialH( &projection, c, angle, arc );
+}
+
+
+/**
+ * @brief Draws a partial circle.
+ *
+ *    @param H Transformation matrix to draw the circle.
+ *    @param c Colour to use.
+ *    @param angle Starting angle in radians.
+ *    @param arc Length of the arc (0 to 2 pi)
+ */
+void gl_drawCirclePartialH( const gl_Matrix4 *H, const glColour *c, double angle, double arc )
+{
+   // TODO handle shearing and different x/y scaling
+   GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
+
+   /* Draw. */
+   glUseProgram( shaders.circle_partial.program );
+
+   glEnableVertexAttribArray( shaders.circle_partial.vertex );
+   gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle_partial.vertex,
+         0, 2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   gl_uniformColor( shaders.circle_partial.color, c );
+   gl_Matrix4_Uniform( shaders.circle_partial.projection, *H );
+   glUniform1f( shaders.circle_partial.radius, r );
+   glUniform1f( shaders.circle_partial.angle1, angle );
+   glUniform1f( shaders.circle_partial.angle2, arc );
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.circle_partial.vertex );
+
+   glUseProgram(0);
    gl_checkErr();
 }
 
