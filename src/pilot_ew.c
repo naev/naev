@@ -398,6 +398,7 @@ int pilot_stealth( Pilot *p )
    }
 
    /* Got into stealth. */
+   pilot_calcStats(p);
    p->ew_stealth_timer = 0.;
    return 1;
 }
@@ -412,4 +413,5 @@ void pilot_destealth( Pilot *p )
       return;
    pilot_rmFlag( p, PILOT_STEALTH );
    p->ew_stealth_timer = 0.;
+   pilot_calcStats(p);
 }

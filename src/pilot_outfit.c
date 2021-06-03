@@ -1048,6 +1048,13 @@ void pilot_calcStats( Pilot* pilot )
    /* Merge stats. */
    ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
 
+   /* Apply stealth malus. */
+   if (pilot_isFlag(pilot, PILOT_STEALTH)) {
+      s->thrust_mod  *= 0.8;
+      s->turn_mod    *= 0.8;
+      s->speed_mod   *= 0.5;
+   }
+
    /*
     * Relative increases.
     */
