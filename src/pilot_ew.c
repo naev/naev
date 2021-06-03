@@ -34,7 +34,6 @@ static double ew_interference = 1.; /**< Interference factor. */
 /*
  * Prototypes.
  */
-static double pilot_ewMovement( double vmod );
 static double pilot_ewMass( double mass );
 static double pilot_ewAsteroid( Pilot *p );
 static int pilot_ewStealthGetNearby( const Pilot *p );
@@ -44,7 +43,7 @@ static void pilot_ewUpdate( Pilot *p )
 {
    p->ew_detection = p->ew_mass * p->ew_asteroid / p->stats.ew_hide;
    p->ew_evasion   = p->ew_detection * 0.75 * ew_interference / p->stats.ew_evade;
-   p->ew_stealth   = p->ew_detection * 0.25 * p->ew_movement / p->stats.ew_stealth;
+   p->ew_stealth   = p->ew_detection * 0.25 / p->stats.ew_stealth;
 }
 
 
@@ -68,23 +67,9 @@ void pilot_ewUpdateStatic( Pilot *p )
  */
 void pilot_ewUpdateDynamic( Pilot *p )
 {
-   p->ew_movement = pilot_ewMovement( VMOD(p->solid->vel) );
    p->ew_asteroid = pilot_ewAsteroid( p );
 
    pilot_ewUpdate( p );
-}
-
-
-/**
- * @brief Gets the electronic warfare movement modifier for a given velocity.
- *
- *    @param vmod Velocity to get electronic warfare movement modifier of.
- *    @return The electronic warfare movement modifier.
- */
-static double pilot_ewMovement( double vmod )
-{
-   //return 1. + vmod / 100.;
-   return 1.;
 }
 
 

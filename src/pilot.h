@@ -273,7 +273,6 @@ typedef struct Pilot_ {
    /* Defensive Electronic Warfare. */
    double ew_mass;      /**< Mass factor. */
    double ew_asteroid;  /**< Asteroid field factor, affects hide. */
-   double ew_movement;  /**< Movement factor. */
    /* misc. */
    double ew_jump_detect; /** Static jump detection factor */
    double ew_stealth_timer; /**< Stealth timer. */
