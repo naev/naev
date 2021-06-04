@@ -3523,6 +3523,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "visible", .id = PILOT_VISIBLE },
    { .name = "visplayer", .id = PILOT_VISPLAYER },
    { .name = "hilight", .id = PILOT_HILIGHT },
+   { .name = "stealth", .id = PILOT_STEALTH },
    { .name = "invisible", .id = PILOT_INVISIBLE }, 
    { .name = "norender", .id = PILOT_NORENDER },
    { .name = "hide", .id = PILOT_HIDE },
@@ -3553,6 +3554,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> visible: pilot is always visible.</li>
  *  <li> visplayer: pilot is always visible to the player.</li>
  *  <li> hilight: pilot is hilighted on the map.</li>
+ *  <li> stealth: pilot is in stealth mode.</li>
  *  <li> invisible: pilot is not displayed.</li>
  *  <li> invincible: pilot cannot be hit.</li>
  *  <li> invinc_player: pilot cannot be hit by the player.</li>
