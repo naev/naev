@@ -531,6 +531,24 @@ void ovr_render( double dt )
    if (player.p->nav_hyperspace > -1)
       gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res, 1 );
 
+   /* render the asteroids */
+   for (i=0; i<array_size(cur_system->asteroids); i++) {
+      ast = &cur_system->asteroids[i];
+      for (j=0; j<ast->nb; j++)
+         gui_renderAsteroid( &ast->asteroids[j], w, h, res, 1 );
+
+      if (pilot_isFlag( player.p, PILOT_STEALTH )) {
+         detect = vect_dist2( &player.p->solid->pos, &ast->pos );
+         if (detect - ast->radius < pow2(pilot_sensorRange() * player.p->stats.ew_detect)) {
+            col = cBlue;
+            col.a = 0.2;
+            x = map_overlay_center_x() + ast->pos.x / res;
+            y = map_overlay_center_y() + ast->pos.y / res;
+            gl_drawCircle( x, y, ast->radius / res, &col, 1 );
+         }
+      }
+   }
+
    /* Render pilots. */
    pstk  = pilot_getAll();
    /* First do the overlays if in stealth. */
@@ -539,8 +557,6 @@ void ovr_render( double dt )
       col = cRed;
       col.a = 0.2;
       for (i=0; i<array_size(pstk); i++) {
-         x = map_overlay_center_x() + (int)(pstk[i]->solid->pos.x / res);
-         y = map_overlay_center_y() + (int)(pstk[i]->solid->pos.y / res);
          if (areAllies( player.p->faction, pstk[i]->faction ) || pilot_isFriendly(pstk[i]))
             continue;
          if (pilot_isDisabled(pstk[i]))
@@ -548,6 +564,8 @@ void ovr_render( double dt )
          /* Only show pilots the player can see. */
          if (!pilot_validTarget( player.p, pstk[i] ))
             continue;
+         x = map_overlay_center_x() + (int)(pstk[i]->solid->pos.x / res);
+         y = map_overlay_center_y() + (int)(pstk[i]->solid->pos.y / res);
          r = detect * pstk[i]->stats.ew_detect / res;
          gl_drawCircle( x, y, r, &col, 1 );
       }
@@ -571,13 +589,6 @@ void ovr_render( double dt )
       y = player.autonav_pos.y / res + map_overlay_center_y();
       gl_renderCross( x, y, 5., &cRadar_hilight );
       gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
-   }
-
-   /* render the asteroids */
-   for (i=0; i<array_size(cur_system->asteroids); i++) {
-      ast = &cur_system->asteroids[i];
-      for (j=0; j<ast->nb; j++)
-         gui_renderAsteroid( &ast->asteroids[j], w, h, res, 1 );
    }
 
    /* Render the player. */
