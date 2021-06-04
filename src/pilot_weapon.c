@@ -1522,6 +1522,7 @@ void pilot_afterburn (Pilot *p)
       p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
       pilot_setFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
+      pilot_destealth( p ); /* No afterburning stealth. */
 
       /* @todo Make this part of a more dynamic activated outfit sound system. */
       sound_playPos(p->afterburner->outfit->u.afb.sound_on,
