@@ -153,9 +153,6 @@ static void opt_OK( unsigned int wid, char *str )
 {
    int ret, prompted_restart;
 
-   /* Save current configuration over. */
-   conf_copy( &local_conf, &conf );
-
    prompted_restart = opt_restart;
    ret = 0;
    ret |= opt_gameplaySave( opt_windows[ OPT_WIN_GAMEPLAY ], str);
@@ -166,8 +163,11 @@ static void opt_OK( unsigned int wid, char *str )
       dialogue_msgRaw( _("Warning"), _("Restart Naev for changes to take effect.") );
 
    /* Close window if no errors occurred. */
-   if (!ret)
+   if (!ret) {
+      /* Save current configuration over. */
+      conf_copy( &local_conf, &conf );
       opt_close(wid, str);
+   }
 }
 
 /**
