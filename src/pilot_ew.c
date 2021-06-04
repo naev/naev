@@ -24,6 +24,7 @@
 #include "space.h"
 
 
+#define EW_ASTEROID_DIST      7500.
 #define EW_JUMPDETECT_DIST    7500.
 #define EW_PLANETDETECT_DIST  pilot_ewMass(10e3) /* TODO something better than this. */
 
@@ -215,7 +216,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( !pnt->real )
       return 0;
 
-   sense = EW_PLANETDETECT_DIST;
+   sense = pow2(EW_PLANETDETECT_DIST);
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
@@ -251,7 +252,7 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
    as = &f->asteroids[ast];
 
    /* TODO something better than this. */
-   sense = pilot_ewMass( 500. );
+   sense = pow2(EW_ASTEROID_DIST);
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &as->pos );
@@ -299,7 +300,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &jp->pos );
 
-   if (d * hide < sense)
+   if (d * hide < pow2(sense))
       return 1;
 
    return 0;
