@@ -163,6 +163,7 @@ static int player_parseEscorts( xmlNodePtr parent );
 static int player_parseMetadata( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Render. */
+static void player_renderStealthUnderlay( double dt );
 static void player_renderStealthOverlay( double dt );
 static void player_renderAimHelper( double dt );
 /* Misc. */
@@ -922,17 +923,68 @@ void player_render( double dt )
 
 
 /**
+ * @brief Renders the player underlay.
+ */
+void player_renderUnderlay( double dt )
+{
+   /* Skip rendering. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_CREATING) ||
+         pilot_isFlag( player.p, PILOT_HIDE))
+      return;
+
+   if (pilot_isFlag( player.p, PILOT_STEALTH ))
+      player_renderStealthUnderlay( dt );
+}
+
+
+/**
+ * @brief Renders the stealth overlay for the player.
+ */
+static void player_renderStealthUnderlay( double dt )
+{
+   (void) dt;
+   double detect, x, y, r, z;
+   glColour col;
+   Pilot *t;
+   Pilot *const* ps;
+   int i;
+
+   /* Don't display if overlay is open. */
+   if (ovr_isOpen())
+      return;
+
+   /* Iterate and draw for all pilots. */
+   z = cam_getZoom();
+   detect = player.p->ew_stealth;
+   col = cRed;
+   col.a = 0.2;
+   ps = pilot_getAll();
+   for (i=0; i<array_size(ps); i++) {
+      t = ps[i];
+      if (areAllies( player.p->faction, t->faction ) || pilot_isFriendly(t))
+         continue;
+      if (pilot_isDisabled(t))
+         continue;
+      /* Only show pilots the player can see. */
+      if (!pilot_validTarget( player.p, t ))
+         continue;
+
+      gl_gameToScreenCoords( &x, &y, t->solid->pos.x, t->solid->pos.y );
+      r = detect * t->stats.ew_detect * z;
+      gl_drawCircle( x, y, r, &col, 1 );
+   }
+}
+
+
+/**
  * @brief Renders the stealth overlay for the player.
  */
 static void player_renderStealthOverlay( double dt )
 {
    (void) dt;
-   double detect, x, y, r, st, z;
+   double x, y, r, st, z;
    double angle, arc;
    glColour col;
-   Pilot *t;
-   Pilot *const* ps;
-   int i;
 
    /* Don't display if overlay is open. */
    if (ovr_isOpen())
@@ -955,26 +1007,6 @@ static void player_renderStealthOverlay( double dt )
 
    /* Draw the main circle. */
    gl_drawCirclePartial( x, y, r * z, &col, angle, arc );
-
-   /* Iterate and draw for all pilots. */
-   detect = player.p->ew_stealth;
-   col = cRed;
-   col.a = 0.2;
-   ps = pilot_getAll();
-   for (i=0; i<array_size(ps); i++) {
-      t = ps[i];
-      if (areAllies( player.p->faction, t->faction ) || pilot_isFriendly(t))
-         continue;
-      if (pilot_isDisabled(t))
-         continue;
-      /* Only show pilots the player can see. */
-      if (!pilot_validTarget( player.p, t ))
-         continue;
-
-      gl_gameToScreenCoords( &x, &y, t->solid->pos.x, t->solid->pos.y );
-      r = detect * t->stats.ew_detect * z;
-      gl_drawCircle( x, y, r, &col, 1 );
-   }
 }
 
 

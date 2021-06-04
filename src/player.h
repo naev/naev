@@ -159,6 +159,7 @@ void player_runHooks (void);
 /*
  * render
  */
+void player_renderUnderlay( double dt );
 void player_render( double dt );
 
 
