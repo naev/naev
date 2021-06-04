@@ -71,6 +71,7 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
  *    @param p Pilot firing weaponsets.
  *    @param ws Weapon set to fire.
  *    @param level Level of the firing weapon set.
+ *    @return Number of weapons shot.
  */
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
@@ -136,6 +137,10 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* Shoot the weapon of the weaponset. */
       ret += pilot_shootWeaponSetOutfit( p, ws, o, level, time );
    }
+
+   /* Destealth when attacking. */
+   if (pilot_isFlag( p, PILOT_STEALTH) && (ret>0))
+      pilot_destealth( p );
 
    return ret;
 }

@@ -415,6 +415,9 @@ int pilot_stealth( Pilot *p )
       return 0;
    }
 
+   /* Turn off outfits. */
+   pilot_outfitOffAll( p );
+
    /* Got into stealth. */
    pilot_calcStats(p);
    p->ew_stealth_timer = 0.;
