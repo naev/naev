@@ -403,8 +403,9 @@ int space_hyperspace( Pilot* p )
  *    @param[out] pos Position calculated.
  *    @param[out] vel Velocity calculated.
  *    @param[out] dir Angle calculated.
+ *    @param p Pilot that is entering to use stats of (or NULL if not important).
  */
-int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir )
+int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir, const Pilot *p )
 {
    int i;
    JumpPoint *jp;
@@ -430,6 +431,8 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *
    /* Calculate offset from target position. */
    a = 2*M_PI - jp->angle;
    d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
+   if ((p!=NULL) && pilot_isFlag(p, PILOT_STEALTH))
+      d *= 1.4; /* Jump in from further out when coming in from stealth. */
 
    /* Calculate new position. */
    x += d*cos(a);
@@ -438,6 +441,11 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *
    /* Add some error. */
    ea = 2*M_PI*RNGF();
    ed = jp->radius/2.;
+   if (p != NULL) {
+      ed *= p->stats.jump_distance; /* larger variability. */
+      if (pilot_isFlag(p, PILOT_STEALTH))
+         ed *= 2.;
+   }
    x += ed*cos(ea);
    y += ed*sin(ea);
 

@@ -986,10 +986,6 @@ static void player_renderStealthOverlay( double dt )
    double angle, arc;
    glColour col;
 
-   /* Don't display if overlay is open. */
-   if (ovr_isOpen())
-      return;
-
    z = cam_getZoom();
    gl_gameToScreenCoords( &x, &y, player.p->solid->pos.x, player.p->solid->pos.y );
 
@@ -1888,7 +1884,7 @@ void player_brokeHyperspace (void)
    space_init( jp->target->name );
 
    /* set position, the pilot_update will handle lowering vel */
-   space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir );
+   space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir, player.p );
    cam_setTargetPilot( player.p->id, 0 );
 
    /* reduce fuel */
@@ -1911,7 +1907,7 @@ void player_brokeHyperspace (void)
    for (i=0; i<array_size(pilot_stack); i++) {
       if ((pilot_stack[i] != player.p) &&
             (pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
-         space_calcJumpInPos( cur_system, sys, &pilot_stack[i]->solid->pos, &pilot_stack[i]->solid->vel, &pilot_stack[i]->solid->dir );
+         space_calcJumpInPos( cur_system, sys, &pilot_stack[i]->solid->pos, &pilot_stack[i]->solid->vel, &pilot_stack[i]->solid->dir, player.p );
          ai_cleartasks(pilot_stack[i]);
 
          /* Run Lua stuff. */

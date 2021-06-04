@@ -582,7 +582,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 
    /* Set up velocities and such. */
    if (jump != NULL) {
-      space_calcJumpInPos( cur_system, jump->from, &vp, &vv, &a );
+      space_calcJumpInPos( cur_system, jump->from, &vp, &vv, &a, NULL );
       pilot_setFlagRaw( flags, PILOT_HYP_END );
    }
 

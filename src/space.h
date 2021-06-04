@@ -455,7 +455,7 @@ int system_hasPlanet( const StarSystem *sys );
  */
 int space_canHyperspace( const Pilot* p);
 int space_hyperspace( Pilot* p );
-int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir );
+int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir, const Pilot *p );
 
 
 /*
