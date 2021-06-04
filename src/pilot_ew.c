@@ -343,6 +343,11 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod )
       if (!pilot_canTarget(t))
          continue;
 
+      /* Must not be landing nor taking off. */
+      if (pilot_isFlag(t, PILOT_LANDING) ||
+            pilot_isFlag(t, PILOT_TAKEOFF))
+         continue;
+
       dist = vect_dist2( &p->solid->pos, &t->solid->pos );
       if (dist > pow2(p->ew_stealth * t->stats.ew_detect))
          continue;
