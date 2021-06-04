@@ -345,7 +345,7 @@ int planet_setFaction( Planet *p, int faction )
  *    @param p Pilot to check if he can hyperspace.
  *    @return 1 if he can hyperspace, 0 else.
  */
-int space_canHyperspace( Pilot* p )
+int space_canHyperspace( const Pilot* p )
 {
    double d, r;
    JumpPoint *jp;
@@ -404,7 +404,7 @@ int space_hyperspace( Pilot* p )
  *    @param[out] vel Velocity calculated.
  *    @param[out] dir Angle calculated.
  */
-int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir )
+int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir )
 {
    int i;
    JumpPoint *jp;
