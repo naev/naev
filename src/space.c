@@ -366,7 +366,7 @@ int space_canHyperspace( const Pilot* p )
    jp = &cur_system->jumps[ p->nav_hyperspace ];
 
    /* Check distance. */
-   r = jp->radius;
+   r = jp->radius * p->stats.jump_distance;
    d = vect_dist2( &p->solid->pos, &jp->pos );
    if (d > r*r)
       return 0;
