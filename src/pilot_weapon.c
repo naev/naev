@@ -239,8 +239,13 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             }
          }
          /* Must recalculate stats. */
-         if (n > 0)
-            pilot_calcStats( p );
+         if (n > 0) {
+            /* pilot_destealth should run calcStats already. */
+            if (pilot_isFlag( p, PILOT_STEALTH ))
+               pilot_destealth( p );
+            else
+               pilot_calcStats( p );
+         }
 
          break;
    }
