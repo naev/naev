@@ -285,6 +285,7 @@
   <item>Berserk Chip</item>
   <item>Cryogenic Repair Nanobots</item>
   <item>Cloaking Device</item>
+  <item>Low Radiation Sensor Modulator</item>
   <item>Faraday Tempest Coating</item>
   <item>Lattice Thermal Coating</item>
   <item>MilSpec Impacto-Plastic Coating</item>
@@ -741,6 +742,9 @@
  </tech>
  <tech name="Proteron Military Outfits">
   <item>Proteron Derivative Fighter Bay</item>
+ </tech>
+ <tech name="Pirate Elite Outfits">
+  <item>Low Radiation Sensor Modulator</item>
  </tech>
 
  <!-- outfits -->
