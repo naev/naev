@@ -13,9 +13,21 @@ function __wanttoscan( p, target )
 end
 
 
+function __intable( t, val )
+   for k,v in ipairs(t) do
+      if v==val then
+         return true
+      end
+   end
+   return false
+end
+
+
 function __getscantarget ()
    -- See if we should scan a pilot
    local p = ai.pilot()
+   local pv = {}
+   local inserted = {}
    for k,v in ipairs(p:getVisible()) do
       -- Only care about leaders
       local l = v:leader()
@@ -23,12 +35,44 @@ function __getscantarget ()
          v = l
       end
 
-      -- See if we want to scan
-      if __wanttoscan(p,v) then
-         return v
+      if not __intable( inserted, v ) then
+         if __wanttoscan(p,v) then
+            local d = ai.dist( v )
+            local m = v:mass()
+            table.insert( pv, {p=v, d=d, m=m} )
+         end
+         table.insert( inserted, v )
       end
    end
-   return nil
+   inserted = nil
+   -- We do a sort by distance and mass categories so that the AI will prefer
+   -- larger ships before trying smaller ships. This is to avoid having large
+   -- ships chasing after tiny ships
+   local pm = p:mass()
+   local pmh = pm * 1.5
+   local pml = pm * 0.75
+   table.sort( pv, function(a,b)
+      if a.m > pmh and b.m > pmh then
+         return a.d < b.d
+      elseif a.m > pmh then
+         return true
+      elseif b.m > pmh then
+         return false
+      elseif a.m > pml and b.m > pml then
+         return a.d < b.d
+      elseif a.m > pml then
+         return true
+      elseif b.m > pml then
+         return false
+      else
+         return a.d < b.d
+      end
+   end )
+
+   if #pv==0 then
+      return nil
+   end
+   return pv[1].p
 end
 
 

@@ -28,7 +28,8 @@ mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun         = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
 mem.doscans       = false -- Should the pilot try to scan other pilots?
-mem.scanned       = {} -- List of pilots that have been scanned
+-- mem.scanned is created per pilot otherwise the list gets "shared"
+--mem.scanned       = {} -- List of pilots that have been scanned
 
 mem.formation     = "circle" -- Formation to use when commanding fleet
 mem.form_pos      = nil -- Position in formation (for follower)
@@ -451,6 +452,7 @@ end
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
    mem.tookoff    = ai.pilot():flags().takingoff
+   mem.scanned    = {} -- must create for each pilot
    attack_choose()
 end
 
