@@ -382,6 +382,13 @@ function control ()
          clean_task( task )
          ai.pushtask("attack", enemy)
       end
+
+   -- Randomly choose to do a scan instead of loitering
+   elseif task == "loiter" and mem.doscans and rnd.rnd() < 0.1 then
+      local target = __getscantarget()
+      if target then
+         ai.pushtask("scan", target)
+      end
    end
 end
 

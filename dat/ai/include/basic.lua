@@ -7,6 +7,19 @@
 
 
 --[[
+-- Helper function that checks to see if a value is in a table
+--]]
+function __intable( t, val )
+   for k,v in ipairs(t) do
+      if v==val then
+         return true
+      end
+   end
+   return false
+end
+
+
+--[[
 -- Faces the target.
 --]]
 function __face( target )
@@ -77,8 +90,7 @@ end
 --[[
 -- Goes to a target position without braking
 --]]
-function __moveto_nobrake ()
-   local target   = ai.taskdata()
+function __moveto_nobrake( target )
    local dir      = ai.face( target, nil, true )
    __moveto_generic( target, dir, false )
 end
@@ -87,8 +99,7 @@ end
 --[[
 -- Goes to a target position without braking
 --]]
-function __moveto_nobrake_raw ()
-   local target   = ai.taskdata()
+function __moveto_nobrake_raw( target )
    local dir      = ai.face( target )
    __moveto_generic( target, dir, false )
 end
@@ -136,8 +147,8 @@ end
 --[[
 -- Goes to a point in order to inspect (same as moveto, but pops when attacking)
 --]]
-function inspect_moveto()
-   __moveto_nobrake()
+function inspect_moveto( target )
+   __moveto_nobrake( target )
 end
 
 
@@ -990,6 +1001,44 @@ end
 
 
 --[[
+-- Checks to see if a pilot is visible
+--]]
+function __check_seeable( target )
+   local self   = ai.pilot()
+   if not target:flags().invisible then
+      -- Pilot still sees the target: continue attack
+      if self:inrange( target ) then
+         return true
+      end
+
+      -- Pilots on manual control (in missions or events) never loose target
+      -- /!\ This is not necessary desirable all the time /!\
+      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
+      if self:flags().manualcontrol then
+         return true
+      end
+   end
+   return false
+end
+
+
+--[[
+-- Aborts current task and tries to see what happened to the target.
+--]]
+function __investigate_target( target )
+   ai.settarget(ai.pilot()) -- Un-target
+   ai.poptask()
+   -- TODO probably add some estimation of future position based on velocity
+   ai.pushtask("inspect_moveto", target:pos() )
+end
+
+
+function loiter( pos )
+   __moveto_nobrake( pos )
+end
+
+
+--[[
 -- Tries to get close to scan the enemy
 --]]
 function scan( target )
@@ -1039,33 +1088,84 @@ end
 
 
 --[[
--- Checks to see if a pilot is visible
+-- Whether or not we want to scan, ignore players for now
 --]]
-function __check_seeable( target )
-   local self   = ai.pilot()
-   if not target:flags().invisible then
-      -- Pilot still sees the target: continue attack
-      if self:inrange( target ) then
-         return true
-      end
-
-      -- Pilots on manual control (in missions or events) never loose target
-      -- /!\ This is not necessary desirable all the time /!\
-      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
-      if self:flags().manualcontrol then
-         return true
-      end
+function __wanttoscan( p, target )
+   -- Don't care about stuff that doesn't need scan
+   if not __needs_scan( target ) then
+      return false
    end
-   return false
+
+   -- We always want to scan the player (no abusing allies)
+   --[[
+   if target == player.pilot() then
+      return true
+   end
+   --]]
+
+   -- Don't care about allies
+   if ai.isally(target) then
+      return false
+   end
+
+   return true
 end
 
 
 --[[
--- Aborts current task and tries to see what happened to the target.
+-- Tries to get find a good target to scan with some heuristics based on mass
+-- and distance
 --]]
-function __investigate_target( target )
-   ai.settarget(ai.pilot()) -- Un-target
-   ai.poptask()
-   -- TODO probably add some estimation of future position based on velocity
-   ai.pushtask("inspect_moveto", target:pos() )
+function __getscantarget ()
+   -- See if we should scan a pilot
+   local p = ai.pilot()
+   local pv = {}
+   local inserted = {}
+   for k,v in ipairs(p:getVisible()) do
+      -- Only care about leaders
+      local l = v:leader()
+      if l and l:exists() then
+         v = l
+      end
+
+      if not __intable( inserted, v ) then
+         if __wanttoscan(p,v) then
+            local d = ai.dist( v )
+            local m = v:mass()
+            table.insert( pv, {p=v, d=d, m=m} )
+         end
+         table.insert( inserted, v )
+      end
+   end
+   inserted = nil
+   -- We do a sort by distance and mass categories so that the AI will prefer
+   -- larger ships before trying smaller ships. This is to avoid having large
+   -- ships chasing after tiny ships
+   local pm = p:mass()
+   local pmh = pm * 1.5
+   local pml = pm * 0.75
+   table.sort( pv, function(a,b)
+      if a.m > pmh and b.m > pmh then
+         return a.d < b.d
+      elseif a.m > pmh then
+         return true
+      elseif b.m > pmh then
+         return false
+      elseif a.m > pml and b.m > pml then
+         return a.d < b.d
+      elseif a.m > pml then
+         return true
+      elseif b.m > pml then
+         return false
+      else
+         return a.d < b.d
+      end
+   end )
+
+   if #pv==0 then
+      return nil
+   end
+   return pv[1].p
 end
+
+
