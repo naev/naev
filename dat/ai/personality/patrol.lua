@@ -17,6 +17,13 @@ function __getscantarget ()
    -- See if we should scan a pilot
    local p = ai.pilot()
    for k,v in ipairs(p:getVisible()) do
+      -- Only care about leaders
+      local l = v:leader()
+      if l and l:exists() then
+         v = l
+      end
+
+      -- See if we want to scan
       if __wanttoscan(p,v) then
          return v
       end
@@ -55,6 +62,7 @@ function idle ()
    end
    mem.loiter = mem.loiter - 1
 end
+
 
 -- Settings
 mem.land_friendly = true -- Land on only friendly by default

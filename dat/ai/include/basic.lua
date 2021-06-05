@@ -1003,12 +1003,14 @@ function scan( target )
    if ai.scandone() then
       -- TODO check for illegal stuff and go aggressie
       table.insert( mem.scanned, target )
+      local msg = _("Thank you for your cooperation.")
+      ai.pilot():comm( target, msg )
       ai.poptask()
       return
    end
 
    -- Send a message if applicable
-   local msg = scantalk or _("Prepare to be scanned.")
+   local msg = _("Prepare to be scanned.")
    ai.pilot():comm( target, msg )
 
    -- Get stats about the enemy
