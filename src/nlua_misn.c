@@ -30,6 +30,7 @@
 #include "nlua_audio.h"
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
+#include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_hook.h"
 #include "nlua_music.h"
@@ -79,6 +80,7 @@ static int misn_finish( lua_State *L );
 static int misn_markerAdd( lua_State *L );
 static int misn_markerMove( lua_State *L );
 static int misn_markerRm( lua_State *L );
+static int misn_cargoNew( lua_State *L );
 static int misn_cargoAdd( lua_State *L );
 static int misn_cargoRm( lua_State *L );
 static int misn_cargoJet( lua_State *L );
@@ -100,6 +102,7 @@ static const luaL_Reg misn_methods[] = {
    { "markerAdd", misn_markerAdd },
    { "markerMove", misn_markerMove },
    { "markerRm", misn_markerRm },
+   { "cargoNew", misn_cargoNew },
    { "cargoAdd", misn_cargoAdd },
    { "cargoRm", misn_cargoRm },
    { "cargoJet", misn_cargoJet },
@@ -654,8 +657,36 @@ static int misn_finish( lua_State *L )
 
 
 /**
- * @brief Adds some mission cargo to the player.  He cannot sell it nor get rid of it
- *  unless he abandons the mission in which case it'll get eliminated.
+ * @brief Adds some mission cargo to the player. They cannot sell it nor get rid of it
+ *  unless they abandons the mission in which case it'll get eliminated.
+ *
+ *    @luatparam string cargo Name of the cargo to add. This must not match a cargo name defined in commodity.xml.
+ *    @luatparam string decription Description of the cargo to add.
+ *    @luatreturn Commodity The newly created commodity.
+ * @luafunc cargoNew
+ */
+static int misn_cargoNew( lua_State *L )
+{
+   const char *cname, *cdesc;
+   Commodity *cargo;
+
+   /* Parameters. */
+   cname    = luaL_checkstring(L,1);
+   cdesc    = luaL_checkstring(L,2);
+
+   cargo    = commodity_getW(cname);
+   if (!cargo->istemp)
+      NLUA_ERROR(L,_("Trying to create new cargo '%s' that would shadow existing non-temporary cargo!"), cname);
+
+   if (cargo==NULL)
+      cargo = commodity_newTemp( cname, cdesc );
+
+   lua_pushcommodity(L, cargo);
+   return 1;
+}
+/**
+ * @brief Adds some mission cargo to the player. They cannot sell it nor get rid of it
+ *  unless they abandons the mission in which case it'll get eliminated.
  *
  *    @luatparam string cargo Name of the cargo to add. This must match a cargo name defined in commodity.xml.
  *    @luatparam number quantity Quantity of cargo to add.
@@ -672,7 +703,7 @@ static int misn_cargoAdd( lua_State *L )
    /* Parameters. */
    cname    = luaL_checkstring(L,1);
    quantity = luaL_checkint(L,2);
-   cargo = commodity_get( cname );
+   cargo    = commodity_get( cname );
 
    /* Check if the cargo exists. */
    if (cargo == NULL) {
