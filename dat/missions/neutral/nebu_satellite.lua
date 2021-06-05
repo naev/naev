@@ -97,6 +97,7 @@ function accept ()
    end
 
    -- Add cargo
+   misn.cargoNew( N_("Satellite"), N_("A small satellite loaded with sensors for exploring the depths of the nebula.") )
    cargo = misn.cargoAdd( "Satellite", 3 )
 
    -- Set up mission information
