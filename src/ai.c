@@ -243,6 +243,7 @@ static int aiL_setasterotarget( lua_State *L ); /* setasterotarget( number, numb
 static int aiL_gatherablePos( lua_State *L ); /* gatherablepos( number ) */
 static int aiL_shoot_indicator( lua_State *L ); /* get shoot indicator */
 static int aiL_set_shoot_indicator( lua_State *L ); /* set shoot indicator */
+static int aiL_stealth( lua_State *L );
 
 
 static const luaL_Reg aiL_methods[] = {
@@ -334,6 +335,7 @@ static const luaL_Reg aiL_methods[] = {
    { "gatherablepos", aiL_gatherablePos },
    { "shoot_indicator", aiL_shoot_indicator },
    { "set_shoot_indicator", aiL_set_shoot_indicator },
+   { "stealth", aiL_stealth },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -3291,6 +3293,30 @@ static int aiL_messages( lua_State *L )
    lua_rawgeti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
    lua_newtable(naevL);
    lua_rawseti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
+   return 1;
+}
+
+
+/**
+ * @brief Tries to stealth or destealth the pilot.
+ *
+ *    @luatparam boolean enable Whether or not to try to stealth the pilot.
+ *    @luatreturn boolean Whether or not the stealthing or destealthing succeeded.
+ * @luafunc stealth
+ */
+static int aiL_stealth( lua_State *L )
+{
+   int b = 1;
+   if (lua_gettop(L)>0)
+      b = lua_toboolean(L,1);
+
+   if (!b) {
+      pilot_destealth( cur_pilot );
+      lua_pushboolean(L,1); /* always succeeds */
+      return 1;
+   }
+
+   lua_pushboolean(L, pilot_stealth( cur_pilot ));
    return 1;
 }
 
