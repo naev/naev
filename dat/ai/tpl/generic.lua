@@ -203,8 +203,19 @@ function control ()
       local candidate = ai.getBoss()
       if candidate ~= nil and candidate:exists() then
          p:setLeader( candidate )
+         l = candidate
       else -- Indicate this pilot has no leader
          p:setLeader( nil )
+         l = nil
+      end
+   end
+
+   -- Try to stealth if leader is stealthed
+   if l ~= nil then
+      if l:flags().stealth then
+         ai.stealth(true)
+      elseif p:flags().stealth then
+         ai.stealth(false)
       end
    end
 
