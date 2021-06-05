@@ -27,6 +27,8 @@ mem.weapset        = 3 -- Weapon set that should be used (tweaked based on heat)
 mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 mem.norun         = false -- Do not run away.
 mem.careful       = false -- Should the pilot try to avoid enemies?
+mem.doscans       = false -- Should the pilot try to scan other pilots?
+mem.scanned       = {} -- List of pilots that have been scanned
 
 mem.formation     = "circle" -- Formation to use when commanding fleet
 mem.form_pos      = nil -- Position in formation (for follower)
@@ -651,41 +653,5 @@ end
 function clean_task( task )
    if task == "brake" or task == "inspect_moveto" then
       ai.poptask()
-   end
-end
-
-
--- Holds position
-function hold ()
-   if not ai.isstopped() then
-      ai.brake()
-   else
-      ai.stop()
-   end
-end
-
-
--- Flies back and tries to either dock or stops when back at leader
-function flyback( dock )
-   local target = ai.pilot():leader()
-   if not target or not target:exists() then
-      ai.poptask()
-      return
-   end
-   local goal = ai.follow_accurate(target, 0, 0, mem.Kp, mem.Kd)
-
-   local dir  = ai.face( goal )
-   local dist = ai.dist( goal )
-
-   if dist > 300 then
-      if dir < 10 then 
-         ai.accel()
-      end
-   else -- Time to dock
-      if dock then
-         ai.dock(target)
-      else
-         ai.poptask()
-      end
    end
 end

@@ -9,12 +9,10 @@
 --[[
 -- Faces the target.
 --]]
-function __face ()
-   local target = ai.taskdata()
+function __face( target )
    ai.face( target )
 end
-function __face_towards ()
-   local target = ai.taskdata()
+function __face_towards( target )
    local off = ai.face( target )
    if math.abs(off) < 5 then
       ai.poptask()
@@ -954,3 +952,114 @@ function gather ()
    end
 end
 
+
+-- Holds position
+function hold ()
+   if not ai.isstopped() then
+      ai.brake()
+   else
+      ai.stop()
+   end
+end
+
+
+-- Flies back and tries to either dock or stops when back at leader
+function flyback( dock )
+   local target = ai.pilot():leader()
+   if not target or not target:exists() then
+      ai.poptask()
+      return
+   end
+   local goal = ai.follow_accurate(target, 0, 0, mem.Kp, mem.Kd)
+
+   local dir  = ai.face( goal )
+   local dist = ai.dist( goal )
+
+   if dist > 300 then
+      if dir < 10 then
+         ai.accel()
+      end
+   else -- Time to dock
+      if dock then
+         ai.dock(target)
+      else
+         ai.poptask()
+      end
+   end
+end
+
+
+--[[
+-- Tries to get close to scan the enemy
+--]]
+function scan( target )
+   -- Try to investigate if target lost
+   if not __check_seeable( target ) then
+      __investigate_target( target )
+      return
+   end
+
+   -- Done scanning
+   if ai.scandone() then
+      -- TODO check for illegal stuff and go aggressie
+      table.insert( mem.scanned, target )
+      ai.poptask()
+      return
+   end
+
+   -- Get stats about the enemy
+   local dist = ai.dist(target)
+
+   -- Get closer and scan
+   ai.settarget( target )
+   ai.iface( target )
+   if dist < 1000 then
+      ai.accel()
+   end
+end
+
+
+--[[
+-- Check to see if a ship needs to be scanned.
+--]]
+function __needs_scan( target )
+   for k,v in ipairs(mem.scanned) do
+      if target==v then
+         return false
+      end
+   end
+   return true
+end
+
+
+--[[
+-- Checks to see if a pilot is visible
+--]]
+function __check_seeable( target )
+   local self   = ai.pilot()
+   if not target:flags().invisible then
+      -- Pilot still sees the target: continue attack
+      if self:inrange( target ) then
+         return true
+      end
+
+      -- Pilots on manual control (in missions or events) never loose target
+      -- /!\ This is not necessary desirable all the time /!\
+      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
+      if self:flags().manualcontrol then
+         return true
+      end
+   end
+   return false
+end
+
+
+--[[
+-- Aborts current task and tries to see what happened to the target.
+--]]
+function __investigate_target( target )
+   ai.settarget(ai.pilot()) -- Un-target
+   ai.poptask()
+   -- TODO probably add some estimation of future position based on velocity
+   ai.pushtask("inspect_moveto", target:pos() )
+end

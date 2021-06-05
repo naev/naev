@@ -1,3 +1,30 @@
+function __wanttoscan( p, target )
+   -- Don't care about stuff that doesn't need scan
+   if not __needs_scan( target ) then
+      return false
+   end
+
+   -- Don't care about allies
+   if ai.isally(target) then
+      return false
+   end
+
+   return true
+end
+
+
+function __getscantarget ()
+   -- See if we should scan a pilot
+   local p = ai.pilot()
+   for k,v in ipairs(p:getVisible()) do
+      if __wanttoscan(p,v) then
+         return v
+      end
+   end
+   return nil
+end
+
+
 -- Default task to run when idle
 function idle ()
    if mem.loiter == nil then mem.loiter = 3 end
@@ -15,12 +42,20 @@ function idle ()
           end
        end
    else -- Stay. Have a beer.
-      sysrad = rnd.rnd() * system.cur():radius()
-      angle = rnd.rnd() * 2 * math.pi
-      ai.pushtask("__moveto_nobrake", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
+      local target = __getscantarget()
+      if target then
+         ai.pushtask("scan", target)
+         return
+      else
+         -- Go to a random locatioe
+         sysrad = rnd.rnd() * system.cur():radius()
+         angle = rnd.rnd() * 2 * math.pi
+         ai.pushtask("__moveto_nobrake", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
+      end
    end
    mem.loiter = mem.loiter - 1
 end
 
 -- Settings
 mem.land_friendly = true -- Land on only friendly by default
+mem.doscans       = true -- Patrolling so check all ships as much as possible

@@ -35,25 +35,10 @@ end
 -- This test should be put in any subtask of the attack task.
 --]]
 function _atk_check_seeable( target )
-   local self   = ai.pilot()
-
-   if not target:flags().invisible then
-      -- Pilot still sees the target: continue attack
-      if self:inrange( target ) then
-         return true
-      end
-
-      -- Pilots on manual control (in missions or events) never loose target
-      -- /!\ This is not necessary desirable all the time /!\
-      -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
-      if self:flags().manualcontrol then
-         return true
-      end
+   if __check_seeable( target ) then
+      return true
    end
-
-   ai.settarget(self) -- Un-target
-   ai.poptask()
-   ai.pushtask("inspect_moveto", target:pos() )
+   __investigate_target( target )
    return false
 end
 

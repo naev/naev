@@ -168,7 +168,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
    { "getHostiles", pilotL_getHostiles },
-   { "getisible", pilotL_getVisible },
+   { "getVisible", pilotL_getVisible },
    { "__eq", pilotL_eq },
    /* Info. */
    { "name", pilotL_name },
