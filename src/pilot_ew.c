@@ -66,7 +66,7 @@ int pilot_ewScanCheck( const Pilot *p )
 {
    if (p->target == p->id)
       return 0;
-   return p->scantimer > 0.;
+   return p->scantimer < 0.;
 }
 
 

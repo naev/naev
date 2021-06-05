@@ -1002,6 +1002,7 @@ end
 
 --[[
 -- Checks to see if a pilot is visible
+-- Assumes the pilot exists!
 --]]
 function __check_seeable( target )
    local self   = ai.pilot()
@@ -1033,8 +1034,19 @@ function __investigate_target( target )
 end
 
 
+--[[
+-- Just loitering around.
+--]]
 function loiter( pos )
    __moveto_nobrake( pos )
+end
+
+
+function __push_scan( target )
+   -- Send a message if applicable
+   local msg = _("Prepare to be scanned.")
+   ai.pilot():comm( target, msg )
+   ai.pushtask( "scan", target )
 end
 
 
@@ -1042,14 +1054,22 @@ end
 -- Tries to get close to scan the enemy
 --]]
 function scan( target )
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+
    -- Try to investigate if target lost
    if not __check_seeable( target ) then
       __investigate_target( target )
       return
    end
 
+   -- Set target
+   ai.settarget( target )
+
    -- Done scanning
-   if ai.scandone() then
+   if ai.scandone() then -- Note this check MUST be done after settarget
       -- TODO check for illegal stuff and go aggressie
       table.insert( mem.scanned, target )
       local msg = _("Thank you for your cooperation.")
@@ -1058,15 +1078,10 @@ function scan( target )
       return
    end
 
-   -- Send a message if applicable
-   local msg = _("Prepare to be scanned.")
-   ai.pilot():comm( target, msg )
-
    -- Get stats about the enemy
    local dist = ai.dist(target)
 
    -- Get closer and scan
-   ai.settarget( target )
    ai.iface( target )
    if dist < 1000 then
       ai.accel()

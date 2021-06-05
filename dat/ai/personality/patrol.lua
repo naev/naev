@@ -18,7 +18,7 @@ function idle ()
       if mem.doscans then
          local target = __getscantarget()
          if target then
-            ai.pushtask("scan", target)
+            __push_scan( target )
             return
          end
       end

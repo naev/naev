@@ -387,7 +387,7 @@ function control ()
    elseif task == "loiter" and mem.doscans and rnd.rnd() < 0.1 then
       local target = __getscantarget()
       if target then
-         ai.pushtask("scan", target)
+         __push_scan( target )
       end
    end
 end
