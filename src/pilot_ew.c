@@ -44,7 +44,8 @@ static void pilot_ewUpdate( Pilot *p )
 {
    p->ew_detection = p->ew_mass * p->ew_asteroid / p->stats.ew_hide;
    p->ew_evasion   = p->ew_detection * 0.75 * ew_interference / p->stats.ew_evade;
-   p->ew_stealth   = MAX( 1000., p->ew_detection * 0.25 / p->stats.ew_stealth );
+   /* For stealth we apply the ew_asteroid and ew_interference bonus outside of the max, so that it can go below 1000 with in-system features. */
+   p->ew_stealth   = MAX( 1000., p->ew_mass / p->stats.ew_hide * 0.25 / p->stats.ew_stealth ) * p->ew_asteroid * ew_interference;
 }
 
 
