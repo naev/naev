@@ -363,6 +363,7 @@ typedef struct Pilot_ {
    double dtimer;    /**< Disable timer. */
    double dtimer_accum; /**< Accumulated disable timer. */
    double otimer;    /**< Lua outfit timer. */
+   double scantimer; /**< Electronic warfare scanning timer. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
    int projectiles;      /**< Stores how many weapons are after the pilot */

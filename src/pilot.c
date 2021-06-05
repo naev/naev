@@ -1354,6 +1354,9 @@ void pilot_setTarget( Pilot* p, unsigned int id )
 
    p->target = id;
    pilot_lockClear( p );
+
+   /* Set the scan timer. */
+   pilot_ewScanStart( p );
 }
 
 
@@ -1993,7 +1996,7 @@ void pilot_update( Pilot* pilot, double dt )
       pilot_heatUpdateCooldown( pilot );
 
    /* Update electronic warfare. */
-   pilot_ewUpdateDynamic( pilot );
+   pilot_ewUpdateDynamic( pilot, dt );
 
    /* Update stress. */
    if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
@@ -2766,7 +2769,7 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    pilot_calcStats( pilot );
 
    /* Update dynamic electronic warfare (static should have already been done). */
-   pilot_ewUpdateDynamic( pilot );
+   pilot_ewUpdateDynamic( pilot, 0. );
 
    /* Heal up the ship. */
    pilot->armour = pilot->armour_max;

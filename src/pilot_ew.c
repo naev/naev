@@ -35,11 +35,44 @@ static double ew_interference = 1.; /**< Interference factor. */
 /*
  * Prototypes.
  */
+static void pilot_ewUpdate( Pilot *p );
 static double pilot_ewMass( double mass );
 static double pilot_ewAsteroid( Pilot *p );
 static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close );
 
 
+/**
+ * @brief Initializes the scan timer for a pilot.
+ *
+ *    @param p Pilot to set scan timer for.
+ */
+void pilot_ewScanStart( Pilot *p )
+{
+   /* Ignore no target. */
+   if (p->target == p->id)
+      return;
+
+   p->scantimer = 5.; /* TODO use a non-fixed value. */
+}
+
+
+/**
+ * @brief Checks to see if a scan is done.
+ *
+ *    @param p Pilot to check.
+ *    @return 1 if scan is done, 0 otherwise.
+ */
+int pilot_ewScanCheck( const Pilot *p )
+{
+   if (p->target == p->id)
+      return 0;
+   return p->scantimer > 0.;
+}
+
+
+/**
+ * @brief Updates all the internal values.
+ */
 static void pilot_ewUpdate( Pilot *p )
 {
    p->ew_detection = p->ew_mass * p->ew_asteroid / p->stats.ew_hide;
@@ -66,12 +99,34 @@ void pilot_ewUpdateStatic( Pilot *p )
  * @brief Updates the pilot's dynamic electronic warfare properties.
  *
  *    @param p Pilot to update.
+ *    @param dt Delta time increment (seconds).
  */
-void pilot_ewUpdateDynamic( Pilot *p )
+void pilot_ewUpdateDynamic( Pilot *p, double dt )
 {
-   p->ew_asteroid = pilot_ewAsteroid( p );
+   double d;
+   const Pilot *t;
 
+   /* Electronic warfare values. */
+   p->ew_asteroid = pilot_ewAsteroid( p );
    pilot_ewUpdate( p );
+
+   /* Scanning values. */
+   if (p->target == p->id)
+      return; /* Skip no target. */
+
+   /* Already scanned so skipping. */
+   if (p->scantimer < 0.)
+      return;
+
+   /* Get the target pilot. */
+   t = pilot_get( p->target );
+   if (t == NULL)
+      return;
+   d = vect_dist2( &p->solid->pos, &t->solid->pos );
+
+   /* Must be in evasion range. */
+   if (d < pow2(p->stats.ew_detect * p->stats.ew_track * t->ew_evasion))
+      p->scantimer -= dt;
 }
 
 
