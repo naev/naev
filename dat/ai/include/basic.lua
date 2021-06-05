@@ -1007,6 +1007,10 @@ function scan( target )
       return
    end
 
+   -- Send a message if applicable
+   local msg = scantalk or _("Prepare to be scanned.")
+   ai.pilot():comm( target, msg )
+
    -- Get stats about the enemy
    local dist = ai.dist(target)
 

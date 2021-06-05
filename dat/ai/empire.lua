@@ -72,6 +72,7 @@ function taunt ( target, offense )
    end
 
    -- some taunts
+   local taunts
    if offense then
       taunts = {
             _("There is no room in this universe for scum like you!"),
@@ -92,5 +93,3 @@ function taunt ( target, offense )
 
    ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
-
-
