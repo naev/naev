@@ -56,6 +56,7 @@ typedef struct Commodity_ {
    double population_modifier; /**< Scale of price modification due to population. */
    CommodityModifier *faction_modifier; /**< Price modifier for different factions. */
    credits_t lastPurchasePrice; /**< Price paid when last purchasing this commodity. */
+   int istemp; /**< This commodity is temporary. */
 } Commodity;
 
 typedef struct CommodityPrice_ {
@@ -96,6 +97,13 @@ int commodity_getN( void );
 Commodity* commodity_getByIndex( const int indx );
 int commodity_load (void);
 void commodity_free (void);
+
+
+/*
+ * Temporary commodities.
+ */
+int commodity_isTemp( const char* name );
+Commodity* commodity_newTemp( const char* name, const char* desc );
 
 
 /*

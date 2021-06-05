@@ -47,6 +47,7 @@
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
+static Commodity* commodity_temp = NULL; /**< Contains all the temporary commodities. */
 
 /* gatherables stack */
 static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
@@ -136,6 +137,9 @@ Commodity* commodity_get( const char* name )
    for (i=0; i<array_size(commodity_stack); i++)
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
+   for (i=0; i<array_size(commodity_temp); i++)
+      if (strcmp(commodity_temp[i].name, name) == 0)
+         return &commodity_temp[i];
 
    WARN(_("Commodity '%s' not found in stack"), name);
    return NULL;
@@ -154,6 +158,9 @@ Commodity* commodity_getW( const char* name )
    for (i=0; i<array_size(commodity_stack); i++)
       if (strcmp(commodity_stack[i].name, name) == 0)
          return &commodity_stack[i];
+   for (i=0; i<array_size(commodity_temp); i++)
+      if (strcmp(commodity_temp[i].name, name) == 0)
+         return &commodity_temp[i];
    return NULL;
 }
 
@@ -249,7 +256,7 @@ Commodity ** standard_commodities (void)
 {
    int i, n;
    Commodity *c, **com;
-   
+
    n = array_size(commodity_stack);
    com = array_create_size( Commodity*, n );
    for (i=0; i<n; i++) {
@@ -317,7 +324,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          newdict->value = xml_getFloat(node);
          temp->faction_modifier = newdict;
       }
-   
+
    } while (xml_nextNode(node));
    if (temp->name == NULL)
       WARN( _("Commodity from %s has invalid or no name"), COMMODITY_DATA_PATH);
@@ -330,7 +337,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH"space/_default.png", 0 );
    }
 
-   
+
 
 #if 0 /* shouldn't be needed atm */
 #define MELEMENT(o,s)   if (o) WARN( _("Commodity '%s' missing '"s"' element"), temp->name)
@@ -565,6 +572,49 @@ void gatherable_gather( int pilot )
 
 
 /**
+ * @brief Checks to see if a commodity is temporary.
+ *
+ *    @brief Name of the commodity to check.
+ *    @return 1 if temorary, 0 otherwise.
+ */
+int commodity_isTemp( const char* name )
+{
+   int i;
+
+   for (i=0; i<array_size(commodity_temp); i++)
+      if (strcmp(commodity_temp[i].name, name) == 0)
+         return 1;
+   for (i=0; i<array_size(commodity_stack); i++)
+      if (strcmp(commodity_stack[i].name,name)==0)
+         return 0;
+
+   WARN(_("Commodity '%s' not found in stack"), name);
+   return 0;
+}
+
+
+/**
+ * @brief Creates a new temporary commodity.
+ *
+ *    @param name Name of the commodity to create.
+ *    @param desc Description of the commodity to create.
+ *    @return newly created commodity.
+ */
+Commodity* commodity_newTemp( const char* name, const char* desc )
+{
+   Commodity *c;
+   if (commodity_temp == NULL)
+      commodity_temp = array_create( Commodity );
+
+   c              = &array_grow(&commodity_stack);
+   c->istemp      = 1;
+   c->name        = strdup(name);
+   c->description = strdup(desc);
+   return c;
+}
+
+
+/**
  * @brief Loads all the commodity data.
  *
  *    @return 0 on success.
@@ -635,6 +685,11 @@ void commodity_free (void)
       commodity_freeOne( &commodity_stack[i] );
    array_free( commodity_stack );
    commodity_stack = NULL;
+
+   for (i=0; i<array_size(commodity_temp); i++)
+      commodity_freeOne( &commodity_temp[i] );
+   array_free( commodity_temp );
+   commodity_temp = NULL;
 
    /* More clean up. */
    array_free( econ_comm );
