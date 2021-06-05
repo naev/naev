@@ -11,10 +11,5 @@
  </general>
  <specific type="modification">
   <cpu_max>0</cpu_max>
-  <shield>0</shield>
-  <shield_regen>0</shield_regen>
-  <energy>0</energy>
-  <energy_regen>0</energy_regen>
-  <ew_hide>0</ew_hide>
  </specific>
 </outfit>

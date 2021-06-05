@@ -425,7 +425,7 @@ static void info_openShip( unsigned int wid )
          "closeOutfits", _("Close"), info_close );
 
    /* Text. */
-   window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
+   window_addText( wid, 40, -40, 100, h-60, 0, "txtSDesc", &gl_smallFont,
          NULL,
          _("#nName:\n"
          "Model:\n"
@@ -448,7 +448,7 @@ static void info_openShip( unsigned int wid )
          "\n"
          "Stats:\n")
          );
-   window_addText( wid, 180, -60, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
+   window_addText( wid, 180, -40, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
 
    /* Custom widget. */
@@ -466,7 +466,7 @@ static void info_openShip( unsigned int wid )
  */
 static void ship_update( unsigned int wid )
 {
-   char buf[1024], *hyp_delay;
+   char buf[STRMAX_SHORT], *hyp_delay;
    int cargo, len;
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
@@ -576,7 +576,7 @@ static void info_openWeapons( unsigned int wid )
 static void weapons_genList( unsigned int wid )
 {
    const char *str;
-   char **buf, tbuf[256];
+   char **buf, tbuf[STRMAX_SHORT];
    int i, n;
    int w, h;
 
@@ -1188,10 +1188,10 @@ static void shiplog_menu_update( unsigned int wid, char* str )
       /* has selected a type of log or a log */
       window_dimWindow( wid, &w, &h );
       logWidgetsReady=0;
-      
+
       logType = toolkit_getListPos( wid, "lstLogType" );
       log = toolkit_getListPos( wid, "lstLogs" );
-      
+
       if ( logType != selectedLogType ) {
          /* new log type selected */
          selectedLogType = logType;
@@ -1203,7 +1203,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          window_addList( wid, 20, 60 + BUTTON_HEIGHT  + LOGSPACING / 2,
                          w-40, LOGSPACING / 4,
                          "lstLogs", logs, nlogs, 0, shiplog_menu_update, NULL );
-         
+
          toolkit_setListPos( wid, "lstLogs", selectedLog );
          regenerateEntries=1;
       }
@@ -1216,7 +1216,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
                          w-40, LOGSPACING / 2-20,
                          "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
          toolkit_setListPos( wid, "lstLogEntries", 0 );
-         
+
       }
       logWidgetsReady=1;
    }
@@ -1291,7 +1291,7 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
       dialogue_msg( "", _("You are currently viewing all logs in the selected log type. Please select a log title to delete.") );
       return;
    }
-   
+
    snprintf( buf, 256,
          _("This will delete ALL \"%s\" log entries. This operation cannot be undone. Are you sure?"),
          logs[selectedLog]);
@@ -1400,7 +1400,7 @@ static void info_openShipLog( unsigned int wid )
    window_addText( wid, 20, 80 + BUTTON_HEIGHT + LOGSPACING,
                    w - 40, texth, 0,
                    "logDesc1", &gl_smallFont, NULL, _("Select log type:") );
-   
+
    window_addText( wid, 20, 60 + BUTTON_HEIGHT + 3* LOGSPACING / 4,
                    w - 40, texth, 0,
                    "logDesc2", &gl_smallFont, NULL, _("Select log title:") );

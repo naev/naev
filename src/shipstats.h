@@ -44,9 +44,12 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LAND_DELAY,      /**< Modulates the time that passes during landing. */
    SS_TYPE_D_CARGO_INERTIA,   /**< Modifies the effect of cargo_mass. */
 
-   /* Stealth. */
-   SS_TYPE_D_EW_HIDE,         /**< Electronic warfare hide modifier. */
+   /* Electronic warfare. */
+   SS_TYPE_D_EW_HIDE,         /**< Electronic warfare hide modifier. (affects ew_detection) */
+   SS_TYPE_D_EW_EVADE,        /**< Electronic warfare evasion modifier. (affects ew_evasion) */
+   SS_TYPE_D_EW_STEALTH,      /**< Electronic warfare stealth modifier. (affects ew_stealth) */
    SS_TYPE_D_EW_DETECT,       /**< Electronic warfare detection modifier. */
+   SS_TYPE_D_EW_TRACK,        /**< Electronic warfare tracking modifier. */
    SS_TYPE_D_EW_JUMPDETECT,   /**< Electronic warfare jump point detection modifier. */
 
    /* Launchers. */
@@ -93,18 +96,22 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LOOT_MOD,        /**< Affects boarding rewards. */
    SS_TYPE_D_TIME_MOD,        /**< Time dilation modifier. */
    SS_TYPE_D_TIME_SPEEDUP,    /**< Makes the pilot operate at a higher dt. */
+   SS_TYPE_D_COOLDOWN_TIME,   /**< Speeds up or slows down the cooldown time. */
+   SS_TYPE_D_JUMP_DISTANCE,   /**< Modifies the distance from a jump point at which the pilot can jump. */
 
    /*
     * A: Absolute double type data. Should be continuous.
     */
    SS_TYPE_A_ENERGY_FLAT,       /**< Flat energy modifier (not multiplied). */
    SS_TYPE_A_ENERGY_REGEN_FLAT, /**< Flat energy regeneration modifier (not multiplied). */
+   SS_TYPE_A_ENERGY_LOSS,       /**< Flat energy modifier (not multiplied) and applied linearly. */
    SS_TYPE_A_SHIELD_FLAT,       /**< Flat shield modifier (not multiplied). */
    SS_TYPE_A_SHIELD_REGEN_FLAT, /**< Flat shield regeneration modifier (not multiplied). */
    SS_TYPE_A_ARMOUR_FLAT,       /**< Flat armour modifier (not multiplied). */
    SS_TYPE_A_ARMOUR_REGEN_FLAT, /**< Flat armour regeneration modifier (not multiplied). */
    SS_TYPE_A_CPU_MAX,           /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,      /**< Engine's mass limit. */
+   SS_TYPE_A_ABSORB_FLAT,       /**< Flat damage absorption. */
 
    /*
     * I: Integer type data. Should be continuous.
@@ -183,8 +190,10 @@ typedef struct ShipStats_ {
    double energy_regen_mod;   /**< Energy regeneration multiplier. */
    double energy_flat;        /**< Energy modifier (flat). */
    double energy_usage;       /**< Energy usage (flat). */
+   double energy_loss;        /**< Energy modifier (flat and linear). */
    double cpu_mod;            /**< CPU multiplier. */
    double cpu_max;            /**< CPU modifier. */
+   double absorb_flat;        /**< Flat damage absorption. */
 
    /* Freighter-type. */
    double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */
@@ -193,7 +202,10 @@ typedef struct ShipStats_ {
 
    /* Stealth. */
    double ew_hide;         /**< Electronic warfare hide modifier. */
+   double ew_evade;
+   double ew_stealth;
    double ew_detect;       /**< Electronic warfare detection modifier. */
+   double ew_track;
    double ew_jump_detect;  /**< Electronic warfare jump point detection modifier. */
 
    /* Military type. */
@@ -247,6 +259,8 @@ typedef struct ShipStats_ {
    double loot_mod;           /**< Boarding loot reward bonus. */
    double time_mod;           /**< Time dilation modifier. */
    double time_speedup;       /**< Makes the pilot operate at higher speeds. */
+   double cooldown_time;      /**< Modifies cooldown time. */
+   double jump_distance;      /**< Modifies how far the pilot can jump from the jump point. */
 } ShipStats;
 
 
@@ -266,8 +280,8 @@ void ss_free( ShipStatList *ll );
  */
 int ss_statsInit( ShipStats *stats );
 int ss_statsMerge( ShipStats *dest, const ShipStats *src );
-int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipStats *amount );
-int ss_statsModFromList( ShipStats *stats, const ShipStatList* list, const ShipStats *amount );
+int ss_statsModSingle( ShipStats *stats, const ShipStatList* list );
+int ss_statsModFromList( ShipStats *stats, const ShipStatList* list );
 
 /*
  * Lookup.

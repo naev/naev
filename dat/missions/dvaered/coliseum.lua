@@ -49,7 +49,7 @@ end
 function land ()
    -- TODO something better than this
    local result_str = string.format(_("You obtained %d points!"), total_score )
-   local rewardcredits = total_score
+   local rewardcredits = total_score*10
 
    vn.clear()
    vn.scene()
@@ -124,13 +124,16 @@ function approach_wave ()
    osd = misn.osdCreate( _("Totoran Tournament"),
          { _("Defeat all the other adversaries!") } )
 
+   hook.load( "loaded" )
    hook.safe("enter_the_ring")
-   player.allowSave( false ) -- Don't want to save the mission
    player.takeoff() -- take off and enter the ring!
 
    -- Wave meta-information
    coliseum_enter = "enter_wave"
    wave_round = 1
+end
+function loaded ()
+   misn.finish(false)
 end
 function abort ()
    leave_the_ring()
@@ -151,7 +154,6 @@ function enter_the_ring ()
 
    -- Set up player stuff
    player.pilot():setPos( vec2.new( 0, 0 ) )
-   player.allowSave(true)
    -- Disable escorts if they exist
    var.push("hired_escorts_disabled",true)
    player.teleport(coliseum)
@@ -164,11 +166,15 @@ function enter_the_ring ()
 end
 -- Goes back to Totoran (landed)
 function leave_the_ring ()
+   -- Clear pilots so escorts get docked
+   pilot.clear()
+   -- Fix the map up
    local sys = coliseum
    sys:setKnown(false)
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
    end
+   -- Undo player invincibility stuff and land
    hook.land("land")
    local pp = player.pilot()
    pp:setHide( true ) -- clear hidden flag
@@ -292,6 +298,8 @@ function wave_round_setup ()
    pp:setTemp( 0 )
    pp:fillAmmo()
    -- TODO reset outfit cooldown stuff
+   pp:setPos( vec2.new( 0, 0 ) ) -- teleport to middle
+   pp:setVel( vec2.new( 0, 0 ) )
 
    local function addenemy( shipname, pos )
       local p = pilot.add( shipname, enemy_faction, pos, nil, "baddie_norun" )
@@ -308,10 +316,38 @@ function wave_round_setup ()
    end
    local function addenemies( ships )
       local e = {}
-      local pos = vec2.new( -500, 500 )
+      local posbase = vec2.new( -1500, 1500 )
+      local boss = nil
+      local layout = ships.layout or "cluster"
+      local pos = posbase
       for k,v in ipairs(ships) do
+         -- Determine position
+         if layout=="circle" then
+            local d,a = posbase:polar()
+            a = a +(k-1) * 360 / #ships
+            pos = vec2.newP( d, a )
+         elseif layout=="pincer" then
+            local offset = vec2.newP( 300+200*rnd.rnd(), rnd.rnd()*359 )
+            if math.mod(k,2)==1 then
+               pos = posbase + offset
+            else
+               local x, y = posbase:get()
+               pos = vec2.new(-x,-y) + offset
+            end
+         elseif layout=="cluster" then
+            pos = posbase + vec2.newP( 300+200*rnd.rnd(), rnd.rnd()*359 )
+         else
+            warn(string.format("unknown layout '%s'",layout))
+         end
+
+         -- Add ship
          local shipname = v
          local p = addenemy( shipname, pos )
+         if boss then
+            p:setLeader( boss )
+         else
+            boss = p
+         end
          table.insert( e, p )
       end
       return e

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Weakness Harmonizer AI">
+ <general>
+  <typename>System Improvement</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <rarity>1</rarity>
+  <mass>1</mass>
+  <price>100000</price>
+  <description>This is an upgrade to the sensor systems that is able to learn from nearby hostile ship common weaknesses. The AI is able to extract subtle features that the human eye misses and extrapolate into great detail to point out weaknesses in enemy ships. The more ships it is able to analyze and extrapolate from, the stronger the effect.</description>
+  <desc_extra>10% additional damage for each fighting ship of same class or higher within 2000 units.</desc_extra>
+  <gfx_store>misc04.png</gfx_store>
+  </general>
+ <specific type="modification" group="8">
+  <fwd_damage>10</fwd_damage>
+  <tur_damage>10</tur_damage>
+  <launch_damage>10</launch_damage>
+  <lua>outfits/utility/weakness_harmonizer_ai.lua</lua>
+ </specific>
+</outfit>

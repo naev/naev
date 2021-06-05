@@ -180,6 +180,7 @@ void menu_main (void)
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
    gui_cleanup();
    player_soundStop(); /* Stop sound. */
+   player_resetSpeed();
 
    /* Play load music. */
    music_choose("load");

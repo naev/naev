@@ -16,7 +16,6 @@
  <license>Large Civilian Vessel License</license>
  <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule is a favorite target of pirates, so avoiding dangerous systems is strongly advised.</description>
  <health>
-  <absorb>16</absorb>
   <armour>350</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -27,16 +26,15 @@
   <cargo>180</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="-15" y="0" h="4" />
-  <weapon size="medium" x="15" y="0" h="4" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
+  <weapon size="medium" prop="fighter_bay" x="-15" y="0" h="4" />
+  <weapon size="medium" prop="fighter_bay" x="15" y="0" h="4" />
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-310 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
-  <structure size="medium" />
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-24 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />

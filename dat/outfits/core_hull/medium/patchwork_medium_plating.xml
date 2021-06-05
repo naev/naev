@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Patchwork Medium Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>medium</size>
+  <priority>3</priority>
+  <mass>130</mass>
+  <price>0</price>
+  <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
+  <gfx_store>plating_patchwork.png</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>12</cargo>
+  <absorb>8</absorb>
+  <armour>160</armour>
+ </specific>
+</outfit>

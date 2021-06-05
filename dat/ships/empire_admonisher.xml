@@ -18,7 +18,6 @@
  <license>Medium Combat Vessel License</license>
  <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
-  <absorb>15</absorb>
   <armour>240</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -34,13 +33,13 @@
   <weapon size="medium" x="4" y="-2" h="-5" />
   <weapon size="small" x="-9" y="-5" h="-9" />
   <weapon size="small" x="-9" y="5" h="-9" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Nexus Arrow 700 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
@@ -49,5 +48,7 @@
   <shield_mod>15</shield_mod>
   <shield_regen_mod>20</shield_regen_mod>
   <heat_dissipation>15</heat_dissipation>
+  <launch_range>20</launch_range>
+  <ammo_capacity>25</ammo_capacity>
  </stats>
 </ship>

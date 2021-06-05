@@ -10,7 +10,7 @@
 #include "pilot.h"
 
 
-#define PILOT_OUTFIT_LUA_UPDATE_DT     (1.0/3.0)
+#define PILOT_OUTFIT_LUA_UPDATE_DT     (1.0/10.0)   /* How often the Lua outfits run their update script (in seconds).  */
 
 
 /* Raw changes. */
@@ -58,6 +58,7 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt );
 void pilot_outfitLOutfofenergy( Pilot *pilot );
 void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned int attacker );
 int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on );
+void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer );
 
 
 #endif /* PILOT_OUTFIT_H */

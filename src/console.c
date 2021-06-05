@@ -79,9 +79,9 @@ static int cli_firstline   = 1; /**< Is this the first line? */
  * CLI stuff.
  */
 static int cli_script( lua_State *L );
-static int cli_printOnly( lua_State *L );
+//static int cli_printOnly( lua_State *L );
 static const luaL_Reg cli_methods[] = {
-   { "print", cli_printOnly },
+   { "print", cli_print },
    { "script", cli_script },
    { "warn", cli_warn },
    {NULL, NULL}
@@ -208,10 +208,12 @@ int cli_print( lua_State *L )
 /**
  * @brief Replacement for the internal Lua print to print to console instead of terminal.
  */
+#if 0
 static int cli_printOnly( lua_State *L )
 {
    return cli_printCore( L, 1 );
 }
+#endif
 
 
 /**

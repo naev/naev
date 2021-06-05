@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Za'lek Bomber Drone Fighter Dock">
+ <general>
+  <slot prop="fighter_bay">weapon</slot>
+  <size>large</size>
+  <license>Light Combat Vessel License</license>
+  <rarity>2</rarity>
+  <mass>200</mass>
+  <price>1200000</price>
+  <gfx_store>zalek_drone_bomber_fighter_swarm.webp</gfx_store>
+  <description>This relatively bulky drone is built to crack open large ships from afar. It accomplishes this task admirably. Drone Fighters require no pilot making them a safer approach in dangerous situations. They do however need some careful maintenance. All the tools needed to take care of them are provided with the bay.</description>
+  <cpu>-500</cpu>
+ </general>
+ <specific type="fighter bay" secondary="1">
+  <ammo>Za'lek Bomber Drone Fighter</ammo>
+  <delay>4</delay>
+  <reload_time>120</reload_time>
+  <amount>5</amount>
+ </specific>
+</outfit>

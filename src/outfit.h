@@ -137,13 +137,13 @@ typedef struct OutfitBoltData_ {
    double speed;     /**< How fast it goes. */
    double range;     /**< How far it goes. */
    double falloff;   /**< Point at which damage falls off. */
-   double ew_lockon; /**< Electronic warfare lockon parameter. */
    double energy;    /**< Energy usage */
    Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per shot. */
-   double track;     /**< Ewarfare to track. */
-   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct. */
+   double trackmin;  /**< Ewarfare minimal tracking. */
+   double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
+   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct). */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */
@@ -201,9 +201,10 @@ typedef struct OutfitLauncherData_ {
 
    /* Lock-on information. */
    double lockon;    /**< Time it takes to lock on the target */
-   double ew_target; /**< Target ewarfare at which it the lockon time is based off of. */
-   double ew_target2; /**< Target ewarfare squared for quicker comparisons. */
+   double trackmin;  /**< Ewarfare minimal tracking. */
+   double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
+   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct when launched). */
 } OutfitLauncherData;
 
 /**
@@ -262,7 +263,6 @@ typedef struct OutfitModificationData_ {
    double energy;       /**< Maximum energy modifier. */
    double energy_rel;   /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
-   double energy_loss;  /**< Energy regeneration modifier. */
    double absorb;       /**< Absorption factor. */
 
    /* Misc. */
@@ -276,6 +276,7 @@ typedef struct OutfitModificationData_ {
    int lua_ontoggle; /**< Run when toggled. */
    int lua_onhit;    /**< Run when pilot takes damage. */
    int lua_outofenergy; /**< Run when the pilot runs out of energy. */
+   int lua_cooldown; /**< Run when cooldown is started or stopped. */
 } OutfitModificationData;
 
 /**
@@ -451,6 +452,8 @@ double outfit_cpu( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );
 double outfit_spin( const Outfit* o );
+double outfit_trackmin( const Outfit* o );
+double outfit_trackmax( const Outfit* o );
 int outfit_sound( const Outfit* o );
 int outfit_soundHit( const Outfit* o );
 /* Active outfits. */

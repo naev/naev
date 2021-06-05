@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Hyena Fighter">
+ <general>
+  <license>Light Combat Vessel License</license>
+  <mass>15</mass>
+  <price>0</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>This is a Hyena class fighter adapted for usage in fighter bays.</description>
+ </general>
+ <specific type="fighter">
+  <ship>Hyena</ship>
+ </specific>
+</outfit>

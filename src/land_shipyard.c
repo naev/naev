@@ -201,6 +201,7 @@ void shipyard_update( unsigned int wid, char* str )
    int i;
    Ship* ship;
    char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf_license[PATH_MAX];
+   char smass[NUM2STRLEN];
 
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
 
@@ -250,6 +251,7 @@ void shipyard_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDescription", _(ship->description) );
    price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
+   num2str( smass, ship->mass, 0 );
 
    if (ship->license == NULL)
       strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
@@ -266,7 +268,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%d\n"
          "\n"
          "%.0f %s\n"
-         "%.0f %s\n"
+         "%s %s\n"
          "%.0f kN/tonne\n"
          "%.0f m/s\n"
          "%.0f deg/s\n"
@@ -288,7 +290,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->crew,
          /* Weapons & Manoeuvrability */
          ship->cpu, n_( "teraflop", "teraflops", ship->cpu ),
-         ship->mass, n_( "tonne", "tonnes", ship->mass ),
+         smass, n_( "tonne", "tonnes", ship->mass ),
          ship->thrust,
          ship->speed,
          ship->turn*180/M_PI,

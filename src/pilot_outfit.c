@@ -103,8 +103,9 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    /* Lower timer. When the timer reaches zero, the lock is established. */
    max = -o->outfit->u.lau.lockon/3.;
    if (o->u.ammo.lockon_timer > max) {
-      /* Compensate for enemy hide factor. */
-      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target2 / t->ew_hide) * p->stats.launch_lockon;
+      /* Targetting is linear and can't be faster than the time specified (can be slower though). */
+      double mod = pilot_ewWeaponTrack( p, t, o->outfit->u.lau.trackmin, o->outfit->u.lau.trackmax );
+      o->u.ammo.lockon_timer -= dt * mod * p->stats.launch_lockon;
 
       /* Cap at -max/3. */
       if (o->u.ammo.lockon_timer < max)
@@ -925,8 +926,8 @@ void pilot_calcStats( Pilot* pilot )
    int i;
    Outfit* o;
    PilotOutfitSlot *slot;
-   double ac, sc, ec; /* temporary health coefficients to set */
-   ShipStats amount, *s, *default_s;
+   double ac, sc, ec, tm; /* temporary health coefficients to set */
+   ShipStats *s;
 
    /*
     * set up the basic stuff
@@ -963,8 +964,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_loss   = 0.; /* Initially no net loss. */
    /* Stats. */
    s = &pilot->stats;
+   tm = s->time_mod;
    *s = pilot->ship->stats_array;
-   memset( &amount, 0, sizeof(ShipStats) );
 
    /*
     * Now add outfit changes
@@ -1007,7 +1008,7 @@ void pilot_calcStats( Pilot* pilot )
          if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
             continue;
          /* Add stats. */
-         ss_statsModFromList( s, o->stats, &amount );
+         ss_statsModFromList( s, o->stats );
          /* Movement. */
          pilot->thrust_base   += o->u.mod.thrust;
          pilot->turn_base     += o->u.mod.turn;
@@ -1020,7 +1021,6 @@ void pilot_calcStats( Pilot* pilot )
          pilot->shield_regen  += o->u.mod.shield_regen;
          pilot->energy_max    += o->u.mod.energy;
          pilot->energy_regen  += o->u.mod.energy_regen;
-         pilot->energy_loss   += o->u.mod.energy_loss;
          /* Fuel. */
          pilot->fuel_max      += o->u.mod.fuel;
          /* Misc. */
@@ -1032,13 +1032,13 @@ void pilot_calcStats( Pilot* pilot )
          if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
             continue;
          /* Add stats. */
-         ss_statsModFromList( s, o->stats, &amount );
+         ss_statsModFromList( s, o->stats );
          pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
          pilot->energy_loss += pilot->afterburner->outfit->u.afb.energy; /* energy loss */
       }
       else {
          /* Always add stats for non mod/afterburners. */
-         ss_statsModFromList( s, o->stats, &amount );
+         ss_statsModFromList( s, o->stats );
       }
    }
 
@@ -1048,44 +1048,12 @@ void pilot_calcStats( Pilot* pilot )
    /* Merge stats. */
    ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
 
-   /* Slot voodoo. */
-   s = &pilot->stats;
-   default_s = &pilot->ship->stats_array;
-
-   /* TODO fix these formulas to not be bad. */
-   /* Fire rate:
-    *  amount = p * exp( -0.15 * (n-1) )
-    *  1x 15% -> 15%
-    *  2x 15% -> 25.82%
-    *  3x 15% -> 33.33%
-    *  6x 15% -> 42.51%
-    */
-   if (amount.fwd_firerate > 0) {
-      s->fwd_firerate = default_s->fwd_firerate + (s->fwd_firerate-default_s->fwd_firerate) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1.,0)) );
+   /* Apply stealth malus. */
+   if (pilot_isFlag(pilot, PILOT_STEALTH)) {
+      s->thrust_mod  *= 0.8;
+      s->turn_mod    *= 0.8;
+      s->speed_mod   *= 0.5;
    }
-   /* Cruiser. */
-   if (amount.tur_firerate > 0) {
-      s->tur_firerate = default_s->tur_firerate + (s->tur_firerate-default_s->tur_firerate) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1.,0)) );
-   }
-   /* Launchers. */
-   if (amount.launch_rate > 0) {
-      s->launch_rate = default_s->launch_rate + (s->launch_rate-default_s->launch_rate) * exp( -0.15 * (double)(MAX(amount.launch_rate-1.,0)) );
-   }
-   /* Fighter bays. */
-   if (amount.fbay_rate > 0) {
-      s->fbay_rate = default_s->fbay_rate + (s->fbay_rate-default_s->fbay_rate) * exp( -0.15 * (double)(MAX(amount.fbay_rate-1.,0)) );
-   }
-   /*
-    * Electronic warfare setting base parameters.
-    */
-   s->ew_hide           = default_s->ew_hide + (s->ew_hide-default_s->ew_hide)                      * exp( -0.2 * (double)(MAX(amount.ew_hide-1.,0)) );
-   s->ew_detect         = default_s->ew_detect + (s->ew_detect-default_s->ew_detect)                * exp( -0.2 * (double)(MAX(amount.ew_detect-1.,0)) );
-   s->ew_jump_detect    = default_s->ew_jump_detect + (s->ew_jump_detect-default_s->ew_jump_detect) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1.,0)) );
-
-   /* Square the internal values to speed up comparisons. */
-   pilot->ew_base_hide   = pow2( s->ew_hide );
-   pilot->ew_detect      = pow2( s->ew_detect );
-   pilot->ew_jump_detect = pow2( s->ew_jump_detect );
 
    /*
     * Relative increases.
@@ -1105,7 +1073,6 @@ void pilot_calcStats( Pilot* pilot )
    pilot->cpu_max       = (int)floor((float)(pilot->ship->cpu + s->cpu_max)*s->cpu_mod);
    pilot->cpu          += pilot->cpu_max; /* CPU is negative, this just sets it so it's based off of cpu_max. */
    /* Misc. */
-   pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
    pilot->crew         *= s->crew_mod;
    pilot->cap_cargo    *= s->cargo_mod;
    s->engine_limit     *= s->engine_limit_rel;
@@ -1122,6 +1089,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_max   += s->energy_flat;
    pilot->energy       += s->energy_flat;
    pilot->energy_regen -= s->energy_usage;
+   pilot->energy_loss  += s->energy_loss;
+   pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb + s->absorb_flat/100. );
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
@@ -1149,8 +1118,11 @@ void pilot_calcStats( Pilot* pilot )
    /* Update GUI as necessary. */
    gui_setGeneric( pilot );
 
+   /* Update weapon set range. */
+   pilot_weapSetUpdateStats( pilot );
+
    /* In case the time_mod has changed. */
-   if (pilot_isPlayer(pilot))
+   if (pilot_isPlayer(pilot) && (tm != s->time_mod))
       player_resetSpeed();
 }
 
@@ -1435,4 +1407,50 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
    ret = lua_toboolean(naevL, -1);
    lua_pop(naevL, 1);
    return ret;
+}
+
+
+/**
+ * @brief Handle cooldown hooks for outfits.
+ *
+ *    @param pilot Pilot being handled.
+ *    @param done Whether or not cooldown is starting or done.
+ *    @param success Whether or not it completed successfully.
+ *    @param timer How much time is necessary to cooldown. Only used if done is false.
+ */
+void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer )
+{
+   int i;
+   PilotOutfitSlot *po;
+   pilotoutfit_modified = 0;
+   for (i=0; i<array_size(pilot->outfits); i++) {
+      po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_cooldown == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: cooldown( p, po, done, success/timer ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_cooldown); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      lua_pushboolean(naevL, done); /* f, p, po, done */
+      if (done)
+         lua_pushboolean(naevL, success); /* f, p, po, done, success */
+      else
+         lua_pushnumber(naevL, timer); /* f, p, po, done, timer */
+      if (nlua_pcall( env, 4, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'cooldown':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
 }

@@ -225,6 +225,8 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
 /**
  * @brief Checks to see if a pilot is a valid target for another pilot.
  *
+ * @TODO this calls inRangePilot which can be called again right after. This should probably be optimized.
+ *
  *    @param p Reference pilot.
  *    @param target Pilot to see if is a valid target of the reference.
  *    @return 1 if it is valid, 0 otherwise.
@@ -243,6 +245,26 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
 
    /* Must be in range. */
    if (!pilot_inRangePilot( p, target, NULL ))
+      return 0;
+
+   /* Pilot is a valid target. */
+   return 1;
+}
+
+
+/**
+ * @brief Same as pilot_validTarget but without the range check.
+ */
+int pilot_canTarget( const Pilot* p )
+{
+   /* Must not be dead. */
+   if (pilot_isFlag( p, PILOT_DELETE ) ||
+         pilot_isFlag( p, PILOT_DEAD ))
+      return 0;
+
+   /* Must not be hidden nor invisible. */
+   if (pilot_isFlag( p, PILOT_HIDE ) ||
+         pilot_isFlag( p, PILOT_INVISIBLE))
       return 0;
 
    /* Pilot is a valid target. */
@@ -921,9 +943,12 @@ void pilot_cooldown( Pilot *p )
     */
    p->cdelay = (5. + sqrt(p->base_mass) / 2.) *
          (1. + pow(heat_mean / CONST_SPACE_STAR_TEMP - 1., 1.25));
-   p->ctimer = p->cdelay;
+   p->ctimer = p->cdelay * p->stats.cooldown_time;
    p->heat_start = p->heat_T;
    pilot_setFlag(p, PILOT_COOLDOWN);
+
+   /* Run outfit cooldown start hook. */
+   pilot_outfitLCooldown(p, 0, 0, p->ctimer);
 }
 
 
@@ -955,10 +980,13 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    pilot_rmFlag(p, PILOT_COOLDOWN);
 
    /* Cooldown finished naturally, reset heat just in case. */
-   if (p->ctimer < 0.)
-   {
+   if (p->ctimer < 0.) {
       pilot_heatReset( p );
       pilot_fillAmmo( p );
+      pilot_outfitLCooldown(p,1,1, 0.);
+   }
+   else {
+      pilot_outfitLCooldown(p,1,0, 0.);
    }
 }
 
@@ -1545,6 +1573,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       /* Clear other active states. */
       pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
       pilot_rmFlag(p, PILOT_BRAKING);
+      pilot_rmFlag(p, PILOT_STEALTH);
 
       /* Clear hyperspace flags. */
       pilot_rmFlag(p, PILOT_HYP_PREP);
@@ -1719,6 +1748,11 @@ void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
    double scalew, scaleh;
+   glColour c = {.r=1., .g=1., .b=1., .a=1.};
+
+   /* Don't render the pilot. */
+   if (pilot_isFlag( p, PILOT_NORENDER ))
+      return;
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
@@ -1734,11 +1768,14 @@ void pilot_render( Pilot* p, const double dt )
       scaleh = 1.;
    }
 
+   if (pilot_isFlag(p, PILOT_STEALTH))
+      c.a = 0.5;
+
    /* Base ship. */
    gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
          1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
          scalew, scaleh,
-         p->tsx, p->tsy, NULL );
+         p->tsx, p->tsy, &c );
 }
 
 
@@ -1755,6 +1792,10 @@ void pilot_renderOverlay( Pilot* p, const double dt )
    double dx, dy;
    int sx, sy;
    glColour c;
+
+   /* Don't render the pilot. */
+   if (pilot_isFlag( p, PILOT_NORENDER ))
+      return;
 
    /* Render the hailing graphic if needed. */
    if (pilot_isFlag( p, PILOT_HAILING )) {
@@ -1895,14 +1936,14 @@ void pilot_update( Pilot* pilot, double dt )
          if (outfit_isLauncher(o->outfit)) {
             ammo_threshold = o->outfit->u.lau.amount;
             ammo_threshold = round( (double)ammo_threshold * pilot->stats.ammo_capacity );
-            reload_time = o->outfit->u.lau.reload_time * (2.-pilot->stats.launch_reload);
+            reload_time = o->outfit->u.lau.reload_time / pilot->stats.launch_reload;
          }
          else { /* if (outfit_isFighterBay( o->outfit)) { */ /* Commented to shut up warning. */
             ammo_threshold = o->outfit->u.bay.amount;
             ammo_threshold = round( (double)ammo_threshold * pilot->stats.fbay_capacity );
             /* Adjust for deployed fighters if needed */
             ammo_threshold -= o->u.ammo.deployed;
-            reload_time = o->outfit->u.bay.reload_time * (2.-pilot->stats.fbay_reload);
+            reload_time = o->outfit->u.bay.reload_time / pilot->stats.fbay_reload;
          }
 
          /* Add to timer. */
@@ -1956,7 +1997,7 @@ void pilot_update( Pilot* pilot, double dt )
 
    /* Update stress. */
    if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
-      stress_falloff = 4.; /* TODO: make a function of the pilot's ship and/or its outfits. */
+      stress_falloff = 0.3*sqrt(pilot->solid->mass); /* Should be about 38 seconds for a 300 mass ship with 200 armour, and 172 seconds for a 6000 mass ship with 4000 armour. */
       pilot->stress -= stress_falloff * pilot->stats.stress_dissipation * dt;
       pilot->stress = MAX(pilot->stress, 0);
    }
@@ -2083,6 +2124,54 @@ void pilot_update( Pilot* pilot, double dt )
       }
    }
 
+   /* Healing and energy usage is only done if not disabled. */
+   if (!pilot_isDisabled(pilot)) {
+      pilot_ewUpdateStealth(pilot, dt);
+
+      /* Pilot is still alive */
+      pilot->armour += pilot->armour_regen * dt;
+      if (pilot->armour > pilot->armour_max)
+         pilot->armour = pilot->armour_max;
+
+      /* Regen shield */
+      if (pilot->stimer <= 0.) {
+         pilot->shield += pilot->shield_regen * dt;
+         if (pilot->sbonus > 0.)
+            pilot->shield += dt * (pilot->shield_regen * (pilot->sbonus / 1.5));
+         pilot->shield = CLAMP( 0., pilot->shield_max, pilot->shield );
+      }
+
+      /*
+      * Using RC circuit energy loading.
+      *
+      * Calculations (using y = [0:1])
+      *
+      *                                          \
+      *    y = 1 - exp( -x / tau )               |
+      *    y + dy = 1 - exp( -( x + dx ) / tau ) |  ==>
+      *                                          /
+      *
+      *    ==> dy = exp( -x / tau ) * ( 1 - exp( -dx / tau ) ==>
+      *    ==> [ dy = (1 - y) * ( 1 - exp( -dx / tau ) ) ]
+      */
+      pilot->energy += (pilot->energy_max - pilot->energy) *
+            (1. - exp( -dt / pilot->energy_tau));
+      pilot->energy -= pilot->energy_loss * dt;
+      if (pilot->energy > pilot->energy_max)
+         pilot->energy = pilot->energy_max;
+      else if (pilot->energy < 0.) {
+         pilot->energy = 0.;
+         /* Stop all on outfits. */
+         nchg += pilot_outfitOffAll( pilot );
+         /* Run Lua stuff. */
+         pilot_outfitLOutfofenergy( pilot );
+      }
+
+      /* Must recalculate stats because something changed state. */
+      if (nchg > 0)
+         pilot_calcStats( pilot );
+   }
+
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
       /* Do the slow brake thing */
@@ -2104,50 +2193,6 @@ void pilot_update( Pilot* pilot, double dt )
 
       return;
    }
-
-   /* Pilot is still alive */
-   pilot->armour += pilot->armour_regen * dt;
-   if (pilot->armour > pilot->armour_max)
-      pilot->armour = pilot->armour_max;
-
-   /* Regen shield */
-   if (pilot->stimer <= 0.) {
-      pilot->shield += pilot->shield_regen * dt;
-      if (pilot->sbonus > 0.)
-         pilot->shield += dt * (pilot->shield_regen * (pilot->sbonus / 1.5));
-      if (pilot->shield > pilot->shield_max)
-         pilot->shield = pilot->shield_max;
-   }
-
-   /*
-    * Using RC circuit energy loading.
-    *
-    * Calculations (using y = [0:1])
-    *
-    *                                          \
-    *    y = 1 - exp( -x / tau )               |
-    *    y + dy = 1 - exp( -( x + dx ) / tau ) |  ==>
-    *                                          /
-    *
-    *    ==> dy = exp( -x / tau ) * ( 1 - exp( -dx / tau ) ==>
-    *    ==> [ dy = (1 - y) * ( 1 - exp( -dx / tau ) ) ]
-    */
-   pilot->energy += (pilot->energy_max - pilot->energy) *
-         (1. - exp( -dt / pilot->energy_tau));
-   pilot->energy -= pilot->energy_loss * dt;
-   if (pilot->energy > pilot->energy_max)
-      pilot->energy = pilot->energy_max;
-   else if (pilot->energy < 0.) {
-      pilot->energy = 0.;
-      /* Stop all on outfits. */
-      nchg += pilot_outfitOffAll( pilot );
-      /* Run Lua stuff. */
-      pilot_outfitLOutfofenergy( pilot );
-   }
-
-   /* Must recalculate stats because something changed state. */
-   if (nchg > 0)
-      pilot_calcStats( pilot );
 
    /* Player damage decay. */
    if (pilot->player_damage > 0.)
@@ -2229,7 +2274,8 @@ void pilot_update( Pilot* pilot, double dt )
          pilot->ship->gfx_space, pilot->solid->dir );
 
    /* See if there is commodities to gather. */
-   gatherable_gather( pilot->id );
+   if (!pilot_isDisabled(pilot))
+      gatherable_gather( pilot->id );
 
    /* Update the trail. */
    pilot_sample_trails( pilot, 0 );
@@ -2716,8 +2762,11 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    /* Initialize heat. */
    pilot_heatReset( pilot );
 
-   /* set the pilot stats based on their ship and outfits */
+   /* Set the pilot stats based on their ship and outfits */
    pilot_calcStats( pilot );
+
+   /* Update dynamic electronic warfare (static should have already been done). */
+   pilot_ewUpdateDynamic( pilot );
 
    /* Heal up the ship. */
    pilot->armour = pilot->armour_max;
@@ -2733,8 +2782,13 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    /* Safety check. */
 #ifdef DEBUGGING
    const char *str = pilot_checkSpaceworthy( pilot );
-   if (str != NULL)
+   if (str != NULL) {
       DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, str );
+      for (i=0; i<array_size(pilot->outfits); i++) {
+         if (pilot->outfits[i]->outfit != NULL)
+            DEBUG(_("   [%d] %s"), i, _(pilot->outfits[i]->outfit->name) );
+      }
+   }
 #endif /* DEBUGGING */
 
    /* set flags and functions */
@@ -2981,6 +3035,9 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
 void pilot_free( Pilot* p )
 {
    int i;
+
+   /* Stop all outfits. */
+   pilot_outfitOffAll(p);
 
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
@@ -3287,6 +3344,9 @@ void pilot_clearTimers( Pilot *pilot )
 {
    int i, n;
    PilotOutfitSlot *o;
+
+   /* Clear outfits first to not leave some outfits in dangling states. */
+   pilot_outfitOffAll(pilot);
 
    pilot->ptimer     = 0.; /* Pilot timer. */
    pilot->tcontrol   = 0.; /* AI control timer. */

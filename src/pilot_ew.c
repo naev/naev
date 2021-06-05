@@ -17,16 +17,37 @@
 #include "naev.h"
 /** @endcond */
 
+#include "array.h"
 #include "log.h"
 #include "pilot.h"
 #include "player.h"
 #include "space.h"
 
-static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
-                                         what is in range and what isn't. */
 
-#define EVASION_SCALE        1.3225 /**< 1.15 squared. Ensures that ships have higher evasion than hide. */
-#define SENSOR_DEFAULT_RANGE 7500   /**< The default sensor range for all ships. */
+#define EW_ASTEROID_DIST      7500.
+#define EW_JUMPDETECT_DIST    7500.
+#define EW_PLANETDETECT_DIST  pilot_ewMass(10e3) /* TODO something better than this. */
+
+
+static double ew_interference = 1.; /**< Interference factor. */
+
+
+/*
+ * Prototypes.
+ */
+static double pilot_ewMass( double mass );
+static double pilot_ewAsteroid( Pilot *p );
+static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close );
+
+
+static void pilot_ewUpdate( Pilot *p )
+{
+   p->ew_detection = p->ew_mass * p->ew_asteroid / p->stats.ew_hide;
+   p->ew_evasion   = p->ew_detection * 0.75 * ew_interference / p->stats.ew_evade;
+   /* For stealth we apply the ew_asteroid and ew_interference bonus outside of the max, so that it can go below 1000 with in-system features. */
+   p->ew_stealth   = MAX( 1000., p->ew_mass / p->stats.ew_hide * 0.25 / p->stats.ew_stealth ) * p->ew_asteroid * ew_interference;
+}
+
 
 /**
  * @brief Updates the pilot's static electronic warfare properties.
@@ -35,15 +56,9 @@ static double sensor_curRange    = 0.; /**< Current base sensor range, used to c
  */
 void pilot_ewUpdateStatic( Pilot *p )
 {
-   /*
-    * Unlike the other values, heat isn't squared. The ew_hide formula is thus
-    * equivalent to: ew_base_hide * ew_mass * sqrt(ew_heat)
-    */
-   p->ew_mass     = pow2( pilot_ewMass( p->solid->mass ) );
-   p->ew_heat     = pilot_ewHeat( p->heat_T );
-   p->ew_asteroid = pilot_ewAsteroid( p );
-   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat * p->ew_asteroid;
-   p->ew_evasion  = p->ew_hide * EVASION_SCALE;
+   p->ew_mass     = pilot_ewMass( p->solid->mass );
+
+   pilot_ewUpdate( p );
 }
 
 
@@ -54,38 +69,9 @@ void pilot_ewUpdateStatic( Pilot *p )
  */
 void pilot_ewUpdateDynamic( Pilot *p )
 {
-   /* Update hide. */
-   p->ew_heat     = pilot_ewHeat( p->heat_T );
    p->ew_asteroid = pilot_ewAsteroid( p );
-   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat * p->ew_asteroid;
 
-   /* Update evasion. */
-   p->ew_movement = pilot_ewMovement( VMOD(p->solid->vel) );
-   p->ew_evasion  = p->ew_hide * EVASION_SCALE;
-}
-
-
-/**
- * @brief Gets the electronic warfare movement modifier for a given velocity.
- *
- *    @param vmod Velocity to get electronic warfare movement modifier of.
- *    @return The electronic warfare movement modifier.
- */
-double pilot_ewMovement( double vmod )
-{
-   return 1. + vmod / 100.;
-}
-
-
-/**
- * @brief Gets the electronic warfare heat modifier for a given temperature.
- *
- *    @param T Temperature of the ship.
- *    @return The electronic warfare heat modifier.
- */
-double pilot_ewHeat( double T )
-{
-   return 1. - 0.001 * (T - CONST_SPACE_STAR_TEMP);
+   pilot_ewUpdate( p );
 }
 
 
@@ -97,7 +83,7 @@ double pilot_ewHeat( double T )
  */
 double pilot_ewMass( double mass )
 {
-   return 1. / (.3 + sqrt(mass) / 30. );
+   return pow(mass, 1./1.5) * 150.;
 }
 
 
@@ -112,8 +98,8 @@ double pilot_ewAsteroid( Pilot *p )
    int i;
 
    i = space_isInField(&p->solid->pos);
-   if ( i>=0 )
-      return 1. + cur_system->asteroids[i].density;
+   if (i>=0)
+      return 1. / (1. + 0.4*cur_system->asteroids[i].density);
    else
       return 1.;
 }
@@ -124,13 +110,7 @@ double pilot_ewAsteroid( Pilot *p )
  */
 void pilot_updateSensorRange (void)
 {
-   /* Adjust sensor range based on system interference. */
-   /* See: http://www.wolframalpha.com/input/?i=y+%3D+7500+%2F+%28%28x+%2B+200%29+%2F+200%29+from+x%3D0+to+1000 */
-   sensor_curRange = SENSOR_DEFAULT_RANGE / ((cur_system->interference + 200) / 200.);
-
-   /* Speeds up calculations as we compare it against vectors later on
-    * and we want to avoid actually calculating the sqrt(). */
-   sensor_curRange = pow2(sensor_curRange);
+   ew_interference = 800. / (cur_system->interference + 800.);
 }
 
 
@@ -141,7 +121,7 @@ void pilot_updateSensorRange (void)
  */
 double pilot_sensorRange( void )
 {
-   return sensor_curRange;
+   return 7500 / ew_interference;
 }
 
 
@@ -160,8 +140,8 @@ int pilot_inRange( const Pilot *p, double x, double y )
    /* Get distance. */
    d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
 
-   sense = sensor_curRange * p->ew_detect;
-   if (d < sense)
+   sense = pilot_sensorRange() * p->stats.ew_detect;
+   if (d < pow2(sense))
       return 1;
 
    return 0;
@@ -176,9 +156,9 @@ int pilot_inRange( const Pilot *p, double x, double y )
  *    @param[out] dist2 Distance squared of the two pilots. Set to NULL if you're not interested.
  *    @return 1 if they are in range, 0 if they aren't and -1 if they are detected fuzzily.
  */
-int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2)
+int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
 {
-   double d, sense;
+   double d;
 
    /* Get distance if needed. */
    if (dist2 != NULL) {
@@ -196,11 +176,18 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2)
    if (dist2 == NULL)
       d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
-   sense = sensor_curRange * p->ew_detect;
-   if (d * target->ew_evasion < sense)
-      return 1;
-   else if  (d * target->ew_hide < sense)
-      return -1;
+   /* Stealth detection. */
+   if (pilot_isFlag( target, PILOT_STEALTH )) {
+      if (d < pow2(p->stats.ew_detect * target->ew_stealth))
+         return 1;
+   }
+   /* No stealth so normal detection. */
+   else {
+      if (d < pow2(p->stats.ew_detect * p->stats.ew_track * target->ew_evasion))
+         return 1;
+      else if  (d < pow2(p->stats.ew_detect * target->ew_detection))
+         return -1;
+   }
 
    return 0;
 }
@@ -230,12 +217,12 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( !pnt->real )
       return 0;
 
-   sense = sensor_curRange * p->ew_detect;
+   sense = pow2(EW_PLANETDETECT_DIST);
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
 
-   if (d * pnt->hide < sense )
+   if (d / p->stats.ew_detect < sense )
       return 1;
 
    return 0;
@@ -265,12 +252,13 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
    f = &cur_system->asteroids[fie];
    as = &f->asteroids[ast];
 
-   sense = sensor_curRange * p->ew_detect;
+   /* TODO something better than this. */
+   sense = pow2(EW_ASTEROID_DIST);
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &as->pos );
 
-   if (d < sense ) /* By default, asteroid's hide score is 1. It could be made changeable via xml.*/
+   if (d / p->stats.ew_detect < sense ) /* By default, asteroid's hide score is 1. It could be made changeable via xml.*/
       return 1;
 
    return 0;
@@ -306,14 +294,14 @@ int pilot_inRangeJump( const Pilot *p, int i )
    if (jp_isFlag(jp, JP_HIDDEN))
       sense = pow(p->stats.misc_hidden_jump_detect, 2);
    else
-      sense = sensor_curRange * p->ew_jump_detect;
+      sense = EW_JUMPDETECT_DIST * p->ew_jump_detect;
 
    hide = jp->hide;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &jp->pos );
 
-   if (d * hide < sense)
+   if (d * hide < pow2(sense))
       return 1;
 
    return 0;
@@ -324,23 +312,148 @@ int pilot_inRangeJump( const Pilot *p, int i )
  *
  *    @param p Pilot tracking.
  *    @param t Pilot being tracked.
- *    @param track Track limit of the weapon.
+ *    @param trackmin Minimum track limit of the weapon.
+ *    @param trackmax Maximum track limit of the weapon.
  *    @return The lead angle of the weapon.
  */
-double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
+double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, double trackmax )
 {
-   double limit, lead;
-
-   limit = track;
-   if (p != NULL)
-      limit *= p->ew_detect;
-
-   if (t->ew_evasion * t->ew_movement < limit)
-      lead = 1.;
-   else
-      lead = MAX( 0., 1. - 0.5*((t->ew_evasion * t->ew_movement)/limit - 1.));
-   return lead;
+   double mod = p->stats.ew_track * p->stats.ew_detect;
+   return CLAMP( 0., 1., (t->ew_evasion * mod - trackmin) / (trackmax - trackmin) );
 }
 
 
+static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close )
+{
+   Pilot *t;
+   Pilot *const* ps;
+   int i, n;
+   double dist;
 
+   /* Check nearby non-allies. */
+   if (mod != NULL)
+      *mod = 0.;
+   if (close != NULL)
+      *close = 0;
+   n = 0;
+   ps = pilot_getAll();
+   for (i=0; i<array_size(ps); i++) {
+      t = ps[i];
+      if (areAllies( p->faction, t->faction ) ||
+            ((p->id == PLAYER_ID) && pilot_isFriendly(t)))
+         continue;
+      if (pilot_isDisabled(t))
+         continue;
+      if (!pilot_canTarget(t))
+         continue;
+
+      /* Must not be landing nor taking off. */
+      if (pilot_isFlag(t, PILOT_LANDING) ||
+            pilot_isFlag(t, PILOT_TAKEOFF))
+         continue;
+
+      /* Stealthed pilots don't reduce stealth. */
+      if (pilot_isFlag(t, PILOT_STEALTH))
+         continue;
+
+      /* Compute distance. */
+      dist = vect_dist2( &p->solid->pos, &t->solid->pos );
+      /* TODO maybe not hardcode the close value. */
+      if ((close != NULL) && (dist < pow2(p->ew_stealth * t->stats.ew_detect * 1.5)))
+         (*close)++;
+      if (dist > pow2(p->ew_stealth * t->stats.ew_detect))
+         continue;
+
+      if (mod != NULL)
+         *mod += 1.0 - sqrt(dist) / (p->ew_stealth * t->stats.ew_detect);
+
+      /* We found a pilot that is in range. */
+      n++;
+   }
+
+   return n;
+}
+
+
+/**
+ * @brief Updates the stealth mode and checks to see if it is getting broken.
+ */
+void pilot_ewUpdateStealth( Pilot *p, double dt )
+{
+   int n, close;
+   double mod;
+
+   if (!pilot_isFlag( p, PILOT_STEALTH ))
+      return;
+
+   /* Get nearby pilots. */
+   if (pilot_isPlayer(p))
+      n = pilot_ewStealthGetNearby( p, &mod, &close );
+   else
+      n = pilot_ewStealthGetNearby( p, &mod, NULL );
+
+   /* Stop autonav if pilots are nearby. */
+   if (pilot_isPlayer(p) && (close>0))
+      player_autonavResetSpeed();
+
+   /* Increases if nobody nearby. */
+   if (n == 0) {
+      p->ew_stealth_timer += dt * 5000. / p->ew_stealth;
+      if (p->ew_stealth_timer > 1.)
+         p->ew_stealth_timer = 1.;
+   }
+   /* Otherwise decreases. */
+   else {
+      p->ew_stealth_timer -= dt * (p->ew_stealth / 10000. + mod);
+      if (p->ew_stealth_timer < 0.) {
+         pilot_destealth( p );
+         if (pilot_isPlayer(p))
+            player_message(_("You have been discovered!"));
+      }
+   }
+}
+
+
+/**
+ * @brief Stealths a pilot.
+ */
+int pilot_stealth( Pilot *p )
+{
+   int n;
+
+   if (pilot_isFlag( p, PILOT_STEALTH ))
+      return 0;
+
+   /* Can't stealth if locked on. */
+   if (p->lockons > 0)
+      return 0;
+
+   /* Can't stealth if pilots nearby. */
+   pilot_setFlag( p, PILOT_STEALTH );
+   n = pilot_ewStealthGetNearby( p, NULL, NULL );
+   if (n>0) {
+      pilot_rmFlag( p, PILOT_STEALTH );
+      return 0;
+   }
+
+   /* Turn off outfits. */
+   pilot_outfitOffAll( p );
+
+   /* Got into stealth. */
+   pilot_calcStats(p);
+   p->ew_stealth_timer = 0.;
+   return 1;
+}
+
+
+/**
+ * @brief Destealths a pilot.
+ */
+void pilot_destealth( Pilot *p )
+{
+   if (!pilot_isFlag( p, PILOT_STEALTH ))
+      return;
+   pilot_rmFlag( p, PILOT_STEALTH );
+   p->ew_stealth_timer = 0.;
+   pilot_calcStats(p);
+}

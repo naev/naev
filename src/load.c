@@ -410,7 +410,7 @@ static void load_menu_update( unsigned int wid, char *str )
    int pos;
    nsave_t *ns;
    char *save;
-   char buf[256], credits[ECON_CRED_STRLEN], date[64];
+   char buf[STRMAX_SHORT], credits[ECON_CRED_STRLEN], date[64];
 
    /* Make sure list is ok. */
    save = toolkit_getList( wid, "lstSaves" );

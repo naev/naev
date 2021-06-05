@@ -1,5 +1,8 @@
 * 0.9.0 (unreleased)
    * Gameplay
+      * Pilots can now go into stealth mode
+      * Electronic warfare parameters are visible
+      * Overhaul and rebalance of most outfits
       * Added new utility outfits with complex effects
       * Added escorts for hire
       * Added discovery messages as you explore the universe
@@ -16,6 +19,7 @@
          * Invade the frontier with the Dvaered
       * New translation(s) in progress: Czech, French, and Korean
    * Engine
+      * A ton of new ship stat attributes have been added
       * Support for Lua-based hooks in Outfits for complex behaviours
       * Support for post-processing shaders
       * Added rendering and update hooks in the Lua API

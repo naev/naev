@@ -24,7 +24,7 @@
   <knockback>2</knockback>
  </dtype>
  <dtype name="impact">
-  <shield>1</shield>
+  <shield>0.8</shield>
   <armour>1.15</armour>
   <knockback>1</knockback>
  </dtype>
@@ -34,13 +34,13 @@
   <knockback>0</knockback>
  </dtype>
  <dtype name="armourbreaker">
-  <shield>0.5</shield>
+  <shield>0.05</shield>
   <armour>1.5</armour>
   <knockback>0.5</knockback>
  </dtype>
  <dtype name="ion">
   <shield>1.3</shield>
-  <armour>1</armour>
+  <armour>0.8</armour>
   <knockback>0</knockback>
  </dtype>
  <dtype name="emp">

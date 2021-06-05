@@ -22,6 +22,14 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "circle_partial",
+      vs_path = "circle.vert",
+      fs_path = "circle_partial.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "color", "radius", "angle1", "angle2"],
+      subroutines = {},
+   ),
+   Shader(
       name = "solid",
       vs_path = "solid.vert",
       fs_path = "solid.frag",

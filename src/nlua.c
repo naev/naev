@@ -666,3 +666,21 @@ int nlua_refenv( nlua_env env, const char *name )
    lua_pop(naevL, 1);
    return LUA_NOREF;
 }
+
+
+/**
+ * @brief Gets the reference of a global in a lua environment if it matches a type.
+ *
+ *    @param env Environment.
+ *    @param name Name of the global to get.
+ *    @param type Type to match, e.g., LUA_TFUNCTION.
+ *    @return LUA_NOREF if no global found, reference otherwise.
+ */
+int nlua_refenvtype( nlua_env env, const char *name, int type )
+{
+   nlua_getenv( env, name );
+   if (lua_type( naevL, -1 ) == type)
+      return luaL_ref( naevL, LUA_REGISTRYINDEX );
+   lua_pop(naevL, 1);
+   return LUA_NOREF;
+}

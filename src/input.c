@@ -60,6 +60,7 @@ const char *keybind_info[][3] = {
    { "left", gettext_noop("Turn Left"), gettext_noop("Makes your ship turn left.") },
    { "right", gettext_noop("Turn Right"), gettext_noop("Makes your ship turn right.") },
    { "reverse", gettext_noop("Reverse"), gettext_noop("Makes your ship face the direction you're moving from. Useful for braking.") },
+   { "stealth", gettext_noop("Stealth"), gettext_noop("Tries to enter stealth mode.") },
    /* Targeting */
    { "target_next", gettext_noop("Target Next"), gettext_noop("Cycles through ship targets.") },
    { "target_prev", gettext_noop("Target Previous"), gettext_noop("Cycles backwards through ship targets.") },
@@ -194,6 +195,7 @@ void input_setDefault ( int wasd )
       input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ANY );
       input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ANY );
    }
+   input_setKeybind( "stealth", KEYBIND_KEYBOARD, SDLK_f, NMOD_NONE );
 
    /* Targeting */
    if (wasd) {
@@ -808,6 +810,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             player_accelOver();
       }
 
+   /* try to enter stealth mode. */
+   } else if (KEY("stealth") && !repeat && NOHYP() && NODEAD() && INGAME()) {
+      if (value==KEY_PRESS) player_stealth();
 
    /*
     * combat

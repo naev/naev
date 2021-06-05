@@ -21,7 +21,7 @@
   <resist>20</resist>
   <damage>
    <type>shieldbreaker</type>
-   <penetrate>20</penetrate>
+   <penetrate>36</penetrate>
    <physical>300</physical>
    <disable>10</disable>
   </damage>

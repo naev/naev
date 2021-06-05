@@ -28,41 +28,41 @@ wave_round_enemies = {
       { "Lancelot" },
       { "Vendetta" }, -- 5
       { "Ancestor", "Hyena" },
-      { "Shark", "Hyena" },
+      { layout="pincer"; "Shark", "Hyena" },
       { "Lancelot", "Hyena" },
-      { "Ancestor", "Hyena", "Hyena" },
+      { layout="circle"; "Ancestor", "Hyena", "Hyena" },
       { "Admonisher" }, -- 10
-      { "Shark", "Hyena", "Hyena" },
-      { "Shark", "Shark" },
+      { layout="circle"; "Shark", "Hyena", "Hyena" },
+      { layout="pincer"; "Shark", "Shark" },
       { "Shark", "Lancelot" },
-      { "Lancelot", "Lancelot" },
-      { "Phalanx", "Ancestor", "Ancestor" }, -- 15
-      { "Vendetta", "Lancelot" },
-      { "Vendetta", "Vendetta" },
-      { "Lancelot", "Shark", "Shark" },
-      { "Hyena", "Hyena", "Hyena", "Hyena", "Hyena" },
+      { layout="pincer"; "Lancelot", "Lancelot" },
+      { layout="pincer"; "Phalanx", "Ancestor", "Ancestor" }, -- 15
+      { layout="pincer"; "Vendetta", "Lancelot" },
+      { layout="pincer"; "Vendetta", "Vendetta" },
+      { layout="circle"; "Lancelot", "Shark", "Shark" },
+      { layout="circle"; "Hyena", "Hyena", "Hyena", "Hyena", "Hyena" },
       { "Pacifier" }, --20
    },
    medium = {
       { "Phalanx" }, -- 1
-      { "Phalanx", "Hyena", "Hyena" },
+      { layout="circle"; "Phalanx", "Hyena", "Hyena" },
       { "Admonisher" },
       { "Vigilance" },
       { "Pacifier" }, -- 5
-      { "Admonisher", "Admonisher" },
-      { "Phalanx", "Ancestor", "Ancestor", "Hyena", "Hyena" },
-      { "Pacifier", "Lancelot", "Lancelot" },
-      { "Lancelot", "Shark", "Shark", "Shark", "Shark", "Shark" },
+      { layout="pincer"; "Admonisher", "Admonisher" },
+      { layout="circle"; "Phalanx", "Ancestor", "Ancestor", "Hyena", "Hyena" },
+      { layout="circle"; "Pacifier", "Lancelot", "Lancelot" },
+      { layout="circle"; "Lancelot", "Shark", "Shark", "Shark", "Shark", "Shark" },
       { "Kestrel" } -- 10
    },
    heavy = {
       { "Kestrel" }, -- 1
       { "Hawking" },
       { "Kestrel", "Lancelot", "Lancelot" },
-      { "Pacifier", "Pacifier", "Admonisher", "Admonisher" },
+      { layout="pincer"; "Pacifier", "Pacifier", "Admonisher", "Admonisher" },
       { "Goddard" }, -- 5
-      { "Hawking", "Admonisher", "Admonisher" },
-      { "Pacifier", "Admonisher", "Admonisher", "Ancestor", "Ancestor", "Ancestor", "Lancelot", "Lancelot" },
+      { layout="pincer"; "Hawking", "Admonisher", "Admonisher" },
+      { layout="circle"; "Pacifier", "Admonisher", "Admonisher", "Ancestor", "Ancestor", "Ancestor", "Lancelot", "Lancelot" },
       { "Kestrel", "Kestrel" },
       { "Hawking", "Pacifier", "Pacifier" },
       { "Dvaered Goddard", "Dvaered Vigilance", "Dvaered Vigilance" },

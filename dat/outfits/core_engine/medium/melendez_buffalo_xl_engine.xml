@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Melendez Buffalo XL Engine">
+ <general>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines">structure</slot>
+  <size>medium</size>
+  <priority>7</priority>
+  <mass>30</mass>
+  <price>280000</price>
+  <description>The Buffalo XL is a staple among mid-sized freighters, particularly those carrying dense cargo. Its considerable power leaves it with few competitors in its size class, and more than a few combat vessels rely on it to move them and their arsenals into battle.</description>
+  <gfx_store>engine06.png</gfx_store>
+ </general>
+ <specific type="modification">
+  <energy_usage>45</energy_usage>
+  <engine_limit>1600</engine_limit>
+  <fuel>1000</fuel>
+  <speed>135</speed>
+  <thrust>70</thrust>
+  <turn>65</turn>
+  <land_delay>-25</land_delay>
+  <time_mod>10</time_mod>
+ </specific>
+</outfit>

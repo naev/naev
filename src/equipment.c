@@ -281,31 +281,34 @@ void equipment_open( unsigned int wid )
          _("Unequip"), equipment_unequipShip, SDLK_u );
 
    /* text */
-   buf = _("#nName:\n#0"
-      "#nModel:\n#0"
-      "#nClass:\n#0"
-      "#nCrew:\n#0"
-      "#nValue:\n#0"
+   buf = _("Name:\n"
+      "Model:\n"
+      "Class:\n"
+      "Crew:\n"
+      "Value:\n"
       "\n"
-      "#nMass:\n#0"
-      "#nJump Time:\n#0"
-      "#nThrust:\n#0"
-      "#nSpeed:\n#0"
-      "#nTurn:\n#0"
-      "#nTime Constant:\n#0"
+      "Mass:\n"
+      "Jump Time:\n"
+      "Thrust:\n"
+      "Speed:\n"
+      "Turn:\n"
+      "Time Constant:\n"
+      "Detected at:\n"
+      "Evasion:\n"
+      "Stealth:\n"
       "\n"
-      "#nAbsorption:\n#0"
-      "#nShield:\n#0"
-      "#nArmour:\n#0"
-      "#nEnergy:\n#0"
-      "#nCargo Space:\n#0"
-      "#nFuel:\n#0"
+      "Absorption:\n"
+      "Shield:\n"
+      "Armour:\n"
+      "Energy:\n"
+      "Cargo Space:\n"
+      "Fuel:\n"
       "\n"
-      "#nShip Status:#0");
+      "Ship Status:");
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
-         100, y-20+h-bh, 0, "txtSDesc", &gl_smallFont, NULL, buf );
+         100, y-20+h-bh, 0, "txtSDesc", &gl_smallFont, &cFontGrey, buf );
    x += 150;
    window_addText( wid, x, y,
          w - x - 20, y-20+h-bh, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
@@ -706,6 +709,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    Outfit *o;
    CstSlotWidget *wgt;
    double mass;
+   size_t slen;
 
    /* Get data. */
    wgt = (CstSlotWidget*) data;
@@ -781,6 +785,12 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    if (o->desc_short == NULL)
       return;
    outfit_altText( alt, sizeof(alt), o );
+
+   /* Display temporary bonuses. */
+   if (slot->lua_mem != LUA_NOREF) {
+      slen = strlen(alt);
+      ss_statsDesc( &slot->lua_stats, &alt[slen], sizeof(alt)-slen, 1 );
+   }
 
    /* Draw the text. */
    toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
@@ -1239,26 +1249,38 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
             case OUTFIT_TYPE_BOLT:
                mod_energy = s->stats.fwd_energy;
                mod_damage = s->stats.fwd_damage;
-               mod_shots  = 2. - s->stats.fwd_firerate;
+               mod_shots  = 1. / s->stats.fwd_firerate;
                break;
             case OUTFIT_TYPE_TURRET_BOLT:
                mod_energy = s->stats.tur_energy;
                mod_damage = s->stats.tur_damage;
-               mod_shots  = 2. - s->stats.tur_firerate;
+               mod_shots  = 1. / s->stats.tur_firerate;
                break;
             case OUTFIT_TYPE_LAUNCHER:
             case OUTFIT_TYPE_TURRET_LAUNCHER:
                mod_energy = 1.;
                mod_damage = s->stats.launch_damage;
-               mod_shots  = 2. - s->stats.launch_rate;
+               mod_shots  = 1. / s->stats.launch_rate;
                break;
             case OUTFIT_TYPE_BEAM:
             case OUTFIT_TYPE_TURRET_BEAM:
                /* Special case due to continuous fire. */
-               dps += outfit_damage(o)->damage;
-               eps += outfit_energy(o);
-
+               if (o->type == OUTFIT_TYPE_BEAM) {
+                  mod_energy = s->stats.fwd_energy;
+                  mod_damage = s->stats.fwd_damage;
+                  mod_shots  = 1. / s->stats.fwd_firerate;
+               }
+               else {
+                  mod_energy = s->stats.tur_energy;
+                  mod_damage = s->stats.tur_damage;
+                  mod_shots  = 1. / s->stats.tur_firerate;
+               }
+               shots = outfit_duration(o);
+               mod_shots = shots / (shots + mod_shots * outfit_delay(o));
+               dps += mod_shots * mod_damage * outfit_damage(o)->damage;
+               eps += mod_shots * mod_energy * outfit_energy(o);
                continue;
+
             default:
                continue;
          }
@@ -1524,6 +1546,8 @@ void equipment_updateShips( unsigned int wid, char* str )
    char *buf, buf2[ECON_CRED_STRLEN];
    char errorReport[STRMAX_SHORT];
    char *shipname;
+   char sdet[NUM2STRLEN], seva[NUM2STRLEN], sste[NUM2STRLEN];
+   char smass[NUM2STRLEN], sfuel[NUM2STRLEN];
    Pilot *ship;
    char *nt;
    int onboard;
@@ -1556,6 +1580,13 @@ void equipment_updateShips( unsigned int wid, char* str )
 
    jumps = floor(ship->fuel_max / ship->fuel_consumption);
 
+   /* Stealth stuff. */
+   num2str( sdet, ship->ew_detection, 0 );
+   num2str( seva, ship->ew_evasion, 0 );
+   num2str( sste, ship->ew_stealth, 0 );
+   num2str( smass, ship->solid->mass, 0 );
+   num2str( sfuel, ship->fuel_max, 0 );
+
    /* Fill the buffer. */
    asprintf( &buf,
          _("%s\n"
@@ -1564,19 +1595,22 @@ void equipment_updateShips( unsigned int wid, char* str )
          "#%c%s%.0f#0\n"
          "%s\n"
          "\n"
-         "%.0f#0 %s\n"
+         "%s#0 %s\n"
          "%s average\n"
          "#%c%s%.0f#0 kN/tonne\n"
          "#%c%s%.0f#0 m/s (max #%c%s%.0f#0 m/s)\n"
          "#%c%s%.0f#0 deg/s\n"
          "%.0f%%\n"
+         "%s\n"
+         "%s\n"
+         "%s\n"
          "\n"
          "#%c%s%.0f%%\n"
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
          "#%c%s%.0f#0 MJ (#%c%s%.1f#0 MW)\n"
          "%d / #%c%s%d#0 %s\n"
-         "%d %s (%d %s)\n"
+         "%s %s (%d %s)\n"
          "\n"
          "#%c%s#0"),
          /* Generic. */
@@ -1586,14 +1620,14 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( ship->crew, ship->ship->crew, 0 ),
       buf2,
       /* Movement. */
-      ship->solid->mass, n_( "tonne", "tonnes", ship->solid->mass ),
+      smass, n_( "tonne", "tonnes", ship->solid->mass ),
       nt,
       EQ_COMP( ship->thrust/ship->solid->mass, ship->ship->thrust/ship->ship->mass, 0 ),
       EQ_COMP( ship->speed, ship->ship->speed, 0 ),
       EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
             solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ),
       EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
-      ship->ship->dt_default * 100,
+      ship->ship->dt_default * 100, sdet, seva, sste,
       /* Health. */
       EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ),
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),
@@ -1605,7 +1639,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       /* Misc. */
       pilot_cargoUsed(ship), EQ_COMP( cargo, ship->ship->cap_cargo, 0 ),
       n_( "tonne", "tonnes", ship->ship->cap_cargo ),
-      ship->fuel_max, n_( "unit", "units", ship->fuel_max ),
+      sfuel, n_( "unit", "units", ship->fuel_max ),
       jumps, n_( "jump", "jumps", jumps ),
       pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
    window_modifyText( wid, "txtDDesc", buf );
@@ -1619,7 +1653,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       window_disableButton( wid, "btnSellShip" );
       window_disableButton( wid, "btnChangeShip" );
    }
-   else {\
+   else {
       window_enableButton( wid, "btnChangeShip" );
       window_enableButton( wid, "btnSellShip" );
    }

@@ -16,161 +16,161 @@ equip_classCargo = {
    ["Cruiser"] = .2,
    ["Carrier"] = .3,
    ["Drone"] = .05,
-   ["Heavy Drone"] = .05
+   ["Heavy Drone"] = .05,
 }
 
 -- Table of available core systems by class.
 equip_classOutfits_coreSystems = {
    ["Yacht"] = {
-      "Unicorp PT-100 Core System"
+      "Unicorp PT-16 Core System", "Unicorp PT-68 Core System",
    },
    ["Luxury Yacht"] = {
-      "Unicorp PT-100 Core System"
+      "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System",
    },
    ["Scout"] = {
-      "Unicorp PT-100 Core System", "Milspec Aegis 2201 Core System"
+      "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System",
    },
    ["Courier"] = {
-      "Unicorp PT-200 Core System", "Milspec Aegis 3601 Core System"
+      "Unicorp PT-68 Core System",
    },
    ["Freighter"] = {
-      "Unicorp PT-600 Core System", "Milspec Aegis 5401 Core System"
+      "Unicorp PT-310 Core System",
    },
    ["Armoured Transport"] = {
-      "Milspec Aegis 5401 Core System", "Milspec Orion 5501 Core System"
+      "Unicorp PT-310 Core System", "Milspec Orion 5501 Core System",
    },
    ["Fighter"] = {
-      "Unicorp PT-200 Core System", "Milspec Orion 3701 Core System"
+      "Unicorp PT-68 Core System", "Milspec Orion 3701 Core System",
+      "Milspec Thalos 3602 Core System",
    },
    ["Bomber"] = {
-      "Unicorp PT-200 Core System", "Milspec Orion 3701 Core System"
+      "Unicorp PT-68 Core System", "Milspec Orion 3701 Core System",
+      "Milspec Thalos 3602 Core System",
    },
    ["Corvette"] = {
-      "Unicorp PT-500 Core System", "Milspec Orion 4801 Core System"
+      "Unicorp PT-200 Core System", "Milspec Orion 4801 Core System",
+      "Milspec Thalos 4702 Core System",
    },
    ["Destroyer"] = {
-      "Unicorp PT-600 Core System", "Milspec Orion 5501 Core System"
+      "Unicorp PT-310 Core System", "Milspec Orion 5501 Core System",
+      "Milspec Thalos 5402 Core System",
    },
    ["Cruiser"] = {
-      "Unicorp PT-1000 Core System", "Milspec Orion 9901 Core System"
+      "Milspec Orion 8601 Core System", "Milspec Orion 9901 Core System",
+      "Unicorp PT-2200 Core System",
    },
    ["Carrier"] = {
-      "Milspec Orion 9901 Core System"
+      "Milspec Thalos 8502 Core System", "Milspec Thalos 9802 Core System",
    },
    ["Drone"] = {
-      "Milspec Orion 2301 Core System"
+      "Milspec Orion 2301 Core System",
    },
    ["Heavy Drone"] = {
-      "Milspec Orion 3701 Core System"
-   }
+      "Milspec Orion 3701 Core System",
+   },
 }
 
 
 -- Table of available engines by class.
 equip_classOutfits_engines = {
    ["Yacht"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine"
+      "Nexus Dart 150 Engine", "Unicorp Hawk 350 Engine",
+      "Tricon Zephyr II Engine",
    },
    ["Luxury Yacht"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Scout"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Courier"] = {
-      "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine",
-      "Tricon Zephyr II Engine", "Melendez Ox XL Engine"
+      "Unicorp Hawk 350 Engine", "Tricon Zephyr II Engine",
+      "Melendez Ox XL Engine",
    },
    ["Freighter"] = {
-      "Unicorp Falcon 1200 Engine", "Melendez Buffalo XL Engine"
+      "Unicorp Falcon 1300 Engine", "Melendez Buffalo XL Engine",
    },
    ["Armoured Transport"] = {
-      "Melendez Buffalo XL Engine"
+      "Unicorp Falcon 1300 Engine", "Melendez Buffalo XL Engine",
    },
    ["Fighter"] = {
-      "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine",
-      "Tricon Zephyr II Engine"
+      "Unicorp Hawk 350 Engine", "Tricon Zephyr II Engine",
    },
    ["Bomber"] = {
-      "Unicorp Hawk 300 Engine", "Nexus Dart 300 Engine",
-      "Tricon Zephyr II Engine"
+      "Unicorp Hawk 350 Engine", "Tricon Zephyr II Engine",
+      "Melendez Ox XL Engine",
    },
    ["Corvette"] = {
-      "Unicorp Falcon 550 Engine", "Nexus Arrow 550 Engine",
-      "Tricon Cyclone Engine"
+      "Nexus Arrow 700 Engine", "Tricon Cyclone Engine",
    },
    ["Destroyer"] = {
-      "Unicorp Falcon 1200 Engine", "Nexus Arrow 1200 Engine",
-      "Tricon Cyclone II Engine"
+      "Unicorp Falcon 1300 Engine", "Tricon Cyclone II Engine",
    },
    ["Cruiser"] = {
-      "Unicorp Eagle 6500 Engine", "Nexus Bolt 6500 Engine",
-      "Tricon Typhoon II Engine"
+      "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine",
    },
    ["Carrier"] = {
-      "Nexus Bolt 6500 Engine", "Tricon Typhoon II Engine",
-      "Melendez Mammoth XL Engine"
+      "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine",
+      "Melendez Mammoth XL Engine",
    },
    ["Drone"] = {
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine",
    },
    ["Heavy Drone"] = {
-      "Tricon Zephyr II Engine"
-   }
+      "Unicorp Hawk 350 Engine",
+   },
 }
 
 
 -- Table of available hulls by class.
 equip_classOutfits_hulls = {
    ["Yacht"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating"
+      "Unicorp D-2 Light Plating", "Unicorp D-4 Light Plating",
+      "S&K Small Cargo Hull",
    },
    ["Luxury Yacht"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating"
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
    },
    ["Scout"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
-      "S&K Ultralight Stealth Plating"
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
    },
    ["Courier"] = {
-      "Unicorp D-4 Light Plating", "S&K Small Cargo Hull"
+      "Unicorp D-4 Light Plating", "S&K Small Cargo Hull",
    },
    ["Freighter"] = {
-      "Unicorp D-12 Medium Plating", "S&K Medium Cargo Hull"
+      "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull",
    },
    ["Armoured Transport"] = {
-      "S&K Medium Cargo Hull"
+      "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull",
    },
    ["Fighter"] = {
-      "Unicorp D-4 Light Plating", "Unicorp B-4 Light Plating",
-      "S&K Light Stealth Plating", "S&K Light Combat Plating"
+      "Unicorp D-4 Light Plating", "Nexus Light Stealth Plating",
+      "S&K Light Combat Plating"
    },
    ["Bomber"] = {
-      "Unicorp D-4 Light Plating", "Unicorp B-4 Light Plating",
-      "S&K Light Stealth Plating", "S&K Light Combat Plating"
+      "Unicorp D-4 Light Plating", "Nexus Light Stealth Plating",
+      "S&K Light Combat Plating"
    },
    ["Corvette"] = {
-      "Unicorp D-8 Medium Plating", "Unicorp B-8 Medium Plating",
-      "S&K Medium Stealth Plating", "S&K Medium Combat Plating"
+      "Unicorp D-12 Medium Plating", "Nexus Medium Stealth Plating",
+      "S&K Medium Combat Plating"
    },
    ["Destroyer"] = {
-      "Unicorp D-12 Medium Plating", "Unicorp B-12 Medium Plating",
-      "S&K Medium-Heavy Stealth Plating", "S&K Medium-Heavy Combat Plating"
+      "Unicorp D-24 Medium Plating", "Nexus Medium Stealth Plating",
+      "S&K Medium-Heavy Combat Plating"
    },
    ["Cruiser"] = {
-      "Unicorp D-20 Heavy Plating", "Unicorp B-20 Heavy Plating",
-      "S&K Superheavy Combat Plating"
+      "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating"
    },
    ["Carrier"] = {
-      "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
+      "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating"
    },
    ["Drone"] = {
-      "S&K Ultralight Stealth Plating"
+      "Nexus Light Stealth Plating"
    },
    ["Heavy Drone"] = {
-      "S&K Light Stealth Plating"
-   }
+      "Nexus Light Stealth Plating", "S&K Light Combat Plating"
+   },
 }
 
 
@@ -179,142 +179,161 @@ equip_classOutfits_hulls = {
 equip_classOutfits_weapons = {
    ["Yacht"] = {
       {
-         "Laser Cannon MK1", "Laser Cannon MK2", "Razor MK1", "Razor MK2",
-         "Laser PD MK1", "Turreted Gauss Gun"
-      }
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
+         "Plasma Turret MK1", "Particle Beam",
+      },
    },
    ["Luxury Yacht"] = {
       {
-         "Laser Cannon MK1", "Laser Cannon MK2", "Razor MK1", "Razor MK2"
-      }
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+      },
    },
    ["Scout"] = {
       {
-         "Laser PD MK1", "Laser PD MK2", "Razor Turret MK1",
-         "Turreted Gauss Gun"
-      }
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "TeraCom Mace Launcher", "TeraCom Banshee Launcher",
+      },
    },
    ["Courier"] = {
       {
-         "Laser PD MK1", "Laser PD MK2", "Razor Turret MK1",
-         "Turreted Gauss Gun"
-      }
+         "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun",
+         "Plasma Turret MK1", "Particle Beam",
+      },
    },
    ["Freighter"] = {
       {
          num = 1;
-         "Laser Turret MK2", "Enygma Systems Turreted Fury Launcher"
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
       },
       {
-         "Laser Turret MK1", "Laser Turret MK2", "EMP Grenade Launcher",
-         "Pulse Beam"
-      }
+         "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
+         "Plasma Turret MK2", "Orion Beam",
+      },
    },
    ["Armoured Transport"] = {
       {
-         num = 2, varied = true;
-         "Pulse Beam", "Enygma Systems Turreted Fury Launcher",
-         "Heavy Laser", "Heavy Ripper Turret"
+         "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
       },
       {
-         "Laser Turret MK2", "Laser Turret MK3"
-      }
+         num = 1;
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun",
+         "Plasma Turret MK2", "Orion Beam", "EMP Grenade Launcher",
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
    },
    ["Fighter"] = {
       {
-         num = 1;
-         "Mass Driver MK1", "Ion Cannon", "Unicorp Mace Launcher",
-         "Unicorp Banshee Launcher", "Orion Lance", "Shattershield Lance",
          "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
-         "Unicorp Medusa Launcher", "Ripper Cannon"
+         "Unicorp Medusa Launcher",
       },
       {
-         "Plasma Blaster MK1", "Plasma Blaster MK2", "Gauss Gun",
-         "Vulcan Gun", "Ripper Cannon"
-      }
+         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Orion Lance", "Ion Cannon",
+      },
+      {
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Unicorp Mace Launcher", "Unicorp Banshee Launcher",
+      },
    },
    ["Bomber"] = {
       {
-         num = 3, varied = true;
+         varied = true;
          "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
-         "Unicorp Headhunter Launcher", "Unicorp Mace Launcher",
-         "Unicorp Banshee Launcher"
+         "Unicorp Headhunter Launcher",
       },
       {
-         "Gauss Gun", "Vulcan Gun", "Laser Cannon MK2", "Plasma Blaster MK2"
-      }
+         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Ion Cannon",
+      },
    },
    ["Corvette"] = {
       {
-         num = 1;
-         "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
-         "TeraCom Medusa Launcher"
+         varied = true;
+         "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
+         "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
+         "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
+         "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+         "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
+         "TeraCom Imperator Launcher",
       },
       {
-         num = 2;
-         "Mass Driver MK1", "Mass Driver MK2", "Heavy Ion Cannon",
-         "Laser Turret MK1", "Plasma Turret MK2", "Razor Turret MK2"
+         probability = {
+            ["Ripper Cannon"] = 8, ["Slicer"] = 8, ["Shredder"] = 8,
+            ["Plasma Cannon"] = 8,
+         };
+         "Ripper Cannon", "Slicer", "Shredder", "Plasma Cannon",
+         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
       },
-      {
-         "Ripper Cannon", "Plasma Blaster MK2", "Laser Cannon MK2",
-         "Vulcan Gun", "Ion Cannon"
-      }
    },
    ["Destroyer"] = {
       {
-         num = 2;
-         "Railgun", "Heavy Ripper Turret", "Heavy Laser", "Orion Beam",
-         "Grave Beam", "Laser Turret MK3", "Razor Turret MK2"
+         "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
       },
       {
          num = 1;
-         "Enygma Systems Turreted Fury Launcher", "Unicorp Caesar IV Launcher",
-         "Unicorp Headhunter Launcher", "TeraCom Medusa Launcher"
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
       },
       {
-         "Laser Turret MK2", "Laser Turret MK3", "Turreted Vulcan Gun"
-      }
+         num = 1;
+         "Heavy Ripper Cannon", "Mass Driver", "Plasma Cluster Cannon",
+         "Grave Lance", "Heavy Ion Cannon", "Laser Turret MK2",
+         "Razor Turret MK2", "Turreted Vulcan Gun", "Plasma Turret MK2",
+         "Orion Beam", "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         "Heavy Ripper Cannon", "Mass Driver", "Plasma Cluster Cannon",
+         "Grave Lance", "Heavy Ion Cannon", "Laser Turret MK2",
+         "Razor Turret MK2", "Turreted Vulcan Gun", "Plasma Turret MK2",
+         "Orion Beam",
+      },
    },
    ["Cruiser"] = {
       {
-         num = 2;
-         "Turbolaser", "Ragnarok Beam", "Grave Beam", "Railgun Turret"
+         num = 1;
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
       },
       {
-         "Heavy Laser", "Heavy Ripper Turret", "Railgun Turret"
+         "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
       },
       {
-         "Laser Turret MK3", "Turreted Vulcan Gun"
-      }
+         "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
+      },
    },
    ["Carrier"] = {
       {
-         num = 2;
-         "Turbolaser", "Ragnarok Beam"
+         varied = true;
+         "Lancelot Fighter Bay",
+         "Hyena Fighter Dock",
       },
       {
---         num = 2;
-         "Heavy Laser", "Grave Beam", "Railgun Turret"
+         "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
       },
---      {
---         "Lancelot Fighter Bay"
---      },
       {
-         "Laser Turret MK3", "Turreted Vulcan Gun"
-      }
+         "Heavy Ripper Turret", "Grave Beam",
+      },
    },
    ["Drone"] = {
       {
          "Neutron Disruptor"
-      }
+      },
    },
    ["Heavy Drone"] = {
       {
          "Heavy Neutron Disruptor"
       },
       {
-         "Electron Burst Cannon"
-      }
+         "Shatterer Launcher"
+      },
    }
 }
 
@@ -325,99 +344,105 @@ equip_classOutfits_utilities = {
    ["Yacht"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Jump Scanner",
-         "Generic Afterburner"
-      }
+         "Unicorp Scrambler", "Jump Scanner",
+         "Unicorp Light Afterburner", "Sensor Array",
+      },
    },
    ["Luxury Yacht"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Small Shield Booster"
-      }
+         "Unicorp Scrambler", "Jump Scanner",
+         "Unicorp Light Afterburner", "Sensor Array",
+      },
    },
    ["Scout"] = {
       {
          varied = true;
-         "Unicorp Scrambler", "Small Shield Booster", "Jump Scanner",
-         "Generic Afterburner", "Emergency Shield Booster"
-      }
+         "Unicorp Scrambler", "Jump Scanner",
+         "Unicorp Light Afterburner",
+         "Unicorp Jammer", "Sensor Array",
+      },
    },
    ["Courier"] = {
       {
          varied = true;
-         "Reactor Class I", "Small Shield Booster", "Unicorp Scrambler",
-         "Hellburner", "Emergency Shield Booster"
-      }
+         "Unicorp Scrambler", "Jump Scanner",
+         "Unicorp Light Afterburner",
+      },
    },
    ["Freighter"] = {
       {
          varied = true;
-         "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
-         "Droid Repair Crew", "Boarding Androids MK1"
-      }
+         "Droid Repair Crew", "Targeting Array",
+         "Milspec Jammer", "Emergency Shield Booster", "Milspec Scrambler",
+      },
    },
    ["Armoured Transport"] = {
       {
          varied = true;
-         "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
-         "Droid Repair Crew", "Boarding Androids MK1"
-      }
+         "Targeting Array", "Milspec Scrambler", "Agility Combat AI",
+         "Milspec Jammer", "Emergency Shield Booster", "Droid Repair Crew",
+      },
    },
    ["Fighter"] = {
       {
          varied = true;
-         "Reactor Class I", "Unicorp Scrambler", "Emergency Shield Booster",
-         "Reverse Thrusters"
-      }
+         "Unicorp Scrambler", "Unicorp Light Afterburner",
+         "Weapons Ionizer", "Emergency Shield Booster",
+         "Sensor Array", "Hellburner",
+      },
    },
    ["Bomber"] = {
       {
          varied = true;
-         "Reactor Class I", "Milspec Scrambler", "Small Shield Booster",
-         "Emergency Shield Booster", "Hellburner", "Reverse Thrusters"
-      }
+         "Unicorp Scrambler", "Unicorp Light Afterburner",
+         "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
+         "Emergency Shield Booster", "Sensor Array",
+         "Hellburner",
+      },
    },
    ["Corvette"] = {
       {
          varied = true;
-         "Reactor Class II", "Medium Shield Booster", "Milspec Scrambler",
-         "Droid Repair Crew", "Boarding Androids MK1", "Hellburner"
-      }
+         "Milspec Scrambler", "Milspec Jammer", "Weapons Ionizer",
+         "Hellburner", "Agility Combat AI",
+         "Emergency Shield Booster", "Sensor Array",
+         "Unicorp Medium Afterburner", "Droid Repair Crew",
+      },
    },
    ["Destroyer"] = {
       {
          varied = true;
-         "Reactor Class II", "Medium Shield Booster", "Droid Repair Crew",
-         "Boarding Androids MK1"
-      }
+         "Targeting Array", "Weapons Ionizer",
+         "Hellburner", "Emergency Shield Booster",
+         "Sensor Array", "Droid Repair Crew",
+         "Agility Combat AI",
+      },
    },
    ["Cruiser"] = {
       {
          varied = true;
-         "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
-         "Boarding Androids MK2"
-      }
+         "Targeting Array", "Weapons Ionizer",
+         "Sensor Array", "Droid Repair Crew",
+         "Agility Combat AI",
+      },
    },
    ["Carrier"] = {
       {
          varied = true;
-         "Reactor Class III", "Large Shield Booster", "Droid Repair Crew",
-         "Boarding Androids MK2"
-      }
+         "Targeting Array", "Sensor Array", "Droid Repair Crew",
+         "Agility Combat AI",
+      },
    },
    ["Drone"] = {
       {
-         "Reactor Class I"
-      }
+      },
    },
    ["Heavy Drone"] = {
       {
          num = 1;
          "Unicorp Scrambler"
       },
-      {
-         "Reactor Class I"
-      }
    }
 }
 
@@ -427,90 +452,93 @@ equip_classOutfits_structurals = {
    ["Yacht"] = {
       {
          varied = true;
-         "Cargo Pod", "Solar Panel", "Fuel Pod", "Battery", "Shield Capacitor",
-         "Improved Stabilizer", "Engine Reroute", "Steering Thrusters"
-      }
+         "Cargo Pod", "Fuel Pod", "Battery", "Shield Capacitor",
+         "Improved Stabilizer", "Engine Reroute",
+      },
    },
    ["Luxury Yacht"] = {
       {
          varied = true;
-         "Shield Capacitor", "Engine Reroute", "Steering Thrusters"
-      }
+         "Improved Stabilizer", "Engine Reroute",
+      },
    },
    ["Scout"] = {
       {
          varied = true, probability = {
             ["Fuel Pod"] = 4, ["Improved Stabilizer"] = 2
          };
-         "Fuel Pod", "Improved Stabilizer", "Shield Capacitor"
-      }
+         "Fuel Pod", "Improved Stabilizer", "Shield Capacitor",
+      },
    },
    ["Courier"] = {
       {
          varied = true, probability = {
-            ["Improved Stabilizer"] = 10, ["Cargo Pod"] = 4
+            ["Cargo Pod"] = 4,
          };
          "Cargo Pod", "Fuel Pod", "Improved Stabilizer",
-         "Improved Refrigeration Cycle"
-      }
+      },
    },
    ["Freighter"] = {
       {
          varied = true, probability = {
-            ["Cargo Pod"] = 6
+            ["Medium Cargo Pod"] = 6,
          };
-         "Cargo Pod", "Medium Fuel Pod"
-      }
+         "Medium Cargo Pod", "Medium Fuel Pod",
+      },
    },
    ["Armoured Transport"] = {
       {
          varied = true, probability = {
-            ["Cargo Pod"] = 15, ["Medium Fuel Pod"] = 3
+            ["Cargo Pod"] = 15, ["Medium Fuel Pod"] = 3,
          };
          "Cargo Pod", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
-         "Improved Power Regulator"
-      }
+         "Plasteel Plating",
+      },
    },
    ["Fighter"] = {
       {
          varied = true, probability = {
-            ["Steering Thrusters"] = 8, ["Engine Reroute"] = 4,
-            ["Forward Shock Absorbers"] = 2, ["Power Regulation Override"] = 2
+            ["Improved Stabilizer"] = 4, ["Engine Reroute"] = 4,
          };
-         "Solar Panel", "Fuel Pod", "Steering Thrusters", "Engine Reroute",
-         "Battery", "Shield Capacitor", "Power Regulation Override",
-         "Forward Shock Absorbers"
-      }
+         "Fuel Pod", "Improved Stabilizer", "Engine Reroute",
+         "Battery", "Shield Capacitor", "Reactor Class I",
+      },
    },
    ["Bomber"] = {
       {
          varied = true;
-         "Fuel Pod", "Steering Thrusters", "Engine Reroute", "Shield Capacitor"
-      }
+         "Fuel Pod", "Improved Stabilizer", "Engine Reroute",
+         "Shield Capacitor", "Reactor Class I",
+      },
    },
    ["Corvette"] = {
       {
          varied = true;
-         "Solar Panel", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
-         "Forward Shock Absorbers"
-      }
+         "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
+         "Plasteel Plating", "Reactor Class II",
+      },
    },
    ["Destroyer"] = {
       {
          varied = true;
-         "Plasteel Plating", "Medium Fuel Pod", "Battery II",
-         "Shield Capacitor II", "Improved Power Regulator",
-         "Targeting Array"
-      }
+         "Large Fuel Pod", "Battery III", "Shield Capacitor IV",
+         "Shield Capacitor III", "Nanobond Plating", "Reactor Class III",
+      },
+      {
+         varied = true;
+         "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
+         "Plasteel Plating", "Reactor Class II",
+      },
    },
    ["Cruiser"] = {
       {
          varied = true, probability = {
-            ["Nanobond Plating"] = 3, ["Shield Capacitor IV"] = 2
+            ["Nanobond Plating"] = 3, ["Shield Capacitor IV"] = 2,
          };
-         "Biometal Armour", "Nanobond Plating", "Large Fuel Pod",
-         "Battery III", "Shield Capacitor III", "Shield Capacitor IV"
-      }
+         "Large Fuel Pod", "Biometal Armour", "Nanobond Plating",
+         "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
+         "Reactor Class III",
+      },
    },
    ["Carrier"] = {
       {
@@ -518,23 +546,21 @@ equip_classOutfits_structurals = {
             ["Nanobond Plating"] = 6, ["Shield Capacitor IV"] = 4,
             ["Large Fuel Pod"] = 3, ["Biometal Armour"] = 2
          };
-         "Biometal Armour", "Nanobond Plating", "Large Fuel Pod",
-         "Battery III", "Shield Capacitor III", "Shield Capacitor IV"
-      }
+         "Large Fuel Pod", "Biometal Armour", "Nanobond Plating",
+         "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
+      },
    },
    ["Drone"] = {
       {
-         "Steering Thrusters"
-      }
+      },
    },
    ["Heavy Drone"] = {
       {
          num = 1;
-         "Steering Thrusters"
+         "Battery"
       },
       {
-         "Solar Panel"
-      }
+      },
    }
 }
 
@@ -542,104 +568,104 @@ equip_classOutfits_structurals = {
 -- Table of available core systems by base type.
 equip_typeOutfits_coreSystems = {
    ["Hyena"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System",
    },
    ["Shark"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
-   },
-   ["Brigand"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System",
    },
    ["Fidelity"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
-   },
-   ["Perspicacity"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System",
    },
    ["Derivative"] = {
-      "Unicorp PT-100 Core System", "Milspec Orion 2301 Core System"
+      "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System",
+   },
+   ["Vendetta"] = {
+      "Unicorp PT-68 Core System", "Milspec Orion 3701 Core System",
+      "Milspec Thalos 3602 Core System",
    },
    ["Kestrel"] = {
-      "Unicorp PT-900 Core System", "Milspec Orion 8601 Core System"
+      "Unicorp PT-500 Core System", "Milspec Orion 8601 Core System",
+   },
+   ["Hawking"] = {
+      "Unicorp PT-500 Core System", "Milspec Orion 8601 Core System",
    },
    ["Brigand"] = {
       probability = {
-         ["Ultralight Bioship Brain Stage X"] = 2
+         ["Ultralight Brain Stage X"] = 2
       };
-      "Ultralight Bioship Brain Stage 1", "Ultralight Bioship Brain Stage 2",
-      "Ultralight Bioship Brain Stage X"
+      "Ultralight Brain Stage 1", "Ultralight Brain Stage 2",
+      "Ultralight Brain Stage X",
    },
    ["Reaver"] = {
       probability = {
-         ["Light Bioship Brain Stage X"] = 3
+         ["Light Brain Stage X"] = 3
       };
-      "Light Bioship Brain Stage 1", "Light Bioship Brain Stage 2",
-      "Light Bioship Brain Stage 3", "Light Bioship Brain Stage X"
+      "Light Brain Stage 1", "Light Brain Stage 2",
+      "Light Brain Stage 3", "Light Brain Stage X",
    },
    ["Marauder"] = {
       probability = {
-         ["Light Bioship Brain Stage X"] = 3
+         ["Light Brain Stage X"] = 3
       };
-      "Light Bioship Brain Stage 1", "Light Bioship Brain Stage 2",
-      "Light Bioship Brain Stage 3", "Light Bioship Brain Stage X"
+      "Light Brain Stage 1", "Light Brain Stage 2",
+      "Light Brain Stage 3", "Light Brain Stage X",
    },
    ["Odium"] = {
       probability = {
-         ["Medium Bioship Brain Stage X"] = 4
+         ["Medium Brain Stage X"] = 4
       };
-      "Medium Bioship Brain Stage 1", "Medium Bioship Brain Stage 2",
-      "Medium Bioship Brain Stage 3", "Medium Bioship Brain Stage 4",
-      "Medium Bioship Brain Stage X"
+      "Medium Brain Stage 1", "Medium Brain Stage 2",
+      "Medium Brain Stage 3", "Medium Brain Stage 4",
+      "Medium Brain Stage X",
    },
    ["Nyx"] = {
       probability = {
-         ["Medium-Heavy Bioship Brain Stage X"] = 5
+         ["Medium-Heavy Brain Stage X"] = 5
       };
-      "Medium-Heavy Bioship Brain Stage 1",
-      "Medium-Heavy Bioship Brain Stage 2",
-      "Medium-Heavy Bioship Brain Stage 3",
-      "Medium-Heavy Bioship Brain Stage 4",
-      "Medium-Heavy Bioship Brain Stage 5",
-      "Medium-Heavy Bioship Brain Stage X"
+      "Medium-Heavy Brain Stage 1",
+      "Medium-Heavy Brain Stage 2",
+      "Medium-Heavy Brain Stage 3",
+      "Medium-Heavy Brain Stage 4",
+      "Medium-Heavy Brain Stage 5",
+      "Medium-Heavy Brain Stage X",
    },
    ["Ira"] = {
       probability = {
-         ["Superheavy Bioship Brain Stage X"] = 7
+         ["Heavy Brain Stage X"] = 6
       };
-      "Superheavy Bioship Brain Stage 1",
-      "Superheavy Bioship Brain Stage 2",
-      "Superheavy Bioship Brain Stage 3",
-      "Superheavy Bioship Brain Stage 4",
-      "Superheavy Bioship Brain Stage 5",
-      "Superheavy Bioship Brain Stage 6",
-      "Superheavy Bioship Brain Stage 7",
-      "Superheavy Bioship Brain Stage X"
+      "Heavy Brain Stage 1",
+      "Heavy Brain Stage 2",
+      "Heavy Brain Stage 3",
+      "Heavy Brain Stage 4",
+      "Heavy Brain Stage 5",
+      "Heavy Brain Stage 6",
+      "Heavy Brain Stage X",
    },
    ["Arx"] = {
       probability = {
-         ["Superheavy Bioship Brain Stage X"] = 7
+         ["Superheavy Brain Stage X"] = 7
       };
-      "Superheavy Bioship Brain Stage 1",
-      "Superheavy Bioship Brain Stage 2",
-      "Superheavy Bioship Brain Stage 3",
-      "Superheavy Bioship Brain Stage 4",
-      "Superheavy Bioship Brain Stage 5",
-      "Superheavy Bioship Brain Stage 6",
-      "Superheavy Bioship Brain Stage 7",
-      "Superheavy Bioship Brain Stage X"
+      "Superheavy Brain Stage 1",
+      "Superheavy Brain Stage 2",
+      "Superheavy Brain Stage 3",
+      "Superheavy Brain Stage 4",
+      "Superheavy Brain Stage 5",
+      "Superheavy Brain Stage 6",
+      "Superheavy Brain Stage 7",
+      "Superheavy Brain Stage X",
    },
    ["Vox"] = {
       probability = {
-         ["Superheavy Bioship Brain Stage X"] = 7
+         ["Superheavy Brain Stage X"] = 7
       };
-      "Superheavy Bioship Brain Stage 1",
-      "Superheavy Bioship Brain Stage 2",
-      "Superheavy Bioship Brain Stage 3",
-      "Superheavy Bioship Brain Stage 4",
-      "Superheavy Bioship Brain Stage 5",
-      "Superheavy Bioship Brain Stage 6",
-      "Superheavy Bioship Brain Stage 7",
-      "Superheavy Bioship Brain Stage X"
+      "Superheavy Brain Stage 1",
+      "Superheavy Brain Stage 2",
+      "Superheavy Brain Stage 3",
+      "Superheavy Brain Stage 4",
+      "Superheavy Brain Stage 5",
+      "Superheavy Brain Stage 6",
+      "Superheavy Brain Stage 7",
+      "Superheavy Brain Stage X",
    },
 }
 
@@ -647,111 +673,105 @@ equip_typeOutfits_coreSystems = {
 -- Table of available engines by base type.
 equip_typeOutfits_engines = {
    ["Hyena"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Shark"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
-   },
-   ["Brigand"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Fidelity"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
-   },
-   ["Perspicacity"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
    },
    ["Derivative"] = {
-      "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-      "Tricon Zephyr Engine"
+      "Nexus Dart 150 Engine", "Tricon Zephyr Engine",
+   },
+   ["Vendetta"] = {
+      "Unicorp Hawk 350 Engine", "Melendez Ox XL Engine",
+      "Tricon Zephyr II Engine",
    },
    ["Kestrel"] = {
-      "Unicorp Eagle 4500 Engine", "Nexus Bolt 4500 Engine",
-      "Krain Remige Engine", "Tricon Typhoon Engine"
+      "Nexus Bolt 4500 Engine", "Krain Remige Engine",
+      "Tricon Typhoon Engine",
+   },
+   ["Hawking"] = {
+      "Nexus Bolt 4500 Engine", "Tricon Typhoon Engine",
    },
    ["Brigand"] = {
       probability = {
-         ["Ultralight Bioship Fast Fin Stage X"] = 2
+         ["Ultralight Fast Gene Drive Stage X"] = 2
       };
-      "Ultralight Bioship Fast Fin Stage 1", "Ultralight Bioship Fast Fin Stage 2",
-      "Ultralight Bioship Fast Fin Stage X"
+      "Ultralight Fast Gene Drive Stage 1", "Ultralight Fast Gene Drive Stage 2",
+      "Ultralight Fast Gene Drive Stage X",
    },
    ["Reaver"] = {
       probability = {
-         ["Light Bioship Fast Fin Stage X"] = 3
+         ["Light Fast Gene Drive Stage X"] = 3
       };
-      "Light Bioship Fast Fin Stage 1", "Light Bioship Fast Fin Stage 2",
-      "Light Bioship Fast Fin Stage 3", "Light Bioship Fast Fin Stage X"
+      "Light Fast Gene Drive Stage 1", "Light Fast Gene Drive Stage 2",
+      "Light Fast Gene Drive Stage 3", "Light Fast Gene Drive Stage X",
    },
    ["Marauder"] = {
       probability = {
-         ["Light Bioship Fast Fin Stage X"] = 3
+         ["Light Fast Gene Drive Stage X"] = 3
       };
-      "Light Bioship Fast Fin Stage 1", "Light Bioship Fast Fin Stage 2",
-      "Light Bioship Fast Fin Stage 3", "Light Bioship Fast Fin Stage X"
+      "Light Fast Gene Drive Stage 1", "Light Fast Gene Drive Stage 2",
+      "Light Fast Gene Drive Stage 3", "Light Fast Gene Drive Stage X",
    },
    ["Odium"] = {
       probability = {
-         ["Medium Bioship Fast Fin Stage X"] = 4
+         ["Medium Fast Gene Drive Stage X"] = 4
       };
-      "Medium Bioship Fast Fin Stage 1", "Medium Bioship Fast Fin Stage 2",
-      "Medium Bioship Fast Fin Stage 3", "Medium Bioship Fast Fin Stage 4",
-      "Medium Bioship Fast Fin Stage X"
+      "Medium Fast Gene Drive Stage 1", "Medium Fast Gene Drive Stage 2",
+      "Medium Fast Gene Drive Stage 3", "Medium Fast Gene Drive Stage 4",
+      "Medium Fast Gene Drive Stage X",
    },
    ["Nyx"] = {
       probability = {
-         ["Medium-Heavy Bioship Fast Fin Stage X"] = 5
+         ["Medium-Heavy Fast Gene Drive Stage X"] = 5
       };
-      "Medium-Heavy Bioship Fast Fin Stage 1",
-      "Medium-Heavy Bioship Fast Fin Stage 2",
-      "Medium-Heavy Bioship Fast Fin Stage 3",
-      "Medium-Heavy Bioship Fast Fin Stage 4",
-      "Medium-Heavy Bioship Fast Fin Stage 5",
-      "Medium-Heavy Bioship Fast Fin Stage X"
+      "Medium-Heavy Fast Gene Drive Stage 1",
+      "Medium-Heavy Fast Gene Drive Stage 2",
+      "Medium-Heavy Fast Gene Drive Stage 3",
+      "Medium-Heavy Fast Gene Drive Stage 4",
+      "Medium-Heavy Fast Gene Drive Stage 5",
+      "Medium-Heavy Fast Gene Drive Stage X",
    },
    ["Ira"] = {
       probability = {
-         ["Superheavy Bioship Fast Fin Stage X"] = 7
+         ["Heavy Fast Gene Drive Stage X"] = 6
       };
-      "Superheavy Bioship Fast Fin Stage 1",
-      "Superheavy Bioship Fast Fin Stage 2",
-      "Superheavy Bioship Fast Fin Stage 3",
-      "Superheavy Bioship Fast Fin Stage 4",
-      "Superheavy Bioship Fast Fin Stage 5",
-      "Superheavy Bioship Fast Fin Stage 6",
-      "Superheavy Bioship Fast Fin Stage 7",
-      "Superheavy Bioship Fast Fin Stage X"
+      "Heavy Fast Gene Drive Stage 1",
+      "Heavy Fast Gene Drive Stage 2",
+      "Heavy Fast Gene Drive Stage 3",
+      "Heavy Fast Gene Drive Stage 4",
+      "Heavy Fast Gene Drive Stage 5",
+      "Heavy Fast Gene Drive Stage 6",
+      "Heavy Fast Gene Drive Stage X",
    },
    ["Arx"] = {
       probability = {
-         ["Superheavy Bioship Strong Fin Stage X"] = 7
+         ["Superheavy Strong Gene Drive Stage X"] = 7
       };
-      "Superheavy Bioship Strong Fin Stage 1",
-      "Superheavy Bioship Strong Fin Stage 2",
-      "Superheavy Bioship Strong Fin Stage 3",
-      "Superheavy Bioship Strong Fin Stage 4",
-      "Superheavy Bioship Strong Fin Stage 5",
-      "Superheavy Bioship Strong Fin Stage 6",
-      "Superheavy Bioship Strong Fin Stage 7",
-      "Superheavy Bioship Strong Fin Stage X"
+      "Superheavy Strong Gene Drive Stage 1",
+      "Superheavy Strong Gene Drive Stage 2",
+      "Superheavy Strong Gene Drive Stage 3",
+      "Superheavy Strong Gene Drive Stage 4",
+      "Superheavy Strong Gene Drive Stage 5",
+      "Superheavy Strong Gene Drive Stage 6",
+      "Superheavy Strong Gene Drive Stage 7",
+      "Superheavy Strong Gene Drive Stage X",
    },
    ["Vox"] = {
       probability = {
-         ["Superheavy Bioship Strong Fin Stage X"] = 7
+         ["Superheavy Strong Gene Drive Stage X"] = 7
       };
-      "Superheavy Bioship Strong Fin Stage 1",
-      "Superheavy Bioship Strong Fin Stage 2",
-      "Superheavy Bioship Strong Fin Stage 3",
-      "Superheavy Bioship Strong Fin Stage 4",
-      "Superheavy Bioship Strong Fin Stage 5",
-      "Superheavy Bioship Strong Fin Stage 6",
-      "Superheavy Bioship Strong Fin Stage 7",
-      "Superheavy Bioship Strong Fin Stage X"
+      "Superheavy Strong Gene Drive Stage 1",
+      "Superheavy Strong Gene Drive Stage 2",
+      "Superheavy Strong Gene Drive Stage 3",
+      "Superheavy Strong Gene Drive Stage 4",
+      "Superheavy Strong Gene Drive Stage 5",
+      "Superheavy Strong Gene Drive Stage 6",
+      "Superheavy Strong Gene Drive Stage 7",
+      "Superheavy Strong Gene Drive Stage X",
    },
 }
 
@@ -759,111 +779,103 @@ equip_typeOutfits_engines = {
 -- Table of available hulls by base type.
 equip_typeOutfits_hulls = {
    ["Hyena"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
-      "S&K Ultralight Stealth Plating"
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
    },
    ["Shark"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
-      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
-   },
-   ["Brigand"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
-      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
+      "S&K Ultralight Combat Plating",
    },
    ["Fidelity"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
-      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
-   },
-   ["Perspicacity"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
-      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
+      "S&K Ultralight Combat Plating",
    },
    ["Derivative"] = {
-      "Unicorp D-2 Light Plating", "Unicorp B-2 Light Plating",
-      "S&K Ultralight Stealth Plating", "S&K Ultralight Combat Plating"
+      "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating",
+      "S&K Ultralight Combat Plating",
    },
    ["Kestrel"] = {
-      "Unicorp D-16 Heavy Plating", "Unicorp B-16 Heavy Plating",
-      "S&K Heavy Combat Plating"
+      "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating",
+   },
+   ["Hawking"] = {
+      "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating",
    },
    ["Brigand"] = {
       probability = {
-         ["Ultralight Bioship Shell Stage X"] = 2
+         ["Ultralight Shell Stage X"] = 2,
       };
-      "Ultralight Bioship Shell Stage 1", "Ultralight Bioship Shell Stage 2",
-      "Ultralight Bioship Shell Stage X"
+      "Ultralight Shell Stage 1", "Ultralight Shell Stage 2",
+      "Ultralight Shell Stage X",
    },
    ["Reaver"] = {
       probability = {
-         ["Light Bioship Shell Stage X"] = 3
+         ["Light Shell Stage X"] = 3,
       };
-      "Light Bioship Shell Stage 1", "Light Bioship Shell Stage 2",
-      "Light Bioship Shell Stage 3", "Light Bioship Shell Stage X"
+      "Light Shell Stage 1", "Light Shell Stage 2",
+      "Light Shell Stage 3", "Light Shell Stage X",
    },
    ["Marauder"] = {
       probability = {
-         ["Light Bioship Shell Stage X"] = 3
+         ["Light Shell Stage X"] = 3,
       };
-      "Light Bioship Shell Stage 1", "Light Bioship Shell Stage 2",
-      "Light Bioship Shell Stage 3", "Light Bioship Shell Stage X"
+      "Light Shell Stage 1", "Light Shell Stage 2",
+      "Light Shell Stage 3", "Light Shell Stage X",
    },
    ["Odium"] = {
       probability = {
-         ["Medium Bioship Shell Stage X"] = 4
+         ["Medium Shell Stage X"] = 4,
       };
-      "Medium Bioship Shell Stage 1", "Medium Bioship Shell Stage 2",
-      "Medium Bioship Shell Stage 3", "Medium Bioship Shell Stage 4",
-      "Medium Bioship Shell Stage X"
+      "Medium Shell Stage 1", "Medium Shell Stage 2",
+      "Medium Shell Stage 3", "Medium Shell Stage 4",
+      "Medium Shell Stage X",
    },
    ["Nyx"] = {
       probability = {
-         ["Medium-Heavy Bioship Shell Stage X"] = 5
+         ["Medium-Heavy Shell Stage X"] = 5,
       };
-      "Medium-Heavy Bioship Shell Stage 1",
-      "Medium-Heavy Bioship Shell Stage 2",
-      "Medium-Heavy Bioship Shell Stage 3",
-      "Medium-Heavy Bioship Shell Stage 4",
-      "Medium-Heavy Bioship Shell Stage 5",
-      "Medium-Heavy Bioship Shell Stage X"
+      "Medium-Heavy Shell Stage 1",
+      "Medium-Heavy Shell Stage 2",
+      "Medium-Heavy Shell Stage 3",
+      "Medium-Heavy Shell Stage 4",
+      "Medium-Heavy Shell Stage 5",
+      "Medium-Heavy Shell Stage X",
    },
    ["Ira"] = {
       probability = {
-         ["Superheavy Bioship Shell Stage X"] = 7
+         ["Heavy Shell Stage X"] = 6,
       };
-      "Superheavy Bioship Shell Stage 1",
-      "Superheavy Bioship Shell Stage 2",
-      "Superheavy Bioship Shell Stage 3",
-      "Superheavy Bioship Shell Stage 4",
-      "Superheavy Bioship Shell Stage 5",
-      "Superheavy Bioship Shell Stage 6",
-      "Superheavy Bioship Shell Stage 7",
-      "Superheavy Bioship Shell Stage X"
+      "Heavy Shell Stage 1",
+      "Heavy Shell Stage 2",
+      "Heavy Shell Stage 3",
+      "Heavy Shell Stage 4",
+      "Heavy Shell Stage 5",
+      "Heavy Shell Stage 6",
+      "Heavy Shell Stage X",
    },
    ["Arx"] = {
       probability = {
-         ["Superheavy Bioship Shell Stage X"] = 7
+         ["Superheavy Shell Stage X"] = 7,
       };
-      "Superheavy Bioship Shell Stage 1",
-      "Superheavy Bioship Shell Stage 2",
-      "Superheavy Bioship Shell Stage 3",
-      "Superheavy Bioship Shell Stage 4",
-      "Superheavy Bioship Shell Stage 5",
-      "Superheavy Bioship Shell Stage 6",
-      "Superheavy Bioship Shell Stage 7",
-      "Superheavy Bioship Shell Stage X"
+      "Superheavy Shell Stage 1",
+      "Superheavy Shell Stage 2",
+      "Superheavy Shell Stage 3",
+      "Superheavy Shell Stage 4",
+      "Superheavy Shell Stage 5",
+      "Superheavy Shell Stage 6",
+      "Superheavy Shell Stage 7",
+      "Superheavy Shell Stage X",
    },
    ["Vox"] = {
       probability = {
-         ["Superheavy Bioship Shell Stage X"] = 7
+         ["Superheavy Shell Stage X"] = 7,
       };
-      "Superheavy Bioship Shell Stage 1",
-      "Superheavy Bioship Shell Stage 2",
-      "Superheavy Bioship Shell Stage 3",
-      "Superheavy Bioship Shell Stage 4",
-      "Superheavy Bioship Shell Stage 5",
-      "Superheavy Bioship Shell Stage 6",
-      "Superheavy Bioship Shell Stage 7",
-      "Superheavy Bioship Shell Stage X"
+      "Superheavy Shell Stage 1",
+      "Superheavy Shell Stage 2",
+      "Superheavy Shell Stage 3",
+      "Superheavy Shell Stage 4",
+      "Superheavy Shell Stage 5",
+      "Superheavy Shell Stage 6",
+      "Superheavy Shell Stage 7",
+      "Superheavy Shell Stage X",
    },
 }
 
@@ -871,24 +883,277 @@ equip_typeOutfits_hulls = {
 -- Tables of available weapons by base type.
 -- See equip_set function for more info.
 equip_typeOutfits_weapons = {
+   ["Hyena"] = {
+      {
+         num = 1;
+         "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+      },
+      {
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Ion Cannon",
+      },
+   },
+   ["Shark"] = {
+      {
+         num = 1;
+         "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+      },
+      {
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Ion Cannon",
+      },
+   },
+   ["Fidelity"] = {
+      {
+         num = 1;
+         "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+      },
+      {
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Ion Cannon",
+      },
+   },
+   ["Derivative"] = {
+      {
+         num = 1;
+         "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+      },
+      {
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Ion Cannon",
+      },
+   },
+   ["Vendetta"] = {
+      {
+         num = 2;
+         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher", "Ion Cannon",
+      },
+      {
+         num = 2;
+         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher", "Ion Cannon",
+      },
+      {
+         "Laser Cannon MK2", "Razor MK2", "Vulcan Gun", "Plasma Blaster MK2",
+         "Laser Cannon MK1", "Razor MK1", "Gauss Gun", "Plasma Blaster MK1",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher", "Ion Cannon",
+      },
+   },
    ["Vigilance"] = {
       {
          num = 2;
-         "Railgun"
+         "Railgun",
+      },
+      {
+         num = 1;
+         "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
       },
       {
          varied = true;
-         "Turreted Vulcan Gun", "Mass Driver MK2", "Unicorp Mace Launcher",
-         "Heavy Ion Cannon"
-      }
+         "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+         "Heavy Ripper Cannon", "Mass Driver", "Plasma Cluster Cannon",
+      },
+   },
+   ["Kestrel"] = {
+      {
+         "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
+      },
+      {
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+         "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+      },
+   },
+   ["Hawking"] = {
+      {
+         num = 1;
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
+      },
    },
    ["Goddard"] = {
       {
+         num = 1;
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         "Railgun", "Heavy Ripper Turret", "Railgun Turret",
+      },
+      {
+         "TeraCom Mace Launcher",
+      },
+   },
+   ["Brigand"] = {
+      {
+         "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+         "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Stinger Stage X"] = 3,
+         };
+         "BioPlasma Stinger Stage 1", "BioPlasma Stinger Stage 2",
+         "BioPlasma Stinger Stage 3", "BioPlasma Stinger Stage X",
+      },
+   },
+   ["Reaver"] = {
+      {
+         "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
+         "Unicorp Medusa Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Stinger Stage X"] = 4,
+         };
+         "BioPlasma Claw Stage 1", "BioPlasma Claw Stage 2",
+         "BioPlasma Claw Stage 3", "BioPlasma Claw Stage 4",
+         "BioPlasma Claw Stage X",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Stinger Stage X"] = 3,
+         };
+         "BioPlasma Stinger Stage 1", "BioPlasma Stinger Stage 2",
+         "BioPlasma Stinger Stage 3", "BioPlasma Stinger Stage X",
+      },
+   },
+   ["Marauder"] = {
+      {
          varied = true;
-         "Railgun Turret", "Railgun", "Repeating Railgun", "Mass Driver MK3",
-         "Mass Driver MK2", "Heavy Laser", "Grave Beam"
-      }
-   }
+         "TeraCom Fury Launcher", "TeraCom Medusa Launcher",
+         "Unicorp Headhunter Launcher", "Unicorp Fury Launcher",
+         "Unicorp Medusa Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Claw Stage X"] = 4,
+         };
+         "BioPlasma Claw Stage 1", "BioPlasma Claw Stage 2",
+         "BioPlasma Claw Stage 3", "BioPlasma Claw Stage 4",
+         "BioPlasma Claw Stage X",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Stinger Stage X"] = 3,
+         };
+         "BioPlasma Stinger Stage 1", "BioPlasma Stinger Stage 2",
+         "BioPlasma Stinger Stage 3", "BioPlasma Stinger Stage X",
+      },
+   },
+   ["Odium"] = {
+      {
+         varied = true;
+         "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
+         "Unicorp Medusa Launcher", "Unicorp Vengeance Launcher",
+         "Enygma Systems Spearhead Launcher", "Unicorp Caesar IV Launcher",
+         "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+         "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
+         "TeraCom Imperator Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Fang Stage X"] = 5,
+         };
+         "BioPlasma Fang Stage 1", "BioPlasma Fang Stage 2",
+         "BioPlasma Fang Stage 3", "BioPlasma Fang Stage 4",
+         "BioPlasma Fang Stage 5", "BioPlasma Fang Stage X",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Claw Stage X"] = 4,
+         };
+         "BioPlasma Claw Stage 1", "BioPlasma Claw Stage 2",
+         "BioPlasma Claw Stage 3", "BioPlasma Claw Stage 4",
+         "BioPlasma Claw Stage X",
+      },
+   },
+   ["Nyx"] = {
+      {
+         varied = true, probability = {
+            ["BioPlasma Talon Stage X"] = 6,
+         };
+         "BioPlasma Talon Stage 1", "BioPlasma Talon Stage 2",
+         "BioPlasma Talon Stage 3", "BioPlasma Talon Stage 4",
+         "BioPlasma Talon Stage 5", "BioPlasma Talon Stage 6",
+         "BioPlasma Talon Stage X",
+      },
+      {
+         num = 1;
+         "TeraCom Fury Launcher", "TeraCom Headhunter Launcher",
+      },
+      {
+         "Plasma Cluster Cannon",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Claw Stage X"] = 4,
+         };
+         "BioPlasma Claw Stage 1", "BioPlasma Claw Stage 2",
+         "BioPlasma Claw Stage 3", "BioPlasma Claw Stage 4",
+         "BioPlasma Claw Stage X",
+      },
+   },
+   ["Ira"] = {
+      {
+         num = 1;
+         "TeraCom Fury Launcher", "Enygma Systems Turreted Fury Launcher",
+         "TeraCom Headhunter Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Talon Stage X"] = 6,
+         };
+         "BioPlasma Talon Stage 1", "BioPlasma Talon Stage 2",
+         "BioPlasma Talon Stage 3", "BioPlasma Talon Stage 4",
+         "BioPlasma Talon Stage 5", "BioPlasma Talon Stage 6",
+         "BioPlasma Talon Stage X",
+      },
+   },
+   ["Arx"] = {
+      {
+         varied = true;
+         "Soromid Brigand Fighter Bay",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Tentacle Stage X"] = 7,
+         };
+         "BioPlasma Tentacle Stage 1", "BioPlasma Tentacle Stage 2",
+         "BioPlasma Tentacle Stage 3", "BioPlasma Tentacle Stage 4",
+         "BioPlasma Tentacle Stage 5", "BioPlasma Tentacle Stage 6",
+         "BioPlasma Tentacle Stage 7", "BioPlasma Tentacle Stage X",
+      },
+      {
+         "Heavy Ripper Turret", "Grave Beam",
+      },
+   },
+   ["Vox"] = {
+      {
+         num = 1;
+         "Enygma Systems Turreted Fury Launcher",
+         "Enygma Systems Turreted Headhunter Launcher",
+      },
+      {
+         varied = true, probability = {
+            ["BioPlasma Tentacle Stage X"] = 7,
+         };
+         "BioPlasma Tentacle Stage 1", "BioPlasma Tentacle Stage 2",
+         "BioPlasma Tentacle Stage 3", "BioPlasma Tentacle Stage 4",
+         "BioPlasma Tentacle Stage 5", "BioPlasma Tentacle Stage 6",
+         "BioPlasma Tentacle Stage 7", "BioPlasma Tentacle Stage X",
+      },
+   },
 }
 
 
@@ -904,36 +1169,43 @@ equip_typeOutfits_structurals = {
          varied = true, probability = {
             ["Cargo Pod"] = 9, ["Fuel Pod"] = 2
          };
-         "Cargo Pod", "Fuel Pod", "Improved Refrigeration Cycle"
-      }
-   }
+         "Cargo Pod", "Fuel Pod",
+      },
+   },
 }
 
 
 -- Table of available core systems by ship.
 equip_shipOutfits_coreSystems = {
-   ["Za'lek Scout Drone"] = { "Milspec Aegis 2201 Core System" },
-   ["Za'lek Light Drone"] = { "Milspec Orion 2301 Core System" },
+   ["Empire Lancelot"] = { "Milspec Orion 3701 Core System" },
+   ["Sirius Fidelity"] = { "Milspec Orion 2301 Core System" },
+   ["Za'lek Scout Drone"] = { "Milspec Orion 2301 Core System" },
    ["Za'lek Heavy Drone"] = {  "Milspec Orion 3701 Core System" },
-   ["Za'lek Bomber Drone"] = { "Milspec Hermes 3602 Core System" }
+   ["Za'lek Bomber Drone"] = { "Milspec Orion 3701 Core System" },
 }
 
 
 -- Table of available engines by ship.
 equip_shipOutfits_engines = {
+   ["Empire Lancelot"] = { "Tricon Zephyr II Engine" },
+   ["Sirius Fidelity"] = { "Tricon Zephyr Engine" },
    ["Za'lek Scout Drone"] = { "Tricon Zephyr Engine" },
-   ["Za'lek Light Drone"] = { "Tricon Zephyr Engine" },
    ["Za'lek Heavy Drone"] = { "Tricon Zephyr II Engine" },
-   ["Za'lek Bomber Drone"] = { "Tricon Zephyr II Engine" }
+   ["Za'lek Bomber Drone"] = { "Tricon Zephyr II Engine" },
 }
 
 
 -- Table of available hulls by ship.
 equip_shipOutfits_hulls = {
-   ["Za'lek Scout Drone"] = { "S&K Ultralight Stealth Plating" },
-   ["Za'lek Light Drone"] = { "S&K Ultralight Combat Plating" },
+   ["Empire Lancelot"] = {
+      "Nexus Light Stealth Plating", "S&K Light Combat Plating",
+   },
+   ["Sirius Fidelity"] = {
+      "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating",
+   },
+   ["Za'lek Scout Drone"] = { "Nexus Light Stealth Plating" },
    ["Za'lek Heavy Drone"] = { "S&K Light Combat Plating" },
-   ["Za'lek Bomber Drone"] = { "S&K Light Combat Plating" }
+   ["Za'lek Bomber Drone"] = { "Nexus Light Stealth Plating" },
 }
 
 
@@ -943,58 +1215,51 @@ equip_shipOutfits_weapons = {
    ["Empire Lancelot"] = {
       {
          num = 1;
-         "TeraCom Fury Launcher", "Unicorp Headhunter Launcher",
-         "Unicorp Vengeance Launcher", "Enygma Systems Spearhead Launcher",
-         "Heavy Ripper Cannon"
+         "Unicorp Fury Launcher", "Unicorp Headhunter Launcher",
+         "TeraCom Fury Launcher",
       },
       {
-         "Ripper Cannon"
-      }
+         "Laser Cannon MK2", "Plasma Blaster MK2",
+      },
    },
    ["Sirius Fidelity"] = {
       {
-         num = 2;
-         "Razor MK2", "Razor MK3", "Ion Cannon"
+         num = 1;
+         "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
       },
       {
-         "Razor MK2", "Razor MK3", "Ion Cannon"
-      }
+         "Razor MK1", "Ion Cannon",
+      },
    },
    ["Za'lek Scout Drone"] = {
       {
-         "Particle Lance"
-      }
+         "Particle Lance",
+      },
    },
    ["Za'lek Light Drone"] = {
       {
-         "Particle Lance", "Orion Lance"
-      }
+         "Particle Lance",
+      },
    },
    ["Za'lek Heavy Drone"] = {
       {
-         "Grave Lance"
-      },
-      {
-         num = 1;
+         num = 2;
          "Orion Lance"
       },
       {
+         num = 1;
          "Electron Burst Cannon"
       }
    },
    ["Za'lek Bomber Drone"] = {
       {
-         varied = true;
-         "Unicorp Fury Launcher", "TeraCom Fury Launcher",
-         "Unicorp Headhunter Launcher", "Unicorp Vengeance Launcher"
-      },
-      {
+         num = 2;
          "Electron Burst Cannon"
       },
       {
          "Particle Lance"
-      }
-   }
+      },
+   },
 }
 
 
@@ -1005,6 +1270,13 @@ equip_shipOutfits_utilities = {}
 -- Tables of available structurals by ship.
 -- See equip_set function for more info.
 equip_shipOutfits_structurals = {}
+
+equip_nocores = {
+   ["Za'lek Scout Drone"] = true,
+   ["Za'lek Light Drone"] = true,
+   ["Za'lek Heavy Drone"] = true,
+   ["Za'lek Bomber Drone"] = true,
+}
 
 
 --[[
@@ -1072,12 +1344,10 @@ function equip_set( p, set )
 
          -- Add entries based on "probability".
          if probability ~= nil then
-            chance = probability[ choice ]
-            if chance ~= nil then
-               -- Starting at 2 because the first one is already in the table.
-               for j=2,chance do
-                  choices[ #choices + 1 ] = choice
-               end
+            chance = probability[ choice ] or 0
+            -- Starting at 2 because the first one is already in the table.
+            for j=2,chance do
+               choices[ #choices + 1 ] = choice
             end
          end
       end
@@ -1086,9 +1356,12 @@ function equip_set( p, set )
       i = 1
       while #choices > 0 and (num == nil or i <= num) do
          i = i + 1
+
+         -- If varied we switch up the outfit next iteration
          if varied then c = rnd.rnd( 1, #choices ) end
 
          equipped = p:addOutfit( choices[c] )
+         -- Failed to equip
          if equipped <= 0 then
             if varied or num == nil then
                table.remove( choices, c )
@@ -1118,58 +1391,60 @@ function equip_generic( p )
    local success
    local o
 
-   -- Core systems
-   success = false
-   o = equip_shipOutfits_coreSystems[shipname]
-   if o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_typeOutfits_coreSystems[basetype]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_classOutfits_coreSystems[class]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   if not success then
-      equip_warn( p, "Unicorp PT-100 Core System" )
-   end
+   if not equip_nocores[shipname] then
+      -- Core systems
+      success = false
+      o = equip_shipOutfits_coreSystems[shipname]
+      if o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_typeOutfits_coreSystems[basetype]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_classOutfits_coreSystems[class]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      if not success then
+         equip_warn( p, "Unicorp PT-16 Core System" )
+      end
 
-   -- Engines
-   success = false
-   o = equip_shipOutfits_engines[shipname]
-   if o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_typeOutfits_engines[basetype]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_classOutfits_engines[class]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   if not success then
-      equip_warn( p, "Unicorp Hawk 150 Engine" )
-   end
+      -- Engines
+      success = false
+      o = equip_shipOutfits_engines[shipname]
+      if o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_typeOutfits_engines[basetype]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_classOutfits_engines[class]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      if not success then
+         equip_warn( p, "Unicorp Hawk 350 Engine" )
+      end
 
-   -- Hulls
-   success = false
-   o = equip_shipOutfits_hulls[shipname]
-   if o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_typeOutfits_hulls[basetype]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   o = equip_classOutfits_hulls[class]
-   if not success and o ~= nil then
-      success = equip_warn( p, o[rnd.rnd(1, #o)] )
-   end
-   if not success then
-      equip_warn( p, "Unicorp D-2 Light Plating" )
+      -- Hulls
+      success = false
+      o = equip_shipOutfits_hulls[shipname]
+      if o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_typeOutfits_hulls[basetype]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      o = equip_classOutfits_hulls[class]
+      if not success and o ~= nil then
+         success = equip_warn( p, o[rnd.rnd(1, #o)] )
+      end
+      if not success then
+         equip_warn( p, "Unicorp D-2 Light Plating" )
+      end
    end
 
    -- Weapons
@@ -1187,8 +1462,18 @@ function equip_generic( p )
    equip_set( p, equip_typeOutfits_structurals[basetype] )
    equip_set( p, equip_classOutfits_structurals[class] )
 
+   -- Fill ammo
+   p:fillAmmo()
+
    -- Add cargo
    local pb = equip_classCargo[class]
+   if pb == nil then
+      warn( string.format(
+            "Class %s not handled by equip_classCargo in equip script",
+            class ) )
+      return
+   end
+
    if rnd.rnd() < pb then
       local avail_cargo = commodity.getStandard()
 

@@ -78,7 +78,11 @@ bioship_parts = {
    { "Superheavy Bioship Strong Fin Stage %s", 7 },
 
    -- Weapons
-   { "BioPlasma Organ Stage %s", 3 },
+   { "BioPlasma Stinger Stage %s", 3 },
+   { "BioPlasma Claw Stage %s", 4 },
+   { "BioPlasma Fang Stage %s", 5 },
+   { "BioPlasma Talon Stage %s", 6 },
+   { "BioPlasma Tentacle Stage %s", 7 },
 }
 
 

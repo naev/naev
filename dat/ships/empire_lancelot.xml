@@ -16,7 +16,6 @@
  <license>Light Combat Vessel License</license>
  <description>This military grade version of the Lancelot is mostly identical in function to a standard Lancelot, but with slightly better armour, shields, and heat dissipation.</description>
  <health>
-  <absorb>8</absorb>
   <armour>70</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -31,12 +30,12 @@
   <weapon size="small" x="12" y="0" h="0" />
   <weapon size="small" x="-3" y="0" h="2" />
   <weapon size="small" x="-3" y="0" h="2" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-68 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 350 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />

@@ -15,21 +15,20 @@
  <fabricator>Skull and Bones</fabricator>
  <description>The Kestrel is the best ship offered by the Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirates who can afford it.</description>
  <health>
-  <absorb>28</absorb>
   <armour>950</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
   <crew>28</crew>
-  <mass>1300</mass>
+  <mass>1000</mass>
   <fuel_consumption>400</fuel_consumption>
   <cargo>80</cargo>
  </characteristics>
  <slots>
   <weapon size="large" x="-23" y="-15" h="5" />
   <weapon size="large" x="-23" y="15" h="5" />
-  <weapon size="large" x="44" y="0" h="0" />
-  <weapon size="large" x="-6" y="0" h="12" />
+  <weapon size="large" prop="fighter_bay" x="44" y="0" h="0" />
+  <weapon size="large" prop="fighter_bay" x="-6" y="0" h="12" />
   <weapon size="medium" x="-24" y="-8" h="8" />
   <weapon size="medium" x="-24" y="8" h="8" />
   <utility size="large" prop="systems" exclusive="1" required="1">Previous Generation Large Systems</utility>
@@ -47,8 +46,9 @@
   <structure size="medium" />
  </slots>
  <stats>
-  <speed_mod>5</speed_mod>
-  <turn_mod>5</turn_mod>
+  <shield_mod>5</shield_mod>
+  <speed_mod>10</speed_mod>
+  <turn_mod>10</turn_mod>
   <thrust_mod>5</thrust_mod>
   <cargo_mod>15</cargo_mod>
   <armour_mod>-10</armour_mod>

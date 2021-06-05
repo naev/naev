@@ -99,6 +99,7 @@ static int pilotL_setInvincible( lua_State *L );
 static int pilotL_setInvincPlayer( lua_State *L );
 static int pilotL_setHide( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
+static int pilotL_setNoRender( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
@@ -131,6 +132,7 @@ static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
+static int pilotL_getShipStat( lua_State *L );
 static int pilotL_cargoFree( lua_State *L );
 static int pilotL_cargoHas( lua_State *L );
 static int pilotL_cargoAdd( lua_State *L );
@@ -193,6 +195,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
    { "stats", pilotL_getStats },
+   { "shipstat", pilotL_getShipStat },
    { "colour", pilotL_getColour },
    { "hostile", pilotL_getHostile },
    { "flags", pilotL_flags },
@@ -218,6 +221,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setInvincPlayer", pilotL_setInvincPlayer },
    { "setHide", pilotL_setHide },
    { "setInvisible", pilotL_setInvisible },
+   { "setNoRender", pilotL_setNoRender },
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
    { "setHilight", pilotL_setHilight },
@@ -578,7 +582,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 
    /* Set up velocities and such. */
    if (jump != NULL) {
-      space_calcJumpInPos( cur_system, jump->from, &vp, &vv, &a );
+      space_calcJumpInPos( cur_system, jump->from, &vp, &vv, &a, NULL );
       pilot_setFlagRaw( flags, PILOT_HYP_END );
    }
 
@@ -872,6 +876,9 @@ static int pilotL_getHostiles( lua_State *L )
    lua_newtable(L);
    k = 1;
    for (i=0; i<array_size(pilot_stack); i++) {
+      /* Check if dead. */
+      if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+         continue;
       /* Must be hostile. */
       if ( !( areEnemies( pilot_stack[i]->faction, p->faction )
                || ( (p->id == PLAYER_ID)
@@ -980,7 +987,7 @@ static int pilotL_exists( lua_State *L )
    /* Must still be kicking and alive. */
    if (p==NULL)
       exists = 0;
-   else if (pilot_isFlag( p, PILOT_DEAD ))
+   else if (pilot_isFlag( p, PILOT_DEAD ) || pilot_isFlag( p, PILOT_HIDE ))
       exists = 0;
    else
       exists = 1;
@@ -1364,7 +1371,7 @@ static int pilotL_weapset( lua_State *L )
          if (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
             lua_pushstring(L, "track");
             if (target != NULL)
-               lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.track ));
+               lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.trackmin, slot->outfit->u.blt.trackmax ));
             else
                lua_pushnumber(L, -1);
             lua_rawset(L,-3);
@@ -1581,25 +1588,40 @@ static int pilotL_actives( lua_State *L )
             break;
          case PILOT_OUTFIT_WARMUP:
             str = "warmup";
+            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF)
+               d = 1.; /* TODO add warmup stuff to normal active outfits (not sure if necessary though. */
+            else
+               d = o->progress;
+            lua_pushstring(L,"warmup");
+            lua_pushnumber(L, d );
+            lua_rawset(L,-3);
             break;
          case PILOT_OUTFIT_ON:
             str = "on";
-            d = outfit_duration(o->outfit);
-            if (d==0.)
-               d = 1.;
-            else if (!isinf(o->stimer))
-               d = o->stimer / d;
+            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF) {
+               d = outfit_duration(o->outfit);
+               if (d==0.)
+                  d = 1.;
+               else if (!isinf(o->stimer))
+                  d = o->stimer / d;
+            }
+            else
+               d = o->progress;
             lua_pushstring(L,"duration");
             lua_pushnumber(L, d );
             lua_rawset(L,-3);
             break;
          case PILOT_OUTFIT_COOLDOWN:
             str = "cooldown";
-            d = outfit_cooldown(o->outfit);
-            if (d==0.)
-               d = 0.;
-            else if (!isinf(o->stimer))
-               d = o->stimer / d;
+            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF) {
+               d = outfit_cooldown(o->outfit);
+               if (d==0.)
+                  d = 0.;
+               else if (!isinf(o->stimer))
+                  d = o->stimer / d;
+            }
+            else
+               d = o->progress;
             lua_pushstring(L,"cooldown");
             lua_pushnumber(L, d );
             lua_rawset(L,-3);
@@ -2234,6 +2256,22 @@ static int pilotL_setHide( lua_State *L )
 static int pilotL_setInvisible( lua_State *L )
 {
    return pilotL_setFlagWrapper( L, PILOT_INVISIBLE );
+}
+
+
+/**
+ * @brief Sets the pilot's norender status.
+ *
+ * The pilot still acts normally but is just not visible and can still take
+ * damage. Meant to be used in conjunction with other flags like "invisible".
+ *
+ *    @luatparam Pilot p Pilot to set norender status of.
+ *    @luatparam boolean state State to set norender.
+ * @luafunc setInvisible
+ */
+static int pilotL_setNoRender( lua_State *L )
+{
+   return pilotL_setFlagWrapper( L, PILOT_NORENDER );
 }
 
 
@@ -3190,8 +3228,9 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "energy_regen", p->energy_regen );
    /* Stats. */
    PUSH_DOUBLE( L, "dmg_absorb", p->dmg_absorb );
-   PUSH_DOUBLE( L, "ew_hide", p->ew_hide );
-   PUSH_DOUBLE( L, "ew_detect", p->ew_detect );
+   PUSH_DOUBLE( L, "ew_detection", p->ew_detection );
+   PUSH_DOUBLE( L, "ew_evasion", p->ew_evasion );
+   PUSH_DOUBLE( L, "ew_stealth", p->ew_stealth );
    PUSH_DOUBLE( L, "jump_delay", ntime_convertSeconds( pilot_hyperspaceDelay(p) ) );
    PUSH_INT( L, "jumps", pilot_getJumps(p) );
 
@@ -3199,6 +3238,23 @@ static int pilotL_getStats( lua_State *L )
 }
 #undef PUSH_DOUBLE
 #undef PUSH_INT
+
+
+/**
+ * @brief Gets a shipstat from a Pilot by name.
+ *
+ *    @luatparam Pilot p Pilot to get ship stat of.
+ *    @luatparam string name Name of the ship stat to get.
+ *    @luatreturn number Number corresponding to the ship stat.
+ * @luafunc shipstat
+ */
+static int pilotL_getShipStat( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   const char *str = luaL_checkstring(L,2);
+   lua_pushnumber(L, ss_statsGet(&p->stats,str) );
+   return 1;
+}
 
 
 /**
@@ -3467,6 +3523,9 @@ static const struct pL_flag pL_flags[] = {
    { .name = "visible", .id = PILOT_VISIBLE },
    { .name = "visplayer", .id = PILOT_VISPLAYER },
    { .name = "hilight", .id = PILOT_HILIGHT },
+   { .name = "stealth", .id = PILOT_STEALTH },
+   { .name = "invisible", .id = PILOT_INVISIBLE }, 
+   { .name = "norender", .id = PILOT_NORENDER },
    { .name = "hide", .id = PILOT_HIDE },
    { .name = "invincible", .id = PILOT_INVINCIBLE },
    { .name = "invinc_player", .id = PILOT_INVINC_PLAYER },
@@ -3495,6 +3554,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> visible: pilot is always visible.</li>
  *  <li> visplayer: pilot is always visible to the player.</li>
  *  <li> hilight: pilot is hilighted on the map.</li>
+ *  <li> stealth: pilot is in stealth mode.</li>
  *  <li> invisible: pilot is not displayed.</li>
  *  <li> invincible: pilot cannot be hit.</li>
  *  <li> invinc_player: pilot cannot be hit by the player.</li>

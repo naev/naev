@@ -98,8 +98,11 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_LAND_DELAY,         land_delay,          gettext_noop("Landing Time") ),
    DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia,       gettext_noop("Cargo Inertia") ),
 
-   D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             gettext_noop("Cloaking") ),
+   D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             gettext_noop("Concealment") ),
+   D__ELEM( SS_TYPE_D_EW_EVADE,           ew_evade,            gettext_noop("Evasion") ),
+   D__ELEM( SS_TYPE_D_EW_STEALTH,         ew_stealth,          gettext_noop("Stealth") ),
    D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,           gettext_noop("Detection") ),
+   D__ELEM( SS_TYPE_D_EW_TRACK,           ew_track,            gettext_noop("Tracking") ),
    D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,      gettext_noop("Jump Detection") ),
 
    D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         gettext_noop("Fire Rate (Launcher)") ),
@@ -140,9 +143,12 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_LOOT_MOD,           loot_mod,            gettext_noop("Boarding Bonus") ),
    DI_ELEM( SS_TYPE_D_TIME_MOD,           time_mod,            gettext_noop("Time Constant") ),
    D__ELEM( SS_TYPE_D_TIME_SPEEDUP,       time_speedup,        gettext_noop("Speed-Up") ),
+   DI_ELEM( SS_TYPE_D_COOLDOWN_TIME,      cooldown_time,       gettext_noop("Ship Cooldown Time") ),
+   D__ELEM( SS_TYPE_D_JUMP_DISTANCE,      jump_distance,       gettext_noop("Jump Distance") ),
 
    A__ELEM( SS_TYPE_A_ENERGY_FLAT,        energy_flat,         gettext_noop("Energy Capacity") ),
    AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        gettext_noop("Energy Usage") ),
+   AI_ELEM( SS_TYPE_A_ENERGY_LOSS,        energy_loss,         gettext_noop("Energy Usage") ),
    A__ELEM( SS_TYPE_A_SHIELD_FLAT,        shield_flat,         gettext_noop("Shield Capacity") ),
    AI_ELEM( SS_TYPE_A_SHIELD_REGEN_FLAT,  shield_usage,        gettext_noop("Shield Usage") ),
    A__ELEM( SS_TYPE_A_ARMOUR_FLAT,        armour_flat,         gettext_noop("Armour") ),
@@ -150,6 +156,7 @@ static const ShipStatsLookup ss_lookup[] = {
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             gettext_noop("CPU Capacity") ),
 
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        gettext_noop("Engine Mass Limit") ),
+   A__ELEM( SS_TYPE_A_ABSORB_FLAT,        absorb_flat,         gettext_noop("Damage Absorption") ),
 
    I__ELEM( SS_TYPE_I_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, gettext_noop("Hidden Jump Detection") ),
 
@@ -339,10 +346,9 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
  *
  *    @param stats Stat structure to modify.
  *    @param list Single element to apply.
- *    @param amount If non nil stores the number found in amount.
  *    @return 0 on success.
  */
-int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipStats *amount )
+int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
 {
    char *ptr;
    char *fieldptr;
@@ -353,38 +359,24 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
    ptr = (char*) stats;
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&dbl, &fieldptr, sizeof(double*));
+         *dbl *= 1.0+list->d.d;
+         if (*dbl < 0.) /* Don't let the values go negative. */
+            *dbl = 0.;
+         break;
+
+
       case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
          fieldptr = &ptr[ sl->offset ];
          memcpy(&dbl, &fieldptr, sizeof(double*));
          *dbl += list->d.d;
-         if ((sl->data==SS_DATA_TYPE_DOUBLE) && (*dbl < 0.)) /* Don't let the values go negative. */
-            *dbl = 0.;
-
-         /* We'll increment amount. */
-         if (amount != NULL) {
-            if ((sl->inverted && (list->d.d < 0.)) ||
-                  (!sl->inverted && (list->d.d > 0.))) {
-               memcpy(&ptr, &amount, sizeof(char*));
-               fieldptr = &ptr[ sl->offset ];
-               memcpy(&dbl, &fieldptr, sizeof(double*));
-               (*dbl)  += 1.0;
-            }
-         }
          break;
 
       case SS_DATA_TYPE_INTEGER:
          fieldptr = &ptr[ sl->offset ];
          memcpy(&i, &fieldptr, sizeof(int*));
          *i   += list->d.i;
-         if (amount != NULL) {
-            if ((sl->inverted && (list->d.i < 0)) ||
-                  (!sl->inverted && (list->d.i > 0))) {
-               memcpy(&ptr, &amount, sizeof(char*));
-               fieldptr = &ptr[ sl->offset ];
-               memcpy(&i, &fieldptr, sizeof(int*));
-               (*i)    += 1;
-            }
-         }
          break;
 
       case SS_DATA_TYPE_BOOLEAN:
@@ -403,16 +395,15 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
  *
  *    @param stats Stats to update.
  *    @param list List to update from.
- *    @param amount If non nil stores the number found in amount.
  */
-int ss_statsModFromList( ShipStats *stats, const ShipStatList* list, const ShipStats *amount )
+int ss_statsModFromList( ShipStats *stats, const ShipStatList* list )
 {
    int ret;
    const ShipStatList *ll;
 
    ret = 0;
    for (ll = list; ll != NULL; ll = ll->next)
-      ret |= ss_statsModSingle( stats, ll, amount );
+      ret |= ss_statsModSingle( stats, ll );
 
    return ret;
 }

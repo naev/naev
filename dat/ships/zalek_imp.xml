@@ -13,7 +13,6 @@
  <license>Medium Combat Vessel License</license>
  <description>The Za'lek Imp is a lightweight corvette that features a cutting-edge sensor suite, even relative to most other Za'lek vessels. While it lacks the firepower of heavier corvettes, the information advantage it confers to fleets should not be dismissed.</description>
  <health>
-  <absorb>12</absorb>
   <armour>180</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -29,13 +28,13 @@
   <weapon size="medium" x="-9" y="10" h="2" />
   <weapon size="medium" x="-9" y="-3" h="2" />
   <weapon size="medium" x="-9" y="3" h="2" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="small" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 550 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-8 Medium Plating</structure>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Nexus Arrow 700 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
  </slots>

@@ -340,8 +340,10 @@ static int outfitL_cpu( lua_State *L )
  *
  *    @luatparam Outfit o Outfit to get information of.
  *    @luatreturn string Human readable name (in English).
- *    @luatreturn string Human readable size.
- *    @luatreturn string Human readable property.
+ *    @luatreturn string Human readable size (in English).
+ *    @luatreturn string Human readable property (in English).
+ *    @luatreturn boolean Slot is required.
+ *    @luatreturn boolean Slot is exclusive.
  * @luafunc slot
  */
 static int outfitL_slot( lua_State *L )
@@ -350,6 +352,8 @@ static int outfitL_slot( lua_State *L )
    lua_pushstring(L, outfit_slotName(o));
    lua_pushstring(L, outfit_slotSize(o));
    lua_pushstring(L, sp_display( o->slot.spid ));
+   lua_pushboolean(L, sp_required( o->slot.spid ));
+   lua_pushboolean(L, sp_exclusive( o->slot.spid ));
 
    return 3;
 }

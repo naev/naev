@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Unicorp PT-68 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>small</size>
+  <priority>7</priority>
+  <mass>30</mass>
+  <price>35000</price>
+  <description>The PT-68 is an economical core system providing decent performance to small-to-medium vessels.</description>
+  <gfx_store>core_system_basic_s2.png</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>68</cpu_max>
+  <energy>225</energy>
+  <energy_regen>18</energy_regen>
+  <shield>180</shield>
+  <shield_regen>5</shield_regen>
+  <energy_regen_mod>10</energy_regen_mod>
+  <shield_regen_mod>10</shield_regen_mod>
+  <ew_detect>10</ew_detect>
+ </specific>
+</outfit>

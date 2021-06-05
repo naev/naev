@@ -13,7 +13,6 @@
  <license>Light Combat Vessel License</license>
  <description>Reavers are often found at the forefront of Soromid military engagements. Their good speed and maneuverability are compounded by their durability, making the Reaver one of the most effective heavy fighters in the galaxy.</description>
  <health>
-  <absorb>7</absorb>
   <armour>75</armour>
   <armour_regen>3</armour_regen>
  </health>
@@ -28,13 +27,13 @@
   <weapon size="small" prop="bio_weapon" x="12" y="0" h="0" />
   <weapon size="small" prop="bio_weapon" x="-3" y="0" h="2" />
   <weapon size="small" prop="bio_weapon" x="-3" y="0" h="2" />
-  <utility size="small" prop="bio_systems" exclusive="1" required="1">Light Bioship Brain Stage 1</utility>
+  <utility size="small" prop="bio_systems" exclusive="1" required="1">Light Brain Stage 1</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="bio_engines" exclusive="1" required="1">Light Bioship Fast Fin Stage 1</structure>
-  <structure size="small" prop="bio_hull" exclusive="1" required="1">Light Bioship Shell Stage 1</structure>
+  <structure size="small" prop="bio_engines" exclusive="1" required="1">Light Fast Gene Drive Stage 1</structure>
+  <structure size="small" prop="bio_hull" exclusive="1" required="1">Light Shell Stage 1</structure>
   <structure size="small" />
   <structure size="small" />
  </slots>

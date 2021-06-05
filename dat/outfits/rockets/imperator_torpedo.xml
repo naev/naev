@@ -9,7 +9,7 @@
  </general>
  <specific type="ammo">
   <gfx>imperator.webp</gfx>
-  <sound>mace</sound>
+  <sound>torpedo</sound>
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>ExpL2</spfx_shield>
   <spfx_armour>ExpL2</spfx_armour>

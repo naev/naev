@@ -10,7 +10,7 @@
  </GFX>
  <presence>
   <faction>Thurion</faction>
-  <value>1000.000000</value>
+  <value>600.000000</value>
   <range>2</range>
  </presence>
  <general>
@@ -53,5 +53,6 @@
   <item>Star Maps</item>
   <item>__Heavy Weapon License</item>
   <item>__Heavy Combat Vessel License</item>
+  <item>Thurion Elite Outfits</item>
  </tech>
 </asset>

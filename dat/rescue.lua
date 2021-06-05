@@ -304,7 +304,7 @@ function buildTables()
 
    -- Find the number of required cores, and their default outfits.
    for k,v in pairs(slots) do
-      if v.property then
+      if v.required then
          required[ v.property ] = v
          nrequired = nrequired + 1
       end
@@ -364,10 +364,10 @@ function equipDefaults( defaults )
    local pp = player.pilot() -- Convenience.
 
    for k,v in ipairs( pp:outfits() ) do
-      local _, _, prop = v:slot()
+      local _, _, prop, required = v:slot()
 
       -- Remove if required but not default.
-      if prop and v ~= defaults[prop].outfit then
+      if required and v ~= defaults[prop].outfit then
          -- Store and remove old
          player.addOutfit(v:nameRaw())
          pp:rmOutfit(v:nameRaw())

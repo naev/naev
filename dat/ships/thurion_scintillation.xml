@@ -13,7 +13,6 @@
  <license>Light Combat Vessel License</license>
  <description>The Thurion Scintillation is a bomber designed to attack from a large distance. It is better armed than any other Thurion ship of comparable size, but still not as well as other bombers.</description>
  <health>
-  <absorb>6</absorb>
   <armour>125</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -27,12 +26,13 @@
  <slots>
   <weapon size="medium" x="11" y="-4" h="1" />
   <weapon size="medium" x="11" y="4" h="1" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
+  <weapon size="small" x="11" y="4" h="1" />
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-68 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 350 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
@@ -49,7 +49,7 @@
   <ammo_capacity>50</ammo_capacity>
   <cpu_mod>10</cpu_mod>
   <ew_hide>30</ew_hide>
-  <nebu_absorb_shield>80</nebu_absorb_shield>
-  <nebu_absorb_armour>97</nebu_absorb_armour>
+  <nebu_absorb_shield>15</nebu_absorb_shield>
+  <nebu_absorb_armour>15</nebu_absorb_armour>
  </stats>
 </ship>

@@ -1306,7 +1306,7 @@ static int playerL_teleport( lua_State *L )
 {
    Planet *pnt;
    StarSystem *sys;
-   const char *name, *pntname;
+   const char *name, *pntname, *sysname;
 
    NLUA_CHECKRW(L);
 
@@ -1337,8 +1337,8 @@ static int playerL_teleport( lua_State *L )
    /* Get destination from string. */
    else if (lua_isstring(L,1)) {
       name = lua_tostring(L,1);
-      sys = system_get( name );
-      if (sys == NULL) {
+      sysname = system_existsCase( name );
+      if (sysname == NULL) {
          /* No system found, assume destination string is the name of a planet. */
          pntname = name;
          name = planet_getSystem( pntname );
@@ -1353,6 +1353,8 @@ static int playerL_teleport( lua_State *L )
             return 0;
          }
       }
+      else
+         sys = system_get( sysname );
    }
    else
       NLUA_INVALID_PARAMETER(L);

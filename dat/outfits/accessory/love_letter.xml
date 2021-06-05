@@ -14,6 +14,6 @@
  <rarity>6</rarity></general>
  <specific type="modification">
   <stress_dissipation>10</stress_dissipation>
-  <crew_mod>10</crew_mod>
+  <launch_range>10</launch_range>
  </specific>
 </outfit>

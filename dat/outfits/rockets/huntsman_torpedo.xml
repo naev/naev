@@ -9,7 +9,7 @@
  </general>
  <specific type="ammo">
   <gfx>caesar_blue.webp</gfx>
-  <sound>mace</sound>
+  <sound>torpedo</sound>
   <sound_hit>empexplode</sound_hit>
   <spfx_shield>EmpS</spfx_shield>
   <spfx_armour>EmpM</spfx_armour>

@@ -29,11 +29,15 @@ int pilotoutfit_modified = 0;
 /* Pilot outfit metatable methods. */
 static int poL_outfit( lua_State *L );
 static int poL_state( lua_State *L );
+static int poL_progress( lua_State *L );
 static int poL_set( lua_State *L );
+static int poL_clear( lua_State *L );
 static const luaL_Reg poL_methods[] = {
    { "outfit", poL_outfit },
    { "state", poL_state },
+   { "progress", poL_progress },
    { "set", poL_set },
+   { "clear", poL_clear },
    {0,0}
 }; /**< Pilot outfit metatable methods. */
 
@@ -193,6 +197,21 @@ static int poL_state( lua_State *L )
 
 
 /**
+ * @brief Sets the state progress of the PilotOutfit.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to set the state of.
+ *    @luatparam number progress Progress of the current state with 1 being started and 0 being done.
+ * @luafunc progress
+ */
+static int poL_progress( lua_State *L )
+{
+   PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
+   po->progress = CLAMP( 0., 1., luaL_checknumber(L,2) );
+   return 0;
+}
+
+
+/**
  * @brief Sets a temporary ship stat modifier of the pilot outfit.
  *
  *    @luatparam PilotOutfit po Pilot outfit to set the modifier of.
@@ -206,6 +225,21 @@ static int poL_set( lua_State *L )
    const char *name = luaL_checkstring(L,2);
    double value = luaL_checknumber(L,3);
    ss_statsSet( &po->lua_stats, name, value, 1 );
+   pilotoutfit_modified = 1;
+   return 0;
+}
+
+
+/**
+ * @brief Clears all the temporary ship stat modifiers of the pilot outfit.
+ *
+ *    @luatparam PilotOutfit po Pilot outfit to clear temporary modifiers from.
+ * @luafunc clear
+ */
+static int poL_clear( lua_State *L )
+{
+   PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
+   ss_statsInit( &po->lua_stats );
    pilotoutfit_modified = 1;
    return 0;
 }

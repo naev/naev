@@ -659,7 +659,7 @@ static void map_update( unsigned int wid )
    /*
     * System Status, if not showing commodity info
     */
-   if (map_mode != MAPMODE_TRAVEL) {
+   if (map_mode == MAPMODE_TRAVEL) {
       buf[0] = '\0';
       p = 0;
       /* Nebula. */

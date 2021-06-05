@@ -8,7 +8,7 @@
   <price>16000</price>
   <description>One of the more common countermeasures employed by low-budget merchant ships, the turret version of the Gauss Gun provides basic defense against lone pirates. A more determined attacker is unlikely to be deterred, however.</description>
   <gfx_store>gaussturret.png</gfx_store>
-  <cpu>-8</cpu>
+  <cpu>-24</cpu>
  </general>
  <specific type="turret bolt">
   <gfx>gatling.png</gfx>
@@ -16,17 +16,18 @@
   <sound_hit>medexp0</sound_hit>
   <spfx_shield>ExpS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>0.325</delay>
+  <delay>0.2</delay>
   <speed>500</speed>
-  <range blowup="armour">800</range>
-  <energy>7</energy>
+  <range blowup="armour">1000</range>
+  <energy>2.5</energy>
   <heatup>40</heatup>
-  <track>2.2</track>
+  <trackmin>1000</trackmin>
+  <trackmax>4000</trackmax>
   <damage>
    <type>impact</type>
-   <penetrate>11</penetrate>
-   <physical>6.5</physical>
-   <disable>1</disable>
+   <penetrate>6</penetrate>
+   <physical>4</physical>
+   <disable>0.25</disable>
   </damage>
  </specific>
 </outfit>

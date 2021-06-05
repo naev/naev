@@ -124,6 +124,7 @@ typedef struct PilotOutfitSlot_ {
    double stimer;    /**< State timer, tracking current state. */
    double timer;     /**< Used to store when it was last used. */
    double rtimer;    /**< Used to store when a reload can happen. */
+   double progress;  /**< Used to store state progress and used by Lua outfits. */
    int level;        /**< Level in current weapon set (-1 is none). */
    int weapset;      /**< First weapon set that uses the outfit (-1 is none). */
 
@@ -265,16 +266,16 @@ typedef struct Pilot_ {
    double energy_tau; /**< Tau regeneration rate for energy. */
    double energy_loss; /**< Linear loss that bypasses the actual RC circuit stuff. */
 
-   /* Electronic warfare. */
-   double ew_base_hide; /**< Base static hide factor. */
-   double ew_mass;   /**< Mass factor. */
-   double ew_heat;   /**< Heat factor, affects hide. */
-   double ew_asteroid;   /**< Asteroid field factor, affects hide. */
-   double ew_hide;   /**< Static hide factor. */
-   double ew_movement; /**< Movement factor. */
-   double ew_evasion; /**< Dynamic evasion factor. */
-   double ew_detect; /**< Static detection factor. */
+   /* Defensive Electronic Warfare. */
+   double ew_detection; /**< Main detection. */
+   double ew_evasion;   /**< Evasion. */
+   double ew_stealth;   /**< Stealth. */
+   /* Defensive Electronic Warfare. */
+   double ew_mass;      /**< Mass factor. */
+   double ew_asteroid;  /**< Asteroid field factor, affects hide. */
+   /* misc. */
    double ew_jump_detect; /** Static jump detection factor */
+   double ew_stealth_timer; /**< Stealth timer. */
 
    /* Heat. */
    double heat_T;    /**< Ship temperature. [K] */
@@ -399,6 +400,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
 int pilot_getJumps( const Pilot* p );
 const glColour* pilot_getColour( const Pilot* p );
 int pilot_validTarget( const Pilot* p, const Pilot* target );
+int pilot_canTarget( const Pilot* p);
 
 /* non-lua wrappers */
 double pilot_relsize( const Pilot* cur_pilot, const Pilot* p );

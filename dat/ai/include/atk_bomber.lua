@@ -25,11 +25,11 @@ function atk_bomber( target )
    local range = ai.getweaprange(3, 0)
 
    -- TODO bombers need their own specific routines
-   if dist > range * mem.atk_approach then
+   if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
       _atk_g_ranged( target, dist )
 
    else
-      _atk_f_flyby( target, dist )   
+      _atk_f_flyby( target, dist )
    end
 end
 

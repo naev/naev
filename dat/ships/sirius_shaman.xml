@@ -13,7 +13,6 @@
  <license>Light Combat Vessel License</license>
  <description>Though its relatively sleek form may cause it to be mistaken for a light fighter from a distance, the Shaman is anything but. A purpose-built light missile platform, few enemies escape the reach of the Shaman.</description>
  <health>
-  <absorb>5</absorb>
   <armour>75</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -28,11 +27,11 @@
   <weapon size="medium" x="-2" y="-4" h="-1" />
   <weapon size="small" x="4" y="2" h="0" />
   <weapon size="small" x="4" y="-2" h="0" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-68 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 350 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />

@@ -218,6 +218,7 @@ static int aiL_getenemy_heuristic( lua_State *L ); /* number getenemy_heuristic(
 static int aiL_hostile( lua_State *L ); /* hostile( number ) */
 static int aiL_getweaprange( lua_State *L ); /* number getweaprange() */
 static int aiL_getweapspeed( lua_State *L ); /* number getweapspeed() */
+static int aiL_getweapammo( lua_State *L );
 static int aiL_canboard( lua_State *L ); /* boolean canboard( number ) */
 static int aiL_relsize( lua_State *L ); /* boolean relsize( number ) */
 static int aiL_reldps( lua_State *L ); /* boolean reldps( number ) */
@@ -242,6 +243,7 @@ static int aiL_setasterotarget( lua_State *L ); /* setasterotarget( number, numb
 static int aiL_gatherablePos( lua_State *L ); /* gatherablepos( number ) */
 static int aiL_shoot_indicator( lua_State *L ); /* get shoot indicator */
 static int aiL_set_shoot_indicator( lua_State *L ); /* set shoot indicator */
+static int aiL_stealth( lua_State *L );
 
 
 static const luaL_Reg aiL_methods[] = {
@@ -312,6 +314,7 @@ static const luaL_Reg aiL_methods[] = {
    { "hostile", aiL_hostile },
    { "getweaprange", aiL_getweaprange },
    { "getweapspeed", aiL_getweapspeed },
+   { "getweapammo", aiL_getweapammo },
    { "canboard", aiL_canboard },
    { "relsize", aiL_relsize },
    { "reldps", aiL_reldps },
@@ -332,6 +335,7 @@ static const luaL_Reg aiL_methods[] = {
    { "gatherablepos", aiL_gatherablePos },
    { "shoot_indicator", aiL_shoot_indicator },
    { "set_shoot_indicator", aiL_set_shoot_indicator },
+   { "stealth", aiL_stealth },
    {0,0} /* end */
 }; /**< Lua AI Function table. */
 
@@ -676,10 +680,10 @@ static int ai_loadProfile( const char* filename )
 
    /* Find and set up the necessary references. */
    str = _("AI Profile '%s' is missing '%s' function!");
-   prof->ref_control = nlua_refenv( env, "control" );
+   prof->ref_control = nlua_refenvtype( env, "control", LUA_TFUNCTION );
    if (prof->ref_control == LUA_NOREF)
       WARN( str, filename, "control" );
-   prof->ref_control_manual = nlua_refenv( env, "control_manual" );
+   prof->ref_control_manual = nlua_refenvtype( env, "control_manual", LUA_TFUNCTION );
    if (prof->ref_control == LUA_NOREF)
       WARN( str, filename, "control_manual" );
 
@@ -2997,16 +3001,8 @@ static int aiL_hostile( lua_State *L )
  */
 static int aiL_getweaprange( lua_State *L )
 {
-   int id;
-   int level;
-
-   id    = cur_pilot->active_set;
-   level = -1;
-   if (lua_isnumber(L,1))
-      id = luaL_checkint(L,1);
-   if (lua_isnumber(L,2))
-      level = luaL_checkint(L,2);
-
+   int id    = luaL_optinteger( L, 1, cur_pilot->active_set );
+   int level = luaL_optinteger( L, 2, -1 );
    lua_pushnumber(L, pilot_weapSetRange( cur_pilot, id, level ) );
    return 1;
 }
@@ -3022,17 +3018,26 @@ static int aiL_getweaprange( lua_State *L )
  */
 static int aiL_getweapspeed( lua_State *L )
 {
-   int id;
-   int level;
-
-   id    = cur_pilot->active_set;
-   level = -1;
-   if (lua_isnumber(L,1))
-      id = luaL_checkint(L,1);
-   if (lua_isnumber(L,2))
-      level = luaL_checkint(L,2);
-
+   int id    = luaL_optinteger( L, 1, cur_pilot->active_set );
+   int level = luaL_optinteger( L, 2, -1 );
    lua_pushnumber(L, pilot_weapSetSpeed( cur_pilot, id, level ) );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the ammo of a weapon.
+ *
+ *    @luatparam[opt] number id Optional parameter indicating id of weapon set to get ammo of, defaults to selected one.
+ *    @luatparam[opt=-1] number level Level of weapon set to get range of.
+ *    @luatreturn number The range of the weapon set.
+ * @luafunc getweapammo
+ */
+static int aiL_getweapammo( lua_State *L )
+{
+   int id    = luaL_optinteger( L, 1, cur_pilot->active_set );
+   int level = luaL_optinteger( L, 2, -1 );
+   lua_pushnumber(L, pilot_weapSetAmmo( cur_pilot, id, level ) );
    return 1;
 }
 
@@ -3288,6 +3293,30 @@ static int aiL_messages( lua_State *L )
    lua_rawgeti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
    lua_newtable(naevL);
    lua_rawseti(L, LUA_REGISTRYINDEX, cur_pilot->messages);
+   return 1;
+}
+
+
+/**
+ * @brief Tries to stealth or destealth the pilot.
+ *
+ *    @luatparam boolean enable Whether or not to try to stealth the pilot.
+ *    @luatreturn boolean Whether or not the stealthing or destealthing succeeded.
+ * @luafunc stealth
+ */
+static int aiL_stealth( lua_State *L )
+{
+   int b = 1;
+   if (lua_gettop(L)>0)
+      b = lua_toboolean(L,1);
+
+   if (!b) {
+      pilot_destealth( cur_pilot );
+      lua_pushboolean(L,1); /* always succeeds */
+      return 1;
+   }
+
+   lua_pushboolean(L, pilot_stealth( cur_pilot ));
    return 1;
 }
 

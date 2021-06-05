@@ -246,7 +246,7 @@ function interceptors()
       badguys[i]:rmOutfit("cores")
 
       badguys[i]:addOutfit("S&K Ultralight Combat Plating")
-      badguys[i]:addOutfit("Milspec Prometheus 2203 Core System")
+      badguys[i]:addOutfit("Milspec Orion 2301 Core System")
       badguys[i]:addOutfit("Tricon Zephyr Engine")
 
       badguys[i]:addOutfit("Shredder",3)
@@ -269,7 +269,7 @@ function hvy_intercept()
       badguys[i]:rmOutfit("cores")
 
       badguys[i]:addOutfit("Unicorp D-4 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-200 Core System")
+      badguys[i]:addOutfit("Unicorp PT-68 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
 
       badguys[i]:addOutfit("TeraCom Fury Launcher")
@@ -292,11 +292,11 @@ function corvette()
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
 
-      badguys[i]:addOutfit("Unicorp D-8 Medium Plating")
-      badguys[i]:addOutfit("Unicorp PT-500 Core System")
+      badguys[i]:addOutfit("Unicorp D-12 Medium Plating")
+      badguys[i]:addOutfit("Unicorp PT-200 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
 
-      badguys[i]:addOutfit("Razor Turret MK3",2)
+      badguys[i]:addOutfit("Razor Turret MK2",2)
       badguys[i]:addOutfit("Unicorp Headhunter Launcher",2)
 
       badguys[i]:setHealth(100,100)
@@ -312,8 +312,8 @@ function cruiser()
    badguy:rmOutfit("all")
    badguy:rmOutfit("cores")
 
-   badguy:addOutfit("Unicorp D-16 Heavy Plating")
-   badguy:addOutfit("Unicorp PT-900 Core System")
+   badguy:addOutfit("Unicorp D-48 Heavy Plating")
+   badguy:addOutfit("Unicorp PT-500 Core System")
    badguy:addOutfit("Krain Remige Engine")
 
    badguy:addOutfit("Heavy Ripper Turret",2)
@@ -338,7 +338,7 @@ function bombers()
       badguys[i]:rmOutfit("cores")
 
       badguys[i]:addOutfit("S&K Ultralight Combat Plating")
-      badguys[i]:addOutfit("Milspec Prometheus 2203 Core System")
+      badguys[i]:addOutfit("Milspec Orion 2301 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
 
       badguys[i]:addOutfit("Unicorp Caesar IV Launcher",2)

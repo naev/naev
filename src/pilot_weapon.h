@@ -30,6 +30,7 @@ double pilot_weapFlyTime( Outfit *o, Pilot *parent, Vector2d *pos, Vector2d *vel
 
 
 /* Updating. */
+void pilot_weapSetUpdateStats( Pilot *p );
 void pilot_weapSetAIClear( Pilot* p );
 void pilot_weapSetPress( Pilot* p, int id, int type );
 void pilot_weapSetUpdate( Pilot* p );
@@ -43,6 +44,7 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o );
 int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o );
 double pilot_weapSetRange( Pilot* p, int id, int level );
 double pilot_weapSetSpeed( Pilot* p, int id, int level );
+double pilot_weapSetAmmo( Pilot *p, int id, int level );
 void pilot_weapSetCleanup( Pilot* p, int id );
 PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id );
 

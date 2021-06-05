@@ -38,5 +38,7 @@ PRINTF_FORMAT( 3, 4 ) int scnprintf( char* text, size_t maxlen, const char* fmt,
 
 int strsort( const void *p1, const void *p2 );
 
+#define NUM2STRLEN   16
+int num2str( char dest[NUM2STRLEN], double n, int decimals );
 
 #endif /* NSTRING_H */
