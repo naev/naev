@@ -1007,16 +1007,14 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
    /* We also save specially created cargos here. */
    xmlw_startElem(writer,"mission_cargo");
-   for (i=0; i<MISSION_MAX; i++) {
-      for (j=0; j<array_size(player.p->commodities); j++) {
-         pc = &player.p->commodities[j];
-         if (!pc->commodity->istemp)
-            continue;
-         xmlw_startElem(writer,"cargo");
-         xmlw_attr(writer,"name","%s",pc->commodity->name);
-         xmlw_attr(writer,"description","%s",pc->commodity->description);
-         xmlw_endElem(writer); /* "cargo" */
-      }
+   for (i=0; i<array_size(player.p->commodities); i++) {
+      pc = &player.p->commodities[i];
+      if (!pc->commodity->istemp)
+         continue;
+      xmlw_startElem(writer,"cargo");
+      xmlw_attr(writer,"name","%s",pc->commodity->name);
+      xmlw_attr(writer,"description","%s",pc->commodity->description);
+      xmlw_endElem(writer); /* "cargo" */
    }
    xmlw_endElem(writer); /* "missions_cargo */
 

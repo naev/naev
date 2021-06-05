@@ -675,7 +675,7 @@ static int misn_cargoNew( lua_State *L )
    cdesc    = luaL_checkstring(L,2);
 
    cargo    = commodity_getW(cname);
-   if (!cargo->istemp)
+   if ((cargo != NULL) && !cargo->istemp)
       NLUA_ERROR(L,_("Trying to create new cargo '%s' that would shadow existing non-temporary cargo!"), cname);
 
    if (cargo==NULL)

@@ -607,6 +607,7 @@ Commodity* commodity_newTemp( const char* name, const char* desc )
       commodity_temp = array_create( Commodity );
 
    c              = &array_grow(&commodity_stack);
+   memset( c, 0, sizeof(Commodity) );
    c->istemp      = 1;
    c->name        = strdup(name);
    c->description = strdup(desc);
