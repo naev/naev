@@ -127,6 +127,8 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
    /* Must be in evasion range. */
    if (d < pow2(p->stats.ew_detect * p->stats.ew_track * t->ew_evasion))
       p->scantimer -= dt;
+
+   /* TODO handle case the player finished scaning by setting a flag or something. */
 }
 
 
