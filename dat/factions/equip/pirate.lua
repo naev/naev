@@ -59,6 +59,14 @@ equip_typeOutfits_weapons["Shark"] = {
    },
 }
 
+-- TODO add Low Radiation Sensor Modulator when stealth is added to pilots
+local pir_util_medplus = { { varied = true;
+   "Scanning Combat AI" } }
+equip_shipOutfits_utilities["Pirate Phalanx"]   = pir_util_medplus
+equip_shipOutfits_utilities["Pirate Admonisher"]= pir_util_medplus
+equip_shipOutfits_utilities["Pirate Rhino"]     = pir_util_medplus
+equip_shipOutfits_utilities["Pirate Kestrel"]   = pir_util_medplus
+
 
 --[[
 -- @brief Does pirate pilot equipping

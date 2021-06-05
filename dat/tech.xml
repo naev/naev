@@ -298,6 +298,7 @@
   <item>Agility Combat AI</item>
   <item>Pinpoint Combat AI</item>
   <item>Hunting Combat AI</item>
+  <item>Scanning Combat AI</item>
  </tech>
  <tech name="All Ships">
   <item>Llama</item>
@@ -745,6 +746,7 @@
  </tech>
  <tech name="Pirate Elite Outfits">
   <item>Low Radiation Sensor Modulator</item>
+  <item>Scanning Combat AI</item>
  </tech>
 
  <!-- outfits -->
