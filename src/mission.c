@@ -1086,18 +1086,15 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
 
 /**
- * @brief Loads the player's active missions from a save.
+ * @brief Loads the player's special mission commodities.
  *
- *    @param parent Node containing the player's active missions.
+ *    @param parent Node containing the player's special mission cargo.
  *    @return 0 on success.
  */
-int missions_loadActive( xmlNodePtr parent )
+int missions_loadCommodity( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
    char *name, *desc;
-
-   /* cleanup old missions */
-   missions_cleanup();
 
    /* We have to ensure the mission_cargo stuff is loaded first. */
    node = parent->xmlChildrenNode;
@@ -1137,7 +1134,25 @@ int missions_loadActive( xmlNodePtr parent )
       }
    } while (xml_nextNode(node));
 
+   return 0;
+}
+
+
+/**
+ * @brief Loads the player's active missions from a save.
+ *
+ *    @param parent Node containing the player's active missions.
+ *    @return 0 on success.
+ */
+int missions_loadActive( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   /* cleanup old missions */
+   missions_cleanup();
+
    /* After load the normal missions. */
+   node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
       if (xml_isNode(node,"missions")) {

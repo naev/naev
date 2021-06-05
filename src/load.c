@@ -67,6 +67,7 @@ extern int save_loaded; /**< From save.c */
 /* player.c */
 extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
 /* mission.c */
+extern int missions_loadCommodity( xmlNodePtr parent ); /**< Loads active missions. */
 extern int missions_loadActive( xmlNodePtr parent ); /**< Loads active missions. */
 /* event.c */
 extern int events_loadActive( xmlNodePtr parent );
@@ -663,6 +664,7 @@ static int load_gameInternal( const char* file, const char* version )
 
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
+   missions_loadCommodity(node); /* Must be loaded before player. */
    pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
    pnt = player_load(node);
    player.loaded_version = strdup( (version!=NULL) ? version : naev_version(0) );
