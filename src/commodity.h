@@ -57,6 +57,7 @@ typedef struct Commodity_ {
    CommodityModifier *faction_modifier; /**< Price modifier for different factions. */
    credits_t lastPurchasePrice; /**< Price paid when last purchasing this commodity. */
    int istemp; /**< This commodity is temporary. */
+   int *illegalto; /**< Factions this commodity is illegal to. */
 } Commodity;
 
 typedef struct CommodityPrice_ {
@@ -104,6 +105,7 @@ void commodity_free (void);
  */
 int commodity_isTemp( const char* name );
 Commodity* commodity_newTemp( const char* name, const char* desc );
+int commodity_tempIllegalto( Commodity *com, int faction );
 
 
 /*

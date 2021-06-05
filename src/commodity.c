@@ -218,6 +218,7 @@ static void commodity_freeOne( Commodity* com )
       free(this->name);
       free(this);
    }
+   array_free(com->illegalto);
    /* Clear the memory. */
    memset(com, 0, sizeof(Commodity));
 }
@@ -612,6 +613,28 @@ Commodity* commodity_newTemp( const char* name, const char* desc )
    c->name        = strdup(name);
    c->description = strdup(desc);
    return c;
+}
+
+
+/**
+ * @brief Makes a temporary commodity illegal to something.
+ */
+int commodity_tempIllegalto( Commodity *com, int faction )
+{
+   int *f;
+
+   if (!com->istemp) {
+      WARN(_("Trying to modify temporary commodity '%s'!"), com->name);
+      return -1;
+   }
+
+   if (com->illegalto==NULL)
+      com->illegalto = array_create( int );
+
+   f = &array_grow(&com->illegalto);
+   *f = faction;
+
+   return 0;
 }
 
 
