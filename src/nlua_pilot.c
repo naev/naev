@@ -65,6 +65,7 @@ static int pilotL_clear( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
 static int pilotL_getPilots( lua_State *L );
 static int pilotL_getHostiles( lua_State *L );
+static int pilotL_getVisible( lua_State *L );
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
@@ -167,6 +168,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
    { "getHostiles", pilotL_getHostiles },
+   { "getisible", pilotL_getVisible },
    { "__eq", pilotL_eq },
    /* Info. */
    { "name", pilotL_name },
@@ -899,6 +901,46 @@ static int pilotL_getHostiles( lua_State *L )
 
    return 1;
 }
+
+
+/**
+ * @brief Gets visible pilots to a pilot within a certain distance.
+ *
+ *    @luatparam Pilot pilot Pilot to get visible pilots of.
+ *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
+ *    @luatreturn {Pilot,...} A table containing the pilots.
+ * @luafunc getVisible
+ */
+static int pilotL_getVisible( lua_State *L )
+{
+   int i, k;
+   Pilot *p = luaL_validpilot(L,1);
+   int dis = lua_toboolean(L,2);
+   Pilot *const* pilot_stack;
+
+   /* Now put all the matching pilots in a table. */
+   pilot_stack = pilot_getAll();
+   lua_newtable(L);
+   k = 1;
+   for (i=0; i<array_size(pilot_stack); i++) {
+      /* Check if dead. */
+      if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+         continue;
+      /* Check if disabled. */
+      if (dis && pilot_isDisabled(pilot_stack[i]))
+         continue;
+      /* Check visibilitiy. */
+      if (!pilot_validTarget( p, pilot_stack[i] ))
+         continue;
+
+      lua_pushnumber(L, k++); /* key */
+      lua_pushpilot(L, pilot_stack[i]->id); /* value */
+      lua_rawset(L,-3); /* table[key] = value */
+   }
+
+   return 1;
+}
+
 
 /**
  * @brief Checks to see if pilot and p are the same.
