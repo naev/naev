@@ -3641,22 +3641,9 @@ static int pilotL_flags( lua_State *L )
  */
 static int pilotL_hasIllegal( lua_State *L )
 {
-   int i;
-   Commodity *c;
    Pilot *p = luaL_validpilot(L,1);
    int f    = luaL_validfaction(L,2);
-
-   /* Check commodities. */
-   for (i=0; i<array_size(p->commodities); i++) {
-      c = p->commodities[i].commodity;
-      if (commodity_checkIllegal( c, f )) {
-         lua_pushboolean(L,1);
-         return 1;
-      }
-   }
-
-   /* Nothing to see here sir. */
-   lua_pushboolean(L,0);
+   lua_pushboolean(L, pilot_hasIllegal(p,f));
    return 1;
 }
 

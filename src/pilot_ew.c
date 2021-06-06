@@ -21,6 +21,7 @@
 #include "log.h"
 #include "pilot.h"
 #include "player.h"
+#include "player_autonav.h"
 #include "space.h"
 
 
@@ -48,9 +49,19 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close );
  */
 void pilot_ewScanStart( Pilot *p )
 {
+   Pilot *target;
+
    /* Ignore no target. */
    if (p->target == p->id)
       return;
+
+   target = pilot_get(p->target);
+   if (target==NULL)
+      return;
+
+   /* Player did bad stuff and is getting scanned. */
+   if (pilot_isPlayer(target) && pilot_hasIllegal(target,p->faction))
+      player_autonavResetSpeed();
 
    p->scantimer = 5.; /* TODO use a non-fixed value. */
 }

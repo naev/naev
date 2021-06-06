@@ -3510,3 +3510,27 @@ void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)
    lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); /* data, msg, messages */
    lua_pop(naevL, 3); /*  */
 }
+
+
+/**
+ * @brief Checks to see if the pilot has illegal stuf to a faction.
+ *
+ *    @param p Pilot to check.
+ *    @param faction Faction to check.
+ *    @return 1 if has illegal stuff 0 otherwise.
+ */
+int pilot_hasIllegal( const Pilot *p, int faction )
+{
+   int i;
+   Commodity *c;
+   /* Check commodities. */
+   for (i=0; i<array_size(p->commodities); i++) {
+      c = p->commodities[i].commodity;
+      if (commodity_checkIllegal( c, faction )) {
+         return 1;
+      }
+   }
+   /* Nothing to see here sir. */
+   return 0;
+}
+

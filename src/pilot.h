@@ -512,6 +512,7 @@ char pilot_getFactionColourChar( const Pilot *p );
 credits_t pilot_worth( const Pilot *p );
 void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int index);
 void pilot_sample_trails( Pilot* p, int none );
+int pilot_hasIllegal( const Pilot *p, int faction );
 
 
 #endif /* PILOT_H */
