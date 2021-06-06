@@ -120,7 +120,7 @@ function handle_messages ()
       local sender, msgtype, data = table.unpack(v)
       -- Below we only handle if they came from allies
       if p:faction():areAllies( sender:faction() ) then
-         if msgtype == "scanned" then
+         if mem.doscans and msgtype == "scanned" then
             if data ~= nil and data:exists() then
                table.insert( mem.scanned, data )
             end
