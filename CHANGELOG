@@ -1,5 +1,6 @@
 * 0.9.0 (unreleased)
    * Gameplay
+      * Illegal cargo and ship-to-ship detection implemented
       * Pilots can now go into stealth mode
       * Electronic warfare parameters are visible
       * Overhaul and rebalance of most outfits
@@ -32,6 +33,7 @@
       * Added Visual Novel library
       * Added card games
       * Added dynamic factions
+      * Added dynamic commodities
 
 * 0.8.2
    * Gameplay
