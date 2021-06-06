@@ -67,6 +67,7 @@ function create()
 
    -- We’re redefining the cargo
    local cargoes = {
+      -- Serious stuff here
       {N_("Stolen Goods"), N_("A lot of goods obtained by illicit and illegal means.")},
       {N_("Hacked Electronics"), N_("An assortment of illegally modified electronic goods.")},
       {N_("Illegal Waste"), N_("A diversity of highly illegal waste.")},
@@ -79,6 +80,9 @@ function create()
       {N_("Unauthorized Weapons"), N_("A bunch of illegal weapons.")},
       {N_("Contraband"), N_("An diverse assortment of illegal contraband goods.")},
       {N_("Counterfeit Goods"), N_("An assortment of illegal counterfeit goods of many famous brands.")},
+      {N_("Stolen Art"), N_("Artwork that was illegally seized from a collector or gallery.")},
+      -- Below less serious stuff
+      {N_("User Databases"), N_("Stolen user databases with lots of personal information obtained illegally.")},
       {N_("Smelly Fruits"), N_("Illegal fruits that have a strong smell that can stink up entire stations in minutes.")},
       {N_("Catnip"), N_("Highly illegal drug that is very attractive to cats.")},
       {N_("Hypnotoads"), N_("Illegal amphibian with some mind-control abilities.")},
@@ -89,6 +93,7 @@ function create()
       ["Empire"] = {
          {N_("Tax-evasion Documents"), N_("Illegal documents detailing tax evasion by high empire officials.")},
          {N_("Leaked Documents"), N_("Documents illegally leaked from governmental entities.")},
+         {N_("Incriminating Evidence"), N_("Illegally obtained evidence that incriminates high empire officials.")},
       },
       ["Dvaered"] = {
          {N_("Self-help Books"), N_("Books for self-betterment made illegal by the Dvaered authorities.")},
