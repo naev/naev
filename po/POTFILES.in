@@ -2365,8 +2365,8 @@ dat/missions/pirate/fake_id.lua
 dat/missions/pirate/hitman.lua
 dat/missions/pirate/hitman2.lua
 dat/missions/pirate/patrol.lua
-dat/missions/pirate/pir_cargo.lua
 dat/missions/pirate/pir_clan_cargo.lua
+dat/missions/pirate/pir_contraband.lua
 dat/missions/pirate/pir_ship_stealing.lua
 dat/missions/pirate/pirate_commodity_run.lua
 dat/missions/proteron/dissbounty_dead.lua

@@ -37,6 +37,7 @@ static int tab_scroll( Widget *tab, int dir );
 static void tab_render( Widget* tab, double bx, double by );
 static void tab_renderOverlay( Widget* tab, double bx, double by );
 static void tab_cleanup( Widget* tab );
+static int tab_getBarWidth( const Widget* wgt );
 static Widget *tab_getWgt( unsigned int wid, const char *tab );
 
 
@@ -244,7 +245,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       return 0;
 
    /* Handle event. */
-   p = 0;
+   p = TAB_HMARGIN;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       /* Too far left, won't match any tabs. */
       if (x < p)
@@ -389,15 +390,16 @@ static void tab_render( Widget* tab, double bx, double by )
       y += tab->h-TAB_HEIGHT;
 
    /* Draw tab bar background */
-   toolkit_drawRect( x, y, wdw->w-6., TAB_HEIGHT+2, &cBlack, NULL);
+   toolkit_drawRect( x, y, wdw->w-6., TAB_HEIGHT+2, &cGrey10, NULL);
+   toolkit_drawRect( x, y, tab_getBarWidth( tab ), TAB_HEIGHT+2, &cBlack, NULL);
 
    /* Iterate through tabs */
+   x += TAB_HMARGIN;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
-
       /* Draw contents rect */
       toolkit_drawRect(
           x, y, tab->dat.tab.namelen[i] + (TAB_HPADDING * 2),
-          (i == tab->dat.tab.active ? TAB_HEIGHT  + 2: TAB_HEIGHT),
+          (i == tab->dat.tab.active ? TAB_HEIGHT + 2: TAB_HEIGHT),
           (i == tab->dat.tab.active ? tab_active : tab_inactive),
           NULL );
 
@@ -596,13 +598,21 @@ unsigned int* window_tabWinGet( const unsigned int wid, const char *tab )
  */
 int window_tabWinGetBarWidth( const unsigned int wid, const char* tab )
 {
+   Widget *wgt = tab_getWgt( wid, tab );
+   return tab_getBarWidth( wgt );
+}
+
+/**
+ * @brief \see window_tabWinGetBarWidth
+ */
+int tab_getBarWidth( const Widget* wgt )
+{
    int i, w;
 
-   Widget *wgt = tab_getWgt( wid, tab );
    if (wgt == NULL)
       return 0;
 
-   w = (TAB_HMARGIN + TAB_HPADDING);
+   w = TAB_HMARGIN;
    for (i=0; i<wgt->dat.tab.ntabs; i++)
       w += (TAB_HMARGIN + TAB_HPADDING) + wgt->dat.tab.namelen[i] + (TAB_HPADDING);
 
