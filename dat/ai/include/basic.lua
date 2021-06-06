@@ -1067,22 +1067,26 @@ function scan( target )
 
    -- Set target
    ai.settarget( target )
+   local p = ai.pilot()
 
    -- Done scanning
    if ai.scandone() then -- Note this check MUST be done after settarget
-
-      if target:hasIllegal( ai.pilot():faction() ) then
+      table.insert( mem.scanned, target )
+      ai.poptask()
+      if target:hasIllegal( p:faction() ) then
          ai.hostile( target )
          ai.pushtask( "attack", target )
          local msg = _("Illegal objects detected! Do not resist!")
          ai.pilot():comm( target, msg )
+
+         -- Have escorts attack
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "e_attack", target )
+         end
       else
          local msg = _("Thank you for your cooperation.")
          ai.pilot():comm( target, msg )
       end
-
-      table.insert( mem.scanned, target )
-      ai.poptask()
       return
    end
 
