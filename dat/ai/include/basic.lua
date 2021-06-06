@@ -1070,10 +1070,18 @@ function scan( target )
 
    -- Done scanning
    if ai.scandone() then -- Note this check MUST be done after settarget
-      -- TODO check for illegal stuff and go aggressie
+
+      if target:hasIllegal( ai.pilot():faction() ) then
+         ai.hostile( target )
+         ai.pushtask( "attack", target )
+         local msg = _("Illegal objects detected! Do not resist!")
+         ai.pilot():comm( target, msg )
+      else
+         local msg = _("Thank you for your cooperation.")
+         ai.pilot():comm( target, msg )
+      end
+
       table.insert( mem.scanned, target )
-      local msg = _("Thank you for your cooperation.")
-      ai.pilot():comm( target, msg )
       ai.poptask()
       return
    end
