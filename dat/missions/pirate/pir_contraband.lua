@@ -43,7 +43,7 @@ cargo_always_available = true
 
 -- This is in cargo_common, but we need to increase the range
 function cargo_selectMissionDistance ()
-   return rnd.rnd( 3, 10 )
+   return rnd.rnd( 5, 10 )
 end
 
 
@@ -67,33 +67,44 @@ function create()
 
    -- We’re redefining the cargo
    local cargoes = {
-      {N_("Unmarked Boxes"), N_("A bunch of unmarked boxes containing what you can only assume to be highly illegal items")},
+      {N_("Stolen Goods"), N_("A lot of goods obtained by illicit and illegal means.")},
+      {N_("Hacked Electronics"), N_("An assortment of illegally modified electronic goods.")},
+      {N_("Illegal Waste"), N_("A diversity of highly illegal waste.")},
+      {N_("Powerful Stimulants"), N_("A bunch of illegal stimulates.")},
+      {N_("Unmarked Boxes"), N_("A bunch of unmarked boxes containing what you can only assume to be highly illegal items.")},
       {N_("Exotic Animals"), N_("A bunch of exotic animals that can not be legally traded.")},
-      {N_("Radioactive Materials"), N_("Highly dangerous and illegal radioactive materials")},
+      {N_("Radioactive Materials"), N_("Highly dangerous and illegal radioactive materials.")},
       {N_("Illegal Drugs"), N_("A bunch of drugs made illegal in most systems.")},
+      {N_("Illegal Body Mods"), N_("A lot of illegal body modifications.")},
       {N_("Unauthorized Weapons"), N_("A bunch of illegal weapons.")},
       {N_("Contraband"), N_("An diverse assortment of illegal contraband goods.")},
-      {N_("Smelly Fruits"), N_("Illegal fruits that have a strong smell that can stink up entire stations in minutes.")},
       {N_("Counterfeit Goods"), N_("An assortment of illegal counterfeit goods of many famous brands.")},
+      {N_("Smelly Fruits"), N_("Illegal fruits that have a strong smell that can stink up entire stations in minutes.")},
       {N_("Catnip"), N_("Highly illegal drug that is very attractive to cats.")},
       {N_("Hypnotoads"), N_("Illegal amphibian with some mind-control abilities.")},
       {N_("Extra Spicy Burritos"), N_("Burritos that are so spicy, they are illegal.")},
+      {N_("Pineapple Pizza"), N_("Pizza with pineapple on it, there is no way this is legal.")},
    }
    local fact_cargoes = {
       ["Empire"] = {
          {N_("Tax-evasion Documents"), N_("Illegal documents detailing tax evasion by high empire officials.")},
+         {N_("Leaked Documents"), N_("Documents illegally leaked from governmental entities.")},
       },
       ["Dvaered"] = {
          {N_("Self-help Books"), N_("Books for self-betterment made illegal by the Dvaered authorities.")},
+         {N_("Pacifist Manifestos"), N_("Documents making the case for pacifism, made illegal by the Dvaered authorities.")},
       },
       ["Soromid"] = {
          {N_("Unstable DNA"), N_("Illegal DNA with strong reactive properties.")},
+         {N_("Bio-weapons"), N_("Highly dangerous illegal biological weapons.")},
       },
       ["Sirius"] = {
-         {N_("Heretical Documents"), N_("Illegal documents refering to heresy.")},
+         {N_("Heretical Documents"), N_("Illegal documents referring to heresy.")},
       },
       ["Za'lek"] = {
          {N_("Scientific Preprints"), N_("Non-paywalled illegal scientific papers.")},
+         {N_("Sentient AI"), N_("Highly illegal AI that is assumed to be sentient.")},
+         {N_("Bogus Proofs"), N_("Mathematical proofs with almost imperceptible modifications to make them illegally false.")},
       }
    }
    -- Add faction cargoes as necessary
