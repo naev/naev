@@ -639,7 +639,7 @@ Commodity* commodity_newTemp( const char* name, const char* desc )
  */
 int commodity_tempIllegalto( Commodity *com, int faction )
 {
-   int *f;
+   int i, *f;
 
    if (!com->istemp) {
       WARN(_("Trying to modify temporary commodity '%s'!"), com->name);
@@ -648,6 +648,12 @@ int commodity_tempIllegalto( Commodity *com, int faction )
 
    if (com->illegalto==NULL)
       com->illegalto = array_create( int );
+
+   /* Don't add twice. */
+   for (i=0; i<array_size(com->illegalto); i++) {
+      if (com->illegalto[i] == faction)
+         return 0;
+   }
 
    f = &array_grow(&com->illegalto);
    *f = faction;

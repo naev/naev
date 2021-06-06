@@ -1003,17 +1003,19 @@ int missions_saveActive( xmlTextWriterPtr writer )
 {
    int i,j,n;
    char **items;
-   PilotCommodity *pc;
+   Commodity *c;
 
    /* We also save specially created cargos here. */
    xmlw_startElem(writer,"mission_cargo");
    for (i=0; i<array_size(player.p->commodities); i++) {
-      pc = &player.p->commodities[i];
-      if (!pc->commodity->istemp)
+      c = player.p->commodities[i].commodity;
+      if (!c->istemp)
          continue;
       xmlw_startElem(writer,"cargo");
-      xmlw_attr(writer,"name","%s",pc->commodity->name);
-      xmlw_attr(writer,"description","%s",pc->commodity->description);
+      xmlw_attr(writer,"name","%s",c->name);
+      xmlw_attr(writer,"description","%s",c->description);
+      for (j=0; j<array_size(c->illegalto); j++)
+         xmlw_elem(writer,"illegalto","%s",faction_name(c->illegalto[j]));
       xmlw_endElem(writer); /* "cargo" */
    }
    xmlw_endElem(writer); /* "missions_cargo */
@@ -1093,8 +1095,10 @@ int missions_saveActive( xmlTextWriterPtr writer )
  */
 int missions_loadCommodity( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
+   xmlNodePtr node, cur, ccur;
    char *name, *desc;
+   Commodity *c;
+   int f;
 
    /* We have to ensure the mission_cargo stuff is loaded first. */
    node = parent->xmlChildrenNode;
@@ -1124,7 +1128,16 @@ int missions_loadCommodity( xmlNodePtr parent )
                   continue;
                }
 
-               commodity_newTemp( name, desc );
+               c = commodity_newTemp( name, desc );
+
+               ccur = cur->xmlChildrenNode;
+               do {
+                  xml_onlyNodes(ccur);
+                  if (xml_isNode(ccur,"illegalto")) {
+                     f = faction_get( xml_get(ccur) );
+                     commodity_tempIllegalto( c, f );
+                  }
+               } while (xml_nextNode(ccur));
 
                free(name);
                free(desc);
