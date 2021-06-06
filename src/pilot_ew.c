@@ -151,7 +151,7 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
  */
 double pilot_ewMass( double mass )
 {
-   return pow(mass, 1./1.5) * 150.;
+   return pow(mass, 1./1.8) * 350.;
 }
 
 
