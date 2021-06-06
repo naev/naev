@@ -1354,6 +1354,9 @@ void pilot_setTarget( Pilot* p, unsigned int id )
 
    p->target = id;
    pilot_lockClear( p );
+
+   /* Set the scan timer. */
+   pilot_ewScanStart( p );
 }
 
 
@@ -1993,7 +1996,7 @@ void pilot_update( Pilot* pilot, double dt )
       pilot_heatUpdateCooldown( pilot );
 
    /* Update electronic warfare. */
-   pilot_ewUpdateDynamic( pilot );
+   pilot_ewUpdateDynamic( pilot, dt );
 
    /* Update stress. */
    if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
@@ -2766,7 +2769,7 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    pilot_calcStats( pilot );
 
    /* Update dynamic electronic warfare (static should have already been done). */
-   pilot_ewUpdateDynamic( pilot );
+   pilot_ewUpdateDynamic( pilot, 0. );
 
    /* Heal up the ship. */
    pilot->armour = pilot->armour_max;
@@ -3507,3 +3510,27 @@ void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)
    lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); /* data, msg, messages */
    lua_pop(naevL, 3); /*  */
 }
+
+
+/**
+ * @brief Checks to see if the pilot has illegal stuf to a faction.
+ *
+ *    @param p Pilot to check.
+ *    @param faction Faction to check.
+ *    @return 1 if has illegal stuff 0 otherwise.
+ */
+int pilot_hasIllegal( const Pilot *p, int faction )
+{
+   int i;
+   Commodity *c;
+   /* Check commodities. */
+   for (i=0; i<array_size(p->commodities); i++) {
+      c = p->commodities[i].commodity;
+      if (commodity_checkIllegal( c, faction )) {
+         return 1;
+      }
+   }
+   /* Nothing to see here sir. */
+   return 0;
+}
+

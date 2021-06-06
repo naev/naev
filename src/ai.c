@@ -173,6 +173,7 @@ static int aiL_isenemy( lua_State *L ); /* boolean isenemy( number ) */
 static int aiL_isally( lua_State *L ); /* boolean isally( number ) */
 static int aiL_haslockon( lua_State *L ); /* boolean haslockon() */
 static int aiL_hasprojectile( lua_State *L ); /* boolean hasprojectile() */
+static int aiL_scandone( lua_State *L );
 
 /* movement */
 static int aiL_accel( lua_State *L ); /* accel(number); number <= 1. */
@@ -263,6 +264,7 @@ static const luaL_Reg aiL_methods[] = {
    { "isally", aiL_isally },
    { "haslockon", aiL_haslockon },
    { "hasprojectile", aiL_hasprojectile },
+   { "scandone", aiL_scandone },
    /* get */
    { "pilot", aiL_pilot },
    { "rndpilot", aiL_getrndpilot },
@@ -1635,6 +1637,20 @@ static int aiL_haslockon( lua_State *L )
 static int aiL_hasprojectile( lua_State *L )
 {
    lua_pushboolean(L, cur_pilot->projectiles > 0);
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if pilot has finished scanning their target.
+ *
+ *    @luatreturn boolean Whether the pilot has scanned their target.
+ * @luafunc scandone
+ */
+
+static int aiL_scandone( lua_State *L )
+{
+   lua_pushboolean(L, pilot_ewScanCheck( cur_pilot ) );
    return 1;
 }
 

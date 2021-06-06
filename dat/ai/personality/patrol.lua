@@ -15,12 +15,22 @@ function idle ()
           end
        end
    else -- Stay. Have a beer.
+      if mem.doscans then
+         local target = __getscantarget()
+         if target then
+            __push_scan( target )
+            return
+         end
+      end
+      -- Go to a random locatioe
       sysrad = rnd.rnd() * system.cur():radius()
       angle = rnd.rnd() * 2 * math.pi
-      ai.pushtask("__moveto_nobrake", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
+      ai.pushtask("loiter", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
    end
    mem.loiter = mem.loiter - 1
 end
 
+
 -- Settings
 mem.land_friendly = true -- Land on only friendly by default
+mem.doscans       = true -- Patrolling so check all ships as much as possible

@@ -30,8 +30,10 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, dou
 /*
  * Electronic warfare updating.
  */
+int pilot_ewScanCheck( const Pilot *p );
+void pilot_ewScanStart( Pilot *p );
 void pilot_ewUpdateStatic( Pilot *p );
-void pilot_ewUpdateDynamic( Pilot *p );
+void pilot_ewUpdateDynamic( Pilot *p, double dt );
 
 /*
  * Stealth.

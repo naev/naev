@@ -1003,9 +1003,26 @@ int missions_saveActive( xmlTextWriterPtr writer )
 {
    int i,j,n;
    char **items;
+   Commodity *c;
+
+   /* We also save specially created cargos here. Since it can only be mission
+    * cargo and can only be placed on the player's main ship, we don't have to
+    * worry about it being on other ships. */
+   xmlw_startElem(writer,"mission_cargo");
+   for (i=0; i<array_size(player.p->commodities); i++) {
+      c = player.p->commodities[i].commodity;
+      if (!c->istemp)
+         continue;
+      xmlw_startElem(writer,"cargo");
+      xmlw_attr(writer,"name","%s",c->name);
+      xmlw_attr(writer,"description","%s",c->description);
+      for (j=0; j<array_size(c->illegalto); j++)
+         xmlw_elem(writer,"illegalto","%s",faction_name(c->illegalto[j]));
+      xmlw_endElem(writer); /* "cargo" */
+   }
+   xmlw_endElem(writer); /* "missions_cargo */
 
    xmlw_startElem(writer,"missions");
-
    for (i=0; i<MISSION_MAX; i++) {
       if (player_missions[i]->id != 0) {
          xmlw_startElem(writer,"mission");
@@ -1066,8 +1083,71 @@ int missions_saveActive( xmlTextWriterPtr writer )
          xmlw_endElem(writer); /* "mission" */
       }
    }
-
    xmlw_endElem(writer); /* "missions" */
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the player's special mission commodities.
+ *
+ *    @param parent Node containing the player's special mission cargo.
+ *    @return 0 on success.
+ */
+int missions_loadCommodity( xmlNodePtr parent )
+{
+   xmlNodePtr node, cur, ccur;
+   char *name, *desc;
+   Commodity *c;
+   int f;
+
+   /* We have to ensure the mission_cargo stuff is loaded first. */
+   node = parent->xmlChildrenNode;
+   do {
+      xml_onlyNodes(node);
+
+      if (xml_isNode(node,"mission_cargo")) {
+         cur = node->xmlChildrenNode;
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"cargo")) {
+               xmlr_attr_strd( cur, "name", name );
+               if (name==NULL) {
+                  WARN(_("Mission cargo without name!"));
+                  continue;
+               }
+
+               if (commodity_getW(name) != NULL) {
+                  free(name);
+                  continue;
+               }
+
+               xmlr_attr_strd( cur, "description", desc );
+               if (desc==NULL) {
+                  WARN(_("Mission temporary cargo '%s' missing description!"), name);
+                  free(name);
+                  continue;
+               }
+
+               c = commodity_newTemp( name, desc );
+
+               ccur = cur->xmlChildrenNode;
+               do {
+                  xml_onlyNodes(ccur);
+                  if (xml_isNode(ccur,"illegalto")) {
+                     f = faction_get( xml_get(ccur) );
+                     commodity_tempIllegalto( c, f );
+                  }
+               } while (xml_nextNode(ccur));
+
+               free(name);
+               free(desc);
+            }
+         } while (xml_nextNode(cur));
+         continue;
+      }
+   } while (xml_nextNode(node));
 
    return 0;
 }
@@ -1086,10 +1166,15 @@ int missions_loadActive( xmlNodePtr parent )
    /* cleanup old missions */
    missions_cleanup();
 
+   /* After load the normal missions. */
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"missions"))
-         if (missions_parseActive( node ) < 0) return -1;
+      xml_onlyNodes(node);
+      if (xml_isNode(node,"missions")) {
+         if (missions_parseActive( node ) < 0)
+            return -1;
+         continue;
+      }
    } while (xml_nextNode(node));
 
    return 0;
