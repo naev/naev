@@ -1077,7 +1077,18 @@ function scan( target )
          ai.hostile( target )
          ai.pushtask( "attack", target )
          local msg = _("Illegal objects detected! Do not resist!")
-         ai.pilot():comm( target, msg )
+         p:comm( target, msg )
+
+         -- Make entire system hostile to player
+         if target == player.pilot() then
+            local f = p:faction()
+            for k,v in ipairs(pilot.get(f)) do
+               v:setHostile(true)
+            end
+
+            -- Small faction hit
+            f:modPlayer( -1 )
+         end
 
          -- Have escorts attack
          for k,v in ipairs(p:followers()) do
