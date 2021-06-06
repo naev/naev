@@ -648,7 +648,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
             }
             else if ((wgt->outfit != NULL) &&
                   (lst->sslot->slot.type == wgt->outfit->slot.type)) {
-               top = 0;
+               top = 1;
                display = pilot_canEquip( wgt->selected, &lst[i], wgt->outfit );
                if (display != NULL)
                   c = &cFontRed;
