@@ -1,5 +1,15 @@
 -- Default task to run when idle
 function idle ()
+   -- Aggressives will try to find enemies first, before falling back on
+   -- loitering, to avoid weird stuff starting to scan before attacking
+   if mem.aggressive then
+      local enemy  = ai.getenemy()
+      if enemy ~= nil then
+         ai.pushtask( "attack", enemy )
+         return
+      end
+   end
+
    if mem.loiter == nil then mem.loiter = 3 end
    if mem.loiter == 0 then -- Try to leave.
        local planet = ai.landplanet( mem.land_friendly )
