@@ -152,3 +152,4 @@ function taunt ( target, offense )
    ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 
+mem.doscans    = false -- Pirates don't care about scanning
