@@ -201,16 +201,18 @@ void player_autonavPnt( char *name )
 void player_autonavPil( unsigned int p )
 {
    Pilot *pilot;
+   int inrange;
 
    pilot = pilot_get( p );
 
-   if (!player_autonavSetup())
+   inrange = pilot_inRangePilot( player.p, pilot, NULL );
+   if (!player_autonavSetup() || !inrange)
       return;
 
    player.autonav    = AUTONAV_PLT_FOLLOW;
    player.autonavmsg = pilot->name;
    player.autonavcol = '0';
-   player_message(_("#oAutonav: following %s."), pilot->name);
+   player_message(_("#oAutonav: following %s."), inrange == 1 ? pilot->name : _("Unknown") );
 }
 
 
