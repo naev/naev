@@ -335,7 +335,7 @@ static int iar_key( Widget* iar, SDL_Keycode key, SDL_Keymod mod )
       case SDLK_RETURN:
       case SDLK_KP_ENTER:
          if (iar->dat.iar.accept != NULL) {
-            iar->dat.iar.accept( iar->wdw, iar->name ); 
+            iar->dat.iar.accept( iar->wdw, iar->name );
             return 1;
          }
          FALLTHROUGH;

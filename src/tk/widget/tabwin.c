@@ -388,7 +388,7 @@ static void tab_render( Widget* tab, double bx, double by )
    if (tab->dat.tab.tabpos == 1)
       y += tab->h-TAB_HEIGHT;
 
-   /* Draw tab bar backgrund */
+   /* Draw tab bar background */
    toolkit_drawRect( x, y, wdw->w-6., TAB_HEIGHT+2, &cBlack, NULL);
 
    /* Iterate through tabs */
