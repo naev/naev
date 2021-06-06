@@ -118,6 +118,15 @@ function handle_messages ()
    local l = p:leader()
    for _, v in ipairs(ai.messages()) do
       local sender, msgtype, data = table.unpack(v)
+      -- Below we only handle if they came from allies
+      if p:faction():areAllies( sender:faction() ) then
+         if msgtype == "scanned" then
+            if data ~= nil and data:exists() then
+               table.insert( mem.scanned, data )
+            end
+         end
+      end
+      -- Below we only handle if they came from the glorious leader
       if sender == l then
          if msgtype == "form-pos" then
             mem.form_pos = data

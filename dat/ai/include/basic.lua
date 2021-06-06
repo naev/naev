@@ -1103,6 +1103,17 @@ function scan( target )
       else
          local msg = _("Thank you for your cooperation.")
          ai.pilot():comm( target, msg )
+
+         -- Tell friends about the scanning
+         local f = p:faction()
+         for k,v in ipairs(pilot.get(f)) do
+            p:msg( v, "scanned", target )
+         end
+         for kf,vf in ipairs(f:allies()) do
+            for k,v in ipairs(pilot.get(vf)) do
+               p:msg( v, "scanned", target )
+            end
+         end
       end
       return
    end
