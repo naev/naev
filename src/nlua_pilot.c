@@ -107,6 +107,7 @@ static int pilotL_setHilight( lua_State *L );
 static int pilotL_getColour( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
 static int pilotL_flags( lua_State *L );
+static int pilotL_hasIllegal( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disable( lua_State *L );
@@ -201,6 +202,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "colour", pilotL_getColour },
    { "hostile", pilotL_getHostile },
    { "flags", pilotL_flags },
+   { "hasIllegal", pilotL_hasIllegal },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -3626,6 +3628,35 @@ static int pilotL_flags( lua_State *L )
       lua_pushboolean( L, pilot_isFlag( p, pL_flags[i].id ) );
       lua_setfield(L, -2, pL_flags[i].name);
    }
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if the pilot has illegal stuff to a faction.
+ *
+ *    @luatparam Pilot p Pilot to check.
+ *    @luatparam Faction f Faction to see if it is illegal to.
+ * @luafunc hasIllegal
+ */
+static int pilotL_hasIllegal( lua_State *L )
+{
+   int i;
+   Commodity *c;
+   Pilot *p = luaL_validpilot(L,1);
+   int f    = luaL_validfaction(L,2);
+
+   /* Check commodities. */
+   for (i=0; i<array_size(p->commodities); i++) {
+      c = p->commodities[i].commodity;
+      if (commodity_checkIllegal( c, f )) {
+         lua_pushboolean(L,1);
+         return 1;
+      }
+   }
+
+   /* Nothing to see here sir. */
+   lua_pushboolean(L,0);
    return 1;
 }
 

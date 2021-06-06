@@ -573,6 +573,24 @@ void gatherable_gather( int pilot )
 
 
 /**
+ * @brief Checks to see if a commodity is illegal to a faction.
+ *
+ *    @param com Commodity to check.
+ *    @param faction Faction to check to see if it is illegal to.
+ *    @return 1 if it is illegal, 0 otherwise.
+ */
+int commodity_checkIllegal( const Commodity *com, int faction )
+{
+   int i;
+   for (i=0; i<array_size(com->illegalto); i++) {
+      if (com->illegalto[i] == faction)
+         return 1;
+   }
+   return 0;
+}
+
+
+/**
  * @brief Checks to see if a commodity is temporary.
  *
  *    @brief Name of the commodity to check.

@@ -99,6 +99,8 @@ Commodity* commodity_getByIndex( const int indx );
 int commodity_load (void);
 void commodity_free (void);
 
+int commodity_checkIllegal( const Commodity *com, int faction );
+
 
 /*
  * Temporary commodities.
