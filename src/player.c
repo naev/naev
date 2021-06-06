@@ -1583,6 +1583,8 @@ void player_land (void)
    pilot_afterburnOver( player.p );
    /* Stop accelerating. */
    player_accelOver();
+   /* Stop stealth. */
+   pilot_destealth( player.p );
 
    /* Stop all on outfits. */
    if (pilot_outfitOffAll( player.p ) > 0)
