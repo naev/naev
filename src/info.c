@@ -196,6 +196,7 @@ void info_update (void)
 static void info_openMain( unsigned int wid )
 {
    char str[STRMAX_SHORT], **buf, creds[ECON_CRED_STRLEN];
+   char sdmgdone[NUM2STRLEN], sdmgtaken[NUM2STRLEN], sdestroyed[NUM2STRLEN];
    char **licenses;
    int nlicenses;
    int i;
@@ -228,6 +229,9 @@ static void info_openMain( unsigned int wid )
          "Ships destroyed:")
          );
    credits2str( creds, player.p->credits, 2 );
+   num2str( sdmgdone, player.dmg_done_shield + player.dmg_done_armour, 0 );
+   num2str( sdmgtaken, player.dmg_taken_shield + player.dmg_taken_armour, 0 );
+   num2str( sdestroyed, destroyed, 0 );
    snprintf( str, sizeof(str),
          _("%s\n"
          "%s\n"
@@ -237,9 +241,9 @@ static void info_openMain( unsigned int wid )
          "%d (%d %s)\n"
          "\n"
          "%.1f hours\n"
-         "%.0f\n"
-         "%.0f\n"
-         "%u"),
+         "%s\n"
+         "%s\n"
+         "%s"),
          player.name,
          nt,
          creds,
@@ -247,9 +251,7 @@ static void info_openMain( unsigned int wid )
          player.p->fuel, pilot_getJumps(player.p),
          n_( "jump", "jumps", pilot_getJumps(player.p) ),
          player.time_played / 3600.,
-         player.dmg_done_shield + player.dmg_done_armour,
-         player.dmg_taken_shield + player.dmg_taken_armour,
-         destroyed );
+         sdmgdone, sdmgtaken, sdestroyed );
    window_addText( wid, 180, 20,
          w-80-200-40+20-180, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
