@@ -1085,6 +1085,12 @@ function scan( target )
             for k,v in ipairs(pilot.get(f)) do
                v:setHostile(true)
             end
+            -- Do allies too :)
+            for kf,vf in ipairs(f:allies()) do
+               for k,v in ipairs(pilot.get(vf)) do
+                  v:setHostile(true)
+               end
+            end
 
             -- Small faction hit
             f:modPlayer( -1 )
