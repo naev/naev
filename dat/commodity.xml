@@ -199,16 +199,10 @@
   <name>Datapad</name>
  </commodity>
  <commodity>
-  <name>Drugs</name>
- </commodity>
- <commodity>
   <name>Dvaered ship crew</name>
  </commodity>
  <commodity>
   <name>Equipment</name>
- </commodity>
- <commodity>
-  <name>Exotic Animals</name>
  </commodity>
  <commodity>
   <name>FLF IFF Transponder</name>
@@ -260,9 +254,6 @@
   <name>Prototype</name>
  </commodity>
  <commodity>
-  <name>Radioactive Materials</name>
- </commodity>
- <commodity>
   <name>Recipes</name>
  </commodity>
  <commodity>
@@ -287,16 +278,10 @@
   <name>Tourists</name>
  </commodity>
  <commodity>
-  <name>Unmarked Boxes</name>
- </commodity>
- <commodity>
   <name>VIP</name>
  </commodity>
  <commodity>
   <name>Waste Containers</name>
- </commodity>
- <commodity>
-  <name>Weapons</name>
  </commodity>
  <commodity>
   <name>Nebula Sensor Suit</name>

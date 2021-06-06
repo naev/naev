@@ -67,6 +67,9 @@ function create()
 
    -- We’re redefining the cargo
    local cargoes = {
+      {N_("Unmarked Boxes"), N_("A bunch of unmarked boxes containing what you can only assume to be highly illegal items")},
+      {N_("Exotic Animals"), N_("A bunch of exotic animals that can not be legally traded.")},
+      {N_("Radioactive Materials"), N_("Highly dangerous and illegal radioactive materials")},
       {N_("Illegal Drugs"), N_("A bunch of drugs made illegal in most systems.")},
       {N_("Unauthorized Weapons"), N_("A bunch of illegal weapons.")},
       {N_("Contraband"), N_("An diverse assortment of illegal contraband goods.")},
@@ -94,7 +97,7 @@ function create()
       }
    }
    -- Add faction cargoes as necessary
-   fc = fact_cargoes[ destplanet:faction() ]
+   fc = fact_cargoes[ destplanet:faction():nameRaw() ]
    if fc then
       for k,v in ipairs(fc) do
          table.insert( cargoes, v )
