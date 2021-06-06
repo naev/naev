@@ -432,6 +432,7 @@ int outfit_filterOther( const Outfit *o );
  * get data from outfit
  */
 const char *outfit_slotName( const Outfit* o );
+const char *slotName( const OutfitSlotType o );
 const char *outfit_slotSize( const Outfit* o );
 const char *slotSize( const OutfitSlotSize o );
 const glColour *outfit_slotSizeColour( const OutfitSlot* os );

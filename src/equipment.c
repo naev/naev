@@ -760,15 +760,20 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
    /* Slot is empty. */
    if (o == NULL) {
-      if (slot->sslot->slot.spid == 0)
-         return;
-
-      pos = scnprintf( alt, sizeof(alt),
-            "#o%s", _( sp_display( slot->sslot->slot.spid ) ) );
+      if (slot->sslot->slot.spid)
+         pos = scnprintf( alt, sizeof(alt),
+               "#o%s", _( sp_display( slot->sslot->slot.spid ) ) );
+      else {
+         /* TODO: Get the newline out of the gettext message! This is silly! (Wait til this branch is merged first.) */
+         pos = scnprintf( alt, sizeof(alt), _( "#%c%s #%c%s #0slot\n" ),
+               outfit_slotSizeColourFont( &slot->sslot->slot ), slotSize( slot->sslot->slot.size ),
+               outfit_slotTypeColourFont( &slot->sslot->slot ), slotName( slot->sslot->slot.type ) );
+         alt[--pos] = '\0'; /* Didn't actually want the newline. */
+      }
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += scnprintf( &alt[pos], sizeof(alt)-pos,
                _(" [exclusive]") );
-      if (pos < (int)sizeof(alt))
+      if (slot->sslot->slot.spid)
          scnprintf( &alt[pos], sizeof(alt)-pos,
                "\n\n%s", _( sp_description( slot->sslot->slot.spid ) ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );

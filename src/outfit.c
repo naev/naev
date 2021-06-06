@@ -261,7 +261,16 @@ int outfit_filterOther( const Outfit *o )
  */
 const char *outfit_slotName( const Outfit* o )
 {
-   switch (o->slot.type) {
+   return slotName( o->slot.type );
+}
+
+
+/**
+ * @brief \see outfit_slotName
+ */
+const char *slotName( const OutfitSlotType type )
+{
+   switch (type) {
       case OUTFIT_SLOT_NULL:
          return "NULL";
       case OUTFIT_SLOT_NA:
