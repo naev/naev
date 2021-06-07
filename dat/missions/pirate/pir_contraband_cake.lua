@@ -1,17 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Smuggle Cake">
-  <avail>
-   <priority>3</priority>
-   <chance>20</chance>
-   <location>Bar</location>
-   <cond>system.cur():presence("Pirate") &gt; 0</cond>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <chance>20</chance>
+  <location>Bar</location>
+  <cond>system.cur():presence("Pirate") &gt; 0</cond>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Opens up Pirate contraband missions. The player is asked to take a cake
@@ -30,7 +33,7 @@ local givername = _("Sweaty Individual")
 local giverportrait = portrait.get()
 local giverimage = portrait.getFullPath(giverportrait)
 local receivername = _("Burly Individual")
-local receiverimage = r
+local receiverimage = portrait.getFullPath(portrait.get())
 
 -- Use hidden jumps
 cargo_use_hidden = false
@@ -137,7 +140,7 @@ They go to the restroom and come back holding a nondescript brown box that seems
 
    local c = misn.cargoNew( N_("Cake"), N_("A cake that is supposedly sensitive to scanning radiation. Don't let anyone scan it.") )
    c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek"} )
-   carg_id = misn.cargoAdd( "Cake", 0 )
+   carg_id = misn.cargoAdd( c, 0 )
 
    misn.osdCreate( _("Deliver Cake"), { string.format(_("Fly to %s in the %s system without getting scanned"), destplanet, destsys) } )
 
