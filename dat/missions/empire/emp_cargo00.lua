@@ -92,7 +92,8 @@ function accept ()
    misn.osdCreate(title[2], {misn_desc:format(dest:name(), sys:name())})
 
    -- Set up the goal
-   parcels = misn.cargoAdd("Parcels", 0)
+   local c = misn.cargoNew( N_("Parcels"), N_("A bunch of boring Empire parcels.") )
+   parcels = misn.cargoAdd(c, 0)
    hook.land("land")
 end
 
