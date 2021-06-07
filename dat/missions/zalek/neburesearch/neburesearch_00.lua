@@ -61,7 +61,7 @@ function create()
     -- mission variables
     misn_stage = 0
     homeworld, homeworld_sys = planet.get("Jorla")
-    credits = 100000
+    credits = 300000
     
     -- Spaceport bar stuff
     misn.setNPC(_("A young scientist"),  "zalek/unique/student.png", _("You see a young scientist talking with some pilots, apparently without success.") )
@@ -91,7 +91,8 @@ function accept()
     end
     
     -- Add cargo
-    cargo = misn.cargoAdd("Nebula Sensor Suit", 5)
+    local c = misn.cargoNew( N_("Nebula Sensor Suit"), N_("A heavy suit with lots of fancy looking sensors.") )
+    cargo = misn.cargoAdd(c, 5)
     
     -- Set up mission information
     misn.setTitle( _("Novice Nebula Research") )
