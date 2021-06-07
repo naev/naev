@@ -165,11 +165,6 @@ function difference(a, b)
    return r
 end
 
---Sets the description based on the particulars of the mission.
---
-function cargo_setDesc( cargo, amount, target, notes, deadline )
-end
-
 --[[
 -- @brief Returns a block of mission-description text for the given cargo.
 -- @tparam string misn_desc Translated title-level description, e.g. _("Cargo transport to %s in the %s system."):format(...).
