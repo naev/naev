@@ -1,21 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Nebula Satellite">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>10</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Goddard</faction>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>10</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Goddard</faction>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
  --]]
 --[[
 

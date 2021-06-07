@@ -1,21 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The macho teenager">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>5</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <cond>player.numOutfit("Mercenary License") &gt; 0 and planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>5</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <cond>player.numOutfit("Mercenary License") &gt; 0 and planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 --
 -- MISSION: The macho teenager
