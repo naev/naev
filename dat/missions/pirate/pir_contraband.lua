@@ -6,6 +6,7 @@
    <cond>faction.playerStanding("Pirate") &gt;= -100</cond>
    <chance>960</chance>
    <location>Computer</location>
+   <done>Pirate Smuggle Cake</done>
   </avail>
   <notes>
    <tier>1</tier>
