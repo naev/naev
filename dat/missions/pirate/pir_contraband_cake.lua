@@ -56,18 +56,6 @@ function create()
    if destplanet == nil or destplanet:faction() == faction.get("Pirate") then
       misn.finish(false)
    end
-
-   -- mission generics
-   stuperpx   = 0.3 - 0.015 * tier
-   stuperjump = 11000 - 200 * tier
-   stupertakeoff = 12000 - 50 * tier
-   timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps)
-
-   -- Allow extra time for refuelling stops.
-   local jumpsperstop = 3 + math.min(tier, 1)
-   if numjumps > jumpsperstop then
-      timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
-   end
    
    -- Choose reward
    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
