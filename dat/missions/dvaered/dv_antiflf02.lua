@@ -131,8 +131,9 @@ function accept()
         DVdisablefail = true
         logsfound = false
         flfdead = 0
-        
-        misn.cargoAdd("FLF IFF Transponder", 0)
+
+        local c = misn.cargoNew( N_("FLF IFF Transponder"), N_("A transponder that will make your ship appear as FLF in the nebula.") )
+        misn.cargoAdd(c, 0)
        
         hook.jumpout("jumpout")
         hook.enter("enter")

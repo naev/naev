@@ -66,8 +66,9 @@ function create()
     misn.setDesc(misn_desc)
     misn.setTitle(misn_title)
     misn.setReward(misn_reward)
-    
-    DVcrew = misn.cargoAdd("Dvaered ship crew", 0)
+
+    local c = misn.cargoNew( N_("Dvaered Ship Crew"), N_("Dvaered crew from a ship that was disabled by the FLF.") )
+    DVcrew = misn.cargoAdd(c, 0)
     
     hook.land("land")
 end
