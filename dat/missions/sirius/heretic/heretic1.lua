@@ -86,7 +86,8 @@ function accept()
    misn.markerAdd(targetsystem,"high")
    misn.osdCreate(misn_title,osd)
    misn.osdActive(1)
-   message = misn.cargoAdd("Message",0)
+   local c = misn.cargoNew( N_("Message"), N_("A message of seemingly high importance.") )
+   message = misn.cargoAdd(c,0)
    hook.land("landing")
 end
 
