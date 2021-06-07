@@ -700,7 +700,8 @@ function ecc_feral_boss_dead ()
    vn.done( "hexagon" )
    vn.run()
 
-   nebula_artifacts = misn.cargoAdd( "Nebula Artifact?", 0 )
+   local c = misn.cargoNew( N_("Nebula Artifact?"), N_("A very damaged thing that seems to be mainly biological. I guess this is the nebula artifact?") )
+   nebula_artifacts = misn.cargoAdd( c, 0 )
    misn_state = 5
    misn.osdCreate( misn_title, {_("Go back to Dr. Strangelove")} )
    shiplog.appendLog( logidstr, _("You recovered a nebula artifact that Dr. Strangelove wanted from feral drones.") )
