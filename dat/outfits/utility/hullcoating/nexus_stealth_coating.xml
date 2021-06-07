@@ -7,7 +7,7 @@
   <mass>0</mass>
   <price>570000</price>
   <description>Modern ship sensors are based on detecting gravitational anormalities to detect ships and are very robust in most situations. Nexus Shipyards have developed a breakthrough hull coating that using quantum entangled self-projections that can confuse gravitational readings.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>nexus_stealth_coating.webp</gfx_store>
   <limit>hullcoat</limit>
  </general>
  <specific type="modification">
