@@ -695,21 +695,13 @@ static int misn_cargoNew( lua_State *L )
  */
 static int misn_cargoAdd( lua_State *L )
 {
-   const char *cname;
    Commodity *cargo;
    int quantity, ret;
    Mission *cur_mission;
 
    /* Parameters. */
-   cname    = luaL_checkstring(L,1);
+   cargo    = luaL_validcommodity(L,1);
    quantity = luaL_checkint(L,2);
-   cargo    = commodity_get( cname );
-
-   /* Check if the cargo exists. */
-   if (cargo == NULL) {
-      NLUA_ERROR(L, _("Cargo '%s' not found."), cname);
-      return 0;
-   }
 
    cur_mission = misn_getFromLua(L);
 
