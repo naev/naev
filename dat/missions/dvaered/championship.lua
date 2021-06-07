@@ -16,9 +16,9 @@
  </mission>
  --]]
 --[[
-   
+
    The player takes part into a challenge between fighter pilots in Dvaered space, he has to defeat 5 opponents to win.
-   
+
    Stages :
    0) Way to positions
    1) Begin of the fight
@@ -43,7 +43,7 @@ bar_desc = {}
 title[1] = _("Do you want to take part to a challenge?")
 text[1] = _([["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill them; the security staff won't forgive that. It is forbidden to use missiles, so you won't be allowed to have those equipped while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on any planet or jump away during the championship.
     We are looking for pilots. Are you in?"]])
-   
+
 refusetitle = _("Sorry, not interested")
 refusetext = _([["That's your choice. Goodbye, then."]])
 
@@ -87,7 +87,7 @@ comptext[5] = _([["Hi, I'm... err... I'm an independent pilot. I'm here to take 
 comptitle[6] = _("I am here to win the championship")
 comptext[6] = _([["I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
     "Do you know who I am? I am the famous independent pilot who helped Dvaered High Command destroy the FLF base in the nebula! I managed to defeat lots of FLF fighters with my ship! I will tell you my adventures some other time, but for now, I need to concentrate."]])
-   
+
 -- Mission details
 misn_title = _("The Dvaered Championship")
 misn_reward = _("From 50k to 1.6m credits, depending on your rank")
@@ -131,13 +131,13 @@ osd_msg[3] = _("Land on %s")
 mark_name = _("START")
 
 function create ()
-   
+
    --Change here to change the planet and the system
    sysname = "Dvaer"
    planame = "Dvaer Prime"
    missys = system.get(sysname)
    mispla = planet.get(planame)
-   
+
    if not misn.claim ( missys ) then
       misn.finish(false)
    end
@@ -185,16 +185,16 @@ function competitor5()
 end
 
 function accept()
-   
+
    level = 0
    reward = 50000
-   
+
    if tk.yesno(title[1], text[1]) then
 
       misn.accept()
 
       osd_msg[3] = osd_msg[3]:format(planame)
-      
+
       misn.setTitle(misn_title)
       misn.setReward(misn_reward:format(numstring(reward)))
       misn.setDesc(misn_desc)
@@ -245,7 +245,7 @@ function beginbattle()
       end
 
       usedNames[#usedNames+1] = opponame
-      
+
       tk.msg(title[2], text[2]:format(opponame,numstring(5-level)))
 
       enterhook = hook.enter("enter")
@@ -299,7 +299,7 @@ function enter()
          opponent:addOutfit("Milspec Orion 3701 Core System")
          opponent:addOutfit("S&K Light Combat Plating")
       end
-      
+
       -- Equipment
       local nhigh, nmedium, nlow = oppotype:slots()
 
@@ -312,7 +312,7 @@ function enter()
          opponent:addOutfit("Heavy Ion Cannon")
          hvy = 1
       end
-      
+
       opponent:addOutfit("Ion Cannon", nhigh-hvy)
 
       --Health

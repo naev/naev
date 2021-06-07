@@ -22,7 +22,7 @@
 
 require "scripts/numstring"
 
-misn_title = _("DV: Assault on Unicorn") 
+misn_title = _("DV: Assault on Unicorn")
 misn_reward = _("Variable")
 misn_desc = _("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s.")
 
