@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-06-06 22:16-0400\n"
+"POT-Creation-Date: 2021-06-06 22:36-0400\n"
 "PO-Revision-Date: 2021-05-21 23:32+0000\n"
 "Last-Translator: rhebok-git <geneenkei@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -9073,7 +9073,7 @@ msgstr ""
 #: src/dev_sysedit.c:1919 src/dev_uniedit.c:948 src/dev_uniedit.c:1126
 #: src/dev_uniedit.c:1359 src/dev_uniedit.c:1425 src/info.c:273 src/info.c:371
 #: src/info.c:810 src/info.c:1110 src/input.c:553 src/land_outfits.c:386
-#: src/land_outfits.c:419 src/land_outfits.c:632 src/land_shipyard.c:161
+#: src/land_outfits.c:419 src/land_outfits.c:634 src/land_shipyard.c:161
 #: src/land_shipyard.c:257 src/land_trade.c:85 src/land_trade.c:87
 #: src/land_trade.c:121 src/load.c:373 src/load.c:418 src/load.c:462
 #: src/map.c:628 src/map.c:653 src/map.c:1763 src/map_find.c:738
@@ -68201,7 +68201,7 @@ msgid "Take Off"
 msgstr ""
 
 #. Check if player really wants to sell.
-#: src/equipment.c:275 src/equipment.c:1906
+#: src/equipment.c:275 src/equipment.c:1904
 msgid "Sell Ship"
 msgstr "Vendre le vaisseau"
 
@@ -68283,32 +68283,31 @@ msgstr ""
 msgid "Right click to add"
 msgstr ""
 
-#. TODO: Get the newline out of the gettext message! This is silly! (Wait til this branch is merged first.)
-#: src/equipment.c:768 src/land_outfits.c:595
+#: src/equipment.c:767
 #, c-format
-msgid "#%c%s #%c%s #0slot\n"
+msgid "#%c%s #%c%s #0slot"
 msgstr ""
 
-#: src/equipment.c:775
+#: src/equipment.c:773
 msgid " [exclusive]"
 msgstr ""
 
-#: src/equipment.c:1308
+#: src/equipment.c:1306
 #, c-format
 msgid "%s%.2f DPS [%.2f EPS]"
 msgstr ""
 
-#: src/equipment.c:1391
+#: src/equipment.c:1389
 #, c-format
 msgid "Ship Stats\n"
 msgstr ""
 
-#: src/equipment.c:1432 src/land_outfits.c:277 src/shiplog.c:477
+#: src/equipment.c:1430 src/land_outfits.c:277 src/shiplog.c:477
 #: src/shiplog.c:522
 msgid "All"
 msgstr ""
 
-#: src/equipment.c:1597
+#: src/equipment.c:1595
 #, c-format
 msgid ""
 "%s\n"
@@ -68338,7 +68337,7 @@ msgid ""
 msgstr ""
 
 #. Movement.
-#: src/equipment.c:1628 src/equipment.c:1646 src/info.c:502 src/info.c:513
+#: src/equipment.c:1626 src/equipment.c:1644 src/info.c:502 src/info.c:513
 #: src/land_shipyard.c:293 src/land_shipyard.c:303 src/map_system.c:673
 #: src/map_system.c:683
 msgid "tonne"
@@ -68346,26 +68345,26 @@ msgid_plural "tonnes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1647 src/info.c:514 src/land_shipyard.c:304
+#: src/equipment.c:1645 src/info.c:514 src/land_shipyard.c:304
 #: src/land_shipyard.c:305 src/map_system.c:684 src/map_system.c:685
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1648 src/info.c:252 src/info.c:515
+#: src/equipment.c:1646 src/info.c:252 src/info.c:515
 msgid "jump"
 msgid_plural "jumps"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/equipment.c:1831
+#: src/equipment.c:1829
 msgid "You can not unequip your ship while you have deployed fighters!"
 msgstr ""
 "Vous ne pouvez pas déséquiper votre vaisseau alors que vous avez déployé des "
 "unités de combat !"
 
-#: src/equipment.c:1836
+#: src/equipment.c:1834
 msgid ""
 "You can not unequip your ship when you have more cargo than it can hold "
 "without modifications!"
@@ -68373,44 +68372,44 @@ msgstr ""
 "Vous ne pouvez pas déséquiper votre vaisseau lorsque vous avez plus de "
 "cargaison qu'il ne peut en contenir sans subir de modifications !"
 
-#: src/equipment.c:1840
+#: src/equipment.c:1838
 msgid "Unequip Ship"
 msgstr "Déséquiper le vaisseau"
 
 #. confirm
-#: src/equipment.c:1841
+#: src/equipment.c:1839
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 
-#: src/equipment.c:1907
+#: src/equipment.c:1905
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "Êtes-vous sûr de vouloir vendre votre vaisseau %s pour %s ?"
 
 #. Display widget.
-#: src/equipment.c:1924
+#: src/equipment.c:1922
 msgid "Ship Sold"
 msgstr ""
 
-#: src/equipment.c:1925
+#: src/equipment.c:1923
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr ""
 
-#: src/equipment.c:1954 src/player.c:407
+#: src/equipment.c:1952 src/player.c:407
 msgid "Ship Name"
 msgstr ""
 
-#: src/equipment.c:1955
+#: src/equipment.c:1953
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr ""
 
-#: src/equipment.c:1963
+#: src/equipment.c:1961
 msgid "Name Collision"
 msgstr ""
 
-#: src/equipment.c:1964 src/player.c:432
+#: src/equipment.c:1962 src/player.c:432
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 
@@ -70125,20 +70124,25 @@ msgid ""
 "%s\n"
 msgstr ""
 
-#: src/land_outfits.c:599
-msgid "#oUnique#0\n"
+#: src/land_outfits.c:595
+#, c-format
+msgid "#%c%s #%c%s #0slot\n"
 msgstr ""
 
 #: src/land_outfits.c:601
+msgid "#oUnique#0\n"
+msgstr ""
+
+#: src/land_outfits.c:603
 #, c-format
 msgid "#o%s#0\n"
 msgstr ""
 
-#: src/land_outfits.c:604
+#: src/land_outfits.c:606
 msgid "#rOnly 1 of type per ship#0\n"
 msgstr ""
 
-#: src/land_outfits.c:608
+#: src/land_outfits.c:610
 #, c-format
 msgid ""
 "\n"
@@ -70149,50 +70153,50 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/land_outfits.c:697
+#: src/land_outfits.c:699
 msgid "You can only own one of this outfit."
 msgstr ""
 
-#: src/land_outfits.c:704
+#: src/land_outfits.c:706
 msgid "You already know of everything this map contains."
 msgstr ""
 
-#: src/land_outfits.c:709
+#: src/land_outfits.c:711
 msgid "You already own this GUI."
 msgstr ""
 
-#: src/land_outfits.c:714
+#: src/land_outfits.c:716
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:720 src/land_shipyard.c:428 src/land_shipyard.c:499
+#: src/land_outfits.c:722 src/land_shipyard.c:428 src/land_shipyard.c:499
 #: src/land_trade.c:242
 #, c-format
 msgid "You need %s more."
 msgstr ""
 
-#: src/land_outfits.c:726
+#: src/land_outfits.c:728
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:804
+#: src/land_outfits.c:806
 msgid "You can't sell a unique outfit."
 msgstr ""
 
-#: src/land_outfits.c:810
+#: src/land_outfits.c:812
 msgid "You can't sell a map."
 msgstr ""
 
-#: src/land_outfits.c:816
+#: src/land_outfits.c:818
 msgid "You can't sell a GUI."
 msgstr ""
 
-#: src/land_outfits.c:822
+#: src/land_outfits.c:824
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:828 src/land_trade.c:261
+#: src/land_outfits.c:830 src/land_trade.c:261
 msgid "You can't sell something you don't have!"
 msgstr ""
 

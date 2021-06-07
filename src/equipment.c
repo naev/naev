@@ -764,11 +764,9 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          pos = scnprintf( alt, sizeof(alt),
                "#o%s", _( sp_display( slot->sslot->slot.spid ) ) );
       else {
-         /* TODO: Get the newline out of the gettext message! This is silly! (Wait til this branch is merged first.) */
-         pos = scnprintf( alt, sizeof(alt), _( "#%c%s #%c%s #0slot\n" ),
+         pos = scnprintf( alt, sizeof(alt), _( "#%c%s #%c%s #0slot" ),
                outfit_slotSizeColourFont( &slot->sslot->slot ), slotSize( slot->sslot->slot.size ),
                outfit_slotTypeColourFont( &slot->sslot->slot ), slotName( slot->sslot->slot.type ) );
-         alt[--pos] = '\0'; /* Didn't actually want the newline. */
       }
       if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += scnprintf( &alt[pos], sizeof(alt)-pos,
