@@ -9,9 +9,9 @@
   <chance>5</chance>
   <location>Bar</location>
  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
+ <notes>
+  <tier>1</tier>
+ </notes>
 </mission>
 --]]
 --[[

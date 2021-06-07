@@ -1,20 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="An old woman">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>3</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>  -- Note: additional conditionals present in mission script!
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>3</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
+-- Note: additional conditionals present in mission script!
 --[[
 --
 -- MISSION: The complaining grandma
