@@ -657,12 +657,11 @@ static int misn_finish( lua_State *L )
 
 
 /**
- * @brief Adds some mission cargo to the player. They cannot sell it nor get rid of it
- *  unless they abandons the mission in which case it'll get eliminated.
+ * @brief Creates a new temporary commodity meant for missions. If a temporary commodity with the same name exists, that gets returned instead.
  *
  *    @luatparam string cargo Name of the cargo to add. This must not match a cargo name defined in commodity.xml.
  *    @luatparam string decription Description of the cargo to add.
- *    @luatreturn Commodity The newly created commodity.
+ *    @luatreturn Commodity The newly created commodity or an existing temporary commodity with the same name.
  * @luafunc cargoNew
  */
 static int misn_cargoNew( lua_State *L )
