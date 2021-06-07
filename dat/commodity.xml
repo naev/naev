@@ -169,18 +169,6 @@
   <faction_modifier type="Za'lek">0.5</faction_modifier>
  </commodity>
  <commodity>
-  <name>Ancient Artifact</name>
- </commodity>
- <commodity>
-  <name>Artifact? A</name>
- </commodity>
- <commodity>
-  <name>Artifact? B</name>
- </commodity>
- <commodity>
-  <name>Artifact? C</name>
- </commodity>
- <commodity>
   <name>Bomb</name>
  </commodity>
  <commodity>
@@ -264,9 +252,6 @@
  </commodity>
  <commodity>
   <name>Small Arms</name>
- </commodity>
- <commodity>
-  <name>The Baron's holopainting</name>
  </commodity>
  <commodity>
   <name>The Rescued Children</name>

@@ -135,22 +135,22 @@ function accept()
    tk.msg(title[5], text[6]:format(planetname))
    tk.msg(title[5], text[7])
    tk.msg(title[5], text[8]:format(sysname2, planetname))
-   
+
    misn.accept()
-   
+
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
    misn.setDesc(misn_desc)
-    
+
    osd_msg[1] = osd_msg[1]:format(sysname1, planetname)
    osd_msg[2] = osd_msg[2]:format(sysname2)
    misn.osdCreate(osd_title, osd_msg)
-   
+
    misn_marker = misn.markerAdd( system.get(sysname1), "low" )
-    
+
    talked = false
    stopping = false
-   
+
    hook.land("land")
    hook.enter("jumpin")
    hook.takeoff("takeoff")
@@ -225,7 +225,8 @@ function talkthieves()
    misn.npcRm(thief3)
 
    talked = true
-   carg_id = misn.cargoAdd("The Baron's holopainting", 0)
+   local c = misn.cargoNew( N_("The Baron's holopainting"), N_("A rectangular chest containing a holopainting.") )
+   carg_id = misn.cargoAdd(c, 0)
 
    misn.osdActive(2)
    misn.markerMove( misn_marker, system.get(sysname2) )
