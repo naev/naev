@@ -3101,6 +3101,9 @@ void pilot_destroy(Pilot* p)
    /* find the pilot */
    i = pilot_getStackPos(p->id);
 
+   /* Handle Lua outfits. */
+   pilot_outfitLCleanup(p);
+
    /* Remove faction if necessary. */
    if (p->presence > 0) {
       system_rmCurrentPresence( cur_system, p->faction, p->presence );

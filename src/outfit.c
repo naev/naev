@@ -1735,6 +1735,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    /* Defaults. */
    temp->u.mod.lua_env = LUA_NOREF;
    temp->u.mod.lua_init = LUA_NOREF;
+   temp->u.mod.lua_cleanup = LUA_NOREF;
    temp->u.mod.lua_update = LUA_NOREF;
    temp->u.mod.lua_ontoggle = LUA_NOREF;
    temp->u.mod.lua_onhit = LUA_NOREF;
@@ -1798,6 +1799,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
          /* Check functions as necessary. */
          temp->u.mod.lua_init = nlua_refenvtype( env, "init", LUA_TFUNCTION );
+         temp->u.mod.lua_cleanup = nlua_refenvtype( env, "cleanup", LUA_TFUNCTION );
          temp->u.mod.lua_update = nlua_refenvtype( env, "update", LUA_TFUNCTION );
          temp->u.mod.lua_ontoggle = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
          temp->u.mod.lua_onhit = nlua_refenvtype( env, "onhit", LUA_TFUNCTION );

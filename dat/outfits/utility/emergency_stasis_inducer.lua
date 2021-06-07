@@ -27,6 +27,10 @@ function init( p, po )
    shader_force_off()
 end
 
+function cleanup( p, po )
+   shader_force_off()
+end
+
 function update( p, po, dt )
    if not mem.timer then return end
    mem.timer = mem.timer - dt

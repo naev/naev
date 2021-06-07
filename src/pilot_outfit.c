@@ -1454,3 +1454,39 @@ void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer )
    if (pilotoutfit_modified)
       pilot_calcStats( pilot );
 }
+
+
+/**
+ * @brief Handle cleanup hooks for outfits.
+ *
+ *    @param pilot Pilot being handled.
+ */
+void pilot_outfitLCleanup( Pilot *pilot )
+{
+   int i;
+   PilotOutfitSlot *po;
+   pilotoutfit_modified = 0;
+   for (i=0; i<array_size(pilot->outfits); i++) {
+      po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_cleanup == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: cleanup( p, po ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_cleanup); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      if (nlua_pcall( env, 2, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'cleanup':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+   /* Pilot gets cleaned up so no need to recalculate stats. */
+}
