@@ -1605,7 +1605,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "#%c%s%.0f#0 deg/s\n"
          "%.0f%%\n"
          "%s\n"
-         "%s\n"
+         "%s (%.1f secs for scan)\n"
          "%s\n"
          "\n"
          "#%c%s%.0f%%\n"
@@ -1630,7 +1630,8 @@ void equipment_updateShips( unsigned int wid, char* str )
       EQ_COMP( solid_maxspeed( ship->solid, ship->speed, ship->thrust ),
             solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ),
       EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
-      ship->ship->dt_default * 100, sdet, seva, sste,
+      ship->ship->dt_default * 100,
+      sdet, seva, pilot_ewScanTime(ship), sste,
       /* Health. */
       EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ),
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),

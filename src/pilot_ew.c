@@ -43,6 +43,18 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close );
 
 
 /**
+ * @brief Gets the time it takes to scan a pilot.
+ *
+ *    @param p Pilot to scan.
+ *    @return Time it takes to scan the pilot.
+ */
+double pilot_ewScanTime( const Pilot *p )
+{
+   return pow( p->solid->mass, 1./3. ) * 1.25 * p->stats.ew_hide;
+}
+
+
+/**
  * @brief Initializes the scan timer for a pilot.
  *
  *    @param p Pilot to set scan timer for.
@@ -63,7 +75,8 @@ void pilot_ewScanStart( Pilot *p )
    if (pilot_isPlayer(target) && pilot_hasIllegal(target,p->faction))
       player_autonavResetSpeed();
 
-   p->scantimer = 5.; /* TODO use a non-fixed value. */
+   /* Scan time. */
+   p->scantimer = pilot_ewScanTime(p);
 }
 
 
