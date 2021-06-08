@@ -5,25 +5,25 @@
   <mass>4</mass>
   <price>0</price>
   <description>This modified rocket was used by the Collective heavy drones as a means to puncture heavy warships and leave them vulnerable. It has very poor tracking, but has excellent speed and armor piercing.</description>
-  <gfx_store>teracom_fury_launcher_blue.png</gfx_store>
+  <gfx_store>fury_blue.png</gfx_store>
  </general>
  <specific type="ammo">
   <gfx>fury_blue.png</gfx>
   <sound>missile</sound>
   <sound_hit>bansheeexp</sound_hit>
-  <spfx_shield>ExpM</spfx_shield>
+  <spfx_shield>ExpS</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
   <trail_generator x="0">missile</trail_generator>
-  <duration blowup="armour">2.5</duration>
+  <duration blowup="armour">2.2</duration>
   <thrust>0</thrust>
-  <turn>20</turn>
+  <turn>5</turn>
   <speed>1200</speed>
   <resist>35</resist>
   <damage>
-   <type>shieldbreaker</type>
-   <penetrate>52</penetrate>
-   <physical>20</physical>
-   <disable>10</disable>
+   <type>ion</type>
+   <penetrate>42</penetrate>
+   <physical>50</physical>
+   <disable>5</disable>
   </damage>
   <ai>smart</ai>
  </specific>

@@ -79,7 +79,7 @@ equip_typeOutfits_weapons["Admonisher"] = {
 equip_typeOutfits_weapons["Pacifier"] = {
    {
       num = 2;
-      "Heavy Ripper Turret", "Railgun"
+      "Heavy Laser Turret", "Railgun"
    },
    {
       num = 1;
@@ -119,10 +119,10 @@ function equip( p )
             "Empire Lancelot Fighter Bay", "Drone Fighter Bay",
          },
          {
-            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam",
+            "Turbolaser", "Heavy Ripper Turret", "Ragnarok Beam",
          },
          {
-            "Heavy Ripper Turret",
+            "Heavy Laser Turret",
          },
       }
    else
@@ -132,10 +132,10 @@ function equip( p )
             "Empire Lancelot Fighter Bay",
          },
          {
-            "Turbolaser", "Heavy Laser Turret", "Ragnarok Beam",
+            "Turbolaser", "Heavy Ripper Turret", "Ragnarok Beam",
          },
          {
-            "Heavy Ripper Turret",
+            "Heavy Laser Turret",
          },
       }
    end

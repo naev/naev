@@ -94,7 +94,7 @@ equip_typeOutfits_weapons["Goddard"] = {
       "Repeating Railgun",
    },
    {
-      "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
+      "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    },
 }
 

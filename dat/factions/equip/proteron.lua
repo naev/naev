@@ -66,7 +66,7 @@ equip_typeOutfits_weapons["Archimedes"] = {
       "Enygma Systems Turreted Headhunter Launcher",
    },
    {
-      "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
+      "Heavy Ripper Turret", "Railgun Turret", "Ragnarok Beam",
    },
    {
       "Heavy Razor Turret", "Grave Beam",
