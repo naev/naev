@@ -47,7 +47,7 @@
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
-static Commodity* commodity_temp = NULL; /**< Contains all the temporary commodities. */
+static Commodity** commodity_temp = NULL; /**< Contains all the temporary commodities. */
 
 /* gatherables stack */
 static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
@@ -138,8 +138,8 @@ Commodity* commodity_get( const char* name )
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
    for (i=0; i<array_size(commodity_temp); i++)
-      if (strcmp(commodity_temp[i].name, name) == 0)
-         return &commodity_temp[i];
+      if (strcmp(commodity_temp[i]->name, name) == 0)
+         return commodity_temp[i];
 
    WARN(_("Commodity '%s' not found in stack"), name);
    return NULL;
@@ -159,8 +159,8 @@ Commodity* commodity_getW( const char* name )
       if (strcmp(commodity_stack[i].name, name) == 0)
          return &commodity_stack[i];
    for (i=0; i<array_size(commodity_temp); i++)
-      if (strcmp(commodity_temp[i].name, name) == 0)
-         return &commodity_temp[i];
+      if (strcmp(commodity_temp[i]->name, name) == 0)
+         return commodity_temp[i];
    return NULL;
 }
 
@@ -601,7 +601,7 @@ int commodity_isTemp( const char* name )
    int i;
 
    for (i=0; i<array_size(commodity_temp); i++)
-      if (strcmp(commodity_temp[i].name, name) == 0)
+      if (strcmp(commodity_temp[i]->name, name) == 0)
          return 1;
    for (i=0; i<array_size(commodity_stack); i++)
       if (strcmp(commodity_stack[i].name,name)==0)
@@ -621,16 +621,16 @@ int commodity_isTemp( const char* name )
  */
 Commodity* commodity_newTemp( const char* name, const char* desc )
 {
-   Commodity *c;
+   Commodity **c;
    if (commodity_temp == NULL)
-      commodity_temp = array_create( Commodity );
+      commodity_temp = array_create( Commodity* );
 
-   c              = &array_grow(&commodity_stack);
-   memset( c, 0, sizeof(Commodity) );
-   c->istemp      = 1;
-   c->name        = strdup(name);
-   c->description = strdup(desc);
-   return c;
+   c              = &array_grow(&commodity_temp);
+   *c             = calloc( 1, sizeof(Commodity) );
+   (*c)->istemp   = 1;
+   (*c)->name     = strdup(name);
+   (*c)->description = strdup(desc);
+   return *c;
 }
 
 
@@ -734,8 +734,10 @@ void commodity_free (void)
    array_free( commodity_stack );
    commodity_stack = NULL;
 
-   for (i=0; i<array_size(commodity_temp); i++)
-      commodity_freeOne( &commodity_temp[i] );
+   for (i=0; i<array_size(commodity_temp); i++) {
+      commodity_freeOne( commodity_temp[i] );
+      free( commodity_temp[i] );
+   }
    array_free( commodity_temp );
    commodity_temp = NULL;
 
