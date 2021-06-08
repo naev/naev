@@ -264,12 +264,7 @@ static int commodityL_getStandard( lua_State *L )
  */
 static int commodityL_name( lua_State *L )
 {
-   Commodity *c;
-
-   /* Get the commodity. */
-   c  = luaL_validcommodity(L,1);
-
-   /** Return the commodity name. */
+   Commodity *c  = luaL_validcommodity(L,1);
    lua_pushstring(L, _(c->name));
    return 1;
 }
@@ -291,12 +286,7 @@ static int commodityL_name( lua_State *L )
  */
 static int commodityL_nameRaw( lua_State *L )
 {
-   Commodity *c;
-
-   /* Get the commodity. */
-   c  = luaL_validcommodity(L,1);
-
-   /** Return the commodity name. */
+   Commodity *c  = luaL_validcommodity(L,1);
    lua_pushstring(L, c->name);
    return 1;
 }
