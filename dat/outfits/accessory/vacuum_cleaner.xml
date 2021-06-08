@@ -9,7 +9,7 @@
   <mass>0</mass>
   <price>1000000</price>
   <description>Found on a Four Wings fighter that was carrying a Ragnarok beam. It seems to increase the performance of your engine when the ship's mass is high. It is most certainly not an actual vacuum cleaner, but you don't know this outfit's real name.</description>
-  <gfx_store>placeholder.webp</gfx_store>
+  <gfx_store>vacuum_cleaner.webp</gfx_store>
  <rarity>6</rarity></general>
  <specific type="modification">
   <engine_limit_rel>10</engine_limit_rel>
