@@ -274,7 +274,6 @@ typedef struct Pilot_ {
    double ew_mass;      /**< Mass factor. */
    double ew_asteroid;  /**< Asteroid field factor, affects hide. */
    /* misc. */
-   double ew_jump_detect; /** Static jump detection factor */
    double ew_stealth_timer; /**< Stealth timer. */
 
    /* Heat. */
