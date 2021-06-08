@@ -27,7 +27,7 @@
 
 #define EW_ASTEROID_DIST      7500.
 #define EW_JUMPDETECT_DIST    7500.
-#define EW_PLANETDETECT_DIST  pilot_ewMass(10e3) /* TODO something better than this. */
+#define EW_PLANETDETECT_DIST  200000. /* TODO something better than this. */
 
 
 static double ew_interference = 1.; /**< Interference factor. */
@@ -282,15 +282,14 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    pnt = cur_system->planets[target];
 
    /* target must not be virtual */
-   if ( !pnt->real )
+   if (!pnt->real)
       return 0;
 
-   sense = pow2(EW_PLANETDETECT_DIST);
+   sense = EW_PLANETDETECT_DIST;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
-
-   if (d / p->stats.ew_detect < sense )
+   if (d < pow2(sense * p->stats.ew_detect * pnt->hide) )
       return 1;
 
    return 0;
