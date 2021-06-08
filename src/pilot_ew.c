@@ -27,7 +27,7 @@
 
 #define EW_ASTEROID_DIST      7500.
 #define EW_JUMPDETECT_DIST    7500.
-#define EW_PLANETDETECT_DIST  200000. /* TODO something better than this. */
+#define EW_PLANETDETECT_DIST  250000. /* TODO something better than this. */
 
 
 static double ew_interference = 1.; /**< Interference factor. */
