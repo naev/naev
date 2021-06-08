@@ -214,7 +214,7 @@ equip_classOutfits_weapons = {
    },
    ["Armoured Transport"] = {
       {
-         "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
+         "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
       },
       {
          num = 1;
@@ -274,7 +274,7 @@ equip_classOutfits_weapons = {
    },
    ["Destroyer"] = {
       {
-         "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
+         "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
       },
       {
          num = 1;
@@ -303,10 +303,10 @@ equip_classOutfits_weapons = {
          "Enygma Systems Turreted Headhunter Launcher",
       },
       {
-         "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
+         "Heavy Ripper Turret", "Railgun Turret", "Ragnarok Beam",
       },
       {
-         "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
+         "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
       },
    },
    ["Carrier"] = {
@@ -319,7 +319,7 @@ equip_classOutfits_weapons = {
          "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
       },
       {
-         "Heavy Ripper Turret", "Grave Beam",
+         "Heavy Laser Turret", "Grave Beam",
       },
    },
    ["Drone"] = {
@@ -329,10 +329,10 @@ equip_classOutfits_weapons = {
    },
    ["Heavy Drone"] = {
       {
-         "Heavy Neutron Disruptor"
+         "Shatterer Launcher"
       },
       {
-         "Shatterer Launcher"
+         "Heavy Neutron Disruptor"
       },
    }
 }
@@ -962,7 +962,7 @@ equip_typeOutfits_weapons = {
    },
    ["Kestrel"] = {
       {
-         "Railgun", "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
+         "Railgun", "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
       },
       {
          "Enygma Systems Turreted Fury Launcher",
@@ -977,7 +977,7 @@ equip_typeOutfits_weapons = {
          "Enygma Systems Turreted Headhunter Launcher",
       },
       {
-         "Heavy Ripper Turret", "Grave Beam", "Heavy Ion Turret",
+         "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
       },
    },
    ["Goddard"] = {
@@ -987,7 +987,7 @@ equip_typeOutfits_weapons = {
          "Enygma Systems Turreted Headhunter Launcher",
       },
       {
-         "Railgun", "Heavy Ripper Turret", "Railgun Turret",
+         "Railgun", "Heavy Laser Turret", "Railgun Turret",
       },
       {
          "TeraCom Mace Launcher",
@@ -1135,7 +1135,7 @@ equip_typeOutfits_weapons = {
          "BioPlasma Tentacle Stage 7", "BioPlasma Tentacle Stage X",
       },
       {
-         "Heavy Ripper Turret", "Grave Beam",
+         "Heavy Laser Turret", "Grave Beam",
       },
    },
    ["Vox"] = {
