@@ -162,7 +162,8 @@ end
 
 function beginrun()
    tk.msg(title[4], text[4])
-   records = misn.cargoAdd("Box", 0)  --Adding the cargo
+   local c = misn.cargoNew(N_("Recorder"), N_("A holophone recorder."))
+   records = misn.cargoAdd(c, 0)  --Adding the cargo
    stage = 1
    misn.osdActive(2)
    misn.markerRm(marker)

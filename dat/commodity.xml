@@ -172,9 +172,6 @@
   <name>Bomb</name>
  </commodity>
  <commodity>
-  <name>Box</name>
- </commodity>
- <commodity>
   <name>Colonists</name>
  </commodity>
  <commodity>
@@ -204,9 +201,6 @@
  </commodity>
  <commodity>
   <name>Goods</name>
- </commodity>
- <commodity>
-  <name>Group of Nerds</name>
  </commodity>
  <commodity>
   <name>Love Letters</name>
