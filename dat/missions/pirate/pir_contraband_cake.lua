@@ -110,7 +110,7 @@ They extend their sweaty hand towards you.
    vn.label("accept")
    vn.na(_("You accept their mission without shaking their hand."))
    g(_([["You're a lifesaver!"
-The lean forward and get a bit more serious.
+They lean forward and get a bit more serious.
 "One thing though, you do know how to stealth to get around scanning right?"]]))
    vn.func( function () accepted = true end )
    vn.menu{
@@ -126,7 +126,7 @@ The lean forward and get a bit more serious.
       string.format("#b%s#0",naev.keyGet("stealth"))))
 
    vn.label("notut")
-   g(string.format(_([["Great. One second let me get the cake."
+   g(string.format(_([["Great. One second, let me get the cake."
 They go to the restroom and come back holding a nondescript brown box that seems to have 'Cake' hastily scribbled on it. They promptly hand it over to you while looking both ways.
 "OK, so that's it. Make sure to take this to %s in the %s system, and watch out for scanning!"]]), destplanet, destsys))
    vn.na(_("As leave them behind you can hear them let out a big sigh of what you can only assume is relief."))
