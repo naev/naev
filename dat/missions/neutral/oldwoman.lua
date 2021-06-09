@@ -90,7 +90,8 @@ end
 function accept ()
     if tk.yesno(title1, text1:format(destplanet:name(), destsys:name(), destplanet:name())) then
         tk.msg(title1, text2)
-        oldwoman = misn.cargoAdd("Civilians", 0)
+        local c = misn.cargoNew( N_("Old Woman"), N_("A grumbling old woman.") )
+        oldwoman = misn.cargoAdd(c, 0)
 
         misn.accept()
         misn.setDesc(misndesc:format(destplanet:name(), destsys:name()))

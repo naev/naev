@@ -168,9 +168,10 @@ function accept ()
    misn.accept()
 
    osd_msg[1] = osd_msg[1]:format( missys:name() )
-   osd_msg[3] = osd_msg[3]:format( startingplanet:name(),startingsystem:name() )
+   osd_msg[3] = osd_msg[3]:format( startingplanet:name(), startingsystem:name() )
    misn.osdCreate( osd_title, osd_msg )
-   civs = misn.cargoAdd( "Civilians", 0 )
+   local c = misn.cargoNew( N_("Sightseers"), N_("A bunch of sightseeing civilians.") )
+   civs = misn.cargoAdd( c, 0 )
    job_done = false
 
    hook.enter( "enter" )
