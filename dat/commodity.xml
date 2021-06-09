@@ -187,9 +187,6 @@
   <name>Equipment</name>
  </commodity>
  <commodity>
-  <name>Four Winds Informant</name>
- </commodity>
- <commodity>
   <name>Fuel</name>
   <gfx_space>fuel.png</gfx_space>
  </commodity>
@@ -201,12 +198,6 @@
  </commodity>
  <commodity>
   <name>Goods</name>
- </commodity>
- <commodity>
-  <name>Love Letters</name>
- </commodity>
- <commodity>
-  <name>Packages</name>
  </commodity>
  <commodity>
   <name>Person</name>

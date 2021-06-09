@@ -123,7 +123,8 @@ function land ()
       end
 
       -- Update mission
-      package = misn.cargoAdd("Packages", 3)
+      c = misn.cargoNew(_("Packages"), _("Several packages of \"food\"."))
+      package = misn.cargoAdd(c, 3)
       misn_stage = 1
       jumped = 0
       misn.setDesc( string.format(misn_desc[2], dest:name(), destsys:name()))

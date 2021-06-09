@@ -196,7 +196,8 @@ end
 -- Board hook for Joe
 function joeBoard()
     tk.msg(title[5], text[9]:format(player.name()))
-    misn.cargoAdd("Four Winds Informant", 0)
+    local c = misn.cargoNew(_("Four Winds Informant"), _("Jorek's informant."))
+    misn.cargoAdd(c, 0)
     player.unboard()
     misn.markerMove(marker, seirsys)
     misn.osdActive(2)
