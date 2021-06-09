@@ -328,7 +328,7 @@ function wave_round_setup ()
             pos = vec2.newP( d, a )
          elseif layout=="pincer" then
             local offset = vec2.newP( 300+200*rnd.rnd(), rnd.rnd()*359 )
-            if math.mod(k,2)==1 then
+            if math.fmod(k,2)==1 then
                pos = posbase + offset
             else
                local x, y = posbase:get()

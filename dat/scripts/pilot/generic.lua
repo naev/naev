@@ -134,7 +134,7 @@ function pilot_name ()
       str = roman_encode(num)
    else
       local greek = { "α","β", "γ", "δ", "ε", "ζ", "Δ", "Σ", "Ψ", "Ω" }
-      str = greek[ math.mod( num, #greek )+1 ]
+      str = greek[ math.fmod( num, #greek )+1 ]
       if rnd.rnd() < 0.5 then
          str = str .. string.format("-%d", math.floor(num/#greek+0.5)+1)
       end

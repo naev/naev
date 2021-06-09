@@ -1461,7 +1461,7 @@ dat/outfits/launchers/enygma_systems_huntsman_launcher.xml
 dat/outfits/launchers/enygma_systems_spearhead_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml
 dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml
-dat/outfits/launchers/shattershield_launcher.xml
+dat/outfits/launchers/shatterer_launcher.xml
 dat/outfits/launchers/teracom_banshee_launcher.xml
 dat/outfits/launchers/teracom_fury_launcher.xml
 dat/outfits/launchers/teracom_headhunter_launcher.xml
@@ -1521,7 +1521,7 @@ dat/outfits/rockets/huntsman_torpedo.xml
 dat/outfits/rockets/imperator_torpedo.xml
 dat/outfits/rockets/mace_rocket.xml
 dat/outfits/rockets/medusa_missile.xml
-dat/outfits/rockets/shattershield_missile.xml
+dat/outfits/rockets/shatterer_missile.xml
 dat/outfits/rockets/spearhead_missile.xml
 dat/outfits/rockets/vengeance_missile.xml
 dat/outfits/rockets/zalek_hunter.xml
