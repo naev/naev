@@ -783,6 +783,11 @@ static void info_openCargo( unsigned int wid )
          cargo_jettison );
    window_disableButton( wid, "btnJettisonCargo" );
 
+   /* Description. */
+   window_addText( wid, 20, -40-200-20,
+         w - 40, h - BUTTON_HEIGHT - 260, 0,
+         "txtCargoDesc", NULL, NULL, NULL );
+
    /* Generate the list. */
    cargo_genList( wid );
 }
@@ -814,15 +819,16 @@ static void cargo_genList( unsigned int wid )
       /* List the player's cargo */
       buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
       for (i=0; i<array_size(player.p->commodities); i++) {
-         asprintf(&buf[i], "%s%s %d",
+         asprintf(&buf[i], "%s%s %d%s",
                _(player.p->commodities[i].commodity->name),
                (player.p->commodities[i].id != 0) ? "*" : "",
-               player.p->commodities[i].quantity);
+               player.p->commodities[i].quantity,
+               (array_size(player.p->commodities[i].commodity->illegalto)>0) ? _(" (#rillegal#0)") : "" );
       }
       nbuf = array_size(player.p->commodities);
    }
    window_addList( wid, 20, -40,
-         w - 40, h - BUTTON_HEIGHT - 80,
+         w - 40, 200,
          "lstCargo", buf, nbuf, 0, cargo_update, NULL );
 }
 /**
@@ -831,7 +837,10 @@ static void cargo_genList( unsigned int wid )
  */
 static void cargo_update( unsigned int wid, char* str )
 {
-   (void)str;
+   (void) str;
+   char desc[STRMAX];
+   int pos, l, i, f;
+   Commodity *com;
 
    if (array_size(player.p->commodities)==0)
       return; /* No cargo */
@@ -841,6 +850,28 @@ static void cargo_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnJettisonCargo" );
    else
       window_enableButton( wid, "btnJettisonCargo" );
+
+   if (array_size(player.p->commodities)==0)
+      return; /* No cargo, redundant check */
+
+   pos = toolkit_getListPos( wid, "lstCargo" );
+   com = player.p->commodities[pos].commodity;
+
+   if (!com->description)
+      l = scnprintf( desc, sizeof(desc), "%s", _(com->name) );
+   else
+      l = scnprintf( desc, sizeof(desc), "%s\n\n%s", _(com->name), _(com->description) );
+   if (array_size(com->illegalto) > 0) {
+      l += scnprintf( &desc[l], sizeof(desc)-l, "\n\n%s", _("Illegalized by the following factions:\n") );
+      for (i=0; i<array_size(com->illegalto); i++) {
+         f = com->illegalto[i];
+         if (!faction_isKnown(f))
+            continue;
+
+         l += scnprintf( &desc[l], sizeof(desc)-l, _("\n   - %s"), _(faction_name(f)) );
+      }
+   }
+   window_modifyText( wid, "txtCargoDesc", desc );
 }
 /**
  * @brief Makes the player jettison the currently selected cargo.
