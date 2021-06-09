@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-06-06 22:36-0400\n"
+"POT-Creation-Date: 2021-06-08 20:41-0400\n"
 "PO-Revision-Date: 2021-02-14 02:50+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
@@ -17700,168 +17700,104 @@ msgid "All sorts of high quality luxury goods."
 msgstr "Alle Arten von hochqualitativen Luxusgütern."
 
 #: dat/commodity.xml:172
-msgid "Ancient Artifact"
-msgstr "Antikes Artefakt"
-
-#: dat/commodity.xml:175
-msgid "Artifact? A"
-msgstr "Artefakt? A"
-
-#: dat/commodity.xml:178
-msgid "Artifact? B"
-msgstr "Artefakt? B"
-
-#: dat/commodity.xml:181
-msgid "Artifact? C"
-msgstr "Artefakt? C"
-
-#: dat/commodity.xml:184
 msgid "Bomb"
 msgstr "Bombe"
 
-#: dat/commodity.xml:187
+#: dat/commodity.xml:175
 msgid "Box"
 msgstr "Box"
 
-#: dat/commodity.xml:190
+#: dat/commodity.xml:178
 msgid "Colonists"
 msgstr "Kolonisten"
 
-#: dat/commodity.xml:193
+#: dat/commodity.xml:181
 #, fuzzy
 #| msgid "Commander"
 msgid "Commando"
 msgstr "Kommandant"
 
-#: dat/commodity.xml:196
+#: dat/commodity.xml:184
 msgid "Civilians"
 msgstr "Zivilisen"
 
-#: dat/commodity.xml:199
+#: dat/commodity.xml:187
 msgid "Datapad"
 msgstr "Datenchip"
 
-#: dat/commodity.xml:202
-msgid "Dvaered ship crew"
-msgstr "Dvaered-Schiffscrew"
-
-#: dat/commodity.xml:205 src/land.c:1004
+#: dat/commodity.xml:190 src/land.c:1004
 msgid "Equipment"
 msgstr "Equipment"
 
-#: dat/commodity.xml:208
-msgid "FLF IFF Transponder"
-msgstr "FLF-ZEFF-Transponder"
-
-#: dat/commodity.xml:211 dat/missions/shadow/darkshadow.lua:241
+#: dat/commodity.xml:193 dat/missions/shadow/darkshadow.lua:241
 msgid "Four Winds Informant"
 msgstr "Vier-Winde-Informant"
 
-#: dat/commodity.xml:214 src/board.c:170
+#: dat/commodity.xml:196 src/board.c:170
 msgid "Fuel"
 msgstr "Treibstoff"
 
-#: dat/commodity.xml:218
+#: dat/commodity.xml:200
 msgid "Gregar"
 msgstr "Gregar"
 
-#: dat/commodity.xml:221
+#: dat/commodity.xml:203
 msgid "Jorek"
 msgstr "Jorek"
 
-#: dat/commodity.xml:224
+#: dat/commodity.xml:206
 msgid "Goods"
 msgstr "Güter"
 
-#: dat/commodity.xml:227
+#: dat/commodity.xml:209
 msgid "Group of Nerds"
 msgstr "Gruppe von Nerds"
 
-#: dat/commodity.xml:230
+#: dat/commodity.xml:212
 msgid "Love Letters"
 msgstr "Liebesbriefe"
 
-#: dat/commodity.xml:233
-msgid "Message"
-msgstr "Nachricht"
-
-#: dat/commodity.xml:236
+#: dat/commodity.xml:215
 msgid "Packages"
 msgstr "Pakete"
 
-#: dat/commodity.xml:239
-msgid "Parcels"
-msgstr "Pakete"
-
-#: dat/commodity.xml:242 dat/missions/neutral/runaway/runaway_cynthia.lua:30
+#: dat/commodity.xml:218 dat/missions/neutral/runaway/runaway_cynthia.lua:30
 #: dat/missions/neutral/runaway/runaway_search.lua:35
 msgid "Person"
 msgstr "Person"
 
-#: dat/commodity.xml:245
+#: dat/commodity.xml:221
 msgid "Phosphine"
 msgstr "Phosphan"
 
-#: dat/commodity.xml:248
-msgid "Pilgrims"
-msgstr "Pilger"
-
-#: dat/commodity.xml:251
+#: dat/commodity.xml:224
 msgid "Prisoners"
 msgstr "Gefangene"
 
-#: dat/commodity.xml:254
+#: dat/commodity.xml:227
 msgid "Prototype"
 msgstr "Prototyp"
 
-#: dat/commodity.xml:257
+#: dat/commodity.xml:230
 msgid "Recipes"
 msgstr "Rezepte"
 
-#: dat/commodity.xml:260
-msgid "Refugees"
-msgstr "Flüchtlinge"
-
-#: dat/commodity.xml:263
+#: dat/commodity.xml:233
 msgid "Secret Technology"
 msgstr "Geheimtechnologie"
 
-#: dat/commodity.xml:266
-msgid "Small Arms"
-msgstr "Kleinwaffen"
-
-#: dat/commodity.xml:269
-msgid "Teenagers"
-msgstr "Teenager"
-
-#: dat/commodity.xml:272
-msgid "The Baron's holopainting"
-msgstr "Hologemälde des Barons"
-
-#: dat/commodity.xml:275
+#: dat/commodity.xml:236
 msgid "The Rescued Children"
 msgstr "Die geretteten Kinder"
 
-#: dat/commodity.xml:278
+#: dat/commodity.xml:239
 msgid "Tourists"
 msgstr "Touristen"
 
 #. Clear velocity
-#: dat/commodity.xml:281 dat/missions/empire/shipping/es02.lua:168
+#: dat/commodity.xml:242 dat/missions/empire/shipping/es02.lua:168
 msgid "VIP"
 msgstr "VIP"
-
-#: dat/commodity.xml:284
-msgid "Waste Containers"
-msgstr "Abfallbehälter"
-
-#: dat/commodity.xml:287
-msgid "Nebula Sensor Suit"
-msgstr "Nebelsensoranzug"
-
-#: dat/commodity.xml:290
-msgid "Nebula Artifact?"
-msgstr "Nebel-Artefakt?"
 
 #: dat/faction.xml:4
 msgid "Dummy"
@@ -18621,7 +18557,7 @@ msgstr "FLF Befrieder"
 #: dat/events/cinematic/DvdFLFbattle.lua:85
 #: dat/events/cinematic/DvdFLFbattle.lua:86 dat/events/flf/derelict.lua:35
 #: dat/events/flf/flf_catastrophe.lua:165
-#: dat/missions/dvaered/dv_antiflf02.lua:225
+#: dat/missions/dvaered/dv_antiflf02.lua:226
 #: dat/missions/dvaered/dv_antiflf03.lua:362
 #: dat/missions/empire/shipping/es02.lua:178
 #: dat/missions/flf/dvk/flf_dvk03.lua:196
@@ -22462,13 +22398,13 @@ msgstr ""
 "Kombination mit dem schwenkbaren Raketenwerfer von Enygma Systems kann jeden "
 "toten Winkel effektiv ausgleichen."
 
-#: dat/outfits/launchers/shattershield_launcher.xml:2
+#: dat/outfits/launchers/shatterer_launcher.xml:2
 #, fuzzy
 #| msgid "Shattershield Lance"
 msgid "Shatterer Launcher"
 msgstr "Schildbrecher-Lance"
 
-#: dat/outfits/launchers/shattershield_launcher.xml:10
+#: dat/outfits/launchers/shatterer_launcher.xml:10
 msgid ""
 "This weapon, based on a fury missile, is used by the collective heavy drones "
 "as a bombardment tool against large targets. While weak individually, the "
@@ -23282,13 +23218,13 @@ msgstr "Mace-Rakete"
 msgid "Medusa Missile"
 msgstr "Medusa-Rakete"
 
-#: dat/outfits/rockets/shattershield_missile.xml:2
+#: dat/outfits/rockets/shatterer_missile.xml:2
 #, fuzzy
 #| msgid "Spearhead Missile"
 msgid "Shatterer Missile"
 msgstr "Spearhead-Rakete"
 
-#: dat/outfits/rockets/shattershield_missile.xml:7
+#: dat/outfits/rockets/shatterer_missile.xml:7
 msgid ""
 "This modified rocket was used by the Collective heavy drones as a means to "
 "puncture heavy warships and leave them vulnerable. It has very poor "
@@ -24786,14 +24722,10 @@ msgstr "Schwerer Ripper-Geschützturm"
 
 #: dat/outfits/weapons/heavy_ripper_turret.xml:10
 msgid ""
-"While limited in range compared to true capital-class weaponry, the heavy "
-"ripper turret's pair of heavy ripper cannons deliver exceptional firepower "
-"for dealing with lighter threats such as corvettes."
+"Built off the heavy ripper cannon, the ripper turret is the heaviest turret "
+"conventionally available to civilians. It's bulk, high energy requirements, "
+"and high damage make it unsuitable for non-capital ships."
 msgstr ""
-"Obwohl die Reichweite im Vergleich zu echten Waffen der Schwerklasse "
-"begrenzt ist, liefern die beiden schweren Ripper-Kanonen des schweren Ripper-"
-"Geschützturms eine außergewöhnliche Feuerkraft für den Umgang mit leichteren "
-"Bedrohungen wie Korvetten."
 
 #: dat/outfits/weapons/ion_cannon.xml:2
 msgid "Ion Cannon"
@@ -33246,7 +33178,7 @@ msgstr "Eintauschen"
 #: dat/missions/minerva/maikki1.lua:205 dat/missions/minerva/maikki1.lua:292
 #: dat/missions/minerva/maikki1.lua:534 dat/missions/minerva/maikki1.lua:902
 #: dat/missions/minerva/maikki2.lua:241 dat/missions/minerva/maikki2.lua:505
-#: dat/missions/minerva/maikki2.lua:771 dat/missions/minerva/pirate3.lua:176
+#: dat/missions/minerva/maikki2.lua:772 dat/missions/minerva/pirate3.lua:176
 #: src/board.c:174
 msgid "Leave"
 msgstr "Verlassen"
@@ -40948,7 +40880,7 @@ msgstr ""
 "mir nie wieder deine Visage! Du bist eindeutig nutzlos für meinen Chef.“"
 
 #. skip back to message if already accepted job
-#: dat/missions/baron/baron_baron.lua:85 dat/missions/minerva/maikki2.lua:798
+#: dat/missions/baron/baron_baron.lua:85 dat/missions/minerva/maikki2.lua:799
 #: dat/missions/minerva/pirate1.lua:71 dat/missions/minerva/pirate2.lua:67
 #: dat/missions/minerva/pirate3.lua:132
 msgid "Accept the job"
@@ -41063,12 +40995,20 @@ msgid "Sauterfeldt's agents"
 msgstr "Sauterfeldts Agenen"
 
 #: dat/missions/baron/baron_baron.lua:171
-#: dat/missions/baron/baron_prince.lua:335
+#: dat/missions/baron/baron_prince.lua:339
 msgid "Pinnacle"
 msgstr "Pinnacle"
 
-#: dat/missions/baron/baron_baron.lua:240
+#: dat/missions/baron/baron_baron.lua:228
+msgid "The Baron's holopainting"
+msgstr "Hologemälde des Barons"
+
+#: dat/missions/baron/baron_baron.lua:228
+msgid "A rectangular chest containing a holopainting."
+msgstr ""
+
 #: dat/missions/baron/baron_baron.lua:241
+#: dat/missions/baron/baron_baron.lua:242
 msgid "Dvaered Police Vendetta"
 msgstr "Dvaeredpolizei-Vendetta"
 
@@ -41673,9 +41613,39 @@ msgstr ""
 msgid "Artifact seller"
 msgstr "Artefaktverkäufer"
 
+#: dat/missions/baron/baron_prince.lua:286
+msgid "Ancient Artifact"
+msgstr "Antikes Artefakt"
+
+#: dat/missions/baron/baron_prince.lua:286
+#, fuzzy
+#| msgid "Ancient Artifact"
+msgid "A seemingly ancient artifact."
+msgstr "Antikes Artefakt"
+
+#: dat/missions/baron/baron_prince.lua:303
+msgid "Artifact? A"
+msgstr "Artefakt? A"
+
+#: dat/missions/baron/baron_prince.lua:303
+#: dat/missions/baron/baron_prince.lua:315
+#: dat/missions/baron/baron_prince.lua:327
+#, fuzzy
+#| msgid "Ancient Artifact"
+msgid "An ancient artifact?"
+msgstr "Antikes Artefakt"
+
+#: dat/missions/baron/baron_prince.lua:315
+msgid "Artifact? B"
+msgstr "Artefakt? B"
+
+#: dat/missions/baron/baron_prince.lua:327
+msgid "Artifact? C"
+msgstr "Artefakt? C"
+
 #. Spawn artifact hunters, maybe.
 #. 60% chance of artifact hunters.
-#: dat/missions/baron/baron_prince.lua:357
+#: dat/missions/baron/baron_prince.lua:361
 msgid "Artifact Hunter"
 msgstr "Artefaktjäger"
 
@@ -42557,6 +42527,16 @@ msgstr ""
 "einer Dvaered-Kontaktperson suchen."
 
 #. Note: this mission makes no system claims.
+#: dat/missions/dvaered/dv_antiflf01.lua:70
+#, fuzzy
+#| msgid "Dvaered ship crew"
+msgid "Dvaered Ship Crew"
+msgstr "Dvaered-Schiffscrew"
+
+#: dat/missions/dvaered/dv_antiflf01.lua:70
+msgid "Dvaered crew from a ship that was disabled by the FLF."
+msgstr ""
+
 #. 100K
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -42957,8 +42937,8 @@ msgstr "Die FLF hervorlocken"
 #: dat/missions/pirate/empbounty_dead.lua:73 dat/missions/pirate/patrol.lua:67
 #: dat/missions/proteron/dissbounty_dead.lua:89
 #: dat/missions/soromid/comingout/srm_comingout6.lua:69
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:107
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:108
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:109
 #, lua-format
 msgid "Fly to the %s system"
 msgstr "Flieg zum „%s“-System"
@@ -43026,6 +43006,14 @@ msgstr ""
 "Flugprotokolle stehlen konntest. Die Dvaered planen nun einen Angriff auf "
 "die Terroristenbasis, und Oberst Urnus sagte, dass du eine Kontaktperson der "
 "Dvaered kontaktieren kannst, wann immer du bereit für die Operation bist."
+
+#: dat/missions/dvaered/dv_antiflf02.lua:135
+msgid "FLF IFF Transponder"
+msgstr "FLF-ZEFF-Transponder"
+
+#: dat/missions/dvaered/dv_antiflf02.lua:135
+msgid "A transponder that will make your ship appear as FLF in the nebula."
+msgstr ""
 
 #. Only true as long as the FLF aren't there yet
 #. Persuade the Dvaered to stop shooting at disabled FLF
@@ -43441,7 +43429,7 @@ msgstr "Zerstör die FLF-Basis"
 #: dat/missions/empire/collective/ec06.lua:42
 #: dat/missions/empire/shipping/es01.lua:38
 #: dat/missions/minerva/maikki1.lua:934
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:110
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:111
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:66
 #, lua-format
 msgid "Return to %s in the %s system"
@@ -43577,17 +43565,28 @@ msgid "A small distraction"
 msgstr "Eine kleine Ablenkung"
 
 #: dat/missions/dvaered/dv_diversion.lua:50
-#, lua-format
+#, fuzzy, lua-format
+#| msgid ""
+#| "\"My General has just retired from the High Command and is now looking to "
+#| "become the Warlord of a planetary system. Unfortunately, our loyal forces "
+#| "seem insufficient to take on any existing planetary defense forces head "
+#| "on.  \n"
+#| "      \"However, it looks like there may be an opportunity for us in %s. "
+#| "Warlord Khan of %s has been building his newest flagship, the Hawk, and "
+#| "will be onboard the Hawk as it tests its hyperspace capabilities. Since "
+#| "its engines and weapons have not been fully installed yet, it will be "
+#| "substantially slower than normal and unable to defend itself.  \n"
+#| "\"To protect himself and the Hawk, Khan will have deployed a substantial "
+#| "escort fighter fleet to defend against any surprise attack.\""
 msgid ""
 "\"My General has just retired from the High Command and is now looking to "
 "become the Warlord of a planetary system. Unfortunately, our loyal forces "
-"seem insufficient to take on any existing planetary defense forces head "
-"on.  \n"
+"seem insufficient to take on any existing planetary defense forces head on.\n"
 "      \"However, it looks like there may be an opportunity for us in %s. "
 "Warlord Khan of %s has been building his newest flagship, the Hawk, and will "
 "be onboard the Hawk as it tests its hyperspace capabilities. Since its "
 "engines and weapons have not been fully installed yet, it will be "
-"substantially slower than normal and unable to defend itself.  \n"
+"substantially slower than normal and unable to defend itself.\n"
 "\"To protect himself and the Hawk, Khan will have deployed a substantial "
 "escort fighter fleet to defend against any surprise attack.\""
 msgstr ""
@@ -48741,6 +48740,14 @@ msgstr "Leutnant"
 #. Mission details
 #. Flavour text and mini-briefing
 #. Set up the goal
+#: dat/missions/empire/emp_cargo00.lua:95
+msgid "Parcels"
+msgstr "Pakete"
+
+#: dat/missions/empire/emp_cargo00.lua:95
+msgid "A bunch of boring Empire parcels."
+msgstr ""
+
 #. More flavour text
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -48821,7 +48828,7 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:35
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:38
 #: dat/missions/neutral/cargo_rush.lua:73
-#: dat/missions/pirate/pir_contraband.lua:31
+#: dat/missions/pirate/pir_contraband.lua:32
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:87
 #, lua-format
 msgid ""
@@ -48852,7 +48859,7 @@ msgstr "IL: Frachttransport nach %s im „%s“-System (%s)"
 #: dat/missions/empire/es_cargo.lua:104
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:116
 #: dat/missions/neutral/cargo_rush.lua:144
-#: dat/missions/pirate/pir_contraband.lua:160
+#: dat/missions/pirate/pir_contraband.lua:161
 #: dat/missions/sirius/srs_ferry.lua:68
 #: dat/missions/trader/anxiousmerchant.lua:66
 msgid "Too slow"
@@ -48861,7 +48868,7 @@ msgstr "Zu langsam"
 #: dat/missions/empire/es_cargo.lua:105
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:117
 #: dat/missions/neutral/cargo_rush.lua:145
-#: dat/missions/pirate/pir_contraband.lua:161
+#: dat/missions/pirate/pir_contraband.lua:162
 #, lua-format
 msgid ""
 "This shipment must arrive within %s, but it will take at least %s for your "
@@ -48886,14 +48893,14 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:112
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:124
 #: dat/missions/neutral/cargo.lua:103 dat/missions/neutral/cargo_rush.lua:134
-#: dat/missions/pirate/pir_contraband.lua:168
+#: dat/missions/pirate/pir_contraband.lua:169
 msgid "No room in ship"
 msgstr "Keinen Platz im Schiff"
 
 #: dat/missions/empire/es_cargo.lua:113
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:125
 #: dat/missions/neutral/cargo.lua:104 dat/missions/neutral/cargo_rush.lua:135
-#: dat/missions/pirate/pir_contraband.lua:169
+#: dat/missions/pirate/pir_contraband.lua:170
 #, lua-format
 msgid ""
 "You don't have enough cargo space to accept this mission. It requires %s of "
@@ -48904,7 +48911,7 @@ msgstr ""
 
 #: dat/missions/empire/es_cargo.lua:122
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:134
-#: dat/missions/pirate/pir_contraband.lua:178
+#: dat/missions/pirate/pir_contraband.lua:179
 #: dat/missions/sirius/srs_ferry.lua:136 dat/missions/zalek/zlk_test.lua:33
 msgid "Mission Accepted"
 msgstr "Mission akzeptiert"
@@ -48925,7 +48932,7 @@ msgstr "Die Arbeiter des Imperiums laden die %s von %s auf dein Schiff."
 #: dat/missions/empire/es_cargo.lua:137
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:149
 #: dat/missions/neutral/cargo_rush.lua:58
-#: dat/missions/pirate/pir_contraband.lua:193
+#: dat/missions/pirate/pir_contraband.lua:194
 msgid "Successful Delivery"
 msgstr "Erfolgreiche Lieferung"
 
@@ -53782,12 +53789,14 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex2.lua:167
+#: dat/missions/pirate/pir_contraband_cake.lua:99
 #, fuzzy
 #| msgid "Accelerate"
 msgid "Accept"
 msgstr "Beschleunigen"
 
 #: dat/missions/minerva/kex2.lua:168
+#: dat/missions/pirate/pir_contraband_cake.lua:100
 msgid "Decline"
 msgstr ""
 
@@ -55645,7 +55654,7 @@ msgid ""
 "   \"HAPPY. GOOD.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:487 dat/missions/minerva/maikki2.lua:765
+#: dat/missions/minerva/maikki2.lua:487 dat/missions/minerva/maikki2.lua:766
 #, fuzzy
 #| msgid "\"What do you want from me!?\""
 msgid "\"What do you want?\""
@@ -55973,68 +55982,78 @@ msgid ""
 "material…"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:705
+#: dat/missions/minerva/maikki2.lua:703
+msgid "Nebula Artifact?"
+msgstr "Nebel-Artefakt?"
+
+#: dat/missions/minerva/maikki2.lua:703
+msgid ""
+"A very damaged thing that seems to be mainly biological. I guess this is the "
+"nebula artifact?"
+msgstr ""
+
+#: dat/missions/minerva/maikki2.lua:706
 #, fuzzy
 #| msgid "Prof. Strangelove"
 msgid "Go back to Dr. Strangelove"
 msgstr "Prof. Seltsam"
 
-#: dat/missions/minerva/maikki2.lua:706
+#: dat/missions/minerva/maikki2.lua:707
 msgid ""
 "You recovered a nebula artifact that Dr. Strangelove wanted from feral "
 "drones."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:710
+#: dat/missions/minerva/maikki2.lua:711
 msgid "Just destroy me and put me out of my suffering."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:711
+#: dat/missions/minerva/maikki2.lua:712
 msgid "Why am I still alive?"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:712
+#: dat/missions/minerva/maikki2.lua:713
 #, fuzzy
 #| msgid "I can't wait to see you burn."
 msgid "I can't deal with this anymore."
 msgstr "Ich kann es nicht abwarten, dich brennen zu sehen."
 
-#: dat/missions/minerva/maikki2.lua:713
+#: dat/missions/minerva/maikki2.lua:714
 #, fuzzy
 #| msgid "Please stop!"
 msgid "Please end me!"
 msgstr "Bitte hör auf!"
 
-#: dat/missions/minerva/maikki2.lua:714
+#: dat/missions/minerva/maikki2.lua:715
 msgid "Living is suffering."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:715
+#: dat/missions/minerva/maikki2.lua:716
 msgid "It all hurts."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:716
+#: dat/missions/minerva/maikki2.lua:717
 msgid "Please kill me!"
 msgstr ""
 
 #. We go with nebula music
-#: dat/missions/minerva/maikki2.lua:751
+#: dat/missions/minerva/maikki2.lua:752
 msgid ""
 "The hologram projector flickers as what appears to be a grumpy old man "
 "appears into view. He doesn't look very pleased to be disturbed."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:752
+#: dat/missions/minerva/maikki2.lua:753
 msgid "\"How did you get in there? Who are you!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:753
+#: dat/missions/minerva/maikki2.lua:754
 msgid ""
 "You explain to him that you are looking for information about nebula "
 "artifacts."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:754
+#: dat/missions/minerva/maikki2.lua:755
 msgid ""
 "\"Who sent you here? Was it Dr. Bob? That weasel was always after my "
 "precious artifacts. Well, he can't have them! I got all this with my hard "
@@ -56042,7 +56061,7 @@ msgid ""
 "He cackles manically."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:756
+#: dat/missions/minerva/maikki2.lua:757
 msgid ""
 "\"I have hidden them very well, even though you somehow got past my security "
 "system and made it into my laboratory, you'll never find them!\"\n"
@@ -56050,48 +56069,48 @@ msgid ""
 "room."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:758
+#: dat/missions/minerva/maikki2.lua:759
 msgid ""
 "\"Anyway, I am very busy now, yes? All the science won't do itself. Almost "
 "have a new specimen ready and it will be better than ever! The old ones were "
 "fairly inadequate.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:760
+#: dat/missions/minerva/maikki2.lua:761
 msgid "You met an eccentric researcher named Dr. Strangelove in Westhaven."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:762
+#: dat/missions/minerva/maikki2.lua:763
 msgid ""
 "The hologram projector flickers and Dr. Strangelove comes into view. He "
 "doesn't look very happy to see you again."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:769
+#: dat/missions/minerva/maikki2.lua:770
 #, fuzzy
 #| msgid "Ask about the Nebula"
 msgid "Ask about the nebula"
 msgstr "Über den Nebel fragen"
 
-#: dat/missions/minerva/maikki2.lua:770
+#: dat/missions/minerva/maikki2.lua:771
 #, fuzzy
 #| msgid "Ask about the Nebula"
 msgid "Ask about this place"
 msgstr "Über den Nebel fragen"
 
-#: dat/missions/minerva/maikki2.lua:774
+#: dat/missions/minerva/maikki2.lua:775
 #, fuzzy
 #| msgid "Don't buy the artifact"
 msgid "Hand over the artifact"
 msgstr "Artefakt nicht kaufen"
 
-#: dat/missions/minerva/maikki2.lua:776
+#: dat/missions/minerva/maikki2.lua:777
 #, fuzzy
 #| msgid "Ask about the Nebula"
 msgid "Ask about job"
 msgstr "Über den Nebel fragen"
 
-#: dat/missions/minerva/maikki2.lua:782
+#: dat/missions/minerva/maikki2.lua:783
 msgid ""
 "\"Ah yes, the nebula. The pinnacle of human creation! Isn't it just "
 "mesmerizing and beautiful to look at? I've always been attracted to it even "
@@ -56099,7 +56118,7 @@ msgid ""
 "not?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:783
+#: dat/missions/minerva/maikki2.lua:784
 msgid ""
 "\"I recently had the great opportunity to work directly on nebula research. "
 "It was a fabulous project with hundreds of the brightest Za'lek minds "
@@ -56108,7 +56127,7 @@ msgid ""
 "He grins as nostalgia takes him over."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:785
+#: dat/missions/minerva/maikki2.lua:786
 msgid ""
 "\"We were able to have dedicated teams recovering all sorts of incredible "
 "items! We even found the remains of a Proteron replicator! It was only able "
@@ -56119,7 +56138,7 @@ msgid ""
 "liquid. Is that… cheese?"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:787
+#: dat/missions/minerva/maikki2.lua:788
 msgid ""
 "\"Anyway, it is a real shame that the bureaucrats in central station killed "
 "the project in its prime. At least I was able to bring most of the devices "
@@ -56128,32 +56147,32 @@ msgid ""
 "He coughs, wracking his body."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:790
+#: dat/missions/minerva/maikki2.lua:791
 msgid "\"Bodies…?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:791
+#: dat/missions/minerva/maikki2.lua:792
 msgid "\"What devices?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:794
+#: dat/missions/minerva/maikki2.lua:795
 msgid ""
 "\"Ahaha. You are interested, no? That information won't come cheap. I have a "
 "job that I would like you to do, and in exchange I might give you the "
 "information you seek.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:799
+#: dat/missions/minerva/maikki2.lua:800
 #, fuzzy
 #| msgid "Accept the job"
 msgid "Refuse the job"
 msgstr "Aufgabe akzeptieren"
 
-#: dat/missions/minerva/maikki2.lua:802
+#: dat/missions/minerva/maikki2.lua:803
 msgid "\"You don't scratch my back and I don't scratch yours.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:806
+#: dat/missions/minerva/maikki2.lua:807
 msgid ""
 "\"I see you are braver than you look. I have a bit of an issue. You see, I "
 "was upgrading some of my drones with some nebula artifacts to test to see if "
@@ -56161,7 +56180,7 @@ msgid ""
 "the drones going… ahem… feral.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:807
+#: dat/missions/minerva/maikki2.lua:808
 msgid ""
 "\"I was going to try to deal with them with my security drones, but as you "
 "can guess, that is no longer an option since you smashed them to smithereens."
@@ -56169,7 +56188,7 @@ msgid ""
 "He glares at you."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:809
+#: dat/missions/minerva/maikki2.lua:810
 msgid ""
 "\"While the drones themselves are dispensable, I need you to recover the "
 "nebula artifacts used in their upgrading. They should be roaming around the "
@@ -56177,18 +56196,18 @@ msgid ""
 "parts in one piece!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:811
+#: dat/missions/minerva/maikki2.lua:812
 #, lua-format
 msgid "Recover nebula artifacts from the %s asteroid field"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:813
+#: dat/missions/minerva/maikki2.lua:814
 msgid ""
 "You accepted Dr. Strangelove's request to recover nebula artifacts from "
 "feral drones in Westhaven."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:818
+#: dat/missions/minerva/maikki2.lua:819
 msgid ""
 "\"It should be an easy job. All you have to do is recover the nebula "
 "artifacts from the feral drones. They may put up a fight or not be easy to "
@@ -56198,7 +56217,7 @@ msgid ""
 "He glares at you."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:823
+#: dat/missions/minerva/maikki2.lua:824
 msgid ""
 "\"How do you like it? Cutting edge Za'lek research! I had to borrow a lot of "
 "things from my past jobs, but they can't have it back. It's all mine now! I "
@@ -56207,7 +56226,7 @@ msgid ""
 "He smiles mischievously."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:825
+#: dat/missions/minerva/maikki2.lua:826
 msgid ""
 "\"My drones dug it out and it's the cosiest place I have ever lived in, but "
 "I don't get many guests. In fact, you are my…\"\n"
@@ -56217,7 +56236,7 @@ msgid ""
 "You don't like how he puts emphasis on 'biological living'…"
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:829
+#: dat/missions/minerva/maikki2.lua:830
 msgid ""
 "\"Feel free to use the facilities as you please, but stay out of the "
 "backroom.\"\n"
@@ -56226,44 +56245,44 @@ msgid ""
 "your own safety."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:834
+#: dat/missions/minerva/maikki2.lua:835
 msgid ""
 "You show him the nebula artifact and suddenly a couple of small drones whirl "
 "into the room and start to perform a deeper inspection."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:835
+#: dat/missions/minerva/maikki2.lua:836
 msgid ""
 "\"Energy levels 7%… I see, I see… minor flux instability… not that bad…\n"
 "no vitals… not very good… mmmm… nebula radiation at minimum… can't be helped "
 "I guess…\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:837
+#: dat/missions/minerva/maikki2.lua:838
 msgid ""
 "He goes on for what seems like an eternity before finally remembering that "
 "you are there.\n"
 "\"Why are you still here? Go back to wherever the hell you came from!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:840
+#: dat/missions/minerva/maikki2.lua:841
 msgid "\"What about my information?\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:841
+#: dat/missions/minerva/maikki2.lua:842
 #, fuzzy
 #| msgid "What the hell is happening?"
 msgid "\"What the hell is this thing?\""
 msgstr "Was zur Hölle passiert?"
 
-#: dat/missions/minerva/maikki2.lua:844
+#: dat/missions/minerva/maikki2.lua:845
 msgid ""
 "\"I see… You don't grasp the incredibleness of this artifact. I guess it "
 "can't be helped with such an inferior intellect as yours.\"\n"
 "He sneers."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:846
+#: dat/missions/minerva/maikki2.lua:847
 msgid ""
 "\"This is my latest creation, an amalgamate of ancient nebula technology and "
 "life. Think of this as something that not only surpasses any of the Soromid "
@@ -56271,7 +56290,7 @@ msgid ""
 "technological advancement!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:847
+#: dat/missions/minerva/maikki2.lua:848
 msgid ""
 "\"While it has an incredible potential, there are… some complications still. "
 "The mental faculties tend to lack stability. While this one is a very "
@@ -56279,17 +56298,17 @@ msgid ""
 "creations have had much more success.\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:848
+#: dat/missions/minerva/maikki2.lua:849
 #, fuzzy
 #| msgid "\"What do you want from me!?\""
 msgid "\"What was it you wanted?\""
 msgstr "„Was willst du von mir!?“"
 
-#: dat/missions/minerva/maikki2.lua:849
+#: dat/missions/minerva/maikki2.lua:850
 msgid "You ask him if he knows anything about Kex's ship in the nebula."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:850
+#: dat/missions/minerva/maikki2.lua:851
 msgid ""
 "\"Ah yes! I remember that wreck. A very very curious one indeed. At that "
 "time I was exploring the nebula myself, and we came upon this most curious "
@@ -56300,7 +56319,7 @@ msgid ""
 "He coughs."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:852
+#: dat/missions/minerva/maikki2.lua:853
 msgid ""
 "\"While it was not a pre-incident ship nor had any interesting "
 "characteristics, what was inside was surprising. There were two bodies still "
@@ -56310,7 +56329,7 @@ msgid ""
 "He starts to get excited."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:854
+#: dat/missions/minerva/maikki2.lua:855
 msgid ""
 "\"That's when I realized it, humankind and the nebula are one and the same. "
 "Our futures are intertwined! By absorbing the nebula into the body, one can "
@@ -56319,7 +56338,7 @@ msgid ""
 "up to this!\""
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:855
+#: dat/missions/minerva/maikki2.lua:856
 msgid ""
 "\"And that's when it hit me, by amalgamating nebula and flesh, we can "
 "transcend ourselves! I had to do it; it had to be done! And it worked, oh "
@@ -56328,7 +56347,7 @@ msgid ""
 "He laughs manically."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:857
+#: dat/missions/minerva/maikki2.lua:858
 msgid ""
 "\"They were oh so perfect, like Adam and Eve, ready to create a new perfect "
 "humanity. However, it isn't as simple as that. The man, an ungrateful fool, "
@@ -56339,7 +56358,7 @@ msgid ""
 "He seems delirious."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:859
+#: dat/missions/minerva/maikki2.lua:860
 msgid ""
 "\"So I did it. I tried to upgrade myself. But it isn't so simple, you see, "
 "it's the near-death experience that is necessary. On healthy flesh it just "
@@ -56347,18 +56366,18 @@ msgid ""
 "He coughs, convulsing."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:861
+#: dat/missions/minerva/maikki2.lua:862
 msgid ""
 "\"The mind was good enough, but not my body. No, and I don't have much time. "
 "I'm wasting away. So close and here wasting away. What uselessness.\"\n"
 "He lowers his gaze."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:863
+#: dat/missions/minerva/maikki2.lua:864
 msgid "You ask what happened to the 'individuals' in the experiments."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:864
+#: dat/missions/minerva/maikki2.lua:865
 msgid ""
 "\"I did try to track him down, last I checked he got caught by thugs at "
 "Minerva Station. Nasty place in the Limbo system. No nebula and very stale "
@@ -56366,7 +56385,7 @@ msgid ""
 "He coughs softly."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:866
+#: dat/missions/minerva/maikki2.lua:867
 msgid ""
 "\"She tried to help me, but she too was weak of mind, and one day left for "
 "the stars. I couldn't stop her, but I thought I was close enough. I just "
@@ -56374,33 +56393,33 @@ msgid ""
 "His voice gets softer and softer as he keeps on mumbling."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:868
+#: dat/missions/minerva/maikki2.lua:869
 msgid ""
 "You try to get his attention again, but it doesn't seem to work. He seems to "
 "have fallen into a stupor. You feel you have enough information to report to "
 "Maikki again."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:873
+#: dat/missions/minerva/maikki2.lua:874
 #, fuzzy
 #| msgid "Report back to %s in the %s system"
 msgid "Report back to Maikki in the Limbo system"
 msgstr "Melde dich zurück an %s im „%s“-System"
 
-#: dat/missions/minerva/maikki2.lua:876
+#: dat/missions/minerva/maikki2.lua:877
 msgid ""
 "You learned that Dr. Strangelove saved what appears to be Kex and another "
 "individual from a wreck in the nebula. Kex appears to have run away and is "
 "likely held by thugs at Minerva station."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:878
+#: dat/missions/minerva/maikki2.lua:879
 msgid ""
 "You leave behind the hologram project and hope you won't have to deal with "
 "Dr. Strangelove in the future."
 msgstr ""
 
-#: dat/missions/minerva/maikki2.lua:882
+#: dat/missions/minerva/maikki2.lua:883
 msgid ""
 "You turn off the hologram projector and Dr. Strangelove's image flickers and "
 "disappears."
@@ -58303,9 +58322,6 @@ msgstr "%s pro Tonne"
 #.
 #. --
 #. Function for adding log entries for miscellaneous one-off missions.
-#. List of possible waste dump planets.
-#. Note: this mission makes no system claims
-#. Set mission details
 #. Make everyone angry
 #. Add some police!
 #. No landing, filthy waste dumper!
@@ -61240,13 +61256,14 @@ msgstr "%d …"
 #. <priority>4</priority>
 #. <chance>3</chance>
 #. <location>Bar</location>
-#. <faction>Dvaered</faction>  -- Note: additional conditionals present in mission script!
+#. <faction>Dvaered</faction>
 #. </avail>
 #. <notes>
 #. <tier>1</tier>
 #. </notes>
 #. </mission>
 #. --
+#. Note: additional conditionals present in mission script!
 #.
 #. --
 #. -- MISSION: The complaining grandma
@@ -61255,11 +61272,11 @@ msgstr "%d …"
 #. --
 #. --
 #. Localization, choosing a language if Naev is translated for non-english-speaking locales.
-#: dat/missions/neutral/oldwoman.lua:31
+#: dat/missions/neutral/oldwoman.lua:32
 msgid "An elderly lady"
 msgstr "Eine ältere Frau"
 
-#: dat/missions/neutral/oldwoman.lua:32
+#: dat/missions/neutral/oldwoman.lua:33
 #, lua-format
 msgid ""
 "You decide to ask the old woman if there's something you can help her with.\n"
@@ -61289,7 +61306,7 @@ msgstr ""
 "haben. Lust auf eine Reise runter in %s? Ich werde dir natürlich einen "
 "anständigen Fahrpreis bezahlen.“"
 
-#: dat/missions/neutral/oldwoman.lua:34
+#: dat/missions/neutral/oldwoman.lua:35
 msgid ""
 "\"Oh, that's good of you.\" The old woman gives you a wrinkly smile. \"I "
 "haven't seen my cousin in such a long time, it'll be great to see how she's "
@@ -61309,11 +61326,11 @@ msgstr ""
 "Geschwätz nicht zuzuhören. Vielleicht wäre es eine gute Idee, sie so schnell "
 "wie möglich an ihr Ziel zu bringen."
 
-#: dat/missions/neutral/oldwoman.lua:37
+#: dat/missions/neutral/oldwoman.lua:38
 msgid "Delivery complete"
 msgstr "Lieferung abgeschlossen"
 
-#: dat/missions/neutral/oldwoman.lua:38
+#: dat/missions/neutral/oldwoman.lua:39
 msgid ""
 "You help the old lady to the spacedock elevator. She keeps grumbling about "
 "how spaceports these days are so inconvenient and how advertisement "
@@ -61337,11 +61354,11 @@ msgstr ""
 "    Die Dame gibt dir einen Credit-Jeton. Dann verschwindet sie durch den "
 "Terminal. Na, das war ja ein ganz schöner Passagier!"
 
-#: dat/missions/neutral/oldwoman.lua:42
+#: dat/missions/neutral/oldwoman.lua:43
 msgid "Grumblings from the old lady"
 msgstr "Gerede der alten Frau"
 
-#: dat/missions/neutral/oldwoman.lua:44
+#: dat/missions/neutral/oldwoman.lua:45
 msgid ""
 "\"You youngsters and your newfangled triple redundancy plasma feedback "
 "shunts. In my day, we had to use simple monopole instaconductors to keep our "
@@ -61352,7 +61369,7 @@ msgstr ""
 "Monopolinstakonduktoren verwenden, um unsere Hyperantriebe am Laufen zu "
 "halten!“"
 
-#: dat/missions/neutral/oldwoman.lua:45
+#: dat/missions/neutral/oldwoman.lua:46
 msgid ""
 "\"Tell me, youngster, why is everyone so preoccupied with Soromid "
 "enhancements these days? Cybernetic implants were good enough for us, why "
@@ -61362,7 +61379,7 @@ msgstr ""
 "Soromid besessen? Kybernetische Implantate waren gut genug für uns, warum "
 "auch nicht für euch?“"
 
-#: dat/missions/neutral/oldwoman.lua:46
+#: dat/missions/neutral/oldwoman.lua:47
 msgid ""
 "\"My mother was from Earth, you know. She even took me there once, when I "
 "was a little girl. I still remember it like it happened yesterday. They "
@@ -61373,7 +61390,7 @@ msgstr ""
 "es gestern geschehen. Heutzutage gibt es solche Planeten nicht mehr, oh "
 "nein.“"
 
-#: dat/missions/neutral/oldwoman.lua:47
+#: dat/missions/neutral/oldwoman.lua:48
 msgid ""
 "\"What did you say this thing was? A microblink reinforced packet "
 "transmitter? No, no, don't try to explain how it works. I'm too old for "
@@ -61385,7 +61402,7 @@ msgstr ""
 "Ich bin zu alt dafür. Alles, was komplexer ist als ein "
 "Subraumpseudoechoprojektor, übersteigt mein Verständnis.“"
 
-#: dat/missions/neutral/oldwoman.lua:48
+#: dat/missions/neutral/oldwoman.lua:49
 msgid ""
 "\"You don't know how good you have it these days. When I was young, we "
 "needed to reprogram our own electronic countermeasures to deal with custom "
@@ -61395,13 +61412,13 @@ msgstr ""
 "wir unsere eigenen elektronischen Gegenmaßnahmen neu programmieren, um mit "
 "den manuellen Piratentrackingsystemen umgehen zu können.“"
 
-#: dat/missions/neutral/oldwoman.lua:49
+#: dat/missions/neutral/oldwoman.lua:50
 msgid "\"Time passes by so quickly. I remember when this was all space.\""
 msgstr ""
 "„Die Zeit verfliegt so schnell. Ich erinnere mich noch daran, als dies noch "
 "alles Weltraum war.“"
 
-#: dat/missions/neutral/oldwoman.lua:50
+#: dat/missions/neutral/oldwoman.lua:51
 msgid ""
 "\"All this automation is making people lax, I tell you. My uncle ran a tight "
 "ship. If he caught you cutting corners, you'd be defragmenting the sub-ion "
@@ -61412,20 +61429,20 @@ msgstr ""
 "den Ecken und Kanten schneidt, würde man die Sub-Ionen-Matrixfilter eine "
 "Woche lang defragmentieren!“"
 
-#: dat/missions/neutral/oldwoman.lua:52
+#: dat/missions/neutral/oldwoman.lua:53
 msgid "The old woman"
 msgstr "Die alte Frau"
 
-#: dat/missions/neutral/oldwoman.lua:54
+#: dat/missions/neutral/oldwoman.lua:55
 #, lua-format
 msgid "Take the old woman to %s (%s system)"
 msgstr "Bringe die alte Frau nach %s („%s“-System)"
 
-#: dat/missions/neutral/oldwoman.lua:56
+#: dat/missions/neutral/oldwoman.lua:57
 msgid "An old woman"
 msgstr "Eine alte Frau"
 
-#: dat/missions/neutral/oldwoman.lua:57
+#: dat/missions/neutral/oldwoman.lua:58
 msgid ""
 "You see a wrinkled old lady, a somewhat unusual sight in a spaceport bar. "
 "She's purposefully looking around."
@@ -61433,17 +61450,17 @@ msgstr ""
 "Du siehst eine runzlige alte Dame, ein etwas ungewöhnlicher Anblick in einer "
 "Weltraumhafenkneipe. Sie schaut sich zielstrebig um."
 
-#: dat/missions/neutral/oldwoman.lua:58
+#: dat/missions/neutral/oldwoman.lua:59
 #, lua-format
 msgid "An aging lady has asked you to ferry her to %s in the %s system."
 msgstr ""
 "Eine alte Frau hat dich gebeten, sie nach %s im „%s“-System zu bringen."
 
-#: dat/missions/neutral/oldwoman.lua:59
+#: dat/missions/neutral/oldwoman.lua:60
 msgid "Fair monetary compensation"
 msgstr "Nette monetäre Kompensation"
 
-#: dat/missions/neutral/oldwoman.lua:61
+#: dat/missions/neutral/oldwoman.lua:62
 msgid ""
 "You escorted an old woman to her cousin in Sirian space. She was nice, "
 "albeit somewhat overly chatty."
@@ -64532,6 +64549,14 @@ msgstr "Credence"
 #. New location is 750px away in a random direction
 #. Fine 20K, or take the player for all he has
 #. I love this statement.
+#: dat/missions/neutral/teenager.lua:135
+msgid "Teenagers"
+msgstr "Teenager"
+
+#: dat/missions/neutral/teenager.lua:135
+msgid "Disillusioned teenagers."
+msgstr ""
+
 #. 300K
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -64700,6 +64725,17 @@ msgid ""
 msgstr ""
 "Lande auf einer beliebigen Müllsammelstelle (auf deiner Karte angegeben), um "
 "die Abfallcontainer abzugeben"
+
+#. List of possible waste dump planets.
+#. Note: this mission makes no system claims
+#. Set mission details
+#: dat/missions/neutral/wastedump.lua:114
+msgid "Waste Containers"
+msgstr "Abfallbehälter"
+
+#: dat/missions/neutral/wastedump.lua:114
+msgid "A bunch of waste containers leaking all sorts of indescribable liquids."
+msgstr ""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -65355,6 +65391,7 @@ msgstr "Piratenanführer"
 #. <cond>faction.playerStanding("Pirate") &gt;= -100</cond>
 #. <chance>960</chance>
 #. <location>Computer</location>
+#. <done>Pirate Smuggle Cake</done>
 #. </avail>
 #. <notes>
 #. <tier>1</tier>
@@ -65368,19 +65405,19 @@ msgstr "Piratenanführer"
 #.
 #.
 #.
-#: dat/missions/pirate/pir_contraband.lua:26
+#: dat/missions/pirate/pir_contraband.lua:27
 #, lua-format
 msgid ""
 "Smuggling contraband goods to %s in the %s system. Note that the cargo is "
 "illegal in most systems and you will face consequences if caught by patrols."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:28
+#: dat/missions/pirate/pir_contraband.lua:29
 msgid "MISSION FAILED: You have failed to deliver the goods on time!"
 msgstr ""
 "MISSION FEHLGESCHLAGEN: Du konntest die Güter nicht rechtzeitig liefern!"
 
-#: dat/missions/pirate/pir_contraband.lua:30
+#: dat/missions/pirate/pir_contraband.lua:31
 #, fuzzy, lua-format
 #| msgid "Stealing a %s"
 msgid "Smuggling %s"
@@ -65398,279 +65435,279 @@ msgstr "Diebstahl von %s"
 #. target destination
 #. We’re redefining the cargo
 #. Serious stuff here
-#: dat/missions/pirate/pir_contraband.lua:71
+#: dat/missions/pirate/pir_contraband.lua:72
 #, fuzzy
 #| msgid "No Good "
 msgid "Stolen Goods"
 msgstr "Ungute "
 
-#: dat/missions/pirate/pir_contraband.lua:71
+#: dat/missions/pirate/pir_contraband.lua:72
 msgid "A lot of goods obtained by illicit and illegal means."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:72
+#: dat/missions/pirate/pir_contraband.lua:73
 #, fuzzy
 #| msgid "Hacked Drone"
 msgid "Hacked Electronics"
 msgstr "Gehackte Drohne"
 
-#: dat/missions/pirate/pir_contraband.lua:72
+#: dat/missions/pirate/pir_contraband.lua:73
 msgid "An assortment of illegally modified electronic goods."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:73
+#: dat/missions/pirate/pir_contraband.lua:74
 #, fuzzy
 #| msgid "Illegal ship!"
 msgid "Illegal Waste"
 msgstr "Illegales Schiff!"
 
-#: dat/missions/pirate/pir_contraband.lua:73
+#: dat/missions/pirate/pir_contraband.lua:74
 msgid "A diversity of highly illegal waste."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:74
+#: dat/missions/pirate/pir_contraband.lua:75
 msgid "Powerful Stimulants"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:74
+#: dat/missions/pirate/pir_contraband.lua:75
 msgid "A bunch of illegal stimulates."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:75
+#: dat/missions/pirate/pir_contraband.lua:76
 msgid "Unmarked Boxes"
 msgstr "Nicht markierte Kisten"
 
-#: dat/missions/pirate/pir_contraband.lua:75
+#: dat/missions/pirate/pir_contraband.lua:76
 msgid ""
 "A bunch of unmarked boxes containing what you can only assume to be highly "
 "illegal items."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:76
+#: dat/missions/pirate/pir_contraband.lua:77
 msgid "Exotic Animals"
 msgstr "Exotische Tiere"
 
-#: dat/missions/pirate/pir_contraband.lua:76
+#: dat/missions/pirate/pir_contraband.lua:77
 msgid "A bunch of exotic animals that can not be legally traded."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:77
+#: dat/missions/pirate/pir_contraband.lua:78
 msgid "Radioactive Materials"
 msgstr "Radioaktive Materialien"
 
-#: dat/missions/pirate/pir_contraband.lua:77
+#: dat/missions/pirate/pir_contraband.lua:78
 msgid "Highly dangerous and illegal radioactive materials."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:78
+#: dat/missions/pirate/pir_contraband.lua:79
 #, fuzzy
 #| msgid "Illegal ship!"
 msgid "Illegal Drugs"
 msgstr "Illegales Schiff!"
 
-#: dat/missions/pirate/pir_contraband.lua:78
+#: dat/missions/pirate/pir_contraband.lua:79
 msgid "A bunch of drugs made illegal in most systems."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:79
+#: dat/missions/pirate/pir_contraband.lua:80
 #, fuzzy
 #| msgid "Illegal ship!"
 msgid "Illegal Body Mods"
 msgstr "Illegales Schiff!"
 
-#: dat/missions/pirate/pir_contraband.lua:79
+#: dat/missions/pirate/pir_contraband.lua:80
 msgid "A lot of illegal body modifications."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:80
+#: dat/missions/pirate/pir_contraband.lua:81
 msgid "Unauthorized Weapons"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:80
+#: dat/missions/pirate/pir_contraband.lua:81
 msgid "A bunch of illegal weapons."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:81
+#: dat/missions/pirate/pir_contraband.lua:82
 #, fuzzy
 #| msgid "Contributions"
 msgid "Contraband"
 msgstr "Beiträge"
 
-#: dat/missions/pirate/pir_contraband.lua:81
+#: dat/missions/pirate/pir_contraband.lua:82
 msgid "An diverse assortment of illegal contraband goods."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:82
+#: dat/missions/pirate/pir_contraband.lua:83
 #, fuzzy
 #| msgid "Corinth Foods"
 msgid "Counterfeit Goods"
 msgstr "Korinth-Lebensmittel"
 
-#: dat/missions/pirate/pir_contraband.lua:82
+#: dat/missions/pirate/pir_contraband.lua:83
 msgid "An assortment of illegal counterfeit goods of many famous brands."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:83
+#: dat/missions/pirate/pir_contraband.lua:84
 #, fuzzy
 #| msgid "Solene"
 msgid "Stolen Art"
 msgstr "Solene"
 
-#: dat/missions/pirate/pir_contraband.lua:83
+#: dat/missions/pirate/pir_contraband.lua:84
 msgid "Artwork that was illegally seized from a collector or gallery."
 msgstr ""
 
 #. Below less serious stuff
-#: dat/missions/pirate/pir_contraband.lua:85
+#: dat/missions/pirate/pir_contraband.lua:86
 msgid "User Databases"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:85
+#: dat/missions/pirate/pir_contraband.lua:86
 msgid ""
 "Stolen user databases with lots of personal information obtained illegally."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:86
+#: dat/missions/pirate/pir_contraband.lua:87
 #, fuzzy
 #| msgid "Smelly "
 msgid "Smelly Fruits"
 msgstr "Stänkernde "
 
-#: dat/missions/pirate/pir_contraband.lua:86
+#: dat/missions/pirate/pir_contraband.lua:87
 msgid ""
 "Illegal fruits that have a strong smell that can stink up entire stations in "
 "minutes."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:87
+#: dat/missions/pirate/pir_contraband.lua:88
 msgid "Catnip"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:87
+#: dat/missions/pirate/pir_contraband.lua:88
 msgid "Highly illegal drug that is very attractive to cats."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:88
+#: dat/missions/pirate/pir_contraband.lua:89
 msgid "Hypnotoads"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:88
+#: dat/missions/pirate/pir_contraband.lua:89
 msgid "Illegal amphibian with some mind-control abilities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:89
+#: dat/missions/pirate/pir_contraband.lua:90
 msgid "Extra Spicy Burritos"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:89
+#: dat/missions/pirate/pir_contraband.lua:90
 msgid "Burritos that are so spicy, they are illegal."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:90
+#: dat/missions/pirate/pir_contraband.lua:91
 msgid "Pineapple Pizza"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:90
+#: dat/missions/pirate/pir_contraband.lua:91
 msgid "Pizza with pineapple on it, there is no way this is legal."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:94
+#: dat/missions/pirate/pir_contraband.lua:95
 msgid "Tax-evasion Documents"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:94
+#: dat/missions/pirate/pir_contraband.lua:95
 msgid "Illegal documents detailing tax evasion by high empire officials."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:95
+#: dat/missions/pirate/pir_contraband.lua:96
 #, fuzzy
 #| msgid "Bad arguments"
 msgid "Leaked Documents"
 msgstr "Schlechte Argumente"
 
-#: dat/missions/pirate/pir_contraband.lua:95
+#: dat/missions/pirate/pir_contraband.lua:96
 msgid "Documents illegally leaked from governmental entities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:96
+#: dat/missions/pirate/pir_contraband.lua:97
 msgid "Incriminating Evidence"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:96
+#: dat/missions/pirate/pir_contraband.lua:97
 msgid "Illegally obtained evidence that incriminates high empire officials."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:99
+#: dat/missions/pirate/pir_contraband.lua:100
 msgid "Self-help Books"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:99
+#: dat/missions/pirate/pir_contraband.lua:100
 msgid "Books for self-betterment made illegal by the Dvaered authorities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:100
+#: dat/missions/pirate/pir_contraband.lua:101
 msgid "Pacifist Manifestos"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:100
+#: dat/missions/pirate/pir_contraband.lua:101
 msgid ""
 "Documents making the case for pacifism, made illegal by the Dvaered "
 "authorities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:103
+#: dat/missions/pirate/pir_contraband.lua:104
 #, fuzzy
 #| msgid "Insatiable "
 msgid "Unstable DNA"
 msgstr "Unersättliche "
 
-#: dat/missions/pirate/pir_contraband.lua:103
+#: dat/missions/pirate/pir_contraband.lua:104
 msgid "Illegal DNA with strong reactive properties."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:104
+#: dat/missions/pirate/pir_contraband.lua:105
 #, fuzzy
 #| msgid "Bioship Weapons"
 msgid "Bio-weapons"
 msgstr "Bioschiffswaffen"
 
-#: dat/missions/pirate/pir_contraband.lua:104
+#: dat/missions/pirate/pir_contraband.lua:105
 msgid "Highly dangerous illegal biological weapons."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:107
+#: dat/missions/pirate/pir_contraband.lua:108
 msgid "Heretical Documents"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:107
+#: dat/missions/pirate/pir_contraband.lua:108
 msgid "Illegal documents referring to heresy."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:110
+#: dat/missions/pirate/pir_contraband.lua:111
 #, fuzzy
 #| msgid "Scientific Exploration"
 msgid "Scientific Preprints"
 msgstr "Wissenschaftliche Erkundung"
 
-#: dat/missions/pirate/pir_contraband.lua:110
+#: dat/missions/pirate/pir_contraband.lua:111
 msgid "Non-paywalled illegal scientific papers."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:111
+#: dat/missions/pirate/pir_contraband.lua:112
 #, fuzzy
 #| msgid "Ancient "
 msgid "Sentient AI"
 msgstr "Antike "
 
-#: dat/missions/pirate/pir_contraband.lua:111
+#: dat/missions/pirate/pir_contraband.lua:112
 msgid "Highly illegal AI that is assumed to be sentient."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:112
+#: dat/missions/pirate/pir_contraband.lua:113
 msgid "Bogus Proofs"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:112
+#: dat/missions/pirate/pir_contraband.lua:113
 msgid ""
 "Mathematical proofs with almost imperceptible modifications to make them "
 "illegally false."
@@ -65684,17 +65721,17 @@ msgstr ""
 #. Allow extra time for refuelling stops.
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #. Modifier that should tend towards 1.0 as Naev is finished as a game
-#: dat/missions/pirate/pir_contraband.lua:149
+#: dat/missions/pirate/pir_contraband.lua:150
 #, lua-format
 msgid "PIRACY: Smuggle %s of %s"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:179
+#: dat/missions/pirate/pir_contraband.lua:180
 #, lua-format
 msgid "%s of %s are loaded onto your ship."
 msgstr "%s von %s werden auf dein Schiff geladen."
 
-#: dat/missions/pirate/pir_contraband.lua:194
+#: dat/missions/pirate/pir_contraband.lua:195
 #, lua-format
 msgid "The containers of %s are unloaded at the docks."
 msgstr "Die Container mit %s werden zu den Docks entladen."
@@ -65703,6 +65740,269 @@ msgstr "Die Container mit %s werden zu den Docks entladen."
 #. Date hook
 #. Case still in time
 #. Case missed deadline
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Pirate Smuggle Cake">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>3</priority>
+#. <chance>20</chance>
+#. <location>Bar</location>
+#. <cond>system.cur():presence("Pirate") &gt; 0</cond>
+#. </avail>
+#. <notes>
+#. <tier>1</tier>
+#. </notes>
+#. </mission>
+#. --
+#.
+#.
+#. Opens up Pirate contraband missions. The player is asked to take a cake
+#. (illegal) to a random system.
+#.
+#.
+#.
+#. TODO replace images with something meant for the VN
+#: dat/missions/pirate/pir_contraband_cake.lua:32
+msgid "Sweaty Individual"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:35
+msgid "Burly Individual"
+msgstr ""
+
+#. Use hidden jumps
+#. Always available
+#. This is in cargo_common, but we need to increase the range
+#. Note: this mission does not make any system claims.
+#. target destination
+#. Choose reward
+#. Modifier that should tend towards 1.0 as Naev is finished as a game
+#: dat/missions/pirate/pir_contraband_cake.lua:69
+msgid ""
+"You see a nervous looking individual that seems to be sweating profusely."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:79
+#, fuzzy
+#| msgid "You approach the chuck-a-luck table."
+msgid "You approach the giddy looking character."
+msgstr "Du gehst zum Chuck-a-Luck-Tisch."
+
+#: dat/missions/pirate/pir_contraband_cake.lua:80
+msgid ""
+"They are fairly absorbed in thought and take a while to notice you. "
+"Suddenly, without warning, they jump out of their chair and almost fall to "
+"the drown.\n"
+"\"Crikes! You scared the shit out of me.\"\n"
+"They clutch at their shirt as if trying to hold their heart in their ribcage."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:83
+msgid ""
+"They pant for a while and then try to recover somewhat their composure as "
+"they sit down once more. They seem sweatier than before.\n"
+"\"Hey, say, you look like a pilot. You see, I was asked to deliver a "
+"package, but I'm not feeling so well…\"\n"
+"They coughs to the side somewhat exaggeratedly while looking at you from the "
+"corner of the eye."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:86
+#, lua-format
+msgid ""
+"They lean closer to you and lower their voice.\n"
+"\"I was asked to deliver a… a…\"\n"
+"They furrow their brows for a second.\n"
+"\"…a cake! To %s in the %s system.\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:90
+msgid ""
+"\"It's nothing out of the ordinary, I swear! Only that this cake you see, "
+"it's got some special… icing that is really sensitive. Like super sensitive. "
+"The slightest disturbance can melt it and lay it all to waste. In "
+"particular, any radiation can easily melt it even though it is shielded. "
+"Especially stuff like scanning radiation. You catch my drift?\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:91
+#, lua-format
+msgid ""
+"\"All you would have to do is take the cake and go to %s in the %s system, "
+"without getting any of that nasty scanning radiation on you.\"\n"
+"They shiver with disgust to emphasize and you can see some of their sweat "
+"fly off onto the bar floor.\n"
+"\"Once you deliver it I'll split the money half and half with you.\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:95
+#, lua-format
+msgid ""
+"\"Fine fine, take it all. It should be %s. Just remember no scanning means "
+"no problems.\"\n"
+"They extend their sweaty hand towards you.\n"
+"\"So, are you in?\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:104
+#, fuzzy
+msgid "You decline their offer."
+msgstr "Du wirst es nicht lebend hier raus schaffen!"
+
+#: dat/missions/pirate/pir_contraband_cake.lua:105
+msgid ""
+"They slump down in the chair in defeat.\n"
+"\"Shit, what am I going to do. Think Sam think!\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:107
+msgid ""
+"As you take your leave, you notice they have once again started to profusely "
+"sweat."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:111
+msgid "You accept their mission without shaking their hand."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:112
+msgid ""
+"\"You're a lifesaver!\"\n"
+"They lean forward and get a bit more serious.\n"
+"\"One thing though, you do know how to stealth to get around scanning right?"
+"\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:117
+msgid "Stealth?"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:118
+#, fuzzy
+#| msgid "Of course"
+msgid "Of course!"
+msgstr "Natürlich"
+
+#: dat/missions/pirate/pir_contraband_cake.lua:122
+msgid ""
+"\"Oh boy, you're not going to deliver this cake in one piece without "
+"stealth. It's very simple, all ships have three main statistics: range they "
+"are detected at, evasion range, and stealth range. Detection determines how "
+"far away ships can detect your presence, while evasion range controls how "
+"well they can target your ship and identify it. When within evasion range, "
+"ships can then scan you which does nasty things like melting cakes.\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:123
+#, lua-format
+msgid ""
+"\"To avoid getting spotted and scanned, you can go into stealth with %s. "
+"When in stealth, you move much slower than normal, however, ships can only "
+"detect you when they are within your stealth range. No detection, no "
+"scanning, no problems. You can only stealth if there are no ships nearby, "
+"and it is easier to stealth in asteroids or systems with interference. And "
+"if you get detected while in stealth, your cover will be blown.\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:125
+#, lua-format
+msgid ""
+"\"So as long as you stealth with %s and stay away from ships, you won't be "
+"scanned and the cake will be alright.\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:129
+#, lua-format
+msgid ""
+"\"Great. One second, let me get the cake.\"\n"
+"They go to the restroom and come back holding a nondescript brown box that "
+"seems to have 'Cake' hastily scribbled on it. They promptly hand it over to "
+"you while looking both ways.\n"
+"\"OK, so that's it. Make sure to take this to %s in the %s system, and watch "
+"out for scanning!\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:132
+msgid ""
+"As leave them behind you can hear them let out a big sigh of what you can "
+"only assume is relief."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:141
+msgid "Cake"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:141
+msgid ""
+"A cake that is supposedly sensitive to scanning radiation. Don't let anyone "
+"scan it."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:145
+#: dat/missions/pirate/pir_contraband_cake.lua:147
+#, fuzzy
+#| msgid "Deliver Love"
+msgid "Deliver Cake"
+msgstr "Liebeslieferung"
+
+#: dat/missions/pirate/pir_contraband_cake.lua:145
+#, fuzzy, lua-format
+#| msgid "Fly to %s in the %s system with the movement keys"
+msgid "Fly to %s in the %s system without getting scanned"
+msgstr "Flieg nach %s im „%s“-System mit den Bewegungstasten"
+
+#: dat/missions/pirate/pir_contraband_cake.lua:149
+#, lua-format
+msgid ""
+"Deliver a cake to %s in the %s system. Apparently it has a special frosting "
+"and will be damaged if you are scanned. Use stealth to avoid getting scanned."
+msgstr ""
+
+#. only hook after accepting
+#. Land hook
+#: dat/missions/pirate/pir_contraband_cake.lua:164
+msgid "After you land you are promptly greeted by a burly looking individual."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:165
+msgid ""
+"\"So you're the guy Sam sent? That weasel, I knew he wasn't cut out for this "
+"work.\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:166
+msgid ""
+"You guess that this is the person you were supposed to deliver the cake to "
+"and hand it over."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:167
+msgid ""
+"They take a look at the word 'Cake' written on the box and burst into "
+"laughter. After a while they calm down and turn to you.\n"
+"\"This was his idea wasn't it? Always been a bit weird that one.\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:169
+msgid ""
+"\"I guess you're not naïve enough to think this is a cake right?\"\n"
+"They chuckle.\n"
+"\"Anyway, you did good work bringing it here. I'll get you your reward wired "
+"and if you're interested in doing new jobs look into the mission computers. "
+"I've white-listed you to act as a courier.\""
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband_cake.lua:172
+msgid ""
+"\"Take care.\"\n"
+"As they lumber away, you suddenly notice that quite a few suspicious figures "
+"in the background disappear and follow them away. What have you gotten into?"
+msgstr ""
+
+#. increase faction
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Stealing ships">
@@ -71448,12 +71748,21 @@ msgstr ""
 "„Wie wäre es damit?“"
 
 #: dat/missions/sirius/heretic/heretic0.lua:33
-#, lua-format
+#, fuzzy, lua-format
+#| msgid ""
+#| "You feel a very large hand slap you on the back. \"I knew you would do "
+#| "it! A great choice!\" he says. \"I'll have my boys load up the cargo. "
+#| "Remember, all you gotta do is fly to %s, and avoid the Sirius military. "
+#| "I'll let my contacts know to expect you. They'll pay you when you land."
+#| "\"\n"
+#| "    You shake his sticky hand and walk off, content that you've made an "
+#| "easy buck."
 msgid ""
 "You feel a very large hand slap you on the back. \"I knew you would do it! A "
 "great choice!\" he says. \"I'll have my boys load up the cargo. Remember, "
-"all you gotta do is fly to %s, and avoid the Sirius military. I'll let my "
-"contacts know to expect you. They'll pay you when you land.\"\n"
+"all you gotta do is fly to %s, and avoid the Sirius military. You know, "
+"don't let them scan you. I'll let my contacts know to expect you. They'll "
+"pay you when you land.\"\n"
 "    You shake his sticky hand and walk off, content that you've made an easy "
 "buck."
 msgstr ""
@@ -71561,6 +71870,16 @@ msgstr ""
 #. the obligatory opening messages
 #. checks to make sure the player has 5 tons available
 #. and if they don't, the mission finishes.
+#: dat/missions/sirius/heretic/heretic0.lua:92
+msgid "Small Arms"
+msgstr "Kleinwaffen"
+
+#: dat/missions/sirius/heretic/heretic0.lua:92
+#, fuzzy
+#| msgid "Only shoot weapons that are in range"
+msgid "An assortment of weapons that are not legal in Sirius space."
+msgstr "Nur Waffen, die in Reichweite sind, feuern"
+
 #. I'd like this to be contraband when this actually gets implemented in-game.
 #. this mission was an act against Sirius, and we want Sirius to not like us a little bit.
 #. Nasin reputation is used in mission rewards, and I am trying to avoid having the pay skyrocket.
@@ -71747,6 +72066,14 @@ msgstr ""
 #. we use this at the end.
 #. using the actual reward algorithm now.
 #. set the mission stuff
+#: dat/missions/sirius/heretic/heretic1.lua:89
+msgid "Message"
+msgstr "Nachricht"
+
+#: dat/missions/sirius/heretic/heretic1.lua:89
+msgid "A message of seemingly high importance."
+msgstr ""
+
 #. once again, the Nasin like the fact that we are helping the Nasin.
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -72242,6 +72569,16 @@ msgstr ""
 #. so the player won't get stuck with a mission they can't complete.
 #. convo over. time to finish setting the mission stuff.
 #. average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
+#: dat/missions/sirius/heretic/heretic4.lua:90
+msgid "Refugees"
+msgstr "Flüchtlinge"
+
+#: dat/missions/sirius/heretic/heretic4.lua:90
+#, fuzzy
+#| msgid "Nasin Mule"
+msgid "Nasin refugees."
+msgstr "Nasin-Muli"
+
 #. get the hooks.
 #. left over fleets from the prior mission.
 #. other escapees.
@@ -72679,6 +73016,14 @@ msgstr ""
 #. ok with the arrangements
 #. Will not expect to arrive in a Sirian ship
 #. Will expect to arrive in a Sirian ship
+#: dat/missions/sirius/srs_ferry.lua:361
+msgid "Pilgrims"
+msgstr "Pilger"
+
+#: dat/missions/sirius/srs_ferry.lua:361
+msgid "A bunch of giddy Sirian pilgrims."
+msgstr ""
+
 #. We'll assume you can hold as many pilgrims as you want?
 #. 100STU per tick
 #. Land hook
@@ -72693,11 +73038,11 @@ msgstr ""
 #. Date hook
 #. Case still in time
 #. Case missed second deadline
-#: dat/missions/sirius/srs_ferry.lua:426
+#: dat/missions/sirius/srs_ferry.lua:427
 msgid "Pilgrim drop-off"
 msgstr "Pilger absetzen"
 
-#: dat/missions/sirius/srs_ferry.lua:427
+#: dat/missions/sirius/srs_ferry.lua:428
 msgid "Drop off the pilgrims at the nearest planet"
 msgstr "Setze die Pilger auf dem nächstgelegenem Planeten ab"
 
@@ -75476,19 +75821,27 @@ msgstr ""
 "dein Schiff zu laden. Wir sollten bald abflugbereit sein.“"
 
 #. Add cargo
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:94
+msgid "Nebula Sensor Suit"
+msgstr "Nebelsensoranzug"
+
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:94
+msgid "A heavy suit with lots of fancy looking sensors."
+msgstr ""
+
 #. Set up mission information
 #. Add mission
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:97
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:105
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:98
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:106
 msgid "Novice Nebula Research"
 msgstr "Anfängernebelforschung"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:99
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:100
 #, lua-format
 msgid "%s and the gratitude of a student"
 msgstr "%s und die Dankbarkeit eines Studenten"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:100
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:101
 msgid ""
 "You have been asked by a Za'lek student to fly into the Nebula for some kind "
 "of research."
@@ -75496,17 +75849,17 @@ msgstr ""
 "Du wurdest von einem Za'lek-Studenten gebeten, für eine Art Forschung in den "
 "Nebel zu fliegen."
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:128
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:129
 msgid "You helped a Za'lek student to collect sensor data in the Nebula."
 msgstr ""
 "Du hast einem Za'lek-Schüler geholfen, Sensordaten im Nebel zu sammeln."
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:134
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:135
 msgid "A Mess On Your Ship"
 msgstr "Ein Chaos auf deinem Schiff"
 
 #. Cancel autonav.
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:194
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:195
 #, lua-format
 msgid ""
 "You arrive in the %s system and Robert Hofer tells you that he will let you "
@@ -75516,7 +75869,7 @@ msgstr ""
 "lässt, wenn sein Scan abgeschlossen ist. Hoffentlich wird das nicht zu einen "
 "weiteren Stromausfall führen …"
 
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:201
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:202
 #, lua-format
 msgid "\"OK, my measurements are complete! Let's go back to %s.\""
 msgstr "„OK, meine Messungen sind fertig! Gehen wir zurück nach %s.“"
@@ -78485,8 +78838,6 @@ msgstr[1] ""
 #. factions which cannot be delivered to by factions other than themselves
 #. Determines the items in table a that are not in table b.
 #. Used to determine what cargo is sold at current planet but not at destination planet.
-#. Sets the description based on the particulars of the mission.
-#.
 #.
 #. -- @brief Returns a block of mission-description text for the given cargo.
 #. -- @tparam string misn_desc Translated title-level description, e.g. _("Cargo transport to %s in the %s system."):format(...).
@@ -78496,31 +78847,31 @@ msgstr[1] ""
 #. -- @param deadline Target delivery time. May be nil.
 #. -- @param notes Any additional text the user should see on its own detail line, such as piracy risk. May be nil.
 #. --
-#: dat/scripts/cargo_common.lua:185
+#: dat/scripts/cargo_common.lua:180
 #, lua-format
 msgid "Cargo: %s (%s)"
 msgstr "Fracht: %s (%s)"
 
-#: dat/scripts/cargo_common.lua:187
+#: dat/scripts/cargo_common.lua:182
 #, lua-format
 msgid "Cargo: %s"
 msgstr "Fracht: %s"
 
-#: dat/scripts/cargo_common.lua:193
+#: dat/scripts/cargo_common.lua:188
 #, lua-format
 msgid "Jumps: %d"
 msgid_plural "Jumps: %d"
 msgstr[0] "Sprünge: %d"
 msgstr[1] "Sprünge: %d"
 
-#: dat/scripts/cargo_common.lua:195
+#: dat/scripts/cargo_common.lua:190
 #, lua-format
 msgid "Travel distance: %s"
 msgid_plural "Travel distance: %s"
 msgstr[0] "Reisedistanz: %s"
 msgstr[1] "Reisedistanz: %s"
 
-#: dat/scripts/cargo_common.lua:202
+#: dat/scripts/cargo_common.lua:197
 #, lua-format
 msgid "Time limit: %s"
 msgstr "Zeitlimit: %s"
@@ -84179,7 +84530,7 @@ msgid "Take Off"
 msgstr "Abheben"
 
 #. Check if player really wants to sell.
-#: src/equipment.c:275 src/equipment.c:1904
+#: src/equipment.c:275 src/equipment.c:1905
 msgid "Sell Ship"
 msgstr "Schiff verkaufen"
 
@@ -84366,7 +84717,7 @@ msgid ""
 "#%c%s%.0f#0 deg/s\n"
 "%.0f%%\n"
 "%s\n"
-"%s\n"
+"%s (%.1f secs for scan)\n"
 "%s\n"
 "\n"
 "#%c%s%.0f%%\n"
@@ -84401,7 +84752,7 @@ msgstr ""
 "#%c%s#0"
 
 #. Movement.
-#: src/equipment.c:1626 src/equipment.c:1644 src/info.c:502 src/info.c:513
+#: src/equipment.c:1626 src/equipment.c:1645 src/info.c:502 src/info.c:513
 #: src/land_shipyard.c:293 src/land_shipyard.c:303 src/map_system.c:673
 #: src/map_system.c:683
 #, fuzzy
@@ -84412,7 +84763,7 @@ msgid_plural "tonnes"
 msgstr[0] "%s Tonne"
 msgstr[1] "%s Tonnen"
 
-#: src/equipment.c:1645 src/info.c:514 src/land_shipyard.c:304
+#: src/equipment.c:1646 src/info.c:514 src/land_shipyard.c:304
 #: src/land_shipyard.c:305 src/map_system.c:684 src/map_system.c:685
 #, fuzzy
 #| msgid "Reunited"
@@ -84421,7 +84772,7 @@ msgid_plural "units"
 msgstr[0] "Wiedervereinigt"
 msgstr[1] "Wiedervereinigt"
 
-#: src/equipment.c:1646 src/info.c:252 src/info.c:515
+#: src/equipment.c:1647 src/info.c:252 src/info.c:515
 #, fuzzy
 #| msgid "%s jump"
 #| msgid_plural "%s jumps"
@@ -84430,12 +84781,12 @@ msgid_plural "jumps"
 msgstr[0] "%s Sprung"
 msgstr[1] "%s Sprünge"
 
-#: src/equipment.c:1829
+#: src/equipment.c:1830
 msgid "You can not unequip your ship while you have deployed fighters!"
 msgstr ""
 "Du kannst dein Schiff nicht abrüsten, während deine Kämpfer aktiv sind!"
 
-#: src/equipment.c:1834
+#: src/equipment.c:1835
 msgid ""
 "You can not unequip your ship when you have more cargo than it can hold "
 "without modifications!"
@@ -84443,46 +84794,46 @@ msgstr ""
 "Du kannst dein Schiff nicht abrüsten, so lange du mehr Frachtladung hast, "
 "die es ohne Modifikationen tragen kann!"
 
-#: src/equipment.c:1838
+#: src/equipment.c:1839
 msgid "Unequip Ship"
 msgstr "Schiff abrüsten"
 
 #. confirm
-#: src/equipment.c:1839
+#: src/equipment.c:1840
 msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr ""
 "Bist du dir sicher, dass du all das Equipment von deinem Schiff entfernen "
 "möchtest?"
 
-#: src/equipment.c:1905
+#: src/equipment.c:1906
 #, c-format
 msgid "Are you sure you want to sell your ship %s for %s?"
 msgstr "Bist du dir sicher, dass du das Schiff %s für %s verkaufen möchtest?"
 
 #. Display widget.
-#: src/equipment.c:1922
+#: src/equipment.c:1923
 msgid "Ship Sold"
 msgstr "Schiff verkauft"
 
-#: src/equipment.c:1923
+#: src/equipment.c:1924
 #, c-format
 msgid "You have sold your ship %s for %s."
 msgstr "Du hast dein Schiff %s für %s verkauft."
 
-#: src/equipment.c:1952 src/player.c:407
+#: src/equipment.c:1953 src/player.c:407
 msgid "Ship Name"
 msgstr "Schiffsname"
 
-#: src/equipment.c:1953
+#: src/equipment.c:1954
 #, c-format
 msgid "Please enter a new name for your %s:"
 msgstr "Bitte gib einen neuen Namen für %s ein:"
 
-#: src/equipment.c:1961
+#: src/equipment.c:1962
 msgid "Name Collision"
 msgstr "Namenskollision"
 
-#: src/equipment.c:1962 src/player.c:432
+#: src/equipment.c:1963 src/player.c:432
 msgid "Please do not give the ship the same name as another of your ships."
 msgstr ""
 "Bitte gib dem Schiff keinen Namen, den du bereits für eines deiner anderen "
@@ -88268,13 +88619,13 @@ msgstr "Ware ist ungültig."
 msgid "Commodity '%s' not found!"
 msgstr "Ware „%s“ nicht gefunden!"
 
-#: src/nlua_commodity.c:343 src/nlua_commodity.c:379 src/nlua_player.c:1333
+#: src/nlua_commodity.c:333 src/nlua_commodity.c:369 src/nlua_player.c:1333
 #: src/nlua_player.c:1352
 #, c-format
 msgid "Planet '%s' does not belong to a system."
 msgstr "Planet „%s“ gehört zu keinem System."
 
-#: src/nlua_commodity.c:348 src/nlua_commodity.c:384
+#: src/nlua_commodity.c:338 src/nlua_commodity.c:374
 #, c-format
 msgid "Planet '%s' can not find its system '%s'."
 msgstr "Planet „%s“ kann sein System „%s“ nicht finden."
@@ -88329,7 +88680,7 @@ msgstr ""
 msgid "Event '%s' -> '%s': %s"
 msgstr "Ereignis „%s“ -> „%s“ %s"
 
-#: src/nlua_evt.c:239 src/nlua_misn.c:989
+#: src/nlua_evt.c:239 src/nlua_misn.c:980
 msgid "Invalid NPC ID!"
 msgstr "Ungültige NPC-ID!"
 
@@ -88434,23 +88785,18 @@ msgstr "Mission hat keinen Marker mit ID „%d“"
 msgid "Mission already accepted!"
 msgstr "Mission wurde bereits akzeptiert!"
 
-#: src/nlua_misn.c:679
+#: src/nlua_misn.c:678
 #, c-format
 msgid ""
 "Trying to create new cargo '%s' that would shadow existing non-temporary "
 "cargo!"
 msgstr ""
 
-#: src/nlua_misn.c:710
-#, c-format
-msgid "Cargo '%s' not found."
-msgstr "Ware „%s“ nicht gefunden."
-
-#: src/nlua_misn.c:807
+#: src/nlua_misn.c:798
 msgid "Can't create an OSD on an unaccepted mission!"
 msgstr "Ein OSD für eine nicht akzeptierte Mission kann nicht erzeugt werden!"
 
-#: src/nlua_misn.c:1021
+#: src/nlua_misn.c:1012
 msgid "Mission trying to claim but already has."
 msgstr "Mission versucht, zu claimen, hat es aber bereits getan."
 
@@ -89579,9 +89925,9 @@ msgstr ""
 "                     npolygon = %i und sx*sy = %i"
 
 #: src/outfit.c:1291 src/outfit.c:1462 src/outfit.c:1560 src/outfit.c:1691
-#: src/outfit.c:1817 src/outfit.c:1917 src/outfit.c:1990 src/outfit.c:2037
-#: src/outfit.c:2109 src/outfit.c:2132 src/outfit.c:2174 src/outfit.c:2213
-#: src/outfit.c:2247 src/outfit.c:2379 src/outfit.c:2460
+#: src/outfit.c:1819 src/outfit.c:1919 src/outfit.c:1992 src/outfit.c:2039
+#: src/outfit.c:2111 src/outfit.c:2134 src/outfit.c:2176 src/outfit.c:2215
+#: src/outfit.c:2249 src/outfit.c:2381 src/outfit.c:2462
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr "Ausstattung „%s“ hat unbekannen Node „%s“"
@@ -89642,9 +89988,9 @@ msgid ""
 "%s Minimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1355 src/outfit.c:1505 src/outfit.c:1702 src/outfit.c:1954
-#: src/outfit.c:2011 src/outfit.c:2047 src/outfit.c:2148 src/outfit.c:2187
-#: src/outfit.c:2222 src/outfit.c:2257 src/outfit.c:2464
+#: src/outfit.c:1355 src/outfit.c:1505 src/outfit.c:1702 src/outfit.c:1956
+#: src/outfit.c:2013 src/outfit.c:2049 src/outfit.c:2150 src/outfit.c:2189
+#: src/outfit.c:2224 src/outfit.c:2259 src/outfit.c:2466
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr "Ausstattung „%s“ fehlt oder hat ungültiges „%s“-Element"
@@ -89690,13 +90036,13 @@ msgstr "Ausstattung „%s“ fehlt „%s“-Element"
 msgid "Ammo '%s' has unknown ai type '%s'."
 msgstr "Munition „%s“ hat unbekannten „ai“-Typ „%s“."
 
-#: src/outfit.c:1779
+#: src/outfit.c:1780
 #, fuzzy, c-format
 #| msgid "Outfit '%s' has invalid blowup property: '%s'"
 msgid "Outfit '%s' failed to read Lua '%s'!"
 msgstr "Ausstattung „%s“ hat ungültige „blowup“-Eigenschaft: „%s“"
 
-#: src/outfit.c:1792
+#: src/outfit.c:1793
 #, fuzzy, c-format
 #| msgid "Event Lua '%s' syntax error: %s"
 msgid ""
@@ -89704,7 +90050,7 @@ msgid ""
 "%s"
 msgstr "Ereignis-Lua „%s“ Syntaxfehler: %s"
 
-#: src/outfit.c:1830
+#: src/outfit.c:1832
 msgid ""
 "\n"
 "#rActivated Outfit#0"
@@ -89712,72 +90058,72 @@ msgstr ""
 "\n"
 "#rAktivierbare Ausstattung#0"
 
-#: src/outfit.c:1839
+#: src/outfit.c:1841
 #, c-format
 msgid "%+.0f CPU"
 msgstr "%+.0f CPU"
 
-#: src/outfit.c:1840
+#: src/outfit.c:1842
 #, c-format
 msgid "%+.0f Thrust"
 msgstr "%+.0f Schub"
 
-#: src/outfit.c:1841
+#: src/outfit.c:1843
 #, c-format
 msgid "%+.0f Turn Rate"
 msgstr "%+.0f Drehung"
 
-#: src/outfit.c:1842
+#: src/outfit.c:1844
 #, c-format
 msgid "%+.0f Maximum Speed"
 msgstr "%+.0f Maximalgeschwindigkeit"
 
-#: src/outfit.c:1843
+#: src/outfit.c:1845
 #, c-format
 msgid "%+.0f Armour"
 msgstr "%+.0f Panzerung"
 
-#: src/outfit.c:1844
+#: src/outfit.c:1846
 #, c-format
 msgid "%+.0f Shield"
 msgstr "%+.0f Schild"
 
-#: src/outfit.c:1845
+#: src/outfit.c:1847
 #, c-format
 msgid "%+.0f Energy"
 msgstr "%+.0f Energie"
 
-#: src/outfit.c:1846
+#: src/outfit.c:1848
 #, c-format
 msgid "%+.d Fuel"
 msgstr "%+.d Treibstoff"
 
-#: src/outfit.c:1847
+#: src/outfit.c:1849
 #, c-format
 msgid "%+.1f Armour Per Second"
 msgstr "%+.1f Panzerung pro Sekunde"
 
-#: src/outfit.c:1848
+#: src/outfit.c:1850
 #, c-format
 msgid "%+.1f Shield Per Second"
 msgstr "%+.1f Schild pro Sekunde"
 
-#: src/outfit.c:1849
+#: src/outfit.c:1851
 #, c-format
 msgid "%+.1f Energy Per Second"
 msgstr "%+.1f Energie pro Sekunde"
 
-#: src/outfit.c:1850
+#: src/outfit.c:1852
 #, c-format
 msgid "%+.0f Absorption"
 msgstr "%+.0f Absorbtion"
 
-#: src/outfit.c:1851
+#: src/outfit.c:1853
 #, c-format
 msgid "%+.0f Cargo"
 msgstr "%+.0f Fracht"
 
-#: src/outfit.c:1923
+#: src/outfit.c:1925
 #, c-format
 msgid ""
 "%s\n"
@@ -89800,7 +90146,7 @@ msgstr ""
 "%.1f EPS\n"
 "%.1f Rumpel"
 
-#: src/outfit.c:2000
+#: src/outfit.c:2002
 #, fuzzy, c-format
 #| msgid ""
 #| "%s\n"
@@ -89819,115 +90165,115 @@ msgstr ""
 "%.1f Starts pro Sekunde\n"
 "Fasst %d %s"
 
-#: src/outfit.c:2098
+#: src/outfit.c:2100
 #, c-format
 msgid "Map '%s' has invalid asset '%s'"
 msgstr "Karte „%s“ hat ungültige Mediendaten „%s“"
 
-#: src/outfit.c:2106
+#: src/outfit.c:2108
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr "Karte „%s“ hat ungültigen Sprungpunkt „%s“"
 
-#: src/outfit.c:2113
+#: src/outfit.c:2115
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr "Karte „%s“ hat ungültiges System „%s“"
 
-#: src/outfit.c:2219
+#: src/outfit.c:2221
 #, c-format
 msgid "GUI (Graphical User Interface)"
 msgstr "GUI (Grafische Benutzeroberfläche)"
 
-#: src/outfit.c:2286 src/outfit.c:2606 src/slots.c:74 src/space.c:3186
+#: src/outfit.c:2288 src/outfit.c:2608 src/slots.c:74 src/space.c:3186
 #: src/spfx.c:257 src/spfx.c:1040 src/start.c:74
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr "Defekte „%s“-Datei: enthält keine Elemente"
 
-#: src/outfit.c:2296
+#: src/outfit.c:2298
 #, c-format
 msgid "Outfit in %s has invalid or no name"
 msgstr "Mission in %s hat ungültigen oder keinen Namen"
 
-#: src/outfit.c:2342
+#: src/outfit.c:2344
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr "Ausstattung „%s“ hat einen ungültigen Platztyp."
 
-#: src/outfit.c:2350
+#: src/outfit.c:2352
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr "Ausstattung „%s“ hat einen unbekannten Platztyp „%s“."
 
-#: src/outfit.c:2363
+#: src/outfit.c:2365
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr "Ausstattung „%s“ hat einen unbekannten generellen Node „%s“"
 
-#: src/outfit.c:2389
+#: src/outfit.c:2391
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 "Bei Ausstattung „%s“ fehlt dem Element „specific“ die Eigenschaft „type“"
 
-#: src/outfit.c:2405
+#: src/outfit.c:2407
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr "Ausstattung „%s“ hat Gruppe „%d“, sie sollte im Wertebereich 1-%d sein"
 
-#: src/outfit.c:2416
+#: src/outfit.c:2418
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr "Ausstattung „%s“ ist vom Typ NONE"
 
-#: src/outfit.c:2536
+#: src/outfit.c:2538
 #, fuzzy, c-format
 #| msgid "Outfit '%s' missing/invalid 'arc' element"
 msgid "Outfit '%s' missing/invalid 'trackmin' element"
 msgstr "Ausstattung „%s“ hat fehlendes/ungültiges „arc“-Element"
 
-#: src/outfit.c:2538
+#: src/outfit.c:2540
 #, fuzzy, c-format
 #| msgid "Outfit '%s' missing/invalid 'arc' element"
 msgid "Outfit '%s' missing/invalid 'trackmax' element"
 msgstr "Ausstattung „%s“ hat fehlendes/ungültiges „arc“-Element"
 
-#: src/outfit.c:2540
+#: src/outfit.c:2542
 #, c-format
 msgid "Outfit '%s' missing/invalid 'lockon' element"
 msgstr "Ausstattung „%s“ hat fehlendes/ungültiges „lockon“-Element"
 
-#: src/outfit.c:2542
+#: src/outfit.c:2544
 #, c-format
 msgid "Outfit '%s' missing/invalid 'arc' element"
 msgstr "Ausstattung „%s“ hat fehlendes/ungültiges „arc“-Element"
 
-#: src/outfit.c:2567
+#: src/outfit.c:2569
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] "Namenskollision! %d Ausstattung haben den Namen „%s“"
 msgstr[1] "Namenskollision! %d Ausstattungen haben den Namen „%s“"
 
-#: src/outfit.c:2574
+#: src/outfit.c:2576
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] "%d Ausstattung geladen"
 msgstr[1] "%d Ausstattungen geladen"
 
-#: src/outfit.c:2599
+#: src/outfit.c:2601
 #, c-format
 msgid "%s file is invalid xml!"
 msgstr "„%s“-Datei ist ungültiges XML!"
 
-#: src/outfit.c:2655
+#: src/outfit.c:2657
 #, c-format
 msgid "Outfit '%s' already has a short description"
 msgstr "Ausstattung „%s“ hat bereits eine kurze Beschreibung"
 
-#: src/outfit.c:2663
+#: src/outfit.c:2665
 #, c-format
 msgid ""
 "%s [%s]\n"
@@ -89936,7 +90282,7 @@ msgstr ""
 "%s [%s]\n"
 "%.0f CPU\n"
 
-#: src/outfit.c:2672
+#: src/outfit.c:2674
 #, c-format
 msgid ""
 "%.1f Second Lock-on\n"
@@ -89944,20 +90290,20 @@ msgid ""
 "%s Minimum Tracking\n"
 msgstr ""
 
-#: src/outfit.c:2678
+#: src/outfit.c:2680
 #, fuzzy
 #| msgid "Cloaking"
 msgid "No Tracking\n"
 msgstr "Tarnung"
 
-#: src/outfit.c:2681
+#: src/outfit.c:2683
 #, c-format
 msgid ""
 "%s Optimal Tracking\n"
 "%s Minimum Tracking\n"
 msgstr ""
 
-#: src/outfit.c:2686
+#: src/outfit.c:2688
 #, fuzzy, c-format
 #| msgid ""
 #| "\n"
@@ -89967,7 +90313,7 @@ msgstr ""
 "\n"
 "%.1f Grad Drehung"
 
-#: src/outfit.c:2692
+#: src/outfit.c:2694
 #, c-format
 msgid ""
 "Holds %d %s:\n"
@@ -89978,12 +90324,12 @@ msgstr ""
 "%.0f%% Penetration\n"
 "%.2f SPS [%.0f Schaden]\n"
 
-#: src/outfit.c:2701
+#: src/outfit.c:2703
 #, c-format
 msgid "%.1f Disable/s [%.0f Disable]\n"
 msgstr "%.1f Unfähigmachung/s [%.0f Unfähigmachung]\n"
 
-#: src/outfit.c:2706
+#: src/outfit.c:2708
 #, fuzzy, c-format
 #| msgid ""
 #| "%.1f Shots Per Second\n"
@@ -90003,7 +90349,7 @@ msgstr ""
 "%.0f Höchstgeschwindigkeit\n"
 "%.1f%% Störwiderstand"
 
-#: src/outfit.c:2716
+#: src/outfit.c:2718
 #, fuzzy, c-format
 #| msgid "%s%.2f DPS [%.2f EPS]"
 msgid ""
@@ -90011,7 +90357,7 @@ msgid ""
 "%.1f EPS [%.0f Energy]"
 msgstr "%s%.2f SPS [%.2f EPS]"
 
-#: src/outfit.c:2721
+#: src/outfit.c:2723
 #, c-format
 msgid ""
 "\n"
@@ -90123,7 +90469,7 @@ msgstr ""
 "Fracht konnte nicht vom Piloten „%s“ nach „%s“ kopiert werden. Die Fracht "
 "bleibt."
 
-#: src/pilot_ew.c:479
+#: src/pilot_ew.c:489
 #, fuzzy
 #| msgid "You've been scouted!"
 msgid "You have been discovered!"
@@ -90454,6 +90800,22 @@ msgstr "Pilot „%s“ KI -> „attacked“: %s"
 #| msgid "Pilot '%s' ai -> 'distress': %s"
 msgid ""
 "Pilot '%s''s outfit '%s' -> 'cooldown':\n"
+"%s"
+msgstr "Pilot „%s“ KI -> „distress“: %s"
+
+#. Set the memory.
+#. mem
+#.
+#. Set up the function: cleanup( p, po )
+#. f
+#. f, p
+#. f, p, po
+#.
+#: src/pilot_outfit.c:1487
+#, fuzzy, c-format
+#| msgid "Pilot '%s' ai -> 'distress': %s"
+msgid ""
+"Pilot '%s''s outfit '%s' -> 'cleanup':\n"
 "%s"
 msgstr "Pilot „%s“ KI -> „distress“: %s"
 
@@ -92620,6 +92982,19 @@ msgstr "Ungültiger WEAPON_LAYER angegeben"
 #: src/weapon.c:1855
 msgid "Trying to destroy weapon not found in stack!"
 msgstr "Versuch, eine Waffe, die nicht im Stack ist, zu zerstören!"
+
+#~ msgid ""
+#~ "While limited in range compared to true capital-class weaponry, the heavy "
+#~ "ripper turret's pair of heavy ripper cannons deliver exceptional "
+#~ "firepower for dealing with lighter threats such as corvettes."
+#~ msgstr ""
+#~ "Obwohl die Reichweite im Vergleich zu echten Waffen der Schwerklasse "
+#~ "begrenzt ist, liefern die beiden schweren Ripper-Kanonen des schweren "
+#~ "Ripper-Geschützturms eine außergewöhnliche Feuerkraft für den Umgang mit "
+#~ "leichteren Bedrohungen wie Korvetten."
+
+#~ msgid "Cargo '%s' not found."
+#~ msgstr "Ware „%s“ nicht gefunden."
 
 #~ msgid "Drugs"
 #~ msgstr "Drogen"
