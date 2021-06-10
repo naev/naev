@@ -6,7 +6,7 @@
   <mass>6</mass>
   <price>9000</price>
   <description>The Plasma Blaster fires superheated plasma which is very effective at damaging armour, but less effective against shields. This weapon is often used by bounty hunters and mercenaries for its high killing potential.</description>
-  <gfx_store>plasma.png</gfx_store>
+  <gfx_store>plasma.webp</gfx_store>
   <cpu>-5</cpu>
  </general>
  <specific type="bolt">

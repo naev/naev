@@ -8,7 +8,7 @@
   <mass>50</mass>
   <price>42000</price>
   <description>The BioPlasma Talon is the strongest forward-facing organic weapon in existence. Boasting damage which puts it in line with some of the strongest weapons in the galaxy with incredibly low cognitive requirements for its damage output, Soromid ships equipped with this weapon are rightly feared. As with all organs, it starts out weak, but over time it grows and improves.</description>
-  <gfx_store>railgun.png</gfx_store>
+  <gfx_store>railgun.webp</gfx_store>
   <cpu>-35</cpu>
  </general>
  <specific type="bolt">

@@ -8,7 +8,7 @@
   <mass>75</mass>
   <price>62500</price>
   <description>The BioPlasma Tentacle is hands-down the strongest and versatile organic weapon grown by the Soromid. It has the distinction of being the only rotating organic weapon while also boasting a power output that is unmatched by most weaponry found throughout the galaxy once fully developed. As with all organs, it starts out weak, but over time it grows and improves.</description>
-  <gfx_store>railgunturret.png</gfx_store>
+  <gfx_store>railgunturret.webp</gfx_store>
   <cpu>-200</cpu>
  </general>
  <specific type="turret bolt">

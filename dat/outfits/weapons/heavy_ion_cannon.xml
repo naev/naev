@@ -7,7 +7,7 @@
   <mass>45</mass>
   <price>32000</price>
   <description>The Heavy Ion Cannon does a far better job at disabling ships than the standard model, but it requires a medium mount. Most militaries employ these weapons on specialized capture teams, but the design is licensed for public use as well.</description>
-  <gfx_store>ioncannon.png</gfx_store>
+  <gfx_store>ioncannon.webp</gfx_store>
   <cpu>-60</cpu>
  </general>
  <specific type="bolt">

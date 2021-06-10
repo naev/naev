@@ -7,7 +7,7 @@
   <mass>30</mass>
   <price>28000</price>
   <description>The Laser Turret MK2 is often found on Imperial fast response fleets, for use against fleets of small to medium ships. This weapon is one of the mainstays in the Imperial space forces.</description>
-  <gfx_store>laserturret2.png</gfx_store>
+  <gfx_store>laserturret2.webp</gfx_store>
   <cpu>-50</cpu>
  </general>
  <specific type="turret bolt">
