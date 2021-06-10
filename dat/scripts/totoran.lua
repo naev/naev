@@ -1,5 +1,5 @@
 --[[
--- Helper stuff for the Totoran Coliseum
+-- Helper stuff for the Crimson Gauntlet
 --]]
 
 local vn = require 'vn'
@@ -9,10 +9,10 @@ require 'numstring'
 
 local totoran = {
    guide = {
-      name = _("Coliseum Guide"),
+      name = _("Crimson Gauntlet Guide"),
       portrait = "minerva_terminal.png",
       image = "minerva_terminal.png",
-      desc = _("Information on the Totoran Coliseum."),
+      desc = _("Information on the Crimson Gauntlet."),
       colour = nil,
    }
 }
@@ -51,8 +51,8 @@ function totoran.emblems_pay( amount )
 end
 function totoran.emblems_str( amount )
    return gettext.ngettext(
-      "#r%s Coliseum Emblems#0",
-      "#r%s Coliseum Emblems#0", amount ):format(
+      "#r%s Crimson Emblems#0",
+      "#r%s Crimson Emblems#0", amount ):format(
          numstring(amount) )
 end
 

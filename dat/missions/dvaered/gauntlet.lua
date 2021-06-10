@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Totoran Tournament">
+<mission name="Crimson Gauntlet">
  <avail>
   <priority>3</priority>
   <chance>100</chance>
@@ -13,7 +13,7 @@
 local vn = require 'vn'
 local totoran = require 'totoran'
 require 'numstring'
-require 'missions.dvaered.coliseum_tables'
+require 'missions.dvaered.gauntlet_tables'
 
 logidstr = "log_totoran"
 logname  = _("Totoran Tournament")
@@ -23,14 +23,14 @@ logtype  = _("Totoran Tournament")
 npc_portrait   = "dvaered_thug1.png"
 npc_image      = "dvaered_thug1.png"
 npc_name       = _("Challenge Organizer")
-npc_description= _("The Coliseum Chalenge organizer.")
+npc_description= _("The Crimson Gauntlet Challenge organizer.")
 npc_colour     = {1, 0.7, 0.3}
 
-misn_title  = _("Coliseum Challenge")
-misn_desc   = _("Annihilate all enemies in Coliseum.")
+misn_title  = _("Crimson Gauntlet Challenge")
+misn_desc   = _("Annihilate all enemies in the Crimson Gauntlet.")
 misn_reward = _("Great riches!")
 
-coliseum = system.get("Coliseum")
+gauntlet = system.get("Crimson Gauntlet")
 
 sfx_clear = audio.new( 'snd/sounds/jingles/victory.ogg' )
 
@@ -101,7 +101,7 @@ function approach_wave ()
 
    -- TODO info
    vn.label("info")
-   dv(_("The Coliseum Challenge is a set of challenges split into three types: light, for small ships like fighters and bombers; medium, for ships like corvettes and destroyers; and heavy, for the larger ships such as cruisers or carriers. Once you enter a specific challenge, you will face waves of increasingly hard opponents which you must defeat."))
+   dv(_("The Crimson Gauntlet Challenge is a set of challenges split into three types: light, for small ships like fighters and bombers; medium, for ships like corvettes and destroyers; and heavy, for the larger ships such as cruisers or carriers. Once you enter a specific challenge, you will face waves of increasingly hard opponents which you must defeat."))
    dv(_("You get bonus points depending on your ship class with respect to the category. Using smaller ships will give you a bonus in general. You also get a bonus for clearing the waves faster. If you are defeated, the total score up until your loss will be used to compute your rewards. As this is all done in virtual reality, you don't have to worry about any damage to your real ships!"))
    vn.jump("menu")
 
@@ -136,7 +136,7 @@ function approach_wave ()
    player.takeoff() -- take off and enter the ring!
 
    -- Wave meta-information
-   coliseum_enter = "enter_wave"
+   gauntlet_enter = "enter_wave"
    wave_round = 1
 end
 function loaded ()
@@ -149,11 +149,11 @@ end
 --[[
    Common Teleporting Functions
 --]]
--- Enters Coliseum
+-- Enters Crimson Gauntlet
 function enter_the_ring ()
-   -- Teleport the player to the Coliseum and hide the rest of the universe
-   local sys = coliseum
-   hook.enter( coliseum_enter )
+   -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
+   local sys = gauntlet
+   hook.enter( gauntlet_enter )
    for k,s in ipairs(system.getAll()) do
       s:setHidden(true)
    end
@@ -163,7 +163,7 @@ function enter_the_ring ()
    player.pilot():setPos( vec2.new( 0, 0 ) )
    -- Disable escorts if they exist
    var.push("hired_escorts_disabled",true)
-   player.teleport(coliseum)
+   player.teleport(gauntlet)
    var.pop("hired_escorts_disabled")
 
    -- Player lost info
@@ -176,7 +176,7 @@ function leave_the_ring ()
    -- Clear pilots so escorts get docked
    pilot.clear()
    -- Fix the map up
-   local sys = coliseum
+   local sys = gauntlet
    sys:setKnown(false)
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
@@ -280,7 +280,7 @@ end
    Wave stuff
 --]]
 function enter_wave ()
-   if system.cur() ~= system.get("Coliseum") then
+   if system.cur() ~= system.get("Crimson Gauntlet") then
       return
    end
 

@@ -18,7 +18,7 @@ local totoran = require 'totoran'
 spectator_names = {
    _("Spectator"),
    _("Aficionado"),
-   _("Coliseum Fan"),
+   _("Gauntlet Fan"),
 }
 spectator_descriptions = {
    _("A person enjoying their time at the station."),
@@ -28,7 +28,7 @@ spectator_descriptions = {
 }
 spectator_messages = {
    _([["Sometimes when watching some of the competitions, I forget it is all just virtual reality."]]),
-   _([["The realism of virtual reality coliseum is impressive! It almost feels like it's real!"]]),
+   _([["The realism of virtual reality here is impressive! It almost feels like it's real!"]]),
    function () return string.format(
       _([["I came all the way from %s to be here! We don't have anything like this back at home."]]),
       planet.get( {faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} ):name() -- No Dvaered
@@ -37,29 +37,29 @@ spectator_messages = {
    _([["It's a shame that they require you to own the ship you want to use to enter the virtual reality competitions. I would love to try fly one of those majestic Dvaered Goddards."]]),
    _([["I like watching the competitions between fighters, it's incredible all the moves they can pull off."]]),
    _([["I tried to compete in my Llama, but it doesn't stand a chance against even a single Hyena."]]),
-   _([["I was always told that Dvaered technology was primitive, but the virtual reality coliseum is incredible!"]]),
+   _([["I was always told that Dvaered technology was primitive, but the virtual reality of the Crimson Gauntlet is incredible!"]]),
    _([["There's nothing quite like seeing two capital ships duke it out. I love watching railguns blasting away."]]),
    _([["I used to think the Za'lek virtual games were great, but this is so much better!"]]),
 }
 pilot_names = {
-   _("Coliseum Pilot"),
+   _("jauntlet Pilot"),
 }
 pilot_descriptions = {
-   _("A coliseum pilot enjoying some downtime between competitions."),
-   _("A tired coliseum pilot taking a break."),
-   _("A coliseum pilot lounging around."),
+   _("A pilot enjoying some downtime between competitions."),
+   _("A tired pilot taking a break."),
+   _("A pilot lounging around."),
 }
 pilot_messages = {
-   _([["Some people say that the coliseum encourages and promotes violence, but I've been destroying ships long before I started participating in the coliseum!"]]),
+   _([["Some people say that the Crimson gauntlet encourages and promotes violence, but I've been destroying ships long before I started participating in the Crimson Gauntlet!"]]),
    function () return string.format(
-      _([["Hey, didn't I see you flying a %s in the Coliseum? Nice flying."]]),
+      _([["Hey, didn't I see you flying a %s in the Crimson Gauntlet? Nice flying."]]),
       player.pilot():ship():name()
    ) end,
    _([["I was doing so well in my Hyena, but it just lacks the firepower to take on larger ships. Maybe I should upgrade to a Vendetta."]]),
-   _([["The coliseum has really taught me to appreciate the small things in life, you know, blowing up your enemies with mace rockets and such."]]),
-   _([["I used to be a pretty sloppy pilot before participating in the coliseum. I still am, but I used to be too."]]),
+   _([["The Crimson Gauntlet has really taught me to appreciate the small things in life, you know, blowing up your enemies with mace rockets and such."]]),
+   _([["I used to be a pretty sloppy pilot before participating in the Crimson Gauntlet. I still am, but I used to be too."]]),
    _([["Sometimes I get motion sickness from the virtual reality. What's more troublesome is it also happens when I fly my real ship!"]]),
-   _([["Sometimes when I get blown up in Coliseum, it takes me a while to realize I haven't actually been blown up to smithereens."]]),
+   _([["Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to realize I haven't actually been blown up to smithereens."]]),
 }
 
 guide_priority = 6
@@ -109,9 +109,9 @@ function approach_guide ()
    vn.scene()
    local guide = vn.newCharacter( totoran.vn_guide() )
    vn.transition()
-   vn.na(_("You approach the Totoran Coliseum guide."))
+   vn.na(_("You approach the Crimson Gauntlet guide."))
    vn.label("menu_main")
-   guide(string.format(_([["Hello and welcome to the Totoran Coliseum! You have %s. What would you like to do?"]]), totoran.emblems_str( totoran.emblems_get())))
+   guide(string.format(_([["Hello and welcome to the Crimson Gauntlet! You have %s. What would you like to do?"]]), totoran.emblems_str( totoran.emblems_get())))
    vn.menu{
       {_("Information"), "information"},
       {_("Leave"), "leave"},
@@ -121,20 +121,20 @@ function approach_guide ()
    guide(_("What would you like to know about?"))
    vn.label("menu_info_raw")
    vn.menu{
-      { _("Totoran Coliseum"), "info_overview" },
-      { _("Coliseum History"), "info_coliseum" },
+      { _("Crimson Gauntlet"), "info_overview" },
+      { _("Gauntlet History"), "info_gauntlet" },
       { _("Totoran Emblems"), "info_emblems" },
       { _("Nothing."), "menu_main" },
    }
 
    vn.label("info_overview")
-   guide(_("The Totoran Coliseum is allows you to experience combat with your ships in virtual reality, without having to worry about any real damage. All you do is scan your ship and its outfits, and you will be ready to participate in all the challenges."))
+   guide(_("The Crimson Gauntlet is allows you to experience combat with your ships in virtual reality, without having to worry about any real damage. All you do is scan your ship and its outfits, and you will be ready to participate in all the challenges."))
    vn.jump("menu_info")
 
-   vn.label("info_coliseum")
+   vn.label("info_gauntlet")
    -- incident is 593:3726.4663
-   guide(_("The Totoran Coliseum was founded originally in mid-UST 568, as a program for training Dvaered Military. Of course, back then they did not have such good virtual reality technology and instead relied on actual combat. However, as the number of accidents and casualties grew, they ended up starting a move to virtual reality, and now the Totoran Coliseum boasts some of the best full immersion virtual reality experiences in the Universe."))
-   guide(_("Eventually, to encourage the warrior spirit among the general population, in UST 588, 20 cycles after its creation, the Totoran Coliseum was open to the general public as a virtual reality experience. This is one of the few places in the universe where you can experience hard space combat without having a fear of dying. If your ship is destroyed, you are only dropped out of the virtual reality environment."))
+   guide(_("The Crimson Gauntlet was founded originally in mid-UST 568, as a program for training Dvaered Military. Of course, back then they did not have such good virtual reality technology and instead relied on actual combat. However, as the number of accidents and casualties grew, they ended up starting a move to virtual reality, and now the Crimson Gauntlet boasts some of the best full immersion virtual reality experiences in the Universe."))
+   guide(_("Eventually, to encourage the warrior spirit among the general population, in UST 588, 20 cycles after its creation, the Crimson Gauntlet was open to the general public as a virtual reality experience. This is one of the few places in the universe where you can experience hard space combat without having a fear of dying. If your ship is destroyed, you are only dropped out of the virtual reality environment."))
    guide(_("Many famous pilots have had their formation here, and it is also frequented by scouting agencies from across the Universe to find good pilots. Not to mention all the prizes that can be won from competing in the tournaments."))
    vn.jump("menu_info")
 
