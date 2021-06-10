@@ -282,7 +282,7 @@ function create()
    local blacklisted = false
    local name = cur:name()
    for k,v in ipairs(blacklist) do
-      if cur == v then
+      if name == v then
          blacklisted = true
          break
       end
