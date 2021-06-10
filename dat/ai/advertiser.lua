@@ -41,28 +41,28 @@ function create ()
    -- Faction specific messages
    local fpres = system.cur():presences()
 
-   local fem = fpres["Empire"]
-   if fem and fem > 1 then
+   local fem = fpres["Empire"] or 0
+   if fem > 1 then
       msg[#msg+1] = _("Do you love your Emperor as much as he loves you?")
       msg[#msg+1] = _("You're quick and dependable? The Emperor needs you in the Armada!")
       msg[#msg+1] = _("Help the police help you: denounce the dissidents.")
    end
 
-   local fdv = fpres["Dvaered"]
-   if fdv and fdv > 1 then
+   local fdv = fpres["Dvaered"] or 0
+   if fdv > 1 then
       msg[#msg+1] = _("Only your hard work will save the Dvaered economy!")
       msg[#msg+1] = _("Together, we will beat the economic crisis!")
       msg[#msg+1] = _("Bet on Totoran and win incredible sums thanks to the Crimson Gauntlet!")
    end
 
-   local fsr = fpres["Soromid"]
-   if fsr and fsr > 1 then
+   local fsr = fpres["Soromid"] or 0
+   if fsr > 1 then
       msg[#msg+1] = _("Special offer on Crow: buy one IR-eye, and the second comes for free!")
       msg[#msg+1] = _("Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point Zero Station!")
    end
 
-   local fzl = fpres["Za'lek"]
-   if fzl and fzl > 1 then
+   local fzl = fpres["Za'lek"] or 0
+   if fzl > 1 then
       -- Note that when running in the main menu background, player.name() might not exist (==nil), so 
       -- we need to add a check for that.
       if player.name() then
