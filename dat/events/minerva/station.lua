@@ -45,9 +45,9 @@ patron_names = {
    _("Patron"),
 }
 patron_descriptions = {
-   _("A gambling patron enjoying his time at the station."),
+   _("A gambling patron enjoying their time at the station."),
    _("A tourist looking a bit bewildered at all the noises and shiny lights all over."),
-   _("A patron who seems down on his luck."),
+   _("A patron who seems down on their luck."),
    _("A patron who looks exhilarated as if they won big today."),
    _("A patron that looks like they have spend a lot of time at the station. There are clear dark circles under their eyes."),
    _("A patron that looks strangely out of place."),
