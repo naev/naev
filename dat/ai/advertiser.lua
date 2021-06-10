@@ -68,7 +68,7 @@ function create ()
       if player.name() then
          msg[#msg+1] = string.format(_("Dear Prof. %s, your recent work has left a deep impression on us. Due to the advance, novelty, and possible wide application of your innovation, we invite you to contribute other unpublished papers of relevant fields to the Interstellar Pay-to-win Journal for Mathematics and Applications."),player.name())
       end
-      msg[#msg+1] = _("Want to solve a large-dimensional stochastic PDE? the LMKSTD method is what you need!")
+      msg[#msg+1] = _("Want to solve a large-dimensional stochastic PDE? The LMKSTD method is what you need!")
       msg[#msg+1] = _("Love non-convex minimization? Join Ruadan's Computation Science Lab!")
    end
 
