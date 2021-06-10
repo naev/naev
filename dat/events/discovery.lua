@@ -124,6 +124,7 @@ faction_events = {
       name = "disc_proteron",
       title = _("The Proteron Territories"),
       subtitle = _("United through Sacrifice"),
+      func = function() faction.get("Proteron"):setKnown( true ) end
    },
    Thurion = {
       type = "enter",
@@ -142,6 +143,7 @@ faction_events = {
       name = "disc_collective",
       title = _("The Collective"),
       subtitle = _("Do Robots Dream of Electric Sheep?"),
+      func = function() faction.get("Collective"):setKnown( true ) end
    },
 }
 -- Custom events can handle custom triggers such as nebula systems
@@ -245,6 +247,11 @@ function discover_trigger( event )
 
    -- Break autonav
    player.autonavReset( 5 )
+
+   -- If custom function, run it
+   if event.func then
+      event.func()
+   end
 
    -- Mark as done
    var.push( event.name, true )

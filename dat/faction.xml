@@ -235,7 +235,6 @@
  <faction>
   <name>Collective</name>
   <ai>collective</ai>
-  <known />
   <logo>collective</logo>
   <player>-100</player>
   <colour>silver</colour>
