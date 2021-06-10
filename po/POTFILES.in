@@ -2201,7 +2201,6 @@ dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shipwreck.lua
 dat/events/pirate_fame.lua
-dat/events/proteron_discovery.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua

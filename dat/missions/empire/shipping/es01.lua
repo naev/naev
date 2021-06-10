@@ -123,7 +123,7 @@ function land ()
       end
 
       -- Update mission
-      c = misn.cargoNew(_("Packages"), _("Several packages of \"food\"."))
+      local c = misn.cargoNew(_("Packages"), _("Several packages of \"food\"."))
       package = misn.cargoAdd(c, 3)
       misn_stage = 1
       jumped = 0
