@@ -54,7 +54,6 @@ function create ()
    targetworld_sys = system.get("Oberon")
    targetworld = planet.get("Soromid Customs Central")
 
-
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.png", bar_desc )
 end
 

@@ -18,9 +18,9 @@
            return count &gt; 1
         end)()</cond>
  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
+ <notes>
+  <tier>1</tier>
+ </notes>
 </mission>
 --]]
 --[[
@@ -118,7 +118,8 @@ function accept ()
 
       tk.msg( title[4], string.format(text[3], misn_base:name()) )
       misn.osdCreate(misn_title, {osd_msg[1]:format(misn_base:name())})
-      cargoID = misn.cargoAdd( "Civilians", 0 )
+      local c = misn.cargoNew( N_("Reynir"), N_("A old man who wants to see space.") )
+      cargoID = misn.cargoAdd( c, 0 )
    end
 
 end

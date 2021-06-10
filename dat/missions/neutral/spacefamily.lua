@@ -55,8 +55,6 @@ text[3] = _([[You land at your final stop in your quest to take the space family
     Surveying your now deserted quarters, you are appalled at how much damage the temporary inhabitants have managed to do along the way. You console yourself with the thought that at least you'll have something to do during the dull periods in hyperspace and turn to tend to your ships needs, when your eye falls on a small box that you don't remember seeing here before.
     Inside the box, you find a sum of credits and a note written in neat, feminine handwriting that says, "Sorry for the trouble."]])
 
-carg_type = "Civilians" 
-
 -- Mission details
 misn_title = _("The Space Family")
 misn_reward = _("A clear conscience.")
@@ -94,7 +92,8 @@ function create ()
    tk.msg(title[1], text[1])
    tk.msg(title[1], string.format(text[2], shipname))
 
-   carg_id = misn.cargoAdd( carg_type, 0 )
+   local c = misn.cargoNew( N_("Space Family"), N_("A family who you rescued in space.") )
+   carg_id = misn.cargoAdd( c, 0 )
 
    -- First stop; subsequent stops will be handled in the land function
    nextstop = 1

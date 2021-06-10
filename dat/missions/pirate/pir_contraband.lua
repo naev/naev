@@ -72,7 +72,7 @@ function create()
       {N_("Stolen Goods"), N_("A lot of goods obtained by illicit and illegal means.")},
       {N_("Hacked Electronics"), N_("An assortment of illegally modified electronic goods.")},
       {N_("Illegal Waste"), N_("A diversity of highly illegal waste.")},
-      {N_("Powerful Stimulants"), N_("A bunch of illegal stimulates.")},
+      {N_("Powerful Stimulants"), N_("A bunch of illegal stimulants.")},
       {N_("Unmarked Boxes"), N_("A bunch of unmarked boxes containing what you can only assume to be highly illegal items.")},
       {N_("Exotic Animals"), N_("A bunch of exotic animals that can not be legally traded.")},
       {N_("Radioactive Materials"), N_("Highly dangerous and illegal radioactive materials.")},
@@ -106,11 +106,13 @@ function create()
       },
       ["Sirius"] = {
          {N_("Heretical Documents"), N_("Illegal documents referring to heresy.")},
+         {N_("Itch Powder"), N_("A banned substance with a history of disrupting robed processions.")},
       },
       ["Za'lek"] = {
          {N_("Scientific Preprints"), N_("Non-paywalled illegal scientific papers.")},
          {N_("Sentient AI"), N_("Highly illegal AI that is assumed to be sentient.")},
          {N_("Bogus Proofs"), N_("Mathematical proofs with almost imperceptible modifications to make them illegally false.")},
+         {N_("p-Hacked Results"), N_("Clinical trial results obtained through unreliable and illegal uses of statistics.")},
       }
    }
    -- Add faction cargoes as necessary
