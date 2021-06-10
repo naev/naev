@@ -77,7 +77,7 @@ function accept()
    local g = vn.newCharacter( givername, { image=giverimage } )
    vn.transition()
    vn.na(_("You approach the giddy looking character."))
-   g(_([[They are fairly absorbed in thought and take a while to notice you. Suddenly, without warning, they jump out of their chair and almost fall to the drown.
+   g(_([[They are fairly absorbed in thought and take a while to notice you. Suddenly, without warning, they jump out of their chair and almost fall to the ground.
 "Crikes! You scared the shit out of me."
 They clutch at their shirt as if trying to hold their heart in their ribcage.]]))
    g(_([[They pant for a while and then try to recover somewhat their composure as they sit down once more. They seem sweatier than before.
