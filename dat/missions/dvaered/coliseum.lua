@@ -11,6 +11,7 @@
 --]]
 
 local vn = require 'vn'
+local totoran = require 'totoran'
 require 'numstring'
 require 'missions.dvaered.coliseum_tables'
 
@@ -21,11 +22,11 @@ logtype  = _("Totoran Tournament")
 -- TODO replace portraits/images
 npc_portrait   = "dvaered_thug1.png"
 npc_image      = "dvaered_thug1.png"
-npc_name       = _("Tournament Organizer")
-npc_description= _("The Totoran Tournament organizer.")
+npc_name       = _("Challenge Organizer")
+npc_description= _("The Coliseum Chalenge organizer.")
 npc_colour     = {1, 0.7, 0.3}
 
-misn_title  = _("Totoran Tournament")
+misn_title  = _("Coliseum Challenge")
 misn_desc   = _("Annihilate all enemies in Coliseum.")
 misn_reward = _("Great riches!")
 
@@ -47,17 +48,24 @@ end
 
 -- Land is unified for all types of combat
 function land ()
-   -- TODO something better than this
-   local result_str = string.format(_("You obtained %d points!"), total_score )
    local rewardcredits = total_score*10
+   -- TODO only give emblems from bosses or special clears?
+   local rewardemblems = total_score/100
 
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na( result_str )
    vn.sfxMoney()
-   vn.func( function () player.pay( rewardcredits, "noescorts" ) end )
-   vn.na(string.format(_("You received #g%s#0."), creditstring( rewardcredits )))
+   vn.func( function ()
+      player.pay( rewardcredits, "noescorts" )
+      totoran.emblems_pay( rewardemblems )
+   end )
+   vn.na(string.format(_([[You obtained %d points!
+You received #g%s#0!
+You received %s!]]),
+         total_score,
+         creditstring( rewardcredits ),
+         totoran.emblems_str( rewardemblems ) ))
    vn.run()
 
    misn.finish(true)
@@ -68,8 +76,6 @@ function approach_wave ()
    vn.scene()
    local dv = vn.newCharacter( npc_name, {image=npc_image} )
    vn.transition()
-
-   -- TODO first time message
 
    vn.label("menu")
    dv("Yo")
@@ -95,7 +101,8 @@ function approach_wave ()
 
    -- TODO info
    vn.label("info")
-   dv("here be info")
+   dv(_("The Coliseum Challenge is a set of challenges split into three types: light, for small ships like fighters and bombers; medium, for ships like corvettes and destroyers; and heavy, for the larger ships such as cruisers or carriers. Once you enter a specific challenge, you will face waves of increasingly hard opponents which you must defeat."))
+   dv(_("You get bonus points depending on your ship class with respect to the category. Using smaller ships will give you a bonus in general. You also get a bonus for clearing the waves faster. If you are defeated, the total score up until your loss will be used to compute your rewards. As this is all done in virtual reality, you don't have to worry about any damage to your real ships!"))
    vn.jump("menu")
 
    vn.label("leave")
@@ -246,7 +253,7 @@ function player_lost_disable ()
    player.cinematics( true )
    pp:setInvincible( true )
    pp:setInvisible( true )
-   -- omsg does not display so we need a custom solution
+   -- omsg does not display when dead so we will need a custom solution
    --player.omsgAdd( _("YOU LOST!"), 4.5 )
    if not leave_hook then
       leave_hook = hook.timer( 5000, "leave_the_ring" )
@@ -260,7 +267,7 @@ function player_lost ()
    pp:setInvincible( true )
    player.cinematics( true )
 
-   -- omsg does not display so we need a custom solution
+   -- omsg does not display when dead so we will need a custom solution
    --player.omsgAdd( _("YOU LOST!"), 5 )
    --shiplog.appendLog( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
    if not leave_hook then

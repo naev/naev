@@ -1133,6 +1133,9 @@ end
 -- Check to see if a ship needs to be scanned.
 --]]
 function __needs_scan( target )
+   if not mem.scanned then
+      return false
+   end
    for k,v in ipairs(mem.scanned) do
       if target==v then
          return false

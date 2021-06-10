@@ -121,10 +121,15 @@ function approach_guide ()
    guide(_("What would you like to know about?"))
    vn.label("menu_info_raw")
    vn.menu{
-      { _("Totoran Coliseum"), "info_coliseum" },
+      { _("Totoran Coliseum"), "info_overview" },
+      { _("Coliseum History"), "info_coliseum" },
       { _("Totoran Emblems"), "info_emblems" },
       { _("Nothing."), "menu_main" },
    }
+
+   vn.label("info_overview")
+   guide(_("The Totoran Coliseum is allows you to experience combat with your ships in virtual reality, without having to worry about any real damage. All you do is scan your ship and its outfits, and you will be ready to participate in all the challenges."))
+   vn.jump("menu_info")
 
    vn.label("info_coliseum")
    -- incident is 593:3726.4663
