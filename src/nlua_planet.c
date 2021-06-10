@@ -61,6 +61,7 @@ static int planetL_shipsSold( lua_State *L );
 static int planetL_outfitsSold( lua_State *L );
 static int planetL_commoditiesSold( lua_State *L );
 static int planetL_isBlackMarket( lua_State *L );
+static int planetL_isRestricted( lua_State *L );
 static int planetL_isKnown( lua_State *L );
 static int planetL_setKnown( lua_State *L );
 static int planetL_recordCommodityPriceAtTime( lua_State *L );
@@ -90,6 +91,7 @@ static const luaL_Reg planet_methods[] = {
    { "outfitsSold", planetL_outfitsSold },
    { "commoditiesSold", planetL_commoditiesSold },
    { "blackmarket", planetL_isBlackMarket },
+   { "restricted", planetL_isRestricted },
    { "known", planetL_isKnown },
    { "setKnown", planetL_setKnown },
    { "recordCommodityPriceAtTime", planetL_recordCommodityPriceAtTime },
@@ -877,6 +879,24 @@ static int planetL_isBlackMarket( lua_State *L )
    lua_pushboolean(L, planet_hasService(p, PLANET_SERVICE_BLACKMARKET));
    return 1;
 }
+
+
+/**
+ * @brief Checks to see if a planet is restricted (has complicated land condition).
+ *
+ * @usage b = p:restricted()
+ *
+ *    @luatparam Planet p Planet to check if it's restricted.
+ *    @luatreturn boolean true if the planet is restricted.
+ * @luafunc restricted
+ */
+static int planetL_isRestricted( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+   lua_pushboolean(L, p->land_func != NULL);
+   return 1;
+}
+
 
 /**
  * @brief Checks to see if a planet is known by the player.
