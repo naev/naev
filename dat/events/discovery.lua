@@ -69,6 +69,14 @@ system_events = {
       title = _("Minerva Station"),
       subtitle = _("Gambler's Paradise"),
    },
+   Beeklo = {
+      type = "distance",
+      dist = 5000,
+      pos  = planet.get("Totoran"):pos(),
+      name = "disc_totoran",
+      title = _("Totoran"),
+      subtitle = _("Brave your Fate in the #rCrimson Gauntlet#0"),
+   },
    Haven = {
       type = "enter",
       name = "disc_haven",
@@ -200,16 +208,16 @@ function create()
    local event = system_events[ sc:nameRaw() ]
    local hasevent = false
    if event then
-      hasevent = handle_event( event )
+      hasevent = hasevent or handle_event( event )
    end
    local sf = sc:faction()
    local event = sf and faction_events[ sf:nameRaw() ] or false
    if event then
-      hasevent = handle_event( event )
+      hasevent = hasevent or handle_event( event )
    end
    for k,v in pairs(custom_events) do
       if not var.peek( v.name ) and v.test() then
-         hasevent = handle_event( v )
+         hasevent = hasevent or handle_event( v )
       end
    end
 
