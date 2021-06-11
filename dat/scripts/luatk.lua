@@ -23,7 +23,16 @@ local luatk = {
          disabled_bg       = { 0.2,  0.2,  0.2  },
       },
    },
+   _deffont = nil,
 }
+
+
+--[[
+-- Global functions
+--]]
+function luatk.setDefaultFont( font )
+   luatk._deffont = font
+end
 
 
 --[[
@@ -49,7 +58,9 @@ function luatk.mousepressed( mx, my, button )
 
    for k,wgt in ipairs(wdw._widgets) do
       if wgt.clicked and _checkbounds(wgt,x,y) then
-         wgt.clicked( wgt )
+         if wgt.clicked( wgt ) then
+            return true
+         end
       end
    end
    
@@ -144,11 +155,11 @@ luatk.Button = {}
 setmetatable( luatk.Button, { __index = luatk.Widget } )
 luatk.Button_mt = { __index = luatk.Button }
 function luatk.newButton( parent, x, y, w, h, text, handler )
-   local b     = luatk.newWidget( parent, x, y, w, h )
-   setmetatable( b, luatk.Button_mt )
-   b.text      = text
-   b.clicked   = handler
-   return b
+   local wgt   = luatk.newWidget( parent, x, y, w, h )
+   setmetatable( wgt, luatk.Button_mt )
+   wgt.text    = text
+   wgt.handler = handler
+   return wgt
 end
 function luatk.Button:draw( bx, by )
    local c, fc, outline
@@ -167,13 +178,23 @@ function luatk.Button:draw( bx, by )
    local x, y, w, h = self:getDimensions()
    x = bx + x
    y = by + y
-   local font = lg.getFont()
+   local font = luatk._deffont or lg.getFont()
    lg.setColor( outline )
    lg.rectangle( "fill", x-2, y-2, w+4, h+4 )
    lg.setColor( c )
    lg.rectangle( "fill", x, y, w, h )
    lg.setColor( fc )
-   lg.printf( self.text, x, y+(h-font:getHeight())/2, w, 'center' )
+   lg.printf( self.text, font, x, y+(h-font:getHeight())/2, w, 'center' )
+end
+function luatk.Button:clicked()
+   if self.disabled then
+      return false
+   end
+   if self.handler then
+      self.handler(self)
+      return true
+   end
+   return false
 end
 
 --[[
