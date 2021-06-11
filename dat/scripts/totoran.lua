@@ -13,7 +13,7 @@ local totoran = {
       portrait = "dvaered_thug1.png",
       image = "dvaered_thug1.png",
       desc = _("Information on the Crimson Gauntlet."),
-      colour = nil,
+      colour = {0.9, 0.1, 0.25},
    }
 }
 
