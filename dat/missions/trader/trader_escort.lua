@@ -315,7 +315,7 @@ function spawnConvoy ()
          if class == "Yacht" or class == "Luxury Yacht" or class == "Scout"
                or class == "Courier" or class == "Fighter" or class == "Bomber"
                or class == "Drone" or class == "Heavy Drone" then
-            p:addOutfit( "Unicorp PT-100 Core System" )
+            p:addOutfit( "Unicorp PT-68 Core System" )
             p:addOutfit( "Melendez Ox XL Engine" )
             p:addOutfit( "S&K Small Cargo Hull" )
          elseif class == "Freighter" or class == "Armoured Transport"
