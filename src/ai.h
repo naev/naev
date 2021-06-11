@@ -55,6 +55,7 @@ typedef struct AI_Profile_ {
    nlua_env env; /**< Assosciated Lua Environment. */
    int ref_control; /**< Profile control reference function. */
    int ref_control_manual; /**< Profile manual control reference function. */
+   int ref_refuel; /**< Profile refuel reference function. */
 } AI_Profile;
 
 
