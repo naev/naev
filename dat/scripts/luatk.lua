@@ -100,10 +100,6 @@ end
 function luatk.Window:draw()
    local x, y, w, h = self.x, self.y, self.w, self.h
 
-   -- Set scissors
-   local scs = lg.getScissor()
-   lg.setScissor( x, y, w, h )
-
    -- Draw background
    lg.setColor( luatk.colour.bg )
    lg.rectangle( "fill", x, y, w, h )
@@ -112,6 +108,10 @@ function luatk.Window:draw()
    lg.rectangle( "line", x-1, y-1, w+2, h+2 )
    lg.setColor( luatk.colour.outline )
    lg.rectangle( "line", x, y, w, h )
+
+   -- Set scissors
+   local scs = lg.getScissor()
+   lg.setScissor( x, y, w, h )
 
    -- Draw widgets ontop
    for k,wgt in ipairs(self._widgets) do
@@ -166,6 +166,11 @@ function luatk.newButton( parent, x, y, w, h, text, handler )
    setmetatable( wgt, luatk.Button_mt )
    wgt.text    = text
    wgt.handler = handler
+
+   local font = luatk._deffont or lg.getFont()
+   local sw, wrapped = font:getWrap( text, w )
+   wgt.th = font:getHeight() + font:getLineHeight() * (#wrapped-1)
+
    return wgt
 end
 function luatk.Button:draw( bx, by )
@@ -193,7 +198,7 @@ function luatk.Button:draw( bx, by )
    lg.setColor( c )
    lg.rectangle( "fill", x, y, w, h )
    lg.setColor( fc )
-   lg.printf( self.text, font, x, y+(h-font:getHeight())/2, w, 'center' )
+   lg.printf( self.text, font, x, y+(h-self.th)/2, w, 'center' )
 end
 function luatk.Button:clicked()
    if self.disabled then
@@ -211,12 +216,10 @@ end
 function luatk.Button:disable()
    self.disabled = true
 end
-function luatk.Button:setCol( col )
-   self.col = col
-end
-function luatk.Button:setFCol( col )
-   self.fcol = col
-end
+function luatk.Button:getCol () return self.col end
+function luatk.Button:setCol( col ) self.col = col end
+function luatk.Button:getFCol () return self.fcol end
+function luatk.Button:setFCol( col ) self.fcol = col end
 
 --[[
 -- Text widget
