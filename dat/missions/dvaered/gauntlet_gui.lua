@@ -120,7 +120,7 @@ local function gauntlet_settype( wgt )
    local w, h = wdw.w, wdw.h
    if newtype == "Challenge" then
       btn_options, bh = button_list( wdw,
-            {"Light", "Medium", "Heavy"},
+            {"Skirmisher", "Warrior", "Warlord"},
             0, 135, 160, 40, w, 100, gauntlet_setoption )
       if not var.peek("gauntlet_unlock_medium") then
          btn_options[2]:disable()

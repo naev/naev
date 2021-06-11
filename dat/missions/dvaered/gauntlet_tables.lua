@@ -21,7 +21,7 @@ wave_score_table = {
    -- Carriers
 }
 wave_round_enemies = {
-   light = {
+   skirmisher = {
       { "Hyena" }, -- 1
       { "Ancestor" },
       { "Shark" },
@@ -43,7 +43,7 @@ wave_round_enemies = {
       { layout="circle"; "Hyena", "Hyena", "Hyena", "Hyena", "Hyena" },
       { "Pacifier" }, --20
    },
-   medium = {
+   warrior = {
       { "Phalanx" }, -- 1
       { layout="circle"; "Phalanx", "Hyena", "Hyena" },
       { "Admonisher" },
@@ -55,7 +55,7 @@ wave_round_enemies = {
       { layout="circle"; "Lancelot", "Shark", "Shark", "Shark", "Shark", "Shark" },
       { "Kestrel" } -- 10
    },
-   heavy = {
+   warlord = {
       { "Kestrel" }, -- 1
       { "Hawking" },
       { "Kestrel", "Lancelot", "Lancelot" },

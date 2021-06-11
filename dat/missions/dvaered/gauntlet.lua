@@ -426,7 +426,7 @@ function wave_compute_score ()
       bonus = bonus + b
    end
    local c = pp:ship():class()
-   if wave_category == "light" then
+   if wave_category == "skirmisher" then
       if c=="Corvette" then
          newbonus( "Corvette %d%%", -20 )
       elseif c=="Destroyer" then
@@ -441,7 +441,7 @@ function wave_compute_score ()
       elseif elapsed > 90 then
          newbonus( "Slow Clear (>90s) %d%%", -25 )
       end
-   elseif wave_category == "medium" then
+   elseif wave_category == "warrior" then
       if c=="Fighter" then
          newbonus( "Fighter %d%%", 100 )
       elseif c=="Bomber" then
@@ -458,7 +458,7 @@ function wave_compute_score ()
       elseif elapsed > 120 then
          newbonus( "Slow Clear (>120s) %d%%", -25 )
       end
-   elseif wave_category == "heavy" then
+   elseif wave_category == "warlord" then
       if c=="Fighter" then -- I'd love to see someone take down a kestrel in a fighter
          newbonus( "Fighter %d%%", 500 )
       elseif c=="Bomber" then
