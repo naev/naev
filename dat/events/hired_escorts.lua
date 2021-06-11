@@ -145,7 +145,7 @@ function createPilotNPCs ()
          newpilot.faction = fac:name()
          newpilot.approachtext = npctext[rnd.rnd(1, #npctext)]
          local id = evt.npcAdd(
-               "approachPilot", _("Pilot"), newpilot.portrait,
+               "approachPilot", _("Pilot for Hire"), newpilot.portrait,
                _("This pilot seems to be looking for work."), 9 )
          npcs[id] = newpilot
       end
