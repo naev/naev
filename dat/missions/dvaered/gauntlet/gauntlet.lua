@@ -35,16 +35,8 @@ gauntlet = system.get("Crimson Gauntlet")
 sfx_clear = audio.new( 'snd/sounds/jingles/victory.ogg' )
 
 function create ()
-   if not var.peek("testing") then
-      misn.finish(false) -- Disabled for now
-   end
-   -- We'll have different NPCs for each tournament type
-   npc_wave = misn.npcAdd( "approach_gauntlet", npc_name, npc_portrait, npc_description )
+   npc_gauntlet = misn.npcAdd( "approach_gauntlet", npc_name, npc_portrait, npc_description )
 end
-function cleanup_npc ()
-   misn.npcRm( npc_wave )
-end
-
 
 -- Land is unified for all types of combat
 function land ()
