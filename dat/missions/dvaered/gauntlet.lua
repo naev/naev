@@ -309,10 +309,12 @@ function wave_round_setup ()
 
    -- Heal up and be nice to the player
    local pp = player.pilot()
-   pp:setHealth( 100, 100, 0 )
-   pp:setEnergy( 100 )
-   pp:setTemp( 0 )
-   pp:fillAmmo()
+   if not gmods.nohealing then
+      pp:setHealth( 100, 100, 0 )
+      pp:setEnergy( 100 )
+      pp:setTemp( 0 )
+      pp:fillAmmo()
+   end
    -- TODO reset outfit cooldown stuff
    pp:setPos( vec2.new( 0, 0 ) ) -- teleport to middle
    pp:setVel( vec2.new( 0, 0 ) )
@@ -324,6 +326,12 @@ function wave_round_setup ()
       p:setHostile(true)
       p:brake()
       p:face( pp )
+      if gmods.doubledmgtaken then
+         p:intrinsicSet("fwd_damage",   100)
+         p:intrinsicSet("tur_damage",   100)
+         p:intrinsicSet("launch_damage",100)
+         p:intrinsicSet("fbay_damage",  100)
+      end
       local mem = p:memory()
       mem.comm_no = _("No response.") -- Don't allow talking
       hook.pilot( p, "disable", "p_disabled" )

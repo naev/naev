@@ -7,7 +7,7 @@ local luatk = require 'luatk'
 local lg = require 'love.graphics'
 
 local gauntlet_modifiers = {
-   { id = "doubledmgtaken", str = "Double Damage Taken (#g+50%#0)", var = "gauntlet_unlock_doubledmgtaken", enabled = false },
+   { id = "doubledmgtaken", str = "Double Damage Enemies (#g+50%#0)", var = "gauntlet_unlock_doubledmgtaken", enabled = false },
    { id = "nohealing", str = "No Healing Between Waves (#g+50%)", var = "gauntlet_unlock_nohealing", enabled = false },
    { id = "doubleenemy", str = "Double Enemies", var = nil, enabled = false },
 }
