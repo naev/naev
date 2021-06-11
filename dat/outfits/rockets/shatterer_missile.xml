@@ -2,7 +2,7 @@
 <outfit name="Shatterer Missile">
  <general>
   <license>Heavy Weapon License</license>
-  <mass>4</mass>
+  <mass>0.2</mass>
   <price>0</price>
   <description>This modified rocket was used by the Collective heavy drones as a means to puncture heavy warships and leave them vulnerable. It has very poor tracking, but has excellent speed and armor piercing.</description>
   <gfx_store>fury.png</gfx_store>

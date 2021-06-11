@@ -53,8 +53,7 @@
  *
  * An example would be:
  * @code
- * misn.setNPC( "Keer", "empire/unique/keer.png" )
- * misn.setDesc( "You see here Commodore Keer." )
+ * misn.setNPC( "Keer", "empire/unique/keer.png", _("You see here Commodore Keer.") )
  * @endcode
  *
  * @luamod misn
@@ -505,7 +504,7 @@ static int misn_markerRm( lua_State *L )
  * Note that this NPC will disappear when either misn.accept() or misn.finish()
  *  is called.
  *
- * @usage misn.setNPC( "Invisible Man", "none.png" )
+ * @usage misn.setNPC( "Invisible Man", "none.png", _("You see a levitating mug drain itself.") )
  *
  *    @luatparam string name Name of the NPC.
  *    @luatparam string portrait File name of the portrait to use for the NPC.

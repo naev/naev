@@ -86,7 +86,7 @@ function accept ()
    misn.osdCreate(title[2], {misn_desc:format(dest:name(), sys:name())})
 
    -- Set up the goal
-   c = misn.cargoNew(_("Pirate Packages"), _("A bunch of pirate packages. You don't want to know what's inside."))
+   local c = misn.cargoNew(_("Pirate Packages"), _("A bunch of pirate packages. You don't want to know what's inside."))
    packages = misn.cargoAdd(c, 5)
    hook.land("land")
    hook.enter("enter")
