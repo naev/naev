@@ -475,6 +475,7 @@ function wave_compute_score ()
       end
    end
 
+   -- Implement global modifier bonuses here
    if gmods.doubledmgtaken then
       newbonus( "Double Damage Enemies %d%%", 50 )
    end
