@@ -10,8 +10,8 @@ require 'numstring'
 local totoran = {
    guide = {
       name = _("Crimson Gauntlet Guide"),
-      portrait = "minerva_terminal.png",
-      image = "minerva_terminal.png",
+      portrait = "dvaered_thug1.png",
+      image = "dvaered_thug1.png",
       desc = _("Information on the Crimson Gauntlet."),
       colour = nil,
    }

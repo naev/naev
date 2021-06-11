@@ -24,7 +24,7 @@ logtype  = _("Totoran Tournament")
 npc_portrait   = "minerva_terminal.png"
 npc_image      = "minerva_terminal.png"
 npc_name       = _("Crimson Gauntlet Terminal")
-npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment.")
+npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges ad tournaments available.")
 
 misn_title  = _("Crimson Gauntlet Challenge")
 misn_desc   = _("Annihilate all enemies in the Crimson Gauntlet.")
