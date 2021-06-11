@@ -13,6 +13,7 @@
 local vn = require 'vn'
 local totoran = require 'totoran'
 require 'numstring'
+local gauntlet_gui = require 'missions.dvaered.gauntlet_gui'
 require 'missions.dvaered.gauntlet_tables'
 
 logidstr = "log_totoran"
@@ -20,11 +21,10 @@ logname  = _("Totoran Tournament")
 logtype  = _("Totoran Tournament")
 
 -- TODO replace portraits/images
-npc_portrait   = "dvaered_thug1.png"
-npc_image      = "dvaered_thug1.png"
-npc_name       = _("Challenge Organizer")
-npc_description= _("The Crimson Gauntlet Challenge organizer.")
-npc_colour     = {1, 0.7, 0.3}
+npc_portrait   = "minerva_terminal.png"
+npc_image      = "minerva_terminal.png"
+npc_name       = _("Crimson Gauntlet Terminal")
+npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment.")
 
 misn_title  = _("Crimson Gauntlet Challenge")
 misn_desc   = _("Annihilate all enemies in the Crimson Gauntlet.")
@@ -72,6 +72,7 @@ You received %s!]]),
 end
 
 function approach_wave ()
+   --[[
    vn.clear()
    vn.scene()
    local dv = vn.newCharacter( npc_name, {image=npc_image} )
@@ -110,6 +111,14 @@ function approach_wave ()
    vn.done()
 
    vn.run()
+   --]]
+
+   gtype, gopt, gmodifiers = gauntlet_gui.run()
+   if gtype == nil then
+      return
+   end
+
+   wave_category = string.lower( gopt )
 
    -- See if we start the event
    if wave_category==nil then
