@@ -63,7 +63,7 @@ function luatk.mousepressed( mx, my, button )
          end
       end
    end
-   
+
    return false
 end
 function luatk.mousemoved( mx, my )
@@ -77,7 +77,7 @@ function luatk.mousemoved( mx, my )
 
    return false
 end
-function luatk.keypressed( key ) 
+function luatk.keypressed( key )
    return false
 end
 
@@ -135,9 +135,9 @@ function luatk.newWidget( parent, x, y, w, h )
    return wgt
 end
 function luatk.Widget:destroy()
-   for k,w in ipairs(parent._widgets) do
+   for k,w in ipairs(self.parent._widgets) do
       if w==self then
-         table.remove(parent._widgets,k)
+         table.remove(self.parent._widgets,k)
          return
       end
    end
@@ -163,18 +163,20 @@ function luatk.newButton( parent, x, y, w, h, text, handler )
 end
 function luatk.Button:draw( bx, by )
    local c, fc, outline
-   fc = { 0.7, 0.7, 0.7 } -- cFontGrey
+   outline = { 0.15, 0.15, 0.15 }
    if self.disabled then
-      c = { 0.2, 0.2, 0.2 }
-      outline = c
+      fc = { 0.5, 0.5, 0.5 }
+      c  = { 0.15, 0.15, 0.15 }
    else
-      outline = { 0.15, 0.15, 0.15 }
+      fc = { 0.7, 0.7, 0.7 } -- cFontGrey
       if self.mouseover then
          c = { 0.3,  0.3,  0.3  }
       else
          c = { 0.25, 0.25, 0.25 }
       end
    end
+   c = self.col or c
+   fc = self.fcol or fc
    local x, y, w, h = self:getDimensions()
    x = bx + x
    y = by + y
@@ -196,6 +198,18 @@ function luatk.Button:clicked()
    end
    return false
 end
+function luatk.Button:enable()
+   self.disabled = false
+end
+function luatk.Button:disable()
+   self.disabled = true
+end
+function luatk.Button:setCol( col )
+   self.col = col
+end
+function luatk.Button:setFCol( col )
+   self.fcol = col
+end
 
 --[[
 -- Text widget
@@ -210,11 +224,28 @@ function luatk.newText( parent, x, y, w, h, text, col, align, font )
    wgt.col     = col or {1,1,1}
    wgt.align   = align or "left"
    wgt.font    = font or lg.newFont( 16 )
-   return wgt 
+   return wgt
 end
 function luatk.Text:draw( bx, by )
    lg.setColor( self.col )
    lg.printf( self.text, self.font, bx+self.x, by+self.y, self.w, self.align )
+end
+
+--[[
+-- Rectangle widget
+--]]
+luatk.Rect = {}
+setmetatable( luatk.Rect, { __index = luatk.Widget } )
+luatk.Rect_mt = { __index = luatk.Rect }
+function luatk.newRect( parent, x, y, w, h, col )
+   local wgt   = luatk.newWidget( parent, x, y, w, h )
+   setmetatable( wgt, luatk.Rect_mt )
+   wgt.col     = col or {1,1,1}
+   return wgt
+end
+function luatk.Rect:draw( bx, by )
+   lg.setColor( self.col )
+   lg.rectangle( "fill", bx+self.x, by+self.y, self.w, self.h )
 end
 
 return luatk
