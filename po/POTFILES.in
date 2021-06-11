@@ -1786,11 +1786,11 @@ dat/ssys/chloe.xml
 dat/ssys/chraan.xml
 dat/ssys/churchill.xml
 dat/ssys/cleai.xml
-dat/ssys/coliseum.xml
 dat/ssys/copernicus.xml
 dat/ssys/corinth.xml
 dat/ssys/coriolis.xml
 dat/ssys/corvus.xml
+dat/ssys/crimson_gauntlet.xml
 dat/ssys/cygnus.xml
 dat/ssys/daan.xml
 dat/ssys/dakron.xml
@@ -2179,6 +2179,7 @@ dat/events/cinematic/DvdFLFbattle.lua
 dat/events/discovery.lua
 dat/events/dvaered/fwA_treason.lua
 dat/events/dvaered/fwB_repay.lua
+dat/events/dvaered/totoran.lua
 dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
 dat/events/flf/flf_catastrophe.lua
@@ -2269,8 +2270,6 @@ dat/missions/baron/baron_prince.lua
 dat/missions/baron/common.lua
 dat/missions/dvaered/assault_on_unicorn.lua
 dat/missions/dvaered/championship.lua
-dat/missions/dvaered/coliseum.lua
-dat/missions/dvaered/coliseum_tables.lua
 dat/missions/dvaered/common.lua
 dat/missions/dvaered/dv_antiflf01.lua
 dat/missions/dvaered/dv_antiflf02.lua
@@ -2283,6 +2282,9 @@ dat/missions/dvaered/frontier_war/fw02_escape.lua
 dat/missions/dvaered/frontier_war/fw03_sirius.lua
 dat/missions/dvaered/frontier_war/fw04_meeting.lua
 dat/missions/dvaered/frontier_war/fw_common.lua
+dat/missions/dvaered/gauntlet/gauntlet.lua
+dat/missions/dvaered/gauntlet/gui.lua
+dat/missions/dvaered/gauntlet/tables.lua
 dat/missions/empire/collective/ec00.lua
 dat/missions/empire/collective/ec01.lua
 dat/missions/empire/collective/ec02.lua
@@ -2469,6 +2471,7 @@ dat/scripts/love/touch.lua
 dat/scripts/love/video.lua
 dat/scripts/love/window.lua
 dat/scripts/love_shaders.lua
+dat/scripts/luatk.lua
 dat/scripts/minerva.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
@@ -2488,6 +2491,7 @@ dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
 dat/scripts/swapship.lua
 dat/scripts/taiomi.lua
+dat/scripts/totoran.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/main.lua
