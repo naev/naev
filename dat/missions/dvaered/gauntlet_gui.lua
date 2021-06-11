@@ -134,8 +134,9 @@ function love.load ()
    luatk.setDefaultFont( deffont )
 
    -- Clear defaults
-   --gauntlet_type = nil
-   --gauntlet_option = nil
+   local cache = naev.cache()
+   gauntlet_type = cache.gauntlet_type
+   gauntlet_option = cache.gauntlet_option
 
    -- Window and top details
    local w, h = 800, 355
@@ -217,8 +218,12 @@ local gui = {}
 function gui.run()
    love.run()
    if gauntlet_start then
+      local cache = naev.cache()
+      cache.gauntlet_type = gauntlet_type
+      cache.gauntlet_option = gauntlet_option
       return gauntlet_type, gauntlet_option, {}
    end
+   -- return nils if cancelled
 end
 
 return gui
