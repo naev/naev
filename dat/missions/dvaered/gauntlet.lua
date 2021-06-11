@@ -113,7 +113,7 @@ function approach_wave ()
    vn.run()
    --]]
 
-   gtype, gopt, gmodifiers = gauntlet_gui.run()
+   gtype, gopt, gmods = gauntlet_gui.run()
    if gtype == nil then
       return
    end
@@ -370,8 +370,17 @@ function wave_round_setup ()
    end
 
    local round_enemies = wave_round_enemies[wave_category]
-   enemies = addenemies( round_enemies[wave_round] )
-   wave_enemies = round_enemies[wave_round]
+   local enemies_list = round_enemies[wave_round]
+   if gmods.doubleenemy then
+      local doublelist = {}
+      for k,v in ipairs(enemies_list) do
+         table.insert( doublelist, v )
+         table.insert( doublelist, v )
+      end
+      enemies_list = doublelist
+   end
+   enemies = addenemies( enemies_list )
+   wave_enemies = enemies_list
 
    -- Count down
    player.omsgAdd( string.format( _("#pWAVE %d#0"), wave_round ), 8 )

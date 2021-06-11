@@ -6,6 +6,12 @@ local love = require 'love'
 local luatk = require 'luatk'
 local lg = require 'love.graphics'
 
+local gauntlet_modifiers = {
+   { id = "doubledmgtaken", str = "Double Damage Taken (#g+50%#0)", var = "gauntlet_unlock_doubledmgtaken", enabled = false },
+   { id = "nohealing", str = "No Healing Between Waves (#g+50%)", var = "gauntlet_unlock_nohealing", enabled = false },
+   { id = "doubleenemy", str = "Double Enemies", var = nil, enabled = false },
+}
+
 local function button_list( wdw, captions, bx, by, bw, bh, w, h, handler )
    local btns = {}
 
@@ -28,12 +34,20 @@ end
 
 
 local function gauntlet_setmodifier( wgt )
+   local state
    if wgt:getCol() then
       wgt:setCol(nil)
       wgt:setFCol(nil)
+      state = false
    else
       wgt:setCol{ 0.8, 0.05, 0.20 }
       wgt:setFCol{ 0.9, 0.9, 0.9 }
+      state = true
+   end
+   for k,v in ipairs(gauntlet_modifiers) do
+      if v.str == wgt.text then
+         v.enabled = state
+      end
    end
 end
 
@@ -64,11 +78,17 @@ local function gauntlet_setoption( wgt )
    local w, h = wdw.w, wdw.h
    modifiers_divider = luatk.newRect( wdw, 20, 189, w-40, 2, {0, 0, 0} )
 
-   btn_modifiers, bh = button_list( wdw, {
-         "Double Damage Taken (#g+50%#0)",
-         "No Healing Between Waves (#g+50%)",
-         "Double Enemies",
-         }, 0, 205, 240, 60, w, 100, gauntlet_setmodifier )
+   local strlist = {}
+   for k,v in ipairs(gauntlet_modifiers) do
+      table.insert( strlist, v.str )
+   end
+   btn_modifiers, bh = button_list( wdw, strlist,
+         0, 205, 240, 60, w, 100, gauntlet_setmodifier )
+   for k,v in ipairs(gauntlet_modifiers) do
+      if v.var and not var.peek(v.var) then
+         btn_modifiers[k]:disable()
+      end
+   end
 end
 
 
@@ -137,6 +157,10 @@ function love.load ()
    local cache = naev.cache()
    gauntlet_type = cache.gauntlet_type
    gauntlet_option = cache.gauntlet_option
+   cache.gauntlet_modifiers = cache.gauntlet_modifiers or {}
+   for k,v in ipairs(cache.gauntlet_modifiers) do
+      gauntlet_modifiers[k].enabled = v
+   end
 
    -- Window and top details
    local w, h = 800, 355
@@ -218,10 +242,15 @@ local gui = {}
 function gui.run()
    love.run()
    if gauntlet_start then
+      local mods = {}
       local cache = naev.cache()
       cache.gauntlet_type = gauntlet_type
       cache.gauntlet_option = gauntlet_option
-      return gauntlet_type, gauntlet_option, {}
+      for k,v in ipairs(gauntlet_modifiers) do
+         cache.gauntlet_modifiers[k] = v.enabled
+         mods[v.id] = v.enabled
+      end
+      return gauntlet_type, gauntlet_option, mods
    end
    -- return nils if cancelled
 end
