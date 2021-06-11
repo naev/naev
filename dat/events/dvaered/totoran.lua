@@ -222,7 +222,7 @@ Is there anything else you would like to purchase?"]]),
 
    vn.label("trade_confirm")
    guide( function () return string.format(
-      _([["Are you sure you want to trade in for the '#w%s#0'? The decription is as follows:"
+      _([["Are you sure you want to trade in for the '#w%s#0'? The description is as follows:"
 #w%s#0"]]),
       tradein_item.name, tradein_item.description)
    end )

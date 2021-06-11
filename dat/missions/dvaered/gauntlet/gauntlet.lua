@@ -24,7 +24,7 @@ logtype  = _("Totoran Tournament")
 npc_portrait   = "minerva_terminal.png"
 npc_image      = "minerva_terminal.png"
 npc_name       = _("Crimson Gauntlet Terminal")
-npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges ad tournaments available.")
+npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
 
 misn_title  = _("Crimson Gauntlet Challenge")
 misn_desc   = _("Annihilate all enemies in the Crimson Gauntlet.")
@@ -39,7 +39,7 @@ function create ()
       misn.finish(false) -- Disabled for now
    end
    -- We'll have different NPCs for each tournament type
-   npc_wave = misn.npcAdd( "approach_wave", npc_name, npc_portrait, npc_description )
+   npc_wave = misn.npcAdd( "approach_gauntlet", npc_name, npc_portrait, npc_description )
 end
 function cleanup_npc ()
    misn.npcRm( npc_wave )
@@ -71,48 +71,7 @@ You received %s!]]),
    misn.finish(true)
 end
 
-function approach_wave ()
-   --[[
-   vn.clear()
-   vn.scene()
-   local dv = vn.newCharacter( npc_name, {image=npc_image} )
-   vn.transition()
-
-   vn.label("menu")
-   dv("Yo")
-   vn.menu{
-      { "Enter in the Light Category", "light" },
-      { "Enter in the Medium Category", "medium" },
-      { "Enter in the Heavy Category", "heavy" },
-      { "More Information", "info" },
-      { "Maybe later", "leave" },
-   }
-
-   vn.label("light")
-   vn.func( function () wave_category = "light" end )
-   vn.done()
-
-   vn.label("medium")
-   vn.func( function () wave_category = "medium" end )
-   vn.done()
-
-   vn.label("heavy")
-   vn.func( function () wave_category = "heavy" end )
-   vn.done()
-
-   -- TODO info
-   vn.label("info")
-   dv(_("The Crimson Gauntlet Challenge is a set of challenges split into three types: light, for small ships like fighters and bombers; medium, for ships like corvettes and destroyers; and heavy, for the larger ships such as cruisers or carriers. Once you enter a specific challenge, you will face waves of increasingly hard opponents which you must defeat."))
-   dv(_("You get bonus points depending on your ship class with respect to the category. Using smaller ships will give you a bonus in general. You also get a bonus for clearing the waves faster. If you are defeated, the total score up until your loss will be used to compute your rewards. As this is all done in virtual reality, you don't have to worry about any damage to your real ships!"))
-   vn.jump("menu")
-
-   vn.label("leave")
-   vn.na(_("You take your leave."))
-   vn.done()
-
-   vn.run()
-   --]]
-
+function approach_gauntlet ()
    gtype, gopt, gmods = gauntlet_gui.run()
    if gtype == nil then
       return
@@ -137,7 +96,7 @@ function approach_wave ()
    shiplog.createLog( logidstr, logname, logtype )
 
    -- Create the OSD
-   osd = misn.osdCreate( _("Totoran Tournament"),
+   osd = misn.osdCreate( _("Crimson Gauntlet"),
          { _("Defeat all the other adversaries!") } )
 
    hook.load( "loaded" )
