@@ -109,6 +109,7 @@ function create()
          {N_("Unstable DNA"), N_("Illegal DNA with strong reactive properties.")},
          {N_("Bio-weapons"), N_("Highly dangerous illegal biological weapons.")},
          {N_("Abducted Drosophila"), N_("Genetically modified small fruit flies illegally stolen from a laboratory.")},
+         {N_("Mislabeled Plasmids"), N_("Independently replicating DNA that has been mislabeled and is no longer clear what exactly it does. Illegal for its uncertain and dangerous nature.")},
       },
       ["Sirius"] = {
          {N_("Heretical Documents"), N_("Illegal documents referring to heresy.")},
