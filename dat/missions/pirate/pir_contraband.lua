@@ -89,30 +89,37 @@ function create()
       {N_("Hypnotoads"), N_("Illegal amphibian with some mind-control abilities.")},
       {N_("Extra Spicy Burritos"), N_("Burritos that are so spicy, they are illegal.")},
       {N_("Pineapple Pizza"), N_("Pizza with pineapple on it, there is no way this is legal.")},
+      {N_("Illicit Shader Code"), N_("Program used for rendering images with nefarious and illegal purposes.")},
    }
    local fact_cargoes = {
       ["Empire"] = {
          {N_("Tax-evasion Documents"), N_("Illegal documents detailing tax evasion by high empire officials.")},
          {N_("Leaked Documents"), N_("Documents illegally leaked from governmental entities.")},
          {N_("Incriminating Evidence"), N_("Illegally obtained evidence that incriminates high empire officials.")},
+         {N_("Unauthorized Office Supplies"), N_("Office supplies that don't meet the standards of the Empire bureaucracy, including flimsy red staplers.")},
+         {N_("Paper Deshredders"), N_("Devices that are able to reconstruct original documents from their shredded remains.")},
       },
       ["Dvaered"] = {
          {N_("Self-help Books"), N_("Books for self-betterment made illegal by the Dvaered authorities.")},
          {N_("Pacifist Manifestos"), N_("Documents making the case for pacifism, made illegal by the Dvaered authorities.")},
+         {N_("Zen Rock Gardens"), N_("Sand and rock gardens with special rakes you can use for meditative purposes. Made illegal by the Dvaered authorities.")},
+         {N_("Scented Soap"), N_("Fragrant soaps that can lead you to have a peace of mind. Made illegal by the Dvaered authorities.")},
       },
       ["Soromid"] = {
          {N_("Unstable DNA"), N_("Illegal DNA with strong reactive properties.")},
          {N_("Bio-weapons"), N_("Highly dangerous illegal biological weapons.")},
+         {N_("Abducted Drosophila"), N_("Genetically modified small fruit flies illegally stolen from a laboratory.")},
       },
       ["Sirius"] = {
          {N_("Heretical Documents"), N_("Illegal documents referring to heresy.")},
          {N_("Itch Powder"), N_("A banned substance with a history of disrupting robed processions.")},
+         {N_("Unauthorized Sirichana Merchandise"), N_("Horribly tacky and outright bad merchandise with Sirichana pasted all over it. Sirichana toenail clipper anyone?")},
       },
       ["Za'lek"] = {
          {N_("Scientific Preprints"), N_("Non-paywalled illegal scientific papers.")},
          {N_("Sentient AI"), N_("Highly illegal AI that is assumed to be sentient.")},
          {N_("Bogus Proofs"), N_("Mathematical proofs with almost imperceptible modifications to make them illegally false.")},
-         {N_("p-Hacked Results"), N_("Clinical trial results obtained through unreliable and illegal uses of statistics.")},
+         {N_("p-Hacked Results"), N_("Scientific trial results obtained through unreliable and illegal uses of statistics.")},
       }
    }
    -- Add faction cargoes as necessary
