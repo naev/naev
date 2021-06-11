@@ -122,10 +122,10 @@ local function gauntlet_settype( wgt )
       btn_options, bh = button_list( wdw,
             {"Skirmisher", "Warrior", "Warlord"},
             0, 135, 160, 40, w, 100, gauntlet_setoption )
-      if not var.peek("gauntlet_unlock_medium") then
+      if not var.peek("gauntlet_unlock_warrior") then
          btn_options[2]:disable()
       end
-      if not var.peek("gauntlet_unlock_heavy") then
+      if not var.peek("gauntlet_unlock_warlord") then
          btn_options[3]:disable()
       end
    end

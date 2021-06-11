@@ -42,7 +42,9 @@ spectator_messages = {
    _([["I used to think the Za'lek virtual games were great, but this is so much better!"]]),
 }
 pilot_names = {
-   _("jauntlet Pilot"),
+   _("Gauntlet Pilot"),
+   _("Resting Pilot"),
+   _("Tired Pilot"),
 }
 pilot_descriptions = {
    _("A pilot enjoying some downtime between competitions."),
@@ -111,9 +113,10 @@ function approach_guide ()
    vn.transition()
    vn.na(_("You approach the Crimson Gauntlet guide."))
    vn.label("menu_main")
-   guide(string.format(_([["Hello and welcome to the Crimson Gauntlet! You have %s. What would you like to do?"]]), totoran.emblems_str( totoran.emblems_get())))
+   guide( function () return string.format(_([["Hello and welcome to the Crimson Gauntlet! You have %s. What would you like to do?"]]), totoran.emblems_str( totoran.emblems_get())) end )
    vn.menu{
       {_("Information"), "information"},
+      {_("Trade Emblems"), "trade_menu"},
       {_("Leave"), "leave"},
    }
 
@@ -123,6 +126,7 @@ function approach_guide ()
    vn.menu{
       { _("Crimson Gauntlet"), "info_overview" },
       { _("Gauntlet History"), "info_gauntlet" },
+      { _("Crimson Challenge"), "info_challenge" },
       { _("Totoran Emblems"), "info_emblems" },
       { _("Nothing."), "menu_main" },
    }
@@ -138,6 +142,11 @@ function approach_guide ()
    guide(_("Many famous pilots have had their formation here, and it is also frequented by scouting agencies from across the Universe to find good pilots. Not to mention all the prizes that can be won from competing in the tournaments."))
    vn.jump("menu_info")
 
+   vn.label("info_challenge")
+   guide(_("The Crimson Gauntlet Challenge is a set of challenges split into three types: skirmisher, for small ships like fighters and bombers; warrior, for ships like corvettes and destroyers; and warlord, for the larger ships such as cruisers or carriers. Once you enter a specific challenge, you will face waves of increasingly hard opponents which you must defeat."))
+   guide(_("You get bonus points depending on your ship class with respect to the category. Using smaller ships will give you a bonus in general. You also get a bonus for clearing the waves faster. If you are defeated, the total score up until your loss will be used to compute your rewards. As this is all done in virtual reality, you don't have to worry about any damage to your real ships!"))
+   vn.jump("menu_info")
+
    vn.label("info_emblems")
    guide("TODO")
    vn.jump("menu_info")
@@ -145,6 +154,96 @@ function approach_guide ()
    vn.label("menu_info")
    guide(_("Is there anything else you would like to know about?"))
    vn.jump("menu_info_raw")
+
+   vn.label("trade_menu")
+   guide( function () return string.format(_([["You have %s. What would you like to trade for?"]]), totoran.emblems_str( totoran.emblems_get())) end )
+   local trades = {
+      {name=_("Unlock Warrior Challenge"), cost=100, type="var", var="gauntlet_unlock_warrior",
+         description=_("Unlocks participation in the difficult Warrior Challenge meant for Corvette and Destroyer-class ships.")},
+      {name=_("Unlock Warlord Challenge"), cost=500, type="var", var="gauntlet_unlock_warlord",
+         description=_("Unlocks participation in the most difficult Warlord Challenge meant for Cruiser and Carrier-class ships."),
+         test=function () return var.peek("gauntlet_unlock_warrior") end },
+      {name=_("Unlock Double Damage Enemies Perk"), cost=1000, type="var", var="gauntlet_unlock_doubledmgtaken",
+         description=_("Unlocks the Double Damage Enemies Perk, which causes all enemies to double the amount of damage. While this increases the challenge difficulty, it also immensely increases the rewards.")},
+      {name=_("Unlock No Healing Perk"), cost=1000, type="var", var="gauntlet_unlock_nohealing",
+         description=_("Unlocks the No Healing Perk, which makes it so you don't get healed between waves. While this increases the challenge difficulty, it also increases the rewards.")},
+   }
+   local tradein_item = nil
+   local handler = function (idx)
+      -- Jump in case of 'Back'
+      if idx=="menu_main" then
+         vn.jump(idx)
+         return
+      end
+
+      local t = trades[idx]
+      local emblems = t.cost
+      tradein_item = t
+      if emblems > totoran.emblems_get() then
+         -- Not enough money.
+         vn.jump( "trade_notenough" )
+         return
+      end
+
+      if t.type == "var" then
+         tradein_item.description = t.description
+      else
+         error(_("unknown tradein type"))
+      end
+      vn.jump( "trade_confirm" )
+   end
+   vn.label("trade_menu_raw")
+   vn.menu( function ()
+      local opts = {}
+      for k,v in ipairs(trades) do
+         local toadd = true
+         if v.test and not v.test() then
+            toadd = false
+         end
+         if v.type=="var" and var.peek(v.var) then
+            toadd = false
+         end
+         if toadd then
+            table.insert( opts, {string.format(_("%s (%s)"), v.name, totoran.emblems_str(v.cost)), k} )
+         end
+      end
+      table.insert( opts, {_("Back"), "menu_main"} )
+      return opts
+   end, handler )
+
+   vn.label("trade_notenough")
+   guide( function() return string.format(_([["You only have %s, you would need %s more to purchase the '%s'.
+Is there anything else you would like to purchase?"]]),
+         totoran.emblems_str(totoran.emblems_get()),
+         totoran.emblems_str(tradein_item.cost - totoran.emblems_get()),
+         tradein_item.name)
+   end )
+   vn.jump("trade_menu_raw")
+
+   vn.label("trade_confirm")
+   guide( function () return string.format(
+      _([["Are you sure you want to trade in for the '#w%s#0'? The decription is as follows:"
+#w%s#0"]]),
+      tradein_item.name, tradein_item.description)
+   end )
+   vn.menu{
+      {_("Trade"), "trade_consumate"},
+      {_("Cancel"), "trade_menu" },
+   }
+
+   vn.label("trade_consumate")
+   vn.func( function ()
+      local t = tradein_item
+      totoran.emblems_pay( -t.cost )
+      if t.type == "var" then
+         var.push( t.var, true )
+      else
+         error(_("unknown tradein type"))
+      end
+   end )
+   vn.sfxMoney()
+   guide(_([["Hope you enjoy your purchase!"]]))
+   vn.jump("trade_menu")
 
    vn.label("leave")
    vn.na(_("You take your leave."))
