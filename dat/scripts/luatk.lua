@@ -100,6 +100,10 @@ end
 function luatk.Window:draw()
    local x, y, w, h = self.x, self.y, self.w, self.h
 
+   -- Set scissors
+   local scs = lg.getScissor()
+   lg.setScissor( x, y, w, h )
+
    -- Draw background
    lg.setColor( luatk.colour.bg )
    lg.rectangle( "fill", x, y, w, h )
@@ -113,6 +117,9 @@ function luatk.Window:draw()
    for k,wgt in ipairs(self._widgets) do
       wgt:draw( x, y )
    end
+
+   -- Restore scissors
+   lg.setScissor( scs )
 end
 function luatk.Window:update(dt)
    for k,wgt in ipairs(self._widgets) do

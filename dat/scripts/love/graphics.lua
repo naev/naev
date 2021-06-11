@@ -411,7 +411,7 @@ function graphics.setScissor( x, y, width, height )
    graphics._scissor = {x, y, width, height}
 end
 function graphics.getScissor ()
-   return unpack( graphics._scissor )
+   return table.unpack( graphics._scissor )
 end
 
 
