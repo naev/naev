@@ -13,8 +13,8 @@
 local vn = require 'vn'
 local totoran = require 'totoran'
 require 'numstring'
-local gauntlet_gui = require 'missions.dvaered.gauntlet_gui'
-require 'missions.dvaered.gauntlet_tables'
+local gauntlet_gui = require 'missions.dvaered.gauntlet.gui'
+require 'missions.dvaered.gauntlet.tables'
 
 logidstr = "log_totoran"
 logname  = _("Totoran Tournament")
