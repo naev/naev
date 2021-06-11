@@ -3039,9 +3039,6 @@ void pilot_free( Pilot* p )
 {
    int i;
 
-   /* Stop all outfits. */
-   pilot_outfitOffAll(p);
-
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
 
@@ -3101,6 +3098,9 @@ void pilot_destroy(Pilot* p)
    /* find the pilot */
    i = pilot_getStackPos(p->id);
 
+   /* Stop all outfits. */
+   pilot_outfitOffAll(p);
+
    /* Handle Lua outfits. */
    pilot_outfitLCleanup(p);
 
@@ -3142,6 +3142,14 @@ void pilots_free (void)
 
    pilot_freeGlobalHooks();
 
+   /* First pass to stop outfits. */
+   for (i=0; i < array_size(pilot_stack); i++) {
+      /* Stop all outfits. */
+      pilot_outfitOffAll(pilot_stack[i]);
+      /* Handle Lua outfits. */
+      pilot_outfitLCleanup(pilot_stack[i]);
+   }
+
    /* Free pilots. */
    for (i=0; i < array_size(pilot_stack); i++)
       pilot_free(pilot_stack[i]);
@@ -3156,10 +3164,25 @@ void pilots_free (void)
  *
  *    @param persist Do not remove persistent pilots.
  */
-void pilots_clean (int persist)
+void pilots_clean( int persist )
 {
    int i, persist_count=0;
    Pilot *p;
+
+   /* First pass to stop outfits without clearing stuff - this can call all
+    * sorts of Lua stuff. */
+   for (i=0; i < array_size(pilot_stack); i++) {
+      p = pilot_stack[i];
+      if (p == player.p &&
+          (persist && pilot_isFlag(p, PILOT_PERSIST)))
+         continue;
+      /* Stop all outfits. */
+      pilot_outfitOffAll(p);
+      /* Handle Lua outfits. */
+      pilot_outfitLCleanup(p);
+   }
+
+   /* Here we actually clean up stuff. */
    for (i=0; i < array_size(pilot_stack); i++) {
       /* move player and persisted pilots to start */
       if (pilot_stack[i] == player.p ||
