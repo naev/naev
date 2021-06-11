@@ -313,8 +313,8 @@ function wave_round_setup ()
       pp:setHealth( 100, 100, 0 )
       pp:setEnergy( 100 )
       pp:setTemp( 0 )
-      pp:fillAmmo()
    end
+   pp:fillAmmo() -- Have to fill ammo or deployed fighters get "lost"
    -- TODO reset outfit cooldown stuff
    pp:setPos( vec2.new( 0, 0 ) ) -- teleport to middle
    pp:setVel( vec2.new( 0, 0 ) )
@@ -473,6 +473,13 @@ function wave_compute_score ()
       elseif elapsed > 180 then
          newbonus( "Slow Clear (>180s) %d%%", -25 )
       end
+   end
+
+   if gmods.doubledmgtaken then
+      newbonus( "Double Damage Enemies %d%%", 50 )
+   end
+   if gmods.nohealing then
+      newbonus( "No Healing Between Waves %d%%", 25 )
    end
 
    score = math.max( 0, score * bonus / 100 )
