@@ -135,6 +135,7 @@ static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
 static int pilotL_getShipStat( lua_State *L );
+static int pilotL_getDetectedDistance( lua_State *L );
 static int pilotL_cargoFree( lua_State *L );
 static int pilotL_cargoHas( lua_State *L );
 static int pilotL_cargoAdd( lua_State *L );
@@ -199,6 +200,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "lockon", pilotL_getLockon },
    { "stats", pilotL_getStats },
    { "shipstat", pilotL_getShipStat },
+   { "detectedDistance", pilotL_getDetectedDistance },
    { "colour", pilotL_getColour },
    { "hostile", pilotL_getHostile },
    { "flags", pilotL_flags },
@@ -3297,6 +3299,23 @@ static int pilotL_getShipStat( lua_State *L )
    Pilot *p = luaL_validpilot(L,1);
    const char *str = luaL_checkstring(L,2);
    lua_pushnumber(L, ss_statsGet(&p->stats,str) );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the distance that a pilot can be currently detect at.
+ *
+ *    @luatparam Pilot p Pilot to get the distance they can be detected at.
+ * @luafunc detectedDistance
+ */
+static int pilotL_getDetectedDistance( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   if (pilot_isFlag(p,PILOT_STEALTH))
+      lua_pushnumber( L, p->ew_stealth );
+   else
+      lua_pushnumber( L, p->ew_detection );
    return 1;
 }
 
