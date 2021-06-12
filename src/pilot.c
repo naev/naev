@@ -1595,10 +1595,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       }
 
       /* Set disable timer. This is the time the pilot will remain disabled. */
-      /* 50 armour llama        => 53.18s
-       * 5000 armour peacemaker => 168.18s
+      /* 200 mass llama       => 46.78 s
+       * 8000 mass peacemaker => 156 s
        */
-      p->dtimer = 20. * pow( p->armour, 0.25 );
+      p->dtimer = 8. * pow( p->mass, 1./3. );
       p->dtimer_accum = 0.;
 
       /* Disable active outfits. */
