@@ -818,16 +818,16 @@ void land_updateMainTab (void)
 {
    char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT], pop[STRMAX_SHORT];
    Outfit *o;
-   uint64_t p = land_planet->population;
+   double p = (double)land_planet->population;
 
-   if (p > (uint64_t)10e9)
-      snprintf( pop, sizeof(pop), _("%lu biillion"), p / (uint64_t)1e9 );
-   else if (p > (uint64_t)10e6)
-      snprintf( pop, sizeof(pop), _("%lu million"), p / (uint64_t)1e6 );
+   if (p > 10e9)
+      snprintf( pop, sizeof(pop), _("%.0f billion"), p / 1e9 );
+   else if (p > 10e6)
+      snprintf( pop, sizeof(pop), _("%.0f million"), p / 1e6 );
    else if (p > (uint64_t)10e3)
-      snprintf( pop, sizeof(pop), _("%lu thousand"), p / (uint64_t)1e3 );
+      snprintf( pop, sizeof(pop), _("%.0f thousand"), p / 1e3 );
    else
-      snprintf( pop, sizeof(pop), "%lu", p );
+      snprintf( pop, sizeof(pop), "%.0f", p );
 
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
