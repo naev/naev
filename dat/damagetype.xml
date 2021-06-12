@@ -30,11 +30,11 @@
  </dtype>
  <dtype name="shieldbreaker">
   <shield>1.5</shield>
-  <armour>0.05</armour>
+  <armour>0.1</armour>
   <knockback>0</knockback>
  </dtype>
  <dtype name="armourbreaker">
-  <shield>0.05</shield>
+  <shield>0.3</shield>
   <armour>1.5</armour>
   <knockback>0.5</knockback>
  </dtype>
