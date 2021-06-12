@@ -27,15 +27,15 @@
  <jumps>
   <jump target="Alteris">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Cygnus">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Goddard">
    <pos x="-15689.613962" y="-21174.412562"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

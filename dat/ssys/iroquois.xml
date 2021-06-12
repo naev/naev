@@ -17,20 +17,20 @@
  <jumps>
   <jump target="Cherokee">
    <autopos/>
-   <hide>0.100000</hide>
+   <hide>0.316228</hide>
   </jump>
   <jump target="Mohawk">
    <autopos/>
-   <hide>0.100000</hide>
+   <hide>0.316228</hide>
   </jump>
   <jump target="Navajo">
    <autopos/>
-   <hide>0.100000</hide>
+   <hide>0.316228</hide>
   </jump>
   <jump target="Sioux">
    <autopos/>
    <exitonly/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

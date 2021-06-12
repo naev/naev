@@ -23,27 +23,27 @@
  <jumps>
   <jump target="Arcanis">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Sonas">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Surano">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Tau Prime">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Toaxis">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Zacron">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

@@ -24,11 +24,11 @@
  <jumps>
   <jump target="Doranthex">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Theras">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

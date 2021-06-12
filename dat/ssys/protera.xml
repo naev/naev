@@ -24,15 +24,15 @@
  <jumps>
   <jump target="Apik">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Haered">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Hystera">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

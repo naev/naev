@@ -16,7 +16,7 @@
  <general>
   <class>L</class>
   <population>10000000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>srm_mil_restricted</land>
    <refuel/>

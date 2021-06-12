@@ -23,15 +23,15 @@
  <jumps>
   <jump target="Druss">
    <pos x="1406.230514" y="19670.467799"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Quai">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Rhu">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

@@ -16,7 +16,7 @@
  <general>
   <class>1</class>
   <population>5000</population>
-  <hide>0.370000</hide>
+  <hide>1.600000</hide>
   <services>
    <land>emp_mil_wrath</land>
    <refuel/>

@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Dust">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Muran">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="New Haven">
    <autopos/>
@@ -32,7 +32,7 @@
   </jump>
   <jump target="Wahri">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

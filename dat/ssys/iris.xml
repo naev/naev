@@ -19,16 +19,16 @@
  <jumps>
   <jump target="Behar">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Oriantis">
    <pos x="8027.953539" y="10941.758779"/>
    <hidden/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Percival">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

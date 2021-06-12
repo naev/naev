@@ -20,11 +20,11 @@
  <jumps>
   <jump target="Cerberus">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Symm">
    <pos x="-16144.619611" y="-6736.085874"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

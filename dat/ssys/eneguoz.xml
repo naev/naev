@@ -23,11 +23,11 @@
  <jumps>
   <jump target="Hakoi">
    <pos x="-4704.459146" y="-14095.943141"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Qex">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

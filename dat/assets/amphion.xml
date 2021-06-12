@@ -16,7 +16,7 @@
  <general>
   <class>O</class>
   <population>1000000</population>
-  <hide>0.150000</hide>
+  <hide>0.600000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
