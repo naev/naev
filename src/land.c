@@ -824,7 +824,7 @@ void land_updateMainTab (void)
       snprintf( pop, sizeof(pop), _("%.0f billion"), p / 1e9 );
    else if (p > 10e6)
       snprintf( pop, sizeof(pop), _("%.0f million"), p / 1e6 );
-   else if (p > (uint64_t)10e3)
+   else if (p > 10e3)
       snprintf( pop, sizeof(pop), _("%.0f thousand"), p / 1e3 );
    else
       snprintf( pop, sizeof(pop), "%.0f", p );
