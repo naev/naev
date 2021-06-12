@@ -209,12 +209,23 @@ function love.load ()
             gauntlet_settype( wgt )
          end
       end
-   end
-   if gauntlet_option then
-      for k,wgt in ipairs(btn_options) do
-         if wgt.text == gauntlet_option then
-            gauntlet_option = nil
-            gauntlet_setoption( wgt )
+      if gauntlet_option then
+         for k,wgt in ipairs(btn_options) do
+            if wgt.text == gauntlet_option then
+               gauntlet_option = nil
+               gauntlet_setoption( wgt )
+            end
+         end
+         for mk,mv in ipairs(gauntlet_modifiers) do
+            for k,wgt in ipairs(btn_modifiers) do
+               if wgt.text == gauntlet_modifiers[mk].str then
+                  local gm = gauntlet_modifiers[mk]
+                  if gm.enabled then
+                     gm.enabled = false
+                     gauntlet_setmodifier( wgt )
+                  end
+               end
+            end
          end
       end
    end
