@@ -1354,7 +1354,7 @@ static void sysedit_editPnt( void )
    window_setInput( wid, "inpPresence", buf );
    snprintf( buf, sizeof(buf), "%d", p->presenceRange );
    window_setInput( wid, "inpPresenceRange", buf );
-   snprintf( buf, sizeof(buf), "%g", sqrt(p->hide) );
+   snprintf( buf, sizeof(buf), "%g", p->hide );
    window_setInput( wid, "inpHide", buf );
 
    /* Generate the list. */
@@ -1455,7 +1455,7 @@ static void sysedit_editJump( void )
          "btnClose", _("Close"), sysedit_editJumpClose );
 
    /* Load current values. */
-   snprintf( buf, sizeof(buf), "%g", sqrt(j->hide) );
+   snprintf( buf, sizeof(buf), "%g", j->hide );
    window_setInput( wid, "inpHide", buf );
 }
 
