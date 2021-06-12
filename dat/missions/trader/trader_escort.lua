@@ -320,11 +320,11 @@ function spawnConvoy ()
             p:addOutfit( "S&K Small Cargo Hull" )
          elseif class == "Freighter" or class == "Armoured Transport"
                or class == "Corvette" or class == "Destroyer" then
-            p:addOutfit( "Unicorp PT-420 Core System" )
+            p:addOutfit( "Unicorp PT-310 Core System" )
             p:addOutfit( "Melendez Buffalo XL Engine" )
             p:addOutfit( "S&K Medium Cargo Hull" )
          elseif class == "Cruiser" or class == "Carrier" then
-            p:addOutfit( "Unicorp PT-420 Core System" )
+            p:addOutfit( "Unicorp PT-310 Core System" )
             p:addOutfit( "Melendez Mammoth XL Engine" )
             p:addOutfit( "S&K Large Cargo Hull" )
          end
