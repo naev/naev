@@ -335,7 +335,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
    p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
-   p->hide           = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
+   p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    /* Add the new presence. */
    system_addPresence(sysedit_sys, p->faction, p->presenceAmount, p->presenceRange);
@@ -387,7 +387,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
    p->pos.x             = sysedit_xpos / sysedit_zoom;
    p->pos.y             = sysedit_ypos / sysedit_zoom;
-   p->hide              = pow2(HIDE_DEFAULT_PLANET);
+   p->hide              = HIDE_DEFAULT_PLANET;
    p->radius            = b->radius;
 
    /* Add new planet. */
@@ -1480,7 +1480,7 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
       jp_rmFlag( j, JP_HIDDEN );
       jp_rmFlag( j, JP_EXITONLY );
    }
-   j->hide  = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
+   j->hide  = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    window_close( wid, unused );
 }

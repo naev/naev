@@ -818,7 +818,7 @@ static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
    jp->targetid = targ->id;
    jp->radius  = 200.;
    jp->flags   = JP_AUTOPOS; /* Will automatically create position. */
-   jp->hide    = pow2(HIDE_DEFAULT_JUMP);
+   jp->hide    = HIDE_DEFAULT_JUMP;
 }
 
 
