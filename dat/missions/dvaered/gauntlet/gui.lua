@@ -76,14 +76,14 @@ local function gauntlet_setoption( wgt )
 
    local wdw = wgt.parent
    local w, h = wdw.w, wdw.h
-   modifiers_divider = luatk.newRect( wdw, 20, 189, w-40, 2, {0, 0, 0} )
+   modifiers_divider = luatk.newRect( wdw, 20, headerh+144, w-40, 2, {0, 0, 0} )
 
    local strlist = {}
    for k,v in ipairs(gauntlet_modifiers) do
       table.insert( strlist, v.str )
    end
    btn_modifiers, bh = button_list( wdw, strlist,
-         0, 205, 240, 60, w, 100, gauntlet_setmodifier )
+         0, headerh+160, 240, 60, w, 100, gauntlet_setmodifier )
    for k,v in ipairs(gauntlet_modifiers) do
       if v.var and not var.peek(v.var) then
          btn_modifiers[k]:disable()
@@ -121,7 +121,7 @@ local function gauntlet_settype( wgt )
    if newtype == "Challenge" then
       btn_options, bh = button_list( wdw,
             {"Skirmisher", "Warrior", "Warlord"},
-            0, 135, 160, 40, w, 100, gauntlet_setoption )
+            0, headerh+90, 160, 40, w, 100, gauntlet_setoption )
       if not var.peek("gauntlet_unlock_warrior") then
          btn_options[2]:disable()
       end
@@ -129,7 +129,7 @@ local function gauntlet_settype( wgt )
          btn_options[3]:disable()
       end
    end
-   options_divider = luatk.newRect( wdw, 20, 189, w-40, 2, {0, 0, 0} )
+   options_divider = luatk.newRect( wdw, 20, headerh+144, w-40, 2, {0, 0, 0} )
 end
 
 function gauntlet_enter ()
@@ -163,15 +163,21 @@ function love.load ()
    end
 
    -- Window and top details
-   local w, h = 800, 355
+   local w, h = 800, 400
    local wdw = luatk.newWindow( nil, nil, w, h )
-   luatk.newText( wdw, 0, 10, w, 24, "CRIMSON GAUNTLET", {0.9, 0.1, 0.25}, "center", largefont )
-   luatk.newRect( wdw, 20, 49, w-40, 2, {0, 0, 0} )
+   --local iw, ih = 100, 80
+   local iw, ih = 30, 30
+   local y = 5
+   --luatk.newImage( wdw, (w-iw)/2, y, iw, ih, lg.newImage("crimson_gauntlet.webp") )
+   luatk.newText( wdw, 0, (ih-24)/2+5, (w-iw)/2-10, 24, _("CRIMSON"), {0.9, 0.1, 0.25}, "right", largefont )
+   luatk.newText( wdw, (w-iw)/2+iw+10, (ih-24)/2+5, w-(w-iw)/2-iw-10, 24, _("GAUNTLET"), {0.9, 0.1, 0.25}, "left", largefont )
+   headerh = ih+10
+   luatk.newRect( wdw, 20, headerh+4, w-40, 2, {0, 0, 0} )
 
    -- Tournament Types
    btn_types = button_list( wdw,
          {"Tournament", "Challenge", "Infinity Arena", "Special"},
-         0, 65, 160, 40, w, h, gauntlet_settype )
+         0, headerh+20, 160, 40, w, h, gauntlet_settype )
    if not var.peek( "gauntlet_unlock_tournament" ) then
       btn_types[1]:disable()
    end
@@ -181,7 +187,7 @@ function love.load ()
    if not var.peek( "gauntlet_unlock_special" ) then
       btn_types[4]:disable()
    end
-   luatk.newRect( wdw, 20, 119, w-40, 2, {0, 0, 0} )
+   luatk.newRect( wdw, 20, headerh+74, w-40, 2, {0, 0, 0} )
 
    -- Tournament Options
    btn_options = {}
