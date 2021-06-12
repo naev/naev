@@ -629,7 +629,8 @@ end
 function ecc_dist ()
    local pp = player.pilot()
    local dist = pp:pos():dist( eccpos )
-   if dist < 3000 then
+
+   if dist < math.min( pp:detectedDistance(), 3000 ) then
       system.mrkRm( sysmarker )
       local spawners = {
          "Za'lek Heavy Drone",

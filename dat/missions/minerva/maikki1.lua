@@ -651,7 +651,7 @@ end
 function stealthheartbeat ()
    local pp = player.pilot()
    local dist= math.min ( pscavA:pos():dist(pp:pos()), pscavB:pos():dist(pp:pos()) )
-   if dist < 1000 / (1+pp:shipstat("ew_hide")/100) then
+   if not pp:flags().stealth and dist < 1000 / (1+pp:shipstat("ew_hide")/100) then
       if stealthfailing==nil then
          stealthfailing = 0
          player.msg("#rYou are about to be discovered!")
