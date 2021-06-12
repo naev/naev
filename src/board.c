@@ -406,16 +406,18 @@ static void board_stealAmmo( unsigned int wdw, char* str )
 static int board_trySteal( Pilot *p )
 {
    Pilot *target;
-   Damage dmg;
+   //Damage dmg;
 
    /* Get the target. */
    target = pilot_get(p->target);
    if (target == NULL)
       return 1;
 
+   /* Just make it always succeed for now. */
+#if 0
    /* See if was successful. */
    /* TODO probably replace the interface and rehaul it all. */
-   /*if (RNGF() > (0.5 * (10. + target->crew)/(10. + p->crew)))*/
+   if (RNGF() > (0.5 * (10. + target->crew)/(10. + p->crew)))
       return 0;
 
    /* Triggered self destruct. */
@@ -434,6 +436,8 @@ static int board_trySteal( Pilot *p )
    }
 
    return 1;
+#endif
+   return 0;
 }
 
 
