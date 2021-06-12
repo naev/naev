@@ -39,7 +39,7 @@ static double ew_interference = 1.; /**< Interference factor. */
 static void pilot_ewUpdate( Pilot *p );
 static double pilot_ewMass( double mass );
 static double pilot_ewAsteroid( Pilot *p );
-static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close );
+static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, int *isplayer );
 
 
 /**
@@ -401,7 +401,7 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, dou
 }
 
 
-static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close )
+static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, int *isplayer )
 {
    Pilot *t;
    Pilot *const* ps;
@@ -413,6 +413,8 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close )
       *mod = 0.;
    if (close != NULL)
       *close = 0;
+   if (isplayer != NULL)
+      *isplayer = 0;
    n = 0;
    ps = pilot_getAll();
    for (i=0; i<array_size(ps); i++) {
@@ -447,6 +449,8 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close )
 
       /* We found a pilot that is in range. */
       n++;
+      if ((isplayer != NULL) && pilot_isPlayer(t))
+         *isplayer = 1;
    }
 
    return n;
@@ -458,7 +462,7 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close )
  */
 void pilot_ewUpdateStealth( Pilot *p, double dt )
 {
-   int n, close;
+   int n, close, isplayer;
    double mod;
 
    if (!pilot_isFlag( p, PILOT_STEALTH ))
@@ -466,9 +470,9 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
 
    /* Get nearby pilots. */
    if (pilot_isPlayer(p))
-      n = pilot_ewStealthGetNearby( p, &mod, &close );
+      n = pilot_ewStealthGetNearby( p, &mod, &close, &isplayer );
    else
-      n = pilot_ewStealthGetNearby( p, &mod, NULL );
+      n = pilot_ewStealthGetNearby( p, &mod, NULL, &isplayer );
 
    /* Stop autonav if pilots are nearby. */
    if (pilot_isPlayer(p) && (close>0))
@@ -486,7 +490,9 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
       if (p->ew_stealth_timer < 0.) {
          pilot_destealth( p );
          if (pilot_isPlayer(p))
-            player_message(_("You have been discovered!"));
+            player_message(_("You have been uncovered!"));
+         else if (isplayer)
+            player_message(_("You have uncovered '%s'!"), p->name);
       }
    }
 }
@@ -508,7 +514,7 @@ int pilot_stealth( Pilot *p )
 
    /* Can't stealth if pilots nearby. */
    pilot_setFlag( p, PILOT_STEALTH );
-   n = pilot_ewStealthGetNearby( p, NULL, NULL );
+   n = pilot_ewStealthGetNearby( p, NULL, NULL, NULL );
    if (n>0) {
       pilot_rmFlag( p, PILOT_STEALTH );
       return 0;
