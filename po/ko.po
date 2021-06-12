@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-06-11 21:53-0400\n"
+"POT-Creation-Date: 2021-06-12 01:02-0400\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -27439,6 +27439,9 @@ msgstr ""
 #. -- Rectangle widget
 #. --
 #.
+#. -- Image widget
+#. --
+#.
 #. -- Helper functions and defines for the Minerva Station campaigns
 #. --
 #. Main Characters
@@ -39095,6 +39098,14 @@ msgstr ""
 #. Outlined fonts
 #. Clear defaults
 #. Window and top details
+#: dat/missions/dvaered/gauntlet/gui.lua:171
+msgid "CRIMSON"
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gui.lua:172
+msgid "GAUNTLET"
+msgstr ""
+
 #. Tournament Types
 #. Tournament Options
 #. Modifier
@@ -68651,39 +68662,39 @@ msgid "#rThere is no ammo compatible with your launchers on board."
 msgstr ""
 
 #. killed ship.
-#: src/board.c:454
+#: src/board.c:458
 msgid "#oYou have tripped the ship's self-destruct mechanism!"
 msgstr ""
 
 #. you just got locked out
-#: src/board.c:456
+#: src/board.c:460
 #, c-format
 msgid "#oThe ship's security system locks %s out."
 msgstr ""
 
-#: src/board.c:487 src/board.c:502 src/board.c:509
+#: src/board.c:491 src/board.c:506 src/board.c:513
 msgid "none\n"
 msgstr ""
 
-#: src/board.c:496
+#: src/board.c:500
 #, c-format
 msgid "%d tonne\n"
 msgid_plural "%d tonnes\n"
 msgstr[0] ""
 
-#: src/board.c:504
+#: src/board.c:508
 #, c-format
 msgid "%d unit\n"
 msgid_plural "%d units\n"
 msgstr[0] ""
 
-#: src/board.c:511
+#: src/board.c:515
 #, c-format
 msgid "%d missile\n"
 msgid_plural "%d missiles\n"
 msgstr[0] ""
 
-#: src/board.c:592
+#: src/board.c:596
 #, c-format
 msgid "#%c%s#0 has plundered %s from your ship!"
 msgstr ""
@@ -68919,7 +68930,7 @@ msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
 #: src/commodity.c:694 src/faction.c:1490 src/map.c:2744 src/outfit.c:1139
-#: src/ship.c:588 src/ship.c:1068 src/space.c:1812 src/space.c:3287
+#: src/ship.c:588 src/ship.c:1068 src/space.c:1812 src/space.c:3278
 #: src/tech.c:122
 #, c-format
 msgid "Malformed %s file: does not contain elements"
@@ -71834,17 +71845,17 @@ msgstr ""
 
 #: src/land.c:824
 #, c-format
-msgid "%lu biillion"
+msgid "%.0f billion"
 msgstr ""
 
 #: src/land.c:826
 #, c-format
-msgid "%lu million"
+msgid "%.0f million"
 msgstr ""
 
 #: src/land.c:828
 #, c-format
-msgid "%lu thousand"
+msgid "%.0f thousand"
 msgstr ""
 
 #: src/land.c:836
@@ -75090,7 +75101,7 @@ msgstr ""
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2288 src/outfit.c:2608 src/slots.c:74 src/space.c:3186
+#: src/outfit.c:2288 src/outfit.c:2608 src/slots.c:74 src/space.c:3177
 #: src/spfx.c:257 src/spfx.c:1040 src/start.c:74
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
@@ -76986,7 +76997,7 @@ msgstr ""
 msgid "Lua Spawn script for faction '%s' : %s"
 msgstr ""
 
-#: src/space.c:1200 src/space.c:4290
+#: src/space.c:1200 src/space.c:4281
 #, c-format
 msgid "Lua spawn script for faction '%s' failed to return timer value."
 msgstr ""
@@ -77108,119 +77119,119 @@ msgstr ""
 msgid "Planet '%s' missing '%s' element"
 msgstr ""
 
-#: src/space.c:2304
+#: src/space.c:2301
 #, c-format
 msgid "Unable to remove planet '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2316
+#: src/space.c:2313
 #, c-format
 msgid "Planet '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2337
+#: src/space.c:2334
 #, c-format
 msgid "Unable to find planet '%s' and system '%s' in planet<->system stack."
 msgstr ""
 
-#: src/space.c:2402
+#: src/space.c:2399
 #, c-format
 msgid "Unable to remove jump point '%s' from NULL system."
 msgstr ""
 
-#: src/space.c:2414
+#: src/space.c:2411
 #, c-format
 msgid "Jump point '%s' not found in system '%s' for removal."
 msgstr ""
 
-#: src/space.c:2619
+#: src/space.c:2616
 #, c-format
 msgid "Unknown node '%s' in star system '%s'"
 msgstr ""
 
-#: src/space.c:2628
+#: src/space.c:2625
 #, c-format
 msgid "Star System '%s' missing '%s' element"
 msgstr ""
 
-#: src/space.c:2629
+#: src/space.c:2626
 #, c-format
 msgid "Star System '%s' missing 'name' tag"
 msgstr ""
 
-#: src/space.c:2716 src/space.c:2795
+#: src/space.c:2713 src/space.c:2789
 #, c-format
 msgid "JumpPoint node for system '%s' has no target attribute."
 msgstr ""
 
-#: src/space.c:2721 src/space.c:2800
+#: src/space.c:2718 src/space.c:2794
 #, c-format
 msgid "JumpPoint node for system '%s' has invalid target '%s'."
 msgstr ""
 
-#: src/space.c:2734 src/space.c:2813
+#: src/space.c:2731 src/space.c:2807
 #, c-format
 msgid "Star System '%s' has duplicate jump point to '%s'."
 msgstr ""
 
-#: src/space.c:2857
+#: src/space.c:2851
 #, c-format
 msgid ""
 "JumpPoint in system '%s' is missing pos element but does not have autopos "
 "flag."
 msgstr ""
 
-#: src/space.c:2887
+#: src/space.c:2878
 #, c-format
 msgid "System '%s' was not found in the stack for some reason"
 msgstr ""
 
-#: src/space.c:2973
+#: src/space.c:2964
 #, c-format
 msgid "Asteroid field in %s has no position."
 msgstr ""
 
-#: src/space.c:2976
+#: src/space.c:2967
 #, c-format
 msgid "Asteroid field in %s has no radius."
 msgstr ""
 
-#: src/space.c:3037
+#: src/space.c:3028
 #, c-format
 msgid "Asteroid exclusion in %s has no position."
 msgstr ""
 
-#: src/space.c:3040
+#: src/space.c:3031
 #, c-format
 msgid "Asteroid exclusion in %s has no radius."
 msgstr ""
 
-#: src/space.c:3179
+#: src/space.c:3170
 #, c-format
 msgid "Malformed '%s' file: missing root element 'Asteroid_types'"
 msgstr ""
 
-#: src/space.c:3229
+#: src/space.c:3220
 msgid "Asteroid type's commodity lacks name or quantity."
 msgstr ""
 
-#: src/space.c:3234
+#: src/space.c:3225
 msgid "Asteroid type has no gfx associated."
 msgstr ""
 
-#: src/space.c:3325
+#: src/space.c:3316
 #, c-format
 msgid "Loaded %d Star System"
 msgid_plural "Loaded %d Star Systems"
 msgstr[0] ""
 
-#: src/space.c:3326
+#: src/space.c:3317
 #, c-format
 msgid "       with %d Planet"
 msgid_plural "       with %d Planets"
 msgstr[0] ""
 
-#: src/space.c:3729 src/space.c:3773
+#: src/space.c:3720 src/space.c:3764
 msgid "Unknown marker type."
 msgstr ""
 
@@ -77229,7 +77240,7 @@ msgstr ""
 #. f, cur, max, timer
 #. Actually run the function.
 #. error has occurred
-#: src/space.c:4282
+#: src/space.c:4273
 #, c-format
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
