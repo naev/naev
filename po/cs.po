@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-06-08 20:41-0400\n"
+"POT-Creation-Date: 2021-06-11 21:53-0400\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -2031,7 +2031,6 @@ msgstr ""
 msgid "Atryssa IV"
 msgstr "Atryssa IV"
 
-#. Set mission details
 #. Another check since the previous block could change the result
 #. Remove existing marks
 #. Add new marks
@@ -2280,7 +2279,7 @@ msgstr ""
 msgid "Benteen"
 msgstr "Benteen"
 
-#: dat/assets/benteen.xml:27
+#: dat/assets/benteen.xml:28
 msgid ""
 "Benteen is one of the Empire's primary agriworlds. It grows most of the "
 "crops that are bound for the western systems. It is a quiet world, with "
@@ -2290,7 +2289,7 @@ msgstr ""
 "které jsou určeny pro západní systémy. Je to klidný svět, jenž je v rozporu "
 "s ruchem a rozruchem jiných, více centrálních planet."
 
-#: dat/assets/benteen.xml:28
+#: dat/assets/benteen.xml:29
 msgid ""
 "The bar is a place to relax after a long trip or a hard day's work. The beer "
 "is fine and the locals seem friendly enough. Mostly harmless."
@@ -2362,7 +2361,7 @@ msgstr "Blunderbuss II"
 msgid "Bolero"
 msgstr "Bolero"
 
-#: dat/assets/bolero.xml:28
+#: dat/assets/bolero.xml:30
 msgid ""
 "Bolero is one of the empire's most successful planets. The population is "
 "prosperous and successful, and the planet's conditions are mild. Although it "
@@ -2373,7 +2372,7 @@ msgstr ""
 "úspěšná a podmínky planety jsou mírné. Přestože se s ním stále zachází jako "
 "se vzdutím, v imperiální politice je stále důležitější."
 
-#: dat/assets/bolero.xml:29
+#: dat/assets/bolero.xml:31
 msgid ""
 "The bar here is an old-Earth style pub, with a low ceiling, warm beer and "
 "good food. The atmosphere is warm and welcoming, the clients are all polite "
@@ -2870,14 +2869,14 @@ msgstr ""
 msgid "Colley"
 msgstr ""
 
-#: dat/assets/colley.xml:27
+#: dat/assets/colley.xml:28
 msgid ""
 "Colley is a popular retirement and vacation spot due to its quiet and "
 "unassuming nature. The world has mild weather and is ideally closeted away "
 "from the cares and worries of the wider galaxy."
 msgstr ""
 
-#: dat/assets/colley.xml:28
+#: dat/assets/colley.xml:29
 msgid ""
 "The average age of the patrons here seems to be around seventy, but they "
 "look as alert as they have ever been and you feel their eyes look you over "
@@ -3326,7 +3325,7 @@ msgstr ""
 msgid "Dolmen"
 msgstr ""
 
-#: dat/assets/dolmen.xml:29
+#: dat/assets/dolmen.xml:30
 msgid ""
 "Dolmen is a nice planet but it's only sparsely populated. The local "
 "government aims to keep the planet free from crime and, while this is likely "
@@ -3334,7 +3333,7 @@ msgid ""
 "out the more unsavory characters."
 msgstr ""
 
-#: dat/assets/dolmen.xml:30
+#: dat/assets/dolmen.xml:31
 msgid ""
 "The spaceport bar is officially outside the borders of the Dolmen global "
 "political area. This legal construction was necessary for Dolmen to allow "
@@ -3566,7 +3565,7 @@ msgstr ""
 msgid "Dun Hill"
 msgstr ""
 
-#: dat/assets/dun_hill.xml:27
+#: dat/assets/dun_hill.xml:28
 msgid ""
 "Dun Hill is one of those little mining worlds that is regarded as being "
 "totally insignificant. Indeed, the world has no real personality of its own "
@@ -3575,7 +3574,7 @@ msgid ""
 "rather not go without."
 msgstr ""
 
-#: dat/assets/dun_hill.xml:28
+#: dat/assets/dun_hill.xml:29
 msgid ""
 "This bar is primarily frequented by off-duty miners trying to unwind. "
 "Pictures of antique mining equipment hang from the walls. Little else here "
@@ -3750,7 +3749,7 @@ msgid ""
 "still part of the Empire."
 msgstr ""
 
-#: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:609
+#: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:608
 msgid "Dvaered High Command"
 msgstr "Dvaeredské vrchní velení"
 
@@ -4945,7 +4944,7 @@ msgstr ""
 msgid "Grandard"
 msgstr ""
 
-#: dat/assets/grandard.xml:29
+#: dat/assets/grandard.xml:30
 msgid ""
 "Grandard is the home of some of the Empire's most legendary fighter pilots. "
 "For reasons unknown, this world has become renowned for its highly-skilled "
@@ -4953,7 +4952,7 @@ msgid ""
 "Empire has taken full advantage of it."
 msgstr ""
 
-#: dat/assets/grandard.xml:30
+#: dat/assets/grandard.xml:31
 msgid ""
 "This bar has pictures of some of the more renowned fighter pilots in its "
 "history. Several imperial officers look at these pictures with what can only "
@@ -5017,7 +5016,7 @@ msgstr ""
 msgid "Griffin III"
 msgstr ""
 
-#: dat/assets/griffin_iii.xml:29
+#: dat/assets/griffin_iii.xml:30
 msgid ""
 "Griffin III is, despite the generic name, a well-populated and prosperous "
 "world. It has a booming industrial base and a respectable government "
@@ -5025,7 +5024,7 @@ msgid ""
 "model world for the Empire, even if it's a little lacking in personality."
 msgstr ""
 
-#: dat/assets/griffin_iii.xml:30
+#: dat/assets/griffin_iii.xml:31
 msgid ""
 "The bar is clean and large, with various games and vids for entertainment of "
 "patrons. The food is good and the drinks are great. One could stay a long "
@@ -6338,14 +6337,14 @@ msgstr ""
 msgid "Kayel"
 msgstr ""
 
-#: dat/assets/kayel.xml:27
+#: dat/assets/kayel.xml:29
 msgid ""
 "Kayel is a small, isolated little world that keeps away from the larger "
 "problems of the galaxy. It maintains a few mining outposts here and there, "
 "and sells food, and keeps a respectable shipyard running."
 msgstr ""
 
-#: dat/assets/kayel.xml:28
+#: dat/assets/kayel.xml:30
 msgid ""
 "The bar is mostly a dingy little place with a few groups of people making "
 "shady deals. There are a bunch of drunks at scattered parts, and the "
@@ -6405,14 +6404,14 @@ msgstr ""
 msgid "Koga"
 msgstr ""
 
-#: dat/assets/koga.xml:27
+#: dat/assets/koga.xml:28
 msgid ""
-"Koga has a highly active crust, and may describe the surface as being a "
+"Koga has a highly active crust, and many describe the surface as being a "
 "reasonable facsimile of hell. They may not be too far off the mark, as lava "
-"flows and sullen rubble from the earth are quite common."
+"flows and sudden rumbles from the earth are quite common."
 msgstr ""
 
-#: dat/assets/koga.xml:28
+#: dat/assets/koga.xml:29
 msgid ""
 "The bar has holos and pictures of the more spectacular activity of Koga's "
 "turbulent geography. The bar is known for the \"Lava Storm\" drink, which "
@@ -6802,7 +6801,7 @@ msgstr ""
 msgid "Madeleine Station"
 msgstr ""
 
-#: dat/assets/madeleine_station.xml:28
+#: dat/assets/madeleine_station.xml:29
 msgid ""
 "In a strange twist of fate, Madeleine Station was named after the "
 "granddaughter of the first commander to be stationed here. The place serves "
@@ -6811,7 +6810,7 @@ msgid ""
 "the southern pirates in recent cycles."
 msgstr ""
 
-#: dat/assets/madeleine_station.xml:29
+#: dat/assets/madeleine_station.xml:30
 msgid ""
 "Since traders don't come to this military base, the bar is only frequented "
 "by Imperial military personnel. It's more like a canteen than a bar, really."
@@ -7750,7 +7749,7 @@ msgstr ""
 #. -- Pirate Strongholds
 #. --
 #: dat/assets/new_haven.xml:2 dat/ssys/new_haven.xml:2
-#: dat/events/discovery.lua:86
+#: dat/events/discovery.lua:94
 msgid "New Haven"
 msgstr ""
 
@@ -8412,7 +8411,7 @@ msgstr ""
 msgid "Outbound Station"
 msgstr ""
 
-#: dat/assets/outbound_station.xml:28
+#: dat/assets/outbound_station.xml:29
 msgid ""
 "The last bastion of Imperial control before entering Za'lek space, this "
 "station is meant to patrol and tax traffic between the Empire and its "
@@ -8422,7 +8421,7 @@ msgid ""
 "tolls is a tense one."
 msgstr ""
 
-#: dat/assets/outbound_station.xml:29
+#: dat/assets/outbound_station.xml:30
 msgid ""
 "The bar is staffed with traders and Imperial Military officials. It is "
 "noteworthy that there is no Za'lek in sight here."
@@ -9331,7 +9330,7 @@ msgstr ""
 #: src/dev_sysedit.c:1841 src/dev_sysedit.c:1878 src/dev_sysedit.c:1913
 #: src/dev_sysedit.c:1919 src/dev_uniedit.c:948 src/dev_uniedit.c:1126
 #: src/dev_uniedit.c:1359 src/dev_uniedit.c:1425 src/info.c:273 src/info.c:371
-#: src/info.c:810 src/info.c:1110 src/input.c:553 src/land_outfits.c:386
+#: src/info.c:815 src/info.c:1141 src/input.c:553 src/land_outfits.c:386
 #: src/land_outfits.c:419 src/land_outfits.c:634 src/land_shipyard.c:161
 #: src/land_shipyard.c:257 src/land_trade.c:85 src/land_trade.c:87
 #: src/land_trade.c:121 src/load.c:373 src/load.c:418 src/load.c:462
@@ -9480,7 +9479,7 @@ msgstr ""
 msgid "Rockhardt"
 msgstr ""
 
-#: dat/assets/rockhardt.xml:29
+#: dat/assets/rockhardt.xml:30
 msgid ""
 "Rockhardt was originally commissioned as an auxiliary manufacturing plant "
 "for the Imperial military. But when the Incident happened the Empire lost a "
@@ -9489,7 +9488,7 @@ msgid ""
 "between the first and second generation industrial centers."
 msgstr ""
 
-#: dat/assets/rockhardt.xml:30
+#: dat/assets/rockhardt.xml:31
 msgid ""
 "Even today, the Empire's military remains a well oiled machine. It isn't "
 "content to work with old or substandard equipment, and so replacement parts "
@@ -9521,7 +9520,7 @@ msgstr ""
 msgid "Rogan"
 msgstr ""
 
-#: dat/assets/rogan.xml:28
+#: dat/assets/rogan.xml:29
 msgid ""
 "Rogan is a relatively prosperous world, despite the fact that much of the "
 "planetary surface is desert. However, these deserts conveniently has huge "
@@ -9529,7 +9528,7 @@ msgid ""
 "result is a rich planet with a booming population."
 msgstr ""
 
-#: dat/assets/rogan.xml:29
+#: dat/assets/rogan.xml:30
 msgid ""
 "You see several rich trading magnates talking business in this bar. It seems "
 "to be split between the rich section and the poorer section, for tramp "
@@ -9653,7 +9652,7 @@ msgstr ""
 msgid "Ruin"
 msgstr ""
 
-#: dat/assets/ruin.xml:27
+#: dat/assets/ruin.xml:28
 msgid ""
 "It is said that when the first colonist ship landed here, its captain took a "
 "look outside and muttered to himself: \"what a ruin of a planet\". His cabin "
@@ -9661,7 +9660,7 @@ msgid ""
 "Ruin on all publicly sold star maps."
 msgstr ""
 
-#: dat/assets/ruin.xml:28
+#: dat/assets/ruin.xml:29
 msgid ""
 "Ruin's spaceport bar is a deliberate retro affair. Although it does have all "
 "of the standard spaceport facilities, they have been encased in old-"
@@ -10822,7 +10821,7 @@ msgstr ""
 msgid "Stella"
 msgstr ""
 
-#: dat/assets/stella.xml:27
+#: dat/assets/stella.xml:28
 msgid ""
 "As a resource for many common building materials, Stella is a busy yet "
 "fairly squalid world. Planets like these crop up in most interplanetary "
@@ -10830,7 +10829,7 @@ msgid ""
 "unforgiving, and nobody comes here because they like to."
 msgstr ""
 
-#: dat/assets/stella.xml:28
+#: dat/assets/stella.xml:29
 msgid ""
 "It's not much fun living on a world like Stella. Few people can stay "
 "cheerful after living here for any appreciable amount of time. This "
@@ -10873,7 +10872,7 @@ msgstr ""
 msgid "Stormgard"
 msgstr ""
 
-#: dat/assets/stormgard.xml:29
+#: dat/assets/stormgard.xml:30
 msgid ""
 "Stormgard is, despite it's harsh, icy environment, a heavily populated "
 "world. This is because several elements of the emperor's family has made "
@@ -10883,7 +10882,7 @@ msgid ""
 "sheets."
 msgstr ""
 
-#: dat/assets/stormgard.xml:30
+#: dat/assets/stormgard.xml:31
 msgid ""
 "This bar is warm and cozy despite the howling winds outside. Windows show "
 "off the breathtaking view of the sunlight reflecting off the ice crystals."
@@ -11200,7 +11199,7 @@ msgstr ""
 msgid "Tartarus"
 msgstr ""
 
-#: dat/assets/tartarus.xml:27
+#: dat/assets/tartarus.xml:28
 msgid ""
 "Tartarus is a hard place to live, and for that reason the Imperial Hostile "
 "Environment Training Center is located here. Casualties are distressingly "
@@ -11208,7 +11207,7 @@ msgid ""
 "all, it's hard to find a world worse than Tartarus."
 msgstr ""
 
-#: dat/assets/tartarus.xml:28
+#: dat/assets/tartarus.xml:29
 msgid ""
 "Trainers and students alike unwind here after a hard day's \"work\", doing "
 "things that no reasonable human being would consider. That they seem so "
@@ -11641,7 +11640,7 @@ msgid ""
 "their production process, giving them a rich, somewhat saline taste."
 msgstr ""
 
-#: dat/assets/totoran.xml:2
+#: dat/assets/totoran.xml:2 dat/events/discovery.lua:77
 msgid "Totoran"
 msgstr ""
 
@@ -11876,7 +11875,7 @@ msgstr ""
 msgid "Turnpike Station"
 msgstr ""
 
-#: dat/assets/turnpike_station.xml:29
+#: dat/assets/turnpike_station.xml:30
 msgid ""
 "Turnpike Station is a semi-privatised commerce facility. It is located on "
 "one of the major junctions in Empire space, making it a welcome opportunity "
@@ -11885,7 +11884,7 @@ msgid ""
 "a lot."
 msgstr ""
 
-#: dat/assets/turnpike_station.xml:30
+#: dat/assets/turnpike_station.xml:31
 msgid ""
 "The bar is abustle with traders making money and, in some cases, losing it. "
 "The gears of the free market grind heaviest on stations like these and "
@@ -12885,7 +12884,7 @@ msgstr ""
 msgid "Warnecke"
 msgstr ""
 
-#: dat/assets/warnecke.xml:29
+#: dat/assets/warnecke.xml:30
 msgid ""
 "This gas giant is the epicenter of a gas mining operation for the Za'lek "
 "navy and merchant marine. The gasses here are refined into fuel for the "
@@ -12893,7 +12892,7 @@ msgid ""
 "on building new and better forms of engines for the house's vessels."
 msgstr ""
 
-#: dat/assets/warnecke.xml:30
+#: dat/assets/warnecke.xml:31
 msgid ""
 "This bar smells faintly of the refining going on throughout the orbital "
 "station skimming the upper atmosphere of the gas giant Warnecke. It does "
@@ -13582,96 +13581,72 @@ msgid "Bomb"
 msgstr ""
 
 #: dat/commodity.xml:175
-msgid "Box"
-msgstr ""
-
-#: dat/commodity.xml:178
 msgid "Colonists"
 msgstr ""
 
-#: dat/commodity.xml:181
+#: dat/commodity.xml:178
 msgid "Commando"
 msgstr ""
 
-#: dat/commodity.xml:184
-msgid "Civilians"
-msgstr ""
-
-#: dat/commodity.xml:187
+#: dat/commodity.xml:181
 msgid "Datapad"
 msgstr ""
 
-#: dat/commodity.xml:190 src/land.c:1004
+#: dat/commodity.xml:184 src/land.c:1004
 msgid "Equipment"
 msgstr ""
 
-#: dat/commodity.xml:193 dat/missions/shadow/darkshadow.lua:241
-msgid "Four Winds Informant"
-msgstr ""
-
-#: dat/commodity.xml:196 src/board.c:170
+#: dat/commodity.xml:187 src/board.c:170
 msgid "Fuel"
 msgstr ""
 
-#: dat/commodity.xml:200
+#: dat/commodity.xml:191
 msgid "Gregar"
 msgstr ""
 
-#: dat/commodity.xml:203
+#: dat/commodity.xml:194
 msgid "Jorek"
 msgstr ""
 
-#: dat/commodity.xml:206
+#: dat/commodity.xml:197
 msgid "Goods"
 msgstr ""
 
-#: dat/commodity.xml:209
-msgid "Group of Nerds"
-msgstr ""
-
-#: dat/commodity.xml:212
-msgid "Love Letters"
-msgstr ""
-
-#: dat/commodity.xml:215
-msgid "Packages"
-msgstr ""
-
-#: dat/commodity.xml:218 dat/missions/neutral/runaway/runaway_cynthia.lua:30
+#: dat/commodity.xml:200 dat/missions/neutral/runaway/runaway_cynthia.lua:30
 #: dat/missions/neutral/runaway/runaway_search.lua:35
 msgid "Person"
 msgstr ""
 
-#: dat/commodity.xml:221
+#: dat/commodity.xml:203
 msgid "Phosphine"
 msgstr ""
 
-#: dat/commodity.xml:224
+#: dat/commodity.xml:206
 msgid "Prisoners"
 msgstr ""
 
-#: dat/commodity.xml:227
+#: dat/commodity.xml:209
 msgid "Prototype"
 msgstr ""
 
-#: dat/commodity.xml:230
+#: dat/commodity.xml:212
 msgid "Recipes"
 msgstr ""
 
-#: dat/commodity.xml:233
+#: dat/commodity.xml:215
 msgid "Secret Technology"
 msgstr ""
 
-#: dat/commodity.xml:236
+#: dat/commodity.xml:218
 msgid "The Rescued Children"
 msgstr ""
 
-#: dat/commodity.xml:239
+#: dat/commodity.xml:221
 msgid "Tourists"
 msgstr ""
 
 #. Clear velocity
-#: dat/commodity.xml:242 dat/missions/empire/shipping/es02.lua:168
+#: dat/commodity.xml:224 dat/missions/empire/shipping/es02.lua:168
 msgid "VIP"
 msgstr ""
 
@@ -13679,18 +13654,19 @@ msgstr ""
 msgid "Dummy"
 msgstr ""
 
-#: dat/faction.xml:14 dat/faction.xml:641
+#: dat/faction.xml:14 dat/faction.xml:640
 msgid "Independent"
 msgstr ""
 
 #. Logic to decide what to spawn, if anything.
-#. TODO: Do not spawn any NPCs on restricted assets.
+#. Do not spawn any NPCs on restricted assets.
+#. Skip blacklisted planets
 #. Chance of a jump point message showing up. As this gradually goes
 #. down, it is replaced by lore messages. See spawnNPC function below.
 #. End event on takeoff.
 #. Spawns an NPC.
 #. Select a faction for the NPC. NPCs may not have a specific faction.
-#: dat/faction.xml:31 dat/faction.xml:86 dat/events/neutral/npc.lua:307
+#: dat/faction.xml:31 dat/faction.xml:86 dat/events/neutral/npc.lua:313
 msgid "Civilian"
 msgstr ""
 
@@ -13708,8 +13684,8 @@ msgstr ""
 msgid "Proteron Dissident"
 msgstr ""
 
-#: dat/faction.xml:103 dat/faction.xml:344 dat/faction.xml:387
-#: dat/faction.xml:469 dat/faction.xml:553
+#: dat/faction.xml:103 dat/faction.xml:343 dat/faction.xml:386
+#: dat/faction.xml:468 dat/faction.xml:552
 #: dat/missions/neutral/kidnapped/traffic_00.lua:145
 #: dat/missions/neutral/kidnapped/traffic_00.lua:146
 #: dat/missions/neutral/kidnapped/traffic_00.lua:152
@@ -13718,7 +13694,7 @@ msgstr ""
 msgid "Pirate"
 msgstr ""
 
-#: dat/faction.xml:107 dat/faction.xml:349 dat/faction.xml:418
+#: dat/faction.xml:107 dat/faction.xml:348 dat/faction.xml:417
 msgid "Galactic Pirates"
 msgstr ""
 
@@ -13790,15 +13766,15 @@ msgstr ""
 #. Get a system with both FLF and Pirate presence.
 #. Change the reputation cap for the FLF.
 #. Add an entry to the FLF campaign log.
-#: dat/faction.xml:251 dat/missions/flf/flf_common.lua:82
+#: dat/faction.xml:250 dat/missions/flf/flf_common.lua:82
 msgid "FLF"
 msgstr ""
 
-#: dat/faction.xml:255
+#: dat/faction.xml:254
 msgid "Frontier Liberation Front"
 msgstr "Pohraniční osvobozenecká fronta"
 
-#: dat/faction.xml:268 dat/events/dvaered/fwA_treason.lua:131
+#: dat/faction.xml:267 dat/events/dvaered/fwA_treason.lua:131
 #: dat/events/dvaered/fwA_treason.lua:140 dat/events/dvaered/fwB_repay.lua:47
 #: dat/missions/dvaered/common.lua:11
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:324
@@ -13809,7 +13785,7 @@ msgstr "Pohraniční osvobozenecká fronta"
 msgid "Dvaered"
 msgstr "Dvaered"
 
-#: dat/faction.xml:273 dat/ships/ancestor.xml:13
+#: dat/faction.xml:272 dat/ships/ancestor.xml:13
 #: dat/ships/dvaered_ancestor.xml:14 dat/ships/dvaered_phalanx.xml:15
 #: dat/ships/dvaered_vendetta.xml:15 dat/ships/dvaered_vigilance.xml:12
 #: dat/ships/phalanx.xml:14 dat/ships/vendetta.xml:14
@@ -13817,43 +13793,43 @@ msgstr "Dvaered"
 msgid "House Dvaered"
 msgstr ""
 
-#: dat/faction.xml:288 dat/ssys/zalek.xml:2
+#: dat/faction.xml:287 dat/ssys/zalek.xml:2
 #: dat/missions/minerva/pirate2.lua:184 dat/missions/zalek/common.lua:21
 #: dat/missions/zalek/common.lua:26 dat/missions/zalek/common.lua:32
 msgid "Za'lek"
 msgstr ""
 
-#: dat/faction.xml:293
+#: dat/faction.xml:292
 msgid "House Za'lek"
 msgstr ""
 
-#: dat/faction.xml:305 dat/faction.xml:525 dat/missions/sirius/common.lua:22
+#: dat/faction.xml:304 dat/faction.xml:524 dat/missions/sirius/common.lua:22
 #: dat/missions/sirius/common.lua:28
 msgid "Sirius"
 msgstr ""
 
-#: dat/faction.xml:310
+#: dat/faction.xml:309
 msgid "House Sirius"
 msgstr ""
 
-#: dat/faction.xml:324 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
+#: dat/faction.xml:323 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
 msgid "Goddard"
 msgstr ""
 
-#: dat/faction.xml:329 dat/ships/dvaered_goddard.xml:15
+#: dat/faction.xml:328 dat/ships/dvaered_goddard.xml:15
 #: dat/ships/goddard.xml:14
 msgid "House Goddard"
 msgstr ""
 
-#: dat/faction.xml:342
+#: dat/faction.xml:341
 msgid "Wanted Pirate"
 msgstr ""
 
-#: dat/faction.xml:371 dat/missions/flf/flf_rogue.lua:49
+#: dat/faction.xml:370 dat/missions/flf/flf_rogue.lua:49
 msgid "Rogue FLF"
 msgstr ""
 
-#: dat/faction.xml:385
+#: dat/faction.xml:384
 msgid "Rogue Pirate"
 msgstr ""
 
@@ -13871,11 +13847,6 @@ msgstr ""
 #. Their outfits must be quite good
 #. Just try to avoid fight with these fellas
 #. Their outfits must be quite good
-#. the chances you have to get an ambush
-#. The player is landing on the mission planet to get the box
-#. Job is done
-#. Ambush !
-#. the probability of an ambush goes up when you cross a system without meeting any ennemy
 #. Adding the cargo
 #. remove the spy
 #. Looking at the player ship's class in order to spawn the most dangerous enemy to him
@@ -13890,19 +13861,19 @@ msgstr ""
 #. spawning Admonishers
 #. spawning a Kestrel with massive missile weaponry
 #. spawning Ancestors
-#: dat/faction.xml:401 dat/faction.xml:579
+#: dat/faction.xml:400 dat/faction.xml:578
 #: dat/missions/neutral/kidnapped/traffic_01.lua:237
 #: dat/missions/neutral/kidnapped/traffic_01.lua:255
 #: dat/missions/neutral/kidnapped/traffic_01.lua:275
-#: dat/missions/shark/sh02_tapping.lua:241
-#: dat/missions/shark/sh02_tapping.lua:264
-#: dat/missions/shark/sh02_tapping.lua:289
-#: dat/missions/shark/sh02_tapping.lua:309
-#: dat/missions/shark/sh02_tapping.lua:334
+#: dat/missions/shark/sh02_tapping.lua:242
+#: dat/missions/shark/sh02_tapping.lua:265
+#: dat/missions/shark/sh02_tapping.lua:290
+#: dat/missions/shark/sh02_tapping.lua:310
+#: dat/missions/shark/sh02_tapping.lua:335
 msgid "Mercenary"
 msgstr ""
 
-#: dat/faction.xml:412
+#: dat/faction.xml:411
 msgid "Raider"
 msgstr ""
 
@@ -13943,60 +13914,60 @@ msgstr ""
 #. --
 #. Extra derelicts
 #. Main derelict
-#: dat/faction.xml:429 dat/events/taiomi/find.lua:49
+#: dat/faction.xml:428 dat/events/taiomi/find.lua:49
 #: dat/events/taiomi/find.lua:64
 msgid "Derelict"
 msgstr ""
 
-#: dat/faction.xml:439 dat/faction.xml:455
+#: dat/faction.xml:438 dat/faction.xml:454
 msgid "Four Winds"
 msgstr ""
 
-#: dat/faction.xml:453
+#: dat/faction.xml:452
 msgid "Rogue Four Winds"
 msgstr ""
 
-#: dat/faction.xml:467
+#: dat/faction.xml:466
 msgid "Shadow_pirates"
 msgstr ""
 
-#: dat/faction.xml:483
+#: dat/faction.xml:482
 msgid "Diplomatic"
 msgstr ""
 
-#: dat/faction.xml:497
+#: dat/faction.xml:496
 msgid "Associates"
 msgstr ""
 
-#: dat/faction.xml:510 dat/faction.xml:539 dat/faction.xml:593
+#: dat/faction.xml:509 dat/faction.xml:538 dat/faction.xml:592
 msgid "Thugs"
 msgstr ""
 
-#: dat/faction.xml:523
+#: dat/faction.xml:522
 msgid "Achack_sirius"
 msgstr ""
 
-#: dat/faction.xml:537
+#: dat/faction.xml:536
 msgid "Achack_thugs"
 msgstr ""
 
-#: dat/faction.xml:551
+#: dat/faction.xml:550
 msgid "Kidnappers"
 msgstr ""
 
-#: dat/faction.xml:565
+#: dat/faction.xml:564
 msgid "Nasin"
 msgstr ""
 
-#: dat/faction.xml:577
+#: dat/faction.xml:576
 msgid "Comingout_associates"
 msgstr ""
 
-#: dat/faction.xml:591
+#: dat/faction.xml:590
 msgid "Comingout_thugs"
 msgstr ""
 
-#: dat/faction.xml:605
+#: dat/faction.xml:604
 msgid "DHC"
 msgstr ""
 
@@ -14014,16 +13985,16 @@ msgstr ""
 #. I use Thugs and Associates based factions because they won't interact with anybody
 #. mass of the player's victims
 #. The heaviest ships will surround the leader
-#: dat/faction.xml:623 dat/events/dvaered/warlords_battle.lua:139
+#: dat/faction.xml:622 dat/events/dvaered/warlords_battle.lua:139
 #: dat/events/dvaered/warlords_battle.lua:180
 msgid "Warlords"
 msgstr ""
 
-#: dat/faction.xml:627
+#: dat/faction.xml:626
 msgid "Dvaered Warlords"
 msgstr ""
 
-#: dat/faction.xml:639
+#: dat/faction.xml:638
 msgid "Strangelove"
 msgstr ""
 
@@ -14268,7 +14239,7 @@ msgstr ""
 #. If any pirates still alive, send player back out.
 #. A fellow warrior says hello in passing if player jumps out of the system without landing
 #: dat/fleet.xml:140 dat/fleet.xml:807 dat/fleet.xml:808
-#: dat/missions/empire/collective/ec06.lua:229
+#: dat/missions/empire/collective/ec06.lua:228
 #: dat/missions/neutral/drunkard.lua:164 dat/missions/neutral/dts_00.lua:265
 msgid "Trader Mule"
 msgstr ""
@@ -14550,14 +14521,14 @@ msgstr ""
 #: dat/fleet.xml:371 dat/fleet.xml:372 dat/fleet.xml:373 dat/fleet.xml:374
 #: dat/fleet.xml:375 dat/fleet.xml:390 dat/fleet.xml:391 dat/fleet.xml:392
 #: dat/missions/empire/collective/ec00.lua:142
-#: dat/missions/empire/collective/ec06.lua:170
+#: dat/missions/empire/collective/ec06.lua:169
 msgid "Collective Drone"
 msgstr ""
 
 #: dat/fleet.xml:357 dat/fleet.xml:376 dat/fleet.xml:377 dat/fleet.xml:378
 #: dat/fleet.xml:379 dat/fleet.xml:380 dat/fleet.xml:381 dat/fleet.xml:382
 #: dat/fleet.xml:383 dat/fleet.xml:393
-#: dat/missions/empire/collective/ec06.lua:168
+#: dat/missions/empire/collective/ec06.lua:167
 msgid "Collective Heavy Drone"
 msgstr ""
 
@@ -14726,7 +14697,7 @@ msgstr ""
 #. Disable spawning and clear pilots -> makes it more epic
 #. Position trinity on the other side of the player
 #: dat/fleet.xml:748 dat/missions/empire/collective/ec05.lua:198
-#: dat/missions/empire/collective/ec06.lua:159
+#: dat/missions/empire/collective/ec06.lua:158
 msgid "ESS Trinity"
 msgstr ""
 
@@ -14738,7 +14709,7 @@ msgstr ""
 #. Handles jumping to target system
 #. Entering target system?
 #. Create big battle
-#: dat/fleet.xml:755 dat/missions/empire/collective/ec06.lua:154
+#: dat/fleet.xml:755 dat/missions/empire/collective/ec06.lua:153
 msgid "Starfire"
 msgstr ""
 
@@ -14799,12 +14770,12 @@ msgstr ""
 #. Leaders will patrol between their start position and this one
 #: dat/fleet.xml:852 dat/fleet.xml:859 dat/fleet.xml:860 dat/fleet.xml:861
 #: dat/fleet.xml:862 dat/events/neutral/shadow_comm.lua:50
-#: dat/missions/shadow/darkshadow.lua:239
-#: dat/missions/shadow/darkshadow.lua:320
+#: dat/missions/shadow/darkshadow.lua:240
 #: dat/missions/shadow/darkshadow.lua:321
 #: dat/missions/shadow/darkshadow.lua:322
 #: dat/missions/shadow/darkshadow.lua:323
 #: dat/missions/shadow/darkshadow.lua:324
+#: dat/missions/shadow/darkshadow.lua:325
 msgid "Four Winds Vendetta"
 msgstr ""
 
@@ -14813,17 +14784,10 @@ msgstr ""
 #. The continuation of the ambush, for timer purposes
 #. Spawns a wing of Lancelots that intercept the player.
 #: dat/fleet.xml:869 dat/fleet.xml:870 dat/fleet.xml:871
-#: dat/missions/shadow/darkshadow.lua:453
+#: dat/missions/shadow/darkshadow.lua:454
 msgid "Four Winds Lancelot"
 msgstr ""
 
-#. This is here because setDesc initializes the OSD.
-#. This is the "real" start of the mission. Get yer mission variables here!
-#. Handle boarding of the Seiryuu
-#. Briefing
-#. Debriefing
-#. 1M
-#. Board hook for Joe
 #. Jump-out hook
 #. Keep track of which system the player came from
 #. Enter hook
@@ -14846,7 +14810,7 @@ msgstr ""
 #. Just in case.
 #. not escorting.
 #. case enter system where Seiryuu is
-#: dat/fleet.xml:878 dat/missions/shadow/darkshadow.lua:220
+#: dat/fleet.xml:878 dat/missions/shadow/darkshadow.lua:221
 #: dat/missions/shadow/shadowrun.lua:292
 #: dat/missions/shadow/shadowvigil.lua:281
 #: dat/missions/shadow/shadowvigil.lua:412
@@ -14866,7 +14830,7 @@ msgstr ""
 #. Makes the squads patrol their routes.
 #. Check if any of the patrolling leaders can see the player, and if so intercept.
 #. Spawns the Genbu
-#: dat/fleet.xml:885 dat/missions/shadow/darkshadow.lua:415
+#: dat/fleet.xml:885 dat/missions/shadow/darkshadow.lua:416
 msgid "Genbu"
 msgstr ""
 
@@ -20643,10 +20607,6 @@ msgstr ""
 msgid "Cleai"
 msgstr ""
 
-#: dat/ssys/coliseum.xml:2
-msgid "Coliseum"
-msgstr ""
-
 #: dat/ssys/copernicus.xml:2
 msgid "Copernicus"
 msgstr ""
@@ -20661,6 +20621,16 @@ msgstr ""
 
 #: dat/ssys/corvus.xml:2
 msgid "Corvus"
+msgstr ""
+
+#. See if we start the event
+#. Accept mission
+#. Set details
+#. Add to log
+#. Create the OSD
+#: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:127
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:91
+msgid "Crimson Gauntlet"
 msgstr ""
 
 #: dat/ssys/cygnus.xml:2
@@ -21071,7 +21041,7 @@ msgstr ""
 msgid "Kraft"
 msgstr ""
 
-#: dat/ssys/kretogg.xml:2 dat/events/discovery.lua:92
+#: dat/ssys/kretogg.xml:2 dat/events/discovery.lua:100
 msgid "Kretogg"
 msgstr ""
 
@@ -21969,40 +21939,53 @@ msgid "Life is short, spend it at Minerva Station in the Limbo System!"
 msgstr "Život je krátký, prožijte ho na stanici Minerva v systému Limbo!"
 
 #. Faction specific messages
-#: dat/ai/advertiser.lua:43
+#: dat/ai/advertiser.lua:46
 msgid "Do you love your Emperor as much as he loves you?"
 msgstr "Milujete svého císaře stejně jako on vás?"
 
-#: dat/ai/advertiser.lua:44
+#: dat/ai/advertiser.lua:47
 msgid "You're quick and dependable? The Emperor needs you in the Armada!"
 msgstr "Jsi rychlý a spolehlivý? Císař tě potřebuje v armádě!"
 
-#: dat/ai/advertiser.lua:45
+#: dat/ai/advertiser.lua:48
 msgid "Help the police help you: denounce the dissidents."
 msgstr "Pomozte policii: vypovězte disidenty."
 
-#: dat/ai/advertiser.lua:49
+#: dat/ai/advertiser.lua:53
 msgid "Only your hard work will save the Dvaered economy!"
 msgstr "Pouze vaše tvrdá práce zachrání Dvaeredskou ekonomiku!"
 
-#: dat/ai/advertiser.lua:50
+#: dat/ai/advertiser.lua:54
 msgid "Together, we will beat the economic crisis!"
 msgstr "Společně porazíme hospodářskou krizi!"
 
-#: dat/ai/advertiser.lua:51
-msgid "Bet on Totoran and win incredible sums thanks to the arena!"
+#: dat/ai/advertiser.lua:55
+#, fuzzy
+#| msgid "Bet on Totoran and win incredible sums thanks to the arena!"
+msgid "Bet on Totoran and win incredible sums thanks to the Crimson Gauntlet!"
 msgstr "Sázejte na Totoran a díky aréně vyhrajte neuvěřitelné částky!"
 
-#: dat/ai/advertiser.lua:55
+#: dat/ai/advertiser.lua:60
 msgid "Special offer on Crow: buy one IR-eye, and the second comes for free!"
 msgstr "Speciální nabídka na Crow: kupte si jedno IR-oko a druhé je zdarma!"
 
+#: dat/ai/advertiser.lua:61
+msgid ""
+"Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point "
+"Zero Station!"
+msgstr ""
+
 #. Note that when running in the main menu background, player.name() might not exist (==nil), so
 #. we need to add a check for that.
-#: dat/ai/advertiser.lua:62
-#, lua-format
+#: dat/ai/advertiser.lua:69
+#, fuzzy, lua-format
+#| msgid ""
+#| "Dear Pr. %s, your recent work has left a deep impression on us. Due to "
+#| "the advance, novelty, and possible wide application of your innovation, "
+#| "we invite you to contribute other unpublished papers of relevant fields "
+#| "to the Interstellar Pay-to-win Journal for Mathematics and Applications."
 msgid ""
-"Dear Pr. %s, your recent work has left a deep impression on us. Due to the "
+"Dear Prof. %s, your recent work has left a deep impression on us. Due to the "
 "advance, novelty, and possible wide application of your innovation, we "
 "invite you to contribute other unpublished papers of relevant fields to the "
 "Interstellar Pay-to-win Journal for Mathematics and Applications."
@@ -22012,20 +21995,30 @@ msgstr ""
 "přispění dalších nepublikovaných příspěvků příslušných oborů do Žurnálu "
 "Interstellar Pay-to-win pro matematiku a aplikace."
 
-#: dat/ai/advertiser.lua:64
+#: dat/ai/advertiser.lua:71
+#, fuzzy
+#| msgid ""
+#| "Want to solve a large-dimensional stochastic PDE? the LMKSTD method is "
+#| "what you need!"
 msgid ""
-"Want to solve a large-dimensional stochastic PDE? the LMKSTD method is what "
+"Want to solve a large-dimensional stochastic PDE? The LMKSTD method is what "
 "you need!"
 msgstr ""
 "Chcete vyřešit velkoplošný stochastický PDE? metoda LMKSTD je to, co "
 "potřebujete!"
 
-#: dat/ai/advertiser.lua:65
-msgid ""
-"You love non-convex minimization? Join Ruadan's Computation Science Lab!"
+#: dat/ai/advertiser.lua:72
+#, fuzzy
+#| msgid ""
+#| "You love non-convex minimization? Join Ruadan's Computation Science Lab!"
+msgid "Love non-convex minimization? Join Ruadan's Computation Science Lab!"
 msgstr ""
 "Máte rádi nekonvexní minimalizaci? Připojte se k Ruadanské výpočetní vědecké "
 "laboratoři!"
+
+#: dat/ai/advertiser.lua:77
+msgid "Want a new look? Try Verrill's Ceremonial Robes at Burnan!"
+msgstr ""
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #.
@@ -22053,10 +22046,11 @@ msgstr "Nedám ti palivo!"
 #. Start round
 #. clear remaining pilots if necessary
 #. Heal up and be nice to the player
+#. Have to fill ammo or deployed fighters get "lost"
 #. TODO reset outfit cooldown stuff
 #. teleport to middle
 #: dat/ai/base.lua:9 dat/ai/collective.lua:11 dat/ai/drone_miner.lua:10
-#: dat/missions/dvaered/coliseum.lua:312
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:287
 msgid "No response."
 msgstr "Žádná odpověď."
 
@@ -22271,6 +22265,7 @@ msgstr "\"Jasná věc.\""
 msgid "I'm out of here."
 msgstr "Mizím odsud."
 
+#. Finish up creation
 #. require("ai/personality/patrol") -- Messes up the ai
 #. Do not distress
 #. Settings
@@ -24217,95 +24212,99 @@ msgstr ""
 msgid "Gambler's Paradise"
 msgstr ""
 
-#: dat/events/discovery.lua:75
+#: dat/events/discovery.lua:78
+msgid "Brave your Fate in the #rCrimson Gauntlet#0"
+msgstr ""
+
+#: dat/events/discovery.lua:83
 msgid "The Devastation of Haven"
 msgstr ""
 
-#: dat/events/discovery.lua:76
+#: dat/events/discovery.lua:84
 msgid "The Old Wound That Never Heals"
 msgstr ""
 
-#: dat/events/discovery.lua:87
+#: dat/events/discovery.lua:95
 msgid "They Will Never Destroy Us"
 msgstr ""
 
-#: dat/events/discovery.lua:93
+#: dat/events/discovery.lua:101
 msgid "Any Business is Good Business"
 msgstr ""
 
 #. These trigger for specific factions controlled systems
-#: dat/events/discovery.lua:101
+#: dat/events/discovery.lua:109
 msgid "The Za'lek Territories"
 msgstr ""
 
-#: dat/events/discovery.lua:102
+#: dat/events/discovery.lua:110
 msgid "Knowledge at All Costs"
 msgstr ""
 
-#: dat/events/discovery.lua:107
+#: dat/events/discovery.lua:115
 msgid "The Dvaered Territories"
 msgstr ""
 
-#: dat/events/discovery.lua:108
+#: dat/events/discovery.lua:116
 msgid "The Warlords are Eager for Blood"
 msgstr ""
 
-#: dat/events/discovery.lua:113
+#: dat/events/discovery.lua:121
 msgid "The Soromid Territories"
 msgstr ""
 
-#: dat/events/discovery.lua:114
+#: dat/events/discovery.lua:122
 msgid "Human is Just an Ephemeral Condition"
 msgstr ""
 
-#: dat/events/discovery.lua:119
+#: dat/events/discovery.lua:127
 msgid "The Sirius Territories"
 msgstr ""
 
-#: dat/events/discovery.lua:120
+#: dat/events/discovery.lua:128
 msgid "Sirichana Will Lead the Way"
 msgstr ""
 
-#: dat/events/discovery.lua:125
+#: dat/events/discovery.lua:133
 msgid "The Proteron Territories"
 msgstr ""
 
-#: dat/events/discovery.lua:126
+#: dat/events/discovery.lua:134
 msgid "United through Sacrifice"
 msgstr ""
 
-#: dat/events/discovery.lua:131
+#: dat/events/discovery.lua:140
 msgid "The Thurion Space"
 msgstr ""
 
-#: dat/events/discovery.lua:132
+#: dat/events/discovery.lua:141
 msgid "We Shall All Become One"
 msgstr ""
 
-#: dat/events/discovery.lua:137
+#: dat/events/discovery.lua:146
 msgid "The Frontier"
 msgstr "Pohraničí"
 
-#: dat/events/discovery.lua:138
+#: dat/events/discovery.lua:147
 msgid "Leading to a New Future"
 msgstr ""
 
-#: dat/events/discovery.lua:143
+#: dat/events/discovery.lua:152
 msgid "The Collective"
 msgstr ""
 
-#: dat/events/discovery.lua:144
+#: dat/events/discovery.lua:153
 msgid "Do Robots Dream of Electric Sheep?"
 msgstr ""
 
 #. Custom events can handle custom triggers such as nebula systems
 #. These are currently the only systems from which the player can
 #. enter the nebula
-#: dat/events/discovery.lua:170
+#: dat/events/discovery.lua:180
 msgid "The Nebula"
 msgstr "Mlhovina"
 
-#: dat/events/discovery.lua:171
+#: dat/events/discovery.lua:181
 msgid "Grim Reminder of Our Fragility"
 msgstr ""
 
@@ -24314,24 +24313,25 @@ msgstr ""
 #. Trigger
 #. Nothing triggered
 #. Ends when player lands or leaves either way
-#: dat/events/discovery.lua:240
+#: dat/events/discovery.lua:250
 #, lua-format
 msgid "You found #o%s!"
 msgstr ""
 
 #. Log and message
-#: dat/events/discovery.lua:243 dat/events/shiplog.lua:41
+#: dat/events/discovery.lua:253 dat/events/shiplog.lua:41
 msgid "Travel Log"
 msgstr ""
 
-#: dat/events/discovery.lua:243 src/map.c:1932
+#: dat/events/discovery.lua:253 src/map.c:1932
 msgid "Discovery"
 msgstr ""
 
 #. Break autonav
+#. If custom function, run it
 #. Mark as done
 #. Play sound and show message
-#: dat/events/discovery.lua:261
+#: dat/events/discovery.lua:276
 msgid "fonts/CormorantUnicase-Medium.ttf"
 msgstr ""
 
@@ -24990,6 +24990,410 @@ msgstr ""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Totoran Station Events">
+#. <trigger>land</trigger>
+#. <chance>100</chance>
+#. <cond>planet.cur()==planet.get("Totoran")</cond>
+#. </event>
+#. --
+#.
+#. -- Event handling NPCs and such at Totoran
+#. --
+#: dat/events/dvaered/totoran.lua:19
+msgid "Spectator"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:20
+msgid "Aficionado"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:21
+msgid "Gauntlet Fan"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:24
+msgid "A person enjoying their time at the station."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:25
+msgid "An individual taking a break from viewing the action."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:26
+msgid "A spectator that looks strangely out of place."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:27
+msgid "A person enjoying some drinks."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:30
+msgid ""
+"\"Sometimes when watching some of the competitions, I forget it is all just "
+"virtual reality.\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:31
+msgid ""
+"\"The realism of virtual reality here is impressive! It almost feels like "
+"it's real!\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:33 dat/events/minerva/station.lua:68
+#, lua-format
+msgid ""
+"\"I came all the way from %s to be here! We don't have anything like this "
+"back at home.\""
+msgstr ""
+
+#. No Dvaered
+#: dat/events/dvaered/totoran.lua:36
+msgid ""
+"\"The Dvaered sure know how to put on a good show. I love seeing it rain "
+"Mace Rockets!\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:37
+msgid ""
+"\"It's a shame that they require you to own the ship you want to use to "
+"enter the virtual reality competitions. I would love to try fly one of those "
+"majestic Dvaered Goddards.\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:38
+msgid ""
+"\"I like watching the competitions between fighters, it's incredible all the "
+"moves they can pull off.\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:39
+msgid ""
+"\"I tried to compete in my Llama, but it doesn't stand a chance against even "
+"a single Hyena.\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:40
+msgid ""
+"\"I was always told that Dvaered technology was primitive, but the virtual "
+"reality of the Crimson Gauntlet is incredible!\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:41
+msgid ""
+"\"There's nothing quite like seeing two capital ships duke it out. I love "
+"watching railguns blasting away.\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:42
+msgid ""
+"\"I used to think the Za'lek virtual games were great, but this is so much "
+"better!\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:45
+msgid "Gauntlet Pilot"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:46
+msgid "Resting Pilot"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:47
+msgid "Tired Pilot"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:50
+msgid "A pilot enjoying some downtime between competitions."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:51
+msgid "A tired pilot taking a break."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:52
+msgid "A pilot lounging around."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:55
+msgid ""
+"\"Some people say that the Crimson gauntlet encourages and promotes "
+"violence, but I've been destroying ships long before I started participating "
+"in the Crimson Gauntlet!\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:57
+#, lua-format
+msgid ""
+"\"Hey, didn't I see you flying a %s in the Crimson Gauntlet? Nice flying.\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:60
+msgid ""
+"\"I was doing so well in my Hyena, but it just lacks the firepower to take "
+"on larger ships. Maybe I should upgrade to a Vendetta.\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:61
+msgid ""
+"\"The Crimson Gauntlet has really taught me to appreciate the small things "
+"in life, you know, blowing up your enemies with mace rockets and such.\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:62
+msgid ""
+"\"I used to be a pretty sloppy pilot before participating in the Crimson "
+"Gauntlet. I still am, but I used to be too.\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:63
+msgid ""
+"\"Sometimes I get motion sickness from the virtual reality. What's more "
+"troublesome is it also happens when I fly my real ship!\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:64
+msgid ""
+"\"Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to "
+"realize I haven't actually been blown up to smithereens.\""
+msgstr ""
+
+#. Create random noise NPCs while avoiding duplicate messages
+#. Custom NPCs
+#. Just do random noise
+#: dat/events/dvaered/totoran.lua:114
+#, fuzzy
+#| msgid "You approach the chicken and thug and try to mediate."
+msgid "You approach the Crimson Gauntlet guide."
+msgstr "Přistoupíš ke kuřeti a násilníkovi a pokusíš se vyjednávat."
+
+#: dat/events/dvaered/totoran.lua:116
+#, lua-format
+msgid ""
+"\"Hello and welcome to the Crimson Gauntlet! You have %s. What would you "
+"like to do?\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:118 dat/events/minerva/station.lua:204
+msgid "Information"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:119
+msgid "Trade Emblems"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:120 dat/events/minerva/station.lua:206
+#: dat/events/minerva/station.lua:397 dat/events/minerva/station.lua:473
+#: dat/events/minerva/station.lua:565 dat/missions/minerva/kex1.lua:134
+#: dat/missions/minerva/kex2.lua:150 dat/missions/minerva/maikki1.lua:205
+#: dat/missions/minerva/maikki1.lua:292 dat/missions/minerva/maikki1.lua:534
+#: dat/missions/minerva/maikki1.lua:902 dat/missions/minerva/maikki2.lua:241
+#: dat/missions/minerva/maikki2.lua:505 dat/missions/minerva/maikki2.lua:772
+#: dat/missions/minerva/pirate3.lua:176 src/board.c:174
+msgid "Leave"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:124
+msgid "What would you like to know about?"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:128
+msgid "Gauntlet History"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:129
+msgid "Crimson Challenge"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:130
+msgid "Totoran Emblems"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:131
+#, fuzzy
+#| msgid "Nothing personal."
+msgid "Nothing."
+msgstr "Nic osobního."
+
+#: dat/events/dvaered/totoran.lua:135
+msgid ""
+"The Crimson Gauntlet is allows you to experience combat with your ships in "
+"virtual reality, without having to worry about any real damage. All you do "
+"is scan your ship and its outfits, and you will be ready to participate in "
+"all the challenges."
+msgstr ""
+
+#. incident is 593:3726.4663
+#: dat/events/dvaered/totoran.lua:140
+msgid ""
+"The Crimson Gauntlet was founded originally in mid-UST 568, as a program for "
+"training Dvaered Military. Of course, back then they did not have such good "
+"virtual reality technology and instead relied on actual combat. However, as "
+"the number of accidents and casualties grew, they ended up starting a move "
+"to virtual reality, and now the Crimson Gauntlet boasts some of the best "
+"full immersion virtual reality experiences in the Universe."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:141
+msgid ""
+"Eventually, to encourage the warrior spirit among the general population, in "
+"UST 588, 20 cycles after its creation, the Crimson Gauntlet was open to the "
+"general public as a virtual reality experience. This is one of the few "
+"places in the universe where you can experience hard space combat without "
+"having a fear of dying. If your ship is destroyed, you are only dropped out "
+"of the virtual reality environment."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:142
+msgid ""
+"Many famous pilots have had their formation here, and it is also frequented "
+"by scouting agencies from across the Universe to find good pilots. Not to "
+"mention all the prizes that can be won from competing in the tournaments."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:146
+msgid ""
+"The Crimson Gauntlet Challenge is a set of challenges split into three "
+"types: skirmisher, for small ships like fighters and bombers; warrior, for "
+"ships like corvettes and destroyers; and warlord, for the larger ships such "
+"as cruisers or carriers. Once you enter a specific challenge, you will face "
+"waves of increasingly hard opponents which you must defeat."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:147
+msgid ""
+"You get bonus points depending on your ship class with respect to the "
+"category. Using smaller ships will give you a bonus in general. You also get "
+"a bonus for clearing the waves faster. If you are defeated, the total score "
+"up until your loss will be used to compute your rewards. As this is all done "
+"in virtual reality, you don't have to worry about any damage to your real "
+"ships!"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:155
+msgid "Is there anything else you would like to know about?"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:159
+#, lua-format
+msgid "\"You have %s. What would you like to trade for?\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:161
+msgid "Unlock Warrior Challenge"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:162
+msgid ""
+"Unlocks participation in the difficult Warrior Challenge meant for Corvette "
+"and Destroyer-class ships."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:163
+msgid "Unlock Warlord Challenge"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:164
+msgid ""
+"Unlocks participation in the most difficult Warlord Challenge meant for "
+"Cruiser and Carrier-class ships."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:166
+msgid "Unlock Double Damage Enemies Perk"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:167
+msgid ""
+"Unlocks the Double Damage Enemies Perk, which causes all enemies to double "
+"the amount of damage. While this increases the challenge difficulty, it also "
+"immensely increases the rewards."
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:168
+msgid "Unlock No Healing Perk"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:169
+msgid ""
+"Unlocks the No Healing Perk, which makes it so you don't get healed between "
+"waves. While this increases the challenge difficulty, it also increases the "
+"rewards."
+msgstr ""
+
+#. Jump in case of 'Back'
+#. Not enough money.
+#. Jump in case of 'Back'
+#. Special case
+#. Not enough money.
+#. Not enough money.
+#: dat/events/dvaered/totoran.lua:191 dat/events/dvaered/totoran.lua:241
+#: dat/events/minerva/station.lua:299 dat/events/minerva/station.lua:342
+msgid "unknown tradein type"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:207 dat/events/minerva/station.lua:312
+#: dat/missions/empire/collective/ec03.lua:62 src/map_find.c:431
+#, c-format, lua-format
+msgid "%s (%s)"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:210 dat/events/minerva/station.lua:219
+#: dat/events/minerva/station.lua:319 src/load.c:387
+msgid "Back"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:215
+#, lua-format
+msgid ""
+"\"You only have %s, you would need %s more to purchase the '%s'.\n"
+"Is there anything else you would like to purchase?\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:225
+#, lua-format
+msgid ""
+"\"Are you sure you want to trade in for the '#w%s#0'? The description is as "
+"follows:\"\n"
+"#w%s#0\""
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:230 dat/events/minerva/station.lua:330
+#: dat/events/minerva/station.lua:357
+msgid "Trade"
+msgstr ""
+
+#. Run callback.
+#. Rebuild tables, as we've added outfits.
+#. Remove non-cores, replace cores with defaults, etc.
+#. Build list of suitable tasks.
+#. "Cancel"
+#. Only "Cancel" remains, nothing to do.
+#. Run callback.
+#: dat/events/dvaered/totoran.lua:231 dat/events/minerva/station.lua:331
+#: dat/events/minerva/station.lua:358 dat/rescue.lua:44 dat/rescue.lua:55
+#: dat/rescue.lua:115 dat/rescue.lua:164 src/dialogue.c:736 src/escort.c:288
+#: src/map_find.c:244 src/options.c:263 src/options.c:759 src/options.c:866
+#: src/options.c:1124 src/options.c:1178
+msgid "Cancel"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:245
+msgid "\"Hope you enjoy your purchase!\""
+msgstr ""
+
+#. played backwards so slides left
+#: dat/events/dvaered/totoran.lua:249 dat/events/minerva/station.lua:591
+#: dat/missions/minerva/kex1.lua:230 dat/missions/minerva/kex2.lua:204
+#: dat/missions/minerva/maikki1.lua:367 dat/missions/minerva/maikki2.lua:578
+#: dat/missions/minerva/pirate3.lua:262
+msgid "You take your leave."
+msgstr ""
+
+#.
+#. -- Event is over when player takes off.
+#. --
+#.
+#. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Warlords battle">
 #. <trigger>enter</trigger>
 #. <chance>5</chance>
@@ -25579,9 +25983,8 @@ msgid ""
 msgstr ""
 
 #. { ship = "Llama",       royalty = 0.05 },
-#: dat/events/hired_escorts.lua:148 dat/missions/dvaered/championship.lua:100
-#: dat/missions/dvaered/championship.lua:103
-msgid "Pilot"
+#: dat/events/hired_escorts.lua:148
+msgid "Pilot for Hire"
 msgstr ""
 
 #: dat/events/hired_escorts.lua:149
@@ -26511,7 +26914,7 @@ msgid "Patron"
 msgstr ""
 
 #: dat/events/minerva/station.lua:48
-msgid "A gambling patron enjoying his time at the station."
+msgid "A gambling patron enjoying their time at the station."
 msgstr ""
 
 #: dat/events/minerva/station.lua:49
@@ -26521,7 +26924,7 @@ msgid ""
 msgstr ""
 
 #: dat/events/minerva/station.lua:50
-msgid "A patron who seems down on his luck."
+msgid "A patron who seems down on their luck."
 msgstr ""
 
 #: dat/events/minerva/station.lua:51
@@ -26575,13 +26978,6 @@ msgstr ""
 msgid ""
 "\"This place is great! I still have no idea how to play blackjack, but I "
 "just keep on playing again and again against that Cyborg Chicken.\""
-msgstr ""
-
-#: dat/events/minerva/station.lua:68
-#, lua-format
-msgid ""
-"\"I came all the way from %s to be here! We don't have anything like this "
-"back at home.\""
 msgstr ""
 
 #: dat/events/minerva/station.lua:71
@@ -26761,23 +27157,8 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: dat/events/minerva/station.lua:204
-msgid "Information"
-msgstr ""
-
 #: dat/events/minerva/station.lua:205 dat/events/minerva/station.lua:217
 msgid "Trade-in"
-msgstr ""
-
-#: dat/events/minerva/station.lua:206 dat/events/minerva/station.lua:397
-#: dat/events/minerva/station.lua:473 dat/events/minerva/station.lua:565
-#: dat/missions/minerva/kex1.lua:134 dat/missions/minerva/kex2.lua:150
-#: dat/missions/minerva/maikki1.lua:205 dat/missions/minerva/maikki1.lua:292
-#: dat/missions/minerva/maikki1.lua:534 dat/missions/minerva/maikki1.lua:902
-#: dat/missions/minerva/maikki2.lua:241 dat/missions/minerva/maikki2.lua:505
-#: dat/missions/minerva/maikki2.lua:772 dat/missions/minerva/pirate3.lua:176
-#: src/board.c:174
-msgid "Leave"
 msgstr ""
 
 #: dat/events/minerva/station.lua:209
@@ -26949,16 +27330,40 @@ msgstr ""
 #. @tparam @{shaderparams} params Parameter table where "color" field is used.
 #. --
 #.
+#. -- Implementation of parts of the Naev toolkit... in Lua!
+#. --
+#.
+#. -- Global functions
+#. --
+#.
+#. -- Important functions
+#. --
+#.
+#. -- Window class
+#. --
+#. Draw background
+#. Set scissors
+#. Draw widgets ontop
+#. Restore scissors
+#.
+#. -- Widget class
+#. --
+#.
+#. -- Button widget
+#. --
+#. cFontGrey
+#.
+#. -- Text widget
+#. --
+#.
+#. -- Rectangle widget
+#. --
+#.
 #. -- Helper functions and defines for the Minerva Station campaigns
 #. --
 #. Main Characters
 #: dat/events/minerva/station.lua:218 dat/scripts/minerva.lua:12
 msgid "Cyborg Chicken"
-msgstr ""
-
-#: dat/events/minerva/station.lua:219 dat/events/minerva/station.lua:319
-#: src/load.c:387
-msgid "Back"
 msgstr ""
 
 #: dat/events/minerva/station.lua:222
@@ -27034,23 +27439,9 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#. Jump in case of 'Back'
-#. Special case
-#. Not enough money.
-#. Not enough money.
-#: dat/events/minerva/station.lua:299 dat/events/minerva/station.lua:342
-msgid "unknown tradein type"
-msgstr ""
-
 #: dat/events/minerva/station.lua:310
 #, lua-format
 msgid "%s (#rSOLD OUT#0)"
-msgstr ""
-
-#: dat/events/minerva/station.lua:312
-#: dat/missions/empire/collective/ec03.lua:62 src/map_find.c:431
-#, c-format, lua-format
-msgid "%s (%s)"
 msgstr ""
 
 #. Add special ticket
@@ -27066,24 +27457,6 @@ msgid ""
 "\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w%s#0'? THE DESCRIPTION IS AS "
 "FOLLOWS:\"\n"
 "#w%s#0"
-msgstr ""
-
-#: dat/events/minerva/station.lua:330 dat/events/minerva/station.lua:357
-msgid "Trade"
-msgstr ""
-
-#. Run callback.
-#. Rebuild tables, as we've added outfits.
-#. Remove non-cores, replace cores with defaults, etc.
-#. Build list of suitable tasks.
-#. "Cancel"
-#. Only "Cancel" remains, nothing to do.
-#. Run callback.
-#: dat/events/minerva/station.lua:331 dat/events/minerva/station.lua:358
-#: dat/rescue.lua:44 dat/rescue.lua:55 dat/rescue.lua:115 dat/rescue.lua:164
-#: src/dialogue.c:736 src/escort.c:288 src/map_find.c:244 src/options.c:263
-#: src/options.c:759 src/options.c:866 src/options.c:1124 src/options.c:1178
-msgid "Cancel"
 msgstr ""
 
 #: dat/events/minerva/station.lua:338
@@ -27228,16 +27601,6 @@ msgstr ""
 msgid ""
 "You decide against telling Maikki anything. It does not seem like it is the "
 "time, unless you wish to get murdered by a rampant cyborg duck."
-msgstr ""
-
-#. played backwards so slides left
-#. TODO first time message
-#. TODO info
-#: dat/events/minerva/station.lua:591 dat/missions/dvaered/coliseum.lua:102
-#: dat/missions/minerva/kex1.lua:230 dat/missions/minerva/kex2.lua:204
-#: dat/missions/minerva/maikki1.lua:367 dat/missions/minerva/maikki2.lua:578
-#: dat/missions/minerva/pirate3.lua:262
-msgid "You take your leave."
 msgstr ""
 
 #.
@@ -28734,65 +29097,65 @@ msgstr ""
 #. These descriptions will be picked at random, and may be picked multiple times in one generation.
 #. Remember that any description can end up with any portrait, so don't make any assumptions
 #. about the appearance of the NPC!
-#: dat/events/neutral/npc.lua:34
+#: dat/events/neutral/npc.lua:35
 msgid "This person seems to be here to relax."
 msgstr ""
 
-#: dat/events/neutral/npc.lua:35
+#: dat/events/neutral/npc.lua:36
 msgid "There is a civilian sitting on one of the tables."
 msgstr ""
 
-#: dat/events/neutral/npc.lua:36
-msgid "There is a civilian sitting there, looking somewhere else."
-msgstr ""
-
 #: dat/events/neutral/npc.lua:37
-msgid ""
-"A worker sits at one of the tables, wearing a name tag saying \"Go away\"."
+msgid "There is a civilian sitting there, looking somewhere else."
 msgstr ""
 
 #: dat/events/neutral/npc.lua:38
 msgid ""
-"A civilian sits at the bar, seemingly serious about the cocktails on offer."
+"A worker sits at one of the tables, wearing a name tag saying \"Go away\"."
 msgstr ""
 
 #: dat/events/neutral/npc.lua:39
-msgid "A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""
+msgid ""
+"A civilian sits at the bar, seemingly serious about the cocktails on offer."
 msgstr ""
 
 #: dat/events/neutral/npc.lua:40
-msgid "There is a civilian sitting in the corner."
+msgid "A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""
 msgstr ""
 
 #: dat/events/neutral/npc.lua:41
-msgid "A civilian feverishly concentrating on a fluorescing drink."
+msgid "There is a civilian sitting in the corner."
 msgstr ""
 
 #: dat/events/neutral/npc.lua:42
-msgid "A civilian drinking alone."
+msgid "A civilian feverishly concentrating on a fluorescing drink."
 msgstr ""
 
 #: dat/events/neutral/npc.lua:43
-msgid "This person seems friendly enough."
+msgid "A civilian drinking alone."
 msgstr ""
 
 #: dat/events/neutral/npc.lua:44
-msgid "A civilian sitting at the bar."
+msgid "This person seems friendly enough."
 msgstr ""
 
 #: dat/events/neutral/npc.lua:45
-msgid "This person is idly browsing a news terminal."
+msgid "A civilian sitting at the bar."
 msgstr ""
 
 #: dat/events/neutral/npc.lua:46
-msgid "A worker sits drinks, but not working."
+msgid "This person is idly browsing a news terminal."
 msgstr ""
 
 #: dat/events/neutral/npc.lua:47
-msgid "A worker slouched against the bar, nursing a drink."
+msgid "A worker sits drinks, but not working."
 msgstr ""
 
 #: dat/events/neutral/npc.lua:48
+msgid "A worker slouched against the bar, nursing a drink."
+msgstr ""
+
+#: dat/events/neutral/npc.lua:49
 msgid "This worker seems bored with everything but their drink."
 msgstr ""
 
@@ -28801,80 +29164,80 @@ msgstr ""
 #. When adding factional text, make sure to add it to the table of the appropriate faction.
 #. Does your faction not have a table? Then just add it. The script will find and use it if it exists.
 #. Make sure you spell the faction name exactly the same as in faction.xml though!
-#: dat/events/neutral/npc.lua:57
+#: dat/events/neutral/npc.lua:58
 msgid ""
 "\"I heard the nebula is haunted! My uncle Bobby told me he saw one of the "
 "ghost ships himself over in Arandon!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:58
+#: dat/events/neutral/npc.lua:59
 msgid ""
 "\"I don't believe in those nebula ghost stories. The people who talk about "
 "it are just trying to scare you.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:59
+#: dat/events/neutral/npc.lua:60
 msgid ""
 "\"I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse "
 "can still be found in Basel.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:60
+#: dat/events/neutral/npc.lua:61
 msgid ""
 "\"The Soromid fly organic ships! I heard their ships can even heal "
 "themselves in flight. That's so weird.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:61
+#: dat/events/neutral/npc.lua:62
 msgid ""
 "\"Have you seen that ship the Emperor lives on? It's huge! But if you ask "
 "me, it looks a bit like a... No, never mind.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:62
+#: dat/events/neutral/npc.lua:63
 msgid ""
 "\"I wonder why the Sirii are all so devout? I heard they have these special "
 "priesty people walking around. I wonder what's so special about them.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:63
+#: dat/events/neutral/npc.lua:64
 msgid ""
 "\"They say Eduard Manual Goddard is drifting in space somewhere, entombed "
 "amidst a cache of his inventions! What I wouldn't give to rummage through "
 "there...\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:64
+#: dat/events/neutral/npc.lua:65
 msgid ""
 "\"Ah man, I lost all my money on Totoran. I love the fights they stage "
 "there, but the guys I bet on always lose. What am I doing wrong?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:65
+#: dat/events/neutral/npc.lua:66
 msgid ""
 "\"Don't try to fly into the inner nebula. I've known people who tried, and "
 "none of them came back.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:66
+#: dat/events/neutral/npc.lua:67
 msgid ""
 "\"Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:67
+#: dat/events/neutral/npc.lua:68
 msgid ""
 "\"I wouldn't travel north from Alteris if I were you, unless you're a good "
 "fighter! That area of space has really gone down the drain since the "
 "Incident.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:68
+#: dat/events/neutral/npc.lua:69
 msgid ""
 "\"Sometimes I look at the stars and wonder... are we the only sentient "
 "species in the universe?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:69
+#: dat/events/neutral/npc.lua:70
 msgid ""
 "\"Hey, you ever wonder why we're here?\" You respond that it's one of the "
 "great mysteries of the universe. Why are we here? Are we the product of some "
@@ -28884,87 +29247,87 @@ msgid ""
 "bar?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:70
+#: dat/events/neutral/npc.lua:71
 msgid ""
 "\"Life is so boring here. I would love to go gamble with all the famous "
 "people at Minerva Station.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:73
+#: dat/events/neutral/npc.lua:74
 msgid ""
 "\"We're not part of any of the galactic superpowers. We can take care of "
 "ourselves!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:74
+#: dat/events/neutral/npc.lua:75
 msgid ""
 "\"Sometimes I worry that our lack of a standing military leaves us "
 "vulnerable to attack. I hope nobody will get any ideas about conquering us!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:77
+#: dat/events/neutral/npc.lua:78
 msgid ""
 "\"Things are getting worse by the cycle. What happened to the Empire? We "
 "used to be the lords and masters over the whole galaxy!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:78
+#: dat/events/neutral/npc.lua:79
 msgid ""
 "\"Did you know that House Za'lek was originally a Great Project initiated by "
 "the Empire? Well, now you do! There was also a Project Proteron, but that "
 "didn't go so well.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:79
+#: dat/events/neutral/npc.lua:80
 msgid ""
 "\"The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to "
 "be the biggest ship in the galaxy! I totally want one.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:80
+#: dat/events/neutral/npc.lua:81
 msgid ""
 "\"I'm still waiting for my pilot license application to get through. Oh "
 "well, it's only been half a cycle, I just have to be patient.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:81
+#: dat/events/neutral/npc.lua:82
 msgid ""
 "\"Between you and me, the laws the Council passes can get really ridiculous! "
 "Most planets find creative ways of ignoring them...\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:82
+#: dat/events/neutral/npc.lua:83
 msgid ""
 "\"Don't pay attention to the naysayers. The Empire is still strong. Have you "
 "ever seen a Peacemaker up close? I doubt any ship fielded by any other power "
 "could stand up to one.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:85
+#: dat/events/neutral/npc.lua:86
 msgid ""
 "\"Our Warlord is currently fighting for control over another planet. We all "
 "support him unconditionally, of course! Of course...\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:86
+#: dat/events/neutral/npc.lua:87
 msgid ""
 "\"My great-great-great-grandfather fought in the Dvaered Revolts! We still "
 "have the holovids he made. I'm proud to be a Dvaered!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:87
+#: dat/events/neutral/npc.lua:88
 msgid ""
 "\"I've got lots of civilian commendations! It's important to have "
 "commendations if you're a Dvaered.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:88
+#: dat/events/neutral/npc.lua:89
 msgid ""
 "\"You better not mess with House Dvaered. Our military is the largest and "
 "strongest in the galaxy. Nobody can stand up to us!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:89
+#: dat/events/neutral/npc.lua:90
 msgid ""
 "\"House Dvaered? House? The Empire is weak and useless, we don't need them "
 "anymore! I say we declare ourselves an independent faction today. What are "
@@ -28972,94 +29335,94 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:90
+#: dat/events/neutral/npc.lua:91
 msgid ""
 "\"I'm thinking about joining the military. Every time I see or hear news "
 "about those rotten FLF bastards, it makes my blood boil! They should all be "
 "pounded into space dust!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:91
+#: dat/events/neutral/npc.lua:92
 msgid ""
 "\"FLF terrorists? I'm not too worried about them. You'll see, High Command "
 "will have smoked them out of their den soon enough, and then the Frontier "
 "will be ours.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:92
+#: dat/events/neutral/npc.lua:93
 msgid ""
 "\"Did you know that House Dvaered was named after a hero of the revolt? At "
 "least that's what my grandparents told me.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:95
+#: dat/events/neutral/npc.lua:96
 msgid ""
 "\"Greetings, traveler. May Sirichana's wisdom guide you as it guides me.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:96
+#: dat/events/neutral/npc.lua:97
 msgid ""
 "\"I once met one of the Touched in person. Well, it wasn't really a meeting, "
 "our eyes simply met... But that instant alone was awe-inspiring.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:97
+#: dat/events/neutral/npc.lua:98
 msgid ""
 "\"They say Sirichana lives and dies like any other man, but each new "
 "Sirichana is the same as the last. How is that possible?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:98
+#: dat/events/neutral/npc.lua:99
 msgid ""
 "\"My cousin was called to Mutris a cycle ago... He must be in Crater City by "
 "now. And one day, he will become one of the Touched!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:99
+#: dat/events/neutral/npc.lua:100
 msgid ""
 "\"Some people say Sirius society is unfair because our echelons are "
 "determined by birth. But even though we are different, we are all followers "
 "of Sirichana. Spiritually, we are equal.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:100
+#: dat/events/neutral/npc.lua:101
 msgid ""
 "\"House Sirius is officially part of the Empire, but everyone knows that's "
 "only true on paper. The Emperor has nothing to say in these systems. We "
 "follow Sirichana, and no-one else.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:101
+#: dat/events/neutral/npc.lua:102
 msgid ""
 "\"You can easily tell the different echelons apart. Every Sirian citizen and "
 "soldier wears clothing appropriate to his or her echelon.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:102
+#: dat/events/neutral/npc.lua:103
 msgid "\"I hope to meet one of the Touched one day!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:105
+#: dat/events/neutral/npc.lua:106
 msgid ""
 "Hello. Can I interest you in one of our galaxy famous cosmetic gene "
 "treatments? You look like you could use them..."
 msgstr ""
 
-#: dat/events/neutral/npc.lua:106
+#: dat/events/neutral/npc.lua:107
 msgid ""
 "\"Can you believe it? I was going to visit Sorom to find my roots, and then "
 "boom! It got burnt to a crisp! Even now, cycles later, I still can't believe "
 "it.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:107
+#: dat/events/neutral/npc.lua:108
 msgid ""
 "\"Yes, it's true, our military ships are alive. Us normal folk don't get to "
 "own bioships though, we have to make do with synthetic constructs just like "
 "everyone else.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:108
+#: dat/events/neutral/npc.lua:109
 msgid ""
 "\"Everyone knows that we Soromid altered ourselves to survive the deadly "
 "conditions on Sorom during the Great Quarantine. What you don't hear so "
@@ -29067,37 +29430,37 @@ msgid ""
 "price for survival.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:109
+#: dat/events/neutral/npc.lua:110
 msgid ""
 "\"Our cosmetic gene treatments are even safer now for non-Soromids, with a "
 "rate of survival of 99.4%!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:110
+#: dat/events/neutral/npc.lua:111
 msgid ""
 "\"We have been rebuilding and enhancing our bodies for so long, I say we've "
 "become a new species, one above human.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:113
+#: dat/events/neutral/npc.lua:114
 msgid ""
 "\"It's not easy, dancing to those scientists' tunes. They give you the most "
 "impossible tasks! Like, where am I supposed to get a triple redundant "
 "helitron converter? Honestly.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:114
+#: dat/events/neutral/npc.lua:115
 msgid ""
 "\"The Soromids? Hah! We Za'lek are the only true scientists in this galaxy.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:115
+#: dat/events/neutral/npc.lua:116
 msgid ""
 "\"I don't understand why we bother sending our research results to the "
 "Empire. These asshats can't understand the simplest formulas!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:116
+#: dat/events/neutral/npc.lua:117
 msgid ""
 "\"Do you know why many optimization algorithms require your objective "
 "function to be convex? It's not only because of the question of local "
@@ -29106,13 +29469,13 @@ msgid ""
 "function. There are still too many people who don't know this!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:117
+#: dat/events/neutral/npc.lua:118
 msgid ""
 "\"There are so many algorithms for solving the non-linear eigenvalues "
 "problem, I never know which one to choose. Which one do you prefer?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:118
+#: dat/events/neutral/npc.lua:119
 msgid ""
 "\"I recently attended a very interesting conference about the history of "
 "applied mathematics before the space age. Even in those primitive times, "
@@ -29121,19 +29484,19 @@ msgid ""
 "with only a dozen billion degrees of freedom!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:119
+#: dat/events/neutral/npc.lua:120
 msgid ""
 "\"Last time I had to solve a deconvolution problem, its condition number was "
 "so high that its inverse reached numerical zero on Octuple Precision!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:120
+#: dat/events/neutral/npc.lua:121
 msgid ""
 "\"I am worried about my sister. She's on trial for 'abusive self-citing' and "
 "the public prosecutor has requested a life sentence.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:121
+#: dat/events/neutral/npc.lua:122
 msgid ""
 "\"They opened two professor positions on precision machining in Atryssa "
 "Central Manufacturing Lab, and none in Bedimann Advanced Process Lab, but "
@@ -29143,7 +29506,7 @@ msgid ""
 "scientific recruitment committee.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:122
+#: dat/events/neutral/npc.lua:123
 msgid ""
 "\"Even if our labs are the best in the galaxy, other factions have their own "
 "labs as well. For example, Dvaer Prime Lab for Advanced Mace Rocket Studies "
@@ -29151,21 +29514,21 @@ msgid ""
 "an invasion of the planet.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:125
+#: dat/events/neutral/npc.lua:126
 msgid ""
 "\"Did you know that even the slightest bit of brain damage can lead to death "
 "during the upload process? That's why we're very careful to not allow our "
 "brains to be damaged, even a little.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:126
+#: dat/events/neutral/npc.lua:127
 msgid ""
 "\"My father unfortunately hit his head when he was young, so he couldn't be "
 "safely uploaded. It's okay, though; he had a long and fulfilling life, for a "
 "non-uploaded human, that is.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:127
+#: dat/events/neutral/npc.lua:128
 msgid ""
 "\"One great thing once you're uploaded is that you can choose to forget "
 "things you don't want to remember. My great-grandfather had a movie spoiled "
@@ -29173,54 +29536,54 @@ msgid ""
 "memory and watched it with a fresh perspective. Cool, huh?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:128
+#: dat/events/neutral/npc.lua:129
 msgid ""
 "\"The best part of our lives is after we're uploaded, but that doesn't mean "
 "we lead boring lives before then. We have quite easy and satisfying "
 "biological lives before uploading.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:129
+#: dat/events/neutral/npc.lua:130
 msgid ""
 "\"Being uploaded allows you to live forever, but that doesn't mean you're "
 "forced to. Any uploaded Thurion can choose to end their own life if they "
 "want, though few have chosen to do so.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:130
+#: dat/events/neutral/npc.lua:131
 msgid ""
 "\"Uploading is a choice in our society. No one is forced to do it. It's just "
 "that, well, what kind of person would turn down the chance to live a second "
 "life on the network?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:131
+#: dat/events/neutral/npc.lua:132
 msgid ""
 "\"We were lucky to not get touched by the Incident. In fact, we kind of "
 "benefited from it. The nebula that resulted gave us a great cover and sealed "
 "off the Empire from us. It also got rid of those dangerous Proterons.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:132
+#: dat/events/neutral/npc.lua:133
 msgid ""
 "\"We don't desire galactic dominance. That being said, we do want to spread "
 "our way of life to the rest of the galaxy, so that everyone can experience "
 "the joy of being uploaded.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:133
+#: dat/events/neutral/npc.lua:134
 msgid ""
 "\"I think you're from the outside, aren't you? That's awesome! I've never "
 "met a foreigner before. What's it like outside the nebula?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:134
+#: dat/events/neutral/npc.lua:135
 msgid ""
 "\"We actually make occasional trips outside of the nebula, though only "
 "rarely, and we always make sure to not get discovered by the Empire.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:135
+#: dat/events/neutral/npc.lua:136
 msgid ""
 "\"The Soromid have a rough history. Have you read up on it? First the Empire "
 "confined them to a deadly planet and doomed them to extinction. Then, when "
@@ -29228,54 +29591,54 @@ msgid ""
 "that they're still thriving now despite that is phenomenal, I must say.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:138
+#: dat/events/neutral/npc.lua:139
 msgid ""
 "\"Our system of government is clearly superior to all others. Nothing could "
 "be more obvious.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:139
+#: dat/events/neutral/npc.lua:140
 msgid ""
 "\"The Incident really set back our plan for galactic dominance, but that was "
 "only temporary.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:140
+#: dat/events/neutral/npc.lua:141
 msgid ""
 "\"We don't have time for fun and games. The whole reason we're so great is "
 "because we're more productive than any other society.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:141
+#: dat/events/neutral/npc.lua:142
 msgid ""
 "\"We are superior, so of course we deserve control over the galaxy. It's our "
 "destiny.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:142
+#: dat/events/neutral/npc.lua:143
 msgid "\"The Empire is weak, obsolete. That is why we must replace them.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:143
+#: dat/events/neutral/npc.lua:144
 msgid ""
 "\"Slaves? Of course we're not slaves. Slaves are beaten and starved. We are "
 "in top shape so we can serve our country better.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:144
+#: dat/events/neutral/npc.lua:145
 msgid ""
 "\"I can't believe the Empire continues to allow families. So primitive. "
 "Obviously, all this does is make them less productive.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:145
+#: dat/events/neutral/npc.lua:146
 msgid ""
 "\"The exact cause of the Incident is a tightly-kept secret, but the "
 "government says it was caused by the Empire's inferiority. I would expect "
 "nothing less.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:146
+#: dat/events/neutral/npc.lua:147
 msgid ""
 "\"I came across some heathen a few months back who claimed, get this, that "
 "we Proterons were the cause of the Incident! What slanderous nonsense. Being "
@@ -29283,35 +29646,35 @@ msgid ""
 "catastrophe.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:149
+#: dat/events/neutral/npc.lua:150
 msgid ""
 "\"We value our autonomy. We don't want to be ruled by those Dvaered "
 "Warlords! Can't they just shoot at each other instead of threatening us? If "
 "it wasn't for the Liberation Front...\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:150
+#: dat/events/neutral/npc.lua:151
 msgid ""
 "\"Have you studied your galactic history? The Frontier worlds were the first "
 "to be colonized by humans. That makes our worlds the oldest human "
 "settlements in the galaxy, now that Earth is gone.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:151
+#: dat/events/neutral/npc.lua:152
 msgid ""
 "\"We have the Dvaered encroaching on our territory on one side, and the "
 "Sirius zealots on the other. Sometimes I worry that in a few decacycles, the "
 "Frontier will no longer exist.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:152
+#: dat/events/neutral/npc.lua:153
 msgid ""
 "\"Have you visited the Frontier Museum? They've got a scale model of a First "
 "Growth colony ship on display in one of the big rooms. Even scaled down like "
 "that, it's massive! Imagine how overwhelming the real ones must have been.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:153
+#: dat/events/neutral/npc.lua:154
 msgid ""
 "\"There are twelve true Frontier worlds, because twelve colony ships "
 "successfully completed their journey in the First Growth. But did you know "
@@ -29320,14 +29683,14 @@ msgid ""
 "to them?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:154
+#: dat/events/neutral/npc.lua:155
 msgid ""
 "\"We don't have much here in the Frontier, other than our long history "
 "leading directly back to Earth. But I don't mind. I'm happy living here, and "
 "I wouldn't want to move anywhere else.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:155
+#: dat/events/neutral/npc.lua:156
 msgid ""
 "\"You know the Frontier Liberation Front? They're the guerilla movement that "
 "fights for the Frontier. Not to be confused with the Liberation Front of the "
@@ -29335,32 +29698,32 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:158
+#: dat/events/neutral/npc.lua:159
 msgid ""
 "\"I can't stand Dvaereds. I just want to wipe them all off the map. Don't "
 "you?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:159
+#: dat/events/neutral/npc.lua:160
 msgid ""
 "\"One of these days, we will completely rid the Frontier of Dvaered "
 "oppressors. Mark my words!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:160
+#: dat/events/neutral/npc.lua:161
 msgid ""
 "\"Have you ever wondered about our chances of actually winning over the "
 "Dvaereds? Sometimes I worry a little.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:161
+#: dat/events/neutral/npc.lua:162
 msgid ""
 "\"I was in charge of a bombing run recently. The mission was a success, but "
 "I lost a lot of comrades. Oh well... this is the sacrifice we must make to "
 "resist the oppressors.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:162
+#: dat/events/neutral/npc.lua:163
 msgid ""
 "\"What after we beat the Dvaereds, you say? Well, our work is never truly "
 "done until the Frontier is completely safe from oppression. Even if the "
@@ -29368,34 +29731,34 @@ msgid ""
 "about. I don't think our job will ever end in our lifetimes.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:163
+#: dat/events/neutral/npc.lua:164
 msgid ""
 "\"Yeah, it's true, lots of Frontier officials fund our operations. If they "
 "didn't, we'd have a really hard time landing on Frontier planets, what with "
 "the kinds of operations we perform against the Dvaereds.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:164
+#: dat/events/neutral/npc.lua:165
 msgid ""
 "\"Yeah, some civilians die because of our efforts, but that's just a "
 "sacrifice we have to make. It's for the greater good.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:165
+#: dat/events/neutral/npc.lua:166
 msgid ""
 "\"No, we're not terrorists. We're soldiers. True terrorists kill and destroy "
 "without purpose. Our operations do have a purpose: to drive out the Dvaered "
 "oppressors from the Frontier.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:166
+#: dat/events/neutral/npc.lua:167
 msgid ""
 "\"Riddle me this: how can we be terrorists if the Dvaereds started it by "
 "encroaching on Frontier territory? It's the most ridiculous thing I ever "
 "heard.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:167
+#: dat/events/neutral/npc.lua:168
 msgid ""
 "\"Well, no, the Dvaereds never actually attacked Frontier ships, but that's "
 "not the point. They have their ships in Frontier territory. What other "
@@ -29403,53 +29766,53 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:170
+#: dat/events/neutral/npc.lua:171
 msgid "\"Hi mate. Money or your life! Heh heh, just messing with you.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:171
+#: dat/events/neutral/npc.lua:172
 msgid "\"Hey, look at these new scars I got!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:172
+#: dat/events/neutral/npc.lua:173
 msgid ""
 "\"Have you heard of the Pirates' Code? They're more guidelines than rules..."
 "\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:173
+#: dat/events/neutral/npc.lua:174
 msgid ""
 "\"My gran once said to me, 'Never trust a pirate.' Well, she was right! I "
 "got a pretty credit chip outta her wallet last time I saw her, and I'd do it "
 "again.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:174
+#: dat/events/neutral/npc.lua:175
 msgid ""
 "\"I don't understand why some pirates talk like 16th-century Earth pirates "
 "even though that planet is literally dead.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:175
+#: dat/events/neutral/npc.lua:176
 msgid ""
 "\"I may be a pirate who blows up ships and steals for a living, but that "
 "inner nebula still kind of freaks me out.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:176
+#: dat/events/neutral/npc.lua:177
 msgid ""
 "\"Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see "
 "me again...\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:177
+#: dat/events/neutral/npc.lua:178
 msgid ""
 "\"There's a pirate clanworld I really wanted to get to, but they wouldn't "
 "let me in because I'm a 'small-time pirate'! Sometimes I think I'll never "
 "make it in this line of work...\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:178
+#: dat/events/neutral/npc.lua:179
 msgid ""
 "\"Don't forget, true pirates fly pirate ships! You won't hold onto your "
 "reputation very long if you fly around in those pathetic normie vessels. I "
@@ -29457,7 +29820,7 @@ msgid ""
 "didn't make it very far.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:179
+#: dat/events/neutral/npc.lua:180
 msgid ""
 "\"I was around before Haven was destroyed, you know! Funny times. All the "
 "pirates were panicking and the Empire was cheering thinking that we were "
@@ -29465,21 +29828,21 @@ msgid ""
 "New Haven and resumed business as usual.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:180
+#: dat/events/neutral/npc.lua:181
 msgid ""
 "\"Y'know, I got into this business by accident to tell the truth. But what "
 "can you do? I could get a fake ID and pretend to be someone else but I'd get "
 "caught eventually and I'd lose my fame as a pirate.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:181
+#: dat/events/neutral/npc.lua:182
 msgid ""
 "\"One of my favorite things to do is buy a fake ID and then deliver as much "
 "contraband as I can before I get caught. It's great fun, and finding out "
 "that my identity's been discovered gives me a rush!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:182
+#: dat/events/neutral/npc.lua:183
 msgid ""
 "\"Back when I started out in this business all you could do was go around "
 "delivering packages for other people. Becoming a pirate was real hard back "
@@ -29488,30 +29851,30 @@ msgid ""
 "bit!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:183
+#: dat/events/neutral/npc.lua:184
 msgid ""
 "\"Flying a real big ship is impressive, but it's still no pirate ship. I "
 "mean, I respect ya more if you're flying a Goddard than if you're flying a "
 "civilian Lancelot, but the best pirates fly the good old Pirate Kestrel!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:186
+#: dat/events/neutral/npc.lua:187
 msgid "\"Just another link in the Great Chain, right?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:187
+#: dat/events/neutral/npc.lua:188
 msgid ""
 "\"You win some, you lose some, but if you don't try you're never going to "
 "win.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:188
+#: dat/events/neutral/npc.lua:189
 msgid ""
 "\"If you don't watch the markets then you'll be hopping between planets in a "
 "jury-rigged ship in no time.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:189
+#: dat/events/neutral/npc.lua:190
 msgid ""
 "\"Them blimming pirates, stopping honest folk from making an honest living - "
 "it's not like we're exploiting the needy!\""
@@ -29520,13 +29883,13 @@ msgstr ""
 #. Gameplay tip messages.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
 #. So, make sure the tips are always faction neutral.
-#: dat/events/neutral/npc.lua:195
+#: dat/events/neutral/npc.lua:196
 msgid ""
 "\"I heard you can set your weapons to only fire when your target is in "
 "range, or just let them fire when you pull the trigger. Sounds handy!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:196
+#: dat/events/neutral/npc.lua:197
 #, lua-format
 msgid ""
 "\"Did you know that if a planet doesn't like you, you can often bribe the "
@@ -29534,14 +29897,14 @@ msgid ""
 "the bribe button! Careful though, it doesn't always work.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:197
+#: dat/events/neutral/npc.lua:198
 msgid ""
 "\"Many factions offer rehabilitation programs to criminals through the "
 "mission computer, giving them a chance to get back into their good graces. "
 "It can get really expensive for serious offenders though!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:198
+#: dat/events/neutral/npc.lua:199
 msgid ""
 "\"These new-fangled missile systems! You can't even fire them unless you get "
 "a target lock first! But the same thing goes for your opponents. You can "
@@ -29549,14 +29912,14 @@ msgid ""
 "scramblers or jammers. Scout class ships are also harder to target.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:199
+#: dat/events/neutral/npc.lua:200
 msgid ""
 "\"You know how you can't change your ship or your equipment on some planets? "
 "Well, it seems you need an outfitter to change equipment, and a shipyard to "
 "change ships! Bet you didn't know that.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:200
+#: dat/events/neutral/npc.lua:201
 msgid ""
 "\"Are you trading commodities? You can hold down #bctrl#0 to buy 50 of them "
 "at a time, and #bshift#0 to buy 100. And if you press them both at once, you "
@@ -29564,26 +29927,26 @@ msgid ""
 "would you want to buy 50 laser cannons?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:201
+#: dat/events/neutral/npc.lua:202
 msgid ""
 "\"If you're on a mission you just can't beat, you can open the information "
 "panel and abort the mission. There's no penalty for doing it, so don't "
 "hesitate to try the mission again later.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:202
+#: dat/events/neutral/npc.lua:203
 msgid ""
 "\"Some weapons have a different effect on shields than they do on armor. "
 "Keep that in mind when equipping your ship.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:203
+#: dat/events/neutral/npc.lua:204
 msgid ""
 "\"Afterburners can speed you up a lot, but when they get hot they don't work "
 "as well anymore. Don't use them carelessly!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:204
+#: dat/events/neutral/npc.lua:205
 msgid ""
 "\"There are passive outfits and active outfits. The passive ones modify your "
 "ship continuously, but the active ones only work if you turn them on. You "
@@ -29591,19 +29954,19 @@ msgid ""
 "careful only to use it when you need it.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:205
+#: dat/events/neutral/npc.lua:206
 msgid ""
 "\"If you're new to the galaxy, I recommend you buy a map or two. It can make "
 "exploration a bit easier.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:206
+#: dat/events/neutral/npc.lua:207
 msgid ""
 "\"Scramblers and jammers make it harder for missiles to track you. They can "
 "be very handy if your enemies use missiles.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:207
+#: dat/events/neutral/npc.lua:208
 #, lua-format
 msgid ""
 "\"If you're having trouble with overheating weapons or outfits, you can "
@@ -29612,13 +29975,13 @@ msgid ""
 "your energy and shields won't recharge while you do it!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:208
+#: dat/events/neutral/npc.lua:209
 msgid ""
 "\"If you're having trouble shooting other ships face on, try outfitting with "
 "turrets or use an afterburner to avoid them entirely!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:209
+#: dat/events/neutral/npc.lua:210
 msgid ""
 "\"You know how time speeds up when Autonav is on, but then goes back to "
 "normal when enemies are around? Turns out you can't disable the return to "
@@ -29627,7 +29990,7 @@ msgid ""
 "you.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:210
+#: dat/events/neutral/npc.lua:211
 msgid ""
 "\"Flying bigger ships is awesome, but it's a bit tougher than flying smaller "
 "ships. There's so much more you have to do for the same actions, time just "
@@ -29635,7 +29998,7 @@ msgid ""
 "how slow your ship is as much.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:211
+#: dat/events/neutral/npc.lua:212
 msgid ""
 "\"I know it can be tempting to fly the big and powerful ships, but don't "
 "underestimate smaller ones! Given their simpler designs and lesser crew "
@@ -29643,21 +30006,21 @@ msgid ""
 "so simple to pilot that time seems to slow down all around you!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:212
+#: dat/events/neutral/npc.lua:213
 msgid ""
 "\"Mining can be an easy way to earn some extra credits, but every once in a "
 "while an asteroid will just randomly explode for no apparent reason, so you "
 "have to watch out for that. Yeah, I don't know why they do that either.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:213
+#: dat/events/neutral/npc.lua:214
 msgid ""
 "\"Rich folk will pay extra to go on an offworld sightseeing tour in a luxury "
 "yacht. I don't get it personally; it's all the same no matter what ship "
 "you're in.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:214
+#: dat/events/neutral/npc.lua:215
 msgid ""
 "\"Different ships should be built and piloted differently. One of the "
 "hardest lessons I learned as a pilot was to stop worrying so much about the "
@@ -29667,7 +30030,7 @@ msgid ""
 "your attention on firing back at your enemies.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:215
+#: dat/events/neutral/npc.lua:216
 msgid ""
 "\"Remember that when you pilot a big ship, you perceive time passing a lot "
 "faster than you do when you pilot a small ship. It can be easy to forget "
@@ -29676,7 +30039,7 @@ msgid ""
 "In a way the slow speed of the ship becomes a pretty huge relief!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:216
+#: dat/events/neutral/npc.lua:217
 msgid ""
 "\"There's always an exception to the rule, but I wouldn't recommend using "
 "forward-facing weapons on larger ships. Large ships' slower turn rates "
@@ -29685,21 +30048,21 @@ msgid ""
 "much better; they aim automatically and usually do a very good job!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:217
+#: dat/events/neutral/npc.lua:218
 msgid ""
 "\"Did you know that turrets' automatic tracking of targets is slowed down by "
 "cloaking? Well, now you do! Small ships majorly benefit from a scrambler or "
 "two; it makes it much easier to dodge those turrets on the larger ships.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:218
+#: dat/events/neutral/npc.lua:219
 msgid ""
 "\"Don't forget to have your target selected. Even if you have forward-facing "
 "weapons, the weapons will swivel a bit to track your target. But it's "
 "absolutely essential for turreted weapons.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:219
+#: dat/events/neutral/npc.lua:220
 msgid ""
 "\"Did you know that you can automatically follow pilot with Autonav? It's "
 "true! Just #bleft-click#0 the pilot to target them and then #bright-click#0 "
@@ -29707,14 +30070,14 @@ msgid ""
 "makes them a lot less tedious.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:220
+#: dat/events/neutral/npc.lua:221
 msgid ""
 "\"The new aiming helper feature is awesome! Simply turn it on in your ship's "
 "weapons configuration and you get little guides telling you where you should "
 "aim to hit your target! I use it a lot.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:221
+#: dat/events/neutral/npc.lua:222
 msgid ""
 "\"The '¤' symbol is the official galactic symbol for credits. Supposedly it "
 "comes from the currency symbol of an ancient Earth civilization. It's "
@@ -29722,7 +30085,7 @@ msgid ""
 "for millions of credits, and so on.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:222
+#: dat/events/neutral/npc.lua:223
 msgid ""
 "\"If you're piloting a medium ship, I'd recommend you invest in at least one "
 "turreted missile launcher. I had a close call a few decaperiods ago where a "
@@ -29732,7 +30095,7 @@ msgid ""
 "launcher.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:223
+#: dat/events/neutral/npc.lua:224
 msgid ""
 "\"I've heard that pirates have to keep their reputations up with other "
 "pirates by flying pirate ships. The Hyena is considered a pirate ship and is "
@@ -29740,7 +30103,7 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:224
+#: dat/events/neutral/npc.lua:225
 #, lua-format
 msgid ""
 "\"These computer symbols can be confusing sometimes! I've figured it out, "
@@ -29754,7 +30117,7 @@ msgstr ""
 #. All messages must contain exactly one %s, this is the name of the target system.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
 #. So, make sure the tips are always faction neutral.
-#: dat/events/neutral/npc.lua:232
+#: dat/events/neutral/npc.lua:233
 #, lua-format
 msgid ""
 "\"Hi there, traveler. Is your system map up to date? Just in case you didn't "
@@ -29762,7 +30125,7 @@ msgid ""
 "hope that helps.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:233
+#: dat/events/neutral/npc.lua:234
 #, lua-format
 msgid ""
 "\"Quite a lot of people who come in here complain that they don't know how "
@@ -29770,7 +30133,7 @@ msgid ""
 "is. Here, let me show you.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:234
+#: dat/events/neutral/npc.lua:235
 #, lua-format
 msgid ""
 "\"So you're still getting to know about this area, huh? Tell you what, I'll "
@@ -29778,7 +30141,7 @@ msgid ""
 "take off!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:235
+#: dat/events/neutral/npc.lua:236
 #, lua-format
 msgid ""
 "\"True fact, there's a direct jump from here to %s. Want to know where it "
@@ -29786,7 +30149,7 @@ msgid ""
 "map.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:236
+#: dat/events/neutral/npc.lua:237
 #, lua-format
 msgid ""
 "\"There's a system just one jump away by the name of %s. I can tell you "
@@ -29796,27 +30159,27 @@ msgstr ""
 #. Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
 #. So, make sure the hints are always faction neutral.
-#: dat/events/neutral/npc.lua:242
+#: dat/events/neutral/npc.lua:243
 msgid ""
 "\"Apparently there's a woman who regularly turns up on planets in and around "
 "the Klantar system. I wonder what she's looking for?\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:243
+#: dat/events/neutral/npc.lua:244
 msgid ""
 "\"The Empire is trying to really do something about the Collective, I hear. "
 "Who knows, maybe you can even help them out if you make it to Omega Station."
 "\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:244
+#: dat/events/neutral/npc.lua:245
 msgid ""
 "\"There are often shady characters hanging out in the Alteris system. I'd "
 "stay away from there if I were you, someone might offer you a dirty kind of "
 "job!\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:245
+#: dat/events/neutral/npc.lua:246
 msgid ""
 "\"So there's some Za'lek scientist looking for a cargo monkey out on "
 "Niflheim in the Dohriabi system. I hear it's pretty good money.\""
@@ -29824,7 +30187,7 @@ msgstr ""
 
 #. Event hint messages. Each element should be a table containing the event name and the corresponding hint.
 #. Make sure the hints are always faction neutral.
-#: dat/events/neutral/npc.lua:250
+#: dat/events/neutral/npc.lua:251
 msgid ""
 "\"The FLF and the Dvaered sometimes clash in Surano. If you go there, you "
 "might find something of interest... Or not.\""
@@ -29833,14 +30196,14 @@ msgstr ""
 #. Mission after-care messages. Each element should be a table containing the mission name and a line of text.
 #. This text will be said by NPCs once the player has completed the mission in question.
 #. Make sure the messages are always faction neutral.
-#: dat/events/neutral/npc.lua:256
+#: dat/events/neutral/npc.lua:257
 msgid ""
 "\"Heard some reckless scientists got someone to put a satellite inside the "
 "nebula for them. I thought everyone with half a brain knew to stay out of "
 "there, but oh well.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:257
+#: dat/events/neutral/npc.lua:258
 msgid ""
 "\"Did you hear? There was some big incident during a diplomatic meeting "
 "between the Empire and the Dvaered. Nobody knows what exactly happened, but "
@@ -29848,20 +30211,20 @@ msgid ""
 "Could get ugly.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:258
+#: dat/events/neutral/npc.lua:259
 msgid ""
 "\"Hey, remember the Collective? They got wiped out! I feel so much better "
 "now that there aren't a bunch of robot ships out there to get me anymore.\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:259
+#: dat/events/neutral/npc.lua:260
 msgid ""
 "\"Some thieves broke into a museum on Varia and stole a holopainting! Most "
 "of the thieves were caught, but the one who carried the holopainting "
 "offworld is still at large. No leads. Damn criminals...\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:260
+#: dat/events/neutral/npc.lua:261
 msgid ""
 "\"The Dvaered scored a major victory against the FLF recently. They went "
 "into Sigur and blew the hidden base there to bits! I bet that was a serious "
@@ -29871,20 +30234,20 @@ msgstr ""
 #. Event after-care messages. Each element should be a table containing the event name and a line of text.
 #. This text will be said by NPCs once the player has completed the event in question.
 #. Make sure the messages are always faction neutral.
-#: dat/events/neutral/npc.lua:266
+#: dat/events/neutral/npc.lua:267
 msgid ""
 "\"What? You had rodents sabotage your ship? Man, you're lucky to be alive. "
 "If it had hit the wrong power line...\""
 msgstr ""
 
-#: dat/events/neutral/npc.lua:267
+#: dat/events/neutral/npc.lua:268
 msgid ""
 "\"What do you mean, the world ended and then the creator of the universe "
 "came and fixed it? What kind of illegal substance are you on?\""
 msgstr ""
 
 #. Append the faction to the civilian name, unless there is no faction.
-#: dat/events/neutral/npc.lua:335
+#: dat/events/neutral/npc.lua:341
 #, lua-format
 msgid "%s Civilian"
 msgstr ""
@@ -30063,42 +30426,6 @@ msgstr ""
 #. -- Returns a boolean indicating whether or not the player is using some
 #. -- kind of monstrously powerful or intimidating ship, like a
 #. -- cruiser or carrier.
-#. --
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <event name="Proteron Discovery">
-#. <trigger>enter</trigger>
-#. <chance>100</chance>
-#. <flags>
-#. <unique />
-#. </flags>
-#. <notes>
-#. <tier>5</tier>
-#. </notes>
-#. </event>
-#. --
-#.
-#.
-#. Proteron Discovery Event
-#.
-#. This program is free software: you can redistribute it and/or modify
-#. it under the terms of the GNU General Public License as published by
-#. the Free Software Foundation, either version 3 of the License, or
-#. (at your option) any later version.
-#.
-#. This program is distributed in the hope that it will be useful,
-#. but WITHOUT ANY WARRANTY; without even the implied warranty of
-#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#. GNU General Public License for more details.
-#.
-#. You should have received a copy of the GNU General Public License
-#. along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#.
-#. --
-#.
-#. This event runs in the background to cause the Proteron to be "known"
-#. once you discover them.
-#.
 #. --
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -34072,6 +34399,11 @@ msgstr ""
 msgid "This person seems to be looking for suitable combat pilots."
 msgstr ""
 
+#: dat/missions/dvaered/championship.lua:100
+#: dat/missions/dvaered/championship.lua:103
+msgid "Pilot"
+msgstr ""
+
 #: dat/missions/dvaered/championship.lua:101
 msgid "This pilot looks very self-confident"
 msgstr ""
@@ -34228,175 +34560,6 @@ msgstr ""
 #. The tv tries to land
 #. For some reason, the security wants to take the player down
 #. The tv tries to land
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <mission name="Totoran Tournament">
-#. <avail>
-#. <priority>3</priority>
-#. <chance>100</chance>
-#. <location>Bar</location>
-#. <planet>Totoran</planet>
-#. </avail>
-#. </mission>
-#. --
-#. See if we start the event
-#. Accept mission
-#. Set details
-#. Add to log
-#. Create the OSD
-#: dat/missions/dvaered/coliseum.lua:18 dat/missions/dvaered/coliseum.lua:19
-#: dat/missions/dvaered/coliseum.lua:28 dat/missions/dvaered/coliseum.lua:124
-msgid "Totoran Tournament"
-msgstr ""
-
-#. TODO replace portraits/images
-#: dat/missions/dvaered/coliseum.lua:24
-msgid "Tournament Organizer"
-msgstr ""
-
-#: dat/missions/dvaered/coliseum.lua:25
-msgid "The Totoran Tournament organizer."
-msgstr ""
-
-#: dat/missions/dvaered/coliseum.lua:29
-msgid "Annihilate all enemies in Coliseum."
-msgstr ""
-
-#: dat/missions/dvaered/coliseum.lua:30
-msgid "Great riches!"
-msgstr ""
-
-#. Disabled for now
-#. We'll have different NPCs for each tournament type
-#. Land is unified for all types of combat
-#. TODO something better than this
-#: dat/missions/dvaered/coliseum.lua:51
-#, lua-format
-msgid "You obtained %d points!"
-msgstr ""
-
-#: dat/missions/dvaered/coliseum.lua:60 dat/missions/minerva/kex1.lua:113
-#: dat/missions/minerva/kex2.lua:133
-#, lua-format
-msgid "You received #g%s#0."
-msgstr ""
-
-#: dat/missions/dvaered/coliseum.lua:125
-msgid "Defeat all the other adversaries!"
-msgstr ""
-
-#. take off and enter the ring!
-#. Wave meta-information
-#.
-#. Common Teleporting Functions
-#. --
-#. Enters Coliseum
-#. Teleport the player to the Coliseum and hide the rest of the universe
-#. Set up player stuff
-#. Disable escorts if they exist
-#. Player lost info
-#. Goes back to Totoran (landed)
-#. Clear pilots so escorts get docked
-#. Fix the map up
-#. Undo player invincibility stuff and land
-#. clear hidden flag
-#.
-#. Countdown stuff
-#. --
-#: dat/missions/dvaered/coliseum.lua:191
-msgid "5…"
-msgstr ""
-
-#: dat/missions/dvaered/coliseum.lua:192
-msgid "4…"
-msgstr ""
-
-#: dat/missions/dvaered/coliseum.lua:193
-msgid "3…"
-msgstr ""
-
-#: dat/missions/dvaered/coliseum.lua:194
-msgid "2…"
-msgstr ""
-
-#: dat/missions/dvaered/coliseum.lua:195
-msgid "1…"
-msgstr ""
-
-#. TODO play countdown sound
-#. TODO play sound and cooler text
-#: dat/missions/dvaered/coliseum.lua:204
-msgid "FIGHT!"
-msgstr ""
-
-#. We let them do their thing
-#.
-#. Common functions
-#. --
-#. don't let them come back
-#. can't target
-#. just stays there
-#. omsg does not display so we need a custom solution
-#. player.omsgAdd( _("YOU LOST!"), 4.5 )
-#. Heal up to avoid game over if necessary
-#. omsg does not display so we need a custom solution
-#. player.omsgAdd( _("YOU LOST!"), 5 )
-#. shiplog.appendLog( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
-#.
-#. Wave stuff
-#. --
-#. Get rid of pilots
-#. Metafactions
-#: dat/missions/dvaered/coliseum.lua:285
-msgid "Combatant"
-msgstr ""
-
-#. Don't allow talking
-#. Determine position
-#. Add ship
-#. Count down
-#: dat/missions/dvaered/coliseum.lua:361
-#, lua-format
-msgid "#pWAVE %d#0"
-msgstr ""
-
-#: dat/missions/dvaered/coliseum.lua:373
-#, lua-format
-msgid "%.1f seconds"
-msgstr ""
-
-#. Store all the stuff the pilot killed
-#. I'd love to see someone take down a kestrel in a fighter
-#. TODO add sound
-#. TODO Cooler animation or something
-#. time to display each message
-#: dat/missions/dvaered/coliseum.lua:462
-#, lua-format
-msgid "#pWAVE %d CLEAR#0"
-msgstr ""
-
-#. TODO play sound and cooler text
-#: dat/missions/dvaered/coliseum.lua:474
-msgid "YOU ARE VICTORIOUS!"
-msgstr ""
-
-#. shiplog.appendLog( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
-#. Fighters
-#. Bombers
-#. Corvettes
-#. Destroyers
-#. Cruisers
-#. Carriers
-#. 1
-#. 5
-#. 10
-#. 15
-#. 20
-#. 1
-#. 5
-#. 10
-#. 1
-#. 5
 #.
 #. @brief Increases the reputation limit of the player.
 #. --
@@ -38357,6 +38520,185 @@ msgstr ""
 #. Gets someone to make a message (useful for hook.timer)
 #.
 #. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Crimson Gauntlet">
+#. <avail>
+#. <priority>3</priority>
+#. <chance>100</chance>
+#. <location>Bar</location>
+#. <planet>Totoran</planet>
+#. </avail>
+#. </mission>
+#. --
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:20
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:21
+msgid "Totoran Tournament"
+msgstr ""
+
+#. TODO replace portraits/images
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:26
+msgid "Crimson Gauntlet Terminal"
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:27
+msgid ""
+"A terminal to access the Crimson Gauntlet Virtual Reality environment. This "
+"directly allows you to enter the different challenges and tournaments "
+"available."
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:29
+msgid "Crimson Gauntlet Challenge"
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:30
+msgid "Annihilate all enemies in the Crimson Gauntlet."
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:31
+msgid "Great riches!"
+msgstr ""
+
+#. Land is unified for all types of combat
+#. TODO only give emblems from bosses or special clears?
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:55
+#, lua-format
+msgid ""
+"You obtained %d points!\n"
+"You received #g%s#0!\n"
+"You received %s!"
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:92
+msgid "Defeat all the other adversaries!"
+msgstr ""
+
+#. take off and enter the ring!
+#. Wave meta-information
+#.
+#. Common Teleporting Functions
+#. --
+#. Enters Crimson Gauntlet
+#. Teleport the player to the Crimson Gauntlet and hide the rest of the universe
+#. Set up player stuff
+#. Disable escorts if they exist
+#. Player lost info
+#. Goes back to Totoran (landed)
+#. Clear pilots so escorts get docked
+#. Fix the map up
+#. Undo player invincibility stuff and land
+#. clear hidden flag
+#.
+#. Countdown stuff
+#. --
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:158
+msgid "5…"
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:159
+msgid "4…"
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:160
+msgid "3…"
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:161
+msgid "2…"
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:162
+msgid "1…"
+msgstr ""
+
+#. TODO play countdown sound
+#. TODO play sound and cooler text
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:171
+msgid "FIGHT!"
+msgstr ""
+
+#. We let them do their thing
+#.
+#. Common functions
+#. --
+#. don't let them come back
+#. can't target
+#. just stays there
+#. omsg does not display when dead so we will need a custom solution
+#. player.omsgAdd( _("YOU LOST!"), 4.5 )
+#. Heal up to avoid game over if necessary
+#. omsg does not display when dead so we will need a custom solution
+#. player.omsgAdd( _("YOU LOST!"), 5 )
+#. shiplog.appendLog( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
+#.
+#. Wave stuff
+#. --
+#. Get rid of pilots
+#. Metafactions
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:252
+msgid "Combatant"
+msgstr ""
+
+#. Don't allow talking
+#. Determine position
+#. Add ship
+#. Count down
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:345
+#, lua-format
+msgid "#pWAVE %d#0"
+msgstr ""
+
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:357
+#, lua-format
+msgid "%.1f seconds"
+msgstr ""
+
+#. Store all the stuff the pilot killed
+#. I'd love to see someone take down a kestrel in a fighter
+#. Implement global modifier bonuses here
+#. TODO add sound
+#. TODO Cooler animation or something
+#. time to display each message
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:454
+#, lua-format
+msgid "#pWAVE %d CLEAR#0"
+msgstr ""
+
+#. TODO play sound and cooler text
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:466
+msgid "YOU ARE VICTORIOUS!"
+msgstr ""
+
+#. shiplog.appendLog( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
+#.
+#. -- Fancy GUI interface for the Crimson Gauntlet
+#. --
+#. Outlined fonts
+#. Clear defaults
+#. Window and top details
+#. Tournament Types
+#. Tournament Options
+#. Modifier
+#. Close or Cancel
+#. Load defaults
+#. return nils if cancelled
+#. Fighters
+#. Bombers
+#. Corvettes
+#. Destroyers
+#. Cruisers
+#. Carriers
+#. 1
+#. 5
+#. 10
+#. 15
+#. 20
+#. 1
+#. 5
+#. 10
+#. 1
+#. 5
+#.
+#. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Collective Scouting">
 #. <flags>
 #. <unique />
@@ -39478,11 +39820,11 @@ msgstr ""
 msgid "Keer"
 msgstr ""
 
-#: dat/missions/empire/collective/ec06.lua:221
+#: dat/missions/empire/collective/ec06.lua:220
 msgid "Tanker in system, contact if in need of fuel."
 msgstr ""
 
-#: dat/missions/empire/collective/ec06.lua:230
+#: dat/missions/empire/collective/ec06.lua:229
 msgid "Fuel Tanker"
 msgstr ""
 
@@ -39629,7 +39971,7 @@ msgstr ""
 #. Get the planet and system at which we currently are.
 #. Set our target system and planet.
 #: dat/missions/empire/emp_cargo00.lua:69
-#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:58
+#: dat/missions/empire/longdistanceshipping/emp_longdistancecargo1.lua:57
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo2.lua:58
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo3.lua:57
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo4.lua:57
@@ -39758,7 +40100,7 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:104
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:116
 #: dat/missions/neutral/cargo_rush.lua:144
-#: dat/missions/pirate/pir_contraband.lua:161
+#: dat/missions/pirate/pir_contraband.lua:171
 #: dat/missions/sirius/srs_ferry.lua:68
 #: dat/missions/trader/anxiousmerchant.lua:66
 msgid "Too slow"
@@ -39767,7 +40109,7 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:105
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:117
 #: dat/missions/neutral/cargo_rush.lua:145
-#: dat/missions/pirate/pir_contraband.lua:162
+#: dat/missions/pirate/pir_contraband.lua:172
 #, lua-format
 msgid ""
 "This shipment must arrive within %s, but it will take at least %s for your "
@@ -39789,14 +40131,14 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:112
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:124
 #: dat/missions/neutral/cargo.lua:103 dat/missions/neutral/cargo_rush.lua:134
-#: dat/missions/pirate/pir_contraband.lua:169
+#: dat/missions/pirate/pir_contraband.lua:179
 msgid "No room in ship"
 msgstr ""
 
 #: dat/missions/empire/es_cargo.lua:113
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:125
 #: dat/missions/neutral/cargo.lua:104 dat/missions/neutral/cargo_rush.lua:135
-#: dat/missions/pirate/pir_contraband.lua:170
+#: dat/missions/pirate/pir_contraband.lua:180
 #, lua-format
 msgid ""
 "You don't have enough cargo space to accept this mission. It requires %s of "
@@ -39805,7 +40147,7 @@ msgstr ""
 
 #: dat/missions/empire/es_cargo.lua:122
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:134
-#: dat/missions/pirate/pir_contraband.lua:179
+#: dat/missions/pirate/pir_contraband.lua:189
 #: dat/missions/sirius/srs_ferry.lua:136 dat/missions/zalek/zlk_test.lua:33
 msgid "Mission Accepted"
 msgstr ""
@@ -39826,7 +40168,7 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:137
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:149
 #: dat/missions/neutral/cargo_rush.lua:58
-#: dat/missions/pirate/pir_contraband.lua:194
+#: dat/missions/pirate/pir_contraband.lua:204
 msgid "Successful Delivery"
 msgstr ""
 
@@ -40714,6 +41056,14 @@ msgstr[1] ""
 msgstr[2] ""
 
 #. Update mission
+#: dat/missions/empire/shipping/es01.lua:126
+msgid "Packages"
+msgstr ""
+
+#: dat/missions/empire/shipping/es01.lua:126
+msgid "Several packages of \"food\"."
+msgstr ""
+
 #. Load message
 #. Update mission
 #. Some text
@@ -43194,6 +43544,11 @@ msgstr ""
 msgid ""
 "\"Oh, I almost forgot. There's quite a few credits in the crate too, I think "
 "it's only fair to give you most of them as a reward for your help.\""
+msgstr ""
+
+#: dat/missions/minerva/kex1.lua:113 dat/missions/minerva/kex2.lua:133
+#, lua-format
+msgid "You received #g%s#0."
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:114
@@ -48389,10 +48744,9 @@ msgid ""
 "space for our box.\""
 msgstr ""
 
-#. the mission cargo (names as in commodity.xml)
 #. the outfit name as in outfit.xml
 #: dat/missions/neutral/diy-nerds.lua:116
-#: dat/missions/neutral/diy-nerds.lua:158
+#: dat/missions/neutral/diy-nerds.lua:160
 msgid "Young People"
 msgstr ""
 
@@ -48487,6 +48841,23 @@ msgstr ""
 
 #: dat/missions/neutral/diy-nerds.lua:146
 msgid "Have the nerds not told you to pick them up at the bar? Mission failed!"
+msgstr ""
+
+#. the mission cargo (names as in commodity.xml)
+#: dat/missions/neutral/diy-nerds.lua:149
+msgid "Group of Nerds"
+msgstr ""
+
+#: dat/missions/neutral/diy-nerds.lua:150
+msgid "A bunch of protagonists."
+msgstr ""
+
+#: dat/missions/neutral/diy-nerds.lua:152
+msgid "Box"
+msgstr ""
+
+#: dat/missions/neutral/diy-nerds.lua:153
+msgid "A homebrew processing unit."
 msgstr ""
 
 #. atm, just take the first landable planet which is not the current one
@@ -49504,6 +49875,14 @@ msgid ""
 "man."
 msgstr ""
 
+#: dat/missions/neutral/foodbiz/deliverlove.lua:55
+msgid "Love Letters"
+msgstr ""
+
+#: dat/missions/neutral/foodbiz/deliverlove.lua:56
+msgid "A cargo of feelings inked onto pulped, dried cellulose fibres."
+msgstr ""
+
 #. No system shall be claimed by mission
 #. Introductions and a bit of bargaining
 #. look at you go, double the reward
@@ -50281,6 +50660,14 @@ msgid ""
 msgstr ""
 
 #. In case no suitable planets are in range.
+#: dat/missions/neutral/oldwoman.lua:93
+msgid "Old Woman"
+msgstr ""
+
+#: dat/missions/neutral/oldwoman.lua:93
+msgid "A grumbling old woman."
+msgstr ""
+
 #. Date hook.
 #. Uh... yeah.
 #. Land hook.
@@ -51451,7 +51838,11 @@ msgid ""
 msgstr ""
 
 #. Note: this mission does not make any system claims.
+#. Mission variables
+#. make sure there are at least 2 inhabited planets
+#. For missions from the Bar only.
 #: dat/missions/neutral/reynir.lua:67 dat/missions/neutral/reynir.lua:91
+#: dat/missions/neutral/reynir.lua:121
 msgid "Reynir"
 msgstr ""
 
@@ -51512,9 +51903,10 @@ msgid ""
 "dogs."
 msgstr ""
 
-#. Mission variables
-#. make sure there are at least 2 inhabited planets
-#. For missions from the Bar only.
+#: dat/missions/neutral/reynir.lua:121
+msgid "A old man who wants to see space."
+msgstr ""
+
 #. If landed on misn_base then give reward
 #. If we're in misn_base_sys but not on misn_base then...
 #. If we're in another system then make Reynir bleed out his ears ;)
@@ -52460,6 +52852,15 @@ msgstr ""
 msgid "Attraction"
 msgstr ""
 
+#. Set mission details
+#: dat/missions/neutral/sightseeing.lua:173
+msgid "Sightseers"
+msgstr ""
+
+#: dat/missions/neutral/sightseeing.lua:173
+msgid "A bunch of sightseeing civilians."
+msgstr ""
+
 #. The ship will have a unique name
 #: dat/missions/neutral/spacefamily.lua:31
 msgid "Shipwrecked space family"
@@ -52602,39 +53003,39 @@ msgid ""
 msgstr ""
 
 #. Mission details
-#: dat/missions/neutral/spacefamily.lua:61
+#: dat/missions/neutral/spacefamily.lua:59
 msgid "The Space Family"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:62
+#: dat/missions/neutral/spacefamily.lua:60
 msgid "A clear conscience."
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:64
-#: dat/missions/neutral/spacefamily.lua:77
+#: dat/missions/neutral/spacefamily.lua:62
+#: dat/missions/neutral/spacefamily.lua:75
 msgid ""
 "A shipwrecked space family has enlisted your aid. Can you take them to "
 "safety?"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:65
+#: dat/missions/neutral/spacefamily.lua:63
 #, lua-format
 msgid "Take the space family to %s in the %s system"
 msgstr ""
 
 #. Aborted mission
-#: dat/missions/neutral/spacefamily.lua:68
+#: dat/missions/neutral/spacefamily.lua:66
 msgid "A parting of ways"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:69
+#: dat/missions/neutral/spacefamily.lua:67
 msgid ""
 "You unceremoniously shove your passengers out of the airlock and into the "
 "coldness of space. You're done playing taxi; it's time to get back to "
 "important things!"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:70
+#: dat/missions/neutral/spacefamily.lua:68
 msgid ""
 "You unceremoniously shove your passengers out of the airlock, leaving them "
 "to their fate on this planet. You're done playing taxi; it's time to get "
@@ -52642,11 +53043,11 @@ msgid ""
 msgstr ""
 
 #. OSD stuff
-#: dat/missions/neutral/spacefamily.lua:75
+#: dat/missions/neutral/spacefamily.lua:73
 msgid "The space family"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:80
+#: dat/missions/neutral/spacefamily.lua:78
 msgid ""
 "You rescued a bad-tempered man and his family who were stranded aboard their "
 "ship. After a lot of annoying complaints, the man and his family finally "
@@ -52657,6 +53058,14 @@ msgstr ""
 #. You boarded their ship, now you're stuck with them.
 #. For lack of a test, we'll just have to keep track ourselves.
 #. Intro text, player meets family
+#: dat/missions/neutral/spacefamily.lua:95
+msgid "Space Family"
+msgstr ""
+
+#: dat/missions/neutral/spacefamily.lua:95
+msgid "A family who you rescued in space."
+msgstr ""
+
 #. First stop; subsequent stops will be handled in the land function
 #. Populate the array
 #. In case no systems were found.
@@ -53483,6 +53892,14 @@ msgstr ""
 #. Hey, this mission is probably hell, after all.
 #. Flavour text and mini-briefing
 #. Set up the goal
+#: dat/missions/pirate/pir_clan_cargo.lua:89
+msgid "Pirate Packages"
+msgstr ""
+
+#: dat/missions/pirate/pir_clan_cargo.lua:89
+msgid "A bunch of pirate packages. You don't want to know what's inside."
+msgstr ""
+
 #. The first time this mission is done, the player’s max standing is
 #. increased by 5.
 #. Mercenaries appear after a couple of jumps
@@ -53578,7 +53995,7 @@ msgid "Powerful Stimulants"
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband.lua:75
-msgid "A bunch of illegal stimulates."
+msgid "A bunch of illegal stimulants."
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband.lua:76
@@ -53709,96 +54126,191 @@ msgstr ""
 msgid "Pizza with pineapple on it, there is no way this is legal."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:95
+#: dat/missions/pirate/pir_contraband.lua:92
+msgid "Illicit Shader Code"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:92
+msgid "Program used for rendering images with nefarious and illegal purposes."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:96
 msgid "Tax-evasion Documents"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:95
+#: dat/missions/pirate/pir_contraband.lua:96
 msgid "Illegal documents detailing tax evasion by high empire officials."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:96
+#: dat/missions/pirate/pir_contraband.lua:97
 msgid "Leaked Documents"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:96
+#: dat/missions/pirate/pir_contraband.lua:97
 msgid "Documents illegally leaked from governmental entities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:97
+#: dat/missions/pirate/pir_contraband.lua:98
 msgid "Incriminating Evidence"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:97
+#: dat/missions/pirate/pir_contraband.lua:98
 msgid "Illegally obtained evidence that incriminates high empire officials."
 msgstr ""
 
+#: dat/missions/pirate/pir_contraband.lua:99
+msgid "Unauthorized Office Supplies"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:99
+msgid ""
+"Office supplies that don't meet the standards of the Empire bureaucracy, "
+"including flimsy red staplers."
+msgstr ""
+
 #: dat/missions/pirate/pir_contraband.lua:100
+msgid "Paper Deshredders"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:100
+msgid ""
+"Devices that are able to reconstruct original documents from their shredded "
+"remains."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:103
 msgid "Self-help Books"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:100
+#: dat/missions/pirate/pir_contraband.lua:103
 msgid "Books for self-betterment made illegal by the Dvaered authorities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:101
+#: dat/missions/pirate/pir_contraband.lua:104
 msgid "Pacifist Manifestos"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:101
+#: dat/missions/pirate/pir_contraband.lua:104
 msgid ""
 "Documents making the case for pacifism, made illegal by the Dvaered "
 "authorities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:104
+#: dat/missions/pirate/pir_contraband.lua:105
+msgid "Zen Rock Gardens"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:105
+msgid ""
+"Sand and rock gardens with special rakes you can use for meditative "
+"purposes. Made illegal by the Dvaered authorities."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:106
+msgid "Scented Soap"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:106
+msgid ""
+"Fragrant soaps that can lead you to have a peace of mind. Made illegal by "
+"the Dvaered authorities."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:109
 msgid "Unstable DNA"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:104
+#: dat/missions/pirate/pir_contraband.lua:109
 msgid "Illegal DNA with strong reactive properties."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:105
+#: dat/missions/pirate/pir_contraband.lua:110
 msgid "Bio-weapons"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:105
+#: dat/missions/pirate/pir_contraband.lua:110
 msgid "Highly dangerous illegal biological weapons."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:108
+#: dat/missions/pirate/pir_contraband.lua:111
+msgid "Abducted Drosophila"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:111
+msgid ""
+"Genetically modified small fruit flies illegally stolen from a laboratory."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:112
+msgid "Mislabeled Plasmids"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:112
+msgid ""
+"Independently replicating DNA that has been mislabeled and is no longer "
+"clear what exactly it does. Illegal for its uncertain and dangerous nature."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:115
 msgid "Heretical Documents"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:108
+#: dat/missions/pirate/pir_contraband.lua:115
 msgid "Illegal documents referring to heresy."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:111
+#: dat/missions/pirate/pir_contraband.lua:116
+msgid "Itch Powder"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:116
+msgid "A banned substance with a history of disrupting robed processions."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:117
+msgid "Unauthorized Sirichana Merchandise"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:117
+msgid ""
+"Horribly tacky and outright bad merchandise with Sirichana pasted all over "
+"it. Sirichana toenail clipper anyone?"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:120
 msgid "Scientific Preprints"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:111
+#: dat/missions/pirate/pir_contraband.lua:120
 msgid "Non-paywalled illegal scientific papers."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:112
+#: dat/missions/pirate/pir_contraband.lua:121
 msgid "Sentient AI"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:112
+#: dat/missions/pirate/pir_contraband.lua:121
 msgid "Highly illegal AI that is assumed to be sentient."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:113
+#: dat/missions/pirate/pir_contraband.lua:122
 msgid "Bogus Proofs"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:113
+#: dat/missions/pirate/pir_contraband.lua:122
 msgid ""
 "Mathematical proofs with almost imperceptible modifications to make them "
 "illegally false."
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:123
+msgid "p-Hacked Results"
+msgstr ""
+
+#: dat/missions/pirate/pir_contraband.lua:123
+msgid ""
+"Scientific trial results obtained through unreliable and illegal uses of "
+"statistics."
 msgstr ""
 
 #. Add faction cargoes as necessary
@@ -53809,17 +54321,17 @@ msgstr ""
 #. Allow extra time for refuelling stops.
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #. Modifier that should tend towards 1.0 as Naev is finished as a game
-#: dat/missions/pirate/pir_contraband.lua:150
+#: dat/missions/pirate/pir_contraband.lua:160
 #, lua-format
 msgid "PIRACY: Smuggle %s of %s"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:180
+#: dat/missions/pirate/pir_contraband.lua:190
 #, lua-format
 msgid "%s of %s are loaded onto your ship."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:195
+#: dat/missions/pirate/pir_contraband.lua:205
 #, lua-format
 msgid "The containers of %s are unloaded at the docks."
 msgstr ""
@@ -53881,7 +54393,7 @@ msgstr ""
 msgid ""
 "They are fairly absorbed in thought and take a while to notice you. "
 "Suddenly, without warning, they jump out of their chair and almost fall to "
-"the drown.\n"
+"the ground.\n"
 "\"Crikes! You scared the shit out of me.\"\n"
 "They clutch at their shirt as if trying to hold their heart in their ribcage."
 msgstr ""
@@ -55012,13 +55524,29 @@ msgid ""
 "take him to the Seiryuu."
 msgstr ""
 
-#: dat/missions/shadow/darkshadow.lua:237
+#. This is here because setDesc initializes the OSD.
+#. This is the "real" start of the mission. Get yer mission variables here!
+#. Handle boarding of the Seiryuu
+#. Briefing
+#. Debriefing
+#. 1M
+#. Board hook for Joe
+#: dat/missions/shadow/darkshadow.lua:199
+#: dat/missions/shadow/darkshadow.lua:242
+msgid "Four Winds Informant"
+msgstr ""
+
+#: dat/missions/shadow/darkshadow.lua:199
+msgid "Jorek's informant."
+msgstr ""
+
+#: dat/missions/shadow/darkshadow.lua:238
 msgid ""
 "Landing permission denied. Our docking clamps are currently undergoing "
 "maintenance."
 msgstr ""
 
-#: dat/missions/shadow/darkshadow.lua:329
+#: dat/missions/shadow/darkshadow.lua:330
 msgid "Four Winds Patrol"
 msgstr ""
 
@@ -56419,8 +56947,21 @@ msgid ""
 "soon; he may have another job for you."
 msgstr ""
 
+#. the chances you have to get an ambush
+#. The player is landing on the mission planet to get the box
+#. Job is done
+#. Ambush !
+#. the probability of an ambush goes up when you cross a system without meeting any ennemy
+#: dat/missions/shark/sh02_tapping.lua:165
+msgid "Recorder"
+msgstr ""
+
+#: dat/missions/shark/sh02_tapping.lua:165
+msgid "A holophone recorder."
+msgstr ""
+
 #. adding an useless Llama
-#: dat/missions/shark/sh02_tapping.lua:358
+#: dat/missions/shark/sh02_tapping.lua:359
 msgid "Amateur Mercenary"
 msgstr ""
 
@@ -62210,7 +62751,7 @@ msgstr ""
 msgid "\"You don't have enough money. Stop wasting my time.\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:72 src/comm.c:456
+#: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:72 src/comm.c:454
 msgid "\"Pleasure to do business with you.\""
 msgstr ""
 
@@ -63859,6 +64400,10 @@ msgstr ""
 msgid "unimplemented"
 msgstr ""
 
+#. Only stuff we care about atm
+#. The window title (string)
+#. The window width (number)
+#. The window height (number)
 #.
 #. -- Base
 #. --
@@ -63873,29 +64418,7 @@ msgstr ""
 #.
 #. -- Initialize
 #. --
-#: dat/scripts/love.lua:117
-msgid "can only run one Love2D instance at a time!"
-msgstr ""
-
-#. Save path to restore it later
-#. only add to path if not there, saves path pollution if crashing
-#. Allows loading files relatively
-#. Run conf if exists
-#: dat/scripts/love.lua:150
-#, lua-format
-msgid "'%s' is an unknown filetype '%s'"
-msgstr ""
-
-#: dat/scripts/love.lua:158
-#, lua-format
-msgid "'%s' is not a valid love2d game!"
-msgstr ""
-
-#. Reset functions
-#. Only stuff we care about atm
-#. The window title (string)
-#. The window width (number)
-#. The window height (number)
+#. Set defaults
 #. reset loadedness
 #. Configure
 #. Load stuff
@@ -63905,6 +64428,32 @@ msgstr ""
 #. Doesn't actually get here until the dialogue is closed
 #. Reset libraries that were potentially crushed
 #. Restore the package.path
+#: dat/scripts/love.lua:166 dat/scripts/love.lua:264
+msgid "can only run one Love2D instance at a time!"
+msgstr ""
+
+#. Save path to restore it later
+#. only add to path if not there, saves path pollution if crashing
+#. Allows loading files relatively
+#. Run conf if exists
+#: dat/scripts/love.lua:199
+#, lua-format
+msgid "'%s' is an unknown filetype '%s'"
+msgstr ""
+
+#: dat/scripts/love.lua:207
+#, lua-format
+msgid "'%s' is not a valid love2d game!"
+msgstr ""
+
+#. Set up defaults
+#. Configure
+#. Load stuff
+#. Set properties
+#. Run set up function defined in Love2d spec
+#. Actually run in Naev
+#. Doesn't actually get here until the dialogue is closed
+#. Reset libraries that were potentially crushed
 #. Fancy API so you can do `love = require 'love'`
 #.
 #. -- Audio
@@ -67018,6 +67567,28 @@ msgid "Philosopher Drone"
 msgstr ""
 
 #. Helpers to create main characters
+#.
+#. -- Helper stuff for the Crimson Gauntlet
+#. --
+#: dat/scripts/totoran.lua:12
+msgid "Crimson Gauntlet Guide"
+msgstr ""
+
+#: dat/scripts/totoran.lua:15
+msgid "Information on the Crimson Gauntlet."
+msgstr ""
+
+#. Helpers to create main characters
+#. Emblem stuff
+#. Store lifetime earnings
+#: dat/scripts/totoran.lua:54
+#, lua-format
+msgid "#r%s Crimson Emblems#0"
+msgid_plural "#r%s Crimson Emblems#0"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
 #. --
 #. Visual Novel API for Naev
 #.
@@ -67442,58 +68013,58 @@ msgstr ""
 msgid "AI Profile '%s' is missing '%s' function!"
 msgstr ""
 
-#: src/ai.c:710
+#: src/ai.c:713
 #, c-format
 msgid "AI Profile '%s' not found in AI stack"
 msgstr ""
 
-#: src/ai.c:878
+#: src/ai.c:881
 #, c-format
 msgid "Pilot '%s' ai -> 'attacked': %s"
 msgstr ""
 
-#: src/ai.c:943
+#: src/ai.c:947
 #, c-format
 msgid "Pilot '%s' ai -> 'distress': %s"
 msgstr ""
 
 #. Error has occurred.
-#: src/ai.c:980
+#: src/ai.c:984
 #, c-format
 msgid "Pilot '%s' equip -> '%s': %s"
 msgstr ""
 
 #. Run function.
 #. error has occurred
-#: src/ai.c:1000
+#: src/ai.c:1004
 #, c-format
 msgid "Pilot '%s' ai -> '%s': %s"
 msgstr ""
 
-#: src/ai.c:1043
+#: src/ai.c:1047
 #, c-format
 msgid "Trying to add subtask '%s' to non-existent task."
 msgstr ""
 
-#: src/ai.c:1164 src/ai.c:1231
+#: src/ai.c:1168 src/ai.c:1235
 msgid "Trying to pop task when there are no tasks on the stack."
 msgstr ""
 
-#: src/ai.c:1235
+#: src/ai.c:1239
 #, c-format
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2319
+#: src/ai.c:2323
 #, c-format
 msgid "Pilot '%s' has no land target"
 msgstr ""
 
-#: src/ai.c:2399
+#: src/ai.c:2403
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2945
+#: src/ai.c:2949
 msgid "Invalid Bounds"
 msgstr ""
 
@@ -67530,7 +68101,7 @@ msgstr ""
 msgid "Background -> 'background' : %s"
 msgstr ""
 
-#: src/background.c:452 src/gui.c:2031 src/nlua_evt.c:143 src/nlua_misn.c:262
+#: src/background.c:452 src/gui.c:2031 src/nlua_evt.c:143 src/nlua_misn.c:261
 #: src/nopenal.c:72
 msgid "unknown error"
 msgstr ""
@@ -67715,53 +68286,49 @@ msgstr ""
 msgid "#%c%s#r does not respond"
 msgstr ""
 
-#: src/comm.c:204
-msgid "Greet"
-msgstr ""
-
-#: src/comm.c:207 src/comm.c:256
+#: src/comm.c:205 src/comm.c:254
 msgid "Bribe"
 msgstr ""
 
-#: src/comm.c:211 src/space.c:173
+#: src/comm.c:209 src/space.c:173
 msgid "Refuel"
 msgstr ""
 
-#: src/comm.c:234
+#: src/comm.c:232
 #, c-format
 msgid "%s does not respond."
 msgstr ""
 
 #. Create the window.
-#: src/comm.c:334
+#: src/comm.c:332
 msgid "Communication Channel"
 msgstr ""
 
-#: src/comm.c:375 src/console.c:682 src/dev_sysedit.c:1345
+#: src/comm.c:373 src/console.c:682 src/dev_sysedit.c:1345
 #: src/dev_sysedit.c:1455 src/dev_sysedit.c:1518 src/dev_sysedit.c:1713
 #: src/dev_sysedit.c:1888 src/dev_sysedit.c:1973 src/dev_uniedit.c:1012
 #: src/dev_uniedit.c:1224 src/dev_uniedit.c:1482 src/info.c:263 src/info.c:342
-#: src/info.c:427 src/info.c:571 src/info.c:780 src/info.c:958 src/info.c:1045
-#: src/info.c:1390 src/land_outfits.c:169 src/map.c:337 src/map_find.c:1045
+#: src/info.c:427 src/info.c:571 src/info.c:780 src/info.c:989 src/info.c:1076
+#: src/info.c:1421 src/land_outfits.c:169 src/map.c:337 src/map_find.c:1045
 #: src/map_system.c:203
 msgid "Close"
 msgstr ""
 
-#: src/comm.c:416 src/comm.c:429 src/comm.c:437 src/comm.c:439 src/comm.c:443
-#: src/comm.c:449 src/comm.c:456 src/comm.c:458
+#: src/comm.c:414 src/comm.c:427 src/comm.c:435 src/comm.c:437 src/comm.c:441
+#: src/comm.c:447 src/comm.c:454 src/comm.c:456
 msgid "Bribe Pilot"
 msgstr ""
 
-#: src/comm.c:422
+#: src/comm.c:420
 #, c-format
 msgid "Pilot '%s' accepts bribes but doesn't give price!"
 msgstr ""
 
-#: src/comm.c:429
+#: src/comm.c:427
 msgid "\"Money won't save your hide now!\""
 msgstr ""
 
-#: src/comm.c:437
+#: src/comm.c:435
 #, c-format
 msgid ""
 "\"I'm gonna need at least %s to not leave you as a hunk of floating debris."
@@ -67770,7 +68337,7 @@ msgid ""
 "Pay %s?"
 msgstr ""
 
-#: src/comm.c:439 src/comm.c:587
+#: src/comm.c:437 src/comm.c:585
 #, c-format
 msgid ""
 "%s\n"
@@ -67778,50 +68345,50 @@ msgid ""
 "Pay %s?"
 msgstr ""
 
-#: src/comm.c:443 src/comm.c:509 src/comm.c:589
+#: src/comm.c:441 src/comm.c:507 src/comm.c:587
 msgid "You decide not to pay."
 msgstr ""
 
-#: src/comm.c:449 src/comm.c:515
+#: src/comm.c:447 src/comm.c:513
 msgid "You don't have enough credits for the bribery."
 msgstr ""
 
 #. Yes/No input.
-#: src/comm.c:500 src/comm.c:505 src/comm.c:509 src/comm.c:515 src/comm.c:521
+#: src/comm.c:498 src/comm.c:503 src/comm.c:507 src/comm.c:513 src/comm.c:519
 msgid "Bribe Starport"
 msgstr ""
 
-#: src/comm.c:521
+#: src/comm.c:519
 msgid "You have permission to dock."
 msgstr ""
 
-#: src/comm.c:551 src/comm.c:557 src/comm.c:563 src/comm.c:573 src/comm.c:580
-#: src/comm.c:587 src/comm.c:589 src/comm.c:594 src/comm.c:599 src/comm.c:616
+#: src/comm.c:549 src/comm.c:555 src/comm.c:561 src/comm.c:571 src/comm.c:578
+#: src/comm.c:585 src/comm.c:587 src/comm.c:592 src/comm.c:597 src/comm.c:614
 msgid "Request Fuel"
 msgstr ""
 
-#: src/comm.c:557
+#: src/comm.c:555
 msgid "Your fuel deposits are already full."
 msgstr ""
 
-#: src/comm.c:564
+#: src/comm.c:562
 msgid "\"Sorry, I don't have enough fuel to spare at the moment.\""
 msgstr ""
 
-#: src/comm.c:573
+#: src/comm.c:571
 msgid "\"Sorry, I'm busy now.\""
 msgstr ""
 
-#: src/comm.c:580
+#: src/comm.c:578
 msgid "Pilot is already refueling you."
 msgstr ""
 
-#: src/comm.c:599
+#: src/comm.c:597
 #, c-format
 msgid "You need %s more!"
 msgstr ""
 
-#: src/comm.c:616
+#: src/comm.c:614
 msgid "\"On my way.\""
 msgstr ""
 
@@ -70006,100 +70573,115 @@ msgstr ""
 msgid "Jettison"
 msgstr ""
 
-#: src/info.c:862 src/info.c:1138
+#: src/info.c:826
+msgid " (#rillegal#0)"
+msgstr ""
+
+#: src/info.c:865
+msgid "Illegalized by the following factions:\n"
+msgstr ""
+
+#: src/info.c:871
+#, c-format
+msgid ""
+"\n"
+"   - %s"
+msgstr ""
+
+#: src/info.c:893 src/info.c:1169
 msgid "Abort Mission"
 msgstr ""
 
-#: src/info.c:863 src/info.c:1139
+#: src/info.c:894 src/info.c:1170
 msgid "Are you sure you want to abort this mission?"
 msgstr ""
 
-#: src/info.c:879
+#: src/info.c:910
 #, c-format
 msgid "Cargo '%d' does not belong to any active mission."
 msgstr ""
 
-#: src/info.c:1047
+#: src/info.c:1078
 msgid "Abort"
 msgstr ""
 
-#: src/info.c:1053
+#: src/info.c:1084
 msgid "#nReward:#0"
 msgstr ""
 
 #. no missions
 #. Make sure you have missions.
-#: src/info.c:1091 src/info.c:1109 src/land.c:632 src/land.c:700 src/land.c:736
+#: src/info.c:1122 src/info.c:1140 src/land.c:632 src/land.c:700 src/land.c:736
 msgid "No Missions"
 msgstr ""
 
-#: src/info.c:1112
+#: src/info.c:1143
 msgid "You currently have no active missions."
 msgstr ""
 
-#: src/info.c:1293
+#: src/info.c:1324
 msgid ""
 "You are currently viewing all logs in the selected log type. Please select a "
 "log title to delete."
 msgstr ""
 
-#: src/info.c:1298
+#: src/info.c:1329
 #, c-format
 msgid ""
 "This will delete ALL \"%s\" log entries. This operation cannot be undone. "
 "Are you sure?"
 msgstr ""
 
-#: src/info.c:1328
+#: src/info.c:1359
 msgid "Log message"
 msgstr ""
 
-#: src/info.c:1351 src/info.c:1359
+#: src/info.c:1382 src/info.c:1390
 msgid "Add a log entry"
 msgstr ""
 
-#: src/info.c:1351
+#: src/info.c:1382
 msgid "Add an entry to your diary:"
 msgstr ""
 
-#: src/info.c:1354
+#: src/info.c:1385
 msgid "Your Diary"
 msgstr ""
 
-#: src/info.c:1359
+#: src/info.c:1390
 #, c-format
 msgid "Add an entry to the log titled '%s':"
 msgstr ""
 
-#: src/info.c:1365
+#: src/info.c:1396
 msgid "Cannot add log"
 msgstr ""
 
-#: src/info.c:1365
+#: src/info.c:1396
 msgid "Cannot find this log!  Something went wrong here!"
 msgstr ""
 
-#: src/info.c:1392 src/load.c:391
+#: src/info.c:1423 src/load.c:391
 msgid "Delete"
 msgstr ""
 
-#: src/info.c:1395
+#: src/info.c:1426
 msgid "View Entry"
 msgstr ""
 
-#: src/info.c:1398
+#: src/info.c:1429
 msgid "Add Entry"
 msgstr ""
 
-#: src/info.c:1404
+#: src/info.c:1435
 msgid "Select log type:"
 msgstr ""
 
-#: src/info.c:1408
+#: src/info.c:1439
 msgid "Select log title:"
 msgstr ""
 
-#: src/info.c:1412
+#: src/info.c:1443
 msgid "Log entries:"
 msgstr ""
 
@@ -72637,7 +73219,7 @@ msgstr ""
 msgid "Event '%s' -> '%s': %s"
 msgstr ""
 
-#: src/nlua_evt.c:239 src/nlua_misn.c:980
+#: src/nlua_evt.c:239 src/nlua_misn.c:979
 msgid "Invalid NPC ID!"
 msgstr ""
 
@@ -72714,37 +73296,37 @@ msgstr ""
 msgid "No matching jump points found."
 msgstr ""
 
-#: src/nlua_misn.c:261
+#: src/nlua_misn.c:260
 #, c-format
 msgid "Mission '%s' -> '%s': %s"
 msgstr ""
 
-#: src/nlua_misn.c:393
+#: src/nlua_misn.c:392
 #, c-format
 msgid "Unknown marker type: %s"
 msgstr ""
 
-#: src/nlua_misn.c:443
+#: src/nlua_misn.c:442
 #, c-format
 msgid "Mission does not have a marker with id '%d'"
 msgstr ""
 
-#: src/nlua_misn.c:603
+#: src/nlua_misn.c:602
 msgid "Mission already accepted!"
 msgstr ""
 
-#: src/nlua_misn.c:678
+#: src/nlua_misn.c:677
 #, c-format
 msgid ""
 "Trying to create new cargo '%s' that would shadow existing non-temporary "
 "cargo!"
 msgstr ""
 
-#: src/nlua_misn.c:798
+#: src/nlua_misn.c:797
 msgid "Can't create an OSD on an unaccepted mission!"
 msgstr ""
 
-#: src/nlua_misn.c:1012
+#: src/nlua_misn.c:1011
 msgid "Mission trying to claim but already has."
 msgstr ""
 
@@ -72894,25 +73476,25 @@ msgstr ""
 msgid "Unknown PilotOutfit state '%s'!"
 msgstr ""
 
-#: src/nlua_planet.c:177
+#: src/nlua_planet.c:179
 msgid "Planet is invalid"
 msgstr ""
 
-#: src/nlua_planet.c:234
+#: src/nlua_planet.c:236
 msgid "Attempting to get landed planet when player not landed."
 msgstr ""
 
-#: src/nlua_planet.c:282 src/nlua_planet.c:341
+#: src/nlua_planet.c:284 src/nlua_planet.c:343
 #, c-format
 msgid "Planet '%s' not found in stack"
 msgstr ""
 
-#: src/nlua_planet.c:346
+#: src/nlua_planet.c:348
 #, c-format
 msgid "Planet '%s' is not placed in a system"
 msgstr ""
 
-#: src/nlua_planet.c:351
+#: src/nlua_planet.c:353
 #, c-format
 msgid "Planet '%s' can't find system '%s'"
 msgstr ""
@@ -74615,7 +75197,7 @@ msgstr ""
 #. f, p
 #. f, p, po
 #.
-#: src/pilot_outfit.c:1487
+#: src/pilot_outfit.c:1491
 #, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> 'cleanup':\n"
@@ -75031,7 +75613,7 @@ msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
 #: src/player.c:4094
-msgid "You have destealthed"
+msgid "You have destealthed."
 msgstr ""
 
 #: src/player.c:4100
