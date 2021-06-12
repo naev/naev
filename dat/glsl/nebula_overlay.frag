@@ -21,8 +21,7 @@ void main(void) {
    uv.z = time;
 
    /* Compute hue as in lib/nebula.glsl. */
-   hhue = hue + COLOUR_DISPERSION * snoise( 0.1 * uv );
-   hhue = fract(hhue);
+   hhue = nebula_hue( hue, uv );
 
    /* Modify coordinates to be larger and slower. */
    uv.xy = 3. * uv.xy + 1000.; // Scaled/offset from nebula_background
