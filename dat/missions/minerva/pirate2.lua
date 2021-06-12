@@ -30,7 +30,7 @@ logidstr = minerva.log.pirate.idstr
 misn_title = _("Dvaered Thugs")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to incapacitate a suspicious Za'lek drone.")
-reward_amount = 200000 -- 200k
+reward_amount = 200e3 -- 200k
 
 mainsys = "Limbo"
 jumpinsys = "Pultatis"

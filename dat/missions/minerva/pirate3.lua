@@ -33,7 +33,7 @@ logidstr = minerva.log.pirate.idstr
 misn_title = _("Finding the Dvaered Spy")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to find a Dvaered spy that appears to be located at Minerva Station.")
-reward_amount = 200000 -- 200k
+reward_amount = 200e3 -- 200k
 
 harper_image = portrait.getFullPath( portrait.get() ) -- TODO replace?
 harper_bribe_big = 1e6

@@ -32,7 +32,7 @@ misn_title = _("Dvaered Thugs")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to mess around with Dvaered thugs.")
 time_needed = 15 -- in seconds
-reward_amount = 300000 -- 300k
+reward_amount = 300e3 -- 300k
 
 mainsys = "Limbo"
 runawaysys = "Pultatis"
