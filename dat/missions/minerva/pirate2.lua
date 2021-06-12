@@ -20,7 +20,7 @@
 --[[
 -- Destroy a suspicious Za'lek drone.
 --]]
-local minerva = require "minerva"
+local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'

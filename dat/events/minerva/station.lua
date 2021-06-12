@@ -15,7 +15,7 @@
 -- Event handling the gambling stuff going on at Minerva station
 --]]
 
-local minerva = require "minerva"
+local minerva = require 'campaigns.minerva'
 local portrait = require "portrait"
 local vn = require 'vn'
 local blackjack = require 'minigames.blackjack'

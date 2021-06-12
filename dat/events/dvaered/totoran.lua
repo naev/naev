@@ -13,7 +13,7 @@
 
 local vn = require 'vn'
 local portrait = require 'portrait'
-local totoran = require 'totoran'
+local gauntlet = require 'campaigns.gauntlet'
 
 spectator_names = {
    _("Spectator"),
@@ -90,7 +90,7 @@ function create()
    end
 
    -- Custom NPCs
-   npc_guide = evt.npcAdd( "approach_guide", totoran.guide.name, totoran.guide.portrait, totoran.guide.desc, guide_priority )
+   npc_guide = evt.npcAdd( "approach_guide", gauntlet.guide.name, gauntlet.guide.portrait, gauntlet.guide.desc, guide_priority )
 
    hook.takeoff( "leave" )
 end
@@ -109,11 +109,11 @@ end
 function approach_guide ()
    vn.clear()
    vn.scene()
-   local guide = vn.newCharacter( totoran.vn_guide() )
+   local guide = vn.newCharacter( gauntlet.vn_guide() )
    vn.transition()
    vn.na(_("You approach the Crimson Gauntlet guide."))
    vn.label("menu_main")
-   guide( function () return string.format(_([["Hello and welcome to the Crimson Gauntlet! You have %s. What would you like to do?"]]), totoran.emblems_str( totoran.emblems_get())) end )
+   guide( function () return string.format(_([["Hello and welcome to the Crimson Gauntlet! You have %s. What would you like to do?"]]), gauntlet.emblems_str( gauntlet.emblems_get())) end )
    vn.menu{
       {_("Information"), "information"},
       {_("Trade Emblems"), "trade_menu"},
@@ -156,7 +156,7 @@ function approach_guide ()
    vn.jump("menu_info_raw")
 
    vn.label("trade_menu")
-   guide( function () return string.format(_([["You have %s. What would you like to trade for?"]]), totoran.emblems_str( totoran.emblems_get())) end )
+   guide( function () return string.format(_([["You have %s. What would you like to trade for?"]]), gauntlet.emblems_str( gauntlet.emblems_get())) end )
    local trades = {
       {name=_("Unlock Warrior Challenge"), cost=100, type="var", var="gauntlet_unlock_warrior",
          description=_("Unlocks participation in the difficult Warrior Challenge meant for Corvette and Destroyer-class ships.")},
@@ -179,7 +179,7 @@ function approach_guide ()
       local t = trades[idx]
       local emblems = t.cost
       tradein_item = t
-      if emblems > totoran.emblems_get() then
+      if emblems > gauntlet.emblems_get() then
          -- Not enough money.
          vn.jump( "trade_notenough" )
          return
@@ -204,7 +204,7 @@ function approach_guide ()
             toadd = false
          end
          if toadd then
-            table.insert( opts, {string.format(_("%s (%s)"), v.name, totoran.emblems_str(v.cost)), k} )
+            table.insert( opts, {string.format(_("%s (%s)"), v.name, gauntlet.emblems_str(v.cost)), k} )
          end
       end
       table.insert( opts, {_("Back"), "menu_main"} )
@@ -214,8 +214,8 @@ function approach_guide ()
    vn.label("trade_notenough")
    guide( function() return string.format(_([["You only have %s, you would need %s more to purchase the '%s'.
 Is there anything else you would like to purchase?"]]),
-         totoran.emblems_str(totoran.emblems_get()),
-         totoran.emblems_str(tradein_item.cost - totoran.emblems_get()),
+         gauntlet.emblems_str(gauntlet.emblems_get()),
+         gauntlet.emblems_str(tradein_item.cost - gauntlet.emblems_get()),
          tradein_item.name)
    end )
    vn.jump("trade_menu_raw")
@@ -234,7 +234,7 @@ Is there anything else you would like to purchase?"]]),
    vn.label("trade_consumate")
    vn.func( function ()
       local t = tradein_item
-      totoran.emblems_pay( -t.cost )
+      gauntlet.emblems_pay( -t.cost )
       if t.type == "var" then
          var.push( t.var, true )
       else

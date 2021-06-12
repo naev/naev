@@ -34,7 +34,7 @@
 --
 -- Eccentric Scientist in "Westhaven" (slightly senile with dementia).
 --]]
-local minerva = require "minerva"
+local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'

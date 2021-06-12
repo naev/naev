@@ -18,7 +18,7 @@
 -- Triggered from station.lua
 --]]
 
-local minerva = require "minerva"
+local minerva = require 'campaigns.minerva'
 local vn = require 'vn'
 
 terminal = minerva.terminal

@@ -11,12 +11,12 @@
 --]]
 
 local vn = require 'vn'
-local totoran = require 'totoran'
-require 'numstring'
+local gauntlet = require 'campaigns.gauntlet'
 local gauntlet_gui = require 'missions.dvaered.gauntlet.gui'
 require 'missions.dvaered.gauntlet.tables'
+require 'numstring'
 
-logidstr = "log_totoran"
+logidstr = "log_gauntlet"
 logname  = _("Totoran Tournament")
 logtype  = _("Totoran Tournament")
 
@@ -50,14 +50,14 @@ function land ()
    vn.sfxMoney()
    vn.func( function ()
       player.pay( rewardcredits, "noescorts" )
-      totoran.emblems_pay( rewardemblems )
+      gauntlet.emblems_pay( rewardemblems )
    end )
    vn.na(string.format(_([[You obtained %d points!
 You received #g%s#0!
 You received %s!]]),
          total_score,
          creditstring( rewardcredits ),
-         totoran.emblems_str( rewardemblems ) ))
+         gauntlet.emblems_str( rewardemblems ) ))
    vn.run()
 
    misn.finish(true)

@@ -22,7 +22,7 @@
 --[[
 -- Find the Dvaered spy
 --]]
-local minerva = require "minerva"
+local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require "love_shaders"
