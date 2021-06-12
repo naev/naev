@@ -258,4 +258,26 @@ function luatk.Rect:draw( bx, by )
    lg.rectangle( "fill", bx+self.x, by+self.y, self.w, self.h )
 end
 
+--[[
+-- Image widget
+--]]
+luatk.Image = {}
+setmetatable( luatk.Image, { __index = luatk.Widget } )
+luatk.Image_mt = { __index = luatk.Image }
+function luatk.newImage( parent, x, y, w, h, img, col, rot )
+   local wgt   = luatk.newWidget( parent, x, y, w, h )
+   setmetatable( wgt, luatk.Image_mt )
+   wgt.img     = img
+   wgt.col     = col or {1,1,1}
+   wgt.rot     = rot or 0
+   local iw, ih = wgt.img:getDimensions()
+   wgt.w       = wgt.w / iw
+   wgt.h       = wgt.h / ih
+   return wgt
+end
+function luatk.Image:draw( bx, by )
+   lg.setColor( self.col )
+   self.img:draw( bx+self.x, by+self.y, self.rot, self.w, self.h )
+end
+
 return luatk
