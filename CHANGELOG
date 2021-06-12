@@ -1,8 +1,8 @@
 * 0.9.0 (unreleased)
    * Gameplay
-      * Illegal cargo and ship-to-ship detection implemented
+      * Illegal cargo and ship-to-ship detection
       * Pilots can now go into stealth mode
-      * Electronic warfare parameters are visible
+      * Electronic warfare parameters are simplified and visible
       * Overhaul and rebalance of most outfits
       * Added new utility outfits with complex effects
       * Added escorts for hire
@@ -16,6 +16,7 @@
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
       * New missions
+         * Challenge adversaries in the Crimson Gauntlet
          * Follow happenings on "Minerva Station"
          * Invade the frontier with the Dvaered
       * New translation(s) in progress: Czech, French, and Korean
