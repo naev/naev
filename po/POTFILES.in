@@ -2438,6 +2438,9 @@ dat/outfits/utility/targeting_conduit.lua
 dat/outfits/utility/weakness_harmonizer_ai.lua
 dat/outfits/utility/weapons_ionizer.lua
 dat/rescue.lua
+dat/scripts/campaigns/gauntlet.lua
+dat/scripts/campaigns/minerva.lua
+dat/scripts/campaigns/taiomi.lua
 dat/scripts/cargo_common.lua
 dat/scripts/chatter.lua
 dat/scripts/class.lua
@@ -2472,7 +2475,6 @@ dat/scripts/love/video.lua
 dat/scripts/love/window.lua
 dat/scripts/love_shaders.lua
 dat/scripts/luatk.lua
-dat/scripts/minerva.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
 dat/scripts/minigames/chuckaluck.lua
@@ -2490,8 +2492,6 @@ dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/selectiveclear.lua
 dat/scripts/swapship.lua
-dat/scripts/taiomi.lua
-dat/scripts/totoran.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/main.lua
