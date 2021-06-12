@@ -1361,10 +1361,10 @@ static void equipment_genShipList( unsigned int wid )
       cships[0].image = gl_dupTexture(player.p->ship->gfx_store);
       cships[0].caption = strdup(player.p->name);
       cships[0].layers = gl_copyTexArray( player.p->ship->gfx_overlays, &cships[0].nlayers );
-      t = gl_newImage( OVERLAY_GFX_PATH"active.png", OPENGL_TEX_MIPMAPS );
+      t = gl_newImage( OVERLAY_GFX_PATH"active.webp", OPENGL_TEX_MIPMAPS );
       cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
       if (player.p->ship->rarity > 0) {
-         snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.png", player.p->ship->rarity );
+         snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.webp", player.p->ship->rarity );
          t = gl_newImage( r, OPENGL_TEX_MIPMAPS );
          cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
       }
@@ -1376,7 +1376,7 @@ static void equipment_genShipList( unsigned int wid )
             cships[i].caption = strdup( ps[i-1].p->name );
             cships[i].layers = gl_copyTexArray( ps[i-1].p->ship->gfx_overlays, &cships[i].nlayers );
             if (ps[i-1].p->ship->rarity > 0) {
-               snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.png", ps[i-1].p->ship->rarity );
+               snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.webp", ps[i-1].p->ship->rarity );
                t = gl_newImage( r, OPENGL_TEX_MIPMAPS );
                cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
             }

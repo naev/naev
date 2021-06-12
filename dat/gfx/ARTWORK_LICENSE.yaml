@@ -1420,18 +1420,6 @@
    license: GPLv3
    intro:
      - questions.png
-- Edgar Simo-Serra \"bobbens\" (based on work by knik1985 <https://opengameart.org/users/knik1985>):
-   license: CC-by 3.0
-   overlays:
-     - rarity_1.png
-     - rarity_2.png
-     - rarity_3.png
-     - rarity_4.png
-     - rarity_5.png
-- Edgar Simo-Serra \"bobbens\" (based on work by GNOME PROJECT):
-   license: CC-by-sa 3.0
-   overlays:
-     - active.png
 - Écrivain <https://opengameart.org/users/%C3%A9crivain>:
    license: CC0
    overlay:
