@@ -4091,7 +4091,7 @@ void player_stealth (void)
    /* Handle destealth first. */
    if (pilot_isFlag(player.p, PILOT_STEALTH)) {
       pilot_destealth( player.p );
-      player_message(_("You have destealthed"));
+      player_message(_("You have destealthed."));
       return;
    }
 
