@@ -134,13 +134,14 @@ function dvaered_weapons( p )
       return false
    end
    local allowed = {
-      "Unicorp Mace Launcher",
       "Vulcan Gun",
+      "Gauss Gun",
+      "Unicorp Mace Launcher",
+      "TeraCom Mace Launcher",
       "Shredder",
+      "Railgun",
       "Mass Driver",
-      "Turreted Gauss Gun",
       "Turreted Vulcan Gun",
-      "Railgun Turret",
       "Repeating Railgun",
    }
    local weapons = p:outfits( "weapon" )

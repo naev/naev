@@ -607,7 +607,7 @@ function enter ()
       hook.pilot( b, "attacked", "ecc_feral_boss_attacked" )
       hook.pilot( b, "death", "ecc_feral_boss_dead" )
       b:setNoboard(true)
-      local num = 3
+      local num = 4
       for i=1,num do
          local fpos = pos + vec2.newP( 50, i*360/num )
          local p = spawn_single( "Za'lek Light Drone", fpos )
@@ -633,6 +633,7 @@ function ecc_dist ()
       system.mrkRm( sysmarker )
       local spawners = {
          "Za'lek Heavy Drone",
+         "Za'lek Light Drone",
          "Za'lek Light Drone",
          "Za'lek Light Drone",
       }
