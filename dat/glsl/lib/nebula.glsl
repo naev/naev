@@ -7,7 +7,7 @@
 
 const int ITERATIONS = 3;
 const float SCALAR = pow(2., 4./3.);
-const float COLOUR_DISPERSION = 0.05;
+const float COLOUR_DISPERSION = 0.02;
 
 float nebula_hue( float hue, vec3 uv )
 {
