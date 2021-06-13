@@ -4,6 +4,9 @@
    Dead ships floating everywhere with fancy custom background.
 --]]
 
+-- We use the default background too!
+require "bkg.default"
+
 local love = require 'love'
 local lg = require 'love.graphics'
 
@@ -164,9 +167,10 @@ function background ()
    add_bkg( 1, 5e4, 0.05, 1.5, 0.4, 5, 3 )
    add_bkg( 2, 3e4, 0.08, 1.5, 0.5, 4, 3 )
 
-   -- Standard nebula (prng would generate the same one)
-   local neb = tex.open( "gfx/bkg/nebula23.webp" )
-   bkg.image( neb, 377, 1344, 0.013, 1.9 )
+   -- Default nebula background (no star)
+   cur_sys = system.cur()
+   prng:setSeed( cur_sys:name() )
+   background_nebula()
 end
 function update ()
    -- Calculate player motion
@@ -207,7 +211,7 @@ local function draw_part( p, s, z )
    local y = (p.y - nh/2 - buffer) / z + nh/2
    lg.draw( p.i.i, p.q, x, y, 0, p.s * s / z )
 end
-function renderbg ()
+function renderfg ()
    -- Run the update stuff here
    update()
 
@@ -217,7 +221,7 @@ function renderbg ()
       draw_part( p, 2, z )
    end
 end
-function renderfg ()
+function renderov ()
    local z = camera.getZoom()
    lg.setColor( 1, 1, 1, 1 )
    for k,p in ipairs( fgparts ) do
