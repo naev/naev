@@ -295,7 +295,6 @@ static int naevL_conf( lua_State *L )
    PUSH_STRING( L, "language", conf.language );
    PUSH_INT( L, "fsaa", conf.fsaa );
    PUSH_BOOL( L, "vsync", conf.vsync );
-   PUSH_BOOL( L, "compress", conf.compress );
    PUSH_BOOL( L, "engineglow", conf.engineglow );
    PUSH_INT( L, "width", conf.width );
    PUSH_INT( L, "height", conf.height );

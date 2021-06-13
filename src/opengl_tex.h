@@ -89,11 +89,6 @@ glTexture* gl_dupTexture( glTexture *texture );
 void gl_freeTexture( glTexture* texture );
 
 /*
- * Info.
- */
-int gl_texHasCompress (void);
-
-/*
  * FBO stuff.
  */
 int gl_fboCreate( GLuint *fbo, GLuint *tex, GLsizei width, GLsizei height );

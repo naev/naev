@@ -243,7 +243,6 @@ void conf_setVideoDefaults (void)
    /* OpenGL. */
    conf.fsaa         = FSAA_DEFAULT;
    conf.vsync        = VSYNC_DEFAULT;
-   conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
 
    /* Window. */
    conf.fullscreen   = f;
@@ -325,7 +324,6 @@ int conf_loadConfig ( const char* file )
       /* OpenGL. */
       conf_loadInt( lEnv, "fsaa", conf.fsaa );
       conf_loadBool( lEnv, "vsync", conf.vsync );
-      conf_loadBool( lEnv, "compress", conf.compress );
 
       /* Memory. */
       conf_loadBool( lEnv, "engineglow", conf.engineglow );
@@ -844,10 +842,6 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Synchronize framebuffer updates with the vertical blanking interval"));
    conf_saveBool("vsync",conf.vsync);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Use OpenGL Texture Compression"));
-   conf_saveBool("compress",conf.compress);
    conf_saveEmptyLine();
 
    /* Memory. */

@@ -198,16 +198,6 @@ static GLuint gl_texParameters( unsigned int flags )
    return texture;
 }
 
-/**
- * @brief Checks to see if texture compression is available and enabled.
- *
- *    @return 1 if texture compression is available and enabled.
- */
-int gl_texHasCompress (void)
-{
-   return conf.compress;
-}
-
 
 /**
  * @brief Creates a framebuffer and its associated texture.
@@ -310,15 +300,8 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    /* now load the texture data up */
    SDL_LockSurface( surface );
    glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
-   if (gl_texHasCompress()) {
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA,
-            surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB,
-            GL_UNSIGNED_BYTE, surface->pixels );
-   }
-   else {
-      glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,
-            surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
-   }
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,
+         surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
    SDL_UnlockSurface( surface );
 
    /* Create mipmaps. */
