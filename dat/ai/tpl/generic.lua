@@ -123,6 +123,10 @@ function handle_messages ()
          if mem.doscans and msgtype == "scanned" then
             if data ~= nil and data:exists() then
                table.insert( mem.scanned, data )
+               -- Stop scanning if they got information about the scan
+               if ai.taskname() == "scan" and ai.taskdata() == data then
+                  ai.poptask()
+               end
             end
          end
       end
