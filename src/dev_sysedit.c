@@ -298,6 +298,9 @@ static void sysedit_close( unsigned int wid, char *wgt )
 
    /* Propagate autosave checkbox state */
    uniedit_updateAutosave();
+
+   /* Unset. */
+   sysedit_wid = 0;
 }
 
 
