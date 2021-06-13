@@ -73,7 +73,6 @@ typedef struct PlayerConf_s {
    /* OpenGL properties. */
    int fsaa; /**< Full Scene Anti-Aliasing to use. */
    int vsync; /**< Whether or not to use vsync. */
-   int mipmaps; /**< Use mipmaps. */
 
    /* Video options. */
    int width; /**< Width of the window to use. */
