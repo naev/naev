@@ -1008,6 +1008,8 @@ int missions_saveActive( xmlTextWriterPtr writer )
    xmlw_startElem(writer,"mission_cargo");
    for (i=0; i<array_size(player.p->commodities); i++) {
       c = player.p->commodities[i].commodity;
+      if (!c->istemp)
+         continue;
       xmlw_startElem(writer,"cargo");
       missions_saveTempCommodity( writer, c );
       xmlw_endElem(writer); /* "cargo" */
@@ -1090,8 +1092,6 @@ int missions_saveActive( xmlTextWriterPtr writer )
  */
 int missions_saveTempCommodity( xmlTextWriterPtr writer, const Commodity *c )
 {
-   if ( !c->istemp )
-      return 1;
    xmlw_attr( writer, "name", "%s", c->name );
    xmlw_attr( writer, "description", "%s", c->description );
    for ( int j = 0; j < array_size( c->illegalto ); j++ )
