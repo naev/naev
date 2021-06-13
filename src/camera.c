@@ -250,7 +250,7 @@ void cam_update( double dt )
       cam_updateManualZoom( dt );
 
    /* Set the sound. */
-   if ((p==NULL) || !conf.snd_pilotrel) {
+   if ((p==NULL) || !SOUND_PILOT_RELATIVE) {
       dx = dt*(dx-camera_X);
       dy = dt*(dy-camera_Y);
       sound_updateListener( CAMERA_DIR, camera_X, camera_Y, dx, dy );

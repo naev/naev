@@ -203,7 +203,6 @@ void conf_setGameplayDefaults (void)
 void conf_setAudioDefaults (void)
 {
    /* Sound. */
-   conf.snd_pilotrel = PILOT_RELATIVE_DEFAULT;
    conf.al_efx       = USE_EFX_DEFAULT;
    conf.al_bufsize   = BUFFER_SIZE_DEFAULT;
    conf.nosound      = MUTE_SOUND_DEFAULT;
@@ -350,7 +349,6 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "showpause", conf.pause_show );
 
       /* Sound. */
-      conf_loadBool( lEnv, "snd_pilotrel", conf.snd_pilotrel );
       conf_loadBool( lEnv, "al_efx", conf.al_efx );
       conf_loadInt( lEnv, "al_bufsize", conf.al_bufsize );
       conf_loadBool( lEnv, "nosound", conf.nosound );
@@ -896,10 +894,6 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Sound. */
-   conf_saveComment(_("Sets sound to be relative to pilot when camera is following a pilot instead of referenced to camera."));
-   conf_saveBool("snd_pilotrel",conf.snd_pilotrel);
-   conf_saveEmptyLine();
-
    conf_saveComment(_("Enables EFX extension for OpenAL backend."));
    conf_saveBool("al_efx",conf.al_efx);
    conf_saveEmptyLine();

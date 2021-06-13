@@ -22,6 +22,7 @@ extern int sound_disabled;
  */
 #define SOUND_FADEOUT         100
 #define SOUND_VOICES          128   /**< Maximum number of simultaneous sounds to play, must be at least 16. */
+#define SOUND_PILOT_RELATIVE  1     /**< Whether the sound is relative to the pilot (as opposed to the camera). */
 
 
 /*
