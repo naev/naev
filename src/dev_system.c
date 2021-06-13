@@ -111,6 +111,8 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_startElem( writer, "general" );
    if (sys->background != NULL)
       xmlw_elem( writer, "background", "%s", sys->background );
+   if (sys->features != NULL)
+      xmlw_elem( writer, "features", "%s", sys->features );
    xmlw_elem( writer, "radius", "%f", sys->radius );
    xmlw_elem( writer, "stars", "%d", sys->stars );
    xmlw_elem( writer, "interference", "%f", sys->interference );
