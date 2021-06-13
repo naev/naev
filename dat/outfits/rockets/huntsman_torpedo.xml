@@ -22,8 +22,8 @@
   <damage>
    <type>emp</type>
    <penetrate>70</penetrate>
-   <physical>500</physical>
-   <disable>400</disable>
+   <physical>600</physical>
+   <disable>600</disable>
   </damage>
   <ai>smart</ai>
  </specific>

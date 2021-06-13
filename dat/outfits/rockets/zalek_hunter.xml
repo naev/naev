@@ -2,7 +2,7 @@
 <outfit name="Za'lek Hunter-Killer">
  <general>
   <license>Heavy Weapon License</license>
-  <mass>4</mass>
+  <mass>1.5</mass>
   <price>0</price>
   <description>This little drone is little more than a guidance computer with bare-bones AI, a propulsion system, and a bomb wrapped in an armored shell.</description>
   <gfx_store>empgrenade.png</gfx_store>
@@ -22,7 +22,7 @@
   <damage>
    <type>normal</type>
    <penetrate>36</penetrate>
-   <physical>70</physical>
+   <physical>100</physical>
    <disable>1</disable>
   </damage>
   <ai>smart</ai>

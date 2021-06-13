@@ -13,9 +13,9 @@
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Huntsman Torpedo</ammo>
-  <delay>11</delay>
+  <delay>8</delay>
   <reload_time>90</reload_time>
-  <lockon>18</lockon>
+  <lockon>11</lockon>
   <arc>60</arc>
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>
