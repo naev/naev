@@ -13,9 +13,9 @@
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Caesar IV Torpedo</ammo>
-  <delay>10</delay>
+  <delay>7</delay>
   <reload_time>90</reload_time>
-  <lockon>16</lockon>
+  <lockon>9</lockon>
   <arc>60</arc>
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>
