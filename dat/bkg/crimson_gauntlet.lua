@@ -32,9 +32,9 @@ end
 
 function renderbg( dt )
    -- Get camera properties
-   local x, y = camera.get():get()
+   --local x, y = camera.get():get()
    local z = camera.getZoom()
-   shader:send( "u_camera", x, y, z )
+   shader:send( "u_camera", 0, 0, z )
    shader:update( dt )
 
    local b = 0.1

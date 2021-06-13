@@ -512,15 +512,14 @@ float voronoi( in vec2 x )
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec2 uv, wh;
+   vec2 uv;
 
    /* Minor flickering. */
    float flicker = noise1(u_time * 2.0 * speed) * 0.2 + 0.9;
 
    /* Calculate coordinates relative to camera. */
-   wh = love_ScreenSize.xy * 0.5;
-   uv = (screen_coords - wh) * u_camera.z + wh + u_r;
-   uv /= 500. * strength;
+   uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy + u_r;
+   uv *= strength / 500.0;
 
    float v = 0.0;
 
