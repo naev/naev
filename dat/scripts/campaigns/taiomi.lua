@@ -19,7 +19,7 @@ local taiomi = {
       portrait = nil,
       image = 'gfx/ship/drone/drone_comm.webp',
       colour = nil,
-   }
+   },
    log = {
       main = {
          idstr = "log_taiomi_main",
