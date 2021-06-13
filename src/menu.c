@@ -135,8 +135,6 @@ static int menu_main_bkg_system (void)
             if (sys != NULL) {
                cx = pnt->pos.x;
                cy = pnt->pos.y;
-               cx += 300;
-               cy += 200;
             }
          }
       }
@@ -147,6 +145,10 @@ static int menu_main_bkg_system (void)
       sys = start_system();
       start_position( &cx, &cy );
    }
+
+   /* Have to normalize values by zoom. */
+   cx += SCREEN_W/4. / conf.zoom_far;
+   cy += SCREEN_H/8. / conf.zoom_far;
 
    /* Initialize. */
    space_init( sys );
