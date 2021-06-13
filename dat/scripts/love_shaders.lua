@@ -84,6 +84,15 @@ function love_shaders.shader2canvas( shader, width, height )
    return _shader2canvas( shader, love_shaders.img, width, height, width, height )
 end
 
+
+--[[--
+Generates a paper-like image.
+
+@tparam number widthWidth of the image to create.
+@tparam number height Height of the image to create.
+@tparam[opt=1] number sharpness How sharp to make the texture look.
+@treturn Canvas A apper-like canvas image.
+--]]
 function love_shaders.paper( width, height, sharpness )
    sharpness = sharpness or 1
    local pixelcode = string.format([[
