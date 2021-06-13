@@ -1027,10 +1027,14 @@ end
 -- Aborts current task and tries to see what happened to the target.
 --]]
 function __investigate_target( target )
-   ai.settarget(ai.pilot()) -- Un-target
+   local p = ai.pilot()
+   ai.settarget(p) -- Un-target
    ai.poptask()
-   -- TODO probably add some estimation of future position based on velocity
-   ai.pushtask("inspect_moveto", target:pos() )
+   -- Guess the pilot will be randomly between the current position and the
+   -- future position if they go in the same direction with the same velocity
+   local ttl = ai.dist(target) / p:stats().speed_max
+   local fpos = target:pos() + vec2.newP( target:vel()*ttl, target:dir() ) * rnd.rnd()
+   ai.pushtask("inspect_moveto", fpos )
 end
 
 
