@@ -262,9 +262,6 @@ void conf_setVideoDefaults (void)
 
    /* Pause. */
    conf.pause_show   = SHOW_PAUSE_DEFAULT;
-
-   /* Memory. */
-   conf.engineglow   = ENGINE_GLOWS_DEFAULT;
 }
 
 
@@ -324,9 +321,6 @@ int conf_loadConfig ( const char* file )
       /* OpenGL. */
       conf_loadInt( lEnv, "fsaa", conf.fsaa );
       conf_loadBool( lEnv, "vsync", conf.vsync );
-
-      /* Memory. */
-      conf_loadBool( lEnv, "engineglow", conf.engineglow );
 
       /* Window. */
       w = h = 0;
@@ -842,11 +836,6 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Synchronize framebuffer updates with the vertical blanking interval"));
    conf_saveBool("vsync",conf.vsync);
-   conf_saveEmptyLine();
-
-   /* Memory. */
-   conf_saveComment(_("If true enables engine glow"));
-   conf_saveBool("engineglow",conf.engineglow);
    conf_saveEmptyLine();
 
    /* Window. */
