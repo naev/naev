@@ -10,7 +10,7 @@ local love_shaders = require 'love_shaders'
 function background ()
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
-   sf = 4
+   sf = naev.conf().nebu_scale
 
    -- Initialize shader
    shader = love_shaders.windy{ strength=sf }
