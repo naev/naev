@@ -36,7 +36,6 @@
 #define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
 #define FPS_MAX_DEFAULT                      60    /**< Maximum FPS. */
 #define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
-#define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
 #define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
 #define COLORBLIND_DEFAULT                   0     /**< Whether to enable colorblindness simulation. */
 #define BG_BRIGHTNESS_DEFAULT                1.    /**< How much to darken (or lighten) the backgrounds. */
@@ -79,9 +78,6 @@ typedef struct PlayerConf_s {
    int fsaa; /**< Full Scene Anti-Aliasing to use. */
    int vsync; /**< Whether or not to use vsync. */
    int mipmaps; /**< Use mipmaps. */
-
-   /* Memory usage. */
-   int engineglow; /**< Sets engine glow. */
 
    /* Video options. */
    int width; /**< Width of the window to use. */
