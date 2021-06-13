@@ -361,7 +361,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
    double hide;
 
    /* pilot must exist */
-   if ( p == NULL )
+   if (p == NULL)
       return 0;
 
    /* Get the jump point. */
@@ -371,13 +371,17 @@ int pilot_inRangeJump( const Pilot *p, int i )
    if (jp_isFlag(jp, JP_EXITONLY))
       return 0;
 
+   /* Jumps with 0. hide are considered to be highway points and always visible. */
+   hide = jp->hide;
+   if (hide==0.)
+      return 1;
+
    sense = EW_JUMPDETECT_DIST * p->stats.ew_jump_detect;
    /* Handle hidden jumps separately, as they use a special range parameter. */
    if (jp_isFlag(jp, JP_HIDDEN))
       sense *= p->stats.misc_hidden_jump_detect;
 
    /* Get distance. */
-   hide = jp->hide;
    d = vect_dist2( &p->solid->pos, &jp->pos );
    if (d < pow2( MAX( 0., sense * hide )))
       return 1;
