@@ -1102,7 +1102,7 @@ function scan( target )
          end
       else
          local msg = _("Thank you for your cooperation.")
-         ai.pilot():comm( target, msg )
+         p:comm( target, msg )
 
          -- Tell friends about the scanning
          local f = p:faction()
