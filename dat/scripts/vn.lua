@@ -311,6 +311,23 @@ function vn.keypressed( key )
    end
    --]]
 
+   -- Skip modifier keys
+   local blacklist = {
+      "left alt",
+      "left shift",
+      "left ctrl",
+      "left gui",
+      "right alt",
+      "right ctrl",
+      "right shift",
+      "right gui",
+   }
+   for k,v in ipairs(blacklist) do
+      if key == v then
+         return false
+      end
+   end
+
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
    s:keypressed( key )
