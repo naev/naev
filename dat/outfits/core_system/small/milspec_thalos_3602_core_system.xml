@@ -14,7 +14,7 @@
   <cpu_max>70</cpu_max>
   <shield>225</shield>
   <shield_regen>7</shield_regen>
-  <energy>700</energy>
+  <energy>400</energy>
   <energy_regen>42</energy_regen>
  </specific>
 </outfit>

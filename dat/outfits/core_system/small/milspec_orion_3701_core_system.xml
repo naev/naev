@@ -11,7 +11,7 @@
   <gfx_store>core_system_refined_s2.png</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>80</cpu_max>
+  <cpu_max>90</cpu_max>
   <energy>350</energy>
   <energy_regen>30</energy_regen>
   <shield>250</shield>
