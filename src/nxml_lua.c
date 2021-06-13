@@ -87,6 +87,62 @@ static int nxml_saveData( xmlTextWriterPtr writer, const char *type, const char 
 
 
 /**
+ * @brief Commodity-specific nxml_saveData derivative.
+ *
+ *    @param writer XML Writer to use to persist stuff.
+ *    @param name Name of the data to save.
+ *    @param name_len Data size of name (which is an arbitrary Lua string).
+ *    @param c Commodity to save.
+ *    @return 0 on success.
+ */
+static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name, size_t name_len, const Commodity* c )
+{
+   int status = 0;
+   if (c->name == NULL)
+      return 1;
+
+   xmlw_startElem( writer, "data" );
+
+   xmlw_attr( writer, "type", COMMODITY_METATABLE );
+   nxml_saveNameAttribute( writer, name, name_len );
+   if (c->istemp) {
+      xmlw_attr( writer, "temp", "%d", c->istemp );
+      xmlw_startElem( writer, "commodity" );
+      status = missions_saveTempCommodity( writer, c );
+      xmlw_endElem( writer ); /* "commodity" */
+   }
+   else
+      xmlw_str( writer, "%s", c->name );
+   xmlw_endElem( writer ); /* "data" */
+   return status;
+}
+
+
+/**
+ * @brief Reverse of nxml_saveCommodity.
+ */
+static Commodity* nxml_loadCommodity( xmlNodePtr node )
+{
+   Commodity *c;
+   int istemp;
+   xmlNodePtr cur;
+
+   xmlr_attr_int_def( node, "temp", istemp, 0);
+   if (!istemp)
+      c = commodity_get( xml_get( node ) );
+   else {
+      cur = node->xmlChildrenNode;
+      do {
+         xml_onlyNodes(cur);
+         if ( xml_isNode( cur, "commodity" ) )
+            c = missions_loadTempCommodity( cur );
+      } while ( xml_nextNode( cur ) );
+   }
+   return c;
+}
+
+
+/**
  * @brief Jump-specific nxml_saveData derivative.
  *
  *    @param writer XML Writer to use to persist stuff.
@@ -277,10 +333,8 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          }
          else if (lua_iscommodity(L,-1)) {
             com = lua_tocommodity(L,-1);
-            str = com->name;
-            if (str == NULL)
-               break;
-            nxml_saveData( writer, COMMODITY_METATABLE, name, name_len, str, keynum );
+            if( nxml_saveCommodity( writer, name, name_len, com ) != 0)
+               WARN( _("Failed to save invalid commodity.") );
             /* key, value */
             break;
          }
@@ -433,7 +487,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             free(buf);
          }
          else if (strcmp(type,COMMODITY_METATABLE)==0)
-            lua_pushcommodity(L,commodity_get(xml_get(node)));
+            lua_pushcommodity(L, nxml_loadCommodity( node ) );
          else if (strcmp(type,OUTFIT_METATABLE)==0)
             lua_pushoutfit(L,outfit_get(xml_get(node)));
          else {
