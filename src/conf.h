@@ -46,8 +46,6 @@
 #define FONT_SIZE_DEF_DEFAULT                12    /**< Default font size. */
 #define FONT_SIZE_SMALL_DEFAULT              11    /**< Default small font size. */
 /* Audio options */
-#define VOICES_DEFAULT                       128   /**< Amount of voices to use. */
-#define VOICES_MIN                           16    /**< Minimum amount of voices to use. */
 #define PILOT_RELATIVE_DEFAULT               1     /**< Whether the sound is relative to the pilot (as opposed to the camera). */
 #define USE_EFX_DEFAULT                      1     /**< Whether or not to use EFX (if using OpenAL). */
 #define BUFFER_SIZE_DEFAULT                  128   /**< Default buffer size (if using OpenAL). */
@@ -93,7 +91,6 @@ typedef struct PlayerConf_s {
    double gamma_correction; /**< How much gamma correction to do. */
 
    /* Sound. */
-   int snd_voices; /**< Number of sound voices to use. */
    int snd_pilotrel; /**< Sound is relative to pilot when following. */
    int al_efx; /**< Should EFX extension be used? (only applicable for OpenAL) */
    int al_bufsize; /**< Size of the buffer (in kilobytes) to use for music. */

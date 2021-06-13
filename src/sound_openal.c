@@ -56,6 +56,7 @@
 
 
 #define SOUND_FADEOUT         100
+#define SOUND_VOICES          128   /**< Maximum number of simultaneous sounds to play, must be at least 16. */
 
 
 /*
@@ -265,9 +266,9 @@ int sound_al_init (void)
 
    /* Start allocating the sources - music has already taken theirs */
    source_nstack  = 0;
-   source_mstack  = conf.snd_voices;
+   source_mstack  = SOUND_VOICES;
    source_stack   = malloc( sizeof( ALuint ) * source_mstack );
-   while (source_nstack < conf.snd_voices) {
+   while (source_nstack < SOUND_VOICES) {
       alGenSources( 1, &s );
       source_stack[source_nstack] = s;
 

@@ -308,7 +308,6 @@ static int naevL_conf( lua_State *L )
    PUSH_BOOL( L, "showfps", conf.fps_show );
    PUSH_INT( L, "maxfps", conf.fps_max );
    PUSH_BOOL( L, "showpause", conf.pause_show );
-   PUSH_INT( L, "snd_voices", conf.snd_voices );
    PUSH_BOOL( L, "snd_pilotrel", conf.snd_pilotrel );
    PUSH_BOOL( L, "al_efx", conf.al_efx );
    PUSH_INT( L, "al_bufsize", conf.al_bufsize );

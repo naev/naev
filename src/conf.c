@@ -203,7 +203,6 @@ void conf_setGameplayDefaults (void)
 void conf_setAudioDefaults (void)
 {
    /* Sound. */
-   conf.snd_voices   = VOICES_DEFAULT;
    conf.snd_pilotrel = PILOT_RELATIVE_DEFAULT;
    conf.al_efx       = USE_EFX_DEFAULT;
    conf.al_bufsize   = BUFFER_SIZE_DEFAULT;
@@ -351,8 +350,6 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "showpause", conf.pause_show );
 
       /* Sound. */
-      conf_loadInt( lEnv, "snd_voices", conf.snd_voices );
-      conf.snd_voices = MAX( VOICES_MIN, conf.snd_voices ); /* Must be at least 16. */
       conf_loadBool( lEnv, "snd_pilotrel", conf.snd_pilotrel );
       conf_loadBool( lEnv, "al_efx", conf.al_efx );
       conf_loadInt( lEnv, "al_bufsize", conf.al_bufsize );
@@ -899,10 +896,6 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Sound. */
-   conf_saveComment(_("Maximum number of simultaneous sounds to play, must be at least 16."));
-   conf_saveInt("snd_voices",conf.snd_voices);
-   conf_saveEmptyLine();
-
    conf_saveComment(_("Sets sound to be relative to pilot when camera is following a pilot instead of referenced to camera."));
    conf_saveBool("snd_pilotrel",conf.snd_pilotrel);
    conf_saveEmptyLine();
