@@ -2432,9 +2432,9 @@ static void system_init( StarSystem *sys )
    memset( sys, 0, sizeof(StarSystem) );
    sys->planets   = array_create( Planet* );
    sys->planetsid = array_create( int );
-   sys->jumps = array_create( JumpPoint );
+   sys->jumps     = array_create( JumpPoint );
    sys->asteroids = array_create( AsteroidAnchor );
-   sys->astexclude = array_create( AsteroidExclusion );
+   sys->astexclude= array_create( AsteroidExclusion );
    sys->faction   = -1;
 }
 
@@ -2583,6 +2583,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          cur = node->children;
          do {
             xmlr_strd( cur, "background", sys->background );
+            xmlr_strd( cur, "features", sys->features );
             xmlr_int( cur, "stars", sys->stars );
             xmlr_float( cur, "radius", sys->radius );
             if (xml_isNode(cur,"interference")) {
@@ -3594,8 +3595,9 @@ void space_exit (void)
    /* Free the systems. */
    for (i=0; i < array_size(systems_stack); i++) {
       free(systems_stack[i].name);
-      array_free(systems_stack[i].jumps);
       free(systems_stack[i].background);
+      free(systems_stack[i].features);
+      array_free(systems_stack[i].jumps);
       array_free(systems_stack[i].presence);
       array_free(systems_stack[i].planets);
       array_free(systems_stack[i].planetsid);

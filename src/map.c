@@ -662,8 +662,16 @@ static void map_update( unsigned int wid )
    if (map_mode == MAPMODE_TRAVEL) {
       buf[0] = '\0';
       p = 0;
+
+      /* Special feature text. */
+      if (sys->features != NULL)
+         p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _(sys->features) );
+
       /* Nebula. */
       if (sys->nebu_density > 0.) {
+         if (buf[0] != '\0')
+            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
+
          /* Density. */
          if (sys->nebu_density > 700.)
             adj = _("Dense ");
