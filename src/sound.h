@@ -18,6 +18,13 @@ extern int sound_disabled;
 
 
 /*
+ * Static configuration.
+ */
+#define SOUND_FADEOUT         100
+#define SOUND_VOICES          128   /**< Maximum number of simultaneous sounds to play, must be at least 16. */
+
+
+/*
  * Environmental features.
  */
 typedef enum SoundEnv_e {
