@@ -66,9 +66,6 @@ extern int save_loaded; /**< From save.c */
 /* externs */
 /* player.c */
 extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
-/* mission.c */
-extern int missions_loadCommodity( xmlNodePtr parent ); /**< Loads active missions. */
-extern int missions_loadActive( xmlNodePtr parent ); /**< Loads active missions. */
 /* event.c */
 extern int events_loadActive( xmlNodePtr parent );
 /* news.c */
