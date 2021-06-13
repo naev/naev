@@ -6,23 +6,16 @@
 
 -- We use the default background too!
 require "bkg.default"
+local bgshaders = require "bkg.bgshaders"
 
 local love = require 'love'
 local lg = require 'love.graphics'
 local love_shaders = require 'love_shaders'
 
--- Since we don't actually activate the Love framework we have to fake the
--- the dimensions and width, and set up the origins.
-local nw, nh = naev.gfx.dim()
-love.x = 0
-love.y = 0
-love.w = nw
-love.h = nh
-lg.origin()
-
 function background ()
-   w, h = naev.gfx.dim()
+   -- Initialize the shader
    shader = love_shaders.circuit{}
+   bgshaders.init( shader )
 
    -- Default nebula background (no star)
    cur_sys = system.cur()
@@ -35,12 +28,7 @@ function renderbg( dt )
    --local x, y = camera.get():get()
    local z = camera.getZoom()
    shader:send( "u_camera", 0, 0, z )
-   shader:update( dt )
 
    local b = 0.1
-   lg.setColor( b, b, b, 1 )
-   local oldshader = lg.getShader()
-   lg.setShader( shader )
-   love_shaders.img:draw( 0, 0, 0, w, h )
-   lg.setShader( oldshader )
+   bgshaders.render( dt, {b, b, b, 1} )
 end
