@@ -204,7 +204,6 @@ void conf_setAudioDefaults (void)
 {
    /* Sound. */
    conf.al_efx       = USE_EFX_DEFAULT;
-   conf.al_bufsize   = BUFFER_SIZE_DEFAULT;
    conf.nosound      = MUTE_SOUND_DEFAULT;
    conf.sound        = SOUND_VOLUME_DEFAULT;
    conf.music        = MUSIC_VOLUME_DEFAULT;
@@ -350,7 +349,6 @@ int conf_loadConfig ( const char* file )
 
       /* Sound. */
       conf_loadBool( lEnv, "al_efx", conf.al_efx );
-      conf_loadInt( lEnv, "al_bufsize", conf.al_bufsize );
       conf_loadBool( lEnv, "nosound", conf.nosound );
       conf_loadFloat( lEnv, "sound", conf.sound );
       conf_loadFloat( lEnv, "music", conf.music );
@@ -896,10 +894,6 @@ int conf_saveConfig ( const char* file )
    /* Sound. */
    conf_saveComment(_("Enables EFX extension for OpenAL backend."));
    conf_saveBool("al_efx",conf.al_efx);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Size of the OpenAL music buffer (in kibibytes)."));
-   conf_saveInt("al_bufsize",conf.al_bufsize);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Disable all sound"));

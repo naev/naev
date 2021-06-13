@@ -62,7 +62,7 @@ static SDL_Thread *music_player = NULL; /**< Music player thread. */
 /*
  * Playing buffers.
  */
-static int music_bufSize            = 32*1024; /**< Size of music playing buffer. */
+static int music_bufSize            = 32*1024; /**< Size of music playing buffer. FIXME: Uhh, why not use SOUND_BUFFER_SIZE? */
 static char *music_buf              = NULL; /**< Music playing buffer. */
 
 
@@ -551,7 +551,7 @@ int music_al_init (void)
    music_vorbis.rw   = NULL; /* indication it's not loaded */
 
    /* Create the buffer. */
-   music_bufSize     = conf.al_bufsize * 1024;
+   music_bufSize     = SOUND_BUFFER_SIZE * 1024;
    music_buf         = malloc( music_bufSize );
 
    soundLock();

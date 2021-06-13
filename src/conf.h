@@ -47,7 +47,6 @@
 #define FONT_SIZE_SMALL_DEFAULT              11    /**< Default small font size. */
 /* Audio options */
 #define USE_EFX_DEFAULT                      1     /**< Whether or not to use EFX (if using OpenAL). */
-#define BUFFER_SIZE_DEFAULT                  128   /**< Default buffer size (if using OpenAL). */
 #define MUTE_SOUND_DEFAULT                   0     /**< Whether sound should be disabled. */
 #define SOUND_VOLUME_DEFAULT                 0.6   /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT                 0.8   /**< Default music volume. */
@@ -91,7 +90,6 @@ typedef struct PlayerConf_s {
 
    /* Sound. */
    int al_efx; /**< Should EFX extension be used? (only applicable for OpenAL) */
-   int al_bufsize; /**< Size of the buffer (in kilobytes) to use for music. */
    int nosound; /**< Whether or not sound is on. */
    double sound; /**< Sound level for sound effects. */
    double music; /**< Sound level for music. */
