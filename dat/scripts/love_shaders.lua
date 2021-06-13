@@ -88,7 +88,7 @@ end
 --[[--
 Generates a paper-like image.
 
-@tparam number widthWidth of the image to create.
+@tparam number width Width of the image to create.
 @tparam number height Height of the image to create.
 @tparam[opt=1] number sharpness How sharp to make the texture look.
 @treturn Canvas A apper-like canvas image.
@@ -569,6 +569,70 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    vec3 col = vec3(pow(v, cexp.x), pow(v, cexp.y), pow(v, cexp.z)) * 2.0;
    col = clamp( col, 0.0, 1.0 );
    return color * vec4( col, 1.0);
+}
+]], strength, speed, love_math.random() )
+
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader._dt = 1000 * love_math.random()
+   shader.update = function (self, dt)
+      self._dt = self._dt + dt
+      self:send( "u_time", self._dt )
+   end
+   return shader
+end
+
+
+--[[--
+A windy type shader. Meant as/for backgrounds, however, it is highly transparent.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "strength" and "speed" fields is used.
+--]]
+function love_shaders.windy( params )
+   params = params or {}
+   strength = params.strength or 1.0
+   speed = params.speed or 1.0
+   local pixelcode = string.format([[
+#include "lib/simplex.glsl"
+
+uniform float u_time = 0.0;
+uniform vec3 u_camera = vec3( 0.0, 0.0, 1.0 );
+
+const float strength = %f;
+const float speed    = %f;
+const float u_r      = %f;
+
+const float noiseScale = 0.001;
+const float noiseTimeScale = 0.03;
+
+float fbm3(vec3 v) {
+   float result = snoise(v);
+   result += snoise(v * 2.) / 2.;
+   result += snoise(v * 4.) / 4.;
+   result /= (1. + 1./2. + 1./4.);
+   return result;
+}
+
+float getNoise(vec3 v) {
+   v.xy += vec2( fbm3(v), fbm3(vec3(v.xy, v.z + 1000.)));
+   return fbm3(v) / 2. + 0.5;
+}
+
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   float f = 0.0;
+   vec3 uv;
+
+   /* Calculate coordinates */
+   uv.xy = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy + u_r;
+   uv.xy *= strength;
+   uv.z  = u_time * speed;
+
+   uv *= vec3( noiseScale, noiseScale, noiseTimeScale );
+
+   float noise = getNoise( uv );
+   noise = pow( noise, 4.0 ) * 2.0;  //more contrast
+   return color * vec4( 1.0, 1.0, 1.0, noise );
 }
 ]], strength, speed, love_math.random() )
 
