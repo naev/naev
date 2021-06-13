@@ -132,6 +132,7 @@ static Commodity* nxml_loadCommodity( xmlNodePtr node )
       c = commodity_get( xml_get( node ) );
    else {
       cur = node->xmlChildrenNode;
+      c = NULL;
       do {
          xml_onlyNodes(cur);
          if ( xml_isNode( cur, "commodity" ) )
