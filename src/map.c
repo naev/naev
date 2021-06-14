@@ -682,11 +682,11 @@ static void map_update( unsigned int wid )
 
          /* Volatility */
          if (sys->nebu_volatility > 700.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Volatile %sNebula"), adj);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("#rVolatile %sNebula#0"), adj);
          else if (sys->nebu_volatility > 300.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dangerous %sNebula"), adj);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("#oDangerous %sNebula#0"), adj);
          else if (sys->nebu_volatility > 0.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Unstable %sNebula"), adj);
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("#yUnstable %sNebula#0"), adj);
          else
             p += scnprintf(&buf[p], sizeof(buf)-p, _("%sNebula"), adj);
       }
@@ -696,11 +696,11 @@ static void map_update( unsigned int wid )
             p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
 
          if (sys->interference > 700.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Interference"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("#rDense Interference#0"));
          else if (sys->interference < 300.)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Interference"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("#oLight Interference#0"));
          else
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Interference"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("#yInterference#0"));
       }
       /* Asteroids. */
       if (array_size(sys->asteroids) > 0) {
@@ -715,14 +715,13 @@ static void map_update( unsigned int wid )
          }
 
          if (density >= 1.5)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Dense Asteroid Field"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("#oDense Asteroid Field#0"));
          else if (density <= 0.5)
-            p += scnprintf(&buf[p], sizeof(buf)-p, _("Light Asteroid Field"));
+            p += scnprintf(&buf[p], sizeof(buf)-p, _("#yLight Asteroid Field"));
          else
             p += scnprintf(&buf[p], sizeof(buf)-p, _("Asteroid Field"));
       }
       window_modifyText( wid, "txtSystemStatus", buf );
-      (void)p;
    }
 }
 
