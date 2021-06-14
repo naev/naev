@@ -471,7 +471,7 @@ const float u_r      = %f;
 const float NUM_OCTAVES = 3;
 
 /* 1D noise */
-float noise1(float p)
+float noise1( float p )
 {
    float fl = floor(p);
    float fc = fract(p);
@@ -479,14 +479,14 @@ float noise1(float p)
 }
 
 /* Voronoi distance noise. */
-float voronoi( in vec2 x )
+float voronoi( vec2 x )
 {
    vec2 p = floor(x);
    vec2 f = fract(x);
 
    vec2 res = vec2(8.0);
-   for(int j = -1; j <= 1; j ++) {
-      for(int i = -1; i <= 1; i ++) {
+   for(int j = -1; j <= 1; j++) {
+      for(int i = -1; i <= 1; i++) {
          vec2 b = vec2(i, j);
          vec2 r = vec2(b) - f + random(p + b);
 
@@ -497,9 +497,8 @@ float voronoi( in vec2 x )
             res.y = res.x;
             res.x = d;
          }
-         else if (d < res.y) {
+         else if (d < res.y)
             res.y = d;
-         }
       }
    }
    return res.y - res.x;
@@ -507,31 +506,29 @@ float voronoi( in vec2 x )
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec2 uv;
-
-   /* Minor flickering. */
-   float flicker = noise1(u_time * 2.0 * speed) * 0.2 + 0.9;
-
    /* Calculate coordinates relative to camera. */
-   uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy + u_r;
+   vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy + u_r;
    uv *= strength / 500.0; /* Normalize so that strength==1.0 looks fairly good. */
 
+   /* Minor flickering between 0.9 and 1.1. */
+   float flicker = noise1( u_time * 2.0 * speed ) * 0.2 + 0.9;
+
    /* Add some noise octaves */
-   float a = 0.6, f = 1.0;
+   float a = 0.6;
+   float f = 1.0;
 
    /* 4 octaves also look nice, its getting a bit slow though */
    float v = 0.0;
-   for (int i = 0; i < NUM_OCTAVES; i ++) {
+   for (int i=0; i < NUM_OCTAVES; i ++) {
       float v1 = voronoi(uv * f + 5.0);
       float v2 = 0.0;
 
-      /* Make the moving electrons-effect for higher octaves */
+      /* Make the moving electrons-effect for higher octaves. */
       if (i > 0) {
          v2 = voronoi(uv * f * 0.5 + 50.0 + u_time * speed);
 
-         float va = 0.0, vb = 0.0;
-         va = 1.0 - smoothstep(0.0, 0.1, v1);
-         vb = 1.0 - smoothstep(0.0, 0.08, v2);
+         float va = 1.0 - smoothstep(0.0, 0.1,  v1);
+         float vb = 1.0 - smoothstep(0.0, 0.08, v2);
          v += a * pow(va * (0.5 + vb), 2.0);
       }
 
@@ -556,8 +553,7 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    /* Convert to colour, clamp and multiply by base colour. */
    vec3 col = vec3(pow(v, cexp.x), pow(v, cexp.y), pow(v, cexp.z)) * 2.0;
-   col = clamp( col, 0.0, 1.0 );
-   return color * vec4( col, 1.0);
+   return color * vec4( clamp( col, 0.0, 1.0 ), 1.0);
 }
 ]], strength, speed, love_math.random() )
 
