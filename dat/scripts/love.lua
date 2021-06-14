@@ -122,19 +122,9 @@ local function _update( dt )
 end
 local function _window( message, value )
    if message=="focus" then
-      -- https://github.com/naev/naev/issues/1050 -- upon regaining focus, clear keystate to prevent "stuck" key effects.
-      -- (Ideal would be something like SDL_GetKeyboardState.)
-      if value ~= 0 and not love._focusInOS then
-         for k,v in pairs(love.keyboard._keystate) do
-            love.keyboard._keystate[k] = nil
-            if v then
-               love.keyreleased( k, k )
-            end
-         end
-      end
-      love._focusInOS = (value ~= 0)
+      love._focusInOS = value
    elseif message=="mousefocus" then
-      love._enteredInOS = (value ~= 0)
+      love._enteredInOS = value
    end
    return true
 end
@@ -196,9 +186,7 @@ function love.exec( path )
    end
    addtopath(";?.lua")
 
-   love._focusInNaev = false
-   love._focusInOS = true
-   love._enteredInOS = true
+   love._focus = false
    love._started = false
    love.filesystem = require 'love.filesystem'
 
@@ -268,7 +256,7 @@ function love.exec( path )
       love.w = -1
       love.h = -1
    end
-   love._focusInNaev = true
+   love._focus = true
    love._started = true
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _window )
    -- Doesn't actually get here until the dialogue is closed
@@ -284,7 +272,7 @@ function love.run()
       error(_("can only run one Love2D instance at a time!"))
    end
 
-   love._focusInNaev = false
+   love._focus = false
    love._started = false
 
    -- Set up defaults
@@ -317,7 +305,7 @@ function love.run()
       love.w = -1
       love.h = -1
    end
-   love._focusInNaev = true
+   love._focus = true
    love._started = true
    naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
    -- Doesn't actually get here until the dialogue is closed
