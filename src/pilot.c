@@ -1771,6 +1771,7 @@ void pilot_render( Pilot* p, const double dt )
       scaleh = 1.;
    }
 
+   /* Add some transparency if stealthed. */
    if (pilot_isFlag(p, PILOT_STEALTH))
       c.a = 0.5;
 
