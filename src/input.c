@@ -32,7 +32,6 @@
 #include "nstring.h"
 #include "pause.h"
 #include "pilot.h"
-#include "pilot_weapon.h"
 #include "player.h"
 #include "toolkit.h"
 #include "weapon.h"
@@ -694,7 +693,6 @@ void input_update( double dt )
 !pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
 #define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
 #define NOLAND()  ((player.p != NULL) && (!landed && !pilot_isFlag(player.p,PILOT_LANDING))) /**< Player isn't landed. */
-#define NEEDWSET(id) (INGAME() || (pilot_weapSet(player.p,id)->type == WEAPSET_TYPE_WEAPON)) /**< Need to update weaponset. */
 /**
  * @brief Runs the input command.
  *
@@ -888,25 +886,25 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          player_rmFlag(PLAYER_SECONDARY);
 
    /* Weapon sets. */
-   } else if (NEEDWSET(0) && NODEAD() && KEY("weapset1")) {
+   } else if (NODEAD() && KEY("weapset1")) {
       player_weapSetPress( 0, value, repeat );
-   } else if (NEEDWSET(1) && NODEAD() && KEY("weapset2")) {
+   } else if (NODEAD() && KEY("weapset2")) {
       player_weapSetPress( 1, value, repeat );
-   } else if (NEEDWSET(2) && NODEAD() && KEY("weapset3")) {
+   } else if (NODEAD() && KEY("weapset3")) {
       player_weapSetPress( 2, value, repeat );
-   } else if (NEEDWSET(3) && NODEAD() && KEY("weapset4")) {
+   } else if (NODEAD() && KEY("weapset4")) {
       player_weapSetPress( 3, value, repeat );
-   } else if (NEEDWSET(4) && NODEAD() && KEY("weapset5")) {
+   } else if (NODEAD() && KEY("weapset5")) {
       player_weapSetPress( 4, value, repeat );
-   } else if (NEEDWSET(5) && NODEAD() && KEY("weapset6")) {
+   } else if (NODEAD() && KEY("weapset6")) {
       player_weapSetPress( 5, value, repeat );
-   } else if (NEEDWSET(6) && NODEAD() && KEY("weapset7")) {
+   } else if (NODEAD() && KEY("weapset7")) {
       player_weapSetPress( 6, value, repeat );
-   } else if (NEEDWSET(7) && NODEAD() && KEY("weapset8")) {
+   } else if (NODEAD() && KEY("weapset8")) {
       player_weapSetPress( 7, value, repeat );
-   } else if (NEEDWSET(8) && NODEAD() && KEY("weapset9")) {
+   } else if (NODEAD() && KEY("weapset9")) {
       player_weapSetPress( 8, value, repeat );
-   } else if (NEEDWSET(9) && NODEAD() && KEY("weapset0")) {
+   } else if (NODEAD() && KEY("weapset0")) {
       player_weapSetPress( 9, value, repeat );
 
    /*

@@ -1296,18 +1296,18 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
  *    For use in keybindings
  */
 /**
- * @brief Activates a player's weapon set.
+ * @brief Handles keyboard events involving the player's weapon-set keys. It's valid to call this while gameplay is paused.
  */
 void player_weapSetPress( int id, double value, int repeat )
 {
    int type;
 
-   if (repeat)
+   if (repeat || (player.p == NULL))
       return;
 
    type = (value>=0) ? +1 : -1;
 
-   if ((type>0) && ((player.p == NULL) || toolkit_isOpen()))
+   if (toolkit_isOpen() && (type>0 || pilot_weapSet(player.p,id)->type != WEAPSET_TYPE_WEAPON))
       return;
 
    if ((type>0) && (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
