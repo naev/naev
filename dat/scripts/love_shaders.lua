@@ -470,11 +470,6 @@ const float speed    = %f;
 const float u_r      = %f;
 const float NUM_OCTAVES = 3;
 
-/*
-   Originall by srtuss, 2013
-   https://www.shadertoy.com/view/4sl3Dr
-*/
-
 /* 1D noise */
 float noise1(float p)
 {
@@ -483,7 +478,7 @@ float noise1(float p)
    return mix(random(fl), random(fl + 1.0), fc);
 }
 
-/* voronoi distance noise, based on iq's articles */
+/* Voronoi distance noise. */
 float voronoi( in vec2 x )
 {
    vec2 p = floor(x);
@@ -495,7 +490,7 @@ float voronoi( in vec2 x )
          vec2 b = vec2(i, j);
          vec2 r = vec2(b) - f + random(p + b);
 
-         /* chebyshev distance, one of many ways to do this */
+         /* Chebyshev distance, one of many ways to do this */
          float d = max(abs(r.x), abs(r.y));
 
          if (d < res.x) {
@@ -519,26 +514,19 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 
    /* Calculate coordinates relative to camera. */
    uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy + u_r;
-   uv *= strength / 500.0;
-
-   float v = 0.0;
-
-   /*
-   // that looks highly interesting:
-   //v = 1.0 - length(uv) * 1.3;
-   */
+   uv *= strength / 500.0; /* Normalize so that strength==1.0 looks fairly good. */
 
    /* Add some noise octaves */
    float a = 0.6, f = 1.0;
 
    /* 4 octaves also look nice, its getting a bit slow though */
+   float v = 0.0;
    for (int i = 0; i < NUM_OCTAVES; i ++) {
       float v1 = voronoi(uv * f + 5.0);
       float v2 = 0.0;
 
       /* Make the moving electrons-effect for higher octaves */
       if (i > 0) {
-         /* of course everything based on voronoi */
          v2 = voronoi(uv * f * 0.5 + 50.0 + u_time * speed);
 
          float va = 0.0, vb = 0.0;
@@ -547,13 +535,13 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
          v += a * pow(va * (0.5 + vb), 2.0);
       }
 
-      /* make sharp edges */
+      /* Sharpen the edges. */
       v1 = 1.0 - smoothstep(0.0, 0.3, v1);
 
-      /* noise is used as intensity map */
+      /* Noise is used as intensity map */
       v2 = a * (noise1(v1 * 5.5 + 0.1));
 
-      /* octave 0's intensity changes a bit */
+      /* Octave 0's intensity changes a bit */
       if (i == 0)
          v += v2 * flicker;
       else
@@ -563,9 +551,10 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
       a *= 0.7;
    }
 
-   /* blueish color set */
+   /* Blueish color set */
    vec3 cexp = vec3(6.0, 4.0, 2.0);
 
+   /* Convert to colour, clamp and multiply by base colour. */
    vec3 col = vec3(pow(v, cexp.x), pow(v, cexp.y), pow(v, cexp.z)) * 2.0;
    col = clamp( col, 0.0, 1.0 );
    return color * vec4( col, 1.0);
