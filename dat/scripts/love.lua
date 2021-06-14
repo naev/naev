@@ -122,9 +122,19 @@ local function _update( dt )
 end
 local function _window( message, value )
    if message=="focus" then
-      love._focusInOS = value
+      -- https://github.com/naev/naev/issues/1050 -- upon regaining focus, clear keystate to prevent "stuck" key effects.
+      -- (Ideal would be something like SDL_GetKeyboardState.)
+      if value ~= 0 and not love._focusInOS then
+         for k,v in pairs(love.keyboard._keystate) do
+            love.keyboard._keystate[k] = nil
+            if v then
+               love.keyreleased( k, k )
+            end
+         end
+      end
+      love._focusInOS = (value ~= 0)
    elseif message=="mousefocus" then
-      love._enteredInOS = value
+      love._enteredInOS = (value ~= 0)
    end
    return true
 end
