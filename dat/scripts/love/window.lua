@@ -87,8 +87,8 @@ function window.setFullscreen( fullscreen )
    return true
 end
 function window.getFullscreen( fullscreen ) return love.fullscreen end
-function window.hasFocus() return love._focusInNaev and love._focusInOS end
-function window.hasMouseFocus() return love._focusInNaev and love._enteredInOS end
+function window.hasFocus() return love._focus end
+function window.hasMouseFocus() return love._focus end
 function window.showMessageBox( title, message, ... )
    local arg = {...}
    love._focus = false
