@@ -45,7 +45,6 @@
  * Prototypes.
  */
 static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
-static PilotWeaponSet* pilot_weapSet( Pilot* p, int id );
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
 static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, int level, double time );
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time );
@@ -59,7 +58,7 @@ static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
  *    @param id ID of the weapon set.
  *    @return The weapon set matching id.
  */
-static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
+PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
 {
    return &p->weapon_sets[ id ];
 }
