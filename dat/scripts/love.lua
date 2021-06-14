@@ -120,6 +120,14 @@ local function _update( dt )
    love.timer._adt = alpha*dt + (1-alpha)*love.timer._adt
    love.update(dt)
 end
+local function _window( message, value )
+   if message=="focus" then
+      love._focusInOS = value
+   elseif message=="mousefocus" then
+      love._enteredInOS = value
+   end
+   return true
+end
 local function _mouse( x, y, mtype, button )
    if not love.mouse then return end
    y = love.h-y-1
@@ -252,7 +260,7 @@ function love.exec( path )
    end
    love._focusInNaev = true
    love._started = true
-   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse, _window )
    -- Doesn't actually get here until the dialogue is closed
    love._started = false
 
