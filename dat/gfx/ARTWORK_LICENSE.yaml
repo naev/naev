@@ -4,7 +4,7 @@
      space:
        - lasergreen.png
      store:
-       - plasteel.png
+       - plasteel.webp
    planet:
      exterior:
        - methane.webp
@@ -410,7 +410,7 @@
 - Camilo Polymeris <cpolymeris@gmx.net>:
    license: GPLv3
    gui:
-     - legacy
+     legacy:
        - minimal.png
        - minimal_fuel.png
        - minimal_energy.png
@@ -422,7 +422,7 @@
        - empgrenade.png
        - empgrenadelauncher.png
        - banshee.png
-       - bansheelauncher.png
+       - bansheelauncher.webp
      space:
        - empgrenade.png
        - banshee.png
@@ -441,32 +441,32 @@
      - store:
        - fuel_pod.png
        - medium_fuel_pod.png
-       - cargo_pod.png
-       - afterburner.png
+       - cargopod.webp
+       - afterburner.webp
        - afterburner2.png
-       - jammer0.png
-       - jammer1.png
+       - jammer0.webp
+       - jammer1.webp
        - weapon_rack.png
-       - laser.png
+       - laser.webp
        - laser2.png
-       - laserturret.png
-       - laserturret2.png
-       - ioncannon.png
-       - ionturret.png
-       - plasma.png
+       - laserturret.webp
+       - laserturret2.webp
+       - ioncannon.webp
+       - ionturret.webp
+       - plasma.webp
        - plasma2.png
-       - ragnarok.png
-       - railgun.png
-       - orion.png
-       - ripper.png
-       - ripperturret.png
-       - railgunturret.png
+       - ragnarok.webp
+       - railgun.webp
+       - orion.webp
+       - ripper.webp
+       - ripperturret.webp
+       - railgunturret.webp
    ship:
      - kestrel
      - peacemaker
    loading:
-     - kestrel_pirate.png
-     - peacemaker.png
+     - kestrel_pirate.webp
+     - peacemaker.webp
 - Renderwahn:
    license: CC-by 3.0
    spfx:
@@ -514,13 +514,13 @@
        - cpu_i.png
        - cpu_ii.png
        - cpu_iii.png
-       - biometal.png
+       - biometal.webp
        - seekerlauncher.png
        - seeker.png
        - headhunterlauncher.png
        - headhunter.png
        - caesarlauncher.png
-       - caesar.png
+       - caesar.webp
    spfx:
      - plas2.webp
      - plam2.webp
@@ -769,9 +769,9 @@
      - soromid_*.png
      - trader_*.png
    loading:
-     - fidelity.png
-     - preacher.png
-     - shaman.png
+     - fidelity.webp
+     - preacher.webp
+     - shaman.webp
    outfit:
      - store:
        - fidelity_fighter.png
@@ -990,11 +990,11 @@
 - Galileus:
    license: CC-by-sa 3.0
    loading:
-     - rhino_pirate.png
-     - shark_empire.png
-     - shark_pirate.png
-     - shark.png
-     - rhino.png
+     - rhino_pirate.webp
+     - shark_empire.webp
+     - shark_pirate.webp
+     - shark.webp
+     - rhino.webp
    ship:
      - shark
      - rhino
@@ -1102,7 +1102,7 @@
      space:
        - convulsion.png
      store:
-       - active_plating.png
+       - active_plating.webp
        - base_hull_h.png
        - base_hull_l.png
        - base_hull_m.png
@@ -1115,14 +1115,14 @@
        - combat_hull_s.png
        - combat_hull_t.png
        - combat_hull_x.png
-       - convulsion.png
-       - convulsion_launcher.png
+       - convulsion.webp
+       - convulsion_launcher.webp
        - core_system_basic_l1.png
        - core_system_basic_l2.png
        - core_system_basic_m1.png
        - core_system_basic_m2.png
        - core_system_basic_m2.png
-       - core_system_basic_s1.png
+       - core_system_basic_s1.webp
        - core_system_basic_s2.png
        - core_system_cpu_l1.png
        - core_system_cpu_l2.png
@@ -1180,24 +1180,24 @@
        - misc01.png
        - misc02.png
        - misc04.png
-       - organic_engine_fast_l1.png
-       - organic_engine_fast_l2.png
-       - organic_engine_fast_m1.png
-       - organic_engine_fast_m2.png
-       - organic_engine_fast_s1.png
-       - organic_engine_fast_s2.png
-       - organic_engine_strong_l1.png
-       - organic_engine_strong_l2.png
-       - organic_engine_strong_m1.png
-       - organic_engine_strong_m2.png
-       - organic_engine_strong_s1.png
-       - organic_engine_strong_s2.png
-       - organic_hull_h.png
-       - organic_hull_l.png
-       - organic_hull_m.png
-       - organic_hull_s.png
-       - organic_hull_t.png
-       - organic_hull_x.png
+       - organic_engine_fast_l1.webp
+       - organic_engine_fast_l2.webp
+       - organic_engine_fast_m1.webp
+       - organic_engine_fast_m2.webp
+       - organic_engine_fast_s1.webp
+       - organic_engine_fast_s2.webp
+       - organic_engine_strong_l1.webp
+       - organic_engine_strong_l2.webp
+       - organic_engine_strong_m1.webp
+       - organic_engine_strong_m2.webp
+       - organic_engine_strong_s1.webp
+       - organic_engine_strong_s2.webp
+       - organic_hull_h.webp
+       - organic_hull_l.webp
+       - organic_hull_m.webp
+       - organic_hull_s.webp
+       - organic_hull_t.webp
+       - organic_hull_x.webp
        - plating01.png
        - reactor01.png
        - refined_hull_h.png
@@ -1211,9 +1211,9 @@
        - stealth_hull_m.png
        - stealth_hull_s.png
        - stealth_hull_t.png
-       - stealth_plating.png
-       - turreted_convulsion_launcher.png
-       - weapon01.png
+       - stealth_plating.webp
+       - turreted_convulsion_launcher.webp
+       - weapon01.webp
        - weapon02.png
    ship:
      - apprehension:
@@ -1422,11 +1422,11 @@
      - questions.png
 - Écrivain <https://opengameart.org/users/%C3%A9crivain>:
    license: CC0
-   overlay:
-     - rarity_6.png
+   overlays:
+     - rarity_6.webp
 - qubodup <https://openclipart.org/artist/qubodup>:
    license: PD
-   overlay:
+   overlays:
      - portrait_exclamation.png
 - nenau (based on work from Vega Strike and Kinniken):
    license: GPLv3+
