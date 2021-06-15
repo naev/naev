@@ -259,7 +259,6 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
                xmlr_attr_float(node, "z", z );
                xmlr_attr_float(node, "w", w );
             }
-            DEBUG("%s, %d, %d", name, isint, ix );
             switch (dim) {
                case 1:
                   if (isint)
