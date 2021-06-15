@@ -1007,7 +1007,7 @@ void spfx_render( const int layer )
          /* Set up the vertex. */
          projection = gl_view_matrix;
          projection = gl_Matrix4_Translate(projection, x, y, 0);
-         projection = gl_Matrix4_Scale(projection, effect->size, effect->size, 1);
+         projection = gl_Matrix4_Scale(projection, effect->size*z, effect->size*z, 1);
          glEnableVertexAttribArray( effect->vertex );
          gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex,
                0, 2, GL_FLOAT, 0 );
