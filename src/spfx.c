@@ -200,10 +200,11 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             xml_onlyNodes(cur);
-            xmlr_strd(node, "vert", shadervert);
-            xmlr_strd(node, "frag", shaderfrag);
-            xmlr_float(node, "size", temp->size);
+            xmlr_strd(cur, "vert", shadervert);
+            xmlr_strd(cur, "frag", shaderfrag);
+            xmlr_float(cur, "size", temp->size);
          } while (xml_nextNode(cur));
+         continue;
       }
       WARN(_("SPFX '%s' has unknown node '%s'."), temp->name, node->name);
    } while (xml_nextNode(node));
@@ -216,11 +217,12 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
 
    /* Has shaders. */
    if (shadervert != NULL && shaderfrag != NULL) {
-      temp->shader = gl_program_vert_frag( shadervert, shaderfrag );
-      temp->vertex = glGetAttribLocation( temp->shader, "vertex ");
-      temp->projection = glGetAttribLocation( temp->shader, "projection ");
-      temp->u_r = glGetUniformLocation( temp->shader, "u_r" );
-      temp->u_time = glGetUniformLocation( temp->shader, "u_time" );
+      temp->shader      = gl_program_vert_frag( shadervert, shaderfrag );
+      temp->vertex      = glGetAttribLocation( temp->shader, "vertex");
+      temp->projection  = glGetUniformLocation( temp->shader, "projection");
+      temp->u_r         = glGetUniformLocation( temp->shader, "u_r" );
+      temp->u_time      = glGetUniformLocation( temp->shader, "u_time" );
+      temp->u_size      = glGetUniformLocation( temp->shader, "u_size" );
       gl_checkErr();
    }
 
