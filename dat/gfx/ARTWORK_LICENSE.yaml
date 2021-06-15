@@ -530,7 +530,7 @@
      store:
        - gatling.png
 - Ingo Ruhnke <grumbel@gmx.de>:
-   licence: GPLv3
+   license: GPLv3
    portraits:
      - none.png
      - unknown.png
