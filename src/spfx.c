@@ -195,7 +195,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
                SPFX_GFX_PATH"%s", 6, 5, 0 );
          continue;
       }
-      
+
       if (xml_isNode(node,"shader")) {
          cur = node->xmlChildrenNode;
          do {
@@ -434,6 +434,10 @@ void spfx_add( int effect,
       cur_spfx->timer = ttl + RNGF()*anim;
    else
       cur_spfx->timer = ttl;
+
+   /* Shader magic. */
+   cur_spfx->unique = 1000.0*RNGF();
+   cur_spfx->time = 0.0;
 }
 
 
@@ -506,6 +510,7 @@ static void spfx_update_layer( SPFX *layer, const double dt )
          i--;
          continue;
       }
+      layer[i].time  += dt; /* Shader timer. */
 
       /* actually update it */
       vect_cadd( &layer[i].pos, dt*VX(layer[i].vel), dt*VY(layer[i].vel) );
@@ -945,7 +950,7 @@ void spfx_cinematic (void)
  */
 void spfx_render( const int layer )
 {
-   SPFX *spfx_stack;
+   SPFX *spfx_stack, *spfx;
    int i;
    SPFX_Base *effect;
    int sx, sy;
@@ -980,23 +985,66 @@ void spfx_render( const int layer )
 
    /* Now render the layer */
    for (i=array_size(spfx_stack)-1; i>=0; i--) {
-      effect = &spfx_effects[ spfx_stack[i].effect ];
+      spfx   = &spfx_stack[i];
+      effect = &spfx_effects[ spfx->effect ];
 
-      /* Simplifies */
-      sx = (int)effect->gfx->sx;
-      sy = (int)effect->gfx->sy;
+      /* Render shader. */
+      if (effect->shader >= 0) {
+         double x, y, z, s2;
+         gl_Matrix4 projection;
 
-      if (!paused) { /* don't calculate frame if paused */
-         time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
-         spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
+         /* Translate coords. */
+         s2 = effect->size/2.;
+         z = cam_getZoom();
+         gl_gameToScreenCoords( &x, &y, spfx->pos.x-s2, spfx->pos.y-s2 );
+
+         /* Let's get to business. */
+         glUseProgram( effect->shader );
+
+         /* Set up the vertex. */
+         projection = gl_view_matrix;
+         projection = gl_Matrix4_Translate(projection, x, y, 0);
+         projection = gl_Matrix4_Scale(projection, effect->size, effect->size, 1);
+         glEnableVertexAttribArray( effect->vertex );
+         gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex,
+               0, 2, GL_FLOAT, 0 );
+
+         /* Set shader uniforms. */
+         gl_Matrix4_Uniform(effect->projection, projection);
+         glUniform1f(effect->u_time, spfx->time);
+         glUniform1f(effect->u_r, spfx->unique);
+         glUniform1f(effect->u_size, effect->size);
+
+         /* Draw. */
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+         /* Clear state. */
+         glDisableVertexAttribArray( shaders.texture.vertex );
+
+         /* anything failed? */
+         gl_checkErr();
+
+         glUseProgram(0);
+
       }
+      /* No shader. */
+      else {
+         /* Simplifies */
+         sx = (int)effect->gfx->sx;
+         sy = (int)effect->gfx->sy;
 
-      /* Renders */
-      gl_blitSprite( effect->gfx,
-            VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),
-            spfx_stack[i].lastframe % sx,
-            spfx_stack[i].lastframe / sx,
-            NULL );
+         if (!paused) { /* don't calculate frame if paused */
+            time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
+            spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
+         }
+
+         /* Renders */
+         gl_blitSprite( effect->gfx,
+               VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),
+               spfx_stack[i].lastframe % sx,
+               spfx_stack[i].lastframe / sx,
+               NULL );
+      }
    }
 }
 
