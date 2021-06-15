@@ -10,30 +10,30 @@ import zipfile
 import mutagen
 
 
-def generate_soundtrack( source_dir, output, generate_csv=False ):
+def yaml_list(path):
+    try:
+        return yaml.safe_load(open(path))
+    except FileNotFoundError:
+        return []
 
+
+def generate_soundtrack( source_dir, output, generate_csv=False ):
+    snd_dirs = [os.path.join(source_dir, subdir, 'snd') for subdir in ('dat', 'artwork')]
     # Load licensing information
-    with open(os.path.join(source_dir, 'dat/snd/SOUND_LICENSE.yaml'),'r') as f:
-        sound_license = yaml.safe_load(f)
     song_licensing = {}
-    for author in sound_license:
-        name = list(author.keys())[0]
-        data = author[name]
-        license = data['license']
-        songs = data.get('music')
-        if songs == None:
-            continue
-        for song in songs:
-            song_licensing[song] = {'artist':name,'license':license}
+    for snd_dir in snd_dirs:
+        for author in yaml_list(os.path.join(snd_dir, 'SOUND_LICENSE.yaml')):
+            (name, data), = author.items()
+            license = data['license']
+            songs = data.get('music', [])
+            for song in songs:
+                song_licensing[song] = {'artist':name,'license':license}
 
     # Get all existing songs to check for duplicates and missing songs
     all_songs = []
-    for song in glob.glob(os.path.join(source_dir, "dat/snd/music/*.ogg")):
-        all_songs.append( os.path.basename(song) )
-
-    # Get the soundtrack information
-    with open(os.path.join(source_dir, 'dat/snd/soundtrack.yaml'),'r') as f:
-        soundtrack = yaml.safe_load(f)
+    for snd_dir in snd_dirs:
+        for song in glob.glob(os.path.join(snd_dir, 'music', '*.ogg')):
+            all_songs.append( os.path.basename(song) )
 
     # Run over the soundtrack to create it as a zipfile
     duplicated_songs = []
@@ -42,37 +42,39 @@ def generate_soundtrack( source_dir, output, generate_csv=False ):
         if generate_csv:
             csvfile = open( f"{output}.csv", 'w' )
             csvfile.write( '"Disc Number","Track Number","Original Name","Original Name Language (ie., ""es"", ""jp"") (optional)","International Name (optional)","Duration (""m:ss"")","ISRC (optional)"\n' )
-        for song in soundtrack:
-            if song['filename'] in all_songs:
-                all_songs.remove( song['filename'] )
-            else:
-                duplicated_songs.append( song['filename'] )
+        for snd_dir in snd_dirs:
+            soundtrack = yaml_list(os.path.join(snd_dir, 'soundtrack.yaml'))
+            for song in soundtrack:
+                if song['filename'] in all_songs:
+                    all_songs.remove( song['filename'] )
+                else:
+                    duplicated_songs.append( song['filename'] )
 
-            filename = os.path.join(source_dir, f"dat/snd/music/{song['filename']}")
-            temp = tempfile.NamedTemporaryFile().name
-            with open( temp, 'wb' ) as outf:
-                with open( filename, 'rb' ) as inf:
-                    outf.write( inf.read() )
-            audio = mutagen.File( temp )
-            length = "%d:%02d" % (audio.info.length//60, audio.info.length%60)
-            number = "%02d" % i
-            # Set up metadata
-            audio['TITLE']      = song['name']
-            licensing_info      = song_licensing.get(song['filename'])
-            audio['ARTIST']     = licensing_info['artist']
-            audio['LICENSE']    = licensing_info['license']
-            audio['TRACKNUMBER'] = number
-            audio['ORGANIZATION'] = 'Naev DevTeam'
-            audio['ALBUM']      = 'Naev Soundtrack'
-            print( f"{number}. {song['name']} ({length})" )
-            # Write to zip
-            audio.save()
-            zipf.write( temp, number+"_"+song['filename'] )
-            os.remove( temp )
+                filename = os.path.join(snd_dir, 'music', song['filename'])
+                temp = tempfile.NamedTemporaryFile().name
+                with open( temp, 'wb' ) as outf:
+                    with open( filename, 'rb' ) as inf:
+                        outf.write( inf.read() )
+                audio = mutagen.File( temp )
+                length = "%d:%02d" % (audio.info.length//60, audio.info.length%60)
+                number = "%02d" % i
+                # Set up metadata
+                audio['TITLE']      = song['name']
+                licensing_info      = song_licensing[song['filename']]
+                audio['ARTIST']     = licensing_info['artist']
+                audio['LICENSE']    = licensing_info['license']
+                audio['TRACKNUMBER'] = number
+                audio['ORGANIZATION'] = 'Naev DevTeam'
+                audio['ALBUM']      = 'Naev Soundtrack'
+                print( f"{number}. {song['name']} ({length})" )
+                # Write to zip
+                audio.save()
+                zipf.write( temp, number+"_"+song['filename'] )
+                os.remove( temp )
 
-            if generate_csv:
-                csvfile.write( f"01,{number},{song['name']},en,,{length},\n" )
-            i += 1
+                if generate_csv:
+                    csvfile.write( f"01,{number},{song['name']},en,,{length},\n" )
+                i += 1
         if generate_csv:
             csvfile.close()
 

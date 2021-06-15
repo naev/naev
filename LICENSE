@@ -36,11 +36,10 @@ the GNU General Public License:
 Specific, more permissive, licenses cover code in "distance_field.c", "edtaa3func.c", and "perlin.c".
 They are included in the dat/licenses directory.
 
-Licensing of graphical assets contained in "dat/gfx" is documented by
-"dat/gfx/ARTWORK_LICENSE.yaml".
-
-Licensing of audio assets contained in "dat/snd" is documented by
-"dat/snd/SOUND_LICENSE.yaml".
+Under "dat" and/or "artwork":
+* Licensing of graphical assets contained in "gfx/" is documented by "gfx/ARTWORK_LICENSE.yaml".
+* Licensing of font assets contained in "fonts/" is documented by "fonts/FONT_LICENSE.yaml".
+* Licensing of audio assets contained in "snd/" is documented by "snd/SOUND_LICENSE.yaml".
 
 Except where otherwise noted, all other files, including XML files, are
 distributed under the Creative Commons Attribution-ShareAlike License,

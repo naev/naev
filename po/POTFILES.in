@@ -2499,7 +2499,6 @@ dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/main.lua
 dat/scripts/vn/transitions.lua
-dat/snd/music.lua
 src/ai.c
 src/ai.h
 src/array.c
