@@ -105,7 +105,17 @@ typedef struct SPFX_Base_ {
    double ttl; /**< Time to live */
    double anim; /**< Total duration in ms */
 
-   glTexture *gfx; /**< will use each sprite as a frame */
+   /* Use texture when not using shaders. */
+   glTexture *gfx; /**< Will use each sprite as a frame */
+
+   /* Shaders! */
+   double size; /**< Default size. */
+   GLint shader; /**< Shader to use. */
+   GLint vertex;
+   GLint projection;
+   GLint u_time; /**< Time variable in shader. */
+   GLint u_r; /**< Unique shader value. */
+   GLint u_size; /**< Size of the shader. */
 } SPFX_Base;
 
 static SPFX_Base *spfx_effects = NULL; /**< Total special effects. */
@@ -124,6 +134,10 @@ typedef struct SPFX_ {
    int effect; /**< The real effect */
 
    double timer; /**< Time left */
+
+   /* For shaders. */
+   GLfloat time; /**< Time elapsed (not left). */
+   GLfloat unique; /**< Uniqueness value in the shader. */
 } SPFX;
 
 
@@ -159,10 +173,14 @@ static void spfx_trail_free( Trail_spfx* trail );
  */
 static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node;
+   xmlNodePtr node, cur;
+   char *shadervert, *shaderfrag;
 
    /* Clear data. */
    memset( temp, 0, sizeof(SPFX_Base) );
+   temp->shader = -1;
+   shadervert = NULL;
+   shaderfrag = NULL;
 
    xmlr_attr_strd( parent, "name", temp->name );
 
@@ -177,6 +195,16 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
                SPFX_GFX_PATH"%s", 6, 5, 0 );
          continue;
       }
+      
+      if (xml_isNode(node,"shader")) {
+         cur = node->xmlChildrenNode;
+         do {
+            xml_onlyNodes(cur);
+            xmlr_strd(node, "vert", shadervert);
+            xmlr_strd(node, "frag", shaderfrag);
+            xmlr_float(node, "size", temp->size);
+         } while (xml_nextNode(cur));
+      }
       WARN(_("SPFX '%s' has unknown node '%s'."), temp->name, node->name);
    } while (xml_nextNode(node));
 
@@ -186,12 +214,26 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    if (temp->ttl == 0.)
       temp->ttl = temp->anim;
 
+   /* Has shaders. */
+   if (shadervert != NULL && shaderfrag != NULL) {
+      temp->shader = gl_program_vert_frag( shadervert, shaderfrag );
+      temp->vertex = glGetAttribLocation( temp->shader, "vertex ");
+      temp->projection = glGetAttribLocation( temp->shader, "projection ");
+      temp->u_r = glGetUniformLocation( temp->shader, "u_r" );
+      temp->u_time = glGetUniformLocation( temp->shader, "u_time" );
+      gl_checkErr();
+   }
+
 #define MELEMENT(o,s) \
    if (o) WARN( _("SPFX '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
    MELEMENT(temp->anim==0.,"anim");
    MELEMENT(temp->ttl==0.,"ttl");
-   MELEMENT(temp->gfx==NULL,"gfx");
+   MELEMENT(temp->gfx==NULL && (shadervert==NULL || shaderfrag==NULL),"gfx or shader");
+   MELEMENT(temp->shader>=0 && temp->size<=0., "shader/size");
 #undef MELEMENT
+
+   free(shadervert);
+   free(shaderfrag);
 
    return 0;
 }
@@ -205,9 +247,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
 static void spfx_base_free( SPFX_Base *effect )
 {
    free(effect->name);
-   effect->name = NULL;
    gl_freeTexture(effect->gfx);
-   effect->gfx = NULL;
 }
 
 
