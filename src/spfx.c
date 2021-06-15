@@ -173,14 +173,18 @@ static void spfx_trail_free( Trail_spfx* trail );
  */
 static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
+   xmlNodePtr node, cur, uniforms;
    char *shadervert, *shaderfrag;
+   const char *name;
+   double x, y, z, w;
+   GLint loc, dim;
 
    /* Clear data. */
    memset( temp, 0, sizeof(SPFX_Base) );
    temp->shader = -1;
    shadervert = NULL;
    shaderfrag = NULL;
+   uniforms = NULL;
 
    xmlr_attr_strd( parent, "name", temp->name );
 
@@ -203,6 +207,10 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
             xmlr_strd(cur, "vert", shadervert);
             xmlr_strd(cur, "frag", shaderfrag);
             xmlr_float(cur, "size", temp->size);
+            if (xml_isNode(cur,"uniforms")) {
+               uniforms = cur;
+               continue;
+            }
          } while (xml_nextNode(cur));
          continue;
       }
@@ -223,6 +231,43 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
       temp->u_r         = glGetUniformLocation( temp->shader, "u_r" );
       temp->u_time      = glGetUniformLocation( temp->shader, "u_time" );
       temp->u_size      = glGetUniformLocation( temp->shader, "u_size" );
+      if (uniforms != NULL) {
+         glUseProgram( temp->shader );
+         node = uniforms->xmlChildrenNode;
+         do {
+            xml_onlyNodes(node);
+            name = (char*)node->name;
+            loc = glGetUniformLocation( temp->shader, name );
+            if (loc < 0) {
+               WARN(_("SPFX '%s' is trying to set uniform '%s' not in shader!"), temp->name, name );
+               continue;
+            }
+            xmlr_attr_int_def(node,"dim",dim,1);
+            /* Float values default to 0. */
+            xmlr_attr_float(node, "x", x );
+            xmlr_attr_float(node, "y", y );
+            xmlr_attr_float(node, "z", z );
+            xmlr_attr_float(node, "w", w );
+            switch (dim) {
+               case 1:
+                  glUniform1f( loc, x );
+                  break;
+               case 2:
+                  glUniform2f( loc, x, y );
+                  break;
+               case 3:
+                  glUniform3f( loc, x, y, z );
+                  break;
+               case 4:
+                  glUniform4f( loc, x, y, z, w );
+                  break;
+               default:
+                  WARN(_("SPFX '%s' is trying to set uniform '%s' with '%d' dimensions!"), temp->name, name, dim );
+                  continue;
+            }
+         } while (xml_nextNode(node));
+         glUseProgram( 0 );
+      }
       gl_checkErr();
    }
 
