@@ -49,9 +49,9 @@
 
 
 /* Trail stuff. */
-#define TRAIL_UPDATE_DT       0.05
-static TrailSpec* trail_spec_stack;
-static Trail_spfx** trail_spfx_stack;
+#define TRAIL_UPDATE_DT       0.05  /**< Rate (in seconds) at which trail is updated. */
+static TrailSpec* trail_spec_stack; /**< Trail specifications. */
+static Trail_spfx** trail_spfx_stack; /**< Active trail effects. */
 
 
 /*
