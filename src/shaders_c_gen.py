@@ -31,7 +31,7 @@ SHADERS = [
    ),
    Shader(
       name = "solid",
-      vs_path = "solid.vert",
+      vs_path = "project.vert",
       fs_path = "solid.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "color"],
@@ -39,7 +39,7 @@ SHADERS = [
    ),
    Shader(
       name = "trail",
-      vs_path = "trail.vert",
+      vs_path = "project_pos.vert",
       fs_path = "trail.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "c1", "c2", "t1", "t2", "dt", "pos1", "pos2", "r", "nebu_col" ],
@@ -121,7 +121,7 @@ SHADERS = [
    ),
    Shader(
       name = "beam",
-      vs_path = "beam.vert",
+      vs_path = "project_pos.vert",
       fs_path = "beam.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "color", "dt", "r", "dimensions" ],
@@ -147,7 +147,7 @@ SHADERS = [
    ),
    Shader(
       name = "jump",
-      vs_path = "jump.vert",
+      vs_path = "project_pos.vert",
       fs_path = "jump.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "progress", "direction", "dimensions"],
