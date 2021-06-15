@@ -12,9 +12,9 @@ ARTWORK_PATH="../../../../naev-artwork/"
 ARTWORK_PATH=$ARTWORK_PATH"3d/final/"
 
 function copy_over {
-   cp "${ARTWORK_PATH}$1.png" "$2.png"
-   cp "${ARTWORK_PATH}$1_engine.png" "$2_engine.png"
-   cp "${ARTWORK_PATH}$1_comm.png" "$2_comm.png"
+   cwebp -z9 "${ARTWORK_PATH}$1.png" "$2.webp"
+   cwebp -z9 "${ARTWORK_PATH}$1_engine.png" "$2_engine.webp"
+   cwebp -z9 "${ARTWORK_PATH}$1_comm.png" "$2_comm.webp"
 }
 
 copy_over "drone" "drone/drone"

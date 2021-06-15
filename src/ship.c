@@ -35,7 +35,6 @@
 
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
 
-#define SHIP_EXT     ".png" /**< Ship graphics extension format. */
 #define SHIP_ENGINE  "_engine" /**< Engine graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
 #define SHIP_COMM    "_comm" /**< Communication graphic extension. */
@@ -438,11 +437,11 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    SDL_BlitSurface( surface, &rtemp, gfx_store, &dstrect );
 
    /* Load the store surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
+   snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
    temp->gfx_store = gl_loadImagePad( buf, gfx_store, OPENGL_TEX_VFLIP, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
    /* Load the surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
+   snprintf( buf, sizeof(buf), "%s_gfx_target", temp->name );
    temp->gfx_target = gl_loadImagePad( buf, gfx, OPENGL_TEX_VFLIP, sw, sh, 1, 1, 1 );
 
    return 0;
