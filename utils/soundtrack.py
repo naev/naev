@@ -60,7 +60,7 @@ def generate_soundtrack( source_dir, output, generate_csv=False ):
                 number = "%02d" % i
                 # Set up metadata
                 audio['TITLE']      = song['name']
-                licensing_info      = song_licensing.get(song['filename'])
+                licensing_info      = song_licensing[song['filename']]
                 audio['ARTIST']     = licensing_info['artist']
                 audio['LICENSE']    = licensing_info['license']
                 audio['TRACKNUMBER'] = number
