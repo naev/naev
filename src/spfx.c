@@ -506,7 +506,7 @@ void spfx_add( int effect,
       cur_spfx->timer = ttl;
 
    /* Shader magic. */
-   cur_spfx->unique = 1000.0*RNGF();
+   cur_spfx->unique = RNGF();
    cur_spfx->time = 0.0;
 }
 
