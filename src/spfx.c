@@ -177,6 +177,8 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    char *shadervert, *shaderfrag;
    const char *name;
    double x, y, z, w;
+   int ix, iy, iz, iw;
+   int isint;
    GLint loc, dim;
 
    /* Clear data. */
@@ -243,23 +245,45 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
                continue;
             }
             xmlr_attr_int_def(node,"dim",dim,1);
+            xmlr_attr_int_def(node,"int",isint,0);
             /* Float values default to 0. */
-            xmlr_attr_float(node, "x", x );
-            xmlr_attr_float(node, "y", y );
-            xmlr_attr_float(node, "z", z );
-            xmlr_attr_float(node, "w", w );
+            if (isint) {
+               xmlr_attr_int(node, "x", ix );
+               xmlr_attr_int(node, "y", iy );
+               xmlr_attr_int(node, "z", iz );
+               xmlr_attr_int(node, "w", iw );
+            }
+            else {
+               xmlr_attr_float(node, "x", x );
+               xmlr_attr_float(node, "y", y );
+               xmlr_attr_float(node, "z", z );
+               xmlr_attr_float(node, "w", w );
+            }
+            DEBUG("%s, %d, %d", name, isint, ix );
             switch (dim) {
                case 1:
-                  glUniform1f( loc, x );
+                  if (isint)
+                     glUniform1i( loc, ix );
+                  else
+                     glUniform1f( loc, x );
                   break;
                case 2:
-                  glUniform2f( loc, x, y );
+                  if (isint)
+                     glUniform2i( loc, ix, iy );
+                  else
+                     glUniform2f( loc, x, y );
                   break;
                case 3:
-                  glUniform3f( loc, x, y, z );
+                  if (isint)
+                     glUniform3i( loc, ix, iy, iz );
+                  else
+                     glUniform3f( loc, x, y, z );
                   break;
                case 4:
-                  glUniform4f( loc, x, y, z, w );
+                  if (isint)
+                     glUniform4i( loc, ix, iy, iz, iw );
+                  else
+                     glUniform4f( loc, x, y, z, w );
                   break;
                default:
                   WARN(_("SPFX '%s' is trying to set uniform '%s' with '%d' dimensions!"), temp->name, name, dim );
