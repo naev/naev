@@ -1039,12 +1039,19 @@ void spfx_render( const int layer )
       /* Render shader. */
       if (effect->shader >= 0) {
          double x, y, z, s2;
+         double w, h;
          gl_Matrix4 projection;
 
          /* Translate coords. */
          s2 = effect->size/2.;
          z = cam_getZoom();
          gl_gameToScreenCoords( &x, &y, spfx->pos.x-s2, spfx->pos.y-s2 );
+         w = h = effect->size*z;
+
+         /* Check if inbounds. */
+         if ((x < -w) || (x > SCREEN_W+w) ||
+               (y < -h) || (y > SCREEN_H+h))
+            continue;
 
          /* Let's get to business. */
          glUseProgram( effect->shader );
@@ -1052,7 +1059,7 @@ void spfx_render( const int layer )
          /* Set up the vertex. */
          projection = gl_view_matrix;
          projection = gl_Matrix4_Translate(projection, x, y, 0);
-         projection = gl_Matrix4_Scale(projection, effect->size*z, effect->size*z, 1);
+         projection = gl_Matrix4_Scale(projection, w, h, 1);
          glEnableVertexAttribArray( effect->vertex );
          gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex,
                0, 2, GL_FLOAT, 0 );
