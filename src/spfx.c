@@ -899,35 +899,36 @@ static void spfx_hapticRumble( double mod )
    SDL_HapticEffect *efx;
    double len, mag;
 
-   if (haptic_rumble >= 0) {
+   /* Not active. */
+   if (haptic_rumble < 0)
+      return;
 
-      /* Not time to update yet. */
-      if ((haptic_lastUpdate > 0.) || (shake_shader_pp_id==0) || (mod > SPFX_SHAKE_MAX/3.))
-         return;
+   /* Not time to update yet. */
+   if ((haptic_lastUpdate > 0.) || (shake_shader_pp_id==0) || (mod > SPFX_SHAKE_MAX/3.))
+      return;
 
-      /* Stop the effect if it was playing. */
-      SDL_HapticStopEffect( haptic, haptic_rumble );
+   /* Stop the effect if it was playing. */
+   SDL_HapticStopEffect( haptic, haptic_rumble );
 
-      /* Get length and magnitude. */
-      len = 1000. * shake_force_mod / SPFX_SHAKE_DECAY;
-      mag = 32767. * (shake_force_mod / SPFX_SHAKE_MAX);
+   /* Get length and magnitude. */
+   len = 1000. * shake_force_mod / SPFX_SHAKE_DECAY;
+   mag = 32767. * (shake_force_mod / SPFX_SHAKE_MAX);
 
-      /* Update the effect. */
-      efx = &haptic_rumbleEffect;
-      efx->periodic.magnitude    = (int16_t)mag;
-      efx->periodic.length       = (uint32_t)len;
-      efx->periodic.fade_length  = MIN( efx->periodic.length, 1000 );
-      if (SDL_HapticUpdateEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) < 0) {
-         WARN(_("Failed to update haptic effect: %s."), SDL_GetError());
-         return;
-      }
-
-      /* Run the new effect. */
-      SDL_HapticRunEffect( haptic, haptic_rumble, 1 );
-
-      /* Set timer again. */
-      haptic_lastUpdate += HAPTIC_UPDATE_INTERVAL;
+   /* Update the effect. */
+   efx = &haptic_rumbleEffect;
+   efx->periodic.magnitude    = (int16_t)mag;
+   efx->periodic.length       = (uint32_t)len;
+   efx->periodic.fade_length  = MIN( efx->periodic.length, 1000 );
+   if (SDL_HapticUpdateEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) < 0) {
+      WARN(_("Failed to update haptic effect: %s."), SDL_GetError());
+      return;
    }
+
+   /* Run the new effect. */
+   SDL_HapticRunEffect( haptic, haptic_rumble, 1 );
+
+   /* Set timer again. */
+   haptic_lastUpdate += HAPTIC_UPDATE_INTERVAL;
 }
 
 
