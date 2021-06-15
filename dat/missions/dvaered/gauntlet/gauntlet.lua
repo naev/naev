@@ -30,7 +30,7 @@ misn_title  = _("Crimson Gauntlet Challenge")
 misn_desc   = _("Annihilate all enemies in the Crimson Gauntlet.")
 misn_reward = _("Great riches!")
 
-gauntlet = system.get("Crimson Gauntlet")
+gauntletsys = system.get("Crimson Gauntlet")
 
 sfx_clear = audio.new( 'snd/sounds/jingles/victory.ogg' )
 
@@ -112,7 +112,7 @@ end
 -- Enters Crimson Gauntlet
 function enter_the_ring ()
    -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
-   local sys = gauntlet
+   local sys = gauntletsys
    hook.enter( gauntlet_enter )
    for k,s in ipairs(system.getAll()) do
       s:setHidden(true)
@@ -123,7 +123,7 @@ function enter_the_ring ()
    player.pilot():setPos( vec2.new( 0, 0 ) )
    -- Disable escorts if they exist
    var.push("hired_escorts_disabled",true)
-   player.teleport(gauntlet)
+   player.teleport(sys)
    var.pop("hired_escorts_disabled")
 
    -- Player lost info
@@ -136,7 +136,7 @@ function leave_the_ring ()
    -- Clear pilots so escorts get docked
    pilot.clear()
    -- Fix the map up
-   local sys = gauntlet
+   local sys = gauntletsys
    sys:setKnown(false)
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
