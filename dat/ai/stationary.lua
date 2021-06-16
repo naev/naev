@@ -30,6 +30,9 @@ function control ()
 end
 
 
+control_manual = control
+
+
 function attack_nearest( hostile )
    -- Must not be same
    local target       = ai.taskdata()

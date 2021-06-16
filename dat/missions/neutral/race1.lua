@@ -133,7 +133,6 @@ function takeoff()
    checkpoint[3] = pilot.add("Goddard", "Trader", location3, nil, "stationary")
    for i, j in ipairs(checkpoint) do
       j:rename( string.format(_("Checkpoint %s"), i) )
-      j:control()
       j:setHilight(true)
       j:setInvincible(true)
       j:setActiveBoard(true)
