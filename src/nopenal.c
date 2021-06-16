@@ -38,7 +38,7 @@ ALvoid (AL_APIENTRY *nalEffectfv)(ALuint,ALenum,ALfloat*);
  *    @param err Error to convert to string.
  *    @return String corresponding to the error.
  */
-void al_checkHandleError( const char *func )
+void al_checkHandleError( const char *func, int line )
 {
    ALenum err;
    const char *errstr;
@@ -72,6 +72,6 @@ void al_checkHandleError( const char *func )
          errstr = _("unknown error");
          break;
    }
-   WARN(_("OpenAL error [%s]: %s"), func, errstr);
+   WARN(_("OpenAL error [%s:%d]: %s"), func, line, errstr);
 }
 #endif /* DEBUGGING */
