@@ -247,83 +247,24 @@
       - lancelot_fighter.png
       - lancelot_empire_fighter.png
       - drone_fighter.png
-    ship:
-      admonisher:
-      - \*
-      ancestor:
-      - \*
-      archimedes:
-      - \*
-      derivative:
-      - \*
-      drone:
-      - \*
-      gawain:
-      - \*
-      goddard:
-      - \*
-      hawking:
-      - \*
-      hyena:
-      - \*
-      kahan:
-      - \*
-      koala:
-      - \*
-      lancelot:
-      - \*
-      llama:
-      - \*
-      mule:
-      - \*
-      pacifier:
-      - \*
-      quicksilver:
-      - \*
-      schroedinger:
-      - \*
-      vendetta:
-      - \*
-      vigilance:
-      - \*
-      watson:
-      - \*
 - M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>:
     license: CC-by-sa 3.0
-    outfit:
-      store:
-      - zalek_drone_*_fighter.png
     ship:
-      arx:
-      - \*
       brigand:
       - \*
       demon:
       - \*
-      diablo:
-      - \*
-      hephaestus:
-      - \*
       imp:
-      - \*
-      ira:
-      - \*
-      marauder:
-      - \*
-      mephisto:
-      - \*
-      nyx:
       - \*
       odium:
       - \*
       prototype:
       - \*
-      reaver:
-      - \*
-      sting:
-      - \*
       vox:
       - \*
+    outfit:
+      store:
+      - zalek_drone_*_fighter.png
 - nenau (based on work from Vega Strike and Kinniken):
     license: GPLv3+
     commodity:
@@ -343,33 +284,6 @@
       store:
       - mace.png
       - macelauncher.png
-- Basse:
-    license: GPLv2+
-    outfit:
-      store:
-      - droid.png
-- W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>:
-    license: CC-by-sa 3.0
-    outfit:
-      store:
-      - map.png
-- United States Department of Energy:
-    license: PD
-    outfit:
-      store:
-      - solar.png
-- Kristian Mølhave:
-    license: CC-by 3.0
-    outfit:
-      store:
-      - nanobond.png
-- Camilo Polymeris <cpolymeris@gmx.net>:
-    license: GPLv3
-    gui:
-      legacy:
-      - minimal.png
-      - minimal_fuel.png
-      - minimal_energy.png
 - Brian J. Cameron:
     license: PD
     outfit:
@@ -393,9 +307,6 @@
       - weapon_rack.png
       - laser2.png
       - plasma2.png
-    ship:
-    - kestrel
-    - peacemaker
 - Renderwahn:
     license: CC-by 3.0
     logo:
@@ -426,6 +337,146 @@
       - headhunterlauncher.png
       - headhunter.png
       - caesarlauncher.png
+- Enigmatic:
+    license: CC-by 3.0
+    logo:
+    - collective_*.png
+    - flf_*.png
+    - frontier_*.png
+    - proteron_*.png
+    - prototype_tiny.png
+    - soromid_*.png
+    - trader_*.png
+    outfit:
+      store:
+      - fidelity_fighter.png
+- BTAxis:
+    license: PD
+    gui:
+    - hail.png
+- Alexander Huitric <ahuitric@gmail.com>:
+    license: CC-by-sa 3
+    ship:
+    - ingenuity
+    logo:
+    - thurion_*.png
+- Unnamed:
+    license: CC-by-sa 3.0
+    outfit:
+      space:
+      - convulsion.png
+      store:
+      - base_hull_h.png
+      - base_hull_l.png
+      - base_hull_m.png
+      - base_hull_s.png
+      - base_hull_t.png
+      - base_hull_x.png
+      - combat_hull_h.png
+      - combat_hull_l.png
+      - combat_hull_m.png
+      - combat_hull_s.png
+      - combat_hull_t.png
+      - combat_hull_x.png
+      - core_system_basic_l1.png
+      - core_system_basic_l2.png
+      - core_system_basic_m1.png
+      - core_system_basic_m2.png
+      - core_system_basic_s2.png
+      - core_system_cpu_l1.png
+      - core_system_cpu_l2.png
+      - core_system_cpu_m1.png
+      - core_system_cpu_m2.png
+      - core_system_cpu_s1.png
+      - core_system_cpu_s2.png
+      - core_system_organic_l1.png
+      - core_system_organic_l2.png
+      - core_system_organic_m1.png
+      - core_system_organic_m2.png
+      - core_system_organic_s1.png
+      - core_system_organic_s2.png
+      - core_system_power_l1.png
+      - core_system_power_l2.png
+      - core_system_power_m1.png
+      - core_system_power_m2.png
+      - core_system_power_s1.png
+      - core_system_power_s2.png
+      - core_system_refined_l1.png
+      - core_system_refined_l2.png
+      - core_system_refined_m1.png
+      - core_system_refined_m2.png
+      - core_system_refined_s1.png
+      - core_system_refined_s2.png
+      - core_system_shield_l1.png
+      - core_system_shield_l2.png
+      - core_system_shield_m1.png
+      - core_system_shield_m2.png
+      - core_system_shield_s1.png
+      - core_system_shield_s2.png
+      - energy_dart.png
+      - energy_missile.png
+      - energy_torpedo.png
+      - engine01.png
+      - engine02.png
+      - engine03.png
+      - engine04.png
+      - engine05.png
+      - engine06.png
+      - engine07.png
+      - engine08.png
+      - engine09.png
+      - engine10.png
+      - engine11.png
+      - engine12.png
+      - engine13.png
+      - engine14.png
+      - engine15.png
+      - large_cargo_hull.png
+      - medium_cargo_hull.png
+      - misc01.png
+      - misc02.png
+      - misc04.png
+      - plating01.png
+      - reactor01.png
+      - refined_hull_h.png
+      - refined_hull_l.png
+      - refined_hull_m.png
+      - refined_hull_s.png
+      - refined_hull_t.png
+      - refined_hull_x.png
+      - small_cargo_hull.png
+      - stealth_hull_h.png
+      - stealth_hull_m.png
+      - stealth_hull_s.png
+      - stealth_hull_t.png
+      - weapon02.png
+- Basse:
+    license: GPLv2+
+    outfit:
+      store:
+      - droid.png
+- W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>:
+    license: CC-by-sa 3.0
+    outfit:
+      store:
+      - map.png
+- United States Department of Energy:
+    license: PD
+    outfit:
+      store:
+      - solar.png
+- Kristian Mølhave:
+    license: CC-by 3.0
+    outfit:
+      store:
+      - nanobond.png
+- Camilo Polymeris <cpolymeris@gmx.net>:
+    license: GPLv3
+    gui:
+      legacy:
+      - minimal.png
+      - minimal_fuel.png
+      - minimal_energy.png
 - Thomas Fedor:
     license: PD
     outfit:
@@ -660,29 +711,6 @@
       - damage_forward.png
       - efficiency_turret.png
       - firerate_turret.png
-- Enigmatic:
-    license: CC-by 3.0
-    logo:
-    - collective_*.png
-    - flf_*.png
-    - frontier_*.png
-    - proteron_*.png
-    - prototype_tiny.png
-    - soromid_*.png
-    - trader_*.png
-    outfit:
-      store:
-      - fidelity_fighter.png
-    ship:
-    - divinity
-    - dogma
-    - fidelity
-    - preacher
-    - shaman
-- BTAxis:
-    license: PD
-    gui:
-    - hail.png
 - Scaatis:
     license: CC-by 3.0
     root:
@@ -771,21 +799,6 @@
       - frame_planet_top.png
       - outfit.png
       - speedDouble.png
-- Alexander Huitric <ahuitric@gmail.com>:
-    license: CC-by-sa 3
-    logo:
-    - thurion_*.png
-    ship:
-    - ingenuity
-- Galileus:
-    license: CC-by-sa 3.0
-    ship:
-    - shark
-    - rhino
-- bornloser:
-    license: CC-by-sa 3.0
-    ship:
-    - phalanx
 - SolCommand <http://solcommand.com>:
     license: CC-by 3.0
     outfit:
@@ -805,109 +818,6 @@
       - unicorp_fury_launcher.png
       - teracom_fury_launcher.png
       - turreted_fury_launcher.png
-- Unnamed:
-    license: CC-by-sa 3.0
-    outfit:
-      space:
-      - convulsion.png
-      store:
-      - base_hull_h.png
-      - base_hull_l.png
-      - base_hull_m.png
-      - base_hull_s.png
-      - base_hull_t.png
-      - base_hull_x.png
-      - combat_hull_h.png
-      - combat_hull_l.png
-      - combat_hull_m.png
-      - combat_hull_s.png
-      - combat_hull_t.png
-      - combat_hull_x.png
-      - core_system_basic_l1.png
-      - core_system_basic_l2.png
-      - core_system_basic_m1.png
-      - core_system_basic_m2.png
-      - core_system_basic_s2.png
-      - core_system_cpu_l1.png
-      - core_system_cpu_l2.png
-      - core_system_cpu_m1.png
-      - core_system_cpu_m2.png
-      - core_system_cpu_s1.png
-      - core_system_cpu_s2.png
-      - core_system_organic_l1.png
-      - core_system_organic_l2.png
-      - core_system_organic_m1.png
-      - core_system_organic_m2.png
-      - core_system_organic_s1.png
-      - core_system_organic_s2.png
-      - core_system_power_l1.png
-      - core_system_power_l2.png
-      - core_system_power_m1.png
-      - core_system_power_m2.png
-      - core_system_power_s1.png
-      - core_system_power_s2.png
-      - core_system_refined_l1.png
-      - core_system_refined_l2.png
-      - core_system_refined_m1.png
-      - core_system_refined_m2.png
-      - core_system_refined_s1.png
-      - core_system_refined_s2.png
-      - core_system_shield_l1.png
-      - core_system_shield_l2.png
-      - core_system_shield_m1.png
-      - core_system_shield_m2.png
-      - core_system_shield_s1.png
-      - core_system_shield_s2.png
-      - energy_dart.png
-      - energy_missile.png
-      - energy_torpedo.png
-      - engine01.png
-      - engine02.png
-      - engine03.png
-      - engine04.png
-      - engine05.png
-      - engine06.png
-      - engine07.png
-      - engine08.png
-      - engine09.png
-      - engine10.png
-      - engine11.png
-      - engine12.png
-      - engine13.png
-      - engine14.png
-      - engine15.png
-      - large_cargo_hull.png
-      - medium_cargo_hull.png
-      - misc01.png
-      - misc02.png
-      - misc04.png
-      - plating01.png
-      - reactor01.png
-      - refined_hull_h.png
-      - refined_hull_l.png
-      - refined_hull_m.png
-      - refined_hull_s.png
-      - refined_hull_t.png
-      - refined_hull_x.png
-      - small_cargo_hull.png
-      - stealth_hull_h.png
-      - stealth_hull_m.png
-      - stealth_hull_s.png
-      - stealth_hull_t.png
-      - weapon02.png
-    ship:
-      apprehension:
-      - \*
-      certitude:
-      - \*
-      perspicacity:
-      - \*
-      scintillation:
-      - \*
-      virtuosity:
-      - \*
-      taciturnity:
-      - \*
 - Ian D. Scott <ids1024>:
     license: PD
     outfit:
