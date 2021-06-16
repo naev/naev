@@ -184,13 +184,17 @@ void sound_exit (void)
       voice_mutex = NULL;
    }
 
+   soundLock();
+   sound_al_free_sources_locked();
+
    /* free the sounds */
    for (i=0; i<array_size(sound_list); i++)
       sound_free( &sound_list[i] );
    array_free( sound_list );
 
-   /* Exit sound subsystem. */
-   sound_al_exit();
+   sound_al_exit_locked();
+   soundUnlock();
+   SDL_DestroyMutex( sound_lock );
 
    /* Sound is done. */
    sound_initialized = 0;

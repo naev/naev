@@ -477,13 +477,11 @@ static int al_enableEFX (void)
 
 
 /**
- * @brief Cleans up after the sound subsytem.
+ * @brief Cleans up after the sound subsytem, part 1: sources. Call under soundLock().
  */
-void sound_al_exit (void)
+void sound_al_free_sources_locked (void)
 {
    int i;
-
-   soundLock();
 
    /* Free groups. */
    for (i=0; i<al_ngroups; i++) {
@@ -510,7 +508,14 @@ void sound_al_exit (void)
    source_stack      = NULL;
    source_nstack     = 0;
    source_mstack     = 0;
+}
 
+
+/**
+ * @brief Cleans up after the sound subsytem, part 2: de-init OpenAL. Call under soundLock().
+ */
+void sound_al_exit_locked (void)
+{
    /* Clean up EFX stuff. */
    if (al_info.efx == AL_TRUE) {
       nalDeleteAuxiliaryEffectSlots( 1, &efx_directSlot );
@@ -527,9 +532,6 @@ void sound_al_exit (void)
    }
    if (al_device)
       alcCloseDevice( al_device );
-
-   soundUnlock();
-   SDL_DestroyMutex( sound_lock );
 }
 
 
