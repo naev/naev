@@ -1,938 +1,961 @@
-Vega Strike:
-  license: GPLv2+
-  commodity:
-  - space:
-    - _default.png
+- Vega Strike:
+    license: GPLv2+
+    commodity:
+    - space:
+      - _default.png
+      - diamonds.png
+      - gold.png
+      - water.png
+    - acids.png
+    - advanced_medicines.png
+    - aeranervestimuli.png
+    - aera_ration.png
+    - ai_cores.png
+    - alkali_metals.png
+    - am_magcells.png
+    - animal_meat.png
+    - animal_products.png
+    - anti_corrosives.png
+    - aromatic_scents.png
+    - artificial_limbs.png
+    - artificial_organs.png
+    - assembly_tools.png
+    - astral_gases.png
+    - atasan_furs.png
+    - atmospheric_gases.png
+    - atmospheric_processors.png
+    - atmospheric_scrubbers.png
+    - automated_factories.png
+    - baakgah.png
+    - base.png
+    - beer.png
+    - bioapplicator.png
+    - biocell.png
+    - biogenerators.png
+    - bio_remodeler.png
+    - bipolite.png
+    - bonsai.png
+    - books.png
+    - boring_droids.png
+    - brandy.png
+    - bulk_seeds.png
+    - business_class_passenger.png
+    - butane.png
+    - carbonium.png
+    - cargo-hud.png
+    - cargo_expansion.png
+    - catalysts.png
+    - cellular_accelerant.png
+    - chemfuel.png
+    - chemical_mix.png
+    - chitty-boom.png
+    - classical_instruments.png
+    - cloaking_device_aeramilspec.png
+    - cloaking_device_experimental.png
+    - clones.png
+    - clothing.png
+    - coffee.png
+    - computer_fibres.png
+    - consoles.png
+    - construction_stone.png
+    - construction_vehicles.png
+    - corundum_crystal.png
+    - cotton.png
+    - cryogenic_pods.png
+    - cyborg_mercs.png
     - diamonds.png
+    - diesel.png
+    - dilithium.png
+    - distillators.png
+    - dna_resequencer.png
+    - duranium.png
+    - dyes.png
+    - earthmover.png
+    - engineered_bacteria.png
+    - engineered_seeds.png
+    - enhanced_limbs.png
+    - enhanced_organs.png
+    - erotica.png
+    - esters.png
+    - ethanol.png
+    - experimental_drugs.png
+    - explosives.png
+    - facing_stone.png
+    - factory_constructors.png
+    - factory_equipment.png
+    - first_aid_kits.png
+    - first_class_passenger.png
+    - forest_regenerators.png
+    - fresh_water.png
+    - fullbody.webp
+    - fusion_injectors.png
+    - games.png
     - gold.png
-    - water.png
-  - acids.png
-  - advanced_medicines.png
-  - aeranervestimuli.png
-  - aera_ration.png
-  - ai_cores.png
-  - alkali_metals.png
-  - am_magcells.png
-  - animal_meat.png
-  - animal_products.png
-  - anti_corrosives.png
-  - aromatic_scents.png
-  - artificial_limbs.png
-  - artificial_organs.png
-  - assembly_tools.png
-  - astral_gases.png
-  - atasan_furs.png
-  - atmospheric_gases.png
-  - atmospheric_processors.png
-  - atmospheric_scrubbers.png
-  - automated_factories.png
-  - baakgah.png
-  - base.png
-  - beer.png
-  - bioapplicator.png
-  - biocell.png
-  - biogenerators.png
-  - bio_remodeler.png
-  - bipolite.png
-  - bonsai.png
-  - books.png
-  - boring_droids.png
-  - brandy.png
-  - bulk_seeds.png
-  - business_class_passenger.png
-  - butane.png
-  - carbonium.png
-  - cargo-hud.png
-  - cargo_expansion.png
-  - catalysts.png
-  - cellular_accelerant.png
-  - chemfuel.png
-  - chemical_mix.png
-  - chitty-boom.png
-  - classical_instruments.png
-  - cloaking_device_aeramilspec.png
-  - cloaking_device_experimental.png
-  - clones.png
-  - clothing.png
-  - coffee.png
-  - computer_fibres.png
-  - consoles.png
-  - construction_stone.png
-  - construction_vehicles.png
-  - corundum_crystal.png
-  - cotton.png
-  - cryogenic_pods.png
-  - cyborg_mercs.png
-  - diamonds.png
-  - diesel.png
-  - dilithium.png
-  - distillators.png
-  - dna_resequencer.png
-  - duranium.png
-  - dyes.png
-  - earthmover.png
-  - engineered_bacteria.png
-  - engineered_seeds.png
-  - enhanced_limbs.png
-  - enhanced_organs.png
-  - erotica.png
-  - esters.png
-  - ethanol.png
-  - experimental_drugs.png
-  - explosives.png
-  - facing_stone.png
-  - factory_constructors.png
-  - factory_equipment.png
-  - first_aid_kits.png
-  - first_class_passenger.png
-  - forest_regenerators.png
-  - fresh_water.png
-  - fullbody.webp
-  - fusion_injectors.png
-  - games.png
-  - gold.png
-  - grains.png
-  - halogen_gases.png
-  - heavy_water.png
-  - holovids.png
-  - home_appliances.png
-  - home_furnishings.png
-  - hull_patches.png
-  - hydrocarbons.png
-  - hydroponics.png
-  - hyposyringes.png
-  - icbinf.png
-  - illegal_weapons.png
-  - incense.png
-  - industrial_gemstones.png
-  - intatouch.png
-  - isometal.png
-  - jewelry.png
-  - jewels.png
-  - jhurlon.png
-  - khaisalantimin_F62.png
-  - krystal.png
-  - laser_drills.png
-  - light_alls.png
-  - livestock.png
-  - livestock_equipment.png
-  - londegal_silks.png
-  - longevity_drugs.png
-  - luddite_tracts.png
-  - lumber.png
-  - luxury_mealpacks.png
-  - material_processors.png
-  - medical_kit.png
-  - music.png
-  - musical_instruments.png
-  - narcotics.png
-  - natural_gas.png
-  - natural_sculptures.png
-  - neural_computer.png
-  - neural_interface.png
-  - noble_gases.png
-  - nuclear_pods.png
-  - nutripacks.png
-  - obsidisteel.png
-  - oil.png
-  - ozone_replacement.png
-  - pai_wetware.png
-  - pearls.png
-  - personal_hygienics.png
-  - personal_transport.png
-  - pesticides.png
-  - petrochems.png
-  - petroleum.png
-  - pilot.png
-  - plasglass.png
-  - plasteel.png
-  - plastics.png
-  - polysteel.png
-  - precious.png
-  - prefab_buildings.png
-  - premium_pad.png
-  - produce.png
-  - pseudotherms.png
-  - quantum_processor.png
-  - quartz_crystal.png
-  - radioactives.png
-  - radium.png
-  - rare_artwork.png
-  - rare_catalysts.png
-  - rare_earths.png
-  - ration_mealpacks.png
-  - recycled_electronics.png
-  - recycled_metals.png
-  - recycled_oil.png
-  - recycled_plastics.png
-  - recycling_tanks.png
-  - regen_tank.png
-  - reinforced_rubber.png
-  - repair_droid01.png
-  - repulsor_beam.png
-  - resistant_biologics.png
-  - retrified_salt.png
-  - robotic_surgeons.png
-  - robot_servants.png
-  - robot_workers.png
-  - rubber.png
-  - salted_thok.png
-  - sarakan_tears.png
-  - seafood.png
-  - simple_medicines.png
-  - sorir_lightstones.png
-  - space_grog.png
-  - specialty_wines.png
-  - spices.png
-  - spirits.png
-  - standard_mealpacks.png
-  - standard_PAD.png
-  - steel.png
-  - surgical_techniques.png
-  - sustipacks.png
-  - synthetic_fertilizer.png
-  - terraforming_units.png
-  - thermal_boreholes.png
-  - tractor_beam.png
-  - tractor_capability.png
-  - tractor_heavy.png
-  - trilithium_crystal.png
-  - tripezian_premium.png
-  - tritanium.png
-  - ultrapacks.png
-  - uranium.png
-  - vaccines.png
-  - virtual_tunneling_terminal.png
-  - virtuarea.png
-  - waste_recyclers.png
-  - water_dynamo.png
-  - weather_control.png
-  - welding_lasers.png
-  - wine.png
-  - wood_boards.png
-  - xenoforming_units.png
-  - zhollus.png
-  outfit:
-    space:
-    - ion{M,L}.png
-    - ion{M,L}-end.png
-    - laser{1,2,3,4}{S,M,L}.png
-    - mass{M,L}.png
-    - mass{M,L}-end.png
-    - neutron.png
-    - neutron-end.png
-    - particle.png
-    - plasma.png
-    - razor{S,M,L}.png
-    - razor{S,M,L}-end.png
-    - ripper{S,M}.png
-    - ripper{S,M}-end.png
-    store:
-    - capacitor.png
-    - capacitor2.png
-    - capacitor4.png
-    - capacitor8.png
-    - capacitor-g.png
-    - capacitor2-g.png
-    - capacitor4-g.png
-    - missile.png
-    - neutron.png
-    - neutronheavy.png
-    - reactor_i.png
-    - reactor_ii.png
-    - reactor_iii.png
-    - reroute.png
-    - shield.png
-    - stabilizer.png
-    - lancelot_fighter.png
-    - lancelot_empire_fighter.png
-    - drone_fighter.png
-  ship:
-    admonisher:
-    - \*
-    ancestor:
-    - \*
-    archimedes:
-    - \*
-    derivative:
-    - \*
-    drone:
-    - \*
-    gawain:
-    - \*
-    goddard:
-    - \*
-    hawking:
-    - \*
-    hyena:
-    - \*
-    kahan:
-    - \*
-    koala:
-    - \*
-    lancelot:
-    - \*
-    llama:
-    - \*
-    mule:
-    - \*
-    pacifier:
-    - \*
-    quicksilver:
-    - \*
-    schroedinger:
-    - \*
-    vendetta:
-    - \*
-    vigilance:
-    - \*
-    watson:
-    - \*
-M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>:
-  license: CC-by-sa 3.0
-  outfit:
-    store:
-    - zalek_drone_*_fighter.png
-  ship:
-    arx:
-    - \*
-    brigand:
-    - \*
-    demon:
-    - \*
-    diablo:
-    - \*
-    hephaestus:
-    - \*
-    imp:
-    - \*
-    ira:
-    - \*
-    marauder:
-    - \*
-    mephisto:
-    - \*
-    nyx:
-    - \*
-    odium:
-    - \*
-    prototype:
-    - \*
-    reaver:
-    - \*
-    sting:
-    - \*
-    vox:
-    - \*
-nenau (based on work from Vega Strike and Kinniken):
-  license: GPLv3+
-  commodity:
-    space:
-    - fuel.png
-Bobbens:
-  license: PD
-  outfit:
-    space:
-    - lasergreen.png
-Jordi Pegueroles:
-  license: PD
-  outfit:
-    space:
-    - headhunter.png
-    - mace.png
-    store:
-    - mace.png
-    - macelauncher.png
-Basse:
-  license: GPLv2+
-  outfit:
-    store:
-    - droid.png
-W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>:
-  license: CC-by-sa 3.0
-  outfit:
-    store:
-    - map.png
-United States Department of Energy:
-  license: PD
-  outfit:
-    store:
-    - solar.png
-Kristian Mølhave:
-  license: CC-by 3.0
-  outfit:
-    store:
-    - nanobond.png
-Camilo Polymeris <cpolymeris@gmx.net>:
-  license: GPLv3
-  gui:
-    legacy:
-    - minimal.png
-    - minimal_fuel.png
-    - minimal_energy.png
-Brian J. Cameron:
-  license: PD
-  outfit:
-    store:
-    - license.png
-    - empgrenade.png
-    - empgrenadelauncher.png
-    - banshee.png
-    space:
-    - empgrenade.png
-    - banshee.png
-Josiah Schwartfeger:
-  license: CC-by 3.0 (with modifications by Ian D. Scott <ids1024>, License CC-by
-    3.0)
-  outfit:
-    store:
-    - large_fuel_pod.png
-Renderwahn:
-  license: CC-by 3.0
-  logo:
-  - pirate_*.png
-Sean Hildebrand:
-  license: CC-by 3.0
-  gui:
-  - legacy:
-    - minimal_planet.png
-    - minimal_pilot.png
-  - no.png
-  - yes.png
-  outfit:
-    space:
-    - gatling.png
-    - autocannon.png
-    - plasma2.png
-    - plasma2-end.png
-    - headhunter.png
-    - seeker.png
-    - caesar.png
-    store:
-    - cpu_i.png
-    - cpu_ii.png
-    - cpu_iii.png
-    - seekerlauncher.png
-    - seeker.png
-    - headhunterlauncher.png
-    - headhunter.png
-    - caesarlauncher.png
-Thomas Fedor:
-  license: PD
-  outfit:
-    store:
-    - gatling.png
-Ingo Ruhnke <grumbel@gmx.de>:
-  license: GPLv3
-  portraits:
-  - none.png
-  - unknown.png
-  logo:
-  - dvaered_*.png
-  - empire_*.png
-  - goddard_*.png
-  - sirius_*.png
-  - zalek_*.png
-Nihilos <https://opengameart.org/users/nihilos>:
-  license: CC-by 3.0 (based on portraits by Ingo Ruhnke <grumbel@gmx.de>)
-  portraits:
-    dvaered:
-    - unique:
-      - ka'def.png
-      - vicious.png
-      - zolo.png
-    - dv_civilian_f1.png
-    - dv_civilian_f2.png
-    - dv_general1.png
-    - dv_military_m1.png
-    - dv_military_m2.png
-    - dv_military_m3.png
-    - dv_military_f1.png
-    - dv_military_f2.png
-    empire:
-    - unique:
-      - czesc.png
-      - dimitri.png
-      - keer.png
-      - soldner.png
-    - empire_mil_f1.png
-    - empire_mil_m1.png
-    - empire_mil_m2.png
-    - empire_mil_m3.png
-    flf:
-      unique:
-      - benito.png
-    neutral:
-    - unique:
-      - aristocrat.png
-      - drunkard.png
-      - flintley.png
-      - hunter.png
-      - jorek.png
-      - mia.png
-      - neil.png
-      - oldwoman.png
-      - rebina.png
-      - rebina_casual.png
-      - reynir.png
-      - reynir2.png
-      - youngbusinessman.png
-      - youngbusinessman2.png
-    - barman.png
-    - cyborg1.png
-    - cyborg2.png
-    - cyborg3.png
-    - female1.png
-    - male1.png
-    - miner1.png
-    - miner2.png
-    - scientist.png
-    - scientist2.png
-    - scientist3.png
-    - thief1.png
-    - thief2.png
-    - thief3.png
-    pirate:
-    - pirate_militia1.png
-    - pirate_militia2.png
-    - pirate1.png
-    - pirate2.png
-    - pirate3.png
-    - pirate4.png
-    sirius:
-    - unique:
-      - harja.png
-      - joanne.png
-      - patrek.png
-    - sirius_fyrra_f1.png
-    - sirius_fyrra_f2.png
-    - sirius_fyrra_m1.png
-The Diligent Circle, based on components by Nihilos:
-  license: CC-by 3.0
-  portraits:
-    dvaered:
-    - dv_civilian_f3.png
-    - dv_civilian_f4.png
-    - dv_civilian_f5.png
-    - dv_civilian_f6.png
-    - dv_civilian_f7.png
-    - dv_civilian_f8.png
-    - dv_civilian_f9.png
-    - dv_civilian_f10.png
-    - dv_civilian_f11.png
-    - dv_civilian_m1.png
-    - dv_civilian_m2.png
-    - dv_civilian_m3.png
-    - dv_civilian_m4.png
-    - dv_civilian_m5.png
-    - dv_civilian_m6.png
-    - dv_civilian_m7.png
-    - dv_civilian_m8.png
-    - dv_civilian_m9.png
-    - dv_civilian_m10.png
-    - dv_civilian_m11.png
-    - dv_military_f3.png
-    - dv_military_f4.png
-    - dv_military_f5.png
-    - dv_military_f6.png
-    - dv_military_f7.png
-    - dv_military_f8.png
-    - dv_military_m4.png
-    - dv_military_m5.png
-    - dv_military_m6.png
-    - dv_military_m7.png
-    - dv_military_m8.png
-    empire:
-    - empire_mil_f2.png
-    - empire_mil_f3.png
-    - empire_mil_f4.png
-    - empire_mil_f5.png
-    - empire_mil_m4.png
-    - empire_mil_m5.png
-    - empire_mil_m6.png
-    - empire_mil_m7.png
-    - empire_mil_m8.png
-    neutral:
-    - unique:
-      - arnoldsmith.png
-      - cynthia.png
-      - cynthia_father.png
-      - dealer.png
-      - fakesister.png
-      - laidback.png
-      - michal.png
-      - middleaged.png
-      - nexus_agent.png
-      - paddy.png
-      - shifty_merchant.png
-      - unfamiliarman.png
-    - female2.png
-    - female3.png
-    - female4.png
-    - female5.png
-    - female6.png
-    - female7.png
-    - female8.png
-    - female9.png
-    - female10.png
-    - female11.png
-    - female12.png
-    - female13.png
-    - male2.png
-    - male3.png
-    - male4.png
-    - male5.png
-    - male6.png
-    - male7.png
-    - male8.png
-    - male9.png
-    - male10.png
-    - male11.png
-    - male12.png
-    - male13.png
-    - thief4.png
-    pirate:
-    - pirate5.png
-    - pirate6.png
-    - pirate7.png
-    - pirate8.png
-    - pirate9.png
-    - pirate10.png
-    - pirate11.png
-    - pirate12.png
-    - pirate13.png
-    - pirate14.png
-    sirius:
-    - unique:
-      - draga.png
-      - rodentman.png
-      - shaman.png
-      - strangeman.png
-    - sirius_fyrra_f3.png
-    - sirius_fyrra_f4.png
-    - sirius_fyrra_f5.png
-    - sirius_fyrra_m2.png
-    - sirius_fyrra_m3.png
-    - sirius_fyrra_m4.png
-    - sirius_fyrra_m5.png
-    - sirius_shiara_f1.png
-    - sirius_shiara_f2.png
-    - sirius_shiara_f3.png
-    - sirius_shiara_f4.png
-    - sirius_shiara_f5.png
-    - sirius_shiara_m1.png
-    - sirius_shiara_m2.png
-    - sirius_shiara_m3.png
-    - sirius_shiara_m4.png
-    - sirius_shiara_m5.png
-    soromid:
-      unique:
-      - chelsea.png
-    zalek:
-      unique:
-      - geller.png
-      - logan.png
-Viktor Hahn, based on components by Nihilos:
-  license: CC-by 3.0
-  portraits:
-    zalek:
-      unique:
-      - mensing.png
-      - student.png
-AstroMenace (Viewizard):
-  license: GPLv3
-  outfit:
-    store:
-    - thruster.png
-    - accuracy_forward.png
-    - accuracy_forward_2.png
-    - accuracy_forward_3.png
-    - accuracy_turret.png
-    - damage_forward.png
-    - efficiency_turret.png
-    - firerate_turret.png
-Enigmatic:
-  license: CC-by 3.0
-  logo:
-  - collective_*.png
-  - flf_*.png
-  - frontier_*.png
-  - proteron_*.png
-  - prototype_tiny.png
-  - soromid_*.png
-  - trader_*.png
-  outfit:
-    store:
-    - fidelity_fighter.png
-  ship:
-  - divinity
-  - dogma
-  - fidelity
-  - preacher
-  - shaman
-BTAxis:
-  license: PD
-  gui:
-  - hail.png
-Scaatis:
-  license: CC-by 3.0
-  root:
-  - Naev.png
-  gui:
-  - brushed:
-    - A.png
-    - barBg.webp
-    - barFrame.png
-    - barFrameLight.png
-    - beam.png
-    - bottombar.png
-    - button.png
-    - buttonDis.png
-    - buttonHil.png
-    - buttonHil2.png
-    - buttonPre.png
-    - endRight.png
-    - extRight.png
-    - fieldBg.png
-    - fieldBgCenter1.webp
-    - fieldBgCenter2.webp
-    - fieldBgLeft1.png
-    - fieldBgRight1.png
-    - fieldBgRight2.png
-    - fieldFrameCenter.png
-    - fieldFrameLeft.png
-    - fieldFrameRight.png
-    - iconArmour.png
-    - iconCargo.webp
-    - iconEnergy.webp
-    - iconFuel.png
-    - iconMissions.png
-    - iconMoney.png
-    - iconNavTarg.png
-    - iconPntTarg.png
-    - iconShield.png
-    - iconShip.png
-    - iconWeaps.png
-    - ion.png
-    - kinetic.png
-    - laser.png
-    - light.png
-    - lock.webp
-    - lockon.png
-    - lockonCircle.png
-    - main.png
-    - missile.png
-    - nuclear.png
-    - pilotFrame.png
-    - planet_image.png
-    - plasma.png
-    - popupBottom.png
-    - projectile.png
-    - question.png
-    - radar_planet.png
-    - radar_ship.png
-    - refireCircle.png
-    - speedOff.webp
-    - speedOn.png
-    - store.png
-    - targetBg.png
-    - targetFrame.png
-    - tooltipEmpty.webp
-    - tooltipRight.webp
-    - tooltipRightBottom.webp
-    - tooltipRightSideLeft.png
-    - tooltipRightTop.webp
-    - topbar.png
-    - topbarCenter.png
-    - weapon1.png
-    - weapon2.png
-  - slim
-  - slimv2
-  portraits:
-  - news.webp
-  outfit:
-    store:
-    - brushedGUI.png
-The Diligent Circle, based on work by Scaatis:
-  license: CC-by 3.0
-  gui:
-    brushed:
-    - frame_planet_bottom.png
-    - frame_planet_middle.png
-    - frame_planet_top.png
-    - outfit.png
-    - speedDouble.png
-Alexander Huitric <ahuitric@gmail.com>:
-  license: CC-by-sa 3
-  logo:
-  - thurion_*.png
-  ship:
-  - ingenuity
-Galileus:
-  license: CC-by-sa 3.0
-  ship:
-  - shark
-  - rhino
-bornloser:
-  license: CC-by-sa 3.0
-  ship:
-  - phalanx
-SolCommand <http://solcommand.com>:
-  license: CC-by 3.0
-  outfit:
-    store:
-    - gaussgun.png
-    - gaussturret.png
-    - shredder.png
-    - vulcangun.png
-    - vulcanturret.png
-admiral_cheater:
-  license: CC-by 3.0
-  outfit:
-    space:
-    - fury.png
-    store:
-    - fury.png
-    - unicorp_fury_launcher.png
-    - teracom_fury_launcher.png
-    - turreted_fury_launcher.png
-Unnamed:
-  license: CC-by-sa 3.0
-  outfit:
-    space:
-    - convulsion.png
-    store:
-    - base_hull_h.png
-    - base_hull_l.png
-    - base_hull_m.png
-    - base_hull_s.png
-    - base_hull_t.png
-    - base_hull_x.png
-    - combat_hull_h.png
-    - combat_hull_l.png
-    - combat_hull_m.png
-    - combat_hull_s.png
-    - combat_hull_t.png
-    - combat_hull_x.png
-    - core_system_basic_l1.png
-    - core_system_basic_l2.png
-    - core_system_basic_m1.png
-    - core_system_basic_m2.png
-    - core_system_basic_s2.png
-    - core_system_cpu_l1.png
-    - core_system_cpu_l2.png
-    - core_system_cpu_m1.png
-    - core_system_cpu_m2.png
-    - core_system_cpu_s1.png
-    - core_system_cpu_s2.png
-    - core_system_organic_l1.png
-    - core_system_organic_l2.png
-    - core_system_organic_m1.png
-    - core_system_organic_m2.png
-    - core_system_organic_s1.png
-    - core_system_organic_s2.png
-    - core_system_power_l1.png
-    - core_system_power_l2.png
-    - core_system_power_m1.png
-    - core_system_power_m2.png
-    - core_system_power_s1.png
-    - core_system_power_s2.png
-    - core_system_refined_l1.png
-    - core_system_refined_l2.png
-    - core_system_refined_m1.png
-    - core_system_refined_m2.png
-    - core_system_refined_s1.png
-    - core_system_refined_s2.png
-    - core_system_shield_l1.png
-    - core_system_shield_l2.png
-    - core_system_shield_m1.png
-    - core_system_shield_m2.png
-    - core_system_shield_s1.png
-    - core_system_shield_s2.png
-    - energy_dart.png
-    - energy_missile.png
-    - energy_torpedo.png
-    - engine01.png
-    - engine02.png
-    - engine03.png
-    - engine04.png
-    - engine05.png
-    - engine06.png
-    - engine07.png
-    - engine08.png
-    - engine09.png
-    - engine10.png
-    - engine11.png
-    - engine12.png
-    - engine13.png
-    - engine14.png
-    - engine15.png
-    - large_cargo_hull.png
-    - medium_cargo_hull.png
-    - misc01.png
-    - misc02.png
-    - misc04.png
-    - plating01.png
-    - reactor01.png
-    - refined_hull_h.png
-    - refined_hull_l.png
-    - refined_hull_m.png
-    - refined_hull_s.png
-    - refined_hull_t.png
-    - refined_hull_x.png
-    - small_cargo_hull.png
-    - stealth_hull_h.png
-    - stealth_hull_m.png
-    - stealth_hull_s.png
-    - stealth_hull_t.png
-    - weapon02.png
-  ship:
-    apprehension:
-    - \*
-    certitude:
-    - \*
-    perspicacity:
-    - \*
-    scintillation:
-    - \*
-    virtuosity:
-    - \*
-    taciturnity:
-    - \*
-Ian D. Scott <ids1024>:
-  license: GPLv2+
-  outfit:
-    store:
-    - lancelot_fighter_bay.png
-    - lancelot_empire_fighter_bay.png
-Author Brian J. Cameron:
-  license: PD (with modifications by leodudepal, License CC-by 3.0)
-  outfit:
-    store:
-    - license_pirate.png
-Mutos:
-  license: CC-by 3.0
-  commodity:
-  - _default.png
-Unnamed <https://opengameart.org/users/unnamed>:
-  license: CC-by 3.0
-  intro:
-  - faster_than_light.png
-  - first_steps_into_space.png
-The Diligent Circle (based on work by Unnamed <https://opengameart.org/users/unnamed> and Ingo Ruhnke):
-  license: GPLv3
-  intro:
-  - reign_of_daedris.png
-The Diligent Circle (based on work by ShinyOgre <https://opengameart.org/users/shinyogre> and Vega Strike):
-  license: GPLv3
-  intro:
-  - questions.png
-qubodup <https://openclipart.org/artist/qubodup>:
-  license: PD
-  overlays:
-  - portrait_exclamation.png
-nenau:
-  license: GPLv3+
-  logo:
-  - miner_small.png
-  - miner_tiny.png
+    - grains.png
+    - halogen_gases.png
+    - heavy_water.png
+    - holovids.png
+    - home_appliances.png
+    - home_furnishings.png
+    - hull_patches.png
+    - hydrocarbons.png
+    - hydroponics.png
+    - hyposyringes.png
+    - icbinf.png
+    - illegal_weapons.png
+    - incense.png
+    - industrial_gemstones.png
+    - intatouch.png
+    - isometal.png
+    - jewelry.png
+    - jewels.png
+    - jhurlon.png
+    - khaisalantimin_F62.png
+    - krystal.png
+    - laser_drills.png
+    - light_alls.png
+    - livestock.png
+    - livestock_equipment.png
+    - londegal_silks.png
+    - longevity_drugs.png
+    - luddite_tracts.png
+    - lumber.png
+    - luxury_mealpacks.png
+    - material_processors.png
+    - medical_kit.png
+    - music.png
+    - musical_instruments.png
+    - narcotics.png
+    - natural_gas.png
+    - natural_sculptures.png
+    - neural_computer.png
+    - neural_interface.png
+    - noble_gases.png
+    - nuclear_pods.png
+    - nutripacks.png
+    - obsidisteel.png
+    - oil.png
+    - ozone_replacement.png
+    - pai_wetware.png
+    - pearls.png
+    - personal_hygienics.png
+    - personal_transport.png
+    - pesticides.png
+    - petrochems.png
+    - petroleum.png
+    - pilot.png
+    - plasglass.png
+    - plasteel.png
+    - plastics.png
+    - polysteel.png
+    - precious.png
+    - prefab_buildings.png
+    - premium_pad.png
+    - produce.png
+    - pseudotherms.png
+    - quantum_processor.png
+    - quartz_crystal.png
+    - radioactives.png
+    - radium.png
+    - rare_artwork.png
+    - rare_catalysts.png
+    - rare_earths.png
+    - ration_mealpacks.png
+    - recycled_electronics.png
+    - recycled_metals.png
+    - recycled_oil.png
+    - recycled_plastics.png
+    - recycling_tanks.png
+    - regen_tank.png
+    - reinforced_rubber.png
+    - repair_droid01.png
+    - repulsor_beam.png
+    - resistant_biologics.png
+    - retrified_salt.png
+    - robotic_surgeons.png
+    - robot_servants.png
+    - robot_workers.png
+    - rubber.png
+    - salted_thok.png
+    - sarakan_tears.png
+    - seafood.png
+    - simple_medicines.png
+    - sorir_lightstones.png
+    - space_grog.png
+    - specialty_wines.png
+    - spices.png
+    - spirits.png
+    - standard_mealpacks.png
+    - standard_PAD.png
+    - steel.png
+    - surgical_techniques.png
+    - sustipacks.png
+    - synthetic_fertilizer.png
+    - terraforming_units.png
+    - thermal_boreholes.png
+    - tractor_beam.png
+    - tractor_capability.png
+    - tractor_heavy.png
+    - trilithium_crystal.png
+    - tripezian_premium.png
+    - tritanium.png
+    - ultrapacks.png
+    - uranium.png
+    - vaccines.png
+    - virtual_tunneling_terminal.png
+    - virtuarea.png
+    - waste_recyclers.png
+    - water_dynamo.png
+    - weather_control.png
+    - welding_lasers.png
+    - wine.png
+    - wood_boards.png
+    - xenoforming_units.png
+    - zhollus.png
+    outfit:
+      space:
+      - ion{M,L}.png
+      - ion{M,L}-end.png
+      - laser{1,2,3,4}{S,M,L}.png
+      - mass{M,L}.png
+      - mass{M,L}-end.png
+      - neutron.png
+      - neutron-end.png
+      - particle.png
+      - plasma.png
+      - razor{S,M,L}.png
+      - razor{S,M,L}-end.png
+      - ripper{S,M}.png
+      - ripper{S,M}-end.png
+      store:
+      - capacitor.png
+      - capacitor2.png
+      - capacitor4.png
+      - capacitor8.png
+      - capacitor-g.png
+      - capacitor2-g.png
+      - capacitor4-g.png
+      - missile.png
+      - neutron.png
+      - neutronheavy.png
+      - reactor_i.png
+      - reactor_ii.png
+      - reactor_iii.png
+      - reroute.png
+      - shield.png
+      - stabilizer.png
+      - lancelot_fighter.png
+      - lancelot_empire_fighter.png
+      - drone_fighter.png
+    ship:
+      admonisher:
+      - \*
+      ancestor:
+      - \*
+      archimedes:
+      - \*
+      derivative:
+      - \*
+      drone:
+      - \*
+      gawain:
+      - \*
+      goddard:
+      - \*
+      hawking:
+      - \*
+      hyena:
+      - \*
+      kahan:
+      - \*
+      koala:
+      - \*
+      lancelot:
+      - \*
+      llama:
+      - \*
+      mule:
+      - \*
+      pacifier:
+      - \*
+      quicksilver:
+      - \*
+      schroedinger:
+      - \*
+      vendetta:
+      - \*
+      vigilance:
+      - \*
+      watson:
+      - \*
+- M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>:
+    license: CC-by-sa 3.0
+    outfit:
+      store:
+      - zalek_drone_*_fighter.png
+    ship:
+      arx:
+      - \*
+      brigand:
+      - \*
+      demon:
+      - \*
+      diablo:
+      - \*
+      hephaestus:
+      - \*
+      imp:
+      - \*
+      ira:
+      - \*
+      marauder:
+      - \*
+      mephisto:
+      - \*
+      nyx:
+      - \*
+      odium:
+      - \*
+      prototype:
+      - \*
+      reaver:
+      - \*
+      sting:
+      - \*
+      vox:
+      - \*
+- nenau (based on work from Vega Strike and Kinniken):
+    license: GPLv3+
+    commodity:
+      space:
+      - fuel.png
+- Bobbens:
+    license: PD
+    outfit:
+      space:
+      - lasergreen.png
+- Jordi Pegueroles:
+    license: PD
+    outfit:
+      space:
+      - headhunter.png
+      - mace.png
+      store:
+      - mace.png
+      - macelauncher.png
+- Basse:
+    license: GPLv2+
+    outfit:
+      store:
+      - droid.png
+- W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>:
+    license: CC-by-sa 3.0
+    outfit:
+      store:
+      - map.png
+- United States Department of Energy:
+    license: PD
+    outfit:
+      store:
+      - solar.png
+- Kristian Mølhave:
+    license: CC-by 3.0
+    outfit:
+      store:
+      - nanobond.png
+- Camilo Polymeris <cpolymeris@gmx.net>:
+    license: GPLv3
+    gui:
+      legacy:
+      - minimal.png
+      - minimal_fuel.png
+      - minimal_energy.png
+- Brian J. Cameron:
+    license: PD
+    outfit:
+      store:
+      - license.png
+      - empgrenade.png
+      - empgrenadelauncher.png
+      - banshee.png
+      space:
+      - empgrenade.png
+      - banshee.png
+- Josiah Schwartfeger:
+    license: CC-by 3.0
+    root:
+    - icon.png
+    outfit:
+      store:
+      - fuel_pod.png
+      - medium_fuel_pod.png
+      - afterburner2.png
+      - weapon_rack.png
+      - laser2.png
+      - plasma2.png
+    ship:
+    - kestrel
+    - peacemaker
+- Renderwahn:
+    license: CC-by 3.0
+    logo:
+    - pirate_*.png
+- Sean Hildebrand:
+    license: CC-by 3.0
+    gui:
+    - legacy:
+      - minimal_planet.png
+      - minimal_pilot.png
+    - no.png
+    - yes.png
+    outfit:
+      space:
+      - gatling.png
+      - autocannon.png
+      - plasma2.png
+      - plasma2-end.png
+      - headhunter.png
+      - seeker.png
+      - caesar.png
+      store:
+      - cpu_i.png
+      - cpu_ii.png
+      - cpu_iii.png
+      - seekerlauncher.png
+      - seeker.png
+      - headhunterlauncher.png
+      - headhunter.png
+      - caesarlauncher.png
+- Thomas Fedor:
+    license: PD
+    outfit:
+      store:
+      - gatling.png
+- Ingo Ruhnke <grumbel@gmx.de>:
+    license: GPLv3
+    portraits:
+    - none.png
+    - unknown.png
+    logo:
+    - dvaered_*.png
+    - empire_*.png
+    - goddard_*.png
+    - sirius_*.png
+    - zalek_*.png
+- Nihilos <https://opengameart.org/users/nihilos>:
+    license: CC-by 3.0 (based on portraits by Ingo Ruhnke <grumbel@gmx.de>)
+    portraits:
+      dvaered:
+      - unique:
+        - ka'def.png
+        - vicious.png
+        - zolo.png
+      - dv_civilian_f1.png
+      - dv_civilian_f2.png
+      - dv_general1.png
+      - dv_military_m1.png
+      - dv_military_m2.png
+      - dv_military_m3.png
+      - dv_military_f1.png
+      - dv_military_f2.png
+      empire:
+      - unique:
+        - czesc.png
+        - dimitri.png
+        - keer.png
+        - soldner.png
+      - empire_mil_f1.png
+      - empire_mil_m1.png
+      - empire_mil_m2.png
+      - empire_mil_m3.png
+      flf:
+        unique:
+        - benito.png
+      neutral:
+      - unique:
+        - aristocrat.png
+        - drunkard.png
+        - flintley.png
+        - hunter.png
+        - jorek.png
+        - mia.png
+        - neil.png
+        - oldwoman.png
+        - rebina.png
+        - rebina_casual.png
+        - reynir.png
+        - reynir2.png
+        - youngbusinessman.png
+        - youngbusinessman2.png
+      - barman.png
+      - cyborg1.png
+      - cyborg2.png
+      - cyborg3.png
+      - female1.png
+      - male1.png
+      - miner1.png
+      - miner2.png
+      - scientist.png
+      - scientist2.png
+      - scientist3.png
+      - thief1.png
+      - thief2.png
+      - thief3.png
+      pirate:
+      - pirate_militia1.png
+      - pirate_militia2.png
+      - pirate1.png
+      - pirate2.png
+      - pirate3.png
+      - pirate4.png
+      sirius:
+      - unique:
+        - harja.png
+        - joanne.png
+        - patrek.png
+      - sirius_fyrra_f1.png
+      - sirius_fyrra_f2.png
+      - sirius_fyrra_m1.png
+- The Diligent Circle, based on components by Nihilos:
+    license: CC-by 3.0
+    portraits:
+      dvaered:
+      - dv_civilian_f3.png
+      - dv_civilian_f4.png
+      - dv_civilian_f5.png
+      - dv_civilian_f6.png
+      - dv_civilian_f7.png
+      - dv_civilian_f8.png
+      - dv_civilian_f9.png
+      - dv_civilian_f10.png
+      - dv_civilian_f11.png
+      - dv_civilian_m1.png
+      - dv_civilian_m2.png
+      - dv_civilian_m3.png
+      - dv_civilian_m4.png
+      - dv_civilian_m5.png
+      - dv_civilian_m6.png
+      - dv_civilian_m7.png
+      - dv_civilian_m8.png
+      - dv_civilian_m9.png
+      - dv_civilian_m10.png
+      - dv_civilian_m11.png
+      - dv_military_f3.png
+      - dv_military_f4.png
+      - dv_military_f5.png
+      - dv_military_f6.png
+      - dv_military_f7.png
+      - dv_military_f8.png
+      - dv_military_m4.png
+      - dv_military_m5.png
+      - dv_military_m6.png
+      - dv_military_m7.png
+      - dv_military_m8.png
+      empire:
+      - empire_mil_f2.png
+      - empire_mil_f3.png
+      - empire_mil_f4.png
+      - empire_mil_f5.png
+      - empire_mil_m4.png
+      - empire_mil_m5.png
+      - empire_mil_m6.png
+      - empire_mil_m7.png
+      - empire_mil_m8.png
+      neutral:
+      - unique:
+        - arnoldsmith.png
+        - cynthia.png
+        - cynthia_father.png
+        - dealer.png
+        - fakesister.png
+        - laidback.png
+        - michal.png
+        - middleaged.png
+        - nexus_agent.png
+        - paddy.png
+        - shifty_merchant.png
+        - unfamiliarman.png
+      - female2.png
+      - female3.png
+      - female4.png
+      - female5.png
+      - female6.png
+      - female7.png
+      - female8.png
+      - female9.png
+      - female10.png
+      - female11.png
+      - female12.png
+      - female13.png
+      - male2.png
+      - male3.png
+      - male4.png
+      - male5.png
+      - male6.png
+      - male7.png
+      - male8.png
+      - male9.png
+      - male10.png
+      - male11.png
+      - male12.png
+      - male13.png
+      - thief4.png
+      pirate:
+      - pirate5.png
+      - pirate6.png
+      - pirate7.png
+      - pirate8.png
+      - pirate9.png
+      - pirate10.png
+      - pirate11.png
+      - pirate12.png
+      - pirate13.png
+      - pirate14.png
+      sirius:
+      - unique:
+        - draga.png
+        - rodentman.png
+        - shaman.png
+        - strangeman.png
+      - sirius_fyrra_f3.png
+      - sirius_fyrra_f4.png
+      - sirius_fyrra_f5.png
+      - sirius_fyrra_m2.png
+      - sirius_fyrra_m3.png
+      - sirius_fyrra_m4.png
+      - sirius_fyrra_m5.png
+      - sirius_shiara_f1.png
+      - sirius_shiara_f2.png
+      - sirius_shiara_f3.png
+      - sirius_shiara_f4.png
+      - sirius_shiara_f5.png
+      - sirius_shiara_m1.png
+      - sirius_shiara_m2.png
+      - sirius_shiara_m3.png
+      - sirius_shiara_m4.png
+      - sirius_shiara_m5.png
+      soromid:
+        unique:
+        - chelsea.png
+      zalek:
+        unique:
+        - geller.png
+        - logan.png
+- Viktor Hahn, based on components by Nihilos:
+    license: CC-by 3.0
+    portraits:
+      zalek:
+        unique:
+        - mensing.png
+        - student.png
+- AstroMenace (Viewizard):
+    license: GPLv3
+    outfit:
+      store:
+      - thruster.png
+      - accuracy_forward.png
+      - accuracy_forward_2.png
+      - accuracy_forward_3.png
+      - accuracy_turret.png
+      - damage_forward.png
+      - efficiency_turret.png
+      - firerate_turret.png
+- Enigmatic:
+    license: CC-by 3.0
+    logo:
+    - collective_*.png
+    - flf_*.png
+    - frontier_*.png
+    - proteron_*.png
+    - prototype_tiny.png
+    - soromid_*.png
+    - trader_*.png
+    outfit:
+      store:
+      - fidelity_fighter.png
+    ship:
+    - divinity
+    - dogma
+    - fidelity
+    - preacher
+    - shaman
+- BTAxis:
+    license: PD
+    gui:
+    - hail.png
+- Scaatis:
+    license: CC-by 3.0
+    root:
+    - Naev.png
+    gui:
+    - brushed:
+      - A.png
+      - barBg.webp
+      - barFrame.png
+      - barFrameLight.png
+      - beam.png
+      - bottombar.png
+      - button.png
+      - buttonDis.png
+      - buttonHil.png
+      - buttonHil2.png
+      - buttonPre.png
+      - endRight.png
+      - extRight.png
+      - fieldBg.png
+      - fieldBgCenter1.webp
+      - fieldBgCenter2.webp
+      - fieldBgLeft1.png
+      - fieldBgRight1.png
+      - fieldBgRight2.png
+      - fieldFrameCenter.png
+      - fieldFrameLeft.png
+      - fieldFrameRight.png
+      - iconArmour.png
+      - iconCargo.webp
+      - iconEnergy.webp
+      - iconFuel.png
+      - iconMissions.png
+      - iconMoney.png
+      - iconNavTarg.png
+      - iconPntTarg.png
+      - iconShield.png
+      - iconShip.png
+      - iconWeaps.png
+      - ion.png
+      - kinetic.png
+      - laser.png
+      - light.png
+      - lock.webp
+      - lockon.png
+      - lockonCircle.png
+      - main.png
+      - missile.png
+      - nuclear.png
+      - pilotFrame.png
+      - planet_image.png
+      - plasma.png
+      - popupBottom.png
+      - projectile.png
+      - question.png
+      - radar_planet.png
+      - radar_ship.png
+      - refireCircle.png
+      - speedOff.webp
+      - speedOn.png
+      - store.png
+      - targetBg.png
+      - targetFrame.png
+      - tooltipEmpty.webp
+      - tooltipRight.webp
+      - tooltipRightBottom.webp
+      - tooltipRightSideLeft.png
+      - tooltipRightTop.webp
+      - topbar.png
+      - topbarCenter.png
+      - weapon1.png
+      - weapon2.png
+    - slim
+    - slimv2
+    portraits:
+    - news.webp
+    outfit:
+      store:
+      - brushedGUI.png
+- The Diligent Circle, based on work by Scaatis:
+    license: CC-by 3.0
+    gui:
+      brushed:
+      - frame_planet_bottom.png
+      - frame_planet_middle.png
+      - frame_planet_top.png
+      - outfit.png
+      - speedDouble.png
+- Alexander Huitric <ahuitric@gmail.com>:
+    license: CC-by-sa 3
+    logo:
+    - thurion_*.png
+    ship:
+    - ingenuity
+- Galileus:
+    license: CC-by-sa 3.0
+    ship:
+    - shark
+    - rhino
+- bornloser:
+    license: CC-by-sa 3.0
+    ship:
+    - phalanx
+- SolCommand <http://solcommand.com>:
+    license: CC-by 3.0
+    outfit:
+      store:
+      - gaussgun.png
+      - gaussturret.png
+      - shredder.png
+      - vulcangun.png
+      - vulcanturret.png
+- admiral_cheater:
+    license: CC-by 3.0
+    outfit:
+      space:
+      - fury.png
+      store:
+      - fury.png
+      - unicorp_fury_launcher.png
+      - teracom_fury_launcher.png
+      - turreted_fury_launcher.png
+- Unnamed:
+    license: CC-by-sa 3.0
+    outfit:
+      space:
+      - convulsion.png
+      store:
+      - base_hull_h.png
+      - base_hull_l.png
+      - base_hull_m.png
+      - base_hull_s.png
+      - base_hull_t.png
+      - base_hull_x.png
+      - combat_hull_h.png
+      - combat_hull_l.png
+      - combat_hull_m.png
+      - combat_hull_s.png
+      - combat_hull_t.png
+      - combat_hull_x.png
+      - core_system_basic_l1.png
+      - core_system_basic_l2.png
+      - core_system_basic_m1.png
+      - core_system_basic_m2.png
+      - core_system_basic_s2.png
+      - core_system_cpu_l1.png
+      - core_system_cpu_l2.png
+      - core_system_cpu_m1.png
+      - core_system_cpu_m2.png
+      - core_system_cpu_s1.png
+      - core_system_cpu_s2.png
+      - core_system_organic_l1.png
+      - core_system_organic_l2.png
+      - core_system_organic_m1.png
+      - core_system_organic_m2.png
+      - core_system_organic_s1.png
+      - core_system_organic_s2.png
+      - core_system_power_l1.png
+      - core_system_power_l2.png
+      - core_system_power_m1.png
+      - core_system_power_m2.png
+      - core_system_power_s1.png
+      - core_system_power_s2.png
+      - core_system_refined_l1.png
+      - core_system_refined_l2.png
+      - core_system_refined_m1.png
+      - core_system_refined_m2.png
+      - core_system_refined_s1.png
+      - core_system_refined_s2.png
+      - core_system_shield_l1.png
+      - core_system_shield_l2.png
+      - core_system_shield_m1.png
+      - core_system_shield_m2.png
+      - core_system_shield_s1.png
+      - core_system_shield_s2.png
+      - energy_dart.png
+      - energy_missile.png
+      - energy_torpedo.png
+      - engine01.png
+      - engine02.png
+      - engine03.png
+      - engine04.png
+      - engine05.png
+      - engine06.png
+      - engine07.png
+      - engine08.png
+      - engine09.png
+      - engine10.png
+      - engine11.png
+      - engine12.png
+      - engine13.png
+      - engine14.png
+      - engine15.png
+      - large_cargo_hull.png
+      - medium_cargo_hull.png
+      - misc01.png
+      - misc02.png
+      - misc04.png
+      - plating01.png
+      - reactor01.png
+      - refined_hull_h.png
+      - refined_hull_l.png
+      - refined_hull_m.png
+      - refined_hull_s.png
+      - refined_hull_t.png
+      - refined_hull_x.png
+      - small_cargo_hull.png
+      - stealth_hull_h.png
+      - stealth_hull_m.png
+      - stealth_hull_s.png
+      - stealth_hull_t.png
+      - weapon02.png
+    ship:
+      apprehension:
+      - \*
+      certitude:
+      - \*
+      perspicacity:
+      - \*
+      scintillation:
+      - \*
+      virtuosity:
+      - \*
+      taciturnity:
+      - \*
+- Ian D. Scott <ids1024>:
+    license: PD
+    outfit:
+      store:
+      - plating_cargo.png
+      - plating_combat.png
+      - plating_patchwork.png
+      - plating_stealth.png
+- Ian D. Scott <ids1024>:
+    license: GPLv2+
+    outfit:
+      store:
+      - lancelot_fighter_bay.png
+      - lancelot_empire_fighter_bay.png
+- Josiah Schwartfeger:
+    license: CC-by 3.0 (with modifications by Ian D. Scott <ids1024>, License CC-by
+      3.0)
+    outfit:
+      store:
+      - large_fuel_pod.png
+- Author Brian J. Cameron:
+    license: PD (with modifications by leodudepal, License CC-by 3.0)
+    outfit:
+      store:
+      - license_pirate.png
+- Mutos:
+    license: CC-by 3.0
+    commodity:
+    - _default.png
+- Unnamed <https://opengameart.org/users/unnamed>:
+    license: CC-by 3.0
+    intro:
+    - faster_than_light.png
+    - first_steps_into_space.png
+- The Diligent Circle (based on work by Unnamed <https://opengameart.org/users/unnamed> and Ingo Ruhnke):
+    license: GPLv3
+    intro:
+    - reign_of_daedris.png
+- The Diligent Circle (based on work by ShinyOgre <https://opengameart.org/users/shinyogre> and Vega Strike):
+    license: GPLv3
+    intro:
+    - questions.png
+- qubodup <https://openclipart.org/artist/qubodup>:
+    license: PD
+    overlays:
+    - portrait_exclamation.png
+- nenau:
+    license: GPLv3+
+    logo:
+    - miner_small.png
+    - miner_tiny.png
