@@ -249,19 +249,6 @@
       - drone_fighter.png
 - M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>:
     license: CC-by-sa 3.0
-    ship:
-      brigand:
-      - \*
-      demon:
-      - \*
-      imp:
-      - \*
-      odium:
-      - \*
-      prototype:
-      - \*
-      vox:
-      - \*
     outfit:
       store:
       - zalek_drone_*_fighter.png
@@ -356,8 +343,6 @@
     - hail.png
 - Alexander Huitric <ahuitric@gmail.com>:
     license: CC-by-sa 3
-    ship:
-    - ingenuity
     logo:
     - thurion_*.png
 - Unnamed:
