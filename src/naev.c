@@ -97,7 +97,7 @@ static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
 static glTexture *loading     = NULL; /**< Loading screen. */
 static glFont loading_font; /**< Loading font. */
-static char loading_txt[STRMAX_SHORT]; /**< Loading text to display. */
+static char *loading_txt = NULL; /**< Loading text to display. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
@@ -484,7 +484,7 @@ int main( int argc, char** argv )
 void loadscreen_load (void)
 {
    char file_path[PATH_MAX];
-   char **loadpaths, **loadscreens, *load, *buf;
+   char **loadpaths, **loadscreens, *load;
    size_t nload, nreal, nbuf;
    const char *loading_prefix = "webp";
 
@@ -521,11 +521,9 @@ void loadscreen_load (void)
    loading = gl_newImage( file_path, 0 );
 
    /* Load the metadata. */
-   memset( loading_txt, 0, sizeof(loading_txt) );
    snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s.txt", load );
-   buf = ndata_read( file_path, &nbuf );
-   if (buf != NULL)
-      strncpy( loading_txt, _(buf), MIN( nbuf, sizeof(loading_txt) ) );
+   free( loading_txt );
+   loading_txt = ndata_read( file_path, &nbuf );
 
    /* Create the stars. */
    background_initStars( 1000 );
@@ -576,8 +574,9 @@ void loadscreen_render( double done, const char *msg )
    y  = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2. - rh - 5.;
 
    /* Draw loading screen image. */
-   if (loading != NULL) {
+   if (loading != NULL)
       gl_blitScale( loading, bx, by, SHIP_IMAGE_WIDTH, SHIP_IMAGE_HEIGHT, NULL );
+   if (loading_txt != NULL) {
       int tw = gl_printWidthRaw( &loading_font, loading_txt );
       gl_printRaw( &loading_font, bx+SHIP_IMAGE_WIDTH-tw, by+20, &cFontWhite, 1, loading_txt );
    }
@@ -621,6 +620,7 @@ static void loadscreen_unload (void)
    gl_freeTexture(loading);
    loading = NULL;
    gl_freeFont( &loading_font );
+   free( loading_txt );
 }
 
 
