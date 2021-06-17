@@ -2054,6 +2054,7 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
       free( p->gfx_spacePath );
       gl_freeTexture( p->gfx_space );
       p->gfx_spacePath = strdup( str );
+      p->gfx_space = NULL;
       planet_gfxLoad( p );
    }
 
