@@ -117,7 +117,7 @@ ships = {
       carrier   = { "Soromid Arx" },
    },
    ["Za'lek"] = {
-      corvette  = { "Za'lek Imp", "Za'lek Sting" },
+      corvette  = { "Za'lek Sting" },
       destroyer = { "Za'lek Demon" },
       cruiser   = { "Za'lek Mephisto", "Za'lek Prototype" },
       carrier   = { "Za'lek Diablo", "Za'lek Hephaestus" },

@@ -20,10 +20,10 @@ function copy_over {
 # A few are missing:
 # copy_over "??" "brigand/brigand"
 # copy_over "??" "demon/demon"
-# copy_over "??" "imp/imp"
 # copy_over "??" "ingenuity/ingenuity"
 # copy_over "??" "odium/odium"
 # copy_over "??" "prototype/prototype"
+#                 ^^ Actually, this one is currently just sharing a model "mephisto".
 # copy_over "??" "vox/vox"
 
 # And 3 models are apparently extra; otherwise things are one-to-one:

@@ -378,6 +378,17 @@
       - misc04.png
       - plating01.png
       - small_cargo_hull.png
+- AstroMenace (Viewizard):
+    license: GPLv3
+    outfit:
+      store:
+      - accuracy_forward.png
+      - accuracy_forward_2.png
+      - accuracy_forward_3.png
+      - accuracy_turret.png
+      - damage_forward.png
+      - efficiency_turret.png
+      - firerate_turret.png
 - Basse:
     license: GPLv2+
     outfit:
@@ -627,17 +638,6 @@
         unique:
         - mensing.png
         - student.png
-- AstroMenace (Viewizard):
-    license: GPLv3
-    outfit:
-      store:
-      - accuracy_forward.png
-      - accuracy_forward_2.png
-      - accuracy_forward_3.png
-      - accuracy_turret.png
-      - damage_forward.png
-      - efficiency_turret.png
-      - firerate_turret.png
 - Scaatis:
     license: CC-by 3.0
     root:
