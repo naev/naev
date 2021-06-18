@@ -103,9 +103,6 @@
 - Sean Hildebrand:
     license: CC-by 3.0
     gui:
-    - legacy:
-      - minimal_planet.png
-      - minimal_pilot.png
     - no.png
     - yes.png
     outfit:
@@ -191,6 +188,21 @@
       - damage_forward.png
       - efficiency_turret.png
       - firerate_turret.png
+- Ingo Ruhnke <grumbel@gmx.de>:
+    license: GPLv3
+    logo:
+    - dvaered_*.png
+    - empire_*.png
+    - goddard_*.png
+    - sirius_*.png
+    - zalek_*.png
+- Scaatis:
+    license: CC-by 3.0
+    root:
+    - Naev.png
+    outfit:
+      store:
+      - brushedGUI.png
 - Basse:
     license: GPLv2+
     outfit:
@@ -211,114 +223,11 @@
     outfit:
       store:
       - nanobond.png
-- Camilo Polymeris <cpolymeris@gmx.net>:
-    license: GPLv3
-    gui:
-      legacy:
-      - minimal.png
-      - minimal_fuel.png
-      - minimal_energy.png
 - Thomas Fedor:
     license: PD
     outfit:
       store:
       - gatling.png
-- Ingo Ruhnke <grumbel@gmx.de>:
-    license: GPLv3
-    logo:
-    - dvaered_*.png
-    - empire_*.png
-    - goddard_*.png
-    - sirius_*.png
-    - zalek_*.png
-- Scaatis:
-    license: CC-by 3.0
-    root:
-    - Naev.png
-    gui:
-    - brushed:
-      - A.png
-      - barBg.webp
-      - barFrame.png
-      - barFrameLight.png
-      - beam.png
-      - bottombar.png
-      - button.png
-      - buttonDis.png
-      - buttonHil.png
-      - buttonHil2.png
-      - buttonPre.png
-      - endRight.png
-      - extRight.png
-      - fieldBg.png
-      - fieldBgCenter1.webp
-      - fieldBgCenter2.webp
-      - fieldBgLeft1.png
-      - fieldBgRight1.png
-      - fieldBgRight2.png
-      - fieldFrameCenter.png
-      - fieldFrameLeft.png
-      - fieldFrameRight.png
-      - iconArmour.png
-      - iconCargo.webp
-      - iconEnergy.webp
-      - iconFuel.png
-      - iconMissions.png
-      - iconMoney.png
-      - iconNavTarg.png
-      - iconPntTarg.png
-      - iconShield.png
-      - iconShip.png
-      - iconWeaps.png
-      - ion.png
-      - kinetic.png
-      - laser.png
-      - light.png
-      - lock.webp
-      - lockon.png
-      - lockonCircle.png
-      - main.png
-      - missile.png
-      - nuclear.png
-      - pilotFrame.png
-      - planet_image.png
-      - plasma.png
-      - popupBottom.png
-      - projectile.png
-      - question.png
-      - radar_planet.png
-      - radar_ship.png
-      - refireCircle.png
-      - speedOff.webp
-      - speedOn.png
-      - store.png
-      - targetBg.png
-      - targetFrame.png
-      - tooltipEmpty.webp
-      - tooltipRight.webp
-      - tooltipRightBottom.webp
-      - tooltipRightSideLeft.png
-      - tooltipRightTop.webp
-      - topbar.png
-      - topbarCenter.png
-      - weapon1.png
-      - weapon2.png
-    - slim
-    - slimv2
-    portraits:
-    - news.webp
-    outfit:
-      store:
-      - brushedGUI.png
-- The Diligent Circle, based on work by Scaatis:
-    license: CC-by 3.0
-    gui:
-      brushed:
-      - frame_planet_bottom.png
-      - frame_planet_middle.png
-      - frame_planet_top.png
-      - outfit.png
-      - speedDouble.png
 - SolCommand <http://solcommand.com>:
     license: CC-by 3.0
     outfit:
