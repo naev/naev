@@ -141,7 +141,7 @@ log_text = _([[Baron Sauterfeldt sent you on a wild goose chase to find some anc
 
 function create ()
    -- Note: this mission makes no system claims.
-   misn.setNPC(npc_desc, "neutral/unique/unfamiliarman.png", bar_desc)
+   misn.setNPC(npc_desc, "neutral/unique/unfamiliarman.webp", bar_desc)
 end
 
 function accept()
@@ -226,9 +226,9 @@ function land()
       sellnpc = misn.npcAdd("seller", _("Artifact seller"), portrait.get("Pirate"), sellerdesc, 4)
    elseif planet.cur() == flintplanet then
       if flintleyfirst then
-         flintnpc = misn.npcAdd("flintley", flint_npc1, "neutral/unique/flintley.png", flint_bar1, 4)
+         flintnpc = misn.npcAdd("flintley", flint_npc1, "neutral/unique/flintley.webp", flint_bar1, 4)
       else
-         flintnpc = misn.npcAdd("flintley", flint_npc2, "neutral/unique/flintley.png", flint_bar2, 4)
+         flintnpc = misn.npcAdd("flintley", flint_npc2, "neutral/unique/flintley.webp", flint_bar2, 4)
       end
    end
 end

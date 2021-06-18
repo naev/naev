@@ -26,8 +26,7 @@ function love.load()
    if not love._vn then
       -- Small test
       vn.scene()
-      --local d = vn.newCharacter( "Developer", { color={1,0,0}, image="assets/scientist.png" } )
-      local d = vn.newCharacter( "Developer", { color={1,0,0}, image="gfx/portraits/neutral/scientist.png" } )
+      local d = vn.newCharacter( "Developer", { color={1,0,0}, image="gfx/portraits/neutral/scientist.webp" } )
       local me = vn.me
       local na = vn.na
       vn.transition()

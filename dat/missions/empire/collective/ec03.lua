@@ -80,7 +80,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.png", bar_desc )
+   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", bar_desc )
 end
 
 
