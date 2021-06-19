@@ -30,6 +30,8 @@
 
 
 #define INTRO_SPEED        30. /**< Speed of text in characters / second. */
+#define SIDE_MARGIN       100. /**< Minimum space on either side of the text. */
+#define IMAGE_WIDTH       300. /**< Width to reserve for images on the side. */
 
 
 /**
@@ -145,7 +147,7 @@ static int intro_load( const char *text )
 
       } else { /* plain old text. */
          /* Get the length. */
-         i = gl_printWidthForText( &intro_font, cur_line, SCREEN_W - 500., NULL );
+         i = gl_printWidthForText( &intro_font, cur_line, SCREEN_W - 2*SIDE_MARGIN - IMAGE_WIDTH, NULL );
 
          intro_lines[n] = malloc( i + 2 );
          intro_lines[n][0] = 't';
@@ -191,7 +193,7 @@ static void intro_cleanup (void)
 static void initialize_image( intro_img_t *img )
 {
    img->tex = NULL;
-   img->x   = 100.;
+   img->x   = SIDE_MARGIN;
    img->c.r = 1.0;
    img->c.g = 1.0;
    img->c.b = 1.0;
@@ -316,10 +318,9 @@ static int intro_draw_text( char **const sb_list, int sb_size, int sb_index, dou
    int          i;
    register int stop = 1;
 
+   x = SIDE_MARGIN;
    if (has_side_gfx)
-      x = 400.0; /* leave some space for graphics if they exist. */
-   else
-      x = 100.0;
+      x += IMAGE_WIDTH;
 
    i = sb_index;
    y = SCREEN_H + offset - line_height;
