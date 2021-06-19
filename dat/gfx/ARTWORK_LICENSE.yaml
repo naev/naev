@@ -273,19 +273,6 @@
     license: CC-by 3.0
     commodity:
     - _default.png
-- Unnamed <https://opengameart.org/users/unnamed>:
-    license: CC-by 3.0
-    intro:
-    - faster_than_light.png
-    - first_steps_into_space.png
-- The Diligent Circle (based on work by Unnamed <https://opengameart.org/users/unnamed> and Ingo Ruhnke):
-    license: GPLv3
-    intro:
-    - reign_of_daedris.png
-- The Diligent Circle (based on work by ShinyOgre <https://opengameart.org/users/shinyogre> and Vega Strike):
-    license: GPLv3
-    intro:
-    - questions.png
 - qubodup <https://openclipart.org/artist/qubodup>:
     license: PD
     overlays:
