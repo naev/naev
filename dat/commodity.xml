@@ -25,7 +25,7 @@
   <description>An unusual chemical that we humans take for granted, water is necessary for sustaining human life and useful in many industries due to its unique properties. While common, it is not evenly dispersed throughout the galaxy, leading to heavy concentrations in some areas and a complete absence of water in other areas.</description>
   <price>250</price>
   <gfx_store>heavy_water.png</gfx_store>
-  <gfx_space>water.png</gfx_space>
+  <gfx_space>water.webp</gfx_space>
   <standard/>
   <planet_modifier type="A">1.2</planet_modifier>
   <planet_modifier type="B">1.2</planet_modifier>
@@ -96,7 +96,7 @@
   <description>Gold is prized for its combination of resistance to corrosion and conductivity, which is used to enhance the lifetime of electronics, although its most demanding application is as a component in decorative articles, such as jewelry.</description>
   <price>550</price>
   <gfx_store>gold.webp</gfx_store>
-  <gfx_space>gold.png</gfx_space>
+  <gfx_space>gold.webp</gfx_space>
   <standard/>
   <planet_modifier type="M">1.1</planet_modifier>
   <planet_modifier type="N">1.25</planet_modifier>
@@ -115,7 +115,7 @@
   <description>Diamond is another form of graphite which has been crystallized due to intense pressure and heat deep beneath the surface of some types of planets. The material is useful in some cutting applications due to its hardness, and it is commonly used in decorative applications, but diamond is now easy enough to produce synthetically that it is not as sought after as much as it once was.</description>
   <price>220</price>
   <gfx_store>diamonds.png</gfx_store>
-  <gfx_space>diamonds.png</gfx_space>
+  <gfx_space>diamonds.webp</gfx_space>
   <standard/>
   <planet_modifier type="F">0.5</planet_modifier>
   <planet_modifier type="K">0.9</planet_modifier>
@@ -185,7 +185,7 @@
  </commodity>
  <commodity>
   <name>Fuel</name>
-  <gfx_space>fuel.png</gfx_space>
+  <gfx_space>fuel.webp</gfx_space>
  </commodity>
  <commodity>
   <name>Gregar</name>

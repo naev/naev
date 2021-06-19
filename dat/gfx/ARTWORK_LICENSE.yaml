@@ -1,11 +1,6 @@
 - Vega Strike:
     license: GPLv2+
     commodity:
-    - space:
-      - _default.png
-      - diamonds.png
-      - gold.png
-      - water.png
     - base.png
     - diamonds.png
     - heavy_water.png
@@ -51,11 +46,6 @@
     outfit:
       store:
       - zalek_drone_*_fighter.png
-- nenau (based on work from Vega Strike and Kinniken):
-    license: GPLv3+
-    commodity:
-      space:
-      - fuel.png
 - Bobbens:
     license: PD
     outfit:
