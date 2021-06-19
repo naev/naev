@@ -114,7 +114,7 @@
   <name>Diamond</name>
   <description>Diamond is another form of graphite which has been crystallized due to intense pressure and heat deep beneath the surface of some types of planets. The material is useful in some cutting applications due to its hardness, and it is commonly used in decorative applications, but diamond is now easy enough to produce synthetically that it is not as sought after as much as it once was.</description>
   <price>220</price>
-  <gfx_store>diamonds.png</gfx_store>
+  <gfx_store>diamonds.webp</gfx_store>
   <gfx_space>diamonds.webp</gfx_space>
   <standard/>
   <planet_modifier type="F">0.5</planet_modifier>
