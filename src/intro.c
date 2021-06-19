@@ -39,7 +39,7 @@
  */
 typedef struct intro_img_t_ {
    glTexture *tex;     /* Image. */
-   double x, y;        /* Position. */
+   double x, y, w, h;  /* Position. */
    glColour c;         /* Alpha channel for fading. */
    double fade_rate;   /* Positive for fade-in, negative for fade-out. */
 } intro_img_t;
@@ -60,6 +60,7 @@ static int intro_load( const char *text );
 static void intro_cleanup (void);
 static void intro_event_handler( int *stop, double *offset, double *vel );
 static void initialize_image( intro_img_t *img );
+static void load_image( intro_img_t *img, const char *img_file );
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
                                  const char *img_file );
 static int  intro_draw_text( char **const sb_list, int sb_size, int sb_index, double offset, double line_height );
@@ -193,12 +194,29 @@ static void intro_cleanup (void)
 static void initialize_image( intro_img_t *img )
 {
    img->tex = NULL;
-   img->x   = SIDE_MARGIN;
    img->c.r = 1.0;
    img->c.g = 1.0;
    img->c.b = 1.0;
    img->c.a = 1.0;
    img->fade_rate = 0.0;
+}
+
+
+/**
+ * @brief Initialize an intro_img_t to default values.
+ *
+ *    @brief img Image to initialize.
+ *    @brief img_file Path to the image file on disk.
+ */
+static void load_image( intro_img_t *img, const char *img_file )
+{
+      img->tex = gl_newImage( img_file, 0 );
+      img->w = MIN( img->tex->w, IMAGE_WIDTH );
+      img->h = img->tex->h * img->w / img->tex->w;
+      img->x = (IMAGE_WIDTH + SIDE_MARGIN - img->w) / 2.0;
+      img->y = (double)SCREEN_H / 2.0 - (img->h / 2.0);
+      img->c.a = 0.0;
+      img->fade_rate = 0.1;
 }
 
 
@@ -212,13 +230,8 @@ static void initialize_image( intro_img_t *img )
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
                                  const char *img_file )
 {
-   if (NULL == side->tex) {
-      /* Simple fade-in. */
-      side->tex = gl_newImage( img_file, 0 );
-      side->y = (double)SCREEN_H / 2.0 - (side->tex->h / 2.0);
-      side->c.a = 0.0;
-      side->fade_rate = 0.1;
-   }
+   if (NULL == side->tex)
+      load_image( side, img_file ); /* Simple fade-in. */
    else {
       /*
        * Transition or on-deck. The difference is whether one image is
@@ -233,15 +246,11 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
          WARN( _("Intro scrolling too fast!") );
          gl_freeTexture( transition->tex );
       }
-      transition->tex = gl_newImage( img_file, 0 );
-      transition->y =
-         (double)SCREEN_H / 2.0 - (transition->tex->h / 2.0);
-      transition->c.a = 0.0;
+      load_image( transition, img_file );
       if (side->fade_rate < 0.0)
          transition->fade_rate = 0.0; /* put an image on deck. */
       else {
          /* transition. */
-         transition->fade_rate = 0.1;
          side->fade_rate = -0.1; /* begin fading out. */
          side->c.a = 0.99;
       }
@@ -444,6 +453,8 @@ int intro_display( const char *text, const char *mus )
             if (transition.tex != NULL) {
                side_image.tex = transition.tex;
                side_image.c.a = transition.c.a;
+               side_image.w   = transition.w;
+               side_image.h   = transition.h;
                side_image.y   = transition.y;
                side_image.fade_rate = 0.1;
                transition.tex = NULL;
@@ -469,12 +480,12 @@ int intro_display( const char *text, const char *mus )
       if (NULL != side_image.tex)
          /* Draw the image next to the text. */
          gl_blitScale( side_image.tex, side_image.x, side_image.y,
-                       side_image.tex->w, side_image.tex->h, &side_image.c );
+                       side_image.w, side_image.h, &side_image.c );
 
       if (NULL != transition.tex && transition.c.a > 0.0)
          /* Draw the image in transition. */
          gl_blitScale( transition.tex, transition.x, transition.y,
-                       transition.tex->w, transition.tex->h, &transition.c );
+                       transition.w, transition.h, &transition.c );
 
       /* Display stuff. */
       SDL_GL_SwapWindow( gl_screen.window );
