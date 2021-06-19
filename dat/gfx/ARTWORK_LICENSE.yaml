@@ -259,10 +259,6 @@
     outfit:
       store:
       - license_pirate.png
-- Mutos:
-    license: CC-by 3.0
-    commodity:
-    - _default.png
 - qubodup <https://openclipart.org/artist/qubodup>:
     license: PD
     overlays:
