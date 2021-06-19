@@ -1,7 +1,6 @@
 - Vega Strike:
     license: GPLv2+
     commodity:
-    - base.png
     - standard_mealpacks.png
     - vaccines.png
     outfit:

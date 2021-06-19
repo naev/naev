@@ -69,7 +69,7 @@
   <name>Ore</name>
   <description>Ore is a key material in many industries. Smelted into metals, without ore, the ship-building industry and many others would grind to a halt.</description>
   <price>210</price>
-  <gfx_store>base.png</gfx_store>
+  <gfx_store>ore.webp</gfx_store>
   <standard/>
   <planet_modifier type="1">1.2</planet_modifier>
   <planet_modifier type="2">1.2</planet_modifier>
