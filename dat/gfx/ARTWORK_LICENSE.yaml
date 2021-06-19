@@ -7,20 +7,6 @@
     - standard_mealpacks.png
     - vaccines.png
     outfit:
-      space:
-      - ion{M,L}.png
-      - ion{M,L}-end.png
-      - laser{1,2,3,4}{S,M,L}.png
-      - mass{M,L}.png
-      - mass{M,L}-end.png
-      - neutron.png
-      - neutron-end.png
-      - particle.png
-      - plasma.png
-      - razor{S,M,L}.png
-      - razor{S,M,L}-end.png
-      - ripper{S,M}.png
-      - ripper{S,M}-end.png
       store:
       - capacitor.png
       - capacitor2.png
@@ -46,17 +32,9 @@
     outfit:
       store:
       - zalek_drone_*_fighter.png
-- Bobbens:
-    license: PD
-    outfit:
-      space:
-      - lasergreen.png
 - Jordi Pegueroles:
     license: PD
     outfit:
-      space:
-      - headhunter.png
-      - mace.png
       store:
       - mace.png
       - macelauncher.png
@@ -67,9 +45,6 @@
       - license.png
       - empgrenade.png
       - empgrenadelauncher.png
-      - banshee.png
-      space:
-      - empgrenade.png
       - banshee.png
 - Josiah Schwartfeger:
     license: CC-by 3.0
@@ -93,14 +68,6 @@
     - no.png
     - yes.png
     outfit:
-      space:
-      - gatling.png
-      - autocannon.png
-      - plasma2.png
-      - plasma2-end.png
-      - headhunter.png
-      - seeker.png
-      - caesar.png
       store:
       - cpu_i.png
       - cpu_ii.png
@@ -134,8 +101,6 @@
 - Unnamed:
     license: CC-by-sa 3.0
     outfit:
-      space:
-      - convulsion.png
       store:
       - core_system_basic_m1.png
       - core_system_basic_s2.png
@@ -227,8 +192,6 @@
 - admiral_cheater:
     license: CC-by 3.0
     outfit:
-      space:
-      - fury.png
       store:
       - fury.png
       - unicorp_fury_launcher.png
