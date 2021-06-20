@@ -89,7 +89,7 @@ function create()
     credits = 800000  -- 800K
     
     -- Spaceport bar stuff
-    misn.setNPC(_("A scientist"), "zalek/unique/mensing.png", bar_desc)
+    misn.setNPC(_("A scientist"), "zalek/unique/mensing.webp", bar_desc)
 end
 
 function accept()

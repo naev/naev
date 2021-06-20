@@ -65,7 +65,7 @@ function create ()
    end
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Commander"), "empire/unique/soldner.png", bar_desc )
+   misn.setNPC( _("Commander"), "empire/unique/soldner.webp", bar_desc )
 end
 
 

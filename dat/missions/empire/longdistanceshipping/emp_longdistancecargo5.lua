@@ -54,7 +54,7 @@ function create ()
    targetworld_sys = system.get("Esker")
    targetworld = planet.get("Madria")
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.png", bar_desc )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", bar_desc )
 end
 
 

@@ -119,7 +119,9 @@ function handle_messages ()
    for _, v in ipairs(ai.messages()) do
       local sender, msgtype, data = table.unpack(v)
       -- Below we only handle if they came from allies
-      if p:faction():areAllies( sender:faction() ) then
+      -- (So far, only allies would send in the first place, but this check future-proofs things.
+      -- One day it might be interesting to have non-allied snitches whose tips get checked out...)
+      if sender:exists() and p:faction():areAllies( sender:faction() ) then
          if mem.doscans and msgtype == "scanned" then
             if data ~= nil and data:exists() then
                table.insert( mem.scanned, data )

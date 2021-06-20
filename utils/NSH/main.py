@@ -57,7 +57,7 @@ class harvester:
                         'heavy drone', 'armoured transport']
         }
 
-    def __init__(self, xmlPath):
+    def __init__(self, xmlPath, gfx_map):
         if self.__xmlData is None:
             self.__xmlData = glob.glob(os.path.join(xmlPath, "ships/*.xml"))
 
@@ -80,7 +80,7 @@ class harvester:
                     if details.text not in self.shipSortBy[details.tag]:
                         self.shipSortBy[details.tag][details.text] = []
 
-                # seems empty, ignoring. <- perhapse not a good idea
+                # seems empty, ignoring. <- perhaps not a good idea
                 if not details.text:
                     continue
 
@@ -108,6 +108,7 @@ class harvester:
                     self.ships[shipName][details.tag] = details.text
 
             self.ships[shipName]['name'] = shipName
+            self.ships[shipName]['gfx_comm'] = gfx_map[self.ships[shipName]['GFX']]
 
             if 'movement' not in self.ships[shipName]:
                 self.ships[shipName]['movement'] = {'speed': 0, 'thrust': 0, 'turn': 0}
@@ -217,14 +218,19 @@ if __name__ == "__main__":
     env.filters['getStatsLabel'] = labels.getShipStatsLabels
     env.filters['getStatsLabelsLabel'] = labels.getStatsLabelsLabel
 
+    mediapath = storagePath + '/ships/media'
+    gfx_map = {}
+    os.makedirs(mediapath, 0o755, exist_ok=True)
+    print('Copying image files...')
+    for f in glob.glob(currentPath+'/../../*/gfx/ship/*/*_comm.*'):
+        bname = os.path.basename(f)
+        gfx_map[bname.rpartition('.')[0][:-5]] = bname
+        shutil.copy(f, mediapath)
+
     # creating ships html
     myTpl = env.get_template('ships_index.html')
-    yaarh = harvester(naevPath)
+    yaarh = harvester(naevPath, gfx_map)
     shipIStore = os.path.normpath(storagePath + '/ships/')
-    if not os.path.exists(storagePath):
-        os.mkdir(storagePath, 0o755)
-    if not os.path.exists(shipIStore):
-        os.mkdir(shipIStore, 0o755)
     myTpl.stream(shipList=yaarh.get_by('class'), date=date).dump(shipIStore+'/index.html')
     del(myTpl)
 
@@ -255,11 +261,3 @@ if __name__ == "__main__":
         bname = os.path.basename(f)
         print('Copying css file:', bname, 'in', storagePath)
         shutil.copy(f, storagePath)
-
-    mediapath = storagePath + '/ships/media'
-    if not os.path.exists(mediapath):
-        os.mkdir(mediapath)
-    print('Copying image files...')
-    for f in glob.glob(currentPath+'/../../dat/gfx/ship/*/*_comm.png'):
-        bname = os.path.basename(f)
-        shutil.copy(f, mediapath)

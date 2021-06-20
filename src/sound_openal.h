@@ -107,7 +107,8 @@ extern alInfo_t al_info;
  * Creation.
  */
 int sound_al_init (void);
-void sound_al_exit (void);
+void sound_al_free_sources_locked (void);
+void sound_al_exit_locked (void);
 
 
 /*

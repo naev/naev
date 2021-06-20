@@ -1793,9 +1793,11 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
             WARN(_("Outfit '%s' Lua error:\n%s"), temp->name, lua_tostring(naevL,-1));
             lua_pop(naevL,1);
             nlua_freeEnv( temp->u.mod.lua_env );
+	    free( dat );
             temp->u.mod.lua_env = LUA_NOREF;
             continue;
          }
+	 free( dat );
 
          /* Check functions as necessary. */
          temp->u.mod.lua_init = nlua_refenvtype( env, "init", LUA_TFUNCTION );

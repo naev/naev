@@ -319,7 +319,7 @@ function land()
             tk.msg( execution_title, execution_failed_text2:format(creditstring(effective_credits)) )
          else -- No pity for non-Hamelsen henchmen
             tk.msg( execution_title, execution_text1:format(shi:name(), player.name()) )
-            tk.msg( execution_title, execution_text2, "portraits/neutral/female1.png" )
+            tk.msg( execution_title, execution_text2, "portraits/neutral/female1.webp" )
             tk.msg( execution_title, execution_text3:format(creditstring(effective_credits)) )
          end
          payNfinish()

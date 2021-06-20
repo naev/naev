@@ -282,10 +282,12 @@ function enter ()
          hook.pilot( mainguy, "death", "mainguy_dead" )
          hook.pilot( mainguy, "board", "mainguy_board" )
          hook.pilot( mainguy, "jump", "mainguy_left" )
+         hook.pilot( mainguy, "attacked", "mainguy_attacked" )
 
          local function addescort( shipname )
             local p = pilot.add( shipname, fthugs, jinsys, _("Escort") )
             p:setLeader( mainguy )
+            hook.pilot( p, "attacked", "mainguy_attacked" )
             return p
          end
 
@@ -300,15 +302,24 @@ end
 
 function mainguy_left ()
    player.msg(_("#rMISSION FAILED! The transport got away!"))
+   misn.finish(false)
 end
 
 function mainguy_attacked ()
    if not mainguy:exists() then return end
    if mainguy_attacked_msg then return end
 
-   mainguy:broadcast(_("Transport under attack! Help requested immediately!"))
+   if mainguy:exists() then
+      mainguy:broadcast(_("Transport under attack! Help requested immediately!"))
+      mainguy_attacked_msg = true
+      mainguy:setHostile(true)
+   end
 
-   mainguy_attacked_msg = true
+   for k,e in ipairs(escorts) do
+      if e:exists() then
+         e:setHostile(true)
+      end
+   end
 end
 
 function mainguy_board ()

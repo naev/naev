@@ -44,9 +44,9 @@ local minerva = {
    },
    pirate = {
       name = _("Sketchy Individual"),
-      portrait = "pirate/pirate5.png", -- TODO REPLACE
+      portrait = "pirate/pirate5.webp", -- TODO REPLACE
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
-      image = portrait.getFullPath("pirate/pirate5.png"),
+      image = portrait.getFullPath("pirate/pirate5.webp"),
       colour = nil,
    },
    -- Secondary characters

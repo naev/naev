@@ -252,13 +252,19 @@ end
 function heartbeat ()
    -- Check to see if the blockade can detect the player
    local pp = player.pilot()
+   local inrange = false
    for k,v in ipairs(blockade) do
       if v:exists() then
-         if v:inrange( pp ) then
-            blockade_end()
-            return
+         local detect, fuzzy =  v:inrange( pp )
+         if detect and not fuzzy then
+            inrange = true
          end
       end
+   end
+   if inrange then
+      blockade_end()
+   else
+      hook.timer( 500, "heartbeat" )
    end
 end
 

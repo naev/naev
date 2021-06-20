@@ -109,10 +109,10 @@ extern ALvoid (AL_APIENTRY *nalEffectfv)(ALuint,ALenum,ALfloat*);
 
 /* Debugging.  */
 #ifdef DEBUGGING
-#define al_checkErr()      al_checkHandleError( __func__ )
-void al_checkHandleError( const char *func );
-#else /* DEBUG */
+#define al_checkErr()      al_checkHandleError( __func__, __LINE__ )
+void al_checkHandleError( const char *func, int line );
+#else /* DEBUGGING */
 #define al_checkErr() /**< Hack to ignore errors when debugging. */
-#endif /* DEBUG */
+#endif /* DEBUGGING */
 
 #endif /* NOPENAL_H */

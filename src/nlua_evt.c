@@ -164,7 +164,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 /**
  * @brief Adds an NPC.
  *
- * @usage npc_id = evt.npcAdd( "my_func", "Mr. Test", "none.png", "A test." ) -- Creates an NPC.
+ * @usage npc_id = evt.npcAdd( "my_func", "Mr. Test", "none.webp", "A test." ) -- Creates an NPC.
  *
  *    @luatparam string func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luatparam string name Name of the NPC

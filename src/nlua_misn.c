@@ -53,7 +53,7 @@
  *
  * An example would be:
  * @code
- * misn.setNPC( "Keer", "empire/unique/keer.png", _("You see here Commodore Keer.") )
+ * misn.setNPC( "Keer", "empire/unique/keer.webp", _("You see here Commodore Keer.") )
  * @endcode
  *
  * @luamod misn
@@ -498,13 +498,13 @@ static int misn_markerRm( lua_State *L )
  * @brief Sets the current mission NPC.
  *
  * This is used in bar missions where you talk to a person. The portraits are
- *  the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.png
- *  you would use "none.png".)
+ *  the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.webp
+ *  you would use "none.webp".)
  *
  * Note that this NPC will disappear when either misn.accept() or misn.finish()
  *  is called.
  *
- * @usage misn.setNPC( "Invisible Man", "none.png", _("You see a levitating mug drain itself.") )
+ * @usage misn.setNPC( "Invisible Man", "none.webp", _("You see a levitating mug drain itself.") )
  *
  *    @luatparam string name Name of the NPC.
  *    @luatparam string portrait File name of the portrait to use for the NPC.
@@ -903,7 +903,7 @@ static int misn_osdGetActiveItem( lua_State *L )
 /**
  * @brief Adds an NPC.
  *
- * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none.png", "A test." ) -- Creates an NPC.
+ * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none.webp", "A test." ) -- Creates an NPC.
  *
  *    @luatparam string func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luatparam string name Name of the NPC

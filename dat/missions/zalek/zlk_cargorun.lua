@@ -82,7 +82,7 @@ log_text = _([[You helped a Za'lek scientist deliver some equipment and were pai
 function create ()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Za'lek Scientist"), "zalek/unique/logan.png", bar_desc )  -- creates the scientist at the bar
+   misn.setNPC( _("Za'lek Scientist"), "zalek/unique/logan.webp", bar_desc )  -- creates the scientist at the bar
 
    -- Planets
    pickupWorld, pickupSys  = planet.getLandable("Vilati Vilata")

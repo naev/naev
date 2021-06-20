@@ -504,7 +504,7 @@ static void ship_update( unsigned int wid )
          player.p->thrust / player.p->solid->mass,
          player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
          player.p->turn*180./M_PI,
-         player.p->ship->dt_default * 100.,
+         player.p->stats.time_mod * player.p->ship->dt_default * 100.,
          /* Health. */
          player.p->dmg_absorb * 100.,
          player.p->shield, player.p->shield_max, player.p->shield_regen,

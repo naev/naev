@@ -91,7 +91,7 @@ function create ()
    credits = 500000
    started = false
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea.png", npc_desc )
+   misn.setNPC( npc_name, "soromid/unique/chelsea.webp", npc_desc )
 end
 
 
