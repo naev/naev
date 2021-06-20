@@ -2,7 +2,6 @@
     license: GPLv2+
     commodity:
     - standard_mealpacks.png
-    - vaccines.png
     outfit:
       store:
       - capacitor.png

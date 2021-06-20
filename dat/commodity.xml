@@ -52,7 +52,7 @@
   <name>Medicine</name>
   <description>An assortment of medicines suitable for curing all sorts of ailments.</description>
   <price>750</price>
-  <gfx_store>vaccines.png</gfx_store>
+  <gfx_store>medicine.webp</gfx_store>
   <standard/>
   <planet_modifier type="2">1.2</planet_modifier>
   <period>70</period>
