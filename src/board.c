@@ -109,7 +109,7 @@ void player_board (void)
       return;
    }
    else if (vect_dist(&player.p->solid->pos,&p->solid->pos) >
-         p->ship->gfx_space->sw * PILOT_SIZE_APROX) {
+         p->ship->gfx_space->sw * PILOT_SIZE_APPROX) {
       player_message(_("#rYou are too far away to board your target."));
       return;
    }
@@ -541,7 +541,7 @@ int pilot_board( Pilot *p )
    if (!pilot_isDisabled(target))
       return 0;
    else if (vect_dist(&p->solid->pos, &target->solid->pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APROX )
+         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return 0;
    else if ((pow2(VX(p->solid->vel)-VX(target->solid->vel)) +
             pow2(VY(p->solid->vel)-VY(target->solid->vel))) >

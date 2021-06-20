@@ -572,17 +572,17 @@ static void gui_renderPilotTarget( double dt )
    else
       c = &cNeutral;
 
-   x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
-   y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
+   x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APPROX/2.;
+   y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APPROX/2.;
    gl_blitSprite( gui_target_pilot, x, y, 0, 0, c ); /* top left */
 
-   x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+   x += p->ship->gfx_space->sw * PILOT_SIZE_APPROX;
    gl_blitSprite( gui_target_pilot, x, y, 1, 0, c ); /* top right */
 
-   y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
+   y -= p->ship->gfx_space->sh * PILOT_SIZE_APPROX;
    gl_blitSprite( gui_target_pilot, x, y, 1, 1, c ); /* bottom right */
 
-   x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+   x -= p->ship->gfx_space->sw * PILOT_SIZE_APPROX;
    gl_blitSprite( gui_target_pilot, x, y, 0, 1, c ); /* bottom left */
 }
 

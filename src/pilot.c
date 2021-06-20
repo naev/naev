@@ -1816,8 +1816,8 @@ void pilot_renderOverlay( Pilot* p, const double dt )
          }
          /* Render. */
          gl_blitSprite( ico_hail,
-               p->solid->pos.x + PILOT_SIZE_APROX*p->ship->gfx_space->sw/2. + ico_hail->sw/4.,
-               p->solid->pos.y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2. + ico_hail->sh/4.,
+               p->solid->pos.x + PILOT_SIZE_APPROX*p->ship->gfx_space->sw/2. + ico_hail->sw/4.,
+               p->solid->pos.y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2. + ico_hail->sh/4.,
                p->hail_pos % sx, p->hail_pos / sx, NULL );
       }
    }
@@ -1846,7 +1846,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
 
          /* Position to render at. */
          dx = x - p->comm_msgWidth/2.;
-         dy = y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2.;
+         dy = y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2.;
 
          /* Background. */
          gl_renderRect( dx-2., dy-2., p->comm_msgWidth+4., gl_defFont.h+4., &cBlackHilight );
@@ -2058,7 +2058,7 @@ void pilot_update( Pilot* pilot, double dt )
          dmg.disable       = 0.;
          expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y,
-               pilot->ship->gfx_space->sw/2. + a, &dmg, NULL, EXPL_MODE_SHIP );
+               pilot->ship->gfx_space->sw/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
          debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
                pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
@@ -2539,7 +2539,7 @@ int pilot_refuelStart( Pilot *p )
 
    /* Conditions are the same as boarding, except disabled. */
    if (vect_dist(&p->solid->pos, &target->solid->pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APROX )
+         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return 0;
    else if ((pow2(VX(p->solid->vel)-VX(target->solid->vel)) +
             pow2(VY(p->solid->vel)-VY(target->solid->vel))) >
