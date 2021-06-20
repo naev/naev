@@ -201,7 +201,7 @@ vec4 effect( vec2 texture_coords )
    float ifar  = -b+h; /* far from camera intersection */
 
    /* Base step is equally spread out through the sphere. */
-   const float step_base = RADIUS / float(MARCHING_STEPS_MAX);
+   float step_base = RADIUS / float(u_steps);
 
    /* Normalize the progress to take into account explosion delays and represent the whole animation. */
    float smooth_t    = sin(progress*2.1);
@@ -210,7 +210,7 @@ vec4 effect( vec2 texture_coords )
    /* Begin marching. */
    float depth = inear; /* We start marching at the first intersection. */
    vec4 sum = vec4( 0.0 );
-   for (int i=0; i<MARCHING_STEPS_MAX; i++) {
+   for (int i=0; i<u_steps; i++) {
 
       /* Stop when solid. */
       if (sum.a >= 1.0)
