@@ -16,9 +16,6 @@ equip_typeOutfits_coreSystems["Diablo"] = {
 equip_typeOutfits_coreSystems["Hephaestus"] = {
    "Milspec Thalos 9802 Core System",
 }
-equip_typeOutfits_coreSystems["Prototype"] = {
-   "Milspec Orion 9901 Core System",
-}
 
 equip_typeOutfits_engines["Sting"] = {
    "Tricon Cyclone Engine",
@@ -35,9 +32,6 @@ equip_typeOutfits_engines["Diablo"] = {
 equip_typeOutfits_engines["Hephaestus"] = {
    "Melendez Mammoth XL Engine",
 }
-equip_typeOutfits_engines["Prototype"] = {
-   "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine",
-}
 
 equip_typeOutfits_hulls["Sting"] = {
    "Nexus Medium Stealth Plating", "S&K Medium Combat Plating",
@@ -52,9 +46,6 @@ equip_typeOutfits_hulls["Diablo"] = {
    "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating",
 }
 equip_typeOutfits_hulls["Hephaestus"] = {
-   "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating",
-}
-equip_typeOutfits_hulls["Prototype"] = {
    "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating",
 }
 
@@ -157,7 +148,6 @@ equip_shipOutfits_utilities["Za'lek Demon"]     = zlk_util_medplus
 equip_shipOutfits_utilities["Za'lek Mephisto"]  = zlk_util_medplus
 equip_shipOutfits_utilities["Za'lek Diablo"]    = zlk_util_medplus
 equip_shipOutfits_utilities["Za'lek Hephaestus"]= zlk_util_medplus
-equip_shipOutfits_utilities["Za'lek Prototype"] = zlk_util_medplus
 
 --[[
 -- @brief Does Za'lek pilot equipping
