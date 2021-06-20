@@ -132,13 +132,6 @@
     - goddard_*.png
     - sirius_*.png
     - zalek_*.png
-- Scaatis:
-    license: CC-by 3.0
-    root:
-    - Naev.png
-    outfit:
-      store:
-      - brushedGUI.png
 - admiral_cheater:
     license: CC-by 3.0
     outfit:
