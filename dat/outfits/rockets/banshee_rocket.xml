@@ -5,7 +5,7 @@
   <mass>0.1</mass>
   <price>0</price>
   <description>The Banshee class heavy rocket is sometimes labeled the "poor pilot's torpedo". It has a relatively weak engine, but packs a powerful punch that can do respectable damage even to fairly large ships.</description>
-  <gfx_store>banshee.png</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="ammo">
   <gfx>banshee.png</gfx>

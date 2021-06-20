@@ -5,7 +5,6 @@
       - capacitor-g.png
       - capacitor2-g.png
       - capacitor4-g.png
-      - missile.png
       - neutronheavy.png
       - reroute.png
       - lancelot_fighter.png
@@ -20,16 +19,13 @@
     license: PD
     outfit:
       store:
-      - mace.png
       - macelauncher.png
 - Brian J. Cameron:
     license: PD
     outfit:
       store:
       - license.png
-      - empgrenade.png
       - empgrenadelauncher.png
-      - banshee.png
 - Josiah Schwartfeger:
     license: CC-by 3.0
     root:
@@ -55,11 +51,9 @@
       store:
       - cpu_i.png
       - cpu_ii.png
-      - cpu_iii.png
       - seekerlauncher.png
       - seeker.png
       - headhunterlauncher.png
-      - headhunter.png
       - caesarlauncher.png
 - Enigmatic:
     license: CC-by 3.0
@@ -136,7 +130,6 @@
     license: CC-by 3.0
     outfit:
       store:
-      - fury.png
       - unicorp_fury_launcher.png
       - teracom_fury_launcher.png
       - turreted_fury_launcher.png

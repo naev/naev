@@ -5,7 +5,7 @@
   <mass>4</mass>
   <price>0</price>
   <description>Based on the Caesar torpedo platofrm, Huntsman EMP torpedoes are designed to disable large warships, where smaller weapons would fail.</description>
-  <gfx_store>caesar_blue.webp</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="ammo">
   <gfx>caesar_blue.webp</gfx>

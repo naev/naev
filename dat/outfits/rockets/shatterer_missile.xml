@@ -5,7 +5,7 @@
   <mass>0.5</mass>
   <price>0</price>
   <description>This modified rocket was used by the Collective heavy drones as a means to puncture heavy warships and leave them vulnerable. It has very poor tracking, but has excellent speed and armor piercing.</description>
-  <gfx_store>fury.png</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="ammo">
   <gfx>fury.png</gfx>
