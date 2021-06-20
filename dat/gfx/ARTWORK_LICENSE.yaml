@@ -1,25 +1,13 @@
 - Vega Strike:
     license: GPLv2+
-    commodity:
-    - standard_mealpacks.png
     outfit:
       store:
-      - capacitor.png
-      - capacitor2.png
-      - capacitor4.png
-      - capacitor8.png
       - capacitor-g.png
       - capacitor2-g.png
       - capacitor4-g.png
       - missile.png
-      - neutron.png
       - neutronheavy.png
-      - reactor_i.png
-      - reactor_ii.png
-      - reactor_iii.png
       - reroute.png
-      - shield.png
-      - stabilizer.png
       - lancelot_fighter.png
       - lancelot_empire_fighter.png
       - drone_fighter.png
@@ -151,6 +139,14 @@
     outfit:
       store:
       - brushedGUI.png
+- admiral_cheater:
+    license: CC-by 3.0
+    outfit:
+      store:
+      - fury.png
+      - unicorp_fury_launcher.png
+      - teracom_fury_launcher.png
+      - turreted_fury_launcher.png
 - Basse:
     license: GPLv2+
     outfit:
@@ -185,14 +181,6 @@
       - shredder.png
       - vulcangun.png
       - vulcanturret.png
-- admiral_cheater:
-    license: CC-by 3.0
-    outfit:
-      store:
-      - fury.png
-      - unicorp_fury_launcher.png
-      - teracom_fury_launcher.png
-      - turreted_fury_launcher.png
 - Ian D. Scott <ids1024>:
     license: PD
     outfit:
