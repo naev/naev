@@ -30,7 +30,7 @@
 #define MISSION_DATA_PATH        "missions/" /**< Path to missions XML. */
 #define EVENT_DATA_PATH          "events/" /**< Path to events XML. */
 #define UNIDIFF_DATA_PATH        "unidiff/" /**< Path to unidiff XML. */
-#define SPFX_DATA_PATH           "spfx.xml" /**< Location of the spfx datafile. */
+#define SPFX_DATA_PATH           "spfx/" /**< Location of the spfx datafiles. */
 #define DTYPE_DATA_PATH          "damagetype.xml" /**< Damage-type definitions. */
 #define COMMODITY_DATA_PATH      "commodity.xml" /**< Commodity XML file. */
 #define FLEET_DATA_PATH          "fleet.xml" /**< Where to find fleet data. */

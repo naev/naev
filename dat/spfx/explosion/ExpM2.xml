@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spfx name="ExpM2">
+ <gfx sx="5" sy="5">expm2.webp</gfx>
+ <anim>450</anim>
+</spfx>

@@ -35,8 +35,7 @@
 #include "nlua_shader.h"
 
 
-#define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
-#define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
+#define SPFX_XML_ID    "spfx" /**< SPFX XML node tag. */
 
 /*
  * Effect parameters.
@@ -151,7 +150,7 @@ static SPFX *spfx_stack_back = NULL; /**< Back special effect layer. */
  * prototypes
  */
 /* General. */
-static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent );
+static int spfx_base_parse( SPFX_Base *temp, const char *filename );
 static void spfx_base_free( SPFX_Base *effect );
 static void spfx_update_layer( SPFX *layer, const double dt );
 /* Haptic. */
@@ -168,10 +167,10 @@ static void spfx_trail_free( Trail_spfx* trail );
  * @brief Parses an xml node containing a SPFX.
  *
  *    @param temp Address to load SPFX into.
- *    @param parent XML Node containing the SPFX data.
+ *    @param filename Name of the file to parse.
  *    @return 0 on success.
  */
-static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
+static int spfx_base_parse( SPFX_Base *temp, const char *filename )
 {
    xmlNodePtr node, cur, uniforms;
    char *shadervert, *shaderfrag;
@@ -180,6 +179,19 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    int ix, iy, iz, iw;
    int isint;
    GLint loc, dim;
+   xmlDocPtr doc;
+
+   /* Load and read the data. */
+   doc = xml_parsePhysFS( filename );
+   if (doc == NULL)
+      return -1;
+
+   /* Check to see if document exists. */
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,SPFX_XML_ID)) {
+      ERR( _("Malformed '%s' file: missing root element '%s'"), filename, SPFX_XML_ID);
+      return -1;
+   }
 
    /* Clear data. */
    memset( temp, 0, sizeof(SPFX_Base) );
@@ -188,10 +200,10 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    shaderfrag = NULL;
    uniforms = NULL;
 
-   xmlr_attr_strd( parent, "name", temp->name );
+   xmlr_attr_strd( node, "name", temp->name );
 
    /* Extract the data. */
-   node = parent->xmlChildrenNode;
+   node = node->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
       xmlr_float(node, "anim", temp->anim);
@@ -305,6 +317,9 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    free(shadervert);
    free(shaderfrag);
 
+   /* Clean up. */
+   xmlFreeDoc(doc);
+
    return 0;
 }
 
@@ -346,43 +361,27 @@ int spfx_get( char* name )
  */
 int spfx_load (void)
 {
-   xmlNodePtr node;
-   xmlDocPtr doc;
+   int i, n, ret;
+   char **spfx_files;
 
-   /* Load and read the data. */
-   doc = xml_parsePhysFS( SPFX_DATA_PATH );
-   if (doc == NULL)
-      return -1;
-
-   /* Check to see if document exists. */
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,SPFX_XML_ID)) {
-      ERR( _("Malformed '%s' file: missing root element '%s'"), SPFX_DATA_PATH, SPFX_XML_ID);
-      return -1;
-   }
-
-   /* Check to see if is populated. */
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR( _("Malformed '%s' file: does not contain elements"), SPFX_DATA_PATH);
-      return -1;
-   }
-
-   /* First pass, loads up ammunition. */
    spfx_effects = array_create(SPFX_Base);
-   do {
-      xml_onlyNodes(node);
-      if (xml_isNode(node,SPFX_XML_TAG)) {
-         spfx_base_parse( &array_grow(&spfx_effects), node );
-      }
-      else
-         WARN( _("'%s' has unknown node '%s'."), SPFX_DATA_PATH, node->name);
-   } while (xml_nextNode(node));
-   /* Shrink back to minimum - shouldn't change ever. */
-   array_shrink(&spfx_effects);
 
-   /* Clean up. */
-   xmlFreeDoc(doc);
+   spfx_files = ndata_listRecursive( SPFX_DATA_PATH );
+   for (i=0; i<array_size(spfx_files); i++) {
+      if (!ndata_matchExt( spfx_files[i], "xml" ))
+         continue;
+
+      ret = spfx_base_parse( &array_grow(&spfx_effects), spfx_files[i] );
+      if (ret < 0) {
+         n = array_size(spfx_effects);
+         array_erase( &spfx_effects, &spfx_effects[n-1], &spfx_effects[n] );
+      }
+      free( spfx_files[i] );
+   }
+   array_free( spfx_files );
+
+   /* Reduce size. */
+   array_shrink( &spfx_effects );
 
    /* Trail colour sets. */
    trailSpec_load();
@@ -412,8 +411,11 @@ int spfx_load (void)
    spfx_stack_middle = array_create( SPFX );
    spfx_stack_back = array_create( SPFX );
 
+   DEBUG( n_( "Loaded %d Special Effect", "Loaded %d Special Effects", array_size(spfx_effects) ), array_size(spfx_effects) );
+
    return 0;
 }
+
 
 
 /**
