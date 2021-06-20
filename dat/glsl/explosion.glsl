@@ -1,9 +1,8 @@
 #include "lib/math.glsl"
 
+/* Common uniforms for special effects. */
 uniform float u_time = 0.0;
 uniform float u_r = 0.0;
-
-//#define SHOW_BOUNDS 1
 
 /* Main constants. */
 const float CAM_DIST = 2.0;         /**< Distance of the camera from the origin. Defaults to 2.0. */
@@ -26,9 +25,9 @@ const float CONTRAST = 1.0;         /**< Final colour contrast. Higher values co
 /* Uniforms. */
 uniform float u_grain = 1.0;     /**< Determines the details of the explosions. Increasing it likely requires increasing step size. */
 uniform float u_speed = 0.4;     /**< How fast the animation plays. Total play time is 1.0/u_speed. */
-uniform vec4 u_colorbase = vec4( 1.2, 0.9, 0.5, 0.7); /**< Base colour of the explosion. */
-uniform vec4 u_colorsmoke = vec4( 0.15, 0.15,  0.15, 0.1); /**< Colour to use for the smoke, most likely shouldn't be changed. */
-uniform int u_steps = 24;  /**< How many steps to march. Defaults to 32. */
+uniform vec4 u_colorbase = vec4( 1.2, 0.9, 0.5, 0.7); /**< Base colour of the explosion. Defaults to {1.2, 0.9, 0.5, 0.7}. */
+uniform vec4 u_colorsmoke = vec4( 0.15, 0.15, 0.15, 0.1); /**< Colour to use for the smoke. Defaults to {0.15, 0.15, 0.15, 0.1}. */
+uniform int u_steps = 16;        /**< Maximum amount of steps to take when marching. Defaults to 16. */
 
 /* Note that all the hash functions return in the [0.0, 1.0] range. */
 #define hash random
@@ -125,11 +124,6 @@ float compute_density( vec3 p, float r, float t, vec3 dir )
    /* We skip small densities and make them seem flat. */
    if (den <= -3.0)
       return -1.0;
-
-#ifdef SHOW_BOUNDS
-   p = 0.5 * normalize(p);
-   return abs(p.y);
-#endif
 
    /* We modify the pshere direction by rolling and dampening it. */
    float s  = 33.7*u_r - (ROLL_SPEED / (sin(min(t*3.0, 1.57)) + ROLL_DAMPENING));
@@ -239,44 +233,29 @@ vec4 effect( vec2 texture_coords )
          continue;
       }
 
-#ifndef SHOW_BOUNDS
       /* Smooth out the smoke at the far end so you don't see the clipping
       with the main sphere. Does not change the sign of the density.  */
       density *= 1.0 - smoothstep( SMOOTHING, 1.0, radius );
-#endif
 
       /* Compute the colour based on the density. */
       float densityc = clamp( density, 0.0, 1.0 );
       vec4 col   = compute_colour( densityc, radius*(BRIGHTNESS_RADIUS_OFFSET+density), brightness );
 
-#ifndef SHOW_BOUNDS
       /* Uniform scale density. */
       col.a   *= (col.a + 0.4) * (1.0 - radius*radius);
 
       /* Alpha premultiply. */
       col.rgb *= col.a;
-#else
-      col.a   *= 5.0;
-#endif
 
-#ifndef SHOW_BOUNDS
       /* Blend in the contribution of the sphere. */
       sum   += col*(1.0 - sum.a);
       sum.a += 0.15 * col.a;
-#else
-      sum = max( sum, col );
-#endif
 
       /* Heuristics to move faster through low density areas. */
       float step_mod = 1.0 + (1.0-max(density+col.a, 0.0));
       /* March along the ray. */
       depth  += step_base * step_mod;
    }
-
-#ifdef SHOW_BOUNDS
-   if (sum.a < 0.1)
-      sum = vec4(0.0, 0.0, 0.5, 0.1);
-#endif
 
    vec4 col = clamp( sum, 0.0, 1.0 );
    col.xyz  = col.xyz*col.xyz*(1.0+CONTRAST-CONTRAST*col.xyz);
