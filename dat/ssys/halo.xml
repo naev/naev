@@ -10,7 +10,9 @@
   <x>181.518949</x>
   <y>146.341840</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Pirate Small</asset>
+ </assets>
  <jumps>
   <jump target="Bastion">
    <autopos/>
