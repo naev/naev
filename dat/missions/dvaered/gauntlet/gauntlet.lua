@@ -40,7 +40,7 @@ end
 
 -- Land is unified for all types of combat
 function land ()
-   local rewardcredits = total_score*10
+   local rewardcredits = total_score
    -- TODO only give emblems from bosses or special clears?
    local rewardemblems = total_score/100
 

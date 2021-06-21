@@ -158,14 +158,14 @@ function approach_guide ()
    vn.label("trade_menu")
    guide( function () return string.format(_([["You have %s. What would you like to trade for?"]]), gauntlet.emblems_str( gauntlet.emblems_get())) end )
    local trades = {
-      {name=_("Unlock Warrior Challenge"), cost=100, type="var", var="gauntlet_unlock_warrior",
+      {name=_("Unlock Warrior Challenge"), cost=500, type="var", var="gauntlet_unlock_warrior",
          description=_("Unlocks participation in the difficult Warrior Challenge meant for Corvette and Destroyer-class ships.")},
-      {name=_("Unlock Warlord Challenge"), cost=500, type="var", var="gauntlet_unlock_warlord",
+      {name=_("Unlock Warlord Challenge"), cost=2000, type="var", var="gauntlet_unlock_warlord",
          description=_("Unlocks participation in the most difficult Warlord Challenge meant for Cruiser and Carrier-class ships."),
          test=function () return var.peek("gauntlet_unlock_warrior") end },
-      {name=_("Unlock Double Damage Enemies Perk"), cost=1000, type="var", var="gauntlet_unlock_doubledmgtaken",
+      {name=_("Unlock Double Damage Enemies Perk"), cost=2500, type="var", var="gauntlet_unlock_doubledmgtaken",
          description=_("Unlocks the Double Damage Enemies Perk, which causes all enemies to double the amount of damage. While this increases the challenge difficulty, it also immensely increases the rewards.")},
-      {name=_("Unlock No Healing Perk"), cost=1000, type="var", var="gauntlet_unlock_nohealing",
+      {name=_("Unlock No Healing Perk"), cost=2500, type="var", var="gauntlet_unlock_nohealing",
          description=_("Unlocks the No Healing Perk, which makes it so you don't get healed between waves. While this increases the challenge difficulty, it also increases the rewards.")},
    }
    local tradein_item = nil

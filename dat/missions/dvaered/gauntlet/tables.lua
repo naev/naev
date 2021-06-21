@@ -1,23 +1,23 @@
 wave_score_table = {
    -- Fighters
-   Hyena = 100,
-   Shark = 200,
-   Lancelot = 300,
-   Vendetta = 400,
+   Hyena = 1000,
+   Shark = 2000,
+   Lancelot = 3000,
+   Vendetta = 4000,
    -- Bombers
-   Ancestor = 250,
+   Ancestor = 2500,
    -- Corvettes
-   Phalanx = 500,
-   Admonisher = 600,
+   Phalanx = 6000,
+   Admonisher = 8000,
    -- Destroyers
-   Vigilance = 800,
-   Pacifier = 1000,
-   ["Dvaered Vigilance"] = 1200,
+   Vigilance = 12000,
+   Pacifier = 14000,
+   ["Dvaered Vigilance"] = 14000,
    -- Cruisers
-   Kestrel = 2000,
-   Hawking = 3000,
-   Goddard = 4000,
-   ["Dvaered Goddard"] = 5000,
+   Kestrel = 20000,
+   Hawking = 30000,
+   Goddard = 40000,
+   ["Dvaered Goddard"] = 45000,
    -- Carriers
 }
 wave_round_enemies = {
