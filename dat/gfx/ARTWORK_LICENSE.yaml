@@ -5,11 +5,8 @@
       - capacitor-g.png
       - capacitor2-g.png
       - capacitor4-g.png
-      - missile.png
       - neutronheavy.png
       - reroute.png
-      - lancelot_fighter.png
-      - lancelot_empire_fighter.png
       - drone_fighter.png
 - M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>:
     license: CC-by-sa 3.0
@@ -20,16 +17,13 @@
     license: PD
     outfit:
       store:
-      - mace.png
       - macelauncher.png
 - Brian J. Cameron:
     license: PD
     outfit:
       store:
       - license.png
-      - empgrenade.png
       - empgrenadelauncher.png
-      - banshee.png
 - Josiah Schwartfeger:
     license: CC-by 3.0
     root:
@@ -54,12 +48,8 @@
     outfit:
       store:
       - cpu_i.png
-      - cpu_ii.png
-      - cpu_iii.png
       - seekerlauncher.png
-      - seeker.png
       - headhunterlauncher.png
-      - headhunter.png
       - caesarlauncher.png
 - Enigmatic:
     license: CC-by 3.0
@@ -132,18 +122,10 @@
     - goddard_*.png
     - sirius_*.png
     - zalek_*.png
-- Scaatis:
-    license: CC-by 3.0
-    root:
-    - Naev.png
-    outfit:
-      store:
-      - brushedGUI.png
 - admiral_cheater:
     license: CC-by 3.0
     outfit:
       store:
-      - fury.png
       - unicorp_fury_launcher.png
       - teracom_fury_launcher.png
       - turreted_fury_launcher.png
@@ -152,11 +134,6 @@
     outfit:
       store:
       - droid.png
-- W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>:
-    license: CC-by-sa 3.0
-    outfit:
-      store:
-      - map.png
 - United States Department of Energy:
     license: PD
     outfit:

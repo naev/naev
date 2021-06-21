@@ -5,7 +5,7 @@
   <mass>0.1</mass>
   <price>0</price>
   <description>These Energy Cells are used as a form of 'ammo' for a long-range discharge cannon used by the Za'lek. They have a decent range and good damage, making them ideal for softening up a target for shorter-ranged beams to finish the target off.</description>
-  <gfx_store>cpu_iii.png</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="ammo">
   <gfx>electron.png</gfx>
