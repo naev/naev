@@ -23401,7 +23401,7 @@ msgstr "Motorenumleitung"
 
 #: dat/outfits/structure/engine_reroute.xml:4
 #: dat/outfits/structure/improved_stabilizer.xml:4
-msgid "Manoevrability Modifier"
+msgid "Manoeuvrability Modifier"
 msgstr "Manovrierfähigkeitsmodifikator"
 
 #: dat/outfits/structure/engine_reroute.xml:9
@@ -23413,7 +23413,7 @@ msgstr "Manovrierfähigkeitsmodifikator"
 msgid ""
 "This enhancement routes energy from the ship's energy supplies to the "
 "engine, giving the ship an increased thrust. It does not directly increase "
-"the ship's max speed nor turning abilities, however, a curious effet is that "
+"the ship's max speed nor turning abilities, however, a curious effect is that "
 "the engines can now also be run in reverse to allow braking with a small "
 "loss in reverse thrust capability."
 msgstr ""

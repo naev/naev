@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Improved Stabilizer">
  <general>
-  <typename>Manoevrability Modifier</typename>
+  <typename>Manoeuvrability Modifier</typename>
   <slot>structure</slot>
   <size>small</size>
   <mass>0</mass>
