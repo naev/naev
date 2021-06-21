@@ -3,10 +3,10 @@
  <anim>3333</anim>
  <shader>
   <vert>project_pos.vert</vert>
-  <frag>explosion.glsl</frag>
+  <frag>explosion.frag</frag>
   <size>400</size>
   <uniforms>
-   <u_grain x="1.3" />
+   <u_grain x="0.325" />
    <u_speed x="0.3" />
    <u_steps int="1" x="15" />
   </uniforms>
