@@ -52,10 +52,8 @@ function land ()
       player.pay( rewardcredits, "noescorts" )
       gauntlet.emblems_pay( rewardemblems )
    end )
-   vn.na(string.format(_([[You obtained %d points!
-You received #g%s#0!
+   vn.na(string.format(_([[You received #g%s#0!
 You received %s!]]),
-         total_score,
          creditstring( rewardcredits ),
          gauntlet.emblems_str( rewardemblems ) ))
    vn.run()
