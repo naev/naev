@@ -179,6 +179,15 @@ faction_events = {
    },
 }
 -- Custom events can handle custom triggers such as nebula systems
+local function test_systems( syslist )
+   local n = system.cur():nameRaw()
+   for k,v in ipairs(syslist) do
+      if v==n then
+         return true
+      end
+   end
+   return false
+end
 custom_events = {
    Nebula = {
       test = function ()
@@ -191,18 +200,46 @@ custom_events = {
             "Myad",
             "Tormulex",
          }
-         local n = system.cur():nameRaw()
-         for k,v in ipairs(nsys) do
-            if v==n then
-               return true
-            end
-         end
-         return false
+         return test_systems( nsys )
       end,
       type = "enter",
       name = "disc_nebula",
       title = _("The Nebula"),
       subtitle = _("Grim Reminder of Our Fragility"),
+   },
+   NorthWinds = {
+      test = function ()
+         local nsys = {
+            "Defa",
+            "Vedalus",
+            "Titus",
+            "New Haven",
+            "Daled",
+            "Mason",
+         }
+         return test_systems( nsys )
+      end,
+      type = "enter",
+      name = "disc_northwinds",
+      title = _("Northern Solar Winds"),
+      --subtitle = _("None"),
+   },
+   SouthWinds = {
+      test = function ()
+         local nsys = {
+            "Kretogg",
+            "Unicorn",
+            "Volus",
+            "Sheffield",
+            "Gold",
+            "Fried",
+         }
+         return test_systems( nsys )
+      end,
+      type = "enter",
+      name = "disc_southwinds",
+      title = _("Southern Solar Winds"),
+      --subtitle = _("None"),
    },
 }
 
