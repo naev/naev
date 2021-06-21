@@ -256,8 +256,12 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
                WARN(_("SPFX '%s' is trying to set uniform '%s' not in shader!"), temp->name, name );
                continue;
             }
-            xmlr_attr_int_def(node,"dim",dim,1);
             xmlr_attr_int_def(node,"int",isint,0);
+            /* Get dimension */
+            if (xmlHasProp(node,(xmlChar*)"w"))       dim = 4;
+            else if (xmlHasProp(node,(xmlChar*)"z"))  dim = 3;
+            else if (xmlHasProp(node,(xmlChar*)"y"))  dim = 2;
+            else                                      dim = 1;
             /* Float values default to 0. */
             if (isint) {
                xmlr_attr_int(node, "x", ix );
