@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-06-16 22:16-0400\n"
+"POT-Creation-Date: 2021-06-21 12:01-0400\n"
 "PO-Revision-Date: 2021-02-14 02:50+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
@@ -23413,9 +23413,9 @@ msgstr "Manovrierfähigkeitsmodifikator"
 msgid ""
 "This enhancement routes energy from the ship's energy supplies to the "
 "engine, giving the ship an increased thrust. It does not directly increase "
-"the ship's max speed nor turning abilities, however, a curious effect is that "
-"the engines can now also be run in reverse to allow braking with a small "
-"loss in reverse thrust capability."
+"the ship's max speed nor turning abilities, however, a curious effect is "
+"that the engines can now also be run in reverse to allow braking with a "
+"small loss in reverse thrust capability."
 msgstr ""
 "Diese Verbesserung leitet die Energie von den Energievorräten des Schiffes "
 "zum Motor, wodurch das Schiff einen erhöhten Schub erhält. Sie erhöht weder "
@@ -26356,25 +26356,6 @@ msgstr ""
 "abzuwehren. Eine Gruppe dieser Schiffe kann selbst mächtige Flotten in "
 "kurzer Zeit zu Schrott verarbeiten."
 
-#: dat/ships/zalek_prototype.xml:2
-msgid "Za'lek Prototype"
-msgstr "Za'lek-Prototyp"
-
-#: dat/ships/zalek_prototype.xml:13
-msgid "Za'lek Research Team"
-msgstr "Za'lek-Forschungsteam"
-
-#: dat/ships/zalek_prototype.xml:15
-msgid ""
-"This is an experimental type of cruiser developed by Za'lek engineers. "
-"Little is known about it outside of the development team, but it is rumoured "
-"to have powerful upgrades and enhancements over much of the competition."
-msgstr ""
-"Dies ist ein experimenteller Kreuzertyp, der von Za'lek-Ingenieuren "
-"entwickelt wurde. Außerhalb des Entwicklungsteams ist nur wenig darüber "
-"bekannt, aber es gibt Gerüchte, dass er in weiten Teilen der Konkurrenz über "
-"leistungsstarke Upgrades und Verbesserungen verfügt."
-
 #: dat/ships/zalek_sting.xml:17
 msgid ""
 "The Sting Corvette is rather large for its size, but its advanced sensor "
@@ -26774,7 +26755,7 @@ msgstr "Corvus"
 #. Add to log
 #. Create the OSD
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:127
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:91
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:89
 #, fuzzy
 #| msgid "Crimson "
 msgid "Crimson Gauntlet"
@@ -26795,6 +26776,15 @@ msgstr "Dakron"
 #: dat/ssys/daled.xml:2
 msgid "Daled"
 msgstr "Daled"
+
+#: dat/ssys/daled.xml:5 dat/ssys/defa.xml:5 dat/ssys/fried.xml:5
+#: dat/ssys/gold.xml:5 dat/ssys/kretogg.xml:5 dat/ssys/mason.xml:5
+#: dat/ssys/new_haven.xml:5 dat/ssys/sheffield.xml:5 dat/ssys/titus.xml:5
+#: dat/ssys/unicorn.xml:5 dat/ssys/vedalus.xml:5 dat/ssys/volus.xml:5
+#, fuzzy
+#| msgid "Four Winds"
+msgid "#bSolar Winds#0"
+msgstr "Vier Winde"
 
 #: dat/ssys/damien.xml:2
 msgid "Damien"
@@ -27792,6 +27782,12 @@ msgstr "Symm"
 msgid "Taiomi"
 msgstr ""
 
+#: dat/ssys/taiomi.xml:5
+#, fuzzy
+#| msgid "Shipyard"
+msgid "#pShip Graveyard#0"
+msgstr "Schiffswerft"
+
 #: dat/ssys/tandar.xml:2
 msgid "Tandar"
 msgstr "Tandar"
@@ -28219,7 +28215,7 @@ msgstr "Ich werde Ihnen keinen Treibstoff geben!"
 #. TODO reset outfit cooldown stuff
 #. teleport to middle
 #: dat/ai/base.lua:9 dat/ai/collective.lua:11 dat/ai/drone_miner.lua:10
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:287
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:285
 msgid "No response."
 msgstr "Keine Antwort."
 
@@ -29932,6 +29928,8 @@ msgstr "Formation „%s“ nicht gefunden"
 
 #. Run instead of "control" when under manual control; use should be limited
 #. Below we only handle if they came from allies
+#. (So far, only allies would send in the first place, but this check future-proofs things.
+#. One day it might be interesting to have non-allied snitches whose tips get checked out...)
 #. Stop scanning if they got information about the scan
 #. Below we only handle if they came from the glorious leader
 #. Escort commands
@@ -30187,6 +30185,8 @@ msgstr "Das willst du tun? Deine Entscheidung."
 #. Some light circuit background.
 #. --
 #. We use the default background too!
+#. Shader isn't too expensive, but we try to respect nebu_scale to an
+#. extent.
 #. Initialize the shader
 #. Default nebula background (no star)
 #. Get camera properties
@@ -30563,33 +30563,47 @@ msgstr ""
 #. Custom events can handle custom triggers such as nebula systems
 #. These are currently the only systems from which the player can
 #. enter the nebula
-#: dat/events/discovery.lua:204
+#: dat/events/discovery.lua:207
 #, fuzzy
 #| msgid "Nebula"
 msgid "The Nebula"
 msgstr "Nebel"
 
-#: dat/events/discovery.lua:205
+#: dat/events/discovery.lua:208
 msgid "Grim Reminder of Our Fragility"
 msgstr ""
 
+#: dat/events/discovery.lua:224
+#, fuzzy
+#| msgid "Rogue Four Winds"
+msgid "Northern Solar Winds"
+msgstr "Feindliche Vier Winde"
+
+#. subtitle = _("None"),
+#: dat/events/discovery.lua:241
+#, fuzzy
+#| msgid "Rogue Four Winds"
+msgid "Southern Solar Winds"
+msgstr "Feindliche Vier Winde"
+
+#. subtitle = _("None"),
 #. sfx = audio.newSource( 'snd/sounds/jingles/success.ogg' )
 #. Don't trigger if already done
 #. Trigger
 #. Nothing triggered
 #. Ends when player lands or leaves either way
-#: dat/events/discovery.lua:274
+#: dat/events/discovery.lua:311
 #, fuzzy, lua-format
 #| msgid "You need %s more!"
 msgid "You found #o%s!"
 msgstr "Du brauchst noch %s!"
 
 #. Log and message
-#: dat/events/discovery.lua:277 dat/events/shiplog.lua:41
+#: dat/events/discovery.lua:314 dat/events/shiplog.lua:41
 msgid "Travel Log"
 msgstr "Reiselogbuch"
 
-#: dat/events/discovery.lua:277 src/map.c:1939
+#: dat/events/discovery.lua:314 src/map.c:1939
 #, fuzzy
 #| msgid "Discord"
 msgid "Discovery"
@@ -30599,7 +30613,7 @@ msgstr "Konflikt"
 #. If custom function, run it
 #. Mark as done
 #. Play sound and show message
-#: dat/events/discovery.lua:300
+#: dat/events/discovery.lua:337
 msgid "fonts/CormorantUnicase-Medium.ttf"
 msgstr ""
 
@@ -47215,14 +47229,14 @@ msgstr "Große "
 #. Land is unified for all types of combat
 #. TODO only give emblems from bosses or special clears?
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:55
-#, lua-format
+#, fuzzy, lua-format
+#| msgid "Naev received %s!"
 msgid ""
-"You obtained %d points!\n"
 "You received #g%s#0!\n"
 "You received %s!"
-msgstr ""
+msgstr "Naev hat %s erhalten!"
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:92
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:90
 #, fuzzy
 #| msgid "Defeat the Starfire"
 msgid "Defeat all the other adversaries!"
@@ -47246,29 +47260,29 @@ msgstr "Besiege Sternfeuer"
 #.
 #. Countdown stuff
 #. --
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:158
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:156
 msgid "5…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:159
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:157
 msgid "4…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:160
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:158
 msgid "3…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:161
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:159
 msgid "2…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:162
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:160
 msgid "1…"
 msgstr ""
 
 #. TODO play countdown sound
 #. TODO play sound and cooler text
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:171
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:169
 msgid "FIGHT!"
 msgstr ""
 
@@ -47290,7 +47304,7 @@ msgstr ""
 #. --
 #. Get rid of pilots
 #. Metafactions
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:252
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:250
 msgid "Combatant"
 msgstr ""
 
@@ -47298,12 +47312,12 @@ msgstr ""
 #. Determine position
 #. Add ship
 #. Count down
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:345
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:343
 #, lua-format
 msgid "#pWAVE %d#0"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:357
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:355
 #, fuzzy, lua-format
 #| msgid "%.1f Second Lock-on\n"
 msgid "%.1f seconds"
@@ -47315,13 +47329,13 @@ msgstr "%.1f Sekunden Zielerfassung\n"
 #. TODO add sound
 #. TODO Cooler animation or something
 #. time to display each message
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:454
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:452
 #, lua-format
 msgid "#pWAVE %d CLEAR#0"
 msgstr ""
 
 #. TODO play sound and cooler text
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:466
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:464
 msgid "YOU ARE VICTORIOUS!"
 msgstr ""
 
@@ -53852,24 +53866,24 @@ msgstr "Konvoi-Muli"
 msgid "Transport"
 msgstr "Gepanzerter Transport"
 
-#: dat/missions/minerva/kex1.lua:287 src/faction.c:296 src/faction.c:1031
+#: dat/missions/minerva/kex1.lua:288 src/faction.c:296 src/faction.c:1031
 #: src/faction.c:1084
 msgid "Escort"
 msgstr "Geleit"
 
-#: dat/missions/minerva/kex1.lua:302
+#: dat/missions/minerva/kex1.lua:304
 #, fuzzy
 #| msgid "MISSION FAILURE! Target got away."
 msgid "#rMISSION FAILED! The transport got away!"
 msgstr "MISSION FEHLGESCHLAGEN! Ziel ist geflohen."
 
-#: dat/missions/minerva/kex1.lua:309
+#: dat/missions/minerva/kex1.lua:313
 #, fuzzy
 #| msgid "Convoy ships under attack! Requesting immediate assistance!"
 msgid "Transport under attack! Help requested immediately!"
 msgstr "Konvoischiffe unter Beschuss! Sofortige Hilfe erbeten!"
 
-#: dat/missions/minerva/kex1.lua:320
+#: dat/missions/minerva/kex1.lua:331
 msgid ""
 "You storm the transport and head towards the cargo bay, however, once you "
 "get there you find it is empty. Given that it is likely not to be large, you "
@@ -53877,14 +53891,14 @@ msgid ""
 "interest."
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:321
+#: dat/missions/minerva/kex1.lua:332
 #, lua-format
 msgid ""
 "You are not able to find what you were looking for, but you were able to "
 "find %s that likely won't be necessary to the crew anymore."
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:322
+#: dat/missions/minerva/kex1.lua:333
 msgid ""
 "It might be best to report back to Kex to see if his information was "
 "incorrect."
@@ -53892,19 +53906,19 @@ msgstr ""
 
 #. Permanently disable mainguy
 #. Message update
-#: dat/missions/minerva/kex1.lua:329
+#: dat/missions/minerva/kex1.lua:340
 msgid ""
 "You boarded a transport destined to the Minerva CEO, but didn't find "
 "anything."
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:341
+#: dat/missions/minerva/kex1.lua:352
 msgid ""
 "You scan the debris of the transport for any potential cargo, but can't find "
 "anything."
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:342
+#: dat/missions/minerva/kex1.lua:353
 msgid ""
 "You destroyed a transport destined to the Minerva Ceo, but didn't find "
 "anything in the debris."
@@ -83483,7 +83497,6 @@ msgstr "vn: Laufen lassen ohne Zustände"
 #. Transparent background in Naev
 #. Check to see if running standalone
 #. Small test
-#. local d = vn.newCharacter( "Developer", { color={1,0,0}, image="assets/scientist.png" } )
 #. Set up
 #. Insert start and end state if necessary
 #. table.insert( vn._states, vn.StateEnd.new() )
@@ -84067,8 +84080,8 @@ msgstr "Defekte „%s“-Datei: fehlendes Wurzelelement „%s“"
 msgid "Malformed %s file: does not contain elements"
 msgstr "Defekte „%s“-Datei: enthält keine Elemente"
 
-#: src/commodity.c:713 src/map.c:2763 src/slots.c:83 src/spfx.c:269
-#: src/start.c:126 src/tech.c:136
+#: src/commodity.c:713 src/map.c:2763 src/slots.c:83 src/start.c:126
+#: src/tech.c:136
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr "„%s“ hat unbekannten Node „%s“."
@@ -85640,7 +85653,7 @@ msgstr "Ereignisdatei „%s“ hat keinen XML-Header!"
 msgid "Unable to parse document XML header for Event '%s'"
 msgstr "Dokument-XML-Header für Ereignis „%s“ konnte nicht geparst werden"
 
-#: src/event.c:608 src/slots.c:67 src/spfx.c:250 src/start.c:68
+#: src/event.c:608 src/slots.c:67 src/spfx.c:192 src/start.c:68
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr "Defekte „%s“-Datei: fehlendes Wurzelelement „%s“"
@@ -87134,11 +87147,11 @@ msgstr ""
 "nicht"
 
 #. Scrolling is happening faster than fading...
-#: src/intro.c:231
+#: src/intro.c:246
 msgid "Intro scrolling too fast!"
 msgstr "Scrollen im Intro ist zu schnell!"
 
-#: src/intro.c:411
+#: src/intro.c:421
 msgid "Tried to fade out without an image."
 msgstr "Versuchte, ohne ein Bild auszublenden."
 
@@ -90120,7 +90133,7 @@ msgstr "Shader „%s“ nicht gefunden."
 msgid "Invalid #include syntax in '%s%s'!"
 msgstr "Ungültige #include-Syntax in „%s%s“!"
 
-#: src/opengl_shader.c:255
+#: src/opengl_shader.c:254
 #, c-format
 msgid "Failed to link vertex shader '%s' and fragment shader '%s'!"
 msgstr ""
@@ -90922,7 +90935,7 @@ msgid "GUI (Graphical User Interface)"
 msgstr "GUI (Grafische Benutzeroberfläche)"
 
 #: src/outfit.c:2290 src/outfit.c:2610 src/slots.c:74 src/space.c:3178
-#: src/spfx.c:257 src/spfx.c:1040 src/start.c:74
+#: src/spfx.c:1212 src/start.c:74
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr "Defekte „%s“-Datei: enthält keine Elemente"
@@ -93267,62 +93280,80 @@ msgstr "Unbekannter Markertyp."
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr "Lua-Verringerungsskript für Fraktion „%s“: %s"
 
-#: src/spfx.c:180
+#: src/spfx.c:231
 #, c-format
 msgid "SPFX '%s' has unknown node '%s'."
 msgstr "SPFX „%s“ hat unbekannten Node „%s“."
 
-#: src/spfx.c:190
+#: src/spfx.c:256
+#, c-format
+msgid "SPFX '%s' is trying to set uniform '%s' not in shader!"
+msgstr ""
+
+#: src/spfx.c:304
+#, c-format
+msgid "SPFX '%s' is trying to set uniform '%s' with '%d' dimensions!"
+msgstr ""
+
+#: src/spfx.c:314
 #, c-format
 msgid "SPFX '%s' missing/invalid '%s' element"
 msgstr "SPFX „%s“ hat fehlendes/ungültiges „%s“-Element"
 
-#: src/spfx.c:368
+#: src/spfx.c:418
+#, fuzzy, c-format
+#| msgid "Loading Special Effects..."
+msgid "Loaded %d Special Effect"
+msgid_plural "Loaded %d Special Effects"
+msgstr[0] "Spezialeffekte laden …"
+msgstr[1] "Spezialeffekte laden …"
+
+#: src/spfx.c:484
 msgid "Trying to add spfx with invalid effect!"
 msgstr "Versuchte, spfx mit ungültigem Effekt hinzuzufügen!"
 
-#: src/spfx.c:382
+#: src/spfx.c:498
 msgid "Invalid SPFX layer."
 msgstr "Ungültige SPFX-Ebene."
 
-#: src/spfx.c:839
+#: src/spfx.c:960
 #, c-format
 msgid "Unable to upload haptic effect: %s."
 msgstr "Konnte haptischen Effekt nicht hochladen: %s."
 
-#: src/spfx.c:876
+#: src/spfx.c:999
 #, c-format
 msgid "Failed to update haptic effect: %s."
 msgstr "Konnte haptischen Effekt nicht aktualisieren: %s."
 
-#: src/spfx.c:930
+#: src/spfx.c:1052
 msgid "Rendering invalid SPFX layer."
 msgstr "Ungültige SPFX-Ebene wird gerendert."
 
-#: src/spfx.c:1002
+#: src/spfx.c:1174
 #, fuzzy, c-format
 #| msgid "'%s' has unknown node '%s'."
 msgid "Trail '%s' has unknown node '%s'."
 msgstr "„%s“ hat unbekannten Node „%s“."
 
-#: src/spfx.c:1006
+#: src/spfx.c:1178
 #, fuzzy, c-format
 #| msgid "Ship '%s' missing '%s' element"
 msgid "Trail '%s' missing '%s' element"
 msgstr "Schiff „%s“ fehlt das „%s“-Element"
 
-#: src/spfx.c:1033
+#: src/spfx.c:1205
 #, fuzzy, c-format
 #| msgid "Malformed '%s' file: missing root element 'Asteroid_types'"
 msgid "Malformed '%s' file: missing root element 'Trail_types'"
 msgstr "Defekte „%s“-Datei: fehlendes Wurzelelement „Asteroid_types“"
 
-#: src/spfx.c:1082
+#: src/spfx.c:1254
 #, c-format
 msgid "Trail '%s' that inherits from '%s' has missing reference!"
 msgstr ""
 
-#: src/spfx.c:1120
+#: src/spfx.c:1292
 #, fuzzy, c-format
 #| msgid "Damage type '%s' not found in stack."
 msgid "Trail type '%s' not found in stack"
@@ -93724,6 +93755,23 @@ msgstr "Ungültiger WEAPON_LAYER angegeben"
 #: src/weapon.c:1855
 msgid "Trying to destroy weapon not found in stack!"
 msgstr "Versuch, eine Waffe, die nicht im Stack ist, zu zerstören!"
+
+#~ msgid "Za'lek Prototype"
+#~ msgstr "Za'lek-Prototyp"
+
+#~ msgid "Za'lek Research Team"
+#~ msgstr "Za'lek-Forschungsteam"
+
+#~ msgid ""
+#~ "This is an experimental type of cruiser developed by Za'lek engineers. "
+#~ "Little is known about it outside of the development team, but it is "
+#~ "rumoured to have powerful upgrades and enhancements over much of the "
+#~ "competition."
+#~ msgstr ""
+#~ "Dies ist ein experimenteller Kreuzertyp, der von Za'lek-Ingenieuren "
+#~ "entwickelt wurde. Außerhalb des Entwicklungsteams ist nur wenig darüber "
+#~ "bekannt, aber es gibt Gerüchte, dass er in weiten Teilen der Konkurrenz "
+#~ "über leistungsstarke Upgrades und Verbesserungen verfügt."
 
 #~ msgid "Za'lek Imp"
 #~ msgstr "Za'lek Imp"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-06-16 22:16-0400\n"
+"POT-Creation-Date: 2021-06-21 12:01-0400\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -17863,16 +17863,16 @@ msgstr ""
 
 #: dat/outfits/structure/engine_reroute.xml:4
 #: dat/outfits/structure/improved_stabilizer.xml:4
-msgid "Manoevrability Modifier"
+msgid "Manoeuvrability Modifier"
 msgstr ""
 
 #: dat/outfits/structure/engine_reroute.xml:9
 msgid ""
 "This enhancement routes energy from the ship's energy supplies to the "
 "engine, giving the ship an increased thrust. It does not directly increase "
-"the ship's max speed nor turning abilities, however, a curious effet is that "
-"the engines can now also be run in reverse to allow braking with a small "
-"loss in reverse thrust capability."
+"the ship's max speed nor turning abilities, however, a curious effect is "
+"that the engines can now also be run in reverse to allow braking with a "
+"small loss in reverse thrust capability."
 msgstr ""
 
 #: dat/outfits/structure/fuel_pod.xml:2
@@ -20387,24 +20387,6 @@ msgstr ""
 "방어막 덕분에 많은 학대를 피할 수 있습니다. 이 배의 핵심은 강력한 함대조차도 "
 "짧은 시간에 슬래그로 줄일 수 있습니다."
 
-#: dat/ships/zalek_prototype.xml:2
-msgid "Za'lek Prototype"
-msgstr "자레크의 프로토타이"
-
-#: dat/ships/zalek_prototype.xml:13
-msgid "Za'lek Research Team"
-msgstr "자레크의 연구티"
-
-#: dat/ships/zalek_prototype.xml:15
-msgid ""
-"This is an experimental type of cruiser developed by Za'lek engineers. "
-"Little is known about it outside of the development team, but it is rumoured "
-"to have powerful upgrades and enhancements over much of the competition."
-msgstr ""
-"Za'lek 엔지니어가 개발 한 실험용 순양함입니다. 개발 팀 외부에서는 알려진 바"
-"가 거의 없지만 많은 경쟁 제품에 대해 강력한 업그레이드 및 개선 사항이 있다는 "
-"소문이 있습니다."
-
 #: dat/ships/zalek_sting.xml:17
 msgid ""
 "The Sting Corvette is rather large for its size, but its advanced sensor "
@@ -20796,7 +20778,7 @@ msgstr ""
 #. Add to log
 #. Create the OSD
 #: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:127
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:91
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:89
 msgid "Crimson Gauntlet"
 msgstr ""
 
@@ -20814,6 +20796,13 @@ msgstr ""
 
 #: dat/ssys/daled.xml:2
 msgid "Daled"
+msgstr ""
+
+#: dat/ssys/daled.xml:5 dat/ssys/defa.xml:5 dat/ssys/fried.xml:5
+#: dat/ssys/gold.xml:5 dat/ssys/kretogg.xml:5 dat/ssys/mason.xml:5
+#: dat/ssys/new_haven.xml:5 dat/ssys/sheffield.xml:5 dat/ssys/titus.xml:5
+#: dat/ssys/unicorn.xml:5 dat/ssys/vedalus.xml:5 dat/ssys/volus.xml:5
+msgid "#bSolar Winds#0"
 msgstr ""
 
 #: dat/ssys/damien.xml:2
@@ -21820,6 +21809,10 @@ msgstr ""
 msgid "Taiomi"
 msgstr ""
 
+#: dat/ssys/taiomi.xml:5
+msgid "#pShip Graveyard#0"
+msgstr ""
+
 #: dat/ssys/tandar.xml:2
 msgid "Tandar"
 msgstr ""
@@ -22235,7 +22228,7 @@ msgstr "연료를 주지 않겠어!"
 #. TODO reset outfit cooldown stuff
 #. teleport to middle
 #: dat/ai/base.lua:9 dat/ai/collective.lua:11 dat/ai/drone_miner.lua:10
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:287
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:285
 msgid "No response."
 msgstr "응답이 없습니다."
 
@@ -23941,6 +23934,8 @@ msgstr "'%s' 대형은 발견되지 않았다"
 
 #. Run instead of "control" when under manual control; use should be limited
 #. Below we only handle if they came from allies
+#. (So far, only allies would send in the first place, but this check future-proofs things.
+#. One day it might be interesting to have non-allied snitches whose tips get checked out...)
 #. Stop scanning if they got information about the scan
 #. Below we only handle if they came from the glorious leader
 #. Escort commands
@@ -24191,6 +24186,8 @@ msgstr "너 이거 하고싶어? 네 방식대로 해."
 #. Some light circuit background.
 #. --
 #. We use the default background too!
+#. Shader isn't too expensive, but we try to respect nebu_scale to an
+#. extent.
 #. Initialize the shader
 #. Default nebula background (no star)
 #. Get camera properties
@@ -24542,31 +24539,41 @@ msgstr ""
 #. Custom events can handle custom triggers such as nebula systems
 #. These are currently the only systems from which the player can
 #. enter the nebula
-#: dat/events/discovery.lua:204
+#: dat/events/discovery.lua:207
 #, fuzzy
 msgid "The Nebula"
 msgstr "%s성운"
 
-#: dat/events/discovery.lua:205
+#: dat/events/discovery.lua:208
 msgid "Grim Reminder of Our Fragility"
 msgstr ""
 
+#: dat/events/discovery.lua:224
+msgid "Northern Solar Winds"
+msgstr ""
+
+#. subtitle = _("None"),
+#: dat/events/discovery.lua:241
+msgid "Southern Solar Winds"
+msgstr ""
+
+#. subtitle = _("None"),
 #. sfx = audio.newSource( 'snd/sounds/jingles/success.ogg' )
 #. Don't trigger if already done
 #. Trigger
 #. Nothing triggered
 #. Ends when player lands or leaves either way
-#: dat/events/discovery.lua:274
+#: dat/events/discovery.lua:311
 #, lua-format
 msgid "You found #o%s!"
 msgstr ""
 
 #. Log and message
-#: dat/events/discovery.lua:277 dat/events/shiplog.lua:41
+#: dat/events/discovery.lua:314 dat/events/shiplog.lua:41
 msgid "Travel Log"
 msgstr ""
 
-#: dat/events/discovery.lua:277 src/map.c:1939
+#: dat/events/discovery.lua:314 src/map.c:1939
 msgid "Discovery"
 msgstr ""
 
@@ -24574,7 +24581,7 @@ msgstr ""
 #. If custom function, run it
 #. Mark as done
 #. Play sound and show message
-#: dat/events/discovery.lua:300
+#: dat/events/discovery.lua:337
 msgid "fonts/CormorantUnicase-Medium.ttf"
 msgstr ""
 
@@ -38851,12 +38858,11 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:55
 #, lua-format
 msgid ""
-"You obtained %d points!\n"
 "You received #g%s#0!\n"
 "You received %s!"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:92
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:90
 msgid "Defeat all the other adversaries!"
 msgstr ""
 
@@ -38878,29 +38884,29 @@ msgstr ""
 #.
 #. Countdown stuff
 #. --
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:158
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:156
 msgid "5…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:159
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:157
 msgid "4…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:160
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:158
 msgid "3…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:161
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:159
 msgid "2…"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:162
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:160
 msgid "1…"
 msgstr ""
 
 #. TODO play countdown sound
 #. TODO play sound and cooler text
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:171
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:169
 msgid "FIGHT!"
 msgstr ""
 
@@ -38922,7 +38928,7 @@ msgstr ""
 #. --
 #. Get rid of pilots
 #. Metafactions
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:252
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:250
 msgid "Combatant"
 msgstr ""
 
@@ -38930,12 +38936,12 @@ msgstr ""
 #. Determine position
 #. Add ship
 #. Count down
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:345
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:343
 #, lua-format
 msgid "#pWAVE %d#0"
 msgstr ""
 
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:357
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:355
 #, lua-format
 msgid "%.1f seconds"
 msgstr ""
@@ -38946,13 +38952,13 @@ msgstr ""
 #. TODO add sound
 #. TODO Cooler animation or something
 #. time to display each message
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:454
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:452
 #, lua-format
 msgid "#pWAVE %d CLEAR#0"
 msgstr ""
 
 #. TODO play sound and cooler text
-#: dat/missions/dvaered/gauntlet/gauntlet.lua:466
+#: dat/missions/dvaered/gauntlet/gauntlet.lua:464
 msgid "YOU ARE VICTORIOUS!"
 msgstr ""
 
@@ -44113,20 +44119,20 @@ msgstr ""
 msgid "Transport"
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:287 src/faction.c:296 src/faction.c:1031
+#: dat/missions/minerva/kex1.lua:288 src/faction.c:296 src/faction.c:1031
 #: src/faction.c:1084
 msgid "Escort"
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:302
+#: dat/missions/minerva/kex1.lua:304
 msgid "#rMISSION FAILED! The transport got away!"
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:309
+#: dat/missions/minerva/kex1.lua:313
 msgid "Transport under attack! Help requested immediately!"
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:320
+#: dat/missions/minerva/kex1.lua:331
 msgid ""
 "You storm the transport and head towards the cargo bay, however, once you "
 "get there you find it is empty. Given that it is likely not to be large, you "
@@ -44134,14 +44140,14 @@ msgid ""
 "interest."
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:321
+#: dat/missions/minerva/kex1.lua:332
 #, lua-format
 msgid ""
 "You are not able to find what you were looking for, but you were able to "
 "find %s that likely won't be necessary to the crew anymore."
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:322
+#: dat/missions/minerva/kex1.lua:333
 msgid ""
 "It might be best to report back to Kex to see if his information was "
 "incorrect."
@@ -44149,19 +44155,19 @@ msgstr ""
 
 #. Permanently disable mainguy
 #. Message update
-#: dat/missions/minerva/kex1.lua:329
+#: dat/missions/minerva/kex1.lua:340
 msgid ""
 "You boarded a transport destined to the Minerva CEO, but didn't find "
 "anything."
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:341
+#: dat/missions/minerva/kex1.lua:352
 msgid ""
 "You scan the debris of the transport for any potential cargo, but can't find "
 "anything."
 msgstr ""
 
-#: dat/missions/minerva/kex1.lua:342
+#: dat/missions/minerva/kex1.lua:353
 msgid ""
 "You destroyed a transport destined to the Minerva Ceo, but didn't find "
 "anything in the debris."
@@ -68472,7 +68478,6 @@ msgstr ""
 #. Transparent background in Naev
 #. Check to see if running standalone
 #. Small test
-#. local d = vn.newCharacter( "Developer", { color={1,0,0}, image="assets/scientist.png" } )
 #. Set up
 #. Insert start and end state if necessary
 #. table.insert( vn._states, vn.StateEnd.new() )
@@ -69019,8 +69024,8 @@ msgstr ""
 msgid "Malformed %s file: does not contain elements"
 msgstr ""
 
-#: src/commodity.c:713 src/map.c:2763 src/slots.c:83 src/spfx.c:269
-#: src/start.c:126 src/tech.c:136
+#: src/commodity.c:713 src/map.c:2763 src/slots.c:83 src/start.c:126
+#: src/tech.c:136
 #, c-format
 msgid "'%s' has unknown node '%s'."
 msgstr ""
@@ -70448,7 +70453,7 @@ msgstr ""
 msgid "Unable to parse document XML header for Event '%s'"
 msgstr ""
 
-#: src/event.c:608 src/slots.c:67 src/spfx.c:250 src/start.c:68
+#: src/event.c:608 src/slots.c:67 src/spfx.c:192 src/start.c:68
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr ""
@@ -71784,11 +71789,11 @@ msgid "Unable to get keybinding description '%s', that command doesn't exist"
 msgstr ""
 
 #. Scrolling is happening faster than fading...
-#: src/intro.c:231
+#: src/intro.c:246
 msgid "Intro scrolling too fast!"
 msgstr ""
 
-#: src/intro.c:411
+#: src/intro.c:421
 msgid "Tried to fade out without an image."
 msgstr ""
 
@@ -74439,7 +74444,7 @@ msgstr "셰이더 '%s'을 (를) 찾을 수 없습니다."
 msgid "Invalid #include syntax in '%s%s'!"
 msgstr "창 정보 이름 '%s'이 (가) 잘못되었습니다."
 
-#: src/opengl_shader.c:255
+#: src/opengl_shader.c:254
 #, c-format
 msgid "Failed to link vertex shader '%s' and fragment shader '%s'!"
 msgstr ""
@@ -75186,7 +75191,7 @@ msgid "GUI (Graphical User Interface)"
 msgstr ""
 
 #: src/outfit.c:2290 src/outfit.c:2610 src/slots.c:74 src/space.c:3178
-#: src/spfx.c:257 src/spfx.c:1040 src/start.c:74
+#: src/spfx.c:1212 src/start.c:74
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
@@ -77334,60 +77339,76 @@ msgstr ""
 msgid "Lua decrease script for faction '%s' : %s"
 msgstr ""
 
-#: src/spfx.c:180
+#: src/spfx.c:231
 #, c-format
 msgid "SPFX '%s' has unknown node '%s'."
 msgstr ""
 
-#: src/spfx.c:190
+#: src/spfx.c:256
+#, c-format
+msgid "SPFX '%s' is trying to set uniform '%s' not in shader!"
+msgstr ""
+
+#: src/spfx.c:304
+#, c-format
+msgid "SPFX '%s' is trying to set uniform '%s' with '%d' dimensions!"
+msgstr ""
+
+#: src/spfx.c:314
 #, c-format
 msgid "SPFX '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/spfx.c:368
+#: src/spfx.c:418
+#, fuzzy, c-format
+msgid "Loaded %d Special Effect"
+msgid_plural "Loaded %d Special Effects"
+msgstr[0] "%d개의 성운 레이어로드"
+
+#: src/spfx.c:484
 msgid "Trying to add spfx with invalid effect!"
 msgstr ""
 
-#: src/spfx.c:382
+#: src/spfx.c:498
 msgid "Invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:839
+#: src/spfx.c:960
 #, c-format
 msgid "Unable to upload haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:876
+#: src/spfx.c:999
 #, c-format
 msgid "Failed to update haptic effect: %s."
 msgstr ""
 
-#: src/spfx.c:930
+#: src/spfx.c:1052
 msgid "Rendering invalid SPFX layer."
 msgstr ""
 
-#: src/spfx.c:1002
+#: src/spfx.c:1174
 #, fuzzy, c-format
 msgid "Trail '%s' has unknown node '%s'."
 msgstr "'%s'임무에 알 수없는 플래그 노드 '%s'이 (가) 있습니다."
 
-#: src/spfx.c:1006
+#: src/spfx.c:1178
 #, fuzzy, c-format
 #| msgid "Mission '%s' missing/invalid '%s' element"
 msgid "Trail '%s' missing '%s' element"
 msgstr "임무 '%s'누락 / 잘못된 '%s'요소"
 
-#: src/spfx.c:1033
+#: src/spfx.c:1205
 #, fuzzy, c-format
 msgid "Malformed '%s' file: missing root element 'Trail_types'"
 msgstr "'%s'임무에 대한 잘못된 XML 헤더: 루트 요소 '%s'누락"
 
-#: src/spfx.c:1082
+#: src/spfx.c:1254
 #, c-format
 msgid "Trail '%s' that inherits from '%s' has missing reference!"
 msgstr ""
 
-#: src/spfx.c:1120
+#: src/spfx.c:1292
 #, fuzzy, c-format
 msgid "Trail type '%s' not found in stack"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
@@ -77778,6 +77799,22 @@ msgstr ""
 msgid "Trying to destroy weapon not found in stack!"
 msgstr ""
 
+#~ msgid "Za'lek Prototype"
+#~ msgstr "자레크의 프로토타이"
+
+#~ msgid "Za'lek Research Team"
+#~ msgstr "자레크의 연구티"
+
+#~ msgid ""
+#~ "This is an experimental type of cruiser developed by Za'lek engineers. "
+#~ "Little is known about it outside of the development team, but it is "
+#~ "rumoured to have powerful upgrades and enhancements over much of the "
+#~ "competition."
+#~ msgstr ""
+#~ "Za'lek 엔지니어가 개발 한 실험용 순양함입니다. 개발 팀 외부에서는 알려진 "
+#~ "바가 거의 없지만 많은 경쟁 제품에 대해 강력한 업그레이드 및 개선 사항이 있"
+#~ "다는 소문이 있습니다."
+
 #~ msgid "Za'lek Imp"
 #~ msgstr "자레크의 lmp"
 
@@ -77946,11 +77983,6 @@ msgstr ""
 
 #~ msgid "Error renaming %s to %s"
 #~ msgstr "%s의 이름을 %s로 바꾸는 동안 오류가 발생했습니다"
-
-#, fuzzy
-#~ msgid "Loaded %d Nebula Layer"
-#~ msgid_plural "Loaded %d Nebula Layers"
-#~ msgstr[0] "%d개의 성운 레이어로드"
 
 #~ msgid "No nebula found, generating (this may take a while)."
 #~ msgstr "성운이 발견되지 않고 생성됩니다 (시간이 걸릴 수 있음)."
