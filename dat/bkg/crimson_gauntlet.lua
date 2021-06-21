@@ -13,9 +13,13 @@ local lg = require 'love.graphics'
 local love_shaders = require 'love_shaders'
 
 function background ()
+   -- Shader isn't too expensive, but we try to respect nebu_scale to an
+   -- extent.
+   sf = math.max( 1, naev.conf().nebu_scale / 2 )
+
    -- Initialize the shader
-   shader = love_shaders.circuit{}
-   bgshaders.init( shader )
+   shader = love_shaders.circuit{ strength=sf }
+   bgshaders.init( shader, sf )
 
    -- Default nebula background (no star)
    cur_sys = system.cur()
