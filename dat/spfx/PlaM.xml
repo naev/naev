@@ -4,7 +4,7 @@
  <shader>
   <vert>project_pos.vert</vert>
   <frag>explosion.frag</frag>
-  <size>50</size>
+  <size>60</size>
   <uniforms>
    <u_colorbase x="0.9" y="0.1" z="0.1" w="0.1" />
    <u_colorsmoke x="0.6" y="0.3" z="0.3" w="0.25" />
