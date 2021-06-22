@@ -725,6 +725,10 @@ void main_loop( int update )
       player_updateAutonav( real_dt );
       update_all(); /* update game */
    }
+   else if (!dialogue_isOpen()) {
+      /* We run the exclusion end here to handle any hooks that are potentially manually triggered by hook.trigger. */
+      hook_exclusionEnd( 0. );
+   }
 
    /* Safe hook should be run every frame regardless of whether game is paused or not. */
    hooks_run( "safe" );

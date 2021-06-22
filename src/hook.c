@@ -963,9 +963,9 @@ int hooks_runParamDeferred( const char* stack, HookParam *param )
    hq = calloc( 1, sizeof(HookQueue_t) );
    hq->stack = strdup(stack);
    i         = 0;
-   if ( param != NULL ) {
-      for ( ; param[ i ].type != HOOK_PARAM_SENTINEL; i++ )
-         hq->hparam[ i ] = param[ i ];
+   if (param != NULL) {
+      for (; param[i].type != HOOK_PARAM_SENTINEL; i++)
+         hq->hparam[i] = param[i];
    }
 #ifdef DEBUGGING
    if (i >= HOOK_MAX_PARAM)
