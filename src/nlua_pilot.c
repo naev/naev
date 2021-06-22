@@ -155,6 +155,7 @@ static int pilotL_attack( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_gather( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
+static int pilotL_stealth( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_msg( lua_State *L );
@@ -269,6 +270,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "runaway", pilotL_runaway },
    { "gather", pilotL_gather },
    { "hyperspace", pilotL_hyperspace },
+   { "stealth", pilotL_stealth },
    { "land", pilotL_land },
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
@@ -4191,6 +4193,33 @@ static int pilotL_hyperspace( lua_State *L )
    }
    /* Not found. */
    NLUA_ERROR( L, _("System '%s' is not adjacent to current system '%s'"), ss->name, cur_system->name );
+   return 0;
+}
+
+
+/**
+ * @brief Tells the pilot to try to stealth.
+ *
+ * Pilot must be under manual control for this to work.
+ *
+ *    @luatparam Pilot p Pilot to tell to hyperspace.
+ * @luasee control
+ * @luafunc stealth
+ */
+static int pilotL_stealth( lua_State *L )
+{
+   Pilot *p;
+   Task *t;
+
+   NLUA_CHECKRW(L);
+
+   /* Get parameters. */
+   p      = luaL_validpilot(L,1);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "stealth" );
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+
    return 0;
 }
 
