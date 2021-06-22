@@ -360,17 +360,13 @@ static int time_str( lua_State *L )
    char nt[64];
    int d;
 
-   /* Defaults. */
-   d = 2;
-
    /* Parse parameters. */
    top = lua_gettop(L);
    if ((top > 0) && !lua_isnil(L,1))
       t = luaL_validtime(L,1);
    else
       t = ntime_get();
-   if (top > 1)
-      d = luaL_checkint(L,2);
+   d = luaL_optinteger(L,2,2); /* Defaults to 2 decimals. */
 
    /* Push string. */
    ntime_prettyBuf( nt, sizeof(nt), t, d );
