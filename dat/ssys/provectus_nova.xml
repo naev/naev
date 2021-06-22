@@ -40,4 +40,15 @@
    <hide>0.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>liquid</type>
+   <radius>4000.000000</radius>
+   <pos x="5000.000000" y="9000.000000"/>
+   <density>0.500000</density>
+  </asteroid>
+ </asteroids>
 </ssys>
