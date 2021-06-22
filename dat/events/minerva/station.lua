@@ -33,8 +33,13 @@ blackjack_portrait = "blackjack.png"
 blackjack_desc = _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\".")
 blackjack_image = minerva.chicken.image
 chuckaluck_name = _("Chuck-a-luck")
-chuckaluck_portrait = "minervaceo.png" -- TODO replace
-chuckaluck_image = "minervaceo.png" -- TODO replace
+if var.peek("minerva_chuckaluck_change") then
+   chuckaluck_portrait = portrait.get() -- Becomes a random NPC
+   chuckaluck_image = portrait.getFullPath( chuckaluck_portrait )
+else
+   chuckaluck_portrait = "minervaceo.png" -- TODO replace
+   chuckaluck_image = "minervaceo.png" -- TODO replace
+end
 chuckaluck_desc = _("A fast-paced luck-based betting game using dice.")
 greeter_portrait = portrait.get() -- TODO replace?
 
@@ -122,6 +127,7 @@ function create()
    -- End event on takeoff.
    tokens_landed = minerva.tokens_get()
    hook.takeoff( "leave" )
+   hook.custom( "minerva_molecaught", "molecaught" )
 end
 
 local function has_event( name )
@@ -529,8 +535,16 @@ function approach_chuckaluck ()
    vn.na( _("You leave the chuck-a-luck table behind and head back to the main area.") )
    vn.run()
 
-   -- Handle random bar events if necessary
-   random_event()
+   -- Handle random bar events if necessary, however, don't do it with secret code or we get a dialogue inside a dialogue.
+   if not cl.secretcode then
+      random_event()
+   end
+end
+
+-- The mole was caught, we have to change and redo the chuckaluck NPC
+function molecaught()
+   var.push("minerva_chuckaluck_change", true)
+   evt.npcRm( npc_chuckaluck ) -- Just remove for now
 end
 
 -- Just do random noise
