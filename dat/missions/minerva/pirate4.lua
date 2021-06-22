@@ -28,7 +28,7 @@ require 'numstring'
 
 logidstr = minerva.log.pirate.idstr
 
-misn_title = _("The Dvaered Spy")
+misn_title = _("Minerva Mole")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to deal with a Dvaered spy that appears to be located at Minerva Station.")
 reward_amount = 200e3 -- 200k
@@ -37,6 +37,7 @@ reward_amount = 200e3 -- 200k
 mole_image = "minervaceo.png" -- TODO replace
 
 mainsys = "Provectus Nova"
+dvaeredsys = "Daan"
 -- Mission states:
 --  nil: mission not accepted yet
 --    0. have to find spy
@@ -64,7 +65,7 @@ function accept ()
    end
 
    misn.accept()
-   osd = misn.osdCreate( _("Minerva Mole"), {
+   osd = misn.osdCreate( misn_title, {
       _("Find out who the mole is"),
       _("Take the mole to the interrogation facility")
    } )
@@ -161,7 +162,7 @@ They make a cutting gesture from their belly up to their neck.
    -- Add illegal cargo
    local c = misn.cargoNew( _("Dvaered Mole"), _("An unconscious and restrained Dvaered mole. You better not let Dvaered ships find out you are carrying this individual.") )
    c:illegalto{"Dvaered"}
-   misn.cargoAdd( c, 0 )
+   mole = misn.cargoAdd( c, 0 )
 
    -- Signal they were caught
    var.pop("minerva_caninputcode")
@@ -169,7 +170,7 @@ They make a cutting gesture from their belly up to their neck.
 
    -- On to next state
    misn_state = 1
-   osd = misn.osdCreate( _("Minerva Mole"), {
+   osd = misn.osdCreate( misn_title, {
       string.format(_("Take the mole to the interrogation facility at %s"), mainsys),
    } )
    misn.markerAdd( system.get(mainsys) )
@@ -223,21 +224,73 @@ They beam you a smile.
    maikki(_([[The familiar and angry voice bellows in the distance.
 "Zuri! We've got incoming boars closing in our or position! Take care of it!"]]))
    pir:rename(_("Zuri"))
-   pir(_([["Shit, it looks like we have Dvaered company. Make sure they don't find our ship! I'll be manning the turrets here."
+   pir(_([["Shit, it looks like we have Dvaered company. Make sure they don't find our ship! I dunno, just shoot them or something! I'll be manning the turrets here."
 They rush off into the depths of the ship.]]))
    vn.na(_("You rush to get back to your ship before the Dvaereds jump in."))
    vn.run()
 
    -- Set up stuff
+   misn.cargoRm( mole )
    mainship:setActiveBoard(false)
 
+   -- Time limit stuff
+   timeneeded = time.create(0, 0, 5*60*30)
+   timelimit = time.get() + timeneeded
+   tick_hook = hook.date(time.create(0, 0, 10), "tick") -- 100STU per tick
+
    -- Dvaered jump in hooks
+   player.msg(string.format(_("Sensors detecting Dvaered patrol incoming from %s!"), dvaeredsys))
+   hook.timer(  5e3, "msg1" )
+   hook.timer( 10e3, "dv_reinforcement1" )
 end
 
 function mainship_attacked ()
 end
 
 function mainship_dead ()
-   player.msg(_("#rMISSION FAILED! You were supposed to kill the drones with Dvaered-only weapons!"))
+   player.msg(_("#rMISSION FAILED! The interrogation ship was destroyed!"))
    misn.finish(false)
+end
+
+function tick ()
+   if timelimit >= time.get() then
+      misn.osdCreate( misn_title, {
+         string.format(_("Defend the Interrogation Ship from the Dvaered for %s!"), (timelimit - time.get()):str()),
+      } )
+   else
+      hook.rm( tick_hook ) -- stop the hook
+   end
+end
+
+function msg1 ()
+   mainship:comm(string.format(_("All we need is %s before we are ready to get out of here!"), timeneeded:str(0)), true)
+end
+
+local function spawn_dvaereds( ships )
+   spawned_dvaereds = spawned_dvaereds or {}
+   local plts = {}
+   local jmp = jump.get( system.cur(), system.get(dvaeredsys) )
+   for k,v in ipairs(ships) do
+      local p = pilot.add( v, "Dvaered", jmp )
+      table.insert( plts, p )
+      table.insert( spawned_dvaereds, p )
+   end
+   -- Set leader stuff
+   local l = plts[1]
+   for k = 2,#plts do
+      local v = plts[k]
+      v:setLeader(l)
+   end
+   -- Set leader behaviour
+   p:moveto( mainship:pos(), false, false )
+   return plts
+end
+
+function dv_reinforcement1 ()
+   local dvships = {
+      "Dvaered Phalanx",
+      "Dvaered Vendetta",
+      "Dvaered Vendetta",
+   }
+   spawn_dvaereds( dvships )
 end
