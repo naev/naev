@@ -120,7 +120,7 @@ function approach_pir ()
 
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
+   local pir = vn.newCharacter( minerva.vn_pirate() )
    vn.music( minerva.loops.pirate )
    vn.transition()
 

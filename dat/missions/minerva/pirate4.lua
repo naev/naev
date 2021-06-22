@@ -88,7 +88,7 @@ end
 function approach_pir ()
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
+   local pir = vn.newCharacter( minerva.vn_pirate() )
    vn.music( minerva.loops.pirate )
    vn.transition()
 
@@ -149,17 +149,17 @@ function found_mole ()
 They make a cutting gesture from their belly up to their neck.
 "Poor kid, not the best way to leave this world."]]))
    mole(_([["Hey, wait a moment. Haven't I seen you around?"]]))
-   vn.na(_("While they wrinkle their eyebrows, you suddenly hear a soft thud and while you hear the soud of strong electric current, you see their eyes glaze over and muscles stiffen. They quickly drop to the ground and a familiar face appears into view."))
+   vn.na(_("While they wrinkle their eyebrows, you suddenly hear a soft thud and while you hear the sound of strong electric current, you see their eyes glaze over and muscles stiffen. They quickly drop to the ground and a familiar face appears into view."))
 
    vn.scene()
+   local pir = vn.newCharacter( minerva.vn_pirate() )
    vn.transition()
-   local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
-   pir(string.format(_([["Great job! It seems like you found our mole. However, our job is not done here. We have to get all the information we can out of him. This is not something we can do here at Minerva Station. Here, take him on your ship and bring him to the %s system. There should be a ship waiting for him in the middle of the asteroid field near Pund, it might be a bit hard to spot at first."]]), mainsys))
-   pir(_([["I'll be waiting on the ship with my crew. Make sure to bring him overe, however, watch out for any Dvaered patrols. We don't want them to know we have taken him."]]))
+   pir(string.format(_([["Great job! It seems like you found our mole. However, our job is not done here. We have to get all the information we can out of him. This is not something we can do here at Minerva Station. Here, take him on your ship and bring him to the %s system. There should be a ship waiting for him in the middle of the asteroid field, it might be a bit hard to spot at first."]]), mainsys))
+   pir(_([["I'll be waiting on the ship with my crew. Make sure to bring him over, however, watch out for any Dvaered patrols. We don't want them to know we have taken him."]]))
    vn.run()
 
    -- Add illegal cargo
-   local c = misn.cargoNew( _("Dvaered Mole"), _("An unconcious and restrained Dvaered mole. You better not let Dvaered ships find out you are carrying this individual.") )
+   local c = misn.cargoNew( _("Dvaered Mole"), _("An unconscious and restrained Dvaered mole. You better not let Dvaered ships find out you are carrying this individual.") )
    c:illegalto{"Dvaered"}
    misn.cargoAdd( c, 0 )
 
@@ -179,12 +179,65 @@ end
 
 function enter ()
    if misn_state==1 and system.cur()==system.get(mainsys) then
-      mainship = pilot.add( "Pirate Rhino", f, vec2.new( 5000, 9000 ) )
+      -- Clear system
+      -- TODO don't clear everything, leave some dvaered and stuff around as an obstacle
+      pilot.clear()
+      pilot.toggleSpawn(false)
+
+      -- Main ship player has to protect
+      mainship = pilot.add( "Pirate Rhino", "Pirate", vec2.new( 5000, 9000 ) )
       mainship:rename(_("Interrogation Ship"))
       mainship:setFriendly(true)
       mainship:setVisplayer(true)
       mainship:setHilight(true)
+      mainship:setActiveBoard(true)
       mainship:control(true)
       mainship:stealth()
+
+      -- Some hooks
+      hook.pilot( mainship, "board", "mainship_board" )
+      hook.pilot( mainship, "attacked", "mainship_attacked" )
+      hook.pilot( mainship, "death", "mainship_dead" )
    end
+end
+
+
+function mainship_board ()
+   vn.clear()
+   vn.scene()
+   local pir = vn.newCharacter( minerva.vn_pirate() )
+   local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { color = minerva.maikkiP.colour } )
+   vn.transition()
+   vn.na(_("You board the ship and are once again greeting by the shady figure you are getting used to."))
+   pir(_([["I was worried. Glad you made it here in one piece!"
+Some crew member escort the Dvaered mole towards the inner part of the ship. They have a fairly rough and burly complexion.]]))
+   pir(_([["Don't worry about the mole, we'll take care of them from now on."
+They beam you a smile.
+"If all goes well, we'll get the information we were looking for in the next periods and we can all go ]]))
+   maikki(_([[You faintly hear an angry voice that sounds strangely familiary.
+"What the hell are you guys doing loafing around? We have work to do! I don't pay you to sit on your bums all day!"]]))
+   pir(_([[They visibly wince when they hear the angry voice.
+"Let us talk about your payment."]]))
+   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   vn.na("Suddenly an alarm starts blaring throughout the ship.")
+   maikki(_([[The familiar and angry voice bellows in the distance.
+"Zuri! We've got incoming boars closing in our or position! Take care of it!"]]))
+   pir:rename(_("Zuri"))
+   pir(_([["Shit, it looks like we have Dvaered company. Make sure they don't find our ship! I'll be manning the turrets here."
+They rush off into the depths of the ship.]]))
+   vn.na(_("You rush to get back to your ship before the Dvaereds jump in."))
+   vn.run()
+
+   -- Set up stuff
+   mainship:setActiveBoard(false)
+
+   -- Dvaered jump in hooks
+end
+
+function mainship_attacked ()
+end
+
+function mainship_dead ()
+   player.msg(_("#rMISSION FAILED! You were supposed to kill the drones with Dvaered-only weapons!"))
+   misn.finish(false)
 end

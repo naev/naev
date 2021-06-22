@@ -55,7 +55,7 @@ end
 function accept ()
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
+   local pir = vn.newCharacter( minerva.vn_pirate() )
    vn.music( minerva.loops.pirate )
    vn.transition()
    vn.label( "leave" )
@@ -102,7 +102,7 @@ function land ()
    if misn_state==1 and planet.cur() == planet.get("Minerva Station") then
       vn.clear()
       vn.scene()
-      local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
+      local pir = vn.newCharacter( minerva.vn_pirate() )
       vn.music( minerva.loops.pirate )
       vn.transition()
       vn.na(_("After you land on Minerva Station you are once again greeted by the shady character that gave you the job to clear the Za'lek drones."))
@@ -195,6 +195,7 @@ end
 function drone_death ()
    if not dvaered_weapons( player.pilot() ) then
       player.msg(_("#rMISSION FAILED! You were supposed to kill the drones with Dvaered-only weapons!"))
+      misn.finish(false)
    end
    drones_killed = drones_killed+1
    if drones_killed==1 then

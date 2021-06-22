@@ -134,6 +134,13 @@ function minerva.vn_terminal( params )
             color=minerva.terminal.colour,
          }, params) )
 end
+function minerva.vn_pirate( params )
+   return vn.Character.new( minerva.pirate.name,
+         _merge_tables( {
+            image=minerva.pirate.image,
+            color=minerva.pirate.colour,
+         }, params) )
+end
 function minerva.vn_ceo( params )
    return vn.Character.new( minerva.ceo.name,
          _merge_tables( {
