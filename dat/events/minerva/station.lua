@@ -536,7 +536,7 @@ function approach_chuckaluck ()
    vn.run()
 
    -- Handle random bar events if necessary, however, don't do it with secret code or we get a dialogue inside a dialogue.
-   if not cl.secretcode then
+   if not chuckaluck.secretcode then
       random_event()
    end
 end
