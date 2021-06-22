@@ -127,7 +127,7 @@ function approach_pir ()
    if misn_state==nil then
       -- Not accepted
       vn.na(_("You approach the sketch individual who seems to be calling your attention yet once again."))
-      pir(_("Hello again, we have another job for you. Our previous actions has led us to believe that there are several Dvaered and Za'lek spies deeply infiltrated into the station infrastructure. Would you be up to the challenge of helping us get rid of them?"))
+      pir(_([["Hello again, we have another job for you. Our previous actions has led us to believe that there are several Dvaered and Za'lek spies deeply infiltrated into the station infrastructure. Would you be up to the challenge of helping us get rid of them?"]]))
       vn.menu( {
          {_("Accept the job"), "accept"},
          {_("Kindly decline"), "decline"},
