@@ -945,13 +945,13 @@ static int hooks_executeParam( const char* stack, HookParam *param )
 
 
 /**
- * @brief Runs all the hooks of stack.
+ * @brief Runs all the hooks of stack in the next frame. Does not trigger right away.
  *
  *    @param stack Stack to run.
  *    @param param Parameters to pass.
  *    @return 0 on success.
  */
-int hooks_runParam( const char* stack, HookParam *param )
+int hooks_runParamDeferred( const char* stack, HookParam *param )
 {
    int i;
    HookQueue_t *hq;
@@ -960,23 +960,39 @@ int hooks_runParam( const char* stack, HookParam *param )
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return 0;
 
-   /* Not time to run hooks, so queue them. */
-   if (hook_atomic) {
-      hq = calloc( 1, sizeof(HookQueue_t) );
-      hq->stack = strdup(stack);
-      i         = 0;
-      if ( param != NULL ) {
-         for ( ; param[ i ].type != HOOK_PARAM_SENTINEL; i++ )
-            hq->hparam[ i ] = param[ i ];
-      }
-#ifdef DEBUGGING
-      if (i >= HOOK_MAX_PARAM)
-         WARN( _("HOOK_MAX_PARAM is set too low (%d), need at least %d!"), HOOK_MAX_PARAM, i );
-#endif /* DEBUGGING */
-      hq->hparam[i].type = HOOK_PARAM_SENTINEL;
-      hq_add( hq );
-      return 0;
+   hq = calloc( 1, sizeof(HookQueue_t) );
+   hq->stack = strdup(stack);
+   i         = 0;
+   if ( param != NULL ) {
+      for ( ; param[ i ].type != HOOK_PARAM_SENTINEL; i++ )
+         hq->hparam[ i ] = param[ i ];
    }
+#ifdef DEBUGGING
+   if (i >= HOOK_MAX_PARAM)
+      WARN( _("HOOK_MAX_PARAM is set too low (%d), need at least %d!"), HOOK_MAX_PARAM, i );
+#endif /* DEBUGGING */
+   hq->hparam[i].type = HOOK_PARAM_SENTINEL;
+   hq_add( hq );
+   return 0;
+}
+
+
+/**
+ * @brief Runs all the hooks of stack.
+ *
+ *    @param stack Stack to run.
+ *    @param param Parameters to pass.
+ *    @return 0 on success.
+ */
+int hooks_runParam( const char* stack, HookParam *param )
+{
+   /* Don't update if player is dead. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
+      return 0;
+
+   /* Not time to run hooks, so queue them. */
+   if (hook_atomic)
+      return hooks_runParamDeferred( stack, param );
 
    /* Execute. */
    return hooks_executeParam( stack, param );

@@ -95,6 +95,7 @@ nlua_env hook_env( unsigned int hook );
  *    - "commodity" - When visited commodity exchange
  *    - "equipment" - When visiting equipment place < br/>
  */
+int hooks_runParamDeferred( const char* stack, HookParam *param );
 int hooks_runParam( const char* stack, HookParam *param );
 int hooks_run( const char* stack );
 int hook_runIDparam( unsigned int id, HookParam *param );
