@@ -909,6 +909,7 @@ static int hook_trigger( lua_State *L )
  *    <li> "attacked" : triggered when the pilot is attacked. </li>
  *    <li> "idle" : triggered when the pilot becomes idle in manual control.</li>
  *    <li> "lockon" : triggered when the pilot locked on a missile on it's target.</li>
+ *    <li> "stealth" : triggered when the pilot either enters or leaves stealth.</li>
  * </ul>
  * <br />
  * If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.<br />
@@ -939,6 +940,11 @@ static int hook_trigger( lua_State *L )
  * </p>
  * <p style="margin-bottom: 0">
  *    function jump_hook( pilot, jump_point, arg )<br />
+ *    end
+ * </p>
+ * The stealth hook passes whether or not the ship is stealthing or destealthing as a boolean:
+ * <p>
+ *    function stealth_hook( pilot, status, arg )<br />
  *    end
  * </p>
  *    @luatparam Pilot|nil pilot Pilot identifier to hook (or nil for all).
