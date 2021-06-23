@@ -40,7 +40,7 @@ static int pilot_hookCleanup = 0; /**< Are hooks being removed from a pilot? */
  *    @param nparam Number of parameters to pass.
  *    @return The number of hooks run.
  */
-int pilot_runHookParam( Pilot* p, int hook_type, HookParam* param, int nparam )
+int pilot_runHookParam( Pilot* p, int hook_type, const HookParam* param, int nparam )
 {
    int n, i, run, ret;
    HookParam hstaparam[5], *hdynparam, *hparam;

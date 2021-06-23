@@ -65,8 +65,7 @@ int hook_hasMisnParent( unsigned int parent );
 int hook_hasEventParent( unsigned int parent );
 
 /* pilot hook. */
-int pilot_runHookParam( Pilot* p, int hook_type, HookParam *param, int nparam );
-
+int pilot_runHookParam( Pilot* p, int hook_type, const HookParam *param, int nparam );
 nlua_env hook_env( unsigned int hook );
 
 /*
@@ -95,10 +94,10 @@ nlua_env hook_env( unsigned int hook );
  *    - "commodity" - When visited commodity exchange
  *    - "equipment" - When visiting equipment place < br/>
  */
-int hooks_runParamDeferred( const char* stack, HookParam *param );
-int hooks_runParam( const char* stack, HookParam *param );
+int hooks_runParamDeferred( const char* stack, const HookParam *param );
+int hooks_runParam( const char* stack, const HookParam *param );
 int hooks_run( const char* stack );
-int hook_runIDparam( unsigned int id, HookParam *param );
+int hook_runIDparam( unsigned int id, const HookParam *param );
 int hook_runID( unsigned int id ); /* runs hook of specific id */
 
 /* destroys hooks */

@@ -18,6 +18,7 @@
 /** @endcond */
 
 #include "array.h"
+#include "hook.h"
 #include "log.h"
 #include "pilot.h"
 #include "player.h"
@@ -530,6 +531,10 @@ int pilot_stealth( Pilot *p )
    /* Got into stealth. */
    pilot_calcStats(p);
    p->ew_stealth_timer = 0.;
+
+   /* Run hook. */
+   const HookParam hparam = { .type = HOOK_PARAM_BOOL, .u.b = 1 };
+   pilot_runHookParam( p, PILOT_HOOK_STEALTH, &hparam, 1 );
    return 1;
 }
 
@@ -544,4 +549,8 @@ void pilot_destealth( Pilot *p )
    pilot_rmFlag( p, PILOT_STEALTH );
    p->ew_stealth_timer = 0.;
    pilot_calcStats(p);
+
+   /* Run hook. */
+   const HookParam hparam = { .type = HOOK_PARAM_BOOL, .u.b = 0 };
+   pilot_runHookParam( p, PILOT_HOOK_STEALTH, &hparam, 1 );
 }

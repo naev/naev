@@ -62,7 +62,8 @@ enum {
    PILOT_HOOK_ATTACKED,  /**< Pilot is in manual override and is being attacked. */
    PILOT_HOOK_IDLE,      /**< Pilot is in manual override and has just become idle. */
    PILOT_HOOK_EXPLODED,  /**< Pilot died and exploded (about to be removed). */
-   PILOT_HOOK_LOCKON     /**< Pilot had a launcher lockon. */
+   PILOT_HOOK_LOCKON,    /**< Pilot had a launcher lockon. */
+   PILOT_HOOK_STEALTH,   /**< Pilot either stealthed or destealthed. */
 };
 
 
