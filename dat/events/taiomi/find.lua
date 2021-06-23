@@ -36,7 +36,7 @@ dist_detect_jump = 3000 -- second encounter at jump
 evt_state = 0
 
 function create ()
-   evt.finish(false)
+   if var.peek("testing") then evt.finish(false) end
    -- Extra derelicts
    numboarded = 0
    derelicts = {}
