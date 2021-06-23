@@ -197,7 +197,7 @@ function board_flashback()
       textbox_y = vn.textbox_y
       textbox_font = vn.textbox_font
       -- New values
-      vn.textbox_font = graphics.newFont( _("CoveredByYourGrace-Regular.ttf"), 24 )
+      vn.textbox_font = graphics.newFont( _("fonts/CoveredByYourGrace-Regular.ttf"), 24 )
       vn.textbox_bg_alpha = 0
       vn.textbox_h = math.min(0.7*nh, 800 )
       vn.textbox_y = (nh-vn.textbox_h)/2
