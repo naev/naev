@@ -39,23 +39,23 @@ function background ()
       { n = 10, i = lg.newImage( 'gfx/spfx/debris4.webp' ), s = 6 },
       { n = 10, i = lg.newImage( 'gfx/spfx/debris5.webp' ), s = 6 },
       -- Neutral
-      { n = 2, i = lg.newImage( 'gfx/ship/llama/llama.png' ), s = 8 },
-      { n = 2, i = lg.newImage( 'gfx/ship/koala/koala.png' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/quicksilver/quicksilver.png' ), s = 10 },
-      { i = lg.newImage( 'gfx/ship/mule/mule.png' ), s = 10 },
-      { i = lg.newImage( 'gfx/ship/rhino/rhino.png' ), s = 10 },
+      { n = 2, i = lg.newImage( 'gfx/ship/llama/llama.webp' ), s = 8 },
+      { n = 2, i = lg.newImage( 'gfx/ship/koala/koala.webp' ), s = 8 },
+      { i = lg.newImage( 'gfx/ship/quicksilver/quicksilver.webp' ), s = 10 },
+      { i = lg.newImage( 'gfx/ship/mule/mule.webp' ), s = 10 },
+      { i = lg.newImage( 'gfx/ship/rhino/rhino.webp' ), s = 10 },
       -- Pirate
-      { n = 3, i = lg.newImage( 'gfx/ship/hyena/hyena.png' ), s = 8 },
-      { n = 2, i = lg.newImage( 'gfx/ship/shark/shark_pirate.png' ), s = 8 },
-      { n = 2, i = lg.newImage( 'gfx/ship/vendetta/vendetta_pirate.png' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/ancestor/ancestor_pirate.png' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/phalanx/phalanx_pirate.png' ), s = 10 },
-      { i = lg.newImage( 'gfx/ship/rhino/rhino_pirate.png' ), s = 10 },
+      { n = 3, i = lg.newImage( 'gfx/ship/hyena/hyena.webp' ), s = 8 },
+      { n = 2, i = lg.newImage( 'gfx/ship/shark/shark_pirate.webp' ), s = 8 },
+      { n = 2, i = lg.newImage( 'gfx/ship/vendetta/vendetta_pirate.webp' ), s = 8 },
+      { i = lg.newImage( 'gfx/ship/ancestor/ancestor_pirate.webp' ), s = 8 },
+      { i = lg.newImage( 'gfx/ship/phalanx/phalanx_pirate.webp' ), s = 10 },
+      { i = lg.newImage( 'gfx/ship/rhino/rhino_pirate.webp' ), s = 10 },
       -- Empire
-      { n = 2, i = lg.newImage( 'gfx/ship/lancelot/lancelot_empire.png' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/shark/shark_empire.png' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/admonisher/admonisher_empire.png' ), s = 8 },
-      { i = lg.newImage( 'gfx/ship/pacifier/pacifier_empire.png' ), s = 10 },
+      { n = 2, i = lg.newImage( 'gfx/ship/lancelot/lancelot_empire.webp' ), s = 8 },
+      { i = lg.newImage( 'gfx/ship/shark/shark_empire.webp' ), s = 8 },
+      { i = lg.newImage( 'gfx/ship/admonisher/admonisher_empire.webp' ), s = 8 },
+      { i = lg.newImage( 'gfx/ship/pacifier/pacifier_empire.webp' ), s = 10 },
    }
    images = {}
    for k,v in ipairs(images_raw) do
