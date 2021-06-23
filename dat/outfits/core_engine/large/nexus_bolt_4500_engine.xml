@@ -13,10 +13,10 @@
  <specific type="modification">
   <energy_usage>50</energy_usage>
   <engine_limit>4500</engine_limit>
-  <fuel>1200</fuel>
+  <fuel>1600</fuel>
   <speed>100</speed>
   <thrust>57</thrust>
   <turn>65</turn>
-  <time_mod>-10</time_mod>
+  <time_mod>-20</time_mod>
  </specific>
 </outfit>

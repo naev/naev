@@ -13,7 +13,7 @@
  <specific type="modification">
   <energy_usage>6</energy_usage>
   <engine_limit>150</engine_limit>
-  <fuel>300</fuel>
+  <fuel>400</fuel>
   <speed>300</speed>
   <thrust>165</thrust>
   <turn>140</turn>
