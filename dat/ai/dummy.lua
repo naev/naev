@@ -14,6 +14,8 @@ end
 -- No need for control
 function control ()
 end
+function control_manual ()
+end
 
 -- No response
 function attacked ( attacker )
