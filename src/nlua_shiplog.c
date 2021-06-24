@@ -97,25 +97,16 @@ int nlua_loadShiplog( nlua_env env )
  */
 static int shiplog_createLog( lua_State *L )
 {
-   const char *logname;
-   const char *logtype;
-   const char *nidstr;
-   char *idstr=NULL;
+   const char *idstr, *logname, *logtype;
    int overwrite,maxLen;
    /* Parameters. */
-   nidstr      = luaL_checkstring(L,1);
-   logname    = luaL_checkstring(L,2);
-   logtype    = luaL_checkstring(L,3);
-   overwrite = lua_toboolean(L,4);
-
-   maxLen = 0;
-   if ( lua_gettop(L) > 4 )
-      maxLen = MAX(0, luaL_checkint(L,5));
-   if ( nidstr!=NULL && strlen(nidstr) > 0 )
-      idstr = strdup(nidstr);
+   idstr       = luaL_checkstring(L,1);
+   logname     = luaL_checkstring(L,2);
+   logtype     = luaL_checkstring(L,3);
+   overwrite   = lua_toboolean(L,4);
+   maxLen      = luaL_optinteger(L,5,0);
    /* Create a new shiplog */
    shiplog_create( idstr, logname, logtype, overwrite, maxLen );
-   free( idstr );
    lua_pushnumber(L, 0);
    return 1;
 }
