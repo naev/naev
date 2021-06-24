@@ -31,7 +31,7 @@ logidstr = minerva.log.pirate.idstr
 misn_title = _("Minerva Mole")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to deal with a Dvaered spy that appears to be located at Minerva Station.")
-reward_amount = 200e3 -- 200k
+reward_amount = 250e3
 
 -- Should be the same as the original chuckaluck guy
 mole_image = "minervaceo.png" -- TODO replace
@@ -277,11 +277,13 @@ function tick ()
       mainship:comm(_("Reinforcements are coming!"))
 
       -- Reinforcement spawners
+      spawned_pirates = {}
       local jmp = jump.get( system.cur(), system.get(piratesys) )
       local function addpir( shipname, leader )
          local p = pilot.add( shipname, "Pirate", jmp )
          p:setFriendly(true)
          p:setLeader(l)
+         table.insert( spawned_pirates, p )
          return p
       end
 
@@ -291,6 +293,8 @@ function tick ()
       addpir( "Pirate Admonisher", l )
       addpir( "Pirate Shark", l )
       addpir( "Pirate Vendetta", l )
+
+      hook.timer( 3000, "heartbeat" )
    end
 end
 
@@ -344,4 +348,48 @@ function dv_reinforcements3 ()
       "Dvaered Vendetta",
    }
    spawn_dvaereds( dvships )
+end
+
+function heartbeat ()
+   local left = {}
+   for k,v in ipairs(spawned_dvaereds) do
+      if v:exists() then
+         table.insert( left, v )
+      end
+   end
+   spawned_dvaereds = left
+
+   -- Still left
+   if #spawned_dvaereds > 0 then
+      hook.timer( 3000, "heartbeat" )
+      return
+   end
+
+   -- Mission should be done
+   vn.clear()
+   vn.scene()
+   local pir = vn.newCharacter( minerva.vn_pirate{ shader=love_shaders.hologram()} )
+   vn.transition("electric")
+   vn.na(_("As everything settles down"))
+   pir(_([["Damn that was close. I never thought the Dvaered would be tricky enough to trail us over here. Pretty sure the damn mole had some sort of tracking device we must have missed."]]))
+   vn.func( function () -- Rewards
+      player.pay( reward_amount )
+      shiplog.appendLog( logidstr, _("You helped defend an interrogation ship from Dvaered vessels.") )
+      faction.modPlayerSingle("Pirate", 5)
+   end )
+   vn.sfxVictory()
+   vn.done("electric")
+   vn.run()
+
+   -- Pirates go away
+   mainship:control(false)
+   for k,v in ipairs(spawned_pirates) do
+      if v:exists() then
+         v:control(false)
+         v:setLeader( mainship )
+      end
+   end
+
+   -- We done here
+   misn.finish(true)
 end
