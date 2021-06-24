@@ -359,12 +359,13 @@ end
 
 -- keep drone moving
 function targetIdle()
-   t_drone:moveto(t_drone:pos() + vec2.new( 400,  400), false)
-   t_drone:moveto(t_drone:pos() + vec2.new(-400,  400), false)
-   t_drone:moveto(t_drone:pos() + vec2.new(-400, -400), false)
-   t_drone:moveto(t_drone:pos() + vec2.new( 400, -400), false)
-   hook.rm(idlehook)
-   idlehook = hook.timer(5000, "targetIdle")
+   if t_drone:exists() then
+      t_drone:moveto(t_drone:pos() + vec2.new( 400,  400), false)
+      t_drone:moveto(t_drone:pos() + vec2.new(-400,  400), false)
+      t_drone:moveto(t_drone:pos() + vec2.new(-400, -400), false)
+      t_drone:moveto(t_drone:pos() + vec2.new( 400, -400), false)
+      idlehook = hook.timer(5000, "targetIdle")
+   end
 end
 
 -- get nearest jumppoint
