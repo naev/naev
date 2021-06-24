@@ -36,8 +36,10 @@ reward_amount = 200e3 -- 200k
 -- Should be the same as the original chuckaluck guy
 mole_image = "minervaceo.png" -- TODO replace
 
-mainsys = "Provectus Nova"
-dvaeredsys = "Daan"
+mainsys     = "Fried"
+dvaeredsys  = "Limbo"
+piratesys   = "Effetey"
+shippos     = vec2.new( 9000, -4000 ) -- asteroid field center
 -- Mission states:
 --  nil: mission not accepted yet
 --    0. have to find spy
@@ -181,12 +183,12 @@ end
 function enter ()
    if misn_state==1 and system.cur()==system.get(mainsys) then
       -- Clear system
-      -- TODO don't clear everything, leave some dvaered and stuff around as an obstacle
+      -- TODO maybe don't clear everything, leave some dvaered and stuff around as an obstacle
       pilot.clear()
       pilot.toggleSpawn(false)
 
       -- Main ship player has to protect
-      mainship = pilot.add( "Pirate Rhino", "Pirate", vec2.new( 5000, 9000 ) )
+      mainship = pilot.add( "Pirate Rhino", "Pirate", shippos )
       mainship:rename(_("Interrogation Ship"))
       mainship:setFriendly(true)
       mainship:setVisplayer(true)
@@ -199,6 +201,7 @@ function enter ()
       hook.pilot( mainship, "board", "mainship_board" )
       hook.pilot( mainship, "attacked", "mainship_attacked" )
       hook.pilot( mainship, "death", "mainship_dead" )
+      hook.pilot( mainship, "stealth", "mainship_stealth" )
    end
 end
 
@@ -234,7 +237,7 @@ They rush off into the depths of the ship.]]))
    mainship:setActiveBoard(false)
 
    -- Time limit stuff
-   timeneeded = time.create(0, 0, 5*60*30)
+   timeneeded = time.create(0, 0, 3*60*30)
    timelimit = time.get() + timeneeded
    tick_hook = hook.date(time.create(0, 0, 10), "tick") -- 100STU per tick
 
@@ -242,9 +245,20 @@ They rush off into the depths of the ship.]]))
    player.msg(string.format(_("Sensors detecting Dvaered patrol incoming from %s!"), dvaeredsys))
    hook.timer(  5e3, "msg1" )
    hook.timer( 10e3, "dv_reinforcement1" )
+   hook.timer( 60e3, "dv_reinforcement1" )
+   hook.timer( 90e3, "dv_reinforcement2" )
+   hook.timer( 120e3, "dv_reinforcement3" )
 end
 
 function mainship_attacked ()
+end
+
+function mainship_stealth( p, status )
+   if status==false then
+      player.msg(_("#oThe Interrogation Ship has been discovered!"))
+      -- TODO make the mainship try to attack
+      mainship_discovered = true
+   end
 end
 
 function mainship_dead ()
@@ -258,7 +272,25 @@ function tick ()
          string.format(_("Defend the Interrogation Ship from the Dvaered for %s!"), (timelimit - time.get()):str()),
       } )
    else
+      -- Get ready!
       hook.rm( tick_hook ) -- stop the hook
+      mainship:comm(_("Reinforcements are coming!"))
+
+      -- Reinforcement spawners
+      local jmp = jump.get( system.cur(), system.get(piratesys) )
+      local function addpir( shipname, leader )
+         local p = pilot.add( shipname, "Pirate", jmp )
+         p:setFriendly(true)
+         p:setLeader(l)
+         return p
+      end
+
+      -- Reinforcements!
+      local l = addpir( "Pirate Kestrel" )
+      addpir( "Pirate Admonisher", l )
+      addpir( "Pirate Admonisher", l )
+      addpir( "Pirate Shark", l )
+      addpir( "Pirate Vendetta", l )
    end
 end
 
@@ -289,6 +321,25 @@ end
 function dv_reinforcement1 ()
    local dvships = {
       "Dvaered Phalanx",
+      "Dvaered Vendetta",
+      "Dvaered Vendetta",
+   }
+   spawn_dvaereds( dvships )
+end
+
+function dv_reinforcement2 ()
+   local dvships = {
+      "Dvaered Vigilance",
+      "Dvaered Ancestor",
+      "Dvaered Ancestor",
+   }
+   spawn_dvaereds( dvships )
+end
+
+function dv_reinforcements3 ()
+   local dvships = {
+      "Dvaered Goddard",
+      "Dvaered Vigilance",
       "Dvaered Vendetta",
       "Dvaered Vendetta",
    }
