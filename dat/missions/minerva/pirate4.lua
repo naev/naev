@@ -72,7 +72,7 @@ function accept ()
       _("Take the mole to the interrogation facility")
    } )
 
-   shiplog.appendLog( logidstr, _("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
+   shiplog.append( logidstr, _("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
 
    hook.load("generate_npc")
    hook.land("generate_npc")
@@ -374,7 +374,7 @@ function heartbeat ()
    pir(_([["Damn that was close. I never thought the Dvaered would be tricky enough to trail us over here. Pretty sure the damn mole had some sort of tracking device we must have missed."]]))
    vn.func( function () -- Rewards
       player.pay( reward_amount )
-      shiplog.appendLog( logidstr, _("You helped defend an interrogation ship from Dvaered vessels.") )
+      shiplog.append( logidstr, _("You helped defend an interrogation ship from Dvaered vessels.") )
       faction.modPlayerSingle("Pirate", 5)
    end )
    vn.sfxVictory()
