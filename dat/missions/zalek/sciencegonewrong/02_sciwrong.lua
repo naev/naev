@@ -152,6 +152,7 @@ end
 function got_hailed()
    if vec2.dist(player.pos(),t_drone:pos()) > 1000 then
       player.msg(_("Target out of range"))
+      player.commClose()
       return
    end
    hook.rm(hailhook)
@@ -167,7 +168,7 @@ function got_hailed()
    hook.pilot(t_drone, "death", "failed")
    hook.pilot(t_drone, "board", "targetBoard")
    hook.pilot(t_drone, "jump", "drone_jumped")
-
+   player.commClose()
 end
 
 function sp_baddies()
