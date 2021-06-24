@@ -21,7 +21,7 @@ lg.origin()
 
 function background ()
    -- Create particles and buffer
-   local density = 200*200
+   local density = 220*220
    local z, zmax, zmin = camera.getZoom()
    buffer = 500
    tw = zmax*nw+2*buffer
@@ -86,7 +86,7 @@ function background ()
 
    -- Create background
    bgparts = {}
-   for i = 1,nparts*10 do
+   for i = 1,nparts*3 do
       local part = parts_create()
       bgparts[i] = part
       part.s = 1 / (2 + 5*rnd.rnd())
