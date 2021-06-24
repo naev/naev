@@ -28,7 +28,7 @@ function background ()
    -- Create particles and buffer
    local density = 200*200
    local z = camera.getZoom()
-   buffer = 500
+   buffer = 200
    tw = zmax*nw+2*buffer
    th = zmax*nh+2*buffer
    local nparts = math.floor( tw * th / density + 0.5 )
