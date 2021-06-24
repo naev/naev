@@ -90,6 +90,7 @@ static gl_vbo *gui_radar_select_vbo = NULL;
 static gl_vbo *gui_planet_blink_vbo = NULL;
 
 static int gui_getMessage     = 1; /**< Whether or not the player should receive messages. */
+static char *gui_name         = NULL; /**< Name of the GUI (for errors and such). */
 
 
 extern unsigned int land_wid; /**< From land.c */
@@ -1993,7 +1994,7 @@ static int gui_prepFunc( const char* func )
 {
 #if DEBUGGING
    if (gui_env == LUA_NOREF) {
-      WARN( _("Trying to run GUI func '%s' but no GUI is loaded!"), func );
+      WARN( _("GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"), gui_name, func );
       return -1;
    }
 #endif /* DEBUGGING */
@@ -2002,7 +2003,7 @@ static int gui_prepFunc( const char* func )
    nlua_getenv( gui_env, func );
 #if DEBUGGING
    if (lua_isnil( naevL, -1 )) {
-      WARN(_("GUI doesn't have function '%s' defined!"), func );
+      WARN(_("GUI '%s': no function '%s' defined!"), gui_name, func );
       lua_pop(naevL,1);
       return -1;
    }
@@ -2027,7 +2028,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
    ret = nlua_pcall( gui_env, nargs, nret );
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
-      WARN(_("GUI Lua -> '%s': %s"),
+      WARN(_("GUI '%s' Lua -> '%s': %s"), gui_name,
             func, (err) ? err : _("unknown error"));
       lua_pop(naevL,1);
       return ret;
@@ -2155,12 +2156,12 @@ char* gui_pick (void)
  */
 int gui_load( const char* name )
 {
-   (void) name;
    char *buf, path[PATH_MAX];
    size_t bufsize;
 
    /* Set defaults. */
    gui_cleanup();
+   gui_name = strdup(name);
 
    /* Open file. */
    snprintf( path, sizeof(path), GUI_PATH"%s.lua", name );
@@ -2330,6 +2331,10 @@ void gui_cleanup (void)
 
    /* OMSG */
    omsg_position( SCREEN_W/2., SCREEN_H*2./3., SCREEN_W*2./3. );
+
+   /* Delete the name. */
+   free(gui_name);
+   gui_name = NULL;
 }
 
 
