@@ -10,7 +10,30 @@
 
 #include "shiplog.h"
 
-static ShipLog *shipLog = NULL;
+/*Hold a single log entry - a double linked list*/
+typedef struct {
+  int id;
+  ntime_t time;
+  char *msg;
+  void *next;
+  void *prev;
+} ShipLogEntry;
+
+/* Holding global information about the log. */
+typedef struct {
+  int *idList;
+  char **typeList;
+  char **nameList;
+  ntime_t *removeAfter;
+  char **idstrList;
+  int *maxLen;
+  int nlogs;
+  ShipLogEntry *head; /**< The head (newest entry) */
+  ShipLogEntry *tail; /**< The tail (oldest entry) */
+} ShipLog;
+
+
+static ShipLog *shipLog = NULL; /**< The player's ship log. */
 
 /*
  * Prototypes.
