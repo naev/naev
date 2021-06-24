@@ -51,7 +51,7 @@ function enter ()
    if system.cur() ~= system.get("Taiomi") then return end
 
    if evt_state==0 then
-      shiplog.create( logidstr, taiomi.log.main.logname, taiomi.log.main.logtype, true )
+      shiplog.create( logidstr, taiomi.log.main.logname, taiomi.log.main.logtype )
       shiplog.append( logidstr, _("You have entered Taiomi for the first time.") )
 
       drones_create()
