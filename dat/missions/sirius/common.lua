@@ -19,12 +19,12 @@
 
 
 function srs_addAcHackLog( text )
-   shiplog.createLog( "achack", _("Academy Hack"), _("Sirius") )
-   shiplog.appendLog( "achack", text )
+   shiplog.create( "achack", _("Academy Hack"), _("Sirius") )
+   shiplog.append( "achack", text )
 end
 
 
 function srs_addHereticLog( text )
-   shiplog.createLog( "heretic", _("Heretic"), _("Sirius") )
-   shiplog.appendLog( "heretic", text )
+   shiplog.create( "heretic", _("Heretic"), _("Sirius") )
+   shiplog.append( "heretic", text )
 end

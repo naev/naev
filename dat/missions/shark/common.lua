@@ -19,6 +19,6 @@
 
 
 function shark_addLog( text )
-   shiplog.createLog( "shark", _("Nexus Shipyards"), _("Nexus Shipyards") )
-   shiplog.appendLog( "shark", text )
+   shiplog.create( "shark", _("Nexus Shipyards"), _("Nexus Shipyards") )
+   shiplog.append( "shark", text )
 end

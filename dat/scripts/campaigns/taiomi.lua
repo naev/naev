@@ -1,3 +1,5 @@
+local vn = require 'vn'
+
 --[[
 -- Helper functions and defines for the Taiomi campaigns
 --]]

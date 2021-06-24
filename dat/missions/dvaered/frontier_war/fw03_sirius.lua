@@ -669,8 +669,8 @@ end
 -- Pay and finish the mission
 function payNfinish()
    player.pay(effective_credits)
-   shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
-   shiplog.appendLog( "frontier_war", log_text )
+   shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
+   shiplog.append( "frontier_war", log_text )
    misn.finish(true)
 end
 

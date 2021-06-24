@@ -317,21 +317,21 @@ function land()
       tk.msg(back_title, back_text:format(hospPlanet:name(), player.name()))
       var.push("dv_empire_deal", false)
       var.push("dv_pirate_debt", false)
-      shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
+      shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
       if stage == 7 then -- Empire solution
          tk.msg(back_empire_title, back_empire_text:format(creditstring(credits_02)))
          var.push("dv_empire_deal", true)
-         shiplog.appendLog( "frontier_war", log_text_emp )
+         shiplog.append( "frontier_war", log_text_emp )
       elseif stage == 8 then -- Pirate debt
          tk.msg(back_debt_title, back_debt_text:format(creditstring(pirate_price), creditstring(credits_02)))
          var.push("dv_pirate_debt", true)
-         shiplog.appendLog( "frontier_war", log_text_debt )
+         shiplog.append( "frontier_war", log_text_debt )
       elseif stage == 9 then -- Pirate cash
          tk.msg(back_pay_title, back_pay_text:format(creditstring(credits_02)))
-         shiplog.appendLog( "frontier_war", log_text_pay )
+         shiplog.append( "frontier_war", log_text_pay )
       else -- Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
          tk.msg(back_nodeal_title, back_nodeal_text:format(creditstring(credits_02)))
-         shiplog.appendLog( "frontier_war", log_text_raw )
+         shiplog.append( "frontier_war", log_text_raw )
       end
       player.pay(credits_02)
 

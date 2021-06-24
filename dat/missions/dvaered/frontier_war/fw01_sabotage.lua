@@ -643,8 +643,8 @@ end
 function endMisn()
    tk.msg( epilogue_title, epilogue_text:format(creditstring(credits_01)) )
    player.pay(credits_01)
-   shiplog.createLog( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
-   shiplog.appendLog( "dvaered_military", log_text )
+   shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
+   shiplog.append( "dvaered_military", log_text )
    var.push( "loyal2klank", false ) -- This ensures the next mission will be available only once the traitor event is done
    misn.finish(true)
 end

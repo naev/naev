@@ -83,7 +83,7 @@ function approach_gauntlet ()
    misn.setTitle( misn_title )
 
    -- Add to log
-   shiplog.createLog( logidstr, logname, logtype )
+   shiplog.create( logidstr, logname, logtype )
 
    -- Create the OSD
    osd = misn.osdCreate( _("Crimson Gauntlet"),
@@ -227,7 +227,7 @@ function player_lost ()
 
    -- omsg does not display when dead so we will need a custom solution
    --player.omsgAdd( _("YOU LOST!"), 5 )
-   --shiplog.appendLog( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
+   --shiplog.append( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
    if not leave_hook then
       leave_hook = hook.timer( 3000, "leave_the_ring")
    end
@@ -463,7 +463,7 @@ function wave_end ()
    -- TODO play sound and cooler text
    player.omsgAdd( _("YOU ARE VICTORIOUS!"), 5 )
    sfx_clear:play()
-   --shiplog.appendLog( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
+   --shiplog.append( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
    hook.timer( 5000, "leave_the_ring")
 end
 

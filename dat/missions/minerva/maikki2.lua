@@ -197,7 +197,7 @@ and %s in the %s system."]]),
       vn.func( function ()
          misn.accept()
          misn_state = 0
-         shiplog.appendLog( logidstr, _("You agreed to continue helping Maikki find her father. She told you to try to find hints from three Za'lek researchers.") )
+         shiplog.append( logidstr, _("You agreed to continue helping Maikki find her father. She told you to try to find hints from three Za'lek researchers.") )
       end )
       maikki(_([["I think we should be able to find out what happened to my father's ship in the nebula. It seems like someone is very interested on stuff that is being found in the nebula and is behind the scavengers you met. Whoever is behind them could also be related to whatever happened to the ship in the first place."]]))
       maikki(_([["I ran a check on Za'lek researchers that would likely be interested in stuff taken from the nebula and there seems to be less than I imagined. I was able to get a list of three researchers. I'll give you the details on them and you should pay them a visit to see if they know anything."]]))
@@ -283,7 +283,7 @@ Her eyes sparkle with determination.]]))
       -- no reward, yet...
       mission_finish = true
       minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
-      shiplog.appendLog( logidstr, _("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
+      shiplog.append( logidstr, _("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
    end )
    vn.na(string.format(_("You recieve %s.", minerva.tokens_str(500)), minerva.tokens_get(500)))
    maikki(_([["I'll be around here if you find anything."]]))
@@ -347,7 +347,7 @@ function visited ()
    if misn_state==0 and visitedhints()==3 then
       misn_state = 1
       markerhint4 = misn.markerAdd( system.get(hintsys[4]), "low" )
-      shiplog.appendLog( logidstr, _("You met the three researchers that Maikki told you about and found out a lead about another researcher.") )
+      shiplog.append( logidstr, _("You met the three researchers that Maikki told you about and found out a lead about another researcher.") )
    end
    hintosd()
 end
@@ -565,7 +565,7 @@ He activates her feeding system and a food pellet drops out.]]))
          misn.osdCreate( misn_title, {string.format(_("\tGo to %s"), _(eccsys))} )
          misn.markerRm( markerhint4 )
          marker_ecc = misn.markerAdd( system.get(eccsys), "low" )
-         shiplog.appendLog( logidstr, _("You found about a strange researcher who appears to be in Westhaven and is related to the nebula research.") )
+         shiplog.append( logidstr, _("You found about a strange researcher who appears to be in Westhaven and is related to the nebula research.") )
       end
    end )
    vn.jump("menu_msg")
@@ -676,7 +676,7 @@ function ecc_timer_dead ()
    vn.sfxEerie()
    diff.apply( eccdiff )
    misn_state = 3
-   shiplog.appendLog( logidstr, _("You were attacked by a Za'lek security system and found a laboratory disguised as an asteroid in Westhaven.") )
+   shiplog.append( logidstr, _("You were attacked by a Za'lek security system and found a laboratory disguised as an asteroid in Westhaven.") )
 end
 
 
@@ -706,7 +706,7 @@ function ecc_feral_boss_dead ()
    nebula_artifacts = misn.cargoAdd( c, 0 )
    misn_state = 5
    misn.osdCreate( misn_title, {_("Go back to Dr. Strangelove")} )
-   shiplog.appendLog( logidstr, _("You recovered a nebula artifact that Dr. Strangelove wanted from feral drones.") )
+   shiplog.append( logidstr, _("You recovered a nebula artifact that Dr. Strangelove wanted from feral drones.") )
 end
 
 drone_msgs = {
@@ -760,7 +760,7 @@ He cackles manically.]]))
 You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room.]]))
       dr(_([["Anyway, I am very busy now, yes? All the science won't do itself. Almost have a new specimen ready and it will be better than ever! The old ones were fairly inadequate."]]))
       ecc_visitedonce = true
-      shiplog.appendLog( logidstr, _("You met an eccentric researcher named Dr. Strangelove in Westhaven." ) )
+      shiplog.append( logidstr, _("You met an eccentric researcher named Dr. Strangelove in Westhaven." ) )
    else
       vn.na(_("The hologram projector flickers and Dr. Strangelove comes into view. He doesn't look very happy to see you again."))
    end
@@ -813,7 +813,7 @@ He glares at you.]]))
    vn.func( function ()
       misn.osdCreate( misn_title, {string.format(_("Recover nebula artifacts from the %s asteroid field"),_(eccsys))} )
       misn_state = 4
-      shiplog.appendLog( logidstr, _("You accepted Dr. Strangelove's request to recover nebula artifacts from feral drones in Westhaven." ) )
+      shiplog.append( logidstr, _("You accepted Dr. Strangelove's request to recover nebula artifacts from feral drones in Westhaven." ) )
    end )
    vn.jump("menu_msg")
 
@@ -876,7 +876,7 @@ His voice gets softer and softer as he keeps on mumbling.]]))
       misn.osdCreate( misn_title, {_("Report back to Maikki in the Limbo system")} )
       misn.markerAdd( system.get("Limbo"), "low")
       misn.markerRm( marker_ecc )
-      shiplog.appendLog( logidstr, _("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )
+      shiplog.append( logidstr, _("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )
    end )
    vn.na(_("You leave behind the hologram project and hope you won't have to deal with Dr. Strangelove in the future."))
    vn.done( "electric" )

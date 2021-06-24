@@ -321,8 +321,8 @@ function land() -- The player is only allowed to land on special occasions
       misn.markerRm(mark2)
       mark3 = misn.markerAdd(destsys3, "low")
    elseif stage == 8 then
-      shiplog.createLog( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
-      shiplog.appendLog( "dvaered_military", log_text )
+      shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
+      shiplog.append( "dvaered_military", log_text )
       tk.msg(end_title, end_text:format(creditstring(credits_00)))
 
       -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.

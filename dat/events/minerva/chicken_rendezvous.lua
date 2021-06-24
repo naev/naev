@@ -172,8 +172,8 @@ Kex slides out of the water, ruffles his feather and fades into the steam. You h
    vn.run()
 
    local logidstr = minerva.log.kex.idstr
-   shiplog.createLog( logidstr, minerva.log.kex.logname, minerva.log.kex.logtype, true )
-   shiplog.appendLog( logidstr, _("You found out that Cyborg Chicken is Kex, Maikki's father. He told you of a spot you can meet up with him on Minerva station.") )
+   shiplog.create( logidstr, minerva.log.kex.logname, minerva.log.kex.logtype )
+   shiplog.append( logidstr, _("You found out that Cyborg Chicken is Kex, Maikki's father. He told you of a spot you can meet up with him on Minerva station.") )
 
    evt.finish(true)
 end

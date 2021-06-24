@@ -67,7 +67,7 @@ function accept ()
 
    misn.accept()
       
-   shiplog.appendLog( logidstr, _("You have agreed to help Kex steal information from Baroness Eve.") )
+   shiplog.append( logidstr, _("You have agreed to help Kex steal information from Baroness Eve.") )
 
    misn.osdCreate( misn_title,
       { string.format(_("Go to %s in the %s system and hack the main database"), _(targetplanet), _(targetsys) ),
@@ -135,7 +135,7 @@ He plugs in the program directly into a port under his wing and his eyes go blan
       vn.sfxVictory()
       vn.run()
 
-      shiplog.appendLog( logidstr, _("You managed to find a crate destined to the Minerva CEO through luck, and found that it was sent by Baroness Eve."))
+      shiplog.append( logidstr, _("You managed to find a crate destined to the Minerva CEO through luck, and found that it was sent by Baroness Eve."))
       misn.finish( true )
       return
    end

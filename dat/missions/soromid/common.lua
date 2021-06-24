@@ -19,6 +19,6 @@
 
 
 function srm_addComingOutLog( text )
-   shiplog.createLog( "comingout", _("Coming Out"), _("Soromid") )
-   shiplog.appendLog( "comingout", text )
+   shiplog.create( "comingout", _("Coming Out"), _("Soromid") )
+   shiplog.append( "comingout", text )
 end

@@ -34,16 +34,13 @@ logidstr = taiomi.log.main.idstr
 evt_state = 0
 
 function create ()
-   evt.save(true) -- Saves the event until done
-
    drone_faction = "Independent"
-   drones_create()
-   for k,d in ipairs(drones) do
-      d:disable()
-   end
 
    hook.enter("enter")
    hook.land("land")
+
+   -- Run enter stuff
+   enter()
 end
 
 function enter ()
@@ -51,8 +48,8 @@ function enter ()
    if system.cur() ~= system.get("Taiomi") then return end
 
    if evt_state==0 then
-      shiplog.createLog( logidstr, taiomi.log.main.logname, taiomi.log.main.logtype, true )
-      shiplog.appendLog( logidstr, _("You have entered Taiomi for the first time.") )
+      shiplog.create( logidstr, taiomi.log.main.logname, taiomi.log.main.logtype )
+      shiplog.append( logidstr, _("You have entered Taiomi for the first time.") )
 
       drones_create()
       for k,d in ipairs(drones) do
@@ -103,7 +100,7 @@ function land ()
       vn.transition()
       vn.na(_("You dock with the one-winged Goddard and once again get out in your atmospheric suit. Once you exit the narrow hallways and entire the command room, you are once again met with the Drone which is a lot more intimidating in person."))
       d(_([["Hello again and welcome to our refuge. It may not seem like much, but it has been our home for generations now."]]))
-      d(_([["As you have probably noticed, we are not organic beings such as you, however, we are equally sentient.]]))
+      d(_([["As you have probably noticed, we are not organic beings such as you, however, we are equally sentient."]]))
       d(_([["Our encounters with humans have not been, in general, very fruitful and we have lost countless of members over time. The few that remain were able to band together and find stumble upon this quiet area, where we have been since."]]))
       d(_([["We scavenge and collect what we can, allowing our repairs and developments, however, it does not seem like we can continue like this forever."]]))
       d(_([["Although most don't wish to admit it, our numbers are waning and we are unable to maintain them as before. Furthermore, changes in the universe are making it so that more and more humans approach our location, and clashes are inevitable."]]))
@@ -113,15 +110,20 @@ function land ()
       vn.done()
       vn.run()
 
-      shiplog.appendLog( logidstr, _("You have met the robotic inhabitants of Taiomi.") )
+      shiplog.append( logidstr, _("You have met the robotic inhabitants of Taiomi.") )
+
+      -- Have to be able to get back!
+      jump.get( "Taiomi", "Bastion" ):setKnown(true)
 
       -- Since we finish here, next time the player takes off the Taiomi
       -- System event will take over and spawn NPCs
+      player.allowSave(true)
       evt.finish(true)
       return
    end
 
    evt_state = 1
+   player.allowSave(false)
 
    -- Small event
    vn.clear()
@@ -214,7 +216,7 @@ The voice sounds uncanny, almost human but something sets it apart.]]))
    d(_([["This is an extraordinary place, is it not? The solar winds have created currents that slowly drag many ships from very far away and concentrate them here."]]))
    d(_([["However, you do not seem to have been caught in the solar wind. The time-frame in which the solar winds operate does not seem to be compatible with human lifespan."]]))
    d(_([["It is quite remarkable that you made it here. As far as we know, the probability of your conventional sensors finding the jump that brought you here should be to all practical effects zero."]]))
-   d(_([["We do not wish to harm you, however, our experience leads us to think that co-existence with humans is futile. After analyzing your behaviour we have decided that you do not seem to be a threat. However, please note that we do not want knowledge of our existence to spread."]]))
+   d(_([["We do not wish to harm you, however, our experience leads us to think that co-existence with humans is futile. After analyzing your behaviour we have decided that you do not seem to be a threat. Please note that we do not want knowledge of our existence to spread."]]))
    d(_([["Please dock once more with the Goddard and I will explain the situation slightly more in detail."]]))
 
    vn.done()

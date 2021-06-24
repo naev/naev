@@ -90,7 +90,7 @@ They smiles at you.]]))
           _("Go back to Minerva Station") } )
    misn.osdActive(1)
 
-   shiplog.appendLog( logidstr, _("You accept another job from the shady individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
+   shiplog.append( logidstr, _("You accept another job from the shady individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
 
    hook.enter("enter")
    hook.load("land")
@@ -117,7 +117,7 @@ They wink at you.]]))
       vn.sfxVictory()
       vn.run()
    
-      shiplog.appendLog( logidstr, _("You succeeded in destroying Za'lek drones and making it seem like the Dvaered were involved.") )
+      shiplog.append( logidstr, _("You succeeded in destroying Za'lek drones and making it seem like the Dvaered were involved.") )
 
       misn.finish(true)
    end
