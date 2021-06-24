@@ -188,6 +188,7 @@ static void gl_fontRenderEnd (void);
 /* Fussy layout concerns. */
 static void gl_fontKernStart (void);
 static int gl_fontKernGlyph( glFontStash* stsh, uint32_t ch, glFontGlyph* glyph );
+static void gl_fontstashftDestroy( glFontStashFreetype *ft );
 
 
 /**
@@ -1620,47 +1621,46 @@ int gl_fontAddFallback( glFont* font, const char *fname, const char *prefix )
  */
 static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsigned int h )
 {
-   glFontStashFreetype *ft;
-   FT_Face face;
+   glFontStashFreetype ft = {.file=NULL, .face=NULL};
    FT_Matrix scale;
    int i, j;
 
    /* Set up file data. Reference a loaded copy if we have one. */
-   ft = &array_grow( &stsh->ft );
-   ft->file = NULL;
    for (i=0; i<array_size(avail_fonts); i++) {
       if (avail_fonts[i].ft == NULL)
          continue;
       for (j=0; j<array_size(avail_fonts[i].ft); j++)
-         if (ft != &avail_fonts[i].ft[j] && !strcmp( fname, avail_fonts[i].ft[j].file->name ))
-            ft->file = avail_fonts[i].ft[j].file;
-      if (ft->file != NULL) {
-         ft->file->refcount++;
+         if (!strcmp( fname, avail_fonts[i].ft[j].file->name ))
+            ft.file = avail_fonts[i].ft[j].file;
+      if (ft.file != NULL) {
+         ft.file->refcount++;
          break;
       }
    }
 
-   if (ft->file == NULL) {
+   if (ft.file == NULL) {
       /* Read font file. */
-      ft->file = malloc( sizeof( glFontFile ) );
-      ft->file->name = strdup( fname );
-      ft->file->refcount = 1;
-      ft->file->data = (FT_Byte*) ndata_read( fname, &ft->file->datasize );
-      if (ft->file->data == NULL) {
+      ft.file = malloc( sizeof( glFontFile ) );
+      ft.file->name = strdup( fname );
+      ft.file->refcount = 1;
+      ft.file->data = (FT_Byte*) ndata_read( fname, &ft.file->datasize );
+      if (ft.file->data == NULL) {
          WARN(_("Unable to read font: %s"), fname );
+         gl_fontstashftDestroy( &ft );
          return -1;
       }
    }
 
    /* Object which freetype uses to store font info. */
-   if (FT_New_Memory_Face( font_library, ft->file->data, ft->file->datasize, 0, &face )) {
+   if (FT_New_Memory_Face( font_library, ft.file->data, ft.file->datasize, 0, &ft.face )) {
       WARN(_("FT_New_Memory_Face failed loading library from %s"), fname);
+      gl_fontstashftDestroy( &ft );
       return -1;
    }
 
    /* Try to resize. */
-   if (FT_IS_SCALABLE(face)) {
-      if (FT_Set_Char_Size( face,
+   if (FT_IS_SCALABLE(ft.face)) {
+      if (FT_Set_Char_Size( ft.face,
                0, /* Same as width. */
                h * 64,
                96, /* Create at 96 DPI */
@@ -1668,17 +1668,17 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsign
          WARN(_("FT_Set_Char_Size failed."));
       scale.xx = scale.yy = (FT_Fixed)FONT_DISTANCE_FIELD_SIZE*0x10000/h;
       scale.xy = scale.yx = 0;
-      FT_Set_Transform( face, &scale, NULL );
+      FT_Set_Transform( ft.face, &scale, NULL );
    }
    else
       WARN(_("Font isn't resizable!"));
 
    /* Select the character map. */
-   if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
+   if (FT_Select_Charmap( ft.face, FT_ENCODING_UNICODE ))
       WARN(_("FT_Select_Charmap failed to change character mapping."));
 
    /* Save stuff. */
-   ft->face     = face;
+   array_push_back( &stsh->ft, ft );
 
    /* Success. */
    return 0;
@@ -1695,7 +1695,6 @@ static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsign
 void gl_freeFont( glFont* font )
 {
    int i;
-   glFontStashFreetype *ft;
 
    if (font == NULL)
       font = &gl_defFont;
@@ -1707,15 +1706,8 @@ void gl_freeFont( glFont* font )
       return;
    /* Not references and must eliminate. */
 
-   for (i=0; i<array_size(stsh->ft); i++) {
-      ft = &stsh->ft[i];
-      if(--ft->file->refcount == 0) {
-         free(ft->file->name);
-         free(ft->file->data);
-         free(ft->file);
-      }
-      FT_Done_Face(ft->face);
-   }
+   for (i=0; i<array_size(stsh->ft); i++)
+      gl_fontstashftDestroy( &stsh->ft[i] );
    array_free( stsh->ft );
 
    if (--font_library_refs == 0) {
@@ -1734,4 +1726,16 @@ void gl_freeFont( glFont* font )
    free(stsh->vbo_tex_data);
    free(stsh->vbo_vert_data);
    memset( stsh, 0, sizeof(glFontStash) );
+}
+
+/**
+ * @brief Frees resources referenced by a glFontStashFreetype struct.
+ */
+static void gl_fontstashftDestroy( glFontStashFreetype *ft ) {
+   if(--ft->file->refcount == 0) {
+      free(ft->file->name);
+      free(ft->file->data);
+      free(ft->file);
+   }
+   FT_Done_Face(ft->face);
 }

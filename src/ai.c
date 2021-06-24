@@ -809,6 +809,7 @@ void ai_think( Pilot* pilot, const double dt )
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, t->func );
          data = t->dat;
       }
+      /* Function should be on the stack. */
       if (data != LUA_NOREF) {
          lua_rawgeti( naevL, LUA_REGISTRYINDEX, data );
          ai_run(env, 1);
@@ -894,10 +895,16 @@ void ai_refuel( Pilot* refueler, unsigned int target )
 {
    Task *t;
 
+   if (cur_pilot->ai->ref_refuel==LUA_NOREF) {
+      WARN(_("Pilot '%s' is trying to refuel when no 'refuel' function is defined!"), cur_pilot->name);
+      return;
+   }
+
    /* Create the task. */
    t           = calloc( 1, sizeof(Task) );
-   t->func     = cur_pilot->ai->ref_refuel;
    t->name     = strdup("refuel");
+   lua_rawgeti(naevL, LUA_REGISTRYINDEX, cur_pilot->ai->ref_refuel);
+   t->func     = luaL_ref(naevL, LUA_REGISTRYINDEX);
    lua_pushpilot(naevL, target);
    t->dat      = luaL_ref(naevL, LUA_REGISTRYINDEX);
 

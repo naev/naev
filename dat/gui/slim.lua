@@ -1169,3 +1169,6 @@ function mouseInsideButton( x, y )
    end
    return nil
 end
+
+function end_cooldown ()
+end
