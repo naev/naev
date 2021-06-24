@@ -115,6 +115,9 @@ function land ()
 
       shiplog.appendLog( logidstr, _("You have met the robotic inhabitants of Taiomi.") )
 
+      -- Have to be able to get back!
+      jump.get( "Taiomi", "Bastion" ):setKnown(true)
+
       -- Since we finish here, next time the player takes off the Taiomi
       -- System event will take over and spawn NPCs
       evt.finish(true)
