@@ -13,16 +13,21 @@ local lg = require 'love.graphics'
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
 local nw, nh = naev.gfx.dim()
+local unused, zmax, zmin = camera.getZoom()
+unused = nil
 love.x = 0
 love.y = 0
 love.w = nw
 love.h = nh
 lg.origin()
+-- some helpers to speed up computations
+local znw2, znh2 = zmax*nw/2, zmax*nh/2
+local nw2, nh2 = nw/2, nh/2
 
 function background ()
    -- Create particles and buffer
-   local density = 220*220
-   local z, zmax, zmin = camera.getZoom()
+   local density = 200*200
+   local z = camera.getZoom()
    buffer = 500
    tw = zmax*nw+2*buffer
    th = zmax*nh+2*buffer
@@ -184,6 +189,7 @@ function update ()
    local function update_part( p )
       p.x = p.x + dx * p.s
       p.y = p.y + dy * p.s
+      -- tw and th include 2*buffer
       if p.x < -buffer then
          p.x = p.x + tw
       elseif p.x > tw-buffer then
@@ -207,8 +213,8 @@ function update ()
    end
 end
 local function draw_part( p, s, z )
-   local x = (p.x - nw/2 - buffer) / z + nw/2
-   local y = (p.y - nh/2 - buffer) / z + nh/2
+   local x = (p.x - znw2) / z + nw2
+   local y = (p.y - znh2) / z + nh2
    lg.draw( p.i.i, p.q, x, y, 0, p.s * s / z )
 end
 function renderfg ()
@@ -232,7 +238,7 @@ function renderov ()
    local x, y = pos:get()
    x = (wing.x - x) * wing.s
    y = (wing.y + y) * wing.s
-   x = (x - nw/2) / z + nw/2
-   y = (y - nh/2) / z + nh/2
+   x = (x - nw2) / z + nw2
+   y = (y - nh2) / z + nh2
    lg.draw( wing.i, x, y, 0, wing.s / z )
 end
