@@ -91,7 +91,7 @@ int nlua_loadShiplog( nlua_env env )
  *    @luatparam string logname Name for this log.
  *    @luatparam string logtype Type of log (e.g travel, trade, etc, can be anything).
  *    @luatparam[opt] boolean overwrite Whether to remove previous entries of this logname and type (default false).
- *    @luatparam[opt] number maxLen Maximum length of the log (zero or nil for infinite) - if greater than this length, new entries appended will result in old entries being removed. 
+ *    @luatparam[opt=0] number maxLen Maximum length of the log (zero for infinite) - if greater than this length, new entries appended will result in old entries being removed.
  *
  * @luafunc createLog
  */
@@ -110,7 +110,7 @@ static int shiplog_createLog( lua_State *L )
    lua_pushnumber(L, 0);
    return 1;
 }
-  
+
 /**
  * @brief Appends to the shiplog.
  *
