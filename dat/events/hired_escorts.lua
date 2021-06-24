@@ -290,7 +290,7 @@ function enter ()
             hook.pilot(edata.pilot, "attacked", "pilot_attacked", i)
             hook.pilot(edata.pilot, "hail", "pilot_hail", i)
          else
-            shiplog.appendLog( logidstr, string.format(_("'%s' (%s) has left your employment."), edata.name, edata.ship) )
+            shiplog.append( logidstr, string.format(_("'%s' (%s) has left your employment."), edata.name, edata.ship) )
             pilot_disbanded( edata )
          end
       end
@@ -321,7 +321,7 @@ function standing ()
             and edata.pilot:exists() then
          local f = faction.get(edata.faction)
          if f ~= nil and f:playerStanding() < 0 then
-            shiplog.appendLog( logidstr, string.format(_("'%s' (%s) has left your employment."), edata.name, edata.ship) )
+            shiplog.append( logidstr, string.format(_("'%s' (%s) has left your employment."), edata.name, edata.ship) )
             pilot_disbanded( edata )
          end
       end
@@ -358,7 +358,7 @@ function pilot_askFire( edata, npc_id )
          evt.npcRm(npc_id)
          npcs[npc_id] = nil
       end
-      shiplog.appendLog( logidstr, string.format(_("You fired '%s' (%s)."), edata.name, edata.ship) )
+      shiplog.append( logidstr, string.format(_("You fired '%s' (%s)."), edata.name, edata.ship) )
       pilot_disbanded( edata )
    end
 end
@@ -384,7 +384,7 @@ function pilot_attacked( p, attacker, dmg, arg )
          -- Since all the escorts will turn on the player, we might as well
          -- just have them all disband at once and attack.
          for i, edata in ipairs(escorts) do
-            shiplog.appendLog( logidstr, string.format(_("You turned on your hired escort '%s' (%s)."), edata.name, edata.ship) )
+            shiplog.append( logidstr, string.format(_("You turned on your hired escort '%s' (%s)."), edata.name, edata.ship) )
             pilot_disbanded( edata )
             edata.pilot:setHostile()
          end
@@ -395,7 +395,7 @@ end
 -- Escort got killed
 function pilot_death( p, attacker, arg )
    local edata = escorts[arg]
-   shiplog.appendLog( logidstr, string.format(_("'%s' (%s) was killed in combat."), edata.name, edata.ship) )
+   shiplog.append( logidstr, string.format(_("'%s' (%s) was killed in combat."), edata.name, edata.ship) )
    pilot_disbanded( edata )
 end
 
@@ -453,7 +453,7 @@ function approachPilot( npc_id )
    evt.save(true)
 
    local edata = escorts[i]
-   shiplog.createLog( logidstr, logname, logtype )
-   shiplog.appendLog( logidstr, string.format(_("You hired a %s ship named '%s' for %s and %.1f%% of mission earnings."), edata.ship, edata.name, creditstring(edata.deposit), edata.royalty * 100 ) )
+   shiplog.create( logidstr, logname, logtype )
+   shiplog.append( logidstr, string.format(_("You hired a %s ship named '%s' for %s and %.1f%% of mission earnings."), edata.ship, edata.name, creditstring(edata.deposit), edata.royalty * 100 ) )
 end
 

@@ -311,8 +311,8 @@ function discover_trigger( event )
    local msg  = string.format(_("You found #o%s!"),event.title)
    -- Log and message
    player.msg( msg )
-   local logid = shiplog.createLog( "discovery", _("Travel Log"), _("Discovery") )
-   shiplog.appendLog( "discovery", msg )
+   local logid = shiplog.create( "discovery", _("Travel Log"), _("Discovery") )
+   shiplog.append( "discovery", msg )
 
    -- Break autonav
    player.autonavReset( 5 )

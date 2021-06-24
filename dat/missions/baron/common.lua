@@ -20,6 +20,6 @@
 
 -- Function for adding log entries for miscellaneous one-off missions.
 function baron_addLog( text )
-   shiplog.createLog( "baron", _("Baron"), _("Baron") )
-   shiplog.appendLog( "baron", text )
+   shiplog.create( "baron", _("Baron"), _("Baron") )
+   shiplog.append( "baron", text )
 end

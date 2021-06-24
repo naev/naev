@@ -51,8 +51,8 @@ function enter ()
    if system.cur() ~= system.get("Taiomi") then return end
 
    if evt_state==0 then
-      shiplog.createLog( logidstr, taiomi.log.main.logname, taiomi.log.main.logtype, true )
-      shiplog.appendLog( logidstr, _("You have entered Taiomi for the first time.") )
+      shiplog.create( logidstr, taiomi.log.main.logname, taiomi.log.main.logtype, true )
+      shiplog.append( logidstr, _("You have entered Taiomi for the first time.") )
 
       drones_create()
       for k,d in ipairs(drones) do
@@ -113,7 +113,7 @@ function land ()
       vn.done()
       vn.run()
 
-      shiplog.appendLog( logidstr, _("You have met the robotic inhabitants of Taiomi.") )
+      shiplog.append( logidstr, _("You have met the robotic inhabitants of Taiomi.") )
 
       -- Have to be able to get back!
       jump.get( "Taiomi", "Bastion" ):setKnown(true)

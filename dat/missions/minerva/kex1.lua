@@ -116,7 +116,7 @@ Kex runs off and disappears into the station.]]))
       vn.sfxVictory()
       vn.run()
 
-      shiplog.appendLog( logidstr, _("You managed to find a crate destined to the Minerva CEO through luck, and found that it was sent by Baroness Eve."))
+      shiplog.append( logidstr, _("You managed to find a crate destined to the Minerva CEO through luck, and found that it was sent by Baroness Eve."))
 
       -- Remove unnecessary variables to keep it clean
       var.pop( "kex_talk_station" )
@@ -202,7 +202,7 @@ You looks at you with determination.
             vn.jump("menu_msg")
             return
          end
-         shiplog.appendLog( logidstr, _("You agreed to help Kex to find dirt on the Minerva Station CEO to try to get him free."))
+         shiplog.append( logidstr, _("You agreed to help Kex to find dirt on the Minerva Station CEO to try to get him free."))
          misn_marker = misn.markerAdd( system.get(targetsys) )
          misn.osdCreate( misn_title,
             { string.format(_("Intercept the transport at %s"), _(targetsys)),
@@ -337,7 +337,7 @@ function mainguy_board ()
    mainguy:disable()
 
    -- Message update
-   shiplog.appendLog( logidstr, _("You boarded a transport destined to the Minerva CEO, but didn't find anything."))
+   shiplog.append( logidstr, _("You boarded a transport destined to the Minerva CEO, but didn't find anything."))
    misn.markerMove( misn_marker, system.get("Limbo") )
    misn_state = 2
    misn.osdActive(2)
@@ -350,7 +350,7 @@ end
 
 function mainguy_dead_scanned ()
    player.msg(_("You scan the debris of the transport for any potential cargo, but can't find anything."))
-   shiplog.appendLog( logidstr, _("You destroyed a transport destined to the Minerva Ceo, but didn't find anything in the debris."))
+   shiplog.append( logidstr, _("You destroyed a transport destined to the Minerva Ceo, but didn't find anything in the debris."))
    misn.markerMove( misn_marker, system.get("Limbo") )
    misn_state = 2
    misn.osdActive(2)

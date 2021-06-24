@@ -81,7 +81,7 @@ function accept ()
    osd = misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in a VIP room.") } )
 
-   shiplog.appendLog( logidstr, _("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
+   shiplog.append( logidstr, _("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
 
    hook.enter("enter")
    hook.load("generate_npc")
@@ -158,7 +158,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
       vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
       vn.func( function ()
          player.pay( reward_amount )
-         shiplog.appendLog( logidstr, _("You planted a listening device in the Minerva Spa to catch a mole and were rewarded for your actions.") )
+         shiplog.append( logidstr, _("You planted a listening device in the Minerva Spa to catch a mole and were rewarded for your actions.") )
       end )
       vn.sfxVictory()
       vn.done()
@@ -237,7 +237,7 @@ They start frantically typing into their portable holo-deck. It makes weird beep
          {_("Get Harper Bowdoin's ticket in Limbo.")},
          {_("Plant a listening device in a VIP room.") } )
       misn_state = 3
-      shiplog.appendLog( logidstr, _("You did not obtain the winning ticket of the Minerva Spa event and were tasked with obtaining it from a so called Harper Bowdoin.") )
+      shiplog.append( logidstr, _("You did not obtain the winning ticket of the Minerva Spa event and were tasked with obtaining it from a so called Harper Bowdoin.") )
    end )
    vn.jump("menu_msg")
 
@@ -251,7 +251,7 @@ She beams you a smile.
       osd = misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in the Spa.") } )
       npc_spa = misn.npcAdd( "approach_spa", spa_name, spa_portrait, spa_description )
-      shiplog.appendLog( logidstr, _("You obtained the winning ticket to enter the Minerva Spa.") )
+      shiplog.append( logidstr, _("You obtained the winning ticket to enter the Minerva Spa.") )
    end )
    vn.jump("menu_msg")
 

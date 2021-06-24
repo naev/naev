@@ -265,8 +265,8 @@ function land()
       tk.msg( debrief_title, debrief_text2:format(creditstring(reward)), ("portraits/"..portrait_tam) )
       player.pay(reward)
 
-      shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
-      shiplog.appendLog( "frontier_war", log_text )
+      shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
+      shiplog.append( "frontier_war", log_text )
       misn.finish(true)
    end
 end

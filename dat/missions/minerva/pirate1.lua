@@ -93,8 +93,8 @@ They beam a smile at you.]]),_(runawaysys)))
       return
    end
 
-   shiplog.createLog( logidstr, minerva.log.pirate.logname, minerva.log.pirate.logtype, true )
-   shiplog.appendLog( logidstr, _("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
+   shiplog.create( logidstr, minerva.log.pirate.logname, minerva.log.pirate.logtype, true )
+   shiplog.append( logidstr, _("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
 
    misn.accept()
    osd = misn.osdCreate( _("Thug Decoy"),
@@ -128,7 +128,7 @@ She winks at you and walks way.]]))
       vn.sfxVictory()
       vn.run()
 
-      shiplog.appendLog( logidstr, _("You succeeded in making the Dvaered think that the Za'lek were harassing their thugs near Minerva station.") )
+      shiplog.append( logidstr, _("You succeeded in making the Dvaered think that the Za'lek were harassing their thugs near Minerva station.") )
       misn.finish(true)
    end
 end

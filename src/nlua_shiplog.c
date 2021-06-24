@@ -50,8 +50,8 @@ int shiplog_loadShiplog( nlua_env env );
 static int shiplog_createLog( lua_State *L );
 static int shiplog_appendLog( lua_State *L );
 static const luaL_Reg shiplog_methods[] = {
-   { "createLog", shiplog_createLog },
-   { "appendLog", shiplog_appendLog },
+   { "create", shiplog_createLog },
+   { "append", shiplog_appendLog },
    {0,0}
 }; /**< Shiplog Lua methods. */
 
@@ -75,8 +75,8 @@ int nlua_loadShiplog( nlua_env env )
  *
  * A typical example would be:
  * @code
- * shiplog.createLog( "idstring", "log name", "log type", 0, 0 )
- * shiplog.appendLog( "idstring", "message to append to log" )
+ * shiplog.create( "idstring", "log name", "log type", 0, 0 )
+ * shiplog.append( "idstring", "message to append to log" )
  * @endcode
  *
  * @luamod shiplog
@@ -84,8 +84,8 @@ int nlua_loadShiplog( nlua_env env )
 /**
  * @brief Creates a shiplog for this mission.
  *
- * @usage shiplog.createLog("MyLog", "My mission title", "Mission type") -- Creates log "MyLog" without erasing anything
- * @usage shiplog.createLog("MyOtherLog", "Any title","Anything can be a type", true, 10) -- Erases any existing MyOtherLog entries and sets a limit of 10 entries
+ * @usage shiplog.create("MyLog", "My mission title", "Mission type") -- Creates log "MyLog" without erasing anything
+ * @usage shiplog.create("MyOtherLog", "Any title","Anything can be a type", true, 10) -- Erases any existing MyOtherLog entries and sets a limit of 10 entries
  *
  *    @luatparam string idstr ID string to identify this log, or empty string for unnamed logsets.
  *    @luatparam string logname Name for this log.
@@ -93,7 +93,7 @@ int nlua_loadShiplog( nlua_env env )
  *    @luatparam[opt] boolean overwrite Whether to remove previous entries of this logname and type (default false).
  *    @luatparam[opt=0] number maxLen Maximum length of the log (zero for infinite) - if greater than this length, new entries appended will result in old entries being removed.
  *
- * @luafunc createLog
+ * @luafunc create
  */
 static int shiplog_createLog( lua_State *L )
 {
@@ -114,11 +114,11 @@ static int shiplog_createLog( lua_State *L )
 /**
  * @brief Appends to the shiplog.
  *
- * @usage shiplog.appendLog("MyLog", "Some message here")
+ * @usage shiplog.append("MyLog", "Some message here")
  *
  *    @luatparam string idstr ID string of the log to append to.
  *    @luatparam string message Message to append to the log.
- * @luafunc appendLog
+ * @luafunc append
  */
 static int shiplog_appendLog( lua_State *L )
 {
