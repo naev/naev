@@ -51,13 +51,14 @@ static ShipLogEntry *shiplog_removeEntry(ShipLogEntry *e);
  *    @param maxLen Maximum number of entries for this log (longer ones will be purged).
  *    @return log ID.
  */
-int shiplog_create(const char *idstr, const char *logname, const char *type, const int overwrite, const int maxLen)
+int shiplog_create( const char *idstr,
+      const char *logname, const char *type,
+      int overwrite, int maxLen)
 {
    ShipLogEntry *e;
    int i, id, indx;
-   if ( shipLog == NULL ) {
+   if (shipLog == NULL)
       shipLog = calloc( sizeof(ShipLog), 1);
-   }
    indx = shipLog->nlogs;
 
    id = LOG_ID_INVALID;
@@ -172,17 +173,17 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
  * @param msg Message to be added.
  * @return 0 on success, -1 on failure.
  */
-int shiplog_append(const char *idstr, const char *msg)
+int shiplog_append( const char *idstr, const char *msg )
 {
    int i, id;
-   for ( i=0 ; i<shipLog->nlogs; i++ ) {
-      if ( ( ( idstr == NULL ) && ( shipLog->idstrList[i] == NULL ) )
-            || ( ( idstr != NULL ) && ( shipLog->idstrList[i] != NULL )
-               && ( strcmp(idstr, shipLog->idstrList[i]) == 0 ) ) ) {
+   for (i=0 ; i<shipLog->nlogs; i++) {
+      if (((idstr == NULL) && (shipLog->idstrList[i] == NULL) )
+            || ((idstr != NULL) && (shipLog->idstrList[i] != NULL)
+               && (strcmp(idstr, shipLog->idstrList[i]) == 0))) {
          break;
       }
    }
-   if ( i==shipLog->nlogs ) {
+   if (i==shipLog->nlogs) {
       WARN(_("Warning - log not found: creating it"));
       id = shiplog_create( idstr, _( "Please report this log as an error to github.com/naev" ),
                            idstr != NULL ? idstr : "", 0, 0 );
@@ -200,7 +201,7 @@ int shiplog_append(const char *idstr, const char *msg)
  *    @param msg Message to be added.
  *    @return 0 on success, -1 on failure.
  */
-int shiplog_appendByID(const int logid,const char *msg)
+int shiplog_appendByID( int logid,const char *msg )
 {
    ShipLogEntry *e;
    ntime_t now = ntime_get();
@@ -208,55 +209,54 @@ int shiplog_appendByID(const int logid,const char *msg)
    if (shipLog == NULL)
       shiplog_new();
 
-   if ( logid < 0 )
+   if (logid < 0)
       return -1;
 
    /* Check that the log hasn't already been added (e.g. if reloading) */
    e = shipLog->head;
    /* check for identical logs */
-   while ( e != NULL ) {
-      if ( e->time != now ) { /* logs are created in chronological order */
+   while (e != NULL) {
+      if (e->time != now) { /* logs are created in chronological order */
          break;
       }
-      if ( ( logid == e->id ) && ( strcmp(e->msg,msg) == 0 ) ) {
+      if ((logid == e->id) && (strcmp(e->msg,msg) == 0)) {
          /* Identical log already exists */
          return 0;
       }
       e = e->next;
    }
-   if ( (e = calloc(sizeof(ShipLogEntry),1)) == NULL ) {
+   if ((e = calloc(sizeof(ShipLogEntry),1)) == NULL) {
       WARN(_("Error creating new log entry - crash imminent!\n"));
       return -1;
    }
    e->next = shipLog->head;
    shipLog->head = e;
-   if ( shipLog->tail == NULL ) /* first entry - point to both head and tail.*/
+   if (shipLog->tail == NULL) /* first entry - point to both head and tail.*/
       shipLog->tail = e;
-   if ( e->next != NULL )
+   if (e->next != NULL)
       ((ShipLogEntry*)e->next)->prev = (void*)e;
    e->id = logid;
    e->msg = strdup(msg);
    e->time = now;
-   for ( i=0; i<shipLog->nlogs; i++ ) {
-      if ( shipLog->idList[i] == logid ) {
+   for (i=0; i<shipLog->nlogs; i++) {
+      if (shipLog->idList[i] == logid) {
          maxLen = shipLog->maxLen[i];
          break;
       }
    }
-   if ( maxLen > 0 ) {
+   if (maxLen > 0) {
       /* prune log entries if necessary */
-      i=0;
+      i = 0;
       e = shipLog->head;
-      while ( e != NULL ) {
-         if ( e->id == logid ) {
+      while (e != NULL) {
+         if (e->id == logid) {
             i++;
-            if ( i > maxLen ) {
+            if (i > maxLen)
                e = shiplog_removeEntry( e );
-            } else {
-               e = (ShipLogEntry*)e->next;
-            }
+            else
+               e = (ShipLogEntry*) e->next;
          } else {
-            e = (ShipLogEntry*)e->next;
+            e = (ShipLogEntry*) e->next;
          }
       }
    }
@@ -268,7 +268,7 @@ int shiplog_appendByID(const int logid,const char *msg)
  *
  * @param logid of the log to remove, or LOG_ID_ALL
  */
-void shiplog_delete(const int logid)
+void shiplog_delete( int logid )
 {
    ShipLogEntry *e, *tmp;
    int i;
@@ -321,7 +321,7 @@ void shiplog_delete(const int logid)
  * @param when the time at which to remove.  If 0, uses current time, if <0, adds abs to current time, if >0, uses as the time to remove.
  * Rationale: Allows a player to review the log while still landed, and then clears it up once takes off.
  */
-void shiplog_setRemove(const int logid, ntime_t when)
+void shiplog_setRemove( int logid, ntime_t when )
 {
    int i;
    if ( when == 0 )
