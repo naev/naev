@@ -9,10 +9,14 @@
  */
 
 #include "shiplog.h"
-/* Limit the journey log to 6 entries */
 
-static ShipLog *shipLog=NULL;
-ShipLogEntry *shiplog_removeEntry(ShipLogEntry *e);
+static ShipLog *shipLog = NULL;
+
+/*
+ * Prototypes.
+ */
+static ShipLogEntry *shiplog_removeEntry(ShipLogEntry *e);
+
 
 /**
  * @brief Creates a new log with given title of given type.
@@ -24,7 +28,6 @@ ShipLogEntry *shiplog_removeEntry(ShipLogEntry *e);
  *    @param maxLen Maximum number of entries for this log (longer ones will be purged).
  *    @return log ID.
  */
-
 int shiplog_create(const char *idstr, const char *logname, const char *type, const int overwrite, const int maxLen)
 {
    ShipLogEntry *e;
@@ -566,7 +569,7 @@ int shiplog_getIdOfLogOfType( const char *type, int selectedLog )
  * @param e the entry to remove
  * @returns the next entry.
  */
-ShipLogEntry *shiplog_removeEntry( ShipLogEntry *e )
+static ShipLogEntry *shiplog_removeEntry( ShipLogEntry *e )
 {
    ShipLogEntry *tmp;
    /* remove this entry */
@@ -583,7 +586,6 @@ ShipLogEntry *shiplog_removeEntry( ShipLogEntry *e )
    e=(ShipLogEntry*)e->next;
    free(tmp);
    return e;
-
 }
 
 /**
