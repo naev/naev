@@ -1621,7 +1621,7 @@ int gl_fontAddFallback( glFont* font, const char *fname, const char *prefix )
  */
 static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsigned int h )
 {
-   glFontStashFreetype ft = {NULL};
+   glFontStashFreetype ft = {.file=NULL, .face=NULL};
    FT_Matrix scale;
    int i, j;
 
