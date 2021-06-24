@@ -80,14 +80,13 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
                || ( ( idstr == NULL )
                   && ( strcmp(type, shipLog->typeList[i]) == 0 ) ) ) {
             e = shipLog->head;
-            while ( e != NULL ) {
-               if ( e->id == shipLog->idList[i] ) {
+            while (e != NULL) {
+               if (e->id == shipLog->idList[i])
                   e = shiplog_removeEntry( e );
-               } else {
+               else
                   e = e->next;
-               }
             }
-            if ( found == 0 ) { /* This is the first entry of this type */
+            if (found == 0) { /* This is the first entry of this type */
                found = 1;
                id = shipLog->idList[i];
                indx = i;
@@ -103,11 +102,11 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
       }
 
    }
-   if ( indx == shipLog->nlogs && idstr != NULL) {
+   if ((indx == shipLog->nlogs) && (idstr != NULL)) {
       /* see if existing log with this idstr exists, if so, append to it */
-      for ( i=0; i<shipLog->nlogs; i++ ) {
-         if ( ( shipLog->idstrList[i] != NULL )
-               && ( strcmp( idstr, shipLog->idstrList[i] ) == 0 ) ) {
+      for (i=0; i<shipLog->nlogs; i++) {
+         if ((shipLog->idstrList[i] != NULL)
+               && (strcmp( idstr, shipLog->idstrList[i] ) == 0)) {
             id = shipLog->idList[i];
             indx = i;
             shipLog->maxLen[i] = maxLen;
@@ -115,30 +114,27 @@ int shiplog_create(const char *idstr, const char *logname, const char *type, con
          }
       }
    }
-   if ( indx == shipLog->nlogs) {
+   if (indx == shipLog->nlogs) {
       /* create a new id for this log */
       id = -1;
-      for ( i=0; i<shipLog->nlogs; i++ ) {/* get maximum id */
-         if ( shipLog->idList[i] > id )
+      for (i=0; i<shipLog->nlogs; i++) {/* get maximum id */
+         if (shipLog->idList[i] > id)
             id = shipLog->idList[i];
       }
       id++;
       shipLog->nlogs++;
-      shipLog->idList = realloc(shipLog->idList, sizeof(int) * shipLog->nlogs);
-      shipLog->nameList = realloc(shipLog->nameList, sizeof(char*) * shipLog->nlogs);
-      shipLog->typeList = realloc(shipLog->typeList, sizeof(char*) * shipLog->nlogs);
+      shipLog->idList      = realloc(shipLog->idList, sizeof(int) * shipLog->nlogs);
+      shipLog->nameList    = realloc(shipLog->nameList, sizeof(char*) * shipLog->nlogs);
+      shipLog->typeList    = realloc(shipLog->typeList, sizeof(char*) * shipLog->nlogs);
       shipLog->removeAfter = realloc(shipLog->removeAfter, sizeof(ntime_t) * shipLog->nlogs);
-      shipLog->idstrList = realloc(shipLog->idstrList, sizeof(char*) * shipLog->nlogs);
-      shipLog->maxLen = realloc(shipLog->maxLen, sizeof(int) * shipLog->nlogs);
+      shipLog->idstrList   = realloc(shipLog->idstrList, sizeof(char*) * shipLog->nlogs);
+      shipLog->maxLen      = realloc(shipLog->maxLen, sizeof(int) * shipLog->nlogs);
       shipLog->removeAfter[indx] = 0;
-      shipLog->idList[indx] = id;
+      shipLog->idList[indx]   = id;
       shipLog->nameList[indx] = strdup(logname);
       shipLog->typeList[indx] = strdup(type);
-      shipLog->maxLen[indx] = maxLen;
-      if ( idstr == NULL )
-         shipLog->idstrList[indx] = NULL;
-      else
-         shipLog->idstrList[indx] = strdup(idstr);
+      shipLog->maxLen[indx]   = maxLen;
+      shipLog->idstrList[indx]= (idstr==NULL) ? NULL : strdup(idstr);
    }
    return id;
 }
