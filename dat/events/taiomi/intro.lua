@@ -34,16 +34,13 @@ logidstr = taiomi.log.main.idstr
 evt_state = 0
 
 function create ()
-   evt.save(true) -- Saves the event until done
-
    drone_faction = "Independent"
-   drones_create()
-   for k,d in ipairs(drones) do
-      d:disable()
-   end
 
    hook.enter("enter")
    hook.land("land")
+
+   -- Run enter stuff
+   enter()
 end
 
 function enter ()
@@ -120,11 +117,13 @@ function land ()
 
       -- Since we finish here, next time the player takes off the Taiomi
       -- System event will take over and spawn NPCs
+      player.allowSave(true)
       evt.finish(true)
       return
    end
 
    evt_state = 1
+   player.allowSave(false)
 
    -- Small event
    vn.clear()
