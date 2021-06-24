@@ -44,6 +44,7 @@ local minerva = {
    },
    pirate = {
       name = _("Sketchy Individual"),
+      realname = _("Zuri"),
       portrait = "pirate/pirate5.webp", -- TODO REPLACE
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
       image = portrait.getFullPath("pirate/pirate5.webp"),
@@ -136,6 +137,13 @@ function minerva.vn_terminal( params )
 end
 function minerva.vn_pirate( params )
    return vn.Character.new( minerva.pirate.name,
+         _merge_tables( {
+            image=minerva.pirate.image,
+            color=minerva.pirate.colour,
+         }, params) )
+end
+function minerva.vn_zuri( params )
+   return vn.Character.new( minerva.pirate.realname,
          _merge_tables( {
             image=minerva.pirate.image,
             color=minerva.pirate.colour,

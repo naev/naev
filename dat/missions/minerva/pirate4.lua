@@ -181,6 +181,11 @@ end
 
 
 function enter ()
+   if misn_state==2 then
+      player.msg(_("#rMISSION FAILED! You were supposed to protect the interrogation ship!"))
+      misn.finish(false)
+   end
+
    if misn_state==1 and system.cur()==system.get(mainsys) then
       -- Clear system
       -- TODO maybe don't clear everything, leave some dvaered and stuff around as an obstacle
@@ -193,6 +198,7 @@ function enter ()
       mainship:setFriendly(true)
       mainship:setVisplayer(true)
       mainship:setHilight(true)
+      mainship:setNoDisable(true)
       mainship:setActiveBoard(true)
       mainship:control(true)
       mainship:stealth()
@@ -202,6 +208,9 @@ function enter ()
       hook.pilot( mainship, "attacked", "mainship_attacked" )
       hook.pilot( mainship, "death", "mainship_dead" )
       hook.pilot( mainship, "stealth", "mainship_stealth" )
+
+      -- Increase state
+      misn_state=2
    end
 end
 
@@ -218,7 +227,7 @@ Some crew member escort the Dvaered mole towards the inner part of the ship. The
    pir(_([["Don't worry about the mole, we'll take care of them from now on."
 They beam you a smile.
 "If all goes well, we'll get the information we were looking for in the next periods and we can all go ]]))
-   maikki(_([[You faintly hear an angry voice that sounds strangely familiary.
+   maikki(_([[You faintly hear an angry voice that sounds strangely familiar.
 "What the hell are you guys doing loafing around? We have work to do! I don't pay you to sit on your bums all day!"]]))
    pir(_([[They visibly wince when they hear the angry voice.
 "Let us talk about your payment."]]))
@@ -245,9 +254,12 @@ They rush off into the depths of the ship.]]))
    player.msg(string.format(_("Sensors detecting Dvaered patrol incoming from %s!"), dvaeredsys))
    hook.timer(  5e3, "msg1" )
    hook.timer( 10e3, "dv_reinforcement1" )
+   hook.timer( 55e3, "msg2" )
    hook.timer( 60e3, "dv_reinforcement1" )
    hook.timer( 90e3, "dv_reinforcement2" )
+   hook.timer( 100e3, "msg3" )
    hook.timer( 120e3, "dv_reinforcement3" )
+   hook.timer( 135e3, "msg4" )
 end
 
 function mainship_attacked ()
@@ -294,12 +306,28 @@ function tick ()
       addpir( "Pirate Shark", l )
       addpir( "Pirate Vendetta", l )
 
+      -- Message stuff
+      mainship:comm(_("Support incoming! Hurrah!"), true)
+      misn.osdCreate( misn_title, {
+         _("Clean up the Dvaered patrols"),
+      } )
+
+      -- Detect all Dvaered dead
       hook.timer( 3000, "heartbeat" )
    end
 end
 
 function msg1 ()
    mainship:comm(string.format(_("All we need is %s before we are ready to get out of here!"), timeneeded:str(0)), true)
+end
+function msg2 ()
+   mainship:comm(_("They keep on coming! Keep them distracted!"), true)
+end
+function msg3 ()
+   mainship:comm(string.format(_("Only %s left before support comes!"), (timelimit-time.get()):str(0)), true)
+end
+function msg4 ()
+   mainship:comm(_("Shit, is that a Dvaered Goddard?"), true)
 end
 
 local function spawn_dvaereds( ships )
@@ -368,10 +396,19 @@ function heartbeat ()
    -- Mission should be done
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( minerva.vn_pirate{ shader=love_shaders.hologram()} )
+   local pir = vn.newCharacter( minerva.vn_zuri{ shader=love_shaders.hologram()} )
+   local maikki = vn.newCharacter(_("Strangely Familiar Voice"), { color = minerva.maikkiP.colour } )
    vn.transition("electric")
-   vn.na(_("As everything settles down"))
+   vn.na(_("As everything settles down you receive an incoming transmission from the interrogation ship, and the individual apparently known as 'Zuri' appears on screen.."))
    pir(_([["Damn that was close. I never thought the Dvaered would be tricky enough to trail us over here. Pretty sure the damn mole had some sort of tracking device we must have missed."]]))
+   pir(_([["I'm sure you have a lot of questions, however, now is not the time for answers. We can't linger here long, the Dvaered are bound to be back, and this time in larger numbers."]]))
+   maikki(_([[The still familiar voice butts in.
+"Zuri! Get your ass back to navigation! Wait until I tell you how that Dvaered squealed like a pig!"]]))
+   pir(_([[Zuri makes a somewhat complicated face at the unwanted interruption.
+"I have some business to attend to."
+They give you a tired grin.
+"Anyway, I'll wire you a reward and meet me back at Minerva Station."]]))
+   vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
    vn.func( function () -- Rewards
       player.pay( reward_amount )
       shiplog.append( logidstr, _("You helped defend an interrogation ship from Dvaered vessels.") )
