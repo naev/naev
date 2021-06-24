@@ -402,5 +402,8 @@ function destroy()
 end
 
 -- Game crashes if this isn't defined
-function render_cooldown()
+function render_cooldown ()
+end
+
+function end_cooldown ()
 end

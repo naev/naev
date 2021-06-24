@@ -574,3 +574,6 @@ function render( dt, dt_mod )
    gfx.print( true, time.str( time.get(), 2 ), time_x, time_y, col_txt_std, time_w, true )
    
 end
+
+function end_cooldown ()
+end
