@@ -397,6 +397,11 @@ function heartbeat ()
       return
    end
 
+   -- Add a delay for the followup
+   hook.time( 7e3, "followup" )
+end
+
+function followup ()
    -- Mission should be done
    vn.clear()
    vn.scene()
