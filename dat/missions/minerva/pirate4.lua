@@ -198,17 +198,20 @@ function enter ()
       pilot.toggleSpawn(false)
 
       -- Main ship player has to protect
-      mainship = pilot.add( "Pirate Rhino", "Pirate", shippos )
+      mainship = pilot.add( "Pirate Rhino", "Pirate", shippos, nil, "guard" )
+      local mem = mainship:memory()
+      mem.guardpos = shippos -- Stay around origin
+      mem.guarddodist = 2500
+      mem.guardreturndist = 4000
+      mem.enemyclose = mem.guarddodist
       mainship:rename(_("Interrogation Ship"))
       mainship:setFriendly(true)
       mainship:setVisplayer(true)
       mainship:setHilight(true)
       mainship:setNoDisable(true)
       mainship:setActiveBoard(true)
-      mainship:setVisible(true) -- AI should be able to go attack it
       mainship:control(true)
-      --mainship:stealth()
-      mainship:brake()
+      mainship:stealth()
 
       -- Some hooks
       hook.pilot( mainship, "board", "mainship_board" )
@@ -251,6 +254,7 @@ They rush off into the depths of the ship.]]))
    -- Set up stuff
    misn.cargoRm( cargo_mole )
    mainship:setActiveBoard(false)
+   mainship:control(false) -- Should fight back a bit
 
    -- Dvaered jump in hooks
    spawned_dvaereds = {}
@@ -294,9 +298,11 @@ function pir_reinforcements ()
    -- Reinforcement spawners
    local jmp = system.get(piratesys)
    local function addpir( shipname, leader )
-      local p = pilot.add( shipname, "Pirate", jmp )
+      local p = pilot.add( shipname, "Pirate", jmp, nil, "guard" )
       p:setFriendly(true)
       p:setLeader(l)
+      local mem = p:memory()
+      mem.guardpos = shippos -- Try to guard the Rhino
       table.insert( spawned_pirates, p )
       return p
    end
@@ -337,8 +343,14 @@ local function spawn_dvaereds( ships )
    local plts = {}
    local jmp = system.get(dvaeredsys)
    for k,v in ipairs(ships) do
-      local p = pilot.add( v, "Dvaered", jmp )
+      -- We exploit the 'guard' AI to get the Dvaered to go ontop of the
+      -- interrogation ship and destroy it
+      local p = pilot.add( v, "Dvaered", jmp, nil, "guard" )
       p:setVisplayer(true)
+      local mem = p:memory()
+      mem.guardpos = shippos -- Go to mainship
+      mem.guarddodist = math.huge -- don't actually want to guard
+      mem.guardreturndist = math.huge
       table.insert( plts, p )
       table.insert( spawned_dvaereds, p )
    end
@@ -348,9 +360,6 @@ local function spawn_dvaereds( ships )
       local v = plts[k]
       v:setLeader(l)
    end
-   -- Set leader behaviour
-   --plts[1]:control(true)
-   --plts[1]:moveto( mainship:pos(), false, false )
    return plts
 end
 
@@ -398,7 +407,7 @@ function heartbeat ()
    end
 
    -- Add a delay for the followup
-   hook.time( 7e3, "followup" )
+   hook.timer( 7e3, "followup" )
 end
 
 function followup ()
@@ -428,9 +437,11 @@ They give you a tired grin.
    vn.run()
 
    -- Pirates go away
+   mainship:changeAI( "Pirate" )
    mainship:control(false)
    for k,v in ipairs(spawned_pirates) do
       if v:exists() then
+         v:changeAI( "pirate" ) -- Guard AI is bad for stuff other than guarding
          v:control(false)
          v:setLeader( mainship )
       end
