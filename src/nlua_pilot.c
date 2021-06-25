@@ -866,7 +866,7 @@ static int pilotL_getPilots( lua_State *L )
  *    @luatparam[opt=infinity] number dist Distance to look for hostiles.
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
  *    @luatreturn {Pilot,...} A table containing the pilots.
- * @luafunc get
+ * @luafunc getHostiles
  */
 static int pilotL_getHostiles( lua_State *L )
 {
