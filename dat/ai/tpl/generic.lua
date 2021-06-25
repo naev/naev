@@ -15,7 +15,7 @@ mem.shield_return  = 0 -- At which shield to return to combat
 mem.aggressive     = false -- Should pilot actively attack enemies?
 mem.defensive      = true -- Should pilot defend itself
 mem.cooldown       = false -- Whether the pilot is currently cooling down.
-mem.heatthreshold  = .5 -- Weapon heat to enter cooldown at [0-2 or nil]
+mem.heatthreshold  = 0.5 -- Weapon heat to enter cooldown at [0-2 or nil]
 mem.safe_distance  = 300 -- Safe distance from enemies to jump
 mem.land_planet    = true -- Should land on planets?
 mem.land_friendly  = false -- Only land on friendly planets?
@@ -155,11 +155,7 @@ function handle_messages ()
             ai.pushtask("hold" )
          -- Return to carrier
          elseif msgtype == "e_return" then
-            if p:flags().carried then
-               ai.pushtask("flyback", true)
-            else
-               ai.pushtask("flyback", false)
-            end
+            ai.pushtask( "flyback", p:flags().carried )
          -- Clear orders
          elseif msgtype == "e_clear" then
             p:taskClear()
