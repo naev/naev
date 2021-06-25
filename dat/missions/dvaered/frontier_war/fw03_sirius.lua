@@ -340,7 +340,7 @@ function spawnEscort( origin )
       -- Give him nice outfits
       escort[1]:rmOutfit("all")
       escort[1]:rmOutfit("cores")
-      escort[1]:addOutfit("S&K Ultralight Stealth Plating")
+      escort[1]:addOutfit("Nexus Light Stealth Plating")
       escort[1]:addOutfit("Tricon Zephyr Engine")
       escort[1]:addOutfit("Milspec Orion 2301 Core System")
       escort[1]:addOutfit("Reactor Class II")
