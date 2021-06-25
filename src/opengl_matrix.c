@@ -49,7 +49,7 @@ void gl_Matrix4_Print( gl_Matrix4 m ) {
 
 gl_Matrix4 gl_Matrix4_Mult( gl_Matrix4 m1, gl_Matrix4 m2 ) {
    int i, j, k;
-   gl_Matrix4 m = {0};
+   gl_Matrix4 m = {{{0}}};
 
    for (i = 0; i < 4; i++) {
       for (j = 0; j < 4; j++) {
@@ -63,7 +63,7 @@ gl_Matrix4 gl_Matrix4_Mult( gl_Matrix4 m1, gl_Matrix4 m2 ) {
 }
 
 gl_Matrix4 gl_Matrix4_Identity( void ) {
-   gl_Matrix4 m = {0};
+   gl_Matrix4 m = {{{0}}};
    m.m[0][0] = 1;
    m.m[1][1] = 1;
    m.m[2][2] = 1;
@@ -74,7 +74,7 @@ gl_Matrix4 gl_Matrix4_Identity( void ) {
 gl_Matrix4 gl_Matrix4_Ortho( double left, double right,
       double bottom, double top, double nearVal, double farVal )
 {
-   gl_Matrix4 mat = {0};
+   gl_Matrix4 mat = {{{0}}};
    double tx, ty, tz;
 
    /* https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glOrtho.xml */

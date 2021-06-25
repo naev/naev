@@ -369,7 +369,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
  */
 static void tab_render( Widget* tab, double bx, double by )
 {
-   int i, x, y, dx;
+   int i, x, y;
    Window *wdw;
 
    /** Get window. */
@@ -383,7 +383,6 @@ static void tab_render( Widget* tab, double bx, double by )
    window_render( wdw );
 
    /* Render tabs ontop. */
-   dx = 0;
    x = bx+tab->x+3.;
    y = by+tab->y+3.;
    if (tab->dat.tab.tabpos == 1)
@@ -410,10 +409,7 @@ static void tab_render( Widget* tab, double bx, double by )
 
       /* Go to next line. */
       x += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
-      dx += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
    }
-
-
 }
 
 

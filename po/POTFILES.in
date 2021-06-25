@@ -2155,6 +2155,7 @@ dat/ai/flf_norun.lua
 dat/ai/flf_rogue_norun.lua
 dat/ai/frontier_police.lua
 dat/ai/goddard.lua
+dat/ai/guard.lua
 dat/ai/include/atk_bomber.lua
 dat/ai/include/atk_capital.lua
 dat/ai/include/atk_corvette.lua
@@ -2352,6 +2353,7 @@ dat/missions/minerva/maikki2.lua
 dat/missions/minerva/pirate1.lua
 dat/missions/minerva/pirate2.lua
 dat/missions/minerva/pirate3.lua
+dat/missions/minerva/pirate4.lua
 dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua

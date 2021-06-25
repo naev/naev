@@ -1901,7 +1901,6 @@ static void map_buttonZoom( unsigned int wid, char* str )
 static void map_genModeList(void)
 {
    int i,j,k,l;
-   int tot=0;
    Planet *p;
    StarSystem *sys;
    int totGot = 0;
@@ -1914,7 +1913,6 @@ static void map_genModeList(void)
       sys = system_getIndex( i );
       for ( j=0 ; j<array_size(sys->planets); j++) {
          p = sys->planets[j];
-         tot += array_size( p->commodities );
          for ( k=0; k<array_size(p->commodities); k++) {
             if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                /* find out which commodity this is */
