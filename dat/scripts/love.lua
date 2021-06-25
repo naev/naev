@@ -121,40 +121,33 @@ local function _update( dt )
    love.update(dt)
 end
 local function _mouse( x, y, mtype, button )
-   if not love.mouse then return end
+   if not love.mouse then return false end
    y = love.h-y-1
    love.mouse.x = x
    love.mouse.y = y
    if mtype==1 then
       love.mouse.down[button] = true
-      love.mousepressed( x, y, button, false )
+      return love.mousepressed( x, y, button, false )
    elseif mtype==2 then
       love.mouse.down[button] = false
-      love.mousereleased( x, y, button, false )
+      return love.mousereleased( x, y, button, false )
    elseif mtype==3 then
       local dx = x - love.mouse.lx
       local dy = y - love.mouse.ly
       love.mouse.lx = x
       love.mouse.ly = y
-      love.mousemoved( x, y, dx, dy, false )
+      return love.mousemoved( x, y, dx, dy, false )
    end
-   return true
 end
 local function _keyboard( pressed, key, mod )
-   if not love.keyboard then return end
+   if not love.keyboard then return false end
    local k = string.lower( key )
    love.keyboard._keystate[ k ] = pressed
    if pressed then
-      love.keypressed( k, k, false )
+      return love.keypressed( k, k, false )
    else
-      love.keyreleased( k, k )
+      return love.keyreleased( k, k )
    end
-   --[[
-   if k == "escape" then
-      naev.tk.customDone()
-   end
-   --]]
-   return true
 end
 
 

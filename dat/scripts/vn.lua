@@ -304,13 +304,6 @@ Key press handler.
    @tparam string key Name of the key pressed.
 --]]
 function vn.keypressed( key )
-   --[[
-   if key=="escape" then
-      love.event.quit()
-      return
-   end
-   --]]
-
    -- Skip modifier keys
    local blacklist = {
       "left alt",
@@ -330,7 +323,7 @@ function vn.keypressed( key )
 
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
-   s:keypressed( key )
+   return s:keypressed( key )
 end
 
 
@@ -341,9 +334,9 @@ Mouse press handler.
    @tparam number button Button that was pressed.
 --]]
 function vn.mousepressed( mx, my, button )
-   if vn.isDone() then return end
+   if vn.isDone() then return false end
    local s = vn._states[ vn._state ]
-   s:mousepressed( mx, my, button )
+   return s:mousepressed( mx, my, button )
 end
 
 
@@ -399,12 +392,14 @@ function vn.State:update( dt )
    vn._checkDone()
 end
 function vn.State:mousepressed( mx, my, button )
-   self:_mousepressed( mx, my, button )
+   local ret = self:_mousepressed( mx, my, button )
    vn._checkDone()
+   return ret
 end
 function vn.State:keypressed( key )
-   self:_keypressed( key )
+   local ret = self:_keypressed( key )
    vn._checkDone()
+   return ret
 end
 function vn.State:isDone() return self.done end
 --[[
@@ -626,8 +621,10 @@ function vn.StateWait:_keypressed( key )
       return true
    elseif key=="home" then
       vn._buffer_y = 0
+      return true
    end
    wait_scrollorfinish( self )
+   return true
 end
 --[[
 -- Menu
@@ -723,9 +720,9 @@ function vn.StateMenu:_mousepressed( mx, my, button )
 end
 function vn.StateMenu:_keypressed( key )
    local n = tonumber(key)
-   if n == nil then return end
+   if n == nil then return false end
    if n==0 then n = n + 10 end
-   if n > #self._items then return end
+   if n > #self._items then return false end
    self:_choose(n)
 end
 function vn.StateMenu:_choose( n )
