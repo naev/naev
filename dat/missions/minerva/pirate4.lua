@@ -39,7 +39,7 @@ mole_image = "minervaceo.png" -- TODO replace
 mainsys     = "Fried"
 dvaeredsys  = "Limbo"
 piratesys   = "Effetey"
-shippos     = vec2.new( 9000, -4000 ) -- asteroid field center
+shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 -- Mission states:
 --  nil: mission not accepted yet
 --    0. have to find spy
@@ -56,6 +56,9 @@ function create ()
    misn.setDesc( misn_desc )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
+   -- In the case the player failed/crashed the mission ,we want to clear the
+   -- change so they can repeat it without modifying their save
+   var.pop("minerva_chuckaluck_change")
 end
 
 function accept ()
@@ -76,6 +79,7 @@ function accept ()
 
    hook.load("generate_npc")
    hook.land("generate_npc")
+   hook.enter("enter")
    hook.custom("minerva_secretcode", "found_mole")
    var.push("minerva_caninputcode",true)
    generate_npc()
@@ -164,7 +168,7 @@ They make a cutting gesture from their belly up to their neck.
    -- Add illegal cargo
    local c = misn.cargoNew( _("Dvaered Mole"), _("An unconscious and restrained Dvaered mole. You better not let Dvaered ships find out you are carrying this individual.") )
    c:illegalto{"Dvaered"}
-   mole = misn.cargoAdd( c, 0 )
+   cargo_mole = misn.cargoAdd( c, 0 )
 
    -- Signal they were caught
    var.pop("minerva_caninputcode")
@@ -183,6 +187,7 @@ end
 function enter ()
    if misn_state==2 then
       player.msg(_("#rMISSION FAILED! You were supposed to protect the interrogation ship!"))
+      var.pop("minerva_chuckaluck_change")
       misn.finish(false)
    end
 
@@ -200,8 +205,10 @@ function enter ()
       mainship:setHilight(true)
       mainship:setNoDisable(true)
       mainship:setActiveBoard(true)
+      mainship:setVisible(true) -- AI should be able to go attack it
       mainship:control(true)
-      mainship:stealth()
+      --mainship:stealth()
+      mainship:brake()
 
       -- Some hooks
       hook.pilot( mainship, "board", "mainship_board" )
@@ -242,24 +249,36 @@ They rush off into the depths of the ship.]]))
    vn.run()
 
    -- Set up stuff
-   misn.cargoRm( mole )
+   misn.cargoRm( cargo_mole )
    mainship:setActiveBoard(false)
 
-   -- Time limit stuff
-   timeneeded = time.create(0, 0, 3*60*30)
-   timelimit = time.get() + timeneeded
-   tick_hook = hook.date(time.create(0, 0, 10), "tick") -- 100STU per tick
-
    -- Dvaered jump in hooks
+   spawned_dvaereds = {}
+   spawned_pirates = {}
    player.msg(string.format(_("Sensors detecting Dvaered patrol incoming from %s!"), dvaeredsys))
    hook.timer(  5e3, "msg1" )
    hook.timer( 10e3, "dv_reinforcement1" )
-   hook.timer( 55e3, "msg2" )
-   hook.timer( 60e3, "dv_reinforcement1" )
-   hook.timer( 90e3, "dv_reinforcement2" )
-   hook.timer( 100e3, "msg3" )
-   hook.timer( 120e3, "dv_reinforcement3" )
-   hook.timer( 135e3, "msg4" )
+   hook.timer( 100e3, "dv_reinforcement1" )
+   hook.timer( 110e3, "msg2" )
+   hook.timer( 170e3, "dv_reinforcement2" )
+   hook.timer( 200e3, "msg3" )
+   hook.timer( 230e3, "dv_reinforcement3" )
+   hook.timer( 240e3, "msg4" )
+   hook.timer( 330e3, "pir_reinforcements" )
+   hook.timer( 1000, "dv_ai" )
+
+   -- Unboard
+   player.unboard()
+end
+
+function dv_ai ()
+   local left = {}
+   for k,v in ipairs(spawned_dvaereds) do
+      if v:exists() then
+         table.insert( left, v )
+      end
+   end
+   spawned_dvaereds = left
 end
 
 function mainship_attacked ()
@@ -275,67 +294,62 @@ end
 
 function mainship_dead ()
    player.msg(_("#rMISSION FAILED! The interrogation ship was destroyed!"))
+   var.pop("minerva_chuckaluck_change")
    misn.finish(false)
 end
 
-function tick ()
-   if timelimit >= time.get() then
-      misn.osdCreate( misn_title, {
-         string.format(_("Defend the Interrogation Ship from the Dvaered for %s!"), (timelimit - time.get()):str()),
-      } )
-   else
-      -- Get ready!
-      hook.rm( tick_hook ) -- stop the hook
-      mainship:comm(_("Reinforcements are coming!"))
+function pir_reinforcements ()
+   -- Get ready!
+   mainship:comm(_("Reinforcements are coming!"))
 
-      -- Reinforcement spawners
-      spawned_pirates = {}
-      local jmp = jump.get( system.cur(), system.get(piratesys) )
-      local function addpir( shipname, leader )
-         local p = pilot.add( shipname, "Pirate", jmp )
-         p:setFriendly(true)
-         p:setLeader(l)
-         table.insert( spawned_pirates, p )
-         return p
-      end
-
-      -- Reinforcements!
-      local l = addpir( "Pirate Kestrel" )
-      addpir( "Pirate Admonisher", l )
-      addpir( "Pirate Admonisher", l )
-      addpir( "Pirate Shark", l )
-      addpir( "Pirate Vendetta", l )
-
-      -- Message stuff
-      mainship:comm(_("Support incoming! Hurrah!"), true)
-      misn.osdCreate( misn_title, {
-         _("Clean up the Dvaered patrols"),
-      } )
-
-      -- Detect all Dvaered dead
-      hook.timer( 3000, "heartbeat" )
+   -- Reinforcement spawners
+   local jmp = system.get(piratesys)
+   local function addpir( shipname, leader )
+      local p = pilot.add( shipname, "Pirate", jmp )
+      p:setFriendly(true)
+      p:setLeader(l)
+      table.insert( spawned_pirates, p )
+      return p
    end
+
+   -- Reinforcements!
+   local l = addpir( "Pirate Kestrel" )
+   addpir( "Pirate Admonisher", l )
+   addpir( "Pirate Admonisher", l )
+   addpir( "Pirate Shark", l )
+   addpir( "Pirate Vendetta", l )
+   addpir( "Pirate Ancestor", l )
+   addpir( "Pirate Ancestor", l )
+
+   -- Message stuff
+   mainship:comm(_("Support incoming! Hurrah!"), true)
+   misn.osdCreate( misn_title, {
+      _("Clean up the Dvaered patrols"),
+   } )
+
+   -- Detect all Dvaered dead
+   hook.timer( 3000, "heartbeat" )
 end
 
 function msg1 ()
-   mainship:comm(string.format(_("All we need is %s before we are ready to get out of here!"), timeneeded:str(0)), true)
+   mainship:comm(_("Try to buy us time! We have reinforcements coming!"))
 end
 function msg2 ()
    mainship:comm(_("They keep on coming! Keep them distracted!"), true)
 end
 function msg3 ()
-   mainship:comm(string.format(_("Only %s left before support comes!"), (timelimit-time.get()):str(0)), true)
+   mainship:comm(_("Just a bit more and reinforcements should arrive!"), true)
 end
 function msg4 ()
    mainship:comm(_("Shit, is that a Dvaered Goddard?"), true)
 end
 
 local function spawn_dvaereds( ships )
-   spawned_dvaereds = spawned_dvaereds or {}
    local plts = {}
-   local jmp = jump.get( system.cur(), system.get(dvaeredsys) )
+   local jmp = system.get(dvaeredsys)
    for k,v in ipairs(ships) do
       local p = pilot.add( v, "Dvaered", jmp )
+      p:setVisplayer(true)
       table.insert( plts, p )
       table.insert( spawned_dvaereds, p )
    end
@@ -346,7 +360,8 @@ local function spawn_dvaereds( ships )
       v:setLeader(l)
    end
    -- Set leader behaviour
-   p:moveto( mainship:pos(), false, false )
+   --plts[1]:control(true)
+   --plts[1]:moveto( mainship:pos(), false, false )
    return plts
 end
 
@@ -354,7 +369,7 @@ function dv_reinforcement1 ()
    local dvships = {
       "Dvaered Phalanx",
       "Dvaered Vendetta",
-      "Dvaered Vendetta",
+      --"Dvaered Vendetta",
    }
    spawn_dvaereds( dvships )
 end
@@ -363,12 +378,12 @@ function dv_reinforcement2 ()
    local dvships = {
       "Dvaered Vigilance",
       "Dvaered Ancestor",
-      "Dvaered Ancestor",
+      --"Dvaered Ancestor",
    }
    spawn_dvaereds( dvships )
 end
 
-function dv_reinforcements3 ()
+function dv_reinforcement3 ()
    local dvships = {
       "Dvaered Goddard",
       "Dvaered Vigilance",
@@ -379,14 +394,6 @@ function dv_reinforcements3 ()
 end
 
 function heartbeat ()
-   local left = {}
-   for k,v in ipairs(spawned_dvaereds) do
-      if v:exists() then
-         table.insert( left, v )
-      end
-   end
-   spawned_dvaereds = left
-
    -- Still left
    if #spawned_dvaereds > 0 then
       hook.timer( 3000, "heartbeat" )
@@ -429,4 +436,9 @@ They give you a tired grin.
 
    -- We done here
    misn.finish(true)
+end
+
+function abort ()
+   var.pop("minerva_chuckaluck_change")
+   misn.finish(false)
 end

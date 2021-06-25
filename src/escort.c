@@ -136,8 +136,10 @@ unsigned int escort_create( Pilot *p, char *ship,
    /* Set flags. */
    pilot_clearFlagsRaw( f );
    pilot_setFlagRaw( f, PILOT_NOJUMP );
-   if (p->faction == FACTION_PLAYER)
+   if (p->faction == FACTION_PLAYER) {
       pilot_setFlagRaw( f, PILOT_PERSIST );
+      pilot_setFlagRaw( f, PILOT_NOCLEAR );
+   }
    if (type == ESCORT_TYPE_BAY)
       pilot_setFlagRaw( f, PILOT_CARRIED );
 
