@@ -425,7 +425,8 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
    for (i=0; i<array_size(ps); i++) {
       t = ps[i];
       if (areAllies( p->faction, t->faction ) ||
-            ((p->id == PLAYER_ID) && pilot_isFriendly(t)))
+            ((p->faction == FACTION_PLAYER) && pilot_isFriendly(t)) ||
+            ((t->faction == FACTION_PLAYER) && pilot_isFriendly(p)))
          continue;
       if (pilot_isDisabled(t))
          continue;
@@ -511,7 +512,7 @@ int pilot_stealth( Pilot *p )
    int n;
 
    if (pilot_isFlag( p, PILOT_STEALTH ))
-      return 0;
+      return 1;
 
    /* Can't stealth if locked on. */
    if (p->lockons > 0)
