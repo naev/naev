@@ -1232,10 +1232,10 @@ end
 
 
 function stealth( target )
-   -- TODO move to target if necessary
-   if not target then
-      ai.brake()
-      -- TODO something to try to get them to restealth if failed, maybe move around?
-      ai.stealth(true)
+   ai.brake()
+   if ai.isstopped() then
+      ai.stop()
    end
+   -- TODO something to try to get them to restealth if failed, maybe move around?
+   ai.stealth(true)
 end
