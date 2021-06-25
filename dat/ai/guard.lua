@@ -14,6 +14,7 @@ mem.bribe_no      = _("You can't bribe me!")
 mem.refuel_no     = _("I won't give you fuel!")
 mem.doscans       = true
 mem.guardpos      = vec2.new( 0, 0 ) -- defaults to origin
+mem.guardbrake    = 500
 mem.guarddodist   = 5000 -- distance at which to start activities
 mem.guardreturndist = 7000 -- distance at which to return
 mem.enemyclose    = mem.guarddodist
@@ -40,7 +41,8 @@ function idle ()
    end
 
    -- get distance
-   if ai.dist(mem.guardpos) > mem.guardreturndist then
+   local guarddist = ai.dist(mem.guardpos)
+   if guarddist > mem.guardreturndist then
       -- Go back to Guard target
       ai.pushtask( "moveto", mem.guardpos )
       return
@@ -55,8 +57,12 @@ function idle ()
       end
    end
 
-   -- Just return
-   ai.pushtask( "moveto", mem.guardpos )
+   if guarddist < mem.guardbrake then
+      ai.pushtask("brake" )
+   else
+      -- Just return
+      ai.pushtask( "moveto", mem.guardpos )
+   end
 end
 
 -- Override the control function
