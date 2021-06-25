@@ -72,7 +72,6 @@ function accept ()
    misn.accept()
    osd = misn.osdCreate( misn_title, {
       _("Find out who the mole is"),
-      _("Take the mole to the interrogation facility")
    } )
 
    shiplog.append( logidstr, _("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
@@ -461,6 +460,7 @@ They give you a tired grin.
 end
 
 function abort ()
+   var.pop("minerva_caninputcode")
    var.pop("minerva_chuckaluck_change")
    misn.finish(false)
 end
