@@ -48,7 +48,6 @@ shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 misn_state = nil
 
 function create ()
-   if not var.peek("testing") then misn.finish(false) end
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
