@@ -65,6 +65,7 @@
  <faction>
   <name>Miner</name>
   <ai>miner</ai>
+  <logo>miner</logo>
   <static />
   <invisible />
   <known />
@@ -280,7 +281,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -356,7 +356,6 @@
   <enemies>
    <enemy>Civilian</enemy>
    <enemy>Collective</enemy>
-   <enemy>Dvaered</enemy>
    <enemy>Independent</enemy>
    <enemy>Miner</enemy>
    <enemy>Proteron</enemy>

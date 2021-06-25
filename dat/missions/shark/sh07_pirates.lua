@@ -192,7 +192,7 @@ function enter()
       baddie:rmOutfit("all")
       baddie:rmOutfit("cores")
 
-      baddie:addOutfit("S&K Ultralight Stealth Plating")
+      baddie:addOutfit("Nexus Light Stealth Plating")
       baddie:addOutfit("Milspec Orion 2301 Core System")
       baddie:addOutfit("Tricon Zephyr Engine")
       baddie:setHealth(100,100)
