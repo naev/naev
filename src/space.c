@@ -119,7 +119,7 @@ int space_spawn = 1; /**< Spawn enabled by default. */
  * Interference.
  */
 extern double interference_alpha; /* gui.c */
-static double interference_target = 0.; /**< Target alpha level. */
+//static double interference_target = 0.; /**< Target alpha level. */
 static double interference_timer  = 0.; /**< Interference timer. */
 
 
@@ -1321,6 +1321,9 @@ void space_update( const double dt )
     * Interference.
     */
    if (cur_system->interference > 0.) {
+      /* This interference mechanic is just annoying and doesn't bring much to
+       * the table. Disabling for now, but would need a proper removal. */
+#if 0
       /* Always dark. */
       if (cur_system->interference >= 1000.)
          interference_alpha = 1.;
@@ -1357,6 +1360,7 @@ void space_update( const double dt )
                interference_alpha = 0.;
          }
       }
+#endif
    }
 
    /* Faction updates. */
