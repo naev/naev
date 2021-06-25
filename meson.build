@@ -111,8 +111,7 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      # Transitive dependency, probably can/should be marked as required after adding it to our naev-linux containers..
-      dependency('libwebp', required: false),
+      dependency('libwebp', required: true),
    ]
 
    # Lua
