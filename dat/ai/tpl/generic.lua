@@ -249,7 +249,7 @@ function control ()
    if mem.cooldown then
       mem.tickssincecooldown = 0
 
-      cooldown, braking = p:cooldown()
+      local cooldown, braking = p:cooldown()
       if not (cooldown or braking) then
          mem.cooldown = false
       end
