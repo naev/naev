@@ -162,7 +162,7 @@ They make a cutting gesture from their belly up to their neck.
    local pir = vn.newCharacter( minerva.vn_pirate() )
    vn.transition()
    pir(string.format(_([["Great job! It seems like you found our mole. However, our job is not done here. We have to get all the information we can out of him. This is not something we can do here at Minerva Station. Here, take him on your ship and bring him to the %s system. There should be a ship waiting for him in the middle of the asteroid field, it might be a bit hard to spot at first."]]), mainsys))
-   pir(_([["I'll be waiting on the ship with my crew. Make sure to bring him over, however, watch out for any Dvaered patrols. We don't want them to know we have taken him."]]))
+   pir(_([["I'll be waiting on the ship with my crew. Make sure to bring him over, however, watch out for any Dvaered patrols. We don't want them to know we have taken him. We're not expecting much trouble, but bring a strong ship just in case."]]))
    vn.run()
 
    -- Add illegal cargo
@@ -265,20 +265,9 @@ They rush off into the depths of the ship.]]))
    hook.timer( 230e3, "dv_reinforcement3" )
    hook.timer( 240e3, "msg4" )
    hook.timer( 330e3, "pir_reinforcements" )
-   hook.timer( 1000, "dv_ai" )
 
    -- Unboard
    player.unboard()
-end
-
-function dv_ai ()
-   local left = {}
-   for k,v in ipairs(spawned_dvaereds) do
-      if v:exists() then
-         table.insert( left, v )
-      end
-   end
-   spawned_dvaereds = left
 end
 
 function mainship_attacked ()
@@ -394,6 +383,14 @@ function dv_reinforcement3 ()
 end
 
 function heartbeat ()
+   local left = {}
+   for k,v in ipairs(spawned_dvaereds) do
+      if v:exists() then
+         table.insert( left, v )
+      end
+   end
+   spawned_dvaereds = left
+
    -- Still left
    if #spawned_dvaereds > 0 then
       hook.timer( 3000, "heartbeat" )
