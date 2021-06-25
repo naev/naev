@@ -111,15 +111,17 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      # Transitive dependency, probably can/should be marked as required after adding it to our naev-linux containers..
-      dependency('libwebp', required: false),
+      dependency('libwebp', required: true),
    ]
 
    # Lua
    useLuaJIT = get_option('luajit')
    lua = dependency('', required: false)
    if useLuaJIT.disabled() == false
-      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT)
+      # FIXME: Why doesn't `meson configure --force-fallback-for=luajit` force a fallback in
+      # dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT), even if useLuaJIT is "enabled"?
+      HACK_dep_name = 'luajit' in get_option('force_fallback_for') ? 'meson_seriously_please_fall_back' : 'luajit'
+      lua = dependency(HACK_dep_name, fallback: ['luajit', 'luajit_dep'], required: useLuaJIT)
    endif
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
