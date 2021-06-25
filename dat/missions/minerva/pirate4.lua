@@ -200,6 +200,7 @@ function enter ()
       -- Main ship player has to protect
       mainship = pilot.add( "Pirate Rhino", "Pirate", shippos, nil, "guard" )
       local mem = mainship:memory()
+      mem.aggressive = false -- only fight back
       mem.guardpos = shippos -- Stay around origin
       mem.guarddodist = 2500
       mem.guardreturndist = 4000
@@ -275,13 +276,21 @@ They rush off into the depths of the ship.]]))
 end
 
 function mainship_attacked ()
+   if attacked_spam then
+      return
+   end
+
+   mainship:comm(_("We are under attack!"), true)
+   attacked_spam = true
+   hook.time( 6e3, "attack_spam_over" )
+end
+function attack_spam_over ()
+   attacked_spam = false
 end
 
 function mainship_stealth( p, status )
    if status==false then
-      player.msg(_("#oThe Interrogation Ship has been discovered!"))
-      -- TODO make the mainship try to attack
-      mainship_discovered = true
+      mainship:comm(_("We have been discovered!"), true)
    end
 end
 
@@ -327,7 +336,7 @@ function pir_reinforcements ()
 end
 
 function msg1 ()
-   mainship:comm(_("Try to buy us time! We have reinforcements coming!"))
+   mainship:comm(_("Try to buy us time! We have reinforcements coming!"), true)
 end
 function msg2 ()
    mainship:comm(_("They keep on coming! Keep them distracted!"), true)
@@ -437,7 +446,7 @@ They give you a tired grin.
    vn.run()
 
    -- Pirates go away
-   mainship:changeAI( "Pirate" )
+   mainship:changeAI( "pirate" )
    mainship:control(false)
    for k,v in ipairs(spawned_pirates) do
       if v:exists() then
