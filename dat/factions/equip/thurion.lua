@@ -97,16 +97,16 @@ equip_typeOutfits_structurals["Perspicacity"] = {
 equip_typeOutfits_structurals["Ingenuity"] = {
    {
       varied = true, probability = {
-         ["Steering Thrusters"] = 4, ["Engine Reroute"] = 4,
+         ["Improved Stabilizer"] = 4, ["Engine Reroute"] = 4,
       };
-      "Fuel Pod", "Steering Thrusters", "Engine Reroute", "Battery",
+      "Fuel Pod", "Improved Stabilizer", "Engine Reroute", "Battery",
       "Shield Capacitor", "Adaptive Stealth Plating",
    },
 }
 equip_typeOutfits_structurals["Scintillation"] = {
    {
       varied = true;
-      "Fuel Pod", "Steering Thrusters", "Engine Reroute", "Shield Capacitor",
+      "Fuel Pod", "Improved Stabilizer", "Engine Reroute", "Shield Capacitor",
       "Adaptive Stealth Plating",
    },
 }
