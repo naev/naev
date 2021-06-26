@@ -434,6 +434,7 @@ static int outfitL_unique( lua_State *L )
  *
  *    @luatparam Outfit o Outfit to get ship stat of.
  *    @luatparam[opt=nil] string name Name of the ship stat to get.
+ *    @luatparam[opt=false] boolean internal Whether or not to use the internal representation.
  *    @luareturn Value of the ship stat or a tale containing all the ship stats if name is not specified.
  * @luafunc shipstat
  */
@@ -444,6 +445,7 @@ static int outfitL_getShipStat( lua_State *L )
    ss_statsInit( &ss );
    ss_statsModFromList( &ss, o->stats );
    const char *str = luaL_optstring(L,2,NULL);
-   ss_statsGetLua( L, &ss, str );
+   int internal      = lua_toboolean(L,3);
+   ss_statsGetLua( L, &ss, str, internal );
    return 1;
 }
