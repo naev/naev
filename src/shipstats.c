@@ -874,6 +874,9 @@ int ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name )
 {
    ShipStatsType type;
 
+   if (name==NULL)
+      return ss_statsGetLuaTable( L, s );
+
    type = ss_typeFromName( name );
    if (type == SS_TYPE_NIL) {
       WARN(_("Unknown ship stat type '%s'!"), name );

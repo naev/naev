@@ -2817,18 +2817,17 @@ static int pilotL_intrinsicSet( lua_State *L )
 
 
 /**
- * @brief Allows getting an intrinsic stats of a pilot.
+ * @brief Allows getting an intrinsic stats of a pilot, or gets all of them if name is not specified.
  *
  *    @luatparam Pilot p Pilot to get stat of.
- *    @luatparam string name Name of the stat to get. It is the same as in the xml.
- *    @luatparam number value Value to get the stat to.
- *    @luatparam boolean overwrite Whether or not to add to the stat or replace it.
+ *    @luatparam[opt=nil] string name Name of the stat to get. It is the same as in the xml.
+ *    @luaparam Value of the stat or a table containing all the stats if name is not specified.
  * @luafunc intrinsicGet
  */
 static int pilotL_intrinsicGet( lua_State *L )
 {
    Pilot *p          = luaL_validpilot(L,1);
-   const char *name  = luaL_checkstring(L,2);
+   const char *name  = luaL_optstring(L,2,NULL);
    ss_statsGetLua( L, &p->intrinsic_stats, name );
    return 1;
 }
@@ -3289,17 +3288,17 @@ static int pilotL_getStats( lua_State *L )
 
 
 /**
- * @brief Gets a shipstat from a Pilot by name.
+ * @brief Gets a shipstat from a Pilot by name, or a table containing all the ship stats if not specified.
  *
  *    @luatparam Pilot p Pilot to get ship stat of.
- *    @luatparam string name Name of the ship stat to get.
- *    @luatreturn number Number corresponding to the ship stat.
+ *    @luatparam[opt=nil] string name Name of the ship stat to get.
+ *    @luareturn Value of the ship stat or a tale containing all the ship stats if name is not specified.
  * @luafunc shipstat
  */
 static int pilotL_getShipStat( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   const char *str = luaL_checkstring(L,2);
+   const char *str = luaL_optstring(L,2,NULL);
    ss_statsGetLua( L, &p->stats, str );
    return 1;
 }
