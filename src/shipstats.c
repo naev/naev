@@ -789,7 +789,7 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
 /**
  * @brief Gets a ship stat value by name.
  */
-double ss_statsGet( ShipStats *s, const char *name )
+double ss_statsGet( const ShipStats *s, const char *name )
 {
    const ShipStatsLookup *sl;
    ShipStatsType type;
