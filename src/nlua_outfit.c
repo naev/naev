@@ -36,6 +36,7 @@ static int outfitL_icon( lua_State *L );
 static int outfitL_price( lua_State *L );
 static int outfitL_description( lua_State *L );
 static int outfitL_unique( lua_State *L );
+static int outfitL_getShipStat( lua_State *L );
 static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -50,6 +51,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "price", outfitL_price },
    { "description", outfitL_description },
    { "unique", outfitL_unique },
+   { "shipstat", outfitL_getShipStat },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -423,5 +425,25 @@ static int outfitL_unique( lua_State *L )
 {
    Outfit *o = luaL_validoutfit(L,1);
    lua_pushboolean(L, outfit_isProp(o, OUTFIT_PROP_UNIQUE));
+   return 1;
+}
+
+
+/**
+ * @brief Gets a shipstat from an Outfit by name, or a table containing all the ship stats if not specified.
+ *
+ *    @luatparam Outfit o Outfit to get ship stat of.
+ *    @luatparam[opt=nil] string name Name of the ship stat to get.
+ *    @luareturn Value of the ship stat or a tale containing all the ship stats if name is not specified.
+ * @luafunc shipstat
+ */
+static int outfitL_getShipStat( lua_State *L )
+{
+   ShipStats ss;
+   Outfit *o = luaL_validoutfit(L,1);
+   ss_statsInit( &ss );
+   ss_statsModFromList( &ss, o->stats );
+   const char *str = luaL_optstring(L,2,NULL);
+   ss_statsGetLua( L, &ss, str );
    return 1;
 }
