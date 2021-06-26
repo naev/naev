@@ -178,6 +178,8 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
 static int ss_printA( char *buf, int len, int newline, double d, const ShipStatsLookup *sl );
 static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLookup *sl );
 static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLookup *sl );
+static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type );
+static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal );
 
 
 /**
@@ -786,22 +788,12 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
 }
 
 
-/**
- * @brief Gets a ship stat value by name.
- */
-double ss_statsGet( ShipStats *s, const char *name )
+static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type )
 {
    const ShipStatsLookup *sl;
-   ShipStatsType type;
    const char *ptr;
    const double *destdbl;
    const int *destint;
-
-   type = ss_typeFromName( name );
-   if (type == SS_TYPE_NIL) {
-      WARN(_("Unknown ship stat type '%s'!"), name );
-      return 0;
-   }
 
    sl = &ss_lookup[ type ];
    ptr = (const char*) s;
@@ -819,5 +811,107 @@ double ss_statsGet( ShipStats *s, const char *name )
          destint  = (const int*) &ptr[ sl->offset ];
          return *destint;
    }
+   return 0.;
+}
+
+
+static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal )
+{
+   const ShipStatsLookup *sl;
+   const char *ptr;
+   const double *destdbl;
+   const int *destint;
+
+   sl = &ss_lookup[ type ];
+   ptr = (const char*) s;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         destdbl = (const double*) &ptr[ sl->offset ];
+         if (internal)
+            lua_pushnumber(L, *destdbl );
+         else
+            lua_pushnumber(L, 100.*((*destdbl) - 1.0) );
+         return 0;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         destdbl  = (const double*) &ptr[ sl->offset ];
+         lua_pushnumber(L, *destdbl);
+         return 0;
+
+      case SS_DATA_TYPE_BOOLEAN:
+         destint  = (const int*) &ptr[ sl->offset ];
+         lua_pushboolean(L, *destint);
+         return 0;
+
+      case SS_DATA_TYPE_INTEGER:
+         destint  = (const int*) &ptr[ sl->offset ];
+         lua_pushinteger(L, *destint);
+         return 0;
+   }
+   lua_pushnil(L);
+   return -1;
+}
+
+
+
+/**
+ * @brief Gets a ship stat value by name.
+ */
+double ss_statsGet( const ShipStats *s, const char *name )
+{
+   ShipStatsType type;
+
+   type = ss_typeFromName( name );
+   if (type == SS_TYPE_NIL) {
+      WARN(_("Unknown ship stat type '%s'!"), name );
+      return 0;
+   }
+
+   return ss_statsGetInternal( s, type );
+}
+
+/**
+ * @brief Gets a ship stat value by name and pushes it to Lua.
+ */
+int ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name, int internal )
+{
+   ShipStatsType type;
+
+   if (name==NULL)
+      return ss_statsGetLuaTable( L, s, internal );
+
+   type = ss_typeFromName( name );
+   if (type == SS_TYPE_NIL) {
+      WARN(_("Unknown ship stat type '%s'!"), name );
+      return -1;
+   }
+
+   return ss_statsGetLuaInternal( L, s, type, internal );
+}
+
+
+/**
+ * @brief Converts ship stats to a Lua table, which is pushed on the Lua stack.
+ */
+int ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal )
+{
+   int i;
+   const ShipStatsLookup *sl;
+
+   lua_newtable(L);
+
+   for (i=0; i<SS_TYPE_SENTINEL; i++) {
+      sl = &ss_lookup[ i ];
+
+      /* Only want valid names. */
+      if (sl->name == NULL)
+         continue;
+
+      /* Push name and get value. */
+      lua_pushstring(L, sl->name);
+      ss_statsGetLuaInternal( L, s, i, internal );
+      lua_rawset( L, -3 );
+   }
+
    return 0;
 }
