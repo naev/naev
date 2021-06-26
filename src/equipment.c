@@ -121,9 +121,10 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
 {
    (void)str;
    Outfit* o;
-   int i, active;
+   int i, active, minimal, n;
    PilotOutfitSlot* slots;
    Pilot *p;
+   OutfitSlotSize size;
 
    active = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
    i = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
@@ -152,7 +153,10 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    }
 
    /* Loop through outfit slots of the right type, try to find an empty one */
-   for (i=0; i<array_size(slots); i++) {
+   size = OUTFIT_SLOT_SIZE_NA;
+   n = array_size(slots);
+   minimal = n;
+   for (i=0; i<n; i++) {
       /* Slot full. */
       if (slots[i].outfit != NULL)
          continue;
@@ -161,11 +165,22 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
       if (!outfit_fitsSlot( o, &slots[i].sslot->slot))
          continue;
 
-      /* Bingo! */
+      /* Must have valid slot size. */
+      if (o->slot.size == OUTFIT_SLOT_SIZE_NA)
+         continue;
+
+      /* Search for the smallest slot avaliable. */
+      if ((size == OUTFIT_SLOT_SIZE_NA) || (slots[i].sslot->slot.size < size)){
+         size = slots[i].sslot->slot.size;
+         minimal = i;
+      }
+   }
+
+   /* Use the chosen one (if any). */
+   if (minimal < n) {
       eq_wgt.outfit  = o;
       p              = eq_wgt.selected;
-      equipment_swapSlot( equipment_wid, p, &slots[i] );
-      return;
+      equipment_swapSlot( equipment_wid, p, &slots[minimal] );
    }
 }
 
