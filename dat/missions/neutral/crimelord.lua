@@ -60,7 +60,7 @@ function accept ()
    end
    
    misn.accept()
-   reward = 600000
+   reward = 600e3
    tk.msg( title[1], text[1] ) --dialogue 2
    misn.setTitle( title[0] ) --OSD stuff
    misn.setReward( reward_desc )
@@ -126,6 +126,7 @@ function spawnBaddies ()
       sp = last_system
    end
 
+   local pp = player.pilot()
    thugs = addShips( 4, "Admonisher", "Thugs", sp, _("Thug"), ai )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:setHostile(true) --they don't like you
@@ -138,8 +139,11 @@ function spawnBaddies ()
       pilot_object:addOutfit("Engine Reroute")
       pilot_object:addOutfit("Shield Capacitor II")
       if system.cur() ~= targetsystem then
-         pilot_object:control() --switch to manual control
-         pilot_object:attack( player.pilot() ) --they attack you and only you
+         -- TODO more sophisticated way of detecting the player
+         if pilot_object:inrange( pp ) then
+            pilot_object:control() --switch to manual control
+            pilot_object:attack( pp ) --they attack you and only you
+         end
       else
          thugs_alive = #thugs
          hook.pilot(pilot_object, "exploded", "pilotKilled") --trigger when one of them is killed
