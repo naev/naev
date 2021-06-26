@@ -250,7 +250,7 @@ function interceptors()
       badguys[i]:addOutfit("Milspec Orion 2301 Core System")
       badguys[i]:addOutfit("Tricon Zephyr Engine")
 
-      badguys[i]:addOutfit("Shredder",3)
+      badguys[i]:addOutfit("Gauss Gun",3)
       badguys[i]:addOutfit("Improved Stabilizer") -- Just try to avoid fight with these fellas
 
       badguys[i]:setHealth(100,100)
@@ -274,9 +274,10 @@ function hvy_intercept()
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
 
       badguys[i]:addOutfit("TeraCom Fury Launcher")
-      badguys[i]:addOutfit("Shredder",2)
-      badguys[i]:addOutfit("Ripper Cannon")
-      badguys[i]:addOutfit("Shield Capacitor",2)
+      badguys[i]:addOutfit("Laser Cannon MK2",2)
+      badguys[i]:addOutfit("Laser Cannon MK1")
+      badguys[i]:addOutfit("Reactor Class I")
+      badguys[i]:addOutfit("Solar Panel")
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
@@ -297,8 +298,12 @@ function corvette()
       badguys[i]:addOutfit("Unicorp PT-200 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
 
-      badguys[i]:addOutfit("Razor Turret MK2",2)
       badguys[i]:addOutfit("Unicorp Headhunter Launcher",2)
+      badguys[i]:addOutfit("Razor Turret MK2")
+      badguys[i]:addOutfit("Razor Turret MK1",2)
+
+      badguys[i]:addOutfit("Shield Capacitor II")
+      badguys[i]:addOutfit("Reactor Class I",2)
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
@@ -317,12 +322,13 @@ function cruiser()
    badguy:addOutfit("Unicorp PT-500 Core System")
    badguy:addOutfit("Krain Remige Engine")
 
-   badguy:addOutfit("Heavy Ripper Turret",2)
-   badguy:addOutfit("Unicorp Headhunter Launcher",2)
-   badguy:addOutfit("Enygma Systems Spearhead Launcher",2)
+   badguy:addOutfit("Heavy Laser Turret",2)
+   badguy:addOutfit("Unicorp Headhunter Launcher",4)
 
-   badguy:addOutfit("Large Shield Booster",2)
-   badguy:addOutfit("Improved Stabilizer",4)
+   badguy:addOutfit("Pinpoint Combat AI")
+   badguy:addOutfit("Photo-Voltaic Nanobot Coating")
+   badguy:addOutfit("Reactor Class III")
+   badguy:addOutfit("Improved Stabilizer",3)
    badguy:setHealth(100,100)
    badguy:setEnergy(100)
 
@@ -338,16 +344,14 @@ function bombers()
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
 
-      badguys[i]:addOutfit("S&K Ultralight Combat Plating")
-      badguys[i]:addOutfit("Milspec Orion 2301 Core System")
+      badguys[i]:addOutfit("Unicorp D-2 Light Plating")
+      badguys[i]:addOutfit("Unicorp PT-68 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
 
       badguys[i]:addOutfit("Unicorp Caesar IV Launcher",2)
-      badguys[i]:addOutfit("Neutron Disruptor")
-      badguys[i]:addOutfit("Vulcan Gun")
+      badguys[i]:addOutfit("Gauss Gun",2)
 
-      badguys[i]:addOutfit("Small Shield Booster",2)
-      badguys[i]:addOutfit("Shield Capacitor",2)
+      badguys[i]:addOutfit("Reactor Class I")
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
@@ -358,12 +362,6 @@ function add_llama()
    --adding an useless Llama
    useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
    useless:setHostile()
-
-   useless:rmOutfit("all")
-   useless:addOutfit("Laser Cannon MK1",2)
-
-   useless:setHealth(100,100)
-   useless:setEnergy(100)
 end
 
 function littleofall()

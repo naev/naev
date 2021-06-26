@@ -183,8 +183,7 @@ function lets_go()
    sharkboy:addOutfit("Milspec Orion 3701 Core System")
    sharkboy:addOutfit("Tricon Zephyr II Engine")
 
-   sharkboy:addOutfit("Reactor Class I",3)
-   sharkboy:addOutfit("Battery",2)
+   sharkboy:addOutfit("Reactor Class I",2)
 
    sharkboy:addOutfit("Heavy Ion Cannon")
    sharkboy:addOutfit("Ion Cannon",3)
