@@ -2829,7 +2829,7 @@ static int pilotL_intrinsicGet( lua_State *L )
 {
    Pilot *p          = luaL_validpilot(L,1);
    const char *name  = luaL_checkstring(L,2);
-   lua_pushnumber(L, ss_statsGet( &p->intrinsic_stats, name ));
+   ss_statsGetLua( L, &p->intrinsic_stats, name );
    return 1;
 }
 
@@ -3300,7 +3300,7 @@ static int pilotL_getShipStat( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    const char *str = luaL_checkstring(L,2);
-   lua_pushnumber(L, ss_statsGet(&p->stats,str) );
+   ss_statsGetLua( L, &p->stats, str );
    return 1;
 }
 
