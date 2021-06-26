@@ -1,0 +1,7 @@
+[wrap-file]
+directory = glpk-5.0
+
+source_url = https://ftp.gnu.org/gnu/glpk/glpk-5.0.tar.gz
+source_filename = glpk-5.0.tar.gz
+source_hash = 4a1013eebb50f728fc601bdd833b0b2870333c3b3e5a816eeba921d95bec6f15
+patch_directory = glpk

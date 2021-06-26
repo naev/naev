@@ -132,6 +132,9 @@ if buildExec.disabled() == false
 
    naev_deps += lua
 
+   ## GLPK
+   glpk = subproject('glpk').get_variable('glpk')
+   naev_deps += [glpk]
    ### Soft deps (required: false)
 
    # BFD
