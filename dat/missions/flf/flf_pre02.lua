@@ -319,13 +319,14 @@ end
 
 function timer_spawnHostileFLF ()
    spawnFLF()
+   local pp = player.pilot()
    for i, j in ipairs( fleetFLF ) do
       j:setHostile()
       j:control()
-      j:attack( player.pilot() )
+      j:attack( pp )
    end
 
-   hook.pilot( player.pilot(), "death", "returnFLFControl" )
+   hook.pilot( pp, "death", "returnFLFControl" )
    fleetFLF[1]:broadcast( flfcomm[2]:format( player.name() ) )
 end
 
