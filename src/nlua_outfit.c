@@ -31,12 +31,14 @@ static int outfitL_nameRaw( lua_State *L );
 static int outfitL_type( lua_State *L );
 static int outfitL_typeBroad( lua_State *L );
 static int outfitL_cpu( lua_State *L );
+static int outfitL_mass( lua_State *L );
 static int outfitL_slot( lua_State *L );
 static int outfitL_icon( lua_State *L );
 static int outfitL_price( lua_State *L );
 static int outfitL_description( lua_State *L );
 static int outfitL_unique( lua_State *L );
 static int outfitL_getShipStat( lua_State *L );
+static int outfitL_weapStats( lua_State *L );
 static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -46,12 +48,14 @@ static const luaL_Reg outfitL_methods[] = {
    { "type", outfitL_type },
    { "typeBroad", outfitL_typeBroad },
    { "cpu", outfitL_cpu },
+   { "mass", outfitL_mass },
    { "slot", outfitL_slot },
    { "icon", outfitL_icon },
    { "price", outfitL_price },
    { "description", outfitL_description },
    { "unique", outfitL_unique },
    { "shipstat", outfitL_getShipStat },
+   { "weapstats", outfitL_weapStats },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -336,6 +340,23 @@ static int outfitL_cpu( lua_State *L )
 
 
 /**
+ * @brief Gets the mass of an outfit.
+ *
+ * @usage print( o:mass() ) -- Prints the mass of an outfit
+ *
+ *    @luatparam Outfit o Outfit to get information of.
+ *    @luatreturn string The amount of mass the outfit uses.
+ * @luafunc mass
+ */
+static int outfitL_mass( lua_State *L )
+{
+   Outfit *o = luaL_validoutfit(L,1);
+   lua_pushnumber(L, o->mass);
+   return 1;
+}
+
+
+/**
  * @brief Gets the slot name, size and property of an outfit.
  *
  * @usage slot_name, slot_size, slot_prop = o:slot() -- Gets an outfit's slot info
@@ -449,3 +470,48 @@ static int outfitL_getShipStat( lua_State *L )
    ss_statsGetLua( L, &ss, str, internal );
    return 1;
 }
+
+
+
+static int outfitL_weapStats( lua_State *L )
+{
+   Outfit *o = luaL_validoutfit( L, 1 );
+   double eps, dps, shots;
+   double mod_energy, mod_damage, mod_shots;
+   const Damage *dmg;
+
+   /* Just return 0 for non-wapons. */
+   if (o->slot.type != OUTFIT_SLOT_WEAPON) {
+      lua_pushnumber( L, 0. );
+      lua_pushnumber( L, 0. );
+      return 2;
+   }
+
+   mod_energy = 1;
+   mod_damage = 1;
+   mod_shots  = 1;
+
+   /* Special case beam weapons .*/
+   if (outfit_isBeam(o)) {
+      shots = outfit_duration(o);
+      mod_shots = shots / (shots + mod_shots * outfit_delay(o));
+      dps = mod_shots * mod_damage * outfit_damage(o)->damage;
+      eps = mod_shots * mod_energy * outfit_energy(o);
+   }
+   else {
+      shots = 1. / (mod_shots * outfit_delay(o));
+      /* Special case: Ammo-based weapons. */
+      if (outfit_isLauncher(o))
+         dmg = outfit_damage(o->u.lau.ammo);
+      else
+         dmg = outfit_damage(o);
+      dps = shots * mod_damage * dmg->damage;
+      eps = shots * mod_energy * MAX( outfit_energy(o), 0. );
+   }
+
+   lua_pushnumber( L, dps );
+   lua_pushnumber( L, eps );
+   return 2;
+}
+
+
