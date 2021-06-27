@@ -472,7 +472,13 @@ static int outfitL_getShipStat( lua_State *L )
 }
 
 
-
+/**
+ * @brief Computes the DPS and EPS for weapons.
+ *
+ *    @luatparam Outfit o Outfit to compute for.
+ *    @luatreturn number DPS of the outfit.
+ *    @luatreturn number EPS of the outfit.
+ */
 static int outfitL_weapStats( lua_State *L )
 {
    Outfit *o = luaL_validoutfit( L, 1 );
