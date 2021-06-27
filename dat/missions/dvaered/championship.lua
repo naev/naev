@@ -294,6 +294,10 @@ function enter()
          opponent:addOutfit("Tricon Zephyr Engine")
          opponent:addOutfit("Milspec Orion 2301 Core System")
          opponent:addOutfit("S&K Ultralight Combat Plating")
+      elseif oppotype == ship.get("Reaver") then
+         opponent:addOutfit("Light Brain Stage X")
+         opponent:addOutfit("Light Fast Gene Drive Stage X")
+         opponent:addOutfit("Light Shell Stage X")
       else
          opponent:addOutfit("Tricon Zephyr II Engine")
          opponent:addOutfit("Milspec Orion 3701 Core System")
@@ -303,12 +307,11 @@ function enter()
       -- Equipment
       local nhigh, nmedium, nlow = oppotype:slots()
 
-      opponent:addOutfit("Reactor Class I",nmedium)
+      -- TODO: decide if the "Faraday Tempest Coating" is a good idea
       opponent:addOutfit("Battery",nlow)
 
       hvy = 0
-
-      if oppotype == ship.get("Lancelot") or oppotype == ship.get("Empire Lancelot") or oppotype == ship.get("Soromid Reaver") then
+      if oppotype == ship.get("Lancelot") or oppotype == ship.get("Empire Lancelot") then
          opponent:addOutfit("Heavy Ion Cannon")
          hvy = 1
       end
@@ -338,7 +341,7 @@ function enter()
 
       for i, k in ipairs({sec11, sec12, sec21, sec22}) do
          k:rmOutfit("all")
-         k:addOutfit("Shredder", 3)
+         k:addOutfit("Gauss Gun", 3)
          k:addOutfit("Improved Stabilizer")
       end
 
