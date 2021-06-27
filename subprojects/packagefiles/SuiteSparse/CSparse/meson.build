@@ -61,7 +61,7 @@ system_deps = [
    cc.find_library('m', required : false)
 ]
 
-library(
+libcsparse = static_library(
    'CSparse',
    source,
    dependencies: system_deps,
@@ -69,7 +69,7 @@ library(
 )
 
 CSparse_dep = declare_dependency(
-   sources: source,
+   link_with: libcsparse,
    include_directories: include,
    dependencies: system_deps
 )
