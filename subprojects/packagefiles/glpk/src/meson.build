@@ -1,39 +1,19 @@
 glpk_includes = include_directories([
- '.',
- 'amd',
- 'api',
- 'bflib',
- 'colamd',
- 'draft',
- 'env',
- 'intopt',
- 'minisat',
- 'misc',
- 'mpl',
- 'npp',
- 'proxy',
- 'simplex',
+   '.',
+   'api',
+   'bflib',
+   'draft',
+   'env',
+   'intopt',
+   'minisat',
+   'misc',
+   'mpl',
+   'npp',
+   'proxy',
+   'simplex',
 ])
 
-# TODO: https://mesonbuild.com/FAQ.html#how-do-i-do-the-equivalent-of-libtools-exportsymbol-and-exportregex
-# libglpk_la_LDFLAGS = \
-# -version-info 43:1:3 \
-# -export-symbols-regex '^glp_*' \
-# ${NOUNDEFINED}
-
 glpk_sources = [
-   'amd/amd_1.c',
-   'amd/amd_2.c',
-   'amd/amd_aat.c',
-   'amd/amd_control.c',
-   'amd/amd_defaults.c',
-   'amd/amd_dump.c',
-   'amd/amd_info.c',
-   'amd/amd_order.c',
-   'amd/amd_post_tree.c',
-   'amd/amd_postorder.c',
-   'amd/amd_preprocess.c',
-   'amd/amd_valid.c',
    'api/advbas.c',
    'api/asnhall.c',
    'api/asnlp.c',
@@ -99,7 +79,6 @@ glpk_sources = [
    'bflib/scfint.c',
    'bflib/sgf.c',
    'bflib/sva.c',
-   'colamd/colamd.c',
    'draft/bfd.c',
    'draft/bfx.c',
    'draft/glpapi06.c',
@@ -200,5 +179,10 @@ glpk_sources = [
    'simplex/spydual.c',
 ]
 
+glpk_dependencies = [
+   subproject('SuiteSparse').get_variable('CSparse_dep'),
+   dependency('zlib'),
+]
 
-libglpk = static_library('glpk', glpk_sources, include_directories: glpk_includes, dependencies: dependency('zlib'))
+
+libglpk = static_library('glpk', glpk_sources, include_directories: glpk_includes, dependencies: glpk_dependencies)

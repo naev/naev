@@ -67,30 +67,6 @@ if buildExec.disabled() == false
 
    ### Hard deps (required: true)
 
-   csparse = dependency('', required: false)
-   if 'SuiteSparse' not in get_option('force_fallback_for')
-      csparse_names = ['csparse', 'cxsparse']
-      foreach n : csparse_names
-         csparse = cc.find_library(n, required: false, has_headers: ['suitesparse/cs.h'])
-         if csparse.found()
-            config_data.set10('HAVE_SUITESPARSE_CS_H', true)
-            break
-         endif
-         csparse = cc.find_library(n, required: false, has_headers: ['cs.h'])
-         if csparse.found()
-            break
-         endif
-      endforeach
-   endif
-
-   if not csparse.found()
-      csparse = dependency(
-         'SuiteSparse',
-         fallback: ['SuiteSparse', 'CSparse_dep'],
-         required: true)
-   endif
-   naev_deps += csparse
-
    naev_deps += cc.find_library('m', required : false)
 
    sdl = dependency('sdl2', required: true)
@@ -132,14 +108,39 @@ if buildExec.disabled() == false
 
    naev_deps += lua
 
-   # Linear Programming stuff
-   use_system_glpk = false
-   if 'glpk' not in get_option('force_fallback_for')
+   # Linear Algebra
+
+   use_system_glpk = ('glpk' not in get_option('force_fallback_for'))
+   use_system_csparse = ('SuiteSparse' not in get_option('force_fallback_for'))
+
+   if use_system_glpk
       system_glpk = cc.find_library('glpk', required: false, has_headers: ['glpk.h'])
       use_system_glpk = system_glpk.found()
    endif
-   glpk = use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk')
-   naev_deps += [glpk]
+   naev_deps += use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk_dep')
+
+   if use_system_csparse and not use_system_glpk
+      message('Falling back to included SuiteSpare subproject, because the included glpk subproject depends on it.')
+      use_system_csparse = false
+   endif
+
+   if use_system_csparse
+      foreach csparse_name : ['csparse', 'cxsparse']
+         system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['suitesparse/cs.h'])
+         use_system_csparse = system_csparse.found()
+         if system_csparse.found()
+            config_data.set10('HAVE_SUITESPARSE_CS_H', true)
+            break
+         endif
+         system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['cs.h'])
+         use_system_csparse = system_csparse.found()
+         if system_csparse.found()
+            break
+         endif
+      endforeach
+   endif
+   naev_deps += use_system_csparse ? system_csparse : subproject('SuiteSparse').get_variable('CSparse_dep')
+
    ### Soft deps (required: false)
 
    # BFD
