@@ -57,7 +57,7 @@ static const luaL_Reg linoptL_methods[] = {
  *    @param env Environment to load linopt library into.
  *    @return 0 on success.
  */
-int nlua_loadOptim( nlua_env env )
+int nlua_loadLinOpt( nlua_env env )
 {
    nlua_register(env, LINOPT_METATABLE, linoptL_methods, 1);
    return 0;
@@ -172,6 +172,7 @@ static int linoptL_eq( lua_State *L )
  *    @luatparam number cols Number of columns in the optimization program.
  *    @luatparam number rows Number of rows in the optimization program.
  *    @luatparam[opt=nil] string name Name of the optimization program.
+ *    @luatparam[opt=false] boolean maximize Whether or not to maximize or minimize the function.
  *    @luatreturn Optim New linopt object.
  * @luafunc new
  */
@@ -179,11 +180,13 @@ static int linoptL_new( lua_State *L )
 {
    LuaLinOpt_t lp;
    const char *name;
+   int max;
 
    /* Input. */
    lp.ncols = luaL_checkinteger(L,1);
    lp.nrows = luaL_checkinteger(L,2);
    name     = luaL_optstring(L,3,NULL);
+   max      = lua_toboolean(L,4);
 
    /* Initialize and create. */
    lp.prob = glp_create_prob();
@@ -191,6 +194,8 @@ static int linoptL_new( lua_State *L )
       glp_set_prob_name( lp.prob, name );
    glp_add_cols( lp.prob, lp.ncols );
    glp_add_rows( lp.prob, lp.nrows );
+   if (max)
+      glp_set_obj_dir( lp.prob, GLP_MAX );
    
    lua_pushlinopt( L, lp );
    return 1;
@@ -352,6 +357,7 @@ static int linoptL_solve( lua_State *L )
    /* Parameters. */
    glp_init_smcp(&parm);
    //parm.msg_lev = GLP_MSG_ERR;
+   parm.msg_lev = GLP_MSG_ALL;
 
    /* Optimization. */
    glp_simplex( lp->prob, &parm );
@@ -362,7 +368,7 @@ static int linoptL_solve( lua_State *L )
 
    /* Go over variables and store them. */
    lua_newtable(L); /* t */
-   for (i=1; i<lp->ncols; i++) {
+   for (i=1; i<=lp->ncols; i++) {
       z = glp_get_col_prim( lp->prob, i );
 #if 0
       name = glp_get_col_name( lp->prob, i );

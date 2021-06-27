@@ -19,7 +19,7 @@ typedef struct LuaLinOpt_s LuaLinOpt_t;
 /*
  * Library loading
  */
-int nlua_loadOptim( nlua_env env );
+int nlua_loadLinOpt( nlua_env env );
 
 /* Basic operations. */
 LuaLinOpt_t* lua_tolinopt( lua_State *L, int ind );
