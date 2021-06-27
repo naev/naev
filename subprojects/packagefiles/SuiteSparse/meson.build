@@ -7,4 +7,6 @@ foreach arg: ['-Wno-unused-but-set-variable', '-Wno-unused-parameter']
    endif
 endforeach
 
+subdir('AMD')
+subdir('COLAMD')
 subdir('CSparse')

@@ -180,7 +180,8 @@ glpk_sources = [
 ]
 
 glpk_dependencies = [
-   subproject('SuiteSparse').get_variable('CSparse_dep'),
+   subproject('SuiteSparse').get_variable('AMD_dep'),
+   subproject('SuiteSparse').get_variable('COLAMD_dep'),
    dependency('zlib'),
 ]
 

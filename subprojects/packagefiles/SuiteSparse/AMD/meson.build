@@ -1,0 +1,36 @@
+source = files([
+   'Source/amd_1.c',
+   'Source/amd_2.c',
+   'Source/amd_aat.c',
+   'Source/amd_control.c',
+   'Source/amd_defaults.c',
+   'Source/amd_dump.c',
+   'Source/amd_info.c',
+   'Source/amd_order.c',
+   'Source/amd_postorder.c',
+   'Source/amd_post_tree.c',
+   'Source/amd_preprocess.c',
+   'Source/amd_valid.c',
+])
+
+include = include_directories([
+   'Include'
+])
+
+cc = meson.get_compiler('c')
+system_deps = [
+   cc.find_library('m', required : false)
+]
+
+libamd = static_library(
+   'AMD',
+   source,
+   dependencies: system_deps,
+   include_directories: include
+)
+
+AMD_dep = declare_dependency(
+   link_with: libamd,
+   include_directories: include,
+   dependencies: system_deps
+)
