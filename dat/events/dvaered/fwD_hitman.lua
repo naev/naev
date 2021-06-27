@@ -17,14 +17,14 @@
 -- Player is attacked by a hitman. If player disables and boards the hitman, this enables the Dvaered Base mission
 --]]
 -- TODO: this event is neutralized because the "Dvaered Base" mission has not been written yet
-attk_warn = "You are being attacked: try to catck your attacker alive!"
+attk_warn = "You are being attacked: try to catch your attacker alive!"
 
 death_title = "Target destroyed"
-death_text = [[While your attacker's ship gets transformed into a fireball, you hesitate between feeling relieved to be still in life and disappointed not to have managed to catch the pilot alive. There will however probably be other opportunities to do that.]]
+death_text = [[While your attacker's ship gets transformed into a fireball, you hesitate between feeling relieved to be alive and disappointed not to have taken the pilot alive. There will however probably be other opportunities to do that.]]
 
 board_title = "Boarding aborted"
-board_text = [[After you have docked with the hostile ship, your crew combat androids start attacking its airlock with their torchs. You recieve a message from your attacker:
-   "Get away from there! There is a detonator on the airlock! You'll get both of us killed!" At this very moment, a huge explosion illuminates your cockpit. The shock disconnects both ships and dispatches your androids. Your enemy's vessel does a swerving that causes its hull to break apart. You think the pilot is dead, but soon you hear his message:
+board_text = [[After you have docked with the hostile ship, your crew combat androids start attacking its airlock with their torches. You recieve a message from your attacker:
+   "Get away from there! There is a detonator on the airlock! You'll get both of us killed!" At this very moment, a huge explosion illuminates your cockpit. The shock disconnects both ships and dispatches your androids. Your enemy's vessel swerves with a force that breaks its hull apart. You think the pilot is dead, but soon you hear his message:
    "Damn. I thought being transpierced by a spar would hurt more. I guess you're not in a better shape than me. Too bad, none of us will see the Division Marius destroy the Dvaered fleet! Wait, is that my intestine drifting away? Oho! Come back. Hey! You belong to me. Come back into the inside of me, my intestine."]]
 
 function create ()
