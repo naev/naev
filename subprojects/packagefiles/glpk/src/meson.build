@@ -13,7 +13,6 @@ glpk_includes = include_directories([
  'npp',
  'proxy',
  'simplex',
- 'zlib',
 ])
 
 # TODO: https://mesonbuild.com/FAQ.html#how-do-i-do-the-equivalent-of-libtools-exportsymbol-and-exportregex
@@ -199,22 +198,7 @@ glpk_sources = [
    'simplex/spychuzc.c',
    'simplex/spychuzr.c',
    'simplex/spydual.c',
-   'zlib/adler32.c',
-   'zlib/compress.c',
-   'zlib/crc32.c',
-   'zlib/deflate.c',
-   'zlib/gzclose.c',
-   'zlib/gzlib.c',
-   'zlib/gzread.c',
-   'zlib/gzwrite.c',
-   'zlib/inffast.c',
-   'zlib/inflate.c',
-   'zlib/inftrees.c',
-   'zlib/trees.c',
-   'zlib/uncompr.c',
-   'zlib/zio.c',
-   'zlib/zutil.c',
 ]
 
 
-libglpk = static_library('glpk', glpk_sources, include_directories: glpk_includes)
+libglpk = static_library('glpk', glpk_sources, include_directories: glpk_includes, dependencies: dependency('zlib'))
