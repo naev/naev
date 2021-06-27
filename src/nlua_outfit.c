@@ -33,6 +33,7 @@ static int outfitL_typeBroad( lua_State *L );
 static int outfitL_cpu( lua_State *L );
 static int outfitL_mass( lua_State *L );
 static int outfitL_slot( lua_State *L );
+static int outfitL_limit( lua_State *L );
 static int outfitL_icon( lua_State *L );
 static int outfitL_price( lua_State *L );
 static int outfitL_description( lua_State *L );
@@ -50,6 +51,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "cpu", outfitL_cpu },
    { "mass", outfitL_mass },
    { "slot", outfitL_slot },
+   { "limit", outfitL_limit },
    { "icon", outfitL_icon },
    { "price", outfitL_price },
    { "description", outfitL_description },
@@ -379,6 +381,24 @@ static int outfitL_slot( lua_State *L )
    lua_pushboolean(L, sp_exclusive( o->slot.spid ));
 
    return 3;
+}
+
+
+/**
+ * @brief Gets the limit string of the outfit. Only one outfit can be equipped at the same time for each limit string.
+ *
+ *    @luatparam Outfit o Outfit to get information of.
+ *    @luatreturn string|nil Limit string or nil if not applicable.
+ * @luafunc limit
+ */
+static int outfitL_limit( lua_State *L )
+{
+   Outfit *o = luaL_validoutfit(L,1);
+   if (o->limit)
+      lua_pushstring(L,o->limit);
+   else
+      lua_pushnil(L);
+   return 1;
 }
 
 
