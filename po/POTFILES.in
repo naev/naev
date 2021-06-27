@@ -2560,16 +2560,10 @@ src/debris.c
 src/debris.h
 src/debug.c
 src/debug.h
-src/dev.c
-src/dev.h
 src/dev_mapedit.c
 src/dev_mapedit.h
-src/dev_outfit.c
-src/dev_outfit.h
 src/dev_planet.c
 src/dev_planet.h
-src/dev_ship.c
-src/dev_ship.h
 src/dev_sysedit.c
 src/dev_sysedit.h
 src/dev_system.c

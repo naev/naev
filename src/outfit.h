@@ -245,11 +245,6 @@ typedef struct OutfitModificationData_ {
    double duration;  /**< Time the active outfit stays on (in seconds). */
    double cooldown;  /**< Time the active outfit stays off after it's duration (in seconds). */
 
-   /* Movement. */
-   double thrust;       /**< Maximum thrust modifier. */
-   double turn;         /**< Maximum turn modifier. */
-   double speed;        /**< Maximum speed modifier. */
-
    /* Health. */
    double armour;       /**< Maximum armour modifier. */
    double armour_regen; /**< Armour regeneration modifier. */

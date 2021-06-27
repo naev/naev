@@ -13,8 +13,8 @@
   <energy_usage>30</energy_usage>
   <engine_limit>550</engine_limit>
   <fuel>400</fuel>
-  <speed>105</speed>
-  <thrust>60</thrust>
-  <turn>55</turn>
+  <speed_base>105</speed_base>
+  <thrust_base>60</thrust_base>
+  <turn_base>55</turn_base>
  </specific>
 </outfit>

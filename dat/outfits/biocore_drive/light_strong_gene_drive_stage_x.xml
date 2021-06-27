@@ -12,9 +12,9 @@
   <gfx_store>organic_engine_strong_s2.webp</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>115</thrust>
-  <turn>95</turn>
-  <speed>225</speed>
+  <thrust_base>115</thrust_base>
+  <turn_base>95</turn_base>
+  <speed_base>225</speed_base>
   <fuel>500</fuel>
   <energy_usage>7</energy_usage>
   <engine_limit>400</engine_limit>

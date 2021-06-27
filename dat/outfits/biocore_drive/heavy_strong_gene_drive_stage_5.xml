@@ -12,9 +12,9 @@
   <priority>3</priority>
  </general>
  <specific type="modification">
-  <thrust>42</thrust>
-  <turn>44</turn>
-  <speed>81</speed>
+  <thrust_base>42</thrust_base>
+  <turn_base>44</turn_base>
+  <speed_base>81</speed_base>
   <fuel>2000</fuel>
   <energy_usage>25</energy_usage>
   <engine_limit>5500</engine_limit>

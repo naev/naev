@@ -14,9 +14,9 @@
   <energy_usage>120</energy_usage>
   <engine_limit>8000</engine_limit>
   <fuel>2000</fuel>
-  <speed>70</speed>
-  <thrust>35</thrust>
-  <turn>45</turn>
+  <speed_base>70</speed_base>
+  <thrust_base>35</thrust_base>
+  <turn_base>45</turn_base>
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>
  </specific>

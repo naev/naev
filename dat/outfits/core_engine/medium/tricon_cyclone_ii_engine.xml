@@ -14,8 +14,8 @@
   <energy_usage>55</energy_usage>
   <engine_limit>1100</engine_limit>
   <fuel>600</fuel>
-  <speed>175</speed>
-  <thrust>100</thrust>
-  <turn>90</turn>
+  <speed_base>175</speed_base>
+  <thrust_base>100</thrust_base>
+  <turn_base>90</turn_base>
  </specific>
 </outfit>

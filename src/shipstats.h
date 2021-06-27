@@ -103,6 +103,9 @@ typedef enum ShipStatsType_ {
    /*
     * A: Absolute double type data. Should be continuous.
     */
+   SS_TYPE_A_THRUST_BASE,       /**< Base thrust bonus. */
+   SS_TYPE_A_TURN_BASE,         /**< Base turn bonus (in deg/s). */
+   SS_TYPE_A_SPEED_BASE,        /**< Base speed bonus. */
    SS_TYPE_A_ENERGY_FLAT,       /**< Flat energy modifier (not multiplied). */
    SS_TYPE_A_ENERGY_REGEN_FLAT, /**< Flat energy regeneration modifier (not multiplied). */
    SS_TYPE_A_ENERGY_LOSS,       /**< Flat energy modifier (not multiplied) and applied linearly. */
@@ -174,10 +177,15 @@ typedef struct ShipStatList_ {
  *  1 or 0 values wher 1 indicates property is set.
  */
 typedef struct ShipStats_ {
-   /* General */
+   /* Movement. */
+   double speed_base;         /**< Base speed bonus. */
+   double turn_base;          /**< Base turn bonus. */
+   double thrust_base;        /**< Base thrust bonus. */
    double speed_mod;          /**< Speed multiplier. */
    double turn_mod;           /**< Turn multiplier. */
    double thrust_mod;         /**< Thrust multiplier. */
+
+   /* General */
    double cargo_mod;          /**< Cargo space multiplier. */
    double armour_mod;         /**< Armour multiplier. */
    double armour_regen_mod;   /**< Armour regeneration multiplier. */
