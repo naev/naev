@@ -292,6 +292,8 @@ function spawnNpcs()
             tk.msg( totalTitle, totalString ) -- Ex-aequo always profit the player.
             tk.msg("",reward_text0:format(competitors_names[10]))
 
+            player.addOutfit("Handbook for Dvaered Good Manners") -- TODO: add lore about this Handbook
+
             -- Give a reward depending on the rank (10 is highest and 1 lowest)
             playerRank = elt_inlist( 10, iter )
             if playerRank == 10 then
@@ -301,9 +303,9 @@ function spawnNpcs()
                tk.msg("",reward_text1:format(_("Vendetta")))
                player.addShip("Vendetta")
             elseif playerRank == 8 then
-               tk.msg("",reward_text2:format(_("Tricon Zephyr II Engine"),_("Power Regulation Override")))
+               tk.msg("",reward_text2:format(_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")))
                player.addOutfit("Tricon Zephyr II Engine")
-               player.addOutfit("Power Regulation Override")
+               player.addOutfit("Emergency Shield Booster")
             elseif playerRank == 7 then
                tk.msg("",reward_text2:format(_("Milspec Orion 3701 Core System"),_("Shield Capacitor")))
                player.addOutfit("Milspec Orion 3701 Core System")

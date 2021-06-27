@@ -3,7 +3,7 @@
 <event name="Division Marius">
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>player.misnDone("Dvaered Triathlon") == true and not (player.misnDone("Dvaered Base") or player.misnActive("Dvaered Base"))</cond>
+  <cond>player.misnDone("Dvaered Triathlon") == true and not (player.misnDone("Dvaered Base") or player.misnActive("Dvaered Base") or player.misnDone("Dvaered Triathlon"))</cond>
   <flags>
    <unique />
   </flags>
@@ -16,7 +16,7 @@
 --[[
 -- Player is attacked by a hitman. If player disables and boards the hitman, this enables the Dvaered Base mission
 --]]
-
+-- TODO: this event is neutralized because the "Dvaered Base" mission has not been written yet
 attk_warn = "You are being attacked: try to catck your attacker alive!"
 
 death_title = "Target destroyed"
