@@ -168,9 +168,9 @@ static int linoptL_new( lua_State *L )
    LuaLinOpt_t lp;
    const char *name = luaL_optstring(L,1,NULL);
 
-   lp.prob = glp_createprob();
+   lp.prob = glp_create_prob();
    if (name)
-      glp_setprob_name( lp.prob, name );
+      glp_set_prob_name( lp.prob, name );
    
    lua_pushlinopt( L, lp );
    return 1;
