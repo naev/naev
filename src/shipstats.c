@@ -310,6 +310,10 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
    destptr = (char*) dest;
    srcptr = (const char*) src;
    for (i=0; i<SS_TYPE_SENTINEL; i++) {
+      /* Only want valid names. */
+      if (sl->name == NULL)
+         continue;
+
       sl = &ss_lookup[ i ];
 
       switch (sl->data) {
