@@ -379,8 +379,7 @@ static int outfitL_slot( lua_State *L )
    lua_pushstring(L, sp_display( o->slot.spid ));
    lua_pushboolean(L, sp_required( o->slot.spid ));
    lua_pushboolean(L, sp_exclusive( o->slot.spid ));
-
-   return 3;
+   return 5;
 }
 
 
