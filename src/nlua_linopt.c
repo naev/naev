@@ -363,17 +363,20 @@ static int linoptL_solve( lua_State *L )
    LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
    double z;
    //const char *name;
-   int i;
+   int i, ismip;
 
    /* Parameters. */
+   ismip = (glp_get_num_int( lp->prob ) > 0);
 
    /* Optimization. */
-   if (glp_get_num_int( lp->prob ) > 0) {
+   if (ismip) {
       glp_iocp parm;
       glp_init_iocp(&parm);
+      parm.presolve = GLP_ON;
       //parm.msg_lev = GLP_MSG_ERR;
       glp_intopt( lp->prob, &parm );
       /* TODO handle errors. */
+      z = glp_mip_obj_val( lp->prob );
    }
    else {
       glp_smcp parm;
@@ -381,16 +384,19 @@ static int linoptL_solve( lua_State *L )
       //parm.msg_lev = GLP_MSG_ERR;
       glp_simplex( lp->prob, &parm );
       /* TODO handle errors. */
+      z = glp_get_obj_val( lp->prob );
    }
 
    /* Output function value. */
-   z = glp_get_obj_val( lp->prob );
    lua_pushnumber(L,z);
 
    /* Go over variables and store them. */
    lua_newtable(L); /* t */
    for (i=1; i<=lp->ncols; i++) {
-      z = glp_get_col_prim( lp->prob, i );
+      if (ismip)
+         z = glp_mip_col_val( lp->prob, i );
+      else
+         z = glp_get_col_prim( lp->prob, i );
 #if 0
       name = glp_get_col_name( lp->prob, i );
       lua_pushstring( L, name ); /* t, name */
