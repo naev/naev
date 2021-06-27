@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Handbook for Dvaered Good Manners">
+ <general>
+  <unique/>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>When does a gentleman use the head of another gentleman as a trophy in their bathroom? And when is it more proper to use it as a mug? When is it allowed to burn the house of one of your victims, and when is it an absolute misstep? Lord Chainsaw, one of the most successful Warlords of our time, answers those thorny questions and many other in this essential little book. "This book has allowed me to quickly work my way up through the highest ranks" -- Colonel Urnus, Executive Office Manager at the High Command</description>
+  <gfx_store>dv_good_manners.png</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <launch_reload>50</launch_reload>
+  <time_speedup>2</time_speedup>
+ </specific>
+</outfit>
+

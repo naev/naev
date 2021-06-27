@@ -312,6 +312,10 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
    for (i=0; i<SS_TYPE_SENTINEL; i++) {
       sl = &ss_lookup[ i ];
 
+      /* Only want valid names. */
+      if (sl->name == NULL)
+         continue;
+
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
             destdbl = (double*) &destptr[ sl->offset ];

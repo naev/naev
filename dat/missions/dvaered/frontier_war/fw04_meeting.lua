@@ -265,6 +265,9 @@ function land()
       tk.msg( debrief_title, debrief_text2:format(creditstring(reward)), ("portraits/"..portrait_tam) )
       player.pay(reward)
 
+      local t = time.get():tonumber()
+      var.push( "invasion_time", t ) -- Timer for the next mission
+
       shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
       shiplog.append( "frontier_war", log_text )
       misn.finish(true)
@@ -697,12 +700,8 @@ function StraferNspy()
    alpha[2]:attack( spy )
 
    -- Remove all cargo (to control their speed)
-   for i, v in ipairs(alpha[2]:cargoList()) do
-      alpha[2]:cargoRm( v.name, v.q )
-   end
-   for i, v in ipairs(spy:cargoList()) do
-      spy:cargoRm( v.name, v.q )
-   end
+   alpha[2]:cargoRm( "__all" )
+   spy:cargoRm( "__all" )
 end
 
 -- Many enemies jump and kill Strafer

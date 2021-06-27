@@ -1191,6 +1191,7 @@ dat/faction.xml
 dat/fleet.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
+dat/outfits/accessory/dv_handbook.xml
 dat/outfits/accessory/fuzzy_dice.xml
 dat/outfits/accessory/left_boot.xml
 dat/outfits/accessory/love_letter.xml
@@ -2203,6 +2204,8 @@ dat/events/cinematic/DvdFLFbattle.lua
 dat/events/discovery.lua
 dat/events/dvaered/fwA_treason.lua
 dat/events/dvaered/fwB_repay.lua
+dat/events/dvaered/fwC_ceremony.lua
+dat/events/dvaered/fwD_hitman.lua
 dat/events/dvaered/totoran.lua
 dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
@@ -2305,6 +2308,7 @@ dat/missions/dvaered/frontier_war/fw01_sabotage.lua
 dat/missions/dvaered/frontier_war/fw02_escape.lua
 dat/missions/dvaered/frontier_war/fw03_sirius.lua
 dat/missions/dvaered/frontier_war/fw04_meeting.lua
+dat/missions/dvaered/frontier_war/fw05_triathlon.lua
 dat/missions/dvaered/frontier_war/fw_common.lua
 dat/missions/dvaered/gauntlet/gauntlet.lua
 dat/missions/dvaered/gauntlet/gui.lua
