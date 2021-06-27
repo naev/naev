@@ -132,8 +132,13 @@ if buildExec.disabled() == false
 
    naev_deps += lua
 
-   ## GLPK
-   glpk = subproject('glpk').get_variable('glpk')
+   # Linear Programming stuff
+   use_system_glpk = false
+   if 'glpk' not in get_option('force_fallback_for')
+      system_glpk = cc.find_library('glpk', required: false, has_headers: ['glpk.h'])
+      use_system_glpk = system_glpk.found()
+   endif
+   glpk = use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk')
    naev_deps += [glpk]
    ### Soft deps (required: false)
 
