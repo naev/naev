@@ -397,16 +397,21 @@ static int linoptL_solve( lua_State *L )
          z = glp_mip_col_val( lp->prob, i );
       else
          z = glp_get_col_prim( lp->prob, i );
-#if 0
-      name = glp_get_col_name( lp->prob, i );
-      lua_pushstring( L, name ); /* t, name */
-      lua_pushnumber( L, z ); /* t, name, z */
-      lua_rawset( L, -3 ); /* t */
-#endif 
       lua_pushnumber( L, z ); /* t, z */
       lua_rawseti( L, -2, i ); /* t */
    }
 
-   return 2;
+   /* Go over constraints and store them. */
+   lua_newtable(L); /* t */
+   for (i=1; i<=lp->nrows; i++) {
+      if (ismip)
+         z = glp_mip_row_val( lp->prob, i );
+      else
+         z = glp_get_row_prim( lp->prob, i );
+      lua_pushnumber( L, z ); /* t, z */
+      lua_rawseti( L, -2, i ); /* t */
+   }
+
+   return 3;
 }
 
