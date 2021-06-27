@@ -23,6 +23,8 @@
 
 
 typedef struct LuaLinOpt_s {
+   int ncols;
+   int nrows;
    glp_prob *prob;
 } LuaLinOpt_t;
 
@@ -31,10 +33,18 @@ typedef struct LuaLinOpt_s {
 static int linoptL_gc( lua_State *L );
 static int linoptL_eq( lua_State *L );
 static int linoptL_new( lua_State *L );
+static int linoptL_setcol( lua_State *L );
+static int linoptL_setrow( lua_State *L );
+static int linoptL_loadmatrix( lua_State *L );
+static int linoptL_solve( lua_State *L );
 static const luaL_Reg linoptL_methods[] = {
    { "__gc", linoptL_gc },
    { "__eq", linoptL_eq },
    { "new", linoptL_new },
+   { "set_col", linoptL_setcol },
+   { "set_row", linoptL_setrow },
+   { "load_matrix", linoptL_loadmatrix },
+   { "solve", linoptL_solve },
    {0,0}
 }; /**< Optim metatable methods. */
 
@@ -159,19 +169,211 @@ static int linoptL_eq( lua_State *L )
 /**
  * @brief Opens a new linopt.
  *
- *    @luatparam string name Name of the optimization program.
+ *    @luatparam number cols Number of columns in the optimization program.
+ *    @luatparam number rows Number of rows in the optimization program.
+ *    @luatparam[opt=nil] string name Name of the optimization program.
  *    @luatreturn Optim New linopt object.
  * @luafunc new
  */
 static int linoptL_new( lua_State *L )
 {
    LuaLinOpt_t lp;
-   const char *name = luaL_optstring(L,1,NULL);
+   const char *name;
 
+   /* Input. */
+   lp.ncols = luaL_checkinteger(L,1);
+   lp.nrows = luaL_checkinteger(L,2);
+   name     = luaL_optstring(L,3,NULL);
+
+   /* Initialize and create. */
    lp.prob = glp_create_prob();
    if (name)
       glp_set_prob_name( lp.prob, name );
+   glp_add_cols( lp.prob, lp.ncols );
+   glp_add_rows( lp.prob, lp.nrows );
    
    lua_pushlinopt( L, lp );
    return 1;
 }
+
+
+/**
+ * @brief Adds an optimization column.
+ *
+ *    @luatparam number index Index of the column to set.
+ *    @luatparam string name Name of the column being added.
+ *    @luatparam number coefficient Coefficient of the objective function being added.
+ *    @luatparam[opt=nil] number lb Lower bound of the column.
+ *    @luatparam[opt=nil] number ub Upper bound of the column.
+ * @luafunc set_col
+ */
+static int linoptL_setcol( lua_State *L )
+{
+   LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
+   int idx           = luaL_checkinteger(L,2);
+   const char *name  = luaL_checkstring(L,3);
+   double coef       = luaL_checknumber(L,4);
+   int haslb, hasub, type;
+   double lb, ub;
+
+   /* glpk stuff */
+   glp_set_col_name( lp->prob, idx, name );
+   glp_set_obj_coef( lp->prob, idx, coef );
+
+   /* Determine bounds. */
+   haslb = !lua_isnoneornil(L,5);
+   hasub = !lua_isnoneornil(L,6);
+   lb    = luaL_optnumber(L,5,0.0);
+   ub    = luaL_optnumber(L,6,0.0);
+   if (haslb && hasub)
+      type = GLP_DB;
+   else if (haslb)
+      type = GLP_LO;
+   else if (hasub)
+      type = GLP_UP;
+   else
+      type = GLP_FR;
+   glp_set_col_bnds( lp->prob, idx, type, lb, ub );
+
+   return 0;
+}
+
+
+/**
+ * @brief Adds an optimization row.
+ *
+ *    @luatparam number index Index of the row to set.
+ *    @luatparam string name Name of the row being added.
+ *    @luatparam[opt=nil] number lb Lower bound of the row.
+ *    @luatparam[opt=nil] number ub Upper bound of the row.
+ * @luafunc set_row
+ */
+static int linoptL_setrow( lua_State *L )
+{
+   LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
+   int idx           = luaL_checkinteger(L,2);
+   const char *name  = luaL_checkstring(L,3);
+   int haslb, hasub, type;
+   double lb, ub;
+
+   /* glpk stuff */
+   glp_set_row_name( lp->prob, idx, name );
+
+   /* Determine bounds. */
+   haslb = !lua_isnoneornil(L,4);
+   hasub = !lua_isnoneornil(L,5);
+   lb    = luaL_optnumber(L,4,0.0);
+   ub    = luaL_optnumber(L,5,0.0);
+   if (haslb && hasub)
+      type = GLP_DB;
+   else if (haslb)
+      type = GLP_LO;
+   else if (hasub)
+      type = GLP_UP;
+   else
+      type = GLP_FR;
+   glp_set_row_bnds( lp->prob, idx, type, lb, ub );
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the entire matrix for the linear program.
+ *
+ *    @luatparam number row_indices Indices of the rows.
+ *    @luatparam number col_indices Indices of the columns.
+ *    @luatparam number coefficients Values of the coefficients.
+ * @luafunc load_matrix
+ */
+static int linoptL_loadmatrix( lua_State *L )
+{
+   size_t i, n;
+   int *ia, *ja;
+   double *ar;
+   LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
+   luaL_checktype(L, 2, LUA_TTABLE);
+   luaL_checktype(L, 3, LUA_TTABLE);
+   luaL_checktype(L, 4, LUA_TTABLE);
+
+   /* Make sure size is ok. */
+   n = lua_objlen(L,2);
+#if DEBUGGING
+   if ((n != lua_objlen(L,3)) || (n != lua_objlen(L,4)))
+      NLUA_ERROR(L, _("Table lengths don't match!"));
+#endif /* DEBUGGING */
+
+   /* Load everything from tables, has to be 1-index based. */
+   ia = calloc( n+1, sizeof(int) );
+   ja = calloc( n+1, sizeof(int) );
+   ar = calloc( n+1, sizeof(double) );
+   for (i=1; i<=n; i++) {
+      lua_rawgeti(L, 2, i);
+      lua_rawgeti(L, 3, i);
+      lua_rawgeti(L, 4, i);
+#if DEBUGGING
+      ia[i] = luaL_checkinteger(L,-3);
+      ja[i] = luaL_checkinteger(L,-2);
+      ar[i] = luaL_checknumber(L,-1);
+#else /* DEBUGGING */
+      ia[i] = luaL_tointeger(L,-3);
+      ja[i] = luaL_tointeger(L,-2);
+      ar[i] = luaL_tonumber(L,-1);
+#endif /* DEBUGGING */
+      lua_pop(L,3);
+   }
+
+   /* Set up the matrix. */
+   glp_load_matrix( lp->prob, n, ia, ja, ar );
+
+   /* Clean up. */
+   free(ia);
+   free(ja);
+   free(ar);
+   return 0;
+}
+
+
+/**
+ * @brief Solves the linear optimization problem.
+ *
+ *    @luatreturn number The value of the primal funcation.
+ *    @luatreturn table Table of column values.
+ * @luafunc solve
+ */
+static int linoptL_solve( lua_State *L )
+{
+   LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
+   glp_smcp parm;
+   double z;
+   //const char *name;
+   int i;
+
+   /* Parameters. */
+   glp_init_smcp(&parm);
+   //parm.msg_lev = GLP_MSG_ERR;
+
+   /* Optimization. */
+   glp_simplex( lp->prob, &parm );
+
+   /* Output function value. */
+   z = glp_get_obj_val( lp->prob );
+   lua_pushnumber(L,z);
+
+   /* Go over variables and store them. */
+   lua_newtable(L); /* t */
+   for (i=1; i<lp->ncols; i++) {
+      z = glp_get_col_prim( lp->prob, i );
+#if 0
+      name = glp_get_col_name( lp->prob, i );
+      lua_pushstring( L, name ); /* t, name */
+      lua_pushnumber( L, z ); /* t, name, z */
+      lua_rawset( L, -3 ); /* t */
+#endif 
+      lua_pushnumber( L, z ); /* t, z */
+      lua_rawseti( L, -2, i ); /* t */
+   }
+
+   return 2;
+}
+
