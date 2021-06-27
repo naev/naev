@@ -195,7 +195,7 @@ static int linoptL_new( lua_State *L )
    glp_add_rows( lp.prob, lp.nrows );
    if (max)
       glp_set_obj_dir( lp.prob, GLP_MAX );
-   
+
    lua_pushlinopt( L, lp );
    return 1;
 }

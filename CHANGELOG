@@ -22,6 +22,7 @@
          * Invade the frontier with the Dvaered
       * New translation(s) in progress: Czech, French, and Korean
    * Engine
+      * Added an optimizer to improve automatic outfitting choices
       * A ton of new ship stat attributes have been added
       * Support for Lua-based hooks in Outfits for complex behaviours
       * Support for post-processing shaders
