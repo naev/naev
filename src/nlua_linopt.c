@@ -169,9 +169,9 @@ static int linoptL_eq( lua_State *L )
 /**
  * @brief Opens a new linopt.
  *
+ *    @luatparam[opt=nil] string name Name of the optimization program.
  *    @luatparam number cols Number of columns in the optimization program.
  *    @luatparam number rows Number of rows in the optimization program.
- *    @luatparam[opt=nil] string name Name of the optimization program.
  *    @luatparam[opt=false] boolean maximize Whether or not to maximize or minimize the function.
  *    @luatreturn Optim New linopt object.
  * @luafunc new
@@ -183,15 +183,14 @@ static int linoptL_new( lua_State *L )
    int max;
 
    /* Input. */
-   lp.ncols = luaL_checkinteger(L,1);
-   lp.nrows = luaL_checkinteger(L,2);
-   name     = luaL_optstring(L,3,NULL);
+   name     = luaL_optstring(L,1,NULL);
+   lp.ncols = luaL_checkinteger(L,2);
+   lp.nrows = luaL_checkinteger(L,3);
    max      = lua_toboolean(L,4);
 
    /* Initialize and create. */
    lp.prob = glp_create_prob();
-   if (name)
-      glp_set_prob_name( lp.prob, name );
+   glp_set_prob_name( lp.prob, name );
    glp_add_cols( lp.prob, lp.ncols );
    glp_add_rows( lp.prob, lp.nrows );
    if (max)
@@ -208,6 +207,7 @@ static int linoptL_new( lua_State *L )
  *    @luatparam number index Index of the column to set.
  *    @luatparam string name Name of the column being added.
  *    @luatparam number coefficient Coefficient of the objective function being added.
+ *    @luatparam[opt="real"] string kind Kind of the column being added. Can be either "real", "integer", or "binary".
  *    @luatparam[opt=nil] number lb Lower bound of the column.
  *    @luatparam[opt=nil] number ub Upper bound of the column.
  * @luafunc set_col
@@ -218,7 +218,8 @@ static int linoptL_setcol( lua_State *L )
    int idx           = luaL_checkinteger(L,2);
    const char *name  = luaL_checkstring(L,3);
    double coef       = luaL_checknumber(L,4);
-   int haslb, hasub, type;
+   const char *skind = luaL_optstring(L,5,"real");
+   int haslb, hasub, type, kind;
    double lb, ub;
 
    /* glpk stuff */
@@ -226,10 +227,10 @@ static int linoptL_setcol( lua_State *L )
    glp_set_obj_coef( lp->prob, idx, coef );
 
    /* Determine bounds. */
-   haslb = !lua_isnoneornil(L,5);
-   hasub = !lua_isnoneornil(L,6);
-   lb    = luaL_optnumber(L,5,0.0);
-   ub    = luaL_optnumber(L,6,0.0);
+   haslb = !lua_isnoneornil(L,6);
+   hasub = !lua_isnoneornil(L,7);
+   lb    = luaL_optnumber(L,6,0.0);
+   ub    = luaL_optnumber(L,7,0.0);
    if (haslb && hasub)
       type = GLP_DB;
    else if (haslb)
@@ -239,6 +240,17 @@ static int linoptL_setcol( lua_State *L )
    else
       type = GLP_FR;
    glp_set_col_bnds( lp->prob, idx, type, lb, ub );
+
+   /* Get kind. */
+   if (strcmp(skind,"real")==0)
+      kind = GLP_CV;
+   else if (strcmp(skind,"integer")==0)
+      kind = GLP_IV;
+   else if (strcmp(skind,"binary")==0)
+      kind = GLP_BV;
+   else
+      NLUA_ERROR(L,_("Unknown column kind '%s'!"), skind);
+   glp_set_col_kind( lp->prob, idx, kind );
 
    return 0;
 }
@@ -349,18 +361,27 @@ static int linoptL_loadmatrix( lua_State *L )
 static int linoptL_solve( lua_State *L )
 {
    LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
-   glp_smcp parm;
    double z;
    //const char *name;
    int i;
 
    /* Parameters. */
-   glp_init_smcp(&parm);
-   //parm.msg_lev = GLP_MSG_ERR;
-   parm.msg_lev = GLP_MSG_ALL;
 
    /* Optimization. */
-   glp_simplex( lp->prob, &parm );
+   if (glp_get_num_int( lp->prob ) > 0) {
+      glp_iocp parm;
+      glp_init_iocp(&parm);
+      //parm.msg_lev = GLP_MSG_ERR;
+      glp_intopt( lp->prob, &parm );
+      /* TODO handle errors. */
+   }
+   else {
+      glp_smcp parm;
+      glp_init_smcp(&parm);
+      //parm.msg_lev = GLP_MSG_ERR;
+      glp_simplex( lp->prob, &parm );
+      /* TODO handle errors. */
+   }
 
    /* Output function value. */
    z = glp_get_obj_val( lp->prob );
