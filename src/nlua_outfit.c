@@ -493,9 +493,10 @@ static int outfitL_weapStats( lua_State *L )
       return 2;
    }
 
-   mod_energy = 1;
-   mod_damage = 1;
-   mod_shots  = 1;
+   /* TODO pass in a pilot to use the pilot's stats. */
+   mod_energy = 1.;
+   mod_damage = 1.;
+   mod_shots  = 1.;
 
    /* Special case beam weapons .*/
    if (outfit_isBeam(o)) {
