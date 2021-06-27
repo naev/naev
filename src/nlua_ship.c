@@ -46,6 +46,7 @@ static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
 static int shipL_price( lua_State *L );
 static int shipL_description( lua_State *L );
+static int shipL_getShipStat( lua_State *L );
 static const luaL_Reg shipL_methods[] = {
    { "__tostring", shipL_name },
    { "__eq", shipL_eq },
@@ -62,6 +63,7 @@ static const luaL_Reg shipL_methods[] = {
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
    { "description", shipL_description },
+   { "shipstat", shipL_getShipStat },
    {0,0}
 }; /**< Ship metatable methods. */
 
@@ -475,12 +477,7 @@ static int shipL_fitsSlot( lua_State *L )
  */
 static int shipL_CPU( lua_State *L )
 {
-   Ship *s;
-
-   /* Get the ship. */
-   s  = luaL_validship(L,1);
-
-   /* Get CPU. */
+   Ship *s = luaL_validship(L,1);
    lua_pushnumber(L, s->cpu);
    return 1;
 }
@@ -578,9 +575,26 @@ static int shipL_gfx( lua_State *L )
  */
 static int shipL_description( lua_State *L )
 {
-   Ship *s;
-   s = luaL_validship(L,1);
+   Ship *s = luaL_validship(L,1);
    lua_pushstring(L, s->description);
    return 1;
 }
 
+
+/**
+ * @brief Gets a shipstat from an Outfit by name, or a table containing all the ship stats if not specified.
+ *
+ *    @luatparam Outfit o Outfit to get ship stat of.
+ *    @luatparam[opt=nil] string name Name of the ship stat to get.
+ *    @luatparam[opt=false] boolean internal Whether or not to use the internal representation.
+ *    @luareturn Value of the ship stat or a tale containing all the ship stats if name is not specified.
+ * @luafunc shipstat
+ */
+static int shipL_getShipStat( lua_State *L )
+{
+   Ship *s           = luaL_validship(L,1);
+   const char *str   = luaL_optstring(L,2,NULL);
+   int internal      = lua_toboolean(L,3);
+   ss_statsGetLua( L, &s->stats_array, str, internal );
+   return 1;
+}
