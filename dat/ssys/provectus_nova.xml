@@ -7,13 +7,14 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-244.800000</x>
-  <y>-642.800000</y>
+  <x>-233.800000</x>
+  <y>-644.800000</y>
  </pos>
  <assets>
   <asset>Provectus Nova I</asset>
   <asset>Provectus Nova Ia</asset>
   <asset>Virtual Independent Trader Area</asset>
+  <asset>Virtual Pirate Small</asset>
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
@@ -28,7 +29,7 @@
   </jump>
   <jump target="Limbo">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Pultatis">
    <autopos/>
@@ -39,4 +40,15 @@
    <hide>0.000000</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>liquid</type>
+   <radius>4000.000000</radius>
+   <pos x="5000.000000" y="9000.000000"/>
+   <density>0.500000</density>
+  </asteroid>
+ </asteroids>
 </ssys>

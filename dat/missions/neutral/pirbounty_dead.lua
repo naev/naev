@@ -279,7 +279,7 @@ end
 
 
 function pilot_death( p, attacker )
-   if attacker == player.pilot() then
+   if attacker == player.pilot() or attacker:leader() == player.pilot() then
       succeed()
       target_killed = true
    else
@@ -290,7 +290,7 @@ function pilot_death( p, attacker )
       for i, j in ipairs( hunters ) do
          total_hits = total_hits + hunter_hits[i]
          if j ~= nil then
-            if j == player.pilot() then
+            if j == player.pilot() or j:leader() == player.pilot() then
                player_hits = player_hits + hunter_hits[i]
             elseif j:exists() and hunter_hits[i] > top_hits then
                top_hunter = j
@@ -399,6 +399,8 @@ function spawn_pirate( param )
          pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
          pir_land_hook = hook.pilot( target_ship, "land", "pilot_jump" )
 
+
+         --[[
          local pir_crew = target_ship:stats().crew
          local pl_crew = player.pilot():stats().crew
          if rnd.rnd() > (0.5 * (10 + pir_crew) / (10 + pl_crew)) then
@@ -406,6 +408,10 @@ function spawn_pirate( param )
          else
             can_capture = false
          end
+         --]]
+         -- Disabling and boarding is hard enough as is to randomly fail
+         -- TODO potentially do a small capturing minigame here
+         can_capture = true
       else
          fail( msg[1]:format( name ) )
       end

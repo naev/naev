@@ -104,8 +104,7 @@ function create()
     timelimit  = time.get() + time.create(0, 0, allowance)
     
     -- Spaceport bar stuff
-    misn.setNPC(_("Robert"), "zalek/unique/student.png")
-    misn.setDesc(bar_desc)
+    misn.setNPC(_("Robert"), "zalek/unique/student.webp", bar_desc)
 end
 
 function accept()

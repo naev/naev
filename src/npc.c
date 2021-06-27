@@ -48,7 +48,7 @@ typedef struct NPCevtData_ {
  * @brief Minimum needed NPC data for mission.
  */
 typedef struct NPCmisnData_ {
-   Mission *misn; /**< Mission information. */
+   unsigned int id; /**< Mission information. */
    char *func; /**< Function to run. */
 } NPCmisnData;
 /**
@@ -63,7 +63,6 @@ typedef struct NPC_s {
    glTexture *background; /**< Background of the NPC. */
    char *desc; /**< Translated, human-readable NPC description. */
    union {
-      Mission g; /**< Mission information (for mission giver). */
       NPCmisnData m; /**< Mission information (for mission generated NPC). */
       NPCevtData e; /**< Event data (for event generated NPC). */
    } u; /**< Type-specific data. */
@@ -72,15 +71,40 @@ typedef struct NPC_s {
 static unsigned int npc_array_idgen = 0; /**< ID generator. */
 static NPC_t *npc_array  = NULL; /**< Missions at the spaceport bar. */
 
+/* We have to store the missions temporarily here. */
+static Mission *npc_missions = NULL;
 
 /*
  * Prototypes.
  */
+/* NPCs. */
 static unsigned int npc_add( NPC_t *npc );
-static unsigned int npc_add_giver( Mission *misn );
 static int npc_rm( NPC_t *npc );
 static NPC_t *npc_arrayGet( unsigned int id );
 static void npc_free( NPC_t *npc );
+/* Missions. */
+static Mission* npc_getMisn( const NPC_t *npc );
+
+
+/**
+ * Gets the mission associated with an NPC.
+ */
+static Mission* npc_getMisn( const NPC_t *npc )
+{
+   int i;
+
+   /* First check active missions. */
+   for (i=0; i<MISSION_MAX; i++)
+      if (player_missions[i]->id == npc->u.m.id)
+         return player_missions[i];
+
+   /* Now check npc missions. */
+   for (i=0; i<array_size(npc_missions); i++)
+      if (npc_missions[i].id == npc->u.m.id)
+         return &npc_missions[i];
+
+   return NULL;
+}
 
 
 /**
@@ -119,14 +143,29 @@ static unsigned int npc_add_giver( Mission *misn )
 {
    NPC_t npc;
 
+   /* Sanity check. */
+   if (misn->npc == NULL) {
+      WARN(_("Mission '%s' trying to create NPC with no name!"), misn->data->name);
+      return 0;
+   }
+   if (misn->portrait == NULL) {
+      WARN(_("Mission '%s' trying to create NPC with no portrait!"), misn->data->name);
+      return 0;
+   }
+   if (misn->npc_desc == NULL) {
+      WARN(_("Mission '%s' trying to create NPC with no description!"), misn->data->name);
+      return 0;
+   }
+
    /* Set up the data. */
    npc.type       = NPC_TYPE_GIVER;
    npc.name       = strdup(misn->npc);
    npc.priority   = misn->data->avail.priority;
    npc.portrait   = gl_dupTexture(misn->portrait);
    npc.background = NULL;
-   npc.desc       = strdup(misn->desc);
-   npc.u.g        = *misn;
+   npc.desc       = strdup(misn->npc_desc);
+   npc.u.m.id     = misn->id;
+   npc.u.m.func   = strdup("accept");
 
    return npc_add( &npc );
 }
@@ -135,7 +174,7 @@ static unsigned int npc_add_giver( Mission *misn )
 /**
  * @brief Adds a mission NPC to the mission computer.
  */
-unsigned int npc_add_mission( Mission *misn, const char *func, const char *name,
+unsigned int npc_add_mission( unsigned int mid, const char *func, const char *name,
       int priority, const char *portrait, const char *desc, const char *background )
 {
    NPC_t npc;
@@ -150,7 +189,7 @@ unsigned int npc_add_mission( Mission *misn, const char *func, const char *name,
    else
       npc.background = NULL;
    npc.desc       = strdup( desc );
-   npc.u.m.misn   = misn;
+   npc.u.m.id     = mid;
    npc.u.m.func   = strdup( func );
 
    return npc_add( &npc );
@@ -236,7 +275,7 @@ int npc_rm_event( unsigned int id, unsigned int evt )
 /**
  * @brief removes a mission NPC.
  */
-int npc_rm_mission( unsigned int id, Mission *misn )
+int npc_rm_mission( unsigned int id, unsigned int mid )
 {
    NPC_t *npc;
 
@@ -250,7 +289,7 @@ int npc_rm_mission( unsigned int id, Mission *misn )
       return -1;
 
    /* Doesn't belong to the mission. */
-   if (misn->id != npc->u.m.misn->id)
+   if (mid != npc->u.m.id)
       return -1;
 
    /* Remove the NPC. */
@@ -280,6 +319,8 @@ int npc_rm_parentEvent( unsigned int id )
       n++;
    }
 
+   bar_regen();
+
    return n;
 }
 
@@ -287,7 +328,7 @@ int npc_rm_parentEvent( unsigned int id )
 /**
  * @brief Removes all the npc belonging to a mission.
  */
-int npc_rm_parentMission( Mission *misn )
+int npc_rm_parentMission( unsigned int mid )
 {
    int i, n;
    NPC_t *npc;
@@ -297,7 +338,7 @@ int npc_rm_parentMission( Mission *misn )
       npc = &npc_array[i];
       if (npc->type != NPC_TYPE_MISSION)
          continue;
-      if (npc->u.m.misn->id != misn->id )
+      if (npc->u.m.id != mid )
          continue;
 
       /* Invalidates iterators. */
@@ -305,6 +346,8 @@ int npc_rm_parentMission( Mission *misn )
       i--;
       n++;
    }
+
+   bar_regen();
 
    return n;
 }
@@ -357,17 +400,44 @@ void npc_sort (void)
 void npc_generateMissions (void)
 {
    int i;
-   Mission *missions;
+   Mission *missions, *m;
    int nmissions;
+
+   if (npc_missions == NULL)
+      npc_missions = array_create( Mission );
 
    /* Get the missions. */
    missions = missions_genList( &nmissions,
          land_planet->faction, land_planet->name, cur_system->name,
          MIS_AVAIL_BAR );
+   /* Mission sshould already be generated and have had their 'create' function
+    * run, so NPCs should be running wild (except givers). */
 
-   /* Add to the bar NPC stack - may be not empty. */
-   for (i=0; i<nmissions; i++)
-      npc_add_giver( &missions[i] );
+   /* Add to the bar NPC stack and add npc. */
+   for (i=0; i<nmissions; i++) {
+      m = &missions[i];
+      array_push_back( &npc_missions, *m );
+
+      /* See if need to add NPC. */
+      if (m->npc)
+         npc_add_giver( m );
+
+#if DEBUGGING
+      /* Make sure the mission has created an NPC or it won't be able to do anything. */
+      int found = 0;
+      NPC_t *npc;
+      for (int j=0; j<array_size(npc_array); j++) {
+         npc = &npc_array[j];
+         if ((npc->type == NPC_TYPE_MISSION || npc->type == NPC_TYPE_GIVER) &&
+               npc->u.m.id == m->id) {
+            found = 1;
+            break;
+         }
+      }
+      if (!found)
+         WARN(_("Mission '%s' was created at the spaceport bar but didn't create any NPC!"), m->data->name);
+#endif /* DEBUGGING */
+   }
 
    /* Clean up. */
    free( missions );
@@ -386,8 +456,15 @@ void npc_generateMissions (void)
  */
 void npc_patchMission( Mission *misn )
 {
-   /* Add mission giver. */
-   npc_add_giver( misn );
+   if (npc_missions==NULL)
+      npc_missions = array_create( Mission );
+
+   /* Add to array. */
+   array_push_back( &npc_missions, *misn );
+
+   /* Add mission giver if necessary. */
+   if (misn->npc)
+      npc_add_giver( misn );
 
    /* Sort NPC. */
    npc_sort();
@@ -409,9 +486,6 @@ static void npc_free( NPC_t *npc )
    /* Type-specific free stuff. */
    switch (npc->type) {
       case NPC_TYPE_GIVER:
-         mission_cleanup(&npc->u.g);
-         break;
-
       case NPC_TYPE_MISSION:
          free(npc->u.m.func);
          break;
@@ -432,14 +506,26 @@ static void npc_free( NPC_t *npc )
  */
 void npc_clear (void)
 {
-   int i;
+   int i, j;
 
-   /* First pass to clear the data. */
+   /* Clear the npcs. */
    for (i=0; i<array_size( npc_array ); i++)
       npc_free( &npc_array[i] );
-
    array_free( npc_array );
    npc_array = NULL;
+
+   /* Clear all the missions. */
+   for (i=0; i<array_size( npc_missions ); i++) {
+      /* TODO this is horrible and should be removed */
+      /* Clean up all missions that haven't been moved to the active missions. */
+      for (j=0; j<MISSION_MAX; j++)
+         if (player_missions[i]->id == npc_missions[i].id)
+            break;
+      if (j>=MISSION_MAX)
+         mission_cleanup( &npc_missions[i] );
+   }
+   array_free( npc_missions );
+   npc_missions = NULL;
 }
 
 
@@ -544,10 +630,14 @@ static int npc_approach_giver( NPC_t *npc )
    }
 
    /* Get mission. */
-   misn = &npc->u.g;
+   misn = npc_getMisn( npc );
+   if (misn==NULL) {
+      WARN(_("Unable to find mission '%d' in npc_missions for giver npc '%s'!"), npc->u.m.id, npc->name);
+      return -1;
+   }
    id   = npc->id;
    ret  = mission_accept( misn );
-   if ((ret==0) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
+   if ((ret==3) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
       if (ret==-1)
          mission_cleanup( misn );
       npc_rm( npc_arrayGet(id) );
@@ -568,6 +658,7 @@ static int npc_approach_giver( NPC_t *npc )
 int npc_approach( int i )
 {
    NPC_t *npc;
+   Mission *misn;
 
    /* Make sure in bounds. */
    if (i<0 || i>=array_size(npc_array))
@@ -582,9 +673,14 @@ int npc_approach( int i )
          return npc_approach_giver( npc );
 
       case NPC_TYPE_MISSION:
-         misn_runStart( npc->u.m.misn, npc->u.m.func );
+         misn = npc_getMisn( npc );
+         if (misn==NULL) {
+      WARN(_("Unable to find mission '%d' in npc_missions for mission npc '%s'!"), npc->u.m.id, npc->name);
+            return -1;
+         }
+         misn_runStart( misn, npc->u.m.func );
          lua_pushnumber( naevL, npc->id );
-         misn_runFunc( npc->u.m.misn, npc->u.m.func, 1 );
+         misn_runFunc( misn, npc->u.m.func, 1 );
          break;
 
       case NPC_TYPE_EVENT:

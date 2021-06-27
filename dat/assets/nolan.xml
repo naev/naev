@@ -16,7 +16,7 @@
  <general>
   <class>J</class>
   <population>9939</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>dv_mil_restricted</land>
    <refuel/>

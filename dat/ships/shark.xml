@@ -16,7 +16,6 @@
  <license>Light Combat Vessel License</license>
  <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot, it's still an effective addition to any fleet.</description>
  <health>
-  <absorb>4</absorb>
   <armour>30</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -30,11 +29,11 @@
   <weapon size="small" x="12" y="0" h="0" />
   <weapon size="small" x="-3" y="0" h="2" />
   <weapon size="small" x="3" y="0" h="2" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />

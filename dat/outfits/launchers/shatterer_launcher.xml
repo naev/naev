@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Shatterer Launcher">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Heavy Weapon License</license>
+  <rarity>2</rarity>
+  <mass>12</mass>
+  <price>350000</price>
+  <description>This weapon, based on a fury missile, is used by the collective heavy drones as a bombardment tool against large targets. While weak individually, the sheer numbers that the Collective could bring to bear makes this weapon dangerous.</description>
+  <gfx_store>teracom_fury_launcher.png</gfx_store>
+  <cpu>-11</cpu>
+ </general>
+ <specific type="turret launcher" secondary="1">
+  <ammo>Shatterer Missile</ammo>
+  <delay>1.5</delay>
+  <reload_time>35</reload_time>
+  <amount>30</amount>
+  <lockon>3</lockon>
+  <trackmin>0</trackmin>
+  <trackmax>10000</trackmax>
+ </specific>
+</outfit>

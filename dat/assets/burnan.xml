@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>3000000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_hiclass</land>
    <refuel/>
@@ -44,5 +44,6 @@
   <item>Light Civilian Combat Ships</item>
   <item>Heavy Civilian Combat Ships</item>
   <item>Systems High</item>
+  <item>Sirius Elite Outfits</item>
  </tech>
 </asset>

@@ -6,14 +6,17 @@
   <license>Medium Weapon License</license>
   <mass>15</mass>
   <price>25000</price>
-  <gfx_store>bansheelauncher.png</gfx_store>
-  <description>The Banshee class heavy unguided rocket is sometimes labeled the "poor pilot's torpedo". It has a relatively weak engine, but packs a powerful punch that can do respectable damage even to capital ships. The launcher is small and light enough to be usable by even small fighters, which makes it a great choice for bombers.</description>
-  <cpu>-5</cpu>
+  <gfx_store>bansheelauncher.webp</gfx_store>
+  <description>The Banshee class heavy unguided rocket is sometimes labeled the "poor pilot's torpedo". It has a relatively weak engine, but packs a powerful punch that can do respectable damage even to fairly large ships. The launcher is small and light enough to be usable by even small fighters.</description>
+  <cpu>-2</cpu>
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Banshee Rocket</ammo>
   <delay>4</delay>
   <reload_time>90</reload_time>
   <amount>20</amount>
+  <swivel>22</swivel>
+  <trackmin>2000</trackmin>
+  <trackmax>8000</trackmax>
  </specific>
 </outfit>

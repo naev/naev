@@ -2,10 +2,10 @@
 <outfit name="Vengeance Missile">
  <general>
   <license>Medium Weapon License</license>
-  <mass>0.8</mass>
+  <mass>1.5</mass>
   <price>0</price>
   <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. Its designed to excel at killing armoured targets at the expense of making it poor against shields. Best paired with anti-shield weapons.</description>
-  <gfx_store>headhunter.png</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="ammo">
   <gfx>headhunter.png</gfx>
@@ -21,7 +21,7 @@
   <resist>20</resist>
   <damage>
    <type>armourbreaker</type>
-   <penetrate>20</penetrate>
+   <penetrate>36</penetrate>
    <physical>200</physical>
    <disable>1</disable>
   </damage>

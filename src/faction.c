@@ -1138,7 +1138,7 @@ int areEnemies( int a, int b )
    if (faction_isFaction(a))
       fa = &faction_stack[a];
    else { /* a is invalid */
-      WARN(_("Faction id '%d' is invalid."), a);
+      //WARN(_("Faction id '%d' is invalid."), a);
       return 0;
    }
 
@@ -1146,7 +1146,7 @@ int areEnemies( int a, int b )
    if (faction_isFaction(b))
       fb = &faction_stack[b];
    else { /* b is invalid */
-      WARN(_("Faction id '%d' is invalid."), b);
+      //WARN(_("Faction id '%d' is invalid."), b);
       return 0;
    }
 
@@ -1188,7 +1188,7 @@ int areAllies( int a, int b )
    if (faction_isFaction(a))
       fa = &faction_stack[a];
    else { /* a is invalid */
-      WARN(_("Faction id '%d' is invalid."), a);
+      //WARN(_("Faction id '%d' is invalid."), a);
       return 0;
    }
 
@@ -1196,7 +1196,7 @@ int areAllies( int a, int b )
    if (faction_isFaction(b))
       fb = &faction_stack[b];
    else { /* b is invalid */
-      WARN(_("Faction id '%d' is invalid."), b);
+      //WARN(_("Faction id '%d' is invalid."), b);
       return 0;
    }
 
@@ -1762,7 +1762,7 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
    memset( f, 0, sizeof(Faction) );
    f->name        = strdup( name );
    f->displayname = display==NULL ? NULL : strdup( display );
-   f->ai          = ai==NULL ? NULL : strdup( ai );
+   f->ai          = (ai==NULL) ? NULL : strdup( ai );
    f->allies      = array_create( int );
    f->enemies     = array_create( int );
    f->equip_env   = LUA_NOREF;
@@ -1772,7 +1772,7 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
    if (base>=0) {
       bf = &faction_stack[base];
 
-      if (bf->ai!=NULL && ai==NULL)
+      if (bf->ai!=NULL && f->ai==NULL)
          f->ai = strdup( bf->ai );
       if (bf->logo_small!=NULL)
          f->logo_small = gl_dupTexture( bf->logo_small );

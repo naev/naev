@@ -26,7 +26,6 @@ nebulae = {
    "nebula34.webp",
 }
 
-
 stars = {
    "blue01.webp",
    "blue02.webp",

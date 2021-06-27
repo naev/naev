@@ -1,4 +1,4 @@
-local pixelcode = [[
+local pixelcode_noise = [[
 #pragma language glsl3
 //
 // GLSL textureless classic 2D noise "cnoise",
@@ -297,7 +297,133 @@ float pnoise(vec3 P, vec3 rep)
    float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
    return 2.2 * n_xyz;
 }
+float snoise(vec2 v)
+{
+   const vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0
+         0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)
+         -0.577350269189626,  // -1.0 + 2.0 * C.x
+         0.024390243902439); // 1.0 / 41.0
+   // First corner
+   vec2 i  = floor(v + dot(v, C.yy) );
+   vec2 x0 = v -   i + dot(i, C.xx);
 
+   // Other corners
+   vec2 i1;
+   //i1.x = step( x0.y, x0.x ); // x0.x > x0.y ? 1.0 : 0.0
+   //i1.y = 1.0 - i1.x;
+   i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+   // x0 = x0 - 0.0 + 0.0 * C.xx ;
+   // x1 = x0 - i1 + 1.0 * C.xx ;
+   // x2 = x0 - 1.0 + 2.0 * C.xx ;
+   vec4 x12 = x0.xyxy + C.xxzz;
+   x12.xy -= i1;
+
+   // Permutations
+   i = mod289(i); // Avoid truncation effects in permutation
+   vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+         + i.x + vec3(0.0, i1.x, 1.0 ));
+
+   vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+   m = m*m ;
+   m = m*m ;
+
+   // Gradients: 41 points uniformly over a line, mapped onto a diamond.
+   // The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)
+
+   vec3 x = 2.0 * fract(p * C.www) - 1.0;
+   vec3 h = abs(x) - 0.5;
+   vec3 ox = floor(x + 0.5);
+   vec3 a0 = x - ox;
+
+   // Normalise gradients implicitly by scaling m
+   // Approximation of: m *= inversesqrt( a0*a0 + h*h );
+   m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+
+   // Compute final noise value at P
+   vec3 g;
+   g.x  = a0.x  * x0.x  + h.x  * x0.y;
+   g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+   return 130.0 * dot(m, g);
+}
+
+float snoise(vec3 v)
+{
+   const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+   const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+
+   // First corner
+   vec3 i  = floor(v + dot(v, C.yyy) );
+   vec3 x0 =   v - i + dot(i, C.xxx) ;
+
+   // Other corners
+   vec3 g = step(x0.yzx, x0.xyz);
+   vec3 l = 1.0 - g;
+   vec3 i1 = min( g.xyz, l.zxy );
+   vec3 i2 = max( g.xyz, l.zxy );
+
+   //   x0 = x0 - 0.0 + 0.0 * C.xxx;
+   //   x1 = x0 - i1  + 1.0 * C.xxx;
+   //   x2 = x0 - i2  + 2.0 * C.xxx;
+   //   x3 = x0 - 1.0 + 3.0 * C.xxx;
+   vec3 x1 = x0 - i1 + C.xxx;
+   vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
+   vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
+
+   // Permutations
+   i = mod289(i);
+   vec4 p = permute( permute( permute(
+               i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+            + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
+         + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+   // Gradients: 7x7 points over a square, mapped onto an octahedron.
+   // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
+   float n_ = 0.142857142857; // 1.0/7.0
+   vec3  ns = n_ * D.wyz - D.xzx;
+
+   vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
+
+   vec4 x_ = floor(j * ns.z);
+   vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
+
+   vec4 x = x_ *ns.x + ns.yyyy;
+   vec4 y = y_ *ns.x + ns.yyyy;
+   vec4 h = 1.0 - abs(x) - abs(y);
+
+   vec4 b0 = vec4( x.xy, y.xy );
+   vec4 b1 = vec4( x.zw, y.zw );
+
+   //vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;
+   //vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;
+   vec4 s0 = floor(b0)*2.0 + 1.0;
+   vec4 s1 = floor(b1)*2.0 + 1.0;
+   vec4 sh = -step(h, vec4(0.0));
+
+   vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+   vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+   vec3 p0 = vec3(a0.xy,h.x);
+   vec3 p1 = vec3(a0.zw,h.y);
+   vec3 p2 = vec3(a1.xy,h.z);
+   vec3 p3 = vec3(a1.zw,h.w);
+
+   //Normalise gradients
+   vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+   p0 *= norm.x;
+   p1 *= norm.y;
+   p2 *= norm.z;
+   p3 *= norm.w;
+
+   // Mix final noise value
+   vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+   m = m * m;
+   return 105.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
+            dot(p2,x2), dot(p3,x3) ) );
+}
+]]
+
+
+local pixelcode_nebula = [[
 const int ITERATIONS = 3;
 const float SCALAR = pow(2., 4./3.);
 
@@ -325,6 +451,528 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 }
 ]]
 
+local pixelcode_wind = [[
+uniform float u_time = 0.0;
+uniform float eddy_scale = 50.0;
+out vec4 color_out;
+
+const int noiseSwirlSteps = 2; // 2
+const float noiseSwirlValue = 1.; // 1.
+const float noiseSwirlStepValue = noiseSwirlValue / float(noiseSwirlSteps);
+
+const float noiseScale = 0.5; // 0.5
+const float noiseTimeScale = 0.1; // 0.1
+
+float fbm3(vec3 v) {
+   float result = snoise(v);
+   result += snoise(v * 2.) / 2.;
+   result += snoise(v * 4.) / 4.;
+   result /= (1. + 1./2. + 1./4.);
+   return result;
+}
+
+float fbm5(vec3 v) {
+   float result = snoise(v);
+   result += snoise(v * 2.) / 2.;
+   result += snoise(v * 4.) / 4.;
+   result += snoise(v * 8.) / 8.;
+   result += snoise(v * 16.) / 16.;
+   result /= (1. + 1./2. + 1./4. + 1./8. + 1./16.);
+   return result;
+}
+
+float getNoise(vec3 v) {
+   //  make it curl
+   for (int i=0; i<noiseSwirlSteps; i++) {
+      v.xy += vec2(fbm3(v), fbm3(vec3(v.xy, v.z + 1000.))) * noiseSwirlStepValue;
+   }
+   //  normalize
+   return fbm5(v) / 2. + 0.5;
+}
+
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   float f = 0.0;
+   vec3 uv;
+
+   // Calculate coordinates
+   uv.xy = screen_coords / eddy_scale;
+   uv.z = u_time;
+
+   uv *= vec3( noiseScale, noiseScale, noiseTimeScale );
+
+   float noise = getNoise( uv );
+   noise = pow( noise, 4.0 ) * 2.0;  //more contrast
+   return vec4( 0.2, 0.9, 1.0, noise );
+   //return vec4(noise, noise, noise, 1.0);
+}
+]]
+
+local pixelcode_digital = [[
+uniform float u_time = 0.0;
+uniform float eddy_scale = 50.0;
+out vec4 color_out;
+// by srtuss, 2013
+// https://www.shadertoy.com/view/4sl3Dr
+
+// rotate position around axis
+vec2 rotate(vec2 p, float a)
+{
+	return vec2(p.x * cos(a) - p.y * sin(a), p.x * sin(a) + p.y * cos(a));
+}
+
+// 1D random numbers
+float rand(float n)
+{
+    return fract(sin(n) * 43758.5453123);
+}
+
+// 2D random numbers
+vec2 rand2(in vec2 p)
+{
+	return fract(vec2(sin(p.x * 591.32 + p.y * 154.077), cos(p.x * 391.32 + p.y * 49.077)));
+}
+
+// 1D noise
+float noise1(float p)
+{
+	float fl = floor(p);
+	float fc = fract(p);
+	return mix(rand(fl), rand(fl + 1.0), fc);
+}
+
+// voronoi distance noise, based on iq's articles
+float voronoi(in vec2 x)
+{
+	vec2 p = floor(x);
+	vec2 f = fract(x);
+	
+	vec2 res = vec2(8.0);
+	for(int j = -1; j <= 1; j ++)
+	{
+		for(int i = -1; i <= 1; i ++)
+		{
+			vec2 b = vec2(i, j);
+			vec2 r = vec2(b) - f + rand2(p + b);
+			
+			// chebyshev distance, one of many ways to do this
+			float d = max(abs(r.x), abs(r.y));
+			
+			if(d < res.x)
+			{
+				res.y = res.x;
+				res.x = d;
+			}
+			else if(d < res.y)
+			{
+				res.y = d;
+			}
+		}
+	}
+	return res.y - res.x;
+}
+
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec2 uv;
+
+   // Calculate coordinates
+
+   float flicker = noise1(u_time * 2.0) * 0.8 + 0.4;
+
+   uv = screen_coords / eddy_scale / 10.;
+	uv = (uv - 0.5) * 2.0;
+	vec2 suv = uv;
+	//uv.x *= iResolution.x / iResolution.y;
+	
+	
+	float v = 0.0;
+	
+	// that looks highly interesting:
+	//v = 1.0 - length(uv) * 1.3;
+	
+	
+	// a bit of camera movement
+   /*
+	uv *= 0.6 + sin(u_time * 0.1) * 0.4;
+	uv = rotate(uv, sin(u_time * 0.3) * 1.0);
+	uv += u_time * 0.4;
+   */
+	
+	// add some noise octaves
+	float a = 0.6, f = 1.0;
+	
+	for(int i = 0; i < 3; i ++) // 4 octaves also look nice, its getting a bit slow though
+	{	
+		float v1 = voronoi(uv * f + 5.0);
+		float v2 = 0.0;
+		
+		// make the moving electrons-effect for higher octaves
+		if(i > 0)
+		{
+			// of course everything based on voronoi
+			v2 = voronoi(uv * f * 0.5 + 50.0 + u_time);
+			
+			float va = 0.0, vb = 0.0;
+			va = 1.0 - smoothstep(0.0, 0.1, v1);
+			vb = 1.0 - smoothstep(0.0, 0.08, v2);
+			v += a * pow(va * (0.5 + vb), 2.0);
+		}
+		
+		// make sharp edges
+		v1 = 1.0 - smoothstep(0.0, 0.3, v1);
+		
+		// noise is used as intensity map
+		v2 = a * (noise1(v1 * 5.5 + 0.1));
+		
+		// octave 0's intensity changes a bit
+		if(i == 0)
+			v += v2 * flicker;
+		else
+			v += v2;
+		
+		f *= 3.0;
+		a *= 0.7;
+	}
+
+	// slight vignetting
+	//v *= exp(-0.6 * length(suv)) * 1.2;
+	
+	// use texture channel0 for color? why not.
+	//vec3 cexp = texture(iChannel0, uv * 0.001).xyz * 3.0 + texture(iChannel0, uv * 0.01).xyz;//vec3(1.0, 2.0, 4.0);
+	//cexp *= 1.4;
+	
+	// old blueish color set
+	vec3 cexp = vec3(6.0, 4.0, 2.0);
+	
+	vec3 col = vec3(pow(v, cexp.x), pow(v, cexp.y), pow(v, cexp.z)) * 2.0;
+	
+	return vec4(col, 1.0);
+}
+]]
+
+local pixelcode_marble = [[
+// https://www.shadertoy.com/view/Xs3fR4
+uniform float u_time = 0.0;
+uniform float eddy_scale = 50.0;
+out vec4 color_out;
+// variant of Vorocracks: https://shadertoy.com/view/lsVyRy
+// integrated with cracks here: https://www.shadertoy.com/view/Xd3fRN
+
+#define MM 0
+
+#define VARIANT 1              // 1: amplifies Voronoi cell jittering
+#if VARIANT
+      float ofs = .5;          // jitter Voronoi centers in -ofs ... 1.+ofs
+#else
+      float ofs = 0.;
+#endif
+
+//int FAULT = 1;                 // 0: crest 1: fault
+
+float RATIO = 1.,              // stone length/width ratio
+ /*   STONE_slope = .3,        // 0.  .3  .3  -.3
+      STONE_height = 1.,       // 1.  1.  .6   .7
+      profile = 1.,            // z = height + slope * dist ^ prof
+ */
+      CRACK_depth = 3.,
+      CRACK_zebra_scale = 1.,  // fractal shape of the fault zebra
+      CRACK_zebra_amp = .67,
+      CRACK_profile = 1.,      // fault vertical shape  1.  .2
+      CRACK_slope = 50.,       //                      10.  1.4
+      CRACK_width = .0;
+
+
+// std int hash, inspired from https://www.shadertoy.com/view/XlXcW4
+vec3 hash3( uvec3 x )
+{
+#   define scramble  x = ( (x>>8U) ^ x.yzx ) * 1103515245U // GLIB-C const
+    scramble; scramble; scramble;
+    return vec3(x) / float(0xffffffffU) + 1e-30; // <- eps to fix a windows/angle bug
+}
+
+// === Voronoi =====================================================
+// --- Base Voronoi. inspired by https://www.shadertoy.com/view/MslGD8
+
+#define hash22(p)  fract( 18.5453 * sin( p * mat2(127.1,311.7,269.5,183.3)) )
+#define disp(p) ( -ofs + (1.+2.*ofs) * hash22(p) )
+
+vec3 voronoi( vec2 u )  // returns len + id
+{
+    vec2 iu = floor(u), v;
+	float m = 1e9,d;
+#if VARIANT
+    for( int k=0; k < 25; k++ ) {
+        vec2  p = iu + vec2(k%5-2,k/5-2),
+#else
+    for( int k=0; k < 9; k++ ) {
+        vec2  p = iu + vec2(k%3-1,k/3-1),
+#endif
+            o = disp(p),
+      	      r = p - u + o;
+		d = dot(r,r);
+        if( d < m ) m = d, v = r;
+    }
+
+    return vec3( sqrt(m), v+u );
+}
+
+// --- Voronoi distance to borders. inspired by https://www.shadertoy.com/view/ldl3W8
+vec3 voronoiB( vec2 u )  // returns len + id
+{
+    vec2 iu = floor(u), C, P;
+	float m = 1e9,d;
+#if VARIANT
+    for( int k=0; k < 25; k++ ) {
+        vec2  p = iu + vec2(k%5-2,k/5-2),
+#else
+    for( int k=0; k < 9; k++ ) {
+        vec2  p = iu + vec2(k%3-1,k/3-1),
+#endif
+              o = disp(p),
+      	      r = p - u + o;
+		d = dot(r,r);
+        if( d < m ) m = d, C = p-iu, P = r;
+    }
+
+    m = 1e9;
+
+    for( int k=0; k < 25; k++ ) {
+        vec2 p = iu+C + vec2(k%5-2,k/5-2),
+		     o = disp(p),
+             r = p-u + o;
+
+        if( dot(P-r,P-r)>1e-5 )
+        m = min( m, .5*dot( (P+r), normalize(r-P) ) );
+    }
+
+    return vec3( m, P+u );
+}
+
+// === pseudo Perlin noise =============================================
+#define rot(a) mat2(cos(a),-sin(a),sin(a),cos(a))
+int MOD = 1;  // type of Perlin noise
+
+// --- 2D
+#define hash21(p) fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453123)
+float nnoise2(vec2 p) {
+   vec2 i = floor(p);
+   vec2 f = fract(p); f = f*f*(3.-2.*f); // smoothstep
+
+   float v= mix( mix(hash21(i+vec2(0,0)),hash21(i+vec2(1,0)),f.x),
+         mix(hash21(i+vec2(0,1)),hash21(i+vec2(1,1)),f.x), f.y);
+   return   MOD==0 ? v
+      : MOD==1 ? 2.*v-1.
+      : MOD==2 ? abs(2.*v-1.)
+      : 1.-abs(2.*v-1.);
+}
+
+float fbm2(vec2 p) {
+    float v = 0.,  a = .5;
+    mat2 R = rot(.37);
+
+    for (int i = 0; i < 9; i++, p*=2.,a/=2.)
+        p *= R,
+        v += a * nnoise2(p);
+
+    return v;
+}
+#define nnoise22(p) vec2(nnoise2(p),nnoise2(p+17.7))
+vec2 fbm22(vec2 p) {
+    vec2 v = vec2(0);
+    float a = .5;
+    mat2 R = rot(.37);
+
+    for (int i = 0; i < 6; i++, p*=2.,a/=2.)
+        p *= R,
+        v += a * nnoise22(p);
+
+    return v;
+}
+vec2 mfbm22(vec2 p) {  // multifractal fbm
+    vec2 v = vec2(1);
+    float a = .5;
+    mat2 R = rot(.37);
+
+    for (int i = 0; i < 6; i++, p*=2.,a/=2.)
+        p *= R,
+        //v *= 1.+nnoise22(p);
+          v += v * a * nnoise22(p);
+
+    return v-1.;
+}
+
+/*
+// --- 3D
+#define hash31(p) fract(sin(dot(p,vec3(127.1,311.7, 74.7)))*43758.5453123)
+float noise3(vec3 p) {
+    vec3 i = floor(p);
+    vec3 f = fract(p); f = f*f*(3.-2.*f); // smoothstep
+
+    float v= mix( mix( mix(hash31(i+vec3(0,0,0)),hash31(i+vec3(1,0,0)),f.x),
+                       mix(hash31(i+vec3(0,1,0)),hash31(i+vec3(1,1,0)),f.x), f.y),
+                  mix( mix(hash31(i+vec3(0,0,1)),hash31(i+vec3(1,0,1)),f.x),
+                       mix(hash31(i+vec3(0,1,1)),hash31(i+vec3(1,1,1)),f.x), f.y), f.z);
+	return   MOD==0 ? v
+	       : MOD==1 ? 2.*v-1.
+           : MOD==2 ? abs(2.*v-1.)
+                    : 1.-abs(2.*v-1.);
+}
+
+float fbm3(vec3 p) {
+    float v = 0.,  a = .5;
+    mat2 R = rot(.37);
+
+    for (int i = 0; i < 9; i++, p*=2.,a/=2.)
+        p.xy *= R, p.yz *= R,
+        v += a * noise3(p);
+
+    return v;
+}
+*/
+
+// ======================================================
+
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec4 O;
+   vec2 U;
+
+   U = screen_coords / eddy_scale / 10.;
+
+    //U *= 4./iResolution.y;
+    //U.x += iTime;                                     // for demo
+    U *= 4.;
+    U.x += u_time;
+ // O = vec4( 1.-voronoiB(U).x,voronoi(U).x, 0,0 );   // for tests
+    vec2 I = floor(U/2.);
+    bool vert = mod(I.x+I.y,2.)==0.; //if (vert) U = U.yx;
+    vec3 H0;
+    O-=O;
+
+    for(float i=0.; i<CRACK_depth ; i++) {
+        vec2 V =  U / vec2(RATIO,1),                  // voronoi cell shape
+             D = CRACK_zebra_amp * fbm22(U/CRACK_zebra_scale) * CRACK_zebra_scale;
+        vec3  H = voronoiB( V + D ); if (i==0.) H0=H;
+        float d = H.x;                                // distance to cracks
+   /*         r = voronoi(V).x,                       // distance to center
+              s = STONE_height-STONE_slope*pow(r,profile);// stone interior
+    */                                                // cracks
+        d = min( 1., CRACK_slope * pow(max(0.,d-CRACK_width),CRACK_profile) );
+
+        O += vec4(1.-d) / exp2(i);
+        U *= 1.5 * rot(.37);
+    }
+    /*
+    O = vec4(
+        FAULT==1 ? d * s                              // fault * stone
+                 : mix(1.,s, d)                       // crest or stone
+            ); */
+    if (vert) O = 1.-O; O *= vec4(.9,.85,.85,1);      // for demo
+
+#if MM
+    O.g = hash3(uvec3(H0.yz,1)).x;
+#endif
+    return O;
+}
+]]
+
+local pixelcode_electric = [[
+uniform float u_time = 0.0;
+uniform float eddy_scale = 50.0;
+out vec4 color_out;
+// License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+// https://www.shadertoy.com/view/4tySWK
+
+#define time_         u_time
+#define detail_steps_ 1 // 13
+
+#define mod3_      vec3(.1031, .11369, .13787)
+
+vec3  hash3_3(vec3 p3);
+float perlin_noise3(vec3 p);
+float noise_sum_abs3(vec3 p);
+
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   //vec2 p = screen_coords / eddy_scale;
+   // re2.*uv.xy-res_.xy) / res_.y*s;
+   //vec2 p = screen_coords / eddy_scale * 3.;
+   //p += -10;
+   //vec2 p = (texture_coords-0.5) * 5.;
+   vec2 p = screen_coords / 150.;
+
+   float electric_density = 1.1; // 0.9
+   float electric_radius  = length(texture_coords*2.-1.) - 0.1;
+   float velocity = 0.5;
+
+   vec3  electric_local_domain = vec3(p, u_time * velocity);
+   float electric_field = electric_density * noise_sum_abs3(electric_local_domain);
+
+   vec3 col = vec3(107, 148, 196) / 255.;
+   col += (1. - (electric_field + electric_radius));
+   //col += (1. - (electric_field));
+   for(int i = 0; i < detail_steps_; i++) {
+      if(length(col) >= 2.1 + float(i) / 2.)
+         col -= .3;
+   }
+   col += 1. - 4.2*electric_field;
+
+   float alpha = 1.;
+   return vec4(col, alpha);
+}
+
+
+vec3 hash3_3(vec3 p3) {
+	p3 = fract(p3 * mod3_);
+    p3 += dot(p3, p3.yxz + 19.19);
+    return -1. + 2. * fract(vec3((p3.x + p3.y) * p3.z, (p3.x+p3.z) * p3.y, (p3.y+p3.z) * p3.x));
+}
+
+float perlin_noise3(vec3 p) {
+    vec3 pi = floor(p);
+    vec3 pf = p - pi;
+
+    vec3 w = pf * pf * (3. - 2. * pf);
+
+    return 	mix(
+    	mix(
+            mix(
+                dot(pf - vec3(0, 0, 0), hash3_3(pi + vec3(0, 0, 0))),
+                dot(pf - vec3(1, 0, 0), hash3_3(pi + vec3(1, 0, 0))),
+                w.x),
+            mix(
+                dot(pf - vec3(0, 0, 1), hash3_3(pi + vec3(0, 0, 1))),
+                dot(pf - vec3(1, 0, 1), hash3_3(pi + vec3(1, 0, 1))),
+                w.x),
+    	w.z),
+        mix(
+            mix(
+                dot(pf - vec3(0, 1, 0), hash3_3(pi + vec3(0, 1, 0))),
+                dot(pf - vec3(1, 1, 0), hash3_3(pi + vec3(1, 1, 0))),
+                w.x),
+            mix(
+                dot(pf - vec3(0, 1, 1), hash3_3(pi + vec3(0, 1, 1))),
+                dot(pf - vec3(1, 1, 1), hash3_3(pi + vec3(1, 1, 1))),
+                w.x),
+     	w.z),
+	w.y);
+}
+
+
+float noise_sum_abs3(vec3 p) {
+    float f = 0.;
+    p = p * 3.;
+    f += 1.0000 * abs(perlin_noise3(p)); p = 2. * p;
+    f += 0.5000 * abs(perlin_noise3(p)); p = 3. * p;
+	f += 0.2500 * abs(perlin_noise3(p)); p = 4. * p;
+	f += 0.1250 * abs(perlin_noise3(p)); p = 5. * p;
+	f += 0.0625 * abs(perlin_noise3(p)); p = 6. * p;
+
+    return f;
+}
+]]
+
 local vertexcode = [[
 #pragma language glsl3
 vec4 position( mat4 transform_projection, vec4 vertex_position )
@@ -343,7 +991,10 @@ function love.load()
    love.window.setMode( 800, 450 )
    --love.window.setMode( 0, 0, {fullscreen = true} )
    -- Set up the shader
-   shader   = love.graphics.newShader(pixelcode, vertexcode)
+   --shader   = love.graphics.newShader( pixelcode_noise..pixelcode_wind, vertexcode)
+   --shader   = love.graphics.newShader( pixelcode_noise..pixelcode_digital, vertexcode)
+   --shader   = love.graphics.newShader( pixelcode_noise..pixelcode_marble, vertexcode)
+   shader   = love.graphics.newShader( pixelcode_noise..pixelcode_electric, vertexcode)
    set_shader( 0 )
    -- We need an image for the shader to work so we create a 1x1 px white image.
    local idata = love.image.newImageData( 1, 1 )

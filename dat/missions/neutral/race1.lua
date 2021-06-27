@@ -88,8 +88,7 @@ function create ()
    end
    cursys = system.cur()
    curplanet = planet.cur()
-   misn.setNPC(NPCname, "neutral/unique/laidback.png")
-   misn.setDesc(NPCdesc)
+   misn.setNPC(NPCname, "neutral/unique/laidback.webp", NPCdesc)
    credits = rnd.rnd(20000, 100000)
 end
 
@@ -134,7 +133,6 @@ function takeoff()
    checkpoint[3] = pilot.add("Goddard", "Trader", location3, nil, "stationary")
    for i, j in ipairs(checkpoint) do
       j:rename( string.format(_("Checkpoint %s"), i) )
-      j:control()
       j:setHilight(true)
       j:setInvincible(true)
       j:setActiveBoard(true)
@@ -143,7 +141,7 @@ function takeoff()
    racers[1] = pilot.add("Llama", "Civilian", curplanet)
    racers[1]:addOutfit("Engine Reroute")
    racers[2] = pilot.add("Llama", "Civilian", curplanet)
-   racers[2]:addOutfit("Steering Thrusters")
+   racers[2]:addOutfit("Engine Reroute")
    racers[3] = pilot.add("Llama", "Civilian", curplanet)
    racers[3]:addOutfit("Improved Stabilizer")
    for i, j in ipairs(racers) do

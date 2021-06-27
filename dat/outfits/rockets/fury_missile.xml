@@ -4,7 +4,7 @@
   <mass>0.2</mass>
   <price>0</price>
   <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility come at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters.</description>
-  <gfx_store>fury.png</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="ammo">
   <gfx>fury.png</gfx>
@@ -20,7 +20,7 @@
   <resist>10</resist>
   <damage>
    <type>impact</type>
-   <penetrate>5</penetrate>
+   <penetrate>12</penetrate>
    <physical>40</physical>
    <disable>1</disable>
   </damage>

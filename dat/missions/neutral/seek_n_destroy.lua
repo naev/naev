@@ -34,6 +34,7 @@
 require "numstring"
 require "jumpdist"
 local portrait = require "portrait"
+require "pilot/generic"
 require "pilot/pirate"
 
 clue_title   = _("I know the pilot you're looking for")
@@ -207,15 +208,16 @@ function create ()
       misn.finish(false)
    end
 
-   name = pirate_name()
-   if target_faction == faction.get("Pirate") then
-      ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
-      aship = "Pirate Phalanx"
-      bship = "Pirate Hyena"
-   else -- FLF
+   if target_faction == faction.get("FLF") then
+      name = pilot_name()
       ships = {"FLF Lancelot", "FLF Vendetta", "FLF Pacifier"}
       aship = "FLF Pacifier"
       bship = "FLF Lancelot"
+   else -- default Pirate
+      name = pirate_name()
+      ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
+      aship = "Pirate Phalanx"
+      bship = "Pirate Hyena"
    end
 
    ship = ships[rnd.rnd(1,#ships)]
@@ -385,8 +387,12 @@ function hail_ad()
 end
 
 -- Player hails a ship for info
-function hail ()
-    target = player.pilot():target()
+function hail( p )
+   target = p
+   if target:leader() == player.pilot() then
+      -- Don't want the player hailing their own escorts.
+      return
+   end
 
    if system.cur() == mysys[cursys] and stage == 0 and not elt_inlist( target, hailed ) then
 
@@ -478,6 +484,8 @@ function space_clue ()
          if isScared (target) then
             tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )
             next_sys()
+            target:control()
+            target:runaway(player.pilot())
          else
             tk.msg( not_scared_title, not_scared_text[rnd.rnd(1,#not_scared_text)]:format( name, mysys[cursys+1]:name() ) )
             target:comm(not_scared_comm[rnd.rnd(1,#not_scared_comm)])
@@ -496,7 +504,8 @@ end
 -- Player attacks an informant who has refused to give info
 function clue_attacked( p, attacker )
    -- Target was hit sufficiently to get more talkative
-   if attacker == player.pilot() and p:health() < 100 then
+   if (attacker == player.pilot() or attacker:leader() == player.pilot())
+         and p:health() < 100 then
       p:control()
       p:runaway(player.pilot())
       tk.msg( scared_title, scared_text[rnd.rnd(1,#scared_text)]:format( name, mysys[cursys+1]:name() ) )

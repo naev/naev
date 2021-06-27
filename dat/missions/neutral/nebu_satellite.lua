@@ -1,21 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Nebula Satellite">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>10</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Goddard</faction>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>10</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Goddard</faction>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
  --]]
 --[[
 
@@ -79,8 +79,7 @@ function create ()
    credits = 750000
 
    -- Set stuff up for the spaceport bar
-   misn.setNPC( _("Scientists"), "neutral/unique/neil.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Scientists"), "neutral/unique/neil.webp", bar_desc )
 
 end
 
@@ -98,7 +97,8 @@ function accept ()
    end
 
    -- Add cargo
-   cargo = misn.cargoAdd( "Satellite", 3 )
+   local c = misn.cargoNew( N_("Satellite"), N_("A small satellite loaded with sensors for exploring the depths of the nebula.") )
+   cargo = misn.cargoAdd( c, 3 )
 
    -- Set up mission information
    misn.setTitle( mtitle[1] )

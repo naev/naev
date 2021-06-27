@@ -1,20 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="An old woman">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>3</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>  -- Note: additional conditionals present in mission script!
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>3</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
+-- Note: additional conditionals present in mission script!
 --[[
 --
 -- MISSION: The complaining grandma
@@ -82,15 +83,15 @@ function create ()
     destsys = planets[index][2]
 
     curplanet = planet.cur()
-    misn.setNPC(NPCname, "neutral/unique/oldwoman.png")
-    misn.setDesc(NPCdesc)
+    misn.setNPC(NPCname, "neutral/unique/oldwoman.webp", NPCdesc)
 end
 
 
 function accept ()
     if tk.yesno(title1, text1:format(destplanet:name(), destsys:name(), destplanet:name())) then
         tk.msg(title1, text2)
-        oldwoman = misn.cargoAdd("Civilians", 0)
+        local c = misn.cargoNew( N_("Old Woman"), N_("A grumbling old woman.") )
+        oldwoman = misn.cargoAdd(c, 0)
 
         misn.accept()
         misn.setDesc(misndesc:format(destplanet:name(), destsys:name()))

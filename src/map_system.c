@@ -187,7 +187,6 @@ void map_system_open( int sys_selected )
    /* get the selected system. */
    cur_sys_sel = system_getIndex( sys_selected );
    cur_planet_sel = 0;
-   cur_planetObj_sel = (Planet*)-1;
    /* Set up window size. */
    w = MAX(600, SCREEN_W - 140);
    h = MAX(540, SCREEN_H - 140);
@@ -487,8 +486,6 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
             bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
 
-      (void)cnt;
-
       /* Jumps. */
       for (  i=0; i<array_size(sys->jumps); i++ ) {
          if ( jp_isUsable ( &sys->jumps[i] ) ) {
@@ -499,13 +496,12 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             } else {
                infopos+=scnprintf( &infobuf[infopos], sizeof(infobuf)-infopos, _("     Unknown system\n") );
             }
-            (void)infopos;
          }
       }
    } else {
      /* display planet info */
-     p=cur_planetObj_sel;
-     if ( p->faction > 0 ) {/* show the faction */
+     p = cur_planetObj_sel;
+     if (p->faction > 0 ) {/* show the faction */
         char factionBuf[64];
         logo = faction_logoSmall( p->faction );
         if ( logo != NULL ) {
@@ -529,7 +525,6 @@ static void map_system_render( double bx, double by, double w, double h, void *d
      }
      /* Add a description */
      cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, "%s", (p->description==NULL?_("No description available"):_(p->description)) );
-     (void)cnt;
 
      txtHeight=gl_printHeightRaw( &gl_smallFont, (w - nameWidth-pitch-60)/2, buf );
 
@@ -549,7 +544,6 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         if ( p->bar_description && planet_hasService( p, PLANET_SERVICE_BAR ) ) {
            infocnt+=scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
         }
-        (void)infocnt;
      }
      gl_printTextRaw( &gl_smallFont, (w - nameWidth - pitch - 60) / 2, txtHeight,
          bx + 10 + pitch + nameWidth, by + h - 10 - txtHeight, 0, &cFontWhite, -1., buf );
@@ -579,19 +573,15 @@ static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, doub
    (void) data;
    (void) rx;
    (void) ry;
-   int offset;
    switch (event->type) {
    case SDL_MOUSEBUTTONDOWN:
      /* Must be in bounds. */
      if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
      if (mx < pitch && my > 0) {
-        offset = h - pitch*nshow;
-
-        if ( cur_planet_sel != (h-my-offset ) / pitch ) {
-           cur_planet_sel = ( h-my-offset ) / pitch  ;
+        if ( cur_planet_sel != (h-my) / pitch ) {
+           cur_planet_sel = ( h-my) / pitch;
            map_system_updateSelected( wid );
-
         }
        return 1;
      }
@@ -657,8 +647,8 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "\n%s\n\n"
                    "#nFabricator:#0 %s    "
                    "#nCrew:#0 %d\n"
-                   "#nCPU:#0 %.0f teraflops    "
-                   "#nMass:#0 %.0f tonnes\n"
+                   "#nCPU:#0 %.0f %s    "
+                   "#nMass:#0 %.0f %s\n"
                    "#nThrust:#0 %.0f kN/tonne    "
                    "#nSpeed:#0 %.0f m/s\n"
                    "#nTurn:#0 %.0f deg/s    "
@@ -667,9 +657,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                    "#nShield:#0 %.0f MJ (%.1f MW)    "
                    "#nArmour:#0 %.0f MJ (%.1f MW)\n"
                    "#nEnergy:#0 %.0f MJ (%.1f MW)\n"
-                   "#nCargo Space:#0 %.0f tonnes\n"
-                   "#nFuel:#0 %d units  "
-                   "#nFuel Use:#0 %d units\n"
+                   "#nCargo Space:#0 %.0f %s\n"
+                   "#nFuel:#0 %d %s  "
+                   "#nFuel Use:#0 %d %s\n"
                    "#nPrice:#0 %s  "
                    "#nLicense:#0 %s\n"
                    "%s"),
@@ -679,8 +669,8 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  _(ship->fabricator),
                  ship->crew,
                  /* Weapons & Manoeuvrability */
-                 ship->cpu,
-                 ship->mass,
+                 ship->cpu, n_( "teraflop", "teraflops", ship->cpu ),
+                 ship->mass, n_( "tonne", "tonnes", ship->mass ),
                  ship->thrust,
                  ship->speed,
                  ship->turn*180/M_PI,
@@ -690,9 +680,9 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  ship->shield, ship->shield_regen,
                  ship->armour, ship->armour_regen,
                  ship->energy, ship->energy_regen,
-                 ship->cap_cargo,
-                 ship->fuel,
-                 ship->fuel_consumption,
+                 ship->cap_cargo, n_( "tonne", "tonnes", ship->cap_cargo ),
+                 ship->fuel, n_( "unit", "units", ship->fuel ),
+                 ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ),
                  buf_price,
                  (ship->license != NULL) ? _(ship->license) : _("None"),
                  ship->desc_stats
@@ -739,7 +729,6 @@ static void map_system_array_update( unsigned int wid, char* str ) {
    }
    else
       WARN( _("Unexpected call to map_system_array_update\n") );
-   (void) i;
 }
 
 void map_system_updateSelected( unsigned int wid )
@@ -790,8 +779,9 @@ void map_system_updateSelected( unsigned int wid )
          planetObjChanged = 1;
       }
    }
-   if ( cur_planet_sel == 0 ) {
+   if ( cur_planet_sel <= 0 ) {
       /* star selected */
+      cur_planet_sel = 0;
       if ( cur_planetObj_sel != NULL ) {
          cur_planetObj_sel = NULL;
          planetObjChanged = 1;
@@ -855,6 +845,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    int noutfits;
    int w, h;
    int xpos, xw, ypos, yh;
+   int iconsize;
    static Planet *planetDone = NULL;
 
    window_dimWindow( wid, &w, &h );
@@ -887,8 +878,12 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
       i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
       yh = (h - 100 - (i+1)*5 ) * outfitSpace;
       ypos = 65 + 5*(shipSpace!=0) + (h - 100 - (i+1)*5)*shipSpace;
+
+      iconsize = 64;
+      if (toolkit_simImageArrayVisibleElements( xw, yh, iconsize, iconsize ) < noutfits)
+         iconsize = 48;
       window_addImageArray( wid, xpos, ypos,
-                            xw, yh, MAPSYS_OUTFITS, 96, 96,
+                            xw, yh, MAPSYS_OUTFITS, iconsize, iconsize,
                             coutfits, noutfits, map_system_array_update, NULL, NULL );
       toolkit_unsetSelection( wid, MAPSYS_OUTFITS );
    }
@@ -901,7 +896,7 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    int nships;
    int xpos, ypos, xw, yh;
    static Planet *planetDone=NULL;
-   int i, w, h;
+   int i, w, h, iconsize;
    window_dimWindow( wid, &w, &h );
 
    /* set up the ships that can be bought here */
@@ -937,8 +932,12 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
       i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
       yh = (h - 100 - (i+1)*5 ) * shipSpace;
       ypos = 65;
+
+      iconsize = 48;
+      if (toolkit_simImageArrayVisibleElements( xw, yh, iconsize, iconsize ) < nships )
+         iconsize = 48;
       window_addImageArray( wid, xpos, ypos,
-         xw, yh, MAPSYS_SHIPS, 96., 96.,
+         xw, yh, MAPSYS_SHIPS, iconsize, iconsize,
          cships, nships, map_system_array_update, NULL, NULL );
       toolkit_unsetSelection( wid, MAPSYS_SHIPS );
    }
@@ -949,7 +948,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
    static Planet *planetDone=NULL;
    int i, ngoods;
    ImageArrayCell *cgoods;
-   int xpos, ypos, xw, yh, w, h;
+   int xpos, ypos, xw, yh, w, h, iconsize;
    window_dimWindow( wid, &w, &h );
 
    /* set up the commodities that can be bought here */
@@ -982,8 +981,11 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
       yh = (h - 100 - (i+1)*5 ) * goodsSpace;
       ypos = 60 + 5*i + (h-100 - (i+1)*5 )*(outfitSpace + shipSpace);
 
+      iconsize = 48;
+      if (toolkit_simImageArrayVisibleElements( xw, yh, iconsize, iconsize ) < ngoods )
+         iconsize = 48;
       window_addImageArray( wid, xpos, ypos,
-         xw, yh, MAPSYS_TRADE, 96, 96,
+         xw, yh, MAPSYS_TRADE, iconsize, iconsize,
          cgoods, ngoods, map_system_array_update, NULL, NULL );
       toolkit_unsetSelection( wid, MAPSYS_TRADE );
    }

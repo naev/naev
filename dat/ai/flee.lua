@@ -29,7 +29,7 @@ function control ()
       end
    
    elseif task == "runaway" then
-      target = ai.target()
+      target = ai.taskdata()
 
       if not target:exists() then
          ai.poptask()
@@ -43,8 +43,8 @@ function attacked ( attacker )
    local task = ai.taskname()
 
    if task == "runaway" then
-      local target = ai.target()
-      if target == nil or ai.target() ~= attacker then
+      local target = ai.taskdata()
+      if target == nil or ai.taskdata() ~= attacker then
          ai.poptask()
          ai.pushtask("runaway", attacker)
       end

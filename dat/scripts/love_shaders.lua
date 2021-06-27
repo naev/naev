@@ -84,6 +84,15 @@ function love_shaders.shader2canvas( shader, width, height )
    return _shader2canvas( shader, love_shaders.img, width, height, width, height )
 end
 
+
+--[[--
+Generates a paper-like image.
+
+@tparam number width Width of the image to create.
+@tparam number height Height of the image to create.
+@tparam[opt=1] number sharpness How sharp to make the texture look.
+@treturn Canvas A apper-like canvas image.
+--]]
 function love_shaders.paper( width, height, sharpness )
    sharpness = sharpness or 1
    local pixelcode = string.format([[
@@ -441,6 +450,188 @@ end
 
 
 --[[--
+An electronic circuit-board like shader. Meant as/for backgrounds.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "strength" and "speed" fields is used.
+--]]
+function love_shaders.circuit( params )
+   params = params or {}
+   strength = params.strength or 1.0
+   speed = params.speed or 1.0
+   local pixelcode = string.format([[
+#include "lib/math.glsl"
+
+uniform float u_time = 0.0;
+uniform vec3 u_camera = vec3( 0.0, 0.0, 1.0 );
+
+const float strength = %f;
+const float speed    = %f;
+const float u_r      = %f;
+const float NUM_OCTAVES = 3;
+
+/* 1D noise */
+float noise1( float p )
+{
+   float fl = floor(p);
+   float fc = fract(p);
+   return mix(random(fl), random(fl + 1.0), fc);
+}
+
+/* Voronoi distance noise. */
+float voronoi( vec2 x )
+{
+   vec2 p = floor(x);
+   vec2 f = fract(x);
+
+   vec2 res = vec2(8.0);
+   for(int j = -1; j <= 1; j++) {
+      for(int i = -1; i <= 1; i++) {
+         vec2 b = vec2(i, j);
+         vec2 r = vec2(b) - f + random(p + b);
+
+         /* Chebyshev distance, one of many ways to do this */
+         float d = max(abs(r.x), abs(r.y));
+
+         if (d < res.x) {
+            res.y = res.x;
+            res.x = d;
+         }
+         else if (d < res.y)
+            res.y = d;
+      }
+   }
+   return res.y - res.x;
+}
+
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   /* Calculate coordinates relative to camera. */
+   vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy + u_r;
+   uv *= strength / 500.0; /* Normalize so that strength==1.0 looks fairly good. */
+
+   /* Minor flickering between 0.9 and 1.1. */
+   float flicker = noise1( u_time * 2.0 * speed ) * 0.2 + 0.9;
+
+   /* Add some noise octaves */
+   float a = 0.6;
+   float f = 1.0;
+
+   /* 4 octaves also look nice, its getting a bit slow though */
+   float v = 0.0;
+   for (int i=0; i < NUM_OCTAVES; i ++) {
+      float v1 = voronoi(uv * f + 5.0);
+      float v2 = 0.0;
+
+      /* Make the moving electrons-effect for higher octaves. */
+      if (i > 0) {
+         v2 = voronoi(uv * f * 0.5 + 50.0 + u_time * speed);
+
+         float va = 1.0 - smoothstep(0.0, 0.1,  v1);
+         float vb = 1.0 - smoothstep(0.0, 0.08, v2);
+         v += a * pow(va * (0.5 + vb), 2.0);
+      }
+
+      /* Sharpen the edges. */
+      v1 = 1.0 - smoothstep(0.0, 0.3, v1);
+
+      /* Noise is used as intensity map */
+      v2 = a * (noise1(v1 * 5.5 + 0.1));
+
+      /* Octave 0's intensity changes a bit */
+      if (i == 0)
+         v += v2 * flicker;
+      else
+         v += v2;
+
+      f *= 3.0;
+      a *= 0.7;
+   }
+
+   /* Blueish color set */
+   vec3 cexp = vec3(6.0, 4.0, 2.0);
+
+   /* Convert to colour, clamp and multiply by base colour. */
+   vec3 col = vec3(pow(v, cexp.x), pow(v, cexp.y), pow(v, cexp.z)) * 2.0;
+   return color * vec4( clamp( col, 0.0, 1.0 ), 1.0);
+}
+]], strength, speed, love_math.random() )
+
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader._dt = 1000 * love_math.random()
+   shader.update = function (self, dt)
+      self._dt = self._dt + dt
+      self:send( "u_time", self._dt )
+   end
+   return shader
+end
+
+
+--[[--
+A windy type shader. Meant as/for backgrounds, however, it is highly transparent.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "strength" and "speed" fields is used.
+--]]
+function love_shaders.windy( params )
+   params = params or {}
+   strength = params.strength or 1.0
+   speed = params.speed or 1.0
+   local pixelcode = string.format([[
+#include "lib/simplex.glsl"
+
+uniform float u_time = 0.0;
+uniform vec3 u_camera = vec3( 0.0, 0.0, 1.0 );
+
+const float strength = %f;
+const float speed    = %f;
+const float u_r      = %f;
+
+const float noiseScale = 0.001;
+const float noiseTimeScale = 0.03;
+
+float fbm3(vec3 v) {
+   float result = snoise(v);
+   result += snoise(v * 2.) / 2.;
+   result += snoise(v * 4.) / 4.;
+   result /= (1. + 1./2. + 1./4.);
+   return result;
+}
+
+float getNoise(vec3 v) {
+   v.xy += vec2( fbm3(v), fbm3(vec3(v.xy, v.z + 1000.)));
+   return fbm3(v) / 2. + 0.5;
+}
+
+vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   float f = 0.0;
+   vec3 uv;
+
+   /* Calculate coordinates */
+   uv.xy = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.z + u_camera.xy + u_r;
+   uv.xy *= strength;
+   uv.z  = u_time * speed;
+
+   uv *= vec3( noiseScale, noiseScale, noiseTimeScale );
+
+   float noise = getNoise( uv );
+   noise = pow( noise, 4.0 ) * 2.0;  //more contrast
+   return color * vec4( 1.0, 1.0, 1.0, noise );
+}
+]], strength, speed, love_math.random() )
+
+   local shader = graphics.newShader( pixelcode, _vertexcode )
+   shader._dt = 1000 * love_math.random()
+   shader.update = function (self, dt)
+      self._dt = self._dt + dt
+      self:send( "u_time", self._dt )
+   end
+   return shader
+end
+
+
+--[[--
 An aura effect for characters.
 
 The default size is 40 and refers to the standard deviation of the Gaussian blur being applied.
@@ -504,6 +695,28 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
       self._dt = self._dt + dt
       self:send( "u_time", self._dt )
    end
+   return shader
+end
+
+
+--[[--
+Simple color modulation shader.
+
+@see shaderparams
+@tparam @{shaderparams} params Parameter table where "color" field is used.
+--]]
+function love_shaders.color( params )
+   color = params.color or {1, 1, 1, 1}
+   color[4] = color[4] or 1
+   local pixelcode = string.format([[
+const vec4 basecolor = vec4( %f, %f, %f, %f );
+vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+{
+   vec4 texcolor = Texel(tex, uv);
+   return basecolor * color * texcolor;
+}
+]], color[1], color[2], color[3], color[4] )
+   local shader = graphics.newShader( pixelcode, _vertexcode )
    return shader
 end
 

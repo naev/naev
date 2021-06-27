@@ -7,7 +7,7 @@
   <mass>12</mass>
   <price>1</price>
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
-  <gfx_store>ripper.png</gfx_store>
+  <gfx_store>ripper.webp</gfx_store>
   <cpu>-12</cpu>
  <rarity>6</rarity></general>
  <specific type="turret bolt">
@@ -22,7 +22,8 @@
   <gfx_end>ripperM-end.png</gfx_end>
   <energy>1</energy>
   <heatup>10000</heatup>
-  <track>2</track>
+  <trackmin>2000</trackmin>
+  <trackmax>8000</trackmax>
   <damage>
    <type>normal</type>
    <penetrate>50</penetrate>

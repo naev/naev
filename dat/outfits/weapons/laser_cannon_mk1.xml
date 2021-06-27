@@ -3,30 +3,31 @@
  <general>
   <slot>weapon</slot>
   <size>small</size>
-  <mass>4</mass>
+  <mass>6</mass>
   <price>5000</price>
-  <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
-  <gfx_store>laser.png</gfx_store>
-  <cpu>-4</cpu>
+  <description>The Laser Cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
+  <gfx_store>laser.webp</gfx_store>
+  <cpu>-5</cpu>
   </general>
  <specific type="bolt">
   <gfx>laser1S.png</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>0.5</delay>
-  <speed>550</speed>
-  <range>550</range>
-  <falloff>275</falloff>
-  <energy>4.5</energy>
-  <heatup>15</heatup>
-  <track>3</track>
+  <delay>0.8</delay>
+  <speed>700</speed>
+  <range>900</range>
+  <falloff>750</falloff>
+  <energy>4</energy>
+  <heatup>40</heatup>
+  <trackmin>0</trackmin>
+  <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>normal</type>
    <penetrate>0</penetrate>
-   <physical>6</physical>
-   <disable>1</disable>
+   <physical>17</physical>
+   <disable>1.6</disable>
   </damage>
  </specific>
 </outfit>

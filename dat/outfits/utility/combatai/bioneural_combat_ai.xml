@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Bio-Neural Combat AI">
+ <general>
+  <typename>Combat AI</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <rarity>1</rarity>
+  <license>Heavy Weapon License</license>
+  <mass>1</mass>
+  <price>850000</price>
+  <description>Unlike regular Combat AI which consists of pure software, this AI consists of a quasi-organic co-processor made with both living tissue and inorganic material. Acting like a small temporal lobe, the coprocessor is able to process all ship sensory data to predict future events, allowing the ship to seemingly gain an edge over other ships in reaction time.</description>
+  <gfx_store>bioneural_combat_ai.webp</gfx_store>
+  <limit>combatai</limit>
+ </general>
+ <specific type="modification">
+  <time_speedup>3</time_speedup>
+ </specific>
+</outfit>

@@ -8,25 +8,26 @@
   <price>21000</price>
   <description>The plasma turret essentially takes a plasma blaster and mounts it on a turret. Its short range makes it ill-suited for defense, so it is not especially popular with traders and merchants, but it has found a niche among inexperienced mercenaries who are not as well-practiced at aiming as the pros.</description>
   <gfx_store>plasma2.png</gfx_store>
-  <cpu>-10</cpu>
+  <cpu>-24</cpu>
  </general>
  <specific type="turret bolt">
   <gfx>plasma.png</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS</spfx_armour>
-  <delay>0.45</delay>
-  <speed>450</speed>
-  <range>700</range>
-  <falloff>310</falloff>
-  <energy>9.5</energy>
-  <heatup>25</heatup>
-  <track>1.8</track>
+  <delay>0.8</delay>
+  <speed>700</speed>
+  <range>900</range>
+  <falloff>750</falloff>
+  <energy>8</energy>
+  <heatup>35</heatup>
+  <trackmin>1000</trackmin>
+  <trackmax>4000</trackmax>
   <damage>
-   <type>normal</type>
-   <penetrate>12</penetrate>
-   <physical>9</physical>
-   <disable>1</disable>
+   <type>impact</type>
+   <penetrate>6</penetrate>
+   <physical>17</physical>
+   <disable>1.6</disable>
   </damage>
  </specific>
 </outfit>

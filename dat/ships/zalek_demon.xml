@@ -8,13 +8,14 @@
  <class>Destroyer</class>
  <price>2400000</price>
  <time_mod>1.5</time_mod>
+ <trail_generator x="-35" y="20" h="0">nebula</trail_generator>
+ <trail_generator x="-10" y="-20" h="0">nebula</trail_generator>
  <trail_generator x="-30" y="8" h="0">zalek</trail_generator>
  <trail_generator x="-30" y="-8" h="0">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionately powerful shields and energy management, as well as size. Its handling suffers, and has poor armor like all Za'lek ships, but this comes as poor consolation to the Za'lek's enemies.</description>
  <health>
-  <absorb>20</absorb>
   <armour>400</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -25,19 +26,19 @@
   <cargo>50</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="28" y="0" h="5" />
-  <weapon size="medium" x="18" y="0" h="5" />
-  <weapon size="medium" x="-30" y="-8" h="3" />
-  <weapon size="medium" x="-30" y="8" h="3" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
+  <weapon size="large" x="28" y="0" h="5" />
+  <weapon size="large" x="18" y="0" h="5" />
+  <weapon size="medium" prop="fighter_bay" x="-30" y="-8" h="3" />
+  <weapon size="medium" prop="fighter_bay" x="-30" y="8" h="3" />
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-310 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-24 Medium Plating</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />
@@ -47,5 +48,6 @@
   <shield_mod>40</shield_mod>
   <shield_regen_mod>30</shield_regen_mod>
   <stress_dissipation>10</stress_dissipation>
+  <fbay_reload>15</fbay_reload>
  </stats>
 </ship>

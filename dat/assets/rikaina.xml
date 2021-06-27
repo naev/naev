@@ -16,7 +16,7 @@
  <general>
   <class>1</class>
   <population>4000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>thr_mil_restricted</land>
    <refuel/>
@@ -58,5 +58,6 @@
   <item>Ion 3</item>
   <item>Engines Cargo</item>
   <item>Thurion Civilian Ships</item>
+  <item>Thurion Elite Outfits</item>
  </tech>
 </asset>

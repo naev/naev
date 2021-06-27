@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Medium-Heavy Strong Gene Drive Stage X">
+ <general>
+  <rarity>2</rarity>
+  <typename>Bioship Gene Drive</typename>
+  <slot prop="bio_engines">structure</slot>
+  <size>medium</size>
+  <priority>7</priority>
+  <mass>30</mass>
+  <price>280000</price>
+  <description>The gene drive is a Soromid bioship's equivalent to engines in synthetic ships. It is charged with moving the organism through space and comes in either a strong form (for heavy loads) or a fast form (for greater speed and agility). This gene drive has reached Stage X, its full potential.</description>
+  <gfx_store>organic_engine_strong_m2.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <thrust>70</thrust>
+  <turn>65</turn>
+  <speed>135</speed>
+  <fuel>1000</fuel>
+  <energy_usage>14</energy_usage>
+  <engine_limit>1600</engine_limit>
+ </specific>
+</outfit>

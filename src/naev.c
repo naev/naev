@@ -96,12 +96,14 @@
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
 static glTexture *loading     = NULL; /**< Loading screen. */
+static glFont loading_font; /**< Loading font. */
+static char *loading_txt = NULL; /**< Loading text to display. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
 /* Version stuff. */
 static semver_t version_binary; /**< Naev binary version. */
 //static semver_t version_data; /**< Naev data version. */
-static char version_human[256]; /**< Human readable version. */
+static char version_human[STRMAX_SHORT]; /**< Human readable version. */
 
 /*
  * FPS stuff.
@@ -141,6 +143,15 @@ void main_loop( int update ); /* dialogue.c */
 void naev_quit (void)
 {
    quit = 1;
+}
+
+
+/**
+ * @brief Get if Naev is trying to quit.
+ */
+int naev_isQuit (void)
+{
+   return quit;
 }
 
 
@@ -324,6 +335,7 @@ int main( int argc, char** argv )
    fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
 
    /* Misc graphics init */
+   render_init();
    if (nebu_init() != 0) { /* Initializes the nebula */
       /* An error has happened */
       ERR( _("Unable to initialize the Nebula subsystem!") );
@@ -393,9 +405,9 @@ int main( int argc, char** argv )
 
    /* primary loop */
    while (!quit) {
-      while (SDL_PollEvent(&event)) { /* event loop */
+      while (!quit && SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) {
-            if (menu_askQuit()) {
+            if (quit || menu_askQuit()) {
                quit = 1; /* quit is handled here */
                break;
             }
@@ -472,32 +484,53 @@ int main( int argc, char** argv )
 void loadscreen_load (void)
 {
    char file_path[PATH_MAX];
-   char **loadscreens;
-   size_t nload;
+   char **loadpaths, **loadscreens, *load;
+   size_t nload, nreal, nbuf;
+   const char *loading_prefix = "webp";
 
    /* Count the loading screens */
-   loadscreens = PHYSFS_enumerateFiles( GFX_PATH"loading/" );
-   for (nload=0; loadscreens[nload]!=NULL; nload++) {}
+   loadpaths = PHYSFS_enumerateFiles( GFX_PATH"loading/" );
+
+   for (nload=0; loadpaths[nload]!=NULL; nload++) {}
+   loadscreens = calloc( nload, sizeof(char*) );
+   nreal = 0;
+   for (nload=0; loadpaths[nload]!=NULL; nload++) {
+      if (!ndata_matchExt( loadpaths[nload], loading_prefix ))
+         continue;
+      loadscreens[nreal++] = loadpaths[nload];
+   }
 
    /* Must have loading screens */
-   if (nload==0) {
+   if (nreal==0) {
       WARN( _("No loading screens found!") );
       loading = NULL;
       return;
    }
 
+   /* Load the loading font. */
+   gl_fontInit( &loading_font, _(FONT_DEFAULT_PATH), 24, FONT_PATH_PREFIX, 0 ); /* initializes default font to size */
+
    /* Set the zoom. */
    cam_setZoom( conf.zoom_far );
 
+   /* Choose the screen. */
+   load = loadscreens[ RNG_BASE(0,nreal-1) ];
+
    /* Load the texture */
-   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s", loadscreens[ RNG_BASE(0,nload-1) ] );
+   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s", load );
    loading = gl_newImage( file_path, 0 );
+
+   /* Load the metadata. */
+   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s.txt", load );
+   free( loading_txt );
+   loading_txt = ndata_read( file_path, &nbuf );
 
    /* Create the stars. */
    background_initStars( 1000 );
 
    /* Clean up. */
-   PHYSFS_freeList( loadscreens );
+   PHYSFS_freeList( loadpaths );
+   free( loadscreens );
 }
 
 
@@ -543,6 +576,10 @@ void loadscreen_render( double done, const char *msg )
    /* Draw loading screen image. */
    if (loading != NULL)
       gl_blitScale( loading, bx, by, SHIP_IMAGE_WIDTH, SHIP_IMAGE_HEIGHT, NULL );
+   if (loading_txt != NULL) {
+      int tw = gl_printWidthRaw( &loading_font, loading_txt );
+      gl_printRaw( &loading_font, bx+SHIP_IMAGE_WIDTH-tw, by+20, &cFontWhite, 1, loading_txt );
+   }
 
    /* Draw progress bar. */
    /* BG. */
@@ -582,6 +619,8 @@ static void loadscreen_unload (void)
 {
    gl_freeTexture(loading);
    loading = NULL;
+   gl_freeFont( &loading_font );
+   free( loading_txt );
 }
 
 
@@ -686,9 +725,16 @@ void main_loop( int update )
       player_updateAutonav( real_dt );
       update_all(); /* update game */
    }
+   else if (!dialogue_isOpen()) {
+      /* We run the exclusion end here to handle any hooks that are potentially manually triggered by hook.trigger. */
+      hook_exclusionEnd( 0. );
+   }
 
    /* Safe hook should be run every frame regardless of whether game is paused or not. */
    hooks_run( "safe" );
+
+   /* Checks to see if we want to land. */
+   space_checkLand();
 
    /*
     * Handle render.
@@ -1040,7 +1086,10 @@ int naev_versionCompare( const char *version )
    semver_t sv;
 
    if (semver_parse( version, &sv ))
+   {
       WARN( _("Failed to parse version string '%s'!"), version );
+      return -1;
+   }
 
    if ((res = 3*binary_comparison(version_binary.major, sv.major)) == 0) {
       if ((res = 2*binary_comparison(version_binary.minor, sv.minor)) == 0) {

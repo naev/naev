@@ -49,6 +49,7 @@ static int planetL_radius( lua_State *L );
 static int planetL_faction( lua_State *L );
 static int planetL_colour( lua_State *L );
 static int planetL_class( lua_State *L );
+static int planetL_classLong( lua_State *L );
 static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
 static int planetL_canland( lua_State *L );
@@ -60,6 +61,7 @@ static int planetL_shipsSold( lua_State *L );
 static int planetL_outfitsSold( lua_State *L );
 static int planetL_commoditiesSold( lua_State *L );
 static int planetL_isBlackMarket( lua_State *L );
+static int planetL_isRestricted( lua_State *L );
 static int planetL_isKnown( lua_State *L );
 static int planetL_setKnown( lua_State *L );
 static int planetL_recordCommodityPriceAtTime( lua_State *L );
@@ -77,6 +79,7 @@ static const luaL_Reg planet_methods[] = {
    { "faction", planetL_faction },
    { "colour", planetL_colour },
    { "class", planetL_class },
+   { "classLong", planetL_classLong },
    { "pos", planetL_position },
    { "services", planetL_services },
    { "canLand", planetL_canland },
@@ -88,6 +91,7 @@ static const luaL_Reg planet_methods[] = {
    { "outfitsSold", planetL_outfitsSold },
    { "commoditiesSold", planetL_commoditiesSold },
    { "blackmarket", planetL_isBlackMarket },
+   { "restricted", planetL_isRestricted },
    { "known", planetL_isKnown },
    { "setKnown", planetL_setKnown },
    { "recordCommodityPriceAtTime", planetL_recordCommodityPriceAtTime },
@@ -582,6 +586,23 @@ static int planetL_class(lua_State *L )
 
 
 /**
+ * @brief Gets the planet's class in long human-readable format already translated.
+ *
+ * @usage c = p:classLong()
+ *    @luatparam Planet p Planet to get the class of.
+ *    @luatreturn string The class of the planet in descriptive form such as "Pelagic".
+ * @luafunc classLong
+ */
+static int planetL_classLong(lua_State *L )
+{
+   Planet *p;
+   p = luaL_validplanet(L,1);
+   lua_pushstring(L, planet_getClassName(p->class));
+   return 1;
+}
+
+
+/**
  * @brief Checks for planet services.
  *
  * Possible services are:<br />
@@ -606,7 +627,8 @@ static int planetL_services( lua_State *L )
    int i;
    size_t len;
    Planet *p;
-   char *name, lower[256];
+   const char *name;
+   char lower[256];
    p = luaL_validplanet(L,1);
 
    /* Return result in table */
@@ -857,6 +879,24 @@ static int planetL_isBlackMarket( lua_State *L )
    lua_pushboolean(L, planet_hasService(p, PLANET_SERVICE_BLACKMARKET));
    return 1;
 }
+
+
+/**
+ * @brief Checks to see if a planet is restricted (has complicated land condition).
+ *
+ * @usage b = p:restricted()
+ *
+ *    @luatparam Planet p Planet to check if it's restricted.
+ *    @luatreturn boolean true if the planet is restricted.
+ * @luafunc restricted
+ */
+static int planetL_isRestricted( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+   lua_pushboolean(L, p->land_func != NULL);
+   return 1;
+}
+
 
 /**
  * @brief Checks to see if a planet is known by the player.

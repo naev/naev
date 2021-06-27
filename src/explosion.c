@@ -25,6 +25,11 @@
 static int exp_s = -1; /**< Small explosion spfx. */
 static int exp_m = -1; /**< Medium explosion spfx. */
 static int exp_l = -1; /**< Large explosion spfx. */
+static int exp_200 = -1; /**< 200 radius explsion spfx. */
+static int exp_300 = -1; /**< 300 radius explosion spfx. */
+static int exp_400 = -1; /**< 400 radius explosion spfx. */
+static int exp_500 = -1; /**< 500 radius explosion spfx. */
+static int exp_600 = -1; /**< 600 radius explosion spfx. */
 
 
 /**
@@ -43,40 +48,44 @@ void expl_explode( double x, double y, double vx, double vy,
       double radius, const Damage *dmg,
       const Pilot *parent, int mode )
 {
-   int i, n;
-   double a, d;
-   double area;
-   double ex, ey;
    int layer;
    int efx;
 
    /* Standard stuff - lazy allocation. */
    if (exp_s == -1) {
+      /* This is all horrible and I wish we could either parametrize it or get
+       * rid of the hardcoding. */
       exp_s = spfx_get("ExpS");
       exp_m = spfx_get("ExpM");
       exp_l = spfx_get("ExpL");
+      exp_200 = spfx_get("Exp200");
+      exp_300 = spfx_get("Exp300");
+      exp_400 = spfx_get("Exp400");
+      exp_500 = spfx_get("Exp500");
+      exp_600 = spfx_get("Exp600");
    }
    layer = SPFX_LAYER_FRONT;
 
-   /* Number of explosions. */
-   area = M_PI * pow2(radius);
-   n = (int)(area / 100.);
-
-   /* Create explosions. */
-   for (i=0; i<n; i++) {
-      /* Get position. */
-      a = RNGF()*360.;
-      d = RNGF()*(radius-5.) + 5.;
-      ex = d*cos(a);
-      ey = d*sin(a);
-
-      /* Create explosion. */
-      efx = (RNG(0,2)==0) ? exp_m : exp_s;
-      spfx_add( efx, x+ex, y+ey, vx, vy, layer );
-   }
+   if (radius < 40./2.)
+      efx = exp_s;
+   else if (radius < 70./2.)
+      efx = exp_m;
+   else if (radius < 100./2.)
+      efx = exp_l;
+   else if (radius < 200./2.)
+      efx = exp_200;
+   else if (radius < 300./2.)
+      efx = exp_300;
+   else if (radius < 400./2.)
+      efx = exp_400;
+   else if (radius < 500./2.)
+      efx = exp_500;
+   //else if (radius < 600./2.)
+   else
+      efx = exp_600;
 
    /* Final explosion. */
-   spfx_add( exp_l, x, y, vx, vy, layer );
+   spfx_add( efx, x, y, vx, vy, layer );
 
    /* Run the damage. */
    if (dmg != NULL)

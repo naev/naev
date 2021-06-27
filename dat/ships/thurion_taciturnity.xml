@@ -13,7 +13,6 @@
  <license>Large Civilian Vessel License</license>
  <description>The Thurion Taciturnity is an armoured and stealthy transport capable both of surviving the harsh nebula and defending itself from attack.</description>
  <health>
-  <absorb>20</absorb>
   <armour>500</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -25,17 +24,17 @@
   <cargo>100</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="-6" y="-20" h="-4" />
-  <weapon size="medium" x="-6" y="20" h="-4" />
-  <weapon size="small" x="6" y="0" h="5" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
+  <weapon size="large" x="-6" y="-20" h="-4" />
+  <weapon size="large" x="-6" y="20" h="-4" />
+  <weapon size="medium" prop="fighter_bay" x="6" y="0" h="5" />
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-310 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="medium" />
   <utility size="medium" />
-  <utility size="small" />
-  <utility size="small" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-24 Medium Plating</structure>
   <structure size="medium" />
   <structure size="medium" />
   <structure size="medium" />
@@ -44,9 +43,8 @@
  <stats>
   <cargo_mod>20</cargo_mod>
   <cargo_inertia>-30</cargo_inertia>
-  <cpu_mod>10</cpu_mod>
   <ew_hide>30</ew_hide>
-  <nebu_absorb_shield>80</nebu_absorb_shield>
-  <nebu_absorb_armour>97</nebu_absorb_armour>
+  <nebu_absorb_shield>15</nebu_absorb_shield>
+  <nebu_absorb_armour>15</nebu_absorb_armour>
  </stats>
 </ship>

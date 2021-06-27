@@ -2,70 +2,65 @@ require "factions/equip/generic"
 
 
 equip_typeOutfits_coreSystems["Shark"] = {
-   "Milspec Orion 2301 Core System"
+   "Milspec Orion 2301 Core System",
 }
-equip_typeOutfits_coreSystems["Lancelot"] = {
-   "Milspec Orion 3701 Core System"
-}
+equip_typeOutfits_coreSystems["Lancelot"] = equip_shipOutfits_coreSystems["Empire Lancelot"]
 equip_typeOutfits_coreSystems["Admonisher"] = {
-   "Milspec Orion 4801 Core System"
+   "Milspec Orion 4801 Core System",
 }
 equip_typeOutfits_coreSystems["Pacifier"] = {
-   "Milspec Orion 5501 Core System"
+   "Milspec Orion 5501 Core System",
 }
 equip_typeOutfits_coreSystems["Hawking"] = {
-   "Milspec Orion 9901 Core System"
+   "Milspec Orion 8601 Core System",
 }
 equip_typeOutfits_coreSystems["Peacemaker"] = {
-   "Milspec Hermes 9802 Core System"
+   "Milspec Orion 9901 Core System",
 }
 
 equip_typeOutfits_engines["Shark"] = {
-   "Tricon Zephyr Engine"
+   "Tricon Zephyr Engine",
 }
-equip_typeOutfits_engines["Lancelot"] = {
-   "Tricon Zephyr II Engine"
-}
+equip_typeOutfits_engines["Lancelot"] = equip_shipOutfits_engines["Empire Lancelot"]
 equip_typeOutfits_engines["Admonisher"] = {
-   "Tricon Cyclone Engine"
+   "Tricon Cyclone Engine",
 }
 equip_typeOutfits_engines["Pacifier"] = {
-   "Tricon Cyclone II Engine"
+   "Tricon Cyclone II Engine",
 }
 equip_typeOutfits_engines["Hawking"] = {
-   "Tricon Typhoon II Engine", "Nexus Bolt 6500 Engine"
+   "Tricon Typhoon Engine",
 }
 equip_typeOutfits_engines["Peacemaker"] = {
-   "Melendez Mammoth XL Engine"
+   "Melendez Mammoth XL Engine",
 }
 
 equip_typeOutfits_hulls["Shark"] = {
-   "S&K Ultralight Combat Plating"
+   "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating",
 }
-equip_typeOutfits_hulls["Lancelot"] = {
-   "S&K Light Combat Plating"
-}
+equip_typeOutfits_hulls["Lancelot"] = equip_shipOutfits_hulls["Empire Lancelot"]
 equip_typeOutfits_hulls["Admonisher"] = {
-   "S&K Medium Combat Plating"
+   "Nexus Medium Stealth Plating", "S&K Medium Combat Plating",
 }
 equip_typeOutfits_hulls["Pacifier"] = {
-   "S&K Medium-Heavy Combat Plating"
+   "Nexus Medium Stealth Plating", "S&K Medium-Heavy Combat Plating",
 }
 equip_typeOutfits_hulls["Hawking"] = {
-   "Unicorp B-20 Heavy Plating", "S&K Superheavy Combat Plating"
+   "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating"
 }
 equip_typeOutfits_hulls["Peacemaker"] = {
-   "S&K Superheavy Combat Plating"
+   "S&K Superheavy Combat Plating",
 }
 
 equip_typeOutfits_weapons["Shark"] = {
    {
       num = 1;
-      "Unicorp Banshee Launcher", "Ripper Cannon"
+      "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
+      "Unicorp Mace Launcher", "TeraCom Mace Launcher",
    },
    {
-      "Ripper Cannon", "Laser Cannon MK3"
-   }
+      "Laser Cannon MK1", "Plasma Blaster MK1", "Ion Cannon",
+   },
 }
 equip_typeOutfits_weapons["Lancelot"] = equip_shipOutfits_weapons["Empire Lancelot"]
 equip_typeOutfits_weapons["Admonisher"] = {
@@ -84,7 +79,7 @@ equip_typeOutfits_weapons["Admonisher"] = {
 equip_typeOutfits_weapons["Pacifier"] = {
    {
       num = 2;
-      "Heavy Ripper Turret", "Railgun"
+      "Heavy Laser Turret", "Railgun"
    },
    {
       num = 1;
@@ -94,34 +89,22 @@ equip_typeOutfits_weapons["Pacifier"] = {
    },
    {
       num = 1;
-      "Heavy Ripper Cannon", "Laser Turret MK3", "Orion Beam", "Pulse Beam"
+      "Heavy Ripper Cannon", "Laser Turret MK2", "Orion Beam",
    },
    {
-      "Heavy Ripper Cannon", "Laser Turret MK3"
+      "Heavy Ripper Cannon", "Laser Turret MK2"
    }
 }
-equip_typeOutfits_weapons["Hawking"] = {
-   {
-      num = 2;
-      "Heavy Laser"
-   },
-   {
-      num = 2;
-      "Turbolaser", "Ragnarok Beam", "Grave Beam"
-   },
-   {
-      num = 1;
-      "Turbolaser", "Ragnarok Beam", "Grave Beam"
-   },
-   {
-      num = 1;
-      "Turbolaser", "Heavy Laser"
-   },
-   {
-      "Heavy Laser"
-   }
-}
-equip_typeOutfits_weapons["Peacemaker"] = equip_typeOutfits_weapons["Hawking"]
+
+local emp_util_small = { { "Photo-Voltaic Nanobot Coating" } }
+local emp_util_medplus = { { varied=true;
+   "Hunting Combat AI", "Photo-Voltaic Nanobot Coating" } }
+equip_shipOutfits_utilities["Empire Shark"]     = emp_util_small
+equip_shipOutfits_utilities["Empire Lancelot"]  = emp_util_small
+equip_shipOutfits_utilities["Empire Admonisher"]= emp_util_medplus
+equip_shipOutfits_utilities["Empire Pacifier"]  = emp_util_medplus
+equip_shipOutfits_utilities["Empire Hawking"]   = emp_util_medplus
+equip_shipOutfits_utilities["Empire Peacemaker"]= emp_util_medplus
 
 --[[
 -- @brief Does empire pilot equipping
@@ -129,39 +112,33 @@ equip_typeOutfits_weapons["Peacemaker"] = equip_typeOutfits_weapons["Hawking"]
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   --[[
    if diff.isApplied( "collective_dead" ) then
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
-            num = 2, varied = true;
-            "Turbolaser", "Heavy Laser", "Ragnarok Beam", "Grave Beam"
+            varied = true;
+            "Empire Lancelot Fighter Bay", "Drone Fighter Bay",
          },
          {
-            varied = true;
-            "Empire Lancelot Fighter Bay", "Drone Fighter Bay"
+            "Turbolaser", "Heavy Ripper Turret", "Ragnarok Beam",
          },
          {
-            varied = true;
-            "Heavy Ripper Turret", "Laser Turret MK3"
-         }
+            "Heavy Laser Turret",
+         },
       }
    else
       equip_typeOutfits_weapons["Peacemaker"] = {
          {
-            num = 2, varied = true;
-            "Turbolaser", "Heavy Laser", "Ragnarok Beam", "Grave Beam"
+            varied = true;
+            "Empire Lancelot Fighter Bay",
          },
          {
-            varied = true;
-            "Empire Lancelot Fighter Bay"
+            "Turbolaser", "Heavy Ripper Turret", "Ragnarok Beam",
          },
          {
-            varied = true;
-            "Heavy Ripper Turret", "Laser Turret MK3"
-         }
+            "Heavy Laser Turret",
+         },
       }
    end
-   --]]
-   
+
    equip_generic( p )
 end

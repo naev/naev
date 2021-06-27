@@ -14,7 +14,6 @@
  <fabricator>Melendez Corp.</fabricator>
  <description>While still a cargo hauler, the Quicksilver is quite different from Melendez's other offerings. Featuring a streamlined frame and oversized engines, it's the prime choice for expedient shipping.</description>
  <health>
-  <absorb>7</absorb>
   <armour>65</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -27,11 +26,11 @@
  <slots>
   <weapon size="small" x="-10" y="-3" h="0" />
   <weapon size="small" x="-10" y="3" h="0" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />

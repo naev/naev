@@ -64,8 +64,7 @@ function create()
    homeasset = planet.cur()
    targetasset, targetsys = planet.get("Ulios") --this will be the new HQ for the Nasin in the next part.
    --set some mission stuff
-   misn.setNPC(npc_name, "sirius/unique/draga.png")
-   misn.setDesc(bar_desc)
+   misn.setNPC(npc_name, "sirius/unique/draga.webp", bar_desc)
 
    osd[1] = osd[1]:format(targetasset:name(), targetsys:name())
 end
@@ -88,7 +87,8 @@ function accept()
    misn.setReward(creditstring(reward))
    misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
    misn.osdCreate(misn_title,osd)
-   refugees = misn.cargoAdd("Refugees",free_cargo)
+   local c = misn.cargoNew( N_("Refugees"), N_("Nasin refugees.") )
+   refugees = misn.cargoAdd(c,free_cargo)
    player.takeoff()
    --get the hooks.
    hook.takeoff("takeoff")

@@ -6,7 +6,7 @@
   <mass>1</mass>
   <price>180000</price>
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
-  <gfx_store>ragnarok.png</gfx_store>
+  <gfx_store>ragnarok.webp</gfx_store>
   <cpu>-1</cpu>
  <rarity>6</rarity></general>
  <specific type="beam">

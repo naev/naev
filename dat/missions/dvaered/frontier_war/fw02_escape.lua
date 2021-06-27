@@ -261,8 +261,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(portrait_name, portrait_leblanc)
-   misn.setDesc(portrait_desc)
+   misn.setNPC(portrait_name, portrait_leblanc, portrait_desc)
 end
 
 function accept()
@@ -318,21 +317,21 @@ function land()
       tk.msg(back_title, back_text:format(hospPlanet:name(), player.name()))
       var.push("dv_empire_deal", false)
       var.push("dv_pirate_debt", false)
-      shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
+      shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
       if stage == 7 then -- Empire solution
          tk.msg(back_empire_title, back_empire_text:format(creditstring(credits_02)))
          var.push("dv_empire_deal", true)
-         shiplog.appendLog( "frontier_war", log_text_emp )
+         shiplog.append( "frontier_war", log_text_emp )
       elseif stage == 8 then -- Pirate debt
          tk.msg(back_debt_title, back_debt_text:format(creditstring(pirate_price), creditstring(credits_02)))
          var.push("dv_pirate_debt", true)
-         shiplog.appendLog( "frontier_war", log_text_debt )
+         shiplog.append( "frontier_war", log_text_debt )
       elseif stage == 9 then -- Pirate cash
          tk.msg(back_pay_title, back_pay_text:format(creditstring(credits_02)))
-         shiplog.appendLog( "frontier_war", log_text_pay )
+         shiplog.append( "frontier_war", log_text_pay )
       else -- Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
          tk.msg(back_nodeal_title, back_nodeal_text:format(creditstring(credits_02)))
-         shiplog.appendLog( "frontier_war", log_text_raw )
+         shiplog.append( "frontier_war", log_text_raw )
       end
       player.pay(credits_02)
 
@@ -396,7 +395,9 @@ end
 
 -- Test to see if the player killed a zlk inhabited ship
 function killed_zlk(pilot,killer)
-   if pilot:faction() == faction.get("Za'lek") and killer == player.pilot() then
+   if pilot:faction() == faction.get("Za'lek")
+         and (killer == player.pilot()
+            or killer:leader() == player.pilot()) then
       killed_ship = pilot:ship():nameRaw()
       if (elt_inlist( killed_ship, {"Za'lek Scout Drone", "Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"} ) == 0) then
          tk.msg(kill_title, kill_text)
@@ -449,11 +450,10 @@ function enter()
       strafer:rmOutfit("cores")
       strafer:addOutfit("S&K Light Combat Plating")
       strafer:addOutfit("Tricon Zephyr II Engine")
-      strafer:addOutfit("Reactor Class I")
-      strafer:addOutfit("Milspec Aegis 3601 Core System")
-      strafer:addOutfit("Power Regulation Override")
-      strafer:addOutfit("Shredder", 4)
-      strafer:addOutfit("Vulcan Gun", 2)
+      strafer:addOutfit("Solar Panel")
+      strafer:addOutfit("Milspec Orion 3701 Core System")
+      strafer:addOutfit("Gauss Gun", 3)
+      strafer:addOutfit("Vulcan Gun", 3)
 
       strafer:setHealth(100,100)
       strafer:setEnergy(100)

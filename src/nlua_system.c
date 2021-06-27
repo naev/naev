@@ -44,6 +44,7 @@ static int systemL_jumpdistance( lua_State *L );
 static int systemL_jumpPath( lua_State *L );
 static int systemL_adjacent( lua_State *L );
 static int systemL_jumps( lua_State *L );
+static int systemL_asteroidFields( lua_State *L );
 static int systemL_asteroid( lua_State *L );
 static int systemL_asteroidPos( lua_State *L );
 static int systemL_asteroidDestroyed( lua_State *L );
@@ -54,6 +55,8 @@ static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
 static int systemL_isknown( lua_State *L );
 static int systemL_setknown( lua_State *L );
+static int systemL_hidden( lua_State *L );
+static int systemL_setHidden( lua_State *L );
 static int systemL_mrkClear( lua_State *L );
 static int systemL_mrkAdd( lua_State *L );
 static int systemL_mrkRm( lua_State *L );
@@ -71,6 +74,7 @@ static const luaL_Reg system_methods[] = {
    { "jumpPath", systemL_jumpPath },
    { "adjacentSystems", systemL_adjacent },
    { "jumps", systemL_jumps },
+   { "asteroidFields", systemL_asteroidFields },
    { "asteroid", systemL_asteroid },
    { "asteroidPos", systemL_asteroidPos },
    { "asteroidDestroyed", systemL_asteroidDestroyed },
@@ -81,6 +85,8 @@ static const luaL_Reg system_methods[] = {
    { "radius", systemL_radius },
    { "known", systemL_isknown },
    { "setKnown", systemL_setknown },
+   { "hidden", systemL_hidden },
+   { "setHidden", systemL_setHidden },
    { "mrkClear", systemL_mrkClear },
    { "mrkAdd", systemL_mrkAdd },
    { "mrkRm", systemL_mrkRm },
@@ -461,12 +467,12 @@ static int systemL_jumpdistance( lua_State *L )
  *    <li>system : Gets path to system</li>
  * </ul>
  *
- * @usage jumps = sys:jumpPath() -- Path from sys to current system.
+ * @usage jumps = sys:jumpPath( system.cur() ) -- Path from sys to current system.
  * @usage jumps = sys:jumpPath( "Draygar" ) -- Path from sys to Draygar.
  * @usage jumps = system.jumpPath( "Draygar", another_sys ) -- Path from Draygar to another_sys.
  *
  *    @luatparam System s Starting system.
- *    @luatparam nil|string|Goal system param See description.
+ *    @luatparam System goal Goal system param See description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden jumps.
  *    @luatreturn {Jump,...} Table of jumps.
  * @luafunc jumpPath
@@ -482,26 +488,11 @@ static int systemL_jumpPath( lua_State *L )
    h   = lua_toboolean(L,3);
 
    /* Foo to Bar */
-   if (lua_gettop(L) > 1) {
-      sys   = luaL_validsystem(L,1);
-      start = sys->name;
-      sid   = sys->id;
-
-      if (lua_isstring(L,2))
-         goal = lua_tostring(L,2);
-      else if (lua_issystem(L,2)) {
-         sysp = luaL_validsystem(L,2);
-         goal = sysp->name;
-      }
-      else NLUA_INVALID_PARAMETER(L);
-   }
-   /* Current to Foo */
-   else {
-      start = cur_system->name;
-      sid   = cur_system->id;
-      sys   = luaL_validsystem(L,1);
-      goal  = sys->name;
-   }
+   sys   = luaL_validsystem(L,1);
+   start = sys->name;
+   sid   = sys->id;
+   sysp  = luaL_validsystem(L,2);
+   goal  = sysp->name;
 
    s = map_getJumpPath( start, goal, 1, h, NULL );
    if (s == NULL)
@@ -603,6 +594,46 @@ static int systemL_jumps( lua_State *L )
       lj.destid = s->jumps[i].targetid;
       lua_pushnumber(L,++pushed); /* key. */
       lua_pushjump(L,lj); /* value. */
+      lua_rawset(L,-3);
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets all the asteroid fields in a system.
+ *
+ * @usage for i, s in ipairs( sys:asteroidFields() ) do -- Iterate over asteroid fields
+ *
+ *    @luatparam System s System to get the asteroid fields of.
+ *    @luatreturn {Table,...} An ordered table with all the asteroid fields.
+ * @luafunc asteroidFields
+ */
+static int systemL_asteroidFields( lua_State *L )
+{
+   int i, pushed;
+   StarSystem *s = luaL_validsystem(L,1);
+
+   /* Push all jumps. */
+   pushed = 0;
+   lua_newtable(L);
+   for (i=0; i<array_size(s->asteroids); i++) {
+      lua_pushnumber(L,++pushed);   /* key. */
+      lua_newtable(L);              /* key, t */
+
+      lua_pushstring(L,"pos");      /* key, t, k */
+      lua_pushvector(L,s->asteroids[i].pos); /* key, t, k, v */
+      lua_rawset(L,-3);
+
+      lua_pushstring(L,"density");      /* key, t, k */
+      lua_pushnumber(L,s->asteroids[i].density); /* key, t, k, v */
+      lua_rawset(L,-3);
+
+      lua_pushstring(L,"radius");      /* key, t, k */
+      lua_pushnumber(L,s->asteroids[i].radius); /* key, t, k, v */
+      lua_rawset(L,-3);
+
       lua_rawset(L,-3);
    }
 
@@ -997,6 +1028,44 @@ static int systemL_setknown( lua_State *L )
    /* Update outfits image array. */
    outfits_updateEquipmentOutfits();
 
+   return 0;
+}
+
+
+/**
+ * @brief Checks to see if a system is hidden by the player.
+ *
+ * @usage b = s:hidden()
+ *
+ *    @luatparam System s System to check if the player knows.
+ *    @luatreturn boolean true if the player knows the system.
+ * @luafunc hidden
+ */
+static int systemL_hidden( lua_State *L )
+{
+   StarSystem *sys = luaL_validsystem(L, 1);
+   lua_pushboolean(L, sys_isFlag( sys, SYSTEM_HIDDEN ));
+   return 1;
+}
+
+
+/**
+ * @brief Sets a system to be hidden to the player.
+ *
+ * @usage s:setHidden( true )
+ *
+ *    @luatparam System s System to check if the player knows.
+ *    @luatparam boolean hide Whether or not to hide the system.
+ * @luafunc hidden
+ */
+static int systemL_setHidden( lua_State *L )
+{
+   StarSystem *sys = luaL_validsystem(L, 1);
+   int b = lua_toboolean(L,2);
+   if (b)
+      sys_setFlag( sys, SYSTEM_HIDDEN );
+   else
+      sys_rmFlag( sys, SYSTEM_HIDDEN );
    return 0;
 }
 

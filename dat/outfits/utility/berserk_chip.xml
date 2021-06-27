@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Berserk Chip">
+ <general>
+  <typename>Speed Modifier</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>1</mass>
+  <price>1230000</price>
+  <description>The Berserk Chip is a dangerous used by only the most reckless of pilots. It can be fully integrated into a ship to override most of the basic functionality to reroute it into combat capabilities. This comes at a very high expense to the hull integrity and systems on the ship and can only be used for a short time. Newer versions have a safety shutoff which automatically turn off the chip before hull integrity collapses.</description>
+  <desc_extra>Incurs a large amount of shield and armour damage over time, and shuts down automatically when hull integrity is below 30%. After use, there is an 8 second cooldown period during which movement and damage output is decreased by 20%.</desc_extra>
+  <gfx_store>berserk_chip.webp</gfx_store>
+  <limit>berserk_chip</limit>
+ </general>
+ <specific type="modification" group="8">
+  <lua>outfits/utility/berserk_chip.lua</lua>
+  <energy_regen_mod>-80</energy_regen_mod>
+  <shield_regen_mod>-500</shield_regen_mod>
+  <time_mod>-50</time_mod>
+  <time_speedup>50</time_speedup>
+  <fwd_damage>25</fwd_damage>
+  <tur_damage>25</tur_damage>
+  <launch_damage>25</launch_damage>
+ </specific>
+</outfit>

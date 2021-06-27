@@ -49,8 +49,7 @@ reward_desc = _("A generous compensation") --reward description
 function create ()
    targetsystem = system.get("Ogat") --find target system
    
-   misn.setNPC( NPC_name, "neutral/unique/hunter.png") --spawn NPC
-   misn.setDesc( bar_desc )
+   misn.setNPC( NPC_name, "neutral/unique/hunter.webp", bar_desc) --spawn NPC
 end
 
 function accept ()
@@ -61,7 +60,7 @@ function accept ()
    end
    
    misn.accept()
-   reward = 600000
+   reward = 600e3
    tk.msg( title[1], text[1] ) --dialogue 2
    misn.setTitle( title[0] ) --OSD stuff
    misn.setReward( reward_desc )
@@ -127,21 +126,24 @@ function spawnBaddies ()
       sp = last_system
    end
 
+   local pp = player.pilot()
    thugs = addShips( 4, "Admonisher", "Thugs", sp, _("Thug"), ai )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:setHostile(true) --they don't like you
       pilot_object:rmOutfit("all") --strip them down
-      pilot_object:addOutfit("Laser Cannon MK2") --add everything but rockets
+      pilot_object:addOutfit("Ripper Cannon") --add everything but rockets
       pilot_object:addOutfit("Plasma Blaster MK2", 2)
       pilot_object:addOutfit("Vulcan Gun", 2)
       pilot_object:addOutfit("Reactor Class II", 2)
       pilot_object:addOutfit("Milspec Jammer")
       pilot_object:addOutfit("Engine Reroute")
-      pilot_object:addOutfit("Steering Thrusters")
       pilot_object:addOutfit("Shield Capacitor II")
       if system.cur() ~= targetsystem then
-         pilot_object:control() --switch to manual control
-         pilot_object:attack( player.pilot() ) --they attack you and only you
+         -- TODO more sophisticated way of detecting the player
+         if pilot_object:inrange( pp ) then
+            pilot_object:control() --switch to manual control
+            pilot_object:attack( pp ) --they attack you and only you
+         end
       else
          thugs_alive = #thugs
          hook.pilot(pilot_object, "exploded", "pilotKilled") --trigger when one of them is killed

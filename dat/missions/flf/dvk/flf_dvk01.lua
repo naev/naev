@@ -77,8 +77,7 @@ function create ()
    credits = 250000
    reputation = 2
 
-   misn.setNPC( npc_name, "flf/unique/benito.png" )
-   misn.setDesc( npc_desc )
+   misn.setNPC( npc_name, "flf/unique/benito.webp", npc_desc )
 end
 
 

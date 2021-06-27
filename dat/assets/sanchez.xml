@@ -16,7 +16,7 @@
  <general>
   <class>G</class>
   <population>7500</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>pir_clanworld</land>
    <refuel/>
@@ -55,5 +55,6 @@
   <item>Systems High</item>
   <item>Systems Elite</item>
   <item>Pirate Maps</item>
+  <item>Pirate Elite Outfits</item>
  </tech>
 </asset>

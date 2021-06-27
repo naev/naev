@@ -16,12 +16,13 @@
  <general>
   <class>M</class>
   <population>1000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
    <shipyard/>
   </services>
@@ -51,5 +52,6 @@
   <item>Bulk Trade Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Heavy Civilian Combat Ships</item>
+  <item>Empire Elite Outfits</item>
  </tech>
 </asset>

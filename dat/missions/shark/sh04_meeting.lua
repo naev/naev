@@ -89,8 +89,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png")
-   misn.setDesc(bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", bar_desc[1])
 end
 
 function accept()

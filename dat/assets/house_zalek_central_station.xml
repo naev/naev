@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>25000</population>
-  <hide>0.370000</hide>
+  <hide>1.600000</hide>
   <services>
    <land>zlk_mil_restricted</land>
    <refuel/>
@@ -50,6 +50,7 @@
   <item>Missiles 1</item>
   <item>Missiles 2</item>
   <item>Star Maps</item>
+  <item>Za'lek Military Outfits</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
   <item>Za'lek Military Ships</item>
@@ -66,5 +67,6 @@
   <item>Hulls Low</item>
   <item>Hulls Medium</item>
   <item>Hulls High</item>
+  <item>Za'lek Elite Outfits</item>
  </tech>
 </asset>

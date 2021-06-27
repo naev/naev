@@ -15,7 +15,6 @@
  <license>Light Combat Vessel License</license>
  <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability.</description>
  <health>
-  <absorb>7</absorb>
   <armour>60</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -30,12 +29,12 @@
   <weapon size="small" x="12" y="0" h="0" />
   <weapon size="small" x="-3" y="0" h="2" />
   <weapon size="small" x="-3" y="0" h="2" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-68 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 350 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />

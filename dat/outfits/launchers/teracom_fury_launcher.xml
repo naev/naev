@@ -6,9 +6,7 @@
   <license>Medium Weapon License</license>
   <mass>17</mass>
   <price>40000</price>
-  <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility comes at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters.
-
-TeraCom's Fury Launcher is a high-performance missile launcher equipped with patented target tracking and missile arming technology, allowing pilots to get a lock on their target faster and more easily than with launchers made by competing brands.</description>
+  <description>TeraCom's Fury Launcher is a high-performance missile launcher equipped with patented target tracking and missile arming technology, allowing pilots to get a lock on targets quickly and easily. While lacking in destructive power, the Fury missiles launched are nimble enough to easily strike even some of the fastest ships in the galaxy.</description>
   <gfx_store>teracom_fury_launcher.png</gfx_store>
   <cpu>-6</cpu>
  </general>
@@ -18,7 +16,8 @@ TeraCom's Fury Launcher is a high-performance missile launcher equipped with pat
   <reload_time>60</reload_time>
   <amount>25</amount>
   <lockon>4</lockon>
-  <arc>8</arc>
-  <ew_target>3</ew_target>
+  <arc>60</arc>
+  <trackmin>0</trackmin>
+  <trackmax>4000</trackmax>
  </specific>
 </outfit>

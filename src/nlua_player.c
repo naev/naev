@@ -67,12 +67,16 @@ static int playerL_refuel( lua_State *L );
 static int playerL_autonav( lua_State *L );
 static int playerL_autonavDest( lua_State *L );
 static int playerL_autonavAbort( lua_State *L );
+static int playerL_autonavReset( lua_State *L );
 /* Cinematics. */
 static int playerL_cinematics( lua_State *L );
+static int playerL_damageSPFX( lua_State *L );
 /* Board stuff. */
 static int playerL_unboard( lua_State *L );
 /* Land stuff. */
+static int playerL_isLanded( lua_State *L );
 static int playerL_takeoff( lua_State *L );
+static int playerL_land( lua_State *L );
 static int playerL_allowLand( lua_State *L );
 static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
@@ -110,9 +114,13 @@ static const luaL_Reg playerL_methods[] = {
    { "autonav", playerL_autonav },
    { "autonavDest", playerL_autonavDest },
    { "autonavAbort", playerL_autonavAbort },
+   { "autonavReset", playerL_autonavReset },
    { "cinematics", playerL_cinematics },
+   { "damageSPFX", playerL_damageSPFX },
    { "unboard", playerL_unboard },
+   { "isLanded", playerL_isLanded },
    { "takeoff", playerL_takeoff },
+   { "land", playerL_land },
    { "allowLand", playerL_allowLand },
    { "landWindow", playerL_landWindow },
    { "commClose", playerL_commclose },
@@ -191,22 +199,42 @@ static int playerL_shipname( lua_State *L )
  * @usage player.pay( 500 ) -- Gives player 500 credits
  *
  *    @luatparam number amount Amount of money to pay the player in credits.
+ *    @luatparam[opt] boolean|string nohooks Set to true to not trigger pay hooks, or a strig value to pass that to the pay hook instead.
  * @luafunc pay
  */
 static int playerL_pay( lua_State *L )
 {
-   HookParam p[2];
+   HookParam p[3];
    credits_t money;
+   int nohooks;
+   const char *reason;
 
    NLUA_CHECKRW(L);
 
    money = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
    player_modCredits( money );
+   if (lua_isstring(L,2)) {
+      nohooks = 0;
+      reason = lua_tostring(L,2);
+   }
+   else {
+      nohooks = lua_toboolean(L,2);
+      reason = NULL;
+   }
 
-   p[0].type = HOOK_PARAM_NUMBER;
-   p[0].u.num = (double)money;
-   p[1].type = HOOK_PARAM_SENTINEL;
-   hooks_runParam( "pay", p );
+   if (!nohooks) {
+      p[0].type = HOOK_PARAM_NUMBER;
+      p[0].u.num = (double)money;
+      if (reason != NULL) {
+         p[1].type = HOOK_PARAM_STRING;
+         p[1].u.str = reason;
+      }
+      else {
+         p[1].type = HOOK_PARAM_NIL;
+      }
+      p[2].type = HOOK_PARAM_SENTINEL;
+      hooks_runParam( "pay", p );
+   }
 
    return 0;
 }
@@ -506,13 +534,13 @@ static int playerL_autonavDest( lua_State *L )
 
 
 /**
- * @brief Gets the player's long term autonav destination.
+ * @brief Stops the players autonav if active.
  *
  * @usage sys, jumps = player.autonavAbort()
  *
  * @note Does not do anything if the player is not in autonav.
  *
- *    @luatreturn string Abort message.
+ *    @luatparam string msg Abort message.
  * @luafunc autonavAbort
  */
 static int playerL_autonavAbort( lua_State *L )
@@ -521,6 +549,24 @@ static int playerL_autonavAbort( lua_State *L )
    player_autonavAbort( str );
    return 0;
 }
+
+
+/**
+ * @brief Resets the game speed without disabling autonav.
+ *
+ * @note Does not do anything if the player is not in autonav.
+ *
+ *    @luatparam[opt=0.] number timer How many seconds to wait before starting autonav up again.
+ * @luafunc autonavReset
+ */
+static int playerL_autonavReset( lua_State *L )
+{
+   double timer = luaL_optnumber(L,1,0.);
+   player_autonavResetSpeed();
+   player.autonav_timer = timer;
+   return 0;
+}
+
 
 
 /**
@@ -604,6 +650,21 @@ static int playerL_cinematics( lua_State *L )
 
 
 /**
+ * @brief Applies the damage effects to the player.
+ *
+ *    @luatparam number mod How strong the effect should be. It should be a value between 0 and 1, usually corresponding to how much armour damage the player has taken with respect to their total armour.
+ * @luafunc damageSPFX
+ */
+static int playerL_damageSPFX( lua_State *L )
+{
+   double spfx_mod = luaL_checknumber(L,1);
+   spfx_shake( spfx_mod );
+   spfx_damage( spfx_mod );
+   return 0;
+}
+
+
+/**
  * @brief Unboards the player from its boarded target.
  *
  * Use from inside a board hook.
@@ -618,6 +679,19 @@ static int playerL_unboard( lua_State *L )
    NLUA_CHECKRW(L);
    board_unboard();
    return 0;
+}
+
+
+/**
+ * @brief Checks to see if the player is landed or not.
+ *
+ *    @luatreturn boolean Whether or not the player is currently landed.
+ * @luafunc isLanded
+ */
+static int playerL_isLanded( lua_State *L )
+{
+   lua_pushboolean( L, landed );
+   return 1;
 }
 
 
@@ -640,6 +714,45 @@ static int playerL_takeoff( lua_State *L )
 
    land_queueTakeoff();
 
+   return 0;
+}
+
+
+/**
+ * @brief Automagically lands the player on a planet.
+ *
+ * Note that this will teleport the player to the system in question as necessary.
+ *
+ *    @luatparam Planet pnt Planet to land the player on.
+ * @luafunc land
+ */
+static int playerL_land( lua_State *L )
+{
+   NLUA_CHECKRW(L);
+   Planet *pnt = luaL_validplanet(L,1);
+   const char *sysname = planet_getSystem( pnt->name );
+   if (sysname == NULL)
+      NLUA_ERROR(L,_("Planet '%s' is not in a system!"), pnt->name);
+
+   if (strcmp(sysname,cur_system->name) != 0) {
+      /* Refer to playerL_teleport for the voodoo that happens here. */
+      pilot_rmFlag( player.p, PILOT_HYPERSPACE );
+      pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
+      pilot_rmFlag( player.p, PILOT_HYP_BRAKE );
+      pilot_rmFlag( player.p, PILOT_HYP_PREP );
+
+      space_gfxUnload( cur_system );
+
+      player_targetHyperspaceSet( -1 );
+      player_targetPlanetSet( -1 );
+
+      space_init( sysname );
+
+      map_clear();
+
+      player.p->solid->pos = pnt->pos;
+   }
+   space_queueLand( pnt );
    return 0;
 }
 
@@ -1193,7 +1306,7 @@ static int playerL_teleport( lua_State *L )
 {
    Planet *pnt;
    StarSystem *sys;
-   const char *name, *pntname;
+   const char *name, *pntname, *sysname;
 
    NLUA_CHECKRW(L);
 
@@ -1224,8 +1337,8 @@ static int playerL_teleport( lua_State *L )
    /* Get destination from string. */
    else if (lua_isstring(L,1)) {
       name = lua_tostring(L,1);
-      sys = system_get( name );
-      if (sys == NULL) {
+      sysname = system_existsCase( name );
+      if (sysname == NULL) {
          /* No system found, assume destination string is the name of a planet. */
          pntname = name;
          name = planet_getSystem( pntname );
@@ -1240,6 +1353,8 @@ static int playerL_teleport( lua_State *L )
             return 0;
          }
       }
+      else
+         sys = system_get( sysname );
    }
    else
       NLUA_INVALID_PARAMETER(L);

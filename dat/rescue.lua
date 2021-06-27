@@ -38,6 +38,7 @@ nequipped = 0
 -- Array of tasks for filling in missing slots in the following format:
 --    { { desc, callback }, ... }
 mtasks = {
+   { _("Remove outfits and use default cores"), function() removeEquipDefaults() end },
    { _("Add missing default cores"), function() fillMissing( missing ) end },
    { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
    { _("Cancel"), function() tk.msg( msg_title, msg_refuse ) end }
@@ -45,6 +46,7 @@ mtasks = {
 }
 
 tasks = {
+   { _("Remove all outfits and set cores to defaults"), function() removeEquipDefaults() end },
    { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
    { _("Remove all non-core outfits"), function() removeNonCores() end },
    { _("Remove weapons"), function() removeNonCores( "Weapon" ) end },
@@ -304,7 +306,7 @@ function buildTables()
 
    -- Find the number of required cores, and their default outfits.
    for k,v in pairs(slots) do
-      if v.property then
+      if v.required then
          required[ v.property ] = v
          nrequired = nrequired + 1
       end
@@ -357,6 +359,24 @@ function removeNonCores( slottype )
       end
    end
 end
+ 
+
+-- Replace all cores with the ship's defaults.
+function removeEquipDefaults()
+   local pp = player.pilot() -- Convenience.
+
+   -- Store and remove old outfits
+   for k,v in ipairs( pp:outfits() ) do
+      player.addOutfit(v:nameRaw())
+      pp:rmOutfit(v:nameRaw())
+   end
+   -- Add core outfits
+   for k,v in ipairs( pp:ship():getSlots() ) do
+      if v.outfit then
+         pp:addOutfit( v.outfit, 1, true )
+      end
+   end
+end
 
 
 -- Replace all cores with the ship's defaults.
@@ -364,10 +384,10 @@ function equipDefaults( defaults )
    local pp = player.pilot() -- Convenience.
 
    for k,v in ipairs( pp:outfits() ) do
-      local _, _, prop = v:slot()
+      local _, _, prop, required = v:slot()
 
       -- Remove if required but not default.
-      if prop and v ~= defaults[prop].outfit then
+      if required and v ~= defaults[prop].outfit then
          -- Store and remove old
          player.addOutfit(v:nameRaw())
          pp:rmOutfit(v:nameRaw())

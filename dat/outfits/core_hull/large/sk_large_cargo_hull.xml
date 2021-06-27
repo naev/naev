@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="S&amp;K Large Cargo Hull">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>large</size>
+  <priority>7</priority>
+  <mass>650</mass>
+  <price>1100000</price>
+  <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability.</description>
+  <gfx_store>large_cargo_hull.png</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>400</cargo>
+  <absorb>42</absorb>
+  <armour>1100</armour>
+  <cargo_inertia>-25</cargo_inertia>
+ </specific>
+</outfit>

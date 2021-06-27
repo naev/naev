@@ -14,7 +14,6 @@
  <license>Medium Combat Vessel License</license>
  <description>The Nyx is the symbol of the Soromid's military might. Able to provide heavy firepower in heated battles and agile enough to withdraw when needed, this ship usually forms the backbone of any sizable Soromid fleet.</description>
  <health>
-  <absorb>21</absorb>
   <armour>550</armour>
   <armour_regen>4</armour_regen>
  </health>
@@ -30,14 +29,14 @@
   <weapon size="medium" prop="bio_weapon" x="20" y="0" h="-10" />
   <weapon size="medium" prop="bio_weapon" x="4" y="-5" h="-10" />
   <weapon size="medium" prop="bio_weapon" x="4" y="5" h="-10" />
-  <utility size="medium" prop="bio_systems" exclusive="1" required="1">Medium-Heavy Bioship Brain Stage 1</utility>
+  <utility size="medium" prop="bio_systems" exclusive="1" required="1">Medium-Heavy Brain Stage 1</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="bio_engines" exclusive="1" required="1">Medium-Heavy Bioship Fast Fin Stage 1</structure>
-  <structure size="medium" prop="bio_hull" exclusive="1" required="1">Medium-Heavy Bioship Shell Stage 1</structure>
+  <structure size="medium" prop="bio_engines" exclusive="1" required="1">Medium-Heavy Fast Gene Drive Stage 1</structure>
+  <structure size="medium" prop="bio_hull" exclusive="1" required="1">Medium-Heavy Shell Stage 1</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

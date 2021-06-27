@@ -14,6 +14,7 @@
 #include "shipstats.h"
 #include "sound.h"
 #include "spfx.h"
+#include "nlua.h"
 
 
 /*
@@ -31,11 +32,11 @@
 
 /* Outfit filter labels. [Doc comments are also translator notes and must precede the #define.] */
 /** Color-coded abbreviation for "Weapon [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_WEAPON            N_("#b W ")
+#define OUTFIT_LABEL_WEAPON            N_("#p W ")
 /** Color-coded abbreviation for "Utility [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_UTILITY           N_("#g U ")
 /** Color-coded abbreviation for "Structure [outfit]", short enough to use as a tab/column title. */
-#define OUTFIT_LABEL_STRUCTURE         N_("#p S ")
+#define OUTFIT_LABEL_STRUCTURE         N_("#n S ")
 /** Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_CORE              N_("#oCore")
 
@@ -136,13 +137,13 @@ typedef struct OutfitBoltData_ {
    double speed;     /**< How fast it goes. */
    double range;     /**< How far it goes. */
    double falloff;   /**< Point at which damage falls off. */
-   double ew_lockon; /**< Electronic warfare lockon parameter. */
    double energy;    /**< Energy usage */
    Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per shot. */
-   double track;     /**< Ewarfare to track. */
-   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct. */
+   double trackmin;  /**< Ewarfare minimal tracking. */
+   double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
+   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct). */
 
    /* Sound and graphics. */
    glTexture* gfx_space; /**< Normal graphic. */
@@ -200,9 +201,10 @@ typedef struct OutfitLauncherData_ {
 
    /* Lock-on information. */
    double lockon;    /**< Time it takes to lock on the target */
-   double ew_target; /**< Target ewarfare at which it the lockon time is based off of. */
-   double ew_target2; /**< Target ewarfare squared for quicker comparisons. */
+   double trackmin;  /**< Ewarfare minimal tracking. */
+   double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
+   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct when launched). */
 } OutfitLauncherData;
 
 /**
@@ -261,14 +263,21 @@ typedef struct OutfitModificationData_ {
    double energy;       /**< Maximum energy modifier. */
    double energy_rel;   /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
-   double energy_loss;  /**< Energy regeneration modifier. */
    double absorb;       /**< Absorption factor. */
 
    /* Misc. */
    double cargo;     /**< Cargo space modifier. */
-   double crew_rel;  /**< Relative crew modification. */
-   double mass_rel;  /**< Relative mass modification. */
-   int fuel;      /**< Maximum fuel modifier. */
+   int fuel;         /**< Maximum fuel modifier. */
+
+   /* Lua function references. Set to LUA_NOREF if not used. */
+   nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
+   int lua_init;     /**< Run when pilot enters a system. */
+   int lua_cleanup;  /**< Run when the pilot is erased. */
+   int lua_update;   /**< Run periodically. */
+   int lua_ontoggle; /**< Run when toggled. */
+   int lua_onhit;    /**< Run when pilot takes damage. */
+   int lua_outofenergy; /**< Run when the pilot runs out of energy. */
+   int lua_cooldown; /**< Run when cooldown is started or stopped. */
 } OutfitModificationData;
 
 /**
@@ -298,6 +307,7 @@ typedef struct OutfitFighterBayData_ {
    struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
    int amount;       /**< Amount of ammo it can store. */
+   double reload_time; /**< Time it takes to reload 1 ammo. */
 } OutfitFighterBayData;
 
 /**
@@ -423,9 +433,12 @@ int outfit_filterOther( const Outfit *o );
  * get data from outfit
  */
 const char *outfit_slotName( const Outfit* o );
+const char *slotName( const OutfitSlotType o );
 const char *outfit_slotSize( const Outfit* o );
 const char *slotSize( const OutfitSlotSize o );
 const glColour *outfit_slotSizeColour( const OutfitSlot* os );
+char outfit_slotSizeColourFont( const OutfitSlot* os );
+char outfit_slotTypeColourFont( const OutfitSlot* os );
 OutfitSlotSize outfit_toSlotSize( const char *s );
 glTexture* outfit_gfx( const Outfit* o );
 CollPoly* outfit_plg( const Outfit* o );
@@ -441,6 +454,8 @@ double outfit_cpu( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );
 double outfit_spin( const Outfit* o );
+double outfit_trackmin( const Outfit* o );
+double outfit_trackmax( const Outfit* o );
 int outfit_sound( const Outfit* o );
 int outfit_soundHit( const Outfit* o );
 /* Active outfits. */

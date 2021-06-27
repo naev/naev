@@ -8,28 +8,29 @@
   <license>Heavy Weapon License</license>
   <rarity>3</rarity>
   <description>The Neutron Disruptor uses high-energy pulses that alter the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, whose drones were immune to early versions' lethal backscatter radiation.</description>
-  <gfx_store>neutron.png</gfx_store>
-  <cpu>-8</cpu>
+  <gfx_store>neutron.webp</gfx_store>
+  <cpu>-6</cpu>
  </general>
  <specific type="bolt">
   <gfx>neutron.png</gfx>
   <sound>neutron</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>0.9</delay>
-  <speed>650</speed>
-  <range>425</range>
-  <falloff>250</falloff>
+  <delay>0.8</delay>
+  <speed>800</speed>
+  <range>450</range>
+  <falloff>325</falloff>
   <gfx_end>neutron-end.png</gfx_end>
-  <energy>15</energy>
+  <energy>5</energy>
   <heatup>40</heatup>
-  <track>3</track>
+  <trackmin>0</trackmin>
+  <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>normal</type>
-   <penetrate>22</penetrate>
-   <physical>20</physical>
-   <disable>1</disable>
+   <penetrate>0</penetrate>
+   <physical>34</physical>
+   <disable>1.6</disable>
   </damage>
  </specific>
 </outfit>

@@ -16,7 +16,7 @@
  <general>
   <class>1</class>
   <population>1000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>srm_mil_restricted</land>
    <refuel/>
@@ -34,5 +34,6 @@
   <item>Plasma 1</item>
   <item>Plasma 2</item>
   <item>Missiles 2</item>
+  <item>Soromid Elite Outfits</item>
  </tech>
 </asset>

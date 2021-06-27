@@ -71,8 +71,7 @@ function create()
    --set the mission stuff
    misn.setTitle(misn_title)
    misn.setReward(creditstring(reward))
-   misn.setNPC(npc_name, "sirius/unique/draga.png")
-   misn.setDesc(bar_desc)
+   misn.setNPC(npc_name, "sirius/unique/draga.webp", bar_desc)
 
    -- Format OSD
    osd[2] = osd[2]:format( homeasset:name() )

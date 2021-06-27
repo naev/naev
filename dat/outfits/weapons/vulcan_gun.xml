@@ -4,11 +4,11 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon License</license>
-  <mass>6</mass>
+  <mass>18</mass>
   <price>13000</price>
-  <description>The Vulcan Gun improves over the Gauss Gun with increased range and damage, achieved by using a heavier calibre ammunition. A skilled pilot can wreak some serious havoc with a pair of Vulcan Guns installed in his ship.</description>
+  <description>The Vulcan Gun improves over the Gauss Gun with increased range and damage, achieved by using a heavier calibre ammunition. A skilled pilot can wreak some serious havoc even to medium-sized vessels with a pair of Vulcan Guns installed on their ship.</description>
   <gfx_store>vulcangun.png</gfx_store>
-  <cpu>-6</cpu>
+  <cpu>-24</cpu>
  </general>
  <specific type="bolt">
   <gfx>gatling.png</gfx>
@@ -16,18 +16,19 @@
   <sound_hit>medexp0</sound_hit>
   <spfx_shield>ExpS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>0.375</delay>
+  <delay>0.25</delay>
   <speed>500</speed>
-  <range blowup="armour">800</range>
-  <energy>8.5</energy>
-  <heatup>25</heatup>
-  <track>2</track>
+  <range blowup="armour">1100</range>
+  <energy>2.5</energy>
+  <heatup>35</heatup>
+  <trackmin>1000</trackmin>
+  <trackmax>4000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>impact</type>
    <penetrate>12</penetrate>
-   <physical>8.5</physical>
-   <disable>1</disable>
+   <physical>6</physical>
+   <disable>0.3125</disable>
   </damage>
  </specific>
 </outfit>

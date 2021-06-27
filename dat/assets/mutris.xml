@@ -16,7 +16,7 @@
  <general>
   <class>L</class>
   <population>3000000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>srs_mil_mutris</land>
    <refuel/>
@@ -40,5 +40,6 @@
   <item>Basic Outfits 2</item>
   <item>High Tech Upgrades 1</item>
   <item>Basic Civilian Ships</item>
+  <item>Sirius Elite Outfits</item>
  </tech>
 </asset>

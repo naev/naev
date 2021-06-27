@@ -224,13 +224,13 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    /* Nebula. */
    window_addText( wid, -20, -40, 100, 20, 0, "txtSNebula",
          &gl_smallFont, NULL, _("Nebula:") );
-   window_addText( wid, -10, -40-gl_smallFont.h-5, 110, 100, 0, "txtNebula",
+   window_addText( wid, -10, -40-gl_smallFont.h-5, 110, 60, 0, "txtNebula",
          &gl_smallFont, NULL, _("N/A") );
 
    /* Presence. */
-   window_addText( wid, -20, -140, 100, 20, 0, "txtSPresence",
+   window_addText( wid, -20, -100, 100, 20, 0, "txtSPresence",
          &gl_smallFont, NULL, _("Presence:") );
-   window_addText( wid, -10, -140-gl_smallFont.h-5, 110, 100, 0, "txtPresence",
+   window_addText( wid, -10, -100-gl_smallFont.h-5, 110, 140, 0, "txtPresence",
          &gl_smallFont, NULL, _("N/A") );
 
    /* Selected text. */
@@ -407,22 +407,8 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    /* Parameters. */
    map_renderParams( bx, by, uniedit_xpos, uniedit_ypos, w, h, uniedit_zoom, &x, &y, &r );
 
-   /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
-
-   map_renderDecorators( x, y, 1 );
-
-   /* Render faction disks. */
-   map_renderFactionDisks( x, y, 1 );
-
-   /* Render jump paths. */
-   map_renderJumps( x, y, 1 );
-
-   /* Render systems. */
-   map_renderSystems( bx, by, x, y, w, h, r, 1 );
-
-   /* Render system names. */
-   map_renderNames( bx, by, x, y, w, h, 1 );
+   /* Render map stuff. */
+   sysedit_renderMap( bx, by, w, h, x, y, r );
 
    /* Render the selected system selections. */
    for (i=0; i<uniedit_nsys; i++) {
@@ -832,7 +818,7 @@ static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
    jp->targetid = targ->id;
    jp->radius  = 200.;
    jp->flags   = JP_AUTOPOS; /* Will automatically create position. */
-   jp->hide    = pow2(HIDE_DEFAULT_JUMP);
+   jp->hide    = HIDE_DEFAULT_JUMP;
 }
 
 

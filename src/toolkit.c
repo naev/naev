@@ -47,25 +47,25 @@ static int window_dead = 0; /**< There are dead windows lying around. */
 /*
  * simulate keypresses when holding
  */
-static SDL_Keycode input_key             = 0; /**< Current pressed key. */
-static SDL_Keymod input_mod             = 0; /**< Current pressed modifier. */
+static SDL_Keycode input_key   = 0; /**< Current pressed key. */
+static SDL_Keymod input_mod    = 0; /**< Current pressed modifier. */
 
 
 /*
  * default outline colours
  */
-const glColour* toolkit_colLight = &cGrey25; /**< Light outline colour. */
+const glColour* toolkit_colLight = &cGrey50; /**< Light outline colour. */
 const glColour* toolkit_col      = &cGrey20; /**< Normal outline colour. */
-const glColour* toolkit_colDark  = &cGrey10; /**< Dark outline colour. */
+const glColour* toolkit_colDark  = &cGrey5; /**< Dark outline colour. */
 
 /*
  * Tab colors
  */
-const glColour* tab_active = &cGrey20; /**< Light outline colour. */
-const glColour* tab_activeB = &cGrey10; /**< Light outline colour. */
-const glColour* tab_inactive      = &cGrey15; /**< Normal outline colour. */
-const glColour* tab_inactiveB      = &cGrey10; /**< Normal outline colour. */
-const glColour* tab_background  = &cBlack; /**< Dark outline colour. */
+const glColour* tab_active    = &cGrey20; /**< Light outline colour. */
+const glColour* tab_activeB   = &cGrey10; /**< Light outline colour. */
+const glColour* tab_inactive  = &cGrey15; /**< Normal outline colour. */
+const glColour* tab_inactiveB = &cGrey10; /**< Normal outline colour. */
+const glColour* tab_background= &cBlack; /**< Dark outline colour. */
 
 
 /*
@@ -1526,7 +1526,7 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
    double sy;
 
    /* scrollbar background */
-   toolkit_drawRect( x, y, w, h, toolkit_colDark, NULL );
+   toolkit_drawRect( x, y, w, h, &cGrey10, NULL );
 
    /* Bar itself. */
    sy = y + (h - 30.) * (1.-pos);

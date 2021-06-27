@@ -2,33 +2,34 @@
 <outfit name="Heavy Neutron Disruptor">
  <general>
   <slot>weapon</slot>
-  <size>medium</size>
-  <mass>12</mass>
+  <size>small</size>
+  <mass>30</mass>
   <price>36500</price>
   <license>Heavy Weapon License</license>
   <rarity>3</rarity>
   <description>The Heavy Neutron Disruptor improves upon the processes behind the smaller Neutron Disruptor, giving this weapon greater damage and range.</description>
   <gfx_store>neutronheavy.png</gfx_store>
-  <cpu>-12</cpu>
+  <cpu>-29</cpu>
  </general>
  <specific type="bolt">
   <gfx>neutron.png</gfx>
   <sound>neutron</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>1.1</delay>
-  <speed>650</speed>
-  <range>950</range>
-  <falloff>650</falloff>
+  <delay>1.0</delay>
+  <speed>800</speed>
+  <range>500</range>
+  <falloff>425</falloff>
   <gfx_end>neutron-end.png</gfx_end>
-  <energy>33</energy>
-  <heatup>35</heatup>
-  <track>2</track>
+  <energy>25</energy>
+  <heatup>30</heatup>
+  <trackmin>2000</trackmin>
+  <trackmax>8000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>normal</type>
-   <penetrate>28</penetrate>
-   <physical>35</physical>
+   <penetrate>24</penetrate>
+   <physical>52</physical>
    <disable>2</disable>
   </damage>
  </specific>

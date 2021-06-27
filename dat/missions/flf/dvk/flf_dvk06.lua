@@ -89,8 +89,7 @@ function create ()
       misn.finish( false )
    end
 
-   misn.setNPC( npc_name, "flf/unique/benito.png" )
-   misn.setDesc( npc_desc )
+   misn.setNPC( npc_name, "flf/unique/benito.webp", npc_desc )
 end
 
 

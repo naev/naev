@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Heavy Laser Turret">
+ <general>
+  <slot>weapon</slot>
+  <size>large</size>
+  <license>Heavy Weapon License</license>
+  <rarity>1</rarity>
+  <mass>65</mass>
+  <price>100000</price>
+  <description>The Heavy Laser Turret is more or less an upscaled version of the Laser Turret, though some fundamental mechanisms had to be redesigned to adapt to the increased energy throughput found in this weapon.</description>
+  <gfx_store>laserturret2.webp</gfx_store>
+  <cpu>-75</cpu>
+ </general>
+ <specific type="turret bolt">
+  <gfx>laser3L.png</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <delay>1.4</delay>
+  <speed>700</speed>
+  <range>1750</range>
+  <falloff>1400</falloff>
+  <gfx_end>laser2L.png</gfx_end>
+  <energy>49</energy>
+  <heatup>75</heatup>
+  <trackmin>7000</trackmin>
+  <trackmax>20000</trackmax>
+  <damage>
+   <type>normal</type>
+   <penetrate>62</penetrate>
+   <physical>48</physical>
+   <disable>2.8</disable>
+  </damage>
+ </specific>
+</outfit>

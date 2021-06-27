@@ -64,11 +64,14 @@ static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
 static int pilotL_getPilots( lua_State *L );
+static int pilotL_getHostiles( lua_State *L );
+static int pilotL_getVisible( lua_State *L );
 static int pilotL_eq( lua_State *L );
 static int pilotL_name( lua_State *L );
 static int pilotL_id( lua_State *L );
 static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
+static int pilotL_setTarget( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_activeWeapset( lua_State *L );
@@ -82,6 +85,7 @@ static int pilotL_velocity( lua_State *L );
 static int pilotL_dir( lua_State *L );
 static int pilotL_ew( lua_State *L );
 static int pilotL_temp( lua_State *L );
+static int pilotL_mass( lua_State *L );
 static int pilotL_faction( lua_State *L );
 static int pilotL_spaceworthy( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
@@ -96,12 +100,14 @@ static int pilotL_setInvincible( lua_State *L );
 static int pilotL_setInvincPlayer( lua_State *L );
 static int pilotL_setHide( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
+static int pilotL_setNoRender( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
 static int pilotL_getColour( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
 static int pilotL_flags( lua_State *L );
+static int pilotL_hasIllegal( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disable( lua_State *L );
@@ -109,13 +115,18 @@ static int pilotL_cooldown( lua_State *L );
 static int pilotL_setCooldown( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
 static int pilotL_setNoLand( lua_State *L );
+static int pilotL_setNoClear( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
+static int pilotL_intrinsicReset( lua_State *L );
+static int pilotL_intrinsicSet( lua_State *L );
+static int pilotL_intrinsicGet( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
 static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
+static int pilotL_fillAmmo( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
 static int pilotL_setNoDisable( lua_State *L );
 static int pilotL_setSpeedLimit( lua_State *L);
@@ -123,6 +134,8 @@ static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
 static int pilotL_getStats( lua_State *L );
+static int pilotL_getShipStat( lua_State *L );
+static int pilotL_getDetectedDistance( lua_State *L );
 static int pilotL_cargoFree( lua_State *L );
 static int pilotL_cargoHas( lua_State *L );
 static int pilotL_cargoAdd( lua_State *L );
@@ -142,6 +155,7 @@ static int pilotL_attack( lua_State *L );
 static int pilotL_runaway( lua_State *L );
 static int pilotL_gather( lua_State *L );
 static int pilotL_hyperspace( lua_State *L );
+static int pilotL_stealth( lua_State *L );
 static int pilotL_land( lua_State *L );
 static int pilotL_hailPlayer( lua_State *L );
 static int pilotL_msg( lua_State *L );
@@ -156,12 +170,15 @@ static const luaL_Reg pilotL_methods[] = {
    { "addFleet", pilotL_addFleet },
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
+   { "getHostiles", pilotL_getHostiles },
+   { "getVisible", pilotL_getVisible },
    { "__eq", pilotL_eq },
    /* Info. */
    { "name", pilotL_name },
    { "id", pilotL_id },
    { "exists", pilotL_exists },
    { "target", pilotL_target },
+   { "setTarget", pilotL_setTarget },
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "activeWeapset", pilotL_activeWeapset },
@@ -175,6 +192,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "dir", pilotL_dir },
    { "ew", pilotL_ew },
    { "temp", pilotL_temp },
+   { "mass", pilotL_mass },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
    { "spaceworthy", pilotL_spaceworthy },
@@ -182,9 +200,12 @@ static const luaL_Reg pilotL_methods[] = {
    { "energy", pilotL_getEnergy },
    { "lockon", pilotL_getLockon },
    { "stats", pilotL_getStats },
+   { "shipstat", pilotL_getShipStat },
+   { "detectedDistance", pilotL_getDetectedDistance },
    { "colour", pilotL_getColour },
    { "hostile", pilotL_getHostile },
    { "flags", pilotL_flags },
+   { "hasIllegal", pilotL_hasIllegal },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -193,6 +214,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setTemp", pilotL_setTemp },
    { "setHealth", pilotL_setHealth },
    { "setEnergy", pilotL_setEnergy },
+   { "fillAmmo", pilotL_fillAmmo },
    { "setNoboard", pilotL_setNoboard },
    { "setNoDisable", pilotL_setNoDisable },
    { "setSpeedLimit", pilotL_setSpeedLimit },
@@ -206,6 +228,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setInvincPlayer", pilotL_setInvincPlayer },
    { "setHide", pilotL_setHide },
    { "setInvisible", pilotL_setInvisible },
+   { "setNoRender", pilotL_setNoRender },
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
    { "setHilight", pilotL_setHilight },
@@ -215,6 +238,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setCooldown", pilotL_setCooldown },
    { "setNoJump", pilotL_setNoJump },
    { "setNoLand", pilotL_setNoLand },
+   { "setNoClear", pilotL_setNoClear },
    /* Talk. */
    { "broadcast", pilotL_broadcast },
    { "comm", pilotL_comm },
@@ -222,6 +246,9 @@ static const luaL_Reg pilotL_methods[] = {
    { "addOutfit", pilotL_addOutfit },
    { "rmOutfit", pilotL_rmOutfit },
    { "setFuel", pilotL_setFuel },
+   { "intrinsicReset", pilotL_intrinsicReset },
+   { "intrinsicSet", pilotL_intrinsicSet },
+   { "intrinsicGet", pilotL_intrinsicGet },
    /* Ship. */
    { "ship", pilotL_ship },
    { "cargoFree", pilotL_cargoFree },
@@ -243,6 +270,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "runaway", pilotL_runaway },
    { "gather", pilotL_gather },
    { "hyperspace", pilotL_hyperspace },
+   { "stealth", pilotL_stealth },
    { "land", pilotL_land },
    /* Misc. */
    { "hailPlayer", pilotL_hailPlayer },
@@ -481,8 +509,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
          return 0;
       }
       /* Get pilotname argument if provided. */
-      if ((lua_gettop(L) >= 4) && !lua_isnil(L,4))
-         fltname = luaL_checkstring(L,4);
+      fltname = luaL_optstring( L, 4, fltname );
       /* Get faction from string or number. */
       lf = luaL_validfaction(L,2);
    }
@@ -559,14 +586,11 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    }
 
    /* Parse final argument - Fleet AI Override */
-   if ((lua_gettop(L) < 3+2*from_ship) || lua_isnil(L,3+2*from_ship))
-      fltai = NULL;
-   else
-      fltai = luaL_checkstring(L,3+2*from_ship);
+   fltai = luaL_optstring( L, 3+2*from_ship, NULL );
 
    /* Set up velocities and such. */
    if (jump != NULL) {
-      space_calcJumpInPos( cur_system, jump->from, &vp, &vv, &a );
+      space_calcJumpInPos( cur_system, jump->from, &vp, &vv, &a, NULL );
       pilot_setFlagRaw( flags, PILOT_HYP_END );
    }
 
@@ -834,6 +858,96 @@ static int pilotL_getPilots( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Gets hostile pilots to a pilot within a certain distance.
+ *
+ *    @luatparam Pilot pilot Pilot to get hostiles of.
+ *    @luatparam[opt=infinity] number dist Distance to look for hostiles.
+ *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
+ *    @luatreturn {Pilot,...} A table containing the pilots.
+ * @luafunc getHostiles
+ */
+static int pilotL_getHostiles( lua_State *L )
+{
+   int i, k, dd;
+   Pilot *p = luaL_validpilot(L,1);
+   double dist = luaL_optnumber(L,2,-1.);
+   int dis = lua_toboolean(L,3);
+   Pilot *const* pilot_stack;
+
+   if (dist >= 0.)
+      dd = dist*dist;
+
+   /* Now put all the matching pilots in a table. */
+   pilot_stack = pilot_getAll();
+   lua_newtable(L);
+   k = 1;
+   for (i=0; i<array_size(pilot_stack); i++) {
+      /* Check if dead. */
+      if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+         continue;
+      /* Must be hostile. */
+      if ( !( areEnemies( pilot_stack[i]->faction, p->faction )
+               || ( (p->id == PLAYER_ID)
+                  && pilot_isHostile(pilot_stack[i]) ) ) )
+         continue;
+      /* Check if disabled. */
+      if (dis && pilot_isDisabled(pilot_stack[i]))
+         continue;
+      /* Check distance if necessary. */
+      if (dist >= 0. &&
+            vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos) > dd)
+         continue;
+
+      lua_pushnumber(L, k++); /* key */
+      lua_pushpilot(L, pilot_stack[i]->id); /* value */
+      lua_rawset(L,-3); /* table[key] = value */
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets visible pilots to a pilot within a certain distance.
+ *
+ *    @luatparam Pilot pilot Pilot to get visible pilots of.
+ *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
+ *    @luatreturn {Pilot,...} A table containing the pilots.
+ * @luafunc getVisible
+ */
+static int pilotL_getVisible( lua_State *L )
+{
+   int i, k;
+   Pilot *p = luaL_validpilot(L,1);
+   int dis = lua_toboolean(L,2);
+   Pilot *const* pilot_stack;
+
+   /* Now put all the matching pilots in a table. */
+   pilot_stack = pilot_getAll();
+   lua_newtable(L);
+   k = 1;
+   for (i=0; i<array_size(pilot_stack); i++) {
+      /* Check if dead. */
+      if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+         continue;
+      /* Check if disabled. */
+      if (dis && pilot_isDisabled(pilot_stack[i]))
+         continue;
+      /* Check visibilitiy. */
+      if (!pilot_validTarget( p, pilot_stack[i] ))
+         continue;
+
+      lua_pushnumber(L, k++); /* key */
+      lua_pushpilot(L, pilot_stack[i]->id); /* value */
+      lua_rawset(L,-3); /* table[key] = value */
+   }
+
+   return 1;
+}
+
+
 /**
  * @brief Checks to see if pilot and p are the same.
  *
@@ -921,7 +1035,7 @@ static int pilotL_exists( lua_State *L )
    /* Must still be kicking and alive. */
    if (p==NULL)
       exists = 0;
-   else if (pilot_isFlag( p, PILOT_DEAD ))
+   else if (pilot_isFlag( p, PILOT_DEAD ) || pilot_isFlag( p, PILOT_HIDE ))
       exists = 0;
    else
       exists = 1;
@@ -956,6 +1070,27 @@ static int pilotL_target( lua_State *L )
    /* Push target. */
    lua_pushpilot(L, p->target);
    return 1;
+}
+
+
+/**
+ * @brief Sets the pilot target of the pilot.
+ *
+ *    @luatparam Pilot p Pilot to get target of.
+ *    @luatparam Pilot|nil t Pilot to set the target to or nil to set no target.
+ * @luafunc setTarget
+ */
+static int pilotL_setTarget( lua_State *L )
+{
+   Pilot *p;
+   unsigned int t;
+   p = luaL_validpilot(L,1);
+   if (lua_gettop(L)>1)
+      t = luaL_validpilot(L,2)->id;
+   else
+      t = p->id;
+   p->target = t;
+   return 0;
 }
 
 
@@ -1284,7 +1419,7 @@ static int pilotL_weapset( lua_State *L )
          if (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
             lua_pushstring(L, "track");
             if (target != NULL)
-               lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.track ));
+               lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.trackmin, slot->outfit->u.blt.trackmax ));
             else
                lua_pushnumber(L, -1);
             lua_rawset(L,-3);
@@ -1501,25 +1636,40 @@ static int pilotL_actives( lua_State *L )
             break;
          case PILOT_OUTFIT_WARMUP:
             str = "warmup";
+            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF)
+               d = 1.; /* TODO add warmup stuff to normal active outfits (not sure if necessary though. */
+            else
+               d = o->progress;
+            lua_pushstring(L,"warmup");
+            lua_pushnumber(L, d );
+            lua_rawset(L,-3);
             break;
          case PILOT_OUTFIT_ON:
             str = "on";
-            d = outfit_duration(o->outfit);
-            if (d==0.)
-               d = 1.;
-            else if (!isinf(o->stimer))
-               d = o->stimer / d;
+            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF) {
+               d = outfit_duration(o->outfit);
+               if (d==0.)
+                  d = 1.;
+               else if (!isinf(o->stimer))
+                  d = o->stimer / d;
+            }
+            else
+               d = o->progress;
             lua_pushstring(L,"duration");
             lua_pushnumber(L, d );
             lua_rawset(L,-3);
             break;
          case PILOT_OUTFIT_COOLDOWN:
             str = "cooldown";
-            d = outfit_cooldown(o->outfit);
-            if (d==0.)
-               d = 0.;
-            else if (!isinf(o->stimer))
-               d = o->stimer / d;
+            if (!outfit_isMod(o->outfit) || o->outfit->u.mod.lua_env == LUA_NOREF) {
+               d = outfit_cooldown(o->outfit);
+               if (d==0.)
+                  d = 0.;
+               else if (!isinf(o->stimer))
+                  d = o->stimer / d;
+            }
+            else
+               d = o->progress;
             lua_pushstring(L,"cooldown");
             lua_pushnumber(L, d );
             lua_rawset(L,-3);
@@ -1758,6 +1908,22 @@ static int pilotL_temp( lua_State *L )
 }
 
 /**
+ * @brief Gets the mass of a pilot.
+ *
+ * @usage m = p:mass()
+ *
+ *    @luatparam Pilot p Pilot to get mass of.
+ *    @luatreturn number The pilot's current mass (in tonnes).
+ * @luafunc mass
+ */
+static int pilotL_mass( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushnumber( L, p->solid->mass );
+   return 1;
+}
+
+/**
  * @brief Gets the pilot's faction.
  *
  * @usage f = p:faction()
@@ -1820,6 +1986,9 @@ static int pilotL_setPosition( lua_State *L )
    /* Parse parameters */
    p     = luaL_validpilot(L,1);
    vec   = luaL_checkvector(L,2);
+
+   /* Insert skip in trail. */
+   pilot_sample_trails( p, 1 );
 
    /* Warp pilot to new position. */
    p->solid->pos = *vec;
@@ -2125,8 +2294,8 @@ static int pilotL_setHide( lua_State *L )
 /**
  * @brief Sets the pilot's invisibility status.
  *
- * An invisible pilot is neither updated nor drawn. It stays frozen in time
- *  until the invisibility is lifted.
+ * An invisible pilot is not shown on the radar nor targettable, however, it
+ * renders and updates just like normal.
  *
  *    @luatparam Pilot p Pilot to set invisibility status of.
  *    @luatparam boolean state State to set invisibility.
@@ -2135,6 +2304,22 @@ static int pilotL_setHide( lua_State *L )
 static int pilotL_setInvisible( lua_State *L )
 {
    return pilotL_setFlagWrapper( L, PILOT_INVISIBLE );
+}
+
+
+/**
+ * @brief Sets the pilot's norender status.
+ *
+ * The pilot still acts normally but is just not visible and can still take
+ * damage. Meant to be used in conjunction with other flags like "invisible".
+ *
+ *    @luatparam Pilot p Pilot to set norender status of.
+ *    @luatparam boolean state State to set norender.
+ * @luafunc setInvisible
+ */
+static int pilotL_setNoRender( lua_State *L )
+{
+   return pilotL_setFlagWrapper( L, PILOT_NORENDER );
 }
 
 
@@ -2225,21 +2410,29 @@ static int pilotL_setNoDeath( lua_State *L )
  * @usage p:disable()
  *
  *    @luatparam Pilot p Pilot to disable.
+ *    @luatparam[opt=false] boolean nopermanent Whether or not the disable should be permanent.
  * @luafunc disable
  */
 static int pilotL_disable( lua_State *L )
 {
    Pilot *p;
+   int permanent;
 
    NLUA_CHECKRW(L);
 
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
+   permanent = !lua_toboolean(L,2);
 
    /* Disable the pilot. */
    p->shield = 0.;
    p->stress = p->armour;
    pilot_updateDisable(p, 0);
+
+   if (permanent)
+      pilot_setFlag(p, PILOT_DISABLED_PERM);
+   else
+      pilot_rmFlag(p, PILOT_DISABLED_PERM);
 
    return 0;
 }
@@ -2336,17 +2529,32 @@ static int pilotL_setNoLand( lua_State *L )
 
 
 /**
+ * @brief Enables or disables making the the pilot exempt from pilot.clear().
+ *
+ * @usage p:setNoClear( true )
+ *
+ *    @luatparam Pilot p Pilot to modify.
+ *    @luatparam[opt] boolean state true or false
+ * @luafunc setNoClear
+ */
+static int pilotL_setNoClear( lua_State *L )
+{
+   return pilotL_setFlagWrapper( L, PILOT_NOCLEAR );
+}
+
+
+/**
  * @brief Adds an outfit to a pilot.
  *
- * This by default tries to add them to the first empty or defaultly equipped slot.
+ * This by default tries to add them to the first empty or defaultly equipped slot. Will not overwrite existing non-default outfits.
  *
  * @usage added = p:addOutfit( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luatparam Pilot p Pilot to add outfit to.
  *    @luatparam string|outfit outfit Outfit or name of the outfit to add.
  *    @luatparam[opt=1] number q Quantity of the outfit to add.
- *    @luatparam[opt=false] boolean bypass Whether to skip CPU and slot size checks before adding an outfit.
- *              Will not overwrite existing non-default outfits.
+ *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks when adding an outfit.
+ *    @luatparam[opt=false] boolean bypass_slot Whether or not to skip slot size checks before adding an outfit. Not that this implies skipping the CPU checks.
  *    @luatreturn number The number of outfits added.
  * @luafunc addOutfit
  */
@@ -2356,20 +2564,16 @@ static int pilotL_addOutfit( lua_State *L )
    Pilot *p;
    Outfit *o;
    int ret;
-   int q, added, bypass;
+   int q, added, bypass_cpu, bypass_slot;
 
    NLUA_CHECKRW(L);
 
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
    o      = luaL_validoutfit(L,2);
-   q      = 1;
-   if (lua_gettop(L) > 2 && !lua_isnil(L,2))
-      q = luaL_checkint(L,3);
-   if (lua_gettop(L) > 3)
-      bypass = lua_toboolean(L, 4);
-   else
-      bypass = 0;
+   q      = luaL_optinteger(L,3,1);
+   bypass_cpu = lua_toboolean(L,4);
+   bypass_slot = lua_toboolean(L,5);
 
    /* Add outfit. */
    added = 0;
@@ -2383,7 +2587,17 @@ static int pilotL_addOutfit( lua_State *L )
             (p->outfits[i]->outfit != p->outfits[i]->sslot->data))
          continue;
 
-      if (!bypass) {
+      /* Only do a basic check. */
+      if (bypass_slot) {
+         if (!outfit_fitsSlotType( o, &p->outfits[i]->sslot->slot ))
+            continue;
+      }
+      else if (bypass_cpu) {
+         if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
+            continue;
+      }
+      /* Full check. */
+      else {
          /* Must fit slot. */
          if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
             continue;
@@ -2393,13 +2607,11 @@ static int pilotL_addOutfit( lua_State *L )
          if (ret)
             break;
       }
-      /* Only do a basic check. */
-      else
-         if (!outfit_fitsSlotType( o, &p->outfits[i]->sslot->slot ))
-            continue;
 
       /* Add outfit - already tested. */
       ret = pilot_addOutfitRaw( p, o, p->outfits[i] );
+      if (ret==0)
+         pilot_outfitLInit( p, p->outfits[i] );
       pilot_calcStats( p );
 
       /* Add ammo if needed. */
@@ -2552,6 +2764,78 @@ static int pilotL_setFuel( lua_State *L )
 
 
 /**
+ * @brief Resets the intrinsic stats of a pilot.
+ *
+ * @luafunc intrinsicReset
+ */
+static int pilotL_intrinsicReset( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   ss_statsInit( &p->intrinsic_stats );
+   pilot_calcStats( p );
+   return 0;
+}
+
+
+/**
+ * @brief Allows setting intrinsic stats of a pilot.
+ *
+ *    @luatparam Pilot p Pilot to set stat of.
+ *    @luatparam string name Name of the stat to set. It is the same as in the xml.
+ *    @luatparam number value Value to set the stat to.
+ *    @luatparam boolean replace Whether or not to add to the stat or replace it.
+ * @luafunc intrinsicSet
+ */
+static int pilotL_intrinsicSet( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   const char *name;
+   double value;
+   int replace;
+   /* Case individual parameter. */
+   if (!lua_istable(L,2)) {
+      name     = luaL_checkstring(L,2);
+      value    = luaL_checknumber(L,3);
+      replace  = lua_toboolean(L,4);
+      ss_statsSet( &p->intrinsic_stats, name, value, replace );
+      pilot_calcStats( p );
+      return 0;
+   }
+   replace = lua_toboolean(L,4);
+   /* Case set of parameters. */
+   lua_pushnil(L);
+   while (lua_next(L,2) != 0) {
+      name     = luaL_checkstring(L,-2);
+      value    = luaL_checknumber(L,-1);
+      ss_statsSet( &p->intrinsic_stats, name, value, replace );
+      lua_pop(L,1);
+   }
+   lua_pop(L,1);
+   pilot_calcStats( p );
+   return 0;
+}
+
+
+/**
+ * @brief Allows getting an intrinsic stats of a pilot, or gets all of them if name is not specified.
+ *
+ *    @luatparam Pilot p Pilot to get stat of.
+ *    @luatparam[opt=nil] string name Name of the stat to get. It is the same as in the xml.
+ *    @luatparam[opt=false] boolean internal Whether or not to use the internal representation.
+ *    @luaparam Value of the stat or a table containing all the stats if name is not specified.
+ * @luafunc intrinsicGet
+ */
+static int pilotL_intrinsicGet( lua_State *L )
+{
+   Pilot *p          = luaL_validpilot(L,1);
+   const char *name  = luaL_optstring(L,2,NULL);
+   int internal      = lua_toboolean(L,3);
+   ss_statsGetLua( L, &p->intrinsic_stats, name, internal );
+   return 1;
+}
+
+
+/**
  * @brief Changes the pilot's AI.
  *
  * @usage p:changeAI( "empire" ) -- set the pilot to use the Empire AI
@@ -2594,7 +2878,7 @@ static int pilotL_changeAI( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to set health of.
  *    @luatparam number temp Value to set temperature to. Values below base temperature will be clamped.
- *    @luatparam[opt=true] boolean slots Whether slots should also be set to this temperature.
+ *    @luatparam[opt=false] boolean noslots Whether slots should also be set to this temperature.
  * @luafunc setTemp
  */
 static int pilotL_setTemp( lua_State *L )
@@ -2608,10 +2892,7 @@ static int pilotL_setTemp( lua_State *L )
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
    kelvins  = luaL_checknumber(L, 2);
-   if (lua_gettop(L) < 3)
-      setOutfits = 1;
-   else
-      setOutfits = lua_toboolean(L, 3);
+   setOutfits = !lua_toboolean(L,3);
 
    /* Temperature must not go below base temp. */
    kelvins = MAX(kelvins, CONST_SPACE_STAR_TEMP);
@@ -2668,6 +2949,18 @@ static int pilotL_setHealth( lua_State *L )
    p->shield = s * p->shield_max;
    p->stress = st * p->armour;
 
+   /* Clear death hooks if not dead. */
+   if (p->armour > 0.) {
+      pilot_rmFlag( p, PILOT_DISABLED );
+      pilot_rmFlag( p, PILOT_DEAD );
+      pilot_rmFlag( p, PILOT_DEATH_SOUND );
+      pilot_rmFlag( p, PILOT_EXPLODED );
+      pilot_rmFlag( p, PILOT_DELETE );
+      if (pilot_isPlayer(p))
+         player_rmFlag( PLAYER_DESTROYED );
+   }
+   pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Remove permanent disable. */
+
    /* Update disable status. */
    pilot_updateDisable(p, 0);
 
@@ -2683,24 +2976,42 @@ static int pilotL_setHealth( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to set energy of.
  *    @luatparam number energy Value to set energy to, should be double from 0-100 (in percent).
- *
+ *    @luatparam[opt=false] boolean absolute Whether or not it is being set in relative value or absolute.
  * @luafunc setEnergy
  */
 static int pilotL_setEnergy( lua_State *L )
 {
    Pilot *p;
    double e;
+   int absolute;
 
    NLUA_CHECKRW(L);
 
    /* Handle parameters. */
-   p  = luaL_validpilot(L,1);
-   e  = luaL_checknumber(L, 2);
-   e /= 100.;
+   p      = luaL_validpilot(L,1);
+   e      = luaL_checknumber(L,2);
+   absolute = lua_toboolean(L,3);
 
-   /* Set energy. */
-   p->energy = e * p->energy_max;
+   if (absolute)
+      p->energy = CLAMP( 0, p->energy_max, e );
+   else
+      p->energy = (e/100.) * p->energy_max;
 
+   return 0;
+}
+
+
+/**
+ * @brief Fills up the pilot's ammo.
+ *
+ *    @luatparam Pilot p Pilot to fill ammo.
+ * @luafunc fillAmmo
+ */
+static int pilotL_fillAmmo( lua_State *L )
+{
+   NLUA_CHECKRW(L);
+   Pilot *p = luaL_validpilot(L,1);
+   pilot_fillAmmo( p );
    return 0;
 }
 
@@ -2819,22 +3130,27 @@ static int pilotL_setSpeedLimit(lua_State* L)
  * @usage armour, shield, stress, dis = p:health()
  *
  *    @luatparam Pilot p Pilot to get health of.
- *    @luatreturn number The armour in % [0:100].
- *    @luatreturn number The shield in % [0:100].
+ *    @luatparam[opt=false] boolean absolute Whether or not it shouldn't be relative and be absolute instead.
+ *    @luatreturn number The armour in % [0:100] if relative or absolute value otherwise.
+ *    @luatreturn number The shield in % [0:100] if relative or absolute value otherwise.
  *    @luatreturn number The stress in % [0:100].
  *    @luatreturn boolean Indicates if pilot is disabled.
  * @luafunc health
  */
 static int pilotL_getHealth( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p  = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
+   int absolute = lua_toboolean(L,2);
 
    /* Return parameters. */
-   lua_pushnumber(L,(p->armour_max > 0.) ? p->armour / p->armour_max * 100. : 0. );
-   lua_pushnumber(L,(p->shield_max > 0.) ? p->shield / p->shield_max * 100. : 0. );
+   if (absolute) {
+      lua_pushnumber(L, p->armour );
+      lua_pushnumber(L, p->shield );
+   }
+   else {
+      lua_pushnumber(L,(p->armour_max > 0.) ? p->armour / p->armour_max * 100. : 0. );
+      lua_pushnumber(L,(p->shield_max > 0.) ? p->shield / p->shield_max * 100. : 0. );
+   }
    lua_pushnumber(L, MIN( 1., p->stress / p->armour ) * 100. );
    lua_pushboolean(L, pilot_isDisabled(p));
 
@@ -2848,18 +3164,19 @@ static int pilotL_getHealth( lua_State *L )
  * @usage energy = p:energy()
  *
  *    @luatparam Pilot p Pilot to get energy of.
+ *    @luatparam[opt=false] boolean absolute Whether or not to return the absolute numeric value instead of the relative value.
  *    @luatreturn number The energy of the pilot in % [0:100].
  * @luafunc energy
  */
 static int pilotL_getEnergy( lua_State *L )
 {
-   Pilot *p;
+   Pilot *p = luaL_validpilot(L,1);
+   int absolute = lua_toboolean(L,2);
 
-   /* Get the pilot. */
-   p  = luaL_validpilot(L,1);
-
-   /* Return parameter. */
-   lua_pushnumber(L, (p->energy_max > 0.) ? p->energy / p->energy_max * 100. : 0. );
+   if (absolute)
+      lua_pushnumber(L, p->energy );
+   else
+      lua_pushnumber(L, (p->energy_max > 0.) ? p->energy / p->energy_max * 100. : 0. );
 
    return 1;
 }
@@ -2960,8 +3277,9 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "energy_regen", p->energy_regen );
    /* Stats. */
    PUSH_DOUBLE( L, "dmg_absorb", p->dmg_absorb );
-   PUSH_DOUBLE( L, "ew_hide", p->ew_hide );
-   PUSH_DOUBLE( L, "ew_detect", p->ew_detect );
+   PUSH_DOUBLE( L, "ew_detection", p->ew_detection );
+   PUSH_DOUBLE( L, "ew_evasion", p->ew_evasion );
+   PUSH_DOUBLE( L, "ew_stealth", p->ew_stealth );
    PUSH_DOUBLE( L, "jump_delay", ntime_convertSeconds( pilot_hyperspaceDelay(p) ) );
    PUSH_INT( L, "jumps", pilot_getJumps(p) );
 
@@ -2969,6 +3287,42 @@ static int pilotL_getStats( lua_State *L )
 }
 #undef PUSH_DOUBLE
 #undef PUSH_INT
+
+
+/**
+ * @brief Gets a shipstat from a Pilot by name, or a table containing all the ship stats if not specified.
+ *
+ *    @luatparam Pilot p Pilot to get ship stat of.
+ *    @luatparam[opt=nil] string name Name of the ship stat to get.
+ *    @luatparam[opt=false] boolean internal Whether or not to use the internal representation.
+ *    @luareturn Value of the ship stat or a tale containing all the ship stats if name is not specified.
+ * @luafunc shipstat
+ */
+static int pilotL_getShipStat( lua_State *L )
+{
+   Pilot *p          = luaL_validpilot(L,1);
+   const char *str   = luaL_optstring(L,2,NULL);
+   int internal      = lua_toboolean(L,3);
+   ss_statsGetLua( L, &p->stats, str, internal );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the distance that a pilot can be currently detect at.
+ *
+ *    @luatparam Pilot p Pilot to get the distance they can be detected at.
+ * @luafunc detectedDistance
+ */
+static int pilotL_getDetectedDistance( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   if (pilot_isFlag(p,PILOT_STEALTH))
+      lua_pushnumber( L, p->ew_stealth );
+   else
+      lua_pushnumber( L, p->ew_detection );
+   return 1;
+}
 
 
 /**
@@ -3168,8 +3522,7 @@ static int pilotL_cargoList( lua_State *L )
 static int pilotL_credits( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   p->credits += luaL_optlong( L, 2, 0 );
-   p->credits = MAX( 0, p->credits ); /* Make sure it's not negative. */
+   pilot_modCredits( p, luaL_optlong( L, 2, 0 ) );
    lua_pushnumber( L, p->credits );
    return 1;
 }
@@ -3238,6 +3591,9 @@ static const struct pL_flag pL_flags[] = {
    { .name = "visible", .id = PILOT_VISIBLE },
    { .name = "visplayer", .id = PILOT_VISPLAYER },
    { .name = "hilight", .id = PILOT_HILIGHT },
+   { .name = "stealth", .id = PILOT_STEALTH },
+   { .name = "invisible", .id = PILOT_INVISIBLE }, 
+   { .name = "norender", .id = PILOT_NORENDER },
    { .name = "hide", .id = PILOT_HIDE },
    { .name = "invincible", .id = PILOT_INVINCIBLE },
    { .name = "invinc_player", .id = PILOT_INVINC_PLAYER },
@@ -3266,6 +3622,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> visible: pilot is always visible.</li>
  *  <li> visplayer: pilot is always visible to the player.</li>
  *  <li> hilight: pilot is hilighted on the map.</li>
+ *  <li> stealth: pilot is in stealth mode.</li>
  *  <li> invisible: pilot is not displayed.</li>
  *  <li> invincible: pilot cannot be hit.</li>
  *  <li> invinc_player: pilot cannot be hit by the player.</li>
@@ -3295,6 +3652,22 @@ static int pilotL_flags( lua_State *L )
       lua_pushboolean( L, pilot_isFlag( p, pL_flags[i].id ) );
       lua_setfield(L, -2, pL_flags[i].name);
    }
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if the pilot has illegal stuff to a faction.
+ *
+ *    @luatparam Pilot p Pilot to check.
+ *    @luatparam Faction f Faction to see if it is illegal to.
+ * @luafunc hasIllegal
+ */
+static int pilotL_hasIllegal( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   int f    = luaL_validfaction(L,2);
+   lua_pushboolean(L, pilot_hasIllegal(p,f));
    return 1;
 }
 
@@ -3346,6 +3719,8 @@ static int pilotL_idle( lua_State *L )
 /**
  * @brief Sets manual control of the pilot.
  *
+ * Note that this will reset the pilot's current task when the state changes.
+ *
  * @usage p:control() -- Same as p:control(true), enables manual control of the pilot
  * @usage p:control(false) -- Restarts AI control of the pilot
  *
@@ -3363,7 +3738,7 @@ static int pilotL_idle( lua_State *L )
 static int pilotL_control( lua_State *L )
 {
    Pilot *p;
-   int enable;
+   int enable, hasflag;
 
    NLUA_CHECKRW(L);
 
@@ -3374,6 +3749,7 @@ static int pilotL_control( lua_State *L )
    else
       enable = lua_toboolean(L, 2);
 
+   hasflag = pilot_isFlag(p, PILOT_MANUAL_CONTROL);
    if (enable) {
       pilot_setFlag(p, PILOT_MANUAL_CONTROL);
       if (pilot_isPlayer(p))
@@ -3389,8 +3765,9 @@ static int pilotL_control( lua_State *L )
        * has to have an AI even if it's the player for things to work. */
    }
 
-   /* Clear task. */
-   pilotL_taskclear( L );
+   /* Clear task if changing state. */
+   if (hasflag != enable)
+      pilotL_taskclear( L );
 
    return 0;
 }
@@ -3786,7 +4163,7 @@ static int pilotL_hyperspace( lua_State *L )
    /* Get parameters. */
    p = luaL_validpilot(L,1);
    if ((lua_gettop(L) > 1) && !lua_isnil(L,2))
-      ss = system_getIndex( luaL_checksystem( L, 2 ) );
+      ss = luaL_validsystem(L,2);
    else
       ss = NULL;
    shoot = lua_toboolean(L,3);
@@ -3819,6 +4196,33 @@ static int pilotL_hyperspace( lua_State *L )
    }
    /* Not found. */
    NLUA_ERROR( L, _("System '%s' is not adjacent to current system '%s'"), ss->name, cur_system->name );
+   return 0;
+}
+
+
+/**
+ * @brief Tells the pilot to try to stealth.
+ *
+ * Pilot must be under manual control for this to work.
+ *
+ *    @luatparam Pilot p Pilot to tell to hyperspace.
+ * @luasee control
+ * @luafunc stealth
+ */
+static int pilotL_stealth( lua_State *L )
+{
+   Pilot *p;
+   Task *t;
+
+   NLUA_CHECKRW(L);
+
+   /* Get parameters. */
+   p      = luaL_validpilot(L,1);
+
+   /* Set the task. */
+   t        = pilotL_newtask( L, p, "stealth" );
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+
    return 0;
 }
 

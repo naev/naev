@@ -18,41 +18,49 @@ const float M_SQRT1_2   = 0.70710678118654752440;  /* 1/sqrt(2) */
 
 // Modulo 289 without a division (only multiplications)
 vec4 mod289(vec4 x) {
-  return x - floor(x * (1.0 / 289.0)) * 289.0;
+   return x - floor(x * (1.0 / 289.0)) * 289.0;
 }
 vec3 mod289(vec3 x) {
-  return x - floor(x * (1.0 / 289.0)) * 289.0;
+   return x - floor(x * (1.0 / 289.0)) * 289.0;
 }
 vec2 mod289(vec2 x) {
-  return x - floor(x * (1.0 / 289.0)) * 289.0;
+   return x - floor(x * (1.0 / 289.0)) * 289.0;
 }
 
 // Modulo 7 without a division
 vec4 mod7(vec4 x) {
-  return x - floor(x * (1.0 / 7.0)) * 7.0;
+   return x - floor(x * (1.0 / 7.0)) * 7.0;
 }
 
 // Permutation polynomial: (34x^2 + x) mod 289
 vec4 permute(vec4 x) {
-  return mod289((34.0 * x + 1.0) * x);
+   return mod289((34.0 * x + 1.0) * x);
 }
 vec3 permute(vec3 x) {
-  return mod289((34.0 * x + 1.0) * x);
+   return mod289((34.0 * x + 1.0) * x);
 }
 
 vec4 taylorInvSqrt(vec4 r)
 {
-  return 1.79284291400159 - 0.85373472095314 * r;
+   return 1.79284291400159 - 0.85373472095314 * r;
 }
 
 vec3 fade(vec3 t) {
-  return t*t*t*(t*(t*6.0-15.0)+10.0);
+   return t*t*t*(t*(t*6.0-15.0)+10.0);
 }
 vec2 fade(vec2 t) {
-  return t*t*t*(t*(t*6.0-15.0)+10.0);
+   return t*t*t*(t*(t*6.0-15.0)+10.0);
 }
 
-// http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
+/* Returns a value in the [0,1] range. */
+float random(float n)
+{
+   return fract(sin(n) * 43758.5453123);
+}
+
+/* Returns a value in the [0,1] range.
+ http://byteblacksmith.com/improvements-to-the-canonical-one-liner-glsl-rand-for-opengl-es-2-0/
+ */
 float random(vec2 co)
 {
    const highp float seed = 12.9898;

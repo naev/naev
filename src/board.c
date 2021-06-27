@@ -109,7 +109,7 @@ void player_board (void)
       return;
    }
    else if (vect_dist(&player.p->solid->pos,&p->solid->pos) >
-         p->ship->gfx_space->sw * PILOT_SIZE_APROX) {
+         p->ship->gfx_space->sw * PILOT_SIZE_APPROX) {
       player_message(_("#rYou are too far away to board your target."));
       return;
    }
@@ -222,7 +222,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
 
    if (board_fail(wdw)) return;
 
-   player_modCredits( p->credits );
+   player_modCredits( p->credits * player.p->stats.loot_mod );
    p->credits = 0;
    board_update( wdw ); /* update the lack of credits */
    player_message(_("#oYou manage to steal the ship's credits."));
@@ -237,7 +237,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
  */
 static void board_stealCargo( unsigned int wdw, char* str )
 {
-   (void)str;
+   (void) str;
    int q;
    Pilot* p;
 
@@ -254,11 +254,12 @@ static void board_stealCargo( unsigned int wdw, char* str )
 
    if (board_fail(wdw)) return;
 
-   /** steal as much as possible until full - @todo let player choose */
+   /* TODO this will probably not be precise in some corner cases like the target having 3 different cargos of the same thing split up.  */
+   /* steal as much as possible until full - @todo let player choose */
    q = 1;
    while ((array_size(p->commodities) > 0) && (q!=0)) {
       q = pilot_cargoAdd( player.p, p->commodities[0].commodity,
-            p->commodities[0].quantity, 0 );
+            round(player.p->stats.loot_mod * (double)p->commodities[0].quantity), 0 );
       pilot_cargoRm( p, p->commodities[0].commodity, q );
    }
 
@@ -293,9 +294,12 @@ static void board_stealFuel( unsigned int wdw, char* str )
       return;
 
    /* Steal fuel. */
-   player.p->fuel += p->fuel;
-   p->fuel = 0;
+   if (player.p->fuel < player.p->fuel_max) {
+      player.p->fuel += round(player.p->stats.loot_mod * (double)p->fuel);
+      p->fuel = 0;
+   }
 
+   /* TODO this can create some fuel of out thin air with loot_mod. */
    /* Make sure doesn't overflow. */
    if (player.p->fuel > player.p->fuel_max) {
       p->fuel      = player.p->fuel - player.p->fuel_max;
@@ -402,14 +406,17 @@ static void board_stealAmmo( unsigned int wdw, char* str )
 static int board_trySteal( Pilot *p )
 {
    Pilot *target;
-   Damage dmg;
+   //Damage dmg;
 
    /* Get the target. */
    target = pilot_get(p->target);
    if (target == NULL)
       return 1;
 
+   /* Just make it always succeed for now. */
+#if 0
    /* See if was successful. */
+   /* TODO probably replace the interface and rehaul it all. */
    if (RNGF() > (0.5 * (10. + target->crew)/(10. + p->crew)))
       return 0;
 
@@ -429,6 +436,8 @@ static int board_trySteal( Pilot *p )
    }
 
    return 1;
+#endif
+   return 0;
 }
 
 
@@ -464,7 +473,8 @@ static int board_fail( unsigned int wdw )
 static void board_update( unsigned int wdw )
 {
    int i, j;
-   int total_cargo;
+   int total_cargo, fuel;
+   double c;
    char str[PATH_MAX];
    char cred[ECON_CRED_STRLEN];
    Pilot* p;
@@ -473,27 +483,29 @@ static void board_update( unsigned int wdw )
    j = 0;
 
    /* Credits. */
-   credits2str( cred, p->credits, 2 );
+   credits2str( cred, p->credits * player.p->stats.loot_mod, 2 );
    j += scnprintf( &str[j], sizeof(str), "%s\n", cred );
 
    /* Commodities. */
    if ((array_size(p->commodities)==0))
       j += scnprintf( &str[j], sizeof(str)-j, _("none\n") );
    else {
-      total_cargo = 0;
+      c = 0;
       for (i=0; i<array_size(p->commodities); i++) {
          if (p->commodities[i].commodity == NULL)
             continue;
-         total_cargo += p->commodities[i].quantity;
+         c += player.p->stats.loot_mod * (double)p->commodities[i].quantity;
       }
+      total_cargo = round(c);
       j += scnprintf( &str[ j ], sizeof(str) - j, n_( "%d tonne\n", "%d tonnes\n", total_cargo ), total_cargo );
    }
 
    /* Fuel. */
-   if (p->fuel <= 0)
+   fuel = round( player.p->stats.loot_mod * (double)p->fuel );
+   if (fuel <= 0)
       j += scnprintf( &str[j], sizeof(str)-j, _("none\n") );
    else
-      j += scnprintf( &str[ j ], sizeof(str) - j, n_( "%d unit\n", "%d units\n", p->fuel ), p->fuel );
+      j += scnprintf( &str[ j ], sizeof(str) - j, n_( "%d unit\n", "%d units\n", fuel ), fuel );
 
    /* Missiles */
    int nmissiles = pilot_countAmmo(p);
@@ -529,7 +541,7 @@ int pilot_board( Pilot *p )
    if (!pilot_isDisabled(target))
       return 0;
    else if (vect_dist(&p->solid->pos, &target->solid->pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APROX )
+         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return 0;
    else if ((pow2(VX(p->solid->vel)-VX(target->solid->vel)) +
             pow2(VY(p->solid->vel)-VY(target->solid->vel))) >
@@ -577,7 +589,7 @@ void pilot_boardComplete( Pilot *p )
    /* In the case of the player take fewer credits. */
    if (pilot_isPlayer(target)) {
       worth = MIN( 0.1*pilot_worth(target), target->credits );
-      p->credits       += worth;
+      p->credits       += worth * p->stats.loot_mod;
       target->credits  -= worth;
       credits2str( creds, worth, 2 );
       player_message(
@@ -589,7 +601,7 @@ void pilot_boardComplete( Pilot *p )
       ret = board_trySteal(p);
       if (ret == 0) {
          /* Normally just plunder it all. */
-         p->credits += target->credits;
+         p->credits += target->credits * p->stats.loot_mod;
          target->credits = 0.;
       }
    }

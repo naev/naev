@@ -315,16 +315,16 @@ function spawnConvoy ()
          if class == "Yacht" or class == "Luxury Yacht" or class == "Scout"
                or class == "Courier" or class == "Fighter" or class == "Bomber"
                or class == "Drone" or class == "Heavy Drone" then
-            p:addOutfit( "Unicorp PT-200 Core System" )
+            p:addOutfit( "Unicorp PT-68 Core System" )
             p:addOutfit( "Melendez Ox XL Engine" )
             p:addOutfit( "S&K Small Cargo Hull" )
          elseif class == "Freighter" or class == "Armoured Transport"
                or class == "Corvette" or class == "Destroyer" then
-            p:addOutfit( "Unicorp PT-600 Core System" )
+            p:addOutfit( "Unicorp PT-310 Core System" )
             p:addOutfit( "Melendez Buffalo XL Engine" )
             p:addOutfit( "S&K Medium Cargo Hull" )
          elseif class == "Cruiser" or class == "Carrier" then
-            p:addOutfit( "Unicorp PT-600 Core System" )
+            p:addOutfit( "Unicorp PT-310 Core System" )
             p:addOutfit( "Melendez Mammoth XL Engine" )
             p:addOutfit( "S&K Large Cargo Hull" )
          end
@@ -354,7 +354,9 @@ function spawnConvoy ()
 
    if minspeed ~= nil then
       for i, p in ipairs(convoy) do
-         p:setSpeedLimit( minspeed )
+         if p ~= nil and p:exists() then
+            p:setSpeedLimit( minspeed )
+         end
       end
    end
 

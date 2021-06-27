@@ -8,8 +8,8 @@
   <mass>16</mass>
   <price>60000</price>
   <description>The Thurion interceptor class missile focus on high agility rather than destructive power. While it does little damage to physical objects it is quite effective at disrupting shields.</description>
-  <gfx_store>convulsion_launcher.png</gfx_store>
-  <cpu>-12</cpu>
+  <gfx_store>convulsion_launcher.webp</gfx_store>
+  <cpu>-8</cpu>
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Convulsion Missile</ammo>
@@ -17,7 +17,8 @@
   <reload_time>90</reload_time>
   <amount>20</amount>
   <lockon>4</lockon>
-  <arc>8</arc>
-  <ew_target>3</ew_target>
+  <arc>60</arc>
+  <trackmin>0</trackmin>
+  <trackmax>5000</trackmax>
  </specific>
 </outfit>

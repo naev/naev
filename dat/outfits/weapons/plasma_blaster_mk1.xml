@@ -3,30 +3,31 @@
  <general>
   <slot>weapon</slot>
   <size>small</size>
-  <mass>5</mass>
+  <mass>6</mass>
   <price>9000</price>
-  <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
-  <gfx_store>plasma.png</gfx_store>
-  <cpu>-3</cpu>
+  <description>The Plasma Blaster fires superheated plasma which is very effective at damaging armour, but less effective against shields. This weapon is often used by bounty hunters and mercenaries for its high killing potential.</description>
+  <gfx_store>plasma.webp</gfx_store>
+  <cpu>-5</cpu>
  </general>
  <specific type="bolt">
   <gfx>plasma.png</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS</spfx_armour>
-  <delay>0.675</delay>
-  <speed>450</speed>
-  <range>450</range>
-  <falloff>210</falloff>
-  <energy>8</energy>
-  <heatup>20</heatup>
-  <track>2</track>
+  <delay>0.8</delay>
+  <speed>700</speed>
+  <range>900</range>
+  <falloff>750</falloff>
+  <energy>4</energy>
+  <heatup>40</heatup>
+  <trackmin>0</trackmin>
+  <trackmax>3000</trackmax>
   <swivel>22</swivel>
   <damage>
-   <type>normal</type>
-   <penetrate>8</penetrate>
-   <physical>9</physical>
-   <disable>1</disable>
+   <type>impact</type>
+   <penetrate>0</penetrate>
+   <physical>17</physical>
+   <disable>1.6</disable>
   </damage>
  </specific>
 </outfit>

@@ -2,33 +2,34 @@
 <outfit name="Heavy Ion Turret">
  <general>
   <slot>weapon</slot>
-  <size>medium</size>
-  <mass>37</mass>
+  <size>large</size>
+  <mass>55</mass>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
   <price>68000</price>
   <description>The Heavy Ion Turret is a Sirius military design, applying brute force to its target's internal systems. When coupled with Razor weaponry, it is terribly efficient at reducing enemy warships to tumbling hunks of junk.</description>
-  <gfx_store>ionturret.png</gfx_store>
-  <cpu>-24</cpu>
+  <gfx_store>ionturret.webp</gfx_store>
+  <cpu>-75</cpu>
  </general>
- <specific type="turret bolt" secondary="1">
+ <specific type="turret bolt">
   <gfx>ionL.png</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>1.3</delay>
+  <delay>1.4</delay>
   <speed>500</speed>
   <range>1300</range>
   <falloff>1000</falloff>
   <gfx_end>ionL-end.png</gfx_end>
   <energy>54</energy>
   <heatup>60</heatup>
-  <track>0.9</track>
+  <trackmin>7000</trackmin>
+  <trackmax>14000</trackmax>
   <damage>
    <type>ion</type>
-   <penetrate>30</penetrate>
-   <physical>10</physical>
-   <disable>30</disable>
+   <penetrate>48</penetrate>
+   <physical>2.8</physical>
+   <disable>60</disable>
   </damage>
  </specific>
 </outfit>

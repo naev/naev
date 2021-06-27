@@ -40,6 +40,7 @@ const glColour cGrey25     = { .r=0.25, .g=0.25, .b=0.25, .a=1. }; /**< Grey 25%
 const glColour cGrey20     = { .r=0.20, .g=0.20, .b=0.20, .a=1. }; /**< Grey 20% */
 const glColour cGrey15     = { .r=0.15, .g=0.15, .b=0.15, .a=1. }; /**< Grey 15% */
 const glColour cGrey10     = { .r=0.10, .g=0.10, .b=0.10, .a=1. }; /**< Grey 10% */
+const glColour cGrey5      = { .r=0.05, .g=0.05, .b=0.05, .a=1. }; /**< Grey 5% */
 const glColour cBlack      = { .r=0.00, .g=0.00, .b=0.00, .a=1. }; /**< Black */
 
 /* Greens. */
@@ -79,6 +80,13 @@ const glColour cAqua       = { .r=0.00, .g=0.75, .b=1.00, .a=1. }; /**< Aqua */
 const glColour cBlackHilight  =  { .r = 0.0, .g = 0.0, .b = 0.0, .a = 0.4 }; /**< Hilight colour over black background. */
 /* toolkit */
 const glColour cHilight       =  { .r = 0.1, .g = 0.9, .b = 0.1, .a = 0.6 }; /**< Hilight colour */
+/* outfit slot colours.
+ * Taken from https://cran.r-project.org/web/packages/khroma/vignettes/tol.html#muted
+ */
+const glColour cOutfitHeavy = { 0.8, 0.4, 0.46, 1.0 }; /**< Heavy outfit colour (reddish). */
+const glColour cOutfitMedium = { 0.2, 0.73, 0.93, 1.0 }; /**< Medium outfit colour (blueish). */
+//const glColour cOutfitMedium = { 0.55, 0.8, 0.93, 1.0 }; /**< Medium outfit colour (blueish). Technically color safe but doesn't work with our colorblind filter. */
+const glColour cOutfitLight = { 0.86, 0.8, 0.46, 1.0 }; /**< Light outfit colour (yellowish). */
 /* objects */
 const glColour cInert         =  { .r=221./255., .g=221./255., .b=221./255., .a=1. }; /**< Inert object colour */
 const glColour cNeutral       =  { .r=221./255., .g=204./255., .b=119./255., .a=1. }; /**< Neutral object colour */
@@ -92,7 +100,7 @@ const glColour cMarkerLow     =  { .r=234./255., .g=240./255., .b=181./255., .a=
 const glColour cMarkerHigh    =  { .r=252./255., .g=247./255., .b=213./255., .a=1. }; /**< High priority mission marker colour. */
 const glColour cMarkerPlot    =  { .r=255./255., .g=255./255., .b=255./255., .a=1. }; /**< Plot mission marker colour. */
 /* radar */
-const glColour cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1.  }; /**< Player colour on radar. */
+const glColour cRadar_player  =  { .r = 0.9, .g = 0.1, .b = 0.9, .a = 1.  }; /**< Player colour on radar. */
 const glColour cRadar_tPilot  =  { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Targeted object colour on radar. */
 const glColour cRadar_tPlanet =  { .r = 1.0, .g = 1.0, .b = 1.0, .a = 1.  }; /**< Targeted planet colour. */
 const glColour cRadar_weap    =  { .r = 0.8, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Weapon colour on radar. */

@@ -116,8 +116,7 @@ function create ()
 
    -- Give the name of the NPC and the portrait used. You can see all
    -- available portraits in dat/gfx/portraits.
-   misn.setNPC( _("A well-dressed man"), "neutral/unique/youngbusinessman.png" )
-   misn.setDesc( _("This guy is wearing a nice suit.") )
+   misn.setNPC( _("A well-dressed man"), "neutral/unique/youngbusinessman.webp", _("This guy is wearing a nice suit.") )
 end
 
 

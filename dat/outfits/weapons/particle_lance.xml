@@ -4,23 +4,23 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon License</license>
-  <mass>6</mass>
+  <mass>4</mass>
   <price>9800</price>
   <description>This is the smallest direct beam weapon built, purpose-built by the Za'lek for their drones.</description>
-  <gfx_store>orion.png</gfx_store>
+  <gfx_store>orion.webp</gfx_store>
   <cpu>-5</cpu>
  </general>
  <specific type="beam">
   <delay>1.5</delay>
   <duration>2</duration>
-  <range>320</range>
-  <energy>25</energy>
-  <heatup>20</heatup>
+  <range>350</range>
+  <energy>5</energy>
+  <heatup>40</heatup>
   <damage>
    <type>normal</type>
-   <penetrate>18</penetrate>
-   <physical>22</physical>
-   <disable>5</disable>
+   <penetrate>0</penetrate>
+   <physical>84</physical>
+   <disable>4</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

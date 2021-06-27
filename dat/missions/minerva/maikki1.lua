@@ -38,7 +38,7 @@
 --  598ish - Kex is found
 --  603ish - game start (~15 years after incident, maikki is 18ish)
 --]]
-local minerva = require "minerva"
+local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
@@ -91,10 +91,10 @@ function create ()
    if not misn.claim( {system.get(cutscenesys), system.get(stealthsys)} ) then
       misn.finish( false )
    end
-   misn.setNPC( maikki_name, maikki_portrait )
-   misn.setDesc( maikki_description )
+   misn.setNPC( maikki_name, maikki_portrait, maikki_description )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
+   misn.setDesc( misn_desc )
 end
 
 
@@ -103,7 +103,6 @@ function accept ()
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
-      misn.finish(false)
       return
    end
 
@@ -163,10 +162,9 @@ She trails off.]]) )
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
-         misn.setDesc( misn_desc )
          misn_state = -1
-         shiplog.createLog( logidstr, minerva.log.maikki.logname, minerva.log.maikki.logtype, true )
-         shiplog.appendLog( logidstr, _("You have agreed to help Maikki find her father (Kex).") )
+         shiplog.create( logidstr, minerva.log.maikki.logname, minerva.log.maikki.logtype )
+         shiplog.append( logidstr, _("You have agreed to help Maikki find her father (Kex).") )
       end )
       maikki(_([["I was told he would be here, but I've been here for ages and haven't gotten anywhere."
 She gives out a heavy sigh.]]))
@@ -231,7 +229,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
          misn_osd = misn.osdCreate( misn_title,
             { string.format(_("Look around the %s system"), _(searchsys)) } )
          misn_marker = misn.markerAdd( system.get(searchsys), "low" )
-         shiplog.appendLog( logidstr, _("You were told her father colud be near Doeston.") )
+         shiplog.append( logidstr, _("You were told her father colud be near Doeston.") )
       end
    end )
    vn.jump( "menu_msg" )
@@ -258,7 +256,7 @@ She looks clearly excited at the possibility.]]))
    vn.func( function ()
       -- no reward, yet...
       mission_finish = true
-      shiplog.appendLog( logidstr, _("You gave Maikki the information you found in the nebula about her father.") )
+      shiplog.append( logidstr, _("You gave Maikki the information you found in the nebula about her father.") )
    end )
    vn.done("hexagon")
 
@@ -415,7 +413,7 @@ He pats his biceps in a fairly uninspiring way.]]))
                { string.format(_("Follow the scavengers in the %s system"), _(stealthsys)) } )
             misn.markerMove( misn_marker, system.get(stealthsys) )
             misn_state=4
-            shiplog.appendLog( logidstr, _("You overheard some scavengers talking about a wreck in Zerantix.") )
+            shiplog.append( logidstr, _("You overheard some scavengers talking about a wreck in Zerantix.") )
          end
       end )
    end
@@ -566,7 +564,7 @@ function cutscene_hail ()
       misn_state = 2
       hook.rm( cuttimer ) -- reset timer
       pilot.toggleSpawn(true)
-      shiplog.appendLog( logidstr, _("You helped a scavenger in Arandon.") )
+      shiplog.append( logidstr, _("You helped a scavenger in Arandon.") )
    end
 end
 
@@ -653,8 +651,7 @@ end
 function stealthheartbeat ()
    local pp = player.pilot()
    local dist= math.min ( pscavA:pos():dist(pp:pos()), pscavB:pos():dist(pp:pos()) )
-   local stats = pp:stats()
-   if dist < 1000 / stats.ew_hide then
+   if not pp:flags().stealth and dist < 1000 / (1+pp:shipstat("ew_hide")/100) then
       if stealthfailing==nil then
          stealthfailing = 0
          player.msg("#rYou are about to be discovered!")
@@ -670,7 +667,7 @@ function stealthheartbeat ()
          player.msg( _("#rYou have been detected! Stealth failed!") )
          return
       end
-   elseif dist > 2000 * stats.ew_detect then
+   elseif dist > 2000 * (1+pp:shipstat("ew_detect")/100) then
       if stealthfailing==nil then
          stealthfailing = 0
          player.msg( _("#rYou are about to lose track of the scavengers!!") )
@@ -834,7 +831,7 @@ He seems to be clutching his head. A headache perhaps?]]))
             p:taskClear()
             p:hyperspace( system.get(cutscenesys) )
          end
-         shiplog.appendLog( logidstr, _("You found a wreck and bribed scavengers so that they left.") )
+         shiplog.append( logidstr, _("You found a wreck and bribed scavengers so that they left.") )
       end
    end )
    vn.sfxMoney()
@@ -860,7 +857,7 @@ He seems to be clutching his head. A headache perhaps?]]))
          p:attack( player.pilot() )
          -- TODO add angry messages
       end
-      shiplog.appendLog( logidstr, _("You found a wreck and were attacked by scavengers.") )
+      shiplog.append( logidstr, _("You found a wreck and were attacked by scavengers.") )
    end )
 
    vn.done("electric")
@@ -930,7 +927,7 @@ function board_wreck ()
    vn.done("hexagon")
    vn.run()
 
-   shiplog.appendLog( logidstr, _("You boarded the wreck which seems to be Kex's ship. You found a picture of his family and signs that this was not an accident with possible Za'lek involvement.") )
+   shiplog.append( logidstr, _("You boarded the wreck which seems to be Kex's ship. You found a picture of his family and signs that this was not an accident with possible Za'lek involvement.") )
 
    -- Move target back to origin
    misn_osd = misn.osdCreate( misn_title,

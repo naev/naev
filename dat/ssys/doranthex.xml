@@ -24,7 +24,7 @@
  <jumps>
   <jump target="Dakron">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Ogat">
    <pos x="-26146.261342" y="30826.874429"/>
@@ -36,11 +36,11 @@
   </jump>
   <jump target="Torg">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Tuoladis">
    <pos x="11836.302770" y="31893.263337"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

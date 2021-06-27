@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Cryogenic Repair Nanobots">
+ <general>
+  <typename>Armour Repair</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <mass>3</mass>
+  <price>280000</price>
+  <gfx_store>cryogenic_repair_nanobots.webp</gfx_store>
+  <description>Repair nanobots are able to perform what seems short of a miracle, restoring the hull and armour of ships to pristine condition. While they show remarkable behaviour in laboratory conditions, in practice, they need a fairly still environment to work in. The active cooling stage of a ship provides an excellent opportunity for the nanobots to show what they are fully capable, and when the ship is in motion they go into hibernation.</description>
+  <desc_extra>Restores armour to full when performing an active cooldown.</desc_extra>
+ </general>
+ <specific type="modification">
+  <lua>outfits/utility/cryogenic_repair_nanobots.lua</lua>
+ </specific>
+</outfit>

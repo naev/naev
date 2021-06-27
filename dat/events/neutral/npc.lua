@@ -19,6 +19,7 @@ local vn = require 'vn'
 blacklist = {
    "Minerva Station",
    "Strangelove Lab",
+   "Totoran",
 }
 
 -- Factions which will NOT get generic texts if possible.  Factions
@@ -270,12 +271,18 @@ msg_edone =                {{"Animal trouble", _([["What? You had rodents sabota
 
 function create()
    -- Logic to decide what to spawn, if anything.
-   -- TODO: Do not spawn any NPCs on restricted assets.
+   local cur = planet.cur()
 
+   -- Do not spawn any NPCs on restricted assets.
+   if cur:restricted() then
+      evt.finish()
+   end
+
+   -- Skip blacklisted planets
    local blacklisted = false
-   local cur = planet.cur():name()
+   local name = cur:name()
    for k,v in ipairs(blacklist) do
-      if cur == v then
+      if name == v then
          blacklisted = true
          break
       end
@@ -283,7 +290,6 @@ function create()
    if blacklisted then
       evt.finish()
    end
-
 
    -- Chance of a jump point message showing up. As this gradually goes
    -- down, it is replaced by lore messages. See spawnNPC function below.

@@ -90,6 +90,7 @@ static gl_vbo *gui_radar_select_vbo = NULL;
 static gl_vbo *gui_planet_blink_vbo = NULL;
 
 static int gui_getMessage     = 1; /**< Whether or not the player should receive messages. */
+static char *gui_name         = NULL; /**< Name of the GUI (for errors and such). */
 
 
 extern unsigned int land_wid; /**< From land.c */
@@ -555,8 +556,8 @@ static void gui_renderPilotTarget( double dt )
       return;
    }
 
-   /* Make sure target is still in range. */
-   if (!pilot_inRangePilot( player.p, p, NULL )) {
+   /* Make sure target is still valid and in range. */
+   if (!pilot_validTarget( player.p, p )) {
       pilot_setTarget( player.p, player.p->id );
       gui_setTarget();
       return;
@@ -572,17 +573,17 @@ static void gui_renderPilotTarget( double dt )
    else
       c = &cNeutral;
 
-   x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APROX/2.;
-   y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APROX/2.;
+   x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APPROX/2.;
+   y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APPROX/2.;
    gl_blitSprite( gui_target_pilot, x, y, 0, 0, c ); /* top left */
 
-   x += p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+   x += p->ship->gfx_space->sw * PILOT_SIZE_APPROX;
    gl_blitSprite( gui_target_pilot, x, y, 1, 0, c ); /* top right */
 
-   y -= p->ship->gfx_space->sh * PILOT_SIZE_APROX;
+   y -= p->ship->gfx_space->sh * PILOT_SIZE_APPROX;
    gl_blitSprite( gui_target_pilot, x, y, 1, 1, c ); /* bottom right */
 
-   x -= p->ship->gfx_space->sw * PILOT_SIZE_APROX;
+   x -= p->ship->gfx_space->sw * PILOT_SIZE_APPROX;
    gl_blitSprite( gui_target_pilot, x, y, 0, 1, c ); /* bottom left */
 }
 
@@ -894,15 +895,17 @@ void gui_render( double dt )
 
    /* Run Lua. */
    if (gui_env != LUA_NOREF) {
-      gui_prepFunc( "render" );
-      lua_pushnumber( naevL, dt );
-      lua_pushnumber( naevL, dt_mod );
-      gui_runFunc( "render", 2, 0 );
+      if (gui_prepFunc( "render" )==0) {
+         lua_pushnumber( naevL, dt );
+         lua_pushnumber( naevL, dt_mod );
+         gui_runFunc( "render", 2, 0 );
+      }
       if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
-         gui_prepFunc( "render_cooldown" );
-         lua_pushnumber( naevL, player.p->ctimer / player.p->cdelay  );
-         lua_pushnumber( naevL, player.p->ctimer );
-         gui_runFunc( "render_cooldown", 2, 0 );
+         if (gui_prepFunc( "render_cooldown" )==0) {
+            lua_pushnumber( naevL, player.p->ctimer / player.p->cdelay  );
+            lua_pushnumber( naevL, player.p->ctimer );
+            gui_runFunc( "render_cooldown", 2, 0 );
+         }
       }
    }
 
@@ -1782,7 +1785,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    else if (jp_isFlag(jp, JP_HIDDEN))
       col = cRed;
    else
-      col = cPurple;
+      col = cGreen;
 
    if (!overlay)
       col.a = 1.-interference_alpha;
@@ -1977,7 +1980,9 @@ int gui_init (void)
  */
 static int gui_doFunc( const char* func )
 {
-   gui_prepFunc( func );
+   int ret = gui_prepFunc( func );
+   if (ret)
+      return ret;
    return gui_runFunc( func, 0, 0 );
 }
 
@@ -1989,13 +1994,20 @@ static int gui_prepFunc( const char* func )
 {
 #if DEBUGGING
    if (gui_env == LUA_NOREF) {
-      WARN( _("Trying to run GUI func '%s' but no GUI is loaded!"), func );
+      WARN( _("GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"), gui_name, func );
       return -1;
    }
 #endif /* DEBUGGING */
 
    /* Set up function. */
    nlua_getenv( gui_env, func );
+#if DEBUGGING
+   if (lua_isnil( naevL, -1 )) {
+      WARN(_("GUI '%s': no function '%s' defined!"), gui_name, func );
+      lua_pop(naevL,1);
+      return -1;
+   }
+#endif /* DEBUGGING */
    return 0;
 }
 
@@ -2016,7 +2028,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
    ret = nlua_pcall( gui_env, nargs, nret );
    if (ret != 0) { /* error has occurred */
       err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
-      WARN(_("GUI Lua -> '%s': %s"),
+      WARN(_("GUI '%s' Lua -> '%s': %s"), gui_name,
             func, (err) ? err : _("unknown error"));
       lua_pop(naevL,1);
       return ret;
@@ -2108,6 +2120,10 @@ void gui_setGeneric( Pilot* pilot )
    if (gui_env == LUA_NOREF)
       return;
 
+   if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
+      (player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD))
+      return;
+
    if ((player.p->target != PLAYER_ID) && (pilot->id == player.p->target))
       gui_setTarget();
    else if (pilot_isPlayer(pilot)) {
@@ -2140,12 +2156,12 @@ char* gui_pick (void)
  */
 int gui_load( const char* name )
 {
-   (void) name;
    char *buf, path[PATH_MAX];
    size_t bufsize;
 
    /* Set defaults. */
    gui_cleanup();
+   gui_name = strdup(name);
 
    /* Open file. */
    snprintf( path, sizeof(path), GUI_PATH"%s.lua", name );
@@ -2315,6 +2331,10 @@ void gui_cleanup (void)
 
    /* OMSG */
    omsg_position( SCREEN_W/2., SCREEN_H*2./3., SCREEN_W*2./3. );
+
+   /* Delete the name. */
+   free(gui_name);
+   gui_name = NULL;
 }
 
 

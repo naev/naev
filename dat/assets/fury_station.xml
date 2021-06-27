@@ -16,7 +16,7 @@
  <general>
   <class>2</class>
   <population>500</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -58,5 +58,6 @@
   <item>Engines High</item>
   <item>Star Maps</item>
   <item>Pirate Maps</item>
+  <item>Pirate Elite Outfits</item>
  </tech>
 </asset>

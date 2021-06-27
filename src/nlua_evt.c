@@ -20,6 +20,7 @@
 #include "nlua_evt.h"
 
 #include "event.h"
+#include "land.h"
 #include "log.h"
 #include "mission.h"
 #include "ndata.h"
@@ -163,7 +164,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 /**
  * @brief Adds an NPC.
  *
- * @usage npc_id = evt.npcAdd( "my_func", "Mr. Test", "none.png", "A test." ) -- Creates an NPC.
+ * @usage npc_id = evt.npcAdd( "my_func", "Mr. Test", "none.webp", "A test." ) -- Creates an NPC.
  *
  *    @luatparam string func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luatparam string name Name of the NPC
@@ -202,6 +203,8 @@ static int evt_npcAdd( lua_State *L )
    /* Add npc. */
    id = npc_add_event( cur_event->id, func, name, priority, portrait, desc, (bg==NULL) ? bg : background );
 
+   bar_regen();
+
    /* Return ID. */
    if (id > 0) {
       lua_pushnumber( L, id );
@@ -229,6 +232,8 @@ static int evt_npcRm( lua_State *L )
 
    cur_event = event_getFromLua(L);
    ret = npc_rm_event( id, cur_event->id );
+
+   bar_regen();
 
    if (ret != 0)
       NLUA_ERROR(L, _("Invalid NPC ID!"));

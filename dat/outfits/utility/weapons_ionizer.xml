@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Weapons Ionizer">
+ <general>
+  <typename>Weapon Modification</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>3</mass>
+  <price>200000</price>
+  <description>The weapons ionizer works on the principle of diverting massive amounts of weapon energy to an ion field generator. While energy usage increases and damage output significantly decreases, the ion field allows conventional weapons to do ionizing damage while the outfit is active. It is designed to automatically active when the target's armour is below 50%, but can also be triggered manually.</description>
+  <gfx_store>accuracy_forward_3.png</gfx_store>
+  <limit>ionizer</limit>
+  <desc_extra>Automatically triggers when target armour is below 50%.</desc_extra>
+ </general>
+ <specific type="modification" group="7">
+  <active />
+  <fwd_dam_as_dis>100</fwd_dam_as_dis>
+  <fwd_damage>-70</fwd_damage>
+  <fwd_energy>20</fwd_energy>
+  <fwd_heat>20</fwd_heat>
+  <tur_dam_as_dis>100</tur_dam_as_dis>
+  <tur_damage>-70</tur_damage>
+  <tur_energy>20</tur_energy>
+  <tur_heat>20</tur_heat>
+  <lua>outfits/utility/weapons_ionizer.lua</lua>
+ </specific>
+</outfit>

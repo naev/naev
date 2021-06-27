@@ -4,30 +4,31 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon License</license>
-  <mass>25</mass>
+  <mass>30</mass>
   <price>32500</price>
   <description>The MK2 turreted version of the Razor sees a lot of application on medium escort ships. They are often mounted alongside laser or gauss turrets to assist in de-shielding incoming attackers before they are ripped to shreds.</description>
-  <gfx_store>ionturret.png</gfx_store>
-  <cpu>-15</cpu>
+  <gfx_store>ionturret.webp</gfx_store>
+  <cpu>-50</cpu>
  </general>
  <specific type="turret bolt">
   <gfx>razorM.png</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>0.5</delay>
-  <speed>800</speed>
-  <range>1600</range>
-  <falloff>1100</falloff>
+  <delay>1.0</delay>
+  <speed>700</speed>
+  <range>1100</range>
+  <falloff>950</falloff>
   <gfx_end>razorM-end.png</gfx_end>
-  <energy>13</energy>
-  <heatup>35</heatup>
-  <track>1.8</track>
+  <energy>30</energy>
+  <heatup>50</heatup>
+  <trackmin>2000</trackmin>
+  <trackmax>8000</trackmax>
   <damage>
    <type>ion</type>
-   <penetrate>17</penetrate>
-   <physical>11</physical>
-   <disable>3</disable>
+   <penetrate>36</penetrate>
+   <physical>32</physical>
+   <disable>2</disable>
   </damage>
  </specific>
 </outfit>

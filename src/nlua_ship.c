@@ -357,7 +357,7 @@ static int shipL_slots( lua_State *L )
  * @usage for i, v in ipairs( ship.getSlots( ship.get("Llama") ) ) do print(v["type"]) end
  *
  *    @luaparam s Ship to get slots of
- *    @luareturn A table of tables with slot properties string "size", string "type", and string "property".
+ *    @luareturn A table of tables with slot properties string "size", string "type", string "property", boolean "required", and boolean "exclusive".
  *               (Strings are English.)
  * @luafunc getSlots
  */
@@ -391,6 +391,14 @@ static int shipL_getSlots( lua_State *L )
 
          lua_pushstring(L, "property"); /* key */
          lua_pushstring( L, sp_display(slot->spid)); /* value */
+         lua_rawset(L, -3); /* table[key] = value */
+
+         lua_pushstring(L, "required"); /* key */
+         lua_pushboolean( L, sp_required(slot->spid)); /* value */
+         lua_rawset(L, -3); /* table[key] = value */
+
+         lua_pushstring(L, "exclusive"); /* key */
+         lua_pushboolean( L, sp_exclusive(slot->spid)); /* value */
          lua_rawset(L, -3); /* table[key] = value */
 
          if (sslot->data != NULL) {

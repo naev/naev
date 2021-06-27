@@ -146,17 +146,18 @@ textmsg[1] = _("Have the nerds not told you to stay in the system? Mission faile
 textmsg[2] = _("Have the nerds not told you to pick them up at the bar? Mission failed!")
 
 -- the mission cargo (names as in commodity.xml)
-misn_cargo1 = "Group of Nerds"
+misn_cargo1 = N_("Group of Nerds")
+misn_cargodesc1 = N_("A bunch of protagonists.")
 misn_cargoamount1 = 0
-misn_cargo2 = "Box"
+misn_cargo2 = N_("Box")
+misn_cargodesc2 = N_("A homebrew processing unit.")
 misn_cargoamount2 = 4
 
 -- the outfit name as in outfit.xml
-outfit = "Unicorp PT-100 Core System"
+outfit = "Unicorp PT-16 Core System"
 
 function create ()
-   misn.setNPC( _("Young People"), "neutral/unique/mia.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Young People"), "neutral/unique/mia.webp", bar_desc )
 end
 
 function accept ()
@@ -399,8 +400,10 @@ end
 
 -- helper functions, used repeatedly
 function addNerdCargo()
-   cargo1 = misn.cargoAdd(misn_cargo1, misn_cargoamount1)
-   cargo2 = misn.cargoAdd(misn_cargo2, misn_cargoamount2)
+   local c1 = misn.cargoNew(misn_cargo1, misn_cargodesc1)
+   local c2 = misn.cargoNew(misn_cargo2, misn_cargodesc2)
+   cargo1 = misn.cargoAdd(c1, misn_cargoamount1)
+   cargo2 = misn.cargoAdd(c2, misn_cargoamount2)
 end
 
 function rmNerdCargo()

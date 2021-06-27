@@ -143,11 +143,13 @@ typedef struct Planet_ {
 #define SYSTEM_MARKED      (1<<1) /**< System is marked by a regular mission. */
 #define SYSTEM_CMARKED     (1<<2) /**< System is marked by a computer mission. */
 #define SYSTEM_CLAIMED     (1<<3) /**< System is claimed by a mission. */
+#define SYSTEM_DISCOVERED  (1<<4) /**< System has been discovered. This is a temporary flag used by the map. */
+#define SYSTEM_HIDDEN      (1<<5) /**< System is temporarily hidden from view. */
 #define sys_isFlag(s,f)    ((s)->flags & (f)) /**< Checks system flag. */
 #define sys_setFlag(s,f)   ((s)->flags |= (f)) /**< Sets a system flag. */
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
-#define sys_isKnown(s)     sys_isFlag(s,SYSTEM_KNOWN) /**< Checks if system is known. */
-#define sys_isMarked(s)    sys_isFlag(s,SYSTEM_MARKED) /**< Checks if system is marked. */
+#define sys_isKnown(s)     (sys_isFlag((s),SYSTEM_KNOWN)) /**< Checks if system is known. */
+#define sys_isMarked(s)    sys_isFlag((s),SYSTEM_MARKED) /**< Checks if system is marked. */
 
 
 /*
@@ -292,6 +294,7 @@ struct StarSystem_ {
    double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
    double radius; /**< Default system radius for standard jump points. */
    char *background; /**< Background script. */
+   char *features; /**< Extra text on the map indicating special features of the system. */
 
    /* Planets. */
    Planet **planets; /**< Array (array.h): planets */
@@ -353,8 +356,9 @@ int planet_index( const Planet *p );
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
 char **planet_searchFuzzyCase( const char* planetname, int *n );
-char* planet_getServiceName( int service );
+const char* planet_getServiceName( int service );
 int planet_getService( char *name );
+const char* planet_getClassName( const char *class );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
 credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntime_t t );
 int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std);
@@ -450,9 +454,9 @@ int system_hasPlanet( const StarSystem *sys );
 /*
  * Hyperspace.
  */
-int space_canHyperspace( Pilot* p);
+int space_canHyperspace( const Pilot* p);
 int space_hyperspace( Pilot* p );
-int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir );
+int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir, const Pilot *p );
 
 
 /*
@@ -467,7 +471,9 @@ AsteroidType *space_getType ( int ID );
  * Misc.
  */
 void system_setFaction( StarSystem *sys );
+void space_checkLand (void);
 void space_factionChange (void);
+void space_queueLand( Planet *pnt );
 
 
 #endif /* SPACE_H */

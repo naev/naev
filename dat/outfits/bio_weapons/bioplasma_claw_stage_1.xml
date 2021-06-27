@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="BioPlasma Claw Stage 1">
+ <general>
+  <slot prop="bio_weapon">weapon</slot>
+  <size>small</size>
+  <license>Medium Weapon License</license>
+  <mass>18</mass>
+  <price>8500</price>
+  <description>A more powerful cousin of the BioPlasma Stinger, the BioPlasma Claw uses more precious brain capacity, but features markedly increased damage output in return. As with all organs, it starts out weak, but over time it grows and improves.</description>
+  <gfx_store>plasma2.png</gfx_store>
+  <cpu>-8</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx>plasma2.png</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>PlaS2</spfx_armour>
+  <delay>1.0</delay>
+  <speed>550</speed>
+  <range>800</range>
+  <falloff>650</falloff>
+  <gfx_end>plasma2-end.png</gfx_end>
+  <energy>10</energy>
+  <heatup>20</heatup>
+  <trackmin>1000</trackmin>
+  <trackmax>4000</trackmax>
+  <swivel>22</swivel>
+  <damage>
+   <type>impact</type>
+   <penetrate>12</penetrate>
+   <physical>13</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

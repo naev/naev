@@ -16,7 +16,7 @@
  <general>
   <class>1</class>
   <population>50000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>zlk_ruadan</land>
    <refuel/>
@@ -45,6 +45,8 @@
   <item>Missiles 1</item>
   <item>Missiles 2</item>
   <item>Star Maps</item>
+  <item>Za'lek Military Outfits</item>
   <item>Za'lek Military Ships</item>
+  <item>Za'lek Elite Outfits</item>
  </tech>
 </asset>

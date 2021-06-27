@@ -26,6 +26,7 @@
 #include "economy.h"
 #include "gui.h"
 #include "hook.h"
+#include "land.h"
 #include "log.h"
 #include "map.h"
 #include "map_overlay.h"
@@ -106,6 +107,7 @@ static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary cal
 static int space_simulating = 0; /**< Are we simulating space? */
 glTexture **asteroid_gfx = NULL;
 static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
+static Planet *space_landQueuePlanet = NULL;
 
 /*
  * fleet spawn rate
@@ -117,7 +119,7 @@ int space_spawn = 1; /**< Spawn enabled by default. */
  * Interference.
  */
 extern double interference_alpha; /* gui.c */
-static double interference_target = 0.; /**< Target alpha level. */
+//static double interference_target = 0.; /**< Target alpha level. */
 static double interference_timer  = 0.; /**< Interference timer. */
 
 
@@ -163,7 +165,7 @@ int space_sysLoad( xmlNodePtr parent );
  * @return English name, reversible via \p planet_getService()
  * and presentable via \p _().
  */
-char* planet_getServiceName( int service )
+const char* planet_getServiceName( int service )
 {
    switch (service) {
       case PLANET_SERVICE_LAND:        return N_("Land");
@@ -200,6 +202,66 @@ int planet_getService( char *name )
    else if (strcmp(name,"Blackmarket")==0)
       return PLANET_SERVICE_BLACKMARKET;
    return -1;
+}
+
+
+/**
+ * @brief Gets the long class name for a planet.
+ *
+ *    @param class Name of the class to process.
+ *    @return Long name of the class.
+ */
+const char* planet_getClassName( const char *class )
+{
+   if (strcmp(class,"0")==0)
+      return _("Civilian Station");
+   else if (strcmp(class,"1")==0)
+      return _("Military Station");
+   else if (strcmp(class,"2")==0)
+      return _("Pirate Station");
+   else if (strcmp(class,"3")==0)
+      return _("Robotic Station");
+   else if (strcmp(class,"A")==0)
+      return _("Geothermal");
+   else if (strcmp(class,"B")==0)
+      return _("Geomorteus");
+   else if (strcmp(class,"C")==0)
+      return _("Geoinactive");
+   else if (strcmp(class,"D")==0)
+      return _("Asteroid/Moon");
+   else if (strcmp(class,"E")==0)
+      return _("Geoplastic");
+   else if (strcmp(class,"F")==0)
+      return _("Geometallic");
+   else if (strcmp(class,"G")==0)
+      return _("Geocrystaline");
+   else if (strcmp(class,"H")==0)
+      return _("Desert");
+   else if (strcmp(class,"I")==0)
+      return _("Gas Supergiant");
+   else if (strcmp(class,"J")==0)
+      return _("Gas Giant");
+   else if (strcmp(class,"K")==0)
+      return _("Adaptable");
+   else if (strcmp(class,"L")==0)
+      return _("Marginal");
+   else if (strcmp(class,"M")==0)
+      return _("Terrestrial");
+   else if (strcmp(class,"N")==0)
+      return _("Reducing");
+   else if (strcmp(class,"O")==0)
+      return _("Pelagic");
+   else if (strcmp(class,"P")==0)
+      return _("Glaciated");
+   else if (strcmp(class,"Q")==0)
+      return _("Variable");
+   else if (strcmp(class,"R")==0)
+      return _("Rogue");
+   else if (strcmp(class,"S")==0 || strcmp(class,"T")==0)
+      return _("Ultragiants");
+   else if (strcmp(class,"X")==0 || strcmp(class,"Y")==0 || strcmp(class,"Z")==0)
+      return _("Demon");
+   return class;
 }
 
 
@@ -283,7 +345,7 @@ int planet_setFaction( Planet *p, int faction )
  *    @param p Pilot to check if he can hyperspace.
  *    @return 1 if he can hyperspace, 0 else.
  */
-int space_canHyperspace( Pilot* p )
+int space_canHyperspace( const Pilot* p )
 {
    double d, r;
    JumpPoint *jp;
@@ -304,7 +366,7 @@ int space_canHyperspace( Pilot* p )
    jp = &cur_system->jumps[ p->nav_hyperspace ];
 
    /* Check distance. */
-   r = jp->radius;
+   r = jp->radius * p->stats.jump_distance;
    d = vect_dist2( &p->solid->pos, &jp->pos );
    if (d > r*r)
       return 0;
@@ -341,8 +403,9 @@ int space_hyperspace( Pilot* p )
  *    @param[out] pos Position calculated.
  *    @param[out] vel Velocity calculated.
  *    @param[out] dir Angle calculated.
+ *    @param p Pilot that is entering to use stats of (or NULL if not important).
  */
-int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir )
+int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir, const Pilot *p )
 {
    int i;
    JumpPoint *jp;
@@ -368,6 +431,8 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
    /* Calculate offset from target position. */
    a = 2*M_PI - jp->angle;
    d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
+   if ((p!=NULL) && pilot_isFlag(p, PILOT_STEALTH))
+      d *= 1.4; /* Jump in from further out when coming in from stealth. */
 
    /* Calculate new position. */
    x += d*cos(a);
@@ -376,6 +441,11 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
    /* Add some error. */
    ea = 2*M_PI*RNGF();
    ed = jp->radius/2.;
+   if (p != NULL) {
+      ed *= p->stats.jump_distance; /* larger variability. */
+      if (pilot_isFlag(p, PILOT_STEALTH))
+         ed *= 2.;
+   }
    x += ed*cos(ea);
    y += ed*sin(ea);
 
@@ -1192,6 +1262,18 @@ void space_factionChange (void)
 
 
 /**
+ * @brief Handles landing if necessary.
+ */
+void space_checkLand (void)
+{
+   if (space_landQueuePlanet != NULL) {
+      land( space_landQueuePlanet, 0 );
+      space_landQueuePlanet = NULL;
+   }
+}
+
+
+/**
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
@@ -1239,6 +1321,9 @@ void space_update( const double dt )
     * Interference.
     */
    if (cur_system->interference > 0.) {
+      /* This interference mechanic is just annoying and doesn't bring much to
+       * the table. Disabling for now, but would need a proper removal. */
+#if 0
       /* Always dark. */
       if (cur_system->interference >= 1000.)
          interference_alpha = 1.;
@@ -1275,6 +1360,7 @@ void space_update( const double dt )
                interference_alpha = 0.;
          }
       }
+#endif
    }
 
    /* Faction updates. */
@@ -1715,6 +1801,9 @@ static int planets_load ( void )
    /* Load XML stuff. */
    planet_files = PHYSFS_enumerateFiles( PLANET_DATA_PATH );
    for (i=0; planet_files[i]!=NULL; i++) {
+      if (!ndata_matchExt( planet_files[i], "xml" ))
+         continue;
+
       asprintf( &file, "%s%s", PLANET_DATA_PATH, planet_files[i]);
       doc = xml_parsePhysFS( file );
       if (doc == NULL) {
@@ -2154,9 +2243,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    /* Free temporary comms list. */
    array_free(comms);
 
-   /* Square to allow for linear multiplication with squared distances. */
-   planet->hide = pow2(planet->hide);
-
    return 0;
 }
 
@@ -2350,9 +2436,9 @@ static void system_init( StarSystem *sys )
    memset( sys, 0, sizeof(StarSystem) );
    sys->planets   = array_create( Planet* );
    sys->planetsid = array_create( int );
-   sys->jumps = array_create( JumpPoint );
+   sys->jumps     = array_create( JumpPoint );
    sys->asteroids = array_create( AsteroidAnchor );
-   sys->astexclude = array_create( AsteroidExclusion );
+   sys->astexclude= array_create( AsteroidExclusion );
    sys->faction   = -1;
 }
 
@@ -2501,6 +2587,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          cur = node->children;
          do {
             xmlr_strd( cur, "background", sys->background );
+            xmlr_strd( cur, "features", sys->features );
             xmlr_int( cur, "stars", sys->stars );
             xmlr_float( cur, "radius", sys->radius );
             if (xml_isNode(cur,"interference")) {
@@ -2681,9 +2768,6 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
    else
       jp_setFlag(j,JP_AUTOPOS);
 
-   /* Square to allow for linear multiplication with squared distances. */
-   j->hide = pow2(j->hide);
-
    return 0;
 }
 
@@ -2770,9 +2854,6 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
    if (!jp_isFlag(j,JP_AUTOPOS) && !pos)
       WARN(_("JumpPoint in system '%s' is missing pos element but does not have autopos flag."), sys->name);
-
-   /* Square to allow for linear multiplication with squared distances. */
-   j->hide = pow2(j->hide);
 
    return 0;
 }
@@ -3188,6 +3269,9 @@ static int systems_load (void)
     * First pass - loads all the star systems_stack.
     */
    for (i=0; system_files[i]!=NULL; i++) {
+      if (!ndata_matchExt( system_files[i], "xml" ))
+         continue;
+
       asprintf( &file, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       doc = xml_parsePhysFS( file );
@@ -3291,6 +3375,9 @@ void space_renderOverlay( const double dt )
          }
       }
    }
+
+   /* Render overlay if necessary. */
+   background_renderOverlay( dt );
 
    if ((cur_system->nebu_density > 0.) &&
          !menu_isOpen( MENU_MAIN ))
@@ -3512,8 +3599,9 @@ void space_exit (void)
    /* Free the systems. */
    for (i=0; i < array_size(systems_stack); i++) {
       free(systems_stack[i].name);
-      array_free(systems_stack[i].jumps);
       free(systems_stack[i].background);
+      free(systems_stack[i].features);
+      array_free(systems_stack[i].jumps);
       array_free(systems_stack[i].presence);
       array_free(systems_stack[i].planets);
       array_free(systems_stack[i].planetsid);
@@ -3567,6 +3655,7 @@ void space_clearKnown (void)
    for (i=0; i<array_size(systems_stack); i++) {
       sys = &systems_stack[i];
       sys_rmFlag(sys,SYSTEM_KNOWN);
+      sys_rmFlag(sys,SYSTEM_HIDDEN);
       for (j=0; j<array_size(sys->jumps); j++)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
    }
@@ -4205,4 +4294,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 }
 
 
-
+void space_queueLand( Planet *pnt )
+{
+   space_landQueuePlanet = pnt;
+}

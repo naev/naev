@@ -64,7 +64,7 @@ function create()
    --set the mission stuff
    misn.setTitle(misn_title)
    misn.setReward(creditstring(reward))
-   misn.setNPC(npc_name, "sirius/unique/shaman.png")
+   misn.setNPC(npc_name, "sirius/unique/shaman.webp", bar_desc)
    misn.setDesc(bar_desc)
 
    osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
@@ -86,7 +86,8 @@ function accept()
    misn.markerAdd(targetsystem,"high")
    misn.osdCreate(misn_title,osd)
    misn.osdActive(1)
-   message = misn.cargoAdd("Message",0)
+   local c = misn.cargoNew( N_("Message"), N_("A message of seemingly high importance.") )
+   message = misn.cargoAdd(c,0)
    hook.land("landing")
 end
 

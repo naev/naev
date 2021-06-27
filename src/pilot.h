@@ -42,7 +42,7 @@
 #define PILOT_REFUEL_TIME        3. /**< Time to complete refueling. */
 #define PILOT_REFUEL_QUANTITY    100 /**< Amount transferred per refuel. */
 /* Misc. */
-#define PILOT_SIZE_APROX         0.8   /**< approximation for pilot size */
+#define PILOT_SIZE_APPROX        0.8   /**< approximation for pilot size */
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
 #define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
 #define PILOT_REVERSE_THRUST     0.4   /**< Ratio of normal thrust to apply when reversing. */
@@ -62,7 +62,8 @@ enum {
    PILOT_HOOK_ATTACKED,  /**< Pilot is in manual override and is being attacked. */
    PILOT_HOOK_IDLE,      /**< Pilot is in manual override and has just become idle. */
    PILOT_HOOK_EXPLODED,  /**< Pilot died and exploded (about to be removed). */
-   PILOT_HOOK_LOCKON     /**< Pilot had a launcher lockon. */
+   PILOT_HOOK_LOCKON,    /**< Pilot had a launcher lockon. */
+   PILOT_HOOK_STEALTH,   /**< Pilot either stealthed or destealthed. */
 };
 
 
@@ -124,6 +125,7 @@ typedef struct PilotOutfitSlot_ {
    double stimer;    /**< State timer, tracking current state. */
    double timer;     /**< Used to store when it was last used. */
    double rtimer;    /**< Used to store when a reload can happen. */
+   double progress;  /**< Used to store state progress and used by Lua outfits. */
    int level;        /**< Level in current weapon set (-1 is none). */
    int weapset;      /**< First weapon set that uses the outfit (-1 is none). */
 
@@ -132,6 +134,10 @@ typedef struct PilotOutfitSlot_ {
       unsigned int beamid;    /**< ID of the beam used in this outfit, only used for beams. */
       PilotOutfitAmmo ammo;   /**< Ammo for launchers. */
    } u; /**< Stores type specific data. */
+
+   /* In the case of Lua stuff. */
+   int lua_mem; /**< Lua reference to the memory table of the specific outfit. */
+   ShipStats lua_stats; /**< Intrinsic ship stats for the outfit calculated on the fly. Used only by Lua outfits. */
 } PilotOutfitSlot;
 
 
@@ -261,16 +267,15 @@ typedef struct Pilot_ {
    double energy_tau; /**< Tau regeneration rate for energy. */
    double energy_loss; /**< Linear loss that bypasses the actual RC circuit stuff. */
 
-   /* Electronic warfare. */
-   double ew_base_hide; /**< Base static hide factor. */
-   double ew_mass;   /**< Mass factor. */
-   double ew_heat;   /**< Heat factor, affects hide. */
-   double ew_asteroid;   /**< Asteroid field factor, affects hide. */
-   double ew_hide;   /**< Static hide factor. */
-   double ew_movement; /**< Movement factor. */
-   double ew_evasion; /**< Dynamic evasion factor. */
-   double ew_detect; /**< Static detection factor. */
-   double ew_jump_detect; /** Static jump detection factor */
+   /* Defensive Electronic Warfare. */
+   double ew_detection; /**< Main detection. */
+   double ew_evasion;   /**< Evasion. */
+   double ew_stealth;   /**< Stealth. */
+   /* Defensive Electronic Warfare. */
+   double ew_mass;      /**< Mass factor. */
+   double ew_asteroid;  /**< Asteroid field factor, affects hide. */
+   /* misc. */
+   double ew_stealth_timer; /**< Stealth timer. */
 
    /* Heat. */
    double heat_T;    /**< Ship temperature. [K] */
@@ -283,6 +288,7 @@ typedef struct Pilot_ {
    double heat_start; /**< Temperature at the start of a cooldown. */
 
    /* Ship statistics. */
+   ShipStats intrinsic_stats; /**< Intrinsic statistics to the ship create on the fly. */
    ShipStats stats;  /**< Pilot's copy of ship statistics. */
 
    /* Associated functions */
@@ -356,6 +362,8 @@ typedef struct Pilot_ {
    double sbonus;    /**< Shield regeneration bonus. */
    double dtimer;    /**< Disable timer. */
    double dtimer_accum; /**< Accumulated disable timer. */
+   double otimer;    /**< Lua outfit timer. */
+   double scantimer; /**< Electronic warfare scanning timer. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
    int projectiles;      /**< Stores how many weapons are after the pilot */
@@ -393,6 +401,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
 int pilot_getJumps( const Pilot* p );
 const glColour* pilot_getColour( const Pilot* p );
 int pilot_validTarget( const Pilot* p, const Pilot* target );
+int pilot_canTarget( const Pilot* p);
 
 /* non-lua wrappers */
 double pilot_relsize( const Pilot* cur_pilot, const Pilot* p );
@@ -468,7 +477,7 @@ void pilot_setTurn( Pilot *p, double turn );
 /*
  * update
  */
-void pilot_update( Pilot* pilot, const double dt );
+void pilot_update( Pilot* pilot, double dt );
 void pilots_update( double dt );
 void pilots_render( double dt );
 void pilots_renderOverlay( double dt );
@@ -502,5 +511,8 @@ char pilot_getFactionColourChar( const Pilot *p );
  */
 credits_t pilot_worth( const Pilot *p );
 void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int index);
+void pilot_sample_trails( Pilot* p, int none );
+int pilot_hasIllegal( const Pilot *p, int faction );
+
 
 #endif /* PILOT_H */

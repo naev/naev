@@ -135,8 +135,6 @@ static int menu_main_bkg_system (void)
             if (sys != NULL) {
                cx = pnt->pos.x;
                cy = pnt->pos.y;
-               cx += 300;
-               cy += 200;
             }
          }
       }
@@ -147,6 +145,10 @@ static int menu_main_bkg_system (void)
       sys = start_system();
       start_position( &cx, &cy );
    }
+
+   /* Have to normalize values by zoom. */
+   cx += SCREEN_W/4. / conf.zoom_far;
+   cy += SCREEN_H/8. / conf.zoom_far;
 
    /* Initialize. */
    space_init( sys );
@@ -180,6 +182,7 @@ void menu_main (void)
    /* Clean up GUI - must be done before using SCREEN_W or SCREEN_H. */
    gui_cleanup();
    player_soundStop(); /* Stop sound. */
+   player_resetSpeed();
 
    /* Play load music. */
    music_choose("load");
@@ -240,7 +243,7 @@ void menu_main (void)
          "btnCredits", p_("Menu|", "Credits"), menu_main_credits, SDLK_c );
    y -= BUTTON_HEIGHT+20;
    window_addButtonKey( wid, 20, y, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", _("Exit"), menu_exit, SDLK_x );
+         "btnExit", _("Exit Game"), menu_exit, SDLK_x );
 
    /* Disable load button if there are no saves. */
    if (array_size( load_getList() ) == 0) {
@@ -434,7 +437,7 @@ void menu_small (void)
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOptions", _("Options"), menu_options_button, SDLK_o );
    window_addButtonKey( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnExit", _("Exit"), menu_small_exit, SDLK_x );
+         "btnExit", _("Exit to Title"), menu_small_exit, SDLK_x );
 
    menu_Open(MENU_SMALL);
 }
@@ -651,6 +654,9 @@ static void menu_editors_open( unsigned int wid, char *unused )
    menu_main_close();
    unpause_game();
 
+   /* Clear known flags - specifically for the SYSTEM_HIDDEN flag. */
+   space_clearKnown();
+
    /* Set dimensions */
    y  = 20 + (BUTTON_HEIGHT+20)*2;
    h  = y + 80;
@@ -681,13 +687,13 @@ static void menu_editors_open( unsigned int wid, char *unused )
 static void menu_editors_close( unsigned int wid, char* str )
 {
    (void)str;
-   
+
    /* Close the Editors Menu and mark it as closed */
    window_destroy( wid );
    menu_Close( MENU_EDITORS );
-   
+
    /* Restores Main Menu */
    menu_main();
-   
+
    return;
 }

@@ -120,7 +120,7 @@ static int hook_loadingstack  = 0; /**< Check if the hooks are being loaded. */
  * prototypes
  */
 /* Execution. */
-static int hooks_executeParam( const char* stack, HookParam *param );
+static int hooks_executeParam( const char* stack, const HookParam *param );
 static void hooks_updateDateExecute( ntime_t change );
 /* intern */
 static void hook_rmRaw( Hook *h );
@@ -128,10 +128,10 @@ static void hooks_purgeList (void);
 static Hook* hook_get( unsigned int id );
 static unsigned int hook_genID (void);
 static Hook* hook_new( HookType_t type, const char *stack );
-static int hook_parseParam( lua_State *L, HookParam *param );
-static int hook_runMisn( Hook *hook, HookParam *param, int claims );
-static int hook_runEvent( Hook *hook, HookParam *param, int claims );
-static int hook_run( Hook *hook, HookParam *param, int claims );
+static int hook_parseParam( lua_State *L, const HookParam *param );
+static int hook_runMisn( Hook *hook, const HookParam *param, int claims );
+static int hook_runEvent( Hook *hook, const HookParam *param, int claims );
+static int hook_run( Hook *hook, const HookParam *param, int claims );
 static void hook_free( Hook *h );
 static int hook_needSave( Hook *h );
 static int hook_parse( xmlNodePtr base );
@@ -240,7 +240,7 @@ void hook_exclusionEnd( double dt )
  *    @param param Parameters to process.
  *    @return Parameters found.
  */
-static int hook_parseParam( lua_State *L, HookParam *param )
+static int hook_parseParam( lua_State *L, const HookParam *param )
 {
    int n;
 
@@ -295,7 +295,7 @@ static int hook_parseParam( lua_State *L, HookParam *param )
  *    @param claims Whether the hook is contingent on the mission/event claiming the current system.
  *    @return 0 on success.
  */
-static int hook_runMisn( Hook *hook, HookParam *param, int claims )
+static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
 {
    unsigned int id;
    Mission* misn;
@@ -354,7 +354,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
  *    @param claims Whether the hook is contingent on the mission/event claiming the current system.
  *    @return 0 on success.
  */
-static int hook_runEvent( Hook *hook, HookParam *param, int claims )
+static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
 {
    int ret;
    int n;
@@ -404,7 +404,7 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
  *    @param claims Whether the hook is contingent on the mission/event claiming the current system.
  *    @return 0 on success.
  */
-static int hook_run( Hook *hook, HookParam *param, int claims )
+static int hook_run( Hook *hook, const HookParam *param, int claims )
 {
    int ret;
 
@@ -895,7 +895,7 @@ int hook_hasEventParent( unsigned int parent )
 
 
 
-static int hooks_executeParam( const char* stack, HookParam *param )
+static int hooks_executeParam( const char* stack, const HookParam *param )
 {
    int j;
    int run;
@@ -945,13 +945,13 @@ static int hooks_executeParam( const char* stack, HookParam *param )
 
 
 /**
- * @brief Runs all the hooks of stack.
+ * @brief Runs all the hooks of stack in the next frame. Does not trigger right away.
  *
  *    @param stack Stack to run.
  *    @param param Parameters to pass.
  *    @return 0 on success.
  */
-int hooks_runParam( const char* stack, HookParam *param )
+int hooks_runParamDeferred( const char* stack, const HookParam *param )
 {
    int i;
    HookQueue_t *hq;
@@ -960,23 +960,39 @@ int hooks_runParam( const char* stack, HookParam *param )
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return 0;
 
-   /* Not time to run hooks, so queue them. */
-   if (hook_atomic) {
-      hq = calloc( 1, sizeof(HookQueue_t) );
-      hq->stack = strdup(stack);
-      i         = 0;
-      if ( param != NULL ) {
-         for ( ; param[ i ].type != HOOK_PARAM_SENTINEL; i++ )
-            hq->hparam[ i ] = param[ i ];
-      }
-#ifdef DEBUGGING
-      if (i >= HOOK_MAX_PARAM)
-         WARN( _("HOOK_MAX_PARAM is set too low (%d), need at least %d!"), HOOK_MAX_PARAM, i );
-#endif /* DEBUGGING */
-      hq->hparam[i].type = HOOK_PARAM_SENTINEL;
-      hq_add( hq );
-      return 0;
+   hq = calloc( 1, sizeof(HookQueue_t) );
+   hq->stack = strdup(stack);
+   i         = 0;
+   if (param != NULL) {
+      for (; param[i].type != HOOK_PARAM_SENTINEL; i++)
+         hq->hparam[i] = param[i];
    }
+#ifdef DEBUGGING
+   if (i >= HOOK_MAX_PARAM)
+      WARN( _("HOOK_MAX_PARAM is set too low (%d), need at least %d!"), HOOK_MAX_PARAM, i );
+#endif /* DEBUGGING */
+   hq->hparam[i].type = HOOK_PARAM_SENTINEL;
+   hq_add( hq );
+   return 0;
+}
+
+
+/**
+ * @brief Runs all the hooks of stack.
+ *
+ *    @param stack Stack to run.
+ *    @param param Parameters to pass.
+ *    @return 0 on success.
+ */
+int hooks_runParam( const char* stack, const HookParam *param )
+{
+   /* Don't update if player is dead. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
+      return 0;
+
+   /* Not time to run hooks, so queue them. */
+   if (hook_atomic)
+      return hooks_runParamDeferred( stack, param );
 
    /* Execute. */
    return hooks_executeParam( stack, param );
@@ -1047,7 +1063,7 @@ nlua_env hook_env( unsigned int hook )
  *    @param param Parameters to process.
  *    @return The ID of the hook or 0 if it got deleted.
  */
-int hook_runIDparam( unsigned int id, HookParam *param )
+int hook_runIDparam( unsigned int id, const HookParam *param )
 {
    Hook *h;
 

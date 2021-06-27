@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>400000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -43,5 +43,6 @@
   <item>Bulk Trade Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Basic Civilian Ships</item>
+  <item>Soromid Elite Outfits</item>
  </tech>
 </asset>

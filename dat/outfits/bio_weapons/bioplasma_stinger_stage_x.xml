@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="BioPlasma Stinger Stage X">
+ <general>
+  <slot prop="bio_weapon">weapon</slot>
+  <size>small</size>
+  <license>Medium Weapon License</license>
+  <rarity>2</rarity>
+  <mass>6</mass>
+  <price>9000</price>
+  <description>The BioPlasma Stinger is the most basic organic weaponry available, and one of the most common. While it is not especially powerful, it is prized for its reliability and low cognitive requirements. This organ has reached Stage X, its full potential.</description>
+  <gfx_store>plasma.webp</gfx_store>
+  <cpu>-1</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx>plasma2.png</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>PlaS2</spfx_armour>
+  <delay>0.8</delay>
+  <speed>700</speed>
+  <range>900</range>
+  <falloff>750</falloff>
+  <gfx_end>plasma2-end.png</gfx_end>
+  <energy>4</energy>
+  <heatup>40</heatup>
+  <trackmin>0</trackmin>
+  <trackmax>3000</trackmax>
+  <swivel>22</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>0</penetrate>
+   <physical>17</physical>
+   <disable>1.6</disable>
+  </damage>
+ </specific>
+</outfit>

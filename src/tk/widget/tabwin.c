@@ -21,7 +21,7 @@
 
 
 #define TAB_HEIGHT   30
-#define TAB_HMARGIN 3
+#define TAB_HMARGIN  3
 #define TAB_HPADDING 15
 
 
@@ -37,6 +37,7 @@ static int tab_scroll( Widget *tab, int dir );
 static void tab_render( Widget* tab, double bx, double by );
 static void tab_renderOverlay( Widget* tab, double bx, double by );
 static void tab_cleanup( Widget* tab );
+static int tab_getBarWidth( const Widget* wgt );
 static Widget *tab_getWgt( unsigned int wid, const char *tab );
 
 
@@ -88,8 +89,8 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->dat.tab.font       = &gl_smallFont;
 
    /* position/size */
-   wgt->x = (double) (x<0) ? 0 : x;
-   wgt->y = (double) (y<0) ? 0 : y;
+   wgt->x = (double) (x<0) ? 0. : x;
+   wgt->y = (double) (y<0) ? 0. : y;
    wgt->w = (double) (w<0) ? wdw->w : w;
    wgt->h = (double) (h<0) ? wdw->h : h;
 
@@ -244,13 +245,13 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       return 0;
 
    /* Handle event. */
-   p = 0;
+   p = TAB_HMARGIN;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       /* Too far left, won't match any tabs. */
       if (x < p)
          break;
 
-      p += (TAB_HPADDING * 2) + tab->dat.tab.namelen[i];
+      p += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
 
       /* Too far right, try next tab. */
       if (x >= p)
@@ -368,7 +369,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
  */
 static void tab_render( Widget* tab, double bx, double by )
 {
-   int i, x, y, dx;
+   int i, x, y;
    Window *wdw;
 
    /** Get window. */
@@ -382,32 +383,25 @@ static void tab_render( Widget* tab, double bx, double by )
    window_render( wdw );
 
    /* Render tabs ontop. */
-   dx = 0;
-   x = bx+tab->x+1;
-   y = by+tab->y+1;
+   x = bx+tab->x+3.;
+   y = by+tab->y+3.;
    if (tab->dat.tab.tabpos == 1)
       y += tab->h-TAB_HEIGHT;
 
-   /* Draw tab bar backgrund */
-   toolkit_drawRect( x, y, wdw->w, TAB_HEIGHT+2, &cGrey10, NULL);
+   /* Draw tab bar background */
+   toolkit_drawRect( x, y, wdw->w-6., TAB_HEIGHT+2, &cGrey10, NULL);
+   toolkit_drawRect( x, y, tab_getBarWidth( tab ), TAB_HEIGHT+2, &cBlack, NULL);
 
    /* Iterate through tabs */
+   x += TAB_HMARGIN;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
-
-      /* Draw border rect - first tab doesn't have left border */
-      /* toolkit_drawRect( 
-          (i == 0 ? x : x-2), 
-          y, 
-          (i == 0 ? 2 : 4 ) + tab->dat.tab.namelen[i] + (TAB_HPADDING * 2),
-          TAB_HEIGHT + 2, &cGrey10, NULL ); */
-
       /* Draw contents rect */
-      toolkit_drawRect( 
+      toolkit_drawRect(
           x, y, tab->dat.tab.namelen[i] + (TAB_HPADDING * 2),
-          ( i == tab->dat.tab.active ? TAB_HEIGHT  + 2: TAB_HEIGHT ), 
-          ( i == tab->dat.tab.active ? tab_active : tab_inactive), 
+          (i == tab->dat.tab.active ? TAB_HEIGHT + 2: TAB_HEIGHT),
+          (i == tab->dat.tab.active ? tab_active : tab_inactive),
           NULL );
-      
+
       /* Draw text. */
       gl_printRaw( tab->dat.tab.font, x + TAB_HPADDING,
             y + (TAB_HEIGHT-tab->dat.tab.font->h)/2, &cFontWhite, -1.,
@@ -415,10 +409,7 @@ static void tab_render( Widget* tab, double bx, double by )
 
       /* Go to next line. */
       x += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
-      dx += (TAB_HPADDING * 2) + TAB_HMARGIN + tab->dat.tab.namelen[i];
    }
-
-
 }
 
 
@@ -603,13 +594,21 @@ unsigned int* window_tabWinGet( const unsigned int wid, const char *tab )
  */
 int window_tabWinGetBarWidth( const unsigned int wid, const char* tab )
 {
+   Widget *wgt = tab_getWgt( wid, tab );
+   return tab_getBarWidth( wgt );
+}
+
+/**
+ * @brief \see window_tabWinGetBarWidth
+ */
+int tab_getBarWidth( const Widget* wgt )
+{
    int i, w;
 
-   Widget *wgt = tab_getWgt( wid, tab );
    if (wgt == NULL)
       return 0;
 
-   w = (TAB_HMARGIN + TAB_HPADDING);
+   w = TAB_HMARGIN;
    for (i=0; i<wgt->dat.tab.ntabs; i++)
       w += (TAB_HMARGIN + TAB_HPADDING) + wgt->dat.tab.namelen[i] + (TAB_HPADDING);
 

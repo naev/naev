@@ -15,17 +15,9 @@ end
 --[[
 -- Mainly manages targeting nearest enemy.
 --]]
-function atk_generic_think ()
-   local enemy  = ai.getenemy()
-   local target = ai.target()
-
-   -- Stop attacking if it doesn't exist
-   if not target:exists() then
-      ai.poptask()
-      return
-   end
-
+function atk_generic_think( target, si )
    -- Get new target if it's closer
+   local enemy  = ai.getenemy()
    if enemy ~= target and enemy ~= nil then
       local dist  = ai.dist( target )
       local range = ai.getweaprange( 3 )
@@ -42,18 +34,24 @@ end
 -- Attacked function.
 --]]
 function atk_generic_attacked( attacker )
-   local target = ai.target()
+   local task = ai.taskname()
+   local si = _stateinfo( ai.taskname() )
 
    if mem.recharge then
       mem.recharge = false
    end
 
    -- If no target automatically choose it
-   if not target:exists() then
+   if not si.attack then
       ai.pushtask("attack", attacker)
       return
    end
 
+   local target = ai.taskdata()
+   if not target:exists() then
+      ai.pushtask("attack", attacker)
+      return
+   end
    local tdist  = ai.dist(target)
    local dist   = ai.dist(attacker)
    local range  = ai.getweaprange( 0 )
@@ -68,8 +66,8 @@ end
 --[[
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
-function atk_generic ()
-   local target = _atk_com_think()
+function atk_generic( target )
+   target = _atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff
@@ -77,14 +75,14 @@ function atk_generic ()
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable() then return end
+   if not _atk_check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
    local range = ai.getweaprange( 3 )
 
    -- We first bias towards range
-   if dist > range * mem.atk_approach then
+   if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
       _atk_g_ranged( target, dist )
 
    -- Now we do an approach
@@ -112,7 +110,7 @@ function _atk_g_ranged_dogfight( target, dist )
    else
       -- Test if we should zz
       if ai.pilot():stats().mass < 400 and _atk_decide_zz() then
-         ai.pushsubtask("_atk_zigzag")
+         ai.pushsubtask("_atk_zigzag", target)
       end
    end
 

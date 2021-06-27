@@ -16,7 +16,7 @@
  <general>
   <class>A</class>
   <population>3000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>zlk_mil_restricted</land>
    <refuel/>
@@ -49,5 +49,6 @@
   <item>Hulls Medium</item>
   <item>Engines Low</item>
   <item>Engines Medium</item>
+  <item>Za'lek Elite Outfits</item>
  </tech>
 </asset>

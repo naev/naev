@@ -5,30 +5,31 @@
   <size>large</size>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
-  <mass>47</mass>
-  <price>62500</price>
-  <description>House Sirius typically equips its heavier vessels with Heavy Razor Turrets. Where the standard razor turrets are ineffective, the heavy razor turret provides the necessary firepower to batter down virtually any shielding.</description>
-  <gfx_store>ionturret.png</gfx_store>
-  <cpu>-24</cpu>
+  <mass>75</mass>
+  <price>120000</price>
+  <description>House Sirius typically equips its heaviest vessels with Heavy Razor Turrets. Where the standard razor turrets are ineffective, the heavy razor turret provides the necessary firepower to batter down virtually any shielding.</description>
+  <gfx_store>ionturret.webp</gfx_store>
+  <cpu>-350</cpu>
  </general>
  <specific type="turret bolt">
   <gfx>razorL.png</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
-  <delay>0.8</delay>
-  <speed>800</speed>
-  <range>2000</range>
-  <falloff>1500</falloff>
+  <delay>1.45</delay>
+  <speed>600</speed>
+  <range>2400</range>
+  <falloff>1800</falloff>
   <gfx_end>razorL-end.png</gfx_end>
-  <energy>32</energy>
-  <heatup>45</heatup>
-  <track>1.25</track>
+  <energy>174</energy>
+  <heatup>60</heatup>
+  <trackmin>10000</trackmin>
+  <trackmax>30000</trackmax>
   <damage>
    <type>ion</type>
-   <penetrate>36</penetrate>
-   <physical>28</physical>
-   <disable>8</disable>
+   <penetrate>100</penetrate>
+   <physical>80</physical>
+   <disable>20</disable>
   </damage>
  </specific>
 </outfit>

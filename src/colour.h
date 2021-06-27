@@ -44,6 +44,7 @@ extern const glColour cGrey25;
 extern const glColour cGrey20;
 extern const glColour cGrey15;
 extern const glColour cGrey10;
+extern const glColour cGrey5;
 
 extern const glColour cDarkGreen;
 extern const glColour cGreen;
@@ -73,6 +74,10 @@ extern const glColour cAqua;
 extern const glColour cBlackHilight;
 /* toolkit */
 extern const glColour cHilight;
+/* outfit slot colours. */
+extern const glColour cOutfitHeavy;
+extern const glColour cOutfitMedium;
+extern const glColour cOutfitLight;
 /* objects */
 extern const glColour cInert;
 extern const glColour cNeutral;

@@ -192,8 +192,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(portrait_name, portrait_tam)
-   misn.setDesc(portrait_desc)
+   misn.setNPC(portrait_name, portrait_tam, portrait_desc)
 end
 
 function accept()
@@ -362,16 +361,15 @@ function equipGoddard( pilot, repeating )
    pilot:rmOutfit("cores")
    pilot:addOutfit("S&K Superheavy Combat Plating")
    pilot:addOutfit("Melendez Mammoth XL Engine")
+   pilot:addOutfit("Milspec Orion 9901 Core System")
    pilot:addOutfit("Nanobond Plating", 6)
+   pilot:addOutfit("MilSpec Impacto-Plastic Coating")
+   pilot:addOutfit("Droid Repair Crew",4)
 
    if repeating then
-      pilot:addOutfit("Milspec Hermes 9802 Core System")
       pilot:addOutfit("Repeating Railgun", 7)
-      pilot:addOutfit("Reactor Class III", 5)
    else
-      pilot:addOutfit("Milspec Prometheus 9803 Core System")
       pilot:addOutfit("Railgun", 7)
-      pilot:addOutfit("Reactor Class II", 5)
    end
    pilot:setHealth(100,100)
    pilot:setEnergy(100)
@@ -437,10 +435,10 @@ function spawn_phalanx()
    p:rmOutfit("all")
    p:rmOutfit("cores")
    p:addOutfit("S&K Medium Combat Plating")
-   p:addOutfit("Milspec Prometheus 4703 Core System")
+   p:addOutfit("Milspec Orion 4801 Core System")
    p:addOutfit("Tricon Cyclone Engine")
    p:addOutfit("Turreted Vulcan Gun", 2)
-   p:addOutfit("Mass Driver MK3")
+   p:addOutfit("Mass Driver")
    p:addOutfit("Vulcan Gun", 2)
    p:addOutfit("Reactor Class I")
    p:addOutfit("Medium Cargo Pod", 2)
@@ -629,8 +627,8 @@ end
 function endMisn()
    tk.msg( epilogue_title, epilogue_text:format(creditstring(credits_01)) )
    player.pay(credits_01)
-   shiplog.createLog( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
-   shiplog.appendLog( "dvaered_military", log_text )
+   shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
+   shiplog.append( "dvaered_military", log_text )
    var.push( "loyal2klank", false ) -- This ensures the next mission will be available only once the traitor event is done
    misn.finish(true)
 end

@@ -10,11 +10,6 @@
   <gfx_store>engine04.png</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>0</thrust>
-  <turn>0</turn>
-  <speed>0</speed>
-  <fuel>0</fuel>
-  <energy_usage>0</energy_usage>
   <engine_limit>100</engine_limit>
  </specific>
 </outfit>

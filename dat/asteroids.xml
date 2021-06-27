@@ -10,11 +10,23 @@
   <gfx>asteroid-D11.webp</gfx>
   <gfx>asteroid-D12.webp</gfx>
   <gfx>asteroid-D13.webp</gfx>
-  <armour>50</armour>
+  <armour>100</armour>
   <commodity>
    <name>Ore</name>
    <quantity>5</quantity>
   </commodity>
+ </asteroid>
+ <asteroid>
+  <id>nodrop</id>
+  <gfx>asteroid-D00.webp</gfx>
+  <gfx>asteroid-D07.webp</gfx>
+  <gfx>asteroid-D08.webp</gfx>
+  <gfx>asteroid-D09.webp</gfx>
+  <gfx>asteroid-D10.webp</gfx>
+  <gfx>asteroid-D11.webp</gfx>
+  <gfx>asteroid-D12.webp</gfx>
+  <gfx>asteroid-D13.webp</gfx>
+  <armour>200</armour>
  </asteroid>
  <asteroid>
   <id>massive</id>
@@ -26,7 +38,7 @@
   <gfx>asteroid-D11.webp</gfx>
   <gfx>asteroid-D12.webp</gfx>
   <gfx>asteroid-D13.webp</gfx>
-  <armour>100</armour>
+  <armour>200</armour>
   <commodity>
    <name>Ore</name>
    <quantity>15</quantity>
@@ -41,7 +53,7 @@
   <gfx>asteroid-D05.webp</gfx>
   <gfx>asteroid-D06.webp</gfx>
   <gfx>asteroid-D14.webp</gfx>
-  <armour>70</armour>
+  <armour>140</armour>
   <commodity>
    <name>Ore</name>
    <quantity>4</quantity>
@@ -61,7 +73,7 @@
   <gfx>asteroid-D11.webp</gfx>
   <gfx>asteroid-D12.webp</gfx>
   <gfx>asteroid-D13.webp</gfx>
-  <armour>150</armour>
+  <armour>300</armour>
   <commodity>
    <name>Ore</name>
    <quantity>12</quantity>
@@ -81,7 +93,7 @@
   <gfx>asteroid-D11.webp</gfx>
   <gfx>asteroid-D12.webp</gfx>
   <gfx>asteroid-D13.webp</gfx>
-  <armour>40</armour>
+  <armour>80</armour>
   <commodity>
    <name>Ore</name>
    <quantity>4</quantity>

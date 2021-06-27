@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>500</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>srs_mil_restricted</land>
    <refuel/>
@@ -34,5 +34,6 @@
   <item>Heavy Civilian Combat Ships</item>
   <item>Heavy Weapons 2</item>
   <item>High Tech Upgrades 1</item>
+  <item>Sirius Elite Outfits</item>
  </tech>
 </asset>

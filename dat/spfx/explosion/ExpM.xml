@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spfx name="ExpM">
+ <anim>1429</anim>
+ <shader>
+  <vert>project_pos.vert</vert>
+  <frag>explosion.frag</frag>
+  <size>70</size>
+  <uniforms>
+   <u_grain x="0.15" />
+   <u_speed x="0.7" />
+   <u_steps int="1" x="8" />
+  </uniforms>
+ </shader>
+</spfx>

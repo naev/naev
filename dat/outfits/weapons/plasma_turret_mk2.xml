@@ -4,29 +4,30 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon License</license>
-  <mass>24</mass>
+  <mass>30</mass>
   <price>31000</price>
   <description>The mark 2 plasma turret isn't especially impressive compared to other medium-size turrets, but it is sometimes favored by corvettes for its unusually low weight compared to its range and damage output.</description>
   <gfx_store>plasma2.png</gfx_store>
-  <cpu>-16</cpu>
+  <cpu>-50</cpu>
  </general>
  <specific type="turret bolt">
   <gfx>plasma2.png</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>PlaS2</spfx_armour>
-  <delay>0.475</delay>
-  <speed>450</speed>
-  <range>900</range>
-  <falloff>510</falloff>
-  <energy>13.5</energy>
-  <heatup>30</heatup>
-  <track>1.6</track>
+  <delay>1.0</delay>
+  <speed>700</speed>
+  <range>1100</range>
+  <falloff>950</falloff>
+  <energy>30</energy>
+  <heatup>50</heatup>
+  <trackmin>2000</trackmin>
+  <trackmax>8000</trackmax>
   <damage>
-   <type>normal</type>
-   <penetrate>18</penetrate>
-   <physical>14</physical>
-   <disable>1</disable>
+   <type>impact</type>
+   <penetrate>36</penetrate>
+   <physical>32</physical>
+   <disable>2</disable>
   </damage>
  </specific>
 </outfit>

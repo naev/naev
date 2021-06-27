@@ -30,7 +30,7 @@
 #define MISSION_DATA_PATH        "missions/" /**< Path to missions XML. */
 #define EVENT_DATA_PATH          "events/" /**< Path to events XML. */
 #define UNIDIFF_DATA_PATH        "unidiff/" /**< Path to unidiff XML. */
-#define SPFX_DATA_PATH           "spfx.xml" /**< Location of the spfx datafile. */
+#define SPFX_DATA_PATH           "spfx/" /**< Location of the spfx datafiles. */
 #define DTYPE_DATA_PATH          "damagetype.xml" /**< Damage-type definitions. */
 #define COMMODITY_DATA_PATH      "commodity.xml" /**< Commodity XML file. */
 #define FLEET_DATA_PATH          "fleet.xml" /**< Where to find fleet data. */
@@ -81,6 +81,7 @@ void* ndata_read( const char* filename, size_t *filesize );
 char** ndata_listRecursive( const char *path );
 int ndata_backupIfExists( const char *path );
 int ndata_copyIfExists( const char *path1, const char *path2 );
+int ndata_matchExt( const char *path, const char *ext );
 
 
 #endif /* NDATA_H */

@@ -25,7 +25,7 @@ function _atk_keep_distance()
       ai.turn(1)
    elseif perp_distance > 0 and perp_distance < 50 then
       ai.turn(-1)
-   end    
+   end
 end
 
 --[[
@@ -34,25 +34,11 @@ end
 -- But the clean way would require to have stored the target position into memory
 -- This test should be put in any subtask of the attack task.
 --]]
-function _atk_check_seeable()
-   local self   = ai.pilot()
-   local target = ai.target()
-
-   -- Pilot still sees the target: continue attack
-   if self:inrange( target ) then
+function _atk_check_seeable( target )
+   if __check_seeable( target ) then
       return true
    end
-
-   -- Pilots on manual control (in missions or events) never loose target
-   -- /!\ This is not necessary desirable all the time /!\
-   -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control 
-   if self:flags().manualcontrol then
-      return true
-   end
-
-   ai.settarget(self) -- Un-target
-   ai.poptask()
-   ai.pushtask("inspect_moveto", target:pos() )
+   __investigate_target( target )
    return false
 end
 
@@ -64,7 +50,7 @@ function _atk_decide_zz()
    -- The situation is the following: we're out of range, facing the target,
    -- going towards the target, and someone is shooting on us.
 
-   local target = ai.target()
+   local target = ai.taskdata()
    local pilot  = ai.pilot()
    local range  = ai.getweaprange(3)
    local dir = ai.idir(target)
@@ -83,7 +69,7 @@ end
 -- Zig zags towards the target
 --]]
 function _atk_zigzag()
-   local target = ai.target()
+   local target = ai.taskdata()
    local range  = ai.getweaprange(3)
 
    if (not target:exists()) then
@@ -92,7 +78,7 @@ function _atk_zigzag()
    end
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable() then return end
+   if not _atk_check_seeable( target ) then return end
 
    -- Is there something to dodge?
    if (not ai.hasprojectile()) then
@@ -108,7 +94,7 @@ function _atk_zigzag()
       return
    end
 
-   local dir = ai.dir(ai.target())
+   local dir = ai.dir(ai.taskdata())
    __zigzag(dir, 30)
 end
 
@@ -116,9 +102,7 @@ end
 --[[
 -- Common control stuff
 --]]
-function _atk_com_think ()
-   local target = ai.target()
-
+function _atk_com_think( target )
    -- make sure pilot exists
    if not target:exists() then
       ai.poptask()
@@ -142,7 +126,7 @@ function _atk_com_think ()
       ai.poptask()
       return
    end
-   
+
    return target
 end
 

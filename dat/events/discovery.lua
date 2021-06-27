@@ -52,6 +52,30 @@ system_events = {
       title = _("House Za'lek Central Station"),
       subtitle = _("Bastion of Knowledge"),
    },
+   Ruadan = {
+      type = "distance",
+      dist = 5000,
+      pos  = planet.get("Ruadan Prime"):pos(),
+      name = "disc_zalekruadan",
+      title = _("Ruadan Prime"),
+      subtitle = _("New Heart of the Za'lek"),
+   },
+   Dvaer = {
+      type = "distance",
+      dist = 5000,
+      pos  = planet.get("Dvaered High Command"):pos(),
+      name = "disc_dvaeredhigh",
+      title = _("Dvaered High Command"),
+      subtitle = _("Convening of the Warlords"),
+   },
+   Aesir = {
+      type = "distance",
+      dist = 5000,
+      pos  = planet.get("Mutris"):pos(),
+      name = "disc_mutris",
+      title = _("Crater City"),
+      subtitle = _("Touching the Universe"),
+   },
    Taiomi = {
       type = "enter",
       name = "disc_taiomi",
@@ -68,6 +92,14 @@ system_events = {
       name = "disc_minerva",
       title = _("Minerva Station"),
       subtitle = _("Gambler's Paradise"),
+   },
+   Beeklo = {
+      type = "distance",
+      dist = 5000,
+      pos  = planet.get("Totoran"):pos(),
+      name = "disc_totoran",
+      title = _("Totoran"),
+      subtitle = _("Brave your Fate in the #rCrimson Gauntlet#0"),
    },
    Haven = {
       type = "enter",
@@ -124,6 +156,7 @@ faction_events = {
       name = "disc_proteron",
       title = _("The Proteron Territories"),
       subtitle = _("United through Sacrifice"),
+      func = function() faction.get("Proteron"):setKnown( true ) end
    },
    Thurion = {
       type = "enter",
@@ -142,9 +175,19 @@ faction_events = {
       name = "disc_collective",
       title = _("The Collective"),
       subtitle = _("Do Robots Dream of Electric Sheep?"),
+      func = function() faction.get("Collective"):setKnown( true ) end
    },
 }
 -- Custom events can handle custom triggers such as nebula systems
+local function test_systems( syslist )
+   local n = system.cur():nameRaw()
+   for k,v in ipairs(syslist) do
+      if v==n then
+         return true
+      end
+   end
+   return false
+end
 custom_events = {
    Nebula = {
       test = function ()
@@ -157,18 +200,46 @@ custom_events = {
             "Myad",
             "Tormulex",
          }
-         local n = system.cur():nameRaw()
-         for k,v in ipairs(nsys) do
-            if v==n then
-               return true
-            end
-         end
-         return false
+         return test_systems( nsys )
       end,
       type = "enter",
       name = "disc_nebula",
       title = _("The Nebula"),
       subtitle = _("Grim Reminder of Our Fragility"),
+   },
+   NorthWinds = {
+      test = function ()
+         local nsys = {
+            "Defa",
+            "Vedalus",
+            "Titus",
+            "New Haven",
+            "Daled",
+            "Mason",
+         }
+         return test_systems( nsys )
+      end,
+      type = "enter",
+      name = "disc_northwinds",
+      title = _("Northern Solar Winds"),
+      --subtitle = _("None"),
+   },
+   SouthWinds = {
+      test = function ()
+         local nsys = {
+            "Kretogg",
+            "Unicorn",
+            "Volus",
+            "Sheffield",
+            "Gold",
+            "Fried",
+         }
+         return test_systems( nsys )
+      end,
+      type = "enter",
+      name = "disc_southwinds",
+      title = _("Southern Solar Winds"),
+      --subtitle = _("None"),
    },
 }
 
@@ -198,16 +269,16 @@ function create()
    local event = system_events[ sc:nameRaw() ]
    local hasevent = false
    if event then
-      hasevent = handle_event( event )
+      hasevent = hasevent or handle_event( event )
    end
    local sf = sc:faction()
    local event = sf and faction_events[ sf:nameRaw() ] or false
    if event then
-      hasevent = handle_event( event )
+      hasevent = hasevent or handle_event( event )
    end
    for k,v in pairs(custom_events) do
       if not var.peek( v.name ) and v.test() then
-         hasevent = handle_event( v )
+         hasevent = hasevent or handle_event( v )
       end
    end
 
@@ -240,11 +311,16 @@ function discover_trigger( event )
    local msg  = string.format(_("You found #o%s!"),event.title)
    -- Log and message
    player.msg( msg )
-   local logid = shiplog.createLog( "discovery", _("Travel Log"), _("Discovery") )
-   shiplog.appendLog( "discovery", msg )
+   local logid = shiplog.create( "discovery", _("Travel Log"), _("Discovery") )
+   shiplog.append( "discovery", msg )
 
    -- Break autonav
-   player.autonavAbort( msg )
+   player.autonavReset( 5 )
+
+   -- If custom function, run it
+   if event.func then
+      event.func()
+   end
 
    -- Mark as done
    var.push( event.name, true )
@@ -256,6 +332,7 @@ end
 
 text_fadein = 1.5
 text_fadeout = 1.5
+text_length = 8.0
 function textinit( titletext, subtitletext )
    local fontname = _("fonts/CormorantUnicase-Medium.ttf")
    -- Title
@@ -285,7 +362,6 @@ function textinit( titletext, subtitletext )
    textshader:send( "texprev", emptycanvas )
    textshader._emptycanvas = emptycanvas
    texttimer   = 0
-   textlength  = 8
 
    -- Render to canvas
    local pixelcode = string.format([[
@@ -345,14 +421,14 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    hook.renderfg( "textfg" )
    hook.update( "textupdate" )
-   --hook.timer( textlength*1000, "endevent")
+   --hook.timer( text_length*1000, "endevent")
 end
 function textfg ()
    local progress
    if texttimer < text_fadein then
       progress = texttimer / text_fadein
-   elseif texttimer > textlength-text_fadeout then
-      progress = (textlength-texttimer) / text_fadeout
+   elseif texttimer > text_length-text_fadeout then
+      progress = (text_length-texttimer) / text_fadeout
    end
 
    if progress then

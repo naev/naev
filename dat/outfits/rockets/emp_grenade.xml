@@ -3,7 +3,7 @@
  <general>
   <mass>0.5</mass>
   <price>0</price>
-  <gfx_store>empgrenade_blue.png</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
   <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
  </general>
  <specific type="ammo">
@@ -17,9 +17,9 @@
   <speed>500</speed>
   <damage>
    <type>emp</type>
-   <penetrate>50</penetrate>
+   <penetrate>48</penetrate>
    <physical>8</physical>
-   <disable>50</disable>
+   <disable>70</disable>
   </damage>
   <ai>unguided</ai>
  </specific>

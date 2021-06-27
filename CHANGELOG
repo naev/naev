@@ -1,18 +1,29 @@
 * 0.9.0 (unreleased)
    * Gameplay
+      * Illegal cargo and ship-to-ship detection
+      * Pilots can now go into stealth mode
+      * Electronic warfare parameters are simplified and visible
+      * Overhaul and rebalance of most outfits
+      * Added new utility outfits with complex effects
+      * Added escorts for hire
       * Added discovery messages as you explore the universe
       * New fancy system rendering effects
       * Ships and rockets now have engine trails
       * Beam visuals have been made more flexible and pretty
       * Jumping visuals improved
       * Redid the shake visuals and added a small damage visual
-      * Added outfits that allow converting damage to disable
+      * Most special effects implemented as shaders
+      * Game now tracks meta-data like ships destroyed and time played
       * Added gambling resort "Minerva Station"
+      * Added mysterious new system "Taiomi"
       * New missions
+         * Challenge adversaries in the Crimson Gauntlet
          * Follow happenings on "Minerva Station"
          * Invade the frontier with the Dvaered
       * New translation(s) in progress: Czech, French, and Korean
    * Engine
+      * A ton of new ship stat attributes have been added
+      * Support for Lua-based hooks in Outfits for complex behaviours
       * Support for post-processing shaders
       * Added rendering and update hooks in the Lua API
       * Added image format support beyond PNG (notably WebP)
@@ -24,6 +35,7 @@
       * Added Visual Novel library
       * Added card games
       * Added dynamic factions
+      * Added dynamic commodities
 
 * 0.8.2
    * Gameplay

@@ -65,6 +65,7 @@
  <faction>
   <name>Miner</name>
   <ai>miner</ai>
+  <logo>miner</logo>
   <static />
   <invisible />
   <known />
@@ -214,7 +215,6 @@
   <player>0</player>
   <spawn>soromid</spawn>
   <standing>soromid</standing>
-  <equip>soromid</equip>
   <allies/>
   <enemies>
    <enemy>Pirate</enemy>
@@ -236,7 +236,6 @@
  <faction>
   <name>Collective</name>
   <ai>collective</ai>
-  <known />
   <logo>collective</logo>
   <player>-100</player>
   <colour>silver</colour>
@@ -258,7 +257,6 @@
   <colour>yellow</colour>
   <spawn>flf</spawn>
   <standing>flf</standing>
-  <equip>pirate</equip>
   <enemies>
    <enemy>Dvaered</enemy>
    <enemy>Rogue FLF</enemy>
@@ -283,7 +281,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -359,7 +356,6 @@
   <enemies>
    <enemy>Civilian</enemy>
    <enemy>Collective</enemy>
-   <enemy>Dvaered</enemy>
    <enemy>Independent</enemy>
    <enemy>Miner</enemy>
    <enemy>Proteron</enemy>

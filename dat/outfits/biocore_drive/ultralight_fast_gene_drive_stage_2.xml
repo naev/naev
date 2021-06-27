@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Ultralight Fast Gene Drive Stage 2">
+ <general>
+  <rarity>1</rarity>
+  <typename>Bioship Gene Drive</typename>
+  <slot prop="bio_engines">structure</slot>
+  <size>small</size>
+  <mass>8</mass>
+  <price>105000</price>
+  <description>The gene drive is a Soromid bioship's equivalent to engines in synthetic ships. It is charged with moving the organism through space and comes in either a strong form (for heavy loads) or a fast form (for greater speed and agility). All gene drives start off undeveloped, but over time, just like the ships themselves, they grow and improve.</description>
+  <gfx_store>organic_engine_fast_s1.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <thrust>170</thrust>
+  <turn>140</turn>
+  <speed>300</speed>
+  <fuel>400</fuel>
+  <energy_usage>5</energy_usage>
+  <engine_limit>150</engine_limit>
+ </specific>
+</outfit>

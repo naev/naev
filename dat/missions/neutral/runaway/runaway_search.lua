@@ -69,8 +69,7 @@ function create ()
    releasereward = 25000
    reward = 100000
 
-   misn.setNPC( npc_name, "neutral/unique/cynthia_father.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( npc_name, "neutral/unique/cynthia_father.webp", bar_desc )
 end
 
 function accept ()

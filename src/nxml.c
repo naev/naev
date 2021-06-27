@@ -94,3 +94,16 @@ xmlDocPtr xml_parsePhysFS( const char* filename )
    free( buf );
    return doc;
 }
+
+int xmlw_saveTime( xmlTextWriterPtr writer, const char *name, time_t t )
+{
+   xmlw_elem( writer, name, "%lu", t );
+   return 0;
+}
+
+
+int xml_parseTime( xmlNodePtr node, time_t *t )
+{
+   *t = xml_getULong( node );
+   return 0;
+}

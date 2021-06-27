@@ -95,8 +95,7 @@ function create ()
    credits = 300000
    started = false
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea.png" )
-   misn.setDesc( npc_desc )
+   misn.setNPC( npc_name, "soromid/unique/chelsea.webp", npc_desc )
 end
 
 
@@ -160,11 +159,11 @@ function spawn ()
    chelsea:addOutfit( "Tricon Zephyr II Engine" )
    chelsea:addOutfit( "TeraCom Fury Launcher" )
    chelsea:addOutfit( "Fury Missile", 25 )
-   chelsea:addOutfit( "Plasma Blaster MK3", 3 )
-   chelsea:addOutfit( "Reactor Class I", 2 )
-   chelsea:addOutfit( "Milspec Scrambler" )
+   chelsea:addOutfit( "Plasma Blaster MK2", 3 )
+   chelsea:addOutfit( "Reactor Class I" )
+   chelsea:addOutfit( "Small Shield Booster" )
+   chelsea:addOutfit( "Forward Shock Absorbers" )
    chelsea:addOutfit( "Engine Reroute" )
-   chelsea:addOutfit( "Steering Thrusters" )
 
    chelsea:setHealth( 100, 100 )
    chelsea:setEnergy( 100 )

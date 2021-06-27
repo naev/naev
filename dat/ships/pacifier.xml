@@ -15,7 +15,6 @@
  <license>Medium Combat Vessel License</license>
  <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>
  <health>
-  <absorb>20</absorb>
   <armour>475</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -29,16 +28,16 @@
   <weapon size="large" x="-15" y="-10" h="-10" />
   <weapon size="large" x="-15" y="10" h="-10" />
   <weapon size="medium" x="20" y="0" h="-10" />
-  <weapon size="medium" x="4" y="-5" h="-10" />
-  <weapon size="medium" x="4" y="5" h="-10" />
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
+  <weapon size="medium" prop="fighter_bay" x="4" y="-5" h="-10" />
+  <weapon size="medium" prop="fighter_bay" x="4" y="5" h="-10" />
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-310 Core System</utility>
   <utility size="medium" prop="accessory" exclusive="1" />
   <utility size="large" />
   <utility size="large" />
   <utility size="medium" />
   <utility size="medium" />
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-24 Medium Plating</structure>
   <structure size="large" />
   <structure size="medium" />
   <structure size="medium" />

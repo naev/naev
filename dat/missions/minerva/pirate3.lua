@@ -22,7 +22,7 @@
 --[[
 -- Find the Dvaered spy
 --]]
-local minerva = require "minerva"
+local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require "love_shaders"
@@ -33,7 +33,7 @@ logidstr = minerva.log.pirate.idstr
 misn_title = _("Finding the Dvaered Spy")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to find a Dvaered spy that appears to be located at Minerva Station.")
-reward_amount = 200000 -- 200k
+reward_amount = 200e3 -- 200k
 
 harper_image = portrait.getFullPath( portrait.get() ) -- TODO replace?
 harper_bribe_big = 1e6
@@ -58,13 +58,12 @@ mainsys = "Limbo"
 --    7. defend torture ship
 misn_state = nil
 
-
 function create ()
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait )
-   misn.setDesc( minerva.pirate.description )
+   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
+   misn.setDesc( misn_desc )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
 end
@@ -75,16 +74,14 @@ function accept ()
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
-      misn.finish(false)
       return
    end
 
    misn.accept()
-   misn.setDesc( misn_desc )
    osd = misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in a VIP room.") } )
 
-   shiplog.appendLog( logidstr, _("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
+   shiplog.append( logidstr, _("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
 
    hook.enter("enter")
    hook.load("generate_npc")
@@ -123,14 +120,14 @@ function approach_pir ()
 
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
+   local pir = vn.newCharacter( minerva.vn_pirate() )
    vn.music( minerva.loops.pirate )
    vn.transition()
 
    if misn_state==nil then
       -- Not accepted
       vn.na(_("You approach the sketch individual who seems to be calling your attention yet once again."))
-      pir(_("Hello again, we have another job for you. Our previous actions has led us to believe that there are several Dvaered and Za'lek spies deeply infiltrated into the station infrastructure. Would you be up to the challenge of helping us get rid of them?"))
+      pir(_([["Hello again, we have another job for you. Our previous actions has led us to believe that there are several Dvaered and Za'lek spies deeply infiltrated into the station infrastructure. Would you be up to the challenge of helping us get rid of them?"]]))
       vn.menu( {
          {_("Accept the job"), "accept"},
          {_("Kindly decline"), "decline"},
@@ -161,7 +158,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
       vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
       vn.func( function ()
          player.pay( reward_amount )
-         shiplog.appendLog( logidstr, _("You planted a listening device in the Minerva Spa to catch a mole and were rewarded for your actions.") )
+         shiplog.append( logidstr, _("You planted a listening device in the Minerva Spa to catch a mole and were rewarded for your actions.") )
       end )
       vn.sfxVictory()
       vn.done()
@@ -200,8 +197,12 @@ They take out a metallic object from their pocket and show it to you. You don't 
    elseif misn_state==1 then
       pir(_([["The spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket to the Spa and see if we can get lucky. If  not, we may have to take other measures to ensure success."]]))
    elseif misn_state==3 then
-      pir(_([["I can't believe we didn't win a ticket to the Spa. However, it seems like this guy called Harper Bowdown managed to get it instead."]]))
-      pir(_([["I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
+      if not harper_gotticket then
+         pir(_([["I can't believe we didn't win a ticket to the Spa. However, it seems like this guy called Harper Bowdown managed to get it instead."]]))
+         pir(_([["I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
+      else
+         vn.jump("trueticket")
+      end
    elseif misn_state==4 then
       pir(_([["You got the ticket to the Minerva spa, so all you have to do now is go in, plant the listening device, and enjoy the thermal waters."]]))
    end
@@ -236,7 +237,7 @@ They start frantically typing into their portable holo-deck. It makes weird beep
          {_("Get Harper Bowdoin's ticket in Limbo.")},
          {_("Plant a listening device in a VIP room.") } )
       misn_state = 3
-      shiplog.appendLog( logidstr, _("You did not obtain the winning ticket of the Minerva Spa event and were tasked with obtaining it from a so called Harper Bowdoin.") )
+      shiplog.append( logidstr, _("You did not obtain the winning ticket of the Minerva Spa event and were tasked with obtaining it from a so called Harper Bowdoin.") )
    end )
    vn.jump("menu_msg")
 
@@ -250,7 +251,7 @@ She beams you a smile.
       osd = misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in the Spa.") } )
       npc_spa = misn.npcAdd( "approach_spa", spa_name, spa_portrait, spa_description )
-      shiplog.appendLog( logidstr, _("You obtained the winning ticket to enter the Minerva Spa.") )
+      shiplog.append( logidstr, _("You obtained the winning ticket to enter the Minerva Spa.") )
    end )
    vn.jump("menu_msg")
 

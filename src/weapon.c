@@ -310,7 +310,7 @@ static void think_seeker( Weapon* w, const double dt )
    Pilot *p;
    Vector2d v;
    double t, turn_max;
-   double ewtrack;
+   //double ewtrack;
 
    if (w->target == w->parent)
       return; /* no self shooting */
@@ -322,7 +322,7 @@ static void think_seeker( Weapon* w, const double dt )
       return;
    }
 
-   ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p, w->outfit->u.amm.resist );
+   //ewtrack = pilot_ewWeaponTrack( pilot_get(w->parent), p, w->outfit->u.amm.resist );
 
    /* Handle by status. */
    switch (w->status) {
@@ -353,7 +353,7 @@ static void think_seeker( Weapon* w, const double dt )
          }
 
          /* Set turn. */
-         turn_max = w->outfit->u.amm.turn * ewtrack;
+         turn_max = w->outfit->u.amm.turn;// * ewtrack;
          weapon_setTurn( w, CLAMP( -turn_max, turn_max,
                   10 * diff * w->outfit->u.amm.turn ));
          break;
@@ -388,7 +388,7 @@ static void think_beam( Weapon* w, const double dt )
    Pilot *p, *t;
    AsteroidAnchor *field;
    Asteroid *ast;
-   double diff;
+   double diff, mod;
    Vector2d v;
 
    /* Get pilot, if pilot is dead beam is destroyed. */
@@ -399,7 +399,8 @@ static void think_beam( Weapon* w, const double dt )
    }
 
    /* Check if pilot has enough energy left to keep beam active. */
-   p->energy -= dt*w->outfit->u.bem.energy;
+   mod = (w->outfit->type == OUTFIT_TYPE_BEAM) ? p->stats.fwd_energy : p->stats.tur_energy;
+   p->energy -= mod * dt*w->outfit->u.bem.energy;
    if (p->energy < 0.) {
       p->energy = 0.;
       w->timer = -1;
@@ -760,7 +761,7 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (pilot_isFlag(p, PILOT_INVINCIBLE))
       return 0;
 
-   /* Can't hit invisible stuff. */
+   /* Can't hit hidden stuff. */
    if (pilot_isFlag(p, PILOT_HIDE))
       return 0;
 
@@ -856,6 +857,21 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       else if (outfit_isAmmo(w->outfit)) {
          if (array_size(w->outfit->u.amm.polygon) == 0)
             usePoly = 0;
+      }
+   }
+   else {
+      p = pilot_get( w->parent );
+      if (p != NULL) {
+         /* Beams need to update their properties online. */
+         if (w->outfit->type == OUTFIT_TYPE_BEAM) {
+            w->dam_mod        = p->stats.fwd_damage;
+            w->dam_as_dis_mod = p->stats.fwd_dam_as_dis-1.;
+         }
+         else {
+            w->dam_mod        = p->stats.tur_damage;
+            w->dam_as_dis_mod = p->stats.tur_dam_as_dis-1.;
+         }
+         w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
       }
    }
 
@@ -1026,7 +1042,7 @@ static void weapon_sample_trail( Weapon* w )
    else
       mode = MODE_IDLE;
 
-   spfx_trail_sample( w->trail, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2, mode );
+   spfx_trail_sample( w->trail, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2, mode, 0 );
 }
 
 
@@ -1088,11 +1104,6 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
          pilot_setHostile(p);
       }
    }
-   /* Do damage effect if it is the player. */
-   else if (p->faction == FACTION_PLAYER) {
-      if (p->shield < 0.) /**< Only play effect on armour. */
-         spfx_damage( dmg / p->armour_max );
-   }
    /* Otherwise just inform of being attacked. */
    else
       ai_attacked( p, shooter->id, dmg );
@@ -1119,10 +1130,11 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    /* Get general details. */
    odmg              = outfit_damage( w->outfit );
    parent            = pilot_get( w->parent );
-   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * (1.-w->dam_as_dis_mod) );
+   damage            = w->dam_mod * w->strength * odmg->damage;
+   dmg.damage        = MAX( 0., damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = MAX( 0., odmg->disable + dmg.damage * w->dam_as_dis_mod );
+   dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable + damage * w->dam_as_dis_mod );
 
    /* Play sound if they have it. */
    s = outfit_soundHit(w->outfit);
@@ -1185,7 +1197,7 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* 
             w->solid->vel.y);
 
    /* Add the spfx */
-   spfx = outfit_spfxShield(w->outfit);
+   spfx = outfit_spfxArmour(w->outfit);
    spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
 
    weapon_destroy(w,layer);
@@ -1216,10 +1228,11 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    /* Get general details. */
    odmg              = outfit_damage( w->outfit );
    parent            = pilot_get( w->parent );
-   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * dt );
+   damage            = w->dam_mod * w->strength * odmg->damage * dt ;
+   dmg.damage        = MAX( 0., damage * (1.-w->dam_as_dis_mod) );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = odmg->disable * dt;
+   dmg.disable       = MAX( 0., w->dam_mod * w->strength * odmg->disable * dt + damage * w->dam_as_dis_mod );
 
    /* Have pilot take damage and get real damage done. */
    damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
@@ -1311,7 +1324,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    Vector2d relative_location;
    double rdir, lead_angle;
    double x, y, t;
-   double off;
+   double off, trackmin, trackmax;
 
    if (pilot_target != NULL) {
       target_pos = pilot_target->solid->pos;
@@ -1345,7 +1358,9 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
    if (pilot_target != NULL) {
       /* Lead angle is determined from ewarfare. */
-      lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.track );
+      trackmin = outfit_trackmin(outfit);
+      trackmax = outfit_trackmax(outfit);
+      lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
 
       /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
       if (lead_angle && FABS( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
@@ -1464,27 +1479,31 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    glTexture *gfx;
    Outfit* ammo;
 
-   pilot_target = NULL;
+   /* Only difference is the direction of fire */
+   if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */
+      pilot_target = pilot_get(w->target);
+   else /* fire straight or at asteroid */
+      pilot_target = NULL;
+
    ammo = launcher->u.lau.ammo;
    if (w->outfit->type == OUTFIT_TYPE_AMMO &&
             launcher->type == OUTFIT_TYPE_TURRET_LAUNCHER) {
-      pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( ammo, parent, pilot_target, pos, vel, dir, M_PI, time );
+      rdir = weapon_aimTurret( launcher, parent, pilot_target, pos, vel, dir, M_PI, time );
    }
-   else
+   else if (launcher->u.lau.swivel > 0.) {
+      rdir = weapon_aimTurret( launcher, parent, pilot_target, pos, vel, dir, launcher->u.lau.swivel, time );
+   }
+   else {
       rdir = dir;
-
-   /* Launcher damage. */
-   w->dam_mod *= parent->stats.launch_damage;
-   /*if (ammo->u.amm.accuracy != 0.) {
-      rdir += RNG_2SIGMA() * ammo->u.amm.accuracy/2. * 1./180.*M_PI;
-      if ((rdir > 2.*M_PI) || (rdir < 0.))
-         rdir = fmod(rdir, 2.*M_PI);
-   }*/
+   }
+   /* TODO is this check needed? */
    if (rdir < 0.)
       rdir += 2.*M_PI;
    else if (rdir >= 2.*M_PI)
       rdir -= 2.*M_PI;
+
+   /* Launcher damage. */
+   w->dam_mod *= parent->stats.launch_damage;
 
    /* If thrust is 0. we assume it starts out at speed. */
    v = *vel;
@@ -1551,7 +1570,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    Pilot *pilot_target;
    AsteroidAnchor *field;
    Asteroid *ast;
-   
+
    Weapon* w;
 
    /* Create basic features */
@@ -1611,6 +1630,17 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
                w->solid->pos.y,
                w->solid->vel.x,
                w->solid->vel.y);
+
+         if (outfit->type == OUTFIT_TYPE_BEAM) {
+            w->dam_mod       *= parent->stats.fwd_damage;
+            w->dam_as_dis_mod = parent->stats.fwd_dam_as_dis-1.;
+         }
+         else {
+            w->dam_mod       *= parent->stats.tur_damage;
+            w->dam_as_dis_mod = parent->stats.tur_dam_as_dis-1.;
+         }
+         w->dam_as_dis_mod = CLAMP( 0., 1., w->dam_as_dis_mod );
+
          break;
 
       /* Treat seekers together. */

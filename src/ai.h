@@ -36,6 +36,7 @@ typedef struct Pilot_ Pilot;
 typedef struct Task_ {
    struct Task_* next; /**< Next task */
    char *name; /**< Task name. */
+   int func; /**< Reference to the function to be run. */
    int done; /**< Task is done and ready for deletion. */
 
    struct Task_* subtask; /**< Subtasks of the current task. */
@@ -52,6 +53,9 @@ typedef struct Task_ {
 typedef struct AI_Profile_ {
    char* name; /**< Name of the profile. */
    nlua_env env; /**< Assosciated Lua Environment. */
+   int ref_control; /**< Profile control reference function. */
+   int ref_control_manual; /**< Profile manual control reference function. */
+   int ref_refuel; /**< Profile refuel reference function. */
 } AI_Profile;
 
 

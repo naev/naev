@@ -63,7 +63,6 @@ Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement:
 
 * [bobbens](https://github.com/bobbens) (project head): via email at <bobbens@gmail.com>, or via Discord at `bobbens#0291`
-* [diligentcircle](https://github.com/onpon4): via email at <diligentcircle@riseup.net>, or via Discord at `diligentcircle 丸#5156`
 
 All complaints will be reviewed and investigated promptly and fairly.
 

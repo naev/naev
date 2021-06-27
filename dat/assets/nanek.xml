@@ -16,7 +16,7 @@
  <general>
   <class>H</class>
   <population>1245789</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -41,5 +41,6 @@
   <item>Star Maps</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
+  <item>Dvaered Elite Outfits</item>
  </tech>
 </asset>

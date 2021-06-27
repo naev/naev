@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Titus">
  <general>
+  <background>solarwind</background>
+  <features>#bSolar Winds#0</features>
   <radius>10000.000000</radius>
   <stars>400</stars>
-  <interference>100.000000</interference>
+  <interference>300.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
@@ -14,15 +16,15 @@
  <jumps>
   <jump target="Dendria">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Elixir">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="New Haven">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Vedalus">
    <autopos/>

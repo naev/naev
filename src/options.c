@@ -51,6 +51,7 @@ static const char *opt_names[] = {
 
 
 static int opt_restart = 0;
+static PlayerConf_t local_conf;
 
 
 /*
@@ -82,6 +83,7 @@ static int opt_videoSave( unsigned int wid, char *str );
 static void opt_videoDefaults( unsigned int wid, char *str );
 static void opt_getVideoMode( int *w, int *h, int *fullscreen );
 static void opt_setScalefactor( unsigned int wid, char *str );
+static void opt_setBGBrightness( unsigned int wid, char *str );
 static void opt_checkColorblind( unsigned int wid, char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
@@ -112,6 +114,9 @@ void opt_menu (void)
    size_t i;
    int w, h;
    const char **names;
+
+   /* Save current configuration over. */
+   conf_copy( &local_conf, &conf );
 
    /* Dimensions. */
    w = 680;
@@ -158,8 +163,11 @@ static void opt_OK( unsigned int wid, char *str )
       dialogue_msgRaw( _("Warning"), _("Restart Naev for changes to take effect.") );
 
    /* Close window if no errors occurred. */
-   if (!ret)
+   if (!ret) {
+      /* Save current configuration over. */
+      conf_copy( &local_conf, &conf );
       opt_close(wid, str);
+   }
 }
 
 /**
@@ -170,6 +178,9 @@ static void opt_close( unsigned int wid, char *name )
    (void) wid;
    (void) name;
 
+   /* Load old config again. */
+   conf_copy( &conf, &local_conf );
+
    /* At this point, set sound levels as defined in the config file.
     * This ensures that sound volumes are reset on "Cancel". */
    sound_volume(conf.sound);
@@ -177,6 +188,9 @@ static void opt_close( unsigned int wid, char *name )
 
    window_destroy( opt_wid );
    opt_wid = 0;
+
+   /* Free config. */
+   conf_free( &local_conf );
 }
 
 
@@ -292,8 +306,8 @@ static void opt_gameplay( unsigned int wid )
       if (i>=n)
          i = 0;
    }
-   window_addList( wid, x+l+20, y, cw-l-50, 70, "lstLanguage", ls, n, i, NULL, NULL );
-   y -= 90;
+   window_addList( wid, x+l+20, y, cw-l-50, 100, "lstLanguage", ls, n, i, NULL, NULL );
+   y -= 120;
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
          NULL, NULL, _("Compilation Flags:") );
    y -= 30;
@@ -328,21 +342,6 @@ static void opt_gameplay( unsigned int wid )
 
    /* Options. */
 
-   /* MOpacity abort. */
-   window_addText( wid, x, y, cw, 20, 0, "txtAMOpacity",
-         NULL, NULL, _("Map Overlay Opacity:") );
-   y -= 20;
-
-   /* MOpacity abort fader. */
-   window_addText( wid, x, y, cw, 20, 1, "txtMOpacity",
-         &gl_smallFont, NULL, NULL );
-   y -= 20;
-   window_addFader( wid, x, y, cw, 20, "fadMapOverlayOpacity", 0., 1.,
-         conf.map_overlay_opacity, opt_setMapOverlayOpacity );
-   y -= 40;
-
-
-   (void) y;
    x = 20 + cw + 20;
    y  = by;
    cw += 80;
@@ -407,12 +406,12 @@ static int opt_gameplaySave( unsigned int wid, char *str )
 
    /* List. */
    p = toolkit_getListPos( wid, "lstLanguage" );
-   s = p==0 ? NULL : toolkit_getList( wid, "lstLanguage" );
+   s = (p==0) ? NULL : toolkit_getList( wid, "lstLanguage" );
    newlang = ((s != NULL) != (conf.language != NULL))
 	  || ((s != NULL) && (strcmp( s, conf.language) != 0));
    if (newlang) {
       free( conf.language );
-      conf.language = s==NULL ? NULL : strdup( s );
+      conf.language = (s==NULL) ? NULL : strdup( s );
       /* Apply setting going forward; advise restart to regen other text. */
       gettext_setLanguage( conf.language );
       opt_needRestart();
@@ -429,7 +428,6 @@ static int opt_gameplaySave( unsigned int wid, char *str )
 
    /* Faders. */
    conf.autonav_reset_speed = window_getFaderValue(wid, "fadAutonav");
-   conf.map_overlay_opacity = window_getFaderValue(wid, "fadMapOverlayOpacity");
 
    /* Input boxes. */
    vmsg = window_getInput( wid, "inpMSG" );
@@ -459,7 +457,6 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderValue( wid, "fadAutonav", AUTONAV_RESET_SPEED_DEFAULT );
-   window_faderValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 
    /* Input boxes. */
    snprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
@@ -484,7 +481,6 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderValue( wid, "fadAutonav", conf.autonav_reset_speed );
-   window_faderValue( wid, "fadMapOverlayOpacity", conf.map_overlay_opacity );
 
    /* Input boxes. */
    snprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
@@ -605,7 +601,7 @@ static void menuKeybinds_genList( unsigned int wid )
       switch (type) {
          case KEYBIND_KEYBOARD:
             /* Generate mod text. */
-            if (mod == NMOD_ALL)
+            if (mod == NMOD_ANY)
                snprintf( mod_text, sizeof(mod_text), "any+" );
             else {
                p = 0;
@@ -1016,7 +1012,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          }
          type = KEYBIND_KEYBOARD;
          if (window_checkboxState( wid, "chkAny" ))
-            mod = NMOD_ALL;
+            mod = NMOD_ANY;
          else {
             ev_mod = event->key.keysym.mod;
             mod    = 0;
@@ -1041,13 +1037,13 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
          else
             return 0; /* Not handled. */
          key  = event->jaxis.axis;
-         mod  = NMOD_ALL;
+         mod  = NMOD_ANY;
          break;
 
       case SDL_JOYBUTTONDOWN:
          type = KEYBIND_JBUTTON;
          key  = event->jbutton.button;
-         mod  = NMOD_ALL;
+         mod  = NMOD_ANY;
          break;
 
       case SDL_JOYHATMOTION:
@@ -1068,7 +1064,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
                return 0; /* Not handled. */
          }
          key  = event->jhat.hat;
-         mod  = NMOD_ALL;
+         mod  = NMOD_ANY;
          break;
 
       /* Not handled. */
@@ -1278,15 +1274,25 @@ static void opt_video( unsigned int wid )
          NULL, NULL, _("Features") );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkEngineGlow", _("Engine Glow (More RAM)"), NULL, conf.engineglow );
-
-   y -= 20;
-   window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkColorblind", _("Colorblind mode"), opt_checkColorblind,
          conf.colorblind );
+   y -= 20;
+   window_addText( wid, x+15, y-3, cw-20, 20, 0, "txtBGBrightness",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+40, y, cw-60, 20, "fadBGBrightness", 0., 1.,
+         conf.bg_brightness, opt_setBGBrightness );
+   opt_setBGBrightness( wid, "fadBGBrightness" );
+   y -= 20;
+   window_addText( wid, x+15, y-3, cw-20, 20, 0, "txtMOpacity",
+         &gl_smallFont, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+40, y, cw-60, 20, "fadMapOverlayOpacity", 0., 1.,
+         conf.map_overlay_opacity, opt_setMapOverlayOpacity );
+   opt_setMapOverlayOpacity( wid ,"fadMapOverlayOpacity" );
    y -= 40;
 
    /* GUI */
@@ -1368,11 +1374,6 @@ static int opt_videoSave( unsigned int wid, char *str )
    }
 
    /* Features. */
-   f = window_checkboxState( wid, "chkEngineGlow" );
-   if (conf.engineglow != f) {
-      conf.engineglow = f;
-      opt_needRestart();
-   }
    f = window_checkboxState( wid, "chkMinimize" );
    if (conf.minimize != f) {
       conf.minimize = f;
@@ -1499,12 +1500,13 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkFullscreen", FULLSCREEN_DEFAULT );
    window_checkboxSet( wid, "chkVSync", VSYNC_DEFAULT );
    window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
-   window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
    window_checkboxSet( wid, "chkMinimize", MINIMIZE_DEFAULT );
    window_checkboxSet( wid, "chkBigIcons", BIG_ICONS_DEFAULT );
 
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadScale", SCALE_FACTOR_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 }
 
 /**
@@ -1515,7 +1517,7 @@ static void opt_videoDefaults( unsigned int wid, char *str )
  */
 static void opt_setScalefactor( unsigned int wid, char *str )
 {
-   char buf[32];
+   char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
    scale = round(scale * 10) / 10;     // Reasonable precision. Clearer value.
    if (FABS(conf.scalefactor-scale) > 1e-4)
@@ -1523,6 +1525,21 @@ static void opt_setScalefactor( unsigned int wid, char *str )
    conf.scalefactor = scale;
    snprintf( buf, sizeof(buf), _("Scaling: %.1fx"), conf.scalefactor );
    window_modifyText( wid, "txtScale", buf );
+}
+
+/**
+ * @brief Callback to set the background brightness.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setBGBrightness( unsigned int wid, char *str )
+{
+   char buf[STRMAX_SHORT];
+   double fad = window_getFaderValue(wid, str);
+   conf.bg_brightness = fad;
+   snprintf( buf, sizeof(buf), _("BG (Nebula, etc.) brightness: %.0f%%"), 100.*fad );
+   window_modifyText( wid, "txtBGBrightness", buf );
 }
 
 
@@ -1535,14 +1552,10 @@ static void opt_setScalefactor( unsigned int wid, char *str )
  */
 static void opt_setMapOverlayOpacity( unsigned int wid, char *str )
 {
-   char buf[PATH_MAX];
-   double map_overlay_opacity;
-
-   /* Set fader. */
-   map_overlay_opacity = window_getFaderValue(wid, str);
-
-   snprintf( buf, sizeof(buf), _("%.0f%%"), map_overlay_opacity * 100 );
-
+   char buf[STRMAX_SHORT];
+   double fad = window_getFaderValue(wid, str);
+   conf.map_overlay_opacity = fad;
+   snprintf( buf, sizeof(buf), _("Map Overlay Opacity: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtMOpacity", buf );
 }
 

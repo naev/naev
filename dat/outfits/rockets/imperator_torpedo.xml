@@ -5,14 +5,14 @@
   <mass>5</mass>
   <price>0</price>
   <description>TeraCom decided not to develop a launcher for the Caesar IV, because it fell short of the company's performance requirements. Instead, the company released a completely new torpedo specification. At present, the Imperator class heavy torpedo provides devastating destructive power, though it will take a while for it to reach its target. Faster cruisers may be able to outrun it completely.</description>
-  <gfx_store>caesar.png</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="ammo">
-  <gfx>caesar.png</gfx>
-  <sound>mace</sound>
+  <gfx>imperator.webp</gfx>
+  <sound>torpedo</sound>
   <sound_hit>lrgexp0</sound_hit>
-  <spfx_shield>ExpL2</spfx_shield>
-  <spfx_armour>ExpL2</spfx_armour>
+  <spfx_shield>ExpL</spfx_shield>
+  <spfx_armour>ExpL</spfx_armour>
   <trail_generator x="0">missileL</trail_generator>
   <duration blowup="armour">60</duration>
   <thrust>0</thrust>
@@ -22,7 +22,7 @@
   <damage>
    <type>impact</type>
    <penetrate>90</penetrate>
-   <physical>1000</physical>
+   <physical>1100</physical>
    <disable>10</disable>
   </damage>
   <ai>smart</ai>

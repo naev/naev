@@ -16,7 +16,7 @@
  <general>
   <class>O</class>
   <population>1500000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -37,5 +37,6 @@
   <item>Low Tech Upgrades</item>
   <item>Crappy Core Systems</item>
   <item>High Tech Upgrades 1</item>
+  <item>Za'lek Elite Outfits</item>
  </tech>
 </asset>

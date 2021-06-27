@@ -18,6 +18,7 @@
 
 #include "array.h"
 #include "log.h"
+#include "nlua_faction.h"
 #include "nlua_planet.h"
 #include "nlua_time.h"
 #include "nluadef.h"
@@ -33,6 +34,7 @@ static int commodityL_nameRaw( lua_State *L );
 static int commodityL_price( lua_State *L );
 static int commodityL_priceAt( lua_State *L );
 static int commodityL_priceAtTime( lua_State *L );
+static int commodityL_illegalto( lua_State *L );
 static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
@@ -43,6 +45,7 @@ static const luaL_Reg commodityL_methods[] = {
    { "price", commodityL_price },
    { "priceAt", commodityL_priceAt },
    { "priceAtTime", commodityL_priceAtTime },
+   { "illegalto", commodityL_illegalto },
    {0,0}
 }; /**< Commodity metatable methods. */
 
@@ -253,20 +256,15 @@ static int commodityL_getStandard( lua_State *L )
  * messages). It cannot be used as an identifier for the commodity; for
  * that, use commodity.nameRaw() instead.
  *
- * @usage commodityname = s:name() -- Equivalent to `_(s:nameRaw())`
+ * @usage commodityname = c:name() -- Equivalent to `_(c:nameRaw())`
  *
- *    @luatparam Commodity s Commodity to get the translated name of.
+ *    @luatparam Commodity c Commodity to get the translated name of.
  *    @luatreturn string The translated name of the commodity.
  * @luafunc name
  */
 static int commodityL_name( lua_State *L )
 {
-   Commodity *c;
-
-   /* Get the commodity. */
-   c  = luaL_validcommodity(L,1);
-
-   /** Return the commodity name. */
+   Commodity *c  = luaL_validcommodity(L,1);
    lua_pushstring(L, _(c->name));
    return 1;
 }
@@ -280,20 +278,15 @@ static int commodityL_name( lua_State *L )
  * directly for display purposes without manually translating it with
  * _().
  *
- * @usage commodityrawname = s:nameRaw()
+ * @usage commodityrawname = c:nameRaw()
  *
- *    @luatparam Commodity s Commodity to get the raw name of.
+ *    @luatparam Commodity c Commodity to get the raw name of.
  *    @luatreturn string The raw name of the commodity.
  * @luafunc nameRaw
  */
 static int commodityL_nameRaw( lua_State *L )
 {
-   Commodity *c;
-
-   /* Get the commodity. */
-   c  = luaL_validcommodity(L,1);
-
-   /** Return the commodity name. */
+   Commodity *c  = luaL_validcommodity(L,1);
    lua_pushstring(L, c->name);
    return 1;
 }
@@ -302,9 +295,9 @@ static int commodityL_nameRaw( lua_State *L )
 /**
  * @brief Gets the base price of an commodity.
  *
- * @usage print( o:price() ) -- Prints the base price of the commodity
+ * @usage print( c:price() ) -- Prints the base price of the commodity
  *
- *    @luatparam Commodity o Commodity to get information of.
+ *    @luatparam Commodity c Commodity to get information of.
  *    @luatreturn number The base price of the commodity.
  * @luafunc price
  */
@@ -319,9 +312,9 @@ static int commodityL_price( lua_State *L )
 /**
  * @brief Gets the base price of an commodity on a certain planet.
  *
- * @usage if o:priceAt( planet.get("Polaris Prime") ) > 100 then -- Checks price of an outfit at polaris prime
+ * @usage if c:priceAt( planet.get("Polaris Prime") ) > 100 then -- Checks price of a commodity at polaris prime
  *
- *    @luatparam Commodity o Commodity to get information of.
+ *    @luatparam Commodity c Commodity to get information of.
  *    @luatparam Planet p Planet to get price at.
  *    @luatreturn number The price of the commodity at the planet.
  * @luafunc priceAt
@@ -353,9 +346,9 @@ static int commodityL_priceAt( lua_State *L )
 /**
  * @brief Gets the price of an commodity on a certain planet at a certain time.
  *
- * @usage if o:priceAtTime( planet.get("Polaris Prime"), time ) > 100 then -- Checks price of an outfit at polaris prime
+ * @usage if c:priceAtTime( planet.get("Polaris Prime"), time ) > 100 then -- Checks price of a commodity at polaris prime
  *
- *    @luatparam Commodity o Commodity to get information of.
+ *    @luatparam Commodity c Commodity to get information of.
  *    @luatparam Planet p Planet to get price at.
  *    @luatparam Time t Time to get the price at.
  *    @luatreturn number The price of the commodity at the planet.
@@ -384,4 +377,31 @@ static int commodityL_priceAtTime( lua_State *L )
 
    lua_pushnumber( L, planet_commodityPriceAtTime( p, c, t ) );
    return 1;
+}
+
+
+/**
+ * @brief Makes a temporary commodity illegal to a faction.
+ *
+ *    @luatparam Commodity c Temporary commodity to make illegal to factions.
+ *    @luatparam Faction|table f Faction or table of factions to make illegal to.
+ * @luafunc illegalto
+ */
+static int commodityL_illegalto( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity(L,1);
+   int f;
+   if (lua_istable(L,2)) {
+      lua_pushnil(L); /* nil */
+      while (lua_next(L,-2) != 0) { /* k, v */
+         f  = luaL_validfaction(L,-1);
+         commodity_tempIllegalto( c, f );
+         lua_pop(L,1); /* k */
+      }
+   }
+   else {
+      f = luaL_validfaction(L,2);
+      commodity_tempIllegalto( c, f );
+   }
+   return 0;
 }

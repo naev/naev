@@ -101,8 +101,7 @@ function create ()
    end
    cursys = system.cur()
    curplanet = planet.cur()
-   misn.setNPC(NPCname, "neutral/unique/laidback.png")
-   misn.setDesc(NPCdesc)
+   misn.setNPC(NPCname, "neutral/unique/laidback.webp", NPCdesc)
    credits_easy = rnd.rnd(20000, 100000)
    credits_hard = rnd.rnd(200000, 300000)
 end
@@ -137,7 +136,7 @@ function takeoff()
    end
    if choice ~= 1 then
       for k,v in ipairs(player.pilot():outfits()) do
-         if v == outfit.get("Generic Afterburner") or v == outfit.get("Hellburner") then
+         if v == outfit.get("Unicorp Light Afterburner") or v == outfit.get("Hellburner") then
             tk.msg(ftitle[4], ftext[4])
             misn.finish(false)
          end
@@ -168,7 +167,6 @@ function takeoff()
    checkpoint[3] = pilot.add(shiptype, "Trader", location3, nil, "stationary")
    for i, j in ipairs(checkpoint) do
       j:rename(string.format(_("Checkpoint %s"), i))
-      j:control()
       j:setHilight(true)
       j:setInvincible(true)
       j:setActiveBoard(true)
@@ -179,18 +177,17 @@ function takeoff()
    racers[3] = pilot.add("Llama", "Civilian", curplanet)
    if choice == 1 then
       racers[1]:addOutfit("Engine Reroute")
-      racers[2]:addOutfit("Steering Thrusters")
+      racers[2]:addOutfit("Engine Reroute")
       racers[3]:addOutfit("Improved Stabilizer")
    else
       for i in pairs(racers) do
          racers[i]:rmOutfit("all")
          racers[i]:rmOutfit("cores")
          
-         racers[i]:addOutfit("Unicorp PT-100 Core System")
+         racers[i]:addOutfit("Unicorp PT-16 Core System")
          racers[i]:addOutfit("Unicorp D-2 Light Plating")
          local en_choices = {
-            "Unicorp Hawk 150 Engine", "Nexus Dart 150 Engine",
-            "Tricon Zephyr Engine" }
+            "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }
          racers[i]:addOutfit(en_choices[rnd.rnd(1, #en_choices)])
       end
    end

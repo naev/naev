@@ -16,12 +16,13 @@
  <general>
   <class>H</class>
   <population>250000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
   </services>
   <commodities/>
@@ -41,5 +42,6 @@
   <item>Star Maps</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
+  <item>Empire Elite Outfits</item>
  </tech>
 </asset>

@@ -621,7 +621,7 @@ function love.draw ()
 end
 
 function love.update( dt )
-   global_dt = (global_dt or 0) + dt
+   global_dt = (global_dt or 0) + dt/1.5
    if shader:hasUniform("dt") then
       shader:send( "dt", global_dt )
    end

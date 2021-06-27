@@ -196,7 +196,8 @@ end
 -- Board hook for Joe
 function joeBoard()
     tk.msg(title[5], text[9]:format(player.name()))
-    misn.cargoAdd("Four Winds Informant", 0)
+    local c = misn.cargoNew(_("Four Winds Informant"), _("Jorek's informant."))
+    misn.cargoAdd(c, 0)
     player.unboard()
     misn.markerMove(marker, seirsys)
     misn.osdActive(2)
@@ -470,9 +471,9 @@ function land()
     if planet.cur() == jorekplanet1 and stage == 2 then
         -- Thank you player, but our SHITMAN is in another castle.
         tk.msg(NPCtitle, NPCtext)
-        barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.png", NPCdesc, 4)
+        barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", NPCdesc, 4)
     elseif planet.cur() == jorekplanet2 and stage == 3 then
-        joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.png", Jordesc, 4)
+        joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", Jordesc, 4)
     end
 end
 

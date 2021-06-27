@@ -52,7 +52,8 @@ osd_desc["__save"] = true
 
 log_text = _([[You delivered a literal tonne of letters for a love-struck, old-fashioned man.]])
 
-cargoname = "Love Letters"
+cargoname = N_("Love Letters")
+cargodesc = N_("A cargo of feelings inked onto pulped, dried cellulose fibres.")
 
 
 function create () --No system shall be claimed by mission
@@ -62,8 +63,7 @@ function create () --No system shall be claimed by mission
    reward = 20000
    started = false
 
-   misn.setNPC( npc_name, "neutral/unique/michal.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( npc_name, "neutral/unique/michal.webp", bar_desc )
 end
 
 
@@ -93,7 +93,8 @@ function accept ()
    -- Add Mission Cargo and set up the computer
 
    misn.accept()
-   misn.cargoAdd( cargoname, 1 )
+   local c = misn.cargoNew( cargoname, cargodesc )
+   misn.cargoAdd( c, 1 )
 
    misn.setTitle( misn_title )
    misn.setReward( creditstring( reward ) )

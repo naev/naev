@@ -16,7 +16,7 @@
  <general>
   <class>A</class>
   <population>98000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>srm_mil_restricted</land>
    <refuel/>
@@ -39,5 +39,6 @@
   <item>High Tech Upgrades 1</item>
   <item>Missiles 1</item>
   <item>Star Maps</item>
+  <item>Soromid Elite Outfits</item>
  </tech>
 </asset>

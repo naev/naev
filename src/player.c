@@ -152,6 +152,7 @@ static void player_initSound (void);
 static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
 static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship );
+static int player_saveMetadata( xmlTextWriterPtr writer );
 static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
@@ -159,7 +160,12 @@ static int player_parseLicenses( xmlNodePtr parent );
 static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot );
 static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
+static int player_parseMetadata( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
+/* Render. */
+static void player_renderStealthUnderlay( double dt );
+static void player_renderStealthOverlay( double dt );
+static void player_renderAimHelper( double dt );
 /* Misc. */
 static int player_filterSuitablePlanet( Planet *p );
 static void player_planetOutOfRangeMsg (void);
@@ -202,6 +208,11 @@ static void player_newSetup()
    /* Clean up player stuff if we'll be recreating. */
    player_cleanup();
 
+   /* Sane time defaults. */
+   player.last_played = time(NULL);
+   player.date_created = player.last_played;
+   player.time_since_save = player.last_played;
+
    /* For pretty background. */
    pilots_cleanAll();
    space_init( start_system() );
@@ -236,6 +247,9 @@ void player_new (void)
 
    /* Set up new player. */
    player_newSetup();
+
+   /* Some meta-data. */
+   player.date_created = time(NULL);
 
    /* Get the name. */
    player.name = dialogue_input( _("Player Name"), 1, 60,
@@ -713,7 +727,6 @@ void player_cleanup (void)
 
    /* Reset some player stuff. */
    player_creds   = 0;
-   player.crating = 0;
    free( player.gui );
    player.gui = NULL;
 
@@ -856,39 +869,6 @@ void player_clear (void)
    player_rmFlag( PLAYER_NOLAND );
 }
 
-static char* player_ratings[] = {
-      gettext_noop("Harmless"),
-      gettext_noop("Mostly Harmless"),
-      gettext_noop("Smallfry"),
-      gettext_noop("Average"),
-      gettext_noop("Above Average"),
-      gettext_noop("Major"),
-      gettext_noop("Intimidating"),
-      gettext_noop("Fearsome"),
-      gettext_noop("Terrifying"),
-      gettext_noop("Unstoppable"),
-      gettext_noop("Godlike")
-}; /**< Combat ratings. */
-/**
- * @brief Gets the player's combat rating in a human-readable string.
- *
- *    @return The player's combat rating in a human readable string.
- */
-const char* player_rating (void)
-{
-   if (player.crating == 0.) return _(player_ratings[0]);
-   else if (player.crating < 25.) return _(player_ratings[1]);
-   else if (player.crating < 50.) return _(player_ratings[2]);
-   else if (player.crating < 100.) return _(player_ratings[3]);
-   else if (player.crating < 200.) return _(player_ratings[4]);
-   else if (player.crating < 500.) return _(player_ratings[5]);
-   else if (player.crating < 1000.) return _(player_ratings[6]);
-   else if (player.crating < 2000.) return _(player_ratings[7]);
-   else if (player.crating < 5000.) return _(player_ratings[8]);
-   else if (player.crating < 10000.) return _(player_ratings[9]);
-   else return _(player_ratings[10]);
-}
-
 
 /**
  * @brief Checks to see if the player has enough credits.
@@ -919,10 +899,6 @@ credits_t player_modCredits( credits_t amount )
  */
 void player_render( double dt )
 {
-   double a, b, d, x1, y1, x2, y2, r, theta;
-   glColour c;
-   Pilot *target;
-
    /*
     * Check to see if the death menu should pop up.
     */
@@ -933,68 +909,168 @@ void player_render( double dt )
          menu_death();
    }
 
-   /*
-    * Render the player.
-    */
-   if ((player.p != NULL) && !player_isFlag(PLAYER_CREATING) &&
-         !pilot_isFlag( player.p, PILOT_HIDE)) {
+   /* Skip rendering. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_CREATING) ||
+         pilot_isFlag( player.p, PILOT_HIDE))
+      return;
 
-      /* Render the aiming lines. */
-      if ((player.p->target != PLAYER_ID) && player.p->aimLines) {
-         target = pilot_get(player.p->target);
-         if (target != NULL) {
-            a = player.p->solid->dir;
-            r = 200.;
-            gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
+   /* Render stealth overlay. */
+   if (pilot_isFlag( player.p, PILOT_STEALTH ))
+      player_renderStealthOverlay( dt );
 
-            b = pilot_aimAngle( player.p, target );
+   /* Render the aiming lines. */
+   if ((player.p->target != PLAYER_ID) && player.p->aimLines)
+      player_renderAimHelper( dt );
 
-            theta = 22*M_PI/180;
+   /* Render the player's pilot. */
+   pilot_render(player.p, dt);
+}
 
-            /* The angular error will give the exact colour that is used. */
-            d = ABS( angle_diff(a,b) / (2*theta) );
-            d = MIN( 1, d );
 
-            c = cInert;
-            c.a = .3;
-            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a+theta ),
-                                   player.p->solid->pos.y + r*sin( a+theta ) );
-            gl_drawLine( x1, y1, x2, y2, &c );
-            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a-theta ),
-                                   player.p->solid->pos.y + r*sin( a-theta ) );
-            gl_drawLine( x1, y1, x2, y2, &c );
+/**
+ * @brief Renders the player underlay.
+ */
+void player_renderUnderlay( double dt )
+{
+   /* Skip rendering. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_CREATING) ||
+         pilot_isFlag( player.p, PILOT_HIDE))
+      return;
 
-            c.r = d*.9;
-            c.g = d*.2 + (1-d)*.8;
-            c.b = (1-d)*.2;
-            c.a = 0.9;
-            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a ),
-                                   player.p->solid->pos.y + r*sin( a ) );
+   if (pilot_isFlag( player.p, PILOT_STEALTH ))
+      player_renderStealthUnderlay( dt );
+}
 
-            gl_drawLine( x1, y1, x2, y2, &c );
 
-            gl_renderCross( x2 - 1, y2 - 1, 6., &cBlack );
-            gl_renderCross( x2 - 1, y2 + 1, 6., &cBlack );
-            gl_renderCross( x2 + 1, y2 - 1, 6., &cBlack );
-            gl_renderCross( x2 + 1, y2 + 1, 6., &cBlack );
-            gl_renderCross( x2, y2, 7., &cBlack );
-            gl_renderCross( x2, y2, 6., &cWhite );
+/**
+ * @brief Renders the stealth overlay for the player.
+ */
+static void player_renderStealthUnderlay( double dt )
+{
+   (void) dt;
+   double detect, x, y, r, z;
+   glColour col;
+   Pilot *t;
+   Pilot *const* ps;
+   int i;
 
-            gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( b ),
-                                   player.p->solid->pos.y + r*sin( b ) );
+   /* Don't display if overlay is open. */
+   if (ovr_isOpen())
+      return;
 
-            c.a = .4;
-            gl_drawLine( x1, y1, x2, y2, &c );
+   /* Iterate and draw for all pilots. */
+   z = cam_getZoom();
+   detect = player.p->ew_stealth;
+   col = cRed;
+   col.a = 0.2;
+   ps = pilot_getAll();
+   for (i=0; i<array_size(ps); i++) {
+      t = ps[i];
+      if (areAllies( player.p->faction, t->faction ) || pilot_isFriendly(t))
+         continue;
+      if (pilot_isDisabled(t))
+         continue;
+      /* Only show pilots the player can see. */
+      if (!pilot_validTarget( player.p, t ))
+         continue;
 
-            gl_drawCircle( x2, y2, 8., &cBlack, 0 );
-            gl_drawCircle( x2, y2, 10., &cBlack, 0 );
-            gl_drawCircle( x2, y2, 9., &cWhite, 0 );
-         }
-      }
-
-      /* Render the player's pilot. */
-      pilot_render(player.p, dt);
+      gl_gameToScreenCoords( &x, &y, t->solid->pos.x, t->solid->pos.y );
+      r = detect * t->stats.ew_detect * z;
+      gl_drawCircle( x, y, r, &col, 1 );
    }
+}
+
+
+/**
+ * @brief Renders the stealth overlay for the player.
+ */
+static void player_renderStealthOverlay( double dt )
+{
+   (void) dt;
+   double x, y, r, st, z;
+   double angle, arc;
+   glColour col;
+
+   z = cam_getZoom();
+   gl_gameToScreenCoords( &x, &y, player.p->solid->pos.x, player.p->solid->pos.y );
+
+   /* Determine the arcs. */
+   st    = player.p->ew_stealth_timer;
+   arc   = 2.*M_PI * st;
+   angle = -M_PI/2. - arc;
+
+   /* We do red to yellow. */
+   col_blend( &col, &cYellow, &cRed, st );
+   col.a = 0.5;
+
+   /* Determine size. */
+   r = 1.2/2. * (double)player.p->ship->gfx_space->sw;
+
+   /* Draw the main circle. */
+   gl_drawCirclePartial( x, y, r * z, &col, angle, arc );
+}
+
+
+/**
+ * @brief Renders the aim helper.
+ */
+static void player_renderAimHelper( double dt )
+{
+   (void) dt;
+   double a, b, d, x1, y1, x2, y2, r, theta;
+   glColour c;
+   Pilot *target;
+
+   target = pilot_get(player.p->target);
+   if (target == NULL)
+      return;
+
+   a = player.p->solid->dir;
+   r = 200.;
+   gl_gameToScreenCoords( &x1, &y1, player.p->solid->pos.x, player.p->solid->pos.y );
+
+   b = pilot_aimAngle( player.p, target );
+
+   theta = 22*M_PI/180;
+
+   /* The angular error will give the exact colour that is used. */
+   d = ABS( angle_diff(a,b) / (2*theta) );
+   d = MIN( 1, d );
+
+   c = cInert;
+   c.a = .3;
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a+theta ),
+                           player.p->solid->pos.y + r*sin( a+theta ) );
+   gl_drawLine( x1, y1, x2, y2, &c );
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a-theta ),
+                           player.p->solid->pos.y + r*sin( a-theta ) );
+   gl_drawLine( x1, y1, x2, y2, &c );
+
+   c.r = d*.9;
+   c.g = d*.2 + (1-d)*.8;
+   c.b = (1-d)*.2;
+   c.a = 0.9;
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a ),
+                           player.p->solid->pos.y + r*sin( a ) );
+
+   gl_drawLine( x1, y1, x2, y2, &c );
+
+   gl_renderCross( x2 - 1, y2 - 1, 6., &cBlack );
+   gl_renderCross( x2 - 1, y2 + 1, 6., &cBlack );
+   gl_renderCross( x2 + 1, y2 - 1, 6., &cBlack );
+   gl_renderCross( x2 + 1, y2 + 1, 6., &cBlack );
+   gl_renderCross( x2, y2, 7., &cBlack );
+   gl_renderCross( x2, y2, 6., &cWhite );
+
+   gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( b ),
+                           player.p->solid->pos.y + r*sin( b ) );
+
+   c.a = .4;
+   gl_drawLine( x1, y1, x2, y2, &c );
+
+   gl_drawCircle( x2, y2, 8., &cBlack, 0 );
+   gl_drawCircle( x2, y2, 10., &cBlack, 0 );
+   gl_drawCircle( x2, y2, 9., &cWhite, 0 );
 }
 
 
@@ -1020,9 +1096,12 @@ void player_think( Pilot* pplayer, const double dt )
       return;
    }
 
+   /* We always have to run ai_think in the case the player has escorts so that
+    * they properly form formations. */
+   ai_think( pplayer, dt );
+
    /* Under manual control is special. */
    if (pilot_isFlag( pplayer, PILOT_MANUAL_CONTROL )) {
-      ai_think( pplayer, dt );
       return;
    }
 
@@ -1222,18 +1301,18 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
  *    For use in keybindings
  */
 /**
- * @brief Activates a player's weapon set.
+ * @brief Handles keyboard events involving the player's weapon-set keys. It's valid to call this while gameplay is paused.
  */
 void player_weapSetPress( int id, double value, int repeat )
 {
    int type;
 
-   if (repeat)
+   if (repeat || (player.p == NULL))
       return;
 
    type = (value>=0) ? +1 : -1;
 
-   if ((type>0) && ((player.p == NULL) || toolkit_isOpen()))
+   if (toolkit_isOpen() && (type>0 || pilot_weapSet(player.p,id)->type != WEAPSET_TYPE_WEAPON))
       return;
 
    if ((type>0) && (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
@@ -1509,6 +1588,8 @@ void player_land (void)
    pilot_afterburnOver( player.p );
    /* Stop accelerating. */
    player_accelOver();
+   /* Stop stealth. */
+   pilot_destealth( player.p );
 
    /* Stop all on outfits. */
    if (pilot_outfitOffAll( player.p ) > 0)
@@ -1675,7 +1756,7 @@ int player_getHypPreempt(void)
 double player_dt_default (void)
 {
    if (player.p != NULL && player.p->ship != NULL)
-      return player.p->ship->dt_default * player.dt_mod;
+      return player.p->stats.time_mod * player.p->ship->dt_default * player.dt_mod;
 
    return player.dt_mod;
 }
@@ -1810,7 +1891,7 @@ void player_brokeHyperspace (void)
    space_init( jp->target->name );
 
    /* set position, the pilot_update will handle lowering vel */
-   space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir );
+   space_calcJumpInPos( cur_system, sys, &player.p->solid->pos, &player.p->solid->vel, &player.p->solid->dir, player.p );
    cam_setTargetPilot( player.p->id, 0 );
 
    /* reduce fuel */
@@ -1833,8 +1914,11 @@ void player_brokeHyperspace (void)
    for (i=0; i<array_size(pilot_stack); i++) {
       if ((pilot_stack[i] != player.p) &&
             (pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
-         space_calcJumpInPos( cur_system, sys, &pilot_stack[i]->solid->pos, &pilot_stack[i]->solid->vel, &pilot_stack[i]->solid->dir );
+         space_calcJumpInPos( cur_system, sys, &pilot_stack[i]->solid->pos, &pilot_stack[i]->solid->vel, &pilot_stack[i]->solid->dir, player.p );
          ai_cleartasks(pilot_stack[i]);
+
+         /* Run Lua stuff. */
+         pilot_outfitLInitAll( pilot_stack[i] );
       }
    }
 
@@ -1853,6 +1937,9 @@ void player_brokeHyperspace (void)
                map_npath );
       }
    }
+
+   /* Update lua stuff. */
+   pilot_outfitLInitAll( player.p );
 
    /* Safe since this is run in the player hook section. */
    hooks_run( "jumpin" );
@@ -1981,7 +2068,8 @@ void player_targetPrev( int mode )
 void player_targetClear (void)
 {
    gui_forceBlink();
-   if (player.p->target == PLAYER_ID && (preemption == 1 || player.p->nav_planet == -1)
+   if ((player.p->target == PLAYER_ID) && (player.p->nav_planet < 0)
+         && (preemption == 1 || player.p->nav_planet == -1)
          && !pilot_isFlag(player.p, PILOT_HYP_PREP)) {
       player.p->nav_hyperspace = -1;
       player_hyperspacePreempt(0);
@@ -2303,8 +2391,6 @@ void player_dead (void)
    pause_setSpeed(1.);
    sound_setSpeed(1.);
 
-   gui_cleanup();
-
    /* Close the overlay. */
    ovr_setOpen(0);
 }
@@ -2331,8 +2417,8 @@ void player_destroyed (void)
    player_autonavEnd();
 
    /* Reset time compression when player dies. */
-   pause_setSpeed( 1. );
-   sound_setSpeed( 1. );
+   pause_setSpeed(1.);
+   sound_setSpeed(1.);
 }
 
 
@@ -2932,7 +3018,6 @@ int player_save( xmlTextWriterPtr writer )
    /* Standard player details. */
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_attr(writer,"dt_mod","%f",player.dt_mod);
-   xmlw_elem(writer,"rating","%f",player.crating);
    xmlw_elem(writer,"credits","%"CREDITS_PRI,player.p->credits);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
@@ -3005,6 +3090,11 @@ int player_save( xmlTextWriterPtr writer )
    xmlw_startElem(writer, "escorts");
    player_saveEscorts(writer);
    xmlw_endElem(writer); /* "escorts" */
+
+   /* Metadata. */
+   xmlw_startElem(writer,"metadata");
+   player_saveMetadata( writer );
+   xmlw_endElem(writer); /* "metadata" */
 
    return 0;
 }
@@ -3145,6 +3235,50 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
    return 0;
 }
 
+
+/**
+ * @brief Saves the player meta-data.
+ *
+ *    @param writer XML writer.
+ *    @return 0 on success.
+ */
+static int player_saveMetadata( xmlTextWriterPtr writer )
+{
+   int i;
+   size_t j;
+   char buf[STRMAX_SHORT];
+   time_t t = time(NULL);
+
+   /* Compute elapsed time. */
+   player.time_played += difftime( t, player.time_since_save );
+   player.time_since_save = t;
+
+   /* Save the stuff. */
+   xmlw_saveTime(writer, "last_played", time(NULL));
+   xmlw_saveTime(writer, "date_created", player.date_created);
+   xmlw_elem(writer,"time_played","%f",player.time_played);
+
+   /* Damage stuff. */
+   xmlw_elem(writer, "dmg_done_shield", "%f", player.dmg_done_shield);
+   xmlw_elem(writer, "dmg_done_armour", "%f", player.dmg_done_armour);
+   xmlw_elem(writer, "dmg_taken_shield", "%f", player.dmg_taken_shield);
+   xmlw_elem(writer, "dmg_taken_armour", "%f", player.dmg_taken_armour);
+
+   /* Ships destroyed by class. */
+   xmlw_startElem(writer,"ships_destroyed");
+   for (i=SHIP_CLASS_NULL+1; i<SHIP_CLASS_TOTAL; i++) {
+      strncpy( buf, ship_classToString(i), sizeof(buf) );
+      for (j=0; j<strlen(buf); j++)
+         if (buf[j]==' ')
+            buf[j]='_';
+      xmlw_elem(writer, buf, "%u", player.ships_destroyed[i]);
+   }
+   xmlw_endElem(writer); /* "ships_destroyed" */
+
+   return 0;
+}
+
+
 /**
  * @brief Loads the player stuff.
  *
@@ -3158,8 +3292,14 @@ Planet* player_load( xmlNodePtr parent )
 
    /* some cleaning up */
    memset( &player, 0, sizeof(Player_t) );
+   player.speed = 1.;
    pnt = NULL;
    map_cleanup();
+
+   /* Sane time defaults. */
+   player.last_played = time(NULL);
+   player.date_created = player.last_played;
+   player.time_since_save = player.last_played;
 
    if (player_stack==NULL)
       player_stack = array_create( PlayerShip_t );
@@ -3168,7 +3308,9 @@ Planet* player_load( xmlNodePtr parent )
 
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"player"))
+      if (xml_isNode(node,"metadata"))
+         player_parseMetadata(node);
+      else if (xml_isNode(node,"player"))
          pnt = player_parse( node );
       else if (xml_isNode(node,"missions_done"))
          player_parseDoneMissions( node );
@@ -3177,6 +3319,9 @@ Planet* player_load( xmlNodePtr parent )
       else if (xml_isNode(node,"escorts"))
          player_parseEscorts(node);
    } while (xml_nextNode(node));
+
+   /* Set up meta-data. */
+   player.time_since_save = time(NULL);
 
    return pnt;
 }
@@ -3229,7 +3374,6 @@ static Planet* player_parse( xmlNodePtr parent )
 
       /* global stuff */
       xmlr_float(node, "dt_mod", player.dt_mod);
-      xmlr_float(node, "rating", player.crating);
       xmlr_ulong(node, "credits", player_creds);
       xmlr_strd(node, "gui", player.gui);
       xmlr_int(node, "guiOverride", player.guiOverride);
@@ -3529,6 +3673,62 @@ static int player_parseEscorts( xmlNodePtr parent )
 
          /* Add escort to the list. */
          escort_addList( player.p, ship, type, 0, 1 );
+      }
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses the player metadata.
+ *
+ *    @param parent "metadata" node to parse.
+ *    @return 0 on success.
+ */
+static int player_parseMetadata( xmlNodePtr parent )
+{
+   xmlNodePtr node, cur;
+   size_t i;
+   int class;
+   char buf[STRMAX_SHORT];
+
+   node = parent->xmlChildrenNode;
+   do {
+      xml_onlyNodes(node);
+
+      if (xml_isNode(node,"last_played"))
+         xml_parseTime(node, &player.last_played);
+      else if (xml_isNode(node,"time_played"))
+         player.time_played = xml_getFloat(node);
+      else if (xml_isNode(node,"date_created"))
+         xml_parseTime(node, &player.date_created);
+      else if (xml_isNode(node,"dmg_done_shield"))
+         player.dmg_done_shield = xml_getFloat(node);
+      else if (xml_isNode(node,"dmg_done_armour"))
+         player.dmg_done_armour = xml_getFloat(node);
+      else if (xml_isNode(node,"dmg_taken_shield"))
+         player.dmg_taken_shield = xml_getFloat(node);
+      else if (xml_isNode(node,"dmg_taken_armour"))
+         player.dmg_taken_armour = xml_getFloat(node);
+      else if (xml_isNode(node,"ships_destroyed")) {
+         cur = node->xmlChildrenNode;
+         do {
+            xml_onlyNodes(cur);
+
+            strncpy( buf, (const char*)cur->name, sizeof(buf) );
+            for (i=0; i<strlen(buf); i++)
+               if (buf[i]=='_')
+                  buf[i] = ' ';
+
+            class = ship_classFromString( buf );
+            if (class==SHIP_CLASS_NULL) {
+               WARN(_("Unknown ship class '%s' when parsing 'ships_destroyed' node!"), (const char*)cur->name );
+               continue;
+            }
+
+            player.ships_destroyed[class] = xml_getULong(cur);
+         } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
 
@@ -3882,4 +4082,30 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    ship->aimLines = aim_lines;
 
    return 0;
+}
+
+
+/**
+ * @brief Input binding for toggling stealth for the player.
+ */
+void player_stealth (void)
+{
+   if (player.p == NULL)
+      return;
+
+   /* Handle destealth first. */
+   if (pilot_isFlag(player.p, PILOT_STEALTH)) {
+      pilot_destealth( player.p );
+      player_message(_("You have destealthed."));
+      return;
+   }
+
+   /* Stealth case. */
+   if (pilot_stealth( player.p )) {
+      player_message(_("#gYou have entered stealth mode."));
+   }
+   else {
+      /* Stealth failed. */
+      player_message(_("#rUnable to stealth!"));
+   }
 }

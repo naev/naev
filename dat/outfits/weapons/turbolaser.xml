@@ -5,11 +5,11 @@
   <size>large</size>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
-  <mass>57</mass>
+  <mass>75</mass>
   <price>125000</price>
-  <description>The military grade model of the Heavy Laser is one of the heaviest weapons found in the galaxy. Imperial Capital ships use it to lay down devastating barrages against enemy vessels.</description>
-  <gfx_store>laserturret2.png</gfx_store>
-  <cpu>-38</cpu>
+  <description>This special model of the Heavy Laser Turret is one of the heaviest weapons found in the galaxy. Imperial Capital ships use it to lay down devastating barrages against enemy vessels.</description>
+  <gfx_store>laserturret2.webp</gfx_store>
+  <cpu>-350</cpu>
  </general>
  <specific type="turret bolt">
   <gfx>laser4L.png</gfx>
@@ -17,17 +17,18 @@
   <spfx_shield>ShiM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
   <delay>1.45</delay>
-  <speed>550</speed>
-  <range>2800</range>
-  <falloff>2000</falloff>
+  <speed>600</speed>
+  <range>2400</range>
+  <falloff>1800</falloff>
   <gfx_end>laser3L.png</gfx_end>
-  <energy>85</energy>
+  <energy>174</energy>
   <heatup>60</heatup>
-  <track>0.3</track>
+  <trackmin>10000</trackmin>
+  <trackmax>30000</trackmax>
   <damage>
    <type>normal</type>
-   <penetrate>75</penetrate>
-   <physical>82</physical>
+   <penetrate>100</penetrate>
+   <physical>80</physical>
    <disable>4</disable>
   </damage>
  </specific>

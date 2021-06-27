@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="BioPlasma Tentacle Stage 6">
+ <general>
+  <slot prop="bio_weapon">weapon</slot>
+  <size>large</size>
+  <license>Heavy Weapon License</license>
+  <rarity>1</rarity>
+  <mass>75</mass>
+  <price>107000</price>
+  <description>The BioPlasma Tentacle is hands-down the strongest and versatile organic weapon grown by the Soromid. It has the distinction of being the only rotating organic weapon while also boasting a power output that is unmatched by most weaponry found throughout the galaxy once fully developed. As with all organs, it starts out weak, but over time it grows and improves.</description>
+  <gfx_store>railgunturret.webp</gfx_store>
+  <cpu>-200</cpu>
+ </general>
+ <specific type="turret bolt">
+  <gfx>massL.png</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <delay>1.45</delay>
+  <speed>550</speed>
+  <range>2200</range>
+  <falloff>1600</falloff>
+  <gfx_end>massL-end.png</gfx_end>
+  <energy>174</energy>
+  <heatup>50</heatup>
+  <trackmin>10000</trackmin>
+  <trackmax>30000</trackmax>
+  <damage>
+   <type>impact</type>
+   <penetrate>100</penetrate>
+   <physical>68</physical>
+   <disable>3.5</disable>
+  </damage>
+ </specific>
+</outfit>

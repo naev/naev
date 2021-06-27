@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Unicorp D-2 Light Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>small</size>
+  <mass>30</mass>
+  <price>16000</price>
+  <description>Commonly found on civilian vessels, the D-2 plating is popular with ship manufacturers due to its low cost and adequate, if uninspiring performance.</description>
+  <gfx_store>base_hull_t.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <cargo>10</cargo>
+  <absorb>2</absorb>
+  <armour>50</armour>
+ </specific>
+</outfit>

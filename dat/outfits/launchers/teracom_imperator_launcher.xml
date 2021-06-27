@@ -2,22 +2,23 @@
 <outfit name="TeraCom Imperator Launcher">
  <general>
   <slot>weapon</slot>
-  <size>large</size>
+  <size>medium</size>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
   <mass>80</mass>
-  <price>220000</price>
+  <price>250000</price>
   <description>TeraCom decided not to develop a launcher for the Caesar IV, because it fell short of the company's performance requirements. Instead, the company released a completely new torpedo specification. At present, the Imperator class heavy torpedo provides devastating destructive power, though it will take a while for it to reach its target. Faster cruisers may be able to outrun it completely.</description>
-  <gfx_store>caesarlauncher.png</gfx_store>
-  <cpu>-20</cpu>
+  <gfx_store>imperatorlauncher.webp</gfx_store>
+  <cpu>-17</cpu>
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Imperator Torpedo</ammo>
-  <delay>11</delay>
+  <delay>8</delay>
   <reload_time>120</reload_time>
-  <lockon>18</lockon>
-  <arc>6</arc>
-  <ew_target>0.3</ew_target>
+  <lockon>11</lockon>
+  <arc>60</arc>
+  <trackmin>0</trackmin>
+  <trackmax>30000</trackmax>
   <amount>5</amount>
  </specific>
 </outfit>

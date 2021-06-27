@@ -114,8 +114,7 @@ function create ()
    started = false
    chatter_index = 0
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea.png" )
-   misn.setDesc( npc_desc )
+   misn.setNPC( npc_name, "soromid/unique/chelsea.webp", npc_desc )
 end
 
 

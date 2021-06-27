@@ -150,8 +150,6 @@ void conf_setDefaults (void)
    conf.font_size_intro   = FONT_SIZE_INTRO_DEFAULT;
    conf.font_size_def     = FONT_SIZE_DEF_DEFAULT;
    conf.font_size_small   = FONT_SIZE_SMALL_DEFAULT;
-   conf.font_name_default = NULL;
-   conf.font_name_monospace = NULL;
 
    /* Misc. */
    conf.redirect_file = 1;
@@ -205,10 +203,7 @@ void conf_setGameplayDefaults (void)
 void conf_setAudioDefaults (void)
 {
    /* Sound. */
-   conf.snd_voices   = VOICES_DEFAULT;
-   conf.snd_pilotrel = PILOT_RELATIVE_DEFAULT;
    conf.al_efx       = USE_EFX_DEFAULT;
-   conf.al_bufsize   = BUFFER_SIZE_DEFAULT;
    conf.nosound      = MUTE_SOUND_DEFAULT;
    conf.sound        = SOUND_VOLUME_DEFAULT;
    conf.music        = MUSIC_VOLUME_DEFAULT;
@@ -245,7 +240,6 @@ void conf_setVideoDefaults (void)
    /* OpenGL. */
    conf.fsaa         = FSAA_DEFAULT;
    conf.vsync        = VSYNC_DEFAULT;
-   conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
 
    /* Window. */
    conf.fullscreen   = f;
@@ -256,6 +250,8 @@ void conf_setVideoDefaults (void)
    conf.nebu_scale   = NEBULA_SCALE_FACTOR_DEFAULT;
    conf.minimize     = MINIMIZE_DEFAULT;
    conf.colorblind   = COLORBLIND_DEFAULT;
+   conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
+   conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
 
    /* FPS. */
    conf.fps_show     = SHOW_FPS_DEFAULT;
@@ -263,9 +259,6 @@ void conf_setVideoDefaults (void)
 
    /* Pause. */
    conf.pause_show   = SHOW_PAUSE_DEFAULT;
-
-   /* Memory. */
-   conf.engineglow   = ENGINE_GLOWS_DEFAULT;
 }
 
 
@@ -274,17 +267,7 @@ void conf_setVideoDefaults (void)
  */
 void conf_cleanup (void)
 {
-   free(conf.datapath);
-   free(conf.ndata);
-   free(conf.language);
-   free(conf.joystick_nam);
-   free(conf.lastversion);
-   free(conf.dev_save_sys);
-   free(conf.dev_save_map);
-   free(conf.dev_save_asset);
-
-   /* Clear memory. */
-   memset( &conf, 0, sizeof(conf) );
+   conf_free( &conf );
 }
 
 
@@ -335,10 +318,6 @@ int conf_loadConfig ( const char* file )
       /* OpenGL. */
       conf_loadInt( lEnv, "fsaa", conf.fsaa );
       conf_loadBool( lEnv, "vsync", conf.vsync );
-      conf_loadBool( lEnv, "compress", conf.compress );
-
-      /* Memory. */
-      conf_loadBool( lEnv, "engineglow", conf.engineglow );
 
       /* Window. */
       w = h = 0;
@@ -358,6 +337,8 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "modesetting", conf.modesetting );
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
+      conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
+      conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
 
       /* FPS */
       conf_loadBool( lEnv, "showfps", conf.fps_show );
@@ -367,11 +348,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "showpause", conf.pause_show );
 
       /* Sound. */
-      conf_loadInt( lEnv, "snd_voices", conf.snd_voices );
-      conf.snd_voices = MAX( VOICES_MIN, conf.snd_voices ); /* Must be at least 16. */
-      conf_loadBool( lEnv, "snd_pilotrel", conf.snd_pilotrel );
       conf_loadBool( lEnv, "al_efx", conf.al_efx );
-      conf_loadInt( lEnv, "al_bufsize", conf.al_bufsize );
       conf_loadBool( lEnv, "nosound", conf.nosound );
       conf_loadFloat( lEnv, "sound", conf.sound );
       conf_loadFloat( lEnv, "music", conf.music );
@@ -408,8 +385,6 @@ int conf_loadConfig ( const char* file )
       conf_loadInt( lEnv, "font_size_intro", conf.font_size_intro );
       conf_loadInt( lEnv, "font_size_def", conf.font_size_def );
       conf_loadInt( lEnv, "font_size_small", conf.font_size_small );
-      conf_loadString( lEnv, "font_name_default", conf.font_name_default );
-      conf_loadString( lEnv, "font_name_monospace", conf.font_name_monospace );
 
       /* Misc. */
       conf_loadFloat( lEnv, "compression_velocity", conf.compression_velocity );
@@ -517,7 +492,7 @@ int conf_loadConfig ( const char* file )
                   else if (strcmp(mod,"shift")==0)   m = NMOD_SHIFT;
                   else if (strcmp(mod,"alt")==0)     m = NMOD_ALT;
                   else if (strcmp(mod,"meta")==0)    m = NMOD_META;
-                  else if (strcmp(mod,"any")==0)     m = NMOD_ALL;
+                  else if (strcmp(mod,"any")==0)     m = NMOD_ANY;
                   else if (strcmp(mod,"none")==0)    m = NMOD_NONE;
                   else {
                      WARN(_("Unknown keybinding mod of type %s"), mod);
@@ -856,15 +831,6 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("vsync",conf.vsync);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Use OpenGL Texture Compression"));
-   conf_saveBool("compress",conf.compress);
-   conf_saveEmptyLine();
-
-   /* Memory. */
-   conf_saveComment(_("If true enables engine glow"));
-   conf_saveBool("engineglow",conf.engineglow);
-   conf_saveEmptyLine();
-
    /* Window. */
    conf_saveComment(_("The window size or screen resolution"));
    conf_saveComment(_("Set both of these to 0 to make Naev try the desktop resolution"));
@@ -903,6 +869,14 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("colorblind",conf.colorblind);
    conf_saveEmptyLine();
 
+   conf_saveComment(_("Background brightness. 1 is normal brightness while setting it to 0 would make the backgrounds pitch black."));
+   conf_saveFloat("bg_brightness",conf.bg_brightness);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Gamma correction parameter. A value of 1 disables it (no curve)."))
+   conf_saveFloat("gamma_correction",conf.gamma_correction);
+   conf_saveEmptyLine();
+
    /* FPS */
    conf_saveComment(_("Display a frame rate counter"));
    conf_saveBool("showfps",conf.fps_show);
@@ -918,20 +892,8 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    /* Sound. */
-   conf_saveComment(_("Maximum number of simultaneous sounds to play, must be at least 16."));
-   conf_saveInt("snd_voices",conf.snd_voices);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Sets sound to be relative to pilot when camera is following a pilot instead of referenced to camera."));
-   conf_saveBool("snd_pilotrel",conf.snd_pilotrel);
-   conf_saveEmptyLine();
-
    conf_saveComment(_("Enables EFX extension for OpenAL backend."));
    conf_saveBool("al_efx",conf.al_efx);
-   conf_saveEmptyLine();
-
-   conf_saveComment(_("Size of the OpenAL music buffer (in kibibytes)."));
-   conf_saveInt("al_bufsize",conf.al_bufsize);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Disable all sound"));
@@ -1000,21 +962,6 @@ int conf_saveConfig ( const char* file )
    conf_saveInt("font_size_def",conf.font_size_def);
    pos += scnprintf(&buf[pos], sizeof(buf)-pos, _("-- Small size: %d\n"), FONT_SIZE_SMALL_DEFAULT);
    conf_saveInt("font_size_small",conf.font_size_small);
-   conf_saveComment(_("Default font to use: unset"));
-   if (conf.font_name_default) {
-      conf_saveString("font_name_default",conf.font_name_default);
-   }
-   else {
-      conf_saveComment(_("font_name_default = \"/path/to/file.ttf\""));
-   }
-   conf_saveComment("Default monospace font to use: unset");
-   if (conf.font_name_monospace) {
-      conf_saveString("font_name_monospace",conf.font_name_monospace);
-   }
-   else {
-      conf_saveComment("font_name_monospace = \"/path/to/file.ttf\"");
-   }
-   conf_saveEmptyLine();
 
    /* Misc. */
    conf_saveComment(_("Sets the velocity (px/s) to compress up to when time compression is enabled."));
@@ -1119,7 +1066,7 @@ int conf_saveConfig ( const char* file )
          case NMOD_SHIFT: modname = "shift";  break;
          case NMOD_ALT:   modname = "alt";    break;
          case NMOD_META:  modname = "meta";   break;
-         case NMOD_ALL:   modname = "any";     break;
+         case NMOD_ANY:   modname = "any";     break;
          default:         modname = "none";    break;
       }
 
@@ -1155,5 +1102,44 @@ int conf_saveConfig ( const char* file )
    }
 
    return 0;
+}
+
+
+/**
+ * @brief Copies a configuration over another.
+ */
+void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src )
+{
+   conf_free( dest );
+   memcpy( dest, src, sizeof(PlayerConf_t) );
+#define STRDUP(s) dest->s = ((src->s==NULL)?NULL:strdup(src->s))
+   STRDUP(ndata);
+   STRDUP(datapath);
+   STRDUP(language);
+   STRDUP(joystick_nam);
+   STRDUP(lastversion);
+   STRDUP(dev_save_sys);
+   STRDUP(dev_save_map);
+   STRDUP(dev_save_asset);
+#undef STRDUP
+}
+
+
+/**
+ * @brief Frees a configuration.
+ */
+void conf_free( PlayerConf_t *config )
+{
+   free(config->ndata);
+   free(config->datapath);
+   free(config->language);
+   free(config->joystick_nam);
+   free(config->lastversion);
+   free(config->dev_save_sys);
+   free(config->dev_save_map);
+   free(config->dev_save_asset);
+
+   /* Clear memory. */
+   memset( config, 0, sizeof(PlayerConf_t) );
 }
 

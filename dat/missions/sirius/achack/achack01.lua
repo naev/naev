@@ -64,8 +64,7 @@ function create()
         abort()
     end
 
-    misn.setNPC(harjaname, "sirius/unique/harja.png")
-    misn.setDesc(harjadesc)
+    misn.setNPC(harjaname, "sirius/unique/harja.webp", harjadesc)
 end
 
 function accept()
@@ -88,7 +87,7 @@ end
 
 function land()
     if planet.cur() == destplanet then
-        misn.npcAdd("talkJoanne", joannename, "sirius/unique/joanne.png", joannedesc, 4)
+        misn.npcAdd("talkJoanne", joannename, "sirius/unique/joanne.webp", joannedesc, 4)
     end
 end
 

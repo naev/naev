@@ -47,6 +47,7 @@
 require "numstring"
 require "jumpdist"
 require "missions/pirate/common"
+require "pilot/generic"
 
 
 -- Mission details
@@ -57,7 +58,7 @@ misn_title[3] = _("PIRACY: Moderate Assassination Job in %s")
 misn_title[4] = _("PIRACY: Big Assassination Job in %s")
 misn_title[5] = _("PIRACY: Dangerous Assassination Job in %s")
 misn_title[6] = _("PIRACY: Highly Dangerous Assassination Job in %s")
-misn_desc   = _("A meddlesome %s pilot was recently seen in the %s system. Local crime lords want this pilot dead.")
+misn_desc   = _("A meddlesome %s pilot known as %s was recently seen in the %s system. Local crime lords want this pilot dead.")
 desc_illegal_warning = _("WARNING: This mission is illegal and will get you in trouble with the authorities!")
 
 -- Messages
@@ -70,7 +71,7 @@ msg[4] = _("MISSION SUCCESS! Pay has been transferred into your account.")
 osd_title = _("Assassination")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
-osd_msg[2] = _("Kill target %s ship")
+osd_msg[2] = _("Kill %s")
 osd_msg["__save"] = true
 
 
@@ -136,6 +137,7 @@ function create ()
       jumps_permitted = jumps_permitted - 1
    end
 
+   name = pilot_name()
    level_setup()
    bounty_setup()
 
@@ -143,11 +145,11 @@ function create ()
    misn.setTitle( misn_title[level]:format( missys:name() ) )
 
    if planet.cur():faction() == faction.get("Pirate") then
-      misn.setDesc( misn_desc:format( target_faction, missys:name() ) )
+      misn.setDesc( misn_desc:format( target_faction, name, missys:name() ) )
    else
       -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).
-      misn.setDesc( misn_desc:format( target_faction, missys:name() ) .. "\n\n" .. desc_illegal_warning )
+      misn.setDesc( misn_desc:format( target_faction, name, missys:name() ) .. "\n\n" .. desc_illegal_warning )
    end
 
    misn.setReward( creditstring( credits ) )
@@ -159,7 +161,7 @@ function accept ()
    misn.accept()
 
    osd_msg[1] = osd_msg[1]:format( missys:name() )
-   osd_msg[2] = osd_msg[2]:format( target_faction )
+   osd_msg[2] = osd_msg[2]:format( name )
    misn.osdCreate( osd_title, osd_msg )
 
    last_sys = system.cur()
@@ -220,7 +222,7 @@ end
 
 
 function pilot_death( p, attacker )
-   if attacker == player.pilot() then
+   if attacker == player.pilot() or attacker:leader() == player.pilot() then
       succeed()
    else
       local top_hunter = nil
@@ -230,7 +232,7 @@ function pilot_death( p, attacker )
       for i, j in ipairs( hunters ) do
          total_hits = total_hits + hunter_hits[i]
          if j ~= nil then
-            if j == player.pilot() then
+            if j == player.pilot() or j:leader() == player.pilot() then
                player_hits = player_hits + hunter_hits[i]
             elseif j:exists() and hunter_hits[i] > top_hits then
                top_hunter = j
@@ -558,6 +560,7 @@ function spawn_pirate( param )
       if jumps_permitted >= 0 then
          misn.osdActive( 2 )
          target_ship = pilot.addFleet( ship, param )[1]
+         target_ship:rename( name )
          target_ship:setHilight( true )
          hook.pilot( target_ship, "attacked", "pilot_attacked" )
          hook.pilot( target_ship, "death", "pilot_death" )

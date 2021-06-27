@@ -35,8 +35,7 @@
 #include "nlua_shader.h"
 
 
-#define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
-#define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
+#define SPFX_XML_ID    "spfx" /**< SPFX XML node tag. */
 
 /*
  * Effect parameters.
@@ -47,13 +46,11 @@
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
 
-#define DAMAGE_DECAY    0.5 /**< Rate at which the damage strength goes down. */
-
 
 /* Trail stuff. */
-#define TRAIL_UPDATE_DT       0.05
-static TrailSpec* trail_spec_stack;
-static Trail_spfx** trail_spfx_stack;
+#define TRAIL_UPDATE_DT       0.05  /**< Rate (in seconds) at which trail is updated. */
+static TrailSpec* trail_spec_stack; /**< Trail specifications. */
+static Trail_spfx** trail_spfx_stack; /**< Active trail effects. */
 
 
 /*
@@ -107,7 +104,17 @@ typedef struct SPFX_Base_ {
    double ttl; /**< Time to live */
    double anim; /**< Total duration in ms */
 
-   glTexture *gfx; /**< will use each sprite as a frame */
+   /* Use texture when not using shaders. */
+   glTexture *gfx; /**< Will use each sprite as a frame */
+
+   /* Shaders! */
+   double size; /**< Default size. */
+   GLint shader; /**< Shader to use. */
+   GLint vertex;
+   GLint projection;
+   GLint u_time; /**< Time variable in shader. */
+   GLint u_r; /**< Unique shader value. */
+   GLint u_size; /**< Size of the shader. */
 } SPFX_Base;
 
 static SPFX_Base *spfx_effects = NULL; /**< Total special effects. */
@@ -126,6 +133,10 @@ typedef struct SPFX_ {
    int effect; /**< The real effect */
 
    double timer; /**< Time left */
+
+   /* For shaders. */
+   GLfloat time; /**< Time elapsed (not left). */
+   GLfloat unique; /**< Uniqueness value in the shader. */
 } SPFX;
 
 
@@ -139,7 +150,7 @@ static SPFX *spfx_stack_back = NULL; /**< Back special effect layer. */
  * prototypes
  */
 /* General. */
-static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent );
+static int spfx_base_parse( SPFX_Base *temp, const char *filename );
 static void spfx_base_free( SPFX_Base *effect );
 static void spfx_update_layer( SPFX *layer, const double dt );
 /* Haptic. */
@@ -156,20 +167,43 @@ static void spfx_trail_free( Trail_spfx* trail );
  * @brief Parses an xml node containing a SPFX.
  *
  *    @param temp Address to load SPFX into.
- *    @param parent XML Node containing the SPFX data.
+ *    @param filename Name of the file to parse.
  *    @return 0 on success.
  */
-static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
+static int spfx_base_parse( SPFX_Base *temp, const char *filename )
 {
-   xmlNodePtr node;
+   xmlNodePtr node, cur, uniforms;
+   char *shadervert, *shaderfrag;
+   const char *name;
+   double x, y, z, w;
+   int ix, iy, iz, iw;
+   int isint;
+   GLint loc, dim;
+   xmlDocPtr doc;
+
+   /* Load and read the data. */
+   doc = xml_parsePhysFS( filename );
+   if (doc == NULL)
+      return -1;
+
+   /* Check to see if document exists. */
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,SPFX_XML_ID)) {
+      ERR( _("Malformed '%s' file: missing root element '%s'"), filename, SPFX_XML_ID);
+      return -1;
+   }
 
    /* Clear data. */
    memset( temp, 0, sizeof(SPFX_Base) );
+   temp->shader = -1;
+   shadervert = NULL;
+   shaderfrag = NULL;
+   uniforms = NULL;
 
-   xmlr_attr_strd( parent, "name", temp->name );
+   xmlr_attr_strd( node, "name", temp->name );
 
    /* Extract the data. */
-   node = parent->xmlChildrenNode;
+   node = node->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
       xmlr_float(node, "anim", temp->anim);
@@ -177,6 +211,21 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
       if (xml_isNode(node,"gfx")) {
          temp->gfx = xml_parseTexture( node,
                SPFX_GFX_PATH"%s", 6, 5, 0 );
+         continue;
+      }
+
+      if (xml_isNode(node,"shader")) {
+         cur = node->xmlChildrenNode;
+         do {
+            xml_onlyNodes(cur);
+            xmlr_strd(cur, "vert", shadervert);
+            xmlr_strd(cur, "frag", shaderfrag);
+            xmlr_float(cur, "size", temp->size);
+            if (xml_isNode(cur,"uniforms")) {
+               uniforms = cur;
+               continue;
+            }
+         } while (xml_nextNode(cur));
          continue;
       }
       WARN(_("SPFX '%s' has unknown node '%s'."), temp->name, node->name);
@@ -188,12 +237,92 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
    if (temp->ttl == 0.)
       temp->ttl = temp->anim;
 
+   /* Has shaders. */
+   if (shadervert != NULL && shaderfrag != NULL) {
+      temp->shader      = gl_program_vert_frag( shadervert, shaderfrag );
+      temp->vertex      = glGetAttribLocation( temp->shader, "vertex");
+      temp->projection  = glGetUniformLocation( temp->shader, "projection");
+      temp->u_r         = glGetUniformLocation( temp->shader, "u_r" );
+      temp->u_time      = glGetUniformLocation( temp->shader, "u_time" );
+      temp->u_size      = glGetUniformLocation( temp->shader, "u_size" );
+      if (uniforms != NULL) {
+         glUseProgram( temp->shader );
+         node = uniforms->xmlChildrenNode;
+         do {
+            xml_onlyNodes(node);
+            name = (char*)node->name;
+            loc = glGetUniformLocation( temp->shader, name );
+            if (loc < 0) {
+               WARN(_("SPFX '%s' is trying to set uniform '%s' not in shader!"), temp->name, name );
+               continue;
+            }
+            xmlr_attr_int_def(node,"int",isint,0);
+            /* Get dimension */
+            if (xmlHasProp(node,(xmlChar*)"w"))       dim = 4;
+            else if (xmlHasProp(node,(xmlChar*)"z"))  dim = 3;
+            else if (xmlHasProp(node,(xmlChar*)"y"))  dim = 2;
+            else                                      dim = 1;
+            /* Float values default to 0. */
+            if (isint) {
+               xmlr_attr_int(node, "x", ix );
+               xmlr_attr_int(node, "y", iy );
+               xmlr_attr_int(node, "z", iz );
+               xmlr_attr_int(node, "w", iw );
+            }
+            else {
+               xmlr_attr_float(node, "x", x );
+               xmlr_attr_float(node, "y", y );
+               xmlr_attr_float(node, "z", z );
+               xmlr_attr_float(node, "w", w );
+            }
+            switch (dim) {
+               case 1:
+                  if (isint)
+                     glUniform1i( loc, ix );
+                  else
+                     glUniform1f( loc, x );
+                  break;
+               case 2:
+                  if (isint)
+                     glUniform2i( loc, ix, iy );
+                  else
+                     glUniform2f( loc, x, y );
+                  break;
+               case 3:
+                  if (isint)
+                     glUniform3i( loc, ix, iy, iz );
+                  else
+                     glUniform3f( loc, x, y, z );
+                  break;
+               case 4:
+                  if (isint)
+                     glUniform4i( loc, ix, iy, iz, iw );
+                  else
+                     glUniform4f( loc, x, y, z, w );
+                  break;
+               default:
+                  WARN(_("SPFX '%s' is trying to set uniform '%s' with '%d' dimensions!"), temp->name, name, dim );
+                  continue;
+            }
+         } while (xml_nextNode(node));
+         glUseProgram( 0 );
+      }
+      gl_checkErr();
+   }
+
 #define MELEMENT(o,s) \
    if (o) WARN( _("SPFX '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
    MELEMENT(temp->anim==0.,"anim");
    MELEMENT(temp->ttl==0.,"ttl");
-   MELEMENT(temp->gfx==NULL,"gfx");
+   MELEMENT(temp->gfx==NULL && (shadervert==NULL || shaderfrag==NULL),"gfx or shader");
+   MELEMENT(temp->shader>=0 && temp->size<=0., "shader/size");
 #undef MELEMENT
+
+   free(shadervert);
+   free(shaderfrag);
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
 
    return 0;
 }
@@ -207,9 +336,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
 static void spfx_base_free( SPFX_Base *effect )
 {
    free(effect->name);
-   effect->name = NULL;
    gl_freeTexture(effect->gfx);
-   effect->gfx = NULL;
 }
 
 
@@ -238,43 +365,27 @@ int spfx_get( char* name )
  */
 int spfx_load (void)
 {
-   xmlNodePtr node;
-   xmlDocPtr doc;
+   int i, n, ret;
+   char **spfx_files;
 
-   /* Load and read the data. */
-   doc = xml_parsePhysFS( SPFX_DATA_PATH );
-   if (doc == NULL)
-      return -1;
-
-   /* Check to see if document exists. */
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,SPFX_XML_ID)) {
-      ERR( _("Malformed '%s' file: missing root element '%s'"), SPFX_DATA_PATH, SPFX_XML_ID);
-      return -1;
-   }
-
-   /* Check to see if is populated. */
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR( _("Malformed '%s' file: does not contain elements"), SPFX_DATA_PATH);
-      return -1;
-   }
-
-   /* First pass, loads up ammunition. */
    spfx_effects = array_create(SPFX_Base);
-   do {
-      xml_onlyNodes(node);
-      if (xml_isNode(node,SPFX_XML_TAG)) {
-         spfx_base_parse( &array_grow(&spfx_effects), node );
-      }
-      else
-         WARN( _("'%s' has unknown node '%s'."), SPFX_DATA_PATH, node->name);
-   } while (xml_nextNode(node));
-   /* Shrink back to minimum - shouldn't change ever. */
-   array_shrink(&spfx_effects);
 
-   /* Clean up. */
-   xmlFreeDoc(doc);
+   spfx_files = ndata_listRecursive( SPFX_DATA_PATH );
+   for (i=0; i<array_size(spfx_files); i++) {
+      if (!ndata_matchExt( spfx_files[i], "xml" ))
+         continue;
+
+      ret = spfx_base_parse( &array_grow(&spfx_effects), spfx_files[i] );
+      if (ret < 0) {
+         n = array_size(spfx_effects);
+         array_erase( &spfx_effects, &spfx_effects[n-1], &spfx_effects[n] );
+      }
+      free( spfx_files[i] );
+   }
+   array_free( spfx_files );
+
+   /* Reduce size. */
+   array_shrink( &spfx_effects );
 
    /* Trail colour sets. */
    trailSpec_load();
@@ -304,8 +415,11 @@ int spfx_load (void)
    spfx_stack_middle = array_create( SPFX );
    spfx_stack_back = array_create( SPFX );
 
+   DEBUG( n_( "Loaded %d Special Effect", "Loaded %d Special Effects", array_size(spfx_effects) ), array_size(spfx_effects) );
+
    return 0;
 }
+
 
 
 /**
@@ -396,6 +510,10 @@ void spfx_add( int effect,
       cur_spfx->timer = ttl + RNGF()*anim;
    else
       cur_spfx->timer = ttl;
+
+   /* Shader magic. */
+   cur_spfx->unique = RNGF();
+   cur_spfx->time = 0.0;
 }
 
 
@@ -411,10 +529,12 @@ void spfx_clear (void)
    shake_force_mean = 0.;
    vectnull( &shake_pos );
    vectnull( &shake_vel );
-   if (shake_shader_pp_id > 0) {
+   if (shake_shader_pp_id > 0)
       render_postprocessRm( shake_shader_pp_id );
-      shake_shader_pp_id = 0;
-   }
+   shake_shader_pp_id = 0;
+   if (damage_shader_pp_id > 0)
+      render_postprocessRm( damage_shader_pp_id );
+   damage_shader_pp_id = 0;
 
    for (i=0; i<array_size(trail_spfx_stack); i++)
       spfx_trail_free( trail_spfx_stack[i] );
@@ -466,6 +586,7 @@ static void spfx_update_layer( SPFX *layer, const double dt )
          i--;
          continue;
       }
+      layer[i].time  += dt; /* Shader timer. */
 
       /* actually update it */
       vect_cadd( &layer[i].pos, dt*VX(layer[i].vel), dt*VY(layer[i].vel) );
@@ -490,7 +611,7 @@ static void spfx_updateShake( double dt )
    /* The shake decays over time */
    forced = 0;
    if (shake_force_mod > 0.) {
-      shake_force_mod -= SHAKE_DECAY*dt;
+      shake_force_mod -= SPFX_SHAKE_DECAY*dt;
       if (shake_force_mod < 0.)
          shake_force_mod   = 0.;
       else
@@ -546,7 +667,7 @@ static void spfx_updateDamage( double dt )
       return;
 
    /* Decrement and turn off if necessary. */
-   damage_strength -= DAMAGE_DECAY * dt;
+   damage_strength -= SPFX_DAMAGE_DECAY * dt;
    if (damage_strength < 0.) {
       damage_strength = 0.;
       render_postprocessRm( damage_shader_pp_id );
@@ -643,12 +764,13 @@ static void spfx_trail_update( Trail_spfx* trail, double dt )
  *    @param x X position of the new control point.
  *    @param y Y position of the new control point.
  *    @param mode Type of trail emission at this point.
+ *    @param force Whether or not to force the addition of the sample.
  */
-void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode )
+void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode, int force )
 {
    TrailPoint p;
 
-   if (trail->spec->style[mode].col.a <= 0.)
+   if (!force && trail->spec->style[mode].col.a <= 0.)
       return;
 
    p.x = x;
@@ -660,7 +782,7 @@ void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode )
    trail_back( trail ) = p;
 
    /* We may need to insert a control point, but not if our last sample was recent enough. */
-   if (trail_size(trail) > 1 && trail_at( trail, trail->iwrite-2 ).t >= 1.-TRAIL_UPDATE_DT)
+   if (!force && trail_size(trail) > 1 && trail_at( trail, trail->iwrite-2 ).t >= 1.-TRAIL_UPDATE_DT)
       return;
 
    /* If the last time we inserted a control point was recent enough, we don't need a new one. */
@@ -731,6 +853,11 @@ static void spfx_trail_draw( const Trail_spfx* trail )
    for (i = trail->iread + 1; i < trail->iwrite; i++) {
       tp  = &trail_at( trail, i );
       tpp = &trail_at( trail, i-1 );
+
+      /* Ignore none modes. */
+      if (tp->mode == MODE_NONE || tpp->mode == MODE_NONE)
+         continue;
+
       sp  = &styles[tp->mode];
       spp = &styles[tpp->mode];
       gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
@@ -777,7 +904,7 @@ static void spfx_trail_draw( const Trail_spfx* trail )
 void spfx_shake( double mod )
 {
    /* Add the modifier. */
-   shake_force_mod = MIN( SHAKE_MAX, shake_force_mod+mod );
+   shake_force_mod = MIN( SPFX_SHAKE_MAX, shake_force_mod + SPFX_SHAKE_MOD*mod );
 
    /* Rumble if it wasn't rumbling before. */
    spfx_hapticRumble(mod);
@@ -797,11 +924,11 @@ void spfx_shake( double mod )
  */
 void spfx_damage( double mod )
 {
-   damage_strength = MIN( 1.0, damage_strength + mod );
+   damage_strength = MIN( SPFX_DAMAGE_MAX, damage_strength + SPFX_DAMAGE_MOD*mod );
 
    /* Create the damage. */
    if (damage_shader_pp_id==0)
-      damage_shader_pp_id = render_postprocessAdd( &damage_shader, PP_LAYER_FINAL, 98 );
+      damage_shader_pp_id = render_postprocessAdd( &damage_shader, PP_LAYER_GUI, 98 );
 }
 
 
@@ -848,35 +975,36 @@ static void spfx_hapticRumble( double mod )
    SDL_HapticEffect *efx;
    double len, mag;
 
-   if (haptic_rumble >= 0) {
+   /* Not active. */
+   if (haptic_rumble < 0)
+      return;
 
-      /* Not time to update yet. */
-      if ((haptic_lastUpdate > 0.) || (shake_shader_pp_id==0) || (mod > SHAKE_MAX/3.))
-         return;
+   /* Not time to update yet. */
+   if ((haptic_lastUpdate > 0.) || (shake_shader_pp_id==0) || (mod > SPFX_SHAKE_MAX/3.))
+      return;
 
-      /* Stop the effect if it was playing. */
-      SDL_HapticStopEffect( haptic, haptic_rumble );
+   /* Stop the effect if it was playing. */
+   SDL_HapticStopEffect( haptic, haptic_rumble );
 
-      /* Get length and magnitude. */
-      len = 1000. * shake_force_mod / SHAKE_DECAY;
-      mag = 32767. * (shake_force_mod / SHAKE_MAX);
+   /* Get length and magnitude. */
+   len = 1000. * shake_force_mod / SPFX_SHAKE_DECAY;
+   mag = 32767. * (shake_force_mod / SPFX_SHAKE_MAX);
 
-      /* Update the effect. */
-      efx = &haptic_rumbleEffect;
-      efx->periodic.magnitude    = (int16_t)mag;
-      efx->periodic.length       = (uint32_t)len;
-      efx->periodic.fade_length  = MIN( efx->periodic.length, 1000 );
-      if (SDL_HapticUpdateEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) < 0) {
-         WARN(_("Failed to update haptic effect: %s."), SDL_GetError());
-         return;
-      }
-
-      /* Run the new effect. */
-      SDL_HapticRunEffect( haptic, haptic_rumble, 1 );
-
-      /* Set timer again. */
-      haptic_lastUpdate += HAPTIC_UPDATE_INTERVAL;
+   /* Update the effect. */
+   efx = &haptic_rumbleEffect;
+   efx->periodic.magnitude    = (int16_t)mag;
+   efx->periodic.length       = (uint32_t)len;
+   efx->periodic.fade_length  = MIN( efx->periodic.length, 1000 );
+   if (SDL_HapticUpdateEffect( haptic, haptic_rumble, &haptic_rumbleEffect ) < 0) {
+      WARN(_("Failed to update haptic effect: %s."), SDL_GetError());
+      return;
    }
+
+   /* Run the new effect. */
+   SDL_HapticRunEffect( haptic, haptic_rumble, 1 );
+
+   /* Set timer again. */
+   haptic_lastUpdate += HAPTIC_UPDATE_INTERVAL;
 }
 
 
@@ -899,7 +1027,7 @@ void spfx_cinematic (void)
  */
 void spfx_render( const int layer )
 {
-   SPFX *spfx_stack;
+   SPFX *spfx_stack, *spfx;
    int i;
    SPFX_Base *effect;
    int sx, sy;
@@ -934,23 +1062,73 @@ void spfx_render( const int layer )
 
    /* Now render the layer */
    for (i=array_size(spfx_stack)-1; i>=0; i--) {
-      effect = &spfx_effects[ spfx_stack[i].effect ];
+      spfx   = &spfx_stack[i];
+      effect = &spfx_effects[ spfx->effect ];
 
-      /* Simplifies */
-      sx = (int)effect->gfx->sx;
-      sy = (int)effect->gfx->sy;
+      /* Render shader. */
+      if (effect->shader >= 0) {
+         double x, y, z, s2;
+         double w, h;
+         gl_Matrix4 projection;
 
-      if (!paused) { /* don't calculate frame if paused */
-         time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
-         spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
+         /* Translate coords. */
+         s2 = effect->size/2.;
+         z = cam_getZoom();
+         gl_gameToScreenCoords( &x, &y, spfx->pos.x-s2, spfx->pos.y-s2 );
+         w = h = effect->size*z;
+
+         /* Check if inbounds. */
+         if ((x < -w) || (x > SCREEN_W+w) ||
+               (y < -h) || (y > SCREEN_H+h))
+            continue;
+
+         /* Let's get to business. */
+         glUseProgram( effect->shader );
+
+         /* Set up the vertex. */
+         projection = gl_view_matrix;
+         projection = gl_Matrix4_Translate(projection, x, y, 0);
+         projection = gl_Matrix4_Scale(projection, w, h, 1);
+         glEnableVertexAttribArray( effect->vertex );
+         gl_vboActivateAttribOffset( gl_squareVBO, effect->vertex,
+               0, 2, GL_FLOAT, 0 );
+
+         /* Set shader uniforms. */
+         gl_Matrix4_Uniform(effect->projection, projection);
+         glUniform1f(effect->u_time, spfx->time);
+         glUniform1f(effect->u_r, spfx->unique);
+         glUniform1f(effect->u_size, effect->size);
+
+         /* Draw. */
+         glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+         /* Clear state. */
+         glDisableVertexAttribArray( shaders.texture.vertex );
+
+         /* anything failed? */
+         gl_checkErr();
+
+         glUseProgram(0);
+
       }
+      /* No shader. */
+      else {
+         /* Simplifies */
+         sx = (int)effect->gfx->sx;
+         sy = (int)effect->gfx->sy;
 
-      /* Renders */
-      gl_blitSprite( effect->gfx,
-            VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),
-            spfx_stack[i].lastframe % sx,
-            spfx_stack[i].lastframe / sx,
-            NULL );
+         if (!paused) { /* don't calculate frame if paused */
+            time = 1. - fmod(spfx_stack[i].timer,effect->anim) / effect->anim;
+            spfx_stack[i].lastframe = sx * sy * MIN(time, 1.);
+         }
+
+         /* Renders */
+         gl_blitSprite( effect->gfx,
+               VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),
+               spfx_stack[i].lastframe % sx,
+               spfx_stack[i].lastframe / sx,
+               NULL );
+      }
    }
 }
 

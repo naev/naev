@@ -60,8 +60,7 @@ function create ()
    dest = planets[index][1]
    sys = planets[index][2]
 
-   misn.setNPC( _("Pirate Lord"), portrait.getMil("Pirate") )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Pirate Lord"), portrait.getMil("Pirate"), bar_desc )
 end
 
 
@@ -87,7 +86,8 @@ function accept ()
    misn.osdCreate(title[2], {misn_desc:format(dest:name(), sys:name())})
 
    -- Set up the goal
-   packages = misn.cargoAdd("Packages", 5)
+   local c = misn.cargoNew(_("Pirate Packages"), _("A bunch of pirate packages. You don't want to know what's inside."))
+   packages = misn.cargoAdd(c, 5)
    hook.land("land")
    hook.enter("enter")
 end

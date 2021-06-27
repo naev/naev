@@ -25,32 +25,28 @@
 /* Video options */
 #define RESOLUTION_W_MIN                     1280  /**< Minimum screen width (below which graphics are downscaled). */
 #define RESOLUTION_H_MIN                     720   /**< Minimum screen height (below which graphics are downscaled). */
-#define RESOLUTION_W_DEFAULT                 1280  /**< Default screen width. */
-#define RESOLUTION_H_DEFAULT                 720   /**< Default screen height. */
+#define RESOLUTION_W_DEFAULT                 RESOLUTION_W_MIN /**< Default screen width. */
+#define RESOLUTION_H_DEFAULT                 RESOLUTION_H_MIN /**< Default screen height. */
 #define FULLSCREEN_DEFAULT                   0     /**< Whether to run in fullscreen mode. */
 #define FULLSCREEN_MODESETTING               0     /**< Whether fullscreen uses video modesetting. */
 #define FSAA_DEFAULT                         1     /**< Whether to use Full Screen Anti-Aliasing. */
 #define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
-#define TEXTURE_COMPRESSION_DEFAULT          0     /**< Whether to use texture compression. */
 #define SCALE_FACTOR_DEFAULT                 1.    /**< Default scale factor. */
 #define NEBULA_SCALE_FACTOR_DEFAULT          4.    /**< Default scale factor for nebula rendering. */
 #define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
 #define FPS_MAX_DEFAULT                      60    /**< Maximum FPS. */
 #define SHOW_PAUSE_DEFAULT                   1     /**< Whether to display pause status. */
-#define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
 #define MINIMIZE_DEFAULT                     1     /**< Whether to minimize on focus loss. */
 #define COLORBLIND_DEFAULT                   0     /**< Whether to enable colorblindness simulation. */
-#define BIG_ICONS_DEFAULT                    1     /**< Whether to display BIGGER icons. */
+#define BG_BRIGHTNESS_DEFAULT                1.    /**< How much to darken (or lighten) the backgrounds. */
+#define GAMMA_CORRECTION_DEFAULT             1.    /**< How much gamma correction to do. */
+#define BIG_ICONS_DEFAULT                    0     /**< Whether to display BIGGER icons. */
 #define FONT_SIZE_CONSOLE_DEFAULT            10    /**< Default console font size. */
 #define FONT_SIZE_INTRO_DEFAULT              18    /**< Default intro font size. */
 #define FONT_SIZE_DEF_DEFAULT                12    /**< Default font size. */
 #define FONT_SIZE_SMALL_DEFAULT              11    /**< Default small font size. */
 /* Audio options */
-#define VOICES_DEFAULT                       128   /**< Amount of voices to use. */
-#define VOICES_MIN                           16    /**< Minimum amount of voices to use. */
-#define PILOT_RELATIVE_DEFAULT               1     /**< Whether the sound is relative to the pilot (as opposed to the camera). */
 #define USE_EFX_DEFAULT                      1     /**< Whether or not to use EFX (if using OpenAL). */
-#define BUFFER_SIZE_DEFAULT                  128   /**< Default buffer size (if using OpenAL). */
 #define MUTE_SOUND_DEFAULT                   0     /**< Whether sound should be disabled. */
 #define SOUND_VOLUME_DEFAULT                 0.6   /**< Default sound volume. */
 #define MUSIC_VOLUME_DEFAULT                 0.8   /**< Default music volume. */
@@ -77,11 +73,6 @@ typedef struct PlayerConf_s {
    /* OpenGL properties. */
    int fsaa; /**< Full Scene Anti-Aliasing to use. */
    int vsync; /**< Whether or not to use vsync. */
-   int mipmaps; /**< Use mipmaps. */
-   int compress; /**< Use texture compression. */
-
-   /* Memory usage. */
-   int engineglow; /**< Sets engine glow. */
 
    /* Video options. */
    int width; /**< Width of the window to use. */
@@ -93,12 +84,11 @@ typedef struct PlayerConf_s {
    int modesetting; /**< Whether to use modesetting for fullscreen. */
    int minimize; /**< Whether to minimize on focus loss. */
    int colorblind; /**< Whether to enable colorblindness simulation. */
+   double bg_brightness; /**< How much to darken the background stuff. */
+   double gamma_correction; /**< How much gamma correction to do. */
 
    /* Sound. */
-   int snd_voices; /**< Number of sound voices to use. */
-   int snd_pilotrel; /**< Sound is relative to pilot when following. */
    int al_efx; /**< Should EFX extension be used? (only applicable for OpenAL) */
-   int al_bufsize; /**< Size of the buffer (in kilobytes) to use for music. */
    int nosound; /**< Whether or not sound is on. */
    double sound; /**< Sound level for sound effects. */
    double music; /**< Sound level for music. */
@@ -135,8 +125,6 @@ typedef struct PlayerConf_s {
    int font_size_intro;   /**< Intro text font size. */
    int font_size_def;     /**< Default large font size. */
    int font_size_small;   /**< Default small font size. */
-   char *font_name_default; /**< Default font filename. */
-   char *font_name_monospace; /**< Monospace font filename. */
 
    /* Misc. */
    double compression_velocity; /**< Velocity to compress to. */
@@ -176,6 +164,14 @@ void conf_loadConfigPath( void );
 int conf_loadConfig( const char* file );
 void conf_parseCLI( int argc, char** argv );
 void conf_cleanup (void);
+
+
+/*
+ * Some handling.
+ */
+void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src );
+void conf_free( PlayerConf_t *config );
+
 
 /*
  * saving

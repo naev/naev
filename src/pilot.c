@@ -84,7 +84,6 @@ static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
 static void pilot_init_trails( Pilot* p );
 static int pilot_trail_generated( Pilot* p, int generator );
-static void pilot_sample_trails( Pilot* p );
 
 
 /**
@@ -149,8 +148,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
       while (p < array_size(pilot_stack)) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   pilot_isDisabled(pilot_stack[p])) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ))
+               pilot_validTarget( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
       }
@@ -158,10 +156,9 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    if (mode == 1) {
       while (p < array_size(pilot_stack)) {
-         if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
-               pilot_isHostile( pilot_stack[p] ) )
+         if ((pilot_stack[p]->faction != FACTION_PLAYER) &&
+               pilot_validTarget( player.p, pilot_stack[p] ) &&
+               pilot_isHostile( pilot_stack[p] ))
             return pilot_stack[p]->id;
          p++;
       }
@@ -203,8 +200,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
       while (p >= 0) {
          if (((pilot_stack[p]->faction != FACTION_PLAYER) ||
                   (pilot_isDisabled(pilot_stack[p]))) &&
-               !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ))
+               pilot_validTarget( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
          p--;
       }
@@ -214,7 +210,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
       while (p >= 0) {
          if ( ( pilot_stack[p]->faction != FACTION_PLAYER ) &&
                !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
-               pilot_inRangePilot( player.p, pilot_stack[p], NULL ) == 1 &&
+               pilot_validTarget( player.p, pilot_stack[p] ) &&
                pilot_isHostile( pilot_stack[p] ) )
             return pilot_stack[p]->id;
          p--;
@@ -228,6 +224,8 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
 
 /**
  * @brief Checks to see if a pilot is a valid target for another pilot.
+ *
+ * @TODO this calls inRangePilot which can be called again right after. This should probably be optimized.
  *
  *    @param p Reference pilot.
  *    @param target Pilot to see if is a valid target of the reference.
@@ -247,6 +245,26 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
 
    /* Must be in range. */
    if (!pilot_inRangePilot( p, target, NULL ))
+      return 0;
+
+   /* Pilot is a valid target. */
+   return 1;
+}
+
+
+/**
+ * @brief Same as pilot_validTarget but without the range check.
+ */
+int pilot_canTarget( const Pilot* p )
+{
+   /* Must not be dead. */
+   if (pilot_isFlag( p, PILOT_DELETE ) ||
+         pilot_isFlag( p, PILOT_DEAD ))
+      return 0;
+
+   /* Must not be hidden nor invisible. */
+   if (pilot_isFlag( p, PILOT_HIDE ) ||
+         pilot_isFlag( p, PILOT_INVISIBLE))
       return 0;
 
    /* Pilot is a valid target. */
@@ -667,7 +685,8 @@ int pilot_isNeutral( const Pilot *p )
 int pilot_isFriendly( const Pilot *p )
 {
    if ( pilot_isFlag( p, PILOT_FRIENDLY ) ||
-         areAllies( FACTION_PLAYER,p->faction ) )
+         ( areAllies( FACTION_PLAYER,p->faction ) &&
+         !pilot_isFlag( p, PILOT_HOSTILE ) ) )
       return 1;
 
    return 0;
@@ -924,9 +943,12 @@ void pilot_cooldown( Pilot *p )
     */
    p->cdelay = (5. + sqrt(p->base_mass) / 2.) *
          (1. + pow(heat_mean / CONST_SPACE_STAR_TEMP - 1., 1.25));
-   p->ctimer = p->cdelay;
+   p->ctimer = p->cdelay * p->stats.cooldown_time;
    p->heat_start = p->heat_T;
    pilot_setFlag(p, PILOT_COOLDOWN);
+
+   /* Run outfit cooldown start hook. */
+   pilot_outfitLCooldown(p, 0, 0, p->ctimer);
 }
 
 
@@ -958,10 +980,13 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
    pilot_rmFlag(p, PILOT_COOLDOWN);
 
    /* Cooldown finished naturally, reset heat just in case. */
-   if (p->ctimer < 0.)
-   {
+   if (p->ctimer < 0.) {
       pilot_heatReset( p );
       pilot_fillAmmo( p );
+      pilot_outfitLCooldown(p,1,1, 0.);
+   }
+   else {
+      pilot_outfitLCooldown(p,1,0, 0.);
    }
 }
 
@@ -1254,7 +1279,7 @@ void pilot_rmHostile( Pilot* p )
       }
 
       /* Set "bribed" flag if faction has poor reputation */
-      if ( areEnemies( FACTION_PLAYER, p->faction ) )
+      if (areEnemies( FACTION_PLAYER, p->faction ))
          pilot_setFlag(p, PILOT_BRIBED);
    }
 }
@@ -1329,6 +1354,9 @@ void pilot_setTarget( Pilot* p, unsigned int id )
 
    p->target = id;
    pilot_lockClear( p );
+
+   /* Set the scan timer. */
+   pilot_ewScanStart( p );
 }
 
 
@@ -1347,6 +1375,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 {
    int mod;
    double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod, start;
+   double tdshield, tdarmour;
    Pilot *pshooter;
 
    /* Invincible means no damage. */
@@ -1378,6 +1407,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    }
    else
       disable       *= absorb;
+   tdshield = 0.;
+   tdarmour = 0.;
+
 
    /*
     * Shields take entire blow.
@@ -1400,6 +1432,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
        * biases towards high-damage, low-ROF weapons.
        */
       p->stress += disable * (.5 + (.5 - ((start+p->shield) / p->shield_max) / 4.));
+
+      /* True damage. */
+      tdshield = damage_shield;
    }
    /*
     * Shields take part of the blow.
@@ -1408,6 +1443,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       start      = p->shield;
       dmod        = (1. - p->shield/damage_shield);
       ddmg        = p->shield + dmod * damage_armour;
+      tdshield    = p->shield;
       p->shield   = 0.;
 
       /* Leak some disabling damage through the remaining bit of shields. */
@@ -1415,7 +1451,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
       /* Reduce stress as armour is eaten away. */
       p->stress  *= (p->armour - dmod * damage_armour) / p->armour;
-      p->armour  -= dmod * damage_armour;
+      tdarmour    = dmod * damage_armour;
+      p->armour  -= tdarmour;
       p->stress  += dmod * disable;
       dam_mod     = (damage_shield + damage_armour) /
                    ((p->shield_max + p->armour_max) / 2.);
@@ -1441,6 +1478,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          p->stimer  = 3.;
          p->sbonus  = 3.;
       }
+
+      /* True damage. */
+      tdarmour = ddmg;
    }
 
    /* Ensure stress never exceeds remaining armour. */
@@ -1465,8 +1505,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          pilot_dead( p, shooter );
 
          /* adjust the combat rating based on pilot mass and ditto faction */
-         if (pshooter == NULL)
-            pshooter = pilot_get(shooter);
+         pshooter = pilot_get(shooter);
          if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
 
             /* About 6 for a llama, 52 for hawking. */
@@ -1474,18 +1513,33 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
             /* Modify faction for him and friends. */
             faction_modPlayer( p->faction, -mod, "kill" );
+
+            /* Note that player destroyed the ship. */
+            player.ships_destroyed[p->ship->class]++;
          }
       }
    }
 
    /* Some minor effects and stuff. */
    else if (p->shield <= 0.) {
-      dam_mod = damage_armour/p->armour_max;
-
-      if (p->id == PLAYER_ID) /* a bit of shaking */
-         spfx_shake( SHAKE_MAX*dam_mod );
+      if (p->id == PLAYER_ID) { /* a bit of shaking */
+         double spfx_mod = tdarmour/p->armour_max;
+         spfx_shake( 0.5 * spfx_mod );
+         spfx_damage( spfx_mod );
+      }
    }
 
+   /* Update player meta-data if applicable. */
+   if (p->id == PLAYER_ID) {
+      player.dmg_taken_shield += tdshield;
+      player.dmg_taken_armour += tdarmour;
+   }
+   /* TODO we might want to actually resolve shooter and check for
+    * FACTION_PLAYER so that escorts also get counted... */
+   else if (shooter == PLAYER_ID) {
+      player.dmg_done_shield += tdshield;
+      player.dmg_done_armour += tdarmour;
+   }
 
    if (w != NULL)
       /* knock back effect is dependent on both damage and mass of the weapon
@@ -1493,6 +1547,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       vect_cadd( &p->solid->vel,
             knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
+
+   /* On hit Lua outfits activate. */
+   pilot_outfitLOnhit( p, tdarmour, tdshield, shooter );
 
    return ddmg;
 }
@@ -1506,8 +1563,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
  */
 void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 {
-   int mod;
-   Pilot *pshooter;
    HookParam hparam;
 
    if ((!pilot_isFlag(p, PILOT_DISABLED)) &&
@@ -1521,6 +1576,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       /* Clear other active states. */
       pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
       pilot_rmFlag(p, PILOT_BRAKING);
+      pilot_rmFlag(p, PILOT_STEALTH);
 
       /* Clear hyperspace flags. */
       pilot_rmFlag(p, PILOT_HYP_PREP);
@@ -1532,17 +1588,6 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       if (pilot_isHostile(p))
          player.disabled_enemies++;
 
-      /* Modify player combat rating if applicable. */
-      /* TODO: Base off something more sensible than mass. */
-      pshooter = pilot_get(shooter);
-      if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
-         /* About 3 for a llama, 26 for hawking. */
-         mod = pow(p->base_mass, 0.4) - 1.;
-
-         /* Modify combat rating. */
-         player.crating += 2*mod;
-      }
-
       /* Disabled ships don't use up presence. */
       if (p->presence > 0) {
          system_rmCurrentPresence( cur_system, p->faction, p->presence );
@@ -1550,10 +1595,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       }
 
       /* Set disable timer. This is the time the pilot will remain disabled. */
-      /* 50 armour llama        => 53.18s
-       * 5000 armour peacemaker => 168.18s
+      /* 200 mass llama       => 46.78 s
+       * 8000 mass peacemaker => 156 s
        */
-      p->dtimer = 20. * pow( p->armour, 0.25 );
+      p->dtimer = 8. * pow( p->solid->mass, 1./3. );
       p->dtimer_accum = 0.;
 
       /* Disable active outfits. */
@@ -1568,7 +1613,6 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       }
       else {
          hparam.type       = HOOK_PARAM_NIL;
-         pilot_setFlag(p, PILOT_DISABLED_PERM ); /* Set as permanently disabled, since the disable was script-induced. */
       }
       pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam, 1 ); /* Already disabled. */
    }
@@ -1578,8 +1622,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       pilot_rmFlag( p, PILOT_BOARDING ); /* Can get boarded again. */
 
       /* If hostile, must remove counter. */
-      if (pilot_isHostile(p))
-      {
+      if (pilot_isHostile(p)) {
          player.disabled_enemies--;
          /* Time to play combat music. */
          music_choose("combat");
@@ -1626,6 +1669,9 @@ static void pilot_dead( Pilot* p, unsigned int killer )
    pilot_rmFlag(p,PILOT_HYP_BRAKE);
    pilot_rmFlag(p,PILOT_HYPERSPACE);
 
+   /* Turn off all outfits, should disable Lua stuff as necessary. */
+   pilot_outfitOffAll( p );
+
    /* Pilot must die before setting death flag and probably messing with other flags. */
    if (killer > 0) {
       hparam.type       = HOOK_PARAM_PILOT;
@@ -1635,8 +1681,10 @@ static void pilot_dead( Pilot* p, unsigned int killer )
       hparam.type       = HOOK_PARAM_NIL;
    pilot_runHookParam( p, PILOT_HOOK_DEATH, &hparam, 1 );
 
-   /* PILOT R OFFICIALLY DEADZ0R */
-   pilot_setFlag( p, PILOT_DEAD );
+   /* Need a check here in case the hook "regenerates" the pilot. */
+   if (p->armour <= 0.)
+      /* PILOT R OFFICIALLY DEADZ0R */
+      pilot_setFlag( p, PILOT_DEAD );
 }
 
 
@@ -1687,7 +1735,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
 
          /* Shock wave from the explosion. */
          if (p->id == PILOT_PLAYER)
-            spfx_shake( pow2(ddmg.damage) / pow2(100.) * SHAKE_MAX );
+            spfx_shake( pow2(ddmg.damage) / pow2(100.) );
       }
    }
 }
@@ -1703,6 +1751,11 @@ void pilot_render( Pilot* p, const double dt )
 {
    (void) dt;
    double scalew, scaleh;
+   glColour c = {.r=1., .g=1., .b=1., .a=1.};
+
+   /* Don't render the pilot. */
+   if (pilot_isFlag( p, PILOT_NORENDER ))
+      return;
 
    /* Check if needs scaling. */
    if (pilot_isFlag( p, PILOT_LANDING )) {
@@ -1718,11 +1771,15 @@ void pilot_render( Pilot* p, const double dt )
       scaleh = 1.;
    }
 
+   /* Add some transparency if stealthed. */
+   if (pilot_isFlag(p, PILOT_STEALTH))
+      c.a = 0.5;
+
    /* Base ship. */
    gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
          1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
          scalew, scaleh,
-         p->tsx, p->tsy, NULL );
+         p->tsx, p->tsy, &c );
 }
 
 
@@ -1740,6 +1797,10 @@ void pilot_renderOverlay( Pilot* p, const double dt )
    int sx, sy;
    glColour c;
 
+   /* Don't render the pilot. */
+   if (pilot_isFlag( p, PILOT_NORENDER ))
+      return;
+
    /* Render the hailing graphic if needed. */
    if (pilot_isFlag( p, PILOT_HAILING )) {
       ico_hail = gui_hailIcon();
@@ -1755,8 +1816,8 @@ void pilot_renderOverlay( Pilot* p, const double dt )
          }
          /* Render. */
          gl_blitSprite( ico_hail,
-               p->solid->pos.x + PILOT_SIZE_APROX*p->ship->gfx_space->sw/2. + ico_hail->sw/4.,
-               p->solid->pos.y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2. + ico_hail->sh/4.,
+               p->solid->pos.x + PILOT_SIZE_APPROX*p->ship->gfx_space->sw/2. + ico_hail->sw/4.,
+               p->solid->pos.y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2. + ico_hail->sh/4.,
                p->hail_pos % sx, p->hail_pos / sx, NULL );
       }
    }
@@ -1785,7 +1846,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
 
          /* Position to render at. */
          dx = x - p->comm_msgWidth/2.;
-         dy = y + PILOT_SIZE_APROX*p->ship->gfx_space->sh/2.;
+         dy = y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2.;
 
          /* Background. */
          gl_renderRect( dx-2., dy-2., p->comm_msgWidth+4., gl_defFont.h+4., &cBlackHilight );
@@ -1803,7 +1864,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  *    @param pilot Pilot to update.
  *    @param dt Current delta tick.
  */
-void pilot_update( Pilot* pilot, const double dt )
+void pilot_update( Pilot* pilot, double dt )
 {
    int i, cooling, nchg;
    int ammo_threshold;
@@ -1816,6 +1877,10 @@ void pilot_update( Pilot* pilot, const double dt )
    Damage dmg;
    double stress_falloff;
    double efficiency, thrust;
+   double reload_time;
+
+   /* Modify the dt with speedup. */
+   dt *= pilot->stats.time_speedup;
 
    /* Check target validity. */
    if (pilot->target != pilot->id) {
@@ -1870,30 +1935,36 @@ void pilot_update( Pilot* pilot, const double dt )
       if ( ( o->outfit != NULL ) &&
             ( outfit_isLauncher( o->outfit ) || outfit_isFighterBay( o->outfit ) ) &&
             ( outfit_ammo( o->outfit ) != NULL ) ) {
-         if (o->rtimer < o->outfit->u.lau.reload_time)
-            o->rtimer += dt;
 
          /* Initial (raw) ammo threshold */
-         ammo_threshold = o->outfit->u.lau.amount;
-         if (outfit_isLauncher(o->outfit))
+         if (outfit_isLauncher(o->outfit)) {
+            ammo_threshold = o->outfit->u.lau.amount;
             ammo_threshold = round( (double)ammo_threshold * pilot->stats.ammo_capacity );
-
-         /* Adjust for deployed fighters if needed */
-         if ( outfit_isFighterBay( o->outfit ) )
+            reload_time = o->outfit->u.lau.reload_time / pilot->stats.launch_reload;
+         }
+         else { /* if (outfit_isFighterBay( o->outfit)) { */ /* Commented to shut up warning. */
+            ammo_threshold = o->outfit->u.bay.amount;
+            ammo_threshold = round( (double)ammo_threshold * pilot->stats.fbay_capacity );
+            /* Adjust for deployed fighters if needed */
             ammo_threshold -= o->u.ammo.deployed;
-
-         /* Don't allow accumulation of the timer before reload allowed */
-         if ( o->u.ammo.quantity >= ammo_threshold ) {
-            o->rtimer = 0;
+            reload_time = o->outfit->u.bay.reload_time / pilot->stats.fbay_reload;
          }
 
-         while ( ( o->rtimer >= o->outfit->u.lau.reload_time ) &&
-               ( o->u.ammo.quantity < ammo_threshold ) ) {
-            o->rtimer -= o->outfit->u.lau.reload_time;
+         /* Add to timer. */
+         if (o->rtimer < reload_time)
+            o->rtimer += dt;
+
+         /* Don't allow accumulation of the timer before reload allowed */
+         if ( o->u.ammo.quantity >= ammo_threshold )
+            o->rtimer = 0;
+
+         while ((o->rtimer >= reload_time) &&
+               (o->u.ammo.quantity < ammo_threshold)) {
+            o->rtimer -= reload_time;
             pilot_addAmmo( pilot, o, outfit_ammo( o->outfit ), 1 );
          }
 
-         o->rtimer = MIN( o->rtimer, o->outfit->u.lau.reload_time );
+         o->rtimer = MIN( o->rtimer, reload_time );
       }
 
       /* Handle state timer. */
@@ -1926,11 +1997,11 @@ void pilot_update( Pilot* pilot, const double dt )
       pilot_heatUpdateCooldown( pilot );
 
    /* Update electronic warfare. */
-   pilot_ewUpdateDynamic( pilot );
+   pilot_ewUpdateDynamic( pilot, dt );
 
    /* Update stress. */
    if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
-      stress_falloff = 4.; /* TODO: make a function of the pilot's ship and/or its outfits. */
+      stress_falloff = 0.3*sqrt(pilot->solid->mass); /* Should be about 38 seconds for a 300 mass ship with 200 armour, and 172 seconds for a 6000 mass ship with 4000 armour. */
       pilot->stress -= stress_falloff * pilot->stats.stress_dissipation * dt;
       pilot->stress = MAX(pilot->stress, 0);
    }
@@ -1987,17 +2058,20 @@ void pilot_update( Pilot* pilot, const double dt )
          dmg.disable       = 0.;
          expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y,
-               pilot->ship->gfx_space->sw/2. + a, &dmg, NULL, EXPL_MODE_SHIP );
+               pilot->ship->gfx_space->sw/2./PILOT_SIZE_APPROX + a, &dmg, NULL, EXPL_MODE_SHIP );
          debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
                pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
          pilot_setFlag(pilot,PILOT_EXPLODED);
          pilot_runHook( pilot, PILOT_HOOK_EXPLODED );
 
-         /* Release cargo */
-         for (i=0; i<array_size(pilot->commodities); i++)
-            commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
-                  pilot->commodities[i].quantity );
+         /* We do a check here in case the pilot was regenerated. */
+         if (pilot_isFlag(pilot, PILOT_EXPLODED)) {
+            /* Release cargo */
+            for (i=0; i<array_size(pilot->commodities); i++)
+               commodity_Jettison( pilot->id, pilot->commodities[i].commodity,
+                     pilot->commodities[i].quantity );
+         }
       }
       /* reset random explosion timer */
       else if (pilot->timer[1] <= 0.) {
@@ -2020,7 +2094,7 @@ void pilot_update( Pilot* pilot, const double dt )
       }
 
       /* completely destroyed with final explosion */
-      if (pilot->ptimer < 0.) {
+      if (pilot_isFlag(pilot,PILOT_DEAD) && (pilot->ptimer < 0.)) {
          if (pilot->id==PLAYER_ID) /* player.p handled differently */
             player_destroyed();
          pilot_delete(pilot);
@@ -2054,6 +2128,54 @@ void pilot_update( Pilot* pilot, const double dt )
       }
    }
 
+   /* Healing and energy usage is only done if not disabled. */
+   if (!pilot_isDisabled(pilot)) {
+      pilot_ewUpdateStealth(pilot, dt);
+
+      /* Pilot is still alive */
+      pilot->armour += pilot->armour_regen * dt;
+      if (pilot->armour > pilot->armour_max)
+         pilot->armour = pilot->armour_max;
+
+      /* Regen shield */
+      if (pilot->stimer <= 0.) {
+         pilot->shield += pilot->shield_regen * dt;
+         if (pilot->sbonus > 0.)
+            pilot->shield += dt * (pilot->shield_regen * (pilot->sbonus / 1.5));
+         pilot->shield = CLAMP( 0., pilot->shield_max, pilot->shield );
+      }
+
+      /*
+      * Using RC circuit energy loading.
+      *
+      * Calculations (using y = [0:1])
+      *
+      *                                          \
+      *    y = 1 - exp( -x / tau )               |
+      *    y + dy = 1 - exp( -( x + dx ) / tau ) |  ==>
+      *                                          /
+      *
+      *    ==> dy = exp( -x / tau ) * ( 1 - exp( -dx / tau ) ==>
+      *    ==> [ dy = (1 - y) * ( 1 - exp( -dx / tau ) ) ]
+      */
+      pilot->energy += (pilot->energy_max - pilot->energy) *
+            (1. - exp( -dt / pilot->energy_tau));
+      pilot->energy -= pilot->energy_loss * dt;
+      if (pilot->energy > pilot->energy_max)
+         pilot->energy = pilot->energy_max;
+      else if (pilot->energy < 0.) {
+         pilot->energy = 0.;
+         /* Stop all on outfits. */
+         nchg += pilot_outfitOffAll( pilot );
+         /* Run Lua stuff. */
+         pilot_outfitLOutfofenergy( pilot );
+      }
+
+      /* Must recalculate stats because something changed state. */
+      if (nchg > 0)
+         pilot_calcStats( pilot );
+   }
+
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
       /* Do the slow brake thing */
@@ -2075,48 +2197,6 @@ void pilot_update( Pilot* pilot, const double dt )
 
       return;
    }
-
-   /* Pilot is still alive */
-   pilot->armour += pilot->armour_regen * dt;
-   if (pilot->armour > pilot->armour_max)
-      pilot->armour = pilot->armour_max;
-
-   /* Regen shield */
-   if (pilot->stimer <= 0.) {
-      pilot->shield += pilot->shield_regen * dt;
-      if (pilot->sbonus > 0.)
-         pilot->shield += dt * (pilot->shield_regen * (pilot->sbonus / 1.5));
-      if (pilot->shield > pilot->shield_max)
-         pilot->shield = pilot->shield_max;
-   }
-
-   /*
-    * Using RC circuit energy loading.
-    *
-    * Calculations (using y = [0:1])
-    *
-    *                                          \
-    *    y = 1 - exp( -x / tau )               |
-    *    y + dy = 1 - exp( -( x + dx ) / tau ) |  ==>
-    *                                          /
-    *
-    *    ==> dy = exp( -x / tau ) * ( 1 - exp( -dx / tau ) ==>
-    *    ==> [ dy = (1 - y) * ( 1 - exp( -dx / tau ) ) ]
-    */
-   pilot->energy += (pilot->energy_max - pilot->energy) *
-         (1. - exp( -dt / pilot->energy_tau));
-   pilot->energy -= pilot->energy_loss * dt;
-   if (pilot->energy > pilot->energy_max)
-      pilot->energy = pilot->energy_max;
-   else if (pilot->energy < 0.) {
-      pilot->energy = 0.;
-      /* Stop all on outfits. */
-      nchg += pilot_outfitOffAll( pilot );
-   }
-
-   /* Must recalculate stats because something changed state. */
-   if (nchg > 0)
-      pilot_calcStats( pilot );
 
    /* Player damage decay. */
    if (pilot->player_damage > 0.)
@@ -2159,7 +2239,7 @@ void pilot_update( Pilot* pilot, const double dt )
             pilot_afterburnOver(pilot);
          else {
             if (pilot->id == PLAYER_ID)
-               spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+               spfx_shake( 0.75*SPFX_SHAKE_DECAY * dt); /* shake goes down at quarter speed */
             efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
                   pilot->afterburner->outfit->u.afb.heat_base,
                   pilot->afterburner->outfit->u.afb.heat_cap );
@@ -2198,17 +2278,25 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot->ship->gfx_space, pilot->solid->dir );
 
    /* See if there is commodities to gather. */
-   gatherable_gather( pilot->id );
+   if (!pilot_isDisabled(pilot))
+      gatherable_gather( pilot->id );
 
    /* Update the trail. */
-   pilot_sample_trails( pilot );
+   pilot_sample_trails( pilot, 0 );
+
+   /* Update outfits if necessary. */
+   pilot->otimer += dt;
+   while (pilot->otimer > PILOT_OUTFIT_LUA_UPDATE_DT) {
+      pilot_outfitLUpdate( pilot, PILOT_OUTFIT_LUA_UPDATE_DT );
+      pilot->otimer -= PILOT_OUTFIT_LUA_UPDATE_DT;
+   }
 }
 
 
 /**
  * @brief Updates the given pilot's trail emissions.
  */
-static void pilot_sample_trails( Pilot* p )
+void pilot_sample_trails( Pilot* p, int none )
 {
    int i, g;
    double dx, dy, dircos, dirsin;
@@ -2218,14 +2306,18 @@ static void pilot_sample_trails( Pilot* p )
    dirsin = sin(p->solid->dir);
 
    /* Identify the emission type. */
-   if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
-      mode = MODE_JUMPING;
-   else if (pilot_isFlag(p, PILOT_AFTERBURNER))
-      mode = MODE_AFTERBURN;
-   else if (p->engine_glow > 0.)
-      mode = MODE_GLOW;
-   else
-      mode = MODE_IDLE;
+   if (none)
+      mode = MODE_NONE;
+   else {
+      if (pilot_isFlag(p, PILOT_HYPERSPACE) || pilot_isFlag(p, PILOT_HYP_END))
+         mode = MODE_JUMPING;
+      else if (pilot_isFlag(p, PILOT_AFTERBURNER))
+         mode = MODE_AFTERBURN;
+      else if (p->engine_glow > 0.)
+         mode = MODE_GLOW;
+      else
+         mode = MODE_IDLE;
+   }
 
    /* Compute the engine offset. */
    for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
@@ -2235,7 +2327,7 @@ static void pilot_sample_trails( Pilot* p )
          dy = p->ship->trail_emitters[g].x_engine * dirsin +
               p->ship->trail_emitters[g].y_engine * dircos +
               p->ship->trail_emitters[g].h_engine;
-         spfx_trail_sample( p->trail[i++], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, mode );
+         spfx_trail_sample( p->trail[i++], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, mode, mode==MODE_NONE );
       }
 }
 
@@ -2447,7 +2539,7 @@ int pilot_refuelStart( Pilot *p )
 
    /* Conditions are the same as boarding, except disabled. */
    if (vect_dist(&p->solid->pos, &target->solid->pos) >
-         target->ship->gfx_space->sw * PILOT_SIZE_APROX )
+         target->ship->gfx_space->sw * PILOT_SIZE_APPROX )
       return 0;
    else if ((pow2(VX(p->solid->vel)-VX(target->solid->vel)) +
             pow2(VY(p->solid->vel)-VY(target->solid->vel))) >
@@ -2629,6 +2721,7 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    pilot->aimLines = 0;
    pilot->dockpilot = dockpilot;
    pilot->dockslot = dockslot;
+   ss_statsInit( &pilot->intrinsic_stats );
 
    /* Basic information. */
    pilot->ship = ship;
@@ -2673,8 +2766,11 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    /* Initialize heat. */
    pilot_heatReset( pilot );
 
-   /* set the pilot stats based on their ship and outfits */
+   /* Set the pilot stats based on their ship and outfits */
    pilot_calcStats( pilot );
+
+   /* Update dynamic electronic warfare (static should have already been done). */
+   pilot_ewUpdateDynamic( pilot, 0. );
 
    /* Heal up the ship. */
    pilot->armour = pilot->armour_max;
@@ -2690,8 +2786,13 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    /* Safety check. */
 #ifdef DEBUGGING
    const char *str = pilot_checkSpaceworthy( pilot );
-   if (str != NULL)
+   if (str != NULL) {
       DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, str );
+      for (i=0; i<array_size(pilot->outfits); i++) {
+         if (pilot->outfits[i]->outfit != NULL)
+            DEBUG(_("   [%d] %s"), i, _(pilot->outfits[i]->outfit->name) );
+      }
+   }
 #endif /* DEBUGGING */
 
    /* set flags and functions */
@@ -2796,6 +2897,9 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
    /* Animated trail. */
    pilot_init_trails( dyn );
 
+   /* Run Lua stuff. */
+   pilot_outfitLInitAll( dyn );
+
    return dyn->id;
 }
 
@@ -2838,6 +2942,8 @@ Pilot* pilot_replacePlayer( Pilot* after )
    array_erase( &pilot_stack[i]->trail, array_begin(pilot_stack[i]->trail), array_end(pilot_stack[i]->trail) );
    pilot_stack[i] = after;
    pilot_init_trails( after );
+   /* Run Lua stuff. */
+   pilot_outfitLInitAll( after );
    return after;
 }
 
@@ -2993,6 +3099,12 @@ void pilot_destroy(Pilot* p)
    /* find the pilot */
    i = pilot_getStackPos(p->id);
 
+   /* Stop all outfits. */
+   pilot_outfitOffAll(p);
+
+   /* Handle Lua outfits. */
+   pilot_outfitLCleanup(p);
+
    /* Remove faction if necessary. */
    if (p->presence > 0) {
       system_rmCurrentPresence( cur_system, p->faction, p->presence );
@@ -3031,6 +3143,14 @@ void pilots_free (void)
 
    pilot_freeGlobalHooks();
 
+   /* First pass to stop outfits. */
+   for (i=0; i < array_size(pilot_stack); i++) {
+      /* Stop all outfits. */
+      pilot_outfitOffAll(pilot_stack[i]);
+      /* Handle Lua outfits. */
+      pilot_outfitLCleanup(pilot_stack[i]);
+   }
+
    /* Free pilots. */
    for (i=0; i < array_size(pilot_stack); i++)
       pilot_free(pilot_stack[i]);
@@ -3045,10 +3165,25 @@ void pilots_free (void)
  *
  *    @param persist Do not remove persistent pilots.
  */
-void pilots_clean (int persist)
+void pilots_clean( int persist )
 {
    int i, persist_count=0;
    Pilot *p;
+
+   /* First pass to stop outfits without clearing stuff - this can call all
+    * sorts of Lua stuff. */
+   for (i=0; i < array_size(pilot_stack); i++) {
+      p = pilot_stack[i];
+      if (p == player.p &&
+          (persist && pilot_isFlag(p, PILOT_PERSIST)))
+         continue;
+      /* Stop all outfits. */
+      pilot_outfitOffAll(p);
+      /* Handle Lua outfits. */
+      pilot_outfitLCleanup(p);
+   }
+
+   /* Here we actually clean up stuff. */
    for (i=0; i < array_size(pilot_stack); i++) {
       /* move player and persisted pilots to start */
       if (pilot_stack[i] == player.p ||
@@ -3091,13 +3226,14 @@ void pilots_newSystem (void)
 
 
 /**
- * @brief Clears all the pilots except the player.
+ * @brief Clears all the pilots except the player and clear-exempt pilots.
  */
 void pilots_clear (void)
 {
    int i;
    for (i=0; i < array_size(pilot_stack); i++)
-      if (!pilot_isPlayer( pilot_stack[i] ))
+      if (!pilot_isPlayer(pilot_stack[i])
+            && !pilot_isFlag(pilot_stack[i], PILOT_NOCLEAR))
          pilot_delete( pilot_stack[i] );
 }
 
@@ -3147,6 +3283,10 @@ void pilots_update( double dt )
       if (pilot_isDisabled(p))
          continue;
       if (pilot_isFlag(p,PILOT_DEAD))
+         continue;
+
+      /* Ignore persisting pilots during simulation since they don't get cleared. */
+      if (space_isSimulation() && (pilot_isFlag(p,PILOT_PERSIST)))
          continue;
 
       /* Hyperspace gets special treatment */
@@ -3235,10 +3375,14 @@ void pilot_clearTimers( Pilot *pilot )
    int i, n;
    PilotOutfitSlot *o;
 
+   /* Clear outfits first to not leave some outfits in dangling states. */
+   pilot_outfitOffAll(pilot);
+
    pilot->ptimer     = 0.; /* Pilot timer. */
    pilot->tcontrol   = 0.; /* AI control timer. */
    pilot->stimer     = 0.; /* Shield timer. */
    pilot->dtimer     = 0.; /* Disable timer. */
+   pilot->otimer     = 0.; /* Outfit timer. */
    for (i=0; i<MAX_AI_TIMERS; i++)
       pilot->timer[i] = 0.; /* Specific AI timers. */
    n = 0;
@@ -3393,3 +3537,27 @@ void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)
    lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); /* data, msg, messages */
    lua_pop(naevL, 3); /*  */
 }
+
+
+/**
+ * @brief Checks to see if the pilot has illegal stuf to a faction.
+ *
+ *    @param p Pilot to check.
+ *    @param faction Faction to check.
+ *    @return 1 if has illegal stuff 0 otherwise.
+ */
+int pilot_hasIllegal( const Pilot *p, int faction )
+{
+   int i;
+   Commodity *c;
+   /* Check commodities. */
+   for (i=0; i<array_size(p->commodities); i++) {
+      c = p->commodities[i].commodity;
+      if (commodity_checkIllegal( c, faction )) {
+         return 1;
+      }
+   }
+   /* Nothing to see here sir. */
+   return 0;
+}
+

@@ -14,7 +14,6 @@
  <license>Heavy Combat Vessel License</license>
  <description>The heart of the Proteron battle fleet is formed by the Watsons. Acting as a mobile launch base as well as a command and control unit, this vessel coordinates the others in the fight for dominance over the galaxy.</description>
  <health>
-  <absorb>24</absorb>
   <armour>1200</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -25,15 +24,15 @@
   <cargo>70</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="40" y="0" h="2" />
-  <weapon size="large" x="25" y="0" h="2" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="40" y="0" h="2" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="25" y="0" h="2" />
   <weapon size="large" x="12" y="-6" h="0" />
   <weapon size="large" x="12" y="6" h="0" />
-  <weapon size="large" x="0" y="0" h="7" />
-  <weapon size="large" x="0" y="0" h="7" />
-  <weapon size="large" x="-15" y="0" h="7" />
-  <weapon size="large" x="-33" y="0" h="7" />
-  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-1000 Core System</utility>
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="0" y="0" h="7" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="0" y="0" h="7" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="-15" y="0" h="7" />
+  <weapon size="large" prop="fighter_bay" exclusive="1" x="-33" y="0" h="7" />
+  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>
   <utility size="large" prop="accessory" exclusive="1" />
   <utility size="large" />
   <utility size="large" />
@@ -41,8 +40,8 @@
   <utility size="large" />
   <utility size="large" />
   <utility size="large" />
-  <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 6500 Engine</structure>
-  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-20 Heavy Plating</structure>
+  <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 7000 Engine</structure>
+  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-68 Heavy Plating</structure>
   <structure size="large" />
   <structure size="large" />
   <structure size="large" />

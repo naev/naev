@@ -352,20 +352,7 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
    /* Parameters. */
    map_renderParams( bx, by, mapedit_xpos, mapedit_ypos, w, h, mapedit_zoom, &x, &y, &r );
 
-   /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
-
-   /* Render faction disks. */
-   map_renderFactionDisks( x, y, 1 );
-
-   /* Render jump paths. */
-   map_renderJumps( x, y, 1 );
-
-   /* Render systems. */
-   map_renderSystems( bx, by, x, y, w, h, r, 1 );
-
-   /* Render system names. */
-   map_renderNames( bx, by, x, y, w, h, 1 );
+   sysedit_renderMap( bx, by, w, h, x, y, r );
 
    /* Render the selected system selections. */
    for (i=0; i<mapedit_nsys; i++) {
@@ -1072,7 +1059,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    xmlw_elem( writer, "mass", "%d", 0 );
    xmlw_elem( writer, "price", "%"CREDITS_PRI, ns->price );
    xmlw_elem( writer, "description", "%s", ns->description );
-   xmlw_elem( writer, "gfx_store", "%s", "map.png" );
+   xmlw_elem( writer, "gfx_store", "%s", "map.webp" );
    xmlw_endElem( writer ); /* "general" */
 
    xmlw_startElem( writer, "specific" );

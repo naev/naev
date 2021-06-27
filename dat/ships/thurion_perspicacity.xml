@@ -5,7 +5,7 @@
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Fighter</class>
+ <class>Scout</class>
  <price>350000</price>
  <time_mod>1</time_mod>
  <trail_generator x="-8" y="0" h="0" />
@@ -13,7 +13,6 @@
  <license>Light Combat Vessel License</license>
  <description>The Thurion Perspicacity is a fast, light fighter typically used for scouting or attacking in swarms.</description>
  <health>
-  <absorb>6</absorb>
   <armour>50</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -26,12 +25,12 @@
  </characteristics>
  <slots>
   <weapon size="small" x="17" y="0" h="-4" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
@@ -39,7 +38,7 @@
  <stats>
   <cpu_mod>10</cpu_mod>
   <ew_hide>30</ew_hide>
-  <nebu_absorb_shield>80</nebu_absorb_shield>
-  <nebu_absorb_armour>97</nebu_absorb_armour>
+  <nebu_absorb_shield>15</nebu_absorb_shield>
+  <nebu_absorb_armour>15</nebu_absorb_armour>
  </stats>
 </ship>

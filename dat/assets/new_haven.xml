@@ -16,7 +16,7 @@
  <general>
   <class>X</class>
   <population>9000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>pir_clanworld</land>
    <refuel/>
@@ -51,5 +51,6 @@
   <item>Systems Medium</item>
   <item>Pirate Maps</item>
   <item>New Haven Maps</item>
+  <item>Pirate Elite Outfits</item>
  </tech>
 </asset>

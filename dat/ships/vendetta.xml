@@ -15,7 +15,6 @@
  <license>Light Combat Vessel License</license>
  <description>The Vendetta displays the House Dvaered philosophy very well. Give a ship many intimidating guns, layer it with heavy armour, and neglect the electronics. Due to the obsolete electronics used in the Vendetta, it is better suited to skirmishes than extended battles, as it possesses inferior shield and energy regeneration compared to other ships of its class, though it can unleash a truly fearsome barrage.</description>
  <health>
-  <absorb>6</absorb>
   <armour>100</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -32,10 +31,10 @@
   <weapon size="small" x="13" y="13" h="0" />
   <weapon size="small" x="19" y="0" h="-2" />
   <weapon size="small" x="3" y="0" h="2" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-68 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 350 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
   <structure size="small" />
  </slots>

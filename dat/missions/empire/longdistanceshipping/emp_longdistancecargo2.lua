@@ -55,8 +55,7 @@ function create ()
    targetworld = planet.get("Praxis")
 
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", bar_desc )
 end
 
 

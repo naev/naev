@@ -101,8 +101,8 @@ static int last_window = 0; /**< Default window. */
 /*
  * Error handling.
  */
-static char errorlist[512];
-static char errorreason[512];
+static char errorlist[STRMAX_SHORT];
+static char errorreason[STRMAX_SHORT];
 static int errorappend;
 static char *errorlist_ptr;
 
@@ -403,6 +403,8 @@ void bar_regen (void)
 {
    if (!landed)
       return;
+   if (!land_loaded)
+      return;
    bar_genList( land_getWid(LAND_WINDOW_BAR) );
 }
 /**
@@ -517,6 +519,9 @@ static void bar_approach( unsigned int wid, char *str )
 
    n = npc_getArraySize();
    npc_approach( pos );
+   /* This check is necessary if the player quits the game in the middle of an NPC approach. */
+   if (land_planet==NULL)
+      return;
    bar_genList( wid ); /* Always just in case. */
 
    /* Focus the news if the number of NPCs has changed. */
@@ -640,7 +645,7 @@ static void misn_accept( unsigned int wid, char* str )
       pos = toolkit_getListPos( wid, "lstMission" );
       misn = &mission_computer[pos];
       ret = mission_accept( misn );
-      if ((ret==0) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
+      if ((ret==0) || (ret==3) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
          if (ret==-1)
             mission_cleanup( &mission_computer[pos] );
          memmove( &mission_computer[pos], &mission_computer[pos+1],
@@ -811,18 +816,33 @@ static void spaceport_buyMap( unsigned int wid, char *str )
  */
 void land_updateMainTab (void)
 {
-   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
+   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT], pop[STRMAX_SHORT];
    Outfit *o;
+   double p = (double)land_planet->population;
+
+   if (p > 10e9)
+      snprintf( pop, sizeof(pop), _("%.0f billion"), p / 1e9 );
+   else if (p > 10e6)
+      snprintf( pop, sizeof(pop), _("%.0f million"), p / 1e6 );
+   else if (p > 10e3)
+      snprintf( pop, sizeof(pop), _("%.0f thousand"), p / 1e3 );
+   else
+      snprintf( pop, sizeof(pop), "%.0f", p );
 
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
    credits2str( cred, player.p->credits, 2 );
    snprintf( buf, sizeof(buf),
-         _("%s\n"
+         _("%s (%s system)\n"
+         "%s (%s-class)\n"
          "%s\n"
+         "roughly %s\n"
+         "\n"
          "%s\n"
          "%s"),
-         _(land_planet->name), _(cur_system->name), tons, cred );
+         _(land_planet->name), _(cur_system->name),
+         planet_getClassName(land_planet->class), _(land_planet->class),
+         _(faction_name(land_planet->faction)), pop, tons, cred );
    window_modifyText( land_windows[0], "txtDInfo", buf );
 
    /* Maps are only offered if the planet provides fuel. */
@@ -1144,6 +1164,9 @@ void land( Planet* p, int load )
    if (load)
       hooks_run( "load" );
 
+   /* Just in case? */
+   bar_regen();
+
    /* Mission forced take off. */
    if (land_takeoff)
       takeoff(0);
@@ -1188,14 +1211,17 @@ static void land_createMainTab( unsigned int wid )
 
    /* Player stats. */
    bufSInfo = _(
-         "Stationed at:\n"
-         "System:\n"
+         "#nStationed at:\n"
+         "Class:\n"
+         "Faction:\n"
+         "Population:\n"
+         "\n"
          "Free Space:\n"
          "Money:" );
    th = gl_printHeightRaw( &gl_defFont, 200, bufSInfo );
    window_addText( wid, 20, 20, 200, th,
          0, "txtSInfo", &gl_defFont, NULL, bufSInfo );
-   window_addText( wid, 20+200, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,
+   window_addText( wid, 20+120, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,
          th, 0, "txtDInfo", &gl_defFont, NULL, NULL );
 
    /*
@@ -1316,7 +1342,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
  */
 void takeoff( int delay )
 {
-   int h;
+   int h, stu;
    char *nt;
    double a, r;
 
@@ -1325,7 +1351,7 @@ void takeoff( int delay )
 
    /* Player's ship is not able to fly. */
    if (!player_canTakeoff()) {
-      char message[512];
+      char message[STRMAX_SHORT];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
       dialogue_msgRaw( _("Ship not fit for flight"), message );
 
@@ -1383,8 +1409,11 @@ void takeoff( int delay )
       dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
    /* time goes by, triggers hook before takeoff */
-   if (delay)
-      ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 period */
+   if (delay) {
+      /* TODO should this depend on something else? */
+      stu = (int)(NT_PERIOD_SECONDS * player.p->stats.land_delay);
+      ntime_inc( ntime_create( 0, 0, stu ) );
+   }
    nt = ntime_pretty( 0, 2 );
    player_message( _("#oTaking off from %s on %s."), _(land_planet->name), nt);
    free(nt);
@@ -1408,6 +1437,9 @@ void takeoff( int delay )
    pilot_setFlag( player.p, PILOT_TAKEOFF );
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );
+
+   /* Update lua stuff. */
+   pilot_outfitLInitAll( player.p );
 
    /* Reset speed */
    player_autonavResetSpeed();

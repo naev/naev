@@ -16,7 +16,7 @@
  <general>
   <class>K</class>
   <population>25000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>emp_mil_restricted</land>
    <refuel/>
@@ -42,5 +42,6 @@
   <item>Ion 3</item>
   <item>Beam 1</item>
   <item>Beam 2</item>
+  <item>Empire Elite Outfits</item>
  </tech>
 </asset>

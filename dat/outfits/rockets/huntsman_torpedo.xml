@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Huntsman Torpedo">
+ <general>
+  <license>Heavy Weapon License</license>
+  <mass>4</mass>
+  <price>0</price>
+  <description>Based on the Caesar torpedo platofrm, Huntsman EMP torpedoes are designed to disable large warships, where smaller weapons would fail.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>caesar_blue.webp</gfx>
+  <sound>torpedo</sound>
+  <sound_hit>empexplode</sound_hit>
+  <spfx_shield>EmpS</spfx_shield>
+  <spfx_armour>EmpM</spfx_armour>
+  <trail_generator x="0">fire-missileL</trail_generator>
+  <duration blowup="armour">33</duration>
+  <thrust>0</thrust>
+  <turn>25</turn>
+  <speed>200</speed>
+  <resist>100</resist>
+  <damage>
+   <type>emp</type>
+   <penetrate>70</penetrate>
+   <physical>600</physical>
+   <disable>600</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>

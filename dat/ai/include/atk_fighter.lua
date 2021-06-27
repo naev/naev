@@ -13,15 +13,7 @@ end
 --[[
 -- Mainly targets small fighters.
 --]]
-function atk_fighter_think ()
-   local target = ai.target()
-
-   -- Stop attacking if it doesn't exist
-   if not target:exists() then
-      ai.poptask()
-      return
-   end
-
+function atk_fighter_think( target, si )
    local enemy    = ai.getenemy_size(0, 200)
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
@@ -34,7 +26,7 @@ function atk_fighter_think ()
       if dist > range * mem.atk_changetarget then
          ai.pushtask("attack", enemy )
       end
-      
+
    elseif nearest_enemy ~= target and nearest_enemy ~= nil then
       -- Shouldn't switch targets if close
       if dist > range * mem.atk_changetarget then
@@ -47,8 +39,8 @@ end
 --[[
 -- Main control function for fighter behavior.
 --]]
-function atk_fighter ()
-   local target = _atk_com_think()
+function atk_fighter( target )
+   target = _atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff
@@ -56,14 +48,14 @@ function atk_fighter ()
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable() then return end
+   if not _atk_check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
    local range = ai.getweaprange(3, 0)
 
    -- We first bias towards range
-   if dist > range * mem.atk_approach then
+   if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
       _atk_g_ranged( target, dist ) -- Use generic ranged function
 
    -- Otherwise melee
@@ -89,16 +81,16 @@ function _atk_f_flyby( target, dist )
 
    -- First test if we should zz
    if _atk_decide_zz() then
-      ai.pushsubtask("_atk_zigzag")
+      ai.pushsubtask("_atk_zigzag", target)
    end
 
    -- Far away, must approach
    if dist > (3 * range) then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         _atk_keep_distance()     
+         _atk_keep_distance()
          ai.accel()
-      else  
+      else
          dir = ai.iface(target)
       end
 
@@ -151,21 +143,21 @@ function _atk_f_space_sup( target, dist )
 
    -- First test if we should zz
    if _atk_decide_zz() then
-      ai.pushsubtask("_atk_zigzag")
+      ai.pushsubtask("_atk_zigzag", target)
    end
 
-   --if we're far away from the target, then turn and approach 
+   --if we're far away from the target, then turn and approach
    if dist > (range) then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         _atk_keep_distance()     
+         _atk_keep_distance()
          ai.accel()
-      else  
+      else
          dir = ai.iface(target)
       end
 
    elseif dist > 0.8* range then
-      --drifting away from target, so emphasize intercept 
+      --drifting away from target, so emphasize intercept
       --course facing and accelerate to close
       dir = ai.iface(target)
       if dir < 10 and dir > -10 then
@@ -181,7 +173,7 @@ function _atk_f_space_sup( target, dist )
       --but only accel if it will be productive
       if dir2 < 15 and dir2 > -15 and ai.relvel(target) > -10 then
          ai.accel()
-      end         
+      end
 
       -- Shoot if should be shooting.
       if dir < 10 then

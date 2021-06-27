@@ -45,8 +45,6 @@ int save_loaded   = 0; /**< Just loaded the saved game. */
 /* externs */
 /* player.c */
 extern int player_save( xmlTextWriterPtr writer ); /**< Saves player related stuff. */
-/* mission.c */
-extern int missions_saveActive( xmlTextWriterPtr writer ); /**< Saves active missions. */
 /* event.c */
 extern int events_saveActive( xmlTextWriterPtr writer );
 /* news.c */
@@ -125,6 +123,9 @@ int save_all (void)
    xmlw_elem( writer, "naev", "%s", VERSION );
    xmlw_elem( writer, "data", "%s", start_name() );
    xmlw_endElem(writer); /* "version" */
+
+   /* Save last played. */
+   xmlw_saveTime( writer, "last_played", time(NULL) );
 
    /* Save the data. */
    if (save_data(writer) < 0) {

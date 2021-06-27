@@ -9,6 +9,7 @@
 
 /** @cond */
 #include <stdint.h>
+#include <time.h>
 /** @endcond */
 
 #include "ntime.h"

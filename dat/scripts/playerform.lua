@@ -12,6 +12,7 @@ local function playerform()
                             table.unpack(form_names))
 
    player.pilot():memory().formation = formation.keys[choice]
+   var.push("player_formation", choice)
 end
 
 return playerform

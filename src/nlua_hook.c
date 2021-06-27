@@ -62,6 +62,8 @@ static int hook_renderfg( lua_State *L );
 static int hook_standing( lua_State *L );
 static int hook_discover( lua_State *L );
 static int hook_pay( lua_State *L );
+static int hook_custom( lua_State *L );
+static int hook_trigger( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_Reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -92,6 +94,8 @@ static const luaL_Reg hook_methods[] = {
    { "standing", hook_standing },
    { "discover", hook_discover },
    { "pay", hook_pay },
+   { "custom", hook_custom },
+   { "trigger", hook_trigger },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -725,8 +729,8 @@ static int hook_discover( lua_State *L )
 /**
  * @brief Hooks the function to when the player receives  or loses money through player.pay() (the Lua function only).
  *
- * The amount paid (or taken from the player) is passed as a parameter:<br/>
- * function f( amount, args )
+ * The amount paid (or taken from the player) and reason (which is nil by default) is passed as a parameter:<br/>
+ * function f( amount, reason, args )
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -798,7 +802,7 @@ static int hook_renderbg( lua_State *L )
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
  *    @luatreturn number Hook identifier.
- * @luafunc renderbg
+ * @luafunc renderfg
  */
 static int hook_renderfg( lua_State *L )
 {
@@ -806,6 +810,87 @@ static int hook_renderfg( lua_State *L )
    h = hook_generic( L, "renderfg", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
+}
+/**
+ * @brief Hook run once at the end of the next frame regardless when manually triggered.
+ *
+ *    @luatparam string hookname Name to give the hook. This should not overlap with standard names.
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @see safe
+ * @luafunc custom
+ */
+static int hook_custom( lua_State *L )
+{
+   unsigned int h;
+   const char *hookname = luaL_checkstring(L,1);
+   h = hook_generic( L, hookname, 0., 2, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Triggers manually a hook stack. This is run deferred (next frame). Meant mainly to be used with hook.custom, but can work with other hooks too (if you know what you are doing).
+ *
+ * You can pass multiple parameters that get directly passed to the hook. However, this is limited by HOOK_MAX_PARAM.
+ *
+ *    @luatparam string hookname Name of the hook to be run.
+ * @see custom
+ * @luafunc trigger
+ */
+static int hook_trigger( lua_State *L )
+{
+   int i, n;
+   HookParam hp[HOOK_MAX_PARAM], *p;
+   const char *hookname = luaL_checkstring(L,1);
+   n = lua_gettop(L);
+
+   /* Set up hooks. */
+   for (i=0; i< MIN(n, HOOK_MAX_PARAM-1); i++) {
+      p = &hp[i];
+      switch (lua_type(L,i+1)) {
+         case LUA_TNIL:
+            p->type = HOOK_PARAM_NIL;
+            break;
+         case LUA_TNUMBER:
+            p->type = HOOK_PARAM_NUMBER;
+            p->u.num = lua_tonumber(L,i+1);
+            break;
+         case LUA_TBOOLEAN:
+            p->type = HOOK_PARAM_BOOL;
+            p->u.b = lua_toboolean(L,i+1);
+            break;
+         case LUA_TSTRING:
+            p->type = HOOK_PARAM_STRING;
+            p->u.str = lua_tostring(L,i+1);
+            break;
+         case LUA_TUSERDATA:
+            if (lua_ispilot(L,i+1)) {
+               p->type = HOOK_PARAM_PILOT;
+               p->u.lp = lua_topilot(L,i+1);
+            }
+            else if (lua_isfaction(L,i+1)) {
+               p->type = HOOK_PARAM_FACTION;
+               p->u.lf = lua_tofaction(L,i+1);
+            }
+            else if (lua_isplanet(L,i+1)) {
+               p->type = HOOK_PARAM_ASSET;
+               p->u.la = *lua_toplanet(L,i+1);
+            }
+            else if (lua_isjump(L,i+1)) {
+               p->type = HOOK_PARAM_JUMP;
+               p->u.lj = *lua_tojump(L,i+1);
+            }
+            break;
+         default:
+            NLUA_ERROR(L, _("Unsupported Lua hook paramater type '%s'!"), lua_typename(L,i+1));
+      }
+   }
+   hp[i].type = HOOK_PARAM_SENTINEL;
+
+   /* Run the deferred hooks. */
+   hooks_runParamDeferred( hookname, hp );
+   return 0;
 }
 /**
  * @brief Hooks the function to a specific pilot.
@@ -824,6 +909,7 @@ static int hook_renderfg( lua_State *L )
  *    <li> "attacked" : triggered when the pilot is attacked. </li>
  *    <li> "idle" : triggered when the pilot becomes idle in manual control.</li>
  *    <li> "lockon" : triggered when the pilot locked on a missile on it's target.</li>
+ *    <li> "stealth" : triggered when the pilot either enters or leaves stealth.</li>
  * </ul>
  * <br />
  * If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.<br />
@@ -856,6 +942,11 @@ static int hook_renderfg( lua_State *L )
  *    function jump_hook( pilot, jump_point, arg )<br />
  *    end
  * </p>
+ * The stealth hook passes whether or not the ship is stealthing or destealthing as a boolean:
+ * <p>
+ *    function stealth_hook( pilot, status, arg )<br />
+ *    end
+ * </p>
  *    @luatparam Pilot|nil pilot Pilot identifier to hook (or nil for all).
  *    @luatparam string type One of the supported hook types.
  *    @luatparam string funcname Name of function to run when hook is triggered.
@@ -885,7 +976,7 @@ static int hook_pilot( lua_State *L )
    /* Check to see if hook_type is valid */
    if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
    else if (strcmp(hook_type,"exploded")==0) type = PILOT_HOOK_EXPLODED;
-   else if (strcmp(hook_type,"boarditf")==0) type = PILOT_HOOK_BOARDING;
+   else if (strcmp(hook_type,"boarding")==0) type = PILOT_HOOK_BOARDING;
    else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
    else if (strcmp(hook_type,"undisable")==0) type = PILOT_HOOK_UNDISABLE;
@@ -895,6 +986,7 @@ static int hook_pilot( lua_State *L )
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
    else if (strcmp(hook_type,"lockon")==0)   type = PILOT_HOOK_LOCKON;
+   else if (strcmp(hook_type,"stealth")==0)  type = PILOT_HOOK_STEALTH;
    else { /* hook_type not valid */
       NLUA_ERROR(L, _("Invalid pilot hook type: '%s'"), hook_type);
       return 0;

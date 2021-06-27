@@ -16,7 +16,7 @@
  <general>
   <class>K</class>
   <population>211243</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -47,5 +47,6 @@
   <item>Basic Trade Ships</item>
   <item>Bulk Trade Ships</item>
   <item>Hulls Elite</item>
+  <item>Dvaered Elite Outfits</item>
  </tech>
 </asset>

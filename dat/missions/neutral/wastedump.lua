@@ -1,24 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Waste Dump">
-  <avail>
-   <priority>9</priority>
-   <done>Garbage Person</done>
-   <chance>100</chance>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Thurion</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-  </avail>
- </mission>
- --]]
+ <avail>
+  <priority>9</priority>
+  <done>Garbage Person</done>
+  <chance>100</chance>
+  <location>Computer</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Thurion</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+ </avail>
+</mission>
+--]]
 --[[
 
    Waste Dump
@@ -111,7 +111,8 @@ function accept ()
    local txt = text[ rnd.rnd( 1, #text ) ]
    tk.msg( "", txt:format( creditstring( credits ) ) )
 
-   cid = misn.cargoAdd( "Waste Containers", q )
+   local c = misn.cargoNew( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids.") )
+   cid = misn.cargoAdd( c, q )
    player.pay( credits )
 
    misn.osdCreate( osd_title, osd_msg )

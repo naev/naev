@@ -5,23 +5,23 @@
   <size>medium</size>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
-  <mass>25</mass>
+  <mass>30</mass>
   <price>80000</price>
   <description>The Grave Lance is one of the most powerful Lance weapons around. The technology behind it is poorly understood by everyone except the Za'lek, who use it as a standard weapon.</description>
-  <gfx_store>orion.png</gfx_store>
-  <cpu>-20</cpu>
+  <gfx_store>orion.webp</gfx_store>
+  <cpu>-50</cpu>
  </general>
  <specific type="beam">
   <delay>5</delay>
   <duration min="3.5">4.5</duration>
-  <range>500</range>
-  <energy>85</energy>
-  <heatup>45</heatup>
+  <range>700</range>
+  <energy>30</energy>
+  <heatup>50</heatup>
   <damage>
    <type>normal</type>
-   <penetrate>60</penetrate>
-   <physical>75</physical>
-   <disable>10</disable>
+   <penetrate>48</penetrate>
+   <physical>140</physical>
+   <disable>4</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

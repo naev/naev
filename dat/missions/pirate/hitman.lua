@@ -58,8 +58,7 @@ function create ()
    targetsystem = system.get("Delta Pavonis") -- Find target system
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Shifty Trader"),  "neutral/unique/shifty_merchant.png")
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Shifty Trader"),  "neutral/unique/shifty_merchant.webp", bar_desc)
 end
 
 
@@ -112,7 +111,8 @@ function trader_attacked (hook_pilot, hook_attacker, hook_arg)
 
    if ( hook_pilot:faction() == faction.get("Trader")
             or hook_pilot:faction() == faction.get("Traders Guild") )
-         and hook_attacker == player.pilot() then
+         and ( hook_attacker == player.pilot()
+            or hook_attacker:leader() == player.pilot() ) then
       hook_pilot:hookClear()
       hook.pilot(hook_pilot, "jump", "trader_jumped")
       hook.pilot(hook_pilot, "land", "trader_jumped")

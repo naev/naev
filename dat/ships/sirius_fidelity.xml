@@ -13,7 +13,6 @@
  <fabricator>Sirius Systems</fabricator>
  <description>The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
  <health>
-  <absorb>6</absorb>
   <armour>45</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -28,19 +27,18 @@
   <weapon size="small" x="10" y="2" h="0" />
   <weapon size="small" x="0" y="-4" h="-3" />
   <weapon size="small" x="0" y="4" h="-3" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />
  </slots>
  <stats>
-  <turn_mod>10</turn_mod>
-  <thrust_mod>10</thrust_mod>
   <shield_mod>10</shield_mod>
+  <armour_mod>10</armour_mod>
   <stress_dissipation>20</stress_dissipation>
  </stats>
 </ship>

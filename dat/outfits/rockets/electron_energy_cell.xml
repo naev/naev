@@ -4,8 +4,8 @@
   <license>Medium Weapon License</license>
   <mass>0.1</mass>
   <price>0</price>
-  <description>These Energy Cells are used as a form of 'ammo' for a long-range discharge cannon used by the Za'lek and Collective Heavy Drones. They have a very long range and good damage, making them ideal for softening up a target for shorter-ranged weapons to finish the target off.</description>
-  <gfx_store>cpu_iii.png</gfx_store>
+  <description>These Energy Cells are used as a form of 'ammo' for a long-range discharge cannon used by the Za'lek. They have a decent range and good damage, making them ideal for softening up a target for shorter-ranged beams to finish the target off.</description>
+  <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="ammo">
   <gfx>electron.png</gfx>
@@ -19,7 +19,7 @@
   <speed>1500</speed>
   <damage>
    <type>shieldbreaker</type>
-   <penetrate>10</penetrate>
+   <penetrate>24</penetrate>
    <physical>15</physical>
    <disable>5</disable>
   </damage>

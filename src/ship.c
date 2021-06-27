@@ -35,7 +35,6 @@
 
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
 
-#define SHIP_EXT     ".png" /**< Ship graphics extension format. */
 #define SHIP_ENGINE  "_engine" /**< Engine graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
 #define SHIP_COMM    "_comm" /**< Communication graphic extension. */
@@ -161,7 +160,19 @@ int ship_compareTech( const void *arg1, const void *arg2 )
  */
 const char* ship_class( const Ship* s )
 {
-   switch (s->class) {
+   return ship_classToString( s->class );
+}
+
+
+/**
+ * @brief Gets the ship class name in human readable form.
+ *
+ *    @param class Class to get name of.
+ *    @return The human readable class name.
+ */
+const char *ship_classToString( ShipClass class )
+{
+   switch (class) {
       case SHIP_CLASS_NULL:
          return "NULL";
 
@@ -219,7 +230,7 @@ const char* ship_class( const Ship* s )
  *
  *    @param str String to extract ship class identifier from.
  */
-ShipClass ship_classFromString( char* str )
+ShipClass ship_classFromString( const char* str )
 {
    if ( str != NULL ) {
       /* Civilian */
@@ -426,11 +437,11 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    SDL_BlitSurface( surface, &rtemp, gfx_store, &dstrect );
 
    /* Load the store surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
+   snprintf( buf, sizeof(buf), "%s_gfx_store", temp->name );
    temp->gfx_store = gl_loadImagePad( buf, gfx_store, OPENGL_TEX_VFLIP, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
    /* Load the surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
+   snprintf( buf, sizeof(buf), "%s_gfx_target", temp->name );
    temp->gfx_target = gl_loadImagePad( buf, gfx, OPENGL_TEX_VFLIP, sw, sh, 1, 1, 1 );
 
    return 0;
@@ -521,7 +532,7 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    ship_loadSpaceImage( temp, str, sx, sy );
 
    /* Load the engine sprite .*/
-   if (engine && conf.engineglow) {
+   if (engine) {
       snprintf( str, sizeof(str), SHIP_GFX_PATH"%s/%s"SHIP_ENGINE"%s", base, buf, ext );
       ship_loadEngineImage( temp, str, sx, sy );
       if (temp->gfx_engine == NULL)
@@ -665,9 +676,12 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 
    /* Parse exclusive flag, default false. */
    xmlr_attr_int( node, "exclusive", slot->exclusive );
-   //TODO: decide if exclusive should even belong in ShipOutfitSlot, remove this hack, and fix slot->exclusive to slot->slot.exclusive in it's two previous occurrences, meaning three lines above and 12 lines above
+   /* TODO: decide if exclusive should even belong in ShipOutfitSlot,
+    * remove this hack, and fix slot->exclusive to slot->slot.exclusive
+    * in it's two previous occurrences, meaning three lines above and 12
+    * lines above */
    /* hack */
-   slot->slot.exclusive=slot->exclusive;
+   slot->slot.exclusive = slot->exclusive;
 
    /* Parse required flag, default false. */
    xmlr_attr_int( node, "required", slot->required );
@@ -952,7 +966,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          /* Load array. */
          ss_statsInit( &temp->stats_array );
-         ss_statsModFromList( &temp->stats_array, temp->stats, NULL );
+         ss_statsModFromList( &temp->stats_array, temp->stats );
 
          /* Create description. */
          if (temp->stats != NULL) {
@@ -1029,11 +1043,13 @@ int ships_load (void)
    for (nfiles=0; ship_files[nfiles]!=NULL; nfiles++) {}
 
    /* Initialize stack if needed. */
-   if (ship_stack == NULL) {
+   if (ship_stack == NULL)
       ship_stack = array_create_size(Ship, nfiles);
-   }
 
    for (i=0; ship_files[i]!=NULL; i++) {
+      if (!ndata_matchExt( ship_files[i], "xml" ))
+         continue;
+
       /* Get the file name .*/
       asprintf( &file, "%s%s", SHIP_DATA_PATH, ship_files[i] );
 

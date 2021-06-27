@@ -74,8 +74,7 @@ log_text = _([[You stole something called a "quantum sharpener" from a Soromid s
 
 function create ()
    -- Spaceport bar stuff
-   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.png")
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", bar_desc )
 end
 function accept()
    -- Mission details:

@@ -10,6 +10,9 @@
 #include "pilot.h"
 
 
+#define PILOT_OUTFIT_LUA_UPDATE_DT     (1.0/10.0)   /* How often the Lua outfits run their update script (in seconds).  */
+
+
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int warn );
@@ -46,6 +49,17 @@ void pilot_healLanded( Pilot *pilot );
 
 /* Special outfit stuff. */
 int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );
+
+/* Lua outfit stuff. */
+int pilot_slotIsActive( const PilotOutfitSlot *o );
+void pilot_outfitLInitAll( Pilot *pilot );
+int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po );
+void pilot_outfitLUpdate( Pilot *pilot, double dt );
+void pilot_outfitLOutfofenergy( Pilot *pilot );
+void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned int attacker );
+int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on );
+void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer );
+void pilot_outfitLCleanup( Pilot *pilot );
 
 
 #endif /* PILOT_OUTFIT_H */

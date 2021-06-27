@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Shatterer Missile">
+ <general>
+  <license>Heavy Weapon License</license>
+  <mass>0.5</mass>
+  <price>0</price>
+  <description>This modified rocket was used by the Collective heavy drones as a means to puncture heavy warships and leave them vulnerable. It has very poor tracking, but has excellent speed and armor piercing.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>fury.png</gfx>
+  <sound>missile</sound>
+  <sound_hit>bansheeexp</sound_hit>
+  <spfx_shield>ExpS</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <trail_generator x="0">missile</trail_generator>
+  <duration blowup="armour">2</duration>
+  <thrust>0</thrust>
+  <turn>5</turn>
+  <speed>1200</speed>
+  <resist>35</resist>
+  <damage>
+   <type>ion</type>
+   <penetrate>42</penetrate>
+   <physical>40</physical>
+   <disable>5</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>

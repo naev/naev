@@ -5,30 +5,31 @@
   <size>large</size>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
-  <mass>40</mass>
+  <mass>50</mass>
   <price>68000</price>
-  <description>While limited in range compared to true capital-class weaponry, the heavy ripper turret's pair of heavy ripper cannons deliver exceptional firepower for dealing with lighter threats such as corvettes.</description>
-  <gfx_store>ripperturret.png</gfx_store>
-  <cpu>-26</cpu>
+  <description>Built off the heavy ripper cannon, the ripper turret is the heaviest turret conventionally available to civilians. It's bulk, high energy requirements, and high damage make it unsuitable for non-capital ships.</description>
+  <gfx_store>ripperturret.webp</gfx_store>
+  <cpu>-350</cpu>
  </general>
  <specific type="turret bolt">
   <gfx>ripperM.png</gfx>
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>1.0</delay>
-  <speed>700</speed>
-  <range>1400</range>
-  <falloff>900</falloff>
+  <delay>1.7</delay>
+  <speed>650</speed>
+  <range>2200</range>
+  <falloff>1600</falloff>
   <gfx_end>ripperM-end.png</gfx_end>
-  <energy>45</energy>
-  <heatup>45</heatup>
-  <track>1.0</track>
+  <energy>153</energy>
+  <heatup>60</heatup>
+  <trackmin>10000</trackmin>
+  <trackmax>30000</trackmax>
   <damage>
    <type>normal</type>
-   <penetrate>41</penetrate>
-   <physical>44</physical>
-   <disable>3</disable>
+   <penetrate>72</penetrate>
+   <physical>76</physical>
+   <disable>3.4</disable>
   </damage>
  </specific>
 </outfit>

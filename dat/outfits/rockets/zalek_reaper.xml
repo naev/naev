@@ -11,19 +11,19 @@
   <gfx>zalek_reaper.png</gfx>
   <sound>1-second-detachment</sound>
   <sound_hit>lrgexp0</sound_hit>
-  <spfx_shield>ExpL2</spfx_shield>
-  <spfx_armour>ExpL2</spfx_armour>
+  <spfx_shield>ExpL</spfx_shield>
+  <spfx_armour>ExpL</spfx_armour>
   <trail_generator x="-15">zalek-missileL</trail_generator>
-  <duration blowup="armour">60</duration>
+  <duration blowup="armour">35</duration>
   <thrust>0</thrust>
-  <turn>40</turn>
-  <speed>270</speed>
+  <turn>60</turn>
+  <speed>220</speed>
   <resist>100</resist>
   <damage>
-   <type>ion</type>
-   <penetrate>90</penetrate>
+   <type>normal</type>
+   <penetrate>80</penetrate>
    <physical>900</physical>
-   <disable>50</disable>
+   <disable>10</disable>
   </damage>
   <ai>smart</ai>
  </specific>

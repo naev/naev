@@ -12,6 +12,39 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 // https://github.com/jamieowen/glsl-blend
 
+/* Overlay. */
+float blendOverlay(float base, float blend) {
+   return base<0.5?(2.0*base*blend):(1.0-2.0*(1.0-base)*(1.0-blend));
+}
+vec3 blendOverlay(vec3 base, vec3 blend) {
+   return vec3(blendOverlay(base.r,blend.r),blendOverlay(base.g,blend.g),blendOverlay(base.b,blend.b));
+}
+vec3 blendOverlay(vec3 base, vec3 blend, float opacity) {
+   return (blendOverlay(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+/* Color Burn. */
+float blendColorBurn(float base, float blend) {
+   return (blend==0.0)?blend:max((1.0-((1.0-base)/blend)),0.0);
+}
+vec3 blendColorBurn(vec3 base, vec3 blend) {
+   return vec3(blendColorBurn(base.r,blend.r),blendColorBurn(base.g,blend.g),blendColorBurn(base.b,blend.b));
+}
+vec3 blendColorBurn(vec3 base, vec3 blend, float opacity) {
+   return (blendColorBurn(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+/* Color Dodge. */
+float blendColorDodge(float base, float blend) {
+   return (blend==1.0)?blend:min(base/(1.0-blend),1.0);
+}
+vec3 blendColorDodge(vec3 base, vec3 blend) {
+   return vec3(blendColorDodge(base.r,blend.r),blendColorDodge(base.g,blend.g),blendColorDodge(base.b,blend.b));
+}
+vec3 blendColorDodge(vec3 base, vec3 blend, float opacity) {
+   return (blendColorDodge(base, blend) * opacity + base * (1.0 - opacity));
+}
+
 /* Soft Light. */
 float blendSoftLight(float base, float blend) {
    return (blend<0.5)?(2.0*base*blend+base*base*(1.0-2.0*blend)):(sqrt(base)*(2.0*blend-1.0)+2.0*base*(1.0-blend));
@@ -22,6 +55,26 @@ vec3 blendSoftLight(vec3 base, vec3 blend) {
 vec3 blendSoftLight(vec3 base, vec3 blend, float opacity) {
    return (blendSoftLight(base, blend) * opacity + base * (1.0 - opacity));
 }
+
+/* Hard Light. */
+vec3 blendHardLight(vec3 base, vec3 blend) {
+   return blendOverlay(blend,base);
+}
+vec3 blendHardLight(vec3 base, vec3 blend, float opacity) {
+   return (blendHardLight(base, blend) * opacity + base * (1.0 - opacity));
+}
+
+/* Vivid Light. */
+float blendVividLight(float base, float blend) {
+   return (blend<0.5)?blendColorBurn(base,(2.0*blend)):blendColorDodge(base,(2.0*(blend-0.5)));
+}
+vec3 blendVividLight(vec3 base, vec3 blend) {
+   return vec3(blendVividLight(base.r,blend.r),blendVividLight(base.g,blend.g),blendVividLight(base.b,blend.b));
+}
+vec3 blendVividLight(vec3 base, vec3 blend, float opacity) {
+   return (blendVividLight(base, blend) * opacity + base * (1.0 - opacity));
+}
+
 
 /* Screen. */
 float blendScreen(float base, float blend) {

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Hive Combat AI">
+ <general>
+  <typename>Combat AI</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <rarity>1</rarity>
+  <license>Heavy Weapon License</license>
+  <mass>0</mass>
+  <price>850000</price>
+  <description>Heavily inspired by bee and other insect colonies, the Hive Combat AI increases the sharing of data and parameters between a carrier and its fighters, allowing for increased efficiency in communication. This results in more efficient movement of the fighters, and a better ability to respond to mishaps such as lost fighters.</description>
+  <gfx_store>hive_combat_ai.webp</gfx_store>
+  <limit>combatai</limit>
+ </general>
+ <specific type="modification">
+  <fbay_movement>10</fbay_movement>
+  <fbay_reload>10</fbay_reload>
+ </specific>
+</outfit>

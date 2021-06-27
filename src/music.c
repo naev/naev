@@ -325,10 +325,15 @@ int music_load( const char* name )
    /* Free current music if needed. */
    music_free();
 
+   /* Determine the filename. */
+   if (name[0]=='/')
+      snprintf( filename, sizeof(filename), "%s", &name[1]);
+   else
+      snprintf( filename, sizeof(filename), MUSIC_PATH"%s"MUSIC_SUFFIX, name);
+
    /* Load new music. */
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
-   snprintf( filename, sizeof(filename), MUSIC_PATH"%s"MUSIC_SUFFIX, name);
    rw = PHYSFSRWOPS_openRead( filename );
    if (rw == NULL) {
       WARN(_("Music '%s' not found."), filename);
@@ -450,8 +455,6 @@ void music_setPos( double sec )
  */
 static int music_luaInit (void)
 {
-   char *buf;
-   size_t bufsize;
 
    if (music_disabled)
       return 0;
@@ -459,21 +462,76 @@ static int music_luaInit (void)
    if (music_env != LUA_NOREF)
       music_luaQuit();
 
+   /* Load default file. */
+   music_luaFile( MUSIC_LUA_PATH );
+
+   return 0;
+}
+
+
+static int music_luaSetup (void)
+{
+   /* Reset the environment. */
+   if (music_env != LUA_NOREF)
+      nlua_freeEnv(music_env);
    music_env = nlua_newEnv(1);
    nlua_loadStandard(music_env);
    nlua_loadMusic(music_env); /* write it */
+   return 0;
+}
+
+
+/**
+ * @brief Loads the music Lua handler from a file.
+ *
+ *    @param filename File to load.
+ *    @return 0 on success.
+ */
+int music_luaFile( const char *filename )
+{
+   char *buf;
+   size_t bufsize;
+
+   music_luaSetup();
 
    /* load the actual Lua music code */
-   buf = ndata_read( MUSIC_LUA_PATH, &bufsize );
-   if (nlua_dobufenv(music_env, buf, bufsize, MUSIC_LUA_PATH) != 0) {
+   buf = ndata_read( filename, &bufsize );
+   if (nlua_dobufenv(music_env, buf, bufsize, filename) != 0) {
       ERR(_("Error loading music file: %s\n"
           "%s\n"
           "Most likely Lua file has improper syntax, please check"),
-            MUSIC_LUA_PATH, lua_tostring(naevL,-1) );
+            filename, lua_tostring(naevL,-1) );
       return -1;
    }
    free(buf);
 
+   /* Free repeatname. */
+   free( music_temp_repeatname );
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the music Lua handler from a string
+ *
+ *    @param str String to load.
+ *    @return 0 on success.
+ */
+int music_luaString( const char *str )
+{
+   music_luaSetup();
+
+   /* load the actual Lua music code */
+   if (nlua_dobufenv(music_env, str, strlen(str), "string") != 0) {
+      ERR(_("Error loading music string:\n"
+          "%s\n"
+          "Most likely Lua file has improper syntax, please check"),
+            lua_tostring(naevL,-1) );
+      return -1;
+   }
+
+   /* Free repeatname. */
    free( music_temp_repeatname );
 
    return 0;

@@ -132,8 +132,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(portrait_name, portrait_tam)
-   misn.setDesc(portrait_desc)
+   misn.setNPC(portrait_name, portrait_tam, portrait_desc)
 
    previous = planet:cur()
 end
@@ -244,10 +243,6 @@ function meeting_msg3()
 end
 
 function spawnTam( origin )
---   if dyingTam ~= nil then
---      hook.rm(dyingTam)
---   end
-
    majorTam = pilot.add( "Dvaered Vendetta", "Dvaered", origin )
    majorTam:rename(_("Major Tam"))
    majorTam:setHilight()
@@ -257,14 +252,16 @@ function spawnTam( origin )
    majorTam:rmOutfit("all")
    majorTam:rmOutfit("cores")
    majorTam:addOutfit("S&K Light Combat Plating")
-   majorTam:addOutfit("Milspec Aegis 3601 Core System")
+   majorTam:addOutfit("Milspec Orion 3701 Core System")
    majorTam:addOutfit("Tricon Zephyr II Engine")
-   majorTam:addOutfit("Generic Afterburner")
-   majorTam:addOutfit("Shield Capacitor")
-   majorTam:addOutfit("Shredder",6)
+   majorTam:addOutfit("Unicorp Light Afterburner")
+   majorTam:addOutfit("Solar Panel")
+   majorTam:addOutfit("Vulcan Gun",3)
+   majorTam:addOutfit("Gauss Gun",3)
    majorTam:setHealth(100,100)
    majorTam:setEnergy(100)
    majorTam:setFuel(true)
+   majorTam:cargoRm( "__all" )
 
    dyingTam = hook.pilot(majorTam, "death", "tamDied")
 end
@@ -322,8 +319,8 @@ function land() -- The player is only allowed to land on special occasions
       misn.markerRm(mark2)
       mark3 = misn.markerAdd(destsys3, "low")
    elseif stage == 8 then
-      shiplog.createLog( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
-      shiplog.appendLog( "dvaered_military", log_text )
+      shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
+      shiplog.append( "dvaered_military", log_text )
       tk.msg(end_title, end_text:format(creditstring(credits_00)))
 
       -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
@@ -371,6 +368,7 @@ function meeting()
       tk.msg(meet_title2, meet_text2:format(nextsys:name()))
       stage = 3
       quickie = pilot.add( "Dvaered Vendetta", "Dvaered", destpla2 )
+      quickie:cargoRm( "__all" )
       quickie:setFaction("Warlords")
 
       majorTam:control()
@@ -394,19 +392,6 @@ end
 
 -- Makes Battleaddict's team actually attack the player
 function attackMe()
-   quickie:rmOutfit("all")
-   quickie:rmOutfit("cores")
-   quickie:addOutfit("S&K Light Combat Plating")
-   quickie:addOutfit("Milspec Aegis 3601 Core System")
-   quickie:addOutfit("Tricon Zephyr II Engine")
-   quickie:addOutfit("Reactor Class I")
-   quickie:addOutfit("Improved Stabilizer")
-   quickie:addOutfit("Shredder",3)
-   quickie:addOutfit("Vulcan Gun",3)
-   quickie:setHealth(100,100)  -- TODO: does it give health to the player somehow ?!?
-   quickie:setEnergy(100)
-   quickie:setFuel(true)
-
    hook.timer( 5000, "moreBadGuys" )
 
    -- Change the enemies to Warlords in order to make them attack
@@ -462,12 +447,12 @@ function hamelsenAmbush()
    hamelsen:rmOutfit("all")
    hamelsen:rmOutfit("cores")
    hamelsen:addOutfit("S&K Ultralight Combat Plating")
-   hamelsen:addOutfit("Milspec Aegis 2201 Core System")
+   hamelsen:addOutfit("Milspec Orion 2301 Core System")
    hamelsen:addOutfit("Tricon Zephyr Engine")
    hamelsen:addOutfit("Hellburner")
-   hamelsen:addOutfit("Engine Reroute",2)
-   hamelsen:addOutfit("Shredder")
-   hamelsen:addOutfit("Vulcan Gun",2)
+   hamelsen:addOutfit("MilSpec Impacto-Plastic Coating")
+   hamelsen:addOutfit("Improved Stabilizer",2)
+   hamelsen:addOutfit("Gauss Gun",3)
    hamelsen:setHealth(100,100)
    hamelsen:setEnergy(100)
    hamelsen:setFuel(true)

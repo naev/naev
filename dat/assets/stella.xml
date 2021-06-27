@@ -16,12 +16,13 @@
  <general>
   <class>K</class>
   <population>980000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
   </services>
   <commodities/>
   <description>As a resource for many common building materials, Stella is a busy yet fairly squalid world. Planets like these crop up in most interplanetary economies, a sad but inevitable phenomenon. Life here is rough and unforgiving, and nobody comes here because they like to.</description>

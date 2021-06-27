@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>3100000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -33,5 +33,6 @@
   <item>Missiles 1</item>
   <item>High Tech Upgrades 1</item>
   <item>Light Civilian Combat Ships</item>
+  <item>Sirius Elite Outfits</item>
  </tech>
 </asset>

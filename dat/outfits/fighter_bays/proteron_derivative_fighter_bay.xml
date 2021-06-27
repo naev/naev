@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Proteron Derivative Fighter Bay">
+ <general>
+  <slot prop="fighter_bay">weapon</slot>
+  <size>large</size>
+  <license>Light Combat Vessel License</license>
+  <rarity>2</rarity>
+  <mass>300</mass>
+  <price>1580000</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>This fighter bay allows your ship to carry a triplet of Soromid Brigand class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
+  <cpu>-500</cpu>
+ </general>
+ <specific type="fighter bay" secondary="1">
+  <ammo>Proteron Derivative Fighter</ammo>
+  <delay>5</delay>
+  <reload_time>240</reload_time>
+  <amount>3</amount>
+ </specific>
+</outfit>

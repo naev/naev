@@ -1,4 +1,4 @@
-local minerva = require "minerva"
+local minerva = require "campaigns.minerva"
 local lg = require 'love.graphics'
 local la = require 'love.audio'
 local diceio = require 'minigames.diceio'
@@ -18,9 +18,15 @@ for i=1,6 do
    table.insert( cl.sound.chips, s )
 end
 
+local secretcode = { 5, 6, 3, 1 }
+local secretcode_status = 0
+
 function cl.init( x, y, w, h, donefunc )
    cl.dice = { diceio.newDie(), diceio.newDie(), diceio.newDie() }
    cl.font = lg.newFont(16)
+
+   -- Reset secret code
+   secretcode_status = 0
 
    -- Compute position stuff
    cl.buttons = { "1", "2", "3", "4", "5", "6" }
@@ -53,7 +59,20 @@ end
 
 local function _chatter( chat_type )
    local text
-   cl.chatter_color = minerva.chicken.colour
+   cl.chatter_color = nil
+   -- Special secretcode being input chat
+   if var.peek("minerva_caninputcode") then
+      if secretcode_status == 4 then
+         cl.chatter = _("The dealer hands you a note saying to meet him after his shift.")
+         hook.trigger( "minerva_secretcode" )
+         cl.secretcode = true
+         return
+      elseif secretcode_status > 2 then
+         cl.chatter = _("The dealer raises his eyebrows at you.")
+         return
+      end
+   end
+   -- Normal chat
    if chat_type==nil then
       text = nil
    elseif chat_type==0 then
@@ -178,10 +197,18 @@ end
 
 function cl.play( value )
    cl.sound.throw[love_math.random(1,#cl.sound.throw)]:play()
+
+   -- Handle secretcode
+   if secretcode_status >= 0 then
+      if secretcode[ secretcode_status+1 ] == value then
+         secretcode_status = secretcode_status+1
+      end
+   end
+
    -- All logic here
    local matches = 0
    for k,die in ipairs(cl.dice) do
-      local v =  die:roll()
+      local v = die:roll()
       if v==value then
          matches = matches + 1
       end
@@ -248,9 +275,11 @@ function cl.mousepressed( mx, my, button )
          if cl.betting then
             local credits = player.credits()
             if k==1 then
-               trybet( 10000 )
+               secretcode_status = math.max( secretcode_status, 0 )
+               trybet( 10e3 )
             elseif k==2 then
-               trybet( 100000 )
+               secretcode_status = -1
+               trybet( 100e3 )
             else
                cl.donefunc()
             end

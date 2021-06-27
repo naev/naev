@@ -16,7 +16,7 @@
  <general>
   <class>L</class>
   <population>50000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>land_hiclass</land>
    <refuel/>
@@ -41,5 +41,6 @@
   <item>Star Maps</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
+  <item>Soromid Elite Outfits</item>
  </tech>
 </asset>

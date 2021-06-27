@@ -14,7 +14,6 @@
  <license>Light Combat Vessel License</license>
  <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
  <health>
-  <absorb>4</absorb>
   <armour>70</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -29,15 +28,16 @@
   <weapon size="medium" x="8" y="0" h="0" />
   <weapon size="small" x="-2" y="9" h="-1" />
   <weapon size="small" x="-2" y="-9" h="-1" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-200 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-68 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 300 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 350 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-4 Light Plating</structure>
   <structure size="small" />
  </slots>
  <stats>
+  <cpu_mod>-25</cpu_mod>
   <speed_mod>-20</speed_mod>
   <turn_mod>-10</turn_mod>
   <thrust_mod>-10</thrust_mod>

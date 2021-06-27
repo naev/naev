@@ -133,8 +133,7 @@ function create ()
    missys = system.get( "Arcanis" )
    if not misn.claim( missys ) then misn.finish( false ) end
 
-   misn.setNPC( npc_name, "flf/unique/benito.png" )
-   misn.setDesc( npc_desc )
+   misn.setNPC( npc_name, "flf/unique/benito.webp", npc_desc )
 end
 
 
@@ -320,20 +319,23 @@ end
 
 function timer_spawnHostileFLF ()
    spawnFLF()
+   local pp = player.pilot()
    for i, j in ipairs( fleetFLF ) do
       j:setHostile()
       j:control()
-      j:attack( player.pilot() )
+      j:attack( pp )
    end
 
-   hook.pilot( player.pilot(), "death", "returnFLFControl" )
+   hook.pilot( pp, "death", "returnFLFControl" )
    fleetFLF[1]:broadcast( flfcomm[2]:format( player.name() ) )
 end
 
 
 function returnFLFControl()
    for i, j in ipairs( fleetFLF ) do
-      j:control( false )
+      if j:exists() then
+         j:control( false )
+      end
    end
 end
 

@@ -47,8 +47,8 @@ text[1] = _([[You walk up to the Dvaered official at his table. He mentions that
 "I am looking for a skilled pilot to do a simple job for me, interested?"]])
 
 title[2] = _("A small distraction")
-text[2] = _([["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces seem insufficient to take on any existing planetary defense forces head on.  
-      "However, it looks like there may be an opportunity for us in %s. Warlord Khan of %s has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself.  
+text[2] = _([["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces seem insufficient to take on any existing planetary defense forces head on.
+      "However, it looks like there may be an opportunity for us in %s. Warlord Khan of %s has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself.
 "To protect himself and the Hawk, Khan will have deployed a substantial escort fighter fleet to defend against any surprise attack."]])
 text[3] = _([["That is where you come in. You will jump into %s and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]])
 text[4] = _([["We will jump in approximately 80 hectoseconds after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]])
@@ -98,9 +98,8 @@ function create()
    if not misn.claim(missys) then
       abort()
    end
-   
-   misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"))
-   misn.setDesc(npc_desc)
+
+   misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"), npc_desc)
 end
 
 function accept()
@@ -108,17 +107,17 @@ function accept()
       tk.msg(title[2], string.format(text[2], destsysname, destplanetname))
       tk.msg(title[2], string.format(text[3], destsysname))
       tk.msg(title[2], string.format(text[4], destsysname))
-      
+
       misn.accept()
       osd_desc[1] = string.format(osd_desc[1], destsysname)
       misn.osdCreate(misn_title, osd_desc)
       misn.setDesc(misn_desc)
       misn.setTitle(misn_title)
       marker = misn.markerAdd( system.get(destsysname), "low" )
-      
+
       missionstarted = false
       jump_fleet_entered = false
-      
+
       hook.jumpout("jumpout")
       hook.enter("enter")
       hook.land("land")
@@ -143,8 +142,8 @@ function enter()
       hawk = pilot.add( "Dvaered Goddard", "Dvaered", v-vec2.new(1500,8000), nil, "dvaered_norun" )
       hawk:rmOutfit("all")
       hawk:rmOutfit("cores")
-      hawk:addOutfit("Unicorp PT-1000 Core System")
-      hawk:addOutfit("Unicorp Eagle 6500 Engine")
+      hawk:addOutfit("Unicorp PT-2200 Core System")
+      hawk:addOutfit("Unicorp Eagle 7000 Engine")
       hawk:addOutfit("Unicorp Mace Launcher", 3) -- Half finished installing weapons. :)
       hawk:rename(_("Hawk"))
       hawk:setHilight(true)
@@ -163,7 +162,7 @@ function enter()
          j:moveto(v)
          table.insert(fleethooks, hook.pilot(j, "attacked", "fleetdv_attacked"))
       end
-      
+
       hook.pilot( hawk, "jump", "hawk_jump" )
       hook.pilot( hawk, "land", "hawk_land" )
       hook.pilot( hawk, "attacked", "hawk_attacked")
@@ -203,7 +202,7 @@ function hawk_attacked () -- chased
       hawk:hyperspace(system.get(destjumpname))
       broadcast_first(fleetdv, chatter[2])
    end
-   
+
    update_fleet()
 end
 
@@ -213,7 +212,7 @@ function fleetdv_attacked () -- chased
       hawk:hyperspace(system.get(destjumpname))
       broadcast_first(fleetdv, chatter[3])
    end
-   
+
    update_fleet()
 end
 
@@ -231,7 +230,7 @@ end
 
 function hawk_dead () -- mission accomplished
    hawk:broadcast(chatter[4])
-   
+
    messages = {5, 6, 7}
    for k, v in ipairs(fleetdv) do
       if v:exists() then
@@ -241,7 +240,7 @@ function hawk_dead () -- mission accomplished
             if msg then
                v:broadcast(chatter[msg])
             end
-            
+
             v:control(false)
             v:setFaction("FLF")
             v:setVisible(false)
@@ -249,9 +248,9 @@ function hawk_dead () -- mission accomplished
          end
       end
    end
-   
+
    jump_fleet[6]:setNoDeath()
-   
+
    hook.timer(10000, "complete")
    for i, j in ipairs(jump_fleet) do
       if j:exists() then
@@ -265,24 +264,24 @@ function update_fleet() -- Wrangles the fleet defending the Hawk
    if not fleethooks then
       return
    end
-   
+
    for i, j in ipairs(fleetdv) do
       if j:exists() then
          j:control()
-         if jump_fleet_entered then 
+         if jump_fleet_entered then
             j:changeAI("dvaered_norun")
             j:control(false)
-            else 
+            else
             j:attack(player.pilot())
          end
       end
    end
-   
+
    if jump_fleet_entered then
       for k, v in ipairs(fleethooks) do
          hook.rm(v)
       end
-      
+
       fleethooks = nil
    end
 end
@@ -308,7 +307,7 @@ function spawn_fleet() -- spawn warlord killing fleet
    broadcast_first(fleetdv, chatter[10])
    hawk:control()
    hawk:land(planet.get(destplanetname))
-   
+
    for i, j in ipairs(fleetdv) do
       if j:exists() then
          j:changeAI("dvaered_norun")
@@ -317,7 +316,7 @@ function spawn_fleet() -- spawn warlord killing fleet
          j:setInvincible(true)
       end
    end
-   
+
    -- Give the escorts a few seconds to get away from the player.
    hook.timer(3000, "undo_invuln")
 end
@@ -332,7 +331,7 @@ end
 
 function jump_fleet_cap_dead () -- mission failed
    jump_fleet[6]:broadcast(chatter[4])
-   
+
    hawk:broadcast(chatter[12])
    hawk:setNoDeath()
    tk.msg(failtitle[4], failtext[4])
@@ -361,18 +360,18 @@ function cleanup()
          if v:exists() then
             v:setHilight(false)
             v:setVisible(false)
-            
+
             if hawk and not hawk:exists() then
                v:setFriendly()
             end
          end
       end
    end
-   
+
    if not fleetdv then
       return
    end
-   
+
    for k, v in ipairs(fleetdv) do
       if v:exists() then
          v:setHilight(false)

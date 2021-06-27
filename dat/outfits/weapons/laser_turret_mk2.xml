@@ -4,30 +4,31 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon License</license>
-  <mass>28</mass>
+  <mass>30</mass>
   <price>28000</price>
-  <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
-  <gfx_store>laserturret2.png</gfx_store>
-  <cpu>-16</cpu>
+  <description>The Laser Turret MK2 is often found on Imperial fast response fleets, for use against fleets of small to medium ships. This weapon is one of the mainstays in the Imperial space forces.</description>
+  <gfx_store>laserturret2.webp</gfx_store>
+  <cpu>-50</cpu>
  </general>
  <specific type="turret bolt">
   <gfx>laser2M.png</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>0.375</delay>
-  <speed>550</speed>
-  <range>1000</range>
-  <falloff>600</falloff>
+  <delay>1.0</delay>
+  <speed>700</speed>
+  <range>1100</range>
+  <falloff>950</falloff>
   <gfx_end>laser1M.png</gfx_end>
-  <energy>11</energy>
-  <heatup>30</heatup>
-  <track>1.75</track>
+  <energy>30</energy>
+  <heatup>50</heatup>
+  <trackmin>4000</trackmin>
+  <trackmax>14000</trackmax>
   <damage>
    <type>normal</type>
-   <penetrate>27</penetrate>
-   <physical>10.5</physical>
-   <disable>1</disable>
+   <penetrate>36</penetrate>
+   <physical>32</physical>
+   <disable>2</disable>
   </damage>
  </specific>
 </outfit>

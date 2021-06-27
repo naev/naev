@@ -12,7 +12,6 @@
  <fabricator>Robosys</fabricator>
  <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
  <health>
-  <absorb>5</absorb>
   <armour>40</armour>
   <armour_regen>7</armour_regen>
  </health>
@@ -26,10 +25,10 @@
   <weapon size="small" x="5" y="0" h="-5" />
   <weapon size="small" x="5" y="0" h="-5" />
   <weapon size="small" x="5" y="0" h="-5" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
  </slots>

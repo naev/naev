@@ -79,7 +79,7 @@ void gettext_init()
  */
 void gettext_setLanguage( const char* lang )
 {
-   translation_t *newtrans, **ptrans;
+   translation_t *newtrans, *ptrans;
    char root[256], **paths;
    int i;
    const char *map, *lang_part;
@@ -91,9 +91,9 @@ void gettext_setLanguage( const char* lang )
       return;
 
    /* Search for the selected language in the loaded translations. */
-   for (ptrans = &gettext_translations; *ptrans != NULL; ptrans = &(*ptrans)->next)
-      if (!strcmp( lang, (*ptrans)->language )) {
-         gettext_activeTranslation = *ptrans;
+   for (ptrans = gettext_translations; ptrans != NULL; ptrans = ptrans->next)
+      if (!strcmp( lang, ptrans->language )) {
+         gettext_activeTranslation = ptrans;
          return;
       }
 
@@ -101,6 +101,8 @@ void gettext_setLanguage( const char* lang )
    newtrans = calloc( 1, sizeof( translation_t ) );
    newtrans->language = strdup( lang );
    newtrans->chain = array_create( msgcat_t );
+   newtrans->next = gettext_translations;
+   gettext_translations = newtrans;
 
    /* @TODO This code orders the translations alphabetically by file path.
     * That doesn't make sense, but this is a new use case and it's unclear
@@ -129,7 +131,7 @@ void gettext_setLanguage( const char* lang )
       }
       array_free( paths );
    }
-   gettext_activeTranslation = *ptrans = newtrans;
+   gettext_activeTranslation = newtrans;
 }
 
 /**

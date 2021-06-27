@@ -128,8 +128,8 @@ function reaction()
    if stage == 1 then -- Traitor
       tk.msg(traitor_title, traitor_text:format(player.name()), portrait_leblanc)
       var.push( "loyal2klank", false )
-      shiplog.createLog( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
-      shiplog.appendLog( "dvaered_military", log_text_traitor )
+      shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
+      shiplog.append( "dvaered_military", log_text_traitor )
       evt.finish(true)
    else -- Loyal
       tk.choice(loyal_title, loyal_text1:format(player.name()), money_answer, loyal_answer) -- Actually we don't care of the answer
@@ -137,8 +137,8 @@ function reaction()
       tk.msg(loyal_title, loyal_text3)
       tk.msg(loyal_title, loyal_text4)
       var.push( "loyal2klank", true )
-      shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
-      shiplog.appendLog( "frontier_war", log_text_loyal )
+      shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
+      shiplog.append( "frontier_war", log_text_loyal )
       evt.finish(true)
    end
 end

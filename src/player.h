@@ -7,6 +7,9 @@
 #  define PLAYER_H
 
 
+#include <time.h>
+
+
 #include "nstring.h"
 #include "pilot.h"
 
@@ -72,7 +75,6 @@ typedef struct Player_s {
    PlayerFlags flags; /**< Player's flags. */
    int enemies; /**< Amount of enemies the player has. */
    int disabled_enemies; /**< Amount of enemies that are disabled. */
-   double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */
    Vector2d autonav_pos; /**< Target autonav position. */
    const char *autonavmsg; /**< String to print on arrival. */
@@ -85,6 +87,19 @@ typedef struct Player_s {
 
    /* Loaded game version. */
    char *loaded_version; /**< Version of the loaded save game. */
+
+   /* Meta-data. */
+   time_t last_played; /**< Date the save was last played. */
+   double time_played; /**< Total time the player has played the game. */
+   time_t date_created; /**< When the player was created. */
+   double dmg_done_shield; /**< Total damage done to shields. */
+   double dmg_done_armour; /**< Total damage done to armour. */
+   double dmg_taken_shield; /**< Total damage taken to shields. */
+   double dmg_taken_armour; /**< Total damage taken to armour. */
+   unsigned int ships_destroyed[SHIP_CLASS_TOTAL]; /**< Total number of ships destroyed. */
+
+   /* Meta-meta-data. */
+   time_t time_since_save; /**< Time since last saved. */
 } Player_t;
 
 
@@ -144,6 +159,7 @@ void player_runHooks (void);
 /*
  * render
  */
+void player_renderUnderlay( double dt );
 void player_render( double dt );
 
 
@@ -163,7 +179,6 @@ void player_checkLandAck (void);
 void player_nolandMsg( const char *str );
 void player_clear (void);
 void player_warp( const double x, const double y );
-const char* player_rating (void);
 int player_hasCredits( credits_t amount );
 credits_t player_modCredits( credits_t amount );
 void player_hailStart (void);
@@ -277,8 +292,9 @@ void player_accelOver (void);
 void player_hail (void);
 void player_hailPlanet (void);
 void player_autohail (void);
-void player_toggleMouseFly(void);
-void player_brake(void);
+void player_toggleMouseFly (void);
+void player_brake (void);
+void player_stealth (void);
 
 
 #endif /* PLAYER_H */

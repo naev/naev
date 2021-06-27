@@ -100,8 +100,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png")
-   misn.setDesc(bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", bar_desc[1])
 end
 
 function accept()
@@ -181,11 +180,10 @@ function lets_go()
    sharkboy:rmOutfit("cores")
 
    sharkboy:addOutfit("S&K Light Combat Plating")
-   sharkboy:addOutfit("Milspec Prometheus 3603 Core System")
+   sharkboy:addOutfit("Milspec Orion 3701 Core System")
    sharkboy:addOutfit("Tricon Zephyr II Engine")
 
-   sharkboy:addOutfit("Reactor Class I",3)
-   sharkboy:addOutfit("Battery",2)
+   sharkboy:addOutfit("Reactor Class I",2)
 
    sharkboy:addOutfit("Heavy Ion Cannon")
    sharkboy:addOutfit("Ion Cannon",3)

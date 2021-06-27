@@ -3,7 +3,7 @@
 <event name="Minerva Station Gambling">
  <trigger>land</trigger>
  <chance>100</chance>
- <cond>planet.cur():name()=="Minerva Station"</cond>
+ <cond>planet.cur()==planet.get("Minerva Station")</cond>
  <notes>
   <campaign>Minerva</campaign>
   <provides name="Minerva Station" />
@@ -15,7 +15,7 @@
 -- Event handling the gambling stuff going on at Minerva station
 --]]
 
-local minerva = require "minerva"
+local minerva = require 'campaigns.minerva'
 local portrait = require "portrait"
 local vn = require 'vn'
 local blackjack = require 'minigames.blackjack'
@@ -33,8 +33,13 @@ blackjack_portrait = "blackjack.png"
 blackjack_desc = _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\".")
 blackjack_image = minerva.chicken.image
 chuckaluck_name = _("Chuck-a-luck")
-chuckaluck_portrait = "minervaceo.png" -- TODO replace
-chuckaluck_image = "minervaceo.png" -- TODO replace
+if var.peek("minerva_chuckaluck_change") then
+   chuckaluck_portrait = portrait.get() -- Becomes a random NPC
+   chuckaluck_image = portrait.getFullPath( chuckaluck_portrait )
+else
+   chuckaluck_portrait = "minervaceo.png" -- TODO replace
+   chuckaluck_image = "minervaceo.png" -- TODO replace
+end
 chuckaluck_desc = _("A fast-paced luck-based betting game using dice.")
 greeter_portrait = portrait.get() -- TODO replace?
 
@@ -45,9 +50,9 @@ patron_names = {
    _("Patron"),
 }
 patron_descriptions = {
-   _("A gambling patron enjoying his time at the station."),
+   _("A gambling patron enjoying their time at the station."),
    _("A tourist looking a bit bewildered at all the noises and shiny lights all over."),
-   _("A patron who seems down on his luck."),
+   _("A patron who seems down on their luck."),
    _("A patron who looks exhilarated as if they won big today."),
    _("A patron that looks like they have spend a lot of time at the station. There are clear dark circles under their eyes."),
    _("A patron that looks strangely out of place."),
@@ -100,9 +105,6 @@ function create()
       local desc = desclist[ rnd.rnd(1,#desclist) ]
       npc_maikki = evt.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, desc, important_npc_priority )
    end
-   if player.evtDone("Chicken Rendezvous") then
-      npc_kex = evt.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description, important_npc_priority )
-   end
 
    -- Create random noise NPCs
    local npatrons = rnd.rnd(3,5)
@@ -125,11 +127,7 @@ function create()
    -- End event on takeoff.
    tokens_landed = minerva.tokens_get()
    hook.takeoff( "leave" )
-
-   -- Custom music
-   music.load( "meeting_mtfox" )
-   music.play()
-   music.setRepeat(true)
+   hook.custom( "minerva_molecaught", "molecaught" )
 end
 
 local function has_event( name )
@@ -157,7 +155,7 @@ function random_event()
       hook.safe( "start_alter1" )
 
    -- Spa Propaganda
-   elseif maikki2 and player.misnActive("Minerva Pirates 3") then
+   elseif maikki2 and player.misnActive("Minerva Pirates 3") and not spapropaganda then
       hook.safe( "start_spapropaganda" )
    end
 end
@@ -537,8 +535,16 @@ function approach_chuckaluck ()
    vn.na( _("You leave the chuck-a-luck table behind and head back to the main area.") )
    vn.run()
 
-   -- Handle random bar events if necessary
-   random_event()
+   -- Handle random bar events if necessary, however, don't do it with secret code or we get a dialogue inside a dialogue.
+   if not chuckaluck.secretcode then
+      random_event()
+   end
+end
+
+-- The mole was caught, we have to change and redo the chuckaluck NPC
+function molecaught()
+   var.push("minerva_chuckaluck_change", true)
+   evt.npcRm( npc_chuckaluck ) -- Just remove for now
 end
 
 -- Just do random noise
@@ -584,7 +590,7 @@ function approach_maikki ()
 
    vn.label("memory")
    vn.na(_("You ask to see if she remembered anything else about her father."))
-   -- TODO
+   maikki("TODO")
    vn.jump("menu_msg")
 
    vn.label("kex")
@@ -601,33 +607,6 @@ function approach_maikki ()
    vn.run()
 end
 
-function approach_kex ()
-   -- TODO should be handled in the kex mission line probably
-   vn.clear()
-   vn.scene()
-   vn.music( minerva.loops.kex )
-   local kex = vn.newCharacter( minerva.vn_kex() )
-   vn.transition()
-   vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
-
-   vn.label("menu_msg")
-   kex(_("What's up kid?"))
-   vn.menu( function ()
-      local opts = {
-         --{ _("Ask about the station"), "station" },
-         { _("Leave"), "leave" },
-      }
-      return opts
-   end )
-
-   vn.label("station")
-   vn.jump("menu_msg")
-
-   vn.label("leave")
-   vn.na(_("You take your leave."))
-   vn.done()
-   vn.run()
-end
 
 --[[
 -- Event is over when player takes off.

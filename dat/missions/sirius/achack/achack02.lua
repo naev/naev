@@ -111,11 +111,9 @@ function create()
    end
    
    if var.peek("achack02repeat") then
-      misn.setNPC(joannename2, "sirius/unique/joanne.png")
-      misn.setDesc(joannedesc2)
+      misn.setNPC(joannename2, "sirius/unique/joanne.webp", joannedesc2)
    else
-      misn.setNPC(joannename1, "sirius/unique/joanne.png")
-      misn.setDesc(joannedesc1)
+      misn.setNPC(joannename1, "sirius/unique/joanne.webp", joannedesc1)
    end
 end
 
@@ -223,7 +221,7 @@ function enter()
    joanne:rmOutfit("cores")
    joanne:rmOutfit("all")
    joanne:addOutfit("Tricon Zephyr Engine")
-   joanne:addOutfit("Milspec Aegis 2201 Core System")
+   joanne:addOutfit("Milspec Orion 2301 Core System")
    joanne:addOutfit("S&K Ultralight Combat Plating")
    joanne:cargoRm( "__all" )
    joanne:addOutfit("Razor MK2", 4)

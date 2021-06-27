@@ -16,7 +16,7 @@
  <general>
   <class>G</class>
   <population>10000000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_hiclass</land>
    <refuel/>
@@ -40,5 +40,6 @@
   <item>Missiles 2</item>
   <item>Star Maps</item>
   <item>Systems High</item>
+  <item>Sirius Elite Outfits</item>
  </tech>
 </asset>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Plasma Cluster Cannon">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>40</mass>
+  <price>50000</price>
+  <description>The Plasma Cluster Cannon is a Soromid refinement to the standard Plasma Cannon design. By confining a massive cluster of superheated plasma into a small space within a specialized "membrane shield", the impact creates large explosions which tear through even the strongest hulls. The downside to this design is that a lot of space is required, which limits its use to medium mounts, but this also means biological Soromid ships are able to handle its computational load despite being a synthetic construct.</description>
+  <gfx_store>plasma2.png</gfx_store>
+  <cpu>-50</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx>plasma2.png</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>PlaS2</spfx_armour>
+  <delay>1.4</delay>
+  <speed>700</speed>
+  <range>1750</range>
+  <falloff>1400</falloff>
+  <gfx_end>plasma2-end.png</gfx_end>
+  <energy>42</energy>
+  <heatup>50</heatup>
+  <trackmin>2000</trackmin>
+  <trackmax>8000</trackmax>
+  <swivel>22</swivel>
+  <damage>
+   <type>impact</type>
+   <penetrate>48</penetrate>
+   <physical>48</physical>
+   <disable>2.8</disable>
+  </damage>
+ </specific>
+</outfit>

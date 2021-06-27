@@ -29,6 +29,7 @@ local vn = {
       _globalalpha = 1,
       --_soundTalk = audio.newSource( "snd/sounds/ui/letter0.wav" ),
       _pitchValues = {0.7, 0.8, 1.0, 1.2, 1.3},
+      _buffer_y = 0,
    },
    transitions = transitions,
    _sfx = {
@@ -44,12 +45,15 @@ local vn = {
 local function _setdefaults()
    local lw, lh = window.getDesktopDimensions()
    vn._default.textbox_font = graphics.newFont(16)
+   vn._default.textbox_font:setOutline( 0.5 )
    vn._default.textbox_w = 800
-   vn._default.textbox_h = 200
+   local fonth = vn._default.textbox_font:getLineHeight()
+   vn._default.textbox_h = math.floor(200 / fonth) * fonth + 20*2
    vn._default.textbox_x = (lw-vn._default.textbox_w)/2
-   vn._default.textbox_y = lh-230
+   vn._default.textbox_y = lh-30-vn._default.textbox_h
    vn._default.textbox_bg = {0, 0, 0, 1}
-   vn._default.textbox_alpha = 1
+   vn._default.textbox_bg_alpha = 1
+   vn._default.textbox_text_alpha = 1
    vn._default.namebox_font = graphics.newFont(20)
    vn._default.namebox_w = -1 -- Autosize
    vn._default.namebox_h = 20*2+vn._default.namebox_font:getHeight()
@@ -112,7 +116,7 @@ end
 local function _draw_character( c )
    if c.image == nil then return end
    local w, h = c.image:getDimensions()
-   local isportrait = (w>h)
+   local isportrait = (w>=h)
    local lw, lh = love.graphics.getDimensions()
    local mw, mh = vn.textbox_w, vn.textbox_y
    local scale, x, y
@@ -182,10 +186,20 @@ local function _draw()
    local x, y, w, h = vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
    local bw = 20
    local bh = 20
-   _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_alpha )
+   _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_bg_alpha )
    -- Draw text
-   vn.setColor( vn._bufcol, vn.textbox_alpha )
-   graphics.printf( vn._buffer, font, x+bw, y+bw, vn.textbox_w-2*bw )
+   vn.setColor( vn._bufcol, vn.textbox_text_alpha )
+   if not vn._postshader then
+      -- TODO fix this not working during with postshaders. This is caused by
+      -- the fact that if scaling is enabled, the canvas is running at a lower
+      -- resolution (true pixels instead of scaled pixels )
+      graphics.setScissor( x, y+bh, vn.textbox_w, vn.textbox_h-2*bh )
+   end
+   y = y + vn._buffer_y
+   graphics.printf( vn._buffer, font, x+bw, y+bh, vn.textbox_w-2*bw )
+   if not vn._postshader then
+      graphics.setScissor()
+   end
 
    -- Namebox
    if vn._title ~= nil and utf8.len(vn._title)>0 then
@@ -290,16 +304,26 @@ Key press handler.
    @tparam string key Name of the key pressed.
 --]]
 function vn.keypressed( key )
-   --[[
-   if key=="escape" then
-      love.event.quit()
-      return
+   -- Skip modifier keys
+   local blacklist = {
+      "left alt",
+      "left shift",
+      "left ctrl",
+      "left gui",
+      "right alt",
+      "right ctrl",
+      "right shift",
+      "right gui",
+   }
+   for k,v in ipairs(blacklist) do
+      if key == v then
+         return false
+      end
    end
-   --]]
 
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
-   s:keypressed( key )
+   return s:keypressed( key )
 end
 
 
@@ -310,9 +334,9 @@ Mouse press handler.
    @tparam number button Button that was pressed.
 --]]
 function vn.mousepressed( mx, my, button )
-   if vn.isDone() then return end
+   if vn.isDone() then return false end
    local s = vn._states[ vn._state ]
-   s:mousepressed( mx, my, button )
+   return s:mousepressed( mx, my, button )
 end
 
 
@@ -368,12 +392,14 @@ function vn.State:update( dt )
    vn._checkDone()
 end
 function vn.State:mousepressed( mx, my, button )
-   self:_mousepressed( mx, my, button )
+   local ret = self:_mousepressed( mx, my, button )
    vn._checkDone()
+   return ret
 end
 function vn.State:keypressed( key )
-   self:_keypressed( key )
+   local ret = self:_keypressed( key )
    vn._checkDone()
+   return ret
 end
 function vn.State:isDone() return self.done end
 --[[
@@ -489,6 +515,9 @@ function vn.StateSay:_init()
       v.talking = false
    end
    c.talking = true
+
+   -- Initialize scroll
+   vn._buffer_y = 0
 end
 function vn.StateSay:_update( dt )
    self._timer = self._timer - dt
@@ -509,6 +538,16 @@ function vn.StateSay:_update( dt )
          vn._soundTalk:setPitch( p )
          vn._soundTalk:play()
       end
+
+      -- Checks to see if we should scroll down
+      local bw = 20
+      local bh = 20
+      local font = vn.textbox_font
+      local maxw, wrappedtext = font:getWrap( self._text, vn.textbox_w-2*bw )
+      local lh = font:getLineHeight()
+      if (lh * #wrappedtext + bh + vn._buffer_y > vn.textbox_h) then
+         vn._buffer_y = vn._buffer_y - lh
+      end
    end
 end
 function vn.StateSay:_finish()
@@ -524,10 +563,17 @@ function vn.StateWait.new()
    local s = vn.State.new()
    s._init = vn.StateWait._init
    s._draw = vn.StateWait._draw
-   s._mousepressed = _finish
-   s._keypressed = _finish
+   s._mousepressed = vn.StateWait._mousepressed
+   s._keypressed = vn.StateWait._keypressed
    s._type = "Wait"
    return s
+end
+local function _check_scroll( lines )
+   local bw = 20
+   local bh = 20
+   local font = vn.textbox_font
+   local lh = font:getLineHeight()
+   return (lh * #lines + bh + vn._buffer_y > vn.textbox_h)
 end
 function vn.StateWait:_init()
    local x, y, w, h = vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
@@ -538,10 +584,47 @@ function vn.StateWait:_init()
    self._h = font:getHeight()
    self._x = x+w-10-self._w
    self._y = y+h-10-self._h
+
+   local bw = 20
+   local bh = 20
+   local font = vn.textbox_font
+   local maxw, wrappedtext = font:getWrap( vn._buffer, vn.textbox_w-2*bw )
+   self._lines = wrappedtext
+   self._lh = font:getLineHeight()
 end
 function vn.StateWait:_draw()
    vn.setColor( vn._bufcol )
-   graphics.print( self._text, self._font, self._x, self._y )
+   if vn._buffer_y < 0 then
+      graphics.print( "↑", self._font, self._x-5, vn.textbox_y+10 )
+   end
+   if _check_scroll( self._lines ) then
+      graphics.print( "↓", self._font, self._x-5, self._y-5 )
+   else
+      graphics.print( self._text, self._font, self._x, self._y )
+   end
+end
+local function wait_scrollorfinish( self )
+   if _check_scroll( self._lines ) then
+      vn._buffer_y = vn._buffer_y - self._lh
+   else
+      _finish(self)
+   end
+end
+function vn.StateWait:_mousepressed( mx, my, button )
+   wait_scrollorfinish( self )
+end
+function vn.StateWait:_keypressed( key )
+   if key=="up" or key=="pageup" then
+      if vn._buffer_y < 0 then
+         vn._buffer_y = vn._buffer_y + vn.textbox_font:getLineHeight()
+      end
+      return true
+   elseif key=="home" then
+      vn._buffer_y = 0
+      return true
+   end
+   wait_scrollorfinish( self )
+   return true
 end
 --[[
 -- Menu
@@ -637,9 +720,9 @@ function vn.StateMenu:_mousepressed( mx, my, button )
 end
 function vn.StateMenu:_keypressed( key )
    local n = tonumber(key)
-   if n == nil then return end
+   if n == nil then return false end
    if n==0 then n = n + 10 end
-   if n > #self._items then return end
+   if n > #self._items then return false end
    self:_choose(n)
 end
 function vn.StateMenu:_choose( n )
@@ -1069,7 +1152,7 @@ function vn.music( filename, params, dontstop )
    else
       vn.func( function ()
          if not dontstop then
-            music.stop()
+            music.stop(true)
             lmusic.stop()
          end
          vn._handle_music = true

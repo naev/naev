@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>15000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>emp_mil_restricted</land>
    <refuel/>
@@ -51,5 +51,6 @@
   <item>Bulk Trade Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Hulls High</item>
+  <item>Empire Elite Outfits</item>
  </tech>
 </asset>

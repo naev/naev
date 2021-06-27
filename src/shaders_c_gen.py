@@ -22,8 +22,16 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "circle_partial",
+      vs_path = "circle.vert",
+      fs_path = "circle_partial.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "color", "radius", "angle1", "angle2"],
+      subroutines = {},
+   ),
+   Shader(
       name = "solid",
-      vs_path = "solid.vert",
+      vs_path = "project.vert",
       fs_path = "solid.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "color"],
@@ -31,10 +39,10 @@ SHADERS = [
    ),
    Shader(
       name = "trail",
-      vs_path = "trail.vert",
+      vs_path = "project_pos.vert",
       fs_path = "trail.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "c1", "c2", "t1", "t2", "dt", "pos1", "pos2", "r" ],
+      uniforms = ["projection", "c1", "c2", "t1", "t2", "dt", "pos1", "pos2", "r", "nebu_col" ],
       subroutines = {
         "trail_func" : [
             "trail_default",
@@ -92,7 +100,7 @@ SHADERS = [
       vs_path = "nebula_map.vert",
       fs_path = "nebula_map.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "hue", "eddy_scale", "time", "globalpos"],
+      uniforms = ["projection", "hue", "eddy_scale", "time", "globalpos", "alpha"],
       subroutines = {},
    ),
    Shader(
@@ -113,7 +121,7 @@ SHADERS = [
    ),
    Shader(
       name = "beam",
-      vs_path = "beam.vert",
+      vs_path = "project_pos.vert",
       fs_path = "beam.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "color", "dt", "r", "dimensions" ],
@@ -139,7 +147,7 @@ SHADERS = [
    ),
    Shader(
       name = "jump",
-      vs_path = "jump.vert",
+      vs_path = "project_pos.vert",
       fs_path = "jump.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "progress", "direction", "dimensions"],
@@ -174,7 +182,15 @@ SHADERS = [
       vs_path = "postprocess.vert",
       fs_path = "damage.frag",
       attributes = ["VertexPosition"],
-      uniforms = ["ClipSpaceFromLocal", "MainTex", "damage_strength"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "damage_strength", "love_ScreenSize"],
+      subroutines = {},
+   ),
+   Shader(
+      name = "gamma_correction",
+      vs_path = "postprocess.vert",
+      fs_path = "gamma_correction.frag",
+      attributes = ["VertexPosition"],
+      uniforms = ["ClipSpaceFromLocal", "MainTex", "gamma"],
       subroutines = {},
    ),
 ]

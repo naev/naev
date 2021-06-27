@@ -51,6 +51,7 @@ static int gfxL_printDim( lua_State *L );
 static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
 static int gfxL_setBlendMode( lua_State *L );
+static int gfxL_setScissor( lua_State *L );
 static const luaL_Reg gfxL_methods[] = {
    /* Information. */
    { "dim", gfxL_dim },
@@ -75,6 +76,7 @@ static const luaL_Reg gfxL_methods[] = {
    { "printText", gfxL_printText },
    /* Misc. */
    { "setBlendMode", gfxL_setBlendMode },
+   { "setScissor", gfxL_setScissor },
    {0,0}
 }; /**< GFX methods. */
 
@@ -853,6 +855,36 @@ static int gfxL_setBlendMode( lua_State *L )
    glBlendEquation(func);
    glBlendFuncSeparate(srcRGB, dstRGB, srcA, dstA);
    gl_checkErr();
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets the scissor clipping.
+ *
+ * Calling setScissor with no parameters disables the clipping.
+ *
+ *    @luatparam number x X position of the clipping rectangle.
+ *    @luatparam number y Y position of the clipping rectangle.
+ *    @luatparam number width Width of the clipping rectangle.
+ *    @luatparam number height Height of the clipping rectangle.
+ * @luafunc setScissor
+ */
+static int gfxL_setScissor( lua_State *L )
+{
+   GLint x, y;
+   GLsizei w, h;
+
+   if (lua_gettop(L)>0) {
+      x = luaL_optinteger(L,1,0);
+      y = luaL_optinteger(L,2,0);
+      w = luaL_optinteger(L,3,0);
+      h = luaL_optinteger(L,4,0);
+      gl_clipRect( x, y, w, h );
+   }
+   else
+      gl_unclipRect();
 
    return 0;
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spfx name="PlaS">
+ <anim>667</anim>
+ <shader>
+  <vert>project_pos.vert</vert>
+  <frag>explosion.frag</frag>
+  <size>40</size>
+  <uniforms>
+   <u_colorbase x="0.9" y="0.1" z="0.1" w="0.1" />
+   <u_colorsmoke x="0.6" y="0.3" z="0.3" w="0.25" />
+   <u_smokiness x="0.4" />
+   <u_smoke_fade x="1.6" />
+   <u_roll_speed x="0.3" />
+   <u_grain x="0.125" />
+   <u_speed x="1.5" />
+   <u_steps int="1" x="8" />
+  </uniforms>
+ </shader>
+</spfx>

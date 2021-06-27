@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Unicorp Hawk 350 Engine">
+ <general>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines">structure</slot>
+  <size>small</size>
+  <priority>7</priority>
+  <mass>12</mass>
+  <price>75000</price>
+  <description>The Hawk 350 is aimed at heavy fighters and light-duty cargo vessels. Its modest energy consumption allows it to be equipped on most vessels without requiring reactor upgrades.</description>
+  <gfx_store>engine15.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <energy_usage>15</energy_usage>
+  <engine_limit>350</engine_limit>
+  <fuel>400</fuel>
+  <speed>250</speed>
+  <thrust>140</thrust>
+  <turn>120</turn>
+ </specific>
+</outfit>

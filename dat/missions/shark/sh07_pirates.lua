@@ -113,8 +113,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.png")
-   misn.setDesc(bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", bar_desc[1])
 end
 
 function accept()
@@ -192,18 +191,19 @@ function enter()
       --The pirate becomes nice defensive outfits
       baddie:rmOutfit("all")
       baddie:rmOutfit("cores")
+      baddie:cargoRm( "__all" )
 
-      baddie:addOutfit("S&K Ultralight Stealth Plating")
-      baddie:addOutfit("Milspec Aegis 2201 Core System")
+      baddie:addOutfit("Nexus Light Stealth Plating")
+      baddie:addOutfit("Milspec Orion 2301 Core System")
       baddie:addOutfit("Tricon Zephyr Engine")
+
+      baddie:addOutfit("Shield Capacitor")
+      baddie:addOutfit("Plasteel Plating")
+      baddie:addOutfit("MilSpec Impacto-Plastic Coating")
+      baddie:addOutfit("Laser Cannon MK1",2)
+
       baddie:setHealth(100,100)
       baddie:setEnergy(100)
-
-      baddie:addOutfit("Shield Capacitor",2)
-      baddie:addOutfit("Small Shield Booster")
-      baddie:addOutfit("Milspec Scrambler")
-
-      baddie:addOutfit("Laser Cannon MK3",2)
 
       hook.pilot(baddie, "idle", "idle", pos)
       hook.pilot(baddie, "attacked", "attacked")

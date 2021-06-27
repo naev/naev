@@ -5,24 +5,24 @@
   <size>large</size>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
-  <mass>65</mass>
+  <mass>40</mass>
   <price>120000</price>
   <description>The Grave Beam is a lighter, faster version of the Ragnarok Beam. It does not deal as much damage, but its lighter size and more forgiving CPU requirements makes it a competitive contender.</description>
-  <gfx_store>ragnarok.png</gfx_store>
-  <cpu>-32</cpu>
+  <gfx_store>ragnarok.webp</gfx_store>
+  <cpu>-75</cpu>
  </general>
  <specific type="turret beam">
   <delay>6</delay>
   <duration min="1.5">5</duration>
-  <range>550</range>
+  <range>700</range>
   <turn>45</turn>
-  <energy>120</energy>
-  <heatup>55</heatup>
+  <energy>35</energy>
+  <heatup>75</heatup>
   <damage>
    <type>normal</type>
-   <penetrate>75</penetrate>
-   <physical>100</physical>
-   <disable>15</disable>
+   <penetrate>62</penetrate>
+   <physical>140</physical>
+   <disable>4</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

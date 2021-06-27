@@ -21,8 +21,8 @@ function create ()
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
-   bribe_no = _("I'm out of here.")
+   mem.bribe_no = _("I'm out of here.")
+
+   -- Finish up creation
+   create_post()
 end
-
-
-

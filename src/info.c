@@ -196,42 +196,62 @@ void info_update (void)
 static void info_openMain( unsigned int wid )
 {
    char str[STRMAX_SHORT], **buf, creds[ECON_CRED_STRLEN];
+   char sdmgdone[NUM2STRLEN], sdmgtaken[NUM2STRLEN], sdestroyed[NUM2STRLEN];
    char **licenses;
    int nlicenses;
    int i;
    char *nt;
    int w, h;
+   unsigned int destroyed;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
+
+   /* Compute ships destroyed. */
+   destroyed = 0;
+   for (i=0; i<SHIP_CLASS_TOTAL; i++)
+      destroyed += player.ships_destroyed[i];
 
    /* pilot generics */
    nt = ntime_pretty( ntime_get(), 2 );
    window_addText( wid, 40, 20, 120, h-80,
          0, "txtDPilot", &gl_smallFont, NULL,
-         _("#nPilot:#0\n"
-         "#nDate:#0\n"
-         "#nCombat Rating:#0\n"
+         _("#nPilot:\n"
+         "Date:\n"
          "\n"
-         "#nMoney:#0\n"
-         "#nShip:#0\n"
-         "#nFuel:#0")
+         "Money:\n"
+         "Ship:\n"
+         "Fuel:\n"
+         "\n"
+         "Time played:\n"
+         "Damage done:\n"
+         "Damage taken:\n"
+         "Ships destroyed:")
          );
    credits2str( creds, player.p->credits, 2 );
+   num2str( sdmgdone, player.dmg_done_shield + player.dmg_done_armour, 0 );
+   num2str( sdmgtaken, player.dmg_taken_shield + player.dmg_taken_armour, 0 );
+   num2str( sdestroyed, destroyed, 0 );
    snprintf( str, sizeof(str),
          _("%s\n"
          "%s\n"
-         "%s\n"
          "\n"
          "%s\n"
          "%s\n"
-         "%d (%d jumps)"),
+         "%d (%d %s)\n"
+         "\n"
+         "%.1f hours\n"
+         "%s\n"
+         "%s\n"
+         "%s"),
          player.name,
          nt,
-         player_rating(),
          creds,
          player.p->name,
-         player.p->fuel, pilot_getJumps(player.p) );
+         player.p->fuel, pilot_getJumps(player.p),
+         n_( "jump", "jumps", pilot_getJumps(player.p) ),
+         player.time_played / 3600.,
+         sdmgdone, sdmgtaken, sdestroyed );
    window_addText( wid, 180, 20,
          w-80-200-40+20-180, h-80,
          0, "txtPilot", &gl_smallFont, NULL, str );
@@ -407,30 +427,30 @@ static void info_openShip( unsigned int wid )
          "closeOutfits", _("Close"), info_close );
 
    /* Text. */
-   window_addText( wid, 40, -60, 100, h-60, 0, "txtSDesc", &gl_smallFont,
+   window_addText( wid, 40, -40, 100, h-60, 0, "txtSDesc", &gl_smallFont,
          NULL,
-         _("#nName:#0\n"
-         "#nModel:#0\n"
-         "#nClass:#0\n"
-         "#nCrew:#0\n"
+         _("#nName:\n"
+         "Model:\n"
+         "Class:\n"
+         "Crew:\n"
          "\n"
-         "#nMass:#0\n"
-         "#nJump Time:#0\n"
-         "#nThrust:#0\n"
-         "#nSpeed:#0\n"
-         "#nTurn:#0\n"
-         "#nTime Constant:#0\n"
+         "Mass:\n"
+         "Jump Time:\n"
+         "Thrust:\n"
+         "Speed:\n"
+         "Turn:\n"
+         "Time Constant:\n"
          "\n"
-         "#nAbsorption:#0\n"
-         "#nShield:#0\n"
-         "#nArmour:#0\n"
-         "#nEnergy:#0\n"
-         "#nCargo Space:#0\n"
-         "#nFuel:#0\n"
+         "Absorption:\n"
+         "Shield:\n"
+         "Armour:\n"
+         "Energy:\n"
+         "Cargo Space:\n"
+         "Fuel:\n"
          "\n"
-         "#nStats:#0\n")
+         "Stats:\n")
          );
-   window_addText( wid, 180, -60, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
+   window_addText( wid, 180, -40, w-20-180-180., h-60, 0, "txtDDesc", &gl_smallFont,
          NULL, NULL );
 
    /* Custom widget. */
@@ -448,7 +468,7 @@ static void info_openShip( unsigned int wid )
  */
 static void ship_update( unsigned int wid )
 {
-   char buf[1024], *hyp_delay;
+   char buf[STRMAX_SHORT], *hyp_delay;
    int cargo, len;
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
@@ -459,7 +479,7 @@ static void ship_update( unsigned int wid )
          "%s\n"
          "%d\n"
          "\n"
-         "%.0f tonnes\n"
+         "%.0f %s\n"
          "%s average\n"
          "%.0f kN/tonne\n"
          "%.0f m/s (max %.0f m/s)\n"
@@ -470,8 +490,8 @@ static void ship_update( unsigned int wid )
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
-         "%d / %d tonnes\n"
-         "%d / %d units (%d jumps)\n"
+         "%d / %d %s\n"
+         "%d / %d %s (%d %s)\n"
          "\n"),
          /* Generic */
          player.p->name,
@@ -479,19 +499,20 @@ static void ship_update( unsigned int wid )
          _(ship_class(player.p->ship)),
          (int)floor(player.p->crew),
          /* Movement. */
-         player.p->solid->mass,
+         player.p->solid->mass, n_( "tonne", "tonnes", player.p->solid->mass ),
          hyp_delay,
          player.p->thrust / player.p->solid->mass,
          player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
          player.p->turn*180./M_PI,
-         player.p->ship->dt_default * 100.,
+         player.p->stats.time_mod * player.p->ship->dt_default * 100.,
          /* Health. */
          player.p->dmg_absorb * 100.,
          player.p->shield, player.p->shield_max, player.p->shield_regen,
          player.p->armour, player.p->armour_max, player.p->armour_regen,
          player.p->energy, player.p->energy_max, player.p->energy_regen,
-         pilot_cargoUsed( player.p ), cargo,
-         player.p->fuel, player.p->fuel_max, pilot_getJumps(player.p));
+         pilot_cargoUsed( player.p ), cargo, n_( "tonne", "tonnes", cargo ),
+         player.p->fuel, player.p->fuel_max, n_( "unit", "units", player.p->fuel_max ),
+         pilot_getJumps(player.p), n_( "jump", "jumps", pilot_getJumps(player.p) ));
    equipment_shipStats( &buf[len], sizeof(buf)-len, player.p, 1 );
    window_modifyText( wid, "txtDDesc", buf );
    free( hyp_delay );
@@ -557,7 +578,7 @@ static void info_openWeapons( unsigned int wid )
 static void weapons_genList( unsigned int wid )
 {
    const char *str;
-   char **buf, tbuf[256];
+   char **buf, tbuf[STRMAX_SHORT];
    int i, n;
    int w, h;
 
@@ -762,6 +783,11 @@ static void info_openCargo( unsigned int wid )
          cargo_jettison );
    window_disableButton( wid, "btnJettisonCargo" );
 
+   /* Description. */
+   window_addText( wid, 20, -40-200-20,
+         w - 40, h - BUTTON_HEIGHT - 260, 0,
+         "txtCargoDesc", NULL, NULL, NULL );
+
    /* Generate the list. */
    cargo_genList( wid );
 }
@@ -793,15 +819,16 @@ static void cargo_genList( unsigned int wid )
       /* List the player's cargo */
       buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
       for (i=0; i<array_size(player.p->commodities); i++) {
-         asprintf(&buf[i], "%s%s %d",
+         asprintf(&buf[i], "%s%s %d%s",
                _(player.p->commodities[i].commodity->name),
                (player.p->commodities[i].id != 0) ? "*" : "",
-               player.p->commodities[i].quantity);
+               player.p->commodities[i].quantity,
+               (array_size(player.p->commodities[i].commodity->illegalto)>0) ? _(" (#rillegal#0)") : "" );
       }
       nbuf = array_size(player.p->commodities);
    }
    window_addList( wid, 20, -40,
-         w - 40, h - BUTTON_HEIGHT - 80,
+         w - 40, 200,
          "lstCargo", buf, nbuf, 0, cargo_update, NULL );
 }
 /**
@@ -810,7 +837,10 @@ static void cargo_genList( unsigned int wid )
  */
 static void cargo_update( unsigned int wid, char* str )
 {
-   (void)str;
+   (void) str;
+   char desc[STRMAX];
+   int pos, l, i, f;
+   Commodity *com;
 
    if (array_size(player.p->commodities)==0)
       return; /* No cargo */
@@ -820,6 +850,28 @@ static void cargo_update( unsigned int wid, char* str )
       window_disableButton( wid, "btnJettisonCargo" );
    else
       window_enableButton( wid, "btnJettisonCargo" );
+
+   if (array_size(player.p->commodities)==0)
+      return; /* No cargo, redundant check */
+
+   pos = toolkit_getListPos( wid, "lstCargo" );
+   com = player.p->commodities[pos].commodity;
+
+   if (!com->description)
+      l = scnprintf( desc, sizeof(desc), "%s", _(com->name) );
+   else
+      l = scnprintf( desc, sizeof(desc), "%s\n\n%s", _(com->name), _(com->description) );
+   if (array_size(com->illegalto) > 0) {
+      l += scnprintf( &desc[l], sizeof(desc)-l, "\n\n%s", _("Illegalized by the following factions:\n") );
+      for (i=0; i<array_size(com->illegalto); i++) {
+         f = com->illegalto[i];
+         if (!faction_isKnown(f))
+            continue;
+
+         l += scnprintf( &desc[l], sizeof(desc)-l, _("\n   - %s"), _(faction_name(f)) );
+      }
+   }
+   window_modifyText( wid, "txtCargoDesc", desc );
 }
 /**
  * @brief Makes the player jettison the currently selected cargo.
@@ -1138,6 +1190,9 @@ static void mission_menu_abort( unsigned int wid, char* str )
 
       /* Regenerate list. */
       mission_menu_genList(wid ,0);
+
+      /* Regenerate bar if landed. */
+      bar_regen();
    }
 }
 
@@ -1166,10 +1221,10 @@ static void shiplog_menu_update( unsigned int wid, char* str )
       /* has selected a type of log or a log */
       window_dimWindow( wid, &w, &h );
       logWidgetsReady=0;
-      
+
       logType = toolkit_getListPos( wid, "lstLogType" );
       log = toolkit_getListPos( wid, "lstLogs" );
-      
+
       if ( logType != selectedLogType ) {
          /* new log type selected */
          selectedLogType = logType;
@@ -1181,7 +1236,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          window_addList( wid, 20, 60 + BUTTON_HEIGHT  + LOGSPACING / 2,
                          w-40, LOGSPACING / 4,
                          "lstLogs", logs, nlogs, 0, shiplog_menu_update, NULL );
-         
+
          toolkit_setListPos( wid, "lstLogs", selectedLog );
          regenerateEntries=1;
       }
@@ -1194,7 +1249,7 @@ static void shiplog_menu_update( unsigned int wid, char* str )
                          w-40, LOGSPACING / 2-20,
                          "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
          toolkit_setListPos( wid, "lstLogEntries", 0 );
-         
+
       }
       logWidgetsReady=1;
    }
@@ -1269,7 +1324,7 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
       dialogue_msg( "", _("You are currently viewing all logs in the selected log type. Please select a log title to delete.") );
       return;
    }
-   
+
    snprintf( buf, 256,
          _("This will delete ALL \"%s\" log entries. This operation cannot be undone. Are you sure?"),
          logs[selectedLog]);
@@ -1378,7 +1433,7 @@ static void info_openShipLog( unsigned int wid )
    window_addText( wid, 20, 80 + BUTTON_HEIGHT + LOGSPACING,
                    w - 40, texth, 0,
                    "logDesc1", &gl_smallFont, NULL, _("Select log type:") );
-   
+
    window_addText( wid, 20, 60 + BUTTON_HEIGHT + 3* LOGSPACING / 4,
                    w - 40, texth, 0,
                    "logDesc2", &gl_smallFont, NULL, _("Select log title:") );

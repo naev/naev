@@ -20,7 +20,7 @@
 --[[
 -- Destroy a suspicious Za'lek drone.
 --]]
-local minerva = require "minerva"
+local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
@@ -30,7 +30,7 @@ logidstr = minerva.log.pirate.idstr
 misn_title = _("Dvaered Thugs")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to incapacitate a suspicious Za'lek drone.")
-reward_amount = 200000 -- 200k
+reward_amount = 200e3 -- 200k
 
 mainsys = "Limbo"
 jumpinsys = "Pultatis"
@@ -45,8 +45,8 @@ function create ()
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait )
-   misn.setDesc( minerva.pirate.description )
+   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
+   misn.setDesc( misn_desc )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
 end
@@ -55,7 +55,7 @@ end
 function accept ()
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
+   local pir = vn.newCharacter( minerva.vn_pirate() )
    vn.music( minerva.loops.pirate )
    vn.transition()
    vn.label( "leave" )
@@ -81,18 +81,16 @@ They smiles at you.]]))
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
-      misn.finish(false)
       return
    end
 
    misn.accept()
-   misn.setDesc( misn_desc )
    osd = misn.osdCreate( _("Za'lek Scout Drone"),
          {_("Destroy the scout drone with Dvaered weapons"),
           _("Go back to Minerva Station") } )
    misn.osdActive(1)
 
-   shiplog.appendLog( logidstr, _("You accept another job from the shady individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
+   shiplog.append( logidstr, _("You accept another job from the shady individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
 
    hook.enter("enter")
    hook.load("land")
@@ -101,10 +99,10 @@ end
 
 
 function land ()
-   if misn_state==1 then
+   if misn_state==1 and planet.cur() == planet.get("Minerva Station") then
       vn.clear()
       vn.scene()
-      local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
+      local pir = vn.newCharacter( minerva.vn_pirate() )
       vn.music( minerva.loops.pirate )
       vn.transition()
       vn.na(_("After you land on Minerva Station you are once again greeted by the shady character that gave you the job to clear the Za'lek drones."))
@@ -119,7 +117,7 @@ They wink at you.]]))
       vn.sfxVictory()
       vn.run()
    
-      shiplog.appendLog( logidstr, _("You succeeded in destroying Za'lek drones and making it seem like the Dvaered were involved.") )
+      shiplog.append( logidstr, _("You succeeded in destroying Za'lek drones and making it seem like the Dvaered were involved.") )
 
       misn.finish(true)
    end
@@ -136,15 +134,14 @@ function dvaered_weapons( p )
       return false
    end
    local allowed = {
-      "Unicorp Mace Launcher",
       "Vulcan Gun",
+      "Gauss Gun",
+      "Unicorp Mace Launcher",
+      "TeraCom Mace Launcher",
       "Shredder",
-      "Mass Driver MK1",
-      "Mass Driver MK2",
-      "Mass Driver MK3",
-      "Turreted Gauss Gun",
+      "Railgun",
+      "Mass Driver",
       "Turreted Vulcan Gun",
-      "Railgun Turret",
       "Repeating Railgun",
    }
    local weapons = p:outfits( "weapon" )
@@ -198,6 +195,7 @@ end
 function drone_death ()
    if not dvaered_weapons( player.pilot() ) then
       player.msg(_("#rMISSION FAILED! You were supposed to kill the drones with Dvaered-only weapons!"))
+      misn.finish(false)
    end
    drones_killed = drones_killed+1
    if drones_killed==1 then

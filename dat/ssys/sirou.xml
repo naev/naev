@@ -27,11 +27,11 @@
  <jumps>
   <jump target="Gamma Polaris">
    <pos x="23612.088994" y="-23123.662452"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Zemur">
    <pos x="-23291.414097" y="22730.093209"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

@@ -29,6 +29,55 @@ love = {
 love.w = love._default.w
 love.h = love._default.h
 function love._unimplemented() error(_("unimplemented")) end
+local function _clearfuncs()
+   local function _noop() end
+   local f = {
+      "conf",
+      "load",
+      "draw",
+      "update",
+      "keypressed",
+      "keyreleased",
+      "mousemoved",
+      "mousepressed",
+      "mousereleased",
+   }
+   for k,v in ipairs(f) do
+      love[v] = _noop
+   end
+end
+_clearfuncs()
+local function _setdefaults()
+   -- Only stuff we care about atm
+   local t = {}
+   t.audio = {}
+   t.window = {}
+   t.window.title = love._default.title -- The window title (string)
+   t.window.width = love._default.w -- The window width (number)
+   t.window.height = love._default.h -- The window height (number)
+   t.window.fullscreen = love._default.fullscreen
+   t.modules = {
+         audio = true,
+         data = true,
+         event = true,
+         font = true,
+         graphics = true,
+         image = true,
+         joystick = true,
+         keyboard = true,
+         math = true,
+         mouse = true,
+         physics = true,
+         sound = true,
+         system = true,
+         thread = true,
+         timer = true,
+         touch = true,
+         video = true,
+         window = true
+      }
+   return t
+end
 
 
 --[[
@@ -72,40 +121,33 @@ local function _update( dt )
    love.update(dt)
 end
 local function _mouse( x, y, mtype, button )
-   if not love.mouse then return end
+   if not love.mouse then return false end
    y = love.h-y-1
    love.mouse.x = x
    love.mouse.y = y
    if mtype==1 then
       love.mouse.down[button] = true
-      love.mousepressed( x, y, button, false )
+      return love.mousepressed( x, y, button, false )
    elseif mtype==2 then
       love.mouse.down[button] = false
-      love.mousereleased( x, y, button, false )
+      return love.mousereleased( x, y, button, false )
    elseif mtype==3 then
       local dx = x - love.mouse.lx
       local dy = y - love.mouse.ly
       love.mouse.lx = x
       love.mouse.ly = y
-      love.mousemoved( x, y, dx, dy, false )
+      return love.mousemoved( x, y, dx, dy, false )
    end
-   return true
 end
 local function _keyboard( pressed, key, mod )
-   if not love.keyboard then return end
+   if not love.keyboard then return false end
    local k = string.lower( key )
    love.keyboard._keystate[ k ] = pressed
    if pressed then
-      love.keypressed( k, k, false )
+      return love.keypressed( k, k, false )
    else
-      love.keyreleased( k, k )
+      return love.keyreleased( k, k )
    end
-   --[[
-   if k == "escape" then
-      naev.tk.customDone()
-   end
-   --]]
-   return true
 end
 
 
@@ -159,51 +201,9 @@ function love.exec( path )
       end
    end
 
-   -- Reset functions
-   local function _noop() end
-   local f = {
-      "conf",
-      "load",
-      "draw",
-      "update",
-      "keypressed",
-      "keyreleased",
-      "mousemoved",
-      "mousepressed",
-      "mousereleased",
-   }
-   for k,v in ipairs(f) do
-      love[v] = _noop
-   end
-
-   -- Only stuff we care about atm
-   local t = {}
-   t.audio = {}
-   t.window = {}
-   t.window.title = love._default.title -- The window title (string)
-   t.window.width = love._default.w -- The window width (number)
-   t.window.height = love._default.h -- The window height (number)
-   t.window.fullscreen = love._default.fullscreen
-   t.modules = {
-         audio = true,
-         data = true,
-         event = true,
-         font = true,
-         graphics = true,
-         image = true,
-         joystick = true,
-         keyboard = true,
-         math = true,
-         mouse = true,
-         physics = true,
-         sound = true,
-         system = true,
-         thread = true,
-         timer = true,
-         touch = true,
-         video = true,
-         window = true
-      }
+   -- Set defaults
+   _clearfuncs()
+   local t = _setdefaults()
 
    local function dolua( path )
       _LOADED[path] = nil -- reset loadedness
@@ -251,6 +251,53 @@ function love.exec( path )
    for k,v in pairs(naev) do _G[k] = v end
    -- Restore the package.path
    package.path = love._path
+end
+function love.run()
+   if love._started then
+      error(_("can only run one Love2D instance at a time!"))
+   end
+
+   love._focus = false
+   love._started = false
+
+   -- Set up defaults
+   local t = _setdefaults()
+
+   -- Configure
+   love.conf(t)
+
+   -- Load stuff
+   for m,v in pairs(t.modules) do
+      if v then
+         love[m] = require('love.'..m)
+      end
+   end
+
+   -- Set properties
+   love.title = t.window.title
+   love.w = t.window.width
+   love.h = t.window.height
+   love.fullscreen = t.window.fullscreen
+   if love.fullscreen then
+      love.w, love.h = love.window.getDesktopDimensions()
+   end
+
+   -- Run set up function defined in Love2d spec
+   love.load()
+
+   -- Actually run in Naev
+   if love.fullscreen then
+      love.w = -1
+      love.h = -1
+   end
+   love._focus = true
+   love._started = true
+   naev.tk.custom( love.title, love.w, love.h, _update, _draw, _keyboard, _mouse )
+   -- Doesn't actually get here until the dialogue is closed
+   love._started = false
+
+   -- Reset libraries that were potentially crushed
+   for k,v in pairs(naev) do _G[k] = v end
 end
 
 -- Fancy API so you can do `love = require 'love'`

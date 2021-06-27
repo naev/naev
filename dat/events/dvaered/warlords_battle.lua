@@ -227,10 +227,12 @@ end
 
 function defenderAttacked(victim, attacker)
    --The player chose his side
-   if attacker == player.pilot() then
-      for i, j in ipairs(defenders) do
+   if attacker == player.pilot() or attacker:leader() == player.pilot() then
+      for i, p in ipairs(defenders) do
          hook.rm(defAttHook[i])
-         j:setHostile()
+         if p ~= nil and p:exists() then
+            p:setHostile()
+         end
       end
       if side == "defender" then
          side = nil
@@ -245,10 +247,12 @@ end
 
 function attackerAttacked(victim, attacker)
    --The player chose his side
-   if attacker == player.pilot() then
-      for i, j in ipairs(attackers) do
+   if attacker == player.pilot() or attacker:leader() == player.pilot() then
+      for i, p in ipairs(attackers) do
          hook.rm(attAttHook[i])
-         j:setHostile()
+         if p ~= nil and p:exists() then
+            p:setHostile()
+         end
       end
       if side == "attacker" then
          side = nil
@@ -265,7 +269,7 @@ function attackerDeath(victim, attacker)
    if batInProcess then
       attdeath = attdeath + 1
 
-      if attacker == player.pilot() then
+      if attacker == player.pilot() or attacker:leader() == player.pilot() then
          attkilled = attkilled + victim:stats().mass
       end
 
@@ -289,7 +293,7 @@ function defenderDeath(victim, attacker)
    if batInProcess then
       defdeath = defdeath + 1
 
-      if attacker == player.pilot() then
+      if attacker == player.pilot() or attacker:leader() == player.pilot() then
          defkilled = defkilled + victim:stats().mass
       end
 
@@ -331,9 +335,9 @@ end
 
 --chooses the first non nil pilot in a list
 function chooseInList(list)
-   for i, j in ipairs(list) do
-      if j:exists() then
-         return j
+   for i, p in ipairs(list) do
+      if p ~= nil and p:exists() then
+         return p
       end
    end
 end

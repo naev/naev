@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Combat Hologram Projector">
+ <general>
+  <typename>Holograph Projector</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <rarity>1</rarity>
+  <license>Medium Weapon License</license>
+  <mass>3</mass>
+  <price>430000</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>The combat hologram projector uses state of the art technology to create do create a hologram of a ship nearly indistinguishible from real ones. Such holographic displays are very efficient at drawing away enemy fire and creating confusion, however, when engaged in actual combat the cover is usually quickly blown away.</description>
+  <desc_extra>Creates a hologram of the current ship to distract the enemy ship target.</desc_extra>
+ </general>
+ <specific type="modification">
+  <lua>outfits/utility/combat_hologram_projector.lua</lua>
+ </specific>
+</outfit>

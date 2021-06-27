@@ -162,8 +162,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_name, portrait_tam)
-   misn.setDesc(npc_desc)
+   misn.setNPC(npc_name, portrait_tam, npc_desc)
 end
 
 function accept()
@@ -320,7 +319,7 @@ function land()
             tk.msg( execution_title, execution_failed_text2:format(creditstring(effective_credits)) )
          else -- No pity for non-Hamelsen henchmen
             tk.msg( execution_title, execution_text1:format(shi:name(), player.name()) )
-            tk.msg( execution_title, execution_text2, "portraits/neutral/female1.png" )
+            tk.msg( execution_title, execution_text2, "portraits/neutral/female1.webp" )
             tk.msg( execution_title, execution_text3:format(creditstring(effective_credits)) )
          end
          payNfinish()
@@ -341,15 +340,15 @@ function spawnEscort( origin )
       -- Give him nice outfits
       escort[1]:rmOutfit("all")
       escort[1]:rmOutfit("cores")
-      escort[1]:addOutfit("S&K Ultralight Stealth Plating")
+      escort[1]:addOutfit("Nexus Light Stealth Plating")
       escort[1]:addOutfit("Tricon Zephyr Engine")
-      escort[1]:addOutfit("Milspec Aegis 2201 Core System")
-      escort[1]:addOutfit("Reactor Class II")
-      escort[1]:addOutfit("Reactor Class I")
+      escort[1]:addOutfit("Milspec Orion 2301 Core System")
+      escort[1]:addOutfit("Scanning Combat AI")
+      escort[1]:addOutfit("Nexus Stealth Coating")
       escort[1]:addOutfit("Hellburner")
       escort[1]:addOutfit("Milspec Scrambler")
       escort[1]:addOutfit("Improved Stabilizer")
-      escort[1]:addOutfit("Shredder")
+      escort[1]:addOutfit("Gauss Gun")
       escort[1]:setHealth(100,100)
       escort[1]:setEnergy(100)
       escort[1]:setFuel(true)
@@ -670,8 +669,8 @@ end
 -- Pay and finish the mission
 function payNfinish()
    player.pay(effective_credits)
-   shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
-   shiplog.appendLog( "frontier_war", log_text )
+   shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
+   shiplog.append( "frontier_war", log_text )
    misn.finish(true)
 end
 

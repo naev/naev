@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Blink Drive">
+ <general>
+  <typename>Blink Drive</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <mass>3</mass>
+  <price>430000</price>
+  <gfx_store>blink_drive.webp</gfx_store>
+  <description>The blink drive uses hyperdrive technology modified to create a small space-time fold allowing ships to instantly cross short distances. Pilots who often use such devices tend to have a higher amount of strong headaches than usual, but it must be safe, right?</description> 
+  <desc_extra>Blinks you 500 units in the direction you are facing. Can only be run once every 8 seconds. Performance degrades over 800 tonnes of mass.</desc_extra>
+ </general>
+ <specific type="modification">
+  <lua>outfits/utility/blink_drive.lua</lua>
+ </specific>
+</outfit>

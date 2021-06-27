@@ -81,8 +81,7 @@ function create ()
    end
 
    -- Add NPC.
-   misn.setNPC( _("Soldner"), "empire/unique/soldner.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Soldner"), "empire/unique/soldner.webp", bar_desc )
 end
 
 
@@ -100,7 +99,7 @@ function accept ()
 
    -- Mission details
    misn_stage = 0
-   reward = 750000
+   reward = 750e3
    misn.setTitle(misn_title)
    misn.setReward( creditstring(reward) )
    misn.setDesc( string.format( misn_desc[1], destsys:name() ) )
@@ -177,9 +176,13 @@ function enter ()
       end
       -- To make it more interesting a vendetta will solely target the player.
       p = pilot.add( "Vendetta", "FLF", enter_vect , _("FLF Vendetta") )
-      p:control()
       p:setHostile()
-      p:attack( player.pilot() )
+      -- If player is seen, have them target player
+      local pp = player.pilot()
+      if p:inrange( pp ) then
+         p:control()
+         p:attack( pp )
+      end
       
       -- Now Dvaered
       -- They will jump together with you in the system at the jump point. (A.)

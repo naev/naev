@@ -4,24 +4,24 @@
   <slot>weapon</slot>
   <size>small</size>
   <license>Medium Weapon License</license>
-  <mass>30</mass>
+  <mass>14</mass>
   <price>15000</price>
   <description>A turret-mounted particle beam. The smallest possible turreted beam weapon, used as a last-ditch weapon against light enemies.</description>
-  <gfx_store>ragnarok.png</gfx_store>
-  <cpu>-9</cpu>
+  <gfx_store>ragnarok.webp</gfx_store>
+  <cpu>-24</cpu>
  </general>
  <specific type="turret beam">
   <delay>2</delay>
   <duration>2</duration>
-  <range>400</range>
-  <turn>90</turn>
-  <energy>65</energy>
-  <heatup>50</heatup>
+  <range>350</range>
+  <turn>120</turn>
+  <energy>10</energy>
+  <heatup>35</heatup>
   <damage>
    <type>normal</type>
-   <penetrate>22</penetrate>
-   <physical>32</physical>
-   <disable>5</disable>
+   <penetrate>6</penetrate>
+   <physical>84</physical>
+   <disable>4</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

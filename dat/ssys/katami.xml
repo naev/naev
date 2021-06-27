@@ -16,12 +16,12 @@
  <jumps>
   <jump target="Booster">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Tempus">
    <autopos/>
    <hidden/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

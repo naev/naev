@@ -16,12 +16,13 @@
  <general>
   <class>0</class>
   <population>1000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>emp_mil_restricted</land>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
   </services>
   <commodities/>
@@ -37,5 +38,6 @@
   <item>Basic Outfits 2</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
+  <item>Empire Elite Outfits</item>
  </tech>
 </asset>

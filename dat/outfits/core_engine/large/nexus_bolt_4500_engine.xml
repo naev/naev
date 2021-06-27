@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Nexus Bolt 4500 Engine">
+ <general>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines">structure</slot>
+  <size>large</size>
+  <mass>60</mass>
+  <price>900000</price>
+  <description>The Bolt 4500 is a somewhat uncommonly used engine designed for light cruisers. Like most Nexus engines, it doesn't excel in speed, but its low power consumption makes it an attractive option for some pilots.</description>
+  <gfx_store>engine11.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <energy_usage>50</energy_usage>
+  <engine_limit>4500</engine_limit>
+  <fuel>1600</fuel>
+  <speed>100</speed>
+  <thrust>57</thrust>
+  <turn>65</turn>
+  <time_mod>-20</time_mod>
+ </specific>
+</outfit>

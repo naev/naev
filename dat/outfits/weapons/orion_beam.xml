@@ -4,24 +4,24 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon License</license>
-  <mass>30</mass>
+  <mass>24</mass>
   <price>30000</price>
   <description>The turret-mounted edition of the Orion design offers mid-sized ships exceptional short-duration firepower, a potent deterrent against lighter vessels.</description>
-  <gfx_store>ragnarok.png</gfx_store>
-  <cpu>-16</cpu>
+  <gfx_store>ragnarok.webp</gfx_store>
+  <cpu>-50</cpu>
  </general>
  <specific type="turret beam">
   <delay>4</delay>
   <duration>4</duration>
   <range>450</range>
   <turn>90</turn>
-  <energy>65</energy>
+  <energy>30</energy>
   <heatup>50</heatup>
   <damage>
    <type>normal</type>
-   <penetrate>40</penetrate>
-   <physical>60</physical>
-   <disable>6</disable>
+   <penetrate>36</penetrate>
+   <physical>128</physical>
+   <disable>4</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

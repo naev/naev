@@ -66,8 +66,6 @@ extern int save_loaded; /**< From save.c */
 /* externs */
 /* player.c */
 extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
-/* mission.c */
-extern int missions_loadActive( xmlNodePtr parent ); /**< Loads active missions. */
 /* event.c */
 extern int events_loadActive( xmlNodePtr parent );
 /* news.c */
@@ -140,7 +138,7 @@ static int load_load( nsave_t *save, const char *path )
          continue;
       }
 
-      if (xml_isNode(parent, "player")) {
+      else if (xml_isNode(parent, "player")) {
          /* Get name. */
          xmlr_attr_strd(parent, "name", save->name);
          /* Parse rest. */
@@ -410,7 +408,7 @@ static void load_menu_update( unsigned int wid, char *str )
    int pos;
    nsave_t *ns;
    char *save;
-   char buf[256], credits[ECON_CRED_STRLEN], date[64];
+   char buf[STRMAX_SHORT], credits[ECON_CRED_STRLEN], date[64];
 
    /* Make sure list is ok. */
    save = toolkit_getList( wid, "lstSaves" );
@@ -663,6 +661,7 @@ static int load_gameInternal( const char* file, const char* version )
 
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
+   missions_loadCommodity(node); /* Must be loaded before player. */
    pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
    pnt = player_load(node);
    player.loaded_version = strdup( (version!=NULL) ? version : naev_version(0) );

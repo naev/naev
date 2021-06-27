@@ -30,6 +30,7 @@
 #include "nlua_audio.h"
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
+#include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_hook.h"
 #include "nlua_music.h"
@@ -52,8 +53,7 @@
  *
  * An example would be:
  * @code
- * misn.setNPC( "Keer", "empire/unique/keer.png" )
- * misn.setDesc( "You see here Commodore Keer." )
+ * misn.setNPC( "Keer", "empire/unique/keer.webp", _("You see here Commodore Keer.") )
  * @endcode
  *
  * @luamod misn
@@ -79,6 +79,7 @@ static int misn_finish( lua_State *L );
 static int misn_markerAdd( lua_State *L );
 static int misn_markerMove( lua_State *L );
 static int misn_markerRm( lua_State *L );
+static int misn_cargoNew( lua_State *L );
 static int misn_cargoAdd( lua_State *L );
 static int misn_cargoRm( lua_State *L );
 static int misn_cargoJet( lua_State *L );
@@ -100,6 +101,7 @@ static const luaL_Reg misn_methods[] = {
    { "markerAdd", misn_markerAdd },
    { "markerMove", misn_markerMove },
    { "markerRm", misn_markerRm },
+   { "cargoNew", misn_cargoNew },
    { "cargoAdd", misn_cargoAdd },
    { "cargoRm", misn_cargoRm },
    { "cargoJet", misn_cargoJet },
@@ -228,8 +230,8 @@ void misn_runStart( Mission *misn, const char *func )
  *    @param misn Mission that owns the function.
  *    @param func Name of the function to call.
  *    @param nargs Number of arguments to pass.
- *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted
- *            and 0 normally.
+ *    @return -1 on error, 1 on misn.finish() call, 2 if mission got deleted,
+ *          3 if the mission got accepted, and 0 normally.
  */
 int misn_runFunc( Mission *misn, const char *func, int nargs )
 {
@@ -238,7 +240,12 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    int misn_delete;
    Mission *cur_mission;
    nlua_env env;
+   int isaccepted;
 
+   /* Check to see if it is accepted first. */
+   isaccepted = misn->accepted;
+
+   /* Set up and run function. */
    env = misn->env;
    ret = nlua_pcall(env, nargs, 0);
 
@@ -264,7 +271,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    misn_delete = lua_toboolean(naevL,-1);
    lua_pop(naevL,1);
 
-   /* mission is finished */
+   /* Mission is finished */
    if (misn_delete) {
       ret = 2;
       mission_cleanup( cur_mission );
@@ -276,6 +283,9 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
          break;
       }
    }
+   /* Mission became accepted. */
+   else if (!isaccepted && cur_mission->accepted)
+      ret = 3;
 
    return ret;
 }
@@ -353,7 +363,7 @@ static int misn_setReward( lua_State *L )
  *  - "computer": Mission computer marker.<br/>
  *
  *    @luatparam System sys System to mark.
- *    @luatparam string type Colouring scheme to use.
+ *    @luatparam[opt="high"] string type Colouring scheme to use.
  *    @luatreturn number A marker ID to be used with markerMove and markerRm.
  * @luafunc markerAdd
  */
@@ -367,7 +377,7 @@ static int misn_markerAdd( lua_State *L )
 
    /* Check parameters. */
    sys   = luaL_checksystem( L, 1 );
-   stype = luaL_checkstring( L, 2 );
+   stype = luaL_optstring( L, 2, "high" );
 
    /* Handle types. */
    if (strcmp(stype, "computer")==0)
@@ -488,19 +498,23 @@ static int misn_markerRm( lua_State *L )
  * @brief Sets the current mission NPC.
  *
  * This is used in bar missions where you talk to a person. The portraits are
- *  the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.png
- *  you would use "none.png".)
+ *  the ones found in GFX_PATH/portraits. (For GFX_PATH/portraits/none.webp
+ *  you would use "none.webp".)
  *
- * @usage misn.setNPC( "Invisible Man", "none.png" )
+ * Note that this NPC will disappear when either misn.accept() or misn.finish()
+ *  is called.
+ *
+ * @usage misn.setNPC( "Invisible Man", "none.webp", _("You see a levitating mug drain itself.") )
  *
  *    @luatparam string name Name of the NPC.
  *    @luatparam string portrait File name of the portrait to use for the NPC.
+ *    @luatparam string desc Description of the NPC to use.
  * @luafunc setNPC
  */
 static int misn_setNPC( lua_State *L )
 {
    char buf[PATH_MAX];
-   const char *name, *str;
+   const char *name, *str, *desc;
    Mission *cur_mission;
 
    cur_mission = misn_getFromLua(L);
@@ -511,6 +525,9 @@ static int misn_setNPC( lua_State *L )
    free(cur_mission->npc);
    cur_mission->npc = NULL;
 
+   free(cur_mission->npc_desc);
+   cur_mission->npc_desc = NULL;
+
    /* For no parameters just leave having freed NPC. */
    if (lua_gettop(L) == 0)
       return 0;
@@ -518,9 +535,11 @@ static int misn_setNPC( lua_State *L )
    /* Get parameters. */
    name = luaL_checkstring(L,1);
    str  = luaL_checkstring(L,2);
+   desc = luaL_checkstring(L,3);
 
-   /* Set NPC name. */
+   /* Set NPC name and description. */
    cur_mission->npc = strdup(name);
+   cur_mission->npc_desc = strdup(desc);
 
    /* Set portrait. */
    snprintf( buf, sizeof(buf), GFX_PATH"portraits/%s", str );
@@ -637,8 +656,35 @@ static int misn_finish( lua_State *L )
 
 
 /**
- * @brief Adds some mission cargo to the player.  He cannot sell it nor get rid of it
- *  unless he abandons the mission in which case it'll get eliminated.
+ * @brief Creates a new temporary commodity meant for missions. If a temporary commodity with the same name exists, that gets returned instead.
+ *
+ *    @luatparam string cargo Name of the cargo to add. This must not match a cargo name defined in commodity.xml.
+ *    @luatparam string decription Description of the cargo to add.
+ *    @luatreturn Commodity The newly created commodity or an existing temporary commodity with the same name.
+ * @luafunc cargoNew
+ */
+static int misn_cargoNew( lua_State *L )
+{
+   const char *cname, *cdesc;
+   Commodity *cargo;
+
+   /* Parameters. */
+   cname    = luaL_checkstring(L,1);
+   cdesc    = luaL_checkstring(L,2);
+
+   cargo    = commodity_getW(cname);
+   if ((cargo != NULL) && !cargo->istemp)
+      NLUA_ERROR(L,_("Trying to create new cargo '%s' that would shadow existing non-temporary cargo!"), cname);
+
+   if (cargo==NULL)
+      cargo = commodity_newTemp( cname, cdesc );
+
+   lua_pushcommodity(L, cargo);
+   return 1;
+}
+/**
+ * @brief Adds some mission cargo to the player. They cannot sell it nor get rid of it
+ *  unless they abandons the mission in which case it'll get eliminated.
  *
  *    @luatparam string cargo Name of the cargo to add. This must match a cargo name defined in commodity.xml.
  *    @luatparam number quantity Quantity of cargo to add.
@@ -647,21 +693,13 @@ static int misn_finish( lua_State *L )
  */
 static int misn_cargoAdd( lua_State *L )
 {
-   const char *cname;
    Commodity *cargo;
    int quantity, ret;
    Mission *cur_mission;
 
    /* Parameters. */
-   cname    = luaL_checkstring(L,1);
+   cargo    = luaL_validcommodity(L,1);
    quantity = luaL_checkint(L,2);
-   cargo = commodity_get( cname );
-
-   /* Check if the cargo exists. */
-   if (cargo == NULL) {
-      NLUA_ERROR(L, _("Cargo '%s' not found."), cname);
-      return 0;
-   }
 
    cur_mission = misn_getFromLua(L);
 
@@ -865,9 +903,7 @@ static int misn_osdGetActiveItem( lua_State *L )
 /**
  * @brief Adds an NPC.
  *
- * @note Do not use this at all in the "create" function. Use setNPC, setDesc and the "accept" function instead.
- *
- * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none.png", "A test." ) -- Creates an NPC.
+ * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none.webp", "A test." ) -- Creates an NPC.
  *
  *    @luatparam string func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luatparam string name Name of the NPC
@@ -904,7 +940,10 @@ static int misn_npcAdd( lua_State *L )
    cur_mission = misn_getFromLua(L);
 
    /* Add npc. */
-   id = npc_add_mission( cur_mission, func, name, priority, portrait, desc, (bg==NULL) ? bg :background );
+   id = npc_add_mission( cur_mission->id, func, name, priority, portrait, desc, (bg==NULL) ? bg :background );
+
+   /* Regenerate bar. */
+   bar_regen();
 
    /* Return ID. */
    if (id > 0) {
@@ -931,7 +970,10 @@ static int misn_npcRm( lua_State *L )
 
    id = luaL_checklong(L, 1);
    cur_mission = misn_getFromLua(L);
-   ret = npc_rm_mission( id, cur_mission );
+   ret = npc_rm_mission( id, cur_mission->id );
+
+   /* Regenerate bar. */
+   bar_regen();
 
    if (ret != 0)
       NLUA_ERROR(L, _("Invalid NPC ID!"));

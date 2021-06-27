@@ -23,7 +23,7 @@
  <jumps>
   <jump target="Churchill">
    <pos x="-12712.101440" y="-29431.191500"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Gilligan's Tomb">
    <autopos/>
@@ -31,7 +31,7 @@
   </jump>
   <jump target="Herakin">
    <pos x="25532.127636" y="-19674.201177"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Palovi">
    <autopos/>

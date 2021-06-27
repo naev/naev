@@ -636,11 +636,11 @@ static int factionL_dynAdd( lua_State *L )
       fac = -1;
    name = luaL_checkstring(L,2);
    display = luaL_optstring(L,3,name);
-   ai = luaL_optstring(L,4,name);
+   ai = luaL_optstring(L,4,NULL);
 
    /* Check if exists. */
    if (faction_exists(name))
-      NLUA_ERROR(L,"Faction '%s' already exists!");
+      NLUA_ERROR(L,_("Faction '%s' already exists!"), name);
 
    lua_pushfaction( L, faction_dynAdd( fac, name, display, ai ) );
    return 1;

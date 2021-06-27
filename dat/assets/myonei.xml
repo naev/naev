@@ -16,7 +16,7 @@
  <general>
   <class>Y</class>
   <population>50000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -37,5 +37,6 @@
   <item>High Tech Upgrades 1</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
+  <item>Soromid Elite Outfits</item>
  </tech>
 </asset>

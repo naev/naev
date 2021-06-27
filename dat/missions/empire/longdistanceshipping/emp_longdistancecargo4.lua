@@ -54,9 +54,7 @@ function create ()
    targetworld_sys = system.get("Gilligan's Light")
    targetworld = planet.get("The Frontier Council")
 
-
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", bar_desc )
 end
 
 

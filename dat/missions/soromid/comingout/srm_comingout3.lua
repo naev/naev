@@ -91,8 +91,7 @@ function create ()
    credits = 500000
    started = false
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea.png" )
-   misn.setDesc( npc_desc )
+   misn.setNPC( npc_name, "soromid/unique/chelsea.webp", npc_desc )
 end
 
 
@@ -140,11 +139,11 @@ function spawnChelseaShip( param )
    chelsea = pilot.add( "Llama", "Comingout_associates", param, _("Chelsea") )
    chelsea:rmOutfit( "all" )
    chelsea:rmOutfit( "cores" )
-   chelsea:addOutfit( "Unicorp PT-200 Core System" )
-   chelsea:addOutfit( "Unicorp Hawk 300 Engine" )
+   chelsea:addOutfit( "Unicorp PT-68 Core System" )
+   chelsea:addOutfit( "Unicorp Hawk 350 Engine" )
    chelsea:addOutfit( "Unicorp D-4 Light Plating" )
-   chelsea:addOutfit( "Laser PD MK2", 2 )
-   chelsea:addOutfit( "Small Shield Booster", 2 )
+   chelsea:addOutfit( "Laser Turret MK1", 2 )
+   chelsea:addOutfit( "Small Shield Booster" )
    chelsea:addOutfit( "Cargo Pod", 2 )
 
    chelsea:setHealth( 100, 100 )

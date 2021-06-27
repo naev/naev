@@ -61,6 +61,7 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
 static int map_sortCompare( const void *p1, const void *p2 );
 static void map_sortFound( map_find_t *found, int n );
 static char map_getPlanetColourChar( Planet *p );
+static const char *map_getPlanetSymbol( Planet *p );
 /* Fuzzy outfit/ship stuff. */
 static char **map_fuzzyOutfits( Outfit **o, const char *name );
 static char **map_outfitsMatch( const char *name );
@@ -430,7 +431,8 @@ static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys
             _("%s (%s)"), _(sys->name), route_info );
    else
       snprintf( found[n].display, sizeof(found[n].display),
-            _("#%c%s (%s, %s)"), map_getPlanetColourChar(pnt),
+            _("#%c%s%s (%s, %s)"), map_getPlanetColourChar(pnt),
+            map_getPlanetSymbol(pnt),
             _(pnt->name), _(sys->name), route_info );
 }
 
@@ -595,6 +597,16 @@ static char map_getPlanetColourChar( Planet *p )
 
 
 /**
+ * @brief Gets a symbol for a planet, simplified for map use.
+ */
+static const char *map_getPlanetSymbol( Planet *p )
+{
+   planet_updateLand(p);
+   return planet_getSymbol(p);
+}
+
+
+/**
  * @brief Does fuzzy name matching for outfits in an Array. Searches translated names but returns internal names.
  */
 static char **map_fuzzyOutfits( Outfit **o, const char *name )
@@ -696,7 +708,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
 
    outfit = outfit_get( map_foundOutfitNames[toolkit_getListPos(wid, wgtname)] );
    window_modifyText( wid, "txtOutfitName", _(outfit->name) );
-   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
+   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
 
    mass = outfit->mass;
    if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&

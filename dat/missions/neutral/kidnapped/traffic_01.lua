@@ -88,8 +88,7 @@ function create ()
    reward = rnd.rnd(40,60)*1000
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister.webp", bar_desc )
 end
 
 
@@ -162,7 +161,7 @@ function sys_enter ()
       broship:rmOutfit("cores")
       broship:cargoRm("__all")
       broship:addOutfit("Unicorp D-2 Light Plating")
-      broship:addOutfit("Unicorp PT-100 Core System")
+      broship:addOutfit("Unicorp PT-68 Core System")
       broship:addOutfit("Tricon Zephyr Engine")
       broship:setHealth(100,100)
       broship:setEnergy(100)
@@ -243,7 +242,7 @@ function spawn_baddies(sp)
       badguys[i]:rmOutfit("cores")
       
       badguys[i]:addOutfit("Unicorp D-2 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-100 Core System")
+      badguys[i]:addOutfit("Unicorp PT-16 Core System")
       badguys[i]:addOutfit("Tricon Zephyr Engine")
       
       badguys[i]:addOutfit("Laser Cannon MK2",3)
@@ -261,10 +260,10 @@ function spawn_baddies(sp)
       badguys[i]:rmOutfit("cores")
       
       badguys[i]:addOutfit("Unicorp D-4 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-200 Core System")
+      badguys[i]:addOutfit("Unicorp PT-68 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
       
-      badguys[i]:addOutfit("Mass Driver MK1")
+      badguys[i]:addOutfit("Mass Driver")
       badguys[i]:addOutfit("Shredder",2)
       badguys[i]:addOutfit("Ripper Cannon")
       badguys[i]:addOutfit("Shield Capacitor",2)
@@ -279,11 +278,11 @@ function spawn_baddies(sp)
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
       
-      badguys[i]:addOutfit("Unicorp D-8 Medium Plating")
-      badguys[i]:addOutfit("Unicorp PT-500 Core System")
+      badguys[i]:addOutfit("Unicorp D-12 Medium Plating")
+      badguys[i]:addOutfit("Unicorp PT-200 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
       
-      badguys[i]:addOutfit("Razor Turret MK3",2)
+      badguys[i]:addOutfit("Razor Turret MK2",2)
       badguys[i]:addOutfit("Unicorp Headhunter Launcher",2)
       
       badguys[i]:setHealth(100,100)

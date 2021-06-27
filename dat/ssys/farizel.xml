@@ -22,7 +22,7 @@
  <jumps>
   <jump target="Castellan">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Ksher">
    <pos x="-25423.475476" y="-12044.438458"/>
@@ -31,11 +31,11 @@
   </jump>
   <jump target="Radix">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Vandal">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

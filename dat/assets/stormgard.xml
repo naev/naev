@@ -16,12 +16,13 @@
  <general>
   <class>P</class>
   <population>1613000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
    <shipyard/>
   </services>

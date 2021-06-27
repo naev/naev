@@ -5,27 +5,27 @@
   <unique />
   <size>large</size>
   <license>Heavy Weapon License</license>
-  <mass>90</mass>
+  <mass>55</mass>
   <price>3000000</price>
   <description>The Valkyrie Beam is a heavily modified version of the Ragnarok Beam, where the shields of the ship are significantly rerouted to to the beam weapon to increase the output damage. The result is an incredibly potent beam that has a tendency to leave the ship as a sitting duck if it is unable to destroy the target in a single swipe.</description>
-  <gfx_store>ragnarok.png</gfx_store>
-  <cpu>-50</cpu>
+  <gfx_store>ragnarok.webp</gfx_store>
+  <cpu>-350</cpu>
  <rarity>6</rarity></general>
  <stats>
-  <shield_mod>-30</shield_mod>
+  <shield_usage>8</shield_usage>
   <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <specific type="turret beam">
   <delay>10</delay>
   <duration min="2">5</duration>
-  <range>600</range>
+  <range>700</range>
   <turn>25</turn>
   <energy>160</energy>
   <heatup>60</heatup>
   <damage>
    <type>normal</type>
    <penetrate>95</penetrate>
-   <physical>280</physical>
+   <physical>300</physical>
    <disable>18</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>

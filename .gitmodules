@@ -4,3 +4,4 @@
 [submodule "artwork"]
 	path = artwork
 	url = https://github.com/naev/naev-artwork-production.git
+	branch = main

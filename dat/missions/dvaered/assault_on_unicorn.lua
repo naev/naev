@@ -22,7 +22,7 @@
 
 require "scripts/numstring"
 
-misn_title = _("DV: Assault on Unicorn") 
+misn_title = _("DV: Assault on Unicorn")
 misn_reward = _("Variable")
 misn_desc = _("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s.")
 
@@ -82,7 +82,9 @@ function jumpin()
 end
 
 function death(pilot,killer)
-   if pilot:faction() == faction.get("Pirate") and killer == player.pilot() then
+   if pilot:faction() == faction.get("Pirate")
+         and (killer == player.pilot()
+            or killer:leader() == player.pilot()) then
       reward_table = {
          ["Hyena"]             =  10000,
          ["Pirate Shark"]      =  30000,

@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Za'lek Bomber Drone Fighter Bay">
+ <general>
+  <slot prop="fighter_bay">weapon</slot>
+  <size>large</size>
+  <size>medium</size>
+  <license>Light Combat Vessel License</license>
+  <rarity>2</rarity>
+  <mass>120</mass>
+  <price>1200000</price>
+  <gfx_store>zalek_drone_bomber_fighter.png</gfx_store>
+  <description>This docking facility can launch a wing of bomber drones capable of bombarding enemy capital ships into submission without the mothership ever coming into danger.</description>
+  <cpu>-135</cpu>
+ </general>
+ <specific type="fighter bay" secondary="1">
+  <ammo>Za'lek Bomber Drone Fighter</ammo>
+  <delay>4</delay>
+  <reload_time>120</reload_time>
+  <amount>2</amount>
+ </specific>
+</outfit>

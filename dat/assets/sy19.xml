@@ -10,13 +10,13 @@
  </GFX>
  <presence>
   <faction>Thurion</faction>
-  <value>400.000000</value>
+  <value>100.000000</value>
   <range>0</range>
  </presence>
  <general>
   <class>1</class>
   <population>2000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -47,5 +47,6 @@
   <item>Hulls High</item>
   <item>Hulls Elite</item>
   <item>Star Maps</item>
+  <item>Thurion Elite Outfits</item>
  </tech>
 </asset>

@@ -22,11 +22,11 @@
  <jumps>
   <jump target="Daravon">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Urbanus">
    <pos x="21791.360195" y="4943.063790"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="BioPlasma Talon Stage X">
+ <general>
+  <slot prop="bio_weapon">weapon</slot>
+  <size>large</size>
+  <license>Heavy Weapon License</license>
+  <rarity>1</rarity>
+  <mass>50</mass>
+  <price>72000</price>
+  <description>The BioPlasma Talon is the strongest forward-facing organic weapon in existence. Boasting damage which puts it in line with some of the strongest weapons in the galaxy with incredibly low cognitive requirements for its damage output, Soromid ships equipped with this weapon are rightly feared. This organ has reached Stage X, its full potential.</description>
+  <gfx_store>railgun.webp</gfx_store>
+  <cpu>-35</cpu>
+ </general>
+ <specific type="bolt">
+  <gfx>massL.png</gfx>
+  <sound>mass</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <delay>1.7</delay>
+  <speed>700</speed>
+  <range>2200</range>
+  <falloff>1600</falloff>
+  <gfx_end>massL-end.png</gfx_end>
+  <energy>60</energy>
+  <heatup>75</heatup>
+  <trackmin>7000</trackmin>
+  <trackmax>20000</trackmax>
+  <swivel>22</swivel>
+  <damage>
+   <type>impact</type>
+   <penetrate>72</penetrate>
+   <physical>76</physical>
+   <disable>3.4</disable>
+  </damage>
+ </specific>
+</outfit>

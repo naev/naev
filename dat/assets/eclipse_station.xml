@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>4000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>dv_mil_restricted</land>
    <refuel/>
@@ -37,5 +37,6 @@
   <item>High Tech Upgrades 1</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
+  <item>Dvaered Elite Outfits</item>
  </tech>
 </asset>

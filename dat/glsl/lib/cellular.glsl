@@ -46,9 +46,9 @@ vec2 cellular2x2(vec2 P) {
 	return sqrt(d.xy);
 #endif /* CELLULAR_NOISE_ACCURATE */
 }
-
 #undef K
 #undef K2
 #undef jitter
+
 
 #endif /* _CELLULAR_GLSL */

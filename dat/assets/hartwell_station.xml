@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>1300</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>srm_mil_restricted</land>
    <refuel/>
@@ -38,5 +38,6 @@
   <item>High Tech Upgrades 2</item>
   <item>Bioship Outfits</item>
   <item>Soromid Military Ships</item>
+  <item>Soromid Elite Outfits</item>
  </tech>
 </asset>

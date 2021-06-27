@@ -16,7 +16,7 @@
  <general>
   <class>O</class>
   <population>30000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -50,5 +50,6 @@
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
   <item>Bulk Trade Ships</item>
+  <item>Za'lek Elite Outfits</item>
  </tech>
 </asset>

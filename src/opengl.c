@@ -66,7 +66,7 @@ static int gl_view_x = 0; /* X viewport offset. */
 static int gl_view_y = 0; /* Y viewport offset. */
 static int gl_view_w = 0; /* Viewport width. */
 static int gl_view_h = 0; /* Viewport height. */
-gl_Matrix4 gl_view_matrix = {0};
+gl_Matrix4 gl_view_matrix = {{{0}}};
 
 
 /*
@@ -79,7 +79,6 @@ static int gl_getFullscreenMode (void);
 static int gl_getGLInfo (void);
 static int gl_defState (void);
 static int gl_setupScaling (void);
-static int gl_hint (void);
 
 
 /*
@@ -344,9 +343,7 @@ static int gl_getGLInfo (void)
          gl_screen.r, gl_screen.g, gl_screen.b, gl_screen.a,
          gl_has(OPENGL_DOUBLEBUF) ? _("yes") : _("no"),
          gl_screen.fsaa, gl_screen.tex_max);
-   DEBUG(_("vsync: %s, compress: %s"),
-         gl_has(OPENGL_VSYNC) ? _("yes") : _("no"),
-         gl_texHasCompress() ? _("yes") : _("no"));
+   DEBUG(_("vsync: %s"), gl_has(OPENGL_VSYNC) ? _("yes") : _("no"));
    DEBUG(_("Renderer: %s"), glGetString(GL_RENDERER));
    DEBUG(_("Version: %s"), glGetString(GL_VERSION));
 
@@ -428,23 +425,6 @@ static int gl_setupScaling (void)
 
 
 /**
- * Sets up the opengl hints.
- */
-static int gl_hint (void)
-{
-   GLenum mod;
-
-   /* Choose what quality to do it at. */
-   mod = GL_NICEST;
-
-   /* Do some hinting. */
-   glHint(GL_TEXTURE_COMPRESSION_HINT, mod);
-
-   return 0;
-}
-
-
-/**
  * @brief Initializes SDL/OpenGL and the works.
  *    @return 0 on success.
  */
@@ -490,9 +470,6 @@ int gl_init (void)
    /* Finishing touches. */
    glClear( GL_COLOR_BUFFER_BIT ); /* must clear the buffer first */
    gl_checkErr();
-
-   /* Start hinting. */
-   gl_hint();
 
    /* Initialize subsystems.*/
    gl_initMatrix();

@@ -10,7 +10,7 @@ const float VEL_FACTOR = 1.0/8.0;
 
 void main (void)
 {
-   vec2 uv = VaryingTexCoord.st + shake_pos;
+   vec2 uv = VaryingTexCoord.st + 5.0 * shake_pos;
 
    /* Lens Distortion. */
    float aberration = pow( length( uv * 2.0 - 1.0 ), 2.0 );

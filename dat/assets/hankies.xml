@@ -16,7 +16,7 @@
  <general>
   <class>G</class>
   <population>35000000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>land_hiclass</land>
    <refuel/>

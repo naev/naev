@@ -41,6 +41,7 @@
 
   <!-- Star Systems -->
   <its:translateRule selector="/ssys/@name" translate="yes"/>
+  <its:translateRule selector="/ssys/general/features" translate="yes"/>
 
   <!-- Fleets -->
   <its:translateRule selector="/Fleets/fleet/pilots/pilot/@name" translate="yes"/>

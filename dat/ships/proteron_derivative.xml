@@ -15,7 +15,6 @@
  <license>Light Combat Vessel License</license>
  <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Derivatives is still a foe to be reckoned with. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
  <health>
-  <absorb>5</absorb>
   <armour>35</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -29,11 +28,11 @@
   <weapon size="small" x="10" y="0" h="0" />
   <weapon size="small" x="0" y="-4" h="-3" />
   <weapon size="small" x="0" y="4" h="-3" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
   <structure size="small" />

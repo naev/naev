@@ -14,7 +14,6 @@
  <fabricator>Aerosys</fabricator>
  <description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel, and it's so simple to pilot that reaction time is vastly improved. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the pirate ranks.</description>
  <health>
-  <absorb>0</absorb>
   <armour>25</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -28,10 +27,10 @@
   <weapon size="small" x="15" y="0" h="-3" />
   <weapon size="small" x="15" y="0" h="-3" />
   <weapon size="small" x="0" y="0" h="0" />
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-16 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
   <structure size="small" />
  </slots>

@@ -18,7 +18,7 @@
  <jumps>
   <jump target="Ryder">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Tormulex">
    <pos x="-1261.740957" y="-1640.900352"/>

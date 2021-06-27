@@ -16,7 +16,7 @@
  <general>
   <class>2</class>
   <population>4500</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -45,5 +45,6 @@
   <item>Systems Medium</item>
   <item>Hulls Medium</item>
   <item>Hulls High</item>
+  <item>Pirate Elite Outfits</item>
  </tech>
 </asset>

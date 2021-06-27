@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Low Radiation Sensor Modulator">
+ <general>
+  <typename>System Improvement</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>1</mass>
+  <price>370000</price>
+  <gfx_store>placeholder.webp</gfx_store>
+  <description>By using special modulation highly tuned for low radiation environments, the Low Radiation Sensor Modulator is able to increase the detection of nearby ships while also giving more sensibility to jump point signatures.</description>
+  <desc_extra>Only active when in stealth.</desc_extra>
+  <limit>low_radiation_sensor_modulator</limit>
+ </general>
+ <specific type="modification">
+  <ew_detect>25</ew_detect>
+  <jump_distance>500</jump_distance>
+  <lua>outfits/utility/low_radiation_sensor_modulator.lua</lua>
+ </specific>
+</outfit>

@@ -21,7 +21,7 @@
 --]]
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
-local minerva = require 'minerva'
+local minerva = require 'campaigns.minerva'
 
 zalek_holo = "zalek_thug1.png"
 zalek_image = "zalek_thug1.png"
@@ -66,8 +66,8 @@ function takeoff ()
    pilot.toggleSpawn(false)
 
    -- Meta factions
-   local fdv = faction.dynAdd( "Dvaered", "dv_thug", "Dvaered Thug" )
-   local fzl = faction.dynAdd( "Za'lek", "zl_thug", "Za'lek Thug" )
+   local fdv = faction.dynAdd( "Dvaered", "dv_thug", _("Dvaered Thug") )
+   local fzl = faction.dynAdd( "Za'lek", "zl_thug", _("Za'lek Thug") )
    faction.dynEnemy( fdv, fzl )
    -- Create the ships
    local pos = planet.get("Minerva Station"):pos()

@@ -30,7 +30,7 @@ require "missions/sirius/common"
 bmsg = {}
 bmsg[1] = _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare coolly and he half-heartedly tries to strikes up a conversation. "Nice drinks they have here." You feign interest so as not to be impolite.
     He continues impatiently. "You look like you're in need of a couple spare credits," he finally says. "I have, uh, a shipment that needs getting to %s. Are you interested? Just has to be kept under wraps if you know what I mean. Pay is good though. %s. That's all you need to know." He pauses for a moment. "How about it?"]])
-bmsg[2] = _([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to %s, and avoid the Sirius military. I'll let my contacts know to expect you. They'll pay you when you land."
+bmsg[2] = _([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to %s, and avoid the Sirius military. You know, don't let them scan you. I'll let my contacts know to expect you. They'll pay you when you land."
     You shake his sticky hand and walk off, content that you've made an easy buck.]])
 
 --ending messages
@@ -65,8 +65,7 @@ function create()
    --set the mission stuff
    misn.setReward(creditstring(reward))
    misn.setTitle(misn_title)
-   misn.setNPC(npc_name, "sirius/unique/strangeman.png")
-   misn.setDesc(bar_desc)
+   misn.setNPC(npc_name, "sirius/unique/strangeman.webp", bar_desc)
    osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
    misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
@@ -90,7 +89,9 @@ function accept()
       tk.msg(misn_title,notenoughcargo) --and if they don't, the mission finishes.
       misn.finish(false)
    end
-   small_arms = misn.cargoAdd("Small Arms",5) --I'd like this to be contraband when this actually gets implemented in-game.
+   local c = misn.cargoNew( N_("Small Arms"), N_("An assortment of weapons that are not legal in Sirius space.") )
+   c:illegalto( {"Sirius"} )
+   small_arms = misn.cargoAdd(c,5) --I'd like this to be contraband when this actually gets implemented in-game.
    hook.land("land")
 end
 

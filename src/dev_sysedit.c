@@ -298,6 +298,9 @@ static void sysedit_close( unsigned int wid, char *wgt )
 
    /* Propagate autosave checkbox state */
    uniedit_updateAutosave();
+
+   /* Unset. */
+   sysedit_wid = 0;
 }
 
 
@@ -335,7 +338,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
    p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
-   p->hide           = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
+   p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    /* Add the new presence. */
    system_addPresence(sysedit_sys, p->faction, p->presenceAmount, p->presenceRange);
@@ -387,7 +390,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
    p->pos.x             = sysedit_xpos / sysedit_zoom;
    p->pos.y             = sysedit_ypos / sysedit_zoom;
-   p->hide              = pow2(HIDE_DEFAULT_PLANET);
+   p->hide              = HIDE_DEFAULT_PLANET;
    p->radius            = b->radius;
 
    /* Add new planet. */
@@ -551,7 +554,8 @@ void sysedit_sysScale( StarSystem *sys, double factor )
    /* Scale radius. */
    sys->radius *= factor;
    snprintf( buf, sizeof(buf), _("Radius: %.0f"), sys->radius );
-   window_modifyText( sysedit_wid, "txtSelected", buf );
+   if (sysedit_wid > 0)
+      window_modifyText( sysedit_wid, "txtSelected", buf );
 
    /* Scale planets. */
    for (i=0; i<array_size(sys->planets); i++) {
@@ -1353,7 +1357,7 @@ static void sysedit_editPnt( void )
    window_setInput( wid, "inpPresence", buf );
    snprintf( buf, sizeof(buf), "%d", p->presenceRange );
    window_setInput( wid, "inpPresenceRange", buf );
-   snprintf( buf, sizeof(buf), "%g", sqrt(p->hide) );
+   snprintf( buf, sizeof(buf), "%g", p->hide );
    window_setInput( wid, "inpHide", buf );
 
    /* Generate the list. */
@@ -1454,7 +1458,7 @@ static void sysedit_editJump( void )
          "btnClose", _("Close"), sysedit_editJumpClose );
 
    /* Load current values. */
-   snprintf( buf, sizeof(buf), "%g", sqrt(j->hide) );
+   snprintf( buf, sizeof(buf), "%g", j->hide );
    window_setInput( wid, "inpHide", buf );
 }
 
@@ -1479,7 +1483,7 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
       jp_rmFlag( j, JP_HIDDEN );
       jp_rmFlag( j, JP_EXITONLY );
    }
-   j->hide  = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
+   j->hide  = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    window_close( wid, unused );
 }
@@ -2050,9 +2054,36 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
       free( p->gfx_spacePath );
       gl_freeTexture( p->gfx_space );
       p->gfx_spacePath = strdup( str );
+      p->gfx_space = NULL;
       planet_gfxLoad( p );
    }
 
    /* For now we close. */
    sysedit_btnGFXClose( wid, wgt );
 }
+
+/* @brief Renders important map stuff.
+ */
+void sysedit_renderMap( double bx, double by, double w, double h, double x, double y, double r )
+{
+   /* background */
+   gl_renderRect( bx, by, w, h, &cBlack );
+
+   map_renderDecorators( x, y, 1, 1. );
+
+   /* Render faction disks. */
+   map_renderFactionDisks( x, y, 1, 1. );
+
+   /* Render environment stuff. */
+   map_renderSystemEnvironment( x, y, 1, 1. );
+
+   /* Render jump paths. */
+   map_renderJumps( x, y, 1 );
+
+   /* Render systems. */
+   map_renderSystems( bx, by, x, y, w, h, r, 1 );
+
+   /* Render system names. */
+   map_renderNames( bx, by, x, y, w, h, 1, 1. );
+}
+

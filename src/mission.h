@@ -8,7 +8,9 @@
 
 
 #include "claim.h"
+#include "commodity.h"
 #include "nlua.h"
+#include "nxml.h"
 #include "opengl.h"
 
 
@@ -106,6 +108,7 @@ typedef struct Mission_ {
    char *reward; /**< Rewards in text */
    glTexture *portrait; /**< Portrait of the mission giver if applicable. */
    char *npc; /**< Name of the NPC giving the mission. */
+   char *npc_desc; /**< Description of the giver NPC. */
 
    /* mission cargo given to the player - need to cleanup */
    unsigned int *cargo; /**< Array (array.h): Cargos given to player. */
@@ -163,6 +166,11 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id );
  * load/quit
  */
 int missions_load (void);
+int missions_loadActive( xmlNodePtr parent );
+int missions_loadCommodity( xmlNodePtr parent );
+Commodity* missions_loadTempCommodity( xmlNodePtr parent );
+int missions_saveActive( xmlTextWriterPtr writer );
+int missions_saveTempCommodity( xmlTextWriterPtr writer, const Commodity* c );
 void mission_cleanup( Mission* misn );
 void mission_shift( int pos );
 void missions_free (void);
@@ -177,11 +185,9 @@ int misn_runFunc( Mission *misn, const char *func, int nargs );
 int misn_run( Mission *misn, const char *func );
 
 /*
- * CLaims.
+ * Claims.
  */
 void missions_activateClaims (void);
 
 
 #endif /* MISSION_H */
-
-

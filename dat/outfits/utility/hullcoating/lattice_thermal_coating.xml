@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Lattice Thermal Coating">
+ <general>
+  <typename>Hull Coating</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>280000</price>
+  <description>Given that there is no atmosphere in space, ships rely on radiation to passively get rid of excess heat. Such radiation is generally limited by the size of the ship. Lattice thermal coating overcomes this limitation by using a special nano-material that is able to radiate through itself, allowing for increased heat dissipation.</description>
+  <gfx_store>lattice_thermal_coating.webp</gfx_store>
+  <limit>hullcoat</limit>
+ </general>
+ <specific type="modification">
+  <heat_dissipation>50</heat_dissipation>
+ </specific>
+</outfit>

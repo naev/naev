@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>2500</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>zlk_mil_restricted</land>
    <refuel/>
@@ -27,6 +27,7 @@
   <description>These shipyards are one of the places where Za'lek vessels are built and sent out to the defense forces. It also maintains a small contingent of Za'lek vessels at home to serve as a in-system guard.</description>
  </general>
  <tech>
+  <item>Za'lek Military Outfits</item>
   <item>Za'lek Military Ships</item>
   <item>Systems Medium</item>
   <item>Systems High</item>

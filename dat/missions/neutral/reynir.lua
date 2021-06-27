@@ -18,9 +18,9 @@
            return count &gt; 1
         end)()</cond>
  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
+ <notes>
+  <tier>1</tier>
+ </notes>
 </mission>
 --]]
 --[[
@@ -88,8 +88,7 @@ log_text_bad = _([[You took an old man named Reynir on a ride in outer space, bu
 
 function create ()
    -- Note: this mission does not make any system claims. 
-   misn.setNPC( _("Reynir"), "neutral/unique/reynir.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Reynir"), "neutral/unique/reynir.webp", bar_desc )
 
    -- Mission variables
    misn_base, misn_base_sys = planet.cur()
@@ -119,7 +118,8 @@ function accept ()
 
       tk.msg( title[4], string.format(text[3], misn_base:name()) )
       misn.osdCreate(misn_title, {osd_msg[1]:format(misn_base:name())})
-      cargoID = misn.cargoAdd( "Civilians", 0 )
+      local c = misn.cargoNew( N_("Reynir"), N_("A old man who wants to see space.") )
+      cargoID = misn.cargoAdd( c, 0 )
    end
 
 end

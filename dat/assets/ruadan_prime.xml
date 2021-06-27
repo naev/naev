@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>1000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>zlk_ruadan</land>
    <refuel/>
@@ -41,6 +41,7 @@
   <item>Hulls Medium</item>
   <item>Hulls High</item>
   <item>Hulls Elite</item>
+  <item>Za'lek Military Outfits</item>
   <item>Za'lek Military Ships</item>
   <item>Low Tech Upgrades</item>
   <item>High Tech Upgrades 1</item>
@@ -54,5 +55,6 @@
   <item>Beam 1</item>
   <item>Beam 2</item>
   <item>Star Maps</item>
+  <item>Za'lek Elite Outfits</item>
  </tech>
 </asset>

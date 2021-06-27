@@ -66,8 +66,7 @@ function create ()
    dest = planets[index][1]
    sys = planets[index][2]
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.png" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", bar_desc )
 end
 
 
@@ -93,7 +92,8 @@ function accept ()
    misn.osdCreate(title[2], {misn_desc:format(dest:name(), sys:name())})
 
    -- Set up the goal
-   parcels = misn.cargoAdd("Parcels", 0)
+   local c = misn.cargoNew( N_("Parcels"), N_("A bunch of boring Empire parcels.") )
+   parcels = misn.cargoAdd(c, 0)
    hook.land("land")
 end
 

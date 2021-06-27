@@ -2,10 +2,10 @@
 <outfit name="Headhunter Missile">
  <general>
   <license>Medium Weapon License</license>
-  <mass>0.4</mass>
+  <mass>0.5</mass>
   <price>0</price>
   <description>The Headhunter class interceptor missile is a medium calibre missile that can deal devastating damage to small and medium sized targets, while remaining reasonably fast and agile. Most effective when launched at distant enemies.</description>
-  <gfx_store>headhunter.png</gfx_store>
+  <gfx_store>placeholder.webp</gfx_store>
  </general>
  <specific type="ammo">
   <gfx>headhunter.png</gfx>
@@ -21,7 +21,7 @@
   <resist>20</resist>
   <damage>
    <type>impact</type>
-   <penetrate>10</penetrate>
+   <penetrate>24</penetrate>
    <physical>80</physical>
    <disable>1</disable>
   </damage>

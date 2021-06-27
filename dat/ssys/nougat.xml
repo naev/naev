@@ -18,15 +18,15 @@
  <jumps>
   <jump target="Chraan">
    <pos x="-20569.861830" y="5797.696026"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Esker">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Karman">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
  <asteroids>

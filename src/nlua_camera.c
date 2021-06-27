@@ -17,6 +17,7 @@
 #include "nlua_camera.h"
 
 #include "camera.h"
+#include "conf.h"
 #include "log.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
@@ -28,10 +29,14 @@
 /* Camera methods. */
 static int camL_set( lua_State *L );
 static int camL_get( lua_State *L );
+static int camL_setZoom( lua_State *L );
+static int camL_getZoom( lua_State *L );
 static int camL_shake( lua_State *L );
 static const luaL_Reg cameraL_methods[] = {
    { "set", camL_set },
    { "get", camL_get },
+   { "setZoom", camL_setZoom },
+   { "getZoom", camL_getZoom },
    { "shake", camL_shake },
    {0,0}
 }; /**< Camera Lua methods. */
@@ -94,10 +99,7 @@ static int camL_set( lua_State *L )
    else if (lua_isvector(L,1))
       vec = lua_tovector(L,1);
    soft_over = lua_toboolean(L,2);
-   if (lua_isnumber(L,3))
-      speed = luaL_checkinteger(L,3);
-   else
-      speed = 2500;
+   speed = luaL_optinteger(L,3,2500);
 
    /* Set the camera. */
    if (lp != 0) {
@@ -131,6 +133,58 @@ static int camL_get( lua_State *L )
 
 
 /**
+ * @brief Sets the camera zoom.
+ *
+ * Make sure to reset camera the zoom after using it or we'll run into trouble.
+ *
+ * @usage camera.setZoom() -- Resets the camera zoom
+ *
+ *    @luatparam number zoom Level of zoom to use (1 would indicate 1 unit = 1 pixel while 2 would be 1 unit = 2 pixels)
+ *    @luatparam[opt=false] boolean hard_over Indicates that the camera should change the zoom gradually instead of instantly.
+ * @luafunc setZoom
+ */
+static int camL_setZoom( lua_State *L )
+{
+   double zoom = luaL_optnumber(L,1,-1.0);
+   int hard_over = lua_toboolean(L,2);
+
+   NLUA_CHECKRW(L);
+
+   /* Handle arguments. */
+   if (zoom > 0) {
+      zoom = 1.0 / zoom;
+      cam_zoomOverride( 1 );
+      if (hard_over)
+         cam_setZoom( zoom );
+      else
+         cam_setZoomTarget( zoom );
+   }
+   else {
+      cam_zoomOverride( 0 );
+      cam_setZoomTarget( 1. );
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Gets the camera zoom.
+ *
+ *    @luatreturn number Zoom level of the camera.
+ *    @luatreturn number Maximum zoom level of the camera (furthest).
+ *    @luatreturn number Minimum zoom level of the camera (closest).
+ * @luafunc get
+ */
+static int camL_getZoom( lua_State *L )
+{
+   lua_pushnumber( L, 1.0/cam_getZoom() );
+   lua_pushnumber( L, 1.0/conf.zoom_far );
+   lua_pushnumber( L, 1.0/conf.zoom_near );
+   return 3;
+}
+
+
+/**
  * @brief Makes the camera shake.
  *
  * @usage camera.shake() -- Shakes the camera with amplitude 1.
@@ -154,7 +208,7 @@ static int camL_shake( lua_State *L )
          NLUA_INVALID_PARAMETER(L);
    }
 
-   spfx_shake( SHAKE_MAX * amplitude );
+   spfx_shake( amplitude );
    return 0;
 }
 

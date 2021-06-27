@@ -21,7 +21,7 @@
 --[[
 -- Beat up Dvaered thugs making them think the za'leks did it
 --]]
-local minerva = require "minerva"
+local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
@@ -32,7 +32,7 @@ misn_title = _("Dvaered Thugs")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to mess around with Dvaered thugs.")
 time_needed = 15 -- in seconds
-reward_amount = 300000 -- 300k
+reward_amount = 300e3 -- 300k
 
 mainsys = "Limbo"
 runawaysys = "Pultatis"
@@ -50,8 +50,8 @@ function create ()
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait )
-   misn.setDesc( minerva.pirate.description )
+   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
+   misn.setDesc( misn_desc )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
 end
@@ -60,7 +60,7 @@ end
 function accept ()
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
+   local pir = vn.newCharacter( minerva.vn_pirate() )
    vn.music( minerva.loops.pirate )
    vn.transition()
    vn.label( "leave" )
@@ -90,15 +90,13 @@ They beam a smile at you.]]),_(runawaysys)))
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
-      misn.finish(false)
       return
    end
 
-   shiplog.createLog( logidstr, minerva.log.pirate.logname, minerva.log.pirate.logtype, true )
-   shiplog.appendLog( logidstr, _("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
+   shiplog.create( logidstr, minerva.log.pirate.logname, minerva.log.pirate.logtype )
+   shiplog.append( logidstr, _("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
 
    misn.accept()
-   misn.setDesc( misn_desc )
    osd = misn.osdCreate( _("Thug Decoy"),
          {_("Get the drone to follow you"),
           _("Harass the thugs"),
@@ -117,7 +115,7 @@ function land ()
       vn.clear()
       vn.scene()
       vn.music( minerva.loops.pirate )
-      local pir = vn.newCharacter( minerva.pirate.name, {image=minerva.pirate.image} )
+      local pir = vn.newCharacter( minerva.vn_pirate() )
       vn.transition()
       vn.na(_("After you land on Minerva Station you are once again greeted by the shady character that gave you the job dealing with the Dvaered thugs."))
       pir(_([["I hear it went rather well. This should cause more tension between the Za'lek and the Dvaered so we can get them off this station. However, this is only the beginning."]]))
@@ -130,7 +128,7 @@ She winks at you and walks way.]]))
       vn.sfxVictory()
       vn.run()
 
-      shiplog.appendLog( logidstr, _("You succeeded in making the Dvaered think that the Za'lek were harassing their thugs near Minerva station.") )
+      shiplog.append( logidstr, _("You succeeded in making the Dvaered think that the Za'lek were harassing their thugs near Minerva station.") )
       misn.finish(true)
    end
 end

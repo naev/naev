@@ -16,13 +16,14 @@
  <general>
   <class>P</class>
   <population>2000000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
    <bar/>
    <missions/>
    <outfits/>
+   <shipyard/>
   </services>
   <commodities/>
   <description>Welcome to Totoran, home of the galaxy's biggest and best fighting tournament: The Crimson Gauntlet! With 34 major rankings and 17 deadly arenas, there is always a fight to suit your tastes! Feel the adrenaline rush as you watch the head-to-head duels, team melees, and deathmatches careen to their violent finales! Sponsor a contestant, invest in their equipment, see them obliterate their opponents and win a fortune! Snacks available at all licensed outlets.</description>
@@ -36,5 +37,8 @@
   <item>Basic Outfits 1</item>
   <item>Basic Outfits 2</item>
   <item>Missiles 1</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Dvaered Elite Outfits</item>
  </tech>
 </asset>

@@ -34,7 +34,7 @@
 --
 -- Eccentric Scientist in "Westhaven" (slightly senile with dementia).
 --]]
-local minerva = require "minerva"
+local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
@@ -69,7 +69,7 @@ hint4_colour = nil
 strangelove = minerva.strangelove
 ecc_barname = _("Hologram Projector")
 ecc_portrait = strangelove.portrait
-ecc_description = _("A terminal with which you can check your current token balance and buy items with tokens.")
+ecc_description = _("An old decrepit hologram projector sits in the corner. It looks like you could use this to communicate with the owner of the station.")
 
 misn_title = _("Finding Maikki's Father")
 misn_reward = _("???")
@@ -106,8 +106,8 @@ function create ()
    if not misn.claim( system.get(eccsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( minerva.maikki.name, minerva.maikki.portrait )
-   misn.setDesc( minerva.maikki.description )
+   misn.setNPC( minerva.maikki.name, minerva.maikki.portrait, minerva,maikki.description )
+   misn.setDesc( misn_desc )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
 end
@@ -118,7 +118,6 @@ function accept ()
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
-      misn.finish(false)
       return
    end
 
@@ -197,9 +196,8 @@ and %s in the %s system."]]),
       vn.label( "accept" )
       vn.func( function ()
          misn.accept()
-         misn.setDesc( misn_desc )
          misn_state = 0
-         shiplog.appendLog( logidstr, _("You agreed to continue helping Maikki find her father. She told you to try to find hints from three Za'lek researchers.") )
+         shiplog.append( logidstr, _("You agreed to continue helping Maikki find her father. She told you to try to find hints from three Za'lek researchers.") )
       end )
       maikki(_([["I think we should be able to find out what happened to my father's ship in the nebula. It seems like someone is very interested on stuff that is being found in the nebula and is behind the scavengers you met. Whoever is behind them could also be related to whatever happened to the ship in the first place."]]))
       maikki(_([["I ran a check on Za'lek researchers that would likely be interested in stuff taken from the nebula and there seems to be less than I imagined. I was able to get a list of three researchers. I'll give you the details on them and you should pay them a visit to see if they know anything."]]))
@@ -276,7 +274,7 @@ Her eyes sparkle with determination.]]))
    maikki(_([["The Za'leks were assholes as expected, but I'm glad you found out what I thought: that he's somewhere here being held captive or something… This is still all very weird though."]]))
    maikki(_([["I'm a bit worried about that Dr. Strangelove, what exactly did he mean? Is he even a real doctor? We still even don't know happened in the nebula nor what they want with my father. Instead of answering questions we keep on finding new questions. I suppose that this is progress?…"]]))
    maikki(_([["Anyway, if we can believe Dr. Strangelove, my father is alive and somewhere here! I don't think we have any reason to doubt him, Za'leks don't tend to lie, they only bend the truth. All we have to do is find my father now and everything should fall in place."]]))
-   maikki(_([[She is visibly exciting.
+   maikki(_([[She is visibly excited.
 "It is all coming together! I will finally be able to meet him again! This is so great! I don't know what to tell him first. Do you think he'll recognize me?"]]))
    maikki(_([["I don't have a lead at the moment, but it can't be far. Keep your eyes open and if you find anything look suspicious, please get in touch with me! I'll also be keeping my eyes open."]]))
    maikki(_([["Oh, I almost forgot. I got lucky with a Pachinko machine and won a lot of Minerva Tokens and a lifetime supply of parfaits! Since I don't need the tokens to buy anything anymore, here, you can take them."]]))
@@ -285,7 +283,7 @@ Her eyes sparkle with determination.]]))
       -- no reward, yet...
       mission_finish = true
       minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
-      shiplog.appendLog( logidstr, _("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
+      shiplog.append( logidstr, _("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
    end )
    vn.na(string.format(_("You recieve %s.", minerva.tokens_str(500)), minerva.tokens_get(500)))
    maikki(_([["I'll be around here if you find anything."]]))
@@ -326,8 +324,6 @@ function generate_npc ()
 
    elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) and misn_state < 6 then
       npc_ecc = misn.npcAdd( "approach_eccentric", ecc_barname, ecc_portrait, ecc_description )
-      music.load("landing_sinister")
-      music.play()
    end
 end
 
@@ -351,7 +347,7 @@ function visited ()
    if misn_state==0 and visitedhints()==3 then
       misn_state = 1
       markerhint4 = misn.markerAdd( system.get(hintsys[4]), "low" )
-      shiplog.appendLog( logidstr, _("You met the three researchers that Maikki told you about and found out a lead about another researcher.") )
+      shiplog.append( logidstr, _("You met the three researchers that Maikki told you about and found out a lead about another researcher.") )
    end
    hintosd()
 end
@@ -380,7 +376,7 @@ function approach_hint1 ()
 
    vn.na(_("You approach the professor."))
    prof(_([["Hello, how can I help you?"]]))
-   vn.me(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
+   vn.na(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
    prof(_([["Very interesting, but I stopped working on that line of research several cycles ago. It was really a mess of a project. The project leader was pushing us very hard due to the other competition."]]))
    prof(_([["In the end, some papers results were falsified and the project leader was barred from doing research. That was too much for them and they took their own life. How illogical!"]]))
    prof(_([["If you are interested in the nebula research, you should go visit the museum of nebula artifacts. Although due to administrative changes, I don't think it'll open again for a few cycles."]]))
@@ -410,7 +406,7 @@ function approach_hint2 ()
 
    vn.na(_("You approach the professor."))
    prof(_([["What can I do for you?"]]))
-   vn.me(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
+   vn.na(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
    prof(_([[They rubs their temples.
 "Ah, the nebula artifacts… Not very good experiences with those, no, not really interested in them anymore."]]))
    prof(_([["I was part of a really ambitious project to try to track down the origin of the incident, which just end up being a bureaucratic nightmare."]]))
@@ -419,7 +415,7 @@ They shudder when they says the word "work packages".]]))
    prof(_([["At the end, we were just chaining meetings and answering e-mails and not getting anything done. We ended up handing in a 5 page report written by an intern for the mid-project evaluation and almost lost all the funding. The project leader panicked and it all went to hell from there."]]))
    prof(_([["All nebula research is doomed to end that way. I haven't seen a project succeed yet, despite all the proposal calls attempting to address the issue."]]))
    vn.na(_("You inquire about other project members."))
-   prof(_([["The only logical step after that traumatic experience is to get as far away as possible fro nebula research. As far as I know all the project members moved to new topics, although none as exciting as mine."]]))
+   prof(_([["The only logical step after that traumatic experience is to get as far away as possible from nebula research. As far as I know all the project members moved to new topics, although none as exciting as mine."]]))
    prof(_([["Have you heard of graphene infused hydro nano lattices? By taking sheets of graphene and creating strong lateral strain under the effect of intense Coriolis electro-magnetic induction fields, it is possible to obtain a behaviour similar to turbulent hydrofoils. And what's even better is that they naturally form octahedral quasi-lattices that allow absorbing most low-spectrum frequencies!"]]))
    prof(_([["They could change material science as we know it! Image being able to create materials with almost any property you can desire! We do still have to solve the problem of the subatomic crystallite implosion, but once I finish recovering the notes from the crater left at my last laboratory, I should be able to solve it in no time. By the way, since the accident with my last assistant, I'm looking for a new one. Would you be interested?"]]))
    vn.na(_("You get away as fast as you can from them as they keep on rambling."))
@@ -443,7 +439,7 @@ function approach_hint3 ()
 
    vn.na(_("You approach the professor."))
    prof(_([["Hello."]]))
-   vn.me(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
+   vn.na(_("You inquire to about whether or not they are interested in artifacts from the nebula."))
    prof(_([["Ah, such fond memories. I have never been interested in the artifacts from the nebula themselves, but I was part of a large project dealing with them as part of the philosophical and ethical committee."]]))
    prof(_([["Recently, due to the illogical imbalance between science and humanities, all large Za'lek projects are require to have at least a 10% of humanities members. This has given me lots of opportunities to work on many interesting projects."]]))
    prof(_([["Oh yes, on the nebula artifacts. I remember having fun conversations with our colleagues about whether or not the artifacts from the nebula actually do exist or not given that we are using imperfect sensorial organs to see, touch, and feel them. You see, given that we only perceive reality through our imperfect organs, can we actually know whether or not there is an absolute objective reality?"]]))
@@ -486,7 +482,7 @@ function approach_hint4 ()
       shrimp(_([["PERSON. PERSON. PERSON."]]))
       drshrimp(_([["C'mon Calliope, I already know that. Here, have a pellet."]]))
       shrimp:rename("Calliope")
-      shrimp(_([[A pellet of shrimp food releases into the floating aquarium. The shrimp wastes no time in getting scarfing it down.
+      shrimp(_([[A pellet of shrimp food is released into the floating aquarium. The shrimp wastes no time in getting scarfing it down.
    "HAPPY. GOOD."]]))
       drshrimp(_([["What do you want?"]]))
       vn.na(_("You explain to him that you are looking for information related to nebula artifacts."))
@@ -569,7 +565,7 @@ He activates her feeding system and a food pellet drops out.]]))
          misn.osdCreate( misn_title, {string.format(_("\tGo to %s"), _(eccsys))} )
          misn.markerRm( markerhint4 )
          marker_ecc = misn.markerAdd( system.get(eccsys), "low" )
-         shiplog.appendLog( logidstr, _("You found about a strange researcher who appears to be in Westhaven and is related to the nebula research.") )
+         shiplog.append( logidstr, _("You found about a strange researcher who appears to be in Westhaven and is related to the nebula research.") )
       end
    end )
    vn.jump("menu_msg")
@@ -611,7 +607,7 @@ function enter ()
       hook.pilot( b, "attacked", "ecc_feral_boss_attacked" )
       hook.pilot( b, "death", "ecc_feral_boss_dead" )
       b:setNoboard(true)
-      local num = 3
+      local num = 4
       for i=1,num do
          local fpos = pos + vec2.newP( 50, i*360/num )
          local p = spawn_single( "Za'lek Light Drone", fpos )
@@ -633,10 +629,12 @@ end
 function ecc_dist ()
    local pp = player.pilot()
    local dist = pp:pos():dist( eccpos )
-   if dist < 3000 then
+
+   if dist < math.min( pp:detectedDistance(), 3000 ) then
       system.mrkRm( sysmarker )
       local spawners = {
          "Za'lek Heavy Drone",
+         "Za'lek Light Drone",
          "Za'lek Light Drone",
          "Za'lek Light Drone",
       }
@@ -678,7 +676,7 @@ function ecc_timer_dead ()
    vn.sfxEerie()
    diff.apply( eccdiff )
    misn_state = 3
-   shiplog.appendLog( logidstr, _("You were attacked by a Za'lek security system and found a laboratory disguised as an asteroid in Westhaven.") )
+   shiplog.append( logidstr, _("You were attacked by a Za'lek security system and found a laboratory disguised as an asteroid in Westhaven.") )
 end
 
 
@@ -704,10 +702,11 @@ function ecc_feral_boss_dead ()
    vn.done( "hexagon" )
    vn.run()
 
-   nebula_artifacts = misn.cargoAdd( "Nebula Artifact?", 0 )
+   local c = misn.cargoNew( N_("Nebula Artifact?"), N_("A very damaged thing that seems to be mainly biological. I guess this is the nebula artifact?") )
+   nebula_artifacts = misn.cargoAdd( c, 0 )
    misn_state = 5
    misn.osdCreate( misn_title, {_("Go back to Dr. Strangelove")} )
-   shiplog.appendLog( logidstr, _("You recovered a nebula artifact that Dr. Strangelove wanted from feral drones.") )
+   shiplog.append( logidstr, _("You recovered a nebula artifact that Dr. Strangelove wanted from feral drones.") )
 end
 
 drone_msgs = {
@@ -761,7 +760,7 @@ He cackles manically.]]))
 You glance at a crate labelled 'NEBULA ARTIFACTS #082' in the corner of the room.]]))
       dr(_([["Anyway, I am very busy now, yes? All the science won't do itself. Almost have a new specimen ready and it will be better than ever! The old ones were fairly inadequate."]]))
       ecc_visitedonce = true
-      shiplog.appendLog( logidstr, _("You met an eccentric researcher named Dr. Strangelove in Westhaven." ) )
+      shiplog.append( logidstr, _("You met an eccentric researcher named Dr. Strangelove in Westhaven." ) )
    else
       vn.na(_("The hologram projector flickers and Dr. Strangelove comes into view. He doesn't look very happy to see you again."))
    end
@@ -814,7 +813,7 @@ He glares at you.]]))
    vn.func( function ()
       misn.osdCreate( misn_title, {string.format(_("Recover nebula artifacts from the %s asteroid field"),_(eccsys))} )
       misn_state = 4
-      shiplog.appendLog( logidstr, _("You accepted Dr. Strangelove's request to recover nebula artifacts from feral drones in Westhaven." ) )
+      shiplog.append( logidstr, _("You accepted Dr. Strangelove's request to recover nebula artifacts from feral drones in Westhaven." ) )
    end )
    vn.jump("menu_msg")
 
@@ -877,7 +876,7 @@ His voice gets softer and softer as he keeps on mumbling.]]))
       misn.osdCreate( misn_title, {_("Report back to Maikki in the Limbo system")} )
       misn.markerAdd( system.get("Limbo"), "low")
       misn.markerRm( marker_ecc )
-      shiplog.appendLog( logidstr, _("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )
+      shiplog.append( logidstr, _("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )
    end )
    vn.na(_("You leave behind the hologram project and hope you won't have to deal with Dr. Strangelove in the future."))
    vn.done( "electric" )

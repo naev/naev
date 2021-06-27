@@ -16,12 +16,13 @@
  <general>
   <class>H</class>
   <population>100100</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
   </services>
   <commodities/>
   <description>Tartarus is a hard place to live, and for that reason the Imperial Hostile Environment Training Center is located here. Casualties are distressingly high, but those that do come out whole are so much the better for it. After all, it's hard to find a world worse than Tartarus.</description>

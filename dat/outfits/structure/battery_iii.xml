@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Battery III">
+ <general>
+  <typename>Energy Modifier</typename>
+  <slot>structure</slot>
+  <size>large</size>
+  <mass>160</mass>
+  <price>360000</price>
+  <description>A very large battery unit designed to hold 1200 MJ of energy. It can only be mounted on very large ships.</description>
+  <gfx_store>capacitor4-g.png</gfx_store>
+ </general>
+ <specific type="modification">
+  <energy>1200</energy>
+ </specific>
+</outfit>

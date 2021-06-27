@@ -7,8 +7,8 @@ end
 --[[
 -- Main control function for capital ship behavior.
 --]]
-function atk_capital ()
-   local target = _atk_com_think()
+function atk_capital( target )
+   target = _atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff
@@ -16,17 +16,17 @@ function atk_capital ()
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable() then return end
+   if not _atk_check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
    local range = ai.getweaprange(3)
 
    -- We first bias towards range
-   if dist > range * mem.atk_approach then
+   if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
       _atk_g_ranged( target, dist )
    -- Close enough to melee
-   else   
+   else
      _atk_g_capital(target, dist)
    end
 end
@@ -51,19 +51,19 @@ function _atk_g_capital( target, dist )
       mem.recharge = false
    end
 
-   --if we're far from the target, then turn and approach 
+   --if we're far from the target, then turn and approach
    if dist > range then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         _atk_keep_distance()     
+         _atk_keep_distance()
          ai.accel()
-      else  
+      else
          dir = ai.iface(target)
       end
 
    --at moderate range from the target, prepare to intercept and engage with turrets
    elseif dist > 0.6* range then
-      --drifting away from target, so emphasize intercept 
+      --drifting away from target, so emphasize intercept
       --course facing and accelerate to close
       aimdir = ai.aim(target)
       dir    = ai.iface(target)

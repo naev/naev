@@ -30,9 +30,12 @@ function control ()
 end
 
 
+control_manual = control
+
+
 function attack_nearest( hostile )
    -- Must not be same
-   local target       = ai.target()
+   local target       = ai.taskdata()
    if target == hostile then
       return
    end
@@ -64,7 +67,7 @@ end
 
 
 function attack ()
-   local target = ai.target()
+   local target = ai.taskdata()
 
    -- Stop attacking if it doesn't exist
    if not target:exists() then
