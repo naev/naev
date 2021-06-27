@@ -2,9 +2,9 @@ project('glpk', 'c', version: '5.0')
 
 cc = meson.get_compiler('c')
 foreach arg: [
-              '-Wno-implicit-fallthrough', '-Wno-misleading-indentation', '-Wno-parentheses',
-	      '-Wno-return-type', '-Wno-sign-compare',
-              '-Wno-unused-but-set-variable', '-Wno-unused-function', '-Wno-unused-parameter',
+              '-Wno-implicit-fallthrough', '-Wno-misleading-indentation', '-Wno-macro-redefined', '-Wno-parentheses',
+	      '-Wno-return-type', '-Wno-self-assign', '-Wno-sign-compare', '-Wno-sometimes-uninitialized',
+	      '-Wno-uninitialized', '-Wno-unused-but-set-variable', '-Wno-unused-function', '-Wno-unused-parameter',
 	      '-Wno-unused-value', '-Wno-unused-variable',
              ]
    if cc.has_argument(arg)
