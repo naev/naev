@@ -35,7 +35,6 @@
 #include "console.h"
 #include "damagetype.h"
 #include "debug.h"
-#include "dev.h"
 #include "dialogue.h"
 #include "economy.h"
 #include "env.h"
@@ -353,10 +352,6 @@ int main( int argc, char** argv )
 
    /* Detect size changes that occurred during load. */
    naev_resize();
-
-   /* Generate the CSV. */
-   if (conf.devcsv)
-      dev_csv();
 
    /* Unload load screen. */
    loadscreen_unload();

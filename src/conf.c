@@ -112,7 +112,6 @@ static void print_usage( void )
    LOG(_("   -X, --scale           defines the scale factor"));
 #ifdef DEBUGGING
    LOG(_("   --devmode             enables dev mode perks like the editors"));
-   LOG(_("   --devcsv              generates csv output from the ndata for development purposes"));
 #endif /* DEBUGGING */
    LOG(_("   -h, --help            display this message and exit"));
    LOG(_("   -v, --version         print the version and exit"));
@@ -156,7 +155,6 @@ void conf_setDefaults (void)
    conf.nosave       = 0;
    conf.devmode      = 0;
    conf.devautosave  = 0;
-   conf.devcsv       = 0;
    conf.lastversion = strdup( "" );
 
    /* Gameplay. */
@@ -545,7 +543,6 @@ void conf_parseCLI( int argc, char** argv )
       { "scale", required_argument, 0, 'X' },
 #ifdef DEBUGGING
       { "devmode", no_argument, 0, 'D' },
-      { "devcsv", no_argument, 0, 'C' },
 #endif /* DEBUGGING */
       { "help", no_argument, 0, 'h' },
       { "version", no_argument, 0, 'v' },
@@ -611,11 +608,6 @@ void conf_parseCLI( int argc, char** argv )
          case 'D':
             conf.devmode = 1;
             LOG(_("Enabling developer mode."));
-            break;
-
-         case 'C':
-            conf.devcsv = 1;
-            LOG(_("Will generate CSV output."));
             break;
 #endif /* DEBUGGING */
 

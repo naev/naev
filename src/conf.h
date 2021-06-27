@@ -138,7 +138,6 @@ typedef struct PlayerConf_s {
    int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
    int devautosave; /**< Developer mode autosave. */
-   int devcsv; /**< Output CSV data. */
    char *lastversion; /**< The last version the game was ran in. */
 
    /* Debugging. */
