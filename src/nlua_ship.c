@@ -582,9 +582,9 @@ static int shipL_description( lua_State *L )
 
 
 /**
- * @brief Gets a shipstat from an Outfit by name, or a table containing all the ship stats if not specified.
+ * @brief Gets a shipstat from an Ship by name, or a table containing all the ship stats if not specified.
  *
- *    @luatparam Outfit o Outfit to get ship stat of.
+ *    @luatparam Ship s Ship to get ship stat of.
  *    @luatparam[opt=nil] string name Name of the ship stat to get.
  *    @luatparam[opt=false] boolean internal Whether or not to use the internal representation.
  *    @luareturn Value of the ship stat or a tale containing all the ship stats if name is not specified.
