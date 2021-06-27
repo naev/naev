@@ -25,6 +25,12 @@
 #include "slots.h"
 
 
+/*
+ * Prototypes.
+ */
+static OutfitSlot* ship_outfitSlotFromID( const Ship *s, int id );
+
+
 /* Ship metatable methods. */
 static int shipL_eq( lua_State *L );
 static int shipL_get( lua_State *L );
@@ -34,6 +40,7 @@ static int shipL_baseType( lua_State *L );
 static int shipL_class( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
+static int shipL_fitsSlot( lua_State *L );
 static int shipL_CPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
@@ -49,6 +56,7 @@ static const luaL_Reg shipL_methods[] = {
    { "class", shipL_class },
    { "slots", shipL_slots },
    { "getSlots", shipL_getSlots },
+   { "fitsSlot", shipL_fitsSlot },
    { "cpu", shipL_CPU },
    { "price", shipL_price },
    { "gfxTarget", shipL_gfxTarget },
@@ -415,7 +423,35 @@ static int shipL_getSlots( lua_State *L )
    }
 
    return 1;
+}
 
+
+static OutfitSlot* ship_outfitSlotFromID( const Ship *s, int id )
+{
+   ShipOutfitSlot *outfit_arrays[] = {
+         s->outfit_structure,
+         s->outfit_utility,
+         s->outfit_weapon };
+   int i, j, k;
+
+   /* TODO no loop. */
+   k=1;
+   for (i=0; i<3 ; i++)
+      for (j=0; j<array_size(outfit_arrays[i]) ; j++)
+         if (k++==id)
+            return &outfit_arrays[i][j].slot;
+   return NULL;
+}
+
+
+static int shipL_fitsSlot( lua_State *L )
+{
+   Ship *s     = luaL_validship(L,1);
+   int id      = luaL_checkinteger(L,2);
+   Outfit *o   = luaL_validoutfit(L,3);
+   OutfitSlot *os = ship_outfitSlotFromID( s, id );
+   lua_pushboolean( L, outfit_fitsSlot( o, os ) );
+   return 1;
 }
 
 
