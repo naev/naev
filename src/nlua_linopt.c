@@ -433,7 +433,7 @@ static int linoptL_solve( lua_State *L )
    if (ismip) {
       glp_iocp parm;
       glp_init_iocp(&parm);
-      parm.presolve = GLP_ON;
+      parm.presolve = GLP_ON; /* Need to presolve first. */
       //parm.msg_lev = GLP_MSG_ERR;
       glp_intopt( lp->prob, &parm );
       /* TODO handle errors. */
