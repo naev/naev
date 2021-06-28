@@ -491,12 +491,13 @@ static int outfitL_getShipStat( lua_State *L )
 
 
 /**
- * @brief Computes the DPS and EPS for weapons.
+ * @brief Computes statistics for weapons.
  *
  *    @luatparam Outfit o Outfit to compute for.
  *    @luatparam[opt=nil] Pilot p Pilot to use ship stats when computing.
- *    @luatreturn number DPS of the outfit.
- *    @luatreturn number EPS of the outfit.
+ *    @luatreturn number Damage per secondof the outfit.
+ *    @luatreturn number Disable per second of the outfit.
+ *    @luatreturn number Energy per second of the outfit.
  *    @luatreturn number Range of the outfit.
  *    @luatreturn number trackmin Minimum tracking value of the outfit.
  *    @luatreturn number trackmax Maximum tracking value of the outfit.
@@ -505,7 +506,7 @@ static int outfitL_getShipStat( lua_State *L )
  */
 static int outfitL_weapStats( lua_State *L )
 {
-   double eps, dps, shots;
+   double eps, dps, disable, shots;
    double mod_energy, mod_damage, mod_shots;
    const Damage *dmg;
    Outfit *o = luaL_validoutfit( L, 1 );
@@ -537,12 +538,15 @@ static int outfitL_weapStats( lua_State *L )
       }
       shots = outfit_duration(o);
       mod_shots = shots / (shots + mod_shots * outfit_delay(o));
-      dps = mod_shots * mod_damage * outfit_damage(o)->damage;
+      dmg = outfit_damage(o);
+      dps = mod_shots * mod_damage * dmg->damage;
+      disable = mod_shots * mod_damage * dmg->disable;
       eps = mod_shots * mod_energy * outfit_energy(o);
       lua_pushnumber( L, dps );
+      lua_pushnumber( L, disable );
       lua_pushnumber( L, eps );
       lua_pushnumber( L, outfit_range(o) );
-      return 3;
+      return 4;
    }
 
    if (p) {
@@ -582,18 +586,20 @@ static int outfitL_weapStats( lua_State *L )
    else
       dmg = outfit_damage(o);
    dps = shots * mod_damage * dmg->damage;
+   disable = shots * mod_damage * dmg->disable;
    eps = shots * mod_energy * MAX( outfit_energy(o), 0. );
 
    lua_pushnumber( L, dps );
+   lua_pushnumber( L, disable );
    lua_pushnumber( L, eps );
    lua_pushnumber( L, outfit_range(o) );
    lua_pushnumber( L, outfit_trackmin(o) );
    lua_pushnumber( L, outfit_trackmax(o) );
    if (outfit_isLauncher(o)) {
       lua_pushnumber( L, o->u.lau.lockon );
-      return 6;
+      return 7;
    }
-   return 5;
+   return 6;
 }
 
 
