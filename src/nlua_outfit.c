@@ -498,6 +498,9 @@ static int outfitL_getShipStat( lua_State *L )
  *    @luatreturn number DPS of the outfit.
  *    @luatreturn number EPS of the outfit.
  *    @luatreturn number Range of the outfit.
+ *    @luatreturn number trackmin Minimum tracking value of the outfit.
+ *    @luatreturn number trackmax Maximum tracking value of the outfit.
+ *    @luatreturn number lockon Time to lockon.
  * @luafunc weapstats
  */
 static int outfitL_weapStats( lua_State *L )
@@ -509,12 +512,8 @@ static int outfitL_weapStats( lua_State *L )
    Pilot *p = (lua_ispilot(L,2)) ? luaL_validpilot(L,2) : NULL;
 
    /* Just return 0 for non-wapons. */
-   if (o->slot.type != OUTFIT_SLOT_WEAPON) {
-      lua_pushnumber( L, 0. );
-      lua_pushnumber( L, 0. );
-      lua_pushnumber( L, 0. );
-      return 3;
-   }
+   if (o->slot.type != OUTFIT_SLOT_WEAPON)
+      return 0;
 
    /* Special case beam weapons .*/
    if (outfit_isBeam(o)) {
@@ -588,7 +587,13 @@ static int outfitL_weapStats( lua_State *L )
    lua_pushnumber( L, dps );
    lua_pushnumber( L, eps );
    lua_pushnumber( L, outfit_range(o) );
-   return 3;
+   lua_pushnumber( L, outfit_trackmin(o) );
+   lua_pushnumber( L, outfit_trackmax(o) );
+   if (outfit_isLauncher(o)) {
+      lua_pushnumber( L, o->u.lau.lockon );
+      return 6;
+   }
+   return 5;
 }
 
 
