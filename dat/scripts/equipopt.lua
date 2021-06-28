@@ -5,6 +5,32 @@
 --]]
 local equipopt = {}
 
+
+-- Get all the fighter bays and calculate rough dps
+local fbays = {}
+for k,o in ipairs(outfit.getAll()) do
+   if o:type() == "Fighter Bay" then
+      local ss = o:specificstats()
+      local s = ss.ship
+      local slots = s:getSlots()
+      local dps = 0
+      for i,sl in ipairs(slots) do
+         if sl.type == "Weapon" then
+            if sl.size == "Small" then
+               dps = dps + 20
+            elseif sl.size == "Medium" then
+               dps = dps + 30
+            elseif sl.size == "Heavy" then
+               dps = dps + 40
+            end
+         end
+      end
+      dps = dps * ss.amount
+      fbays[ o:name() ] = dps
+   end
+end
+
+
 --[[
       Goodness functions to rank how good each outfits are
 --]]
@@ -160,6 +186,12 @@ function equipopt.equip( p, cores, outfit_list, params )
       oo.type     = out:type()
       if oo.type == "Bolt Turret" or oo.type == "Beam Turret" or oo.type == "Turret Launcher" then
          oo.isturret = true
+      end
+      if oo.type == "Fighter Bay" then
+         oo.dps      = fbays[v]
+         oo.disable  = 0
+         oo.eps      = 0
+         oo.range    = 10e3
       end
       oo.typebroad = out:typeBroad()
 
