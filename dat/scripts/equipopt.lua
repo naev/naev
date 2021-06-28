@@ -89,15 +89,16 @@ function equipopt.equip( p, cores, outfit_list, goodness )
 
       -- We correct ship stats here and convert them to "relative improvements"
       oo.thrust = oo.thrust_mod * (oo.thrust + st.thrust) - st.thrust
-      oo.speed  = oo.speed_mod * (oo.speed + st.speed) - st.speed
-      oo.turn   = oo.turn_mod * (oo.turn + st.turn) - st.turn
+      oo.speed  = oo.speed_mod  * (oo.speed  + st.speed)  - st.speed
+      oo.turn   = oo.turn_mod   * (oo.turn   + st.turn)   - st.turn
       oo.armour = oo.armour_mod * (oo.armour + st.armour) - st.armour
       oo.shield = oo.shield_mod * (oo.shield + st.shield) - st.shield
       oo.energy = oo.energy_mod * (oo.energy + st.energy) - st.energy
       oo.armour_regen = oo.armour_regen_mod * (oo.armour_regen + st.armour_regen) - oo.armour_damage - st.armour_regen
-      oo.shield_regen = oo.shield_regen_mod * (oo.shield_regen + st.shield_regen) - oo.shield_usage - st.shield_regen
-      oo.energy_regen = oo.energy_regen_mod * (oo.energy_regen + st.energy_regen) - oo.energy_usage - oo.energy_loss - st.energy_regen
+      oo.shield_regen = oo.shield_regen_mod * (oo.shield_regen + st.shield_regen) - oo.shield_usage  - st.shield_regen
+      oo.energy_regen = oo.energy_regen_mod * (oo.energy_regen + st.energy_regen) - oo.energy_usage  - oo.energy_loss - st.energy_regen
 
+      -- Cache it all so we don't hae to recompute
       outfit_cache[v] = oo
    end
 
@@ -156,7 +157,7 @@ function equipopt.equip( p, cores, outfit_list, goodness )
          -- Energy constraint
          table.insert( ia, 2 )
          table.insert( ja, c )
-         table.insert( ar, stats.energy_regen )
+         table.insert( ar, -stats.energy_regen )
          -- Limit constraint
          if stats.limit then
             table.insert( ia, sworthy + stats.limitpos )
