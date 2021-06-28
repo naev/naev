@@ -392,11 +392,11 @@ static int outfitL_slot( lua_State *L )
 static int outfitL_limit( lua_State *L )
 {
    Outfit *o = luaL_validoutfit(L,1);
-   if (o->limit)
+   if (o->limit) {
       lua_pushstring(L,o->limit);
-   else
-      lua_pushnil(L);
-   return 1;
+      return 1;
+   }
+   return 0;
 }
 
 
