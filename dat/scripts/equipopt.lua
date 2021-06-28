@@ -10,18 +10,19 @@ local equipopt = {}
 --]]
 function equipopt.goodness_default( o )
    -- Base attributes
-   base = -0.00001*o.price - 0.003*o.mass + 0.1*o.cargo - 0.5*o.cargo_inertia + 0.003*o.fuel
+   base = -0.000001*o.price - 0.003*o.mass + 0.1*o.cargo - 0.5*o.cargo_inertia + 0.003*o.fuel
    -- Movement attributes
    move = 0.05*o.thrust + 0.05*o.speed + 0.1*o.turn
    -- Health attributes
-   health = 0.005*o.shield + 0.005*o.armour + 0.005*o.energy + o.absorb
+   health = 0.005*o.shield + 0.005*o.armour + 0.005*o.energy + o.absorb + 0.1*o.shield_regen + 0.1*o.armour_regen + 0.1*o.energy_regen
    -- Weapon attributese
    weap = 0.05*o.dps - 0.02*o.eps + 0.01*o.range
    -- Ewarfare attributes
-   ew = (o.ew_detect-1) + (o.ew_hide-1)
+   ew = 3*(o.ew_detect-1) + 3*(o.ew_hide-1)
    --print(string.format("%s: base = %.3f, move = %.3f, health = %.3f, weap = %.3f, ew = %.3f", o.outfit:name(), base, move, health, weap, ew))
    if 1+base+move+health+weap+ew < 0 then
       print(string.format("Outfit %s has negative goodness: %.3f", o.outfit:name(), 1+base+move+health+weap+ew))
+      print(string.format("%s: base = %.3f, move = %.3f, health = %.3f, weap = %.3f, ew = %.3f", o.outfit:name(), base, move, health, weap, ew))
    end
    -- Constant value makes them prefer outfits rather than not
    return 1 + base + move + health + weap + ew
