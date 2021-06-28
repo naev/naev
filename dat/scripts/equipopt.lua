@@ -129,10 +129,12 @@ function equipopt.equip( p, cores, outfit_list, goodness )
       if #has_outfits > 0 then
          v.id = k
          v.outfits = has_outfits
+         --[[
          print( string.format( "[%d] = %s, %s", k, v.type, v.size ) )
          for m, o in ipairs(v.outfits) do
             print( "   "..o )
          end
+         --]]
          table.insert( slots, v )
 
          -- Each slot adds a number of variables equivalent to the number of
@@ -187,6 +189,7 @@ function equipopt.equip( p, cores, outfit_list, goodness )
    end
    lp:load_matrix( ia, ja, ar )
 
+   --[[
    local M = {}
    for i = 1,nrows do
       M[i] = {}
@@ -204,22 +207,26 @@ function equipopt.equip( p, cores, outfit_list, goodness )
       end
       print(s)
    end
+   --]]
 
    -- All the magic is done here
    z, x, c = lp:solve()
+   --[[
    for k,v in ipairs(x) do
       print(string.format("x%d: %d",k,v))
    end
    for k,v in ipairs(c) do
       print(string.format("c%d: %d",k,v))
    end
+   --]]
 
    -- Interpret results
+   print("Final Equipment:")
    local c = 1
    for i,s in ipairs(slots) do
       for j,o in ipairs(s.outfits) do
          if x[c] == 1 then
-            print( o )
+            print( "   "..o )
          end
          c = c + 1
       end
