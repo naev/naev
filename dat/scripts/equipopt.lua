@@ -103,6 +103,9 @@ function equipopt.equip( p, cores, outfit_list, goodness )
       -- Misc
       oo.cargo = oo.cargo_mod * (oo.cargo + ss.cargo) - ss.cargo
 
+      -- Compute goodness
+      oo.goodness = goodness( oo )
+
       -- Cache it all so we don't hae to recompute
       outfit_cache[v] = oo
    end
@@ -153,7 +156,7 @@ function equipopt.equip( p, cores, outfit_list, goodness )
       for j,o in ipairs(s.outfits) do
          local stats = outfit_cache[o]
          local name = string.format("s%d-o%d", i, j)
-         local objf = goodness(stats) -- contribution to objective function
+         local objf = stats.goodness -- contribution to objective function
          lp:set_col( c, name, objf, "binary" ) -- constraints set automatically
          -- CPU constraint
          table.insert( ia, 1 )
