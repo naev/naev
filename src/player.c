@@ -3267,7 +3267,7 @@ static int player_saveMetadata( xmlTextWriterPtr writer )
    /* Ships destroyed by class. */
    xmlw_startElem(writer,"ships_destroyed");
    for (i=SHIP_CLASS_NULL+1; i<SHIP_CLASS_TOTAL; i++) {
-      strncpy( buf, ship_classToString(i), sizeof(buf) );
+      strncpy( buf, ship_classToString(i), sizeof(buf)-1 );
       for (j=0; j<strlen(buf); j++)
          if (buf[j]==' ')
             buf[j]='_';
@@ -3716,7 +3716,7 @@ static int player_parseMetadata( xmlNodePtr parent )
          do {
             xml_onlyNodes(cur);
 
-            strncpy( buf, (const char*)cur->name, sizeof(buf) );
+            strncpy( buf, (const char*)cur->name, sizeof(buf)-1 );
             for (i=0; i<strlen(buf); i++)
                if (buf[i]=='_')
                   buf[i] = ' ';

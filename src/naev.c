@@ -498,6 +498,8 @@ void loadscreen_load (void)
    /* Must have loading screens */
    if (nreal==0) {
       WARN( _("No loading screens found!") );
+      PHYSFS_freeList( loadpaths );
+      free( loadscreens );
       loading = NULL;
       return;
    }
