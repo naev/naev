@@ -315,7 +315,6 @@ size_t ss_offsetFromType( ShipStatsType type );
 ShipStatsType ss_typeFromName( const char *name );
 int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline );
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline );
-int ss_csv( const ShipStats *s, char *buf, int len );
 
 /*
  * Manipulation.

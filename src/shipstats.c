@@ -665,66 +665,6 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 
 
 /**
- * @brief Generates CSV output for the given ship stats.
- *
- *    @param s Ship stats to use.
- *    @param[out] buf Buffer to write to.
- *    @param len Space left in the buffer.
- *    @return Number of characters written.
- */
-int ss_csv( const ShipStats *s, char *buf, int len )
-{
-   int i, l, left, num;
-   double dbl;
-   char *ptr;
-   const ShipStatsLookup *sl;
-
-   l = 0;
-   ptr = (char*) s;
-   for (i=0; i<SS_TYPE_SENTINEL; i++) {
-      sl = &ss_lookup[ i ];
-
-      /* Only want valid names. */
-      if (sl->name == NULL)
-         continue;
-
-      /* Calculate offset left. */
-      left = len - l;
-      if (left < 0) {
-         WARN(_("Buffer out of space, CSV output truncated"));
-         break;
-      }
-
-      if (s == NULL) {
-         l += scnprintf( &buf[l], left, "%s,", sl->name );
-         continue;
-      }
-
-      switch (sl->data) {
-         case SS_DATA_TYPE_DOUBLE:
-            memcpy(&dbl, &ptr[ sl->offset ], sizeof(double));
-            l  += scnprintf( &buf[l], left, "%f,", (dbl - 1.) * 100. );
-            break;
-
-         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-            memcpy(&dbl, &ptr[ sl->offset ], sizeof(double));
-            l  += scnprintf( &buf[l], left, "%f,", dbl );
-            break;
-
-         case SS_DATA_TYPE_INTEGER:
-         case SS_DATA_TYPE_BOOLEAN:
-            memcpy(&num, &ptr[ sl->offset ], sizeof(int));
-            l  += scnprintf( &buf[l], left, "%d,", num );
-            break;
-      }
-   }
-
-   buf[l-1] = '\n'; /* Terminate with a newline. */
-   return l;
-}
-
-
-/**
  * @brief Frees a list of ship stats.
  *
  *    @param ll List to free.
