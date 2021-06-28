@@ -254,10 +254,6 @@ typedef struct OutfitModificationData_ {
    double energy_regen; /**< Energy regeneration modifier. */
    double absorb;       /**< Absorption factor. */
 
-   /* Misc. */
-   double cargo;     /**< Cargo space modifier. */
-   int fuel;         /**< Maximum fuel modifier. */
-
    /* Lua function references. Set to LUA_NOREF if not used. */
    nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    int lua_init;     /**< Run when pilot enters a system. */

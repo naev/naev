@@ -1016,10 +1016,6 @@ void pilot_calcStats( Pilot* pilot )
          pilot->shield_regen  += o->u.mod.shield_regen;
          pilot->energy_max    += o->u.mod.energy;
          pilot->energy_regen  += o->u.mod.energy_regen;
-         /* Fuel. */
-         pilot->fuel_max      += o->u.mod.fuel;
-         /* Misc. */
-         pilot->cap_cargo     += o->u.mod.cargo;
 
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */
@@ -1048,12 +1044,20 @@ void pilot_calcStats( Pilot* pilot )
    }
 
    /*
-    * Relative increases.
+    * Absolute increases.
     */
    /* Movement. */
    pilot->thrust_base  += s->thrust_base;
    pilot->turn_base    += s->turn_base * M_PI / 180.;
    pilot->speed_base   += s->speed_base;
+   /* Misc. */
+   pilot->fuel_max     += s->fuel;
+   pilot->cap_cargo    += s->cargo;
+
+   /*
+    * Relative increases.
+    */
+   /* Movement. */
    pilot->thrust_base  *= s->thrust_mod;
    pilot->turn_base    *= s->turn_mod;
    pilot->speed_base   *= s->speed_mod;
