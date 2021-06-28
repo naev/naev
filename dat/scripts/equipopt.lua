@@ -47,6 +47,7 @@ equipopt.params_default = {
    goodness = equipopt.goodness_default,
 
    -- Global stuff
+   rnd = 0.2, -- amount of randomness to use for goodness function
    max_same_weap = nil, -- maximum same weapons (nil is no limit)
    max_same_util = nil, -- maximum same utilities (nil is no limit)
    max_same_stru = nil, -- maximum same structurals (nil is no limit)
@@ -250,7 +251,7 @@ function equipopt.equip( p, cores, outfit_list, params )
       for j,o in ipairs(s.outfits) do
          local stats = outfit_cache[o]
          local name = string.format("s%d-o%d", i, j)
-         local objf = stats.goodness -- contribution to objective function
+         local objf = (1+params.rnd*rnd.sigma()) * stats.goodness -- contribution to objective function
          lp:set_col( c, name, objf, "binary" ) -- constraints set automatically
          -- CPU constraint
          table.insert( ia, 1 )
