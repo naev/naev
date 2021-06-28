@@ -42,7 +42,9 @@ equipopt.params_default = {
 
    tracktarget = 10000,
    prefertur = true,
-   maxsame = 3,
+   maxsameweap = nil,
+   maxsameutil = nil,
+   maxsamestru = nil,
 }
 
 --[[
@@ -71,14 +73,28 @@ function equipopt.equip( p, cores, outfit_list, params )
    local ja = {}
    local ar = {}
 
-   -- Figure out limits
+   -- Figure out limits (both natural and artificial)
    local limit_list = {}
+   local same_list = {}
+   local same_limit = {}
    for k,v in ipairs(outfit_list) do
       local oo = outfit.get(v)
       -- Add limit if applicable
       local lim = oo:limit()
       if lim then
          limit_list[lim] = true
+      end
+      -- See if we want to limit the particular outfit
+      local t = oo:slot()
+      if params.maxsameweap and t=="Weapon" then
+         table.insert( same_list, v )
+         table.insert( same_limit, params.maxsameweap )
+      elseif params.maxsameutil and t=="Utility" then
+         table.insert( same_list, v )
+         table.insert( same_limit, params.maxsameutil )
+      elseif params.maxsamestru and t=="Structure" then
+         table.insert( same_list, v )
+         table.insert( same_limit, params.maxsamestru )
       end
    end
    -- Resort limits
@@ -146,17 +162,23 @@ function equipopt.equip( p, cores, outfit_list, params )
    for k,v in ipairs( slots_base ) do
       local has_outfits = {}
       local outfitpos = {}
-      for m,o in ipairs( outfit_list ) do
+      for m,o in ipairs(outfit_list) do
          if ps:fitsSlot( k, o ) then
             table.insert( has_outfits, o )
-            table.insert( outfitpos, m )
+            -- Check to see if it is in the similar list
+            for p,s in ipairs(same_list) do
+               if o==s then
+                  outfitpos[ #has_outfits ] = p
+                  break
+               end
+            end
          end
       end
 
       if #has_outfits > 0 then
          v.id = k
          v.outfits = has_outfits
-         v.outfitpos = outfitpos
+         v.samepos = outfitpos
          --[[
          print( string.format( "[%d] = %s, %s", k, v.type, v.size ) )
          for m, o in ipairs(v.outfits) do
@@ -175,8 +197,8 @@ function equipopt.equip( p, cores, outfit_list, params )
    -- We have to add additional constraints (spaceworthy, limits)
    local sworthy = 2 -- Check CPU and Energy regen
    nrows = nrows + sworthy + #limits
-   if params.maxsame then
-      nrows = nrows + #outfit_list
+   if #same_list > 0 then
+      nrows = nrows + #same_list
    end
    lp = linopt.new( "test", ncols, nrows, true )
    -- Add space worthy checks
@@ -187,11 +209,11 @@ function equipopt.equip( p, cores, outfit_list, params )
       lp:set_row( sworthy+i, l, nil, 1 )
    end
    local nsame = 0
-   if params.maxsame then
-      for i,o in ipairs(outfit_list) do
-         lp:set_row( sworthy+#limits+i, o, nil, params.maxsame )
+   if #same_list > 0 then
+      for i,o in ipairs(same_list) do
+         lp:set_row( sworthy+#limits+i, o, nil, same_limit[i] )
       end
-      nsame = #outfit_list
+      nsame = #same_list
    end
    -- Add outfit checks
    local c = 1
@@ -221,8 +243,9 @@ function equipopt.equip( p, cores, outfit_list, params )
          table.insert( ja, c )
          table.insert( ar, 1 )
          -- Maximum of same type
-         if params.maxsame then
-            table.insert( ia, sworthy + #limits + s.outfitpos[j] )
+         local sp = s.samepos[j]
+         if sp then
+            table.insert( ia, sworthy + #limits + sp )
             table.insert( ja, c )
             table.insert( ar, 1 )
          end
