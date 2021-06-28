@@ -497,6 +497,7 @@ static int outfitL_getShipStat( lua_State *L )
  *    @luatparam[opt=nil] Pilot p Pilot to use ship stats when computing.
  *    @luatreturn number DPS of the outfit.
  *    @luatreturn number EPS of the outfit.
+ *    @luatreturn number Range of the outfit.
  * @luafunc weapstats
  */
 static int outfitL_weapStats( lua_State *L )
@@ -511,7 +512,8 @@ static int outfitL_weapStats( lua_State *L )
    if (o->slot.type != OUTFIT_SLOT_WEAPON) {
       lua_pushnumber( L, 0. );
       lua_pushnumber( L, 0. );
-      return 2;
+      lua_pushnumber( L, 0. );
+      return 3;
    }
 
    /* Special case beam weapons .*/
@@ -540,7 +542,8 @@ static int outfitL_weapStats( lua_State *L )
       eps = mod_shots * mod_energy * outfit_energy(o);
       lua_pushnumber( L, dps );
       lua_pushnumber( L, eps );
-      return 2;
+      lua_pushnumber( L, outfit_range(o) );
+      return 3;
    }
 
    if (p) {
@@ -584,7 +587,8 @@ static int outfitL_weapStats( lua_State *L )
 
    lua_pushnumber( L, dps );
    lua_pushnumber( L, eps );
-   return 2;
+   lua_pushnumber( L, outfit_range(o) );
+   return 3;
 }
 
 
