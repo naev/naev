@@ -16,7 +16,7 @@ function equipopt.goodness_default( o )
    -- Health attributes
    health = 0.005*o.shield + 0.005*o.armour + 0.005*o.energy + o.absorb
    -- Weapon attributese
-   weap = o.dps - 0.5*o.eps
+   weap = 0.05*o.dps - 0.02*o.eps + 0.01*o.range
    -- Ewarfare attributes
    ew = (1-o.ew_detect) + (1-o.ew_hide)
    -- Constant value makes them prefer outfits rather than not
@@ -74,7 +74,7 @@ function equipopt.equip( p, cores, outfit_list, goodness )
       -- Core stats
       local oo = out:shipstat(nil,true)
       oo.outfit   = out
-      oo.dps, oo.eps = out:weapstats( p )
+      oo.dps, oo.eps, oo.range = out:weapstats( p )
       oo.cpu      = out:cpu() * ss.cpu_mod
       oo.mass     = out:mass() * ss.mass_mod
       oo.price    = out:price()
