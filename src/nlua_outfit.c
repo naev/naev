@@ -16,6 +16,7 @@
 
 #include "nlua_outfit.h"
 
+#include "array.h"
 #include "log.h"
 #include "nlua_pilot.h"
 #include "nlua_tex.h"
@@ -27,6 +28,7 @@
 /* Outfit metatable methods. */
 static int outfitL_eq( lua_State *L );
 static int outfitL_get( lua_State *L );
+static int outfitL_getAll( lua_State *L );
 static int outfitL_name( lua_State *L );
 static int outfitL_nameRaw( lua_State *L );
 static int outfitL_type( lua_State *L );
@@ -45,6 +47,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
    { "get", outfitL_get },
+   { "getAll", outfitL_getAll },
    { "name", outfitL_name },
    { "nameRaw", outfitL_nameRaw },
    { "type", outfitL_type },
@@ -231,6 +234,25 @@ static int outfitL_get( lua_State *L )
 
    /* Push. */
    lua_pushoutfit(L, lo);
+   return 1;
+}
+
+
+/**
+ * @brief Gets all the outfits.
+ *
+ *    @luatreturn Table Table containing all the outfits.
+ * @luafunc get
+ */
+static int outfitL_getAll( lua_State *L )
+{
+   int i;
+   const Outfit *outfits = outfit_getAll();
+   lua_newtable(L); /* t */
+   for (i=0; i<array_size(outfits); i++) {
+      lua_pushoutfit( L, (Outfit*) &outfits[i] );
+      lua_rawseti( L, -2, i+1 );
+   }
    return 1;
 }
 
