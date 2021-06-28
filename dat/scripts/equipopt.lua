@@ -38,13 +38,20 @@ function equipopt.goodness_default( o, p )
 end
 
 equipopt.params_default = {
+   -- Our goodness function
    goodness = equipopt.goodness_default,
 
-   tracktarget = 10000,
-   prefertur = true,
-   maxsameweap = nil,
-   maxsameutil = nil,
-   maxsamestru = nil,
+   -- Global stuff
+   max_same_weap = nil, -- maximum same weapons (nil is no limit)
+   max_same_util = nil, -- maximum same utilities (nil is no limit)
+   max_same_stru = nil, -- maximum same structurals (nil is no limit)
+   min_energy_regen = 0, -- energy regen margin (above 0)
+   eps_weight = 0.1, -- how to weight weapon EPS into energy regen
+   max_mass = 1.0, -- maximum amount to go over engine limit (relative)
+
+   -- Weapon stuff
+   tracktarget = 10000, -- ew_detect enemies we want to target
+   prefertur = true, -- whether or not to prefer turrets
 }
 
 --[[
@@ -86,15 +93,15 @@ function equipopt.equip( p, cores, outfit_list, params )
       end
       -- See if we want to limit the particular outfit
       local t = oo:slot()
-      if params.maxsameweap and t=="Weapon" then
+      if params.max_same_weap and t=="Weapon" then
          table.insert( same_list, v )
-         table.insert( same_limit, params.maxsameweap )
-      elseif params.maxsameutil and t=="Utility" then
+         table.insert( same_limit, params.max_same_weap )
+      elseif params.max_same_util and t=="Utility" then
          table.insert( same_list, v )
-         table.insert( same_limit, params.maxsameutil )
-      elseif params.maxsamestru and t=="Structure" then
+         table.insert( same_limit, params.max_same_util )
+      elseif params.max_same_stru and t=="Structure" then
          table.insert( same_list, v )
-         table.insert( same_limit, params.maxsamestru )
+         table.insert( same_limit, params.max_same_stru )
       end
    end
    -- Resort limits
@@ -195,7 +202,7 @@ function equipopt.equip( p, cores, outfit_list, params )
    end
 
    -- We have to add additional constraints (spaceworthy, limits)
-   local sworthy = 2 -- Check CPU and Energy regen
+   local sworthy = 3 -- Check CPU and Energy regen
    nrows = nrows + sworthy + #limits
    if #same_list > 0 then
       nrows = nrows + #same_list
@@ -203,7 +210,8 @@ function equipopt.equip( p, cores, outfit_list, params )
    lp = linopt.new( "test", ncols, nrows, true )
    -- Add space worthy checks
    lp:set_row( 1, "CPU",          nil, st.cpu )
-   lp:set_row( 2, "energy_regen", nil, st.energy_regen )
+   lp:set_row( 2, "energy_regen", nil, st.energy_regen - params.min_energy_regen )
+   lp:set_row( 3, "mass",         nil, params.max_mass * ss.engine_limit - st.mass )
    -- Add limit checks
    for i,l in ipairs(limits) do
       lp:set_row( sworthy+i, l, nil, 1 )
@@ -231,7 +239,11 @@ function equipopt.equip( p, cores, outfit_list, params )
          -- Energy constraint
          table.insert( ia, 2 )
          table.insert( ja, c )
-         table.insert( ar, -stats.energy_regen )
+         table.insert( ar, -stats.energy_regen + params.eps_weight*(stats.eps or 0) )
+         -- Mass constraint
+         table.insert( ia, 3 )
+         table.insert( ja, c )
+         table.insert( ar, stats.mass )
          -- Limit constraint
          if stats.limit then
             table.insert( ia, sworthy + stats.limitpos )
@@ -282,10 +294,10 @@ function equipopt.equip( p, cores, outfit_list, params )
    for k,v in ipairs(x) do
       print(string.format("x%d: %d",k,v))
    end
+   --]]
    for k,v in ipairs(c) do
       print(string.format("c%d: %d",k,v))
    end
-   --]]
 
    -- Interpret results
    print("Final Equipment:")
