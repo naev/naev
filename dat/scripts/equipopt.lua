@@ -5,7 +5,29 @@
 --]]
 local equipopt = {}
 
-function equipopt.equip( p, cores, outfit_list )
+--[[
+      Goodness functions to rank how good each outfits are
+--]]
+function equipopt.goodness_default( o )
+   -- Constant value makes them prefer outfits rather than not
+   local g = 1 - 0.00001*o.price
+   -- Movement attributes
+   g = g + 0.01*o.thrust + 0.1*o.speed + 0.1*o.turn
+   -- Base attributes
+   g = g - 0.01 * o.mass + 0.01 * o.energy
+   -- Defensive attributes
+   g = g + 0.01 * o.shield + 0.01 * o.armour
+   -- Offensive attributes
+   g = g + o.dps - 0.5 * o.eps
+   return g
+end
+
+--[[
+      Main equip script.
+--]]
+function equipopt.equip( p, cores, outfit_list, goodness )
+   goodness = goodness or equipopt.goodness_default
+
    -- Naked ship
    p:rmOutfit( "all" )
    p:rmOutfit( "cores" )
@@ -75,7 +97,7 @@ function equipopt.equip( p, cores, outfit_list )
       oo.armour_regen = oo.armour_regen_mod * (oo.armour_regen + st.armour_regen) - oo.armour_damage - st.armour_regen
       oo.shield_regen = oo.shield_regen_mod * (oo.shield_regen + st.shield_regen) - oo.shield_usage - st.shield_regen
       oo.energy_regen = oo.energy_regen_mod * (oo.energy_regen + st.energy_regen) - oo.energy_usage - oo.energy_loss - st.energy_regen
-      
+
       outfit_cache[v] = oo
    end
 
@@ -107,21 +129,6 @@ function equipopt.equip( p, cores, outfit_list )
       end
    end
 
-   -- Rates the goodness of an outfit
-   local function goodness( o, params )
-      -- Constant value makes them prefer outfits rather than not
-      local g = 1 - 0.00001*o.price
-      -- Movement attributes
-      g = g + 0.01*o.thrust + 0.1*o.speed + 0.1*o.turn
-      -- Base attributes
-      g = g - 0.01 * o.mass + 0.01 * o.energy
-      -- Defensive attributes
-      g = g + 0.01 * o.shield + 0.01 * o.armour
-      -- Offensive attributes
-      g = g + o.dps - 0.5 * o.eps
-      return g
-   end
-
    -- We have to add additional constraints (spaceworthy, limits)
    local sworthy = 2 -- Check CPU and Energy regen
    nrows = nrows + sworthy + #limits
@@ -135,7 +142,7 @@ function equipopt.equip( p, cores, outfit_list )
    end
    -- Add outfit checks
    local c = 1
-   local r = 1 + sworthy + #limits-- first 
+   local r = 1 + sworthy + #limits
    for i,s in ipairs(slots) do
       for j,o in ipairs(s.outfits) do
          local stats = outfit_cache[o]
