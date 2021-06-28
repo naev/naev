@@ -165,7 +165,7 @@ static const ShipStatsLookup ss_lookup[] = {
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             gettext_noop("CPU Capacity") ),
 
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        gettext_noop("Engine Mass Limit") ),
-   A__ELEM( SS_TYPE_A_ABSORB_FLAT,        absorb_flat,         gettext_noop("Damage Absorption") ),
+   A__ELEM( SS_TYPE_A_ABSORB,             absorb,              gettext_noop("Damage Absorption") ),
 
    I__ELEM( SS_TYPE_I_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, gettext_noop("Hidden Jump Detection") ),
    I__ELEM( SS_TYPE_I_FUEL,               fuel, gettext_noop("Fuel") ),

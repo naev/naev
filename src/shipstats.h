@@ -124,7 +124,7 @@ typedef enum ShipStatsType_ {
    /* Misc. */
    SS_TYPE_A_CPU_MAX,           /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,      /**< Engine's mass limit. */
-   SS_TYPE_A_ABSORB_FLAT,       /**< Flat damage absorption. */
+   SS_TYPE_A_ABSORB,            /**< Damage absorption. */
 
    /*
     * I: Integer type data. Should be continuous.
@@ -221,7 +221,7 @@ typedef struct ShipStats_ {
    double cargo_mod;          /**< Cargo space multiplier. */
    double cpu_mod;            /**< CPU multiplier. */
    double cpu_max;            /**< CPU modifier. */
-   double absorb_flat;        /**< Flat damage absorption. */
+   double absorb;             /**< Flat damage absorption. */
 
    /* Freighter-type. */
    double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */

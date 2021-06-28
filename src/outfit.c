@@ -1755,8 +1755,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
          continue;
       }
-      /* health */
-      xmlr_float(node,"absorb", temp->u.mod.absorb );
       /* Lua stuff. */
       if (xml_isNode(node,"lua")) {
          nlua_env env;
@@ -1827,11 +1825,7 @@ if ((x) != 0) \
       i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "#0" ); \
    } while(0)
    DESC_ADD( temp->cpu,                _("%+.0f CPU") );
-   DESC_ADD( temp->u.mod.absorb,       _("%+.0f Absorption") );
 #undef DESC_ADD
-
-   /* More processing. */
-   temp->u.mod.absorb     /= 100.;
 }
 
 
