@@ -23,7 +23,7 @@ function equipopt.goodness_default( o, p )
    if o.dps and o.dps > 0 then
       local trackmod = math.min( 1, math.max( 0, (p.track-o.trackmin)/(o.trackmax-o.trackmin)) )
       local rangemod = math.min( 1, o.range/p.range )
-      weap = 0.1*o.dps
+      weap = 0.2*(o.dps*p.damage + o.disable*p.disable)
       weap = weap * (0.9*trackmod+0.1) * (0.5+0.5*rangemod)
       if p.prefertur and not o.isturret then
          weap = weap * 0.75
@@ -50,7 +50,8 @@ equipopt.params_default = {
    max_same_weap = nil, -- maximum same weapons (nil is no limit)
    max_same_util = nil, -- maximum same utilities (nil is no limit)
    max_same_stru = nil, -- maximum same structurals (nil is no limit)
-   min_energy_regen = 0, -- energy regen margin (above 0)
+   min_energy_regen = 0.6, -- relative minimum regen margin (with respect to cores)
+   min_energy_regen_abs = 0, -- absolute minimum energy regen (MJ/s)
    eps_weight = 0.1, -- how to weight weapon EPS into energy regen
    max_mass = 1.0, -- maximum amount to go over engine limit (relative)
    max_price = 1 / 1e6, -- discourages getting stuff more expensive than this
@@ -68,6 +69,8 @@ equipopt.params_default = {
    -- Weapon stuff
    track = 10000, -- ew_detect enemies we want to target
    range = 1000, -- ideal minimum range we want
+   damage = 1, -- weight for normal damage
+   disable = 1, -- weight for disable damage
    prefertur = true, -- whether or not to prefer turrets
 }
 
@@ -136,7 +139,7 @@ function equipopt.equip( p, cores, outfit_list, params )
       -- Core stats
       local oo = out:shipstat(nil,true)
       oo.outfit   = out
-      oo.dps, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon = out:weapstats( p )
+      oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon = out:weapstats( p )
       oo.trackmin = oo.trackmin or 0
       oo.trackmax = oo.trackmax or 0
       oo.lockon   = oo.lockon or 0
@@ -227,7 +230,7 @@ function equipopt.equip( p, cores, outfit_list, params )
    lp = linopt.new( "test", ncols, nrows, true )
    -- Add space worthy checks
    lp:set_row( 1, "CPU",          nil, st.cpu )
-   lp:set_row( 2, "energy_regen", nil, st.energy_regen - params.min_energy_regen )
+   lp:set_row( 2, "energy_regen", nil, st.energy_regen - math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) )
    lp:set_row( 3, "mass",         nil, params.max_mass * ss.engine_limit - st.mass )
    -- Add limit checks
    for i,l in ipairs(limits) do
