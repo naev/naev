@@ -246,12 +246,6 @@ typedef struct OutfitModificationData_ {
    double cooldown;  /**< Time the active outfit stays off after it's duration (in seconds). */
 
    /* Health. */
-   double armour;       /**< Maximum armour modifier. */
-   double armour_regen; /**< Armour regeneration modifier. */
-   double shield;       /**< Maximum shield modifier. */
-   double shield_regen; /**< Shield regeneration modifier. */
-   double energy;       /**< Maximum energy modifier. */
-   double energy_regen; /**< Energy regeneration modifier. */
    double absorb;       /**< Absorption factor. */
 
    /* Lua function references. Set to LUA_NOREF if not used. */

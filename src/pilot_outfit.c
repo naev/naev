@@ -1010,12 +1010,6 @@ void pilot_calcStats( Pilot* pilot )
          ss_statsModFromList( s, o->stats );
          /* Health. */
          pilot->dmg_absorb    += o->u.mod.absorb;
-         pilot->armour_max    += o->u.mod.armour;
-         pilot->armour_regen  += o->u.mod.armour_regen;
-         pilot->shield_max    += o->u.mod.shield;
-         pilot->shield_regen  += o->u.mod.shield_regen;
-         pilot->energy_max    += o->u.mod.energy;
-         pilot->energy_regen  += o->u.mod.energy_regen;
 
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */
@@ -1050,6 +1044,13 @@ void pilot_calcStats( Pilot* pilot )
    pilot->thrust_base  += s->thrust_base;
    pilot->turn_base    += s->turn_base * M_PI / 180.;
    pilot->speed_base   += s->speed_base;
+   /* Health. */
+   pilot->armour_max   += s->armour;
+   pilot->armour_regen += s->armour_regen;
+   pilot->shield_max   += s->shield;
+   pilot->shield_regen += s->shield_regen;
+   pilot->energy_max   += s->energy;
+   pilot->energy_regen += s->energy_regen;
    /* Misc. */
    pilot->fuel_max     += s->fuel;
    pilot->cap_cargo    += s->cargo;

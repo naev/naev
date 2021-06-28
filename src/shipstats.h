@@ -103,16 +103,25 @@ typedef enum ShipStatsType_ {
    /*
     * A: Absolute double type data. Should be continuous.
     */
+   /* Movement. */
    SS_TYPE_A_THRUST_BASE,       /**< Base thrust bonus. */
    SS_TYPE_A_TURN_BASE,         /**< Base turn bonus (in deg/s). */
    SS_TYPE_A_SPEED_BASE,        /**< Base speed bonus. */
+   /* Health. */
+   SS_TYPE_A_ENERGY,            /**< Energy modifier. */
+   SS_TYPE_A_ENERGY_REGEN,      /**< Energy regeneration modifier. */
    SS_TYPE_A_ENERGY_FLAT,       /**< Flat energy modifier (not multiplied). */
    SS_TYPE_A_ENERGY_REGEN_FLAT, /**< Flat energy regeneration modifier (not multiplied). */
    SS_TYPE_A_ENERGY_LOSS,       /**< Flat energy modifier (not multiplied) and applied linearly. */
+   SS_TYPE_A_SHIELD,            /**< Shield modifier. */
+   SS_TYPE_A_SHIELD_REGEN,      /**< Shield regeneration modifier. */
    SS_TYPE_A_SHIELD_FLAT,       /**< Flat shield modifier (not multiplied). */
    SS_TYPE_A_SHIELD_REGEN_FLAT, /**< Flat shield regeneration modifier (not multiplied). */
+   SS_TYPE_A_ARMOUR,            /**< Armour modifier. */
+   SS_TYPE_A_ARMOUR_REGEN,      /**< Armour regeneration modifier. */
    SS_TYPE_A_ARMOUR_FLAT,       /**< Flat armour modifier (not multiplied). */
    SS_TYPE_A_ARMOUR_REGEN_FLAT, /**< Flat armour regeneration modifier (not multiplied). */
+   /* Misc. */
    SS_TYPE_A_CPU_MAX,           /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,      /**< Engine's mass limit. */
    SS_TYPE_A_ABSORB_FLAT,       /**< Flat damage absorption. */
@@ -187,21 +196,29 @@ typedef struct ShipStats_ {
    double turn_mod;           /**< Turn multiplier. */
    double thrust_mod;         /**< Thrust multiplier. */
 
-   /* General */
-   double cargo_mod;          /**< Cargo space multiplier. */
-   double armour_mod;         /**< Armour multiplier. */
-   double armour_regen_mod;   /**< Armour regeneration multiplier. */
-   double armour_flat;        /**< Armour modifier (flat). */
-   double armour_damage;      /**< Armour regeneration (flat). */
-   double shield_mod;         /**< Shield multiplier. */
-   double shield_regen_mod;   /**< Shield regeneration multiplier. */
-   double shield_flat;        /**< Shield modifier (flat). */
-   double shield_usage;       /**< Shield usage (flat). */
+   /* Health. */
+   double energy;             /**< Energy modifier. */
+   double energy_regen;       /**< Energy regeneration modifier. */
    double energy_mod;         /**< Energy multiplier. */
    double energy_regen_mod;   /**< Energy regeneration multiplier. */
    double energy_flat;        /**< Energy modifier (flat). */
    double energy_usage;       /**< Energy usage (flat). */
    double energy_loss;        /**< Energy modifier (flat and linear). */
+   double shield;             /**< Shield modifier. */
+   double shield_regen;       /**< Shield regeneration modifier. */
+   double shield_mod;         /**< Shield multiplier. */
+   double shield_regen_mod;   /**< Shield regeneration multiplier. */
+   double shield_flat;        /**< Shield modifier (flat). */
+   double shield_usage;       /**< Shield usage (flat). */
+   double armour;             /**< Armour modifier. */
+   double armour_regen;       /**< Armour regeneration modifier. */
+   double armour_mod;         /**< Armour multiplier. */
+   double armour_regen_mod;   /**< Armour regeneration multiplier. */
+   double armour_flat;        /**< Armour modifier (flat). */
+   double armour_damage;      /**< Armour regeneration (flat). */
+
+   /* General */
+   double cargo_mod;          /**< Cargo space multiplier. */
    double cpu_mod;            /**< CPU multiplier. */
    double cpu_max;            /**< CPU modifier. */
    double absorb_flat;        /**< Flat damage absorption. */

@@ -1756,12 +1756,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          continue;
       }
       /* health */
-      xmlr_float(node,"armour",temp->u.mod.armour);
-      xmlr_float(node,"shield",temp->u.mod.shield);
-      xmlr_float(node,"energy",temp->u.mod.energy);
-      xmlr_float(node,"armour_regen", temp->u.mod.armour_regen );
-      xmlr_float(node,"shield_regen", temp->u.mod.shield_regen );
-      xmlr_float(node,"energy_regen", temp->u.mod.energy_regen );
       xmlr_float(node,"absorb", temp->u.mod.absorb );
       /* Lua stuff. */
       if (xml_isNode(node,"lua")) {
@@ -1833,12 +1827,6 @@ if ((x) != 0) \
       i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "#0" ); \
    } while(0)
    DESC_ADD( temp->cpu,                _("%+.0f CPU") );
-   DESC_ADD( temp->u.mod.armour,       _("%+.0f Armour") );
-   DESC_ADD( temp->u.mod.shield,       _("%+.0f Shield") );
-   DESC_ADD( temp->u.mod.energy,       _("%+.0f Energy") );
-   DESC_ADD( temp->u.mod.armour_regen, _("%+.1f Armour Per Second") );
-   DESC_ADD( temp->u.mod.shield_regen, _("%+.1f Shield Per Second") );
-   DESC_ADD( temp->u.mod.energy_regen, _("%+.1f Energy Per Second") );
    DESC_ADD( temp->u.mod.absorb,       _("%+.0f Absorption") );
 #undef DESC_ADD
 
