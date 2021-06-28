@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-06-27 09:52-0400\n"
-"PO-Revision-Date: 2021-06-26 23:34+0000\n"
+"PO-Revision-Date: 2021-06-28 00:42+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -17725,10 +17725,8 @@ msgid "Fuel"
 msgstr "Treibstoff"
 
 #: dat/commodity.xml:191
-#, fuzzy
-#| msgid "Flow"
 msgid "Flowers"
-msgstr "Fluss"
+msgstr "Blumen"
 
 #: dat/commodity.xml:195
 msgid "Gregar"
@@ -19138,7 +19136,7 @@ msgstr ""
 
 #: dat/outfits/accessory/dv_handbook.xml:2
 msgid "Handbook for Dvaered Good Manners"
-msgstr ""
+msgstr "Handbuch für gute Dvaered-Manieren"
 
 #: dat/outfits/accessory/dv_handbook.xml:11
 msgid ""
@@ -30854,10 +30852,8 @@ msgid "You are being attacked: try to catch your attacker alive!"
 msgstr ""
 
 #: dat/events/dvaered/fwD_hitman.lua:22
-#, fuzzy
-#| msgid "The Lancelot is destroyed!"
 msgid "Target destroyed"
-msgstr "Die Lancelot ist zerstört!"
+msgstr "Ziel zerstört"
 
 #: dat/events/dvaered/fwD_hitman.lua:23
 msgid ""
