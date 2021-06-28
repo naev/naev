@@ -245,8 +245,8 @@ typedef struct OutfitModificationData_ {
    double duration;  /**< Time the active outfit stays on (in seconds). */
    double cooldown;  /**< Time the active outfit stays off after it's duration (in seconds). */
 
-   /* Health. */
-   double absorb;       /**< Absorption factor. */
+   /* All the modifiers are based on the outfit's ship stats, nothing here but
+    * Lua and active stuff. */
 
    /* Lua function references. Set to LUA_NOREF if not used. */
    nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
