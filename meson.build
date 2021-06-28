@@ -119,11 +119,6 @@ if buildExec.disabled() == false
    endif
    naev_deps += use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk_dep')
 
-   if use_system_csparse and not use_system_glpk
-      message('Falling back to included SuiteSpare subproject, because the included glpk subproject depends on it.')
-      use_system_csparse = false
-   endif
-
    if use_system_csparse
       foreach csparse_name : ['csparse', 'cxsparse']
          system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['suitesparse/cs.h'])
