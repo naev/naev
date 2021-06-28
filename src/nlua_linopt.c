@@ -33,6 +33,8 @@ typedef struct LuaLinOpt_s {
 static int linoptL_gc( lua_State *L );
 static int linoptL_eq( lua_State *L );
 static int linoptL_new( lua_State *L );
+static int linoptL_addcols( lua_State *L );
+static int linoptL_addrows( lua_State *L );
 static int linoptL_setcol( lua_State *L );
 static int linoptL_setrow( lua_State *L );
 static int linoptL_loadmatrix( lua_State *L );
@@ -41,6 +43,8 @@ static const luaL_Reg linoptL_methods[] = {
    { "__gc", linoptL_gc },
    { "__eq", linoptL_eq },
    { "new", linoptL_new },
+   { "add_cols", linoptL_addcols },
+   { "add_rows", linoptL_addrows },
    { "set_col", linoptL_setcol },
    { "set_row", linoptL_setrow },
    { "load_matrix", linoptL_loadmatrix },
@@ -202,8 +206,43 @@ static int linoptL_new( lua_State *L )
 
 
 /**
+ * @brief Adds columns to the linear program.
+ *
+ *    @luatparam LinOpt lp Linear program to modify.
+ *    @luatparam number cols Number of columns to add.
+ * @luafunc add_cols
+ */
+static int linoptL_addcols( lua_State *L )
+{
+   LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
+   int toadd         = luaL_checkinteger(L,2);
+   glp_add_cols( lp->prob, toadd );
+   lp->ncols += toadd;
+   return 0;
+}
+
+
+/**
+ * @brief Adds rows to the linear program.
+ *
+ *    @luatparam LinOpt lp Linear program to modify.
+ *    @luatparam number rows Number of rows to add.
+ * @luafunc add_rows
+ */
+static int linoptL_addrows( lua_State *L )
+{
+   LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
+   int toadd         = luaL_checkinteger(L,2);
+   glp_add_rows( lp->prob, toadd );
+   lp->nrows += toadd;
+   return 0;
+}
+
+
+/**
  * @brief Adds an optimization column.
  *
+ *    @luatparam LinOpt lp Linear program to modify.
  *    @luatparam number index Index of the column to set.
  *    @luatparam string name Name of the column being added.
  *    @luatparam number coefficient Coefficient of the objective function being added.
@@ -259,6 +298,7 @@ static int linoptL_setcol( lua_State *L )
 /**
  * @brief Adds an optimization row.
  *
+ *    @luatparam LinOpt lp Linear program to modify.
  *    @luatparam number index Index of the row to set.
  *    @luatparam string name Name of the row being added.
  *    @luatparam[opt=nil] number lb Lower bound of the row.
@@ -298,6 +338,7 @@ static int linoptL_setrow( lua_State *L )
 /**
  * @brief Loads the entire matrix for the linear program.
  *
+ *    @luatparam LinOpt lp Linear program to modify.
  *    @luatparam number row_indices Indices of the rows.
  *    @luatparam number col_indices Indices of the columns.
  *    @luatparam number coefficients Values of the coefficients.
@@ -354,6 +395,7 @@ static int linoptL_loadmatrix( lua_State *L )
 /**
  * @brief Solves the linear optimization problem.
  *
+ *    @luatparam LinOpt lp Linear program to modify.
  *    @luatreturn number The value of the primal funcation.
  *    @luatreturn table Table of column values.
  * @luafunc solve
