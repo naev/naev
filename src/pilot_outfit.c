@@ -1039,9 +1039,9 @@ void pilot_calcStats( Pilot* pilot )
     * Absolute increases.
     */
    /* Movement. */
-   pilot->thrust_base  += s->thrust_base;
-   pilot->turn_base    += s->turn_base * M_PI / 180.;
-   pilot->speed_base   += s->speed_base;
+   pilot->thrust_base  += s->thrust;
+   pilot->turn_base    += s->turn * M_PI / 180.;
+   pilot->speed_base   += s->speed;
    /* Health. */
    pilot->armour_max   += s->armour;
    pilot->armour_regen += s->armour_regen;

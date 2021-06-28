@@ -14,9 +14,9 @@
   <energy_usage>15</energy_usage>
   <engine_limit>400</engine_limit>
   <fuel>500</fuel>
-  <speed_base>225</speed_base>
-  <thrust_base>115</thrust_base>
-  <turn_base>95</turn_base>
+  <speed>225</speed>
+  <thrust>115</thrust>
+  <turn>95</turn>
   <land_delay>-25</land_delay>
   <time_mod>10</time_mod>
  </specific>

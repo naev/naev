@@ -12,9 +12,9 @@
   <gfx_store>organic_engine_fast_l2.webp</gfx_store>
  </general>
  <specific type="modification">
-  <thrust_base>43</thrust_base>
-  <turn_base>52</turn_base>
-  <speed_base>73</speed_base>
+  <thrust>43</thrust>
+  <turn>52</turn>
+  <speed>73</speed>
   <fuel>1600</fuel>
   <energy_usage>50</energy_usage>
   <engine_limit>6500</engine_limit>

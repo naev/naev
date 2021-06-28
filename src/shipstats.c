@@ -146,9 +146,9 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_COOLDOWN_TIME,      cooldown_time,       gettext_noop("Ship Cooldown Time") ),
    D__ELEM( SS_TYPE_D_JUMP_DISTANCE,      jump_distance,       gettext_noop("Jump Distance") ),
 
-   A__ELEM( SS_TYPE_A_THRUST_BASE,        thrust_base,         gettext_noop("Thrust") ),
-   A__ELEM( SS_TYPE_A_TURN_BASE,          turn_base,           gettext_noop("Turn Rate") ),
-   A__ELEM( SS_TYPE_A_SPEED_BASE,         speed_base,          gettext_noop("Maximum Speed") ),
+   A__ELEM( SS_TYPE_A_THRUST,             thrust,               gettext_noop("Thrust") ),
+   A__ELEM( SS_TYPE_A_TURN,               turn,                gettext_noop("Turn Rate") ),
+   A__ELEM( SS_TYPE_A_SPEED,              speed,               gettext_noop("Maximum Speed") ),
    A__ELEM( SS_TYPE_A_ENERGY,             energy,              gettext_noop("Energy Capacity") ),
    A__ELEM( SS_TYPE_A_ENERGY_REGEN,       energy_regen,        gettext_noop("Energy Per Second") ),
    AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        gettext_noop("Energy Usage") ),
