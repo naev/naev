@@ -408,7 +408,7 @@ static int opt_gameplaySave( unsigned int wid, char *str )
    p = toolkit_getListPos( wid, "lstLanguage" );
    s = (p==0) ? NULL : toolkit_getList( wid, "lstLanguage" );
    newlang = ((s != NULL) != (conf.language != NULL))
-	  || ((s != NULL) && (strcmp( s, conf.language) != 0));
+          || ((s != NULL) && (strcmp( s, conf.language) != 0));
    if (newlang) {
       free( conf.language );
       conf.language = (s==NULL) ? NULL : strdup( s );

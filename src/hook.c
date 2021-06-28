@@ -1047,9 +1047,9 @@ nlua_env hook_env( unsigned int hook )
          evt = event_get( h->u.event.parent );
          if (evt != NULL)
             return evt->env;
-	 break;
+         break;
       default:
-	 break;
+         break;
    }
 
    return LUA_NOREF;

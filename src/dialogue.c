@@ -727,7 +727,7 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
    window_addList( wid, 20, -40-text_height-20,
          w-40, h - (40+text_height+20) - (20+30+20),
          "lstDialogue", items, nitems, 0, select_call_wrapper,
-	 dialogue_listClose );
+         dialogue_listClose );
 
    /* Create the buttons. */
    window_addButton( wid, -20, 20, 120, 30,

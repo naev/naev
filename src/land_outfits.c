@@ -208,7 +208,7 @@ void outfits_open( unsigned int wid, Outfit **outfits )
          w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, 0,
          w-(iw+80), h, /* TODO: Size exactly and resize instead of moving? */
-	 0, "txtDescription", &gl_smallFont, NULL, NULL );
+         0, "txtDescription", &gl_smallFont, NULL, NULL );
 
    /* Create the image array. */
    outfits_genList( wid );

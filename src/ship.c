@@ -937,9 +937,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"structure"))
                ship_parseSlot( temp, &array_grow(&temp->outfit_structure), OUTFIT_SLOT_STRUCTURE, cur );
-	    else if (xml_isNode(cur,"utility"))
+            else if (xml_isNode(cur,"utility"))
                ship_parseSlot( temp, &array_grow(&temp->outfit_utility), OUTFIT_SLOT_UTILITY, cur );
-	    else if (xml_isNode(cur,"weapon"))
+            else if (xml_isNode(cur,"weapon"))
                ship_parseSlot( temp, &array_grow(&temp->outfit_weapon), OUTFIT_SLOT_WEAPON, cur );
             else
                WARN(_("Ship '%s' has unknown slot node '%s'."), temp->name, cur->name);

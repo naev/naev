@@ -493,10 +493,10 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushoutfit(L,outfit_get(xml_get(node)));
          else {
             /* There are a few types knowingly left out above.
-	     * Meaningless (?): PILOT_METATABLE.
-	     * Seems doable, use case unclear: ARTICLE_METATABLE, VEC_METATABLE.
-	     * Seems doable, but probably GUI-only: COL_METATABLE, TEX_METATABLE.
-	     * */
+             * Meaningless (?): PILOT_METATABLE.
+             * Seems doable, use case unclear: ARTICLE_METATABLE, VEC_METATABLE.
+             * Seems doable, but probably GUI-only: COL_METATABLE, TEX_METATABLE.
+             * */
             WARN(_("Unknown Lua data type!"));
             lua_pop(L,1);
             return -1;

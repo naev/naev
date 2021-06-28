@@ -15,7 +15,7 @@
 
 /* Creation. */
 int escort_addList( Pilot *p, char *ship, EscortType_t type, unsigned int id,
-		    int persist );
+                    int persist );
 void escort_freeList( Pilot *p );
 void escort_rmList( Pilot *p, unsigned int id );
 void escort_rmListIndex( Pilot *p, int i );
