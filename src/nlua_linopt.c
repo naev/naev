@@ -33,6 +33,7 @@ typedef struct LuaLinOpt_s {
 static int linoptL_gc( lua_State *L );
 static int linoptL_eq( lua_State *L );
 static int linoptL_new( lua_State *L );
+static int linoptL_size( lua_State *L );
 static int linoptL_addcols( lua_State *L );
 static int linoptL_addrows( lua_State *L );
 static int linoptL_setcol( lua_State *L );
@@ -43,6 +44,7 @@ static const luaL_Reg linoptL_methods[] = {
    { "__gc", linoptL_gc },
    { "__eq", linoptL_eq },
    { "new", linoptL_new },
+   { "size", linoptL_size },
    { "add_cols", linoptL_addcols },
    { "add_rows", linoptL_addrows },
    { "set_col", linoptL_setcol },
@@ -202,6 +204,23 @@ static int linoptL_new( lua_State *L )
 
    lua_pushlinopt( L, lp );
    return 1;
+}
+
+
+/**
+ * @brief Adds columns to the linear program.
+ *
+ *    @luatparam LinOpt lp Linear program to modify.
+ *    @luatreturn number Number of columns in the linear program.
+ *    @luatreturn number Number of rows in the linear program.
+ * @luafunc size
+ */
+static int linoptL_size( lua_State *L )
+{
+   LuaLinOpt_t *lp = luaL_checklinopt(L,1);
+   lua_pushinteger( L, glp_get_num_cols( lp->prob ) );
+   lua_pushinteger( L, glp_get_num_rows( lp->prob ) );
+   return 2;
 }
 
 
