@@ -10,16 +10,21 @@ local equipopt = {}
 --]]
 function equipopt.goodness_default( o, p )
    -- Base attributes
-   base = -0.000001*o.price - 0.003*o.mass + 0.1*o.cargo - 0.5*o.cargo_inertia + 0.003*o.fuel
+   base = -p.max_price*o.price
+   base = base + p.cargo*(0.1*o.cargo + 0.1*(1-o.cargo_inertia))
+   base = base + p.fuel*0.001*o.fuel
    -- Movement attributes
    move = 0.05*o.thrust + 0.05*o.speed + 0.1*o.turn
    -- Health attributes
-   health = 0.005*o.shield + 0.005*o.armour + 0.005*o.energy + o.absorb + 0.1*o.shield_regen + 0.1*o.armour_regen + 0.1*o.energy_regen
+   health = 0.01*o.shield + 0.01*o.armour + 0.1*o.shield_regen + 0.1*o.armour_regen + o.absorb
+   -- Energy attributes
+   energy = 0.005*o.energy + 0.1*o.energy_regen
    -- Weapon attributes
    if o.dps and o.dps > 0 then
-      local trackmod = math.min( 1, math.max( 0, (p.tracktarget-o.trackmin)/(o.trackmax-o.trackmin)) )
-      weap = 0.05*o.dps - 0.02*o.eps + 0.01*o.range
-      weap = weap * (trackmod+0.1)
+      local trackmod = math.min( 1, math.max( 0, (p.track-o.trackmin)/(o.trackmax-o.trackmin)) )
+      local rangemod = math.min( 1, o.range/p.range )
+      weap = 0.1*o.dps
+      weap = weap * (0.9*trackmod+0.1) * (0.5+0.5*rangemod)
       if p.prefertur and not o.isturret then
          weap = weap * 0.75
       end
@@ -34,7 +39,7 @@ function equipopt.goodness_default( o, p )
       print(string.format("%s: base = %.3f, move = %.3f, health = %.3f, weap = %.3f, ew = %.3f", o.outfit:name(), base, move, health, weap, ew))
    end
    -- Constant value makes them prefer outfits rather than not
-   return 1 + base + move + health + weap + ew
+   return 1 + base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew
 end
 
 equipopt.params_default = {
@@ -48,9 +53,21 @@ equipopt.params_default = {
    min_energy_regen = 0, -- energy regen margin (above 0)
    eps_weight = 0.1, -- how to weight weapon EPS into energy regen
    max_mass = 1.0, -- maximum amount to go over engine limit (relative)
+   max_price = 1 / 1e6, -- discourages getting stuff more expensive than this
+
+   -- High level weights
+   move     = 1,
+   health   = 2,
+   energy   = 1,
+   weap     = 1,
+   ew       = 1,
+   -- Not as important
+   cargo    = 1,
+   fuel     = 1,
 
    -- Weapon stuff
-   tracktarget = 10000, -- ew_detect enemies we want to target
+   track = 10000, -- ew_detect enemies we want to target
+   range = 1000, -- ideal minimum range we want
    prefertur = true, -- whether or not to prefer turrets
 }
 
@@ -294,10 +311,10 @@ function equipopt.equip( p, cores, outfit_list, params )
    for k,v in ipairs(x) do
       print(string.format("x%d: %d",k,v))
    end
-   --]]
    for k,v in ipairs(c) do
       print(string.format("c%d: %d",k,v))
    end
+   --]]
 
    -- Interpret results
    print("Final Equipment:")
