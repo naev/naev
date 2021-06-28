@@ -110,16 +110,13 @@ typedef enum ShipStatsType_ {
    /* Health. */
    SS_TYPE_A_ENERGY,            /**< Energy modifier. */
    SS_TYPE_A_ENERGY_REGEN,      /**< Energy regeneration modifier. */
-   SS_TYPE_A_ENERGY_FLAT,       /**< Flat energy modifier (not multiplied). */
    SS_TYPE_A_ENERGY_REGEN_FLAT, /**< Flat energy regeneration modifier (not multiplied). */
    SS_TYPE_A_ENERGY_LOSS,       /**< Flat energy modifier (not multiplied) and applied linearly. */
    SS_TYPE_A_SHIELD,            /**< Shield modifier. */
    SS_TYPE_A_SHIELD_REGEN,      /**< Shield regeneration modifier. */
-   SS_TYPE_A_SHIELD_FLAT,       /**< Flat shield modifier (not multiplied). */
    SS_TYPE_A_SHIELD_REGEN_FLAT, /**< Flat shield regeneration modifier (not multiplied). */
    SS_TYPE_A_ARMOUR,            /**< Armour modifier. */
    SS_TYPE_A_ARMOUR_REGEN,      /**< Armour regeneration modifier. */
-   SS_TYPE_A_ARMOUR_FLAT,       /**< Flat armour modifier (not multiplied). */
    SS_TYPE_A_ARMOUR_REGEN_FLAT, /**< Flat armour regeneration modifier (not multiplied). */
    /* Misc. */
    SS_TYPE_A_CPU_MAX,           /**< Maximum CPU modifier. */
@@ -201,20 +198,17 @@ typedef struct ShipStats_ {
    double energy_regen;       /**< Energy regeneration modifier. */
    double energy_mod;         /**< Energy multiplier. */
    double energy_regen_mod;   /**< Energy regeneration multiplier. */
-   double energy_flat;        /**< Energy modifier (flat). */
    double energy_usage;       /**< Energy usage (flat). */
    double energy_loss;        /**< Energy modifier (flat and linear). */
    double shield;             /**< Shield modifier. */
    double shield_regen;       /**< Shield regeneration modifier. */
    double shield_mod;         /**< Shield multiplier. */
    double shield_regen_mod;   /**< Shield regeneration multiplier. */
-   double shield_flat;        /**< Shield modifier (flat). */
    double shield_usage;       /**< Shield usage (flat). */
    double armour;             /**< Armour modifier. */
    double armour_regen;       /**< Armour regeneration modifier. */
    double armour_mod;         /**< Armour multiplier. */
    double armour_regen_mod;   /**< Armour regeneration multiplier. */
-   double armour_flat;        /**< Armour modifier (flat). */
    double armour_damage;      /**< Armour regeneration (flat). */
 
    /* General */

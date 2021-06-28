@@ -1082,14 +1082,8 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * Flat increases.
     */
-   pilot->armour_max   += s->armour_flat;
-   pilot->armour       += s->armour_flat;
    pilot->armour_regen -= s->armour_damage;
-   pilot->shield_max   += s->shield_flat;
-   pilot->shield       += s->shield_flat;
    pilot->shield_regen -= s->shield_usage;
-   pilot->energy_max   += s->energy_flat;
-   pilot->energy       += s->energy_flat;
    pilot->energy_regen -= s->energy_usage;
    pilot->energy_loss  += s->energy_loss;
    pilot->dmg_absorb    = CLAMP( 0., 1., pilot->dmg_absorb + s->absorb/100. );
