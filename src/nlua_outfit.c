@@ -19,6 +19,7 @@
 #include "array.h"
 #include "log.h"
 #include "nlua_pilot.h"
+#include "nlua_ship.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
 #include "rng.h"
@@ -43,6 +44,7 @@ static int outfitL_description( lua_State *L );
 static int outfitL_unique( lua_State *L );
 static int outfitL_getShipStat( lua_State *L );
 static int outfitL_weapStats( lua_State *L );
+static int outfitL_specificStats( lua_State *L );
 static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -62,6 +64,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "unique", outfitL_unique },
    { "shipstat", outfitL_getShipStat },
    { "weapstats", outfitL_weapStats },
+   { "specificstats", outfitL_specificStats },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -625,3 +628,57 @@ static int outfitL_weapStats( lua_State *L )
 }
 
 
+#define SETFIELD( name, value )  \
+   lua_pushnumber( L, value ); \
+   lua_setfield( L, -2, name )
+#define SETFIELDI( name, value )  \
+   lua_pushinteger( L, value ); \
+   lua_setfield( L, -2, name )
+/**
+ * @brief Returns raw data specific to each outfit type.
+ *
+ *    @luatreturn A table containing the raw values.
+ * @luafunc specificstats
+ */
+static int outfitL_specificStats( lua_State *L )
+{
+   Outfit *o = luaL_validoutfit( L, 1 );
+   lua_newtable(L);
+   switch (o->type) {
+      case OUTFIT_TYPE_AFTERBURNER:
+         SETFIELD( "thrust",     o->u.afb.thrust );
+         SETFIELD( "speed",      o->u.afb.speed );
+         SETFIELD( "mass_limit", o->u.afb.mass_limit );
+         SETFIELD( "heatup",     o->u.afb.heatup );
+         SETFIELD( "heat",       o->u.afb.heat );
+         SETFIELD( "heat_cap",   o->u.afb.heat_cap );
+         SETFIELD( "heat_base",  o->u.afb.heat_cap );
+         break;
+
+      case OUTFIT_TYPE_FIGHTER_BAY:
+         lua_pushship( L, ship_get( o->u.bay.ammo->u.fig.ship ) );
+         lua_setfield( L, -2, "ship" );
+         SETFIELD( "delay",      o->u.bay.delay );
+         SETFIELDI("amount",     o->u.bay.amount );
+         SETFIELD( "reload_time",o->u.bay.reload_time );
+         break;
+
+      case OUTFIT_TYPE_LAUNCHER:
+      case OUTFIT_TYPE_TURRET_LAUNCHER:
+         SETFIELDI("delay",      o->u.lau.delay );
+         SETFIELDI("amount",     o->u.lau.amount );
+         SETFIELD( "reload_time",o->u.lau.reload_time );
+         SETFIELD( "lockon",     o->u.lau.lockon );
+         SETFIELD( "trackmin",   o->u.lau.trackmin );
+         SETFIELD( "trackmax",   o->u.lau.trackmax );
+         SETFIELD( "arc",        o->u.lau.arc );
+         SETFIELD( "swivel",     o->u.lau.swivel );
+         break;
+
+      default:
+         break;
+   }
+   return 1;
+}
+#undef SETFIELD
+#undef SETFIELDI
