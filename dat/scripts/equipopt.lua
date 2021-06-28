@@ -30,6 +30,14 @@ for k,o in ipairs(outfit.getAll()) do
    end
 end
 
+-- Some manual overrides
+fbays[ "Za'lek Light Drone Fighter Bay" ] = 150
+fbays[ "Za'lek Light Drone Fighter Dock" ] = 300
+fbays[ "Za'lek Bomber Drone Fighter Bay" ] = 150
+fbays[ "Za'lek Bomber Drone Fighter Dock" ] = 300
+fbays[ "Za'lek Heavy Drone Fighter Bay" ] = 200
+fbays[ "Za'lek Heavy Drone Fighter Dock" ] = 400
+
 
 --[[
       Goodness functions to rank how good each outfits are
