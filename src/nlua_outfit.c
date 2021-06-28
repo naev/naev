@@ -205,8 +205,6 @@ static int outfitL_eq( lua_State *L )
 }
 
 
-
-
 /**
  * @brief Gets a outfit.
  *
