@@ -14,7 +14,8 @@ source = files([
 ])
 
 include = include_directories([
-   'Include'
+   'Include',
+   '../SuiteSparse_config',
 ])
 
 cc = meson.get_compiler('c')
