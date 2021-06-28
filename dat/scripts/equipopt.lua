@@ -8,15 +8,24 @@ local equipopt = {}
 --[[
       Goodness functions to rank how good each outfits are
 --]]
-function equipopt.goodness_default( o )
+function equipopt.goodness_default( o, p )
    -- Base attributes
    base = -0.000001*o.price - 0.003*o.mass + 0.1*o.cargo - 0.5*o.cargo_inertia + 0.003*o.fuel
    -- Movement attributes
    move = 0.05*o.thrust + 0.05*o.speed + 0.1*o.turn
    -- Health attributes
    health = 0.005*o.shield + 0.005*o.armour + 0.005*o.energy + o.absorb + 0.1*o.shield_regen + 0.1*o.armour_regen + 0.1*o.energy_regen
-   -- Weapon attributese
-   weap = 0.05*o.dps - 0.02*o.eps + 0.01*o.range
+   -- Weapon attributes
+   if o.dps and o.dps > 0 then
+      local trackmod = math.min( 1, math.max( 0, (p.tracktarget-o.trackmin)/(o.trackmax-o.trackmin)) )
+      weap = 0.05*o.dps - 0.02*o.eps + 0.01*o.range
+      weap = weap * (trackmod+0.1)
+      if p.prefertur and not o.isturret then
+         weap = weap * 0.75
+      end
+   else
+      weap = 0
+   end
    -- Ewarfare attributes
    ew = 3*(o.ew_detect-1) + 3*(o.ew_hide-1)
    --print(string.format("%s: base = %.3f, move = %.3f, health = %.3f, weap = %.3f, ew = %.3f", o.outfit:name(), base, move, health, weap, ew))
@@ -28,11 +37,19 @@ function equipopt.goodness_default( o )
    return 1 + base + move + health + weap + ew
 end
 
+equipopt.params_default = {
+   goodness = equipopt.goodness_default,
+
+   tracktarget = 10000,
+   prefertur = true,
+   maxsame = 3,
+}
+
 --[[
       Main equip script.
 --]]
-function equipopt.equip( p, cores, outfit_list, goodness )
-   goodness = goodness or equipopt.goodness_default
+function equipopt.equip( p, cores, outfit_list, params )
+   params = params or equipopt.params_default
 
    -- Naked ship
    p:rmOutfit( "all" )
@@ -79,7 +96,10 @@ function equipopt.equip( p, cores, outfit_list, goodness )
       -- Core stats
       local oo = out:shipstat(nil,true)
       oo.outfit   = out
-      oo.dps, oo.eps, oo.range = out:weapstats( p )
+      oo.dps, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon = out:weapstats( p )
+      oo.trackmin = oo.trackmin or 0
+      oo.trackmax = oo.trackmax or 0
+      oo.lockon   = oo.lockon or 0
       oo.cpu      = out:cpu() * ss.cpu_mod
       oo.mass     = out:mass() * ss.mass_mod
       oo.price    = out:price()
@@ -92,6 +112,11 @@ function equipopt.equip( p, cores, outfit_list, goodness )
             end
          end
       end
+      oo.type     = out:type()
+      if oo.type == "Bolt Turret" or oo.type == "Beam Turret" or oo.type == "Turret Launcher" then
+         oo.isturret = true
+      end
+      oo.typebroad = out:typeBroad()
 
       -- We correct ship stats here and convert them to "relative improvements"
       -- Movement
@@ -109,7 +134,7 @@ function equipopt.equip( p, cores, outfit_list, goodness )
       oo.cargo = oo.cargo_mod * (oo.cargo + ss.cargo) - ss.cargo
 
       -- Compute goodness
-      oo.goodness = goodness( oo )
+      oo.goodness = params.goodness( oo, params )
 
       -- Cache it all so we don't hae to recompute
       outfit_cache[v] = oo
@@ -120,16 +145,18 @@ function equipopt.equip( p, cores, outfit_list, goodness )
    local slots_base = ps:getSlots()
    for k,v in ipairs( slots_base ) do
       local has_outfits = {}
-
+      local outfitpos = {}
       for m,o in ipairs( outfit_list ) do
          if ps:fitsSlot( k, o ) then
             table.insert( has_outfits, o )
+            table.insert( outfitpos, m )
          end
       end
 
       if #has_outfits > 0 then
          v.id = k
          v.outfits = has_outfits
+         v.outfitpos = outfitpos
          --[[
          print( string.format( "[%d] = %s, %s", k, v.type, v.size ) )
          for m, o in ipairs(v.outfits) do
@@ -148,17 +175,27 @@ function equipopt.equip( p, cores, outfit_list, goodness )
    -- We have to add additional constraints (spaceworthy, limits)
    local sworthy = 2 -- Check CPU and Energy regen
    nrows = nrows + sworthy + #limits
+   if params.maxsame then
+      nrows = nrows + #outfit_list
+   end
    lp = linopt.new( "test", ncols, nrows, true )
    -- Add space worthy checks
    lp:set_row( 1, "CPU",          nil, st.cpu )
    lp:set_row( 2, "energy_regen", nil, st.energy_regen )
    -- Add limit checks
-   for i = 1,#limits do
-      lp:set_row( sworthy+i, limits[i], nil, 1 )
+   for i,l in ipairs(limits) do
+      lp:set_row( sworthy+i, l, nil, 1 )
+   end
+   local nsame = 0
+   if params.maxsame then
+      for i,o in ipairs(outfit_list) do
+         lp:set_row( sworthy+#limits+i, o, nil, params.maxsame )
+      end
+      nsame = #outfit_list
    end
    -- Add outfit checks
    local c = 1
-   local r = 1 + sworthy + #limits
+   local r = 1 + sworthy + #limits + nsame
    for i,s in ipairs(slots) do
       for j,o in ipairs(s.outfits) do
          local stats = outfit_cache[o]
@@ -183,12 +220,17 @@ function equipopt.equip( p, cores, outfit_list, goodness )
          table.insert( ia, r )
          table.insert( ja, c )
          table.insert( ar, 1 )
+         -- Maximum of same type
+         if params.maxsame then
+            table.insert( ia, sworthy + #limits + s.outfitpos[j] )
+            table.insert( ja, c )
+            table.insert( ar, 1 )
+         end
          c = c + 1
       end
       lp:set_row( r, string.format("s%d-sum", i), nil, 1 )
       r = r + 1
    end
-   lp:load_matrix( ia, ja, ar )
 
    --[[
    local M = {}
@@ -211,6 +253,7 @@ function equipopt.equip( p, cores, outfit_list, goodness )
    --]]
 
    -- All the magic is done here
+   lp:load_matrix( ia, ja, ar )
    z, x, c = lp:solve()
    --[[
    for k,v in ipairs(x) do
