@@ -333,9 +333,9 @@ static int linoptL_loadmatrix( lua_State *L )
       ja[i] = luaL_checkinteger(L,-2);
       ar[i] = luaL_checknumber(L,-1);
 #else /* DEBUGGING */
-      ia[i] = luaL_tointeger(L,-3);
-      ja[i] = luaL_tointeger(L,-2);
-      ar[i] = luaL_tonumber(L,-1);
+      ia[i] = lua_tointeger(L,-3);
+      ja[i] = lua_tointeger(L,-2);
+      ar[i] = lua_tonumber(L,-1);
 #endif /* DEBUGGING */
       lua_pop(L,3);
    }
