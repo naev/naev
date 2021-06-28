@@ -56,6 +56,7 @@ equipopt.params_default = {
    eps_weight = 0.1, -- how to weight weapon EPS into energy regen
    max_mass = 1.0, -- maximum amount to go over engine limit (relative)
    max_price = 1 / 1e6, -- discourages getting stuff more expensive than this
+   budget = nil, -- total cost budget
 
    -- High level weights
    move     = 1,
@@ -224,6 +225,9 @@ function equipopt.equip( p, cores, outfit_list, params )
 
    -- We have to add additional constraints (spaceworthy, limits)
    local sworthy = 3 -- Check CPU and Energy regen
+   if params.budget then
+      sworthy = sworthy + 1
+   end
    nrows = nrows + sworthy + #limits
    if #same_list > 0 then
       nrows = nrows + #same_list
@@ -233,6 +237,9 @@ function equipopt.equip( p, cores, outfit_list, params )
    lp:set_row( 1, "CPU",          nil, st.cpu )
    lp:set_row( 2, "energy_regen", nil, st.energy_regen - math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) )
    lp:set_row( 3, "mass",         nil, params.max_mass * ss.engine_limit - st.mass )
+   if params.budget then
+      lp:set_row( 4, "budget",    nil, params.budget )
+   end
    -- Add limit checks
    for i,l in ipairs(limits) do
       lp:set_row( sworthy+i, l, nil, 1 )
@@ -265,6 +272,12 @@ function equipopt.equip( p, cores, outfit_list, params )
          table.insert( ia, 3 )
          table.insert( ja, c )
          table.insert( ar, stats.mass )
+         -- Budget constraint if necessary
+         if params.budget then
+            table.insert( ia, 4 )
+            table.insert( ja, c )
+            table.insert( ar, stats.price )
+         end
          -- Limit constraint
          if stats.limit then
             table.insert( ia, sworthy + stats.limitpos )
