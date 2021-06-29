@@ -52,7 +52,7 @@ function equipopt.goodness_default( o, p )
    -- Health attributes
    health = 0.01*o.shield + 0.01*o.armour + 0.1*o.shield_regen + 0.1*o.armour_regen + o.absorb
    -- Energy attributes
-   energy = 0.005*o.energy + 0.1*o.energy_regen
+   energy = 0.003*o.energy + 0.1*o.energy_regen
    -- Weapon attributes
    if o.dps and o.dps > 0 then
       local trackmod = math.min( 1, math.max( 0, (p.track-o.trackmin)/(o.trackmax-o.trackmin)) )
@@ -87,12 +87,13 @@ function equipopt.goodness_default( o, p )
    return 1 + base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew
 end
 
-equipopt.params_default = {
+function equipopt.params_default ()
+   return {
    -- Our goodness function
    goodness = equipopt.goodness_default,
 
    -- Global stuff
-   rnd = 0.2, -- amount of randomness to use for goodness function
+   rnd         = 0.2, -- amount of randomness to use for goodness function
    max_same_weap = nil, -- maximum same weapons (nil is no limit)
    max_same_util = nil, -- maximum same utilities (nil is no limit)
    max_same_stru = nil, -- maximum same structurals (nil is no limit)
@@ -104,14 +105,14 @@ equipopt.params_default = {
    budget      = nil, -- total cost budget
 
    -- High level weights
-   move     = 1,
-   health   = 1,
-   energy   = 1,
-   weap     = 1,
-   ew       = 1,
+   move        = 1,
+   health      = 1,
+   energy      = 1,
+   weap        = 1,
+   ew          = 1,
    -- Not as important
-   cargo    = 1,
-   fuel     = 1,
+   cargo       = 1,
+   fuel        = 1,
 
    -- Weapon stuff
    track       = 10000, -- ew_detect enemies we want to target
@@ -124,13 +125,13 @@ equipopt.params_default = {
    beam        = 1,
    bolt        = 1,
    fighterbay  = 1,
-}
+} end
 
 --[[
       Main equip script.
 --]]
 function equipopt.equip( p, cores, outfit_list, params )
-   params = params or equipopt.params_default
+   params = params or equipopt.params_default()
 
    -- Naked ship
    p:rmOutfit( "all" )
