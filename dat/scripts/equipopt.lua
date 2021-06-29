@@ -81,7 +81,7 @@ function equipopt.goodness_default( o, p )
          weap = weap * p.beam
       elseif o.typebroad == "Launcher" then
          -- Must be able to outrun target
-         local smod = math.min( 1, 0.5*(o.spec.speed - p.t_speed) / p.t_speed)
+         local smod = math.min( 1, 0.5*(o.spec.speed  / p.t_speed) )
          weap = weap * p.launcher * smod
       elseif o.typebroad == "Fighter Bay" then
          weap = weap * p.fighterbay
@@ -100,63 +100,180 @@ function equipopt.goodness_default( o, p )
    end
    --]]
    print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, p.constant + w*(base + move + health + energy + weap + ew), w*base, w*move, w*health, w*weap, w*ew))
-   -- Constant value makes them prefer outfits rather than not
    return p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
 end
 
-function equipopt.params_default ()
-   return {
-   -- Our goodness function
-   goodness = equipopt.goodness_default,
+local function _merge_tables( p, params )
+   if params then
+      for k,v in pairs(params) do p[k] = v end
+   end
+   return p
+end
 
-   -- Global stuff
-   constant    = 10,
-   rnd         = 0.2, -- amount of randomness to use for goodness function
-   max_same_weap = nil, -- maximum same weapons (nil is no limit)
-   max_same_util = nil, -- maximum same utilities (nil is no limit)
-   max_same_stru = nil, -- maximum same structurals (nil is no limit)
-   min_energy_regen = 0.6, -- relative minimum regen margin (with respect to cores)
-   min_energy_regen_abs = 0, -- absolute minimum energy regen (MJ/s)
-   eps_weight  = 0.1, -- how to weight weapon EPS into energy regen
-   max_mass    = 1.0, -- maximum amount to go over engine limit (relative)
-   budget      = nil, -- total cost budget
-   -- Range of type, this is dangerous as minimum values could lead to the
-   -- optimization problem not having a solution
-   type_range  = {
-      --["Fighter Bay"] = { min=1, max=2 },
-      --["Bolt Turret"] = { min=1, max=2 },
-   },
+equipopt.params = {}
 
-   -- High level weights
-   move        = 1,
-   health      = 1,
-   energy      = 1,
-   weap        = 1,
-   ew          = 1,
-   -- Not as important
-   cargo       = 1,
-   fuel        = 1,
+function equipopt.params.default( overwrite )
+   return _merge_tables( {
+      -- Our goodness function
+      goodness = equipopt.goodness_default,
 
-   -- Weapon stuff
-   t_absorb    = 0.2, -- assumed target absorption
-   t_speed     = 250, -- assumed target speed
-   t_track     = 10000, -- ew_detect enemies we want to target
-   range       = 2000, -- ideal minimum range we want
-   damage      = 1, -- weight for normal damage
-   disable     = 1, -- weight for disable damage
-   turret      = 1,
-   forward     = 1,
-   launcher    = 1,
-   beam        = 1,
-   bolt        = 1,
-   fighterbay  = 1,
-} end
+      -- Global stuff
+      constant    = 5, -- Constant value makes them prefer outfits rather than not
+      rnd         = 0.2, -- amount of randomness to use for goodness function
+      max_same_weap = nil, -- maximum same weapons (nil is no limit)
+      max_same_util = nil, -- maximum same utilities (nil is no limit)
+      max_same_stru = nil, -- maximum same structurals (nil is no limit)
+      min_energy_regen = 0.6, -- relative minimum regen margin (with respect to cores)
+      min_energy_regen_abs = 0, -- absolute minimum energy regen (MJ/s)
+      eps_weight  = 0.1, -- how to weight weapon EPS into energy regen
+      max_mass    = 1.0, -- maximum amount to go over engine limit (relative)
+      budget      = nil, -- total cost budget
+      -- Range of type, this is dangerous as minimum values could lead to the
+      -- optimization problem not having a solution
+      type_range  = {
+         --["Fighter Bay"] = { min=1, max=2 },
+         --["Bolt Turret"] = { min=1, max=2 },
+      },
+
+      -- High level weights
+      move        = 1,
+      health      = 1,
+      energy      = 1,
+      weap        = 1,
+      ew          = 1,
+      -- Not as important
+      cargo       = 1,
+      fuel        = 1,
+
+      -- Weapon stuff
+      t_absorb    = 0.2, -- assumed target absorption
+      t_speed     = 250, -- assumed target speed
+      t_track     = 10000, -- ew_detect enemies we want to target
+      range       = 2000, -- ideal minimum range we want
+      damage      = 1, -- weight for normal damage
+      disable     = 1, -- weight for disable damage
+      turret      = 1,
+      forward     = 1,
+      launcher    = 1,
+      beam        = 1,
+      bolt        = 1,
+      fighterbay  = 1,
+   }, overwrite )
+end
+
+function equipopt.params.yacht( overwrite )
+   return _merge_tables( equipopt.params.default{
+      weap        = 0.1, -- low weapons
+      t_absorb    = 0,
+      t_speed     = 300,
+      t_track     = 4000,
+      t_range     = 1000,
+   }, overwrite )
+end
+
+function equipopt.params.scout( overwrite )
+   return _merge_tables( equipopt.params.default{
+      weap        = 0.5, -- low weapons
+      ew          = 3,
+      move        = 2,
+      t_absorb    = 0,
+      t_speed     = 400,
+      t_track     = 4000,
+      t_range     = 1000,
+   }, overwrite )
+end
+
+function equipopt.params.light_fighter( overwrite )
+   return _merge_tables( equipopt.params.default{
+      move        = 2,
+      t_absorb    = 0,
+      t_speed     = 400,
+      t_track     = 4000,
+      t_range     = 1000,
+   }, overwrite )
+end
+
+function equipopt.params.heavy_fighter( overwrite )
+   return _merge_tables( equipopt.params.default{
+      t_absorb    = 0.10,
+      t_speed     = 300,
+      t_track     = 7000,
+      t_range     = 1000,
+   }, overwrite )
+end
+
+function equipopt.params.light_bomber( overwrite )
+   return _merge_tables( equipopt.params.default{
+      t_absorb    = 0.30,
+      t_speed     = 200,
+      t_track     = 15e3,
+      t_range     = 5000,
+      launcher    = 2,
+   }, overwrite )
+end
+
+function equipopt.params.heavy_bomber( overwrite )
+   return _merge_tables( equipopt.params.default{
+      t_absorb    = 0.60,
+      t_speed     = 50,
+      t_track     = 25e3,
+      t_range     = 5000,
+      launcher    = 2,
+   }, overwrite )
+end
+
+function equipopt.params.corvette( overwrite )
+   return _merge_tables( equipopt.params.default{
+      move        = 1.5,
+      t_absorb    = 0.20,
+      t_speed     = 250,
+      t_track     = 10e3,
+      t_range     = 3000,
+   }, overwrite )
+end
+
+function equipopt.params.destroyer( overwrite )
+   return _merge_tables( equipopt.params.default{
+      t_absorb    = 0.30,
+      t_speed     = 150,
+      t_track     = 15e3,
+      t_range     = 3000,
+   }, overwrite )
+end
+
+function equipopt.params.light_cruiser( overwrite )
+   return _merge_tables( equipopt.params.default{
+      t_absorb    = 0.50,
+      t_speed     = 100,
+      t_track     = 25e3,
+      t_range     = 4000,
+   }, overwrite )
+end
+
+function equipopt.params.heavy_cruiser( overwrite )
+   return _merge_tables( equipopt.params.default{
+      t_absorb    = 0.70,
+      t_speed     = 70,
+      t_track     = 35e3,
+      t_range     = 4000,
+   }, overwrite )
+end
+
+function equipopt.params.carrier( overwrite )
+   return _merge_tables( equipopt.params.default{
+      t_absorb    = 0.50,
+      t_speed     = 70,
+      t_track     = 35e3,
+      t_range     = 4000,
+      fighterbay  = 2,
+   }, overwrite )
+end
 
 --[[
       Main equip script.
 --]]
 function equipopt.equip( p, cores, outfit_list, params )
-   params = params or equipopt.params_default()
+   params = params or equipopt.params.default()
 
    -- TODO check to make sure all the outfits in outfit_list are equippable
 
