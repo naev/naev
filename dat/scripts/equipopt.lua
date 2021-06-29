@@ -59,8 +59,19 @@ function equipopt.goodness_default( o, p )
       local rangemod = math.min( 1, o.range/p.range )
       weap = 0.2*(o.dps*p.damage + o.disable*p.disable)
       weap = weap * (0.9*trackmod+0.1) * (0.5+0.5*rangemod)
-      if p.prefertur and not o.isturret then
-         weap = weap * 0.75
+      if o.isturret then
+         weap = weap * p.turret
+      else
+         weap = weap * p.forward
+      end
+      if o.typebroad == "Bolt Weapon" then
+         weap = weap * p.bolt
+      elseif o.typebroad == "Beam Weapon" then
+         weap = weap * p.beam
+      elseif o.typebroad == "Launcher" then
+         weap = weap * p.launcher
+      elseif o.typebroad == "Fighter Bay" then
+         weap = weap * p.fighterbay
       end
    else
       weap = 0
@@ -87,14 +98,14 @@ equipopt.params_default = {
    max_same_stru = nil, -- maximum same structurals (nil is no limit)
    min_energy_regen = 0.6, -- relative minimum regen margin (with respect to cores)
    min_energy_regen_abs = 0, -- absolute minimum energy regen (MJ/s)
-   eps_weight = 0.1, -- how to weight weapon EPS into energy regen
-   max_mass = 1.0, -- maximum amount to go over engine limit (relative)
-   max_price = 1 / 1e6, -- discourages getting stuff more expensive than this
-   budget = nil, -- total cost budget
+   eps_weight  = 0.1, -- how to weight weapon EPS into energy regen
+   max_mass    = 1.0, -- maximum amount to go over engine limit (relative)
+   max_price   = 1 / 1e6, -- discourages getting stuff more expensive than this
+   budget      = nil, -- total cost budget
 
    -- High level weights
    move     = 1,
-   health   = 2,
+   health   = 1,
    energy   = 1,
    weap     = 1,
    ew       = 1,
@@ -103,11 +114,16 @@ equipopt.params_default = {
    fuel     = 1,
 
    -- Weapon stuff
-   track = 10000, -- ew_detect enemies we want to target
-   range = 1000, -- ideal minimum range we want
-   damage = 1, -- weight for normal damage
-   disable = 1, -- weight for disable damage
-   prefertur = true, -- whether or not to prefer turrets
+   track       = 10000, -- ew_detect enemies we want to target
+   range       = 1000, -- ideal minimum range we want
+   damage      = 1, -- weight for normal damage
+   disable     = 1, -- weight for disable damage
+   turret      = 1,
+   forward     = 1,
+   launcher    = 1,
+   beam        = 1,
+   bolt        = 1,
+   fighterbay  = 1,
 }
 
 --[[
