@@ -248,7 +248,7 @@ void dtype_free (void)
  *    @param[in] dmg Damage information.
  *    @param[in] s Ship stats to use.
  */
-void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *knockback, const Damage *dmg, ShipStats *s )
+void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *knockback, const Damage *dmg, const ShipStats *s )
 {
    DTYPE *dtype;
    char *ptr;

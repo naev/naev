@@ -25,7 +25,7 @@ void dtype_free (void);
  * misc
  */
 void dtype_calcDamage( double *dshield, double *darmour, double absorb,
-      double *knockback, const Damage *dmg, ShipStats *s );
+      double *knockback, const Damage *dmg, const ShipStats *s );
 
 
 #endif /* _DTYPE_H */
