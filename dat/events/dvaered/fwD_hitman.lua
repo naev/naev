@@ -3,7 +3,7 @@
 <event name="Division Marius">
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>player.misnDone("Dvaered Triathlon") == true and not (player.misnDone("Dvaered Base") or player.misnActive("Dvaered Base") or player.misnDone("Dvaered Triathlon"))</cond>
+  <cond>player.misnDone("Dvaered Ballet") == true and not (player.misnDone("Dvaered Base") or player.misnActive("Dvaered Base") or player.misnDone("Dvaered Triathlon"))</cond>
   <flags>
    <unique />
   </flags>
