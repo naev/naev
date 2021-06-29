@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-06-27 09:52-0400\n"
-"PO-Revision-Date: 2021-06-28 15:33+0000\n"
+"PO-Revision-Date: 2021-06-29 18:33+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -30875,10 +30875,8 @@ msgstr ""
 "wahrscheinlich noch andere Gelegenheiten geben, das zu tun."
 
 #: dat/events/dvaered/fwD_hitman.lua:25
-#, fuzzy
-#| msgid "Boarding Androids"
 msgid "Boarding aborted"
-msgstr "Enterandroiden"
+msgstr "Entern abgebrochen"
 
 #: dat/events/dvaered/fwD_hitman.lua:26
 msgid ""
@@ -30896,6 +30894,19 @@ msgid ""
 "drifting away? Oho! Come back. Hey! You belong to me. Come back into the "
 "inside of me, my intestine.\""
 msgstr ""
+"Nachdem du an das feindliche Schiff angedockt hast, beginnen die "
+"Kampfandroiden deiner Crew, dessen Luftschleuse mit ihren Brennern "
+"anzugreifen. Du empfängst eine Nachricht von deinem Angreifer:\n"
+"   „Weg da! An der Luftschleuse befindet sich ein Zünder! Sie bringen uns "
+"beide um!“ Genau in diesem Moment erhellt eine gewaltige Explosion dein "
+"Cockpit. Die Erschütterung trennt beide Schiffe und schaltet deine Androiden "
+"aus. Das gegnerische Schiff wankt mit einer Wucht, die seine Hülle zerreißt. "
+"Du denkst, der Pilot ist tot, aber bald hörst du seine Nachricht:\n"
+"   „Verdammt. Ich dachte, von einer Spiere durchbohrt zu werden, würde mehr "
+"schmerzen. Ich schätze, Sie sind nicht in einer besseren Verfassung als ich. "
+"Schade, keiner von uns wird erleben, wie die Division Marius die Dvaered-"
+"Flotte zerstört! Warte, sind das meine Gedärme, die wegdriften? Oho! Komm "
+"zurück. Hey! Du gehörst zu mir. Komm zurück in mein Inneres, mein Darm.“"
 
 #. Player is attacked: remind what to do
 #. Ambusher is death: event failed
@@ -47537,6 +47548,8 @@ msgid ""
 "This Dvaered officer is probably waiting for you and might have information "
 "about the ex-colonel Hamelsen's escape."
 msgstr ""
+"Dieser Dvaered-Beamte wartet wahrscheinlich auf dich und könnte "
+"Informationen über die Flucht des Ex-Oberst Hamelsen haben."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:121
 msgid "No trace of Hamelsen"
@@ -47592,15 +47605,15 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:130
 msgid "Bye, suckers!"
-msgstr ""
+msgstr "Tschüss, ihr Narren!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:131
 msgid "Just wait for my shredders to..."
-msgstr ""
+msgstr "Wartet nur auf meine Schredder …"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:134
 msgid "Now, it's your turn"
-msgstr ""
+msgstr "Jetzt seid ihr am Zug"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:135
 #, lua-format
@@ -47618,10 +47631,9 @@ msgstr ""
 "%s, kümmern Sie sich um die drei. Lassen Sie keinen von ihnen entkommen.“"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:137
-#, fuzzy, lua-format
-#| msgid "You will pay for your treason!"
+#, lua-format
 msgid "You fell in our trap, %s!"
-msgstr "Für diesen Verrat werden Sie bezahlen!"
+msgstr "Du bist in unsere Falle getappt, %s!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:138
 msgid "You're so dead!"
@@ -47629,7 +47641,7 @@ msgstr "Du bist so tot!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:139
 msgid "Without any support!"
-msgstr ""
+msgstr "Ohne Hilfe!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:140
 msgid "Folks, please do less chatting and more killing."
@@ -47652,10 +47664,8 @@ msgid "Same for me!"
 msgstr "Ich auch!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:146
-#, fuzzy
-#| msgid "Rid of them at last"
 msgid "Rid of them!"
-msgstr "Endlich sind sie weg"
+msgstr "Macht sie weg!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:147
 msgid ""
