@@ -41,20 +41,47 @@ local zalek_skip = {
 }
 
 local zalek_params = {
-   ["Za'lek Demon"] = function ()
-      return {
+   ["Za'lek Demon"] = function () return {
          type_range = {
             ["Launcher"] = { max = rnd.rnd(0,2) },
          },
-      }
-   end,
-   ["Za'lek Mephisto"] = function ()
-      return {
+         weap = 2,
+      } end,
+   ["Za'lek Mephisto"] = function () return {
          type_range = {
             ["Launcher"] = { max = rnd.rnd(0,2) },
          },
-      }
-   end,
+         weap = 2,
+         min_energy_regen = 0,
+      } end,
+}
+local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+local zalek_cores = {
+   ["Za'lek Sting"] = function () return {
+         choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
+         "Tricon Cyclone Engine",
+         choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" },
+      } end,
+   ["Za'lek Demon"] = function () return {
+         choose_one{ "Milspec Orion 5501 Core System", "Milspec Thalos 5402 Core System" },
+         "Tricon Cyclone II Engine",
+         choose_one{ "Nexus Medium Stealth Plating", "S&K Medium-Heavy Combat Plating" },
+      } end,
+   ["Za'lek Mephisto"] = function () return {
+         "Milspec Orion 8601 Core System",
+         choose_one{ "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine" },
+         choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
+      } end,
+   ["Za'lek Diablo"] = function () return {
+         "Milspec Thalos 9802 Core System",
+         choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
+         "Tricon Typhoon II Engine",
+      } end,
+   ["Za'lek Hephaestus"] = function () return {
+         "Milspec Thalos 9802 Core System",
+         choose_one{ "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating" },
+         "Melendez Mammoth XL Engine",
+      } end,
 }
 
 --[[
@@ -67,19 +94,28 @@ function equip( p )
    if zalek_skip[sname] then return end
 
    -- Choose parameters and make Za'lekish
-   params = equipopt.params.choose( p )
+   local params = equipopt.params.choose( p )
    -- Prefer to use the Za'lek utilities
-   params.prefer = {
-      ["Hive Combat AI"]          = 100,
-      ["Faraday Tempest Coating"] = 100,
-   }
+   params.prefer["Hive Combat AI"]          = 100
+   params.prefer["Faraday Tempest Coating"] = 100
+   params.max_same_stru = 3
+   params.max_mass = 0.95 + 0.2*rnd.rnd()
    -- Per ship tweaks
    local sp = zalek_params[ sname ]
    if sp then
       for k,v in pairs(sp()) do
-         params[k] = v
+         if type(v)=="table" then
+            for i,e in pairs(v) do
+               params[k][i] = e
+            end
+         else
+            params[k] = v
+         end
       end
    end
+
+   -- See cores
+   local cores = zalek_cores[ sname ]()
 
    -- Try to equip
    equipopt.equip( p, cores, zalek_outfits, params )

@@ -92,8 +92,8 @@ function equipopt.goodness_default( o, p )
    ew = 3*(o.ew_detect-1) + 3*(o.ew_hide-1)
    -- Custom weight
    local w = special[o.name] or 1
-   --print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, p.constant + w*(base + move + health + energy + weap + ew), w*base, w*move, w*health, w*weap, w*ew))
    local g = p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
+   --print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, g * (p.prefer[o.name] or 1), w*base, w*move, w*health, w*weap, w*ew))
     return g * (p.prefer[o.name] or 1)
 end
 
