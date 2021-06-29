@@ -220,6 +220,12 @@ nlua_env nlua_newEnv(int rw) {
    lua_pushboolean(naevL, rw);
    lua_setfield(naevL, -2, "__RW");
 
+   /* Push if naev is built with debugging. */
+#if DEBUGGING
+   lua_pushboolean(naevL, 1);
+   lua_setfield(naevL, -2, "__debugging");
+#endif /* DEBUGGING */
+
    /* Set up naev namespace. */
    lua_newtable(naevL);
    lua_setfield(naevL, -2, "naev");
