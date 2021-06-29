@@ -45,14 +45,11 @@ local zalek_params = {
          type_range = {
             ["Launcher"] = { max = rnd.rnd(0,2) },
          },
-         weap = 2,
       } end,
    ["Za'lek Mephisto"] = function () return {
          type_range = {
             ["Launcher"] = { max = rnd.rnd(0,2) },
          },
-         weap = 2,
-         min_energy_regen = 0,
       } end,
 }
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
