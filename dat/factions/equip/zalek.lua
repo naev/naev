@@ -68,7 +68,7 @@ local zalek_cores = {
          choose_one{ "Nexus Medium Stealth Plating", "S&K Medium-Heavy Combat Plating" },
       } end,
    ["Za'lek Mephisto"] = function () return {
-         "Milspec Orion 8601 Core System",
+         "Milspec Orion 9901 Core System",
          choose_one{ "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine" },
          choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
       } end,
