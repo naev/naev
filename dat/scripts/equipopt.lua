@@ -41,8 +41,8 @@ fbays[ "Za'lek Heavy Drone Fighter Dock" ]   = 100
 
 -- Special weights
 local special = {
-   ["Enygma Systems Spearhead Launcher"] = 0.4,
-   ["TeraCom Medusa Launcher"] = 0.5,
+   ["Enygma Systems Spearhead Launcher"] = 0.4, -- high damage but shield only
+   ["TeraCom Medusa Launcher"] = 0.5,           -- really high disable
 }
 
 
