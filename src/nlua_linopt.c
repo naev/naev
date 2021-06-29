@@ -22,10 +22,13 @@
 #include "nluadef.h"
 
 
+/**
+ * @brief Our cute little linear program wrapper.
+ */
 typedef struct LuaLinOpt_s {
-   int ncols;
-   int nrows;
-   glp_prob *prob;
+   int ncols;        /**< Number of structural variables. */
+   int nrows;        /**< Number of auxiliary variables (constraints). */
+   glp_prob *prob;   /**< Problem structure itself. */
 } LuaLinOpt_t;
 
 
