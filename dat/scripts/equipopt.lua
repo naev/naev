@@ -60,10 +60,16 @@ function equipopt.goodness_default( o, p )
    energy = 0.003*o.energy + 0.1*o.energy_regen
    -- Weapon attributes
    if o.dps and o.dps > 0 then
-      local trackmod = math.min( 1, math.max( 0, (p.track-o.trackmin)/(o.trackmax-o.trackmin)) )
-      local rangemod = math.min( 1, o.range/p.range )
+      -- Compute damage
       weap = 0.2*(o.dps*p.damage + o.disable*p.disable)
-      weap = weap * (0.9*trackmod+0.1) * (0.1+0.9*rangemod)
+      -- Tracking Modifier
+      local mod = math.min( 1, math.max( 0, (p.t_track-o.trackmin)/(o.trackmax-o.trackmin)) )
+      -- Range modifier
+      mod = mod * math.min( 1, o.range/p.range )
+      -- Absorption modifier
+      mod = mod * (1 + math.min(0, o.penetration-p.t_absorb))
+      -- More modifications
+      weap = weap * (0.9*mod+0.1)
       if o.isturret then
          weap = weap * p.turret
       else
@@ -74,7 +80,9 @@ function equipopt.goodness_default( o, p )
       elseif o.typebroad == "Beam Weapon" then
          weap = weap * p.beam
       elseif o.typebroad == "Launcher" then
-         weap = weap * p.launcher
+         -- Must be able to outrun target
+         local smod = math.min( 1, 0.5*(o.spec.speed - p.t_speed) / p.t_speed)
+         weap = weap * p.launcher * smod
       elseif o.typebroad == "Fighter Bay" then
          weap = weap * p.fighterbay
       end
@@ -124,7 +132,9 @@ function equipopt.params_default ()
    fuel        = 1,
 
    -- Weapon stuff
-   track       = 7000, -- ew_detect enemies we want to target
+   t_absorb    = 0.2, -- assumed target absorption
+   t_speed     = 250, -- assumed target speed
+   t_track     = 10000, -- ew_detect enemies we want to target
    range       = 2000, -- ideal minimum range we want
    damage      = 1, -- weight for normal damage
    disable     = 1, -- weight for disable damage
@@ -141,6 +151,8 @@ function equipopt.params_default ()
 --]]
 function equipopt.equip( p, cores, outfit_list, params )
    params = params or equipopt.params_default()
+
+   -- TODO check to make sure all the outfits in outfit_list are equippable
 
    -- Naked ship
    p:rmOutfit( "all" )
@@ -219,14 +231,15 @@ function equipopt.equip( p, cores, outfit_list, params )
          end
       end
       oo.type     = out:type()
-      if oo.type == "Bolt Turret" or oo.type == "Beam Turret" or oo.type == "Turret Launcher" then
-         oo.isturret = true
-      end
+      oo.spec     = out:specificstats()
+      oo.isturret = oo.spec.isturret
+      oo.penetration = oo.spec.penetration
       if oo.type == "Fighter Bay" then
          oo.dps      = fbays[v]
          oo.disable  = 0
          oo.eps      = 0
          oo.range    = 10e3
+         oo.penetration = 0
       end
       oo.typebroad = out:typeBroad()
 
