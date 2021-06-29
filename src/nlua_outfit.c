@@ -533,6 +533,7 @@ static int outfitL_weapStats( lua_State *L )
 {
    double eps, dps, disable, shots;
    double mod_energy, mod_damage, mod_shots;
+   double sdmg, admg;
    const Damage *dmg;
    Outfit *o = luaL_validoutfit( L, 1 );
    Pilot *p = (lua_ispilot(L,2)) ? luaL_validpilot(L,2) : NULL;
@@ -564,6 +565,10 @@ static int outfitL_weapStats( lua_State *L )
       shots = outfit_duration(o);
       mod_shots = shots / (shots + mod_shots * outfit_delay(o));
       dmg = outfit_damage(o);
+      /* Modulate the damage by average of damage types. */
+      dtype_raw( dmg->type, &sdmg, &admg, NULL );
+      mod_damage *= 0.5*(sdmg+admg);
+      /* Calculate good damage estimates. */
       dps = mod_shots * mod_damage * dmg->damage;
       disable = mod_shots * mod_damage * dmg->disable;
       eps = mod_shots * mod_energy * outfit_energy(o);
@@ -610,6 +615,10 @@ static int outfitL_weapStats( lua_State *L )
       dmg = outfit_damage(o->u.lau.ammo);
    else
       dmg = outfit_damage(o);
+   /* Modulate the damage by average of damage types. */
+   dtype_raw( dmg->type, &sdmg, &admg, NULL );
+   mod_damage *= 0.5*(sdmg+admg);
+   /* Calculate good damage estimates. */
    dps = shots * mod_damage * dmg->damage;
    disable = shots * mod_damage * dmg->disable;
    eps = shots * mod_energy * MAX( outfit_energy(o), 0. );
