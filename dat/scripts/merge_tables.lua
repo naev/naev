@@ -12,7 +12,7 @@ function merge_tables.merge_tables_recursive( dest, src )
    src = src or {}
    for k,v in pairs(src) do
       if type(v)=="table" then
-         dest[k] = merge_tables_recursive( dest[k] or {}, v )
+         dest[k] = merge_tables.merge_tables_recursive( dest[k] or {}, v )
       else
          dest[k] = v
       end

@@ -5,6 +5,7 @@
 local vn = require 'vn'
 local colour = require 'colour'
 local portrait = require 'portrait'
+local mt = require 'merge_tables'
 require 'numstring'
 
 local totoran = {
@@ -17,16 +18,10 @@ local totoran = {
    }
 }
 
-local function _merge_tables( p, params )
-   params = params or {}
-   for k,v in pairs(params) do p[k] = v end
-   return p
-end
-
 -- Helpers to create main characters
 function totoran.vn_guide( params )
    return vn.Character.new( totoran.guide.name,
-         _merge_tables( {
+         mt.merge_tables( {
             image=totoran.guide.image,
             color=totoran.guide.colour,
          }, params) )

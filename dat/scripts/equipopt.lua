@@ -3,6 +3,9 @@
    Equips pilots based on mixed integer linear programming
 
 --]]
+local mt = require 'merge_tables'
+local _merge_tables = mt.merge_tables
+
 local equipopt = {}
 
 -- Get all the fighter bays and calculate rough dps
@@ -95,13 +98,6 @@ function equipopt.goodness_default( o, p )
    local g = p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
    --print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, g * (p.prefer[o.name] or 1), w*base, w*move, w*health, w*weap, w*ew))
     return g * (p.prefer[o.name] or 1)
-end
-
-local function _merge_tables( p, params )
-   if params then
-      for k,v in pairs(params) do p[k] = v end
-   end
-   return p
 end
 
 equipopt.params = {}
