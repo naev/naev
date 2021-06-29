@@ -507,17 +507,25 @@ function equipopt.equip( p, cores, outfit_list, params )
             table.insert( ar, 1 )
          end
          -- Check type range
-         local r = params.type_range[ stats.type ]
-         if r then
-            table.insert( ia, r.id )
-            table.insert( ja, c )
-            table.insert( ar, 1 )
-         end
-         local r = params.type_range[ stats.typebroad ]
-         if r then
-            table.insert( ia, r.id )
-            table.insert( ja, c )
-            table.insert( ar, 1 )
+         if ntype_range > 0 then
+            local r = params.type_range[ stats.name ]
+            if r then
+               table.insert( ia, r.id )
+               table.insert( ja, c )
+               table.insert( ar, 1 )
+            end
+            local r = params.type_range[ stats.type ]
+            if r then
+               table.insert( ia, r.id )
+               table.insert( ja, c )
+               table.insert( ar, 1 )
+            end
+            local r = params.type_range[ stats.typebroad ]
+            if r then
+               table.insert( ia, r.id )
+               table.insert( ja, c )
+               table.insert( ar, 1 )
+            end
          end
          c = c + 1
       end
