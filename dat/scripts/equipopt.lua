@@ -5,7 +5,6 @@
 --]]
 local equipopt = {}
 
-
 -- Get all the fighter bays and calculate rough dps
 local fbays = {}
 for k,o in ipairs(outfit.getAll()) do
@@ -93,6 +92,7 @@ function equipopt.goodness_default( o, p )
    ew = 3*(o.ew_detect-1) + 3*(o.ew_hide-1)
    -- Custom weight
    local w = special[o.name] or 1
+   w = w * (p.prefer[o.name] or 1)
    --print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, p.constant + w*(base + move + health + energy + weap + ew), w*base, w*move, w*health, w*weap, w*ew))
    return p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
 end
@@ -127,6 +127,10 @@ function equipopt.params.default( overwrite )
       type_range  = {
          --["Fighter Bay"] = { min=1, max=2 },
          --["Bolt Turret"] = { min=1, max=2 },
+      },
+      -- Outfit names that the pilot should prefer (multiplies weights)
+      prefer = {
+         --["Hive Combat AI"] = 100,
       },
 
       -- High level weights
@@ -263,24 +267,60 @@ function equipopt.params.carrier( overwrite )
    }, overwrite )
 end
 
+-- @brief Chooses a parameter table randomly for a certain pilot p
+function equipopt.params.choose( p )
+   local choose_table = {
+      ["Yacht"] = { "civilian" },
+      ["Luxury Yacht"] = { "civilian" },
+      ["Cruise Ship"] = { "civilian" },
+      ["Drone"] = { "light_fighter", "heavy_fighter" },
+      ["Heavy Drone"] = { "corvette" },
+      ["Fighter"] = { "light_fighter", "heavy_fighter" },
+      ["Bomber"] = { "light_bomber", "heavy_bomber" },
+      ["Corvette"] = { "corvette" },
+      ["Destroyer"] = { "destroyer" },
+      ["Cruiser"] = { "light_cruiser", "heavy_cruiser" },
+      ["Carrier"] = { "carrier" },
+   }
+   local c = choose_table[ p:ship():class() ]
+   if not c then
+      return equipopt.params.default()
+   end
+   c = c[ rnd.rnd(1,#c) ]
+   return equipopt.params[c]()
+end
+
 --[[
       Main equip script.
 --]]
 function equipopt.equip( p, cores, outfit_list, params )
    params = params or equipopt.params.default()
 
-   -- TODO check to make sure all the outfits in outfit_list are equippable
+   -- Determine what outfits from outfit_list we can actually equip
+   local ps = p:ship()
+   local usable_outfits = {}
+   local slots_base = ps:getSlots()
+   for m,o in ipairs(outfit_list) do
+      for k,v in ipairs( slots_base ) do
+         if ps:fitsSlot( k, o ) then
+            table.insert( usable_outfits, o )
+            break
+         end
+      end
+   end
+   outfit_list = usable_outfits
 
    -- Naked ship
    p:rmOutfit( "all" )
-   p:rmOutfit( "cores" )
-   -- Put cores
-   for k,v in ipairs( cores ) do
-      p:addOutfit( v, 1, true )
+   if cores then
+      p:rmOutfit( "cores" )
+      -- Put cores
+      for k,v in ipairs( cores ) do
+         p:addOutfit( v, 1, true )
+      end
    end
 
    -- Global ship stuff
-   local ps = p:ship()
    local ss = p:shipstat( nil, true ) -- Should include cores!!
    local st = p:stats() -- also include cores
 
@@ -384,7 +424,6 @@ function equipopt.equip( p, cores, outfit_list, params )
 
    -- Figure out slots
    local slots = {}
-   local slots_base = ps:getSlots()
    for k,v in ipairs( slots_base ) do
       local has_outfits = {}
       local outfitpos = {}
@@ -551,7 +590,9 @@ function equipopt.equip( p, cores, outfit_list, params )
    lp:load_matrix( ia, ja, ar )
    z, x, c = lp:solve()
    if not z then
-      error(string.format("Failed to solve linear program: %s", x))
+      -- Maybe should be error instead?
+      warn(string.format("Failed to solve linear program: %s", x))
+      return nil
    end
    --[[
    for k,v in ipairs(x) do
@@ -575,11 +616,14 @@ function equipopt.equip( p, cores, outfit_list, params )
       end
    end
 
+   -- Fill ammo
+   p:fillAmmo()
+
    -- Check
    if __debugging then
       local b, s = p:spaceworthy()
       if not b then
-         print(string.format(_("Pilot '%s' is not space worthy after equip script is run! Reason: %s"),p:name(),s))
+         warn(string.format(_("Pilot '%s' is not space worthy after equip script is run! Reason: %s"),p:name(),s))
       end
    end
 end
