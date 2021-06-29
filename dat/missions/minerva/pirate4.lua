@@ -100,8 +100,8 @@ function approach_pir ()
 
    if misn_state==nil then
       -- Not accepted
-      vn.na(_("You approach the sketch individual who seems to be somewhat excited."))
-      pir(_([["It seems like we have finally started to get the fruits of our labour. It seems like we have found the mole, and we would like you to help us deal with them. Are you up to the task? Things might get a little… messy though."
+      vn.na(_("You approach the sketchy individual who seems to be somewhat excited."))
+      pir(_([["It seems like we have finally started to get the fruits of our labour. We believe we have found the mole, and would like you to help us deal with them. Are you up to the task? Things might get a little… messy though."
 They beam you a smile.]]))
       vn.menu( {
          {_("Accept the job"), "accept"},
