@@ -239,6 +239,26 @@ void dtype_free (void)
 
 
 /**
+ * @brief Gets the raw modulation stats of a damage type.
+ *
+ *    @param type Type to get stats of.
+ *    @param[out] shield Shield damage modulator.
+ *    @param[out] armour Armour damage modulator.
+ *    @param[out] knockback Knockback modulator.
+ */
+void dtype_raw( int type, double *shield, double *armour, double *knockback )
+{
+   DTYPE *dtype = dtype_validType( type );
+   if (shield != NULL)
+      *shield = dtype->sdam;
+   if (armour != NULL)
+      *armour = dtype->adam;
+   if (knockback != NULL)
+      *knockback = dtype->knock;
+}
+
+
+/**
  * @brief Gives the real shield damage, armour damage and knockback modifier.
  *
  *    @param[out] dshield Real shield damage.
