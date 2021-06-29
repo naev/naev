@@ -40,12 +40,22 @@ local zalek_skip = {
    ["Za'lek Bomber Drone"] = true,
 }
 
-local function zalek_params( params )
-   -- Prefer to use the Za'lek utilities
-   params.prefer["Hive Combat AI"]          = 100
-   params.prefer["Faraday Tempest Coating"] = 100
-   return params
-end
+local zalek_params = {
+   ["Za'lek Demon"] = function ()
+      return {
+         type_range = {
+            ["Launcher"] = { max = rnd.rnd(0,2) },
+         },
+      }
+   end,
+   ["Za'lek Mephisto"] = function ()
+      return {
+         type_range = {
+            ["Launcher"] = { max = rnd.rnd(0,2) },
+         },
+      }
+   end,
+}
 
 --[[
 -- @brief Does Za'lek pilot equipping
@@ -58,7 +68,18 @@ function equip( p )
 
    -- Choose parameters and make Za'lekish
    params = equipopt.params.choose( p )
-   params = zalek_params( params )
+   -- Prefer to use the Za'lek utilities
+   params.prefer = {
+      ["Hive Combat AI"]          = 100,
+      ["Faraday Tempest Coating"] = 100,
+   }
+   -- Per ship tweaks
+   local sp = zalek_params[ sname ]
+   if sp then
+      for k,v in pairs(sp()) do
+         params[k] = v
+      end
+   end
 
    -- Try to equip
    equipopt.equip( p, cores, zalek_outfits, params )
