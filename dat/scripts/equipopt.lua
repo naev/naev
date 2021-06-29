@@ -93,13 +93,7 @@ function equipopt.goodness_default( o, p )
    ew = 3*(o.ew_detect-1) + 3*(o.ew_hide-1)
    -- Custom weight
    local w = special[o.name] or 1
-   --[[
-   if base+move+health+weap+ew < 0 then
-      print(string.format("Outfit %s has negative goodness: %.3f", o.outfit:name(), 1+base+move+health+weap+ew))
-      print(string.format("%s: base = %.3f, move = %.3f, health = %.3f, weap = %.3f, ew = %.3f", o.outfit:name(), base, move, health, weap, ew))
-   end
-   --]]
-   print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, p.constant + w*(base + move + health + energy + weap + ew), w*base, w*move, w*health, w*weap, w*ew))
+   --print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, p.constant + w*(base + move + health + energy + weap + ew), w*base, w*move, w*health, w*weap, w*ew))
    return p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
 end
 
@@ -341,7 +335,7 @@ function equipopt.equip( p, cores, outfit_list, params )
       oo.trackmin = oo.trackmin or 0
       oo.trackmax = oo.trackmax or 0
       oo.lockon   = oo.lockon or 0
-      oo.cpu      = out:cpu() * ss.cpu_mod
+      oo.cpu      = out:cpu()
       oo.mass     = out:mass() * ss.mass_mod
       oo.price    = out:price()
       oo.limit    = out:limit()
@@ -440,7 +434,7 @@ function equipopt.equip( p, cores, outfit_list, params )
    nrows = nrows + ntype_range
    lp = linopt.new( "test", ncols, nrows, true )
    -- Add space worthy checks
-   lp:set_row( 1, "CPU",          nil, st.cpu )
+   lp:set_row( 1, "CPU",          nil, st.cpu_max * ss.cpu_mod )
    lp:set_row( 2, "energy_regen", nil, st.energy_regen - math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) )
    lp:set_row( 3, "mass",         nil, params.max_mass * ss.engine_limit - st.mass )
    if params.budget then
@@ -566,14 +560,23 @@ function equipopt.equip( p, cores, outfit_list, params )
    --]]
 
    -- Interpret results
-   print("Final Equipment:")
+   --print("Final Equipment:")
    local c = 1
    for i,s in ipairs(slots) do
       for j,o in ipairs(s.outfits) do
          if x[c] == 1 then
-            print( "   "..o )
+            p:addOutfit( o, 1, true )
+            --print( "   "..o )
          end
          c = c + 1
+      end
+   end
+
+   -- Check
+   if __debugging then
+      local b, s = p:spaceworthy()
+      if not b then
+         print(string.format(_("Pilot '%s' is not space worthy after equip script is run! Reason: %s"),p:name(),s))
       end
    end
 end
