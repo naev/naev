@@ -26,17 +26,24 @@ for k,o in ipairs(outfit.getAll()) do
          end
       end
       dps = dps * ss.amount
-      fbays[ o:name() ] = dps
+      fbays[ o:nameRaw() ] = dps
    end
 end
 
 -- Some manual overrides
-fbays[ "Za'lek Light Drone Fighter Bay" ] = 150
-fbays[ "Za'lek Light Drone Fighter Dock" ] = 300
-fbays[ "Za'lek Bomber Drone Fighter Bay" ] = 150
-fbays[ "Za'lek Bomber Drone Fighter Dock" ] = 300
-fbays[ "Za'lek Heavy Drone Fighter Bay" ] = 200
-fbays[ "Za'lek Heavy Drone Fighter Dock" ] = 400
+fbays[ "Za'lek Light Drone Fighter Bay" ]    = 50
+fbays[ "Za'lek Light Drone Fighter Dock" ]   = 100
+fbays[ "Za'lek Bomber Drone Fighter Bay" ]   = 50
+fbays[ "Za'lek Bomber Drone Fighter Dock" ]  = 100
+fbays[ "Za'lek Heavy Drone Fighter Bay" ]    = 62.5
+fbays[ "Za'lek Heavy Drone Fighter Dock" ]   = 125
+
+
+-- Special weights
+local special = {
+   ["Enygma Systems Spearhead Launcher"] = 0.5,
+   ["TeraCom Medusa Launcher"] = 0.5,
+}
 
 
 --[[
@@ -44,9 +51,7 @@ fbays[ "Za'lek Heavy Drone Fighter Dock" ] = 400
 --]]
 function equipopt.goodness_default( o, p )
    -- Base attributes
-   base = -p.max_price*o.price
-   base = base + p.cargo*(0.1*o.cargo + 0.1*(1-o.cargo_inertia))
-   base = base + p.fuel*0.001*o.fuel
+   base = p.cargo*(0.1*o.cargo + 0.1*(1-o.cargo_inertia)) + p.fuel*0.001*o.fuel
    -- Movement attributes
    move = 0.05*o.thrust + 0.05*o.speed + 0.1*o.turn
    -- Health attributes
@@ -58,7 +63,7 @@ function equipopt.goodness_default( o, p )
       local trackmod = math.min( 1, math.max( 0, (p.track-o.trackmin)/(o.trackmax-o.trackmin)) )
       local rangemod = math.min( 1, o.range/p.range )
       weap = 0.2*(o.dps*p.damage + o.disable*p.disable)
-      weap = weap * (0.9*trackmod+0.1) * (0.5+0.5*rangemod)
+      weap = weap * (0.9*trackmod+0.1) * (0.1+0.9*rangemod)
       if o.isturret then
          weap = weap * p.turret
       else
@@ -78,13 +83,17 @@ function equipopt.goodness_default( o, p )
    end
    -- Ewarfare attributes
    ew = 3*(o.ew_detect-1) + 3*(o.ew_hide-1)
-   --print(string.format("%s: base = %.3f, move = %.3f, health = %.3f, weap = %.3f, ew = %.3f", o.outfit:name(), base, move, health, weap, ew))
-   if 1+base+move+health+weap+ew < 0 then
+   -- Custom weight
+   local w = special[o.name] or 1
+   --[[
+   if base+move+health+weap+ew < 0 then
       print(string.format("Outfit %s has negative goodness: %.3f", o.outfit:name(), 1+base+move+health+weap+ew))
       print(string.format("%s: base = %.3f, move = %.3f, health = %.3f, weap = %.3f, ew = %.3f", o.outfit:name(), base, move, health, weap, ew))
    end
+   --]]
+   print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, p.constant + w*(base + move + health + energy + weap + ew), w*base, w*move, w*health, w*weap, w*ew))
    -- Constant value makes them prefer outfits rather than not
-   return 1 + base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew
+   return p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
 end
 
 function equipopt.params_default ()
@@ -93,6 +102,7 @@ function equipopt.params_default ()
    goodness = equipopt.goodness_default,
 
    -- Global stuff
+   constant    = 10,
    rnd         = 0.2, -- amount of randomness to use for goodness function
    max_same_weap = nil, -- maximum same weapons (nil is no limit)
    max_same_util = nil, -- maximum same utilities (nil is no limit)
@@ -101,7 +111,6 @@ function equipopt.params_default ()
    min_energy_regen_abs = 0, -- absolute minimum energy regen (MJ/s)
    eps_weight  = 0.1, -- how to weight weapon EPS into energy regen
    max_mass    = 1.0, -- maximum amount to go over engine limit (relative)
-   max_price   = 1 / 1e6, -- discourages getting stuff more expensive than this
    budget      = nil, -- total cost budget
 
    -- High level weights
@@ -115,8 +124,8 @@ function equipopt.params_default ()
    fuel        = 1,
 
    -- Weapon stuff
-   track       = 10000, -- ew_detect enemies we want to target
-   range       = 1000, -- ideal minimum range we want
+   track       = 7000, -- ew_detect enemies we want to target
+   range       = 2000, -- ideal minimum range we want
    damage      = 1, -- weight for normal damage
    disable     = 1, -- weight for disable damage
    turret      = 1,
@@ -192,6 +201,7 @@ function equipopt.equip( p, cores, outfit_list, params )
       -- Core stats
       local oo = out:shipstat(nil,true)
       oo.outfit   = out
+      oo.name     = out:nameRaw()
       oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon = out:weapstats( p )
       oo.trackmin = oo.trackmin or 0
       oo.trackmax = oo.trackmax or 0

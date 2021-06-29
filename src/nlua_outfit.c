@@ -18,6 +18,7 @@
 
 #include "array.h"
 #include "log.h"
+#include "damagetype.h"
 #include "nlua_pilot.h"
 #include "nlua_ship.h"
 #include "nlua_tex.h"
@@ -643,6 +644,9 @@ static int outfitL_weapStats( lua_State *L )
 #define SETFIELDI( name, value )  \
    lua_pushinteger( L, value ); \
    lua_setfield( L, -2, name )
+#define SETFIELDB( name, value )  \
+   lua_pushboolean( L, value ); \
+   lua_setfield( L, -2, name )
 /**
  * @brief Returns raw data specific to each outfit type.
  *
@@ -672,9 +676,47 @@ static int outfitL_specificStats( lua_State *L )
          SETFIELD( "reload_time",o->u.bay.reload_time );
          break;
 
-      case OUTFIT_TYPE_LAUNCHER:
+      case OUTFIT_TYPE_TURRET_BOLT:
+         SETFIELDB("isturret",   1 );
+      case OUTFIT_TYPE_BOLT:
+         SETFIELD( "delay",      o->u.blt.delay );
+         SETFIELD( "speed",      o->u.blt.speed );
+         SETFIELD( "range",      o->u.blt.range );
+         SETFIELD( "falloff",    o->u.blt.falloff );
+         SETFIELD( "energy",     o->u.blt.energy );
+         SETFIELD( "heatup",     o->u.blt.heatup );
+         SETFIELD( "heat",       o->u.blt.heat );
+         SETFIELD( "trackmin",   o->u.blt.trackmin );
+         SETFIELD( "trackmax",   o->u.blt.trackmax );
+         SETFIELD( "swivel",     o->u.blt.swivel );
+         /* Damage stuff. */
+         SETFIELD( "penetration",o->u.blt.dmg.penetration );
+         SETFIELD( "damage",     o->u.blt.dmg.damage );
+         SETFIELD( "disable",    o->u.blt.dmg.disable );
+         break;
+
+      case OUTFIT_TYPE_TURRET_BEAM:
+         SETFIELDB("isturret",   1 );
+      case OUTFIT_TYPE_BEAM:
+         SETFIELD( "delay",      o->u.bem.delay );
+         SETFIELD( "warmup",     o->u.bem.warmup );
+         SETFIELD( "duration",   o->u.bem.duration );
+         SETFIELD( "min_duration",o->u.bem.min_duration );
+         SETFIELD( "range",      o->u.bem.range );
+         SETFIELD( "turn",       o->u.bem.turn );
+         SETFIELD( "energy",     o->u.bem.energy );
+         SETFIELD( "heatup",     o->u.bem.heatup );
+         SETFIELD( "heat",       o->u.bem.heat );
+         /* Damage stuff. */
+         SETFIELD( "penetration",o->u.bem.dmg.penetration );
+         SETFIELD( "damage",     o->u.bem.dmg.damage );
+         SETFIELD( "disable",    o->u.bem.dmg.disable );
+         break;
+
       case OUTFIT_TYPE_TURRET_LAUNCHER:
-         SETFIELDI("delay",      o->u.lau.delay );
+         SETFIELDB("isturret",   1 );
+      case OUTFIT_TYPE_LAUNCHER:
+         SETFIELD( "delay",      o->u.lau.delay );
          SETFIELDI("amount",     o->u.lau.amount );
          SETFIELD( "reload_time",o->u.lau.reload_time );
          SETFIELD( "lockon",     o->u.lau.lockon );
@@ -682,6 +724,17 @@ static int outfitL_specificStats( lua_State *L )
          SETFIELD( "trackmax",   o->u.lau.trackmax );
          SETFIELD( "arc",        o->u.lau.arc );
          SETFIELD( "swivel",     o->u.lau.swivel );
+         /* Ammo stuff. */
+         SETFIELD( "speed",      o->u.lau.ammo->u.amm.speed );
+         SETFIELD( "turn",       o->u.lau.ammo->u.amm.turn );
+         SETFIELD( "thrust",     o->u.lau.ammo->u.amm.thrust );
+         SETFIELD( "energy",     o->u.lau.ammo->u.amm.energy );
+         SETFIELDB("seek",       o->u.lau.ammo->u.amm.ai!=AMMO_AI_UNGUIDED );
+         SETFIELDB("smart",      o->u.lau.ammo->u.amm.ai==AMMO_AI_SMART );
+         /* Damage stuff. */
+         SETFIELD( "penetration",o->u.lau.ammo->u.amm.dmg.penetration );
+         SETFIELD( "damage",     o->u.lau.ammo->u.amm.dmg.damage );
+         SETFIELD( "disable",    o->u.lau.ammo->u.amm.dmg.disable );
          break;
 
       default:
@@ -691,3 +744,4 @@ static int outfitL_specificStats( lua_State *L )
 }
 #undef SETFIELD
 #undef SETFIELDI
+#undef SETFIELDB
