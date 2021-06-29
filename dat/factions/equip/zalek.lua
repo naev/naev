@@ -1,4 +1,5 @@
-equipopt = require 'equipopt'
+local equipopt = require 'equipopt'
+local mt = require 'merge_tables'
 
 local zalek_outfits = {
    -- Heavy Weapons
@@ -100,15 +101,7 @@ function equip( p )
    -- Per ship tweaks
    local sp = zalek_params[ sname ]
    if sp then
-      for k,v in pairs(sp()) do
-         if type(v)=="table" then
-            for i,e in pairs(v) do
-               params[k][i] = e
-            end
-         else
-            params[k] = v
-         end
-      end
+      params = mt.merge_tables_recursive( params, sp() )
    end
 
    -- See cores
