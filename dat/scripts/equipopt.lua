@@ -120,6 +120,12 @@ function equipopt.params_default ()
    eps_weight  = 0.1, -- how to weight weapon EPS into energy regen
    max_mass    = 1.0, -- maximum amount to go over engine limit (relative)
    budget      = nil, -- total cost budget
+   -- Range of type, this is dangerous as minimum values could lead to the
+   -- optimization problem not having a solution
+   type_range  = {
+      --["Fighter Bay"] = { min=1, max=2 },
+      --["Bolt Turret"] = { min=1, max=2 },
+   },
 
    -- High level weights
    move        = 1,
@@ -312,6 +318,9 @@ function equipopt.equip( p, cores, outfit_list, params )
    if #same_list > 0 then
       nrows = nrows + #same_list
    end
+   local ntype_range = 0
+   for k,v in pairs(params.type_range) do ntype_range = ntype_range+1 end
+   nrows = nrows + ntype_range
    lp = linopt.new( "test", ncols, nrows, true )
    -- Add space worthy checks
    lp:set_row( 1, "CPU",          nil, st.cpu )
@@ -331,9 +340,14 @@ function equipopt.equip( p, cores, outfit_list, params )
       end
       nsame = #same_list
    end
+   local r = sworthy+#limits+nsame+1
+   for name,v in pairs(params.type_range) do
+      v.id = r
+      lp:set_row( v.id, name, v.min, v.max )
+      r = r+1
+   end
    -- Add outfit checks
    local c = 1
-   local r = 1 + sworthy + #limits + nsame
    for i,s in ipairs(slots) do
       for j,o in ipairs(s.outfits) do
          local stats = outfit_cache[o]
@@ -372,6 +386,19 @@ function equipopt.equip( p, cores, outfit_list, params )
          local sp = s.samepos[j]
          if sp then
             table.insert( ia, sworthy + #limits + sp )
+            table.insert( ja, c )
+            table.insert( ar, 1 )
+         end
+         -- Check type range
+         local r = params.type_range[ stats.type ]
+         if r then
+            table.insert( ia, r.id )
+            table.insert( ja, c )
+            table.insert( ar, 1 )
+         end
+         local r = params.type_range[ stats.typebroad ]
+         if r then
+            table.insert( ia, r.id )
             table.insert( ja, c )
             table.insert( ar, 1 )
          end
