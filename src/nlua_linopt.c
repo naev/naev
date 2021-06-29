@@ -289,8 +289,12 @@ static int linoptL_setcol( lua_State *L )
    hasub = !lua_isnoneornil(L,7);
    lb    = luaL_optnumber(L,6,0.0);
    ub    = luaL_optnumber(L,7,0.0);
-   if (haslb && hasub)
-      type = GLP_DB;
+   if (haslb && hasub) {
+      if (fabs(lb-ub) < 1e-5)
+         type = GLP_FX;
+      else
+         type = GLP_DB;
+   }
    else if (haslb)
       type = GLP_LO;
    else if (hasub)
@@ -340,8 +344,12 @@ static int linoptL_setrow( lua_State *L )
    hasub = !lua_isnoneornil(L,5);
    lb    = luaL_optnumber(L,4,0.0);
    ub    = luaL_optnumber(L,5,0.0);
-   if (haslb && hasub)
-      type = GLP_DB;
+   if (haslb && hasub) {
+      if (fabs(lb-ub) < 1e-5)
+         type = GLP_FX;
+      else
+         type = GLP_DB;
+   }
    else if (haslb)
       type = GLP_LO;
    else if (hasub)
