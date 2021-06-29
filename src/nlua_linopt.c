@@ -422,6 +422,51 @@ static int linoptL_loadmatrix( lua_State *L )
 }
 
 
+static const char* linopt_error( int retval )
+{
+   switch (retval) {
+      case 0:
+         return "No error";
+
+      /* COMMON */
+      case GLP_EFAIL:
+         return "The search was prematurely terminated due to the solver failure.";
+      case GLP_ETMLIM:
+         return "The search was prematurely terminated, because the time limit has been exceeded.";
+
+      /* SIMPLEX */
+      case GLP_EBADB:
+         return "Unable to start the search, because the initial basis specified in the problem object is invalid—the number of basic (auxiliary and structural) variables is not the same as the number of rows in the problem object.";
+      case GLP_ESING:
+         return "Unable to start the search, because the basis matrix corresponding to the initial basis is singular within the working precision.";
+      case GLP_ECOND:
+         return "Unable to start the search, because the basis matrix corresponding to the initial basis is ill-conditioned, i.e. its condition number is too large.";
+      case GLP_EBOUND:
+         return "Unable to start the search, because some double-bounded (auxiliary or structural) variables have incorrect bounds.";
+      case GLP_EOBJLL:
+         return "The search was prematurely terminated, because the objective function being maximized has reached its lower limit and continues decreasing (the dual simplex only).";
+      case GLP_EOBJUL:
+         return "The search was prematurely terminated, because the objective function being minimized has reached its upper limit and continues increasing (the dual simplex only).";
+      case GLP_EITLIM:
+         return "The search was prematurely terminated, because the simplex iteration limit has been exceeded.";
+
+      /* INTOPT */
+      case GLP_EROOT:
+         return "Unable to start the search, because optimal basis for initial LP relaxation is not provided. (This code may appear only if the presolver is disabled.)";
+      case GLP_ENOPFS:
+         return "Unable to start the search, because LP relaxation of the MIP problem instance has no primal feasible solution. (This code may appear only if the presolver is enabled.)";
+      case GLP_ENODFS:
+         return "Unable to start the search, because LP relaxation of the MIP problem instance has no dual feasible solution. In other word, this code means that if the LP relaxation has at least one primal feasible solution, its optimal solution is unbounded, so if the MIP problem has at least one integer feasible solution, its (integer) optimal solution is also unbounded. (This code may appear only if the presolver is enabled.)";
+      case GLP_EMIPGAP:
+         return "The search was prematurely terminated, because the relative mip gap tolerance has been reached.";
+      case GLP_ESTOP:
+         return "The search was prematurely terminated by application. (This code may appear only if the advanced solver interface is used.)";
+
+      default:
+         return "Unknown error.";
+   }
+}
+
 /**
  * @brief Solves the linear optimization problem.
  *
@@ -435,7 +480,7 @@ static int linoptL_solve( lua_State *L )
    LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
    double z;
    //const char *name;
-   int i, ismip;
+   int ret, i, ismip;
 
    /* Parameters. */
    ismip = (glp_get_num_int( lp->prob ) > 0);
@@ -445,17 +490,25 @@ static int linoptL_solve( lua_State *L )
       glp_iocp parm;
       glp_init_iocp(&parm);
       parm.presolve = GLP_ON; /* Need to presolve first. */
-      //parm.msg_lev = GLP_MSG_ERR;
-      glp_intopt( lp->prob, &parm );
-      /* TODO handle errors. */
+      parm.msg_lev = GLP_MSG_ERR;
+      ret = glp_intopt( lp->prob, &parm );
+      if (ret != 0) {
+         lua_pushnil(L);
+         lua_pushstring(L, linopt_error(ret));
+         return 2;
+      }
       z = glp_mip_obj_val( lp->prob );
    }
    else {
       glp_smcp parm;
       glp_init_smcp(&parm);
-      //parm.msg_lev = GLP_MSG_ERR;
-      glp_simplex( lp->prob, &parm );
-      /* TODO handle errors. */
+      parm.msg_lev = GLP_MSG_ERR;
+      ret = glp_simplex( lp->prob, &parm );
+      if (ret != 0) {
+         lua_pushnil(L);
+         lua_pushstring(L, linopt_error(ret));
+         return 2;
+      }
       z = glp_get_obj_val( lp->prob );
    }
 
