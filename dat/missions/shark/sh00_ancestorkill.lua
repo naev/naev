@@ -7,7 +7,7 @@
   <avail>
    <priority>3</priority>
    <cond>planet.cur() ~= planet.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>3</chance>
+   <chance>5</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
    <faction>Empire</faction>
@@ -112,7 +112,7 @@ end
 function accept()
 
    stage = 0
-   reward = 500000
+   reward = 500e3
 
    if tk.yesno(title[1], text[1]) then
       misn.accept()

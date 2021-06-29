@@ -8,7 +8,7 @@
    <priority>3</priority>
    <cond>diff.isApplied("collective_dead")</cond>
    <done>Sharkman Is Back</done>
-   <chance>3</chance>
+   <chance>5</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
    <faction>Empire</faction>
@@ -103,7 +103,7 @@ end
 function accept()
 
    stage = 0
-   reward = 750000
+   reward = 750e3
    proba = 0.3  --the chances you have to get an ambush
 
    if tk.yesno(title[1], text[1]:format(pplname, psyname)) then

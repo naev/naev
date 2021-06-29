@@ -7,7 +7,7 @@
  <avail>
   <priority>3</priority>
   <done>The Meeting</done>
-  <chance>3</chance>
+  <chance>5</chance>
   <location>Bar</location>
   <faction>Dvaered</faction>
   <faction>Empire</faction>
@@ -95,7 +95,7 @@ end
 function accept()
 
    stage = 0
-   reward = 1000000
+   reward = 1e6
 
    if tk.yesno(title[1], text[1]:format(player.name())) then
       misn.accept()
