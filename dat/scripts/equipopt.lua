@@ -550,6 +550,9 @@ function equipopt.equip( p, cores, outfit_list, params )
    -- All the magic is done here
    lp:load_matrix( ia, ja, ar )
    z, x, c = lp:solve()
+   if not z then
+      error(string.format("Failed to solve linear program: %s", x))
+   end
    --[[
    for k,v in ipairs(x) do
       print(string.format("x%d: %d",k,v))
