@@ -1956,14 +1956,13 @@ static int pilotL_faction( lua_State *L )
  */
 static int pilotL_spaceworthy( lua_State *L )
 {
-   Pilot *p;
-
-   /* Parse parameters */
-   p     = luaL_validpilot(L,1);
+   Pilot *p     = luaL_validpilot(L,1);
+   const char *str = pilot_checkSpaceworthy(p);
 
    /* Push position. */
-   lua_pushboolean( L, (pilot_checkSpaceworthy(p) == NULL) ? 1 : 0 );
-   return 1;
+   lua_pushboolean( L, (str==NULL) ? 1 : 0 );
+   lua_pushstring( L, str );
+   return 2;
 }
 
 
