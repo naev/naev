@@ -304,7 +304,7 @@ function equipopt.equip( p, cores, outfit_list, params )
    end
 
    -- We have to add additional constraints (spaceworthy, limits)
-   local sworthy = 3 -- Check CPU and Energy regen
+   local sworthy = 3 -- Check CPU, energy regen, and mass
    if params.budget then
       sworthy = sworthy + 1
    end
