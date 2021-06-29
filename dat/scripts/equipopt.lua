@@ -19,25 +19,25 @@ for k,o in ipairs(outfit.getAll()) do
             if sl.size == "Small" then
                dps = dps + 20
             elseif sl.size == "Medium" then
-               dps = dps + 30
+               dps = dps + 25
             elseif sl.size == "Heavy" then
-               dps = dps + 40
+               dps = dps + 30
             end
          end
       end
-      dps = dps * ss.amount
+      dps = dps * ss.amount * 0.5
       fbays[ o:nameRaw() ] = dps
    end
 end
 
 -- Some manual overrides
-fbays[ "Za'lek Light Drone Fighter Bay" ]    = 50
-fbays[ "Za'lek Light Drone Fighter Dock" ]   = 100
-fbays[ "Za'lek Bomber Drone Fighter Bay" ]   = 50
-fbays[ "Za'lek Bomber Drone Fighter Dock" ]  = 100
-fbays[ "Za'lek Heavy Drone Fighter Bay" ]    = 62.5
-fbays[ "Za'lek Heavy Drone Fighter Dock" ]   = 125
-
+fbays[ "Hyena Fighter Bay" ]                 = 45
+fbays[ "Za'lek Light Drone Fighter Bay" ]    = 40
+fbays[ "Za'lek Light Drone Fighter Dock" ]   = 80
+fbays[ "Za'lek Bomber Drone Fighter Bay" ]   = 40
+fbays[ "Za'lek Bomber Drone Fighter Dock" ]  = 80
+fbays[ "Za'lek Heavy Drone Fighter Bay" ]    = 50
+fbays[ "Za'lek Heavy Drone Fighter Dock" ]   = 100
 
 -- Special weights
 local special = {
