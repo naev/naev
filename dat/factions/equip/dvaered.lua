@@ -18,7 +18,7 @@ local dvaered_outfits = {
    "Vulcan Gun", "Gauss Gun",
    "Unicorp Mace Launcher", "TeraCom Mace Launcher",
    -- Utility
-   "Cyclic Combat AI", "MilSpec Impacto-Plastic Coating",
+   "Cyclic Combat AI", "Milspec Impacto-Plastic Coating",
    "Unicorp Scrambler", "Unicorp Light Afterburner",
    "Sensor Array", "Hellburner", "Emergency Shield Booster",
    "Unicorp Medium Afterburner", "Droid Repair Crew",
@@ -83,7 +83,7 @@ function equip( p )
    local params = equipopt.params.choose( p )
    -- Prefer to use the Za'lek utilities
    params.prefer["Cyclic Combat AI"] = 100
-   params.prefer["MilSpec Impacto-Plastic Coating"] = 100
+   params.prefer["Milspec Impacto-Plastic Coating"] = 100
    params.type_range["Bolt Weapon"] = { min = 1 }
    params.max_same_stru = 3
    params.min_energy_regen = 1.0 -- Dvaereds want more energy
