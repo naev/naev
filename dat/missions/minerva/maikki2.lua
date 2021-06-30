@@ -106,7 +106,7 @@ function create ()
    if not misn.claim( system.get(eccsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( minerva.maikki.name, minerva.maikki.portrait, minerva,maikki.description )
+   misn.setNPC( minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
    misn.setDesc( misn_desc )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
