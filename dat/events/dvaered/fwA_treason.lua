@@ -126,7 +126,7 @@ end
 -- Reaction to player's choice at first landing
 function reaction()
    if stage == 1 then -- Traitor
-      tk.msg(traitor_title, traitor_text:format(player.name()), portrait_leblanc)
+      tk.msg(traitor_title, traitor_text:format(player.name()), ("portraits/"..portrait_leblanc))
       var.push( "loyal2klank", false )
       shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
       shiplog.append( "dvaered_military", log_text_traitor )
