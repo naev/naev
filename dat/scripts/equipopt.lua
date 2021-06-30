@@ -298,9 +298,10 @@ function equipopt.equip( p, cores, outfit_list, params )
    local slots_base = ps:getSlots()
    for m,o in ipairs(outfit_list) do
       for k,v in ipairs( slots_base ) do
+         local oo = outfit.get(o)
          local ok = true
          -- Afterburners will be ignored if the ship is too heavy
-         if outfit.type(o) == "Afterburner" then
+         if oo:type() == "Afterburner" then
             local st = p:stats()
             local spec = oo:specificstats()
             if spec.mass_limit > 2*st.mass then
@@ -319,7 +320,9 @@ function equipopt.equip( p, cores, outfit_list, params )
    -- Naked ship
    p:rmOutfit( "all" )
    if cores then
-      p:rmOutfit( "cores" )
+      -- Don't actually have to remove cores as it should overwrite default
+      -- cores as necessary
+      --p:rmOutfit( "cores" )
       -- Put cores
       for k,v in ipairs( cores ) do
          p:addOutfit( v, 1, true )
