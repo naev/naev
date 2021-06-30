@@ -363,7 +363,7 @@ function equipGoddard( pilot, repeating )
    pilot:addOutfit("Melendez Mammoth XL Engine")
    pilot:addOutfit("Milspec Orion 9901 Core System")
    pilot:addOutfit("Nanobond Plating", 6)
-   pilot:addOutfit("MilSpec Impacto-Plastic Coating")
+   pilot:addOutfit("Milspec Impacto-Plastic Coating")
    pilot:addOutfit("Droid Repair Crew",4)
 
    if repeating then

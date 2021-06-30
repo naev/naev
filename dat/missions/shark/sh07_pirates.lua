@@ -199,7 +199,7 @@ function enter()
 
       baddie:addOutfit("Shield Capacitor I")
       baddie:addOutfit("Plasteel Plating")
-      baddie:addOutfit("MilSpec Impacto-Plastic Coating")
+      baddie:addOutfit("Milspec Impacto-Plastic Coating")
       baddie:addOutfit("Laser Cannon MK1",2)
 
       baddie:setHealth(100,100)

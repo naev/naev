@@ -94,7 +94,7 @@ function equipVendettaMace( pilot )
    pilot:addOutfit("Tricon Zephyr II Engine")
    pilot:addOutfit("Milspec Orion 3701 Core System")
    pilot:addOutfit("Shield Capacitor I")
-   pilot:addOutfit("MilSpec Impacto-Plastic Coating")
+   pilot:addOutfit("Milspec Impacto-Plastic Coating")
    pilot:addOutfit("Unicorp Mace Launcher", 6)
 
    pilot:setHealth(100,100)
