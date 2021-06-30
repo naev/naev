@@ -287,7 +287,13 @@ function equipopt.params.choose( p )
 end
 
 --[[
-      Main equip script.
+   @brief Equips a pilot with cores and outfits chosen from a list through optimization.
+
+      @tparam Pilot p Pilot to equip.
+      @tparam[opt=nil] table|nil cores Table of core outfits (by name) to equip. They will replace existing outfits, or set to nil to use defaults.
+      @tparam table outfit_list List of outfits to try to equip (by name). There can be duplicates in the list, and only outfits that can be equipped are considered.
+      @tparam[opt=nil] table|nil params Parameter list to use or nil for defaults.
+      @treturn boolean Whether or not the pilot was properly equipped
 --]]
 function equipopt.equip( p, cores, outfit_list, params )
    params = params or equipopt.params.default()
@@ -310,27 +316,33 @@ function equipopt.equip( p, cores, outfit_list, params )
    local st = p:stats() -- also include cores
 
    -- Determine what outfits from outfit_list we can actually equip
+   -- We actually remove duplicates too
    local usable_outfits = {}
    local slots_base = ps:getSlots()
    for m,o in ipairs(outfit_list) do
-      for k,v in ipairs( slots_base ) do
-         local oo = outfit.get(o)
-         local ok = true
-         -- Afterburners will be ignored if the ship is too heavy
-         if oo:type() == "Afterburner" then
-            local spec = oo:specificstats()
-            if spec.mass_limit < 0.8*ss.engine_limit then
-               ok = false
+      if not usable_outfits[o] then
+         for k,v in ipairs( slots_base ) do
+            local oo = outfit.get(o)
+            local ok = true
+            -- Afterburners will be ignored if the ship is too heavy
+            if oo:type() == "Afterburner" then
+               local spec = oo:specificstats()
+               if spec.mass_limit < 0.8*ss.engine_limit then
+                  ok = false
+               end
             end
-         end
-         -- Check to see if fits slot
-         if ok and ps:fitsSlot( k, o ) then
-            table.insert( usable_outfits, o )
-            break
+            -- Check to see if fits slot
+            if ok and ps:fitsSlot( k, o ) then
+               usable_outfits[o] = true
+               break
+            end
          end
       end
    end
-   outfit_list = usable_outfits
+   outfit_list = {}
+   for o,v in pairs(usable_outfits) do
+      table.insert( outfit_list, o )
+   end
 
    -- Optimization problem definition
    local ncols = 0
@@ -609,7 +621,7 @@ function equipopt.equip( p, cores, outfit_list, params )
    if not z then
       -- Maybe should be error instead?
       warn(string.format("Failed to solve equipopt linear program for pilot '%s': %s", p:name(), x))
-      return nil
+      return false
    end
    --[[
    for k,v in ipairs(x) do
@@ -641,8 +653,10 @@ function equipopt.equip( p, cores, outfit_list, params )
       local b, s = p:spaceworthy()
       if not b then
          warn(string.format(_("Pilot '%s' is not space worthy after equip script is run! Reason: %s"),p:name(),s))
+         return false
       end
    end
+   return true
 end
 
 return equipopt
