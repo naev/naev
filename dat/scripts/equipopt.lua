@@ -266,17 +266,17 @@ end
 -- @brief Chooses a parameter table randomly for a certain pilot p
 function equipopt.params.choose( p )
    local choose_table = {
-      ["Yacht"] = { "civilian" },
-      ["Luxury Yacht"] = { "civilian" },
-      ["Cruise Ship"] = { "civilian" },
-      ["Drone"] = { "light_fighter", "heavy_fighter" },
-      ["Heavy Drone"] = { "corvette" },
-      ["Fighter"] = { "light_fighter", "heavy_fighter" },
-      ["Bomber"] = { "light_bomber", "heavy_bomber" },
-      ["Corvette"] = { "corvette" },
-      ["Destroyer"] = { "destroyer" },
-      ["Cruiser"] = { "light_cruiser", "heavy_cruiser" },
-      ["Carrier"] = { "carrier" },
+      ["Yacht"]         = { "civilian" },
+      ["Luxury Yacht"]  = { "civilian" },
+      ["Cruise Ship"]   = { "civilian" },
+      ["Drone"]         = { "light_fighter", "heavy_fighter" },
+      ["Heavy Drone"]   = { "corvette" },
+      ["Fighter"]       = { "light_fighter", "heavy_fighter" },
+      ["Bomber"]        = { "light_bomber", "heavy_bomber" },
+      ["Corvette"]      = { "corvette" },
+      ["Destroyer"]     = { "destroyer" },
+      ["Cruiser"]       = { "light_cruiser", "heavy_cruiser" },
+      ["Carrier"]       = { "carrier" },
    }
    local c = choose_table[ p:ship():class() ]
    if not c then
