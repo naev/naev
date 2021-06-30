@@ -304,7 +304,7 @@ function equipopt.equip( p, cores, outfit_list, params )
          if oo:type() == "Afterburner" then
             local st = p:stats()
             local spec = oo:specificstats()
-            if spec.mass_limit > 2*st.mass then
+            if spec.mass_limit < 1.5*st.mass then
                ok = false
             end
          end
@@ -609,7 +609,7 @@ function equipopt.equip( p, cores, outfit_list, params )
    z, x, c = lp:solve()
    if not z then
       -- Maybe should be error instead?
-      warn(string.format("Failed to solve linear program: %s", x))
+      warn(string.format("Failed to solve equipopt linear program for pilot '%s': %s", p:name(), x))
       return nil
    end
    --[[
