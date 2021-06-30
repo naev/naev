@@ -124,7 +124,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
       double x, double y, double radius,
       const Pilot *parent, int mode );
 /* Hitting. */
-static int weapon_checkCanHit( Weapon* w, Pilot *p );
+static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
 static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
@@ -753,7 +753,7 @@ static void weapon_render( Weapon* w, const double dt )
  *    @param p Pilot to check if is hit by weapon.
  *    @return 1 if can be hit, 0 if can't.
  */
-static int weapon_checkCanHit( Weapon* w, Pilot *p )
+static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
 {
    Pilot *parent;
 
