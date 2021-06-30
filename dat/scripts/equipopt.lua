@@ -298,7 +298,17 @@ function equipopt.equip( p, cores, outfit_list, params )
    local slots_base = ps:getSlots()
    for m,o in ipairs(outfit_list) do
       for k,v in ipairs( slots_base ) do
-         if ps:fitsSlot( k, o ) then
+         local ok = true
+         -- Afterburners will be ignored if the ship is too heavy
+         if outfit.type(o) == "Afterburner" then
+            local st = p:stats()
+            local spec = oo:specificstats()
+            if spec.mass_limit > 2*st.mass then
+               ok = false
+            end
+         end
+         -- Check to see if fits slot
+         if ok and ps:fitsSlot( k, o ) then
             table.insert( usable_outfits, o )
             break
          end
@@ -387,13 +397,6 @@ function equipopt.equip( p, cores, outfit_list, params )
       oo.spec     = out:specificstats()
       oo.isturret = oo.spec.isturret
       oo.penetration = oo.spec.penetration
-      if oo.type == "Fighter Bay" then
-         oo.dps      = fbays[v]
-         oo.disable  = 0
-         oo.eps      = 0
-         oo.range    = 10e3
-         oo.penetration = 0
-      end
       oo.typebroad = out:typeBroad()
 
       -- We correct ship stats here and convert them to "relative improvements"
@@ -410,6 +413,20 @@ function equipopt.equip( p, cores, outfit_list, params )
       oo.energy_regen = oo.energy_regen_mod * (oo.energy_regen + st.energy_regen) - oo.energy_usage  - oo.energy_loss - st.energy_regen
       -- Misc
       oo.cargo = oo.cargo_mod * (oo.cargo + ss.cargo) - ss.cargo
+
+      -- Specific corrections
+      if oo.type == "Fighter Bay" then
+         -- Fighter bays don't have dps or anything, so we have to fake it
+         oo.dps      = fbays[v]
+         oo.disable  = 0
+         oo.eps      = 0
+         oo.range    = 10e3
+         oo.penetration = 0
+      elseif oo.type == "Afterburners" then
+         -- We add it as movement, but weaken the effect a bit
+         oo.thrust   = oo.thrust + 0.5*(oo.spec.thrust * st.thrust)
+         oo.speed    = oo.speed  + 0.5*(oo.spec.speed * st.speed)
+      end
 
       -- Compute goodness
       oo.goodness = params.goodness( oo, params )
