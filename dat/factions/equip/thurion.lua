@@ -88,9 +88,9 @@ equip_typeOutfits_weapons["Certitude"] = {
 equip_typeOutfits_structurals["Perspicacity"] = {
    {
       varied = true, probability = {
-         ["Fuel Pod"] = 4, ["Improved Stabilizer"] = 2
+         ["Small Fuel Pod"] = 4, ["Improved Stabilizer"] = 2
       };
-      "Fuel Pod", "Improved Stabilizer", "Shield Capacitor",
+      "Small Fuel Pod", "Improved Stabilizer", "Shield Capacitor I",
       "Adaptive Stealth Plating",
    },
 }
@@ -99,14 +99,14 @@ equip_typeOutfits_structurals["Ingenuity"] = {
       varied = true, probability = {
          ["Improved Stabilizer"] = 4, ["Engine Reroute"] = 4,
       };
-      "Fuel Pod", "Improved Stabilizer", "Engine Reroute", "Battery",
-      "Shield Capacitor", "Adaptive Stealth Plating",
+      "Small Fuel Pod", "Improved Stabilizer", "Engine Reroute", "Battery I",
+      "Shield Capacitor I", "Adaptive Stealth Plating",
    },
 }
 equip_typeOutfits_structurals["Scintillation"] = {
    {
       varied = true;
-      "Fuel Pod", "Improved Stabilizer", "Engine Reroute", "Shield Capacitor",
+      "Small Fuel Pod", "Improved Stabilizer", "Engine Reroute", "Shield Capacitor I",
       "Adaptive Stealth Plating",
    },
 }
@@ -120,9 +120,9 @@ equip_typeOutfits_structurals["Virtuosity"] = {
 equip_typeOutfits_structurals["Taciturnity"] = {
    {
       varied = true, probability = {
-         ["Cargo Pod"] = 15, ["Medium Fuel Pod"] = 3,
+         ["Small Cargo Pod"] = 15, ["Medium Fuel Pod"] = 3,
       };
-      "Cargo Pod", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
+      "Small Cargo Pod", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
       "Plasteel Plating", "Adaptive Stealth Plating",
    },
 }

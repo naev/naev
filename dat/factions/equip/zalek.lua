@@ -31,7 +31,7 @@ local zalek_outfits = {
    "Battery II", "Shield Capacitor II", "Reactor Class II",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
-   "Battery", "Shield Capacitor", "Reactor Class I",
+   "Battery I", "Shield Capacitor I", "Reactor Class I",
 }
 
 local zalek_skip = {

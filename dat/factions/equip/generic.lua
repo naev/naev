@@ -452,7 +452,7 @@ equip_classOutfits_structurals = {
    ["Yacht"] = {
       {
          varied = true;
-         "Cargo Pod", "Fuel Pod", "Battery", "Shield Capacitor",
+         "Small Cargo Pod", "Small Fuel Pod", "Battery I", "Shield Capacitor I",
          "Improved Stabilizer", "Engine Reroute",
       },
    },
@@ -465,17 +465,17 @@ equip_classOutfits_structurals = {
    ["Scout"] = {
       {
          varied = true, probability = {
-            ["Fuel Pod"] = 4, ["Improved Stabilizer"] = 2
+            ["Small Fuel Pod"] = 4, ["Improved Stabilizer"] = 2
          };
-         "Fuel Pod", "Improved Stabilizer", "Shield Capacitor",
+         "Small Fuel Pod", "Improved Stabilizer", "Shield Capacitor I",
       },
    },
    ["Courier"] = {
       {
          varied = true, probability = {
-            ["Cargo Pod"] = 4,
+            ["Small Cargo Pod"] = 4,
          };
-         "Cargo Pod", "Fuel Pod", "Improved Stabilizer",
+         "Small Cargo Pod", "Small Fuel Pod", "Improved Stabilizer",
       },
    },
    ["Freighter"] = {
@@ -489,9 +489,9 @@ equip_classOutfits_structurals = {
    ["Armoured Transport"] = {
       {
          varied = true, probability = {
-            ["Cargo Pod"] = 15, ["Medium Fuel Pod"] = 3,
+            ["Small Cargo Pod"] = 15, ["Medium Fuel Pod"] = 3,
          };
-         "Cargo Pod", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
+         "Small Cargo Pod", "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
          "Plasteel Plating",
       },
    },
@@ -500,15 +500,15 @@ equip_classOutfits_structurals = {
          varied = true, probability = {
             ["Improved Stabilizer"] = 4, ["Engine Reroute"] = 4,
          };
-         "Fuel Pod", "Improved Stabilizer", "Engine Reroute",
-         "Battery", "Shield Capacitor", "Reactor Class I",
+         "Small Fuel Pod", "Improved Stabilizer", "Engine Reroute",
+         "Battery I", "Shield Capacitor I", "Reactor Class I",
       },
    },
    ["Bomber"] = {
       {
          varied = true;
-         "Fuel Pod", "Improved Stabilizer", "Engine Reroute",
-         "Shield Capacitor", "Reactor Class I",
+         "Small Fuel Pod", "Improved Stabilizer", "Engine Reroute",
+         "Shield Capacitor I", "Reactor Class I",
       },
    },
    ["Corvette"] = {
@@ -557,7 +557,7 @@ equip_classOutfits_structurals = {
    ["Heavy Drone"] = {
       {
          num = 1;
-         "Battery"
+         "Battery I"
       },
       {
       },
@@ -1167,9 +1167,9 @@ equip_typeOutfits_structurals = {
    ["Koala"] = {
       {
          varied = true, probability = {
-            ["Cargo Pod"] = 9, ["Fuel Pod"] = 2
+            ["Small Cargo Pod"] = 9, ["Small Fuel Pod"] = 2
          };
-         "Cargo Pod", "Fuel Pod",
+         "Small Cargo Pod", "Small Fuel Pod",
       },
    },
 }

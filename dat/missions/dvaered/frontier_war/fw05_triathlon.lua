@@ -307,9 +307,9 @@ function spawnNpcs()
                player.addOutfit("Tricon Zephyr II Engine")
                player.addOutfit("Emergency Shield Booster")
             elseif playerRank == 7 then
-               tk.msg("",reward_text2:format(_("Milspec Orion 3701 Core System"),_("Shield Capacitor")))
+               tk.msg("",reward_text2:format(_("Milspec Orion 3701 Core System"),_("Shield Capacitor I")))
                player.addOutfit("Milspec Orion 3701 Core System")
-               player.addOutfit("Shield Capacitor")
+               player.addOutfit("Shield Capacitor I")
             elseif playerRank == 6 then
                tk.msg("",reward_text1:format(_("S&K Light Combat Plating")))
                player.addOutfit("S&K Light Combat Plating")
@@ -326,8 +326,8 @@ function spawnNpcs()
                tk.msg("",reward_text1:format(_("Small Shield Booster")))
                player.addOutfit("Small Shield Booster")
             else
-               tk.msg("",reward_text1:format(_("Shield Capacitor")))
-               player.addOutfit("Shield Capacitor")
+               tk.msg("",reward_text1:format(_("Shield Capacitor I")))
+               player.addOutfit("Shield Capacitor I")
             end
             tk.msg(warn_title,warn_text1)
             tk.msg(end_title,end_text1)
