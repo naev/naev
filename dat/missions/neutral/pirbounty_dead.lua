@@ -289,10 +289,10 @@ function pilot_death( p, attacker )
       local total_hits = 0
       for i, j in ipairs( hunters ) do
          total_hits = total_hits + hunter_hits[i]
-         if j ~= nil then
+         if j ~= nil and j:exists() then
             if j == player.pilot() or j:leader() == player.pilot() then
                player_hits = player_hits + hunter_hits[i]
-            elseif j:exists() and hunter_hits[i] > top_hits then
+            elseif hunter_hits[i] > top_hits then
                top_hunter = j
                top_hits = hunter_hits[i]
             end
