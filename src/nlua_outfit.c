@@ -678,6 +678,7 @@ static int outfitL_specificStats( lua_State *L )
 
       case OUTFIT_TYPE_TURRET_BOLT:
          SETFIELDB("isturret",   1 );
+         FALLTHROUGH;
       case OUTFIT_TYPE_BOLT:
          SETFIELD( "delay",      o->u.blt.delay );
          SETFIELD( "speed",      o->u.blt.speed );
@@ -697,6 +698,7 @@ static int outfitL_specificStats( lua_State *L )
 
       case OUTFIT_TYPE_TURRET_BEAM:
          SETFIELDB("isturret",   1 );
+         FALLTHROUGH;
       case OUTFIT_TYPE_BEAM:
          SETFIELD( "delay",      o->u.bem.delay );
          SETFIELD( "warmup",     o->u.bem.warmup );
@@ -715,6 +717,7 @@ static int outfitL_specificStats( lua_State *L )
 
       case OUTFIT_TYPE_TURRET_LAUNCHER:
          SETFIELDB("isturret",   1 );
+         FALLTHROUGH;
       case OUTFIT_TYPE_LAUNCHER:
          SETFIELD( "delay",      o->u.lau.delay );
          SETFIELDI("amount",     o->u.lau.amount );
