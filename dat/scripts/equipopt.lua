@@ -31,7 +31,6 @@ for k,o in ipairs(outfit.getAll()) do
       fbays[ o:nameRaw() ] = dps
    end
 end
-
 -- Some manual overrides
 fbays[ "Hyena Fighter Bay" ]                 = 45
 fbays[ "Za'lek Light Drone Fighter Bay" ]    = 40
@@ -155,7 +154,7 @@ function equipopt.params.default( overwrite )
    }, overwrite )
 end
 
-function equipopt.params.yacht( overwrite )
+function equipopt.params.civilian( overwrite )
    return _merge_tables( equipopt.params.default{
       weap        = 0.1, -- low weapons
       t_absorb    = 0,
