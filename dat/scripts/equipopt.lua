@@ -292,31 +292,6 @@ end
 function equipopt.equip( p, cores, outfit_list, params )
    params = params or equipopt.params.default()
 
-   -- Determine what outfits from outfit_list we can actually equip
-   local ps = p:ship()
-   local usable_outfits = {}
-   local slots_base = ps:getSlots()
-   for m,o in ipairs(outfit_list) do
-      for k,v in ipairs( slots_base ) do
-         local oo = outfit.get(o)
-         local ok = true
-         -- Afterburners will be ignored if the ship is too heavy
-         if oo:type() == "Afterburner" then
-            local st = p:stats()
-            local spec = oo:specificstats()
-            if spec.mass_limit < 1.5*st.mass then
-               ok = false
-            end
-         end
-         -- Check to see if fits slot
-         if ok and ps:fitsSlot( k, o ) then
-            table.insert( usable_outfits, o )
-            break
-         end
-      end
-   end
-   outfit_list = usable_outfits
-
    -- Naked ship
    p:rmOutfit( "all" )
    if cores then
@@ -330,8 +305,32 @@ function equipopt.equip( p, cores, outfit_list, params )
    end
 
    -- Global ship stuff
+   local ps = p:ship()
    local ss = p:shipstat( nil, true ) -- Should include cores!!
    local st = p:stats() -- also include cores
+
+   -- Determine what outfits from outfit_list we can actually equip
+   local usable_outfits = {}
+   local slots_base = ps:getSlots()
+   for m,o in ipairs(outfit_list) do
+      for k,v in ipairs( slots_base ) do
+         local oo = outfit.get(o)
+         local ok = true
+         -- Afterburners will be ignored if the ship is too heavy
+         if oo:type() == "Afterburner" then
+            local spec = oo:specificstats()
+            if spec.mass_limit < 0.8*ss.engine_limit then
+               ok = false
+            end
+         end
+         -- Check to see if fits slot
+         if ok and ps:fitsSlot( k, o ) then
+            table.insert( usable_outfits, o )
+            break
+         end
+      end
+   end
+   outfit_list = usable_outfits
 
    -- Optimization problem definition
    local ncols = 0
@@ -425,7 +424,7 @@ function equipopt.equip( p, cores, outfit_list, params )
          oo.eps      = 0
          oo.range    = 10e3
          oo.penetration = 0
-      elseif oo.type == "Afterburners" then
+      elseif oo.type == "Afterburner" then
          -- We add it as movement, but weaken the effect a bit
          oo.thrust   = oo.thrust + 0.5*(oo.spec.thrust * st.thrust)
          oo.speed    = oo.speed  + 0.5*(oo.spec.speed * st.speed)
