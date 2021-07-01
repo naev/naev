@@ -27,6 +27,7 @@ function equip( p )
    params.turret = 0.5
    params.launcher = 0.5
    params.bolt = 1.5
+   params.type_range["Bolt Weapon"] = { min = 1 } -- need at least one weapon
 
    -- See cores
    local cores = ecores.get( p, { all="normal" } )
