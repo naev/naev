@@ -4314,7 +4314,7 @@ static int pilotL_hailPlayer( lua_State *L )
    /* Get parameters. */
    p = luaL_validpilot(L,1);
    if (lua_gettop(L) > 1)
-      enable = lua_toboolean(L,3);
+      enable = lua_toboolean(L,2);
    else
       enable = 1;
 
