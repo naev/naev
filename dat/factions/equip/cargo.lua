@@ -21,7 +21,7 @@ function cargo.add( p )
    -- Add the cargo
    local q = 0
    for i=1,ncargo do
-      local amount = rnd.rnd( 0, math.floor(p:cargoFree()*pb) )
+      local amount = rnd.rnd( 0, math.floor(p:cargoFree()) )
       q = q + p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:nameRaw(), amount )
    end
    return q
