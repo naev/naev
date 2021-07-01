@@ -470,12 +470,6 @@ function equipopt.equip( p, cores, outfit_list, params )
          v.id = k
          v.outfits = has_outfits
          v.samepos = outfitpos
-         --[[
-         print( string.format( "[%d] = %s, %s", k, v.type, v.size ) )
-         for m, o in ipairs(v.outfits) do
-            print( "   "..o )
-         end
-         --]]
          table.insert( slots, v )
 
          -- Each slot adds a number of variables equivalent to the number of
@@ -594,29 +588,9 @@ function equipopt.equip( p, cores, outfit_list, params )
       r = r + 1
    end
 
-   --[[
-   local M = {}
-   for i = 1,nrows do
-      M[i] = {}
-      for j = 1,ncols do
-         M[i][j] = 0
-      end
-   end
-   for i = 1,#ia do
-      M[ ia[i] ][ ja[i] ] = ar[i]
-   end
-   for i = 1,nrows do
-      s = ""
-      for j = 1,ncols do
-         s = s .. string.format("% 4d", M[i][j])
-      end
-      print(s)
-   end
-   --]]
-
    -- All the magic is done here
    lp:load_matrix( ia, ja, ar )
-   z, x, constraints = lp:solve()
+   local z, x, constraints = lp:solve()
    if not z then
       -- Maybe should be error instead?
       warn(string.format("Failed to solve equipopt linear program for pilot '%s': %s", p:name(), x))
