@@ -1,6 +1,6 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
---local cores = require 'factions.equip.cores'
+local cores = require 'factions.equip.cores'
 
 local pirate_outfits = {
    -- Heavy Weapons

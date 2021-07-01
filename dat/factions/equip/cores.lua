@@ -1,5 +1,16 @@
-local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local cores = {}
+
+--[[
+-- Helper functions
+--]]
+local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+local function choose_one_table( t )
+   if type(t) ~= "table" then
+      return t
+   end
+   return choose_one( t )
+end
+
 cores.default = {}
 cores.elite = {}
 cores.elite.systems = {
@@ -86,20 +97,51 @@ cores.elite.engines = {
       return "Melendez Mammoth XL Engine"
    end,
 }
-local ces = cores.elite.systems
-local ceh = cores.elite.hull
-local cee = cores.elite.engines
-local function choose_set( c, heavy )
-   heavy = heavy or (rnd.rnd() > 0.5)
-   return { cee[c](heavy), ceh[c](heavy), ces[c](heavy) }
+
+--[[
+cores.get( "Fighter", { all="elite" } )
+cores.get( "Fighter", { all={"normal","elite"}, heavy=true } )
+cores.get( "Fighter", { systems="elite", hulls="normal", engines="elite" } )
+--]]
+function cores.get( shipclass, params )
+   if params == nil then
+      return nil
+   end
+
+   -- Check out if we have to do heavy
+   local heavy
+   if params.heavy == nil then
+      heavy = (rnd.rnd() > 0.5)
+   else
+      heavy = params.heavy
+   end
+
+   -- Find out what type to use for each slot
+   local systems, hulls, engines
+   if params.all then
+      local all = choose_one_table( params.all )
+      systems  = all
+      hulls    = all
+      engines  = all
+   else
+      systems  = choose_one_table( params.systems )
+      hulls    = choose_one_table( params.hulls )
+      engines  = choose_one_table( params.engines )
+   end
+
+   -- Get the cores if applicable
+   local c = {}
+   if systems then
+      table.insert( c, cores[ systems ].systems[ shipclass ]( heavy ) )
+   end
+   if hulls then
+      table.insert( c, cores[ hulls ].hulls[ shipclass ]( heavy ) )
+   end
+   if engines then
+      table.insert( c, cores[ engines ].engines[ shipclass ]( heavy ) )
+   end
+
+   return c
 end
-cores.elite.set = {
-   ["Fighter"]  = function( heavy ) return choose_set( "Fighter",  heavy ) end,
-   ["Bomber"]   = function( heavy ) return choose_set( "Bomber",   heavy ) end,
-   ["Corvette"] = function( heavy ) return choose_set( "Corvette", heavy ) end,
-   ["Destroyer"]= function( heavy ) return choose_set( "Destroyer",heavy ) end,
-   ["Cruiser"]  = function( heavy ) return choose_set( "Cruiser",  heavy ) end,
-   ["Carrier"]  = function( heavy ) return choose_set( "Carrier",  heavy ) end,
-}
 
 return cores
