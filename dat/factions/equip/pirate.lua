@@ -1,10 +1,11 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
 local ecores = require 'equipopt.cores'
+local eoutfits = require 'equipopt.outfits'
 
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
-local pirate_outfits = {
+local pirate_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Lancelot Fighter Bay",
    "Hyena Fighter Dock",
@@ -43,7 +44,7 @@ local pirate_outfits = {
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
-}
+}}
 
 local pirate_class = { "normal", "elite" }
 

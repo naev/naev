@@ -1,8 +1,9 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
 local ecores = require 'equipopt.cores'
+local eoutfits = require 'equipopt.outfits'
 
-local zalek_outfits = {
+local zalek_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Za'lek Light Drone Fighter Dock", "Za'lek Heavy Drone Fighter Dock",
    "Za'lek Bomber Drone Fighter Dock",
@@ -33,7 +34,7 @@ local zalek_outfits = {
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
-}
+}}
 
 local zalek_skip = {
    ["Za'lek Scout Drone"]  = true,

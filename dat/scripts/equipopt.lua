@@ -156,7 +156,7 @@ end
 
 function equipopt.params.civilian( overwrite )
    return _merge_tables( equipopt.params.default{
-      weap        = 0.1, -- low weapons
+      weap        = 0.5, -- low weapons
       t_absorb    = 0,
       t_speed     = 300,
       t_track     = 4000,
@@ -166,7 +166,7 @@ end
 
 function equipopt.params.merchant( overwrite )
    return _merge_tables( equipopt.params.default{
-      weap        = 0.3, -- low weapons
+      weap        = 0.5, -- low weapons
       t_absorb    = 0,
       t_speed     = 300,
       t_track     = 4000,

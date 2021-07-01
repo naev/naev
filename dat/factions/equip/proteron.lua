@@ -1,8 +1,9 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
 local ecores = require 'equipopt.cores'
+local eoutfits = require 'equipopt.outfits'
 
-local proteron_outfits = {
+local proteron_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Proteron Derivative Fighter Bay",
    "Heavy Razor Turret", "Grave Beam", "Railgun",
@@ -27,7 +28,7 @@ local proteron_outfits = {
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
-}
+}}
 
 local proteron_params = {
    --["Proteron Demon"] = function () return {

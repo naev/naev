@@ -1,8 +1,9 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
 local ecores = require 'equipopt.cores'
+local eoutfits = require 'equipopt.outfits'
 
-local dvaered_outfits = {
+local dvaered_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Railgun", "Repeating Railgun",
    "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
@@ -31,7 +32,7 @@ local dvaered_outfits = {
    -- Small Structural
    "Plasteel Plating", "Battery I", "Improved Stabilizer", "Engine Reroute",
    "Reactor Class I", "Small Fuel Pod",
-}
+}}
 
 
 local dvaered_params = {

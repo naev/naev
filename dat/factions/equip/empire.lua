@@ -1,8 +1,8 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
+local eoutfits = require 'equipopt.outfits'
 
-
-local empire_outfits = {
+local empire_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Empire Lancelot Fighter Bay",
    "Turbolaser", "Heavy Ripper Turret", "Ragnarok Beam",
@@ -31,7 +31,7 @@ local empire_outfits = {
    -- Small Structural
    "Plasteel Plating", "Battery I", "Improved Stabilizer", "Engine Reroute",
    "Reactor Class I", "Small Fuel Pod",
-}
+}}
 local empire_outfits_collective = false
 
 

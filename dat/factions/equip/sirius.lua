@@ -1,8 +1,9 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
 local ecores = require 'equipopt.cores'
+local eoutfits = require 'equipopt.outfits'
 
-local sirius_outfits = {
+local sirius_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Fidelity Fighter Bay",
    "Heavy Razor Turret", "Ragnarok Beam",
@@ -32,7 +33,7 @@ local sirius_outfits = {
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
-}
+}}
 
 local sirius_params = {
    --["Sirius Demon"] = function () return {

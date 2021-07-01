@@ -1,8 +1,9 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
 local ecores = require 'equipopt.cores'
+local eoutfits = require 'equipopt.outfits'
 
-local thurion_outfits = {
+local thurion_outfits = eoutfits.merge{{
    -- Heavy Weapons
    "Heavy Laser Turret", "Ragnarok Beam",
    "Thurion Perspicacity Fighter Bay",
@@ -37,7 +38,7 @@ local thurion_outfits = {
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
    "Adaptive Stealth Plating",
-}
+}}
 
 local thurion_params = {
    --["Sirius Demon"] = function () return {
