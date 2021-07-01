@@ -82,8 +82,10 @@ function equip( p )
    local params = equipopt.params.choose( p )
    -- Prefer to use the Pirate utilities
    params.prefer["Scanning Combat AI"]      = 100
+   -- much more diversity for pirates
    params.max_same_stru = 1
    params.max_same_util = 1
+   params.rnd = params.rnd * 1.5
    if pc == "Fighter" or pc == "Bomber" then
       params.max_same_weap = 1
    else

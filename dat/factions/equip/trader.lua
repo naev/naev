@@ -30,6 +30,8 @@ local cargo_chance = {
 function equip( p )
    -- Choose parameters and make Pirateish
    local params = equipopt.params.choose( p )
+   params.rnd = params.rnd * 1.5
+   params.max_mass = 0.75 + 0.2*rnd.rnd() -- want space for cargo!
 
    -- See cores
    local cores = ecores.get( p, { all="normal" } )
