@@ -1560,6 +1560,7 @@ static int pilotL_weapsetHeat( lua_State *L )
  * @usage act_outfits = p:actives() -- Gets the table of active outfits
  *
  *    @luatparam Pilot p Pilot to get active outfits of.
+ *    @luatparam[opt=false] boolean sort Whether or not to sort the otufits.
  *    @luatreturn table The table with each active outfit's information.
  * @luafunc actives
  */
@@ -1573,12 +1574,8 @@ static int pilotL_actives( lua_State *L )
    double d;
 
    /* Parse parameters. */
-   p   = luaL_validpilot(L,1);
-
-   if (lua_gettop(L) > 1)
-      sort = lua_toboolean(L, 1);
-   else
-      sort = 0;
+   p     = luaL_validpilot(L,1);
+   sort  = lua_toboolean(L,2);
 
    k = 0;
    lua_newtable(L);
