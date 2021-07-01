@@ -48,9 +48,9 @@ local pirate_outfits = {
 local pirate_class = { "normal", "elite" }
 
 local pirate_params = {
-   ["Pirate Demon"] = function () return {
+   ["Pirate Kestrel"] = function () return {
          type_range = {
-            ["Launcher"] = { max = rnd.rnd(0,2) },
+            ["Launcher"] = { max = 2 },
          },
       } end,
 }
