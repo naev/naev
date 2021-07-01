@@ -6,7 +6,7 @@
   <frag>explosion.frag</frag>
   <size>100</size>
   <uniforms>
-   <u_grain x="0.2" />
+   <u_grain x="0.3125" />
    <u_speed x="0.5" />
    <u_steps int="1" x="10" />
   </uniforms>
