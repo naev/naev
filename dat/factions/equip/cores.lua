@@ -175,9 +175,9 @@ end
 local eeng = {}
 eeng["Fighter"] = function( heavy )
    if heavy then
-      return "Tricon Zephyr Engine"
-   else
       return "Tricon Zephyr II Engine"
+   else
+      return "Tricon Zephyr Engine"
    end
 end
 eeng["Bomber"] = function( heavy )
