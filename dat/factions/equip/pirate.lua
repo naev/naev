@@ -102,7 +102,7 @@ function equip( p )
    if pircor then
       cores = pircor( p )
    else
-      cores = ecores.get( pc, { all=pirate_class } )
+      cores = ecores.get( p, { all=pirate_class } )
    end
 
    -- Try to equip
