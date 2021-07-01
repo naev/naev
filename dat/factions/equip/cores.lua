@@ -181,7 +181,7 @@ eeng["Fighter"] = function( heavy )
    end
 end
 eeng["Bomber"] = function( heavy )
-   return "Tricon Zephyr Engine"
+   return "Tricon Zephyr II Engine"
 end
 eeng["Corvette"] = function( heavy )
    return "Tricon Cyclone Engine"
