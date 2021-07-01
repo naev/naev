@@ -497,8 +497,14 @@ function equipopt.equip( p, cores, outfit_list, params )
    lp = linopt.new( "test", ncols, nrows, true )
    -- Add space worthy checks
    lp:set_row( 1, "CPU",          nil, st.cpu_max * ss.cpu_mod )
-   lp:set_row( 2, "energy_regen", nil, st.energy_regen - math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) )
-   lp:set_row( 3, "mass",         nil, params.max_mass * ss.engine_limit - st.mass )
+   local energygoal = math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs)
+   lp:set_row( 2, "energy_regen", nil, st.energy_regen - energygoal )
+   local massgoal = params.max_mass * ss.engine_limit - st.mass
+   if massgoal < 0 then
+      warn(string.format(_("Impossible mass goal of %d set! Ignoring mass for pilot '%s'!"), massgoal, p:name()))
+      massgoal = nil
+   end
+   lp:set_row( 3, "mass",      nil, massgoal )
    if params.budget then
       lp:set_row( 4, "budget",    nil, params.budget )
    end
@@ -643,14 +649,17 @@ function equipopt.equip( p, cores, outfit_list, params )
       -- Due to the approximation, sometimes they end up with not enough
       -- energy, we'll try again with larger energy constraints
       local stn = p:stats()
-      if stn.energy_regen < 0 then
+      if stn.energy_regen < energygoal then
          p:rmOutfit( "all" )
-         emod = emod * 2
-         --print(string.format("Optimization attempt %d of %d: emod=%.3f", try, 3, emod ))
-         lp:set_row( 2, "energy_regen", nil, st.energy_regen - emod*math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) )
+         emod = emod * 1.5
+         --print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
+         lp:set_row( 2, "energy_regen", nil, st.energy_regen - emod*energygoal )
          done = false
       end
    until done or try >= 5 -- attempts should be fairly fast since we just do optimization step
+   if not done then
+      warn(string.format(_("Failed to equip pilot '%s'!"), p:name()))
+   end
 
    -- Fill ammo
    p:fillAmmo()
