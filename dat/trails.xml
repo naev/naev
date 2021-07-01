@@ -16,11 +16,11 @@
  </trail>
  <trail name="missile" inherits="default">
   <thickness>2</thickness>
-  <ttl>0.3</ttl>
+  <ttl>0.5</ttl>
  </trail>
  <trail name="missileL" inherits="default">
   <thickness>4</thickness>
-  <ttl>0.5</ttl>
+  <ttl>0.8</ttl>
  </trail>
 
  <!-- Fire type of engines-->
@@ -39,11 +39,11 @@
  </trail>
  <trail name="fire-missile" inherits="fire">
   <thickness>3</thickness>
-  <ttl>0.3</ttl>
+  <ttl>0.5</ttl>
  </trail>
  <trail name="fire-missileL" inherits="fire">
   <thickness>5</thickness>
-  <ttl>0.5</ttl>
+  <ttl>0.8</ttl>
  </trail>
 
  <!-- Sirius type of engines -->
@@ -85,11 +85,11 @@
  </trail>
  <trail name="zalek-missile" inherits="zalek">
   <thickness>2</thickness>
-  <ttl>0.3</ttl>
+  <ttl>0.5</ttl>
  </trail>
  <trail name="zalek-missileL" inherits="zalek">
   <thickness>4</thickness>
-  <ttl>0.5</ttl>
+  <ttl>0.8</ttl>
  </trail>
 
  <!-- Soromid type of engines -->
