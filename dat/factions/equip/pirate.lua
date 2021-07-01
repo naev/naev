@@ -43,6 +43,8 @@ local pirate_outfits = {
    "Battery I", "Shield Capacitor I", "Reactor Class I",
 }
 
+local pirate_class = { "normal", "elite" }
+
 local pirate_params = {
    ["Pirate Demon"] = function () return {
          type_range = {
@@ -51,39 +53,17 @@ local pirate_params = {
       } end,
 }
 local pirate_cores = {
-   ["Hyena"] = function () return ecores.get( "Fighter", { all={ "elite" }, heavy=false } ) end,
-   ["Pirate Shark"] = function () return ecores.get( "Fighter", { all={ "elite" }, heavy=false } ) end,
-   --[[
-         choose_one{ "Unicorp PT-68 Core System", "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System", },
-         choose_one{ "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating", },
-         choose_one{ "Nexus Dart 150 Engine", "Tricon Zephyr Engine", },
-   --]]
-   ["Pirate Vendetta"] = function () return ecores.get( "Fighter", { all={ "elite" } } ) end,
-   --[[
-         choose_one{ "Unicorp PT-68 Core System", "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System", },
-         choose_one{ "Unicorp Hawk 350 Engine", "Melendez Ox XL Engine", "Tricon Zephyr II Engine", },
-         choose_one{ "Unicorp D-2 Light Plating", "Unicorp D-4 Light Plating", },
-   --]]
-   ["Pirate Ancestor"] = function () return {
-      } end,
-   ["Lancelot"] = function () return {
-         choose_one{ "Unicorp PT-68 Core System", "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System", },
-      } end,
-   ["Pirate Phalanx"] = function () return {
-         choose_one{ "Unicorp PT-200 Core System", "Milspec Orion 4801 Core System", },
-      } end,
-   ["Pirate Admonisher"] = function () return {
-         choose_one{ "Unicorp PT-200 Core System", "Milspec Orion 4801 Core System", },
-      } end,
-   ["Pacifier"] = function () return {
-         choose_one{ "Unicorp PT-310 Core System", "Milspec Orion 5501 Core System", },
-      } end,
-   ["Pirate Kestrel"] = function () return {
-         choose_one{ "Unicorp PT-2200 Core System", "Milspec Orion 8601 Core System", },
-         choose_one{ "Nexus Bolt 4500 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", },
-      } end,
-   ["Pirate Rhino"] = function () return {
-      } end,
+   ["Hyena"] = function () return ecores.get( "Fighter", { all=pirate_class, heavy=false } ) end,
+   ["Pirate Shark"] = function () return ecores.get( "Fighter", { all=pirate_class, heavy=false } ) end,
+   ["Pirate Kestrel"] = function ()
+         local heavy = rnd.rnd() < 0.3
+         if heavy then
+            return ecores.get( "Cruiser", { all=pirate_class, heavy=heavy } )
+         end
+         local c = ecores.get( "Cruiser", { systems=pirate_class, hull=pirate_class, heavy=false } )
+         table.insert( c, choose_one{ "Nexus Bolt 4500 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", } )
+         return c
+      end,
 }
 
 --[[
@@ -115,7 +95,13 @@ function equip( p )
    end
 
    -- See cores
-   local cores = pirate_cores[ sname ]() or ecores.get( pc, { all={ "elite" } } )
+   local cores
+   local pircor = pirate_cores[ sname ]
+   if pircor then
+      cores = pircor()
+   else
+      cores = ecores.get( pc, { all=pirate_class } )
+   end
 
    -- Try to equip
    equipopt.equip( p, cores, pirate_outfits, params )

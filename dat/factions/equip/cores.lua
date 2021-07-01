@@ -13,6 +13,104 @@ end
 
 
 --[[
+      NORMAL CORES
+--]]
+-- NORMAL SYSTEMS
+local nsys = {}
+nsys["Fighter"] = function( heavy )
+   if heavy then
+      return "Unicorp PT-68 Core System"
+   else
+      return "Unicorp PT-16 Core System"
+   end
+end
+nsys["Bomber"] = function( heavy )
+   return "Unicorp PT-68 Core System"
+end
+nsys["Corvette"] = function( heavy )
+   return "Unicorp PT-200 Core System"
+end
+nsys["Destroyer"] = function( heavy )
+   return "Unicorp PT-310 Core System"
+end
+nsys["Cruiser"] = function( heavy )
+   if heavy then
+      return "Unicorp PT-2200 Core System"
+   else
+      return "Unicorp PT-500 Core System"
+   end
+end
+nsys["Carrier"] = function( heavy )
+   return "Unicorp PT-2200 Core System"
+end
+
+-- NORMAL HULLS
+local nhul = {}
+nhul["Fighter"] = function( heavy )
+   if heavy then
+      return "Unicorp D-4 Light Plating"
+   else
+      return "Unicorp D-2 Light Plating"
+   end
+end
+nhul["Bomber"] = function( heavy )
+   return "Unicorp D-4 Light Plating"
+end
+nhul["Corvette"] = function( heavy )
+   return "Unicorp D-12 Medium Plating"
+end
+nhul["Destroyer"] = function( heavy )
+   return "Unicorp D-24 Medium Plating"
+end
+nhul["Cruiser"] = function( heavy )
+   if heavy then
+      return "Unicorp D-68 Heavy Plating"
+   else
+      return "Unicorp D-48 Heavy Plating"
+   end
+end
+nhul["Carrier"] = function( heavy )
+   return "Unicorp D-68 Heavy Plating"
+end
+
+-- NORMAL ENGINES
+local neng = {}
+neng["Fighter"] = function( heavy )
+   if heavy then
+      return "Unicorp Hawk 350 Engine"
+   else
+      return "Nexus Dart 150 Engine"
+   end
+end
+neng["Bomber"] = function( heavy )
+   return "Unicorp Hawk 350 Engine"
+end
+neng["Corvette"] = function( heavy )
+   return "Nexus Arrow 700 Engine"
+end
+neng["Destroyer"] = function( heavy )
+   return "Unicorp Falcon 1300 Engine"
+end
+neng["Cruiser"] = function( heavy )
+   if heavy then
+      return "Nexus Bolt 4500 Engine"
+   else
+      return "Unicorp Eagle 7000 Engine"
+   end
+end
+neng["Carrier"] = function( heavy )
+   return "Unicorp Eagle 7000 Engine"
+end
+
+-- NORMAL SETS
+cores.normal = {
+   systems = nsys,
+   hulls   = nhul,
+   engines = neng,
+}
+
+
+--[[
       ELITE CORES
 --]]
 -- ELITE SYSTEMS
@@ -102,7 +200,7 @@ eeng["Carrier"] = function( heavy )
    return "Melendez Mammoth XL Engine"
 end
 
--- Elite sets
+-- ELITE SETS
 cores.elite = {
    systems = esys,
    hulls   = ehul,

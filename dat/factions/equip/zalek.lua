@@ -108,7 +108,13 @@ function equip( p )
    end
 
    -- See cores
-   local cores = zalek_cores[ sname ]() or ecores.get( pc, { all="elite" } )
+   local cores
+   local zlkcor = zalek_cores[ sname ]
+   if zlkcor then
+      cores = zlkcor()
+   else
+      cores = ecores.get( pc, { all="elite" } )
+   end
 
    -- Try to equip
    equipopt.equip( p, cores, zalek_outfits, params )
