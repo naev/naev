@@ -982,12 +982,7 @@ static int pilotL_eq( lua_State *L )
  */
 static int pilotL_name( lua_State *L )
 {
-   Pilot *p;
-
-   /* Parse parameters. */
-   p = luaL_validpilot(L,1);
-
-   /* Get name. */
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushstring(L, p->name);
    return 1;
 }
@@ -1003,12 +998,7 @@ static int pilotL_name( lua_State *L )
  */
 static int pilotL_id( lua_State *L )
 {
-   Pilot *p;
-
-   /* Parse parameters. */
-   p = luaL_validpilot(L,1);
-
-   /* Get name. */
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber(L, p->id);
    return 1;
 }
@@ -1560,6 +1550,7 @@ static int pilotL_weapsetHeat( lua_State *L )
  * @usage act_outfits = p:actives() -- Gets the table of active outfits
  *
  *    @luatparam Pilot p Pilot to get active outfits of.
+ *    @luatparam[opt=false] boolean sort Whether or not to sort the otufits.
  *    @luatreturn table The table with each active outfit's information.
  * @luafunc actives
  */
@@ -1573,12 +1564,8 @@ static int pilotL_actives( lua_State *L )
    double d;
 
    /* Parse parameters. */
-   p   = luaL_validpilot(L,1);
-
-   if (lua_gettop(L) > 1)
-      sort = lua_toboolean(L, 1);
-   else
-      sort = 0;
+   p     = luaL_validpilot(L,1);
+   sort  = lua_toboolean(L,2);
 
    k = 0;
    lua_newtable(L);
@@ -1813,12 +1800,7 @@ static int pilotL_rename( lua_State *L )
  */
 static int pilotL_position( lua_State *L )
 {
-   Pilot *p;
-
-   /* Parse parameters */
-   p     = luaL_validpilot(L,1);
-
-   /* Push position. */
+   Pilot *p  = luaL_validpilot(L,1);
    lua_pushvector(L, p->solid->pos);
    return 1;
 }
@@ -1834,12 +1816,7 @@ static int pilotL_position( lua_State *L )
  */
 static int pilotL_velocity( lua_State *L )
 {
-   Pilot *p;
-
-   /* Parse parameters */
-   p     = luaL_validpilot(L,1);
-
-   /* Push velocity. */
+   Pilot *p  = luaL_validpilot(L,1);
    lua_pushvector(L, p->solid->vel);
    return 1;
 }
@@ -1855,12 +1832,7 @@ static int pilotL_velocity( lua_State *L )
  */
 static int pilotL_ew( lua_State *L )
 {
-   Pilot *p;
-
-   /* Parse parameters */
-   p     = luaL_validpilot(L,1);
-
-   /* Push direction. */
+   Pilot *p  = luaL_validpilot(L,1);
    lua_pushnumber( L, p->ew_evasion );
    return 1;
 }
@@ -1876,12 +1848,7 @@ static int pilotL_ew( lua_State *L )
  */
 static int pilotL_dir( lua_State *L )
 {
-   Pilot *p;
-
-   /* Parse parameters */
-   p     = luaL_validpilot(L,1);
-
-   /* Push direction. */
+   Pilot *p  = luaL_validpilot(L,1);
    lua_pushnumber( L, p->solid->dir * 180./M_PI );
    return 1;
 }
@@ -1897,12 +1864,7 @@ static int pilotL_dir( lua_State *L )
  */
 static int pilotL_temp( lua_State *L )
 {
-   Pilot *p;
-
-   /* Parse parameters */
-   p     = luaL_validpilot(L,1);
-
-   /* Push direction. */
+   Pilot *p  = luaL_validpilot(L,1);
    lua_pushnumber( L, p->heat_T );
    return 1;
 }
@@ -1934,12 +1896,7 @@ static int pilotL_mass( lua_State *L )
  */
 static int pilotL_faction( lua_State *L )
 {
-   Pilot *p;
-
-   /* Parse parameters */
-   p     = luaL_validpilot(L,1);
-
-   /* Push faction. */
+   Pilot *p  = luaL_validpilot(L,1);
    lua_pushfaction(L,p->faction);
    return 1;
 }
@@ -1958,8 +1915,6 @@ static int pilotL_spaceworthy( lua_State *L )
 {
    Pilot *p     = luaL_validpilot(L,1);
    const char *str = pilot_checkSpaceworthy(p);
-
-   /* Push position. */
    lua_pushboolean( L, (str==NULL) ? 1 : 0 );
    lua_pushstring( L, str );
    return 2;
@@ -2420,8 +2375,8 @@ static int pilotL_disable( lua_State *L )
    NLUA_CHECKRW(L);
 
    /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-   permanent = !lua_toboolean(L,2);
+   p           = luaL_validpilot(L,1);
+   permanent   = !lua_toboolean(L,2);
 
    /* Disable the pilot. */
    p->shield = 0.;
@@ -2449,15 +2404,9 @@ static int pilotL_disable( lua_State *L )
  */
 static int pilotL_cooldown( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Get the cooldown status. */
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushboolean( L, pilot_isFlag(p, PILOT_COOLDOWN) );
    lua_pushboolean( L, pilot_isFlag(p, PILOT_COOLDOWN_BRAKE) );
-
    return 2;
 }
 
@@ -2853,8 +2802,8 @@ static int pilotL_changeAI( lua_State *L )
    NLUA_CHECKRW(L);
 
    /* Get parameters. */
-   p  = luaL_validpilot(L,1);
-   str = luaL_checkstring(L,2);
+   p     = luaL_validpilot(L,1);
+   str   = luaL_checkstring(L,2);
 
    /* Get rid of current AI. */
    ai_destroy(p);
@@ -2889,9 +2838,9 @@ static int pilotL_setTemp( lua_State *L )
    NLUA_CHECKRW(L);
 
    /* Handle parameters. */
-   p  = luaL_validpilot(L,1);
-   kelvins  = luaL_checknumber(L, 2);
-   setOutfits = !lua_toboolean(L,3);
+   p           = luaL_validpilot(L,1);
+   kelvins     = luaL_checknumber(L, 2);
+   setOutfits  = !lua_toboolean(L,3);
 
    /* Temperature must not go below base temp. */
    kelvins = MAX(kelvins, CONST_SPACE_STAR_TEMP);
@@ -3192,12 +3141,7 @@ static int pilotL_getEnergy( lua_State *L )
  */
 static int pilotL_getLockon( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p  = luaL_validpilot(L,1);
-
-   /* Return. */
+   Pilot *p  = luaL_validpilot(L,1);
    lua_pushnumber(L, p->lockons );
    return 1;
 }
@@ -3333,9 +3277,7 @@ static int pilotL_getDetectedDistance( lua_State *L )
  */
 static int pilotL_cargoFree( lua_State *L )
 {
-   Pilot *p;
-   p = luaL_validpilot(L,1);
-
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushnumber(L, pilot_cargoFree(p) );
    return 1;
 }
@@ -3430,8 +3372,8 @@ static int pilotL_cargoRm( lua_State *L )
    NLUA_CHECKRW(L);
 
    /* Parse parameters. */
-   p = luaL_validpilot(L,1);
-   str      = luaL_checkstring( L, 2 );
+   p     = luaL_validpilot(L,1);
+   str   = luaL_checkstring(L,2);
 
    if (strcmp(str, "__allExceptMisn") == 0)
       quantity = pilot_cargoRmAll( p, 0 );
@@ -3538,15 +3480,9 @@ static int pilotL_credits( lua_State *L )
  */
 static int pilotL_getColour( lua_State *L )
 {
-   Pilot *p;
-   const glColour *col;
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   col = pilot_getColour(p);
+   Pilot *p = luaL_validpilot(L,1);
+   const glColour *col = pilot_getColour(p);
    lua_pushcolour( L, *col );
-
    return 1;
 }
 
@@ -3562,12 +3498,7 @@ static int pilotL_getColour( lua_State *L )
  */
 static int pilotL_getHostile( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Push value. */
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushboolean( L, pilot_isHostile( p ) );
    return 1;
 }
@@ -3682,12 +3613,7 @@ static int pilotL_hasIllegal( lua_State *L )
  */
 static int pilotL_ship( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p  = luaL_validpilot(L,1);
-
-   /* Create the ship. */
+   Pilot *p  = luaL_validpilot(L,1);
    lua_pushship(L, p->ship);
    return 1;
 }
@@ -3704,12 +3630,7 @@ static int pilotL_ship( lua_State *L )
  */
 static int pilotL_idle( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
-
-   /* Check to see if is idle. */
+   Pilot *p = luaL_validpilot(L,1);
    lua_pushboolean(L, p->task==0);
    return 1;
 }
@@ -3944,10 +3865,7 @@ static int pilotL_face( lua_State *L )
       pt = luaL_validpilot(L,2);
    else
       vec = luaL_checkvector(L,2);
-   if (lua_gettop(L) > 2)
-      towards = lua_toboolean(L,3);
-   else
-      towards = 0;
+   towards = lua_toboolean(L,3);
 
    /* Set the task. */
    if (towards)
@@ -4015,11 +3933,7 @@ static int pilotL_follow( lua_State *L )
    /* Get parameters. */
    p  = luaL_validpilot(L,1);
    pt = luaL_validpilot(L,2);
-
-   if (lua_gettop(L) > 2)
-      accurate = lua_toboolean(L,3);
-   else
-      accurate = 0;
+   accurate = lua_toboolean(L,3);
 
    /* Set the task. */
    if (accurate == 0)
@@ -4161,7 +4075,7 @@ static int pilotL_hyperspace( lua_State *L )
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
-   if ((lua_gettop(L) > 1) && !lua_isnil(L,2))
+   if (!lua_isnoneornil(L,2))
       ss = luaL_validsystem(L,2);
    else
       ss = NULL;
@@ -4251,7 +4165,7 @@ static int pilotL_land( lua_State *L )
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
-   if ((lua_gettop(L) > 1) && (!lua_isnil(L,2)))
+   if (!lua_isnoneornil(L,2))
       pnt = luaL_validplanet( L, 2 );
    else
       pnt = NULL;
@@ -4316,7 +4230,7 @@ static int pilotL_hailPlayer( lua_State *L )
    /* Get parameters. */
    p = luaL_validpilot(L,1);
    if (lua_gettop(L) > 1)
-      enable = lua_toboolean(L,3);
+      enable = lua_toboolean(L,2);
    else
       enable = 1;
 
