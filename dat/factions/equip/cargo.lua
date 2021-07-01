@@ -12,7 +12,7 @@ function cargo.add( p )
    local cf = p:cargoFree()
    if r < 0.6 or cf<30 then
       ncargo = 1
-   else if r < 0.85 or cf < 60 then
+   elseif r < 0.85 or cf < 60 then
       ncargo = 2
    else
       ncargo = 3
