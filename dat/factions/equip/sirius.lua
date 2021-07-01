@@ -48,7 +48,6 @@ local sirius_cores = {
 --]]
 function equip( p )
    local ps    = p:ship()
-   local pc    = ps:class()
    local sname = ps:nameRaw()
 
    -- Choose parameters and make Siriusish
@@ -70,7 +69,7 @@ function equip( p )
    if srscor then
       cores = srscor()
    else
-      cores = ecores.get( pc, { all="elite" } )
+      cores = ecores.get( p, { all="elite" } )
    end
 
    -- Try to equip

@@ -56,27 +56,27 @@ local zalek_params = {
 }
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local zalek_cores = {
-   ["Za'lek Sting"] = function () return {
+   ["Za'lek Sting"] = function (p) return {
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
          "Tricon Cyclone Engine",
          choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" },
       } end,
-   ["Za'lek Demon"] = function () return {
+   ["Za'lek Demon"] = function (p) return {
          choose_one{ "Milspec Orion 5501 Core System", "Milspec Thalos 5402 Core System" },
          "Tricon Cyclone II Engine",
          choose_one{ "Nexus Medium Stealth Plating", "S&K Medium-Heavy Combat Plating" },
       } end,
-   ["Za'lek Mephisto"] = function () return {
+   ["Za'lek Mephisto"] = function (p) return {
          "Milspec Orion 9901 Core System",
          choose_one{ "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine" },
          choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
       } end,
-   ["Za'lek Diablo"] = function () return {
+   ["Za'lek Diablo"] = function (p) return {
          "Milspec Thalos 9802 Core System",
          choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
          choose_one{ "Tricon Typhoon II Engine", "Melendez Mammoth XL Engine" },
       } end,
-   ["Za'lek Hephaestus"] = function () return {
+   ["Za'lek Hephaestus"] = function (p) return {
          "Milspec Thalos 9802 Core System",
          choose_one{ "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating" },
          "Melendez Mammoth XL Engine",
@@ -90,7 +90,6 @@ local zalek_cores = {
 --]]
 function equip( p )
    local ps    = p:ship()
-   local pc    = ps:class()
    local sname = ps:nameRaw()
    if zalek_skip[sname] then return end
 
@@ -111,9 +110,9 @@ function equip( p )
    local cores
    local zlkcor = zalek_cores[ sname ]
    if zlkcor then
-      cores = zlkcor()
+      cores = zlkcor(p)
    else
-      cores = ecores.get( pc, { all="elite" } )
+      cores = ecores.get( p, { all="elite" } )
    end
 
    -- Try to equip

@@ -101,7 +101,7 @@ function equip( p )
    if dvrcor then
       cores = dvrcor()
    else
-      cores = ecores.get( pc, { hulls="elite" } )
+      cores = ecores.get( p, { hulls="elite" } )
    end
 
    -- Try to equip

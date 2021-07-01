@@ -55,14 +55,14 @@ local pirate_params = {
       } end,
 }
 local pirate_cores = {
-   ["Hyena"] = function () return ecores.get( "Fighter", { all=pirate_class, heavy=false } ) end,
-   ["Pirate Shark"] = function () return ecores.get( "Fighter", { all=pirate_class, heavy=false } ) end,
-   ["Pirate Kestrel"] = function ()
+   ["Hyena"] = function (p) return ecores.get( p, { all=pirate_class, heavy=false } ) end,
+   ["Pirate Shark"] = function (p) return ecores.get( p, { all=pirate_class, heavy=false } ) end,
+   ["Pirate Kestrel"] = function (p)
          local heavy = rnd.rnd() < 0.3
          if heavy then
-            return ecores.get( "Cruiser", { all=pirate_class, heavy=heavy } )
+            return ecores.get( p, { all=pirate_class, heavy=heavy } )
          end
-         local c = ecores.get( "Cruiser", { systems=pirate_class, hulls=pirate_class, heavy=false } )
+         local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class, heavy=false } )
          table.insert( c, choose_one{ "Nexus Bolt 4500 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", } )
          return c
       end,
@@ -100,7 +100,7 @@ function equip( p )
    local cores
    local pircor = pirate_cores[ sname ]
    if pircor then
-      cores = pircor()
+      cores = pircor( p )
    else
       cores = ecores.get( pc, { all=pirate_class } )
    end

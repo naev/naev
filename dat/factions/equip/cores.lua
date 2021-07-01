@@ -292,10 +292,11 @@ cores.get( "Fighter", { all="elite" } )
 cores.get( "Fighter", { all={"normal","elite"}, heavy=true } )
 cores.get( "Fighter", { systems="elite", hulls="normal", engines="elite" } )
 --]]
-function cores.get( shipclass, params )
+function cores.get( p, params )
    if params == nil then
       return nil
    end
+   shipclass = p:ship():class()
 
    -- Check out if we have to do heavy
    local heavy
