@@ -1,10 +1,9 @@
---[[
-
+--[[--
    Post-processing shader library for Lua.
 
    This basically wraps around the shader framework and allows to easily create
    some post-processing shaders with minimal code overhead.
-
+   @module pp_shaders
 --]]
 local pp_shaders = {}
 
@@ -13,11 +12,11 @@ local f = file.new( 'glsl/postprocess.vert' )
 f:open('r')
 pp_shaders.vertexcode = "#version 140\n"..f:read()
 
---[[
--- @brief Creates a new post-processing shader.
---
---    @tparam string fragcode Fragment shader code.
---    @return The newly created shader.
+--[[--
+   Creates a new post-processing shader.
+
+   @tparam string fragcode Fragment shader code.
+   @return The newly created shader.
 --]]
 function pp_shaders.newShader( fragcode )
    return shader.new([[
