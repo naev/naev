@@ -43,6 +43,18 @@ end
 nsys["Carrier"] = function( heavy )
    return "Unicorp PT-2200 Core System"
 end
+-- Civilian
+nsys["Yacht"] = function( heavy )
+   return "Unicorp PT-16 Core System"
+end
+nsys["Luxury Yacht"] = nsys["Yacht"]
+nsys["Courier"] = function( heavy )
+   return "Unicorp PT-68 Core System"
+end
+nsys["Freighter"] = function( heavy )
+   return "Unicorp PT-310 Core System"
+end
+nsys["Armoured Transport"] = nsys["Freighter"]
 
 -- NORMAL HULLS
 local nhul = {}
@@ -72,6 +84,18 @@ end
 nhul["Carrier"] = function( heavy )
    return "Unicorp D-68 Heavy Plating"
 end
+-- Civilian
+nhul["Yacht"] = function( heavy )
+   return choose_one{ "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
+end
+nhul["Luxury Yacht"] = nhul["Yacht"]
+nhul["Courier"] = function( heavy )
+   return choose_one{ "Unicorp D-4 Light Plating", "S&K Small Cargo Hull" }
+end
+nhul["Freighter"] = function( heavy )
+   return choose_one{ "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull" }
+end
+nhul["Armoured Transport"] = nhul["Freighter"]
 
 -- NORMAL ENGINES
 local neng = {}
@@ -101,6 +125,17 @@ end
 neng["Carrier"] = function( heavy )
    return "Unicorp Eagle 7000 Engine"
 end
+neng["Yacht"] = function( heavy )
+   return "Nexus Dart 150 Engine"
+end
+neng["Luxury Yacht"] = neng["Yacht"]
+neng["Courier"] = function( heavy )
+   return "Unicorp Hawk 350 Engine"
+end
+neng["Freighter"] = function( heavy )
+   return choose_one{ "Unicorp Falcon 1300 Engine", "Melendez Buffalo XL Engine" }
+end
+neng["Armoured Transport"] = neng["Freighter"]
 
 -- NORMAL SETS
 cores.normal = {
@@ -141,6 +176,16 @@ end
 esys["Carrier"] = function( heavy )
    return choose_one{ "Milspec Orion 9901 Core System", "Milspec Thalos 9802 Core System" }
 end
+-- Civilian
+esys["Yacht"] = nsys["Yacht"]
+esys["Luxury Yacht"] = function( heavy )
+   return choose_one{ "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System" }
+end
+esys["Courier"] = nsys["Courier"]
+esys["Freighter"] = nsys["Freighter"]
+esys["Armoured Transport"] = function( heavy )
+   return "Milspec Orion 5501 Core System"
+end
 
 -- ELITE HULLS
 local ehul = {}
@@ -169,6 +214,16 @@ ehul["Cruiser"] = function( heavy )
 end
 ehul["Carrier"] = function( heavy )
    return "S&K Superheavy Combat Plating"
+end
+-- Civilian
+ehul["Yacht"] = nhul["Yacht"]
+ehul["Luxury Yacht"] = function( heavy )
+   return choose_one{ "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating" }
+end
+ehul["Courier"] = nhul["Courier"]
+ehul["Freighter"] = nhul["Freighter"]
+ehul["Armoured Transport"] = function( heavy )
+   return choose_one{ "Unicorp D-24 Medium Plating", "Nexus Medium Stealth Plating" }
 end
 
 -- ELITE ENGINES
@@ -199,6 +254,13 @@ end
 eeng["Carrier"] = function( heavy )
    return "Melendez Mammoth XL Engine"
 end
+eeng["Yacht"] = neng["Yacht"]
+eeng["Luxury Yacht"] = function( heavy )
+   return choose_one{ "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }
+end
+eeng["Courier"] = neng["Courier"]
+eeng["Freighter"] = neng["Freighter"]
+eeng["Armoured Transport"] = neng["Armoured Transport"]
 
 -- ELITE SETS
 cores.elite = {
