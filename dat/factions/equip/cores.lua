@@ -17,6 +17,9 @@ end
 --]]
 -- NORMAL SYSTEMS
 local nsys = {}
+nsys["Scout"] = function( heavy )
+   return "Unicorp PT-16 Core System"
+end
 nsys["Fighter"] = function( heavy )
    if heavy then
       return "Unicorp PT-68 Core System"
@@ -58,6 +61,9 @@ nsys["Armoured Transport"] = nsys["Freighter"]
 
 -- NORMAL HULLS
 local nhul = {}
+nhul["Scout"] = function( heavy )
+   return "Unicorp D-2 Light Plating"
+end
 nhul["Fighter"] = function( heavy )
    if heavy then
       return "Unicorp D-4 Light Plating"
@@ -99,6 +105,9 @@ nhul["Armoured Transport"] = nhul["Freighter"]
 
 -- NORMAL ENGINES
 local neng = {}
+neng["Scout"] = function( heavy )
+   return "Nexus Dart 150 Engine"
+end
 neng["Fighter"] = function( heavy )
    if heavy then
       return "Unicorp Hawk 350 Engine"
@@ -150,6 +159,9 @@ cores.normal = {
 --]]
 -- ELITE SYSTEMS
 local esys = {}
+esys["Scout"] = function( heavy )
+   return "Milspec Orion 2301 Core System"
+end
 esys["Fighter"] = function( heavy )
    if heavy then
       return choose_one{ "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System" }
@@ -189,6 +201,9 @@ end
 
 -- ELITE HULLS
 local ehul = {}
+ehul["Scout"] = function( heavy )
+   return choose_one{ "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating" }
+end
 ehul["Fighter"] = function( heavy )
    if heavy then
       return choose_one{ "Nexus Light Stealth Plating", "S&K Light Combat Plating" }
@@ -228,6 +243,9 @@ end
 
 -- ELITE ENGINES
 local eeng = {}
+eeng["Scout"] = function( heavy )
+   return "Tricon Zephyr Engine"
+end
 eeng["Fighter"] = function( heavy )
    if heavy then
       return "Tricon Zephyr II Engine"
