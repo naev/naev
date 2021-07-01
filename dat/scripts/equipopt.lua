@@ -447,7 +447,7 @@ function equipopt.equip( p, cores, outfit_list, params )
       -- Compute goodness
       oo.goodness = params.goodness( oo, params )
 
-      -- Cache it all so we don't hae to recompute
+      -- Cache it all so we don't have to recompute
       outfit_cache[v] = oo
    end
 
