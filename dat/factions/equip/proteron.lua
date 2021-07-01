@@ -1,53 +1,6 @@
-require "factions/equip/generic"
-
-equip_typeOutfits_weapons["Derivative"] = {
-   {
-      num = 1;
-      "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
-   },
-   {
-      "Laser Cannon MK1", "Plasma Blaster MK1",
-   }
-}
-equip_typeOutfits_weapons["Kahan"] = {
-   {
-      num = 2;
-      "Railgun", "Heavy Razor Turret", "Grave Beam",
-   },
-   {
-      "Enygma Systems Turreted Fury Launcher",
-      "Enygma Systems Turreted Headhunter Launcher",
-   }
-}
-equip_typeOutfits_weapons["Archimedes"] = {
-   {
-      num = 1;
-      "Enygma Systems Turreted Fury Launcher",
-      "Enygma Systems Turreted Headhunter Launcher",
-   },
-   {
-      "Heavy Ripper Turret", "Railgun Turret", "Ragnarok Beam",
-   },
-   {
-      "Heavy Razor Turret", "Grave Beam",
-   },
-}
-equip_typeOutfits_weapons["Watson"] = {
-   {
-      num = 2;
-      "Heavy Laser Turret", "Railgun Turret", "Ragnarok Beam",
-   },
-   {
-      "Proteron Derivative Fighter Bay",
-   },
-   {
-      "Heavy Razor Turret", "Grave Beam",
-   },
-}
-
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
-local ecores = require 'factions.equip.cores'
+local ecores = require 'equipopt.cores'
 
 local proteron_outfits = {
    -- Heavy Weapons

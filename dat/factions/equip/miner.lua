@@ -1,7 +1,7 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
-local ecores = require 'factions.equip.cores'
-local eoutfits = require 'factions.equip.outfits'
+local ecores = require 'equipopt.cores'
+local eoutfits = require 'equipopt.outfits'
 
 local miner_outfits = eoutfits.merge{
    {

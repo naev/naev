@@ -1,6 +1,6 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
-local ecores = require 'factions.equip.cores'
+local ecores = require 'equipopt.cores'
 
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 

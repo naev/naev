@@ -1,8 +1,8 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
-local ecores = require 'factions.equip.cores'
-local eoutfits = require 'factions.equip.outfits'
-local ecargo = require 'factions.equip.cargo'
+local ecores = require 'equipopt.cores'
+local eoutfits = require 'equipopt.outfits'
+local ecargo = require 'equipopt.cargo'
 
 -- Probability of cargo by class.
 local cargo_chance = {
