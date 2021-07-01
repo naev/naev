@@ -653,19 +653,14 @@ function equipopt.equip( p, cores, outfit_list, params )
       if not b then
          warn(string.format(_("Pilot '%s' is not space worthy after equip script is run! Reason: %s"),p:name(),s))
          print(_("Equipment:"))
-         local c = 1
-         for i,s in ipairs(slots) do
-            for j,o in ipairs(s.outfits) do
-               if x[c] == 1 then
-                  print( "   ".._(o) )
-               end
-               c = c + 1
-            end
+         for j,o in ipairs(p:outfits()) do
+            print( "   "..o:name() )
          end
          local stn = p:stats()
-         print(string.format(_("CPU: %d / %d [%d / %d]"), stn.cpu, stn.cpu_max, constraints[1], st.cpu_max * ss.cpu_mod ))
-         print(string.format(_("Energy Regen: %.3f [%.3f / %.3f]"), stn.energy_regen, constraints[2], st.energy_regen - math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) ))
-         print(string.format(_("Mass: %.3f / %.3f [%.3f / %.3f]"), st.mass, ss.engine_limit, constraints[3], params.max_mass * ss.engine_limit - st.mass ))
+         print(string.format(_("CPU: %d / %d [%d < %d]"), stn.cpu, stn.cpu_max, constraints[1], st.cpu_max * ss.cpu_mod ))
+         print( st.energy_regen, params.min_energy_regen*st.energy_regen )
+         print(string.format(_("Energy Regen: %.3f [%.3f < %.3f]"), stn.energy_regen, constraints[2], st.energy_regen - math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) ))
+         print(string.format(_("Mass: %.3f / %.3f [%.3f < %.3f]"), st.mass, ss.engine_limit, constraints[3], params.max_mass * ss.engine_limit - st.mass ))
          return false
       end
    end
