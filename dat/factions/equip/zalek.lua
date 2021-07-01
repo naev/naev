@@ -18,7 +18,7 @@ local zalek_outfits = {
    "Za'lek Hunter Launcher", "Za'lek Reaper Launcher",
    "Grave Lance", "Orion Beam",
    -- Small Weapons
-   "Particle Beam",
+   "Particle Beam", "Particle Lance",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Targeting Array", "Agility Combat AI",
