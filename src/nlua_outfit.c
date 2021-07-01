@@ -616,6 +616,8 @@ static int outfitL_weapStats( lua_State *L )
       dmg = outfit_damage(o->u.lau.ammo);
    else
       dmg = outfit_damage(o);
+   if (dmg==NULL)
+      return 0;
    /* Modulate the damage by average of damage types. */
    dtype_raw( dmg->type, &sdmg, &admg, NULL );
    mod_damage *= 0.5*(sdmg+admg);
