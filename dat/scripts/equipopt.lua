@@ -107,7 +107,7 @@ function equipopt.params.default( overwrite )
       goodness = equipopt.goodness_default,
 
       -- Global stuff
-      constant    = 5, -- Constant value makes them prefer outfits rather than not
+      constant    = 10, -- Constant value makes them prefer outfits rather than not
       rnd         = 0.2, -- amount of randomness to use for goodness function
       max_same_weap = nil, -- maximum same weapons (nil is no limit)
       max_same_util = nil, -- maximum same utilities (nil is no limit)
