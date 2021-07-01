@@ -305,7 +305,10 @@ function equipopt.equip( p, cores, outfit_list, params )
       --p:rmOutfit( "cores" )
       -- Put cores
       for k,v in ipairs( cores ) do
-         p:addOutfit( v, 1, true )
+         local q = p:addOutfit( v, 1, true )
+         if q < 1 then
+            warn(string.format(_("Unable to equip '%s' on '%s'!"), o, p:name()))
+         end
       end
    end
 
@@ -597,6 +600,7 @@ function equipopt.equip( p, cores, outfit_list, params )
    local done = true
    repeat
       try = try + 1
+      done = true
       -- All the magic is done here
       local z, x, constraints = lp:solve()
       if not z then
@@ -627,7 +631,10 @@ function equipopt.equip( p, cores, outfit_list, params )
       for i,s in ipairs(slots) do
          for j,o in ipairs(s.outfits) do
             if x[c] == 1 then
-               p:addOutfit( o, 1, true )
+               local q = p:addOutfit( o, 1, true )
+               if q < 1 then
+                  warn(string.format(_("Unable to equip '%s' on '%s'!"),o,  p:name()))
+               end
             end
             c = c + 1
          end
