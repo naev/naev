@@ -1,6 +1,6 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
-
+local ecores = require 'factions.equip.cores'
 
 local dvaered_outfits = {
    -- Heavy Weapons
@@ -52,7 +52,7 @@ local dvaered_params = {
       } end,
 }
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
-local dvaered_cores = {
+local dvaered_cores = { -- Basically elite hulls excluding stealth
    ["Dvaered Vendetta"] = function () return {
          "S&K Light Combat Plating",
       } end,
@@ -86,6 +86,7 @@ function equip( p )
    params.prefer["Milspec Impacto-Plastic Coating"] = 100
    params.type_range["Bolt Weapon"] = { min = 1 }
    params.max_same_stru = 3
+   params.ew = 0 -- Don't care about electronic warfare
    params.min_energy_regen = 1.0 -- Dvaereds want more energy
    params.max_mass = 0.95 + 0.2*rnd.rnd()
    -- Per ship tweaks
@@ -95,7 +96,13 @@ function equip( p )
    end
 
    -- See cores
-   local cores = dvaered_cores[ sname ]()
+   local cores
+   local dvrcor = dvaered_cores[ sname ]
+   if dvrcor then
+      cores = dvrcor()
+   else
+      cores = ecores.get( pc, { hulls="elite" } )
+   end
 
    -- Try to equip
    equipopt.equip( p, cores, dvaered_outfits, params )
