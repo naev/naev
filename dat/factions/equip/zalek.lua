@@ -1,5 +1,6 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
+local ecores = require 'factions.equip.cores'
 
 local zalek_outfits = {
    -- Heavy Weapons
@@ -73,7 +74,7 @@ local zalek_cores = {
    ["Za'lek Diablo"] = function () return {
          "Milspec Thalos 9802 Core System",
          choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
-         "Tricon Typhoon II Engine",
+         choose_one{ "Tricon Typhoon II Engine", "Melendez Mammoth XL Engine" },
       } end,
    ["Za'lek Hephaestus"] = function () return {
          "Milspec Thalos 9802 Core System",
@@ -88,7 +89,9 @@ local zalek_cores = {
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   local sname = p:ship():nameRaw()
+   local ps    = p:ship()
+   local pc    = ps:class()
+   local sname = ps:nameRaw()
    if zalek_skip[sname] then return end
 
    -- Choose parameters and make Za'lekish
@@ -105,7 +108,7 @@ function equip( p )
    end
 
    -- See cores
-   local cores = zalek_cores[ sname ]()
+   local cores = zalek_cores[ sname ]() or ecores.get( pc, { all="elite" } )
 
    -- Try to equip
    equipopt.equip( p, cores, zalek_outfits, params )

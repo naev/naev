@@ -1,6 +1,6 @@
 local equipopt = require 'equipopt'
 local mt = require 'merge_tables'
-local cores = require 'factions.equip.cores'
+local ecores = require 'factions.equip.cores'
 
 local pirate_outfits = {
    -- Heavy Weapons
@@ -51,21 +51,19 @@ local pirate_params = {
       } end,
 }
 local pirate_cores = {
-   ["Hyena"] = function () return {
-         choose_one{ "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System", },
-         choose_one{ "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating", },
-         choose_one{ "Nexus Dart 150 Engine", "Tricon Zephyr Engine", },
-      } end,
-   ["Pirate Shark"] = function () return {
+   ["Hyena"] = function () return ecores.get( "Fighter", { all={ "elite" }, heavy=false } ) end,
+   ["Pirate Shark"] = function () return ecores.get( "Fighter", { all={ "elite" }, heavy=false } ) end,
+   --[[
          choose_one{ "Unicorp PT-68 Core System", "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System", },
          choose_one{ "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating", },
          choose_one{ "Nexus Dart 150 Engine", "Tricon Zephyr Engine", },
-      } end,
-   ["Pirate Vendetta"] = function () return {
+   --]]
+   ["Pirate Vendetta"] = function () return ecores.get( "Fighter", { all={ "elite" } } ) end,
+   --[[
          choose_one{ "Unicorp PT-68 Core System", "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System", },
          choose_one{ "Unicorp Hawk 350 Engine", "Melendez Ox XL Engine", "Tricon Zephyr II Engine", },
          choose_one{ "Unicorp D-2 Light Plating", "Unicorp D-4 Light Plating", },
-      } end,
+   --]]
    ["Pirate Ancestor"] = function () return {
       } end,
    ["Lancelot"] = function () return {
@@ -94,7 +92,9 @@ local pirate_cores = {
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   local sname = p:ship():nameRaw()
+   local ps = p:ship()
+   local pc = ps:class()
+   local sname = ps:nameRaw()
 
    -- Choose parameters and make Pirateish
    local params = equipopt.params.choose( p )
@@ -102,7 +102,11 @@ function equip( p )
    params.prefer["Scanning Combat AI"]      = 100
    params.max_same_stru = 1
    params.max_same_util = 1
-   params.max_same_weap = 2
+   if pc == "Fighter" or pc == "Bomber" then
+      params.max_same_weap = 1
+   else
+      params.max_same_weap = 2
+   end
    params.max_mass = 0.95 + 0.2*rnd.rnd()
    -- Per ship tweaks
    local sp = pirate_params[ sname ]
@@ -111,7 +115,7 @@ function equip( p )
    end
 
    -- See cores
-   local cores = pirate_cores[ sname ]()
+   local cores = pirate_cores[ sname ]() or ecores.get( pc, { all={ "elite" } } )
 
    -- Try to equip
    equipopt.equip( p, cores, pirate_outfits, params )

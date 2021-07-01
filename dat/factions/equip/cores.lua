@@ -11,91 +11,102 @@ local function choose_one_table( t )
    return choose_one( t )
 end
 
-cores.default = {}
-cores.elite = {}
-cores.elite.systems = {
-   ["Fighter"] = function( heavy )
-      if heavy then
-         return choose_one{ "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System" }
-      else
-         return choose_one{ "Milspec Orion 2301 Core System", "Milspec Thalos 2202 Core System" }
-      end
-   end,
-   ["Bomber"] = function( heavy )
+
+--[[
+      ELITE CORES
+--]]
+-- ELITE SYSTEMS
+local esys = {}
+esys["Fighter"] = function( heavy )
+   if heavy then
       return choose_one{ "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System" }
-   end,
-   ["Corvette"] = function( heavy )
-      return "Milspec Orion 4801 Core System"
-   end,
-   ["Destroyer"] = function( heavy )
-      return "Milspec Orion 5501 Core System"
-   end,
-   ["Cruiser"] = function( heavy )
-      if heavy then
-         return "Milspec Orion 8601 Core System"
-      else
-         return "Milspec Orion 9901 Core System"
-      end
-   end,
-   ["Carrier"] = function( heavy )
-      return "Milspec Orion 9901 Core System"
-   end,
-}
-cores.elite.hulls = {
-   ["Fighter"] = function( heavy )
-      if heavy then
-         return choose_one{ "Nexus Light Stealth Plating", "S&K Light Combat Plating" }
-      else
-         return choose_one{ "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating" }
-      end
-   end,
-   ["Bomber"] = function( heavy )
+   else
+      return choose_one{ "Milspec Orion 2301 Core System", "Milspec Thalos 2202 Core System" }
+   end
+end
+esys["Bomber"] = function( heavy )
+   return choose_one{ "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System" }
+end
+esys["Corvette"] = function( heavy )
+   return choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" }
+end
+esys["Destroyer"] = function( heavy )
+   return choose_one{ "Milspec Orion 5501 Core System", "Milspec Thalos 5402 Core System" }
+end
+esys["Cruiser"] = function( heavy )
+   if heavy then
+      return choose_one{ "Milspec Orion 8601 Core System", "Milspec Thalos 8502 Core System" }
+   else
+      return choose_one{ "Milspec Orion 9901 Core System", "Milspec Thalos 9802 Core System" }
+   end
+end
+esys["Carrier"] = function( heavy )
+   return choose_one{ "Milspec Orion 9901 Core System", "Milspec Thalos 9802 Core System" }
+end
+
+-- ELITE HULLS
+local ehul = {}
+ehul["Fighter"] = function( heavy )
+   if heavy then
       return choose_one{ "Nexus Light Stealth Plating", "S&K Light Combat Plating" }
-   end,
-   ["Corvette"] = function( heavy )
-      return choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" }
-   end,
-   ["Destroyer"] = function( heavy )
-      return "S&K Medium-Heavy Combat Plating"
-   end,
-   ["Cruiser"] = function( heavy )
-      if heavy then
-         return "S&K Superheavy Combat Plating"
-      else
-         return choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" }
-      end
-   end,
-   ["Carrier"] = function( heavy )
-      return "Milspec Orion 9901 Core System"
-   end,
-}
-cores.elite.engines = {
-   ["Fighter"] = function( heavy )
-      if heavy then
-         return "Tricon Zephyr Engine"
-      else
-         return "Tricon Zephyr II Engine"
-      end
-   end,
-   ["Bomber"] = function( heavy )
+   else
+      return choose_one{ "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating" }
+   end
+end
+ehul["Bomber"] = function( heavy )
+   return choose_one{ "Nexus Light Stealth Plating", "S&K Light Combat Plating" }
+end
+ehul["Corvette"] = function( heavy )
+   return choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" }
+end
+ehul["Destroyer"] = function( heavy )
+   return "S&K Medium-Heavy Combat Plating"
+end
+ehul["Cruiser"] = function( heavy )
+   if heavy then
+      return "S&K Superheavy Combat Plating"
+   else
+      return choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" }
+   end
+end
+ehul["Carrier"] = function( heavy )
+   return "S&K Superheavy Combat Plating"
+end
+
+-- ELITE ENGINES
+local eeng = {}
+eeng["Fighter"] = function( heavy )
+   if heavy then
       return "Tricon Zephyr Engine"
-   end,
-   ["Corvette"] = function( heavy )
-      return "Tricon Cyclone Engine"
-   end,
-   ["Destroyer"] = function( heavy )
-      return "Tricon Cyclone II Engine"
-   end,
-   ["Cruiser"] = function( heavy )
-      if heavy then
-         return "Tricon Typhoon II Engine"
-      else
-         return "Tricon Typhoon Engine"
-      end
-   end,
-   ["Carrier"] = function( heavy )
-      return "Melendez Mammoth XL Engine"
-   end,
+   else
+      return "Tricon Zephyr II Engine"
+   end
+end
+eeng["Bomber"] = function( heavy )
+   return "Tricon Zephyr Engine"
+end
+eeng["Corvette"] = function( heavy )
+   return "Tricon Cyclone Engine"
+end
+eeng["Destroyer"] = function( heavy )
+   return choose_one{ "Tricon Cyclone II Engine", "Melendez Buffalo XL Engine" }
+end
+eeng["Cruiser"] = function( heavy )
+   if heavy then
+      return choose_one{ "Tricon Typhoon II Engine", "Melendez Mammoth XL Engine" }
+   else
+      return "Tricon Typhoon Engine"
+   end
+end
+eeng["Carrier"] = function( heavy )
+   return "Melendez Mammoth XL Engine"
+end
+
+-- Elite sets
+cores.elite = {
+   systems = esys,
+   hulls   = ehul,
+   engines = eeng,
 }
 
 --[[
