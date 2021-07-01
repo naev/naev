@@ -79,13 +79,7 @@ function equip( p )
    end
 
    -- See cores
-   local cores
-   local thrcor = thurion_cores[ sname ]
-   if thrcor then
-      cores = thrcor()
-   else
-      cores = ecores.get( p, { all="elite" } )
-   end
+   cores = ecores.get( p, { all="elite" } )
 
    -- Try to equip
    equipopt.equip( p, cores, thurion_outfits, params )
