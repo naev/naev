@@ -421,9 +421,9 @@ function equipopt.equip( p, cores, outfit_list, params )
       oo.armour = oo.armour_mod * (oo.armour + st.armour) - st.armour
       oo.shield = oo.shield_mod * (oo.shield + st.shield) - st.shield
       oo.energy = oo.energy_mod * (oo.energy + st.energy) - st.energy
-      oo.armour_regen = oo.armour_regen_mod * (oo.armour_regen + st.armour_regen) - oo.armour_damage - st.armour_regen
-      oo.shield_regen = oo.shield_regen_mod * (oo.shield_regen + st.shield_regen) - oo.shield_usage  - st.shield_regen
-      oo.energy_regen = oo.energy_regen_mod * (oo.energy_regen + st.energy_regen) - oo.energy_usage  - oo.energy_loss - st.energy_regen
+      oo.armour_regen = oo.armour_regen_mod * (ss.armour_regen_mod * oo.armour_regen + st.armour_regen) - oo.armour_damage - st.armour_regen
+      oo.shield_regen = oo.shield_regen_mod * (ss.shield_regen_mod * oo.shield_regen + st.shield_regen) - oo.shield_usage  - st.shield_regen
+      oo.energy_regen = oo.energy_regen_mod * (ss.energy_regen_mod * oo.energy_regen + st.energy_regen) - oo.energy_usage  - oo.energy_loss - st.energy_regen
       -- Misc
       oo.cargo = oo.cargo_mod * (oo.cargo + ss.cargo) - ss.cargo
 
@@ -588,35 +588,62 @@ function equipopt.equip( p, cores, outfit_list, params )
       r = r + 1
    end
 
-   -- All the magic is done here
+   -- Load all the constraints
    lp:load_matrix( ia, ja, ar )
-   local z, x, constraints = lp:solve()
-   if not z then
-      -- Maybe should be error instead?
-      warn(string.format("Failed to solve equipopt linear program for pilot '%s': %s", p:name(), x))
-      return false
-   end
-   --[[
-   for k,v in ipairs(x) do
-      print(string.format("x%d: %d",k,v))
-   end
-   for k,v in ipairs(constraints) do
-      print(string.format("c%d: %d",k,v))
-   end
-   --]]
 
-   -- Interpret results
-   --print("Final Equipment:")
-   local c = 1
-   for i,s in ipairs(slots) do
-      for j,o in ipairs(s.outfits) do
-         if x[c] == 1 then
-            p:addOutfit( o, 1, true )
-            --print( "   "..o )
+   -- Try to optimize
+   local try = 0
+   local emod = 1
+   local done = true
+   repeat
+      try = try + 1
+      -- All the magic is done here
+      local z, x, constraints = lp:solve()
+      if not z then
+         -- Maybe should be error instead?
+         warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
+         print(_("Equipment:"))
+         for j,o in ipairs(p:outfits()) do
+            print( "   "..o:name() )
          end
-         c = c + 1
+         local stn = p:stats()
+         constraints = constraints or {}
+         print(string.format(_("CPU: %d / %d [%d < %d]"), stn.cpu, stn.cpu_max, constraints[1] or 0, st.cpu_max * ss.cpu_mod ))
+         print(string.format(_("Energy Regen: %.3f [%.3f < %.3f]"), stn.energy_regen, constraints[2] or 0, st.energy_regen - math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) ))
+         print(string.format(_("Mass: %.3f / %.3f [%.3f < %.3f]"), st.mass, ss.engine_limit, constraints[3] or 0, params.max_mass * ss.engine_limit - st.mass ))
+         return false
       end
-   end
+      --[[
+      for k,v in ipairs(x) do
+         print(string.format("x%d: %d",k,v))
+      end
+      for k,v in ipairs(constraints) do
+         print(string.format("c%d: %d",k,v))
+      end
+      --]]
+
+      -- Interpret results
+      local c = 1
+      for i,s in ipairs(slots) do
+         for j,o in ipairs(s.outfits) do
+            if x[c] == 1 then
+               p:addOutfit( o, 1, true )
+            end
+            c = c + 1
+         end
+      end
+
+      -- Due to the approximation, sometimes they end up with not enough
+      -- energy, we'll try again with larger energy constraints
+      local stn = p:stats()
+      if stn.energy_regen < 0 then
+         p:rmOutfit( "all" )
+         emod = emod * 2
+         --print(string.format("Optimization attempt %d of %d: emod=%.3f", try, 3, emod ))
+         lp:set_row( 2, "energy_regen", nil, st.energy_regen - emod*math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) )
+         done = false
+      end
+   until done or try >= 5 -- attempts should be fairly fast since we just do optimization step
 
    -- Fill ammo
    p:fillAmmo()
@@ -632,7 +659,6 @@ function equipopt.equip( p, cores, outfit_list, params )
          end
          local stn = p:stats()
          print(string.format(_("CPU: %d / %d [%d < %d]"), stn.cpu, stn.cpu_max, constraints[1], st.cpu_max * ss.cpu_mod ))
-         print( st.energy_regen, params.min_energy_regen*st.energy_regen )
          print(string.format(_("Energy Regen: %.3f [%.3f < %.3f]"), stn.energy_regen, constraints[2], st.energy_regen - math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) ))
          print(string.format(_("Mass: %.3f / %.3f [%.3f < %.3f]"), st.mass, ss.engine_limit, constraints[3], params.max_mass * ss.engine_limit - st.mass ))
          return false
