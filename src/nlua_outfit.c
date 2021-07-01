@@ -663,6 +663,7 @@ static int outfitL_specificStats( lua_State *L )
       case OUTFIT_TYPE_AFTERBURNER:
          SETFIELD( "thrust",     o->u.afb.thrust );
          SETFIELD( "speed",      o->u.afb.speed );
+         SETFIELD( "energy",     o->u.afb.energy );
          SETFIELD( "mass_limit", o->u.afb.mass_limit );
          SETFIELD( "heatup",     o->u.afb.heatup );
          SETFIELD( "heat",       o->u.afb.heat );
