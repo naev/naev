@@ -37,8 +37,12 @@
   <thickness>4</thickness>
   <ttl>1</ttl>
  </trail>
- <trail name="fire-missile" inherits="fire">
+ <trail name="fire-missileS" inherits="fire">
   <thickness>3</thickness>
+  <ttl>0.2</ttl>
+ </trail>
+ <trail name="fire-missile" inherits="fire">
+  <thickness>4</thickness>
   <ttl>0.5</ttl>
  </trail>
  <trail name="fire-missileL" inherits="fire">
