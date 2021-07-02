@@ -121,7 +121,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
 {
    (void)str;
    Outfit* o;
-   int i, active, minimal, n;
+   int i, active, minimal, n, nfits;
    PilotOutfitSlot* slots;
    Pilot *p;
    OutfitSlotSize size;
@@ -151,10 +151,67 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
       default:
          return;
    }
+   n = array_size(slots);
+
+   /* See how many slots it fits into. */
+   nfits = 0;
+   minimal = n;
+   for (i=0; i<n; i++) {
+      /* Must fit the slot. */
+      if (!outfit_fitsSlot( o, &slots[i].sslot->slot))
+         continue;
+
+      /* Must have valid slot size. */
+      if (o->slot.size == OUTFIT_SLOT_SIZE_NA)
+         continue;
+
+      minimal = i;
+      nfits++;
+   }
+   /* Only fits in a single slot, so we might as well just swap it. */
+   if (nfits==1) {
+      eq_wgt.outfit  = o;
+      p              = eq_wgt.selected;
+      /* We have to call once to remove, once to add. */
+      if (slots[minimal].outfit != NULL)
+         equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+      equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+      return;
+   }
+
+   /* See if limit is applied and swap with shared limit slot. */
+   if (o->limit != NULL) {
+      minimal = n;
+      for (i=0; i<n; i++) {
+         /* Must fit the slot. */
+         if (!outfit_fitsSlot( o, &slots[i].sslot->slot))
+            continue;
+
+         /* Must have valid slot size. */
+         if (o->slot.size == OUTFIT_SLOT_SIZE_NA)
+            continue;
+
+         /* Must have outfit with limit. */
+         if ((slots[i].outfit == NULL) || (slots[i].outfit->limit == NULL))
+            continue;
+
+         /* Must share a limit to be able to swap. */
+         if (strcmp(slots[i].outfit->limit,o->limit)!=0)
+            continue;
+
+         minimal = i;
+      }
+      if (minimal < n) {
+         eq_wgt.outfit  = o;
+         p              = eq_wgt.selected;
+         /* Once to unequip and once to equip. */
+         equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+         equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+      }
+   }
 
    /* Loop through outfit slots of the right type, try to find an empty one */
    size = OUTFIT_SLOT_SIZE_NA;
-   n = array_size(slots);
    minimal = n;
    for (i=0; i<n; i++) {
       /* Slot full. */
