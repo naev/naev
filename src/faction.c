@@ -27,6 +27,7 @@
 #include "nluadef.h"
 #include "nxml.h"
 #include "nstring.h"
+#include "player.h"
 #include "opengl.h"
 #include "rng.h"
 #include "space.h"
@@ -661,6 +662,10 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
 
    /* Make sure it's not static. */
    if (faction_isFlag(faction, FACTION_STATIC))
+      return;
+
+   /* Player is dead or cleared. */
+   if (player.p == NULL)
       return;
 
    old   = faction->player;

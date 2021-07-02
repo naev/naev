@@ -962,7 +962,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, 
    /** @TODO Make beams not fire all at once. */
    if (outfit_isBeam(o)) {
       for (i=0; i<array_size(ws->slots); i++)
-         if (ws->slots[i].slot->outfit == o)
+         if (ws->slots[i].slot->outfit == o && (level == -1 || level == ws->slots[i].level))
             ret += pilot_shootWeapon( p, ws->slots[i].slot, 0 );
       return ret;
    }
