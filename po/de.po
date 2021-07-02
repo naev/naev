@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-06-27 09:52-0400\n"
-"PO-Revision-Date: 2021-06-29 18:33+0000\n"
+"PO-Revision-Date: 2021-07-01 19:34+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.1-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -739,7 +739,7 @@ msgstr "LANCELOT"
 
 #: artwork/gfx/loading/llama.webp.txt:1
 msgid "LLAMA"
-msgstr "LLAMA"
+msgstr "LAMA"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
@@ -31008,7 +31008,7 @@ msgid ""
 "\"I tried to compete in my Llama, but it doesn't stand a chance against even "
 "a single Hyena.\""
 msgstr ""
-"„Ich habe versucht, mit meinem Llama anzutreten, aber es hat keine Chance "
+"„Ich habe versucht, mit meinem Lama anzutreten, aber es hat keine Chance "
 "gegen eine einzige Hyäne.“"
 
 #: dat/events/dvaered/totoran.lua:40
@@ -44969,8 +44969,8 @@ msgstr ""
 "sie die Bombe in den Leitungen, nahe der Zentraleinheit, und täuschten einen "
 "Unfall bei der Landung auf %s vor. Ich schätze, sie sollten jetzt irgendwo "
 "auf der Planetenoberfläche wandern und nach einer Gelegenheit suchen, das "
-"Llama eines unglücklichen Zivilisten zu stehlen, um ihre Rückreise "
-"anzutreten.\n"
+"Lama eines unglücklichen Zivilisten zu stehlen, um ihre Rückreise anzutreten."
+"\n"
 "   Unser Boss, der General Klank, ist bereit für das Duell. Der Kapitän und "
 "ich sind seine Duellzeugen, also sollten wir jetzt zu unseren Prunkschiffen "
 "gehen. Oh, und der Duellkommissar ist jemand, den Sie bereits kennen, Oberst "
@@ -46131,8 +46131,6 @@ msgstr ""
 "verstanden haben, dass ich Ihre einzige Chance bin!“"
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:180
-#, fuzzy
-#| msgid "On top of the world."
 msgid "Shock of two worlds"
 msgstr "Schock von zwei Welten"
 
@@ -47538,10 +47536,8 @@ msgstr ""
 "ermitteln Sie auf %s. Bringen Sie mir den Kopf von Ex-Oberst Hamelsen!“"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:118
-#, fuzzy
-#| msgid "Empire Officer"
 msgid "Officer"
-msgstr "Imperiumsbeamter"
+msgstr "Beamter"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:119
 msgid ""
@@ -47601,7 +47597,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:129
 msgid "A-NightClaws Second to Leader: I'm on it!"
-msgstr ""
+msgstr "A-Nachtklauen Zweiter an Anführer: Ich bin dabei!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:130
 msgid "Bye, suckers!"
@@ -47705,6 +47701,30 @@ msgid ""
 "the graves of my ancestors on Nanek are, they are warmer than the emptiness "
 "of infinite space.\""
 msgstr ""
+"Genau in dem Moment, in dem du aus deinem Schiff steigst, siehst du einen "
+"Beamten, der alleine auf dem Dock steht und offensichtlich auf dich wartet. "
+"Nachdem du dich nach vorne bewegt hast, erkennst du den Major Tam. Der kalte "
+"Wind klappt die Revers seines Mantels auf und lässt ihn über sein trauriges "
+"Gesicht peitschen.\n"
+"   „Wir hatten schon bessere Tage, nicht wahr, Bürger? Einem Spion ist es "
+"gelungen, mit einer vermeintlichen Kopie unseres Invasionsplans zu "
+"entkommen, sie haben einen meiner besten Piloten getötet und Hamelsen ist "
+"entkommen … erneut.“ Tam schaut in den Himmel, der zu regnen beginnt. „… und "
+"es ist Winter auf dem Raumdock von Dvaer Eins. Sollen wir das Gebäude "
+"betreten? Mir wurde gesagt, dass die Chemiefabrik im Winter zweimal mehr "
+"arbeitet und der Regen oft sauer wird.“\n"
+"   Du trittst ein und gehst auf die Militärbar zu. Tam sieht dich an: „Ich "
+"bin auf Nanek in Allus aufgewachsen. 13 Jahre lang war der einzige Teil des "
+"Universums, den ich kannte, mein Dorf auf Nanek, und die einzigen Menschen, "
+"die ich kannte, waren seine Bewohner. Und jetzt habe ich hunderte von "
+"Planeten und tausende von Menschen überall in der Galaxie gesehen. Aber die "
+"meisten von ihnen wurden irgendwann getötet, und ihre Leichen treiben hier "
+"und da im Raum, zusammen mit den kläglichen Überresten ihrer besiegten "
+"Schiffe. Der Nachthimmel ist konstelliert mit den Seelen der toten Piloten. "
+"Unsere Kontrolle über den Weltraum gab uns Zugang zu Erfahrungen, von denen "
+"unsere Vorfahren nicht einmal träumen konnten, aber wissen Sie was? Egal, "
+"wie kalt die Gräber meiner Vorfahren auf Nanek sind, sie sind wärmer als die "
+"Leere des unendlichen Raums.“"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:154
 #, lua-format
@@ -47722,6 +47742,21 @@ msgid ""
 "   \"Anyway, for now, we will transfer %s to your account, as a reward for "
 "this mission, and be certain that we will need you again soon!\""
 msgstr ""
+"Du fragst dich, ob der Major daran denken wird, dich zu bezahlen, aber seine "
+"Stimme ändert sich plötzlich: „Wir hatten definitiv schon bessere Tage, aber "
+"wissen Sie, die wahre Tapferkeit eines Kriegers offenbart sich in Zeiten des "
+"Unglücks. Die dunklen Wolken, die über den Horizont treiben, geschoben von "
+"den grausamen Flügeln der Verzweiflung, sind hier, um die Stärke unserer "
+"Dvaered-Seelen herauszufordern. Und es liegt an uns, diese Herausforderung "
+"anzunehmen.\n"
+"   Ich habe nicht damit gerechnet, dass die Verräterin Hamelsen ihre Gruppe "
+"von Söldnern so schnell wieder aufbauen kann, aber ihr habt bereits einige "
+"von ihnen getötet, und Leblancs Schwadron wird in naher Zukunft noch mehr "
+"töten. Wir werden dann den Ex-Colonel Hamelsen zur Strecke bringen, und "
+"schließlich werden wir diese Invasion weiterführen.\n"
+"   Wie auch immer, für den Moment werden wir %s auf Ihr Konto überweisen, "
+"als Belohnung für diese Mission, und seien Sie sicher, dass wir Sie bald "
+"wieder brauchen werden!“"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:159
 msgid "Ahoy, suckers! Here comes the master!"
@@ -47729,41 +47764,43 @@ msgstr "Ahoy, Idioten! Hier kommt der Meister!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:160
 msgid "Look down, you weaklings."
-msgstr ""
+msgstr "Schaut hinab, ihr Schwächlinge."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:161
 msgid "Only submission will save you from my anger!"
-msgstr ""
+msgstr "Nur die Unterwerfung wird euch vor meinem Zorn retten!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:162
 msgid "Kneel, for I am destined to rule you all!"
-msgstr ""
+msgstr "Kniet vor mir, da es mein Schicksal ist, über euch alle zu herrschen!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:163
 msgid "Worship my strength, or burn by my railguns."
-msgstr ""
+msgstr "Betet meine Stärke an, oder verbrennt an meinen Schienenkanonen."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:164
-#, fuzzy
-#| msgid "Here comes your reward"
 msgid "Here comes Daddy!"
-msgstr "Hier kommt deine Belohnung"
+msgstr "Hier kommt Papi!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:165
 msgid ""
 "I am an artist of Pain and Destruction. Who wants to be part of my next "
 "artwork?"
 msgstr ""
+"Ich bin ein Künstler von Schmerz und Zerstörung. Wer will Teil meines "
+"nächsten Kunstwerks sein?"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:166
 msgid "Make way for the supplier of Hell!"
-msgstr ""
+msgstr "Macht Platz für den Versorger der Hölle!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:167
 msgid ""
 "Death is the destination of everyone's trip. Pissing me off means taking a "
 "shortcut."
 msgstr ""
+"Der Tod ist das Ziel der Reise eines jeden. Wer mich verärgert, nimmt eine "
+"Abkürzung."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:169
 #, lua-format
@@ -47776,11 +47813,11 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:171
 msgid "Look who is running away!"
-msgstr ""
+msgstr "Seht, wer davonrennt!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:172
 msgid "You were supposed to secure a meeting, not to run away like that!"
-msgstr ""
+msgstr "Du hättest ein Treffen sichern sollen, nicht einfach so abhauen!"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:175
 msgid "Controlling incoming ship"
@@ -47788,69 +47825,61 @@ msgstr "Eingehendes Schiff kontrollieren"
 
 #. This might be hard to translate, but that is not a problem IMHO as it is actually supposed to be an automatically generated message.
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:177
-#, lua-format
+#, fuzzy, lua-format
 msgid ""
 "As you approach the ship, your targeting array focuses on it, and its "
 "clearance code gets processed. You can soon read on your control pad: \"This "
 "citizen is an honorable %s whose presence is required for the meeting: let "
 "the ship land on the station.\""
 msgstr ""
+"Als du dich dem Schiff näherst, visiert dein Zielsystem das Schiff an, und "
+"sein Freigabecode wird verarbeitet. Bald kannst du auf deiner Steuerung "
+"lesen: „Dieser Bürger ist ein ehrenwerter %s, dessen Anwesenheit für das "
+"Treffen erforderlich ist: Lassen Sie das Schiff auf der Station landen.“"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:179
-#, fuzzy
-#| msgid "Water"
 msgid "caterer"
-msgstr "Wasser"
+msgstr "Lieferer"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:180
-#, fuzzy
-#| msgid "Watcher"
 msgid "butcher"
-msgstr "Watcher"
+msgstr "Schlächter"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:181
 msgid "brewer"
-msgstr ""
+msgstr "Brauer"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:182
 msgid "waiter"
-msgstr ""
+msgstr "Kellner"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:183
 msgid "vigil"
-msgstr ""
+msgstr "Wache"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:184
-#, fuzzy
-#| msgid "Vindicator"
 msgid "gladiator"
-msgstr "Vindicator"
+msgstr "Gladiator"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:185
 msgid "rat exterminator"
-msgstr ""
+msgstr "Rattenjäger"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:186
-#, fuzzy
-#| msgid "Emergency Shield Booster"
 msgid "emergency doctor"
-msgstr "Not-Schildverstärker"
+msgstr "Notarzt"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:187
-#, fuzzy
-#| msgid "Weapons Ionizer"
 msgid "weapons dealer"
-msgstr "Waffenionisierer"
+msgstr "Waffenhändler"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:188
 msgid "drug dealer"
-msgstr ""
+msgstr "Drogendealer"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:189
-#, fuzzy
-#| msgid "Structure"
 msgid "torturer"
-msgstr "Gerüst"
+msgstr "Peiniger"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:192
 msgid ""
@@ -47858,10 +47887,13 @@ msgid ""
 "the high council of Warlords, where the invasion plan of the frontier will "
 "be discussed."
 msgstr ""
+"Du bist Teil des Weltraumsicherheitsdienstes für ein außerordentliches "
+"Treffen des Hohen Rates der Warlords, bei dem der Invasionsplan der Front "
+"besprochen wird."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:193
 msgid "The greatness of House Dvaered."
-msgstr ""
+msgstr "Die Größe des Hauses Dvaered."
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:194
 msgid ""
@@ -47871,6 +47903,11 @@ msgid ""
 "system. The Lieutenant Strafer has been killed in action during this "
 "incident."
 msgstr ""
+"Du hast an der Sicherung eines Treffens der Dvaered-Warlords teilgenommen, "
+"dessen Ziel es war, den Invasionsplan der Front festzulegen. Leider ist es "
+"der Ex-Oberst Hamelsen und ihren Flügelmännern gelungen, Daten zu erbeuten "
+"und aus dem System zu entkommen. Der Leutnant Strafer wurde bei diesem "
+"Vorfall im Kampf getötet."
 
 #. Mission details
 #. OSD
@@ -47884,22 +47921,20 @@ msgstr "Das Treffen"
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:198
 #, lua-format
 msgid "Stay close to %s and wait for orders"
-msgstr ""
+msgstr "Bleib nah an %s dran und warte auf Anweisungen"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:199
 msgid "Intercept suspect ship for visual identification"
-msgstr ""
+msgstr "Fang verdächtiges Schiff für Sichtidentifikation ab"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:200
 #, lua-format
 msgid "Engage %s"
-msgstr ""
+msgstr "Bekämpfe %s"
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:201
-#, fuzzy
-#| msgid "Eliminate hostiles"
 msgid "Eliminate the hostile fighters"
-msgstr "Feinde eliminieren"
+msgstr "Eliminiere die feindlichen Kämpfer"
 
 #. Encounter with Strafer on Dvaer Prime
 #. Taking off from Dvaer Prime for first part of mission
@@ -47976,7 +48011,7 @@ msgstr "A-Nachtklauen 5"
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:752
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:753
 msgid "Curiatius"
-msgstr ""
+msgstr "Curiatius"
 
 #. A killer died
 #. Watch out that 3 matches #killers
@@ -48017,10 +48052,8 @@ msgstr ""
 #. 7) Mace Pankration performed
 #. --
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:43
-#, fuzzy
-#| msgid "An open invitation"
 msgid "An invitation"
-msgstr "Eine offene Einladung"
+msgstr "Eine Einladung"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:44
 msgid ""
@@ -48040,6 +48073,23 @@ msgid ""
 "void, I would be honoured if my memory would be part of the things that help "
 "you remain right, loyal and strong for the rest of your own lifetime.\""
 msgstr ""
+"Dein Kommunikationskanal informiert dich, dass dein Schiff eine "
+"holografische Nachricht über das Fernmeldesystem der Dvaered-Armee empfangen "
+"hat. Als du die Eingabetaste drückst, erscheint das Gesicht einer "
+"jugendlichen Version von Leutnant Strafer aus deinem Holoprojektor:\n"
+"   „Ich bin Gefreiter Helmut Strafer und dies ist meine Todesanzeige.“ Ein "
+"seltsames Lächeln erscheint auf seinem Gesicht, als er fortfährt: „Ja, es "
+"ist so weit. Es ist mein höchstes Privileg, im Dienst der Dvaered-Nation, "
+"dem Großen Haus des Glorreichen Galaktischen Imperiums, getötet worden zu "
+"sein. Sie erhalten diese Aufnahme, weil Sie auf der Liste der Leute stehen, "
+"die ich als meine Freunde angesehen habe und die zu meiner "
+"Beerdigungszeremonie eingeladen sind, von der ich aufrichtig hoffe, dass Sie "
+"sie genießen werden. Da ich natürlich weder die Umstände meines Todes noch "
+"die Details der Zeremonie kenne, kann ich Sie nur einladen, weitere "
+"Informationen in den angehängten Daten zu finden. Nun, da ich mit dem Nichts "
+"verschmolzen bin, wäre es mir eine Ehre, wenn mein Andenken Teil der Dinge "
+"wäre, die Ihnen helfen, für den Rest Ihres Lebens richtig, loyal und stark "
+"zu bleiben.“"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:46
 msgid ""
@@ -48049,12 +48099,16 @@ msgid ""
 "show up with a fighter and mace launchers.\n"
 "   Are you going to go there?"
 msgstr ""
+"Als du den angehängten Ordner durchsuchst, erfährst du, dass die Zeremonie "
+"in der Nähe von Dvaer Eins stattfinden wird. Als Pilot bist du eingeladen, "
+"an einem Mace-Raketen-Ballett zum Gedenken an Leutnant Strafer teilzunehmen, "
+"und dir wird dringend empfohlen, mit einem Jäger und Mace-Werfern zu "
+"erscheinen.\n"
+"   Werden du dorthin gehen?"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:49
-#, fuzzy
-#| msgid "The Nice Killer"
 msgid "The Mace Ballet"
-msgstr "Der nette Mörder"
+msgstr "Das Mace-Ballett"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:50
 msgid ""
@@ -48073,12 +48127,25 @@ msgid ""
 "now, it has at least rewarded your eyes with this unique view of overgrown "
 "flowers aimlessly drifting on the constellated background."
 msgstr ""
+"Deine Sensoren erfassen eine Gruppe von Kriegsschiffen, die um Dvaer Eins "
+"manövrieren. Als du dich näherst, funkt dich eine Vigilanz an und du "
+"erkennst die Stimme von Major Tam:\n"
+"   „Seien Sie gegrüßt, Bürger. Sind Sie wegen der Zeremonie hier? Natürlich "
+"sind sie das! Sehen Sie? Wir haben bereits ein paar Girlanden geworfen. Der "
+"Trauerzug wird bald vorbei sein, und danach beginnen wir mit dem "
+"eigentlichen Mace-Ballett. Wir treffen uns in der Bar von Dvaer Eins.“\n"
+"   Bevor du die Chance hast, ihn zu fragen, worum es bei der Veranstaltung "
+"geht, schließt Tam den Kommunikationskanal, und du findest dich inmitten "
+"eines Feldes von riesigen Kronen aus weißen Blumen wieder. Du lässt deinen "
+"Geist müßig zwischen den biotechnisch hergestellten Pflanzen navigieren, die "
+"in den Orbit eingedrungen sind, und denkst, dass, auch wenn dein Bündnis mit "
+"den Dvaered bisher nicht sehr lukrativ war, es zumindest deine Augen mit "
+"diesem einzigartigen Anblick von überwucherten Blumen belohnt hat, die "
+"ziellos auf dem zusammengestellten Hintergrund treiben."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:54
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Dvaered People"
-msgstr "Dvaered-Patrouille"
+msgstr "Dvaered-Leute"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:55
 msgid ""
@@ -48088,6 +48155,12 @@ msgid ""
 "also civilians. You can tell they're all there for the ceremony from their "
 "black armbands and the slow military music broadcasted by the speakers."
 msgstr ""
+"Eine ziemlich große Gruppe ist um ein paar reservierte Tische versammelt. Du "
+"erkennst viele Gesichter, unter anderem General Klank, Major Tam und die "
+"Mitglieder ihrer Gruppe. Aber es sind auch Leute dabei, die du nicht kennst, "
+"hauptsächlich Militärs, aber auch Zivilisten. Du erkennst sie alle an ihren "
+"schwarzen Armbinden und an der langsamen Militärmusik, die aus den "
+"Lautsprechern ertönt."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:57
 #, lua-format
@@ -48106,26 +48179,36 @@ msgid ""
 "and utilities.\n"
 "   \"Come at me when you're ready to take off."
 msgstr ""
+"Du gehst auf die Gruppe zu und näherst dich Major Tam. „Guten Tag, Bürger "
+"%s. Ich hoffe, Sie sind bereit für das Mace-Ballett!“ Du antwortest, dass du "
+"keine Ahnung hast, worum es bei diesem Ballett geht, aber du bist immer "
+"bereit, wenn es um Mace-Raketen geht.\n"
+"   „Das Mace-Ballett, auch bekannt als Mace-Triathlon, ist eine Serie von "
+"drei Wettkämpfen, bei denen die Piloten das Andenken an ihren gefallenen "
+"Kameraden ehren und ihr Können zeigen müssen. Die Mitglieder des Nachtklauen-"
+"Geschwaders werden an dem Ereignis teilnehmen, zusammen mit uns beiden, "
+"General Klank, ein paar Mitgliedern von Strafers Familie und einigen seiner "
+"ehemaligen Kameraden, bevor er dem Geschwader beitrat. Vom Ausgang des "
+"Wettkampfes wird abhängen, wie Strafers persönliche Ausrüstung verteilt "
+"werden wird. Dazu gehören zwei Vendettas, schöne Hauptausstattungen, Waffen "
+"und Utensilien.\n"
+"   Kommen Sie zu mir, wenn Sie bereit sind, abzuheben.”"
 
 #. Entering (Dvaer)
 #. Flowers
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:65
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:209
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:231
-#, fuzzy
-#| msgid "General "
 msgid "General Klank"
-msgstr "General "
+msgstr "General Klank"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:67
 msgid "Well-dressed woman"
-msgstr ""
+msgstr "Gut gekleidete Frau"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:68
-#, fuzzy
-#| msgid "Dvaered officer"
 msgid "Retired soldier"
-msgstr "Dvaered-Offizier"
+msgstr "Pensionierter Soldat"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:69
 msgid "Sergeant"
@@ -48133,11 +48216,11 @@ msgstr "Feldwebel"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:70
 msgid "Technician"
-msgstr ""
+msgstr "Techniker"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:72
 msgid "Major Tam is ready to explain the next stage of the ceremony to you."
-msgstr ""
+msgstr "Major Tam ist bereit, dir den nächsten Teil der Zeremonie zu erklären."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:73
 msgid ""
@@ -48147,6 +48230,12 @@ msgid ""
 "shame not to be able to fit among the group. He swings his unused cybernetic "
 "arms around his hips."
 msgstr ""
+"Hamfresser bleibt hinter einer Gruppe von Militärtechnikern stehen. Er "
+"verbeugt sich vor ihnen und versucht wahrscheinlich, sich an der "
+"Unterhaltung zu beteiligen, aber niemand scheint ihm Aufmerksamkeit zu "
+"schenken. Sein Gesicht scheint nicht nur Langeweile widerzuspiegeln, sondern "
+"auch die Scham, nicht in die Gruppe zu passen. Er schwingt seine unbenutzten "
+"kybernetischen Arme um seine Hüften."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:74
 msgid ""
@@ -48154,10 +48243,13 @@ msgid ""
 "respective collections of chopped heads. The ambiance feels surprisingly "
 "relaxed."
 msgstr ""
+"Leblanc ist umgeben von ihren Piloten, die irgendwie Witze über ihre "
+"jeweiligen Sammlungen von abgehackten Köpfen austauschen. Die Atmosphäre "
+"wirkt überraschend entspannt."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:75
 msgid "The general is talking to Major Tam."
-msgstr ""
+msgstr "Der General spricht zu Major Tam."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:76
 msgid ""
@@ -48172,6 +48264,8 @@ msgid ""
 "One of the rare civilians around, this woman seems however to fit in the "
 "place. You think that she must be used to hang out with soldiers."
 msgstr ""
+"Diese Frau ist eine der wenigen Zivilisten hier, scheint aber in den Ort zu "
+"passen. Du denkst, dass sie es gewohnt sein muss, mit Soldaten herumzuhängen."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:78
 msgid ""
@@ -48180,18 +48274,26 @@ msgid ""
 "years spent fighting in space while his face is bent over by days of anguish "
 "for comrades he loved and lost fighting up there."
 msgstr ""
+"Ein alter Kapitän, der seine Prunkuniform für diesen Anlass gebügelt zu "
+"haben scheint, spricht mit einigen Zivilisten. Seine Schultern tragen das "
+"Gewicht der Jahre, die er im Weltraum gekämpft hat, während sein Gesicht von "
+"der tagelangen Trauer um die Kameraden, die er geliebt und im Kampf dort "
+"oben verloren hat, verzogen ist."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:79
 msgid ""
 "This pilot is not a member of Leblanc's squadron, however, she discusses "
 "with them."
 msgstr ""
+"Diese Pilotin ist kein Mitglied von Leblancs Geschwader, jedoch redet sie "
+"mit ihnen."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:80
 msgid ""
 "A military technician encourages his comrades who are arm-wrestling with "
 "Nikolov."
 msgstr ""
+"Ein Militärtechniker ermutigt seine Kameraden, die mit Nikolov armdrücken."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:82
 #, lua-format
@@ -48204,6 +48306,14 @@ msgid ""
 "now scratch my nose without putting oil marks on it. Everyone is jealous at "
 "the barracks."
 msgstr ""
+"Hey, %s! Lange nicht gesehen, wie? Wie geht es Ihnen? Ich habe in letzter "
+"Zeit im Krankenhaus festgesessen, weil ich bei der letzten Mission so viel "
+"Schaden genommen habe. Ich habe einen brandneuen rechten Arm bekommen, "
+"siehst du? Mit den neuesten Bio- und Cyber-Verbesserungen. Die "
+"Zielfähigkeiten wurden um 0,23 Prozent erhöht, die Zugkraft um 0,26 Prozent "
+"und die Schubkraft um 0,22 Prozent. Aber die beste Eigenschaft ist, dass ich "
+"mich jetzt an der Nase kratzen kann, ohne Ölspuren zu hinterlassen. In der "
+"Kaserne sind alle neidisch."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:83
 msgid ""
@@ -48216,6 +48326,15 @@ msgid ""
 "their forces soon. You know, the ex-colonel Hamelsen will have a hard time "
 "recruiting pilots with such a high loss rate."
 msgstr ""
+"Hallo, Bürger. Ich freue mich, dass auch Sie eingeladen wurden. Sie haben es "
+"verdient. Es ärgert mich immer, einen guten Piloten wie Strafer zu "
+"verlieren, aber Sie wissen ja, wie das Leben so ist, wenn man ein Dvaered "
+"ist. Wie auch immer, wir haben es geschafft, ihn zu rächen, da draußen. "
+"Zusätzlich zu den vier, die Sie neutralisiert haben, haben wir bei der "
+"Verfolgung sieben erwischt. Leider hat es der eine im Schrödinger geschafft, "
+"zu entkommen, aber diesmal bezweifle ich, dass sie ihre Kräfte bald wieder "
+"aufbauen können. Wissen Sie, der Ex-Colonel Hamelsen wird es schwer haben, "
+"Piloten zu rekrutieren mit einer so hohen Verlustrate."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:84
 msgid ""
@@ -48223,6 +48342,10 @@ msgid ""
 "I have heard that you are doing fairly good job. Continue and you will get "
 "rewared for your merit, be sure of that!"
 msgstr ""
+"Guten Tag, Bürger. Sie sind der Zivilpilot, der uns bei unserer Aufgabe "
+"hilft, richtig? Ich habe gehört, dass Sie einen ziemlich guten Job machen. "
+"Machen Sie weiter so und Sie werden für Ihre Verdienste belohnt werden, "
+"seien Sie sich dessen sicher!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:85
 msgid ""
@@ -48232,6 +48355,11 @@ msgid ""
 "few who did not despise us spacemarines, and we could count on him. He "
 "certainly will be missed."
 msgstr ""
+"Ja, er war mit Sicherheit ein guter Kerl. Natürlich war er ein „gebildeter“ "
+"Mann, wie die anderen hier, der immer alle „Bürger“ nannte und die Leute mit "
+"„Rechtschaffenheit“, „Tapferkeit“ und so nervte. Aber er war einer der "
+"wenigen, die uns Raumfahrer nicht verachteten, und wir konnten auf ihn "
+"zählen. Er wird sicherlich vermisst werden."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:86
 msgid ""
@@ -48240,6 +48368,11 @@ msgid ""
 "husband from now on. It makes me so sad. Do you think that creating the next "
 "generation of Dvaered warriors is the sole purpose of wedding?"
 msgstr ""
+"Es fühlt sich so seltsam an. Ich wusste, dass dieser Tag früher oder später "
+"kommen könnte, aber dennoch … Ich kann mir nicht wirklich vorstellen, wie "
+"ich und die Kinder von nun an ohne meinen Mann leben werden. Das macht mich "
+"so traurig. Glauben Sie, dass die Schaffung der nächsten Generation von "
+"Dvaered-Kriegern der einzige Zweck der Hochzeit ist?"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:87
 msgid ""
@@ -48248,12 +48381,19 @@ msgid ""
 "simply meant to stay home, waiting for the rest of my family members to die "
 "one after the other."
 msgstr ""
+"Das dunkle Meer nahm so viele meiner Vorfahren, meinen eigenen Vater, dann "
+"meine Frau und jetzt mein ältestes Kind. Das Schicksal hat mich nicht in "
+"meiner Zeit sterben lassen, also bin ich wohl einfach dazu bestimmt, zu "
+"Hause zu bleiben und darauf zu warten, dass der Rest meiner "
+"Familienmitglieder eines nach dem anderen stirbt."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:88
 msgid ""
 "You will take part to the mace ballet too? Ah! I can't wait to fight the "
 "friends of my big brother!"
 msgstr ""
+"Sie werden auch am Mace-Ballett teilnehmen? Ah! Ich kann es nicht erwarten, "
+"gegen die Freunde meines großen Bruders zu kämpfen!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:89
 #, lua-format
@@ -48268,6 +48408,16 @@ msgid ""
 "   \"You know what they say? Joining the Dvaered army is the best way to "
 "find your place in the society.\""
 msgstr ""
+"„Hallo, Bürger %s, wie geht es Ihnen?“ Du fragst den Soldaten, woher er "
+"deinen Namen kennt, und er antwortet: „Nun, ich gehöre zum Nachtklauen-"
+"Geschwader, und im Geschwader kennt Sie jeder. Ihr Zivilpiloten seid es "
+"nicht gewohnt, mit Technikern zu sprechen, richtig? Das ist normal: bei "
+"jeder Station habt man andere, das ist nicht geeignet, um Freundschaften zu "
+"schließen. Aber in unserer Armee ist das anders, wir hängen viel mehr "
+"zusammen ab, vereint durch harte Arbeit und durch unseren Glauben an die "
+"Nation.\n"
+"   Wissen Sie, was man sagt? Der Beitritt zur Dvaered-Armee ist der beste "
+"Weg, um seinen Platz in der Gesellschaft zu finden.“"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:92
 #, fuzzy
@@ -48277,13 +48427,11 @@ msgstr "Was möchtest du Major Tam fragen?"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:93
 msgid "Explain next stage"
-msgstr ""
+msgstr "Nächsten Teil erklären"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:94
-#, fuzzy
-#| msgid "Display a frame rate counter"
 msgid "Display the scores"
-msgstr "Einen Bildratenzähler anzeigen"
+msgstr "Punkte anzeigen"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:97
 msgid ""
@@ -48292,6 +48440,10 @@ msgid ""
 "pilot wins. Are you ready? Have you checked you are only equipped with "
 "Unicorp Mace Launchers?"
 msgstr ""
+"Das erste Ereignis ist das „Mace-Werfen“. Es gibt eine Reihe von Zielen ("
+"alte Lamas) und Sie müssen sie in der kürzesten Zeit treffen. Der schnellste "
+"Pilot gewinnt. Sind Sie bereit? Haben Sie überprüft, dass Sie nur mit "
+"Unicorp-Mace-Werfern ausgestattet sind?"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:98
 #, lua-format
@@ -48305,6 +48457,14 @@ msgid ""
 "competitors. Are you ready? Have you checked you have enough free cargo "
 "space?"
 msgstr ""
+"Die zweite Veranstaltung findet im „Mace-Stadion“ statt. Dort wurden "
+"Blumenkränze abgeworfen, und einige Nachwuchspiloten der Akademie lauern mit "
+"ihren Mace-Werfern in der Sammelzone. Diese Piloten zielen auf die "
+"Wettbewerber, und wenn Ihr Schild deaktiviert ist, werden Sie eliminiert. "
+"Insgesamt gibt es %d Tonnen von Blumen. Der Pilot, der die meisten Blumen "
+"gesammelt hat, bevor er eliminiert wird, oder wenn die Zeit abgelaufen ist, "
+"gewinnt. Es ist verboten, auf andere Teilnehmer zu schießen. Sind Sie "
+"bereit? Haben Sie überprüft, ob Sie genug freien Frachtraum haben?"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:99
 #, lua-format
@@ -48315,12 +48475,15 @@ msgid ""
 "allowed. Are you ready? Have you checked you are only equipped with Unicorp "
 "Mace Launchers?"
 msgstr ""
+"Die dritte und letzte Veranstaltung ist das „Mace-Pankration“. Jeder "
+"Teilnehmer muss gegen einen anderen Teilnehmer kämpfen und sein Schild außer "
+"Gefecht setzen. Der Sieger erhält 7 Punkte und Ihr Gegner ist %s. Töten ist "
+"natürlich nicht erlaubt. Sind Sie bereit? Haben Sie überprüft, dass Sie nur "
+"mit Unicorp-Mace-Werfern ausgestattet sind?"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:101
-#, fuzzy
-#| msgid "Lieutenant Strafer"
 msgid "Goodbye, Lieutenant Strafer"
-msgstr "Leutnant Strafer"
+msgstr "Tschüss, Leutnant Strafer"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:102
 msgid ""
@@ -48336,6 +48499,18 @@ msgid ""
 "interrupt me! Please reassure me!\n"
 "   \"For an answer I already have. And it is all but pleasant.\""
 msgstr ""
+"Nachdem die Teilnehmer ihre Belohnungen eingesammelt haben, wirst du "
+"eingeladen, allen in einem Shuttle zu folgen, das zu einer Arena fährt, die "
+"für diesen Anlass reserviert wurde. Während Cyborg-Gladiatoren in der "
+"Kampfzone verurteilte Verbrecher abschlachten, hält Kapitän Leblanc, als "
+"direkter Vorgesetzter von Strafer, eine Rede:\n"
+"   „Wie kann der Weltraum so dunkel sein mit all dem hellen Blut, das wir "
+"dort oben vergossen haben? Wie können Planeten so majestätisch sein, mit all "
+"den Schiffen, die auf ihren Gesichtern abgestürzt sind? Wie können Sterne so "
+"ruhig sein, mit all den Schrecken, die sie erlebt haben? Wenn einer von "
+"Ihnen eine angenehme Antwort hat, dann sagen Sie sie mir bitte! Bitte "
+"unterbrechen Sie mich! Bitte beruhigen Sie mich!\n"
+"   Doch eine Antwort habe ich schon. Und sie ist alles andere als angenehm.“"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:105
 msgid ""
@@ -48354,6 +48529,22 @@ msgid ""
 "Because we, humans, already have made our own big plans!\n"
 "   \"And Helmut Strafer's big plan is named Great House Dvaered.\""
 msgstr ""
+"„Der Weltraum, Planeten und Sterne. Der Grund, warum sie vom menschlichen "
+"Grauen unberührt bleiben, ist einfach und grausam: Es interessiert sie "
+"nicht. Das Universum brauchte uns nicht, um zu existieren. Es hat es nicht "
+"einmal gewollt. Und trotzdem sind wir hier, ziellos, ahnungslos, reißen uns "
+"gegenseitig die Kehle auf, um uns die Zeit zu vertreiben. Es ist mein "
+"Schicksal, als Kapitän eine Gruppe von verlorenen Männern zu führen, die "
+"alle dazu bestimmt sind, in diesem dunklen und leeren Universum zu sterben.\n"
+"   Aber was wissen wir über die Leere? Warum können wir überhaupt sagen, "
+"dass das Universum leer ist? Weil unser Herz, im Gegensatz dazu, voll ist. "
+"Voll von Schönheit und Hässlichkeit, voll von Liebe und Hass, voll von "
+"Sehnsucht und Verzweiflung. Unser Herz ist voll von all diesen "
+"gegensätzlichen Dingen, die nirgendwo sonst im Universum zu finden sind. Der "
+"Weltraum hat kein Mitgefühl für uns? Planeten kümmern sich nicht um unsere "
+"Schiffe? Sterne haben keinen großen Plan für uns? Umso besser! Denn wir "
+"Menschen haben schon unsere eigenen großen Pläne gemacht!\n"
+"   Und der große Plan von Helmut Strafer heißt ‚Großes Haus Dvaered‘.“"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:108
 msgid ""
@@ -48373,6 +48564,24 @@ msgid ""
 "well as it deserves it, please do worthy things: please do work for the "
 "Nation!\""
 msgstr ""
+"„Das Große Haus Dvaered färbt sich scharlachrot, wenn seine Bürger ihr Blut "
+"für es vergießen, das Große Haus Dvaered verliert ein wenig von seiner "
+"Erhabenheit, wenn eines seiner Schiffe abstürzt, das Große Haus Dvaered ist "
+"entsetzt, wenn es Zeuge von Gräueltaten wird.\n"
+"   Helmut Strafer hat sein Leben dem Großen Haus Dvaered gewidmet, und ich "
+"hatte die unbezahlbare Ehre, ihm bei dieser Gelegenheit den Weg zu ebnen. "
+"Ich könnte Ihnen sagen, wie richtig, loyal und stark dieser Mann war. Ich "
+"könnte Ihnen erzählen, welches Vertrauen seine bloße Anwesenheit neben "
+"meinem Schiff in mir geweckt hat. Aber das wissen Sie ja bereits. Also werde "
+"ich Ihnen nur diese Geschichte erzählen: Wir flogen, Seite an Seite, im "
+"Arandon-Nebel. Wir hatten dort Stunden verbracht, während die abrasiven Gase "
+"langsam an unseren Schilden knabberten, um schließlich einen einzigen "
+"Terroristenjäger zu finden und zu zerstören. Ich fragte Strafer, ob er der "
+"Meinung sei, dass es sich gelohnt habe, und er bekam diese einfache Antwort: "
+"‚Alles ist es wert, wenn es für die Dvaered-Nation getan wird‘.\n"
+"   Abschließend möchte ich sagen: Wenn Sie das Andenken von Helmut Strafer "
+"so ehren wollen, wie er es verdient, dann tun Sie bitte würdige Dinge: Bitte "
+"dienen Sie der Nation!“"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:113
 #, lua-format
@@ -48382,25 +48591,28 @@ msgid ""
 "   \"Congratulations to %s, who is the great winner of the Mace Ballet! All "
 "participants will be rewarded depending to their rank.\""
 msgstr ""
+"Bei der Landung siehst du die anderen Teilnehmer der Zeremonie auf dem Dock "
+"versammelt. Strafers Vater, der der Zeremonienmeister ist, verkündet:\n"
+"   „Herzlichen Glückwunsch an %s, der große Sieger des Mace-Ballets! Alle "
+"Teilnehmer werden je nach ihrem Rang belohnt.“"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:115
-#, fuzzy, lua-format
-#| msgid "Naev received %s!"
+#, lua-format
 msgid "You recieve a %s as a reward."
-msgstr "Naev hat %s erhalten!"
+msgstr "Du hast folgende Belohung erhalten: %s."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:116
 #, lua-format
 msgid "You recieve a %s and a %s as a reward."
-msgstr ""
+msgstr "Du hast folgende Belonungen erhalten: %s und %s."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:117
 msgid "You recieve three Shredders as a reward."
-msgstr ""
+msgstr "Du hast drei Schredder als Belohnung erhalten."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:119
 msgid "Major Tam warns you, and gives you a new task."
-msgstr ""
+msgstr "Major Tam warnt dich und gibt dir eine neue Aufgabe."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:120
 msgid ""
@@ -48421,6 +48633,24 @@ msgid ""
 "if some bounty hunter tries to kill you, catch them alive and bring them to "
 "me.\""
 msgstr ""
+"Nachdem die Ergebnisse bekannt gegeben wurden, kommt Major Tam auf dich zu. "
+"Er scheint etwas Wichtiges zu sagen zu haben: „Es war Ihr erstes Ballett, "
+"richtig? Sie haben sich da sehr gut geschlagen, Bürger.\n"
+"   Wie auch immer, es gibt eine Angelegenheit, die ich mit Ihnen besprechen "
+"muss: Einer meiner Informanten hat mir erzählt, dass der Ex-Oberst Hamelsen "
+"ein Kopfgeld auf Sie ausgesetzt hat. Ja. So etwas passiert einfach, wissen "
+"Sie. Es sieht beängstigend aus, nicht wahr? Eigentlich haben schon viele "
+"Leute hier ein Kopfgeld ausgesetzt, auch ich, General Klank und Hauptmann "
+"Leblanc. Und man kann sehr gut damit leben. Man muss nur ein bisschen "
+"vorsichtiger sein als sonst.\n"
+"   Da Hamelsen so viele Söldner unter ihrem Kommando umgebracht hat, ist es "
+"in der Tat eher unwahrscheinlich, dass unverwandte Piloten aufspringen und "
+"versuchen, Sie zu töten. Ich bin mir ziemlich sicher, dass diejenigen, die "
+"Sie angreifen werden, durch mehr als Geld motiviert sind. Und ich möchte "
+"wissen, was sie dazu bringt, uns weiterhin anzugreifen, nachdem sie so viele "
+"Verluste erlitten haben. Ihre Mission wird also folgende sein: Sollte ein "
+"Kopfgeldjäger versuchen, Sie zu töten, fangen Sie ihn lebend und bringen Sie "
+"ihn zu mir.“"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:124
 msgid ""
@@ -48428,12 +48658,13 @@ msgid ""
 "time runs out. Your score will be equal to the number of flowers you already "
 "collected."
 msgstr ""
+"Du wurdest eliminiert. Du darfst dich nicht mehr bewegen, bis die Zeit "
+"abgelaufen ist. Dein Punktestand entspricht der Anzahl der Blumen, die du "
+"bereits gesammelt hast."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:125
-#, fuzzy
-#| msgid "This is it!"
 msgid "This is not allowed!"
-msgstr "Das ist es!"
+msgstr "Das ist nicht erlaubt!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:126
 msgid ""
@@ -48441,12 +48672,13 @@ msgid ""
 "Stadion. The Stadion has to be interrupted and you recieve 5 points of "
 "penalty. Land and speak again with Major Tam."
 msgstr ""
+"Du darfst nicht auf die anderen Teilnehmer schießen, die das Mace-Stadion "
+"betreten. Das Stadion muss unterbrochen werden und du erhältst 5 "
+"Strafpunkte. Lande und sprich erneut mit Major Tam."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:127
-#, fuzzy
-#| msgid "That was the wrong answer"
 msgid "That was not very smart."
-msgstr "Das war die falsche Antwort"
+msgstr "Das war nicht sehr klug."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:128
 msgid ""
@@ -48456,41 +48688,44 @@ msgid ""
 "for that, but then you realize that they will probably simply kill you "
 "instead."
 msgstr ""
+"Während du den Rumpf deines gegnerischen Schiffes betrachtest, der sich "
+"unter dem Einschlag deiner Raketen verrenkt, erinnerst du dich plötzlich mit "
+"Schrecken daran, dass dies alles nur ein Wettbewerb ist. Du denkst, dass die "
+"Dvaered dir das vielleicht übel nehmen könnten, aber dann wird dir klar, "
+"dass sie dich stattdessen wahrscheinlich einfach töten werden."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:129
-#, fuzzy
-#| msgid "You left the race!"
 msgid "You left the system."
-msgstr "Du hast das Rennen verlassen!"
+msgstr "Du hast das System verlassen."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:130
-#, fuzzy
-#| msgid "You were not supposed to get on the trail of %s!"
 msgid ""
 "You were supposed to take part in the competition, not leave the system."
-msgstr "Du hättest dich nicht auf die Suche nach %s begeben sollen!"
+msgstr "Du hättest im Wettbewerb teilnehen sollen, nicht das System verlassen."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:131
 msgid ""
 "Your only weapons should be Mace rockets: land and speak again with Major "
 "Tam."
 msgstr ""
+"Deine einzigen Waffen sollten Mace-Raketen sein. Lande und sprich erneut mit "
+"Major Tam."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:134
 #, lua-format
 msgid "%s won against %s!"
-msgstr ""
+msgstr "%s hat gegen %s gewonnen!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:136
 msgid ""
 "You are invited to a Mace Rocket Ballet in memory of Lieutenant Strafer."
 msgstr ""
+"Du bist zu einem Mace-Raketenballett in Gedenken an Leutnant Strafer "
+"eingeladen."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:137
-#, fuzzy
-#| msgid "Lieutenant Strafer"
 msgid "Say goodbye to Lieutenant Strafer"
-msgstr "Leutnant Strafer"
+msgstr "Sagt Lebewohl zu Leutnant Strafer"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:138
 msgid ""
@@ -48498,12 +48733,14 @@ msgid ""
 "won an atonishing prize. Major Tam warned you that hitmen are on your tracks "
 "and requested you to catch one of them alive."
 msgstr ""
+"Du hast an einem Mace-Raketenballett im Gedenken an Leutnant Strafer "
+"teilgenommen und einen Preis gewonnen, der sich sehen lassen kann. Major Tam "
+"hat dich gewarnt, dass dir Auftragskiller auf den Fersen sind und dich "
+"gebeten, einen von ihnen lebend zu fangen."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:140
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Dvaered Ballet"
-msgstr "Dvaered-Patrouille"
+msgstr "Dvaered-Ballett"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:141
 #: dat/missions/empire/collective/ec04.lua:64
@@ -48514,113 +48751,104 @@ msgstr "Fliege nach %s"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:142
 msgid "Hit the most targets before your opponents"
-msgstr ""
+msgstr "Triff die meisten Ziele, bevor deine Gegner dies tun"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:143
 msgid "Catch the most flowers possible"
-msgstr ""
+msgstr "Schnapp dir so viele Blumen wie möglich"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:144
 #, lua-format
 msgid "Defeat your opponent %s (nullify their shield)"
-msgstr ""
+msgstr "Besiege deinen Feind %s (brich den Schild)"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:146
-#, fuzzy
-#| msgid "Not far from the goal"
 msgid "Wait for the signal"
-msgstr "Nicht weit vom Ziel"
+msgstr "Warte auf das Signal"
 
 #. Pointless chatter
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:149
 msgid "The stars look very different today"
-msgstr ""
+msgstr "Die Sterne sehen heute ganz anders aus"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:150
 msgid "My rockets can't wait to fly for Strafer"
-msgstr ""
+msgstr "Meine Raketen können es nicht abwarten, für Strafer zu fliegen"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:151
 msgid "Poor small Llamas!"
-msgstr ""
+msgstr "Arme kleine Lamas!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:153
-#, fuzzy
-#| msgid "Time to go back to Alteris"
 msgid "Time to pick up flowers"
-msgstr "Zeit, nach Alteris zurückzukehren"
+msgstr "Zeit, ein paar Blumen zu pflücken"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:154
 msgid "You may as well give up now, I'm invincible!"
-msgstr ""
+msgstr "Du könntest auch gleich aufgeben, ich bin unbesiegbar!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:155
 msgid "Flower Power, I'm coming!"
-msgstr ""
+msgstr "Flower-Power, jetzt komm ich!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:157
 msgid ""
 "Hey, Tamtam, take your protein pills and put your helmet on, because I'M "
 "COMING FOR YOU!"
 msgstr ""
+"Hey, Tamtam, nimm deine Proteinpillen und setz deinen Helm auf, denn JETZT "
+"KOMM ICH DICH HOLEN!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:158
 msgid "I will win for my brother!"
-msgstr ""
+msgstr "Ich werde für meinen Bruder gewinnen!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:159
-#, fuzzy, lua-format
-#| msgid "\"OK, are you ready for the travel to %s in the %s system?\""
+#, lua-format
 msgid "%s, are you ready for the punishment?"
-msgstr "„Okay, bereit zur Reise nach %s im ‚%s‘-System?“"
+msgstr "%s, bereit für die Abstrafung?"
 
 #. Joy cries (for the Mace throw)
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:162
 msgid "Wohoo!"
-msgstr ""
+msgstr "Juhu!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:163
-#, fuzzy
-#| msgid "Princeless "
 msgid "One less!"
-msgstr "Prinzenlose "
+msgstr "Einer weniger!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:164
 msgid "Baoum!"
-msgstr ""
+msgstr "Bumm!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:165
 msgid "I'm in such a good shape!"
-msgstr ""
+msgstr "Ich bin in so guter Form!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:166
 msgid "Top score, I'm coming!"
-msgstr ""
+msgstr "Ich punkte! Ich siege!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:167
 msgid "Eat that, you Llama freak!"
-msgstr ""
+msgstr "Friss das, du Lama-Freak!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:168
-#, fuzzy
-#| msgid "I am Iron Man!"
 msgid "I am so a-Mace-ing!"
-msgstr "Ich bin der Größte!"
+msgstr "Ich bin der Mace-Meister!"
 
 #. Yep, I remember the puns I read on discord
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:169
-#, fuzzy
-#| msgid "You'll regret that!"
 msgid "Dodge that!"
-msgstr "Das werden Sie bereuen!"
+msgstr "Weich aus!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:170
 msgid "I got one right in the a... Hem. The engine..."
-msgstr ""
+msgstr "Ich hab eine direkt in den … ähm … den Motor …"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:171
 msgid "Got you!"
-msgstr ""
+msgstr "Hab dich!"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:210
 msgid "Sergeant Strafer"
@@ -48648,10 +48876,8 @@ msgstr "Gefreiter Ernst"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:215
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:239
-#, fuzzy
-#| msgid "Lieutenant"
 msgid "Lieutenant Guo"
-msgstr "Leutnant"
+msgstr "Leutnant Guo"
 
 #. Introduction scene (with flowers everywhere)
 #. Actually, fleet AI should not require that, but...
@@ -48661,7 +48887,7 @@ msgstr "Leutnant"
 #. First, compute the people's scores
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:278
 msgid "Total Scores"
-msgstr ""
+msgstr "Gesamtpunktzahl"
 
 #. All the cases where the player is not authorized to land nor jump
 #. Approaching the group of soldiers
@@ -48677,7 +48903,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Target: "
 msgid "Target "
-msgstr "Ziel: "
+msgstr "Ziel "
 
 #. Just in case
 #. Remember which joy cries have been used  /!\ this should have the same length as joy /!#. Timer and messages
@@ -48686,10 +48912,8 @@ msgstr "Ziel: "
 #. No need to check the player only has mace rockets
 #. Bouuuh! they r cheating!
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:496
-#, fuzzy
-#| msgid "Shoot me!"
 msgid "Shooter"
-msgstr "Schieß auf mich!"
+msgstr "Schütze"
 
 #. If player has zero shield: eliminated
 #. Timer and messages
@@ -48707,10 +48931,8 @@ msgstr "Los!"
 
 #. Increment the time over timer
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:584
-#, fuzzy
-#| msgid "Time: "
 msgid "Time Over!"
-msgstr "Zeit: "
+msgstr "Zeit abgelaufen!"
 
 #. Actually start the Mace Throw
 #. Actually start the Mace Stadion
@@ -48730,7 +48952,7 @@ msgstr "Zeit: "
 #. Sort and print top scores
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:734
 msgid "Scores for the Mace Throw"
-msgstr ""
+msgstr "Punktestand für das Mace-Werfen"
 
 #. One of the competitors is Idle (Mace Stadion)
 #. A competitor is hit during Stadion (problematic if the player is the agressor)
@@ -48740,19 +48962,15 @@ msgstr ""
 #. End of the Mace Stadion
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:793
 msgid "Scores for the Mace Stadion"
-msgstr ""
+msgstr "Punktestand für das Mace-Station"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:798
-#, fuzzy
-#| msgid "Time: "
 msgid "Time Over"
-msgstr "Zeit: "
+msgstr "Zeit abgelaufen"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:798
-#, fuzzy
-#| msgid "Dvaer Prime"
 msgid "Land on Dvaer Prime."
-msgstr "Dvaer Eins"
+msgstr "Lande auf Dvaer Eins."
 
 #. Free the player
 #. One of the competitors (or the player) is hit (Mace Pankration)
@@ -48762,7 +48980,7 @@ msgstr "Dvaer Eins"
 #. See if all duels are over
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:882
 msgid "Scores for the Mace Pankration"
-msgstr ""
+msgstr "Punktestand für das Mace-Pankration"
 
 #. Sorting functions
 #.
@@ -48771,31 +48989,27 @@ msgstr ""
 #. All the rewards:
 #: dat/missions/dvaered/frontier_war/fw_common.lua:16
 msgid "Instructions to escort"
-msgstr ""
+msgstr "Anweisungen für den Geleit"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:17
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "What do you want the escort to do?"
-msgstr "„Was willst du von mir!?“"
+msgstr "Was soll der Geleit tun?"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:18
 msgid "Attack nearby enemies"
-msgstr ""
+msgstr "Nahe Feinde angreifen"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:19
-#, fuzzy
-#| msgid "Yellow "
 msgid "Follow me"
-msgstr "Gelbe "
+msgstr "Mir folgen"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:20
 msgid "Never mind"
-msgstr ""
+msgstr "Ach, nichts"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:24
 msgid "Lady Pointblank"
-msgstr ""
+msgstr "Lady Blankschuss"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:25
 msgid "Lord Chainsaw"
@@ -48811,21 +49025,19 @@ msgstr "Lord Kriegsreich Hundertfeuer"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:28
 msgid "Lady Blackswan"
-msgstr ""
+msgstr "Lady Schwarzschwan"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:29
 msgid "Lady Killington"
-msgstr ""
+msgstr "Lady Totendorf"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:30
 msgid "Lord Richthofen"
 msgstr "Lord Richthofen"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:31
-#, fuzzy
-#| msgid "Lantern"
 msgid "Lady Dewinter"
-msgstr "Lantern"
+msgstr "Lady Dewinter"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:32
 msgid "Lord Easytrigger"
@@ -48833,7 +49045,7 @@ msgstr "Lord Lockerfinger"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:33
 msgid "Lady Sainte-Beuverie"
-msgstr ""
+msgstr "Lady Sainte-Beuverie"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:34
 msgid "Lord Louverture"
@@ -48845,7 +49057,7 @@ msgstr "Lord Abdelkiller"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:36
 msgid "Lady Proserpina"
-msgstr ""
+msgstr "Lady Proserpina"
 
 #. Character's portraits. TODO: create unique portraits for them
 #. Major Tam: main mission giver of this campaign
@@ -48875,12 +49087,12 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:20
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:21
 msgid "Totoran Tournament"
-msgstr ""
+msgstr "Totoran-Turnier"
 
 #. TODO replace portraits/images
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:26
 msgid "Crimson Gauntlet Terminal"
-msgstr ""
+msgstr "Blutroter-Panzerhandschuh-Terminal"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:27
 msgid ""
@@ -48894,14 +49106,13 @@ msgid "Crimson Gauntlet Challenge"
 msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:30
+#, fuzzy
 msgid "Annihilate all enemies in the Crimson Gauntlet."
-msgstr ""
+msgstr "Vernichte alle Feinde im Blutroten Panzerhandschuh."
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:31
-#, fuzzy
-#| msgid "Great "
 msgid "Great riches!"
-msgstr "Große "
+msgstr "Große Reichtümer!"
 
 #. Land is unified for all types of combat
 #. TODO only give emblems from bosses or special clears?
@@ -48940,29 +49151,29 @@ msgstr "Besiege Sternfeuer"
 #. --
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:156
 msgid "5…"
-msgstr ""
+msgstr "5 …"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:157
 msgid "4…"
-msgstr ""
+msgstr "4 …"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:158
 msgid "3…"
-msgstr ""
+msgstr "3 …"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:159
 msgid "2…"
-msgstr ""
+msgstr "2 …"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:160
 msgid "1…"
-msgstr ""
+msgstr "1 …"
 
 #. TODO play countdown sound
 #. TODO play sound and cooler text
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:169
 msgid "FIGHT!"
-msgstr ""
+msgstr "KÄMPFEN!"
 
 #. We let them do their thing
 #.
@@ -48984,7 +49195,7 @@ msgstr ""
 #. Metafactions
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:250
 msgid "Combatant"
-msgstr ""
+msgstr "Kämpfer"
 
 #. Don't allow talking
 #. Determine position
@@ -48993,7 +49204,7 @@ msgstr ""
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:343
 #, lua-format
 msgid "#pWAVE %d#0"
-msgstr ""
+msgstr "#p%d. WELLE#0"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:355
 #, lua-format
@@ -55138,6 +55349,9 @@ msgid ""
 "Kex wants you to help him find dirt on the Minerva CEO by raiding a "
 "transport headed to Minerva Station."
 msgstr ""
+"Kex möchte, dass du ihm hilfst, Dreck über den Minerva-Geschäftsführer zu "
+"finden, indem du einen Transport überfällst, der zur Minerva-Station "
+"unterwegs ist."
 
 #. We avoid creating a giver NPC and directly use "normal NPC"
 #. Have to make sure to check if misn.accept() works
@@ -55267,10 +55481,8 @@ msgid "Ask about the station"
 msgstr "Über den Nebel fragen"
 
 #: dat/missions/minerva/kex1.lua:137
-#, fuzzy
-#| msgid "Ask about the Nebula"
 msgid "Ask about the CEO"
-msgstr "Über den Nebel fragen"
+msgstr "Über den Geschäftsführer fragen"
 
 #: dat/missions/minerva/kex1.lua:140 dat/missions/minerva/kex2.lua:156
 #: dat/missions/minerva/pirate3.lua:174 dat/missions/minerva/pirate4.lua:133
@@ -58665,6 +58877,12 @@ msgid ""
 "Guns, Shredders, Mass Drivers, Railguns and such. Make sure to not use any "
 "non-Dvaered weapons!\""
 msgstr ""
+"„Sie einfach nur zu zerstören wird nicht reichen, wir müssen es so aussehen "
+"lassen, als ob es diesmal die Dvaered waren. Das sollte jedoch einfach sein. "
+"Stellen Sie sicher, dass Sie Dvaered-Waffen verwenden, um die Drohnen "
+"auszuschalten. Sie wissen schon, Mace-Werfer, Vulcan-Kanonen, Schredder, "
+"Massentreiber, Schienenkanonen und so weiter. Stellen Sie sicher, dass Sie "
+"keine Nicht-Dvaered-Waffen verwenden!“"
 
 #: dat/missions/minerva/pirate2.lua:79
 msgid ""
@@ -76407,10 +76625,10 @@ msgstr ""
 "Chelsea grüßt dich wie zuvor. „Hallo, %s! Es ist so schön, dich "
 "wiederzusehen!“ Ihr beide redet noch einmal über eure Reisen. Dann sagt "
 "Chelsea: „Also, ich habe eine gewisse kleine Bitte. Könntest du ab jetzt für "
-"mich die Pronomen ‚ser‘ bzw. ‚sem‘ benutzen?“. Du stimmst der Bitte zu. "
-"„Dankeschön!“, sagt ser. „Ich bin in letzter Zeit ein wenig mehr in mich "
-"gegangen und habe festgestellt, dass ich mich eher als nicht-binär "
-"identifiziere anstatt als Frau. Das verstehst du doch, oder?“ Du bejahst.\n"
+"mich das Pronomen ‚ser‘ benutzen?“. Du stimmst der Bitte zu. „Dankeschön!“, "
+"sagt ser. „Ich bin in letzter Zeit ein wenig mehr in mich gegangen und habe "
+"festgestellt, dass ich mich eher als nicht-binär identifiziere anstatt als "
+"Frau. Das verstehst du doch, oder?“ Du bejahst.\n"
 "    „Nun, wenn ich es mir recht überlege, wäre das eine tolle Ausrede, um "
 "meine Eltern wiederzusehen! Es ist schon so lange her, dass ich sie gesehen "
 "habe. Sag mal, könntest du mich auf %s zu ihnen bringen?“"
@@ -76450,7 +76668,7 @@ msgid ""
 "them."
 msgstr ""
 "Du landest und dockst an %s an, dann triffst du dich mit beiden Eltern von "
-"Chelsea. Sie begrüßen Chelsea und die Mutter gibt sem eine warme Umarmung "
+"Chelsea. Sie begrüßen Chelsea und die Mutter gibt ser eine warme Umarmung "
 "und lässt ser wieder los. Chelseas Vater winkt leicht, und die drei fangen "
 "an zu plaudern.\n"
 "    Irgendwann kommt das Thema von Chelseas Geschlecht zur Sprache. Chelsea "
@@ -76536,7 +76754,7 @@ msgstr ""
 "passiert, sei dir selbst immer treu. Du bist mein Kind, und ich werde dich "
 "immer lieben.“\n"
 "    Chelseas Vater runzelt die Stirn. „Willst du das wirklich so haben?“ "
-"Chelsea nickt. Sem Vater fährt fort. „Also gut. Du hast recht. Du bist nicht "
+"Chelsea nickt. Ser Vater fährt fort. „Also gut. Du hast recht. Du bist nicht "
 "mein Sohn.“ Er greift in seine Tasche, als Chelseas Mutter in seine Richtung "
 "schaut.\n"
 "    Plötzlich schreit Chelseas Mutter auf. „NEIN!“ schreit sie, während sie "
@@ -76581,14 +76799,14 @@ msgstr ""
 "Nichtsdestotrotz besteht Chelsea darauf. „Danke für deine Hilfe.“, sagt ser. "
 "„Ich hätte nie erwartet, dass es so weit kommen würde, weißt du? Ich wollte "
 "nur … Ich hoffe, meiner Mama geht es gut. Ich hoffe einfach, weißt du?“ Ser "
-"fängt an, zu weinen, und du gibst sem eine freundliche Umarmung. Als du ser "
+"fängt an, zu weinen, und du gibst ser eine freundliche Umarmung. Als du ser "
 "loslässt, wischst du dir die Tränen aus den Augen. „Nun, dann habe ich noch "
 "etwas Arbeit zu erledigen, ich nehme an … es sieht so aus, als würde mir ein "
 "großer Kampf bevorstehen, welche Form er auch annehmen mag. Fürs Erste werde "
 "ich weiterhin wie bisher Missionen durchführen. Du weißt schon, Geld sparen, "
 "mein Schiff bauen … so was in der Art. Ich werde dich finden, wenn ich dich "
 "brauche.“ Chelsea zwingt sich zu einem Lächeln, genau wie wie du, und ihr "
-"beide trennt euch vorerst. Du hoffst, dass es gut gehen wird."
+"beide trennt euch vorerst. Du hoffst, dass es ser gut gehen wird."
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:74
 #, lua-format
@@ -76621,16 +76839,16 @@ msgid ""
 "but this time, they are partly doing so to prepare for the worst. They said "
 "that they will find you if they need your help again."
 msgstr ""
-"Du hast Chelsea – Chelsea bittet ab jetzt um die Verwendung des Pronomen "
-"„ser“ bzw. „sem“ – nach Durea gebracht, damit ser die Eltern sehen kann. "
-"Chelseas Vater wandte sich jedoch wegen Chelseas Geschlechtsidentität und "
-"der Akzeptanz der Soromiden gegen ser und zielte mit einer Laserpistole auf "
-"Chelsea, bevor er von Chelseas Mutter angegriffen und zurückgehalten wurde. "
-"Du hast nicht gesehen, was passiert ist, aber als du und Chelsea geflohen "
-"seid, hast du einen Schuss gehört. Chelseas Vater holte dich dann ein und, "
-"als du die Startprozedur begannst, versuchte er, seine Laserkanone auf dein "
-"Schiff abzufeuern, und schickte dann eine Gruppe von Rowdys hinter dir her, "
-"während du Chelsea in Sicherheit brachtest.\n"
+"Du hast Chelsea – Chelsea bittet ab jetzt um die Verwendung des Pronomens "
+"„ser“ – nach Durea gebracht, damit ser die Eltern sehen kann. Chelseas Vater "
+"wandte sich jedoch wegen Chelseas Geschlechtsidentität und der Akzeptanz der "
+"Soromiden gegen ser und zielte mit einer Laserpistole auf Chelsea, bevor er "
+"von Chelseas Mutter angegriffen und zurückgehalten wurde. Du hast nicht "
+"gesehen, was passiert ist, aber als du und Chelsea geflohen seid, hast du "
+"einen Schuss gehört. Chelseas Vater holte dich dann ein und, als du die "
+"Startprozedur begannst, versuchte er, seine Laserkanone auf dein Schiff "
+"abzufeuern, und schickte dann eine Gruppe von Rowdys hinter dir her, während "
+"du Chelsea in Sicherheit brachtest.\n"
 "    Traumatisiert hat sich Chelsea auf den Weg gemacht, um mit dem "
 "fortzufahren, was ser zuvor getan hat, aber diesmal wird ser sich auf das "
 "Schlimmste vorbereiten. Ser sagte, dass ser dich finden wird, wenn ser "
@@ -81407,16 +81625,12 @@ msgstr "Prof. Seltsam"
 
 #. Purplish (close to nebula?)
 #: dat/scripts/campaigns/minerva.lua:61
-#, fuzzy
-#| msgid "Miner Mule"
 msgid "Minerva CEO"
-msgstr "Bergarbeiter-Muli"
+msgstr "Minerva-Geschäftsführer"
 
 #: dat/scripts/campaigns/minerva.lua:64
-#, fuzzy
-#| msgid "Minerva Station"
 msgid "The CEO of Minerva Station."
-msgstr "Minerva-Station"
+msgstr "Der Geschäftsführer der Minerva-Station."
 
 #: dat/scripts/campaigns/minerva.lua:81
 msgid "Shady Jobs at Minerva"
