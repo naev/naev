@@ -456,7 +456,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          if (i==array_size(sys->planets)) /* saw them all and all the same */
             cnt += scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: %s\nStanding: %s\n"), faction_longname(f), faction_getStandingText( f ) );
          /* display the logo */
-         logo = faction_logoSmall( f );
+         logo = faction_logo( f );
          if ( logo != NULL ) {
             gl_blitScale( logo, bx + pitch + nameWidth + 200,
                   by + h - 21, 20, 20, &cWhite );
@@ -503,7 +503,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
      p = cur_planetObj_sel;
      if (p->faction > 0 ) {/* show the faction */
         char factionBuf[64];
-        logo = faction_logoSmall( p->faction );
+        logo = faction_logo( p->faction );
         if ( logo != NULL ) {
            gl_blitScale( logo, bx + pitch + nameWidth + 200, by + h - 21, 20, 20, &cWhite );
          }

@@ -271,7 +271,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
       int override, int bribed, const char *name )
 {
    int namex, standx, logox, y;
-   int namew, standw, logow, width;
+   int namew, standw, logow, logoh, width;
    glTexture *logo;
    const char *stand;
    unsigned int wid;
@@ -288,7 +288,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    comm_graphic = gfx;
    logo = NULL;
    if ( faction_isKnown(faction) )
-      logo = faction_logoSmall(faction);
+      logo = faction_logo(faction);
 
    /* Get standing colour / text. */
    stand = faction_getStandingBroad( faction, bribed, override );
@@ -305,7 +305,8 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    standw = gl_printWidthRaw( NULL, stand );
    width  = MAX(namew, standw);
 
-   logow = logo == NULL ? 0 : logo->w;
+   logow = logo == NULL ? 0 : logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+   logoh = logo == NULL ? 0 : logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
 
    if (width + logow > GRAPHIC_WIDTH) {
       font = &gl_smallFont;
@@ -320,7 +321,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    standx = GRAPHIC_WIDTH/2 - standw/2 + logow/2;
 
    if (logo != NULL) {
-      y  = MAX( font->h*2 + 15, logo->h );
+      y  = MAX( font->h*2 + 15, logoh );
       logox = GRAPHIC_WIDTH/2 - logow/2 - width/2 - 2;
    }
    else {
@@ -356,8 +357,8 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    /* Faction logo. */
    if (logo != NULL) {
       window_addImage( wid, 19 + logox, -30 - GRAPHIC_HEIGHT - 4,
-            0, 0, "imgFaction", logo, 0 );
-      y -= (logo->h - (gl_defFont.h*2 + 15)) / 2;
+            logow, logoh, "imgFaction", logo, 0 );
+      y -= (logoh - (gl_defFont.h*2 + 15)) / 2;
    }
 
    /* Name. */

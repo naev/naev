@@ -35,10 +35,6 @@
       - weapon_rack.png
       - laser2.png
       - plasma2.png
-- Renderwahn:
-    license: CC-by 3.0
-    logo:
-    - pirate_*.png
 - Sean Hildebrand:
     license: CC-by 3.0
     gui:
@@ -53,13 +49,7 @@
 - Enigmatic:
     license: CC-by 3.0
     logo:
-    - collective_*.png
-    - flf_*.png
-    - frontier_*.png
-    - proteron_*.png
     - prototype_tiny.png
-    - soromid_*.png
-    - trader_*.png
     outfit:
       store:
       - fidelity_fighter.png
@@ -67,10 +57,6 @@
     license: PD
     gui:
     - hail.png
-- Alexander Huitric <ahuitric@gmail.com>:
-    license: CC-by-sa 3
-    logo:
-    - thurion_*.png
 - Unnamed:
     license: CC-by-sa 3.0
     outfit:
@@ -113,14 +99,6 @@
       - damage_forward.png
       - efficiency_turret.png
       - firerate_turret.png
-- Ingo Ruhnke <grumbel@gmx.de>:
-    license: GPLv3
-    logo:
-    - dvaered_*.png
-    - empire_*.png
-    - goddard_*.png
-    - sirius_*.png
-    - zalek_*.png
 - admiral_cheater:
     license: CC-by 3.0
     outfit:
@@ -186,8 +164,3 @@
     license: PD
     overlays:
     - portrait_exclamation.png
-- nenau:
-    license: GPLv3+
-    logo:
-    - miner_small.png
-    - miner_tiny.png
