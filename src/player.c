@@ -3017,7 +3017,7 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Standard player details. */
    xmlw_attr(writer,"name","%s",player.name);
-   xmlw_attr(writer,"dt_mod","%f",player.dt_mod);
+   xmlw_elem(writer,"dt_mod","%f",player.dt_mod);
    xmlw_elem(writer,"credits","%"CREDITS_PRI,player.p->credits);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
