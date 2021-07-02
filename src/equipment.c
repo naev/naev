@@ -172,6 +172,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    if (nfits==1) {
       eq_wgt.outfit  = o;
       p              = eq_wgt.selected;
+      /* We have to call once to remove, once to add. */
       if (slots[minimal].outfit != NULL)
          equipment_swapSlot( equipment_wid, p, &slots[minimal] );
       equipment_swapSlot( equipment_wid, p, &slots[minimal] );
