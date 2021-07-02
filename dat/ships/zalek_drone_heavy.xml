@@ -33,9 +33,9 @@
   <cpu>80</cpu>
  </characteristics>
  <slots>
+  <weapon size="small" x="15" y="-5" h="2" />
+  <weapon size="small" x="15" y="-4" h="2"/>
   <weapon size="small" x="-12" y="6" h="0" />
-  <weapon size="small" x="15" y="-8" h="2" />
-  <weapon size="small" x="15" y="-6" h="2" />
   <utility size="small" />
   <utility size="small" />
   <structure size="small" />
