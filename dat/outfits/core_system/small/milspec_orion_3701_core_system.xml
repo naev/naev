@@ -12,9 +12,9 @@
  </general>
  <specific type="modification">
   <cpu_max>90</cpu_max>
-  <energy>350</energy>
-  <energy_regen>30</energy_regen>
   <shield>250</shield>
   <shield_regen>8</shield_regen>
+  <energy>400</energy>
+  <energy_regen>42</energy_regen>
  </specific>
 </outfit>
