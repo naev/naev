@@ -440,7 +440,7 @@ static int playerL_getPosition( lua_State *L )
  */
 static int playerL_getPilot( lua_State *L )
 {
-   PLAYER_CHECK();
+   /* No need to run check here or stuff that depends on player.pilot() working will fail. */
    lua_pushpilot(L, PLAYER_ID);
    return 1;
 }
