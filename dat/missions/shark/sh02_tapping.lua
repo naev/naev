@@ -277,7 +277,6 @@ function hvy_intercept()
       badguys[i]:addOutfit("Laser Cannon MK2",2)
       badguys[i]:addOutfit("Laser Cannon MK1")
       badguys[i]:addOutfit("Reactor Class I")
-      badguys[i]:addOutfit("Solar Panel")
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
