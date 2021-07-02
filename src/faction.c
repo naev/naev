@@ -663,6 +663,10 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
    if (faction_isFlag(faction, FACTION_STATIC))
       return;
 
+   /* Player is dead or cleared. */
+   if (player.p == NULL)
+      return;
+
    old   = faction->player;
 
    if (faction->env == LUA_NOREF)
