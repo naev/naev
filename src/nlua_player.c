@@ -46,6 +46,9 @@
 #include "player.h"
 
 
+#define PLAYER_CHECK() if (player.p == NULL) return 0
+
+
 /* Player methods. */
 static int playerL_getname( lua_State *L );
 static int playerL_shipname( lua_State *L );
@@ -177,6 +180,7 @@ int nlua_loadPlayer( nlua_env env )
  */
 static int playerL_getname( lua_State *L )
 {
+   PLAYER_CHECK();
    lua_pushstring(L,player.name);
    return 1;
 }
@@ -190,6 +194,7 @@ static int playerL_getname( lua_State *L )
  */
 static int playerL_shipname( lua_State *L )
 {
+   PLAYER_CHECK();
    lua_pushstring(L,player.p->name);
    return 1;
 }
@@ -210,6 +215,7 @@ static int playerL_pay( lua_State *L )
    const char *reason;
 
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
 
    money = CLAMP( CREDITS_MIN, CREDITS_MAX, (credits_t)round(luaL_checknumber(L,1)) );
    player_modCredits( money );
@@ -254,6 +260,8 @@ static int playerL_credits( lua_State *L )
    char buf[ ECON_CRED_STRLEN ];
    int has_dec, decimals;
 
+   PLAYER_CHECK();
+
    /* Parse parameters. */
    if (lua_isnumber(L,1)) {
       has_dec  = 1;
@@ -282,6 +290,7 @@ static int playerL_msg( lua_State *L )
    const char* str;
 
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
 
    str = luaL_checkstring(L,1);
    player_messageRaw(str);
@@ -295,8 +304,8 @@ static int playerL_msg( lua_State *L )
  */
 static int playerL_msgClear( lua_State *L )
 {
-   (void) L;
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
    gui_clearMessages();
    return 0;
 }
@@ -318,6 +327,7 @@ static int playerL_omsgAdd( lua_State *L )
    int fontsize;
 
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
 
    /* Input. */
    str      = luaL_checkstring(L,1);
@@ -351,6 +361,7 @@ static int playerL_omsgChange( lua_State *L )
    int ret;
 
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
 
    /* Input. */
    id       = luaL_checklong(L,1);
@@ -377,6 +388,7 @@ static int playerL_omsgRm( lua_State *L )
 {
    unsigned int id;
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
    id       = luaL_checklong(L,1);
    omsg_rm( id );
    return 0;
@@ -392,6 +404,7 @@ static int playerL_allowSave( lua_State *L )
 {
    unsigned int b;
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
    if (lua_gettop(L)==0)
       b = 1;
    else
@@ -414,6 +427,7 @@ static int playerL_allowSave( lua_State *L )
  */
 static int playerL_getPosition( lua_State *L )
 {
+   PLAYER_CHECK();
    lua_pushvector(L, player.p->solid->pos);
    return 1;
 }
@@ -426,6 +440,7 @@ static int playerL_getPosition( lua_State *L )
  */
 static int playerL_getPilot( lua_State *L )
 {
+   PLAYER_CHECK();
    lua_pushpilot(L, PLAYER_ID);
    return 1;
 }
@@ -441,6 +456,7 @@ static int playerL_getPilot( lua_State *L )
  */
 static int playerL_jumps( lua_State *L )
 {
+   PLAYER_CHECK();
    lua_pushnumber(L, pilot_getJumps(player.p));
    return 1;
 }
@@ -457,6 +473,7 @@ static int playerL_jumps( lua_State *L )
  */
 static int playerL_fuel( lua_State *L )
 {
+   PLAYER_CHECK();
    lua_pushnumber(L,player.p->fuel);
    lua_pushnumber(L,player.p->fuel_consumption);
    return 2;
@@ -477,6 +494,7 @@ static int playerL_refuel( lua_State *L )
    double f;
 
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
 
    if (lua_gettop(L) > 0) {
       f = luaL_checknumber(L,1);
@@ -501,6 +519,7 @@ static int playerL_refuel( lua_State *L )
  */
 static int playerL_autonav( lua_State *L )
 {
+   PLAYER_CHECK();
    lua_pushboolean( L, player_isFlag( PLAYER_AUTONAV ) );
    return 1;
 }
@@ -729,6 +748,7 @@ static int playerL_takeoff( lua_State *L )
 static int playerL_land( lua_State *L )
 {
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
    Planet *pnt = luaL_validplanet(L,1);
    const char *sysname = planet_getSystem( pnt->name );
    if (sysname == NULL)
@@ -908,6 +928,8 @@ static int playerL_shipOutfits( lua_State *L )
    int i, j;
    const PlayerShip_t *ships;
    Pilot *p;
+
+   PLAYER_CHECK();
 
    /* Get name. */
    str = luaL_checkstring(L, 1);
@@ -1166,6 +1188,7 @@ static int playerL_swapShip( lua_State *L )
    int remship;
 
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
 
    remship = lua_toboolean(L,4);
    p       = playerL_newShip( L );
@@ -1309,6 +1332,7 @@ static int playerL_teleport( lua_State *L )
    const char *name, *pntname, *sysname;
 
    NLUA_CHECKRW(L);
+   PLAYER_CHECK();
 
    /* Must not be landed. */
    if (landed)
