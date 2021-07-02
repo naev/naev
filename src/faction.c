@@ -27,6 +27,7 @@
 #include "nluadef.h"
 #include "nxml.h"
 #include "nstring.h"
+#include "player.h"
 #include "opengl.h"
 #include "rng.h"
 #include "space.h"
