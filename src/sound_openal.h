@@ -25,6 +25,7 @@ typedef struct alSound_ {
    char *filename; /**< Name of the file loaded from. */
    char *name; /**< Buffer's name. */
    double length; /**< Length of the buffer. */
+   int channels; /**< Number of channels of the buffer. */
    ALuint buf; /**< Buffer data. */
 } alSound;
 

@@ -747,6 +747,7 @@ int sound_al_load( alSound *snd, SDL_RWops *rw, const char *name )
    }
    else
       snd->length = (double)size / (double)(freq * (bits/8) * channels);
+   snd->channels = channels;
 
    /* Check for errors. */
    al_checkErr();
@@ -874,6 +875,11 @@ static int al_playVoice( alVoice *v, alSound *s,
 
    /* Enable positional sound. */
    alSourcei( v->source, AL_SOURCE_RELATIVE, relative );
+
+#if DEBUGGING
+   if ((relative==AL_FALSE) && (s->channels>1))
+      WARN(_("Sound '%s' has %d channels but is being played as positional. It should be mono!"), s->name, s->channels );
+#endif /* DEBUGGING */
 
    /* Update position. */
    v->pos[0] = px;
