@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>9000000</price>
- <time_mod>1.75</time_mod>
+ <time_mod>1.375</time_mod>
  <trail_generator x="-60" y="0" h="-10">soromid</trail_generator>
  <trail_generator x="-60" y="5" h="-15">soromid</trail_generator>
  <trail_generator x="-60" y="5" h="-10">soromid</trail_generator>

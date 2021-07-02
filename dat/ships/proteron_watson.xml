@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Carrier</class>
  <price>9000000</price>
- <time_mod>2</time_mod>
+ <time_mod>1.5</time_mod>
  <trail_generator x="-55" y="12" h="0" />
  <trail_generator x="-55" y="-12" h="0" />
  <fabricator>Proteron</fabricator>

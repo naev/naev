@@ -7,9 +7,9 @@
  <sound>engine</sound>
  <class>Fighter</class>
  <price>500000</price>
- <time_mod>1</time_mod>
- <trail_generator x="-13" y="-17" h="-6" >nebula</trail_generator>
- <trail_generator x="-13" y="17" h="-6" >nebula</trail_generator>
+ <time_mod>0.9</time_mod>
+ <trail_generator x="-13" y="-17" h="-6">nebula</trail_generator>
+ <trail_generator x="-13" y="17" h="-6">nebula</trail_generator>
  <trail_generator x="-20" y="5" h="0" />
  <trail_generator x="-20" y="-5" h="0" />
  <fabricator>Nexus Shipyards</fabricator>

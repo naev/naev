@@ -6,10 +6,10 @@
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>3000000</price>
- <time_mod>1.625</time_mod>
- <!--<trail_generator x="35" y="0" h="0" >nebula</trail_generator>-->
- <trail_generator x="-23" y="28" h="2" >nebula</trail_generator>
- <trail_generator x="-23" y="-28" h="2" >nebula</trail_generator>
+ <time_mod>1.3</time_mod>
+ 
+ <trail_generator x="-23" y="28" h="2">nebula</trail_generator>
+ <trail_generator x="-23" y="-28" h="2">nebula</trail_generator>
  <trail_generator x="-42" y="0" h="21" />
  <fabricator>Krain Industries</fabricator>
  <license>Heavy Combat Vessel License</license>

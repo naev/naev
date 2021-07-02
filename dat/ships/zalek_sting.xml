@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Corvette</class>
  <price>770000</price>
- <time_mod>1.25</time_mod>
+ <time_mod>1</time_mod>
  <trail_generator x="10" y="25" h="13">nebula</trail_generator>
  <trail_generator x="-25" y="-15" h="-9">nebula</trail_generator>
  <trail_generator x="-25" y="7" h="7">zalek</trail_generator>

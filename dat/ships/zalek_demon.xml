@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Destroyer</class>
  <price>2400000</price>
- <time_mod>1.5</time_mod>
+ <time_mod>1.25</time_mod>
  <trail_generator x="-35" y="20" h="0">nebula</trail_generator>
  <trail_generator x="-10" y="-20" h="0">nebula</trail_generator>
  <trail_generator x="-30" y="8" h="0">zalek</trail_generator>
