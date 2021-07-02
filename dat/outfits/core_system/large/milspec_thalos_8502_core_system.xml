@@ -4,7 +4,7 @@
   <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>large</size>
-  <mass>540</mass>
+  <mass>500</mass>
   <price>2000000</price>
   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Thalos 8502 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
   <gfx_store>core_system_cpu_l1.webp</gfx_store>
