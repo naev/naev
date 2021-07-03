@@ -37,9 +37,6 @@
       - plasma2.png
 - Sean Hildebrand:
     license: CC-by 3.0
-    gui:
-    - no.png
-    - yes.png
     outfit:
       store:
       - cpu_i.png
