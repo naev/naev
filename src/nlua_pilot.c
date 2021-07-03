@@ -3563,6 +3563,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> takingoff: pilot is currently taking off.</li>
  *  <li> manualcontrol: pilot is under manual control.</li>
  *  <li> combat: pilot is engaged in combat.</li>
+ *  <li> carried: pilot came from a fighter bay.</li>
  * </ul>
  *    @luatparam Pilot p Pilot to get flags of.
  *    @luatreturn table Table with flag names an index, boolean as value.
