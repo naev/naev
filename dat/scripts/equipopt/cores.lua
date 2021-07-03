@@ -287,6 +287,28 @@ cores.elite = {
    engines = eeng,
 }
 
+
+--[[
+   SHIP-BASED EXCEPTIONS
+--]]
+-- Normal exceptions
+cores.normal.engines["Kestrel"] = function( heavy )
+   if heavy then
+      return neng["Cruiser"]( heavy )
+   end
+   return choose_one{ "Unicorp Eagle 7000 Engine", "Krain Remige Engine" }
+end
+cores.normal.engines["Pirate Kestrel"] = cores.normal.engines["Kestrel"]
+
+-- Elite exceptions
+cores.normal.engines["Kestrel"] = function( heavy )
+   if heavy then
+      return eeng["Cruiser"]( heavy )
+   end
+   return choose_one{ "Tricon Typhoon Engine", "Krain Remige Engine" }
+end
+cores.elite.engines["Pirate Kestrel"] = cores.elite.engines["Kestrel"]
+
 --[[
 cores.get( "Fighter", { all="elite" } )
 cores.get( "Fighter", { all={"normal","elite"}, heavy=true } )
@@ -296,7 +318,9 @@ function cores.get( p, params )
    if params == nil then
       return nil
    end
-   shipclass = p:ship():class()
+   local s = p:ship()
+   local shipclass = s:class()
+   local shipname = s:nameRaw()
 
    -- Check out if we have to do heavy
    local heavy
@@ -322,13 +346,19 @@ function cores.get( p, params )
    -- Get the cores if applicable
    local c = {}
    if systems then
-      table.insert( c, cores[ systems ].systems[ shipclass ]( heavy ) )
+      local ct = cores[ systems ].systems
+      local co = ct[ shipname ] or ct[ shipclass ]
+      table.insert( c, co( heavy ) )
    end
    if hulls then
-      table.insert( c, cores[ hulls ].hulls[ shipclass ]( heavy ) )
+      local ct = cores[ hulls ].hulls
+      local co = ct[ shipname ] or ct[ shipclass ]
+      table.insert( c, co( heavy ) )
    end
    if engines then
-      table.insert( c, cores[ engines ].engines[ shipclass ]( heavy ) )
+      local ct = cores[ engines ].engines
+      local co = ct[ shipname ] or ct[ shipclass ]
+      table.insert( c, co( heavy ) )
    end
 
    return c
