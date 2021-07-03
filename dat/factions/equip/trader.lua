@@ -34,7 +34,7 @@ function equip( p )
    params.max_mass = 0.8 + 0.2*rnd.rnd() -- want space for cargo!
 
    -- See cores
-   local cores = ecores.get( p, { all="normal" } )
+   local cores = ecores.get( p, { all="standard" } )
 
    -- Try to equip
    equipopt.equip( p, cores, eoutfits.standard.set, params )

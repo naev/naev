@@ -46,7 +46,7 @@ local pirate_outfits = eoutfits.merge{{
    "Battery I", "Shield Capacitor I", "Reactor Class I",
 }}
 
-local pirate_class = { "normal", "elite" }
+local pirate_class = { "standard", "elite" }
 
 local pirate_params = {
    ["Pirate Kestrel"] = function () return {

@@ -32,7 +32,7 @@ function equip_generic( p )
    params.max_mass = 0.9 + 0.2*rnd.rnd()
 
    -- See cores
-   local cores = ecores.get( p, { all="normal" } )
+   local cores = ecores.get( p, { all="standard" } )
 
    -- Try to equip
    equipopt.equip( p, cores, eoutfits.standard.set, params )

@@ -30,7 +30,7 @@ function equip( p )
    params.type_range["Bolt Weapon"] = { min = 1 } -- need at least one weapon
 
    -- See cores
-   local cores = ecores.get( p, { all="normal" } )
+   local cores = ecores.get( p, { all="standard" } )
 
    -- Try to equip
    equipopt.equip( p, cores, miner_outfits, params )
