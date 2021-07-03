@@ -67,10 +67,6 @@ static unsigned int equipment_wid   = 0; /**< Global wid. */
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
 
-/* Slot textures */
-static glTexture *equip_ico_yes = NULL; /* Green circle */
-static glTexture *equip_ico_no  = NULL; /* Red circle with slash */
-
 /*
  * prototypes
  */
@@ -326,12 +322,6 @@ void equipment_open( unsigned int wid )
    equipment_dir        = 0.;
    eq_wgt.selected      = NULL;
 
-   /* Icons */
-   if (equip_ico_yes == NULL)
-      equip_ico_yes = gl_newImage( GUI_GFX_PATH"yes.png", 0);
-   if (equip_ico_no == NULL)
-      equip_ico_no  = gl_newImage( GUI_GFX_PATH"no.png", 0);
-
    /* Add ammo. */
    equipment_addAmmo();
 
@@ -490,13 +480,16 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       else if ((o != NULL) &&
             (lst[i].sslot->slot.type == o->slot.type)) {
-         /* Render the appropriate sprite, centered in each slot. */
-         if (pilot_canEquip( p, &lst[i], o ) != NULL)
-            gl_blitScale( equip_ico_no,
-               x + w * .1, y + h * .1, w * .8, h * .8, NULL);
-         else
-            gl_blitScale( equip_ico_yes,
-               x + w * .1, y + h * .1, w * .8, h * .8, NULL);
+         /* Render a thick frame with a yes/no color, and geometric cue. */
+         int ok = !!pilot_canEquip( p, &lst[i], o );
+         toolkit_drawOutlineThick( x, y, w, h, -.05*w, .20*w, &cBlack, 0 );
+         if (!ok) {
+            toolkit_drawTriangle( x+.05*w, y+.25*h, x+.75*w, y+.95*h, x+.25*w, y+.075*h, &cBlack );
+            toolkit_drawTriangle( x+.95*w, y+.75*h, x+.75*w, y+.95*h, x+.25*w, y+.075*h, &cBlack );
+            toolkit_drawTriangle( x+.10*w, y+.20*h, x+.80*w, y+.90*h, x+.20*w, y+.10*h, &cRed );
+            toolkit_drawTriangle( x+.90*w, y+.80*h, x+.80*w, y+.90*h, x+.20*w, y+.10*h, &cRed );
+         }
+         toolkit_drawOutlineThick( x, y, w, h, -.10*w, .10*w, ok ? &cGreen : &cRed, 0 );
       }
 
       /* Must rechoose colour based on slot properties. */
@@ -2074,11 +2067,5 @@ void equipment_cleanup (void)
       free(iar_outfits);
       iar_outfits = NULL;
    }
-
-   /* Free icons. */
-   gl_freeTexture(equip_ico_yes);
-   equip_ico_yes = NULL;
-   gl_freeTexture(equip_ico_no);
-   equip_ico_no = NULL;
 }
 

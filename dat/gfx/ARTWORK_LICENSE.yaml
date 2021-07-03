@@ -37,9 +37,6 @@
       - plasma2.png
 - Sean Hildebrand:
     license: CC-by 3.0
-    gui:
-    - no.png
-    - yes.png
     outfit:
       store:
       - cpu_i.png
@@ -51,10 +48,6 @@
     outfit:
       store:
       - fidelity_fighter.png
-- BTAxis:
-    license: PD
-    gui:
-    - hail.png
 - Unnamed:
     license: CC-by-sa 3.0
     outfit:
