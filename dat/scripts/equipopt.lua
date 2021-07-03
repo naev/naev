@@ -48,6 +48,53 @@ local special = {
 
 
 --[[
+      Completely custom ship builds: they do not use optimization
+--]]
+local special_ships = {}
+special_ships["Drone"] = function( p )
+   for k,o in ipairs{
+      "Milspec Orion 2301 Core System",
+      "Nexus Dart 150 Engine",
+      "Nexus Light Stealth Plating",
+      "Neutron Disruptor",
+      "Neutron Disruptor",
+      "Neutron Disruptor",
+   } do
+      p:addOutfit( o, 1, true )
+   end
+end
+special_ships["Drone (Hyena)"] = special_ships["Drone"]
+special_ships["Heavy Drone"] = function( p )
+   for k,o in ipairs{
+      "Milspec Orion 3701 Core System",
+      "Unicorp Hawk 350 Engine",
+      choose_one{"Nexus Light Stealth Plating", "S&K Light Combat Plating"},
+      "Shatterer Launcher",
+      "Shatterer Launcher",
+      "Neutron Disruptor",
+      "Neutron Disruptor",
+   } do
+      p:addOutfit( o, 1, true )
+   end
+end
+special_ships["Za'lek Scout Drone"] = function( p )
+   p:addOutfit( "Particle Lance")
+end
+special_ships["Za'lek Light Drone"] = function( p )
+   p:addOutfit( "Particle Lance")
+end
+special_ships["Za'lek Bomber Drone"] = function( p )
+   p:addOutfit( "Electron Burst Cannon" )
+   p:addOutfit( "Electron Burst Cannon" )
+end
+special_ships["Za'lek Heavy Drone"] = function( p )
+   p:addOutfit( "Orion Lance" )
+   p:addOutfit( "Orion Lance" )
+   p:addOutfit( "Electron Burst Cannon" )
+end
+
+
+--[[
       Goodness functions to rank how good each outfits are
 --]]
 function equipopt.goodness_default( o, p )
@@ -353,7 +400,24 @@ function equipopt.equip( p, cores, outfit_list, params )
    params = params or equipopt.params.default()
 
    -- Naked ship
+   local ps = p:ship()
    p:rmOutfit( "all" )
+
+   -- Special ships used fixed outfits
+   local specship = special_ships[ ps:nameRaw() ]
+   if specship then
+      specship( p )
+      if __debugging then
+         local b, s = p:spaceworthy()
+         if not b then
+            warn(string.format(_("Pilot '%s' is not space worthy after custom equip script is run! Reason: %s"),p:name(),s))
+         end
+         return false
+      end
+      return true
+   end
+
+   -- Handle cores
    if cores then
       -- Don't actually have to remove cores as it should overwrite default
       -- cores as necessary
@@ -368,7 +432,6 @@ function equipopt.equip( p, cores, outfit_list, params )
    end
 
    -- Global ship stuff
-   local ps = p:ship()
    local ss = p:shipstat( nil, true ) -- Should include cores!!
    local st = p:stats() -- also include cores
 
