@@ -149,7 +149,3 @@
     outfit:
       store:
       - license_pirate.png
-- qubodup <https://openclipart.org/artist/qubodup>:
-    license: PD
-    overlays:
-    - portrait_exclamation.png
