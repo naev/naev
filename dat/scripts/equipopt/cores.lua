@@ -309,6 +309,9 @@ cores.normal.engines["Kestrel"] = function( heavy )
 end
 cores.elite.engines["Pirate Kestrel"] = cores.elite.engines["Kestrel"]
 
+-- Load Soromid Exceptions
+require "equipopt.cores_soromid"( cores )
+
 --[[
 cores.get( "Fighter", { all="elite" } )
 cores.get( "Fighter", { all={"normal","elite"}, heavy=true } )
