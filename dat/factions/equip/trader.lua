@@ -31,7 +31,7 @@ function equip( p )
    -- Choose parameters and make Pirateish
    local params = equipopt.params.choose( p )
    params.rnd = params.rnd * 1.5
-   params.max_mass = 0.75 + 0.2*rnd.rnd() -- want space for cargo!
+   params.max_mass = 0.8 + 0.2*rnd.rnd() -- want space for cargo!
 
    -- See cores
    local cores = ecores.get( p, { all="normal" } )
@@ -40,7 +40,8 @@ function equip( p )
    equipopt.equip( p, cores, eoutfits.standard.set, params )
 
    -- Add cargo
-   if rnd.rnd() < cargo_chance[ p:ship():class() ] then
+   local cc = cargo_chance[ p:ship():class() ]
+   if cc and rnd.rnd() < cc then
       ecargo.add( p )
    end
 end
