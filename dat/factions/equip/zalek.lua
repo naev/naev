@@ -36,13 +36,6 @@ local zalek_outfits = eoutfits.merge{{
    "Battery I", "Shield Capacitor I", "Reactor Class I",
 }}
 
-local zalek_skip = {
-   ["Za'lek Scout Drone"]  = true,
-   ["Za'lek Light Drone"]  = true,
-   ["Za'lek Heavy Drone"]  = true,
-   ["Za'lek Bomber Drone"] = true,
-}
-
 local zalek_params = {
    ["Za'lek Demon"] = function () return {
          type_range = {
@@ -92,7 +85,6 @@ local zalek_cores = {
 function equip( p )
    local ps    = p:ship()
    local sname = ps:nameRaw()
-   if zalek_skip[sname] then return end
 
    -- Choose parameters and make Za'lekish
    local params = equipopt.params.choose( p )
