@@ -165,10 +165,9 @@ function equipopt.params.default( overwrite )
       max_mass    = 1.0, -- maximum amount to go over engine limit (relative)
       budget      = nil, -- total cost budget
       -- Range of type, this is dangerous as minimum values could lead to the
-      -- optimization problem not having a solution
+      -- optimization problem not having a solution with high minimums
       type_range  = {
-         --["Fighter Bay"] = { min=1, max=2 },
-         --["Bolt Turret"] = { min=1, max=2 },
+         ["Launcher"] = { max=2 },
       },
       -- Outfit names that the pilot should prefer (multiplies weights)
       prefer = {
@@ -253,9 +252,6 @@ function equipopt.params.light_fighter( overwrite )
       t_speed     = 400,
       t_track     = 4000,
       t_range     = 1000,
-      type_range  = {
-         ["Launcher"] = { max=2 },
-      },
    }, overwrite )
 end
 
@@ -265,9 +261,6 @@ function equipopt.params.heavy_fighter( overwrite )
       t_speed     = 300,
       t_track     = 7000,
       t_range     = 1000,
-      type_range  = {
-         ["Launcher"] = { max=2 },
-      },
    }, overwrite )
 end
 
@@ -316,9 +309,6 @@ function equipopt.params.destroyer( overwrite )
       t_speed     = 150,
       t_track     = 15e3,
       t_range     = 3000,
-      type_range  = {
-         ["Launcher"] = { max=2 },
-      },
    }, overwrite )
 end
 
@@ -337,9 +327,6 @@ function equipopt.params.heavy_cruiser( overwrite )
       t_speed     = 70,
       t_track     = 35e3,
       t_range     = 4000,
-      type_range  = {
-         ["Launcher"] = { max=2 },
-      },
    }, overwrite )
 end
 
@@ -350,9 +337,6 @@ function equipopt.params.carrier( overwrite )
       t_track     = 35e3,
       t_range     = 4000,
       fighterbay  = 2,
-      type_range  = {
-         ["Launcher"] = { max=2 },
-      },
    }, overwrite )
 end
 
