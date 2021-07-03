@@ -123,7 +123,7 @@ function update_target ()
       target_gfx = ptarget:ship():gfxTarget()
       target_gfx_w, target_gfx_h = target_gfx:dim()
       if target_fact ~= nil and target_fact:known() then
-         target_gfxFact = target_fact:logoTiny()
+         target_gfxFact = target_fact:logo()
          if target_gfxFact ~= nil then
             target_gf_w, target_gf_h = target_gfxFact:dim()
             target_gf_w = ( target_gf_w + 24 ) / 2
@@ -350,7 +350,7 @@ function render_target ()
 
    -- Render faction logo.
    if scan and target_gfxFact ~= nil then
-      gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - 2*target_gf_h + 3 )
+      gfx.renderTexScale( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - 2*target_gf_h + 3, 24, 24 )
    end
 end
 function render_targetnone ()

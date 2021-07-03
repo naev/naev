@@ -1182,7 +1182,7 @@ static void land_createMainTab( unsigned int wid )
 {
    glTexture *logo;
    int offset;
-   int w, h, th;
+   int w, h, logow, logoh, th;
    const char *bufSInfo;
 
    /* Get window dimensions. */
@@ -1193,11 +1193,13 @@ static void land_createMainTab( unsigned int wid )
     */
    offset = 20;
    if (land_planet->faction != -1) {
-      logo = faction_logoSmall(land_planet->faction);
+      logo = faction_logo(land_planet->faction);
       if (logo != NULL) {
-         window_addImage( wid, 440 + (w-460-logo->w)/2, -20,
-               0, 0, "imgFaction", logo, 0 );
-         offset = 84;
+         logow = logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+         logoh = logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+         window_addImage( wid, 440 + (w-460-logow)/2, -20,
+               logow, logoh, "imgFaction", logo, 0 );
+         offset += FACTION_LOGO_SM;
       }
    }
 

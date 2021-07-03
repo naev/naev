@@ -41,8 +41,7 @@ static int factionL_setplayerstanding( lua_State *L );
 static int factionL_playerstanding( lua_State *L );
 static int factionL_enemies( lua_State *L );
 static int factionL_allies( lua_State *L );
-static int factionL_logoSmall( lua_State *L );
-static int factionL_logoTiny( lua_State *L );
+static int factionL_logo( lua_State *L );
 static int factionL_colour( lua_State *L );
 static int factionL_isknown( lua_State *L );
 static int factionL_setknown( lua_State *L );
@@ -65,8 +64,7 @@ static const luaL_Reg faction_methods[] = {
    { "playerStanding", factionL_playerstanding },
    { "enemies", factionL_enemies },
    { "allies", factionL_allies },
-   { "logoSmall", factionL_logoSmall },
-   { "logoTiny", factionL_logoTiny },
+   { "logo", factionL_logo },
    { "colour", factionL_colour },
    { "known", factionL_isknown },
    { "setKnown", factionL_setknown },
@@ -513,38 +511,18 @@ static int factionL_allies( lua_State *L )
 
 
 /**
- * @brief Gets the small faction logo which is 64x64 or smaller.
+ * @brief Gets the faction logo.
  *
  *    @luatparam Faction f Faction to get logo from.
- *    @luatreturn Tex The small faction logo or nil if not applicable.
- * @luafunc logoSmall
+ *    @luatreturn Tex The faction logo or nil if not applicable.
+ * @luafunc logo
  */
-static int factionL_logoSmall( lua_State *L )
+static int factionL_logo( lua_State *L )
 {
    int lf;
    glTexture *tex;
    lf = luaL_validfaction(L,1);
-   tex = faction_logoSmall( lf );
-   if (tex == NULL)
-      return 0;
-   lua_pushtex( L, gl_dupTexture( tex ) );
-   return 1;
-}
-
-
-/**
- * @brief Gets the tiny faction logo which is 24x24 or smaller.
- *
- *    @luatparam Faction f Faction to get logo from.
- *    @luatreturn Tex The tiny faction logo or nil if not applicable.
- * @luafunc logoTiny
- */
-static int factionL_logoTiny( lua_State *L )
-{
-   int lf;
-   glTexture *tex;
-   lf = luaL_validfaction(L,1);
-   tex = faction_logoTiny( lf );
+   tex = faction_logo( lf );
    if (tex == NULL)
       return 0;
    lua_pushtex( L, gl_dupTexture( tex ) );

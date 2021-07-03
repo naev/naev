@@ -59,8 +59,7 @@ typedef struct Faction_ {
    char *ai; /**< Name of the faction's default pilot AI. */
 
    /* Graphics. */
-   glTexture *logo_small; /**< Small logo. */
-   glTexture *logo_tiny; /**< Tiny logo. */
+   glTexture *logo; /**< Tiny logo. */
    const glColour *colour; /**< Faction specific colour. */
 
    /* Enemies */
@@ -339,36 +338,19 @@ const char* faction_default_ai( int f )
 
 
 /**
- * @brief Gets the faction's small logo (64x64 or smaller).
+ * @brief Gets the faction's logo (ideally 256x256).
  *
  *    @param f Faction to get the logo of.
- *    @return The faction's small logo image.
+ *    @return The faction's logo image.
  */
-glTexture* faction_logoSmall( int f )
+glTexture* faction_logo( int f )
 {
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."),f);
       return NULL;
    }
 
-   return faction_stack[f].logo_small;
-}
-
-
-/**
- * @brief Gets the faction's tiny logo (24x24 or smaller).
- *
- *    @param f Faction to get the logo of.
- *    @return The faction's tiny logo image.
- */
-glTexture* faction_logoTiny( int f )
-{
-   if (!faction_isFaction(f)) {
-      WARN(_("Faction id '%d' is invalid."),f);
-      return NULL;
-   }
-
-   return faction_stack[f].logo_tiny;
+   return faction_stack[f].logo;
 }
 
 
@@ -1358,12 +1340,10 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node,"logo")) {
-         if (temp->logo_small != NULL)
+         if (temp->logo != NULL)
             WARN(_("Faction '%s' has duplicate 'logo' tag."), temp->name);
-         snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s_small.png", xml_get(node) );
-         temp->logo_small = gl_newImage(buf, 0);
-         snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s_tiny.png", xml_get(node) );
-         temp->logo_tiny = gl_newImage(buf, 0);
+         snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s.webp", xml_get(node) );
+         temp->logo = gl_newImage(buf, 0);
          continue;
       }
 
@@ -1580,8 +1560,7 @@ static void faction_freeOne( Faction *f )
    free(f->longname);
    free(f->displayname);
    free(f->ai);
-   gl_freeTexture(f->logo_small);
-   gl_freeTexture(f->logo_tiny);
+   gl_freeTexture(f->logo);
    array_free(f->allies);
    array_free(f->enemies);
    if (f->sched_env != LUA_NOREF)
@@ -1779,10 +1758,8 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
 
       if (bf->ai!=NULL && f->ai==NULL)
          f->ai = strdup( bf->ai );
-      if (bf->logo_small!=NULL)
-         f->logo_small = gl_dupTexture( bf->logo_small );
-      if (bf->logo_tiny!=NULL)
-         f->logo_tiny = gl_dupTexture( bf->logo_tiny );
+      if (bf->logo!=NULL)
+         f->logo = gl_dupTexture( bf->logo );
 
       for (i=0; i<array_size(bf->allies); i++) {
          tmp = &array_grow( &f->allies );

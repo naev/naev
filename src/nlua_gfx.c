@@ -34,6 +34,7 @@
 static int gfxL_dim( lua_State *L );
 static int gfxL_renderTex( lua_State *L );
 static int gfxL_renderTexRaw( lua_State *L );
+static int gfxL_renderTexScale( lua_State *L );
 static int gfxL_renderTexH( lua_State *L );
 static int gfxL_renderRect( lua_State *L );
 static int gfxL_renderRectH( lua_State *L );
@@ -58,6 +59,7 @@ static const luaL_Reg gfxL_methods[] = {
    /* Render stuff. */
    { "renderTex", gfxL_renderTex },
    { "renderTexRaw", gfxL_renderTexRaw },
+   { "renderTexScale", gfxL_renderTexScale },
    { "renderTexH", gfxL_renderTexH },
    { "renderRect", gfxL_renderRect },
    { "renderRectH", gfxL_renderRectH },
@@ -193,6 +195,65 @@ static int gfxL_renderTex( lua_State *L )
 
    /* Render. */
    gl_blitStaticSprite( tex, x, y, sx, sy, col );
+
+   return 0;
+}
+
+
+/**
+ * @brief DEPRECATED: Renders a texture, scaled. Ultimately, love.graphics should handle this.
+ *
+ *    @luatparam Tex tex Texture to render.
+ *    @luatparam number pos_x X position to render texture at.
+ *    @luatparam number pos_y Y position to render texture at.
+ *    @luatparam number bw Width to scale to.
+ *    @luatparam number bh Height to scale to.
+ *    @luatparam[opt=0] int sprite_x X sprite to render.
+ *    @luatparam[opt=0] int sprite_y Y sprite to render.
+ *    @luatparam[opt] Colour colour Colour to use when rendering.
+ * @luafunc renderTexScale
+ */
+static int gfxL_renderTexScale( lua_State *L )
+{
+   glTexture *tex;
+   glColour *col;
+   double x, y, bw, bh;
+   int sx, sy;
+
+   NLUA_CHECKRW(L);
+
+   /* Parameters. */
+   col = NULL;
+   tex = luaL_checktex( L, 1 );
+   x   = luaL_checknumber( L, 2 );
+   y   = luaL_checknumber( L, 3 );
+   bw  = luaL_checknumber( L, 4 );
+   bh  = luaL_checknumber( L, 5 );
+   if (lua_isnumber( L, 6 )) {
+      sx    = luaL_checkinteger( L, 6 ) - 1;
+      sy    = luaL_checkinteger( L, 7 ) - 1;
+      if (lua_iscolour(L, 8))
+         col = luaL_checkcolour( L, 8 );
+   }
+   else {
+      sx    = 0;
+      sy    = 0;
+      if (lua_iscolour(L, 6))
+         col = luaL_checkcolour(L,4);
+   }
+
+   /* Some safety checking. */
+#if DEBUGGING
+   if (sx >= tex->sx)
+      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (X position) sprite: %d > %d."),
+            tex->name, sx+1, tex->sx );
+   if (sx >= tex->sx)
+      NLUA_ERROR( L, _("Texture '%s' trying to render out of bounds (Y position) sprite: %d > %d."),
+            tex->name, sy+1, tex->sy );
+#endif /* DEBUGGING */
+
+   /* Render. */
+   gl_blitScaleSprite( tex, x, y, sx, sy, bw, bh, col );
 
    return 0;
 }

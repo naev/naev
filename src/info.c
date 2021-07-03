@@ -1022,7 +1022,7 @@ static void standings_update( unsigned int wid, char* str )
    (void) str;
    int p, y;
    glTexture *t;
-   int w, h, lw;
+   int w, h, lw, tw, th;
    char buf[128];
    int m;
 
@@ -1033,12 +1033,14 @@ static void standings_update( unsigned int wid, char* str )
    p = toolkit_getListPos( wid, "lstStandings" );
 
    /* Render logo. */
-   t = faction_logoSmall( info_factions[p] );
+   t = faction_logo( info_factions[p] );
    if (t != NULL) {
-      window_modifyImage( wid, "imgLogo", t, 0, 0 );
+      tw = t->w * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
+      th = t->h * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
+      window_modifyImage( wid, "imgLogo", t, tw, th );
       y  = -40;
-      window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-t->w)/2, y );
-      y -= t->h;
+      window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-tw)/2, y );
+      y -= th;
    }
    else {
       window_modifyImage( wid, "imgLogo", NULL, 0, 0 );
