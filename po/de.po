@@ -91345,12 +91345,12 @@ msgid "PAUSED"
 msgstr "PAUSIERT"
 
 #: src/naev.c:1030
-msgid "Icon (icon.png) not found!"
-msgstr "Icon (icon.png) nicht gefunden!"
+msgid "Icon (icon.webp) not found!"
+msgstr "Icon (icon.webp) nicht gefunden!"
 
 #: src/naev.c:1035
-msgid "Unable to load icon.png!"
-msgstr "Konnte icon.png nicht laden!"
+msgid "Unable to load icon.webp!"
+msgstr "Konnte icon.webp nicht laden!"
 
 #: src/naev.c:1060
 msgid " debug"
