@@ -195,7 +195,7 @@ SHADERS = [
    ),
    Shader(
       name = "status",
-      vs_path = "status.vert",
+      vs_path = "project_pos.vert",
       fs_path = "status.frag",
       attributes = ["vertex"],
       uniforms = ["projection", "ok"],
