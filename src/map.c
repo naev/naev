@@ -439,7 +439,7 @@ static void map_update( unsigned int wid )
 {
    int i;
    StarSystem *sys;
-   int f, h, x, y;
+   int f, h, x, y, logow, logoh;
    unsigned int services;
    int hasPlanets;
    char t;
@@ -570,11 +570,13 @@ static void map_update( unsigned int wid )
          snprintf( buf, sizeof(buf), "%s", faction_longname(f) );
 
       /* Modify the image. */
-      logo = faction_logoSmall(f);
-      window_modifyImage( wid, "imgFaction", logo, 0, 0 );
+      logo = faction_logo(f);
+      logow = logo == NULL ? 0 : logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+      logoh = logo == NULL ? 0 : logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+      window_modifyImage( wid, "imgFaction", logo, logow, logoh );
       if (logo != NULL)
          window_moveWidget( wid, "imgFaction",
-               -90 + logo->w/2, -20 - 32 - 10 - gl_defFont.h + logo->h/2);
+               -90 + logow/2, -20 - 32 - 10 - gl_defFont.h + logoh/2);
 
       /* Modify the text */
       window_modifyText( wid, "txtFaction", buf );

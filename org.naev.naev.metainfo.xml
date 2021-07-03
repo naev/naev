@@ -1,54 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
   <id>org.naev.naev</id>
-  
+
   <name>Naev</name>
   <summary>2D action/rpg space trading combat game</summary>
-  
+  <summary xml:lang="de">2D-Action- und RPG-Weltraumhandels- und Kampfspiel</summary>
+  <icon type="stock">naev</icon>
+  <url type="homepage">https://naev.org</url>
+  <url type="bugtracker">https://github.com/naev/naev/issues</url>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  
+  <update_contact>bobbens@gmail.com</update_contact>
+
   <recommends>
     <control>pointing</control>
     <control>keyboard</control>
     <control>gamepad</control>
   </recommends>
-  
+
   <description>
     <p>
       Naev is a 2D space trading and combat game, taking inspiration from the Escape Velocity series, among others.
     </p>
+    <p xml:lang="de">
+      Naev ist ein 2D-Weltraumhandels- und -kampfspiel, welches Inspiration aus der „Escape Veolcity“-Serie und anderen Spielen nimmt.
+    </p>
+    <p>
+      You pilot a space ship from a top-down perspective, and are more or less free to do what you want. As the genre name implies, you’re able to trade and engage in combat at will. Beyond that, there’s an ever-growing number of storyline missions, equipment, and ships; Even the galaxy itself grows larger with each release. For the literarily-inclined, there are large amounts of lore accompanying everything from planets to equipment.
+    </p>
+    <p xml:lang="de">
+      Du steuerst ein Raumschiff aus der Vogelperspektive und kannst mehr oder weniger über dein eigenes Schicksal bestimmen. Wie der Name des Genres impliziert, kannst du beliebig handeln und kämpfen. Darüber hinaus gibt es eine beständig wachsende Anzahl an Missionen, Equipment und Schiffe; auch die Galaxie selbst wächst mit jeder Veröffentlichung. Für die literarisch geneigten Spieler gibt es viele Hintergrundgeschichten, die alles von Planeten bis zum Equipment begleiten.
+    </p>
   </description>
-  
-  <launchable type="desktop-id">org.naev.naev.desktop</launchable>
-  <screenshots>
-    <screenshot type="default">
-      <image>https://naev.org/imgs/screenshots/fight2.png</image>
-    </screenshot>
-    <screenshot>
-      <image>https://naev.org/imgs/screenshots/menu.png</image>
-    </screenshot>
-    <screenshot>
-      <image>https://naev.org/imgs/screenshots/map.png</image>
-    </screenshot>
-    <screenshot>
-        <image>https://naev.org/imgs/screenshots/equip.png</image>
-    </screenshot>
-    <screenshot>
-        <image>https://naev.org/imgs/screenshots/jump.png</image>
-    </screenshot>
-    <screenshot>
-        <image>https://naev.org/imgs/screenshots/planet.png</image>
-    </screenshot>
-  </screenshots>
-  
-  <icon type="stock">naev</icon>
-  
+
   <categories>
     <category>Game</category>
     <category>AdventureGame</category>
   </categories>
-  
+
+  <releases>
+    <release version="0.8.2" type="stable" date="2021-02-12">
+      <url>https://naev.org/blarg/2021-02-12_0.8.2</url>
+    </release>
+    <release version="0.8.1" type="stable" date="2021-01-09">
+      <url>https://naev.org/blarg/2021-01-09_0.8.1</url>
+    </release>
+    <release version="0.8.0" type="stable" date="2020-12-17">
+      <url>https://naev.org/blarg/2020-12-17_0.8.0</url>
+    </release>
+    <release version="0.7.0" type="stable" date="2017-07-08">
+      <url>https://naev.org/blarg/2017-07-08_0.7.0</url>
+    </release>
+    <release version="0.6.1" type="stable" date="2015-11-15">
+      <url>https://naev.org/blarg/2015-11-15_0.6.1</url>
+    </release>
+    <release version="0.6.0" type="stable" date="2015-03-17">
+      <url>https://naev.org/blarg/2015-03-17_0.6.0</url>
+    </release>
+    <release version="0.5.3" type="stable" date="2012-04-15">
+      <url>https://naev.org/blarg/2012-04-15_0.5.3</url>
+    </release>
+    <release version="0.5.2" type="stable" date="2012-03-25">
+      <url>https://naev.org/blarg/2012-03-25_0.5.2</url>
+    </release>
+    <release version="0.5.1" type="stable" date="2012-03-01">
+      <url>https://naev.org/blarg/2012-03-01_0.5.1</url>
+    </release>
+    <release version="0.5.0" type="stable" date="2011-06-03">
+      <url>https://naev.org/blarg/2011-06-03_0.5.0</url>
+    </release>
+  </releases>
+
+  <launchable type="desktop-id">org.naev.naev.desktop</launchable>
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>A pirate kestrel in a firefight.</caption>
+      <image>https://naev.org/imgs/screenshots/fight2.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>The main menu.</caption>
+      <image>https://naev.org/imgs/screenshots/menu.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>The galaxy map.</caption>
+      <image>https://naev.org/imgs/screenshots/map.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>The outfit screen.</caption>
+      <image>https://naev.org/imgs/screenshots/equip.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>A jumping ship.</caption>
+      <image>https://naev.org/imgs/screenshots/jump.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>A ringed planet.</caption>
+      <image>https://naev.org/imgs/screenshots/planet.png</image>
+    </screenshot>
+  </screenshots>
+
+  <content_rating type="oars-1.0">
+    <content_attribute id="violence-fantasy">moderate</content_attribute>
+    <content_attribute id="drugs-alcohol">mild</content_attribute>
+    <content_attribute id="language-humor">moderate</content_attribute>
+    <content_attribute id="money-gambling">mild</content_attribute>
+  </content_rating>
+
   <provides>
     <binary>naev</binary>
   </provides>

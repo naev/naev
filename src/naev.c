@@ -1022,14 +1022,14 @@ static void window_caption (void)
    SDL_RWops *rw;
 
    /* Load icon. */
-   rw = PHYSFSRWOPS_openRead( GFX_PATH"icon.png" );
+   rw = PHYSFSRWOPS_openRead( GFX_PATH"icon.webp" );
    if (rw == NULL) {
-      WARN( _("Icon (icon.png) not found!") );
+      WARN( _("Icon (icon.webp) not found!") );
       return;
    }
    naev_icon   = IMG_Load_RW( rw, 1 );
    if (naev_icon == NULL) {
-      WARN( _("Unable to load icon.png!") );
+      WARN( _("Unable to load icon.webp!") );
       return;
    }
 

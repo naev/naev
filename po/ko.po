@@ -74757,11 +74757,11 @@ msgid "PAUSED"
 msgstr ""
 
 #: src/naev.c:1030
-msgid "Icon (icon.png) not found!"
+msgid "Icon (icon.webp) not found!"
 msgstr ""
 
 #: src/naev.c:1035
-msgid "Unable to load icon.png!"
+msgid "Unable to load icon.webp!"
 msgstr ""
 
 #: src/naev.c:1060

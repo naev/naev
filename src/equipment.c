@@ -67,10 +67,6 @@ static unsigned int equipment_wid   = 0; /**< Global wid. */
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
 
-/* Slot textures */
-static glTexture *equip_ico_yes = NULL; /* Green circle */
-static glTexture *equip_ico_no  = NULL; /* Red circle with slash */
-
 /*
  * prototypes
  */
@@ -121,7 +117,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
 {
    (void)str;
    Outfit* o;
-   int i, active, minimal, n;
+   int i, active, minimal, n, nfits;
    PilotOutfitSlot* slots;
    Pilot *p;
    OutfitSlotSize size;
@@ -151,10 +147,67 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
       default:
          return;
    }
+   n = array_size(slots);
+
+   /* See how many slots it fits into. */
+   nfits = 0;
+   minimal = n;
+   for (i=0; i<n; i++) {
+      /* Must fit the slot. */
+      if (!outfit_fitsSlot( o, &slots[i].sslot->slot))
+         continue;
+
+      /* Must have valid slot size. */
+      if (o->slot.size == OUTFIT_SLOT_SIZE_NA)
+         continue;
+
+      minimal = i;
+      nfits++;
+   }
+   /* Only fits in a single slot, so we might as well just swap it. */
+   if (nfits==1) {
+      eq_wgt.outfit  = o;
+      p              = eq_wgt.selected;
+      /* We have to call once to remove, once to add. */
+      if (slots[minimal].outfit != NULL)
+         equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+      equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+      return;
+   }
+
+   /* See if limit is applied and swap with shared limit slot. */
+   if (o->limit != NULL) {
+      minimal = n;
+      for (i=0; i<n; i++) {
+         /* Must fit the slot. */
+         if (!outfit_fitsSlot( o, &slots[i].sslot->slot))
+            continue;
+
+         /* Must have valid slot size. */
+         if (o->slot.size == OUTFIT_SLOT_SIZE_NA)
+            continue;
+
+         /* Must have outfit with limit. */
+         if ((slots[i].outfit == NULL) || (slots[i].outfit->limit == NULL))
+            continue;
+
+         /* Must share a limit to be able to swap. */
+         if (strcmp(slots[i].outfit->limit,o->limit)!=0)
+            continue;
+
+         minimal = i;
+      }
+      if (minimal < n) {
+         eq_wgt.outfit  = o;
+         p              = eq_wgt.selected;
+         /* Once to unequip and once to equip. */
+         equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+         equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+      }
+   }
 
    /* Loop through outfit slots of the right type, try to find an empty one */
    size = OUTFIT_SLOT_SIZE_NA;
-   n = array_size(slots);
    minimal = n;
    for (i=0; i<n; i++) {
       /* Slot full. */
@@ -268,12 +321,6 @@ void equipment_open( unsigned int wid )
    equipment_lastick    = SDL_GetTicks();
    equipment_dir        = 0.;
    eq_wgt.selected      = NULL;
-
-   /* Icons */
-   if (equip_ico_yes == NULL)
-      equip_ico_yes = gl_newImage( GUI_GFX_PATH"yes.png", 0);
-   if (equip_ico_no == NULL)
-      equip_ico_no  = gl_newImage( GUI_GFX_PATH"no.png", 0);
 
    /* Add ammo. */
    equipment_addAmmo();
@@ -433,13 +480,16 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       else if ((o != NULL) &&
             (lst[i].sslot->slot.type == o->slot.type)) {
-         /* Render the appropriate sprite, centered in each slot. */
-         if (pilot_canEquip( p, &lst[i], o ) != NULL)
-            gl_blitScale( equip_ico_no,
-               x + w * .1, y + h * .1, w * .8, h * .8, NULL);
-         else
-            gl_blitScale( equip_ico_yes,
-               x + w * .1, y + h * .1, w * .8, h * .8, NULL);
+         /* Render a thick frame with a yes/no color, and geometric cue. */
+         int ok = !!pilot_canEquip( p, &lst[i], o );
+         toolkit_drawOutlineThick( x, y, w, h, -.05*w, .20*w, &cBlack, 0 );
+         if (!ok) {
+            toolkit_drawTriangle( x+.05*w, y+.25*h, x+.75*w, y+.95*h, x+.25*w, y+.075*h, &cBlack );
+            toolkit_drawTriangle( x+.95*w, y+.75*h, x+.75*w, y+.95*h, x+.25*w, y+.075*h, &cBlack );
+            toolkit_drawTriangle( x+.10*w, y+.20*h, x+.80*w, y+.90*h, x+.20*w, y+.10*h, &cRed );
+            toolkit_drawTriangle( x+.90*w, y+.80*h, x+.80*w, y+.90*h, x+.20*w, y+.10*h, &cRed );
+         }
+         toolkit_drawOutlineThick( x, y, w, h, -.10*w, .10*w, ok ? &cGreen : &cRed, 0 );
       }
 
       /* Must rechoose colour based on slot properties. */
@@ -2017,11 +2067,5 @@ void equipment_cleanup (void)
       free(iar_outfits);
       iar_outfits = NULL;
    }
-
-   /* Free icons. */
-   gl_freeTexture(equip_ico_yes);
-   equip_ico_yes = NULL;
-   gl_freeTexture(equip_ico_no);
-   equip_ico_no = NULL;
 }
 
