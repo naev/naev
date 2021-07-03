@@ -311,6 +311,35 @@ function equipopt.params.choose( p )
    return equipopt.params[c]()
 end
 
+local function print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod )
+   emod = emod or 1
+   mmod = mmod or 1
+   print(_("Trying to equip:"))
+   for j,o in ipairs(outfit_list) do
+      print( "   "..o )
+   end
+   print(_("Parameters:"))
+   for k,v in pairs(params) do
+      if type(v)=="table" then
+         print(string.format("   %s:", k ))
+         for i,m in pairs(v) do
+            print(string.format("      %s: %s", i, m ))
+         end
+      else
+         print(string.format("   %s: %s", k, v ))
+      end
+   end
+   print(_("Equipment:"))
+   for j,o in ipairs(p:outfits()) do
+      print( "   "..o:name() )
+   end
+   local stn = p:stats()
+   constraints = constraints or {}
+   print(string.format(_("CPU: %d / %d [%d < %d]"), stn.cpu, stn.cpu_max, constraints[1] or 0, st.cpu_max * ss.cpu_mod ))
+   print(string.format(_("Energy Regen: %.3f [%.3f < %.3f (%.1f)]"), stn.energy_regen, constraints[2] or 0, st.energy_regen - emod*energygoal, emod))
+   print(string.format(_("Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"), st.mass, ss.engine_limit, constraints[3] or 0, mmod * params.max_mass * ss.engine_limit - st.mass, mmod ))
+end
+
 --[[
    @brief Equips a pilot with cores and outfits chosen from a list through optimization.
 
@@ -629,6 +658,7 @@ function equipopt.equip( p, cores, outfit_list, params )
    -- Try to optimize
    local try = 0
    local emod = 1
+   local mmod = 1
    local done = true
    repeat
       try = try + 1
@@ -636,27 +666,24 @@ function equipopt.equip( p, cores, outfit_list, params )
       -- All the magic is done here
       local z, x, constraints = lp:solve()
       if not z then
-         -- Maybe should be error instead?
-         warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
-         print(_("Equipment:"))
-         for j,o in ipairs(p:outfits()) do
-            print( "   "..o:name() )
+
+         -- Try to relax constraints
+         -- Mass constraint
+         mmod = mmod * 2
+         massgoal = mmod * params.max_mass * ss.engine_limit - st.mass
+         lp:set_row( 2, "mass", nil, massgoal )
+         -- Energy constraint
+         energygoal = energygoal / 1.5
+         lp:set_row( 2, "energy_regen", nil, st.energy_regen - emod*energygoal )
+         z, x, constraints = lp:solve()
+
+         if not z then
+            -- Maybe should be error instead?
+            warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
+            print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod )
+            return false
          end
-         local stn = p:stats()
-         constraints = constraints or {}
-         print(string.format(_("CPU: %d / %d [%d < %d]"), stn.cpu, stn.cpu_max, constraints[1] or 0, st.cpu_max * ss.cpu_mod ))
-         print(string.format(_("Energy Regen: %.3f [%.3f < %.3f]"), stn.energy_regen, constraints[2] or 0, st.energy_regen - math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) ))
-         print(string.format(_("Mass: %.3f / %.3f [%.3f < %.3f]"), st.mass, ss.engine_limit, constraints[3] or 0, params.max_mass * ss.engine_limit - st.mass ))
-         return false
       end
-      --[[
-      for k,v in ipairs(x) do
-         print(string.format("x%d: %d",k,v))
-      end
-      for k,v in ipairs(constraints) do
-         print(string.format("c%d: %d",k,v))
-      end
-      --]]
 
       -- Interpret results
       local c = 1
@@ -685,6 +712,8 @@ function equipopt.equip( p, cores, outfit_list, params )
    until done or try >= 5 -- attempts should be fairly fast since we just do optimization step
    if not done then
       warn(string.format(_("Failed to equip pilot '%s'!"), p:name()))
+      print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod )
+      return false
    end
 
    -- Fill ammo
@@ -695,14 +724,7 @@ function equipopt.equip( p, cores, outfit_list, params )
       local b, s = p:spaceworthy()
       if not b then
          warn(string.format(_("Pilot '%s' is not space worthy after equip script is run! Reason: %s"),p:name(),s))
-         print(_("Equipment:"))
-         for j,o in ipairs(p:outfits()) do
-            print( "   "..o:name() )
-         end
-         local stn = p:stats()
-         print(string.format(_("CPU: %d / %d [%d < %d]"), stn.cpu, stn.cpu_max, constraints[1], st.cpu_max * ss.cpu_mod ))
-         print(string.format(_("Energy Regen: %.3f [%.3f < %.3f]"), stn.energy_regen, constraints[2], st.energy_regen - math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs) ))
-         print(string.format(_("Mass: %.3f / %.3f [%.3f < %.3f]"), st.mass, ss.engine_limit, constraints[3], params.max_mass * ss.engine_limit - st.mass ))
+         print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod )
          return false
       end
    end
