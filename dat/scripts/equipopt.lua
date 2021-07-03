@@ -426,7 +426,7 @@ function equipopt.equip( p, cores, outfit_list, params )
       for k,v in ipairs( cores ) do
          local q = p:addOutfit( v, 1, true )
          if q < 1 then
-            warn(string.format(_("Unable to equip '%s' on '%s'!"), o, p:name()))
+            warn(string.format(_("Unable to equip core '%s' on '%s'!"), v, p:name()))
          end
       end
    end
@@ -755,7 +755,7 @@ function equipopt.equip( p, cores, outfit_list, params )
             if x[c] == 1 then
                local q = p:addOutfit( o, 1, true )
                if q < 1 then
-                  warn(string.format(_("Unable to equip '%s' on '%s'!"),o,  p:name()))
+                  warn(string.format(_("Unable to equip outfit '%s' on '%s'!"), o,  p:name()))
                end
             end
             c = c + 1
