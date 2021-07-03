@@ -253,6 +253,9 @@ function equipopt.params.light_fighter( overwrite )
       t_speed     = 400,
       t_track     = 4000,
       t_range     = 1000,
+      type_range  = {
+         ["Launcher"] = { max=2 },
+      },
    }, overwrite )
 end
 
@@ -262,6 +265,9 @@ function equipopt.params.heavy_fighter( overwrite )
       t_speed     = 300,
       t_track     = 7000,
       t_range     = 1000,
+      type_range  = {
+         ["Launcher"] = { max=2 },
+      },
    }, overwrite )
 end
 
@@ -272,6 +278,9 @@ function equipopt.params.light_bomber( overwrite )
       t_track     = 15e3,
       t_range     = 5000,
       launcher    = 2,
+      type_range  = {
+         ["Launcher"] = { max=3 },
+      },
    }, overwrite )
 end
 
@@ -282,6 +291,9 @@ function equipopt.params.heavy_bomber( overwrite )
       t_track     = 25e3,
       t_range     = 5000,
       launcher    = 2,
+      type_range  = {
+         ["Launcher"] = { max=3 },
+      },
    }, overwrite )
 end
 
@@ -292,6 +304,9 @@ function equipopt.params.corvette( overwrite )
       t_speed     = 250,
       t_track     = 10e3,
       t_range     = 3000,
+      type_range  = {
+         ["Launcher"] = { max=3 },
+      },
    }, overwrite )
 end
 
@@ -301,6 +316,9 @@ function equipopt.params.destroyer( overwrite )
       t_speed     = 150,
       t_track     = 15e3,
       t_range     = 3000,
+      type_range  = {
+         ["Launcher"] = { max=2 },
+      },
    }, overwrite )
 end
 
@@ -319,6 +337,9 @@ function equipopt.params.heavy_cruiser( overwrite )
       t_speed     = 70,
       t_track     = 35e3,
       t_range     = 4000,
+      type_range  = {
+         ["Launcher"] = { max=2 },
+      },
    }, overwrite )
 end
 
@@ -329,6 +350,9 @@ function equipopt.params.carrier( overwrite )
       t_track     = 35e3,
       t_range     = 4000,
       fighterbay  = 2,
+      type_range  = {
+         ["Launcher"] = { max=2 },
+      },
    }, overwrite )
 end
 
