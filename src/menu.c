@@ -188,7 +188,7 @@ void menu_main (void)
    music_choose("load");
 
    /* Load background and friends. */
-   tex = gl_newImage( GFX_PATH"Naev.png", 0 );
+   tex = gl_newImage( GFX_PATH"Naev.webp", 0 );
    main_naevLogo = tex;
    menu_main_bkg_system();
 
