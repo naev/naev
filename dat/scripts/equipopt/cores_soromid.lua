@@ -19,7 +19,7 @@ cores.standard.systems["Soromid Reaver"] = function( heavy )
       "Light Brain Stage 3", "Light Brain Stage X",
    }
 end
-cores.standard.systems["Soromid Marauder"] = cores.standard.systems["Soromid Marauder"]
+cores.standard.systems["Soromid Marauder"] = cores.standard.systems["Soromid Reaver"]
 cores.standard.systems["Soromid Odium"] = function( heavy )
    return choose_one{
       "Medium Brain Stage 1", "Medium Brain Stage 2",
@@ -67,7 +67,7 @@ cores.standard.hulls["Soromid Reaver"] = function( heavy )
       "Light Shell Stage 3", "Light Shell Stage X",
    }
 end
-cores.standard.hulls["Soromid Marauder"] = cores.standard.hulls["Soromid Marauder"]
+cores.standard.hulls["Soromid Marauder"] = cores.standard.hulls["Soromid Reaver"]
 cores.standard.hulls["Soromid Odium"] = function( heavy )
    return choose_one{
       "Medium Shell Stage 1", "Medium Shell Stage 2",
@@ -115,7 +115,7 @@ cores.standard.engines["Soromid Reaver"] = function( heavy )
       "Light Fast Gene Drive Stage 3", "Light Fast Gene Drive Stage X",
    }
 end
-cores.standard.engines["Soromid Marauder"] = cores.standard.engines["Soromid Marauder"]
+cores.standard.engines["Soromid Marauder"] = cores.standard.engines["Soromid Reaver"]
 cores.standard.engines["Soromid Odium"] = function( heavy )
    return choose_one{
       "Medium Fast Gene Drive Stage 1", "Medium Fast Gene Drive Stage 2",
@@ -158,7 +158,7 @@ end
 cores.elite.systems["Soromid Reaver"] = function( heavy )
    return "Light Brain Stage X"
 end
-cores.elite.systems["Soromid Marauder"] = cores.elite.systems["Soromid Marauder"]
+cores.elite.systems["Soromid Marauder"] = cores.elite.systems["Soromid Reaver"]
 cores.elite.systems["Soromid Odium"] = function( heavy )
    return "Medium Brain Stage X"
 end
@@ -182,7 +182,7 @@ end
 cores.elite.hulls["Soromid Reaver"] = function( heavy )
    return "Light Shell Stage X"
 end
-cores.elite.hulls["Soromid Marauder"] = cores.elite.hulls["Soromid Marauder"]
+cores.elite.hulls["Soromid Marauder"] = cores.elite.hulls["Soromid Reaver"]
 cores.elite.hulls["Soromid Odium"] = function( heavy )
    return "Medium Shell Stage X"
 end
@@ -206,7 +206,7 @@ end
 cores.elite.engines["Soromid Reaver"] = function( heavy )
    return "Light Fast Gene Drive Stage X"
 end
-cores.elite.engines["Soromid Marauder"] = cores.elite.engines["Soromid Marauder"]
+cores.elite.engines["Soromid Marauder"] = cores.elite.engines["Soromid Reaver"]
 cores.elite.engines["Soromid Odium"] = function( heavy )
    return "Medium Fast Gene Drive Stage X"
 end
