@@ -837,7 +837,9 @@ int pilot_maxAmmo( Pilot* pilot )
 int pilot_maxAmmoO( const Pilot* p, const Outfit *o )
 {
    int max;
-   if (outfit_isLauncher(o))
+   if (o==NULL)
+      return 0;
+   else if (outfit_isLauncher(o))
       max = round( (double)o->u.lau.amount * p->stats.ammo_capacity );
    else if (outfit_isFighterBay(o))
       max = round( (double)o->u.bay.amount * p->stats.fbay_capacity );
