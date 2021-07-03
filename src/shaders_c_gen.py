@@ -193,6 +193,14 @@ SHADERS = [
       uniforms = ["ClipSpaceFromLocal", "MainTex", "gamma"],
       subroutines = {},
    ),
+   Shader(
+      name = "status",
+      vs_path = "status.vert",
+      fs_path = "status.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "ok"],
+      subroutines = {},
+   ),
 ]
 
 def write_header(f):
