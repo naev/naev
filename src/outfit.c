@@ -59,9 +59,9 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 
 #define SDESC_ADD( l, temp, txt, args... ) \
 (l) += scnprintf( &(temp)->desc_short[l], OUTFIT_SHORTDESC_MAX-(l), (txt), ## args )
-#define SDESC_COND( l, temp, txt, val ) \
+#define SDESC_COND( l, temp, txt, val, args... ) \
 if (fabs(val) > 1e5) \
-   (l) += scnprintf( &(temp)->desc_short[l], OUTFIT_SHORTDESC_MAX-(l), (txt), (val) )
+   (l) += scnprintf( &(temp)->desc_short[l], OUTFIT_SHORTDESC_MAX-(l), (txt), (val), ## args )
 
 
 /*
@@ -1194,7 +1194,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 {
    ShipStatList *ll;
    xmlNodePtr node;
-   char *buf, stmin[NUM2STRLEN], stmax[NUM2STRLEN];
+   char *buf;
    double C, area;
    int l;
 
@@ -1323,40 +1323,24 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = scnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         _("%s [%s]\n"
-         "%.0f CPU\n"
-         "%.0f%% Penetration\n"
-         "%.2f DPS [%.0f Damage]\n"),
-         _(outfit_getType(temp)), _(dtype_damageTypeToStr(temp->u.blt.dmg.type)),
-         temp->cpu,
-         temp->u.blt.dmg.penetration*100.,
+   l = 0;
+   SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
+         _(dtype_damageTypeToStr(temp->u.blt.dmg.type)) );
+   SDESC_COND( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.blt.dmg.penetration );
+   SDESC_ADD(  l, temp, _("\n%.2f DPS [%.0f Damage]"),
          1./temp->u.blt.delay * temp->u.blt.dmg.damage, temp->u.blt.dmg.damage );
-   if (temp->u.blt.dmg.disable > 0.) {
-      l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         _("%.2f Disable/s [%.0f Disable]\n"),
+   SDESC_COND( l, temp, _("\n%.2f Disable/s [%.0f Disable]"),
          1./temp->u.blt.delay * temp->u.blt.dmg.disable, temp->u.blt.dmg.disable );
-   }
-   num2str( stmin, temp->u.blt.range, 0 );
-   l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         _("%.1f Shots Per Second\n"
-         "%.1f EPS [%.0f Energy]\n"
-         "%s Range\n"
-         "%.1f second heat up"),
-         1./temp->u.blt.delay,
-         1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy,
-         stmin, temp->u.blt.heatup);
-   if (!outfit_isTurret(temp)) {
-      l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         _("\n%.1f Degree Swivel"),
-         temp->u.blt.swivel*180./M_PI );
-   }
-   num2str( stmin, temp->u.blt.trackmin, 0 );
-   num2str( stmax, temp->u.blt.trackmax, 0 );
-   l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-      _("\n%s Optimal Tracking\n"
-      "%s Minimal Tracking"),
-      stmax, stmin );
+   SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1./temp->u.blt.delay );
+   SDESC_ADD(  l, temp, _("\n%.1f EPS [%.0f Energy]"),
+         1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy );
+   SDESC_ADD(  l, temp, _("\n%s Range"), num2strU( temp->u.blt.range, 0 ) );
+   SDESC_ADD(  l, temp, _("\n%.1f second heat up"), temp->u.blt.heatup);
+   if (!outfit_isTurret(temp))
+      SDESC_ADD(  l, temp, _("\n%.1f Degree Swivel"), temp->u.blt.swivel*180./M_PI );
+   SDESC_ADD(  l, temp,  _("\n%s Optimal Tracking"), num2strU( temp->u.blt.trackmax, 0 ) );
+   SDESC_ADD(  l, temp,  _("\n%s Minimal Tracking"), num2strU( temp->u.blt.trackmin, 0 ) );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -1495,7 +1479,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    SDESC_ADD(  l, temp, _("\n%.1f Duration"),   temp->u.bem.duration );
    SDESC_ADD(  l, temp, _(" (%.1f minimum)"),   temp->u.bem.min_duration );
    SDESC_ADD(  l, temp, _("\n%.1f Cooldown"),   temp->u.bem.duration );
-   SDESC_ADD(  l, temp, _("\n%.0f Range"),      temp->u.bem.range );
+   SDESC_ADD(  l, temp, _("\n%s Range"),        num2strU(temp->u.bem.range,0) );
    SDESC_COND( l, temp, _("\n%.1f second heat up"),temp->u.bem.heatup );
 
 #define MELEMENT(o,s) \
