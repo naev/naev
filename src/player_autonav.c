@@ -400,7 +400,7 @@ static void player_autonav (void)
 
          /* Try to land. */
          if (ret) {
-            if (player_land(0) == 2)
+            if (player_land(0) == PLAYER_LAND_DENIED)
                player_autonavAbort(NULL);
             else
                player.autonav = AUTONAV_PNT_APPROACH;

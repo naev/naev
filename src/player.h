@@ -40,6 +40,13 @@ enum {
    PLAYER_FLAGS_MAX     /* Maximum number of flags. */
 };
 
+/** player_land() outcomes. */
+enum {
+   PLAYER_LAND_OK,      /**< landed successfully. */
+   PLAYER_LAND_AGAIN,   /**< not yet close/slow enough to land. */
+   PLAYER_LAND_DENIED,  /**< cannot land here. */
+};
+
 typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 
 
