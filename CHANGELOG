@@ -7,6 +7,7 @@
       * Added new utility outfits with complex effects
       * Added escorts for hire
       * Added discovery messages as you explore the universe
+      * Added automatic landing as an overlay double-click action (and on repeat of the "Land" key).
       * New fancy system rendering effects
       * Ships and rockets now have engine trails
       * Beam visuals have been made more flexible and pretty
