@@ -9,7 +9,7 @@
   <mass>0</mass>
   <price>850000</price>
   <description>Similar to how ambush hunters work, the Hunting Combat AI is able to focus on exploiting the element of surprise and weaknesses in the enemy ships hulls, resulting in a slower firerate with significant increased damage for turret weapons.</description>
-  <gfx_store>hunting_combat_ai.webp</gfx_store>k
+  <gfx_store>hunting_combat_ai.webp</gfx_store>
   <limit>combatai</limit>
  </general>
  <specific type="modification">
