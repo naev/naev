@@ -482,14 +482,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             (lst[i].sslot->slot.type == o->slot.type)) {
          /* Render a thick frame with a yes/no color, and geometric cue. */
          int ok = !!pilot_canEquip( p, &lst[i], o );
-         toolkit_drawOutlineThick( x, y, w, h, -.05*w, .20*w, &cBlack, 0 );
-         if (!ok) {
-            toolkit_drawTriangle( x+.05*w, y+.25*h, x+.75*w, y+.95*h, x+.25*w, y+.075*h, &cBlack );
-            toolkit_drawTriangle( x+.95*w, y+.75*h, x+.75*w, y+.95*h, x+.25*w, y+.075*h, &cBlack );
-            toolkit_drawTriangle( x+.10*w, y+.20*h, x+.80*w, y+.90*h, x+.20*w, y+.10*h, &cRed );
-            toolkit_drawTriangle( x+.90*w, y+.80*h, x+.80*w, y+.90*h, x+.20*w, y+.10*h, &cRed );
-         }
-         toolkit_drawOutlineThick( x, y, w, h, -.10*w, .10*w, ok ? &cGreen : &cRed, 0 );
+         gl_renderStatus( x, y, w, h, ok );
       }
 
       /* Must rechoose colour based on slot properties. */

@@ -2206,6 +2206,7 @@ dat/events/dvaered/fwA_treason.lua
 dat/events/dvaered/fwB_repay.lua
 dat/events/dvaered/fwC_ceremony.lua
 dat/events/dvaered/fwD_hitman.lua
+dat/events/dvaered/poster.lua
 dat/events/dvaered/totoran.lua
 dat/events/dvaered/warlords_battle.lua
 dat/events/flf/derelict.lua
