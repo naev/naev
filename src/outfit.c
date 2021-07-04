@@ -63,7 +63,7 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 #define SDESC_ADD( l, temp, txt, args... ) \
 (l) += scnprintf( &(temp)->desc_short[l], OUTFIT_SHORTDESC_MAX-(l), (txt), ## args )
 #define SDESC_COND( l, temp, txt, val, args... ) \
-if (fabs(val) > 1e5) \
+if (fabs(val) > 1e-5) \
    (l) += scnprintf( &(temp)->desc_short[l], OUTFIT_SHORTDESC_MAX-(l), (txt), (val), ## args )
 
 
@@ -1330,7 +1330,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
          _(dtype_damageTypeToStr(temp->u.blt.dmg.type)) );
    SDESC_COND( l, temp, _("\n%.0f CPU"), temp->cpu );
-   SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.blt.dmg.penetration );
+   SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.blt.dmg.penetration*100. );
    SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
          1./temp->u.blt.delay * temp->u.blt.dmg.damage, temp->u.blt.dmg.damage );
    SDESC_COND( l, temp, _("\n%.2f Disable/s [%.0f Disable]"),
