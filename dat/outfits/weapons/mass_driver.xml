@@ -7,7 +7,7 @@
   <mass>40</mass>
   <price>42000</price>
   <description>Mass Drivers fire massive slugs of matter at enemy ships, dealing damage through kinetic impact and knocking the target back. One of the most economical heavy weapons in the galaxy.</description>
-  <gfx_store>gatling.png</gfx_store>
+  <gfx_store>weapon02.webp</gfx_store>
   <cpu>-50</cpu>
  </general>
  <specific type="bolt">
