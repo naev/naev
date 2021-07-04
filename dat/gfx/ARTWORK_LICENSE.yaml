@@ -61,11 +61,6 @@
       - unicorp_fury_launcher.png
       - teracom_fury_launcher.png
       - turreted_fury_launcher.png
-- Basse:
-    license: GPLv2+
-    outfit:
-      store:
-      - droid.png
 - United States Department of Energy:
     license: PD
     outfit:
