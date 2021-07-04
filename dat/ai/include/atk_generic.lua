@@ -209,7 +209,6 @@ function _atk_g_ranged_kite( target, dist )
    local dir = ai.aim(target) -- aim instead of facing
    if dir < 30 then
       if dist < range*0.95 then
-         ai.set_shoot_indicator(false)
          ai.weapset( 4 )
       end
 
@@ -233,7 +232,7 @@ function _atk_g_ranged( target, dist )
          or ai.getweapspeed(4) < target:stats().speed_max*1.2
          or range < ai.getweaprange(1)*1.5 then
       _atk_g_ranged_dogfight( target, dist )
-   elseif target:target()==ai.pilot() and dist < 1.3*range then
+   elseif target:target()==ai.pilot() and dist < range and ai.hasprojectile() then
       local tvel = target:vel()
       local pvel = ai.pilot():vel()
       local vel = (tvel-pvel):polar()
