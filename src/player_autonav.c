@@ -111,7 +111,6 @@ static int player_autonavSetup (void)
 
    player_message(_("#oAutonav: initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
-
       tc_base   = player_dt_default() * player.speed;
       tc_mod    = tc_base;
       if (conf.compression_mult >= 1.)
@@ -125,6 +124,8 @@ static int player_autonavSetup (void)
    }
 
    /* Safe values. */
+   free( player.autonavmsg );
+   player.autonavmsg = NULL;
    tc_rampdown  = 0;
    tc_down      = 0.;
    lasts        = player.p->shield / player.p->shield_max;
@@ -149,6 +150,8 @@ void player_autonavEnd (void)
 {
    player_rmFlag(PLAYER_AUTONAV);
    player_autonavResetSpeed();
+   free( player.autonavmsg );
+   player.autonavmsg = NULL;
 }
 
 
@@ -172,7 +175,7 @@ void player_autonavPos( double x, double y )
       return;
 
    player.autonav    = AUTONAV_POS_APPROACH;
-   player.autonavmsg = _("position");
+   player.autonavmsg = strdup( _("position" ));
    player.autonavcol = '0';
    vect_cset( &player.autonav_pos, x, y );
 }
@@ -190,7 +193,7 @@ void player_autonavPnt( char *name )
       return;
 
    player.autonav    = AUTONAV_PNT_APPROACH;
-   player.autonavmsg = _(p->name);
+   player.autonavmsg = strdup( _(p->name) );
    player.autonavcol = planet_getColourChar( p );
    vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
 }
@@ -211,7 +214,7 @@ void player_autonavPil( unsigned int p )
       return;
 
    player.autonav    = AUTONAV_PLT_FOLLOW;
-   player.autonavmsg = pilot->name;
+   player.autonavmsg = strdup( pilot->name );
    player.autonavcol = '0';
    player_message(_("#oAutonav: following %s."), inrange == 1 ? pilot->name : _("Unknown") );
 }
