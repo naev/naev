@@ -27,9 +27,7 @@
     license: CC-by 3.0
     outfit:
       store:
-      - fuel_pod.png
       - medium_fuel_pod.png
-      - afterburner2.png
       - weapon_rack.png
       - laser2.png
       - plasma2.png
@@ -62,21 +60,9 @@
       - energy_dart.png
       - energy_missile.png
       - energy_torpedo.png
-      - engine01.png
-      - engine02.png
-      - engine03.png
-      - engine04.png
-      - engine05.png
-      - engine06.png
-      - engine07.png
-      - engine08.png
-      - engine09.png
-      - large_cargo_hull.png
-      - medium_cargo_hull.png
       - misc01.png
       - misc04.png
       - plating01.png
-      - small_cargo_hull.png
 - AstroMenace (Viewizard):
     license: GPLv3
     outfit:
@@ -149,7 +135,3 @@
     outfit:
       store:
       - license_pirate.png
-- qubodup <https://openclipart.org/artist/qubodup>:
-    license: PD
-    overlays:
-    - portrait_exclamation.png

@@ -377,7 +377,7 @@ static int bar_genList( unsigned int wid )
          else
             p->image = gl_dupTexture( npc_getTexture(i) );
          if (npc_isImportant(i))
-            p->layers = gl_addTexArray( p->layers, &p->nlayers, gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.png", 0 ) );
+            p->layers = gl_addTexArray( p->layers, &p->nlayers, gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.webp", 0 ) );
       }
    }
    window_addImageArray( wid, 20, -40,
