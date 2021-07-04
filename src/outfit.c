@@ -1328,15 +1328,15 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          _(dtype_damageTypeToStr(temp->u.blt.dmg.type)) );
    SDESC_COND( l, temp, _("\n%.0f CPU"), temp->cpu );
    SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.blt.dmg.penetration );
-   SDESC_ADD(  l, temp, _("\n%.2f DPS [%.0f Damage]"),
+   SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
          1./temp->u.blt.delay * temp->u.blt.dmg.damage, temp->u.blt.dmg.damage );
    SDESC_COND( l, temp, _("\n%.2f Disable/s [%.0f Disable]"),
          1./temp->u.blt.delay * temp->u.blt.dmg.disable, temp->u.blt.dmg.disable );
    SDESC_ADD(  l, temp, _("\n%.1f Shots Per Second"), 1./temp->u.blt.delay );
-   SDESC_ADD(  l, temp, _("\n%.1f EPS [%.0f Energy]"),
+   SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"),
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy );
    SDESC_ADD(  l, temp, _("\n%s Range"), num2strU( temp->u.blt.range, 0 ) );
-   SDESC_ADD(  l, temp, _("\n%.1f second heat up"), temp->u.blt.heatup);
+   SDESC_COND( l, temp, _("\n%.1f second heat up"), temp->u.blt.heatup);
    if (!outfit_isTurret(temp))
       SDESC_ADD(  l, temp, _("\n%.1f Degree Swivel"), temp->u.blt.swivel*180./M_PI );
    SDESC_ADD(  l, temp,  _("\n%s Optimal Tracking"), num2strU( temp->u.blt.trackmax, 0 ) );
