@@ -221,5 +221,19 @@ int num2str( char dest[NUM2STRLEN], double n, int decimals )
             _("%.0f,%03.*f"),
             floor(n/1e3), decimals, fmod(fabs(n),1e3) );
    return snprintf( dest, NUM2STRLEN, "%.*f", decimals, n );
-
 }
+
+/**
+ * @brief Unsafe version of num2str that uses an internal buffer. Every call overwrites the return value.
+ *
+ *    @param n Number to write.
+ *    @param decimals Number of decimals to write.
+ *    @return Fancy string number.
+ */
+char* num2strU( double n, int decimals )
+{
+   static char num2strU_buf[NUM2STRLEN];
+   num2str( num2strU_buf, n, decimals );
+   return num2strU_buf;
+}
+

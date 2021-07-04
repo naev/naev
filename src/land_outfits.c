@@ -604,7 +604,7 @@ int outfit_altText( char *buf, int n, const Outfit *o )
             _( sp_display( o->slot.spid ) ) );
    if (o->limit != NULL)
       p += scnprintf( &buf[p], n-p, _("#rOnly 1 of type per ship#0\n") );
-   p += scnprintf( &buf[p], n-p, "\n%s", o->desc_short );
+   p += scnprintf( &buf[p], n-p, "%s", o->desc_short );
    if ((o->mass > 0.) && (p < n))
       scnprintf( &buf[p], n-p,
             n_("\n%.0f Tonne", "\n%.0f Tonnes", mass),
