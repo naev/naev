@@ -23,7 +23,6 @@
    <type>shieldbreaker</type>
    <penetrate>36</penetrate>
    <physical>300</physical>
-   <disable>10</disable>
   </damage>
   <ai>smart</ai>
  </specific>

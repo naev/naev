@@ -23,7 +23,6 @@
    <type>normal</type>
    <penetrate>80</penetrate>
    <physical>900</physical>
-   <disable>10</disable>
   </damage>
   <ai>smart</ai>
  </specific>

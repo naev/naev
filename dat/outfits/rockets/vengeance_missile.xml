@@ -23,7 +23,6 @@
    <type>armourbreaker</type>
    <penetrate>36</penetrate>
    <physical>200</physical>
-   <disable>1</disable>
   </damage>
   <ai>smart</ai>
  </specific>
