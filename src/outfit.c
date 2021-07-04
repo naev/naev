@@ -57,6 +57,9 @@
 static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 
 
+/*
+ * Helper stuff for setting up short descriptions for outfits.
+ */
 #define SDESC_ADD( l, temp, txt, args... ) \
 (l) += scnprintf( &(temp)->desc_short[l], OUTFIT_SHORTDESC_MAX-(l), (txt), ## args )
 #define SDESC_COND( l, temp, txt, val, args... ) \
