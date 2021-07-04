@@ -57,6 +57,13 @@
 static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 
 
+#define SDESC_ADD( l, temp, txt, args... ) \
+(l) += scnprintf( &(temp)->desc_short[l], OUTFIT_SHORTDESC_MAX-(l), (txt), ## args )
+#define SDESC_COND( l, temp, txt, val ) \
+if (fabs(val) > 1e5) \
+   (l) += scnprintf( &(temp)->desc_short[l], OUTFIT_SHORTDESC_MAX-(l), (txt), (val) )
+
+
 /*
  * Prototypes
  */
@@ -1476,30 +1483,20 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = scnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         _("%s\n"
-         "%.0f CPU\n"
-         "%.0f%% Penetration\n"
-         "%.2f DPS [%s]\n"),
-         _(outfit_getType(temp)),
-         temp->cpu,
-         temp->u.bem.dmg.penetration*100.,
+   l = 0;
+   SDESC_ADD(  l, temp, "%s", _(outfit_getType(temp)) );
+   SDESC_COND( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.bem.dmg.penetration*100 );
+   SDESC_ADD(  l, temp, _("\n%.2f DPS [%s]"),
          temp->u.bem.dmg.damage * temp->u.bem.duration / (temp->u.bem.duration + temp->u.bem.delay),
          _(dtype_damageTypeToStr(temp->u.bem.dmg.type) ) );
-   if (temp->u.blt.dmg.disable > 0.) {
-      l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         _("%.0f Disable/s\n"),
-         temp->u.bem.dmg.disable );
-   }
-   l += scnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         _("%.1f EPS\n"
-         "%.1f Duration %.1f Cooldown\n"
-         "%.0f Range\n"
-         "%.1f second heat up"),
-         temp->u.bem.energy,
-         temp->u.bem.duration, temp->u.bem.delay,
-         temp->u.bem.range,
-         temp->u.bem.heatup);
+   SDESC_COND( l, temp, _("\n%.0f Disable/s"),  temp->u.bem.dmg.disable );
+   SDESC_COND( l, temp, _("\n%.1f EPS"),        temp->u.bem.energy );
+   SDESC_ADD(  l, temp, _("\n%.1f Duration"),   temp->u.bem.duration );
+   SDESC_ADD(  l, temp, _(" (%.1f minimum)"),   temp->u.bem.min_duration );
+   SDESC_ADD(  l, temp, _("\n%.1f Cooldown"),   temp->u.bem.duration );
+   SDESC_ADD(  l, temp, _("\n%.0f Range"),      temp->u.bem.range );
+   SDESC_COND( l, temp, _("\n%.1f second heat up"),temp->u.bem.heatup );
 
 #define MELEMENT(o,s) \
 if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
