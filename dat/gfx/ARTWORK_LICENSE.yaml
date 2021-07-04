@@ -49,13 +49,10 @@
     outfit:
       store:
       - core_system_basic_m1.png
-      - core_system_basic_s2.png
-      - core_system_refined_s2.png
       - energy_dart.png
       - energy_missile.png
       - energy_torpedo.png
       - misc01.png
-      - misc04.png
       - plating01.png
 - AstroMenace (Viewizard):
     license: GPLv3

@@ -8,7 +8,7 @@
   <mass>30</mass>
   <price>35000</price>
   <description>The PT-68 is an economical core system providing decent performance to small-to-medium vessels.</description>
-  <gfx_store>core_system_basic_s2.png</gfx_store>
+  <gfx_store>core_system_basic_s2.webp</gfx_store>
  </general>
  <specific type="modification">
   <cpu_max>68</cpu_max>
