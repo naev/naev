@@ -19,8 +19,8 @@
   <speed>250</speed>
   <damage>
    <type>impact</type>
-   <penetrate>18</penetrate>
-   <physical>120</physical>
+   <penetrate>60</penetrate>
+   <physical>100</physical>
    <disable>3</disable>
   </damage>
   <ai>unguided</ai>
