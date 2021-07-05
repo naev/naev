@@ -481,7 +481,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       else if ((o != NULL) &&
             (lst[i].sslot->slot.type == o->slot.type)) {
          /* Render a thick frame with a yes/no color, and geometric cue. */
-         int ok = !!pilot_canEquip( p, &lst[i], o );
+         int ok = (pilot_canEquip( p, &lst[i], o ) == NULL);
          gl_renderStatus( x, y, w, h, ok );
       }
 
