@@ -870,7 +870,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          xmlr_attr_float( node, "x", trail.x_engine );
          xmlr_attr_float( node, "y", trail.y_engine );
          xmlr_attr_float( node, "h", trail.h_engine );
-         xmlr_attr_int_def( node, "back_trail", trail.back_trail, 0 );
+         xmlr_attr_int_def( node, "always_under", trail.always_under, 0 );
          if (temp->trail_emitters == NULL) {
             temp->trail_emitters = array_create( ShipTrailEmitter );
          }

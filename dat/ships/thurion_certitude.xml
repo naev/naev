@@ -8,10 +8,10 @@
  <class>Cruiser</class>
  <price>9000000</price>
  <time_mod>2</time_mod>
- <trail_generator x="-42" y="11" h="7" back_trail="1" />
- <trail_generator x="-42" y="11" h="-8" back_trail="1" />
- <trail_generator x="-42" y="-17" h="7" back_trail="1" />
- <trail_generator x="-42" y="-17" h="-8" back_trail="1" />
+ <trail_generator x="-42" y="11" h="7" />
+ <trail_generator x="-42" y="11" h="-8" />
+ <trail_generator x="-42" y="-17" h="7" />
+ <trail_generator x="-42" y="-17" h="-8" />
  <fabricator>Thurion shipyards</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>...</description>

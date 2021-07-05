@@ -2333,10 +2333,7 @@ void pilot_sample_trails( Pilot* p, int none )
    for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
       if (pilot_trail_generated( p, g )) {
 
-         if ((dirsin > 0) && (p->ship->trail_emitters[g].back_trail))
-            p->trail[i]->ontop = 1;
-         else
-            p->trail[i]->ontop = 0;
+         p->trail[i]->ontop = ((dirsin > 0) && (!(p->ship->trail_emitters[g].always_under)));
 
          dx = p->ship->trail_emitters[g].x_engine * dircos -
               p->ship->trail_emitters[g].y_engine * dirsin;
@@ -3090,8 +3087,10 @@ void pilot_free( Pilot* p )
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
    /* Free animated trail. */
-   for (i=0; i<array_size(p->trail); i++)
+   for (i=0; i<array_size(p->trail); i++) {
+      p->trail[i]->ontop = 0;
       spfx_trail_remove( p->trail[i] );
+   }
    array_free(p->trail);
 
 #ifdef DEBUGGING
