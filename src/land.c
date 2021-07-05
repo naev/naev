@@ -278,7 +278,7 @@ static void bar_open( unsigned int wid )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, _(land_planet->bar_description) );
+   dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, _(land_planet->bar_description) );
 
    /* Approach when pressing enter */
    window_setAccept( wid, bar_approach );
@@ -294,7 +294,7 @@ static void bar_open( unsigned int wid )
    /* Bar description. */
    window_addText( wid, iw + 40, -40,
          w - iw - 60, dh, 0,
-         "txtDescription", &gl_smallFont, NULL,
+         "txtDescription", &gl_defFont, NULL,
          _(land_planet->bar_description) );
 
    /* Add portrait text. */
@@ -307,7 +307,7 @@ static void bar_open( unsigned int wid )
    th -= 20 + PORTRAIT_HEIGHT + 20 + 20;
    window_addText( wid, iw + 60, th,
          w - iw - 100, h + th - (2*bh+60), 0,
-         "txtMission", &gl_smallFont, NULL, NULL );
+         "txtMission", &gl_defFont, NULL, NULL );
 
    /* Generate the mission list. */
    bar_genList( wid );
@@ -420,7 +420,7 @@ static void bar_update( unsigned int wid, char* str )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, _(land_planet->bar_description) );
+   dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, _(land_planet->bar_description) );
 
    /* Get array. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -586,11 +586,11 @@ static void misn_open( unsigned int wid )
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtReward", &gl_smallFont, NULL, _("#nReward:#0 None") );
+         "txtReward", &gl_defFont, NULL, _("#nReward:#0 None") );
    y -= 20;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, y - 40 + h - 2*LAND_BUTTON_HEIGHT, 0,
-         "txtDesc", &gl_smallFont, NULL, NULL );
+         "txtDesc", &gl_defFont, NULL, NULL );
 
    /* map */
    map_show( wid, 20, 20,
@@ -1209,7 +1209,7 @@ static void land_createMainTab( unsigned int wid )
    window_addImage( wid, 20, -40, 400, 400, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-         "txtPlanetDesc", &gl_smallFont, NULL, _(land_planet->description) );
+         "txtPlanetDesc", &gl_defFont, NULL, _(land_planet->description) );
 
    /* Player stats. */
    bufSInfo = _(
