@@ -303,6 +303,23 @@ void equipment_open( unsigned int wid )
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
          &ew, &eh, &cw, &ch, &bw, &bh );
 
+   /* Buttons */
+   window_addButtonKey( wid, -20, 20,
+         bw, bh, "btnCloseEquipment",
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -20 - (15+bw), 20,
+         bw, bh, "btnRenameShip",
+         _("Rename"), equipment_renameShip, SDLK_r );
+   window_addButtonKey( wid, -20 - (15+bw)*2, 20,
+         bw, bh, "btnSellShip",
+         _("Sell Ship"), equipment_sellShip, SDLK_s );
+   window_addButtonKey( wid, -20 - (15+bw)*3, 20,
+         bw, bh, "btnChangeShip",
+         _("Swap Ship"), equipment_transChangeShip, SDLK_p );
+   window_addButtonKey( wid, -20 - (15+bw)*4, 20,
+         bw, bh, "btnUnequipShip",
+         _("Unequip"), equipment_unequipShip, SDLK_u );
+
    /* Prepare the outfit array. */
    if (iar_data == NULL)
       iar_data = calloc( OUTFIT_TABS, sizeof(iar_data_t) );
@@ -323,23 +340,6 @@ void equipment_open( unsigned int wid )
 
    /* Add ammo. */
    equipment_addAmmo();
-
-   /* buttons */
-   window_addButtonKey( wid, -20, 20,
-         bw, bh, "btnCloseEquipment",
-         _("Take Off"), land_buttonTakeoff, SDLK_t );
-   window_addButtonKey( wid, -20 - (15+bw), 20,
-         bw, bh, "btnRenameShip",
-         _("Rename"), equipment_renameShip, SDLK_r );
-   window_addButtonKey( wid, -20 - (15+bw)*2, 20,
-         bw, bh, "btnSellShip",
-         _("Sell Ship"), equipment_sellShip, SDLK_s );
-   window_addButtonKey( wid, -20 - (15+bw), 20 + bh + 10,
-         bw, bh, "btnChangeShip",
-         _("Swap Ship"), equipment_transChangeShip, SDLK_p );
-   window_addButtonKey( wid, -20 - (15+bw)*2, 20 + bh + 10,
-         bw, bh, "btnUnequipShip",
-         _("Unequip"), equipment_unequipShip, SDLK_u );
 
    /* text */
    buf = _("Name:\n"
@@ -381,15 +381,15 @@ void equipment_open( unsigned int wid )
          ow, gl_defFont.h, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
    equipment_genLists( wid );
 
+   /* Slot widget. Designed so that 10 slots barely fit. */
+   equipment_slotWidget( wid, 20+sw+15, -40-5, ew, eh, &eq_wgt );
+   eq_wgt.canmodify = 1;
+
    /* Separator. */
    // window_addRect( wid, 20 + sw + 20, -40, 2, h-60, "rctDivider", &cGrey50, 0 );
 
-   /* Slot widget. */
-   equipment_slotWidget( wid, 20+sw+15, -20-ch, ew, eh, &eq_wgt );
-   eq_wgt.canmodify = 1;
-
    /* Custom widget (ship information). */
-   window_addCust( wid, 20+sw+15+(ew-cw)/2, -20, cw, ch, "cstMisc", 0,
+   window_addCust( wid, -20-(128-cw)/2, -20-150, cw, ch, "cstMisc", 0,
          equipment_renderMisc, NULL, NULL );
 
    /* Spinning ship. */
