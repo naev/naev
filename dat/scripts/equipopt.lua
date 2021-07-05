@@ -9,7 +9,7 @@ local _merge_tables = mt.merge_tables
 local equipopt = {}
 
 -- Get all the fighter bays and calculate rough dps
-local fbays = {}
+local fbay_dps = {}
 for k,o in ipairs(outfit.getAll()) do
    if o:type() == "Fighter Bay" then
       local ss = o:specificstats()
@@ -28,7 +28,7 @@ for k,o in ipairs(outfit.getAll()) do
          end
       end
       dps = dps * ss.amount * 0.5
-      fbays[ o:nameRaw() ] = 5*math.sqrt(dps)
+      fbay_dps[ o:nameRaw() ] = 5*math.sqrt(dps)
    end
 end
 
@@ -157,7 +157,7 @@ function equipopt.goodness_default( o, p )
       if o.typebroad == "Bolt Weapon" then
          weap = weap * p.bolt
       elseif o.typebroad == "Beam Weapon" then
-         weap = weap * p.beam * 0.7
+         weap = weap * p.beam * 0.6
       elseif o.typebroad == "Launcher" then
          -- Must be able to outrun target
          local smod = math.min( 1, 0.4*(o.spec.speed  / p.t_speed) )
@@ -590,7 +590,10 @@ function equipopt.equip( p, cores, outfit_list, params )
       -- Specific corrections
       if oo.type == "Fighter Bay" then
          -- Fighter bays don't have dps or anything, so we have to fake it
-         oo.dps      = fbays[v]
+         oo.dps      = fbay_dps[oo.name]
+         if not oo.dps then
+            warn(string.format(_("Fighter bay '%s' does not have computed DPS!"), oo.name))
+         end
          oo.disable  = 0
          oo.eps      = 0
          oo.range    = 10e3
