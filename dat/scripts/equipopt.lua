@@ -28,22 +28,52 @@ for k,o in ipairs(outfit.getAll()) do
          end
       end
       dps = dps * ss.amount * 0.5
-      fbays[ o:nameRaw() ] = dps
+      fbays[ o:nameRaw() ] = 5*math.sqrt(dps)
    end
 end
--- Some manual overrides
-fbays[ "Hyena Fighter Bay" ]                 = 45
-fbays[ "Za'lek Light Drone Fighter Bay" ]    = 40
-fbays[ "Za'lek Light Drone Fighter Dock" ]   = 80
-fbays[ "Za'lek Bomber Drone Fighter Bay" ]   = 40
-fbays[ "Za'lek Bomber Drone Fighter Dock" ]  = 80
-fbays[ "Za'lek Heavy Drone Fighter Bay" ]    = 50
-fbays[ "Za'lek Heavy Drone Fighter Dock" ]   = 100
+
+-- Manual overrides
+local goodness_override = {
+   -- Combat AIs
+   ["Hunting Combat AI"]   = 3,
+   ["Hive Combat AI"]      = 3,
+   ["Pinpoint Combat AI"]  = 3,
+   ["Cyclic Combat AI"]    = 3,
+   ["Scanning Combat AI"]  = 3,
+   ["Agility Combat AI"]   = 3,
+   ["Bio-Neural Combat AI"]= 3,
+   -- Hull Coating
+   ["Milspec Impacto-Plastic Coating"] = 3,
+   ["Photo-Voltaic Nanobot Coating"] = 3,
+   ["Nexus Stealth Coating"] = 3,
+   ["Lattice Thermal Coating"] = 3,
+   ["Nebula Resistant Coating"] = 3,
+   ["Faraday Tempest Coating"] = 3,
+   ["Nebula Resistant Coating"] = 3,
+   -- Utility Stuff
+   ["Berserk Chip"] = 3,
+   ["Neural Accelerator Interface"] = 3,
+   ["Emergency Stasis Inducer"] = 3,
+   ["Combat Hologram Projector"] = 3,
+   ["Weakness Harmonizer AI"] = 3,
+   ["Weapons Ionizer"] = 3,
+   ["Boarding Androids MK1"] = 2,
+   ["Boarding Androids MK2"] = 4,
+   ["Hidden Jump Scanner"] = 0,
+   ["Asteroid Scanner"] = 1,
+   ["Blink Drive"] = 3,
+   ["Hyperbolic Blink Engine"] = 3,
+}
 
 -- Special weights
-local special = {
+local goodness_special = {
+   ["Unicorp Medusa Launcher"] = 0.5,
+   ["TeraCom Mace Launcher"] = 0.5,
+   ["Unicorp Mace Launcher"] = 0.5,
+   ["Enygma Systems Huntsman Launcher"] = 0.5,
    ["Enygma Systems Spearhead Launcher"] = 0.4, -- high damage but shield only
    ["TeraCom Medusa Launcher"] = 0.5,           -- really high disable
+   ["Droid Repair Crew"] = 0.5, -- Only work until 50%
 }
 
 
@@ -99,23 +129,24 @@ end
 --]]
 function equipopt.goodness_default( o, p )
    -- Base attributes
-   base = p.cargo*(0.1*o.cargo + 0.1*(1-o.cargo_inertia)) + p.fuel*0.001*o.fuel
+   base = p.cargo*(0.5*math.pow(o.cargo,0.3) + 0.1*(1-o.cargo_inertia)) + p.fuel*0.003*o.fuel
    -- Movement attributes
-   move = 0.05*o.thrust + 0.05*o.speed + 0.1*o.turn
+   move = 0.1*o.thrust + 0.1*o.speed + 0.2*o.turn + 50*(o.time_speedup-1)
    -- Health attributes
-   health = 0.01*o.shield + 0.01*o.armour + 0.1*o.shield_regen + 0.1*o.armour_regen + o.absorb
+   health = 0.01*o.shield + 0.02*o.armour + 0.9*o.shield_regen + 2*o.armour_regen + o.absorb/10
    -- Energy attributes
-   energy = 0.003*o.energy + 0.1*o.energy_regen
+   energy = 0.003*o.energy + 0.18*o.energy_regen
    -- Weapon attributes
    if o.dps and o.dps > 0 then
       -- Compute damage
       weap = 0.2*(o.dps*p.damage + o.disable*p.disable)
       -- Tracking Modifier
-      local mod = math.min( 1, math.max( 0, (p.t_track-o.trackmin)/(o.trackmax-o.trackmin)) )
+      local mod = math.min( 1, math.max( 0, (p.t_track-o.trackmin)/(1+o.trackmax-o.trackmin)) )
       -- Range modifier
       mod = mod * math.min( 1, o.range/p.range )
       -- Absorption modifier
       mod = mod * (1 + math.min(0, o.penetration-p.t_absorb))
+      mod = 1
       -- More modifications
       weap = weap * (0.9*mod+0.1)
       if o.isturret then
@@ -126,10 +157,10 @@ function equipopt.goodness_default( o, p )
       if o.typebroad == "Bolt Weapon" then
          weap = weap * p.bolt
       elseif o.typebroad == "Beam Weapon" then
-         weap = weap * p.beam
+         weap = weap * p.beam * 0.7
       elseif o.typebroad == "Launcher" then
          -- Must be able to outrun target
-         local smod = math.min( 1, 0.5*(o.spec.speed  / p.t_speed) )
+         local smod = math.min( 1, 0.4*(o.spec.speed  / p.t_speed) )
          weap = weap * p.launcher * smod
       elseif o.typebroad == "Fighter Bay" then
          weap = weap * p.fighterbay
@@ -140,7 +171,7 @@ function equipopt.goodness_default( o, p )
    -- Ewarfare attributes
    ew = 3*(o.ew_detect-1) + 3*(o.ew_hide-1)
    -- Custom weight
-   local w = special[o.name] or 1
+   local w = goodness_special[o.name] or 1
    local g = p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
    --print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, g * (p.prefer[o.name] or 1), w*base, w*move, w*health, w*weap, w*ew))
     return g * (p.prefer[o.name] or 1)
@@ -566,12 +597,12 @@ function equipopt.equip( p, cores, outfit_list, params )
          oo.penetration = 0
       elseif oo.type == "Afterburner" then
          -- We add it as movement, but weaken the effect a bit
-         oo.thrust   = oo.thrust + 0.5*(oo.spec.thrust * st.thrust)
-         oo.speed    = oo.speed  + 0.5*(oo.spec.speed * st.speed)
+         oo.thrust   = oo.thrust + 1.5*math.sqrt(oo.spec.thrust * st.thrust)
+         oo.speed    = oo.speed  + 1.5*math.sqrt(oo.spec.speed * st.speed)
       end
 
       -- Compute goodness
-      oo.goodness = params.goodness( oo, params )
+      oo.goodness = goodness_override[oo.name] or params.goodness( oo, params )
 
       -- Cache it all so we don't have to recompute
       outfit_cache[v] = oo
