@@ -14,11 +14,6 @@
     outfit:
       store:
       - macelauncher.png
-- Brian J. Cameron:
-    license: PD
-    outfit:
-      store:
-      - license.png
 - Josiah Schwartfeger:
     license: CC-by 3.0
     outfit:
@@ -42,13 +37,6 @@
     outfit:
       store:
       - core_system_basic_m1.png
-- AstroMenace (Viewizard):
-    license: GPLv3
-    outfit:
-      store:
-      - accuracy_forward.png
-      - accuracy_forward_3.png
-      - accuracy_turret.png
 - admiral_cheater:
     license: CC-by 3.0
     outfit:
@@ -56,6 +44,13 @@
       - unicorp_fury_launcher.png
       - teracom_fury_launcher.png
       - turreted_fury_launcher.png
+- AstroMenace <https://viewizard.com/>:
+    license: GPLv3
+    outfit:
+      store:
+      - accuracy_forward.png
+      - accuracy_forward_3.png
+      - accuracy_turret.png
 - United States Department of Energy:
     license: PD
     outfit:
