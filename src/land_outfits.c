@@ -303,7 +303,7 @@ static void outfits_genList( unsigned int wid )
       /* Only create the filter widget if it will be a reasonable size. */
       if (iw >= 30) {
          window_addInput( wid, fx, fy, fw, fh, OUTFITS_FILTER, 32, 1, &gl_defFont );
-         inp_setEmptyText( wid, OUTFITS_FILTER, _("Search…") );
+         inp_setEmptyText( wid, OUTFITS_FILTER, _("Filter…") );
          window_setInputCallback( wid, OUTFITS_FILTER, outfits_regenList );
       }
    }
