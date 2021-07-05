@@ -8,7 +8,7 @@
   <price>100000</price>
   <description>This piece of hardware provides an auxiliary energy shunt between the ship's reactor and the shield system. When activated, this device dramatically boosts the ship's shield regeneration by dumping raw energy directly into the shield capacitors. The process is very inefficient, so energy use is disproportionally high and the outfit can't be active for more than a certain period of time before needing entering a cooldown cycle.</description>
   <desc_extra>Increases shield regeneration by 500%. Active for 4 seconds with a cooldown of 8 seconds. Uses 3 MJ of energy for each MJ of shield recovered.</desc_extra>
-  <gfx_store>accuracy_forward.png</gfx_store>
+  <gfx_store>accuracy_forward.webp</gfx_store>
   <limit>emergency_shield_booster</limit>
  </general>
  <specific type="modification" group="8">

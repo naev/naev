@@ -7,7 +7,7 @@
   <mass>18</mass>
   <price>17000</price>
   <description>A more powerful cousin of the BioPlasma Stinger, the BioPlasma Claw uses more precious brain capacity, but features markedly increased damage output in return. This organ has reached Stage X, its full potential.</description>
-  <gfx_store>plasma2.png</gfx_store>
+  <gfx_store>plasma2.webp</gfx_store>
   <cpu>-8</cpu>
  </general>
  <specific type="bolt">
