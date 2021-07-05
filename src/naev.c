@@ -624,7 +624,7 @@ static void loadscreen_unload (void)
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES     13. /**< Amount of loading stages. */
+#define LOADING_STAGES     16. /**< Amount of loading stages. */
 void load_all (void)
 {
    /* We can do fast stuff here. */
@@ -633,32 +633,47 @@ void load_all (void)
    /* order is very important as they're interdependent */
    loadscreen_render( 1./LOADING_STAGES, _("Loading Commodities...") );
    commodity_load(); /* dep for space */
-   loadscreen_render( 2./LOADING_STAGES, _("Loading Factions...") );
-   factions_load(); /* dep for fleet, space, missions, AI */
-   loadscreen_render( 3./LOADING_STAGES, _("Loading AI...") );
-   ai_load(); /* dep for fleets */
-   loadscreen_render( 4./LOADING_STAGES, _("Loading Missions...") );
-   missions_load(); /* no dep */
-   loadscreen_render( 5./LOADING_STAGES, _("Loading Events...") );
-   events_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, _("Loading Special Effects...") );
+
+   loadscreen_render( 2./LOADING_STAGES, _("Loading Special Effects...") );
    spfx_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, _("Loading Damage Types...") );
-   dtype_load(); /* no dep */
-   loadscreen_render( 7./LOADING_STAGES, _("Loading Outfits...") );
-   outfit_load(); /* dep for ships */
-   loadscreen_render( 8./LOADING_STAGES, _("Loading Ships...") );
+
+   loadscreen_render( 3./LOADING_STAGES, _("Loading Damage Types...") );
+   dtype_load(); /* dep for outfits */
+
+   loadscreen_render( 4./LOADING_STAGES, _("Loading Outfits...") );
+   outfit_load(); /* dep for ships, factions */
+
+   loadscreen_render( 5./LOADING_STAGES, _("Loading Ships...") );
    ships_load(); /* dep for fleet */
-   loadscreen_render( 9./LOADING_STAGES, _("Loading Fleets...") );
+
+   loadscreen_render( 6./LOADING_STAGES, _("Loading Factions...") );
+   factions_load(); /* dep for fleet, space, missions, AI */
+
+   loadscreen_render( 7./LOADING_STAGES, _("Loading Events...") );
+   events_load(); /* no dep */
+
+   loadscreen_render( 8./LOADING_STAGES, _("Loading Missions...") );
+   missions_load(); /* no dep */
+
+   loadscreen_render( 9./LOADING_STAGES, _("Loading AI...") );
+   ai_load(); /* dep for fleets */
+
+   loadscreen_render( 10./LOADING_STAGES, _("Loading Fleets...") );
    fleet_load(); /* dep for space */
-   loadscreen_render( 10./LOADING_STAGES, _("Loading Techs...") );
+
+   loadscreen_render( 11./LOADING_STAGES, _("Loading Techs...") );
    tech_load(); /* dep for space */
-   loadscreen_render( 11./LOADING_STAGES, _("Loading the Universe...") );
+
+   loadscreen_render( 12./LOADING_STAGES, _("Loading the Universe...") );
    space_load();
-   loadscreen_render( 12./LOADING_STAGES, _("Loading the UniDiffs...") );
+
+   loadscreen_render( 13./LOADING_STAGES, _("Loading the UniDiffs...") );
    diff_loadAvailable();
-   loadscreen_render( 13./LOADING_STAGES, _("Populating Maps...") );
+
+   loadscreen_render( 14./LOADING_STAGES, _("Populating Maps...") );
    outfit_mapParse();
+
+   loadscreen_render( 15./LOADING_STAGES, _("Initializing Details..") );
    background_init();
    map_load();
    map_system_load();
