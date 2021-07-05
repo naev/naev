@@ -146,7 +146,6 @@ function equipopt.goodness_default( o, p )
       mod = mod * math.min( 1, o.range/p.range )
       -- Absorption modifier
       mod = mod * (1 + math.min(0, o.penetration-p.t_absorb))
-      mod = 1
       -- More modifications
       weap = weap * (0.9*mod+0.1)
       if o.isturret then
