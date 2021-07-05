@@ -1105,6 +1105,9 @@ void land_genWindows( int load, int changetab )
 
    /* Finished loading. */
    land_loaded = 1;
+
+   /* Necessary if player.land() was run in an abort() function. */
+   window_lower( land_wid );
 }
 
 
