@@ -1749,6 +1749,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
  */
 void pilot_render( Pilot* p, const double dt )
 {
+   int i, g;
    (void) dt;
    double scalew, scaleh;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
@@ -1780,6 +1781,15 @@ void pilot_render( Pilot* p, const double dt )
          1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
          scalew, scaleh,
          p->tsx, p->tsy, &c );
+
+   /* Re-draw backwards trails. */
+   for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
+      if (pilot_trail_generated( p, g )) {
+         if (p->trail[i]->ontop)
+            spfx_trail_draw( p->trail[i] );
+         i++;
+      }
+
 }
 
 
@@ -2319,9 +2329,15 @@ void pilot_sample_trails( Pilot* p, int none )
          mode = MODE_IDLE;
    }
 
-   /* Compute the engine offset. */
+   /* Compute the engine offset and decide where to draw the trail. */
    for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
       if (pilot_trail_generated( p, g )) {
+
+         if ((dirsin > 0) && (p->ship->trail_emitters[g].back_trail))
+            p->trail[i]->ontop = 1;
+         else
+            p->trail[i]->ontop = 0;
+
          dx = p->ship->trail_emitters[g].x_engine * dircos -
               p->ship->trail_emitters[g].y_engine * dirsin;
          dy = p->ship->trail_emitters[g].x_engine * dirsin +

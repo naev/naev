@@ -159,7 +159,6 @@ static void spfx_hapticRumble( double mod );
 /* Trail. */
 static void spfx_update_trails( double dt );
 static void spfx_trail_update( Trail_spfx* trail, double dt );
-static void spfx_trail_draw( const Trail_spfx* trail );
 static void spfx_trail_free( Trail_spfx* trail );
 
 
@@ -700,6 +699,7 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
    trail->point_ringbuf = calloc( trail->capacity, sizeof(TrailPoint) );
    trail->refcount = 1;
    trail->r = RNGF();
+   trail->ontop = 0;
 
    if ( trail_spfx_stack == NULL )
       trail_spfx_stack = array_create( Trail_spfx* );
@@ -824,7 +824,7 @@ static void spfx_trail_free( Trail_spfx* trail )
 /**
  * @brief Draws a trail on screen.
  */
-static void spfx_trail_draw( const Trail_spfx* trail )
+void spfx_trail_draw( const Trail_spfx* trail )
 {
    double x1, y1, x2, y2, z;
    const TrailPoint *tp, *tpp;
@@ -1057,7 +1057,8 @@ void spfx_render( const int layer )
    if (layer == SPFX_LAYER_BACK)
       for (i=0; i<array_size(trail_spfx_stack); i++) {
          trail = trail_spfx_stack[i];
-         spfx_trail_draw( trail );
+         if (!trail->ontop)
+            spfx_trail_draw( trail );
       }
 
    /* Now render the layer */

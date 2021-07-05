@@ -88,6 +88,7 @@ typedef struct ShipTrailEmitter_ {
    double x_engine;   /**< Offset x. */
    double y_engine;   /**< Offset y. */
    double h_engine;   /**< Offset z. */
+   unsigned int back_trail; /**< Should this trail be drawn on top when the ship turns its back? */
    const TrailSpec* trail_spec; /**< Trail type to emit. */
 } ShipTrailEmitter;
 
