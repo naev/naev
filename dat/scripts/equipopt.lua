@@ -315,8 +315,8 @@ end
 function equipopt.params.light_cruiser( overwrite )
    return _merge_tables( equipopt.params.default{
       t_absorb    = 0.50,
-      t_speed     = 100,
-      t_track     = 25e3,
+      t_speed     = 130,
+      t_track     = 20e3,
       t_range     = 4000,
    }, overwrite )
 end
@@ -335,7 +335,7 @@ function equipopt.params.carrier( overwrite )
       t_absorb    = 0.50,
       t_speed     = 70,
       t_track     = 35e3,
-      t_range     = 4000,
+      t_range     = 5000,
       fighterbay  = 2,
    }, overwrite )
 end
