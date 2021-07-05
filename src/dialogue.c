@@ -226,13 +226,13 @@ static glFont* dialogue_getSize( const char* title,
  */
 void dialogue_msg( const char* caption, const char *fmt, ... )
 {
-   char msg[4096];
+   char msg[STRMAX];
    va_list ap;
 
    if (fmt == NULL) return;
    else { /* get the message */
       va_start(ap, fmt);
-      vsnprintf(msg, 4096, fmt, ap);
+      vsnprintf(msg, sizeof(msg), fmt, ap);
       va_end(ap);
    }
 
@@ -249,13 +249,13 @@ void dialogue_msg( const char* caption, const char *fmt, ... )
  */
 void dialogue_msgImg( const char* caption, const char *img, const char *fmt, ... )
 {
-   char msg[4096];
+   char msg[STRMAX];
    va_list ap;
 
    if (fmt == NULL) return;
    else { /* get the message */
       va_start(ap, fmt);
-      vsnprintf(msg, 4096, fmt, ap);
+      vsnprintf(msg, sizeof(msg), fmt, ap);
       va_end(ap);
    }
 
@@ -356,13 +356,13 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
  */
 int dialogue_YesNo( const char* caption, const char *fmt, ... )
 {
-   char msg[4096];
+   char msg[STRMAX];
    va_list ap;
 
    if (fmt == NULL) return -1;
    else { /* get the message */
       va_start(ap, fmt);
-      vsnprintf(msg, 4096, fmt, ap);
+      vsnprintf(msg, sizeof(msg), fmt, ap);
       va_end(ap);
    }
 
