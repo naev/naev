@@ -71,7 +71,7 @@ void window_addInput( const unsigned int wid,
    wgt->textevent       = inp_text;
    wgt->focusGain       = inp_focusGain;
    wgt->focusLose       = inp_focusLose;
-   wgt->dat.inp.font    = (font != NULL) ? font : &gl_smallFont;
+   wgt->dat.inp.font    = (font != NULL) ? font : &gl_defFont;
    wgt->dat.inp.char_max= max+1;
    wgt->dat.inp.byte_max= 4*max+1;
    wgt->dat.inp.oneline = oneline;
