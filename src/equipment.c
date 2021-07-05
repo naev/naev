@@ -1500,14 +1500,14 @@ static void equipment_genOutfitList( unsigned int wid )
       barw = window_tabWinGetBarWidth( wid, EQUIPMENT_OUTFIT_TAB );
 
       iw = CLAMP(0, 150, ow - barw - 30);
-      ih = 20;
+      ih = 30;
 
-      ix = ow - iw;
-      iy = oh - (30 - ih) / 2; /* Centered relative to 30 px tab bar */
+      ix = ow - iw + 15;
+      iy = y + oh - 25 - 1; /* Centered relative to 30 px tab bar */
 
       /* Only create the filter widget if it will be a reasonable size. */
       if (iw >= 30) {
-         window_addInput( wid, ix+15, iy+1, iw, ih, EQUIPMENT_FILTER, 32, 1, &gl_smallFont );
+         window_addInput( wid, ix, iy, iw, ih, EQUIPMENT_FILTER, 32, 1, NULL );
          window_setInputCallback( wid, EQUIPMENT_FILTER, equipment_filterOutfits );
       }
    }
