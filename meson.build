@@ -119,6 +119,12 @@ if buildExec.disabled() == false
    endif
    naev_deps += use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk_dep')
 
+   if use_system_csparse and not use_system_glpk
+      message('Trying to force Meson to detect cross-subproject dependencies correctly for your setup (system SuiteSparse, included GLPK). If you see this error, try fully deleting subprojects/SuiteSparse from the source and build directories, and if that does not help try installing GLPK onto your system: ERROR: Requested variable "AMD_dep" not found.')
+      subproject('SuiteSparse')
+      #use_system_csparse = false
+   endif
+
    if use_system_csparse
       foreach csparse_name : ['csparse', 'cxsparse']
          system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['suitesparse/cs.h'])
