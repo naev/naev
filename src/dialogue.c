@@ -448,15 +448,16 @@ static InputDialogue input_dialogue; /**< Stores the input window id and callbac
  */
 char* dialogue_input( const char* title, int min, int max, const char *fmt, ... )
 {
-   char msg[512];
+   char msg[STRMAX];
    va_list ap;
 
-   if (input_dialogue.input_wid) return NULL;
+   if (input_dialogue.input_wid)
+      return NULL;
 
    if (fmt == NULL) return NULL;
    else { /* get the message */
       va_start(ap, fmt);
-      vsnprintf(msg, 512, fmt, ap);
+      vsnprintf(msg, sizeof(msg), fmt, ap);
       va_end(ap);
    }
 
@@ -478,10 +479,11 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
 {
    char *input;
    int w, h, done;
+   glFont* font;
 
    /* get text height */
-   w = 300;
-   h = gl_printHeightRaw( &gl_defFont, w, msg );
+   font  = dialogue_getSize( title, msg, &w, &h );
+   h     = gl_printHeightRaw( font, w, msg );
 
    /* create window */
    input_dialogue.input_wid = window_create( "dlgInput", title, -1, -1, w+40, h+140 );
@@ -490,7 +492,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    window_setCancel( input_dialogue.input_wid, dialogue_cancel );
    /* text */
    window_addText( input_dialogue.input_wid, 20, -30, w, h,  0, "txtInput",
-         &gl_defFont, NULL, msg );
+         font, NULL, msg );
    /* input */
    window_addInput( input_dialogue.input_wid, 20, 20+30+10, w, 30,"inpInput", max, 1, NULL );
    window_setInputFilter( input_dialogue.input_wid, "inpInput", "/" ); /* Remove illegal stuff. */
