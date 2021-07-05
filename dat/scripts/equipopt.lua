@@ -192,7 +192,7 @@ function equipopt.params.default( overwrite )
       max_same_stru = nil, -- maximum same structurals (nil is no limit)
       min_energy_regen = 0.6, -- relative minimum regen margin (with respect to cores)
       min_energy_regen_abs = 0, -- absolute minimum energy regen (MJ/s)
-      eps_weight  = 0.1, -- how to weight weapon EPS into energy regen
+      eps_weight  = 0.4, -- how to weight weapon EPS into energy regen
       max_mass    = 1.0, -- maximum amount to go over engine limit (relative)
       budget      = nil, -- total cost budget
       -- Range of type, this is dangerous as minimum values could lead to the
