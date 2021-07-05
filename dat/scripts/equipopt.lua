@@ -139,7 +139,7 @@ function equipopt.goodness_default( o, p )
    -- Weapon attributes
    if o.dps and o.dps > 0 then
       -- Compute damage
-      weap = 0.2*(o.dps*p.damage + o.disable*p.disable)
+      weap = 0.5*(o.dps*p.damage + o.disable*p.disable)
       -- Tracking Modifier
       local mod = math.min( 1, math.max( 0, (p.t_track-o.trackmin)/(1+o.trackmax-o.trackmin)) )
       -- Range modifier
@@ -156,7 +156,7 @@ function equipopt.goodness_default( o, p )
       if o.typebroad == "Bolt Weapon" then
          weap = weap * p.bolt
       elseif o.typebroad == "Beam Weapon" then
-         weap = weap * p.beam * 0.6
+         weap = weap * p.beam
       elseif o.typebroad == "Launcher" then
          -- Must be able to outrun target
          local smod = math.min( 1, 0.4*(o.spec.speed  / p.t_speed) )
