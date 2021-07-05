@@ -2,9 +2,6 @@
     license: GPLv2+
     outfit:
       store:
-      - capacitor-g.png
-      - capacitor2-g.png
-      - capacitor4-g.png
       - neutronheavy.png
       - drone_fighter.png
 - M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>:
@@ -17,25 +14,16 @@
     outfit:
       store:
       - macelauncher.png
-- Brian J. Cameron:
-    license: PD
-    outfit:
-      store:
-      - license.png
-      - empgrenadelauncher.png
 - Josiah Schwartfeger:
     license: CC-by 3.0
     outfit:
       store:
-      - medium_fuel_pod.png
-      - weapon_rack.png
       - laser2.png
       - plasma2.png
 - Sean Hildebrand:
     license: CC-by 3.0
     outfit:
       store:
-      - cpu_i.png
       - seekerlauncher.png
       - headhunterlauncher.png
       - caesarlauncher.png
@@ -49,31 +37,6 @@
     outfit:
       store:
       - core_system_basic_m1.png
-      - core_system_basic_s2.png
-      - core_system_organic_l1.png
-      - core_system_organic_l2.png
-      - core_system_organic_m1.png
-      - core_system_organic_m2.png
-      - core_system_organic_s1.png
-      - core_system_organic_s2.png
-      - core_system_refined_s2.png
-      - energy_dart.png
-      - energy_missile.png
-      - energy_torpedo.png
-      - misc01.png
-      - misc04.png
-      - plating01.png
-- AstroMenace (Viewizard):
-    license: GPLv3
-    outfit:
-      store:
-      - accuracy_forward.png
-      - accuracy_forward_2.png
-      - accuracy_forward_3.png
-      - accuracy_turret.png
-      - damage_forward.png
-      - efficiency_turret.png
-      - firerate_turret.png
 - admiral_cheater:
     license: CC-by 3.0
     outfit:
@@ -81,11 +44,13 @@
       - unicorp_fury_launcher.png
       - teracom_fury_launcher.png
       - turreted_fury_launcher.png
-- Basse:
-    license: GPLv2+
+- AstroMenace <https://viewizard.com/>:
+    license: GPLv3
     outfit:
       store:
-      - droid.png
+      - accuracy_forward.png
+      - accuracy_forward_3.png
+      - accuracy_turret.png
 - United States Department of Energy:
     license: PD
     outfit:
@@ -96,11 +61,6 @@
     outfit:
       store:
       - nanobond.png
-- Thomas Fedor:
-    license: PD
-    outfit:
-      store:
-      - gatling.png
 - SolCommand <http://solcommand.com>:
     license: CC-by 3.0
     outfit:
@@ -114,10 +74,7 @@
     license: PD
     outfit:
       store:
-      - plating_cargo.png
-      - plating_combat.png
       - plating_patchwork.png
-      - plating_stealth.png
 - Ian D. Scott <ids1024>:
     license: GPLv2+
     outfit:
@@ -130,8 +87,3 @@
     outfit:
       store:
       - large_fuel_pod.png
-- Author Brian J. Cameron:
-    license: PD (with modifications by leodudepal, License CC-by 3.0)
-    outfit:
-      store:
-      - license_pirate.png
