@@ -959,7 +959,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
             at = space_getType ( a->type );
-            if ( (a->appearing == ASTEROID_VISIBLE) &&
+            if ( ((a->appearing == ASTEROID_VISIBLE)||(a->appearing == ASTEROID_EXPLODING)) &&
                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
                         at->gfxs[a->gfxID], 0, 0, &a->pos,
                         &crash[0] ) ) {
@@ -975,7 +975,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
             at = space_getType ( a->type );
-            if ( (a->appearing == ASTEROID_VISIBLE) &&
+            if ( ((a->appearing == ASTEROID_VISIBLE)||(a->appearing == ASTEROID_EXPLODING)) &&
                   CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
                         at->gfxs[a->gfxID], 0, 0, &a->pos,
                         &crash[0] ) ) {
@@ -991,7 +991,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
          for (j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
             at = space_getType ( a->type );
-            if ( (a->appearing == ASTEROID_VISIBLE) &&
+            if ( ((a->appearing == ASTEROID_VISIBLE)||(a->appearing == ASTEROID_EXPLODING)) &&
                   CollideLineSprite( &w->solid->pos, w->solid->dir,
                         w->outfit->u.bem.range,
                         at->gfxs[a->gfxID], 0, 0, &a->pos,
@@ -1201,7 +1201,9 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* 
    spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
 
    weapon_destroy(w,layer);
-   asteroid_hit( a, &dmg );
+
+   if (a->appearing != ASTEROID_EXPLODING)
+      asteroid_hit( a, &dmg );
 }
 
 
