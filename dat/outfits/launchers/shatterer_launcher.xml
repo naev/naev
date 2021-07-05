@@ -8,7 +8,7 @@
   <mass>12</mass>
   <price>350000</price>
   <description>This weapon, based on a fury missile, is used by the collective heavy drones as a bombardment tool against large targets. While weak individually, the sheer numbers that the Collective could bring to bear makes this weapon dangerous.</description>
-  <gfx_store>teracom_fury_launcher.png</gfx_store>
+  <gfx_store>teracom_fury_launcher.webp</gfx_store>
   <cpu>-11</cpu>
  </general>
  <specific type="turret launcher" secondary="1">

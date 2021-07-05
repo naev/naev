@@ -5,7 +5,7 @@
   <mass>5</mass>
   <price>0</price>
   <description>Reaper drones are the Za'lek version of other nations' torpedoes. They are reasonably fast, and hit with shattering force.</description>
-  <gfx_store>zalek_reaper.png</gfx_store>
+  <gfx_store>zalek_reaper.webp</gfx_store>
  </general>
  <specific type="ammo">
   <gfx>zalek_reaper.png</gfx>

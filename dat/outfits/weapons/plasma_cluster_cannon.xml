@@ -7,7 +7,7 @@
   <mass>40</mass>
   <price>50000</price>
   <description>The Plasma Cluster Cannon is a Soromid refinement to the standard Plasma Cannon design. By confining a massive cluster of superheated plasma into a small space within a specialized "membrane shield", the impact creates large explosions which tear through even the strongest hulls. The downside to this design is that a lot of space is required, which limits its use to medium mounts, but this also means biological Soromid ships are able to handle its computational load despite being a synthetic construct.</description>
-  <gfx_store>plasma2.png</gfx_store>
+  <gfx_store>plasma2.webp</gfx_store>
   <cpu>-50</cpu>
  </general>
  <specific type="bolt">
