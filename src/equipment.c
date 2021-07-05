@@ -1503,7 +1503,7 @@ static void equipment_genOutfitList( unsigned int wid )
       ih = 30;
 
       ix = ow - iw + 15;
-      iy = y + oh - 25 - 1; /* Centered relative to 30 px tab bar */
+      iy = y + oh - 25 - 1;
 
       /* Only create the filter widget if it will be a reasonable size. */
       if (iw >= 30) {

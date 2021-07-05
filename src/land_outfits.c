@@ -295,14 +295,15 @@ static void outfits_genList( unsigned int wid )
 
       barw = window_tabWinGetBarWidth( wid, OUTFITS_TAB );
       fw = CLAMP(0, 150, iw - barw - 30);
-      fh = 20;
+      fh = 30;
 
-      fx = iw - fw;
-      fy = ih - (30 - fh) / 2; /* Centered relative to 30 px tab bar */
+      fx = iw - fw + 15;
+      fy = ih - 25 -1 + 20;
 
       /* Only create the filter widget if it will be a reasonable size. */
       if (iw >= 30) {
-         window_addInput( wid, fx + 15, fy +1, fw, fh, OUTFITS_FILTER, 32, 1, &gl_smallFont );
+         window_addInput( wid, fx, fy, fw, fh, OUTFITS_FILTER, 32, 1, &gl_smallFont );
+         inp_setEmptyText( wid, OUTFITS_FILTER, _("Search…") );
          window_setInputCallback( wid, OUTFITS_FILTER, outfits_regenList );
       }
    }
