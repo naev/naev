@@ -3,6 +3,7 @@
 #include "lib/nebula.glsl"
 
 uniform float hue;
+uniform float brightness;
 uniform mat4 projection;
 uniform float horizon;
 uniform float eddy_scale;
@@ -30,7 +31,7 @@ void main(void) {
    /* Do very simple two iteration noise */
    f = abs( cnoise( uv * pow(SCALAR, 0) ) );
    f += abs( cnoise( uv * pow(SCALAR, 1) ) );
-   color = vec4( hsv2rgb( vec3( hhue, 1.0, 1.0 ) ), 1.0 );
+   color = vec4( brightness * hsv2rgb( vec3( hhue, 1.0, 1.0 ) ), 1.0 );
    color_out = color * (0.1+0.9*f);
 
    /* Compute dist and interpolate */
