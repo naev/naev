@@ -113,7 +113,7 @@ local function equip_zalek( p, opt_params )
    end
 
    -- Try to equip
-   optimize.optimize( p, cores, zalek_outfits, params )
+   return optimize.optimize( p, cores, zalek_outfits, params )
 end
 
 return equip_zalek
