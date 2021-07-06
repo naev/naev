@@ -42,7 +42,11 @@ local soromid_outfits = eoutfits.merge{{
 }}
 
 local soromid_params = {
-   --["Soromid Demon"] = function () return {
+   ["Soromid Arx"] = function () return {
+         type_range = {
+            ["Launcher"] = { max = rnd.rnd(0,2) },
+         },
+      } end,
 }
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local soromid_cores = {
