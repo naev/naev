@@ -1,6 +1,7 @@
 #include "lib/nebula.glsl"
 
 uniform float hue;
+uniform float brightness;
 uniform float eddy_scale;
 uniform float time;
 uniform vec2 globalpos;
@@ -8,9 +9,9 @@ uniform float alpha;
 in vec2 localpos;
 out vec4 color_out;
 
-const float smoothness  = 0.5;
-const float value       = 0.4;
-const float brightness  = 0.5;
+const float smoothness       = 0.5;
+const float value            = 0.4;
+const float base_brightness  = 0.5;
 
 void main(void) {
    float f = 0.0;
@@ -19,7 +20,7 @@ void main(void) {
    // Calculate coordinates
    vec2 rel_pos = localpos + globalpos;
    //rel_pos *= eddy_scale;
-   color_out = nebula( vec4(0.0), rel_pos, time, hue, value, brightness );
+   color_out = nebula( vec4(0.0), rel_pos, time, hue, value, brightness * base_brightness );
 
    // Fallout
    float dist = length(localpos);
