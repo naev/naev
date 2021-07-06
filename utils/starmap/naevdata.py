@@ -154,7 +154,8 @@ class Services(object):
 
 	'''
 	def __init__(self, bar=None, commodity=None, land=None, missions=False,
-				 outfits=False, refuel=False, shipyard=False, blackmarket=False):
+				 outfits=False, refuel=False, shipyard=False, blackmarket=False,
+                 nomissionspawn=False):
 		'''Create the service availability data.
 
 		Keyword arguments:
@@ -177,6 +178,7 @@ class Services(object):
 		self.refuel = bool(refuel)
 		self.shipyard = bool(shipyard)
 		self.blackmarket = bool(blackmarket)
+		self.nomissionspawn = bool(nomissionspawn)
 
 
 class Asset(object):
@@ -441,6 +443,8 @@ class SSystem(object):
 						# The <nebula> tag has a couple of bits of info.
 						self.nebula = Nebula(content,
 											 child.getAttribute('volatility'))
+					elif child.tagName in ('background', 'features'):
+						pass  # Ignore these string attributes for now.
 					else:
 						# Everything else is just a single piece of content.
 						# <stars> is an int; the rest are floats.
