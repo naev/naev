@@ -36,8 +36,8 @@ function turnon( p, po )
    local ps = p:stats()
    mem.ainc = ps.armour * drain_armour
    mem.admg = mem.ainc
-   po:set( "armour_damage", mem.admg )
-   po:set( "shield_usage",  ps.shield * drain_shield ) -- shield gone in 2 secs
+   po:set( "armour_regen_malus", mem.admg )
+   po:set( "shield_regen_malus",  ps.shield * drain_shield ) -- shield gone in 2 secs
 
    -- Visual effect
    if mem.isp then shader_on() end
@@ -54,8 +54,8 @@ function turnoff( p, po )
    mem.timer = cooldown
    mem.active = false
    shader_off()
-   po:set( "armour_damage", 0 )
-   po:set( "shield_usage",  0 )
+   po:set( "armour_regen_malus", 0 )
+   po:set( "shield_regen_malus",  0 )
    po:set( "launch_damage", -20 )
    po:set( "fwd_damage", -20 )
    po:set( "tur_damage", -20 )
@@ -82,7 +82,7 @@ function update( p, po, dt )
          turnoff( p, po )
       else
          mem.admg = mem.admg + mem.ainc * dt
-         po:set( "armour_damage", mem.admg )
+         po:set( "armour_regen_malus", mem.admg )
       end
    else
       if mem.timer then

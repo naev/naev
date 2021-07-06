@@ -8,7 +8,7 @@ function cooldown( p, po, done, opt )
       local a, s = p:health(true)
       local ps = p:stats()
       local regen = (ps.armour - a) / opt
-      po:set( "armour_damage", -regen );
+      po:set( "armour_regen_malus", -regen );
    else
       -- Stop repairing
       po:clear()

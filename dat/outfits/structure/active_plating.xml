@@ -15,6 +15,6 @@
   <armour_mod>20</armour_mod>
   <mass_mod>3</mass_mod>
   <energy_regen_mod>-10</energy_regen_mod>
-  <energy_usage>5</energy_usage>
+  <energy_regen_malus>5</energy_regen_malus>
  </specific>
 </outfit>

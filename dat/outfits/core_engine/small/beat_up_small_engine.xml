@@ -10,7 +10,7 @@
   <gfx_store>engine15.webp</gfx_store>
  </general>
  <specific type="modification">
-  <energy_usage>8</energy_usage>
+  <energy_regen_malus>8</energy_regen_malus>
   <engine_limit>100</engine_limit>
   <fuel>200</fuel>
   <speed>150</speed>

@@ -360,9 +360,9 @@ function equipopt.equip( p, cores, outfit_list, params )
       oo.armour = oo.armour_mod * (oo.armour + st.armour) - st.armour
       oo.shield = oo.shield_mod * (oo.shield + st.shield) - st.shield
       oo.energy = oo.energy_mod * (oo.energy + st.energy) - st.energy
-      oo.armour_regen = oo.armour_regen_mod * (ss.armour_regen_mod * oo.armour_regen + st.armour_regen) - oo.armour_damage - st.armour_regen
-      oo.shield_regen = oo.shield_regen_mod * (ss.shield_regen_mod * oo.shield_regen + st.shield_regen) - oo.shield_usage  - st.shield_regen
-      oo.energy_regen = oo.energy_regen_mod * (ss.energy_regen_mod * oo.energy_regen + st.energy_regen) - oo.energy_usage  - oo.energy_loss - st.energy_regen
+      oo.armour_regen = oo.armour_regen_mod * (ss.armour_regen_mod * oo.armour_regen + st.armour_regen) - oo.armour_regen_malus - st.armour_regen
+      oo.shield_regen = oo.shield_regen_mod * (ss.shield_regen_mod * oo.shield_regen + st.shield_regen) - oo.shield_regen_malus - st.shield_regen
+      oo.energy_regen = oo.energy_regen_mod * (ss.energy_regen_mod * oo.energy_regen + st.energy_regen) - oo.energy_regen_malus - oo.energy_loss - st.energy_regen
       -- Misc
       oo.cargo = oo.cargo_mod * (oo.cargo + ss.cargo) - ss.cargo
 
