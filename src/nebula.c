@@ -196,7 +196,7 @@ static void nebu_renderBackground( const double dt )
    /* Set shader uniforms. */
    glUniform1f(shaders.nebula_background.eddy_scale, nebu_view * cam_getZoom() / nebu_scale);
    glUniform1f(shaders.nebula_background.time, nebu_time);
-   glUniform1f(shaders.nebula_background.brightness, conf.bg_brightness);
+   glUniform1f(shaders.nebula_background.brightness, conf.nebu_brightness);
 
    /* Draw. */
    glEnableVertexAttribArray( shaders.nebula_background.vertex );
@@ -293,7 +293,7 @@ void nebu_renderOverlay( const double dt )
    glUniform1f(shaders.nebula.horizon, nebu_view * z / nebu_scale);
    glUniform1f(shaders.nebula.eddy_scale, nebu_dx * z / nebu_scale);
    glUniform1f(shaders.nebula.time, nebu_time);
-   glUniform1f(shaders.nebula.brightness, conf.bg_brightness);
+   glUniform1f(shaders.nebula.brightness, conf.nebu_brightness);
 
    /* Draw. */
    glEnableVertexAttribArray(shaders.nebula.vertex);
@@ -350,7 +350,7 @@ static void nebu_renderPuffs( int below_player )
             puff->y += SCREEN_H + 2*NEBULA_PUFF_BUFFER;
 
          /* Render */
-	 col_blend( &col, &puff->col, &cBlack, conf.bg_brightness );
+	 col_blend( &col, &puff->col, &cBlack, conf.nebu_brightness );
          gl_blitStatic( nebu_pufftexs[puff->tex],
                puff->x, puff->y, &col );
       }

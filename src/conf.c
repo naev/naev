@@ -249,6 +249,7 @@ void conf_setVideoDefaults (void)
    conf.minimize     = MINIMIZE_DEFAULT;
    conf.colorblind   = COLORBLIND_DEFAULT;
    conf.bg_brightness = BG_BRIGHTNESS_DEFAULT;
+   conf.nebu_brightness = NEBU_BRIGHTNESS_DEFAULT;
    conf.gamma_correction = GAMMA_CORRECTION_DEFAULT;
 
    /* FPS. */
@@ -336,6 +337,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
+      conf_loadFloat( lEnv, "nebu_brightness", conf.nebu_brightness );
       conf_loadFloat( lEnv, "gamma_correction", conf.gamma_correction );
 
       /* FPS */
@@ -863,6 +865,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Background brightness. 1 is normal brightness while setting it to 0 would make the backgrounds pitch black."));
    conf_saveFloat("bg_brightness",conf.bg_brightness);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Nebula brightness. 1 is normal brightness while setting it to 0 would make the nebula pitch black."));
+   conf_saveFloat("nebu_brightness",conf.nebu_brightness);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Gamma correction parameter. A value of 1 disables it (no curve)."))
