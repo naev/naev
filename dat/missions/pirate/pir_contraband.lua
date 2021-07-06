@@ -50,9 +50,13 @@ end
 
 function create()
    -- Note: this mission does not make any system claims.
-   
+   local pntf = planet.cur():faction()
    -- Lower chance of appearing to 1/3 on non-pirate planets
-   if planet.cur():faction() ~= faction.get("Pirate") and rnd.rnd() < 2/3 then
+   if pntf ~= faction.get("Pirate") and rnd.rnd() < 2/3 then
+      misn.finish(false)
+   end
+   -- Doesn't appear on Thurion and Proteron worlds for now
+   if pntf == faction.get("Thurion") or pntf == faction.get("Proteron") then
       misn.finish(false)
    end
 
