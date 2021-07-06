@@ -106,5 +106,5 @@ function equip( p )
    end
 
    -- Try to equip
-   equipopt.equip( p, cores, dvaered_outfits, params )
+   equipopt.optimize.optimize( p, cores, dvaered_outfits, params )
 end

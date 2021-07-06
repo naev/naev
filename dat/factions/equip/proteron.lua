@@ -59,5 +59,5 @@ function equip( p )
    cores = ecores.get( p, { all="elite" } )
 
    -- Try to equip
-   equipopt.equip( p, cores, proteron_outfits, params )
+   equipopt.optimize.optimize( p, cores, proteron_outfits, params )
 end

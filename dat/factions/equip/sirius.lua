@@ -74,5 +74,5 @@ function equip( p )
    end
 
    -- Try to equip
-   equipopt.equip( p, cores, sirius_outfits, params )
+   equipopt.optimize.optimize( p, cores, sirius_outfits, params )
 end

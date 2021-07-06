@@ -109,5 +109,5 @@ function equip( p )
    end
 
    -- Try to equip
-   equipopt.equip( p, cores, pirate_outfits, params )
+   equipopt.optimize.optimize( p, cores, pirate_outfits, params )
 end

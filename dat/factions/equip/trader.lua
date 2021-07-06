@@ -37,7 +37,7 @@ function equip( p )
    local cores = ecores.get( p, { all="standard" } )
 
    -- Try to equip
-   equipopt.equip( p, cores, eoutfits.standard.set, params )
+   equipopt.optimize.optimize( p, cores, eoutfits.standard.set, params )
 
    -- Add cargo
    local cc = cargo_chance[ p:ship():class() ]

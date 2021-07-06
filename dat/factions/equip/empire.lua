@@ -115,6 +115,6 @@ function equip( p )
    local cores = empire_cores[ sname ]()
 
    -- Try to equip
-   equipopt.equip( p, cores, empire_outfits, params )
+   equipopt.optimize.optimize( p, cores, empire_outfits, params )
 end
 

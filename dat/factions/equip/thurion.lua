@@ -83,5 +83,5 @@ function equip( p )
    cores = ecores.get( p, { all="elite" } )
 
    -- Try to equip
-   equipopt.equip( p, cores, thurion_outfits, params )
+   equipopt.optimize.optimize( p, cores, thurion_outfits, params )
 end

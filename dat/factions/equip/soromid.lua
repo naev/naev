@@ -79,7 +79,7 @@ function equip( p )
    end
 
    -- Try to equip
-   equipopt.equip( p, cores, soromid_outfits, params )
+   equipopt.optimize.optimize( p, cores, soromid_outfits, params )
 
    -- TODO randomly change some bio plasma weapons to weaker ones
 end
