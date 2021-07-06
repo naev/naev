@@ -5,5 +5,5 @@ local equipopt = require 'equipopt'
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   return equip.sirius( p )
+   return equipopt.sirius( p )
 end

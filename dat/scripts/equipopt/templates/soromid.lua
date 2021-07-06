@@ -53,7 +53,7 @@ local soromid_cores = {
 --
 --    @param p Pilot to equip
 --]]
-function equip( p, opt_params  )
+local function equip_soromid( p, opt_params  )
    opt_params = opt_params or {}
    local ps    = p:ship()
    local sname = ps:nameRaw()
