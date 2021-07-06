@@ -421,7 +421,6 @@ void outfits_update( unsigned int wid, char* str )
       strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
    else
       snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(outfit->license) );
-   buf_license[ sizeof(buf_license)-1 ] = '\0';
 
    mass = outfit->mass;
    if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&

@@ -281,7 +281,6 @@ void shipyard_update( unsigned int wid, char* str )
       strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
    else
       snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
-   buf_license[ sizeof(buf_license)-1 ] = '\0';
 
    snprintf( buf, sizeof(buf),
          _("%s\n"
