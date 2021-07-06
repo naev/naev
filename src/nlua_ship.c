@@ -34,6 +34,7 @@ static OutfitSlot* ship_outfitSlotFromID( const Ship *s, int id );
 /* Ship metatable methods. */
 static int shipL_eq( lua_State *L );
 static int shipL_get( lua_State *L );
+static int shipL_getAll( lua_State *L );
 static int shipL_name( lua_State *L );
 static int shipL_nameRaw( lua_State *L );
 static int shipL_baseType( lua_State *L );
@@ -51,6 +52,7 @@ static const luaL_Reg shipL_methods[] = {
    { "__tostring", shipL_name },
    { "__eq", shipL_eq },
    { "get", shipL_get },
+   { "getAll", shipL_getAll },
    { "name", shipL_name },
    { "nameRaw", shipL_nameRaw },
    { "baseType", shipL_baseType },
@@ -205,6 +207,28 @@ static int shipL_eq( lua_State *L )
       lua_pushboolean(L,1);
    else
       lua_pushboolean(L,0);
+   return 1;
+}
+
+
+/**
+ * @brief Gets a ship.
+ *
+ * @usage s = ship.get( "Hyena" ) -- Gets the hyena
+ *
+ *    @luatparam string s Raw (untranslated) name of the ship to get.
+ *    @luatreturn Ship The ship matching name or nil if error.
+ * @luafunc get
+ */
+static int shipL_getAll( lua_State *L )
+{
+   int i;
+   const Ship *ships = ship_getAll();
+   lua_newtable(L); /* t */
+   for (i=0; i<array_size(ships); i++) {
+      lua_pushship( L, (Ship*) &ships[i] );
+      lua_rawseti( L, -2, i+1 );
+   }
    return 1;
 }
 
