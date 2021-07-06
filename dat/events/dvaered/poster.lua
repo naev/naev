@@ -54,7 +54,7 @@ end
 
 function watchPoster()
    if not myCanvas then
-      myCanvas = graphics.newCanvas(700, 900*1.5) -- It's all assuming the poster is 700x900
+      myCanvas = graphics.newCanvas(700, 900) -- It's all assuming the poster is 700x900
       local img    = graphics.newImage( myImg )
 
       -- Create the image
@@ -80,7 +80,7 @@ function watchPoster()
    -- Create the vn scene
    vn.clear()
    vn.scene()
-   local npc = vn.newCharacter( _("Poster"), { image=myCanvas } )
+   local npc = vn.newCharacter( _("Poster"), { image=myCanvas, isportrait=true } )
    vn.transition()
    npc( myMsg )
    vn.run()
