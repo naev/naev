@@ -5,6 +5,7 @@
 --]]
 local optimize = {}
 local eparams = require 'equipopt.params'
+local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 -- Get all the fighter bays and calculate rough dps
 local fbay_dps = {}
