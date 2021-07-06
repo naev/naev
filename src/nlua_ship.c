@@ -220,28 +220,6 @@ static int shipL_eq( lua_State *L )
  *    @luatreturn Ship The ship matching name or nil if error.
  * @luafunc get
  */
-static int shipL_getAll( lua_State *L )
-{
-   int i;
-   const Ship *ships = ship_getAll();
-   lua_newtable(L); /* t */
-   for (i=0; i<array_size(ships); i++) {
-      lua_pushship( L, (Ship*) &ships[i] );
-      lua_rawseti( L, -2, i+1 );
-   }
-   return 1;
-}
-
-
-/**
- * @brief Gets a ship.
- *
- * @usage s = ship.get( "Hyena" ) -- Gets the hyena
- *
- *    @luatparam string s Raw (untranslated) name of the ship to get.
- *    @luatreturn Ship The ship matching name or nil if error.
- * @luafunc get
- */
 static int shipL_get( lua_State *L )
 {
    const char *name;
@@ -259,6 +237,25 @@ static int shipL_get( lua_State *L )
 
    /* Push. */
    lua_pushship(L, ship);
+   return 1;
+}
+
+
+/**
+ * @brief Gets a table containing all the ships.
+ *
+ *    @luatreturn table A table containing all the ships in the game.
+ * @luafunc getAll
+ */
+static int shipL_getAll( lua_State *L )
+{
+   int i;
+   const Ship *ships = ship_getAll();
+   lua_newtable(L); /* t */
+   for (i=0; i<array_size(ships); i++) {
+      lua_pushship( L, (Ship*) &ships[i] );
+      lua_rawseti( L, -2, i+1 );
+   }
    return 1;
 }
 
