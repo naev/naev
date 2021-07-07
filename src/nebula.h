@@ -34,6 +34,7 @@ void nebu_update( double dt );
 double nebu_getSightRadius (void);
 void nebu_prep( double density, double volatility, double hue );
 void nebu_movePuffs( double x, double y );
+double nebu_damage( double volatility );
 
 
 #endif /* NEBULA_H */

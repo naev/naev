@@ -22,6 +22,7 @@
 #include "log.h"
 #include "map.h"
 #include "map_overlay.h"
+#include "nebula.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"
 #include "nlua_planet.h"
@@ -390,6 +391,7 @@ static int systemL_faction( lua_State *L )
  *    @luatparam System s System to get nebula parameters from.
  *    @luatreturn number The density of the system.
  *    @luatreturn number The volatility of the system.
+ *    @luatreturn number The amount of nebula damage done per second.
  * @luafunc nebula
  */
 static int systemL_nebula( lua_State *L )
@@ -401,6 +403,7 @@ static int systemL_nebula( lua_State *L )
    /* Push the density and volatility. */
    lua_pushnumber(L, s->nebu_density);
    lua_pushnumber(L, s->nebu_volatility);
+   lua_pushnumber(L, nebu_damage(s->nebu_volatility));
 
    return 2;
 }
