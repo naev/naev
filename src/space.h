@@ -291,7 +291,7 @@ struct StarSystem_ {
    double interference; /**< in % @todo implement interference. */
    double nebu_hue; /**< Hue of the nebula (0. - 1.) */
    double nebu_density; /**< Nebula density (0. - 1000.) */
-   double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
+   double nebu_volatility; /**< Damage per second. */
    double radius; /**< Default system radius for standard jump points. */
    char *background; /**< Background script. */
    char *features; /**< Extra text on the map indicating special features of the system. */
@@ -474,7 +474,6 @@ void system_setFaction( StarSystem *sys );
 void space_checkLand (void);
 void space_factionChange (void);
 void space_queueLand( Planet *pnt );
-double space_interference( const StarSystem *sys );
 
 
 #endif /* SPACE_H */

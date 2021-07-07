@@ -701,7 +701,7 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
 
          /* Increase price with volatility, which goes up to about 600.
             And with interference, since systems are harder to find, which goes up to about 1000.*/
-         planet->commodityPrice[j].price *= 1 + sys->nebu_volatility/6000.;
+         planet->commodityPrice[j].price *= 1 + sys->nebu_volatility/600.;
          planet->commodityPrice[j].price *= 1 + sys->interference/10000.;
 
          /* Use number of jumps to determine sytsem time period.  More jumps means more options for trade

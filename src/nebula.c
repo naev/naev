@@ -477,15 +477,3 @@ static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const in
 
    return sur;
 }
-
-
-/**
- * @brief Calculates the amount of damage the nebula does.
- *
- *    @param volatility Volatility to compute damage from.
- *    @return Amount of damage per second that is done.
- */
-double nebu_damage( double volatility )
-{
-   return pow2( volatility ) / 500.;
-}

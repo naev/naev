@@ -193,7 +193,7 @@ double pilot_ewAsteroid( Pilot *p )
  */
 void pilot_updateSensorRange (void)
 {
-   ew_interference = space_interference( cur_system );
+   ew_interference = 1. + cur_system->interference/100.;
 }
 
 

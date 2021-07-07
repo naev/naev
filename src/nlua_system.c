@@ -403,9 +403,8 @@ static int systemL_nebula( lua_State *L )
    /* Push the density and volatility. */
    lua_pushnumber(L, s->nebu_density);
    lua_pushnumber(L, s->nebu_volatility);
-   lua_pushnumber(L, nebu_damage(s->nebu_volatility));
 
-   return 3;
+   return 2;
 }
 
 
@@ -413,13 +412,13 @@ static int systemL_nebula( lua_State *L )
  * @brief Gets the system's interference level.
  *
  *    @luatparam System s System to get interference of.
- *    @luatreturn number The amount of interference (1 is indicates none, <0 indicates increasing levels of interference).
+ *    @luatreturn number The amount of interference (in percent).
  * @luafunc interference
  */
 static int systemL_interference( lua_State *L )
 {
    StarSystem *s = luaL_validsystem(L,1);
-   lua_pushnumber( L, space_interference(s) );
+   lua_pushnumber( L, s->interference );
    return 1;
 }
 

@@ -684,10 +684,10 @@ static void map_update( unsigned int wid )
             adj = "";
 
          /* Volatility */
-         dmg = nebu_damage( sys->nebu_volatility );
-         if (sys->nebu_volatility > 700.)
+         dmg = sys->nebu_volatility;
+         if (sys->nebu_volatility > 50.)
             p += scnprintf(&buf[p], sizeof(buf)-p, _("#rVolatile %sNebula (%.1f MW)#0"), adj, dmg);
-         else if (sys->nebu_volatility > 300.)
+         else if (sys->nebu_volatility > 20.)
             p += scnprintf(&buf[p], sizeof(buf)-p, _("#oDangerous %sNebula (%.1f MW)#0"), adj, dmg);
          else if (sys->nebu_volatility > 0.)
             p += scnprintf(&buf[p], sizeof(buf)-p, _("#yUnstable %sNebula (%.1f MW)#0"), adj, dmg);
@@ -699,7 +699,7 @@ static void map_update( unsigned int wid )
          if (buf[0] != '\0')
             p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
 
-         itf = 100. - space_interference( sys )*100.;
+         itf = sys->interference;
          if (sys->interference > 700.)
             p += scnprintf(&buf[p], sizeof(buf)-p, _("#rDense Interference (%.0f%%)#0"), itf);
          else if (sys->interference < 300.)

@@ -1306,7 +1306,7 @@ void space_update( const double dt )
    nebu_update( dt );
    if (cur_system->nebu_volatility > 0.) {
       dmg.type          = dtype_get("nebula");
-      dmg.damage        = nebu_damage(cur_system->nebu_volatility) * dt;
+      dmg.damage        = cur_system->nebu_volatility * dt;
       dmg.penetration   = 1.; /* Full penetration. */
       dmg.disable       = 0.;
 
@@ -4297,16 +4297,4 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 void space_queueLand( Planet *pnt )
 {
    space_landQueuePlanet = pnt;
-}
-
-/**
- * @brief Gets the system base interference.
- *
- *    @return Amount of interference (1 indicates no interference, <0 indicates increasing levels of interference).
- */
-double space_interference( const StarSystem *sys )
-{
-   if (sys==NULL)
-      sys = cur_system;
-   return 800. / (sys->interference + 800.);
 }
