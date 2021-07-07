@@ -4298,3 +4298,15 @@ void space_queueLand( Planet *pnt )
 {
    space_landQueuePlanet = pnt;
 }
+
+/**
+ * @brief Gets the system base interference.
+ *
+ *    @return Amount of interference (1 indicates no interference, <0 indicates increasing levels of interference).
+ */
+double space_interference( const StarSystem *sys )
+{
+   if (sys==NULL)
+      sys = cur_system;
+   return 800. / (cur_system->interference + 800.);
+}

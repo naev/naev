@@ -474,6 +474,7 @@ void system_setFaction( StarSystem *sys );
 void space_checkLand (void);
 void space_factionChange (void);
 void space_queueLand( Planet *pnt );
+double space_interference( const StarSystem *sys );
 
 
 #endif /* SPACE_H */

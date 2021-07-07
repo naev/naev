@@ -41,6 +41,7 @@ static int systemL_name( lua_State *L );
 static int systemL_nameRaw( lua_State *L );
 static int systemL_faction( lua_State *L );
 static int systemL_nebula( lua_State *L );
+static int systemL_interference( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_jumpPath( lua_State *L );
 static int systemL_adjacent( lua_State *L );
@@ -71,6 +72,7 @@ static const luaL_Reg system_methods[] = {
    { "nameRaw", systemL_nameRaw },
    { "faction", systemL_faction },
    { "nebula", systemL_nebula },
+   { "interference", systemL_interference },
    { "jumpDist", systemL_jumpdistance },
    { "jumpPath", systemL_jumpPath },
    { "adjacentSystems", systemL_adjacent },
@@ -386,7 +388,7 @@ static int systemL_faction( lua_State *L )
 /**
  * @brief Gets the system's nebula parameters.
  *
- * @usage density, volatility = sys:nebula()
+ * @usage density, volatility, damage = sys:nebula()
  *
  *    @luatparam System s System to get nebula parameters from.
  *    @luatreturn number The density of the system.
@@ -396,16 +398,29 @@ static int systemL_faction( lua_State *L )
  */
 static int systemL_nebula( lua_State *L )
 {
-   StarSystem *s;
-
-   s = luaL_validsystem(L,1);
+   StarSystem *s = luaL_validsystem(L,1);
 
    /* Push the density and volatility. */
    lua_pushnumber(L, s->nebu_density);
    lua_pushnumber(L, s->nebu_volatility);
    lua_pushnumber(L, nebu_damage(s->nebu_volatility));
 
-   return 2;
+   return 3;
+}
+
+
+/**
+ * @brief Gets the system's interference level.
+ *
+ *    @luatparam System s System to get interference of.
+ *    @luatreturn number The amount of interference (1 is indicates none, <0 indicates increasing levels of interference).
+ * @luafunc interference
+ */
+static int systemL_interference( lua_State *L )
+{
+   StarSystem *s = luaL_validsystem(L,1);
+   lua_pushnumber( L, space_interference(s) );
+   return 1;
 }
 
 
