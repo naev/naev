@@ -33,12 +33,15 @@ local thurion_outfits = eoutfits.merge{{
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
    "Reactor Class III",
+   "Large Shield Booster",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
+   "Medium Shield Booster",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
    "Adaptive Stealth Plating",
+   "Small Shield Booster",
 }}
 
 local thurion_params = {

@@ -49,11 +49,14 @@ outfits.standard.structural = {
    -- Heavy Structural
    "Battery III", "Shield Capacitor III", "Shield Capacitor IV",
    "Reactor Class III",
+   "Large Shield Booster",
    -- Medium Structural
    "Battery II", "Shield Capacitor II", "Reactor Class II",
+   "Medium Shield Booster",
    -- Small Structural
    "Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
+   "Small Shield Booster",
 }
 outfits.standard.set = outfits.merge{
    outfits.standard.weapons,

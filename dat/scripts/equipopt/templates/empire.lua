@@ -26,12 +26,15 @@ local empire_outfits = eoutfits.merge{{
    -- Heavy Structural
    "Battery IV", "Large Fuel Pod", "Battery III", "Reactor Class III",
    "Shield Capacitor III", "Nanobond Plating",
+   "Large Shield Booster",
    -- Medium Structural
    "Medium Fuel Pod", "Battery II", "Shield Capacitor II",
    "Active Plating", "Reactor Class II",
+   "Medium Shield Booster",
    -- Small Structural
    "Plasteel Plating", "Battery I", "Improved Stabilizer", "Engine Reroute",
    "Reactor Class I", "Small Fuel Pod",
+   "Small Shield Booster",
 }}
 local empire_outfits_collective = false
 
