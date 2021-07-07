@@ -43,6 +43,7 @@ static int linoptL_setcol( lua_State *L );
 static int linoptL_setrow( lua_State *L );
 static int linoptL_loadmatrix( lua_State *L );
 static int linoptL_solve( lua_State *L );
+static int linoptL_writeProblem( lua_State *L );
 static const luaL_Reg linoptL_methods[] = {
    { "__gc", linoptL_gc },
    { "__eq", linoptL_eq },
@@ -54,6 +55,7 @@ static const luaL_Reg linoptL_methods[] = {
    { "set_row", linoptL_setrow },
    { "load_matrix", linoptL_loadmatrix },
    { "solve", linoptL_solve },
+   { "write_problem", linoptL_writeProblem },
    {0,0}
 }; /**< Optim metatable methods. */
 
@@ -540,3 +542,25 @@ static int linoptL_solve( lua_State *L )
    return 3;
 }
 
+
+/**
+ * @brief Writes a optimization problem to a file for debugging purposes.
+ *
+ *    @luatparam LinOpt lp Linear program to write.
+ *    @luatparam string fname Path to write the program to.
+ *    @luatparam[opt=false] boolean mps_format Whether to write the program in MPS format instead of GLPK format.
+ * @luafunc write_problem
+ */
+static int linoptL_writeProblem( lua_State *L )
+{
+   LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
+   const char *fname = luaL_checkstring(L,2);
+   int mps_format    = lua_toboolean(L,3);
+   int ret;
+   if (mps_format)
+      ret = glp_write_mps(  lp->prob, GLP_MPS_FILE, NULL, fname );
+   else
+      ret = glp_write_prob( lp->prob, 0, fname );
+   lua_pushboolean( L, ret==0 );
+   return 1;
+}
