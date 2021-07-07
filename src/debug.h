@@ -26,7 +26,7 @@ enum {
 typedef char DebugFlags[ DEBUG_FLAGS_MAX ];
 
 /* Initialize debugging flags. */
-DebugFlags debug_flags;
+extern DebugFlags debug_flags;
 #endif /* DEBUGGING */
 
 

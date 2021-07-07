@@ -36,6 +36,13 @@ static asymbol **syms = NULL;
 #endif /* LINUX && HAS_BFD && DEBUGGING */
 
 
+#ifdef DEBUGGING
+/* Initialize debugging flags. */
+#include "debug.h"
+DebugFlags debug_flags;
+#endif /* DEBUGGING */
+
+
 #if LINUX && HAS_BFD && DEBUGGING
 /**
  * @brief Gets the string related to the signal code.
