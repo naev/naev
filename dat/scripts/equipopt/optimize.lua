@@ -175,7 +175,7 @@ function optimize.goodness_default( o, p )
 end
 
 
-local function print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod )
+local function print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
    emod = emod or 1
    mmod = mmod or 1
    print(_("Trying to equip:"))
@@ -202,6 +202,10 @@ local function print_debug( p, st, ss, outfit_list, params, constraints, energyg
    print(string.format(_("CPU: %d / %d [%d < %d]"), stn.cpu, stn.cpu_max, constraints[1] or 0, st.cpu_max * ss.cpu_mod ))
    print(string.format(_("Energy Regen: %.3f [%.3f < %.3f (%.1f)]"), stn.energy_regen, constraints[2] or 0, st.energy_regen - emod*energygoal, emod))
    print(string.format(_("Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"), st.mass, ss.engine_limit, constraints[3] or 0, mmod * params.max_mass * ss.engine_limit - st.mass, mmod ))
+   if nebu_row then
+      local nebu_dens, nebu_vol = system.cur():nebula()
+      print(string.format(_("Shield Regen: %.3f [%.3f > %.3f (%.1f)]"), stn.shield_regen, constraints[nebu_row] or 0, nebu_vol*0.15-st.shield_regen, 1))
+   end
 end
 
 --[[
@@ -428,9 +432,16 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- We have to add additional constraints (spaceworthy, limits)
    local sworthy = 3 -- Check CPU, energy regen, and mass
+   -- Budget limit
    if params.budget then
       sworthy = sworthy + 1
    end
+   -- For volatile systems we don't want ships to explode!
+   local nebu_dens, nebu_vol = system.cur():nebula()
+   if nebu_vol > 0 then
+      sworthy = sworthy + 1
+   end
+   -- Avoid same items and limits
    nrows = nrows + sworthy + #limits
    if #same_list > 0 then
       nrows = nrows + #same_list
@@ -449,8 +460,18 @@ function optimize.optimize( p, cores, outfit_list, params )
       massgoal = nil
    end
    lp:set_row( 3, "mass",      nil, massgoal )
+   local rows = 3
+   local budget_row
    if params.budget then
-      lp:set_row( 4, "budget",    nil, params.budget )
+      rows = rows+1
+      budget_row = rows
+      lp:set_row( budget_row, "budget",    nil, params.budget )
+   end
+   local nebu_row
+   if nebu_vol > 0 then
+      rows = rows+1
+      nebu_row = rows
+      lp:set_row( nebu_row, "shield_regen", nebu_vol*0.15-st.shield_regen, nil )
    end
    -- Add limit checks
    for i,l in ipairs(limits) do
@@ -491,9 +512,15 @@ function optimize.optimize( p, cores, outfit_list, params )
          table.insert( ar, stats.mass )
          -- Budget constraint if necessary
          if params.budget then
-            table.insert( ia, 4 )
+            table.insert( ia, budget_row )
             table.insert( ja, c )
             table.insert( ar, stats.price )
+         end
+         -- Minimum shield regen is necessary
+         if nebu_vol > 0 then
+            table.insert( ia, nebu_row )
+            table.insert( ja, c )
+            table.insert( ar, stats.shield_regen )
          end
          -- Limit constraint
          if stats.limit then
@@ -570,7 +597,7 @@ function optimize.optimize( p, cores, outfit_list, params )
          if not z then
             -- Maybe should be error instead?
             warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
-            print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod )
+            print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
             return false
          end
       end
@@ -602,7 +629,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    until done or try >= 5 -- attempts should be fairly fast since we just do optimization step
    if not done then
       warn(string.format(_("Failed to equip pilot '%s'!"), p:name()))
-      print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod )
+      print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
       return false
    end
 
@@ -614,7 +641,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       local b, s = p:spaceworthy()
       if not b then
          warn(string.format(_("Pilot '%s' is not space worthy after equip script is run! Reason: %s"),p:name(),s))
-         print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod )
+         print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
          return false
       end
    end
