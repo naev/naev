@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-07-05 23:48-0400\n"
+"POT-Creation-Date: 2021-07-06 20:07-0400\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -805,10 +805,6 @@ msgstr ""
 "zde založili výzkumnou základnu, která má zjistit více o struktuře planety. "
 "Základna je docela malá a na místě může být jen několik desítek výzkumníků. "
 "Turismus zde nepřichází v úvahu, stejně jako bar."
-
-#: dat/assets/abandoned_station.xml:2
-msgid "Abandoned Station"
-msgstr "Opuštěná stanice"
 
 #: dat/assets/adham.xml:2
 msgid "Adham"
@@ -8540,24 +8536,6 @@ msgstr ""
 msgid "Pastor VI"
 msgstr ""
 
-#: dat/assets/paul_2.xml:2
-msgid "Paul 2"
-msgstr ""
-
-#: dat/assets/paul_2.xml:30
-msgid ""
-"Paul 2 is a planet of merchants and entrepreneurs. Though the planet doesn't "
-"have a global government as such, the population has agreed on a number of "
-"general rules that count as law of some sort. It works surprisingly well."
-msgstr ""
-
-#: dat/assets/paul_2.xml:31
-msgid ""
-"Like many planets in the galaxy nowadays, Paul 2's economy relies heavily on "
-"interplanetary trade. The spaceport bar doubles as a trade center, allowing "
-"traders to buy and sell wares without ever leaving the spaceport."
-msgstr ""
-
 #: dat/assets/pauldur.xml:2
 msgid "Pauldur"
 msgstr ""
@@ -9371,10 +9349,6 @@ msgid ""
 "have to take an elevator to reach this one."
 msgstr ""
 
-#: dat/assets/rein.xml:2
-msgid "Rein"
-msgstr ""
-
 #: dat/assets/rhaana.xml:2
 msgid "Rhaana"
 msgstr ""
@@ -9426,24 +9400,6 @@ msgid ""
 "The bar here really is no different from any other Thurion bar. As usual, no "
 "alcohol is sold, and biological Thurions can be seen socializing and "
 "enjoying safe foods and drinks."
-msgstr ""
-
-#: dat/assets/rin.xml:2
-msgid "Rin"
-msgstr ""
-
-#: dat/assets/rin.xml:30
-msgid ""
-"Rin is a quiet world, far away from the turmoil that plagues most of the "
-"galaxy. The inhabitants are friendly, always happy to help a beginning "
-"captain get his space legs."
-msgstr ""
-
-#: dat/assets/rin.xml:31
-msgid ""
-"If space is just getting a bit too much for you, the spaceport bar on Rin is "
-"the place to take a load off. It's a tidy place, and the clientele is well "
-"behaved. You will find no unsavory figures here."
 msgstr ""
 
 #: dat/assets/rionna.xml:2
@@ -11244,10 +11200,6 @@ msgid ""
 "as good unprocessed. Most algae runners stop to grab drinks between runs to "
 "try to get the taste of the algae out of their mouth, though the liquors the "
 "bar serves happen to be made with processed algae."
-msgstr ""
-
-#: dat/assets/tein.xml:2
-msgid "Tein"
 msgstr ""
 
 #: dat/assets/telika_ii.xml:2
@@ -20582,10 +20534,6 @@ msgstr ""
 msgid "Castellan"
 msgstr ""
 
-#: dat/ssys/cherokee.xml:2
-msgid "Cherokee"
-msgstr ""
-
 #: dat/ssys/chloe.xml:2
 msgid "Chloe"
 msgstr ""
@@ -20977,10 +20925,6 @@ msgstr ""
 msgid "Iris"
 msgstr ""
 
-#: dat/ssys/iroquois.xml:2
-msgid "Iroquois"
-msgstr ""
-
 #: dat/ssys/jackson.xml:2
 msgid "Jackson"
 msgstr ""
@@ -21141,10 +21085,6 @@ msgstr ""
 msgid "Modus Manis"
 msgstr ""
 
-#: dat/ssys/mohawk.xml:2
-msgid "Mohawk"
-msgstr ""
-
 #: dat/ssys/monogram.xml:2
 msgid "Monogram"
 msgstr ""
@@ -21187,10 +21127,6 @@ msgstr ""
 
 #: dat/ssys/nava.xml:2
 msgid "Nava"
-msgstr ""
-
-#: dat/ssys/navajo.xml:2
-msgid "Navajo"
 msgstr ""
 
 #: dat/ssys/neexi.xml:2
@@ -21529,10 +21465,6 @@ msgstr ""
 msgid "Sikh"
 msgstr ""
 
-#: dat/ssys/sioux.xml:2
-msgid "Sioux"
-msgstr ""
-
 #: dat/ssys/sirou.xml:2
 msgid "Sirou"
 msgstr ""
@@ -21705,10 +21637,6 @@ msgstr ""
 
 #: dat/ssys/tobanna.xml:2
 msgid "Tobanna"
-msgstr ""
-
-#: dat/ssys/todo_traders_here.xml:2
-msgid "TODO: Traders here"
 msgstr ""
 
 #: dat/ssys/tomas.xml:2
@@ -25215,13 +25143,12 @@ msgstr ""
 
 #. Did the FLF wreck this poster?
 #. End event on takeoff.
+#. It's all assuming the poster is 700x900
 #. Create the image
-#. It's all assuming the poster is 700x900
 #. Add FLF stuff on it
-#. Raw poster
-#. It's all assuming the poster is 700x900
+#. Finish
 #. Create the vn scene
-#: dat/events/dvaered/poster.lua:82
+#: dat/events/dvaered/poster.lua:83
 #, fuzzy
 #| msgid "Testers"
 msgid "Poster"
@@ -25613,8 +25540,8 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:231 dat/events/minerva/station.lua:337
 #: dat/events/minerva/station.lua:364 dat/rescue.lua:44 dat/rescue.lua:55
 #: dat/rescue.lua:115 dat/rescue.lua:164 src/dialogue.c:738 src/escort.c:290
-#: src/map_find.c:244 src/options.c:263 src/options.c:759 src/options.c:866
-#: src/options.c:1124 src/options.c:1178
+#: src/map_find.c:244 src/options.c:264 src/options.c:760 src/options.c:867
+#: src/options.c:1125 src/options.c:1179
 msgid "Cancel"
 msgstr ""
 
@@ -31822,56 +31749,23 @@ msgid ""
 "\" You thank the salesperson and continue on your way."
 msgstr ""
 
-#. Heavy Weapons
-#. Medium Weapons
-#. Small Weapons
-#. Utility
-#. Heavy Structural
-#. Medium Structural
-#. Small Structural
-#. Basically elite hulls excluding stealth
 #.
 #. -- @brief Does Dvaered pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
-#. if dvaered_skip[sname] then return end
-#. Choose parameters and make Za'lekish
-#. Prefer to use the Za'lek utilities
-#. Don't care about electronic warfare
-#. Dvaereds want more energy
-#. Per ship tweaks
-#. See cores
-#. Try to equip
-#. Heavy Weapons
-#. Medium Weapons
-#. Small Weapons
-#. "Unicorp Mace Launcher", "TeraCom Mace Launcher",
-#. Utility
-#. Heavy Structural
-#. Medium Structural
-#. Small Structural
 #.
 #. -- @brief Does Dvaered pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
-#. if empire_skip[sname] then return end
-#. Choose parameters and make Empire-ish
-#. Prefer to use the Empire utilities
-#. Empire loves energy
-#. Per ship tweaks
-#. See cores
-#. Try to equip
 #. Probability of cargo by class.
 #.
 #. -- @brief Does Generic pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
-#. Choose parameters and make Pirateish
-#. See cores
-#. Try to equip
+#. Do equipment
 #. Add cargo
 #. Heavy Weapons
 #. Medium Weapons
@@ -31885,97 +31779,31 @@ msgstr ""
 #. need at least one weapon
 #. See cores
 #. Try to equip
-#. Heavy Weapons
-#. Medium Weapons
-#. Small Weapons
-#. Utility
-#. Heavy Structural
-#. Medium Structural
-#. Small Structural
 #.
 #. -- @brief Does Pirate pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
-#. Choose parameters and make Pirateish
-#. Prefer to use the Pirate utilities
-#. much more diversity for pirates
-#. Per ship tweaks
-#. See cores
-#. Try to equip
-#. Heavy Weapons
-#. Medium Weapons
-#. Small Weapons
-#. Utility
-#. Heavy Structural
-#. Medium Structural
-#. Small Structural
-#. ["Proteron Demon"] = function () return {
 #.
 #. -- @brief Does Proteron pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
-#. Choose parameters and make Proteronish
-#. Prefer to use the Proteron utilities
-#. Per ship tweaks
-#. See cores
-#. Try to equip
-#. Heavy Weapons
-#. Medium Weapons
-#. Small Weapons
-#. Utility
-#. Heavy Structural
-#. Medium Structural
-#. Small Structural
-#. ["Sirius Demon"] = function () return {
 #.
 #. -- @brief Does Sirius pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
-#. Choose parameters and make Siriusish
-#. Prefer to use the Sirius utilities
-#. Per ship tweaks
-#. See cores
-#. Try to equip
-#. Heavy Weapons
-#. Medium Weapons
-#. Small Weapons
-#. Utility
-#. Heavy Structural
-#. Medium Structural
-#. Small Structural
-#. ["Soromid Demon"] = function () return {
 #.
 #. -- @brief Does Soromid pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
-#. Choose parameters and make Soromidish
-#. Prefer to use the Soromid utilities
-#. Per ship tweaks
-#. See cores
-#. Try to equip
-#. TODO randomly change some bio plasma weapons to weaker ones
-#. Heavy Weapons
-#. Medium Weapons
-#. Small Weapons
-#. Utility
-#. Heavy Structural
-#. Medium Structural
-#. Small Structural
-#. ["Sirius Demon"] = function () return {
 #.
 #. -- @brief Does Thurion pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
-#. Choose parameters and make Thurion-ish
-#. Prefer to use the Thurion utilities
-#. Per ship tweaks
-#. See cores
-#. Try to equip
 #. Probability of cargo by class.
 #.
 #. -- @brief Does Trader pilot equipping
@@ -31987,23 +31815,11 @@ msgstr ""
 #. See cores
 #. Try to equip
 #. Add cargo
-#. Heavy Weapons
-#. Medium Weapons
-#. Small Weapons
-#. Utility
-#. Heavy Structural
-#. Medium Structural
-#. Small Structural
 #.
 #. -- @brief Does Za'lek pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
-#. Choose parameters and make Za'lekish
-#. Prefer to use the Za'lek utilities
-#. Per ship tweaks
-#. See cores
-#. Try to equip
 #. @brief Spawns a single small ship.
 #. Compute the hostile presence
 #. The more hostiles, the less advertisers
@@ -40960,7 +40776,7 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:104
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:116
 #: dat/missions/neutral/cargo_rush.lua:144
-#: dat/missions/pirate/pir_contraband.lua:171
+#: dat/missions/pirate/pir_contraband.lua:175
 #: dat/missions/sirius/srs_ferry.lua:68
 #: dat/missions/trader/anxiousmerchant.lua:66
 msgid "Too slow"
@@ -40969,7 +40785,7 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:105
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:117
 #: dat/missions/neutral/cargo_rush.lua:145
-#: dat/missions/pirate/pir_contraband.lua:172
+#: dat/missions/pirate/pir_contraband.lua:176
 #, lua-format
 msgid ""
 "This shipment must arrive within %s, but it will take at least %s for your "
@@ -40991,14 +40807,14 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:112
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:124
 #: dat/missions/neutral/cargo.lua:103 dat/missions/neutral/cargo_rush.lua:134
-#: dat/missions/pirate/pir_contraband.lua:179
+#: dat/missions/pirate/pir_contraband.lua:183
 msgid "No room in ship"
 msgstr ""
 
 #: dat/missions/empire/es_cargo.lua:113
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:125
 #: dat/missions/neutral/cargo.lua:104 dat/missions/neutral/cargo_rush.lua:135
-#: dat/missions/pirate/pir_contraband.lua:180
+#: dat/missions/pirate/pir_contraband.lua:184
 #, lua-format
 msgid ""
 "You don't have enough cargo space to accept this mission. It requires %s of "
@@ -41007,7 +40823,7 @@ msgstr ""
 
 #: dat/missions/empire/es_cargo.lua:122
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:134
-#: dat/missions/pirate/pir_contraband.lua:189
+#: dat/missions/pirate/pir_contraband.lua:193
 #: dat/missions/sirius/srs_ferry.lua:136 dat/missions/zalek/zlk_test.lua:33
 msgid "Mission Accepted"
 msgstr ""
@@ -41028,7 +40844,7 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:137
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:149
 #: dat/missions/neutral/cargo_rush.lua:58
-#: dat/missions/pirate/pir_contraband.lua:204
+#: dat/missions/pirate/pir_contraband.lua:208
 msgid "Successful Delivery"
 msgstr ""
 
@@ -55189,351 +55005,352 @@ msgstr ""
 #. This is in cargo_common, but we need to increase the range
 #. Note: this mission does not make any system claims.
 #. Lower chance of appearing to 1/3 on non-pirate planets
+#. Doesn't appear on Thurion and Proteron worlds for now
 #. target destination
 #. We’re redefining the cargo
 #. Serious stuff here
-#: dat/missions/pirate/pir_contraband.lua:72
+#: dat/missions/pirate/pir_contraband.lua:76
 msgid "Stolen Goods"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:72
+#: dat/missions/pirate/pir_contraband.lua:76
 msgid "A lot of goods obtained by illicit and illegal means."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:73
+#: dat/missions/pirate/pir_contraband.lua:77
 msgid "Hacked Electronics"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:73
+#: dat/missions/pirate/pir_contraband.lua:77
 msgid "An assortment of illegally modified electronic goods."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:74
+#: dat/missions/pirate/pir_contraband.lua:78
 msgid "Illegal Waste"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:74
+#: dat/missions/pirate/pir_contraband.lua:78
 msgid "A diversity of highly illegal waste."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:75
+#: dat/missions/pirate/pir_contraband.lua:79
 msgid "Powerful Stimulants"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:75
+#: dat/missions/pirate/pir_contraband.lua:79
 msgid "A bunch of illegal stimulants."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:76
+#: dat/missions/pirate/pir_contraband.lua:80
 msgid "Unmarked Boxes"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:76
+#: dat/missions/pirate/pir_contraband.lua:80
 msgid ""
 "A bunch of unmarked boxes containing what you can only assume to be highly "
 "illegal items."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:77
+#: dat/missions/pirate/pir_contraband.lua:81
 msgid "Exotic Animals"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:77
+#: dat/missions/pirate/pir_contraband.lua:81
 msgid "A bunch of exotic animals that can not be legally traded."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:78
+#: dat/missions/pirate/pir_contraband.lua:82
 msgid "Radioactive Materials"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:78
+#: dat/missions/pirate/pir_contraband.lua:82
 msgid "Highly dangerous and illegal radioactive materials."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:79
+#: dat/missions/pirate/pir_contraband.lua:83
 msgid "Illegal Drugs"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:79
+#: dat/missions/pirate/pir_contraband.lua:83
 msgid "A bunch of drugs made illegal in most systems."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:80
+#: dat/missions/pirate/pir_contraband.lua:84
 msgid "Illegal Body Mods"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:80
+#: dat/missions/pirate/pir_contraband.lua:84
 msgid "A lot of illegal body modifications."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:81
+#: dat/missions/pirate/pir_contraband.lua:85
 msgid "Unauthorized Weapons"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:81
+#: dat/missions/pirate/pir_contraband.lua:85
 msgid "A bunch of illegal weapons."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:82
+#: dat/missions/pirate/pir_contraband.lua:86
 #, fuzzy
 #| msgid "Contributions"
 msgid "Contraband"
 msgstr "Příspěvky"
 
-#: dat/missions/pirate/pir_contraband.lua:82
+#: dat/missions/pirate/pir_contraband.lua:86
 msgid "An diverse assortment of illegal contraband goods."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:83
+#: dat/missions/pirate/pir_contraband.lua:87
 msgid "Counterfeit Goods"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:83
+#: dat/missions/pirate/pir_contraband.lua:87
 msgid "An assortment of illegal counterfeit goods of many famous brands."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:84
+#: dat/missions/pirate/pir_contraband.lua:88
 msgid "Stolen Art"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:84
+#: dat/missions/pirate/pir_contraband.lua:88
 msgid "Artwork that was illegally seized from a collector or gallery."
 msgstr ""
 
 #. Below less serious stuff
-#: dat/missions/pirate/pir_contraband.lua:86
+#: dat/missions/pirate/pir_contraband.lua:90
 msgid "User Databases"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:86
+#: dat/missions/pirate/pir_contraband.lua:90
 msgid ""
 "Stolen user databases with lots of personal information obtained illegally."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:87
+#: dat/missions/pirate/pir_contraband.lua:91
 msgid "Smelly Fruits"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:87
+#: dat/missions/pirate/pir_contraband.lua:91
 msgid ""
 "Illegal fruits that have a strong smell that can stink up entire stations in "
 "minutes."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:88
+#: dat/missions/pirate/pir_contraband.lua:92
 msgid "Catnip"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:88
+#: dat/missions/pirate/pir_contraband.lua:92
 msgid "Highly illegal drug that is very attractive to cats."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:89
+#: dat/missions/pirate/pir_contraband.lua:93
 msgid "Hypnotoads"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:89
+#: dat/missions/pirate/pir_contraband.lua:93
 msgid "Illegal amphibian with some mind-control abilities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:90
+#: dat/missions/pirate/pir_contraband.lua:94
 msgid "Extra Spicy Burritos"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:90
+#: dat/missions/pirate/pir_contraband.lua:94
 msgid "Burritos that are so spicy, they are illegal."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:91
+#: dat/missions/pirate/pir_contraband.lua:95
 msgid "Pineapple Pizza"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:91
+#: dat/missions/pirate/pir_contraband.lua:95
 msgid "Pizza with pineapple on it, there is no way this is legal."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:92
+#: dat/missions/pirate/pir_contraband.lua:96
 msgid "Illicit Shader Code"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:92
+#: dat/missions/pirate/pir_contraband.lua:96
 msgid "Program used for rendering images with nefarious and illegal purposes."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:96
+#: dat/missions/pirate/pir_contraband.lua:100
 msgid "Tax-evasion Documents"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:96
+#: dat/missions/pirate/pir_contraband.lua:100
 msgid "Illegal documents detailing tax evasion by high empire officials."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:97
+#: dat/missions/pirate/pir_contraband.lua:101
 msgid "Leaked Documents"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:97
+#: dat/missions/pirate/pir_contraband.lua:101
 msgid "Documents illegally leaked from governmental entities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:98
+#: dat/missions/pirate/pir_contraband.lua:102
 msgid "Incriminating Evidence"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:98
+#: dat/missions/pirate/pir_contraband.lua:102
 msgid "Illegally obtained evidence that incriminates high empire officials."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:99
+#: dat/missions/pirate/pir_contraband.lua:103
 msgid "Unauthorized Office Supplies"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:99
+#: dat/missions/pirate/pir_contraband.lua:103
 msgid ""
 "Office supplies that don't meet the standards of the Empire bureaucracy, "
 "including flimsy red staplers."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:100
+#: dat/missions/pirate/pir_contraband.lua:104
 msgid "Paper Deshredders"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:100
+#: dat/missions/pirate/pir_contraband.lua:104
 msgid ""
 "Devices that are able to reconstruct original documents from their shredded "
 "remains."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:103
+#: dat/missions/pirate/pir_contraband.lua:107
 msgid "Self-help Books"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:103
+#: dat/missions/pirate/pir_contraband.lua:107
 msgid "Books for self-betterment made illegal by the Dvaered authorities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:104
+#: dat/missions/pirate/pir_contraband.lua:108
 msgid "Pacifist Manifestos"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:104
+#: dat/missions/pirate/pir_contraband.lua:108
 msgid ""
 "Documents making the case for pacifism, made illegal by the Dvaered "
 "authorities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:105
+#: dat/missions/pirate/pir_contraband.lua:109
 msgid "Zen Rock Gardens"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:105
+#: dat/missions/pirate/pir_contraband.lua:109
 msgid ""
 "Sand and rock gardens with special rakes you can use for meditative "
 "purposes. Made illegal by the Dvaered authorities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:106
+#: dat/missions/pirate/pir_contraband.lua:110
 msgid "Scented Soap"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:106
+#: dat/missions/pirate/pir_contraband.lua:110
 msgid ""
 "Fragrant soaps that can lead you to have a peace of mind. Made illegal by "
 "the Dvaered authorities."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:109
+#: dat/missions/pirate/pir_contraband.lua:113
 msgid "Unstable DNA"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:109
+#: dat/missions/pirate/pir_contraband.lua:113
 msgid "Illegal DNA with strong reactive properties."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:110
+#: dat/missions/pirate/pir_contraband.lua:114
 msgid "Bio-weapons"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:110
+#: dat/missions/pirate/pir_contraband.lua:114
 msgid "Highly dangerous illegal biological weapons."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:111
+#: dat/missions/pirate/pir_contraband.lua:115
 msgid "Abducted Drosophila"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:111
+#: dat/missions/pirate/pir_contraband.lua:115
 msgid ""
 "Genetically modified small fruit flies illegally stolen from a laboratory."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:112
+#: dat/missions/pirate/pir_contraband.lua:116
 msgid "Mislabeled Plasmids"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:112
+#: dat/missions/pirate/pir_contraband.lua:116
 msgid ""
 "Independently replicating DNA that has been mislabeled and is no longer "
 "clear what exactly it does. Illegal for its uncertain and dangerous nature."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:115
+#: dat/missions/pirate/pir_contraband.lua:119
 msgid "Heretical Documents"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:115
+#: dat/missions/pirate/pir_contraband.lua:119
 msgid "Illegal documents referring to heresy."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:116
+#: dat/missions/pirate/pir_contraband.lua:120
 msgid "Itch Powder"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:116
+#: dat/missions/pirate/pir_contraband.lua:120
 msgid "A banned substance with a history of disrupting robed processions."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:117
+#: dat/missions/pirate/pir_contraband.lua:121
 msgid "Unauthorized Sirichana Merchandise"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:117
+#: dat/missions/pirate/pir_contraband.lua:121
 msgid ""
 "Horribly tacky and outright bad merchandise with Sirichana pasted all over "
 "it. Sirichana toenail clipper anyone?"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:120
+#: dat/missions/pirate/pir_contraband.lua:124
 msgid "Scientific Preprints"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:120
+#: dat/missions/pirate/pir_contraband.lua:124
 msgid "Non-paywalled illegal scientific papers."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:121
+#: dat/missions/pirate/pir_contraband.lua:125
 msgid "Sentient AI"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:121
+#: dat/missions/pirate/pir_contraband.lua:125
 msgid "Highly illegal AI that is assumed to be sentient."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:122
+#: dat/missions/pirate/pir_contraband.lua:126
 msgid "Bogus Proofs"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:122
+#: dat/missions/pirate/pir_contraband.lua:126
 msgid ""
 "Mathematical proofs with almost imperceptible modifications to make them "
 "illegally false."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:123
+#: dat/missions/pirate/pir_contraband.lua:127
 msgid "p-Hacked Results"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:123
+#: dat/missions/pirate/pir_contraband.lua:127
 msgid ""
 "Scientific trial results obtained through unreliable and illegal uses of "
 "statistics."
@@ -55547,17 +55364,17 @@ msgstr ""
 #. Allow extra time for refuelling stops.
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #. Modifier that should tend towards 1.0 as Naev is finished as a game
-#: dat/missions/pirate/pir_contraband.lua:160
+#: dat/missions/pirate/pir_contraband.lua:164
 #, lua-format
 msgid "PIRACY: Smuggle %s of %s"
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:190
+#: dat/missions/pirate/pir_contraband.lua:194
 #, lua-format
 msgid "%s of %s are loaded onto your ship."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:205
+#: dat/missions/pirate/pir_contraband.lua:209
 #, lua-format
 msgid "The containers of %s are unloaded at the docks."
 msgstr ""
@@ -65501,207 +65318,7 @@ msgstr ""
 #. Equips pilots based on mixed integer linear programming
 #.
 #. --
-#. Get all the fighter bays and calculate rough dps
-#. Manual overrides
-#. Combat AIs
-#. Hull Coating
-#. Utility Stuff
-#. Special weights
-#. high damage but shield only
-#. really high disable
-#. Only work until 50%
-#.
-#. Completely custom ship builds: they do not use optimization
-#. --
-#.
-#. Goodness functions to rank how good each outfits are
-#. --
-#. Base attributes
-#. Movement attributes
-#. Health attributes
-#. Energy attributes
-#. Weapon attributes
-#. Compute damage
-#. Tracking Modifier
-#. Range modifier
-#. Absorption modifier
-#. More modifications
-#. Must be able to outrun target
-#. Ewarfare attributes
-#. Custom weight
-#. print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, g * (p.prefer[o.name] or 1), w*base, w*move, w*health, w*weap, w*ew))
-#. Our goodness function
-#. Global stuff
-#. Constant value makes them prefer outfits rather than not
-#. amount of randomness to use for goodness function
-#. maximum same weapons (nil is no limit)
-#. maximum same utilities (nil is no limit)
-#. maximum same structurals (nil is no limit)
-#. relative minimum regen margin (with respect to cores)
-#. absolute minimum energy regen (MJ/s)
-#. how to weight weapon EPS into energy regen
-#. maximum amount to go over engine limit (relative)
-#. total cost budget
-#. Range of type, this is dangerous as minimum values could lead to the
-#. optimization problem not having a solution with high minimums
-#. Outfit names that the pilot should prefer (multiplies weights)
-#. ["Hive Combat AI"] = 100,
-#. High level weights
-#. Not as important
-#. Weapon stuff
-#. assumed target absorption
-#. assumed target speed
-#. ew_detect enemies we want to target
-#. ideal minimum range we want
-#. weight for normal damage
-#. weight for disable damage
-#. low weapons
-#. low weapons
-#. Less forward weapons
-#. Less forward weapons
-#. low weapons
-#. @brief Chooses a parameter table randomly for a certain pilot p
-#: dat/scripts/equipopt.lua:402
-msgid "Trying to equip:"
-msgstr ""
-
-#: dat/scripts/equipopt.lua:406
-msgid "Parameters:"
-msgstr ""
-
-#: dat/scripts/equipopt.lua:417
-msgid "Equipment:"
-msgstr ""
-
-#: dat/scripts/equipopt.lua:423
-#, lua-format
-msgid "CPU: %d / %d [%d < %d]"
-msgstr ""
-
-#: dat/scripts/equipopt.lua:424
-#, lua-format
-msgid "Energy Regen: %.3f [%.3f < %.3f (%.1f)]"
-msgstr ""
-
-#: dat/scripts/equipopt.lua:425
-#, lua-format
-msgid "Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"
-msgstr ""
-
-#.
-#. @brief Equips a pilot with cores and outfits chosen from a list through optimization.
-#.
-#. @tparam Pilot p Pilot to equip.
-#. @tparam[opt=nil] table|nil cores Table of core outfits (by name) to equip. They will replace existing outfits, or set to nil to use defaults.
-#. @tparam table outfit_list List of outfits to try to equip (by name). There can be duplicates in the list, and only outfits that can be equipped are considered.
-#. @tparam[opt=nil] table|nil params Parameter list to use or nil for defaults.
-#. @treturn boolean Whether or not the pilot was properly equipped
-#. --
-#. Naked ship
-#. Special ships used fixed outfits
-#: dat/scripts/equipopt.lua:451
-#, lua-format
-msgid ""
-"Pilot '%s' is not space worthy after custom equip script is run! Reason: %s"
-msgstr ""
-
-#. Handle cores
-#. Don't actually have to remove cores as it should overwrite default
-#. cores as necessary
-#. p:rmOutfit( "cores" )
-#. Put cores
-#: dat/scripts/equipopt.lua:467
-#, lua-format
-msgid "Unable to equip core '%s' on '%s'!"
-msgstr ""
-
-#. Global ship stuff
-#. Should include cores!!
-#. also include cores
-#. Determine what outfits from outfit_list we can actually equip
-#. We actually remove duplicates too
-#. Afterburners will be ignored if the ship is too heavy
-#. Check to see if fits slot
-#. Optimization problem definition
-#. Figure out limits (both natural and artificial)
-#. Add limit if applicable
-#. See if we want to limit the particular outfit
-#. Resort limits
-#. Create outfit cache, it contains all sort of nice information like DPS and
-#. other stuff that can be used for our goodness function
-#. Core stats
-#. We correct ship stats here and convert them to "relative improvements"
-#. Movement
-#. Health
-#. Misc
-#. Specific corrections
-#. Fighter bays don't have dps or anything, so we have to fake it
-#: dat/scripts/equipopt.lua:594
-#, lua-format
-msgid "Fighter bay '%s' does not have computed DPS!"
-msgstr ""
-
-#. We add it as movement, but weaken the effect a bit
-#. Compute goodness
-#. Cache it all so we don't have to recompute
-#. Figure out slots
-#. Check to see if it is in the similar list
-#. Each slot adds a number of variables equivalent to the number of
-#. potential outfits, but only one constraint
-#. We have to add additional constraints (spaceworthy, limits)
-#. Check CPU, energy regen, and mass
-#. Add space worthy checks
-#: dat/scripts/equipopt.lua:663
-#, lua-format
-msgid "Impossible mass goal of %d set! Ignoring mass for pilot '%s'!"
-msgstr ""
-
-#. Add limit checks
-#. Add outfit checks
-#. contribution to objective function
-#. constraints set automatically
-#. CPU constraint
-#. Energy constraint
-#. Mass constraint
-#. Budget constraint if necessary
-#. Limit constraint
-#. Only one outfit per slot constraint
-#. Maximum of same type
-#. Check type range
-#. Load all the constraints
-#. Try to optimize
-#. All the magic is done here
-#. Try to relax constraints
-#. Mass constraint
-#. Energy constraint
-#. Maybe should be error instead?
-#: dat/scripts/equipopt.lua:786
-#, lua-format
-msgid "Failed to solve equipopt linear program for pilot '%s': %s"
-msgstr ""
-
-#. Interpret results
-#: dat/scripts/equipopt.lua:799
-#, lua-format
-msgid "Unable to equip outfit '%s' on '%s'!"
-msgstr ""
-
-#. Due to the approximation, sometimes they end up with not enough
-#. energy, we'll try again with larger energy constraints
-#. print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
-#. attempts should be fairly fast since we just do optimization step
-#: dat/scripts/equipopt.lua:818
-#, lua-format
-msgid "Failed to equip pilot '%s'!"
-msgstr ""
-
-#. Fill ammo
-#. Check
-#: dat/scripts/equipopt.lua:830
-#, lua-format
-msgid "Pilot '%s' is not space worthy after equip script is run! Reason: %s"
-msgstr ""
-
+#. Main equipment functions
 #. Bias towards fewer types
 #. Add the cargo
 #.
@@ -65767,6 +65384,181 @@ msgstr ""
 #. ELITE ENGINES
 #. --
 #.
+#.
+#. Equips pilots based on mixed integer linear programming
+#.
+#. --
+#. Get all the fighter bays and calculate rough dps
+#. Manual overrides
+#. Combat AIs
+#. Hull Coating
+#. Utility Stuff
+#. Special weights
+#. high damage but shield only
+#. really high disable
+#. Only work until 50%
+#.
+#. Completely custom ship builds: they do not use optimization
+#. --
+#.
+#. Goodness functions to rank how good each outfits are
+#. --
+#. Base attributes
+#. Movement attributes
+#. Health attributes
+#. Energy attributes
+#. Weapon attributes
+#. Compute damage
+#. Tracking Modifier
+#. Range modifier
+#. Absorption modifier
+#. More modifications
+#. Must be able to outrun target
+#. Ewarfare attributes
+#. Custom weight
+#. print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, g * (p.prefer[o.name] or 1), w*base, w*move, w*health, w*weap, w*ew))
+#: dat/scripts/equipopt/optimize.lua:182
+msgid "Trying to equip:"
+msgstr ""
+
+#: dat/scripts/equipopt/optimize.lua:186
+msgid "Parameters:"
+msgstr ""
+
+#: dat/scripts/equipopt/optimize.lua:197
+msgid "Equipment:"
+msgstr ""
+
+#: dat/scripts/equipopt/optimize.lua:203
+#, lua-format
+msgid "CPU: %d / %d [%d < %d]"
+msgstr ""
+
+#: dat/scripts/equipopt/optimize.lua:204
+#, lua-format
+msgid "Energy Regen: %.3f [%.3f < %.3f (%.1f)]"
+msgstr ""
+
+#: dat/scripts/equipopt/optimize.lua:205
+#, lua-format
+msgid "Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"
+msgstr ""
+
+#.
+#. @brief Equips a pilot with cores and outfits chosen from a list through optimization.
+#.
+#. @tparam Pilot p Pilot to equip.
+#. @tparam[opt=nil] table|nil cores Table of core outfits (by name) to equip. They will replace existing outfits, or set to nil to use defaults.
+#. @tparam table outfit_list List of outfits to try to equip (by name). There can be duplicates in the list, and only outfits that can be equipped are considered.
+#. @tparam[opt=nil] table|nil params Parameter list to use or nil for defaults.
+#. @treturn boolean Whether or not the pilot was properly equipped
+#. --
+#. Naked ship
+#. Special ships used fixed outfits
+#: dat/scripts/equipopt/optimize.lua:232
+#, lua-format
+msgid ""
+"Pilot '%s' is not space worthy after custom equip script is run! Reason: %s"
+msgstr ""
+
+#. Handle cores
+#. Don't actually have to remove cores as it should overwrite default
+#. cores as necessary
+#. p:rmOutfit( "cores" )
+#. Put cores
+#: dat/scripts/equipopt/optimize.lua:248
+#, lua-format
+msgid "Unable to equip core '%s' on '%s'!"
+msgstr ""
+
+#. Global ship stuff
+#. Should include cores!!
+#. also include cores
+#. Determine what outfits from outfit_list we can actually equip
+#. We actually remove duplicates too
+#. Afterburners will be ignored if the ship is too heavy
+#. Check to see if fits slot
+#. Optimization problem definition
+#. Figure out limits (both natural and artificial)
+#. Add limit if applicable
+#. See if we want to limit the particular outfit
+#. Resort limits
+#. Create outfit cache, it contains all sort of nice information like DPS and
+#. other stuff that can be used for our goodness function
+#. Core stats
+#. We correct ship stats here and convert them to "relative improvements"
+#. Movement
+#. Health
+#. Misc
+#. Specific corrections
+#. Fighter bays don't have dps or anything, so we have to fake it
+#: dat/scripts/equipopt/optimize.lua:375
+#, lua-format
+msgid "Fighter bay '%s' does not have computed DPS!"
+msgstr ""
+
+#. We add it as movement, but weaken the effect a bit
+#. Compute goodness
+#. Cache it all so we don't have to recompute
+#. Figure out slots
+#. Check to see if it is in the similar list
+#. Each slot adds a number of variables equivalent to the number of
+#. potential outfits, but only one constraint
+#. We have to add additional constraints (spaceworthy, limits)
+#. Check CPU, energy regen, and mass
+#. Add space worthy checks
+#: dat/scripts/equipopt/optimize.lua:444
+#, lua-format
+msgid "Impossible mass goal of %d set! Ignoring mass for pilot '%s'!"
+msgstr ""
+
+#. Add limit checks
+#. Add outfit checks
+#. contribution to objective function
+#. constraints set automatically
+#. CPU constraint
+#. Energy constraint
+#. Mass constraint
+#. Budget constraint if necessary
+#. Limit constraint
+#. Only one outfit per slot constraint
+#. Maximum of same type
+#. Check type range
+#. Load all the constraints
+#. Try to optimize
+#. All the magic is done here
+#. Try to relax constraints
+#. Mass constraint
+#. Energy constraint
+#. Maybe should be error instead?
+#: dat/scripts/equipopt/optimize.lua:567
+#, lua-format
+msgid "Failed to solve equipopt linear program for pilot '%s': %s"
+msgstr ""
+
+#. Interpret results
+#: dat/scripts/equipopt/optimize.lua:580
+#, lua-format
+msgid "Unable to equip outfit '%s' on '%s'!"
+msgstr ""
+
+#. Due to the approximation, sometimes they end up with not enough
+#. energy, we'll try again with larger energy constraints
+#. print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
+#. attempts should be fairly fast since we just do optimization step
+#: dat/scripts/equipopt/optimize.lua:599
+#, lua-format
+msgid "Failed to equip pilot '%s'!"
+msgstr ""
+
+#. Fill ammo
+#. Check
+#: dat/scripts/equipopt/optimize.lua:611
+#, lua-format
+msgid "Pilot '%s' is not space worthy after equip script is run! Reason: %s"
+msgstr ""
+
+#.
 #. -- @brief Merges two tables while removing duplicates.
 #. --
 #. Heavy Weapons
@@ -65775,6 +65567,192 @@ msgstr ""
 #. Heavy Structural
 #. Medium Structural
 #. Small Structural
+#. Global stuff
+#. Constant value makes them prefer outfits rather than not
+#. amount of randomness to use for goodness function
+#. maximum same weapons (nil is no limit)
+#. maximum same utilities (nil is no limit)
+#. maximum same structurals (nil is no limit)
+#. relative minimum regen margin (with respect to cores)
+#. absolute minimum energy regen (MJ/s)
+#. how to weight weapon EPS into energy regen
+#. maximum amount to go over engine limit (relative)
+#. total cost budget
+#. Range of type, this is dangerous as minimum values could lead to the
+#. optimization problem not having a solution with high minimums
+#. Outfit names that the pilot should prefer (multiplies weights)
+#. ["Hive Combat AI"] = 100,
+#. High level weights
+#. Not as important
+#. Weapon stuff
+#. assumed target absorption
+#. assumed target speed
+#. ew_detect enemies we want to target
+#. ideal minimum range we want
+#. weight for normal damage
+#. weight for disable damage
+#. low weapons
+#. low weapons
+#. Less forward weapons
+#. Less forward weapons
+#. low weapons
+#. @brief Chooses a parameter table randomly for a certain pilot p
+#. Heavy Weapons
+#. Medium Weapons
+#. Small Weapons
+#. Utility
+#. Heavy Structural
+#. Medium Structural
+#. Small Structural
+#. Basically elite hulls excluding stealth
+#.
+#. -- @brief Does Dvaered pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. if dvaered_skip[sname] then return end
+#. Choose parameters and make Za'lekish
+#. Prefer to use the Za'lek utilities
+#. Don't care about electronic warfare
+#. Dvaereds want more energy
+#. Per ship tweaks
+#. See cores
+#. Try to equip
+#. Heavy Weapons
+#. Medium Weapons
+#. Small Weapons
+#. "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+#. Utility
+#. Heavy Structural
+#. Medium Structural
+#. Small Structural
+#.
+#. -- @brief Does Dvaered pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. if empire_skip[sname] then return end
+#. Choose parameters and make Empire-ish
+#. Prefer to use the Empire utilities
+#. Empire loves energy
+#. Per ship tweaks
+#. See cores
+#. Try to equip
+#.
+#. -- @brief Does Generic pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. Choose parameters and make Pirateish
+#. Get stuff
+#. Try to equip
+#. Heavy Weapons
+#. Medium Weapons
+#. Small Weapons
+#. Utility
+#. Heavy Structural
+#. Medium Structural
+#. Small Structural
+#.
+#. -- @brief Does Pirate pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. Choose parameters and make Pirateish
+#. Prefer to use the Pirate utilities
+#. much more diversity for pirates
+#. Per ship tweaks
+#. See cores
+#. Try to equip
+#. Heavy Weapons
+#. Medium Weapons
+#. Small Weapons
+#. Utility
+#. Heavy Structural
+#. Medium Structural
+#. Small Structural
+#. ["Proteron Demon"] = function () return {
+#.
+#. -- @brief Does Proteron pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. Choose parameters and make Proteronish
+#. Prefer to use the Proteron utilities
+#. Per ship tweaks
+#. See cores
+#. Try to equip
+#. Heavy Weapons
+#. Medium Weapons
+#. Small Weapons
+#. Utility
+#. Heavy Structural
+#. Medium Structural
+#. Small Structural
+#. ["Sirius Demon"] = function () return {
+#.
+#. -- @brief Does Sirius pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. Choose parameters and make Siriusish
+#. Prefer to use the Sirius utilities
+#. Per ship tweaks
+#. See cores
+#. Try to equip
+#. Heavy Weapons
+#. Medium Weapons
+#. Small Weapons
+#. Utility
+#. Heavy Structural
+#. Medium Structural
+#. Small Structural
+#.
+#. -- @brief Does Soromid pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. Choose parameters and make Soromidish
+#. Prefer to use the Soromid utilities
+#. Per ship tweaks
+#. See cores
+#. Try to equip
+#. TODO randomly change some bio plasma weapons to weaker ones
+#. Heavy Weapons
+#. Medium Weapons
+#. Small Weapons
+#. Utility
+#. Heavy Structural
+#. Medium Structural
+#. Small Structural
+#. ["Sirius Demon"] = function () return {
+#.
+#. -- @brief Does Thurion pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. Choose parameters and make Thurion-ish
+#. Prefer to use the Thurion utilities
+#. Per ship tweaks
+#. See cores
+#. Try to equip
+#. Heavy Weapons
+#. Medium Weapons
+#. Small Weapons
+#. Utility
+#. Heavy Structural
+#. Medium Structural
+#. Small Structural
+#.
+#. -- @brief Does Za'lek pilot equipping
+#. --
+#. --    @param p Pilot to equip
+#. --
+#. Choose parameters and make Za'lekish
+#. Prefer to use the Za'lek utilities
+#. Per ship tweaks
+#. See cores
+#. Try to equip
 #.
 #. -- @brief Wrapper for pilot.add() that can operate on tables of ships.
 #. --
@@ -69323,7 +69301,7 @@ msgstr ""
 #.
 #. -- Character
 #. --
-#: dat/scripts/vn.lua:455
+#: dat/scripts/vn.lua:458
 msgid "character not found to remove!"
 msgstr ""
 
@@ -69388,7 +69366,7 @@ msgstr ""
 #. @tparam tab params Parameter table.
 #. @treturn Character New character.
 #. --
-#: dat/scripts/vn.lua:934
+#: dat/scripts/vn.lua:937
 #, lua-format
 msgid "vn: character image '%s' not found!"
 msgstr ""
@@ -69543,12 +69521,12 @@ msgstr ""
 #.
 #. @tparam func updatefunc Update function to run every frame.
 #. --
-#: dat/scripts/vn.lua:1361
+#: dat/scripts/vn.lua:1364
 #, lua-format
 msgid "vn: unable to find label '%s'"
 msgstr ""
 
-#: dat/scripts/vn.lua:1371
+#: dat/scripts/vn.lua:1374
 #, lua-format
 msgid "vn: character '%s' not found!"
 msgstr ""
@@ -69564,7 +69542,7 @@ msgstr ""
 #. <em>Note</em> You have to set up the states first.
 #. <em>Note</em> This function doesn't return until the VN is done running.
 #. --
-#: dat/scripts/vn.lua:1407
+#: dat/scripts/vn.lua:1410
 msgid "vn: run without any states"
 msgstr ""
 
@@ -70260,311 +70238,317 @@ msgstr ""
 msgid "   -v, --version         print the version and exit"
 msgstr ""
 
-#: src/conf.c:429
+#: src/conf.c:431
 msgid "Found keybind with no type field!"
 msgstr ""
 
-#: src/conf.c:433
+#: src/conf.c:435
 msgid "Found keybind with invalid type field!"
 msgstr ""
 
-#: src/conf.c:447
+#: src/conf.c:449
 msgid "Found keybind with no key field!"
 msgstr ""
 
-#: src/conf.c:451
+#: src/conf.c:453
 msgid "Found keybind with invalid key field!"
 msgstr ""
 
-#: src/conf.c:477
+#: src/conf.c:479
 #, c-format
 msgid "Unknown keybinding of type %s"
 msgstr ""
 
-#: src/conf.c:483
+#: src/conf.c:485
 #, c-format
 msgid "Keybind for '%s' is invalid"
 msgstr ""
 
-#: src/conf.c:496
+#: src/conf.c:498
 #, c-format
 msgid "Unknown keybinding mod of type %s"
 msgstr ""
 
-#: src/conf.c:507
+#: src/conf.c:509
 #, c-format
 msgid "Malformed keybind for '%s' in '%s'."
 msgstr ""
 
 #. failed to load the config file
-#: src/conf.c:514
+#: src/conf.c:516
 #, c-format
 msgid "Config file '%s' has invalid syntax:"
 msgstr ""
 
-#: src/conf.c:610
+#: src/conf.c:612
 msgid "Enabling developer mode."
 msgstr ""
 
 #. Write a nice header for new configuration files
-#: src/conf.c:791
+#: src/conf.c:793
 msgid "Naev configuration file"
 msgstr ""
 
-#: src/conf.c:797
+#: src/conf.c:799
 msgid "Not saving configuration."
 msgstr ""
 
-#: src/conf.c:803
+#: src/conf.c:805
 msgid "The contents of this section will be rewritten by Naev!"
 msgstr ""
 
 #. ndata.
-#: src/conf.c:807
+#: src/conf.c:809
 msgid "The location of Naev's data pack, usually called 'ndata'"
 msgstr ""
 
 #. Language.
-#: src/conf.c:812
+#: src/conf.c:814
 msgid ""
 "Language to use. Set to the two character identifier to the language (e.g., "
 "\"en\" for English), and nil for autodetect."
 msgstr ""
 
 #. OpenGL.
-#: src/conf.c:817
+#: src/conf.c:819
 msgid "The factor to use in Full-Scene Anti-Aliasing"
 msgstr ""
 
-#: src/conf.c:818
+#: src/conf.c:820
 msgid "Anything lower than 2 will simply disable FSAA"
 msgstr ""
 
-#: src/conf.c:822
+#: src/conf.c:824
 msgid "Synchronize framebuffer updates with the vertical blanking interval"
 msgstr ""
 
 #. Window.
-#: src/conf.c:827
+#: src/conf.c:829
 msgid "The window size or screen resolution"
 msgstr ""
 
-#: src/conf.c:828
+#: src/conf.c:830
 msgid "Set both of these to 0 to make Naev try the desktop resolution"
 msgstr ""
 
-#: src/conf.c:838
+#: src/conf.c:840
 msgid "Factor used to divide the above resolution with"
 msgstr ""
 
-#: src/conf.c:839
+#: src/conf.c:841
 msgid "This is used to lower the rendering resolution, and scale to the above"
 msgstr ""
 
-#: src/conf.c:843
+#: src/conf.c:845
 msgid "Scale factor for rendered nebula backgrounds."
 msgstr ""
 
-#: src/conf.c:844
+#: src/conf.c:846
 msgid "Larger values can save time but lead to a blurrier appearance."
 msgstr ""
 
-#: src/conf.c:848
+#: src/conf.c:850
 msgid "Run Naev in full-screen mode"
 msgstr ""
 
-#: src/conf.c:852
+#: src/conf.c:854
 msgid "Use video modesetting when fullscreen is enabled"
 msgstr ""
 
-#: src/conf.c:856 src/options.c:1277
+#: src/conf.c:858 src/options.c:1278
 msgid "Minimize on focus loss"
 msgstr ""
 
-#: src/conf.c:860 src/options.c:1280
+#: src/conf.c:862 src/options.c:1281
 msgid "Colorblind mode"
 msgstr ""
 
-#: src/conf.c:864
+#: src/conf.c:866
 msgid ""
 "Background brightness. 1 is normal brightness while setting it to 0 would "
 "make the backgrounds pitch black."
 msgstr ""
 
-#: src/conf.c:868
+#: src/conf.c:870
+msgid ""
+"Nebula brightness. 1 is normal brightness while setting it to 0 would make "
+"the nebula pitch black."
+msgstr ""
+
+#: src/conf.c:874
 msgid "Gamma correction parameter. A value of 1 disables it (no curve)."
 msgstr ""
 
 #. FPS
-#: src/conf.c:873
+#: src/conf.c:879
 msgid "Display a frame rate counter"
 msgstr ""
 
-#: src/conf.c:877
+#: src/conf.c:883
 msgid "Limit the rendering frame rate"
 msgstr ""
 
 #. Pause
-#: src/conf.c:882
+#: src/conf.c:888
 msgid "Show 'PAUSED' on screen while paused"
 msgstr ""
 
 #. Sound.
-#: src/conf.c:887
+#: src/conf.c:893
 msgid "Enables EFX extension for OpenAL backend."
 msgstr ""
 
-#: src/conf.c:891
+#: src/conf.c:897
 msgid "Disable all sound"
 msgstr ""
 
-#: src/conf.c:895
+#: src/conf.c:901
 msgid "Volume of sound effects and music, between 0.0 and 1.0"
 msgstr ""
 
 #. Joystick.
-#: src/conf.c:901
+#: src/conf.c:907
 msgid "The name or numeric index of the joystick to use"
 msgstr ""
 
-#: src/conf.c:902
+#: src/conf.c:908
 msgid "Setting this to nil disables the joystick support"
 msgstr ""
 
 #. GUI.
-#: src/conf.c:915
+#: src/conf.c:921
 msgid "Number of lines visible in the comm window."
 msgstr ""
 
-#: src/conf.c:917
+#: src/conf.c:923
 msgid "Opacity fraction (0-1) for the overlay map."
 msgstr ""
 
 #. Key repeat.
-#: src/conf.c:923
+#: src/conf.c:929
 msgid "Delay in ms before starting to repeat (0 disables)"
 msgstr ""
 
-#: src/conf.c:925
+#: src/conf.c:931
 msgid "Delay in ms between repeats once it starts to repeat"
 msgstr ""
 
 #. Zoom.
-#: src/conf.c:930
+#: src/conf.c:936
 msgid "Minimum and maximum zoom factor to use in-game"
 msgstr ""
 
-#: src/conf.c:931
+#: src/conf.c:937
 msgid "At 1.0, no sprites are scaled"
 msgstr ""
 
-#: src/conf.c:932
+#: src/conf.c:938
 msgid "zoom_far should be less then zoom_near"
 msgstr ""
 
-#: src/conf.c:938
+#: src/conf.c:944
 msgid "Zooming speed in factor increments per second"
 msgstr ""
 
-#: src/conf.c:942
+#: src/conf.c:948
 msgid "Zooming modulation factor for the starry background"
 msgstr ""
 
 #. Fonts.
-#: src/conf.c:947
+#: src/conf.c:953
 msgid "Font sizes (in pixels) for Naev"
 msgstr ""
 
-#: src/conf.c:948
+#: src/conf.c:954
 msgid "Warning, setting to other than the default can cause visual glitches!"
 msgstr ""
 
-#: src/conf.c:949
+#: src/conf.c:955
 #, c-format
 msgid "-- Console default: %d\n"
 msgstr ""
 
-#: src/conf.c:951
+#: src/conf.c:957
 #, c-format
 msgid "-- Intro default: %d\n"
 msgstr ""
 
-#: src/conf.c:953
+#: src/conf.c:959
 #, c-format
 msgid "-- Default size: %d\n"
 msgstr ""
 
-#: src/conf.c:955
+#: src/conf.c:961
 #, c-format
 msgid "-- Small size: %d\n"
 msgstr ""
 
 #. Misc.
-#: src/conf.c:959
+#: src/conf.c:965
 msgid ""
 "Sets the velocity (px/s) to compress up to when time compression is enabled."
 msgstr ""
 
-#: src/conf.c:963
+#: src/conf.c:969
 msgid "Sets the multiplier to compress up to when time compression is enabled."
 msgstr ""
 
-#: src/conf.c:967
+#: src/conf.c:973
 msgid "Redirects log and error output to files"
 msgstr ""
 
-#: src/conf.c:971
+#: src/conf.c:977
 msgid "Enables compression on saved games"
 msgstr ""
 
-#: src/conf.c:975
+#: src/conf.c:981
 msgid "Afterburner sensitivity"
 msgstr ""
 
-#: src/conf.c:979
+#: src/conf.c:985
 msgid "Mouse-flying thrust control"
 msgstr ""
 
-#: src/conf.c:983
+#: src/conf.c:989
 msgid "Maximum interval to count as a double-click (0 disables)."
 msgstr ""
 
-#: src/conf.c:987
+#: src/conf.c:993
 msgid "Condition under which the autonav aborts."
 msgstr ""
 
-#: src/conf.c:991
+#: src/conf.c:997
 msgid "Enables developer mode (universe editor and the likes)"
 msgstr ""
 
-#: src/conf.c:995
+#: src/conf.c:1001
 msgid ""
 "Automatic saving for when using the universe editor whenever an edit is done"
 msgstr ""
 
-#: src/conf.c:999
+#: src/conf.c:1005
 msgid "Save the config every time game exits (rewriting this bit)"
 msgstr ""
 
-#: src/conf.c:1003
+#: src/conf.c:1009
 msgid "Indicates the last version the game has run in before"
 msgstr ""
 
 #. Debugging.
-#: src/conf.c:1008
+#: src/conf.c:1014
 msgid "Enables FPU exceptions - only works on DEBUG builds"
 msgstr ""
 
 #. Editor.
-#: src/conf.c:1013
+#: src/conf.c:1019
 msgid "Paths for saving different files from the editor"
 msgstr ""
 
-#: src/conf.c:1023
+#: src/conf.c:1029
 msgid "Keybindings"
 msgstr ""
 
-#: src/conf.c:1092
+#: src/conf.c:1098
 msgid ""
 "Failed to write configuration!  You'll most likely have to restore it by "
 "copying your backup configuration over your current configuration."
@@ -71133,13 +71117,13 @@ msgid "Name: %s"
 msgstr ""
 
 #. create the window
-#: src/dialogue.c:156 src/options.c:163
+#: src/dialogue.c:156 src/options.c:164
 msgid "Warning"
 msgstr ""
 
 #. Add the OK button
 #: src/dialogue.c:160 src/dialogue.c:286 src/dialogue.c:343 src/dialogue.c:736
-#: src/options.c:260 src/options.c:554 src/options.c:863 src/options.c:1175
+#: src/options.c:261 src/options.c:555 src/options.c:864 src/options.c:1176
 msgid "OK"
 msgstr ""
 
@@ -72815,7 +72799,7 @@ msgstr ""
 msgid "Unable to get keybinding '%s', that command doesn't exist"
 msgstr ""
 
-#: src/input.c:497 src/options.c:702
+#: src/input.c:497 src/options.c:703
 #, c-format
 msgid "Not bound"
 msgstr ""
@@ -74119,7 +74103,7 @@ msgid "Editors"
 msgstr ""
 
 #. Create window and tabs.
-#: src/menu.c:240 src/menu.c:438 src/options.c:126
+#: src/menu.c:240 src/menu.c:438 src/options.c:127
 msgid "Options"
 msgstr ""
 
@@ -75020,7 +75004,7 @@ msgstr ""
 msgid "Pilot is invalid."
 msgstr ""
 
-#: src/nlua_pilot.c:508 src/nlua_ship.c:232
+#: src/nlua_pilot.c:508 src/nlua_ship.c:234
 #, c-format
 msgid "Ship '%s' not found!"
 msgstr ""
@@ -75198,16 +75182,16 @@ msgstr ""
 msgid "Layer was '%s', but must be one of 'final' or 'game'"
 msgstr ""
 
-#: src/nlua_ship.c:145
+#: src/nlua_ship.c:147
 msgid "Ship is invalid."
 msgstr ""
 
-#: src/nlua_ship.c:529
+#: src/nlua_ship.c:550
 #, c-format
 msgid "Unable to get ship target graphic for '%s'."
 msgstr ""
 
-#: src/nlua_ship.c:559
+#: src/nlua_ship.c:580
 #, c-format
 msgid "Unable to get ship graphic for '%s'."
 msgstr ""
@@ -75595,296 +75579,301 @@ msgstr ""
 msgid "Input"
 msgstr ""
 
-#: src/options.c:163 src/options.c:1319
+#: src/options.c:164 src/options.c:1327
 msgid "Restart Naev for changes to take effect."
 msgstr ""
 
-#: src/options.c:227
+#: src/options.c:228
 msgid "system"
 msgstr ""
 
-#: src/options.c:266 src/options.c:557 src/options.c:869 src/options.c:1181
+#: src/options.c:267 src/options.c:558 src/options.c:870 src/options.c:1182
 msgid "Defaults"
 msgstr ""
 
-#: src/options.c:280
+#: src/options.c:281
 #, c-format
 msgid "ndata: %s"
 msgstr ""
 
-#: src/options.c:296
+#: src/options.c:297
 msgid "Language:"
 msgstr ""
 
-#: src/options.c:312
+#: src/options.c:313
 msgid "Compilation Flags:"
 msgstr ""
 
-#: src/options.c:351
+#: src/options.c:352
 msgid "Stop Speedup At:"
 msgstr ""
 
-#: src/options.c:363
+#: src/options.c:364
 msgid "Settings:"
 msgstr ""
 
-#: src/options.c:367
+#: src/options.c:368
 msgid "Enable manual zoom control"
 msgstr ""
 
-#: src/options.c:370
+#: src/options.c:371
 msgid "Enable double-tap afterburn"
 msgstr ""
 
-#: src/options.c:373
+#: src/options.c:374
 msgid "Enable mouse-flying thrust control"
 msgstr ""
 
-#: src/options.c:376
+#: src/options.c:377
 msgid "Enable saved game compression"
 msgstr ""
 
-#: src/options.c:378
+#: src/options.c:379
 msgid "Visible Messages"
 msgstr ""
 
-#: src/options.c:384
+#: src/options.c:385
 msgid "Max Time Compression Factor"
 msgstr ""
 
-#: src/options.c:509
+#: src/options.c:510
 #, c-format
 msgid "Enemy Presence"
 msgstr ""
 
-#: src/options.c:511
+#: src/options.c:512
 #, c-format
 msgid "%.0f%% Shield"
 msgstr ""
 
-#: src/options.c:513 src/shipstats.c:161
+#: src/options.c:514 src/shipstats.c:161
 #, c-format
 msgid "Armour Damage"
 msgstr ""
 
-#: src/options.c:560
+#: src/options.c:561
 msgid "Set Key"
 msgstr ""
 
-#: src/options.c:707
+#: src/options.c:708
 #, c-format
 msgid "keyboard:   %s%s%c"
 msgstr ""
 
-#: src/options.c:712
+#: src/options.c:713
 #, c-format
 msgid "keyboard:   %s%s%s"
 msgstr ""
 
-#: src/options.c:718
+#: src/options.c:719
 #, c-format
 msgid "joy axis pos:   <%d>"
 msgstr ""
 
-#: src/options.c:721
+#: src/options.c:722
 #, c-format
 msgid "joy axis neg:   <%d>"
 msgstr ""
 
-#: src/options.c:724
+#: src/options.c:725
 #, c-format
 msgid "joy button:   <%d>"
 msgstr ""
 
-#: src/options.c:727
+#: src/options.c:728
 #, c-format
 msgid "joy hat up:   <%d>"
 msgstr ""
 
-#: src/options.c:730
+#: src/options.c:731
 #, c-format
 msgid "joy hat down: <%d>"
 msgstr ""
 
-#: src/options.c:733
+#: src/options.c:734
 #, c-format
 msgid "joy hat left: <%d>"
 msgstr ""
 
-#: src/options.c:736
+#: src/options.c:737
 #, c-format
 msgid "joy hat right:<%d>"
 msgstr ""
 
-#: src/options.c:757
+#: src/options.c:758
 msgid "WASD"
 msgstr ""
 
-#: src/options.c:758
+#: src/options.c:759
 msgid "Arrow Keys"
 msgstr ""
 
-#: src/options.c:762
+#: src/options.c:763
 msgid "Restore Defaults"
 msgstr ""
 
-#: src/options.c:763
+#: src/options.c:764
 msgid "Which layout do you want to use?"
 msgstr ""
 
 #. Alert user it worked.
-#: src/options.c:792
+#: src/options.c:793
 msgid "Defaults Restored"
 msgstr ""
 
-#: src/options.c:792
+#: src/options.c:793
 msgid "Keybindings restored to defaults."
 msgstr ""
 
-#: src/options.c:836
+#: src/options.c:837
 msgid "Music Volume"
 msgstr ""
 
-#: src/options.c:836
+#: src/options.c:837
 msgid "Sound Volume"
 msgstr ""
 
-#: src/options.c:840
+#: src/options.c:841
 msgid "Muted"
 msgstr ""
 
 #. -48 dB minimum divided by logarithm of volume floor.
-#: src/options.c:843
+#: src/options.c:844
 #, c-format
 msgid "%s: %.2f (%.0f dB)"
 msgstr ""
 
-#: src/options.c:875
+#: src/options.c:876
 msgid "Disable all sound/music"
 msgstr ""
 
-#: src/options.c:879
+#: src/options.c:880
 msgid "EFX (More CPU)"
 msgstr ""
 
-#: src/options.c:886
+#: src/options.c:887
 msgid "Volume Levels"
 msgstr ""
 
-#: src/options.c:1078
+#: src/options.c:1079
 #, c-format
 msgid ""
 "Key '%s' overlaps with key '%s' that was just set. You may want to correct "
 "this."
 msgstr ""
 
-#: src/options.c:1112
+#: src/options.c:1113
 msgid "Set Keybinding"
 msgstr ""
 
-#: src/options.c:1119
+#: src/options.c:1120
 msgid ""
 "To use a modifier key hit that key twice in a row, otherwise it will "
 "register as a modifier. To set with any modifier click the checkbox."
 msgstr ""
 
-#: src/options.c:1128
+#: src/options.c:1129
 msgid "Unset"
 msgstr ""
 
-#: src/options.c:1132
+#: src/options.c:1133
 msgid "Set any modifier"
 msgstr ""
 
-#: src/options.c:1188
+#: src/options.c:1189
 msgid "Resolution"
 msgstr ""
 
-#: src/options.c:1193
+#: src/options.c:1194
 msgid "Fullscreen"
 msgstr ""
 
-#: src/options.c:1241
+#: src/options.c:1242
 msgid "FPS Control"
 msgstr ""
 
-#: src/options.c:1243
+#: src/options.c:1244
 msgid "FPS Limit"
 msgstr ""
 
-#: src/options.c:1254
+#: src/options.c:1255
 msgid "Show FPS"
 msgstr ""
 
-#: src/options.c:1263
+#: src/options.c:1264
 msgid "OpenGL"
 msgstr ""
 
-#: src/options.c:1266
+#: src/options.c:1267
 msgid "Vertical Sync"
 msgstr ""
 
-#: src/options.c:1269
+#: src/options.c:1270
 msgid "*Disable for compatibility."
 msgstr ""
 
-#: src/options.c:1274
+#: src/options.c:1275
 msgid "Features"
 msgstr ""
 
-#: src/options.c:1300 src/outfit.c:890 src/outfit.c:920
+#: src/options.c:1308 src/outfit.c:890 src/outfit.c:920
 msgid "GUI"
 msgstr ""
 
-#: src/options.c:1303
+#: src/options.c:1311
 msgid "Bigger icons"
 msgstr ""
 
-#: src/options.c:1352
+#: src/options.c:1360
 msgid "Height/Width invalid. Should be formatted like 1024x768."
 msgstr ""
 
-#: src/options.c:1437
+#: src/options.c:1445
 msgid "Resolution can't be changed while maximized."
 msgstr ""
 
-#: src/options.c:1441
+#: src/options.c:1449
 msgid "Keep Video Settings"
 msgstr ""
 
-#: src/options.c:1442
+#: src/options.c:1450
 #, c-format
 msgid "Do you want to keep running at %dx%d %s?"
 msgstr ""
 
-#: src/options.c:1443 src/options.c:1449
+#: src/options.c:1451 src/options.c:1457
 msgid "fullscreen"
 msgstr ""
 
-#: src/options.c:1443 src/options.c:1449
+#: src/options.c:1451 src/options.c:1457
 msgid "windowed"
 msgstr ""
 
-#: src/options.c:1447
+#: src/options.c:1455
 msgid "Video Settings Restored"
 msgstr ""
 
-#: src/options.c:1448
+#: src/options.c:1456
 #, c-format
 msgid "Resolution reset to %dx%d %s."
 msgstr ""
 
-#: src/options.c:1526
+#: src/options.c:1535
 #, c-format
 msgid "Scaling: %.1fx"
 msgstr ""
 
-#: src/options.c:1541
+#: src/options.c:1550
 #, c-format
-msgid "BG (Nebula, etc.) brightness: %.0f%%"
+msgid "BG (Stars, etc.) brightness: %.0f%%"
 msgstr ""
 
-#: src/options.c:1558
+#: src/options.c:1565
+#, c-format
+msgid "Nebula brightness: %.0f%%"
+msgstr ""
+
+#: src/options.c:1580
 #, c-format
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr ""
@@ -78887,6 +78876,9 @@ msgstr ""
 #: src/weapon.c:1857
 msgid "Trying to destroy weapon not found in stack!"
 msgstr ""
+
+#~ msgid "Abandoned Station"
+#~ msgstr "Opuštěná stanice"
 
 #~ msgid "   * CI dude"
 #~ msgstr "   * CI týpek"
