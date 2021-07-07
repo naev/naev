@@ -468,10 +468,12 @@ function optimize.optimize( p, cores, outfit_list, params )
       lp:set_row( budget_row, "budget",    nil, params.budget )
    end
    local nebu_row
+   local nebu_dmg
    if nebu_vol > 0 then
       rows = rows+1
       nebu_row = rows
-      lp:set_row( nebu_row, "shield_regen", nebu_vol*0.15*(2-ss.nebu_absorb_shield)-st.shield_regen, nil )
+      nebu_dmg = nebu_vol*0.15*(2-ss.nebu_absorb_shield)
+      lp:set_row( nebu_row, "shield_regen", nebu_dmg-st.shield_regen, nil )
    end
    -- Add limit checks
    for i,l in ipairs(limits) do
@@ -520,7 +522,7 @@ function optimize.optimize( p, cores, outfit_list, params )
          if nebu_vol > 0 then
             table.insert( ia, nebu_row )
             table.insert( ja, c )
-            table.insert( ar, stats.shield_regen + nebu_vol*(2-stats.nebu_absorb_shield) )
+            table.insert( ar, stats.shield_regen + 0.15*nebu_vol*(2-stats.nebu_absorb_shield) )
          end
          -- Limit constraint
          if stats.limit then
@@ -575,6 +577,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    local try = 0
    local emod = 1
    local mmod = 1
+   local smod = 1
    local done = true
    repeat
       try = try + 1
@@ -592,7 +595,18 @@ function optimize.optimize( p, cores, outfit_list, params )
          -- Energy constraint
          energygoal = energygoal / 1.5
          lp:set_row( 2, "energy_regen", nil, st.energy_regen - emod*energygoal )
+
+         -- Re-solve
          z, x, constraints = lp:solve()
+
+         -- Nebula shield damage constraint if not resolved
+         if not z and nebu_vol > 0 then
+            smod = smod / 1.5
+            lp:set_row( nebu_row, "shield_regen", smod*nebu_dmg-st.shield_regen, nil )
+
+            -- Re-solve
+            z, x, constraints = lp:solve()
+         end
 
          if not z then
             if nebu_vol > 0 then
