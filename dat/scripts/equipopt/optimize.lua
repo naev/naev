@@ -171,7 +171,7 @@ function optimize.goodness_default( o, p )
    local w = goodness_special[o.name] or 1
    local g = p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
    --print(string.format("% 32s [%6.3f]: base=%6.3f, move=%6.3f, health=%6.3f, weap=%6.3f, ew=%6.3f", o.name, g * (p.prefer[o.name] or 1), w*base, w*move, w*health, w*weap, w*ew))
-    return g * (p.prefer[o.name] or 1)
+   return g * (p.prefer[o.name] or 1)
 end
 
 
@@ -384,7 +384,12 @@ function optimize.optimize( p, cores, outfit_list, params )
       end
 
       -- Compute goodness
-      oo.goodness = goodness_override[oo.name] or params.goodness( oo, params )
+      oo.goodness = goodness_override[oo.name]
+      if oo.goodness then
+         oo.goodness = params.constant + (params.prefer[oo.name] or 1) * oo.goodness
+      else
+         oo.goodness = params.goodness( oo, params )
+      end
 
       -- Cache it all so we don't have to recompute
       outfit_cache[v] = oo
@@ -469,7 +474,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    for i,s in ipairs(slots) do
       for j,o in ipairs(s.outfits) do
          local stats = outfit_cache[o]
-         local name = string.format("s%d-o%d", i, j)
+         local name = string.format("s%d-%s", i, stats.name)
          local objf = (1+params.rnd*rnd.sigma()) * stats.goodness -- contribution to objective function
          lp:set_col( c, name, objf, "binary" ) -- constraints set automatically
          -- CPU constraint
@@ -548,6 +553,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       try = try + 1
       done = true
       -- All the magic is done here
+      --lp:write_problem( "test.txt", true )
       local z, x, constraints = lp:solve()
       if not z then
 
