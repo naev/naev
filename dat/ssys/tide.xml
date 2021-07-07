@@ -3,11 +3,11 @@
  <general>
   <radius>10000.000000</radius>
   <stars>400</stars>
-  <interference>42.857143</interference>
-  <nebula volatility="500.000000" hue="320.000000">800.000000</nebula>
+  <interference>42.857100</interference>
+  <nebula volatility="379.000000" hue="320.000000">800.000000</nebula>
  </general>
  <pos>
-  <x>760.000000</x>
+  <x>754.212963</x>
   <y>214.000000</y>
  </pos>
  <assets/>
@@ -17,10 +17,6 @@
    <hide>1.118034</hide>
   </jump>
   <jump target="Sol">
-   <autopos/>
-   <hide>1.118034</hide>
-  </jump>
-  <jump target="Tobanna">
    <autopos/>
    <hide>1.118034</hide>
   </jump>
