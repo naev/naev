@@ -71,7 +71,7 @@ void window_addInput( const unsigned int wid,
    wgt->textevent       = inp_text;
    wgt->focusGain       = inp_focusGain;
    wgt->focusLose       = inp_focusLose;
-   wgt->dat.inp.font    = (font != NULL) ? font : &gl_smallFont;
+   wgt->dat.inp.font    = (font != NULL) ? font : &gl_defFont;
    wgt->dat.inp.char_max= max+1;
    wgt->dat.inp.byte_max= 4*max+1;
    wgt->dat.inp.oneline = oneline;
@@ -101,6 +101,7 @@ static void inp_render( Widget* inp, double bx, double by )
    int s;
    size_t p, w;
    int lines;
+   const glColour *col;
 
    x = bx + inp->x;
    y = by + inp->y;
@@ -108,18 +109,29 @@ static void inp_render( Widget* inp, double bx, double by )
    /* main background */
    toolkit_drawRect( x - 4, y - 4, inp->w + 8, inp->h + 8, &cBlack, NULL );
 
+   /** Decide what text to draw. */
+   if ((inp->dat.inp.input[0]=='\0') && (inp->dat.inp.empty_text != NULL)) {
+      str = inp->dat.inp.empty_text;
+      col = &cFontGrey;
+   }
+   else {
+      str = &inp->dat.inp.input[ inp->dat.inp.view ];
+      col = &cGreen;
+   }
+
    /* Draw text. */
    if (inp->dat.inp.oneline) {
       /* center vertically, print whatever text fits regardless of word boundaries. */
       ty = y + (inp->h - inp->dat.inp.font->h)/2.;
       gl_printMaxRaw( inp->dat.inp.font, inp->w-10.,
-            x+5., ty, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+            x+5., ty, col, -1., str );
    }
    else {
       /* Align top-left, print with word wrapping. */
       ty = y - inp->dat.inp.font->h / 2.;
+      col = &cGreen;
       gl_printTextRaw( inp->dat.inp.font, inp->w-10., inp->h,
-            x+5., ty, 0, &cGreen, -1., &inp->dat.inp.input[ inp->dat.inp.view ] );
+            x+5., ty, 0, col, -1., str );
    }
 
    /* Draw cursor. */
@@ -562,6 +574,7 @@ static void inp_cleanup( Widget* inp )
 {
    free(inp->dat.inp.filter);
    free(inp->dat.inp.input);
+   free(inp->dat.inp.empty_text);
 }
 
 
@@ -630,6 +643,36 @@ char* window_setInput( const unsigned int wid, char* name, const char *msg )
       wgt->dat.inp.fptr( wid, name );
 
    return wgt->dat.inp.input;
+}
+
+
+/**
+ * @brief Sets the empty text to be displayed (when nothing is input) for an input widget.
+ *
+ *    @param wid Window to which the widget belongs.
+ *    @param name Name of the widget to modify.
+ *    @param msg Empty text to display or NULL to clear.
+ */
+void inp_setEmptyText( const unsigned int wid, char* name, const char *str )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_INPUT) {
+      WARN("Trying to set input filter on non-input widget '%s'.", name);
+      return;
+   }
+
+   free(wgt->dat.inp.empty_text);
+   if (str != NULL)
+      wgt->dat.inp.empty_text = strdup(str);
+   else
+      wgt->dat.inp.empty_text = NULL;
 }
 
 

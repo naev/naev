@@ -910,7 +910,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
    else if (outfit_isBeam(o))       return gettext_noop("Beam Weapon");
    else if (outfit_isLauncher(o))   return gettext_noop("Launcher");
    else if (outfit_isAmmo(o))       return gettext_noop("Ammo");
-   else if (outfit_isTurret(o))     return gettext_noop("Turret");
+   //else if (outfit_isTurret(o))     return gettext_noop("Turret");
    else if (outfit_isMod(o))        return gettext_noop("Modification");
    else if (outfit_isAfterburner(o)) return gettext_noop("Afterburner");
    else if (outfit_isFighterBay(o)) return gettext_noop("Fighter Bay");

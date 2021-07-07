@@ -10,7 +10,7 @@
   <gfx_store>engine11.webp</gfx_store>
  </general>
  <specific type="modification">
-  <energy_usage>70</energy_usage>
+  <energy_regen_malus>70</energy_regen_malus>
   <engine_limit>4000</engine_limit>
   <fuel>800</fuel>
   <speed>55</speed>

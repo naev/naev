@@ -53,33 +53,34 @@ function create()
 end
 
 function watchPoster()
-   local canvas
+   if not myCanvas then
+      myCanvas = graphics.newCanvas(700, 900) -- It's all assuming the poster is 700x900
+      local img    = graphics.newImage( myImg )
 
-   if flf then
       -- Create the image
-      local img  = graphics.newImage( myImg )
-      canvas = graphics.newCanvas(700, 900*1.5) -- It's all assuming the poster is 700x900
-      graphics.setCanvas(canvas)
+      local oldcanvas = graphics.getCanvas()
+      graphics.setCanvas(myCanvas)
+      graphics.clear( 0, 0, 0, 0 )
+      graphics.setBlendMode( "alpha", "premultiplied" )
       graphics.draw( img, 0, 0, 0, 1, 1 )
 
       -- Add FLF stuff on it
-      for i = 1, 20 do
-         local spam = graphics.newImage( FLFFlyers[ rnd.rnd(1,#FLFFlyers) ] )
-         graphics.draw( spam, rnd.rnd(-200,700), rnd.rnd(-200,900), rnd.rnd(-1,1), 1, 1 )
+      if flf then
+         for i = 1, 20 do
+            local spam = graphics.newImage( FLFFlyers[ rnd.rnd(1,#FLFFlyers) ] )
+            graphics.draw( spam, rnd.rnd(-200,700), rnd.rnd(-200,900), rnd.rnd(-1,1), 1, 1 )
+         end
       end
-      graphics.setCanvas()
-   else -- Raw poster
-      local img  = graphics.newImage( myImg )
-      canvas = graphics.newCanvas(700, 900*1.5) -- It's all assuming the poster is 700x900
-      graphics.setCanvas(canvas)
-      graphics.draw( img, 0, 0, 0, 1, 1 )
-      graphics.setCanvas()
+
+      -- Finish
+      graphics.setBlendMode( "alpha" )
+      graphics.setCanvas(oldcanvas)
    end
 
    -- Create the vn scene
    vn.clear()
    vn.scene()
-   local npc = vn.newCharacter( _("Poster"), { image=canvas } )
+   local npc = vn.newCharacter( _("Poster"), { image=myCanvas, isportrait=true } )
    vn.transition()
    npc( myMsg )
    vn.run()

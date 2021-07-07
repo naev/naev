@@ -837,7 +837,9 @@ int pilot_maxAmmo( Pilot* pilot )
 int pilot_maxAmmoO( const Pilot* p, const Outfit *o )
 {
    int max;
-   if (outfit_isLauncher(o))
+   if (o==NULL)
+      return 0;
+   else if (outfit_isLauncher(o))
       max = round( (double)o->u.lau.amount * p->stats.ammo_capacity );
    else if (outfit_isFighterBay(o))
       max = round( (double)o->u.bay.amount * p->stats.fbay_capacity );
@@ -1082,9 +1084,9 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * Flat increases.
     */
-   pilot->armour_regen -= s->armour_damage;
-   pilot->shield_regen -= s->shield_usage;
-   pilot->energy_regen -= s->energy_usage;
+   pilot->armour_regen -= s->armour_regen_malus;
+   pilot->shield_regen -= s->shield_regen_malus;
+   pilot->energy_regen -= s->energy_regen_malus;
    pilot->energy_loss  += s->energy_loss;
    pilot->dmg_absorb    = CLAMP( 0., 1., pilot->dmg_absorb + s->absorb/100. );
 

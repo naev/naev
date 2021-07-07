@@ -2801,6 +2801,11 @@ static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction,
    }
    array_shrink( &pilot->outfits );
 
+   /* We must set the weapon auto in case some of the outfits had a default
+    * weapon equipped. */
+   if (!pilot_isFlagRaw(flags, PILOT_PLAYER))
+      pilot_weaponAuto(pilot);
+
    /* cargo - must be set before calcStats */
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
 

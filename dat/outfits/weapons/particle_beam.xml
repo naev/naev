@@ -21,7 +21,6 @@
    <type>normal</type>
    <penetrate>6</penetrate>
    <physical>84</physical>
-   <disable>4</disable>
   </damage>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>

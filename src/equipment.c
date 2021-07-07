@@ -89,8 +89,7 @@ static void equipment_renderOverlayColumn( double x, double y, double h,
       PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt );
 static void equipment_renderOverlaySlots( double bx, double by, double bw, double bh,
       void *data );
-static void equipment_renderShip( double bx, double by,
-      double bw, double bh, double x, double y, Pilot *p );
+static void equipment_renderShip( double bx, double by, double bw, double bh, void *data );
 static int equipment_mouseInColumn( double y, double h, int n, double my );
 static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h, double rx, double ry, void *data );
@@ -270,9 +269,9 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 
    /* Calculate custom widget. */
    if (cw != NULL)
-      *cw = *w - 20 - (sw!=NULL?*sw:0) - 20 - (ew!=NULL?*ew:0) - 20.;
+      *cw = 120;
    if (ch != NULL)
-      *ch = *h - 100;
+      *ch = 150;
 
    /* Calculate button dimensions. */
    if (bw != NULL)
@@ -305,6 +304,23 @@ void equipment_open( unsigned int wid )
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
          &ew, &eh, &cw, &ch, &bw, &bh );
 
+   /* Buttons */
+   window_addButtonKey( wid, -20, 20,
+         bw, bh, "btnCloseEquipment",
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -20 - (15+bw), 20,
+         bw, bh, "btnRenameShip",
+         _("Rename"), equipment_renameShip, SDLK_r );
+   window_addButtonKey( wid, -20 - (15+bw)*2, 20,
+         bw, bh, "btnSellShip",
+         _("Sell Ship"), equipment_sellShip, SDLK_s );
+   window_addButtonKey( wid, -20 - (15+bw)*3, 20,
+         bw, bh, "btnChangeShip",
+         _("Swap Ship"), equipment_transChangeShip, SDLK_p );
+   window_addButtonKey( wid, -20 - (15+bw)*4, 20,
+         bw, bh, "btnUnequipShip",
+         _("Unequip"), equipment_unequipShip, SDLK_u );
+
    /* Prepare the outfit array. */
    if (iar_data == NULL)
       iar_data = calloc( OUTFIT_TABS, sizeof(iar_data_t) );
@@ -325,23 +341,6 @@ void equipment_open( unsigned int wid )
 
    /* Add ammo. */
    equipment_addAmmo();
-
-   /* buttons */
-   window_addButtonKey( wid, -20, 20,
-         bw, bh, "btnCloseEquipment",
-         _("Take Off"), land_buttonTakeoff, SDLK_t );
-   window_addButtonKey( wid, -20 - (15+bw), 20,
-         bw, bh, "btnRenameShip",
-         _("Rename"), equipment_renameShip, SDLK_r );
-   window_addButtonKey( wid, -20 - (15+bw)*2, 20,
-         bw, bh, "btnSellShip",
-         _("Sell Ship"), equipment_sellShip, SDLK_s );
-   window_addButtonKey( wid, -20 - (15+bw)*3, 20,
-         bw, bh, "btnChangeShip",
-         _("Swap Ship"), equipment_transChangeShip, SDLK_p );
-   window_addButtonKey( wid, -20 - (15+bw)*4, 20,
-         bw, bh, "btnUnequipShip",
-         _("Unequip"), equipment_unequipShip, SDLK_u );
 
    /* text */
    buf = _("Name:\n"
@@ -368,13 +367,13 @@ void equipment_open( unsigned int wid )
       "Fuel:\n"
       "\n"
       "Ship Status:");
-   x = 20 + sw + 20 + 180 + 20 + 30;
-   y = -190;
+   x = 20+sw+20+180+10;
+   y = -40;
    window_addText( wid, x, y,
-         100, y-20+h-bh, 0, "txtSDesc", &gl_smallFont, &cFontGrey, buf );
-   x += 150;
+         130, y-20+h-bh, 0, "txtSDesc", &gl_defFont, &cFontGrey, buf );
+   x += 130;
    window_addText( wid, x, y,
-         w - x - 20, y-20+h-bh, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+         w - x - 20, y-20+h-bh, 0, "txtDDesc", &gl_defFont, NULL, NULL );
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
@@ -383,16 +382,21 @@ void equipment_open( unsigned int wid )
          ow, gl_defFont.h, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
    equipment_genLists( wid );
 
+   /* Slot widget. Designed so that 10 slots barely fit. */
+   equipment_slotWidget( wid, 20+sw+15, -40-5, ew, eh, &eq_wgt );
+   eq_wgt.canmodify = 1;
+
    /* Separator. */
    // window_addRect( wid, 20 + sw + 20, -40, 2, h-60, "rctDivider", &cGrey50, 0 );
 
-   /* Slot widget. */
-   equipment_slotWidget( wid, 20 + sw + 40, -40, ew, eh, &eq_wgt );
-   eq_wgt.canmodify = 1;
-
    /* Custom widget (ship information). */
-   window_addCust( wid, 20 + sw + 40 + ew + 20, -40, cw, ch, "cstMisc", 0,
+   window_addCust( wid, -20-(128-cw)/2, -20-150, cw, ch, "cstMisc", 0,
          equipment_renderMisc, NULL, NULL );
+
+   /* Spinning ship. */
+   window_addRect( wid, -20+4, -40+4, 128+8, 128+8, "rctShip", &cBlack, 1 );
+   window_addCust( wid, -20, -40, 128, 128, "cstShip", 0,
+         equipment_renderShip, NULL, NULL );
 
    /* Focus the ships image array. */
    window_setFocus( wid , EQUIPMENT_SHIPS );
@@ -616,9 +620,9 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    p = eq_wgt.selected;
 
    /* Render CPU and energy bars. */
-   w = 120;
+   w = bw;
    h = 20;
-   x = bx + 50.;
+   x = bx;
    y = by + bh - 30 - h;
 
    gl_printMidRaw( &gl_smallFont, w,
@@ -652,11 +656,6 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
          x, y, &cFontRed, _("!! %.0f%% Slower !!"),
          (1. - p->speed / p->speed_base) * 100);
    }
-
-   x += w/2. + 50;
-
-   /* Render ship graphic. */
-   equipment_renderShip( bx, by, bw, bh, x, y, p );
 }
 
 
@@ -859,20 +858,25 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
  *    @param by Base Y position of the widget.
  *    @param bw Width of the widget.
  *    @param bh Height of the widget.
- *    @param x X position to render at.
- *    @param y Y position to render at.
- *    @param p Pilot to render.
+ *    @param data Unused.
  */
 static void equipment_renderShip( double bx, double by,
-      double bw, double bh, double x, double y, Pilot* p )
+      double bw, double bh, void *data )
 {
+   (void) data;
+   Pilot *p;
    int sx, sy;
    unsigned int tick;
    double dt;
    double px, py;
    double pw, ph;
-   double w, h;
    Vector2d v;
+
+   /* Must have selected ship. */
+   if (eq_wgt.selected == NULL)
+      return;
+
+   p = eq_wgt.selected;
 
    tick = SDL_GetTicks();
    dt   = (double)(tick - equipment_lastick)/1000.;
@@ -883,7 +887,7 @@ static void equipment_renderShip( double bx, double by,
    gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, equipment_dir );
 
    /* Render ship graphic. */
-   if (p->ship->gfx_space->sw > 128) {
+   if (p->ship->gfx_space->sw > bw) {
       pw = 128;
       ph = 128;
    }
@@ -891,15 +895,10 @@ static void equipment_renderShip( double bx, double by,
       pw = p->ship->gfx_space->sw;
       ph = p->ship->gfx_space->sh;
    }
-   w  = 128;
-   h  = 128;
-   px = (x+30) + (bx+bw - (x+30) - pw)/2;
-   py = by + bh - 30 - h + (h-ph)/2 + 30;
-   x  = (x+30) + (bx+bw - (x+30) - w)/2;
-   y  = by + bh - 30 - h + 30;
-   toolkit_drawRect( x-5, y-5, w+10, h+10, &cBlack, NULL );
-   gl_blitScaleSprite( p->ship->gfx_space,
-         px, py, sx, sy, pw, ph, NULL );
+
+   px = bx + (bw-pw)/2;
+   py = by + (bh-ph)/2;
+   gl_blitScaleSprite( p->ship->gfx_space, px, py, sx, sy, pw, ph, NULL );
 
 #ifdef DEBUGGING
    if (debug_isFlag(DEBUG_MARK_EMITTER)) {
@@ -938,9 +937,6 @@ static void equipment_renderShip( double bx, double by,
       gl_renderCross(px + v.x, py + v.y, 7, &cRadar_player);
       glLineWidth( 1. );
    }
-
-   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 1., toolkit_colLight, NULL  );
-   toolkit_drawOutline( x - 4., y-4., w+7., h+2., 2., toolkit_colDark, NULL  );
 }
 /**
  * @brief Handles a mouse press in column.
@@ -1530,14 +1526,15 @@ static void equipment_genOutfitList( unsigned int wid )
       barw = window_tabWinGetBarWidth( wid, EQUIPMENT_OUTFIT_TAB );
 
       iw = CLAMP(0, 150, ow - barw - 30);
-      ih = 20;
+      ih = 30;
 
-      ix = ow - iw;
-      iy = oh - (30 - ih) / 2; /* Centered relative to 30 px tab bar */
+      ix = ow - iw + 15;
+      iy = y + oh - 25 - 1;
 
       /* Only create the filter widget if it will be a reasonable size. */
       if (iw >= 30) {
-         window_addInput( wid, ix+15, iy+1, iw, ih, EQUIPMENT_FILTER, 32, 1, &gl_smallFont );
+         window_addInput( wid, ix, iy, iw, ih, EQUIPMENT_FILTER, 32, 1, NULL );
+         inp_setEmptyText( wid, EQUIPMENT_FILTER, _("Filter…") );
          window_setInputCallback( wid, EQUIPMENT_FILTER, equipment_filterOutfits );
       }
    }

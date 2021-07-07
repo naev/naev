@@ -13,7 +13,7 @@
   <sound_hit>lrgexp0</sound_hit>
   <spfx_shield>ExpM</spfx_shield>
   <spfx_armour>ExpM</spfx_armour>
-  <trail_generator x="0">fire-missile</trail_generator>
+  <trail_generator x="0">fire-missileS</trail_generator>
   <duration blowup="armour">1.5</duration>
   <thrust>1200</thrust>
   <speed>1800</speed>
@@ -21,7 +21,6 @@
    <type>impact</type>
    <penetrate>12</penetrate>
    <physical>15</physical>
-   <disable>0</disable>
   </damage>
   <ai>unguided</ai>
  </specific>

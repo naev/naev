@@ -196,6 +196,7 @@ static void nebu_renderBackground( const double dt )
    /* Set shader uniforms. */
    glUniform1f(shaders.nebula_background.eddy_scale, nebu_view * cam_getZoom() / nebu_scale);
    glUniform1f(shaders.nebula_background.time, nebu_time);
+   glUniform1f(shaders.nebula_background.brightness, conf.nebu_brightness);
 
    /* Draw. */
    glEnableVertexAttribArray( shaders.nebula_background.vertex );
@@ -292,6 +293,7 @@ void nebu_renderOverlay( const double dt )
    glUniform1f(shaders.nebula.horizon, nebu_view * z / nebu_scale);
    glUniform1f(shaders.nebula.eddy_scale, nebu_dx * z / nebu_scale);
    glUniform1f(shaders.nebula.time, nebu_time);
+   glUniform1f(shaders.nebula.brightness, conf.nebu_brightness);
 
    /* Draw. */
    glEnableVertexAttribArray(shaders.nebula.vertex);
@@ -320,6 +322,7 @@ static void nebu_renderPuffs( int below_player )
 {
    int i;
    NebulaPuff *puff;
+   glColour col;
 
    /* Main menu shouldn't have puffs */
    if (menu_isOpen(MENU_MAIN))
@@ -347,8 +350,9 @@ static void nebu_renderPuffs( int below_player )
             puff->y += SCREEN_H + 2*NEBULA_PUFF_BUFFER;
 
          /* Render */
+	 col_blend( &col, &puff->col, &cBlack, conf.nebu_brightness );
          gl_blitStatic( nebu_pufftexs[puff->tex],
-               puff->x, puff->y, &puff->col );
+               puff->x, puff->y, &col );
       }
    }
 }
@@ -386,7 +390,7 @@ void nebu_prep( double density, double volatility, double hue )
    glUniform1f(shaders.nebula_background.hue, nebu_hue);
    glUseProgram(0);
 
-   /* Also set the hue for trail.s */
+   /* Also set the hue for trails */
    col_hsv2rgb( &col, nebu_hue*360., 0.7, 1.0 );
    glUseProgram(shaders.trail.program);
    glUniform3f( shaders.trail.nebu_col, col.r, col.g, col.b );

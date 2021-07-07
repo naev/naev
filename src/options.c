@@ -84,6 +84,7 @@ static void opt_videoDefaults( unsigned int wid, char *str );
 static void opt_getVideoMode( int *w, int *h, int *fullscreen );
 static void opt_setScalefactor( unsigned int wid, char *str );
 static void opt_setBGBrightness( unsigned int wid, char *str );
+static void opt_setNebuBrightness( unsigned int wid, char *str );
 static void opt_checkColorblind( unsigned int wid, char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
@@ -1287,6 +1288,13 @@ static void opt_video( unsigned int wid )
          conf.bg_brightness, opt_setBGBrightness );
    opt_setBGBrightness( wid, "fadBGBrightness" );
    y -= 20;
+   window_addText( wid, x+15, y-3, cw-20, 20, 0, "txtNebuBrightness",
+         NULL, NULL, NULL );
+   y -= 20;
+   window_addFader( wid, x+40, y, cw-60, 20, "fadNebuBrightness", 0., 1.,
+         conf.nebu_brightness, opt_setNebuBrightness );
+   opt_setNebuBrightness( wid, "fadNebuBrightness" );
+   y -= 20;
    window_addText( wid, x+15, y-3, cw-20, 20, 0, "txtMOpacity",
          &gl_smallFont, NULL, NULL );
    y -= 20;
@@ -1506,6 +1514,7 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadScale", SCALE_FACTOR_DEFAULT );
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadNebuBrightness", NEBU_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
 }
 
@@ -1538,11 +1547,24 @@ static void opt_setBGBrightness( unsigned int wid, char *str )
    char buf[STRMAX_SHORT];
    double fad = window_getFaderValue(wid, str);
    conf.bg_brightness = fad;
-   snprintf( buf, sizeof(buf), _("BG (Nebula, etc.) brightness: %.0f%%"), 100.*fad );
+   snprintf( buf, sizeof(buf), _("BG (Stars, etc.) brightness: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtBGBrightness", buf );
 }
 
-
+/**
+ * @brief Callback to set the background brightness.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setNebuBrightness( unsigned int wid, char *str )
+{
+   char buf[STRMAX_SHORT];
+   double fad = window_getFaderValue(wid, str);
+   conf.nebu_brightness = fad;
+   snprintf( buf, sizeof(buf), _("Nebula brightness: %.0f%%"), 100.*fad );
+   window_modifyText( wid, "txtNebuBrightness", buf );
+}
 
 /**
  * @brief Callback to set autonav abort threshold.

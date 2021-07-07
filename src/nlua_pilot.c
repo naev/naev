@@ -1913,9 +1913,11 @@ static int pilotL_faction( lua_State *L )
  */
 static int pilotL_spaceworthy( lua_State *L )
 {
-   Pilot *p  = luaL_validpilot(L,1);
-   lua_pushboolean( L, (pilot_checkSpaceworthy(p) == NULL) ? 1 : 0 );
-   return 1;
+   Pilot *p     = luaL_validpilot(L,1);
+   const char *str = pilot_checkSpaceworthy(p);
+   lua_pushboolean( L, (str==NULL) ? 1 : 0 );
+   lua_pushstring( L, str );
+   return 2;
 }
 
 
@@ -3561,6 +3563,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> takingoff: pilot is currently taking off.</li>
  *  <li> manualcontrol: pilot is under manual control.</li>
  *  <li> combat: pilot is engaged in combat.</li>
+ *  <li> carried: pilot came from a fighter bay.</li>
  * </ul>
  *    @luatparam Pilot p Pilot to get flags of.
  *    @luatreturn table Table with flag names an index, boolean as value.

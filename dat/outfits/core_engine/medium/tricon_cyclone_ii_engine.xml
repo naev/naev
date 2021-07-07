@@ -11,7 +11,7 @@
   <gfx_store>engine14.webp</gfx_store>
  </general>
  <specific type="modification">
-  <energy_usage>55</energy_usage>
+  <energy_regen_malus>55</energy_regen_malus>
   <engine_limit>1100</engine_limit>
   <fuel>600</fuel>
   <speed>175</speed>

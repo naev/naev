@@ -197,9 +197,9 @@ function enter()
       baddie:addOutfit("Milspec Orion 2301 Core System")
       baddie:addOutfit("Tricon Zephyr Engine")
 
-      baddie:addOutfit("Shield Capacitor")
+      baddie:addOutfit("Shield Capacitor I")
       baddie:addOutfit("Plasteel Plating")
-      baddie:addOutfit("MilSpec Impacto-Plastic Coating")
+      baddie:addOutfit("Milspec Impacto-Plastic Coating")
       baddie:addOutfit("Laser Cannon MK1",2)
 
       baddie:setHealth(100,100)

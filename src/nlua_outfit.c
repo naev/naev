@@ -16,8 +16,11 @@
 
 #include "nlua_outfit.h"
 
+#include "array.h"
 #include "log.h"
+#include "damagetype.h"
 #include "nlua_pilot.h"
+#include "nlua_ship.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
 #include "rng.h"
@@ -27,6 +30,7 @@
 /* Outfit metatable methods. */
 static int outfitL_eq( lua_State *L );
 static int outfitL_get( lua_State *L );
+static int outfitL_getAll( lua_State *L );
 static int outfitL_name( lua_State *L );
 static int outfitL_nameRaw( lua_State *L );
 static int outfitL_type( lua_State *L );
@@ -41,10 +45,12 @@ static int outfitL_description( lua_State *L );
 static int outfitL_unique( lua_State *L );
 static int outfitL_getShipStat( lua_State *L );
 static int outfitL_weapStats( lua_State *L );
+static int outfitL_specificStats( lua_State *L );
 static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
    { "get", outfitL_get },
+   { "getAll", outfitL_getAll },
    { "name", outfitL_name },
    { "nameRaw", outfitL_nameRaw },
    { "type", outfitL_type },
@@ -59,6 +65,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "unique", outfitL_unique },
    { "shipstat", outfitL_getShipStat },
    { "weapstats", outfitL_weapStats },
+   { "specificstats", outfitL_specificStats },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -205,8 +212,6 @@ static int outfitL_eq( lua_State *L )
 }
 
 
-
-
 /**
  * @brief Gets a outfit.
  *
@@ -233,6 +238,25 @@ static int outfitL_get( lua_State *L )
 
    /* Push. */
    lua_pushoutfit(L, lo);
+   return 1;
+}
+
+
+/**
+ * @brief Gets all the outfits.
+ *
+ *    @luatreturn Table Table containing all the outfits.
+ * @luafunc get
+ */
+static int outfitL_getAll( lua_State *L )
+{
+   int i;
+   const Outfit *outfits = outfit_getAll();
+   lua_newtable(L); /* t */
+   for (i=0; i<array_size(outfits); i++) {
+      lua_pushoutfit( L, (Outfit*) &outfits[i] );
+      lua_rawseti( L, -2, i+1 );
+   }
    return 1;
 }
 
@@ -394,11 +418,11 @@ static int outfitL_slot( lua_State *L )
 static int outfitL_limit( lua_State *L )
 {
    Outfit *o = luaL_validoutfit(L,1);
-   if (o->limit)
+   if (o->limit) {
       lua_pushstring(L,o->limit);
-   else
-      lua_pushnil(L);
-   return 1;
+      return 1;
+   }
+   return 0;
 }
 
 
@@ -493,28 +517,31 @@ static int outfitL_getShipStat( lua_State *L )
 
 
 /**
- * @brief Computes the DPS and EPS for weapons.
+ * @brief Computes statistics for weapons.
  *
  *    @luatparam Outfit o Outfit to compute for.
  *    @luatparam[opt=nil] Pilot p Pilot to use ship stats when computing.
- *    @luatreturn number DPS of the outfit.
- *    @luatreturn number EPS of the outfit.
+ *    @luatreturn number Damage per secondof the outfit.
+ *    @luatreturn number Disable per second of the outfit.
+ *    @luatreturn number Energy per second of the outfit.
+ *    @luatreturn number Range of the outfit.
+ *    @luatreturn number trackmin Minimum tracking value of the outfit.
+ *    @luatreturn number trackmax Maximum tracking value of the outfit.
+ *    @luatreturn number lockon Time to lockon.
  * @luafunc weapstats
  */
 static int outfitL_weapStats( lua_State *L )
 {
-   double eps, dps, shots;
+   double eps, dps, disable, shots;
    double mod_energy, mod_damage, mod_shots;
+   double sdmg, admg;
    const Damage *dmg;
    Outfit *o = luaL_validoutfit( L, 1 );
    Pilot *p = (lua_ispilot(L,2)) ? luaL_validpilot(L,2) : NULL;
 
    /* Just return 0 for non-wapons. */
-   if (o->slot.type != OUTFIT_SLOT_WEAPON) {
-      lua_pushnumber( L, 0. );
-      lua_pushnumber( L, 0. );
-      return 2;
-   }
+   if (o->slot.type != OUTFIT_SLOT_WEAPON)
+      return 0;
 
    /* Special case beam weapons .*/
    if (outfit_isBeam(o)) {
@@ -538,11 +565,19 @@ static int outfitL_weapStats( lua_State *L )
       }
       shots = outfit_duration(o);
       mod_shots = shots / (shots + mod_shots * outfit_delay(o));
-      dps = mod_shots * mod_damage * outfit_damage(o)->damage;
+      dmg = outfit_damage(o);
+      /* Modulate the damage by average of damage types. */
+      dtype_raw( dmg->type, &sdmg, &admg, NULL );
+      mod_damage *= 0.5*(sdmg+admg);
+      /* Calculate good damage estimates. */
+      dps = mod_shots * mod_damage * dmg->damage;
+      disable = mod_shots * mod_damage * dmg->disable;
       eps = mod_shots * mod_energy * outfit_energy(o);
       lua_pushnumber( L, dps );
+      lua_pushnumber( L, disable );
       lua_pushnumber( L, eps );
-      return 2;
+      lua_pushnumber( L, outfit_range(o) );
+      return 4;
    }
 
    if (p) {
@@ -581,12 +616,138 @@ static int outfitL_weapStats( lua_State *L )
       dmg = outfit_damage(o->u.lau.ammo);
    else
       dmg = outfit_damage(o);
+   if (dmg==NULL)
+      return 0;
+   /* Modulate the damage by average of damage types. */
+   dtype_raw( dmg->type, &sdmg, &admg, NULL );
+   mod_damage *= 0.5*(sdmg+admg);
+   /* Calculate good damage estimates. */
    dps = shots * mod_damage * dmg->damage;
+   disable = shots * mod_damage * dmg->disable;
    eps = shots * mod_energy * MAX( outfit_energy(o), 0. );
 
    lua_pushnumber( L, dps );
+   lua_pushnumber( L, disable );
    lua_pushnumber( L, eps );
-   return 2;
+   lua_pushnumber( L, outfit_range(o) );
+   lua_pushnumber( L, outfit_trackmin(o) );
+   lua_pushnumber( L, outfit_trackmax(o) );
+   if (outfit_isLauncher(o)) {
+      lua_pushnumber( L, o->u.lau.lockon );
+      return 7;
+   }
+   return 6;
 }
 
 
+#define SETFIELD( name, value )  \
+   lua_pushnumber( L, value ); \
+   lua_setfield( L, -2, name )
+#define SETFIELDI( name, value )  \
+   lua_pushinteger( L, value ); \
+   lua_setfield( L, -2, name )
+#define SETFIELDB( name, value )  \
+   lua_pushboolean( L, value ); \
+   lua_setfield( L, -2, name )
+/**
+ * @brief Returns raw data specific to each outfit type.
+ *
+ *    @luatreturn A table containing the raw values.
+ * @luafunc specificstats
+ */
+static int outfitL_specificStats( lua_State *L )
+{
+   Outfit *o = luaL_validoutfit( L, 1 );
+   lua_newtable(L);
+   switch (o->type) {
+      case OUTFIT_TYPE_AFTERBURNER:
+         SETFIELD( "thrust",     o->u.afb.thrust );
+         SETFIELD( "speed",      o->u.afb.speed );
+         SETFIELD( "energy",     o->u.afb.energy );
+         SETFIELD( "mass_limit", o->u.afb.mass_limit );
+         SETFIELD( "heatup",     o->u.afb.heatup );
+         SETFIELD( "heat",       o->u.afb.heat );
+         SETFIELD( "heat_cap",   o->u.afb.heat_cap );
+         SETFIELD( "heat_base",  o->u.afb.heat_cap );
+         break;
+
+      case OUTFIT_TYPE_FIGHTER_BAY:
+         lua_pushship( L, ship_get( o->u.bay.ammo->u.fig.ship ) );
+         lua_setfield( L, -2, "ship" );
+         SETFIELD( "delay",      o->u.bay.delay );
+         SETFIELDI("amount",     o->u.bay.amount );
+         SETFIELD( "reload_time",o->u.bay.reload_time );
+         break;
+
+      case OUTFIT_TYPE_TURRET_BOLT:
+         SETFIELDB("isturret",   1 );
+         FALLTHROUGH;
+      case OUTFIT_TYPE_BOLT:
+         SETFIELD( "delay",      o->u.blt.delay );
+         SETFIELD( "speed",      o->u.blt.speed );
+         SETFIELD( "range",      o->u.blt.range );
+         SETFIELD( "falloff",    o->u.blt.falloff );
+         SETFIELD( "energy",     o->u.blt.energy );
+         SETFIELD( "heatup",     o->u.blt.heatup );
+         SETFIELD( "heat",       o->u.blt.heat );
+         SETFIELD( "trackmin",   o->u.blt.trackmin );
+         SETFIELD( "trackmax",   o->u.blt.trackmax );
+         SETFIELD( "swivel",     o->u.blt.swivel );
+         /* Damage stuff. */
+         SETFIELD( "penetration",o->u.blt.dmg.penetration );
+         SETFIELD( "damage",     o->u.blt.dmg.damage );
+         SETFIELD( "disable",    o->u.blt.dmg.disable );
+         break;
+
+      case OUTFIT_TYPE_TURRET_BEAM:
+         SETFIELDB("isturret",   1 );
+         FALLTHROUGH;
+      case OUTFIT_TYPE_BEAM:
+         SETFIELD( "delay",      o->u.bem.delay );
+         SETFIELD( "warmup",     o->u.bem.warmup );
+         SETFIELD( "duration",   o->u.bem.duration );
+         SETFIELD( "min_duration",o->u.bem.min_duration );
+         SETFIELD( "range",      o->u.bem.range );
+         SETFIELD( "turn",       o->u.bem.turn );
+         SETFIELD( "energy",     o->u.bem.energy );
+         SETFIELD( "heatup",     o->u.bem.heatup );
+         SETFIELD( "heat",       o->u.bem.heat );
+         /* Damage stuff. */
+         SETFIELD( "penetration",o->u.bem.dmg.penetration );
+         SETFIELD( "damage",     o->u.bem.dmg.damage );
+         SETFIELD( "disable",    o->u.bem.dmg.disable );
+         break;
+
+      case OUTFIT_TYPE_TURRET_LAUNCHER:
+         SETFIELDB("isturret",   1 );
+         FALLTHROUGH;
+      case OUTFIT_TYPE_LAUNCHER:
+         SETFIELD( "delay",      o->u.lau.delay );
+         SETFIELDI("amount",     o->u.lau.amount );
+         SETFIELD( "reload_time",o->u.lau.reload_time );
+         SETFIELD( "lockon",     o->u.lau.lockon );
+         SETFIELD( "trackmin",   o->u.lau.trackmin );
+         SETFIELD( "trackmax",   o->u.lau.trackmax );
+         SETFIELD( "arc",        o->u.lau.arc );
+         SETFIELD( "swivel",     o->u.lau.swivel );
+         /* Ammo stuff. */
+         SETFIELD( "speed",      o->u.lau.ammo->u.amm.speed );
+         SETFIELD( "turn",       o->u.lau.ammo->u.amm.turn );
+         SETFIELD( "thrust",     o->u.lau.ammo->u.amm.thrust );
+         SETFIELD( "energy",     o->u.lau.ammo->u.amm.energy );
+         SETFIELDB("seek",       o->u.lau.ammo->u.amm.ai!=AMMO_AI_UNGUIDED );
+         SETFIELDB("smart",      o->u.lau.ammo->u.amm.ai==AMMO_AI_SMART );
+         /* Damage stuff. */
+         SETFIELD( "penetration",o->u.lau.ammo->u.amm.dmg.penetration );
+         SETFIELD( "damage",     o->u.lau.ammo->u.amm.dmg.damage );
+         SETFIELD( "disable",    o->u.lau.ammo->u.amm.dmg.disable );
+         break;
+
+      default:
+         break;
+   }
+   return 1;
+}
+#undef SETFIELD
+#undef SETFIELDI
+#undef SETFIELDB

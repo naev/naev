@@ -7,7 +7,7 @@
  <sound>engine</sound>
  <class>Fighter</class>
  <price>400000</price>
- <time_mod>1</time_mod>
+ <time_mod>0.9</time_mod>
  <trail_generator x="3" y="18" h="0">nebula</trail_generator>
  <trail_generator x="3" y="-18" h="0">nebula</trail_generator>
  <trail_generator x="-5" y="4" h="0" always_under="1" >fire</trail_generator>

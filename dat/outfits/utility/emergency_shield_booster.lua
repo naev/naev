@@ -18,7 +18,7 @@ function turnon( p, po )
    -- the effect affecting itself and going to near infinity
    local ps = p:stats()
    local regen = boost * ps.shield_regen
-   po:set( "shield_usage", -regen )
+   po:set( "shield_regen_malus", -regen )
    po:set( "energy_loss", efficiency * regen )
 
    mem.timer = active

@@ -6,7 +6,7 @@
  <sound>engine</sound>
  <class>Heavy Drone</class>
  <price>150000</price>
- <time_mod>1</time_mod>
+ <time_mod>0.75</time_mod>
  <trail_generator x="-11" y="0" h="0">nebula</trail_generator>
  <trail_generator x="-11" y="0" h="0">zalekS</trail_generator>
  <fabricator>Za'lek Robotics</fabricator>
@@ -34,7 +34,7 @@
  </characteristics>
  <slots>
   <weapon size="small" x="15" y="-5" h="2" />
-  <weapon size="small" x="15" y="-4" h="2"/>
+  <weapon size="small" x="15" y="-4" h="2" />
   <weapon size="small" x="-12" y="6" h="0" />
   <utility size="small" />
   <utility size="small" />

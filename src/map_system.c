@@ -613,7 +613,6 @@ static void map_system_array_update( unsigned int wid, char* str ) {
          strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
       else
          snprintf( buf_license, sizeof( buf_license ), "#r%s#0", _(outfit->license) );
-      buf_license[ sizeof( buf_license )-1 ] = '\0';
 
       mass = outfit->mass;
       if ( (outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
@@ -640,6 +639,12 @@ static void map_system_array_update( unsigned int wid, char* str ) {
 
    /* update text */
       price2str( buf_price, ship_buyPrice( ship ), player.p->credits, 2 );
+      if (ship->license == NULL)
+         strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
+      else if (player_hasLicense( ship->license ))
+         strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
+      else
+         snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
 
       snprintf( infobuf, sizeof(infobuf),
                  _("#nModel:#0 %s    "
@@ -684,7 +689,7 @@ static void map_system_array_update( unsigned int wid, char* str ) {
                  ship->fuel, n_( "unit", "units", ship->fuel ),
                  ship->fuel_consumption, n_( "unit", "units", ship->fuel_consumption ),
                  buf_price,
-                 (ship->license != NULL) ? _(ship->license) : _("None"),
+                 buf_license,
                  ship->desc_stats
                  );
    } else if ( ( strcmp( str, MAPSYS_TRADE ) == 0 ) ) {

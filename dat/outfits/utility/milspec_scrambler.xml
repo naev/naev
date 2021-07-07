@@ -10,7 +10,7 @@
   <gfx_store>jammer1.webp</gfx_store>
  </general>
  <specific type="modification">
-  <energy_usage>6</energy_usage>
+  <energy_regen_malus>6</energy_regen_malus>
   <ew_hide>20</ew_hide>
  </specific>
 </outfit>

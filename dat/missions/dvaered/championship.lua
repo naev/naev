@@ -308,7 +308,7 @@ function enter()
       local nhigh, nmedium, nlow = oppotype:slots()
 
       -- TODO: decide if the "Faraday Tempest Coating" is a good idea
-      opponent:addOutfit("Battery",nlow)
+      opponent:addOutfit("Battery I",nlow)
 
       hvy = 0
       if oppotype == ship.get("Lancelot") or oppotype == ship.get("Empire Lancelot") then

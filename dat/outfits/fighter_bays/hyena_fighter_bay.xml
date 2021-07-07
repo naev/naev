@@ -7,7 +7,7 @@
   <mass>120</mass>
   <price>500000</price>
   <gfx_store>placeholder.webp</gfx_store>
-  <description>aoe</description>
+  <description>TODO</description>
   <cpu>-150</cpu>
  </general>
  <specific type="fighter bay" secondary="1">

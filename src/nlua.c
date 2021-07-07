@@ -23,10 +23,12 @@
 #include "nlua_cli.h"
 #include "nlua_commodity.h"
 #include "nlua_data.h"
+#include "nlua_debug.h"
 #include "nlua_diff.h"
 #include "nlua_faction.h"
 #include "nlua_file.h"
 #include "nlua_jump.h"
+#include "nlua_linopt.h"
 #include "nlua_naev.h"
 #include "nlua_news.h"
 #include "nlua_outfit.h"
@@ -219,6 +221,12 @@ nlua_env nlua_newEnv(int rw) {
    /* Push whether or not the read/write functionality is used for the different libraries. */
    lua_pushboolean(naevL, rw);
    lua_setfield(naevL, -2, "__RW");
+
+   /* Push if naev is built with debugging. */
+#if DEBUGGING
+   lua_pushboolean(naevL, 1);
+   lua_setfield(naevL, -2, "__debugging");
+#endif /* DEBUGGING */
 
    /* Set up naev namespace. */
    lua_newtable(naevL);
@@ -584,6 +592,7 @@ int nlua_loadStandard( nlua_env env )
    r |= nlua_loadFile(env);
    r |= nlua_loadData(env);
    r |= nlua_loadDebug(env);
+   r |= nlua_loadLinOpt(env);
 
    return r;
 }

@@ -29,7 +29,6 @@
    <type>normal</type>
    <penetrate>12</penetrate>
    <physical>26</physical>
-   <disable>2</disable>
   </damage>
  </specific>
 </outfit>

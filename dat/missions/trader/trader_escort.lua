@@ -303,7 +303,7 @@ function spawnConvoy ()
          for j, o in ipairs( p:outfits() ) do
             if o == "Improved Stabilizer" then
                p:rmOutfit("Improved Stabilizer")
-               p:addOutfit("Cargo Pod")
+               p:addOutfit("Small Cargo Pod")
             end
          end
 

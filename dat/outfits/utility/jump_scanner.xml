@@ -9,7 +9,7 @@
   <gfx_store>jammer0.webp</gfx_store>
  </general>
  <specific type="modification">
-  <energy_usage>2</energy_usage>
+  <energy_regen_malus>2</energy_regen_malus>
   <ew_jump_detect>60</ew_jump_detect>
  </specific>
 </outfit>

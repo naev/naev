@@ -80,15 +80,14 @@
   <item>BioPlasma Talon Stage X</item>
   <item>BioPlasma Tentacle Stage 1</item>
   <item>BioPlasma Tentacle Stage X</item>
-  <item>Battery</item>
+  <item>Battery I</item>
   <item>Battery II</item>
   <item>Battery III</item>
   <item>Battery IV</item>
-  <item>Solar Panel</item>
   <item>Reactor Class I</item>
   <item>Reactor Class II</item>
   <item>Reactor Class III</item>
-  <item>Shield Capacitor</item>
+  <item>Shield Capacitor I</item>
   <item>Shield Capacitor II</item>
   <item>Shield Capacitor III</item>
   <item>Shield Capacitor IV</item>
@@ -108,10 +107,10 @@
   <item>Hellburner</item>
   <item>Emergency Shield Booster</item>
   <item>Hidden Jump Scanner</item>
-  <item>Fuel Pod</item>
+  <item>Small Fuel Pod</item>
   <item>Medium Fuel Pod</item>
   <item>Large Fuel Pod</item>
-  <item>Cargo Pod</item>
+  <item>Small Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
   <item>Targeting Array</item>
@@ -288,7 +287,7 @@
   <item>Low Radiation Sensor Modulator</item>
   <item>Faraday Tempest Coating</item>
   <item>Lattice Thermal Coating</item>
-  <item>MilSpec Impacto-Plastic Coating</item>
+  <item>Milspec Impacto-Plastic Coating</item>
   <item>Nexus Stealth Coating</item>
   <item>Photo-Voltaic Nanobot Coating</item>
   <item>Nebula Resistant Coating</item>
@@ -458,8 +457,8 @@
   <item>Plasma Blaster MK1</item>
   <item>Gauss Gun</item>
   <item>Unicorp Fury Launcher</item>
-  <item>Battery</item>
-  <item>Fuel Pod</item>
+  <item>Battery I</item>
+  <item>Small Fuel Pod</item>
   <item>Star Maps</item>
   <item>Large Civilian Vessel License</item>
   <item>Local System Map</item>
@@ -496,12 +495,12 @@
   <item>Plasma Blaster MK2</item>
   <item>Unicorp Banshee Launcher</item>
   <item>Reactor Class I</item>
-  <item>Shield Capacitor</item>
+  <item>Shield Capacitor I</item>
   <item>Plasteel Plating</item>
   <item>Engine Reroute</item>
   <item>Unicorp Light Afterburner</item>
   <item>Unicorp Medium Afterburner</item>
-  <item>Cargo Pod</item>
+  <item>Small Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
   <item>Star Maps</item>
@@ -570,15 +569,15 @@
   <item>Lancelot Fighter Bay</item>
  </tech>
  <tech name="Low Tech Upgrades">
-  <item>Battery</item>
+  <item>Battery I</item>
   <item>Reactor Class I</item>
-  <item>Shield Capacitor</item>
+  <item>Shield Capacitor I</item>
   <item>Small Shield Booster</item>
   <item>Medium Shield Booster</item>
   <item>Plasteel Plating</item>
   <item>Engine Reroute</item>
-  <item>Fuel Pod</item>
-  <item>Cargo Pod</item>
+  <item>Small Fuel Pod</item>
+  <item>Small Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
   <item>Star Maps</item>
@@ -590,11 +589,11 @@
   <item>Mercenary License</item>
  </tech>
  <tech name="High Tech Upgrades 1">
-  <item>Battery</item>
+  <item>Battery I</item>
   <item>Battery II</item>
   <item>Reactor Class I</item>
   <item>Reactor Class II</item>
-  <item>Shield Capacitor</item>
+  <item>Shield Capacitor I</item>
   <item>Shield Capacitor II</item>
   <item>Small Shield Booster</item>
   <item>Medium Shield Booster</item>
@@ -605,9 +604,9 @@
   <item>Improved Stabilizer</item>
   <item>Unicorp Light Afterburner</item>
   <item>Unicorp Medium Afterburner</item>
-  <item>Fuel Pod</item>
+  <item>Small Fuel Pod</item>
   <item>Medium Fuel Pod</item>
-  <item>Cargo Pod</item>
+  <item>Small Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
   <item>Targeting Array</item>
@@ -693,7 +692,7 @@
   <item>Empire Lancelot Fighter Bay</item>
  </tech>
  <tech name="Dvaered Elite Outfits">
-  <item>MilSpec Impacto-Plastic Coating</item>
+  <item>Milspec Impacto-Plastic Coating</item>
   <item>Cyclic Combat AI</item>
  </tech>
  <tech name="Dvaered Military Outfits">

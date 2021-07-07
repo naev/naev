@@ -266,7 +266,7 @@ function spawn_baddies(sp)
       badguys[i]:addOutfit("Mass Driver")
       badguys[i]:addOutfit("Shredder",2)
       badguys[i]:addOutfit("Ripper Cannon")
-      badguys[i]:addOutfit("Shield Capacitor",2)
+      badguys[i]:addOutfit("Shield Capacitor I",2)
       
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)

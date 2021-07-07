@@ -34,11 +34,16 @@
 #include "toolkit.h"
 
 
+#define  SHIP_GFX_W     256
+#define  SHIP_GFX_H     256
+
+
 /*
  * Vars.
  */
 static Ship **shipyard_list = NULL; /**< Array (array.h): Available ships, valid when the shipyard image-array widget is. */
 static Ship* shipyard_selected = NULL; /**< Currently selected shipyard ship. */
+static glTexture *shipyard_comm = NULL; /**< Current comm image. */
 
 
 /*
@@ -60,7 +65,7 @@ void shipyard_open( unsigned int wid )
    int i;
    ImageArrayCell *cships;
    int nships;
-   int w, h;
+   int w, h, sw, sh;
    int iw, ih;
    int bw, bh, padding, off;
    int th;
@@ -79,8 +84,12 @@ void shipyard_open( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* Calculate image array dimensions. */
-   iw = 704 + (w - LAND_WIDTH);
+   iw = 440 + (w - LAND_WIDTH);
    ih = h - 60;
+
+   /* Ship image dimensions. */
+   sw = SHIP_GFX_W;
+   sh = SHIP_GFX_H;
 
    /* Left padding + per-button padding * nbuttons */
    padding = 40 + 20 * 4;
@@ -102,55 +111,52 @@ void shipyard_open( unsigned int wid )
    window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnFindShips",
          _("Find Ships"), shipyard_find, SDLK_f );
-   (void)off;
 
    /* target gfx */
-   window_addRect( wid, -41, -30,
-         SHIP_TARGET_W, SHIP_TARGET_H, "rctTarget", &cBlack, 0 );
-   window_addImage( wid, -40, -30,
-         SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
+   window_addRect( wid, -40+4, -40+4, sw+8, sh+8, "rctTarget", &cBlack, 1 );
+   window_addImage( wid, -40, -40, sw, sh, "imgTarget", NULL, 0);
 
    /* slot types */
-   window_addCust( wid, -20, -SHIP_TARGET_H-35, 148, 80, "cstSlots", 0.,
+   window_addCust( wid, -20, -sh-50, sw-10, 80, "cstSlots", 0.,
          shipyard_renderSlots, NULL, NULL );
 
    /* stat text */
-   window_addText( wid, -4, -SHIP_TARGET_H-40-70-20, 164, -SHIP_TARGET_H-60-70-20+h-bh, 0, "txtStats",
+   window_addText( wid, -4, -sw-50-70-20, sw, -sh-60-70-20+h-bh, 0, "txtStats",
          &gl_smallFont, NULL, NULL );
 
    /* text */
-   buf = _("#nModel:\n#0"
-         "#nClass:\n#0"
-         "#nFabricator:\n#0"
-         "#nCrew:\n#0"
+   buf = _("Model:\n"
+         "Class:\n"
+         "Fabricator:\n"
+         "Crew:\n"
          "\n"
-         "#nCPU:\n#0"
-         "#nMass:\n#0"
-         "#nThrust:\n#0"
-         "#nSpeed:\n#0"
-         "#nTurn:\n#0"
-         "#nTime Constant:\n#0"
+         "CPU:\n"
+         "Mass:\n"
+         "Thrust:\n"
+         "Speed:\n"
+         "Turn:\n"
+         "Time Constant:\n"
          "\n"
-         "#nAbsorption:\n#0"
-         "#nShield:\n#0"
-         "#nArmour:\n#0"
-         "#nEnergy:\n#0"
-         "#nCargo Space:\n#0"
-         "#nFuel:\n#0"
-         "#nFuel Use:\n#0"
-         "#nPrice:\n#0"
-         "#nMoney:\n#0"
-         "#nLicense:\n#0");
-   th = gl_printHeightRaw( &gl_smallFont, 106, buf );
+         "Absorption:\n"
+         "Shield:\n"
+         "Armour:\n"
+         "Energy:\n"
+         "Cargo Space:\n"
+         "Fuel:\n"
+         "Fuel Use:\n"
+         "Price:\n"
+         "Money:\n"
+         "License:\n");
+   th = gl_printHeightRaw( &gl_defFont, 106, buf );
    y  = -35;
    window_addText( wid, 20+iw+20, y,
-         106, th, 0, "txtSDesc", &gl_smallFont, NULL, buf );
-   window_addText( wid, 20+iw+20+106, y,
-         w-SHIP_TARGET_W-40-(20+iw+20+106), th, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
+         128, th, 0, "txtSDesc", &gl_defFont, &cFontGrey, buf );
+   window_addText( wid, 20+iw+20+128, y,
+         w-sw-40-(20+iw+20+128), th, 0, "txtDDesc", &gl_defFont, NULL, NULL );
    y -= th;
    window_addText( wid, 20+iw+20, y,
-         w-(20+iw+20) - (SHIP_TARGET_W+40), y-20+h-bh, 0, "txtDescription",
-         &gl_smallFont, NULL, NULL );
+         w-(20+iw+20) - (sw+40), y-20+h-bh, 0, "txtDescription",
+         &gl_defFont, NULL, NULL );
 
    /* set up the ships to buy/sell */
    shipyard_list = tech_getShip( land_planet->tech );
@@ -173,13 +179,14 @@ void shipyard_open( unsigned int wid )
       }
    }
 
-
    iconsize = 128;
    if (!conf.big_icons) {
       if (toolkit_simImageArrayVisibleElements(iw,ih,iconsize,iconsize) < nships)
          iconsize = 96;
+      /*
       if (toolkit_simImageArrayVisibleElements(iw,ih,iconsize,iconsize) < nships)
          iconsize = 64;
+      */
    }
    window_addImageArray( wid, 20, 20,
          iw, ih, "iarShipyard", iconsize, iconsize,
@@ -202,11 +209,14 @@ void shipyard_update( unsigned int wid, char* str )
    Ship* ship;
    char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf_license[PATH_MAX];
    char smass[NUM2STRLEN];
+   double aspect, gw, gh;
 
    i = toolkit_getImageArrayPos( wid, "iarShipyard" );
 
    /* No ships */
    if (i < 0 || array_size(shipyard_list) == 0) {
+      gl_freeTexture( shipyard_comm );
+      shipyard_comm = NULL;
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
@@ -244,7 +254,19 @@ void shipyard_update( unsigned int wid, char* str )
    shipyard_selected = ship;
 
    /* update image */
-   window_modifyImage( wid, "imgTarget", ship->gfx_store, 0, 0 );
+   gl_freeTexture( shipyard_comm );
+   shipyard_comm = NULL;
+   shipyard_comm = ship_loadCommGFX( ship );
+   aspect = shipyard_comm->w / shipyard_comm->h;
+   gw = MIN( shipyard_comm->w, SHIP_GFX_W );
+   gh = MIN( shipyard_comm->h, SHIP_GFX_H );
+   if (aspect > 1.)
+      gh /= aspect;
+   else
+      gw /= aspect;
+   window_destroyWidget( wid, "imgTarget" );
+   window_addImage( wid, -40-(SHIP_GFX_W-gw)/2, -30-(SHIP_GFX_H-gh)/2, gw, gh, "imgTarget", NULL, 0 );
+   window_modifyImage( wid, "imgTarget", shipyard_comm, gw, gh );
 
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
@@ -259,7 +281,6 @@ void shipyard_update( unsigned int wid, char* str )
       strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
    else
       snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
-   buf_license[ sizeof(buf_license)-1 ] = '\0';
 
    snprintf( buf, sizeof(buf),
          _("%s\n"
@@ -328,6 +349,8 @@ void shipyard_cleanup (void)
    array_free( shipyard_list );
    shipyard_list = NULL;
    shipyard_selected = NULL;
+   gl_freeTexture( shipyard_comm );
+   shipyard_comm = NULL;
 }
 
 

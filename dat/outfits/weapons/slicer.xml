@@ -29,7 +29,6 @@
    <type>ion</type>
    <penetrate>24</penetrate>
    <physical>38</physical>
-   <disable>2.4</disable>
   </damage>
  </specific>
 </outfit>

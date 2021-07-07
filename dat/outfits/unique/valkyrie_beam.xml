@@ -12,7 +12,7 @@
   <cpu>-350</cpu>
  <rarity>6</rarity></general>
  <stats>
-  <shield_usage>8</shield_usage>
+  <shield_regen_malus>8</shield_regen_malus>
   <shield_regen_mod>-50</shield_regen_mod>
  </stats>
  <specific type="turret beam">
