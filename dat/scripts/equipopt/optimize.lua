@@ -46,7 +46,6 @@ local goodness_override = {
    ["Photo-Voltaic Nanobot Coating"] = 3,
    ["Nexus Stealth Coating"] = 3,
    ["Lattice Thermal Coating"] = 3,
-   ["Nebula Resistant Coating"] = 3,
    ["Faraday Tempest Coating"] = 3,
    ["Nebula Resistant Coating"] = 3,
    -- Utility Stuff
