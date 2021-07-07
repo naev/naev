@@ -165,6 +165,11 @@ int main( int argc, char** argv )
 {
    char conf_file_path[PATH_MAX], **search_path, **p;
 
+#ifdef DEBUGGING
+   /* Set Debugging flags. */
+   memset( debug_flags , 0, DEBUG_FLAGS_MAX );
+#endif /* DEBUGGING */
+
    env_detect( argc, argv );
 
    log_init();

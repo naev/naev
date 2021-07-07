@@ -26,6 +26,7 @@
 #include "camera.h"
 #include "damagetype.h"
 #include "debris.h"
+#include "debug.h"
 #include "escort.h"
 #include "explosion.h"
 #include "faction.h"
@@ -1782,13 +1783,40 @@ void pilot_render( Pilot* p, const double dt )
          scalew, scaleh,
          p->tsx, p->tsy, &c );
 
+#ifdef DEBUGGING
+   double dircos, dirsin, x, y;
+   Vector2d v;
+   dircos = cos(p->solid->dir);
+   dirsin = sin(p->solid->dir);
+#endif /* DEBUGGING */
+
    /* Re-draw backwards trails. */
-   for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
+   for (i=g=0; g<array_size(p->ship->trail_emitters); g++){
+
+#ifdef DEBUGGING
+      if (debug_isFlag(MARK_EMITTER)) {
+         /* Visualize the trail emitters. */
+         v.x = p->ship->trail_emitters[g].x_engine * dircos -
+              p->ship->trail_emitters[g].y_engine * dirsin;
+         v.y = p->ship->trail_emitters[g].x_engine * dirsin +
+              p->ship->trail_emitters[g].y_engine * dircos +
+              p->ship->trail_emitters[g].h_engine;
+
+         gl_gameToScreenCoords( &x, &y, p->solid->pos.x + v.x,
+                                p->solid->pos.y + v.y*M_SQRT1_2 );
+         if (p->ship->trail_emitters[i].trail_spec->nebula)
+            gl_renderCross(x, y, 2, &cFontBlue);
+         else
+            gl_renderCross(x, y, 4, &cInert);
+      }
+#endif /* DEBUGGING */
+
       if (pilot_trail_generated( p, g )) {
          if (p->trail[i]->ontop)
             spfx_trail_draw( p->trail[i] );
          i++;
       }
+   }
 
 }
 

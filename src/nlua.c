@@ -583,6 +583,7 @@ int nlua_loadStandard( nlua_env env )
    r |= nlua_loadShiplog(env);
    r |= nlua_loadFile(env);
    r |= nlua_loadData(env);
+   r |= nlua_loadDebug(env);
 
    return r;
 }
