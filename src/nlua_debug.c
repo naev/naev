@@ -21,9 +21,9 @@
 
 /* Debug metatable methods. */
 
-static int debugL_dispEmitters( lua_State *L );
+static int debugL_showEmitters( lua_State *L );
 static const luaL_Reg debugL_methods[] = {
-   { "dispEmitters", debugL_dispEmitters },
+   { "showEmitters", debugL_showEmitters },
    {0,0}
 }; /**< Debug metatable methods. */
 
@@ -46,13 +46,13 @@ int nlua_loadDebug( nlua_env env )
 /**
  * @brief Toggles the emitter marker.
  *
- * @usage dispEmitters() -- Trail emitters are marked with crosses.
- * @usage dispEmitters(false) -- Remove the markers.
+ * @usage showEmitters() -- Trail emitters are marked with crosses.
+ * @usage showEmitters(false) -- Remove the markers.
  *
  *    @luatparam[opt=true] boolean state Whether to set or unset markers.
- * @luafunc dispEmitters
+ * @luafunc showEmitters
  */
-static int debugL_dispEmitters( lua_State *L )
+static int debugL_showEmitters( lua_State *L )
 {
    int state;
 
@@ -64,11 +64,11 @@ static int debugL_dispEmitters( lua_State *L )
    else
       state = 1;
 
-   /* Set as hostile. */
+   /* Toggle the markers. */
    if (state)
-      debug_setFlag(MARK_EMITTER);
+      debug_setFlag(DEBUG_MARK_EMITTER);
    else
-      debug_rmFlag(MARK_EMITTER);
+      debug_rmFlag(DEBUG_MARK_EMITTER);
 
    return 0;
 }

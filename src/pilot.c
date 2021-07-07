@@ -1794,7 +1794,7 @@ void pilot_render( Pilot* p, const double dt )
    for (i=g=0; g<array_size(p->ship->trail_emitters); g++){
 
 #ifdef DEBUGGING
-      if (debug_isFlag(MARK_EMITTER)) {
+      if (debug_isFlag(DEBUG_MARK_EMITTER)) {
          /* Visualize the trail emitters. */
          v.x = p->ship->trail_emitters[g].x_engine * dircos -
               p->ship->trail_emitters[g].y_engine * dirsin;

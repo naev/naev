@@ -18,7 +18,7 @@ void debug_enableFPUExcept (void);
 #define debug_rmFlag(f)     (debug_flags[f] = 0) /**< Removes flag f. */
 
 enum {
-   MARK_EMITTER,        /**< Mark the trail emitters with a cross. */
+   DEBUG_MARK_EMITTER,        /**< Mark the trail emitters with a cross. */
 
    /* Sentinel. */
    DEBUG_FLAGS_MAX      /**< Maximum number of flags. */

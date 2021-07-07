@@ -902,7 +902,7 @@ static void equipment_renderShip( double bx, double by,
          px, py, sx, sy, pw, ph, NULL );
 
 #ifdef DEBUGGING
-   if (debug_isFlag(MARK_EMITTER)) {
+   if (debug_isFlag(DEBUG_MARK_EMITTER)) {
       /* Visualize the trail emitters. */
       double dircos, dirsin;
       int i;
