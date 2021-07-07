@@ -55,6 +55,12 @@ Royalty: %.1f%% of mission earnings
 Money: %s
 Current total royalties: %.1f%% of mission earnings]])
 
+description = _([[This pilot seems to be looking for work.
+
+Ship: %s
+Deposit: %s
+Royalty: %.1f%% of mission earnings]])
+
 pilot_action_text = _([[Would you like to do something with this pilot?
 
 Pilot credentials:]])
@@ -145,8 +151,9 @@ function createPilotNPCs ()
          newpilot.faction = fac:name()
          newpilot.approachtext = npctext[rnd.rnd(1, #npctext)]
          local id = evt.npcAdd(
-               "approachPilot", _("Pilot for Hire"), newpilot.portrait,
-               _("This pilot seems to be looking for work."), 9 )
+            "approachPilot", _("Pilot for Hire"), newpilot.portrait,
+            string.format(description, newpilot.ship, creditstring(newpilot.deposit), newpilot.royalty), 9 )
+
          npcs[id] = newpilot
       end
    end
