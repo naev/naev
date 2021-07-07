@@ -4,19 +4,27 @@
   <radius>10000.000000</radius>
   <stars>400</stars>
   <interference>26.000000</interference>
-  <nebula volatility="77.000000" hue="305.000000">500.000000</nebula>
+  <nebula volatility="157.000000" hue="310.000000">700.000000</nebula>
  </general>
  <pos>
-  <x>791.767875</x>
-  <y>256.561600</y>
+  <x>726.181455</x>
+  <y>277.780736</y>
  </pos>
  <assets/>
  <jumps>
+  <jump target="Rauthia">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Rotide">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Tobanna">
+  <jump target="Seport">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Tide">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

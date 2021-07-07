@@ -12,9 +12,9 @@
  </pos>
  <assets/>
  <jumps>
-  <jump target="Rotide">
+  <jump target="Antares">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Sol">
    <autopos/>
