@@ -55,6 +55,10 @@ missionlist = {}
 
 
 function create ()
+    local nebu_dens, nebu_vol = system.cur():nebula()
+    if nebu_vol > 0 then
+      evt.finish()
+    end
 
     -- Get the derelict's ship.
     r = rnd.rnd()
