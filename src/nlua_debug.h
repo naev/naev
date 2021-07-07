@@ -6,13 +6,6 @@
 #ifndef NLUA_DEBUG_H
 #  define NLUA_DEBUG_H
 
-
-/** @cond */
-//#include <lua.h>
-/** @endcond */
-
-//#include "debug.h"
-
 #include "nlua.h"
 
 /*

@@ -46,8 +46,8 @@ int nlua_loadDebug( nlua_env env )
 /**
  * @brief Toggles the emitter marker.
  *
- * @usage showEmitters() -- Trail emitters are marked with crosses.
- * @usage showEmitters(false) -- Remove the markers.
+ * @usage debug.showEmitters() -- Trail emitters are marked with crosses.
+ * @usage debug.showEmitters(false) -- Remove the markers.
  *
  *    @luatparam[opt=true] boolean state Whether to set or unset markers.
  * @luafunc showEmitters
