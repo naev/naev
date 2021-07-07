@@ -9,7 +9,7 @@
  <price>10000000</price>
  <time_mod>2</time_mod>
  <trail_generator x="-50" y="30" h="0">zalek</trail_generator>
- <trail_generator x="-60" y="-25" h="-20">zalek</trail_generator>
+ <trail_generator x="-60" y="-25" h="-20" always_under="1" >zalek</trail_generator>
  <trail_generator x="45" y="25" h="20">zalek</trail_generator>
  <trail_generator x="45" y="-30" h="0">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>

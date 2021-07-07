@@ -10,10 +10,10 @@
  <time_mod>1.25</time_mod>
  <trail_generator x="-11" y="33" h="-2" >nebula</trail_generator>
  <trail_generator x="-11" y="-33" h="-2" >nebula</trail_generator>
- <trail_generator x="-25" y="5" h="5" />
- <trail_generator x="-25" y="-5" h="5" />
- <trail_generator x="-25" y="5" h="-5" />
- <trail_generator x="-25" y="-5" h="-5" />
+ <trail_generator x="-20" y="5" h="5" />
+ <trail_generator x="-20" y="-5" h="5" />
+ <trail_generator x="-20" y="5" h="-5" always_under="1" />
+ <trail_generator x="-20" y="-5" h="-5" always_under="1" />
  <fabricator>Nexus Shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>This military grade version of the Admonisher is mostly identical in function to a standard Admonisher, but with slightly better armour, shields, and heat dissipation.</description>

@@ -8,8 +8,8 @@
  <class>Fighter</class>
  <price>290000</price>
  <time_mod>0.875</time_mod>
- <trail_generator x="-7" y="9" h="-9" />
- <trail_generator x="-7" y="-9" h="-9" />
+ <trail_generator x="-7" y="9" h="-9" always_under="1" />
+ <trail_generator x="-7" y="-9" h="-9" always_under="1" />
  <trail_generator x="-7" y="0" h="13" />
  <fabricator>Proteron</fabricator>
  <license>Light Combat Vessel License</license>
