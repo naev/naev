@@ -463,7 +463,7 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *
  * Asteroids
  */
 void asteroid_hit( Asteroid *a, const Damage *dmg );
-int space_isInField ( Vector2d *p );
+int space_isInField ( const Vector2d *p );
 AsteroidType *space_getType ( int ID );
 
 

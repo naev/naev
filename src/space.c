@@ -4108,7 +4108,7 @@ void space_reconstructPresences( void )
  *    @param p pointer to the position.
  *    @return -1 If false; index of the field otherwise.
  */
-int space_isInField ( Vector2d *p )
+int space_isInField( const Vector2d *p )
 {
    int i;
    AsteroidAnchor *a;
