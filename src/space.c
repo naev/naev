@@ -4308,5 +4308,5 @@ double space_interference( const StarSystem *sys )
 {
    if (sys==NULL)
       sys = cur_system;
-   return 800. / (cur_system->interference + 800.);
+   return 800. / (sys->interference + 800.);
 }
