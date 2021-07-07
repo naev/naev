@@ -11,6 +11,8 @@
  <trail_generator x="-30" y="9" h="-5" />
  <trail_generator x="-30" y="-9" h="-5" />
  <trail_generator x="-30" y="0" h="10" />
+ <trail_generator x="-20" y="-20" h="10" >nebula</trail_generator>
+ <trail_generator x="-20" y="20" h="10" >nebula</trail_generator>
  <fabricator>Thurion shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>...</description>

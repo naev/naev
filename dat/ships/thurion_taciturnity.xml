@@ -6,6 +6,9 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <trail_generator x="-20" y="0" h="0" />
+ <trail_generator x="-7" y="23" h="-13">nebula</trail_generator>
+ <trail_generator x="-7" y="-23" h="-13">nebula</trail_generator>
+ <trail_generator x="-7" y="0" h="30">nebula</trail_generator>
  <class>Armoured Transport</class>
  <price>1600000</price>
  <time_mod>1.25</time_mod>
