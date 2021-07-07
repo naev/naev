@@ -548,19 +548,19 @@ static int linoptL_solve( lua_State *L )
  *
  *    @luatparam LinOpt lp Linear program to write.
  *    @luatparam string fname Path to write the program to.
- *    @luatparam[opt=false] boolean mps_format Whether to write the program in MPS format instead of GLPK format.
+ *    @luatparam[opt=false] boolean glpk_format Whether to write the program in GLPK format instead of MPS format.
  * @luafunc write_problem
  */
 static int linoptL_writeProblem( lua_State *L )
 {
    LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
    const char *fname = luaL_checkstring(L,2);
-   int mps_format    = lua_toboolean(L,3);
+   int glpk_format   = lua_toboolean(L,3);
    int ret;
-   if (mps_format)
-      ret = glp_write_mps(  lp->prob, GLP_MPS_FILE, NULL, fname );
-   else
+   if (glpk_format)
       ret = glp_write_prob( lp->prob, 0, fname );
+   else
+      ret = glp_write_mps(  lp->prob, GLP_MPS_FILE, NULL, fname );
    lua_pushboolean( L, ret==0 );
    return 1;
 }
