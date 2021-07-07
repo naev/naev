@@ -1768,6 +1768,7 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
    f->env         = LUA_NOREF;
    f->sched_env   = LUA_NOREF;
    f->flags       = FACTION_STATIC | FACTION_INVISIBLE | FACTION_DYNAMIC | FACTION_KNOWN;
+   faction_addStandingScript( f, "static" );
    if (base>=0) {
       bf = &faction_stack[base];
 
