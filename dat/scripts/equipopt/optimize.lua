@@ -595,6 +595,10 @@ function optimize.optimize( p, cores, outfit_list, params )
          z, x, constraints = lp:solve()
 
          if not z then
+            if nebu_vol > 0 then
+               -- Assume we couldn't equip because of Nebula!
+               return false
+            end
             -- Maybe should be error instead?
             warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
             print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )

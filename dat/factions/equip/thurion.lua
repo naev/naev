@@ -5,5 +5,5 @@ local equipopt = require 'equipopt'
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   return equipopt.thurion( p )
+   equipopt.thurion( p )
 end

@@ -83,7 +83,7 @@ function create ( max )
     weights[ spawn_patrol  ] = 100
     weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
     weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
-   
+
    -- Create spawn table base on weights
    spawn_table = scom.createSpawnTable( weights )
 
@@ -102,10 +102,26 @@ function spawn ( presence, max )
    if presence > max then
       return 5
    end
-  
+
    -- Actually spawn the pilots
    pilots = scom.spawn( spawn_data, "Thurion" )
-   
+
+   -- Make sure they don't die because of nebula
+   local nebu_dens, nebu_vol = system.cur():nebula()
+   if nebu_vol > 0 then
+      local new_pilots = {}
+      for i, s in ipairs(pilots) do
+         local dmg = 0.15 * nebu_vol * s.pilot:shipstat().nebu_absorb_shield
+         if s.pilot:stats().shield_regen >= 0.15*nebu_vol then
+            table.insert( new_pilots, s )
+         else
+            s.pilot:rm()
+         end
+      end
+      pilots = new_pilots
+   end
+
+   -- Unknown until known
    if not faction.get("Thurion"):known() then
       for i, s in ipairs( pilots ) do
          s.pilot:rename(_("Unknown"))
