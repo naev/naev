@@ -386,7 +386,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       -- Compute goodness
       oo.goodness = goodness_override[oo.name]
       if oo.goodness then
-         oo.goodness = params.constant + (params.prefer[oo.name] or 1) * oo.goodness
+         oo.goodness = (params.prefer[oo.name] or 1) * (params.constant +  oo.goodness)
       else
          oo.goodness = params.goodness( oo, params )
       end
