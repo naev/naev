@@ -72,6 +72,7 @@ local function equip_thurion( p, opt_params )
    local params = eparams.choose( p )
    -- Prefer to use the Thurion utilities
    params.prefer["Nebula Resistant Coating"] = 100
+   params.max_same_util = 3
    params.max_same_stru = 3
    params.max_same_weap = 3
    params.max_mass = 0.95 + 0.1*rnd.rnd()
