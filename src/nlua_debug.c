@@ -8,6 +8,7 @@
  * @brief Handles the Lua debug bindings.
  *
  * These bindings control the debug flags.
+ * @luamod debug
  */
 
 /** @cond */
