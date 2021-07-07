@@ -1,6 +1,5 @@
 po/credits.pot
 dat/assets/abacus.xml
-dat/assets/abandoned_station.xml
 dat/assets/adham.xml
 dat/assets/adius.xml
 dat/assets/adrian.xml
@@ -714,7 +713,6 @@ dat/assets/passir.xml
 dat/assets/pastor_ii.xml
 dat/assets/pastor_iix.xml
 dat/assets/pastor_vi.xml
-dat/assets/paul_2.xml
 dat/assets/pauldur.xml
 dat/assets/paxadon.xml
 dat/assets/paxsor.xml
@@ -804,14 +802,12 @@ dat/assets/regensburg.xml
 dat/assets/rei_ii.xml
 dat/assets/rei_iii.xml
 dat/assets/reidd.xml
-dat/assets/rein.xml
 dat/assets/rhaana.xml
 dat/assets/rhu_ii.xml
 dat/assets/rhu_iii.xml
 dat/assets/rhu_iv.xml
 dat/assets/ridrack.xml
 dat/assets/rikaina.xml
-dat/assets/rin.xml
 dat/assets/rionna.xml
 dat/assets/riun.xml
 dat/assets/rocker.xml
@@ -983,7 +979,6 @@ dat/assets/tartarus.xml
 dat/assets/tau_prime.xml
 dat/assets/tau_secundus.xml
 dat/assets/tau_station.xml
-dat/assets/tein.xml
 dat/assets/telika_ii.xml
 dat/assets/telika_iii.xml
 dat/assets/telika_station.xml
@@ -1800,7 +1795,6 @@ dat/ssys/c59.xml
 dat/ssys/capricorn.xml
 dat/ssys/castellan.xml
 dat/ssys/cerberus.xml
-dat/ssys/cherokee.xml
 dat/ssys/chloe.xml
 dat/ssys/chraan.xml
 dat/ssys/churchill.xml
@@ -1900,7 +1894,6 @@ dat/ssys/hystera.xml
 dat/ssys/infinity.xml
 dat/ssys/ingot.xml
 dat/ssys/iris.xml
-dat/ssys/iroquois.xml
 dat/ssys/jackson.xml
 dat/ssys/jade.xml
 dat/ssys/jervis.xml
@@ -1942,7 +1935,6 @@ dat/ssys/millstone.xml
 dat/ssys/mirror.xml
 dat/ssys/mizar.xml
 dat/ssys/modus_manis.xml
-dat/ssys/mohawk.xml
 dat/ssys/monogram.xml
 dat/ssys/moor.xml
 dat/ssys/moordra.xml
@@ -1954,7 +1946,6 @@ dat/ssys/narousse.xml
 dat/ssys/nartur.xml
 dat/ssys/nasona.xml
 dat/ssys/nava.xml
-dat/ssys/navajo.xml
 dat/ssys/neexi.xml
 dat/ssys/neon.xml
 dat/ssys/new_haven.xml
@@ -2040,7 +2031,6 @@ dat/ssys/shikima.xml
 dat/ssys/shinnok.xml
 dat/ssys/sigur.xml
 dat/ssys/sikh.xml
-dat/ssys/sioux.xml
 dat/ssys/sirou.xml
 dat/ssys/slaccid.xml
 dat/ssys/sleuth.xml
@@ -2081,7 +2071,6 @@ dat/ssys/tide.xml
 dat/ssys/titus.xml
 dat/ssys/toaxis.xml
 dat/ssys/tobanna.xml
-dat/ssys/todo_traders_here.xml
 dat/ssys/tomas.xml
 dat/ssys/torg.xml
 dat/ssys/tormulex.xml
