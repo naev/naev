@@ -77,7 +77,7 @@ function land()
     if planet.cur():faction() == faction.get("Dvaered") then
         if var.peek("flfbase_flfshipkilled") then
             tk.msg(title[2], text[2] .. text[3] .. text[5])
-            player.pay(100000) -- 100K
+            player.pay(100e3)
         else
             tk.msg(title[2], text[2] .. text[4] .. text[5])
         end

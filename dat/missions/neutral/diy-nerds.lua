@@ -31,7 +31,7 @@ bar_desc = _("You see a bunch of guys and gals, excitedly whispering over some p
 
 -- Mission details.
 misn_title = _("DIY Nerds")
-misn_reward = creditstring(20000) -- 20K
+misn_reward = creditstring(20e3)
 misn_desc = _("Cart some nerds to their contest, and back.")
 
 title = {}

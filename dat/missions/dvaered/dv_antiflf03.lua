@@ -212,7 +212,7 @@ function land()
         tk.msg(title[3], text[6])
         dv_modReputation( 5 )
         faction.get("Dvaered"):modPlayerSingle(10)
-        player.pay(1000000) -- 1M
+        player.pay(1e6)
         player.addOutfit("Star of Valor")
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")

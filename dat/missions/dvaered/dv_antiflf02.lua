@@ -166,7 +166,7 @@ function land()
         tk.msg(title[6], text[6])
         var.push("flfbase_intro", 3)
         faction.get("Dvaered"):modPlayerSingle(5)
-        player.pay(700000) -- 700K
+        player.pay(700e3)
         dv_addAntiFLFLog( log_text )
         misn.finish(true)
     end

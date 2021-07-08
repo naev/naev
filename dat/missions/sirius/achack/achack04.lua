@@ -101,7 +101,7 @@ osd_msg["__save"] = true
 
 misn_desc = _("Joanne has contacted you. She wants to meet you on %s (%s).")
 misn_desc2 = _("Joanne wants you to find Harja and convince him to meet her in person.")
-misn_reward = creditstring(1500000) -- 1.5M
+misn_reward = creditstring(1.5e6)
 
 log_text = _([[You were hired by Joanne to deliver an invitation to Harja to talk with her. He agreed on the condition that you first deal with associates of his that were coming after him. When Joanne and Harja met, they came to an agreement that neither of them were responsible for the hack of the High Academy main computer which was the source of their feud. Joanne said that she will probably call for you again when she's figured out how to proceed.]])
 
@@ -141,7 +141,7 @@ function land()
    elseif planet.cur() == startplanet and stage == stages.finish then
       tk.msg(title7, text8:format(player.name()))
       tk.msg(title7, text9:format(player.name()))
-      player.pay(1500000) -- 1.5M
+      player.pay(1.5e6)
       var.pop("achack04repeat")
       srs_addAcHackLog( log_text )
       misn.finish(true)

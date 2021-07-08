@@ -93,8 +93,8 @@ function create()
     -- mission variables
     homeworld, homeworld_sys = planet.get("Jorla")
     dest_planet, dest_sys = planet.get("Neo Pomerania")
-    lab_coat_price = 25000 -- 25K
-    glasses_price = 40000 -- 40K
+    lab_coat_price = 25e3
+    glasses_price = 40e3
     local numjumps = homeworld_sys:jumpDist(dest_sys, false)
     local traveldist = cargo_calculateDistance(homeworld_sys, homeworld:pos(), dest_sys, dest_planet)
     local stuperpx   = 0.225

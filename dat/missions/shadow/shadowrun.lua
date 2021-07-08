@@ -142,7 +142,7 @@ function create ()
     if not misn.claim( {sys, sys2} ) then
     end
 
-    credits = 400000 -- 400K
+    credits = 400e3
     -- Developer note: changing these numbers may have consequences for translators (if we support more languages later on).
     timelimit1 = 20 -- In STP
     timelimit2 = 50 -- In STP
