@@ -99,6 +99,7 @@ static void faction_sanitizePlayer( Faction* faction );
 static void faction_modPlayerLua( int f, double mod, const char *source, int secondary );
 static int faction_parse( Faction* temp, xmlNodePtr parent );
 static void faction_parseSocial( xmlNodePtr parent );
+static void faction_addStandingScript( Faction* temp, const char* scriptname );
 /* externed */
 int pfaction_save( xmlTextWriterPtr writer );
 int pfaction_load( xmlNodePtr parent );
@@ -1299,19 +1300,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "standing")) {
          if (temp->env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'standing' tag."), temp->name);
-         snprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", xml_raw(node) );
-         temp->env = nlua_newEnv(1);
-         nlua_loadStandard( temp->env );
-         dat = ndata_read( buf, &ndat );
-         if (nlua_dobufenv(temp->env, dat, ndat, buf) != 0) {
-            WARN(_("Failed to run standing script: %s\n"
-                  "%s\n"
-                  "Most likely Lua file has improper syntax, please check"),
-                  buf, lua_tostring(naevL,-1));
-            nlua_freeEnv( temp->env );
-            temp->env = LUA_NOREF;
-         }
-         free(dat);
+         faction_addStandingScript( temp, xml_raw(node) );
          continue;
       }
 
@@ -1372,6 +1361,32 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       WARN(_("Faction '%s' has no Lua and isn't static!"), temp->name);
 
    return 0;
+}
+
+
+/**
+ * @brief Sets up a standing script for a faction.
+ *
+ *    @param temp Faction to associate the script to.
+ *    @param scriptname Name of the lua script to use (e.g., "static").
+ */
+static void faction_addStandingScript( Faction* temp, const char* scriptname ) {
+   char buf[PATH_MAX], *dat;
+   size_t ndat;
+
+   snprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", scriptname );
+   temp->env = nlua_newEnv(1);
+   nlua_loadStandard( temp->env );
+   dat = ndata_read( buf, &ndat );
+   if (nlua_dobufenv(temp->env, dat, ndat, buf) != 0) {
+      WARN(_("Failed to run standing script: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check"),
+            buf, lua_tostring(naevL,-1));
+      nlua_freeEnv( temp->env );
+      temp->env = LUA_NOREF;
+   }
+   free(dat);
 }
 
 
@@ -1753,6 +1768,7 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
    f->env         = LUA_NOREF;
    f->sched_env   = LUA_NOREF;
    f->flags       = FACTION_STATIC | FACTION_INVISIBLE | FACTION_DYNAMIC | FACTION_KNOWN;
+   faction_addStandingScript( f, "static" );
    if (base>=0) {
       bf = &faction_stack[base];
 
