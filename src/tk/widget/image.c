@@ -20,7 +20,7 @@ static void img_freeLayers( Widget* img );
  * @brief Adds an image widget to the window.
  *
  * Position origin is 0,0 at bottom left.  If you use negative X or Y
- *  positions.  They actually count from the opposite side in.
+ *  positions. They actually count from the opposite side in.
  *
  *    @param wid ID of the window to add the widget to.
  *    @param x X position within the window to use.
@@ -81,12 +81,12 @@ static void img_render( Widget* img, double bx, double by )
     * image
     */
    if (img->dat.img.image != NULL) {
-      gl_blitScale( img->dat.img.image, x, y,
+      gl_blitScaleAspect( img->dat.img.image, x, y,
             w, h, &img->dat.img.colour );
    }
    /* Additional layers. */
    for (i=0; i<img->dat.img.nlayers; i++) {
-      gl_blitScale( img->dat.img.layers[i], x, y,
+      gl_blitScaleAspect( img->dat.img.layers[i], x, y,
             w, h, &img->dat.img.colour );
    }
 

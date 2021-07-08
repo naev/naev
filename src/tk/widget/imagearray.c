@@ -225,14 +225,14 @@ static void iar_render( Widget* iar, double bx, double by )
 
          /* image */
          if (iar->dat.iar.images[pos].image != NULL)
-            gl_blitScale( iar->dat.iar.images[pos].image,
+            gl_blitScaleAspect( iar->dat.iar.images[pos].image,
                   xcurs + 5., ycurs + gl_smallFont.h + 7.,
                   iar->dat.iar.iw, iar->dat.iar.ih, NULL );
 
          /* layers */
          for (k=0; k<iar->dat.iar.images[pos].nlayers; k++)
             if (iar->dat.iar.images[pos].layers[k] != NULL)
-               gl_blitScale( iar->dat.iar.images[pos].layers[k],
+               gl_blitScaleAspect( iar->dat.iar.images[pos].layers[k],
                      xcurs + 5., ycurs + gl_smallFont.h + 7.,
                      iar->dat.iar.iw, iar->dat.iar.ih, NULL );
 
