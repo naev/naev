@@ -2,6 +2,7 @@ local optimize = require 'equipopt.optimize'
 local mt = require 'merge_tables'
 local eoutfits = require 'equipopt.outfits'
 local eparams = require 'equipopt.params'
+local ecores = require 'equipopt.cores'
 
 local empire_outfits = eoutfits.merge{{
    -- Heavy Weapons
