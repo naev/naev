@@ -12,7 +12,6 @@
   <limit>hullcoat</limit>
  </general>
  <specific type="modification">
-  <nebu_absorb_shield>20</nebu_absorb_shield>
-  <nebu_absorb_armour>60</nebu_absorb_armour>
+  <nebu_absorb>25</nebu_absorb>
  </specific>
 </outfit>

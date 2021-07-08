@@ -167,8 +167,7 @@ static const ShipStatsLookup ss_lookup[] = {
 
    P__ELEM( SS_TYPE_P_ABSORB,             absorb,              gettext_noop("Damage Absorption") ),
 
-   P__ELEM( SS_TYPE_P_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   gettext_noop("Nebula Resistance (Shield)") ),
-   P__ELEM( SS_TYPE_P_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   gettext_noop("Nebula Resistance (Armour)") ),
+   P__ELEM( SS_TYPE_P_NEBULA_ABSORB,      nebu_absorb,         gettext_noop("Nebula Resistance") ),
 
    I__ELEM( SS_TYPE_I_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, gettext_noop("Hidden Jump Detection") ),
    I__ELEM( SS_TYPE_I_FUEL,               fuel, gettext_noop("Fuel") ),

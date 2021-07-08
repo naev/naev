@@ -11,7 +11,7 @@
   <description>A modification to the ship's shields that allows them to resist nebular volatility.</description>
  </general>
  <specific type="modification">
-  <nebu_absorb_shield>40</nebu_absorb_shield>
+  <nebu_absorb>40</nebu_absorb>
   <energy_regen_malus>20</energy_regen_malus>
  </specific>
 </outfit>

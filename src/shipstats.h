@@ -123,8 +123,7 @@ typedef enum ShipStatsType_ {
     */
    SS_TYPE_P_ABSORB,            /**< Damage absorption. */
    /* Nebula. */
-   SS_TYPE_P_NEBULA_ABSORB_SHIELD, /**< Shield nebula resistance. */
-   SS_TYPE_P_NEBULA_ABSORB_ARMOUR, /**< Armour nebula resistance. */
+   SS_TYPE_P_NEBULA_ABSORB,     /**< Nebula resistance. */
 
    /*
     * I: Integer type data. Should be continuous.
@@ -275,8 +274,7 @@ typedef struct ShipStats_ {
    double engine_limit;     /**< Engine limit. */
 
    /* Misc. */
-   double nebu_absorb_shield; /**< Shield nebula resistance. */
-   double nebu_absorb_armour; /**< Armour nebula resistance. */
+   double nebu_absorb;     /**< Shield nebula resistance. */
    int misc_instant_jump;    /**< Do not require brake or chargeup to jump. */
    int misc_reverse_thrust;  /**< Slows down the ship instead of turning it around. */
    int misc_asteroid_scan;   /**< Able to scan asteroids. */

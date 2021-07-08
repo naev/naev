@@ -111,7 +111,7 @@ function spawn ( presence, max )
    if nebu_vol > 0 then
       local new_pilots = {}
       for i, s in ipairs(pilots) do
-         local dmg = nebu_vol * (1-s.pilot:shipstat("nebu_absorb_shield",true))
+         local dmg = nebu_vol * (1-s.pilot:shipstat("nebu_absorb",true))
          if s.pilot:stats().shield_regen > dmg then
             table.insert( new_pilots, s )
          else

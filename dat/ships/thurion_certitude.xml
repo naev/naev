@@ -58,7 +58,6 @@
   <heat_dissipation>10</heat_dissipation>
   <ew_hide>30</ew_hide>
   <misc_instant_jump>1</misc_instant_jump>
-  <nebu_absorb_shield>15</nebu_absorb_shield>
-  <nebu_absorb_armour>15</nebu_absorb_armour>
+  <nebu_absorb>15</nebu_absorb>
  </stats>
 </ship>
