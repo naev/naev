@@ -59,13 +59,13 @@ function create()
    if destplanet == nil or destplanet:faction() == faction.get("Pirate") then
       misn.finish(false)
    end
-   
+
    -- Choose reward
    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    jumpreward = 2000
    distreward = 0.40
    reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
-  
+
    misn.setNPC( givername, giverportrait, _("You see a nervous looking individual that seems to be sweating profusely.") )
 end
 
@@ -157,7 +157,7 @@ function land()
    if planet.cur() ~= destplanet then
       return
    end
-     
+
    vn.clear()
    vn.scene()
    local b = vn.newCharacter( receivername, { image=receiverimage } )

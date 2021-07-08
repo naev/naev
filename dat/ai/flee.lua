@@ -27,7 +27,7 @@ function control ()
       else
          ai.pushtask("hyperspace" )
       end
-   
+
    elseif task == "runaway" then
       target = ai.taskdata()
 

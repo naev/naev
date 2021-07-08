@@ -152,14 +152,14 @@ function create()
    if numjumps > jumpsperstop then
       timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
    end
-   
+
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
-   amount    = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
+   amount    = rnd.rnd(10 + 3 * tier, 20 + 4 * tier)
    jumpreward = 2000
    distreward = 0.40
    reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
-   
+
    misn.setTitle( string.format(
       _("PIRACY: Smuggle %s of %s"), tonnestring(amount),
       _(cargo) ) )

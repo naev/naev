@@ -5,22 +5,22 @@
 -- The following example gets a random Sirius M class planet between 1 to 6 jumps away.
 --
 -- @code
--- local planets = {} 
+-- local planets = {}
 -- getsysatdistance( system.cur(), 1, 6,
 --     function(s)
 --         for i, v in ipairs(s:planets()) do
 --             if v:faction() == faction.get("Sirius") and v:class() == "M" then
 --                 return true
 --             end
---         end 
+--         end
 --         return false
 --     end )
--- 
+--
 -- if #planets == 0 then abort() end -- In case no suitable planets are in range.
--- 
+--
 -- local index = rnd.rnd(1, #planets)
 -- destplanet = planets[index][1]
--- destsys = planets[index][2]     
+-- destsys = planets[index][2]
 -- @endcode
 --
 --    @param sys System to calculate distance from or nil to use current system

@@ -53,7 +53,7 @@ log_text = _([[You assassinated some of the shifty merchant's competition and we
 
 
 function create ()
-   -- Note: this mission does not make any system claims. 
+   -- Note: this mission does not make any system claims.
    targetsystem = system.get("Delta Pavonis") -- Find target system
 
    -- Spaceport bar stuff

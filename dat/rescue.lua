@@ -359,7 +359,7 @@ function removeNonCores( slottype )
       end
    end
 end
- 
+
 
 -- Replace all cores with the ship's defaults.
 function removeEquipDefaults()

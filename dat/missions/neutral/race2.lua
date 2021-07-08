@@ -22,14 +22,14 @@
 
 require "numstring"
 
-   
+
 text = {}
 title = {}
 ftitle = {}
 ftext = {}
 
 title[1] = _("Another race")
-text[1] = _([["Hey there, great to see you back! You want to have another race?"]])   
+text[1] = _([["Hey there, great to see you back! You want to have another race?"]])
 
 title[5] = _("Choose difficulty")
 text[5] = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s, and the hard one has a prize of %s. Which one do you want to do?"]])
@@ -62,7 +62,7 @@ ftext[2] = _([["Because you left the race, you have been disqualified."]])
 ftitle[3] = _("You failed to win the race.")
 ftext[3] = _([[As you congratulate the winner on a great race, the laid back person comes up to you.
    "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
-   
+
 ftitle[4] = _("Illegal ship!")
 ftext[4] = _([["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]])
 
@@ -93,7 +93,7 @@ landmsg = _("%s just landed at %s and finished the race")
 
 
 function create ()
-   
+
    this_planet, this_system = planet.cur()
    missys = {this_system}
    if not misn.claim(missys) then
@@ -143,7 +143,7 @@ function takeoff()
       end
    end
    planetvec = planet.pos(curplanet)
-   misn.osdActive(1) 
+   misn.osdActive(1)
    checkpoint = {}
    racers = {}
    pilot.toggleSpawn(false)
@@ -183,7 +183,7 @@ function takeoff()
       for i in pairs(racers) do
          racers[i]:rmOutfit("all")
          racers[i]:rmOutfit("cores")
-         
+
          racers[i]:addOutfit("Unicorp PT-16 Core System")
          racers[i]:addOutfit("Unicorp D-2 Light Plating")
          local en_choices = {
@@ -205,7 +205,7 @@ function takeoff()
    countdown = 5 -- seconds
    omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
    counting = true
-   counterhook = hook.timer(1000, "counter")    
+   counterhook = hook.timer(1000, "counter")
    hook.board("board")
    hook.jumpin("jumpin")
    hook.land("land")
@@ -230,7 +230,7 @@ function counter()
       player.msg(marketing)
       else
       player.omsgChange(omsg, timermsg:format(countdown), 0)
-      counterhook = hook.timer(1000, "counter")    
+      counterhook = hook.timer(1000, "counter")
    end
 end
 
@@ -294,7 +294,7 @@ function board(ship)
          break
       end
    end
-   player.unboard()       
+   player.unboard()
 end
 
 function jumpin()

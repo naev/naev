@@ -60,18 +60,18 @@ articles=
 function create ()
     pilot.clear()
     pilot.toggleSpawn(false)
-    
+
     flfguys = {}
     dvaeredguys = {}
     flfwave = 1
-    dvaeredwave = 1    
-    
+    dvaeredwave = 1
+
     hook.timer(3000, "FLFSpawn")
-    
+
     hook.timer(12000, "DvaeredSpawn")
 
     news.add(articles)
-    
+
     hook.jumpout("leave")
     hook.land("leave")
 end
@@ -87,7 +87,7 @@ function FLFSpawn ()
     flfguys[flfwave][5] = pilot.add( "Pacifier", "FLF", source_system, _("FLF Pacifier") )
     flfguys[flfwave][6] = pilot.add( "Lancelot", "FLF", source_system, _("FLF Lancelot") )
     flfguys[flfwave][7] = pilot.add( "Lancelot", "FLF", source_system, _("FLF Lancelot") )
-    
+
     flfwave = flfwave + 1
     if flfwave <=5 then
         hook.timer(1000, "FLFSpawn")
@@ -106,7 +106,7 @@ function DvaeredSpawn ()
     dvaeredguys[dvaeredwave][6] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system )
     dvaeredguys[dvaeredwave][7] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system )
     dvaeredguys[dvaeredwave][8] = pilot.add( "Dvaered Goddard", "Dvaered", source_system )
-    
+
     dvaeredwave = dvaeredwave + 1
     if dvaeredwave <=5 then
         hook.timer(3000, "DvaeredSpawn")

@@ -14,11 +14,11 @@
  </mission>
 --]]
 --[[
-   
+
    Mission: The Substitute Speaker
-   
+
    Description: The player has to impersonate a scientist and give a scientific talk.
-   
+
    Difficulty: Easy
 
 --]]
@@ -102,7 +102,7 @@ function create()
     local stupertakeoff = 10500
     local allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 250 * numjumps
     timelimit  = time.get() + time.create(0, 0, allowance)
-    
+
     -- Spaceport bar stuff
     misn.setNPC(_("Robert"), "zalek/unique/student.webp", bar_desc)
 end
@@ -114,17 +114,17 @@ function accept()
     has_lab_coat = false
     has_glasses = false
     time_left = 4
-    
+
     -- Set up mission information
     misn.setTitle(mtitle)
     misn.setReward(misn_reward)
     misn.setDesc(mdesc:format(dest_planet:name(), dest_sys:name(), timelimit:str()))
     misn_marker = misn.markerAdd(dest_sys, "high")
-    
+
     misn.accept()
     osd_msg[1] = osd_msg1:format(dest_planet:name(), dest_sys:name(), timelimit:str(), (timelimit - time.get()):str())
     misn.osdCreate(osd_title, osd_msg)
-    
+
     hook.land("land")
     hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
 end
@@ -238,14 +238,14 @@ function start_talk()
     end
     tk.msg(talk_title, talk_finished_text)
     c = tk.choice(talk_title, question_text, choice_good_question, choice_open_question, choice_run)
-    
+
     if c == 3 then
         tk.msg(cancel_title, run_text)
         zlk_addNebuResearchLog(log_text:format(dest_planet:name()))
         misn.finish(true)
         return
     end
-    
+
     tk.msg(talk_title, avoid_question_text)
     zlk_addNebuResearchLog(log_text:format(dest_planet:name()))
     faction.modPlayerSingle("Za'lek", 1)

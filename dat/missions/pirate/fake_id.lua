@@ -26,7 +26,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
---]] 
+--]]
 
 require "numstring"
 
@@ -145,7 +145,7 @@ end
 
 function abort ()
    if standhook ~= nil then hook.rm(standhook) end
-   
+
    for i, j in ipairs( factions ) do
       if orig_standing[j] ~= nil then
          if misnvars[j] ~= nil then
@@ -158,7 +158,7 @@ function abort ()
          faction.get(j):setPlayerStanding( orig_standing[j] )
       end
    end
-   
+
    local msg = noticed_offplanet
    if landed then
       local f = planet.cur():faction()

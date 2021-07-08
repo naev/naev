@@ -38,7 +38,7 @@ misn_title[4] = _("Escort a large convoy to %s in %s.")
 misn_title[5] = _("Escort a huge convoy to %s in %s.")
 
 misn_desc = _("A convoy of traders needs protection while they go to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so.")
-   
+
 piracyrisk = {}
 piracyrisk[1] = _("Piracy Risk: None")
 piracyrisk[2] = _("Piracy Risk: Low")
@@ -75,7 +75,7 @@ traderdistress = _("Convoy ships under attack! Requesting immediate assistance!"
 function create()
    --This mission does not make any system claims
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
-   
+
    if destplanet == nil then
       misn.finish(false)
    elseif numjumps == 0 then
@@ -83,7 +83,7 @@ function create()
    elseif avgrisk * numjumps <= 25 then
       misn.finish(false) -- needs to be a little bit of piracy possible along route
    end
-   
+
    if avgrisk == 0 then
       piracyrisk = piracyrisk[1]
    elseif avgrisk <= 25 then
@@ -93,9 +93,9 @@ function create()
    else
       piracyrisk = piracyrisk[4]
    end
-    
+
    convoysize = rnd.rnd(1,5)
-   
+
    -- Choose mission reward.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
    if convoysize == 1 then
@@ -115,7 +115,7 @@ function create()
       distreward = math.log(1000*commodity.price(cargo))/100
    end
    reward = 2.0 * (avgrisk * numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
-   
+
    misn.setTitle( misn_title[convoysize]:format(
       destplanet:name(), destsys:name() ) )
    cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, nil, destplanet, nil, piracyrisk );
@@ -133,16 +133,16 @@ function accept()
    elseif convoysize == 4 then
       convoyname = "Trader Convoy 6"
    elseif convoysize == 5 then
-      convoyname = "Trader Convoy 8"  
+      convoyname = "Trader Convoy 8"
    end
- 
+
    if player.jumps() < numjumps then
       if not tk.yesno( slow[1], slow[2]:format(
             jumpstring(numjumps), jumpstring( player.jumps() ) ) ) then
          misn.finish()
       end
    end
-    
+
    nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
    origin = planet.cur() -- The place where the AI ships spawn from.
 
@@ -283,11 +283,11 @@ function spawnConvoy ()
       ambush = pilot.addFleet( "Trader Ambush 1", ambush_src, {ai="baddie_norun"} )
    elseif convoysize == 2 then
       ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(1,2) ), ambush_src, {ai="baddie_norun"} )
-   elseif convoysize == 3 then                                                                         
+   elseif convoysize == 3 then
       ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(2,3) ), ambush_src, {ai="baddie_norun"} )
-   elseif convoysize == 4 then                                                                         
+   elseif convoysize == 4 then
       ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(2,4) ), ambush_src, {ai="baddie_norun"} )
-   else                                                                                                
+   else
       ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(3,5) ), ambush_src, {ai="baddie_norun"} )
    end
 

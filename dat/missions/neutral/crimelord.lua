@@ -48,7 +48,7 @@ reward_desc = _("A generous compensation") --reward description
 
 function create ()
    targetsystem = system.get("Ogat") --find target system
-   
+
    misn.setNPC( NPC_name, "neutral/unique/hunter.webp", bar_desc) --spawn NPC
 end
 
@@ -58,7 +58,7 @@ function accept ()
          targetsystem:name(), targetsystem:name() ) ) then --if accepted
       misn.finish()
    end
-   
+
    misn.accept()
    reward = 600e3
    tk.msg( title[1], text[1] ) --dialogue 2
@@ -67,25 +67,25 @@ function accept ()
    misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
    misn.markerAdd( targetsystem, "low" )
    misn.osdCreate(title[0], {misn_desc:format(targetsystem:name())})
-   
+
    startsystem = system.cur() --needed to make thugs appear random in the first system
    last_system = system.cur() --ignore this one, it's just the initialization of the variable
-   
+
    hook.enter("enter") --trigger when entering a system
    hook.jumpout("jumpout") --trigger when leaving a system
    hook.land("land") --trigger when landing
-   
+
 end
 
 function enter () --aforementioned triggered function
    hook.timer(4000, "spawnBaddies")
-   
+
    if system.cur() == targetsystem then --when in target system
       local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier", "Hawking", "Kestrel" }
       local jumpin = jump.pos(targetsystem, last_system)
       defenders = addShips( 1, defenderships, "Associates", jumpin ) --add a defending force to help you
       for pilot_number, pilot_object in pairs(defenders) do
-         local rn = pilot_object:ship():nameRaw() 
+         local rn = pilot_object:ship():nameRaw()
          if rn == "Lancelot" then
             pilot_object:rename(_("Associate Lancelot"))
          elseif rn == "Admonisher" then
@@ -103,7 +103,7 @@ function enter () --aforementioned triggered function
          vec2.new( rnd.rnd(400, 800) * (rnd.rnd(0,1) - 0.5) * 2,
          rnd.rnd(400, 800) * (rnd.rnd(0,1) - 0.5) * 2))
       end
-      
+
       capship = defenders[#defenders]
       capship:setInvincible()
       capship:comm(_("We've got your back. Engaging hostiles."), true )

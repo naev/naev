@@ -51,17 +51,17 @@ function create ()
    local landed, landed_sys = planet.cur()
 
    -- target destination
-   local planets = {} 
+   local planets = {}
    getsysatdistance( system.cur(), 1, 6,
        function(s)
            for i, v in ipairs(s:planets()) do
                if v:faction() == faction.get("Empire") and v:canLand() then
                    planets[#planets + 1] = {v, s}
                end
-           end 
+           end
            return false
-       end ) 
-   if #planets == 0 then abort() end -- In case no suitable planets are in range. 
+       end )
+   if #planets == 0 then abort() end -- In case no suitable planets are in range.
    local index = rnd.rnd(1, #planets)
    dest = planets[index][1]
    sys = planets[index][2]

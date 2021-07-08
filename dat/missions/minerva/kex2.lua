@@ -66,7 +66,7 @@ function accept ()
    end
 
    misn.accept()
-      
+
    shiplog.append( logidstr, _("You have agreed to help Kex steal information from Baroness Eve.") )
 
    misn.osdCreate( misn_title,

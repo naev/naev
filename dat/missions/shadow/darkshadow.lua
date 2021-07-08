@@ -73,11 +73,11 @@ text[8] = _([["I dunno if you've seen them on your way here, but there's guys of
 title[5] = _("An extra passenger")
 text[9] = _([[You board the Four Winds vessel, and as soon as the airlock opens a nervous looking man enters your ship. He eyes you warily, but when he sees that Jorek is with you his tension fades.
     "Come on, %s," Jorek says. "Let's not waste any more time here. We got what we came for. Now let's give these damn vultures the slip, eh?"]])
-    
+
 title[6] = _("Ambush!")
 text[10] = _([[Suddenly, your long range sensors pick up a ship jumping in behind you. Jorek checks the telemetry beside you. Suddenly, his eyes go wide and he groans. The Four Winds informant turns pale.
     "Oh, damn it all," Jorek curses. "%s, that's the Genbu, Giornio's flagship. I never expected him to take an interest in me personally! Damn, this is bad. Listen, if you have anything to boost our speed, now would be the time. We got to get outta here as if all hell was hot on our heels, which it kinda is! If that thing catches us, we're toast. I really mean it, you don't wanna get into a fight against her, not on your own. Get your ass movin' to Sirius space. Giornio ain't gonna risk getting into a scrap with the Sirius military, so we'll be safe once we get there. Come on, what are you waitin' for? Step on it!"]])
-    
+
 title[7] = _("A safe return")
 text[11] = _([[You find yourself back on the Seiryuu, in the company of Jorek and the Four Winds informant. The informant is escorted deeper into the ship by grey-uniformed crew members, while Jorek takes you up to the bridge for a meeting with Captain Rebina.
     "Welcome back, Jorek, %s," Rebina greets you on your arrival. "I've already got a preliminary report on the situation, but let's have ourselves a proper debriefing. Have a seat."
@@ -335,7 +335,7 @@ function spawnSquads(highlight)
         end
         squad[1]:taskClear() --...except the leader himself.
     end
-    
+
     -- Shorthand notation for the leader pilots
     leader = {}
     leader[1] = squads[1][1]
@@ -427,7 +427,7 @@ end
 -- The initial ambush cutscene
 function startAmbush()
     spawnGenbu(system.get("Anrique"))
-    
+
     local delay = 0
     zoomspeed = 4500
     hook.timer(delay, "playerControl", true)
@@ -460,7 +460,7 @@ function spawnInterceptors()
         j:control()
         j:attack(player.pilot())
     end
-    if waves < maxwaves then 
+    if waves < maxwaves then
        waves = waves + 1
        spinter = hook.timer(25000, "spawnInterceptors")
     end

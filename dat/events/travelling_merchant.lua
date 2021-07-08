@@ -7,7 +7,7 @@
 </event>
 --]]
 --[[
-   
+
    Travelling Merchant Event
 
 Spawns a travelling merchant that can sell the player if interested.

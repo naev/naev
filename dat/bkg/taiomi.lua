@@ -212,7 +212,7 @@ function update ()
    for k,p in ipairs( bgparts ) do
       update_part( p )
    end
-   
+
    -- Update foreground
    for k,p in ipairs( fgparts ) do
       update_part( p )

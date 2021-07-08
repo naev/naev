@@ -27,34 +27,34 @@ function create()
     -- Create the derelicts One Dvaered, one FLF.
     pilot.toggleSpawn(false)
     pilot.clear()
-    
+
     posDV = vec2.new(7400, 3000)
     posFLF = vec2.new(-10500, -8500)
-    
+
     shipDV = pilot.add( "Dvaered Vendetta", "Dvaered", posDV, nil, {ai="dummy"} )
     shipFLF = pilot.add( "Vendetta", "FLF", posFLF, _("FLF Vendetta"), {ai="dummy"} )
-    
+
     shipDV:disable()
     shipFLF:disable()
-    
+
     shipDV:setHilight(true)
     shipFLF:setHilight(true)
-    
+
     shipDV:setVisplayer()
     shipFLF:setVisplayer()
-    
+
     shipDV:rename(shipnameDV)
     shipFLF:rename(shipnameFLF)
-    
+
     timerDV = hook.timer(3000, "broadcastDV")
     timerFLF = hook.timer(12000, "broadcastFLF")
-    
+
     boarded = false
     destroyed = false
 
     -- Set a bunch of vars, for no real reason
     var.push("flfbase_sysname", "Sigur") -- Caution: if you change this, change the location for base Sindbad in unidiff.xml as well!
-    
+
     hook.pilot(shipDV, "board", "boardDV")
     hook.pilot(shipDV, "death", "deathDV")
     hook.pilot(shipFLF, "board", "boardFLF")
@@ -83,7 +83,7 @@ function boardFLF()
     hook.rm(timerFLF)
     hook.rm(timerDV)
     player.unboard()
-    naev.missionStart("Deal with the FLF agent") 
+    naev.missionStart("Deal with the FLF agent")
     boarded = true
 end
 
@@ -104,7 +104,7 @@ function boardDV()
     hook.rm(timerDV)
     hook.rm(timerFLF)
     player.unboard()
-    naev.missionStart("Take the Dvaered crew home") 
+    naev.missionStart("Take the Dvaered crew home")
     boarded = true
 end
 

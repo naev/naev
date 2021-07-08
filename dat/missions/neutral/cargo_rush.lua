@@ -75,30 +75,30 @@ osd_timeup = _("Fly to %s in the %s system\n(deadline missed, but you can still 
 
 -- Create the mission
 function create()
-   -- Note: this mission does not make any system claims. 
-   
+   -- Note: this mission does not make any system claims.
+
    -- Calculate the route, distance, jumps, risk of piracy, and cargo to take
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
    if destplanet == nil then
       misn.finish(false)
    end
-   
+
    -- Calculate time limit. Depends on tier and distance.
    -- The second time limit is for the reduced reward.
    stuperpx   = 0.2 - 0.025 * tier
    stuperjump = 10300 - 300 * tier
    stupertakeoff = 10300 - 75 * tier
    allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
-   
+
    -- Allow extra time for refuelling stops.
    local jumpsperstop = 3 + math.min(tier, 3)
    if numjumps > jumpsperstop then
       allowance = allowance + math.floor((numjumps-1) / jumpsperstop) * stuperjump
    end
-   
+
    timelimit  = time.get() + time.create(0, 0, allowance)
    timelimit2 = time.get() + time.create(0, 0, allowance * 1.2)
-   
+
    if avgrisk == 0 then
       piracyrisk = piracyrisk[1]
       riskreward = 0
@@ -112,7 +112,7 @@ function create()
       piracyrisk = piracyrisk[4]
       riskreward = 50
    end
-   
+
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
@@ -120,7 +120,7 @@ function create()
    jumpreward = commodity.price(cargo)*1.2
    distreward = math.log(300*commodity.price(cargo))/100
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
-   
+
    misn.setTitle( misn_title[tier]:format(
       destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")
@@ -137,9 +137,9 @@ function accept()
          tonnestring( amount - player.pilot():cargoFree() ) ) )
       misn.finish()
    end
-   player.pilot():cargoAdd( cargo, amount ) 
+   player.pilot():cargoAdd( cargo, amount )
    local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
-   player.pilot():cargoRm( cargo, amount ) 
+   player.pilot():cargoRm( cargo, amount )
    if timelimit < playerbest then
       if not tk.yesno( _("Too slow"), string.format(
             _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),

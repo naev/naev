@@ -13,7 +13,7 @@
 </event>
 --]]
 --[[
-   
+
    Finding Taiomi Event
 
 --]]
@@ -241,7 +241,7 @@ The sand is awful here, it gets in everything and everywhere so I decided to cut
 (This page consists of scribbled drawings of the ship and people. A person captioned Captain is drawn with horns coming out of his head.)]]))
    log(_([[UST 602:1999
 
-We have finished loading the cargo, which consists of some sort of bottles of something like sand? The Captain said it is very expensive and was yelling at us all the time while we were loading the cargo. 
+We have finished loading the cargo, which consists of some sort of bottles of something like sand? The Captain said it is very expensive and was yelling at us all the time while we were loading the cargo.
 
 I have decided that once this is over I will try to find a new job. I don't think I will ever get used to the Captain's temper.
 

@@ -41,9 +41,9 @@ refusetitle = _("Refusal")
 refusetext = _([["I guess we'll need to find another pilot."]])
 
 wintitle = _("You Won!")
-wintext = _([[The laid back person comes up to you and hands you a credit chip. 
+wintext = _([[The laid back person comes up to you and hands you a credit chip.
    "Nice racing! Here's your prize money. Let's race again sometime soon!"]])
-   
+
 ftitle[1] = _("Illegal ship!")
 ftext[1] = _([["You have switched to a ship that's not allowed in this race. Mission failed."]])
 
@@ -53,7 +53,7 @@ ftext[2] = _([["Because you left the race, you have been disqualified."]])
 ftitle[3] = _("You failed to win the race.")
 ftext[3] = _([[As you congratulate the winner on a great race, the laid back person comes up to you.
    "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
-   
+
 NPCname = _("A laid back person")
 NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar.")
 
@@ -114,7 +114,7 @@ function takeoff()
       abort()
    end
    planetvec = planet.pos(curplanet)
-   misn.osdActive(1) 
+   misn.osdActive(1)
    checkpoint = {}
    racers = {}
    pilot.toggleSpawn(false)
@@ -158,7 +158,7 @@ function takeoff()
    countdown = 5 -- seconds
    omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
    counting = true
-   counterhook = hook.timer(1000, "counter") 
+   counterhook = hook.timer(1000, "counter")
    hook.board("board")
    hook.jumpin("jumpin")
    hook.land("land")
@@ -183,7 +183,7 @@ function counter()
       hp3 = hook.pilot(racers[3], "idle", "racer3idle")
    else
       player.omsgChange(omsg, timermsg:format(countdown), 0)
-      counterhook = hook.timer(1000, "counter") 
+      counterhook = hook.timer(1000, "counter")
    end
 end
 
@@ -285,7 +285,7 @@ function land()
       else
          tk.msg(ftitle[3], ftext[3])
          abort()
-         
+
       end
    else
       tk.msg(ftitle[2], ftext[2])

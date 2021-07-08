@@ -36,7 +36,7 @@ mem.form_pos      = nil -- Position in formation (for follower)
 mem.leadermaxdist = nil -- Distance from leader to run back to leader
 mem.gather_range  = 800 -- Radius in which the pilot looks for gatherables
 
---[[Control parameters: mem.radius and mem.angle are the polar coordinates 
+--[[Control parameters: mem.radius and mem.angle are the polar coordinates
 of the point the pilot has to follow when using follow_accurate.
 The reference direction is the target's velocity direction.
 For example, radius = 100 and angle = 180 means that the pilot will stay

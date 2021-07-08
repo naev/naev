@@ -19,7 +19,7 @@
 -- DESCRIPTION: Dr. Geller asks you to disable a Soromid ship to retrieve some technology
 -- that he needs for his prototype. Za'lek science can obviously not fall behind Soromid.
 -- Obviously Soromid will not like this and will try to attack the player.
--- 
+--
 -- Difficulty: Easy to Medium?
 --
 -- Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
@@ -65,7 +65,7 @@ osd_msg[1] = _("Go to the %s system and find the %s")
 osd_msg[2] = _("Board the %s and retrieve the secret technology")
 osd_msg[3] = _("Return to %s in the %s system")
 
--- refuestext 
+-- refuestext
 refusetitle = _("No Science Today")
 refusetext = _("But I really thought you were into science...")
 

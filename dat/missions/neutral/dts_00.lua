@@ -3,7 +3,7 @@
 <mission name="Defend the System 1">
   <flags>
    <unique />
-  </flags> 
+  </flags>
   <avail>
    <priority>4</priority>
    <chance>3</chance>
@@ -110,7 +110,7 @@ function create ()
    if ( this_system:presences()["Pirate"]
          or this_system:presences()["Collective"]
          or this_system:presences()["FLF"] ) then
-      misn.finish(false) 
+      misn.finish(false)
    end
 
    missys = {this_system}
@@ -210,7 +210,7 @@ function defend_system()
       if defender == false then
          misn.finish( true)
       end
-      
+
       if pilot.get( "Raider") == {} then
          player.msg( comm[7])
       end

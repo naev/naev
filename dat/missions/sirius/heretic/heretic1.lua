@@ -21,7 +21,7 @@
 --[[after smuggling a small arms shipment to the an'ku system,
    the player is asked to deliver a message to a "shady character"
    on the wringer in the Suna system.]]
-   
+
 require "numstring"
 require "missions/sirius/common"
 

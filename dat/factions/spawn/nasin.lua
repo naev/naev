@@ -6,7 +6,7 @@ local scom = {}
 -- @brief Calculates when next spawn should occur
 scom.calcNextSpawn = function( cur, new, max )
     if cur == 0 then return rnd.rnd(0, 10) end -- Kickstart spawning.
-    
+
     local stddelay = 10 -- seconds
     local maxdelay = 60 -- seconds. No fleet can ever take more than this to show up.
     local stdfleetsize = 1/4 -- The fraction of "max" that gets the full standard delay. Fleets bigger than this portion of max will have longer delays, fleets smaller, shorter.
@@ -16,9 +16,9 @@ scom.calcNextSpawn = function( cur, new, max )
     if percent > 1. then
         penaltyweight = 1. + 10. * (percent - 1.)
     end
-        
+
     local fleetratio = (new/max)/stdfleetsize -- This turns into the base delay multiplier for the next fleet.
-    
+
     return math.min(stddelay * fleetratio * delayweight * penaltyweight, maxdelay)
 end
 

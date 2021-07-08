@@ -168,7 +168,7 @@ function pay( amount, reason )
             pp:rmOutfit( part )
             local new_part
             if new_level > max_level then
-               new_part = bioship_parts[index][1]:format( "X" ) 
+               new_part = bioship_parts[index][1]:format( "X" )
             else
                local sn = string.format( "%d", new_level )
                new_part = bioship_parts[index][1]:format( sn )
@@ -185,6 +185,6 @@ function pay( amount, reason )
             pp:setTemp( 0 )
             pp:setFuel( true )
          end
-      end 
+      end
    end
 end

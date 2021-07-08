@@ -183,7 +183,7 @@ function enter ()
          p:control()
          p:attack( pp )
       end
-      
+
       -- Now Dvaered
       -- They will jump together with you in the system at the jump point. (A.)
       p = pilot.addFleet( "Dvaered Med Force", prevsys )

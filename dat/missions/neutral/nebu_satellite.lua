@@ -60,7 +60,7 @@ articles={
    {
       "Generic",
       _("Scientists Launch Research Probe Into Nebula"),
-      _("A group of scientists have successfully launched a science probe into the Nebula. The probe was specifically designed to be resistant to the corrosive environment of the Nebula and is supposed to find new clues about the nature of the gas and where it's from."), 
+      _("A group of scientists have successfully launched a science probe into the Nebula. The probe was specifically designed to be resistant to the corrosive environment of the Nebula and is supposed to find new clues about the nature of the gas and where it's from."),
    }
 }
 

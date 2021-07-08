@@ -72,7 +72,7 @@ function create ( max )
     weights[ spawn_patrol  ] = 100
     weights[ spawn_squad   ] = math.max(1, -100 + 1.00 * max)
     weights[ spawn_capship ] = math.max(1, -100 + 0.50 * max)
-   
+
     -- Create spawn table base on weights
     spawn_table = scom.createSpawnTable( weights )
 
@@ -91,7 +91,7 @@ function spawn ( presence, max )
     if presence > max then
         return 5
     end
-  
+
     -- Actually spawn the pilots
     pilots = scom.spawn( spawn_data, "Collective" )
 

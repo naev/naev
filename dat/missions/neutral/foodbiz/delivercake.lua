@@ -55,7 +55,7 @@ log_text = _([[You delivered a whole lot of the most disgusting cake you've ever
 log_text_nocake = _([[You delivered recipes for making some kind of cake to Michal, the man who had you deliver a literal tonne of love letters before.]])
 
 cakes = "Food"
-  
+
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()

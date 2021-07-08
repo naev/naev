@@ -57,9 +57,9 @@ text[4] = _([[She continues. "As a symbol of appreciation, you should find a dep
 coward_text = _([[You receive a message signed by Commodore Keer:
     "There is no room for cowards in the Empire's fleet."
     The signature does seem valid.]])
-    
+
 start_comm = _("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!")
-   
+
 osd_msg = {}
 osd_msg[1] = _("Fly to %s via %s and meet up with the Imperial fleet")
 osd_msg[2] = _("Defeat the Starfire")
@@ -149,7 +149,7 @@ function jumpin ()
             for i = 1, 15 do
                 fleetE[#fleetE + 1] = pilot.add( "Empire Lancelot", "Empire", last_sys )
             end
-            
+
             fleetC[#fleetC + 1] = pilot.add( "Goddard", "Empire", fleetCpos, _("Starfire"), {ai="collective"} )
             hook.pilot(fleetC[#fleetC], "death", "col_dead")
             fleetC[#fleetC]:setNoDisable()
@@ -169,12 +169,12 @@ function jumpin ()
                     droneC[#droneC + 1] = pilot.add( "Drone", "Collective", pos, _("Collective Drone") )
                 end
             end
-            
+
             for _, j in ipairs(fleetE) do
                 j:changeAI("empire_idle")
                 j:setVisible()
             end
-            
+
             for _, j in ipairs(fleetC) do
                 j:changeAI("collective_norun")
                 j:setVisible()

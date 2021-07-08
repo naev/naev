@@ -58,7 +58,7 @@ title[3] = _("Right system")
 title[4] = _("Comm Channel")
 title[5] = _("The Deception")
 text[1]  = _([["I must find my dear brother! Please help me. I think he is in danger! I don't have a ship and he is the only family I have left. Could you please help me?"]])
-text[2] = _([[The woman calms down as you signal your willingness to help. "Oh, thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him. 
+text[2] = _([[The woman calms down as you signal your willingness to help. "Oh, thank goodness! I was told where he usually hangs around. Please take me there and tell him that I have to talk to him.
     And please hurry. Someone was sent to assassinate him. I don't have much to give, but whatever I have saved, you can have."]])
 text[3] = _([["I don't think he is here. He must be in one of the other systems. Please hurry!"]])
 text[4] = _([["I think this is it! We found him!"]])
@@ -134,7 +134,7 @@ function sys_enter ()
       nmsys = #targetsys
       for i=1,#targetsys do
          if system.cur() == targetsys[i] then
-            table.remove(targetsys,i) 
+            table.remove(targetsys,i)
             misn.markerRm(misn_marker[i])
             table.remove(misn_marker,i)
             -- we can break, we found what we were looking for
@@ -188,7 +188,7 @@ function sys_enter ()
    end
 end
 
--- if hailed: stop vessel let it be boarded 
+-- if hailed: stop vessel let it be boarded
 function got_hailed(shipp)
    tk.msg(title[4], text[5])
    shipp:taskClear()
@@ -236,55 +236,55 @@ function spawn_baddies(sp)
    for i=1,2 do
       badguys[i] = pilot.add("Za'lek Light Drone", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
-      
+
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
-      
+
       badguys[i]:addOutfit("Unicorp D-2 Light Plating")
       badguys[i]:addOutfit("Unicorp PT-16 Core System")
       badguys[i]:addOutfit("Tricon Zephyr Engine")
-      
+
       badguys[i]:addOutfit("Laser Cannon MK2",3)
       badguys[i]:addOutfit("Improved Stabilizer") -- Just try to avoid fight with these fellas
-      
+
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end
    for i=3,4 do
       badguys[i] = pilot.add( "Lancelot", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
-      
+
       --Their outfits must be quite good
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
-      
+
       badguys[i]:addOutfit("Unicorp D-4 Light Plating")
       badguys[i]:addOutfit("Unicorp PT-68 Core System")
       badguys[i]:addOutfit("Tricon Zephyr II Engine")
-      
+
       badguys[i]:addOutfit("Mass Driver")
       badguys[i]:addOutfit("Shredder",2)
       badguys[i]:addOutfit("Ripper Cannon")
       badguys[i]:addOutfit("Shield Capacitor I",2)
-      
+
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end
    for i=5,6 do
       badguys[i] = pilot.add( "Admonisher", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
-      
+
       badguys[i]:rmOutfit("all")
       badguys[i]:rmOutfit("cores")
-      
+
       badguys[i]:addOutfit("Unicorp D-12 Medium Plating")
       badguys[i]:addOutfit("Unicorp PT-200 Core System")
       badguys[i]:addOutfit("Tricon Cyclone Engine")
-      
+
       badguys[i]:addOutfit("Razor Turret MK2",2)
       badguys[i]:addOutfit("Unicorp Headhunter Launcher",2)
-      
+
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
    end
@@ -293,7 +293,7 @@ end
 -- gets the nearest jumppoint from a pilot
 function get_nearest_jump(pilot)
    jpts = system.cur():jumps()
-   -- basically the distance that the map can have at 
+   -- basically the distance that the map can have at
    dist = 2*system.cur():radius()
    index = 0
    for i,jpt in ipairs(jpts) do

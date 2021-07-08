@@ -79,7 +79,7 @@ talk[1] = ""
 osd_msg = {}
 osd_msg[1] = _("Fly around in the system, preferably near %s")
 osd_msg[2] = _("Take Reynir home to %s")
-msg_abortTitle = "" 
+msg_abortTitle = ""
 msg_abort = [[]]
 
 log_text_good = _([[You took an old man named Reynir on a ride in outer space. He was happy and paid you in the form of %s of hot dogs.]])
@@ -87,7 +87,7 @@ log_text_bad = _([[You took an old man named Reynir on a ride in outer space, bu
 
 
 function create ()
-   -- Note: this mission does not make any system claims. 
+   -- Note: this mission does not make any system claims.
    misn.setNPC( _("Reynir"), "neutral/unique/reynir.webp", bar_desc )
 
    -- Mission variables
@@ -98,7 +98,7 @@ end
 
 function accept ()
    -- make sure there are at least 2 inhabited planets
-   if (function () 
+   if (function ()
             local count = 0
             for i, p in ipairs (system.cur():planets()) do
                if p:services()["inhabited"] then

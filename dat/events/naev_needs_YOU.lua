@@ -11,7 +11,7 @@
 --[[
 
 EVENT TITLE: Naev Needs You!
-DESCRIPTION: 
+DESCRIPTION:
          An event that pops up to encourage new players to contribute to the project.
 
       Mission Stages:
@@ -65,8 +65,8 @@ function create()
          music.stop()
       end
       music.load( "sirius1")
-      music.play() 
-      
+      music.play()
+
       -- The big programmer in the sky looks in to ask the player a question
       if tk.yesno( title[1], text[1]) then
          tk.msg( title[2], text[2]) -- if the answer is 'yes'
@@ -76,11 +76,11 @@ function create()
 
       else
          tk.msg( title[3], text[3]) -- if the answer is 'no', not much different from 'yes'
-         
+
      -- Mission ends with a little comment after blasting off.
          -- hook.takeoff( "enter_system")
       end
-      
+
       -- everything returns to normal
       music.stop()
       if background_music ~= nil then

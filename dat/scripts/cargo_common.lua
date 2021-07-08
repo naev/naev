@@ -39,7 +39,7 @@ function cargo_selectPlanets(missdist, routepos)
       end,
       nil, cargo_use_hidden)
 
-   return planets   
+   return planets
 end
 
 -- We have a destination, now we need to calculate how far away it is by simulating the journey there.
@@ -71,10 +71,10 @@ function cargo_calculateRoute ()
    origin_p, origin_s = planet.cur()
    local routesys = origin_s
    local routepos = origin_p:pos()
-   
+
    -- Select mission tier.
    local tier = rnd.rnd(0, 4)
-   
+
    -- Farther distances have a lower chance of appearing.
    local missdist = cargo_selectMissionDistance()
    local planets = cargo_selectPlanets(missdist, routepos)
@@ -85,15 +85,15 @@ function cargo_calculateRoute ()
    local index     = rnd.rnd(1, #planets)
    local destplanet = planets[index][1]
    local destsys   = planets[index][2]
-   
+
    -- We have a destination, now we need to calculate how far away it is by simulating the journey there.
    -- Assume shortest route with no interruptions.
    -- This is used to calculate the reward.
 
    local numjumps   = origin_s:jumpDist(destsys, cargo_use_hidden)
    local traveldist = cargo_calculateDistance(routesys, routepos, destsys, destplanet)
-   
-   
+
+
    --Determine amount of piracy along the route
    local jumps = system.jumpPath( system.cur(), destsys )
    local risk = system.cur():presences()["Pirate"]
@@ -108,7 +108,7 @@ function cargo_calculateRoute ()
       end
    end
    local avgrisk = risk/(numjumps + 1)
-   
+
    -- We now know where. But we don't know what yet. Randomly choose a commodity type.
    local cargo
    local cargoes = difference(planet.cur():commoditiesSold(),destplanet:commoditiesSold())
@@ -121,7 +121,7 @@ function cargo_calculateRoute ()
    else
       cargo = cargoes[rnd.rnd(1,#cargoes)]:nameRaw()
    end
-   
+
 
    -- Return lots of stuff
    return destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier
@@ -171,7 +171,7 @@ function difference(a, b)
    local ai = {}
    local r = {}
    for k,v in pairs(a) do r[k] = v; ai[v]=true end
-   for k,v in pairs(b) do 
+   for k,v in pairs(b) do
       if ai[v]~=nil then   r[k] = nil   end
    end
    return r

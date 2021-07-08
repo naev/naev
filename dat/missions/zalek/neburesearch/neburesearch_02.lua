@@ -15,11 +15,11 @@
 </mission>
 --]]
 --[[
-   
+
    Mission: Emergency of Immediate Inspiration
-   
+
    Description: Take Dr. Mensing to Jorla as fast as possible!
-   
+
    Difficulty: Easy
 
 --]]
@@ -60,7 +60,7 @@ function create()
     homeworld, homeworld_sys = planet.get("Jorla")
     origin = planet.cur()
     origin_sys = system.cur()
-    
+
     local numjumps = origin_sys:jumpDist(homeworld_sys, false)
     local traveldist = cargo_calculateDistance(origin_sys, origin:pos(), homeworld_sys, homeworld)
     local stuperpx   = 0.15
@@ -68,7 +68,7 @@ function create()
     local stupertakeoff = 10000
     local allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
     timelimit  = time.get() + time.create(0, 0, allowance)
-    
+
     -- Spaceport bar stuff
     misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.webp", bar_desc)
 end
@@ -78,17 +78,17 @@ function accept()
         misn.finish()
     end
     tk.msg(bar_title, accept_text:format(homeworld:name()))
-    
+
     -- Set up mission information
     misn.setTitle(mtitle)
     misn.setReward(misn_reward:format(creditstring(credits)))
     misn.setDesc(mdesc:format(homeworld:name(), homeworld_sys:name()))
     misn_marker = misn.markerAdd(homeworld_sys, "low")
-    
+
     misn.accept()
     osd_msg[1] = osd_msg[1]:format(homeworld:name(), homeworld_sys:name())
     misn.osdCreate(osd_title, osd_msg)
-    
+
     hook.land("land")
 end
 

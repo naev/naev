@@ -82,14 +82,14 @@ function create()
       piracyrisk = piracyrisk[4]
       riskreward = 50
    end
- 
+
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
-   amount     = rnd.rnd(10 + 3 * tier, 20 + 4 * tier) 
+   amount     = rnd.rnd(10 + 3 * tier, 20 + 4 * tier)
    jumpreward = commodity.price(cargo)*1.5
    distreward = math.log(300*commodity.price(cargo))/100
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
-   
+
    misn.setTitle( string.format(
       _("ES: Cargo transport to %s in %s (%s)"), destplanet:name(), destsys:name(), tonnestring(amount) ) )
    misn.markerAdd(destsys, "computer")

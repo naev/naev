@@ -287,7 +287,7 @@ function enter ()
          end
       elseif stage == 2 then  -- Target system
          misn.osdActive( 2 )
-         
+
          -- Get the position of the target
          jp  = jump.get(system.cur(), last_sys)
          if jp ~= nil then

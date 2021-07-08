@@ -19,7 +19,7 @@
    Mission: The one with the Shopping
 
    Description: A Za'lek scientist asks the player to fetch some raw material that he needs to build his prototype.
-   Multiple systems have to be visited and materials acquired from contact persons in the bar. 
+   Multiple systems have to be visited and materials acquired from contact persons in the bar.
 
    Difficulty: Easy to Medium? Depending on whether the player lingers around too much and gets caught.
 
@@ -43,7 +43,7 @@ t_pla[2] = planet.get("Waterhole's Moon")
 t_sys[3] = system.get("Seiben")
 t_pla[3] = planet.get("Gastan")
 pho_mny = 50000
-reward = 1000000 
+reward = 1000000
 title = {}
 text = {}
 osd_msg = {}
@@ -86,7 +86,7 @@ osd_msg[1] = _("Go to the %s system and talk to the trader on %s")
 osd_msg[2] = _("Go to the %s system and talk to the contact person on %s")
 osd_msg[3] = _("Return to the %s system to the trader on %s")
 osd_msg[4] = _("Return to the %s system and deliver to Dr. Geller on %s")
--- refusetext 
+-- refusetext
 refusetitle = _("No Science Today")
 refusetext = _("I guess you don't care for science...")
 
@@ -138,15 +138,15 @@ function first_trd()
      tk.msg(title[1], text[4]:format(t_pla[2]:name(), t_sys[2]:name()))
      talked = true
   end
-  
-  
+
+
   osd_msg[2] = osd_msg[2]:format(t_sys[2]:name(), t_pla[2]:name())
   misn.osdCreate(misn_title, {osd_msg[2]})
-  
+
   misn.markerMove(misn_mark, t_sys[2])
-  
+
   lhook2 = hook.land("land2", "land")
-  
+
 end
 -- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
@@ -165,7 +165,7 @@ function second_trd()
   tk.msg(title[1], text[9])
   osd_msg[3] = osd_msg[3]:format(t_sys[1]:name(), t_pla[1]:name())
   misn.osdCreate(misn_title, {osd_msg[3]})
- -- create hook that player will be hailed by authorities bc of toxic materials 
+ -- create hook that player will be hailed by authorities bc of toxic materials
   misn.markerMove(misn_mark, t_sys[1])
   hook.rm(lhook2)
   hook.enter("sys_enter")
@@ -175,17 +175,17 @@ end
 -- 3rd trade: Get the stuff the scientist wants
 function third_trd()
   tk.msg(title[1], text[6])
-  
+
   misn.npcRm(bar1pir1)
   misn.cargoRm(carg_id)
   player.msg(t_sys[3]:name())
   osd_msg[4] = osd_msg[4]:format(t_sys[3]:name(), t_pla[3]:name())
   misn.osdCreate(misn_title, {osd_msg[4]})
-  
+
   misn.markerMove(misn_mark, t_sys[3])
-  
+
   hook.rm(lhook1)
-  
+
   traded2 = true
   lhook1 = hook.land("fnl_ld", "land")
 end
@@ -237,7 +237,7 @@ function spwn_police ()
       lance2:setHostile(true)
       adm1:setHostile(true)
 end
--- move to the player ship 
+-- move to the player ship
 
 function go_board ()
    if adm1:exists() then

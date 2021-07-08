@@ -19,7 +19,7 @@
       MISSION: Kidnapped
       AUTHOR: Superkoop - John Koopman
 
-      The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions. 
+      The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions.
 --]]
 
 local portrait = require "portrait"
@@ -107,9 +107,9 @@ function create()
   if not misn.claim(claimsystem) then
     abort()
   end
-  
+
   chosen = tk.choice(title[1], text[1]:format(player.name()), choice1, choice2)
-  
+
   if chosen == 1 then
     accept()
   else
@@ -120,26 +120,26 @@ end
 
 function accept()
   misn.accept()
-  
+
   tk.msg(title[2], text[2]:format(sysname3, bar1))
   misn.setTitle(mistitle)
   misn.setReward(reward)
   misn.setDesc(description)
-  
+
   osdmsg[1] = osdmsg[1]:format(sysname3, bar1)
   misn.osdCreate(osdtitle, {osdmsg[1]})
-  
+
   misn_mark = misn.markerAdd(system.get(sysname3), "low")
-  
+
   eavesdropped1 = false
   eavesdropped2 = false
   rescued = false
-  
+
   lhook =  hook.land("land1", "land")
   hook.enter("enter")
 
 end
-  
+
 function land1()
   if planet.cur() == planet.get(bar1) and not eavesdropped1 and not eavesdropped2 then
     bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), portrait.getMale("Pirate"), pir1_disc)
@@ -156,34 +156,34 @@ end
 
 function firstpirates()
   tk.msg(title[3], text[3]:format(bar2))
-  
+
   misn.npcRm(bar1pir1)
   misn.npcRm(bar1pir2)
-  
+
   osdmsg[2] = osdmsg[2]:format(sysname4, bar2)
   misn.osdCreate(osdtitle, {osdmsg[2]})
-  
+
   misn.markerMove(misn_mark, system.get(sysname4))
-  
+
   hook.rm(lhook)
   lhook = hook.land("land2", "land")
-  
+
   eavesdropped1 = true
 end
 
 function secondpirates()
   tk.msg(title[4], text[4]:format(sysname2))
-  
+
   misn.npcRm(bar2pir1)
   misn.npcRm(bar2pir2)
-  
+
   osdmsg[3] = osdmsg[3]:format(sysname2)
   misn.osdCreate(osdtitle, {osdmsg[3]})
-  
+
   misn.markerMove(misn_mark, system.get(sysname2))
-  
+
   hook.rm(lhook)
-  
+
   eavesdropped2 = true
 end
 
@@ -214,11 +214,11 @@ function idle()
 end
 
 function attackedkidnappers()
-  
+
   if kidnappers:exists() then
     kidnappers:runaway(player.pilot(), true)
   end
-  
+
   if needpirates then
     bodyguard1 = pilot.add( "Hyena", "Pirate", vec2.new(800, 700), _("Pirate Hyena") )
     bodyguard2 = pilot.add( "Hyena", "Pirate", vec2.new(-900, 600), _("Pirate Hyena") )
@@ -232,7 +232,7 @@ function attackedkidnappers()
     bodyguard1:broadcast(pirbroadcast, true)
     needpirates = false
   end
-  
+
 end
 
 function explodedkidnappers()

@@ -1,21 +1,21 @@
 -- =======================================================================================
 --
 -- Debug facility
--- 
+--
 -- Include this script to output debug messages
 --
--- 
+--
 -- =======================================================================================
 
 
 -- =======================================================================================
 --
 -- Script-global variables
--- 
+--
 -- =======================================================================================
 --
 dbg = {}
--- 
+--
 -- =======================================================================================
 
 
@@ -25,7 +25,7 @@ dbg = {}
 --
 -- Usage :
 --    dbg.stdOutput( strPrefixParam, numIndentParam, strMessageParam, boolDebugParam )
--- 
+--
 -- =======================================================================================
 --
 function dbg.stdOutput(strPrefixParam, numIndentParam, strMessageParam, boolDebugParam)
@@ -67,5 +67,5 @@ function dbg.stdOutput(strPrefixParam, numIndentParam, strMessageParam, boolDebu
 		print ( string.format( "%s(%s:%s) (%s) : %s : %s%s", strLF, strDate, strTime, time.str(), strPrefix, strIndent, strMessage ) )
 	end
 end
--- 
+--
 -- =======================================================================================

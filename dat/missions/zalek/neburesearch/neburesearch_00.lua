@@ -17,12 +17,12 @@
 </mission>
 --]]
 --[[
-   
+
    Mission: Novice Nebula Research
-   
+
    Description: A Za'lek student asks the player to help him with his research. The player has to visit Doeston and Iris.
    Some minor complications on the way have to be expected.
-   
+
    Difficulty: Easy
 
 ]]--
@@ -62,7 +62,7 @@ function create()
     misn_stage = 0
     homeworld, homeworld_sys = planet.get("Jorla")
     credits = 300000
-    
+
     -- Spaceport bar stuff
     misn.setNPC(_("A young scientist"),  "zalek/unique/student.webp", _("You see a young scientist talking with some pilots, apparently without success.") )
 end
@@ -75,7 +75,7 @@ function accept()
         tk.msg( "", _([["Sorry, I need a ship with more cargo space than you have."]]) )
         misn.finish()
     end
-    
+
     if not tk.yesno(bar_title, string.format(bar_ask_text, creditstring(50000))) then
         if not tk.yesno(bar_title, bar_ask_again_text ) then
             misn.finish()
@@ -89,18 +89,18 @@ function accept()
             _([["So it is not a problem at all? I'm still a student and spent all funds I got on the sensor suit. Thank you for helping me out here! I'll start to load the sensors into your ship right away. We should be ready to take off soon."]]),
             t_sys[1] ) )
     end
-    
+
     -- Add cargo
     local c = misn.cargoNew( N_("Nebula Sensor Suit"), N_("A heavy suit with lots of fancy looking sensors.") )
     cargo = misn.cargoAdd(c, 5)
-    
+
     -- Set up mission information
     misn.setTitle( _("Novice Nebula Research") )
     misn.setReward( string.format(
         _("%s and the gratitude of a student"), creditstring(50000) ) )
     misn.setDesc( _("You have been asked by a Za'lek student to fly into the Nebula for some kind of research.") )
     misn_marker = misn.markerAdd(system.get(t_sys[1]), "low")
-    
+
     -- Add mission
     misn.accept()
     local osd_title = _("Novice Nebula Research")
@@ -111,7 +111,7 @@ function accept()
         _("Return to %s in the %s system"), homeworld:name(),
         homeworld_sys:name() )
     misn.osdCreate(osd_title, osd_msg)
-    
+
     thook = hook.takeoff("takeoff")
     hook.land("land")
     hook.enter("jumpin")

@@ -55,7 +55,7 @@ function turnoff( p, po )
    -- Make visible
    p:setInvisible( false )
    p:setNoRender( false )
-  
+
    -- Turn off shader
    shader_off()
 

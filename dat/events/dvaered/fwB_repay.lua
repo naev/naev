@@ -11,7 +11,7 @@
   </notes>
  </event>
  --]]
---[[ 
+--[[
 --Event for Frontier Invasion campaign. The player must repay general Klank
 --]]
 

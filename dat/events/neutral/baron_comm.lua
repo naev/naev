@@ -32,12 +32,12 @@ function create ()
     end
 
     hyena = pilot.add( "Hyena", "Civilian", true, _("Civilian Hyena") )
-    
+
     hook.pilot(hyena, "jump", "finish")
     hook.pilot(hyena, "death", "finish")
     hook.land("finish")
     hook.jumpout("finish")
-    
+
     hailie = hook.timer( 3000., "hailme" );
 end
 

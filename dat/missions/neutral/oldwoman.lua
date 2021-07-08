@@ -112,7 +112,7 @@ end
 
 -- Date hook.
 function date()
-    local dist_now = cargo_calculateDistance(system.cur(), player.pos(), destsys, destplanet) 
+    local dist_now = cargo_calculateDistance(system.cur(), player.pos(), destsys, destplanet)
     local complaint_now = math.floor(((dist_total - dist_now) / dist_total) * #complaints + 0.5)
     if complaint_now > complaint then
         complaint = complaint_now

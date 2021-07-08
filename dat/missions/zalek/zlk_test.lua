@@ -35,7 +35,7 @@ msg_title[2] = _("Too many missions")
 msg_title[3] = _("Successful Landing")
 msg_title[4] = _("Didn't you forget something?")
 
-engines = {_("engine with phase-change material cooling"), 
+engines = {_("engine with phase-change material cooling"),
            _("engine controlled with Zermatt-Henry theory"),   --Some random scientists names
            _("engine using a new electron propelling system"),
            _("engine using the fifth law of thermodynamics"),      --In these times, there will maybe exist more thermo laws...
@@ -110,14 +110,14 @@ function create()
    stuperpx   = 0.3 - 0.015 * tier
    stuperjump = 11000 - 75 * tier
    stupertakeoff = 15000
-    
+
    -- Choose mission reward. This depends on the mission tier.
    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    jumpreward = 1000
    distreward = 0.25
    riskreward = 50
    reward     = (1.5 ^ tier) * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
-    
+
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 
    misn.setTitle( misn_title:format( typeOfEng ))
@@ -240,7 +240,7 @@ function slow()
 
    local maxspeed = player.pilot():stats().speed
    local speed = maxspeed/3*(1 + 0.1*rnd.twosigma())
-   
+
    hook.timer(1000, "slowtext")
 
    isSlow = true

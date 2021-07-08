@@ -21,7 +21,7 @@ function ontoggle( p, po, on )
 
    -- Not ready yet
    if mem.timer > 0 then return end
-      
+
    -- Blink!
    local dist = jumpdist
    local m = p:mass()

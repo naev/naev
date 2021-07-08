@@ -59,14 +59,14 @@ osd_msg = _("Fly to %s in the %s system")
 
 -- Create the mission
 function create()
-   -- Note: this mission does not make any system claims. 
-   
+   -- Note: this mission does not make any system claims.
+
    -- Calculate the route, distance, jumps, risk of piracy, and cargo to take
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
    if destplanet == nil then
       misn.finish(false)
    end
-   
+
    if avgrisk == 0 then
       piracyrisk = piracyrisk[1]
       riskreward = 0

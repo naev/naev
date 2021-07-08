@@ -52,7 +52,7 @@ function create ()
             _("\"All the money in the world won't save you now!\"")
      }
      mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
-     
+
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system

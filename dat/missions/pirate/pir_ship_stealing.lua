@@ -190,7 +190,7 @@ function random_planet()
             if f and ships[f:nameRaw()] and v:services().shipyard then
                planets[#planets + 1] = v
             end
-         end 
+         end
          return false
       end, nil, true )
 
@@ -349,7 +349,7 @@ function land()
       -- Hey, stealing a ship isn’t anything! (if you survive, that is)
       faction.modPlayerSingle("Pirate", rnd.rnd(3,5))
 
-      -- Let’s keep a counter. Just in case we want to know how many you 
+      -- Let’s keep a counter. Just in case we want to know how many you
       -- stole in the future.
       local stolen_ships = var.peek("pir_stolen_ships") or 0
       var.push("pir_stolen_ships", stolen_ships + 1)
@@ -365,7 +365,7 @@ function land()
       damage_standing(theship.class, theship.faction)
 
       -- This is a success. The player stole his new ship, and everyone is
-      -- happy with it. Getting out of the system alive is the player’s 
+      -- happy with it. Getting out of the system alive is the player’s
       -- responsibility, now.
       misn.finish(true)
    end

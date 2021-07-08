@@ -14,10 +14,10 @@
  --]]
 --[[
 -- Shipwreck Event
--- 
+--
 -- Creates a wrecked ship that asks for help. If the player boards it, the event switches to the Space Family mission.
 -- See dat/missions/neutral/spacefamily
--- 
+--
 -- 12/02/2010 - Added visibility/highlight options for use in big systems (Anatolis)
 --]]
 
@@ -35,7 +35,7 @@ function create ()
         ship = "Trader Mule"
     elseif r > 0.5 then
         ship = "Trader Koala"
-    else 
+    else
         ship = "Trader Llama"
     end
 
@@ -54,7 +54,7 @@ function create ()
     end
 
     hook.timer(3000, "broadcast")
-   
+
     -- Set hooks
     hook.pilot( p[1], "board", "rescue" )
     hook.pilot( p[1], "death", "destroyevent" )

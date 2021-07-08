@@ -59,7 +59,7 @@ ferrytime[2] = _("Express")
 misn_desc = _("%s space transport to %s for %s-class citizen")
 
 -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
-title_p2 = _([[ 
+title_p2 = _([[
 Jumps: %d
 Travel distance: %d
 Time limit: %s]])
@@ -424,7 +424,7 @@ function tick()
     elseif timelimit2 <= time.get() and not overtime then
         -- Case missed second deadline
         player.msg(timeup_2)
-        misn.osdCreate( _("Pilgrim drop-off"), 
+        misn.osdCreate( _("Pilgrim drop-off"),
             {_("Drop off the pilgrims at the nearest planet")})
         overtime = true
     elseif intime then

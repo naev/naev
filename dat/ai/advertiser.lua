@@ -63,7 +63,7 @@ function create ()
 
    local fzl = fpres["Za'lek"] or 0
    if fzl > 1 then
-      -- Note that when running in the main menu background, player.name() might not exist (==nil), so 
+      -- Note that when running in the main menu background, player.name() might not exist (==nil), so
       -- we need to add a check for that.
       if player.name() then
          msg[#msg+1] = string.format(_("Dear Prof. %s, your recent work has left a deep impression on us. Due to the advance, novelty, and possible wide application of your innovation, we invite you to contribute other unpublished papers of relevant fields to the Interstellar Pay-to-win Journal for Mathematics and Applications."),player.name())

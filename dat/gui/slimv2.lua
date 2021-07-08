@@ -35,7 +35,7 @@ function create()
    col_black = colour.new( 0, 0, 0 )
    col_slot_bg = colour.new( 12/255, 14/255, 20/255 )
    col_slot_heat = colour.new( 108/255, 25/255, 13/255, 200/255 )
-   
+
    --Load Images
    local base = "gfx/gui/slimv2/"
    player_pane = tex.open( base .. "main.png" )
@@ -63,10 +63,10 @@ function create()
    lockonA = tex.open( base .. "padlockA.png" )
    lockonB = tex.open( base .. "padlockB.png" )
    active =  tex.open( base .. "active.png" )
-   
+
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png", 2, 2 ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png", 2, 2 ) )
-   
+
    --Get positions
    --Radar
    radar_w = 126
@@ -74,29 +74,29 @@ function create()
    radar_x = screen_w/2 - radar_w/2
    radar_y = 5
    gui.radarInit( false, radar_w, radar_h )
-   
+
    --Player pane
    pl_pane_w, pl_pane_h = player_pane:dim()
    pl_pane_x = screen_w/2 - pl_pane_w/2
    pl_pane_y = 0
-   
+
    slot_w, slot_h = slotA:dim()
    max_slots = math.floor(screen_w/2 / slot_w)
    slot_start_x = screen_w/2 + radar_w/2 + 5
-   
+
    slote_y = slot_h - 2
-   
+
    slot_img_offs_x = 1
    slot_img_offs_y = 5
-   
+
    slot_txt_offs_x = slot_img_offs_x + 24
    slot_txt_offs_y = 9
    slot_txt_w = 40
-   
+
    slot_img_w = 64
-   
+
    lockon_w, lockon_h = lockonA:dim()
-   
+
    slotA_w, slotA_h = slotA:dim()
    slotAend_w, slotAend_h = slotAend:dim()
    slotB_w, slotB_h = slotB:dim()
@@ -110,26 +110,26 @@ function create()
    --Bars
    bar_w = 86
    bar_h = 22
-   
+
    bar_bg_w, bar_bg_h = bar_bg:dim()
-   
+
    bar_armour_x = pl_pane_x + 127
    bar_armour_y = 103
-   
+
    bar_shield_x = bar_armour_x-- Missile lock warning
    missile_lock_text = "Warning - Missile Lock-on Detected"
    missile_lock_length = gfx.printDim( false, missile_lock_text )
    bar_shield_y = 75
-   
+
    bar_fuel_x = pl_pane_x + 7
    bar_fuel_y = bar_shield_y
-   
+
    bar_energy_x = pl_pane_x + 409
    bar_energy_y = bar_armour_y
-   
+
    bar_heat_x = bar_energy_x
    bar_heat_y = bar_shield_y
-   
+
    bar_speed_x = pl_pane_x + 529
    bar_speed_y = bar_shield_y
 
@@ -148,53 +148,53 @@ function create()
    cooldown_bg_w, cooldown_bg_h = cooldown_bg:dim()
    cooldown_sheen_x = cooldown_bg_x
    cooldown_sheen_y = cooldown_bg_y + 12
-   
+
    -- Missile lock warning
    missile_lock_text = "Warning - Missile Lock-on Detected"
    missile_lock_length = gfx.printDim( false, missile_lock_text )
-   
+
    --Lock-on warning light
    warning_lockon_c_x = pl_pane_x + 125 + 9
    warning_lockon_c_y = 130 + 9
-   
+
    --Autonav warning light
    warning_autonav_c_x = pl_pane_x + 145 + 9
    warning_autonav_c_y = warning_lockon_c_y
-   
+
    --Low armour warning light
    warning_armour_c_x = pl_pane_x + 167 + 16
    warning_armour_c_y = warning_lockon_c_y
-   
+
    -- Set FPS
    gui.fpsPos( 20, screen_h - 20 - deffont_h )
 
    -- Set OSD
    gui.osdInit( 20, screen_h - 63, 150, 500 )
-   
+
    --Credits
    credits_x = screen_w/2 - 86
    credits_y = 134
    credits_w = 52
-   
+
    --Cargo
    cargo_x = screen_w/2 -2
    cargo_y = 134
    cargo_w = 38
-   
+
    --Time
    time_x = screen_w/2 + 67
    time_y = 134
    time_w = 114
-   
-   
+
+
    --Messages
    gui.mesgInit( 600, 20, pl_pane_h + 20 )
-   
+
    -- Timer stuff
    timers = {}
    timers[1] = 0.5
    blinkcol = col_txt_enm
-   
+
    update_target()
    update_ship()
    --update_system()
@@ -228,17 +228,17 @@ end
 function update_wset()
    wset_name, wset  = pp:weapset()
    weap_icons = {}
-   
+
    for k, v in ipairs( wset ) do
       if k > max_slots then
          break
       end
       weap_icons[k] = outfit.get( v.name ):icon()
    end
-   
+
    aset = pp:actives()
    active_icons = {}
-   
+
    for k, v in ipairs( aset ) do
       if k > max_slots then
          break
@@ -266,7 +266,7 @@ function render_bar( left, name, value, text, txtcol, stress )
    for k, v in ipairs(values) do
       _G[ "s_" .. v ] = _G[ "bar_" .. name .. "_" .. v ]
    end
-   
+
    if name == "heat" and value > 0.8 then
       s_col = bar_heat2_col
    elseif name == "speed" and value > 1. then
@@ -274,11 +274,11 @@ function render_bar( left, name, value, text, txtcol, stress )
       s_col = bar_speed2_col
       value = value - 1
    end
-   
+
    if value > 1. then
       value = 1
    end
-   
+
    --Draw bar
    if name ~= "armour" then
       if left then
@@ -342,7 +342,7 @@ function destroy()
 end
 
 function render( dt, dt_mod )
-   
+
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
@@ -355,29 +355,29 @@ function render( dt, dt_mod )
    autonav = player.autonav()
    credits = player.credits()
    update_wset() --Rather hacky, waiting for fix
-   
+
    --Radar
    gfx.renderRect( radar_x, radar_y, radar_w, radar_h, col_black )
    gui.radarRender( radar_x, radar_y )
-   
+
    gfx.renderTex( player_pane, pl_pane_x, pl_pane_y, 1, 1 )
-   
+
    --Slots
    --Right side
    local i = 1
    while i <= math.max( 4, math.min( max_slots, #wset )) do
-      
+
       local slot_x = slot_start_x + (i-1) * slot_w
       if i <= #wset then
          --There is something in this slot
          gfx.renderRect( slot_x, 0, slot_w, slot_h, col_slot_bg ) --Background
-         
-         gfx.renderTexRaw( weap_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image 
-         
+
+         gfx.renderTexRaw( weap_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
+
          if wset[i].temp > 0 then
             gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * wset[i].temp/2, col_slot_heat ) --Heat
          end
-         
+
          --Cooldown
          local coolinglevel = wset[i].cooldown
          if wset[i].charge then
@@ -386,11 +386,11 @@ function render( dt, dt_mod )
          if coolinglevel ~= nil and coolinglevel < 1. then
             local texnum = round((1-coolinglevel)*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready. Also, reversed
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
-            
+
             --A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
             --is this an error in my code or bobbens' ?
          end
-         
+
          --Ammo
          if wset[i].left then
             local txtcol = col_txt_std
@@ -399,7 +399,7 @@ function render( dt, dt_mod )
             end
             gfx.print( true, tostring( wset[i].left), slot_x + slot_txt_offs_x, slot_txt_offs_y, txtcol, slot_txt_w, true )
          end
-         
+
          --Lock-on
          if wset[i].lockon ~= nil and ptarget and wset[i].lockon > 0. then
             if wset[i].lockon < 1. then
@@ -409,8 +409,8 @@ function render( dt, dt_mod )
                gfx.renderTex( lockonB, slot_x + slot_img_offs_x + slot_img_w/2 - lockon_w/2, slot_img_offs_y + slot_img_w/2 - lockon_h/2, 1, 1 )
             end
          end
-         
-         
+
+
          --Frame
          local postfix = ""
          if i+1 > #wset then
@@ -423,7 +423,7 @@ function render( dt, dt_mod )
          else
             gfx.renderTex( _G["slotC" .. postfix], slot_x, 0, 1, 1 )
          end
-               
+
       else
          if i == 1 then
             gfx.renderTex( slotAe, slot_x, 0, 1, 1 )
@@ -435,11 +435,11 @@ function render( dt, dt_mod )
       end
       i = i + 1
    end
-   
+
    --Left side
    i = 1
    while i <= math.max( 4, math.min( max_slots, #aset )) do
-   
+
       local slot_x = screen_w - slot_start_x - i * slot_w
       if i <= #aset then
          --There is something in this slot
@@ -450,7 +450,7 @@ function render( dt, dt_mod )
             gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * aset[i].temp, col_slot_heat ) -- Background (heat)
          end
 
-         gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image 
+         gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image
 
          if aset[i].state == "on" then
             gfx.renderTex( active, slot_x + slot_img_offs_x, slot_img_offs_y )
@@ -458,14 +458,14 @@ function render( dt, dt_mod )
          --Cooldown
             local texnum = round(aset[i].cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
-            
+
             --A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
             --is this an error in my code or bobbens' ?
          elseif aset[i].state == "on" then
             --"Heat"
             gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * (1-aset[i].duration), col_slot_heat )
          end
-         
+
          --Frame
          local postfix = ""
          if i+1 > #aset then
@@ -478,7 +478,7 @@ function render( dt, dt_mod )
          else
             gfx.renderTexRaw( _G["slotC" .. postfix], slot_x + slot_w, 0, -1*_G["slotC"..postfix.."_w"], _G["slotC"..postfix.."_h"], 1, 1, 0, 0, 1, 1 )
          end
-               
+
       else
          if i == 1 then
             gfx.renderTexRaw( slotAe, slot_x + slot_w, 0, -1*slotAe_w, slotAe_h, 1, 1, 0, 0, 1, 1 )
@@ -502,7 +502,7 @@ function render( dt, dt_mod )
       col = col_txt_enm
    end
    render_bar( true, "fuel", fuel/fuel_max, txt, col )
-   
+
    --Armour
    txt = string.format( "%s%% (%s)", round( armour ), round( stats.armour * armour / 100 ) )
    col = col_txt_std
@@ -510,7 +510,7 @@ function render( dt, dt_mod )
       col = col_txt_enm
    end
    render_bar( true, "armour", armour/100, txt, col, stress/100 )
-   
+
    --Shield
    txt = string.format( "%s%% (%s)", round( shield ), round( stats.shield * shield / 100 ) )
    col = col_txt_std
@@ -520,7 +520,7 @@ function render( dt, dt_mod )
       col = col_txt_enm
    end
    render_bar( true, "shield", shield/100, txt, col )
-   
+
    --Energy
    txt = string.format( "%s%% (%s)", round( energy ), round( stats.energy * energy / 100 ) )
    col = col_txt_std
@@ -530,7 +530,7 @@ function render( dt, dt_mod )
       col = col_txt_enm
    end
    render_bar( false, "energy", energy/100, txt, col )
-   
+
    --Heat
    txt = round(heat) .. "K"
    heat = math.max( math.min( (heat - 250)/1.75, 100 ), 0 )
@@ -541,7 +541,7 @@ function render( dt, dt_mod )
       col = col_txt_enm
    end
    render_bar( false, "heat", heat/100, txt, col )
-   
+
    --Speed
    local hspeed
    if stats.speed_max <= 0 then hspeed = 0
@@ -563,16 +563,16 @@ function render( dt, dt_mod )
       col = col_txt_wrn
    end
    render_bar( false, "speed", hspeed/100, txt, col )
-   
+
    --Cargo
    gfx.print( true, cargo_free, cargo_x, cargo_y, col_txt_std, cargo_w, true)
-   
+
    --Money
    gfx.print( true, largeNumber( player.credits(), 2 ), credits_x, credits_y, col_txt_std, credits_w, true )
-   
+
    --Time
    gfx.print( true, time.str( time.get(), 2 ), time_x, time_y, col_txt_std, time_w, true )
-   
+
 end
 
 function end_cooldown ()

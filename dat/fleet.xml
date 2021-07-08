@@ -979,7 +979,7 @@
   <ai>baddie_norun</ai>
   <faction>Pirate</faction>
   <pilots>
-   <pilot name="Pirate Kestrel" ship="Pirate Kestrel"></pilot>   
+   <pilot name="Pirate Kestrel" ship="Pirate Kestrel"></pilot>
    <pilot name="Pirate Admonisher" ship="Pirate Admonisher"></pilot>
    <pilot name="Pirate Rhino" ship="Pirate Rhino"></pilot>
    <pilot name="Pirate Shark" ship="Pirate Shark"></pilot>

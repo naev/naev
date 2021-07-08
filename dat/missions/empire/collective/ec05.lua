@@ -108,7 +108,7 @@ function create ()
    if not misn.claim(missys) then
       misn.finish(false)
    end
- 
+
    misn.setNPC( _("Dimitri?"), "unknown.webp", bar_desc )
    credits = 2000000
 end
@@ -141,7 +141,7 @@ function accept ()
    osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
    osd_msg[3] = osd_msg[3]:format(misn_base:name())
    misn.osdCreate(misn_title, osd_msg)
-   
+
    tk.msg( title[2], string.format(text[3], misn_base:name() ) )
    tk.msg( title[3], string.format(text[4], _("Eiroik")))
    emp_addCollectiveLog( log_text_intro )
@@ -336,7 +336,7 @@ function add_escorts( landed )
    else
       param = last_sys
    end
-   
+
    if escorts == nil then escorts = {} end
    paci = pilot.add( "Empire Pacifier", "Empire", param, nil, {ai="escort_player"} )
    escorts[#escorts + 1] = paci

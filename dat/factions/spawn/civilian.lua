@@ -7,7 +7,7 @@ function spawn_patrol ()
 
     -- Compute the hostile presence
     local host = 0
-    for k,fact in pairs(faction.get("Civilian"):enemies()) do 
+    for k,fact in pairs(faction.get("Civilian"):enemies()) do
        host = host + system.cur():presence(fact)
     end
     host = host / system.cur():presence(faction.get("Civilian"))
@@ -34,7 +34,7 @@ function spawn_patrol ()
        local select = rnd.rnd(1, #adships)
        scom.addPilot( pilots, adships[select][1], adships[select][2] );
     end
-    
+
 
 
     return pilots
@@ -43,16 +43,16 @@ end
 -- @brief Creation hook.
 function create ( max )
     local weights = {}
-    
+
     -- Create weights for spawn table
     weights[ spawn_patrol  ] = 100
-    
+
     -- Create spawn table base on weights
     spawn_table = scom.createSpawnTable( weights )
-    
+
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )
-    
+
     return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
 end
 
@@ -60,18 +60,18 @@ end
 -- @brief Spawning hook
 function spawn ( presence, max )
     local pilots
-    
+
     -- Over limit
     if presence > max then
         return 5
     end
-    
+
     -- Actually spawn the pilots
     pilots = scom.spawn( spawn_data, "Civilian" )
-    
+
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )
-    
+
     return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
 end
 

@@ -33,7 +33,7 @@ function create ()
    landhook = hook.land("leave")
 end
 
-function begin ()  
+function begin ()
    thissystem = system.cur()
 
    -- thissystem and source_system must be adjacent (for those who use player.teleport)

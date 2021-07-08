@@ -21,7 +21,7 @@ header_table["Independent"] = _("Welcome to Universal News Feed. All the headlin
 header_table["Empire"] = _("Welcome to the Empire News Centre.")
 header_table["Dvaered"] = _("Welcome to the Dvaered News Centre. All that happens. In simple words. So you can understand.")
 header_table["Goddard"] = _("Welcome to Goddard News Centre. We bring you the news from around the Empire.")
-header_table["Pirate"] = _("Pirate News. News that matters.") 
+header_table["Pirate"] = _("Pirate News. News that matters.")
 header_table["Sirius"] = _("Sirius News Reel. Words of the Sirichana for all.")
 header_table["FLF"] = _("The word of the Free Resistance.")
 header_table["Frontier"] = _("News from the Frontier Alliance.")
@@ -194,7 +194,7 @@ articles["Dvaered"] = {
    --]]
    {
       tag = N_("Sirius Weaker Than Ever"),
-      desc = _("This cycle breaks the negative record for fewest pilgrims to Mutris since the formation of House Sirius. This weakness is yet another sign that House Dvaered must increase patrols on the border and into Sirius space.") 
+      desc = _("This cycle breaks the negative record for fewest pilgrims to Mutris since the formation of House Sirius. This weakness is yet another sign that House Dvaered must increase patrols on the border and into Sirius space.")
    }
 }
 

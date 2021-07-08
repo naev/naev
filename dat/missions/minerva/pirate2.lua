@@ -67,7 +67,7 @@ They smiles at you.]]))
       {_("Accept the job"), "accept"},
       {_("Kindly decline"), "decline"},
    } )
-   
+
    vn.label("decline")
    vn.na(_("You decline their offer and take your leave."))
    vn.done()
@@ -116,7 +116,7 @@ They wink at you.]]))
       end )
       vn.sfxVictory()
       vn.run()
-   
+
       shiplog.append( logidstr, _("You succeeded in destroying Za'lek drones and making it seem like the Dvaered were involved.") )
 
       misn.finish(true)

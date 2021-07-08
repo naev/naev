@@ -57,7 +57,7 @@ text[6] = _([[As your ship touches ground, you see Lt. Commander Dimitri come ou
 osd_msg = {}
 osd_msg[1] = _("Fly to %s and land on %s")
 osd_msg[2] = _("Return to %s with your findings")
-osd_msg["__save"] = true 
+osd_msg["__save"] = true
 
 log_text = _([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on Omega Station again later.]])
 

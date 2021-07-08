@@ -48,7 +48,7 @@ function control ()
    -- Check if we are near enough
    elseif task == "approach" then
       planet = mem.approach
-      
+
       if ai.dist( planet ) < planet_dist + ai.minbrakedist() then
          ai.poptask()
          ai.pushtask("idle")

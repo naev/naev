@@ -2,7 +2,7 @@
 -- argument chat: A table containing:
 -- pilot: The pilot to say the text
 -- text: The text to be said
--- 
+--
 -- Example usage: hook.timer(2000, "chatter", {pilot = p, text = "Hello, space!"})
 function chatter(chat)
     if chat.pilot:exists() then

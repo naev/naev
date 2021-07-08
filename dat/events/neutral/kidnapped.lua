@@ -10,7 +10,7 @@
   </notes>
  </event>
 --]]
---[[ 
+--[[
 --Event for kidnapped mission.
 --]]
 
@@ -23,7 +23,7 @@ function create ()
     hook.pilot(panma, "death", "finish")
     hook.land("finish")
     hook.jumpout("finish")
-    
+
     yohail = hook.timer( 2000., "hailme" );
 end
 

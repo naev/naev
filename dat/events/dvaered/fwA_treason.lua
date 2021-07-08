@@ -13,7 +13,7 @@
   </notes>
  </event>
  --]]
---[[ 
+--[[
 --Event for Frontier Invasion campaign. One proposes to the player to betray Klank
 
    Stages:

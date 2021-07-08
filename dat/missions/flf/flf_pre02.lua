@@ -121,7 +121,7 @@ osd_desc[3] = _("Return to the FLF base")
 osd_desc["__save"] = true
 DVosd[1] = _("Fly to the %s system and land on %s")
 DVosd["__save"] = true
-   
+
 npc_name = _("FLF petty officer")
 npc_desc = _("There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar.")
 

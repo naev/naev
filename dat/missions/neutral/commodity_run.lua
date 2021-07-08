@@ -79,10 +79,10 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
- 
+
    misplanet = planet.cur()
    missys = system.cur()
-   
+
    if commchoices == nil then
       local std = commodity.getStandard();
       chosen_comm = std[rnd.rnd(1, #std)]:nameRaw()

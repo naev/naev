@@ -30,7 +30,7 @@ require "numstring"
 bar_desc = _("You see a bunch of guys and gals, excitedly whispering over some papers, which seem to contain column after column of raw numbers. Two of them don't participate in the babbling, but look at you expectantly.")
 
 -- Mission details.
-misn_title = _("DIY Nerds") 
+misn_title = _("DIY Nerds")
 misn_reward = creditstring(20000) -- 20K
 misn_desc = _("Cart some nerds to their contest, and back.")
 
@@ -50,7 +50,7 @@ title[2] = _("We have a deal!")
 text[2] = _([[Upon accepting the task, you see the entire group relax visibly, and you can almost feel Mia's boldness fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
     As the others scramble to get up from their cramped table and start to gather their belongings, it is again up to Mia to address you:
     "Really? You'll do it? Um, great. Fantastic. I just knew that eventually, someone desperate would turn up. OK, we're set to go. We better take off immediately and go directly to %s, or we'll be late for the contest!"]])
-  
+
 -- right planet, in time
 title[3] = _("Happy nerds")
 text[3] = _([["Good job, %s," Mia compliments you upon arrival. "We'll now go win the competition and celebrate a bit. You better stay in the system. We will hail you in about 4 or 5 periods, so you can pick us up an' bring us back to %s."

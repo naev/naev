@@ -38,7 +38,7 @@ misn_title = _("Collective Espionage")
 misn_desc = {}
 misn_desc[1] = _("Scan the Collective systems for wireless communications")
 misn_desc[2] = _("Travel back to %s in %s")
-misn_desc["__save"] = true 
+misn_desc["__save"] = true
 
 title = {}
 title[1] = _("Lt. Commander Dimitri")
@@ -52,7 +52,7 @@ text[2] = _([["You need to jump to each of the systems indicated on your map, an
    "Like I said, it's best if you tried to avoid the drones, but if you think you can take them, go for it! Good luck."]])
 text[3] = _([[After landing, Lt. Commander Dimitri greets you on the land pad.
     "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]])
-    
+
 timermsg = _("Scanning... %ss remaining.")
 
 log_text = _([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on Omega Station.]])

@@ -96,7 +96,7 @@ function formations.wedge(leader)
       radius = 100 * (math.floor(i / 2) + 1) -- Increase the radius every 2 positions.
    end
 end
-      
+
 function formations.echelon_left(leader)
    --This formation forms a "/", with the fleader in the middle.
    local pilots = leader:followers()

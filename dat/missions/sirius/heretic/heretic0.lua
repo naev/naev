@@ -25,7 +25,7 @@
 require "numstring"
 require "missions/sirius/common"
 
-    
+
 --the intro messages
 bmsg = {}
 bmsg[1] = _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare coolly and he half-heartedly tries to strikes up a conversation. "Nice drinks they have here." You feign interest so as not to be impolite.

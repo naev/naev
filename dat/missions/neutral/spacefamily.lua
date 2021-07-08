@@ -48,7 +48,7 @@ directions[2] = _([[Harrus steps out of your ship and takes a look around the sp
     You heave a sigh, and proceed to the registration desk to get the docking formalities out of the way.]])
 directions[3] = _([["The sky! Have you LOOKED at it?"
     Harrus rounds on you with a furious expression. Your keen understanding of the human body language tells you he isn't happy. You thought he might be satisfied with the state of the spacedock, since it's kept in prime condition, and indeed he was. That changed as soon as he looked up.
-    "It's com-plete-ly the wrong color!" Harrus fumes. "It's a mockery of our standards of living, and it's right there overhead! Do you want my children to grow up believing the sky is supposed to look like, like... like THAT?" Harrus again looks up at the heavens that offend him so. "No, captain, my patience is at an end. I expect you to take me and my family to %s in the %s system. We've got relatives there who will take us in. I will waste my time with this pointless endeavour no longer!" 
+    "It's com-plete-ly the wrong color!" Harrus fumes. "It's a mockery of our standards of living, and it's right there overhead! Do you want my children to grow up believing the sky is supposed to look like, like... like THAT?" Harrus again looks up at the heavens that offend him so. "No, captain, my patience is at an end. I expect you to take me and my family to %s in the %s system. We've got relatives there who will take us in. I will waste my time with this pointless endeavour no longer!"
     Before you get a chance at making a snappy retort, Harrus storms back to his (your) quarters, leaving you to either vent your anger on his wife, who is hovering nearby, or keep it to yourself. Since the poor woman has done nothing wrong, you grimly return to the bridge.]])
 title[4] = _("Rid of them at last")
 text[3] = _([[You land at your final stop in your quest to take the space family home, and not a moment too soon for both you and Harrus. Harrus stomps off your ship without so much as a greeting, his wife and children in tow, and you are just as happy to see them gone.
@@ -79,7 +79,7 @@ log_text = _([[You rescued a bad-tempered man and his family who were stranded a
 
 
 function create ()
-   -- Note: this mission does not make any system claims. 
+   -- Note: this mission does not make any system claims.
    misn.accept() -- You boarded their ship, now you're stuck with them.
    misn.setTitle( misn_title )
    misn.setReward( misn_reward )

@@ -104,7 +104,7 @@ end
 
 function accept ()
    misn.accept()
-   
+
    local q = player.pilot():cargoFree()
    credits = credits_factor * q + credits_mod
 

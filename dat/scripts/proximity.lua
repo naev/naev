@@ -5,7 +5,7 @@
 -- radius: The radius around the location or anchor
 -- focus: The pilot that's polled for. If omitted, defaults to the player.
 -- funcname: The name of the function to be called when the player is in proximity.
--- 
+--
 -- Example usage: hook.timer(500, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "function"})
 -- Example usage: hook.timer(500, "proximity", {anchor = mypilot, radius = 500, funcname = "function"})
 -- Example usage: hook.timer(500, "proximity", {anchor = mypilot, radius = 500, funcname = "function", focus = theirpilot})

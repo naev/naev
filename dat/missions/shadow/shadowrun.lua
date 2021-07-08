@@ -146,7 +146,7 @@ function create ()
     -- Developer note: changing these numbers may have consequences for translators (if we support more languages later on).
     timelimit1 = 20 -- In STP
     timelimit2 = 50 -- In STP
-    
+
     misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual.webp", bar_desc )
 end
 
@@ -156,7 +156,7 @@ function accept()
     else
         tk.msg(title[1], text[1])
     end
-    if tk.yesno(title[2], text[3]) then 
+    if tk.yesno(title[2], text[3]) then
         misn.accept()
         tk.msg(title[3], string.format(text[4], planetname, sysname, sysname2, shipname))
         tk.msg(title[3], string.format(text[5], planetname, timelimit1, timelimit2, shipname, shipname))
@@ -164,7 +164,7 @@ function accept()
         -- Set deadlines
         deadline1 = time.get() + time.create(0, timelimit1, 0)
         deadline2 = time.get() + time.create(0, timelimit2, 0)
-        
+
         misn.setTitle(misn_title)
         misn.setReward(misn_reward)
         misn.setDesc(string.format(misn_desc[1], planetname, sysname, sysname2, shipname))
@@ -241,15 +241,15 @@ function date()
 end
 
 function dateresolution(time)
-    if time - time.get() < time.create(0, 0, 5000) and dateres > 30 then 
+    if time - time.get() < time.create(0, 0, 5000) and dateres > 30 then
         dateres = 30
         hook.rm(datehook)
         datehook = hook.date(time.create(0, 0, dateres), "date")
-    elseif time - time.get() < time.create(0, 1, 0) and dateres > 100 then 
+    elseif time - time.get() < time.create(0, 1, 0) and dateres > 100 then
         dateres = 100
         hook.rm(datehook)
         datehook = hook.date(time.create(0, 0, dateres), "date")
-    elseif time - time.get() >= time.create(0, 1, 0) and dateres < 500 then 
+    elseif time - time.get() >= time.create(0, 1, 0) and dateres < 500 then
         dateres = 500
         hook.rm(datehook)
         datehook = hook.date(time.create(0, 0, dateres), "date")
@@ -270,7 +270,7 @@ function enter()
         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(-20,0) )
         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,-20) )
     end
-    
+
     -- Empire ships around planet
     if system.cur() == sys then
         pilot.clear()
@@ -295,7 +295,7 @@ function enter()
         seiryuu:control()
         seiryuu:setInvincible(true)
         seiryuu:setHilight(true)
-        
+
         hook.pilot(seiryuu, "board", "board")
         hook.pilot(seiryuu, "death", "abort")
     end

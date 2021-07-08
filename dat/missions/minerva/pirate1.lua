@@ -71,7 +71,7 @@ function accept ()
       {_("Accept the job"), "accept"},
       {_("Kindly decline"), "decline"},
    } )
-   
+
    vn.label("decline")
    vn.na(_("You decline their offer and take your leave."))
    vn.done()
@@ -189,10 +189,10 @@ end
 
 function heartbeat ()
    local pp = player.pilot()
-   local dist =  pp:pos():dist( drone:pos() ) 
+   local dist =  pp:pos():dist( drone:pos() )
    if dist < 1000 then
       player.msg(_("#gThe drone begins to follow you."))
-      misn_state=1 
+      misn_state=1
       misn.osdActive(2)
       drone:taskClear()
       drone:follow(pp)

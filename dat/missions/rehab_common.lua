@@ -40,7 +40,7 @@ function create()
     if rep >= 0 then
        misn.finish()
     end
-    
+
     -- Don't spawn this mission if the player is buddies with this faction's enemies.
     for _, enemy in pairs(fac:enemies()) do
        if enemy:playerStanding() > 20 then
@@ -49,7 +49,7 @@ function create()
     end
 
     setFine(rep)
-    
+
     misn.setTitle(misn_title:format(fac:name()))
     misn.setDesc(misn_desc:format(fac:name(), creditstring(fine)))
     misn.setReward(misn_reward)
@@ -60,12 +60,12 @@ function accept()
         tk.msg("", lowmoney:format(creditstring(fine)))
         misn.finish()
     end
-    
+
     player.pay(-fine)
     tk.msg(misn_title:format(fac:name()), accepted:format(fac:name(), fac:name(), fac:name()))
-    
+
     fac:modPlayerRaw(-rep)
-    
+
     misn.accept()
     osd_msg[1] = gettext.ngettext(
        "You need to gain %d more reputation",
@@ -73,9 +73,9 @@ function accept()
        -rep
     ):format(-rep)
     misn.osdCreate(misn_title:format(fac:name()), osd_msg)
-    
+
     standhook = hook.standing("standing")
-    
+
     excess = 5 -- The maximum amount of reputation the player can LOSE before the contract is void.
 end
 

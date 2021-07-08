@@ -34,7 +34,7 @@ function create ()
    landhook = hook.land("leave")
 end
 
-function begin ()  
+function begin ()
    thissystem = system.cur()
 
    -- thissystem and source_system must be adjacent (for those who use player.teleport)
@@ -47,7 +47,7 @@ function begin ()
       evt.finish(false)
    end
 
-   --choose 1 particular planet 
+   --choose 1 particular planet
    plan = thissystem:planets()
    cand = {}
    k = 1
@@ -143,7 +143,7 @@ function attack ()
       j:setFaction("Invaders")
       j:memory().formation = form
       j:memory().aggressive = false
-      
+
       if j ~= goda then
          j:setLeader(goda)
       end

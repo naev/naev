@@ -142,7 +142,7 @@ function accept ()
       hook.land("land")
       hook.takeoff("takeoff")
       hook.enter("enter")
-      
+
       osd_desc[1] = osd_desc[1]:format( start_planet:name(), missys:name() )
       osd_desc[2] = osd_desc[2]:format( start_planet:name(), missys:name() )
       osd_desc[3] = osd_desc[3]:format( dest_planet:name(), missys:name() )
