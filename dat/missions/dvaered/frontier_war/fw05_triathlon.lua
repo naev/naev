@@ -334,8 +334,8 @@ function spawnNpcs()
             tk.msg(end_title,end_text2)
             tk.msg(end_title,end_text3)
 
-            shiplog.createLog( "frontier_war", _("Frontier War"), _("Dvaered") )
-            shiplog.appendLog( "frontier_war", log_text )
+            shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
+            shiplog.append( "frontier_war", log_text )
             misn.finish(true)
          end
       end
