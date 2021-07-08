@@ -588,7 +588,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    /* Parse final argument - table of optional parameters */
    i_parameters = 3+2*from_ship;
    fltai = NULL;
-   if (lua_gettop( L ) >= i_parameters) {
+   if (lua_gettop( L ) >= i_parameters && !lua_isnil( L, i_parameters )) {
       if (!lua_istable( L, i_parameters )) {
          NLUA_ERROR( L, _("'parameters' should be a table of options or omitted!") );
          return 0;
