@@ -64,4 +64,15 @@ outfits.standard.set = outfits.merge{
    outfits.standard.structural,
 }
 
+-- TODO proper elite outfits
+outfits.elite = {}
+outfits.elite.weapons = outfits.standard.weapons
+outfits.elite.utility = outfits.standard.utility
+outfits.elite.structural = outfits.standard.structural
+outfits.elite.set = outfits.merge{
+   outfits.elite.weapons,
+   outfits.elite.utility,
+   outfits.elite.structural,
+}
+
 return outfits
