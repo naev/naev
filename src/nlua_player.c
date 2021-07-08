@@ -204,7 +204,7 @@ static int playerL_shipname( lua_State *L )
  * @usage player.pay( 500 ) -- Gives player 500 credits
  *
  *    @luatparam number amount Amount of money to pay the player in credits.
- *    @luatparam[opt] boolean|string nohooks Set to true to not trigger pay hooks, or a strig value to pass that to the pay hook instead.
+ *    @luatparam[opt] boolean|string nohooks Set to true to not trigger pay hooks, or a string value to pass that to the pay hook instead.
  * @luafunc pay
  */
 static int playerL_pay( lua_State *L )
