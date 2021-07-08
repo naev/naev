@@ -131,6 +131,11 @@ function spawn ( presence, max )
    -- Calculate spawn data
    spawn_data = scom.choose( spawn_table )
 
+   -- Case no ship was actually spawned, just create an arbitrary delay
+   if #pilots == 0 then
+      return 10
+   end
+
    return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
 end
 
