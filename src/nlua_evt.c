@@ -49,17 +49,17 @@
  * libraries
  */
 /* evt */
-static int evt_npcAdd( lua_State *L );
-static int evt_npcRm( lua_State *L );
-static int evt_finish( lua_State *L );
-static int evt_save( lua_State *L );
-static int evt_claim( lua_State *L );
-static const luaL_Reg evt_methods[] = {
-   { "npcAdd", evt_npcAdd },
-   { "npcRm", evt_npcRm },
-   { "save", evt_save },
-   { "finish", evt_finish },
-   { "claim", evt_claim },
+static int evtL_npcAdd( lua_State *L );
+static int evtL_npcRm( lua_State *L );
+static int evtL_finish( lua_State *L );
+static int evtL_save( lua_State *L );
+static int evtL_claim( lua_State *L );
+static const luaL_Reg evtL_methods[] = {
+   { "npcAdd", evtL_npcAdd },
+   { "npcRm", evtL_npcRm },
+   { "save", evtL_save },
+   { "finish", evtL_finish },
+   { "claim", evtL_claim },
    {0,0}
 }; /**< Mission Lua methods. */
 
@@ -73,7 +73,7 @@ static const luaL_Reg evt_methods[] = {
  */
 int nlua_loadEvt( nlua_env env )
 {
-   nlua_register(env, "evt", evt_methods, 0);
+   nlua_register(env, "evt", evtL_methods, 0);
    return 0;
 }
 
@@ -175,7 +175,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
  *    @luatreturn number The ID of the NPC to pass to npcRm.
  * @luafunc npcAdd
  */
-static int evt_npcAdd( lua_State *L )
+static int evtL_npcAdd( lua_State *L )
 {
    unsigned int id;
    int priority;
@@ -222,7 +222,7 @@ static int evt_npcAdd( lua_State *L )
  *    @luatparam number id ID of the NPC to remove.
  * @luafunc npcRm
  */
-static int evt_npcRm( lua_State *L )
+static int evtL_npcRm( lua_State *L )
 {
    unsigned int id;
    int ret;
@@ -249,7 +249,7 @@ static int evt_npcRm( lua_State *L )
  *                     doesn't mark it as completed.
  * @luafunc finish
  */
-static int evt_finish( lua_State *L )
+static int evtL_finish( lua_State *L )
 {
    int b;
    Event_t *cur_event;
@@ -278,7 +278,7 @@ static int evt_finish( lua_State *L )
  *    @luatparam[opt=true] boolean enable If true sets the event to save, otherwise tells the event to not save.
  * @luafunc save
  */
-static int evt_save( lua_State *L )
+static int evtL_save( lua_State *L )
 {
    int b;
    Event_t *cur_event;
@@ -309,7 +309,7 @@ static int evt_save( lua_State *L )
  *    @luatreturn boolean true if was able to claim, false otherwise.
  * @luafunc claim
  */
-static int evt_claim( lua_State *L )
+static int evtL_claim( lua_State *L )
 {
    Claim_t *claim;
    Event_t *cur_event;
