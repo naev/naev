@@ -687,7 +687,7 @@ static int load_gameInternal( const char* file, const char* version )
    /* Initialise the ship log */
    shiplog_new();
    shiplog_load(node);
-   
+
    /* Check validity. */
    event_checkValidity();
 

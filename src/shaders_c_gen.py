@@ -265,7 +265,7 @@ def generate_c_file(f):
                     attribute,
                     shader.name,
                     attribute))
-       
+
         for uniform in shader.uniforms:
             f.write("   shaders.{}.{} = glGetUniformLocation(shaders.{}.program, \"{}\");\n".format(
                     shader.name,

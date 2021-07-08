@@ -112,7 +112,7 @@ static int physfsrwops_seek(SDL_RWops *rw, int offset, int whence)
         SDL_SetError("Attempt to seek past start of file.");
         return -1;
     } /* if */
-    
+
     if (!PHYSFS_seek(handle, (PHYSFS_uint64) pos))
     {
         SDL_SetError("PhysicsFS error: %s", PHYSFS_getLastError());

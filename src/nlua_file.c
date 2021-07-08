@@ -319,7 +319,7 @@ static int fileL_write( lua_State *L )
 }
 
 
-/** 
+/**
  * @brief Seeks in an open file.
  *
  *    @luatparam File file File to seek in.

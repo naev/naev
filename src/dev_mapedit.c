@@ -333,7 +333,7 @@ static void mapedit_btnOpen( unsigned int wid_unused, char *unused )
 {
    (void) wid_unused;
    (void) unused;
-   
+
    mapedit_loadMapMenu_open();
 
 }
@@ -362,7 +362,7 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
       gl_drawCircle( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
             2.0*r, &cRed, 0 );
    }
-   
+
    /* Render last clicked system */
    if (mapedit_iLastClickedSystem != 0) {
       sys = system_getIndex( mapedit_iLastClickedSystem );
@@ -498,7 +498,7 @@ static void mapedit_deselect (void)
    mapedit_sys    = NULL;
    mapedit_nsys   = 0;
    mapedit_msys   = 0;
-   
+
    /* Change window stuff. */
    window_modifyText( mapedit_wid, "txtSelected", "No selection" );
    window_modifyText( mapedit_wid, "txtCurrentNumSystems", "0" );
@@ -797,7 +797,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
       /* Break out of the loop, either with a correct outfitType or not */
       break;
    } while (xml_nextNode(node));
-   
+
    mapedit_deselect();
 
    /* Loop on the nodes to find all <sys> node */
@@ -830,7 +830,7 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
    } while (xml_nextNode(node));
 
    mapedit_setGlobalLoadedInfos ( ns );
-   
+
    free(file);
    xmlFreeDoc(doc);
 

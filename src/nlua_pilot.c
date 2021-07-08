@@ -3539,7 +3539,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "visplayer", .id = PILOT_VISPLAYER },
    { .name = "hilight", .id = PILOT_HILIGHT },
    { .name = "stealth", .id = PILOT_STEALTH },
-   { .name = "invisible", .id = PILOT_INVISIBLE }, 
+   { .name = "invisible", .id = PILOT_INVISIBLE },
    { .name = "norender", .id = PILOT_NORENDER },
    { .name = "hide", .id = PILOT_HIDE },
    { .name = "invincible", .id = PILOT_INVINCIBLE },

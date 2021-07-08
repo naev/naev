@@ -81,8 +81,8 @@ void ntime_update( double dt )
    if (!ntime_enable)
       return;
 
-   /* Calculate the effective time. */ dtt = naev_remainder + 
-   dt*NT_SECONDS_DT*NT_SECONDS_DIV;
+   /* Calculate the effective time. */
+   dtt = naev_remainder + dt*NT_SECONDS_DT*NT_SECONDS_DIV;
 
    /* Time to update. */
    tu             = floor( dtt );

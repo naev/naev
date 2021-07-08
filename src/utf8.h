@@ -6,7 +6,7 @@
 #include <stdint.h>
 /** @endcond */
 
-/** 
+/**
  * @file utf8.h
  * Utilities from cutef8: https://github.com/JeffBezanson/cutef8
  * @note Its current README says, "I now use and recommend utf8proc instead of this library."

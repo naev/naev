@@ -14,7 +14,7 @@
 */
 
 /** @cond */
-#if HAVE_ALLOCA_H 
+#if HAVE_ALLOCA_H
 #   include <alloca.h> /* Not available in windows, necessary for linux. */
 #endif /* HAVE_ALLOCA_H */
 #include <assert.h>
