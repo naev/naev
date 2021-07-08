@@ -596,6 +596,11 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       lua_getfield( L, i_parameters, "ai" );
       fltai = luaL_optstring( L, -1, NULL );
       lua_pop( L, 1 );
+
+      lua_getfield( L, i_parameters, "naked" );
+      if (lua_toboolean(L, -1))
+         pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
+      lua_pop( L, 1 );
    }
 
    /* Set up velocities and such. */
@@ -682,6 +687,7 @@ static int pilotL_addFleet( lua_State *L )
  *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to shipname.
  *    @luatparam[opt] table parameters Table of extra keyword arguments. Supported arguments:
  *                    "ai" (string): AI to give the pilot. Defaults to the faction's AI.
+ *                    "naked" (boolean): Whether or not to have the pilot spawn without outfits. Defaults to false.
  *    @luatreturn Pilot The created pilot.
  * @luafunc add
  */
