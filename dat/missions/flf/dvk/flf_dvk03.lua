@@ -156,7 +156,7 @@ function enter ()
          ms, s = planet.get( "Marius Station" )
 
          -- Spawn Raelid Outpost ship
-         dv_base = pilot.add( "Raelid Outpost", "Dvaered", ro:pos() , nil, "dvaered_norun" )
+         dv_base = pilot.add( "Raelid Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )
          dv_base:rmOutfit( "all" )
          dv_base:rmOutfit( "cores" )
          dv_base:addOutfit( "Dummy Systems" )
@@ -174,12 +174,12 @@ function enter ()
          -- Spawn Dvaered and Empire ships
          dv_fleet = {}
 
-         nf = pilot.addFleet( "Empire Lge Attack", ms:pos(), "empire_norun" )
+         nf = pilot.addFleet( "Empire Lge Attack", ms:pos(), {ai="empire_norun"} )
          for i, j in ipairs( nf ) do
             dv_fleet[ #dv_fleet + 1 ] = j
          end
 
-         nf = pilot.addFleet( "Dvaered Big Patrol", ro:pos(), "dvaered_norun" )
+         nf = pilot.addFleet( "Dvaered Big Patrol", ro:pos(), {ai="dvaered_norun"} )
          for i, j in ipairs( nf ) do
             dv_fleet[ #dv_fleet + 1 ] = j
          end

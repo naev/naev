@@ -162,9 +162,9 @@ function takeoff()
    else
       shiptype = "Koala"
    end
-   checkpoint[1] = pilot.add(shiptype, "Trader", location1, nil, "stationary")
-   checkpoint[2] = pilot.add(shiptype, "Trader", location2, nil, "stationary")
-   checkpoint[3] = pilot.add(shiptype, "Trader", location3, nil, "stationary")
+   checkpoint[1] = pilot.add(shiptype, "Trader", location1, nil, {ai="stationary"})
+   checkpoint[2] = pilot.add(shiptype, "Trader", location2, nil, {ai="stationary"})
+   checkpoint[3] = pilot.add(shiptype, "Trader", location3, nil, {ai="stationary"})
    for i, j in ipairs(checkpoint) do
       j:rename(string.format(_("Checkpoint %s"), i))
       j:setHilight(true)

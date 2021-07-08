@@ -182,13 +182,13 @@ function defend_system()
       end
 
   -- Create a fleet of raiding pirates
-      raider_fleet = addShips( 18, "Hyena", "Raider", raider_position, _("Raider Hyena"), "def" )
+      raider_fleet = addShips( 18, "Hyena", "Raider", raider_position, _("Raider Hyena"), {ai="def"} )
       for k,v in ipairs( raider_fleet) do
          v:setHostile()
       end
 
   -- And a fleet of defending independents
-      defense_fleet = pilot.addFleet( "DTS Defense Fleet", defense_position, "def" )
+      defense_fleet = pilot.addFleet( "DTS Defense Fleet", defense_position, {ai="def"} )
       for k,v in ipairs( defense_fleet) do
          v:setFriendly()
       end
@@ -236,7 +236,7 @@ function victorious()
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 100, 200 )
       empire_vect = starting_vect:add( math.cos(a) * d, math.sin(a) * d )
-      pilot.addFleet( "Empire Med Attack", empire_vect, "def" )
+      pilot.addFleet( "Empire Med Attack", empire_vect, {ai="def"} )
 
 end
 
@@ -259,7 +259,7 @@ end
 -- A fellow warrior says hello in passing if player jumps out of the system without landing
 function ship_enters()
       enter_vect = player.pos()
-      pilot.add( "Empire Pacifier", "Empire", enter_vect:add( 10, 10), nil, "def" )
+      pilot.add( "Empire Pacifier", "Empire", enter_vect:add( 10, 10), nil, {ai="def"} )
       hook.timer(1000, "congratulations")
 end
 function congratulations()

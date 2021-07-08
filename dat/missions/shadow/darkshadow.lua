@@ -218,7 +218,7 @@ end
 -- Enter hook
 function enter()
     if system.cur() == seirsys then
-        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), "trader" )
+        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), {ai="trader"} )
         seiryuu:setInvincible(true)
         seiryuu:control()
         if stage == 1 or stage == 6 then
@@ -237,7 +237,7 @@ function enter()
         pilot.toggleSpawn(false)
         player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
         -- Meet Joe, our informant.
-        joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Vendetta"), "trader" )
+        joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Vendetta"), {ai="trader"} )
         joe:control()
         joe:rename(_("Four Winds Informant"))
         joe:setHilight(true)

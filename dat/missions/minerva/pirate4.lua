@@ -197,7 +197,7 @@ function enter ()
       pilot.toggleSpawn(false)
 
       -- Main ship player has to protect
-      mainship = pilot.add( "Pirate Rhino", "Pirate", shippos, nil, "guard" )
+      mainship = pilot.add( "Pirate Rhino", "Pirate", shippos, nil, {ai="guard"} )
       local mem = mainship:memory()
       mem.aggressive = false -- only fight back
       mem.guardpos = shippos -- Stay around origin
@@ -306,7 +306,7 @@ function pir_reinforcements ()
    -- Reinforcement spawners
    local jmp = system.get(piratesys)
    local function addpir( shipname, leader )
-      local p = pilot.add( shipname, "Pirate", jmp, nil, "guard" )
+      local p = pilot.add( shipname, "Pirate", jmp, nil, {ai="guard"} )
       p:setFriendly(true)
       p:setLeader(l)
       local mem = p:memory()
@@ -353,7 +353,7 @@ local function spawn_dvaereds( ships )
    for k,v in ipairs(ships) do
       -- We exploit the 'guard' AI to get the Dvaered to go ontop of the
       -- interrogation ship and destroy it
-      local p = pilot.add( v, "Dvaered", jmp, nil, "guard" )
+      local p = pilot.add( v, "Dvaered", jmp, nil, {ai="guard"} )
       p:setVisplayer(true)
       local mem = p:memory()
       mem.guardpos = shippos -- Go to mainship

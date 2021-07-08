@@ -17,7 +17,7 @@ function turnon( p, po )
    -- TODO hologram-specific AI?
    local s = p:ship()
    local pos = p:pos() + vec2.newP( 0.1, rnd.rnd()*359 )
-   local np = pilot.add( s:nameRaw(), p:faction(), pos, p:name(), "escort" )
+   local np = pilot.add( s:nameRaw(), p:faction(), pos, p:name(), {ai="escort"} )
    mem.p = np
    np:setHealth( p:health() ) -- Copy health
    np:setNoDeath( true ) -- Dosen't die

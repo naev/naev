@@ -157,7 +157,7 @@ function sys_enter ()
       end
    else
       hook.timer( 3000,"do_msg2")
-      broship = pilot.add( "Gawain", "Civilian", bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), "trader" ) -- fast Gawain
+      broship = pilot.add( "Gawain", "Civilian", bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), {ai="trader"} ) -- fast Gawain
       broship:rmOutfit("cores")
       broship:cargoRm("__all")
       broship:addOutfit("Unicorp D-2 Light Plating")

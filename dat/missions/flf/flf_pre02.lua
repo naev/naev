@@ -205,7 +205,7 @@ function spawnDVReinforcements ()
    end
 
    local pos = player.pos() + vec2.new( x, y )
-   local reinforcements = pilot.addFleet( "Dvaered Big Patrol", pos, "dvaered_norun" )
+   local reinforcements = pilot.addFleet( "Dvaered Big Patrol", pos, {ai="dvaered_norun"} )
    for i, j in ipairs( reinforcements ) do
       if j:ship():class() == "Destroyer" then boss = j end
       hook.pilot( j, "death", "pilot_death_dv" )
@@ -300,7 +300,7 @@ function spawnFLF ()
    end
 
    local pos = player.pos() + vec2.new( x, y )
-   fleetFLF = addShips( 8, {"Vendetta", "Lancelot"}, "FLF", pos, {_("FLF Vendetta"), _("FLF Lancelot")}, "flf_norun" )
+   fleetFLF = addShips( 8, {"Vendetta", "Lancelot"}, "FLF", pos, {_("FLF Vendetta"), _("FLF Lancelot")}, {ai="flf_norun"} )
 end
 
 

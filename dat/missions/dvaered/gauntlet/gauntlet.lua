@@ -269,7 +269,7 @@ function wave_round_setup ()
    pp:setVel( vec2.new( 0, 0 ) )
 
    local function addenemy( shipname, pos )
-      local p = pilot.add( shipname, enemy_faction, pos, nil, "baddie_norun" )
+      local p = pilot.add( shipname, enemy_faction, pos, nil, {ai="baddie_norun"} )
       p:setInvincible(true)
       p:control(true)
       p:setHostile(true)

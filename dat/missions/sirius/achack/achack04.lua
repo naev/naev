@@ -226,7 +226,7 @@ end
 function enter()
    if stage == stages.finish then
       -- Remember, Harja will be with you. Always. Well, until the mission ends.
-      harja = addShips(1, "Shark", "Achack_sirius", enter_src, _("Harja's Shark"), "trader")[1]
+      harja = addShips(1, "Shark", "Achack_sirius", enter_src, _("Harja's Shark"), {ai="trader"})[1]
       harja:control()
       harja:setInvincible(true)
       harja:follow(player.pilot())

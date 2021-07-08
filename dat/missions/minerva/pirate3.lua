@@ -273,7 +273,7 @@ function enter ()
       local pos = planet.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.rnd(360) )
 
       local fharper = faction.dynAdd( nil, "Harper Bowdoin" )
-      harper = pilot.add( "Quicksilver", fharper, pos, "Harper", "civilian" )
+      harper = pilot.add( "Quicksilver", fharper, pos, "Harper", {ai="civilian"} )
       local mem = harper:memory()
       mem.loiter = math.huge -- Should make them loiter forever
       mem.distress = false -- Don't distress or everyone aggros

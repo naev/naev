@@ -478,7 +478,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    Fleet *flt;
    Ship *ship;
    const char *fltname, *fltai;
-   int i, first;
+   int i, first, i_parameters;
    unsigned int p;
    double a, r;
    Vector2d vv, vp, vn;
@@ -585,8 +585,18 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       }
    }
 
-   /* Parse final argument - Fleet AI Override */
-   fltai = luaL_optstring( L, 3+2*from_ship, NULL );
+   /* Parse final argument - table of optional parameters */
+   i_parameters = 3+2*from_ship;
+   fltai = NULL;
+   if (lua_gettop( L ) >= i_parameters) {
+      if (!lua_istable( L, i_parameters )) {
+         NLUA_ERROR( L, _("'parameters' should be a table of options or omitted!") );
+         return 0;
+      }
+      lua_getfield( L, i_parameters, "ai" );
+      fltai = luaL_optstring( L, -1, NULL );
+      lua_pop( L, 1 );
+   }
 
    /* Set up velocities and such. */
    if (jump != NULL) {
@@ -653,7 +663,7 @@ static int pilotL_addFleet( lua_State *L )
  *
  * @usage p = pilot.add( "Empire Shark", nil, "Empire" ) -- Creates a standard Empire Shark.
  * @usage p = pilot.add( "Hyena", "Pirate", _("Pirate Hyena") ) -- Just adds the pilot (will jump in or take off).
- * @usage p = pilot.add( "Llama", "Trader", nil, _("Trader Llama"), "dummy" ) -- Overrides AI with dummy ai.
+ * @usage p = pilot.add( "Llama", "Trader", nil, _("Trader Llama"), {ai="dummy"} ) -- Overrides AI with dummy ai.
  * @usage p = pilot.add( "Gawain", "Civilian", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
  * @usage p = pilot.add( "Empire Pacifier", "Empire", system.get("Goddard") ) -- Have the pilot jump in from the system.
  * @usage p = pilot.add( "Goddard", "Goddard", planet.get("Zhiru") , _("Goddard Goddard") ) -- Have the pilot take off from a planet.
@@ -670,7 +680,8 @@ static int pilotL_addFleet( lua_State *L )
  *    @luatparam System|Planet param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
  *              a planet it'll try to take off from it.
  *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to shipname.
- *    @luatparam[opt] string ai AI to give the pilot. Defaults to the faction's AI.
+ *    @luatparam[opt] table parameters Table of extra keyword arguments. Supported arguments:
+ *                    "ai" (string): AI to give the pilot. Defaults to the faction's AI.
  *    @luatreturn Pilot The created pilot.
  * @luafunc add
  */

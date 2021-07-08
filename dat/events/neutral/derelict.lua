@@ -76,7 +76,7 @@ function create ()
     angle = rnd.rnd() * 2 * math.pi
     dist  = rnd.rnd(400, system.cur():radius() * 0.6)
     pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.addFleet(ship, pos, "dummy")[1]
+    p     = pilot.addFleet(ship, pos, {ai="dummy"})[1]
     p:setFaction("Derelict")
     p:disable()
     p:rename("Derelict")

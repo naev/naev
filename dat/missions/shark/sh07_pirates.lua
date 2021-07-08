@@ -182,7 +182,7 @@ function enter()
       angle = rnd.rnd() * 360
       pos = vec2.newP(sysrad, angle)
 
-      baddie = pilot.add( "Gawain", "Thugs", nil, gawname, "dummy" )
+      baddie = pilot.add( "Gawain", "Thugs", nil, gawname, {ai="dummy"} )
       baddie:setHostile()
       baddie:setHilight()
       baddie:control()
@@ -213,7 +213,7 @@ function enter()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      baddie = pilot.add( "Pirate Kestrel", "Pirate", vec2.new(0,0), nil, "pirate_norun" )
+      baddie = pilot.add( "Pirate Kestrel", "Pirate", vec2.new(0,0), nil, {ai="pirate_norun"} )
       ancestor = pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) )
       hyena = pilot.add( "Hyena", "Pirate", vec2.new(0,100), _("Pirate Hyena") )
 
@@ -227,7 +227,7 @@ function enter()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      baddie = pilot.add( "Pirate Kestrel", "Pirate", vec2.new(0,0), nil, "pirate_norun" )
+      baddie = pilot.add( "Pirate Kestrel", "Pirate", vec2.new(0,0), nil, {ai="pirate_norun"} )
       ancestor = pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) )
       shark = pilot.add( "Pirate Shark", "Pirate", vec2.new(0,100) )
       hyena = pilot.add( "Hyena", "Pirate", vec2.new(100,100), _("Pirate Hyena") )
@@ -242,7 +242,7 @@ function enter()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      baddie = pilot.add( "Goddard", "Goddard", vec2.new(0,0), _("Goddard Goddard"), "pirate_norun" ) --Faction's ships come with upgraded weaponry
+      baddie = pilot.add( "Goddard", "Goddard", vec2.new(0,0), _("Goddard Goddard"), {ai="pirate_norun"} ) --Faction's ships come with upgraded weaponry
       baddie:setFaction("Pirate")
       baddie:changeAI( "pirate" )
 

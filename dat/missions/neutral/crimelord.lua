@@ -127,7 +127,7 @@ function spawnBaddies ()
    end
 
    local pp = player.pilot()
-   thugs = addShips( 4, "Admonisher", "Thugs", sp, _("Thug"), ai )
+   thugs = addShips( 4, "Admonisher", "Thugs", sp, _("Thug"), {ai=ai} )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:setHostile(true) --they don't like you
       pilot_object:rmOutfit("all") --strip them down

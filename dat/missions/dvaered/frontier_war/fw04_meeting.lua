@@ -384,11 +384,11 @@ end
 -- Spawn the alpha squadron
 function spawnAlpha()
    alpha = {}
-   alpha[1] = pilot.add( "Hyena", "Dvaered", targpla, _("Captain Leblanc"), "baddie" )
-   alpha[2] = pilot.add( "Hyena", "Dvaered", destpla, _("Lieutenant Strafer"), "baddie" )
-   alpha[3] = pilot.add( "Hyena", "Dvaered", targpla, _("A-NightClaws-3"), "baddie" )
-   alpha[4] = pilot.add( "Hyena", "Dvaered", targpla, _("A-NightClaws-4"), "baddie" )
-   alpha[5] = pilot.add( "Hyena", "Dvaered", destpla, _("A-NightClaws-5"), "baddie" )
+   alpha[1] = pilot.add( "Hyena", "Dvaered", targpla, _("Captain Leblanc"), {ai="baddie"} )
+   alpha[2] = pilot.add( "Hyena", "Dvaered", destpla, _("Lieutenant Strafer"), {ai="baddie"} )
+   alpha[3] = pilot.add( "Hyena", "Dvaered", targpla, _("A-NightClaws-3"), {ai="baddie"} )
+   alpha[4] = pilot.add( "Hyena", "Dvaered", targpla, _("A-NightClaws-4"), {ai="baddie"} )
+   alpha[5] = pilot.add( "Hyena", "Dvaered", destpla, _("A-NightClaws-5"), {ai="baddie"} )
 
    Aidlehooks = {}
    for i, p in ipairs(alpha) do
@@ -748,9 +748,9 @@ function spawnKillers()
    misn.osdCreate( osd_title, {osd_text5} )
 
    killers = {}
-   killers[1] = pilot.add( "Hyena", "Warlords", haltpla, _("Curiatius"), "baddie_norun" )
-   killers[2] = pilot.add( "Shark", "Warlords", haltpla, _("Curiatius"), "baddie_norun" )
-   killers[3] = pilot.add( "Lancelot", "Warlords", haltpla, _("Curiatius"), "baddie_norun" )
+   killers[1] = pilot.add( "Hyena", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[2] = pilot.add( "Shark", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
+   killers[3] = pilot.add( "Lancelot", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
 
    deadkillers = 0
    for i = 1, #killers do

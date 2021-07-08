@@ -117,8 +117,8 @@ function enter()
         local waypoint12 = vec2.new(1500, 3000)
         local waypoint22 = vec2.new(1500, -500)
 
-        fleet1 = pilot.addFleet("Empire Flanking Fleet", fleetpos1, "empire_norun")
-        fleet2 = pilot.addFleet("Empire Flanking Fleet", fleetpos2, "empire_norun")
+        fleet1 = pilot.addFleet("Empire Flanking Fleet", fleetpos1, {ai="empire_norun"})
+        fleet2 = pilot.addFleet("Empire Flanking Fleet", fleetpos2, {ai="empire_norun"})
         empireAttack(fleet1)
         empireAttack(fleet2)
 

@@ -128,9 +128,9 @@ function takeoff()
    dist3 = rnd.rnd() * system.cur():radius()
    angle3 = rnd.rnd() * 2 * math.pi
    location3 = vec2.new(dist3 * math.cos(angle3), dist3 * math.sin(angle3))
-   checkpoint[1] = pilot.add("Goddard", "Trader", location1, nil, "stationary")
-   checkpoint[2] = pilot.add("Goddard", "Trader", location2, nil, "stationary")
-   checkpoint[3] = pilot.add("Goddard", "Trader", location3, nil, "stationary")
+   checkpoint[1] = pilot.add("Goddard", "Trader", location1, nil, {ai="stationary"})
+   checkpoint[2] = pilot.add("Goddard", "Trader", location2, nil, {ai="stationary"})
+   checkpoint[3] = pilot.add("Goddard", "Trader", location3, nil, {ai="stationary"})
    for i, j in ipairs(checkpoint) do
       j:rename( string.format(_("Checkpoint %s"), i) )
       j:setHilight(true)

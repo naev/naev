@@ -2,7 +2,7 @@
 -- @brief Wrapper for pilot.add() that can operate on tables of ships.
 --
 -- @usage pilots = addShips( 1, "Hyena", "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
--- @usage pilots = addShips( 1, "Hyena", "Pirate", nil, nil, "pirate_norun" ) -- Ditto, but use the "norun" AI variant.
+-- @usage pilots = addShips( 1, "Hyena", "Pirate", nil, nil, {ai="pirate_norun"} ) -- Ditto, but use the "norun" AI variant.
 -- @usage pilots = addShips( 2, { "Rhino", "Koala" }, "Trader" ) -- Creates four Trader ships.
 --
 --    @luaparam count Number of times to repeat the pattern.
@@ -10,13 +10,14 @@
 --    @luaparam faction Faction to give the pilot.
 --    @luaparam location Location to jump in from, take off from, or appear at.
 --    @luaparam pilotname Name to give the pilot.
---    @luaparam ai AI to give the pilot.
+--    @luaparam parameters Table of extra parameters to pass pilot.add(), e.g. {ai="escort"}.
 --    @luareturn Table of created pilots.
+--
+--    @TODO: With a little work we can support a table of parameters tables, but no one even wants that. (Yet?)
 -- @luafunc addShips
 --]]
-function addShips( count, ship, faction, location, pilotname, ai )
+function addShips( count, ship, faction, location, pilotname, parameters )
    local pilotnames = {}
-   local ais = {}
    local locations = {}
    local factions = {}
    local out = {}
@@ -28,7 +29,6 @@ function addShips( count, ship, faction, location, pilotname, ai )
       ship = { ship }
    end
    pilotnames= _buildDupeTable( pilotname, #ship )
-   ais       = _buildDupeTable( ai, #ship )
    locations = _buildDupeTable( location, #ship )
    factions  = _buildDupeTable( faction, #ship )
    if factions[1] == nil then
@@ -41,7 +41,7 @@ function addShips( count, ship, faction, location, pilotname, ai )
    end
    for i=1,count do -- Repeat the pattern as necessary.
       for k,v in ipairs(ship) do
-         out[k+(i-1)*#ship] = pilot.add( ship[k], factions[k], locations[k], pilotnames[k], ais[k] )
+         out[k+(i-1)*#ship] = pilot.add( ship[k], factions[k], locations[k], pilotnames[k], parameters )
       end
    end
    if #out > 1 then

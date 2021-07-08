@@ -369,7 +369,7 @@ function spawn_advisor ()
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
 
-   advisor = pilot.add( "Lancelot", "Mercenary", pos, nil, "baddie_norun" )
+   advisor = pilot.add( "Lancelot", "Mercenary", pos, nil, {ai="baddie_norun"} )
    hailie = hook.timer( 2000, "hailme" )
 
    hailed[#hailed+1] = advisor

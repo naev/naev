@@ -142,7 +142,7 @@ function enter ()
          ro, s = planet.get( "Raglan Outpost" )
 
          -- Spawn Raglan Outpost ship
-         dv_base = pilot.add( "Raglan Outpost", "Dvaered", ro:pos() , nil, "dvaered_norun" )
+         dv_base = pilot.add( "Raglan Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )
          dv_base:rmOutfit( "all" )
          dv_base:rmOutfit( "cores" )
          dv_base:addOutfit( "Dummy Systems" )
@@ -162,7 +162,7 @@ function enter ()
             "Dvaered Goddard", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Ancestor", "Dvaered Ancestor",
             "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta",
             "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta"}
-         dv_fleet = addShips( 1, dv_ships, "Dvaered", ro:pos(), nil, "dvaered_norun" )
+         dv_fleet = addShips( 1, dv_ships, "Dvaered", ro:pos(), nil, {ai="dvaered_norun"} )
 
          for i, j in ipairs( dv_fleet ) do
             j:control()

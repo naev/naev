@@ -254,7 +254,7 @@ end
 function enter()
     if system.cur() == misssys[1] and stage == 1 and missend == false then
         -- case enter system where escorts wait
-        escorts = addShips( 3, "Lancelot", "Four Winds", vec2.new(0, 0), _("Four Winds Escort"), "baddie_norun" )
+        escorts = addShips( 3, "Lancelot", "Four Winds", vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
         for i, j in ipairs(escorts) do
             if not alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
@@ -278,7 +278,7 @@ function jumpin()
     end    
 
     if stage == 0 and system.cur() == rebinasys then -- put Rebina's ship
-        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), "trader" )
+        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
         seiryuu:control(true)
         seiryuu:setActiveBoard(true)
         seiryuu:setInvincible(true)
@@ -312,7 +312,7 @@ function jumpin()
         pilot.clearSelect("Pirate")
 
         -- Spawn the escorts.
-        escorts = addShips( 3, "Lancelot", "Four Winds", origin, _("Four Winds Escort"), "baddie_norun" )
+        escorts = addShips( 3, "Lancelot", "Four Winds", origin, _("Four Winds Escort"), {ai="baddie_norun"} )
         for i, j in ipairs(escorts) do
             if not alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
@@ -386,7 +386,7 @@ function jumpin()
             end
             jp2go = system.cur():jumpDist(misssys[4])
             if jp2go <= 2 and jp2go > 0 then -- Encounter
-                ambush = pilot.addFleet(string.format("Shadowvigil Ambush %i", 3 - jp2go), vec2.new(0, 0), "baddie_norun")
+                ambush = pilot.addFleet(string.format("Shadowvigil Ambush %i", 3 - jp2go), vec2.new(0, 0), {ai="baddie_norun"})
                 kills = 0
                 for i, j in ipairs(ambush) do
                     if j:exists() then
@@ -409,7 +409,7 @@ function jumpin()
 
     elseif system.cur() == seirsys then -- not escorting.
         -- case enter system where Seiryuu is
-        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), "trader" )
+        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(0, -2000), _("Seiryuu"), {ai="trader"} )
         seiryuu:setInvincible(true)
         if missend then
             seiryuu:setActiveBoard(true)

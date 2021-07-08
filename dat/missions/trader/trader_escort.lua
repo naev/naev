@@ -280,15 +280,15 @@ function spawnConvoy ()
    end
 
    if convoysize == 1 then
-      ambush = pilot.addFleet( "Trader Ambush 1", ambush_src, "baddie_norun" )
+      ambush = pilot.addFleet( "Trader Ambush 1", ambush_src, {ai="baddie_norun"} )
    elseif convoysize == 2 then
-      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(1,2) ), ambush_src, "baddie_norun" )
+      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(1,2) ), ambush_src, {ai="baddie_norun"} )
    elseif convoysize == 3 then                                                                         
-      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(2,3) ), ambush_src, "baddie_norun" )
+      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(2,3) ), ambush_src, {ai="baddie_norun"} )
    elseif convoysize == 4 then                                                                         
-      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(2,4) ), ambush_src, "baddie_norun" )
+      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(2,4) ), ambush_src, {ai="baddie_norun"} )
    else                                                                                                
-      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(3,5) ), ambush_src, "baddie_norun" )
+      ambush = pilot.addFleet( string.format( "Trader Ambush %d", rnd.rnd(3,5) ), ambush_src, {ai="baddie_norun"} )
    end
 
    --Spawn the convoy

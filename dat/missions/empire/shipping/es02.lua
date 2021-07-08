@@ -157,7 +157,7 @@ function enter ()
       enter_vect = jump.pos(sys, prevsys)
       m,a = enter_vect:polar()
       enter_vect:setP( m-3000, a )
-      v = pilot.add( "Gawain", "Trader", enter_vect, _("Trader Gawain"), "dummy" )
+      v = pilot.add( "Gawain", "Trader", enter_vect, _("Trader Gawain"), {ai="dummy"} )
 
       v:setPos( enter_vect )
       v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity

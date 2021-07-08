@@ -282,7 +282,7 @@ function enter()
 
       shiplist = ships[level+1]
       oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.add( oppotype, "Thugs", mispla, opponame, "baddie" )
+      opponent = pilot.add( oppotype, "Thugs", mispla, opponame, {ai="baddie"} )
 
       opponent:rmOutfit("all")
       opponent:rmOutfit("cores")
@@ -330,8 +330,8 @@ function enter()
       opponent:moveto(mispla:pos() + vec2.new( 1000,  1500))
 
       --The TV and the security
-      tv1 = pilot.add( "Gawain", "Dvaered", mispla, _("Holovision"), "civilian" )
-      tv2 = pilot.add( "Gawain", "Dvaered", mispla, _("Holovision"), "civilian" )
+      tv1 = pilot.add( "Gawain", "Dvaered", mispla, _("Holovision"), {ai="civilian"} )
+      tv2 = pilot.add( "Gawain", "Dvaered", mispla, _("Holovision"), {ai="civilian"} )
       sec11 = pilot.add( "Hyena", "Dvaered", mispla, _("Security") )
       sec12 = pilot.add( "Hyena", "Dvaered", mispla, _("Security") )
       sec21 = pilot.add( "Hyena", "Dvaered", mispla, _("Security") )

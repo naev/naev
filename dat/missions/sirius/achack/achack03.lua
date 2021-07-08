@@ -161,7 +161,7 @@ function date()
       end
       spawnpoint = spawnpoints[rnd.rnd(#spawnpoints)]
 
-      harja = addShips(1, "Shark", "Achack_sirius", spawnpoint, _("Harja's Shark"), "trader")[1]
+      harja = addShips(1, "Shark", "Achack_sirius", spawnpoint, _("Harja's Shark"), {ai="trader"})[1]
       harja:memory().aggressive = true
       harja:control()
       harja:follow(player.pilot())

@@ -267,14 +267,14 @@ function enter ()
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         boss = pilot.add( "Pirate Kestrel", "Pirate", vec, nil, "pirate_norun" )
+         boss = pilot.add( "Pirate Kestrel", "Pirate", vec, nil, {ai="pirate_norun"} )
          hook.pilot( boss, "death", "pilot_death_boss" )
          hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setHostile()
          boss:setHilight()
 
          pirates_left = 4
-         pirates = addShips( pirates_left, "Hyena", "Pirate", vec, _("Pirate Hyena"), "pirate_norun" )
+         pirates = addShips( pirates_left, "Hyena", "Pirate", vec, _("Pirate Hyena"), {ai="pirate_norun"} )
          for i, j in ipairs( pirates ) do
             hook.pilot( j, "death", "pilot_death_pirate" )
             hook.pilot( j, "hail", "pilot_hail_pirate" )
@@ -293,7 +293,7 @@ function enter ()
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         boss = pilot.add( "Pirate Kestrel", "Pirate", vec, nil, "pirate_norun" )
+         boss = pilot.add( "Pirate Kestrel", "Pirate", vec, nil, {ai="pirate_norun"} )
          hook.pilot( boss, "death", "pilot_death_boss" )
          boss_hook = hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setFriendly()

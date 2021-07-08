@@ -139,7 +139,7 @@ function enter()
       missionstarted = true
       j = jump.get(destsysname, destjumpname)
       v = j:pos()
-      hawk = pilot.add( "Dvaered Goddard", "Dvaered", v-vec2.new(1500,8000), nil, "dvaered_norun" )
+      hawk = pilot.add( "Dvaered Goddard", "Dvaered", v-vec2.new(1500,8000), nil, {ai="dvaered_norun"} )
       hawk:rmOutfit("all")
       hawk:rmOutfit("cores")
       hawk:addOutfit("Unicorp PT-2200 Core System")
@@ -153,7 +153,7 @@ function enter()
       hawk:hyperspace(system.get(destjumpname))
       hawk:broadcast(string.format(chatter[0], destjumpname))
       fleethooks = {}
-      fleetdv = addShips( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, "dvaered_norun" )
+      fleetdv = addShips( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, {ai="dvaered_norun"} )
       for i, j in ipairs(fleetdv) do
          j:changeAI("dvaered_norun")
          j:setHilight(true)
@@ -291,7 +291,7 @@ function spawn_fleet() -- spawn warlord killing fleet
    player.cinematics(true)
    player.cinematics(false)
    jump_fleet_entered = true
-   jump_fleet = pilot.addFleet("Dvaered Med Force", system.get(destjumpname), "dvaered_norun")
+   jump_fleet = pilot.addFleet("Dvaered Med Force", system.get(destjumpname), {ai="dvaered_norun"})
    broadcast_first(jump_fleet, string.format(chatter[8], destplanetname))
    for i, j in ipairs(jump_fleet) do
       j:changeAI("dvaered_norun")
