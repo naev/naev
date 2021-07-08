@@ -2442,6 +2442,7 @@ dat/missions/zalek/zlk_cargorun.lua
 dat/missions/zalek/zlk_rehab.lua
 dat/missions/zalek/zlk_test.lua
 dat/outfits/lua_outfit_example.lua
+dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/utility/berserk_chip.lua
 dat/outfits/utility/blink_drive.lua
 dat/outfits/utility/cloaking_device.lua
