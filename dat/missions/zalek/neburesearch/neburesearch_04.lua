@@ -76,7 +76,7 @@ log_text = _([[You helped Dr. Mensing to acquire funding for a shielding prototy
 
 function create()
     -- mission variables
-    credits = 500000  -- 500K
+    credits = 500e3
     homeworld, homeworld_sys = planet.get("Jorla")
     dest_planet, dest_sys = planet.get("Jurai")
 

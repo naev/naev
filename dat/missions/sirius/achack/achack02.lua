@@ -100,7 +100,7 @@ osd_final = {_("Land on Sroolu to get your reward")}
 osd_final["__save"] = true
 
 misn_desc = _("Joanne needs you to escort her ship and fight off mercenaries sent to kill her.")
-misn_reward = creditstring(750000) -- 750K
+misn_reward = creditstring(750e3)
 
 log_text = _([[Joanne, the Serra military officer who Harja tried to hire you to assassinate, enlisted you to aid her against would-be assassins. Along the way, she explained that Harja was a classmate of hers in the High Academy. According to her, Harja had hacked into the academy's main computer to change all of her grades to perfect scores in an attempt to sabotage her by making her look like a cheater.]])
 
@@ -190,7 +190,7 @@ function land()
       tk.msg(title4, text5:format(player.name(), player.name()))
       tk.msg(title5, text6)
       tk.msg(title5, text7:format(player.name()))
-      player.pay(750000) -- 750K
+      player.pay(750e3)
       var.pop("achack02repeat")
       srs_addAcHackLog( log_text )
       misn.finish(true)

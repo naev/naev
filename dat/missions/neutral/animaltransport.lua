@@ -97,7 +97,7 @@ end
 function land()
     if planet.cur() == destplanet then
         tk.msg(title[1], text[3])
-        player.pay(200000) -- 200K
+        player.pay(200e3)
         var.push("shipinfested", true)
         addMiscLog( log_text )
         misn.finish(true)

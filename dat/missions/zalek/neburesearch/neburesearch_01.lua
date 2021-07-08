@@ -86,7 +86,7 @@ function create()
     homeworld = "Bastion Station"
     ambush = false
     stage = 0
-    credits = 800000  -- 800K
+    credits = 800e3
 
     -- Spaceport bar stuff
     misn.setNPC(_("A scientist"), "zalek/unique/mensing.webp", bar_desc)

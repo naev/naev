@@ -184,7 +184,7 @@ function seiryuuBoard()
         stage = 2
     elseif stage == 6 then -- Debriefing
         tk.msg(title[7], text[11]:format(player.name(), player.name()))
-        player.pay(1000000) -- 1M
+        player.pay(1e6)
         seiryuu:control()
         seiryuu:hyperspace()
         var.pop("darkshadow_active")

@@ -93,7 +93,7 @@ misn_title = _("Baron")
 misn_reward = _("A tidy sum of money")
 misn_desc = _("You've been hired as a courier for one Baron Sauterfeldt. Your job is to transport a holopainting from a Dvaered world to the Baron's ship.")
 
-credits = 40000 -- 40K
+credits = 40e3
 
 -- NPC stuff
 npc_desc = _("These must be the 'agents' hired by this Baron Sauterfeldt. They look shifty. Why must people involved in underhanded business always look shifty?")

@@ -86,7 +86,7 @@ osd_msg[3] = _("Return to Joanne on %s (%s)")
 osd_msg["__save"] = true
 
 misn_desc = _("Joanne wants you to find Harja and interrogate him about his motives.")
-misn_reward = creditstring(1000000) -- 1M
+misn_reward = creditstring(1e6)
 
 log_text = _([[Joanne hired you to interrogate Harja about his motives for trying to assassinate her. He was unwilling to talk to you, but when you backed him into a corner, Harja claimed that it was Joanne who hacked the High Acadamy's main computer to change her scores in an attempt to frame him. He swore "on Sirichana" that he wasn't responsible for the hack. Joanne took this oath seriously, saying that he wouldn't "abuse his Sirian beliefs". She said that she may need your help again soon.]])
 
@@ -238,7 +238,7 @@ function land()
    if planet.cur() == destplanet and harjatalked then
       player.landWindow("bar")
       tk.msg(title5, text7:format(player.name()))
-      player.pay(1000000) -- 1M
+      player.pay(1e6)
       var.pop("achack03repeat")
       srs_addAcHackLog( log_text )
       misn.finish(true)
