@@ -474,6 +474,7 @@ void system_setFaction( StarSystem *sys );
 void space_checkLand (void);
 void space_factionChange (void);
 void space_queueLand( Planet *pnt );
+const char *space_populationStr( uint64_t population );
 
 
 #endif /* SPACE_H */

@@ -4294,7 +4294,37 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 }
 
 
+/**
+ * @brief Cues a planet to be landed on. This is not done immediately, but when
+ * the engine thinks it is ok to do.
+ *
+ *    @param pnt Planet to land on.
+ */
 void space_queueLand( Planet *pnt )
 {
    space_landQueuePlanet = pnt;
+}
+
+
+/**
+ * @brief Gets the population in an approximated string. Note this function changes the string value each call, so be careful!
+ *
+ *    @param population Population to get string of.
+ *    @return String corresponding to the population.
+ */
+const char *space_populationStr( uint64_t population )
+{
+   static char pop[STRMAX_SHORT];
+   double p = (double)population;
+
+   if (p > 10e9)
+      snprintf( pop, sizeof(pop), _("%.0f billion"), p / 1e9 );
+   else if (p > 10e6)
+      snprintf( pop, sizeof(pop), _("%.0f million"), p / 1e6 );
+   else if (p > 10e3)
+      snprintf( pop, sizeof(pop), _("%.0f thousand"), p / 1e3 );
+   else
+      snprintf( pop, sizeof(pop), "%.0f", p );
+
+   return pop;
 }

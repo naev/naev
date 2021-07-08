@@ -513,7 +513,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
 
      }
 
-     cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: %.0f\n"), _(p->name), p->class, (double)p->population );
+     cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Planet: %s\nPlanetary class: %s    Population: roughly %s\n"), _(p->name), p->class, space_populationStr( p->population ) );
      if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
         cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
      else if (p->can_land || p->bribed ) {

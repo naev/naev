@@ -816,18 +816,8 @@ static void spaceport_buyMap( unsigned int wid, char *str )
  */
 void land_updateMainTab (void)
 {
-   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT], pop[STRMAX_SHORT];
+   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
    Outfit *o;
-   double p = (double)land_planet->population;
-
-   if (p > 10e9)
-      snprintf( pop, sizeof(pop), _("%.0f billion"), p / 1e9 );
-   else if (p > 10e6)
-      snprintf( pop, sizeof(pop), _("%.0f million"), p / 1e6 );
-   else if (p > 10e3)
-      snprintf( pop, sizeof(pop), _("%.0f thousand"), p / 1e3 );
-   else
-      snprintf( pop, sizeof(pop), "%.0f", p );
 
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
@@ -842,7 +832,9 @@ void land_updateMainTab (void)
          "%s"),
          _(land_planet->name), _(cur_system->name),
          planet_getClassName(land_planet->class), _(land_planet->class),
-         _(faction_name(land_planet->faction)), pop, tons, cred );
+         _(faction_name(land_planet->faction)),
+         space_populationStr( land_planet->population ),
+         tons, cred );
    window_modifyText( land_windows[0], "txtDInfo", buf );
 
    /* Maps are only offered if the planet provides fuel. */
