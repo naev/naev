@@ -736,7 +736,7 @@
   <item>Map: Thurion Core</item>
  </tech>
  <tech name="Thurion Military Outfits">
-  <item>Nebular Shielding Prototype</item>
+  <!--<item>Nebular Shielding Prototype</item>-->
  </tech>
  <tech name="Proteron Military Outfits">
   <item>Proteron Derivative Fighter Bay</item>
