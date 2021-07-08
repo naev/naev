@@ -14,8 +14,8 @@
    less shield damage when in volatile nebulae.
  -->
  <dtype name="nebula">
-  <shield stat="nebu_absorb_shield">0.15</shield>
-  <armour stat="nebu_absorb_armour">1</armour>
+  <shield stat="nebu_absorb_shield">1</shield>
+  <armour stat="nebu_absorb_armour">3</armour>
   <knockback>0</knockback>
  </dtype>
  <dtype name="explosion_splash">
