@@ -74,7 +74,7 @@ function accept ()
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = 50000 -- 500K
+   reward = 50e3 -- 500K
    misn.setTitle(misn_title)
    misn.setReward(creditstring(reward))
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
