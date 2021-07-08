@@ -132,9 +132,6 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,          gettext_noop("Energy Usage (Turret)") ),
    D__ELEM( SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, tur_dam_as_dis,gettext_noop("Damage as Disable (Turret)") ),
 
-   D__ELEM( SS_TYPE_D_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   gettext_noop("Nebula Resistance (Shield)") ),
-   D__ELEM( SS_TYPE_D_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   gettext_noop("Nebula Resistance (Armour)") ),
-
    D__ELEM( SS_TYPE_D_HEAT_DISSIPATION,   heat_dissipation,    gettext_noop("Heat Dissipation") ),
    D__ELEM( SS_TYPE_D_STRESS_DISSIPATION, stress_dissipation,  gettext_noop("Stress Dissipation") ),
    D__ELEM( SS_TYPE_D_CREW,               crew_mod,            gettext_noop("Crew") ),
@@ -159,8 +156,11 @@ static const ShipStatsLookup ss_lookup[] = {
    A__ELEM( SS_TYPE_A_ARMOUR,             armour,              gettext_noop("Armour") ),
    A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        gettext_noop("Armour Per Second") ),
    AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  gettext_noop("Armour Damage") ),
-   A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             gettext_noop("CPU Capacity") ),
 
+   A__ELEM( SS_TYPE_A_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   gettext_noop("Nebula Resistance (Shield)") ),
+   A__ELEM( SS_TYPE_A_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   gettext_noop("Nebula Resistance (Armour)") ),
+
+   A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             gettext_noop("CPU Capacity") ),
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        gettext_noop("Engine Mass Limit") ),
    A__ELEM( SS_TYPE_A_ABSORB,             absorb,              gettext_noop("Damage Absorption") ),
 

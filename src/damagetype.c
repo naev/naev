@@ -288,12 +288,12 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
           * If an offset has been specified, look for a double at that offset
           * in the ShipStats struct, and used it as a multiplier.
           *
-          * The 2. - n logic serves to undo the initialization done by
-          * ss_statsInit and turn the value into a multiplier.
+          * The 1. - n logic serves to convert the value from absorption to
+          * damage multiplier.
           */
          ptr = (char*) s;
          memcpy(&multiplier, &ptr[ dtype->soffset ], sizeof(double));
-         multiplier = MAX( 0., 2. - multiplier );
+         multiplier = MAX( 0., 1. - multiplier );
          *dshield = dtype->sdam * dmg->damage * absorb * multiplier;
       }
    }
@@ -303,7 +303,7 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
       else {
          ptr = (char*) s;
          memcpy(&multiplier, &ptr[ dtype->aoffset ], sizeof(double));
-         multiplier = MAX( 0., 2. - multiplier );
+         multiplier = MAX( 0., 1. - multiplier );
          *darmour = dtype->adam * dmg->damage * absorb * multiplier;
       }
    }

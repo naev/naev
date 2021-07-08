@@ -84,10 +84,6 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TURRET_ENERGY,   /**< Energy usage of turrets. */
    SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, /**< Damage converted to disable. */
 
-   /* Nebula. */
-   SS_TYPE_D_NEBULA_ABSORB_SHIELD, /**< Shield nebula resistance. */
-   SS_TYPE_D_NEBULA_ABSORB_ARMOUR, /**< Armour nebula resistance. */
-
    /* Misc. */
    SS_TYPE_D_HEAT_DISSIPATION, /**< Ship heat dissipation. */
    SS_TYPE_D_STRESS_DISSIPATION, /**< Ship stress dissipation. */
@@ -118,6 +114,9 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_ARMOUR,            /**< Armour modifier. */
    SS_TYPE_A_ARMOUR_REGEN,      /**< Armour regeneration modifier. */
    SS_TYPE_A_ARMOUR_REGEN_MALUS,/**< Flat armour regeneration modifier (not multiplied). */
+   /* Nebula. */
+   SS_TYPE_A_NEBULA_ABSORB_SHIELD, /**< Shield nebula resistance. */
+   SS_TYPE_A_NEBULA_ABSORB_ARMOUR, /**< Armour nebula resistance. */
    /* Misc. */
    SS_TYPE_A_CPU_MAX,           /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,      /**< Engine's mass limit. */

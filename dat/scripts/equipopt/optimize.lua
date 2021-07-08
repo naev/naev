@@ -204,7 +204,7 @@ local function print_debug( p, st, ss, outfit_list, params, constraints, energyg
    print(string.format(_("Mass: %.3f / %.3f [%.3f < %.3f (%.1f)]"), st.mass, ss.engine_limit, constraints[3] or 0, mmod * params.max_mass * ss.engine_limit - st.mass, mmod ))
    if nebu_row then
       local nebu_dens, nebu_vol = system.cur():nebula()
-      print(string.format(_("Shield Regen: %.3f [%.3f > %.3f (%.1f)]"), stn.shield_regen, constraints[nebu_row] or 0, nebu_vol*0.15*(2-ss.nebu_absorb_shield)-st.shield_regen, 1))
+      print(string.format(_("Shield Regen: %.3f [%.3f > %.3f (%.1f)]"), stn.shield_regen, constraints[nebu_row] or 0, nebu_vol*0.15*(1-ss.nebu_absorb_shield)-st.shield_regen, 1))
    end
 end
 
@@ -472,7 +472,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    if nebu_vol > 0 then
       rows = rows+1
       nebu_row = rows
-      nebu_dmg = nebu_vol*0.15*(2-ss.nebu_absorb_shield)
+      nebu_dmg = nebu_vol*0.15*(1-ss.nebu_absorb_shield)
       lp:set_row( nebu_row, "shield_regen", nebu_dmg-st.shield_regen, nil )
    end
    -- Add limit checks
@@ -522,7 +522,7 @@ function optimize.optimize( p, cores, outfit_list, params )
          if nebu_vol > 0 then
             table.insert( ia, nebu_row )
             table.insert( ja, c )
-            table.insert( ar, stats.shield_regen + 0.15*nebu_vol*(2-stats.nebu_absorb_shield) )
+            table.insert( ar, stats.shield_regen + 0.15*nebu_vol*stats.nebu_absorb_shield )
          end
          -- Limit constraint
          if stats.limit then
