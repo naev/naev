@@ -162,13 +162,13 @@ static const ShipStatsLookup ss_lookup[] = {
    A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        gettext_noop("Armour Per Second") ),
    AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  gettext_noop("Armour Damage") ),
 
-   A__ELEM( SS_TYPE_A_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   gettext_noop("Nebula Resistance (Shield)") ),
-   A__ELEM( SS_TYPE_A_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   gettext_noop("Nebula Resistance (Armour)") ),
-
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             gettext_noop("CPU Capacity") ),
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        gettext_noop("Engine Mass Limit") ),
 
-   P__ELEM( SS_TYPE_A_ABSORB,             absorb,              gettext_noop("Damage Absorption") ),
+   P__ELEM( SS_TYPE_P_ABSORB,             absorb,              gettext_noop("Damage Absorption") ),
+
+   P__ELEM( SS_TYPE_P_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   gettext_noop("Nebula Resistance (Shield)") ),
+   P__ELEM( SS_TYPE_P_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   gettext_noop("Nebula Resistance (Armour)") ),
 
    I__ELEM( SS_TYPE_I_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, gettext_noop("Hidden Jump Detection") ),
    I__ELEM( SS_TYPE_I_FUEL,               fuel, gettext_noop("Fuel") ),

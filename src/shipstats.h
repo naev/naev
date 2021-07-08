@@ -114,13 +114,17 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_ARMOUR,            /**< Armour modifier. */
    SS_TYPE_A_ARMOUR_REGEN,      /**< Armour regeneration modifier. */
    SS_TYPE_A_ARMOUR_REGEN_MALUS,/**< Flat armour regeneration modifier (not multiplied). */
-   /* Nebula. */
-   SS_TYPE_A_NEBULA_ABSORB_SHIELD, /**< Shield nebula resistance. */
-   SS_TYPE_A_NEBULA_ABSORB_ARMOUR, /**< Armour nebula resistance. */
    /* Misc. */
    SS_TYPE_A_CPU_MAX,           /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,      /**< Engine's mass limit. */
-   SS_TYPE_A_ABSORB,            /**< Damage absorption. */
+
+   /*
+    * P: Absolute percent type datas. Should be continuous.
+    */
+   SS_TYPE_P_ABSORB,            /**< Damage absorption. */
+   /* Nebula. */
+   SS_TYPE_P_NEBULA_ABSORB_SHIELD, /**< Shield nebula resistance. */
+   SS_TYPE_P_NEBULA_ABSORB_ARMOUR, /**< Armour nebula resistance. */
 
    /*
     * I: Integer type data. Should be continuous.
