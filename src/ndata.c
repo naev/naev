@@ -382,3 +382,27 @@ int ndata_matchExt( const char *path, const char *ext )
       return 0;
    return strcmp( &path[i+1], ext )==0;
 }
+
+
+/**
+ * @brief Tries to see if a file is in a default path before seeing if it is an absolute path.
+ *
+ *    @param[out] path Path found.
+ *    @param len Length of path.
+ *    @param default_path Default path to look in.
+ *    @param filename Name of the file to look for.
+ *    @return 1 if found.
+ */
+int ndata_getPathDefault( char *path, int len, const char *default_path, const char *filename )
+{
+   PHYSFS_Stat path_stat;
+   snprintf( path, len, "%s%s", default_path, filename );
+   if (PHYSFS_stat( path, &path_stat ) && (path_stat.filetype == PHYSFS_FILETYPE_REGULAR))
+      return 1;
+   snprintf( path, len, "%s", filename );
+   if (PHYSFS_stat( path, &path_stat ) && (path_stat.filetype == PHYSFS_FILETYPE_REGULAR))
+      return 1;
+   return 0;
+}
+
+
