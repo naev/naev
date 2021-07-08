@@ -364,6 +364,13 @@ err:
 }
 
 
+/**
+ * @brief Sees if a file matches an extension.
+ *
+ *    @param path Path to check extension of.
+ *    @param ext Extension to check.
+ *    @return 1 on match, 0 otherwise.
+ */
 int ndata_matchExt( const char *path, const char *ext )
 {
    int i;
