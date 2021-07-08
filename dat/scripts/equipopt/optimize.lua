@@ -599,20 +599,27 @@ function optimize.optimize( p, cores, outfit_list, params )
          -- Re-solve
          z, x, constraints = lp:solve()
 
-         -- Nebula shield damage constraint if not resolved
+         -- Likely nebula shield damage constraint if not resolved
+         -- TODO this should probably just ignore the constraint and change it so that
+         -- the pilot tries to optimize for maximum shield regen instead
          if not z and nebu_vol > 0 then
             smod = smod / 1.5
             lp:set_row( nebu_row, "shield_regen", smod*nebu_dmg-st.shield_regen, nil )
 
             -- Re-solve
             z, x, constraints = lp:solve()
+
+            -- Check to see if that worked, and if not remove the constraint
+            if not z then
+               smod = 0
+               lp:set_row( nebu_row, "shield_regen", nil, nil )
+
+               -- Re-solve
+               z, x, constraints = lp:solve()
+            end
          end
 
          if not z then
-            if nebu_vol > 0 then
-               -- Assume we couldn't equip because of Nebula!
-               return false
-            end
             -- Maybe should be error instead?
             warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
             print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
