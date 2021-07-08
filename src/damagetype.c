@@ -293,7 +293,7 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
           */
          ptr = (char*) s;
          memcpy(&multiplier, &ptr[ dtype->soffset ], sizeof(double));
-         multiplier = MAX( 0., 1. - multiplier );
+         multiplier = MAX( 0., 1. - multiplier/100. );
          *dshield = dtype->sdam * dmg->damage * absorb * multiplier;
       }
    }
@@ -303,7 +303,7 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
       else {
          ptr = (char*) s;
          memcpy(&multiplier, &ptr[ dtype->aoffset ], sizeof(double));
-         multiplier = MAX( 0., 1. - multiplier );
+         multiplier = MAX( 0., 1. - multiplier/100. );
          *darmour = dtype->adam * dmg->damage * absorb * multiplier;
       }
    }
