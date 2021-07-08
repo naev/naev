@@ -2233,6 +2233,9 @@ void pilot_update( Pilot* pilot, double dt )
             pilot->engine_glow = 0.;
       }
 
+      /* Update the trail. */
+      pilot_sample_trails( pilot, 0 );
+
       return;
    }
 
@@ -2361,7 +2364,8 @@ void pilot_sample_trails( Pilot* p, int none )
    for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
       if (pilot_trail_generated( p, g )) {
 
-         p->trail[i]->ontop = ((dirsin > 0) && (!(p->ship->trail_emitters[g].always_under)));
+         p->trail[i]->ontop = ((p->solid->vel.y > 0) && (dirsin > 0) &&
+                               (!(p->ship->trail_emitters[g].always_under)));
 
          dx = p->ship->trail_emitters[g].x_engine * dircos -
               p->ship->trail_emitters[g].y_engine * dirsin;
