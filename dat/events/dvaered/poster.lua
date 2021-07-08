@@ -32,11 +32,8 @@ messages[2] = _("Does this poster make you want to buy this book?")
 
 message_flf = _("The FLF has wrecked this Dvaered poster.")
 
-              
-function create()
-   -- Create the NPC.
-   evt.npcAdd("watchPoster", _("Poster on the wall"), "news.webp", _("There is a poster on the wall"), 15)
 
+function create()
    local imageNmsg = imagesNmsg[ rnd.rnd(1,#imagesNmsg) ]
    myImg = imageNmsg[1]
 
@@ -47,6 +44,9 @@ function create()
    else
       myMsg = messages[ imageNmsg[2] ]
    end
+
+   -- Create the NPC.
+   evt.npcAdd("watchPoster", _("Poster on the wall"), myImg, _("There is a poster on the wall"), 15)
 
    -- End event on takeoff.
    hook.takeoff( "leave" )
