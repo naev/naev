@@ -1088,7 +1088,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->shield_regen -= s->shield_regen_malus;
    pilot->energy_regen -= s->energy_regen_malus;
    pilot->energy_loss  += s->energy_loss;
-   pilot->dmg_absorb    = CLAMP( 0., 1., pilot->dmg_absorb + s->absorb/100. );
+   pilot->dmg_absorb    = CLAMP( 0., 1., pilot->dmg_absorb + s->absorb );
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
