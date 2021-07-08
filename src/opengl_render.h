@@ -67,6 +67,10 @@ void gl_blitScaleSprite( const glTexture* sprite,
 void gl_blitScale( const glTexture* texture,
       const double bx, const double by,
       const double bw, const double bh, const glColour* c );
+/* blits a texture scaled to a rectangle, but conserve aspect ratio, absolute pos */
+void gl_blitScaleAspect( const glTexture* texture,
+      const double bx, const double by,
+      const double bw, const double bh, const glColour* c );
 /* blits the entire image, absolute pos */
 void gl_blitStatic( const glTexture* texture,
       const double bx, const double by, const glColour *c );
