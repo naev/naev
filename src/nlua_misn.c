@@ -933,9 +933,9 @@ static int misn_npcAdd( lua_State *L )
    bg   = luaL_optstring(L,6,NULL);
 
    /* Set path. */
-   snprintf( portrait, sizeof(portrait), GFX_PATH"portraits/%s", gfx );
+   ndata_getPathDefault( portrait, sizeof(portrait), GFX_PATH"portraits/", gfx );
    if (bg!=NULL)
-      snprintf( background, sizeof(background), GFX_PATH"portraits/%s", bg );
+      ndata_getPathDefault( background, sizeof(background), GFX_PATH"portraits/", bg );
 
    cur_mission = misn_getFromLua(L);
 
