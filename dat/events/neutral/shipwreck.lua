@@ -43,7 +43,7 @@ function create ()
     angle = rnd.rnd() * 2 * math.pi
     dist  = rnd.rnd(2000, 3000) -- place it a ways out
     pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.addFleet( ship, "Derelict", pos, nil, {ai="dummy"} )
+    p     = pilot.add( ship, "Derelict", pos, nil, {ai="dummy"} )
     p:disable()
     p:rename(shipwreck:format(shipname))
     -- Added extra visibility for big systems (A.)
