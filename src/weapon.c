@@ -384,7 +384,6 @@ static void think_seeker( Weapon* w, const double dt )
  */
 static void think_beam( Weapon* w, const double dt )
 {
-   (void)dt;
    Pilot *p, *t;
    AsteroidAnchor *field;
    Asteroid *ast;
@@ -401,6 +400,7 @@ static void think_beam( Weapon* w, const double dt )
    /* Check if pilot has enough energy left to keep beam active. */
    mod = (w->outfit->type == OUTFIT_TYPE_BEAM) ? p->stats.fwd_energy : p->stats.tur_energy;
    p->energy -= mod * dt*w->outfit->u.bem.energy;
+   pilot_heatAddSlotTime( p, w->mount, dt );
    if (p->energy < 0.) {
       p->energy = 0.;
       w->timer = -1;

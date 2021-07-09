@@ -22,6 +22,12 @@
 #include "log.h"
 
 
+/*
+ * Prototypes.
+ */
+static double pilot_heatOutfitMod( const Pilot *p, const Outfit *o );
+
+
 /**
  * @brief Calculates the heat parameters for a pilot.
  *
@@ -112,22 +118,37 @@ void pilot_heatReset( Pilot *p )
 
 
 /**
+ * @brief Gets the heat mod for an outfit.
+ */
+static double pilot_heatOutfitMod( const Pilot *p, const Outfit *o )
+{
+   switch (o->type) {
+      case OUTFIT_TYPE_BOLT:
+      case OUTFIT_TYPE_BEAM:
+         return p->stats.fwd_heat;
+
+      case OUTFIT_TYPE_TURRET_BOLT:
+      case OUTFIT_TYPE_TURRET_BEAM:
+         return p->stats.tur_heat;
+
+      default:
+         return 1;
+   }
+}
+
+
+/**
  * @brief Adds heat to an outfit slot.
  *
  *    @param p Pilot whose slot it is.
  *    @param o The slot in question.
  */
-void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
+void pilot_heatAddSlot( const Pilot *p, PilotOutfitSlot *o )
 {
-   double hmod;
    /* We consider that only 1% of the energy is lost in the form of heat,
     * this keeps numbers safe. */
-   if (o->outfit->type == OUTFIT_TYPE_BOLT)
-      hmod = p->stats.fwd_heat;
-   else if (o->outfit->type == OUTFIT_TYPE_TURRET_BOLT)
-      hmod = p->stats.tur_heat;
-   else
-      hmod = 1.;
+   double hmod = pilot_heatOutfitMod( p, o->outfit );
+
    o->heat_T += hmod * outfit_heat(o->outfit) / o->heat_C;
 
    /* Enforce a minimum value as a safety measure. */
@@ -142,13 +163,10 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
  *    @param o The slot in question.
  *    @param dt Delta tick.
  */
-void pilot_heatAddSlotTime( Pilot *p, PilotOutfitSlot *o, double dt )
+void pilot_heatAddSlotTime( const Pilot *p, PilotOutfitSlot *o, double dt )
 {
-   (void) p;
-   double hmod;
+   double hmod = pilot_heatOutfitMod( p, o->outfit );
 
-   /* @todo Handle beam modifiers for ships here. */
-   hmod = 1.;
    o->heat_T += (hmod * outfit_heat(o->outfit) / o->heat_C) * dt;
 
    /* Enforce a minimum value as a safety measure. */
@@ -174,7 +192,7 @@ void pilot_heatAddSlotTime( Pilot *p, PilotOutfitSlot *o, double dt )
  *    @param dt Delta tick.
  *    @return The energy transferred.
  */
-double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt )
+double pilot_heatUpdateSlot( const Pilot *p, PilotOutfitSlot *o, double dt )
 {
    double Q;
 
