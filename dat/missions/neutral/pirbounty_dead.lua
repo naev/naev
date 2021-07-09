@@ -352,7 +352,7 @@ end
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
    if level == 1 then
-      ship = "Pirate Hyena"
+      ship = "Hyena"
       credits = 50e3 + rnd.sigma() * 15e3
       reputation = 0
    elseif level == 2 then
@@ -388,7 +388,9 @@ function spawn_pirate( param )
    if not job_done and system.cur() == missys then
       if jumps_permitted >= 0 then
          misn.osdActive( 2 )
-         target_ship = pilot.addFleet( ship, param )[1]
+         target_ship = pilot.add( ship, "Pirate", param )
+         local mem = target_ship:memory()
+         mem.loiter = math.huge -- Should make them loiter forever
          set_faction( target_ship )
          target_ship:rename( name )
          target_ship:setHilight( true )
