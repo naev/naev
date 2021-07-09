@@ -29,9 +29,8 @@ def createFactions():
 
     return {name: i for (i, name) in enumerate(factions)}
 
-# Compute insystem paths. TODO maybe : use Delauney triangulation instead ?
 def inSysStiff( nodess, factass, g2ass, loc2globNs ):
-    #stiff = sp.csr_matrix() # Basic stiffness matrix (without lanes)
+    '''Compute insystem paths. TODO maybe : use Delauney triangulation instead?'''
     si  = []  # Element to build the sparse default matrix
     sj  = []
     sv  = []
@@ -51,21 +50,17 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
         nodes = nodess[k]
         loc2glob = []
         loc2globN = loc2globNs[k]
-        #print(nodes)
         for n in range(len(nodes)):
             xn = nodes[n][0]
             yn = nodes[n][1]
             
             na = g2ass[loc2globN[n]]  # Find global asset numerotation of local node
-            #print(na)
             if na>=0:
                 fn = factass[na]
             else: # It's not an asset
                 fn = -1
             
-            for m in range(n): # Because symmetry
-                #if n >= m: 
-                #    continue
+            for m in range(n): # Only m<n, because symmetry
                 xm = nodes[m][0]
                 ym = nodes[m][1]
                 
@@ -237,10 +232,10 @@ def buildStiffness( default_lanes, internal_lanes, activated, alpha, anchors ):
 
     return stiff
 
-# Gives the matrix that computes penibility form potentials
-# By chance, this does not depend on the presence of lane
 @timed
 def PenMat( nass, ndof, internal_lanes, utilde, ass2g, assts, sysdist ):
+    '''Gives the matrix that computes penibility form potentials.
+      By chance, this does not depend on the presence of lane.'''
     presass = assts[0]
     factass = assts[1]
     nfact = max(factass)+1
@@ -260,7 +255,6 @@ def PenMat( nass, ndof, internal_lanes, utilde, ass2g, assts, sysdist ):
     for i in range(nass):
         ai = ass2g[i] # Find corresponding dof
         facti = factass[i]
-        #print(facti)
         presi = presass[i]        
         for j in range(i):# Stuff is symmetric, we use that
             if utilde[ai,j] <= 1e-12: # i and j are disconnected. Dont consider this couple
@@ -304,9 +298,6 @@ def PenMat( nass, ndof, internal_lanes, utilde, ass2g, assts, sysdist ):
     P = sp.csr_matrix( ( pv, (pi, pj) ) )
     # P*utilde^T = u^T
     
-    #print(di[0][100])
-    #print(di[1][100])
-    
     D = [None]*nfact
     for k in range(nfact):
         D[k] = sp.csr_matrix( ( dv[k], (di[k], dj[k]) ), (P.shape[1], P.shape[1]) )
@@ -333,18 +324,15 @@ def PenMat( nass, ndof, internal_lanes, utilde, ass2g, assts, sysdist ):
     return (P,Q,D)
 
 
-# Get the gradient from state and adjoint state
-# Luckly, this does not depend on the stiffness itself (by linearity wrt. stiffness)
 @timed
 def getGradient( internal_lanes, u, lamt, alpha, PP, PPl, pres_0 ):
+    '''Get the gradient from state and adjoint state.
+       Luckily, this does not depend on the stiffness itself (by linearity wrt. stiffness).'''
     si, sj, sv = internal_lanes[:3]
     sr = internal_lanes[6] # Tells who has right to build on each lane
     sy = internal_lanes[7] # Tells the system
     
     sz = len(si)
-#    print(u.shape, sz)
-    sh = u.shape
-    sh = sh[0]
     
     #lam = lamt.dot(PP) # 0.01 s
     #LUT = lam.dot(u.transpose())
@@ -352,16 +340,12 @@ def getGradient( internal_lanes, u, lamt, alpha, PP, PPl, pres_0 ):
 
     nfact = len(PPl)
     gl = []
-    #ut = u.transpose()
     for k in range(nfact): # .2
         lal = lamt.dot(PPl[k])
         #LUTl = lal.dot(ut)
-
         glk = np.zeros((sz,1))
 
-    #for k in range(nfact): 
         for i in range(sz):
-            
             if pres_0[sy[i]][k] <= 0: # Does this faction have presence here ?
                 continue
             
@@ -382,8 +366,8 @@ def getGradient( internal_lanes, u, lamt, alpha, PP, PPl, pres_0 ):
     return (g,gl)
         
 
-# Activates the best lane in each system
 def activateBest( internal_lanes, g, activated, Lfaction, nodess ):
+    '''Activates the best lane in each system'''
     # Find lanes to keep in each system
     sv, sil, sjl, lanesLoc2globs = internal_lanes[2:6]
     nsys = len(lanesLoc2globs)
@@ -404,8 +388,8 @@ def activateBest( internal_lanes, g, activated, Lfaction, nodess ):
         ind = [lanesLoc2glob[k] for k in ind1[0]]
 
         # Find a lane to activate
-        for k in ind:#range(len(ind)):
-            if activated[k] == False: # One connot activate something that is already active
+        for k in ind:
+            if not activated[k]: # One connot activate something that is already active
                 break
                     
         #if admissible: # Because it's possible noone was admissible
@@ -415,8 +399,8 @@ def activateBest( internal_lanes, g, activated, Lfaction, nodess ):
     return 1
 
 
-# Activates the best lane in each system for each faction
 def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c, pres_0 ):
+    '''Activates the best lane in each system for each faction'''
     # Find lanes to keep in each system
     sv, sil, sjl, lanesLoc2globs, sr  = internal_lanes[2:7]
     nsys = len(lanesLoc2globs)
@@ -435,8 +419,6 @@ def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c
     
     for i in range(nsys):
         lanesLoc2glob = lanesLoc2globs[i]
-        #nodes = nodess[i]
-        #aloc = activated[lanesLoc2glob]
         aloc = [activated[k] for k in lanesLoc2glob]
         
         if not (False in aloc): # There should be something to actually activate
@@ -446,10 +428,6 @@ def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c
         ploc = pres_0[i]
         sind = np.argsort(ploc)
         sind = np.flip(sind)
-        
-#        if i==320: #116=Alteris 320=Raelid
-#            print(pres_c[i])
-#            print(sind)
         
         for ff in range(nfact):
             f = sind[ff]
@@ -466,11 +444,9 @@ def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c
                 ind = [lanesLoc2glob[k] for k in ind1[0]]
         
                 # Find a lane to activate
-                for k in ind:#range(len(ind)):
-                    cond = (sr[k][0] == f) or (sr[k][1] == f) or ((sr[k][0] == -1) and (sr[k][1] == -1))
-                    #if (activated[k] == False) and (pres_c[i][f] >= 1/sv[k] * price):     # One connot activate something that is already active           
-                    if (activated[k] == False) and (pres_c[i][f] >= 1/sv[k] * price) \
-                      and cond:                   
+                for k in ind:
+                    cond = (sr[k][0] == f) or (sr[k][1] == f) or (sr[k] == (-1, -1))
+                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * price) and cond:
                         pres_c[i][f] -= 1/sv[k] * price
                         activated[k] = True
                         Lfaction[k] = f
@@ -524,10 +500,8 @@ def optimizeLanes( systems, problem, alpha=9 ):
             D = Pi[2]
             
             QQ = (Q.transpose()).dot(Q)
-            #QQ = QQ.todense()
-            with timer('Calculate dense P P*'):
-                PP0 = P.dot(P.transpose())
-                PP = PP0.todense() # PP is actually not sparse
+            PP0 = P.dot(P.transpose())
+            PP = PP0.todense() # PP is actually not sparse
             PPl = [None]*nfact
             for k in range(nfact): # Assemble per-faction ponderators
                 Pp = P.dot(D[k])
@@ -550,9 +524,7 @@ def optimizeLanes( systems, problem, alpha=9 ):
     #print(np.max(np.c_[problem.internal_lanes[2]]))
 
     # And print the lanes
-    print(np.linalg.norm(utilde,'fro'))
-    print(i+1)
-    #print(np.linalg.norm(utilde-utilde.transpose(),'fro'))
+    print('Converged in', i+1, 'iterations, ‖Ũ‖=', np.linalg.norm(utilde,'fro'))
     
     return (activated, Lfaction)
 
