@@ -639,10 +639,10 @@ static int factionL_dynAlly( lua_State *L )
    int remove;
    NLUA_CHECKRW(L);
    fac      = luaL_validfaction(L,1);
-   remove   = lua_toboolean(L,2);
    if (!faction_isDynamic(fac))
       NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
-   ally = luaL_validfaction(L,2);
+   ally     = luaL_validfaction(L,2);
+   remove   = lua_toboolean(L,3);
    if (remove)
       faction_rmAlly(fac, ally);
    else
@@ -665,10 +665,10 @@ static int factionL_dynEnemy( lua_State *L )
    int remove;
    NLUA_CHECKRW(L);
    fac      = luaL_validfaction(L,1);
-   remove   = lua_toboolean(L,1);
    if (!faction_isDynamic(fac))
       NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
-   enemy = luaL_validfaction(L,2);
+   enemy    = luaL_validfaction(L,2);
+   remove   = lua_toboolean(L,3);
    if (remove)
       faction_rmEnemy(fac, enemy);
    else

@@ -3,13 +3,13 @@ require("ai/personality/patrol")
 require "numstring"
 
 -- Settings
-mem.aggressive     = true
-mem.safe_distance  = 300
-mem.armour_run     = 100
-mem.shield_return  = 20
-mem.land_planet    = false
+mem.aggressive    = true
+mem.safe_distance = 300
+mem.armour_run    = 100
+mem.shield_return = 20
+mem.land_planet   = false
 mem.careful       = true
-
+mem.doscans       = false
 
 function create ()
 
