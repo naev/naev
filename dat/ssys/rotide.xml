@@ -13,6 +13,8 @@
  <assets>
   <asset>Rotide I</asset>
   <asset>Rotide II</asset>
+  <asset>SY-1025</asset>
+  <asset>SY-612</asset>
  </assets>
  <jumps>
   <jump target="Antares">

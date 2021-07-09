@@ -13,6 +13,9 @@
  <assets>
   <asset>Eryla</asset>
   <asset>Serria</asset>
+  <asset>NS-144</asset>
+  <asset>SY-237</asset>
+  <asset>SY-413</asset>
  </assets>
  <jumps>
   <jump target="Adran">

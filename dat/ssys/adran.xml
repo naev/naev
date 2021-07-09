@@ -10,7 +10,9 @@
   <x>665.000000</x>
   <y>325.000000</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Thurion Local</asset>
+ </assets>
  <jumps>
   <jump target="Metsys">
    <autopos/>

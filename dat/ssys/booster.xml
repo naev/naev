@@ -10,7 +10,9 @@
   <x>555.000000</x>
   <y>401.000000</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Thurion Local</asset>
+ </assets>
  <jumps>
   <jump target="Katami">
    <autopos/>
