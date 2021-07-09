@@ -17,6 +17,7 @@
   <range>700</range>
   <energy>30</energy>
   <heatup>50</heatup>
+  <swivel>22</swivel>
   <damage>
    <type>normal</type>
    <penetrate>48</penetrate>

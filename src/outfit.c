@@ -795,6 +795,7 @@ double outfit_trackmin( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.trackmin;
    else if (outfit_isLauncher(o)) return o->u.lau.trackmin;
+   else if (outfit_isBeam(o)) return 0.;
    return -1.;
 }
 /**
@@ -806,6 +807,7 @@ double outfit_trackmax( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.trackmax;
    else if (outfit_isLauncher(o)) return o->u.lau.trackmax;
+   else if (outfit_isBeam(o)) return 1.;
    return -1.;
 }
 /**
@@ -1396,6 +1398,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"delay",temp->u.bem.delay);
       xmlr_float(node,"warmup",temp->u.bem.warmup);
       xmlr_float(node,"heatup",temp->u.bem.heatup);
+      xmlr_float(node,"swivel",temp->u.bem.swivel);
 
       if (xml_isNode(node, "duration")) {
          xmlr_attr_float(node, "min", temp->u.bem.min_duration);
@@ -1457,7 +1460,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
-   temp->u.bem.turn     *= M_PI/180.; /* Convert to rad/s. */
+   temp->u.bem.swivel  *= M_PI/180.;
+   temp->u.bem.turn    *= M_PI/180.; /* Convert to rad/s. */
    C = pilot_heatCalcOutfitC(temp);
    area = pilot_heatCalcOutfitArea(temp);
    temp->u.bem.heat     = ((800.-CONST_SPACE_STAR_TEMP)*C +
@@ -1484,6 +1488,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    SDESC_ADD(  l, temp, _("\n%.1f Cooldown"),   temp->u.bem.duration );
    SDESC_ADD(  l, temp, _("\n%s Range"),        num2strU(temp->u.bem.range,0) );
    SDESC_COND( l, temp, _("\n%.1f second heat up"),temp->u.bem.heatup );
+   if (!outfit_isTurret(temp))
+      SDESC_ADD(  l, temp, _("\n%.1f Degree Swivel"), temp->u.bem.swivel*180./M_PI );
 
 #define MELEMENT(o,s) \
 if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */

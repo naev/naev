@@ -412,14 +412,18 @@ static void think_beam( Weapon* w, const double dt )
    w->solid->pos.x = p->solid->pos.x + v.x;
    w->solid->pos.y = p->solid->pos.y + v.y;
 
-   /* Handle aiming. */
+   /* Handle aiming at the target. */
+   t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
    switch (w->outfit->type) {
       case OUTFIT_TYPE_BEAM:
-         w->solid->dir = p->solid->dir;
+         if (w->outfit->u.bem.swivel > 0.)
+            w->solid->dir = weapon_aimTurret( w->outfit, p, t, &w->solid->pos, &p->solid->vel, p->solid->dir, w->outfit->u.bem.swivel, 0. );
+         else
+            w->solid->dir = p->solid->dir;
          break;
 
       case OUTFIT_TYPE_TURRET_BEAM:
-         /* Get target, if target is dead beam stops moving. Targeting
+         /* If target is dead beam stops moving. Targeting
           * self is invalid so in that case we ignore the target.
           */
          t = (w->target != w->parent) ? pilot_get(w->target) : NULL;

@@ -175,6 +175,7 @@ typedef struct OutfitBeamData_ {
    Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per second. */
+   double swivel;    /**< Amount of swivel (semiarc in radians of deviation the weapon can correct). */
 
    /* Graphics and sound. */
    glColour colour;  /**< Color to use for the shader. */
