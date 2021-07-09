@@ -2626,7 +2626,7 @@ static void outfit_launcherDesc( Outfit* o )
       SDESC_ADD(  l, o, _("\n%s Minimal Tracking"), num2strU( o->u.lau.trackmin, 0 ) );
    }
    else {
-      SDESC_ADD(  l, o, _("\nNo Tracking") );
+      SDESC_ADD(  l, o, _("\nNo Seeking") );
       if (outfit_isTurret(o) || o->u.lau.swivel > 0.) {
          SDESC_ADD(  l, o, _("\n%s Optimal Tracking"), num2strU( o->u.lau.trackmax, 0 ) );
          SDESC_ADD(  l, o, _("\n%s Minimal Tracking"), num2strU( o->u.lau.trackmin, 0 ) );
