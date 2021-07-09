@@ -15,6 +15,7 @@ function params.default( overwrite )
       min_energy_regen_abs = 0, -- absolute minimum energy regen (MJ/s)
       eps_weight  = 0.4, -- how to weight weapon EPS into energy regen
       max_mass    = 1.2, -- maximum amount to go over engine limit (relative)
+      min_mass_margin = 0.15, -- minimum mass margin to consider when equipping
       budget      = nil, -- total cost budget
       -- Range of type, this is dangerous as minimum values could lead to the
       -- optimization problem not having a solution with high minimums

@@ -454,7 +454,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    lp:set_row( 1, "CPU",          nil, st.cpu_max * ss.cpu_mod )
    local energygoal = math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs)
    lp:set_row( 2, "energy_regen", nil, st.energy_regen - energygoal )
-   local massgoal = params.max_mass * ss.engine_limit - st.mass
+   local massgoal = math.max( params.max_mass * ss.engine_limit - st.mass, ss.engine_limit*params.min_mass_margin )
    if massgoal < 0 then
       warn(string.format(_("Impossible mass goal of %d set! Ignoring mass for pilot '%s'!"), massgoal, p:name()))
       massgoal = nil
