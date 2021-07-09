@@ -321,7 +321,8 @@ def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c
     nsys = len(lanesLoc2globs)
     
     nfact = len(pres_c[0])
-    price = [.005, .007, .100, .005, .010, .007, .010, .005, .005, .010]
+    price = .007  # TODO : tune metric price
+
     
     g1 = g * np.c_[sv] # Short lanes are more interesting
     
@@ -359,8 +360,8 @@ def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c
                 # Find a lane to activate
                 for k in ind:
                     cond = (sr[k][0] == f) or (sr[k][1] == f) or (sr[k] == (-1, -1))
-                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * price[f]) and cond:
-                        pres_c[i][f] -= 1/sv[k] * price[f]
+                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * price) and cond:
+                        pres_c[i][f] -= 1/sv[k] * price
                         activated[k] = True
                         Lfaction[k] = f
                         break
