@@ -30,28 +30,25 @@ function create ()
     -- The shipwreck will be a random trader vessel.
     r = rnd.rnd()
     if r > 0.95 then
-        ship = "Trader Gawain"
+        ship = "Gawain"
     elseif r > 0.8 then
-        ship = "Trader Mule"
+        ship = "Mule"
     elseif r > 0.5 then
-        ship = "Trader Koala"
+        ship = "Koala"
     else
-        ship = "Trader Llama"
+        ship = "Llama"
     end
 
     -- Create the derelict.
     angle = rnd.rnd() * 2 * math.pi
     dist  = rnd.rnd(2000, 3000) -- place it a ways out
     pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.addFleet(ship, pos, {ai="dummy"})
-    for k,v in ipairs(p) do
-        v:setFaction("Derelict")
-        v:disable()
-        v:rename(shipwreck:format(shipname))
-        -- Added extra visibility for big systems (A.)
-        v:setVisplayer( true )
-        v:setHilight( true )
-    end
+    p     = pilot.addFleet( ship, "Derelict", pos, nil, {ai="dummy"} )
+    p:disable()
+    p:rename(shipwreck:format(shipname))
+    -- Added extra visibility for big systems (A.)
+    p:setVisplayer( true )
+    p:setHilight( true )
 
     hook.timer(3000, "broadcast")
 

@@ -63,21 +63,20 @@ function create ()
     -- Get the derelict's ship.
     r = rnd.rnd()
     if r > 0.8 then
-        ship = "Trader Gawain"
+        ship = "Gawain"
     elseif r > 0.6 then
-        ship = "Trader Mule"
+        ship = "Mule"
     elseif r > 0.4 then
-        ship = "Trader Koala"
+        ship = "Koala"
     else
-        ship = "Trader Llama"
+        ship = "Llama"
     end
 
     -- Create the derelict.
     angle = rnd.rnd() * 2 * math.pi
     dist  = rnd.rnd(400, system.cur():radius() * 0.6)
     pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.addFleet(ship, pos, {ai="dummy"})[1]
-    p:setFaction("Derelict")
+    p     = pilot.add(ship, "Derelict", pos, nil, {ai="dummy"})
     p:disable()
     p:rename("Derelict")
     hook.pilot(p, "board", "board")
