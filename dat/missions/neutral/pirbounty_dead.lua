@@ -353,11 +353,11 @@ end
 function bounty_setup ()
    if level == 1 then
       ship = "Pirate Hyena"
-      credits = 50000 + rnd.sigma() * 15000
+      credits = 50e3 + rnd.sigma() * 15e3
       reputation = 0
    elseif level == 2 then
       ship = "Pirate Shark"
-      credits = 150000 + rnd.sigma() * 50000
+      credits = 150e3 + rnd.sigma() * 50e3
       reputation = 0
    elseif level == 3 then
       if rnd.rnd() < 0.5 then
@@ -365,7 +365,7 @@ function bounty_setup ()
       else
          ship = "Pirate Ancestor"
       end
-      credits = 400000 + rnd.sigma() * 80000
+      credits = 400e3 + rnd.sigma() * 80e3
       reputation = 1
    elseif level == 4 then
       if rnd.rnd() < 0.5 then
@@ -373,11 +373,11 @@ function bounty_setup ()
       else
          ship = "Pirate Phalanx"
       end
-      credits = 700000 + rnd.sigma() * 120000
+      credits = 700e3 + rnd.sigma() * 120e3
       reputation = 2
    elseif level == 5 then
       ship = "Pirate Kestrel"
-      credits = 1200000 + rnd.sigma() * 200000
+      credits = 1.2e6 + rnd.sigma() * 200e3
       reputation = 4
    end
 end
@@ -389,7 +389,7 @@ function spawn_pirate( param )
       if jumps_permitted >= 0 then
          misn.osdActive( 2 )
          target_ship = pilot.addFleet( ship, param )[1]
-         set_pirate_faction()
+         set_faction( target_ship )
          target_ship:rename( name )
          target_ship:setHilight( true )
          hook.pilot( target_ship, "disable", "pilot_disable" )
@@ -420,7 +420,17 @@ end
 
 
 -- Adjust pirate faction (used for "alive" bounties)
-function set_pirate_faction ()
+function set_faction( p )
+   if not _target_faction then
+      _target_faction = faction.dynAdd( "Pirate", "Wanted Pirate", _("Wanted Pirate") )
+      for k,v in ipairs(_target_faction:enemies()) do
+         _target_faction:dynEnemy( v, true )
+      end
+      for k,v in ipairs(_target_faction:allies()) do
+         _target_faction:dynAlly( v, true )
+      end
+   end
+   p:setFaction( "Wanted Pirate" )
 end
 
 

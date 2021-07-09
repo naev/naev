@@ -130,6 +130,10 @@ function create ()
 end
 
 
+function set_faction( p )
+end
+
+
 -- Set up the ship, credits, and reputation.
 function bounty_setup ()
    local choices = {

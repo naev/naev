@@ -24,7 +24,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -41,7 +40,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -59,7 +57,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Raider</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -78,7 +75,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Raider</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -96,7 +92,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Wanted Pirate</enemy>
    <enemy>Proteron</enemy>
   </enemies>
  </faction>
@@ -112,7 +107,6 @@
   <standing>pirate</standing>
   <equip>pirate</equip>
   <allies>
-   <ally>Wanted Pirate</ally>
   </allies>
   <enemies>
    <enemy>Civilian</enemy>
@@ -168,7 +162,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Wanted Pirate</enemy>
    <enemy>Proteron Dissident</enemy>
   </enemies>
  </faction>
@@ -203,7 +196,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Raider</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -245,7 +237,6 @@
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Pirate</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -317,7 +308,6 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Nasin</enemy>
-   <enemy>Wanted Pirate</enemy>
   </enemies>
  </faction>
  <faction>
@@ -336,34 +326,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-  </enemies>
- </faction>
- <faction>
-  <name>Wanted Pirate</name>
-  <ai>pirate</ai>
-  <display>Pirate</display>
-  <static />
-  <invisible />
-  <known />
-  <logo>pirate</logo>
-  <longname>Galactic Pirates</longname>
-  <player>-100</player>
-  <colour>red</colour>
-  <standing>static</standing>
-  <equip>pirate</equip>
-  <allies>
-   <ally>Pirate</ally>
-  </allies>
-  <enemies>
-   <enemy>Civilian</enemy>
-   <enemy>Collective</enemy>
-   <enemy>Independent</enemy>
-   <enemy>Miner</enemy>
-   <enemy>Proteron</enemy>
-   <enemy>Proteron Dissident</enemy>
-   <enemy>Sirius</enemy>
-   <enemy>Trader</enemy>
-   <enemy>Traders Guild</enemy>
   </enemies>
  </faction>
  <faction>

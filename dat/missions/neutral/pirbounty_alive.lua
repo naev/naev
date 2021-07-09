@@ -99,11 +99,11 @@ end
 function bounty_setup ()
    if level == 1 then
       ship = "Pirate Hyena"
-      credits = 100000 + rnd.sigma() * 30000
+      credits = 100e3 + rnd.sigma() * 30e3
       reputation = 0
    elseif level == 2 then
       ship = "Pirate Shark"
-      credits = 300000 + rnd.sigma() * 100000
+      credits = 300e3 + rnd.sigma() * 100e3
       reputation = 1
    elseif level == 3 then
       if rnd.rnd() < 0.5 then
@@ -111,7 +111,7 @@ function bounty_setup ()
       else
          ship = "Pirate Ancestor"
       end
-      credits = 800000 + rnd.sigma() * 160000
+      credits = 800e3 + rnd.sigma() * 160e3
       reputation = 3
    elseif level == 4 then
       if rnd.rnd() < 0.5 then
@@ -119,19 +119,13 @@ function bounty_setup ()
       else
          ship = "Pirate Phalanx"
       end
-      credits = 1400000 + rnd.sigma() * 240000
+      credits = 1.4e6 + rnd.sigma() * 240e3
       reputation = 5
    elseif level == 5 then
       ship = "Pirate Kestrel"
-      credits = 2500000 + rnd.sigma() * 500000
+      credits = 2.5e6 + rnd.sigma() * 500e3
       reputation = 7
    end
-end
-
-
--- Adjust pirate faction (used for "alive" bounties)
-function set_pirate_faction ()
-   target_ship:setFaction( "Wanted Pirate" )
 end
 
 

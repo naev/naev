@@ -626,40 +626,55 @@ static int factionL_dynAdd( lua_State *L )
 
 
 /**
- * @brief Adds allies to a faction. Only works with dynamic factions.
+ * @brief Adds or removes allies to a faction. Only works with dynamic factions.
  *
  *    @luatparam Faction fac Faction to add ally to.
  *    @luatparam Faction ally Faction to add as an ally.
+ *    @luatparam[opt=false] boolean remove Whether or not to remove the ally from the faction instead of adding it.
  * @luafunc dynAlly
  */
 static int factionL_dynAlly( lua_State *L )
 {
    LuaFaction fac, ally;
+   int remove;
    NLUA_CHECKRW(L);
-   fac = luaL_validfaction(L,1);
+   fac      = luaL_validfaction(L,1);
+   remove   = lua_toboolean(L,2);
    if (!faction_isDynamic(fac))
       NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
    ally = luaL_validfaction(L,2);
-   faction_addAlly(fac, ally);
+   if (remove)
+      faction_rmAlly(fac, ally);
+   else
+      faction_addAlly(fac, ally);
    return 0;
 }
 
 
 /**
- * @brief Adds enemies to a faction. Only works with dynamic factions.
+ * @brief Adds or removes enemies to a faction. Only works with dynamic factions.
  *
  *    @luatparam Faction fac Faction to add enemy to.
  *    @luatparam Faction enemy Faction to add as an enemy.
+ *    @luatparam[opt=false] boolean remove Whether or not to remove the enemy from the faction instead of adding it.
  * @luafunc dynEnemy
  */
 static int factionL_dynEnemy( lua_State *L )
 {
    LuaFaction fac, enemy;
+   int remove;
    NLUA_CHECKRW(L);
-   fac = luaL_validfaction(L,1);
+   fac      = luaL_validfaction(L,1);
+   remove   = lua_toboolean(L,1);
    if (!faction_isDynamic(fac))
       NLUA_ERROR(L,_("Can only add allies to dynamic factions"));
    enemy = luaL_validfaction(L,2);
-   faction_addEnemy(fac, enemy);
+   if (remove)
+      faction_rmEnemy(fac, enemy);
+   else
+      faction_addEnemy(fac, enemy);
    return 0;
 }
+
+
+
