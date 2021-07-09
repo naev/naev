@@ -25,8 +25,9 @@ int pilot_shoot( Pilot* p, int level );
 void pilot_shootStop( Pilot* p, int level );
 void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w );
 void pilot_getRateMod( double *rate_mod, double* energy_mod,
-      Pilot* p, Outfit* o );
-double pilot_weapFlyTime( Outfit *o, Pilot *parent, Vector2d *pos, Vector2d *vel);
+      const Pilot* p, const Outfit* o );
+double pilot_weapFlyTime( const Outfit *o, const Pilot *parent,
+      const Vector2d *pos, const Vector2d *vel);
 
 
 /* Updating. */

@@ -884,7 +884,7 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
  *    @param pos Target of the weapon.
  *    @param vel Target's velocity.
  */
-double pilot_weapFlyTime( Outfit *o, Pilot *parent, Vector2d *pos, Vector2d *vel)
+double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const Vector2d *pos, const Vector2d *vel)
 {
    Vector2d approach_vector, relative_location, orthoradial_vector;
    double speed, radial_speed, orthoradial_speed, dist, t;
@@ -1190,7 +1190,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
  *    @param o Pilot's outfit.
  */
 void pilot_getRateMod( double *rate_mod, double* energy_mod,
-      Pilot* p, Outfit *o )
+      const Pilot* p, const Outfit *o )
 {
    switch (o->type) {
       case OUTFIT_TYPE_BOLT:
