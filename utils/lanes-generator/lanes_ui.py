@@ -3,19 +3,46 @@ import matplotlib.pyplot as plt
 FACTION_COLORS = ["g","orange","brown","darkred","silver","aqua","y","b","purple","grey"]
 
 
+def directedSystemPairs( internal_lanes, activated, Lfaction, systems ):
+    '''Return a dictionary: {(src_sys_index, dst_sys_index): {faction_index_1, ...}}.'''
+    out = {}
+    sil, sjl, lanesLoc2globs = internal_lanes[3:6]
+
+    for i, jpname in enumerate(systems.jpnames):
+        for target in jpname:
+            out[i, systems.sysdict[target]] = set()
+
+    for i, (sysas, jpname, lanesLoc2glob) in enumerate(zip(systems.sysass, systems.jpnames, lanesLoc2globs)):
+        aloc = [activated[k] for k in lanesLoc2glob]
+        for j, jj in enumerate(lanesLoc2glob):
+            if aloc[j]:
+                for no in sil[jj], sjl[jj]:
+                    no -= len(sysas)  # Adjust for index offset.
+                    if no >= 0:
+                        out[i, systems.sysdict[jpname[no]]].add(Lfaction[jj])
+    return out
+
+
 def printLanes( internal_lanes, activated, Lfaction, systems ):
     '''Display the active lanes'''
     nsys = len(systems.nodess)
-    sil = internal_lanes[3]
-    sjl = internal_lanes[4]
-    lanesLoc2globs = internal_lanes[5]
+    sil, sjl, lanesLoc2globs = internal_lanes[3:6]
+
+    sys_edge_factions = directedSystemPairs(internal_lanes, activated, Lfaction, systems)
+    # Symmetrize, at least for now. (A faction might have a dead-end on the far side of a jump, making it one-way in a sense.)
+    for i,j in [(i, j) for (i, j) in sys_edge_factions if i>j]:
+        sys_edge_factions.setdefault((j, i), set()).update(sys_edge_factions.pop((i, j)))
     
     fig, (glob_ax, loc_ax) = plt.subplots(1, 2, figsize=(18, 10))
     globmap = glob_ax.scatter(systems.xlist ,systems.ylist, color='b')
-    for i, jpname in enumerate(systems.jpnames):
-        for target in jpname:
-            j = systems.sysdict[target]
-            glob_ax.plot([systems.xlist[i], systems.xlist[j]], [systems.ylist[i], systems.ylist[j]], color='r')
+    for (i, j), factions in sys_edge_factions.items():
+        xij = [systems.xlist[i], systems.xlist[j]]
+        yij = [systems.ylist[i], systems.ylist[j]]
+        if not factions:
+            glob_ax.plot(xij, yij, color='lightgrey')
+        for i, f in enumerate(factions):
+            nf = len(factions)
+            glob_ax.plot(xij, yij, linewidth=nf, color=FACTION_COLORS[f], dashes=(0, 5*i, 5, 5*(nf-i-1)))
 
     annot = glob_ax.annotate('', xy=(0, 0), xytext=(10, 10), textcoords='offset points', bbox={'fc': 'w'})
     annot.set_visible(False)
