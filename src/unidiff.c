@@ -83,6 +83,10 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_ASSET_LEGALMARKET,
    HUNK_TYPE_JUMP_ADD,
    HUNK_TYPE_JUMP_REMOVE,
+   HUNK_TYPE_SSYS_BACKGROUND,
+   HUNK_TYPE_SSYS_BACKGROUND_REVERT, /* For internal usage. */
+   HUNK_TYPE_SSYS_FEATURES,
+   HUNK_TYPE_SSYS_FEATURES_REVERT, /* For internal usage. */
    /* Target should be tech. */
    HUNK_TYPE_TECH_ADD,
    HUNK_TYPE_TECH_REMOVE,
@@ -337,7 +341,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
       }
       else if (xml_isNode(cur,"jump")) {
          buf = xml_get( cur );
-         if ( buf == NULL ) {
+         if (buf == NULL) {
             WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
             continue;
          }
@@ -357,6 +361,32 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             WARN(_("Unidiff '%s': Unknown hunk type '%s' for jump '%s'."), diff->name, buf, hunk.u.name);
 
          hunk.node = cur;
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"background")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SSYS_BACKGROUND;
+         hunk.u.name = xml_getStrd(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"features")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_SSYS_FEATURES;
+         hunk.u.name = xml_getStrd(cur);
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -738,6 +768,7 @@ static int diff_patch( xmlNodePtr parent )
 static int diff_patchHunk( UniHunk_t *hunk )
 {
    Planet *p;
+   StarSystem *ssys;
    int a, b;
 
    switch (hunk->type) {
@@ -764,6 +795,28 @@ static int diff_patchHunk( UniHunk_t *hunk )
       /* Removing a jump. */
       case HUNK_TYPE_JUMP_REMOVE:
          return system_rmJump( system_get(hunk->target.u.name), hunk->u.name );
+
+      /* Changing system background. */
+      case HUNK_TYPE_SSYS_BACKGROUND:
+         ssys = system_get(hunk->target.u.name);
+         hunk->o.name = ssys->background;
+         ssys->background = hunk->u.name;
+         return 0;
+      case HUNK_TYPE_SSYS_BACKGROUND_REVERT:
+         ssys = system_get(hunk->target.u.name);
+         ssys->background = (char*)hunk->o.name;
+         return 0;
+
+      /* Changing system features designation. */
+      case HUNK_TYPE_SSYS_FEATURES:
+         ssys = system_get(hunk->target.u.name);
+         hunk->o.name = ssys->features;
+         ssys->features = hunk->u.name;
+         return 0;
+      case HUNK_TYPE_SSYS_FEATURES_REVERT:
+         ssys = system_get(hunk->target.u.name);
+         ssys->features = (char*)hunk->o.name;
+         return 0;
 
       /* Adding a tech. */
       case HUNK_TYPE_TECH_ADD:
@@ -991,6 +1044,13 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_JUMP_ADD;
             break;
 
+         case HUNK_TYPE_SSYS_BACKGROUND:
+            hunk.type = HUNK_TYPE_SSYS_BACKGROUND_REVERT;
+            break;
+         case HUNK_TYPE_SSYS_FEATURES:
+            hunk.type = HUNK_TYPE_SSYS_FEATURES_REVERT;
+            break;
+
          case HUNK_TYPE_TECH_ADD:
             hunk.type = HUNK_TYPE_TECH_REMOVE;
             break;
@@ -1071,6 +1131,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_ASSET_LEGALMARKET:
       case HUNK_TYPE_JUMP_ADD:
       case HUNK_TYPE_JUMP_REMOVE:
+      case HUNK_TYPE_SSYS_BACKGROUND:
+      case HUNK_TYPE_SSYS_FEATURES:
       case HUNK_TYPE_TECH_ADD:
       case HUNK_TYPE_TECH_REMOVE:
       case HUNK_TYPE_ASSET_FACTION:
