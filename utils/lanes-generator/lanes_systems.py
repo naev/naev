@@ -110,8 +110,8 @@ class Systems:
         nsys = len(os.listdir(path))
 
         self.anchors = []
-        presass = [] # List of presences in assets
-        factass = [] # Factions in assets. (I'm sorry for all these asses)
+        self.presass = [] # List of presences in assets
+        self.factass = [] # Factions in assets. (I'm sorry for all these asses)
 
         i = 0 # No of system
         nglob = 0 # Global nb of nodes
@@ -152,8 +152,8 @@ class Systems:
                             self.ass2g.append(nglob)
                             self.g2ass.append(nasg)
                             self.g2sys.append(i)
-                            presass.append(info.population)
-                            factass.append(factions.get(info.faction, -1))
+                            self.presass.append(info.population)
+                            self.factass.append(factions.get(info.faction, -1))
                             nglob += 1
                             nass += 1
                             nasg += 1
@@ -201,8 +201,6 @@ class Systems:
             self.nodess.append(nodes)
             self.loc2globs.append(loc2glob)
             i += 1
-
-        self.assts = (presass,factass)
 
         connect = np.zeros((nsys,nsys)) # Connectivity matrix for systems. TODO : use sparse
         anchorSys, anchorJps, anchorAst = createAnchors()

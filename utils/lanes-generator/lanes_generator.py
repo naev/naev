@@ -128,7 +128,7 @@ class SafeLaneProblem:
             k += 1
 
         # Get the stiffness inside systems
-        self.internal_lanes = inSysStiff( systems.nodess, systems.assts[1], systems.g2ass, systems.loc2globs )
+        self.internal_lanes = inSysStiff( systems.nodess, systems.factass, systems.g2ass, systems.loc2globs )
 
         # Merge both and generate matrix
         si = si0 + self.internal_lanes[0]
@@ -160,7 +160,6 @@ class SafeLaneProblem:
         self.stiff = sp.csr_matrix( ( svv, (sii, sjj) ) )
 
         self.default_lanes = (si0,sj0,sv0)
-        self.sysdist = (systems.distances, systems.g2sys)
 
 
 @timed
@@ -216,12 +215,10 @@ def buildStiffness( default_lanes, internal_lanes, activated, alpha, anchors ):
     return stiff
 
 @timed
-def PenMat( nass, ndof, internal_lanes, utilde, ass2g, assts, sysdist ):
+def PenMat( nass, ndof, internal_lanes, utilde, systems ):
     '''Gives the matrix that computes penibility form potentials.
       By chance, this does not depend on the presence of lane.'''
-    presass = assts[0]
-    factass = assts[1]
-    nfact = max(factass)+1
+    nfact = max(systems.factass)+1
     
     # First : compute the (sparse) matrix that transforms utilde into u
     pi = []
@@ -232,13 +229,10 @@ def PenMat( nass, ndof, internal_lanes, utilde, ass2g, assts, sysdist ):
     dj = [[] for i in range(nfact)]
     dv = [[] for i in range(nfact)]
     
-    distances = sysdist[0]
-    g2sys = sysdist[1]
-    
     for i in range(nass):
-        ai = ass2g[i] # Find corresponding dof
-        facti = factass[i]
-        presi = presass[i]        
+        ai = systems.ass2g[i] # Find corresponding dof
+        facti = systems.factass[i]
+        presi = systems.presass[i]
         for j in range(i):# Stuff is symmetric, we use that
             if utilde[ai,j] <= 1e-12: # i and j are disconnected. Dont consider this couple
                 continue
@@ -252,13 +246,13 @@ def PenMat( nass, ndof, internal_lanes, utilde, ass2g, assts, sysdist ):
             pj.append(ij)
             pv.append(-1)
             
-            factj = factass[j]
-            presj = presass[j]
+            factj = systems.factass[j]
+            presj = systems.presass[j]
             
             # More the assets are far from each other less interesting it is
             # This avoids strange shapes for peripheric systems
-#            aj = ass2g[j]
-#            dis = distances[g2sys[ai],g2sys[aj]]
+#            aj = systems.ass2g[j]
+#            dis = systems.distances[systems.g2sys[ai],systems.g2sys[aj]]
 #            if dis==0:
 #                dis = 1
             dis = 1
@@ -359,11 +353,8 @@ def activateBest( internal_lanes, g, activated, Lfaction, nodess ):
     
     for i in range(nsys):
         lanesLoc2glob = lanesLoc2globs[i]
-        #nodes = nodess[i]
-        #aloc = activated[lanesLoc2glob]
-        aloc = [activated[k] for k in lanesLoc2glob]
         
-        if not (False in aloc): # There should be something to actually activate
+        if all(activated[k] for k in lanesLoc2glob):
             continue
         
         gloc = g1[lanesLoc2glob]
@@ -402,9 +393,8 @@ def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c
     
     for i in range(nsys):
         lanesLoc2glob = lanesLoc2globs[i]
-        aloc = [activated[k] for k in lanesLoc2glob]
         
-        if not (False in aloc): # There should be something to actually activate
+        if all(activated[k] for k in lanesLoc2glob):
             continue
 
         # Faction with more presence choose first
@@ -477,10 +467,7 @@ def optimizeLanes( systems, problem, alpha=9 ):
         # Compute QQ and PP, and use utilde to detect connected parts of the mesh
         # It's in the loop, but only happends once
         if i == 0: # .5 s
-            Pi = PenMat( nass, ndof, problem.internal_lanes, utilde, systems.ass2g, systems.assts, problem.sysdist )
-            P = Pi[0]
-            Q = Pi[1] 
-            D = Pi[2]
+            P, Q, D = PenMat( nass, ndof, problem.internal_lanes, utilde, systems )
             
             QQ = (Q.transpose()).dot(Q)
             PP0 = P.dot(P.transpose())
