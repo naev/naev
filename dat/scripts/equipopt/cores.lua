@@ -309,6 +309,10 @@ cores.elite = {
 --[[
    SHIP-BASED EXCEPTIONS
 --]]
+local heavy_exception = {
+   ["Lancelot"] = true,
+   ["Empire Lancelot"] = true,
+}
 -- Normal exceptions
 cores.standard.engines["Kestrel"] = function( heavy )
    if heavy then
@@ -346,7 +350,7 @@ function cores.get( p, params )
    -- Check out if we have to do heavy
    local heavy
    if params.heavy == nil then
-      heavy = (rnd.rnd() > 0.5)
+      heavy = heavy_exception[shipname] or (rnd.rnd() > 0.5)
    else
       heavy = params.heavy
    end
