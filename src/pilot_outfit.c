@@ -784,7 +784,7 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
  *    @param pilot Pilot to count the ammo on
  *    @@return The integer count of ammo units on pilot
  */
-int pilot_countAmmo( Pilot* pilot )
+int pilot_countAmmo( const Pilot* pilot )
 {
    int nammo = 0, i;
    PilotOutfitSlot* po;
@@ -810,7 +810,7 @@ int pilot_countAmmo( Pilot* pilot )
  *    @param pilot Pilot to get the count from
  *    @@return An integer, the max amount of ammo that can be held.
  */
-int pilot_maxAmmo( Pilot* pilot )
+int pilot_maxAmmo( const Pilot* pilot )
 {
   int max = 0, i;
   PilotOutfitSlot* po;
