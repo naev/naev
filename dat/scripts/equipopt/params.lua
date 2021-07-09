@@ -88,8 +88,7 @@ end
 function params.scout( overwrite )
    return _merge_tables( params.default{
       weap        = 0.5, -- low weapons
-      ew          = 3,
-      move        = 2,
+      ew          = 2,
       t_absorb    = 0,
       t_speed     = 400,
       t_track     = 4000,
@@ -99,7 +98,7 @@ end
 
 function params.light_fighter( overwrite )
    return _merge_tables( params.default{
-      move        = 2,
+      eps_weight  = 0.2,
       t_absorb    = 0,
       t_speed     = 400,
       t_track     = 4000,
@@ -109,6 +108,7 @@ end
 
 function params.heavy_fighter( overwrite )
    return _merge_tables( params.default{
+      eps_weight  = 0.3,
       t_absorb    = 0.10,
       t_speed     = 300,
       t_track     = 7000,

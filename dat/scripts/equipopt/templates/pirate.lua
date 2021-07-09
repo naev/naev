@@ -88,6 +88,7 @@ local function equip_pirate( p, opt_params )
    local params = eparams.choose( p )
    -- Prefer to use the Pirate utilities
    params.prefer["Scanning Combat AI"]      = 100
+   params.weap = 2 -- Focus on weapons!
    -- much more diversity for pirates
    params.max_same_stru = 1
    params.max_same_util = 1
