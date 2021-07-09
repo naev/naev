@@ -128,38 +128,9 @@ class SafeLaneProblem:
             k += 1
 
         # Get the stiffness inside systems
-        self.internal_lanes = inSysStiff( systems.nodess, systems.factass, systems.g2ass, systems.loc2globs )
-
-        # Merge both and generate matrix
-        si = si0 + self.internal_lanes[0]
-        sj = sj0 + self.internal_lanes[1]
-        sv = sv0 + self.internal_lanes[2]
-        sz = len(si)
-
-        # Build the sparse matrix
-        sii = [0]*(4*sz)
-        sjj = [0]*(4*sz)
-        svv = [0.]*(4*sz)
-
-        sii[0::4] = si
-        sjj[0::4] = si
-        svv[0::4] = sv
-
-        sii[1::4] = sj
-        sjj[1::4] = sj
-        svv[1::4] = sv
-
-        sii[2::4] = si
-        sjj[2::4] = sj
-        svv[2::4] = map(neg, sv)
-
-        sii[3::4] = sj
-        sjj[3::4] = si
-        svv[3::4] = map(neg, sv)
-
-        self.stiff = sp.csr_matrix( ( svv, (sii, sjj) ) )
-
         self.default_lanes = (si0,sj0,sv0)
+        self.internal_lanes = inSysStiff( systems.nodess, systems.factass, systems.g2ass, systems.loc2globs )
+        self.ndof = sum(map(len, systems.nodess))  # number of degrees of freedom
 
 
 @timed
@@ -350,7 +321,7 @@ def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c
     nsys = len(lanesLoc2globs)
     
     nfact = len(pres_c[0])
-    price = .007  # TODO : tune metric price
+    price = [.005, .007, .100, .005, .010, .007, .010, .005, .005, .010]
     
     g1 = g * np.c_[sv] # Short lanes are more interesting
     
@@ -388,8 +359,8 @@ def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c
                 # Find a lane to activate
                 for k in ind:
                     cond = (sr[k][0] == f) or (sr[k][1] == f) or (sr[k] == (-1, -1))
-                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * price) and cond:
-                        pres_c[i][f] -= 1/sv[k] * price
+                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * price[f]) and cond:
+                        pres_c[i][f] -= 1/sv[k] * price[f]
                         activated[k] = True
                         Lfaction[k] = f
                         break
@@ -401,7 +372,6 @@ def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c
 def optimizeLanes( systems, problem, alpha=9 ):
     '''Optimize the lanes. alpha is the efficiency parameter for lanes.'''
     sz = len(problem.internal_lanes[0])
-    ndof = problem.stiff.shape[0]
     activated = [False] * sz # Initialization : no lane is activated
     Lfaction = [-1] * sz;
     pres_c = systems.presences.copy()
@@ -410,7 +380,7 @@ def optimizeLanes( systems, problem, alpha=9 ):
     nass = len(systems.ass2g)
     
     # TODO : It could be interesting to use sparse format for the RHS as well (see)
-    ftilde = np.eye( ndof )
+    ftilde = np.eye( problem.ndof )
     ftilde = ftilde[:,systems.ass2g] # Keep only lines corresponding to assets
     
     niter = 20
@@ -436,7 +406,7 @@ def optimizeLanes( systems, problem, alpha=9 ):
         # Compute QQ and PP, and use utilde to detect connected parts of the mesh
         # It's in the loop, but only happends once
         if i == 0: # .5 s
-            P, Q, D = PenMat( nass, ndof, problem.internal_lanes, utilde, systems )
+            P, Q, D = PenMat( nass, problem.ndof, problem.internal_lanes, utilde, systems )
             
             QQ = (Q.transpose()).dot(Q)
             PP0 = P.dot(P.transpose())
