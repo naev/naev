@@ -343,36 +343,6 @@ def getGradient( internal_lanes, u, lamt, alpha, PP, PPl, pres_0 ):
     return (g,gl)
         
 
-def activateBest( internal_lanes, g, activated, Lfaction, nodess ):
-    '''Activates the best lane in each system'''
-    # Find lanes to keep in each system
-    sv, sil, sjl, lanesLoc2globs = internal_lanes[2:6]
-    nsys = len(lanesLoc2globs)
-    
-    g1 = g * np.c_[sv] # Short lanes are more interesting
-    
-    for i in range(nsys):
-        lanesLoc2glob = lanesLoc2globs[i]
-        
-        if all(activated[k] for k in lanesLoc2glob):
-            continue
-        
-        gloc = g1[lanesLoc2glob]
-        ind1 = np.argsort(gloc.transpose()) # For some reason, it does not work without transpose :/
-        ind = [lanesLoc2glob[k] for k in ind1[0]]
-
-        # Find a lane to activate
-        for k in ind:
-            if not activated[k]: # One connot activate something that is already active
-                break
-                    
-        #if admissible: # Because it's possible noone was admissible
-        activated[k] = True
-        Lfaction[k] = 0
-        
-    return 1
-
-
 def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c, pres_0 ):
     '''Activates the best lane in each system for each faction'''
     # Find lanes to keep in each system
@@ -412,7 +382,6 @@ def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c
                     continue
                 
                 gloc = g1l[f][lanesLoc2glob]
-                #gloc = g1[lanesLoc2glob]
                 ind1 = np.argsort(gloc.transpose()) # For some reason, it does not work without transpose :/
                 ind = [lanesLoc2glob[k] for k in ind1[0]]
         
@@ -487,8 +456,6 @@ def optimizeLanes( systems, problem, alpha=9 ):
         g = gNgl[0]
         gl = gNgl[1]
 
-        # Activate one lane per system
-        #activateBest( problem.internal_lanes, g, activated, Lfaction, nodess ) # 0.01 s
         activateBestFact( problem.internal_lanes, g, gl, activated, Lfaction, systems.nodess, pres_c, systems.presences ) # 0.01 s
 
     #print(np.max(np.c_[problem.internal_lanes[2]]))
