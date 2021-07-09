@@ -133,6 +133,12 @@ end
 
 function enter()
    if system.cur() == system.get(destsysname) then
+      -- Create the custom factions
+      hawkfaction = faction.dynAdd( "Dummy", "The Hawk", _("The Hawk"), "dvaered_norun" )
+      attkfaction = faction.dynAdd( "Dummy", "Attackers", _("Attackers"), "dvaered_norun" )
+      faction.dynEnemy( hawkfaction, attkfaction )
+
+      -- Spawn people
       pilot.toggleSpawn(false)
       pilot.clear()
       misn.osdActive(2)
@@ -152,6 +158,7 @@ function enter()
       hawk:control()
       hawk:hyperspace(system.get(destjumpname))
       hawk:broadcast(string.format(chatter[0], destjumpname))
+      hawk:setFaction(hawkfaction)
       fleethooks = {}
       fleetdv = addShips( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, {ai="dvaered_norun"} )
       for i, j in ipairs(fleetdv) do
@@ -160,6 +167,7 @@ function enter()
          j:setVisible(true)
          j:control()
          j:moveto(v)
+         j:setFaction(hawkfaction)
          table.insert(fleethooks, hook.pilot(j, "attacked", "fleetdv_attacked"))
       end
 
@@ -231,6 +239,8 @@ end
 function hawk_dead () -- mission accomplished
    hawk:broadcast(chatter[4])
 
+   faction.dynEnemy( hawkfaction, attkfaction, true )
+   faction.dynEnemy( attkfaction, hawkfaction, true )
    messages = {5, 6, 7}
    for k, v in ipairs(fleetdv) do
       if v:exists() then
@@ -242,7 +252,6 @@ function hawk_dead () -- mission accomplished
             end
 
             v:control(false)
-            v:setFaction("FLF")
             v:setVisible(false)
             v:setHilight(false)
          end
@@ -272,6 +281,7 @@ function update_fleet() -- Wrangles the fleet defending the Hawk
             j:changeAI("dvaered_norun")
             j:control(false)
             else
+            j:taskClear()
             j:attack(player.pilot())
          end
       end
@@ -295,7 +305,7 @@ function spawn_fleet() -- spawn warlord killing fleet
    broadcast_first(jump_fleet, string.format(chatter[8], destplanetname))
    for i, j in ipairs(jump_fleet) do
       j:changeAI("dvaered_norun")
-      j:setFaction("FLF")
+      j:setFaction(attkfaction)
       j:setHilight(true)
       j:setVisible()
       j:control()
