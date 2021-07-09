@@ -12,23 +12,6 @@ from lanes_perf import timed, timer
 from lanes_ui import printLanes
 from lanes_systems import Systems
 
-def createFactions():
-    '''Creates the dico of lane-making factions'''
-    factions = [
-                "Empire",
-                "Soromid",
-                "Dvaered",
-                "Za'lek",
-                "Collective", # TODO : see if this one is right
-                "Sirius",
-                "Frontier",
-                "Goddard",
-                "Proteron",
-                "Thurion",
-               ]
-
-    return {name: i for (i, name) in enumerate(factions)}
-
 def inSysStiff( nodess, factass, g2ass, loc2globNs ):
     '''Compute insystem paths. TODO maybe : use Delauney triangulation instead?'''
     si  = []  # Element to build the sparse default matrix
@@ -112,7 +95,7 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
 
 class SafeLaneProblem:
     '''Representation of the systems, with more calculated: nodes associated to jumps, connectivity matrix (for ranged presence).'''
-    def __init__( self, systems, factions ):
+    def __init__( self, systems ):
         si0 = [] #
         sj0 = [] #
         sv0 = [] # For the construction of the sparse weighted connectivity matrix
@@ -529,9 +512,8 @@ def optimizeLanes( systems, problem, alpha=9 ):
     return (activated, Lfaction)
 
 if __name__ == "__main__":
-    factions = createFactions()
-    systems = Systems( factions )
-    problem = SafeLaneProblem( systems, factions )
+    systems = Systems()
+    problem = SafeLaneProblem( systems )
     
     activated, Lfaction = optimizeLanes( systems, problem )
     printLanes( problem.internal_lanes, activated, Lfaction, systems )
