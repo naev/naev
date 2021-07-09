@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 FACTION_COLORS = ["g","orange","brown","darkred","silver","aqua","y","b","purple","grey"]
 
 
-def directedSystemPairs( internal_lanes, activated, Lfaction, systems ):
+def directedSystemPairs( problem, activated, Lfaction, systems ):
     '''Return a dictionary: {(src_sys_index, dst_sys_index): {faction_index_1, ...}}.'''
     out = {}
-    sil, sjl, lanesLoc2globs = internal_lanes[3:6]
+    sil, sjl, lanesLoc2globs = problem.internal_lanes[3:6]
 
     for i, jpname in enumerate(systems.jpnames):
         for target in jpname:
@@ -23,12 +23,12 @@ def directedSystemPairs( internal_lanes, activated, Lfaction, systems ):
     return out
 
 
-def printLanes( internal_lanes, activated, Lfaction, systems ):
+def printLanes( problem, activated, Lfaction, systems ):
     '''Display the active lanes'''
     nsys = len(systems.nodess)
-    sil, sjl, lanesLoc2globs = internal_lanes[3:6]
+    sil, sjl, lanesLoc2globs = problem.internal_lanes[3:6]
 
-    sys_edge_factions = directedSystemPairs(internal_lanes, activated, Lfaction, systems)
+    sys_edge_factions = directedSystemPairs(problem, activated, Lfaction, systems)
     # Symmetrize, at least for now. (A faction might have a dead-end on the far side of a jump, making it one-way in a sense.)
     for i,j in [(i, j) for (i, j) in sys_edge_factions if i>j]:
         sys_edge_factions.setdefault((j, i), set()).update(sys_edge_factions.pop((i, j)))
