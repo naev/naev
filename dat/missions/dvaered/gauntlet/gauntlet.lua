@@ -15,6 +15,7 @@ local gauntlet = require 'campaigns.gauntlet'
 local gauntlet_gui = require 'missions.dvaered.gauntlet.gui'
 require 'missions.dvaered.gauntlet.tables'
 require 'numstring'
+local equipopt = require 'equipopt'
 
 logidstr = "log_gauntlet"
 logname  = _("Totoran Tournament")
@@ -269,7 +270,8 @@ function wave_round_setup ()
    pp:setVel( vec2.new( 0, 0 ) )
 
    local function addenemy( shipname, pos )
-      local p = pilot.add( shipname, enemy_faction, pos, nil, {ai="baddie_norun"} )
+      local p = pilot.add( shipname, enemy_faction, pos, nil, {ai="baddie_norun", naked=true} )
+      equipopt.generic( p, nil, "elite" )
       p:setInvincible(true)
       p:control(true)
       p:setHostile(true)
