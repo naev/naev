@@ -135,7 +135,6 @@ static void ai_create( Pilot* pilot );
 static int ai_loadEquip (void);
 /* Task management. */
 static void ai_taskGC( Pilot* pilot );
-static Task* ai_curTask( Pilot* pilot );
 static Task* ai_createTask( lua_State *L, int subtask );
 static int ai_tasktarget( lua_State *L, Task *t );
 
@@ -395,7 +394,7 @@ static void ai_taskGC( Pilot* pilot )
 /**
  * @brief Gets the current running task.
  */
-static Task* ai_curTask( Pilot* pilot )
+Task* ai_curTask( Pilot* pilot )
 {
    Task *t;
    /* Get last task. */

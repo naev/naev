@@ -146,6 +146,7 @@ static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
+static int pilotL_taskname( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
 static int pilotL_moveto( lua_State *L );
 static int pilotL_face( lua_State *L );
@@ -261,6 +262,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "idle", pilotL_idle },
    { "control", pilotL_control },
    { "memory", pilotL_memory },
+   { "taskname", pilotL_taskname },
    { "taskClear", pilotL_taskclear },
    { "moveto", pilotL_moveto },
    { "face", pilotL_face },
@@ -3751,6 +3753,24 @@ static int pilotL_memory( lua_State *L )
 
 
 /**
+ * @brief Gets the name of the task the pilot is currently doing.
+ *
+ *    @luatparam Pilot p Pilot to clear tasks of.
+ * @luafunc taskname
+ */
+static int pilotL_taskname( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   Task *t = ai_curTask(p);
+   if (t)
+      lua_pushstring(L, t->name);
+   else
+      lua_pushnil(L);
+   return 1;
+}
+
+
+/**
  * @brief Clears all the tasks of the pilot.
  *
  * @usage p:taskClear()
@@ -3760,16 +3780,9 @@ static int pilotL_memory( lua_State *L )
  */
 static int pilotL_taskclear( lua_State *L )
 {
-   Pilot *p;
-
    NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p  = luaL_validpilot(L,1);
-
-   /* Clean up tasks. */
+   Pilot *p = luaL_validpilot(L,1);
    ai_cleartasks( p );
-
    return 0;
 }
 
