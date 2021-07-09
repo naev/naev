@@ -294,7 +294,7 @@ function enter()
          opponent:addOutfit("Tricon Zephyr Engine")
          opponent:addOutfit("Milspec Orion 2301 Core System")
          opponent:addOutfit("S&K Ultralight Combat Plating")
-      elseif oppotype == ship.get("Reaver") then
+      elseif oppotype == ship.get("Soromid Reaver") then
          opponent:addOutfit("Light Brain Stage X")
          opponent:addOutfit("Light Fast Gene Drive Stage X")
          opponent:addOutfit("Light Shell Stage X")
