@@ -80,6 +80,7 @@ typedef struct Trail_spfx_ {
    int refcount;     /**< Number of referrers. If 0, trail dies after its TTL. */
    double dt;        /**< Timer accumulator (in seconds). */
    GLfloat r;        /**< Random variable between 0 and 1 to make each trail unique. */
+   unsigned int ontop; /**< Boolean to decide if the trail is drawn before or after the ship. */
 } Trail_spfx;
 
 /** @brief Indexes into a trail's circular buffer.  */
@@ -112,6 +113,7 @@ void spfx_clear (void);
 Trail_spfx* spfx_trail_create( const TrailSpec* spec );
 void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode, int force );
 void spfx_trail_remove( Trail_spfx* trail );
+void spfx_trail_draw( const Trail_spfx* trail );
 
 
 /*

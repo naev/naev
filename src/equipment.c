@@ -21,6 +21,7 @@
 
 #include "array.h"
 #include "conf.h"
+#include "debug.h"
 #include "dialogue.h"
 #include "gui.h"
 #include "hook.h"
@@ -894,9 +895,34 @@ static void equipment_renderShip( double bx, double by,
       pw = p->ship->gfx_space->sw;
       ph = p->ship->gfx_space->sh;
    }
+
    px = bx + (bw-pw)/2;
    py = by + (bh-ph)/2;
    gl_blitScaleSprite( p->ship->gfx_space, px, py, sx, sy, pw, ph, NULL );
+
+#ifdef DEBUGGING
+   if (debug_isFlag(DEBUG_MARK_EMITTER)) {
+      /* Visualize the trail emitters. */
+      double dircos, dirsin;
+      int i;
+      dircos = cos(equipment_dir);
+      dirsin = sin(equipment_dir);
+      for (i=0; i<array_size(p->ship->trail_emitters); i++) {
+         v.x = p->ship->trail_emitters[i].x_engine * dircos -
+              p->ship->trail_emitters[i].y_engine * dirsin;
+         v.y = p->ship->trail_emitters[i].x_engine * dirsin +
+              p->ship->trail_emitters[i].y_engine * dircos +
+              p->ship->trail_emitters[i].h_engine;
+         v.x *= pw / p->ship->gfx_space->sw;
+         v.y *= ph / p->ship->gfx_space->sh;
+         if (p->ship->trail_emitters[i].trail_spec->nebula)
+            gl_renderCross(px + pw/2 + v.x, py + ph/2 + v.y*M_SQRT1_2, 2, &cFontBlue);
+         else
+            gl_renderCross(px + pw/2 + v.x, py + ph/2 + v.y*M_SQRT1_2, 4, &cInert);
+      }
+   }
+#endif /* DEBUGGING */
+
    if ((eq_wgt.slot >= 0) && (eq_wgt.slot < array_size(p->outfit_weapon))) {
       p->tsx = sx;
       p->tsy = sy;

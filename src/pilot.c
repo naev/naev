@@ -26,6 +26,7 @@
 #include "camera.h"
 #include "damagetype.h"
 #include "debris.h"
+#include "debug.h"
 #include "escort.h"
 #include "explosion.h"
 #include "faction.h"
@@ -1749,6 +1750,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
  */
 void pilot_render( Pilot* p, const double dt )
 {
+   int i, g;
    (void) dt;
    double scalew, scaleh;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
@@ -1780,6 +1782,42 @@ void pilot_render( Pilot* p, const double dt )
          1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
          scalew, scaleh,
          p->tsx, p->tsy, &c );
+
+#ifdef DEBUGGING
+   double dircos, dirsin, x, y;
+   Vector2d v;
+   dircos = cos(p->solid->dir);
+   dirsin = sin(p->solid->dir);
+#endif /* DEBUGGING */
+
+   /* Re-draw backwards trails. */
+   for (i=g=0; g<array_size(p->ship->trail_emitters); g++){
+
+#ifdef DEBUGGING
+      if (debug_isFlag(DEBUG_MARK_EMITTER)) {
+         /* Visualize the trail emitters. */
+         v.x = p->ship->trail_emitters[g].x_engine * dircos -
+              p->ship->trail_emitters[g].y_engine * dirsin;
+         v.y = p->ship->trail_emitters[g].x_engine * dirsin +
+              p->ship->trail_emitters[g].y_engine * dircos +
+              p->ship->trail_emitters[g].h_engine;
+
+         gl_gameToScreenCoords( &x, &y, p->solid->pos.x + v.x,
+                                p->solid->pos.y + v.y*M_SQRT1_2 );
+         if (p->ship->trail_emitters[i].trail_spec->nebula)
+            gl_renderCross(x, y, 2, &cFontBlue);
+         else
+            gl_renderCross(x, y, 4, &cInert);
+      }
+#endif /* DEBUGGING */
+
+      if (pilot_trail_generated( p, g )) {
+         if (p->trail[i]->ontop)
+            spfx_trail_draw( p->trail[i] );
+         i++;
+      }
+   }
+
 }
 
 
@@ -2198,6 +2236,9 @@ void pilot_update( Pilot* pilot, double dt )
             pilot->engine_glow = 0.;
       }
 
+      /* Update the trail. */
+      pilot_sample_trails( pilot, 0 );
+
       return;
    }
 
@@ -2302,7 +2343,7 @@ void pilot_update( Pilot* pilot, double dt )
 void pilot_sample_trails( Pilot* p, int none )
 {
    int i, g;
-   double dx, dy, dircos, dirsin;
+   double dx, dy, dircos, dirsin, prod;
    TrailMode mode;
 
    dircos = cos(p->solid->dir);
@@ -2322,9 +2363,19 @@ void pilot_sample_trails( Pilot* p, int none )
          mode = MODE_IDLE;
    }
 
-   /* Compute the engine offset. */
+   /* Compute the engine offset and decide where to draw the trail. */
    for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
       if (pilot_trail_generated( p, g )) {
+
+         p->trail[i]->ontop = 0;
+         if (!(p->ship->trail_emitters[g].always_under) && (dirsin > 0)) {
+            /* See if the trail's front (tail) is in front of the ship. */
+            prod = (trail_front( p->trail[i] ).x - p->solid->pos.x) * dircos +
+                   (trail_front( p->trail[i] ).y - p->solid->pos.y) * dirsin;
+
+            p->trail[i]->ontop = (prod < 0);
+         }
+
          dx = p->ship->trail_emitters[g].x_engine * dircos -
               p->ship->trail_emitters[g].y_engine * dirsin;
          dy = p->ship->trail_emitters[g].x_engine * dirsin +
@@ -3082,8 +3133,10 @@ void pilot_free( Pilot* p )
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
    /* Free animated trail. */
-   for (i=0; i<array_size(p->trail); i++)
+   for (i=0; i<array_size(p->trail); i++) {
+      p->trail[i]->ontop = 0;
       spfx_trail_remove( p->trail[i] );
+   }
    array_free(p->trail);
 
 #ifdef DEBUGGING

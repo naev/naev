@@ -7,8 +7,8 @@
  <class>Bomber</class>
  <price>250000</price>
  <time_mod>0.75</time_mod>
- <trail_generator x="-15" y="0" h="0">nebula</trail_generator>
- <trail_generator x="-15" y="0" h="0">zalekS</trail_generator>
+ <trail_generator x="-11" y="0" h="0">nebula</trail_generator>
+ <trail_generator x="-11" y="0" h="0">zalekS</trail_generator>
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Bomber Drone. Built for attacking heavy ships. Not to be flown by the player.</description>
  <movement>
