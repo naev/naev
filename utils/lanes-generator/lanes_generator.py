@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # This file generates safe lanes
 
+import math
 import numpy as np
 from operator import neg
 import scipy.sparse as sp
-import scipy.sparse.linalg as lgs
 import scipy.linalg as slg
-import math
+from sksparse.cholmod import cholesky
 
 from lanes_perf import timed, timer
 from lanes_ui import printLanes
@@ -34,8 +34,7 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
         loc2glob = []
         loc2globN = loc2globNs[k]
         for n in range(len(nodes)):
-            xn = nodes[n][0]
-            yn = nodes[n][1]
+            xn, yn = nodes[n]
             
             na = g2ass[loc2globN[n]]  # Find global asset numerotation of local node
             if na>=0:
@@ -44,9 +43,7 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
                 fn = -1
             
             for m in range(n): # Only m<n, because symmetry
-                xm = nodes[m][0]
-                ym = nodes[m][1]
-                
+                xm, ym = nodes[m]
                 ma = g2ass[loc2globN[m]]
                 if ma>=0:
                     fm = factass[ma]
@@ -180,7 +177,7 @@ def buildStiffness( default_lanes, internal_lanes, activated, alpha, anchors ):
         svv.append(mu)
         #stiff[i,i] = stiff[i,i] + mu
 
-    stiff = sp.csr_matrix( ( svv, (sii, sjj) ) )
+    stiff = sp.csc_matrix( ( svv, (sii, sjj) ) )
     # Rem : it may become mandatory at some point to impose nb of dofs
 
     return stiff
@@ -249,7 +246,6 @@ def PenMat( nass, ndof, internal_lanes, utilde, systems ):
     D = [None]*nfact
     for k in range(nfact):
         D[k] = sp.csr_matrix( ( dv[k], (di[k], dj[k]) ), (P.shape[1], P.shape[1]) )
-    #print(lgs.norm(D[0]-D[1], 'fro'))
     
     si, sj = internal_lanes[:2]
     
@@ -387,12 +383,12 @@ def optimizeLanes( systems, problem, alpha=9 ):
     niter = 20
     for i in range(niter):
         stiff = buildStiffness( problem.default_lanes, problem.internal_lanes, activated, alpha, systems.anchors ) # 0.02 s
+        stiff_c = cholesky(stiff) #.001s
 
         # Compute direct and adjoint state
         if i >= 1:
             utildp = utilde
-        with timer('spsolve: utilde'):
-            utilde = lgs.spsolve( stiff, ftilde ) # 0.11 s
+        utilde = stiff_c.solve_A( ftilde ) # .004 s
 
         # Check stopping condition
         nu = np.linalg.norm(utilde,'fro')
@@ -420,7 +416,7 @@ def optimizeLanes( systems, problem, alpha=9 ):
                 PPl[k] = PP0.todense() # Actually, for some factions, sparse is better
 
         rhs = - QQ.dot(utilde)  
-        lamt = lgs.spsolve( stiff, rhs ) #.11 s # TODO if possible : reuse cholesky factorization
+        lamt = stiff_c.solve_A( rhs ) #.010 s
         
         # Compute the gradient.
         gNgl = getGradient( problem.internal_lanes, utilde, lamt, alpha, PP, PPl, pres_c ) # 0.2 s
