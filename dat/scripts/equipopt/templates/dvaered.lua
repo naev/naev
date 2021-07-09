@@ -10,15 +10,12 @@ local dvaered_outfits = eoutfits.merge{{
    "Heavy Laser Turret", "Grave Beam", "Heavy Ion Turret",
    -- Medium Weapons
    "Mass Driver", "Turreted Vulcan Gun",
-   "Enygma Systems Turreted Fury Launcher",
-   "Enygma Systems Turreted Headhunter Launcher",
-   "Unicorp Headhunter Launcher", "Unicorp Vengeance Launcher",
-   "TeraCom Headhunter Launcher", "TeraCom Vengeance Launcher",
    "Unicorp Caesar IV Launcher", "TeraCom Imperator Launcher",
    -- Small Weapons
    "Shredder",
    "Vulcan Gun", "Gauss Gun",
    "Unicorp Mace Launcher", "TeraCom Mace Launcher",
+   "Unicorp Banshee Launcher", "TeraCom Banshee Launcher",
    -- Utility
    "Cyclic Combat AI", "Milspec Impacto-Plastic Coating",
    "Unicorp Scrambler", "Unicorp Light Afterburner",
