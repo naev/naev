@@ -311,7 +311,7 @@ cores.elite = {
 --]]
 local heavy_exception = {
    ["Lancelot"] = true,
-   ["Empire Lancelot"] = true,
+   ["Goddard"] = true,
 }
 -- Normal exceptions
 cores.standard.engines["Kestrel"] = function( heavy )
