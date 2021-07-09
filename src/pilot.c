@@ -2340,7 +2340,7 @@ void pilot_update( Pilot* pilot, double dt )
 void pilot_sample_trails( Pilot* p, int none )
 {
    int i, g;
-   double dx, dy, dircos, dirsin;
+   double dx, dy, dircos, dirsin, prod;
    TrailMode mode;
 
    dircos = cos(p->solid->dir);
@@ -2364,8 +2364,14 @@ void pilot_sample_trails( Pilot* p, int none )
    for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
       if (pilot_trail_generated( p, g )) {
 
-         p->trail[i]->ontop = ((p->solid->vel.y > 0) && (dirsin > 0) &&
-                               (!(p->ship->trail_emitters[g].always_under)));
+         p->trail[i]->ontop = 0;
+         if (!(p->ship->trail_emitters[g].always_under) && (dirsin > 0)) {
+            /* See if the trail's front (tail) is in front of the ship. */
+            prod = (trail_front( p->trail[i] ).x - p->solid->pos.x) * dircos +
+                   (trail_front( p->trail[i] ).y - p->solid->pos.y) * dirsin;
+
+            p->trail[i]->ontop = (prod < 0);
+         }
 
          dx = p->ship->trail_emitters[g].x_engine * dircos -
               p->ship->trail_emitters[g].y_engine * dirsin;
