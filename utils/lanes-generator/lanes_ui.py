@@ -13,9 +13,8 @@ def directedSystemPairs( problem, activated, Lfaction, systems ):
             out[i, systems.sysdict[target]] = set()
 
     for i, (sysas, jpname, lanesLoc2glob) in enumerate(zip(systems.sysass, systems.jpnames, lanesLoc2globs)):
-        aloc = [activated[k] for k in lanesLoc2glob]
-        for j, jj in enumerate(lanesLoc2glob):
-            if aloc[j]:
+        for jj in lanesLoc2glob:
+            if activated[jj]:
                 for no in sil[jj], sjl[jj]:
                     no -= len(sysas)  # Adjust for index offset.
                     if no >= 0:
@@ -68,8 +67,6 @@ def printLanes( problem, activated, Lfaction, systems ):
         nodes = systems.nodess[i]
         names = systems.sysass[i] + [f'\u2192{jn}' for jn in systems.jpnames[i]]
         lanesLoc2glob = lanesLoc2globs[i]
-        aloc = [activated[k] for k in lanesLoc2glob]
-        #floc = [Lfaction[k] for k in lanesLoc2glob]
         
         loc_ax.clear()
         loc_ax.title.set_text(systems.sysnames[i])
@@ -78,8 +75,8 @@ def printLanes( problem, activated, Lfaction, systems ):
         for xy, name in zip(nodes, names):
             loc_ax.annotate(name, xy=xy, xytext=(10, 10), textcoords='offset points', bbox={'fc': 'w'})
         
-        for j, jj in enumerate(lanesLoc2glob):
-            if aloc[j]:
+        for jj in lanesLoc2glob:
+            if activated[jj]:
                 no1 = sil[jj]
                 no2 = sjl[jj]
             
