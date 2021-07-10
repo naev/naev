@@ -53,17 +53,16 @@ int nlua_loadSafelanes( nlua_env env )
  * @luamod safelanes
  */
 /**
- * @brief Sets player save ability.
+ * @brief Return a table of matching lanes (format described below).
  *
  * @usage safelanes.get() -- Everyone's in current system
  * @usage safelanes.get( "Empire" ) -- Empire's lanes in current system
  * @usage safelanes.get( faction.get("Empire"), system.get("Gamma Polaris") ) -- Empire's lanes through Gamma Polaris.
  *    @luatparam[opt] Faction f If present, only return this faction's lanes.
- *    @luatparam[opt=system.cur()] System The system whose lanes we want.
- *    @luatreturn table The list of matching safe lanes, each of which is a table with members:
- *                [1]: The first endpoint, type Planet|Jump
- *                [2]: The second endpoint, type Planet|Jump
- *                .faction: The lane's owner, type Faction
+ *    @luatparam[opt=system.cur()] System s The system whose lanes we want.
+ *    @luatreturn table The list of matching safe lanes, each of which is a table where:
+ *                lane[1] and lane[2] are the endpoints (type Planet|Jump),
+ *                and lane.faction is the owner's Faction.
  * @luafunc get
  */
 static int safelanesL_get( lua_State *L )
