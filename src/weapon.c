@@ -565,7 +565,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          /* Beam weapons handled a part. */
          case OUTFIT_TYPE_BEAM:
          case OUTFIT_TYPE_TURRET_BEAM:
-            w->timer -= dt;
+            /* Beams don't have inherent accuracy, so we use the
+             * heatAccuracyMod to modulate duration. */
+            w->timer -= dt / (1.-pilot_heatAccuracyMod(w->mount->heat_T));
             if (w->timer < 0. || (w->outfit->u.bem.min_duration > 0. &&
                   w->mount->stimer < 0.)) {
                p = pilot_get(w->parent);

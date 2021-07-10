@@ -868,8 +868,9 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
 
-   /* Beam duration used. */
-   used = w->outfit->u.bem.duration - w->timer;
+   /* Beam duration used. Compensate for the fact it's duration might have
+    * been shortened by heat. */
+   used = w->outfit->u.bem.duration - w->timer*(1.-pilot_heatAccuracyMod(w->heat_T));
 
    w->timer = rate_mod * (used / w->outfit->u.bem.duration) * outfit_delay( w->outfit );
    w->u.beamid = 0;

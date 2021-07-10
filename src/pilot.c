@@ -1963,12 +1963,8 @@ void pilot_update( Pilot* pilot, double dt )
          continue;
 
       /* Handle firerate timer. */
-      if (o->timer > 0.) {
-         if (outfit_isBeam(o->outfit))
-            o->timer -= dt / MAX( 1e-3, pilot_heatFireRateMod( o->heat_T ) );
-         else
-            o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
-      }
+      if (o->timer > 0.)
+         o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
 
       /* Handle reload timer. (Note: this works backwards compared to
        * other timers. This helps to simplify code resetting the timer
