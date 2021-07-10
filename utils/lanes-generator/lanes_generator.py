@@ -53,7 +53,7 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
                 lmn = math.hypot( xn-xm, yn-ym )
                 
                 # Check if very close path exist already.
-                forbitten = False
+                forbidden = False
                 for p in range(len(nodes)):
                     if n==p or m==p:
                         continue
@@ -67,10 +67,10 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
                     dpn = ((xn-xm)*(xn-xi) + (yn-ym)*(yn-yi)) / ( lmn * lni )
                     dpm = ((xm-xn)*(xm-xi) + (ym-yn)*(ym-yi)) / ( lmn * lmi )
                     if (dpn > crit and lni < lmn) or (dpm > crit and lmi < lmn):
-                        forbitten = True
+                        forbidden = True
                         break
                     
-                if forbitten:
+                if forbidden:
                     continue
                 
                 si.append( i+n )
@@ -91,12 +91,11 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
 
 
 class SafeLaneProblem:
-    '''Representation of the systems, with more calculated: nodes associated to jumps, connectivity matrix (for ranged presence).'''
+    '''Representation of the optimization problem to be solved.'''
     def __init__( self, systems ):
         si0 = [] #
         sj0 = [] #
         sv0 = [] # For the construction of the sparse weighted connectivity matrix
-        nsys = len(systems.sysnames)
 
         for i, (jpname, loc2globi, jp2loci, namei) in enumerate(zip(systems.jpnames, systems.loc2globs, systems.jp2locs, systems.sysnames)):
             for j in range(len(jpname)):
@@ -278,15 +277,15 @@ def getGradient( problem, u, lamt, alpha, PP, PPl, pres_0 ):
     
     sz = len(si)
     
-    #lam = lamt.dot(PP) # 0.01 s
-    #LUT = lam.dot(u.transpose())
+    #lam = lamt @ PP # 0.01 s
+    #LUT = lam @ u.transpose()
     g = np.zeros((sz,1)) # Just a vector
 
     nfact = len(PPl)
     gl = []
     for k in range(nfact): # .2
-        lal = lamt.dot(PPl[k])
-        #LUTl = lal.dot(ut)
+        lal = lamt @ PPl[k]
+        #LUTl = lal @ ut
         glk = np.zeros((sz,1))
 
         for i in range(sz):
@@ -303,7 +302,6 @@ def getGradient( problem, u, lamt, alpha, PP, PPl, pres_0 ):
             
             LUTll = np.dot( lal[[sis,sjs],:] , u[[sis,sjs],:].T )
             glk[i] = alpha*sv[i] * ( LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0] )
-            
             #glk[i] = alpha*sv[i] * ( LUTl[sis, sis] + LUTl[sjs, sjs] - LUTl[sis, sjs] - LUTl[sjs, sis] )
             
         gl.append(glk)
@@ -318,7 +316,6 @@ def activateBestFact( problem, g, gl, activated, Lfaction, nodess, pres_c, pres_
     
     nfact = len(pres_c[0])
     price = .007  # TODO : tune metric price
-
     
     g1 = g * np.c_[sv] # Short lanes are more interesting
     
@@ -361,8 +358,6 @@ def activateBestFact( problem, g, gl, activated, Lfaction, nodess, pres_c, pres_
                         activated[k] = True
                         Lfaction[k] = f
                         break
-        
-    return 1
 
 
 @timed
@@ -405,23 +400,21 @@ def optimizeLanes( systems, problem, alpha=9 ):
         if i == 0: # .5 s
             P, Q, D = PenMat( nass, problem, utilde, systems )
             
-            QQ = (Q.transpose()).dot(Q)
-            PP0 = P.dot(P.transpose())
+            QQ = Q.transpose() @ Q
+            PP0 = P @ P.transpose()
             PP = PP0.todense() # PP is actually not sparse
             PPl = [None]*nfact
             for k in range(nfact): # Assemble per-faction ponderators
-                Pp = P.dot(D[k])
-                PP0 = Pp.dot(Pp.transpose())
+                Pp = P @ D[k]
+                PP0 = Pp @ Pp.transpose()
                 #print(PP0.count_nonzero())
                 PPl[k] = PP0.todense() # Actually, for some factions, sparse is better
 
-        rhs = - QQ.dot(utilde)  
+        rhs = - QQ @ utilde
         lamt = stiff_c.solve_A( rhs ) #.010 s
         
         # Compute the gradient.
-        gNgl = getGradient( problem, utilde, lamt, alpha, PP, PPl, pres_c ) # 0.2 s
-        g = gNgl[0]
-        gl = gNgl[1]
+        g, gl = getGradient( problem, utilde, lamt, alpha, PP, PPl, pres_c ) # 0.2 s
 
         activateBestFact( problem, g, gl, activated, Lfaction, systems.nodess, pres_c, systems.presences ) # 0.01 s
 
