@@ -9,7 +9,8 @@
    <chance>100</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
-   <cond>diff.isApplied("flf_dead") and system.get("Tarsus"):jumpDist() &lt; 4 and (var.peek("invasion_time") == nil or time.get() &gt;= time.fromnumber(var.peek("invasion_time")) + time.create(0, 20, 0)) and not (planet.cur():services().shipyard == nil)</cond>
+   <done>Destroy the FLF base!</done>
+   <cond>system.get("Tarsus"):jumpDist() &lt; 4 and (var.peek("invasion_time") == nil or time.get() &gt;= time.fromnumber(var.peek("invasion_time")) + time.create(0, 20, 0)) and not (planet.cur():services().shipyard == nil)</cond>
   </avail>
   <notes>
    <campaign>Frontier Invasion</campaign>
