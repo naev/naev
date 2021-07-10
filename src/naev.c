@@ -73,6 +73,7 @@
 #include "player.h"
 #include "render.h"
 #include "rng.h"
+#include "safelanes.h"
 #include "semver.h"
 #include "ship.h"
 #include "slots.h"
@@ -629,7 +630,7 @@ static void loadscreen_unload (void)
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES     16. /**< Amount of loading stages. */
+#define LOADING_STAGES     17. /**< Amount of loading stages. */
 void load_all (void)
 {
    /* We can do fast stuff here. */
@@ -678,7 +679,10 @@ void load_all (void)
    loadscreen_render( 14./LOADING_STAGES, _("Populating Maps...") );
    outfit_mapParse();
 
-   loadscreen_render( 15./LOADING_STAGES, _("Initializing Details..") );
+   loadscreen_render( 15./LOADING_STAGES, _("Calculating Patrols...") );
+   safelanes_init();
+
+   loadscreen_render( 16./LOADING_STAGES, _("Initializing Details..") );
    background_init();
    map_load();
    map_system_load();
@@ -702,6 +706,7 @@ void unload_all (void)
    npc_clear(); /* In case exiting while landed. */
    background_free(); /* Destroy backgrounds. */
    load_free(); /* Clean up loading game stuff stuff. */
+   safelanes_destroy();
    diff_free();
    economy_destroy(); /* must be called before space_exit */
    space_exit(); /* cleans up the universe itself */

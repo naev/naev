@@ -28,6 +28,7 @@
 #include "nstring.h"
 #include "opengl.h"
 #include "pause.h"
+#include "safelanes.h"
 #include "space.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
@@ -790,6 +791,7 @@ static void uniedit_toggleJump( StarSystem *sys )
 
    /* Reconstruct universe presences. */
    space_reconstructPresences();
+   safelanes_recalculate();
 
    if (conf.devautosave) {
       dsys_saveSystem( sys );
@@ -1397,6 +1399,7 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
 
    /* Reconstruct universe presences. */
    space_reconstructPresences();
+   safelanes_recalculate();
 
    /* Text might need changing. */
    uniedit_selectText();

@@ -496,11 +496,18 @@ function vn.StateSay.new( who, what )
    return s
 end
 function vn.StateSay:_init()
+   -- Get the main text
    if type(self.what)=="function" then
       self._textbuf = self.what()
    else
       self._textbuf = self.what
    end
+   -- Parse for line breaks and insert newlines
+   local font = vn.textbox_font
+   local bw = 20
+   local maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_w-2*bw )
+   self._textbuf = table.concat( wrappedtext, "\n" )
+   -- Set up initial buffer
    self._timer = vn.speed
    self._len = utf8.len( self._textbuf )
    self._pos = utf8.next( self._textbuf )

@@ -2730,6 +2730,8 @@ src/nlua_player.c
 src/nlua_player.h
 src/nlua_rnd.c
 src/nlua_rnd.h
+src/nlua_safelanes.c
+src/nlua_safelanes.h
 src/nlua_shader.c
 src/nlua_shader.h
 src/nlua_ship.c
@@ -2816,6 +2818,8 @@ src/render.c
 src/render.h
 src/rng.c
 src/rng.h
+src/safelanes.c
+src/safelanes.h
 src/save.c
 src/save.h
 src/semver.c

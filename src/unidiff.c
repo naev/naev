@@ -29,6 +29,7 @@
 #include "ndata.h"
 #include "nstring.h"
 #include "nxml.h"
+#include "safelanes.h"
 #include "space.h"
 
 
@@ -750,8 +751,10 @@ static int diff_patch( xmlNodePtr parent )
    }
 
    /* Prune presences if necessary. */
-   if (univ_update)
+   if (univ_update) {
       space_reconstructPresences();
+      safelanes_recalculate();
+   }
 
    /* Update overlay map just in case. */
    ovr_refresh();

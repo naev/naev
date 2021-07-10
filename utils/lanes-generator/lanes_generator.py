@@ -131,10 +131,10 @@ class SafeLaneProblem:
 
 
 @timed
-def buildStiffness( default_lanes, internal_lanes, activated, alpha, anchors ):
+def buildStiffness( problem, activated, alpha, anchors ):
     '''Computes the conductivity matrix'''
-    def_si, def_sj, def_sv = default_lanes[:3]
-    int_si, int_sj, int_sv0  = internal_lanes[:3]
+    def_si, def_sj, def_sv = problem.default_lanes[:3]
+    int_si, int_sj, int_sv0  = problem.internal_lanes[:3]
 
     # Take activated lanes into account
     int_sv = int_sv0.copy()
@@ -183,7 +183,7 @@ def buildStiffness( default_lanes, internal_lanes, activated, alpha, anchors ):
     return stiff
 
 @timed
-def PenMat( nass, ndof, internal_lanes, utilde, systems ):
+def PenMat( nass, problem, utilde, systems ):
     '''Gives the matrix that computes penibility form potentials.
       By chance, this does not depend on the presence of lane.'''
     nfact = max(systems.factass)+1
@@ -247,7 +247,7 @@ def PenMat( nass, ndof, internal_lanes, utilde, systems ):
     for k in range(nfact):
         D[k] = sp.csr_matrix( ( dv[k], (di[k], dj[k]) ), (P.shape[1], P.shape[1]) )
     
-    si, sj = internal_lanes[:2]
+    si, sj = problem.internal_lanes[:2]
     
     # Then : the matrix that gives penibility on each internal lane from u
     qi = []
@@ -262,19 +262,19 @@ def PenMat( nass, ndof, internal_lanes, utilde, systems ):
         qj.append(sj[i])
         qv.append(-1)
             
-    Q = sp.csr_matrix( ( qv, (qi, qj) ), (len(si),ndof) )
+    Q = sp.csr_matrix( ( qv, (qi, qj) ), (len(si),problem.ndof) )
     # Q*u = p
     
     return (P,Q,D)
 
 
 @timed
-def getGradient( internal_lanes, u, lamt, alpha, PP, PPl, pres_0 ):
+def getGradient( problem, u, lamt, alpha, PP, PPl, pres_0 ):
     '''Get the gradient from state and adjoint state.
        Luckily, this does not depend on the stiffness itself (by linearity wrt. stiffness).'''
-    si, sj, sv = internal_lanes[:3]
-    sr = internal_lanes[6] # Tells who has right to build on each lane
-    sy = internal_lanes[7] # Tells the system
+    si, sj, sv = problem.internal_lanes[:3]
+    sr = problem.internal_lanes[6] # Tells who has right to build on each lane
+    sy = problem.internal_lanes[7] # Tells the system
     
     sz = len(si)
     
@@ -310,10 +310,10 @@ def getGradient( internal_lanes, u, lamt, alpha, PP, PPl, pres_0 ):
     return (g,gl)
         
 
-def activateBestFact( internal_lanes, g, gl, activated, Lfaction, nodess, pres_c, pres_0 ):
+def activateBestFact( problem, g, gl, activated, Lfaction, nodess, pres_c, pres_0 ):
     '''Activates the best lane in each system for each faction'''
     # Find lanes to keep in each system
-    sv, sil, sjl, lanesLoc2globs, sr  = internal_lanes[2:7]
+    sv, sil, sjl, lanesLoc2globs, sr  = problem.internal_lanes[2:7]
     nsys = len(lanesLoc2globs)
     
     nfact = len(pres_c[0])
@@ -382,7 +382,7 @@ def optimizeLanes( systems, problem, alpha=9 ):
     
     niter = 20
     for i in range(niter):
-        stiff = buildStiffness( problem.default_lanes, problem.internal_lanes, activated, alpha, systems.anchors ) # 0.02 s
+        stiff = buildStiffness( problem, activated, alpha, systems.anchors ) # 0.02 s
         stiff_c = cholesky(stiff) #.001s
 
         # Compute direct and adjoint state
@@ -403,7 +403,7 @@ def optimizeLanes( systems, problem, alpha=9 ):
         # Compute QQ and PP, and use utilde to detect connected parts of the mesh
         # It's in the loop, but only happends once
         if i == 0: # .5 s
-            P, Q, D = PenMat( nass, problem.ndof, problem.internal_lanes, utilde, systems )
+            P, Q, D = PenMat( nass, problem, utilde, systems )
             
             QQ = (Q.transpose()).dot(Q)
             PP0 = P.dot(P.transpose())
@@ -419,11 +419,11 @@ def optimizeLanes( systems, problem, alpha=9 ):
         lamt = stiff_c.solve_A( rhs ) #.010 s
         
         # Compute the gradient.
-        gNgl = getGradient( problem.internal_lanes, utilde, lamt, alpha, PP, PPl, pres_c ) # 0.2 s
+        gNgl = getGradient( problem, utilde, lamt, alpha, PP, PPl, pres_c ) # 0.2 s
         g = gNgl[0]
         gl = gNgl[1]
 
-        activateBestFact( problem.internal_lanes, g, gl, activated, Lfaction, systems.nodess, pres_c, systems.presences ) # 0.01 s
+        activateBestFact( problem, g, gl, activated, Lfaction, systems.nodess, pres_c, systems.presences ) # 0.01 s
 
     #print(np.max(np.c_[problem.internal_lanes[2]]))
 
@@ -437,4 +437,4 @@ if __name__ == "__main__":
     problem = SafeLaneProblem( systems )
     
     activated, Lfaction = optimizeLanes( systems, problem )
-    printLanes( problem.internal_lanes, activated, Lfaction, systems )
+    printLanes( problem, activated, Lfaction, systems )
