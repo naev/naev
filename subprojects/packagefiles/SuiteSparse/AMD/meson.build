@@ -24,7 +24,7 @@ system_deps = [
 ]
 
 libamd = static_library(
-   'AMD',
+   'amd',
    source,
    dependencies: system_deps,
    include_directories: include

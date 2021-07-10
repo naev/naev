@@ -179,11 +179,13 @@ glpk_sources = [
    'simplex/spydual.c',
 ]
 
-glpk_dependencies = [
-   subproject('SuiteSparse').get_variable('AMD_dep'),
-   subproject('SuiteSparse').get_variable('COLAMD_dep'),
-   dependency('zlib'),
-]
-
+glpk_dependencies = [dependency('zlib')]
+if 'SuiteSparse' in get_option('force_fallback_for')
+      glpk_dependencies += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
+else
+      # TODO: See top-level meson.build: we may have to fiddle with header locations.
+      glpk_dependencies += cc.find_library('amd', required: true)
+      glpk_dependencies += cc.find_library('colamd', required: true)
+endif
 
 libglpk = static_library('glpk', glpk_sources, include_directories: glpk_includes, dependencies: glpk_dependencies)

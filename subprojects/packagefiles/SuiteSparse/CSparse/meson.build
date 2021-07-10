@@ -53,7 +53,8 @@ source = files([
 ])
 
 include = include_directories([
-   'Include'
+   'Include',
+   '../SuiteSparse_config',
 ])
 
 cc = meson.get_compiler('c')
@@ -62,7 +63,7 @@ system_deps = [
 ]
 
 libcsparse = static_library(
-   'CSparse',
+   'csparse',
    source,
    dependencies: system_deps,
    include_directories: include

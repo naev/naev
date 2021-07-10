@@ -109,9 +109,10 @@ if buildExec.disabled() == false
    naev_deps += lua
 
    # Linear Algebra
+   message('IMPORTANT NOTE ABOUT SuiteSparse: Naev can provide it, but only if you "meson configure --force-fallback-for=SuiteSparse". Otherwise, you must have the following libraries installed: amd, colamd, cholmod, and either csparse or cxsparse.')
 
    use_system_glpk = ('glpk' not in get_option('force_fallback_for'))
-   use_system_csparse = ('SuiteSparse' not in get_option('force_fallback_for'))
+   use_system_suitesparse = ('SuiteSparse' not in get_option('force_fallback_for'))
 
    if use_system_glpk
       system_glpk = cc.find_library('glpk', required: false, has_headers: ['glpk.h'])
@@ -119,28 +120,38 @@ if buildExec.disabled() == false
    endif
    naev_deps += use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk_dep')
 
-   if use_system_csparse and not use_system_glpk
-      message('Trying to force Meson to detect cross-subproject dependencies correctly for your setup (system SuiteSparse, included GLPK). If you see this error, try fully deleting subprojects/SuiteSparse from the source and build directories, and if that does not help try installing GLPK onto your system: ERROR: Requested variable "AMD_dep" not found.')
-      subproject('SuiteSparse')
-      #use_system_csparse = false
-   endif
-
-   if use_system_csparse
+   if use_system_suitesparse
       foreach csparse_name : ['csparse', 'cxsparse']
          system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['suitesparse/cs.h'])
-         use_system_csparse = system_csparse.found()
+         use_system_suitesparse = system_csparse.found()
          if system_csparse.found()
             config_data.set10('HAVE_SUITESPARSE_CS_H', true)
             break
          endif
          system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['cs.h'])
-         use_system_csparse = system_csparse.found()
+         use_system_suitesparse = system_csparse.found()
          if system_csparse.found()
             break
          endif
       endforeach
+      if system_csparse.found()
+         naev_deps += system_csparse
+      else
+         error('Failed to find an installation of c[x]sparse. See above note about SuiteSparse.')
+      endif
+
+   # TODO: These packages may require the same nonsense, in terms of checking for suitesparse/foo.h headers.
+      naev_deps += cc.find_library('amd', required: true)
+      naev_deps += cc.find_library('blas', required: false)
+      naev_deps += cc.find_library('ccolamd', required: false)
+      naev_deps += cc.find_library('colamd', required: true)
+      naev_deps += cc.find_library('cholmod', required: true)
+      naev_deps += cc.find_library('lapack', required: false)
+      naev_deps += cc.find_library('metis', required: false)
+      naev_deps += cc.find_library('suitesparseconfig', required: true)
+   else
+      naev_deps += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
    endif
-   naev_deps += use_system_csparse ? system_csparse : subproject('SuiteSparse').get_variable('CSparse_dep')
 
    ### Soft deps (required: false)
 

@@ -9,10 +9,18 @@
  */
 
 /** @cond */
+#include <cholmod.h>
+#include <math.h>
+
 #include "naev.h"
 /** @endcond */
 
 #include "safelanes.h"
+
+/*
+ * Global state.
+ */
+static cholmod_common C;
 
 
 /**
@@ -20,6 +28,7 @@
  */
 void safelanes_init (void)
 {
+   cholmod_start( &C );
 }
 
 
@@ -28,6 +37,7 @@ void safelanes_init (void)
  */
 void safelanes_destroy (void)
 {
+   cholmod_finish( &C );
 }
 
 
