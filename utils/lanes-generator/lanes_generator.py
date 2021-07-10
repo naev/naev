@@ -5,7 +5,6 @@ import math
 import numpy as np
 from operator import neg
 import scipy.sparse as sp
-import scipy.linalg as slg
 from sksparse.cholmod import cholesky
 
 from lanes_perf import timed, timer
@@ -268,7 +267,7 @@ def PenMat( nass, problem, utilde, systems ):
 
 
 @timed
-def getGradient( problem, u, lamt, alpha, PP, PPl, pres_0 ):
+def getGradient( problem, u, lamt, alpha, PPl, pres_0 ):
     '''Get the gradient from state and adjoint state.
        Luckily, this does not depend on the stiffness itself (by linearity wrt. stiffness).'''
     si, sj, sv = problem.internal_lanes[:3]
@@ -277,8 +276,6 @@ def getGradient( problem, u, lamt, alpha, PP, PPl, pres_0 ):
     
     sz = len(si)
     
-    #lam = lamt @ PP # 0.01 s
-    #LUT = lam @ u.transpose()
     g = np.zeros((sz,1)) # Just a vector
 
     nfact = len(PPl)
@@ -308,7 +305,7 @@ def getGradient( problem, u, lamt, alpha, PP, PPl, pres_0 ):
     return (g,gl)
         
 
-def activateBestFact( problem, g, gl, activated, Lfaction, nodess, pres_c, pres_0 ):
+def activateBestFact( problem, g, gl, activated, Lfaction, pres_c, pres_0 ):
     '''Activates the best lane in each system for each faction'''
     # Find lanes to keep in each system
     sv, sil, sjl, lanesLoc2globs, sr  = problem.internal_lanes[2:7]
@@ -401,8 +398,6 @@ def optimizeLanes( systems, problem, alpha=9 ):
             P, Q, D = PenMat( nass, problem, utilde, systems )
             
             QQ = Q.transpose() @ Q
-            PP0 = P @ P.transpose()
-            PP = PP0.todense() # PP is actually not sparse
             PPl = [None]*nfact
             for k in range(nfact): # Assemble per-faction ponderators
                 Pp = P @ D[k]
@@ -414,15 +409,11 @@ def optimizeLanes( systems, problem, alpha=9 ):
         lamt = stiff_c.solve_A( rhs ) #.010 s
         
         # Compute the gradient.
-        g, gl = getGradient( problem, utilde, lamt, alpha, PP, PPl, pres_c ) # 0.2 s
+        g, gl = getGradient( problem, utilde, lamt, alpha, PPl, pres_c ) # 0.2 s
 
-        activateBestFact( problem, g, gl, activated, Lfaction, systems.nodess, pres_c, systems.presences ) # 0.01 s
+        activateBestFact( problem, g, gl, activated, Lfaction, pres_c, systems.presences ) # 0.01 s
 
-    #print(np.max(np.c_[problem.internal_lanes[2]]))
-
-    # And print the lanes
     print('Converged in', i+1, 'iterations, ‖Ũ‖=', np.linalg.norm(utilde,'fro'))
-    
     return (activated, Lfaction)
 
 if __name__ == "__main__":
