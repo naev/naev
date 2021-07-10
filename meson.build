@@ -87,7 +87,7 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      dependency('libwebp', required: true),
+      dependency('libwebp', required: false),  # FIXME: required at runtime, but unavailable in the naev-steamruntime build image.
    ]
 
    # Lua
