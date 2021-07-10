@@ -66,10 +66,15 @@ static int debugL_showEmitters( lua_State *L )
       state = 1;
 
    /* Toggle the markers. */
+#if DEBUGGING
    if (state)
       debug_setFlag(DEBUG_MARK_EMITTER);
    else
       debug_rmFlag(DEBUG_MARK_EMITTER);
+#else
+   (void) state;
+   NLUA_ERROR(L, _("Requires a debug build."));
+#endif
 
    return 0;
 }
