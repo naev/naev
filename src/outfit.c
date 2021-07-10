@@ -1466,7 +1466,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    area = pilot_heatCalcOutfitArea(temp);
    temp->u.bem.heat     = ((800.-CONST_SPACE_STAR_TEMP)*C +
             STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
-         temp->u.bem.heatup * (temp->u.bem.delay+temp->u.bem.warmup+temp->u.bem.duration);
+         temp->u.bem.heatup * (temp->u.bem.delay+temp->u.bem.warmup+temp->u.bem.duration) / temp->u.bem.delay;
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
