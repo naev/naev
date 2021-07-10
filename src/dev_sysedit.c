@@ -29,6 +29,7 @@
 #include "nstring.h"
 #include "opengl.h"
 #include "opengl_render.h"
+#include "safelanes.h"
 #include "space.h"
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
@@ -289,6 +290,7 @@ static void sysedit_close( unsigned int wid, char *wgt )
 
    /* Reconstruct universe presences. */
    space_reconstructPresences();
+   safelanes_recalculate();
 
    /* Close the window. */
    window_close( wid, wgt );
@@ -348,6 +350,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 
    /* Clean up presences. */
    space_reconstructPresences();
+   safelanes_recalculate();
 
    window_close( wid, unused );
 }
