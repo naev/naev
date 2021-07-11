@@ -330,13 +330,20 @@ def activateBestFact( problem, g, gl, activated, Lfaction, pres_c, pres_0 ):
                 ind = [lanesLoc2glob[k] for k in ind1[0]]
         
                 # Find a lane to activate
+                IdidntActivate = True
                 for k in ind:
                     cond = (sr[k][0] == f) or (sr[k][1] == f) or (sr[k] == (-1, -1))
                     if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * price) and cond:
                         pres_c[i][f] -= 1/sv[k] * price
                         activated[k] = True
                         Lfaction[k] = f
+                        IdidntActivate = False
                         break
+                    
+                # The faction did not activate anything:
+                # There is no hope in activating anything anymore.
+                if IdidntActivate:
+                    pres_c[i][f] = -1
 
 
 @timed
