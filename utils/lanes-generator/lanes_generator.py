@@ -237,7 +237,7 @@ def compute_PPts_QtQ( nass, problem, utilde, systems ):
 
 
 @timed
-def getGradient( problem, u, lamt, PPl, pres_0 ):
+def getGradient( problem, u, lamt, PPl, pres_0, activated ):
     '''Get the gradient from state and adjoint state.
        Luckily, this does not depend on the stiffness itself (by linearity wrt. stiffness).'''
     si, sj, sv = problem.internal_lanes[:3]
@@ -253,6 +253,10 @@ def getGradient( problem, u, lamt, PPl, pres_0 ):
         glk = np.zeros((sz,1))
 
         for i in range(sz):
+            
+            if activated[i]: # The lane has already been activated: no need to re-compute its gradient
+                continue
+            
             if pres_0[sy[i]][k] <= 0: # Does this faction have presence here ?
                 continue
             
@@ -355,7 +359,7 @@ def optimizeLanes( systems, problem ):
         lamt = stiff_c.solve_A( rhs ) #.010 s
         
         # Compute the gradient.
-        gl = getGradient( problem, utilde, lamt, PPl, pres_c ) # 0.2 s
+        gl = getGradient( problem, utilde, lamt, PPl, pres_c, activated ) # 0.2 s
 
         activateBestFact( problem, gl, activated, Lfaction, pres_c, systems.presences ) # 0.01 s
 
