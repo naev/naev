@@ -10,6 +10,15 @@ from lanes_perf import timed, timer
 from lanes_ui import printLanes
 from lanes_systems import Systems
 
+PRICE = 0.007  # TODO : tune metric price
+JUMP_CONDUCTIVITY = .001  # TODO : better value
+DISCONNECTED_THRESHOLD = 1e-12
+FACTIONS_LANES_BUILT_PER_ITERATION = 1
+MAX_ITERATIONS = 20
+CONVERGENCE_THRESHOLD = 1e-12
+MIN_ANGLE = 10*math.pi/180 # Path triangles can't be more acute.
+ALPHA = 9  # Lane efficiency parameter.
+
 def inSysStiff( nodess, factass, g2ass, loc2globNs ):
     '''Compute insystem paths. TODO maybe : use Delauney triangulation instead?'''
     si  = []  # Element to build the sparse default matrix
@@ -21,9 +30,7 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
     loc2globs = []
     system = [] # Tells which system the lane is in
     
-    minangle = 10 # Minimal angle between 2 lanes (deg)
-    crit = math.cos(math.pi*minangle/180)
-    
+    crit = math.cos(MIN_ANGLE)
     i  = 0
     ii = 0
 
@@ -109,7 +116,7 @@ class SafeLaneProblem:
 
                 si0.append(loc2globi[jp2loci[j]]) # Assets connectivity (jp only)
                 sj0.append(loc2globk[jp2lock[m]]) # 
-                sv0.append( 1/1000 ) # TODO : better value
+                sv0.append(JUMP_CONDUCTIVITY)
 
         # Remove the redundant info because right now, we have i->j and j->i
         while k<len(si0):
@@ -127,7 +134,7 @@ class SafeLaneProblem:
 
 
 @timed
-def buildStiffness( problem, activated, alpha, anchors ):
+def buildStiffness( problem, activated, anchors ):
     '''Computes the conductivity matrix'''
     def_si, def_sj, def_sv = problem.default_lanes[:3]
     int_si, int_sj, int_sv0  = problem.internal_lanes[:3]
@@ -136,7 +143,7 @@ def buildStiffness( problem, activated, alpha, anchors ):
     int_sv = int_sv0.copy()
     for i in range(len(int_sv0)):
         if activated[i]:
-            int_sv[i] = (alpha+1)*int_sv0[i]
+            int_sv[i] = (ALPHA+1)*int_sv0[i]
     
     # Assemble both lists
     si = def_si + int_si
@@ -180,7 +187,7 @@ def PenMat( nass, problem, utilde, systems ):
         facti = systems.factass[i]
         presi = systems.presass[i]
         for j in range(i):# Stuff is symmetric, we use that
-            if utilde[ai,j] <= 1e-12: # i and j are disconnected. Dont consider this couple
+            if utilde[ai,j] <= DISCONNECTED_THRESHOLD:
                 continue
             ij = i*nass + j # Multiindex
             
@@ -221,9 +228,7 @@ def PenMat( nass, problem, utilde, systems ):
     P = sp.csr_matrix( ( pv, (pi, pj) ) )
     # P*utilde^T = u^T
     
-    D = [None]*nfact
-    for k in range(nfact):
-        D[k] = sp.csr_matrix( ( dv[k], (di[k], dj[k]) ), (P.shape[1], P.shape[1]) )
+    D = [ sp.csr_matrix( (dv[k], (di[k], dj[k])), (P.shape[1], P.shape[1]) ) for k in range(nfact) ]
     
     si, sj = problem.internal_lanes[:2]
     
@@ -240,14 +245,14 @@ def PenMat( nass, problem, utilde, systems ):
         qj.append(sj[i])
         qv.append(-1)
             
-    Q = sp.csr_matrix( ( qv, (qi, qj) ), (len(si),problem.ndof) )
+    Q = sp.csr_matrix( (qv, (qi, qj)), (len(si), problem.ndof) )
     # Q*u = p
     
     return (P,Q,D)
 
 
 @timed
-def getGradient( problem, u, lamt, alpha, PPl, pres_0 ):
+def getGradient( problem, u, lamt, PPl, pres_0 ):
     '''Get the gradient from state and adjoint state.
        Luckily, this does not depend on the stiffness itself (by linearity wrt. stiffness).'''
     si, sj, sv = problem.internal_lanes[:3]
@@ -255,7 +260,6 @@ def getGradient( problem, u, lamt, alpha, PPl, pres_0 ):
     sy = problem.internal_lanes[7] # Tells the system
     
     sz = len(si)
-    
     g = np.zeros((sz,1)) # Just a vector
 
     nfact = len(PPl)
@@ -276,7 +280,7 @@ def getGradient( problem, u, lamt, alpha, PPl, pres_0 ):
             sjs = sj[i]
             
             LUTll = np.dot( lal[[sis,sjs],:] , u[[sis,sjs],:].T )
-            glk[i] = alpha*sv[i] * ( LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0] )
+            glk[i] = ALPHA*sv[i] * ( LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0] )
             
         gl.append(glk)
     return (g,gl)
@@ -289,16 +293,9 @@ def activateBestFact( problem, g, gl, activated, Lfaction, pres_c, pres_0 ):
     nsys = len(lanesLoc2globs)
     
     nfact = len(pres_c[0])
-    price = .007  # TODO : tune metric price
     
     g1 = g * np.c_[sv] # Short lanes are more interesting
-    
-    g1l = [None]*nfact
-    for k in range(nfact):
-        g1l[k] = gl[k] * np.c_[sv]
-        #print(np.linalg.norm(gl[k]))
-    
-    #print(sv)
+    g1l = [gl[k] * np.c_[sv] for k in range(nfact)]
     
     for i in range(nsys):
         lanesLoc2glob = lanesLoc2globs[i]
@@ -314,9 +311,7 @@ def activateBestFact( problem, g, gl, activated, Lfaction, pres_c, pres_0 ):
         for ff in range(nfact):
             f = sind[ff]
 
-            ntimes = 1 # Nb of lanes per iteration for this faction
-            
-            for lane in range(ntimes):
+            for lane in range(FACTIONS_LANES_BUILT_PER_ITERATION):
                 if pres_c[i][f] <= 0.: # This faction has no presence
                     continue
                 
@@ -328,8 +323,8 @@ def activateBestFact( problem, g, gl, activated, Lfaction, pres_c, pres_0 ):
                 IdidntActivate = True
                 for k in ind:
                     faction_may_build = (f in sr[k]) or (sr[k] == (-1, -1))
-                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * price) and faction_may_build:
-                        pres_c[i][f] -= 1/sv[k] * price
+                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * PRICE) and faction_may_build:
+                        pres_c[i][f] -= 1/sv[k] * PRICE
                         activated[k] = True
                         Lfaction[k] = f
                         IdidntActivate = False
@@ -342,23 +337,20 @@ def activateBestFact( problem, g, gl, activated, Lfaction, pres_c, pres_0 ):
 
 
 @timed
-def optimizeLanes( systems, problem, alpha=9 ):
-    '''Optimize the lanes. alpha is the efficiency parameter for lanes.'''
+def optimizeLanes( systems, problem ):
     sz = len(problem.internal_lanes[0])
     activated = [False] * sz # Initialization : no lane is activated
     Lfaction = [-1] * sz;
     pres_c = systems.presences.copy()
     nfact = len(systems.presences[0])
-    
     nass = len(systems.ass2g)
     
     # TODO : It could be interesting to use sparse format for the RHS as well (see)
     ftilde = np.eye( problem.ndof )
     ftilde = ftilde[:,systems.ass2g] # Keep only lines corresponding to assets
     
-    niter = 20
-    for i in range(niter):
-        stiff = buildStiffness( problem, activated, alpha, systems.anchors ) # 0.02 s
+    for i in range(MAX_ITERATIONS):
+        stiff = buildStiffness( problem, activated, systems.anchors ) # 0.02 s
         stiff_c = cholesky(stiff) #.001s
 
         # Compute direct and adjoint state
@@ -366,10 +358,9 @@ def optimizeLanes( systems, problem, alpha=9 ):
             utildp = utilde
         utilde = stiff_c.solve_A( ftilde ) # .004 s
 
-        # Check stopping condition
         if i >=1:
             rel_change = np.linalg.norm(utildp-utilde,'fro') / np.linalg.norm(utilde,'fro')
-            if rel_change <= 1e-12:
+            if rel_change <= CONVERGENCE_THRESHOLD:
                 break
 
         # Compute QQ and PP, and use utilde to detect connected parts of the mesh
@@ -389,7 +380,7 @@ def optimizeLanes( systems, problem, alpha=9 ):
         lamt = stiff_c.solve_A( rhs ) #.010 s
         
         # Compute the gradient.
-        g, gl = getGradient( problem, utilde, lamt, alpha, PPl, pres_c ) # 0.2 s
+        g, gl = getGradient( problem, utilde, lamt, PPl, pres_c ) # 0.2 s
 
         activateBestFact( problem, g, gl, activated, Lfaction, pres_c, systems.presences ) # 0.01 s
 
