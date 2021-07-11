@@ -179,7 +179,6 @@ def PenMat( nass, problem, utilde, systems ):
     pv = []
     
     di = [[] for i in range(nfact)]
-    dj = [[] for i in range(nfact)]
     dv = [[] for i in range(nfact)]
     
     for i in range(nass):
@@ -202,33 +201,18 @@ def PenMat( nass, problem, utilde, systems ):
             factj = systems.factass[j]
             presj = systems.presass[j]
             
-            # More the assets are far from each other less interesting it is
-            # This avoids strange shapes for peripheric systems
-#            aj = systems.ass2g[j]
-#            dis = systems.distances[systems.g2sys[ai],systems.g2sys[aj]]
-#            if dis==0:
-#                dis = 1
-            dis = 1
-                    
+            # EXPERIMENT: Could weight v here by 1/distances[g2sys[ai],g2sys[aj]], to avoid strange shapes for peripheric systems.
             # Build the diagonal ponderators
-            if (facti == factj):
-                di[facti].append(ij)
-                dj[facti].append(ij)
-                dv[facti].append( (presi+presj) / dis )
-                
-            else: # Foreign assets are not so interesting
-                di[facti].append(ij)
-                dj[facti].append(ij)
-                dv[facti].append( presi / dis )
-                
+            di[facti].append(ij)
+            dv[facti].append(presi if facti!=factj else presi+presj)
+            if facti != factj:
                 di[factj].append(ij)
-                dj[factj].append(ij)
-                dv[factj].append( presj / dis ) 
+                dv[factj].append(presj)
             
     P = sp.csr_matrix( ( pv, (pi, pj) ) )
     # P*utilde^T = u^T
     
-    D = [ sp.csr_matrix( (dv[k], (di[k], dj[k])), (P.shape[1], P.shape[1]) ) for k in range(nfact) ]
+    D = [ sp.csr_matrix( (dv[k], (di[k], di[k])), (P.shape[1], P.shape[1]) ) for k in range(nfact) ]
     
     si, sj = problem.internal_lanes[:2]
     
