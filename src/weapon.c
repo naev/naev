@@ -1329,8 +1329,8 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    Asteroid *ast;
    Vector2d target_pos;
    Vector2d target_vel;
-   Vector2d relative_location;
-   double rdir, lead_angle;
+   Vector2d rel_pos;
+   double rdir, rdir_lead, lead;
    double x, y, t;
    double off, trackmin, trackmax;
 
@@ -1349,7 +1349,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    }
 
    /* Get the vector : shooter -> target*/
-   vect_cset( &relative_location, VX(target_pos) - VX(parent->solid->pos),
+   vect_cset( &rel_pos, VX(target_pos) - VX(parent->solid->pos),
          VY(target_pos) - VY(parent->solid->pos) );
 
    /* Try to predict where the enemy will be. */
@@ -1361,24 +1361,19 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    x = (target_pos.x + target_vel.x*t) - (pos->x + vel->x*t);
    y = (target_pos.y + target_vel.y*t) - (pos->y + vel->y*t);
 
-   /* Set angle to face. */
-   rdir = ANGLE(x, y);
+   /* Compute both the angles we want. */
+   rdir        = ANGLE(rel_pos.x, rel_pos.y);
+   rdir_lead   = ANGLE(x, y);
 
    if (pilot_target != NULL) {
       /* Lead angle is determined from ewarfare. */
       trackmin = outfit_trackmin(outfit);
       trackmax = outfit_trackmax(outfit);
-      lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
-
-      /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
-      if (lead_angle && FABS( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
-         /* the target is moving too fast for the turret to keep up */
-         if (ANGLE(x, y) < VANGLE(relative_location))
-            rdir = angle_diff(lead_angle, VANGLE(relative_location));
-         else
-            rdir = angle_diff(-1*lead_angle, VANGLE(relative_location));
-      }
+      lead     = pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
+      rdir     = lead * rdir_lead + (1.-lead) * rdir;
    }
+   else
+      rdir     = rdir_lead; /* Just be accurate for asteroids. */
 
    /* Calculate bounds. */
    off = angle_diff( rdir, dir );
