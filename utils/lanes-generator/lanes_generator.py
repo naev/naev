@@ -168,7 +168,7 @@ def buildStiffness( problem, activated, anchors ):
     return stiff
 
 @timed
-def PenMat( nass, problem, utilde, systems ):
+def compute_PPts_QtQ( nass, problem, utilde, systems ):
     '''Gives the matrix that computes penibility form potentials.
       By chance, this does not depend on the presence of lane.'''
     nfact = len(systems.presences[0])
@@ -212,7 +212,8 @@ def PenMat( nass, problem, utilde, systems ):
     P = sp.csr_matrix( ( pv, (pi, pj) ) )
     # P*utilde^T = u^T
     
-    D = [ sp.csr_matrix( (dv[k], (di[k], di[k])), (P.shape[1], P.shape[1]) ) for k in range(nfact) ]
+    Pp = ( P @ sp.csr_matrix( (dv[k], (di[k], di[k])), (P.shape[1], P.shape[1]) ) for k in range(nfact) )
+    PPl = [ (Ppk @ Ppk.transpose()).todense() for Ppk in Pp ]
     
     si, sj = problem.internal_lanes[:2]
     
@@ -232,7 +233,7 @@ def PenMat( nass, problem, utilde, systems ):
     Q = sp.csr_matrix( (qv, (qi, qj)), (len(si), problem.ndof) )
     # Q*u = p
     
-    return (P,Q,D)
+    return PPl, Q.transpose() @ Q
 
 
 @timed
@@ -350,15 +351,7 @@ def optimizeLanes( systems, problem ):
         # Compute QQ and PP, and use utilde to detect connected parts of the mesh
         # It's in the loop, but only happends once
         if i == 0: # .5 s
-            P, Q, D = PenMat( nass, problem, utilde, systems )
-            
-            QQ = Q.transpose() @ Q
-            PPl = [None]*nfact
-            for k in range(nfact): # Assemble per-faction ponderators
-                Pp = P @ D[k]
-                PP0 = Pp @ Pp.transpose()
-                #print(PP0.count_nonzero())
-                PPl[k] = PP0.todense() # Actually, for some factions, sparse is better
+            PPl, QQ = compute_PPts_QtQ( nass, problem, utilde, systems )
 
         rhs = - QQ @ utilde
         lamt = stiff_c.solve_A( rhs ) #.010 s
