@@ -8,10 +8,8 @@ import xml.etree.ElementTree as ET
 Asset = namedtuple('Asset', 'x y faction population ran')
 
 def createFactions():
-    '''Creates the dico of lane-making factions'''
-    # TODO: include Collective?
-    factions = ["Empire", "Soromid", "Dvaered", "Za'lek", "Collective", "Sirius", "Frontier", "Goddard", "Proteron", "Thurion"]
-    return {name: i for (i, name) in enumerate(factions)}
+    '''Creates the dico of lane-making factions. TODO: include Collective?'''
+    return ["Empire", "Soromid", "Dvaered", "Za'lek", "Sirius", "Frontier", "Goddard", "Proteron", "Collective", "Thurion"]
 
 def parse_pos(pos):
     if pos is None:
@@ -84,7 +82,8 @@ class Systems:
     def __init__( self, skip_hidden=True, skip_exitonly=True, skip_uninhabited=False ):
         path = '../../dat/ssys/'
         assets  = readAssets( '../../dat/assets/' )
-        factions = createFactions()
+        self.facnames = createFactions()
+        factions = {name: i for (i, name) in enumerate(self.facnames)}
 
         self.sysdict = {} # This dico will give index of systems
         self.sysnames = [] # List giving the invert of self.sysdict
