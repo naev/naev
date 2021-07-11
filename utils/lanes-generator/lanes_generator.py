@@ -3,7 +3,6 @@
 
 import math
 import numpy as np
-from operator import neg
 import scipy.sparse as sp
 from sksparse.cholmod import cholesky
 
@@ -144,28 +143,11 @@ def buildStiffness( problem, activated, alpha, anchors ):
     si = def_si + int_si
     sj = def_sj + int_sj
     sv = def_sv + int_sv
-    sz = len(si)
     
     # Build the sparse matrix
-    sii = [0]*(4*sz)
-    sjj = [0]*(4*sz)
-    svv = [0.]*(4*sz)
-
-    sii[0::4]   = si
-    sjj[0::4]   = si
-    svv[0::4]   = sv
-
-    sii[1::4] = sj
-    sjj[1::4] = sj
-    svv[1::4] = sv
-
-    sii[2::4] = si
-    sjj[2::4] = sj
-    svv[2::4] = map(neg, sv)
-
-    sii[3::4] = sj
-    sjj[3::4] = si
-    svv[3::4] = map(neg, sv)
+    sii = si + sj + si + sj
+    sjj = si + sj + sj + si
+    svv = sv*2 + [-x for x in sv]*2
 
     # impose Robin condition at anchors (because of singularity)
     mu = max(sv)  # Just a parameter to make a Robin condition that does not spoil the spectrum of the matrix
