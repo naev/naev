@@ -1329,7 +1329,7 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    Asteroid *ast;
    Vector2d *target_pos;
    Vector2d *target_vel;
-   double rdir, rdir_lead, lead;
+   double rdir, lead;
    double rx, ry, x, y, t;
    double off, trackmin, trackmax;
 
@@ -1362,7 +1362,6 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
    /* Compute both the angles we want. */
    rdir        = ANGLE(rx, ry);
-   rdir_lead   = ANGLE(x, y);
 
    if (pilot_target != NULL) {
       /* Lead angle is determined from ewarfare. */
