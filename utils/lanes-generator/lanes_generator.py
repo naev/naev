@@ -245,7 +245,6 @@ def getGradient( problem, u, lamt, PPl, pres_0 ):
     sy = problem.internal_lanes[7] # Tells the system
     
     sz = len(si)
-    g = np.zeros((sz,1)) # Just a vector
 
     nfact = len(PPl)
     gl = []
@@ -268,10 +267,10 @@ def getGradient( problem, u, lamt, PPl, pres_0 ):
             glk[i] = ALPHA*sv[i] * ( LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0] )
             
         gl.append(glk)
-    return (g,gl)
+    return gl
         
 
-def activateBestFact( problem, g, gl, activated, Lfaction, pres_c, pres_0 ):
+def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0 ):
     '''Activates the best lane in each system for each faction'''
     # Find lanes to keep in each system
     sv, sil, sjl, lanesLoc2globs, sr  = problem.internal_lanes[2:7]
@@ -279,7 +278,6 @@ def activateBestFact( problem, g, gl, activated, Lfaction, pres_c, pres_0 ):
     
     nfact = len(pres_c[0])
     
-    g1 = g * np.c_[sv] # Short lanes are more interesting
     g1l = [gl[k] * np.c_[sv] for k in range(nfact)]
     
     for i in range(nsys):
@@ -357,9 +355,9 @@ def optimizeLanes( systems, problem ):
         lamt = stiff_c.solve_A( rhs ) #.010 s
         
         # Compute the gradient.
-        g, gl = getGradient( problem, utilde, lamt, PPl, pres_c ) # 0.2 s
+        gl = getGradient( problem, utilde, lamt, PPl, pres_c ) # 0.2 s
 
-        activateBestFact( problem, g, gl, activated, Lfaction, pres_c, systems.presences ) # 0.01 s
+        activateBestFact( problem, gl, activated, Lfaction, pres_c, systems.presences ) # 0.01 s
 
     print('Converged in', i+1, 'iterations, ‖Ũ‖=', np.linalg.norm(utilde,'fro'))
     return (activated, Lfaction)
