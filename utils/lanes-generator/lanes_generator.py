@@ -10,7 +10,6 @@ from lanes_perf import timed, timer
 from lanes_ui import printLanes
 from lanes_systems import Systems
 
-PRICE = 0.007  # TODO : tune metric price
 JUMP_CONDUCTIVITY = .001  # TODO : better value
 DISCONNECTED_THRESHOLD = 1e-12
 FACTIONS_LANES_BUILT_PER_ITERATION = 1
@@ -310,8 +309,8 @@ def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0 ):
                 IdidntActivate = True
                 for k in ind:
                     faction_may_build = (f in sr[k]) or (sr[k] == (-1, -1))
-                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * PRICE) and faction_may_build:
-                        pres_c[i][f] -= 1/sv[k] * PRICE
+                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] / systems.dist_per_presence[f]) and faction_may_build:
+                        pres_c[i][f] -= 1/sv[k] / systems.dist_per_presence[f]
                         activated[k] = True
                         Lfaction[k] = f
                         IdidntActivate = False

@@ -77,6 +77,7 @@ typedef struct Faction_ {
 
    /* Behaviour. */
    nlua_env env; /**< Faction specific environment. */
+   double lane_length_per_presence; /**< Influences the choice to build patrolled safe lanes in the way the name suggests. */
 
    /* Equipping. */
    nlua_env equip_env; /**< Faction equipper enviornment. */
@@ -1259,6 +1260,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       xmlr_strd(node,"longname",temp->longname);
       xmlr_strd(node,"display",temp->displayname);
       xmlr_strd(node,"ai",temp->ai);
+      xmlr_float(node,"lane_length_per_presence",temp->lane_length_per_presence);
       if (xml_isNode(node, "colour")) {
          ctmp = xml_get(node);
          if (ctmp != NULL)
