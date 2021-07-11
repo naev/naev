@@ -1369,10 +1369,10 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       trackmin = outfit_trackmin(outfit);
       trackmax = outfit_trackmax(outfit);
       lead     = pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
-      rdir     = lead * rdir_lead + (1.-lead) * rdir;
+      x        = lead * x + (1.-lead) * rx;
+      y        = lead * y + (1.-lead) * ry;
    }
-   else
-      rdir     = rdir_lead; /* Just be accurate for asteroids. */
+   rdir     = ANGLE(x,y);
 
    /* Calculate bounds. */
    off = angle_diff( rdir, dir );
