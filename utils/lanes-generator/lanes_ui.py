@@ -89,5 +89,7 @@ def printLanes( problem, activated, Lfaction, systems ):
             
                 col = COLORMAP(Lfaction[jj]/nfac)
                 loc_ax.plot([x1,x2], [y1,y2], color=col)
-        
+                
+                
+    plt.gca().set_aspect('equal')
     plt.show()
