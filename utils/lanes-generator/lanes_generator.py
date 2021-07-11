@@ -55,8 +55,7 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
                 for p in range(len(nodes)):
                     if n==p or m==p:
                         continue
-                    xi = nodes[p][0]
-                    yi = nodes[p][1]
+                    xi, yi = nodes[p]
                     
                     # The scalar product should not be too close to 1
                     # That would mean we've got a flat triangle
@@ -155,7 +154,6 @@ def buildStiffness( problem, activated, alpha, anchors ):
         sii.append(i)
         sjj.append(i)
         svv.append(mu)
-        #stiff[i,i] = stiff[i,i] + mu
 
     stiff = sp.csc_matrix( ( svv, (sii, sjj) ) )
     # Rem : it may become mandatory at some point to impose nb of dofs
@@ -166,7 +164,7 @@ def buildStiffness( problem, activated, alpha, anchors ):
 def PenMat( nass, problem, utilde, systems ):
     '''Gives the matrix that computes penibility form potentials.
       By chance, this does not depend on the presence of lane.'''
-    nfact = max(systems.factass)+1
+    nfact = len(systems.presences[0])
     
     # First : compute the (sparse) matrix that transforms utilde into u
     pi = []
@@ -264,16 +262,14 @@ def getGradient( problem, u, lamt, alpha, PPl, pres_0 ):
     gl = []
     for k in range(nfact): # .2
         lal = lamt @ PPl[k]
-        #LUTl = lal @ ut
         glk = np.zeros((sz,1))
 
         for i in range(sz):
             if pres_0[sy[i]][k] <= 0: # Does this faction have presence here ?
                 continue
             
-            # Does this faction have the right to build here ?
-            cond = (sr[i][0] == k) or (sr[i][1] == k) or ((sr[i][0] == -1) and (sr[i][1] == -1))
-            if not cond: # No need to compute stuff if we've dont have the right to build here !
+            faction_may_build = (k in sr[i]) or (sr[i] == (-1, -1))
+            if not faction_may_build:
                 continue
             
             sis = si[i]
@@ -281,7 +277,6 @@ def getGradient( problem, u, lamt, alpha, PPl, pres_0 ):
             
             LUTll = np.dot( lal[[sis,sjs],:] , u[[sis,sjs],:].T )
             glk[i] = alpha*sv[i] * ( LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0] )
-            #glk[i] = alpha*sv[i] * ( LUTl[sis, sis] + LUTl[sjs, sjs] - LUTl[sis, sjs] - LUTl[sjs, sis] )
             
         gl.append(glk)
     return (g,gl)
@@ -332,8 +327,8 @@ def activateBestFact( problem, g, gl, activated, Lfaction, pres_c, pres_0 ):
                 # Find a lane to activate
                 IdidntActivate = True
                 for k in ind:
-                    cond = (sr[k][0] == f) or (sr[k][1] == f) or (sr[k] == (-1, -1))
-                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * price) and cond:
+                    faction_may_build = (f in sr[k]) or (sr[k] == (-1, -1))
+                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] * price) and faction_may_build:
                         pres_c[i][f] -= 1/sv[k] * price
                         activated[k] = True
                         Lfaction[k] = f
@@ -372,14 +367,10 @@ def optimizeLanes( systems, problem, alpha=9 ):
         utilde = stiff_c.solve_A( ftilde ) # .004 s
 
         # Check stopping condition
-        nu = np.linalg.norm(utilde,'fro')
-        dr = nu # Just for i==0
         if i >=1:
-            dr = np.linalg.norm(utildp-utilde,'fro')
-            
-        #print(dr/nu)
-        if dr/nu <= 1e-12:
-            break
+            rel_change = np.linalg.norm(utildp-utilde,'fro') / np.linalg.norm(utilde,'fro')
+            if rel_change <= 1e-12:
+                break
 
         # Compute QQ and PP, and use utilde to detect connected parts of the mesh
         # It's in the loop, but only happends once
