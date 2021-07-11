@@ -1327,16 +1327,15 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 {
    AsteroidAnchor *field;
    Asteroid *ast;
-   Vector2d target_pos;
-   Vector2d target_vel;
-   Vector2d rel_pos;
+   Vector2d *target_pos;
+   Vector2d *target_vel;
    double rdir, rdir_lead, lead;
-   double x, y, t;
+   double rx, ry, x, y, t;
    double off, trackmin, trackmax;
 
    if (pilot_target != NULL) {
-      target_pos = pilot_target->solid->pos;
-      target_vel = pilot_target->solid->vel;
+      target_pos = &pilot_target->solid->pos;
+      target_vel = &pilot_target->solid->vel;
    }
    else {
       if (parent->nav_asteroid < 0)
@@ -1344,13 +1343,13 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
       field = &cur_system->asteroids[parent->nav_anchor];
       ast = &field->asteroids[parent->nav_asteroid];
-      target_pos = ast->pos;
-      target_vel = ast->vel;
+      target_pos = &ast->pos;
+      target_vel = &ast->vel;
    }
 
-   /* Get the vector : shooter -> target*/
-   vect_cset( &rel_pos, VX(target_pos) - VX(parent->solid->pos),
-         VY(target_pos) - VY(parent->solid->pos) );
+   /* Get the vector : shooter -> target */
+   rx = target_pos->x - pos->x;
+   ry = target_pos->y - pos->y;
 
    /* Try to predict where the enemy will be. */
    t = time;
@@ -1358,11 +1357,11 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       t = 0.;
 
    /* Position is calculated on where it should be */
-   x = (target_pos.x + target_vel.x*t) - (pos->x + vel->x*t);
-   y = (target_pos.y + target_vel.y*t) - (pos->y + vel->y*t);
+   x = (target_pos->x + target_vel->x*t) - (pos->x + vel->x*t);
+   y = (target_pos->y + target_vel->y*t) - (pos->y + vel->y*t);
 
    /* Compute both the angles we want. */
-   rdir        = ANGLE(rel_pos.x, rel_pos.y);
+   rdir        = ANGLE(rx, ry);
    rdir_lead   = ANGLE(x, y);
 
    if (pilot_target != NULL) {
