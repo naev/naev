@@ -340,6 +340,19 @@ const char* faction_default_ai( int f )
 
 
 /**
+ * @brief Gets the faction's weight for patrolled safe-lane construction (0 means they don't build lanes).
+ */
+double faction_lane_length_per_presence( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN(_("Faction id '%d' is invalid."), f);
+      return 0.;
+   }
+   return faction_stack[f].lane_length_per_presence;
+}
+
+
+/**
  * @brief Gets the faction's logo (ideally 256x256).
  *
  *    @param f Faction to get the logo of.
