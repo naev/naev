@@ -207,6 +207,7 @@ jobs:
           meson setup build source \
               --native-file='source/utils/build/linux.ini' \
               --buildtype=release \
+              --force-fallback-for=SuiteSparse \
               -Dprefix="/usr" \
               -Dnightly=true \
               -Db_lto=true \
