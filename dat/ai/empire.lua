@@ -26,17 +26,17 @@ function create ()
    if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
-      if standing < 20 then
+      if standing < 0 then
          mem.refuel_no = _("\"My fuel is property of the Empire.\"")
-      elseif standing < 70 then
-         if rnd.rnd() > 0.2 then
+      elseif standing < 40 then
+         if rnd.rnd() > 0.8 then
             mem.refuel_no = _("\"My fuel is property of the Empire.\"")
          end
       else
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _("\"I suppose I could spare some fuel for %s.\""), creditstring(mem.refuel) )
+      mem.refuel_msg = string.format( _("\"I suppose I could spare some fuel for %s, but you'll have to do the paperwork.\""), creditstring(mem.refuel) )
    end
 
    -- See if can be bribed
