@@ -54,7 +54,8 @@ def readAssets( path ):
 # thanks to them because in u (not utilde) the flux on these anchors should
 # be 0, otherwise, it means that the 2 non-null terms on the rhs are on
 # separate sets of systems.
-def createAnchors(): # TODO : understand what's going on with anchors
+# TODO : Just automatically pick a global node index representing each connected component (by 2-way jumps & in-system flights).
+def createAnchors():
     anchorSys = [
                  "Alteris",
                  "Flow",
@@ -69,14 +70,7 @@ def createAnchors(): # TODO : understand what's going on with anchors
                  "Firk",
                 ]
 
-    anchorAst = [
-                 "Darkshed",
-                 "Sevlow",
-                 "Bon Sebb",
-                 "Qorellia",
-                ]
-
-    return (anchorSys, anchorJps, anchorAst)
+    return (anchorSys, anchorJps)
 
 
 class Systems:
@@ -207,7 +201,7 @@ class Systems:
             i += 1
 
         connect = np.zeros((nsys,nsys)) # Connectivity matrix for systems. TODO : use sparse
-        anchorSys, anchorJps, anchorAst = createAnchors()
+        anchorSys, anchorJps = createAnchors()
 
         for i, (jpname, autopos, loc2globi, jp2loci, namei) in enumerate(zip(self.jpnames, self.autoposs, self.loc2globs, self.jp2locs, self.sysnames)):
             #print(namei)
