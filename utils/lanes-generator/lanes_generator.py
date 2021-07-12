@@ -124,7 +124,6 @@ class SafeLaneProblem:
         # Get the stiffness inside systems
         self.default_lanes = (si0,sj0,sv0)
         self.internal_lanes = inSysStiff( systems.nodess, systems.factass, systems.g2ass, systems.loc2globs )
-        self.ndof = sum(map(len, systems.nodess))  # number of degrees of freedom
 
 
 @timed
@@ -162,10 +161,11 @@ def buildStiffness( problem, activated, anchors ):
     return stiff
 
 @timed
-def compute_PPts_QtQ( nass, problem, utilde, systems ):
+def compute_PPts_QtQ( problem, utilde, systems ):
     '''Gives the matrix that computes penibility form potentials.
       By chance, this does not depend on the presence of lane.'''
     nfact = len(systems.presences[0])
+    nass = len(systems.ass2g)
     
     # First : compute the (sparse) matrix that transforms utilde into u
     pi = []
@@ -175,8 +175,7 @@ def compute_PPts_QtQ( nass, problem, utilde, systems ):
     di = [[] for i in range(nfact)]
     dv = [[] for i in range(nfact)]
     
-    for i in range(nass):
-        ai = systems.ass2g[i] # Find corresponding dof
+    for i, ai in enumerate(systems.ass2g):
         facti = systems.factass[i]
         presi = systems.presass[i]
         for j in range(i):# Stuff is symmetric, we use that
@@ -224,7 +223,7 @@ def compute_PPts_QtQ( nass, problem, utilde, systems ):
         qj.append(sj[i])
         qv.append(-1)
             
-    Q = sp.csr_matrix( (qv, (qi, qj)), (len(si), problem.ndof) )
+    Q = sp.csr_matrix( (qv, (qi, qj)), (len(si), len(systems.g2ass)) )
     # Q*u = p
     
     return PPl, Q.transpose() @ Q
@@ -324,10 +323,9 @@ def optimizeLanes( systems, problem ):
     Lfaction = [-1] * sz;
     pres_c = systems.presences.copy()
     nfact = len(systems.presences[0])
-    nass = len(systems.ass2g)
     
     # TODO : It could be interesting to use sparse format for the RHS as well (see)
-    ftilde = np.eye( problem.ndof )
+    ftilde = np.eye( len(systems.g2ass) )
     ftilde = ftilde[:,systems.ass2g] # Keep only lines corresponding to assets
     
     for i in range(MAX_ITERATIONS):
@@ -347,7 +345,7 @@ def optimizeLanes( systems, problem ):
         # Compute QQ and PP, and use utilde to detect connected parts of the mesh
         # It's in the loop, but only happends once
         if i == 0: # .5 s
-            PPl, QQ = compute_PPts_QtQ( nass, problem, utilde, systems )
+            PPl, QQ = compute_PPts_QtQ( problem, utilde, systems )
 
         rhs = - QQ @ utilde
         lamt = stiff_c.solve_A( rhs ) #.010 s
