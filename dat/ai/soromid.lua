@@ -14,14 +14,14 @@ function create ()
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
 
    -- Get refuel chance
-   p = player.pilot()
+   local p = player.pilot()
    if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
-      if standing < 20 then
+      if standing < 0 then
          mem.refuel_no = _("\"The warriors of Sorom are not your personal refueller.\"")
-      elseif standing < 70 then
-         if rnd.rnd() > 0.2 then
+      elseif standing < 40 then
+         if rnd.rnd() > 0.8 then
             mem.refuel_no = _("\"The warriors of Sorom are not your personal refueller.\"")
          end
       else

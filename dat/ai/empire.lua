@@ -14,7 +14,7 @@ function create ()
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
 
    -- Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
-   r = rnd.rnd(0,20)
+   local r = rnd.rnd(0,20)
    if r == 0 then
       ai.pilot():broadcast(_("The Empire is watching you."))
    elseif r == 1 then
@@ -22,7 +22,7 @@ function create ()
    end
 
    -- Get refuel chance
-   p = player.pilot()
+   local p = player.pilot()
    if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
