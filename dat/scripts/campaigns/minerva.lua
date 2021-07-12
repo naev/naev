@@ -32,8 +32,8 @@ local minerva = {
    maikkiP = {
       name = _("Pirate Lord Maikki"),
       description = _("TODO"),
-      portrait = "maikki.png",
-      image = "maikki.png",
+      portrait = "maikki_pirate.webp",
+      image = "maikki_pirate.webp",
       colour = {1, 0.73, 0.97}, -- Pink :D
    },
    terminal = {
@@ -46,9 +46,9 @@ local minerva = {
    pirate = {
       name = _("Sketchy Individual"),
       realname = _("Zuri"),
-      portrait = "pirate/pirate5.webp", -- TODO REPLACE
+      portrait = "zuri.webp",
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
-      image = portrait.getFullPath("pirate/pirate5.webp"),
+      image = "zuri.webp",
       colour = nil,
    },
    -- Secondary characters
@@ -60,9 +60,15 @@ local minerva = {
    },
    ceo = {
       name = _("Minerva CEO"),
-      portrait = "minervaceo.png",
-      image = "minervaceo.png",
+      portrait = "minervaceo.webp",
+      image = "minervaceo.webp",
       description = _("The CEO of Minerva Station."),
+      colour = nil,
+   },
+   mole = {
+      name = _("Mole"),
+      portrait = "minervamole.webp",
+      image = "minervamole.webp",
       colour = nil,
    },
 
@@ -149,6 +155,13 @@ function minerva.vn_ceo( params )
          mt.merge_tables( {
             image=minerva.ceo.image,
             color=minerva.ceo.colour,
+         }, params) )
+end
+function minerva.vn_mole( params )
+   return vn.Character.new( minerva.mole.name,
+         mt.merge_tables( {
+            image=minerva.mole.image,
+            color=minerva.mole.colour,
          }, params) )
 end
 

@@ -37,8 +37,8 @@ if var.peek("minerva_chuckaluck_change") then
    chuckaluck_portrait = portrait.get() -- Becomes a random NPC
    chuckaluck_image = portrait.getFullPath( chuckaluck_portrait )
 else
-   chuckaluck_portrait = "minervaceo.png" -- TODO replace
-   chuckaluck_image = "minervaceo.png" -- TODO replace
+   chuckaluck_portrait = minerva.mole.portrait
+   chuckaluck_image = minerva.mole.image
 end
 chuckaluck_desc = _("A fast-paced luck-based betting game using dice.")
 greeter_portrait = portrait.get() -- TODO replace?

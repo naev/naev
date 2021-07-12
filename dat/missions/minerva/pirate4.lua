@@ -148,7 +148,7 @@ end
 function found_mole ()
    vn.clear()
    vn.scene()
-   local mole = vn.newCharacter( _("Mole"), {image=mole_image} )
+   local mole = vn.newCharacter( minerva.vn_mole() )
    vn.transition()
    vn.na(_("After the chuck-a-luck dealers shift you follow him to a back alley in the station."))
    mole(_([["I don't recognize you, are you the new messenger? Last guy got sliced up."
