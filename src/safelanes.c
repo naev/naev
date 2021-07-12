@@ -9,8 +9,13 @@
  */
 
 /** @cond */
-#include <cholmod.h>
 #include <math.h>
+
+#ifdef HAVE_SUITESPARSE_CHOLMOD_H
+#include <suitesparse/cholmod.h>
+#else
+#include <cholmod.h>
+#endif
 
 #include "naev.h"
 /** @endcond */

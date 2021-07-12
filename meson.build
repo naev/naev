@@ -140,12 +140,26 @@ if buildExec.disabled() == false
          error('Failed to find an installation of c[x]sparse. See above note about SuiteSparse.')
       endif
 
+      system_cholmod = cc.find_library('cholmod', required: false, has_headers: ['suitesparse/cholmod.h'])
+      use_system_suitesparse = system_cholmod.found()
+      if system_cholmod.found()
+         config_data.set10('HAVE_SUITESPARSE_CHOLMOD_H', true)
+      else
+         system_cholmod = cc.find_library('cholmod', required: false, has_headers: ['cholmod.h'])
+         use_system_suitesparse = system_cholmod.found()
+      endif
+      if system_cholmod.found()
+         naev_deps += system_cholmod
+      else
+         error('Failed to find an installation of cholmod. See above note about SuiteSparse.')
+      endif
+
+
    # TODO: These packages may require the same nonsense, in terms of checking for suitesparse/foo.h headers.
       naev_deps += cc.find_library('amd', required: true)
       naev_deps += cc.find_library('blas', required: false)
       naev_deps += cc.find_library('ccolamd', required: false)
       naev_deps += cc.find_library('colamd', required: true)
-      naev_deps += cc.find_library('cholmod', required: true)
       naev_deps += cc.find_library('lapack', required: false)
       naev_deps += cc.find_library('metis', required: false)
       naev_deps += cc.find_library('suitesparseconfig', required: true)
