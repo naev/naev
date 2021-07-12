@@ -183,9 +183,9 @@ glpk_dependencies = [dependency('zlib')]
 if 'SuiteSparse' in get_option('force_fallback_for')
       glpk_dependencies += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
 else
-      # TODO: See top-level meson.build: we may have to fiddle with header locations.
-      glpk_dependencies += cc.find_library('amd', required: true)
-      glpk_dependencies += cc.find_library('colamd', required: true)
+      message('IMPORTANT NOTE ABOUT SuiteSparse: If setup fails looking for amd or colamd here, please try either installing the glpk devel package or using the included SuiteSparse (setup/config option: "--force-fallback-for=glpk,SuiteSparse").')
+      glpk_dependencies += cc.find_library('amd', has_headers: ['amd.h'], required: true)
+      glpk_dependencies += cc.find_library('colamd', has_headers: ['colamd.h'], required: true)
 endif
 
 libglpk = static_library('glpk', glpk_sources, include_directories: glpk_includes, dependencies: glpk_dependencies)
