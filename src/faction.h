@@ -30,6 +30,7 @@ const char* faction_name( int f );
 const char* faction_shortname( int f );
 const char* faction_longname( int f );
 const char* faction_default_ai( int f );
+double faction_lane_length_per_presence( int f );
 void faction_addEnemy( int f, int o );
 void faction_rmEnemy( int f, int o );
 void faction_addAlly( int f, int o );
