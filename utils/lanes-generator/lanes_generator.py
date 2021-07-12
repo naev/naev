@@ -230,7 +230,7 @@ def compute_PPts_QtQ( problem, utilde, systems ):
 
 
 @timed
-def getGradient( problem, u, lamt, PPl, pres_0, activated ):
+def getGradient( problem, u, lamt, PPl, pres_0, activated, systems ):
     '''Get the gradient from state and adjoint state.
        Luckily, this does not depend on the stiffness itself (by linearity wrt. stiffness).'''
     si, sj, sv = problem.internal_lanes[:3]
@@ -242,7 +242,21 @@ def getGradient( problem, u, lamt, PPl, pres_0, activated ):
     nfact = len(PPl)
     gl = []
     for k in range(nfact): # .2
-        lal = lamt @ PPl[k]
+        
+        # Build the list of all interesting dofs
+        myDofs = []
+        for i in range(len(systems.loc2globs)):
+            
+            if pres_0[i][k] <= 0: # Does this faction have presence here ?
+                continue
+            
+            loc2glob = systems.loc2globs[i] # Idices of the assets in the global numerotation
+            myDofs = myDofs + loc2glob
+            
+
+        lal = np.zeros(lamt.shape)
+        lal[myDofs,:] = lamt[myDofs,:] @ PPl[k]
+        #lal = lamt @ PPl[k]
         glk = np.zeros((sz,1))
 
         for i in range(sz):
@@ -351,7 +365,7 @@ def optimizeLanes( systems, problem ):
         lamt = stiff_c.solve_A( rhs ) #.010 s
         
         # Compute the gradient.
-        gl = getGradient( problem, utilde, lamt, PPl, pres_c, activated ) # 0.2 s
+        gl = getGradient( problem, utilde, lamt, PPl, pres_c, activated, systems ) # 0.2 s
 
         activateBestFact( problem, gl, activated, Lfaction, pres_c, systems.presences ) # 0.01 s
 
