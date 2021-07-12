@@ -33,8 +33,7 @@ def inSysStiff( nodess, factass, g2ass, loc2globNs ):
     i  = 0
     ii = 0
 
-    for k in range(len(nodess)):
-        nodes = nodess[k]
+    for k, nodes in enumerate(nodess):
         loc2glob = []
         loc2globN = loc2globNs[k]
         for n in range(len(nodes)):
@@ -118,13 +117,9 @@ class SafeLaneProblem:
                 sv0.append(JUMP_CONDUCTIVITY)
 
         # Remove the redundant info because right now, we have i->j and j->i
-        while k<len(si0):
+        for k in range(len(si0)-1, -1, -1):
             if (si0[k] in sj0):
-                si0.pop(k)
-                sj0.pop(k)
-                sv0.pop(k)
-                k -= 1
-            k += 1
+                del si0[k], sj0[k], sv0[k]
 
         # Get the stiffness inside systems
         self.default_lanes = (si0,sj0,sv0)
