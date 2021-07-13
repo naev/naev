@@ -179,7 +179,7 @@ esys["Fighter"] = function( heavy )
    end
 end
 esys["Bomber"] = function( heavy )
-   return choose_one{ "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System" }
+   return "Milspec Orion 3701 Core System"
 end
 esys["Corvette"] = function( heavy )
    return choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" }
