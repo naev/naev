@@ -24,6 +24,7 @@
 
 #include "array.h"
 #include "log.h"
+#include "union_find.h"
 
 
 /*
@@ -197,8 +198,7 @@ static void safelanes_initStacks (void)
    safelanes_initStacks_faction();
    safelanes_initStacks_edge();
    safelanes_initStacks_anchor();
-   DEBUG( _("Built safelanes graph: V=%d, E=%d, anchors=%d"), array_size(vertex_stack), array_size(edge_stack),
-         array_size(tmp_anchor_vertices) );
+   DEBUG( _("Built safelanes graph: V=%d, E=%d"), array_size(vertex_stack), array_size(edge_stack) );
 }
 
 
@@ -311,7 +311,23 @@ static void safelanes_initStacks_faction (void)
  */
 static void safelanes_initStacks_anchor (void)
 {
-   //TODO
+   UnionFind uf;
+   int i, nsys, *systems;
+
+   nsys = array_size(sys_to_first_vertex) - 1;
+   unionfind_init( &uf, nsys );
+   for (i=0; i<array_size(tmp_jump_edges); i++)
+      unionfind_union( &uf, vertex_stack[tmp_jump_edges[i][0]].system, vertex_stack[tmp_jump_edges[i][1]].system );
+   systems = unionfind_findall( &uf );
+   tmp_anchor_vertices = array_create_size( int, array_size(systems) );
+
+   /* Add an anchor vertex per system, but only if there actually is a vertex in the system. */
+   for (i=0; i<array_size(systems); i++)
+      if (sys_to_first_vertex[systems[i]] < sys_to_first_vertex[1+systems[i]]) {
+         array_push_back( &tmp_anchor_vertices, sys_to_first_vertex[systems[i]] );
+         DEBUG( _("Anchoring safelanes graph in system: %s."), system_getIndex(systems[i])->name );
+      }
+   unionfind_free( &uf );
 }
 
 
