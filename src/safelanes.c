@@ -81,6 +81,7 @@ static cholmod_common C;        /**< Parameter settings, statistics, and workspa
 static Vertex *vertex_stack;    /**< Array (array.h): Everything eligible to be a lane endpoint. */
 static int *sys_to_first_vertex;/**< Array (array.h): For each system index, the id of its first vertex, + sentinel. */
 static Edge *edge_stack;        /**< Array (array.h): Everything eligible to be a lane. */
+static int *sys_to_first_edge;  /**< Array (array.h): For each system index, the id of its first edge, + sentinel. */
 static Faction *faction_stack;  /**< Array (array.h): The faction IDs that can build lanes. */
 static int *lane_faction;       /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
 static FactionMask *lane_fmask; /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
@@ -170,11 +171,10 @@ SafeLane* safelanes_get (int faction, const StarSystem* system)
 
    out = array_create( SafeLane );
 
-   /* FIXME: How slow is this full scan? We could have a sys_to_first_edge stack as well. */
-   for (i=0; i<array_size(lane_faction); i++) {
+   for (i=sys_to_first_edge[system->id]; i<sys_to_first_edge[1+system->id]; i++) {
       for (j=0; j<2; j++)
          v[j] = &vertex_stack[edge_stack[i][j]];
-      if (v[0]->system == system->id && lane_faction[i] > 0 && (faction < 0 || faction == lane_faction[i])) {
+      if (lane_faction[i] > 0 && (faction < 0 || faction == lane_faction[i])) {
          l = &array_grow( &out );
          l->faction = lane_faction[i];
          for (j=0; j<2; j++) {
@@ -351,6 +351,8 @@ static void safelanes_initStacks_edge (void)
    systems_stack = system_getAll();
 
    edge_stack = array_create( Edge );
+   sys_to_first_edge = array_create( int );
+   array_push_back( &sys_to_first_edge, 0 );
    lane_fmask = array_create( FactionMask );
    tmp_edge_conduct = array_create( double );
    for (system=0; system<array_size(systems_stack); system++) {
@@ -372,8 +374,10 @@ static void safelanes_initStacks_edge (void)
             array_push_back( &tmp_edge_conduct, 1/lij );
          }
       }
+      array_push_back( &sys_to_first_edge, array_size(edge_stack) );
    }
    array_shrink( &edge_stack );
+   array_shrink( &sys_to_first_edge );
 
    lane_faction = array_create_size( int, array_size(edge_stack) );
    memset( lane_faction, 0, array_size(lane_faction)*sizeof(lane_faction[0]) );
@@ -431,8 +435,12 @@ static void safelanes_destroyStacks (void)
    safelanes_destroyTmp();
    array_free( vertex_stack );
    vertex_stack = NULL;
+   array_free( sys_to_first_vertex );
+   sys_to_first_vertex = NULL;
    array_free( edge_stack );
    edge_stack = NULL;
+   array_free( sys_to_first_edge );
+   sys_to_first_edge = NULL;
    array_free( faction_stack );
    faction_stack = NULL;
    array_free( lane_faction );
