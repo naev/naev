@@ -35,7 +35,6 @@ static const double ALPHA                  = 9;         /**< Lane efficiency par
 static const double JUMP_CONDUCTIVITY      = .001;      /**< Conductivity value for inter-system jump-point connections. */
 /*static*/ const double CONVERGENCE_THRESHOLD  = 1e-12;     /**< Stop optimizing after a relative change of U~ this small. */
 /*static*/ const double MAX_ITERATIONS         = 20;        /**< Stop optimizing after this many iterations, at most. */
-/*static*/ const double DISCONNECTED_THRESHOLD = 1e-12;     /**< Used to infer non-connectivity from any iteration's U~. */
 static const double MIN_ANGLE              = M_PI/18;   /**< Path triangles can't be more acute. */
 enum {
    STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
@@ -90,6 +89,7 @@ static int *tmp_planet_indices; /**< Array (array.h): The vertex indices for pla
 static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to initialize "stiff". */
 static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to initialize "stiff". */
 static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to initialize "stiff". */
+static UnionFind tmp_sys_uf;    /**< The partition of {system indices} into connected components (connected by 2-way jumps). */
 static cholmod_triplet *stiff;  /**< K matrix, UT triplets: internal edges (E*3), implicit jump connections, anchor conditions. */
 static cholmod_sparse *QtQ;     /**< (Q*)Q where Q is the ExV difference matrix. */
 static cholmod_dense *ftilde;   /**< Fluxes (a bunch of rhs columns in the KU=F problem). */
@@ -333,14 +333,13 @@ static void safelanes_initStacks_faction (void)
  */
 static void safelanes_initStacks_anchor (void)
 {
-   UnionFind uf;
    int i, nsys, *systems;
 
    nsys = array_size(sys_to_first_vertex) - 1;
-   unionfind_init( &uf, nsys );
+   unionfind_init( &tmp_sys_uf, nsys );
    for (i=0; i<array_size(tmp_jump_edges); i++)
-      unionfind_union( &uf, vertex_stack[tmp_jump_edges[i][0]].system, vertex_stack[tmp_jump_edges[i][1]].system );
-   systems = unionfind_findall( &uf );
+      unionfind_union( &tmp_sys_uf, vertex_stack[tmp_jump_edges[i][0]].system, vertex_stack[tmp_jump_edges[i][1]].system );
+   systems = unionfind_findall( &tmp_sys_uf );
    tmp_anchor_vertices = array_create_size( int, array_size(systems) );
 
    /* Add an anchor vertex per system, but only if there actually is a vertex in the system. */
@@ -350,7 +349,6 @@ static void safelanes_initStacks_anchor (void)
          DEBUG( _("Anchoring safelanes graph in system: %s."), system_getIndex(systems[i])->name );
       }
    array_free( systems );
-   unionfind_free( &uf );
 }
 
 
@@ -378,6 +376,7 @@ static void safelanes_destroyStacks (void)
  */
 static void safelanes_destroyTmp (void)
 {
+   unionfind_free( &tmp_sys_uf );
    array_free( tmp_planet_indices );
    tmp_planet_indices = NULL;
    array_free( tmp_jump_edges );
