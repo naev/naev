@@ -182,7 +182,7 @@ def compute_PPts_QtQ( problem, utilde, systems ):
         for j in range(i):# Stuff is symmetric, we use that
             if utilde[ai,j] <= DISCONNECTED_THRESHOLD:
                 continue
-            ij = i*nass + j # Multiindex
+            ij = i*(i-1) + j # Multiindex
             
             # Just a substraction
             pi.append(i)

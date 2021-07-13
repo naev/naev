@@ -489,7 +489,7 @@ static void safelanes_initPPl (void)
    Planet *pnti, *pntj;
 
    np = array_size(tmp_planet_indices);
-#define MULTI_INDEX( i, j ) (i*np + j)
+#define MULTI_INDEX( i, j ) ((i*(i-1))/2 + j)
    P = cholmod_allocate_triplet( np, MULTI_INDEX(np,0), np*(np-1), STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
    pi = P->i; pj = P->j; pv = P->x;
    for (i=0; i<np; i++)
