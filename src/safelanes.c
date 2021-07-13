@@ -91,7 +91,8 @@ static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connecte
 static UnionFind tmp_sys_uf;    /**< The partition of {system indices} into connected components (connected by 2-way jumps). */
 static cholmod_triplet *stiff;  /**< K matrix, UT triplets: internal edges (E*3), implicit jump connections, anchor conditions. */
 static cholmod_sparse *QtQ;     /**< (Q*)Q where Q is the ExV difference matrix. */
-static cholmod_dense *ftilde;   /**< Fluxes (a bunch of rhs columns in the KU=F problem). */
+static cholmod_dense *ftilde;   /**< Fluxes (bunch of F columns in the KU=F problem). */
+static cholmod_dense *utilde;   /**< Potentials (bunch of U columns in the KU=F problem). */
 static cholmod_dense **PPl;     /**< Array: (array.h): For each builder faction, The (P*)P in: grad_u(phi)=(Q*)Q U~ (P*)P. */
 
 /*
@@ -103,6 +104,8 @@ static void safelanes_initStacks_edge (void);
 static void safelanes_initStacks_faction (void);
 static void safelanes_initStacks_vertex (void);
 static void safelanes_initStacks_anchor (void);
+static void safelanes_initOptimizer (void);
+static void safelanes_destroyOptimizer (void);
 static void safelanes_destroyStacks (void);
 static void safelanes_destroyTmp (void);
 static void safelanes_initStiff (void);
@@ -142,12 +145,7 @@ void safelanes_init (void)
  */
 void safelanes_destroy (void)
 {
-   for (int i=0; i<array_size(PPl); i++)
-      cholmod_free_dense( &PPl[i], &C );
-   array_free( PPl );
-   cholmod_free_dense( &ftilde, &C );
-   cholmod_free_sparse( &QtQ, &C );
-   cholmod_free_triplet( &stiff, &C );
+   safelanes_destroyOptimizer();
    safelanes_destroyStacks();
    cholmod_finish( &C );
 }
@@ -200,15 +198,41 @@ SafeLane* safelanes_get (int faction, const StarSystem* system)
 void safelanes_recalculate (void)
 {
    safelanes_initStacks();
+   safelanes_initOptimizer();
+   for (int i=0; i<MAX_ITERATIONS; i++)
+      if (safelanes_changeFromOptimizer() <= CONVERGENCE_THRESHOLD)
+         break;
+   safelanes_destroyOptimizer();
+   /* Stacks remain available for queries. */
+}
+
+
+/**
+ * @brief Initializes resources used by lane optimization.
+ */
+static void safelanes_initOptimizer (void)
+{
    safelanes_initStiff();
    safelanes_initQtQ();
    safelanes_initFTilde();
    safelanes_initPPl();
    safelanes_destroyTmp();
+}
 
-   for (int i=0; i<MAX_ITERATIONS; i++)
-      if (safelanes_changeFromOptimizer() <= CONVERGENCE_THRESHOLD)
-         break;
+
+/**
+ * @brief Frees resources used by lane optimization.
+ */
+static void safelanes_destroyOptimizer (void)
+{
+   for (int i=0; i<array_size(PPl); i++)
+      cholmod_free_dense( &PPl[i], &C );
+   array_free( PPl );
+   PPl = NULL;
+   cholmod_free_dense( &utilde, &C );
+   cholmod_free_dense( &ftilde, &C );
+   cholmod_free_sparse( &QtQ, &C );
+   cholmod_free_triplet( &stiff, &C );
 }
 
 
