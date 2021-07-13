@@ -197,9 +197,10 @@ def compute_PPts_QtQ( problem, utilde, systems ):
             
             # EXPERIMENT: Could weight v here by 1/distances[g2sys[ai],g2sys[aj]], to avoid strange shapes for peripheric systems.
             # Build the diagonal ponderators
-            di[facti].append(ij)
-            dv[facti].append(presi if facti!=factj else presi+presj)
-            if facti != factj:
+            if facti >= 0:
+                di[facti].append(ij)
+                dv[facti].append(presi)
+            if factj >= 0:
                 di[factj].append(ij)
                 dv[factj].append(presj)
             
