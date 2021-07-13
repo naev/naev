@@ -99,6 +99,7 @@ static cholmod_dense **PPl;     /**< Array: (array.h): For each builder faction,
  * Prototypes.
  */
 static double safelanes_changeFromOptimizer (void);
+static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde );
 static void safelanes_initStacks (void);
 static void safelanes_initStacks_edge (void);
 static void safelanes_initStacks_faction (void);
@@ -109,6 +110,7 @@ static void safelanes_destroyOptimizer (void);
 static void safelanes_destroyStacks (void);
 static void safelanes_destroyTmp (void);
 static void safelanes_initStiff (void);
+/*static*/ double safelanes_edgeConductivity ( int i );
 static void safelanes_initQtQ (void);
 static void safelanes_initFTilde (void);
 static void safelanes_initPPl (void);
@@ -241,7 +243,37 @@ static void safelanes_destroyOptimizer (void)
  */
 static double safelanes_changeFromOptimizer (void)
 {
-   return 0; // TODO
+   cholmod_sparse *stiff_s;
+   cholmod_factor *stiff_f;
+   cholmod_dense *new_utilde, *_QtQutilde, *Lambda_tilde;
+   double rel_change = HUGE_VAL;
+   double zero[] = {0, 0}, neg_1[] = {-1, 0};
+
+   stiff_s = cholmod_triplet_to_sparse( stiff, 0, &C );
+   stiff_f = cholmod_analyze( stiff_s, &C );
+   cholmod_factorize( stiff_s, stiff_f, &C );
+   new_utilde = cholmod_solve( CHOLMOD_A, stiff_f, ftilde, &C );
+   if (utilde != NULL) {
+      /* Do utilde -= new_utilde, and compute ||utilde||/||utilde_new|| */
+      for (size_t i = 0; i < utilde->nzmax; i++)
+         ((double*)utilde->x)[i] -= ((double*)new_utilde->x)[i];
+      /* FIXME: Using 1-norm instead of 2-norm because CHOLMOD only supports the latter for vectors. */
+      rel_change = cholmod_norm_dense( utilde, 1, &C ) / cholmod_norm_dense( new_utilde, 1, &C );
+      cholmod_free_dense( &utilde, &C );
+   }
+   utilde = new_utilde;
+
+   if (rel_change > CONVERGENCE_THRESHOLD) {
+      _QtQutilde = cholmod_zeros( utilde->nrow, utilde->ncol, CHOLMOD_REAL, &C );
+      cholmod_sdmult( QtQ, 0, neg_1, zero, utilde, _QtQutilde, &C );
+      Lambda_tilde = cholmod_solve( CHOLMOD_A, stiff_f, _QtQutilde, &C );
+      cholmod_free_dense( &_QtQutilde, &C );
+      safelanes_activateByGradient( Lambda_tilde );
+      cholmod_free_dense( &Lambda_tilde, &C );
+   }
+   cholmod_free_factor( &stiff_f, &C );
+   cholmod_free_sparse( &stiff_s, &C );
+   return rel_change;
 }
 
 
@@ -432,15 +464,15 @@ static void safelanes_destroyTmp (void)
  */
 static void safelanes_initStiff (void)
 {
-   int n, v, i;
+   int nnz, v, i;
    int *pi, *pj;
    double *pv;
    double max_conductivity;
 
    cholmod_free_triplet( &stiff, &C );
    v = array_size(vertex_stack);
-   n = 3*(array_size(edge_stack)+array_size(tmp_jump_edges)) + array_size(tmp_anchor_vertices);
-   stiff = cholmod_allocate_triplet( v, v, n, STORAGE_MODE_UPPER_TRIANGULAR_PART, CHOLMOD_REAL, &C );
+   nnz = 3*(array_size(edge_stack)+array_size(tmp_jump_edges)) + array_size(tmp_anchor_vertices);
+   stiff = cholmod_allocate_triplet( v, v, nnz, STORAGE_MODE_UPPER_TRIANGULAR_PART, CHOLMOD_REAL, &C );
    /* Populate triplets: internal edges (ii ij jj), implicit jump connections (ditto), anchor conditions. */
    pi = stiff->i; pj = stiff->j; pv = stiff->x;
    for (i=0; i<array_size(edge_stack); i++) {
@@ -461,9 +493,20 @@ static void safelanes_initStiff (void)
    for (i=0; i<array_size(tmp_anchor_vertices); i++) {
       *pi++ = tmp_anchor_vertices[i]; *pj++ = tmp_anchor_vertices[i]; *pv++ = max_conductivity;
    }
+   stiff->nnz = nnz;
 #if DEBUGGING
    assert( cholmod_check_triplet( stiff, &C) );
 #endif
+}
+
+
+/**
+ * @brief Returns the conductivity (1/length) value for the ith edge.
+ * These are stored in the stiffness matrix; \see safelanes_initStiff.
+ */
+/*static*/ double safelanes_edgeConductivity ( int i )
+{
+   return ((double*)stiff->x)[3*i];
 }
 
 
@@ -533,6 +576,7 @@ static void safelanes_initPPl (void)
          *pi++ = i; *pj++ = MULTI_INDEX(i,j); *pv++ = +1;
          *pi++ = j; *pj++ = MULTI_INDEX(i,j); *pv++ = -1;
       }
+   P->nnz = P->nzmax;
 #if DEBUGGING
    assert( cholmod_check_triplet( P, &C) );
 #endif
@@ -577,6 +621,15 @@ static void safelanes_initPPl (void)
       cholmod_free_dense( &D[k], &C );
    array_free( D );
    cholmod_free_triplet( &P, &C );
+}
+
+
+/**
+ * @brief Per-system, per-faction, activates the affordable lane with best (grad phi)/L
+ */
+static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
+{
+   (void) Lambda_tilde; // TODO
 }
 
 
