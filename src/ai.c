@@ -1588,7 +1588,6 @@ static int aiL_isenemy( lua_State *L )
    /* Player needs special handling in case of hostility. */
    if (p->faction == FACTION_PLAYER) {
       lua_pushboolean(L, pilot_isHostile(cur_pilot));
-      lua_pushboolean(L,1);
       return 1;
    }
 
