@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # This file generates safe lanes
 
+import copy
 import math
 import numpy as np
 import scipy.sparse as sp
@@ -335,7 +336,7 @@ def optimizeLanes( systems, problem ):
     sz = len(problem.internal_lanes[0])
     activated = [False] * sz # Initialization : no lane is activated
     Lfaction = [-1] * sz;
-    pres_c = systems.presences.copy()
+    pres_c = copy.deepcopy(systems.presences)
     nfact = len(systems.presences[0])
     
     # TODO : It could be interesting to use sparse format for the RHS as well (see)
