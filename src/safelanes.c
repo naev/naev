@@ -123,6 +123,7 @@ static inline FactionMask MASK_ANY_FACTION();
 static inline FactionMask MASK_ONE_FACTION( int id );
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 );
 static int cmp_key( const void* p1, const void* p2 );
+static double frobenius_norm( cholmod_dense* m );
 
 /**
  * @brief Like array_push_back( a, Edge{v0, v1} ), but achievable in C. :-P
@@ -259,8 +260,7 @@ static double safelanes_changeFromOptimizer (void)
       /* Do utilde -= new_utilde, and compute ||utilde||/||utilde_new|| */
       for (size_t i = 0; i < utilde->nzmax; i++)
          ((double*)utilde->x)[i] -= ((double*)new_utilde->x)[i];
-      /* FIXME: Using 1-norm instead of 2-norm because CHOLMOD only supports the latter for vectors. */
-      rel_change = cholmod_norm_dense( utilde, 1, &C ) / cholmod_norm_dense( new_utilde, 1, &C );
+      rel_change = frobenius_norm( utilde ) / frobenius_norm( new_utilde );
       cholmod_free_dense( &utilde, &C );
    }
    utilde = new_utilde;
@@ -737,6 +737,7 @@ static inline FactionMask MASK_ANY_FACTION()
    return ~(FactionMask)0;
 }
 
+
 /** @brief A mask giving this faction (NOT faction_stack index) exclusive rights to build, if it's a lane-building faction. */
 static inline FactionMask MASK_ONE_FACTION( int id )
 {
@@ -744,9 +745,24 @@ static inline FactionMask MASK_ONE_FACTION( int id )
    return i>0 ? ((FactionMask)1)<<i : MASK_ANY_FACTION();
 }
 
+
 /** @brief A mask with appropriate lane-building rights given one faction ID owning each endpoint. */
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 )
 {
    FactionMask m1 = MASK_ONE_FACTION(id1), m2 = MASK_ONE_FACTION(id2);
    return (m1 & m2) ? (m1 & m2) : (m1 | m2);  /* Any/Any -> any, Any/f -> just f, f1/f2 -> either. */
+}
+
+
+/** @brief Return the Frobenius norm sqrt(Tr(m* m)). Matrix form is restricted to stuff we care about. */
+static double frobenius_norm( cholmod_dense* m )
+{
+   double x, n2 = 0;
+   assert( m->xtype == CHOLMOD_REAL );
+   for (size_t i = 0; i < m->nrow; i++)
+      for (size_t j = 0; j < m->ncol; j++) {
+         x = ((double*)m->x)[i+j*m->d];
+         n2 += x*x;
+      }
+   return sqrt( n2 );
 }
