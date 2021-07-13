@@ -199,6 +199,11 @@ static int linoptL_new( lua_State *L )
    lp.nrows = luaL_checkinteger(L,3);
    max      = lua_toboolean(L,4);
 
+#ifdef DEBUGGING
+   if (lp.ncols <= 0)
+      NLUA_ERROR( L, _("Number of columns in a linear optimization problem must be greater than 0!") );
+#endif /* DEBUGGING */
+
    /* Initialize and create. */
    lp.prob = glp_create_prob();
    glp_set_prob_name( lp.prob, name );
