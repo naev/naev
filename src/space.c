@@ -4034,7 +4034,7 @@ sys_cleanup:
  *    @param faction The faction to get the presence for.
  *    @return The amount of presence the faction has in the system.
  */
-double system_getPresence( StarSystem *sys, int faction )
+double system_getPresence( const StarSystem *sys, int faction )
 {
    int i;
 
