@@ -35,7 +35,6 @@ static const double ALPHA                  = 9;         /**< Lane efficiency par
 static const double JUMP_CONDUCTIVITY      = .001;      /**< Conductivity value for inter-system jump-point connections. */
 /*static*/ const double CONVERGENCE_THRESHOLD  = 1e-12;     /**< Stop optimizing after a relative change of U~ this small. */
 /*static*/ const double MAX_ITERATIONS         = 20;        /**< Stop optimizing after this many iterations, at most. */
-/*static*/ const double DISCONNECTED_THRESHOLD = 1e-12;     /**< Used to infer non-connectivity from any iteration's U~. */
 static const double MIN_ANGLE              = M_PI/18;   /**< Path triangles can't be more acute. */
 enum {
    STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
@@ -86,11 +85,15 @@ static Edge *edge_stack;        /**< Array (array.h): Everything eligible to be 
 static Faction *faction_stack;  /**< Array (array.h): The faction IDs that can build lanes. */
 static int *lane_faction;       /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
 static FactionMask *lane_fmask; /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
+static int *tmp_planet_indices; /**< Array (array.h): The vertex indices for planets. Used to initialize "ftilde", "PPl". */
 static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to initialize "stiff". */
 static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to initialize "stiff". */
 static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to initialize "stiff". */
+static UnionFind tmp_sys_uf;    /**< The partition of {system indices} into connected components (connected by 2-way jumps). */
 static cholmod_triplet *stiff;  /**< K matrix, UT triplets: internal edges (E*3), implicit jump connections, anchor conditions. */
 static cholmod_sparse *QtQ;     /**< (Q*)Q where Q is the ExV difference matrix. */
+static cholmod_dense *ftilde;   /**< Fluxes (a bunch of rhs columns in the KU=F problem). */
+static cholmod_sparse **PPl;    /**< Array: (array.h): For each builder faction, The (P*)P in: grad_u(phi)=(Q*)Q U~ (P*)P. */
 
 /*
  * Prototypes.
@@ -103,9 +106,9 @@ static void safelanes_initStacks_anchor (void);
 static void safelanes_destroyStacks (void);
 static void safelanes_destroyTmp (void);
 static void safelanes_initStiff (void);
-static void safelanes_destroyStiff (void);
 static void safelanes_initQtQ (void);
-static void safelanes_destroyQtQ (void);
+static void safelanes_initFTilde (void);
+static void safelanes_initPPl (void);
 static int safelanes_triangleTooFlat( const Vector2d* m, const Vector2d* n, const Vector2d* p, double lmn );
 static int vertex_faction( int i );
 static const Vector2d* vertex_pos( int i );
@@ -138,8 +141,12 @@ void safelanes_init (void)
  */
 void safelanes_destroy (void)
 {
-   safelanes_destroyQtQ();
-   safelanes_destroyStiff();
+   for (int i=0; i<array_size(PPl); i++)
+      cholmod_free_sparse( &PPl[i], &C );
+   array_free( PPl );
+   cholmod_free_dense( &ftilde, &C );
+   cholmod_free_sparse( &QtQ, &C );
+   cholmod_free_triplet( &stiff, &C );
    safelanes_destroyStacks();
    cholmod_finish( &C );
 }
@@ -194,6 +201,9 @@ void safelanes_recalculate (void)
    safelanes_initStacks();
    safelanes_initStiff();
    safelanes_initQtQ();
+   safelanes_initFTilde();
+   safelanes_initPPl();
+   safelanes_destroyTmp();
    // TODO
 }
 
@@ -227,12 +237,14 @@ static void safelanes_initStacks_vertex (void)
    vertex_stack = array_create( Vertex );
    sys_to_first_vertex = array_create( int );
    array_push_back( &sys_to_first_vertex, 0 );
+   tmp_planet_indices = array_create( int );
    tmp_jump_edges = array_create( Edge );
    for (system=0; system<array_size(systems_stack); system++) {
       for (i=0; i<array_size(systems_stack[system].planets); i++) {
          p = systems_stack[system].planets[i];
          if (p->real && p->presenceAmount) {
             Vertex v = {.system = system, .type = VERTEX_PLANET, .index = i};
+            array_push_back( &tmp_planet_indices, array_size(vertex_stack) );
             array_push_back( &vertex_stack, v );
          }
       }
@@ -321,14 +333,13 @@ static void safelanes_initStacks_faction (void)
  */
 static void safelanes_initStacks_anchor (void)
 {
-   UnionFind uf;
    int i, nsys, *systems;
 
    nsys = array_size(sys_to_first_vertex) - 1;
-   unionfind_init( &uf, nsys );
+   unionfind_init( &tmp_sys_uf, nsys );
    for (i=0; i<array_size(tmp_jump_edges); i++)
-      unionfind_union( &uf, vertex_stack[tmp_jump_edges[i][0]].system, vertex_stack[tmp_jump_edges[i][1]].system );
-   systems = unionfind_findall( &uf );
+      unionfind_union( &tmp_sys_uf, vertex_stack[tmp_jump_edges[i][0]].system, vertex_stack[tmp_jump_edges[i][1]].system );
+   systems = unionfind_findall( &tmp_sys_uf );
    tmp_anchor_vertices = array_create_size( int, array_size(systems) );
 
    /* Add an anchor vertex per system, but only if there actually is a vertex in the system. */
@@ -338,7 +349,6 @@ static void safelanes_initStacks_anchor (void)
          DEBUG( _("Anchoring safelanes graph in system: %s."), system_getIndex(systems[i])->name );
       }
    array_free( systems );
-   unionfind_free( &uf );
 }
 
 
@@ -366,6 +376,9 @@ static void safelanes_destroyStacks (void)
  */
 static void safelanes_destroyTmp (void)
 {
+   unionfind_free( &tmp_sys_uf );
+   array_free( tmp_planet_indices );
+   tmp_planet_indices = NULL;
    array_free( tmp_jump_edges );
    tmp_jump_edges = NULL;
    array_free( tmp_edge_conduct );
@@ -387,7 +400,7 @@ static void safelanes_initStiff (void)
    double *pv;
    double max_conductivity;
 
-   safelanes_destroyStiff();
+   cholmod_free_triplet( &stiff, &C );
    v = array_size(vertex_stack);
    n = 3*(array_size(edge_stack)+array_size(tmp_jump_edges)) + array_size(tmp_anchor_vertices);
    stiff = cholmod_allocate_triplet( v, v, n, STORAGE_MODE_UPPER_TRIANGULAR_PART, CHOLMOD_REAL, &C );
@@ -411,19 +424,9 @@ static void safelanes_initStiff (void)
    for (i=0; i<array_size(tmp_anchor_vertices); i++) {
       *pi++ = tmp_anchor_vertices[i]; *pj++ = tmp_anchor_vertices[i]; *pv++ = max_conductivity;
    }
-   safelanes_destroyTmp();
 #if DEBUGGING
    assert( cholmod_check_triplet( stiff, &C) );
 #endif
-}
-
-
-/**
- * @brief Tears down the stiffness matrix.
- */
-static void safelanes_destroyStiff (void)
-{
-   cholmod_free_triplet( &stiff, &C );
 }
 
 
@@ -436,7 +439,7 @@ static void safelanes_initQtQ (void)
    int i, *qp, *qi;
    double *qv;
 
-   safelanes_destroyQtQ();
+   cholmod_free_sparse( &QtQ, &C );
    Q = cholmod_allocate_sparse( array_size(vertex_stack), array_size(edge_stack), 2*array_size(edge_stack),
          SORTED, PACKED, STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
    qp = Q->p;
@@ -459,11 +462,44 @@ static void safelanes_initQtQ (void)
 
 
 /**
- * @brief Tears down the (Q*)Q matrix.
+ * @brief Sets up the fluxes matrix f~.
  */
-static void safelanes_destroyQtQ (void)
+static void safelanes_initFTilde (void)
 {
-   cholmod_free_sparse( &QtQ, &C );
+   cholmod_sparse *eye = cholmod_speye( array_size(vertex_stack), array_size(vertex_stack), CHOLMOD_REAL, &C );
+   cholmod_sparse *sp = cholmod_submatrix( eye, NULL, -1, tmp_planet_indices, array_size(tmp_planet_indices), 1, SORTED, &C );
+   cholmod_free_dense( &ftilde, &C );
+   ftilde = cholmod_sparse_to_dense( sp, &C );
+   cholmod_free_sparse( &sp, &C );
+   cholmod_free_sparse( &eye, &C );
+}
+
+
+/**
+ * @brief Sets up the PPl matrices appearing in the gradient formula.
+ */
+static void safelanes_initPPl (void)
+{
+   cholmod_triplet *P;
+   int np, i, j;
+   int *pi, *pj;
+   double *pv;
+
+   np = array_size(tmp_planet_indices);
+   P = cholmod_allocate_triplet( np, np*np, np*(np-1), STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
+   pi = P->i; pj = P->j; pv = P->x;
+   for (i=0; i<np; i++)
+      for (j=0; j<i; j++) {
+         *pi++ = i; *pj++ = i*np + j; *pv++ = +1;
+         *pi++ = j; *pj++ = i*np + j; *pv++ = -1;
+      }
+#if DEBUGGING
+   assert( cholmod_check_triplet( P, &C) );
+#endif
+
+   // TODO
+
+   cholmod_free_triplet( &P, &C );
 }
 
 

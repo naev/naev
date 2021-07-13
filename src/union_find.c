@@ -29,7 +29,9 @@ void unionfind_init( UnionFind* uf, int n )
 void unionfind_free( UnionFind* uf )
 {
    array_free( uf->parent );
+   uf->parent = NULL;
    array_free( uf->rank );
+   uf->rank = NULL;
 }
 
 
