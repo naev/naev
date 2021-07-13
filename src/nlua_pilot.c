@@ -104,6 +104,7 @@ static int pilotL_setNoRender( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
+static int pilotL_setBribed( lua_State *L );
 static int pilotL_getColour( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
 static int pilotL_flags( lua_State *L );
@@ -233,6 +234,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
    { "setHilight", pilotL_setHilight },
+   { "setBribed", pilotL_setBribed },
    { "setActiveBoard", pilotL_setActiveBoard },
    { "setNoDeath", pilotL_setNoDeath },
    { "disable", pilotL_disable },
@@ -2344,6 +2346,21 @@ static int pilotL_setVisible( lua_State *L )
 static int pilotL_setHilight( lua_State *L )
 {
    return pilotL_setFlagWrapper( L, PILOT_HILIGHT );
+}
+
+
+/**
+ * @brief Makes pilot act as if bribed by the player.
+ *
+ * @usage p:setBribed( true )
+ *
+ *    @luatparam Pilot p Pilot to set bribed status of.
+ *    @luatparam[opt=true] boolean state State to set bribed.
+ * @luafunc setHilight
+ */
+static int pilotL_setBribed( lua_State *L )
+{
+   return pilotL_setFlagWrapper( L, PILOT_BRIBED );
 }
 
 
