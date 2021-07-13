@@ -84,8 +84,9 @@ static Edge *edge_stack;        /**< Array (array.h): Everything eligible to be 
 static int *sys_to_first_edge;  /**< Array (array.h): For each system index, the id of its first edge, + sentinel. */
 static Faction *faction_stack;  /**< Array (array.h): The faction IDs that can build lanes. */
 static int *lane_faction;       /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
-static FactionMask *lane_fmask; /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
-static int *tmp_planet_indices; /**< Array (array.h): The vertex indices for planets. Used to initialize "ftilde", "PPl". */
+static FactionMask *lane_fmask; /**< Array (array.h): Per edge, the set of factions that may build it. */
+static double **presence_budget;/**< Array (array.h): Per faction, per system, the amount of presence not yet spent on lanes. */
+static int *tmp_pnt_to_vertex;  /**< Array (array.h): The vertex indices for planets. Used to initialize "ftilde", "PPl". */
 static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to initialize "stiff". */
 static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to initialize "stiff". */
 static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to initialize "stiff". */
@@ -308,14 +309,14 @@ static void safelanes_initStacks_vertex (void)
    vertex_stack = array_create( Vertex );
    sys_to_first_vertex = array_create( int );
    array_push_back( &sys_to_first_vertex, 0 );
-   tmp_planet_indices = array_create( int );
+   tmp_pnt_to_vertex = array_create( int );
    tmp_jump_edges = array_create( Edge );
    for (system=0; system<array_size(systems_stack); system++) {
       for (i=0; i<array_size(systems_stack[system].planets); i++) {
          p = systems_stack[system].planets[i];
          if (p->real && p->presenceAmount) {
             Vertex v = {.system = system, .type = VERTEX_PLANET, .index = i};
-            array_push_back( &tmp_planet_indices, array_size(vertex_stack) );
+            array_push_back( &tmp_pnt_to_vertex, array_size(vertex_stack) );
             array_push_back( &vertex_stack, v );
          }
       }
@@ -389,17 +390,26 @@ static void safelanes_initStacks_edge (void)
  */
 static void safelanes_initStacks_faction (void)
 {
-   int *faction_all;
+   int i, s, *faction_all;
+   const StarSystem *systems_stack;
 
    faction_stack = array_create( Faction );
    faction_all = faction_getAll();
-   for (int i=0; i<array_size(faction_all); i++) {
+   for (i=0; i<array_size(faction_all); i++) {
       Faction f = {.id = i, .lane_length_per_presence = faction_lane_length_per_presence(i)};
       if (f.lane_length_per_presence > 0.)
          array_push_back( &faction_stack, f );
    }
    array_free( faction_all );
    array_shrink( &faction_stack );
+
+   presence_budget = array_create_size( double*, array_size(faction_stack) );
+   systems_stack = system_getAll();
+   for (i=0; i<array_size(faction_stack); i++) {
+      presence_budget[i] = array_create_size( double, array_size(systems_stack) );
+      for (s=0; s<array_size(systems_stack); s++)
+         presence_budget[i][s] = system_getPresence( &systems_stack[s], faction_stack[i].id );
+   }
 }
 
 
@@ -432,6 +442,7 @@ static void safelanes_initStacks_anchor (void)
  */
 static void safelanes_destroyStacks (void)
 {
+   int i;
    safelanes_destroyTmp();
    array_free( vertex_stack );
    vertex_stack = NULL;
@@ -441,6 +452,10 @@ static void safelanes_destroyStacks (void)
    edge_stack = NULL;
    array_free( sys_to_first_edge );
    sys_to_first_edge = NULL;
+   for (i=0; i<array_size(presence_budget); i++)
+      array_free( presence_budget[i] );
+   array_free( presence_budget );
+   presence_budget = NULL;
    array_free( faction_stack );
    faction_stack = NULL;
    array_free( lane_faction );
@@ -456,16 +471,14 @@ static void safelanes_destroyStacks (void)
 static void safelanes_destroyTmp (void)
 {
    unionfind_free( &tmp_sys_uf );
-   array_free( tmp_planet_indices );
-   tmp_planet_indices = NULL;
+   array_free( tmp_pnt_to_vertex );
+   tmp_pnt_to_vertex = NULL;
    array_free( tmp_jump_edges );
    tmp_jump_edges = NULL;
    array_free( tmp_edge_conduct );
    tmp_edge_conduct = NULL;
    array_free( tmp_anchor_vertices );
    tmp_anchor_vertices = NULL;
-   array_free( lane_faction );
-   lane_faction = NULL;
 }
 
 
@@ -557,7 +570,7 @@ static void safelanes_initQtQ (void)
 static void safelanes_initFTilde (void)
 {
    cholmod_sparse *eye = cholmod_speye( array_size(vertex_stack), array_size(vertex_stack), CHOLMOD_REAL, &C );
-   cholmod_sparse *sp = cholmod_submatrix( eye, NULL, -1, tmp_planet_indices, array_size(tmp_planet_indices), 1, SORTED, &C );
+   cholmod_sparse *sp = cholmod_submatrix( eye, NULL, -1, tmp_pnt_to_vertex, array_size(tmp_pnt_to_vertex), 1, SORTED, &C );
    cholmod_free_dense( &ftilde, &C );
    ftilde = cholmod_sparse_to_dense( sp, &C );
    cholmod_free_sparse( &sp, &C );
@@ -577,7 +590,7 @@ static void safelanes_initPPl (void)
    double *pv;
    Planet *pnti, *pntj;
 
-   np = array_size(tmp_planet_indices);
+   np = array_size(tmp_pnt_to_vertex);
 #define MULTI_INDEX( i, j ) ((i*(i-1))/2 + j)
    P = cholmod_allocate_triplet( np, MULTI_INDEX(np,0), np*(np-1), STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
    pi = P->i; pj = P->j; pv = P->x;
@@ -599,14 +612,14 @@ static void safelanes_initPPl (void)
    for (k=0; k<array_size(faction_stack); k++)
       array_push_back( &D, cholmod_allocate_dense( 1, MULTI_INDEX(np,0), 1, CHOLMOD_REAL, &C ) );
 
-   for (i=0; i<array_size(tmp_planet_indices); i++) {
-      sysi = vertex_stack[tmp_planet_indices[i]].system;
-      pnti = planet_getIndex( vertex_stack[tmp_planet_indices[i]].index );
+   for (i=0; i<array_size(tmp_pnt_to_vertex); i++) {
+      sysi = vertex_stack[tmp_pnt_to_vertex[i]].system;
+      pnti = planet_getIndex( vertex_stack[tmp_pnt_to_vertex[i]].index );
       facti = FACTION_ID_TO_INDEX( pnti->faction );
       for (j=0; j<i; j++) {
-         sysj = vertex_stack[tmp_planet_indices[j]].system;
+         sysj = vertex_stack[tmp_pnt_to_vertex[j]].system;
          if (unionfind_find( &tmp_sys_uf, sysi ) == unionfind_find( &tmp_sys_uf, sysj )) {
-            pntj = planet_getIndex( vertex_stack[tmp_planet_indices[i]].index );
+            pntj = planet_getIndex( vertex_stack[tmp_pnt_to_vertex[i]].index );
             factj = FACTION_ID_TO_INDEX( pntj->faction );
             if (facti >= 0)
                ((double*)D[facti]->x)[MULTI_INDEX(i,j)] += pnti->presenceAmount;
@@ -640,7 +653,7 @@ static void safelanes_initPPl (void)
 static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 {
    (void) Lambda_tilde; // TODO
-   int fi, *facind_opts, *edgeind_opts, si;
+   int ei, fi, fii, *facind_opts, *edgeind_opts, si;
    double *facind_vals;
    StarSystem *sys;
 
@@ -654,17 +667,24 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 
    for (si=0; si<array_size(sys_to_first_vertex)-1; si++)
    {
-      // TODO: bail early if all edges in system have lane_faction set
+      for (ei=sys_to_first_edge[si]; ei<sys_to_first_edge[1+si]; ei++)
+         if (lane_faction[ei] == 0)
+            break;
+      if (ei == sys_to_first_edge[1+si])
+         continue; /* No unclaimed edges here. */
+
       /* Factions with most presence here choose first. */
       sys = system_getIndex( si );
       for (fi=0; fi<array_size(faction_stack); fi++)
-         facind_vals[fi] = -system_getPresence( sys, faction_stack[fi].id ); /* TODO: Is this better, or reserve_presence? */
+         facind_vals[fi] = -system_getPresence( sys, faction_stack[fi].id ); /* TODO: Is this better, or presence_budget? */
       cmp_key_ref = facind_vals;
       qsort( facind_opts, array_size(faction_stack), sizeof(int), cmp_key );
-      // TODO For each faction:
+
+      for (fii=0; fii<array_size(faction_stack); fii++) {
          // TODO Enumerate the candidate edge-indices.
-         // TODO If none (and bailing early as above), zap reserve_presence.
-         // TODO Pick the candidate ei with best (grad phi)/L, and activate (boosting stiffness, dropping reserve_presence)
+         // TODO If none (and bailing early as above), zap presence_budget.
+         // TODO Pick the candidate ei with best (grad phi)/L, and activate (boosting stiffness, dropping presence_budget)
+      }
    }
 
    array_free( edgeind_opts );
