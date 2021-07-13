@@ -115,6 +115,7 @@ jobs:
               -Dndata_path=bin \
               --cross-file='source/utils/build/windows_cross_mxe.ini' \
               --buildtype=release \
+              --force-fallback-for=glpk,SuiteSparse \
               -Dnightly=true \
               -Db_lto=true \
               -Dauto_features=enabled \
