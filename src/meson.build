@@ -116,6 +116,7 @@ source = files(
    'threadpool.c',
    'toolkit.c',
    'unidiff.c',
+   'union_find.c',
    'utf8.c',
    'weapon.c',
    'tk/widget/input.c',
@@ -361,6 +362,7 @@ headers = files(
    'toolkit.h',
    'unidata.h',
    'unidiff.h',
+   'union_find.h',
    'utf8.h',
    'weapon.h'
 )
