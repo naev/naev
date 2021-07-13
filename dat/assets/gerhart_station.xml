@@ -5,8 +5,8 @@
   <y>-6019.003188</y>
  </pos>
  <GFX>
-  <space>station-cylinder.webp</space>
-  <exterior>traderoom.webp</exterior>
+  <space>zalek_station2.webp</space>
+  <exterior>zalek_station2.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
