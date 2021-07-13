@@ -44,7 +44,7 @@ enum {
    SORTED                             = 1,              /**< a named bool */
    UNPACKED                           = 0,              /**< a named bool */
    PACKED                             = 1,              /**< a named bool */
-   MODE_NUMERICAL                     = 0,              /**< yet another CHOLMOD magic number! */
+   MODE_NUMERICAL                     = 1,              /**< yet another CHOLMOD magic number! */
 };
 
 /*
@@ -93,7 +93,7 @@ static UnionFind tmp_sys_uf;    /**< The partition of {system indices} into conn
 static cholmod_triplet *stiff;  /**< K matrix, UT triplets: internal edges (E*3), implicit jump connections, anchor conditions. */
 static cholmod_sparse *QtQ;     /**< (Q*)Q where Q is the ExV difference matrix. */
 static cholmod_dense *ftilde;   /**< Fluxes (a bunch of rhs columns in the KU=F problem). */
-static cholmod_sparse **PPl;    /**< Array: (array.h): For each builder faction, The (P*)P in: grad_u(phi)=(Q*)Q U~ (P*)P. */
+static cholmod_dense **PPl;     /**< Array: (array.h): For each builder faction, The (P*)P in: grad_u(phi)=(Q*)Q U~ (P*)P. */
 
 /*
  * Prototypes.
@@ -112,6 +112,7 @@ static void safelanes_initPPl (void);
 static int safelanes_triangleTooFlat( const Vector2d* m, const Vector2d* n, const Vector2d* p, double lmn );
 static int vertex_faction( int i );
 static const Vector2d* vertex_pos( int i );
+static inline int FACTION_ID_TO_INDEX( int id );
 static inline FactionMask MASK_ANY_FACTION();
 static inline FactionMask MASK_ONE_FACTION( int id );
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 );
@@ -142,7 +143,7 @@ void safelanes_init (void)
 void safelanes_destroy (void)
 {
    for (int i=0; i<array_size(PPl); i++)
-      cholmod_free_sparse( &PPl[i], &C );
+      cholmod_free_dense( &PPl[i], &C );
    array_free( PPl );
    cholmod_free_dense( &ftilde, &C );
    cholmod_free_sparse( &QtQ, &C );
@@ -481,24 +482,64 @@ static void safelanes_initFTilde (void)
 static void safelanes_initPPl (void)
 {
    cholmod_triplet *P;
-   int np, i, j;
-   int *pi, *pj;
+   cholmod_dense **D;
+   cholmod_sparse *sp, *PPl_sp;
+   int np, i, j, k, facti, factj, *pi, *pj, sysi, sysj;
    double *pv;
+   Planet *pnti, *pntj;
 
    np = array_size(tmp_planet_indices);
-   P = cholmod_allocate_triplet( np, np*np, np*(np-1), STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
+#define MULTI_INDEX( i, j ) (i*np + j)
+   P = cholmod_allocate_triplet( np, MULTI_INDEX(np,0), np*(np-1), STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
    pi = P->i; pj = P->j; pv = P->x;
    for (i=0; i<np; i++)
       for (j=0; j<i; j++) {
-         *pi++ = i; *pj++ = i*np + j; *pv++ = +1;
-         *pi++ = j; *pj++ = i*np + j; *pv++ = -1;
+         *pi++ = i; *pj++ = MULTI_INDEX(i,j); *pv++ = +1;
+         *pi++ = j; *pj++ = MULTI_INDEX(i,j); *pv++ = -1;
       }
 #if DEBUGGING
    assert( cholmod_check_triplet( P, &C) );
 #endif
 
-   // TODO
+   for (k=0; i<array_size(PPl); k++)
+      cholmod_free_dense( &PPl[k], &C );
+   array_free( PPl );
 
+   D = array_create_size( cholmod_dense*, array_size(faction_stack) );
+   for (k=0; k<array_size(faction_stack); k++)
+      array_push_back( &D, cholmod_allocate_dense( 1, MULTI_INDEX(np,0), 1, CHOLMOD_REAL, &C ) );
+
+   for (i=0; i<array_size(tmp_planet_indices); i++) {
+      sysi = vertex_stack[tmp_planet_indices[i]].system;
+      pnti = planet_getIndex( vertex_stack[tmp_planet_indices[i]].index );
+      facti = FACTION_ID_TO_INDEX( pnti->faction );
+      for (j=0; j<i; j++) {
+         sysj = vertex_stack[tmp_planet_indices[j]].system;
+         if (unionfind_find( &tmp_sys_uf, sysi ) == unionfind_find( &tmp_sys_uf, sysj )) {
+            pntj = planet_getIndex( vertex_stack[tmp_planet_indices[i]].index );
+            factj = FACTION_ID_TO_INDEX( pntj->faction );
+            if (facti >= 0)
+               ((double*)D[facti]->x)[MULTI_INDEX(i,j)] += pnti->presenceAmount;
+            if (factj >= 0)
+               ((double*)D[factj]->x)[MULTI_INDEX(i,j)] += pntj->presenceAmount;
+         }
+      }
+   }
+
+   PPl = array_create_size( cholmod_dense*, array_size(faction_stack) );
+   for (k=0; k<array_size(faction_stack); k++) {
+      sp = cholmod_triplet_to_sparse( P, 0, &C );
+      cholmod_scale( D[k], CHOLMOD_COL, sp, &C );
+      PPl_sp = cholmod_aat( sp, NULL, 0, MODE_NUMERICAL, &C );
+      array_push_back( &PPl, cholmod_sparse_to_dense( PPl_sp, &C ) );
+      cholmod_free_sparse( &PPl_sp, &C );
+      cholmod_free_sparse( &sp, &C );
+   }
+#undef MULTI_INDEX
+
+   for (k=0; i<array_size(D); k++)
+      cholmod_free_dense( &D[k], &C );
+   array_free( D );
    cholmod_free_triplet( &P, &C );
 }
 
@@ -551,6 +592,16 @@ static const Vector2d* vertex_pos( int i )
 }
 
 
+/** @brief Return the faction_stack index corresponding to a faction ID, or -1. */
+static inline int FACTION_ID_TO_INDEX( int id )
+{
+   for (int i=0; i<array_size(faction_stack) && faction_stack[i].id <= id; i++)
+      if (faction_stack[i].id == id)
+         return i;
+   return -1;
+}
+
+
 /** @brief Return a mask matching any faction. */
 static inline FactionMask MASK_ANY_FACTION()
 {
@@ -560,10 +611,8 @@ static inline FactionMask MASK_ANY_FACTION()
 /** @brief A mask giving this faction (NOT faction_stack index) exclusive rights to build, if it's a lane-building faction. */
 static inline FactionMask MASK_ONE_FACTION( int id )
 {
-   for (int i=0; i<array_size(faction_stack) && faction_stack[i].id <= id; i++)
-      if (faction_stack[i].id == id)
-         return ((FactionMask)1)<<i;
-   return MASK_ANY_FACTION();
+   int i = FACTION_ID_TO_INDEX( id );
+   return i>0 ? ((FactionMask)1)<<i : MASK_ANY_FACTION();
 }
 
 /** @brief A mask with appropriate lane-building rights given one faction ID owning each endpoint. */
