@@ -66,6 +66,7 @@ system_deps = [
 libcholmod = static_library(
    'cholmod',
    source,
+   c_args: ['-DNCAMD', '-DNPARTITION', '-DNSUPERNODAL'],
    dependencies: system_deps,
    include_directories: include
 )
