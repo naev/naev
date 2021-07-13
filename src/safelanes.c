@@ -94,6 +94,7 @@ static cholmod_sparse *QtQ;     /**< (Q*)Q where Q is the ExV difference matrix.
 static cholmod_dense *ftilde;   /**< Fluxes (bunch of F columns in the KU=F problem). */
 static cholmod_dense *utilde;   /**< Potentials (bunch of U columns in the KU=F problem). */
 static cholmod_dense **PPl;     /**< Array: (array.h): For each builder faction, The (P*)P in: grad_u(phi)=(Q*)Q U~ (P*)P. */
+static double* cmp_key_ref;     /**< To qsort() a list of indices by table value, point this at your table and use cmp_key. */
 
 /*
  * Prototypes.
@@ -121,6 +122,7 @@ static inline int FACTION_ID_TO_INDEX( int id );
 static inline FactionMask MASK_ANY_FACTION();
 static inline FactionMask MASK_ONE_FACTION( int id );
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 );
+static int cmp_key( const void* p1, const void* p2 );
 
 /**
  * @brief Like array_push_back( a, Edge{v0, v1} ), but achievable in C. :-P
@@ -630,6 +632,44 @@ static void safelanes_initPPl (void)
 static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 {
    (void) Lambda_tilde; // TODO
+   int fi, *facind_opts, *edgeind_opts, si;
+   double *facind_vals;
+   StarSystem *sys;
+
+   edgeind_opts = array_create( int );
+   facind_opts = array_create_size( int, array_size(faction_stack) );
+   facind_vals = array_create_size( double, array_size(faction_stack) );
+   for (fi=0; fi<array_size(faction_stack); fi++) {
+      array_push_back( &facind_opts, fi );
+      array_push_back( &facind_vals, 0 );
+   }
+
+   for (si=0; si<array_size(sys_to_first_vertex)-1; si++)
+   {
+      // TODO: bail early if all edges in system have lane_faction set
+      /* Factions with most presence here choose first. */
+      sys = system_getIndex( si );
+      for (fi=0; fi<array_size(faction_stack); fi++)
+         facind_vals[fi] = -system_getPresence( sys, faction_stack[fi].id ); /* TODO: Is this better, or reserve_presence? */
+      cmp_key_ref = facind_vals;
+      qsort( facind_opts, array_size(faction_stack), sizeof(int), cmp_key );
+      // TODO For each faction:
+         // TODO Enumerate the candidate edge-indices.
+         // TODO If none (and bailing early as above), zap reserve_presence.
+         // TODO Pick the candidate ei with best (grad phi)/L, and activate (boosting stiffness, dropping reserve_presence)
+   }
+
+   array_free( edgeind_opts );
+   array_free( facind_vals );
+   array_free( facind_opts );
+}
+
+
+/** @brief It's a qsort comparator. Set the cmp_key_ref pointer prior to use, or else. */
+static int cmp_key( const void* p1, const void* p2 )
+{
+   double d = cmp_key_ref[*(int*)p1] - cmp_key_ref[*(int*)p2];
+   return SIGN( d );
 }
 
 
