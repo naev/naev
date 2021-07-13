@@ -204,6 +204,9 @@ SafeLane* safelanes_get (int faction, const StarSystem* system)
  */
 void safelanes_recalculate (void)
 {
+   Uint32 time;
+
+   time = SDL_GetTicks();
    safelanes_initStacks();
    safelanes_initOptimizer();
    for (int i=0; i<MAX_ITERATIONS; i++)
@@ -211,6 +214,8 @@ void safelanes_recalculate (void)
          break;
    safelanes_destroyOptimizer();
    /* Stacks remain available for queries. */
+   time = SDL_GetTicks() - time;
+   DEBUG( _("Calculated patrols in %f seconds"), time/1000. );
 }
 
 
