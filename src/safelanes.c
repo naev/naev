@@ -113,13 +113,14 @@ static void safelanes_destroyOptimizer (void);
 static void safelanes_destroyStacks (void);
 static void safelanes_destroyTmp (void);
 static void safelanes_initStiff (void);
-/*static*/ double safelanes_edgeConductivity ( int i );
+static double safelanes_initialConductivity ( int ei );
+static void safelanes_updateConductivity ( int ei_activated );
 static void safelanes_initQtQ (void);
 static void safelanes_initFTilde (void);
 static void safelanes_initPPl (void);
 static int safelanes_triangleTooFlat( const Vector2d* m, const Vector2d* n, const Vector2d* p, double lmn );
-static int vertex_faction( int i );
-static const Vector2d* vertex_pos( int i );
+static int vertex_faction( int vi );
+static const Vector2d* vertex_pos( int vi );
 static inline int FACTION_ID_TO_INDEX( int id );
 static inline FactionMask MASK_ANY_FACTION();
 static inline FactionMask MASK_ONE_FACTION( int id );
@@ -524,12 +525,26 @@ static void safelanes_initStiff (void)
 
 
 /**
- * @brief Returns the conductivity (1/length) value for the ith edge.
- * These are stored in the stiffness matrix; \see safelanes_initStiff.
+ * @brief Returns the initial conductivity value (1/length) for edge ei.
+ * The live value is stored in the stiffness matrix; \see safelanes_initStiff above.
+ * When a lane is activated, its conductivity is updated to (1+ALPHA)/length.
  */
-/*static*/ double safelanes_edgeConductivity ( int i )
+static double safelanes_initialConductivity ( int ei )
 {
-   return ((double*)stiff->x)[3*i];
+   double *sv = stiff->x;
+   return lane_faction[ei] ? sv[3*ei]/(1+ALPHA) : sv[3*ei];
+}
+
+
+/**
+ * @brief Updates the stiffness matrix to account for the given edge being activated.
+ * \see safelanes_initStiff.
+ */
+static void safelanes_updateConductivity ( int ei_activated )
+{
+   double *sv = stiff->x;
+   for (int i=3*ei_activated; i<3*(ei_activated+1); i++)
+      sv[i] *= 1+ALPHA;
 }
 
 
@@ -652,7 +667,6 @@ static void safelanes_initPPl (void)
  */
 static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 {
-   (void) Lambda_tilde; // TODO
    int ei, fi, fii, *facind_opts, *edgeind_opts, si;
    double *facind_vals;
    StarSystem *sys;
@@ -667,23 +681,44 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 
    for (si=0; si<array_size(sys_to_first_vertex)-1; si++)
    {
+      /** FIXME begin premature optimization? */
       for (ei=sys_to_first_edge[si]; ei<sys_to_first_edge[1+si]; ei++)
          if (lane_faction[ei] == 0)
             break;
       if (ei == sys_to_first_edge[1+si])
          continue; /* No unclaimed edges here. */
+      /** FIXME end premature optimization? */
 
       /* Factions with most presence here choose first. */
       sys = system_getIndex( si );
       for (fi=0; fi<array_size(faction_stack); fi++)
-         facind_vals[fi] = -system_getPresence( sys, faction_stack[fi].id ); /* TODO: Is this better, or presence_budget? */
+         facind_vals[fi] = -system_getPresence( sys, faction_stack[fi].id ); /* FIXME: Is this better, or presence_budget? */
       cmp_key_ref = facind_vals;
       qsort( facind_opts, array_size(faction_stack), sizeof(int), cmp_key );
 
       for (fii=0; fii<array_size(faction_stack); fii++) {
-         // TODO Enumerate the candidate edge-indices.
-         // TODO If none (and bailing early as above), zap presence_budget.
-         // TODO Pick the candidate ei with best (grad phi)/L, and activate (boosting stiffness, dropping presence_budget)
+         fi = facind_opts[fii];
+         if (presence_budget[fi][si] <= 0)
+            continue;
+
+         array_resize( &edgeind_opts, 0 );
+         for (ei=sys_to_first_edge[si]; ei<sys_to_first_edge[1+si]; ei++)
+            if (!lane_faction[ei]
+                && presence_budget[fi][si] >= 1 / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence
+                && (lane_fmask[ei] & (1<<fi)))
+               array_push_back( &edgeind_opts, ei );
+
+         if (array_size(edgeind_opts) == 0) {
+            presence_budget[fi][si] = -1;  /* Nothing to build here! Tell ourselves to stop trying. */
+            continue;
+         }
+
+         (void) Lambda_tilde;  // TODO use this to
+         ei = edgeind_opts[0]; // TODO actually pick the best edge
+
+         presence_budget[fi][si] -= 1 / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence;
+         safelanes_updateConductivity( ei );
+         lane_faction[ ei ] = faction_stack[fi].id;
       }
    }
 
@@ -718,12 +753,12 @@ static int safelanes_triangleTooFlat( const Vector2d* m, const Vector2d* n, cons
 /**
  * @brief Return the vertex's owning faction (ID, not faction_stack index), or -1 if not applicable.
  */
-static int vertex_faction( int i )
+static int vertex_faction( int vi )
 {
-   const StarSystem *sys = system_getIndex(vertex_stack[i].system);
-   switch (vertex_stack[i].type) {
+   const StarSystem *sys = system_getIndex(vertex_stack[vi].system);
+   switch (vertex_stack[vi].type) {
       case VERTEX_PLANET:
-         return sys->planets[vertex_stack[i].index]->faction;
+         return sys->planets[vertex_stack[vi].index]->faction;
       case VERTEX_JUMP:
          return -1;
       default:
@@ -735,14 +770,14 @@ static int vertex_faction( int i )
 /**
  * @brief Return the vertex's coordinates within its system (by reference since our vec2's are fat).
  */
-static const Vector2d* vertex_pos( int i )
+static const Vector2d* vertex_pos( int vi )
 {
-   const StarSystem *sys = system_getIndex(vertex_stack[i].system);
-   switch (vertex_stack[i].type) {
+   const StarSystem *sys = system_getIndex(vertex_stack[vi].system);
+   switch (vertex_stack[vi].type) {
       case VERTEX_PLANET:
-         return &sys->planets[vertex_stack[i].index]->pos;
+         return &sys->planets[vertex_stack[vi].index]->pos;
       case VERTEX_JUMP:
-         return &sys->jumps[vertex_stack[i].index].pos;
+         return &sys->jumps[vertex_stack[vi].index].pos;
       default:
          ERR( _("Invalid vertex type.") );
    }
