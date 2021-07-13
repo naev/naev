@@ -29,12 +29,11 @@
 
 /*
  * Global parameters.
- * FIXME: make static as compiler learns to shut up.
  */
 static const double ALPHA                  = 9;         /**< Lane efficiency parameter. */
 static const double JUMP_CONDUCTIVITY      = .001;      /**< Conductivity value for inter-system jump-point connections. */
-/*static*/ const double CONVERGENCE_THRESHOLD  = 1e-12;     /**< Stop optimizing after a relative change of U~ this small. */
-/*static*/ const double MAX_ITERATIONS         = 20;        /**< Stop optimizing after this many iterations, at most. */
+static const double CONVERGENCE_THRESHOLD  = 1e-12;     /**< Stop optimizing after a relative change of U~ this small. */
+static const double MAX_ITERATIONS         = 20;        /**< Stop optimizing after this many iterations, at most. */
 static const double MIN_ANGLE              = M_PI/18;   /**< Path triangles can't be more acute. */
 enum {
    STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
@@ -98,6 +97,7 @@ static cholmod_dense **PPl;     /**< Array: (array.h): For each builder faction,
 /*
  * Prototypes.
  */
+static double safelanes_changeFromOptimizer (void);
 static void safelanes_initStacks (void);
 static void safelanes_initStacks_edge (void);
 static void safelanes_initStacks_faction (void);
@@ -205,7 +205,19 @@ void safelanes_recalculate (void)
    safelanes_initFTilde();
    safelanes_initPPl();
    safelanes_destroyTmp();
-   // TODO
+
+   for (int i=0; i<MAX_ITERATIONS; i++)
+      if (safelanes_changeFromOptimizer() <= CONVERGENCE_THRESHOLD)
+         break;
+}
+
+
+/**
+ * @brief Run a round of optimization, and return the relative change to U~.
+ */
+static double safelanes_changeFromOptimizer (void)
+{
+   return 0; // TODO
 }
 
 
