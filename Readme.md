@@ -24,6 +24,7 @@ Naev requires the following:
 * glpk
 * libpng
 * OpenAL
+* OpenBLAS
 * libvorbis >= 1.2.2
 * binutils
 * intltool
@@ -50,7 +51,7 @@ Warning: this procedure is inadequate if you want to build a Naev.app that you c
 
 Dependencies may be installed using [Homebrew](https://brew.sh):
 ```
-brew install freetype gettext glpk intltool libpng libvorbis luajit meson openal-soft physfs pkg-config sdl2_image suite-sparse
+brew install freetype gettext glpk intltool libpng libvorbis luajit meson openal-soft openblas physfs pkg-config sdl2_image suite-sparse
 ```
 Building the latest available code in git is recommended, but to build version 0.8 you can add `sdl2_mixer` (and `autoconf-archive` and `automake` if using Autotools to build).
 

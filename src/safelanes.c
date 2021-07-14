@@ -11,6 +11,16 @@
 /** @cond */
 #include <math.h>
 
+#if HAVE_OPENBLAS_CBLAS_H
+#include <openblas/cblas.h>
+#elif HAVE_CBLAS_OPENBLAS_H
+#include <cblas_openblas.h>
+#elif HAVE_CBLAS_HYPHEN_OPENBLAS_H
+#include <cblas-openblas.h>
+#else
+#include <cblas.h>
+#endif
+
 #ifdef HAVE_SUITESPARSE_CHOLMOD_H
 #include <suitesparse/cholmod.h>
 #else
@@ -835,12 +845,6 @@ static inline FactionMask MASK_COMPROMISE( int id1, int id2 )
 /** @brief Return the Frobenius norm sqrt(Tr(m* m)). Matrix form is restricted to stuff we care about. */
 static double frobenius_norm( cholmod_dense* m )
 {
-   double x, n2 = 0;
-   assert( m->xtype == CHOLMOD_REAL );
-   for (size_t i = 0; i < m->nrow; i++)
-      for (size_t j = 0; j < m->ncol; j++) {
-         x = ((double*)m->x)[i+j*m->d];
-         n2 += x*x;
-      }
-   return sqrt( n2 );
+   assert( m->xtype == CHOLMOD_REAL && m->d == m->nrow );
+   return cblas_dnrm2( m->nrow * m->ncol, m->x, 1 );
 }

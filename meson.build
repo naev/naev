@@ -157,7 +157,6 @@ if buildExec.disabled() == false
 
    # TODO: These packages may require the same nonsense, in terms of checking for suitesparse/foo.h headers.
       naev_deps += cc.find_library('amd', required: true)
-      naev_deps += cc.find_library('blas', required: false)
       naev_deps += cc.find_library('ccolamd', required: false)
       naev_deps += cc.find_library('colamd', required: true)
       naev_deps += cc.find_library('lapack', required: false)
@@ -166,6 +165,9 @@ if buildExec.disabled() == false
    else
       naev_deps += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
    endif
+
+   message('IMPORTANT NOTE ABOUT BLAS: Any working BLAS should suffice, but Meson cannot reliably pick one on all platforms, so we specify "openblas". Distros like to put the cblas header in random locations, so beware and get in touch if we fail to find yours. As of July 2021, Arch Linux users must install aur/openblas-lapack to avoid linker errors; see here: https://bugs.archlinux.org/task/59046')
+   naev_deps += cc.find_library('openblas', required: true)
 
    ### Soft deps (required: false)
 
@@ -196,10 +198,13 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
+   config_data.set10('HAVE_CBLAS_OPENBLAS_H', cc.has_header('cblas_openblas.h'))
+   config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.has_header('cblas-openblas.h'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
+   config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.has_header('openblas/cblas.h'))
    config_data.set10('HAVE_STRCASESTR', cc.has_function('strcasestr'))
    # strndup() detectin must work around this bug: https://github.com/mesonbuild/meson/issues/3672
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
