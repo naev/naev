@@ -396,25 +396,26 @@ static void safelanes_initStacks_edge (void)
  */
 static void safelanes_initStacks_faction (void)
 {
-   int i, s, *faction_all;
+   int fi, f, s, *faction_all;
    const StarSystem *systems_stack;
 
    faction_stack = array_create( Faction );
    faction_all = faction_getAll();
-   for (i=0; i<array_size(faction_all); i++) {
-      Faction f = {.id = i, .lane_length_per_presence = faction_lane_length_per_presence(i)};
-      if (f.lane_length_per_presence > 0.)
-         array_push_back( &faction_stack, f );
+   for (fi=0; fi<array_size(faction_all); fi++) {
+      f = faction_all[fi];
+      Faction rec = {.id = f, .lane_length_per_presence = faction_lane_length_per_presence(f)};
+      if (rec.lane_length_per_presence > 0.)
+         array_push_back( &faction_stack, rec );
    }
    array_free( faction_all );
    array_shrink( &faction_stack );
 
    presence_budget = array_create_size( double*, array_size(faction_stack) );
    systems_stack = system_getAll();
-   for (i=0; i<array_size(faction_stack); i++) {
-      presence_budget[i] = array_create_size( double, array_size(systems_stack) );
+   for (fi=0; fi<array_size(faction_stack); fi++) {
+      presence_budget[fi] = array_create_size( double, array_size(systems_stack) );
       for (s=0; s<array_size(systems_stack); s++)
-         presence_budget[i][s] = system_getPresence( &systems_stack[s], faction_stack[i].id );
+         presence_budget[fi][s] = system_getPresence( &systems_stack[s], faction_stack[fi].id );
    }
 }
 
@@ -672,8 +673,8 @@ static void safelanes_initPPl (void)
  */
 static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 {
-   int ei, fi, fii, *facind_opts, *edgeind_opts, si;
-   double *facind_vals;
+   int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si;
+   double *facind_vals, score, score_best;
    StarSystem *sys;
 
    edgeind_opts = array_create( int );
@@ -718,12 +719,20 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
             continue;
          }
 
-         (void) Lambda_tilde;  // TODO use this to
-         ei = edgeind_opts[0]; // TODO actually pick the best edge
+         score_best = -HUGE_VAL;
+         for (eii=0; eii<array_size(edgeind_opts); eii++) {
+            ei = edgeind_opts[eii];
+            score = /* TODO this is a fake placeholder formula */ safelanes_initialConductivity(ei);
+            (void) Lambda_tilde;  // TODO use this instead
+            if (score > score_best) {
+               ei_best = ei;
+               score_best = score;
+            }
+         }
 
-         presence_budget[fi][si] -= 1 / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence;
-         safelanes_updateConductivity( ei );
-         lane_faction[ ei ] = faction_stack[fi].id;
+         presence_budget[fi][si] -= 1 / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
+         safelanes_updateConductivity( ei_best );
+         lane_faction[ ei_best ] = faction_stack[fi].id;
       }
    }
 
