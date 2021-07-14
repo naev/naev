@@ -85,8 +85,9 @@ static int safelanesL_get( lua_State *L )
    lanes = safelanes_get( faction, sys );
    lua_newtable( L );
    for (i=0; i<array_size(lanes); i++) {
+      lua_newtable( L );
       for (j=0; j<2; j++) {
-         switch (lanes[i].point_type[i]) {
+         switch (lanes[i].point_type[j]) {
             case SAFELANE_LOC_PLANET:
                lua_pushplanet( L, lanes[i].point_id[j] );
                break;
@@ -98,11 +99,12 @@ static int safelanesL_get( lua_State *L )
             default:
                NLUA_ERROR( L, _("What the?") );
          }
-         lua_rawseti( L, -2, i+1 );
+         lua_rawseti( L, -2, j+1 );
       }
       lua_pushstring( L, "faction" ); /* key */
       lua_pushfaction( L, lanes[i].faction ); /* value */
       lua_rawset( L, -3 );
+      lua_rawseti( L, -2, i+1 );
    }
    array_free( lanes );
 
