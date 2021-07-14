@@ -720,6 +720,7 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
          }
 
          score_best = -HUGE_VAL;
+         ei_best = edgeind_opts[0]; /* so the compiler understands we will initialize it */
          for (eii=0; eii<array_size(edgeind_opts); eii++) {
             ei = edgeind_opts[eii];
             score = /* TODO this is a fake placeholder formula */ safelanes_initialConductivity(ei);
