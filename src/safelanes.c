@@ -431,26 +431,28 @@ static void safelanes_initStacks_faction (void)
 
 
 /**
- * @brief Sets up the local stacks with entry per faction.
+ * @brief Identifies anchor points:
+ * The universe graph (with in-system and 2-way-jump edges) could have many connected components.
+ * Our impedance problem needs one boundary condition for each, so we choose a representative vertex from each.
  */
 static void safelanes_initStacks_anchor (void)
 {
-   int i, nsys, *systems;
+   int i, nsys, *anchor_systems;
 
    nsys = array_size(sys_to_first_vertex) - 1;
    unionfind_init( &tmp_sys_uf, nsys );
    for (i=0; i<array_size(tmp_jump_edges); i++)
       unionfind_union( &tmp_sys_uf, vertex_stack[tmp_jump_edges[i][0]].system, vertex_stack[tmp_jump_edges[i][1]].system );
-   systems = unionfind_findall( &tmp_sys_uf );
-   tmp_anchor_vertices = array_create_size( int, array_size(systems) );
+   anchor_systems = unionfind_findall( &tmp_sys_uf );
+   tmp_anchor_vertices = array_create_size( int, array_size(anchor_systems) );
 
    /* Add an anchor vertex per system, but only if there actually is a vertex in the system. */
-   for (i=0; i<array_size(systems); i++)
-      if (sys_to_first_vertex[systems[i]] < sys_to_first_vertex[1+systems[i]]) {
-         array_push_back( &tmp_anchor_vertices, sys_to_first_vertex[systems[i]] );
-         DEBUG( _("Anchoring safelanes graph in system: %s."), system_getIndex(systems[i])->name );
+   for (i=0; i<array_size(anchor_systems); i++)
+      if (sys_to_first_vertex[anchor_systems[i]] < sys_to_first_vertex[1+anchor_systems[i]]) {
+         array_push_back( &tmp_anchor_vertices, sys_to_first_vertex[anchor_systems[i]] );
+         DEBUG( _("Anchoring safelanes graph in system: %s."), system_getIndex(anchor_systems[i])->name );
       }
-   array_free( systems );
+   array_free( anchor_systems );
 }
 
 
@@ -729,15 +731,18 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
             continue;
          }
 
-         score_best = -HUGE_VAL;
-         ei_best = edgeind_opts[0]; /* so the compiler understands we will initialize it */
-         for (eii=0; eii<array_size(edgeind_opts); eii++) {
-            ei = edgeind_opts[eii];
-            score = /* TODO this is a fake placeholder formula */ safelanes_initialConductivity(ei);
-            (void) Lambda_tilde;  // TODO use this instead
-            if (score > score_best) {
-               ei_best = ei;
-               score_best = score;
+         ei_best = edgeind_opts[0];
+         if (array_size(edgeind_opts) > 1) {
+            /* There's an actual choice. Search for the best option. */
+            score_best = -HUGE_VAL;
+            for (eii=0; eii<array_size(edgeind_opts); eii++) {
+               ei = edgeind_opts[eii];
+               score = /* TODO this is a fake placeholder formula */ safelanes_initialConductivity(ei);
+               (void) Lambda_tilde;  // TODO use this instead
+               if (score > score_best) {
+                  ei_best = ei;
+                  score_best = score;
+               }
             }
          }
 
