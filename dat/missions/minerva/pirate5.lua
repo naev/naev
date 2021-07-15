@@ -193,6 +193,11 @@ function enter ()
       vec2.new( 15000, -7500 ),
       vec2.new( 7500, -5000 ),
    }
+   local route7 = {
+      vec2.new( -7000, -7000 ),
+      vec2.new( 11000, -5000 ),
+      pos_hacking_center,
+   }
 
    -- We'll use a dynamic faction for some ships to lower faction standing damage
    local zfact = faction.dynAdd( "Za'lek", "zalek_nohit", _("Za'lek") )
@@ -317,6 +322,11 @@ function enter ()
       "Za'lek Light Drone",
       "Za'lek Light Drone",
    }
+   local sting_group = {
+      "Za'lek Sting",
+      "Za'lek Heavy Drone",
+      "Za'lek Heavy Drone",
+   }
    add_patrol_group( route0, small_group, nil )
    add_patrol_group( route1, small_group, drone_group1 )
    add_patrol_group( route2, small_group, drone_group1 )
@@ -326,6 +336,7 @@ function enter ()
    add_patrol_group( route5, small_group, drone_group1, 4 )
    add_patrol_group( route6, small_group, drone_group1, 2 )
    add_patrol_group( route6, small_group, drone_group2, 4 )
+   add_patrol_group( route7, sting_group, nil )
 
    --add_guard_group( pos_drone_control1, tiny_group, drone_group1 )
    --add_guard_group( pos_drone_control2, tiny_group, drone_group2 )
