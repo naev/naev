@@ -2400,7 +2400,7 @@ static int pilotL_setNoDeath( lua_State *L )
  * @usage p:disable()
  *
  *    @luatparam Pilot p Pilot to disable.
- *    @luatparam[opt=false] boolean nopermanent Whether or not the disable should be permanent.
+ *    @luatparam[opt=false] boolean nopermanent Whether or not the disable should be not permanent.
  * @luafunc disable
  */
 static int pilotL_disable( lua_State *L )
