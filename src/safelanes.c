@@ -991,7 +991,7 @@ static double matwrap_mul_elem( MatWrap A, MatWrap B, int i, int j )
 }
 
 
-/** @brief Return the Frobenius norm sqrt(Tr(m* m)). Matrix form is restricted to stuff we care about. */
+/** @brief Cleans up resources allocated by matwrap_init (or indirectly by matwrap_mul, etc.). */
 static void matwrap_free( MatWrap A )
 {
    free( A.x );
