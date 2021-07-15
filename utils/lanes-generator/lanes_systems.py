@@ -82,15 +82,13 @@ class Systems:
 
         self.sysass = [] # Assets names per system
 
-        nsys = len(os.listdir(path))
-
         self.presass = [] # List of presences in assets
         self.factass = [] # Factions in assets. (I'm sorry for all these asses)
 
         i = 0 # No of system
         nglob = 0 # Global nb of nodes
         nasg = 0 # Global nb of assest
-        for fileName in os.listdir(path):
+        for fileName in sorted(os.listdir(path)):
             tree = ET.parse((path+fileName))
             root = tree.getroot()
 
@@ -175,6 +173,7 @@ class Systems:
             self.loc2globs.append(loc2glob)
             i += 1
 
+        nsys = len(self.sysnames)
         connect = np.zeros((nsys,nsys)) # Connectivity matrix for systems. TODO : use sparse
         biconnect = UnionFind(nsys)  # Partitioning of the systems by reversible-jump connectedness.
 
@@ -201,7 +200,6 @@ class Systems:
             for j in range(nsys):
                 sysas = self.sysass[j]
                 for k in range(len(sysas)):
-#Asset = namedtuple('Asset', 'x y faction population ran')
                     info = assets[sysas[k]] # not really optimized, but should be OK
                     if info.faction in factions:
                         fact = factions[ info.faction ]
