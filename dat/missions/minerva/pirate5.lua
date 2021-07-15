@@ -147,7 +147,7 @@ function enter ()
       return
    end
    -- Must be in mission mode (we allow the player to run away and come back)
-   if misn_state < 3 then return end
+   if misn_state == 3 then return end
    misn_state = 2
    misn.osdActive(2)
 
@@ -198,6 +198,9 @@ function enter ()
       dc:setHostile(true)
       dc:setVisplayer(true)
       dc:setHilight(true)
+      -- Controllers can't detect anything
+      dc:intrinsicSet( "ew_detect", -1000 )
+      dc:setActiveBoard(true) -- Can board them to blow them up
       return dc
    end
 
@@ -206,15 +209,21 @@ function enter ()
       max_offset = max_offset or 100
       local p = vec2.newP(max_offset*rnd.rnd(), 360*rnd.rnd()) + pos
    end
+   local function spawn_drone( shipname, pos )
+      return pilot.add( shipname, "Za'lek", fuzz_pos(pos) )
+   end
 
    -- Spawn the main controllers
    drone_control1 = spawn_drone_controller( pos_drone_control1 )
    hook.pilot( drone_control1, "death", "drone_control1_dead" )
+   hook.pilot( drone_control1, "board", "plant_explosives" )
    drone_control2 = spawn_drone_controller( pos_drone_control2 )
    hook.pilot( drone_control3, "death", "drone_control2_dead" )
+   hook.pilot( drone_control3, "board", "plant_explosives" )
    hacking_center = spawn_drone_controller( pos_hacking_center )
    hacking_center:rename(_("Hacking Center"))
    hook.pilot( hacking_center, "death", "hacking_center_dead" )
+   hook.pilot( hacking_center, "board", "plant_explosives" )
 
    -- Groups of controlled drones
    drone_group1 = {}
@@ -222,8 +231,8 @@ function enter ()
    all_ships = {}
 
    -- Main boss, isn't necessary to kill
-   local pos = pos_hacking_center - vec2.new( -67, -109 )
-   main_boss = pilot.add( "Za'lek Mephisto", "Za'lek", pos, nil, {naked=true, ai="guard"} )
+   local bosspos = pos_hacking_center - vec2.new( -67, -109 )
+   main_boss = pilot.add( "Za'lek Mephisto", "Za'lek", bosspos, nil, {naked=true, ai="guard"} )
    all_ships[1] = main_boss
    -- Be nice and give only close-range weapons
    equipopt.zalek( main_boss, {
@@ -233,7 +242,7 @@ function enter ()
       },
    } )
    local mem            = main_boss:memory()
-   mem.guardpos         = pos
+   mem.guardpos         = bosspos
    mem.guarddodist      = 8e3 -- Should be enough to go far out for torpedo type weapons
    mem.guardreturndist  = 15e3
    mem.doscans          = false
@@ -243,7 +252,7 @@ function enter ()
          "Za'lek Bomber Drone",
          "Za'lek Light Drone",
       }) do
-      local p = pilot.add( v, "Za'lek", fuzz_pos(pos), nil )
+      local p = spawn_drone( v, bosspos )
       p:setLeader( main_boss )
       table.insert( all_ships, p )
    end
@@ -255,7 +264,7 @@ function enter ()
          "Za'lek Light Drone",
          "Za'lek Light Drone",
       }) do
-      local p = pilot.add( v, "Za'lek", fuzz_pos(pos), nil )
+      local p = spawn_drone( v, bosspos )
       p:setLeader( main_boss )
       table.insert( drone_group1, p )
       table.insert( all_ships, p )
@@ -268,7 +277,7 @@ function enter ()
          "Za'lek Light Drone",
          "Za'lek Light Drone",
       }) do
-      local p = pilot.add( v, "Za'lek", fuzz_pos(pos) )
+      local p = spawn_drone( v, bosspos )
       p:setLeader( main_boss )
       table.insert( drone_group2, p )
       table.insert( all_ships, p )
@@ -278,14 +287,16 @@ function enter ()
       local pos = route[1]
       local l
       for k, s in ipairs( ships ) do
-         local p = pilot.add( s, "Za'lek", pos )
+         local p = spawn_drone( s, pos )
          if k==1 then
             l = p
             local mem = p:memory()
             mem.waypoints = route
+            mem.loiter = math.huge -- patrol forever
          else
             p:setLeader( l )
          end
+         p:setVisplayer(true)
          table.insert( all_ships, p )
          table.insert( group, p )
       end
@@ -331,6 +342,14 @@ function message_hostile ()
 end
 
 -- Drone controllers disable their respective drones
+function plant_explosives( p )
+   hook.timer( 5e3, "blowup", p )
+   player.msg(_("You plant explosives on the ship."))
+   player.unboard()
+end
+function blowup( p )
+   p:setHealth( -1, -1 )
+end
 function drone_control1_dead ()
    for k,p in ipairs(drone_group1) do
       if p:exists() then
