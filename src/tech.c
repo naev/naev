@@ -53,7 +53,7 @@ typedef struct tech_item_s {
       Ship *ship;          /**< Ship pointer. */
       Commodity *comm;     /**< Commodity pointer. */
       int grp;             /**< Identifier of another tech group. */
-      tech_group_t *grpptr; /**< Pointer to another tech group. */
+      const tech_group_t *grpptr; /**< Pointer to another tech group. */
    } u;                    /**< Data union. */
 } tech_item_t;
 
@@ -87,10 +87,10 @@ static int tech_addItemOutfit( tech_group_t *grp, const char* name );
 static int tech_addItemShip( tech_group_t *grp, const char* name );
 static int tech_addItemCommodity( tech_group_t *grp, const char* name );
 static int tech_getID( const char *name );
-static int tech_addItemGroupPointer( tech_group_t *grp, tech_group_t *ptr );
+static int tech_addItemGroupPointer( tech_group_t *grp, const tech_group_t *ptr );
 static int tech_addItemGroup( tech_group_t *grp, const char* name );
 /* Getting by tech. */
-static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group_t *tech );
+static void** tech_addGroupItem( void **items, tech_item_type_t type, const tech_group_t *tech );
 
 
 /**
@@ -597,7 +597,7 @@ static int tech_getID( const char *name )
 /**
  * @brief Adds a group pointer to a group.
  */
-static int tech_addItemGroupPointer( tech_group_t *grp, tech_group_t *ptr )
+static int tech_addItemGroupPointer( tech_group_t *grp, const tech_group_t *ptr )
 {
    tech_item_t *item;
 
@@ -655,7 +655,7 @@ static void tech_createMetaGroup( tech_group_t *grp, tech_group_t **tech, int nu
 /**
  * @brief Recursive function for creating an array of commodities from a tech group.
  */
-static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group_t *tech )
+static void** tech_addGroupItem( void **items, tech_item_type_t type, const tech_group_t *tech )
 {
    int i, j, size, f;
    tech_item_t *item;
@@ -710,7 +710,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
  *    @param item The item name to search for.
  *    @return Whether or not the item was found.
  */
-int tech_hasItem( tech_group_t *tech, char *item )
+int tech_hasItem( const tech_group_t *tech, char *item )
 {
    int i, s;
    char *buf;
@@ -731,7 +731,7 @@ int tech_hasItem( tech_group_t *tech, char *item )
  *
  *   @return Number of techs.
  */
-int tech_getItemCount( tech_group_t *tech )
+int tech_getItemCount( const tech_group_t *tech )
 {
    return array_size( tech->items );
 }
@@ -744,7 +744,7 @@ int tech_getItemCount( tech_group_t *tech )
  *    @param[out] n Number of techs in the group.
  *    @return The names of the techs contained within the group.
  */
-char** tech_getItemNames( tech_group_t *tech, int *n )
+char** tech_getItemNames( const tech_group_t *tech, int *n )
 {
    int i, s;
    char **names;
@@ -788,7 +788,7 @@ char** tech_getAllItemNames( int *n )
  *    @param tech Tech to get outfits from.
  *    @return Array (array.h): Outfits found.
  */
-Outfit** tech_getOutfit( tech_group_t *tech )
+Outfit** tech_getOutfit( const tech_group_t *tech )
 {
    Outfit **o;
 
@@ -838,7 +838,7 @@ Outfit** tech_getOutfitArray( tech_group_t **tech, int num )
  *    @param tech Tech group to get list of ships from.
  *    @return Array (array.h): The ships found.
  */
-Ship** tech_getShip( tech_group_t *tech )
+Ship** tech_getShip( const tech_group_t *tech )
 {
    Ship **s;
 
@@ -914,7 +914,7 @@ Commodity** tech_getCommodityArray( tech_group_t **tech, int num )
  *    @param tech Tech group to get list of ships from.
  *    @return Array (array.h): The commodities found.
  */
-Commodity** tech_getCommodity( tech_group_t *tech )
+Commodity** tech_getCommodity( const tech_group_t *tech )
 {
    Commodity **c;
 

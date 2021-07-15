@@ -49,15 +49,15 @@ int tech_rmItem( const char *name, const char *value );
 /*
  * Get.
  */
-int tech_hasItem( tech_group_t *tech, char *item );
-int tech_getItemCount( tech_group_t *tech );
-char** tech_getItemNames( tech_group_t *tech, int *n );
+int tech_hasItem( const tech_group_t *tech, char *item );
+int tech_getItemCount( const tech_group_t *tech );
+char** tech_getItemNames( const tech_group_t *tech, int *n );
 char** tech_getAllItemNames( int *n );
-Outfit** tech_getOutfit( tech_group_t *tech );
+Outfit** tech_getOutfit( const tech_group_t *tech );
 Outfit** tech_getOutfitArray( tech_group_t **tech, int num );
-Ship** tech_getShip( tech_group_t *tech );
+Ship** tech_getShip( const tech_group_t *tech );
 Ship** tech_getShipArray( tech_group_t **tech, int num );
-Commodity** tech_getCommodity( tech_group_t *tech );
+Commodity** tech_getCommodity( const tech_group_t *tech );
 Commodity** tech_getCommodityArray( tech_group_t **tech, int num );
 
 
