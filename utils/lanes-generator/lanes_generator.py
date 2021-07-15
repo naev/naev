@@ -110,8 +110,8 @@ class SafeLaneProblem:
                 loc2globk = systems.loc2globs[k]
                 jp2lock = systems.jp2locs[k]
 
-                if namei not in jpnamek:
-                    continue # It's an exit-only : we don't count this one as a link
+                if i < k or namei not in jpnamek:
+                    continue # We only want to consider reversible jumps, and only once per pair.
 
                 m = jpnamek[namei] # Index of system i in system k numerotation
 
@@ -119,11 +119,6 @@ class SafeLaneProblem:
                 sj0.append(loc2globk[jp2lock[m]]) # 
                 sv0.append(JUMP_CONDUCTIVITY)
                 biconnect.union(i, k)
-
-        # Remove the redundant info because right now, we have i->j and j->i
-        for k in range(len(si0)-1, -1, -1):
-            if (si0[k] in sj0):
-                del si0[k], sj0[k], sv0[k]
 
         # Create anchors to prevent the matrix from being singular
         # Anchors are jumpoints, there is 1 per connected set of systems

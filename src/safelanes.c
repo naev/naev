@@ -359,7 +359,7 @@ static void safelanes_initStacks_vertex (void)
             if (jp->targetid < system && jp->returnJump != NULL)
                for (j = sys_to_first_vertex[jp->targetid]; j < sys_to_first_vertex[1+jp->targetid]; j++)
                   if (vertex_stack[j].type == VERTEX_JUMP && jp->returnJump == &jp->target->jumps[vertex_stack[j].index]) {
-                     array_push_back_edge( &tmp_jump_edges, j, array_size(vertex_stack)-1 );
+                     array_push_back_edge( &tmp_jump_edges, array_size(vertex_stack)-1, j );
                      break;
                   }
          }
