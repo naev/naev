@@ -300,7 +300,7 @@ static void cam_updateFly( double x, double y, double dt )
 static void cam_updatePilot( const Pilot *follow, double dt )
 {
    Pilot *target;
-   double diag2, a, r, dir, k;
+   double a, r, dir, k;
    double x,y, dx,dy, mx,my, targ_x,targ_y, bias_x,bias_y, vx,vy;
 
    /* Get target. */
@@ -313,7 +313,7 @@ static void cam_updatePilot( const Pilot *follow, double dt )
     * we'll just use the largest of the two. */
    /*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/
    /*diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );*/
-   diag2 = 100*100;
+   const double diag2 = 100*100;
    x = follow->solid->pos.x;
    y = follow->solid->pos.y;
 
