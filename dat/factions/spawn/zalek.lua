@@ -77,7 +77,7 @@ function spawn_capship ()
        pilots = spawnBgMerc("Za'lek")
     else
        -- Generate the capship
-       if r < 0.7 then
+       if r < 0.5 then
           scom.addPilot( pilots, "Za'lek Mephisto", 140 )
        else
           scom.addPilot( pilots, "Za'lek Diablo", 150 )
