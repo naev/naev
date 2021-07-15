@@ -45,9 +45,15 @@ local minerva = {
    },
    pirate = {
       name = _("Sketchy Individual"),
-      realname = _("Zuri"),
       portrait = "zuri.webp",
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
+      image = "zuri.webp",
+      colour = nil,
+   },
+   zuri = {
+      name = _("Zuri"),
+      portrait = "zuri.webp",
+      description = _("You see Zuri who seems to be motioning for you to come."),
       image = "zuri.webp",
       colour = nil,
    },
@@ -144,10 +150,10 @@ function minerva.vn_pirate( params )
          }, params) )
 end
 function minerva.vn_zuri( params )
-   return vn.Character.new( minerva.pirate.realname,
+   return vn.Character.new( minerva.zuri.name,
          mt.merge_tables( {
-            image=minerva.pirate.image,
-            color=minerva.pirate.colour,
+            image=minerva.zuri.image,
+            color=minerva.zuri.colour,
          }, params) )
 end
 function minerva.vn_ceo( params )

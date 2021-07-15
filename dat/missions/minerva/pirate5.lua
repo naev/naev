@@ -54,15 +54,14 @@ function create ()
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
-   misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
+   misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
    misn.setDesc( misn_desc )
    misn.setReward( misn_reward )
    misn.setTitle( misn_title )
 end
 
-
 function accept ()
-   approach_pir()
+   approach_zuri()
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
@@ -71,11 +70,13 @@ function accept ()
 
    misn.accept()
    osd = misn.osdCreate( misn_title, {
-      _("Find out who the mole is"),
-      _("Take the mole to the interrogation facility")
+      string.format( _("Go to the %s system"), mainsys ),
+      _("Destroy the hacking center"),
+      _("Return to Minerva Station"),
    } )
+   mrk_mainsys = misn.markerAdd( system.get(mainsys) )
 
-   shiplog.append( logidstr, _("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
+   shiplog.append( logidstr, string.format(_("You accepted a job from Zuri to take out a hacking center at the %s system"), mainsys) )
 
    hook.load("generate_npc")
    hook.land("generate_npc")
@@ -84,24 +85,23 @@ function accept ()
 end
 
 function generate_npc ()
-   npc_pir = nil
+   npc_zuri = nil
    if planet.cur() == planet.get("Minerva Station") and misn_state < 1 then
-      npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
+      npc_zuri = misn.npcAdd( "approach_zuri", minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
    end
 end
 
-function approach_pir ()
+function approach_zuri ()
    vn.clear()
    vn.scene()
-   local pir = vn.newCharacter( minerva.vn_pirate() )
+   local zuri = vn.newCharacter( minerva.vn_zuri() )
    vn.music( minerva.loops.pirate )
    vn.transition()
 
    if misn_state==nil then
       -- Not accepted
-      vn.na(_("You approach the sketch individual who seems to be somewhat excited."))
-      pir(_([["It seems like we have finally started to get the fruits of our labour. It seems like we have found the mole, and we would like you to help us deal with them. Are you up to the task? Things might get a little… messy though."
-They beam you a smile.]]))
+      vn.na(_("You approach Zuri who seems to be motioning to you."))
+      zuri(_([[""]]))
       vn.menu( {
          {_("Accept the job"), "accept"},
          {_("Kindly decline"), "decline"},
@@ -113,21 +113,14 @@ They beam you a smile.]]))
 
       vn.label("accept")
       vn.func( function () misn_state=0 end )
-      pir(_([["Glad to have you onboard again! So we have tracked down the mole and know that they are infiltrated in the station from the intercepted messages. It appears that they are most likely working at the station. Now there are not many places to work at the station so it is likely that they are involved in the gambling facility."]]))
-      pir(_([["The bad news is we don't exactly know who the moles is. However, the good news is we were able to intercept a messenger. It was after a delivery so we weren't able to capture anything very interesting. But there was a small memo we found that could be a hint."
-They should you a crumpled up dirty piece of paper that has '10K 5-6-3-1' on it and hands it to you.]]))
-      vn.func( function ()
-         local c = misn.cargoNew( _("Crumpled Up Note"), _("This is a crumpled up note that says '10K 5-6-3-1' on it. How could this be related to the Dvaered spy on Minerva Station?") )
-         misn.cargoAdd( c, 0 )
-      end )
-      pir(_([["We're still trying to figure exactly who they are, but that note is our best hint. Maybe it can be of use to you when looking for them. Once we get them we'll kindly escort them to an interrogation ship we have and we can try to get them to spill the beans."]]))
+      zuri(_([[""]]))
    else
       -- Accepted.
-      vn.na(_("You approach the shady character you have become familiarized with."))
+      vn.na(_("You approach Zuri."))
    end
 
    vn.label("menu_msg")
-   pir(_([["Is there anything you would like to know?"]]))
+   zuri(_([["Is there anything you would like to know?"]]))
    vn.menu{
       {_("Ask about the job"), "job"},
       -- TODO add some other more info text
@@ -135,7 +128,7 @@ They should you a crumpled up dirty piece of paper that has '10K 5-6-3-1' on it 
    }
 
    vn.label("job")
-   pir(_([["How is the search going? We haven't been able to find any new leads on the mole. Our best bet is still the note I gave you that says '10K 5-6-3-1' on it. Maybe it's some sort of code for something?"]]))
+   zuri(_([[""]]))
    vn.jump("menu_msg")
 
    vn.label("leave")
@@ -146,10 +139,17 @@ end
 
 function enter ()
    -- Must be goal system
-   if system.cur() ~= system.get(mainsys) then return end
-   -- Must be in mission mode (we allow the player to run away nad come back)
+   if system.cur() ~= system.get(mainsys) then
+      if misn_state == 2 then
+         misn.osdActive(1)
+         misn_state = 1
+      end
+      return
+   end
+   -- Must be in mission mode (we allow the player to run away and come back)
    if misn_state < 3 then return end
    misn_state = 2
+   misn.osdActive(2)
 
    -- Clear pilots
    pilot.clear()
@@ -311,19 +311,20 @@ function enter ()
    add_patrol_group( route5, large_group, drone_group2 )
 
    -- Tell the player to f off
-   hook.timer( 5e3, "message_warn" )
+   hook.timer( 5e3,  "message_first" )
+   hook.timer( 20e3, "message_warn" )
    hook.timer( 25e3, "message_hostile" )
 end
 
-function message_warn ()
+function message_first ()
    hacking_center:broadcast( string.format(_("Due to military exercises, %s is under lockdown. Please evacuate the area immediately."), mainsys), true )
 end
 
+function message_warn ()
+   hacking_center:broadcast( _("Unwelcome ships will be terminated. You have been warned."), true )
+end
+
 function message_hostile ()
-   local pp = player.pilot()
-   if pp:flags().stealth then
-      return
-   end
    for k,p in pairs(all_ships) do
       p:setHostile(true)
    end
@@ -345,5 +346,8 @@ function drone_control2_dead ()
    end
 end
 function hacking_center_dead ()
+   misn.markerMove( mrk_mainsys, system.get("Limbo") )
+   misn.osdActive(3)
    misn_state = 3
+   player.msg("#gThe hacking center has been destroyed!#0")
 end
