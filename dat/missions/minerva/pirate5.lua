@@ -161,6 +161,10 @@ function enter ()
    local pos_hacking_center = vec2.new( -5000, -17000 )
 
    -- Define the routes
+   local route0 = {
+      pos_drone_control1,
+      pos_drone_control2,
+   }
    local route1 = {
       pos_drone_control1,
       jump.get( "Gammacron", "Daan" ):pos(),
@@ -171,15 +175,19 @@ function enter ()
    }
    local route3 = {
       pos_drone_control2,
-      pos_hacking_center,
+      jump.get( "Gammacron", "Daan" ):pos(),
    }
    local route4 = {
+      pos_drone_control2,
+      pos_hacking_center,
+   }
+   local route5 = {
       vec2.new( -5000, 8000 ),
       vec2.new( -9000, -5000 ),
       vec2.new( 0, -15000 ),
       vec2.new( -9000, -5000 ),
    }
-   local route5 = {
+   local route6 = {
       vec2.new( -4000, -7400 ),
       vec2.new( 7500, -5000 ),
       vec2.new( 15000, -7500 ),
@@ -199,6 +207,7 @@ function enter ()
       dc:setVisplayer(true)
       dc:setHilight(true)
       -- Controllers can't detect anything
+      dc:intrinsicSet( "ew_hide", -75 )
       dc:intrinsicSet( "ew_detect", -1000 )
       dc:setActiveBoard(true) -- Can board them to blow them up
       return dc
@@ -217,6 +226,8 @@ function enter ()
    local function spawn_drone( shipname, pos )
       local p = pilot.add( shipname, "Za'lek", fuzz_pos(pos) )
       p:setVisplayer(true)
+      -- We are nice and make the drones easier to see for this mission
+      p:intrinsicSet( "ew_hide", -50 )
       table.insert( all_ships, p )
       return p
    end
@@ -226,12 +237,52 @@ function enter ()
    hook.pilot( drone_control1, "death", "drone_control1_dead" )
    hook.pilot( drone_control1, "board", "plant_explosives" )
    drone_control2 = spawn_drone_controller( pos_drone_control2 )
-   hook.pilot( drone_control3, "death", "drone_control2_dead" )
-   hook.pilot( drone_control3, "board", "plant_explosives" )
+   hook.pilot( drone_control2, "death", "drone_control2_dead" )
+   hook.pilot( drone_control2, "board", "plant_explosives" )
    hacking_center = spawn_drone_controller( pos_hacking_center )
    hacking_center:rename(_("Hacking Center"))
    hook.pilot( hacking_center, "death", "hacking_center_dead" )
    hook.pilot( hacking_center, "board", "plant_explosives" )
+
+   local function add_patrol_group( route, ships, group, start )
+      local start = start or rnd.rnd(1,#route)
+      local pos = route[ start ]
+      local l
+      for k, s in ipairs( ships ) do
+         local p = spawn_drone( s, pos )
+         if k==1 then
+            l = p
+            local mem = p:memory()
+            mem.waypoints = route
+            mem.loiter = math.huge -- patrol forever
+         else
+            p:setLeader( l )
+         end
+         if group then
+            table.insert( group, p )
+         end
+      end
+   end
+
+   local function add_guard_group( pos, ships, group )
+      local l
+      for k, s in ipairs( ships ) do
+         local p = spawn_drone( s, pos )
+         if k==1 then
+            l = p
+            p:changeAI("guard")
+            local mem = p:memory()
+            mem.guardpos = pos
+            mem.guarddodist = 6e3
+            mem.guardreturndist = 12e3
+         else
+            p:setLeader( l )
+         end
+         if group then
+            table.insert( group, p )
+         end
+      end
+   end
 
    -- Main boss, isn't necessary to kill
    local bosspos = pos_hacking_center - vec2.new( -67, -109 )
@@ -249,58 +300,12 @@ function enter ()
    mem.guarddodist      = 8e3 -- Should be enough to go far out for torpedo type weapons
    mem.guardreturndist  = 15e3
    mem.doscans          = false
-   -- Give him some drone friends
-   for k,v in ipairs({
-         "Za'lek Heavy Drone",
-         "Za'lek Bomber Drone",
-         "Za'lek Light Drone",
-      }) do
-      local p = spawn_drone( v, bosspos )
-      p:setLeader( main_boss )
-   end
-   for k,v in ipairs({
-         "Za'lek Heavy Drone",
-         "Za'lek Heavy Drone",
-         "Za'lek Bomber Drone",
-         "Za'lek Bomber Drone",
-         "Za'lek Light Drone",
-         "Za'lek Light Drone",
-      }) do
-      local p = spawn_drone( v, bosspos )
-      p:setLeader( main_boss )
-      table.insert( drone_group1, p )
-   end
-   for k,v in ipairs({
-         "Za'lek Heavy Drone",
-         "Za'lek Heavy Drone",
-         "Za'lek Bomber Drone",
-         "Za'lek Bomber Drone",
-         "Za'lek Light Drone",
-         "Za'lek Light Drone",
-      }) do
-      local p = spawn_drone( v, bosspos )
-      p:setLeader( main_boss )
-      table.insert( drone_group2, p )
-   end
-
-   local function add_patrol_group( route, ships, group )
-      local pos = route[1]
-      local l
-      for k, s in ipairs( ships ) do
-         local p = spawn_drone( s, pos )
-         if k==1 then
-            l = p
-            local mem = p:memory()
-            mem.waypoints = route
-            mem.loiter = math.huge -- patrol forever
-         else
-            p:setLeader( l )
-         end
-         table.insert( group, p )
-      end
-   end
 
    -- Now add the different patrol groups
+   local tiny_group = {
+      "Za'lek Light Drone",
+      "Za'lek Light Drone",
+   }
    local small_group = {
       "Za'lek Heavy Drone",
       "Za'lek Light Drone",
@@ -313,11 +318,22 @@ function enter ()
       "Za'lek Light Drone",
       "Za'lek Light Drone",
    }
+   add_patrol_group( route0, small_group, nil )
    add_patrol_group( route1, small_group, drone_group1 )
    add_patrol_group( route2, small_group, drone_group1 )
    add_patrol_group( route3, small_group, drone_group2 )
-   add_patrol_group( route4, large_group, drone_group1 )
-   add_patrol_group( route5, large_group, drone_group2 )
+   add_patrol_group( route4, small_group, drone_group2 )
+   add_patrol_group( route5, small_group, drone_group2, 2 )
+   add_patrol_group( route5, small_group, drone_group1, 4 )
+   add_patrol_group( route6, small_group, drone_group1, 2 )
+   add_patrol_group( route6, small_group, drone_group2, 4 )
+
+   --add_guard_group( pos_drone_control1, tiny_group, drone_group1 )
+   --add_guard_group( pos_drone_control2, tiny_group, drone_group2 )
+
+   add_guard_group( bosspos, small_group, nil )
+   add_guard_group( bosspos, large_group, drone_group1 )
+   add_guard_group( bosspos, large_group, drone_group2 )
 
    -- Tell the player to f off
    hook.timer( 5e3,  "message_first" )
@@ -341,7 +357,7 @@ end
 
 -- Drone controllers disable their respective drones
 function plant_explosives( p )
-   hook.timer( 5e3, "blowup", p )
+   hook.timer( 3e3, "blowup", p )
    player.msg(_("You plant explosives on the ship."))
    player.unboard()
 end
