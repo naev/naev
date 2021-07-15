@@ -206,11 +206,11 @@ SafeLane* safelanes_get (int faction, const StarSystem* system)
             switch (v[j]->type) {
                case VERTEX_PLANET:
                   l->point_type[j]   = SAFELANE_LOC_PLANET;
-                  l->point_id[j]     = v[j]->index;
+                  l->point_id[j]     = system->planets[v[j]->index]->id;
                   break;
                case VERTEX_JUMP:
                   l->point_type[j]   = SAFELANE_LOC_DEST_SYS;
-                  l->point_id[j]     = system_getIndex(v[j]->system)->jumps[v[j]->index].targetid;
+                  l->point_id[j]     = system->jumps[v[j]->index].targetid;
                   break;
                default:
                   ERR( _("Invalid vertex type.") );
