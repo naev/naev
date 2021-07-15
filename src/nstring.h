@@ -40,6 +40,6 @@ int strsort( const void *p1, const void *p2 );
 
 #define NUM2STRLEN   16
 int num2str( char dest[NUM2STRLEN], double n, int decimals );
-char* num2strU( double n, int decimals );
+const char* num2strU( double n, int decimals );
 
 #endif /* NSTRING_H */
