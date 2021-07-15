@@ -100,7 +100,21 @@ function approach_zuri ()
    vn.music( minerva.loops.pirate )
    vn.transition()
 
-   if misn_state==nil then
+   if misn_state==3 then
+      vn.na(_("You approach Zuri to report your success. They listen to you intently as you explain how things went down when you took down the hacking center."))
+      zuri(_([["Great work out there. This will definitely set the Za'lek scheme back a few decaperiods. Must have been satisfying see the show of fireworks as the hacking station went down. I just wish I was able to see it, but I haven't been able to properly pilot a ship in ages. Boss just never cuts me any slack."]]))
+      zuri(_([["I've wired you your reward as always."
+They grin at you.
+"That said, our work is still far from done. We won't stop until Minerva Station is free from Za'lek and Dvaered inference. Meet me up in the bar in a bit if you want to help."]]))
+      vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
+      vn.func( function () -- Rewards
+         player.pay( reward_amount )
+         shiplog.append( logidstr, _("You took down an advanced Za'lek hacking center and got rewarded for your efforts.") )
+         faction.modPlayerSingle("Pirate", 5)
+      end )
+      vn.sfxVictory()
+      vn.done()
+   elseif  misn_state==nil then
       -- Not accepted
       vn.na(_("You approach Zuri who seems to be motioning to you. They seem faintly tired."))
       zuri(_([["I suppose you have a lot of questions, but first things first. Remember the suspicious Za'lek drones? Well, we were able to look more into that, and it seems like they were part of the scouts of an advanced hacking attack on Minerva Station."]]))
@@ -228,6 +242,10 @@ function enter ()
       -- Controllers can't detect anything
       dc:intrinsicSet( "ew_hide", -75 )
       dc:intrinsicSet( "ew_detect", -1000 )
+      -- Much more bulky than normal
+      dc:intrinsicSet( "shield", 500 )
+      dc:intrinsicSet( "armour", 1500 )
+      dc:intrinsicSet( "absorb", 30 )
       dc:setActiveBoard(true) -- Can board them to blow them up
       return dc
    end
