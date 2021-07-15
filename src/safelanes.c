@@ -662,12 +662,12 @@ static void safelanes_initPPl (void)
 
    for (i=0; i<array_size(tmp_pnt_to_vertex); i++) {
       sysi = vertex_stack[tmp_pnt_to_vertex[i]].system;
-      pnti = planet_getIndex( vertex_stack[tmp_pnt_to_vertex[i]].index );
+      pnti = system_getIndex( sysi )->planets[vertex_stack[tmp_pnt_to_vertex[i]].index];
       facti = FACTION_ID_TO_INDEX( pnti->faction );
       for (j=0; j<i; j++) {
          sysj = vertex_stack[tmp_pnt_to_vertex[j]].system;
          if (unionfind_find( &tmp_sys_uf, sysi ) == unionfind_find( &tmp_sys_uf, sysj )) {
-            pntj = planet_getIndex( vertex_stack[tmp_pnt_to_vertex[i]].index );
+            pntj = system_getIndex( sysj )->planets[vertex_stack[tmp_pnt_to_vertex[j]].index];
             factj = FACTION_ID_TO_INDEX( pntj->faction );
             if (facti >= 0)
                ((double*)D[facti]->x)[MULTI_INDEX(i,j)] += pnti->presenceAmount;
