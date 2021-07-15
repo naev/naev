@@ -126,7 +126,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer );
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer );
 static void weapon_sample_trail( Weapon* w );
 /* Destruction. */
-static void weapon_destroy( Weapon* w, WeaponLayer layer );
+static void weapon_destroy( Weapon* w );
 static void weapon_free( Weapon* w );
 static void weapon_explodeLayer( WeaponLayer layer,
       double x, double y, double radius,
@@ -134,7 +134,7 @@ static void weapon_explodeLayer( WeaponLayer layer,
 static void weapons_purgeLayer( Weapon** layer );
 /* Hitting. */
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
-static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
+static void weapon_hit( Weapon* w, Pilot* p, Vector2d* pos );
 static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* pos );
 static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       Vector2d pos[2], const double dt );
@@ -512,6 +512,11 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    for (i=0; i<array_size(wlayer); i++) {
       w = wlayer[i];
 
+      /* Ignore destroyed wapons. */
+      if (weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
+         continue;
+
+      /* Handle types. */
       switch (w->outfit->type) {
 
          /* most missiles behave the same */
@@ -540,7 +545,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                            w->solid->vel.x,
                            w->solid->vel.y);
                }
-               weapon_destroy(w,layer);
+               weapon_destroy(w);
                break;
             }
             break;
@@ -570,7 +575,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                            w->solid->vel.x,
                            w->solid->vel.y);
                }
-               weapon_destroy(w,layer);
+               weapon_destroy(w);
                break;
             }
             else if (w->timer < w->falloff)
@@ -588,7 +593,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                p = pilot_get(w->parent);
                if (p != NULL)
                   pilot_stopBeam(p, w->mount);
-               weapon_destroy(w,layer);
+               weapon_destroy(w);
                break;
             }
             /* We use the explosion timer to tell when we have to create explosions. */
@@ -957,7 +962,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
                         &p->solid->pos, &crash[0] );
             }
             if (coll) {
-               weapon_hit( w, p, layer, &crash[0] );
+               weapon_hit( w, p, &crash[0] );
                return; /* Weapon is destroyed. */
             }
          }
@@ -977,7 +982,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
             }
 
             if (coll) {
-            weapon_hit( w, p, layer, &crash[0] );
+            weapon_hit( w, p, &crash[0] );
             return; /* Weapon is destroyed. */
             }
          }
@@ -1147,10 +1152,9 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
  *
  *    @param w Weapon involved in the collision.
  *    @param p Pilot that got hit.
- *    @param layer Layer to which the weapon belongs.
  *    @param pos Position of the hit.
  */
-static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
+static void weapon_hit( Weapon* w, Pilot* p, Vector2d* pos )
 {
    Pilot *parent;
    int s, spfx;
@@ -1195,7 +1199,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
    weapon_hitAI( p, parent, damage );
 
    /* no need for the weapon particle anymore */
-   weapon_destroy(w,layer);
+   weapon_destroy(w);
 }
 
 /**
@@ -1232,7 +1236,7 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* 
    spfx = outfit_spfxArmour(w->outfit);
    spfx_add( spfx, pos->x, pos->y,VX(a->vel), VY(a->vel), layer );
 
-   weapon_destroy(w,layer);
+   weapon_destroy(w);
 
    if (a->appearing != ASTEROID_EXPLODING)
       asteroid_hit( a, &dmg );
@@ -1846,7 +1850,7 @@ void beam_end( const unsigned int parent, unsigned int beam )
    /* Now try to destroy the beam. */
    for (i=0; i<array_size(curLayer); i++) {
       if (curLayer[i]->ID == beam) { /* Found it. */
-         weapon_destroy(curLayer[i], layer);
+         weapon_destroy(curLayer[i]);
          break;
       }
    }
@@ -1857,40 +1861,11 @@ void beam_end( const unsigned int parent, unsigned int beam )
  * @brief Destroys a weapon.
  *
  *    @param w Weapon to destroy.
- *    @param layer Layer to which the weapon belongs.
  */
-static void weapon_destroy( Weapon* w, WeaponLayer layer )
+static void weapon_destroy( Weapon* w )
 {
-   int i;
-   Weapon** wlayer;
-
-   /* When updating we just mark for removal. */
-   if (weapons_updating) {
-      weapon_setFlag( w, WEAPON_FLAG_DESTROYED );
-      return;
-   }
-
-   switch (layer) {
-      case WEAPON_LAYER_BG:
-         wlayer = wbackLayer;
-         break;
-      case WEAPON_LAYER_FG:
-         wlayer = wfrontLayer;
-         break;
-
-      default:
-         WARN(_("Unknown weapon layer!"));
-         return;
-   }
-
-   for (i=0; (wlayer[i] != w) && (i < array_size(wlayer)); i++); /* get to the current position */
-   if (i >= array_size(wlayer)) {
-      WARN(_("Trying to destroy weapon not found in stack!"));
-      return;
-   }
-
-   weapon_free(wlayer[i]);
-   array_erase( &wlayer, &wlayer[i], &wlayer[i+1] );
+   /* Just mark for removal. */
+   weapon_setFlag( w, WEAPON_FLAG_DESTROYED );
 }
 
 
@@ -2025,10 +2000,8 @@ static void weapon_explodeLayer( WeaponLayer layer,
          dist = pow2(curLayer[i]->solid->pos.x - x) +
                pow2(curLayer[i]->solid->pos.y - y);
 
-         if (dist < rad2) {
-            weapon_destroy(curLayer[i], layer);
-            i--;
-         }
+         if (dist < rad2)
+            weapon_destroy(curLayer[i]);
       }
    }
 }
