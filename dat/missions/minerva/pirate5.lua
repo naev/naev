@@ -327,7 +327,7 @@ function enter ()
    -- Be nice and give only close-range weapons
    equipopt.zalek( main_boss, {
       type_range = {
-         ["Launcher"]      = { max=0 },
+         --["Launcher"]      = { max=0 },
          ["Fighter Bay"]   = { max=0 },
       },
    } )
