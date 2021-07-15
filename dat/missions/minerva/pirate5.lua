@@ -204,13 +204,21 @@ function enter ()
       return dc
    end
 
+   -- Groups of controlled drones
+   drone_group1 = {}
+   drone_group2 = {}
+   all_ships = {}
+
    -- Fuzzes a position a bit
    local function fuzz_pos( pos, max_offset )
       max_offset = max_offset or 100
-      local p = vec2.newP(max_offset*rnd.rnd(), 360*rnd.rnd()) + pos
+      return vec2.newP(max_offset*rnd.rnd(), 360*rnd.rnd()) + pos
    end
    local function spawn_drone( shipname, pos )
-      return pilot.add( shipname, "Za'lek", fuzz_pos(pos) )
+      local p = pilot.add( shipname, "Za'lek", fuzz_pos(pos) )
+      p:setVisplayer(true)
+      table.insert( all_ships, p )
+      return p
    end
 
    -- Spawn the main controllers
@@ -224,11 +232,6 @@ function enter ()
    hacking_center:rename(_("Hacking Center"))
    hook.pilot( hacking_center, "death", "hacking_center_dead" )
    hook.pilot( hacking_center, "board", "plant_explosives" )
-
-   -- Groups of controlled drones
-   drone_group1 = {}
-   drone_group2 = {}
-   all_ships = {}
 
    -- Main boss, isn't necessary to kill
    local bosspos = pos_hacking_center - vec2.new( -67, -109 )
@@ -254,7 +257,6 @@ function enter ()
       }) do
       local p = spawn_drone( v, bosspos )
       p:setLeader( main_boss )
-      table.insert( all_ships, p )
    end
    for k,v in ipairs({
          "Za'lek Heavy Drone",
@@ -267,7 +269,6 @@ function enter ()
       local p = spawn_drone( v, bosspos )
       p:setLeader( main_boss )
       table.insert( drone_group1, p )
-      table.insert( all_ships, p )
    end
    for k,v in ipairs({
          "Za'lek Heavy Drone",
@@ -280,7 +281,6 @@ function enter ()
       local p = spawn_drone( v, bosspos )
       p:setLeader( main_boss )
       table.insert( drone_group2, p )
-      table.insert( all_ships, p )
    end
 
    local function add_patrol_group( route, ships, group )
@@ -296,8 +296,6 @@ function enter ()
          else
             p:setLeader( l )
          end
-         p:setVisplayer(true)
-         table.insert( all_ships, p )
          table.insert( group, p )
       end
    end
@@ -353,14 +351,14 @@ end
 function drone_control1_dead ()
    for k,p in ipairs(drone_group1) do
       if p:exists() then
-         p:disable(true)
+         p:disable()
       end
    end
 end
 function drone_control2_dead ()
    for k,p in ipairs(drone_group2) do
       if p:exists() then
-         p:disable(true)
+         p:disable()
       end
    end
 end
