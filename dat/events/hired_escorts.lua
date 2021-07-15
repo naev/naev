@@ -253,9 +253,7 @@ function enter ()
       if edata.alive then
          local f = faction.get(edata.faction)
 
-         edata.pilot = pilot.add(edata.ship, f, spawnpoint, edata.name)
-         edata.pilot:rmOutfit("all")
-         edata.pilot:rmOutfit("cores")
+         edata.pilot = pilot.add(edata.ship, f, spawnpoint, edata.name, {naked=true})
          for j, o in ipairs(edata.outfits) do
             edata.pilot:addOutfit(o)
          end
@@ -391,9 +389,11 @@ function pilot_attacked( p, attacker, dmg, arg )
          -- Since all the escorts will turn on the player, we might as well
          -- just have them all disband at once and attack.
          for i, edata in ipairs(escorts) do
-            shiplog.append( logidstr, string.format(_("You turned on your hired escort '%s' (%s)."), edata.name, edata.ship) )
-            pilot_disbanded( edata )
-            edata.pilot:setHostile()
+            if edata.pilot and edata.pilot:exists() then
+               shiplog.append( logidstr, string.format(_("You turned on your hired escort '%s' (%s)."), edata.name, edata.ship) )
+               pilot_disbanded( edata )
+               edata.pilot:setHostile()
+            end
          end
       end
    end
