@@ -964,7 +964,13 @@ static void matwrap_mul( MatWrap A, MatWrap B, MatWrap* C )
 static double matwrap_mul_elem( MatWrap A, MatWrap B, int i, int j )
 {
    assert( A.ncol == B.nrow );
-   return i+j; // TODO Not actually!!!
+   return cblas_ddot(
+         A.ncol,
+         &A.x[A.order == CblasColMajor ? i : i*A.ncol],
+              A.order == CblasRowMajor ? 1 : A.nrow,
+         &B.x[B.order == CblasRowMajor ? j : j*A.nrow],
+              B.order == CblasColMajor ? 1 : B.ncol
+   );
 }
 
 
