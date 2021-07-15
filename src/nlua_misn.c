@@ -108,7 +108,7 @@ static const luaL_Reg misn_methods[] = {
    { "osdCreate", misn_osdCreate },
    { "osdDestroy", misn_osdDestroy },
    { "osdActive", misn_osdActive },
-   { "osdGetActiveItem", misn_osdGetActiveItem },
+   { "osdGetActive", misn_osdGetActiveItem },
    { "npcAdd", misn_npcAdd },
    { "npcRm", misn_npcRm },
    { "claim", misn_claim },
@@ -882,6 +882,12 @@ static int misn_osdActive( lua_State *L )
    return 0;
 }
 
+/**
+ * @brief Gets the active OSD element.
+ *
+ *    @luatreturn string Th ename of the active element or nil if none.
+ * @luafunc osdGetActive
+ */
 static int misn_osdGetActiveItem( lua_State *L )
 {
    Mission *cur_mission;
