@@ -128,7 +128,7 @@ class SafeLaneProblem:
 
 
 @timed
-def buildStiffness( problem, activated, anchors ):
+def buildStiffness( problem, activated, systems ):
     '''Computes the conductivity matrix'''
     def_si, def_sj, def_sv = problem.default_lanes[:3]
     int_si, int_sj, int_sv0  = problem.internal_lanes[:3]
@@ -149,12 +149,19 @@ def buildStiffness( problem, activated, anchors ):
     sjj = si + sj + sj + si
     svv = sv*2 + [-x for x in sv]*2
 
-    # impose Robin condition at anchors (because of singularity)
+    # Create anchors to prevent the matrix from being singular
+    # Anchors are jumpoints, there is 1 per connected set of systems
+    # A Robin condition will be added to these points and we will check the rhs
+    # thanks to them because in u (not utilde) the flux on these anchors should
+    # be 0, otherwise, it means that the 2 non-null terms on the rhs are on
+    # separate sets of systems.
     mu = max(sv)  # Just a parameter to make a Robin condition that does not spoil the spectrum of the matrix
-    for i in anchors:
-        sii.append(i)
-        sjj.append(i)
-        svv.append(mu)
+    for i in systems.biconn_roots:
+        for g in systems.loc2globs[i]:
+            sii.append(g)
+            sjj.append(g)
+            svv.append(mu)
+            break
 
     stiff = sp.csc_matrix( ( svv, (sii, sjj) ) )
     # Rem : it may become mandatory at some point to impose nb of dofs
@@ -345,7 +352,7 @@ def optimizeLanes( systems, problem ):
     ftilde = ftilde[:,systems.ass2g] # Keep only lines corresponding to assets
     
     for i in range(MAX_ITERATIONS):
-        stiff = buildStiffness( problem, activated, systems.anchors ) # 0.02 s
+        stiff = buildStiffness( problem, activated, systems ) # 0.02 s
         stiff_c = cholesky(stiff) #.001s
 
         # Compute direct and adjoint state

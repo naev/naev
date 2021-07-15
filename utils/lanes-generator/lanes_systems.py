@@ -5,6 +5,8 @@ import os
 import scipy.sparse as sp
 import xml.etree.ElementTree as ET
 
+from union_find import UnionFind
+
 Asset = namedtuple('Asset', 'x y faction population ran')
 
 def readFactions( path ):
@@ -48,31 +50,6 @@ def readAssets( path ):
     return assets
 
 
-# Creates anchors to prevent the matrix from being singular
-# Anchors are jumpoints, there is 1 per connected set of systems
-# A Robin condition will be added to these points and we will check the rhs
-# thanks to them because in u (not utilde) the flux on these anchors should
-# be 0, otherwise, it means that the 2 non-null terms on the rhs are on
-# separate sets of systems.
-# TODO : Just automatically pick a global node index representing each connected component (by 2-way jumps & in-system flights).
-def createAnchors():
-    anchorSys = [
-                 "Alteris",
-                 "Flow",
-                 "Zied",        # TODO : be sure this one is necessary
-                 "Qorel",
-                ]
-
-    anchorJps = [
-                 "Delta Pavonis",
-                 "Aesria",
-                 "Pudas",
-                 "Firk",
-                ]
-
-    return (anchorSys, anchorJps)
-
-
 class Systems:
     '''Readable representation of the systems.'''
     def __init__( self, skip_hidden=True, skip_exitonly=True, skip_uninhabited=False ):
@@ -107,7 +84,6 @@ class Systems:
 
         nsys = len(os.listdir(path))
 
-        self.anchors = []
         self.presass = [] # List of presences in assets
         self.factass = [] # Factions in assets. (I'm sorry for all these asses)
 
@@ -119,7 +95,6 @@ class Systems:
             root = tree.getroot()
 
             name = root.attrib['name']
-            #print(name)
             self.sysdict[name] = i
             self.sysnames.append(name)
 
@@ -201,17 +176,15 @@ class Systems:
             i += 1
 
         connect = np.zeros((nsys,nsys)) # Connectivity matrix for systems. TODO : use sparse
-        anchorSys, anchorJps = createAnchors()
+        biconnect = UnionFind(nsys)  # Partitioning of the systems by reversible-jump connectedness.
 
         for i, (jpname, autopos, loc2globi, jp2loci, namei) in enumerate(zip(self.jpnames, self.autoposs, self.loc2globs, self.jp2locs, self.sysnames)):
-            #print(namei)
             for j in range(len(jpname)):
                 k = self.sysdict[jpname[j]] # Get the index of target
                 connect[i,k] = 1 # Systems connectivity
                 connect[k,i] = 1
-
-                if (namei in anchorSys) and (jpname[j] in anchorJps): # Add to anchors
-                    self.anchors.append( loc2globi[jp2loci[j]] )
+                if namei in self.jpdicts[k]: # If reverse jump exists
+                    biconnect.union(i, k)
 
                 if autopos[j]: # Compute autopos stuff
                     theta = math.atan2( self.ylist[k]-self.ylist[i], self.xlist[k]-self.xlist[i] )
@@ -220,6 +193,7 @@ class Systems:
                     self.nodess[i][jp2loci[j]] = (x,y) # Now we have the position
 
         # Compute distances.
+        self.biconn_roots = biconnect.findall()  # One system ID per biconnected* component. (* connected by 2-way jumps)
         self.distances = sp.csgraph.dijkstra(connect)
 
         # Use distances to compute ranged presences
