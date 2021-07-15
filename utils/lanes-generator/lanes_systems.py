@@ -5,8 +5,6 @@ import os
 import scipy.sparse as sp
 import xml.etree.ElementTree as ET
 
-from union_find import UnionFind
-
 Asset = namedtuple('Asset', 'x y faction population ran')
 
 def readFactions( path ):
@@ -175,15 +173,12 @@ class Systems:
 
         nsys = len(self.sysnames)
         connect = np.zeros((nsys,nsys)) # Connectivity matrix for systems. TODO : use sparse
-        biconnect = UnionFind(nsys)  # Partitioning of the systems by reversible-jump connectedness.
 
         for i, (jpname, autopos, loc2globi, jp2loci, namei) in enumerate(zip(self.jpnames, self.autoposs, self.loc2globs, self.jp2locs, self.sysnames)):
             for j in range(len(jpname)):
                 k = self.sysdict[jpname[j]] # Get the index of target
                 connect[i,k] = 1 # Systems connectivity
                 connect[k,i] = 1
-                if namei in self.jpdicts[k]: # If reverse jump exists
-                    biconnect.union(i, k)
 
                 if autopos[j]: # Compute autopos stuff
                     theta = math.atan2( self.ylist[k]-self.ylist[i], self.xlist[k]-self.xlist[i] )
@@ -192,7 +187,6 @@ class Systems:
                     self.nodess[i][jp2loci[j]] = (x,y) # Now we have the position
 
         # Compute distances.
-        self.biconn_roots = biconnect.findall()  # One system ID per biconnected* component. (* connected by 2-way jumps)
         self.distances = sp.csgraph.dijkstra(connect)
 
         # Use distances to compute ranged presences

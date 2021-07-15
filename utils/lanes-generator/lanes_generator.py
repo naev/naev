@@ -10,6 +10,7 @@ from sksparse.cholmod import cholesky
 from lanes_perf import timed, timer
 from lanes_ui import printLanes
 from lanes_systems import Systems
+from union_find import UnionFind
 
 JUMP_CONDUCTIVITY = .001  # TODO : better value
 DISCONNECTED_THRESHOLD = 1e-12
@@ -99,6 +100,7 @@ class SafeLaneProblem:
         si0 = [] #
         sj0 = [] #
         sv0 = [] # For the construction of the sparse weighted connectivity matrix
+        biconnect = UnionFind(len(systems.sysnames))  # Partitioning of the systems by reversible-jump connectedness.
 
         for i, (jpname, loc2globi, jp2loci, namei) in enumerate(zip(systems.jpnames, systems.loc2globs, systems.jp2locs, systems.sysnames)):
             for j in range(len(jpname)):
@@ -116,11 +118,20 @@ class SafeLaneProblem:
                 si0.append(loc2globi[jp2loci[j]]) # Assets connectivity (jp only)
                 sj0.append(loc2globk[jp2lock[m]]) # 
                 sv0.append(JUMP_CONDUCTIVITY)
+                biconnect.union(i, k)
 
         # Remove the redundant info because right now, we have i->j and j->i
         for k in range(len(si0)-1, -1, -1):
             if (si0[k] in sj0):
                 del si0[k], sj0[k], sv0[k]
+
+        # Create anchors to prevent the matrix from being singular
+        # Anchors are jumpoints, there is 1 per connected set of systems
+        # A Robin condition will be added to these points and we will check the rhs
+        # thanks to them because in u (not utilde) the flux on these anchors should
+        # be 0, otherwise, it means that the 2 non-null terms on the rhs are on
+        # separate sets of systems.
+        self.anchors = [systems.loc2globs[i][0] for i in biconnect.findall() if systems.loc2globs[i]]
 
         # Get the stiffness inside systems
         self.default_lanes = (si0,sj0,sv0)
@@ -149,19 +160,11 @@ def buildStiffness( problem, activated, systems ):
     sjj = si + sj + sj + si
     svv = sv*2 + [-x for x in sv]*2
 
-    # Create anchors to prevent the matrix from being singular
-    # Anchors are jumpoints, there is 1 per connected set of systems
-    # A Robin condition will be added to these points and we will check the rhs
-    # thanks to them because in u (not utilde) the flux on these anchors should
-    # be 0, otherwise, it means that the 2 non-null terms on the rhs are on
-    # separate sets of systems.
     mu = max(sv)  # Just a parameter to make a Robin condition that does not spoil the spectrum of the matrix
-    for i in systems.biconn_roots:
-        for g in systems.loc2globs[i]:
-            sii.append(g)
-            sjj.append(g)
-            svv.append(mu)
-            break
+    for i in problem.anchors:
+        sii.append(i)
+        sjj.append(i)
+        svv.append(mu)
 
     stiff = sp.csc_matrix( ( svv, (sii, sjj) ) )
     # Rem : it may become mandatory at some point to impose nb of dofs
