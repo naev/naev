@@ -158,7 +158,7 @@ function enter ()
    -- Main positions
    local pos_drone_control1 = vec2.new( -500, 2000 )
    local pos_drone_control2 = vec2.new( 18500, 9200 )
-   local pos_hacking_center = vec2.new( -5000, -17000 )
+   local pos_hacking_center = vec2.new( 5000, -17000 )
 
    -- Define the routes
    local route0 = {
@@ -225,7 +225,6 @@ function enter ()
    end
    local function spawn_drone( shipname, pos )
       local p = pilot.add( shipname, "Za'lek", fuzz_pos(pos) )
-      p:setVisplayer(true)
       -- We are nice and make the drones easier to see for this mission
       p:intrinsicSet( "ew_hide", -50 )
       table.insert( all_ships, p )
@@ -331,9 +330,9 @@ function enter ()
    --add_guard_group( pos_drone_control1, tiny_group, drone_group1 )
    --add_guard_group( pos_drone_control2, tiny_group, drone_group2 )
 
-   add_guard_group( bosspos, small_group, nil )
-   add_guard_group( bosspos, large_group, drone_group1 )
-   add_guard_group( bosspos, large_group, drone_group2 )
+   add_guard_group( fuzz_pos(bosspos,300), small_group, nil )
+   add_guard_group( fuzz_pos(bosspos,300), large_group, drone_group1 )
+   add_guard_group( fuzz_pos(bosspos,300), large_group, drone_group2 )
 
    -- Tell the player to f off
    hook.timer( 5e3,  "message_first" )
@@ -370,12 +369,27 @@ function drone_control1_dead ()
          p:disable()
       end
    end
+   drone_control1 = nil
+   drone_control_update()
 end
 function drone_control2_dead ()
    for k,p in ipairs(drone_group2) do
       if p:exists() then
          p:disable()
       end
+   end
+   drone_control2 = nil
+   drone_control_update()
+end
+function drone_control_update ()
+   if drone_control1 or drone_control2 then
+      return
+   end
+
+   -- Move the boss a bit away
+   if main_boss and main_boss:exists() then
+      local mem = main_boss:memory()
+      mem.guardpos = vec2.new( 4000, -14000 )
    end
 end
 function hacking_center_dead ()
