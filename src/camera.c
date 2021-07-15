@@ -49,7 +49,7 @@ static double camera_flyspeed = 0.; /**< Speed when flying. */
  * Prototypes.
  */
 static void cam_updateFly( double x, double y, double dt );
-static void cam_updatePilot( Pilot *follow, double dt );
+static void cam_updatePilot( const Pilot *follow, double dt );
 static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, double dt );
 static void cam_updateManualZoom( double dt );
 
@@ -297,7 +297,7 @@ static void cam_updateFly( double x, double y, double dt )
 /**
  * @brief Updates a camera following a pilot.
  */
-static void cam_updatePilot( Pilot *follow, double dt )
+static void cam_updatePilot( const Pilot *follow, double dt )
 {
    Pilot *target;
    double diag2, a, r, dir, k;
