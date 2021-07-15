@@ -40,7 +40,7 @@ static unsigned int mission_cargo_id = 0; /**< ID generator for special mission 
  * @param commodityname Commodity to check how many the player.p owns.
  * @return The number of commodities owned matching commodityname.
  */
-int pilot_cargoOwned( Pilot* pilot, const char* commodityname )
+int pilot_cargoOwned( const Pilot* pilot, const char* commodityname )
 {
    int i;
 
@@ -58,7 +58,7 @@ int pilot_cargoOwned( Pilot* pilot, const char* commodityname )
  *    @param p Pilot to get the free space of.
  *    @return Free cargo space on pilot.
  */
-int pilot_cargoFree( Pilot* p )
+int pilot_cargoFree( const Pilot* p )
 {
    return p->cargo_free;
 }
@@ -189,7 +189,7 @@ int pilot_cargoAdd( Pilot* pilot, Commodity* cargo,
  *    @param pilot Pilot to get used cargo space of.
  *    @return The used cargo space by pilot.
  */
-int pilot_cargoUsed( Pilot* pilot )
+int pilot_cargoUsed( const Pilot* pilot )
 {
    int i, q;
 

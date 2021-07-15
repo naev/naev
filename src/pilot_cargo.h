@@ -13,9 +13,9 @@
 /*
  * Normal Cargo.
  */
-int pilot_cargoUsed( Pilot* pilot ); /* gets how much cargo it has onboard */
-int pilot_cargoFree( Pilot* p ); /* cargo space */
-int pilot_cargoOwned( Pilot* pilot, const char* commodityname );
+int pilot_cargoUsed( const Pilot* pilot ); /* gets how much cargo it has onboard */
+int pilot_cargoFree( const Pilot* p ); /* cargo space */
+int pilot_cargoOwned( const Pilot* pilot, const char* commodityname );
 int pilot_cargoAdd( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id );
 int pilot_cargoRm( Pilot* pilot, Commodity* cargo, int quantity );
