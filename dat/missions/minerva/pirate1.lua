@@ -64,7 +64,7 @@ function accept ()
    vn.music( minerva.loops.pirate )
    vn.transition()
    vn.label( "leave" )
-   vn.na(_("You approach the sketch individual who seems to be calling your attention."))
+   vn.na(_("You approach the sketchy individual who seems to be calling your attention."))
    pir(_([["What do you think about them Za'leks and Dvaereds? Quite a work, eh? Always getting into fights with each other and creating trouble for those who just want to enjoy life. Such a bother."]]))
    pir(_([["Say what, I know you're a pretty decent pilot. Would you be interested in a somewhat non-standard job? Nothing very out of the ordinary, just want to ruff up some feathers."]]))
    vn.menu( {
