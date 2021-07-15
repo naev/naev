@@ -10,7 +10,25 @@ require "numstring"
 mem.armour_run = 75 -- Za'lek armour is pretty crap. They know this, and will dip when their shields go down.
 mem.aggressive = true
 
+local drones = {
+   ["Za'lek Heavy Drone"] = true,
+   ["Za'lek Bomber Drone"] = true,
+   ["Za'lek Light Drone"] = true,
+   ["Za'lek Scout Drone"] = true,
+}
+
 function create()
+   -- See if a drone
+   mem.isdrone = drones[ ai.pilot():ship():nameRaw() ]
+   if mem.isdrone then
+      local msg = _([["Access denied"]])
+      mem.refuel_no = msg
+      mem.bribe_no = msg
+      mem.armour_run = 0 -- Drones don't run
+      create_post()
+      return
+   end
+
    -- Not too many credits.
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/200, ai.pilot():ship():price()/50) )
 
@@ -36,7 +54,7 @@ function create()
    else
       -- FIXME: Could be made more Za'lek-like.
       -- Will this work? ~Areze
-      bribe_no = {
+      local bribe_no = {
          _("\"Keep your cash, you troglodyte.\""),
          _("\"Don't make me laugh. Eat laser beam!\""),
          _("\"My drones aren't interested in your ill-gotten gains and neither am I!\""),
