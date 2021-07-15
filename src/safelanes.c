@@ -105,7 +105,7 @@ static Faction *faction_stack;  /**< Array (array.h): The faction IDs that can b
 static int *lane_faction;       /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
 static FactionMask *lane_fmask; /**< Array (array.h): Per edge, the set of factions that may build it. */
 static double **presence_budget;/**< Array (array.h): Per faction, per system, the amount of presence not yet spent on lanes. */
-static int *tmp_pnt_to_vertex;  /**< Array (array.h): The vertex indices for planets. Used to initialize "ftilde", "PPl". */
+static int *tmp_planet_indices; /**< Array (array.h): Vertex ids that are planets. Used to initialize "ftilde", "PPl". */
 static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to initialize "stiff". */
 static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to initialize "stiff". */
 static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to initialize "stiff". */
@@ -339,14 +339,14 @@ static void safelanes_initStacks_vertex (void)
    vertex_stack = array_create( Vertex );
    sys_to_first_vertex = array_create( int );
    array_push_back( &sys_to_first_vertex, 0 );
-   tmp_pnt_to_vertex = array_create( int );
+   tmp_planet_indices = array_create( int );
    tmp_jump_edges = array_create( Edge );
    for (system=0; system<array_size(systems_stack); system++) {
       for (i=0; i<array_size(systems_stack[system].planets); i++) {
          p = systems_stack[system].planets[i];
          if (p->real && p->presenceAmount) {
             Vertex v = {.system = system, .type = VERTEX_PLANET, .index = i};
-            array_push_back( &tmp_pnt_to_vertex, array_size(vertex_stack) );
+            array_push_back( &tmp_planet_indices, array_size(vertex_stack) );
             array_push_back( &vertex_stack, v );
          }
       }
@@ -505,8 +505,8 @@ static void safelanes_destroyStacks (void)
 static void safelanes_destroyTmp (void)
 {
    unionfind_free( &tmp_sys_uf );
-   array_free( tmp_pnt_to_vertex );
-   tmp_pnt_to_vertex = NULL;
+   array_free( tmp_planet_indices );
+   tmp_planet_indices = NULL;
    array_free( tmp_jump_edges );
    tmp_jump_edges = NULL;
    array_free( tmp_edge_conduct );
@@ -618,7 +618,7 @@ static void safelanes_initQtQ (void)
 static void safelanes_initFTilde (void)
 {
    cholmod_sparse *eye = cholmod_speye( array_size(vertex_stack), array_size(vertex_stack), CHOLMOD_REAL, &C );
-   cholmod_sparse *sp = cholmod_submatrix( eye, NULL, -1, tmp_pnt_to_vertex, array_size(tmp_pnt_to_vertex), 1, SORTED, &C );
+   cholmod_sparse *sp = cholmod_submatrix( eye, NULL, -1, tmp_planet_indices, array_size(tmp_planet_indices), 1, SORTED, &C );
    cholmod_free_dense( &ftilde, &C );
    ftilde = cholmod_sparse_to_dense( sp, &C );
    cholmod_free_sparse( &sp, &C );
@@ -638,7 +638,7 @@ static void safelanes_initPPl (void)
    double *pv;
    Planet *pnti, *pntj;
 
-   np = array_size(tmp_pnt_to_vertex);
+   np = array_size(tmp_planet_indices);
 #define MULTI_INDEX( i, j ) ((i*(i-1))/2 + j)
    P = cholmod_allocate_triplet( np, MULTI_INDEX(np,0), np*(np-1), STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
    pi = P->i; pj = P->j; pv = P->x;
@@ -660,14 +660,14 @@ static void safelanes_initPPl (void)
    for (k=0; k<array_size(faction_stack); k++)
       array_push_back( &D, cholmod_allocate_dense( 1, MULTI_INDEX(np,0), 1, CHOLMOD_REAL, &C ) );
 
-   for (i=0; i<array_size(tmp_pnt_to_vertex); i++) {
-      sysi = vertex_stack[tmp_pnt_to_vertex[i]].system;
-      pnti = system_getIndex( sysi )->planets[vertex_stack[tmp_pnt_to_vertex[i]].index];
+   for (i=0; i<array_size(tmp_planet_indices); i++) {
+      sysi = vertex_stack[tmp_planet_indices[i]].system;
+      pnti = system_getIndex( sysi )->planets[vertex_stack[tmp_planet_indices[i]].index];
       facti = FACTION_ID_TO_INDEX( pnti->faction );
       for (j=0; j<i; j++) {
-         sysj = vertex_stack[tmp_pnt_to_vertex[j]].system;
+         sysj = vertex_stack[tmp_planet_indices[j]].system;
          if (unionfind_find( &tmp_sys_uf, sysi ) == unionfind_find( &tmp_sys_uf, sysj )) {
-            pntj = system_getIndex( sysj )->planets[vertex_stack[tmp_pnt_to_vertex[j]].index];
+            pntj = system_getIndex( sysj )->planets[vertex_stack[tmp_planet_indices[j]].index];
             factj = FACTION_ID_TO_INDEX( pntj->faction );
             if (facti >= 0)
                ((double*)D[facti]->x)[MULTI_INDEX(i,j)] += pnti->presenceAmount;
