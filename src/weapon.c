@@ -43,6 +43,12 @@
 #define WEAPON_STATUS_JAMMED     1 /**< Got jammed */
 #define WEAPON_STATUS_UNJAMMED   2 /**< Survived jamming */
 
+/* Weapon flags. */
+#define WEAPON_FLAG_DESTROYED    1
+#define weapon_isFlag(w,f)    ((w)->flags & (f))
+#define weapon_setFlag(w,f)   ((w)->flags |= (f))
+#define weapon_rmFlag(w,f)    ((w)->flags &= ~(f))
+
 
 /**
  * @struct Weapon
@@ -50,6 +56,7 @@
  * @brief In-game representation of a weapon.
  */
 typedef struct Weapon_ {
+   unsigned int flags; /**< Weapno flags. */
    Solid *solid; /**< Actually has its own solid :) */
    unsigned int ID; /**< Only used for beam weapons. */
 
@@ -87,6 +94,7 @@ typedef struct Weapon_ {
 static Weapon** wbackLayer = NULL; /**< behind pilots */
 /* behind player layer */
 static Weapon** wfrontLayer = NULL; /**< in front of pilots, behind player */
+static int weapons_updating = 0; /**< Whether or not the weapons are updating. */
 
 /* Graphics. */
 static gl_vbo  *weapon_vbo     = NULL; /**< Weapon VBO. */
@@ -123,6 +131,7 @@ static void weapon_free( Weapon* w );
 static void weapon_explodeLayer( WeaponLayer layer,
       double x, double y, double radius,
       const Pilot *parent, int mode );
+static void weapons_purgeLayer( Weapon** layer );
 /* Hitting. */
 static int weapon_checkCanHit( const Weapon* w, const Pilot *p );
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos );
@@ -459,8 +468,15 @@ static void think_beam( Weapon* w, const double dt )
  */
 void weapons_update( const double dt )
 {
+   /* When updating, just mark weapons for deletion. */
+   weapons_updating = 1;
    weapons_updateLayer(dt,WEAPON_LAYER_BG);
    weapons_updateLayer(dt,WEAPON_LAYER_FG);
+   weapons_updating = 0;
+
+   /* Actually purge and remove weapons. */
+   weapons_purgeLayer( wbackLayer );
+   weapons_purgeLayer( wfrontLayer );
 }
 
 
@@ -493,8 +509,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          return;
    }
 
-   i = 0;
-   while (i < array_size(wlayer)) {
+   for (i=0; i<array_size(wlayer); i++) {
       w = wlayer[i];
 
       switch (w->outfit->type) {
@@ -591,15 +606,26 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             break;
       }
 
-      /* Out of bounds, loop is over. */
-      if (i >= array_size(wlayer))
-         break;
-
-      /* Only increment if weapon wasn't deleted. */
-      if (w == wlayer[i]) {
+      /* Only increment if weapon wasn't destroyed. */
+      if (!weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
          weapon_update(w,dt,layer);
-         if ((i < array_size(wlayer)) && (w == wlayer[i]))
-            i++;
+   }
+}
+
+
+/**
+ * @brief Purges weapons marked for deletion.
+ *
+ *    @param layer Layer to purge weapons from.
+ */
+static void weapons_purgeLayer( Weapon** layer )
+{
+   int i;
+   for (i=0; i<array_size(layer); i++) {
+      if (weapon_isFlag(layer[i],WEAPON_FLAG_DESTROYED)) {
+         weapon_free(layer[i]);
+         array_erase( &layer, &layer[i], &layer[i+1] );
+         i--;
       }
    }
 }
@@ -1837,6 +1863,12 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
 {
    int i;
    Weapon** wlayer;
+
+   /* When updating we just mark for removal. */
+   if (weapons_updating) {
+      weapon_setFlag( w, WEAPON_FLAG_DESTROYED );
+      return;
+   }
 
    switch (layer) {
       case WEAPON_LAYER_BG:
