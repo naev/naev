@@ -72,12 +72,12 @@ static int safelanesL_get( lua_State *L )
    SafeLane *lanes;
    LuaJump jump;
 
-   if (lua_gettop( L ) >= 1 && !lua_isnil( L, 1 ))
+   if (!lua_isnoneornil(L,1))
       faction = luaL_validfaction( L, 1 );
    else
       faction = -1;
 
-   if (lua_gettop( L ) >= 2 && !lua_isnil( L, 2 ))
+   if (!lua_isnoneornil(L,2))
       sys = luaL_validsystem( L, 2 );
    else
       sys = cur_system;
