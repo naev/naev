@@ -956,7 +956,22 @@ static void matwrap_mul( MatWrap A, MatWrap B, MatWrap* C )
 {
    assert( A.ncol == B.nrow );
    matwrap_init( C, CblasColMajor, A.nrow, B.ncol );
-   // TODO
+   cblas_dgemm(
+         C->order,
+         A.order == C->order ? CblasNoTrans : CblasTrans,
+         B.order == C->order ? CblasNoTrans : CblasTrans,
+         A.nrow,
+         B.ncol,
+         A.ncol,
+         1,
+         A.x,
+         A.order == CblasColMajor ? A.nrow : A.ncol,
+         B.x,
+         B.order == CblasColMajor ? B.nrow : B.ncol,
+         0,
+         C->x,
+         C->order == CblasColMajor ? C->nrow : C->ncol
+   );
 }
 
 
