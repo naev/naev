@@ -83,6 +83,14 @@ typedef struct Faction_ {
 /** @brief A bet that we'll never willingly point this algorithm at 32 factions. */
 typedef uint32_t FactionMask;
 
+/** @brief Some BLAS-compatible matrix data whose size/ordreing isn't pre-determined. */
+typedef struct MatWrap_ {
+   enum CBLAS_ORDER order; /**< CblasRowMajor or CblasColMajor */
+   int nrow;               /**< Rows. */
+   int ncol;               /**< Columns. */
+   double *x;
+} MatWrap;
+
 
 /*
  * Global state.
@@ -137,6 +145,11 @@ static inline FactionMask MASK_ONE_FACTION( int id );
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 );
 static int cmp_key( const void* p1, const void* p2 );
 static double frobenius_norm( cholmod_dense* m );
+static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol );
+static void matwrap_sliceByPresence( cholmod_dense* m, double* sysPresence, MatWrap* out );
+static void matwrap_mul( MatWrap A, MatWrap B, MatWrap* C );
+static double matwrap_mul_elem( MatWrap A, MatWrap B, int i, int j );
+static void matwrap_free( MatWrap A );
 
 /**
  * @brief Like array_push_back( a, Edge{v0, v1} ), but achievable in C. :-P
@@ -685,10 +698,15 @@ static void safelanes_initPPl (void)
  */
 static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 {
-   int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si;
-   double *facind_vals, score, score_best;
+   int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si, sis, sjs;
+   double *facind_vals, score, score_best, Linv;
    StarSystem *sys;
+   MatWrap *lal; /**< Per faction index, the Lambda_tilde[myDofs,:] @ PPl[fi] matrices. Calloced and lazily populated. */
+   int *lal_bases, lal_base, sys_base; /**< System si's U and Lambda rows start at sys_base; its lal rows start at lal_base. */
+   MatWrap UTt = {.order = CblasRowMajor, .nrow = utilde->ncol, .ncol = utilde->nrow, .x = utilde->x};
 
+   lal = calloc( array_size(faction_stack), sizeof(MatWrap) );
+   lal_bases = calloc( array_size(faction_stack), sizeof(int) );
    edgeind_opts = array_create( int );
    facind_opts = array_create_size( int, array_size(faction_stack) );
    facind_vals = array_create_size( double, array_size(faction_stack) );
@@ -697,16 +715,12 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
       array_push_back( &facind_vals, 0 );
    }
 
+   /* HACK: Because Lambda_tilde will never be used again, and we need to row-slice it, conver to row-major now. */
+   cblas_dimatcopy( CblasColMajor, CblasTrans, Lambda_tilde->nrow, Lambda_tilde->ncol, 1, Lambda_tilde->x,
+         Lambda_tilde->nrow, Lambda_tilde->ncol );
+
    for (si=0; si<array_size(sys_to_first_vertex)-1; si++)
    {
-      /** FIXME begin premature optimization? */
-      for (ei=sys_to_first_edge[si]; ei<sys_to_first_edge[1+si]; ei++)
-         if (lane_faction[ei] == 0)
-            break;
-      if (ei == sys_to_first_edge[1+si])
-         continue; /* No unclaimed edges here. */
-      /** FIXME end premature optimization? */
-
       /* Factions with most presence here choose first. */
       sys = system_getIndex( si );
       for (fi=0; fi<array_size(faction_stack); fi++)
@@ -716,8 +730,18 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 
       for (fii=0; fii<array_size(faction_stack); fii++) {
          fi = facind_opts[fii];
+         sys_base = sys_to_first_vertex[si];
+
+         /* Get the base index to use for this system. Save the value we expect to be the next iteration's base index.
+          * The current system's rows is in the lal[fi] matrix if there's presence at the time we slice it.
+          * What we know is whether there's presence *now*. We can use that as a proxy and fix lal_bases[fi] if we
+          * deplete this presence before constructing lal[fi]. This is tricky, so there are assertions below,
+          * which can warn us if we fuck this up. */
+         lal_base = lal_bases[fi];
          if (presence_budget[fi][si] <= 0)
             continue;
+         /* We "should" find these DoF's interesting if/when we slice, and will unless we deplete this presence first. */
+         lal_bases[fi] += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
 
          array_resize( &edgeind_opts, 0 );
          for (ei=sys_to_first_edge[si]; ei<sys_to_first_edge[1+si]; ei++)
@@ -728,6 +752,8 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 
          if (array_size(edgeind_opts) == 0) {
             presence_budget[fi][si] = -1;  /* Nothing to build here! Tell ourselves to stop trying. */
+            if (lal[fi].x == NULL)
+               lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
             continue;
          }
 
@@ -737,8 +763,27 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
             score_best = -HUGE_VAL;
             for (eii=0; eii<array_size(edgeind_opts); eii++) {
                ei = edgeind_opts[eii];
-               score = /* TODO this is a fake placeholder formula */ safelanes_initialConductivity(ei);
-               (void) Lambda_tilde;  // TODO use this instead
+               sis = edge_stack[ei][0];
+               sjs = edge_stack[ei][1];
+
+               if (lal[fi].x == NULL) { /* Is it time to evaluate the lazily-calculated matrix? */
+                  MatWrap lamt;
+                  MatWrap PP = {.order = CblasColMajor, .nrow = PPl[fi]->ncol, .ncol = PPl[fi]->nrow, .x = PPl[fi]->x};
+                  matwrap_sliceByPresence( Lambda_tilde, presence_budget[fi], &lamt );
+                  matwrap_mul( lamt, PP, &lal[fi] );
+                  matwrap_free( lamt );
+               }
+
+               score = 0;
+               /* Evaluate (LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0]), */
+               /* where    LUTll = np.dot( lal[[sis,sjs],:] , utilde[[sis,sjs],:].T ) */
+               score += matwrap_mul_elem( lal[fi], UTt, sis - sys_base + lal_base, sis );
+               score += matwrap_mul_elem( lal[fi], UTt, sjs - sys_base + lal_base, sjs );
+               score -= matwrap_mul_elem( lal[fi], UTt, sis - sys_base + lal_base, sjs );
+               score -= matwrap_mul_elem( lal[fi], UTt, sjs - sys_base + lal_base, sis );
+               Linv = safelanes_initialConductivity(ei);
+               score *= ALPHA * Linv * Linv;
+
                if (score > score_best) {
                   ei_best = ei;
                   score_best = score;
@@ -747,11 +792,23 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
          }
 
          presence_budget[fi][si] -= 1 / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
+         if (presence_budget[fi][si] <= 0 && lal[fi].x == NULL)
+            lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
          safelanes_updateConductivity( ei_best );
          lane_faction[ ei_best ] = faction_stack[fi].id;
       }
    }
 
+#if DEBUGGING
+   for (fi=0; fi<array_size(faction_stack); fi++)
+      if ( lal[fi].x != NULL)
+         assert( "We correctly tracked the row offsets between the 'lal' and 'utilde' matrices" && lal[fi].nrow == lal_bases[fi] );
+#endif
+
+   for (fi=0; fi<array_size(faction_stack); fi++)
+      matwrap_free( lal[fi] );
+   free( lal );
+   free( lal_bases );
    array_free( edgeind_opts );
    array_free( facind_vals );
    array_free( facind_opts );
@@ -852,4 +909,67 @@ static double frobenius_norm( cholmod_dense* m )
 {
    assert( m->xtype == CHOLMOD_REAL && m->d == m->nrow );
    return cblas_dnrm2( m->nrow * m->ncol, m->x, 1 );
+}
+
+
+/** @brief Allocate a matrix fitting this description. */
+static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol )
+{
+   A->order = order;
+   A->nrow  = nrow;
+   A->ncol  = ncol;
+   A->x     = malloc( nrow*ncol*sizeof(double) );
+}
+
+
+/**
+ * @brief Construct the matrix-slice of m, selecting those rows where the corresponding presence value is positive.
+ *        HACK: We assume m has already been flipped to row-major in place.
+ */
+static void matwrap_sliceByPresence( cholmod_dense* m, double* sysPresence, MatWrap* out )
+{
+   int nr, nc, si;
+   size_t in_base, out_base, sz;
+
+   nc = m->ncol;
+   nr = 0;
+   for (si = 0; si < array_size(sys_to_first_vertex) - 1; si++)
+      if (sysPresence[si] > 0)
+         nr += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
+
+   matwrap_init( out, CblasRowMajor, nr, nc );
+
+   in_base = out_base = 0;
+   for (si = 0; si < array_size(sys_to_first_vertex) - 1; si++) {
+      sz = (sys_to_first_vertex[1+si] - sys_to_first_vertex[si]) * nc;
+      if (sysPresence[si] > 0) {
+         memcpy( &out->x[out_base], &((double*)m->x)[in_base], sz * sizeof(double) );
+         out_base += sz;
+      }
+      in_base += sz;
+   }
+}
+
+
+/** @brief Initialize C with the product A*B. */
+static void matwrap_mul( MatWrap A, MatWrap B, MatWrap* C )
+{
+   assert( A.ncol == B.nrow );
+   matwrap_init( C, CblasColMajor, A.nrow, B.ncol );
+   // TODO
+}
+
+
+/** @brief Return the i,j entry of A*B. */
+static double matwrap_mul_elem( MatWrap A, MatWrap B, int i, int j )
+{
+   assert( A.ncol == B.nrow );
+   return i+j; // TODO Not actually!!!
+}
+
+
+/** @brief Return the Frobenius norm sqrt(Tr(m* m)). Matrix form is restricted to stuff we care about. */
+static void matwrap_free( MatWrap A )
+{
+   free( A.x );
 }
