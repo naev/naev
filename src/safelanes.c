@@ -6,6 +6,7 @@
  * @file safelanes.c
  *
  * @brief Handles factions' safe lanes through systems.
+ * This implements the algorithm described in utils/lanes-generator (whitepaper and much clearer Python version).
  */
 
 /** @cond */
@@ -410,6 +411,7 @@ static void safelanes_initStacks_edge (void)
    array_shrink( &sys_to_first_edge );
 
    lane_faction = array_create_size( int, array_size(edge_stack) );
+   array_resize( &lane_faction, array_size(edge_stack) );
    memset( lane_faction, 0, array_size(lane_faction)*sizeof(lane_faction[0]) );
 }
 
@@ -715,7 +717,7 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
       array_push_back( &facind_vals, 0 );
    }
 
-   /* HACK: Because Lambda_tilde will never be used again, and we need to row-slice it, conver to row-major now. */
+   /* HACK: Because Lambda_tilde will never be used again, and we need to row-slice it, convert to row-major now. */
    cblas_dimatcopy( CblasColMajor, CblasTrans, Lambda_tilde->nrow, Lambda_tilde->ncol, 1, Lambda_tilde->x,
          Lambda_tilde->nrow, Lambda_tilde->ncol );
 
