@@ -55,7 +55,7 @@
 typedef struct {
 #if DEBUG_ARRAYS
    int _sentinel;         /**< Sentinel for when debugging. */
-#endif
+#endif /* DEBUG_ARRAYS */
    size_t _reserved;      /**< Number of elements reserved */
    size_t _size;          /**< Number of elements in the array */
    char alignas(max_align_t) _array[0];  /**< Begin of the array */
@@ -84,7 +84,7 @@ static inline _private_container *_array_private_container(void *a)
 
 #if DEBUG_ARRAYS
    assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == ARRAY_SENTINEL));
-#endif
+#endif /* DEBUG_ARRAYS */
 
    return c;
 }
@@ -178,7 +178,7 @@ ALWAYS_INLINE static inline int array_size(const void *array)
 
 #if DEBUG_ARRAYS
    assert("Sentinel not found. Use array_create() to create the array." && (c1[-1]._sentinel == ARRAY_SENTINEL));
-#endif
+#endif /* DEBUG_ARRAYS */
 
    return c1[-1]._size;
 }
