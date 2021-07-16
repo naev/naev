@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-07-06 20:07-0400\n"
-"PO-Revision-Date: 2021-07-01 19:34+0000\n"
+"PO-Revision-Date: 2021-07-16 00:38+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.7.2-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -21446,7 +21446,7 @@ msgstr "Hyänen-Kämpferbucht"
 #: dat/outfits/fighter_bays/hyena_fighter_dock.xml:10
 #: dat/scripts/campaigns/minerva.lua:34
 msgid "TODO"
-msgstr ""
+msgstr "ZUTUN"
 
 #: dat/outfits/fighter_bays/hyena_fighter_dock.xml:2
 msgid "Hyena Fighter Dock"
@@ -22768,10 +22768,8 @@ msgstr ""
 "an Strahlung auszusenden, die für passive Sensoren unsichtbar erscheint."
 
 #: dat/outfits/structure/battery_i.xml:2
-#, fuzzy
-#| msgid "Battery II"
 msgid "Battery I"
-msgstr "Batterie II"
+msgstr "Batterie I"
 
 #: dat/outfits/structure/battery_i.xml:4 dat/outfits/structure/battery_ii.xml:4
 #: dat/outfits/structure/battery_iii.xml:4
@@ -23070,10 +23068,8 @@ msgstr ""
 #: dat/outfits/structure/shield_capacitor_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:310
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:329
-#, fuzzy
-#| msgid "Shield Capacitor II"
 msgid "Shield Capacitor I"
-msgstr "Schildkondensator II"
+msgstr "Schildkondensator I"
 
 #: dat/outfits/structure/shield_capacitor_i.xml:9
 msgid ""
@@ -23119,16 +23115,12 @@ msgstr ""
 "der Front kämpfenden Schiffe verstärkt."
 
 #: dat/outfits/structure/small_cargo_pod.xml:2
-#, fuzzy
-#| msgid "Cargo Pod"
 msgid "Small Cargo Pod"
-msgstr "Frachtkapsel"
+msgstr "Kleine Frachtkapsel"
 
 #: dat/outfits/structure/small_fuel_pod.xml:2
-#, fuzzy
-#| msgid "Fuel Pod"
 msgid "Small Fuel Pod"
-msgstr "Treibstoffkapsel"
+msgstr "Kleine Treibstoffkapsel"
 
 #: dat/outfits/structure/small_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:326
@@ -23667,23 +23659,16 @@ msgstr ""
 "hindurch zu strahlen, was eine erhöhte Wärmeabfuhr ermöglicht."
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:2
-#, fuzzy
-#| msgid "MilSpec Impacto-Plastic Coating"
 msgid "Milspec Impacto-Plastic Coating"
-msgstr "MilSpec-Impactoplastikbeschichtung"
+msgstr "Milspec-Impactoplastikbeschichtung"
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:9
-#, fuzzy
-#| msgid ""
-#| "The MilSpec Impacto-Plastic Coating is based on memory nano-alloys that "
-#| "resist both impact and damage, quickly restoring the protected surface to "
-#| "its original state."
 msgid ""
 "The Milspec Impacto-Plastic Coating is based on memory nano-alloys that "
 "resist both impact and damage, quickly restoring the protected surface to "
 "its original state."
 msgstr ""
-"Die MilSpec-Impactoplastikbeschichtung basiert auf Memory-Nanolegierungen, "
+"Die Milspec-Impactoplastikbeschichtung basiert auf Memory-Nanolegierungen, "
 "die sowohl Stößen als auch Beschädigungen widerstehen und die geschützte "
 "Oberfläche schnell wieder in ihren ursprünglichen Zustand zurückversetzen."
 
@@ -30828,28 +30813,24 @@ msgstr ""
 #. List of FLF flyers
 #: dat/events/dvaered/poster.lua:30
 msgid "This is an advertisement for the Dvaered Army."
-msgstr ""
+msgstr "Dies ist eine Werbeanzeige für die Dvaered-Armee."
 
 #: dat/events/dvaered/poster.lua:31
-#, fuzzy
-#| msgid "Are you sure you want to abort this mission?"
 msgid "Does this poster make you want to buy this book?"
-msgstr "Bist du dir sicher, dass du diese Mission abbrechen willst?"
+msgstr "Bringt dich dieses Poster dazu, dieses Buch zu kaufen?"
 
 #: dat/events/dvaered/poster.lua:33
 msgid "The FLF has wrecked this Dvaered poster."
-msgstr ""
+msgstr "Die FLF hat dieses Dvaered-Poster ruiniert."
 
 #. Create the NPC.
 #: dat/events/dvaered/poster.lua:38
-#, fuzzy
-#| msgid "Altering the deal"
 msgid "Poster on the wall"
-msgstr "Anpassung des Handels"
+msgstr "Poster an der Wand"
 
 #: dat/events/dvaered/poster.lua:38
 msgid "There is a poster on the wall"
-msgstr ""
+msgstr "Da ist ein Poster an der Wand"
 
 #. Did the FLF wreck this poster?
 #. End event on takeoff.
@@ -30859,10 +30840,8 @@ msgstr ""
 #. Finish
 #. Create the vn scene
 #: dat/events/dvaered/poster.lua:83
-#, fuzzy
-#| msgid "Booster"
 msgid "Poster"
-msgstr "Booster"
+msgstr "Poster"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -48306,8 +48285,6 @@ msgstr ""
 "Weg, um seinen Platz in der Gesellschaft zu finden.“"
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:92
-#, fuzzy
-#| msgid "What do you want to ask to Major Tam?"
 msgid "What do you want to ask Major Tam?"
 msgstr "Was möchtest du Major Tam fragen?"
 
@@ -48992,7 +48969,6 @@ msgid "Crimson Gauntlet Challenge"
 msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:30
-#, fuzzy
 msgid "Annihilate all enemies in the Crimson Gauntlet."
 msgstr "Vernichte alle Feinde im Blutroten Panzerhandschuh."
 
@@ -49012,10 +48988,8 @@ msgstr ""
 "Du hast %s erhalten!"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:90
-#, fuzzy
-#| msgid "Defeat the Starfire"
 msgid "Defeat all the other adversaries!"
-msgstr "Besiege Sternfeuer"
+msgstr "Besiege all die anderen Gegner!"
 
 #. take off and enter the ring!
 #. Wave meta-information
