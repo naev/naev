@@ -2348,6 +2348,7 @@ dat/missions/minerva/pirate1.lua
 dat/missions/minerva/pirate2.lua
 dat/missions/minerva/pirate3.lua
 dat/missions/minerva/pirate4.lua
+dat/missions/minerva/pirate5.lua
 dat/missions/neutral/animaltransport.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua

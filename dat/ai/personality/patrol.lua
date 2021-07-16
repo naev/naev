@@ -53,7 +53,7 @@ function idle ()
          -- Go to the next position
          ai.pushtask( "loiter", mem.waypoints[ mem._waypoint_cur ] )
       else
-         -- Go to a random locatioe
+         -- Go to a random location
          sysrad = rnd.rnd() * system.cur():radius()
          angle = rnd.rnd() * 2 * math.pi
          ai.pushtask("loiter", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
