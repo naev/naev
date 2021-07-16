@@ -976,7 +976,10 @@ static void matwrap_sliceByPresence( MatWrap *A, double* sysPresence, MatWrap* o
 /** @brief Convert in-place from column-major to row-major, or vice-versa. */
 static void matwrap_reorder_in_place( MatWrap* A )
 {
-   cblas_dimatcopy( A->order, CblasTrans, A->nrow, A->ncol, 1, A->x, A->nrow, A->ncol );
+   int ldA, ldAt;
+   ldA  = A->order == CblasColMajor ? A->nrow : A->ncol;
+   ldAt = A->order == CblasRowMajor ? A->nrow : A->ncol;
+   cblas_dimatcopy( A->order, CblasTrans, A->nrow, A->ncol, 1, A->x, ldA, ldAt );
    A->order = A->order == CblasColMajor ? CblasRowMajor : CblasColMajor;
 }
 
@@ -1013,7 +1016,7 @@ static double matwrap_mul_elem( MatWrap A, MatWrap B, int i, int j )
          A.ncol,
          &A.x[A.order == CblasColMajor ? i : i*A.ncol],
               A.order == CblasRowMajor ? 1 : A.nrow,
-         &B.x[B.order == CblasRowMajor ? j : j*A.nrow],
+         &B.x[B.order == CblasRowMajor ? j : j*B.nrow],
               B.order == CblasColMajor ? 1 : B.ncol
    );
 }
