@@ -20,6 +20,8 @@
   <services>
    <land/>
    <refuel/>
+   <nomissionspawn/>
+   <uninhabited/>
   </services>
   <commodities/>
   <description>You dock with the remains of a Dvaered Goddard. The hull is covered in burns and war scars with large holes throughout the ship. Given that there doesn't seem to be many working parts left in the ship, you have to remain in your atmospheric suit throughout your visit to the ship.</description>
