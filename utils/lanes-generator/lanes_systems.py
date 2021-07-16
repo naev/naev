@@ -79,6 +79,7 @@ class Systems:
         self.g2sys   = [] # Gives the system from global numerotation
 
         self.sysass = [] # Assets names per system
+        fakeass = [] # Virtual asset names (conferring faction presence or anti-presence)
 
         self.presass = [] # List of presences in assets
         self.factass = [] # Factions in assets. (I'm sorry for all these asses)
@@ -107,6 +108,7 @@ class Systems:
             assts = root.find('assets')
             loc2glob = []
             sysas = []
+            fakeas = []
             nass = 0
 
             if assts != None:
@@ -114,7 +116,7 @@ class Systems:
                 for pnt in aslist :
                     asname = pnt.text
                     info = assets[asname]
-                    if info.population > 0 and info.x is not None: # Populated, not a virual asset
+                    if info.population > 0 and info.x is not None: # Populated, not a virtual asset
                             sysas.append(asname)
                             nodes.append( (info.x, info.y) )
                             loc2glob.append(nglob)
@@ -126,10 +128,13 @@ class Systems:
                             nglob += 1
                             nass += 1
                             nasg += 1
+                    else:
+                            fakeas.append(asname)
 
             presence = [max(0,j) for j in presence] # Ensure presences are >= 0
             self.presences.append(presence)
             self.sysass.append(sysas)
+            fakeass.append(fakeas)
 
 
             # Store jump points.
@@ -178,7 +183,6 @@ class Systems:
             for j in range(len(jpname)):
                 k = self.sysdict[jpname[j]] # Get the index of target
                 connect[i,k] = 1 # Systems connectivity
-                connect[k,i] = 1
 
                 if autopos[j]: # Compute autopos stuff
                     theta = math.atan2( self.ylist[k]-self.ylist[i], self.xlist[k]-self.xlist[i] )
@@ -192,14 +196,14 @@ class Systems:
         # Use distances to compute ranged presences
         for i in range(nsys):
             for j in range(nsys):
-                sysas = self.sysass[j]
+                sysas = self.sysass[j] + fakeass[j]
                 for k in range(len(sysas)):
                     info = assets[sysas[k]] # not really optimized, but should be OK
                     if info.faction in factions:
                         fact = factions[ info.faction ]
                         d = self.distances[i,j]
                         if d <= info.ran:
-                            #self.presences[i][fact] += info.population/(2**d)
                             self.presences[i][fact] += info.population / (1+d)
 
-            # TODO maybe : ensure positive presence
+            for presence in self.presences:
+                presence[:] = [max(0, p) for p in presence]
