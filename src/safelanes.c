@@ -121,7 +121,7 @@ static double* cmp_key_ref;     /**< To qsort() a list of indices by table value
  * Prototypes.
  */
 static double safelanes_changeFromOptimizer (void);
-static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde );
+static void safelanes_activateByGradient( MatWrap Lambda_tilde );
 static void safelanes_initStacks (void);
 static void safelanes_initStacks_edge (void);
 static void safelanes_initStacks_faction (void);
@@ -148,7 +148,10 @@ static int cmp_key( const void* p1, const void* p2 );
 static double frobenius_norm( cholmod_dense* m );
 static inline void triplet_entry( cholmod_triplet* m, int i, int j, double v );
 static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol );
-static void matwrap_sliceByPresence( cholmod_dense* m, double* sysPresence, MatWrap* out );
+static inline MatWrap matwrap_from_cholmod( cholmod_dense* m );
+static inline MatWrap matwrap_transpose( MatWrap A );
+static void matwrap_reorder_in_place( MatWrap* A );
+static void matwrap_sliceByPresence( MatWrap* A, double* sysPresence, MatWrap* out );
 static void matwrap_mul( MatWrap A, MatWrap B, MatWrap* C );
 static double matwrap_mul_elem( MatWrap A, MatWrap B, int i, int j );
 static void matwrap_free( MatWrap A );
@@ -302,7 +305,7 @@ static double safelanes_changeFromOptimizer (void)
       cholmod_sdmult( QtQ, 0, neg_1, zero, utilde, _QtQutilde, &C );
       Lambda_tilde = cholmod_solve( CHOLMOD_A, stiff_f, _QtQutilde, &C );
       cholmod_free_dense( &_QtQutilde, &C );
-      safelanes_activateByGradient( Lambda_tilde );
+      safelanes_activateByGradient( matwrap_from_cholmod( Lambda_tilde ) );
       cholmod_free_dense( &Lambda_tilde, &C );
    }
    cholmod_free_factor( &stiff_f, &C );
@@ -693,14 +696,14 @@ static void safelanes_initPPl (void)
 /**
  * @brief Per-system, per-faction, activates the affordable lane with best (grad phi)/L
  */
-static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
+static void safelanes_activateByGradient( MatWrap Lambda_tilde )
 {
    int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si, sis, sjs;
    double *facind_vals, score, score_best, Linv;
    StarSystem *sys;
    MatWrap *lal; /**< Per faction index, the Lambda_tilde[myDofs,:] @ PPl[fi] matrices. Calloced and lazily populated. */
    int *lal_bases, lal_base, sys_base; /**< System si's U and Lambda rows start at sys_base; its lal rows start at lal_base. */
-   MatWrap UTt = {.order = CblasRowMajor, .nrow = utilde->ncol, .ncol = utilde->nrow, .x = utilde->x};
+   MatWrap UTt = matwrap_transpose( matwrap_from_cholmod( utilde ) );
 
    lal = calloc( array_size(faction_stack), sizeof(MatWrap) );
    lal_bases = calloc( array_size(faction_stack), sizeof(int) );
@@ -711,10 +714,6 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
       array_push_back( &facind_opts, fi );
       array_push_back( &facind_vals, 0 );
    }
-
-   /* HACK: Because Lambda_tilde will never be used again, and we need to row-slice it, convert to row-major now. */
-   cblas_dimatcopy( CblasColMajor, CblasTrans, Lambda_tilde->nrow, Lambda_tilde->ncol, 1, Lambda_tilde->x,
-         Lambda_tilde->nrow, Lambda_tilde->ncol );
 
    for (si=0; si<array_size(sys_to_first_vertex)-1; si++)
    {
@@ -765,8 +764,8 @@ static void safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 
                if (lal[fi].x == NULL) { /* Is it time to evaluate the lazily-calculated matrix? */
                   MatWrap lamt;
-                  MatWrap PP = {.order = CblasColMajor, .nrow = PPl[fi]->ncol, .ncol = PPl[fi]->nrow, .x = PPl[fi]->x};
-                  matwrap_sliceByPresence( Lambda_tilde, presence_budget[fi], &lamt );
+                  MatWrap PP = matwrap_from_cholmod( PPl[fi] );
+                  matwrap_sliceByPresence( &Lambda_tilde, presence_budget[fi], &lamt );
                   matwrap_mul( lamt, PP, &lal[fi] );
                   matwrap_free( lamt );
                }
@@ -928,32 +927,57 @@ static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol
 }
 
 
+/** @brief Construct a MatWrap representing the given cholmod_dense. It's just a wrapper, referencing the same memory. */
+static inline MatWrap matwrap_from_cholmod( cholmod_dense* m )
+{
+   MatWrap A = {.order = CblasColMajor, .nrow = m->nrow, .ncol = m->ncol, .x = m->x};
+   return A;
+}
+
+
+/** @brief Construct a MatWrap representing the input's transpose. It's just a wrapper, referencing the same memory. */
+static inline MatWrap matwrap_transpose( MatWrap A )
+{
+   MatWrap At = {.order = A.order == CblasColMajor ? CblasRowMajor : CblasColMajor, .nrow = A.ncol, .ncol = A.nrow, .x = A.x};
+   return At;
+}
+
+
 /**
  * @brief Construct the matrix-slice of m, selecting those rows where the corresponding presence value is positive.
- *        HACK: We assume m has already been flipped to row-major in place.
  */
-static void matwrap_sliceByPresence( cholmod_dense* m, double* sysPresence, MatWrap* out )
+static void matwrap_sliceByPresence( MatWrap *A, double* sysPresence, MatWrap* out )
 {
    int nr, nc, si;
    size_t in_base, out_base, sz;
 
-   nc = m->ncol;
+   nc = A->ncol;
    nr = 0;
    for (si = 0; si < array_size(sys_to_first_vertex) - 1; si++)
       if (sysPresence[si] > 0)
          nr += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
 
+   if (A->order != CblasRowMajor)
+      matwrap_reorder_in_place( A );
    matwrap_init( out, CblasRowMajor, nr, nc );
 
    in_base = out_base = 0;
    for (si = 0; si < array_size(sys_to_first_vertex) - 1; si++) {
       sz = (sys_to_first_vertex[1+si] - sys_to_first_vertex[si]) * nc;
       if (sysPresence[si] > 0) {
-         memcpy( &out->x[out_base], &((double*)m->x)[in_base], sz * sizeof(double) );
+         memcpy( &out->x[out_base], &A->x[in_base], sz * sizeof(double) );
          out_base += sz;
       }
       in_base += sz;
    }
+}
+
+
+/** @brief Convert in-place from column-major to row-major, or vice-versa. */
+static void matwrap_reorder_in_place( MatWrap* A )
+{
+   cblas_dimatcopy( A->order, CblasTrans, A->nrow, A->ncol, 1, A->x, A->nrow, A->ncol );
+   A->order = A->order == CblasColMajor ? CblasRowMajor : CblasColMajor;
 }
 
 
