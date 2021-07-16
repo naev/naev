@@ -133,6 +133,7 @@ static MapOverlay map_overlay = {
   .boundBottom = 0,
   .boundLeft = 0,
 };
+
 int map_overlay_height(void)
 {
    return SCREEN_H - map_overlay.boundTop - map_overlay.boundBottom;
