@@ -48,14 +48,14 @@ local minerva = {
       portrait = "zuri.webp",
       description = _("You see a sketchy-looking individual, they seem to have their gaze on you."),
       image = "zuri.webp",
-      colour = nil,
+      colour = {0.73, 1, 0.73},
    },
    zuri = {
       name = _("Zuri"),
       portrait = "zuri.webp",
       description = _("You see Zuri who seems to be motioning for you to come."),
       image = "zuri.webp",
-      colour = nil,
+      colour = {0.73, 1, 0.73},
    },
    -- Secondary characters
    strangelove = {
