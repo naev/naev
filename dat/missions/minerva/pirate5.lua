@@ -88,7 +88,7 @@ end
 
 function generate_npc ()
    npc_zuri = nil
-   if planet.cur() == planet.get("Minerva Station") and misn_state < 1 then
+   if planet.cur() == planet.get("Minerva Station") then
       npc_zuri = misn.npcAdd( "approach_zuri", minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
    end
 end
@@ -133,8 +133,8 @@ They smile at you.]]))
       vn.label("accept")
       vn.func( function () misn_state=0 end )
       zuri(string.format(_([["Great! We are always counting on you.
-So, as I was saying, it seems like the Za'lek have set up some pretty serious surveillance and hacking infrastructure in the nearby %s system. We sent a scout to look at it quickly and it seems like they have set up several drone controllers besides the hacking center. The main objective is taking out the hacking center, but it seems like it won't be possible without taking out the drone controllers too."]]), mainsys))
-      zuri(_([["The main issue is that the system is infested with Za'lek drones. Heavies, bombers, lights, you name it. While usually not a real challenge to a great pilot like you, their sheer numbers make it so that a frontal attack will only end up getting us killed. However, controlling so many drones requires infrastructure, and the Za'lek, being the lazy bums they are, are not commanding them from ships, but using the drone controllers. If you could take them out, that should incapacitate most of the drones and make taking out the hacking center a piece of cake."]]))
+So, as I was saying, it seems like the Za'lek have set up some pretty serious surveillance and hacking infrastructure in the nearby %s system. We sent a scout to look at it quickly and it looks like they have set up several drone controllers besides the hacking center. The main objective is taking out the hacking center, but it looks like it won't be possible without taking out the drone controllers too."]]), mainsys))
+      zuri(_([["The main issue is that the system is infested with Za'lek drones. Heavies, bombers, lights, you name it. While usually not a real challenge to a great pilot like you, their sheer numbers make it so that a frontal attack will only end up getting you killed. However, controlling so many drones requires infrastructure, and the Za'lek, being the lazy bums they are, are not commanding them from ships, but using the drone controllers. If you could take them out, that should incapacitate most of the drones and make taking out the hacking center a piece of cake."]]))
       zuri(string.format(_([["My recommendation to you is to jump into %s and stay low. We've got some really good explosives we'll hook you up with that should let you take out the drone controllers or hacking stations if you can get close enough. So try to sneak past all the drones, plant the bombs on the drone controllers, and once they are out, do the same with the hacking center. Of course, if you prefer to be old fashion, you can take the hacking center down with missiles, railguns, or whatever you have hand. Probably easier said than done, but I know you can do it."
 They grin at you.]]), mainsys))
       zuri(_([["That said, given the amount of drones, you should probably take a stealthy ship that is also able to take some out if you get found. They are really fast, so it's unlikely you will be able to outrun them while planting the explosives."
@@ -172,6 +172,7 @@ They chuckle.
       {_([["No, it is a hamper on human development."]]), "cont1"},
       {_([["How is this related to my question?"]]), "cont1"},
    }
+   vn.label("cont1")
    zuri(_([["We represent those who want to stand up to this tyranny and oppression, and believe that a better universe is possible. Sure, there are those who dismissively label us as pirates or scoundrels, but that is because they represent the status quo. They do not want anyone to challenge their reign and want to continue their life of luxury."]]))
    zuri(_([["Of course, it is not that easy, as many people are implicit on this even against their own interests. They believe they can become part of the elite if they work hard enough, you know, the Empire dream. However, that never happens, and they die a sad depressed life filled with delusions of grandeur. This is not the universe we wish for humankind."]]))
    zuri(_([["It is not easy to go toe-to-toe with such the large establishment, which is why we have to work from the shadows and focus on small objectives, like Minerva Station. The Station has such a potential, yet it is wasted on Za'lek and Dvaered squabbles. We wish to free the people of Minerva Station to live their full potential, even though we have to ruffle some feathers here and there."]]))
@@ -430,6 +431,7 @@ function drone_control1_dead ()
    for k,p in ipairs(drone_group1) do
       if p:exists() then
          p:disable()
+         p:setInvisible(true)
       end
    end
    drone_control1 = nil
@@ -439,6 +441,7 @@ function drone_control2_dead ()
    for k,p in ipairs(drone_group2) do
       if p:exists() then
          p:disable()
+         p:setInvisible(true)
       end
    end
    drone_control2 = nil
