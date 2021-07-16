@@ -146,6 +146,7 @@ static inline FactionMask MASK_ONE_FACTION( int id );
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 );
 static int cmp_key( const void* p1, const void* p2 );
 static double frobenius_norm( cholmod_dense* m );
+static inline void triplet_entry( cholmod_triplet* m, int i, int j, double v );
 static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol );
 static void matwrap_sliceByPresence( cholmod_dense* m, double* sysPresence, MatWrap* out );
 static void matwrap_mul( MatWrap A, MatWrap B, MatWrap* C );
@@ -522,8 +523,6 @@ static void safelanes_destroyTmp (void)
 static void safelanes_initStiff (void)
 {
    int nnz, v, i;
-   int *pi, *pj;
-   double *pv;
    double max_conductivity;
 
    cholmod_free_triplet( &stiff, &C );
@@ -531,27 +530,25 @@ static void safelanes_initStiff (void)
    nnz = 3*(array_size(edge_stack)+array_size(tmp_jump_edges)) + array_size(tmp_anchor_vertices);
    stiff = cholmod_allocate_triplet( v, v, nnz, STORAGE_MODE_UPPER_TRIANGULAR_PART, CHOLMOD_REAL, &C );
    /* Populate triplets: internal edges (ii ij jj), implicit jump connections (ditto), anchor conditions. */
-   pi = stiff->i; pj = stiff->j; pv = stiff->x;
    for (i=0; i<array_size(edge_stack); i++) {
-      *pi++ = edge_stack[i][0]; *pj++ = edge_stack[i][0]; *pv++ = +tmp_edge_conduct[i];
-      *pi++ = edge_stack[i][0]; *pj++ = edge_stack[i][1]; *pv++ = -tmp_edge_conduct[i];
-      *pi++ = edge_stack[i][1]; *pj++ = edge_stack[i][1]; *pv++ = +tmp_edge_conduct[i];
+      triplet_entry( stiff, edge_stack[i][0], edge_stack[i][0], +tmp_edge_conduct[i] );
+      triplet_entry( stiff, edge_stack[i][0], edge_stack[i][1], -tmp_edge_conduct[i] );
+      triplet_entry( stiff, edge_stack[i][1], edge_stack[i][1], +tmp_edge_conduct[i] );
    }
    for (i=0; i<array_size(tmp_jump_edges); i++) {
-      *pi++ = tmp_jump_edges[i][0]; *pj++ = tmp_jump_edges[i][0]; *pv++ = +JUMP_CONDUCTIVITY;
-      *pi++ = tmp_jump_edges[i][0]; *pj++ = tmp_jump_edges[i][1]; *pv++ = -JUMP_CONDUCTIVITY;
-      *pi++ = tmp_jump_edges[i][1]; *pj++ = tmp_jump_edges[i][1]; *pv++ = +JUMP_CONDUCTIVITY;
+      triplet_entry( stiff, tmp_jump_edges[i][0], tmp_jump_edges[i][0], +JUMP_CONDUCTIVITY );
+      triplet_entry( stiff, tmp_jump_edges[i][0], tmp_jump_edges[i][1], -JUMP_CONDUCTIVITY );
+      triplet_entry( stiff, tmp_jump_edges[i][1], tmp_jump_edges[i][1], +JUMP_CONDUCTIVITY );
    }
    /* Add a Robin boundary condition, using the max conductivity (after activation) for spectral reasons. */
-   max_conductivity = JUMP_CONDUCTIVITY/(ALPHA+1);
+   max_conductivity = JUMP_CONDUCTIVITY/(1+ALPHA);
    for (i=0; i<array_size(edge_stack); i++)
       max_conductivity = MAX( max_conductivity, tmp_edge_conduct[i] );
    max_conductivity = MAX( JUMP_CONDUCTIVITY, (1+ALPHA)*max_conductivity ); /* Activation scales entries by 1+ALPHA later. */
-   for (i=0; i<array_size(tmp_anchor_vertices); i++) {
-      *pi++ = tmp_anchor_vertices[i]; *pj++ = tmp_anchor_vertices[i]; *pv++ = max_conductivity;
-   }
-   stiff->nnz = nnz;
+   for (i=0; i<array_size(tmp_anchor_vertices); i++)
+      triplet_entry( stiff, tmp_anchor_vertices[i], tmp_anchor_vertices[i], max_conductivity );
 #if DEBUGGING
+   assert( stiff->nnz == stiff->nzmax );
    assert( cholmod_check_triplet( stiff, &C) );
 #endif
 }
@@ -634,21 +631,19 @@ static void safelanes_initPPl (void)
    cholmod_triplet *P;
    cholmod_dense **D;
    cholmod_sparse *sp, *PPl_sp;
-   int np, i, j, k, facti, factj, *pi, *pj, sysi, sysj;
-   double *pv;
+   int np, i, j, k, facti, factj, sysi, sysj;
    Planet *pnti, *pntj;
 
    np = array_size(tmp_planet_indices);
 #define MULTI_INDEX( i, j ) ((i*(i-1))/2 + j)
    P = cholmod_allocate_triplet( np, MULTI_INDEX(np,0), np*(np-1), STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
-   pi = P->i; pj = P->j; pv = P->x;
    for (i=0; i<np; i++)
       for (j=0; j<i; j++) {
-         *pi++ = i; *pj++ = MULTI_INDEX(i,j); *pv++ = +1;
-         *pi++ = j; *pj++ = MULTI_INDEX(i,j); *pv++ = -1;
+         triplet_entry( P, i, MULTI_INDEX(i,j), +1 );
+         triplet_entry( P, j, MULTI_INDEX(i,j), -1 );
       }
-   P->nnz = P->nzmax;
 #if DEBUGGING
+   assert( P->nnz == P->nzmax );
    assert( cholmod_check_triplet( P, &C) );
 #endif
 
@@ -903,6 +898,15 @@ static inline FactionMask MASK_COMPROMISE( int id1, int id2 )
 {
    FactionMask m1 = MASK_ONE_FACTION(id1), m2 = MASK_ONE_FACTION(id2);
    return (m1 & m2) ? (m1 & m2) : (m1 | m2);  /* Any/Any -> any, Any/f -> just f, f1/f2 -> either. */
+}
+
+
+static inline void triplet_entry( cholmod_triplet* m, int i, int j, double x )
+{
+   ((int*)m->i)[m->nnz] = i;
+   ((int*)m->j)[m->nnz] = j;
+   ((double*)m->x)[m->nnz] = x;
+   m->nnz++;
 }
 
 
