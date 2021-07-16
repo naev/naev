@@ -50,7 +50,6 @@ misn_state = nil
 
 
 function create ()
-   if not var.peek('testing') then misn.finish( false ) end
    if not misn.claim( system.get(mainsys) ) then
       misn.finish( false )
    end
