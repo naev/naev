@@ -369,7 +369,13 @@ We propose first an algorithm that works with boolean unknowns $\theta$. It cons
 
 In the case where $\theta$ represents the density of a given lane, on which the only constraint is that it is positive, a steepest-descent algorithm can be proposed.
 
-\subsection{Optimization under constraint}
+\textcolor{red}{Watch out: this part is a draft}
+
+\textcolor{red}{It might be interesting to precondition the algo by multiplying the gradient by the invert of the lengths of the lanes, as done in the boolean case. OR not}
+
+\subsection{Constrained optimization}
+
+\subsubsection{Lanes costs}
 
 For each system, and each faction, the total cost of lanes must be equal to the faction's presence in the system, which can be represented as the following constraint, where $\xi_j$ is the cost of a given lane, and $\Xi_p$ is the presence of the faction $p$:
 
@@ -405,9 +411,93 @@ This second point leads to a variable change that can be formally written as fol
 \theta_{end} = c^T \theta_0
 \end{equation}
 
+We define the cost-function, depending only on $\theta_0$:
+
+\begin{equation}
+\tilde{\phi}(\theta_0) = \phi(\theta_0,c^T\theta_0)
+\end{equation}
+
+Its gradient is then \textcolor{red}{CHECK THIS ONE}:
+
+\begin{equation}
+\nabla\tilde{\phi}(\theta_0) = \nabla_{\theta_0}\phi(\theta_0,c^T\theta_0) + c^T\nabla_{\theta_{end}}\phi(\theta_0,c^T\theta_0)
+\end{equation}
+
+\subsubsection{Positivity of density} \label{sect:pos}
+
+The second constraint is the positivity of the lane density. This reads $\theta\geqslant0$. With the previous variable change, it reads rather:
+
+\begin{equation}
+\begin{cases}
+	\theta_0 \geqslant 0\\
+	c^T\theta_0 \geqslant \Xi
+\end{cases}
+\end{equation}
+
+\textcolor{red}{Check the second inequality}
+
+From any tentative iterate $\tilde{\theta_0}$, the vector $\theta_0$ will be constructed by projection: 
+
+\begin{equation}
+\theta_0 = \argmin_{\substack{\theta \geqslant 0\\c^T\theta \geqslant \Xi}} \dfrac{1}{2}\|\theta-\tilde{\theta_0}\|^2
+\end{equation}
+
+\textcolor{red}{TODO: it might be interesting to add a term $1/2 c^T(\theta-\theta_0)$ to make the result independent of the choice of $\theta_{end}$, but it makes the problem more complicated}
+
+The projection can be performed independently in each system and for each faction.
+
 \subsection{Linesearch step}
 
+The gradient gives the direction to follow for minimizing $\theta$. Once this direction $\delta$ is known, one has to solve the 1-D minimization problem by dichotomy. We define two candidates next iterates: $\alpha$ and $\beta$, and an initial step $p$. They will converge towards the optimal point.
+
+The operation of projection presented in Section~\ref{sect:pos}, will be denoted by $P(\bullet)$
+
+\begin{algorithm}[ht]
+	\caption{Linesearch}
+	\label{alg:linesearch}
+	\begin{algorithmic}
+		\STATE Initialize $\alpha = \theta_n$, the previous iterate.
+		\STATE Initialize $\beta = \alpha + p\delta$
+		\IF{$\phi(P(\alpha))>\phi(P(\beta))$}
+		\STATE $\gamma\leftarrow \dfrac{-\alpha+2\beta}{2}$
+		\WHILE{$\phi(P(\beta))>\phi(P(\gamma))$}
+		\STATE $\beta\leftarrow\gamma$
+		\STATE $\gamma\leftarrow \dfrac{-\alpha+2\beta}{2}$
+		\ENDWHILE
+		\ENDIF
+		\STATE \COMMENT{Now, we know there is a minimum between $\alpha$ and $\beta$}
+		\FOR{Each $i=1..n$}
+		\IF{$\phi(P(\alpha))>\phi(P(\beta))$}
+		\STATE $\alpha\leftarrow \dfrac{\alpha+\beta}{2}$
+		\ELSE
+		\STATE $\beta\leftarrow \dfrac{\alpha+\beta}{2}$
+		\ENDIF
+		\ENDFOR
+		\STATE $\theta_{n+1} = P(\alpha)$
+	\end{algorithmic}
+\end{algorithm}
+
+\textcolor{red}{Check the algo}
+
 \subsection{Evaluation of the cost-function}
+
+\textcolor{red}{Abuse of notation}
+
+\begin{equation}
+\phi(\theta) = \varphi(\tilde{U}(\theta)) = \dfrac{1}{2} \|Q\tilde{U}P_p^T\|_f^2
+\end{equation}
+
+\textcolor{red}{Each evaluation is very likely to be very costly. Try to find a trick, otherwise we're doomed.}
+
+\subsection{Regularization}
+
+In the case when the algorithm tends towards activating only one lane with its full presence, it might be interesting to regularize the solution by adding to the cost-function a term of the form:
+
+\begin{equation}
+N(\theta) = \dfrac{\mu}{2} \|\theta\|^2
+\end{equation}
+
+Of course, the weight $\mu$ is a new parameter of the method that has to be determined by hand (or maybe with a L-curve?)
 
 \section{Conclusion}
 
