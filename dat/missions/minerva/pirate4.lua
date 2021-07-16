@@ -34,9 +34,6 @@ misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to deal with a Dvaered spy that appears to be located at Minerva Station.")
 reward_amount = 350e3
 
--- Should be the same as the original chuckaluck guy
-mole_image = "minervaceo.png" -- TODO replace
-
 mainsys     = "Fried"
 dvaeredsys  = "Limbo"
 piratesys   = "Effetey"
