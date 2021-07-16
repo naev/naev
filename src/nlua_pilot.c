@@ -104,6 +104,7 @@ static int pilotL_setNoRender( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
+static int pilotL_setBribed( lua_State *L );
 static int pilotL_getColour( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
 static int pilotL_flags( lua_State *L );
@@ -233,6 +234,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
    { "setHilight", pilotL_setHilight },
+   { "setBribed", pilotL_setBribed },
    { "setActiveBoard", pilotL_setActiveBoard },
    { "setNoDeath", pilotL_setNoDeath },
    { "disable", pilotL_disable },
@@ -907,9 +909,9 @@ static int pilotL_getHostiles( lua_State *L )
       if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
          continue;
       /* Must be hostile. */
-      if ( !( areEnemies( pilot_stack[i]->faction, p->faction )
-               || ( (p->id == PLAYER_ID)
-                  && pilot_isHostile(pilot_stack[i]) ) ) )
+      if (!(areEnemies( pilot_stack[i]->faction, p->faction )
+               || ((pilot_isWithPlayer(p))
+                  && pilot_isHostile(pilot_stack[i]))))
          continue;
       /* Check if disabled. */
       if (dis && pilot_isDisabled(pilot_stack[i]))
@@ -2348,6 +2350,21 @@ static int pilotL_setHilight( lua_State *L )
 
 
 /**
+ * @brief Makes pilot act as if bribed by the player.
+ *
+ * @usage p:setBribed( true )
+ *
+ *    @luatparam Pilot p Pilot to set bribed status of.
+ *    @luatparam[opt=true] boolean state State to set bribed.
+ * @luafunc setHilight
+ */
+static int pilotL_setBribed( lua_State *L )
+{
+   return pilotL_setFlagWrapper( L, PILOT_BRIBED );
+}
+
+
+/**
  * @brief Allows the pilot to be boarded when not disabled.
  *
  * @usage p:setActiveBoard( true )
@@ -2383,7 +2400,7 @@ static int pilotL_setNoDeath( lua_State *L )
  * @usage p:disable()
  *
  *    @luatparam Pilot p Pilot to disable.
- *    @luatparam[opt=false] boolean nopermanent Whether or not the disable should be permanent.
+ *    @luatparam[opt=false] boolean nopermanent Whether or not the disable should be not permanent.
  * @luafunc disable
  */
 static int pilotL_disable( lua_State *L )

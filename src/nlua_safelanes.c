@@ -53,17 +53,16 @@ int nlua_loadSafelanes( nlua_env env )
  * @luamod safelanes
  */
 /**
- * @brief Sets player save ability.
+ * @brief Return a table of matching lanes (format described below).
  *
  * @usage safelanes.get() -- Everyone's in current system
  * @usage safelanes.get( "Empire" ) -- Empire's lanes in current system
  * @usage safelanes.get( faction.get("Empire"), system.get("Gamma Polaris") ) -- Empire's lanes through Gamma Polaris.
  *    @luatparam[opt] Faction f If present, only return this faction's lanes.
- *    @luatparam[opt=system.cur()] System The system whose lanes we want.
- *    @luatreturn table The list of matching safe lanes, each of which is a table with members:
- *                [1]: The first endpoint, type Planet|Jump
- *                [2]: The second endpoint, type Planet|Jump
- *                .faction: The lane's owner, type Faction
+ *    @luatparam[opt=system.cur()] System s The system whose lanes we want.
+ *    @luatreturn table The list of matching safe lanes, each of which is a table where:
+ *                lane[1] and lane[2] are the endpoints (type Planet|Jump),
+ *                and lane.faction is the owner's Faction.
  * @luafunc get
  */
 static int safelanesL_get( lua_State *L )
@@ -73,12 +72,12 @@ static int safelanesL_get( lua_State *L )
    SafeLane *lanes;
    LuaJump jump;
 
-   if (lua_gettop( L ) >= 1 && !lua_isnil( L, 1 ))
+   if (!lua_isnoneornil(L,1))
       faction = luaL_validfaction( L, 1 );
    else
       faction = -1;
 
-   if (lua_gettop( L ) >= 2 && !lua_isnil( L, 2 ))
+   if (!lua_isnoneornil(L,2))
       sys = luaL_validsystem( L, 2 );
    else
       sys = cur_system;
@@ -86,8 +85,9 @@ static int safelanesL_get( lua_State *L )
    lanes = safelanes_get( faction, sys );
    lua_newtable( L );
    for (i=0; i<array_size(lanes); i++) {
+      lua_newtable( L );
       for (j=0; j<2; j++) {
-         switch (lanes[i].point_type[i]) {
+         switch (lanes[i].point_type[j]) {
             case SAFELANE_LOC_PLANET:
                lua_pushplanet( L, lanes[i].point_id[j] );
                break;
@@ -99,11 +99,12 @@ static int safelanesL_get( lua_State *L )
             default:
                NLUA_ERROR( L, _("What the?") );
          }
-         lua_rawseti( L, -2, i+1 );
+         lua_rawseti( L, -2, j+1 );
       }
       lua_pushstring( L, "faction" ); /* key */
       lua_pushfaction( L, lanes[i].faction ); /* value */
       lua_rawset( L, -3 );
+      lua_rawseti( L, -2, i+1 );
    }
    array_free( lanes );
 

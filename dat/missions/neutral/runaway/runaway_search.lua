@@ -150,7 +150,7 @@ function land ()
       misn.markerRm(runawayMarker)
 
       --Talk to the father and get the reward
-      if misn.osdGetActiveItem() == osd4 then
+      if misn.osdGetActive() == osd4 then
          tk.msg(title, misn_father)
          player.pay(reward)
          misn.cargoRm(cargoID)

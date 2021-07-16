@@ -1495,7 +1495,7 @@ static int aiL_isbribed( lua_State *L )
 {
    Pilot *p;
    p = luaL_validpilot(L,1);
-   lua_pushboolean(L, (p->id == PLAYER_ID) && pilot_isFlag(cur_pilot, PILOT_BRIBED));
+   lua_pushboolean(L, pilot_isWithPlayer(p) && pilot_isFlag(cur_pilot, PILOT_BRIBED));
    return 1;
 }
 
@@ -1528,7 +1528,7 @@ static int aiL_getstanding( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Get faction standing. */
-   if (p->faction == FACTION_PLAYER)
+   if (pilot_isWithPlayer(p))
       lua_pushnumber(L, faction_getPlayer(cur_pilot->faction));
    else {
       if (areAllies( cur_pilot->faction, p->faction ))
@@ -1586,9 +1586,8 @@ static int aiL_isenemy( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Player needs special handling in case of hostility. */
-   if (p->faction == FACTION_PLAYER) {
+   if (pilot_isWithPlayer(p)) {
       lua_pushboolean(L, pilot_isHostile(cur_pilot));
-      lua_pushboolean(L,1);
       return 1;
    }
 
@@ -1612,7 +1611,7 @@ static int aiL_isally( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Player needs special handling in case of friendliness. */
-   if (p->faction == FACTION_PLAYER) {
+   if (pilot_isWithPlayer(p)) {
       lua_pushboolean(L, pilot_isFriendly(cur_pilot));
       return 1;
    }
@@ -3010,7 +3009,7 @@ static int aiL_hostile( lua_State *L )
 
    p = luaL_validpilot(L,1);
 
-   if (p->faction == FACTION_PLAYER)
+   if (pilot_isWithPlayer(p))
       pilot_setHostile(cur_pilot);
 
    return 0;

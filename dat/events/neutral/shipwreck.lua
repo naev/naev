@@ -53,18 +53,18 @@ function create ()
     hook.timer(3000, "broadcast")
 
     -- Set hooks
-    hook.pilot( p[1], "board", "rescue" )
-    hook.pilot( p[1], "death", "destroyevent" )
+    hook.pilot( p, "board", "rescue" )
+    hook.pilot( p, "death", "destroyevent" )
     hook.enter("endevent")
     hook.land("endevent")
 end
 
 function broadcast ()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-    if not p[1]:exists() then
+    if not p:exists() then
         return
     end
-    p[1]:broadcast( string.format(broadcastmsg, shipname), true )
+    p:broadcast( string.format(broadcastmsg, shipname), true )
     bctimer = hook.timer(15000, "broadcast")
 end
 

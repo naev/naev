@@ -87,7 +87,7 @@ if buildExec.disabled() == false
          dependencies: dependency('libpng', required: true),
          compile_args: '-DNOLOGPRINTFCONSOLE',
          link_args: '-DNOLOGPRINTFCONSOLE'),
-      dependency('libwebp', required: true),
+      dependency('libwebp', required: false),  # FIXME: required at runtime, but unavailable in the naev-steamruntime build image.
    ]
 
    # Lua
@@ -109,9 +109,10 @@ if buildExec.disabled() == false
    naev_deps += lua
 
    # Linear Algebra
+   message('IMPORTANT NOTE ABOUT SuiteSparse: Naev can provide it, but only if you "meson configure --force-fallback-for=SuiteSparse". Otherwise, you must have the following libraries installed: amd, colamd, cholmod, and either csparse or cxsparse.')
 
    use_system_glpk = ('glpk' not in get_option('force_fallback_for'))
-   use_system_csparse = ('SuiteSparse' not in get_option('force_fallback_for'))
+   use_system_suitesparse = ('SuiteSparse' not in get_option('force_fallback_for'))
 
    if use_system_glpk
       system_glpk = cc.find_library('glpk', required: false, has_headers: ['glpk.h'])
@@ -119,28 +120,54 @@ if buildExec.disabled() == false
    endif
    naev_deps += use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk_dep')
 
-   if use_system_csparse and not use_system_glpk
-      message('Trying to force Meson to detect cross-subproject dependencies correctly for your setup (system SuiteSparse, included GLPK). If you see this error, try fully deleting subprojects/SuiteSparse from the source and build directories, and if that does not help try installing GLPK onto your system: ERROR: Requested variable "AMD_dep" not found.')
-      subproject('SuiteSparse')
-      #use_system_csparse = false
-   endif
-
-   if use_system_csparse
+   if use_system_suitesparse
       foreach csparse_name : ['csparse', 'cxsparse']
          system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['suitesparse/cs.h'])
-         use_system_csparse = system_csparse.found()
+         use_system_suitesparse = system_csparse.found()
          if system_csparse.found()
             config_data.set10('HAVE_SUITESPARSE_CS_H', true)
             break
          endif
          system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['cs.h'])
-         use_system_csparse = system_csparse.found()
+         use_system_suitesparse = system_csparse.found()
          if system_csparse.found()
             break
          endif
       endforeach
+      if system_csparse.found()
+         naev_deps += system_csparse
+      else
+         error('Failed to find an installation of c[x]sparse. See above note about SuiteSparse.')
+      endif
+
+      system_cholmod = cc.find_library('cholmod', required: false, has_headers: ['suitesparse/cholmod.h'])
+      use_system_suitesparse = system_cholmod.found()
+      if system_cholmod.found()
+         config_data.set10('HAVE_SUITESPARSE_CHOLMOD_H', true)
+      else
+         system_cholmod = cc.find_library('cholmod', required: false, has_headers: ['cholmod.h'])
+         use_system_suitesparse = system_cholmod.found()
+      endif
+      if system_cholmod.found()
+         naev_deps += system_cholmod
+      else
+         error('Failed to find an installation of cholmod. See above note about SuiteSparse.')
+      endif
+
+
+   # TODO: These packages may require the same nonsense, in terms of checking for suitesparse/foo.h headers.
+      naev_deps += cc.find_library('amd', required: true)
+      naev_deps += cc.find_library('ccolamd', required: false)
+      naev_deps += cc.find_library('colamd', required: true)
+      naev_deps += cc.find_library('lapack', required: false)
+      naev_deps += cc.find_library('metis', required: false)
+      naev_deps += cc.find_library('suitesparseconfig', required: true)
+   else
+      naev_deps += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
    endif
-   naev_deps += use_system_csparse ? system_csparse : subproject('SuiteSparse').get_variable('CSparse_dep')
+
+   message('IMPORTANT NOTE ABOUT BLAS: Any working BLAS should suffice, but Meson cannot reliably pick one on all platforms, so we specify "openblas". Distros like to put the cblas header in random locations, so beware and get in touch if we fail to find yours. As of July 2021, Arch Linux users must install aur/openblas-lapack to avoid linker errors; see here: https://bugs.archlinux.org/task/59046')
+   naev_deps += cc.find_library('openblas', required: true)
 
    ### Soft deps (required: false)
 
@@ -171,10 +198,13 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
+   config_data.set10('HAVE_CBLAS_OPENBLAS_H', cc.has_header('cblas_openblas.h'))
+   config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.has_header('cblas-openblas.h'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
+   config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.has_header('openblas/cblas.h'))
    config_data.set10('HAVE_STRCASESTR', cc.has_function('strcasestr'))
    # strndup() detectin must work around this bug: https://github.com/mesonbuild/meson/issues/3672
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))

@@ -147,6 +147,7 @@
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
   </enemies>
+  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>Proteron</name>
@@ -164,6 +165,7 @@
    <enemy>Pirate</enemy>
    <enemy>Proteron Dissident</enemy>
   </enemies>
+  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>Frontier</name>
@@ -180,6 +182,7 @@
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
+  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>Traders Guild</name>
@@ -212,6 +215,7 @@
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
+  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>Thurion</name>
@@ -225,6 +229,7 @@
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
+  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>Collective</name>
@@ -238,6 +243,7 @@
    <enemy>Empire</enemy>
    <enemy>Pirate</enemy>
   </enemies>
+  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>FLF</name>
@@ -274,6 +280,7 @@
    <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
   </enemies>
+  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>Za'lek</name>
@@ -291,6 +298,7 @@
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
+  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>Sirius</name>
@@ -309,6 +317,7 @@
    <enemy>Pirate</enemy>
    <enemy>Nasin</enemy>
   </enemies>
+  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>Goddard</name>
@@ -327,6 +336,7 @@
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
+  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>Rogue FLF</name>

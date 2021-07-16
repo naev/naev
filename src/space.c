@@ -2147,6 +2147,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                      planet->services |= PLANET_SERVICE_SHIPYARD | PLANET_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "nomissionspawn"))
                      planet->flags |= PLANET_NOMISNSPAWN;
+                  else if (xml_isNode(ccur, "uninhabited"))
+                     planet->flags |= PLANET_UNINHABITED;
                   else if (xml_isNode(ccur, "blackmarket"))
                      planet->services |= PLANET_SERVICE_BLACKMARKET;
                   else
@@ -2184,6 +2186,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
       DEBUG(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
    } while (xml_nextNode(node));
 
+   /* Allow forcing to be uninhabited. */
+   if (planet_isFlag(planet, PLANET_UNINHABITED))
+      planet->services &= ~PLANET_SERVICE_INHABITED;
+
 /*
  * verification
  */
@@ -2193,8 +2199,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
       MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
             planet->gfx_exterior==NULL,"GFX exterior");
-      /* MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-            (planet->population==0), "population"); */
+      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+            (planet->population==0), "population");
       MELEMENT((flags&FLAG_XSET)==0,"x");
       MELEMENT((flags&FLAG_YSET)==0,"y");
       MELEMENT(planet->class==NULL,"class");
@@ -4034,7 +4040,7 @@ sys_cleanup:
  *    @param faction The faction to get the presence for.
  *    @return The amount of presence the faction has in the system.
  */
-double system_getPresence( StarSystem *sys, int faction )
+double system_getPresence( const StarSystem *sys, int faction )
 {
    int i;
 

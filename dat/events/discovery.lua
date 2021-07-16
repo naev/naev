@@ -68,6 +68,12 @@ system_events = {
       title = _("Dvaered High Command"),
       subtitle = _("Convening of the Warlords"),
    },
+   Feye = {
+      type = "enter",
+      name = "disc_kataka",
+      title = _("Feye"),
+      subtitle = _("Remembering Sorom"),
+   },
    Aesir = {
       type = "distance",
       dist = 5000,

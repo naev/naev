@@ -868,8 +868,9 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
 
-   /* Beam duration used. */
-   used = w->outfit->u.bem.duration - w->timer;
+   /* Beam duration used. Compensate for the fact it's duration might have
+    * been shortened by heat. */
+   used = w->outfit->u.bem.duration - w->timer*(1.-pilot_heatAccuracyMod(w->heat_T));
 
    w->timer = rate_mod * (used / w->outfit->u.bem.duration) * outfit_delay( w->outfit );
    w->u.beamid = 0;
@@ -1425,7 +1426,8 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       pilot_afterburnOver( p );
    else if (outfit_isBeam( o->outfit )) {
       /* Beams use stimer to represent minimum time until shutdown. */
-      o->stimer = -1;
+      beam_end( p->id, o->u.beamid );
+      pilot_stopBeam(p, o);
    }
    else if (!o->active)
       /* Case of a mod we can't toggle. */

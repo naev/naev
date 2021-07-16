@@ -2875,6 +2875,8 @@ src/toolkit.h
 src/unidata.h
 src/unidiff.c
 src/unidiff.h
+src/union_find.c
+src/union_find.h
 src/utf8.c
 src/utf8.h
 src/weapon.c

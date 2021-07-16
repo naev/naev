@@ -4,6 +4,8 @@
       * Pilots can now go into stealth mode
       * Electronic warfare parameters are simplified and visible
       * Overhaul and rebalance of most outfits
+      * Wanted pirates no longer aggro defense forces (pirate bounties)
+      * Bribed pilots don't become hostile again unless attacked
       * Added new utility outfits with complex effects
       * Added escorts for hire
       * Added discovery messages as you explore the universe

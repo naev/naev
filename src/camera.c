@@ -49,8 +49,8 @@ static double camera_flyspeed = 0.; /**< Speed when flying. */
  * Prototypes.
  */
 static void cam_updateFly( double x, double y, double dt );
-static void cam_updatePilot( Pilot *follow, double dt );
-static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt );
+static void cam_updatePilot( const Pilot *follow, double dt );
+static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, double dt );
 static void cam_updateManualZoom( double dt );
 
 
@@ -297,10 +297,10 @@ static void cam_updateFly( double x, double y, double dt )
 /**
  * @brief Updates a camera following a pilot.
  */
-static void cam_updatePilot( Pilot *follow, double dt )
+static void cam_updatePilot( const Pilot *follow, double dt )
 {
    Pilot *target;
-   double diag2, a, r, dir, k;
+   double a, r, dir, k;
    double x,y, dx,dy, mx,my, targ_x,targ_y, bias_x,bias_y, vx,vy;
 
    /* Get target. */
@@ -313,7 +313,7 @@ static void cam_updatePilot( Pilot *follow, double dt )
     * we'll just use the largest of the two. */
    /*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/
    /*diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );*/
-   diag2 = 100*100;
+   const double diag2 = 100*100;
    x = follow->solid->pos.x;
    y = follow->solid->pos.y;
 
@@ -406,7 +406,7 @@ static void cam_updateManualZoom( double dt )
 /**
  * @brief Updates the camera zoom.
  */
-static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
+static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, double dt )
 {
    double d, x,y, z,tz, dx, dy;
    double zfar, znear;
@@ -443,21 +443,26 @@ static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
     * Set Zoom to pilot target.
     */
    z = cam_getZoom();
-   if (target != NULL) {
-      /* Get current relative target position. */
-      gui_getOffset( &x, &y );
-      x += target->solid->pos.x - follow->solid->pos.x;
-      y += target->solid->pos.y - follow->solid->pos.y;
-
-      /* Get distance ratio. */
-      dx = (SCREEN_W/2.) / (FABS(x) + 2*target->ship->gfx_space->sw);
-      dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
-
-      /* Get zoom. */
-      tz = MIN( dx, dy );
+   if (pilot_isFlag( follow, PILOT_STEALTH )) {
+      tz = zfar;
    }
-   else
-      tz = znear; /* Aim at in. */
+   else {
+      if (target != NULL) {
+         /* Get current relative target position. */
+         gui_getOffset( &x, &y );
+         x += target->solid->pos.x - follow->solid->pos.x;
+         y += target->solid->pos.y - follow->solid->pos.y;
+
+         /* Get distance ratio. */
+         dx = (SCREEN_W/2.) / (FABS(x) + 2*target->ship->gfx_space->sw);
+         dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
+
+         /* Get zoom. */
+         tz = MIN( dx, dy );
+      }
+      else
+         tz = znear; /* Aim at in. */
+   }
 
    /* Gradually zoom in/out. */
    d  = CLAMP(-conf.zoom_speed, conf.zoom_speed, tz - z);

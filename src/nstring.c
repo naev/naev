@@ -230,7 +230,7 @@ int num2str( char dest[NUM2STRLEN], double n, int decimals )
  *    @param decimals Number of decimals to write.
  *    @return Fancy string number.
  */
-char* num2strU( double n, int decimals )
+const char* num2strU( double n, int decimals )
 {
    static char num2strU_buf[NUM2STRLEN];
    num2str( num2strU_buf, n, decimals );

@@ -59,7 +59,7 @@ function accept ()
    vn.music( minerva.loops.pirate )
    vn.transition()
    vn.label( "leave" )
-   vn.na(_("You approach the sketch individual who seems to be calling your attention once again."))
+   vn.na(_("You approach the sketchy individual who seems to be calling your attention once again."))
    pir(_([["It seems like our last job worked better than we thought. The Dvaered are all riled up, just as planned. However, there is still a lot left to do."]]))
    pir(_([["I have another job if you are interested, it should be simpler than last time, only this time we target the Za'lek instead of the Dvaered to try to… improve the situation."
 They smiles at you.]]))

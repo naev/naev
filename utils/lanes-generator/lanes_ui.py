@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 
-FACTION_COLORS = ["g","orange","brown","darkred","silver","aqua","y","b","purple","grey"]
+COLORMAP = plt.cm.gist_rainbow
 
 
 def directedSystemPairs( problem, activated, Lfaction, systems ):
@@ -25,6 +26,7 @@ def directedSystemPairs( problem, activated, Lfaction, systems ):
 def printLanes( problem, activated, Lfaction, systems ):
     '''Display the active lanes'''
     nsys = len(systems.nodess)
+    nfac = len(systems.facnames)
     sil, sjl, lanesLoc2globs = problem.internal_lanes[3:6]
 
     sys_edge_factions = directedSystemPairs(problem, activated, Lfaction, systems)
@@ -41,7 +43,9 @@ def printLanes( problem, activated, Lfaction, systems ):
             glob_ax.plot(xij, yij, color='lightgrey')
         for i, f in enumerate(factions):
             nf = len(factions)
-            glob_ax.plot(xij, yij, linewidth=nf, color=FACTION_COLORS[f], dashes=(0, 5*i, 5, 5*(nf-i-1)))
+            glob_ax.plot(xij, yij, linewidth=nf, color=COLORMAP(f/nfac), dashes=(0, 5*i, 5, 5*(nf-i-1)))
+
+    glob_ax.legend(handles=[Patch(color=COLORMAP(f/nfac), label=name) for (f,name) in enumerate(systems.facnames)])
 
     annot = glob_ax.annotate('', xy=(0, 0), xytext=(10, 10), textcoords='offset points', bbox={'fc': 'w'})
     annot.set_visible(False)
@@ -83,7 +87,9 @@ def printLanes( problem, activated, Lfaction, systems ):
                 x1, y1 = nodes[no1]
                 x2, y2 = nodes[no2]
             
-                col = FACTION_COLORS[ Lfaction[jj] ]
+                col = COLORMAP(Lfaction[jj]/nfac)
                 loc_ax.plot([x1,x2], [y1,y2], color=col)
-        
+                
+                
+    plt.gca().set_aspect('equal')
     plt.show()

@@ -148,7 +148,7 @@ end
 function found_mole ()
    vn.clear()
    vn.scene()
-   local mole = vn.newCharacter( _("Mole"), {image=mole_image} )
+   local mole = vn.newCharacter( minerva.vn_mole() )
    vn.transition()
    vn.na(_("After the chuck-a-luck dealers shift you follow him to a back alley in the station."))
    mole(_([["I don't recognize you, are you the new messenger? Last guy got sliced up."
@@ -243,6 +243,7 @@ They beam you a smile.
 "Let us talk about your payment."]]))
    vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
    vn.na("Suddenly an alarm starts blaring throughout the ship.")
+   -- Using boars as slang for Dvaered
    maikki(_([[The familiar and angry voice bellows in the distance.
 "Zuri! We've got incoming boars closing in our or position! Take care of it!"]]))
    pir:rename(_("Zuri"))

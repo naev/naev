@@ -633,7 +633,7 @@ static char **map_outfitsMatch( const char *name )
    char **names;
 
    /* Get outfits and names. */
-   o     = tech_getOutfitArray( map_known_techs, array_size( map_known_techs ) );
+   o     = tech_getOutfitArray( map_known_techs, array_size(map_known_techs) );
    names = map_fuzzyOutfits( o, name );
    array_free(o);
 

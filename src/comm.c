@@ -54,8 +54,8 @@ static void comm_close( unsigned int wid, char *unused );
 static void comm_bribePilot( unsigned int wid, char *unused );
 static void comm_bribePlanet( unsigned int wid, char *unused );
 static void comm_requestFuel( unsigned int wid, char *unused );
-static int comm_getNumber( double *val, char* str );
-static const char* comm_getString( char *str );
+static int comm_getNumber( double *val, const char* str );
+static const char* comm_getString( const char *str );
 
 
 /**
@@ -627,7 +627,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
  *    @param str Name of number to get.
  *    @return 0 for success, 1 on error (including not found).
  */
-static int comm_getNumber( double *val, char* str )
+static int comm_getNumber( double *val, const char* str )
 {
    int ret;
 
@@ -664,7 +664,7 @@ static int comm_getNumber( double *val, char* str )
  *    @param str String to get.
  *    @return String matching str.
  */
-static const char* comm_getString( char *str )
+static const char* comm_getString( const char *str )
 {
    const char *ret;
 

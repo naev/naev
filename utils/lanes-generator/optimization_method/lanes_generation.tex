@@ -267,7 +267,7 @@ The cost-function should measure how hard it is to travel along the graph. It wi
 g_{j,\eta} = u_{m,\eta}-u_{n,\eta}
 \end{equation}
 
-This means that in our particular application, the cost-function $\varphi$ does not depend on $\theta$ directly. In a matricial notation, we introduce the sparse difference matrix $Q$ of size \textcolor{red}{??}:
+This means that in our particular application, the cost-function $\varphi$ does not depend on $\theta$ directly. In a matricial notation, we introduce the sparse difference matrix $Q$ of size $n_{edges}\times n_{nodes}$:
 
 \begin{equation}
 G = QU = Q\tilde{U}P^T
@@ -310,7 +310,7 @@ Let us introduce the matrix term to term product: $c = A\cdot B$ means $\forall 
 In this part, we seek to determine the gradient of the cost-function $\phi$ with respect to $\theta$. In order to take into account the constraint $K(\theta)\tilde{U} = \tilde{F}$, one introduces the Lagrange multiplier $\Lambda$ and the Lagrangian $\psi(\theta,\tilde{U},\Lambda)$:
 
 \begin{equation}
-\psi(\theta,\tilde{U},\Lambda) = \dfrac{1}{2} \|Q\tilde{U}P_p^T\|_f^2 + \Lambda \cdot \left( K(\theta)\tilde{U} - \tilde{F} \right)
+\psi(\theta,\tilde{U},\Lambda) = \dfrac{1}{2} \|Q\tilde{U}P_p^T\|_f^2 + \Lambda^T \cdot \left( K(\theta)\tilde{U} - \tilde{F} \right)
 \end{equation}
 
 One can show that the solution of the minimization problem is also the saddle-point of $\psi$. One can compute the gradients of $\psi$:
@@ -319,7 +319,7 @@ One can show that the solution of the minimization problem is also the saddle-po
 \begin{cases}
 \nabla_u \psi = Q^TQ\tilde{U}P_p^TP_p + K(\theta)^T \Lambda \\
 \nabla_\lambda \psi = K(\theta)\tilde{U} - \tilde{F} \\
-\nabla_\theta \psi = \Lambda \cdot \nabla K(\theta) \tilde{U}
+\nabla_\theta \psi = \Lambda^T \cdot \nabla K(\theta) \tilde{U}
 \end{cases}
 \end{equation}
 
@@ -327,7 +327,7 @@ See annex A for the computation of $\nabla_u \psi$. The computation of $\nabla_\
 
 For $\tilde{U}$ and $\lambda$ such that $\nabla_u \psi = 0$ and $\nabla_\lambda \psi = 0$, one has $\nabla\phi = \nabla_\theta \psi$.
 
-\textit{Remark:} As $\nabla K$ is symmetric, one can show that $\Lambda \cdot \nabla K(\theta) \tilde{U} = \tilde{U} \cdot \nabla K(\theta) \Lambda$
+\textit{Remark:} As $\nabla K$ is symmetric, one can show that $\Lambda^T \cdot \nabla K(\theta) \tilde{U} = \tilde{U}^T \cdot \nabla K(\theta) \Lambda$
 
 As a conclusion, in order to compute $\nabla\phi$, which is an essential point in the algorithm, one has to do the following computations :
 
@@ -335,14 +335,12 @@ As a conclusion, in order to compute $\nabla\phi$, which is an essential point i
 	\item Solve MRHS problem $K(\theta)\tilde{U} = \tilde{F}$ to obtain $\tilde{U}$
 	\item Solve MRHS problem $K(\theta) \tilde{\Lambda} = - Q^TQ\tilde{U}$ to obtain $\tilde{\Lambda}$
 	\item Compute $\Lambda = \tilde{\Lambda}P_p^TP_p$
-	\item Evaluate $\nabla\phi = \Lambda \cdot \nabla K(\theta) \tilde{U}$, as detailed in annex C.
+	\item Evaluate $\nabla\phi = \Lambda^T \cdot \nabla K(\theta) \tilde{U}$, as detailed in annex C.
 \end{itemize}
 
-\section{The algorithm}
+\section{The algorithm (boolean case)}
 
-An idea could be to use a gradient-based minimization algorithm (BFGS or steepest descent) to minimize $\phi$ under a few additional constraints, with respect to $\theta \in [0;1]$, and to use a regularization function, or any other procedure that tends to impose that $\theta$ is $0$ or $1$. However, this approach is quite complex and not straightforwardly compatible with the fact that there are different factions, that minimize different cost-functions.
-
- In this report, an other approach is proposed. It consists in activating at each iteration one lane per system and per faction. This lane is the one with the strongest gradient (in absolute value). It is presented at algorithm \ref{alg:lanes}.
+We propose first an algorithm that works with boolean unknowns $\theta$. It consists in activating at each iteration one lane per system and per faction. This lane is the one with the strongest gradient (in absolute value). It is presented at algorithm \ref{alg:lanes}.
 
 \begin{algorithm}[ht]
 	\caption{Lanes building algorithm}
@@ -367,6 +365,50 @@ An idea could be to use a gradient-based minimization algorithm (BFGS or steepes
 	\end{algorithmic}
 \end{algorithm}
 
+\section{Continuous case}
+
+In the case where $\theta$ represents the density of a given lane, on which the only constraint is that it is positive, a steepest-descent algorithm can be proposed.
+
+\subsection{Optimization under constraint}
+
+For each system, and each faction, the total cost of lanes must be equal to the faction's presence in the system, which can be represented as the following constraint, where $\xi_j$ is the cost of a given lane, and $\Xi_p$ is the presence of the faction $p$:
+
+\begin{equation}
+\forall s \text{ (system)}, \forall p \text{ (faction)}, \sum_j \theta_j^p \xi_j = \Xi_p
+\end{equation}
+
+This can be enforced by initializing $\theta$ for each system and faction as:
+
+\begin{equation}
+\forall s \text{ (system)}, \forall p \text{ (faction)}, \forall j \text{ (lane)}, \theta_{j,0}^p = \dfrac{\Xi_p}{\sum_i \xi_i}
+\end{equation}
+
+And by enforcing that, for any update $\delta$:
+
+\begin{equation}
+\forall s \text{ (system)}, \forall p \text{ (faction)}, \sum_j \delta_j^p \xi_j = 0
+\end{equation}
+
+Two different cases may happend:
+
+1/ There is only one lane in the system: $\delta_0^p = 0$ all the time for any faction
+
+2/ There is more than one lane: one can select one lane (for example the last one in the list), which density will automatically determined from the density of the other lanes:
+
+\begin{equation}
+\forall s \text{ (system)}, \forall p \text{ (faction)}, \delta_{end}^p = - \dfrac{1}{\xi_{end}} \sum_j \delta_j^p \xi_j
+\end{equation}
+
+This second point leads to a variable change that can be formally written as follows, where $c$ is a vector for each system and faction: 
+
+\begin{equation}
+\theta_{end} = c^T \theta_0
+\end{equation}
+
+\subsection{Linesearch step}
+
+\subsection{Evaluation of the cost-function}
+
 \section{Conclusion}
 
 In this report, an algorithm was presented, that aims at generating a mesh of safe lanes via the resolution of a topological optimization problem based on the impedance problem.
@@ -376,7 +418,7 @@ In this report, an algorithm was presented, that aims at generating a mesh of sa
 We develop the computation of $\nabla_u\varphi$
 
 \begin{equation}
-\varphi = \dfrac{1}{2} \sum_{i,l} \sum_{j,k} q_{ij} \tilde{u}_{jk} p_{lk}
+\varphi = \dfrac{1}{2} \sum_{i,l} \sum_{j,k} \left(q_{ij} \tilde{u}_{jk} p_{lk}\right)^2
 \end{equation}
 
 \begin{equation}
@@ -389,7 +431,7 @@ This leads to:
 \nabla_u\varphi = Q^TQ\tilde{U}P^TP
 \end{equation}
 
-\section*{Annex C: Evaluation of the gradient}
+\section*{Annex B: Evaluation of the gradient}
 
 We evaluate in this part $\nabla\phi = \Lambda^T \cdot \nabla K(\theta) \tilde{U}$. As $\nabla K(\theta)$ is an order $4$ tensor, (because $\theta$ is indexed by a multi-index), it is absolutely out of question to assemble it. For that reason, a smarter approach is needed.
 

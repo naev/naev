@@ -32,7 +32,7 @@ function create ()
    if rnd.rnd() < 0.05 then
       mem.bribe_no = _("\"You won't be able to slide out of this one!\"")
    else
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.rnd() + 850.)
+      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300 * rnd.rnd() + 850)
       bribe_prompt = {
             _("\"It'll cost you %s for me to ignore your pile of rubbish.\""),
             _("\"I'm in a good mood so I'll let you go for %s.\""),
@@ -69,14 +69,14 @@ function create ()
    end
 
    -- Deal with refueling
-   p = player.pilot()
+   local p = player.pilot()
    if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing > 60 then
          mem.refuel = mem.refuel * 0.5
       end
-      mem.refuel_msg = string.format(_("\"For you, only %s for a hundred units of fuel.\""),
+      mem.refuel_msg = string.format(_("\"For you, only %s for a jump of fuel.\""),
             creditstring(mem.refuel));
    end
 

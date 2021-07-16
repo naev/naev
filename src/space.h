@@ -65,6 +65,7 @@ enum {
 #define PLANET_KNOWN       (1<<0) /**< Planet is known. */
 #define PLANET_BLACKMARKET (1<<1) /**< Planet is a black market. */
 #define PLANET_NOMISNSPAWN (1<<2) /**< No missions spawn nor trigger on this asset. */
+#define PLANET_UNINHABITED (1<<3) /**< Force planet to be uninhabited. */
 #define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
@@ -404,7 +405,7 @@ void planets_render (void);
  */
 void system_presenceCleanupAll( void );
 void system_addPresence( StarSystem *sys, int faction, double amount, int range );
-double system_getPresence( StarSystem *sys, int faction );
+double system_getPresence( const StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );
 void space_reconstructPresences( void );
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount );

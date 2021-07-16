@@ -76,6 +76,8 @@ enum {
 #define pilot_isPlayer(p)   pilot_isFlag(p,PILOT_PLAYER) /**< Checks if pilot is a player. */
 #define pilot_isDisabled(p) pilot_isFlag(p,PILOT_DISABLED) /**< Checks if pilot is disabled. */
 #define pilot_isStopped(p)  (VMOD(p->solid->vel) <= MIN_VEL_ERR)
+/* We would really have to recursively go up all the parents to check, but we're being cheap. */
+#define pilot_isWithPlayer(p) ((p)->faction == FACTION_PLAYER || ((p)->parent == PLAYER_ID))
 
 
 /**
