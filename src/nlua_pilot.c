@@ -909,9 +909,9 @@ static int pilotL_getHostiles( lua_State *L )
       if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
          continue;
       /* Must be hostile. */
-      if ( !( areEnemies( pilot_stack[i]->faction, p->faction )
-               || ( (p->id == PLAYER_ID)
-                  && pilot_isHostile(pilot_stack[i]) ) ) )
+      if (!(areEnemies( pilot_stack[i]->faction, p->faction )
+               || ((pilot_isWithPlayer(p))
+                  && pilot_isHostile(pilot_stack[i]))))
          continue;
       /* Check if disabled. */
       if (dis && pilot_isDisabled(pilot_stack[i]))
