@@ -755,8 +755,8 @@ static void safelanes_activateByGradient( MatWrap Lambda_tilde )
 
          ei_best = edgeind_opts[0];
          if (array_size(edgeind_opts) > 1) {
-            /* There's an actual choice. Search for the best option. */
-            score_best = -HUGE_VAL;
+            /* There's an actual choice. Search for the best option. Lower is better. */
+            score_best = +HUGE_VAL;
             for (eii=0; eii<array_size(edgeind_opts); eii++) {
                ei = edgeind_opts[eii];
                sis = edge_stack[ei][0];
@@ -780,7 +780,7 @@ static void safelanes_activateByGradient( MatWrap Lambda_tilde )
                Linv = safelanes_initialConductivity(ei);
                score *= ALPHA * Linv * Linv;
 
-               if (score > score_best) {
+               if (score < score_best) {
                   ei_best = ei;
                   score_best = score;
                }
