@@ -94,7 +94,6 @@ typedef struct Weapon_ {
 static Weapon** wbackLayer = NULL; /**< behind pilots */
 /* behind player layer */
 static Weapon** wfrontLayer = NULL; /**< in front of pilots, behind player */
-static int weapons_updating = 0; /**< Whether or not the weapons are updating. */
 
 /* Graphics. */
 static gl_vbo  *weapon_vbo     = NULL; /**< Weapon VBO. */
@@ -472,10 +471,8 @@ static void think_beam( Weapon* w, const double dt )
 void weapons_update( const double dt )
 {
    /* When updating, just mark weapons for deletion. */
-   weapons_updating = 1;
    weapons_updateLayer(dt,WEAPON_LAYER_BG);
    weapons_updateLayer(dt,WEAPON_LAYER_FG);
-   weapons_updating = 0;
 
    /* Actually purge and remove weapons. */
    weapons_purgeLayer( wbackLayer );
