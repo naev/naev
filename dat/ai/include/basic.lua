@@ -859,7 +859,7 @@ function mine ()
    local field     = fieldNast[1]
    local ast       = fieldNast[2]
    local p         = ai.pilot()
-   local wrange    = ai.getweaprange()
+   local wrange    = ai.getweaprange(nil, 0)
    local erange    = 100
    local trange    = math.min( math.max( erange, wrange * 3 / 4 ), wrange )
    local mbd       = ai.minbrakedist()
