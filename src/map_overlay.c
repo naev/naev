@@ -602,8 +602,7 @@ void ovr_render( double dt )
          if (detect - ast->radius < pow2(pilot_sensorRange() * player.p->stats.ew_detect)) {
             col = cBlue;
             col.a = 0.2;
-            x = map_overlay_center_x() + ast->pos.x / res;
-            y = map_overlay_center_y() + ast->pos.y / res;
+            map_overlayToScreenPos( &x, &y, ast->pos.x, ast->pos.y );
             gl_drawCircle( x, y, ast->radius / res, &col, 1 );
          }
       }
@@ -624,8 +623,7 @@ void ovr_render( double dt )
          /* Only show pilots the player can see. */
          if (!pilot_validTarget( player.p, pstk[i] ))
             continue;
-         x = map_overlay_center_x() + (int)(pstk[i]->solid->pos.x / res);
-         y = map_overlay_center_y() + (int)(pstk[i]->solid->pos.y / res);
+         map_overlayToScreenPos( &x, &y, pstk[i]->solid->pos.x, pstk[i]->solid->pos.y );
          r = detect * pstk[i]->stats.ew_detect / res;
          gl_drawCircle( x, y, r, &col, 1 );
       }
@@ -645,8 +643,7 @@ void ovr_render( double dt )
 
    /* Check if player has goto target. */
    if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
-      x = player.autonav_pos.x / res + map_overlay_center_x();
-      y = player.autonav_pos.y / res + map_overlay_center_y();
+      map_overlayToScreenPos( &x, &y, player.autonav_pos.x, player.autonav_pos.y );
       gl_renderCross( x, y, 5., &cRadar_hilight );
       gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
    }
@@ -669,12 +666,12 @@ static void ovr_mrkRenderAll( double res )
    int i;
    ovr_marker_t *mrk;
    double x, y;
+   (void) res;
 
    for (i=0; i<array_size(ovr_markers); i++) {
       mrk = &ovr_markers[i];
 
-      x = mrk->u.pt.x / res + map_overlay_center_x();
-      y = mrk->u.pt.y / res + map_overlay_center_y();
+      map_overlayToScreenPos( &x, &y, mrk->u.pt.x, mrk->u.pt.y );
       gl_renderCross( x, y, 5., &cRadar_hilight );
 
       if (mrk->text != NULL)
