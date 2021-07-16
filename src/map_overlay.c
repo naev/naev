@@ -21,6 +21,7 @@
 #include "opengl.h"
 #include "pilot.h"
 #include "player.h"
+#include "safelanes.h"
 #include "space.h"
 
 
@@ -496,6 +497,7 @@ void ovr_render( double dt )
    int i, j;
    Pilot *const*pstk;
    AsteroidAnchor *ast;
+   SafeLane *safelanes;
    double w, h, res;
    double x,y, r,detect;
    glColour col;
@@ -548,6 +550,39 @@ void ovr_render( double dt )
          }
       }
    }
+
+   /* render the safe lanes */
+   safelanes = safelanes_get( -1, cur_system );
+   for (i=0; i<array_size(safelanes); i++) {
+      if (faction_isPlayerFriend( safelanes[i].faction ))
+         col = cFriend;
+      else if (faction_isPlayerEnemy( safelanes[i].faction ))
+         col = cHostile;
+      else
+         col = cNeutral;
+
+      /* This is a bit asinine, but should be easily replaceable by decent code when we have a System Objects API. */
+      Vector2d *posns[2];
+      for (j=0; j<2; j++)
+         switch(safelanes[i].point_type[j]) {
+            case SAFELANE_LOC_PLANET:
+               posns[j] = &planet_getIndex( safelanes[i].point_id[j] )->pos;
+               break;
+            case SAFELANE_LOC_DEST_SYS:
+               posns[j] = &jump_getTarget( system_getIndex( safelanes[i].point_id[j] ), cur_system )->pos;
+               break;
+            default:
+               ERR( _("What the?") );
+         }
+
+
+      gl_drawLine(
+            map_overlay_center_x() + posns[0]->x / res, map_overlay_center_y() + posns[0]->y / res,
+            map_overlay_center_x() + posns[1]->x / res, map_overlay_center_y() + posns[1]->y / res,
+            &col
+      );
+   }
+   array_free( safelanes );
 
    /* Render pilots. */
    pstk  = pilot_getAll();
