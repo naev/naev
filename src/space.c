@@ -1106,7 +1106,7 @@ JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
  *    @param sys System to look in.
  *    @return Jump point in sys to target or NULL if not found.
  */
-JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
+JumpPoint* jump_getTarget( const StarSystem* target, const StarSystem* sys )
 {
    int i;
    JumpPoint *jp;

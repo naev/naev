@@ -377,7 +377,7 @@ void planet_updateLand( Planet *p );
  * jump stuff
  */
 JumpPoint* jump_get( const char* jumpname, const StarSystem* sys );
-JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
+JumpPoint* jump_getTarget( const StarSystem* target, const StarSystem* sys );
 const char *jump_getSymbol( JumpPoint *jp );
 
 /*
