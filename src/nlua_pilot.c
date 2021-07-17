@@ -3603,10 +3603,7 @@ static const struct pL_flag pL_flags[] = {
 static int pilotL_flags( lua_State *L )
 {
    int i;
-   Pilot *p;
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
 
    /* Create flag table. */
    lua_newtable(L);
@@ -3738,17 +3735,10 @@ static int pilotL_control( lua_State *L )
  */
 static int pilotL_memory( lua_State *L )
 {
-   Pilot *p;
-
    NLUA_CHECKRW(L);
 
-   if (lua_gettop(L) < 1) {
-      NLUA_ERROR(L, _("pilot.memory requires 1 argument!"));
-      return 0;
-   }
-
    /* Get the pilot. */
-   p  = luaL_validpilot(L,1);
+   Pilot *p  = luaL_validpilot(L,1);
 
    /* Set the pilot's memory. */
    if (p->ai == NULL) {
@@ -3773,7 +3763,7 @@ static int pilotL_memory( lua_State *L )
 static int pilotL_taskname( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
-   Task *t = ai_curTask(p);
+   Task *t  = ai_curTask(p);
    if (t)
       lua_pushstring(L, t->name);
    else
@@ -3938,16 +3928,9 @@ static int pilotL_face( lua_State *L )
  */
 static int pilotL_brake( lua_State *L )
 {
-   Pilot *p;
-
    NLUA_CHECKRW(L);
-
-   /* Get parameters. */
-   p = luaL_validpilot(L,1);
-
-   /* Set the task. */
+   Pilot *p = luaL_validpilot(L,1);
    pilotL_newtask( L, p, "brake" );
-
    return 0;
 }
 
@@ -4167,17 +4150,14 @@ static int pilotL_hyperspace( lua_State *L )
  */
 static int pilotL_stealth( lua_State *L )
 {
-   Pilot *p;
-   Task *t;
-
    NLUA_CHECKRW(L);
 
    /* Get parameters. */
-   p      = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
 
    /* Set the task. */
-   t        = pilotL_newtask( L, p, "stealth" );
-   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+   Task *t  = pilotL_newtask( L, p, "stealth" );
+   t->dat   = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
 }
@@ -4342,16 +4322,13 @@ static int pilotL_msg( lua_State *L )
  *    @luatreturn Pilot|nil The leader or nil.
  * @luafunc leader
  */
-static int pilotL_leader( lua_State *L ) {
-   Pilot *p;
-
-   p = luaL_validpilot(L, 1);
-
+static int pilotL_leader( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L, 1);
    if (p->parent != 0)
       lua_pushpilot(L, p->parent);
    else
       lua_pushnil(L);
-
    return 1;
 }
 
@@ -4366,7 +4343,8 @@ static int pilotL_leader( lua_State *L ) {
  *    @luatparam Pilot|nil leader Pilot to set as leader.
  * @luafunc setLeader
  */
-static int pilotL_setLeader( lua_State *L ) {
+static int pilotL_setLeader( lua_State *L )
+{
    Pilot *p, *leader, *prev_leader;
    PilotOutfitSlot* dockslot;
    Pilot *const* pilot_stack;
@@ -4374,14 +4352,15 @@ static int pilotL_setLeader( lua_State *L ) {
 
    NLUA_CHECKRW(L);
 
+   p           = luaL_validpilot(L, 1);
    pilot_stack = pilot_getAll();
-   p = luaL_validpilot(L, 1);
 
    prev_leader = pilot_get(p->parent);
 
    if (lua_isnil(L, 2)) {
       p->parent = 0;
-   } else {
+   }
+   else {
       leader = luaL_validpilot(L, 2);
 
       if (leader->parent != 0 && pilot_get(leader->parent) != NULL)
@@ -4391,8 +4370,7 @@ static int pilotL_setLeader( lua_State *L ) {
 
       /* Reset dock slot */
       dockslot = pilot_getDockSlot( p );
-      if (dockslot != NULL)
-      {
+      if (dockslot != NULL) {
          dockslot->u.ammo.deployed--;
          p->dockpilot = 0;
          p->dockslot = -1;
@@ -4424,14 +4402,13 @@ static int pilotL_setLeader( lua_State *L ) {
  *    @luatreturn {Pilot,...} Table of followers.
  * @luafunc followers
  */
-static int pilotL_followers( lua_State *L ) {
-   Pilot *p;
+static int pilotL_followers( lua_State *L )
+{
    int i;
-
-   p = luaL_validpilot(L, 1);
+   Pilot *p = luaL_validpilot(L, 1);
 
    lua_newtable(L);
-   for (i = 0; i < array_size(p->escorts); i++) {
+   for (i=0; i < array_size(p->escorts); i++) {
       lua_pushnumber(L, i+1);
       lua_pushpilot(L, p->escorts[i].id);
       lua_rawset(L, -3);
@@ -4452,11 +4429,9 @@ static int pilotL_followers( lua_State *L ) {
  */
 static int pilotL_hookClear( lua_State *L )
 {
-   Pilot *p;
-
    NLUA_CHECKRW(L);
 
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    pilot_clearHooks( p );
 
    return 0;
