@@ -1,26 +1,21 @@
 local scom = require "factions.spawn.lib.common"
-local merc = require "factions.spawn.lib.mercenary"
-
-local mercenary_chance = 0.05
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
    local pilots = { __doscans = true }
    local r = rnd.rnd()
 
-   if r < mercenary_chance then
-      pilots = merc.spawnLtMerc("Dvaered")
-   elseif r < 0.5 then
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+   if r < 0.5 then
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
    else
-      scom.addPilot( pilots, "Dvaered Phalanx", 45 );
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+      scom.addPilot( pilots, "Dvaered Phalanx", 45 )
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
    end
 
    return pilots
@@ -35,21 +30,19 @@ function spawn_squad ()
    end
    local r = rnd.rnd()
 
-   if r < mercenary_chance then
-      pilots = spawnMdMerc("Dvaered")
-   elseif r < 0.5 then
-      scom.addPilot( pilots, "Dvaered Vigilance", 70 );
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+   if r < 0.5 then
+      scom.addPilot( pilots, "Dvaered Vigilance", 70 )
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Dvaered Vigilance", 70 );
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+      scom.addPilot( pilots, "Dvaered Vigilance", 70 )
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
    else
-      scom.addPilot( pilots, "Dvaered Vigilance", 70 );
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-      scom.addPilot( pilots, "Dvaered Phalanx", 45 );
+      scom.addPilot( pilots, "Dvaered Vigilance", 70 )
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Phalanx", 45 )
    end
 
    return pilots
@@ -60,27 +53,23 @@ end
 function spawn_capship ()
    local pilots = {}
 
-   if rnd.rnd() < mercenary_chance then
-      pilots = spawnBgMerc("Dvaered")
-   else
-      -- Generate the capship
-      scom.addPilot( pilots, "Dvaered Goddard", 120 )
+   -- Generate the capship
+   scom.addPilot( pilots, "Dvaered Goddard", 120 )
 
-      -- Generate the escorts
-      r = rnd.rnd()
-      if r < 0.5 then
-         scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-         scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-         scom.addPilot( pilots, "Dvaered Ancestor", 20 );
-      elseif r < 0.8 then
-         scom.addPilot( pilots, "Dvaered Phalanx", 45 );
-         scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-         scom.addPilot( pilots, "Dvaered Ancestor", 20 );
-      else
-         scom.addPilot( pilots, "Dvaered Vigilance", 70 );
-         scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-         scom.addPilot( pilots, "Dvaered Vendetta", 25 );
-      end
+   -- Generate the escorts
+   r = rnd.rnd()
+   if r < 0.5 then
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
+   elseif r < 0.8 then
+      scom.addPilot( pilots, "Dvaered Phalanx", 45 )
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
+   else
+      scom.addPilot( pilots, "Dvaered Vigilance", 70 )
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
    end
 
    return pilots

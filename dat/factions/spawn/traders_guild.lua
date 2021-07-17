@@ -7,13 +7,13 @@ function spawn_patrol ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Traders Guild Llama", 20 )
+      scom.addPilot( pilots, "Llama", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Traders Guild Llama", 20 )
-      scom.addPilot( pilots, "Traders Guild Llama", 20 )
+      scom.addPilot( pilots, "Llama", 20 )
+      scom.addPilot( pilots, "Llama", 20 )
    else
-      scom.addPilot( pilots, "Traders Guild Llama", 20 )
-      scom.addPilot( pilots, "Traders Guild Koala", 40 )
+      scom.addPilot( pilots, "Llama", 20 )
+      scom.addPilot( pilots, "Koala", 40 )
    end
 
    return pilots
@@ -26,20 +26,20 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Traders Guild Koala", 40 )
-      scom.addPilot( pilots, "Traders Guild Gawain", 20 )
-      scom.addPilot( pilots, "Traders Guild Gawain", 20 )
+      scom.addPilot( pilots, "Koala", 40 )
+      scom.addPilot( pilots, "Gawain", 20 )
+      scom.addPilot( pilots, "Gawain", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Traders Guild Mule", 45 )
-      scom.addPilot( pilots, "Traders Guild Llama", 20 )
-      scom.addPilot( pilots, "Traders Guild Quicksilver", 20 )
-      scom.addPilot( pilots, "Traders Guild Rhino", 35 )
+      scom.addPilot( pilots, "Mule", 45 )
+      scom.addPilot( pilots, "Llama", 20 )
+      scom.addPilot( pilots, "Quicksilver", 20 )
+      scom.addPilot( pilots, "Rhino", 35 )
    else
-      scom.addPilot( pilots, "Traders Guild Llama", 20 )
-      scom.addPilot( pilots, "Traders Guild Mule", 45 )
-      scom.addPilot( pilots, "Traders Guild Gawain", 20 )
-      scom.addPilot( pilots, "Traders Guild Rhino", 35 )
-      scom.addPilot( pilots, "Traders Guild Quicksilver", 20 )
+      scom.addPilot( pilots, "Llama", 20 )
+      scom.addPilot( pilots, "Mule", 45 )
+      scom.addPilot( pilots, "Gawain", 20 )
+      scom.addPilot( pilots, "Rhino", 35 )
+      scom.addPilot( pilots, "Quicksilver", 20 )
    end
 
    return pilots

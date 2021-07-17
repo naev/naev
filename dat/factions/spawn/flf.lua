@@ -7,15 +7,15 @@ function spawn_patrol ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "FLF Lancelot", 25 );
-      scom.addPilot( pilots, "FLF Lancelot", 25 );
+      scom.addPilot( pilots, "Lancelot", 25 )
+      scom.addPilot( pilots, "Lancelot", 25 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "FLF Lancelot", 25 );
-      scom.addPilot( pilots, "FLF Vendetta", 25 );
+      scom.addPilot( pilots, "Lancelot", 25 )
+      scom.addPilot( pilots, "Vendetta", 25 )
    else
-      scom.addPilot( pilots, "FLF Lancelot", 25 );
-      scom.addPilot( pilots, "FLF Lancelot", 25 );
-      scom.addPilot( pilots, "FLF Vendetta", 25 );
+      scom.addPilot( pilots, "Lancelot", 25 )
+      scom.addPilot( pilots, "Lancelot", 25 )
+      scom.addPilot( pilots, "Vendetta", 25 )
    end
 
    return pilots
@@ -28,16 +28,16 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "FLF Lancelot", 25 );
-      scom.addPilot( pilots, "FLF Lancelot", 25 );
-      scom.addPilot( pilots, "FLF Vendetta", 25 );
+      scom.addPilot( pilots, "Lancelot", 25 )
+      scom.addPilot( pilots, "Lancelot", 25 )
+      scom.addPilot( pilots, "Vendetta", 25 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "FLF Lancelot", 25 );
-      scom.addPilot( pilots, "FLF Vendetta", 25 );
-      scom.addPilot( pilots, "FLF Vendetta", 25 );
+      scom.addPilot( pilots, "Lancelot", 25 )
+      scom.addPilot( pilots, "Vendetta", 25 )
+      scom.addPilot( pilots, "Vendetta", 25 )
    else
-      scom.addPilot( pilots, "FLF Lancelot", 25 );
-      scom.addPilot( pilots, "FLF Pacifier", 70 );
+      scom.addPilot( pilots, "Lancelot", 25 )
+      scom.addPilot( pilots, "Pacifier", 70 )
    end
 
    return pilots

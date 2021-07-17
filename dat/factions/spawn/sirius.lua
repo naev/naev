@@ -1,23 +1,18 @@
 local scom = require "factions.spawn.lib.common"
-local merc = require "factions.spawn.lib.mercenary"
-
-mercenary_chance = 0.05
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
    local pilots = { __doscans = true }
    local r = rnd.rnd()
 
-   if r < mercenary_chance then
-      pilots = merc.spawnLtMerc("Sirius")
-   elseif r < 0.5 then
-      scom.addPilot( pilots, "Sirius Fidelity", 20 );
+   if r < 0.5 then
+      scom.addPilot( pilots, "Sirius Fidelity", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Sirius Fidelity", 20 );
-      scom.addPilot( pilots, "Sirius Fidelity", 20 );
+      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+      scom.addPilot( pilots, "Sirius Fidelity", 20 )
    else
-      scom.addPilot( pilots, "Sirius Fidelity", 20 );
-      scom.addPilot( pilots, "Sirius Shaman", 25 );
+      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+      scom.addPilot( pilots, "Sirius Shaman", 25 )
    end
 
    return pilots
@@ -32,20 +27,18 @@ function spawn_squad ()
    end
    local r = rnd.rnd()
 
-   if r < mercenary_chance then
-      pilots = spawnMdMerc("Sirius")
-   elseif r < 0.5 then
-      scom.addPilot( pilots, "Sirius Preacher", 45 );
-      scom.addPilot( pilots, "Sirius Shaman", 25 );
-      scom.addPilot( pilots, "Sirius Fidelity", 20 );
+   if r < 0.5 then
+      scom.addPilot( pilots, "Sirius Preacher", 45 )
+      scom.addPilot( pilots, "Sirius Shaman", 25 )
+      scom.addPilot( pilots, "Sirius Fidelity", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Sirius Preacher", 45 );
-      scom.addPilot( pilots, "Sirius Preacher", 45 );
+      scom.addPilot( pilots, "Sirius Preacher", 45 )
+      scom.addPilot( pilots, "Sirius Preacher", 45 )
    else
-      scom.addPilot( pilots, "Sirius Preacher", 45 );
-      scom.addPilot( pilots, "Sirius Shaman", 25 );
-      scom.addPilot( pilots, "Sirius Fidelity", 20 );
-      scom.addPilot( pilots, "Sirius Fidelity", 20 );
+      scom.addPilot( pilots, "Sirius Preacher", 45 )
+      scom.addPilot( pilots, "Sirius Shaman", 25 )
+      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+      scom.addPilot( pilots, "Sirius Fidelity", 20 )
    end
 
    return pilots
@@ -55,28 +48,23 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
    local pilots = {}
-
-   if rnd.rnd() < mercenary_chance then
-      pilots = spawnBgMerc("Sirius")
+   local r = rnd.rnd()
+   -- Generate the capship
+   if r < 0.5 then
+      scom.addPilot( pilots, "Sirius Dogma", 140 )
    else
-      local r = rnd.rnd()
-      -- Generate the capship
-      if r < 0.5 then
-          scom.addPilot( pilots, "Sirius Dogma", 140 )
-      else
-          scom.addPilot( pilots, "Sirius Divinity", 120 );
-      end
+      scom.addPilot( pilots, "Sirius Divinity", 120 )
+   end
 
-      -- Generate the escorts
-      r = rnd.rnd()
-      if r < 0.5 then
-         scom.addPilot( pilots, "Sirius Shaman", 25 );
-         scom.addPilot( pilots, "Sirius Fidelity", 20 );
-         scom.addPilot( pilots, "Sirius Fidelity", 20 );
-      else
-         scom.addPilot( pilots, "Sirius Preacher", 45 );
-         scom.addPilot( pilots, "Sirius Fidelity", 20 );
-      end
+   -- Generate the escorts
+   r = rnd.rnd()
+   if r < 0.5 then
+      scom.addPilot( pilots, "Sirius Shaman", 25 )
+      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+   else
+      scom.addPilot( pilots, "Sirius Preacher", 45 )
+      scom.addPilot( pilots, "Sirius Fidelity", 20 )
    end
 
    return pilots

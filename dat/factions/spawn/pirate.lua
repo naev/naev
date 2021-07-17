@@ -1,5 +1,9 @@
 local scom = require "factions.spawn.lib.common"
 
+local function add_hyena( pilots )
+   scom.addPilot( pilots, "Hyena", 15, {name=N_("Pirate Hyena")})
+end
+
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
    local pilots = {}
@@ -9,16 +13,16 @@ function spawn_patrol ()
    local r = rnd.rnd()
 
    if r < 0.3 then
-      scom.addPilot( pilots, "Pirate Hyena", 15 );
+      add_hyena( pilots )
    elseif r < 0.5 then
-      scom.addPilot( pilots, "Pirate Shark", 20 );
+      scom.addPilot( pilots, "Pirate Shark", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Pirate Hyena", 15 );
-      scom.addPilot( pilots, "Pirate Shark", 20 );
+      add_hyena( pilots )
+      scom.addPilot( pilots, "Pirate Shark", 20 )
    else
-      scom.addPilot( pilots, "Pirate Vendetta", 25 );
-      scom.addPilot( pilots, "Pirate Hyena", 15 );
-      scom.addPilot( pilots, "Pirate Shark", 20 );
+      scom.addPilot( pilots, "Pirate Vendetta", 25 )
+      add_hyena( pilots )
+      scom.addPilot( pilots, "Pirate Shark", 20 )
    end
 
    return pilots
@@ -34,24 +38,24 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.4 then
-      scom.addPilot( pilots, "Pirate Hyena", 15 );
-      scom.addPilot( pilots, "Pirate Vendetta", 25 );
-      scom.addPilot( pilots, "Pirate Ancestor", 20 );
-      scom.addPilot( pilots, "Pirate Ancestor", 20 );
+      add_hyena( pilots )
+      scom.addPilot( pilots, "Pirate Vendetta", 25 )
+      scom.addPilot( pilots, "Pirate Ancestor", 20 )
+      scom.addPilot( pilots, "Pirate Ancestor", 20 )
    elseif r < 0.6 then
-      scom.addPilot( pilots, "Pirate Hyena", 15 );
-      scom.addPilot( pilots, "Pirate Shark", 20 );
-      scom.addPilot( pilots, "Pirate Vendetta", 25 );
-      scom.addPilot( pilots, "Pirate Ancestor", 20 );
+      add_hyena( pilots )
+      scom.addPilot( pilots, "Pirate Shark", 20 )
+      scom.addPilot( pilots, "Pirate Vendetta", 25 )
+      scom.addPilot( pilots, "Pirate Ancestor", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Pirate Shark", 20 );
-      scom.addPilot( pilots, "Pirate Rhino", 35 );
-      scom.addPilot( pilots, "Pirate Phalanx", 45 );
+      scom.addPilot( pilots, "Pirate Shark", 20 )
+      scom.addPilot( pilots, "Pirate Rhino", 35 )
+      scom.addPilot( pilots, "Pirate Phalanx", 45 )
    else
-      scom.addPilot( pilots, "Pirate Hyena", 15 );
-      scom.addPilot( pilots, "Pirate Shark", 20 );
-      scom.addPilot( pilots, "Pirate Vendetta", 25 );
-      scom.addPilot( pilots, "Pirate Admonisher", 45 );
+      add_hyena( pilots )
+      scom.addPilot( pilots, "Pirate Shark", 20 )
+      scom.addPilot( pilots, "Pirate Vendetta", 25 )
+      scom.addPilot( pilots, "Pirate Admonisher", 45 )
    end
 
    return pilots
@@ -71,20 +75,20 @@ function spawn_capship ()
 
    -- Generate the escorts
    if r < 0.5 then
-      scom.addPilot( pilots, "Pirate Admonisher", 45 );
-      scom.addPilot( pilots, "Pirate Vendetta", 25 );
-      scom.addPilot( pilots, "Pirate Vendetta", 25 );
+      scom.addPilot( pilots, "Pirate Admonisher", 45 )
+      scom.addPilot( pilots, "Pirate Vendetta", 25 )
+      scom.addPilot( pilots, "Pirate Vendetta", 25 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Pirate Phalanx", 45 );
-      scom.addPilot( pilots, "Pirate Shark", 20 );
-      scom.addPilot( pilots, "Pirate Vendetta", 25 );
-      scom.addPilot( pilots, "Pirate Ancestor", 20 );
+      scom.addPilot( pilots, "Pirate Phalanx", 45 )
+      scom.addPilot( pilots, "Pirate Shark", 20 )
+      scom.addPilot( pilots, "Pirate Vendetta", 25 )
+      scom.addPilot( pilots, "Pirate Ancestor", 20 )
    else
-      scom.addPilot( pilots, "Pirate Rhino", 35 );
-      scom.addPilot( pilots, "Pirate Admonisher", 45 );
-      scom.addPilot( pilots, "Pirate Shark", 20 );
-      scom.addPilot( pilots, "Pirate Vendetta", 25 );
-      scom.addPilot( pilots, "Pirate Ancestor", 20 );
+      scom.addPilot( pilots, "Pirate Rhino", 35 )
+      scom.addPilot( pilots, "Pirate Admonisher", 45 )
+      scom.addPilot( pilots, "Pirate Shark", 20 )
+      scom.addPilot( pilots, "Pirate Vendetta", 25 )
+      scom.addPilot( pilots, "Pirate Ancestor", 20 )
    end
 
    return pilots

@@ -7,14 +7,14 @@ function spawn_patrol ()
    local r = rnd.rnd()
 
    if r < 0.3 then
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 )
    elseif r < 0.6 then
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 )
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 )
    else
-      scom.addPilot( pilots, "Thurion Apprehension", 75 );
+      scom.addPilot( pilots, "Thurion Apprehension", 75 )
    end
 
    return pilots
@@ -27,20 +27,20 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.4 then
-      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 )
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 )
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 )
    elseif r < 0.6 then
-      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 )
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Thurion Taciturnity", 40 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Taciturnity", 40 )
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 )
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 )
    else
-      scom.addPilot( pilots, "Thurion Apprehension", 75 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Apprehension", 75 )
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 )
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 )
    end
 
    return pilots
@@ -57,16 +57,16 @@ function spawn_capship ()
    -- Generate the escorts
    local r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 )
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 )
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 )
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Thurion Virtuosity", 45 );
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Virtuosity", 45 )
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 )
    else
-      scom.addPilot( pilots, "Thurion Apprehension", 75 );
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Apprehension", 75 )
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 )
    end
 
    return pilots

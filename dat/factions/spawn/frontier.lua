@@ -1,23 +1,18 @@
 local scom = require "factions.spawn.lib.common"
-local merc = require "factions.spawn.lib.mercenary"
-
-local mercenary_chance = 0.15
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
    local pilots = { __doscans = true }
    local r = rnd.rnd()
 
-   if r < mercenary_chance then
-      pilots = merc.spawnLtMerc("Frontier")
-   elseif r < 0.5 then
-      scom.addPilot( pilots, "Frontier Lancelot", 30 );
+   if r < 0.5 then
+      scom.addPilot( pilots, "Lancelot", 30 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Frontier Hyena", 20 );
-      scom.addPilot( pilots, "Frontier Lancelot", 30 );
+      scom.addPilot( pilots, "Hyena", 20 )
+      scom.addPilot( pilots, "Lancelot", 30 )
    else
-      scom.addPilot( pilots, "Frontier Hyena", 20 );
-      scom.addPilot( pilots, "Frontier Ancestor", 25 );
+      scom.addPilot( pilots, "Hyena", 20 )
+      scom.addPilot( pilots, "Ancestor", 25 )
    end
 
    return pilots
@@ -33,15 +28,13 @@ function spawn_squad ()
 
    local r = rnd.rnd()
 
-   if r < mercenary_chance then
-      pilots = spawnMdMerc("Frontier")
-   elseif r < 0.5 then
-      scom.addPilot( pilots, "Frontier Lancelot", 30 );
-      scom.addPilot( pilots, "Frontier Phalanx", 55 );
+   if r < 0.5 then
+      scom.addPilot( pilots, "Lancelot", 30 )
+      scom.addPilot( pilots, "Phalanx", 55 )
    else
-      scom.addPilot( pilots, "Frontier Lancelot", 30 );
-      scom.addPilot( pilots, "Frontier Lancelot", 30 );
-      scom.addPilot( pilots, "Frontier Ancestor", 25 );
+      scom.addPilot( pilots, "Lancelot", 30 )
+      scom.addPilot( pilots, "Lancelot", 30 )
+      scom.addPilot( pilots, "Ancestor", 25 )
    end
 
    return pilots

@@ -4,16 +4,14 @@ local scom = require "factions.spawn.lib.common"
 -- @brief Spawns a single small ship.
 function spawn_patrol ()
    local pilots = {}
-   local civships = {{"Proteron Dissident Schroedinger", 8},
-                     {"Proteron Dissident Llama", 8},
-                     {"Proteron Dissident Gawain", 8},
-                     {"Proteron Dissident Hyena", 13}
-                    }
-
-   local select = rnd.rnd(1, #civships)
-
-   scom.addPilot( pilots, civships[select][1], civships[select][2] );
-
+   local civships = {
+         {"Schroedinger", 8},
+         {"Llama", 8},
+         {"Gawain", 8},
+         {"Hyena", 13},
+   }
+   local shp = civships[ rnd.rnd(1, #civships) ]
+   scom.addPilot( pilots, shp[1], shp[2] )
    return pilots
 end
 

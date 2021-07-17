@@ -5,7 +5,7 @@ local scom = require "factions.spawn.lib.common"
 function spawn_patrol ()
     local pilots = {}
 
-    scom.addPilot( pilots, "Collective Drone", 20 );
+    scom.addPilot( pilots, "Drone", 20 )
 
     return pilots
 end
@@ -17,17 +17,17 @@ function spawn_squad ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-        scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
+        scom.addPilot( pilots, "Drone", 20 )
+        scom.addPilot( pilots, "Drone", 20 )
     elseif r < 0.8 then
-        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
+        scom.addPilot( pilots, "Heavy Drone", 30 )
+        scom.addPilot( pilots, "Drone", 20 )
+        scom.addPilot( pilots, "Drone", 20 )
     else
-        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
+        scom.addPilot( pilots, "Heavy Drone", 30 )
+        scom.addPilot( pilots, "Heavy Drone", 30 )
+        scom.addPilot( pilots, "Drone", 20 )
+        scom.addPilot( pilots, "Drone", 20 )
     end
 
     return pilots
@@ -40,23 +40,23 @@ function spawn_capship ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
+        scom.addPilot( pilots, "Heavy Drone", 30 )
+        scom.addPilot( pilots, "Drone", 20 )
+        scom.addPilot( pilots, "Drone", 20 )
+        scom.addPilot( pilots, "Drone", 20 )
     elseif r < 0.8 then
-        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
+        scom.addPilot( pilots, "Heavy Drone", 30 )
+        scom.addPilot( pilots, "Heavy Drone", 30 )
+        scom.addPilot( pilots, "Drone", 20 )
+        scom.addPilot( pilots, "Drone", 20 )
+        scom.addPilot( pilots, "Drone", 20 )
     else
-        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
-        scom.addPilot( pilots, "Collective Heavy Drone", 30 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
-        scom.addPilot( pilots, "Collective Drone", 20 );
+        scom.addPilot( pilots, "Heavy Drone", 30 )
+        scom.addPilot( pilots, "Heavy Drone", 30 )
+        scom.addPilot( pilots, "Heavy Drone", 30 )
+        scom.addPilot( pilots, "Drone", 20 )
+        scom.addPilot( pilots, "Drone", 20 )
+        scom.addPilot( pilots, "Drone", 20 )
     end
 
     return pilots

@@ -66,77 +66,51 @@ end
 -- @brief Actually spawns the pilots
 function scom.spawn( pilots, faction, guerilla )
    local spawned = {}
-   local leader = nil
 
    -- Case no pilots
    if pilots == nil then
       return nil
    end
 
+   local leader
    local origin = pilot.choosePoint( faction, false, guerilla ) -- Find a suitable spawn point
    for k,v in ipairs(pilots) do
-      local p
-      if type(v["pilot"])=='function' then
-         p = v["pilot"]() -- Call function
-      elseif not v["pilot"][1] then
-         if leader ~= nil then
-            if pilots.__formation ~= nil then
-               leader:memory().formation = pilots.__formation
-            end
+      local params = v.params or {}
+      if not leader then
+         if pilots.__formation ~= nil then
+            leader:memory().formation = pilots.__formation
          end
-         p = pilot.addFleet( v["pilot"], origin )
-      else
-         p = scom.spawnRaw( v["pilot"][1], v["pilot"][2], v["pilot"][3], v["pilot"][4], v["pilot"][5], origin )
       end
-      if #p == 0 then
-         error(_("No pilots added"))
-      end
-      local presence = v["presence"] / #p
-      for _,vv in ipairs(p) do
-         if not pilots.__nofleet then
-            if leader == nil then
-               leader = vv
-            else
-               vv:setLeader(leader)
-            end
+      local pfact = params.faction or faction
+      local p = pilot.add( v["pilot"], pfact, origin, params.name, params )
+      local presence = v["presence"]
+      if not pilots.__nofleet then
+         if leader == nil then
+            leader = p
+         else
+            p:setLeader(leader)
          end
-         if pilots.__doscans then
-            local mem = vv:memory()
-            mem.doscans = true
-         end
-         spawned[ #spawned+1 ] = { pilot = vv, presence = presence }
       end
+      if pilots.__doscans then
+         local mem = p:memory()
+         mem.doscans = true
+      end
+      spawned[ #spawned+1 ] = { pilot=p, presence=presence }
    end
    return spawned
 end
 
 
--- @brief spawn a pilot with pilot.add
-function scom.spawnRaw( ship, name, ai, equip, faction, origin )
-   local p = {pilot.add( ship, equip, origin, name, {ai=ai} )}
-   p[1]:setFaction(faction)
-   return p
-end
-
-
 -- @brief adds a pilot to the table
-function scom.addPilot( pilots, name, presence )
-   pilots[ #pilots+1 ] = { pilot = name, presence = presence }
-   if pilots[ "__presence" ] then
-      pilots[ "__presence" ] = pilots[ "__presence" ] + presence
-   else
-      pilots[ "__presence" ] = presence
-   end
+function scom.addPilot( pilots, name, presence, params )
+   pilots[ #pilots+1 ] = { pilot=name, presence=presence, params=params }
+   pilots.__presence = (pilots.__presence or 0) + presence
 end
 
 
 -- @brief Gets the presence value of a group of pilots
 function scom.presence( pilots )
-   if pilots[ "__presence" ] then
-      return pilots[ "__presence" ]
-   else
-      return 0
-   end
+   return pilots.__presence or 0
 end
 
 
