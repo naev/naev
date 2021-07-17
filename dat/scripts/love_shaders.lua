@@ -105,7 +105,7 @@ const float u_sharp = %f;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = color * texture2D( tex, uv );
+   vec4 texcolor = color * texture( tex, uv );
 
    float n = 0.0;
    for (float i=1.0; i<8.0; i=i+1.0) {
@@ -227,7 +227,7 @@ vec4 vignette( vec2 uv )
 }
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 {
-   vec4 texcolor = color * texture2D( tex, uv );
+   vec4 texcolor = color * texture( tex, uv );
 
    texcolor = graineffect( texcolor, uv, screen_coords );
    vec4 v = vignette( uv );
@@ -316,7 +316,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    look.y = mod( look.y + vShift, 1.0 );
 
    /* Blur a bit. */
-   vec4 texcolor = color * texture2D( tex, look );
+   vec4 texcolor = color * texture( tex, look );
    float blurdir = snoise( vec2( blurspeed*u_time, 0 ) );
    vec2 blurvec = bluramplitude * vec2( cos(blurdir), sin(blurdir) );
    vec4 blurbg = blur9( tex, look, love_ScreenSize.xy, blurvec );
@@ -384,9 +384,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
 
    float glitchStep = mix(4.0, 32.0, random(vec2(time)));
 
-   vec4 screenColor = texture2D( tex, uv );
+   vec4 screenColor = texture( tex, uv );
    uv.x = round(uv.x * glitchStep ) / glitchStep;
-   vec4 glitchColor = texture2D( tex, uv );
+   vec4 glitchColor = texture( tex, uv );
    return color * mix(screenColor, glitchColor, vec4(0.1*strength));
 }
 ]], strength )
@@ -423,7 +423,7 @@ const float u_r      = %f;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = color * texture2D( tex, uv );
+   vec4 texcolor = color * texture( tex, uv );
 
    vec2 offset = vec2( 50.0*sin( M_PI*u_time * 0.001 * speed ), -0.3*u_time*speed );
 
@@ -660,13 +660,13 @@ const float u_r = %f;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
-   vec4 blurcolor = texture2D( blurtex, uv );
+   vec4 blurcolor = texture( blurtex, uv );
 
    // Hack to hopefully speed up
    if (blurcolor.a <= 0.0)
       return vec4(0.0);
 
-   vec4 texcolor = texture2D( tex, uv );
+   vec4 texcolor = texture( tex, uv );
    vec2 offset = vec2( 50.0*sin( M_PI*u_time * 0.001 * speed ), -3.0*u_time*speed );
 
    float n = 0.0;

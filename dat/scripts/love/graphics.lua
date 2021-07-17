@@ -638,7 +638,7 @@ function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
 local _pixelcode = [[
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec4 texcolor = texture2D(tex, texture_coords );
+   vec4 texcolor = texture(tex, texture_coords );
    return texcolor * color;
 }
 ]]
