@@ -1,7 +1,7 @@
 local scom = require "factions.spawn.lib.common"
 
 local function add_hyena( pilots )
-   scom.addPilot( pilots, "Hyena", 15, {name=N_("Pirate Hyena")})
+   scom.addPilot( pilots, "Hyena", 15, {name=_("Pirate Hyena")})
 end
 
 -- @brief Spawns a small patrol fleet.

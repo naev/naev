@@ -6,11 +6,11 @@ function spawn_patrol ()
    local pilots = {}
    local r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Llama", 20, {name=N_("Miner Llama"), ai="miner"}  )
+      scom.addPilot( pilots, "Llama", 20, {name=_("Miner Llama"), ai="miner"}  )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Koala", 40, {name=N_("Miner Koala"), ai="miner"} )
+      scom.addPilot( pilots, "Koala", 40, {name=_("Miner Koala"), ai="miner"} )
    else
-      scom.addPilot( pilots, "Mule", 45, {name=N_("Miner Mule"), ai="miner"} )
+      scom.addPilot( pilots, "Mule", 45, {name=_("Miner Mule"), ai="miner"} )
    end
 
    return pilots

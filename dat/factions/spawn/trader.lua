@@ -2,22 +2,22 @@ local scom = require "factions.spawn.lib.common"
 
 
 local function add_llama( pilots )
-   scom.addPilot( pilots, "Llama", 20, {name=N_("Trader Llama")})
+   scom.addPilot( pilots, "Llama", 20, {name=_("Trader Llama")})
 end
 local function add_koala( pilots )
-   scom.addPilot( pilots, "Koala", 30, {name=N_("Trader Koala")})
+   scom.addPilot( pilots, "Koala", 30, {name=_("Trader Koala")})
 end
 local function add_quicksilver( pilots )
-   scom.addPilot( pilots, "Quicksilver", 40, {name=N_("Trader Quicksilver")})
+   scom.addPilot( pilots, "Quicksilver", 40, {name=_("Trader Quicksilver")})
 end
 local function add_mule( pilots )
-   scom.addPilot( pilots, "Mule", 60, {name=N_("Trader Mule")})
+   scom.addPilot( pilots, "Mule", 60, {name=_("Trader Mule")})
 end
 local function add_rhino( pilots )
-   scom.addPilot( pilots, "Rhino", 70, {name=N_("Trader Rhino")})
+   scom.addPilot( pilots, "Rhino", 70, {name=_("Trader Rhino")})
 end
 local function add_shark( pilots )
-   scom.addPilot( pilots, "Shark", 15, {name=N_("Trader Shark"), ai="mercenary"})
+   scom.addPilot( pilots, "Shark", 15, {name=_("Trader Shark"), ai="mercenary"})
 end
 
 

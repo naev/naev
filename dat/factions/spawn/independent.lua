@@ -15,49 +15,58 @@ end
 
 
 -- @brief Spawns a small patrol fleet.
-function spawn_patrol ()
+function spawn_solitary_civilians ()
    local pilots = {}
    local r = rnd.rnd()
 
-   if r < 0.5 then
-      scom.addPilot( pilots, "Schroedinger", 12 )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, "Schroedinger", 12 )
+   if r < 0.3 then
+      scom.addPilot( pilots, "Llama", 5 )
+   elseif r < 0.55 then
+      scom.addPilot( pilots, "Hyena", 7 )
+   elseif r < 0.75 then
       scom.addPilot( pilots, "Gawain", 7 )
+   elseif r < 0.9 then
+      scom.addPilot( pilots, "Schroedinger", 12 )
    else
-      scom.addPilot( pilots, "Schroedinger", 12 )
-      scom.addPilot( pilots, "Schroedinger", 12 )
-      scom.addPilot( pilots, "Gawain", 7 )
+      scom.addPilot( pilots, "Koala", 20 )
    end
 
    return pilots
 end
 
-
--- @brief Spawns a medium sized squadron.
-function spawn_squad ()
+function spawn_bounty_hunter( shiplist )
    local pilots = {}
    local r = rnd.rnd()
-
-   if r < 0.5 then
-      scom.addPilot( pilots, "Schroedinger", 5 )
-      scom.addPilot( pilots, "Gawain", 5 )
-      scom.addPilot( pilots, "Gawain", 5 )
-      scom.addPilot( pilots, "Hyena", 10 )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, "Gawain", 5 )
-      scom.addPilot( pilots, "Gawain", 5 )
-      scom.addPilot( pilots, "Gawain", 5 )
-      scom.addPilot( pilots, "Hyena", 10 )
-      scom.addPilot( pilots, "Hyena", 10 )
-   else
-      scom.addPilot( pilots, "Hyena", 10 )
-      scom.addPilot( pilots, "Hyena", 10 )
-      scom.addPilot( pilots, "Hyena", 10 )
-      scom.addPilot( pilots, "Hyena", 10 )
-   end
-
+   local params = {name=_("Bounty Hunter"), ai="mercenary"}
+   local shp = shiplist[ rnd.rnd(1,#shiplist) ]
+   scom.addPilot( pilots, shp[1], shp[2], params )
    return pilots
+end
+
+
+function spawn_bounty_hunter_sml ()
+   return spawn_bounty_hunter{
+      {"Hyena", 10},
+      {"Shark", 20},
+      {"Lancelot", 25},
+      {"Vendetta", 25},
+      {"Ancestor", 20},
+   }
+end
+function spawn_bounty_hunter_med ()
+   return spawn_bounty_hunter{
+      {"Admonisher", 45},
+      {"Phalanx", 45},
+      {"Vigilance", 70},
+      {"Pacifier", 70},
+   }
+end
+function spawn_bounty_hunter_lrg ()
+   return spawn_bounty_hunter{
+      {"Kestrel", 90},
+      {"Hawking", 105},
+      {"Goddard", 120},
+   }
 end
 
 
@@ -65,22 +74,24 @@ end
 function create ( max )
    local weights = {}
 
-   -- Create weights for spawn table
-   weights[ spawn_patrol  ] = 100
-   weights[ spawn_squad   ] = math.max(1, -100 + 1.00 * max)
-
-   -- Compute advertisements
+   -- Hostiles (namely pirates atm)
    local host = 0
    local csys = system.cur()
    local find = faction.get("Independent")
    for k,fact in pairs(find:enemies()) do
       host = host + csys:presence(fact)
    end
-   host = host / csys:presence(find)
+   local hostnorm = host / csys:presence(find)
+
+   -- Create weights for spawn table
+   weights[ spawn_solitary_civilians ] = max
+   weights[ spawn_bounty_hunter_sml  ] = math.min( 0.3*max, 50 )
+   weights[ spawn_bounty_hunter_med  ] = math.min( 0.2*max, math.max(1, -100 + host ) )
+   weights[ spawn_bounty_hunter_lrg  ] = math.min( 0.1*max, math.max(1, -200 + host ) )
    -- The more hostiles, the less advertisers
    -- The modifier should be 0.15 at 10% hostiles, 0.001 at 100% hostiles, and
    -- 1 at 0% hostiles
-   weights[ spawn_advert  ] = 30 * math.exp(-host*5)
+   weights[ spawn_advert  ] = 30 * math.exp(-hostnorm*5)
 
    -- Create spawn table base on weights
    spawn_table = scom.createSpawnTable( weights )
