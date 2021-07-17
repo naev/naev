@@ -541,20 +541,33 @@ void ovr_render( double dt )
          col = cNeutral;
       col.a = 0.3;
 
-      /* This is a bit asinine, but should be easily replaceable by decent code when we have a System Objects API. */
+      /* This is a bit asinine, but should be easily replaceable by decent code when we have a System Objects API.
+       * Specifically, a generic pos and isKnown test would clean this up nicely. */
       Vector2d *posns[2];
+      Planet *pnt;
+      JumpPoint *jp;
+      int known = 1;
       for (j=0; j<2; j++) {
          switch(safelanes[i].point_type[j]) {
             case SAFELANE_LOC_PLANET:
-               posns[j] = &planet_getIndex( safelanes[i].point_id[j] )->pos;
+               pnt = planet_getIndex( safelanes[i].point_id[j] );
+               posns[j] = &pnt->pos;
+               if (!planet_isKnown( pnt ))
+                  known = 0;
                break;
             case SAFELANE_LOC_DEST_SYS:
-               posns[j] = &jump_getTarget( system_getIndex( safelanes[i].point_id[j] ), cur_system )->pos;
+               jp = jump_getTarget( system_getIndex( safelanes[i].point_id[j] ), cur_system );
+               posns[j] = &jp->pos;
+               if (!jp_isKnown( jp ))
+                  known = 0;
                break;
             default:
                ERR( _("What the?") );
          }
       }
+
+      if (!known)
+         continue;
 
       /* Get positions and stuff. */
       map_overlayToScreenPos( &x,  &y,  posns[0]->x, posns[0]->y );
