@@ -16,7 +16,6 @@ JUMP_CONDUCTIVITY = .001  # TODO : better value
 DISCONNECTED_THRESHOLD = 1e-12
 FACTIONS_LANES_BUILT_PER_ITERATION = 1
 MAX_ITERATIONS = 20
-CONVERGENCE_THRESHOLD = 1e-12
 MIN_ANGLE = 10*math.pi/180 # Path triangles can't be more acute.
 ALPHA = 9  # Lane efficiency parameter.
 
@@ -133,7 +132,6 @@ class SafeLaneProblem:
         self.internal_lanes = inSysStiff( systems.nodess, systems.factass, systems.g2ass, systems.loc2globs )
 
 
-@timed
 def buildStiffness( problem, activated, systems ):
     '''Computes the conductivity matrix'''
     def_si, def_sj, def_sv = problem.default_lanes[:3]
@@ -289,11 +287,11 @@ def getGradient( problem, u, lamt, PPl, pres_0, activated, systems ):
         
 
 def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0 ):
-    '''Activates the best lane in each system for each faction'''
+    '''Activates the best lane in each system for each faction. Returns the number activated. '''
     # Find lanes to keep in each system
     sv, sil, sjl, lanesLoc2globs, sr  = problem.internal_lanes[2:7]
     nsys = len(lanesLoc2globs)
-    
+    nactivated = 0
     nfact = len(pres_c[0])
     
     g1l = [gl[k] * np.c_[sv] for k in range(nfact)]
@@ -321,20 +319,22 @@ def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0 ):
                 ind = [lanesLoc2glob[k] for k in ind1[0]]
         
                 # Find a lane to activate
-                IdidntActivate = True
+                prev_nactivated = nactivated
                 for k in ind:
                     faction_may_build = (f in sr[k]) or (sr[k] == (-1, -1))
                     if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] / systems.dist_per_presence[f]) and faction_may_build:
                         pres_c[i][f] -= 1/sv[k] / systems.dist_per_presence[f]
                         activated[k] = True
                         Lfaction[k] = f
-                        IdidntActivate = False
+                        nactivated += 1
                         break
                     
                 # The faction did not activate anything:
                 # There is no hope in activating anything anymore.
-                if IdidntActivate:
+                if nactivated == prev_nactivated:
                     pres_c[i][f] = -1
+
+    return nactivated
 
 
 @timed
@@ -350,18 +350,11 @@ def optimizeLanes( systems, problem ):
     ftilde = ftilde[:,systems.ass2g] # Keep only lines corresponding to assets
     
     for i in range(MAX_ITERATIONS):
-        stiff = buildStiffness( problem, activated, systems ) # 0.02 s
+        stiff = buildStiffness( problem, activated, systems ) # ~0.008 s
         stiff_c = cholesky(stiff) #.001s
 
         # Compute direct and adjoint state
-        if i >= 1:
-            utildp = utilde
         utilde = stiff_c.solve_A( ftilde ) # .004 s
-
-        if i >=1:
-            rel_change = np.linalg.norm(utildp-utilde,'fro') / np.linalg.norm(utilde,'fro')
-            if rel_change <= CONVERGENCE_THRESHOLD:
-                break
 
         # Compute QQ and PP, and use utilde to detect connected parts of the mesh
         # It's in the loop, but only happends once
@@ -371,12 +364,13 @@ def optimizeLanes( systems, problem ):
         rhs = - QQ @ utilde
         lamt = stiff_c.solve_A( rhs ) #.010 s
         
-        # Compute the gradient.
-        gl = getGradient( problem, utilde, lamt, PPl, pres_c, activated, systems ) # 0.2 s
+        # Compute the gradient and activate. Runtime depends on how many degrees of freedom remain.
+        gl = getGradient( problem, utilde, lamt, PPl, pres_c, activated, systems )
 
-        activateBestFact( problem, gl, activated, Lfaction, pres_c, systems.presences ) # 0.01 s
+        if not activateBestFact( problem, gl, activated, Lfaction, pres_c, systems.presences ):
+            break
 
-    print('Converged in', i+1, 'iterations, ‖Ũ‖=', np.linalg.norm(utilde,'fro'))
+    print('Converged in', i+1, 'iterations.')
     return (activated, Lfaction)
 
 if __name__ == "__main__":

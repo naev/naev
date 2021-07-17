@@ -265,7 +265,7 @@ static void safelanes_destroyOptimizer (void)
       cholmod_free_dense( &PPl[i], &C );
    array_free( PPl );
    PPl = NULL;
-   cholmod_free_dense( &utilde, &C );
+   cholmod_free_dense( &utilde, &C ); /* CAUTION: if we instead save it, ensure it's updated after the final activateByGradient. */
    cholmod_free_dense( &ftilde, &C );
    cholmod_free_sparse( &QtQ, &C );
    cholmod_free_triplet( &stiff, &C );
