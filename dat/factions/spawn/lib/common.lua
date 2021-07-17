@@ -8,11 +8,11 @@ function scom.calcNextSpawn( cur, new, max )
    local stddelay = 10 -- seconds
    local maxdelay = 60 -- seconds. No fleet can ever take more than this to show up.
    local stdfleetsize = 1/4 -- The fraction of "max" that gets the full standard delay. Fleets bigger than this portion of max will have longer delays, fleets smaller, shorter.
-   local delayweight = 1. -- A scalar for tweaking the delay differences. A bigger number means bigger differences.
+   local delayweight = 1 -- A scalar for tweaking the delay differences. A bigger number means bigger differences.
    local percent = (cur + new) / max
-   local penaltyweight = 1. -- Further delays fleets that go over the presence limit.
-   if percent > 1. then
-      penaltyweight = 1. + 10. * (percent - 1.)
+   local penaltyweight = 1 -- Further delays fleets that go over the presence limit.
+   if percent > 1 then
+      penaltyweight = 1 + 10 * (percent - 1)
    end
 
    local fleetratio = (new/max)/stdfleetsize -- This turns into the base delay multiplier for the next fleet.
@@ -140,6 +140,5 @@ end
 function scom.decrease( cur, max, timer )
    return timer
 end
-
 
 return scom
