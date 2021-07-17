@@ -427,7 +427,7 @@ static void safelanes_initStacks_faction (void)
    }
    array_free( faction_all );
    array_shrink( &faction_stack );
-   assert( "FactionMask size is sufficient" && array_size(faction_stack) <= 8*sizeof(FactionMask) );
+   assert( "FactionMask size is sufficient" && (size_t)array_size(faction_stack) <= 8*sizeof(FactionMask) );
 
    presence_budget = array_create_size( double*, array_size(faction_stack) );
    systems_stack = system_getAll();
