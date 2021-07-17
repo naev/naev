@@ -3,7 +3,7 @@
 <mission name="Racing Skills 2">
  <avail>
   <priority>3</priority>
-  <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
+  <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
   <done>Racing Skills 1</done>
   <chance>20</chance>
   <location>Bar</location>
@@ -172,9 +172,9 @@ function takeoff()
       j:setActiveBoard(true)
       j:setVisible(true)
    end
-   racers[1] = pilot.add("Llama", "Civilian", curplanet)
-   racers[2] = pilot.add("Gawain", "Civilian", curplanet)
-   racers[3] = pilot.add("Llama", "Civilian", curplanet)
+   racers[1] = pilot.add("Llama", "Independent", curplanet)
+   racers[2] = pilot.add("Gawain", "Independent", curplanet)
+   racers[3] = pilot.add("Llama", "Independent", curplanet)
    if choice == 1 then
       racers[1]:addOutfit("Engine Reroute")
       racers[2]:addOutfit("Engine Reroute")
