@@ -660,7 +660,7 @@ end
 
 -- Hack for the ships not to be hostile anymore once shot (Mace Throw)
 function dehostilify()
-   mypilots = pilot.get( { faction.get("Civilian") } )
+   mypilots = pilot.get( { faction.get("Independent") } )
    for i, p in ipairs(mypilots) do
       p:setHostile(false)
    end
@@ -693,7 +693,7 @@ function targetHit( victim, attacker )
    victim:setInvincible()
    victim:taskClear()
    victim:land(destpla)
-   victim:setFaction( "Civilian" )
+   victim:setFaction( "Independent" )
    victim:setHostile( false )
 
    if attacker == player.pilot() then

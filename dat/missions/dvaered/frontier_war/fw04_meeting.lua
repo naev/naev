@@ -478,10 +478,10 @@ function spawnControl()
    theSys = syst[ rnd.rnd(1,#syst) ]
    origin = system.get(theSys)
 
-   types = { "Civilian Gawain", "Civilian Llama", "Civilian Schroedinger", "Civilian Hyena" }
+   types = { "Gawain", "Llama", "Schroedinger", "Hyena" }
    theTyp = types[ rnd.rnd(1,#types) ]
 
-   controls[noCtrl] = pilot.addFleet( theTyp, origin )[1]
+   controls[noCtrl] = pilot.add( theTyp, "Independent", origin )[1]
    controls[noCtrl]:control()
    controls[noCtrl]:land(targpla)
 
@@ -587,7 +587,7 @@ end
 
 -- Spawn Hamelsen in a hyena
 function spawnHam()
-   hamelsen = pilot.add( "Hyena", "Civilian", system.get("Beeklo") , _("Civilian Hyena") )
+   hamelsen = pilot.add( "Hyena", "Independent", system.get("Beeklo") )
    equipHyena( hamelsen )
    hamelsen:control()
    hamelsen:land(targpla)
@@ -597,7 +597,7 @@ function spawnHam()
    hook.timer(500, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
-   jules = pilot.add( "Hyena", "Civilian", system.get("Beeklo") , _("Civilian Hyena") )
+   jules = pilot.add( "Hyena", "Independent", system.get("Beeklo") )
    equipHyena( jules )
    jules:control()
    jules:follow( hamelsen )
