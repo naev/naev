@@ -1,5 +1,4 @@
-require("ai/empire_idle")
-require("ai/personality/patrol")
+require 'ai.empire_idle'
 
 -- Settings
 mem.aggressive = false
@@ -12,7 +11,7 @@ function create ()
    ai.setcredits( 0 )
 
    -- Get refuel chance
-   p = player.pilot()
+   local p = player.pilot()
    if p:exists() then
       mem.refuel = 0
       -- Most likely no chance to refuel

@@ -14,8 +14,8 @@ function idle ()
           ai.pushtask("land")
        end
    else -- Stay. Have a beer.
-      sysrad = rnd.rnd() * system.cur():radius()
-      angle = rnd.rnd() * 2 * math.pi
+      local sysrad = rnd.rnd() * system.cur():radius()
+      local angle = rnd.rnd() * 2 * math.pi
       ai.pushtask("loiter", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
    end
    mem.loiter = mem.loiter - 1

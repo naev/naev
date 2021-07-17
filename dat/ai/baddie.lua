@@ -1,10 +1,7 @@
-require("ai/tpl/generic")
-require("ai/personality/patrol")
+require 'ai.core.core'
 
 --[[
-
    Generic Mission baddie AI
-
 ]]--
 
 -- Settings
@@ -19,9 +16,8 @@ mem.refuel_no      = _("I won't give you fuel!")
 mem.doscans        = false
 
 function create ()
-
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Choose attack format
-   attack_choose()
+   create_post()
 end

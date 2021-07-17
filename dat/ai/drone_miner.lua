@@ -1,4 +1,4 @@
-require("ai/tpl/generic")
+require 'ai.core.core'
 
 -- Settings
 mem.control_rate = 0.5 -- Lower control rate
@@ -13,7 +13,9 @@ end
 
 -- Default task to run when idle
 function idle ()
-   field, ast = system.asteroid() -- Get a random asteroid in the system
-   ai.pushtask( "mine", {field, ast} )
+   local field, ast = system.asteroid() -- Get a random asteroid in the system
+   if field then
+      ai.pushtask( "mine", {field, ast} )
+   end
 end
 

@@ -1,3 +1,3 @@
-require("ai/baddie")
+require 'ai.baddie'
 
 mem.armour_run = 0

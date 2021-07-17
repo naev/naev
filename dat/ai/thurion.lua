@@ -1,5 +1,4 @@
-require("ai/tpl/generic")
-require("ai/personality/civilian")
+require 'ai.core.core'
 require "numstring"
 
 
@@ -9,10 +8,9 @@ mem.defensive  = true
 mem.enemyclose = 500
 mem.distressmsgfunc = sos
 
-
 -- Sends a distress signal which causes faction loss
 function sos ()
-   msg = {
+   local msg = {
       _("Local security: requesting assistance!"),
       _("Requesting assistance. We are under attack!"),
       _("Vessel under attack! Requesting help!"),
@@ -25,7 +23,6 @@ function sos ()
    ai.settarget( ai.taskdata() )
    ai.distress( msg[ rnd.int(1,#msg) ])
 end
-
 
 function create ()
 
@@ -44,7 +41,6 @@ function create ()
    mem.refuel = rnd.rnd( 1000, 3000 )
    local p = player.pilot()
    if p:exists() then
-      standing = ai.getstanding( p ) or -1
       mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
             creditstring(mem.refuel));
    end
@@ -52,4 +48,3 @@ function create ()
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
    create_post()
 end
-

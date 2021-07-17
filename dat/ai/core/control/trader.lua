@@ -1,5 +1,3 @@
-require("ai/include/basic")
-
 -- Variables
 mem.enemy_close = 500 -- Distance enemy is too close for comfort
 
@@ -69,13 +67,6 @@ function control ()
          ai.pushtask("hyperspace")
          ai.pushtask("land")
       end
-   end
-end
-
-   -- Delays the ship when entering systems so that it doesn't leave right away
-function enterdelay ()
-   if ai.timeup(0) then
-      ai.pushtask("hyperspace")
    end
 end
 

@@ -1,4 +1,4 @@
-require("ai/tpl/generic")
+require 'ai.core.core'
 
 --[[
 
@@ -74,6 +74,7 @@ function control ()
    if ai.dist(mem.guardpos) > mem.guardreturndist then
       -- Try to return
       ai.pushtask( "moveto", mem.guardpos )
+      return
    end
 
    -- Then do normal control

@@ -1,5 +1,3 @@
-require("ai/include/basic")
-require("ai/include/attack")
 local formation = require("scripts/formation")
 
 --[[
@@ -460,13 +458,6 @@ function attacked( attacker )
          ai.poptask()
          ai.pushtask("runaway", attacker)
       end
-   end
-end
-
--- Delays the ship when entering systems so that it doesn't leave right away
-function enterdelay ()
-   if ai.timeup(0) then
-      ai.pushtask("hyperspace")
    end
 end
 

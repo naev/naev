@@ -1,5 +1,4 @@
-require("ai/tpl/escort")
-require("ai/personality/patrol")
+require 'ai.escort'
 
 -- Settings
 mem.aggressive = true

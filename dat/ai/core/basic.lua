@@ -1239,3 +1239,11 @@ function stealth( target )
    -- TODO something to try to get them to restealth if failed, maybe move around?
    ai.stealth(true)
 end
+
+
+-- Delays the ship when entering systems so that it doesn't leave right away
+function enterdelay ()
+   if ai.timeup(0) then
+      ai.pushtask("hyperspace")
+   end
+end

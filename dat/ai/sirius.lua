@@ -1,5 +1,4 @@
-require("ai/tpl/generic")
-require("ai/personality/patrol")
+require 'ai.core.core'
 require "numstring"
 
 -- Settings
@@ -16,7 +15,7 @@ function create ()
    -- Get refuel chance
    local p = player.pilot()
    if p:exists() then
-      standing = ai.getstanding( p ) or -1
+      local standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 1000, 2000 )
       if standing < 50 then
          mem.refuel_no = _("\"I do not have fuel to spare.\"")
@@ -28,7 +27,7 @@ function create ()
    end
 
    -- Can't be bribed
-   bribe_no = {
+   local bribe_no = {
           _("\"Your money is of no interest to me.\"")
    }
    mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
@@ -48,6 +47,7 @@ function taunt ( target, offense )
    end
 
    -- some taunts
+   local taunts
    if offense then
       taunts = {
             _("The universe shall be cleansed of your presence!")

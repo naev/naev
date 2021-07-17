@@ -1,6 +1,6 @@
-require "ai/tpl/generic"
-require "ai/personality/advertiser"
-require "ai/include/distress_behaviour"
+require 'ai.core.core'
+require 'ai.core.idle.advertiser'
+require 'ai.core.distress'
 require "numstring"
 
 

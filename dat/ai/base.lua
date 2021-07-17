@@ -1,14 +1,11 @@
-require("ai/include/basic")
-
+require 'ai.core.core'
 
 -- Required control rate
 control_rate   = 5
 
-
 function create ()
    mem.comm_no = _("No response.")
 end
-
 
 -- Required "control" function
 function control ()
@@ -27,13 +24,11 @@ function control ()
    end
 end
 
-
 function attacked( attacker )
    if ai.taskname() ~= "attack" then
       ai.pushtask("attack", attacker)
    end
 end
-
 
 function attack ()
    -- make sure pilot exists
@@ -60,9 +55,7 @@ function attack ()
    else
       ai.poptask() -- change targets
    end
-
 end
-
 
 function idle ()
 end

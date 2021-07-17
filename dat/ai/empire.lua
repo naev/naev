@@ -1,6 +1,5 @@
-require("ai/tpl/generic")
-require("ai/personality/patrol")
-require "numstring"
+require 'ai.core.core'
+require 'numstring'
 
 -- Settings
 mem.armour_run = 40
@@ -24,7 +23,7 @@ function create ()
    -- Get refuel chance
    local p = player.pilot()
    if p:exists() then
-      standing = ai.getstanding( p ) or -1
+      local standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing < 0 then
          mem.refuel_no = _("\"My fuel is property of the Empire.\"")
@@ -45,7 +44,7 @@ function create ()
       mem.bribe_prompt = string.format(_("\"For some %s I could forget about seeing you.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Now scram before I change my mind.\"")
    else
-     bribe_no = {
+     local bribe_no = {
             _("\"You won't buy your way out of this one.\""),
             _("\"The Empire likes to make examples out of scum like you.\""),
             _("\"You've made a huge mistake.\""),
@@ -65,7 +64,6 @@ end
 
 -- taunts
 function taunt ( target, offense )
-
    -- Only 50% of actually taunting.
    if rnd.rnd(0,1) == 0 then
       return

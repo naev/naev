@@ -1,1 +1,1 @@
-require("ai/tpl/generic")
+require 'ai.core.core'
