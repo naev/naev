@@ -6,7 +6,7 @@ mercenary_chance = 0.02
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
-   local pilots = {}
+   local pilots = { __doscans = true }
    local r = rnd.rnd()
 
    if r < mercenary_chance then
@@ -37,6 +37,9 @@ end
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
    local pilots = {}
+   if rnd.rnd() < 0.5 then
+      pilots.__doscans = true
+   end
    local r = rnd.rnd()
 
    if r < mercenary_chance then

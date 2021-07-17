@@ -28,6 +28,9 @@ end
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
    local pilots = {}
+   if rnd.rnd() < 0.5 then
+      pilots.__doscans = true
+   end
    local r = rnd.rnd()
 
    if r < mercenary_chance then
