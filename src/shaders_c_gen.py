@@ -120,6 +120,14 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "safelanes",
+      vs_path = "project_pos.vert",
+      fs_path = "safelanes.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "color", "dt", "dimensions" ],
+      subroutines = {},
+   ),
+   Shader(
       name = "beam",
       vs_path = "project_pos.vert",
       fs_path = "beam.frag",

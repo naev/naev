@@ -509,7 +509,7 @@ void ovr_render( double dt )
    SafeLane *safelanes;
    double w, h, res;
    double x,y, r,detect;
-   double rx,ry, x2,y2, rw;
+   double rx,ry, x2,y2, rw,rh;
    glColour col;
    gl_Matrix4 projection;
 
@@ -563,17 +563,30 @@ void ovr_render( double dt )
       ry = y2-y;
       r  = atan2( ry, rx );
       rw = 10.;
+      rh = MOD(rx,ry);
 
       /* Set up projcetion. */
       projection = gl_view_matrix;
       projection = gl_Matrix4_Translate( projection, x, y, 0 );
       projection = gl_Matrix4_Rotate2d( projection, atan2(ry,rx) );
       projection = gl_Matrix4_Translate( projection, 0, -rw/2., 0 );
-      projection = gl_Matrix4_Scale( projection, MOD(rx,ry), rw, 1 );
+      projection = gl_Matrix4_Scale( projection, rh, rw, 1 );
 
-      /* Render.
-       * TODO use a fancier shader. */
-      gl_renderRectH( &projection, &col, 1 );
+      /* Render.*/
+      glUseProgram(shaders.safelanes.program);
+      glEnableVertexAttribArray(shaders.safelanes.vertex);
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.safelanes.vertex, 0, 2, GL_FLOAT, 0 );
+
+      gl_uniformColor(shaders.safelanes.color, &col);
+      gl_Matrix4_Uniform(shaders.safelanes.projection, projection);
+      glUniform2f(shaders.safelanes.dimensions, rh, rw);
+      glUniform1f(shaders.safelanes.dt, 0.);
+
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      glDisableVertexAttribArray(shaders.safelanes.vertex);
+      glUseProgram(0);
+      gl_checkErr();
    }
    array_free( safelanes );
 
