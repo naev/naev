@@ -1,29 +1,31 @@
 local scom = require "factions/spawn/lib/common"
 local merc = require "factions/spawn/lib/mercenary"
 
+-- Few mercenaries for za'lek
+mercenary_chance = 0.02
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < pbm then
+    if r < mercenary_chance then
        pilots = merc.spawnLtMerc("Za'lek")
     elseif r < 0.5 then
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
        scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
        scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
        scom.addPilot( pilots, "Za'lek Bomber Drone", 10 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
     elseif r < 0.9 then
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
        scom.addPilot( pilots, "Za'lek Sting", 45 );
+       scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
     else
        scom.addPilot( pilots, "Za'lek Demon", 75 );
     end
@@ -37,30 +39,30 @@ function spawn_squad ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < pbm then
+    if r < mercenary_chance then
        pilots = spawnMdMerc("Za'lek")
     elseif r < 0.5 then
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Sting", 45 );
        scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
        scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
        scom.addPilot( pilots, "Za'lek Bomber Drone", 10 );
-       scom.addPilot( pilots, "Za'lek Sting", 45 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Sting", 45 );
        scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
        scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
        scom.addPilot( pilots, "Za'lek Bomber Drone", 10 );
-       scom.addPilot( pilots, "Za'lek Sting", 45 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
     else
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
        scom.addPilot( pilots, "Za'lek Demon", 75 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+       scom.addPilot( pilots, "Za'lek Light Drone", 5 );
     end
 
     return pilots
@@ -73,7 +75,7 @@ function spawn_capship ()
     pilots.__fleet = true
     local r = rnd.rnd()
 
-    if rnd.rnd() < pbm then
+    if rnd.rnd() < mercenary_chance then
        pilots = spawnBgMerc("Za'lek")
     else
        -- Generate the capship
@@ -86,22 +88,22 @@ function spawn_capship ()
        -- Generate the escorts
        r = rnd.rnd()
        if r < 0.5 then
-          scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-          scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-          scom.addPilot( pilots, "Za'lek Light Drone", 5 );
           scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
           scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
           scom.addPilot( pilots, "Za'lek Bomber Drone", 10 );
+          scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+          scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+          scom.addPilot( pilots, "Za'lek Light Drone", 5 );
        elseif r < 0.8 then
-          scom.addPilot( pilots, "Za'lek Bomber Drone", 10 );
-          scom.addPilot( pilots, "Za'lek Bomber Drone", 10 );
           scom.addPilot( pilots, "Za'lek Sting", 45 );
+          scom.addPilot( pilots, "Za'lek Bomber Drone", 10 );
+          scom.addPilot( pilots, "Za'lek Bomber Drone", 10 );
        else
-          scom.addPilot( pilots, "Za'lek Light Drone", 5 );
-          scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+          scom.addPilot( pilots, "Za'lek Demon", 75 );
           scom.addPilot( pilots, "Za'lek Heavy Drone", 10 );
           scom.addPilot( pilots, "Za'lek Bomber Drone", 10 );
-          scom.addPilot( pilots, "Za'lek Demon", 75 );
+          scom.addPilot( pilots, "Za'lek Light Drone", 5 );
+          scom.addPilot( pilots, "Za'lek Light Drone", 5 );
        end
     end
 
@@ -110,7 +112,7 @@ end
 
 
 -- @brief Creation hook.
-function create ( max )
+function create( max )
     local weights = {}
 
     -- Create weights for spawn table
@@ -122,26 +124,24 @@ function create ( max )
     spawn_table = scom.createSpawnTable( weights )
 
     -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
+    local spawn_data = scom.choose( spawn_table )
 
     return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
 end
 
 
 -- @brief Spawning hook
-function spawn ( presence, max )
-    local pilots
-
+function spawn( presence, max )
     -- Over limit
     if presence > max then
        return 5
     end
 
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data, "Za'lek" )
+    local pilots = scom.spawn( spawn_data, "Za'lek" )
 
     -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
+    local spawn_data = scom.choose( spawn_table )
 
     return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
 end

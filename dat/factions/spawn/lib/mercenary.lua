@@ -3,8 +3,6 @@ local scom = require "factions/spawn/lib/common"
 
 local merc = {}
 
-local pbm = 0.05   --5% mercenaries
-
 function merc.spawnLtMerc(faction)
    local pilots = {}
    local r = rnd.rnd()

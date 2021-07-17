@@ -1,13 +1,14 @@
 local scom = require "factions/spawn/lib/common"
 local merc = require "factions/spawn/lib/mercenary"
 
+local mercenary_chance = 0.15
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < pbm then
+    if r < mercenary_chance then
        pilots = merc.spawnLtMerc("Frontier")
     elseif r < 0.5 then
        scom.addPilot( pilots, "Frontier Lancelot", 30 );
@@ -28,7 +29,7 @@ function spawn_squad ()
     local pilots = {}
     local r = rnd.rnd()
 
-    if r < pbm then
+    if r < mercenary_chance then
         pilots = spawnMdMerc("Frontier")
     elseif r < 0.5 then
        scom.addPilot( pilots, "Frontier Lancelot", 30 );
