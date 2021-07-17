@@ -66,4 +66,4 @@ end
 -- Settings
 mem.waypoints     = nil
 mem.land_friendly = true -- Land on only friendly by default
-mem.doscans       = true -- Patrolling so check all ships as much as possible
+mem.doscans       = false -- Patrolling so check all ships as much as possible

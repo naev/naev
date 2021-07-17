@@ -6,4 +6,3 @@ mem.distress = false
 mem.aggressive = true
 mem.enemyclose = 3000
 mem.leadermaxdist = 8000
-mem.doscans = false

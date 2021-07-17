@@ -15,7 +15,6 @@ mem.armour_return = 100
 mem.atk_board     = true
 mem.atk_kill      = false
 mem.careful       = true
-mem.doscans       = false -- Pirates don't care about scanning
 
 
 function create ()
