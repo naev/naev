@@ -279,25 +279,25 @@ static int safelanes_buildOneTurn (void)
 {
    cholmod_sparse *stiff_s;
    cholmod_factor *stiff_f;
-   cholmod_dense *new_utilde, *_QtQutilde, *Lambda_tilde;
+   cholmod_dense *_QtQutilde, *Lambda_tilde, *Y_workspace, *E_workspace;
    int turns_next_time;
    double zero[] = {0, 0}, neg_1[] = {-1, 0};
 
+   Y_workspace = E_workspace = Lambda_tilde = NULL;
    stiff_s = cholmod_triplet_to_sparse( stiff, 0, &C );
    stiff_f = cholmod_analyze( stiff_s, &C );
    cholmod_factorize( stiff_s, stiff_f, &C );
-   new_utilde = cholmod_solve( CHOLMOD_A, stiff_f, ftilde, &C );
-   cholmod_free_dense( &utilde, &C );
-   utilde = new_utilde;
-
+   cholmod_solve2( CHOLMOD_A, stiff_f, ftilde, NULL, &utilde, NULL, &Y_workspace, &E_workspace, &C );
    _QtQutilde = cholmod_zeros( utilde->nrow, utilde->ncol, CHOLMOD_REAL, &C );
    cholmod_sdmult( QtQ, 0, neg_1, zero, utilde, _QtQutilde, &C );
-   Lambda_tilde = cholmod_solve( CHOLMOD_A, stiff_f, _QtQutilde, &C );
+   cholmod_solve2( CHOLMOD_A, stiff_f, _QtQutilde, NULL, &Lambda_tilde, NULL, &Y_workspace, &E_workspace, &C );
    cholmod_free_dense( &_QtQutilde, &C );
-   turns_next_time = safelanes_activateByGradient( matwrap_from_cholmod( Lambda_tilde ) );
-   cholmod_free_dense( &Lambda_tilde, &C );
+   cholmod_free_dense( &Y_workspace, &C );
+   cholmod_free_dense( &E_workspace, &C );
    cholmod_free_factor( &stiff_f, &C );
    cholmod_free_sparse( &stiff_s, &C );
+   turns_next_time = safelanes_activateByGradient( matwrap_from_cholmod( Lambda_tilde ) );
+   cholmod_free_dense( &Lambda_tilde, &C );
 
    return turns_next_time;
 }
