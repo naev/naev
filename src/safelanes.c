@@ -43,8 +43,6 @@
  */
 static const double ALPHA                  = 9;         /**< Lane efficiency parameter. */
 static const double JUMP_CONDUCTIVITY      = .001;      /**< Conductivity value for inter-system jump-point connections. */
-static const double CONVERGENCE_THRESHOLD  = 1e-12;     /**< Stop optimizing after a relative change of U~ this small. */
-static const double MAX_ITERATIONS         = 20;        /**< Stop optimizing after this many iterations, at most. */
 static const double MIN_ANGLE              = M_PI/18;   /**< Path triangles can't be more acute. */
 enum {
    STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
@@ -120,8 +118,8 @@ static double* cmp_key_ref;     /**< To qsort() a list of indices by table value
 /*
  * Prototypes.
  */
-static double safelanes_changeFromOptimizer (void);
-static void safelanes_activateByGradient( MatWrap Lambda_tilde );
+static int safelanes_buildOneTurn (void);
+static int safelanes_activateByGradient( MatWrap Lambda_tilde );
 static void safelanes_initStacks (void);
 static void safelanes_initStacks_edge (void);
 static void safelanes_initStacks_faction (void);
@@ -145,7 +143,6 @@ static inline FactionMask MASK_ANY_FACTION();
 static inline FactionMask MASK_ONE_FACTION( int id );
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 );
 static int cmp_key( const void* p1, const void* p2 );
-static double frobenius_norm( cholmod_dense* m );
 static inline void triplet_entry( cholmod_triplet* m, int i, int j, double v );
 static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol );
 static inline MatWrap matwrap_from_cholmod( cholmod_dense* m );
@@ -237,9 +234,8 @@ void safelanes_recalculate (void)
    time = SDL_GetTicks();
    safelanes_initStacks();
    safelanes_initOptimizer();
-   for (int i=0; i<MAX_ITERATIONS; i++)
-      if (safelanes_changeFromOptimizer() <= CONVERGENCE_THRESHOLD)
-         break;
+   while (safelanes_buildOneTurn() > 0)
+      ;
    safelanes_destroyOptimizer();
    /* Stacks remain available for queries. */
    time = SDL_GetTicks() - time;
@@ -277,40 +273,33 @@ static void safelanes_destroyOptimizer (void)
 
 
 /**
- * @brief Run a round of optimization, and return the relative change to U~.
+ * @brief Run a round of optimization. Return how many builds (upper bound) have to happen next turn.
  */
-static double safelanes_changeFromOptimizer (void)
+static int safelanes_buildOneTurn (void)
 {
    cholmod_sparse *stiff_s;
    cholmod_factor *stiff_f;
    cholmod_dense *new_utilde, *_QtQutilde, *Lambda_tilde;
-   double rel_change = HUGE_VAL;
+   int turns_next_time;
    double zero[] = {0, 0}, neg_1[] = {-1, 0};
 
    stiff_s = cholmod_triplet_to_sparse( stiff, 0, &C );
    stiff_f = cholmod_analyze( stiff_s, &C );
    cholmod_factorize( stiff_s, stiff_f, &C );
    new_utilde = cholmod_solve( CHOLMOD_A, stiff_f, ftilde, &C );
-   if (utilde != NULL) {
-      /* Do utilde -= new_utilde, and compute ||utilde||/||utilde_new|| */
-      for (size_t i = 0; i < utilde->nzmax; i++)
-         ((double*)utilde->x)[i] -= ((double*)new_utilde->x)[i];
-      rel_change = frobenius_norm( utilde ) / frobenius_norm( new_utilde );
-      cholmod_free_dense( &utilde, &C );
-   }
+   cholmod_free_dense( &utilde, &C );
    utilde = new_utilde;
 
-   if (rel_change > CONVERGENCE_THRESHOLD) {
-      _QtQutilde = cholmod_zeros( utilde->nrow, utilde->ncol, CHOLMOD_REAL, &C );
-      cholmod_sdmult( QtQ, 0, neg_1, zero, utilde, _QtQutilde, &C );
-      Lambda_tilde = cholmod_solve( CHOLMOD_A, stiff_f, _QtQutilde, &C );
-      cholmod_free_dense( &_QtQutilde, &C );
-      safelanes_activateByGradient( matwrap_from_cholmod( Lambda_tilde ) );
-      cholmod_free_dense( &Lambda_tilde, &C );
-   }
+   _QtQutilde = cholmod_zeros( utilde->nrow, utilde->ncol, CHOLMOD_REAL, &C );
+   cholmod_sdmult( QtQ, 0, neg_1, zero, utilde, _QtQutilde, &C );
+   Lambda_tilde = cholmod_solve( CHOLMOD_A, stiff_f, _QtQutilde, &C );
+   cholmod_free_dense( &_QtQutilde, &C );
+   turns_next_time = safelanes_activateByGradient( matwrap_from_cholmod( Lambda_tilde ) );
+   cholmod_free_dense( &Lambda_tilde, &C );
    cholmod_free_factor( &stiff_f, &C );
    cholmod_free_sparse( &stiff_s, &C );
-   return rel_change;
+
+   return turns_next_time;
 }
 
 
@@ -696,10 +685,11 @@ static void safelanes_initPPl (void)
 
 /**
  * @brief Per-system, per-faction, activates the affordable lane with best (grad phi)/L
+ * @return How many builds (upper bound) have to happen next turn.
  */
-static void safelanes_activateByGradient( MatWrap Lambda_tilde )
+static int safelanes_activateByGradient( MatWrap Lambda_tilde )
 {
-   int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si, sis, sjs;
+   int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si, sis, sjs, turns_next_time;
    double *facind_vals, score, score_best, Linv;
    StarSystem *sys;
    MatWrap *lal; /**< Per faction index, the Lambda_tilde[myDofs,:] @ PPl[fi] matrices. Calloced and lazily populated. */
@@ -715,6 +705,7 @@ static void safelanes_activateByGradient( MatWrap Lambda_tilde )
       array_push_back( &facind_opts, fi );
       array_push_back( &facind_vals, 0 );
    }
+   turns_next_time = 0;
 
    for (si=0; si<array_size(sys_to_first_vertex)-1; si++)
    {
@@ -786,6 +777,7 @@ static void safelanes_activateByGradient( MatWrap Lambda_tilde )
                   score_best = score;
                }
             }
+            turns_next_time++; /* We had to forgo a lane-build this time! */
          }
 
          presence_budget[fi][si] -= 1 / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
@@ -809,6 +801,8 @@ static void safelanes_activateByGradient( MatWrap Lambda_tilde )
    array_free( edgeind_opts );
    array_free( facind_vals );
    array_free( facind_opts );
+
+   return turns_next_time;
 }
 
 
@@ -907,14 +901,6 @@ static inline void triplet_entry( cholmod_triplet* m, int i, int j, double x )
    ((int*)m->j)[m->nnz] = j;
    ((double*)m->x)[m->nnz] = x;
    m->nnz++;
-}
-
-
-/** @brief Return the Frobenius norm sqrt(Tr(m* m)). Matrix form is restricted to stuff we care about. */
-static double frobenius_norm( cholmod_dense* m )
-{
-   assert( m->xtype == CHOLMOD_REAL && m->d == m->nrow );
-   return cblas_dnrm2( m->nrow * m->ncol, m->x, 1 );
 }
 
 
