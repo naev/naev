@@ -4404,12 +4404,18 @@ static int pilotL_setLeader( lua_State *L )
  */
 static int pilotL_followers( lua_State *L )
 {
-   int i;
+   int i, idx;
+   Pilot *pe;
    Pilot *p = luaL_validpilot(L, 1);
 
    lua_newtable(L);
+   idx = 1;
    for (i=0; i < array_size(p->escorts); i++) {
-      lua_pushnumber(L, i+1);
+      /* Make sure the followers are valid. */
+      pe = pilot_get( p->escorts[i].id );
+      if ((pe==NULL) || pilot_isFlag( pe, PILOT_DEAD ) || pilot_isFlag( pe, PILOT_HIDE ))
+         continue;
+      lua_pushnumber(L, idx++);
       lua_pushpilot(L, p->escorts[i].id);
       lua_rawset(L, -3);
    }
