@@ -2,7 +2,7 @@
 <asset name="Virtual Civilian Standard">
  <virtual/>
  <presence>
-  <faction>Civilian</faction>
+  <faction>Independent</faction>
   <value>50.000000</value>
   <range>0</range>
  </presence>
