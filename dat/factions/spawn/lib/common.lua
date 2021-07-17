@@ -100,6 +100,10 @@ function scom.spawn( pilots, faction, guerilla )
                vv:setLeader(leader)
             end
          end
+         if pilots.__doscans then
+            local mem = vv:memory()
+            mem.doscans = true
+         end
          spawned[ #spawned+1 ] = { pilot = vv, presence = presence }
       end
    end

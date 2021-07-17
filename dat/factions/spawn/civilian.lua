@@ -1,4 +1,4 @@
-local scom = require "factions/spawn/lib/common"
+local scom = require "factions.spawn.lib.common"
 
 
 -- @brief Spawns a single small ship.

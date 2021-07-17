@@ -1,4 +1,4 @@
-local scom = require "factions/spawn/lib/common"
+local scom = require "factions.spawn.lib.common"
 
 
 -- @brief Spawns a small patrol fleet.
@@ -68,15 +68,13 @@ end
 
 -- @brief Spawning hook
 function spawn ( presence, max )
-    local pilots
-
     -- Over limit
     if presence > max then
        return 5
     end
 
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data, "Independent" )
+    local pilots = scom.spawn( spawn_data, "Independent" )
 
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )

@@ -1,4 +1,4 @@
-local scom = require "factions/spawn/lib/common"
+local scom = require "factions.spawn.lib.common"
 
 
 -- @brief Spawns a small patrol fleet.
@@ -27,16 +27,16 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.4 then
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Virtuosity", 45 );
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
    elseif r < 0.6 then
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Virtuosity", 45 );
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Taciturnity", 40 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
    else
       scom.addPilot( pilots, "Thurion Apprehension", 75 );
       scom.addPilot( pilots, "Thurion Perspicacity", 20 );
@@ -50,21 +50,20 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
    local pilots = {}
-   local r = rnd.rnd()
 
    -- Generate the capship
    scom.addPilot( pilots, "Thurion Certitude", 140 )
 
    -- Generate the escorts
-   r = rnd.rnd()
+   local r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
-      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
+      scom.addPilot( pilots, "Thurion Perspicacity", 20 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
       scom.addPilot( pilots, "Thurion Virtuosity", 45 );
+      scom.addPilot( pilots, "Thurion Ingenuity", 25 );
    else
       scom.addPilot( pilots, "Thurion Apprehension", 75 );
       scom.addPilot( pilots, "Thurion Ingenuity", 25 );
@@ -79,9 +78,9 @@ function create ( max )
    local weights = {}
 
    -- Create weights for spawn table
-    weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
-    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
+   weights[ spawn_patrol  ] = 100
+   weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
+   weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
    -- Create spawn table base on weights
    spawn_table = scom.createSpawnTable( weights )
@@ -95,15 +94,13 @@ end
 
 -- @brief Spawning hook
 function spawn ( presence, max )
-   local pilots
-
    -- Over limit
    if presence > max then
       return 5
    end
 
    -- Actually spawn the pilots
-   pilots = scom.spawn( spawn_data, "Thurion" )
+   local pilots = scom.spawn( spawn_data, "Thurion" )
 
    -- Make sure they don't die because of nebula
    local nebu_dens, nebu_vol = system.cur():nebula()

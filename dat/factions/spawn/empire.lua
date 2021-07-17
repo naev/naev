@@ -1,13 +1,13 @@
-local scom = require "factions/spawn/lib/common"
-local merc = require "factions/spawn/lib/mercenary"
+local scom = require "factions.spawn.lib.common"
+local merc = require "factions.spawn.lib.mercenary"
 
-local formation = require "scripts/formation"
+local formation = require "scripts.formation"
 
 local mercenary_chance = 0.05
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
-   local pilots = {}
+   local pilots = { __doscans = true }
    local r = rnd.rnd()
 
    if r < mercenary_chance then
@@ -131,7 +131,7 @@ function create ( max )
    spawn_table = scom.createSpawnTable( weights )
 
    -- Calculate spawn data
-   local spawn_data = scom.choose( spawn_table )
+   spawn_data = scom.choose( spawn_table )
 
    return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
 end
@@ -148,7 +148,7 @@ function spawn ( presence, max )
    local pilots = scom.spawn( spawn_data, "Empire" )
 
    -- Calculate spawn data
-   local spawn_data = scom.choose( spawn_table )
+   spawn_data = scom.choose( spawn_table )
 
    return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
 end

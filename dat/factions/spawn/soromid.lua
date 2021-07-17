@@ -1,11 +1,11 @@
-local scom = require "factions/spawn/lib/common"
-local merc = require "factions/spawn/lib/mercenary"
+local scom = require "factions.spawn.lib.common"
+local merc = require "factions.spawn.lib.mercenary"
 
 local mercenary_chance = 0.07
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
-   local pilots = {}
+   local pilots = { __doscans = true }
    local r = rnd.rnd()
 
    if r < mercenary_chance then
@@ -13,8 +13,8 @@ function spawn_patrol ()
    elseif r < 0.5 then
       scom.addPilot( pilots, "Soromid Reaver", 25 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Soromid Brigand", 20 );
       scom.addPilot( pilots, "Soromid Marauder", 25 );
+      scom.addPilot( pilots, "Soromid Brigand", 20 );
    else
       scom.addPilot( pilots, "Soromid Nyx", 75 );
    end
@@ -26,21 +26,24 @@ end
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
    local pilots = {}
+   if rnd.rnd() < 0.5 then
+      pilots.__doscans = true
+   end
    local r = rnd.rnd()
 
    if r < mercenary_chance then
       pilots = spawnMdMerc("Soromid")
    elseif r < 0.5 then
-      scom.addPilot( pilots, "Soromid Brigand", 20 );
+      scom.addPilot( pilots, "Soromid Odium", 45 );
       scom.addPilot( pilots, "Soromid Marauder", 25 );
-      scom.addPilot( pilots, "Soromid Odium", 45 );
-   elseif r < 0.8 then
-      scom.addPilot( pilots, "Soromid Reaver", 25 );
-      scom.addPilot( pilots, "Soromid Odium", 45 );
-   else
       scom.addPilot( pilots, "Soromid Brigand", 20 );
+   elseif r < 0.8 then
+      scom.addPilot( pilots, "Soromid Odium", 45 );
       scom.addPilot( pilots, "Soromid Reaver", 25 );
+   else
       scom.addPilot( pilots, "Soromid Nyx", 75 );
+      scom.addPilot( pilots, "Soromid Reaver", 25 );
+      scom.addPilot( pilots, "Soromid Brigand", 20 );
    end
 
    return pilots
@@ -66,15 +69,15 @@ function spawn_capship ()
       -- Generate the escorts
       r = rnd.rnd()
       if r < 0.5 then
-         scom.addPilot( pilots, "Soromid Brigand", 20 );
+         scom.addPilot( pilots, "Soromid Reaver", 25 );
          scom.addPilot( pilots, "Soromid Marauder", 25 );
-         scom.addPilot( pilots, "Soromid Reaver", 25 );
+         scom.addPilot( pilots, "Soromid Brigand", 20 );
       elseif r < 0.8 then
-         scom.addPilot( pilots, "Soromid Reaver", 25 );
          scom.addPilot( pilots, "Soromid Odium", 45 );
-      else
          scom.addPilot( pilots, "Soromid Reaver", 25 );
+      else
          scom.addPilot( pilots, "Soromid Nyx", 75 );
+         scom.addPilot( pilots, "Soromid Reaver", 25 );
       end
    end
 
@@ -87,9 +90,9 @@ function create ( max )
    local weights = {}
 
    -- Create weights for spawn table
-    weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
-    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
+   weights[ spawn_patrol  ] = 100
+   weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
+   weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
    -- Create spawn table base on weights
    spawn_table = scom.createSpawnTable( weights )
@@ -103,15 +106,13 @@ end
 
 -- @brief Spawning hook
 function spawn ( presence, max )
-   local pilots
-
    -- Over limit
    if presence > max then
       return 5
    end
 
    -- Actually spawn the pilots
-   pilots = scom.spawn( spawn_data, "Soromid" )
+   local pilots = scom.spawn( spawn_data, "Soromid" )
 
    -- Calculate spawn data
    spawn_data = scom.choose( spawn_table )
