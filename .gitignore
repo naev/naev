@@ -5,7 +5,6 @@
 .hgignore
 build/*
 naev_csv
-naikari_csv
 bintray.json
 asset.xml
 ssys.xml
@@ -23,7 +22,6 @@ dist/*
 dat/VERSION
 release.log
 Naev.app
-Naikari.app
 core
 po/credits.pot
 
