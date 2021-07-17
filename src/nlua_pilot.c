@@ -438,8 +438,8 @@ int lua_ispilot( lua_State *L, int ind )
  * @usage point = pilot.choosePoint( f, i, g )
  *
  *    @luatparam Faction f Faction the pilot will belong to.
- *    @luatparam boolean i Wether to ignore rules.
- *    @luatparam boolean g Wether to behave as guerilla (spawn in deep space)
+ *    @luatparam[opt=false] boolean i Wether to ignore rules.
+ *    @luatparam[opt=false] boolean g Wether to behave as guerilla (spawn in deep space)
  *    @luatreturn Planet|Vec2|Jump A randomly chosen suitable spawn point.
  * @luafunc choosePoint
  */
@@ -451,15 +451,10 @@ static int pilotL_choosePoint( lua_State *L )
    JumpPoint *jump = NULL;
    Vector2d vp;
 
-   lf = faction_get( luaL_checkstring(L,1) );
-
-   ignore_rules = 0;
-   if (lua_isboolean(L,2) && lua_toboolean(L,2))
-      ignore_rules = 1;
-
-   guerilla = 0;
-   if (lua_isboolean(L,3) && lua_toboolean(L,3))
-      guerilla = 1;
+   /* Parameters. */
+   lf             = luaL_validfaction(L,1);
+   ignore_rules   = lua_toboolean(L,2);
+   guerilla       = lua_toboolean(L,3);
 
    pilot_choosePoint( &vp, &planet, &jump, lf, ignore_rules, guerilla );
 
