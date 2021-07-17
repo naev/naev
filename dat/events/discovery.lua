@@ -388,7 +388,7 @@ float vignette( vec2 uv )
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
-   vec4 texcolor = color * texture2D( tex, uv );
+   vec4 texcolor = color * texture( tex, uv );
 
    float n = 0.0;
    for (float i=1.0; i<8.0; i=i+1.0) {
