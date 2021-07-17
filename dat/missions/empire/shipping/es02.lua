@@ -131,8 +131,8 @@ function land ()
          -- Rewards
          player.pay(reward)
          emp_modReputation( 5 ) -- Bump cap a bit
-         faction.modPlayerSingle("Empire",5);
-         faction.modPlayerSingle("Dvaered",5);
+         faction.modPlayerSingle("Empire",5)
+         faction.modPlayerSingle("Dvaered",5)
          diff.apply("heavy_combat_vessel_license")
 
          -- Flavour text

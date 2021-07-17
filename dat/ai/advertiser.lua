@@ -23,7 +23,7 @@ function create ()
    if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
-            creditstring(mem.refuel));
+            creditstring(mem.refuel))
    end
 
    -- Selects an advertiser message

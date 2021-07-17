@@ -24,7 +24,7 @@ function create ()
    if p:exists() then
       local standing = ai.getstanding( p ) or -1
       mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
-            creditstring(mem.refuel));
+            creditstring(mem.refuel))
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system

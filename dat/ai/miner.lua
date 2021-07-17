@@ -15,7 +15,7 @@ function create ()
    local p = player.pilot()
    if p:exists() then
       mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
-            creditstring(mem.refuel));
+            creditstring(mem.refuel))
    end
 
    create_post()

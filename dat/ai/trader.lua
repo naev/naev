@@ -21,7 +21,7 @@ function create ()
          mem.refuel = mem.refuel * 0.5
       end
       mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
-            creditstring(mem.refuel));
+            creditstring(mem.refuel))
    end
 
    -- Finish up creation

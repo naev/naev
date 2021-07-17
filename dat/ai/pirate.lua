@@ -76,7 +76,7 @@ function create ()
          mem.refuel = mem.refuel * 0.5
       end
       mem.refuel_msg = string.format(_("\"For you, only %s for a jump of fuel.\""),
-            creditstring(mem.refuel));
+            creditstring(mem.refuel))
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
