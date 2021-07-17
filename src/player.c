@@ -2151,7 +2151,7 @@ void player_targetNearest (void)
    t = dt;
 
    /* Disabled ships are typically only valid if within 500 px of the player. */
-   if ((d > 250000) && (pilot_isDisabled( pilot_get(dt) ))) {
+   if ((d > pow2(500.)) && (pilot_isDisabled( pilot_get(dt) ))) {
       t = pilot_getNearestPilot(player.p);
       /* Try to target a disabled ship if there are no active ships in range. */
       if (t == PLAYER_ID)

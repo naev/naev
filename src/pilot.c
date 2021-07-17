@@ -147,7 +147,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    p = m+1;
    if (mode == 0) {
       while (p < array_size(pilot_stack)) {
-         if ((pilot_isWithPlayer(pilot_stack[p]) ||
+         if ((!pilot_isWithPlayer(pilot_stack[p]) ||
                   pilot_isDisabled(pilot_stack[p])) &&
                pilot_validTarget( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
@@ -157,7 +157,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    if (mode == 1) {
       while (p < array_size(pilot_stack)) {
-         if (pilot_isWithPlayer(pilot_stack[p]) &&
+         if (!pilot_isWithPlayer(pilot_stack[p]) &&
                pilot_validTarget( player.p, pilot_stack[p] ) &&
                pilot_isHostile( pilot_stack[p] ))
             return pilot_stack[p]->id;
@@ -199,7 +199,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    /* Get first one in range. */
    if (mode == 0) {
       while (p >= 0) {
-         if ((pilot_isWithPlayer(pilot_stack[p]) ||
+         if ((!pilot_isWithPlayer(pilot_stack[p]) ||
                   (pilot_isDisabled(pilot_stack[p]))) &&
                pilot_validTarget( player.p, pilot_stack[p] ))
             return pilot_stack[p]->id;
@@ -209,7 +209,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
    /* Get first hostile in range. */
    else if (mode == 1) {
       while (p >= 0) {
-         if (pilot_isWithPlayer(pilot_stack[p]) &&
+         if (!pilot_isWithPlayer(pilot_stack[p]) &&
                !pilot_isFlag( pilot_stack[p], PILOT_HIDE ) &&
                pilot_validTarget( player.p, pilot_stack[p] ) &&
                pilot_isHostile( pilot_stack[p] ) )
@@ -521,13 +521,12 @@ double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y
    *tp = PLAYER_ID;
    d  = 0;
    for (i=0; i<array_size(pilot_stack); i++) {
-
       /* Must not be self. */
       if (pilot_stack[i] == p)
          continue;
 
       /* Player doesn't select escorts (unless disabled is active). */
-      if (!disabled && pilot_isWithPlayer(p) &&
+      if (!disabled && pilot_isPlayer(p) &&
             pilot_isWithPlayer(pilot_stack[i]))
          continue;
 
@@ -574,7 +573,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
          continue;
 
       /* Player doesn't select escorts (unless disabled is active). */
-      if (!disabled && pilot_isWithPlayer(p) &&
+      if (!disabled && pilot_isPlayer(p) &&
             pilot_isWithPlayer(pilot_stack[i]))
          continue;
 
