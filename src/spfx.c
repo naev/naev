@@ -863,7 +863,7 @@ void spfx_trail_draw( const Trail_spfx* trail )
       gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
       gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
 
-      s = hypotf( x2-x1, y2-y1 );
+      s = hypot( x2-x1, y2-y1 );
 
       /* Set vertex. */
       projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);

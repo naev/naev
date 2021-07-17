@@ -18,7 +18,7 @@
 #define VMOD(v)   ((v).mod) /**< Gets the modulus of a vector. */
 #define VANGLE(v) ((v).angle) /**< Gets the angle of a vector. */
 
-#define MOD(x,y)  (hypotf((x),(y))) /**< Gets the modulus of a vector by cartesian coordinates. */
+#define MOD(x,y)  (hypot((x),(y))) /**< Gets the modulus of a vector by cartesian coordinates. */
 #define ANGLE(x,y) (atan2(y,x)) /**< Gets the angle of two cartesian coordinates. */
 
 #define vect_dist(v,u)  MOD((v)->x-(u)->x,(v)->y-(u)->y) /**< Gets the distance between two vectors. */
