@@ -69,7 +69,7 @@ typedef enum VertexType_ {VERTEX_PLANET, VERTEX_JUMP} VertexType;
 typedef struct Vertex_ {
    int system;                  /**< ID of the system containing the object. */
    VertexType type;             /**< Which of Naev's list contains it? */
-   int index;                   /**< Index in the planet stack, or the system's jump stack. */
+   int index;                   /**< Index in the system's planets or jumps array. */
 } Vertex;
 
 /** @brief An edge is a pair of vertex indices. */
@@ -81,7 +81,7 @@ typedef struct Faction_ {
    double lane_length_per_presence;     /**< Weight determining their ability to claim lanes. */
 } Faction;
 
-/** @brief A bet that we'll never willingly point this algorithm at 32 factions. */
+/** @brief A set of lane-building factions, represented as a bitfield. */
 typedef uint32_t FactionMask;
 
 /** @brief Some BLAS-compatible matrix data whose size/ordreing isn't pre-determined. */
@@ -105,10 +105,10 @@ static Faction *faction_stack;  /**< Array (array.h): The faction IDs that can b
 static int *lane_faction;       /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
 static FactionMask *lane_fmask; /**< Array (array.h): Per edge, the set of factions that may build it. */
 static double **presence_budget;/**< Array (array.h): Per faction, per system, the amount of presence not yet spent on lanes. */
-static int *tmp_planet_indices; /**< Array (array.h): Vertex ids that are planets. Used to initialize "ftilde", "PPl". */
-static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to initialize "stiff". */
-static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to initialize "stiff". */
-static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to initialize "stiff". */
+static int *tmp_planet_indices; /**< Array (array.h): The vertex IDs of planets, to set up ftilde/PPl. Unrelated to planet IDs. */
+static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to set up "stiff". */
+static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to set up "stiff". */
+static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to set up "stiff". */
 static UnionFind tmp_sys_uf;    /**< The partition of {system indices} into connected components (connected by 2-way jumps). */
 static cholmod_triplet *stiff;  /**< K matrix, UT triplets: internal edges (E*3), implicit jump connections, anchor conditions. */
 static cholmod_sparse *QtQ;     /**< (Q*)Q where Q is the ExV difference matrix. */
@@ -438,6 +438,7 @@ static void safelanes_initStacks_faction (void)
    }
    array_free( faction_all );
    array_shrink( &faction_stack );
+   assert( "FactionMask size is sufficient" && array_size(faction_stack) <= 8*sizeof(FactionMask) );
 
    presence_budget = array_create_size( double*, array_size(faction_stack) );
    systems_stack = system_getAll();
