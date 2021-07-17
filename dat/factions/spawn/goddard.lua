@@ -4,7 +4,6 @@ local scom = require "factions/spawn/lib/common"
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
     local pilots = {}
-    pilots.__fleet = true
     local r = rnd.rnd()
 
     -- Generate the capship
@@ -41,7 +40,7 @@ function create ( max )
     spawn_table = scom.createSpawnTable( weights )
 
     -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
+    local spawn_data = scom.choose( spawn_table )
 
     return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
 end
@@ -49,18 +48,16 @@ end
 
 -- @brief Spawning hook
 function spawn ( presence, max )
-    local pilots
-
     -- Over limit
     if presence > max then
        return 5
     end
 
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data, "Goddard" )
+    local pilots = scom.spawn( spawn_data, "Goddard" )
 
     -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
+    local spawn_data = scom.choose( spawn_table )
 
     return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
 end

@@ -15,8 +15,8 @@ function spawn_patrol ()
    elseif r < 0.5 then
       scom.addPilot( pilots, "Empire Lancelot", 25 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Shark", 20 );
    else
       scom.addPilot( pilots, "Empire Pacifier", 75 );
    end
@@ -33,16 +33,16 @@ function spawn_squad ()
    if r < mercenary_chance then
       pilots = spawnMdMerc("Empire")
    elseif r < 0.5 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
       scom.addPilot( pilots, "Empire Admonisher", 45 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Shark", 20 );
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
       scom.addPilot( pilots, "Empire Admonisher", 45 );
-   else
-      scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
+   else
       scom.addPilot( pilots, "Empire Pacifier", 75 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Shark", 20 );
    end
 
    return pilots
@@ -52,7 +52,6 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
    local pilots = {}
-   pilots.__fleet = true
 
    if rnd.rnd() < mercenary_chance then
       pilots = spawnBgMerc("Empire")
@@ -69,15 +68,15 @@ function spawn_capship ()
       -- Generate the escorts
       r = rnd.rnd()
       if r < 0.5 then
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
          scom.addPilot( pilots, "Empire Shark", 20 );
-         scom.addPilot( pilots, "Empire Lancelot", 25 );
-         scom.addPilot( pilots, "Empire Lancelot", 25 );
       elseif r < 0.8 then
-         scom.addPilot( pilots, "Empire Lancelot", 25 );
          scom.addPilot( pilots, "Empire Admonisher", 45 );
-      else
          scom.addPilot( pilots, "Empire Lancelot", 25 );
+      else
          scom.addPilot( pilots, "Empire Pacifier", 75 );
+         scom.addPilot( pilots, "Empire Lancelot", 25 );
       end
    end
 
@@ -89,7 +88,6 @@ end
 -- @brief Spawns a fleet.
 function spawn_fleet ()
    local pilots = {}
-   pilots.__fleet = true
    pilots.__formation = formation.random_key()
 
    scom.addPilot( pilots, "Empire Peacemaker", 165 )
@@ -133,7 +131,7 @@ function create ( max )
    spawn_table = scom.createSpawnTable( weights )
 
    -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
+   local spawn_data = scom.choose( spawn_table )
 
    return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
 end
@@ -141,18 +139,16 @@ end
 
 -- @brief Spawning hook
 function spawn ( presence, max )
-   local pilots
-
    -- Over limit
    if presence > max then
       return 5
    end
 
    -- Actually spawn the pilots
-   pilots = scom.spawn( spawn_data, "Empire" )
+   local pilots = scom.spawn( spawn_data, "Empire" )
 
    -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
+   local spawn_data = scom.choose( spawn_table )
 
    return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
 end

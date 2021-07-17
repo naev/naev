@@ -93,7 +93,7 @@ function scom.spawn( pilots, faction, guerilla )
       end
       local presence = v["presence"] / #p
       for _,vv in ipairs(p) do
-         if pilots.__fleet then
+         if not pilots.__nofleet then
             if leader == nil then
                leader = vv
             else
