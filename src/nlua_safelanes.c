@@ -19,6 +19,7 @@
 #include "nlua_jump.h"
 #include "nlua_planet.h"
 #include "nlua_system.h"
+#include "nlua_vec2.h"
 #include "nluadef.h"
 #include "safelanes.h"
 
@@ -70,7 +71,8 @@ static int safelanesL_get( lua_State *L )
    int i, j, faction;
    StarSystem *sys;
    SafeLane *lanes;
-   LuaJump jump;
+   Planet *pnt;
+   JumpPoint *jmp;
 
    if (!lua_isnoneornil(L,1))
       faction = luaL_validfaction( L, 1 );
@@ -89,12 +91,24 @@ static int safelanesL_get( lua_State *L )
       for (j=0; j<2; j++) {
          switch (lanes[i].point_type[j]) {
             case SAFELANE_LOC_PLANET:
-               lua_pushplanet( L, lanes[i].point_id[j] );
+               pnt = planet_getIndex( lanes[i].point_id[j] );
+               //lua_pushplanet( L, lanes[i].point_id[j] );
+#ifdef DEBUGGING
+               if (pnt==NULL)
+                  NLUA_ERROR( L, _("What the?") );
+#endif /* DEBUGGING */
+               lua_pushvector( L, pnt->pos );
                break;
             case SAFELANE_LOC_DEST_SYS:
-               jump.srcid = system_index( sys );
-               jump.destid = lanes[i].point_id[j];
-               lua_pushjump( L, jump );
+               //jump.srcid = system_index( sys );
+               //jump.destid = lanes[i].point_id[j];
+               //lua_pushjump( L, jump );
+               jmp = jump_getTarget( sys, system_getIndex(lanes[i].point_id[j]) );
+#ifdef DEBUGGING
+               if (jmp==NULL)
+                  NLUA_ERROR( L, _("What the?") );
+#endif /* DEBUGGING */
+               lua_pushvector( L, jmp->pos );
                break;
             default:
                NLUA_ERROR( L, _("What the?") );
