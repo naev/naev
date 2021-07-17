@@ -72,7 +72,7 @@ end
 
 function taunt ( target, offense )
    -- Only 50% of actually taunting.
-   if rnd.rnd(0,1) == 0 then
+   if rnd.rnd(0,1) == 0 and not mem.isdrone then
       return
    end
 
