@@ -43,8 +43,6 @@
  */
 static const double ALPHA                  = 9;         /**< Lane efficiency parameter. */
 static const double JUMP_CONDUCTIVITY      = .001;      /**< Conductivity value for inter-system jump-point connections. */
-static const double CONVERGENCE_THRESHOLD  = 1e-12;     /**< Stop optimizing after a relative change of U~ this small. */
-static const double MAX_ITERATIONS         = 20;        /**< Stop optimizing after this many iterations, at most. */
 static const double MIN_ANGLE              = M_PI/18;   /**< Path triangles can't be more acute. */
 enum {
    STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
@@ -69,7 +67,7 @@ typedef enum VertexType_ {VERTEX_PLANET, VERTEX_JUMP} VertexType;
 typedef struct Vertex_ {
    int system;                  /**< ID of the system containing the object. */
    VertexType type;             /**< Which of Naev's list contains it? */
-   int index;                   /**< Index in the planet stack, or the system's jump stack. */
+   int index;                   /**< Index in the system's planets or jumps array. */
 } Vertex;
 
 /** @brief An edge is a pair of vertex indices. */
@@ -81,7 +79,7 @@ typedef struct Faction_ {
    double lane_length_per_presence;     /**< Weight determining their ability to claim lanes. */
 } Faction;
 
-/** @brief A bet that we'll never willingly point this algorithm at 32 factions. */
+/** @brief A set of lane-building factions, represented as a bitfield. */
 typedef uint32_t FactionMask;
 
 /** @brief Some BLAS-compatible matrix data whose size/ordreing isn't pre-determined. */
@@ -105,10 +103,10 @@ static Faction *faction_stack;  /**< Array (array.h): The faction IDs that can b
 static int *lane_faction;       /**< Array (array.h): Per edge, ID of faction that built a lane there, if any, else 0. */
 static FactionMask *lane_fmask; /**< Array (array.h): Per edge, the set of factions that may build it. */
 static double **presence_budget;/**< Array (array.h): Per faction, per system, the amount of presence not yet spent on lanes. */
-static int *tmp_planet_indices; /**< Array (array.h): Vertex ids that are planets. Used to initialize "ftilde", "PPl". */
-static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to initialize "stiff". */
-static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to initialize "stiff". */
-static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to initialize "stiff". */
+static int *tmp_planet_indices; /**< Array (array.h): The vertex IDs of planets, to set up ftilde/PPl. Unrelated to planet IDs. */
+static Edge *tmp_jump_edges;    /**< Array (array.h): The vertex ID pairs connected by 2-way jumps. Used to set up "stiff". */
+static double *tmp_edge_conduct;/**< Array (array.h): Conductivity (1/len) of each potential lane. Used to set up "stiff". */
+static int *tmp_anchor_vertices;/**< Array (array.h): One vertex ID per connected component. Used to set up "stiff". */
 static UnionFind tmp_sys_uf;    /**< The partition of {system indices} into connected components (connected by 2-way jumps). */
 static cholmod_triplet *stiff;  /**< K matrix, UT triplets: internal edges (E*3), implicit jump connections, anchor conditions. */
 static cholmod_sparse *QtQ;     /**< (Q*)Q where Q is the ExV difference matrix. */
@@ -120,8 +118,8 @@ static double* cmp_key_ref;     /**< To qsort() a list of indices by table value
 /*
  * Prototypes.
  */
-static double safelanes_changeFromOptimizer (void);
-static void safelanes_activateByGradient( MatWrap Lambda_tilde );
+static int safelanes_buildOneTurn (void);
+static int safelanes_activateByGradient( MatWrap Lambda_tilde );
 static void safelanes_initStacks (void);
 static void safelanes_initStacks_edge (void);
 static void safelanes_initStacks_faction (void);
@@ -145,7 +143,6 @@ static inline FactionMask MASK_ANY_FACTION();
 static inline FactionMask MASK_ONE_FACTION( int id );
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 );
 static int cmp_key( const void* p1, const void* p2 );
-static double frobenius_norm( cholmod_dense* m );
 static inline void triplet_entry( cholmod_triplet* m, int i, int j, double v );
 static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol );
 static inline MatWrap matwrap_from_cholmod( cholmod_dense* m );
@@ -237,9 +234,8 @@ void safelanes_recalculate (void)
    time = SDL_GetTicks();
    safelanes_initStacks();
    safelanes_initOptimizer();
-   for (int i=0; i<MAX_ITERATIONS; i++)
-      if (safelanes_changeFromOptimizer() <= CONVERGENCE_THRESHOLD)
-         break;
+   while (safelanes_buildOneTurn() > 0)
+      ;
    safelanes_destroyOptimizer();
    /* Stacks remain available for queries. */
    time = SDL_GetTicks() - time;
@@ -269,7 +265,7 @@ static void safelanes_destroyOptimizer (void)
       cholmod_free_dense( &PPl[i], &C );
    array_free( PPl );
    PPl = NULL;
-   cholmod_free_dense( &utilde, &C );
+   cholmod_free_dense( &utilde, &C ); /* CAUTION: if we instead save it, ensure it's updated after the final activateByGradient. */
    cholmod_free_dense( &ftilde, &C );
    cholmod_free_sparse( &QtQ, &C );
    cholmod_free_triplet( &stiff, &C );
@@ -277,40 +273,33 @@ static void safelanes_destroyOptimizer (void)
 
 
 /**
- * @brief Run a round of optimization, and return the relative change to U~.
+ * @brief Run a round of optimization. Return how many builds (upper bound) have to happen next turn.
  */
-static double safelanes_changeFromOptimizer (void)
+static int safelanes_buildOneTurn (void)
 {
    cholmod_sparse *stiff_s;
    cholmod_factor *stiff_f;
-   cholmod_dense *new_utilde, *_QtQutilde, *Lambda_tilde;
-   double rel_change = HUGE_VAL;
+   cholmod_dense *_QtQutilde, *Lambda_tilde, *Y_workspace, *E_workspace;
+   int turns_next_time;
    double zero[] = {0, 0}, neg_1[] = {-1, 0};
 
+   Y_workspace = E_workspace = Lambda_tilde = NULL;
    stiff_s = cholmod_triplet_to_sparse( stiff, 0, &C );
    stiff_f = cholmod_analyze( stiff_s, &C );
    cholmod_factorize( stiff_s, stiff_f, &C );
-   new_utilde = cholmod_solve( CHOLMOD_A, stiff_f, ftilde, &C );
-   if (utilde != NULL) {
-      /* Do utilde -= new_utilde, and compute ||utilde||/||utilde_new|| */
-      for (size_t i = 0; i < utilde->nzmax; i++)
-         ((double*)utilde->x)[i] -= ((double*)new_utilde->x)[i];
-      rel_change = frobenius_norm( utilde ) / frobenius_norm( new_utilde );
-      cholmod_free_dense( &utilde, &C );
-   }
-   utilde = new_utilde;
-
-   if (rel_change > CONVERGENCE_THRESHOLD) {
-      _QtQutilde = cholmod_zeros( utilde->nrow, utilde->ncol, CHOLMOD_REAL, &C );
-      cholmod_sdmult( QtQ, 0, neg_1, zero, utilde, _QtQutilde, &C );
-      Lambda_tilde = cholmod_solve( CHOLMOD_A, stiff_f, _QtQutilde, &C );
-      cholmod_free_dense( &_QtQutilde, &C );
-      safelanes_activateByGradient( matwrap_from_cholmod( Lambda_tilde ) );
-      cholmod_free_dense( &Lambda_tilde, &C );
-   }
+   cholmod_solve2( CHOLMOD_A, stiff_f, ftilde, NULL, &utilde, NULL, &Y_workspace, &E_workspace, &C );
+   _QtQutilde = cholmod_zeros( utilde->nrow, utilde->ncol, CHOLMOD_REAL, &C );
+   cholmod_sdmult( QtQ, 0, neg_1, zero, utilde, _QtQutilde, &C );
+   cholmod_solve2( CHOLMOD_A, stiff_f, _QtQutilde, NULL, &Lambda_tilde, NULL, &Y_workspace, &E_workspace, &C );
+   cholmod_free_dense( &_QtQutilde, &C );
+   cholmod_free_dense( &Y_workspace, &C );
+   cholmod_free_dense( &E_workspace, &C );
    cholmod_free_factor( &stiff_f, &C );
    cholmod_free_sparse( &stiff_s, &C );
-   return rel_change;
+   turns_next_time = safelanes_activateByGradient( matwrap_from_cholmod( Lambda_tilde ) );
+   cholmod_free_dense( &Lambda_tilde, &C );
+
+   return turns_next_time;
 }
 
 
@@ -438,6 +427,7 @@ static void safelanes_initStacks_faction (void)
    }
    array_free( faction_all );
    array_shrink( &faction_stack );
+   assert( "FactionMask size is sufficient" && (size_t)array_size(faction_stack) <= 8*sizeof(FactionMask) );
 
    presence_budget = array_create_size( double*, array_size(faction_stack) );
    systems_stack = system_getAll();
@@ -695,10 +685,11 @@ static void safelanes_initPPl (void)
 
 /**
  * @brief Per-system, per-faction, activates the affordable lane with best (grad phi)/L
+ * @return How many builds (upper bound) have to happen next turn.
  */
-static void safelanes_activateByGradient( MatWrap Lambda_tilde )
+static int safelanes_activateByGradient( MatWrap Lambda_tilde )
 {
-   int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si, sis, sjs;
+   int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si, sis, sjs, turns_next_time;
    double *facind_vals, score, score_best, Linv;
    StarSystem *sys;
    MatWrap *lal; /**< Per faction index, the Lambda_tilde[myDofs,:] @ PPl[fi] matrices. Calloced and lazily populated. */
@@ -714,6 +705,7 @@ static void safelanes_activateByGradient( MatWrap Lambda_tilde )
       array_push_back( &facind_opts, fi );
       array_push_back( &facind_vals, 0 );
    }
+   turns_next_time = 0;
 
    for (si=0; si<array_size(sys_to_first_vertex)-1; si++)
    {
@@ -785,6 +777,7 @@ static void safelanes_activateByGradient( MatWrap Lambda_tilde )
                   score_best = score;
                }
             }
+            turns_next_time++; /* We had to forgo a lane-build this time! */
          }
 
          presence_budget[fi][si] -= 1 / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
@@ -808,6 +801,8 @@ static void safelanes_activateByGradient( MatWrap Lambda_tilde )
    array_free( edgeind_opts );
    array_free( facind_vals );
    array_free( facind_opts );
+
+   return turns_next_time;
 }
 
 
@@ -906,14 +901,6 @@ static inline void triplet_entry( cholmod_triplet* m, int i, int j, double x )
    ((int*)m->j)[m->nnz] = j;
    ((double*)m->x)[m->nnz] = x;
    m->nnz++;
-}
-
-
-/** @brief Return the Frobenius norm sqrt(Tr(m* m)). Matrix form is restricted to stuff we care about. */
-static double frobenius_norm( cholmod_dense* m )
-{
-   assert( m->xtype == CHOLMOD_REAL && m->d == m->nrow );
-   return cblas_dnrm2( m->nrow * m->ncol, m->x, 1 );
 }
 
 
