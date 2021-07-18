@@ -106,7 +106,7 @@ static int safelanesL_get( lua_State *L )
                //jump.srcid = system_index( sys );
                //jump.destid = lanes[i].point_id[j];
                //lua_pushjump( L, jump );
-               jmp = jump_getTarget( sys, system_getIndex(lanes[i].point_id[j]) );
+               jmp = jump_getTarget( system_getIndex(lanes[i].point_id[j]), sys );
 #ifdef DEBUGGING
                if (jmp==NULL)
                   NLUA_ERROR( L, _("What the?") );
