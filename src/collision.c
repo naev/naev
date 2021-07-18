@@ -786,17 +786,17 @@ int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
    double a = pow2(A) + pow2(B);
    double b, c, d;
 
-   int bnz = 0;
-   int cnt;
+   int bnz, cnt;
 
    double x, y, d1;
 
-   /* Have to have special care when line is vertical. */
+   /* Non-vertical case. */
    if (fabs(B) >= 1e-8) {
       b = 2. * (A * C + A * B * y0 - pow2(B) * x0);
       c = pow2(C) + 2. * B * C * y0 - pow2(B) * (pow2(cr) - pow2(x0) - pow2(y0));
       bnz = 1;
    }
+   /* Have to have special care when line is vertical. */
    else {
       b = 2. * (B * C + A * B * x0 - pow2(A) * y0);
       c = pow2(C) + 2. * A * C * x0 - pow2(A) * (pow2(cr) - pow2(x0) - pow2(y0));
@@ -807,12 +807,12 @@ int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
       return 0;
 
    cnt = 0;
+   d1 = hypot( x2-x1, y2-y1 );
    /* Line is tangent, so only one intersection. */
    if (d == 0.) {
       if (bnz) {
          x = -b / (2. * a);
          y = FX(A, B, C, x);
-         d1 = hypot( x2-x1, y2-y1 );
          if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
             crash[cnt].x = x;
             crash[cnt].y = y;
@@ -821,7 +821,6 @@ int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
       } else {
          y = -b / (2. * a);
          x = FY(A, B, C, y);
-         d1 = hypot( x2-x1, y2-y1 );
          if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
             crash[cnt].x = x;
             crash[cnt].y = y;
@@ -835,13 +834,11 @@ int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
       if (bnz) {
          x = (-b + d) / (2. * a);
          y = FX(A, B, C, x);
-         d1 = hypot( x2-x1, y2-y1 );
          if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
             crash[cnt].x = x;
             crash[cnt].y = y;
             cnt++;
          }
-
          x = (-b - d) / (2. * a);
          y = FX(A, B, C, x);
          if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
@@ -852,13 +849,11 @@ int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
       } else {
          y = (-b + d) / (2. * a);
          x = FY(A, B, C, y);
-         d1 = hypot( x2-x1, y2-y1 );
          if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
             crash[cnt].x = x;
             crash[cnt].y = y;
             cnt++;
          }
-
          y = (-b - d) / (2. * a);
          x = FY(A, B, C, y);
          if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
@@ -868,7 +863,6 @@ int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
          }
       }
    }
-
    return cnt;
 }
 #undef FX
