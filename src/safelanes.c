@@ -147,7 +147,7 @@ static inline void triplet_entry( cholmod_triplet* m, int i, int j, double v );
 static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol );
 static inline MatWrap matwrap_from_cholmod( cholmod_dense* m );
 static inline MatWrap matwrap_transpose( MatWrap A );
-static void matwrap_reorder_in_place( MatWrap* A );
+static void matwrap_init_row_major( MatWrap* A, cholmod_dense* m );
 static void matwrap_sliceByPresence( MatWrap* A, double* sysPresence, MatWrap* out );
 static void matwrap_mul( MatWrap A, MatWrap B, MatWrap* C );
 static double matwrap_mul_elem( MatWrap A, MatWrap B, int i, int j );
@@ -280,6 +280,7 @@ static int safelanes_buildOneTurn (void)
    cholmod_sparse *stiff_s;
    cholmod_factor *stiff_f;
    cholmod_dense *_QtQutilde, *Lambda_tilde, *Y_workspace, *E_workspace;
+   MatWrap Lambda_tilde_rm;
    int turns_next_time;
    double zero[] = {0, 0}, neg_1[] = {-1, 0};
 
@@ -291,13 +292,15 @@ static int safelanes_buildOneTurn (void)
    _QtQutilde = cholmod_zeros( utilde->nrow, utilde->ncol, CHOLMOD_REAL, &C );
    cholmod_sdmult( QtQ, 0, neg_1, zero, utilde, _QtQutilde, &C );
    cholmod_solve2( CHOLMOD_A, stiff_f, _QtQutilde, NULL, &Lambda_tilde, NULL, &Y_workspace, &E_workspace, &C );
+   matwrap_init_row_major( &Lambda_tilde_rm, Lambda_tilde );
+   cholmod_free_dense( &Lambda_tilde, &C );
    cholmod_free_dense( &_QtQutilde, &C );
    cholmod_free_dense( &Y_workspace, &C );
    cholmod_free_dense( &E_workspace, &C );
    cholmod_free_factor( &stiff_f, &C );
    cholmod_free_sparse( &stiff_s, &C );
-   turns_next_time = safelanes_activateByGradient( matwrap_from_cholmod( Lambda_tilde ) );
-   cholmod_free_dense( &Lambda_tilde, &C );
+   turns_next_time = safelanes_activateByGradient( Lambda_tilde_rm );
+   matwrap_free( Lambda_tilde_rm );
 
    return turns_next_time;
 }
@@ -918,6 +921,7 @@ static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol
 static inline MatWrap matwrap_from_cholmod( cholmod_dense* m )
 {
    MatWrap A = {.order = CblasColMajor, .nrow = m->nrow, .ncol = m->ncol, .x = m->x};
+   assert( "slices (leading dimension < #rows) not supported" && m->d == m->nrow );
    return A;
 }
 
@@ -944,8 +948,7 @@ static void matwrap_sliceByPresence( MatWrap *A, double* sysPresence, MatWrap* o
       if (sysPresence[si] > 0)
          nr += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
 
-   if (A->order != CblasRowMajor)
-      matwrap_reorder_in_place( A );
+   assert( "Row-major order required" && A->order == CblasRowMajor);
    matwrap_init( out, CblasRowMajor, nr, nc );
 
    in_base = out_base = 0;
@@ -961,13 +964,10 @@ static void matwrap_sliceByPresence( MatWrap *A, double* sysPresence, MatWrap* o
 
 
 /** @brief Convert in-place from column-major to row-major, or vice-versa. */
-static void matwrap_reorder_in_place( MatWrap* A )
+static void matwrap_init_row_major( MatWrap* A, cholmod_dense* m )
 {
-   int ldA, ldAt;
-   ldA  = A->order == CblasColMajor ? A->nrow : A->ncol;
-   ldAt = A->order == CblasRowMajor ? A->nrow : A->ncol;
-   cblas_dimatcopy( A->order, CblasTrans, A->nrow, A->ncol, 1, A->x, ldA, ldAt );
-   A->order = A->order == CblasColMajor ? CblasRowMajor : CblasColMajor;
+   matwrap_init( A, CblasRowMajor, m->nrow, m->ncol );
+   cblas_domatcopy( CblasColMajor, CblasTrans, m->nrow, m->ncol, 1, m->x, m->nrow, A->x, m->ncol );
 }
 
 
