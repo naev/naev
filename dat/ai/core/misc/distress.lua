@@ -4,8 +4,7 @@ mem.shield_run = 100
 mem.armour_run = 100
 mem.defensive  = false
 mem.enemyclose = 500
-mem.distressmsgfunc = sos
-mem.careful   = true
+mem.careful    = true
 
 -- Send a distress signal which causes faction loss
 function sos ()
@@ -24,3 +23,6 @@ function sos ()
    ai.settarget( ai.taskdata() )
    ai.distress( msg[ rnd.int(1,#msg) ])
 end
+
+-- Must be defined after sos
+mem.distressmsgfunc = sos

@@ -349,7 +349,7 @@ Pilot *cur_pilot           = NULL; /**< Current pilot.  All functions use this. 
 static double pilot_acc    = 0.; /**< Current pilot's acceleration. */
 static double pilot_turn   = 0.; /**< Current pilot's turning. */
 static int pilot_flags     = 0; /**< Handle stuff like weapon firing. */
-static char aiL_distressmsg[PATH_MAX]; /**< Buffer to store distress message. */
+static char aiL_distressmsg[STRMAX_SHORT]; /**< Buffer to store distress message. */
 
 /*
  * ai status, used so that create functions can't be used elsewhere

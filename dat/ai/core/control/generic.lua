@@ -597,7 +597,7 @@ function gen_distress ( target )
 
    -- See if it's time to trigger distress
    if mem.distressed > mem.distressrate then
-      if mem.distressmsgfunc ~= nil then
+      if mem.distressmsgfunc then
          mem.distressmsgfunc()
       else
          ai.distress( mem.distressmsg )
