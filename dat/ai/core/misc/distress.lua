@@ -10,7 +10,7 @@ mem.careful   = true
 -- Send a distress signal which causes faction loss
 function sos ()
    local plt = ai.pilot()
-   msg = {
+   local msg = {
       _("Local security: requesting assistance!"),
       _("Mayday! We are under attack!"),
       _("Requesting assistance. We are under attack!"),
