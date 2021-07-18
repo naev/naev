@@ -649,7 +649,7 @@ end
 --[[
 -- Starts heading away to try to hyperspace.
 --]]
-function hyperspace( target)
+function hyperspace( target )
    if target == nil then
       target = ai.rndhyptarget()
       -- Can't jump so abort

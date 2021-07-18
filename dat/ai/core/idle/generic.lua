@@ -12,9 +12,8 @@ function idle ()
       end
    end
 
-   if mem.loiter == nil then mem.loiter = 3 end
-   if mem.loiter == 0 then -- Try to leave.
-
+   -- Try to leave
+   if mem.loiter == 0 then
       -- Get a goal
       if not mem.goal then
          if mem.land_planet then
@@ -105,8 +104,8 @@ function idle ()
    end
 end
 
-
 -- Settings
 mem.waypoints     = nil
 mem.land_friendly = false -- Land on only friendly by default
 mem.doscans       = false
+mem.loiter        = 3

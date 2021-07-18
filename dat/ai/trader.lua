@@ -1,8 +1,14 @@
 require 'ai.core.core'
 require 'ai.core.idle.trader'
-require 'ai.core.control.trader'
+--require 'ai.core.control.trader'
 require 'ai.core.misc.distress'
 require "numstring"
+
+-- Always run away
+mem.enemy_close = 500 -- Distance enemy is too close for comfort
+mem.aggressive = false
+mem.armour_run = 100
+mem.shield_run = 100
 
 function create ()
 
