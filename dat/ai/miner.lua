@@ -1,6 +1,6 @@
 require 'ai.core.core'
 require 'ai.core.idle.miner'
-require 'ai.core.distress'
+require 'ai.core.misc.distress'
 require "numstring"
 
 function create ()

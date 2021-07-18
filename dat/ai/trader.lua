@@ -1,7 +1,7 @@
 require 'ai.core.core'
 require 'ai.core.idle.trader'
 require 'ai.core.control.trader'
-require 'ai.core.distress'
+require 'ai.core.misc.distress'
 require "numstring"
 
 function create ()
