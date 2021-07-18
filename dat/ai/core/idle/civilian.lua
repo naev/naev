@@ -1,3 +1,5 @@
+local lanes = require 'ai.core.misc.lanes'
+
 -- Default task to run when idle
 function idle ()
    if mem.loiter == nil then mem.loiter = 3 end
@@ -13,9 +15,16 @@ function idle ()
           ai.pushtask("land")
        end
    else -- Stay. Have a beer.
-      local sysrad = rnd.rnd() * system.cur():radius()
-      local angle = rnd.rnd() * 2 * math.pi
-      ai.pushtask("loiter", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
+      if not mem.route then
+         local target = lanes.getPointInterest()
+         mem.route = lanes.getRoute( target )
+      end
+      local pos = mem.route[1]
+      table.remove( mem.route, 1 )
+      if #mem.route == 0 then
+         mem.loiter = mem.loiter - 1
+         mem.route = nil
+      end
+      ai.pushtask("loiter", pos )
    end
-   mem.loiter = mem.loiter - 1
 end
