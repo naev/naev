@@ -1,3 +1,5 @@
+local lanes = require 'ai.core.misc.lanes'
+
 -- Default task to run when idle
 function idle ()
    -- Aggressives will try to find enemies first, before falling back on
@@ -34,6 +36,7 @@ function idle ()
       end
 
       -- Check to see if we want to patrol waypoints
+      -- TODO should waypoints use the mem.loiter also?
       if mem.waypoints then
          -- If haven't started patroling, find the closest waypoint
          if not mem._waypoint_cur then
@@ -53,13 +56,20 @@ function idle ()
          -- Go to the next position
          ai.pushtask( "loiter", mem.waypoints[ mem._waypoint_cur ] )
       else
-         -- Go to a random location
-         sysrad = rnd.rnd() * system.cur():radius()
-         angle = rnd.rnd() * 2 * math.pi
-         ai.pushtask("loiter", vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad))
+         -- Go to an interesting
+         if not mem.route then
+            local target = lanes.getPointInterest()
+            mem.route = lanes.getRoute( target )
+         end
+         local pos = mem.route[1]
+         table.remove( mem.route, 1 )
+         if #mem.route == 0 then
+            mem.loiter = mem.loiter - 1
+            mem.route = nil
+         end
+         ai.pushtask("loiter", pos )
       end
    end
-   mem.loiter = mem.loiter - 1
 end
 
 
