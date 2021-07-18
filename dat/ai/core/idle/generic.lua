@@ -16,7 +16,7 @@ function idle ()
    if mem.loiter == 0 then
       -- Get a goal
       if not mem.goal then
-         if mem.land_planet then
+         if mem.land_planet and not mem.tookoff then
             local planet = ai.landplanet( mem.land_friendly )
             if planet ~= nil then
                mem.goal = "planet"
