@@ -2143,12 +2143,12 @@ dat/ai/core/control/generic.lua
 dat/ai/core/control/scout.lua
 dat/ai/core/control/trader.lua
 dat/ai/core/core.lua
-dat/ai/core/distress.lua
-dat/ai/core/idle/advertiser.lua
 dat/ai/core/idle/civilian.lua
 dat/ai/core/idle/generic.lua
 dat/ai/core/idle/miner.lua
 dat/ai/core/idle/trader.lua
+dat/ai/core/misc/distress.lua
+dat/ai/core/misc/lanes.lua
 dat/ai/drone_miner.lua
 dat/ai/dummy.lua
 dat/ai/dvaered.lua

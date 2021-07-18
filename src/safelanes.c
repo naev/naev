@@ -646,7 +646,7 @@ static void safelanes_initPPl (void)
 
    D = array_create_size( cholmod_dense*, array_size(faction_stack) );
    for (k=0; k<array_size(faction_stack); k++)
-      array_push_back( &D, cholmod_allocate_dense( 1, MULTI_INDEX(np,0), 1, CHOLMOD_REAL, &C ) );
+      array_push_back( &D, cholmod_zeros( 1, MULTI_INDEX(np,0), CHOLMOD_REAL, &C ) );
 
    for (i=0; i<array_size(tmp_planet_indices); i++) {
       sysi = vertex_stack[tmp_planet_indices[i]].system;
