@@ -67,7 +67,7 @@ function idle ()
             mem.loiter = mem.loiter - 1
             mem.route = nil
          end
-         ai.pushtask("loiter", pos )
+         ai.pushtask("loiter", pos + vec2.newP(200*rnd.rnd(),360*rnd.rnd()) )
       end
    end
 end
