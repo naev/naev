@@ -14,18 +14,51 @@ function idle ()
 
    if mem.loiter == nil then mem.loiter = 3 end
    if mem.loiter == 0 then -- Try to leave.
-      local planet = ai.landplanet( mem.land_friendly )
-      -- planet must exist
-      if planet == nil or mem.land_planet == false then
-         ai.settimer(0, rnd.int(1000, 3000))
-         ai.pushtask("enterdelay")
-      else
-         mem.land = planet:pos()
-         ai.pushtask("hyperspace")
-         if not mem.tookoff then
-            ai.pushtask("land")
+
+      -- Get a goal
+      if not mem.goal then
+         if mem.land_planet then
+            local planet = ai.landplanet( mem.land_friendly )
+            if planet ~= nil then
+               mem.goal = "planet"
+               mem.goal_planet = planet
+               mem.goal_pos = planet:pos()
+               mem.land = mem.goal_pos
+            end
          end
+         if not mem.goal then
+            local hyperspace = ai.rndhyptarget()
+            if hyperspace then
+               mem.goal = "hyperspace"
+               mem.goal_hyperspace = hyperspace
+               mem.goal_pos = hyperspace:pos()
+            end
+         end
+         -- Wasn't able to find a goal, so just loiter more
+         if not mem.goal then
+            mem.loiter = 1
+            return
+         end
+
+         mem.route = lanes.getRoute( mem.goal_pos )
       end
+
+      -- Arrived at goal
+      if #mem.route == 0 then
+         if mem.goal == "planet" then
+            ai.pushtask("land")
+         elseif mem.goal == "hyperspace" then
+            ai.pushtask("hyperspace", mem.goal_hyperspace)
+         end
+         return
+      end
+
+      -- Continue to goal
+      local pos = mem.route[1]
+      table.remove( mem.route, 1 )
+      ai.pushtask("loiter", pos + vec2.newP(200*rnd.rnd(),360*rnd.rnd()) )
+      return
+
    else -- Stay. Have a beer.
       if mem.doscans then
          local target = __getscantarget()

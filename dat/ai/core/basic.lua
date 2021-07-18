@@ -649,11 +649,12 @@ end
 --[[
 -- Starts heading away to try to hyperspace.
 --]]
-function hyperspace ()
-   local target = ai.taskdata()
+function hyperspace( target)
    if target == nil then
       target = ai.rndhyptarget()
+      -- Can't jump so abort
       if target == nil then
+         ai.poptask()
          return
       end
    end
