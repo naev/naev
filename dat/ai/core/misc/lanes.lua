@@ -224,6 +224,14 @@ function lanes.getPointInterest( pos )
    local ncl = getCache()
    local lv, le = ncl.v, ncl.e
 
+   -- Case nothing of interest we just return a random position like in the old days
+   -- TODO do something smarter here
+   if #lv == 0 then
+      local r = rnd.rnd() * system.cur():radius()
+      local a = rnd.rnd() * 360
+      return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.rnd() * 360 )
+   end
+
    return lv[ rnd.rnd(1,#lv) ]
    -- TODO try to find elements in the connected component and not random
    --[[
@@ -242,6 +250,11 @@ function lanes.getRoute( target, pos )
    pos = pos or ai.pilot():pos()
    local ncl = getCache()
    local lv, le = ncl.v, ncl.e
+
+   -- Case no lanes in the system
+   if #lv == 0 then
+      return { target }
+   end
 
    -- Compute shortest path
    local sv = nearestVertex( lv, pos )
