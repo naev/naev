@@ -185,7 +185,7 @@ void safelanes_destroy (void)
 
 
 /**
- * @brief Shuts down the safelanes system.
+ * @brief Gets a set of safelanes for a faction and system.
  *    @param faction ID of the faction whose lanes we want, or a negative value signifying "all of them".
  *    @param system Star system whose lanes we want.
  *    @return Array (array.h) of matching SafeLane structures. Caller frees.
