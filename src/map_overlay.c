@@ -562,7 +562,7 @@ void ovr_render( double dt )
       rx = x2-x;
       ry = y2-y;
       r  = atan2( ry, rx );
-      rw = 10.;
+      rw = 13.;
       rh = MOD(rx,ry);
 
       /* Set up projcetion. */
@@ -580,7 +580,8 @@ void ovr_render( double dt )
       gl_uniformColor(shaders.safelanes.color, &col);
       gl_Matrix4_Uniform(shaders.safelanes.projection, projection);
       glUniform2f(shaders.safelanes.dimensions, rh, rw);
-      glUniform1f(shaders.safelanes.dt, 0.);
+      //glUniform1f(shaders.safelanes.dt, 0.);
+      //glUniform1f(shaders.safelanes.r, rw+rh+x+y);
 
       glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 

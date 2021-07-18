@@ -124,7 +124,8 @@ SHADERS = [
       vs_path = "project_pos.vert",
       fs_path = "safelanes.frag",
       attributes = ["vertex"],
-      uniforms = ["projection", "color", "dt", "dimensions" ],
+      #uniforms = ["projection", "color", "dt", "r", "dimensions" ],
+      uniforms = ["projection", "color", "dimensions" ],
       subroutines = {},
    ),
    Shader(
