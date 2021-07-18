@@ -201,12 +201,7 @@ local function closestPointLine( a, b, p )
 end
 
 
---[[
--- Computes the route for the pilot to get to target.
---]]
-function lanes.getRoute( target, pos )
-   pos = pos or ai.pilot():pos()
-
+local function getCache ()
    -- We try to cache the lane graph per system
    -- TODO handle hostile lanes and such
    local nc = naev.cache()
@@ -217,6 +212,35 @@ function lanes.getRoute( target, pos )
       ncl.v, ncl.e = safelanesToGraph( safelanes.get() )
       ncl.system = sc
    end
+   return ncl
+end
+
+
+--[[
+-- Gets a random point of interest
+--]]
+function lanes.getPointInterest( pos )
+   pos = pos or ai.pilot():pos()
+   local ncl = getCache()
+   local lv, le = ncl.v, ncl.e
+
+   return lv[ rnd.rnd(1,#lv) ]
+   -- TODO try to find elements in the connected component and not random
+   --[[
+   local sv = nearestVertex( lv, pos )
+   local S = djikstra( lv, le, sv )
+   for k,v in ipairs(S) do
+   end
+   --]]
+end
+
+
+--[[
+-- Computes the route for the pilot to get to target.
+--]]
+function lanes.getRoute( target, pos )
+   pos = pos or ai.pilot():pos()
+   local ncl = getCache()
    local lv, le = ncl.v, ncl.e
 
    -- Compute shortest path
