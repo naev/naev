@@ -98,7 +98,7 @@ static int safelanesL_get( lua_State *L )
                //lua_pushplanet( L, lanes[i].point_id[j] );
 #ifdef DEBUGGING
                if (pnt==NULL)
-                  NLUA_ERROR( L, _("What the?") );
+                  NLUA_ERROR(L, _("Planet is invalid"));
 #endif /* DEBUGGING */
                lua_pushvector( L, pnt->pos );
                break;
@@ -109,12 +109,12 @@ static int safelanesL_get( lua_State *L )
                jmp = jump_getTarget( system_getIndex(lanes[i].point_id[j]), sys );
 #ifdef DEBUGGING
                if (jmp==NULL)
-                  NLUA_ERROR( L, _("What the?") );
+                  NLUA_ERROR(L, _("Jump is invalid"));
 #endif /* DEBUGGING */
                lua_pushvector( L, jmp->pos );
                break;
             default:
-               NLUA_ERROR( L, _("What the?") );
+               NLUA_ERROR( L, _("Safe-lane vertex type is invalid.") );
          }
          lua_rawseti( L, -2, j+1 );
       }

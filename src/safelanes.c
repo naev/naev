@@ -48,9 +48,7 @@ enum {
    STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
    STORAGE_MODE_UNSYMMETRIC = 0,                        /**< A CHOLMOD "stype" value: matrix holds whatever we put in it. */
    STORAGE_MODE_UPPER_TRIANGULAR_PART = +1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
-   UNSORTED                           = 0,              /**< a named bool */
    SORTED                             = 1,              /**< a named bool */
-   UNPACKED                           = 0,              /**< a named bool */
    PACKED                             = 1,              /**< a named bool */
    MODE_NUMERICAL                     = 1,              /**< yet another CHOLMOD magic number! */
 };
@@ -215,7 +213,7 @@ SafeLane* safelanes_get (int faction, const StarSystem* system)
                   l->point_id[j]     = system->jumps[v[j]->index].targetid;
                   break;
                default:
-                  ERR( _("Invalid vertex type.") );
+                  ERR( _("Safe-lane vertex type is invalid.") );
             }
          }
       }
@@ -239,7 +237,7 @@ void safelanes_recalculate (void)
    safelanes_destroyOptimizer();
    /* Stacks remain available for queries. */
    time = SDL_GetTicks() - time;
-   DEBUG( _("Calculated patrols in %f seconds"), time/1000. );
+   DEBUG( _("Charted safe lanes for %d objects in %.3f s."), array_size(vertex_stack), time/1000. );
 }
 
 
@@ -316,7 +314,6 @@ static void safelanes_initStacks (void)
    safelanes_initStacks_faction();
    safelanes_initStacks_edge();
    safelanes_initStacks_anchor();
-   DEBUG( _("Built safelanes graph: V=%d, E=%d"), array_size(vertex_stack), array_size(edge_stack) );
 }
 
 
@@ -460,10 +457,8 @@ static void safelanes_initStacks_anchor (void)
 
    /* Add an anchor vertex per system, but only if there actually is a vertex in the system. */
    for (i=0; i<array_size(anchor_systems); i++)
-      if (sys_to_first_vertex[anchor_systems[i]] < sys_to_first_vertex[1+anchor_systems[i]]) {
+      if (sys_to_first_vertex[anchor_systems[i]] < sys_to_first_vertex[1+anchor_systems[i]])
          array_push_back( &tmp_anchor_vertices, sys_to_first_vertex[anchor_systems[i]] );
-         DEBUG( _("Anchoring safelanes graph in system: %s."), system_getIndex(anchor_systems[i])->name );
-      }
    array_free( anchor_systems );
 }
 
@@ -843,7 +838,7 @@ static int vertex_faction( int vi )
       case VERTEX_JUMP:
          return -1;
       default:
-         ERR( _("Invalid vertex type.") );
+         ERR( _("Safe-lane vertex type is invalid.") );
    }
 }
 
@@ -860,7 +855,7 @@ static const Vector2d* vertex_pos( int vi )
       case VERTEX_JUMP:
          return &sys->jumps[vertex_stack[vi].index].pos;
       default:
-         ERR( _("Invalid vertex type.") );
+         ERR( _("Safe-lane vertex type is invalid.") );
    }
 }
 
