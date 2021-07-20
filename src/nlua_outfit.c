@@ -486,7 +486,7 @@ static int outfitL_getShipStat( lua_State *L )
    Outfit *o = luaL_validoutfit(L,1);
    ss_statsInit( &ss );
    ss_statsModFromList( &ss, o->stats );
-   const char *str = luaL_optstring(L,2,NULL);
+   const char *str   = luaL_optstring(L,2,NULL);
    int internal      = lua_toboolean(L,3);
    ss_statsGetLua( L, &ss, str, internal );
    return 1;
@@ -513,8 +513,8 @@ static int outfitL_weapStats( lua_State *L )
    double mod_energy, mod_damage, mod_shots;
    double sdmg, admg;
    const Damage *dmg;
-   Outfit *o = luaL_validoutfit( L, 1 );
-   Pilot *p = (lua_ispilot(L,2)) ? luaL_validpilot(L,2) : NULL;
+   Outfit *o   = luaL_validoutfit( L, 1 );
+   Pilot *p    = (lua_ispilot(L,2)) ? luaL_validpilot(L,2) : NULL;
 
    /* Just return 0 for non-wapons. */
    if (o->slot.type != OUTFIT_SLOT_WEAPON)
