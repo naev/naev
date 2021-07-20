@@ -12,7 +12,15 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local outfit_stats = {}
 local fbay_dps = {}
 for k,o in ipairs(outfit.getAll()) do
-   outfit_stats[o:nameRaw()] = o:shipstat(nil,true)
+   local os = o:shipstat(nil,true)
+   os.type = o:type()
+   os.typebroad = o:typeBroad()
+   os.spec = o:specificstats()
+   os.price = o:price()
+   os.limit = o:limit()
+   os.mass = o:mass()
+   os.cpu = o:cpu()
+   outfit_stats[o:nameRaw()] = os
    if o:type() == "Fighter Bay" then
       local ss = o:specificstats()
       local s = ss.ship
@@ -342,10 +350,10 @@ function optimize.optimize( p, cores, outfit_list, params )
       oo.trackmin = oo.trackmin or 0
       oo.trackmax = oo.trackmax or 0
       oo.lockon   = oo.lockon or 0
-      oo.cpu      = out:cpu()
-      oo.mass     = out:mass() * ss.mass_mod
-      oo.price    = out:price()
-      oo.limit    = out:limit()
+      oo.cpu      = os.cpu
+      oo.mass     = os.mass * ss.mass_mod
+      oo.price    = os.price
+      oo.limit    = os.limit
       if oo.limit then
          for i,l in ipairs(limits) do
             if l == oo.limit then
@@ -354,11 +362,11 @@ function optimize.optimize( p, cores, outfit_list, params )
             end
          end
       end
-      oo.type     = out:type()
-      oo.spec     = out:specificstats()
+      oo.type     = os.type
+      oo.typebroad = os.typebroad
+      oo.spec     = os.spec
       oo.isturret = oo.spec.isturret
       oo.penetration = oo.spec.penetration
-      oo.typebroad = out:typeBroad()
 
       -- We correct ship stats here and convert them to "relative improvements"
       -- Movement
