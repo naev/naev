@@ -93,7 +93,7 @@ local empire_cores = {
 local function equip_empire( p, opt_params )
    opt_params = opt_params or {}
    if diff.isApplied( "collective_dead" ) and not empire_outfits_collective then
-      table.insert( empire_outfits, "Drone Fighter Bay" )
+      table.insert( empire_outfits, outfit.get("Drone Fighter Bay") )
       empire_outfits_collective = true
    end
 
