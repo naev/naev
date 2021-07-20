@@ -113,6 +113,7 @@ They grin at you.
       end )
       vn.sfxVictory()
       vn.done()
+      misn.finish(true)
    elseif  misn_state==nil then
       -- Not accepted
       vn.na(_("You approach Zuri who seems to be motioning to you. They seem faintly tired."))
