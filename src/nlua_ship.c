@@ -275,12 +275,7 @@ static int shipL_getAll( lua_State *L )
  */
 static int shipL_name( lua_State *L )
 {
-   Ship *s;
-
-   /* Get the ship. */
-   s  = luaL_validship(L,1);
-
-   /** Return the ship name. */
+   Ship *s  = luaL_validship(L,1);
    lua_pushstring(L, _(s->name));
    return 1;
 }
@@ -301,12 +296,7 @@ static int shipL_name( lua_State *L )
  */
 static int shipL_nameRaw( lua_State *L )
 {
-   Ship *s;
-
-   /* Get the ship. */
-   s  = luaL_validship(L,1);
-
-   /** Return the ship name. */
+   Ship *s  = luaL_validship(L,1);
    lua_pushstring(L, s->name);
    return 1;
 }
@@ -325,11 +315,7 @@ static int shipL_nameRaw( lua_State *L )
  */
 static int shipL_baseType( lua_State *L )
 {
-   Ship *s;
-
-   /* Get the ship. */
-   s  = luaL_validship(L,1);
-
+   Ship *s  = luaL_validship(L,1);
    lua_pushstring(L, s->base_type);
    return 1;
 }
@@ -346,11 +332,7 @@ static int shipL_baseType( lua_State *L )
  */
 static int shipL_class( lua_State *L )
 {
-   Ship *s;
-
-   /* Get the ship. */
-   s  = luaL_validship(L,1);
-
+   Ship *s  = luaL_validship(L,1);
    lua_pushstring(L, ship_class(s));
    return 1;
 }
@@ -369,10 +351,7 @@ static int shipL_class( lua_State *L )
  */
 static int shipL_slots( lua_State *L )
 {
-   Ship *s;
-
-   /* Get the ship. */
-   s  = luaL_validship(L,1);
+   Ship *s  = luaL_validship(L,1);
 
    /* Push slot numbers. */
    lua_pushnumber(L, array_size(s->outfit_weapon));
@@ -538,14 +517,8 @@ static int shipL_price( lua_State *L )
  */
 static int shipL_gfxTarget( lua_State *L )
 {
-   Ship *s;
-   glTexture *tex;
-
-   /* Get the ship. */
-   s  = luaL_validship(L,1);
-
-   /* Push graphic. */
-   tex = gl_dupTexture( s->gfx_target );
+   Ship *s        = luaL_validship(L,1);
+   glTexture *tex = gl_dupTexture( s->gfx_target );
    if (tex == NULL) {
       WARN(_("Unable to get ship target graphic for '%s'."), s->name);
       return 0;
@@ -568,14 +541,8 @@ static int shipL_gfxTarget( lua_State *L )
  */
 static int shipL_gfx( lua_State *L )
 {
-   Ship *s;
-   glTexture *tex;
-
-   /* Get the ship. */
-   s  = luaL_validship(L,1);
-
-   /* Push graphic. */
-   tex = gl_dupTexture( s->gfx_space );
+   Ship *s        = luaL_validship(L,1);
+   glTexture *tex = gl_dupTexture( s->gfx_space );
    if (tex == NULL) {
       WARN(_("Unable to get ship graphic for '%s'."), s->name);
       return 0;
