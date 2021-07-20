@@ -792,7 +792,7 @@ function refuel ()
    end
 
    -- See if finished refueling
-   if not ai.pilot():flags().refueling then
+   if not ai.pilot():flags("refueling") then
       ai.poptask()
       return
    end
@@ -828,7 +828,7 @@ function __refuelstop ()
 
    -- See if finished refueling
    local p = ai.pilot()
-   if not p:flags().refueling then
+   if not p:flags("refueling") then
       p:comm(target, _("Finished fuel transfer."))
       ai.poptask()
 
@@ -1007,7 +1007,7 @@ end
 --]]
 function __check_seeable( target )
    local self   = ai.pilot()
-   if not target:flags().invisible then
+   if not target:flags("invisible") then
       -- Pilot still sees the target: continue attack
       if self:inrange( target ) then
          return true
@@ -1016,7 +1016,7 @@ function __check_seeable( target )
       -- Pilots on manual control (in missions or events) never loose target
       -- /!\ This is not necessary desirable all the time /!\
       -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
-      if self:flags().manualcontrol then
+      if self:flags("manualcontrol") then
          return true
       end
    end

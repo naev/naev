@@ -153,7 +153,7 @@ function handle_messages ()
             ai.pushtask("hold" )
          -- Return to carrier
          elseif msgtype == "e_return" then
-            ai.pushtask( "flyback", p:flags().carried )
+            ai.pushtask( "flyback", p:flags("carried") )
          -- Clear orders
          elseif msgtype == "e_clear" then
             p:taskClear()
@@ -224,9 +224,9 @@ function control ()
 
    -- Try to stealth if leader is stealthed
    if l ~= nil then
-      if l:flags().stealth then
+      if l:flags("stealth") then
          ai.stealth(true)
-      elseif p:flags().stealth then
+      elseif p:flags("stealth") then
          ai.stealth(false)
       end
    end
@@ -467,7 +467,7 @@ end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
-   mem.tookoff    = ai.pilot():flags().takingoff
+   mem.tookoff    = ai.pilot():flags("takingoff")
    mem.scanned    = {} -- must create for each pilot
    attack_choose()
 end
