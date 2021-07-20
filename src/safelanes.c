@@ -139,6 +139,8 @@ static cholmod_dense* ncholmod_transpose_dense( cholmod_dense* m );
 static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_dense* B );
 static double ncholmod_ddmult_elem( cholmod_dense* A, cholmod_dense* B, int i, int j );
 
+#define MULTI_INDEX( i, j ) ((i*(i-1))/2 + j)  /**< Encodes the pair {i,j}, where j<i, as an int. */
+
 /**
  * @brief Like array_push_back( a, Edge{v0, v1} ), but achievable in C. :-P
  */
@@ -591,22 +593,19 @@ static void safelanes_updateConductivity ( int ei_activated )
 static void safelanes_initQtQ (void)
 {
    cholmod_sparse *Q;
-   int i, *qp, *qi;
-   double *qv;
+   int i;
 
    cholmod_free_sparse( &QtQ, &C );
+   /* Form Q, the edge-vertex projection where (Dirac notation) Q |edge> = |edge[0]> - |edge[1]>. It has a +1 and -1 per column. */
    Q = cholmod_allocate_sparse( array_size(vertex_stack), array_size(edge_stack), 2*array_size(edge_stack),
          SORTED, PACKED, STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
-   qp = Q->p;
-   qi = Q->i;
-   qv = Q->x;
-   qp[0] = 0;
+   ((int*)Q->p)[0] = 0;
    for (i=0; i<array_size(edge_stack); i++) {
-      qp[i+1] = 2*(i+1);
-      qi[2*i+0] = edge_stack[i][0];
-      qv[2*i+0] = +1;
-      qi[2*i+1] = edge_stack[i][1];
-      qv[2*i+1] = -1;
+      ((int*)Q->p)[i+1] = 2*(i+1);
+      ((int*)Q->i)[2*i+0] = edge_stack[i][0];
+      ((int*)Q->i)[2*i+1] = edge_stack[i][1];
+      ((double*)Q->x)[2*i+0] = +1;
+      ((double*)Q->x)[2*i+1] = -1;
    }
 #if DEBUGGING
    assert( cholmod_check_sparse( Q, &C ) );
@@ -635,28 +634,31 @@ static void safelanes_initFTilde (void)
  */
 static void safelanes_initPPl (void)
 {
-   cholmod_triplet *P;
    cholmod_dense **D;
-   cholmod_sparse *sp, *PPl_sp;
-   int np, i, j, k, facti, factj, sysi, sysj;
+   cholmod_sparse *P, *PD, *PPl_sp;
+   int np, i, j, k, m, facti, factj, sysi, sysj, component_i, component_j;
    Planet *pnti, *pntj;
 
-   np = array_size(tmp_planet_indices);
-#define MULTI_INDEX( i, j ) ((i*(i-1))/2 + j)
-   P = cholmod_allocate_triplet( np, MULTI_INDEX(np,0), np*(np-1), STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
-   for (i=0; i<np; i++)
-      for (j=0; j<i; j++) {
-         triplet_entry( P, i, MULTI_INDEX(i,j), +1 );
-         triplet_entry( P, j, MULTI_INDEX(i,j), -1 );
-      }
-#if DEBUGGING
-   assert( P->nnz == P->nzmax );
-   assert( cholmod_check_triplet( P, &C) );
-#endif
-
-   for (k=0; i<array_size(PPl); k++)
+   for (k=0; k<array_size(PPl); k++)
       cholmod_free_dense( &PPl[k], &C );
    array_free( PPl );
+
+   np = array_size(tmp_planet_indices);
+   /* Form P, the pair-vertex projection where (Dirac notation) P |MULTI_INDEX(i,j)> = |i> - |j>. It has a +1 and -1 per column. */
+   P = cholmod_allocate_sparse( np, MULTI_INDEX(np,0), np*(np-1), SORTED, PACKED, STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
+   ((int*)P->p)[0] = 0;
+   for (i=0; i<np; i++)
+      for (j=0; j<i; j++) {
+         m = MULTI_INDEX(i, j);
+         ((int*)P->p)[m+1] = 2*(m+1);
+         ((int*)P->i)[2*m+0] = j;
+         ((int*)P->i)[2*m+1] = i;
+         ((double*)P->x)[2*m+0] = -1;
+         ((double*)P->x)[2*m+1] = +1;
+   }
+#if DEBUGGING
+   assert( cholmod_check_sparse( P, &C) );
+#endif
 
    D = array_create_size( cholmod_dense*, array_size(faction_stack) );
    for (k=0; k<array_size(faction_stack); k++)
@@ -666,9 +668,11 @@ static void safelanes_initPPl (void)
       sysi = vertex_stack[tmp_planet_indices[i]].system;
       pnti = system_getIndex( sysi )->planets[vertex_stack[tmp_planet_indices[i]].index];
       facti = FACTION_ID_TO_INDEX( pnti->faction );
+      component_i = unionfind_find( &tmp_sys_uf, sysi );
       for (j=0; j<i; j++) {
          sysj = vertex_stack[tmp_planet_indices[j]].system;
-         if (unionfind_find( &tmp_sys_uf, sysi ) == unionfind_find( &tmp_sys_uf, sysj )) {
+	 component_j = unionfind_find( &tmp_sys_uf, sysj );
+         if (component_i == component_j) {
             pntj = system_getIndex( sysj )->planets[vertex_stack[tmp_planet_indices[j]].index];
             factj = FACTION_ID_TO_INDEX( pntj->faction );
             if (facti >= 0)
@@ -681,19 +685,17 @@ static void safelanes_initPPl (void)
 
    PPl = array_create_size( cholmod_dense*, array_size(faction_stack) );
    for (k=0; k<array_size(faction_stack); k++) {
-      sp = cholmod_triplet_to_sparse( P, 0, &C );
-      cholmod_scale( D[k], CHOLMOD_COL, sp, &C );
-      PPl_sp = cholmod_aat( sp, NULL, 0, MODE_NUMERICAL, &C );
+      PD = cholmod_copy_sparse( P, &C );
+      cholmod_scale( D[k], CHOLMOD_COL, PD, &C );
+      cholmod_free_dense( &D[k], &C );
+      PPl_sp = cholmod_aat( PD, NULL, 0, MODE_NUMERICAL, &C );
+      cholmod_free_sparse( &PD, &C );
       array_push_back( &PPl, cholmod_sparse_to_dense( PPl_sp, &C ) );
       cholmod_free_sparse( &PPl_sp, &C );
-      cholmod_free_sparse( &sp, &C );
    }
-#undef MULTI_INDEX
 
-   for (k=0; i<array_size(D); k++)
-      cholmod_free_dense( &D[k], &C );
    array_free( D );
-   cholmod_free_triplet( &P, &C );
+   cholmod_free_sparse( &P, &C );
 }
 
 
