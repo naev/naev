@@ -141,10 +141,14 @@ typedef struct UniDiff_ {
  */
 static UniDiff_t *diff_stack = NULL; /**< Currently applied universe diffs. */
 
+/* Useful variables. */
+static int diff_universe_changed = 0; /**< Whether or not the universe changed. */
+
 
 /*
  * Prototypes.
  */
+static int diff_applyInternal( const char *name, int oneshot );
 NONNULL( 1 ) static UniDiff_t *diff_get( const char *name );
 static UniDiff_t *diff_newDiff (void);
 static int diff_removeDiff( UniDiff_t *diff );
@@ -156,6 +160,8 @@ static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk );
 static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk );
 static void diff_cleanup( UniDiff_t *diff );
 static void diff_cleanupHunk( UniHunk_t *hunk );
+/* Misc. */;
+static int diff_checkUpdateUniverse (void);
 /* Externed. */
 int diff_save( xmlTextWriterPtr writer ); /**< Used in save.c */
 int diff_load( xmlNodePtr parent ); /**< Used in save.c */
@@ -240,6 +246,19 @@ static UniDiff_t* diff_get( const char *name )
  */
 int diff_apply( const char *name )
 {
+   return diff_applyInternal( name, 1 );
+}
+
+
+/**
+ * @brief Applies a diff to the universe.
+ *
+ *    @param name Diff to apply.
+ *    @param oneshot Whether or not this diff should be applied as a single one-shot diff.
+ *    @return 0 on success.
+ */
+static int diff_applyInternal( const char *name, int oneshot )
+{
    xmlNodePtr node;
    xmlDocPtr doc;
    char *filename;
@@ -277,6 +296,10 @@ int diff_apply( const char *name )
    /* Re-compute the economy. */
    economy_execQueued();
    economy_initialiseCommodityPrices();
+
+   /* Update universe. */
+   if (oneshot)
+      diff_checkUpdateUniverse();
 
    return 0;
 }
@@ -639,7 +662,7 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
  */
 static int diff_patch( xmlNodePtr parent )
 {
-   int i, univ_update;
+   int i;
    UniDiff_t *diff;
    UniHunk_t *fail;
    xmlNodePtr node;
@@ -651,24 +674,21 @@ static int diff_patch( xmlNodePtr parent )
    memset(diff, 0, sizeof(UniDiff_t));
    xmlr_attr_strd(parent,"name",diff->name);
 
-   /* Whether or not we need to update the universe. */
-   univ_update = 0;
-
    node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
       if (xml_isNode(node,"system")) {
-         univ_update = 1;
+         diff_universe_changed = 1;
          diff_patchSystem( diff, node );
       }
       else if (xml_isNode(node, "tech"))
          diff_patchTech( diff, node );
       else if (xml_isNode(node, "asset")) {
-         univ_update = 1;
+         diff_universe_changed = 1;
          diff_patchAsset( diff, node );
       }
       else if (xml_isNode(node, "faction")) {
-         univ_update = 1;
+         diff_universe_changed = 1;
          diff_patchFaction( diff, node );
       }
       else
@@ -748,12 +768,6 @@ static int diff_patch( xmlNodePtr parent )
                break;
          }
       }
-   }
-
-   /* Prune presences if necessary. */
-   if (univ_update) {
-      space_reconstructPresences();
-      safelanes_recalculate();
    }
 
    /* Update overlay map just in case. */
@@ -1194,6 +1208,7 @@ int diff_load( xmlNodePtr parent )
    char *     diffName;
 
    diff_clear();
+   diff_universe_changed = 0;
 
    node = parent->xmlChildrenNode;
    do {
@@ -1206,14 +1221,29 @@ int diff_load( xmlNodePtr parent )
                   WARN( _( "Expected node \"diff\" to contain the name of a unidiff. Was empty." ) );
                   continue;
                }
-               diff_apply( diffName );
+               diff_applyInternal( diffName, 0 );
             }
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
 
-   return 0;
+   /* Update as necessary. */
+   diff_checkUpdateUniverse();
 
+   return 0;
 }
 
+
+/**
+ * @brief Checks and updates the universe if necessary.
+ */
+static int diff_checkUpdateUniverse (void)
+{
+   if (!diff_universe_changed)
+      return 0;
+   space_reconstructPresences();
+   safelanes_recalculate();
+   diff_universe_changed = 0;
+   return 1;
+}
 
