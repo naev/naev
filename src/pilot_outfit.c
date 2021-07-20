@@ -416,6 +416,10 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
 {
    int ret;
 
+   /* Force turn off if necessary. */
+   if (s->state==PILOT_OUTFIT_ON)
+      pilot_outfitOff( pilot, s );
+
    /* Decrement counters if necessary. */
    if (s->outfit != NULL) {
       if (outfit_isTurret(s->outfit))
