@@ -37,7 +37,10 @@ local empire_outfits = eoutfits.merge{{
    "Reactor Class I", "Small Fuel Pod",
    "Small Shield Booster",
 }}
-local empire_outfits_collective = false
+local empire_outfits_collective = eoutfits.merge{
+   empire_outfits,
+   { "Drone Fighter Bay" },
+}
 
 
 local empire_params = {
@@ -92,9 +95,11 @@ local empire_cores = {
 --]]
 local function equip_empire( p, opt_params )
    opt_params = opt_params or {}
-   if diff.isApplied( "collective_dead" ) and not empire_outfits_collective then
-      table.insert( empire_outfits, outfit.get("Drone Fighter Bay") )
-      empire_outfits_collective = true
+   local emp_out
+   if diff.isApplied( "collective_dead" ) then
+      emp_out = empire_outfits_collective
+   else
+      emp_out = empire_outfits
    end
 
    local sname = p:ship():nameRaw()
@@ -128,7 +133,7 @@ local function equip_empire( p, opt_params )
    end
 
    -- Try to equip
-   return optimize.optimize( p, cores, empire_outfits, params )
+   return optimize.optimize( p, cores, emp_out, params )
 end
 
 return equip_empire
