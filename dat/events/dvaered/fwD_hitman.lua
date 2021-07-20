@@ -8,7 +8,7 @@
    <unique />
   </flags>
   <notes>
-   <done_misn name="Dvaered Triathlon"/>
+   <done_misn name="Dvaered Ballet"/>
    <campaign>Frontier Invasion</campaign>
   </notes>
  </event>
