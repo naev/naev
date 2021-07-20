@@ -13,12 +13,12 @@ function sos ()
       _("Local security: requesting assistance!"),
       _("Mayday! We are under attack!"),
       _("Requesting assistance. We are under attack!"),
-      string.format(_("%s vessel under attack! Requesting help!"), plt:faction()),
+      string.format(_("%s vessel under attack! Requesting help!"), plt:faction():name()),
       _("Help! Ship under fire!"),
       _("Taking hostile fire! Need assistance!"),
       _("We are under attack, require support!"),
       _("Mayday! Ship taking damage!"),
-      string.format(_("Mayday! %s %s being assaulted!"), plt:faction(), string.lower( plt:ship():class() ))
+      string.format(_("Mayday! %s %s being assaulted!"), plt:faction():name(), string.lower( plt:ship():class():name() ))
    }
    ai.settarget( ai.taskdata() )
    ai.distress( msg[ rnd.int(1,#msg) ])
