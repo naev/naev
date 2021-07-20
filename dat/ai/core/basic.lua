@@ -315,11 +315,10 @@ end
 --[[
 -- Tries to hyperspace asap.
 --]]
-function __hyperspace ()
-   hyperspace()
+function __hyperspace( target )
+   hyperspace( target )
 end
-function __hyperspace_shoot ()
-   local target = ai.taskdata()
+function __hyperspace_shoot( target )
    if target == nil then
       target = ai.rndhyptarget()
       if target == nil then
