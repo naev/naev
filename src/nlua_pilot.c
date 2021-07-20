@@ -4112,10 +4112,7 @@ static int pilotL_hyperspace( lua_State *L )
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
-   if (!lua_isnoneornil(L,2))
-      ss = luaL_validsystem(L,2);
-   else
-      ss = NULL;
+   ss = (lua_isnoneornil(L,2)) ? NULL : luaL_validsystem(L,2);
    shoot = lua_toboolean(L,3);
 
    /* Set the task. */
