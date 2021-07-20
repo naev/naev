@@ -634,9 +634,8 @@ static void safelanes_initFTilde (void)
  */
 static void safelanes_initPPl (void)
 {
-   cholmod_dense **D;
-   cholmod_sparse *P, *PD, *PPl_sp;
-   int np, i, j, k, m, facti, factj, sysi, sysj, component_i, component_j;
+   double d, **D;
+   int np, i, j, k, facti, factj, sysi, sysj, component_i, component_j;
    Planet *pnti, *pntj;
 
    for (k=0; k<array_size(PPl); k++)
@@ -645,24 +644,11 @@ static void safelanes_initPPl (void)
 
    np = array_size(tmp_planet_indices);
    /* Form P, the pair-vertex projection where (Dirac notation) P |MULTI_INDEX(i,j)> = |i> - |j>. It has a +1 and -1 per column. */
-   P = cholmod_allocate_sparse( np, MULTI_INDEX(np,0), np*(np-1), SORTED, PACKED, STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
-   ((int*)P->p)[0] = 0;
-   for (i=0; i<np; i++)
-      for (j=0; j<i; j++) {
-         m = MULTI_INDEX(i, j);
-         ((int*)P->p)[m+1] = 2*(m+1);
-         ((int*)P->i)[2*m+0] = j;
-         ((int*)P->i)[2*m+1] = i;
-         ((double*)P->x)[2*m+0] = -1;
-         ((double*)P->x)[2*m+1] = +1;
-   }
-#if DEBUGGING
-   assert( cholmod_check_sparse( P, &C) );
-#endif
+   /* At least, pretend we did. We want (PD)(PD)*, for each diagonal D below. */
 
-   D = array_create_size( cholmod_dense*, array_size(faction_stack) );
+   D = calloc( array_size(faction_stack), sizeof(double*) );
    for (k=0; k<array_size(faction_stack); k++)
-      array_push_back( &D, cholmod_zeros( 1, MULTI_INDEX(np,0), CHOLMOD_REAL, &C ) );
+      D[k] = calloc( MULTI_INDEX(np,0), sizeof(double*) );
 
    for (i=0; i<array_size(tmp_planet_indices); i++) {
       sysi = vertex_stack[tmp_planet_indices[i]].system;
@@ -676,26 +662,30 @@ static void safelanes_initPPl (void)
             pntj = system_getIndex( sysj )->planets[vertex_stack[tmp_planet_indices[j]].index];
             factj = FACTION_ID_TO_INDEX( pntj->faction );
             if (facti >= 0)
-               ((double*)D[facti]->x)[MULTI_INDEX(i,j)] += pnti->presenceAmount;
+               D[facti][MULTI_INDEX(i,j)] += pnti->presenceAmount;
             if (factj >= 0)
-               ((double*)D[factj]->x)[MULTI_INDEX(i,j)] += pntj->presenceAmount;
+               D[factj][MULTI_INDEX(i,j)] += pntj->presenceAmount;
          }
       }
    }
 
    PPl = array_create_size( cholmod_dense*, array_size(faction_stack) );
    for (k=0; k<array_size(faction_stack); k++) {
-      PD = cholmod_copy_sparse( P, &C );
-      cholmod_scale( D[k], CHOLMOD_COL, PD, &C );
-      cholmod_free_dense( &D[k], &C );
-      PPl_sp = cholmod_aat( PD, NULL, 0, MODE_NUMERICAL, &C );
-      cholmod_free_sparse( &PD, &C );
-      array_push_back( &PPl, cholmod_sparse_to_dense( PPl_sp, &C ) );
-      cholmod_free_sparse( &PPl_sp, &C );
+      array_push_back( &PPl, cholmod_zeros( np, np, CHOLMOD_REAL, &C ) );
+      for (i=0; i<array_size(tmp_planet_indices); i++) {
+         for (j=0; j<i; j++) {
+            d = D[k][MULTI_INDEX(i, j)];
+            d *= d;
+            ((double*)PPl[k]->x)[np*i+i] += d;
+            ((double*)PPl[k]->x)[np*i+j] -= d;
+            ((double*)PPl[k]->x)[np*j+i] -= d;
+            ((double*)PPl[k]->x)[np*j+j] += d;
+         }
+      }
+      free( D[k] );
    }
 
-   array_free( D );
-   cholmod_free_sparse( &P, &C );
+   free( D );
 }
 
 
