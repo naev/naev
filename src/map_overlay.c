@@ -531,7 +531,7 @@ void ovr_render( double dt )
    gl_renderRect( (double)gui_getMapOverlayBoundLeft(), (double)gui_getMapOverlayBoundRight(), w, h, &c );
 
    /* Render the safe lanes */
-   safelanes = safelanes_get( -1, cur_system );
+   safelanes = safelanes_get( -1, 0, cur_system );
    for (i=0; i<array_size(safelanes); i++) {
       if (faction_isPlayerFriend( safelanes[i].faction ))
          col = cFriend;

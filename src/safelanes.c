@@ -185,36 +185,65 @@ void safelanes_destroy (void)
 /**
  * @brief Gets a set of safelanes for a faction and system.
  *    @param faction ID of the faction whose lanes we want, or a negative value signifying "all of them".
+ *    @param standing Bit-mask indicating what standing to get.
  *    @param system Star system whose lanes we want.
  *    @return Array (array.h) of matching SafeLane structures. Caller frees.
  */
-SafeLane* safelanes_get (int faction, const StarSystem* system)
+SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
 {
    int i, j;
    SafeLane *out, *l;
    const Vertex *v[2];
+   int lf, fe, fa, skip;
 
    out = array_create( SafeLane );
 
    for (i=sys_to_first_edge[system->id]; i<sys_to_first_edge[1+system->id]; i++) {
+      /* No lane on edge. */
+      if (lane_faction[i] <= 0)
+         continue;
+
+      /* Filter by standing. */
+      if (faction >= 0) {
+         if (standing==0) {
+            /* Only match exact faction. */
+            if (lf != faction)
+               continue;
+         }
+         else {
+            /* Try to do more advanced matching. */
+            lf = lane_faction[i];
+            fe = areEnemies(faction,lf);
+            fa = areAllies(faction,lf);
+            skip = 1;
+            if ((standing & SAFELANES_FRIENDLY) && !fa)
+               skip = 0;
+            if ((standing & SAFELANES_NEUTRAL) && (fe || fa))
+               skip = 0;
+            if ((standing & SAFELANES_HOSTILE) && !fe)
+               skip = 0;
+            if (skip)
+               continue;
+         }
+      }
+
       for (j=0; j<2; j++)
          v[j] = &vertex_stack[edge_stack[i][j]];
-      if (lane_faction[i] > 0 && (faction < 0 || faction == lane_faction[i])) {
-         l = &array_grow( &out );
-         l->faction = lane_faction[i];
-         for (j=0; j<2; j++) {
-            switch (v[j]->type) {
-               case VERTEX_PLANET:
-                  l->point_type[j]   = SAFELANE_LOC_PLANET;
-                  l->point_id[j]     = system->planets[v[j]->index]->id;
-                  break;
-               case VERTEX_JUMP:
-                  l->point_type[j]   = SAFELANE_LOC_DEST_SYS;
-                  l->point_id[j]     = system->jumps[v[j]->index].targetid;
-                  break;
-               default:
-                  ERR( _("Safe-lane vertex type is invalid.") );
-            }
+
+      l = &array_grow( &out );
+      l->faction = lane_faction[i];
+      for (j=0; j<2; j++) {
+         switch (v[j]->type) {
+            case VERTEX_PLANET:
+               l->point_type[j]   = SAFELANE_LOC_PLANET;
+               l->point_id[j]     = system->planets[v[j]->index]->id;
+               break;
+            case VERTEX_JUMP:
+               l->point_type[j]   = SAFELANE_LOC_DEST_SYS;
+               l->point_id[j]     = system->jumps[v[j]->index].targetid;
+               break;
+            default:
+               ERR( _("Safe-lane vertex type is invalid.") );
          }
       }
    }

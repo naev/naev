@@ -63,6 +63,7 @@ int nlua_loadSafelanes( nlua_env env )
  * @usage safelanes.get( "Empire" ) -- Empire's lanes in current system
  * @usage safelanes.get( faction.get("Empire"), system.get("Gamma Polaris") ) -- Empire's lanes through Gamma Polaris.
  *    @luatparam[opt] Faction f If present, only return this faction's lanes.
+ *    @luatparam[opt="friendly"] string standing What type of lanes to get. Either friendly", "neutral", or "hostile".
  *    @luatparam[opt=system.cur()] System s The system whose lanes we want.
  *    @luatreturn table The list of matching safe lanes, each of which is a table where:
  *                lane[1] and lane[2] are the endpoints (type vec2),
@@ -71,23 +72,41 @@ int nlua_loadSafelanes( nlua_env env )
  */
 static int safelanesL_get( lua_State *L )
 {
-   int i, j, faction;
+   int i, j, faction, standing;
    StarSystem *sys;
    SafeLane *lanes;
    Planet *pnt;
    JumpPoint *jmp;
+   const char *std;
 
    if (!lua_isnoneornil(L,1))
       faction = luaL_validfaction( L, 1 );
    else
       faction = -1;
-
-   if (!lua_isnoneornil(L,2))
-      sys = luaL_validsystem( L, 2 );
+   std = luaL_optstring(L, 2, "friendly");
+   if (!lua_isnoneornil(L,3))
+      sys = luaL_validsystem( L, 3 );
    else
       sys = cur_system;
 
-   lanes = safelanes_get( faction, sys );
+   /* Translate standing into number. */
+   standing = 0;
+   if (faction >= 0) {
+      if (strcmp(std,"friendly")==0)
+         standing |= SAFELANES_FRIENDLY;
+      else if (strcmp(std,"neutral")==0)
+         standing |= SAFELANES_NEUTRAL;
+      else if (strcmp(std,"hostile")==0)
+         standing |= SAFELANES_HOSTILE;
+      else if (strcmp(std,"non-friendly")==0)
+         standing |= SAFELANES_NEUTRAL & SAFELANES_HOSTILE;
+      else if (strcmp(std,"non-hostile")==0)
+         standing |= SAFELANES_NEUTRAL & SAFELANES_FRIENDLY;
+      else
+         NLUA_ERROR(L,_("Unknown standing type '%s'!"), std);
+   }
+
+   lanes = safelanes_get( faction, standing, sys );
    lua_newtable( L );
    for (i=0; i<array_size(lanes); i++) {
       lua_newtable( L );

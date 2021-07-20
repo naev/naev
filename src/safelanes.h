@@ -10,6 +10,12 @@
 #include "space.h"
 
 
+/* Bit flags to specify what standing to get. */
+#define SAFELANES_FRIENDLY (1<<0)
+#define SAFELANES_NEUTRAL  (1<<1)
+#define SAFELANES_HOSTILE  (1<<3)
+
+
 /**
  * @brief Defines the type of object at a safe lane's end.
  */
@@ -31,7 +37,7 @@ typedef struct SafeLane_ {
 
 void safelanes_init (void);
 void safelanes_destroy (void);
-SafeLane* safelanes_get (int faction, const StarSystem* system);
+SafeLane* safelanes_get( int faction, int standing, const StarSystem* system );
 void safelanes_recalculate (void);
 
 
