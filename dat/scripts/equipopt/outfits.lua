@@ -7,7 +7,7 @@ function outfits.merge( t )
    local e = {}
    for i,m in ipairs(t) do
       for j,n in ipairs(m) do
-         e[n] = true
+         e[ outfit.get(n) ] = true
       end
    end
    local o = {}

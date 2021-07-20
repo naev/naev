@@ -264,11 +264,10 @@ function optimize.optimize( p, cores, outfit_list, params )
    for m,o in ipairs(outfit_list) do
       if not usable_outfits[o] then
          for k,v in ipairs( slots_base ) do
-            local oo = outfit.get(o)
             local ok = true
             -- Afterburners will be ignored if the ship is too heavy
-            if oo:type() == "Afterburner" then
-               local spec = oo:specificstats()
+            if o:type() == "Afterburner" then
+               local spec = o:specificstats()
                if spec.mass_limit < 0.8*ss.engine_limit then
                   ok = false
                end
@@ -297,23 +296,23 @@ function optimize.optimize( p, cores, outfit_list, params )
    local limit_list = {}
    local same_list = {}
    local same_limit = {}
-   for k,v in ipairs(outfit_list) do
-      local oo = outfit.get(v)
+   for k,o in ipairs(outfit_list) do
+      local n = o:nameRaw()
       -- Add limit if applicable
-      local lim = oo:limit()
+      local lim = o:limit()
       if lim then
          limit_list[lim] = true
       end
       -- See if we want to limit the particular outfit
-      local t = oo:slot()
+      local t = o:slot()
       if params.max_same_weap and t=="Weapon" then
-         table.insert( same_list, v )
+         table.insert( same_list, n )
          table.insert( same_limit, params.max_same_weap )
       elseif params.max_same_util and t=="Utility" then
-         table.insert( same_list, v )
+         table.insert( same_list, n )
          table.insert( same_limit, params.max_same_util )
       elseif params.max_same_stru and t=="Structure" then
-         table.insert( same_list, v )
+         table.insert( same_list, n )
          table.insert( same_limit, params.max_same_stru )
       end
    end
@@ -327,8 +326,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Create outfit cache, it contains all sort of nice information like DPS and
    -- other stuff that can be used for our goodness function
    local outfit_cache = {}
-   for k,v in ipairs(outfit_list) do
-      local out = outfit.get(v)
+   for k,out in ipairs(outfit_list) do
       -- Core stats
       local oo = out:shipstat(nil,true)
       oo.outfit   = out
@@ -396,7 +394,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       end
 
       -- Cache it all so we don't have to recompute
-      outfit_cache[v] = oo
+      outfit_cache[out] = oo
    end
 
    -- Figure out slots
