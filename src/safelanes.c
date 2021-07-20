@@ -634,9 +634,9 @@ static void safelanes_initFTilde (void)
  */
 static void safelanes_initPPl (void)
 {
-   double d, **D;
-   int np, i, j, k, facti, factj, sysi, sysj, component_i, component_j;
-   Planet *pnti, *pntj;
+   double d, *pres, **D;
+   int np, i, j, k, sys, *fi, *component;
+   Planet *pnt;
 
    for (k=0; k<array_size(PPl); k++)
       cholmod_free_dense( &PPl[k], &C );
@@ -646,33 +646,34 @@ static void safelanes_initPPl (void)
    /* Form P, the pair-vertex projection where (Dirac notation) P |MULTI_INDEX(i,j)> = |i> - |j>. It has a +1 and -1 per column. */
    /* At least, pretend we did. We want (PD)(PD)*, for each diagonal D below. */
 
-   D = calloc( array_size(faction_stack), sizeof(double*) );
+   pres         = calloc( np, sizeof(double) );
+   fi           = calloc( np, sizeof(int) );
+   component    = calloc( np, sizeof(int) );
+   D            = calloc( array_size(faction_stack), sizeof(double*) );
    for (k=0; k<array_size(faction_stack); k++)
       D[k] = calloc( MULTI_INDEX(np,0), sizeof(double*) );
 
-   for (i=0; i<array_size(tmp_planet_indices); i++) {
-      sysi = vertex_stack[tmp_planet_indices[i]].system;
-      pnti = system_getIndex( sysi )->planets[vertex_stack[tmp_planet_indices[i]].index];
-      facti = FACTION_ID_TO_INDEX( pnti->faction );
-      component_i = unionfind_find( &tmp_sys_uf, sysi );
-      for (j=0; j<i; j++) {
-         sysj = vertex_stack[tmp_planet_indices[j]].system;
-	 component_j = unionfind_find( &tmp_sys_uf, sysj );
-         if (component_i == component_j) {
-            pntj = system_getIndex( sysj )->planets[vertex_stack[tmp_planet_indices[j]].index];
-            factj = FACTION_ID_TO_INDEX( pntj->faction );
-            if (facti >= 0)
-               D[facti][MULTI_INDEX(i,j)] += pnti->presenceAmount;
-            if (factj >= 0)
-               D[factj][MULTI_INDEX(i,j)] += pntj->presenceAmount;
-         }
-      }
+   for (i=0; i<np; i++) {
+      sys = vertex_stack[tmp_planet_indices[i]].system;
+      pnt = system_getIndex( sys )->planets[vertex_stack[tmp_planet_indices[i]].index];
+      pres[i] = pnt->presenceAmount;
+      fi[i] = FACTION_ID_TO_INDEX( pnt->faction );
+      component[i] = unionfind_find( &tmp_sys_uf, sys );
    }
+
+   for (i=0; i<np; i++)
+      for (j=0; j<i; j++)
+         if (component[i] == component[j]) {
+            if (fi[i] >= 0)
+               D[fi[i]][MULTI_INDEX(i,j)] += pres[i];
+            if (fi[j] >= 0)
+               D[fi[j]][MULTI_INDEX(i,j)] += pres[j];
+         }
 
    PPl = array_create_size( cholmod_dense*, array_size(faction_stack) );
    for (k=0; k<array_size(faction_stack); k++) {
       array_push_back( &PPl, cholmod_zeros( np, np, CHOLMOD_REAL, &C ) );
-      for (i=0; i<array_size(tmp_planet_indices); i++) {
+      for (i=0; i<np; i++) {
          for (j=0; j<i; j++) {
             d = D[k][MULTI_INDEX(i, j)];
             d *= d;
@@ -686,6 +687,9 @@ static void safelanes_initPPl (void)
    }
 
    free( D );
+   free( pres );
+   free( fi );
+   free( component );
 }
 
 
