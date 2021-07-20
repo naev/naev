@@ -295,10 +295,13 @@ function jumpin()
 
     if stage == 4 then
         -- Spawn the diplomat.
-        diplomat = pilot.add( "Diplomatic Vessel", "Diplomatic", origin, _("Imperial Diplomat") )
+        diplomat = pilot.add( "Gawain", "Diplomatic", origin, _("Imperial Diplomat") )
         hook.pilot(diplomat, "death", "diplomatDeath")
         hook.pilot(diplomat, "jump", "diplomatJump")
         hook.pilot(diplomat, "attacked", "diplomatAttacked")
+        diplomat:setSpeedLimit( 130 )
+        diplomat:intrinsicSet( "armour", 300 )
+        diplomat:intrinsicSet( "shield", 300 )
         diplomat:control()
         diplomat:setInvincPlayer()
         diplomat:setHilight(true)
@@ -334,9 +337,12 @@ function jumpin()
                end
            end
         elseif system.cur() == misssys[3] then -- case join up with diplomat
-            diplomat = pilot.add( "Diplomatic Vessel", "Diplomatic", vec2.new(0, 0), _("Imperial Diplomat") )
+            diplomat = pilot.add( "Gawain", "Diplomatic", vec2.new(0, 0), _("Imperial Diplomat") )
             hook.pilot(diplomat, "death", "diplomatDeath")
             hook.pilot(diplomat, "jump", "diplomatJump")
+            diplomat:setSpeedLimit( 130 )
+            diplomat:intrinsicSet( "armour", 300 )
+            diplomat:intrinsicSet( "shield", 300 )
             diplomat:control()
             diplomat:setInvincPlayer()
             diplomat:setHilight(true)
@@ -434,10 +440,11 @@ function escortStart()
     misn.osdActive(2)
     misn.markerRm(marker) -- No marker. Player has to follow the NPCs.
     escorts[1]:comm(commmsg[1])
+    local nextjump = getNextSystem( system.cur(), misssys[stage] )
     for i, j in pairs(escorts) do
         if j:exists() then
             j:setHilight(true)
-            j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
+            j:hyperspace( nextjump ) -- Hyperspace toward the next destination system.
         end
     end
 end
@@ -523,6 +530,7 @@ end
 
 -- Handle the diplomat getting attacked.
 function diplomatAttacked()
+    player.autonavReset(5)
     if controlled and not sysclear then
         chatter({pilot = escorts[1], text = commmsg[9]})
         escortFree()
@@ -534,7 +542,7 @@ function diplomatAttacked()
     else
         shuttingup = true
         diplomat:comm(diplomatdistress)
-        hook.timer(10000, "diplomatShutup") -- Shuts him up for at least 10s.
+        hook.timer(10e3, "diplomatShutup") -- Shuts him up for at least 10s.
     end
 end
 
