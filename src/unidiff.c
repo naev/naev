@@ -268,6 +268,10 @@ static int diff_applyInternal( const char *name, int oneshot )
    if (diff_isApplied(name))
       return 0;
 
+   /* Reset change variable. */
+   if (oneshot)
+      diff_universe_changed = 0;
+
    filename = NULL;
    for (i=0; i<array_size(diff_available); i++) {
       if (strcmp(diff_available[i].name,name)==0) {
