@@ -956,8 +956,7 @@ const char* outfit_getAmmoAI( const Outfit *o )
  */
 int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
 {
-   const OutfitSlot *os;
-   os = &o->slot;
+   const OutfitSlot *os = &o->slot;
 
    /* Outfit must have valid slot type. */
    if ((os->type == OUTFIT_SLOT_NULL) ||
@@ -966,6 +965,10 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
 
    /* Outfit type must match outfit slot. */
    if (os->type != s->type)
+      return 0;
+
+   /* It doesn't fit. */
+   if (os->size > s->size)
       return 0;
 
    /* Must match slot property. */
@@ -979,12 +982,10 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
          return 0;
 
    /* Must have valid slot size. */
+   /*
    if (os->size == OUTFIT_SLOT_SIZE_NA)
       return 0;
-
-   /* It doesn't fit. */
-   if (os->size > s->size)
-      return 0;
+   */
 
    /* It meets all criteria. */
    return 1;
