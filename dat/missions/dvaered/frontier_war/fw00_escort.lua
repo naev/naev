@@ -372,7 +372,7 @@ function meeting()
       quickie:cargoRm( "__all" )
       quickie:setFaction("Warlords")
 
-      majorTam:control()
+      majorTam:taskClear()
       majorTam:memory().careful = true
       majorTam:runaway(quickie, true) -- The nojump prevents him to land as well
 
