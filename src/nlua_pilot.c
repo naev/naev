@@ -3539,10 +3539,17 @@ static int pilotL_getHostile( lua_State *L )
  * @brief Small struct to handle flags.
  */
 struct pL_flag {
-   char *name; /**< Name of the flag. */
+   const char *name; /**< Name of the flag. */
    int id;     /**< Id of the flag. */
 };
 static const struct pL_flag pL_flags[] = {
+   { .name = "stealth", .id = PILOT_STEALTH },
+   { .name = "refueling", .id = PILOT_REFUELING },
+   { .name = "invisible", .id = PILOT_INVISIBLE },
+   { .name = "disabled", .id = PILOT_DISABLED },
+   { .name = "takingoff", .id = PILOT_TAKEOFF },
+   { .name = "manualcontrol", .id = PILOT_MANUAL_CONTROL },
+   { .name = "carried", .id = PILOT_CARRIED },
    { .name = "hailing", .id = PILOT_HAILING },
    { .name = "boardable", .id = PILOT_BOARDABLE },
    { .name = "nojump", .id = PILOT_NOJUMP },
@@ -3552,20 +3559,13 @@ static const struct pL_flag pL_flags[] = {
    { .name = "visible", .id = PILOT_VISIBLE },
    { .name = "visplayer", .id = PILOT_VISPLAYER },
    { .name = "hilight", .id = PILOT_HILIGHT },
-   { .name = "stealth", .id = PILOT_STEALTH },
-   { .name = "invisible", .id = PILOT_INVISIBLE },
    { .name = "norender", .id = PILOT_NORENDER },
    { .name = "hide", .id = PILOT_HIDE },
    { .name = "invincible", .id = PILOT_INVINCIBLE },
    { .name = "invinc_player", .id = PILOT_INVINC_PLAYER },
    { .name = "friendly", .id = PILOT_FRIENDLY },
    { .name = "hostile", .id = PILOT_HOSTILE },
-   { .name = "refueling", .id = PILOT_REFUELING },
-   { .name = "disabled", .id = PILOT_DISABLED },
-   { .name = "takingoff", .id = PILOT_TAKEOFF },
-   { .name = "manualcontrol", .id = PILOT_MANUAL_CONTROL },
    { .name = "combat", .id = PILOT_COMBAT },
-   { .name = "carried", .id = PILOT_CARRIED },
    {NULL, -1}
 }; /**< Flags to get. */
 /**
@@ -3597,6 +3597,7 @@ static const struct pL_flag pL_flags[] = {
  *  <li> carried: pilot came from a fighter bay.</li>
  * </ul>
  *    @luatparam Pilot p Pilot to get flags of.
+ *    @luatparam[opt] string name If provided, return only the individual flag.
  *    @luatreturn table Table with flag names an index, boolean as value.
  * @luafunc flags
  */
@@ -3604,6 +3605,16 @@ static int pilotL_flags( lua_State *L )
 {
    int i;
    Pilot *p = luaL_validpilot(L,1);
+   const char *name = luaL_optstring( L, 2, NULL );
+
+   if (name != NULL) {
+      for (i=0; pL_flags[i].name != NULL; i++)
+         if (strcmp(pL_flags[i].name,name)==0) {
+            lua_pushboolean( L, pilot_isFlag( p, pL_flags[i].id ) );
+            return 1;
+         }
+      return 0;
+   }
 
    /* Create flag table. */
    lua_newtable(L);

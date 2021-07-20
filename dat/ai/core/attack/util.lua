@@ -122,7 +122,7 @@ function _atk_com_think( target )
    end
 
    -- Check to see if target is disabled
-   if not mem.atk_kill and target:flags().disabled then
+   if not mem.atk_kill and target:flags("disabled") then
       ai.poptask()
       return
    end
