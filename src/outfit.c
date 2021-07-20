@@ -90,7 +90,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
-static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt );
+static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt );
 
 
 /**
@@ -1120,7 +1120,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
  *    @param buf Name of the file.
  *    @param bolt 1 if outfit is a Bolt, 0 if it is an Ammo
  */
-static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
+static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt )
 {
    char *file;
    CollPoly *polygon;
