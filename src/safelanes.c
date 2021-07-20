@@ -80,14 +80,6 @@ typedef struct Faction_ {
 /** @brief A set of lane-building factions, represented as a bitfield. */
 typedef uint32_t FactionMask;
 
-/** @brief Some BLAS-compatible matrix data whose size/ordreing isn't pre-determined. */
-typedef struct MatWrap_ {
-   enum CBLAS_ORDER order; /**< CblasRowMajor or CblasColMajor */
-   int nrow;               /**< Rows. */
-   int ncol;               /**< Columns. */
-   double *x;
-} MatWrap;
-
 
 /*
  * Global state.
@@ -117,7 +109,7 @@ static double* cmp_key_ref;     /**< To qsort() a list of indices by table value
  * Prototypes.
  */
 static int safelanes_buildOneTurn (void);
-static int safelanes_activateByGradient( MatWrap Lambda_tilde );
+static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT );
 static void safelanes_initStacks (void);
 static void safelanes_initStacks_edge (void);
 static void safelanes_initStacks_faction (void);
@@ -142,14 +134,10 @@ static inline FactionMask MASK_ONE_FACTION( int id );
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 );
 static int cmp_key( const void* p1, const void* p2 );
 static inline void triplet_entry( cholmod_triplet* m, int i, int j, double v );
-static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol );
-static inline MatWrap matwrap_from_cholmod( cholmod_dense* m );
-static inline MatWrap matwrap_transpose( MatWrap A );
-static void matwrap_init_row_major( MatWrap* A, cholmod_dense* m );
-static void matwrap_sliceByPresence( MatWrap* A, double* sysPresence, MatWrap* out );
-static void matwrap_mul( MatWrap A, MatWrap B, MatWrap* C );
-static double matwrap_mul_elem( MatWrap A, MatWrap B, int i, int j );
-static void matwrap_free( MatWrap A );
+static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPresence );
+static cholmod_dense* ncholmod_transpose_dense( cholmod_dense* m );
+static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_dense* B );
+static double ncholmod_ddmult_elem( cholmod_dense* A, cholmod_dense* B, int i, int j );
 
 /**
  * @brief Like array_push_back( a, Edge{v0, v1} ), but achievable in C. :-P
@@ -306,8 +294,7 @@ static int safelanes_buildOneTurn (void)
 {
    cholmod_sparse *stiff_s;
    cholmod_factor *stiff_f;
-   cholmod_dense *_QtQutilde, *Lambda_tilde, *Y_workspace, *E_workspace;
-   MatWrap Lambda_tilde_rm;
+   cholmod_dense *_QtQutilde, *Lambda_tilde, *Lambda_tildeT, *Y_workspace, *E_workspace;
    int turns_next_time;
    double zero[] = {0, 0}, neg_1[] = {-1, 0};
 
@@ -319,15 +306,15 @@ static int safelanes_buildOneTurn (void)
    _QtQutilde = cholmod_zeros( utilde->nrow, utilde->ncol, CHOLMOD_REAL, &C );
    cholmod_sdmult( QtQ, 0, neg_1, zero, utilde, _QtQutilde, &C );
    cholmod_solve2( CHOLMOD_A, stiff_f, _QtQutilde, NULL, &Lambda_tilde, NULL, &Y_workspace, &E_workspace, &C );
-   matwrap_init_row_major( &Lambda_tilde_rm, Lambda_tilde );
+   Lambda_tildeT = ncholmod_transpose_dense( Lambda_tilde );
    cholmod_free_dense( &Lambda_tilde, &C );
    cholmod_free_dense( &_QtQutilde, &C );
    cholmod_free_dense( &Y_workspace, &C );
    cholmod_free_dense( &E_workspace, &C );
    cholmod_free_factor( &stiff_f, &C );
    cholmod_free_sparse( &stiff_s, &C );
-   turns_next_time = safelanes_activateByGradient( Lambda_tilde_rm );
-   matwrap_free( Lambda_tilde_rm );
+   turns_next_time = safelanes_activateByGradient( Lambda_tildeT );
+   cholmod_free_dense( &Lambda_tildeT, &C );
 
    return turns_next_time;
 }
@@ -714,17 +701,16 @@ static void safelanes_initPPl (void)
  * @brief Per-system, per-faction, activates the affordable lane with best (grad phi)/L
  * @return How many builds (upper bound) have to happen next turn.
  */
-static int safelanes_activateByGradient( MatWrap Lambda_tilde )
+static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT )
 {
    int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si, sis, sjs, turns_next_time;
    double *facind_vals, score, score_best, Linv;
    StarSystem *sys;
-   MatWrap *lal; /**< Per faction index, the Lambda_tilde[myDofs,:] @ PPl[fi] matrices. Calloced and lazily populated. */
-   int *lal_bases, lal_base, sys_base; /**< System si's U and Lambda rows start at sys_base; its lal rows start at lal_base. */
-   MatWrap UTt = matwrap_transpose( matwrap_from_cholmod( utilde ) );
+   cholmod_dense **lalT; /**< Per faction index, the value (Lambda_tilde[myDofs,:] @ PPl[fi]).T. Calloced and lazily populated. */
+   size_t *lal_bases, lal_base, sys_base; /**< System si's LambdaT cols start at sys_base; its lalT cols start at lal_base. */
 
-   lal = calloc( array_size(faction_stack), sizeof(MatWrap) );
-   lal_bases = calloc( array_size(faction_stack), sizeof(int) );
+   lalT = calloc( array_size(faction_stack), sizeof(cholmod_dense*) );
+   lal_bases = calloc( array_size(faction_stack), sizeof(size_t) );
    edgeind_opts = array_create( int );
    facind_opts = array_create_size( int, array_size(faction_stack) );
    facind_vals = array_create_size( double, array_size(faction_stack) );
@@ -748,9 +734,9 @@ static int safelanes_activateByGradient( MatWrap Lambda_tilde )
          sys_base = sys_to_first_vertex[si];
 
          /* Get the base index to use for this system. Save the value we expect to be the next iteration's base index.
-          * The current system's rows is in the lal[fi] matrix if there's presence at the time we slice it.
+          * The current system's cols are in the lalT[fi] matrix if there's presence at the time we slice it.
           * What we know is whether there's presence *now*. We can use that as a proxy and fix lal_bases[fi] if we
-          * deplete this presence before constructing lal[fi]. This is tricky, so there are assertions below,
+          * deplete this presence before constructing lalT[fi]. This is tricky, so there are assertions below,
           * which can warn us if we fuck this up. */
          lal_base = lal_bases[fi];
          if (presence_budget[fi][si] <= 0)
@@ -767,7 +753,7 @@ static int safelanes_activateByGradient( MatWrap Lambda_tilde )
 
          if (array_size(edgeind_opts) == 0) {
             presence_budget[fi][si] = -1;  /* Nothing to build here! Tell ourselves to stop trying. */
-            if (lal[fi].x == NULL)
+            if (lalT[fi] == NULL)
                lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
             continue;
          }
@@ -781,21 +767,19 @@ static int safelanes_activateByGradient( MatWrap Lambda_tilde )
                sis = edge_stack[ei][0];
                sjs = edge_stack[ei][1];
 
-               if (lal[fi].x == NULL) { /* Is it time to evaluate the lazily-calculated matrix? */
-                  MatWrap lamt;
-                  MatWrap PP = matwrap_from_cholmod( PPl[fi] );
-                  matwrap_sliceByPresence( &Lambda_tilde, presence_budget[fi], &lamt );
-                  matwrap_mul( lamt, PP, &lal[fi] );
-                  matwrap_free( lamt );
+               if (lalT[fi] == NULL) { /* Is it time to evaluate the lazily-calculated matrix? */
+                  cholmod_dense *lamtT = safelanes_sliceByPresence( Lambda_tildeT, presence_budget[fi] );
+                  lalT[fi] = ncholmod_ddmult( PPl[fi], 0, lamtT );
+                  cholmod_free_dense( &lamtT, &C );
                }
 
                score = 0;
                /* Evaluate (LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0]), */
                /* where    LUTll = np.dot( lal[[sis,sjs],:] , utilde[[sis,sjs],:].T ) */
-               score += matwrap_mul_elem( lal[fi], UTt, sis - sys_base + lal_base, sis );
-               score += matwrap_mul_elem( lal[fi], UTt, sjs - sys_base + lal_base, sjs );
-               score -= matwrap_mul_elem( lal[fi], UTt, sis - sys_base + lal_base, sjs );
-               score -= matwrap_mul_elem( lal[fi], UTt, sjs - sys_base + lal_base, sis );
+               score += ncholmod_ddmult_elem( utilde, lalT[fi], sis, sis - sys_base + lal_base );
+               score += ncholmod_ddmult_elem( utilde, lalT[fi], sjs, sjs - sys_base + lal_base );
+               score -= ncholmod_ddmult_elem( utilde, lalT[fi], sjs, sis - sys_base + lal_base );
+               score -= ncholmod_ddmult_elem( utilde, lalT[fi], sis, sjs - sys_base + lal_base );
                Linv = safelanes_initialConductivity(ei);
                score *= ALPHA * Linv * Linv;
 
@@ -808,7 +792,7 @@ static int safelanes_activateByGradient( MatWrap Lambda_tilde )
          }
 
          presence_budget[fi][si] -= 1 / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
-         if (presence_budget[fi][si] <= 0 && lal[fi].x == NULL)
+         if (presence_budget[fi][si] <= 0 && lalT[fi] == NULL)
             lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
          safelanes_updateConductivity( ei_best );
          lane_faction[ ei_best ] = faction_stack[fi].id;
@@ -817,13 +801,13 @@ static int safelanes_activateByGradient( MatWrap Lambda_tilde )
 
 #if DEBUGGING
    for (fi=0; fi<array_size(faction_stack); fi++)
-      if ( lal[fi].x != NULL)
-         assert( "We correctly tracked the row offsets between the 'lal' and 'utilde' matrices" && lal[fi].nrow == lal_bases[fi] );
+      if ( lalT[fi] != NULL)
+         assert( "Correctly tracked col offsets between the 'lalT' and 'LambdaT' matrices" && lalT[fi]->ncol == lal_bases[fi] );
 #endif
 
    for (fi=0; fi<array_size(faction_stack); fi++)
-      matwrap_free( lal[fi] );
-   free( lal );
+      cholmod_free_dense( &lalT[fi], &C );
+   free( lalT );
    free( lal_bases );
    array_free( edgeind_opts );
    array_free( facind_vals );
@@ -931,110 +915,59 @@ static inline void triplet_entry( cholmod_triplet* m, int i, int j, double x )
 }
 
 
-/** @brief Allocate a matrix fitting this description. */
-static void matwrap_init( MatWrap* A, enum CBLAS_ORDER order, int nrow, int ncol )
-{
-   A->order = order;
-   A->nrow  = nrow;
-   A->ncol  = ncol;
-   A->x     = malloc( nrow*ncol*sizeof(double) );
-}
-
-
-/** @brief Construct a MatWrap representing the given cholmod_dense. It's just a wrapper, referencing the same memory. */
-static inline MatWrap matwrap_from_cholmod( cholmod_dense* m )
-{
-   MatWrap A = {.order = CblasColMajor, .nrow = m->nrow, .ncol = m->ncol, .x = m->x};
-   assert( "slices (leading dimension < #rows) not supported" && m->d == m->nrow );
-   return A;
-}
-
-
-/** @brief Construct a MatWrap representing the input's transpose. It's just a wrapper, referencing the same memory. */
-static inline MatWrap matwrap_transpose( MatWrap A )
-{
-   MatWrap At = {.order = A.order == CblasColMajor ? CblasRowMajor : CblasColMajor, .nrow = A.ncol, .ncol = A.nrow, .x = A.x};
-   return At;
-}
-
-
 /**
- * @brief Construct the matrix-slice of m, selecting those rows where the corresponding presence value is positive.
+ * @brief Construct the matrix-slice of m, selecting those columns where the corresponding presence value is positive.
  */
-static void matwrap_sliceByPresence( MatWrap *A, double* sysPresence, MatWrap* out )
+static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPresence )
 {
    int nr, nc, si;
    size_t in_base, out_base, sz;
+   cholmod_dense *out;
 
-   nc = A->ncol;
-   nr = 0;
+   nr = m->nrow;
+   nc = 0;
    for (si = 0; si < array_size(sys_to_first_vertex) - 1; si++)
       if (sysPresence[si] > 0)
-         nr += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
+         nc += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
 
-   assert( "Row-major order required" && A->order == CblasRowMajor);
-   matwrap_init( out, CblasRowMajor, nr, nc );
+   out = cholmod_allocate_dense( nr, nc, nr, CHOLMOD_REAL, &C );
 
    in_base = out_base = 0;
    for (si = 0; si < array_size(sys_to_first_vertex) - 1; si++) {
-      sz = (sys_to_first_vertex[1+si] - sys_to_first_vertex[si]) * nc;
+      sz = (sys_to_first_vertex[1+si] - sys_to_first_vertex[si]) * nr;
       if (sysPresence[si] > 0) {
-         memcpy( &out->x[out_base], &A->x[in_base], sz * sizeof(double) );
+         memcpy( &((double*)out->x)[out_base], &((double*)m->x)[in_base], sz * sizeof(double) );
          out_base += sz;
       }
       in_base += sz;
    }
+   return out;
 }
 
 
-/** @brief Convert in-place from column-major to row-major, or vice-versa. */
-static void matwrap_init_row_major( MatWrap* A, cholmod_dense* m )
+/** @brief Return the transpose (as a newly allocated cholmod_dense). */
+static cholmod_dense* ncholmod_transpose_dense( cholmod_dense* m )
 {
-   matwrap_init( A, CblasRowMajor, m->nrow, m->ncol );
-   cblas_domatcopy( CblasColMajor, CblasTrans, m->nrow, m->ncol, 1, m->x, m->nrow, A->x, m->ncol );
+   cholmod_dense *out = cholmod_allocate_dense( m->ncol, m->nrow, m->ncol, CHOLMOD_REAL, &C );
+   cblas_domatcopy( CblasColMajor, CblasTrans, m->nrow, m->ncol, 1, m->x, m->d, out->x, out->d );
+   return out;
 }
 
 
-/** @brief Initialize C with the product A*B. */
-static void matwrap_mul( MatWrap A, MatWrap B, MatWrap* C )
+/** @brief Dense times dense matrix. Return A*B, or A'*B if transA is true. */
+static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_dense* B )
 {
-   assert( A.ncol == B.nrow );
-   matwrap_init( C, CblasColMajor, A.nrow, B.ncol );
-   cblas_dgemm(
-         C->order,
-         A.order == C->order ? CblasNoTrans : CblasTrans,
-         B.order == C->order ? CblasNoTrans : CblasTrans,
-         A.nrow,
-         B.ncol,
-         A.ncol,
-         1,
-         A.x,
-         A.order == CblasColMajor ? A.nrow : A.ncol,
-         B.x,
-         B.order == CblasColMajor ? B.nrow : B.ncol,
-         0,
-         C->x,
-         C->order == CblasColMajor ? C->nrow : C->ncol
-   );
+   size_t M = transA ? A->ncol : A->nrow, K = transA ? A->nrow : A->ncol, N = B->ncol;
+   assert( K == B->nrow );
+   cholmod_dense *out = cholmod_allocate_dense( M, N, M, CHOLMOD_REAL, &C );
+   cblas_dgemm( CblasColMajor, transA?CblasTrans:CblasNoTrans, CblasNoTrans, M, N, K, 1, A->x, A->d, B->x, B->d, 0, out->x, out->d);
+   return out;
 }
 
 
 /** @brief Return the i,j entry of A*B. */
-static double matwrap_mul_elem( MatWrap A, MatWrap B, int i, int j )
+static double ncholmod_ddmult_elem( cholmod_dense* A, cholmod_dense* B, int i, int j )
 {
-   assert( A.ncol == B.nrow );
-   return cblas_ddot(
-         A.ncol,
-         &A.x[A.order == CblasColMajor ? i : i*A.ncol],
-              A.order == CblasRowMajor ? 1 : A.nrow,
-         &B.x[B.order == CblasRowMajor ? j : j*B.nrow],
-              B.order == CblasColMajor ? 1 : B.ncol
-   );
-}
-
-
-/** @brief Cleans up resources allocated by matwrap_init (or indirectly by matwrap_mul, etc.). */
-static void matwrap_free( MatWrap A )
-{
-   free( A.x );
+   assert( A->ncol == B->nrow );
+   return cblas_ddot( A->ncol, (double*)A->x + i, A->d, (double*)B->x + j*B->d, 1);
 }
