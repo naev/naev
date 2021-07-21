@@ -692,7 +692,7 @@ static void safelanes_initPPl (void)
 static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT )
 {
    int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si, sis, sjs, turns_next_time;
-   double *facind_vals, score, score_best, Linv;
+   double *facind_vals, score, score_best, Linv, cost, cost_best, cost_cheapest_other;
    StarSystem *sys;
    cholmod_dense **lalT; /**< Per faction index, the value (Lambda_tilde[myDofs,:] @ PPl[fi]).T. Calloced and lazily populated. */
    size_t *lal_bases, lal_base, sys_base; /**< System si's LambdaT cols start at sys_base; its lalT cols start at lal_base. */
@@ -740,13 +740,15 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT )
                array_push_back( &edgeind_opts, ei );
 
          if (array_size(edgeind_opts) == 0) {
-            presence_budget[fi][si] = -1;  /* Nothing to build here! Tell ourselves to stop trying. */
+            presence_budget[fi][si] = 0;  /* Nothing to build here! Tell ourselves to stop trying. */
             if (lalT[fi] == NULL)
                lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
             continue;
          }
 
          ei_best = edgeind_opts[0];
+         cost_best = 1 / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
+         cost_cheapest_other = +HUGE_VAL;
          if (array_size(edgeind_opts) > 1) {
             /* There's an actual choice. Search for the best option. Lower is better. */
             score_best = +HUGE_VAL;
@@ -771,17 +773,26 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT )
                Linv = safelanes_initialConductivity(ei);
                score *= ALPHA * Linv * Linv;
 
+               cost = 1 / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence;
                if (score < score_best) {
                   ei_best = ei;
                   score_best = score;
+                  cost_cheapest_other = MIN( cost_cheapest_other, cost_best );
+                  cost_best = cost;
                }
+               else
+                  cost_cheapest_other = MIN( cost_cheapest_other, cost );
             }
-            turns_next_time++; /* We had to forgo a lane-build this time! */
          }
 
-         presence_budget[fi][si] -= 1 / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
-         if (presence_budget[fi][si] <= 0 && lalT[fi] == NULL)
-            lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
+         presence_budget[fi][si] -= cost_best;
+         if (presence_budget[fi][si] >= cost_cheapest_other)
+            turns_next_time++;
+	 else {
+            presence_budget[fi][si] = 0; /* Nothing more to do here; tell ourselves. */
+            if (lalT[fi] == NULL)
+               lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
+         }
          safelanes_updateConductivity( ei_best );
          lane_faction[ ei_best ] = faction_stack[fi].id;
       }
