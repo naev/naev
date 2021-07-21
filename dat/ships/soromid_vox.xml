@@ -5,7 +5,7 @@
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Battleship</class>
+ <class display="Bio-Battleship">Battleship</class>
  <price>9000000</price>
  <time_mod>1.375</time_mod>
  <trail_generator x="-60" y="2" h="-10">soromid</trail_generator>
