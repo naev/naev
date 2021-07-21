@@ -139,8 +139,6 @@ static cholmod_dense* ncholmod_transpose_dense( cholmod_dense* m );
 static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_dense* B );
 static double ncholmod_ddmult_elem( cholmod_dense* A, cholmod_dense* B, int i, int j );
 
-#define MULTI_INDEX( i, j ) ((i*(i-1))/2 + j)  /**< Encodes the pair {i,j}, where j<i, as an int. */
-
 /**
  * @brief Like array_push_back( a, Edge{v0, v1} ), but achievable in C. :-P
  */
@@ -635,24 +633,25 @@ static void safelanes_initFTilde (void)
  */
 static void safelanes_initPPl (void)
 {
-   double d, pres, **D;
+   double d, pres, *Di;
    int np, i, j, sys, fi, *component;
    Planet *pnt;
+
+   np = array_size(tmp_planet_indices);
 
    for (fi=0; fi<array_size(PPl); fi++)
       cholmod_free_dense( &PPl[fi], &C );
    array_free( PPl );
+   PPl = array_create_size( cholmod_dense*, array_size(faction_stack) );
+   for (fi=0; fi<array_size(faction_stack); fi++)
+      array_push_back( &PPl, cholmod_zeros( np, np, CHOLMOD_REAL, &C ) );
 
-   np = array_size(tmp_planet_indices);
-   /* Form P, the pair-vertex projection where (Dirac notation) P |MULTI_INDEX(i,j)> = |i> - |j>. It has a +1 and -1 per column. */
-   /* At least, pretend we did. We want (PD)(PD)*, for each diagonal D below. */
+   /* Form P, the pair-vertex projection where (Dirac notation) P |pair(i,j)> = |i> - |j>. It has a +1 and -1 per column. */
+   /* At least, pretend we did. We want (PD)(PD)*, where D is a diagonal matrix whose pair(i,j) are these presence sums: */
 
-   component    = calloc( np, sizeof(int) );
-   D            = calloc( array_size(faction_stack), sizeof(double*) );
+   component = calloc( np, sizeof(int) );
    for (i=0; i<np; i++)
       component[i] = unionfind_find( &tmp_sys_uf, vertex_stack[tmp_planet_indices[i]].system );
-   for (fi=0; fi<array_size(faction_stack); fi++)
-      D[fi] = calloc( MULTI_INDEX(np,0), sizeof(double*) );
 
    for (i=0; i<np; i++) {
       sys = vertex_stack[tmp_planet_indices[i]].system;
@@ -661,31 +660,27 @@ static void safelanes_initPPl (void)
       fi = FACTION_ID_TO_INDEX( pnt->faction );
       if (fi < 0)
          continue;
+      Di = PPl[fi]->x;
       for (j=0; j<i; j++)
          if (component[i] == component[j])
-            D[fi][MULTI_INDEX(i,j)] += pres;
+            Di[np*i+j] += pres;
       for (j=i+1; j<np; j++)
          if (component[i] == component[j])
-            D[fi][MULTI_INDEX(j,i)] += pres;
+            Di[np*j+i] += pres;
    }
 
-   PPl = array_create_size( cholmod_dense*, array_size(faction_stack) );
-   for (fi=0; fi<array_size(faction_stack); fi++) {
-      array_push_back( &PPl, cholmod_zeros( np, np, CHOLMOD_REAL, &C ) );
-      for (i=0; i<np; i++) {
+   /* At this point, PPl[fi]->x[np*i+j] holds the pair(i,j) entry of D. */
+   for (fi=0; fi<array_size(faction_stack); fi++)
+      for (i=0; i<np; i++)
          for (j=0; j<i; j++) {
-            d = D[fi][MULTI_INDEX(i, j)];
+            d = ((double*)PPl[fi]->x)[np*i+j];
             d *= d;
+            ((double*)PPl[fi]->x)[np*i+j] = -d;
+            ((double*)PPl[fi]->x)[np*j+i] = -d;
             ((double*)PPl[fi]->x)[np*i+i] += d;
-            ((double*)PPl[fi]->x)[np*i+j] -= d;
-            ((double*)PPl[fi]->x)[np*j+i] -= d;
             ((double*)PPl[fi]->x)[np*j+j] += d;
          }
-      }
-      free( D[fi] );
-   }
 
-   free( D );
    free( component );
 }
 
