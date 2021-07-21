@@ -189,8 +189,10 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
    out = array_create( SafeLane );
 
    for (i=sys_to_first_edge[system->id]; i<sys_to_first_edge[1+system->id]; i++) {
+      lf = lane_faction[i];
+
       /* No lane on edge. */
-      if (lane_faction[i] <= 0)
+      if (lf <= 0)
          continue;
 
       /* Filter by standing. */
@@ -202,7 +204,6 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
          }
          else {
             /* Try to do more advanced matching. */
-            lf = lane_faction[i];
             fe = areEnemies(faction,lf);
             fa = areAllies(faction,lf);
             skip = 1;
