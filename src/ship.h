@@ -33,27 +33,21 @@
 typedef enum ShipClass_ {
    SHIP_CLASS_NULL,        /**< Invalid ship class. */
    /* Civilian. */
-   SHIP_CLASS_YACHT,       /**< Small cheap ship. */
-   SHIP_CLASS_LUXURY_YACHT, /**< Small expensive ship. */
-   SHIP_CLASS_CRUISE_SHIP, /**< Medium ship. */
-   /* Merchant. */
+   SHIP_CLASS_YACHT,       /**< Ultra-small ship. */
    SHIP_CLASS_COURIER,     /**< Small ship. */
-   SHIP_CLASS_ARMOURED_TRANSPORT, /**< Medium, somewhat combat-oriented ship. */
    SHIP_CLASS_FREIGHTER,   /**< Medium ship. */
    SHIP_CLASS_BULK_CARRIER, /**< Large ship. */
+   SHIP_CLASS_ARMOURED_TRANSPORT, /**< Medium, somewhat combat-oriented ship. */
    /* Military. */
    SHIP_CLASS_SCOUT,       /**< Small scouter. */
+   SHIP_CLASS_INTERCEPTOR, /**< Ultra small attack ship. */
    SHIP_CLASS_FIGHTER,     /**< Small attack ship. */
    SHIP_CLASS_BOMBER,      /**< Small attack ship with many missiles. */
    SHIP_CLASS_CORVETTE,    /**< Very agile medium ship. */
    SHIP_CLASS_DESTROYER,   /**< Not so agile medium ship. */
    SHIP_CLASS_CRUISER,     /**< Large ship. */
+   SHIP_CLASS_BATTLESHIP,  /**< Larger ship. */
    SHIP_CLASS_CARRIER,     /**< Large ship with fighter bays. */
-   /* Robotic */
-   SHIP_CLASS_DRONE,       /**< Unmanned small robotic ship. */
-   SHIP_CLASS_HEAVY_DRONE, /**< Unmanned medium robotic ship. */
-   SHIP_CLASS_MOTHERSHIP,  /**< Unmanned large robotic carrier. */
-   /* Hybrid */
    /** @todo hybrid ship classification. */
    SHIP_CLASS_TOTAL,       /**< Sentinal for total amount of ship classes. */
 } ShipClass;
@@ -100,6 +94,7 @@ typedef struct Ship_ {
    char* name;       /**< Ship name */
    char* base_type;  /**< Ship's base type, basically used for figuring out what ships are related. */
    ShipClass class;  /**< Ship class */
+   char *class_display; /**< Custom ship class. */
    int rarity;       /**< Rarity. */
 
    /* store stuff */
@@ -178,6 +173,7 @@ Ship* ship_getW( const char* name );
 const char *ship_existsCase( const char* name );
 const Ship* ship_getAll (void);
 const char* ship_class( const Ship* s );
+const char* ship_classDisplay( const Ship* s );
 const char *ship_classToString( ShipClass class );
 ShipClass ship_classFromString( const char* str );
 credits_t ship_basePrice( const Ship* s );

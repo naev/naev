@@ -5,7 +5,7 @@
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Fighter</class>
+ <class>Interceptor</class>
  <price>280000</price>
  <time_mod>0.9</time_mod>
  <trail_generator x="-5" y="0" h="0">soromid</trail_generator>

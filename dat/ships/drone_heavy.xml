@@ -5,7 +5,7 @@
  <GUI>brushed</GUI>
  <rarity>3</rarity>
  <sound>engine</sound>
- <class>Heavy Drone</class>
+ <class>Fighter</class>
  <price>750000</price>
  <time_mod>1</time_mod>
  <trail_generator x="-15" y="0" h="0" />

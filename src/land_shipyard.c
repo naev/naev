@@ -306,7 +306,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%s\n"),
          _(ship->name),
-         _(ship_class(ship)),
+         _(ship_classDisplay(ship)),
          _(ship->fabricator),
          ship->crew,
          /* Weapons & Manoeuvrability */

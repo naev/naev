@@ -1693,7 +1693,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          /* Generic. */
       ship->name,
       _(ship->ship->name),
-      _(ship_class(ship->ship)),
+      _(ship_classDisplay(ship->ship)),
       EQ_COMP( ship->crew, ship->ship->crew, 0 ),
       buf2,
       /* Movement. */

@@ -111,11 +111,11 @@ function attack_choose ()
    if class == "Bomber" then
       atk_bomber_init()
 
+   elseif class == "Interceptor" then
+      atk_drone_init()
+
    elseif class == "Fighter" then
       atk_fighter_init()
-
-   elseif class == "Drone" then
-      atk_drone_init()
 
    -- Medium ships
    elseif class == "Corvette" then
@@ -126,6 +126,9 @@ function attack_choose ()
       atk_capital_init()
 
    elseif class == "Cruiser" then
+      atk_capital_init()
+
+   elseif class == "Battleship" then
       atk_capital_init()
 
    elseif class == "Carrier" then

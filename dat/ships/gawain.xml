@@ -4,7 +4,7 @@
  <GFX>gawain</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Luxury Yacht</class>
+ <class display="Luxury Yacht">Yacht</class>
  <price>500000</price>
  <time_mod>0.9</time_mod>
  <trail_generator x="-2" y="15" h="-2">nebula</trail_generator>

@@ -196,9 +196,9 @@ end
 -- Returns the factor the bribe cost is multiplied by when the player tries to bribe.
 -- NOTE: This should be replaced by something better in time.
 function getshipmod()
-   local light = {"Yacht", "Luxury Yacht", "Drone", "Fighter", "Bomber", "Scout"}
+   local light = {"Yacht", "Interceptor", "Fighter", "Bomber", "Scout"}
    local medium = {"Destroyer", "Corvette", "Courier", "Armoured Transport", "Freighter"}
-   local heavy = {"Cruiser", "Carrier"}
+   local heavy = {"Bulk Freighter", "Cruiser", "Battleship", "Carrier"}
    local ps = player.pilot():ship()
    for _, j in ipairs(light) do
       if ps == j then return 1 end
