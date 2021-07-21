@@ -3683,9 +3683,11 @@ static int pilotL_idle( lua_State *L )
  *
  * @usage p:control() -- Same as p:control(true), enables manual control of the pilot
  * @usage p:control(false) -- Restarts AI control of the pilot
+ * @usage p:control( true, true ) -- Enables manual control of the pilot and resets tasks.
  *
  *    @luatparam Pilot p Pilot to change manual control settings.
- *    @luatparam[opt=1] boolean enable If true or nil enables pilot manual control, otherwise enables automatic AI.
+ *    @luatparam[opt=true] boolean enable If true or nil enables pilot manual control, otherwise enables automatic AI.
+ *    @luatparam[opt=true if changing modes] boolean Whether or not to clear the tasks for the pilot. Defaults to true when changing from manual to normal mode or viceversa.
  * @luasee moveto
  * @luasee brake
  * @luasee follow
@@ -3698,18 +3700,22 @@ static int pilotL_idle( lua_State *L )
 static int pilotL_control( lua_State *L )
 {
    Pilot *p;
-   int enable, hasflag;
+   int n, enable, cleartasks;
 
    NLUA_CHECKRW(L);
 
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
-   if (lua_gettop(L)==1)
+   n  = lua_gettop(L);
+   if (n>=1)
       enable = 1;
    else
       enable = lua_toboolean(L, 2);
+   if (n>=2)
+      cleartasks = enable ^ pilot_isFlag(p, PILOT_MANUAL_CONTROL);
+   else
+      cleartasks = lua_toboolean(L, 3);
 
-   hasflag = pilot_isFlag(p, PILOT_MANUAL_CONTROL);
    if (enable) {
       pilot_setFlag(p, PILOT_MANUAL_CONTROL);
       if (pilot_isPlayer(p))
@@ -3726,7 +3732,7 @@ static int pilotL_control( lua_State *L )
    }
 
    /* Clear task if changing state. */
-   if (hasflag != enable)
+   if (cleartasks)
       pilotL_taskclear( L );
 
    return 0;
