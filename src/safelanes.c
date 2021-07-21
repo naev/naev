@@ -109,7 +109,7 @@ static double* cmp_key_ref;     /**< To qsort() a list of indices by table value
  * Prototypes.
  */
 static int safelanes_buildOneTurn (void);
-static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT );
+static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde );
 static void safelanes_initStacks (void);
 static void safelanes_initStacks_edge (void);
 static void safelanes_initStacks_faction (void);
@@ -135,9 +135,8 @@ static inline FactionMask MASK_COMPROMISE( int id1, int id2 );
 static int cmp_key( const void* p1, const void* p2 );
 static inline void triplet_entry( cholmod_triplet* m, int i, int j, double v );
 static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPresence );
-static cholmod_dense* ncholmod_transpose_dense( cholmod_dense* m );
 static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_dense* B );
-static double ncholmod_ddmult_elem( cholmod_dense* A, cholmod_dense* B, int i, int j );
+static double safelanes_row_dot_row( cholmod_dense* A, cholmod_dense* B, int i, int j );
 
 /**
  * @brief Like array_push_back( a, Edge{v0, v1} ), but achievable in C. :-P
@@ -295,7 +294,7 @@ static int safelanes_buildOneTurn (void)
 {
    cholmod_sparse *stiff_s;
    cholmod_factor *stiff_f;
-   cholmod_dense *_QtQutilde, *Lambda_tilde, *Lambda_tildeT, *Y_workspace, *E_workspace;
+   cholmod_dense *_QtQutilde, *Lambda_tilde, *Y_workspace, *E_workspace;
    int turns_next_time;
    double zero[] = {0, 0}, neg_1[] = {-1, 0};
 
@@ -307,15 +306,13 @@ static int safelanes_buildOneTurn (void)
    _QtQutilde = cholmod_zeros( utilde->nrow, utilde->ncol, CHOLMOD_REAL, &C );
    cholmod_sdmult( QtQ, 0, neg_1, zero, utilde, _QtQutilde, &C );
    cholmod_solve2( CHOLMOD_A, stiff_f, _QtQutilde, NULL, &Lambda_tilde, NULL, &Y_workspace, &E_workspace, &C );
-   Lambda_tildeT = ncholmod_transpose_dense( Lambda_tilde );
-   cholmod_free_dense( &Lambda_tilde, &C );
    cholmod_free_dense( &_QtQutilde, &C );
    cholmod_free_dense( &Y_workspace, &C );
    cholmod_free_dense( &E_workspace, &C );
    cholmod_free_factor( &stiff_f, &C );
    cholmod_free_sparse( &stiff_s, &C );
-   turns_next_time = safelanes_activateByGradient( Lambda_tildeT );
-   cholmod_free_dense( &Lambda_tildeT, &C );
+   turns_next_time = safelanes_activateByGradient( Lambda_tilde );
+   cholmod_free_dense( &Lambda_tilde, &C );
 
    return turns_next_time;
 }
@@ -689,15 +686,15 @@ static void safelanes_initPPl (void)
  * @brief Per-system, per-faction, activates the affordable lane with best (grad phi)/L
  * @return How many builds (upper bound) have to happen next turn.
  */
-static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT )
+static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 {
    int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si, sis, sjs, turns_next_time;
    double *facind_vals, score, score_best, Linv, cost, cost_best, cost_cheapest_other;
    StarSystem *sys;
-   cholmod_dense **lalT; /**< Per faction index, the value (Lambda_tilde[myDofs,:] @ PPl[fi]).T. Calloced and lazily populated. */
-   size_t *lal_bases, lal_base, sys_base; /**< System si's LambdaT cols start at sys_base; its lalT cols start at lal_base. */
+   cholmod_dense **lal; /**< Per faction index, the Lambda_tilde[myDofs,:] @ PPl[fi] matrices. Calloced and lazily populated. */
+   size_t *lal_bases, lal_base, sys_base; /**< System si's U and Lambda rows start at sys_base; its lal rows start at lal_base. */
 
-   lalT = calloc( array_size(faction_stack), sizeof(cholmod_dense*) );
+   lal = calloc( array_size(faction_stack), sizeof(cholmod_dense*) );
    lal_bases = calloc( array_size(faction_stack), sizeof(size_t) );
    edgeind_opts = array_create( int );
    facind_opts = array_create_size( int, array_size(faction_stack) );
@@ -722,9 +719,9 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT )
          sys_base = sys_to_first_vertex[si];
 
          /* Get the base index to use for this system. Save the value we expect to be the next iteration's base index.
-          * The current system's cols are in the lalT[fi] matrix if there's presence at the time we slice it.
+          * The current system's rows are in the lal[fi] matrix if there's presence at the time we slice it.
           * What we know is whether there's presence *now*. We can use that as a proxy and fix lal_bases[fi] if we
-          * deplete this presence before constructing lalT[fi]. This is tricky, so there are assertions below,
+          * deplete this presence before constructing lal[fi]. This is tricky, so there are assertions below,
           * which can warn us if we fuck this up. */
          lal_base = lal_bases[fi];
          if (presence_budget[fi][si] <= 0)
@@ -741,7 +738,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT )
 
          if (array_size(edgeind_opts) == 0) {
             presence_budget[fi][si] = 0;  /* Nothing to build here! Tell ourselves to stop trying. */
-            if (lalT[fi] == NULL)
+            if (lal[fi] == NULL)
                lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
             continue;
          }
@@ -757,19 +754,19 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT )
                sis = edge_stack[ei][0];
                sjs = edge_stack[ei][1];
 
-               if (lalT[fi] == NULL) { /* Is it time to evaluate the lazily-calculated matrix? */
-                  cholmod_dense *lamtT = safelanes_sliceByPresence( Lambda_tildeT, presence_budget[fi] );
-                  lalT[fi] = ncholmod_ddmult( PPl[fi], 0, lamtT );
-                  cholmod_free_dense( &lamtT, &C );
+               if (lal[fi] == NULL) { /* Is it time to evaluate the lazily-calculated matrix? */
+                  cholmod_dense *lamt = safelanes_sliceByPresence( Lambda_tilde, presence_budget[fi] );
+                  lal[fi] = ncholmod_ddmult( lamt, 0, PPl[fi] );
+                  cholmod_free_dense( &lamt, &C );
                }
 
                score = 0;
                /* Evaluate (LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0]), */
                /* where    LUTll = np.dot( lal[[sis,sjs],:] , utilde[[sis,sjs],:].T ) */
-               score += ncholmod_ddmult_elem( utilde, lalT[fi], sis, sis - sys_base + lal_base );
-               score += ncholmod_ddmult_elem( utilde, lalT[fi], sjs, sjs - sys_base + lal_base );
-               score -= ncholmod_ddmult_elem( utilde, lalT[fi], sjs, sis - sys_base + lal_base );
-               score -= ncholmod_ddmult_elem( utilde, lalT[fi], sis, sjs - sys_base + lal_base );
+               score += safelanes_row_dot_row( utilde, lal[fi], sis, sis - sys_base + lal_base );
+               score += safelanes_row_dot_row( utilde, lal[fi], sjs, sjs - sys_base + lal_base );
+               score -= safelanes_row_dot_row( utilde, lal[fi], sjs, sis - sys_base + lal_base );
+               score -= safelanes_row_dot_row( utilde, lal[fi], sis, sjs - sys_base + lal_base );
                Linv = safelanes_initialConductivity(ei);
                score *= ALPHA * Linv * Linv;
 
@@ -790,7 +787,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT )
             turns_next_time++;
 	 else {
             presence_budget[fi][si] = 0; /* Nothing more to do here; tell ourselves. */
-            if (lalT[fi] == NULL)
+            if (lal[fi] == NULL)
                lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
          }
          safelanes_updateConductivity( ei_best );
@@ -800,13 +797,13 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tildeT )
 
 #if DEBUGGING
    for (fi=0; fi<array_size(faction_stack); fi++)
-      if ( lalT[fi] != NULL)
-         assert( "Correctly tracked col offsets between the 'lalT' and 'LambdaT' matrices" && lalT[fi]->ncol == lal_bases[fi] );
+      if ( lal[fi] != NULL)
+         assert( "Correctly tracked row offsets between the 'lal' and 'utilde' matrices" && lal[fi]->nrow == lal_bases[fi] );
 #endif
 
    for (fi=0; fi<array_size(faction_stack); fi++)
-      cholmod_free_dense( &lalT[fi], &C );
-   free( lalT );
+      cholmod_free_dense( &lal[fi], &C );
+   free( lal );
    free( lal_bases );
    array_free( edgeind_opts );
    array_free( facind_vals );
@@ -915,40 +912,32 @@ static inline void triplet_entry( cholmod_triplet* m, int i, int j, double x )
 
 
 /**
- * @brief Construct the matrix-slice of m, selecting those columns where the corresponding presence value is positive.
+ * @brief Construct the matrix-slice of m, selecting those rows where the corresponding presence value is positive.
  */
 static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPresence )
 {
-   int nr, nc, si;
-   size_t in_base, out_base, sz;
+   int si;
+   size_t nr, nc, c, in_r, out_r, sz;
    cholmod_dense *out;
 
-   nr = m->nrow;
-   nc = 0;
+   nr = 0;
+   nc = m->ncol;
    for (si = 0; si < array_size(sys_to_first_vertex) - 1; si++)
       if (sysPresence[si] > 0)
-         nc += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
+         nr += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
 
    out = cholmod_allocate_dense( nr, nc, nr, CHOLMOD_REAL, &C );
 
-   in_base = out_base = 0;
+   in_r = out_r = 0;
    for (si = 0; si < array_size(sys_to_first_vertex) - 1; si++) {
-      sz = (sys_to_first_vertex[1+si] - sys_to_first_vertex[si]) * nr;
+      sz = sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
       if (sysPresence[si] > 0) {
-         memcpy( &((double*)out->x)[out_base], &((double*)m->x)[in_base], sz * sizeof(double) );
-         out_base += sz;
+         for (c = 0; c < nc; c++)
+            memcpy( &((double*)out->x)[c*out->d + out_r], &((double*)m->x)[c*m->d + in_r], sz * sizeof(double) );
+         out_r += sz;
       }
-      in_base += sz;
+      in_r += sz;
    }
-   return out;
-}
-
-
-/** @brief Return the transpose (as a newly allocated cholmod_dense). */
-static cholmod_dense* ncholmod_transpose_dense( cholmod_dense* m )
-{
-   cholmod_dense *out = cholmod_allocate_dense( m->ncol, m->nrow, m->ncol, CHOLMOD_REAL, &C );
-   cblas_domatcopy( CblasColMajor, CblasTrans, m->nrow, m->ncol, 1, m->x, m->d, out->x, out->d );
    return out;
 }
 
@@ -964,9 +953,9 @@ static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_den
 }
 
 
-/** @brief Return the i,j entry of A*B. */
-static double ncholmod_ddmult_elem( cholmod_dense* A, cholmod_dense* B, int i, int j )
+/** @brief Return the i,j entry of A*B', or equivalently the dot product of row i of A with row j of B. */
+static double safelanes_row_dot_row( cholmod_dense* A, cholmod_dense* B, int i, int j )
 {
-   assert( A->ncol == B->nrow );
-   return cblas_ddot( A->ncol, (double*)A->x + i, A->d, (double*)B->x + j*B->d, 1);
+   assert( A->ncol == B->ncol );
+   return cblas_ddot( A->ncol, (double*)A->x + i, A->d, (double*)B->x + j, B->d);
 }
