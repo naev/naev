@@ -165,7 +165,7 @@ end
 --[[
 -- Generic moveto function.
 --]]
-function __moveto_generic( target, dir, brake, subtask )
+function __moveto_generic( target, dir, brake )
    local dist     = ai.dist( target )
    local bdist
    if brake then
@@ -184,7 +184,6 @@ function __moveto_generic( target, dir, brake, subtask )
       if brake then
          ai.pushtask("brake")
       end
-      return
    end
 end
 
@@ -1041,8 +1040,16 @@ end
 --[[
 -- Just loitering around.
 --]]
-function loiter( pos )
-   __moveto_nobrake( pos )
+function loiter( target )
+   local dir      = ai.face( target )
+   local dist     = ai.dist( target )
+   if dist < 200 then
+      ai.poptask()
+      return
+   end
+   if dir < 10 then
+      ai.accel()
+   end
 end
 
 
