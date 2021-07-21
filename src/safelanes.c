@@ -635,61 +635,57 @@ static void safelanes_initFTilde (void)
  */
 static void safelanes_initPPl (void)
 {
-   double d, *pres, **D;
-   int np, i, j, k, sys, *fi, *component;
+   double d, pres, **D;
+   int np, i, j, sys, fi, *component;
    Planet *pnt;
 
-   for (k=0; k<array_size(PPl); k++)
-      cholmod_free_dense( &PPl[k], &C );
+   for (fi=0; fi<array_size(PPl); fi++)
+      cholmod_free_dense( &PPl[fi], &C );
    array_free( PPl );
 
    np = array_size(tmp_planet_indices);
    /* Form P, the pair-vertex projection where (Dirac notation) P |MULTI_INDEX(i,j)> = |i> - |j>. It has a +1 and -1 per column. */
    /* At least, pretend we did. We want (PD)(PD)*, for each diagonal D below. */
 
-   pres         = calloc( np, sizeof(double) );
-   fi           = calloc( np, sizeof(int) );
    component    = calloc( np, sizeof(int) );
    D            = calloc( array_size(faction_stack), sizeof(double*) );
-   for (k=0; k<array_size(faction_stack); k++)
-      D[k] = calloc( MULTI_INDEX(np,0), sizeof(double*) );
+   for (i=0; i<np; i++)
+      component[i] = unionfind_find( &tmp_sys_uf, vertex_stack[tmp_planet_indices[i]].system );
+   for (fi=0; fi<array_size(faction_stack); fi++)
+      D[fi] = calloc( MULTI_INDEX(np,0), sizeof(double*) );
 
    for (i=0; i<np; i++) {
       sys = vertex_stack[tmp_planet_indices[i]].system;
       pnt = system_getIndex( sys )->planets[vertex_stack[tmp_planet_indices[i]].index];
-      pres[i] = pnt->presenceAmount;
-      fi[i] = FACTION_ID_TO_INDEX( pnt->faction );
-      component[i] = unionfind_find( &tmp_sys_uf, sys );
+      pres = pnt->presenceAmount;
+      fi = FACTION_ID_TO_INDEX( pnt->faction );
+      if (fi < 0)
+         continue;
+      for (j=0; j<i; j++)
+         if (component[i] == component[j])
+            D[fi][MULTI_INDEX(i,j)] += pres;
+      for (j=i+1; j<np; j++)
+         if (component[i] == component[j])
+            D[fi][MULTI_INDEX(j,i)] += pres;
    }
 
-   for (i=0; i<np; i++)
-      for (j=0; j<i; j++)
-         if (component[i] == component[j]) {
-            if (fi[i] >= 0)
-               D[fi[i]][MULTI_INDEX(i,j)] += pres[i];
-            if (fi[j] >= 0)
-               D[fi[j]][MULTI_INDEX(i,j)] += pres[j];
-         }
-
    PPl = array_create_size( cholmod_dense*, array_size(faction_stack) );
-   for (k=0; k<array_size(faction_stack); k++) {
+   for (fi=0; fi<array_size(faction_stack); fi++) {
       array_push_back( &PPl, cholmod_zeros( np, np, CHOLMOD_REAL, &C ) );
       for (i=0; i<np; i++) {
          for (j=0; j<i; j++) {
-            d = D[k][MULTI_INDEX(i, j)];
+            d = D[fi][MULTI_INDEX(i, j)];
             d *= d;
-            ((double*)PPl[k]->x)[np*i+i] += d;
-            ((double*)PPl[k]->x)[np*i+j] -= d;
-            ((double*)PPl[k]->x)[np*j+i] -= d;
-            ((double*)PPl[k]->x)[np*j+j] += d;
+            ((double*)PPl[fi]->x)[np*i+i] += d;
+            ((double*)PPl[fi]->x)[np*i+j] -= d;
+            ((double*)PPl[fi]->x)[np*j+i] -= d;
+            ((double*)PPl[fi]->x)[np*j+j] += d;
          }
       }
-      free( D[k] );
+      free( D[fi] );
    }
 
    free( D );
-   free( pres );
-   free( fi );
    free( component );
 }
 
