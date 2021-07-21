@@ -77,10 +77,20 @@ if buildExec.disabled() == false
       libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
    endif
 
+   pkgconfig_physfs = dependency('physfs', required: false)
+   if not pkgconfig_physfs.found()
+      physfs = cc.find_library('physfs', required: false, has_headers: ['physfs.h'])
+      if not physfs.found()
+         physfs = dependency('physfs', required: true, fallback: ['physfs', 'physfs_dep'])
+      endif
+   else
+      physfs=pkgconfig_physfs
+   endif
+
    naev_deps += [
       dependency('freetype2', required: true),
       libxml2,
-      dependency('physfs', fallback: ['physfs', 'physfs_dep'], required: true),
+      physfs,
       sdl,
       sdl_image,
       declare_dependency(
