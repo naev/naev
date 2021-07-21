@@ -797,9 +797,11 @@ static int diff_patchHunk( UniHunk_t *hunk )
       /* Adding an asset. */
       case HUNK_TYPE_ASSET_ADD:
          planet_updateLand( planet_get(hunk->u.name) );
+         diff_universe_changed = 1;
          return system_addPlanet( system_get(hunk->target.u.name), hunk->u.name );
       /* Removing an asset. */
       case HUNK_TYPE_ASSET_REMOVE:
+         diff_universe_changed = 1;
          return system_rmPlanet( system_get(hunk->target.u.name), hunk->u.name );
       /* Making an asset a black market. */
       case HUNK_TYPE_ASSET_BLACKMARKET:
@@ -812,9 +814,11 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Adding a Jump. */
       case HUNK_TYPE_JUMP_ADD:
+         diff_universe_changed = 1;
          return system_addJumpDiff( system_get(hunk->target.u.name), hunk->node );
       /* Removing a jump. */
       case HUNK_TYPE_JUMP_REMOVE:
+         diff_universe_changed = 1;
          return system_rmJump( system_get(hunk->target.u.name), hunk->u.name );
 
       /* Changing system background. */
@@ -852,6 +856,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
          if (p==NULL)
             return -1;
          hunk->o.name = faction_name( p->faction );
+         diff_universe_changed = 1;
          return planet_setFaction( p, faction_get(hunk->u.name) );
       case HUNK_TYPE_ASSET_FACTION_REMOVE:
          return planet_setFaction( planet_get(hunk->target.u.name), faction_get(hunk->o.name) );
@@ -985,6 +990,7 @@ void diff_remove( const char *name )
    diff_removeDiff(diff);
 
    economy_execQueued();
+   diff_checkUpdateUniverse();
 }
 
 
@@ -997,6 +1003,7 @@ void diff_clear (void)
       diff_removeDiff(&diff_stack[array_size(diff_stack)-1]);
 
    economy_execQueued();
+   diff_checkUpdateUniverse();
 }
 
 
