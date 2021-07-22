@@ -182,7 +182,7 @@ glpk_sources = [
 glpk_args = []
 glpk_dependencies = [dependency('zlib')]
 
-if 'SuiteSparse' in get_option('force_fallback_for')
+if 'SuiteSparse' in get_option('force_fallback_for') or 'forcefallback' == get_option('wrap_mode')
    glpk_dependencies += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
 else
    glpk_dependencies += cc.find_library('amd', required: true)

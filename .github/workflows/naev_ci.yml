@@ -67,8 +67,7 @@ jobs:
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
-              -Ddocs_lua=disabled \
-              -Dforce_fallback_for=SuiteSparse
+              -Ddocs_lua=disabled
 
       - name: Upload Setup Log
         uses: actions/upload-artifact@v1
@@ -160,8 +159,7 @@ jobs:
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
-              -Ddocs_lua=disabled \
-              -Dforce_fallback_for=SuiteSparse
+              -Ddocs_lua=disabled
 
       - name: Upload Setup Log
         uses: actions/upload-artifact@v2

@@ -57,7 +57,7 @@ Building the latest available code in git is recommended, but to build version 0
 
 Meson needs an extra argument to find Homebrew's `openal-soft` package: `--pkg-config-path=/usr/local/opt/openal-soft/lib/pkgconfig`.
 If build may fail if `suite-sparse` is installed via Homebrew, citing an undefined reference to `_cs_di_spfree`. A workaround is to pass `--force-fallback-for=SuiteSparse`.
-(These arguments may be passed to the initial `meson setup` or applied later using `meson configure`. For 0.8/Autotools, set the `PKG_CONFIG_PATH` environment variable before running `./configure`.)
+(These arguments may be passed to the initial `meson setup` or applied later using `meson configure`. In the later case, make sure to run `meson configure --clearcache` to work around bugs in Meson. For 0.8/Autotools, set the `PKG_CONFIG_PATH` environment variable before running `./configure`.)
 
 Naev 0.9 needs a BLAS library. To use Apple's, add `-Dblas=Accelerate` to your Meson options. You can also install `openblas` via Homebrew, but you'll have to follow its instructions carefully before Meson will be able to detect it. (Official builds are prepared using OSXCross, which bypasses a lot of problems with Homebrew and Apple's toolchain, but is also more difficult to set up.)
 
