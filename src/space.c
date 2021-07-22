@@ -429,7 +429,7 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *
    y = jp->pos.y;
 
    /* Calculate offset from target position. */
-   a = 2*M_PI - jp->angle;
+   a = 2.*M_PI - jp->angle;
    d = RNGF()*(HYPERSPACE_ENTER_MAX-HYPERSPACE_ENTER_MIN) + HYPERSPACE_ENTER_MIN;
    if ((p!=NULL) && pilot_isFlag(p, PILOT_STEALTH))
       d *= 1.4; /* Jump in from further out when coming in from stealth. */
@@ -439,7 +439,7 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *
    y += d*sin(a);
 
    /* Add some error. */
-   ea = 2*M_PI*RNGF();
+   ea = 2.*M_PI*RNGF();
    ed = jp->radius/2.;
    if (p != NULL) {
       ed *= p->stats.jump_distance; /* larger variability. */

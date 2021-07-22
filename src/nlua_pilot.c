@@ -488,6 +488,7 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
    JumpPoint *jump;
    PilotFlags flags;
    int ignore_rules;
+   Pilot *pplt;
 
    /* Default values. */
    pilot_clearFlagsRaw( flags );
@@ -600,6 +601,11 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       if (lua_toboolean(L, -1))
          pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
       lua_pop( L, 1 );
+
+      lua_getfield( L, i_parameters, "stealth" );
+      if (lua_toboolean(L, -1))
+         pilot_setFlagRaw( flags, PILOT_STEALTH );
+      lua_pop( L, 1 );
    }
 
    /* Set up velocities and such. */
@@ -617,6 +623,12 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       /* Create the pilot. */
       p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, 0, 0 );
       lua_pushpilot(L,p);
+
+      /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
+      if ((jump != NULL) && pilot_isFlagRaw( flags, PILOT_STEALTH )) {
+         pplt = pilot_get( p );
+         space_calcJumpInPos( cur_system, jump->from, &pplt->solid->pos, &pplt->solid->vel, &pplt->solid->dir, pplt );
+      }
    }
    else {
       /* now we start adding pilots and toss ids into the table we return */
