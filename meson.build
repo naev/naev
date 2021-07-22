@@ -176,16 +176,17 @@ if buildExec.disabled() == false
       naev_deps += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
    endif
 
-   if get_option('steamruntime') == true
-      blas= cc.find_library('openblas', required: true, static: true, dependencies: ['threads'])
+   if get_option('steamruntime')
+      blas = cc.find_library('openblas', required: true, static: true, dependencies: ['threads'])
+   elif get_option('blas') == 'Accelerate'
+      blas = dependency('Accelerate', required: true)
    else
-      blas = get_option('blas') == 'Accelerate' ? dependency('Accelerate', required: true) : cc.find_library(get_option('blas'), required: true)
-      # It would be nice to detect the functions and just embed the prototypes. Problem is, we might not know the int width to use...
-      #config_data.set10('HAVE_BLAS_CBLAS_FUNC', cc.has_function('cblas_ddot', dependencies: blas))
-      #config_data.set10('HAVE_BLAS_FUNC_', cc.has_function('ddot_', dependencies: blas))
-      naev_deps += cc.find_library('openblas', required: true)
+      blas = cc.find_library(get_option('blas'), required: true)
    endif
 
+   # It would be nice to detect the functions and just embed the prototypes. Problem is, we might not know the int width to use...
+   #config_data.set10('HAVE_BLAS_CBLAS_FUNC', cc.has_function('cblas_ddot', dependencies: blas))
+   #config_data.set10('HAVE_BLAS_FUNC_', cc.has_function('ddot_', dependencies: blas))
    naev_deps += blas
 
    ### Soft deps (required: false)
