@@ -856,7 +856,7 @@ void gl_drawLine( const double x1, const double y1,
    double a, s;
 
    a = atan2( y2-y1, x2-x1 );
-   s = sqrt( (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1) );
+   s = hypotf( x2-x1, y2-y1 );
 
    projection = gl_view_matrix;
 

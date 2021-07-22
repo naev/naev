@@ -35,62 +35,6 @@
    <pilot name="Goddard Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
- <fleet name="Civilian Schroedinger">
-  <ai>civilian</ai>
-  <faction>Civilian</faction>
-  <pilots>
-   <pilot name="Civilian Schroedinger" ship="Schroedinger"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Civilian Hyena">
-  <ai>civilian</ai>
-  <faction>Civilian</faction>
-  <pilots>
-   <pilot name="Civilian Hyena" ship="Hyena"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Civilian Llama">
-  <ai>civilian</ai>
-  <faction>Civilian</faction>
-  <pilots>
-   <pilot name="Civilian Llama" ship="Llama"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Civilian Gawain">
-  <ai>civilian</ai>
-  <faction>Civilian</faction>
-  <pilots>
-   <pilot name="Civilian Gawain" ship="Gawain"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Advertiser Schroedinger">
-  <ai>advertiser</ai>
-  <faction>Civilian</faction>
-  <pilots>
-   <pilot name="Advertiser Schroedinger" ship="Schroedinger"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Advertiser Hyena">
-  <ai>advertiser</ai>
-  <faction>Civilian</faction>
-  <pilots>
-   <pilot name="Advertiser Hyena" ship="Hyena"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Advertiser Llama">
-  <ai>advertiser</ai>
-  <faction>Civilian</faction>
-  <pilots>
-   <pilot name="Advertiser Llama" ship="Llama"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Advertiser Gawain">
-  <ai>advertiser</ai>
-  <faction>Civilian</faction>
-  <pilots>
-   <pilot name="Advertiser Gawain" ship="Gawain"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Miner Llama">
   <ai>miner</ai>
   <faction>Miner</faction>
@@ -679,28 +623,28 @@
   </pilots>
  </fleet>
  <fleet name="Za'lek Light Drone">
-  <ai>collective</ai>
+  <ai>zalek</ai>
   <faction>Za'lek</faction>
   <pilots>
    <pilot name="Za'lek Light Drone" ship="Za'lek Light Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Za'lek Scout Drone">
-  <ai>collective</ai>
+  <ai>zalek</ai>
   <faction>Za'lek</faction>
   <pilots>
    <pilot name="Za'lek Scout Drone" ship="Za'lek Scout Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Za'lek Bomber Drone">
-  <ai>collective</ai>
+  <ai>zalek</ai>
   <faction>Za'lek</faction>
   <pilots>
    <pilot name="Za'lek Bomber Drone" ship="Za'lek Bomber Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Za'lek Heavy Drone">
-  <ai>collective</ai>
+  <ai>zalek</ai>
   <faction>Za'lek</faction>
   <pilots>
    <pilot name="Za'lek Heavy Drone" ship="Za'lek Heavy Drone"></pilot>

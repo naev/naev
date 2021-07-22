@@ -1,11 +1,10 @@
-require("ai/tpl/generic")
-require("ai/personality/civilian")
-require("ai/include/distress_behaviour")
+require 'ai.core.core'
+require 'ai.core.idle.civilian'
+require 'ai.core.misc.distress'
 require "numstring"
 
 
 function create ()
-
    -- Credits.
    ai.setcredits( rnd.int(ai.pilot():ship():price()/500, ai.pilot():ship():price()/200) )
 
@@ -19,11 +18,11 @@ function create ()
 
    -- Refuel
    mem.refuel = rnd.rnd( 1000, 3000 )
-   p = player.pilot()
+   local p = player.pilot()
    if p:exists() then
       standing = ai.getstanding( p ) or -1
       mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
-            creditstring(mem.refuel));
+            creditstring(mem.refuel))
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system

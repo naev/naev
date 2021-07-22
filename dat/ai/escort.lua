@@ -1,5 +1,5 @@
-require("ai/tpl/escort")
---require("ai/personality/patrol") -- Messes up the ai
+require 'ai.core.core'
+require 'ai.core.control.escort'
 
 -- Do not distress
 mem.distress = false

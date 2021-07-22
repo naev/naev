@@ -83,7 +83,7 @@ function create ()
    paying_faction = faction.get("Pirate")
 
    target_factions = {
-      "Civilian",
+      "Independent",
       "Dvaered",
       "Empire",
       "Frontier",
@@ -261,7 +261,7 @@ end
 function level_setup ()
    local num_pirates = missys:presences()[target_faction]
 
-   if target_faction == "Civilian" or target_faction == "Independent" then
+   if target_faction == "Independent" then
       level = 1
    elseif target_faction == "Trader" or target_faction == "Traders Guild" then
       if num_pirates <= 100 then
@@ -331,7 +331,7 @@ end
 
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
-   ship = "Civilian Schroedinger"
+   ship = "Schroedinger"
    credits = 50000
    reputation = 0
 
@@ -419,19 +419,19 @@ function bounty_setup ()
       end
    elseif target_faction == "Frontier" then
       if level == 1 then
-         ship = "Fronier Hyena"
+         ship = "Hyena"
          credits = 100000 + rnd.sigma() * 7500
          reputation = 0
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
-            ship = "Frontier Lancelot"
+            ship = "Lancelot"
          else
-            ship = "Frontier Ancestor"
+            ship = "Ancestor"
          end
          credits = 450000 + rnd.sigma() * 50000
          reputation = 2
       elseif level >= 3 then
-         ship = "Frontier Phalanx"
+         ship = "Phalanx"
          credits = 800000 + rnd.sigma() * 80000
          reputation = 3
       end
@@ -482,25 +482,25 @@ function bounty_setup ()
    elseif target_faction == "Trader" then
       if level == 1 then
          if rnd.rnd() < 0.5 then
-            ship = "Trader Gawain"
+            ship = "Gawain"
          else
-            ship = "Trader Koala"
+            ship = "Koala"
          end
          credits = 75000 + rnd.sigma() * 5000
          reputation = 0
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
-            ship = "Trader Llama"
+            ship = "Llama"
          else
-            ship = "Trader Quicksilver"
+            ship = "Quicksilver"
          end
          credits = 350000 + rnd.sigma() * 50000
          reputation = 2
       elseif level >= 3 then
          if rnd.rnd() < 0.5 then
-            ship = "Trader Rhino"
+            ship = "Rhino"
          else
-            ship = "Trader Mule"
+            ship = "Mule"
          end
          credits = 700000 + rnd.sigma() * 80000
          reputation = 3
@@ -508,44 +508,35 @@ function bounty_setup ()
    elseif target_faction == "Traders Guild" then
       if level == 1 then
          if rnd.rnd() < 0.5 then
-            ship = "Traders Guild Gawain"
+            ship = "Gawain"
          else
-            ship = "Traders Guild Koala"
+            ship = "Koala"
          end
          credits = 100000 + rnd.sigma() * 5000
          reputation = 0
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
-            ship = "Traders Guild Llama"
+            ship = "Llama"
          else
-            ship = "Traders Guild Quicksilver"
+            ship = "Quicksilver"
          end
          credits = 400000 + rnd.sigma() * 50000
          reputation = 2
       elseif level >= 3 then
          if rnd.rnd() < 0.5 then
-            ship = "Traders Guild Rhino"
+            ship = "Rhino"
          else
-            ship = "Traders Guild Mule"
+            ship = "Mule"
          end
          credits = 800000 + rnd.sigma() * 80000
          reputation = 3
       end
-   elseif target_faction == "Civilian" then
-      local choices = {}
-      choices[1] = "Civilian Schroedinger"
-      choices[2] = "Civilian Hyena"
-      choices[3] = "Civilian Gawain"
-      choices[4] = "Civilian Llama"
-
-      ship = choices[ rnd.rnd( 1, #choices ) ]
-      credits = 50000 + rnd.sigma() * 5000
-      reputation = 0
    elseif target_faction == "Independent" then
       local choices = {}
-      choices[1] = "Independent Schroedinger"
-      choices[2] = "Independent Hyena"
-      choices[3] = "Independent Gawain"
+      choices[1] = "Schroedinger"
+      choices[2] = "Hyena"
+      choices[3] = "Gawain"
+      choices[4] = "Llama"
 
       ship = choices[ rnd.rnd( 1, #choices ) ]
       credits = 50000 + rnd.sigma() * 5000
@@ -559,7 +550,7 @@ function spawn_pirate( param )
    if not job_done and system.cur() == missys then
       if jumps_permitted >= 0 then
          misn.osdActive( 2 )
-         target_ship = pilot.addFleet( ship, param )[1]
+         target_ship = pilot.add( ship, target_faction, param )
          target_ship:rename( name )
          target_ship:setHilight( true )
          hook.pilot( target_ship, "attacked", "pilot_attacked" )

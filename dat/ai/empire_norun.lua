@@ -1,4 +1,4 @@
-require("ai/empire")
+require 'ai.empire'
 
 mem.armour_run = 0
 

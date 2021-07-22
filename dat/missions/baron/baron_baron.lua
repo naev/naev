@@ -167,7 +167,7 @@ end
 function jumpin()
    if talked and system.cur() == system.get(sysname2) then
       pinnacle = pilot.add( "Proteron Kahan", "Proteron", planet.get("Ulios"):pos() + vec2.new(-400,-400), nil, {ai="trader"} )
-      pinnacle:setFaction("Civilian")
+      pinnacle:setFaction("Independent")
       pinnacle:rename(_("Pinnacle"))
       pinnacle:setInvincible(true)
       pinnacle:control()

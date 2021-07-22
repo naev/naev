@@ -196,19 +196,17 @@ end
 -- @brief Chooses a parameter table randomly for a certain pilot p
 function params.choose( p )
    local choose_table = {
-      ["Yacht"]         = { "civilian" },
-      ["Luxury Yacht"]  = { "civilian" },
-      ["Cruise Ship"]   = { "civilian" },
       ["Courier"]       = { "merchant" },
       ["Freighter"]     = { "merchant" },
+      ["Bulk Freighter"]= { "merchant" },
       ["Armoured Transport"] = { "armoured_transport" },
-      ["Drone"]         = { "light_fighter", "heavy_fighter" },
-      ["Heavy Drone"]   = { "corvette" },
-      ["Fighter"]       = { "light_fighter", "heavy_fighter" },
+      ["Interceptor"]   = { "light_fighter" },
+      ["Fighter"]       = { "heavy_fighter" },
       ["Bomber"]        = { "light_bomber", "heavy_bomber" },
       ["Corvette"]      = { "corvette" },
       ["Destroyer"]     = { "destroyer" },
-      ["Cruiser"]       = { "light_cruiser", "heavy_cruiser" },
+      ["Cruiser"]       = { "light_cruiser" },
+      ["Battleship"]    = { "heavy_cruiser" },
       ["Carrier"]       = { "carrier" },
    }
    local c = choose_table[ p:ship():class() ]

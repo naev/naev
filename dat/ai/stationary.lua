@@ -1,11 +1,7 @@
 --[[
-
       AI for stationary turrets.
-
 --]]
-
-
-require("ai/include/basic")
+require 'ai.core.core'
 
 
 control_rate = 2

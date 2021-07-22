@@ -1,4 +1,4 @@
-require("ai/flf")
+require 'ai.flf'
 
 mem.armour_run = 0
 

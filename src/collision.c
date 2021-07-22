@@ -746,3 +746,124 @@ int CollideLinePolygon( const Vector2d* ap, double ad, double al,
    /* We hit. */
    return 1;
 }
+
+
+static int linePointOnSegment( double d1, double x1, double y1, double x2, double y2, double x, double y )
+{
+   //double d1 = hypot( x2-x1, y2-y1 ); /* Distance between end-points. */
+   double d2 = hypot( x-x1,  y-y1 );  /* Distance from point to one end. */
+   double d3 = hypot( x2-x,  y2-y );  /* Distance to the other end. */
+   return fabs(d1 - d2 - d3) < 1e-8;   /* True if smaller than some tolerance. */
+}
+
+
+#define FX( A, B, C, x )   (-(A * x + C) / B)
+#define FY( A, B, C , y )  (-(B * y + C) / A)
+/**
+ * @brief Checks to see if a line collides with a circle
+ *
+ *    @param[in] p1 Point 1 of the line segment.
+ *    @param[in] p2 Point 2 of the line segment.
+ *    @param[in] cc Center of the circle.
+ *    @param[in] cr Radius of the circle.
+ *    @param[out] crash Position of the collision.
+ *    @return 1 on collision, 0 else.
+ */
+int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
+      const Vector2d *cc, double cr, Vector2d crash[2] )
+{
+   double x0 = cc->x;
+   double y0 = cc->y;
+   double x1 = p1->x;
+   double y1 = p1->y;
+   double x2 = p2->x;
+   double y2 = p2->y;
+
+   double A = y2 - y1;
+   double B = x1 - x2;
+   double C = x2 * y1 - x1 * y2;
+
+   double a = pow2(A) + pow2(B);
+   double b, c, d;
+
+   int bnz, cnt;
+
+   double x, y, d1;
+
+   /* Non-vertical case. */
+   if (fabs(B) >= 1e-8) {
+      b = 2. * (A * C + A * B * y0 - pow2(B) * x0);
+      c = pow2(C) + 2. * B * C * y0 - pow2(B) * (pow2(cr) - pow2(x0) - pow2(y0));
+      bnz = 1;
+   }
+   /* Have to have special care when line is vertical. */
+   else {
+      b = 2. * (B * C + A * B * x0 - pow2(A) * y0);
+      c = pow2(C) + 2. * A * C * x0 - pow2(A) * (pow2(cr) - pow2(x0) - pow2(y0));
+      bnz = 0;
+   }
+   d = pow2(b) - 4. * a * c; /* Discriminant. */
+   if (d < 0.)
+      return 0;
+
+   cnt = 0;
+   d1 = hypot( x2-x1, y2-y1 );
+   /* Line is tangent, so only one intersection. */
+   if (d == 0.) {
+      if (bnz) {
+         x = -b / (2. * a);
+         y = FX(A, B, C, x);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+      } else {
+         y = -b / (2. * a);
+         x = FY(A, B, C, y);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+      }
+   }
+   /* Two intersections. */
+   else {
+      d = sqrt(d);
+      if (bnz) {
+         x = (-b + d) / (2. * a);
+         y = FX(A, B, C, x);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+         x = (-b - d) / (2. * a);
+         y = FX(A, B, C, x);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+      } else {
+         y = (-b + d) / (2. * a);
+         x = FY(A, B, C, y);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+         y = (-b - d) / (2. * a);
+         x = FY(A, B, C, y);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+      }
+   }
+   return cnt;
+}
+#undef FX
+#undef FY

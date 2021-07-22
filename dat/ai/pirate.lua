@@ -1,5 +1,4 @@
-require("ai/tpl/generic")
-require("ai/personality/patrol")
+require 'ai.core.core'
 require "numstring"
 
 --[[
@@ -9,12 +8,12 @@ require "numstring"
 --]]
 
 -- Settings
-mem.aggressive     = true
-mem.safe_distance  = 500
-mem.armour_run     = 80
-mem.armour_return  = 100
-mem.atk_board      = true
-mem.atk_kill       = false
+mem.aggressive    = true
+mem.safe_distance = 500
+mem.armour_run    = 80
+mem.armour_return = 100
+mem.atk_board     = true
+mem.atk_kill      = false
 mem.careful       = true
 
 
@@ -33,7 +32,7 @@ function create ()
       mem.bribe_no = _("\"You won't be able to slide out of this one!\"")
    else
       mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300 * rnd.rnd() + 850)
-      bribe_prompt = {
+      local bribe_prompt = {
             _("\"It'll cost you %s for me to ignore your pile of rubbish.\""),
             _("\"I'm in a good mood so I'll let you go for %s.\""),
             _("\"Send me %s or you're dead.\""),
@@ -49,7 +48,7 @@ function create ()
             _("\"This is a toll road, pay up %s or die.\""),
       }
       mem.bribe_prompt = string.format(bribe_prompt[ rnd.rnd(1,#bribe_prompt) ], creditstring(mem.bribe))
-      bribe_paid = {
+      local bribe_paid = {
             _("\"You're lucky I'm so kind.\""),
             _("\"Life doesn't get easier than this.\""),
             _("\"Pleasure doing business.\""),
@@ -71,13 +70,13 @@ function create ()
    -- Deal with refueling
    local p = player.pilot()
    if p:exists() then
-      standing = ai.getstanding( p ) or -1
+      local standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing > 60 then
          mem.refuel = mem.refuel * 0.5
       end
       mem.refuel_msg = string.format(_("\"For you, only %s for a jump of fuel.\""),
-            creditstring(mem.refuel));
+            creditstring(mem.refuel))
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
@@ -95,6 +94,7 @@ function taunt ( target, offense )
    end
 
    -- some taunts
+   local taunts
    if offense then
       taunts = {
             _("Prepare to be boarded!"),
@@ -151,5 +151,3 @@ function taunt ( target, offense )
 
    ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
-
-mem.doscans    = false -- Pirates don't care about scanning

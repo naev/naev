@@ -1,5 +1,4 @@
-require("ai/tpl/generic")
-require("ai/personality/patrol")
+require 'ai.core.core'
 require "numstring"
 
 -- Settings
@@ -17,7 +16,8 @@ function create ()
    ai.setcredits( rnd.int(ai.pilot():ship():price()/600 , ai.pilot():ship():price()/100) )
 
    -- Get standing.
-   p = player.pilot()
+   local p = player.pilot()
+   local standing
    if p:exists() then
       standing = ai.getstanding( p ) or -1
    else
@@ -56,6 +56,7 @@ function taunt ( target, offense )
    end
 
    -- some taunts
+   local taunts
    if offense then
       taunts = {
             _("For the Frontier!"),

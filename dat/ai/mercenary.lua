@@ -1,12 +1,10 @@
-require("ai/tpl/generic")
-require("ai/personality/patrol")
+require 'ai.core.core'
 require "numstring"
 
 -- Settings
 mem.armour_run = 40
 mem.armour_return = 70
 mem.aggressive = true
-
 
 function create ()
 
@@ -39,6 +37,7 @@ function taunt ( target, offense )
    end
 
    -- some taunts
+   local taunts
    if offense then
       taunts = {
             _("Don't take this personally."),

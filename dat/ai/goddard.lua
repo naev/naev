@@ -1,10 +1,8 @@
-require("ai/tpl/generic")
-require("ai/personality/patrol")
+require 'ai.core.core'
 require "numstring"
 
 -- Settings
 mem.aggressive = true
-
 
 -- Create function
 function create ()
@@ -13,7 +11,7 @@ function create ()
    ai.setcredits( rnd.int(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
 
    -- Bribing
-   bribe_no = {
+   local bribe_no = {
          _("\"You insult my honour.\""),
          _("\"I find your lack of honour disturbing.\""),
          _("\"You disgust me.\""),
@@ -23,9 +21,9 @@ function create ()
    mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
 
    -- Refueling
-   p = player.pilot()
+   local p = player.pilot()
    if p:exists() then
-      standing = ai.getstanding( p ) or -1
+      local standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing > 60 then mem.refuel = mem.refuel * 0.7 end
       mem.refuel_msg = string.format( _("\"I could do you the favour of refueling for the price of %s.\""),
@@ -41,7 +39,7 @@ end
 -- taunts
 function taunt ( target, offense )
    -- Offense is not actually used
-   taunts = {
+   local taunts = {
          _("Prepare to face annihilation!"),
          _("I shall wash my hull in your blood!"),
          _("Your head will make a great trophy!"),

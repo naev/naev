@@ -68,9 +68,6 @@
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
 #define XML_GUI_TAG  "gui" /**<  XML Section identifier for GUI tags. */
 
-#define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
-#define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
-
 #define RADAR_BLINK_PILOT        0.5 /**< Blink rate of the pilot target on radar. */
 #define RADAR_BLINK_PLANET       1. /**< Blink rate of the planet target on radar. */
 
@@ -133,6 +130,7 @@ static MapOverlay map_overlay = {
   .boundBottom = 0,
   .boundLeft = 0,
 };
+
 int map_overlay_height(void)
 {
    return SCREEN_H - map_overlay.boundTop - map_overlay.boundBottom;
@@ -170,7 +168,6 @@ typedef struct Radar_ {
    double y; /**< Y position. */
    RadarShape shape; /**< Shape */
    double res; /**< Resolution */
-   glTexture *interference[INTERFERENCE_LAYERS]; /**< Interference texture. */
 } Radar;
 /* radar resolutions */
 #define RADAR_RES_MAX      100. /**< Maximum radar resolution. */
@@ -228,7 +225,6 @@ extern void weapon_minimap( const double res, const double w, const double h,
  * internal
  */
 /* gui */
-static void gui_createInterference( Radar *radar );
 static void gui_borderIntersection( double *cx, double *cy, double rx, double ry, double hw, double hh );
 /* Render GUI. */
 static void gui_renderPilotTarget( double dt );
@@ -239,7 +235,6 @@ static const glColour *gui_getPlanetColour( int i );
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col );
 static void gui_blink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape, const glColour *col, const double blinkInterval, const double blinkVar );
 static const glColour* gui_getPilotColour( const Pilot* p );
-static void gui_renderInterference (void);
 static void gui_calcBorders (void);
 /* Lua GUI. */
 static int gui_doFunc( const char* func );
@@ -1065,7 +1060,6 @@ int gui_radarInit( int circle, int w, int h )
    gui_radar.res     = RADAR_RES_DEFAULT;
    gui_radar.w       = w;
    gui_radar.h       = h;
-   gui_createInterference( &gui_radar );
    return 0;
 }
 
@@ -1145,9 +1139,6 @@ void gui_radarRender( double x, double y )
       for (j=0; j<ast->nb; j++)
          gui_renderAsteroid( &ast->asteroids[j], radar->w, radar->h, radar->res, 0 );
    }
-
-   /* Interference. */
-   gui_renderInterference();
 
    /* Render the player cross. */
    gui_renderPlayer( radar->res, 0 );
@@ -1268,41 +1259,6 @@ static void gui_renderMessages( double dt )
       c.a = 0.5;
       gl_renderRect( vx + gui_mesg_w-10., vy + hs/2. + (h-hs)*((double)o/(double)(mesg_max-conf.mesg_visible)), 10, hs, &c );
    }
-}
-
-
-/**
- * @brief Renders interference if needed.
- */
-static void gui_renderInterference (void)
-{
-   glColour c;
-   glTexture *tex;
-   int t;
-
-   /* Must be displaying interference. */
-   if (interference_alpha <= 0.)
-      return;
-
-   /* Calculate frame to draw. */
-   if (interference_t > INTERFERENCE_CHANGE_DT) { /* Time to change */
-      t = RNG(0, INTERFERENCE_LAYERS-1);
-      if (t != interference_layer)
-         interference_layer = t;
-      else
-         interference_layer = (interference_layer == INTERFERENCE_LAYERS-1) ?
-               0 : interference_layer+1;
-      interference_t -= INTERFERENCE_CHANGE_DT;
-   }
-
-   /* Render the interference. */
-   c.r = c.g = c.b = 1.;
-   c.a = interference_alpha;
-   tex = gui_radar.interference[interference_layer];
-   if (gui_radar.shape == RADAR_CIRCLE)
-      gl_blitStatic( tex, -gui_radar.w, -gui_radar.w, &c );
-   else if (gui_radar.shape == RADAR_RECT)
-      gl_blitStatic( tex, -gui_radar.w, -gui_radar.h, &c );
 }
 
 
@@ -2212,101 +2168,13 @@ int gui_load( const char* name )
 
 
 /**
- * @brief Creates the interference map for the current gui.
- */
-static void gui_createInterference( Radar *radar )
-{
-   uint8_t raw;
-   int i, j, k;
-   float *map;
-   uint32_t *pix;
-   SDL_Surface *sur;
-   int w,h, hw,hh;
-   float c;
-   int r;
-
-   /* Dimension shortcuts. */
-   if (radar->shape == RADAR_CIRCLE) {
-      w = radar->w*2.;
-      h = w;
-   }
-   else if (radar->shape == RADAR_RECT) {
-      w = radar->w*2.;
-      h = radar->h*2.;
-   }
-   else {
-      WARN( _("Radar shape is invalid.") );
-      return;
-   }
-
-   for (k=0; k<INTERFERENCE_LAYERS; k++) {
-      /* Free the old texture. */
-      gl_freeTexture(radar->interference[k]);
-
-      /* Create the temporary surface. */
-      sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
-      pix = sur->pixels;
-
-      /* Clear pixels. */
-      memset( pix, 0, sizeof(uint32_t)*w*h );
-
-      /* Load the interference map. */
-      map = noise_genRadarInt( w, h, (w+h)/2*1.2 );
-
-      /* Create the texture. */
-      SDL_LockSurface( sur );
-      if (radar->shape == RADAR_CIRCLE) {
-         r = pow2((int)radar->w);
-         hw = w/2;
-         hh = h/2;
-         for (i=0; i<h; i++) {
-            for (j=0; j<w; j++) {
-               /* Must be in circle. */
-               if (pow2(i-hh) + pow2(j-hw) > r)
-                  continue;
-               c = map[i*w + j];
-               raw = 0xff & (uint8_t)((float)0xff * c);
-               memset( &pix[i*w + j], raw, sizeof(uint32_t) );
-               pix[i*w + j] |= AMASK;
-            }
-         }
-      }
-      else if (radar->shape == RADAR_RECT) {
-         for (i=0; i<h*w; i++) {
-            /* Process pixels. */
-            c = map[i];
-            raw = 0xff & (uint8_t)((float)0xff * c);
-            memset( &pix[i], raw, sizeof(uint32_t) );
-            pix[i] |= AMASK;
-         }
-      }
-      SDL_UnlockSurface( sur );
-
-      /* Set the interference. */
-      radar->interference[k] = gl_loadImage( sur, 0 );
-
-      /* Clean up. */
-      free(map);
-   }
-}
-
-
-/**
  * @brief Cleans up the GUI.
  */
 void gui_cleanup (void)
 {
-   int i;
-
    /* Disable mouse voodoo. */
    gui_mouseClickEnable( 0 );
    gui_mouseMoveEnable( 0 );
-
-   /* Interference. */
-   for (i=0; i<INTERFERENCE_LAYERS; i++) {
-      gl_freeTexture(gui_radar.interference[i]);
-      gui_radar.interference[i] = NULL;
-   }
 
    /* Set the viewport. */
    gui_clearViewport();

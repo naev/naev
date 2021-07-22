@@ -179,8 +179,8 @@ function ambush()
    badguys = {}
 
    if playerclass == "Scout" or playerclass == "Fighter"
-         or playerclass == "Drone" or playerclass == "Heavy Drone"
-         or playerclass == "Luxury Yacht" or playerclass == "Yacht"
+         or playerclass == "Interceptor"
+         or playerclass == "Yacht"
          or palyerclass == "Courier" then
       if rnd.rnd() < 0.7 then
          interceptors()
@@ -207,7 +207,7 @@ function ambush()
          cruiser()
       end
 
-      elseif playerclass == "Corvette" or playerclass == "Destroyer" then
+      elseif playerclass == "Corvette" or playerclass == "Destroyer" or playerclass == "Armoured Transport" then
 
       local rand = rnd.rnd()
       if rand < 0.6 then
@@ -218,7 +218,7 @@ function ambush()
          hvy_intercept()
       end
 
-      elseif playerclass == "Cruiser" or playerclass == "Armoured Transport" or playerclass == "Carrier" then
+      elseif playerclass == "Cruiser" or playerclass == "Carrier" or playerclass == "Battleship" then
 
       if rnd.rnd() < 0.7 then
          bombers()

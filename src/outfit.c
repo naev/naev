@@ -90,7 +90,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
-static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt );
+static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt );
 
 
 /**
@@ -956,8 +956,7 @@ const char* outfit_getAmmoAI( const Outfit *o )
  */
 int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
 {
-   const OutfitSlot *os;
-   os = &o->slot;
+   const OutfitSlot *os = &o->slot;
 
    /* Outfit must have valid slot type. */
    if ((os->type == OUTFIT_SLOT_NULL) ||
@@ -966,6 +965,10 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
 
    /* Outfit type must match outfit slot. */
    if (os->type != s->type)
+      return 0;
+
+   /* It doesn't fit. */
+   if (os->size > s->size)
       return 0;
 
    /* Must match slot property. */
@@ -979,12 +982,10 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
          return 0;
 
    /* Must have valid slot size. */
+   /*
    if (os->size == OUTFIT_SLOT_SIZE_NA)
       return 0;
-
-   /* It doesn't fit. */
-   if (os->size > s->size)
-      return 0;
+   */
 
    /* It meets all criteria. */
    return 1;
@@ -1119,7 +1120,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
  *    @param buf Name of the file.
  *    @param bolt 1 if outfit is a Bolt, 0 if it is an Ammo
  */
-static int outfit_loadPLG( Outfit *temp, char *buf, unsigned int bolt )
+static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt )
 {
    char *file;
    CollPoly *polygon;

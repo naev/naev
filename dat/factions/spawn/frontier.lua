@@ -1,45 +1,43 @@
-local scom = require "factions/spawn/lib/common"
-local merc = require "factions/spawn/lib/mercenary"
-
+local scom = require "factions.spawn.lib.common"
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
-    local pilots = {}
-    local r = rnd.rnd()
+   local pilots = { __doscans = true }
+   local r = rnd.rnd()
 
-    if r < pbm then
-       pilots = merc.spawnLtMerc("Frontier")
-    elseif r < 0.5 then
-       scom.addPilot( pilots, "Frontier Lancelot", 30 );
-    elseif r < 0.8 then
-       scom.addPilot( pilots, "Frontier Hyena", 20 );
-       scom.addPilot( pilots, "Frontier Lancelot", 30 );
-    else
-       scom.addPilot( pilots, "Frontier Hyena", 20 );
-       scom.addPilot( pilots, "Frontier Ancestor", 25 );
-    end
+   if r < 0.5 then
+      scom.addPilot( pilots, "Lancelot", 30 )
+   elseif r < 0.8 then
+      scom.addPilot( pilots, "Hyena", 20 )
+      scom.addPilot( pilots, "Lancelot", 30 )
+   else
+      scom.addPilot( pilots, "Hyena", 20 )
+      scom.addPilot( pilots, "Ancestor", 25 )
+   end
 
-    return pilots
+   return pilots
 end
 
 
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
-    local pilots = {}
-    local r = rnd.rnd()
+   local pilots = {}
+   if rnd.rnd() < 0.5 then
+      pilots.__doscans = true
+   end
 
-    if r < pbm then
-        pilots = spawnMdMerc("Frontier")
-    elseif r < 0.5 then
-       scom.addPilot( pilots, "Frontier Lancelot", 30 );
-       scom.addPilot( pilots, "Frontier Phalanx", 55 );
-    else
-       scom.addPilot( pilots, "Frontier Lancelot", 30 );
-       scom.addPilot( pilots, "Frontier Lancelot", 30 );
-       scom.addPilot( pilots, "Frontier Ancestor", 25 );
-    end
+   local r = rnd.rnd()
 
-    return pilots
+   if r < 0.5 then
+      scom.addPilot( pilots, "Lancelot", 30 )
+      scom.addPilot( pilots, "Phalanx", 55 )
+   else
+      scom.addPilot( pilots, "Lancelot", 30 )
+      scom.addPilot( pilots, "Lancelot", 30 )
+      scom.addPilot( pilots, "Ancestor", 25 )
+   end
+
+   return pilots
 end
 
 
@@ -63,15 +61,13 @@ end
 
 -- @brief Spawning hook
 function spawn ( presence, max )
-    local pilots
-
     -- Over limit
     if presence > max then
        return 5
     end
 
     -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data, "Frontier" )
+    local pilots = scom.spawn( spawn_data, "Frontier" )
 
     -- Calculate spawn data
     spawn_data = scom.choose( spawn_table )

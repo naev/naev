@@ -1,5 +1,5 @@
-require("ai/include/basic")
-require("ai/personality/trader")
+require 'ai.core.core'
+require 'ai.core.idle.trader'
 
 --[[
  ===FLEE AI===
@@ -9,7 +9,6 @@ Mission specific AI to make pilots leave the system immediately.
 --]]
 -- Required control rate
 control_rate   = 2
-
 
 -- Required "flee" function
 function create ()
@@ -29,7 +28,7 @@ function control ()
       end
 
    elseif task == "runaway" then
-      target = ai.taskdata()
+      local target = ai.taskdata()
 
       if not target:exists() then
          ai.poptask()

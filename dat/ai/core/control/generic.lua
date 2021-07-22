@@ -1,5 +1,3 @@
-require("ai/include/basic")
-require("ai/include/attack")
 local formation = require("scripts/formation")
 
 --[[
@@ -155,7 +153,7 @@ function handle_messages ()
             ai.pushtask("hold" )
          -- Return to carrier
          elseif msgtype == "e_return" then
-            ai.pushtask( "flyback", p:flags().carried )
+            ai.pushtask( "flyback", p:flags("carried") )
          -- Clear orders
          elseif msgtype == "e_clear" then
             p:taskClear()
@@ -226,9 +224,9 @@ function control ()
 
    -- Try to stealth if leader is stealthed
    if l ~= nil then
-      if l:flags().stealth then
+      if l:flags("stealth") then
          ai.stealth(true)
-      elseif p:flags().stealth then
+      elseif p:flags("stealth") then
          ai.stealth(false)
       end
    end
@@ -463,20 +461,13 @@ function attacked( attacker )
    end
 end
 
--- Delays the ship when entering systems so that it doesn't leave right away
-function enterdelay ()
-   if ai.timeup(0) then
-      ai.pushtask("hyperspace")
-   end
-end
-
 function create ()
    create_post()
 end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
-   mem.tookoff    = ai.pilot():flags().takingoff
+   mem.tookoff    = ai.pilot():flags("takingoff")
    mem.scanned    = {} -- must create for each pilot
    attack_choose()
 end
@@ -606,7 +597,7 @@ function gen_distress ( target )
 
    -- See if it's time to trigger distress
    if mem.distressed > mem.distressrate then
-      if mem.distressmsgfunc ~= nil then
+      if mem.distressmsgfunc then
          mem.distressmsgfunc()
       else
          ai.distress( mem.distressmsg )

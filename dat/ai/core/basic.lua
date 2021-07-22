@@ -165,7 +165,7 @@ end
 --[[
 -- Generic moveto function.
 --]]
-function __moveto_generic( target, dir, brake, subtask )
+function __moveto_generic( target, dir, brake )
    local dist     = ai.dist( target )
    local bdist
    if brake then
@@ -184,7 +184,6 @@ function __moveto_generic( target, dir, brake, subtask )
       if brake then
          ai.pushtask("brake")
       end
-      return
    end
 end
 
@@ -315,11 +314,10 @@ end
 --[[
 -- Tries to hyperspace asap.
 --]]
-function __hyperspace ()
-   hyperspace()
+function __hyperspace( target )
+   hyperspace( target )
 end
-function __hyperspace_shoot ()
-   local target = ai.taskdata()
+function __hyperspace_shoot( target )
    if target == nil then
       target = ai.rndhyptarget()
       if target == nil then
@@ -649,11 +647,12 @@ end
 --[[
 -- Starts heading away to try to hyperspace.
 --]]
-function hyperspace ()
-   local target = ai.taskdata()
+function hyperspace( target )
    if target == nil then
       target = ai.rndhyptarget()
+      -- Can't jump so abort
       if target == nil then
+         ai.poptask()
          return
       end
    end
@@ -791,7 +790,7 @@ function refuel ()
    end
 
    -- See if finished refueling
-   if not ai.pilot():flags().refueling then
+   if not ai.pilot():flags("refueling") then
       ai.poptask()
       return
    end
@@ -827,7 +826,7 @@ function __refuelstop ()
 
    -- See if finished refueling
    local p = ai.pilot()
-   if not p:flags().refueling then
+   if not p:flags("refueling") then
       p:comm(target, _("Finished fuel transfer."))
       ai.poptask()
 
@@ -1006,7 +1005,7 @@ end
 --]]
 function __check_seeable( target )
    local self   = ai.pilot()
-   if not target:flags().invisible then
+   if not target:flags("invisible") then
       -- Pilot still sees the target: continue attack
       if self:inrange( target ) then
          return true
@@ -1015,7 +1014,7 @@ function __check_seeable( target )
       -- Pilots on manual control (in missions or events) never loose target
       -- /!\ This is not necessary desirable all the time /!\
       -- TODO: there should probably be a flag settable to allow to outwit pilots under manual control
-      if self:flags().manualcontrol then
+      if self:flags("manualcontrol") then
          return true
       end
    end
@@ -1041,8 +1040,16 @@ end
 --[[
 -- Just loitering around.
 --]]
-function loiter( pos )
-   __moveto_nobrake( pos )
+function loiter( target )
+   local dir      = ai.face( target )
+   local dist     = ai.dist( target )
+   if dist < 200 then
+      ai.poptask()
+      return
+   end
+   if dir < 10 then
+      ai.accel()
+   end
 end
 
 
@@ -1238,4 +1245,12 @@ function stealth( target )
    end
    -- TODO something to try to get them to restealth if failed, maybe move around?
    ai.stealth(true)
+end
+
+
+-- Delays the ship when entering systems so that it doesn't leave right away
+function enterdelay ()
+   if ai.timeup(0) then
+      ai.pushtask("hyperspace")
+   end
 end

@@ -386,6 +386,8 @@ function wave_compute_score ()
          newbonus( "Cruiser %d%%", -80 )
       elseif c=="Carrier" then
          newbonus( "Carrier %d%%", -90 )
+      elseif c=="Battleship" then
+         newbonus( "Battleship %d%%", -90 )
       end
       if elapsed < 15 then
          newbonus( "Fast Clear (<15s) %d%%", 25 )
@@ -403,6 +405,8 @@ function wave_compute_score ()
          newbonus( "Cruiser %d%%", -20 )
       elseif c=="Carrier" then
          newbonus( "Carrier %d%%", -30 )
+      elseif c=="Battleship" then
+         newbonus( "Battleship %d%%", -30 )
       end
       if elapsed < 25 then
          newbonus( "Fast Clear (<25s) %d%%", 25 )
@@ -418,6 +422,8 @@ function wave_compute_score ()
          newbonus( "Corvette %d%%", 100 )
       elseif c=="Destroyer" then
          newbonus( "Destroyer %d%%", 50 )
+      elseif c=="Cruiser" then
+         newbonus( "Cruiser %d%%", 25 )
       end
       if elapsed < 40 then
          newbonus( "Fast Clear (<40s) %d%%", 25 )

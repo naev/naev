@@ -1106,7 +1106,7 @@ JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
  *    @param sys System to look in.
  *    @return Jump point in sys to target or NULL if not found.
  */
-JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
+JumpPoint* jump_getTarget( const StarSystem* target, const StarSystem* sys )
 {
    int i;
    JumpPoint *jp;
@@ -1123,7 +1123,7 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
 /**
  * @brief Gets the jump point symbol.
  */
-const char *jump_getSymbol( JumpPoint *jp )
+const char *jump_getSymbol( const JumpPoint *jp )
 {
    if (jp_isFlag(jp, JP_HIDDEN))
       return "* ";
@@ -1839,7 +1839,7 @@ static int planets_load ( void )
 /**
  * @brief Gets the planet colour char.
  */
-char planet_getColourChar( Planet *p )
+char planet_getColourChar( const Planet *p )
 {
    if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
       return 'I';
@@ -1859,7 +1859,7 @@ char planet_getColourChar( Planet *p )
 /**
  * @brief Gets the planet symbol.
  */
-const char *planet_getSymbol( Planet *p )
+const char *planet_getSymbol( const Planet *p )
 {
    if (!planet_hasService( p, PLANET_SERVICE_INHABITED )) {
       if (planet_hasService( p, PLANET_SERVICE_LAND ))
@@ -1882,7 +1882,7 @@ const char *planet_getSymbol( Planet *p )
 /**
  * @brief Gets the planet colour.
  */
-const glColour* planet_getColour( Planet *p )
+const glColour* planet_getColour( const Planet *p )
 {
    if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
       return &cInert;

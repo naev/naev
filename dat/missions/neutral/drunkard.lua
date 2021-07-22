@@ -163,7 +163,7 @@ function takeoff()
 
       willie = pilot.add( "Mule", "Trader", player.pos() + vec2.new(-500,-500), _("Trader Mule") )
       willie:rename(_("Ol Bess"))
-      willie:setFaction("Civilian")
+      willie:setFaction("Independent")
       willie:setFriendly()
       willie:setInvincible()
       willie:setVisplayer()

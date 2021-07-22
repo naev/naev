@@ -17,6 +17,8 @@
       * Redid the shake visuals and added a small damage visual
       * Most special effects implemented as shaders
       * Game now tracks meta-data like ships destroyed and time played
+      * Stress now discreases based on ship mass
+      * Merged the Independent and Civilian factions
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
       * New missions

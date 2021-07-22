@@ -1,9 +1,6 @@
-require("ai/include/basic")
-
 -- Variables
-planet_dist = 1500 -- distance to keep from planets
-enemy_dist = 800 -- distance to keep from enemies
-
+mem.planet_dist = 1500 -- distance to keep from planets
+mem.enemy_dist = 800 -- distance to keep from enemies
 
 -- Required control rate
 control_rate = 2
@@ -33,7 +30,7 @@ function control ()
       planet = mem.approach
 
       if planet ~= nil then
-         if ai.dist(planet) > planet_dist then
+         if ai.dist(planet) > mem.planet_dist then
             ai.pushtask("approach")
             return
          end
@@ -49,7 +46,7 @@ function control ()
    elseif task == "approach" then
       planet = mem.approach
 
-      if ai.dist( planet ) < planet_dist + ai.minbrakedist() then
+      if ai.dist( planet ) < mem.planet_dist + ai.minbrakedist() then
          ai.poptask()
          ai.pushtask("idle")
          return
@@ -105,7 +102,7 @@ function approach ()
    dist = ai.dist(target)
 
    -- See if should accel or brake
-   if dist > planet_dist then
+   if dist > mem.planet_dist then
       ai.accel()
    else
       ai.poptask()

@@ -7,9 +7,20 @@ local optimize = {}
 local eparams = require 'equipopt.params'
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
+-- Create caches and stuff
 -- Get all the fighter bays and calculate rough dps
+local outfit_stats = {}
 local fbay_dps = {}
 for k,o in ipairs(outfit.getAll()) do
+   local os = o:shipstat(nil,true)
+   os.type = o:type()
+   os.typebroad = o:typeBroad()
+   os.spec = o:specificstats()
+   os.price = o:price()
+   os.limit = o:limit()
+   os.mass = o:mass()
+   os.cpu = o:cpu()
+   outfit_stats[o:nameRaw()] = os
    if o:type() == "Fighter Bay" then
       local ss = o:specificstats()
       local s = ss.ship
@@ -126,12 +137,13 @@ end
       Goodness functions to rank how good each outfits are
 --]]
 function optimize.goodness_default( o, p )
+   local os = o.stats
    -- Base attributes
-   base = p.cargo*(0.5*math.pow(o.cargo,0.3) + 0.1*(1-o.cargo_inertia)) + p.fuel*0.003*o.fuel
+   base = p.cargo*(0.5*math.pow(o.cargo,0.3) + 0.1*(1-os.cargo_inertia)) + p.fuel*0.003*os.fuel
    -- Movement attributes
-   move = 0.1*o.thrust + 0.1*o.speed + 0.2*o.turn + 50*(o.time_speedup-1)
+   move = 0.1*o.thrust + 0.1*o.speed + 0.2*o.turn + 50*(os.time_speedup-1)
    -- Health attributes
-   health = 0.01*o.shield + 0.02*o.armour + 0.9*o.shield_regen + 2*o.armour_regen + o.absorb/10
+   health = 0.01*o.shield + 0.02*o.armour + 0.9*o.shield_regen + 2*o.armour_regen + os.absorb/10
    -- Energy attributes
    energy = 0.003*o.energy + 0.18*o.energy_regen
    -- Weapon attributes
@@ -166,7 +178,7 @@ function optimize.goodness_default( o, p )
       weap = 0
    end
    -- Ewarfare attributes
-   ew = 3*(o.ew_detect-1) + 3*(o.ew_hide-1)
+   ew = 3*(os.ew_detect-1) + 3*(os.ew_hide-1)
    -- Custom weight
    local w = goodness_special[o.name] or 1
    local g = p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
@@ -264,11 +276,10 @@ function optimize.optimize( p, cores, outfit_list, params )
    for m,o in ipairs(outfit_list) do
       if not usable_outfits[o] then
          for k,v in ipairs( slots_base ) do
-            local oo = outfit.get(o)
             local ok = true
             -- Afterburners will be ignored if the ship is too heavy
-            if oo:type() == "Afterburner" then
-               local spec = oo:specificstats()
+            if o:type() == "Afterburner" then
+               local spec = o:specificstats()
                if spec.mass_limit < 0.8*ss.engine_limit then
                   ok = false
                end
@@ -297,23 +308,23 @@ function optimize.optimize( p, cores, outfit_list, params )
    local limit_list = {}
    local same_list = {}
    local same_limit = {}
-   for k,v in ipairs(outfit_list) do
-      local oo = outfit.get(v)
+   for k,o in ipairs(outfit_list) do
+      local n = o:nameRaw()
       -- Add limit if applicable
-      local lim = oo:limit()
+      local lim = o:limit()
       if lim then
          limit_list[lim] = true
       end
       -- See if we want to limit the particular outfit
-      local t = oo:slot()
+      local t = o:slot()
       if params.max_same_weap and t=="Weapon" then
-         table.insert( same_list, v )
+         table.insert( same_list, n )
          table.insert( same_limit, params.max_same_weap )
       elseif params.max_same_util and t=="Utility" then
-         table.insert( same_list, v )
+         table.insert( same_list, n )
          table.insert( same_limit, params.max_same_util )
       elseif params.max_same_stru and t=="Structure" then
-         table.insert( same_list, v )
+         table.insert( same_list, n )
          table.insert( same_limit, params.max_same_stru )
       end
    end
@@ -327,20 +338,22 @@ function optimize.optimize( p, cores, outfit_list, params )
    -- Create outfit cache, it contains all sort of nice information like DPS and
    -- other stuff that can be used for our goodness function
    local outfit_cache = {}
-   for k,v in ipairs(outfit_list) do
-      local out = outfit.get(v)
+   for k,out in ipairs(outfit_list) do
       -- Core stats
-      local oo = out:shipstat(nil,true)
-      oo.outfit   = out
+      --local oo    = out:shipstat(nil,true)
+      local oo    = {}
       oo.name     = out:nameRaw()
+      oo.outfit   = out
+      local os = outfit_stats[oo.name]
+      oo.stats    = os
       oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon = out:weapstats( p )
       oo.trackmin = oo.trackmin or 0
       oo.trackmax = oo.trackmax or 0
       oo.lockon   = oo.lockon or 0
-      oo.cpu      = out:cpu()
-      oo.mass     = out:mass() * ss.mass_mod
-      oo.price    = out:price()
-      oo.limit    = out:limit()
+      oo.cpu      = os.cpu
+      oo.mass     = os.mass * ss.mass_mod
+      oo.price    = os.price
+      oo.limit    = os.limit
       if oo.limit then
          for i,l in ipairs(limits) do
             if l == oo.limit then
@@ -349,26 +362,26 @@ function optimize.optimize( p, cores, outfit_list, params )
             end
          end
       end
-      oo.type     = out:type()
-      oo.spec     = out:specificstats()
+      oo.type     = os.type
+      oo.typebroad = os.typebroad
+      oo.spec     = os.spec
       oo.isturret = oo.spec.isturret
       oo.penetration = oo.spec.penetration
-      oo.typebroad = out:typeBroad()
 
       -- We correct ship stats here and convert them to "relative improvements"
       -- Movement
-      oo.thrust = oo.thrust_mod * (oo.thrust + st.thrust) - st.thrust
-      oo.speed  = oo.speed_mod  * (oo.speed  + st.speed)  - st.speed
-      oo.turn   = oo.turn_mod   * (oo.turn   + st.turn)   - st.turn
+      oo.thrust = os.thrust_mod * (os.thrust + st.thrust) - st.thrust
+      oo.speed  = os.speed_mod  * (os.speed  + st.speed)  - st.speed
+      oo.turn   = os.turn_mod   * (os.turn   + st.turn)   - st.turn
       -- Health
-      oo.armour = oo.armour_mod * (oo.armour + st.armour) - st.armour
-      oo.shield = oo.shield_mod * (oo.shield + st.shield) - st.shield
-      oo.energy = oo.energy_mod * (oo.energy + st.energy) - st.energy
-      oo.armour_regen = oo.armour_regen_mod * (ss.armour_regen_mod * oo.armour_regen + st.armour_regen) - oo.armour_regen_malus - st.armour_regen
-      oo.shield_regen = oo.shield_regen_mod * (ss.shield_regen_mod * oo.shield_regen + st.shield_regen) - oo.shield_regen_malus - st.shield_regen
-      oo.energy_regen = oo.energy_regen_mod * (ss.energy_regen_mod * oo.energy_regen + st.energy_regen) - oo.energy_regen_malus - oo.energy_loss - st.energy_regen
+      oo.armour = os.armour_mod * (os.armour + st.armour) - st.armour
+      oo.shield = os.shield_mod * (os.shield + st.shield) - st.shield
+      oo.energy = os.energy_mod * (os.energy + st.energy) - st.energy
+      oo.armour_regen = os.armour_regen_mod * (ss.armour_regen_mod * os.armour_regen + st.armour_regen) - os.armour_regen_malus - st.armour_regen
+      oo.shield_regen = os.shield_regen_mod * (ss.shield_regen_mod * os.shield_regen + st.shield_regen) - os.shield_regen_malus - st.shield_regen
+      oo.energy_regen = os.energy_regen_mod * (ss.energy_regen_mod * os.energy_regen + st.energy_regen) - os.energy_regen_malus - os.energy_loss - st.energy_regen
       -- Misc
-      oo.cargo = oo.cargo_mod * (oo.cargo + ss.cargo) - ss.cargo
+      oo.cargo = os.cargo_mod * (os.cargo + ss.cargo) - ss.cargo
 
       -- Specific corrections
       if oo.type == "Fighter Bay" then
@@ -396,7 +409,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       end
 
       -- Cache it all so we don't have to recompute
-      outfit_cache[v] = oo
+      outfit_cache[out] = oo
    end
 
    -- Figure out slots

@@ -1,5 +1,4 @@
-require("ai/tpl/generic")
-require("ai/personality/patrol")
+require 'ai.core.core'
 require "numstring"
 
 -- Settings
@@ -16,7 +15,7 @@ function create ()
    if rnd.int() > 0.4 then
       mem.bribe_no = _("\"I shall especially enjoy your death.\"")
    else
-      bribe_no = {
+      local bribe_no = {
             _("\"You insult my honour.\""),
             _("\"I find your lack of honour disturbing.\""),
             _("\"You disgust me.\""),
@@ -27,9 +26,9 @@ function create ()
    end
 
    -- Handle refueling
-   p = player.pilot()
+   local p = player.pilot()
    if p:exists() then
-      standing = ai.getstanding( p ) or -1
+      local standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 1000, 3000 )
       if standing < 50 then
          mem.refuel_no = _("\"Mare magno turbantibus. That means that I don't care about your problems.\"")
@@ -53,7 +52,7 @@ function taunt ( target, offense )
    end
 
    -- Offense is not actually used
-   taunts = {
+   local taunts = {
        _("Alea iacta est!"),
        _("Morituri te salutant!"),
        _("Your head will make a great trophy!"),

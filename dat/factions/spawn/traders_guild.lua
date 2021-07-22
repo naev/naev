@@ -1,83 +1,81 @@
-local scom = require "factions/spawn/lib/common"
+local scom = require "factions.spawn.lib.common"
 
 
 -- @brief Spawns a small trade fleet.
 function spawn_patrol ()
-    local pilots = {}
-    local r = rnd.rnd()
+   local pilots = {}
+   local r = rnd.rnd()
 
-    if r < 0.5 then
-       scom.addPilot( pilots, "Traders Guild Llama", 20 )
-    elseif r < 0.8 then
-       scom.addPilot( pilots, "Traders Guild Llama", 20 )
-       scom.addPilot( pilots, "Traders Guild Llama", 20 )
-    else
-       scom.addPilot( pilots, "Traders Guild Llama", 20 )
-       scom.addPilot( pilots, "Traders Guild Koala", 40 )
-    end
+   if r < 0.5 then
+      scom.addPilot( pilots, "Llama", 20 )
+   elseif r < 0.8 then
+      scom.addPilot( pilots, "Llama", 20 )
+      scom.addPilot( pilots, "Llama", 20 )
+   else
+      scom.addPilot( pilots, "Llama", 20 )
+      scom.addPilot( pilots, "Koala", 40 )
+   end
 
-    return pilots
+   return pilots
 end
 
 
 -- @brief Spawns a larger trade fleet.
 function spawn_squad ()
-    local pilots = {}
-    local r = rnd.rnd()
+   local pilots = {}
+   local r = rnd.rnd()
 
-    if r < 0.5 then
-       scom.addPilot( pilots, "Traders Guild Koala", 40 )
-       scom.addPilot( pilots, "Traders Guild Gawain", 20 )
-       scom.addPilot( pilots, "Traders Guild Gawain", 20 )
-    elseif r < 0.8 then
-       scom.addPilot( pilots, "Traders Guild Mule", 45 )
-       scom.addPilot( pilots, "Traders Guild Llama", 20 )
-       scom.addPilot( pilots, "Traders Guild Quicksilver", 20 )
-       scom.addPilot( pilots, "Traders Guild Rhino", 35 )
-    else
-       scom.addPilot( pilots, "Traders Guild Llama", 20 )
-       scom.addPilot( pilots, "Traders Guild Mule", 45 )
-       scom.addPilot( pilots, "Traders Guild Gawain", 20 )
-       scom.addPilot( pilots, "Traders Guild Rhino", 35 )
-       scom.addPilot( pilots, "Traders Guild Quicksilver", 20 )
-    end
+   if r < 0.5 then
+      scom.addPilot( pilots, "Koala", 40 )
+      scom.addPilot( pilots, "Gawain", 20 )
+      scom.addPilot( pilots, "Gawain", 20 )
+   elseif r < 0.8 then
+      scom.addPilot( pilots, "Mule", 45 )
+      scom.addPilot( pilots, "Llama", 20 )
+      scom.addPilot( pilots, "Quicksilver", 20 )
+      scom.addPilot( pilots, "Rhino", 35 )
+   else
+      scom.addPilot( pilots, "Llama", 20 )
+      scom.addPilot( pilots, "Mule", 45 )
+      scom.addPilot( pilots, "Gawain", 20 )
+      scom.addPilot( pilots, "Rhino", 35 )
+      scom.addPilot( pilots, "Quicksilver", 20 )
+   end
 
-    return pilots
+   return pilots
 end
 
 
 -- @brief Creation hook.
 function create ( max )
-    local weights = {}
+   local weights = {}
 
-    -- Create weights for spawn table
-    weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
+   -- Create weights for spawn table
+   weights[ spawn_patrol  ] = 100
+   weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
 
-    -- Create spawn table base on weights
-    spawn_table = scom.createSpawnTable( weights )
+   -- Create spawn table base on weights
+   spawn_table = scom.createSpawnTable( weights )
 
-    -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
+   -- Calculate spawn data
+   spawn_data = scom.choose( spawn_table )
 
-    return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
+   return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
 end
 
 
 -- @brief Spawning hook
 function spawn ( presence, max )
-    local pilots
-
-    -- Over limit
-    if presence > max then
+   -- Over limit
+   if presence > max then
        return 5
-    end
+   end
 
-    -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data, "Traders Guild" )
+   -- Actually spawn the pilots
+   local pilots = scom.spawn( spawn_data, "Traders Guild" )
 
-    -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
+   -- Calculate spawn data
+   spawn_data = scom.choose( spawn_table )
 
-    return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
+   return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
 end

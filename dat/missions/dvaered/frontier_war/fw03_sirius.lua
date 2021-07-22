@@ -656,7 +656,7 @@ end
 
 -- Spawn Hamelsen and make her escape
 function spawnHamelsen( origin )
-   hamelsen = pilot.add( "Schroedinger", "Civilian", origin , _("Civilian Schroedinger") )
+   hamelsen = pilot.add( "Schroedinger", "Independent", origin )
    hamelsen:setInvincible()
    hamelsen:setFaction("Warlords")
    hamelsen:rename(_("Colonel Hamelsen"))

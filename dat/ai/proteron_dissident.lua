@@ -1,5 +1,4 @@
-require("ai/tpl/generic")
-require("ai/personality/civilian")
+require 'ai.core.core'
 require "numstring"
 
 
@@ -25,11 +24,10 @@ function create ()
 
    -- Refuel
    mem.refuel = rnd.rnd( 1000, 3000 )
-   p = player.pilot()
+   local p = player.pilot()
    if p:exists() then
-      standing = ai.getstanding( p ) or -1
       mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
-            creditstring(mem.refuel));
+            creditstring(mem.refuel))
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system

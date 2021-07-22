@@ -3,7 +3,7 @@
 <mission name="Sightseeing">
  <avail>
   <priority>4</priority>
-  <cond>planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Civilian"] ~= nil and system.cur():presences()["Civilian"] &gt; 0</cond>
+  <cond>planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
   <chance>460</chance>
   <location>Computer</location>
   <faction>Dvaered</faction>
@@ -156,7 +156,7 @@ end
 
 
 function accept ()
-   if player.pilot():ship():class() ~= "Luxury Yacht" then
+   if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
       if tk.yesno( nolux_title, nolux_text:format( creditstring(credits_nolux) ) ) then
          nolux_known = true
          misn.setReward( creditstring( credits_nolux ) )
@@ -182,7 +182,7 @@ end
 
 function enter ()
    if system.cur() == missys and not job_done then
-      if player.pilot():ship():class() ~= "Luxury Yacht" then
+      if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
          nolux = true
       end
       set_marks()

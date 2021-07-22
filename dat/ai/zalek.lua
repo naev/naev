@@ -1,5 +1,4 @@
-require("ai/tpl/generic")
-require("ai/personality/patrol")
+require 'ai.core.core'
 require "numstring"
 
 -- We’ll consider the Za'lek prefer to turn a bad (i.e. battle) situation into
@@ -35,7 +34,7 @@ function create()
    -- Get refuel chance
    local p = player.pilot()
    if p:exists() then
-      standing = ai.getstanding( p ) or -1
+      local standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 1000, 2000 )
       if standing < -10 then
          mem.refuel_no = _("\"I do not have fuel to spare.\"")
@@ -72,10 +71,11 @@ end
 
 function taunt ( target, offense )
    -- Only 50% of actually taunting.
-   if rnd.rnd(0,1) == 0 then
+   if rnd.rnd(0,1) == 0 and not mem.isdrone then
       return
    end
 
+   local taunts
    if offense then
       taunts = {
          _("Move drones in to engage. Cook this clown!"),

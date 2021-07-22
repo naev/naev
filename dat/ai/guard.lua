@@ -1,4 +1,4 @@
-require("ai/tpl/generic")
+require 'ai.core.core'
 
 --[[
 
@@ -12,7 +12,6 @@ mem.atk_kill      = true
 mem.atk_board     = false
 mem.bribe_no      = _("You can't bribe me!")
 mem.refuel_no     = _("I won't give you fuel!")
-mem.doscans       = true
 mem.guardpos      = vec2.new( 0, 0 ) -- defaults to origin
 mem.guardbrake    = 500
 mem.guarddodist   = 3000 -- distance at which to start activities
@@ -74,6 +73,7 @@ function control ()
    if ai.dist(mem.guardpos) > mem.guardreturndist then
       -- Try to return
       ai.pushtask( "moveto", mem.guardpos )
+      return
    end
 
    -- Then do normal control

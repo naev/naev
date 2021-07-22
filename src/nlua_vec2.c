@@ -33,6 +33,7 @@ static int vectorL_mul__( lua_State *L );
 static int vectorL_mul( lua_State *L );
 static int vectorL_div__( lua_State *L );
 static int vectorL_div( lua_State *L );
+static int vectorL_dot( lua_State *L );
 static int vectorL_get( lua_State *L );
 static int vectorL_polar( lua_State *L );
 static int vectorL_set( lua_State *L );
@@ -51,6 +52,7 @@ static const luaL_Reg vector_methods[] = {
    { "mul", vectorL_mul__ },
    { "__div", vectorL_div },
    { "div", vectorL_div__ },
+   { "dot", vectorL_dot },
    { "get", vectorL_get },
    { "polar", vectorL_polar },
    { "set", vectorL_set },
@@ -450,6 +452,23 @@ static int vectorL_div__( lua_State *L )
    /* Actually add it */
    vect_cset( v1, v1->x / mod, v1->y / mod );
    lua_pushvector( L, *v1 );
+   return 1;
+}
+
+
+/**
+ * @brief Dot product of two vectors.
+ *
+ *    @luatparam Vec2 a First vector.
+ *    @luatparam Vec2 b Second vector.
+ *    @luatreturn Vec2 The dot product.
+ * @luafunc dot
+ */
+static int vectorL_dot( lua_State *L )
+{
+   Vector2d *a = luaL_checkvector(L,1);
+   Vector2d *b = luaL_checkvector(L,2);
+   lua_pushnumber( L, a->x*b->x + a->y*b->y );
    return 1;
 }
 

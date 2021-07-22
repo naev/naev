@@ -1,22 +1,19 @@
-local scom = require "factions/spawn/lib/common"
-local merc = require "factions/spawn/lib/mercenary"
+local scom = require "factions.spawn.lib.common"
 
-local formation = require "scripts/formation"
+local formation = require "scripts.formation"
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
-   local pilots = {}
+   local pilots = { __doscans = true }
    local r = rnd.rnd()
 
-   if r < pbm then
-      pilots = merc.spawnLtMerc("Empire")
-   elseif r < 0.5 then
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
+   if r < 0.5 then
+      scom.addPilot( pilots, "Empire Lancelot", 25 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
+      scom.addPilot( pilots, "Empire Lancelot", 25 )
+      scom.addPilot( pilots, "Empire Shark", 20 )
    else
-      scom.addPilot( pilots, "Empire Pacifier", 75 );
+      scom.addPilot( pilots, "Empire Pacifier", 75 )
    end
 
    return pilots
@@ -26,21 +23,22 @@ end
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
    local pilots = {}
+   if rnd.rnd() < 0.5 then
+      pilots.__doscans = true
+   end
    local r = rnd.rnd()
 
-   if r < pbm then
-      pilots = spawnMdMerc("Empire")
-   elseif r < 0.5 then
-      scom.addPilot( pilots, "Empire Shark", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 45 );
+   if r < 0.5 then
+      scom.addPilot( pilots, "Empire Admonisher", 45 )
+      scom.addPilot( pilots, "Empire Lancelot", 25 )
+      scom.addPilot( pilots, "Empire Shark", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 45 );
+      scom.addPilot( pilots, "Empire Admonisher", 45 )
+      scom.addPilot( pilots, "Empire Lancelot", 25 )
    else
-      scom.addPilot( pilots, "Empire Shark", 20 );
-      scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Pacifier", 75 );
+      scom.addPilot( pilots, "Empire Pacifier", 75 )
+      scom.addPilot( pilots, "Empire Lancelot", 25 )
+      scom.addPilot( pilots, "Empire Shark", 20 )
    end
 
    return pilots
@@ -50,33 +48,27 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
    local pilots = {}
-   pilots.__fleet = true
+   local r = rnd.rnd()
 
-   if rnd.rnd() < pbm then
-      pilots = spawnBgMerc("Empire")
+   -- Generate the capship
+   if r < 0.7 then
+      scom.addPilot( pilots, "Empire Hawking", 140 )
    else
-      local r = rnd.rnd()
+      scom.addPilot( pilots, "Empire Peacemaker", 165 )
+   end
 
-      -- Generate the capship
-      if r < 0.7 then
-         scom.addPilot( pilots, "Empire Hawking", 140 )
-      else
-         scom.addPilot( pilots, "Empire Peacemaker", 165 )
-      end
-
-      -- Generate the escorts
-      r = rnd.rnd()
-      if r < 0.5 then
-         scom.addPilot( pilots, "Empire Shark", 20 );
-         scom.addPilot( pilots, "Empire Lancelot", 25 );
-         scom.addPilot( pilots, "Empire Lancelot", 25 );
-      elseif r < 0.8 then
-         scom.addPilot( pilots, "Empire Lancelot", 25 );
-         scom.addPilot( pilots, "Empire Admonisher", 45 );
-      else
-         scom.addPilot( pilots, "Empire Lancelot", 25 );
-         scom.addPilot( pilots, "Empire Pacifier", 75 );
-      end
+   -- Generate the escorts
+   r = rnd.rnd()
+   if r < 0.5 then
+      scom.addPilot( pilots, "Empire Lancelot", 25 )
+      scom.addPilot( pilots, "Empire Lancelot", 25 )
+      scom.addPilot( pilots, "Empire Shark", 20 )
+   elseif r < 0.8 then
+      scom.addPilot( pilots, "Empire Admonisher", 45 )
+      scom.addPilot( pilots, "Empire Lancelot", 25 )
+   else
+      scom.addPilot( pilots, "Empire Pacifier", 75 )
+      scom.addPilot( pilots, "Empire Lancelot", 25 )
    end
 
    return pilots
@@ -87,7 +79,6 @@ end
 -- @brief Spawns a fleet.
 function spawn_fleet ()
    local pilots = {}
-   pilots.__fleet = true
    pilots.__formation = formation.random_key()
 
    scom.addPilot( pilots, "Empire Peacemaker", 165 )
@@ -139,15 +130,13 @@ end
 
 -- @brief Spawning hook
 function spawn ( presence, max )
-   local pilots
-
    -- Over limit
    if presence > max then
       return 5
    end
 
    -- Actually spawn the pilots
-   pilots = scom.spawn( spawn_data, "Empire" )
+   local pilots = scom.spawn( spawn_data, "Empire" )
 
    -- Calculate spawn data
    spawn_data = scom.choose( spawn_table )

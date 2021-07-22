@@ -27,22 +27,6 @@
   </enemies>
  </faction>
  <faction>
-  <name>Civilian</name>
-  <ai>civilian</ai>
-  <static />
-  <invisible />
-  <known />
-  <player>0</player>
-  <colour>black</colour>
-  <spawn>civilian</spawn>
-  <standing>static</standing>
-  <allies>
-  </allies>
-  <enemies>
-   <enemy>Pirate</enemy>
-  </enemies>
- </faction>
- <faction>
   <name>Trader</name>
   <ai>trader</ai>
   <static />
@@ -109,7 +93,6 @@
   <allies>
   </allies>
   <enemies>
-   <enemy>Civilian</enemy>
    <enemy>Collective</enemy>
    <enemy>Comingout_associates</enemy>
    <enemy>Dvaered</enemy>

@@ -1,4 +1,4 @@
-require("ai/include/basic")
+require 'ai.core.core'
 --[[
 -- Dummy AI - does nothing except brake and then float around.
 --]]
@@ -7,23 +7,18 @@ require("ai/include/basic")
 control_rate = 2
 
 function create ()
-   ai.pushtask( "idle" )
    ai.pushtask( "brake" )
 end
 
 -- No need for control
-function control ()
-end
-function control_manual ()
-end
+function control () end
+function control_manual () end
 
 -- No response
-function attacked ( attacker )
-end
+function attacked ( attacker ) end
 
 -- Does nothing
-function idle ()
-end
+function idle () end
 
 -- Brakes the pilot
 function brake ()

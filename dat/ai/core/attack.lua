@@ -9,18 +9,18 @@
 --]]
 
 -- Utilities
-require("ai/include/atk_util")
-require("ai/include/atk_target")
+require("ai/core/attack/util")
+require("ai/core/attack/target")
 
 -- Attack profiles
-require("ai/include/atk_generic")
-require("ai/include/atk_fighter")
-require("ai/include/atk_bomber")
-require("ai/include/atk_corvette")
-require("ai/include/atk_capital")
---require("ai/include/atk_cruiser")
---require("ai/include/atk_carrier")
-require("ai/include/atk_drone")
+require("ai/core/attack/generic")
+require("ai/core/attack/fighter")
+require("ai/core/attack/bomber")
+require("ai/core/attack/corvette")
+require("ai/core/attack/capital")
+--require("ai/core/attack/cruiser")
+--require("ai/core/attack/carrier")
+require("ai/core/attack/drone")
 
 -- Set attack variables
 mem.atk_changetarget  = 2 -- Distance at which target changes
@@ -32,7 +32,6 @@ mem.atk_minammo       = 0.1 -- Percent of ammo necessary to do ranged attacks
 mem.ranged_ammo       = 0 -- How much ammo is left, we initialize to 0 here just in case
 mem.aggressive        = true --whether to take the more aggressive or more evasive option when given
 mem.recharge          = false --whether to hold off shooting to avoid running dry of energy
-
 
 --[[
 -- Wrapper for the think functions.
@@ -112,11 +111,11 @@ function attack_choose ()
    if class == "Bomber" then
       atk_bomber_init()
 
+   elseif class == "Interceptor" then
+      atk_drone_init()
+
    elseif class == "Fighter" then
       atk_fighter_init()
-
-   elseif class == "Drone" then
-      atk_drone_init()
 
    -- Medium ships
    elseif class == "Corvette" then
@@ -127,6 +126,9 @@ function attack_choose ()
       atk_capital_init()
 
    elseif class == "Cruiser" then
+      atk_capital_init()
+
+   elseif class == "Battleship" then
       atk_capital_init()
 
    elseif class == "Carrier" then

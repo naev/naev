@@ -4,7 +4,7 @@
  <GFX sx="12" sy="12">goddard</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Cruiser</class>
+ <class>Battleship</class>
  <price>6000000</price>
  <time_mod>1.4</time_mod>
  <trail_generator x="-17" y="20" h="0" />

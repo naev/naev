@@ -367,9 +367,9 @@ void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate );
 /* Misc modification. */
 int planet_setFaction( Planet *p, int faction );
 /* Land related stuff. */
-char planet_getColourChar( Planet *p );
-const char *planet_getSymbol( Planet *p );
-const glColour* planet_getColour( Planet *p );
+char planet_getColourChar( const Planet *p );
+const char *planet_getSymbol( const Planet *p );
+const glColour* planet_getColour( const Planet *p );
 void planet_updateLand( Planet *p );
 
 
@@ -377,8 +377,8 @@ void planet_updateLand( Planet *p );
  * jump stuff
  */
 JumpPoint* jump_get( const char* jumpname, const StarSystem* sys );
-JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
-const char *jump_getSymbol( JumpPoint *jp );
+JumpPoint* jump_getTarget( const StarSystem* target, const StarSystem* sys );
+const char *jump_getSymbol( const JumpPoint *jp );
 
 /*
  * system adding/removing stuff.
