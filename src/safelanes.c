@@ -954,12 +954,12 @@ static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_den
    cholmod_dense *out = cholmod_allocate_dense( M, N, M, CHOLMOD_REAL, &C );
    double alpha = 1, beta = 0;
    BLASFUNC(dgemm)( transA ? "T" : "N", "N", &M, &N, &K, &alpha, A->x, &lda, B->x, &ldb, &beta, out->x, &ldc);
-#else
+#else /* I_LOVE_FORTRAN */
    size_t M = transA ? A->ncol : A->nrow, K = transA ? A->nrow : A->ncol, N = B->ncol;
    assert( K == B->nrow );
    cholmod_dense *out = cholmod_allocate_dense( M, N, M, CHOLMOD_REAL, &C );
    cblas_dgemm( CblasColMajor, transA?CblasTrans:CblasNoTrans, CblasNoTrans, M, N, K, 1, A->x, A->d, B->x, B->d, 0, out->x, out->d);
-#endif
+#endif /* I_LOVE_FORTRAN */
    return out;
 }
 
@@ -971,7 +971,7 @@ static double safelanes_row_dot_row( cholmod_dense* A, cholmod_dense* B, int i, 
 #if I_LOVE_FORTRAN
    blasint N = A->ncol, incA = A->d, incB = B->d;
    return BLASFUNC(ddot)( &N, (double*)A->x + i, &incA, (double*)B->x + j, &incB);
-#else
+#else /* I_LOVE_FORTRAN */
    return cblas_ddot( A->ncol, (double*)A->x + i, A->d, (double*)B->x + j, B->d);
-#endif
+#endif /* I_LOVE_FORTRAN */
 }
