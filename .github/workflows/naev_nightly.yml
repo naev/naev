@@ -214,7 +214,8 @@ jobs:
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
-              -Ddocs_lua=disabled
+              -Ddocs_lua=disabled \
+              -Dsteamruntime=true
 
       - name: Meson Compile
         run: |
