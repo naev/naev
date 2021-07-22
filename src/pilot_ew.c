@@ -39,7 +39,8 @@ static double ew_interference = 1.; /**< Interference factor. */
  */
 static void pilot_ewUpdate( Pilot *p );
 static double pilot_ewMass( double mass );
-static double pilot_ewAsteroid( Pilot *p );
+static double pilot_ewAsteroid( const Pilot *p );
+static double pilot_ewJumpPoint( const Pilot *p );
 static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, int *isplayer );
 
 
@@ -104,7 +105,7 @@ static void pilot_ewUpdate( Pilot *p )
    p->ew_detection = p->ew_mass * p->ew_asteroid / p->stats.ew_hide;
    p->ew_evasion   = p->ew_detection * 0.75 * ew_interference / p->stats.ew_evade;
    /* For stealth we apply the ew_asteroid and ew_interference bonus outside of the max, so that it can go below 1000 with in-system features. */
-   p->ew_stealth   = MAX( 1000., p->ew_mass / p->stats.ew_hide * 0.25 / p->stats.ew_stealth ) * p->ew_asteroid * ew_interference;
+   p->ew_stealth   = MAX( 1000., p->ew_mass / p->stats.ew_hide * 0.25 / p->stats.ew_stealth ) * p->ew_asteroid * ew_interference * p->ew_jumppoint;
 }
 
 
@@ -134,6 +135,7 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
 
    /* Electronic warfare values. */
    p->ew_asteroid = pilot_ewAsteroid( p );
+   p->ew_jumppoint = pilot_ewJumpPoint( p );
    pilot_ewUpdate( p );
 
    /* Scanning values. */
@@ -164,7 +166,7 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
  *    @param mass Mass to get the electronic warfare mass modifier of.
  *    @return The electronic warfare mass modifier.
  */
-double pilot_ewMass( double mass )
+static double pilot_ewMass( double mass )
 {
    return pow(mass, 1./1.8) * 350.;
 }
@@ -176,7 +178,7 @@ double pilot_ewMass( double mass )
  *    @param p Pilot.
  *    @return The electronic warfare asteroid modifier.
  */
-double pilot_ewAsteroid( Pilot *p )
+static double pilot_ewAsteroid( const Pilot *p )
 {
    int i;
 
@@ -185,6 +187,33 @@ double pilot_ewAsteroid( Pilot *p )
       return 1. / (1. + 0.4*cur_system->asteroids[i].density);
    else
       return 1.;
+}
+
+
+/**
+ * @brief Gets the electronic warfare jump point modifier.
+ *
+ *    @param p Pilot.
+ *    @return The electronic warfare jump point modifier.
+ */
+static double pilot_ewJumpPoint( const Pilot *p )
+{
+   int i;
+   JumpPoint *jp;
+   double d2;
+
+   /* Don't have to really check when not in stealth. */
+   if (!pilot_isFlag(p,PILOT_STEALTH))
+      return 1.;
+
+   /* Gets lower when near jump. */
+   for (i=0; i<array_size(cur_system->jumps); i++) {
+      jp = &cur_system->jumps[i];
+      d2 = vect_dist2( &jp->pos, &p->solid->pos );
+      if (d2 <= pow2(2500.))
+         return MAX( 0.5, sqrt(d2) / 2500.);
+   }
+   return 1.;
 }
 
 
