@@ -161,7 +161,7 @@ function approach_guide ()
       {name=_("Unlock Warrior Challenge"), cost=500, type="var", var="gauntlet_unlock_warrior",
          description=_("Unlocks participation in the difficult Warrior Challenge meant for Corvette and Destroyer-class ships.")},
       {name=_("Unlock Warlord Challenge"), cost=2000, type="var", var="gauntlet_unlock_warlord",
-         description=_("Unlocks participation in the most difficult Warlord Challenge meant for Cruiser and Carrier-class ships."),
+         description=_("Unlocks participation in the most difficult Warlord Challenge meant for Cruiser, Carrier, and Battleship-class ships."),
          test=function () return var.peek("gauntlet_unlock_warrior") end },
       {name=_("Unlock Double Damage Enemies Perk"), cost=2500, type="var", var="gauntlet_unlock_doubledmgtaken",
          description=_("Unlocks the Double Damage Enemies Perk, which causes all enemies to double the amount of damage. While this increases the challenge difficulty, it also immensely increases the rewards.")},
