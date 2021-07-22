@@ -156,7 +156,7 @@ end
 
 
 function accept ()
-   if player.pilot():ship():class() ~= "Luxury Yacht" then
+   if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
       if tk.yesno( nolux_title, nolux_text:format( creditstring(credits_nolux) ) ) then
          nolux_known = true
          misn.setReward( creditstring( credits_nolux ) )
@@ -182,7 +182,7 @@ end
 
 function enter ()
    if system.cur() == missys and not job_done then
-      if player.pilot():ship():class() ~= "Luxury Yacht" then
+      if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
          nolux = true
       end
       set_marks()

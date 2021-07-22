@@ -3,7 +3,7 @@
 <mission name="Racing Skills 2">
  <avail>
   <priority>3</priority>
-  <cond>(player.pilot():ship():class() == "Yacht" or player.pilot():ship():class() == "Luxury Yacht") and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
+  <cond>player.pilot():ship():class() == "Yacht" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3" and system.cur():presences()["Independent"] ~= nil and system.cur():presences()["Independent"] &gt; 0</cond>
   <done>Racing Skills 1</done>
   <chance>20</chance>
   <location>Bar</location>
@@ -130,7 +130,7 @@ function accept ()
 end
 
 function takeoff()
-   if player.pilot():ship():class() ~= "Yacht" and player.pilot():ship():class() ~= "Luxury Yacht" then
+   if player.pilot():ship():class() ~= "Yacht" then
       tk.msg(ftitle[1], ftext[1])
       misn.finish(false)
    end

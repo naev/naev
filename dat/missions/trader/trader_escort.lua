@@ -312,9 +312,8 @@ function spawnConvoy ()
          end
 
          local class = p:ship():class()
-         if class == "Yacht" or class == "Luxury Yacht" or class == "Scout"
-               or class == "Courier" or class == "Fighter" or class == "Bomber"
-               or class == "Drone" or class == "Heavy Drone" then
+         if class == "Yacht" or class == "Scout" or class == "Interceptor"
+               or class == "Courier" or class == "Fighter" or class == "Bomber" then
             p:addOutfit( "Unicorp PT-68 Core System" )
             p:addOutfit( "Melendez Ox XL Engine" )
             p:addOutfit( "S&K Small Cargo Hull" )
@@ -323,7 +322,7 @@ function spawnConvoy ()
             p:addOutfit( "Unicorp PT-310 Core System" )
             p:addOutfit( "Melendez Buffalo XL Engine" )
             p:addOutfit( "S&K Medium Cargo Hull" )
-         elseif class == "Cruiser" or class == "Carrier" then
+         elseif class == "Cruiser" or class == "Carrier" or class == "Battleship" then
             p:addOutfit( "Unicorp PT-310 Core System" )
             p:addOutfit( "Melendez Mammoth XL Engine" )
             p:addOutfit( "S&K Large Cargo Hull" )

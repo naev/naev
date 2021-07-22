@@ -5,7 +5,7 @@
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Bomber</class>
+ <class display="Bio-Bomber">Bomber</class>
  <price>600000</price>
  <time_mod>0.9</time_mod>
  <trail_generator x="7" y="8" h="0" always_under="1" >soromid</trail_generator>

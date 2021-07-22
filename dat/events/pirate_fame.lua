@@ -56,7 +56,7 @@ end
 local function using_impressive_ship()
    local t = player.pilot():ship():baseType()
    local c = player.pilot():ship():class()
-   return ( c == "Cruiser" or c == "Carrier" or t == "Kahan" )
+   return ( c == "Cruiser" or c == "Carrier" or c == "Battleship" )
 end
 
 function create()

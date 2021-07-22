@@ -5,7 +5,7 @@
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Cruiser</class>
+ <class>Battleship</class>
  <price>9000000</price>
  <time_mod>1.5</time_mod>
  <trail_generator x="-42" y="11" h="7" />

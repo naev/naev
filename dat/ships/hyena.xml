@@ -4,7 +4,7 @@
  <GFX>hyena</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Fighter</class>
+ <class>Interceptor</class>
  <price>180000</price>
  <time_mod>0.75</time_mod>
  <trail_generator x="-3" y="13" h="0">nebula</trail_generator>
