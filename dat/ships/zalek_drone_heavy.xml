@@ -4,7 +4,7 @@
  <GFX>zalek_drone_heavy</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Fighter</class>
+ <class display="Robotic Fighter">Fighter</class>
  <price>150000</price>
  <time_mod>0.75</time_mod>
  <trail_generator x="-11" y="0" h="0">nebula</trail_generator>
