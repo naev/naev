@@ -3719,11 +3719,11 @@ static int pilotL_control( lua_State *L )
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
    n  = lua_gettop(L);
-   if (n>1)
+   if (n<2)
       enable = 1;
    else
       enable = lua_toboolean(L, 2);
-   if (n>2)
+   if (n<3)
       cleartasks = enable ^ pilot_isFlag(p, PILOT_MANUAL_CONTROL);
    else
       cleartasks = lua_toboolean(L, 3);
