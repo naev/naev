@@ -494,7 +494,7 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
    }
    /* Otherwise decreases. */
    else {
-      p->ew_stealth_timer -= dt * (p->ew_stealth / 10000. + mod);
+      p->ew_stealth_timer -= dt * (p->ew_stealth / 10000. + mod) * p->stats.ew_stealth_timer;
       if (p->ew_stealth_timer < 0.) {
          pilot_destealth( p );
          if (pilot_isPlayer(p))
