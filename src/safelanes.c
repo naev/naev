@@ -18,6 +18,8 @@
 #   include <cblas_openblas.h>
 #elif HAVE_CBLAS_HYPHEN_OPENBLAS_H
 #   include <cblas-openblas.h>
+#elif HAVE_ACCELERATE_ACCELERATE_H
+#   include <Accelerate/Accelerate.h>
 #elif HAVE_CBLAS_H
 #   include <cblas.h>
 #elif HAVE_F77BLAS_H
