@@ -4122,14 +4122,14 @@ int space_isInField( const Vector2d *p )
    /* Always return -1 if in an exclusion zone */
    for (i=0; i < array_size(cur_system->astexclude); i++) {
       e = &cur_system->astexclude[i];
-      if (vect_dist( p, &e->pos ) <= e->radius)
+      if (vect_dist2( p, &e->pos ) <= pow2(e->radius))
          return -1;
    }
 
    /* Check if in asteroid field */
    for (i=0; i < array_size(cur_system->asteroids); i++) {
       a = &cur_system->asteroids[i];
-      if (vect_dist( p, &a->pos ) <= a->radius)
+      if (vect_dist2( p, &a->pos ) <= pow2(a->radius))
          return i;
    }
 
