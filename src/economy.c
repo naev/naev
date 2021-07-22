@@ -17,11 +17,11 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#ifdef HAVE_SUITESPARSE_CS_H
+#if HAVE_SUITESPARSE_CS_H
 #include <suitesparse/cs.h>
-#else
+#else /* HAVE_SUITESPARSE_CS_H */
 #include <cs.h>
-#endif
+#endif /* HAVE_SUITESPARSE_CS_H */
 
 #include "naev.h"
 /** @endcond */

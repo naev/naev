@@ -27,11 +27,11 @@
 #   define I_LOVE_FORTRAN 1
 #endif
 
-#ifdef HAVE_SUITESPARSE_CHOLMOD_H
+#if HAVE_SUITESPARSE_CHOLMOD_H
 #include <suitesparse/cholmod.h>
-#else
+#else /* HAVE_SUITESPARSE_CHOLMOD_H */
 #include <cholmod.h>
-#endif
+#endif /* HAVE_SUITESPARSE_CHOLMOD_H */
 
 #include "naev.h"
 /** @endcond */
