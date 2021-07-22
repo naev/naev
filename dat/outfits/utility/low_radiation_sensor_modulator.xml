@@ -13,7 +13,8 @@
  </general>
  <specific type="modification">
   <ew_detect>25</ew_detect>
-  <jump_distance>500</jump_distance>
+  <jump_distance>200</jump_distance>
+  <stealth_timer>-25</stealth_timer>
   <lua>outfits/utility/low_radiation_sensor_modulator.lua</lua>
  </specific>
 </outfit>
