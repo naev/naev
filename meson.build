@@ -218,7 +218,8 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
-   config_data.set10('HAVE_CBLAS_H', cc.has_header('cblas.h'))
+   config_data.set10('HAVE_CBLAS_H', cc.has_header('cblas.h')
+                     or (get_option('blas') == 'Accelerate' and 'Meson' != 'smart'))
    config_data.set10('HAVE_CBLAS_OPENBLAS_H', cc.has_header('cblas_openblas.h'))
    config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.has_header('cblas-openblas.h'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept'))
@@ -261,11 +262,16 @@ if buildExec.disabled() == false
       naev_deps += cc.find_library('dl', required: true)
    endif
 
-   include_dirs = include_directories(
+   include_dirs = [include_directories(
       'src',
       'src/tk',
       'src/tk/widget'
-   )
+   )]
+
+   if get_option('blas') == 'Accelerate'
+      message('Apple has buried the cblas.h header file in a hard-to-reach spot. Check the path if the compile fails.')
+      include_dirs += include_directories('/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/Headers')
+   endif
 
    if host_machine.system() == 'darwin'
       add_languages('objc', native: false)
