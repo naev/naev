@@ -41,7 +41,7 @@ require "missions/neutral/common"
 bar_desc = _("The woman waves at you a bit desperately.")
 
 -- Mission details
-misn_title  = _("The lost Brother")
+misn_title  = _("The Lost Brother")
 misn_reward = _("Some money and a happy sister.") -- Possibly some hard to get contraband once it is introduced
 misn_desc   = {}
 misn_desc[1] = _("Locate the brother in the %s system")
