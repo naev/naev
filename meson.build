@@ -176,8 +176,12 @@ if buildExec.disabled() == false
       naev_deps += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
    endif
 
-   message('IMPORTANT NOTE ABOUT BLAS: Any working BLAS should suffice, but Meson cannot reliably pick one on all platforms, so we specify "openblas". Distros like to put the cblas header in random locations, so beware and get in touch if we fail to find yours. As of July 2021, Arch Linux users must install aur/openblas-lapack to avoid linker errors; see here: https://bugs.archlinux.org/task/59046')
-   naev_deps += cc.find_library('openblas', required: true)
+   if get_option('steamruntime') == true
+      naev_deps += cc.find_library('openblas', required: true, static: true, dependencies: ['threads'])
+   else
+      message('IMPORTANT NOTE ABOUT BLAS: Any working BLAS should suffice, but Meson cannot reliably pick one on all platforms, so we specify "openblas". Distros like to put the cblas header in random locations, so beware and get in touch if we fail to find yours. As of July 2021, Arch Linux users must install aur/openblas-lapack to avoid linker errors; see here: https://bugs.archlinux.org/task/59046')
+      naev_deps += cc.find_library('openblas', required: true)
+   endif
 
    ### Soft deps (required: false)
 
