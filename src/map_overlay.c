@@ -539,7 +539,7 @@ void ovr_render( double dt )
          col = cHostile;
       else
          col = cNeutral;
-      col.a = 0.3;
+      col.a = 0.2;
 
       /* This is a bit asinine, but should be easily replaceable by decent code when we have a System Objects API.
        * Specifically, a generic pos and isKnown test would clean this up nicely. */
