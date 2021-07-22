@@ -367,8 +367,10 @@ int space_canHyperspace( const Pilot* p )
 
    /* Check distance. */
    r = jp->radius * p->stats.jump_distance;
+   if (pilot_isFlag( p, PILOT_STEALTH )) /* Stealth gives a jump distance bonus. */
+      r *= 2.;
    d = vect_dist2( &p->solid->pos, &jp->pos );
-   if (d > r*r)
+   if (d > pow2(r))
       return 0;
    return 1;
 }
