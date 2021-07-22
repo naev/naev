@@ -185,10 +185,21 @@ glpk_dependencies = [dependency('zlib')]
 if 'SuiteSparse' in get_option('force_fallback_for')
    glpk_dependencies += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
 else
-   glpk_dependencies += cc.find_library('amd', required: true)
-   glpk_dependencies += cc.find_library('colamd', required: true)
-   glpk_args += cc.has_header('suitesparse/amd.h') ? ['-DHAVE_SUITESPARSE_AMD_H=1'] : []
-   glpk_args += cc.has_header('suitesparse/colamd.h') ? ['-DHAVE_SUITESPARSE_COLAMD_H=1'] : []
+   amd = cc.find_library('amd', has_headers: ['suitesparse/amd.h'], required: false)
+   if amd.found()
+      glpk_args += '-DHAVE_SUITESPARSE_AMD_H=1'
+   else
+      amd = cc.find_library('amd', has_headers: ['amd.h'], required: true)
+   endif
+
+   colamd = cc.find_library('colamd', has_headers: ['suitesparse/colamd.h'], required: false)
+   if colamd.found()
+      glpk_args += '-DHAVE_SUITESPARSE_COLAMD_H=1'
+   else
+      colamd = cc.find_library('colamd', has_headers: ['colamd.h'], required: true)
+   endif
+
+   glpk_dependencies += [amd, colamd]
 endif
 
 libglpk = static_library(

@@ -132,7 +132,13 @@ if buildExec.disabled() == false
 
    if use_system_suitesparse
       foreach csparse_name : ['csparse', 'cxsparse']
-         system_csparse = cc.find_library(csparse_name, required: false)
+         system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['suitesparse/cs.h'])
+         use_system_suitesparse = system_csparse.found()
+         if system_csparse.found()
+            config_data.set10('HAVE_SUITESPARSE_CS_H', true)
+            break
+         endif
+         system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['cs.h'])
          use_system_suitesparse = system_csparse.found()
          if system_csparse.found()
             break
@@ -144,8 +150,14 @@ if buildExec.disabled() == false
          error('Failed to find an installation of c[x]sparse. See above note about SuiteSparse.')
       endif
 
-      system_cholmod = cc.find_library('cholmod', required: false)
+      system_cholmod = cc.find_library('cholmod', required: false, has_headers: ['suitesparse/cholmod.h'])
       use_system_suitesparse = system_cholmod.found()
+      if system_cholmod.found()
+         config_data.set10('HAVE_SUITESPARSE_CHOLMOD_H', true)
+      else
+         system_cholmod = cc.find_library('cholmod', required: false, has_headers: ['cholmod.h'])
+         use_system_suitesparse = system_cholmod.found()
+      endif
       if system_cholmod.found()
          naev_deps += system_cholmod
       else
@@ -206,8 +218,6 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
-   config_data.set10('HAVE_SUITESPARSE_CHOLMOD_H', cc.has_header('suitesparse/cholmod.h'))
-   config_data.set10('HAVE_SUITESPARSE_CS_H', cc.has_header('suitesparse/cs.h'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
