@@ -176,8 +176,11 @@ if buildExec.disabled() == false
       naev_deps += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
    endif
 
-   message('IMPORTANT NOTE ABOUT BLAS: Any working BLAS should suffice, but Meson cannot reliably pick one on all platforms, so we specify "openblas". Distros like to put the cblas header in random locations, so beware and get in touch if we fail to find yours. As of July 2021, Arch Linux users must install aur/openblas-lapack to avoid linker errors; see here: https://bugs.archlinux.org/task/59046')
-   naev_deps += cc.find_library('openblas', required: true)
+   blas = get_option('blas') == 'Accelerate' ? dependency('Accelerate', required: true) : cc.find_library(get_option('blas'), required: true)
+   # It would be nice to detect the functions and just embed the prototypes. Problem is, we might not know the int width to use...
+   #config_data.set10('HAVE_BLAS_CBLAS_FUNC', cc.has_function('cblas_ddot', dependencies: blas))
+   #config_data.set10('HAVE_BLAS_FUNC_', cc.has_function('ddot_', dependencies: blas))
+   naev_deps += blas
 
    ### Soft deps (required: false)
 
@@ -208,10 +211,12 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
+   config_data.set10('HAVE_CBLAS_H', cc.has_header('cblas.h'))
    config_data.set10('HAVE_CBLAS_OPENBLAS_H', cc.has_header('cblas_openblas.h'))
    config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.has_header('cblas-openblas.h'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
+   config_data.set10('HAVE_F77BLAS_H', cc.has_header('f77blas.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
    config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.has_header('openblas/cblas.h'))

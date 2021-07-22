@@ -13,13 +13,16 @@
 #include <math.h>
 
 #if HAVE_OPENBLAS_CBLAS_H
-#include <openblas/cblas.h>
+#   include <openblas/cblas.h>
 #elif HAVE_CBLAS_OPENBLAS_H
-#include <cblas_openblas.h>
+#   include <cblas_openblas.h>
 #elif HAVE_CBLAS_HYPHEN_OPENBLAS_H
-#include <cblas-openblas.h>
-#else
-#include <cblas.h>
+#   include <cblas-openblas.h>
+#elif HAVE_CBLAS_H
+#   include <cblas.h>
+#elif HAVE_F77BLAS_H
+#   include <f77blas.h>
+#   define I_LOVE_FORTRAN 1
 #endif
 
 #ifdef HAVE_SUITESPARSE_CHOLMOD_H
@@ -945,10 +948,18 @@ static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPr
 /** @brief Dense times dense matrix. Return A*B, or A'*B if transA is true. */
 static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_dense* B )
 {
+#if I_LOVE_FORTRAN
+   blasint M = transA ? A->ncol : A->nrow, K = transA ? A->nrow : A->ncol, N = B->ncol, lda = A->d, ldb = B->d, ldc = M;
+   assert( K == (blasint) B->nrow );
+   cholmod_dense *out = cholmod_allocate_dense( M, N, M, CHOLMOD_REAL, &C );
+   double alpha = 1, beta = 0;
+   BLASFUNC(dgemm)( transA ? "T" : "N", "N", &M, &N, &K, &alpha, A->x, &lda, B->x, &ldb, &beta, out->x, &ldc);
+#else
    size_t M = transA ? A->ncol : A->nrow, K = transA ? A->nrow : A->ncol, N = B->ncol;
    assert( K == B->nrow );
    cholmod_dense *out = cholmod_allocate_dense( M, N, M, CHOLMOD_REAL, &C );
    cblas_dgemm( CblasColMajor, transA?CblasTrans:CblasNoTrans, CblasNoTrans, M, N, K, 1, A->x, A->d, B->x, B->d, 0, out->x, out->d);
+#endif
    return out;
 }
 
@@ -957,5 +968,10 @@ static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_den
 static double safelanes_row_dot_row( cholmod_dense* A, cholmod_dense* B, int i, int j )
 {
    assert( A->ncol == B->ncol );
+#if I_LOVE_FORTRAN
+   blasint N = A->ncol, incA = A->d, incB = B->d;
+   return BLASFUNC(ddot)( &N, (double*)A->x + i, &incA, (double*)B->x + j, &incB);
+#else
    return cblas_ddot( A->ncol, (double*)A->x + i, A->d, (double*)B->x + j, B->d);
+#endif
 }
