@@ -134,8 +134,8 @@ end
 function enter()
    if system.cur() == system.get(destsysname) then
       -- Create the custom factions
-      hawkfaction = faction.dynAdd( "Dummy", "The Hawk", _("The Hawk"), "dvaered_norun" )
-      attkfaction = faction.dynAdd( "Dummy", "Attackers", _("Attackers"), "dvaered_norun" )
+      hawkfaction = faction.dynAdd( "Dummy", "The Hawk", _("The Hawk"), {ai="dvaered_norun"} )
+      attkfaction = faction.dynAdd( "Dummy", "Attackers", _("Attackers"), {ai="dvaered_norun"} )
       faction.dynEnemy( hawkfaction, attkfaction )
 
       -- Spawn people

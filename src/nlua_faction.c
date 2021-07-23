@@ -561,13 +561,14 @@ static int factionL_setknown( lua_State *L )
  *    @luatparam Faction base Faction to base it off of or nil for new faction.
  *    @luatparam string name Name to give the faction.
  *    @luatparam[opt] string display Display name to give the faction.
- *    @luatparam[opt] string ai Default pilot AI to give the faction.
+ *    @luatparam[opt] table params Table of parameters.
  * @luafunc dynAdd
  */
 static int factionL_dynAdd( lua_State *L )
 {
-   LuaFaction fac;
+   LuaFaction fac, newfac;
    const char *name, *display, *ai;
+   int clear_allies, clear_enemies;
 
    NLUA_CHECKRW(L);
 
@@ -577,13 +578,41 @@ static int factionL_dynAdd( lua_State *L )
       fac   = -1;
    name     = luaL_checkstring(L,2);
    display  = luaL_optstring(L,3,name);
-   ai       = luaL_optstring(L,4,NULL);
+
+   /* Parse parameters. */
+   if (lua_istable(L,4)) {
+      lua_getfield(L,4,"ai");
+      ai    = luaL_optstring(L,-1,NULL);
+      lua_pop(L,1);
+
+      lua_getfield(L,4,"clear_allies");
+      clear_allies = lua_toboolean(L,-1);
+      lua_pop(L,1);
+
+      lua_getfield(L,4,"clear_enemies");
+      clear_enemies = lua_toboolean(L,-1);
+      lua_pop(L,1);
+   }
+   else {
+      ai             = NULL;
+      clear_allies   = 0;
+      clear_enemies  = 0;
+   }
 
    /* Check if exists. */
    if (faction_exists(name))
       NLUA_ERROR(L,_("Faction '%s' already exists!"), name);
 
-   lua_pushfaction( L, faction_dynAdd( fac, name, display, ai ) );
+   /* Create new faction. */
+   newfac = faction_dynAdd( fac, name, display, ai );
+
+   /* Clear if necessary. */
+   if (clear_allies)
+      faction_clearAlly( newfac );
+   if (clear_enemies)
+      faction_clearEnemy( newfac );
+
+   lua_pushfaction( L, newfac );
    return 1;
 }
 
