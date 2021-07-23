@@ -102,7 +102,9 @@ function loaded ()
    misn.finish(false)
 end
 function abort ()
-   leave_the_ring()
+   if system.cur() == gauntletsys then
+      leave_the_ring()
+   end
 end
 
 --[[
