@@ -25,7 +25,7 @@ int nlua_loadShip( nlua_env env );
 Ship* lua_toship( lua_State *L, int ind );
 Ship* luaL_checkship( lua_State *L, int ind );
 Ship* luaL_validship( lua_State *L, int ind );
-Ship** lua_pushship( lua_State *L, Ship *ship );
+Ship** lua_pushship( lua_State *L, const Ship *ship );
 int lua_isship( lua_State *L, int ind );
 
 

@@ -69,7 +69,7 @@
  * player stuff
  */
 Player_t player; /**< Local player. */
-static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
+static const Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
 static credits_t player_creds = 0; /**< Temporary hack for when creating. */
 static char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 
@@ -398,7 +398,7 @@ static int player_newMake (void)
  *
  * @sa player_newShipMake
  */
-Pilot* player_newShip( Ship* ship, const char *def_name,
+Pilot* player_newShip( const Ship* ship, const char *def_name,
       int trade, int noname )
 {
    char *ship_name, *old_name;

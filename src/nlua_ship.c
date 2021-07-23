@@ -161,11 +161,11 @@ Ship* luaL_validship( lua_State *L, int ind )
  *    @param ship Ship to push.
  *    @return Newly pushed ship.
  */
-Ship** lua_pushship( lua_State *L, Ship *ship )
+Ship** lua_pushship( lua_State *L, const Ship *ship )
 {
    Ship **p;
    p = (Ship**) lua_newuserdata(L, sizeof(Ship*));
-   *p = ship;
+   *p = (Ship*) ship; // TODO fix this
    luaL_getmetatable(L, SHIP_METATABLE);
    lua_setmetatable(L, -2);
    return p;

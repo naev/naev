@@ -70,7 +70,7 @@ static const double pilot_commFade     = 5.; /**< Time for text above pilot to f
  * Prototypes
  */
 /* Create. */
-static void pilot_init( Pilot* dest, Ship* ship, const char* name, int faction, const char *ai,
+static void pilot_init( Pilot* dest, const Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
 /* Update. */
@@ -2752,7 +2752,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
  *    @param dockpilot The pilot which launched this pilot (0 if N/A).
  *    @param dockslot The outfit slot which launched this pilot (-1 if N/A).
  */
-static void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const char *ai,
+static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
@@ -2932,7 +2932,7 @@ static void pilot_init_trails( Pilot* p )
  *
  * @sa pilot_init
  */
-unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
+unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
@@ -2972,7 +2972,7 @@ unsigned int pilot_create( Ship* ship, const char* name, int faction, const char
  *    @param flags Flags for tweaking, PILOT_EMPTY is added.
  *    @return Pointer to the new pilot (not added to stack).
  */
-Pilot* pilot_createEmpty( Ship* ship, const char* name,
+Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags )
 {
    Pilot* dyn;

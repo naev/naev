@@ -225,7 +225,7 @@ typedef struct Pilot_ {
    int presence;     /**< Presence being used by the pilot. */
 
    /* Object characteristics */
-   Ship* ship;       /**< ship pilot is flying */
+   const Ship* ship; /**< ship pilot is flying */
    Solid* solid;     /**< associated solid (physics) */
    double base_mass; /**< Ship mass plus core outfit mass. */
    double mass_cargo; /**< Amount of cargo mass added. */
@@ -448,10 +448,10 @@ PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
 /*
  * creation
  */
-unsigned int pilot_create( Ship* ship, const char* name, int faction, const char *ai,
+unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot );
-Pilot* pilot_createEmpty( Ship* ship, const char* name,
+Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags );
 Pilot* pilot_replacePlayer( Pilot* after );
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla );

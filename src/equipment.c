@@ -1963,7 +1963,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
    char *shipname, buf[ECON_CRED_STRLEN], *name;
    credits_t price;
    Pilot *p;
-   Ship *s;
+   const Ship *s;
    HookParam hparam[3];
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );

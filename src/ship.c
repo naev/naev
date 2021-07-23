@@ -319,7 +319,7 @@ credits_t ship_buyPrice( const Ship* s )
  *
  * Must be freed afterwards.
  */
-glTexture* ship_loadCommGFX( Ship* s )
+glTexture* ship_loadCommGFX( const Ship* s )
 {
    if (s->gfx_comm != NULL)
       return gl_newImage( s->gfx_comm, 0 );

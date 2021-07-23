@@ -144,12 +144,6 @@ static const luaL_Reg playerL_methods[] = {
 }; /**< Player Lua methods. */
 
 
-/*
- * Prototypes.
- */
-static Pilot* playerL_newShip( lua_State *L );
-
-
 /**
  * @brief Loads the player Lua library.
  *    @param env Lua environment.
@@ -1125,75 +1119,55 @@ static int playerL_rmOutfit( lua_State *L )
 
 
 /**
- * @brief Helper function for playerL_addShip.
- */
-static Pilot* playerL_newShip( lua_State *L )
-{
-   const char *name;
-   Ship *s;
-   Pilot *new_ship;
-   int noname;
-
-   /* Handle parameters. */
-   s        = luaL_validship(L, 1);
-   name     = luaL_optstring(L, 2, _(s->name) );
-   noname   = lua_toboolean(L, 3);
-
-   /* Add the ship, look in case it's cancelled. */
-   do {
-      new_ship = player_newShip( s, name, 0, noname );
-   } while (new_ship == NULL);
-
-
-   return new_ship;
-}
-
-
-/**
  * @brief Gives the player a new ship.
  *
- * @note Should be given when landed, ideally on a planet with a shipyard.
+ * @note Should be given when landed, ideally on a planet with a shipyard. Furthermore, this invalidates all player.pilot() references.
  *
  * @usage player.addShip( "Pirate Kestrel", "Seiryuu" ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
  *
  *    @luatparam string ship Name of the ship to add.
  *    @luatparam[opt] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
  *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
+ *    @luatreturn string The new ship's name.
  * @luafunc addShip
  */
 static int playerL_addShip( lua_State *L )
 {
    NLUA_CHECKRW(L);
-   playerL_newShip( L );
-   return 0;
+   Pilot *new_ship;
+   /* Handle parameters. */
+   Ship *s           = luaL_validship(L, 1);
+   const char *name  = luaL_optstring(L, 2, _(s->name) );
+   int noname        = lua_toboolean(L, 3);
+   /* Add the ship, look in case it's cancelled. */
+   do {
+      new_ship = player_newShip( s, name, 0, noname );
+   } while (new_ship == NULL);
+   /* Return the new name. */
+   lua_pushstring( L, new_ship->name );
+   return 1;
 }
 
 
 /**
- * @brief Swaps the player's current ship with a new ship given to him.
+ * @brief Swaps the player's current ship with a ship they own by name.
  *
  * @note You shouldn't use this directly unless you know what you are doing. If the player's cargo doesn't fit in the new ship, it won't be moved over and can lead to a whole slew of issues.
+ * @note This invalidates all player.pilot() references!
  *
- *    @luatparam string ship Name of the ship to add.
- *    @luatparam[opt] string name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
- *    @luatparam[opt=false] boolean noname If true does not let the player name the ship.
+ *    @luatparam string ship Name of the ship to swap to. (this is name given by the player, not ship name)
  *    @luatparam[opt=false] boolean remove If true removes the player's current ship (so it replaces and doesn't swap).
  * @luafunc swapShip
  */
 static int playerL_swapShip( lua_State *L )
 {
-   Pilot *p;
-   char *cur;
-   int remship;
-
    NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
-   remship = lua_toboolean(L,4);
-   p       = playerL_newShip( L );
-   cur     = player.p->name;
-   player_swapShip( p->name );
-   if (remship)
+   const char *str = luaL_checkstring(L,1);
+   const char *cur = player.p->name;
+   player_swapShip( str );
+   if (lua_toboolean(L,2))
       player_rmShip( cur );
 
    return 0;
@@ -1207,7 +1181,7 @@ static int playerL_swapShip( lua_State *L )
  *
  *    @luatparam string name Name of the mission to check.
  *    @luatreturn boolean true if the mission is active, false if it isn't.
- * @luafunc misnActive
+ * @luafunc misnActiv
  */
 static int playerL_misnActive( lua_State *L )
 {
