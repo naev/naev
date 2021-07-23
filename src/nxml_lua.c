@@ -180,7 +180,7 @@ static int nxml_saveJump( xmlTextWriterPtr writer, const char *name, size_t name
 static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable )
 {
    int ret, b;
-   Ship *sh;
+   const Ship *sh;
    ntime_t t;
    LuaJump *lj;
    Commodity *com;

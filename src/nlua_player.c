@@ -1136,7 +1136,7 @@ static int playerL_addShip( lua_State *L )
    NLUA_CHECKRW(L);
    Pilot *new_ship;
    /* Handle parameters. */
-   Ship *s           = luaL_validship(L, 1);
+   const Ship *s     = luaL_validship(L, 1);
    const char *name  = luaL_optstring(L, 2, _(s->name) );
    int noname        = lua_toboolean(L, 3);
    /* Add the ship, look in case it's cancelled. */
