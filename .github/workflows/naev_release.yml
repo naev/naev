@@ -216,16 +216,15 @@ jobs:
       - name: Meson Setup
         run: |
           meson setup build source \
-              --native-file='source/utils/build/linux.ini' \
+              --native-file='source/utils/build/linux_steamruntime.ini' \
               --buildtype=release \
-              --force-fallback-for=SuiteSparse \
+              --force-fallback-for=SuiteSparse,sdl2_image \
               -Dprefix="/usr" \
               -Dnightly=false \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
-              -Ddocs_lua=disabled \
-              -Dsteamruntime=true
+              -Ddocs_lua=disabled
 
       - name: Meson Compile
         run: |

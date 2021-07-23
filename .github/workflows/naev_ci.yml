@@ -39,7 +39,7 @@ jobs:
           - image: naev-linux-lts
             config: linux.ini
           - image: naev-steamruntime
-            config: linux.ini
+            config: linux_steamruntime.ini
 
     runs-on: ubuntu-latest
     container:
