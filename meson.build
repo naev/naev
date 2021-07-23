@@ -71,13 +71,8 @@ if buildExec.disabled() == false
 
    sdl = dependency('sdl2', required: true)
 
-   if get_option('steamruntime') == true
-      sdl2_image_subproj = subproject('sdl2_image')
-      sdl2_image_dep = sdl2_image_subproj.get_variable('sdl2_image_dep')
-      sdl_image = sdl2_image_dep
-   else
-      sdl_image = dependency('SDL2_image', required: true)
-   endif 
+   # SDL2_image
+   sdl_image = dependency('sdl2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
 
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
@@ -176,7 +171,7 @@ if buildExec.disabled() == false
    elif get_option('blas') == 'Accelerate'
       blas = dependency('Accelerate', required: true)
    else
-      blas = cc.find_library(get_option('blas'), required: true)
+      blas = cc.find_library(get_option('blas'), required: true, static: false)
    endif
 
    # It would be nice to detect the functions and just embed the prototypes. Problem is, we might not know the int width to use...
