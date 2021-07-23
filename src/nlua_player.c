@@ -1183,7 +1183,7 @@ static int playerL_swapShip( lua_State *L )
  *
  *    @luatparam string name Name of the mission to check.
  *    @luatreturn boolean true if the mission is active, false if it isn't.
- * @luafunc misnActiv
+ * @luafunc misnActive
  */
 static int playerL_misnActive( lua_State *L )
 {
