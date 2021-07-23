@@ -1136,7 +1136,7 @@ static Pilot* playerL_newShip( lua_State *L )
 
    /* Handle parameters. */
    s        = luaL_validship(L, 1);
-   name     = luaL_optstring(L, 2, s->name );
+   name     = luaL_optstring(L, 2, _(s->name) );
    noname   = lua_toboolean(L, 3);
 
    /* Add the ship, look in case it's cancelled. */
