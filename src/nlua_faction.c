@@ -561,7 +561,7 @@ static int factionL_setknown( lua_State *L )
  *    @luatparam Faction base Faction to base it off of or nil for new faction.
  *    @luatparam string name Name to give the faction.
  *    @luatparam[opt] string display Display name to give the faction.
- *    @luatparam[opt] table params Table of parameters.
+ *    @luatparam[opt] table params Table of parameters. Options include "ai" (string) to set the AI to use, "clear_allies" (boolean) to clear all allies, and "clear_enemies" (boolean) to clear all enemies.
  * @luafunc dynAdd
  */
 static int factionL_dynAdd( lua_State *L )
