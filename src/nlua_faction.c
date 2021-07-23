@@ -219,9 +219,8 @@ int lua_isfaction( lua_State *L, int ind )
  */
 static int factionL_eq( lua_State *L )
 {
-   int a, b;
-   a = luaL_validfaction(L,1);
-   b = luaL_validfaction(L,2);
+   int a = luaL_validfaction(L,1);
+   int b = luaL_validfaction(L,2);
    lua_pushboolean(L, a == b);
    return 1;
 }
@@ -242,8 +241,7 @@ static int factionL_eq( lua_State *L )
  */
 static int factionL_name( lua_State *L )
 {
-   int f;
-   f = luaL_validfaction(L,1);
+   int f = luaL_validfaction(L,1);
    lua_pushstring(L, faction_shortname(f));
    return 1;
 }
@@ -264,8 +262,7 @@ static int factionL_name( lua_State *L )
  */
 static int factionL_nameRaw( lua_State *L )
 {
-   int f;
-   f = luaL_validfaction(L,1);
+   int f = luaL_validfaction(L,1);
    lua_pushstring(L, faction_name(f));
    return 1;
 }
@@ -285,8 +282,7 @@ static int factionL_nameRaw( lua_State *L )
  */
 static int factionL_longname( lua_State *L )
 {
-   int f;
-   f = luaL_validfaction(L,1);
+   int f = luaL_validfaction(L,1);
    lua_pushstring(L, faction_longname(f));
    return 1;
 }
@@ -303,10 +299,8 @@ static int factionL_longname( lua_State *L )
  */
 static int factionL_areenemies( lua_State *L )
 {
-   int f, ff;
-   f  = luaL_validfaction(L,1);
-   ff = luaL_validfaction(L,2);
-
+   int f  = luaL_validfaction(L,1);
+   int ff = luaL_validfaction(L,2);
    lua_pushboolean(L, areEnemies( f, ff ));
    return 1;
 }
@@ -323,10 +317,8 @@ static int factionL_areenemies( lua_State *L )
  */
 static int factionL_areallies( lua_State *L )
 {
-   int f, ff;
-   f  = luaL_validfaction(L,1);
-   ff = luaL_validfaction(L,2);
-
+   int f  = luaL_validfaction(L,1);
+   int ff = luaL_validfaction(L,2);
    lua_pushboolean(L, areAllies( f, ff ));
    return 1;
 }
@@ -344,15 +336,10 @@ static int factionL_areallies( lua_State *L )
  */
 static int factionL_modplayer( lua_State *L )
 {
-   int f;
-   double n;
-
    NLUA_CHECKRW(L);
-
-   f = luaL_validfaction(L,1);
-   n = luaL_checknumber(L,2);
+   int f    = luaL_validfaction(L,1);
+   double n = luaL_checknumber(L,2);
    faction_modPlayer( f, n, "script" );
-
    return 0;
 }
 
@@ -369,13 +356,9 @@ static int factionL_modplayer( lua_State *L )
  */
 static int factionL_modplayersingle( lua_State *L )
 {
-   int f;
-   double n;
-
    NLUA_CHECKRW(L);
-
-   f = luaL_validfaction(L,1);
-   n = luaL_checknumber(L,2);
+   int f    = luaL_validfaction(L,1);
+   double n = luaL_checknumber(L,2);
    faction_modPlayerSingle( f, n, "script" );
 
    return 0;
@@ -395,15 +378,10 @@ static int factionL_modplayersingle( lua_State *L )
  */
 static int factionL_modplayerraw( lua_State *L )
 {
-   int f;
-   double n;
-
    NLUA_CHECKRW(L);
-
-   f = luaL_validfaction(L,1);
-   n = luaL_checknumber(L,2);
+   int f    = luaL_validfaction(L,1);
+   double n = luaL_checknumber(L,2);
    faction_modPlayerRaw( f, n );
-
    return 0;
 }
 
@@ -418,15 +396,10 @@ static int factionL_modplayerraw( lua_State *L )
  */
 static int factionL_setplayerstanding( lua_State *L )
 {
-   int f;
-   double n;
-
    NLUA_CHECKRW(L);
-
-   f = luaL_validfaction( L, 1 );
-   n = luaL_checknumber( L, 2 );
+   int f    = luaL_validfaction( L, 1 );
+   double n = luaL_checknumber( L, 2 );
    faction_setPlayer( f, n );
-
    return 0;
 }
 
@@ -577,15 +550,10 @@ static int factionL_isknown( lua_State *L )
  */
 static int factionL_setknown( lua_State *L )
 {
-   int b, fac;
-
    NLUA_CHECKRW(L);
-
-   fac = luaL_validfaction(L, 1);
-   b   = lua_toboolean(L, 2);
-
+   int fac = luaL_validfaction(L, 1);
+   int b   = lua_toboolean(L, 2);
    faction_setKnown( fac, b );
-
    return 0;
 }
 
