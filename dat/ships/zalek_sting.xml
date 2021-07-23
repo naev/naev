@@ -10,8 +10,8 @@
  <time_mod>1</time_mod>
  <trail_generator x="10" y="25" h="13">nebula</trail_generator>
  <trail_generator x="-25" y="-15" h="-9">nebula</trail_generator>
- <trail_generator x="-25" y="7" h="7">zalek</trail_generator>
- <trail_generator x="-25" y="-7" h="-7">zalek</trail_generator>
+ <trail_generator x="-25" y="7" h="7" always_under="1">zalek</trail_generator>
+ <trail_generator x="-25" y="-7" h="-7" always_under="1">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>The Sting Corvette is rather large for its size, but its advanced sensor suite, impressive weapons loadout, and tough shields makes it a good backbone to the fleet of House Za'lek.</description>
