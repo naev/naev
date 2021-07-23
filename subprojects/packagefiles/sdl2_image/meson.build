@@ -1,4 +1,4 @@
-project('sdl2-image', 'c')
+project('sdl2-image', 'c', version: '2.0.5')
 
 feature_args = ['-DLOAD_PNG', '-DLOAD_WEBP']
 
