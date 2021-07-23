@@ -337,24 +337,30 @@ int ship_size( const Ship *s )
 {
    switch (s->class) {
       case SHIP_CLASS_YACHT:
-      case SHIP_CLASS_COURIER:
       case SHIP_CLASS_SCOUT:
       case SHIP_CLASS_INTERCEPTOR:
-      case SHIP_CLASS_FIGHTER:
-      case SHIP_CLASS_BOMBER:
          return 1;
 
-      case SHIP_CLASS_FREIGHTER:
-      case SHIP_CLASS_ARMOURED_TRANSPORT:
-      case SHIP_CLASS_CORVETTE:
-      case SHIP_CLASS_DESTROYER:
+      case SHIP_CLASS_COURIER:
+      case SHIP_CLASS_FIGHTER:
+      case SHIP_CLASS_BOMBER:
          return 2;
+
+      case SHIP_CLASS_FREIGHTER:
+      case SHIP_CLASS_CORVETTE:
+         return 3;
+
+      case SHIP_CLASS_DESTROYER:
+      case SHIP_CLASS_ARMOURED_TRANSPORT:
+         return 4;
 
       case SHIP_CLASS_BULK_CARRIER:
       case SHIP_CLASS_CRUISER:
+         return 5;
+
       case SHIP_CLASS_BATTLESHIP:
       case SHIP_CLASS_CARRIER:
-         return 3;
+         return 6;
 
       default:
          return -1;
