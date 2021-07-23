@@ -104,10 +104,7 @@ if buildExec.disabled() == false
    useLuaJIT = get_option('luajit')
    lua = dependency('', required: false)
    if useLuaJIT.disabled() == false
-      # FIXME: Why doesn't `meson configure --force-fallback-for=luajit` force a fallback in
-      # dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT), even if useLuaJIT is "enabled"?
-      HACK_dep_name = 'luajit' in get_option('force_fallback_for') ? 'meson_seriously_please_fall_back' : 'luajit'
-      lua = dependency(HACK_dep_name, fallback: ['luajit', 'luajit_dep'], required: useLuaJIT)
+      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT)
    endif
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
@@ -119,10 +116,8 @@ if buildExec.disabled() == false
    naev_deps += lua
 
    # Linear Algebra
-   message('IMPORTANT NOTE ABOUT SuiteSparse: Naev can provide it, but only if you "meson configure --force-fallback-for=SuiteSparse". Otherwise, you must have the following libraries installed: amd, colamd, cholmod, and either csparse or cxsparse.')
-
-   use_system_glpk = ('glpk' not in get_option('force_fallback_for'))
-   use_system_suitesparse = ('SuiteSparse' not in get_option('force_fallback_for'))
+   use_system_glpk = ('glpk' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
+   use_system_suitesparse = ('SuiteSparse' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
 
    if use_system_glpk
       system_glpk = cc.find_library('glpk', required: false, has_headers: ['glpk.h'])
@@ -131,41 +126,29 @@ if buildExec.disabled() == false
    naev_deps += use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk_dep')
 
    if use_system_suitesparse
+      message('Note: Naev needs the following SuiteSparse libraries: amd, colamd, cholmod, and either csparse or cxsparse. ' +
+              'It can use its own copies if you run "meson configure --force-fallback-for=SuiteSparse".')
       foreach csparse_name : ['csparse', 'cxsparse']
-         system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['suitesparse/cs.h'])
-         use_system_suitesparse = system_csparse.found()
-         if system_csparse.found()
-            config_data.set10('HAVE_SUITESPARSE_CS_H', true)
-            break
-         endif
-         system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['cs.h'])
-         use_system_suitesparse = system_csparse.found()
+         system_csparse = cc.find_library(csparse_name, required: false)
          if system_csparse.found()
             break
          endif
       endforeach
       if system_csparse.found()
          naev_deps += system_csparse
+         config_data.set10('HAVE_SUITESPARSE_CS_H', cc.has_header('suitesparse/cs.h'))
       else
          error('Failed to find an installation of c[x]sparse. See above note about SuiteSparse.')
       endif
 
-      system_cholmod = cc.find_library('cholmod', required: false, has_headers: ['suitesparse/cholmod.h'])
-      use_system_suitesparse = system_cholmod.found()
-      if system_cholmod.found()
-         config_data.set10('HAVE_SUITESPARSE_CHOLMOD_H', true)
-      else
-         system_cholmod = cc.find_library('cholmod', required: false, has_headers: ['cholmod.h'])
-         use_system_suitesparse = system_cholmod.found()
-      endif
+      system_cholmod = cc.find_library('cholmod', required: false)
       if system_cholmod.found()
          naev_deps += system_cholmod
+         config_data.set10('HAVE_SUITESPARSE_CHOLMOD_H', cc.has_header('suitesparse/cholmod.h'))
       else
          error('Failed to find an installation of cholmod. See above note about SuiteSparse.')
       endif
 
-
-   # TODO: These packages may require the same nonsense, in terms of checking for suitesparse/foo.h headers.
       naev_deps += cc.find_library('amd', required: true)
       naev_deps += cc.find_library('ccolamd', required: false)
       naev_deps += cc.find_library('colamd', required: true)

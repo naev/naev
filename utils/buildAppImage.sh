@@ -60,6 +60,7 @@ export DESTDIR="$(readlink -mf "$BUILDPATH")/dist/Naev.AppDir"
 sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
 --native-file "$SOURCEROOT/utils/build/linux.ini" \
 --buildtype "$BUILDTYPE" \
+--force-fallback-for=glpk,SuiteSparse \
 -Dnightly=$NIGHTLY \
 -Dprefix="/usr" \
 -Db_lto=true \
