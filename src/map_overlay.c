@@ -370,7 +370,7 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
       ovr_refresh_compute_overlap( &ox, &oy, res, cx, cy, w, h, pos, mo, moo, items, self, 1, pixbuf, object_weight, text_weight );
       val = pow2(ox)+pow2(oy);
       /* Bias slightly toward the center, to avoid text going off the edge of the overlay. */
-      val -= 1 / (pow2(cx)+pow2(cy)+pow2(100));
+      val -= 1. / (pow2(cx)+pow2(cy)+pow2(100.));
       /* Keep best. */
       if (i == 0 || val < best) {
          bx = tx[i];
@@ -378,7 +378,6 @@ static void ovr_init_position( float *px, float *py, float res, float x, float y
          best = val;
       }
    }
-
    *px = bx;
    *py = by;
 }
