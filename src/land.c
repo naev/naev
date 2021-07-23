@@ -1128,6 +1128,10 @@ void land( Planet* p, int load )
    /* Do not land twice. */
    if (landed)
       return;
+   
+   /* Clear some unnecessary flags. */
+   pilot_rmFlag( player.p, PILOT_COOLDOWN_BRAKE);
+   pilot_rmFlag( player.p, PILOT_COOLDOWN );
 
    /* Resets the player's heat. */
    pilot_heatReset( player.p );
