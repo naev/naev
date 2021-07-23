@@ -876,7 +876,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    noutfits = array_size( cur_planet_sel_outfits );
 
    if (noutfits > 0) {
-      coutfits = outfits_imageArrayCells( cur_planet_sel_outfits, &noutfits );
+      coutfits = outfits_imageArrayCells( (const Outfit**)cur_planet_sel_outfits, &noutfits );
 
       xw = ( w - nameWidth - pitch - 60 ) / 2;
       xpos = 35 + pitch + nameWidth + xw;

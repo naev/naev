@@ -487,7 +487,7 @@ static int shipL_fitsSlot( lua_State *L )
 {
    const Ship *s  = luaL_validship(L,1);
    int id         = luaL_checkinteger(L,2);
-   Outfit *o      = luaL_validoutfit(L,3);
+   const Outfit *o= luaL_validoutfit(L,3);
    const OutfitSlot *os = ship_outfitSlotFromID( s, id );
    lua_pushboolean( L, outfit_fitsSlot( o, os ) );
    return 1;

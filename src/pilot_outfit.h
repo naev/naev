@@ -14,16 +14,16 @@
 
 
 /* Raw changes. */
-int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
-int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int warn );
+int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
+int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s, int warn );
 int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s );
 
 /* Changes with checks. */
-int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
+int pilot_addOutfit( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
 int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
 
 /* Ammo. */
-int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity );
+int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int quantity );
 int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
 int pilot_countAmmo( const Pilot* pilot );
 int pilot_maxAmmo( const Pilot* pilot );
@@ -35,7 +35,7 @@ int pilot_slotsCheckSafety( Pilot *p );
 int pilot_slotsCheckRequired( Pilot *p );
 const char* pilot_checkSpaceworthy( Pilot *p );
 int pilot_reportSpaceworthy( Pilot *p, char buf[], int buffSize );
-const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o );
+const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, const Outfit *o );
 
 /* Lock-ons. */
 void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt );

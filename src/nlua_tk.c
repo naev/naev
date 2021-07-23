@@ -319,7 +319,7 @@ static int tk_list( lua_State *L )
  */
 static int tk_merchantOutfit( lua_State *L )
 {
-   Outfit **outfits;
+   const Outfit **outfits;
    unsigned int wid;
    const char *name;
    int w, h;
@@ -329,7 +329,7 @@ static int tk_merchantOutfit( lua_State *L )
    if (!lua_istable(L,2))
       NLUA_INVALID_PARAMETER(L);
 
-   outfits = array_create_size( Outfit*, lua_objlen(L,2) );
+   outfits = array_create_size( const Outfit*, lua_objlen(L,2) );
    /* Iterate over table. */
    lua_pushnil(L);
    while (lua_next(L, -2) != 0) {

@@ -43,7 +43,7 @@
 
 
 typedef struct LandOutfitData_ {
-   Outfit **outfits;
+   const Outfit **outfits;
 } LandOutfitData;
 
 
@@ -121,7 +121,7 @@ static void outfits_onClose( unsigned int wid, char *str )
  *    @param outfits Array (array.h): Outfits to sell. Will be freed.
  *                   Set to NULL if this is the landed player store.
  */
-void outfits_open( unsigned int wid, Outfit **outfits )
+void outfits_open( unsigned int wid, const Outfit **outfits )
 {
    int w, h, iw, ih, bw, bh, off;
    LandOutfitData *data = NULL;
@@ -327,8 +327,8 @@ static void outfits_genList( unsigned int wid )
    array_free( iar_outfits[active] );
    /* Use custom list; default to landed outfits. */
    iar_outfits[active] = data!=NULL ? array_copy( Outfit*, data->outfits ) : tech_getOutfit( land_planet->tech );
-   noutfits = outfits_filter( iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
-   coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
+   noutfits = outfits_filter( (const Outfit**)iar_outfits[active], array_size(iar_outfits[active]), tabfilters[active], filtertext );
+   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits );
 
    iconsize = 128;
    if (!conf.big_icons) {
@@ -525,7 +525,7 @@ static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab )
  *    @param name Name fragment that each outfit name must contain.
  *    @return Number of outfits.
  */
-int outfits_filter( Outfit **outfits, int n,
+int outfits_filter( const Outfit **outfits, int n,
       int(*filter)( const Outfit *o ), char *name )
 {
    int i, j;
@@ -615,12 +615,12 @@ int outfit_altText( char *buf, int n, const Outfit *o )
 /**
  * @brief Generates image array cells corresponding to outfits.
  */
-ImageArrayCell *outfits_imageArrayCells( Outfit **outfits, int *noutfits )
+ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
 {
    int i;
    const glColour *c;
    ImageArrayCell *coutfits;
-   Outfit *o;
+   const Outfit *o;
    const char *typename;
    glTexture *t;
 

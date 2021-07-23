@@ -1254,7 +1254,7 @@ static int pilotL_weapset( lua_State *L )
    int i, j, k, n;
    PilotWeaponSetOutfit *po_list;
    PilotOutfitSlot *slot;
-   Outfit *ammo, *o;
+   const Outfit *ammo, *o;
    double delay, firemod, enermod, t;
    int id, all, level, level_match;
    int is_lau, is_fb;
@@ -1477,7 +1477,7 @@ static int pilotL_weapsetHeat( lua_State *L )
    Pilot *p;
    PilotWeaponSetOutfit *po_list;
    PilotOutfitSlot *slot;
-   Outfit *o;
+   const Outfit *o;
    int i, j, n;
    int id, all, level, level_match;
    double heat, heat_mean, heat_peak, nweapons;
@@ -2553,7 +2553,7 @@ static int pilotL_addOutfit( lua_State *L )
 {
    int i;
    Pilot *p;
-   Outfit *o;
+   const Outfit *o;
    int ret;
    int q, added, bypass_cpu, bypass_slot;
 
@@ -2649,7 +2649,7 @@ static int pilotL_rmOutfit( lua_State *L )
    int i;
    Pilot *p;
    const char *outfit;
-   Outfit *o;
+   const Outfit *o;
    int q, removed, matched = 0;
 
    NLUA_CHECKRW(L);

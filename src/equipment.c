@@ -764,7 +764,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    PilotOutfitSlot *slot;
    char alt[STRMAX];
    int pos;
-   Outfit *o;
+   const Outfit *o;
    CstSlotWidget *wgt;
    size_t slen;
 
@@ -1128,7 +1128,7 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot )
 {
    int ret;
-   Outfit *o, *ammo;
+   const Outfit *o, *ammo;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -1308,7 +1308,7 @@ void equipment_addAmmo (void)
 int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
 {
    int j, l;
-   Outfit *o;
+   const Outfit *o;
    double mod_energy, mod_damage, mod_shots;
    double eps, dps, shots;
    const Damage *dmg;
@@ -1559,8 +1559,8 @@ static void equipment_genOutfitList( unsigned int wid )
    }
 
    /* Get the outfits. */
-   noutfits = player_getOutfitsFiltered( iar_outfits[active], tabfilters[active], filtertext );
-   coutfits = outfits_imageArrayCells( iar_outfits[active], &noutfits );
+   noutfits = player_getOutfitsFiltered( (const Outfit**)iar_outfits[active], tabfilters[active], filtertext );
+   coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits );
 
 
    /* Create the actual image array. */
@@ -1882,7 +1882,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    int ret;
    int i;
    Pilot *ship;
-   Outfit *o, *ammo;
+   const Outfit *o, *ammo;
 
    ship = eq_wgt.selected;
 

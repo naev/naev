@@ -184,7 +184,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    ntime_t t;
    LuaJump *lj;
    Commodity *com;
-   Outfit *o;
+   const Outfit *o;
    Planet *pnt;
    StarSystem *ss, *dest;
    char buf[ PATH_MAX ];

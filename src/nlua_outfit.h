@@ -22,10 +22,10 @@ int nlua_loadOutfit( nlua_env env );
 /*
  * Outfit operations
  */
-Outfit* lua_tooutfit( lua_State *L, int ind );
-Outfit* luaL_checkoutfit( lua_State *L, int ind );
-Outfit* luaL_validoutfit( lua_State *L, int ind );
-Outfit** lua_pushoutfit( lua_State *L, Outfit* outfit );
+const Outfit* lua_tooutfit( lua_State *L, int ind );
+const Outfit* luaL_checkoutfit( lua_State *L, int ind );
+const Outfit* luaL_validoutfit( lua_State *L, int ind );
+const Outfit** lua_pushoutfit( lua_State *L, const Outfit* outfit );
 int lua_isoutfit( lua_State *L, int ind );
 
 

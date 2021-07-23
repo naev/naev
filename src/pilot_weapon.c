@@ -46,7 +46,7 @@
  */
 static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
-static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, int level, double time );
+static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time );
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time );
 static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
 
@@ -79,7 +79,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    AsteroidAnchor *field;
    Asteroid *ast;
    double time;
-   Outfit *o;
+   const Outfit *o;
 
    ret = 0;
    for (i=0; i<array_size(ws->slots); i++) {
@@ -420,7 +420,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
 {
    PilotWeaponSet *ws;
    PilotWeaponSetOutfit *slot;
-   Outfit *oo;
+   const Outfit *oo;
    int i, j;
    double r;
 
@@ -948,7 +948,7 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const Vector2d *
 /**
  * @brief Calculates and shoots the appropriate weapons in a weapon set matching an outfit.
  */
-static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, int level, double time )
+static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time )
 {
    int i, ret;
    int is_launcher, is_bay;
@@ -1256,7 +1256,7 @@ void pilot_weaponClear( Pilot *p )
 void pilot_weaponAuto( Pilot *p )
 {
    PilotOutfitSlot *slot;
-   Outfit *o;
+   const Outfit *o;
    int i, level, id;
 
    /* Clear weapons. */

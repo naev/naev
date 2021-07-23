@@ -1008,7 +1008,7 @@ static int playerL_outfits( lua_State *L )
  */
 static int playerL_numOutfit( lua_State *L )
 {
-   Outfit *o;
+   const Outfit *o;
    int q, unequipped_only;
 
    /* Handle parameters. */
@@ -1036,7 +1036,7 @@ static int playerL_numOutfit( lua_State *L )
  */
 static int playerL_addOutfit( lua_State *L  )
 {
-   Outfit *o;
+   const Outfit *o;
    int q;
 
    NLUA_CHECKRW(L);

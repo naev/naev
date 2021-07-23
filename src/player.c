@@ -2641,7 +2641,7 @@ const PlayerOutfit_t* player_getOutfits (void)
  *    @param[in] name Name fragment that each outfit must contain.
  *    @return Number of outfits.
  */
-int player_getOutfitsFiltered( Outfit **outfits,
+int player_getOutfitsFiltered( const Outfit **outfits,
       int(*filter)( const Outfit *o ), char *name )
 {
    int i;
@@ -3110,7 +3110,7 @@ int player_save( xmlTextWriterPtr writer )
  */
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i )
 {
-   Outfit *o;
+   const Outfit *o;
    o = slot->outfit;
    xmlw_startElem(writer,"outfit");
    xmlw_attr(writer,"slot","%d",i);
@@ -3828,7 +3828,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    Pilot* ship;
    xmlNodePtr node, cur, ccur;
    int quantity;
-   Outfit *o;
+   const Outfit *o;
    int ret;
    /*const char *str;*/
    Commodity *com;

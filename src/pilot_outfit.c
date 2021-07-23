@@ -199,7 +199,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
 int pilot_dock( Pilot *p, Pilot *target )
 {
    int i;
-   Outfit *o = NULL;
+   const Outfit *o = NULL;
    PilotOutfitSlot* dockslot;
 
    /* Must belong to target */
@@ -291,9 +291,9 @@ int pilot_hasDeployed( Pilot *p )
  *    @param s Slot to add ammo to.
  *    @return 0 on success.
  */
-int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
+int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 {
-   Outfit *o;
+   const Outfit *o;
 
    /* Set the outfit. */
    s->outfit   = outfit;
@@ -347,7 +347,7 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
  *    @param warn Whether or not should generate a warning.
  *    @return 0 if can add, -1 if can't.
  */
-int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int warn )
+int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s, int warn )
 {
    const char *str;
 
@@ -384,7 +384,7 @@ int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int w
  *    @param s Slot to add ammo to.
  *    @return 0 on success.
  */
-int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
+int pilot_addOutfit( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 {
    int ret;
 
@@ -635,7 +635,7 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
 static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
 {
    int i;
-   Outfit *o;
+   const Outfit *o;
    for (i = 0; i<array_size(p->outfits); i++) {
       o = p->outfits[i]->outfit;
       if (o == NULL)
@@ -654,7 +654,7 @@ static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
  *    @param o Outfit to check (NULL if being removed).
  *    @return NULL if can swap, or error message if can't.
  */
-const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
+const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, const Outfit *o )
 {
    /* Just in case. */
    if ((p==NULL) || (s==NULL))
@@ -690,7 +690,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
  *    @param quantity Amount to add.
  *    @return Amount actually added.
  */
-int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity )
+int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int quantity )
 {
    int q, max;
    (void) pilot;
@@ -792,7 +792,7 @@ int pilot_countAmmo( const Pilot* pilot )
 {
    int nammo = 0, i;
    PilotOutfitSlot* po;
-   Outfit* outfit;
+   const Outfit* outfit;
    for (i=0; i<array_size(pilot->outfits); i++) {
      po = pilot->outfits[i];
      if (po == NULL)
@@ -818,7 +818,7 @@ int pilot_maxAmmo( const Pilot* pilot )
 {
   int max = 0, i;
   PilotOutfitSlot* po;
-  Outfit* outfit;
+  const Outfit* outfit;
   for (i=0; i<array_size(pilot->outfits); i++) {
      po = pilot->outfits[i];
      if (po == NULL)
@@ -861,7 +861,7 @@ int pilot_maxAmmoO( const Pilot* p, const Outfit *o )
 void pilot_fillAmmo( Pilot* pilot )
 {
    int i, ammo_threshold;
-   Outfit *o, *ammo;
+   const Outfit *o, *ammo;
 
    for (i=0; i<array_size(pilot->outfits); i++) {
       o = pilot->outfits[i]->outfit;
@@ -930,7 +930,7 @@ char* pilot_getOutfits( const Pilot* pilot )
 void pilot_calcStats( Pilot* pilot )
 {
    int i;
-   Outfit* o;
+   const Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec, tm; /* temporary health coefficients to set */
    ShipStats *s;
@@ -1187,7 +1187,7 @@ void pilot_updateMass( Pilot *pilot )
  */
 int pilot_slotIsActive( const PilotOutfitSlot *o )
 {
-   Outfit *oo;
+   const Outfit *oo;
    if (!o->active)
       return 0;
 

@@ -97,7 +97,7 @@ typedef enum PilotOutfitState_ {
  * @brief Stores outfit ammo.
  */
 typedef struct PilotOutfitAmmo_ {
-   Outfit *outfit;      /**< Type of ammo. */
+   const Outfit *outfit;/**< Type of ammo. */
    int quantity;        /**< Amount of ammo. */
    int deployed;        /**< For fighter bays. */
    double lockon_timer; /**< Locking on timer. */
@@ -112,8 +112,8 @@ typedef struct PilotOutfitSlot_ {
    int id;           /**< Position in the global slot list. */
 
    /* Outfit slot properties. */
-   Outfit* outfit;   /**< Associated outfit. */
-   int active;       /**< Slot is an active slot. */
+   const Outfit* outfit;  /**< Associated outfit. */
+   int active;            /**< Slot is an active slot. */
    ShipOutfitSlot *sslot; /**< Ship outfit slot. */
 
    /* Heat. */

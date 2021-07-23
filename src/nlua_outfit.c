@@ -105,9 +105,9 @@ int nlua_loadOutfit( nlua_env env )
  *    @param ind Index position to find the outfit.
  *    @return Outfit found at the index in the state.
  */
-Outfit* lua_tooutfit( lua_State *L, int ind )
+const Outfit* lua_tooutfit( lua_State *L, int ind )
 {
-   return *((Outfit**) lua_touserdata(L,ind));
+   return *((const Outfit**) lua_touserdata(L,ind));
 }
 /**
  * @brief Gets outfit at index or raises error if there is no outfit at index.
@@ -116,7 +116,7 @@ Outfit* lua_tooutfit( lua_State *L, int ind )
  *    @param ind Index position to find outfit.
  *    @return Outfit found at the index in the state.
  */
-Outfit* luaL_checkoutfit( lua_State *L, int ind )
+const Outfit* luaL_checkoutfit( lua_State *L, int ind )
 {
    if (lua_isoutfit(L,ind))
       return lua_tooutfit(L,ind);
@@ -130,9 +130,9 @@ Outfit* luaL_checkoutfit( lua_State *L, int ind )
  *    @param ind Index of the outfit to validate.
  *    @return The outfit (doesn't return if fails - raises Lua error ).
  */
-Outfit* luaL_validoutfit( lua_State *L, int ind )
+const Outfit* luaL_validoutfit( lua_State *L, int ind )
 {
-   Outfit *o;
+   const Outfit *o;
 
    if (lua_isoutfit(L, ind))
       o  = luaL_checkoutfit(L,ind);
@@ -155,10 +155,10 @@ Outfit* luaL_validoutfit( lua_State *L, int ind )
  *    @param outfit Outfit to push.
  *    @return Newly pushed outfit.
  */
-Outfit** lua_pushoutfit( lua_State *L, Outfit *outfit )
+const Outfit** lua_pushoutfit( lua_State *L, const Outfit *outfit )
 {
-   Outfit **o;
-   o = (Outfit**) lua_newuserdata(L, sizeof(Outfit*));
+   const Outfit **o;
+   o = (const Outfit**) lua_newuserdata(L, sizeof(Outfit*));
    *o = outfit;
    luaL_getmetatable(L, OUTFIT_METATABLE);
    lua_setmetatable(L, -2);
@@ -200,7 +200,7 @@ int lua_isoutfit( lua_State *L, int ind )
  */
 static int outfitL_eq( lua_State *L )
 {
-   Outfit *a, *b;
+   const Outfit *a, *b;
 
    a = luaL_checkoutfit(L,1);
    b = luaL_checkoutfit(L,2);
@@ -223,7 +223,7 @@ static int outfitL_eq( lua_State *L )
  */
 static int outfitL_get( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushoutfit(L, o);
    return 1;
 }
@@ -263,7 +263,7 @@ static int outfitL_getAll( lua_State *L )
  */
 static int outfitL_name( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushstring(L, _(o->name));
    return 1;
 }
@@ -284,7 +284,7 @@ static int outfitL_name( lua_State *L )
  */
 static int outfitL_nameRaw( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushstring(L, o->name);
    return 1;
 }
@@ -301,7 +301,7 @@ static int outfitL_nameRaw( lua_State *L )
  */
 static int outfitL_type( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushstring(L, outfit_getType(o));
    return 1;
 }
@@ -320,7 +320,7 @@ static int outfitL_type( lua_State *L )
  */
 static int outfitL_typeBroad( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushstring(L, outfit_getTypeBroad(o));
    return 1;
 }
@@ -337,7 +337,7 @@ static int outfitL_typeBroad( lua_State *L )
  */
 static int outfitL_cpu( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushnumber(L, outfit_cpu(o));
    return 1;
 }
@@ -354,7 +354,7 @@ static int outfitL_cpu( lua_State *L )
  */
 static int outfitL_mass( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushnumber(L, o->mass);
    return 1;
 }
@@ -375,7 +375,7 @@ static int outfitL_mass( lua_State *L )
  */
 static int outfitL_slot( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushstring(L, outfit_slotName(o));
    lua_pushstring(L, outfit_slotSize(o));
    lua_pushstring(L, sp_display( o->slot.spid ));
@@ -394,7 +394,7 @@ static int outfitL_slot( lua_State *L )
  */
 static int outfitL_limit( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    if (o->limit) {
       lua_pushstring(L,o->limit);
       return 1;
@@ -414,7 +414,7 @@ static int outfitL_limit( lua_State *L )
  */
 static int outfitL_icon( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushtex( L, gl_dupTexture( o->gfx_store ) );
    return 1;
 }
@@ -431,7 +431,7 @@ static int outfitL_icon( lua_State *L )
  */
 static int outfitL_price( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushnumber(L, o->price);
    return 1;
 }
@@ -448,7 +448,7 @@ static int outfitL_price( lua_State *L )
  */
 static int outfitL_description( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushstring(L, o->description);
    return 1;
 }
@@ -465,7 +465,7 @@ static int outfitL_description( lua_State *L )
  */
 static int outfitL_unique( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    lua_pushboolean(L, outfit_isProp(o, OUTFIT_PROP_UNIQUE));
    return 1;
 }
@@ -483,7 +483,7 @@ static int outfitL_unique( lua_State *L )
 static int outfitL_getShipStat( lua_State *L )
 {
    ShipStats ss;
-   Outfit *o = luaL_validoutfit(L,1);
+   const Outfit *o = luaL_validoutfit(L,1);
    ss_statsInit( &ss );
    ss_statsModFromList( &ss, o->stats );
    const char *str   = luaL_optstring(L,2,NULL);
@@ -513,7 +513,7 @@ static int outfitL_weapStats( lua_State *L )
    double mod_energy, mod_damage, mod_shots;
    double sdmg, admg;
    const Damage *dmg;
-   Outfit *o   = luaL_validoutfit( L, 1 );
+   const Outfit *o   = luaL_validoutfit( L, 1 );
    Pilot *p    = (lua_ispilot(L,2)) ? luaL_validpilot(L,2) : NULL;
 
    /* Just return 0 for non-wapons. */
@@ -634,7 +634,7 @@ static int outfitL_weapStats( lua_State *L )
  */
 static int outfitL_specificStats( lua_State *L )
 {
-   Outfit *o = luaL_validoutfit( L, 1 );
+   const Outfit *o = luaL_validoutfit( L, 1 );
    lua_newtable(L);
    switch (o->type) {
       case OUTFIT_TYPE_AFTERBURNER:
