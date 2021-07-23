@@ -414,15 +414,10 @@ static int factionL_setplayerstanding( lua_State *L )
  */
 static int factionL_playerstanding( lua_State *L )
 {
-   int f;
-   double n;
-
-   f = luaL_validfaction( L, 1 );
-   n = faction_getPlayer( f );
-
+   int f    = luaL_validfaction( L, 1 );
+   double n = faction_getPlayer( f );
    lua_pushnumber( L, n );
    lua_pushstring( L, faction_getStandingText( f ) );
-
    return 2;
 }
 
