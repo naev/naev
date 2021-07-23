@@ -8,6 +8,7 @@
   <location>Bar</location>
   <chance>100</chance>
   <planet>Minerva Station</planet>
+  <cond>player.evtDone("Chicken Rendezvous")</cond>
  </avail>
  <notes>
   <campaign>Minerva</campaign>
