@@ -608,13 +608,13 @@ static int factionL_dynAdd( lua_State *L )
 
    NLUA_CHECKRW(L);
 
-   if (!lua_isnil(L, 1))
-      fac = luaL_validfaction(L,1);
+   if (!lua_isnoneornil(L, 1))
+      fac   = luaL_validfaction(L,1);
    else
-      fac = -1;
-   name = luaL_checkstring(L,2);
-   display = luaL_optstring(L,3,name);
-   ai = luaL_optstring(L,4,NULL);
+      fac   = -1;
+   name     = luaL_checkstring(L,2);
+   display  = luaL_optstring(L,3,name);
+   ai       = luaL_optstring(L,4,NULL);
 
    /* Check if exists. */
    if (faction_exists(name))
