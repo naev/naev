@@ -171,7 +171,7 @@ if buildExec.disabled() == false
    elif get_option('blas') == 'Accelerate'
       blas = dependency('Accelerate', required: true)
    else
-      blas = cc.find_library(get_option('blas'), required: true, static: false)
+      blas = cc.find_library(get_option('blas'), required: true)
    endif
 
    # It would be nice to detect the functions and just embed the prototypes. Problem is, we might not know the int width to use...
