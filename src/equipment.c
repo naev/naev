@@ -1844,7 +1844,7 @@ static void equipment_changeShip( unsigned int wid )
       filtertext = NULL;
 
    /* Swap ship. */
-   player_swapShip( shipname );
+   player_swapShip( shipname, 1 );
    pilot_healLanded( player.p );
 
    /* What happens here is the gui gets recreated when the player swaps ship.

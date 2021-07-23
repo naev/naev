@@ -446,7 +446,7 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
       if (player.p == NULL)
          ERR(_("Player ship isn't valid... This shouldn't happen!"));
       old_name = player.p->name;
-      player_swapShip( ship_name ); /* Move to the new ship. */
+      player_swapShip( ship_name, 1 ); /* Move to the new ship. */
       player_rmShip( old_name );
    }
 
@@ -528,8 +528,9 @@ static Pilot* player_newShipMake( const char* name )
  * @brief Swaps player's current ship with their ship named shipname.
  *
  *    @param shipname Ship to change to.
+ *    @param move_cargo Whether or not to move the cargo over or ignore it.
  */
-void player_swapShip( const char *shipname )
+void player_swapShip( const char *shipname, int move_cargo )
 {
    int i;
    Pilot* ship;
@@ -547,7 +548,8 @@ void player_swapShip( const char *shipname )
       ship->credits = player.p->credits;
 
       /* move cargo over */
-      pilot_cargoMove( ship, player.p );
+      if (move_cargo)
+         pilot_cargoMove( ship, player.p );
 
       /* Copy target info */
       ship->target = player.p->target;

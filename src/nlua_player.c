@@ -1156,6 +1156,7 @@ static int playerL_addShip( lua_State *L )
  * @note This invalidates all player.pilot() references!
  *
  *    @luatparam string ship Name of the ship to swap to. (this is name given by the player, not ship name)
+ *    @luatparam[opt=false] boolean ignore_cargo Whether or not to ignore cargo and not move it, or try to move it over.
  *    @luatparam[opt=false] boolean remove If true removes the player's current ship (so it replaces and doesn't swap).
  * @luafunc swapShip
  */
@@ -1165,9 +1166,10 @@ static int playerL_swapShip( lua_State *L )
    PLAYER_CHECK();
 
    const char *str = luaL_checkstring(L,1);
+   int ignore_cargo= lua_toboolean(L,2);
    const char *cur = player.p->name;
-   player_swapShip( str );
-   if (lua_toboolean(L,2))
+   player_swapShip( str, !ignore_cargo );
+   if (lua_toboolean(L,3))
       player_rmShip( cur );
 
    return 0;
