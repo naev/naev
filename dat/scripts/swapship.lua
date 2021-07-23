@@ -100,7 +100,6 @@ function swapship.swap( template )
    player.swapShip( template:ship() )
    pp = player.pilot() -- Update struct to new pilot
 
-
    -- Start with an empty ship
    pp:rmOutfit( "all" )
    pp:rmOutfit( "cores" )
