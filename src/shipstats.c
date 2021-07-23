@@ -109,6 +109,7 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,           N_("Detection") ),
    D__ELEM( SS_TYPE_D_EW_TRACK,           ew_track,            N_("Tracking") ),
    D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,      N_("Jump Detection") ),
+   DI_ELEM( SS_TYPE_D_EW_STEALTH_TIMER,   ew_stealth_timer,    N_("Stealth Discovered Speed") ),
 
    D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         N_("Fire Rate (Launcher)") ),
    D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,        N_("Launch Range") ),

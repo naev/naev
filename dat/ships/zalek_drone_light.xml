@@ -4,7 +4,7 @@
  <GFX>zalek_drone_light</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Interceptor</class>
+ <class display="Robotic Interceptor">Interceptor</class>
  <price>90000</price>
  <time_mod>0.8</time_mod>
  <trail_generator x="-11" y="0" h="0">nebula</trail_generator>

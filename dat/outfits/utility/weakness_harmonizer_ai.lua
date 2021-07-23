@@ -4,17 +4,7 @@ bonus = 10
 
 -- Only care about fighting classes
 function pilotToLevel( p )
-   local c = p:ship():class()
-   if c=="Fighter" or c=="Bomber" then
-      return 1
-   elseif c=="Corvette" then
-      return 2
-   elseif c=="Destroyer" then
-      return 3
-   elseif c=="Cruiser" or c=="Carrier" then
-      return 4
-   end
-   return 0
+   return p:ship():size()
 end
 
 -- Init function run on creation

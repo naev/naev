@@ -40,6 +40,7 @@ require "numstring"
 require "jumpdist"
 require "pilot/pirate"
 require "missions/soromid/common"
+local equipopt = require 'equipopt'
 
 
 title = {}
@@ -151,19 +152,8 @@ function spawn ()
    p:setHilight( true )
 
    -- Spawn Chelsea
-   chelsea = pilot.add( "Lancelot", "Comingout_associates", lastsys, _("Chelsea") )
-   chelsea:rmOutfit( "all" )
-   chelsea:rmOutfit( "cores" )
-   chelsea:addOutfit( "Milspec Orion 3701 Core System" )
-   chelsea:addOutfit( "S&K Light Stealth Plating" )
-   chelsea:addOutfit( "Tricon Zephyr II Engine" )
-   chelsea:addOutfit( "TeraCom Fury Launcher" )
-   chelsea:addOutfit( "Fury Missile", 25 )
-   chelsea:addOutfit( "Plasma Blaster MK2", 3 )
-   chelsea:addOutfit( "Reactor Class I" )
-   chelsea:addOutfit( "Small Shield Booster" )
-   chelsea:addOutfit( "Forward Shock Absorbers" )
-   chelsea:addOutfit( "Engine Reroute" )
+   chelsea = pilot.add( "Lancelot", "Comingout_associates", lastsys, _("Chelsea"), {naked=true} )
+   equipopt.generic( chelsea, nil, "elite" )
 
    chelsea:setHealth( 100, 100 )
    chelsea:setEnergy( 100 )

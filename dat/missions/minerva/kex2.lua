@@ -135,7 +135,7 @@ He plugs in the program directly into a port under his wing and his eyes go blan
       vn.sfxVictory()
       vn.run()
 
-      shiplog.append( logidstr, _("You managed to find a crate destined to the Minerva CEO through luck, and found that it was sent by Baroness Eve."))
+      shiplog.append( logidstr, _("You stole information from Baroness Eve for Kex."))
       misn.finish( true )
       return
    end

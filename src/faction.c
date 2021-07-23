@@ -457,6 +457,25 @@ int* faction_getAllies( int f )
 
 
 /**
+ * @brief Clears all the enemies of a dynamic faction.
+ *
+ *    @param f Faction to clear enemies of.
+ */
+void faction_clearEnemy( int f )
+{
+   Faction *ff;
+   /* Get faction. */
+   if (faction_isFaction(f))
+      ff = &faction_stack[f];
+   else { /* f is invalid */
+      WARN(_("Faction id '%d' is invalid."), f);
+      return;
+   }
+   array_erase( &ff->enemies, array_begin(ff->enemies), array_end(ff->enemies) );
+}
+
+
+/**
  * @brief Adds an enemy to the faction's enemies list.
  *
  *    @param f The faction to add an enemy to.
@@ -527,6 +546,25 @@ void faction_rmEnemy( int f, int o )
          return;
       }
    }
+}
+
+
+/**
+ * @brief Clears all the ally of a dynamic faction.
+ *
+ *    @param f Faction to clear ally of.
+ */
+void faction_clearAlly( int f )
+{
+   Faction *ff;
+   /* Get faction. */
+   if (faction_isFaction(f))
+      ff = &faction_stack[f];
+   else { /* f is invalid */
+      WARN(_("Faction id '%d' is invalid."), f);
+      return;
+   }
+   array_erase( &ff->allies, array_begin(ff->allies), array_end(ff->allies) );
 }
 
 

@@ -5,7 +5,7 @@
  <GUI>brushed</GUI>
  <rarity>3</rarity>
  <sound>engine</sound>
- <class>Interceptor</class>
+ <class display="Robotic Interceptor">Interceptor</class>
  <price>300000</price>
  <time_mod>0.8</time_mod>
  <trail_generator x="-8" y="0" h="-3" always_under="1" />

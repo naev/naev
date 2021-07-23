@@ -55,7 +55,7 @@ electronics_text = _([[While walking through a store selling electronics you not
 return_text = _([[You return to your ship.]])
 timeup_text = _([[It's time to go to the institute.]])
 institute_text = _([[You make your way to the institute where you are supposed to give the talk, following the signs. On arriving you ask around where you should head to for your talk. Apparently you were already awaited. You are lead to a rather small seminar room. Finally you are ready to give your talk and a few scientist take seat. Actually you expected more than 17 listener. Maybe this talk is not such a big deal as you expected. They wouldn't just send you to an important presentation, right?]])
-no_lab_coat_text = _("It is just now that you realize that you're the only person now wearing a lab coat. That's a nightmare! Well, maybe it would be for a scientist?")
+no_lab_coat_text = _("It is just now that you realize that you're the only person not wearing a lab coat. That's a nightmare! Well, maybe it would be for a scientist?")
 has_lab_coat_text = _("Wearing a lab coat you blend in nicely with your audience.")
 talk_unprepared_text = _([[%s
     You start reciting the text you got from the student. You realize that you should have learned the text as some of the occurring terms are difficult to pronounce correctly.]])

@@ -156,7 +156,7 @@ function enter ()
       thugpos = vec2.new( 6000, -4000 )
       dronepos = vec2.new( -12000, -12000 )
 
-      fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs"), "dvaered" )
+      fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs") )
 
       local pos = thugpos
       boss = pilot.add( "Dvaered Vigilance", fthugs, pos )
@@ -174,7 +174,7 @@ function enter ()
          table.insert( thugs, p )
       end
 
-      fdrone = faction.dynAdd( "Independent", "Drone", _("Drone"), "zalek" )
+      fdrone = faction.dynAdd( "Independent", "Drone", _("Drone") )
       drone = pilot.add( "Za'lek Light Drone", fdrone, dronepos )
       drone:control()
       drone:brake()

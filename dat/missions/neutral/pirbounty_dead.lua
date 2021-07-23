@@ -424,13 +424,7 @@ end
 -- Adjust pirate faction (used for "alive" bounties)
 function set_faction( p )
    if not _target_faction then
-      _target_faction = faction.dynAdd( "Pirate", "Wanted Pirate", _("Wanted Pirate") )
-      for k,v in ipairs(_target_faction:enemies()) do
-         _target_faction:dynEnemy( v, true )
-      end
-      for k,v in ipairs(_target_faction:allies()) do
-         _target_faction:dynAlly( v, true )
-      end
+      _target_faction = faction.dynAdd( "Pirate", "Wanted Pirate", _("Wanted Pirate"), {clear_enemies=true, clear_allies=true} )
    end
    p:setFaction( "Wanted Pirate" )
 end

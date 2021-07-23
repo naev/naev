@@ -6,6 +6,7 @@
       * Overhaul and rebalance of most outfits
       * Wanted pirates no longer aggro defense forces (pirate bounties)
       * Bribed pilots don't become hostile again unless attacked
+      * Changed ship classification, removing rare classes while adding Interceptor and Battleship classes
       * Added new utility outfits with complex effects
       * Added escorts for hire
       * Added discovery messages as you explore the universe
@@ -33,6 +34,7 @@
       * Support for post-processing shaders
       * Added rendering and update hooks in the Lua API
       * Added image format support beyond PNG (notably WebP)
+      * Support for arbitrary ship display classes
       * Game data now handled by PhysicsFS, allowing for multiple sources and easier modding
       * Meson is now the only build system, and development builds can integrate all assets/translations without being installed
       * Fonts now use distance fields and much better in many cases

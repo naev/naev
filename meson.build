@@ -116,10 +116,7 @@ if buildExec.disabled() == false
    useLuaJIT = get_option('luajit')
    lua = dependency('', required: false)
    if useLuaJIT.disabled() == false
-      # FIXME: Why doesn't `meson configure --force-fallback-for=luajit` force a fallback in
-      # dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT), even if useLuaJIT is "enabled"?
-      HACK_dep_name = 'luajit' in get_option('force_fallback_for') ? 'meson_seriously_please_fall_back' : 'luajit'
-      lua = dependency(HACK_dep_name, fallback: ['luajit', 'luajit_dep'], required: useLuaJIT)
+      lua = dependency('luajit', fallback: ['luajit', 'luajit_dep'], required: useLuaJIT)
    endif
    config_data.set10('HAVE_LUAJIT', lua.found())
    summary('LuaJIT', lua.found(), section: 'Features', bool_yn: true)
@@ -131,10 +128,8 @@ if buildExec.disabled() == false
    naev_deps += lua
 
    # Linear Algebra
-   message('IMPORTANT NOTE ABOUT SuiteSparse: Naev can provide it, but only if you "meson configure --force-fallback-for=SuiteSparse". Otherwise, you must have the following libraries installed: amd, colamd, cholmod, and either csparse or cxsparse.')
-
-   use_system_glpk = ('glpk' not in get_option('force_fallback_for'))
-   use_system_suitesparse = ('SuiteSparse' not in get_option('force_fallback_for'))
+   use_system_glpk = ('glpk' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
+   use_system_suitesparse = ('SuiteSparse' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
 
    if use_system_glpk
       system_glpk = cc.find_library('glpk', required: false, has_headers: ['glpk.h'])
@@ -143,41 +138,29 @@ if buildExec.disabled() == false
    naev_deps += use_system_glpk ? system_glpk : subproject('glpk').get_variable('glpk_dep')
 
    if use_system_suitesparse
+      message('Note: Naev needs the following SuiteSparse libraries: amd, colamd, cholmod, and either csparse or cxsparse. ' +
+              'It can use its own copies if you run "meson configure --force-fallback-for=SuiteSparse".')
       foreach csparse_name : ['csparse', 'cxsparse']
-         system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['suitesparse/cs.h'])
-         use_system_suitesparse = system_csparse.found()
-         if system_csparse.found()
-            config_data.set10('HAVE_SUITESPARSE_CS_H', true)
-            break
-         endif
-         system_csparse = cc.find_library(csparse_name, required: false, has_headers: ['cs.h'])
-         use_system_suitesparse = system_csparse.found()
+         system_csparse = cc.find_library(csparse_name, required: false)
          if system_csparse.found()
             break
          endif
       endforeach
       if system_csparse.found()
          naev_deps += system_csparse
+         config_data.set10('HAVE_SUITESPARSE_CS_H', cc.has_header('suitesparse/cs.h'))
       else
          error('Failed to find an installation of c[x]sparse. See above note about SuiteSparse.')
       endif
 
-      system_cholmod = cc.find_library('cholmod', required: false, has_headers: ['suitesparse/cholmod.h'])
-      use_system_suitesparse = system_cholmod.found()
-      if system_cholmod.found()
-         config_data.set10('HAVE_SUITESPARSE_CHOLMOD_H', true)
-      else
-         system_cholmod = cc.find_library('cholmod', required: false, has_headers: ['cholmod.h'])
-         use_system_suitesparse = system_cholmod.found()
-      endif
+      system_cholmod = cc.find_library('cholmod', required: false)
       if system_cholmod.found()
          naev_deps += system_cholmod
+         config_data.set10('HAVE_SUITESPARSE_CHOLMOD_H', cc.has_header('suitesparse/cholmod.h'))
       else
          error('Failed to find an installation of cholmod. See above note about SuiteSparse.')
       endif
 
-
-   # TODO: These packages may require the same nonsense, in terms of checking for suitesparse/foo.h headers.
       naev_deps += cc.find_library('amd', required: true)
       naev_deps += cc.find_library('ccolamd', required: false)
       naev_deps += cc.find_library('colamd', required: true)
@@ -188,16 +171,17 @@ if buildExec.disabled() == false
       naev_deps += subproject('SuiteSparse').get_variable('SuiteSparse_dep')
    endif
 
-   if get_option('steamruntime') == true
-      blas= cc.find_library('openblas', required: true, static: true, dependencies: ['threads'])
+   if get_option('steamruntime')
+      blas = cc.find_library('openblas', required: true, static: true, dependencies: ['threads'])
+   elif get_option('blas') == 'Accelerate'
+      blas = dependency('Accelerate', required: true)
    else
-      blas = get_option('blas') == 'Accelerate' ? dependency('Accelerate', required: true) : cc.find_library(get_option('blas'), required: true)
-      # It would be nice to detect the functions and just embed the prototypes. Problem is, we might not know the int width to use...
-      #config_data.set10('HAVE_BLAS_CBLAS_FUNC', cc.has_function('cblas_ddot', dependencies: blas))
-      #config_data.set10('HAVE_BLAS_FUNC_', cc.has_function('ddot_', dependencies: blas))
-      naev_deps += cc.find_library('openblas', required: true)
+      blas = cc.find_library(get_option('blas'), required: true)
    endif
 
+   # It would be nice to detect the functions and just embed the prototypes. Problem is, we might not know the int width to use...
+   #config_data.set10('HAVE_BLAS_CBLAS_FUNC', cc.has_function('cblas_ddot', dependencies: blas))
+   #config_data.set10('HAVE_BLAS_FUNC_', cc.has_function('ddot_', dependencies: blas))
    naev_deps += blas
 
    ### Soft deps (required: false)
@@ -229,20 +213,22 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_DECL_SETENV', cc.has_header_symbol('stdlib.h', 'setenv'))
    config_data.set10('HAVE_DECL__PUTENV_S', cc.has_header_symbol('stdlib.h', '_putenv_s'))
    config_data.set10('HAVE_DECL_GETENV_S', cc.has_header_symbol('stdlib.h', 'getenv_s'))
-   config_data.set10('HAVE_CBLAS_H', cc.has_header('cblas.h'))
-   config_data.set10('HAVE_CBLAS_OPENBLAS_H', cc.has_header('cblas_openblas.h'))
-   config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.has_header('cblas-openblas.h'))
    config_data.set10('HAVE_FEENABLEEXCEPT', cc.has_header_symbol('fenv.h', 'feenableexcept'))
    config_data.set10('HAVE_ALLOCA_H', cc.has_header('alloca.h'))
-   config_data.set10('HAVE_F77BLAS_H', cc.has_header('f77blas.h'))
    config_data.set10('HAVE_FENV_H', cc.has_header('fenv.h'))
    config_data.set10('HAVE_MALLOC_H', cc.has_header('malloc.h'))
-   config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.has_header('openblas/cblas.h'))
    config_data.set10('HAVE_STRCASESTR', cc.has_function('strcasestr'))
    # strndup() detectin must work around this bug: https://github.com/mesonbuild/meson/issues/3672
    config_data.set10('HAVE_STRNDUP', cc.has_header_symbol('string.h', 'strndup') and cc.has_function('strndup'))
    config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))
    config_data.set10('HAVE_VASPRINTF', cc.has_function('vasprintf'))
+   # BLAS include tests
+   config_data.set10('HAVE_ACCELERATE_ACCELERATE_H', cc.has_header('Accelerate/Accelerate.h', dependencies: blas))
+   config_data.set10('HAVE_CBLAS_H', cc.has_header('cblas.h', dependencies: blas))
+   config_data.set10('HAVE_CBLAS_OPENBLAS_H', cc.has_header('cblas_openblas.h', dependencies: blas))
+   config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.has_header('cblas-openblas.h', dependencies: blas))
+   config_data.set10('HAVE_F77BLAS_H', cc.has_header('f77blas.h', dependencies: blas))
+   config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.has_header('openblas/cblas.h', dependencies: blas))
 
    # OS declaration (Shows which OS we built this with in the options menu)
    if host_machine.system() == 'linux'
@@ -272,11 +258,11 @@ if buildExec.disabled() == false
       naev_deps += cc.find_library('dl', required: true)
    endif
 
-   include_dirs = include_directories(
+   include_dirs = [include_directories(
       'src',
       'src/tk',
       'src/tk/widget'
-   )
+   )]
 
    if host_machine.system() == 'darwin'
       add_languages('objc', native: false)

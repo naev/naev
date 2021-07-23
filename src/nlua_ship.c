@@ -48,6 +48,7 @@ static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
 static int shipL_price( lua_State *L );
 static int shipL_time_mod( lua_State *L );
+static int shipL_getSize( lua_State *L );
 static int shipL_description( lua_State *L );
 static int shipL_getShipStat( lua_State *L );
 static const luaL_Reg shipL_methods[] = {
@@ -66,6 +67,7 @@ static const luaL_Reg shipL_methods[] = {
    { "cpu", shipL_CPU },
    { "price", shipL_price },
    { "time_mod", shipL_time_mod },
+   { "size", shipL_getSize },
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
    { "description", shipL_description },
@@ -540,6 +542,21 @@ static int shipL_time_mod( lua_State *L )
 {
    Ship *s = luaL_validship(L,1);
    lua_pushnumber(L, s->dt_default );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the ship's size. Ultra-light is 1, light is 2, medium is 3, heavy-medium is 4, heavy is 5, and super-heavy is 6.
+ *
+ *    @luatparam Ship s Ship to get the size of.
+ *    @luatreturn number The ship's size.
+ * @luafunc size
+ */
+static int shipL_getSize( lua_State *L )
+{
+   Ship *s = luaL_validship(L,1);
+   lua_pushinteger(L, ship_size(s) );
    return 1;
 }
 
