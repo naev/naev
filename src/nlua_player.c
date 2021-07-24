@@ -309,8 +309,9 @@ static int playerL_msgClear( lua_State *L )
  *
  * @usage player.omsgAdd( "some_message", 5 )
  *    @luatparam string msg Message to add.
- *    @luatparam number duration Duration to add message (if 0. is infinite).
+ *    @luatparam number duration Duration to add message (if 0. the duration is infinite).
  *    @luatparam[opt] number fontsize Size of the font to use.
+ *    @luatparam[opt=white] Colour col Colour to use for the text or white if not specified.
  *    @luatreturn number ID of the created overlay message.
  * @luafunc omsgAdd
  */
