@@ -133,7 +133,7 @@ textosd[1] = _("Bring the nerds and their box to %s before %s")
 textosd[2] = _("You have %s remaining")
 textosd[3] = _("You're late and the nerds are getting angry and abusive; land to get rid of the nerds and their box")
 -- stage 2
-textosd[4] = _("Wait several periods until hailed by the nerds for their return trip")
+textosd[4] = _("Wait several periods in this system until hailed by the nerds for their return trip")
 textosd[5] = _("Pick up the nerds on %s for their return trip to %s")
 textosd[6] = _("The nerds are getting impatient")
 textosd[7] = _("You didn't pick up the nerds in time")
