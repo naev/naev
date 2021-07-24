@@ -192,7 +192,7 @@ local function print_debug( p, st, ss, outfit_list, params, constraints, energyg
    mmod = mmod or 1
    print(_("Trying to equip:"))
    for j,o in ipairs(outfit_list) do
-      print( "   "..o )
+      print( "   "..o:name() )
    end
    print(_("Parameters:"))
    for k,v in pairs(params) do
