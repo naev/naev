@@ -1029,6 +1029,12 @@ function __investigate_target( target )
    local p = ai.pilot()
    ai.settarget(p) -- Un-target
    ai.poptask()
+
+   -- No need to investigate: target has jumped out.
+   if target:flags("jumpingout") then
+      return
+   end
+
    -- Guess the pilot will be randomly between the current position and the
    -- future position if they go in the same direction with the same velocity
    local ttl = ai.dist(target) / p:stats().speed_max
