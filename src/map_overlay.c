@@ -314,9 +314,9 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    }
 
    /* Uzawa optimization algorithm.
-    * We minimize the (ponderated) L2 norm of vector of offsets and radius changes
+    * We minimize the (weighted) L2 norm of vector of offsets and radius changes
     * Under the constraint of no interpenetration
-    * As the algorithm is Uzawa, this constraint won't necessary be attaigned.
+    * As the algorithm is Uzawa, this constraint won't necessary be attained.
     * This is similar to a contact problem is mechanics. */
 
    /* Initialize the cholmod and the matrix that stores the dual variables (forces applied between objects).
@@ -329,7 +329,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    forces_y = cholmod_zeros( 2*items, items, CHOLMOD_REAL, &C );
 /*   sum_x = cholmod_zeros( items, 1, CHOLMOD_REAL, &C );*/
 /*   sum_y = cholmod_zeros( items, 1, CHOLMOD_REAL, &C );*/
-   
+
    /* Main Uzawa Loop. */
    for (iter=0; iter<max_iters; iter++) {
       changed = 0;
