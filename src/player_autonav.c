@@ -44,7 +44,7 @@ static double lasta;
 static int player_autonavSetup (void);
 static void player_autonav (void);
 static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
-static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow );
+static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 );
 static int player_autonavBrake (void);
 
 
@@ -427,8 +427,11 @@ static void player_autonav (void)
             player_accel( 0. );
             player_autonavEnd();
          }
-         else
-            player_autonavFollow( &p->solid->pos, &p->solid->vel, pilot_isDisabled(p)==0 );
+         else {
+            player_autonavFollow( &p->solid->pos, &p->solid->vel, pilot_isDisabled(p)==0, &d );
+            if (pilot_isDisabled(p) && (!tc_rampdown))
+               player_autonavRampdown(d);
+         }
          break;
    }
 }
@@ -489,8 +492,9 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
  *    @param[in] pos Position to go to.
  *    @param[in] vel Velocity of the target.
  *    @param[in] follow Whether to follow, or arrive at
+ *    @param[out] dist2 Distance left to target.
  */
-static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow )
+static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 )
 {
    double Kp, Kd, angle, radius, d;
    Vector2d dir, point;
@@ -501,7 +505,7 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
    Kd = 20;
    radius = 100;
 
-   /* Find a point behind the target at a distance of radius unless stationary, or not following */
+   /* Find a point behind the target at a distance of radius unless stationary, or not following. */
    if ( !follow || ( vel->x == 0 && vel->y == 0 ) )
       radius = 0;
    angle = M_PI + vel->angle;
@@ -514,10 +518,15 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
          (vel->y - player.p->solid->vel.y) *Kd );
 
    d = pilot_face( player.p, VANGLE(dir) );
+
    if ((FABS(d) < MIN_DIR_ERR) && (VMOD(dir) > 300))
       player_accel( 1. );
    else
       player_accel( 0. );
+
+   /* If aiming exactly at the point, should say when approaching. */
+   if (!follow)
+      *dist2 = vect_dist( pos, &player.p->solid->pos );
 }
 
 
