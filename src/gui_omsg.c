@@ -38,7 +38,7 @@ typedef struct omsg_s {
    int nlines;       /**< Message lines. */
    double duration;  /**< Time left. */
    int font;         /**< Font to use. */
-   const glColour *col;    /**< Colour to use. */
+   glColour col;     /**< Colour to use. */
 } omsg_t;
 static omsg_t *omsg_array           = NULL;  /**< Array of messages. */
 static unsigned int omsg_idgen      = 0;     /**< Unique ID generator. */
@@ -225,7 +225,7 @@ void omsg_render( double dt )
 
       /* Render. */
       font = omsg_getFont( omsg->font );
-      col = *omsg->col;
+      col = omsg->col;
       if (omsg->duration < 1.)
          col.a = omsg->duration;
       gl_printRestoreClear();
@@ -253,9 +253,10 @@ void omsg_render( double dt )
  *    @param msg Message to add.
  *    @param duration Duration of message on screen (in seconds).
  *    @param fontsize Size of the font to use.
+ *    @param col Colour to use.
  *    @return Unique ID to the message.
  */
-unsigned int omsg_add( const char *msg, double duration, int fontsize )
+unsigned int omsg_add( const char *msg, double duration, int fontsize, const glColour *col )
 {
    omsg_t *omsg;
    int font;
@@ -273,7 +274,7 @@ unsigned int omsg_add( const char *msg, double duration, int fontsize )
    omsg->id       = ++omsg_idgen;
    omsg->duration = duration;
    omsg->font     = font;
-   omsg->col      = &cWhite;
+   omsg->col      = *col;
    omsg_setMsg( omsg, msg );
 
    return omsg->id;

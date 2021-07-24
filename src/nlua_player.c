@@ -34,6 +34,7 @@
 #include "map.h"
 #include "map_overlay.h"
 #include "mission.h"
+#include "nlua_col.h"
 #include "nlua_outfit.h"
 #include "nlua_pilot.h"
 #include "nlua_planet.h"
@@ -319,6 +320,7 @@ static int playerL_omsgAdd( lua_State *L )
    double duration;
    unsigned int id;
    int fontsize;
+   const glColour *col;
 
    NLUA_CHECKRW(L);
    PLAYER_CHECK();
@@ -327,13 +329,14 @@ static int playerL_omsgAdd( lua_State *L )
    str      = luaL_checkstring(L,1);
    duration = luaL_checknumber(L,2);
    fontsize = luaL_optinteger(L,3,OMSG_FONT_DEFAULT_SIZE);
+   col      = luaL_optcolour(L,4,&cWhite);
 
    /* Infinity. */
    if (duration < 1e-10)
       duration = INFINITY;
 
    /* Output. */
-   id       = omsg_add( str, duration, fontsize );
+   id       = omsg_add( str, duration, fontsize, col );
    lua_pushnumber( L, id );
    return 1;
 }
