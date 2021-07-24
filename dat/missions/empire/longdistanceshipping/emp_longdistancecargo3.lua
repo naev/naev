@@ -13,7 +13,7 @@
    <faction>Empire</faction>
   </avail>
   <notes>
-   <campaign>Long Distance Shipping</campaign>
+   <campaign>Empire Shipping</campaign>
   </notes>
  </mission>
  --]]

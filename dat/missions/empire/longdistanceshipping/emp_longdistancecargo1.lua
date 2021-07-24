@@ -8,12 +8,12 @@
    <priority>4</priority>
    <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 2</cond>
    <chance>30</chance>
-   <done>Empire Recruitment</done>
    <location>Bar</location>
    <faction>Empire</faction>
   </avail>
   <notes>
-   <campaign>Long Distance Shipping</campaign>
+   <done_misn name="Empire Shipping">2 times or more</done_misn>
+   <campaign>Empire Shipping</campaign>
   </notes>
  </mission>
  --]]
