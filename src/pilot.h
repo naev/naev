@@ -404,7 +404,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
 int pilot_getJumps( const Pilot* p );
 const glColour* pilot_getColour( const Pilot* p );
 int pilot_validTarget( const Pilot* p, const Pilot* target );
-int pilot_canTarget( const Pilot* p);
+int pilot_canTarget( const Pilot* p );
 
 /* non-lua wrappers */
 double pilot_relsize( const Pilot* cur_pilot, const Pilot* p );
