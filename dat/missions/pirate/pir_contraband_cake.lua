@@ -162,10 +162,10 @@ function land()
    vn.scene()
    local b = vn.newCharacter( receivername, { image=receiverimage } )
    vn.na(_("After you land you are promptly greeted by a burly looking individual."))
-   b(_([["So you're the guy Sam sent? That weasel, I knew he wasn't cut out for this work."]]))
+   b(_([["So you've been sent by Sam? That weasel, I knew they weren't cut out for this work."]]))
    vn.na(_([[You guess that this is the person you were supposed to deliver the cake to and hand it over.]]))
    b(_([[They take a look at the word 'Cake' written on the box and burst into laughter. After a while they calm down and turn to you.
-"This was his idea wasn't it? Always been a bit weird that one."]]))
+"This was their idea wasn't it? Always been a bit weird that one."]]))
    b(_([["I guess you're not naïve enough to think this is a cake right?"
 They chuckle.
 "Anyway, you did good work bringing it here. I'll get you your reward wired and if you're interested in doing new jobs look into the mission computers. I've white-listed you to act as a courier."]]))
