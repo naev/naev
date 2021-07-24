@@ -476,6 +476,7 @@ static Pilot* player_newShipMake( const char* name )
    /* store the current ship if it exists */
    pilot_clearFlagsRaw( flags );
    pilot_setFlagRaw( flags, PILOT_PLAYER );
+   pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
 
    /* in case we're respawning */
    player_rmFlag( PLAYER_CREATING );
