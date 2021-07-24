@@ -24,6 +24,11 @@
 #include "safelanes.h"
 #include "space.h"
 
+#if HAVE_SUITESPARSE_CHOLMOD_H
+#include <suitesparse/cholmod.h>
+#else /* HAVE_SUITESPARSE_CHOLMOD_H */
+#include <cholmod.h>
+#endif /* HAVE_SUITESPARSE_CHOLMOD_H */
 
 /**
  * Structure for map overlay size.
@@ -71,11 +76,15 @@ static Uint32 ovr_opened = 0; /**< Time last opened. */
 static int ovr_open = 0; /**< Is the overlay open? */
 static double ovr_res = 10.; /**< Resolution. */
 
+static cholmod_common C; /**< Parameter settings, statistics, and workspace used internally by CHOLMOD (label position optimizer). */
 
 /*
  * Prototypes
  */
 static int update_collision( float *ox, float *oy, float weight,
+      float x, float y, float w, float h,
+      float mx, float my, float mw, float mh );
+static int force_collision( float *ox, float *oy,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh );
 static void ovr_optimizeLayout( int items, const Vector2d** pos,
@@ -87,6 +96,9 @@ static int ovr_refresh_compute_overlap( float *ox, float *oy,
       float res, float x, float y, float w, float h, const Vector2d** pos,
       MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self, int radius, float pixbuf,
       float object_weight, float text_weight );
+static int ovr_refresh_uzawa_overlap( cholmod_dense *forces_x, cholmod_dense *forces_y,
+      float res, float x, float y, float w, float h, const Vector2d** pos,
+      MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self, float pixbuf );
 /* Render. */
 void map_overlayToScreenPos( double *ox, double *oy, double x, double y );
 /* Markers. */
@@ -229,12 +241,14 @@ void ovr_refresh (void)
  */
 static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, MapOverlayPosOpt* moo, float res )
 {
-   int i, iter, changed;
-   float cx,cy, ox,oy, r, off;
+   int i, j, iter, changed;
+   float cx,cy, ox, oy, r, off;
+   cholmod_dense *forces_x, *forces_y, *sum_x, *sum_y;
+   float sx, sy;
 
    /* Parameters for the map overlay optimization. */
    const float update_rate = 0.015; /**< how big of an update to do each step. */
-   const int max_iters = 100; /**< Maximum amount of iterations to do. */
+   const int max_iters = 10; /**< Maximum amount of iterations to do. */
    const float pixbuf = 5.; /**< Pixels to buffer around for text (not used for optimizing radius). */
    const float pixbuf_initial = 50; /**< Initial pixel buffer to consider. */
    const float position_threshold_x = 20.; /**< How far to start penalizing x position. */
@@ -295,52 +309,80 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       moo[i].text_offx = moo[i].text_offx_base;
       moo[i].text_offy = moo[i].text_offy_base;
       /* Initialize mo. */
-      mo[i]->text_offx = moo[i].text_offx;
-      mo[i]->text_offy = moo[i].text_offy;
+      mo[i]->text_offx = 0; //moo[i].text_offx; /* TODO: see what to do there. */
+      mo[i]->text_offy = 0; //moo[i].text_offy;
    }
 
-   /* Optimize over them. */
+   /* Uzawa optimization algorithm.
+    * We minimize the (ponderated) L2 norm of vector of offsets and radius changes
+    * Under the constraint of no interpenetration
+    * As the algorithm is Uzawa, this constraint won't necessary be attaigned.
+    * This is similar to a contact problem is mechanics. */
+
+   /* Initialize the cholmod and the matrix that stores the dual variables (forces applied between objects).
+    * cholmod matrix is column-major, this means it is interesting to store in each column the forces
+    * recieved by a given object. Then these forces are summed to obtain the total force on the object.
+    * Odd lines are forces from objects and Even lines from other texts. */
+
+   cholmod_start( &C );
+   forces_x = cholmod_zeros( 2*items, items, CHOLMOD_REAL, &C );
+   forces_y = cholmod_zeros( 2*items, items, CHOLMOD_REAL, &C );
+/*   sum_x = cholmod_zeros( items, 1, CHOLMOD_REAL, &C );*/
+/*   sum_y = cholmod_zeros( items, 1, CHOLMOD_REAL, &C );*/
+   
+   /* Main Uzawa Loop. */
    for (iter=0; iter<max_iters; iter++) {
       changed = 0;
       for (i=0; i<items; i++) {
          cx = pos[i]->x / res;
          cy = pos[i]->y / res;
-         /* Move text if overlap. */
-         if (ovr_refresh_compute_overlap( &ox, &oy, res, cx+mo[i]->text_offx, cy+mo[i]->text_offy, moo[i].text_width, gl_smallFont.h, pos, mo, moo, items, i, 0, pixbuf, object_weight, text_weight )) {
-            moo[i].text_offx += ox * update_rate;
-            moo[i].text_offy += 30 * oy * update_rate; /* Boost y offset as it's more likely to be the solution. */
-            changed = 1;
+         /* Compute the forces. */
+         //DEBUG("mo[i]->text_offx = %f",mo[i]->text_offx);
+         if (ovr_refresh_uzawa_overlap( forces_x, forces_y, res, cx+mo[i]->text_offx-pixbuf, cy+mo[i]->text_offy-pixbuf, moo[i].text_width+2*pixbuf, gl_smallFont.h+2*pixbuf, pos, mo, moo, items, i, pixbuf )) {
+            changed = 1; /* TODO: get rid of this and find a proper stopping criterion. */
          }
 
-         /* Penalize offsets changes */
-         off = moo[i].text_offx_base - mo[i]->text_offx;
-         if (fabs(off) > position_threshold_x) {
-            off -= FSIGN(off) * position_threshold_x;
-            /* Regularization, my ass. This can kick the point straight through to the opposite side.
-             * That's not necessarily bad. If our base point forces a bad fit, may as well switch to another one.
-             * But we cannot just let the adjustment overshoot and grow without bound; it's hard to read a label
-             * located at (nan, nan). */
-            moo[i].text_offx += off * MIN( position_weight * fabs(off), 2. );
-            /* Embrace the possibility of switching sides (accidental simulated annealing?) and reset the base point. */
-            moo[i].text_offx_base *= FSIGN(moo[i].text_offx_base * moo[i].text_offx);
-            changed = 1;
-         }
-         off = moo[i].text_offy_base - mo[i]->text_offy;
-         if (fabs(off) > position_threshold_y) {
-            off -= FSIGN(off) * position_threshold_y;
-            moo[i].text_offy += off * MIN( position_weight * fabs(off), 2. );
-            moo[i].text_offy_base *= FSIGN(moo[i].text_offy_base * moo[i].text_offy);
-            changed = 1;
+         /* Do the sum. */
+         sx = 0.;
+         sy = 0.;
+         for (j=0; j<items; j++) {
+            sx += ((double*)forces_x->x)[2*items*i+2*j+1] + ((double*)forces_x->x)[2*items*i+2*j];
+            sy += ((double*)forces_y->x)[2*items*i+2*j+1] + ((double*)forces_y->x)[2*items*i+2*j];
+/*            DEBUG("fx = %f",((double*)forces_x->x)[2*items*i+2*j+1]);*/
+/*            DEBUG("fx = %f",((double*)forces_x->x)[2*items*i+2*j]);*/
+/*            DEBUG("fy = %f",((double*)forces_y->x)[2*items*i+2*j+1]);*/
+/*            DEBUG("fy = %f",((double*)forces_y->x)[2*items*i+2*j]);*/
          }
 
-         /* Propagate updates. */
+         //DEBUG("sy = %f",sy);
+
+         /* Update positions (in buffer). Diagonal stiffness.
+          * (moving along y is more likely to be the right solution)*/
+         moo[i].text_offx = .1 * sx; //.1 * sx; /* TODO: decide. */
+         moo[i].text_offy = .3 * sy; // .3
+      }
+      //DEBUG("%f",((double*)forces_x->x)[items*0+1]);
+      //DEBUG("%f",sx);
+      //DEBUG("%d",items);
+
+      /* Propagate updates. */
+      for (i=0; i<items; i++) {
          mo[i]->text_offx = moo[i].text_offx;
          mo[i]->text_offy = moo[i].text_offy;
+         //DEBUG("mo[i]->text_offy = %f",mo[i]->text_offy);
       }
+
       /* Converged (or unnecessary). */
-      if (!changed)
-         break;
+/*      if (!changed)*/
+/*         break;*/
    }
+
+   /* Free the forces matrix. */
+   cholmod_free_dense( &forces_x, &C );
+   cholmod_free_dense( &forces_y, &C );
+/*   cholmod_free_dense( &sum_x, &C );*/
+/*   cholmod_free_dense( &sum_y, &C );*/
+   cholmod_finish( &C );
 }
 
 
@@ -414,6 +456,56 @@ static int update_collision( float *ox, float *oy, float weight,
 
 
 /**
+ * @brief Compute a collision between two rectangles and direction to deduce the force.
+ */
+static int force_collision( float *ox, float *oy,
+      float x, float y, float w, float h,
+      float mx, float my, float mw, float mh )
+{
+
+   /* No contact because of y offset (5 pix tolerance). */
+   if (((y+h) < my+5) || (y+5 > (my+mh)))
+      *ox = 0;
+   else {
+      /* Case A is left of B. */
+      if (x < mx) {
+         *ox += mx-(x+w);
+         *ox = MIN(0., *ox);
+      }
+      /* Case A is to the right of B. */
+      else {
+         *ox += (mx+mw)-x;
+         *ox = MAX(0., *ox);
+      }
+   }
+
+   /* No contact because of x offset (5 pix tolerance). */
+   if (((x+w) < mx+5) || (x+5 > (mx+mw)))
+      *oy = 0;
+   else {
+      /* Case A is below B. */
+      if (y < my) {
+         *oy += my-(y+h);
+         *oy = MIN(0., *oy);
+      }
+      /* Case A is above B. */
+      else {
+         *oy += (my+mh)-y;
+         *oy = MAX(0., *oy);
+      }
+   }
+
+   /* No collision. TODO: get rid of this one. */
+   if (((x+w) < mx+5) || (x+5 > (mx+mw)))
+      return 0;
+   if (((y+h) < my+5) || (y+5 > (my+mh)))
+      return 0;
+
+   return 1;
+}
+
+
+/**
  * @brief Compute how an element overlaps with text and direction to move away.
  */
 static int ovr_refresh_compute_overlap( float *ox, float *oy,
@@ -445,6 +537,60 @@ static int ovr_refresh_compute_overlap( float *ox, float *oy,
          my = pos[i]->y/res + mo[i]->text_offy-pixbuf;
          collided |= update_collision( ox, oy, text_weight, x, y, w, h, mx, my, mw, mh );
       }
+   }
+
+   // TODO: this neutralizes the initialization. See if it should be re-activated
+   *ox = *oy = 0.;
+   collided = 0;
+
+   return collided;
+}
+
+
+/**
+ * @brief Compute how an element overlaps with text and force to move away.
+ */
+static int ovr_refresh_uzawa_overlap( cholmod_dense *forces_x, cholmod_dense *forces_y,
+      float res, float x, float y, float w, float h, const Vector2d** pos,
+      MapOverlayPos** mo, MapOverlayPosOpt* moo, int items, int self, float pixbuf )
+{
+   int i, collided;
+   float mx, my, mw, mh, fx, fy;
+   const float pb2 = pixbuf*2.;
+
+   collided = 0;
+
+   for (i=0; i<items; i++) {
+      fx = ((double*)forces_x->x)[2*items*self+2*i+1];
+      fy = ((double*)forces_y->x)[2*items*self+2*i+1];
+
+      /* Collisions with planet circles and jp triangles (odd indices). */
+      mw = mo[i]->radius + pb2;
+      mh = mw;
+      mx = pos[i]->x/res - mw/2.;
+      my = pos[i]->y/res - mh/2.;
+      //DEBUG("x=%f, mx=%f, w=%f, mw=%f", x,mx,w,mw);
+      collided |= force_collision( &fx, &fy, x, y, w, h, mx, my, mw, mh );
+
+      ((double*)forces_x->x)[2*items*self+2*i+1] = fx;
+      ((double*)forces_y->x)[2*items*self+2*i+1] = fy;
+
+      if (i == self)
+         continue;
+
+      fx = ((double*)forces_x->x)[2*items*self+2*i];
+      fy = ((double*)forces_y->x)[2*items*self+2*i];
+
+      /* Collisions with other texts (even indices) */
+      mw = moo[i].text_width + pb2;
+      mh = gl_smallFont.h + pb2;
+      mx = pos[i]->x/res + mo[i]->text_offx - pixbuf;
+      my = pos[i]->y/res + mo[i]->text_offy - pixbuf;
+      collided |= force_collision( &fx, &fy, x, y, w, h, mx, my, mw, mh );
+
+      ((double*)forces_x->x)[2*items*self+2*i] = fx;
+      ((double*)forces_y->x)[2*items*self+2*i] = fy;
+
    }
 
    return collided;
