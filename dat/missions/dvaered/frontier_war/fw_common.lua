@@ -50,7 +50,7 @@ portrait_tronk      = "dvaered/dv_military_m5.webp" -- Private Tronk: subordinat
 -- Decides wether the player is stronger than a corvette
 function playerMoreThanCorvette()
    local playerclass = player.pilot():ship():class()
-   return (playerclass == "Destroyer" or playerclass == "Cruiser" or playerclass == "Carrier" or or playerclass == "Battleship" or playerclass == "Armoured Transport")
+   return (playerclass == "Destroyer" or playerclass == "Cruiser" or playerclass == "Carrier" or playerclass == "Battleship" or playerclass == "Armoured Transport")
 end
 
 -- When an escort is hailed

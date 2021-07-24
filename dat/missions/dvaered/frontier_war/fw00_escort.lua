@@ -10,7 +10,7 @@
    <location>Bar</location>
    <faction>Dvaered</faction>
    <done>Destroy the FLF base!</done>
-   <cond>system.get("Tarsus"):jumpDist() &lt; 4 and (var.peek("invasion_time") == nil or time.get() &gt;= time.fromnumber(var.peek("invasion_time")) + time.create(0, 20, 0)) and not (planet.cur():services().shipyard == nil)</cond>
+   <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (planet.cur():services().shipyard == nil)</cond>
   </avail>
   <notes>
    <campaign>Frontier Invasion</campaign>
@@ -119,6 +119,12 @@ misn_reward = _("Dvaered never talk about money.")
 
 
 function create()
+   -- The mission should not appear just after the FLF destruction
+   if not (var.peek("invasion_time") == nil or 
+           time.get() >= time.fromnumber(var.peek("invasion_time")) + time.create(0, 20, 0)) then
+      misn.finish(false)
+   end
+
    destpla1, destsys1 = planet.get("Ginni")
    destpla2, destsys2 = planet.get(wlrd_planet)
    destpla3, destsys3 = planet.get("Laarss")
