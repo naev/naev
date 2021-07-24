@@ -988,13 +988,8 @@ static int pilotL_getVisible( lua_State *L )
  */
 static int pilotL_eq( lua_State *L )
 {
-   LuaPilot p1, p2;
-
-   /* Get parameters. */
-   p1 = luaL_checkpilot(L,1);
-   p2 = luaL_checkpilot(L,2);
-
-   /* Push result. */
+   LuaPilot p1 = luaL_checkpilot(L,1);
+   LuaPilot p2 = luaL_checkpilot(L,2);
    lua_pushboolean(L, p1 == p2);
    return 1;
 }
