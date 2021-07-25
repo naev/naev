@@ -10,6 +10,7 @@
 
 
 /** @cond */
+#include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -83,11 +84,12 @@ int nlua_loadEvt( nlua_env env )
  */
 void event_setupLua( Event_t *ev, const char *func )
 {
-   Event_t **evptr;
+   uintptr_t *evptr;
 
    /* Set up event pointer. */
+   assert( ev != NULL );
    evptr = lua_newuserdata( naevL, sizeof(Event_t*) );
-   *evptr = ev;
+   *evptr = ev->id;
    nlua_setenv( ev->env, "__evt" );
 
    /* Get function. */
@@ -114,10 +116,11 @@ int event_runLua( Event_t *ev, const char *func )
  */
 Event_t *event_getFromLua( lua_State *L )
 {
-   Event_t *ev, **evptr;
+   Event_t *ev;
+   uintptr_t *evptr;
    nlua_getenv(__NLUA_CURENV, "__evt");
    evptr = lua_touserdata( L, -1 );
-   ev = evptr ? *evptr : NULL;
+   ev = evptr ? event_get( *evptr ) : NULL;
    lua_pop( L, 1 );
    return ev;
 }
