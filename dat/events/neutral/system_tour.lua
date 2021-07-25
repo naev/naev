@@ -1,7 +1,7 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="System Tour">
-  <trigger>load</trigger>
+  <trigger>none</trigger>
   <chance>100</chance>
   <cond>false</cond>
   <flags>
