@@ -92,6 +92,7 @@ function luaspfx.exit()
    luaspfx.__hookbg = nil
    if luaspfx.__hookfg then hook.rm( luaspfx.__hookfg ) end
    luaspfx.__hookfg = nil
+   if luaspfx.__update then hook.rm( luaspfx.__update ) end
 end
 
 return luaspfx
