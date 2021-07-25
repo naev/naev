@@ -46,7 +46,7 @@ function create()
    end
 
    -- Create the NPC.
-   evt.npcAdd("watchPoster", _("Poster on the wall"), myImg, _("There is a poster on the wall"), 15)
+   evt.npcAdd("watchPoster", _("Poster"), myImg, _("There is a poster on the wall."), 15)
 
    -- End event on takeoff.
    hook.takeoff( "leave" )
