@@ -2189,6 +2189,7 @@ dat/bkg/solarwind.lua
 dat/bkg/taiomi.lua
 dat/events/bioship_upgrade.lua
 dat/events/cinematic/DvdFLFbattle.lua
+dat/events/dev/system_tour.lua
 dat/events/discovery.lua
 dat/events/dvaered/fwA_treason.lua
 dat/events/dvaered/fwB_repay.lua
@@ -2217,7 +2218,6 @@ dat/events/neutral/npc.lua
 dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shipwreck.lua
-dat/events/neutral/system_tour.lua
 dat/events/pirate_fame.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
