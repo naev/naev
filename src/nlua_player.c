@@ -75,6 +75,7 @@ static int playerL_autonavReset( lua_State *L );
 /* Cinematics. */
 static int playerL_cinematics( lua_State *L );
 static int playerL_damageSPFX( lua_State *L );
+static int playerL_screenshot( lua_State *L );
 /* Board stuff. */
 static int playerL_unboard( lua_State *L );
 /* Land stuff. */
@@ -121,6 +122,7 @@ static const luaL_Reg playerL_methods[] = {
    { "autonavReset", playerL_autonavReset },
    { "cinematics", playerL_cinematics },
    { "damageSPFX", playerL_damageSPFX },
+   { "screenshot", playerL_screenshot },
    { "unboard", playerL_unboard },
    { "isLanded", playerL_isLanded },
    { "takeoff", playerL_takeoff },
@@ -677,6 +679,19 @@ static int playerL_damageSPFX( lua_State *L )
    double spfx_mod = luaL_checknumber(L,1);
    spfx_shake( spfx_mod );
    spfx_damage( spfx_mod );
+   return 0;
+}
+
+
+/**
+ * @brief Takes a screenshot (same as the keyboard action).
+ *
+ * @luafunc screenshot
+ */
+static int playerL_screenshot( lua_State *L )
+{
+   (void) L;
+   player_screenshot();
    return 0;
 }
 
