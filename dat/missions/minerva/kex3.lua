@@ -76,6 +76,8 @@ function accept ()
       return
    end
 
+   misn.accept()
+
    shiplog.append( logidstr, _("You have agreed to help Kex obtain information from Major Malik.") )
 
    misn.osdCreate( misn_title,
@@ -155,6 +157,9 @@ function approach_kex ()
       kex(string.format(_([["This time I'm hoping it's a cinch. Major Malik should be at %s in the %s system. They should be fairly old, so it should be to just outright confront him and get him to talk. I'll give you a note that if you show him should be easy enough to convince him. I'll send you a picture of him so you can easily recognize him when you see him."]]), _(targetplanet), _(targetsys)))
       kex(_([["The note? It's just your run-of-the-mill blackmail. We don't really care about Major Malik himself, what we want is mud on the CEO. Hopefully they'll be sensible and give us what we want. However, I trust you will do what it takes in they case they don't."
 He winks his cyborg eye at you.]]))
+      vn.func( function ()
+         misn_state = 0
+      end )
    else
       vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
    end
@@ -180,6 +185,8 @@ He winks his cyborg eye at you.]]))
    end
    vn.jump("menu_msg")
 
+   vn.label("leave")
+   vn.na(_("You take your leave."))
    vn.run()
 end
 
@@ -219,7 +226,7 @@ function enter ()
       -- Move to next state
       misn_state = 3
 
-      -- Timer 
+      -- Timer
       hook.timer( 5e3, "thug_heartbeat" )
    end
 end
