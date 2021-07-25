@@ -10,7 +10,6 @@
 
 
 /** @cond */
-#include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -92,7 +91,6 @@ void event_runStart( unsigned int eventid, const char *func )
       return;
 
    /* Set up event pointer. */
-   assert( ev != NULL );
    evptr = lua_newuserdata( naevL, sizeof(Event_t*) );
    *evptr = ev->id;
    nlua_setenv( ev->env, "__evt" );
@@ -167,6 +165,7 @@ int event_runFunc( unsigned int eventid, const char *func, int nargs )
    }
 
    /* Time to remove the event. */
+   ev = event_get( eventid );  /* The Lua call may have invalidated the pointer. */
    nlua_getenv(ev->env, "__evt_delete");
    evt_delete = lua_toboolean(naevL,-1);
    lua_pop(naevL,1);
