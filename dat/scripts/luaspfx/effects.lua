@@ -1,5 +1,6 @@
 local love = require 'love'
 local lg = require 'love.graphics'
+local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'
 
 local effects = {}
@@ -58,6 +59,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    return color;
 }
 ]]
+local alert_sound = audio.newSource('snd/sounds/alarm_warning.ogg')
 local function __alert( params, x, y, z )
    if not effects.__alert_bg_shader then
       effects.__alert_bg_shader = lg.newShader(
@@ -77,7 +79,8 @@ local function __alert( params, x, y, z )
    lg.setShader( old_shader )
 end
 local function __alert_create( params, ttl, pos, vel )
-   -- TODO play sound
+   -- TODO allow multiple to play simultaneously (share buffers)
+   alert_sound:playPos( pos )
 end
 effects.alert = { func = __alert, create = __alert_create }
 
