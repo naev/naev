@@ -47,9 +47,16 @@ targetsys = planet.get(targetplanet):system():nameRaw()
 lastplanet = "Totoran"
 lastsys = planet.get(lastplanet):system():nameRaw()
 
+gauntletsys = system.get("Crimson Gauntlet")
+
 misn_reward = _("A step closer to Kex's freedom")
 misn_title = _("Freeing Kex")
 misn_desc = string.format(_("You have been assigned with obtaining information from Major Malik at %s in the %s system."), _(targetplanet), _(targetsys))
+
+malik_portrait = "major_malik.webp"
+malik_image = "major_malik.webp"
+malik_portrait = minerva.kex.portrait
+malik_image = minerva.kex.image
 
 money_reward = 400e3
 
@@ -115,7 +122,7 @@ function generate_npc ()
    elseif misn_state==3 and planet.cur() == planet.get(lastplanet) then
 
       -- TODO fix portrait
-      npc_malik = misn.npcAdd( "approach_malik", _("Major Malik"), "major_malik.webp", _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
+      npc_malik = misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
    end
 end
 
@@ -250,16 +257,22 @@ function thug_heartbeat ()
 end
 
 function approach_malik ()
+   local dogauntlet
    vn.clear()
    vn.scene()
-   local malik = vn.newCharacter( _("Major Malik"), {image="major_malik.webp"} )
+   local malik = vn.newCharacter( _("Major Malik"), {image=malik_image} )
    vn.transition()
    vn.na(_("You approach Major Malik who seems to be enjoying a drink."))
    malik(_([["What do you want?"]]))
    vn.na(_("You hand him the note you got from Kex. He reads it and furrows his brows a bit."))
    malik(_([["I see. You think at my age I worry about what happens to me? I've had a good ..."]]))
    -- TODO finish
+   vn.func( function () dogauntlet = true end )
    vn.run()
+
+   if dogauntlet then
+      gauntlet_start()
+   end
 end
 
 gauntletsys = system.get("Crimson Gauntlet")
@@ -280,9 +293,12 @@ end
 --]]
 -- Enters Crimson Gauntlet
 function enter_the_ring ()
+   -- If the player reloads when accepted the mission, the hook will be saved
+   -- and error out because it can't teleport
+   if player.isLanded() then return end
+
    -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
    local sys = gauntletsys
-   hook.enter( gauntlet_enter )
    for k,s in ipairs(system.getAll()) do
       s:setHidden(true)
    end
@@ -317,7 +333,7 @@ function enter_the_ring ()
    enemies = {pmalik}
 
    -- Taunt stuff
-   hook.time(   3e3, "cauntdown_start" )
+   hook.timer(   3e3, "countdown_start" )
    hook.timer( 10e3, "malik_taunt" )
 end
 -- Goes back to Totoran (landed)
@@ -366,7 +382,7 @@ function countdown_done ()
 end
 
 function malik_taunt ()
-   if pmalik and pmalik:exist() then
+   if pmalik and pmalik:exists() then
       local taunts = {
          _("Back in my day we used to fly uphill both ways to go to work!"),
          _("I'll be damned if I let a young whippersnapper get the best of me!"),
@@ -493,7 +509,7 @@ function malik_speech ()
       s.func()
    end
    if s.delay then
-      hook.timer( s.delay )
+      hook.timer( s.delay, "malik_speech" )
    end
 end
 
