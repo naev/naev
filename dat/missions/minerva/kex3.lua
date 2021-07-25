@@ -55,8 +55,6 @@ misn_desc = string.format(_("You have been assigned with obtaining information f
 
 malik_portrait = "major_malik.webp"
 malik_image = "major_malik.webp"
-malik_portrait = minerva.kex.portrait
-malik_image = minerva.kex.image
 
 money_reward = 400e3
 
