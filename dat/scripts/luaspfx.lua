@@ -43,8 +43,7 @@ function __luaspfx_render( tbl )
    local cx, cy = camera.get():get()
    local cz = camera.getZoom()
    for k,v in ipairs(tbl) do
-      -- Update time
-      v.params.time = v.time
+      v.efx.time = v.time
       -- Convert coordinates to screen
       local ox, oy = v.pos:get()
       local x = (ox-cx) / cz + nw2

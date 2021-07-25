@@ -67,7 +67,7 @@ local function __alert( efx, x, y, z )
          love_shaders.vertexcode
       )
    end
-   effects.__alert_bg_shader:send( "u_time", efx.params.time )
+   effects.__alert_bg_shader:send( "u_time", efx.time )
    effects.__alert_bg_shader:send( "u_size", efx.params.size )
 
    local col = efx.params.col or {1, 1, 0, 0.5}
