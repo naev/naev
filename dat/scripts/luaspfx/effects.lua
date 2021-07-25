@@ -60,26 +60,26 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 }
 ]]
 local alert_sound = audio.newSource('snd/sounds/alarm_warning.ogg')
-local function __alert( params, x, y, z )
+local function __alert( efx, x, y, z )
    if not effects.__alert_bg_shader then
       effects.__alert_bg_shader = lg.newShader(
          alert_bg_shader_frag,
          love_shaders.vertexcode
       )
    end
-   effects.__alert_bg_shader:send( "u_time", params.time )
-   effects.__alert_bg_shader:send( "u_size", params.size )
+   effects.__alert_bg_shader:send( "u_time", efx.params.time )
+   effects.__alert_bg_shader:send( "u_size", efx.params.size )
 
-   local col = params.col or {1, 1, 0, 0.5}
-   local s = params.size / z
+   local col = efx.params.col or {1, 1, 0, 0.5}
+   local s = efx.params.size / z
    local old_shader = lg.getShader()
    lg.setShader( effects.__alert_bg_shader )
    lg.setColor( col )
    love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
    lg.setShader( old_shader )
 end
-local function __alert_create( params, ttl, pos, vel )
-   params.efx.sound:playPos( pos )
+local function __alert_create( efx, ttl, pos, vel )
+   efx.sound:playPos( pos )
 end
 effects.alert = { func = __alert, create = __alert_create, sound=alert_sound:clone() }
 
