@@ -97,7 +97,7 @@ function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif misn_state==1 and planet.cur() == planet.get(targetplanet) then
+   elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -207,7 +207,7 @@ function enter ()
          table.insert( thugs, "Dvaered Ancestor" )
       end
       local fdv = faction.dynAdd( "Dvaered", "dv_thug", _("Dvaered Thug"), {clear_enemies=true, clear_allies=true} )
-      local thug_pilots = {}
+      thug_pilots = {}
       for k,v in ipairs(thugs) do
          local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
          local p = pilot.add( v, fdv, ppos )
