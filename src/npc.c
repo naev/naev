@@ -22,6 +22,7 @@
 #include "event.h"
 #include "land.h"
 #include "log.h"
+#include "nlua_evt.h"
 #include "nstring.h"
 #include "opengl.h"
 #include "ndata.h"

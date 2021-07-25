@@ -80,11 +80,16 @@ int nlua_loadEvt( nlua_env env )
 
 
 /**
- * @brief Sets up the Lua environment to run a function.
+ * @brief Starts running a function, allows programmer to set up arguments.
  */
-void event_setupLua( Event_t *ev, const char *func )
+void event_runStart( unsigned int eventid, const char *func )
 {
    uintptr_t *evptr;
+   Event_t *ev;
+
+   ev = event_get( eventid );
+   if (ev == NULL)
+      return;
 
    /* Set up event pointer. */
    assert( ev != NULL );
@@ -98,13 +103,17 @@ void event_setupLua( Event_t *ev, const char *func )
 
 
 /**
- * @brief Runs the Lua for an event.
+ * @brief Runs the event function.
+ *
+ *    @param eventid ID of the event to run Lua function on.
+ *    @param func Name of the function to run.
+ *    @return 0 on success.
  */
-int event_runLua( Event_t *ev, const char *func )
+int event_run( unsigned int eventid, const char *func )
 {
    int ret;
-   event_setupLua( ev, func );
-   ret = event_runLuaFunc( ev, func, 0 );
+   event_runStart( eventid, func );
+   ret = event_runFunc( eventid, func, 0 );
    return ret;
 }
 
@@ -127,16 +136,22 @@ Event_t *event_getFromLua( lua_State *L )
 
 
 /**
- * @brief Runs a Lua func with nargs.
+ * @brief Runs a function previously set up with event_runStart.
  *
  *    @return -1 on error, 1 on misn.finish() call, 2 if event got deleted
  *            and 0 normally.
  */
-int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
+int event_runFunc( unsigned int eventid, const char *func, int nargs )
 {
    int ret;
    const char* err;
    int evt_delete;
+   Event_t *ev;
+
+   ev = event_get( eventid );
+   if (ev == NULL)
+      return 0;
+
 
    ret = nlua_pcall(ev->env, nargs, 0);
    if (ret != 0) { /* error has occurred */
