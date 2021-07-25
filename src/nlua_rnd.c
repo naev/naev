@@ -28,6 +28,7 @@ static int rnd_int( lua_State *L );
 static int rnd_sigma( lua_State *L );
 static int rnd_twosigma( lua_State *L );
 static int rnd_threesigma( lua_State *L );
+static int rnd_uniform( lua_State *L );
 static int rnd_permutation( lua_State *L );
 static const luaL_Reg rnd_methods[] = {
    { "int", rnd_int }, /* obsolete, rnd.rnd is preferred. */
@@ -35,6 +36,7 @@ static const luaL_Reg rnd_methods[] = {
    { "sigma", rnd_sigma },
    { "twosigma", rnd_twosigma },
    { "threesigma", rnd_threesigma },
+   { "uniform", rnd_uniform },
    { "permutation", rnd_permutation },
    {0,0}
 }; /**< Random Lua methods. */
@@ -161,6 +163,42 @@ static int rnd_threesigma( lua_State *L )
 {
    lua_pushnumber(L, RNG_3SIGMA());
    return 1;
+}
+
+
+/**
+ * @brief Gets a random number in the given range, with a uniform distribution.
+ *
+ * @usage n = uniform() -- Real number in the interval [0,1].
+ * @usage n = uniform(5) -- Real number in the interval [0,5].
+ * @usage n = uniform(3,5) -- Real number in the interval [3,5].
+ *
+ *    @luatparam number x First parameter, read description for details.
+ *    @luatparam number y Second parameter, read description for details.
+ *    @luatreturn number A randomly generated number, read description for details.
+ * @luafunc uniform
+ */
+static int rnd_uniform( lua_State *L )
+{
+   int o;
+   double l,h;
+
+   o = lua_gettop( L );
+
+   if (o==0)
+      lua_pushnumber( L, RNGF() ); /* random double 0 <= x <= 1 */
+   else if (o==1) { /* random int 0 <= x <= parameter */
+      l = luaL_checknumber( L, 1 );
+      lua_pushnumber( L, RNGF() * l );
+   }
+   else if (o>=2) { /* random int parameter 1 <= x <= parameter 2 */
+      l = luaL_checknumber( L, 1 );
+      h = luaL_checknumber( L, 2 );
+      lua_pushnumber( L, l + (h-l) * RNGF() );
+   }
+   else NLUA_INVALID_PARAMETER(L);
+
+   return 1; /* unless it's returned 0 already it'll always return a parameter */
 }
 
 
