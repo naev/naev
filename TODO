@@ -1,4 +1,5 @@
-
+For live issue tracking see here: https://github.com/naev/naev/issues/
+For live release tracking see here: https://github.com/naev/naev/projects/
 
    VITAL
 
@@ -15,7 +16,6 @@
    MINOR
 
    *) Graphic improvements
-      *) cloaking effects
       *) fancy displacement effects for some ships
    *) Allow player to create faction and control fleets
    *) Minimap/Radar improvements

@@ -19,7 +19,7 @@ local sirius_outfits = eoutfits.merge{{
    "TeraCom Medusa Launcher", "TeraCom Vengeance Launcher",
    "TeraCom Imperator Launcher",
    -- Small Weapons
-   "Slicer", "Razor MK2", "Ion Cannon",
+   "Slicer", "Razor MK1", "Razor MK2", "Ion Cannon",
    -- Utility
    "Droid Repair Crew", "Milspec Scrambler",
    "Targeting Array", "Agility Combat AI",
@@ -44,6 +44,11 @@ local sirius_params = {
 }
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local sirius_cores = {
+   ["Sirius Fidelity"] = function () return {
+         "Milspec Orion 2301 Core System",
+         "Tricon Zephyr Engine",
+         "S&K Ultralight Combat Plating",
+      } end,
 }
 
 --[[

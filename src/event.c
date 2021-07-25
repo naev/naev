@@ -139,55 +139,6 @@ int event_start( const char *name, unsigned int *id )
 
 
 /**
- * @brief Starts running a function, allows programmer to set up arguments.
- */
-void event_runStart( unsigned int eventid, const char *func )
-{
-   Event_t *ev;
-
-   ev = event_get( eventid );
-   if (ev == NULL)
-      return;
-
-   event_setupLua( ev, func );
-}
-
-
-/**
- * @brief Runs a function previously set up with event_runStart.
- */
-int event_runFunc( unsigned int eventid, const char *func, int nargs )
-{
-   Event_t *ev;
-
-   ev = event_get( eventid );
-   if (ev == NULL)
-      return 0;
-
-   return event_runLuaFunc( ev, func, nargs );
-}
-
-
-/**
- * @brief Runs the event function.
- *
- *    @param eventid ID of the event to run Lua function on.
- *    @param func Name of the function to run.
- *    @return 0 on success.
- */
-int event_run( unsigned int eventid, const char *func )
-{
-   Event_t *ev;
-
-   ev = event_get( eventid );
-   if (ev == NULL)
-      return -1;
-
-   return event_runLua( ev, func );
-}
-
-
-/**
  * @brief Gets the name of the event data.
  *
  *    @param eventid Event to get name of data from.
@@ -286,7 +237,7 @@ static int event_create( int dataid, unsigned int *id )
 
    /* Run Lua. */
    if ((id==NULL) || (*id==0))
-      event_runLua( ev, "create" );
+      event_run( ev->id, "create" );
    if (id != NULL)
       *id = ev->id;
 

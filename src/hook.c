@@ -36,6 +36,7 @@
 #include "log.h"
 #include "menu.h"
 #include "mission.h"
+#include "nlua_evt.h"
 #include "nlua_hook.h"
 #include "nlua_pilot.h"
 #include "nstring.h"

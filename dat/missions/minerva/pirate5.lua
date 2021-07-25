@@ -157,7 +157,7 @@ They grin at you.]]), mainsys))
    end )
 
    vn.label("job")
-   zuri(string.format(_([["The job is a bit trickier than what we've done up until now, but you should be able to handle it. The main objective is to take out the Za'lek hacking center in the %s system, every else can be ignored. That said, the system is infested with drones that are being controlled by several drone controllers. You should probably take them out first if you want to have a shot at the hacking center."]]), mainsys))
+   zuri(string.format(_([["The job is a bit trickier than what we've done up until now, but you should be able to handle it. The main objective is to take out the Za'lek hacking center in the %s system; everything else can be ignored. That said, the system is infested with drones that are being controlled by several drone controllers. You should probably take them out first if you want to have a shot at the hacking center."]]), mainsys))
    zuri(_([["We've loaded explosives onto your ships, so if you are able to avoid the drones and board the drone controllers or even the hacking center, you should be able to detonate them easily. However, they should also be able to be taken down by conventional weapons. Whatever is easier for you."
 They beam you a smile.
 "Make sure you take a stealthy ship that can take down a couple of drones if things go wrong, and you get caught."]]))
@@ -169,12 +169,12 @@ They chuckle.
 "Let me ask you one thing, do you think the decrepit Empire is good? Overtaxing and overworking the citizens to feed the ostentatious bureaucracy and aristocracy, all the while starving and exploiting the workers all over. Is this what we want?"]]))
    vn.menu{
       {_([["Yes, it brings stability."]]), "cont1"},
-      {_([["No, it is a hamper on human development."]]), "cont1"},
+      {_([["No, it hampers human development."]]), "cont1"},
       {_([["How is this related to my question?"]]), "cont1"},
    }
    vn.label("cont1")
    zuri(_([["We represent those who want to stand up to this tyranny and oppression, and believe that a better universe is possible. Sure, there are those who dismissively label us as pirates or scoundrels, but that is because they represent the status quo. They do not want anyone to challenge their reign and want to continue their life of luxury."]]))
-   zuri(_([["Of course, it is not that easy, as many people are implicit on this even against their own interests. They believe they can become part of the elite if they work hard enough, you know, the Empire dream. However, that never happens, and they die a sad depressed life filled with delusions of grandeur. This is not the universe we wish for humankind."]]))
+   zuri(_([["Of course, it is not that easy, as many people are complicit even against their own interests. They believe they can become part of the elite if they work hard enough, you know, the Empire dream. However, that never happens, and they die a sad depressed life filled with delusions of grandeur. This is not the universe we wish for humankind."]]))
    zuri(_([["It is not easy to go toe-to-toe with such the large establishment, which is why we have to work from the shadows and focus on small objectives, like Minerva Station. The Station has such a potential, yet it is wasted on Za'lek and Dvaered squabbles. We wish to free the people of Minerva Station to live their full potential, even though we have to ruffle some feathers here and there."]]))
    zuri(_([["So yes, maybe we are pirates. Pirates who dream of a better universe for you and I."
 Their eyes blaze with hard determination.]]))
