@@ -186,12 +186,10 @@ static int hookL_setarg( unsigned int hook, int ind )
    nlua_env env = hook_env(hook);
 
    /* If a table set __save, this won't work for tables of tables however. */
-   lua_pushvalue( naevL, ind );   /* v */
-   if (lua_istable(naevL, -1)) {
-      lua_pushboolean( naevL, 1 );/* v, b */
-      lua_setfield( naevL, -2, "__save" ); /* v */
+   if (lua_istable(naevL, ind)) {
+      lua_pushboolean( naevL, 1 );/* b */
+      lua_setfield( naevL, ind, "__save" ); /* v */
    }
-   lua_pop(L,1);
 
    /* Create if necessary the actual hook argument table. */
    nlua_getenv(env, "__hook_arg");  /* t */
