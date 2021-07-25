@@ -421,7 +421,6 @@ function malik_respawn ()
    hook.timer( 3e3, "malik_respawn_real", pos )
 end
 function malik_respawn_real( pos )
-   print( pos )
    pmalik = pilot.add("Dvaered Goddard", enemy_faction, pos, _("Major Malik"))
    pmalik:setHostile(true)
    pmalik:setNoDeath(true)
@@ -440,8 +439,10 @@ function malik_disabled ()
       end
    end
 
-   -- Maikki goes away
-   pmaikki:rm()
+   -- Maikki and friends go away
+   for k,v in ipairs(pilot.get({faction.get("Pirate")})) do
+      v:rm()
+   end
 end
 
 function malik_spawn_more ()
@@ -476,10 +477,15 @@ function maikki_arrives ()
    local col = {mc[1], mc[2], mc[3], 0.3}
    luaspfx.addfg( luaspfx.effects.alert, {size=200, col=col}, 1.2, pos )
    hook.timer( 1e3, "maikki_arrives_real", pos )
+   -- Add more extras
+   for i=1,4 do
+      local pos = player.pos() + vec2.new( 200*rnd.rnd(), 360*rnd.rnd() )
+      luaspfx.addfg( luaspfx.effects.alert, {size=100, col=col}, 1.2, pos )
+      hook.timer( 1e3, "maikki_arrives_extra", pos )
+   end
 end
 function maikki_arrives_real( pos )
-   local p = pilot.add( "Pirate Kestrel", "Pirate", pos, _("Pink Demon"), {naked=true} )
-   equipopt.pirate( p, {} )
+   local p = pilot.add( "Pirate Kestrel", "Pirate", pos, _("Pink Demon") )
    p:setFriendly(true)
    p:control()
    p:attack( pmalik )
@@ -489,14 +495,28 @@ function maikki_arrives_real( pos )
    p:intrinsicSet( "armour", 1e6 )
    p:intrinsicSet( "shield", 1e6 )
    p:intrinsicSet( "energy", 1e6 )
-   p:intrinsicSet( "fwd_damage", 100 )
-   p:intrinsicSet( "tur_damage", 100 )
+   p:intrinsicSet( "fwd_damage", 400 )
+   p:intrinsicSet( "tur_damage", 400 )
    p:intrinsicSet( "fwd_dam_as_dis", 50 )
    p:intrinsicSet( "tur_dam_as_dis", 50 )
 
    local mc = minerva.maikkiP.colour
    local col = colour.new( mc[1], mc[2], mc[3], 1.0 )
-   player.omsgAdd( _("Ho ho ho and a bottle of rum!"), 5e3, nil, col )
+   player.omsgAdd( _("Ho ho ho and a bottle of rum!"), 5, nil, col )
+
+   -- Be nice to player and make the AI rethink priorities
+   for k,v in ipairs(pilot.get({enemy_faction})) do
+      v:taskClear()
+   end
+end
+function maikki_arrives_extra( pos )
+   local p = pilot.add( "Pirate Shark", "Pirate", pos )
+   p:setFriendly(true)
+   p:intrinsicSet( "armour", 1e5 )
+   p:intrinsicSet( "shield", 1e5 )
+   p:intrinsicSet( "energy", 1e5 )
+   p:intrinsicSet( "fwd_damage", 400 )
+   p:intrinsicSet( "tur_damage", 400 )
 end
 
 function malik_speech ()
