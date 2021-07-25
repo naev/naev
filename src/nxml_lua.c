@@ -300,6 +300,9 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             break;
          }
          else if (lua_isfaction(L,-1)) {
+            LuaFaction lf = lua_tofaction(L,-1);
+            if (!faction_isFaction(lf)) /* Dynamic factions may become invalid for saving. */
+               break;
             str = faction_name( lua_tofaction(L,-1) );
             if (str == NULL)
                break;
