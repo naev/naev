@@ -130,6 +130,7 @@ function generate_npc ()
       vn.na(_([[You disconnect from the virtual reality of the Crimson Gauntlet and look around the private room you were in. There is a distinct odour of sweat permeating the room. Furthermore, it looks like someone left in a hurry, but at least it seems like Major Malik is still in his terminal.]]))
       vn.na(_([[You approach Major Malik and notice immediately that something is off. You remove the headgear from him and immediately see that his eyes are glazed over and there is some white froth coming out of his mouth. Seems like some sort of mental shock killed him.]]))
       vn.na(_([[From the corner of your eye you see that the terminal is still logged in. Since there is nothing you can do anymore for Major Mali, you rotate the screen to you and try to see if you can find any of the information that Kex was looking for.]]))
+      vn.sfxBingo()
       vn.na(_([[The directories are really organized and it doesn't take long before you can find what seem to be the correct files, and you copy them over to a holodrive that you pocket with you. This should make Kex satisfied this time.]]))
       vn.na(_([[You survey the room one last time before you leave. You notice that the chassis covering some of the terminal has been pried open, exposing some internal connections. There is no doubt that someone jacked into your Crimson Gauntlet session. However, given the dead body in the room, you decide to take your leave before it attracts attention.]]))
       vn.na(_([[You better head over to Kex to rely the information back at Minerva Station.]]))
@@ -150,14 +151,25 @@ function approach_kex ()
    -- Mission is over
    if misn_state==5 then
 
-      vn.na(_("You return tired from your escapade once again to Kex, who is at his favourite spot at Minerva station."))
+      vn.na(_("You return exhausted from the entire ordeal, with Major Malik's dead eyes are stilled engrained in your memory, and approach Kex."))
+      kex(_([["You look like a mess kid. What happened?"]]))
+      vn.na(_("You explain what happened in the Crimson Gauntlet server and how you barely emerged with your life, and hand him the holodrive with the data you were able to collect."))
+      kex(_([["Damn. When I was still a human, we didn't have that fancy Virtual Reality shit. It's wild. Don't think I want to try it after hearing about your experience though. At least I'm glad you made it out of there alive. Don't know what I would do without you now."]]))
+      kex(_([["Let me take a look at the data."
+He once again plugs the drive into a port somewhere under his wing and his eyes go blank.
+"Seems like that Major Malik was into some major shit."
+He seems satisfied at his pun.]]))
+      kex(_([[He snaps out of his stupor and looks at you again.
+"Seems like you got much more than I expected. It's going to take me a while to go over this. Meet me back up here in a period or so after I process all this data."]]))
+      kex(_([["Ah yes, before I get absorbed by the data processing, here, let me reward you for your troubles."]]))
       vn.sfxMoney()
       vn.func( function () player.pay( money_reward ) end )
       vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
       vn.sfxVictory()
+      vn.na(_("As you take your leave you hear Kex beginning to hum an ancient-sounding tune. He seems happier than usual."))
       vn.run()
 
-      shiplog.append( logidstr, _("TODO"))
+      shiplog.append( logidstr, _("You defeated Major Malik in a lop-sided duel in the Crimson Gauntlet, and acquired information related to money laundering at Minerva Station."))
       misn.finish( true )
       return
 
