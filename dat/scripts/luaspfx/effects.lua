@@ -76,6 +76,9 @@ local function __alert( params, x, y, z )
    love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
    lg.setShader( old_shader )
 end
-effects.alert = { func = __alert }
+local function __alert_create( params, ttl, pos, vel )
+   -- TODO play sound
+end
+effects.alert = { func = __alert, create = __alert_create }
 
 return effects
