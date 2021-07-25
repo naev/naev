@@ -32,6 +32,7 @@ static int audioL_gc( lua_State *L );
 static int audioL_eq( lua_State *L );
 static int audioL_new( lua_State *L );
 static int audioL_play( lua_State *L );
+static int audioL_playPos( lua_State *L );
 static int audioL_pause( lua_State *L );
 static int audioL_isPaused( lua_State *L );
 static int audioL_stop( lua_State *L );
@@ -51,6 +52,7 @@ static const luaL_Reg audioL_methods[] = {
    { "__eq", audioL_eq },
    { "new", audioL_new },
    { "play", audioL_play },
+   { "playPos", audioL_playPos },
    { "pause", audioL_pause },
    { "isPaused", audioL_isPaused },
    { "stop", audioL_stop },
@@ -305,6 +307,33 @@ static int audioL_play( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!conf.nosound) {
       soundLock();
+      alSourcePlay( la->source );
+      al_checkErr();
+      soundUnlock();
+   }
+   lua_pushboolean(L,1);
+   return 1;
+}
+
+
+/**
+ * @brief Plays a source at a position.
+ *
+ *    @luatparam Audio source Source to play.
+ *    @luatreturn boolean True on success.
+ * @luafunc play
+ */
+static int audioL_playPos( lua_State *L )
+{
+   ALfloat pos[3];
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   Vector2d *vp   = luaL_checkvector(L,2);
+   if (!conf.nosound) {
+      soundLock();
+      pos[0] = vp->x;
+      pos[1] = vp->y;
+      pos[2] = 0.;
+      alSourcefv( la->source, AL_POSITION, pos );
       alSourcePlay( la->source );
       al_checkErr();
       soundUnlock();
