@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ofenthource\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-07-24 21:49-0400\n"
+"POT-Creation-Date: 2021-07-25 10:48-0400\n"
 "PO-Revision-Date: 2020-12-02 18:35+0900\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
@@ -3242,7 +3242,7 @@ msgid ""
 "still part of the Empire."
 msgstr ""
 
-#: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:563
+#: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:562
 #: dat/events/discovery.lua:68
 #, fuzzy
 msgid "Dvaered High Command"
@@ -13153,7 +13153,7 @@ msgstr ""
 msgid "Dummy"
 msgstr ""
 
-#: dat/faction.xml:14 dat/faction.xml:595
+#: dat/faction.xml:14 dat/faction.xml:594
 msgid "Independent"
 msgstr ""
 
@@ -13184,8 +13184,8 @@ msgstr "프로 테론 유도체"
 msgid "Civilian"
 msgstr ""
 
-#: dat/faction.xml:83 dat/faction.xml:341 dat/faction.xml:423
-#: dat/faction.xml:507 dat/missions/neutral/kidnapped/traffic_00.lua:145
+#: dat/faction.xml:83 dat/faction.xml:340 dat/faction.xml:422
+#: dat/faction.xml:506 dat/missions/neutral/kidnapped/traffic_00.lua:145
 #: dat/missions/neutral/kidnapped/traffic_00.lua:146
 #: dat/missions/neutral/kidnapped/traffic_00.lua:152
 #: dat/missions/neutral/kidnapped/traffic_00.lua:153
@@ -13193,7 +13193,7 @@ msgstr ""
 msgid "Pirate"
 msgstr ""
 
-#: dat/faction.xml:87 dat/faction.xml:372
+#: dat/faction.xml:87 dat/faction.xml:371
 msgid "Galactic Pirates"
 msgstr ""
 
@@ -13238,7 +13238,7 @@ msgstr ""
 msgid "Thurion"
 msgstr ""
 
-#: dat/faction.xml:218
+#: dat/faction.xml:217
 msgid "Collective"
 msgstr ""
 
@@ -13267,16 +13267,18 @@ msgstr ""
 #. Get a system with both FLF and Pirate presence.
 #. Change the reputation cap for the FLF.
 #. Add an entry to the FLF campaign log.
-#: dat/faction.xml:232 dat/missions/flf/flf_common.lua:82
+#: dat/faction.xml:231 dat/missions/flf/flf_common.lua:82
 msgid "FLF"
 msgstr ""
 
-#: dat/faction.xml:236
+#: dat/faction.xml:235
 #, fuzzy
 msgid "Frontier Liberation Front"
 msgstr "프론티어 순찰대"
 
-#: dat/faction.xml:249 dat/events/dvaered/fwA_treason.lua:131
+#. Ship to go back to
+#. Set up Major Malik
+#: dat/faction.xml:248 dat/events/dvaered/fwA_treason.lua:131
 #: dat/events/dvaered/fwA_treason.lua:140 dat/events/dvaered/fwB_repay.lua:47
 #: dat/missions/dvaered/common.lua:11
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:329
@@ -13285,10 +13287,11 @@ msgstr "프론티어 순찰대"
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:672
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:271
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:337
+#: dat/missions/minerva/kex3.lua:385
 msgid "Dvaered"
 msgstr ""
 
-#: dat/faction.xml:254 dat/ships/ancestor.xml:13
+#: dat/faction.xml:253 dat/ships/ancestor.xml:13
 #: dat/ships/dvaered_ancestor.xml:14 dat/ships/dvaered_phalanx.xml:15
 #: dat/ships/dvaered_vendetta.xml:15 dat/ships/dvaered_vigilance.xml:14
 #: dat/ships/phalanx.xml:14 dat/ships/vendetta.xml:14
@@ -13302,42 +13305,42 @@ msgstr ""
 #. Main positions
 #. Define the routes
 #. We'll use a dynamic faction for some ships to lower faction standing damage
-#: dat/faction.xml:269 dat/ssys/zalek.xml:2
+#: dat/faction.xml:268 dat/ssys/zalek.xml:2
 #: dat/missions/minerva/pirate2.lua:185 dat/missions/minerva/pirate5.lua:252
 #: dat/missions/zalek/common.lua:21 dat/missions/zalek/common.lua:26
 #: dat/missions/zalek/common.lua:32
 msgid "Za'lek"
 msgstr ""
 
-#: dat/faction.xml:274
+#: dat/faction.xml:273
 msgid "House Za'lek"
 msgstr ""
 
-#: dat/faction.xml:287 dat/faction.xml:479 dat/missions/sirius/common.lua:22
+#: dat/faction.xml:286 dat/faction.xml:478 dat/missions/sirius/common.lua:22
 #: dat/missions/sirius/common.lua:28
 msgid "Sirius"
 msgstr ""
 
-#: dat/faction.xml:292
+#: dat/faction.xml:291
 msgid "House Sirius"
 msgstr ""
 
-#: dat/faction.xml:306 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
+#: dat/faction.xml:305 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
 #, fuzzy
 msgid "Goddard"
 msgstr "드 베어드 고다드"
 
-#: dat/faction.xml:311 dat/ships/dvaered_goddard.xml:17
+#: dat/faction.xml:310 dat/ships/dvaered_goddard.xml:17
 #: dat/ships/goddard.xml:16
 #, fuzzy
 msgid "House Goddard"
 msgstr "드 베어드 고다드"
 
-#: dat/faction.xml:325 dat/missions/flf/flf_rogue.lua:49
+#: dat/faction.xml:324 dat/missions/flf/flf_rogue.lua:49
 msgid "Rogue FLF"
 msgstr ""
 
-#: dat/faction.xml:339
+#: dat/faction.xml:338
 msgid "Rogue Pirate"
 msgstr ""
 
@@ -13372,7 +13375,7 @@ msgstr ""
 #. spawning Admonishers
 #. spawning a Kestrel with massive missile weaponry
 #. spawning Ancestors
-#: dat/faction.xml:355 dat/faction.xml:533 dat/events/dvaered/fwD_hitman.lua:60
+#: dat/faction.xml:354 dat/faction.xml:532 dat/events/dvaered/fwD_hitman.lua:60
 #: dat/events/dvaered/fwD_hitman.lua:62 dat/events/dvaered/fwD_hitman.lua:64
 #: dat/missions/neutral/kidnapped/traffic_01.lua:237
 #: dat/missions/neutral/kidnapped/traffic_01.lua:255
@@ -13385,7 +13388,7 @@ msgstr ""
 msgid "Mercenary"
 msgstr ""
 
-#: dat/faction.xml:366
+#: dat/faction.xml:365
 msgid "Raider"
 msgstr ""
 
@@ -13426,63 +13429,63 @@ msgstr ""
 #. --
 #. Extra derelicts
 #. Main derelict
-#: dat/faction.xml:383 dat/events/taiomi/find.lua:49
+#: dat/faction.xml:382 dat/events/taiomi/find.lua:49
 #: dat/events/taiomi/find.lua:64
 #, fuzzy
 msgid "Derelict"
 msgstr "빈 휴지통"
 
-#: dat/faction.xml:393 dat/faction.xml:409
+#: dat/faction.xml:392 dat/faction.xml:408
 msgid "Four Winds"
 msgstr ""
 
-#: dat/faction.xml:407
+#: dat/faction.xml:406
 msgid "Rogue Four Winds"
 msgstr ""
 
-#: dat/faction.xml:421
+#: dat/faction.xml:420
 msgid "Shadow_pirates"
 msgstr ""
 
-#: dat/faction.xml:437
+#: dat/faction.xml:436
 #, fuzzy
 msgid "Diplomatic"
 msgstr "외교 선박"
 
-#: dat/faction.xml:451
+#: dat/faction.xml:450
 #, fuzzy
 msgid "Associates"
 msgstr "해적 황조롱이"
 
-#: dat/faction.xml:464 dat/faction.xml:493 dat/faction.xml:547
+#: dat/faction.xml:463 dat/faction.xml:492 dat/faction.xml:546
 msgid "Thugs"
 msgstr ""
 
-#: dat/faction.xml:477
+#: dat/faction.xml:476
 msgid "Achack_sirius"
 msgstr ""
 
-#: dat/faction.xml:491
+#: dat/faction.xml:490
 msgid "Achack_thugs"
 msgstr ""
 
-#: dat/faction.xml:505
+#: dat/faction.xml:504
 msgid "Kidnappers"
 msgstr ""
 
-#: dat/faction.xml:519
+#: dat/faction.xml:518
 msgid "Nasin"
 msgstr ""
 
-#: dat/faction.xml:531
+#: dat/faction.xml:530
 msgid "Comingout_associates"
 msgstr ""
 
-#: dat/faction.xml:545
+#: dat/faction.xml:544
 msgid "Comingout_thugs"
 msgstr ""
 
-#: dat/faction.xml:559
+#: dat/faction.xml:558
 msgid "DHC"
 msgstr ""
 
@@ -13493,18 +13496,18 @@ msgstr ""
 #. I use Thugs and Associates based factions because they won't interact with anybody
 #. mass of the player's victims
 #. The heaviest ships will surround the leader
-#: dat/faction.xml:577 dat/events/dvaered/warlords_battle.lua:139
+#: dat/faction.xml:576 dat/events/dvaered/warlords_battle.lua:139
 #: dat/events/dvaered/warlords_battle.lua:180
 msgid "Warlords"
 msgstr ""
 
-#: dat/faction.xml:581
+#: dat/faction.xml:580
 #, fuzzy
 #| msgid "Dvaered Patrol"
 msgid "Dvaered Warlords"
 msgstr "드바에레드 순찰대"
 
-#: dat/faction.xml:593
+#: dat/faction.xml:592
 msgid "Strangelove"
 msgstr ""
 
@@ -22282,10 +22285,10 @@ msgstr "응답이 없습니다."
 #. ship must be stabilized since 2 secs
 #. if not mem.stabilized then
 #. mem.stabilized = true
-#. ai.settimer(0, 2000)
+#. ai.settimer(0, 2.0)
 #. elseif not ai.timeup(1) and ai.timeup(0) then
 #. -- If the ship manages to catch its mark, reset the timer
-#. ai.settimer(1, 10000)
+#. ai.settimer(1, 10.0)
 #. In range
 #. If he managed to shoot, reinitialize the timer
 #. The pilot just arrived in the good zone :
@@ -24402,7 +24405,7 @@ msgstr ""
 #. TODO probably rewrite the shader as this is being computed with the full
 #. screen resolution, breaks with all transitions that use love_ScreenSize...
 #. Render to canvas
-#. hook.timer( text_length*1000, "endevent")
+#. hook.timer( text_length*1.0, "endevent")
 #. Horrible hack, but since the canvas is being scaled by Naev's scale stuff,
 #. we actually draw pretty text ontop using the signed distance transform shader
 #. when it is fully drawn
@@ -25102,24 +25105,20 @@ msgstr ""
 
 #. Did the FLF wreck this poster?
 #. Create the NPC.
-#: dat/events/dvaered/poster.lua:49
-msgid "Poster on the wall"
-msgstr ""
-
-#: dat/events/dvaered/poster.lua:49
-msgid "There is a poster on the wall"
-msgstr ""
-
 #. End event on takeoff.
 #. It's all assuming the poster is 700x900
 #. Create the image
 #. Add FLF stuff on it
 #. Finish
 #. Create the vn scene
-#: dat/events/dvaered/poster.lua:83
+#: dat/events/dvaered/poster.lua:49 dat/events/dvaered/poster.lua:83
 #, fuzzy
 msgid "Poster"
 msgstr "시스템"
+
+#: dat/events/dvaered/poster.lua:49
+msgid "There is a poster on the wall."
+msgstr ""
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -25320,12 +25319,13 @@ msgstr ""
 #: dat/events/dvaered/totoran.lua:120 dat/events/minerva/station.lua:212
 #: dat/events/minerva/station.lua:403 dat/events/minerva/station.lua:479
 #: dat/events/minerva/station.lua:579 dat/missions/minerva/kex1.lua:135
-#: dat/missions/minerva/kex2.lua:150 dat/missions/minerva/maikki1.lua:205
-#: dat/missions/minerva/maikki1.lua:292 dat/missions/minerva/maikki1.lua:534
-#: dat/missions/minerva/maikki1.lua:902 dat/missions/minerva/maikki2.lua:241
-#: dat/missions/minerva/maikki2.lua:505 dat/missions/minerva/maikki2.lua:774
-#: dat/missions/minerva/pirate3.lua:176 dat/missions/minerva/pirate4.lua:132
-#: dat/missions/minerva/pirate5.lua:154 src/board.c:174
+#: dat/missions/minerva/kex2.lua:150 dat/missions/minerva/kex3.lua:200
+#: dat/missions/minerva/maikki1.lua:205 dat/missions/minerva/maikki1.lua:292
+#: dat/missions/minerva/maikki1.lua:534 dat/missions/minerva/maikki1.lua:902
+#: dat/missions/minerva/maikki2.lua:241 dat/missions/minerva/maikki2.lua:505
+#: dat/missions/minerva/maikki2.lua:774 dat/missions/minerva/pirate3.lua:176
+#: dat/missions/minerva/pirate4.lua:132 dat/missions/minerva/pirate5.lua:154
+#: src/board.c:174
 msgid "Leave"
 msgstr ""
 
@@ -25522,9 +25522,9 @@ msgstr ""
 #. played backwards so slides left
 #: dat/events/dvaered/totoran.lua:249 dat/events/minerva/station.lua:605
 #: dat/missions/minerva/kex1.lua:231 dat/missions/minerva/kex2.lua:204
-#: dat/missions/minerva/maikki1.lua:367 dat/missions/minerva/maikki2.lua:578
-#: dat/missions/minerva/pirate3.lua:262 dat/missions/minerva/pirate4.lua:140
-#: dat/missions/minerva/pirate5.lua:184
+#: dat/missions/minerva/kex3.lua:235 dat/missions/minerva/maikki1.lua:367
+#: dat/missions/minerva/maikki2.lua:578 dat/missions/minerva/pirate3.lua:262
+#: dat/missions/minerva/pirate4.lua:140 dat/missions/minerva/pirate5.lua:184
 msgid "You take your leave."
 msgstr ""
 
@@ -26300,7 +26300,8 @@ msgstr ""
 #. Scuffle between Za'lek and Dvaered
 #. Set up system
 #. Meta factions
-#: dat/events/minerva/altercation1.lua:69
+#. Spawn thugs after the player. Player should likely be going to Dvaer
+#: dat/events/minerva/altercation1.lua:69 dat/missions/minerva/kex3.lua:255
 #, fuzzy
 #| msgid "Dvaered Phalanx"
 msgid "Dvaered Thug"
@@ -30700,6 +30701,21 @@ msgstr ""
 #. Player boards the shipwreck and rescues the crew, this spawns a new mission.
 #.
 #. <?xml version='1.0' encoding='utf8'?>
+#. <event name="System Tour">
+#. <trigger>load</trigger>
+#. <chance>100</chance>
+#. <cond>false</cond>
+#. <flags>
+#. </flags>
+#. </event>
+#. --
+#.
+#. -- Tests system / overlay rendering by screenshotting each one.
+#. -- To use: land, put this line in the Lua console, and take off:
+#. -- naev.eventStart("System Tour")
+#. --
+#.
+#. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Pirate Fame">
 #. <trigger>enter</trigger>
 #. <chance>100</chance>
@@ -30827,7 +30843,6 @@ msgstr ""
 #.
 #. -- This is a helper event for the fourth mission in the Academy Hack minor campaign.
 #. --
-#. 10-40s
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Preacher">
@@ -39619,29 +39634,45 @@ msgstr ""
 #.
 #. Countdown stuff
 #. --
+#. Taunt stuff
+#. Goes back to Totoran (landed)
+#. Stop spfx stuff
+#. Clear pilots so escorts get docked
+#. Give the player back their old ship
+#. Fix the map up
+#. Undo player invincibility stuff and land
+#.
+#. Countdown stuff
+#. --
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:159
+#: dat/missions/minerva/kex3.lua:424
 msgid "5…"
 msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:160
+#: dat/missions/minerva/kex3.lua:425
 msgid "4…"
 msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:161
+#: dat/missions/minerva/kex3.lua:426
 msgid "3…"
 msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:162
+#: dat/missions/minerva/kex3.lua:427
 msgid "2…"
 msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:163
+#: dat/missions/minerva/kex3.lua:428
 msgid "1…"
 msgstr ""
 
 #. TODO play countdown sound
 #. TODO play sound and cooler text
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:172
+#: dat/missions/minerva/kex3.lua:437
 msgid "FIGHT!"
 msgstr ""
 
@@ -44446,11 +44477,47 @@ msgstr[0] ""
 #. 0: mission accepted go to targetplanet
 #. 1: run away and return alive to minerva station
 #. 2: got away
+#. Spawn chasing guys
+#. Clear function so that it doesn't do anything anymore
+#. Check to see if the blockade can detect the player
+#. Spawn enemies that will eventually bog down the player
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Kex's Freedom 3">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <location>Bar</location>
+#. <chance>100</chance>
+#. <planet>Minerva Station</planet>
+#. <done>Kex's Freedom 2</done>
+#. </avail>
+#. <notes>
+#. <campaign>Minerva</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. Freeing Kex 3
+#.
+#. Go
+#. --
+#. Mission states:
+#. nil: mission not accepted yet
+#. 0: mission accepted go to targetplanet
+#. 1: try to find dvaered dude
+#. 2: get ambushed
+#. 3: go to totoran
+#. 4: duel finished
+#. 5: return to Kex
 #: dat/missions/minerva/kex1.lua:44 dat/missions/minerva/kex2.lua:43
+#: dat/missions/minerva/kex3.lua:52
 msgid "A step closer to Kex's freedom"
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:45 dat/missions/minerva/kex2.lua:44
+#: dat/missions/minerva/kex3.lua:53
 msgid "Freeing Kex"
 msgstr ""
 
@@ -44463,6 +44530,7 @@ msgstr ""
 #. We avoid creating a giver NPC and directly use "normal NPC"
 #. Have to make sure to check if misn.accept() works
 #: dat/missions/minerva/kex1.lua:80 dat/missions/minerva/kex2.lua:143
+#: dat/missions/minerva/kex3.lua:191
 msgid "You find Kex taking a break at his favourite spot at Minerva station."
 msgstr ""
 
@@ -44557,6 +44625,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:114 dat/missions/minerva/kex2.lua:133
+#: dat/missions/minerva/kex3.lua:161
 #, lua-format
 msgid "You received #g%s#0."
 msgstr ""
@@ -44575,6 +44644,7 @@ msgstr ""
 
 #. Remove unnecessary variables to keep it clean
 #: dat/missions/minerva/kex1.lua:131 dat/missions/minerva/kex2.lua:146
+#: dat/missions/minerva/kex3.lua:195
 #, fuzzy
 #| msgid "\"What do you want from me!?\""
 msgid "\"What's up kid?\""
@@ -44591,8 +44661,8 @@ msgid "Ask about the CEO"
 msgstr "네뷸라에 온것을 환영합니다"
 
 #: dat/missions/minerva/kex1.lua:141 dat/missions/minerva/kex2.lua:156
-#: dat/missions/minerva/pirate3.lua:174 dat/missions/minerva/pirate4.lua:130
-#: dat/missions/minerva/pirate5.lua:151
+#: dat/missions/minerva/kex3.lua:198 dat/missions/minerva/pirate3.lua:174
+#: dat/missions/minerva/pirate4.lua:130 dat/missions/minerva/pirate5.lua:151
 #, fuzzy
 msgid "Ask about the job"
 msgstr "네뷸라에 온것을 환영합니다"
@@ -44751,6 +44821,7 @@ msgid "Intercept the transport at %s"
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:210 dat/missions/minerva/kex2.lua:74
+#: dat/missions/minerva/kex3.lua:86 dat/missions/minerva/kex3.lua:115
 #, fuzzy
 msgid "Return to Kex at Minerva Station"
 msgstr "투리온의 불꽃"
@@ -45041,12 +45112,14 @@ msgid ""
 "should be able to handle this easily. Would you be up for the challenge?\""
 msgstr ""
 
-#: dat/missions/minerva/kex2.lua:167
+#: dat/missions/minerva/kex2.lua:167 dat/missions/minerva/kex3.lua:175
+#: dat/missions/minerva/kex3.lua:311
 #: dat/missions/pirate/pir_contraband_cake.lua:99
 msgid "Accept"
 msgstr ""
 
-#: dat/missions/minerva/kex2.lua:168
+#: dat/missions/minerva/kex2.lua:168 dat/missions/minerva/kex3.lua:176
+#: dat/missions/minerva/kex3.lua:312
 #: dat/missions/pirate/pir_contraband_cake.lua:100
 msgid "Decline"
 msgstr ""
@@ -45138,10 +45211,528 @@ msgstr ""
 msgid "Baroness Eve"
 msgstr ""
 
-#. Spawn chasing guys
-#. Clear function so that it doesn't do anything anymore
-#. Check to see if the blockade can detect the player
-#. Spawn enemies that will eventually bog down the player
+#: dat/missions/minerva/kex3.lua:54
+#, lua-format
+msgid ""
+"You have been assigned with obtaining information from Major Malik at %s in "
+"the %s system."
+msgstr ""
+
+#. If not accepted, misn_state will still be nil
+#: dat/missions/minerva/kex3.lua:82
+msgid "You have agreed to help Kex obtain information from Major Malik."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:85
+#, lua-format
+msgid "Go to %s in the %s system to find Major Malik"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:105
+msgid ""
+"You land and promptly proceed to try to find Major Malik and get the job "
+"over with. After glossing over the map of the installations, you are able to "
+"quickly locate their office and head down there."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:107
+#, lua-format
+msgid ""
+"You arrive and inquire about Major Malik, but are told he is apparently "
+"enjoying some leisure time at %s in the %s system. Looks like you have no "
+"choice but to try to look for them there."
+msgstr ""
+
+#. Advance the state
+#: dat/missions/minerva/kex3.lua:114
+#, lua-format
+msgid "Look for Major Malik at %s in the %s system"
+msgstr ""
+
+#. Reset autonav just in case
+#. Keep on beating
+#: dat/missions/minerva/kex3.lua:118 dat/missions/minerva/kex3.lua:302
+#: dat/missions/minerva/kex3.lua:387 dat/missions/minerva/kex3.lua:477
+msgid "Major Malik"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:118
+msgid ""
+"You see Major Malik who is fairly similar to the image shown to you by Kex."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:124
+msgid ""
+"You disconnect from the virtual reality of the Crimson Gauntlet and look "
+"around the private room you were in. There is a distinct odour of sweat "
+"permeating the room. Furthermore, it looks like someone left in a hurry, but "
+"at least it seems like Major Malik is still at his terminal."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:125
+msgid ""
+"You approach Major Malik and notice immediately that something is off. You "
+"remove the headgear from him and immediately see that his eyes are glazed "
+"over and there is some white froth coming out of his mouth. Seems like some "
+"sort of mental shock killed him."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:126
+msgid ""
+"From the corner of your eye you see that the terminal is still logged in. "
+"Since there is nothing you can do anymore for Major Malik, you rotate the "
+"screen to you and try to see if you can find any of the information that Kex "
+"was looking for."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:128
+msgid ""
+"The directories are really organized and it doesn't take long before you can "
+"find what seem to be the correct files, and you copy them over to a "
+"holodrive that you pocket with you. This should make Kex satisfied this time."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:129
+msgid ""
+"You survey the room one last time before you leave. You notice that the "
+"chassis covering some of the terminal has been pried open, exposing some "
+"internal connections. There is no doubt that someone jacked into your "
+"Crimson Gauntlet session. However, given the dead body in the room, you "
+"decide to take your leave before it attracts attention."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:130
+msgid ""
+"You better head over to Kex to rely the information back at Minerva Station."
+msgstr ""
+
+#. We're done here, go back to kex:)
+#. Mission is over
+#: dat/missions/minerva/kex3.lua:148
+msgid ""
+"You return exhausted from the entire ordeal, with Major Malik's dead eyes "
+"are stilled ingrained in your memory, and approach Kex."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:149
+msgid "\"You look like a mess, kid. What happened?\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:150
+msgid ""
+"You explain what happened in the Crimson Gauntlet server and how you barely "
+"emerged with your life, and hand him the holodrive with the data you were "
+"able to collect."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:151
+msgid ""
+"\"Damn. When I was still a human, we didn't have that fancy Virtual Reality "
+"shit. It's wild. Don't think I want to try it after hearing about your "
+"experience though. At least I'm glad you made it out of there alive. Don't "
+"know what I would do without you now.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:152
+msgid ""
+"\"Let me take a look at the data.\"\n"
+"He once again plugs the drive into a port somewhere under his wing and his "
+"eyes go blank.\n"
+"\"Seems like that Major Malik was into some major shit.\"\n"
+"He seems satisfied at his pun."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:156
+msgid ""
+"He snaps out of his stupor and looks at you again.\n"
+"\"Seems like you got much more than I expected. It's going to take me a "
+"while to go over this. Meet me back up here in a period or so after I "
+"process all this data.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:158
+msgid ""
+"\"Ah yes, before I get absorbed by the data processing, here, let me reward "
+"you for your troubles.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:163
+msgid ""
+"As you take your leave you hear Kex beginning to hum an ancient-sounding "
+"tune. He seems happier than usual."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:166
+msgid ""
+"You defeated Major Malik in a lopsided duel in the Crimson Gauntlet, and "
+"acquired information related to money laundering at Minerva Station."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:171
+msgid ""
+"You find Kex taking a break at his favourite spot at Minerva station. His "
+"eyes light up when he sees you and he runs over to you."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:172
+msgid ""
+"\"Good news kid! It looks like the information obtained from Baroness Eve "
+"got some dirt on the CEO. It seems like they're involved in some sort of "
+"money laundering, but this alone won't get us anywhere, we need more intel.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:173
+msgid ""
+"\"We have another lead on another co-conspirator, this time in Dvaered "
+"space. Some individual named Major Malik seems to also be in the money "
+"laundering. Would you be up for paying them a visit and seeing what you can "
+"get out of them?\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:179
+msgid ""
+"He looks dejected.\n"
+"   \"I see. If you change your mind, I'll be around.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:184
+#, lua-format
+msgid ""
+"\"This time I'm hoping it's a cinch. Major Malik should be at %s in the %s "
+"system. They should be fairly old, so it should be enough to just outright "
+"confront him and get him to talk. I'll give you a note that if you show him "
+"should be easy enough to convince him. I'll also send you a picture of him "
+"so you can easily recognize him when you see him.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:185
+msgid ""
+"\"The note? It's just your run-of-the-mill blackmail. We don't really care "
+"about Major Malik himself, what we want is dirt on the CEO. Hopefully "
+"they'll be sensible and give us what we want. However, I trust you will do "
+"what it takes in case they don't.\"\n"
+"He winks his cyborg eye at you."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:199
+#, fuzzy
+msgid "Ask about his past"
+msgstr "네뷸라에 온것을 환영합니다"
+
+#: dat/missions/minerva/kex3.lua:207
+msgid ""
+"\"The job is pretty straightforward. We need Major Malik to talk about his "
+"dealings with the Minerva CEO. If you hand him the letter I gave you it "
+"should be enough to convince him.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:208
+#, lua-format
+msgid ""
+"\"You should be able to find him at %s in the %s system. I don't think he "
+"should give much trouble.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:210
+#, lua-format
+msgid ""
+"\"Oh, so Major Malik wasn't at %s? That is really weird. Let's hope you can "
+"find him at %s in the %s system.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:215
+msgid ""
+"\"You are quite the curious kid. At the time I didn't think my life was all "
+"that great and exciting, but lately I yearn to take to the skies like the "
+"good old times. Did I ever tell you about the story of when I spent a kilo-"
+"period drifting in the Nebula?\"\n"
+"\"No? Great!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:217
+msgid ""
+"\"It was not uncommon for things to break down and get weird fast when going "
+"deep into the Nebula. The radiation is really damaging to ship armour, so "
+"you always have to maximize energy to shields. It makes it hard to bring "
+"firepower, but not like it's going to do you any good in the deep Nebula. "
+"Nothing is alive there, or at least, not in the sense we sort of think of as "
+"being alive.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:218
+msgid ""
+"\"So me and Mireia had picked up a tip of some sort of weird wreck deep past "
+"Arandon. Some poor fools had gone to search for it and hadn't come back for "
+"a few hecto-periods and one of their husbands was beginning to lose it, so "
+"they came to us. Now, we weren't interested in trying to save them, once you "
+"enter the Nebula, you forfeit all chance at salvation. Search parties tend "
+"to only rack up the body counts.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:219
+msgid ""
+"\"However, from the looks of it, it was a very interesting find. Sometimes "
+"you find really weird things in the Nebula.\"\n"
+"He leans closer to you and whispers.\n"
+"\"…things that shouldn't exist. Or better said, things that can't possibly "
+"exist.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:222
+msgid ""
+"\"So we loaded up our trusty Mule with all the shield generators and "
+"survival goods we could fit, and headed towards the rough location we were "
+"told the wreck was at. At first it was fairly standard, shields running at "
+"maximum power, and radiators set at maximum power. You get used to the hum "
+"and the chaos of the Nebula, but you can never relax. It sort of gets into "
+"your bones and makes you lose your sleep.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:223
+msgid ""
+"\"We continued like that for what seemed ages. Sensors get a bit fuzzy in "
+"there, but they were reporting about a deca-period when we saw it. It was "
+"part of something very big, almost looking like some sort of metallic "
+"skeleton. We approached it cautiously because radiation was off the charts. "
+"The more you looked at it, the more it felt like it was burning into the "
+"back of your retina.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:224
+msgid ""
+"\"After our cursory analysis, we went to grab a sample. However, when we "
+"tried to approach the robotic arm to it, it never seemed to get closer. It "
+"was at some sort of constant distance from us no matter what we tried. We "
+"only had a small laser turret, but we even tried shooting at it and nothing. "
+"Zip-O.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:225
+msgid ""
+"\"It could have been the exhausting or something else, I don't know, but we "
+"decided to try to ram it. So we accelerated at maximum velocity, and that's "
+"when it happened. Suddenly there was some horrible screeching sound and "
+"everything shook. Next we know, it felt like we were getting pulled through "
+"the eye of a needle, like hyperspace sickness but much worse. And we passed "
+"out.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:226
+msgid ""
+"\"When we woke up, there was nothing around us. Only Nebula. One of the "
+"shield generators had gone offline so we wouldn't last long. We did some "
+"emergency repairs and hauled our asses out of there. When we got out, our "
+"systems said that we had only been gone for about 22 periods, but when we "
+"hailed a ship, we found out there was a 1087 period difference between our "
+"system clock and theirs.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:227
+msgid ""
+"\"The weird thing is we didn't have many supplies missing, so there's no way "
+"that could be true. I still scratch my head thinking about this today. I did "
+"tend to lose track of time and lose hunger in the deep Nebula, but nothing "
+"like that. We also had nothing from our encounter with the wreck or whatever "
+"that was.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:228
+msgid ""
+"\"After that I head back home and got totally chewed out by my wife. I had "
+"to spend a few weeks sleeping on the couch and Maikki didn't speak to me for "
+"ages.\"\n"
+"He sighs wistfully.\n"
+"\"That's the part I miss the most of my previous life. Having a place to go "
+"after adventuring.\"\n"
+"He looks a bit glum."
+msgstr ""
+
+#. Try to make sure they meet up the player
+#. Move to next state
+#. Timer
+#. Start the attack, should be close enough to aggro naturally
+#: dat/missions/minerva/kex3.lua:285
+msgid "That's the the one!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:304
+msgid "You approach Major Malik who seems to be enjoying a drink."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:305 dat/missions/minerva/maikki2.lua:487
+#: dat/missions/minerva/maikki2.lua:768
+#, fuzzy
+#| msgid "\"What do you want from me!?\""
+msgid "\"What do you want?\""
+msgstr "\"원하는게 뭐야!?\""
+
+#: dat/missions/minerva/kex3.lua:306
+msgid ""
+"You hand him the note you got from Kex. He reads it and furrows his brows a "
+"bit."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:307
+msgid ""
+"\"I see. You think at my age I worry about what happens to me? I've had a "
+"good career with no regrets. Your threats don't sway me.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:308
+msgid ""
+"\"However, I'm in a good mood today. How about we play a game? I have a "
+"private Crimson Gauntlet server here, let us duel in classic Dvaered "
+"fashion. If you win, I'll give you over the information you want.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:309
+msgid ""
+"\"To make it more exciting, we can both duel in Vendettas. I'll provide you "
+"with one. What do you say?\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:316
+msgid ""
+"\"OK, then it's settled then. Follow me to my private room and we'll get "
+"started.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:317
+msgid ""
+"Major Malik leads you through the installation to a private Crimson Gauntlet "
+"server room. You enter and see that there are two virtual reality terminals."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:318
+msgid ""
+"\"Please sit in that terminal over there, I'll be at the one here. You know "
+"how this works right? Just connect yourself, and I'll set up the server "
+"details.\""
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:319
+msgid ""
+"You sit down and do as you are told. Quickly it changes to the Crimson "
+"Gauntlet boot screen. You idly scan the server detail information as it "
+"boots up. Suddenly something catches your eye:\n"
+"#rHUMAN LIFE SAFETY OVERRIDE.\n"
+"DUEL TO THE DEATH MODE ENABLED.#0"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:323
+msgid ""
+"You try to remove the gear and stop the boot, but it is too late. The "
+"virtual reality of the Crimson Gauntlet envelopes you…"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:327
+#, fuzzy
+#| msgid "\"I'll be around if you get generous again.\""
+msgid "\"OK. I'll be here if you change your mind.\""
+msgstr "\"당신이 다시 관대해지면 내가 곁에 있겠다.\""
+
+#.
+#. Common Teleporting Functions
+#. --
+#. Enters Crimson Gauntlet
+#. If the player reloads when accepted the mission, the hook will be saved
+#. and error out because it can't teleport
+#. Teleport the player to the Crimson Gauntlet and hide the rest of the universe
+#. Set up player stuff
+#. Disable escorts if they exist
+#. Clean up
+#. Want no escorts and the likes
+#. Set up Player
+#: dat/missions/minerva/kex3.lua:378 dat/scripts/pilot/pirate.lua:357
+msgid "Ketchup"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:448
+msgid "Back in my day we used to fly uphill both ways to go to work!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:449
+msgid "I'll be damned if I let a young whippersnapper get the best of me!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:450
+msgid "Nothing like some dogfighting to feel alive!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:451
+msgid "Wait until this old dog shows you some new tricks!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:452
+msgid "Youth is overrated!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:453
+msgid "Feel the taste of my cannons!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:486
+msgid "Aaaaaargh!"
+msgstr ""
+
+#. Kill all enemies
+#. Maikki and friends go away
+#. Add more extras
+#: dat/missions/minerva/kex3.lua:546
+#, fuzzy
+#| msgid "Za'lek Demon"
+msgid "Pink Demon"
+msgstr "잘렉 악마"
+
+#. Make really really strong
+#. Fancy message
+#: dat/missions/minerva/kex3.lua:564
+msgid "Ho ho ho and a bottle of rum!"
+msgstr ""
+
+#. Be nice to player and make the AI rethink priorities
+#: dat/missions/minerva/kex3.lua:589
+msgid "You come to my office to harass me…"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:590
+msgid "You interrupt my leisure with blackmail…"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:591
+#, fuzzy
+#| msgid "Did you really think you would get away with that?"
+msgid "You really think you would be getting out of here alive?…"
+msgstr "정말 그렇게 될 줄 알았는가?"
+
+#: dat/missions/minerva/kex3.lua:592
+msgid "You are in my realm now kid!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:593
+msgid "And the only way out is in a body bag!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:594
+msgid "My power is limitless here!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:595
+msgid "You are a fool to have walked into my trap so willingly."
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:596
+msgid "Not so tough anymore! Ha ha ha!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:598
+msgid "What is going on? It's not responding!"
+msgstr ""
+
+#: dat/missions/minerva/kex3.lua:600
+msgid "What the hell?!"
+msgstr ""
+
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <mission name="Maikki's Father 1">
@@ -46894,12 +47485,6 @@ msgid ""
 "wastes no time in getting scarfing it down.\n"
 "   \"HAPPY. GOOD.\""
 msgstr ""
-
-#: dat/missions/minerva/maikki2.lua:487 dat/missions/minerva/maikki2.lua:768
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
-msgid "\"What do you want?\""
-msgstr "\"원하는게 뭐야!?\""
 
 #: dat/missions/minerva/maikki2.lua:488
 msgid ""
@@ -66063,7 +66648,7 @@ msgstr "저지름: %s"
 #. pilot: The pilot to say the text
 #. text: The text to be said
 #.
-#. Example usage: hook.timer(2000, "chatter", {pilot = p, text = "Hello, space!"})
+#. Example usage: hook.timer(2.0, "chatter", {pilot = p, text = "Hello, space!"})
 #. Taken from http://lua-users.org/wiki/InheritanceTutorial
 #. Implementation of additional OO properties starts here --
 #. Return the class object of the instance
@@ -67027,6 +67612,17 @@ msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 #. @see shaderparams
 #. @tparam @{shaderparams} params Parameter table where "color" field is used.
 #. --
+#.
+#. Pure Lua implementation of special effects for use with missions
+#. --
+#. some helpers to speed up computations
+#. Update position
+#. Update time
+#. Clean up as necessary (reverse sorted)
+#. Update time
+#. Convert coordinates to screen
+#. Run function (should render)
+#. TODO allow multiple to play simultaneously (share buffers)
 #.
 #. -- Implementation of parts of the Naev toolkit... in Lua!
 #. --
@@ -69248,10 +69844,6 @@ msgstr ""
 msgid "Keel"
 msgstr ""
 
-#: dat/scripts/pilot/pirate.lua:357
-msgid "Ketchup"
-msgstr ""
-
 #: dat/scripts/pilot/pirate.lua:358
 msgid "Killer"
 msgstr ""
@@ -69904,6 +70496,9 @@ msgstr ""
 #. @tparam string fragcode Fragment shader code.
 #. @return The newly created shader.
 #. --
+#.
+#. -- A post-processing version of the corruption shader.
+#. --
 #. --
 #. Simple deterministic Lua PRNG. Meant when you want worse quality random numbers
 #. and more deterministic than what the rnd module provides.
@@ -69950,17 +70545,17 @@ msgstr ""
 #. focus: The pilot that's polled for. If omitted, defaults to the player.
 #. funcname: The name of the function to be called when the player is in proximity.
 #.
-#. Example usage: hook.timer(500, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "function"})
-#. Example usage: hook.timer(500, "proximity", {anchor = mypilot, radius = 500, funcname = "function"})
-#. Example usage: hook.timer(500, "proximity", {anchor = mypilot, radius = 500, funcname = "function", focus = theirpilot})
+#. Example usage: hook.timer(0.5, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "function"})
+#. Example usage: hook.timer(0.5, "proximity", {anchor = mypilot, radius = 500, funcname = "function"})
+#. Example usage: hook.timer(0.5, "proximity", {anchor = mypilot, radius = 500, funcname = "function", focus = theirpilot})
 #. This variant assumes a proximity hook between two ships, and trigger when the anchor ship scans the focus ship (fuzzy detection doesn't trigger).
 #. argument trigger: a table containing:
 #. anchor: The pilot to use as the anchor for the trigger area.  If omitted, defaults to the player.
 #. focus: The pilot that's polled for.
 #. funcname: The name of the function to be called when the player is in proximity.
 #.
-#. Example usage: hook.timer(500, "proximityScan", {focus = theirpilot, funcname = "function"}) -- Triggers when theirpilot is detected by the player
-#. Example usage: hook.timer(500, "proximityScan", {anchor = theirpilot, focus = mypilot, funcname = "function"}) -- Triggers when mypilot is detected by theirpilot
+#. Example usage: hook.timer(0.5, "proximityScan", {focus = theirpilot, funcname = "function"}) -- Triggers when theirpilot is detected by the player
+#. Example usage: hook.timer(0.5, "proximityScan", {anchor = theirpilot, focus = mypilot, funcname = "function"}) -- Triggers when mypilot is detected by theirpilot
 #. Check global proxmitiy table
 #. Assign ID if necessary
 #. First time hook is set
@@ -74956,7 +75551,7 @@ msgstr "맵 의상"
 msgid "Exit to Main Menu"
 msgstr "메인 메뉴에서 나가기"
 
-#: src/mission.c:113 src/nlua_player.c:1200 src/nlua_player.c:1229
+#: src/mission.c:113 src/nlua_player.c:1215 src/nlua_player.c:1244
 #, c-format
 msgid "Mission '%s' not found in stack"
 msgstr "스택에서 '%s' 미션을 찾지 못했습니다"
@@ -75557,7 +76152,7 @@ msgid ""
 "Tried:%s"
 msgstr "include (): %s이 (가) ndata에 없습니다."
 
-#: src/nlua_audio.c:421 src/nlua_audio.c:449
+#: src/nlua_audio.c:451 src/nlua_audio.c:479
 #, c-format
 msgid "Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"
 msgstr ""
@@ -75584,8 +76179,8 @@ msgstr "상품이 유효하지 않습니다."
 msgid "Commodity '%s' not found!"
 msgstr "상품 '%s'을 (를) 찾을 수 없습니다!"
 
-#: src/nlua_commodity.c:333 src/nlua_commodity.c:369 src/nlua_player.c:1336
-#: src/nlua_player.c:1355
+#: src/nlua_commodity.c:333 src/nlua_commodity.c:369 src/nlua_player.c:1351
+#: src/nlua_player.c:1370
 #, c-format
 msgid "Planet '%s' does not belong to a system."
 msgstr "행성 '%s'은 (는) 시스템에 속하지 않습니다."
@@ -75943,52 +76538,52 @@ msgstr ""
 msgid "Planet '%s' can't find system '%s'"
 msgstr ""
 
-#: src/nlua_player.c:622
+#: src/nlua_player.c:624
 msgid "Second parameter to cinematics should be a table of options or omitted!"
 msgstr ""
 
-#: src/nlua_player.c:728
+#: src/nlua_player.c:743
 msgid "Player must be landed to force takeoff."
 msgstr ""
 
-#: src/nlua_player.c:753
+#: src/nlua_player.c:768
 #, fuzzy, c-format
 #| msgid "Planet '%s' does not belong to a system."
 msgid "Planet '%s' is not in a system!"
 msgstr "행성 '%s'은 (는) 시스템에 속하지 않습니다."
 
-#: src/nlua_player.c:846
+#: src/nlua_player.c:861
 msgid "Must be landed to set the active land window."
 msgstr ""
 
-#: src/nlua_player.c:955
+#: src/nlua_player.c:970
 #, c-format
 msgid "Player does not own a ship named '%s'"
 msgstr ""
 
-#: src/nlua_player.c:1255 src/nlua_player.c:1285
+#: src/nlua_player.c:1270 src/nlua_player.c:1300
 #, c-format
 msgid "Event '%s' not found in stack"
 msgstr ""
 
-#: src/nlua_player.c:1318
+#: src/nlua_player.c:1333
 msgid "Can not teleport the player while landed!"
 msgstr ""
 
-#: src/nlua_player.c:1320
+#: src/nlua_player.c:1335
 msgid "Can not teleport the player while the comm is open!"
 msgstr ""
 
-#: src/nlua_player.c:1322
+#: src/nlua_player.c:1337
 msgid "Can not teleport the player while they are boarded!"
 msgstr ""
 
-#: src/nlua_player.c:1350
+#: src/nlua_player.c:1365
 #, c-format
 msgid "'%s' is not a valid teleportation target."
 msgstr ""
 
-#: src/nlua_player.c:1367
+#: src/nlua_player.c:1382
 #, c-format
 msgid "System '%s' does not exist."
 msgstr ""
@@ -76214,27 +76809,27 @@ msgstr ""
 msgid "Failed to save invalid system."
 msgstr "잘못된 시스템을 저장하지 못했습니다."
 
-#: src/nxml_lua.c:331
+#: src/nxml_lua.c:334
 msgid "Failed to save invalid jump."
 msgstr "잘못된 점프를 저장하지 못했습니다."
 
-#: src/nxml_lua.c:338
+#: src/nxml_lua.c:341
 #, fuzzy
 #| msgid "Failed to save invalid jump."
 msgid "Failed to save invalid commodity."
 msgstr "잘못된 점프를 저장하지 못했습니다."
 
-#: src/nxml_lua.c:460
+#: src/nxml_lua.c:463
 #, c-format
 msgid "Failed to load nonexistent planet '%s'"
 msgstr "존재하지 않는 행성 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/nxml_lua.c:467
+#: src/nxml_lua.c:470
 #, c-format
 msgid "Failed to load nonexistent system '%s'"
 msgstr "존재하지 않는 시스템 '%s'을 (를) 로드하지 못했습니다."
 
-#: src/nxml_lua.c:487
+#: src/nxml_lua.c:490
 #, c-format
 msgid "Failed to load nonexistent jump from '%s' to '%s'"
 msgstr "존재하지 않는 점프를 '%s'에서 '%s'(으) 로 로드하지 못했습니다."
@@ -76244,7 +76839,7 @@ msgstr "존재하지 않는 점프를 '%s'에서 '%s'(으) 로 로드하지 못�
 #. * Seems doable, use case unclear: ARTICLE_METATABLE, VEC_METATABLE.
 #. * Seems doable, but probably GUI-only: COL_METATABLE, TEX_METATABLE.
 #. *
-#: src/nxml_lua.c:500
+#: src/nxml_lua.c:503
 msgid "Unknown Lua data type!"
 msgstr "알 수없는 Lua 데이터 유형!"
 

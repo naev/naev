@@ -121,9 +121,9 @@ function generate_npc ()
       vn.clear()
       vn.scene()
       vn.transition()
-      vn.na(_([[You disconnect from the virtual reality of the Crimson Gauntlet and look around the private room you were in. There is a distinct odour of sweat permeating the room. Furthermore, it looks like someone left in a hurry, but at least it seems like Major Malik is still in his terminal.]]))
+      vn.na(_([[You disconnect from the virtual reality of the Crimson Gauntlet and look around the private room you were in. There is a distinct odour of sweat permeating the room. Furthermore, it looks like someone left in a hurry, but at least it seems like Major Malik is still at his terminal.]]))
       vn.na(_([[You approach Major Malik and notice immediately that something is off. You remove the headgear from him and immediately see that his eyes are glazed over and there is some white froth coming out of his mouth. Seems like some sort of mental shock killed him.]]))
-      vn.na(_([[From the corner of your eye you see that the terminal is still logged in. Since there is nothing you can do anymore for Major Mali, you rotate the screen to you and try to see if you can find any of the information that Kex was looking for.]]))
+      vn.na(_([[From the corner of your eye you see that the terminal is still logged in. Since there is nothing you can do anymore for Major Malik, you rotate the screen to you and try to see if you can find any of the information that Kex was looking for.]]))
       vn.sfxBingo()
       vn.na(_([[The directories are really organized and it doesn't take long before you can find what seem to be the correct files, and you copy them over to a holodrive that you pocket with you. This should make Kex satisfied this time.]]))
       vn.na(_([[You survey the room one last time before you leave. You notice that the chassis covering some of the terminal has been pried open, exposing some internal connections. There is no doubt that someone jacked into your Crimson Gauntlet session. However, given the dead body in the room, you decide to take your leave before it attracts attention.]]))
@@ -145,8 +145,8 @@ function approach_kex ()
    -- Mission is over
    if misn_state==5 then
 
-      vn.na(_("You return exhausted from the entire ordeal, with Major Malik's dead eyes are stilled engrained in your memory, and approach Kex."))
-      kex(_([["You look like a mess kid. What happened?"]]))
+      vn.na(_("You return exhausted from the entire ordeal, with Major Malik's dead eyes are stilled ingrained in your memory, and approach Kex."))
+      kex(_([["You look like a mess, kid. What happened?"]]))
       vn.na(_("You explain what happened in the Crimson Gauntlet server and how you barely emerged with your life, and hand him the holodrive with the data you were able to collect."))
       kex(_([["Damn. When I was still a human, we didn't have that fancy Virtual Reality shit. It's wild. Don't think I want to try it after hearing about your experience though. At least I'm glad you made it out of there alive. Don't know what I would do without you now."]]))
       kex(_([["Let me take a look at the data."
@@ -163,7 +163,7 @@ He seems satisfied at his pun.]]))
       vn.na(_("As you take your leave you hear Kex beginning to hum an ancient-sounding tune. He seems happier than usual."))
       vn.run()
 
-      shiplog.append( logidstr, _("You defeated Major Malik in a lop-sided duel in the Crimson Gauntlet, and acquired information related to money laundering at Minerva Station."))
+      shiplog.append( logidstr, _("You defeated Major Malik in a lopsided duel in the Crimson Gauntlet, and acquired information related to money laundering at Minerva Station."))
       misn.finish( true )
       return
 
@@ -182,7 +182,7 @@ He seems satisfied at his pun.]]))
 
       vn.label("accept")
       kex(string.format(_([["This time I'm hoping it's a cinch. Major Malik should be at %s in the %s system. They should be fairly old, so it should be enough to just outright confront him and get him to talk. I'll give you a note that if you show him should be easy enough to convince him. I'll also send you a picture of him so you can easily recognize him when you see him."]]), _(targetplanet), _(targetsys)))
-      kex(_([["The note? It's just your run-of-the-mill blackmail. We don't really care about Major Malik himself, what we want is mud on the CEO. Hopefully they'll be sensible and give us what we want. However, I trust you will do what it takes in they case they don't."
+      kex(_([["The note? It's just your run-of-the-mill blackmail. We don't really care about Major Malik himself, what we want is dirt on the CEO. Hopefully they'll be sensible and give us what we want. However, I trust you will do what it takes in case they don't."
 He winks his cyborg eye at you.]]))
       vn.func( function ()
          misn_state = 0
@@ -204,7 +204,7 @@ He winks his cyborg eye at you.]]))
 
    vn.label("job")
    if not misn_state or misn_state < 2 then
-      kex(_([["The job is pretty straight forward. We need Major Malik to talk about his dealings with the Minerva CEO. If you hand him the letter I gave you it should be enough to convince him."]]))
+      kex(_([["The job is pretty straightforward. We need Major Malik to talk about his dealings with the Minerva CEO. If you hand him the letter I gave you it should be enough to convince him."]]))
       kex(string.format(_([["You should be able to find him at %s in the %s system. I don't think he should give much trouble."]]), _(targetplanet), _(targetsys)))
    else
       kex(string.format(_([["Oh, so Major Malik wasn't at %s? That is really weird. Let's hope you can find him at %s in the %s system."]]), _(targetplanet), _(lastplanet), _(lastsys)))
