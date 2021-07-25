@@ -487,23 +487,23 @@ function malik_speech ()
    malik_speech_state = malik_speech_state or 0
    malik_speech_state = malik_speech_state + 1
    local speeches = {
-      { delay=8e3, txt=_("You come to my office to harass me…") },
-      { delay=8e3, txt=_("You interrupt my leisure with blackmail…") },
-      { delay=8e3, txt=_("You really think you would be getting out of here alive?…"), func=malik_respawn },
-      { delay=6e3, txt=_("You are in my realm now kid!"), func=malik_spawn_more },
-      { delay=6e3, txt=_("And the only way out is in a body bag!"), func=malik_spawn_more },
-      { delay=7e3, txt=_("My power is limitless here!"), func=malik_spawn_more },
-      { delay=8e3, txt=_("You are a fool to have walked into my trap so willingly."), func=malik_spawn_more },
-      { delay=3e3, txt=_("Not so tough anymore! Ha ha ha!"), func=malik_spawn_more },
-      { delay=5e3, func=noise_start },
-      { delay=8e3, txt=_("What is going on? It's not responding!"), func=noise_worsen },
+      { delay=5e3, txt=_("You come to my office to harass me…") },
+      { delay=5e3, txt=_("You interrupt my leisure with blackmail…") },
+      { delay=5e3, txt=_("You really think you would be getting out of here alive?…"), func=malik_respawn },
+      { delay=5e3, txt=_("You are in my realm now kid!"), func=malik_spawn_more },
+      { delay=5e3, txt=_("And the only way out is in a body bag!"), func=malik_spawn_more },
+      { delay=5e3, txt=_("My power is limitless here!"), func=malik_spawn_more },
+      { delay=5e3, txt=_("You are a fool to have walked into my trap so willingly."), func=malik_spawn_more },
+      { delay=2e3, txt=_("Not so tough anymore! Ha ha ha!"), func=malik_spawn_more },
+      { delay=3e3, func=noise_start },
+      { delay=5e3, txt=_("What is going on? It's not responding!"), func=noise_worsen },
       { delay=5e3, func=maikki_arrives },
-      { delay=8e3, txt=_("What the hell?!") },
+      { delay=5e3, txt=_("What the hell?!") },
    }
 
    local s = speeches[ malik_speech_state ]
    if s.txt then
-      player.omsgAdd( s.txt, s.delay )
+      player.omsgAdd( s.txt, s.delay / 1000 )
    end
    if s.func then
       s.func()
