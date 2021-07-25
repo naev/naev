@@ -474,8 +474,8 @@ function malik_respawn ()
 
    enemies = {}
    local pos = player.pos()
-   luaspfx.addfg( luaspfx.effects.alert, {size=200}, 3.2, pos )
-   hook.timer( 3e3, "malik_respawn_real", pos )
+   luaspfx.addfg( luaspfx.effects.alert, {size=200}, 2.2, pos )
+   hook.timer( 2e3, "malik_respawn_real", pos )
 end
 function malik_respawn_real( pos )
    pmalik = pilot.add("Dvaered Goddard", enemy_faction, pos, _("Major Malik"))
@@ -581,12 +581,16 @@ function maikki_arrives_extra( pos )
    p:intrinsicSet( "fwd_damage", 400 )
    p:intrinsicSet( "tur_damage", 400 )
 end
+function malik_music ()
+   music.load('battlesomething2')
+   music.play()
+end
 
 function malik_speech ()
    malik_speech_state = malik_speech_state or 0
    malik_speech_state = malik_speech_state + 1
    local speeches = {
-      { delay=5e3, txt=_("You come to my office to harass me…") },
+      { delay=5e3, txt=_("You come to my office to harass me…"), func=malik_music },
       { delay=5e3, txt=_("You interrupt my leisure with blackmail…") },
       { delay=5e3, txt=_("You really think you would be getting out of here alive?…"), func=malik_respawn },
       { delay=5e3, txt=_("You are in my realm now kid!"), func=malik_spawn_more },
