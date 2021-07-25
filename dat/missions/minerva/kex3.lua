@@ -187,7 +187,7 @@ He seems satisfied at his pun.]]))
       vn.done()
 
       vn.label("accept")
-      kex(string.format(_([["This time I'm hoping it's a cinch. Major Malik should be at %s in the %s system. They should be fairly old, so it should be to just outright confront him and get him to talk. I'll give you a note that if you show him should be easy enough to convince him. I'll send you a picture of him so you can easily recognize him when you see him."]]), _(targetplanet), _(targetsys)))
+      kex(string.format(_([["This time I'm hoping it's a cinch. Major Malik should be at %s in the %s system. They should be fairly old, so it should be enough to just outright confront him and get him to talk. I'll give you a note that if you show him should be easy enough to convince him. I'll also send you a picture of him so you can easily recognize him when you see him."]]), _(targetplanet), _(targetsys)))
       kex(_([["The note? It's just your run-of-the-mill blackmail. We don't really care about Major Malik himself, what we want is mud on the CEO. Hopefully they'll be sensible and give us what we want. However, I trust you will do what it takes in they case they don't."
 He winks his cyborg eye at you.]]))
       vn.func( function ()
@@ -304,8 +304,9 @@ function approach_malik ()
    vn.na(_("Major Malik leads you through the installation to a private Crimson Gauntlet server room. You enter and see that there are two virtual reality terminals."))
    malik(_([["Please sit in that terminal over there, I'll be at the one here. You know how this works right? Just connect yourself, and I'll set up the server details."]]))
    vn.na(_([[You sit down and do as you are told. Quickly it changes to the Crimson Gauntlet boot screen. You idly scan the server detail information as it boots up. Suddenly something catches your eye:
-HUMAN LIFE SAFETY OVERRIDE.
-DUEL TO THE DEATH MODE ENABLED.]]))
+#rHUMAN LIFE SAFETY OVERRIDE.
+DUEL TO THE DEATH MODE ENABLED.#0]]))
+   vn.sfxEerie()
    vn.na(_([[You try to remove the gear and stop the boot, but it is too late. The virtual reality of the Crimson Gauntlet envelopes you…]]))
    vn.done()
 
@@ -326,6 +327,9 @@ function gauntlet_start ()
 end
 
 function abort ()
+   if noise_shader then
+      shader.rmPPShader( noise_shader )
+   end
    if system.cur() == gauntletsys then
       leave_the_ring()
    end
@@ -362,6 +366,7 @@ function enter_the_ring ()
    player_prevship = player.pilot():name() -- Ship to go back to
    player.swapShip( player_vendetta, true )
    equipopt.generic( player.pilot(), {type_range={Afterburner={min=1}}}, "elite" )
+   hook.pilot( player.pilot(), "death", "player_death" )
 
    -- Set up Major Malik
    enemy_faction = faction.dynAdd( "Dvaered", "Combatant", _("Dvaered"), {ai="dvaered_norun"} )
@@ -477,6 +482,11 @@ function malik_disabled ()
    -- Maikki and friends go away
    for k,v in ipairs(pilot.get({faction.get("Pirate")})) do
       v:rm()
+   end
+end
+function player_death ()
+   if noise_shader then
+      shader.rmPPShader( noise_shader )
    end
 end
 
