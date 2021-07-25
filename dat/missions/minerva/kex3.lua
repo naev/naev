@@ -59,10 +59,6 @@ malik_image = "major_malik.webp"
 money_reward = 400e3
 
 function create ()
-   if not var.peek("testing") then
-      misn.finish(false)
-   end
-
    if not misn.claim( system.get(targetsys) ) then
       misn.finish( false )
    end
