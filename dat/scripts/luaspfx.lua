@@ -18,32 +18,41 @@ local nw2, nh2 = nw/2, nh/2
 local luaspfx = {}
 luaspfx.effects = require 'luaspfx.effects'
 
-function __luaspfx_render( dt, tbl )
+
+local function __update_table( tbl, dt )
    local toremove = {}
+   for k,v in ipairs(tbl) do
+      -- Update position
+      v.pos = v.pos + v.vel * dt
+      -- Update time
+      v.time = v.time + dt
+      if v.time > v.ttl then
+         table.insert( toremove, 1, k )
+      end
+   end
+   -- Clean up as necessary (reverse sorted)
+   for k,v in ipairs(toremove) do
+      table.remove( tbl, v )
+   end
+end
+function __luaspfx_update( dt, realdt )
+   __update_table( luaspfx.__bg, dt )
+   __update_table( luaspfx.__fg, dt )
+end
+
+function __luaspfx_render( tbl )
    local cx, cy = camera.get():get()
    local cz = camera.getZoom()
    for k,v in ipairs(tbl) do
       -- Update time
-      v.time = v.time + dt
-      if v.time < v.ttl then
-         v.params.time = v.time
-         -- Update position
-         v.pos = v.pos + v.vel * dt
-         -- Convert coordinates to screen
-         local ox, oy = v.pos:get()
-         local x, y = ox-x, oy-y
-         x = (x-nw2) / z + nw2
-         y = nh2 - (y-nh2) / z
-         -- Run function (should render)
-         v.func( v.params, x, y, z )
-      else
-         table.insert( toremove, 1, k )
-      end
-   end
-
-   -- Clean up as necessary (reverse sorted)
-   for k,v in ipairs(toremove) do
-      table.remove( tbl, v )
+      v.params.time = v.time
+      -- Convert coordinates to screen
+      local ox, oy = v.pos:get()
+      local x, y = ox-cx, oy-cy
+      x = (cx-nw2) / cz + nw2
+      y = nh2 - (cy-nh2) / cz
+      -- Run function (should render)
+      v.func( v.params, x, y, cz )
    end
 end
 
@@ -63,12 +72,12 @@ local function __luaspfx_add( tbl, efx, params, ttl, pos, vel )
    } )
 end
 
-function luaspfx.addbg( func, params, ttl, pos, vel )
-   return __luaspfx_add( luaspfx.__bg, func, params, pos, vel )
+function luaspfx.addbg( efx, params, ttl, pos, vel )
+   return __luaspfx_add( luaspfx.__bg, efx, params, ttl, pos, vel )
 end
 
-function luaspfx.addfg( func, params, ttl, pos, vel )
-   return __luaspfx_add( luaspfx.__fg, func, params, pos, vel )
+function luaspfx.addfg( efx, params, ttl, pos, vel )
+   return __luaspfx_add( luaspfx.__fg, efx, params, ttl, pos, vel )
 end
 
 function luaspfx.init()
@@ -76,6 +85,7 @@ function luaspfx.init()
    luaspfx.__fg = {}
    luaspfx.__hookbg = hook.renderbg( "__luaspfx_render", luaspfx.__bg )
    luaspfx.__hookfg = hook.renderfg( "__luaspfx_render", luaspfx.__fg )
+   luaspfx.__update = hook.update( "__luaspfx_update" )
 end
 
 function luaspfx.exit()
