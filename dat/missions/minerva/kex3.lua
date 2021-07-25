@@ -279,9 +279,26 @@ function approach_malik ()
    vn.na(_("You approach Major Malik who seems to be enjoying a drink."))
    malik(_([["What do you want?"]]))
    vn.na(_("You hand him the note you got from Kex. He reads it and furrows his brows a bit."))
-   malik(_([["I see. You think at my age I worry about what happens to me? I've had a good ..."]]))
-   -- TODO finish
+   malik(_([["I see. You think at my age I worry about what happens to me? I've had a good career with no regrets. Your threats don't sway me."]]))
+   malik(_([["However, I'm in a good mood today. How about we play a game? I have a private Crimson Gauntlet server here, let us duel in classic Dvaered fashion. If you win, I'll give you over the information you want."]]))
+   malik(_([["To make it more exciting, we can both duel in Vendettas. I'll provide you with one. What do you say?"]]))
+   vn.menu{
+      {_("Accept"),  "accept"},
+      {_("Decline"), "decline"},
+   }
+   vn.label("accept")
    vn.func( function () dogauntlet = true end )
+   malik(_([["OK, then it's settled then. Follow me to my private room and we'll get started."]]))
+   vn.na(_("Major Malik leads you through the installation to a private Crimson Gauntlet server room. You enter and see that there are two virtual reality terminals."))
+   malik(_([["Please sit in that terminal over there, I'll be at the one here. You know how this works right? Just connect yourself, and I'll set up the server details."]]))
+   vn.na(_([[You sit down and do as you are told. Quickly it changes to the Crimson Gauntlet boot screen. You idly scan the server detail information as it boots up. Suddenly something catches your eye:
+HUMAN LIFE SAFETY OVERRIDE.
+DUEL TO THE DEATH MODE ENABLED.]]))
+   vn.na(_([[You try to remove the gear and stop the boot, but it is too late. The virtual reality of the Crimson Gauntlet envelopes you…]]))
+   vn.done()
+
+   vn.label("decline")
+   malik(_([["OK. I'll be here if you change your mind."]]))
    vn.run()
 
    if dogauntlet then
@@ -347,7 +364,7 @@ function enter_the_ring ()
    enemies = {pmalik}
 
    -- Taunt stuff
-   hook.timer( 3e3, "countdown_start" )
+   hook.timer( 1e3, "countdown_start" )
    hook.timer( 10e3, "malik_taunt" )
 end
 -- Goes back to Totoran (landed)
