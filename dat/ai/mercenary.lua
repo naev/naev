@@ -8,14 +8,14 @@ mem.aggressive = true
 
 function create ()
 
-   ai.setcredits( rnd.int(ai.pilot():ship():price()/150, ai.pilot():ship():price()/50) )
+   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/150, ai.pilot():ship():price()/50) )
 
-   if rnd.int() > 0.7 then
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750. * rnd.int() + 2500.)
+   if rnd.rnd() > 0.7 then
+      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750. * rnd.rnd() + 2500.)
       mem.bribe_prompt = string.format(_("\"Your life is worth %s to me.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Beat it.\"")
    else
-      if rnd.int() > 0.5 then
+      if rnd.rnd() > 0.5 then
          mem.bribe_no = _("\"You won't buy your way out of this one.\"")
       else
          mem.bribe_no = _("\"I'm afraid you can't make it worth my while.\"")
@@ -32,7 +32,7 @@ end
 function taunt ( target, offense )
 
    -- Only 20% of actually taunting.
-   if rnd.int(0,4) ~= 0 then
+   if rnd.rnd(0,4) ~= 0 then
       return
    end
 
@@ -52,7 +52,7 @@ function taunt ( target, offense )
       }
    end
 
-   ai.pilot():comm(target, taunts[ rnd.int(1,#taunts) ])
+   ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 
 

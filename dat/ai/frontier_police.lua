@@ -9,10 +9,10 @@ mem.aggressive = true
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
+   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
 
    -- Handle bribing
-   if rnd.int() > 0.4 then
+   if rnd.rnd() > 0.4 then
       mem.bribe_no = _("\"I shall especially enjoy your death.\"")
    else
       local bribe_no = {
@@ -59,6 +59,6 @@ function taunt ( target, offense )
        _("Cave canem!"),
        _("Death awaits you!")
    }
-   ai.pilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
+   ai.pilot():comm( target, taunts[ rnd.rnd(1,#taunts) ] )
 end
 

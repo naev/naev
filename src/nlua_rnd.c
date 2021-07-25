@@ -31,7 +31,6 @@ static int rnd_threesigma( lua_State *L );
 static int rnd_uniform( lua_State *L );
 static int rnd_permutation( lua_State *L );
 static const luaL_Reg rnd_methods[] = {
-   { "int", rnd_int }, /* obsolete, rnd.rnd is preferred. */
    { "rnd", rnd_int },
    { "sigma", rnd_sigma },
    { "twosigma", rnd_twosigma },

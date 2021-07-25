@@ -22,7 +22,7 @@ function sos ()
       string.format(_("Mayday! %s %s being assaulted!"), fname, string.lower( plt:ship():class() ))
    }
    ai.settarget( ai.taskdata() )
-   ai.distress( msg[ rnd.int(1,#msg) ])
+   ai.distress( msg[ rnd.rnd(1,#msg) ])
 end
 
 -- Must be defined after sos

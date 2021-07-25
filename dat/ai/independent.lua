@@ -8,7 +8,7 @@ mem.careful   = false
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.pilot():ship():price()/500, ai.pilot():ship():price()/200) )
+   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/500, ai.pilot():ship():price()/200) )
 
    -- No bribe
    local bribe_msg = {
@@ -16,7 +16,7 @@ function create ()
       _("\"What do you want from me!?\""),
       _("\"Get away from me!\"")
    }
-   mem.bribe_no = bribe_msg[ rnd.int(1,#bribe_msg) ]
+   mem.bribe_no = bribe_msg[ rnd.rnd(1,#bribe_msg) ]
 
    -- Refuel
    mem.refuel = rnd.rnd( 1000, 3000 )
