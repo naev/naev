@@ -185,26 +185,27 @@ static int hookL_setarg( unsigned int hook, int ind )
 {
    nlua_env env = hook_env(hook);
 
-   lua_pushvalue( naevL, ind );   /* v */
    /* If a table set __save, this won't work for tables of tables however. */
+   lua_pushvalue( naevL, ind );   /* v */
    if (lua_istable(naevL, -1)) {
       lua_pushboolean( naevL, 1 );/* v, b */
       lua_setfield( naevL, -2, "__save" ); /* v */
    }
+   lua_pop(L,1);
    /* Create if necessary the actual hook argument table. */
-   nlua_getenv(env, "__hook_arg"); /* v, t */
-   if (lua_isnil(naevL,-1)) {     /* v, nil */
-      lua_pop( naevL, 1 );        /* v */
-      lua_newtable( naevL );      /* v, t */
-      lua_pushvalue( naevL, -1 ); /* v, t, t */
-      nlua_setenv(env, "__hook_arg"); /* v, t */
-      lua_pushboolean( naevL, 1 ); /* v, t, s */
-      lua_setfield( naevL, -2, "__save" ); /* v, t */
+   nlua_getenv(env, "__hook_arg");  /* t */
+   if (lua_isnil(naevL,-1)) {       /* nil */
+      lua_pop( naevL, 1 );          /* */
+      lua_newtable( naevL );        /* t */
+      lua_pushvalue( naevL, -1 );   /* t, t */
+      nlua_setenv(env, "__hook_arg");/*t */
+      lua_pushboolean( naevL, 1 );  /* t, s */
+      lua_setfield( naevL, -2, "__save" );/* t */
    }
-   lua_pushnumber( naevL, hook ); /* v, t, k */
-   lua_pushvalue( naevL, -3 );    /* v, t, k, v */
-   lua_settable( naevL, -3 );     /* v, t */
-   lua_pop( naevL, 2 );           /* */
+   lua_pushnumber( naevL, hook ); /* t, k */
+   lua_pushvalue( naevL, ind );   /* t, k, v */
+   lua_settable( naevL, -3 );     /* t */
+   lua_pop( naevL, 1 );           /* */
    return 0;
 }
 
@@ -317,7 +318,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
    }
 
    /* Check parameter. */
-   if (!lua_isnil(L,pos+1))
+   if (!lua_isnoneornil(L,pos+1))
       hookL_setarg( h, pos+1 );
 
    return h;
