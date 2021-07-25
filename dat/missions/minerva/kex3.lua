@@ -37,7 +37,7 @@ logidstr = minerva.log.kex.idstr
 --  1: try to find dvaered dude
 --  2: get ambushed
 --  3: go to totoran
---  4: duel the dvaered dude
+--  4: duel finished
 --  5: return to Kex
 misn_state = nil
 
@@ -119,10 +119,18 @@ function generate_npc ()
       misn.osdCreate( misn_title,
          { string.format(_("Look for Major Malik at %s in the %s system"), _(lastplanet), _(lastsys) ),
          _("Return to Kex at Minerva Station") } )
-   elseif misn_state==3 and planet.cur() == planet.get(lastplanet) then
 
-      -- TODO fix portrait
+   elseif misn_state==3 and planet.cur() == planet.get(lastplanet) then
       npc_malik = misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
+
+   elseif misn_state==4 and planet.cur() == planet.get(lastplanet) then
+      vn.clear()
+      vn.scene()
+      vn.transition()
+      vn.na("TODO")
+      vn.run()
+
+      misn_state = 5 -- We're done here, go back to kex:)
    end
 end
 
@@ -423,6 +431,7 @@ end
 function malik_disabled ()
    shader.rmPPShader( noise_shader )
    pmalik:disable(true)
+   player.omsgAdd( _("Aaaaaargh!"), 3 )
 
    -- Kill all enemies
    for k,v in ipairs(enemies) do
@@ -436,7 +445,7 @@ function malik_disabled ()
 end
 
 function malik_spawn_more ()
-   local pos = player.pos()
+   local pos = player.pos() + vec2.new( 200*rnd.rnd(), 360*rnd.rnd() )
    luaspfx.addfg( luaspfx.effects.alert, {size=100}, 2.2, pos )
    hook.timer( 2e3, "malik_spawn_more_real", pos )
 end
@@ -445,15 +454,19 @@ function malik_spawn_more_real( pos )
    p:setHostile(true)
    table.insert( enemies, p )
 end
+function malik_spawn_more2 ()
+   malik_spawn_more()
+   malik_spawn_more()
+end
 
 function noise_start ()
-   noise_shader = pp_shaders.corruption( 1.0 )
+   noise_shader = pp_shaders.corruption( 0.8 )
    shader.addPPShader( noise_shader, "gui" )
 end
 
 function noise_worsen ()
    shader.rmPPShader( noise_shader )
-   noise_shader = pp_shaders.corruption( 2.0 )
+   noise_shader = pp_shaders.corruption( 1.5 )
    shader.addPPShader( noise_shader, "gui" )
 end
 
@@ -496,8 +509,8 @@ function malik_speech ()
       { delay=5e3, txt=_("You are in my realm now kid!"), func=malik_spawn_more },
       { delay=5e3, txt=_("And the only way out is in a body bag!"), func=malik_spawn_more },
       { delay=5e3, txt=_("My power is limitless here!"), func=malik_spawn_more },
-      { delay=5e3, txt=_("You are a fool to have walked into my trap so willingly."), func=malik_spawn_more },
-      { delay=2e3, txt=_("Not so tough anymore! Ha ha ha!"), func=malik_spawn_more },
+      { delay=5e3, txt=_("You are a fool to have walked into my trap so willingly."), func=malik_spawn_more2 },
+      { delay=2e3, txt=_("Not so tough anymore! Ha ha ha!"), func=malik_spawn_more2 },
       { delay=3e3, func=noise_start },
       { delay=5e3, txt=_("What is going on? It's not responding!"), func=noise_worsen },
       { delay=5e3, func=maikki_arrives },
@@ -520,9 +533,7 @@ function malik_speech ()
 end
 
 function malik_boarded ()
-   vn.clear()
-   vn.scene()
-   vn.transition()
-   vn.na("TODO")
-   vn.run()
+   player.unboard()
+   misn_state = 4
+   hook.safe( "leave_the_ring" )
 end
