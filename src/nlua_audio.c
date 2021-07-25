@@ -333,6 +333,7 @@ static int audioL_playPos( lua_State *L )
       pos[0] = vp->x;
       pos[1] = vp->y;
       pos[2] = 0.;
+      alSourcei( la->source, AL_SOURCE_RELATIVE, AL_FALSE );
       alSourcefv( la->source, AL_POSITION, pos );
       alSourcePlay( la->source );
       al_checkErr();
