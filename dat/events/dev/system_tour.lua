@@ -2,8 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="System Tour">
   <trigger>none</trigger>
-  <chance>100</chance>
-  <cond>false</cond>
+  <chance>0</chance>
   <flags>
   </flags>
  </event>
