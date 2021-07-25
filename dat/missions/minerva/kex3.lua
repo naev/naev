@@ -23,7 +23,7 @@
 --]]
 local minerva  = require "campaigns.minerva"
 local portrait = require 'portrait'
-local love_shaders = require 'love_shaders'
+local pp_shaders = require 'pp_shaders'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'
 local luaspfx  = require 'luaspfx'
@@ -333,7 +333,7 @@ function enter_the_ring ()
    enemies = {pmalik}
 
    -- Taunt stuff
-   hook.timer(   3e3, "countdown_start" )
+   hook.timer( 3e3, "countdown_start" )
    hook.timer( 10e3, "malik_taunt" )
 end
 -- Goes back to Totoran (landed)
@@ -409,10 +409,11 @@ function malik_respawn ()
 
    enemies = {}
    local pos = player.pos()
-   luaspfx.addfg( luaspfx.effects.alert, {size=100}, 5, pos )
-   hook.timer( 5e5, "malik_respawn_real", pos )
+   luaspfx.addfg( luaspfx.effects.alert, {size=200}, 3.2, pos )
+   hook.timer( 3e3, "malik_respawn_real", pos )
 end
 function malik_respawn_real( pos )
+   print( pos )
    pmalik = pilot.add("Dvaered Goddard", enemy_faction, pos, _("Major Malik"))
    pmalik:setHostile(true)
    pmalik:setNoDeath(true)
@@ -420,7 +421,7 @@ function malik_respawn_real( pos )
    hook.pilot( pmalik, "board", "malik_boarded" )
 end
 function malik_disabled ()
-   shader.rmPPShader( noise_ppshader )
+   shader.rmPPShader( noise_shader )
    pmalik:disable(true)
 
    -- Kill all enemies
@@ -436,8 +437,8 @@ end
 
 function malik_spawn_more ()
    local pos = player.pos()
-   luaspfx.addfg( luaspfx.effects.alert, {size=100}, 3, pos )
-   hook.timer( 3e5, "malik_spawn_more_real", pos )
+   luaspfx.addfg( luaspfx.effects.alert, {size=100}, 2.2, pos )
+   hook.timer( 2e3, "malik_spawn_more_real", pos )
 end
 function malik_spawn_more_real( pos )
    local p = pilot.add("Dvaered Vendetta", enemy_faction, pos )
@@ -446,25 +447,25 @@ function malik_spawn_more_real( pos )
 end
 
 function noise_start ()
-   noise_shader = love_shaders.corruption{ strength=0.3 }
-   noise_ppshader = shader.addPPShader( noise_shader )
+   noise_shader = pp_shaders.corruption( 1.0 )
+   shader.addPPShader( noise_shader, "gui" )
 end
 
 function noise_worsen ()
-   shader.rmPPShader( noise_ppshader )
-   noise_shader = love_shaders.corruption{ strength=1.0 }
-   noise_ppshader = shader.addPPShader( noise_shader )
+   shader.rmPPShader( noise_shader )
+   noise_shader = pp_shaders.corruption( 2.0 )
+   shader.addPPShader( noise_shader, "gui" )
 end
 
 function maikki_arrives ()
    local pos = player.pos()
    local mc = minerva.maikkiP.colour
    local col = {mc[1], mc[2], mc[3], 0.3}
-   luaspfx.addfg( luaspfx.effects.alert, {size=100, col=col}, 3, pos )
-   hook.timer( 3e5, "maikki_arrives_real", pos )
+   luaspfx.addfg( luaspfx.effects.alert, {size=200, col=col}, 1.2, pos )
+   hook.timer( 1e3, "maikki_arrives_real", pos )
 end
 function maikki_arrives_real( pos )
-   local p = pilot.add( "Pirate Kestrel", "Pirate", _("Pink Demon"), {naked=true} )
+   local p = pilot.add( "Pirate Kestrel", "Pirate", pos, _("Pink Demon"), {naked=true} )
    equipopt.pirate( p, {} )
    p:setFriendly(true)
    p:control()
@@ -480,7 +481,9 @@ function maikki_arrives_real( pos )
    p:intrinsicSet( "fwd_dam_as_dis", 50 )
    p:intrinsicSet( "tur_dam_as_dis", 50 )
 
-   player.omsgAdd( _("Ho ho ho and a bottle of rum!"), 5e3, nil, minerva.maikkiP.colour )
+   local mc = minerva.maikkiP.colour
+   local col = colour.new( mc[1], mc[2], mc[3], 1.0 )
+   player.omsgAdd( _("Ho ho ho and a bottle of rum!"), 5e3, nil, col )
 end
 
 function malik_speech ()
@@ -502,6 +505,9 @@ function malik_speech ()
    }
 
    local s = speeches[ malik_speech_state ]
+   if not s then
+      return
+   end
    if s.txt then
       player.omsgAdd( s.txt, s.delay / 1000 )
    end
