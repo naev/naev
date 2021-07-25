@@ -306,7 +306,7 @@ static int audioL_new( lua_State *L )
 
 
 /**
- * @brlef Clones an existing audio source.
+ * @brief Clones an existing audio source.
  *
  *    @luatparam Audio source Audio source to clone.
  *    @luatreturn Audio New audio corresponding to the data.
