@@ -277,7 +277,7 @@ function enter ()
       misn_state = 3
 
       -- Timer
-      hook.timer( 5e3, "thug_heartbeat" )
+      hook.timer( 5, "thug_heartbeat" )
    end
 end
 
@@ -296,7 +296,7 @@ function thug_heartbeat ()
       return
    end
    -- Keep on beating
-   hook.timer( 5e3, "thug_heartbeat" )
+   hook.timer( 5, "thug_heartbeat" )
 end
 
 function approach_malik ()
@@ -398,8 +398,8 @@ function enter_the_ring ()
    enemies = {pmalik}
 
    -- Taunt stuff
-   hook.timer( 1e3, "countdown_start" )
-   hook.timer( 10e3, "malik_taunt" )
+   hook.timer( 1, "countdown_start" )
+   hook.timer( 10, "malik_taunt" )
 end
 -- Goes back to Totoran (landed)
 function leave_the_ring ()
@@ -426,11 +426,11 @@ end
 --]]
 function countdown_start ()
    omsg_id = player.omsgAdd( _("5…"), 1.1 )
-   hook.timer( 1*1000, "countdown", _("4…") )
-   hook.timer( 2*1000, "countdown", _("3…") )
-   hook.timer( 3*1000, "countdown", _("2…") )
-   hook.timer( 4*1000, "countdown", _("1…") )
-   hook.timer( 5*1000, "countdown_done" )
+   hook.timer( 1, "countdown", _("4…") )
+   hook.timer( 2, "countdown", _("3…") )
+   hook.timer( 3, "countdown", _("2…") )
+   hook.timer( 4, "countdown", _("1…") )
+   hook.timer( 5, "countdown_done" )
 end
 function countdown( str )
    -- TODO play countdown sound
@@ -461,12 +461,12 @@ function malik_taunt ()
       tauntid = (tauntid % #taunts)+1
       pmalik:comm( player.pilot(), tauntperm[tauntid], true )
 
-      hook.timer( 7e3, "malik_taunt" )
+      hook.timer( 7, "malik_taunt" )
    end
 end
 
 function malik_death ()
-   hook.timer( 5e3, "malik_speech" )
+   hook.timer( 5, "malik_speech" )
 end
 
 function malik_respawn ()
@@ -475,7 +475,7 @@ function malik_respawn ()
    enemies = {}
    local pos = player.pos()
    luaspfx.addfg( luaspfx.effects.alert, {size=200}, 2.2, pos )
-   hook.timer( 2e3, "malik_respawn_real", pos )
+   hook.timer( 2, "malik_respawn_real", pos )
 end
 function malik_respawn_real( pos )
    pmalik = pilot.add("Dvaered Goddard", enemy_faction, pos, _("Major Malik"))
@@ -510,7 +510,7 @@ end
 function malik_spawn_more ()
    local pos = player.pos() + vec2.new( 200*rnd.rnd(), 360*rnd.rnd() )
    luaspfx.addfg( luaspfx.effects.alert, {size=100}, 2.2, pos )
-   hook.timer( 2e3, "malik_spawn_more_real", pos )
+   hook.timer( 2, "malik_spawn_more_real", pos )
 end
 function malik_spawn_more_real( pos )
    local p = pilot.add("Dvaered Vendetta", enemy_faction, pos )
@@ -538,12 +538,12 @@ function maikki_arrives ()
    local mc = minerva.maikkiP.colour
    local col = {mc[1], mc[2], mc[3], 0.3}
    luaspfx.addfg( luaspfx.effects.alert, {size=200, col=col}, 1.2, pos )
-   hook.timer( 1e3, "maikki_arrives_real", pos )
+   hook.timer( 1, "maikki_arrives_real", pos )
    -- Add more extras
    for i=1,4 do
       local pos = player.pos() + vec2.new( 200*rnd.rnd(), 360*rnd.rnd() )
       luaspfx.addfg( luaspfx.effects.alert, {size=100, col=col}, 1.2, pos )
-      hook.timer( 1e3, "maikki_arrives_extra", pos )
+      hook.timer( 1, "maikki_arrives_extra", pos )
    end
 end
 function maikki_arrives_real( pos )
@@ -590,24 +590,24 @@ function malik_speech ()
    malik_speech_state = malik_speech_state or 0
    malik_speech_state = malik_speech_state + 1
    local speeches = {
-      { delay=5e3, txt=_("You come to my office to harass me…"), func=malik_music },
-      { delay=5e3, txt=_("You interrupt my leisure with blackmail…") },
-      { delay=5e3, txt=_("You really think you would be getting out of here alive?…"), func=malik_respawn },
-      { delay=5e3, txt=_("You are in my realm now kid!"), func=malik_spawn_more },
-      { delay=5e3, txt=_("And the only way out is in a body bag!"), func=malik_spawn_more },
-      { delay=5e3, txt=_("My power is limitless here!"), func=malik_spawn_more },
-      { delay=5e3, txt=_("You are a fool to have walked into my trap so willingly."), func=malik_spawn_more2 },
-      { delay=2e3, txt=_("Not so tough anymore! Ha ha ha!"), func=malik_spawn_more2 },
-      { delay=3e3, func=noise_start },
-      { delay=5e3, txt=_("What is going on? It's not responding!"), func=noise_worsen },
-      { delay=5e3, func=maikki_arrives },
-      { delay=5e3, txt=_("What the hell?!") },
+      { delay=5, txt=_("You come to my office to harass me…"), func=malik_music },
+      { delay=5, txt=_("You interrupt my leisure with blackmail…") },
+      { delay=5, txt=_("You really think you would be getting out of here alive?…"), func=malik_respawn },
+      { delay=5, txt=_("You are in my realm now kid!"), func=malik_spawn_more },
+      { delay=5, txt=_("And the only way out is in a body bag!"), func=malik_spawn_more },
+      { delay=5, txt=_("My power is limitless here!"), func=malik_spawn_more },
+      { delay=5, txt=_("You are a fool to have walked into my trap so willingly."), func=malik_spawn_more2 },
+      { delay=2, txt=_("Not so tough anymore! Ha ha ha!"), func=malik_spawn_more2 },
+      { delay=3, func=noise_start },
+      { delay=5, txt=_("What is going on? It's not responding!"), func=noise_worsen },
+      { delay=5, func=maikki_arrives },
+      { delay=5, txt=_("What the hell?!") },
    }
 
    local s = speeches[ malik_speech_state ]
    if not s then return end
    if s.txt then
-      player.omsgAdd( s.txt, s.delay / 1000 )
+      player.omsgAdd( s.txt, s.delay )
    end
    if s.func then
       s.func()
