@@ -16,9 +16,14 @@
 #define AUDIO_METATABLE      "audio" /**< Audio metatable identifier. */
 
 
+typedef struct LuaBuffer_s {
+   ALuint buffer; /**< Buffer to use. */
+   int refcount; /**< Refcount. */
+} LuaBuffer_t;
+
 typedef struct LuaAudio_s {
-   ALuint source;
-   ALuint buffer;
+   ALuint source; /**< Source to use. */
+   LuaBuffer_t *buf; /**< Shared buffer. */
 } LuaAudio_t;
 
 

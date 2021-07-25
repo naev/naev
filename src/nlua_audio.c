@@ -200,13 +200,19 @@ int lua_isaudio( lua_State *L, int ind )
 static int audioL_gc( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (!conf.nosound) {
-      soundLock();
-      alDeleteSources( 1, &la->source );
-      alDeleteBuffers( 1, &la->buffer );
-      al_checkErr();
-      soundUnlock();
+   if (conf.nosound)
+      return 0;
+   soundLock();
+   alDeleteSources( 1, &la->source );
+   /* Check if buffers need freeing. */
+   la->buf->refcount--;
+   if (la->buf->refcount <= 0) {
+      alDeleteBuffers( 1, &la->buf->buffer );
+      free( la->buf );
    }
+   /* Clean up. */
+   al_checkErr();
+   soundUnlock();
    return 0;
 }
 
@@ -264,12 +270,14 @@ static int audioL_new( lua_State *L )
 
       soundLock();
       alGenSources( 1, &la.source );
-      alGenBuffers( 1, &la.buffer );
 
-      sound_al_buffer( &la.buffer, rw, name );
+      la.buf = malloc( sizeof(LuaBuffer_t) );
+      la.buf->refcount = 1;
+      alGenBuffers( 1, &la.buf->buffer );
+      sound_al_buffer( &la.buf->buffer, rw, name );
 
       /* Attach buffer. */
-      alSourcei( la.source, AL_BUFFER, la.buffer );
+      alSourcei( la.source, AL_BUFFER, la.buf->buffer );
 
       /* Defaults. */
       master = sound_getVolumeLog();
