@@ -127,9 +127,9 @@ function takeoff() --for when the player takes off from the wringer.
       p:setFriendly( true )
       hook.pilot(p,"death","death")
    end
-   hook.timer(90000,"second_coming") --i wanted the player to feel some hope that he'd win, but have that hope come crashing down.
-   hook.timer(97000,"second_coming")
-   hook.timer(145000,"second_coming")
+   hook.timer(90.0,"second_coming") --i wanted the player to feel some hope that he'd win, but have that hope come crashing down.
+   hook.timer(97.0,"second_coming")
+   hook.timer(145.0,"second_coming")
 end
 
 function death(p)

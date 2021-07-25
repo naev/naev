@@ -157,8 +157,8 @@ function enter()
 
         faction.get("FLF"):setPlayerStanding( -100 )
 
-        hook.timer(2000, "commFLF")
-        hook.timer(15000, "wakeUpGregarYouLazyBugger")
+        hook.timer(2.0, "commFLF")
+        hook.timer(15.0, "wakeUpGregarYouLazyBugger")
     end
 end
 
@@ -211,7 +211,7 @@ function wakeUpGregarYouLazyBugger()
         faction.get("FLF"):setPlayerStanding( 5 ) -- Small buffer to ensure it doesn't go negative again right away.
         misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_adddesc, osd_desc[2]})
         misn.osdActive(2)
-        hook.timer(500, "inRange")
+        hook.timer(0.5, "inRange")
     end
 end
 
@@ -223,10 +223,10 @@ function inRange()
         end
     end
     if mindist < 500 then
-        hook.timer(2000, "annai")
-        OORT = hook.timer(10000, "outOfRange")
+        hook.timer(2.0, "annai")
+        OORT = hook.timer(10.0, "outOfRange")
     else
-        hook.timer(500, "inRange")
+        hook.timer(0.5, "inRange")
     end
 end
 
@@ -251,7 +251,7 @@ function annai()
             p:moveto(waypoint0 + poss[i])
         end
     end
-    spawner = hook.timer(1000, "spawnbase")
+    spawner = hook.timer(1.0, "spawnbase")
 end
 
 -- Part of the escort script
@@ -272,7 +272,7 @@ function spawnbase()
         basefound = true
         hook.rm(OORT)
     else
-        spawner = hook.timer(1000, "spawnbase")
+        spawner = hook.timer(1.0, "spawnbase")
     end
 end
 
@@ -285,7 +285,7 @@ function outOfRange()
         end
     end
     if mindist < 1500 then
-        OORT = hook.timer(2000, "outOfRange")
+        OORT = hook.timer(2.0, "outOfRange")
     else
         tk.msg(contacttitle, contacttext)
         abort()

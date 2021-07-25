@@ -184,7 +184,7 @@ function enter ( from_sys )
          if from_sys == nil then
             add_escorts( true )
          else -- Just jumped
-            hook.timer( rnd.int(2000, 5000), "add_escorts" )
+            hook.timer( rnd.rnd(2.0, 5.0), "add_escorts" )
          end
 
          -- Disable spawning and clear pilots -> makes it more epic
@@ -204,7 +204,7 @@ function enter ( from_sys )
          hook.pilot( trinity, "jump", "trinity_jump" )
 
          final_fight = 0
-         hook.timer(rnd.int(6000, 8000) , "final_talk") -- Escorts should be in system by now
+         hook.timer(rnd.rnd(6.0, 8.0) , "final_talk") -- Escorts should be in system by now
       end
 
    -- Player ran away from combat - big disgrace.
@@ -227,13 +227,13 @@ function final_talk ()
       talker:broadcast( talk[1] )
 
       final_fight = 1
-      hook.timer(rnd.int( 3000, 4000 ), "final_talk")
+      hook.timer(rnd.rnd( 3.0, 4.0 ), "final_talk")
    elseif final_fight == 1 then
       talker = trinity
       talker:broadcast( talk[2] )
 
       final_fight = 2
-      hook.timer(rnd.int( 3000, 4000 ), "final_talk")
+      hook.timer(rnd.rnd( 3.0, 4.0 ), "final_talk")
    elseif final_fight == 2 then
       -- Talk
       talker = paci
@@ -244,10 +244,10 @@ function final_talk ()
       trinity:setHostile()
 
       final_fight = 3
-      hook.timer(rnd.int( 4000, 5000 ), "final_talk")
+      hook.timer(rnd.rnd( 4.0, 5.0 ), "final_talk")
    elseif final_fight == 3 then
       tri_flee  = false
-      hook.timer( 3000, "trinity_check" )
+      hook.timer( 3.0, "trinity_check" )
       tri_checked = 0
       for i, j in ipairs( escorts ) do
          if j:exists() then
@@ -274,7 +274,7 @@ function trinity_check ()
    if a < 100 or tri_checked > 100 then
       trinity_flee()
    else
-      hook.timer( 3000, "trinity_check" )
+      hook.timer( 3.0, "trinity_check" )
    end
 end
 
@@ -286,7 +286,7 @@ function trinity_flee ()
    trinity:hyperspace( misn_flee_sys, true )
    trinity:broadcast( taunts[3] )
    player.msg( talk[7] )
-   hook.timer( rnd.int( 3000, 5000 ), "call_drones_jump" )
+   hook.timer( rnd.rnd( 3.0, 5.0 ), "call_drones_jump" )
 end
 
 

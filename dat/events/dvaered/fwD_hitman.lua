@@ -46,7 +46,7 @@ function begin ()
       evt.finish(false)
    end
 
-   hook.timer(10000, "ambusher")
+   hook.timer(10.0, "ambusher")
    hook.rm(jumphook)
    hook.jumpout("leave")
 end

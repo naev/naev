@@ -112,12 +112,12 @@ function sys_enter ()
       -- wait til stars have settled and do stuff
       --pilot.clear()
       --pilot.toggleSpawn(false)
-      hook.timer( 2000,"game_of_drones")
+      hook.timer( 2.0, "game_of_drones" )
    end
    if jumps ~= 0 then
       if system.cur() == t_sys[3] then
          -- do something else
-         hook.timer(2000,"chase_of_drones")
+         hook.timer( 2.0, "chase_of_drones" )
       end
    end
 
@@ -163,7 +163,7 @@ function got_hailed()
    t_drone:setHostile(true)
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)
-   spawnhook = hook.timer(3000, "sp_baddies")
+   spawnhook = hook.timer(3.0, "sp_baddies")
    hook.pilot(t_drone, "death", "failed")
    hook.pilot(t_drone, "board", "targetBoard")
    hook.pilot(t_drone, "jump", "drone_jumped")
@@ -204,7 +204,7 @@ function targetBoard()
    misn.markerRm(mmarker)
    mmarker = misn.markerAdd(t_sys[2],"high")
    if jumps == 0 then
-      hook.timer(2000, "drones_flee")
+      hook.timer(2.0, "drones_flee")
    end
    hook.land("land_home")
 end
@@ -275,7 +275,7 @@ function drone_attacked()
    t_drone:taskClear()
    t_sys[3] = jps[1]:dest()
    t_drone:hyperspace(jps[1]:dest())
-   hook.timer(4000,"drone_disableable")
+   hook.timer(4.0, "drone_disableable")
 end
 
 function drone_selfdestruct()
@@ -290,7 +290,7 @@ function drone_disableable()
    t_drone:setNoDisable(false)
    if jumps == 2 then
       tk.msg(title[3],text[13])
-      hook.timer(18000+rnd.rnd(1,4000),"drone_selfdestruct")
+      hook.timer(18.0+rnd.rnd(0.001, 4.0), "drone_selfdestruct")
    end
 end
 -- last hook
@@ -363,7 +363,7 @@ function targetIdle()
       t_drone:moveto(t_drone:pos() + vec2.new(-400,  400), false)
       t_drone:moveto(t_drone:pos() + vec2.new(-400, -400), false)
       t_drone:moveto(t_drone:pos() + vec2.new( 400, -400), false)
-      idlehook = hook.timer(5000, "targetIdle")
+      idlehook = hook.timer(5.0, "targetIdle")
    end
 end
 

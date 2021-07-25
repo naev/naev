@@ -205,7 +205,7 @@ function takeoff()
    countdown = 5 -- seconds
    omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
    counting = true
-   counterhook = hook.timer(1000, "counter")
+   counterhook = hook.timer(1.0, "counter")
    hook.board("board")
    hook.jumpin("jumpin")
    hook.land("land")
@@ -215,7 +215,7 @@ function counter()
    countdown = countdown - 1
    if countdown == 0 then
       player.omsgChange(omsg, _("Go!"), 1000)
-      hook.timer(1000, "stopcount")
+      hook.timer(1.0, "stopcount")
       player.pilot():control(false)
       counting = false
       hook.rm(counterhook)
@@ -230,7 +230,7 @@ function counter()
       player.msg(marketing)
       else
       player.omsgChange(omsg, timermsg:format(countdown), 0)
-      counterhook = hook.timer(1000, "counter")
+      counterhook = hook.timer(1.0, "counter")
    end
 end
 
@@ -238,7 +238,7 @@ function racer1idle(p)
    player.msg( string.format( positionmsg, p:name(),target[1]) )
    p:broadcast(string.format( chatter[4], target[1]))
    target[1] = target[1] + 1
-   hook.timer(2000, "nexttarget1")
+   hook.timer(2.0, "nexttarget1")
 end
 function nexttarget1()
    if target[1] == 4 then
@@ -253,7 +253,7 @@ function racer2idle(p)
    player.msg( string.format( positionmsg, p:name(),target[2]) )
    p:broadcast(chatter[5])
    target[2] = target[2] + 1
-   hook.timer(2000, "nexttarget2")
+   hook.timer(2.0, "nexttarget2")
 end
 function nexttarget2()
    if target[2] == 4 then
@@ -267,7 +267,7 @@ function racer3idle(p)
    player.msg( string.format( positionmsg, p:name(),target[3]) )
    p:broadcast(chatter[6])
    target[3] = target[3] + 1
-   hook.timer(2000, "nexttarget3")
+   hook.timer(2.0, "nexttarget3")
 end
 function nexttarget3()
    if target[3] == 4 then

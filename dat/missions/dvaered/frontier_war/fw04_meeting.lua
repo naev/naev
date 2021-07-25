@@ -305,13 +305,13 @@ function takeoff()
       StraferNspy()
 
       -- Chatter
-      hook.timer( 700, "message", {pilot = alpha[1], msg = spychatter0} )
-      hook.timer( 1400, "message", {pilot = alpha[2], msg = spychatter1} )
-      hook.timer( 2100, "message", {pilot = spy, msg = spychatter2} )
-      hook.timer( 2800, "message", {pilot = alpha[2], msg = spychatter3} )
-      hook.timer( 5000, "message", {pilot = alpha[2], msg = spychatter4} )
+      hook.timer( 0.7, "message", {pilot = alpha[1], msg = spychatter0} )
+      hook.timer( 1.4, "message", {pilot = alpha[2], msg = spychatter1} )
+      hook.timer( 2.1, "message", {pilot = spy, msg = spychatter2} )
+      hook.timer( 2.8, "message", {pilot = alpha[2], msg = spychatter3} )
+      hook.timer( 5.0, "message", {pilot = alpha[2], msg = spychatter4} )
 
-      hook.timer( 4000, "deathOfStrafer" )
+      hook.timer( 4.0, "deathOfStrafer" )
 
       misn.osdDestroy()
       misn.osdCreate( osd_title, {osd_text2:format(targpla:name()), osd_text3 } )
@@ -408,32 +408,32 @@ function scheduleIncoming()
    wrlrds = {}
 
    spawnWrlrd()
-   hook.timer( 50000, "spawnWrlrd" )
-   hook.timer( 100000, "spawnWrlrd" )
-   hook.timer( 150000, "spawnWrlrd" )
-   hook.timer( 200000, "spawnWrlrd" )
+   hook.timer( 50.0, "spawnWrlrd" )
+   hook.timer( 100.0, "spawnWrlrd" )
+   hook.timer( 150.0, "spawnWrlrd" )
+   hook.timer( 200.0, "spawnWrlrd" )
 
    -- Then annoying people the player has to control
    controls = { nil, nil, nil, nil, nil }
    canland = { false, false, false, false, false } -- Marks wether the ship has been controlled by the player
    noCtrl = 1
    spawnControl()
-   hook.timer( 40000, "spawnControl" )
-   hook.timer( 80000, "spawnControl" )
-   hook.timer( 120000, "spawnControl" )
-   hook.timer( 160000, "spawnControl" )
+   hook.timer( 40.0, "spawnControl" )
+   hook.timer( 80.0, "spawnControl" )
+   hook.timer( 120.0, "spawnControl" )
+   hook.timer( 160.0, "spawnControl" )
    n2control = 0 -- This stores the number of ships the play has to control
 
-   hook.timer( 200000, "spawnHam" ) -- Hamelsen comes in
+   hook.timer( 200.0, "spawnHam" ) -- Hamelsen comes in
 
    -- Briefing by Leblanc.
    tk.msg( briefing_title, briefing_text )
-   hook.timer( 4000, "message", {pilot = alpha[1], msg = briefing0} )
-   hook.timer( 8000, "message", {pilot = alpha[1], msg = briefing1} )
-   hook.timer( 12000, "message", {pilot = alpha[1], msg = briefing2} )
-   hook.timer( 16000, "message", {pilot = alpha[1], msg = briefing3} )
-   hook.timer( 17000, "beepMe" )
-   hook.timer( 20000, "message", {pilot = alpha[1], msg = briefing4} )
+   hook.timer( 4.0, "message", {pilot = alpha[1], msg = briefing0} )
+   hook.timer( 8.0, "message", {pilot = alpha[1], msg = briefing1} )
+   hook.timer( 12.0, "message", {pilot = alpha[1], msg = briefing2} )
+   hook.timer( 16.0, "message", {pilot = alpha[1], msg = briefing3} )
+   hook.timer( 17.0, "beepMe" )
+   hook.timer( 20.0, "message", {pilot = alpha[1], msg = briefing4} )
 end
 
 -- Play a beep
@@ -485,8 +485,8 @@ function spawnControl()
    controls[noCtrl]:control()
    controls[noCtrl]:land(targpla)
 
-   hook.timer(500, "proximity", {location = targpos, radius = 10000, funcname = ("incomingControl"..tostring(noCtrl)), focus = controls[noCtrl]}) -- First one for detection
-   hook.timer(500, "proximity", {location = targpos, radius = 1500, funcname = ("toocloseControl"..tostring(noCtrl)), focus = controls[noCtrl]}) -- Second one for loosing
+   hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = ("incomingControl"..tostring(noCtrl)), focus = controls[noCtrl]}) -- First one for detection
+   hook.timer(0.5, "proximity", {location = targpos, radius = 1500, funcname = ("toocloseControl"..tostring(noCtrl)), focus = controls[noCtrl]}) -- Second one for loosing
 
    noCtrl = noCtrl + 1
 end
@@ -532,23 +532,23 @@ function incomingControl( self )
 end
 function incomingControl1()
    incomingControl( controls[1] )
-   hook.timer(500, "proximity", {anchor = controls[1], radius = 1000, funcname = ("checkClearance1")}) -- Just because I cannot pass an argument to proximity hooks :(
+   hook.timer(0.5, "proximity", {anchor = controls[1], radius = 1000, funcname = ("checkClearance1")}) -- Just because I cannot pass an argument to proximity hooks :(
 end
 function incomingControl2()
    incomingControl( controls[2] )
-   hook.timer(500, "proximity", {anchor = controls[2], radius = 1000, funcname = ("checkClearance2")})
+   hook.timer(0.5, "proximity", {anchor = controls[2], radius = 1000, funcname = ("checkClearance2")})
 end
 function incomingControl3()
    incomingControl( controls[3] )
-   hook.timer(500, "proximity", {anchor = controls[3], radius = 1000, funcname = ("checkClearance3")})
+   hook.timer(0.5, "proximity", {anchor = controls[3], radius = 1000, funcname = ("checkClearance3")})
 end
 function incomingControl4()
    incomingControl( controls[4] )
-   hook.timer(500, "proximity", {anchor = controls[4], radius = 1000, funcname = ("checkClearance4")})
+   hook.timer(0.5, "proximity", {anchor = controls[4], radius = 1000, funcname = ("checkClearance4")})
 end
 function incomingControl5()
    incomingControl( controls[5] )
-   hook.timer(500, "proximity", {anchor = controls[5], radius = 1000, funcname = ("checkClearance5")})
+   hook.timer(0.5, "proximity", {anchor = controls[5], radius = 1000, funcname = ("checkClearance5")})
 end
 
 -- Player checks security clearance of a ship
@@ -594,7 +594,7 @@ function spawnHam()
 
    hook.pilot( hamelsen, "land", "hamelsenLanded" )
    hook.pilot( hamelsen, "hail", "controlHailed" )
-   hook.timer(500, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
+   hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
    jules = pilot.add( "Hyena", "Independent", system.get("Beeklo") )
@@ -638,7 +638,7 @@ function incomingHamelsen()
    alpha[1]:comm( order_control:format( player.name(), hamelsen:name() ) )
    hamelsen:setHilight()
    hamelsen:setVisible()
-   hook.timer(500, "proximity", {anchor = hamelsen, radius = 1000, funcname = ("checkHamelsen")})
+   hook.timer(0.5, "proximity", {anchor = hamelsen, radius = 1000, funcname = ("checkHamelsen")})
    misn.osdActive(2)
 end
 
@@ -650,7 +650,7 @@ function checkHamelsen()
 
    hamelsen:taskClear()
    hamelsen:runaway( player.pilot(), true ) -- First run away (for hellburner) then land
-   hook.timer( 5000, "hamelsenTowards" )
+   hook.timer( 5.0, "hamelsenTowards" )
    hamelsen:setNoDeath()
    hamelsen:setNoDisable()
 
@@ -728,7 +728,7 @@ function straferDied()
    camera.set( )
    player.pilot():control( false )
    player.cinematics( false )
-   hook.timer( 1000, "spawnKillers" )
+   hook.timer( 1.0, "spawnKillers" )
 
    for i = 1, #attackers do
       attackers[i]:taskClear()
@@ -759,14 +759,14 @@ function spawnKillers()
 
    tk.msg( killertitle, killertext:format(player.name()) )
 
-   hook.timer( 1000, "message", {pilot = killers[1], msg = killerchatter0:format(player.name())} )
-   hook.timer( 3000, "message", {pilot = killers[2], msg = killerchatter1} )
-   hook.timer( 5000, "message", {pilot = killers[1], msg = killerchatter2} )
-   hook.timer( 7000, "message", {pilot = killers[3], msg = killerchatter3} )
-   hook.timer( 9000, "message", {pilot = killers[1], msg = killerchatter4} )
-   hook.timer( 11000, "message", {pilot = killers[2], msg = killerchatter5} )
-   hook.timer( 13000, "message", {pilot = killers[1], msg = killerchatter6} )
-   hook.timer( 15000, "message", {pilot = killers[2], msg = killerchatter7} )
+   hook.timer( 1.0, "message", {pilot = killers[1], msg = killerchatter0:format(player.name())} )
+   hook.timer( 3.0, "message", {pilot = killers[2], msg = killerchatter1} )
+   hook.timer( 5.0, "message", {pilot = killers[1], msg = killerchatter2} )
+   hook.timer( 7.0, "message", {pilot = killers[3], msg = killerchatter3} )
+   hook.timer( 9.0, "message", {pilot = killers[1], msg = killerchatter4} )
+   hook.timer( 11.0, "message", {pilot = killers[2], msg = killerchatter5} )
+   hook.timer( 13.0, "message", {pilot = killers[1], msg = killerchatter6} )
+   hook.timer( 15.0, "message", {pilot = killers[2], msg = killerchatter7} )
 end
 
 -- A killer died

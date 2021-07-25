@@ -438,11 +438,11 @@ function enter ()
       pscavB = pilot.add( "Vendetta", "Scavenger", pos, _("Scavenger Vendetta"), {ai="independent"} )
       pscavB:control()
       pscavB:brake()
-      cuttimer = hook.timer( 3000, "cutscene_timer" )
+      cuttimer = hook.timer( 3.0, "cutscene_timer" )
       pscavB:setInvincible() -- annoying to handle the case the player kills them
       -- Timer in case the player doesn't find them in a long while
       sysmaker = nil
-      cuttimeout = hook.timer( 120*1000, "cutscene_timeout" ) -- 2 minutes
+      cuttimeout = hook.timer( 120.0, "cutscene_timeout" ) -- 2 minutes
    elseif system.cur() == system.get(stealthsys) and misn_state==4 then
       -- Set up system
       pilot.clear()
@@ -468,7 +468,7 @@ function enter ()
       pscavA:face( pscavB )
       pscavB:face( pscavA )
 
-      hook.timer( 3000, "stealthstart" )
+      hook.timer( 3.0, "stealthstart" )
    end
 end
 
@@ -507,7 +507,7 @@ function cutscene_timer ()
       local msg = cutscene_messages[ cutscene_msg ]
       pscavB:broadcast( msg )
    end
-   cuttimer = hook.timer( 3000, "cutscene_timer" )
+   cuttimer = hook.timer( 3.0, "cutscene_timer" )
 end
 
 
@@ -555,7 +555,7 @@ function cutscene_hail ()
    if asshole then
       pscavB:broadcast(_("Asshole!"))
       hook.rm( cuttimer ) -- reset timer
-      cuttimer = hook.timer( 3000, "cutscene_timer" )
+      cuttimer = hook.timer( 3.0, "cutscene_timer" )
    else
       pscavB:broadcast(_("Thanks!"))
       pscavB:taskClear()
@@ -578,7 +578,7 @@ function stealthstart ()
    stealthanimation = 0
    player.cinematics( true )
    camera.set( waypoints[1], true )
-   hook.timer( 1000, "stealthstartanimation" )
+   hook.timer( 1.0, "stealthstartanimation" )
 end
 
 
@@ -586,51 +586,51 @@ function stealthstartanimation ()
    stealthanimation = stealthanimation+1
    if stealthanimation==1 then
       pscavB:broadcast( _("Damnit! I thought I told you to fix the sensors.") , true )
-      hook.timer( 4000, "stealthstartanimation" )
+      hook.timer( 4.0, "stealthstartanimation" )
    elseif stealthanimation==2 then
       pscavA:broadcast( _("Hey! I fixed them, it's this damn nebula that must have broken them again."), true )
-      hook.timer( 4000, "stealthstartanimation" )
+      hook.timer( 4.0, "stealthstartanimation" )
    elseif stealthanimation==3 then
       pscavB:broadcast( _("Damnit. I really dislike broadcasting, but my encryption also seems damaged now."), true )
-      hook.timer( 4000, "stealthstartanimation" )
+      hook.timer( 4.0, "stealthstartanimation" )
    elseif stealthanimation==4 then
       pscavA:broadcast( _("Don't worry, it's not like there's anybody else here."), true )
-      hook.timer( 4000, "stealthstartanimation" )
+      hook.timer( 4.0, "stealthstartanimation" )
    elseif stealthanimation==5 then
       pscavB:broadcast( _("Let's just get this over with."), true )
-      hook.timer( 4000, "stealthstartanimation" )
+      hook.timer( 4.0, "stealthstartanimation" )
    elseif stealthanimation==6 then
       -- Back to player
       player.cinematics( false )
       camera.set( nil, true )
       player.pilot():control(false)
       stealthtarget = 0
-      hook.timer( 4000, "stealthheartbeat" )
+      hook.timer( 4.0, "stealthheartbeat" )
    end
 end
 
 
 function stealthbroadcast ()
    stealthmessages = {
-      { pscavA, 4000, _("This place always gives me the creeps.") },
-      { pscavB, 4000, _("C'mon, the guy said that this was a great wreck.") },
-      { pscavB, 4000, _("You know the Za'lek pay premium for this sort of shit, right?") },
-      { pscavA, 4000, _("Yeah, yeah…  just hope we don't see any ghosts.") },
-      { pscavB, 4000, _("You don't really believe in them do you?") },
-      { pscavA, 4000, _("Dude, there's really freaky shit out there.") },
-      { pscavB, 4000, _("Yeah, but most of that freaky shit are Soromid bioengineered crap.") },
-      { pscavA, 4000, _("Ugh, Soromids give me the creeps.") },
-      { pscavB, 5000, _("I'd take them over Za'leks any day. I have no idea what Za'leks are thinking.") },
+      { pscavA, 4.0, _("This place always gives me the creeps.") },
+      { pscavB, 4.0, _("C'mon, the guy said that this was a great wreck.") },
+      { pscavB, 4.0, _("You know the Za'lek pay premium for this sort of shit, right?") },
+      { pscavA, 4.0, _("Yeah, yeah…  just hope we don't see any ghosts.") },
+      { pscavB, 4.0, _("You don't really believe in them do you?") },
+      { pscavA, 4.0, _("Dude, there's really freaky shit out there.") },
+      { pscavB, 4.0, _("Yeah, but most of that freaky shit are Soromid bioengineered crap.") },
+      { pscavA, 4.0, _("Ugh, Soromids give me the creeps.") },
+      { pscavB, 5.0, _("I'd take them over Za'leks any day. I have no idea what Za'leks are thinking.") },
       -- 37 seconds
-      { pscavA, 4000, _("Hey, did you see something?") },
-      { pscavB, 4000, _("How the hell am I supposed to see anything with my sensors broken, dipshit?") },
-      { pscavA, 4000, _("I already said I was sorry!") },
-      { pscavB, 4000, _("This is coming out of your cut.") },
+      { pscavA, 4.0, _("Hey, did you see something?") },
+      { pscavB, 4.0, _("How the hell am I supposed to see anything with my sensors broken, dipshit?") },
+      { pscavA, 4.0, _("I already said I was sorry!") },
+      { pscavB, 4.0, _("This is coming out of your cut.") },
       -- 53 seconds
       { pscavA, -1, _("C'mon!") },
       -- Cut off point here, restarts at heading to waypoint[4]
-      { pscavB, 3000, _("We should be there soon.") },
-      { pscavA, 3000, _("I swear I'll never come to the nebula again after this…") },
+      { pscavB, 3.0, _("We should be there soon.") },
+      { pscavA, 3.0, _("I swear I'll never come to the nebula again after this…") },
       { pscavB, -1, _("That's what you said last time too!") }
    }
 
@@ -694,7 +694,7 @@ function stealthheartbeat ()
       pscavA:follow( pscavB )
       stealthtarget = 1
       pscavB:moveto( waypoints[stealthtarget] )
-      hook.timer( 3000, "stealthbroadcast" )
+      hook.timer( 3.0, "stealthbroadcast" )
    else
       -- Check if made it to next target
       local pos = waypoints[ stealthtarget ]
@@ -715,7 +715,7 @@ function stealthheartbeat ()
             player.cinematics( true )
             camera.set( waypoints[ #waypoints ], true )
             wreckscene = 0
-            hook.timer( 3000, "wreckcutscene" )
+            hook.timer( 3.0, "wreckcutscene" )
             return
          else
             -- pscavA is following pscavB
@@ -726,13 +726,13 @@ function stealthheartbeat ()
                   pscavB:broadcast( _("Did you see something?") )
                   stealthtarget = 3 -- Should trigger another catch
                   stopped_once = true
-                  hook.timer( 5000, "stealthheartbeat" )
+                  hook.timer( 5.0, "stealthheartbeat" )
                   return
                else
                   pscavA:broadcast( _("It's your imagination. Let's get this over with.") )
                   pscavB:taskClear()
                   pscavB:moveto( waypoints[stealthtarget] )
-                  hook.timer( 3000, "stealthbroadcast" )
+                  hook.timer( 3.0, "stealthbroadcast" )
                end
             else
                pscavB:taskClear()
@@ -753,7 +753,7 @@ function stealthheartbeat ()
       end
    end
 
-   hook.timer( 500, "stealthheartbeat" )
+   hook.timer( 0.5, "stealthheartbeat" )
 end
 
 
@@ -776,7 +776,7 @@ function wreckcutscene ()
       camera.set( nil, true )
       return
    end
-   hook.timer( 3000, "wreckcutscene" )
+   hook.timer( 3.0, "wreckcutscene" )
 end
 
 

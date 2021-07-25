@@ -60,7 +60,7 @@ function control ()
       planet = ai.landplanet()
       -- planet must exist
       if planet == nil then
-         ai.settimer(0, rnd.int(1000, 3000))
+         ai.settimer(0, rnd.rnd(1.0, 3.0))
          ai.pushtask("enterdelay")
       else
          mem.land = planet:pos()

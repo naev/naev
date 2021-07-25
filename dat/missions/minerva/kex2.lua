@@ -229,10 +229,9 @@ function enter ()
       }
 
       -- Spawn chasing guys
-      spawn_timer = 10e3
-      spawn_hook = hook.timer( spawn_timer, "spawn_enemies" )
+      spawn_hook = hook.timer( 10.0, "spawn_enemies" )
 
-      hook.timer( 500, "heartbeat" )
+      hook.timer( 0.5, "heartbeat" )
 
       hook.jumpout( "gotaway" )
    end
@@ -264,7 +263,7 @@ function heartbeat ()
    if inrange then
       blockade_end()
    else
-      hook.timer( 500, "heartbeat" )
+      hook.timer( 0.5, "heartbeat" )
    end
 end
 
@@ -297,8 +296,7 @@ function spawn_enemies ()
    end
    addenemy( strongenemies[ rnd.rnd(1,#strongenemies) ] )
 
-   spawn_timer = 20e3
-   spawn_hook = hook.timer( spawn_timer, "spawn_enemies" )
+   spawn_hook = hook.timer( 20.0, "spawn_enemies" )
 end
 
 function gotaway ()

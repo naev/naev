@@ -282,19 +282,19 @@ function enter()
       p[8]:rename("Colonel Hamelsen")
       p[8]:setNoDeath()
 
-      hook.timer(4000, "enter1_message")
-      hook.timer(500, "proximity", {anchor = warlord, radius = 2000, funcname = "meeting", focus = player.pilot()})
-      hook.timer(500, "proximity", {anchor = warlord, radius = 300, funcname = "killing", focus = player.pilot()})
+      hook.timer(4.0, "enter1_message")
+      hook.timer(0.5, "proximity", {anchor = warlord, radius = 2000, funcname = "meeting", focus = player.pilot()})
+      hook.timer(0.5, "proximity", {anchor = warlord, radius = 300, funcname = "killing", focus = player.pilot()})
 
    elseif stage == 2 then
-      hook.timer(2000, "enter2_message")
+      hook.timer(2.0, "enter2_message")
       stage = 3
       misn.osdDestroy()
       misn.osdCreate( osd_title, {osd_msg5:format(intsys:name(), intpla:name()), osd_msg7, osd_msg8:format(duelpla:name(), duelsys:name())} )
       mark = misn.markerAdd(intsys, "low")
 
    elseif stage == 3 and system.cur() == intsys then
-      hook.timer(500, "proximity", {location = intpla:pos(), radius = 1000, funcname = "spawn_phalanx", focus = player.pilot()})
+      hook.timer(0.5, "proximity", {location = intpla:pos(), radius = 1000, funcname = "spawn_phalanx", focus = player.pilot()})
 
    elseif stage == 6 and system.cur() == duelsys then
       pilot.toggleSpawn(false)
@@ -349,9 +349,9 @@ function enter()
 
       camera.set( mypos + vec2.new(0, step/2) )
 
-      hook.timer(5000, "beginDuel")
-      hook.timer(15000, "disableDuel")
-      hook.timer(65000, "fighterDuel")
+      hook.timer(5.0, "beginDuel")
+      hook.timer(15.0, "disableDuel")
+      hook.timer(65.0, "fighterDuel")
    end
 end
 
@@ -518,10 +518,10 @@ function beginDuel()
    battleaddict:attack(klank)
 
    urnus:broadcast( duel_broadcast )
-   hook.timer( 1000, "message", {pilot = tam, msg = duel_comm1} )
-   hook.timer( 2000, "message", {pilot = leblanc, msg = duel_comm2} )
-   hook.timer( 3000, "message", {pilot = hamelsen, msg = duel_comm3} )
-   hook.timer( 4000, "message", {pilot = randguy, msg = duel_comm4} )
+   hook.timer( 1.0, "message", {pilot = tam, msg = duel_comm1} )
+   hook.timer( 2.0, "message", {pilot = leblanc, msg = duel_comm2} )
+   hook.timer( 3.0, "message", {pilot = hamelsen, msg = duel_comm3} )
+   hook.timer( 4.0, "message", {pilot = randguy, msg = duel_comm4} )
 
    hook.pilot( battleaddict, "exploded", "battleaddict_killed" )
 end
@@ -534,24 +534,24 @@ function disableDuel()
    -- Explosion and such
    audio.soundPlay( "empexplode" )
    camera.shake()
-   hook.timer(1000, "moreSound1")
-   hook.timer(2000, "moreSound2")
+   hook.timer(1.0, "moreSound1")
+   hook.timer(2.0, "moreSound2")
 
-   hook.timer( 2000, "message", {pilot = tam, msg = disable_comm1} )
-   hook.timer( 4000, "message", {pilot = leblanc, msg = disable_comm2} )
-   hook.timer( 6000, "message", {pilot = hamelsen, msg = disable_comm3} )
-   hook.timer( 8000, "message", {pilot = randguy, msg = disable_comm4} )
+   hook.timer( 2.0, "message", {pilot = tam, msg = disable_comm1} )
+   hook.timer( 4.0, "message", {pilot = leblanc, msg = disable_comm2} )
+   hook.timer( 6.0, "message", {pilot = hamelsen, msg = disable_comm3} )
+   hook.timer( 8.0, "message", {pilot = randguy, msg = disable_comm4} )
 
-   hook.timer( 11000, "message", {pilot = tam, msg = disable_comm5} )
-   hook.timer( 15000, "message", {pilot = leblanc, msg = disable_comm6} )
-   hook.timer( 19000, "message", {pilot = tam, msg = disable_comm12} )
-   hook.timer( 23000, "message", {pilot = hamelsen, msg = disable_comm13} )
+   hook.timer( 11.0, "message", {pilot = tam, msg = disable_comm5} )
+   hook.timer( 15.0, "message", {pilot = leblanc, msg = disable_comm6} )
+   hook.timer( 19.0, "message", {pilot = tam, msg = disable_comm12} )
+   hook.timer( 23.0, "message", {pilot = hamelsen, msg = disable_comm13} )
 
-   hook.timer( 28000, "message", {pilot = klank, msg = disable_comm7} )
-   hook.timer( 32000, "message", {pilot = battleaddict, msg = disable_comm8} )
-   hook.timer( 36000, "message", {pilot = klank, msg = disable_comm9} )
-   hook.timer( 38000, "message", {pilot = klank, msg = disable_comm10} )
-   hook.timer( 42000, "message", {pilot = battleaddict, msg = disable_comm11} )
+   hook.timer( 28.0, "message", {pilot = klank, msg = disable_comm7} )
+   hook.timer( 32.0, "message", {pilot = battleaddict, msg = disable_comm8} )
+   hook.timer( 36.0, "message", {pilot = klank, msg = disable_comm9} )
+   hook.timer( 38.0, "message", {pilot = klank, msg = disable_comm10} )
+   hook.timer( 42.0, "message", {pilot = battleaddict, msg = disable_comm11} )
 end
 
 function moreSound1()
@@ -575,11 +575,11 @@ function fighterDuel()
    battleaddict2:setFaction("Warlords")
 
    battleaddict2:broadcast( takoff_comm1 )
-   hook.timer( 1000, "message", {pilot = klank2, msg = takoff_comm2} )
-   hook.timer( 1500, "message", {pilot = tam, msg = duel_comm1} )
-   hook.timer( 2000, "message", {pilot = leblanc, msg = duel_comm2} )
-   hook.timer( 2500, "message", {pilot = hamelsen, msg = duel_comm3} )
-   hook.timer( 3000, "message", {pilot = randguy, msg = duel_comm4} )
+   hook.timer( 1.0, "message", {pilot = klank2, msg = takoff_comm2} )
+   hook.timer( 1.5, "message", {pilot = tam, msg = duel_comm1} )
+   hook.timer( 2.0, "message", {pilot = leblanc, msg = duel_comm2} )
+   hook.timer( 2.5, "message", {pilot = hamelsen, msg = duel_comm3} )
+   hook.timer( 3.0, "message", {pilot = randguy, msg = duel_comm4} )
 
    klank2:setNoDeath() -- Actually it should not be necessary, but...
    klank2:setNoDisable()
@@ -605,7 +605,7 @@ function battleaddict_killed()
    randguy:broadcast( kill_comm4 )
    urnus:broadcast( kill_comm5 )
 
-   hook.timer( 2000, "everyoneLands" )
+   hook.timer( 2.0, "everyoneLands" )
    camera.set()
    player.pilot():control( false )
    player.cinematics( false )

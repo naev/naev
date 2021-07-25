@@ -310,7 +310,7 @@ function pilot_death( p, attacker )
          hook.jumpout( "hunter_leave" )
          hook.land( "hunter_leave" )
          player.msg( "#r" .. msg[2]:format( name ) .. "#0" )
-         hook.timer( 3000, "timer_hail", top_hunter )
+         hook.timer( 3.0, "timer_hail", top_hunter )
          misn.osdDestroy()
       else
          fail( msg[2]:format( name ) )

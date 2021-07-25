@@ -152,7 +152,7 @@ end
 function enter()
    -- Ambush !
    if stage == 1 and rnd.rnd() < proba then
-      hook.timer( 2000, "ambush" )
+      hook.timer( 2.0, "ambush" )
       proba = proba - 0.2
    elseif stage == 1 then
       --the probability of an ambush goes up when you cross a system without meeting any ennemy

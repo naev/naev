@@ -119,7 +119,7 @@ function update_dv ()
       hook.pilot( j, "attacked", "pilot_attacked_dv" )
       hook.pilot( j, "death", "pilot_death_dv" )
    end
-   update_dv_hook = hook.timer( 3000, "update_dv" )
+   update_dv_hook = hook.timer( 3.0, "update_dv" )
 end
 
 
@@ -130,7 +130,7 @@ function add_attention( p )
       dv_attention = dv_attention + 1
       if dv_attention >= dv_attention_target and dv_attention - 1 < dv_attention_target then
          if success_hook ~= nil then hook.rm( success_hook ) end
-         success_hook = hook.timer( 30000, "timer_mission_success" )
+         success_hook = hook.timer( 30.0, "timer_mission_success" )
       end
 
       hook.pilot( p, "jump", "rm_attention" )
@@ -151,7 +151,7 @@ function pilot_attacked_dv( p, attacker )
    if (attacker == player.pilot() or attacker:leader() == player.pilot())
          and not dv_coming and rnd.rnd() < 0.1 then
       dv_coming = true
-      hook.timer( 10000, "timer_spawn_dv" )
+      hook.timer( 10.0, "timer_spawn_dv" )
    end
 end
 
@@ -160,7 +160,7 @@ function pilot_death_dv( p, attacker )
    if (attacker == player.pilot() or attacker:leader() == player.pilot())
          and not dv_coming then
       dv_coming = true
-      hook.timer( 10000, "timer_spawn_dv" )
+      hook.timer( 10.0, "timer_spawn_dv" )
    end
 end
 

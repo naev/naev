@@ -50,7 +50,7 @@ function create ()
     p:setVisplayer( true )
     p:setHilight( true )
 
-    hook.timer(3000, "broadcast")
+    hook.timer(3.0, "broadcast")
 
     -- Set hooks
     hook.pilot( p, "board", "rescue" )
@@ -65,7 +65,7 @@ function broadcast ()
         return
     end
     p:broadcast( string.format(broadcastmsg, shipname), true )
-    bctimer = hook.timer(15000, "broadcast")
+    bctimer = hook.timer(15.0, "broadcast")
 end
 
 function rescue ()

@@ -209,7 +209,7 @@ function jumpin ()
    if chelsea_jumped and system.cur() == getNextSystem( lastsys, missys ) then
       spawnChelseaShip( lastsys )
       jumpNext()
-      hook.timer( 5000, "thug_timer" )
+      hook.timer( 5.0, "thug_timer" )
    else
       fail( plflee_msg )
    end
@@ -266,7 +266,7 @@ function chelsea_attacked ()
    if chelsea ~= nil and chelsea:exists() then
       chelsea:control( false )
       if distress_timer_hook ~= nil then hook.rm( distress_timer_hook ) end
-      distress_timer_hook = hook.timer( 1000, "chelsea_distress_timer" )
+      distress_timer_hook = hook.timer( 1.0, "chelsea_distress_timer" )
    end
 end
 

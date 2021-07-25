@@ -73,8 +73,8 @@ function create ()
 
    hook.pilot( derelict_mule, "board", "boardnothing" )
 
-   fidget_hook = hook.timer( 3000, "fidget" )
-   hook.timer( 500, "heartbeat" )
+   fidget_hook = hook.timer( 3.0, "fidget" )
+   hook.timer( 0.5, "heartbeat" )
    hook.jumpout("leave")
    hook.land("leave")
 end
@@ -89,7 +89,7 @@ function fidget ()
    local pos = derelict_mule:pos() + vec2.newP( 30, rnd.rnd()*359 )
    drone:moveto( pos )
    if evt_state==0 then
-      fidget_hook = hook.timer( 5000, "fidget" )
+      fidget_hook = hook.timer( 5.0, "fidget" )
    end
 end
 
@@ -106,8 +106,8 @@ function heartbeat ()
          camera.set( derelict_mule:pos(), true )
          camera.setZoom( math.max(1.5,camera.getZoom()) )
          vn._sfx.eerie:play()
-         hook.timer( 6000, "drone_runaway" )
-         hook.timer( 10000, "returncontrol", 2 )
+         hook.timer( 6.0, "drone_runaway" )
+         hook.timer( 10.0, "returncontrol", 2 )
       end
    elseif evt_state==2 then
       local dist = pp:pos():dist( drone:pos() )
@@ -122,11 +122,11 @@ function heartbeat ()
          drone:taskClear()
          drone:hyperspace( "Taiomi" )
          vn._sfx.eerie:play()
-         hook.timer( 11000, "returncontrol", 4 )
-         hook.timer( 14000, "whatwasthat" )
+         hook.timer( 11.0, "returncontrol", 4 )
+         hook.timer( 14.0, "whatwasthat" )
       end
    end
-   hook.timer( 500, "heartbeat" )
+   hook.timer( 0.5, "heartbeat" )
 end
 
 function drone_runaway ()

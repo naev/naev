@@ -175,7 +175,7 @@ function enter()  --Generates a random breakdown
       luck = 0.9
    end
 
-   local time = 10000*(1 + 0.3*rnd.twosigma())
+   local time = 10.0*(1 + 0.3*rnd.twosigma())
    if luck < 0.06 then  --player is teleported to a random place around the current system
       hook.timer(time, "teleport")
       elseif luck < 0.12 then  --player's ship slows down a lot
@@ -241,13 +241,13 @@ function slow()
    local maxspeed = player.pilot():stats().speed
    local speed = maxspeed/3*(1 + 0.1*rnd.twosigma())
 
-   hook.timer(1000, "slowtext")
+   hook.timer(1.0, "slowtext")
 
    isSlow = true
 
    -- If the player is not too unlucky, the velocity is soon back to normal
    if rnd.rnd() > 0.8 then
-      local time = 20000*(1 + 0.3*rnd.twosigma())
+      local time = 20.0*(1 + 0.3*rnd.twosigma())
       hook.timer(time, "backToNormal")
       isSlow = false
    end
@@ -258,7 +258,7 @@ end
 --Player is no longer slowed
 function backToNormal()
    player.pilot():setSpeedLimit(0)
-   hook.timer(1000, "speedtext")
+   hook.timer(1.0, "speedtext")
 end
 
 --Player's ship run amok and behaves randomly
@@ -272,8 +272,8 @@ function outOfControl()
       local deltax, deltay = rnd.rnd()*1000, rnd.rnd()*1000
       player.pilot():moveto ( player.pos() + vec2.new( deltax, deltay ), false, false )
    end
-   hook.timer(20000, "backToControl")
-   hook.timer(1000, "outOftext")
+   hook.timer(20.0, "backToControl")
+   hook.timer(1.0, "outOftext")
 end
 
 --The player can't control his ship anymore
@@ -283,15 +283,15 @@ function noAnswer()
    player.cinematics(true)
 
    player.pilot():control()
-   hook.timer(10000, "backToControl")
-   hook.timer(1000, "noAntext")
+   hook.timer(10.0, "backToControl")
+   hook.timer(1.0, "noAntext")
 end
 
 --Just de-control the player's ship
 function backToControl()
    player.cinematics(false)
    player.pilot():control(false)
-   hook.timer(1000, "baTotext")
+   hook.timer(1.0, "baTotext")
 end
 
 --Displays texts

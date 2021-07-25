@@ -138,7 +138,7 @@ function jumpin ()
    sys = system.cur()
    -- Launch satellite
    if misn_stage == 0 and sys == satellite_sys then
-      hook.timer( 3000, "beginLaunch" )
+      hook.timer( 3.0, "beginLaunch" )
    end
 end
 
@@ -148,12 +148,12 @@ end
 function beginLaunch ()
    player.msg( launch[1] )
    misn.osdDestroy()
-   hook.timer( 3000, "beginCountdown" )
+   hook.timer( 3.0, "beginCountdown" )
 end
 function beginCountdown ()
    countdown = 5
    player.msg( launch[2] )
-   hook.timer( 1000, "countLaunch" )
+   hook.timer( 1.0, "countLaunch" )
 end
 function countLaunch ()
    countdown = countdown - 1
@@ -161,7 +161,7 @@ function countLaunch ()
       launchSatellite()
    else
       player.msg( string.format(_("%d..."), countdown) )
-      hook.timer( 1000, "countLaunch" )
+      hook.timer( 1.0, "countLaunch" )
    end
 end
 function launchSatellite ()

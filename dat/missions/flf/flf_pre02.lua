@@ -218,9 +218,9 @@ function spawnDVReinforcements ()
 
    -- Check for defection possibility
    if faction.playerStanding( "Dvaered" ) >= -5 then
-      hailer = hook.timer( 30000, "timer_hail" )
+      hailer = hook.timer( 30.0, "timer_hail" )
    else
-      spawner = hook.timer( 30000, "timer_spawnFLF" )
+      spawner = hook.timer( 30.0, "timer_spawnFLF" )
    end
 end
 
@@ -238,7 +238,7 @@ function timer_rehail ()
    if rehailer ~= nil then hook.rm( rehailer ) end
    if boss ~= nil and boss:exists() then
       boss:hailPlayer()
-      rehailer = hook.timer( 8000, "timer_rehail" )
+      rehailer = hook.timer( 8.0, "timer_rehail" )
    end
 end
 
@@ -275,7 +275,7 @@ function hail ()
       misn.markerRm( marker )
       marker = misn.markerAdd( DVsys, "high" )
 
-      spawner = hook.timer( 3000, "timer_spawnHostileFLF" )
+      spawner = hook.timer( 3.0, "timer_spawnHostileFLF" )
       hook.land( "land_dv" )
    else
       tk.msg( DVtitle[5], DVtext[5] )

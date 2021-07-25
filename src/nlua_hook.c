@@ -493,7 +493,7 @@ static int hook_board( lua_State *L )
  *
  * The hook receives only the optional argument.
  *
- *    @luatparam number ms Milliseconds to delay.
+ *    @luatparam number s Seconds to delay.
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
  *    @luatreturn number Hook identifier.
@@ -502,9 +502,9 @@ static int hook_board( lua_State *L )
 static int hook_timer( lua_State *L )
 {
    unsigned int h;
-   double ms;
-   ms = luaL_checknumber( L, 1 );
-   h  = hook_generic( L, NULL, ms/1000., 2, 0 );
+   double s;
+   s = luaL_checknumber( L, 1 );
+   h  = hook_generic( L, NULL, s, 2, 0 );
    lua_pushnumber( L, h );
    return 1;
 }

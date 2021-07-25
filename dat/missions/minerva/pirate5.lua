@@ -399,9 +399,9 @@ function enter ()
    add_guard_group( fuzz_pos(bosspos,300), large_group, drone_group2 )
 
    -- Tell the player to f off
-   hook.timer( 5e3,  "message_first" )
-   hook.timer( 20e3, "message_warn" )
-   hook.timer( 25e3, "message_hostile" )
+   hook.timer( 5.0,  "message_first" )
+   hook.timer( 20.0, "message_warn" )
+   hook.timer( 25.0, "message_hostile" )
 end
 
 function message_first ()
@@ -420,7 +420,7 @@ end
 
 -- Drone controllers disable their respective drones
 function plant_explosives( p )
-   hook.timer( 3e3, "blowup", p )
+   hook.timer( 3.0, "blowup", p )
    player.msg(_("You plant explosives on the ship."))
    player.unboard()
 end

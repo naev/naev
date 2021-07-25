@@ -130,7 +130,7 @@ end
 function funStartsSoon()
    playerP=player.pilot() --save player's pilot
    rep=faction.playerStanding(faction.get("Sirius"))
-   hook.timer(5000, "theFunBegins") --for effect, so that we can see them jumping in!
+   hook.timer(5.0, "theFunBegins") --for effect, so that we can see them jumping in!
 end
 
 --the preaching's about to begin!
@@ -138,7 +138,7 @@ function theFunBegins()
    if rep < 0 then
       local dist = vec2.dist(jump.get(system.cur(),curr):pos(),player.pos()) --please note the order of system.cur() and curr matters!
       if dist < 6000 then
-         hook.timer(5000,"theFunBegins") --wait some more time
+         hook.timer(5.0,"theFunBegins") --wait some more time
          return
       end
    end
@@ -211,16 +211,16 @@ function theFunBegins()
    preacher:setFriendly()
 
    --pick a random follower and have him praise Sirichana, after a delay
-   hook.timer(4000,"praise")
+   hook.timer(4.0, "praise")
 
    --have the preacher say something cool
-   hook.timer(8000,"preacherSpeak")
+   hook.timer(8.0, "preacherSpeak")
 
    --add some normal pirates for fun :)
-   hook.timer(12500,"pirateSpawn")
+   hook.timer(12.5, "pirateSpawn")
 
    --hook up timers for releasing cinematics (and you of course :P)
-   hook.timer(17500,"release")
+   hook.timer(17.5, "release")
 
    --hook up timer for re-hailing player
    hailHook=hook.date(time.create(0, 0, 1000), "reHail") --hail every 1000 STU till player answers

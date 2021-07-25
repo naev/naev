@@ -157,11 +157,11 @@ end
 --]]
 function countdown_start ()
    omsg_id = player.omsgAdd( _("5…"), 1.1 )
-   hook.timer( 1*1000, "countdown", _("4…") )
-   hook.timer( 2*1000, "countdown", _("3…") )
-   hook.timer( 3*1000, "countdown", _("2…") )
-   hook.timer( 4*1000, "countdown", _("1…") )
-   hook.timer( 5*1000, "countdown_done" )
+   hook.timer( 1.0, "countdown", _("4…") )
+   hook.timer( 2.0, "countdown", _("3…") )
+   hook.timer( 3.0, "countdown", _("2…") )
+   hook.timer( 4.0, "countdown", _("1…") )
+   hook.timer( 5.0, "countdown_done" )
 end
 function countdown( str )
    -- TODO play countdown sound
@@ -217,7 +217,7 @@ function player_lost_disable ()
    -- omsg does not display when dead so we will need a custom solution
    --player.omsgAdd( _("YOU LOST!"), 4.5 )
    if not leave_hook then
-      leave_hook = hook.timer( 5000, "leave_the_ring" )
+      leave_hook = hook.timer( 5.0, "leave_the_ring" )
    end
 end
 function player_lost ()
@@ -232,7 +232,7 @@ function player_lost ()
    --player.omsgAdd( _("YOU LOST!"), 5 )
    --shiplog.append( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
    if not leave_hook then
-      leave_hook = hook.timer( 3000, "leave_the_ring")
+      leave_hook = hook.timer( 3.0, "leave_the_ring")
    end
 end
 
@@ -463,10 +463,10 @@ function wave_end ()
       sfx_clear:play()
       for k,v in pairs(score_str) do
          local start = k*s
-         hook.timer( 1000*start, "wave_end_msg", {v, f-start} )
+         hook.timer( 1.0*start, "wave_end_msg", {v, f-start} )
       end
       wave_round = wave_round + 1
-      hook.timer( (f+1)*1000, "wave_round_setup" )
+      hook.timer( (f+1)*1.0, "wave_round_setup" )
       return
    end
 
@@ -474,7 +474,7 @@ function wave_end ()
    player.omsgAdd( _("YOU ARE VICTORIOUS!"), 5 )
    sfx_clear:play()
    --shiplog.append( logidstr, string.format(_("You defeated a %s in one-on-one combat."), enemy_ship) )
-   hook.timer( 5000, "leave_the_ring")
+   hook.timer( 5.0, "leave_the_ring")
 end
 
 

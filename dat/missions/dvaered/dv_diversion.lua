@@ -175,7 +175,7 @@ function enter()
       hook.pilot( hawk, "land", "hawk_land" )
       hook.pilot( hawk, "attacked", "hawk_attacked")
       hook.pilot( hawk, "death", "hawk_dead" )
-      hook.timer(80000, "spawn_fleet")
+      hook.timer(80.0, "spawn_fleet")
    elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission.
       tk.msg(failtitle[1], failtext[1])
       faction.get("Dvaered"):modPlayerSingle(-5)
@@ -194,13 +194,13 @@ end
 function hawk_jump () -- Got away
    tk.msg(failtitle[2], failtext[2])
    faction.get("Dvaered"):modPlayerSingle(-5)
-   hook.timer(10000, "abort")
+   hook.timer(10.0, "abort")
 end
 
 function hawk_land () -- Got away
    tk.msg(failtitle[3], failtext[3])
    faction.get("Dvaered"):modPlayerSingle(-5)
-   hook.timer(10000, "abort")
+   hook.timer(10.0, "abort")
 end
 
 function hawk_attacked () -- chased
@@ -260,7 +260,7 @@ function hawk_dead () -- mission accomplished
 
    jump_fleet[6]:setNoDeath()
 
-   hook.timer(10000, "complete")
+   hook.timer(10.0, "complete")
    for i, j in ipairs(jump_fleet) do
       if j:exists() then
          j:land(planet.get(destplanetname))
@@ -328,7 +328,7 @@ function spawn_fleet() -- spawn warlord killing fleet
    end
 
    -- Give the escorts a few seconds to get away from the player.
-   hook.timer(3000, "undo_invuln")
+   hook.timer(3.0, "undo_invuln")
 end
 
 function undo_invuln()
@@ -361,7 +361,7 @@ function jump_fleet_cap_dead () -- mission failed
          j:setHilight(false)
       end
    end
-   hook.timer(10000, "abort")
+   hook.timer(10.0, "abort")
 end
 
 function cleanup()

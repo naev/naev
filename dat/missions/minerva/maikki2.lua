@@ -584,7 +584,7 @@ function enter ()
    if misn_state==2 and system.cur() == system.get(eccsys) then
       pilot.clear()
       pilot.toggleSpawn(false)
-      hook.timer( 30000, "ecc_timer" )
+      hook.timer( 30.0, "ecc_timer" )
    elseif misn_state==4 then
       pilot.clear()
       pilot.toggleSpawn(false)
@@ -622,7 +622,7 @@ end
 function ecc_timer ()
    player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
    sysmarker = system.mrkAdd( _("Curious Signal"), eccpos )
-   hook.timer( 500, "ecc_dist" )
+   hook.timer( 0.5, "ecc_dist" )
 end
 
 
@@ -652,7 +652,7 @@ function ecc_dist ()
       defense_systems[1]:broadcast(_("UNAUTHORIZED VESSEL DETECTED. ELIMINATING."))
       return
    end
-   hook.timer( 500, "ecc_dist" )
+   hook.timer( 0.5, "ecc_dist" )
 end
 
 
@@ -666,7 +666,7 @@ function ecc_drone_dead( p )
 
    -- All dead
    if #defense_systems==0 then
-      hook.timer( 5000, "ecc_timer_dead" )
+      hook.timer( 5.0, "ecc_timer_dead" )
    end
 end
 
@@ -724,7 +724,7 @@ function ecc_feral_boss_attacked( p )
       attacked_feral_drones = true
       feral_drone_boss:broadcast( drone_msgs[1] )
       drone_msgid = 0
-      hook.timer( 2000, "ecc_feral_boss_msg" )
+      hook.timer( 2.0, "ecc_feral_boss_msg" )
 
       -- We go with nebula music
       music.load("nebu_battle1")
@@ -737,7 +737,7 @@ function ecc_feral_boss_msg ()
    drone_msgid = (drone_msgid % #drone_msgs)+1
    if feral_drone_boss:exists() then
       feral_drone_boss:broadcast( drone_msgs[ drone_msgid ] )
-      hook.timer( 7000, "ecc_feral_boss_msg" )
+      hook.timer( 7.0, "ecc_feral_boss_msg" )
    end
 end
 

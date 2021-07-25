@@ -171,7 +171,7 @@ function jumpin()
         updateGoalDisplay()
         spawnTransporter()
         if not ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then
-            hook.timer(2000, "startAmbush")
+            hook.timer(2.0, "startAmbush")
         elseif system.cur()==system.get("Daan") or system.cur()==system.get("Provectus Nova") then
             ambush = pilot.addFleet("Trader Ambush 2", vec2.new(0,0), {ai="baddie_norun"})
             for i, j in ipairs(ambush) do
@@ -272,7 +272,7 @@ function transporterAttacked(p, attacker)
     if not shuttingup then
         shuttingup = true
         p:comm(player.pilot(), transporterdistress)
-        hook.timer(5000, "transporterShutup") -- Shuts him up for at least 5s.
+        hook.timer(5.0, "transporterShutup") -- Shuts him up for at least 5s.
     end
 end
 
@@ -281,7 +281,7 @@ function transporterShutup()
 end
 
 function timer_transporterSafe()
-    hook.timer(2000, "timer_transporterSafe")
+    hook.timer(2.0, "timer_transporterSafe")
 
     if unsafe then
         unsafe = false
@@ -303,7 +303,7 @@ function spawnTransporter()
     transporter:setFriendly()
     transporter:rename( _("Research Shuttle") )
     continueToDest(transporter)
-    hook.timer( 2000, "timer_transporterSafe" )
+    hook.timer( 2.0, "timer_transporterSafe" )
 end
 
 function startAmbush()
@@ -313,7 +313,7 @@ function startAmbush()
         j:moveto(vec2.new(-8000,0))
     end
     ambush = true
-    hook.timer(15000, "ambushHail")
+    hook.timer(15.0, "ambushHail")
 end
 
 function ambushHail()

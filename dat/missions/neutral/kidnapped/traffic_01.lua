@@ -138,7 +138,7 @@ function sys_enter ()
             misn.markerRm(misn_marker[i])
             table.remove(misn_marker,i)
             -- we can break, we found what we were looking for
-            hook.timer( 3000,"do_msg")
+            hook.timer( 3.0, "do_msg" )
             break
          end
       end
@@ -156,7 +156,7 @@ function sys_enter ()
          --update OSD
       end
    else
-      hook.timer( 3000,"do_msg2")
+      hook.timer( 3.0, "do_msg2" )
       broship = pilot.add( "Gawain", "Independent", bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), {ai="trader"} ) -- fast Gawain
       broship:rmOutfit("cores")
       broship:cargoRm("__all")

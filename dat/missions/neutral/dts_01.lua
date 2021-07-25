@@ -151,7 +151,7 @@ function enter_system()
       if this_system == system.cur() and defender == true then
          defend_system()
       elseif victory == true and defender == true then
-         hook.timer(1000, "ship_enters")
+         hook.timer(1.0, "ship_enters")
       elseif defender == true then
          player.msg( comm[8])
          faction.modPlayerSingle( "Empire", -3)
@@ -220,7 +220,7 @@ function add_cas_and_check()
          if victory ~= true then  -- A few seconds after victory, the system is back under control
             victory = true
             player.msg( comm[6])
-            hook.timer(8000, "victorious")
+            hook.timer(8.0, "victorious")
          end
       end
 
@@ -260,7 +260,7 @@ end
 function ship_enters()
       enter_vect = player.pos()
       pilot.add( "Empire Pacifier", "Empire", enter_vect:add( 10, 10), nil, {ai="def"} )
-      hook.timer(1000, "congratulations")
+      hook.timer(1.0, "congratulations")
 end
 function congratulations()
       tk.msg( title[4], string.format( text[4], player.ship(), planet_name))

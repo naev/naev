@@ -165,7 +165,7 @@ function date()
       harja:memory().aggressive = true
       harja:control()
       harja:follow(player.pilot())
-      hook.timer(500, "proximityScan", {focus = harja, funcname = "detectHarja"})
+      hook.timer(0.5, "proximityScan", {focus = harja, funcname = "detectHarja"})
    end
 end
 

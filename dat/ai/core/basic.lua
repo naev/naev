@@ -69,7 +69,7 @@ function __zigzag ( dir, angle )
 
    if (mem.pm*dir < angle-20) or (mem.pm*dir > angle+25) then
       -- Orientation is totally wrong: reset timer
-      ai.settimer(0, 2000)
+      ai.settimer(0, 2.0)
    end
 
    if (mem.pm*dir < angle) then

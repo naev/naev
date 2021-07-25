@@ -192,7 +192,7 @@ end
 function pirate_death ()
    chelsea:setNoDeath( true )
    pilot.toggleSpawn( true )
-   hook.timer( 1000, "win_timer" )
+   hook.timer( 1.0, "win_timer" )
 end
 
 

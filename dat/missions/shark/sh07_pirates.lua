@@ -276,25 +276,25 @@ end
 function gawain_dead()
    misn.markerRm(gawmarker)
    gawdead = true
-   hook.timer(3000,"generic_dead")
+   hook.timer(3.0,"generic_dead")
 end
 
 function kestrel_dead1()
    misn.markerRm(kermarker1)
    kerdead1 = true
-   hook.timer(3000,"generic_dead")
+   hook.timer(3.0,"generic_dead")
 end
 
 function kestrel_dead2()
    misn.markerRm(kermarker2)
    kerdead2 = true
-   hook.timer(3000,"generic_dead")
+   hook.timer(3.0,"generic_dead")
 end
 
 function goddard_dead()
    misn.markerRm(godmarker)
    goddead = true
-   hook.timer(3000,"generic_dead")
+   hook.timer(3.0,"generic_dead")
 end
 
 function generic_dead()

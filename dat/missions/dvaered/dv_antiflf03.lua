@@ -179,7 +179,7 @@ function enter()
         obstinate:comm( _("All Dvaered vessels in position. Citizen, join the fleet and commence the attack!"), true )
         -- Wait for the player to fly to the Obstinate before commencing the mission
 
-        hook.timer(500, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
+        hook.timer(0.5, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
     elseif system.cur() == DVsys and victorious then -- Make sure the player can finish the missions properly.
         DVplanet:landOverride(true)
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
@@ -198,12 +198,12 @@ function operationStart()
     baseattack = false
 
     idle()
-    hook.timer(10000, "spawnFLFfighters")
-    hook.timer(13000, "spawnFLFfighters")
-    hook.timer(15000, "spawnFLFbombers")
-    hook.timer(17000, "spawnFLFfighters")
+    hook.timer(10.0, "spawnFLFfighters")
+    hook.timer(13.0, "spawnFLFfighters")
+    hook.timer(15.0, "spawnFLFbombers")
+    hook.timer(17.0, "spawnFLFfighters")
     deathsFLFneeded = 11
-    controller = hook.timer(1000, "control")
+    controller = hook.timer(1.0, "control")
 end
 
 function land()
@@ -245,7 +245,7 @@ function deathBase()
     player.pilot():setInvincible()
     player.cinematics()
     camera.set( base, true, 5000 )
-    hook.timer( 8000, "timer_plcontrol" )
+    hook.timer( 8.0, "timer_plcontrol" )
 
     misn.osdActive(4)
     misn.markerMove( mission_marker, DVsys )
@@ -411,28 +411,28 @@ function nextStage()
     deathsFLFneeded = 0
     if stage <= 1 then
         --player.msg("Starting stage 2.")
-        hook.timer(1000, "spawnFLFfighters")
-        hook.timer(3000, "spawnFLFbombers")
-        hook.timer(5000, "spawnFLFdestroyers")
-        hook.timer(7000, "spawnFLFbombers")
+        hook.timer(1.0, "spawnFLFfighters")
+        hook.timer(3.0, "spawnFLFbombers")
+        hook.timer(5.0, "spawnFLFdestroyers")
+        hook.timer(7.0, "spawnFLFbombers")
         deathsFLFneeded = 10
     elseif stage <= 2 then
         --player.msg("Starting stage 3.")
-        hook.timer(1000, "spawnFLFfighters")
-        hook.timer(3000, "spawnFLFdestroyers")
-        hook.timer(5000, "spawnFLFbombers")
-        hook.timer(7000, "spawnFLFbombers")
-        hook.timer(9000, "spawnFLFdestroyers")
+        hook.timer(1.0, "spawnFLFfighters")
+        hook.timer(3.0, "spawnFLFdestroyers")
+        hook.timer(5.0, "spawnFLFbombers")
+        hook.timer(7.0, "spawnFLFbombers")
+        hook.timer(9.0, "spawnFLFdestroyers")
         deathsFLFneeded = 12
     elseif stage <= 3 then
         --player.msg("Starting stage 4.")
         local delay = 0
-        delay = delay + 3000
+        delay = delay + 3.0
         hook.timer(delay, "broadcast", {caster = obstinate, text = phasetwo})
         hook.timer(delay, "spawnDVbomber")
-        delay = delay + 38000
+        delay = delay + 38.0
         hook.timer(delay, "engageBase")
-        delay = delay + 45000
+        delay = delay + 45.0
         hook.timer(delay, "destroyBase")
         misn.osdActive(3)
     else
@@ -460,7 +460,7 @@ function spawnDVbomber()
     hook.pilot(bomber, "death", "deathDVbomber")
     DVbombers = DVbombers - 1
     if DVbombers > 0 then
-        spawner = hook.timer(3000, "spawnDVbomber")
+        spawner = hook.timer(3.0, "spawnDVbomber")
     end
 end
 
@@ -543,14 +543,14 @@ end
 function control()
     -- Timer to have them return
     if timer > 0 then
-        timer = timer - 500
+        timer = timer - 0.5
     end
 
     -- Control the fleets
     controlFleet( fleetDV, fleetpos, 1 )
     controlFleet( fightersDV, fighterpos, 0 )
 
-    controller = hook.timer(500, "control")
+    controller = hook.timer(0.5, "control")
 end
 
 -- Replaces lost bombers. The supply is limited, though.
@@ -608,7 +608,7 @@ end
 
 -- Make escorts fight back, then return to their positions
 function attacked()
-    timer = 3000
+    timer = 3.0
 
     for i, j in ipairs(fleetDV) do
         if j:exists() and (not base:exists() or vec2.dist(j:pos(), base:pos()) > safestandoff) and vec2.dist(j:pos(), obstinate:pos()) < 1000 then

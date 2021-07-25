@@ -66,7 +66,7 @@ function create ()
    credits = 1000000
 
    late_arrival = false
-   late_arrival_delay = rnd.rnd( 10000, 120000 )
+   late_arrival_delay = rnd.rnd( 10.0, 120.0 )
 
    misn.setNPC( npc_name, "flf/unique/benito.webp", npc_desc )
 end

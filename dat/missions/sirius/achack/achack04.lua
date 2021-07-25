@@ -213,7 +213,7 @@ function jumpin()
          hailhook = hook.pilot(j, "hail", "hail")
          attackhook = hook.pilot(j, "attacked", "attacked")
       end
-      grumblehook = hook.timer(5000, "grumble")
+      grumblehook = hook.timer(5.0, "grumble")
    end
 end
 
@@ -237,7 +237,7 @@ end
 function grumble()
    -- Randomville!!
    bhfleet[rnd.rnd(1, #bhfleet)]:broadcast(grumblings[rnd.rnd(1, #grumblings)])
-   grumblehook = hook.timer(rnd.rnd(3000, 8000), "grumble")
+   grumblehook = hook.timer(rnd.rnd(3.0, 8.0), "grumble")
 end
 
 -- Attacked hook for mercenaries.

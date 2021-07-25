@@ -29,7 +29,7 @@ function land ()
    if ai.isstopped() then
       ai.stop()
       ai.poptask()
-      ai.settimer(0, ai.rnd(8000,15000))
+      ai.settimer(0, ai.rnd(8.0, 15.0))
       ai.pushtask(0,"landed")
    else
       ai.brake()

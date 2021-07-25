@@ -157,7 +157,7 @@ function cutscene00 ()
    player.pilot():control(true)
 
    -- Start next hook
-   hook.timer( 3000, "cutscene01" )
+   hook.timer( 3.0, "cutscene01" )
 end
 
 function cutscene01 ()
@@ -181,12 +181,12 @@ function cutscene01 ()
    d_scav:face( pp )
 
    -- Next stage
-   hook.timer( 5000, "cutscene02" )
+   hook.timer( 5.0, "cutscene02" )
 end
 
 function cutscene02 ()
    camera.setZoom() -- reset zoom
-   hook.timer( 6000, "cutscene03" )
+   hook.timer( 6.0, "cutscene03" )
 end
 
 function cutscene03 ()
