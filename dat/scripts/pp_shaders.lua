@@ -36,4 +36,30 @@ void main (void)
 ]] .. fragcode, pp_shaders.vertexcode )
 end
 
+
+--[[
+-- A post-processing version of the corruption shader.
+--]]
+function pp_shaders.corruption( strength )
+   strength = strength or 1.0
+   local pixelcode = string.format([[
+#include "lib/math.glsl"
+
+   uniform float u_time;
+
+   const int    fps     = 15;
+   const float strength = %f;
+
+   vec4 effect( sampler2D tex, vec2 uv, vec2 px ) {
+      float time = u_time - mod( u_time, 1.0 / float(fps) );
+      float glitchStep = mix(4.0, 32.0, random(vec2(time)));
+      vec4 screenColor = texture( tex, uv );
+      uv.x = round(uv.x * glitchStep ) / glitchStep;
+      vec4 glitchColor = texture( tex, uv );
+      return mix(screenColor, glitchColor, vec4(0.1*strength));
+   }
+   ]], strength )
+   return pp_shaders.newShader( pixelcode )
+end
+
 return pp_shaders
