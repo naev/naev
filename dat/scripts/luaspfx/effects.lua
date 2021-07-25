@@ -79,9 +79,8 @@ local function __alert( params, x, y, z )
    lg.setShader( old_shader )
 end
 local function __alert_create( params, ttl, pos, vel )
-   -- TODO allow multiple to play simultaneously (share buffers)
-   alert_sound:playPos( pos )
+   params.efx.sound:playPos( pos )
 end
-effects.alert = { func = __alert, create = __alert_create }
+effects.alert = { func = __alert, create = __alert_create, sound=alert_sound:clone() }
 
 return effects

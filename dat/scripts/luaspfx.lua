@@ -56,6 +56,7 @@ end
 
 local function __luaspfx_add( tbl, efx, params, ttl, pos, vel )
    params = params or {}
+   params.efx = efx
    if efx.create then
       efx.create( params, ttl, pos, vel )
    end
