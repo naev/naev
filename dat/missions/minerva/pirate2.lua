@@ -204,7 +204,7 @@ function drone_death ()
       drone2marker = system.mrkAdd( _("Za'lek Drone"), drone2:pos() )
       player.msg(_("You detected another Za'lek drone in the system!"))
       zalek_inbound = false
-      hook.timer( 500, "heartbeat" )
+      hook.timer( 0.5, "heartbeat" )
    elseif drones_killed==2 then
       system.mrkRm( drone2marker )
       misn_state = 1
@@ -229,10 +229,10 @@ function heartbeat ()
       local msg = _("Your sensors are detecting a Za'lek fleet inbound!")
       player.msg("#o"..msg)
       player.autonavAbort(msg)
-      hook.timer( 5000, "reinforcements_jumpin" )
+      hook.timer( 5.0, "reinforcements_jumpin" )
       return
    end
-   hook.timer( 500, "heartbeat" )
+   hook.timer( 0.5, "heartbeat" )
 end
 
 

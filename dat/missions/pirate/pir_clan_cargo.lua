@@ -145,7 +145,7 @@ function enter ()
          invoke_enemies()
       -- Enter after player
       else
-         t = hook.timer(rnd.int( 2000, 5000 ) , "enemies")
+         t = hook.timer(rnd.uniform( 2.0, 5.0 ) , "enemies")
       end
    end
 end

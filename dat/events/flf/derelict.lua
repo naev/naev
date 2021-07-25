@@ -46,8 +46,8 @@ function create()
     shipDV:rename(shipnameDV)
     shipFLF:rename(shipnameFLF)
 
-    timerDV = hook.timer(3000, "broadcastDV")
-    timerFLF = hook.timer(12000, "broadcastFLF")
+    timerDV = hook.timer(3.0, "broadcastDV")
+    timerFLF = hook.timer(12.0, "broadcastFLF")
 
     boarded = false
     destroyed = false
@@ -65,13 +65,13 @@ end
 function broadcastDV()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
     shipDV:broadcast(string.format(broadcastmsgDV, shipnameDV), true)
-    timerDV = hook.timer(20000, "broadcastDV")
+    timerDV = hook.timer(20.0, "broadcastDV")
 end
 
 function broadcastFLF()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
     shipFLF:broadcast(string.format(broadcastmsgFLF, shipnameFLF), true)
-    timerFLF = hook.timer(20000, "broadcastFLF")
+    timerFLF = hook.timer(20.0, "broadcastFLF")
 end
 
 function boardFLF()

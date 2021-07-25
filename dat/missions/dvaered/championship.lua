@@ -391,7 +391,7 @@ function enter()
       --Adding the starting mark
       start_pos = mispla:pos() + vec2.new( -1000, -1500)
       mark = system.mrkAdd( mark_name, start_pos )
-      prox = hook.timer(500, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
+      prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then
       tk.msg(dismisstitle, missiletext)

@@ -3194,7 +3194,7 @@ static int aiL_settimer( lua_State *L )
    n = luaL_checkint(L,1);
 
    /* Set timer. */
-   cur_pilot->timer[n] = (lua_isnumber(L,2)) ? lua_tonumber(L,2)/1000. : 0;
+   cur_pilot->timer[n] = (lua_isnumber(L,2)) ? lua_tonumber(L,2) : 0.;
 
    return 0;
 }

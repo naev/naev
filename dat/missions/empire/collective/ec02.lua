@@ -140,15 +140,15 @@ function takeoff()
     swarm3 = pilot.addFleet("Collective Sml Swarm", vec2.new(17000, 2500))
     moveSwarm(swarm3, vec2.new(-9500, 13000))
 
-    local delay = 1000
+    local delay = 1.0
     hook.timer(delay, "cameraZoom", {targ = swarm1[1], speed = 5000})
-    delay = delay + 8000
+    delay = delay + 8.0
     hook.timer(delay, "cameraZoom", {targ = swarm2[1], speed = 5000})
-    delay = delay + 8000
+    delay = delay + 8.0
     hook.timer(delay, "cameraZoom", {targ = swarm3[1], speed = 5000})
-    delay = delay + 8000
+    delay = delay + 8.0
     hook.timer(delay, "cameraZoom", {targ = nil, speed = 5000})
-    delay = delay + 4000
+    delay = delay + 4.0
     hook.timer(delay, "endCutscene")
 
     hook.rm(takeoffhook)

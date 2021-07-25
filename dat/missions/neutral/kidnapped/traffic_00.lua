@@ -237,7 +237,7 @@ end
 
 function explodedkidnappers()
   if (not rescued) then
-     hook.timer(1500, "kidskilled")
+     hook.timer(1.5, "kidskilled")
   end
 end
 

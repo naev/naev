@@ -35,7 +35,7 @@ log_text = _([[You found that one of the rodents you transported for that Sirian
 
 function create ()
     -- Allow some time before the problems start
-    hook.timer(45000, "startProblems")
+    hook.timer(45.0, "startProblems")
     bucks = 6
 end
 
@@ -46,7 +46,7 @@ function startProblems()
     tk.msg(title[1], text[1])
     ps = player.pilot()
     ps:control()
-    hook.timer(7000, "buck")
+    hook.timer(7.0, "buck")
     hook.pilot(ps, "idle", "continueProblems")
     continueProblems()
 end
@@ -66,7 +66,7 @@ function buck()
     if bucks == 0 then
         endProblems()
     end
-    hook.timer(7000, "buck")
+    hook.timer(7.0, "buck")
     continueProblems()
 end
 

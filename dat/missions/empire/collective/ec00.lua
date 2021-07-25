@@ -123,7 +123,7 @@ function enter()
       pilot.clear()
       pilot.toggleSpawn(false)
       misn.osdActive(2)
-      hook.timer(500, "proximity", {location = vec2.new(8000, -20000), radius = 5000, funcname = "spotdrone"})
+      hook.timer(0.5, "proximity", {location = vec2.new(8000, -20000), radius = 5000, funcname = "spotdrone"})
    elseif misn_stage == 0 then
       misn.osdActive(1)
    end
@@ -175,7 +175,7 @@ function idle()
         local newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
         p:taskClear()
         p:moveto(location + newlocation, false, false)
-        hook.timer(5000, "idle")
+        hook.timer(5.0, "idle")
     end
 end
 

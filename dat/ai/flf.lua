@@ -13,7 +13,7 @@ mem.doscans       = false
 function create ()
 
    -- Give monies.
-   ai.setcredits( rnd.int(ai.pilot():ship():price()/600 , ai.pilot():ship():price()/100) )
+   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/600 , ai.pilot():ship():price()/100) )
 
    -- Get standing.
    local p = player.pilot()
@@ -28,7 +28,7 @@ function create ()
    if standing < -30 then
       mem.bribe_no = _("\"The only way to deal with scum like you is with cannons!\"")
    else
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.int() + 850.)
+      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.rnd() + 850.)
       mem.bribe_prompt = string.format(_("\"It'll cost you %s for me to ignore your dirty presence.\""), creditstring(mem.bribe))
       mem.bribe_paid = _("\"Begone before I change my mind.\"")
    end
@@ -51,7 +51,7 @@ end
 function taunt ( target, offense )
 
    -- Only 50% of actually taunting.
-   if rnd.int(0,1) == 0 then
+   if rnd.rnd(0,1) == 0 then
       return
    end
 
@@ -72,6 +72,6 @@ function taunt ( target, offense )
       }
    end
 
-   ai.pilot():comm(target, taunts[ rnd.int(1,#taunts) ])
+   ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 

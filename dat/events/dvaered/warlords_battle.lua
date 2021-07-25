@@ -67,9 +67,9 @@ function begin ()
 
    source_planet = cand[rnd.rnd(1,#cand)]
 
-   hook.timer(3000, "merchant")
-   hook.timer(7000, "attack")
-   hook.timer(12000, "defense")
+   hook.timer(3.0, "merchant")
+   hook.timer(7.0, "attack")
+   hook.timer(12.0, "defense")
    inForm       = true -- People are in formation
    batInProcess = true -- Battle is happening
 
@@ -82,7 +82,7 @@ function merchant ()
    merShips = {"Koala", "Mule", "Rhino", "Llama"}
    mship = merShips[rnd.rnd(1,#merShips)]
    trader = pilot.add( mship, "Trader", source_system, _("Trader %s"):format( _(mship) ) )
-   hook.timer(2000, "hailme")
+   hook.timer(2.0, "hailme")
 end
 
 function hailme()
@@ -207,7 +207,7 @@ function defense ()
    dlead:control()
    alead:attack(dlead)
    dlead:attack(alead)
-   hook.timer(500, "proximity", {anchor = alead, radius = 5000, funcname = "startBattle", focus = dlead})
+   hook.timer(0.5, "proximity", {anchor = alead, radius = 5000, funcname = "startBattle", focus = dlead})
 end
 
 -- Both fleets are close enough: start the epic battle
@@ -283,7 +283,7 @@ function attackerDeath(victim, attacker)
          if side == "defender" then
             warrior = chooseInList(defenders)
             computeReward(true, attkilled)
-            hook.timer(1000, "hailmeagain")
+            hook.timer(1.0, "hailmeagain")
          end
       end
    end
@@ -307,7 +307,7 @@ function defenderDeath(victim, attacker)
          if side == "attacker" then
             warrior = chooseInList(attackers)
             computeReward(true, defkilled)
-            hook.timer(1000, "hailmeagain")
+            hook.timer(1.0, "hailmeagain")
          end
       end
    end

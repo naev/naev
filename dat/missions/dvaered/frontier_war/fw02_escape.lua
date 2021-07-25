@@ -417,11 +417,11 @@ function enter()
       prevsys = getNextSystem(system.cur(), prisys)
       nextsys = getNextSystem(system.cur(), zlksys)
 
-      hook.timer(5000, "convoyEnter")
+      hook.timer(5.0, "convoyEnter")
 
    -- At first jump, it gets announced that you've got to land
    elseif stage == 2 then
-      hook.timer( 7000, "weNeed2land" )
+      hook.timer( 7.0, "weNeed2land" )
 
    elseif stage == 4 and tronkDeath then
       tronkDeath = false
@@ -429,8 +429,8 @@ function enter()
 
    -- When entering Empire Space, contact with Captain HewHew
    elseif stage == 4 and system.cur():presences()["Empire"] and (not system.cur():presences()["Za'lek"]) then
-      hook.timer(2000, "spawnHewHew", lastSys)
-      hook.timer(10000, "backDialog")  -- And some dialog with the VIP
+      hook.timer(2.0, "spawnHewHew", lastSys)
+      hook.timer(10.0, "backDialog")  -- And some dialog with the VIP
    end
 
    -- Spawn Strafer
@@ -632,7 +632,7 @@ function takeoff( )
    -- Player takes off from planet after attacking the hospital
    if stage == 4 and lastPlanet:faction() == fzlk then
       fzlk:modPlayerRaw( -100 )
-      hook.timer(1000, "spawnDrones")
+      hook.timer(1.0, "spawnDrones")
 
       -- Clear all Zlk pilots in a given radius of the player to avoid being insta-killed at takeoff
       local dmin2 = 500^2
@@ -678,7 +678,7 @@ function spawnZlkSquadron( pos, bloc )
    end
 
    if firstBloc then
-      scanHooks[#scanHooks+1] = hook.timer(500, "proximityScan", {focus = squad[2], funcname = "scanBloc"})
+      scanHooks[#scanHooks+1] = hook.timer(0.5, "proximityScan", {focus = squad[2], funcname = "scanBloc"})
    end
 end
 function spawnEmpSquadron( pos, bloc )
@@ -717,7 +717,7 @@ function scanBloc()
 
       rmScanHooksRaw()
       firstBloc = false
-      hook.timer(4000, "spawnStrafer")
+      hook.timer(4.0, "spawnStrafer")
    end
 end
 
@@ -729,7 +729,7 @@ function spawnStrafer()
    strafer:control(true)
    strafer:follow( player.pilot() )
    camera.set( strafer )
-   prox = hook.timer(500, "proximity", {anchor = strafer, radius = 2000, funcname = "straferDiscuss", focus = player.pilot()})
+   prox = hook.timer(0.5, "proximity", {anchor = strafer, radius = 2000, funcname = "straferDiscuss", focus = player.pilot()})
 end
 
 -- The player discuss with Strafer

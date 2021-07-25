@@ -31,7 +31,9 @@
 static int audioL_gc( lua_State *L );
 static int audioL_eq( lua_State *L );
 static int audioL_new( lua_State *L );
+static int audioL_clone( lua_State *L );
 static int audioL_play( lua_State *L );
+static int audioL_playPos( lua_State *L );
 static int audioL_pause( lua_State *L );
 static int audioL_isPaused( lua_State *L );
 static int audioL_stop( lua_State *L );
@@ -50,7 +52,9 @@ static const luaL_Reg audioL_methods[] = {
    { "__gc", audioL_gc },
    { "__eq", audioL_eq },
    { "new", audioL_new },
+   { "clone", audioL_clone },
    { "play", audioL_play },
+   { "playPos", audioL_playPos },
    { "pause", audioL_pause },
    { "isPaused", audioL_isPaused },
    { "stop", audioL_stop },
@@ -198,13 +202,19 @@ int lua_isaudio( lua_State *L, int ind )
 static int audioL_gc( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (!conf.nosound) {
-      soundLock();
-      alDeleteSources( 1, &la->source );
-      alDeleteBuffers( 1, &la->buffer );
-      al_checkErr();
-      soundUnlock();
+   if (conf.nosound)
+      return 0;
+   soundLock();
+   alDeleteSources( 1, &la->source );
+   /* Check if buffers need freeing. */
+   la->buf->refcount--;
+   if (la->buf->refcount <= 0) {
+      alDeleteBuffers( 1, &la->buf->buffer );
+      free( la->buf );
    }
+   /* Clean up. */
+   al_checkErr();
+   soundUnlock();
    return 0;
 }
 
@@ -262,12 +272,14 @@ static int audioL_new( lua_State *L )
 
       soundLock();
       alGenSources( 1, &la.source );
-      alGenBuffers( 1, &la.buffer );
 
-      sound_al_buffer( &la.buffer, rw, name );
+      la.buf = malloc( sizeof(LuaBuffer_t) );
+      la.buf->refcount = 1;
+      alGenBuffers( 1, &la.buf->buffer );
+      sound_al_buffer( &la.buf->buffer, rw, name );
 
       /* Attach buffer. */
-      alSourcei( la.source, AL_BUFFER, la.buffer );
+      alSourcei( la.source, AL_BUFFER, la.buf->buffer );
 
       /* Defaults. */
       master = sound_getVolumeLog();
@@ -294,6 +306,49 @@ static int audioL_new( lua_State *L )
 
 
 /**
+ * @brief Clones an existing audio source.
+ *
+ *    @luatparam Audio source Audio source to clone.
+ *    @luatreturn Audio New audio corresponding to the data.
+ * @luafunc clone
+ */
+static int audioL_clone( lua_State *L )
+{
+   LuaAudio_t la;
+   LuaAudio_t *source = luaL_checkaudio(L,1);
+   double master;
+
+   memset( &la, 0, sizeof(LuaAudio_t) );
+   if (conf.nosound) {
+      lua_pushaudio(L, la);
+      return 1;
+   }
+
+   soundLock();
+   alGenSources( 1, &la.source );
+
+   /* Attach source buffer. */
+   la.buf = source->buf;
+   la.buf->refcount++;
+
+   /* Attach buffer. */
+   alSourcei( la.source, AL_BUFFER, la.buf->buffer );
+
+   /* Defaults. */
+   master = sound_getVolumeLog();
+   alSourcef( la.source, AL_GAIN, master );
+   /* See note in audioL_new */
+   alSourcei( la.source, AL_SOURCE_RELATIVE, AL_TRUE );
+   alSource3f( la.source, AL_POSITION, 0., 0., 0. );
+   al_checkErr();
+   soundUnlock();
+
+   lua_pushaudio(L, la);
+   return 1;
+}
+
+
+/**
  * @brief Plays a source.
  *
  *    @luatparam Audio source Source to play.
@@ -305,6 +360,34 @@ static int audioL_play( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    if (!conf.nosound) {
       soundLock();
+      alSourcePlay( la->source );
+      al_checkErr();
+      soundUnlock();
+   }
+   lua_pushboolean(L,1);
+   return 1;
+}
+
+
+/**
+ * @brief Plays a source at a position.
+ *
+ *    @luatparam Audio source Source to play.
+ *    @luatreturn boolean True on success.
+ * @luafunc play
+ */
+static int audioL_playPos( lua_State *L )
+{
+   ALfloat pos[3];
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   Vector2d *vp   = luaL_checkvector(L,2);
+   if (!conf.nosound) {
+      soundLock();
+      pos[0] = vp->x;
+      pos[1] = vp->y;
+      pos[2] = 0.;
+      alSourcei( la->source, AL_SOURCE_RELATIVE, AL_FALSE );
+      alSourcefv( la->source, AL_POSITION, pos );
       alSourcePlay( la->source );
       al_checkErr();
       soundUnlock();

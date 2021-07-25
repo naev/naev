@@ -138,7 +138,7 @@ function accept ()
 
    if tk.yesno( intro_title, intro_text:format(
             player.name(), player.pilot():name() ) ) then
-      timer_hook = hook.timer( 5000, "timer" )
+      timer_hook = hook.timer( 5.0, "timer" )
       hook.land("land")
       hook.takeoff("takeoff")
       hook.enter("enter")
@@ -164,7 +164,7 @@ end
 
 function timer ()
    if timer_hook ~= nil then hook.rm( timer_hook ) end
-   timer_hook = hook.timer( 5000, "timer" )
+   timer_hook = hook.timer( 5.0, "timer" )
 
    if stage == 1 then
       if system.cur() == missys
@@ -255,8 +255,8 @@ end
 
 function enter ()
    if timer_hook ~= nil then hook.rm( timer_hook ) end
-   timer_hook = hook.timer( 5000, "timer" )
-   hook.timer( 2000, "enter_timer" )
+   timer_hook = hook.timer( 5.0, "timer" )
+   hook.timer( 2.0, "enter_timer" )
 end
 
 
@@ -278,7 +278,7 @@ end
 
 
 function pilot_death ()
-   hook.timer( 2000, "pilot_death_timer" )
+   hook.timer( 2.0, "pilot_death_timer" )
 end
 
 

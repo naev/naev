@@ -353,7 +353,7 @@ function trigger_ambush()
    ambush[2]:attack(player.pilot())
    ambush[3]:attack(player.pilot())
 
-   msg = hook.timer( 1000, "ambust_msg" )
+   msg = hook.timer( 1.0, "ambust_msg" )
 end
 
 -- Enemies explain that they are ambushing the player
@@ -370,7 +370,7 @@ function spawn_advisor ()
    pos = jp:pos() + vec2.new(x,y)
 
    advisor = pilot.add( "Lancelot", "Mercenary", pos, nil, {ai="baddie_norun"} )
-   hailie = hook.timer( 2000, "hailme" )
+   hailie = hook.timer( 2.0, "hailme" )
 
    hailed[#hailed+1] = advisor
 end

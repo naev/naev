@@ -182,7 +182,7 @@ function enter ()
       dronemarker = system.mrkAdd( _("Za'lek Drone"), drone:pos() )
       thugsmarker = system.mrkAdd( _("Dvaered Thugs"), boss:pos() )
 
-      hook.timer( 500, "heartbeat" )
+      hook.timer( 0.5, "heartbeat" )
    end
 end
 
@@ -199,7 +199,7 @@ function heartbeat ()
       system.mrkRm( dronemarker )
       return
    end
-   hook.timer( 500, "heartbeat" )
+   hook.timer( 0.5, "heartbeat" )
 end
 
 
@@ -217,7 +217,7 @@ function thugs_attacked ()
          v:setHostile()
       end
       total_harassment = 0
-      hook.timer( 1000, "harassed" )
+      hook.timer( 1.0, "harassed" )
    end
 end
 
@@ -254,7 +254,7 @@ function harassed ()
       system.mrkRm( thugsmarker )
       return
    end
-   hook.timer( 1000, "harassed" )
+   hook.timer( 1.0, "harassed" )
 end
 
 

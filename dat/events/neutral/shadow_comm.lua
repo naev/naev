@@ -50,7 +50,7 @@ function create ()
     vendetta = pilot.add( "Vendetta", "Four Winds", true, _("Four Winds Vendetta"), {ai="trader"} )
     vendetta:control()
     vendetta:follow(player.pilot())
-    hook.timer(500, "proximityScan", {focus = vendetta, funcname = "hailme"})
+    hook.timer(0.5, "proximityScan", {focus = vendetta, funcname = "hailme"})
 
     -- Clean up on events that remove the Vendetta from the game
     hook1 = hook.pilot(vendetta, "jump", "finish")

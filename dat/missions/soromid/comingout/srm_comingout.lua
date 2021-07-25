@@ -153,7 +153,7 @@ end
 -- still possible and that's fine).
 function init_chatter ()
    if timer_hook ~= nil then hook.rm( timer_hook ) end
-   timer_hook = hook.timer( 10000, "do_chatter" )
+   timer_hook = hook.timer( 10.0, "do_chatter" )
 end
 
 

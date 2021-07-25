@@ -15,7 +15,7 @@
 --]]
 
 function create ()
-    timer = hook.timer(20000, "msgme")
+    timer = hook.timer(20.0, "msgme")
     landhook = hook.land("finish")
     jumpouthook = hook.jumpout("finish")
 end

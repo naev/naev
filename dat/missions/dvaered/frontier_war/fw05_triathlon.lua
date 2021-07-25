@@ -244,7 +244,7 @@ function enter()
       for i, p in ipairs(followers) do
          p:setLeader(leader)
       end
-      hook.timer(500, "proximity", {location = destpla:pos(), radius = 2000, funcname = "introduction", focus = player.pilot()})
+      hook.timer(0.5, "proximity", {location = destpla:pos(), radius = 2000, funcname = "introduction", focus = player.pilot()})
    end
 end
 
@@ -458,12 +458,12 @@ function takeoff()
          joyyesno = {true,true,true,true,true,true,true,true,true,true}
 
          -- Timer and messages
-         hook.timer( 3000, "message", {pilot = competitors[1], msg = chat_00} )
-         hook.timer( 6000, "message", {pilot = competitors[2], msg = chat_01} )
-         hook.timer( 9000, "message", {pilot = competitors[4], msg = chat_02} )
-         hook.timer( 10000, "startThrow" )
+         hook.timer( 3.0, "message", {pilot = competitors[1], msg = chat_00} )
+         hook.timer( 6.0, "message", {pilot = competitors[2], msg = chat_01} )
+         hook.timer( 9.0, "message", {pilot = competitors[4], msg = chat_02} )
+         hook.timer( 10.0, "startThrow" )
          countdown = 10
-         hook.timer( 1000, "timerIncrement")
+         hook.timer( 1.0, "timerIncrement")
          omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
 
       else -- Need to land and continue at previous stage
@@ -507,12 +507,12 @@ function takeoff()
       playerHitHook = hook.pilot( player.pilot(), "attacked", "playerHitS" ) -- If player has zero shield: eliminated
 
       -- Timer and messages
-      hook.timer( 3000, "message", {pilot = competitors[2], msg = chat_10} )
-      hook.timer( 6000, "message", {pilot = competitors[4], msg = chat_11} )
-      hook.timer( 9000, "message", {pilot = competitors[8], msg = chat_12} )
-      hook.timer( 10000, "startStadion" )
+      hook.timer( 3.0, "message", {pilot = competitors[2], msg = chat_10} )
+      hook.timer( 6.0, "message", {pilot = competitors[4], msg = chat_11} )
+      hook.timer( 9.0, "message", {pilot = competitors[8], msg = chat_12} )
+      hook.timer( 10.0, "startStadion" )
       countdown = 10
-      hook.timer( 1000, "timerIncrement")
+      hook.timer( 1.0, "timerIncrement")
       omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
 
    elseif stage == 6 then -- Mace Pankration: competitors and make teams
@@ -538,12 +538,12 @@ function takeoff()
          duelsEnded = 0
 
          -- Timer and messages
-         hook.timer( 3000, "message", {pilot = competitors[6], msg = chat_20} )
-         hook.timer( 6000, "message", {pilot = competitors[4], msg = chat_21} )
-         hook.timer( 9000, "message", {pilot = competitors[5], msg = chat_22:format(player.name())} )
-         hook.timer( 10000, "startPankration" )
+         hook.timer( 3.0, "message", {pilot = competitors[6], msg = chat_20} )
+         hook.timer( 6.0, "message", {pilot = competitors[4], msg = chat_21} )
+         hook.timer( 9.0, "message", {pilot = competitors[5], msg = chat_22:format(player.name())} )
+         hook.timer( 10.0, "startPankration" )
          countdown = 10
-         hook.timer( 1000, "timerIncrement")
+         hook.timer( 1.0, "timerIncrement")
          omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
 
       else
@@ -572,7 +572,7 @@ function timerIncrement()
    if countdown == 0 then
       player.omsgChange(omsg, _("Go!"), 3)
    else
-      hook.timer( 1000, "timerIncrement")
+      hook.timer( 1.0, "timerIncrement")
       player.omsgChange(omsg, timermsg:format(countdown), 0)
    end
 end
@@ -583,14 +583,14 @@ function timerIncrementT()
    if countdown == 0 then
       player.omsgChange(omsg, _("Time Over!"), 3)
    else
-      hook.timer( 1000, "timerIncrementT")
+      hook.timer( 1.0, "timerIncrementT")
       player.omsgChange(omsg, timermsg:format(countdown), 0)
    end
 end
 
 -- Actually start the Mace Throw
 function startThrow()
-   hook.timer( 500, "dehostilify" )
+   hook.timer( 0.5, "dehostilify" )
    player.pilot():control(false)
    for i, p in ipairs(competitors) do
       p:control(false)
@@ -610,15 +610,15 @@ function startStadion()
    for i, p in ipairs(annoyers) do
       p:control(false)
    end
-   hook.timer( 60000, "endStadion" )
-   hook.timer( 50000, "endTimer" ) -- Near-end timer
+   hook.timer( 60.0, "endStadion" )
+   hook.timer( 50.0, "endTimer" ) -- Near-end timer
    misn.osdActive(2)
 end
 
 -- Timer for the end of the Stadion
 function endTimer()
    countdown = 10
-   hook.timer( 1000, "timerIncrementT" ) -- Near-end timer
+   hook.timer( 1.0, "timerIncrementT" ) -- Near-end timer
    omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
 end
 
@@ -664,7 +664,7 @@ function dehostilify()
    for i, p in ipairs(mypilots) do
       p:setHostile(false)
    end
-   hook.timer( 500, "dehostilify" )
+   hook.timer( 0.5, "dehostilify" )
 end
 
 -- Spawn Competitors
@@ -707,7 +707,7 @@ function targetHit( victim, attacker )
 
    targetShot = targetShot + 1
    if targetShot >= #targets then
-      hook.timer( 3000, "endThrow" )
+      hook.timer( 3.0, "endThrow" )
    end
 
    -- pick a joy cry
@@ -870,7 +870,7 @@ end
 -- See if all duels are over
 function endPankration()
    if duelsEnded >= 5 then
-      hook.timer(1000, "endPankrationT")
+      hook.timer(1.0, "endPankrationT")
    end
 end
 function endPankrationT()

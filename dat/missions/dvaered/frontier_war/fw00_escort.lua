@@ -180,7 +180,7 @@ function enter()
    if stage == 0 then   -- Go to first rendezvous
       if system.cur() == destsys1 then -- Spawn the Warlord
          encounterWarlord( _("Lady Bitterfly"), destpla1 )
-         hook.timer( 2000, "meeting_msg1" )
+         hook.timer( 2.0, "meeting_msg1" )
       else
          nextsys = getNextSystem(system.cur(), destsys1)
          majorTam:control()
@@ -192,7 +192,7 @@ function enter()
       if system.cur() == destsys2 then -- Spawn the Baddies
          encounterWarlord( _("Lord Battleaddict"), destpla2 )
          jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
-         hook.timer( 2000, "meeting_msg2" )
+         hook.timer( 2.0, "meeting_msg2" )
       else
          nextsys = getNextSystem(system.cur(), destsys2)
          majorTam:control()
@@ -201,7 +201,7 @@ function enter()
       end
 
    elseif stage == 3 then  -- Fleeing to flee planet
-      hook.timer( 2500, "explain_battle") -- Explain what happened
+      hook.timer( 2.5, "explain_battle") -- Explain what happened
       majorTam:control()
       majorTam:land(fleepla)
       stage = 4
@@ -213,7 +213,7 @@ function enter()
       if system.cur() == destsys3 then -- Spawn the Warlord and Hamelsen
          hamelsenAmbush()
          encounterWarlord( _("Lord Jim"), destpla3 )
-         hook.timer( 2000, "meeting_msg3" )
+         hook.timer( 2.0, "meeting_msg3" )
       else
          nextsys = getNextSystem(system.cur(), destsys3)
          majorTam:control()
@@ -296,7 +296,7 @@ function encounterWarlord( name, origin )
    majorTam:memory().radius = 0
    majorTam:follow(warlord, true)
 
-   proxHook = hook.timer(500, "proximity", {anchor = warlord, radius = 1000, funcname = "meeting_timer", focus = majorTam})
+   proxHook = hook.timer(0.5, "proximity", {anchor = warlord, radius = 1000, funcname = "meeting_timer", focus = majorTam})
 end
 
 function tamJump()
@@ -355,7 +355,7 @@ function meeting_timer() -- Delay the triggering of the meeting
    player.cinematics( true )
    player.cinematics( false )
 
-   hook.timer(7000, "meeting")
+   hook.timer(7.0, "meeting")
 end
 
 function meeting()
@@ -382,8 +382,8 @@ function meeting()
       majorTam:memory().careful = true
       majorTam:runaway(quickie, true) -- The nojump prevents him to land as well
 
-      hook.timer( 2000, "attackMe" ) -- A small delay to give the player a chance in case an enemy is too close
-      hook.timer( 15000, "tamHyperspace" ) -- At some point, he is supposed to jump
+      hook.timer( 2.0, "attackMe" ) -- A small delay to give the player a chance in case an enemy is too close
+      hook.timer( 15.0, "tamHyperspace" ) -- At some point, he is supposed to jump
 
       misn.osdDestroy()
       misn.osdCreate( osd_title, {osd_msg3:format(fleesys:name())} )
@@ -399,7 +399,7 @@ end
 
 -- Makes Battleaddict's team actually attack the player
 function attackMe()
-   hook.timer( 5000, "moreBadGuys" )
+   hook.timer( 5.0, "moreBadGuys" )
 
    -- Change the enemies to Warlords in order to make them attack
    for i = 1,#p do
@@ -483,7 +483,7 @@ function hamelsenAmbush()
    savers[1]:setNoDeath()
    savers[1]:setNoDisable()
 
-   msg = hook.timer( 4000, "ambush_msg" )
+   msg = hook.timer( 4.0, "ambush_msg" )
    killed_ambush = 0
 end
 
@@ -506,7 +506,7 @@ function hamelsen_attacked( )
    if shield < 10 then
       hamelsen:control()
       hamelsen:runaway(player.pilot(), true) -- Nojump because I don't want her to try to jump at the beginning
-      hook.timer(15000, "hamelsenHyperspace")
+      hook.timer(15.0, "hamelsenHyperspace")
       hook.rm(attack)
       ambushDied() -- One less
    end
@@ -522,8 +522,8 @@ function ambushDied()
    if killed_ambush >= nambush then -- Everything back to normal: we meet Lord Jim
       majorTam:control()
       majorTam:follow(warlord, true)
-      hook.timer(500, "proximity", {anchor = warlord, radius = 1000, funcname = "meeting_timer", focus = majorTam})
-      hook.timer(3000, "ambush_end")
+      hook.timer(0.5, "proximity", {anchor = warlord, radius = 1000, funcname = "meeting_timer", focus = majorTam})
+      hook.timer(3.0, "ambush_end")
    end
 end
 

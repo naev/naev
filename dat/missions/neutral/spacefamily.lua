@@ -176,7 +176,7 @@ end
 
 function enter()
    if harrassmsg then
-      hook.timer(3000, "harrassme")
+      hook.timer(3.0, "harrassme")
       harrassmsg = false
    else
    end

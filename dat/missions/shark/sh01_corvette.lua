@@ -165,7 +165,7 @@ function enter()
       pilot.toggleSpawn( false )
       pilot.setVisible(player.pilot())
 
-      hook.timer(2000,"lets_go")
+      hook.timer(2.0,"lets_go")
    end
 end
 

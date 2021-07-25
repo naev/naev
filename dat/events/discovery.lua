@@ -265,7 +265,7 @@ function handle_event( event )
    elseif event.type=="discover" then
       hook.discover( "discovered", event )
    elseif event.type=="distance" then
-      hook.timer( 500, "heartbeat", event )
+      hook.timer( 0.5, "heartbeat", event )
    end
    return true
 end
@@ -308,7 +308,7 @@ function heartbeat( event )
    if dist < event.dist then
       discover_trigger( event )
    else
-      hook.timer( 500, "heartbeat", event )
+      hook.timer( 0.5, "heartbeat", event )
    end
 end
 
@@ -427,7 +427,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    hook.renderfg( "textfg" )
    hook.update( "textupdate" )
-   --hook.timer( text_length*1000, "endevent")
+   --hook.timer( text_length*1.0, "endevent")
 end
 function textfg ()
    local progress

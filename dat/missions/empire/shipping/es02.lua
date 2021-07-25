@@ -192,7 +192,7 @@ function enter ()
       end
 
       -- Add more ships on a timer to make this messy
-      hook.timer(rnd.rnd( 3000, 5000 ) , "delay_flf")
+      hook.timer(rnd.uniform( 3.0, 5.0 ) , "delay_flf")
 
       -- Pass to next stage
       misn_stage = 1

@@ -147,7 +147,7 @@ function enter()
             end
         end
 
-        hook.timer(500, "proximity", {location = misn_target:pos(), radius = 3000, funcname = "idle"})
+        hook.timer(0.5, "proximity", {location = misn_target:pos(), radius = 3000, funcname = "idle"})
 
         misn_stage = 1
         misn.osdActive(2)

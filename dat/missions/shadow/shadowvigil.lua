@@ -141,7 +141,7 @@ function create()
    local rsysname = "Pas"
    rebinasys = system.get(rsysname)
    hook.jumpin("jumpin")
-   hook.timer(1000, "delayedClaim")
+   hook.timer(1.0, "delayedClaim")
 
    misn.setDesc(misn_desc0:format(rsysname))
    misn.setReward(misn_reward0)
@@ -265,7 +265,7 @@ function enter()
         end
         rend_point = vec2.new(0,0)
         start_marker = system.mrkAdd( "Rendezvous point", rend_point )
-        proxy = hook.timer(500, "proximity", {location = rend_point, radius = 500, funcname = "escortStart"})
+        proxy = hook.timer(0.5, "proximity", {location = rend_point, radius = 500, funcname = "escortStart"})
     end
 end
 
@@ -348,15 +348,15 @@ function jumpin()
             diplomat:setHilight(true)
             diplomat:setVisplayer()
             diplomat:setVisible() -- Hack to make ambushes more reliable.
-            proxy = hook.timer(500, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortNext"})
+            proxy = hook.timer(0.5, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortNext"})
             for i, j in ipairs(escorts) do
                 if j:exists() then
                     j:follow(diplomat,true) -- Follow the diplomat.
                 end
             end
-            hook.timer(5000, "chatter", {pilot = escorts[1], text = commmsg[6]})
-            hook.timer(12000, "chatter", {pilot = escorts[2], text = commmsg[7]})
-            hook.timer(14000, "chatter", {pilot = escorts[3], text = commmsg[8]})
+            hook.timer(5.0, "chatter", {pilot = escorts[1], text = commmsg[6]})
+            hook.timer(12.0, "chatter", {pilot = escorts[2], text = commmsg[7]})
+            hook.timer(14.0, "chatter", {pilot = escorts[3], text = commmsg[8]})
         elseif system.cur() == misssys[4] then -- case rendezvous with Dvaered diplomat
             for i, j in ipairs(escorts) do
                 if j:exists() then
@@ -384,10 +384,10 @@ function jumpin()
                 end
             end
             if not chattered then
-                hook.timer(10000, "chatter", {pilot = escorts[2], text = commmsg[2]})
-                hook.timer(20000, "chatter", {pilot = escorts[3], text = commmsg[3]})
-                hook.timer(30000, "chatter", {pilot = escorts[2], text = commmsg[4]})
-                hook.timer(35000, "chatter", {pilot = escorts[1], text = commmsg[5]})
+                hook.timer(10.0, "chatter", {pilot = escorts[2], text = commmsg[2]})
+                hook.timer(20.0, "chatter", {pilot = escorts[3], text = commmsg[3]})
+                hook.timer(30.0, "chatter", {pilot = escorts[2], text = commmsg[4]})
+                hook.timer(35.0, "chatter", {pilot = escorts[1], text = commmsg[5]})
                 chattered = true
             end
             jp2go = system.cur():jumpDist(misssys[4])
@@ -542,7 +542,7 @@ function diplomatAttacked()
     else
         shuttingup = true
         diplomat:comm(diplomatdistress)
-        hook.timer(10e3, "diplomatShutup") -- Shuts him up for at least 10s.
+        hook.timer(10.0, "diplomatShutup") -- Shuts him up for at least 10s.
     end
 end
 
@@ -562,7 +562,7 @@ function diplomatIdle()
         end
     end
 
-    proxy = hook.timer(100, "proximity", {location = diplomat:pos(), radius = 400, funcname = "diplomatCutscene"})
+    proxy = hook.timer(0.1, "proximity", {location = diplomat:pos(), radius = 400, funcname = "diplomatCutscene"})
 end
 
 -- This is the final cutscene.
@@ -574,11 +574,11 @@ function diplomatCutscene()
 
     camera.set(dvaerplomat, true, 500)
 
-    hook.timer(1000, "chatter", {pilot = diplomat, text = commmsg[11]})
-    hook.timer(10000, "chatter", {pilot = dvaerplomat, text = commmsg[12]})
-    hook.timer(17000, "diplomatGo")
-    hook.timer(21000, "chatter", {pilot = escorts[1], text = commmsg[13]})
-    hook.timer(21500, "killDiplomats")
+    hook.timer(1.0, "chatter", {pilot = diplomat, text = commmsg[11]})
+    hook.timer(10.0, "chatter", {pilot = dvaerplomat, text = commmsg[12]})
+    hook.timer(17.0, "diplomatGo")
+    hook.timer(21.0, "chatter", {pilot = escorts[1], text = commmsg[13]})
+    hook.timer(21.5, "killDiplomats")
 
 end
 
@@ -602,8 +602,8 @@ function killDiplomats()
         end
     end
     diplomat:hookClear()
-    hook.timer(500, "diplomatKilled")
-    hook.timer(5000, "escortFlee")
+    hook.timer(0.5, "diplomatKilled")
+    hook.timer(5.0, "escortFlee")
     landfail = false
 end
 

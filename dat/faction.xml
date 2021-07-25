@@ -212,7 +212,6 @@
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
-  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>Collective</name>

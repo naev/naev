@@ -143,8 +143,8 @@ function enter()
       pilot.toggleSpawn(false)
 
       --Waiting to spawn the FLF in order to let the player's shield decrease
-      hook.timer(2000,"wait_msg")
-      hook.timer(10000,"flf_people")
+      hook.timer(2.0,"wait_msg")
+      hook.timer(10.0,"flf_people")
 
    end
 end

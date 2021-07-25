@@ -258,15 +258,15 @@ They rush off into the depths of the ship.]]))
    spawned_dvaereds = {}
    spawned_pirates = {}
    player.msg(string.format(_("Sensors detecting Dvaered patrol incoming from %s!"), dvaeredsys))
-   hook.timer(  5e3, "msg1" )
-   hook.timer( 10e3, "dv_reinforcement1" )
-   hook.timer( 100e3, "dv_reinforcement1" )
-   hook.timer( 110e3, "msg2" )
-   hook.timer( 170e3, "dv_reinforcement2" )
-   hook.timer( 200e3, "msg3" )
-   hook.timer( 230e3, "dv_reinforcement3" )
-   hook.timer( 240e3, "msg4" )
-   hook.timer( 330e3, "pir_reinforcements" )
+   hook.timer(  5.0, "msg1" )
+   hook.timer( 10.0, "dv_reinforcement1" )
+   hook.timer( 100.0, "dv_reinforcement1" )
+   hook.timer( 110.0, "msg2" )
+   hook.timer( 170.0, "dv_reinforcement2" )
+   hook.timer( 200.0, "msg3" )
+   hook.timer( 230.0, "dv_reinforcement3" )
+   hook.timer( 240.0, "msg4" )
+   hook.timer( 330.0, "pir_reinforcements" )
 
    -- Unboard
    player.unboard()
@@ -329,7 +329,7 @@ function pir_reinforcements ()
    } )
 
    -- Detect all Dvaered dead
-   hook.timer( 3000, "heartbeat" )
+   hook.timer( 3.0, "heartbeat" )
 end
 
 function msg1 ()
@@ -408,12 +408,12 @@ function heartbeat ()
 
    -- Still left
    if #spawned_dvaereds > 0 then
-      hook.timer( 3000, "heartbeat" )
+      hook.timer( 3.0, "heartbeat" )
       return
    end
 
    -- Add a delay for the followup
-   hook.timer( 7e3, "followup" )
+   hook.timer( 7.0, "followup" )
 end
 
 function followup ()

@@ -168,17 +168,17 @@ function jumpin()
             scom[i]:control()
             scom[i]:attack(player.pilot())
         end
-        hook.timer(10000, "warningMessage")
+        hook.timer(10.0, "warningMessage")
     elseif stage == 3 and system.cur() == dest_sys then
-        hook.timer(60000, "cannotLand")
+        hook.timer(60.0, "cannotLand")
     end
 end
 
 function takeoff()
     if stage == 5 then
         stage = 6
-        hook.timer(2000, "startAmbush")
-        hook.timer(12000, "secondWarningMessage")
+        hook.timer(2.0, "startAmbush")
+        hook.timer(12.0, "secondWarningMessage")
     end
 end
 

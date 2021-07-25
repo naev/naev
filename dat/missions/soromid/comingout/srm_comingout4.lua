@@ -138,7 +138,7 @@ function enter ()
    player.allowSave( true )
    if stage >= 2 and system.cur() == missys then
       player.allowLand( false, noland_msg )
-      hook.timer( 1000, "ambush_timer" )
+      hook.timer( 1.0, "ambush_timer" )
    end
 end
 

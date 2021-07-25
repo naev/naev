@@ -253,37 +253,37 @@ function enter()
         local delay = 0
         zoomspeed = 2500
         hook.timer(delay, "playerControl", true)
-        delay = delay + 2000
+        delay = delay + 2.0
         hook.timer(delay, "zoomTo", joe)
-        delay = delay + 4000
+        delay = delay + 4.0
         hook.timer(delay, "showText", Jorscene[1])
-        delay = delay + 4000
+        delay = delay + 4.0
         hook.timer(delay, "zoomTo", leader[1])
-        delay = delay + 1000
+        delay = delay + 1.0
         hook.timer(delay, "showText", Jorscene[2])
-        delay = delay + 2000
+        delay = delay + 2.0
         hook.timer(delay, "zoomTo", leader[2])
-        delay = delay + 3000
+        delay = delay + 3.0
         hook.timer(delay, "zoomTo", leader[3])
-        delay = delay + 2000
+        delay = delay + 2.0
         hook.timer(delay, "showText", Jorscene[3])
-        delay = delay + 3000
+        delay = delay + 3.0
         hook.timer(delay, "zoomTo", leader[4])
-        delay = delay + 4000
+        delay = delay + 4.0
         hook.timer(delay, "zoomTo", leader[5])
-        delay = delay + 4000
+        delay = delay + 4.0
         hook.timer(delay, "zoomTo", player.pilot())
         hook.timer(delay, "playerControl", false)
 
         -- Hide everyone again
-        delay = delay + 2000
+        delay = delay + 2.0
         hook.timer(delay, "squadVis", false)
-        delay = delay + 1
+        delay = delay + 0.001
         -- ...except the leaders.
         hook.timer(delay, "leaderVis", true)
 
         hook.pilot(joe, "board", "joeBoard")
-        poller = hook.timer(500, "patrolPoll")
+        poller = hook.timer(0.5, "patrolPoll")
     elseif system.cur() == ambushsys and stage == 4 then
         tk.msg(joefailtitle, joefailtext:format(player.name()))
         shadow_addLog( log_text_fail )
@@ -291,7 +291,7 @@ function enter()
     elseif system.cur() == ambushsys and stage == 5 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        hook.timer(500, "invProximity", { location = jump.pos(system.cur(), "Suna"), radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
+        hook.timer(0.5, "invProximity", { location = jump.pos(system.cur(), "Suna"), radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
     elseif system.cur() == safesys and stage == 5 then
         stage = 6 -- stop spawning the Genbu
     elseif genbuspawned and stage == 5 then
@@ -408,7 +408,7 @@ function patrolPoll()
             return
         end
     end
-    poller = hook.timer(500, "patrolPoll")
+    poller = hook.timer(0.5, "patrolPoll")
 end
 
 -- Spawns the Genbu
@@ -432,9 +432,9 @@ function startAmbush()
     zoomspeed = 4500
     hook.timer(delay, "playerControl", true)
     hook.timer(delay, "zoomTo", genbu)
-    delay = delay + 5000
+    delay = delay + 5.0
     hook.timer(delay, "showMsg", {title[6], text[10]:format(player.name())})
-    delay = delay + 1000
+    delay = delay + 1.0
     hook.timer(delay, "zoomTo", player.pilot())
     hook.timer(delay, "playerControl", false)
     hook.timer(delay, "continueAmbush")
@@ -446,7 +446,7 @@ function continueAmbush()
     genbu:attack(player.pilot())
     waves = 0
     maxwaves = 5
-    spinter = hook.timer(5000, "spawnInterceptors")
+    spinter = hook.timer(5.0, "spawnInterceptors")
 end
 
 -- Spawns a wing of Lancelots that intercept the player.
@@ -462,7 +462,7 @@ function spawnInterceptors()
     end
     if waves < maxwaves then
        waves = waves + 1
-       spinter = hook.timer(25000, "spawnInterceptors")
+       spinter = hook.timer(25.0, "spawnInterceptors")
     end
 end
 
@@ -537,7 +537,7 @@ function invProximity(trigger)
     if vec2.dist(player.pos(), trigger.location) >= trigger.radius then
         _G[trigger.funcname]()
     else
-        hook.timer(500, "invProximity", trigger)
+        hook.timer(0.5, "invProximity", trigger)
     end
 end
 

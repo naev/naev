@@ -153,7 +153,7 @@ function enter()
         pilot.clear()
         pilot.toggleSpawn(false)
         misn.osdActive(2)
-        hook.timer(15000, "spawnDV")
+        hook.timer(15.0, "spawnDV")
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission.
         tk.msg(failtitle[1], failtext[1])
         faction.get("Dvaered"):modPlayerSingle(-10)
@@ -188,7 +188,7 @@ function spawnDV()
         hook.pilot(j, "disable", "disableDV")
     end
 
-    hook.timer(500, "pollHealth")
+    hook.timer(0.5, "pollHealth")
 end
 
 -- Polls the player's health and the Dvaereds' shields, and spawns the FLF fleet if shields and armor are below a certain value.
@@ -204,7 +204,7 @@ function pollHealth()
     if parmor <= 60 and pshield <= 10 and shieldDV <= (maxshieldDV - 50) then
         spawnFLF()
     else
-        hook.timer(500, "pollHealth")
+        hook.timer(0.5, "pollHealth")
     end
 end
 

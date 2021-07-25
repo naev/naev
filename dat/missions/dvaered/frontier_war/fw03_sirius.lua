@@ -248,13 +248,13 @@ function enter()
             waitPoint = tamJp:pos() + PW
             badguys[1]:control()
             badguys[1]:moveto(waitPoint)
-            hook.timer(500, "proximity", {location = waitPoint, radius = 3000, funcname = "badInPosition", focus = badguys[1]})
+            hook.timer(0.5, "proximity", {location = waitPoint, radius = 3000, funcname = "badInPosition", focus = badguys[1]})
 
             escort[1]:taskClear()
             escort[1]:follow( badguys[1] ) -- Yes, he's not supposed to know where they are, but it's safer for the trigger
-            hook.timer(500, "proximityScan", {anchor = badguys[1], funcname = "straferScans", focus = escort[1]})
+            hook.timer(0.5, "proximityScan", {anchor = badguys[1], funcname = "straferScans", focus = escort[1]})
          else
-            hook.timer(500, "proximity", {location = ambJp:pos(), radius = 4000, funcname = "straferReturns", focus = escort[1]})
+            hook.timer(0.5, "proximity", {location = ambJp:pos(), radius = 4000, funcname = "straferReturns", focus = escort[1]})
          end
       end
 
@@ -470,8 +470,8 @@ end
 -- Baddies are in position: start the battle after a small delay
 function badInPosition()
    badguys[1]:comm(preAmbushMsg)
-   hook.timer(2000, "roastedTam")
-   hook.timer(4000, "tamNattack")
+   hook.timer(2.0, "roastedTam")
+   hook.timer(4.0, "tamNattack")
 end
 function roastedTam()
    badguys[2]:comm(preAmbush1)

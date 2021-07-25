@@ -78,7 +78,7 @@ function accept ()
 end
 
 function enter () --aforementioned triggered function
-   hook.timer(4000, "spawnBaddies")
+   hook.timer(4.0, "spawnBaddies")
 
    if system.cur() == targetsystem then --when in target system
       local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier", "Hawking", "Kestrel" }

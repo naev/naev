@@ -203,7 +203,7 @@ end
 -- when the player takes off the authorities will want them
 function sys_enter ()
    if system.cur() == t_sys[2] then
-      hook.timer(7000, "call_the_police")
+      hook.timer(7.0, "call_the_police")
    end
 end
 function call_the_police ()

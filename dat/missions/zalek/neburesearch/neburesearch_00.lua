@@ -140,16 +140,16 @@ end
 function jumpin()
     sys = system.cur()
     if misn_stage == 0 and sys == system.get(t_sys[1]) then
-        hook.timer(5000, "beginFirstScan")
+        hook.timer(5.0, "beginFirstScan")
     elseif misn_stage == 1 and sys == system.get(t_sys[2]) then
         misn_stage = 2
-        hook.timer(5000, "beginSecondScan")
+        hook.timer(5.0, "beginSecondScan")
     end
 end
 
 function beginFirstScan()
     tk.msg("", string.format(scan_1_text, t_sys[1], t_sys[2]))
-    shook = hook.timer(30000, "startProblems")
+    shook = hook.timer(30.0, "startProblems")
 end
 
 function startProblems()
@@ -158,8 +158,8 @@ function startProblems()
     player.cinematics(false)
     ps = player.pilot()
     ps:control()
-    phook = hook.timer(100, "drainShields")
-    hook.timer(4000, "noticeProblems")
+    phook = hook.timer(0.1, "drainShields")
+    hook.timer(4.0, "noticeProblems")
 end
 
 function drainShields()
@@ -167,12 +167,12 @@ function drainShields()
     armour, shield, stress, dis = ps:health()
     ps:setHealth(armour, 0)
     ps:setEnergy(0)
-    phook = hook.timer(100, "drainShields")
+    phook = hook.timer(0.1, "drainShields")
 end
 
 function noticeProblems()
     tk.msg("", problems_text)
-    hook.timer(10000, "stopProblems")
+    hook.timer(10.0, "stopProblems")
 end
 
 function stopProblems()
@@ -194,7 +194,7 @@ function beginSecondScan()
     tk.msg( "", string.format(
         _("You arrive in the %s system and Robert Hofer tells you that he will let you know when his scan is complete. This had better not cause another blackout..."),
         t_sys[2] ) )
-    hook.timer(30000, "endSecondScan")
+    hook.timer(30.0, "endSecondScan")
 end
 
 function endSecondScan()

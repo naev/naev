@@ -318,7 +318,7 @@ function timer ()
    end
 
    if not job_done then
-      timer_hook = hook.timer( 50, "timer" )
+      timer_hook = hook.timer( 0.05, "timer" )
    end
 end
 

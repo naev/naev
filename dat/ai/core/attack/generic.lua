@@ -157,10 +157,10 @@ function _atk_g_ranged_strafe( target, dist )
       -- ship must be stabilized since 2 secs
       elseif ai.relvel(target) < 5 and not ai.timeup(1) then--[[if not mem.stabilized then
          mem.stabilized = true
-         ai.settimer(0, 2000)
+         ai.settimer(0, 2.0)
       elseif not ai.timeup(1) and ai.timeup(0) then
          -- If the ship manages to catch its mark, reset the timer]]
-         --ai.settimer(1, 10000)
+         --ai.settimer(1, 10.0)
          mem.mustapproach = false
       end
       if dist < range*0.85 then
@@ -174,7 +174,7 @@ function _atk_g_ranged_strafe( target, dist )
          ai.weapset( 4 )
          -- If he managed to shoot, reinitialize the timer
          if ai.shoot_indicator() and not ai.timeup(1) then
-            ai.settimer(1, 13000)
+            ai.settimer(1, 13.0)
          end
       end
    end
@@ -183,7 +183,7 @@ function _atk_g_ranged_strafe( target, dist )
    --From now, if ship doesn't manage to stabilize within a few seconds, shoot anyway
    if dist < 1.5*range and not mem.inzone then
       mem.inzone = true
-      ai.settimer(1, mod/p:stats().speed*700 )
+      ai.settimer(1, mod/p:stats().speed*0.7 )
    end
 end
 function _atk_g_ranged_kite( target, dist )

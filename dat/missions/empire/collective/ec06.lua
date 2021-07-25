@@ -203,7 +203,7 @@ function jumpin ()
         pilot.toggleSpawn(false)
         misn_stage = 0
         diff.apply("collective_dead")
-        hook.timer( 4000, "fail_timer" )
+        hook.timer( 4.0, "fail_timer" )
     end
 end
 
@@ -218,7 +218,7 @@ end
 function refuelBroadcast ()
    if refship:exists() then
       refship:broadcast(_("Tanker in system, contact if in need of fuel."))
-      hook.timer(10000, "refuelBroadcast")
+      hook.timer(10.0, "refuelBroadcast")
    end
 end
 

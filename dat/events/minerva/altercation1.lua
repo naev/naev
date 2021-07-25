@@ -111,9 +111,9 @@ function takeoff ()
       _("You Dvaereds smell worse than my vials of thiol!"),
    }
    zl_yelling = (rnd.rnd()<0.5)
-   timetonextanger = 1000
+   timetonextanger = 1.0
    angrytimer = hook.timer( timetonextanger, "angrypeople" )
-   attacktimer = hook.timer( 5000, "startattack" )
+   attacktimer = hook.timer( 5.0, "startattack" )
    player_side = nil
 
    -- Set up hooks when it is over
@@ -147,7 +147,7 @@ function angrypeople ()
       zl:broadcast( msg )
    end
    zl_yelling = not zl_yelling
-   timetonextanger = timetonextanger + 2000 -- slowly talk less and less
+   timetonextanger = timetonextanger + 2.0 -- slowly talk less and less
    angrytimer = hook.timer( timetonextanger, "angrypeople" )
 end
 

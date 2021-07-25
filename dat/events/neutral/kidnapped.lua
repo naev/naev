@@ -25,7 +25,7 @@ function create ()
     hook.land("finish")
     hook.jumpout("finish")
 
-    yohail = hook.timer( 2000., "hailme" );
+    yohail = hook.timer( 2.0, "hailme" );
 end
 
 --Pa and Ma are hailing the player!

@@ -346,7 +346,7 @@ function mainguy_board ()
 end
 
 function mainguy_dead ()
-   hook.timer( 3000, "mainguy_dead_scanned" )
+   hook.timer( 3.0, "mainguy_dead_scanned" )
 end
 
 function mainguy_dead_scanned ()

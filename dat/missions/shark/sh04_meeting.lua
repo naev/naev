@@ -151,7 +151,7 @@ end
 function enter()
    --This timer will ensure that the hacked drones don't reveal themselves during the jumping
    enable = false
-   hook.timer(5000,"enabling")
+   hook.timer(5.0,"enabling")
    -- Ambush !
    if system.cur():presence(faction.get("Za'lek")) > 50 then  -- Only in Za'lek space
       if stage == 0 and rnd.rnd() < proba then
@@ -174,7 +174,7 @@ function ambush()
       j:follow(player.pilot())
 
       --as the player approaches, the drones reveal to be bad guys!
-      badguyprox[i] = hook.timer(500, "proximity", {anchor = j, radius = 1000, funcname = "reveal"})
+      badguyprox[i] = hook.timer(0.5, "proximity", {anchor = j, radius = 1000, funcname = "reveal"})
    end
 end
 

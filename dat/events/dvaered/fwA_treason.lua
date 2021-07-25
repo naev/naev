@@ -95,7 +95,7 @@ function begin ()
    finish3 = hook.land("finish")
    finish4 = hook.jumpout("finish")
 
-   yohail = hook.timer( 4000, "hailme" );
+   yohail = hook.timer( 4.0, "hailme" )
 end
 
 function hailme()

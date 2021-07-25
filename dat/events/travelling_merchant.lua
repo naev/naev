@@ -56,7 +56,7 @@ function create ()
    p:brake()
 
    -- Set up hooks
-   timerdelay = 5000
+   timerdelay = 5.0
    broadcastid = 1
    broadcastmsg = rnd.permutation( broadcastmsg )
    timer = hook.timer( timerdelay, "broadcast" )

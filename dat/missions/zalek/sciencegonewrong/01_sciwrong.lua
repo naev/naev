@@ -130,11 +130,11 @@ function targetIdle()
    newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
    target:taskClear()
    target:moveto(location + newlocation, false, false)
-   hook.timer(5000, "targetIdle")
+   hook.timer(5.0, "targetIdle")
 end
 
 function targetExploded()
-   hook.timer( 2000, "targetDeath" )
+   hook.timer( 2.0, "targetDeath" )
 end
 
 function targetDeath()
