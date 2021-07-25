@@ -290,7 +290,7 @@ function drone_disableable()
    t_drone:setNoDisable(false)
    if jumps == 2 then
       tk.msg(title[3],text[13])
-      hook.timer(18.0+rnd.rnd(0.001, 4.0), "drone_selfdestruct")
+      hook.timer(18.0+rnd.uniform(0.001, 4.0), "drone_selfdestruct")
    end
 end
 -- last hook

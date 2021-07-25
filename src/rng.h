@@ -17,7 +17,7 @@
 /**
  * @brief Gets a number between L and H (L <= RNG <= H).
  *
- * Result unspecified in L is bigger then H>
+ * Result unspecified in L is bigger then H.
  */
 #define RNG_BASE(L,H) ((int)L + (int)((double)(H-L+1) * randfp())) /* L <= RNG <= H */
 /**
