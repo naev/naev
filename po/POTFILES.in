@@ -2217,6 +2217,7 @@ dat/events/neutral/npc.lua
 dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shipwreck.lua
+dat/events/neutral/system_tour.lua
 dat/events/pirate_fame.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
@@ -2340,6 +2341,7 @@ dat/missions/flf/flf_pre02.lua
 dat/missions/flf/flf_rogue.lua
 dat/missions/minerva/kex1.lua
 dat/missions/minerva/kex2.lua
+dat/missions/minerva/kex3.lua
 dat/missions/minerva/maikki1.lua
 dat/missions/minerva/maikki2.lua
 dat/missions/minerva/pirate1.lua
@@ -2508,6 +2510,8 @@ dat/scripts/love/touch.lua
 dat/scripts/love/video.lua
 dat/scripts/love/window.lua
 dat/scripts/love_shaders.lua
+dat/scripts/luaspfx.lua
+dat/scripts/luaspfx/effects.lua
 dat/scripts/luatk.lua
 dat/scripts/merge_tables.lua
 dat/scripts/minigames/blackjack.lua
