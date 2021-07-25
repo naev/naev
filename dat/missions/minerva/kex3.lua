@@ -127,10 +127,16 @@ function generate_npc ()
       vn.clear()
       vn.scene()
       vn.transition()
-      vn.na("TODO")
+      vn.na(_([[You disconnect from the virtual reality of the Crimson Gauntlet and look around the private room you were in. There is a distinct odour of sweat permeating the room. Furthermore, it looks like someone left in a hurry, but at least it seems like Major Malik is still in his terminal.]]))
+      vn.na(_([[You approach Major Malik and notice immediately that something is off. You remove the headgear from him and immediately see that his eyes are glazed over and there is some white froth coming out of his mouth. Seems like some sort of mental shock killed him.]]))
+      vn.na(_([[From the corner of your eye you see that the terminal is still logged in. Since there is nothing you can do anymore for Major Mali, you rotate the screen to you and try to see if you can find any of the information that Kex was looking for.]]))
+      vn.na(_([[The directories are really organized and it doesn't take long before you can find what seem to be the correct files, and you copy them over to a holodrive that you pocket with you. This should make Kex satisfied this time.]]))
+      vn.na(_([[You survey the room one last time before you leave. You notice that the chassis covering some of the terminal has been pried open, exposing some internal connections. There is no doubt that someone jacked into your Crimson Gauntlet session. However, given the dead body in the room, you decide to take your leave before it attracts attention.]]))
+      vn.na(_([[You better head over to Kex to rely the information back at Minerva Station.]]))
       vn.run()
 
       misn_state = 5 -- We're done here, go back to kex:)
+      misn.osdActive(2)
    end
 end
 
@@ -539,9 +545,7 @@ function malik_speech ()
    }
 
    local s = speeches[ malik_speech_state ]
-   if not s then
-      return
-   end
+   if not s then return end
    if s.txt then
       player.omsgAdd( s.txt, s.delay / 1000 )
    end
