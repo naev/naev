@@ -18,7 +18,7 @@ local nw2, nh2 = nw/2, nh/2
 local luaspfx = {}
 luaspfx.effects = require 'luaspfx.effects'
 
-local function __luaspfx_render( dt, tbl )
+function __luaspfx_render( dt, tbl )
    local toremove = {}
    local cx, cy = camera.get():get()
    local cz = camera.getZoom()

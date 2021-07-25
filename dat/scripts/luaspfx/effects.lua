@@ -49,7 +49,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    return color;
 }
 ]]
-function effects.alert( params, x, y, z )
+local function __alert( params, x, y, z )
    if not effects.__alert_bg_shader then
       effects.__alert_bg_shader = lg.newShader(
          alert_bg_shader_frag,
@@ -66,6 +66,6 @@ function effects.alert( params, x, y, z )
    love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
    lg.setShader( old_shader )
 end
-
+effects.alert = { func = __alert }
 
 return effects
