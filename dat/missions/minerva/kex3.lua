@@ -500,6 +500,7 @@ function maikki_arrives_real( pos )
    p:intrinsicSet( "fwd_dam_as_dis", 50 )
    p:intrinsicSet( "tur_dam_as_dis", 50 )
 
+   -- Fancy message
    local mc = minerva.maikkiP.colour
    local col = colour.new( mc[1], mc[2], mc[3], 1.0 )
    player.omsgAdd( _("Ho ho ho and a bottle of rum!"), 5, nil, col )
