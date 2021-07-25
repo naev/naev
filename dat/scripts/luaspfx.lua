@@ -48,9 +48,8 @@ function __luaspfx_render( tbl )
       v.params.time = v.time
       -- Convert coordinates to screen
       local ox, oy = v.pos:get()
-      local x, y = ox-cx, oy-cy
-      x = (cx-nw2) / cz + nw2
-      y = nh2 - (cy-nh2) / cz
+      local x = (ox-cx) / cz + nw2
+      local y = nh2 - (oy-cy) / cz
       -- Run function (should render)
       v.func( v.params, x, y, cz )
    end
