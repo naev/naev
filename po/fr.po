@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-07-24 11:31-0400\n"
+"POT-Creation-Date: 2021-07-24 21:49-0400\n"
 "PO-Revision-Date: 2021-07-13 20:33+0000\n"
 "Last-Translator: rhebok-git <geneenkei@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
@@ -12689,8 +12689,8 @@ msgstr ""
 msgid "Wayline m1"
 msgstr ""
 
-#: dat/assets/wayling_m2.xml:2
-msgid "Wayling m2"
+#: dat/assets/wayline_m2.xml:2
+msgid "Wayline m2"
 msgstr ""
 
 #: dat/assets/wellen.xml:2
@@ -43817,7 +43817,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/kex1.lua:202 dat/missions/zalek/zlk_test.lua:66
-#: src/land.c:639 src/npc.c:628
+#: src/land.c:639 src/npc.c:629
 msgid "You have too many active missions."
 msgstr ""
 
@@ -65322,7 +65322,7 @@ msgstr ""
 #. Misc
 #. Specific corrections
 #. Fighter bays don't have dps or anything, so we have to fake it
-#: dat/scripts/equipopt/optimize.lua:391
+#: dat/scripts/equipopt/optimize.lua:392
 #, lua-format
 msgid "Fighter bay '%s' does not have computed DPS!"
 msgstr ""
@@ -65340,7 +65340,7 @@ msgstr ""
 #. For volatile systems we don't want ships to explode!
 #. Avoid same items and limits
 #. Add space worthy checks
-#: dat/scripts/equipopt/optimize.lua:472
+#: dat/scripts/equipopt/optimize.lua:473
 #, lua-format
 msgid "Impossible mass goal of %d set! Ignoring mass for pilot '%s'!"
 msgstr ""
@@ -65373,13 +65373,13 @@ msgstr ""
 #. Check to see if that worked, and if not remove the constraint
 #. Re-solve
 #. Maybe should be error instead?
-#: dat/scripts/equipopt/optimize.lua:637
+#: dat/scripts/equipopt/optimize.lua:638
 #, lua-format
 msgid "Failed to solve equipopt linear program for pilot '%s': %s"
 msgstr ""
 
 #. Interpret results
-#: dat/scripts/equipopt/optimize.lua:650
+#: dat/scripts/equipopt/optimize.lua:651
 #, lua-format
 msgid "Unable to equip outfit '%s' on '%s'!"
 msgstr ""
@@ -65388,14 +65388,14 @@ msgstr ""
 #. energy, we'll try again with larger energy constraints
 #. print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
 #. attempts should be fairly fast since we just do optimization step
-#: dat/scripts/equipopt/optimize.lua:669
+#: dat/scripts/equipopt/optimize.lua:670
 #, lua-format
 msgid "Failed to equip pilot '%s'!"
 msgstr ""
 
 #. Fill ammo
 #. Check
-#: dat/scripts/equipopt/optimize.lua:681
+#: dat/scripts/equipopt/optimize.lua:682
 #, lua-format
 msgid "Pilot '%s' is not space worthy after equip script is run! Reason: %s"
 msgstr ""
@@ -69566,7 +69566,7 @@ msgstr ""
 msgid "Background -> 'background' : %s"
 msgstr ""
 
-#: src/background.c:462 src/gui.c:1988 src/nlua_evt.c:143 src/nlua_misn.c:261
+#: src/background.c:462 src/gui.c:1988 src/nlua_evt.c:159 src/nlua_misn.c:261
 #: src/nopenal.c:72
 msgid "unknown error"
 msgstr ""
@@ -71291,7 +71291,7 @@ msgstr ""
 msgid "#gEscorts: #0Jumping."
 msgstr ""
 
-#: src/event.c:280
+#: src/event.c:231
 #, c-format
 msgid ""
 "Error loading event file: %s\n"
@@ -71299,117 +71299,117 @@ msgid ""
 "Most likely Lua file has improper syntax, please check"
 msgstr ""
 
-#: src/event.c:342
+#: src/event.c:293
 #, c-format
 msgid "Event ID '%u' not valid."
 msgstr ""
 
-#: src/event.c:409
+#: src/event.c:360
 #, c-format
 msgid "Conditional for event '%s' failed to run."
 msgstr ""
 
-#: src/event.c:444
+#: src/event.c:395
 #, c-format
 msgid "Event in %s has invalid or no name"
 msgstr ""
 
-#: src/event.c:457
+#: src/event.c:408
 #, c-format
 msgid "Event '%s': Null trigger type."
 msgstr ""
 
-#: src/event.c:467
+#: src/event.c:418
 #, c-format
 msgid "Event '%s' has invalid 'trigger' parameter: %s"
 msgstr ""
 
-#: src/event.c:481
+#: src/event.c:432
 #, c-format
 msgid "Event '%s' has unknown flag node '%s'."
 msgstr ""
 
-#: src/event.c:498
+#: src/event.c:449
 #, c-format
 msgid "Unknown node '%s' in event '%s'"
 msgstr ""
 
-#: src/event.c:505
+#: src/event.c:456
 #, c-format
 msgid "Event '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/event.c:550
+#: src/event.c:501
 #, c-format
 msgid "Loaded %d Event"
 msgid_plural "Loaded %d Events"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/event.c:576 src/faction.c:1410 src/mission.c:900 src/nxml.c:88
+#: src/event.c:527 src/faction.c:1410 src/mission.c:900 src/nxml.c:88
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr ""
 
-#: src/event.c:585
+#: src/event.c:536
 #, c-format
 msgid "Event '%s' has create function but no XML header!"
 msgstr ""
 
-#: src/event.c:594
+#: src/event.c:545
 #, c-format
 msgid "Event file '%s' has missing XML header!"
 msgstr ""
 
-#: src/event.c:601
+#: src/event.c:552
 #, c-format
 msgid "Unable to parse document XML header for Event '%s'"
 msgstr ""
 
-#: src/event.c:608 src/slots.c:67 src/spfx.c:191 src/start.c:68
+#: src/event.c:559 src/slots.c:67 src/spfx.c:191 src/start.c:68
 #, c-format
 msgid "Malformed '%s' file: missing root element '%s'"
 msgstr ""
 
-#: src/event.c:621
+#: src/event.c:572
 #, c-format
 msgid "Event Lua '%s' syntax error: %s"
 msgstr ""
 
-#: src/event.c:698
+#: src/event.c:649
 #, c-format
 msgid "No event data found matching name '%s'."
 msgstr ""
 
-#: src/event.c:737
+#: src/event.c:688
 #, c-format
 msgid "Trying to test claims of unknown event with id '%d'!"
 msgstr ""
 
 #. Must delete.
-#: src/event.c:761
+#: src/event.c:712
 #, c-format
 msgid ""
 "Detected event '%s' without any hooks and is therefore invalid. Removing "
 "event."
 msgstr ""
 
-#: src/event.c:855
+#: src/event.c:806
 msgid "Event has missing 'name' attribute, skipping."
 msgstr ""
 
-#: src/event.c:860
+#: src/event.c:811
 #, c-format
 msgid ""
 "Event in save has name '%s' but event data not found matching name. Skipping."
 msgstr ""
 
-#: src/event.c:867
+#: src/event.c:818
 #, c-format
 msgid "Event with data '%s' has invalid 'id' attribute, skipping."
 msgstr ""
 
-#: src/event.c:875
+#: src/event.c:826
 #, c-format
 msgid "Event with data '%s' was not created, skipping."
 msgstr ""
@@ -71716,67 +71716,67 @@ msgstr ""
 msgid "OSD '%s' only has %d items (requested %d)"
 msgstr ""
 
-#: src/hook.c:279
+#: src/hook.c:280
 msgid "Unknown Lua parameter type."
 msgstr ""
 
-#: src/hook.c:309
+#: src/hook.c:310
 msgid "Trying to run hook with nonexistent parent: deleting"
 msgstr ""
 
-#: src/hook.c:317
+#: src/hook.c:318
 msgid "Trying to run hook with parent not in player mission stack: deleting"
 msgstr ""
 
 #. error has occurred
-#: src/hook.c:341 src/hook.c:391
+#: src/hook.c:342 src/hook.c:392
 #, c-format
 msgid "Hook [%s] '%d' -> '%s' failed"
 msgstr ""
 
-#: src/hook.c:372
+#: src/hook.c:373
 #, c-format
 msgid "Hook [%s] '%d' -> '%s' failed, event does not exist. Deleting hook."
 msgstr ""
 
-#: src/hook.c:429
+#: src/hook.c:430
 #, c-format
 msgid "Invalid hook type '%d', deleting."
 msgstr ""
 
-#: src/hook.c:972
+#: src/hook.c:973
 #, c-format
 msgid "HOOK_MAX_PARAM is set too low (%d), need at least %d!"
 msgstr ""
 
-#: src/hook.c:1077
+#: src/hook.c:1078
 #, c-format
 msgid "Attempting to run hook of id '%d' which is not in the stack"
 msgstr ""
 
-#: src/hook.c:1137
+#: src/hook.c:1138
 msgid "Running hook_cleanup while hook stack is being run!"
 msgstr ""
 
-#: src/hook.c:1219
+#: src/hook.c:1220
 msgid "Something has gone screwy here..."
 msgstr ""
 
-#: src/hook.c:1316
+#: src/hook.c:1317
 #, c-format
 msgid "Hook of unknown type '%s' found, skipping."
 msgstr ""
 
-#: src/hook.c:1345
+#: src/hook.c:1346
 #, c-format
 msgid "Save has unknown hook node '%s'."
 msgstr ""
 
-#: src/hook.c:1350
+#: src/hook.c:1351
 msgid "Invalid hook."
 msgstr ""
 
-#: src/hook.c:1363
+#: src/hook.c:1364
 msgid "Save has unsupported hook type."
 msgstr ""
 
@@ -74631,16 +74631,16 @@ msgstr ""
 msgid "Requires a debug build."
 msgstr ""
 
-#: src/nlua_evt.c:142
+#: src/nlua_evt.c:158
 #, c-format
 msgid "Event '%s' -> '%s': %s"
 msgstr ""
 
-#: src/nlua_evt.c:239 src/nlua_misn.c:985
+#: src/nlua_evt.c:256 src/nlua_misn.c:985
 msgid "Invalid NPC ID!"
 msgstr ""
 
-#: src/nlua_evt.c:322
+#: src/nlua_evt.c:339
 msgid "Event trying to claim but already has."
 msgstr ""
 
@@ -75112,42 +75112,42 @@ msgstr ""
 msgid "OpenAL error [%s:%d]: %s"
 msgstr ""
 
-#: src/npc.c:148
+#: src/npc.c:149
 #, c-format
 msgid "Mission '%s' trying to create NPC with no name!"
 msgstr ""
 
-#: src/npc.c:152
+#: src/npc.c:153
 #, c-format
 msgid "Mission '%s' trying to create NPC with no portrait!"
 msgstr ""
 
-#: src/npc.c:156
+#: src/npc.c:157
 #, c-format
 msgid "Mission '%s' trying to create NPC with no description!"
 msgstr ""
 
-#: src/npc.c:438
+#: src/npc.c:439
 #, c-format
 msgid ""
 "Mission '%s' was created at the spaceport bar but didn't create any NPC!"
 msgstr ""
 
-#: src/npc.c:498
+#: src/npc.c:499
 msgid "Freeing NPC of invalid type."
 msgstr ""
 
-#: src/npc.c:635
+#: src/npc.c:636
 #, c-format
 msgid "Unable to find mission '%d' in npc_missions for giver npc '%s'!"
 msgstr ""
 
-#: src/npc.c:678
+#: src/npc.c:679
 #, c-format
 msgid "Unable to find mission '%d' in npc_missions for mission npc '%s'!"
 msgstr ""
 
-#: src/npc.c:693
+#: src/npc.c:694
 msgid "Unknown NPC type!"
 msgstr ""
 
@@ -75228,7 +75228,7 @@ msgstr ""
 msgid "Unknown Lua data type!"
 msgstr ""
 
-#: src/opengl.c:118 src/player.c:2176
+#: src/opengl.c:118 src/player.c:2177
 msgid "Aborting screenshot"
 msgstr ""
 
@@ -76733,117 +76733,117 @@ msgstr ""
 msgid "Player ship isn't valid... This shouldn't happen!"
 msgstr ""
 
-#: src/player.c:514
+#: src/player.c:515
 msgid ""
 "Something seriously wonky went on, newly created player does not exist, "
 "bailing!"
 msgstr ""
 
-#: src/player.c:588
+#: src/player.c:589
 #, c-format
 msgid "Unable to swap player.p with ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:617
+#: src/player.c:618
 #, c-format
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:1379
+#: src/player.c:1380
 #, c-format
 msgid "Trying to set player's planet target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1429
+#: src/player.c:1430
 msgid "Asteroid targeted, composition: "
 msgstr ""
 
-#: src/player.c:1432
+#: src/player.c:1433
 #, c-format
 msgid "%s, quantity: %i"
 msgstr ""
 
-#: src/player.c:1437
+#: src/player.c:1438
 msgid "Asteroid targeted"
 msgstr ""
 
-#: src/player.c:1508
+#: src/player.c:1509
 msgid "#rThere are no planets to land on."
 msgstr ""
 
-#: src/player.c:1545
+#: src/player.c:1546
 msgid "#rDocking stabilizers malfunctioning, cannot land."
 msgstr ""
 
-#: src/player.c:1552
+#: src/player.c:1553
 msgid "#rYou can't land here."
 msgstr ""
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1570
+#: src/player.c:1571
 #, c-format
 msgid "#oReady to land on %s."
 msgstr ""
 
-#: src/player.c:1580
+#: src/player.c:1581
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr ""
 
-#: src/player.c:1586
+#: src/player.c:1587
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
-#: src/player.c:1629
+#: src/player.c:1630
 msgid "Player has landing permission, but no valid planet targeted."
 msgstr ""
 
-#: src/player.c:1640
+#: src/player.c:1641
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr ""
 
-#: src/player.c:1667
+#: src/player.c:1668
 msgid "You are not allowed to land at this moment."
 msgstr ""
 
-#: src/player.c:1681
+#: src/player.c:1682
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1784
+#: src/player.c:1785
 #, c-format
 msgid "#rReceiving hail! Press %s to respond."
 msgstr ""
 
-#: src/player.c:1839
+#: src/player.c:1840
 msgid "#rAborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1846
+#: src/player.c:1847
 msgid "#rYou are too far from a jump point to initiate hyperspace."
 msgstr ""
 
-#: src/player.c:1848 src/player_autonav.c:86
+#: src/player.c:1849 src/player_autonav.c:86
 msgid "#rHyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1850
+#: src/player.c:1851
 msgid "#rYou do not have enough fuel to hyperspace jump."
 msgstr ""
 
-#: src/player.c:1852
+#: src/player.c:1853
 msgid "#oPreparing for hyperspace."
 msgstr ""
 
-#: src/player.c:1936
+#: src/player.c:1937
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr ""
 
-#: src/player.c:1942
+#: src/player.c:1943
 #, c-format
 msgid "#oAutonav continuing until destination (%d jump left)."
 msgid_plural "#oAutonav continuing until destination (%d jumps left)."
@@ -76851,220 +76851,220 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2188
+#: src/player.c:2189
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2193
+#: src/player.c:2194
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2229
+#: src/player.c:2230
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2253 src/player.c:2276
+#: src/player.c:2254 src/player.c:2277
 msgid "#rNo target selected to hail."
 msgstr ""
 
-#: src/player.c:2312
+#: src/player.c:2313
 msgid "#rYou haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2323
+#: src/player.c:2324
 msgid "#oMouse flying enabled."
 msgstr ""
 
-#: src/player.c:2329
+#: src/player.c:2330
 msgid "#rMouse flying disabled."
 msgstr ""
 
-#: src/player.c:2557
+#: src/player.c:2558
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:2976
+#: src/player.c:2977
 msgid "Escort is undeployed"
 msgstr ""
 
-#: src/player.c:3198
+#: src/player.c:3199
 msgid "Found mission cargo without associated mission."
 msgstr ""
 
-#: src/player.c:3199
+#: src/player.c:3200
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3403
+#: src/player.c:3404
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3437
+#: src/player.c:3438
 #, c-format
 msgid "Outfit '%s' was saved but does not exist!"
 msgstr ""
 
-#: src/player.c:3443
+#: src/player.c:3444
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3463
+#: src/player.c:3464
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3466
+#: src/player.c:3467
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3477
+#: src/player.c:3478
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3483
+#: src/player.c:3484
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3493
+#: src/player.c:3494
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3502
+#: src/player.c:3503
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3532
+#: src/player.c:3533
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3536
+#: src/player.c:3537
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr ""
 
-#: src/player.c:3588
+#: src/player.c:3589
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3616
+#: src/player.c:3617
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3644
+#: src/player.c:3645
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3675
+#: src/player.c:3676
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3734
+#: src/player.c:3735
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:3755
+#: src/player.c:3756
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:3763
+#: src/player.c:3764
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:3785
+#: src/player.c:3786
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:3853
+#: src/player.c:3854
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:3903
+#: src/player.c:3904
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:3916 src/player.c:3929
+#: src/player.c:3917 src/player.c:3930
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:3946
+#: src/player.c:3947
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:3970
+#: src/player.c:3971
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:4013
+#: src/player.c:4014
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:4021
+#: src/player.c:4022
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4025
+#: src/player.c:4026
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:4041
+#: src/player.c:4042
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:4054
+#: src/player.c:4055
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:4062
+#: src/player.c:4063
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:4067
+#: src/player.c:4068
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4107
+#: src/player.c:4108
 #, fuzzy
 #| msgid "You discovered #%c%s#0."
 msgid "You have destealthed."
 msgstr "Vous avez découvert #%c%s#0."
 
-#: src/player.c:4113
+#: src/player.c:4114
 msgid "#gYou have entered stealth mode."
 msgstr ""
 
 #. Stealth failed.
-#: src/player.c:4117
+#: src/player.c:4118
 msgid "#rUnable to stealth!"
 msgstr ""
 
