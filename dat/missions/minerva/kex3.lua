@@ -200,8 +200,7 @@ He winks his cyborg eye at you.]]))
    vn.menu( function ()
       local opts = {
          { _("Ask about the job"), "job" },
-         --{ _("Ask about his family"), "family" },
-         -- TODO more fancy text
+         { _("Ask about his past"), "past" },
          { _("Leave"), "leave" },
       }
       return opts
@@ -214,6 +213,26 @@ He winks his cyborg eye at you.]]))
    else
       kex(string.format(_([["Oh, so Major Malik wasn't at %s? That is really weird. Let's hope you can find him at %s in the %s system."]]), _(targetplanet), _(lastplanet), _(lastsys)))
    end
+   vn.jump("menu_msg")
+
+   vn.label("past")
+   kex(_([["You are quite the curious kid. At the time I didn't think my life was all that great and exciting, but lately I yearn to take to the skies like the good old times. Did I ever tell you about the story of when I spent a kilo-period drifting in the Nebula?"
+"No? Great!]]))
+   kex(_([["It was not uncommon for things to break down and get weird fast when going deep into the Nebula. The radiation is really damaging to ship armour, so you always have to maximize energy to shields. It makes it hard to bring firepower, but not like it's going to do you any good in the deep Nebula. Nothing is alive there, or at least, not in the sense we sort of think of as being alive."]]))
+   kex(_([["So me and Mireia had picked up a tip of some sort of weird wreck deep past Arandon. Some poor fools had gone to search for it and hadn't come back for a few hecto-periods and one of their husbands was beginning to lose it, so they came to us. Now, we weren't interested in trying to save them, once you enter the Nebula, you forfeit all chance at salvation. Search parties tend to only rack up the body counts."]]))
+   kex(_([["However, from the looks of it, it was a very interesting find. Sometimes you find really weird things in the Nebula."
+He leans closer to you and whispers.
+"…things that shouldn't exist. Or better said, things that can't possibly exist."]]))
+   kex(_([["So we loaded up our trusty Mule with all the shield generators and survival goods we could fit, and headed towards the rough location we were told the wreck was at. At first it was fairly standard, shields running at maximum power, and radiators set at maximum power. You get used to the hum and the chaos of the Nebula, but you can never relax. It sort of gets into your bones and makes you lose your sleep."]]))
+   kex(_([["We continued like that for what seemed ages. Sensors get a bit fuzzy in there, but they were reporting about a deca-period when we saw it. It was part of something very big, almost looking like some sort of metallic skeleton. We approached it cautiously because radiation was off the charts. The more you looked at it, the more it felt like it was burning into the back of your retina."]]))
+   kex(_([["After our cursory analysis, we went to grab a sample. However, when we tried to approach the robotic arm to it, it never seemed to get closer. It was at some sort of constant distance from us no matter what we tried. We only had a small laser turret, but we even tried shooting at it and nothing. Zip-O."]]))
+   kex(_([["It could have been the exhausting or something else, I don't know, but we decided to try to ram it. So we accelerated at maximum velocity, and that's when it happened. Suddenly there was some horrible screeching sound and everything shook. Next we know, it felt like we were getting pulled through the eye of a needle, like hyperspace sickness but much worse. And we passed out."]]))
+   kex(_([["When we woke up, there was nothing around us. Only Nebula. One of the shield generators had gone offline so we wouldn't last long. We did some emergency repairs and hauled our asses out of there. When we got out, our systems said that we had only been gone for about 22 periods, but when we hailed a ship, we found out there was a 1087 period difference between our system clock and theirs."]]))
+   kex(_([["The weird thing is we didn't have many supplies missing, so there's no way that could be true. I still scratch my head thinking about this today. I did tend to lose track of time and lose hunger in the deep Nebula, but nothing like that. We also had nothing from our encounter with the wreck or whatever that was."]]))
+   kex(_([["After that I head back home and got totally chewed out by my wife. I had to spend a few weeks sleeping on the couch and Maikki didn't speak to me for ages."
+He sighs wistfully.
+"That's the part I miss the most of my previous life. Having a place to go after adventuring."
+He looks a bit glum.]]))
    vn.jump("menu_msg")
 
    vn.label("leave")
