@@ -380,6 +380,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       oo.armour_regen = os.armour_regen_mod * (ss.armour_regen_mod * os.armour_regen + st.armour_regen) - os.armour_regen_malus - st.armour_regen
       oo.shield_regen = os.shield_regen_mod * (ss.shield_regen_mod * os.shield_regen + st.shield_regen) - os.shield_regen_malus - st.shield_regen
       oo.energy_regen = os.energy_regen_mod * (ss.energy_regen_mod * os.energy_regen + st.energy_regen) - os.energy_regen_malus - os.energy_loss - st.energy_regen
+      oo.nebu_absorb = os.nebu_absorb
       -- Misc
       oo.cargo = os.cargo_mod * (os.cargo + ss.cargo) - ss.cargo
 
