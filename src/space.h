@@ -81,6 +81,7 @@ typedef struct MapOverlayPos_ {
    float radius; /**< Diameter for display on the map overlay. No, it's not the radius, why do you ask? */
    float text_offx; /**< x offset of the caption text. */
    float text_offy; /**< y offset of the caption text. */
+   float text_width; /**< width of the caption text. */
 } MapOverlayPos;
 
 
