@@ -18,7 +18,6 @@ local nw2, nh2 = nw/2, nh/2
 local luaspfx = {}
 luaspfx.effects = require 'luaspfx.effects'
 
-
 local function __update_table( tbl, dt )
    local toremove = {}
    for k,v in ipairs(tbl) do
