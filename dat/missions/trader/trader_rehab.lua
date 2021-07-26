@@ -3,7 +3,7 @@
 <mission name="Trader Rehabilitation">
   <avail>
    <priority>10</priority>
-   <cond>faction.playerStanding("Trader") &lt; 0</cond>
+   <cond>faction.playerStanding("Traders Guild") &lt; 0</cond>
    <chance>100</chance>
    <location>Computer</location>
   </avail>
