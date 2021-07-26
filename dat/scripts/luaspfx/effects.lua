@@ -79,11 +79,13 @@ local function __alert( efx, x, y, z )
    lg.setShader( old_shader )
 end
 local function __alert_create( efx, ttl, pos, vel )
+   local dt_mod = player.dt_mod()
    local px, py = pos:get()
    local vx, vy = vel:get()
    efx.sound:setRelative( false )
    efx.sound:setPosition( px, py, 0 )
    efx.sound:setVelocity( vx, vy, 0 )
+   efx.sound:setPitch( dt_mod )
    efx.sound:play( pos )
 end
 effects.alert = { func = __alert, create = __alert_create, sound=alert_sound:clone() }

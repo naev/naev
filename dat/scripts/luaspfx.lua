@@ -21,6 +21,11 @@ luaspfx.effects = require 'luaspfx.effects'
 local function __update_table( tbl, dt )
    local toremove = {}
    for k,v in ipairs(tbl) do
+      -- Update pitch if necessary.
+      local p = luaspfx.__pitch
+      if p and v.sound then
+         v.sound:setPitch( p )
+      end
       -- Update position
       v.pos = v.pos + v.vel * dt
       -- Update time
@@ -35,6 +40,13 @@ local function __update_table( tbl, dt )
    end
 end
 function __luaspfx_update( dt, realdt )
+   local dt_mod = player.dt_mod()
+   if dt_mod ~= luaspfx.__last_dt_mod then
+      luaspfx.__last_dt_mod = dt_mod
+      luaspfx.__pitch = dt_mod
+   else
+      luaspfx.__pitch = nil
+   end
    __update_table( luaspfx.__bg, dt )
    __update_table( luaspfx.__fg, dt )
 end
