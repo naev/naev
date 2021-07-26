@@ -603,7 +603,7 @@ function malik_speech ()
    local s = speeches[ malik_speech_state ]
    if not s then return end
    if s.txt then
-      player.omsgAdd( s.txt, s.delay )
+      player.omsgAdd( s.txt, s.delay-0.1 )
    end
    if s.func then
       s.func()
