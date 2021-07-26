@@ -342,6 +342,8 @@ static int audioL_clone( lua_State *L )
    /* Attach buffer. */
    alSourcei( la.source, AL_BUFFER, la.buf->buffer );
 
+   /* TODO this should probably set the same parameters as the original source
+    * being cloned to be truly compatible with Love2D. */
    /* Defaults. */
    master = sound_getVolumeLog();
    alSourcef( la.source, AL_GAIN, master );
