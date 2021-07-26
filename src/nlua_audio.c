@@ -33,7 +33,6 @@ static int audioL_eq( lua_State *L );
 static int audioL_new( lua_State *L );
 static int audioL_clone( lua_State *L );
 static int audioL_play( lua_State *L );
-static int audioL_playPos( lua_State *L );
 static int audioL_pause( lua_State *L );
 static int audioL_isPaused( lua_State *L );
 static int audioL_stop( lua_State *L );
@@ -43,18 +42,22 @@ static int audioL_seek( lua_State *L );
 static int audioL_tell( lua_State *L );
 static int audioL_setVolume( lua_State *L );
 static int audioL_getVolume( lua_State *L );
+static int audioL_setRelative( lua_State *L );
+static int audioL_setPosition( lua_State *L );
+static int audioL_getPosition( lua_State *L );
+static int audioL_setVelocity( lua_State *L );
+static int audioL_getVelocity( lua_State *L );
 static int audioL_setLooping( lua_State *L );
 static int audioL_isLooping( lua_State *L );
 static int audioL_setPitch( lua_State *L );
 static int audioL_getPitch( lua_State *L );
-static int audioL_soundPlay( lua_State *L );
+static int audioL_soundPlay( lua_State *L ); /* Obsolete API, to get rid of. */
 static const luaL_Reg audioL_methods[] = {
    { "__gc", audioL_gc },
    { "__eq", audioL_eq },
    { "new", audioL_new },
    { "clone", audioL_clone },
    { "play", audioL_play },
-   { "playPos", audioL_playPos },
    { "pause", audioL_pause },
    { "isPaused", audioL_isPaused },
    { "stop", audioL_stop },
@@ -64,6 +67,11 @@ static const luaL_Reg audioL_methods[] = {
    { "tell", audioL_tell },
    { "setVolume", audioL_setVolume },
    { "getVolume", audioL_getVolume },
+   { "setRelative", audioL_setRelative },
+   { "setPosition", audioL_setPosition },
+   { "getPosition", audioL_getPosition },
+   { "setVelocity", audioL_setVelocity },
+   { "getVelocity", audioL_getVelocity },
    { "setLooping", audioL_setLooping },
    { "isLooping", audioL_isLooping },
    { "setPitch", audioL_setPitch },
@@ -370,34 +378,6 @@ static int audioL_play( lua_State *L )
 
 
 /**
- * @brief Plays a source at a position.
- *
- *    @luatparam Audio source Source to play.
- *    @luatreturn boolean True on success.
- * @luafunc play
- */
-static int audioL_playPos( lua_State *L )
-{
-   ALfloat pos[3];
-   LuaAudio_t *la = luaL_checkaudio(L,1);
-   Vector2d *vp   = luaL_checkvector(L,2);
-   if (!conf.nosound) {
-      soundLock();
-      pos[0] = vp->x;
-      pos[1] = vp->y;
-      pos[2] = 0.;
-      alSourcei( la->source, AL_SOURCE_RELATIVE, AL_FALSE );
-      alSourcefv( la->source, AL_POSITION, pos );
-      alSourcePlay( la->source );
-      al_checkErr();
-      soundUnlock();
-   }
-   lua_pushboolean(L,1);
-   return 1;
-}
-
-
-/**
  * @brief Pauses a source.
  *
  *    @luatparam Audio source Source to pause.
@@ -589,6 +569,146 @@ static int audioL_getVolume( lua_State *L )
    }
    lua_pushnumber(L, volume);
    return 1;
+}
+
+
+/**
+ * @brief Sets whether a source is relative or not.
+ *
+ *    @luatparam boolean relative Whether or not to make the source relative or not.
+ * @luafunc setRelative
+ */
+static int audioL_setRelative( lua_State *L )
+{
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (!conf.nosound)
+      return 0;
+
+   soundLock();
+   alSourcei( la->source, AL_SOURCE_RELATIVE, lua_toboolean(L,2) );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+
+/**
+ * @brief Sets the position of a source.
+ *
+ *    @luatparam Audio source Source to set position of.
+ *    @luatparam number x X position.
+ *    @luatparam number y Y position.
+ *    @luatparam number z Z position.
+ * @luafunc setPosition
+ */
+static int audioL_setPosition( lua_State *L )
+{
+   ALfloat pos[3];
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (!conf.nosound)
+      return 0;
+
+   pos[0] = luaL_optnumber(L,2,0.);
+   pos[1] = luaL_optnumber(L,3,0.);
+   pos[2] = luaL_optnumber(L,4,0.);
+
+   soundLock();
+   alSourcefv( la->source, AL_POSITION, pos );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+
+/**
+ * @brief Gets the position of a source.
+ *
+ *    @luatparam Audio source Source to get position of.
+ *    @luatreturn number X position.
+ *    @luatreturn number Y position.
+ *    @luatreturn number Z position.
+ * @luafunc getPosition
+ */
+static int audioL_getPosition( lua_State *L )
+{
+   ALfloat pos[3];
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (!conf.nosound) {
+      lua_pushnumber(L,0.);
+      lua_pushnumber(L,0.);
+      lua_pushnumber(L,0.);
+      return 0;
+   }
+
+   soundLock();
+   alGetSource3f( la->source, AL_POSITION, &pos[0], &pos[1], &pos[2] );
+   al_checkErr();
+   soundUnlock();
+
+   lua_pushnumber(L,pos[0]);
+   lua_pushnumber(L,pos[1]);
+   lua_pushnumber(L,pos[2]);
+   return 3;
+}
+
+
+/**
+ * @brief Sets the velocity of a source.
+ *
+ *    @luatparam Audio source Source to set velocity of.
+ *    @luatparam number x X velocity.
+ *    @luatparam number y Y velocity.
+ *    @luatparam number z Z velocity.
+ * @luafunc setVelocity
+ */
+static int audioL_setVelocity( lua_State *L )
+{
+   ALfloat vel[3];
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (!conf.nosound)
+      return 0;
+
+   vel[0] = luaL_optnumber(L,2,0.);
+   vel[1] = luaL_optnumber(L,3,0.);
+   vel[2] = luaL_optnumber(L,4,0.);
+
+   soundLock();
+   alSourcefv( la->source, AL_VELOCITY, vel );
+   al_checkErr();
+   soundUnlock();
+   return 0;
+}
+
+
+/**
+ * @brief Gets the velocity of a source.
+ *
+ *    @luatparam Audio source Source to get velocity of.
+ *    @luatreturn number X velocity.
+ *    @luatreturn number Y velocity.
+ *    @luatreturn number Z velocity.
+ * @luafunc getVelocity
+ */
+static int audioL_getVelocity( lua_State *L )
+{
+   ALfloat vel[3];
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   if (!conf.nosound) {
+      lua_pushnumber(L,0.);
+      lua_pushnumber(L,0.);
+      lua_pushnumber(L,0.);
+      return 0;
+   }
+
+   soundLock();
+   alGetSource3f( la->source, AL_VELOCITY, &vel[0], &vel[1], &vel[2] );
+   al_checkErr();
+   soundUnlock();
+
+   lua_pushnumber(L,vel[0]);
+   lua_pushnumber(L,vel[1]);
+   lua_pushnumber(L,vel[2]);
+   return 3;
 }
 
 
