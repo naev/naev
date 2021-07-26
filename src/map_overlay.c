@@ -468,8 +468,8 @@ static int ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       /* Collisions with other texts (even indices) */
       mw = mo[i]->text_width + pb2;
       mh = gl_smallFont.h + pb2;
-      mx = pos[i]->x/ovr_es + mo[i]->text_offx + offx[i] - ovr_text_pixbuf; // TODO: rationalize this stuff
-      my = pos[i]->y/ovr_es + mo[i]->text_offy + offy[i] - ovr_text_pixbuf;
+      mx = pos[i]->x/ovr_res + mo[i]->text_offx + offx[i] - ovr_text_pixbuf; // TODO: rationalize this stuff
+      my = pos[i]->y/ovr_res + mo[i]->text_offy + offy[i] - ovr_text_pixbuf;
       collided |= force_collision( &forces_x[2*items*self+2*i], &forces_y[2*items*self+2*i], x, y, w, h, mx, my, mw, mh );
    }
 
