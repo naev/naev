@@ -6,30 +6,10 @@ local love_shaders = require 'love_shaders'
 local effects = {}
 
 local alert_bg_shader_frag = [[
+#include "lib/sdf.glsl"
+
 uniform float u_time = 0.0;
 uniform float u_size = 100.0;
-
-float cro(in vec2 a, in vec2 b ) { return a.x*b.y - a.y*b.x; }
-
-float sdUnevenCapsuleY( in vec2 p, in float ra, in float rb, in float h )
-{
-	p.x = abs(p.x);
-
-   float b = (ra-rb)/h;
-   vec2  c = vec2(sqrt(1.0-b*b),b);
-   float k = cro(c,p);
-   float m = dot(c,p);
-   float n = dot(p,p);
-
-        if( k < 0.0   ) return sqrt(n)               - ra;
-   else if( k > c.x*h ) return sqrt(n+h*h-2.0*h*p.y) - rb;
-                        return m                     - ra;
-}
-
-float sdCircle( in vec2 p, in float r )
-{
-   return length(p)-r;
-}
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
