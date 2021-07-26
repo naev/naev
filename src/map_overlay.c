@@ -253,12 +253,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    array_free( fits );
 
    /* Initialization offset list. */
-   off_0x = array_create_size( float, items );
-   off_0y = array_create_size( float, items );
-/*   for (i=0; i<items; i++) {*/
-/*      off_0x[i] = 0;*/
-/*      off_0y[i] = 0;*/
-/*   }*/
+   off_0x = calloc( items, sizeof(float) );
+   off_0y = calloc( items, sizeof(float) );
 
    /* Initialize all items. */
    for (i=0; i<items; i++) {
@@ -324,20 +320,12 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
     * recieved by a given object. Then these forces are summed to obtain the total force on the object.
     * Odd lines are forces from objects and Even lines from other texts. */
 
-   forces_xa = array_create_size( float, 2*items*items );
-   forces_ya = array_create_size( float, 2*items*items );
-   for (i=0; i<2*items*items; i++) {
-      forces_xa[i] = 0;
-      forces_ya[i] = 0;
-   }
+   forces_xa = calloc( 2*items*items, sizeof(float) );
+   forces_ya = calloc( 2*items*items, sizeof(float) );
 
    /* And a buffer list. */
-   off_buffx = array_create_size( float, items );
-   off_buffy = array_create_size( float, items );
-   for (i=0; i<items; i++) {
-      off_buffx[i] = 0;
-      off_buffy[i] = 0;
-   }
+   off_buffx = calloc( items, sizeof(float) );
+   off_buffy = calloc( items, sizeof(float) );
 
    /* Main Uzawa Loop. */
    for (iter=0; iter<max_iters; iter++) {
@@ -392,12 +380,12 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    }
 
    /* Free the forces matrix. */
-   array_free( forces_xa );
-   array_free( forces_ya );
-   array_free( off_buffx );
-   array_free( off_buffy );
-   array_free( off_0x );
-   array_free( off_0y );
+   free( forces_xa );
+   free( forces_ya );
+   free( off_buffx );
+   free( off_buffy );
+   free( off_0x );
+   free( off_0y );
 }
 
 
