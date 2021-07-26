@@ -100,6 +100,7 @@ static int playerL_misnDone( lua_State *L );
 static int playerL_evtActive( lua_State *L );
 static int playerL_evtDone( lua_State *L );
 static int playerL_teleport( lua_State *L );
+static int playerL_dt_mod( lua_State *L );
 static const luaL_Reg playerL_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -143,6 +144,7 @@ static const luaL_Reg playerL_methods[] = {
    { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
    { "teleport", playerL_teleport },
+   { "dt_mod", playerL_dt_mod },
    {0,0}
 }; /**< Player Lua methods. */
 
@@ -1426,4 +1428,13 @@ static int playerL_teleport( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Gets the dt_mod of the player, which multiplies all time stuff.
+ */
+static int playerL_dt_mod( lua_State *L )
+{
+   lua_pushnumber(L,dt_mod);
+   return 1;
+}
 
