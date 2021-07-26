@@ -55,6 +55,7 @@ end
 
 local function __luaspfx_add( tbl, efx, params, ttl, pos, vel )
    params = params or {}
+   vel = vel or vec2.new(0,0)
    efx.params = params
    if efx.create then
       efx.create( efx, ttl, pos, vel )
@@ -62,9 +63,9 @@ local function __luaspfx_add( tbl, efx, params, ttl, pos, vel )
    table.insert( tbl, {
       efx=efx,
       pos=pos,
+      vel=vel,
       time=0,
       ttl=ttl,
-      vel=vel or vec2.new(0,0),
    } )
 end
 
