@@ -66,9 +66,9 @@ static int force_collision( float *ox, float *oy,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh );
 static void ovr_optimizeLayout( int items, const Vector2d** pos,
-      MapOverlayPos** mo, float res );
+      MapOverlayPos** mo );
 static int ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
-      float res, float x, float y, float w, float h, const Vector2d** pos,
+      float x, float y, float w, float h, const Vector2d** pos,
       MapOverlayPos** mo, int items, int self, unsigned int test_text,
       float *offx, float *offy );
 /* Render. */
@@ -197,7 +197,7 @@ void ovr_refresh (void)
       ovr_res = 50.;
 
    /* Compute text overlap and try to minimize it. */
-   ovr_optimizeLayout( items, pos, mo, ovr_res );
+   ovr_optimizeLayout( items, pos, mo );
 
    /* Free the moos. */
    free( mo );
@@ -208,7 +208,7 @@ void ovr_refresh (void)
 /**
  * @brief Makes a best effort to fit the given assets' overlay indicators and labels fit without collisions.
  */
-static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo, float res )
+static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo )
 {
    int i, j, k, iter;
    float cx, cy, r, sx, sy;
@@ -227,7 +227,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    uint8_t *must_shrink = malloc( items );
    for (cur.i=0; cur.i<items; cur.i++)
       for (cur.j=cur.i+1; cur.j<items; cur.j++) {
-         cur.dist = hypot( pos[cur.i]->x - pos[cur.j]->x, pos[cur.i]->y - pos[cur.j]->y ) / res;
+         cur.dist = hypot( pos[cur.i]->x - pos[cur.j]->x, pos[cur.i]->y - pos[cur.j]->y ) / ovr_res;
          cur.dist *= 2; /* Oh, for the love of God, did someone make "radius" a diameter again? */
          if (cur.dist < mo[cur.i]->radius + mo[cur.j]->radius)
             array_push_back( &fits, cur );
@@ -266,8 +266,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
        * We actually compute the text overlap also so hopefully it will alternate
        * sides when stuff is clustered together. */
 
-      x = pos[i]->x/res - ovr_text_pixbuf;
-      y = pos[i]->y/res - ovr_text_pixbuf;
+      x = pos[i]->x/ovr_res - ovr_text_pixbuf;
+      y = pos[i]->y/ovr_res - ovr_text_pixbuf;
       w = mo[i]->text_width + 2*ovr_text_pixbuf;
       h = gl_smallFont.h + 2*ovr_text_pixbuf;
       off = mo[i]->radius/2 + 2*ovr_text_pixbuf;
@@ -285,8 +285,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
             fx = fy = 0.;
             mw = mo[j]->radius;
             mh = mw;
-            mx = pos[j]->x/res - mw/2.;
-            my = pos[j]->y/res - mh/2.;
+            mx = pos[j]->x/ovr_res - mw/2.;
+            my = pos[j]->y/ovr_res - mh/2.;
 
             force_collision( &fx, &fy, x+tx[k], y+ty[k], w, h, mx, my, mw, mh );
 
@@ -342,13 +342,12 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    /* Main Uzawa Loop. */
    for (iter=0; iter<max_iters; iter++) {
       for (i=0; i<items; i++) {
-         cx = pos[i]->x / res;
-         cy = pos[i]->y / res;
+         cx = pos[i]->x / ovr_res;
+         cy = pos[i]->y / ovr_res;
          /* Compute the forces. */
          //DEBUG("mo[i]->text_offx = %f",mo[i]->text_offx);
          ovr_refresh_uzawa_overlap(
                forces_xa, forces_ya,
-               res,
                cx + mo[i]->text_offx + off_0x[i] - ovr_text_pixbuf,
                cy + mo[i]->text_offy + off_0y[i] - ovr_text_pixbuf,
                mo[i]->text_width + 2*ovr_text_pixbuf,
@@ -456,7 +455,7 @@ static int force_collision( float *ox, float *oy,
  * @brief Compute how an element overlaps with text and force to move away.
  */
 static int ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
-      float res, float x, float y, float w, float h, const Vector2d** pos,
+      float x, float y, float w, float h, const Vector2d** pos,
       MapOverlayPos** mo, int items, int self, unsigned int test_text,
       float *offx, float *offy )
 {
@@ -470,8 +469,8 @@ static int ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       /* Collisions with planet circles and jp triangles (odd indices). */
       mw = mo[i]->radius;
       mh = mw;
-      mx = pos[i]->x/res - mw/2.;
-      my = pos[i]->y/res - mh/2.;
+      mx = pos[i]->x/ovr_res - mw/2.;
+      my = pos[i]->y/ovr_res - mh/2.;
       //DEBUG("x=%f, mx=%f, w=%f, mw=%f", x,mx,w,mw);
       collided |= force_collision( &forces_x[2*items*self+2*i+1], &forces_y[2*items*self+2*i+1], x, y, w, h, mx, my, mw, mh );
 
@@ -481,8 +480,8 @@ static int ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       /* Collisions with other texts (even indices) */
       mw = mo[i]->text_width + pb2;
       mh = gl_smallFont.h + pb2;
-      mx = pos[i]->x/res + mo[i]->text_offx + offx[i] - ovr_text_pixbuf; // TODO: rationalize this stuff
-      my = pos[i]->y/res + mo[i]->text_offy + offy[i] - ovr_text_pixbuf;
+      mx = pos[i]->x/ovr_es + mo[i]->text_offx + offx[i] - ovr_text_pixbuf; // TODO: rationalize this stuff
+      my = pos[i]->y/ovr_es + mo[i]->text_offy + offy[i] - ovr_text_pixbuf;
       collided |= force_collision( &forces_x[2*items*self+2*i], &forces_y[2*items*self+2*i], x, y, w, h, mx, my, mw, mh );
    }
 
