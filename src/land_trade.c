@@ -190,7 +190,7 @@ void commodity_update( unsigned int wid, char* str )
    snprintf( buf_globalstd, sizeof(buf_globalstd), _("%.1f ¤"), globalstd ); /* TODO credit2str could learn to do this... */
    /* modify text */
    buf_purchase_price[0]='\0';
-   owned=pilot_cargoOwned( player.p, com->name );
+   owned=pilot_cargoOwned( player.p, com );
    if ( owned > 0 )
       credits2str( buf_purchase_price, com->lastPurchasePrice, -1 );
    credits2str( buf_credits, player.p->credits, 2 );
@@ -213,28 +213,26 @@ void commodity_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDesc", _(com->description) );
 
    /* Button enabling/disabling */
-   if (commodity_canBuy( com->name ))
+   if (commodity_canBuy( com ))
       window_enableButton( wid, "btnCommodityBuy" );
    else
       window_disableButtonSoft( wid, "btnCommodityBuy" );
 
-   if (commodity_canSell( com->name ))
+   if (commodity_canSell( com ))
       window_enableButton( wid, "btnCommoditySell" );
    else
       window_disableButtonSoft( wid, "btnCommoditySell" );
 }
 
 
-int commodity_canBuy( const char *name )
+int commodity_canBuy( const Commodity* com )
 {
    int failure;
    unsigned int q, price;
-   Commodity *com;
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
    q = commodity_getMod();
-   com = commodity_get( name );
    price = planet_commodityPrice( land_planet, com ) * q;
 
    if (!player_hasCredits( price )) {
@@ -251,13 +249,13 @@ int commodity_canBuy( const char *name )
 }
 
 
-int commodity_canSell( const char *name )
+int commodity_canSell( const Commodity* com )
 {
    int failure;
 
    failure = 0;
 
-   if (pilot_cargoOwned( player.p, name ) == 0) {
+   if (pilot_cargoOwned( player.p, com ) == 0) {
       land_errDialogueBuild(_("You can't sell something you don't have!"));
       failure = 1;
    }
@@ -335,7 +333,7 @@ void commodity_sell( unsigned int wid, char* str )
    q = pilot_cargoRm( player.p, com, q );
    price = price * (credits_t)q;
    player_modCredits( price );
-   if ( pilot_cargoOwned( player.p, com->name) == 0 ) /* None left, set purchase price to zero, in case missions add cargo. */
+   if ( pilot_cargoOwned( player.p, com ) == 0 ) /* None left, set purchase price to zero, in case missions add cargo. */
      com->lastPurchasePrice = 0;
    commodity_update(wid, NULL);
 

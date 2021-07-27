@@ -15,26 +15,26 @@
  */
 int pilot_cargoUsed( const Pilot* pilot ); /* gets how much cargo it has onboard */
 int pilot_cargoFree( const Pilot* p ); /* cargo space */
-int pilot_cargoOwned( const Pilot* pilot, const char* commodityname );
-int pilot_cargoAdd( Pilot* pilot, Commodity* cargo,
+int pilot_cargoOwned( const Pilot* pilot, const Commodity* cargo );
+int pilot_cargoAdd( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id );
-int pilot_cargoRm( Pilot* pilot, Commodity* cargo, int quantity );
+int pilot_cargoRm( Pilot* pilot, const Commodity* cargo, int quantity );
 int pilot_cargoMove( Pilot* dest, Pilot* src );
 void pilot_cargoCalc( Pilot* pilot );
 
 /*
  * Normal cargo below the abstractions.
  */
-int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup );
+int pilot_cargoRmRaw( Pilot* pilot, const Commodity* cargo, int quantity, int cleanup );
 int pilot_cargoRmAll( Pilot* pilot, int cleanup );
-int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
+int pilot_cargoAddRaw( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id );
 
 
 /*
  * Mission cargo - not to be confused with normal cargo.
  */
-unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );
+unsigned int pilot_addMissionCargo( Pilot* pilot, const Commodity* cargo, int quantity );
 int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison );
 
 

@@ -3340,7 +3340,7 @@ static int pilotL_cargoHas( lua_State *L )
 
    p = luaL_validpilot(L, 1);
    cargo = luaL_validcommodity(L, 2);
-   quantity = pilot_cargoOwned(p, cargo->name);
+   quantity = pilot_cargoOwned(p, cargo);
    lua_pushnumber(L, quantity);
    return 1;
 }
@@ -3362,7 +3362,6 @@ static int pilotL_cargoHas( lua_State *L )
 static int pilotL_cargoAdd( lua_State *L )
 {
    Pilot *p;
-   const char *str;
    int quantity;
    Commodity *cargo;
 

@@ -212,9 +212,9 @@ int land_errDialogue( const char *name, char *type )
    else if (strcmp(type,"sellOutfit")==0)
       outfit_canSell( name );
    else if (strcmp(type,"buyCommodity")==0)
-      commodity_canBuy( name );
+      commodity_canBuy( commodity_get( name ) );
    else if (strcmp(type,"sellCommodity")==0)
-      commodity_canSell( name );
+      commodity_canSell( commodity_get( name ) );
    if (errorlist_ptr != NULL) {
       dialogue_alert( "%s", errorlist );
       return 1;

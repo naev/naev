@@ -3609,7 +3609,7 @@ void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)
 int pilot_hasIllegal( const Pilot *p, int faction )
 {
    int i;
-   Commodity *c;
+   const Commodity *c;
    /* Check commodities. */
    for (i=0; i<array_size(p->commodities); i++) {
       c = p->commodities[i].commodity;

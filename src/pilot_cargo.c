@@ -23,7 +23,7 @@
 
 
 /* Private common implementation */
-static int pilot_cargoAddNeglectingStats( Pilot* pilot, Commodity* cargo,
+static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id );
 
 /* ID Generators. */
@@ -37,16 +37,16 @@ static unsigned int mission_cargo_id = 0; /**< ID generator for special mission 
  * @brief Gets how many of the commodity the player.p has.
  *
  * @param pilot Pilot to check.
- * @param commodityname Commodity to check how many the player.p owns.
+ * @param cargo Commodity to check how many the player.p owns.
  * @return The number of commodities owned matching commodityname.
  */
-int pilot_cargoOwned( const Pilot* pilot, const char* commodityname )
+int pilot_cargoOwned( const Pilot* pilot, const Commodity* cargo )
 {
    int i;
 
    for (i=0; i<array_size(pilot->commodities); i++)
       if (!pilot->commodities[i].id &&
-            strcmp(commodityname, pilot->commodities[i].commodity->name)==0)
+            strcmp(cargo->name, pilot->commodities[i].commodity->name)==0)
          return pilot->commodities[i].quantity;
    return 0;
 }
@@ -104,7 +104,7 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
  *    @param quantity Quantity to add.
  *    @param id Mission ID to add (0 is none).
  */
-static int pilot_cargoAddNeglectingStats( Pilot* pilot, Commodity* cargo,
+static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id )
 {
    int i, q;
@@ -144,7 +144,7 @@ static int pilot_cargoAddNeglectingStats( Pilot* pilot, Commodity* cargo,
  *    @param quantity Quantity to add.
  *    @param id Mission ID to add (0 is none).
  */
-int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
+int pilot_cargoAddRaw( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id )
 {
    int q;
@@ -169,7 +169,7 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
  *    @param id Mission ID to add (0 is none).
  *    @return Quantity actually added.
  */
-int pilot_cargoAdd( Pilot* pilot, Commodity* cargo,
+int pilot_cargoAdd( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id )
 {
    int freespace;
@@ -223,7 +223,7 @@ void pilot_cargoCalc( Pilot* pilot )
  *    @param quantity Quantity to add.
  *    @return The Mission Cargo ID of created cargo.
  */
-unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity )
+unsigned int pilot_addMissionCargo( Pilot* pilot, const Commodity* cargo, int quantity )
 {
    int i;
    unsigned int id, max_id;
@@ -298,7 +298,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
  *    @param cleanup Whether we're cleaning up or not (removes mission cargo).
  *    @return Amount of cargo gotten rid of.
  */
-int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup )
+int pilot_cargoRmRaw( Pilot* pilot, const Commodity* cargo, int quantity, int cleanup )
 {
    int i;
    int q;
@@ -386,7 +386,7 @@ int pilot_cargoRmAll( Pilot* pilot, int cleanup )
  *    @param quantity Amount of cargo to get rid of.
  *    @return Amount of cargo gotten rid of.
  */
-int pilot_cargoRm( Pilot* pilot, Commodity* cargo, int quantity )
+int pilot_cargoRm( Pilot* pilot, const Commodity* cargo, int quantity )
 {
    return pilot_cargoRmRaw( pilot, cargo, quantity, 0 );
 }

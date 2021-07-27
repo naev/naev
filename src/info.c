@@ -840,7 +840,7 @@ static void cargo_update( unsigned int wid, char* str )
    (void) str;
    char desc[STRMAX];
    int pos, l, i, f;
-   Commodity *com;
+   const Commodity *com;
 
    if (array_size(player.p->commodities)==0)
       return; /* No cargo */

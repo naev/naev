@@ -1000,7 +1000,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
 {
    int i,j,n;
    char **items;
-   Commodity *c;
+   const Commodity *c;
 
    /* We also save specially created cargos here. Since it can only be mission
     * cargo and can only be placed on the player's main ship, we don't have to
