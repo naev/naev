@@ -353,7 +353,6 @@ int pilot_cargoRmAll( Pilot* pilot, int cleanup )
    /* check if pilot has it */
    q = 0;
    for (i=array_size(pilot->commodities)-1; i>=0; i--) {
-
       /* Must not be mission cargo unless cleaning up. */
       if (!cleanup && (pilot->commodities[i].id != 0))
          continue;
