@@ -105,14 +105,14 @@ function approach_zuri ()
       zuri(_([["I've wired you your reward as always."
 They grin at you.
 "That said, our work is still far from done. We won't stop until Minerva Station is free from Za'lek and Dvaered inference. Meet me up in the bar in a bit if you want to help."]]))
-      vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
+      vn.sfxVictory()
       vn.func( function () -- Rewards
          player.pay( reward_amount )
          shiplog.append( logidstr, _("You took down an advanced Za'lek hacking center and got rewarded for your efforts.") )
          faction.modPlayerSingle("Pirate", 5)
       end )
-      vn.sfxVictory()
-      vn.done()
+      vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
+      vn.run()
       misn.finish(true)
    elseif  misn_state==nil then
       -- Not accepted
