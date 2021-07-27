@@ -108,8 +108,7 @@ end
 --[[
 -- Goes to a precise position.
 --]]
-function __moveto_precise ()
-   local target   = ai.taskdata()
+function __moveto_precise( target )
    local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
 
@@ -137,8 +136,7 @@ end
 --[[
 -- Goes to a target position roughly
 --]]
-function moveto ()
-   local target   = ai.taskdata()
+function moveto( target )
    local dir      = ai.face( target, nil, true )
    __moveto_generic( target, dir, true )
 end
@@ -155,8 +153,7 @@ end
 --[[
 -- moveto without velocity compensation.
 --]]
-function moveto_raw ()
-   local target   = ai.taskdata()
+function moveto_raw( target )
    local dir      = ai.face( target )
    __moveto_generic( target, dir, true )
 end
@@ -191,9 +188,7 @@ end
 --[[
 -- Follows it's target.
 --]]
-function follow ()
-   local target = ai.taskdata()
-
+function follow( target )
    -- Will just float without a target to escort.
    if not target:exists() then
       ai.poptask()
@@ -208,8 +203,7 @@ function follow ()
       ai.accel()
    end
 end
-function follow_accurate ()
-   local target = ai.taskdata()
+function follow_accurate( target )
    local p = ai.pilot()
 
    -- Will just float without a target to escort.
@@ -225,11 +219,9 @@ function follow_accurate ()
 
    --  Always face the goal
    local dir   = ai.face(goal)
-
    if dir < 10 and mod > 300 then
       ai.accel()
    end
-
 end
 
 -- Default action for non-leader pilot in fleet
@@ -299,15 +291,15 @@ end
 --[[
 -- Tries to runaway and jump asap.
 --]]
-function __runaway ()
-   runaway()
+function __runaway( target )
+   runaway( target )
 end
 
 --[[
 -- Runaway without jumping
 --]]
-function __runaway_nojump ()
-   runaway_nojump()
+function __runaway_nojump( target )
+   runaway_nojump( target )
 end
 
 
@@ -445,10 +437,8 @@ end
 --[[
 -- Attempts to run away from the target.
 --]]
-function runaway ()
-
+function runaway( target )
    -- Target must exist
-   local target = ai.taskdata()
    if not target:exists() then
       ai.poptask()
       return
@@ -480,12 +470,11 @@ function runaway ()
       end
    end
 end
-function runaway_nojump ()
-   if __run_target() then return end
-   __run_turret()
+function runaway_nojump( target )
+   if __run_target( target ) then return end
+   __run_turret( target )
 end
-function __run_target ()
-   local target = ai.taskdata()
+function __run_target( target )
    local plt    = ai.pilot()
 
    -- Target must exist
@@ -516,9 +505,8 @@ function __run_target ()
 
    return false
 end
-function __run_turret ()
+function __run_turret( target )
    -- Shoot the target
-   local target   = ai.taskdata()
    if target:exists() then
       ai.hostile(target)
       ai.settarget( target )
@@ -532,12 +520,11 @@ function __run_turret ()
       end
    end
 end
-function __run_hyp ()
+function __run_hyp( jump )
    -- Shoot the target
-   __run_turret()
+   __run_turret( ai.taskdata() )
 
    -- Go towards jump
-   local jump     = ai.subtaskdata()
    local jdir
    local bdist    = ai.minbrakedist()
    local jdist    = ai.dist(jump)
@@ -586,7 +573,6 @@ function __run_hyp ()
    end
 end
 function __run_hypbrake ()
-
    -- The braking
    ai.brake()
    if ai.isstopped() then
@@ -596,9 +582,9 @@ function __run_hypbrake ()
    end
 end
 
-function __run_landgo ()
+function __run_landgo( target )
    -- Shoot the target
-   __run_turret()
+   __run_turret( target )
 
    local target   = mem.land
    local dist     = ai.dist( target )
@@ -712,9 +698,7 @@ end
 --[[
 -- Boards the target
 --]]
-function board ()
-   local target = ai.taskdata()
-
+function board( target )
    -- Make sure pilot exists
    if not target:exists() then
       ai.poptask()
@@ -745,9 +729,7 @@ end
 --[[
 -- Attempts to brake on the target.
 --]]
-function __boardstop ()
-   target = ai.taskdata()
-
+function __boardstop( target )
    -- make sure pilot exists
    if not target:exists() then
       ai.poptask()
@@ -786,11 +768,7 @@ end
 --[[
 -- Boards the target
 --]]
-function refuel ()
-
-   -- Get the target
-   local target = ai.taskdata()
-
+function refuel( target )
    -- make sure pilot exists
    if not target:exists() then
       ai.poptask()
@@ -820,9 +798,7 @@ end
 --[[
 -- Attempts to brake on the target.
 --]]
-function __refuelstop ()
-   local target = ai.taskdata()
-
+function __refuelstop( target )
    -- make sure pilot exists
    if not target:exists() then
       ai.poptask()
@@ -860,9 +836,8 @@ end
 --[[
 -- Mines an asteroid
 --]]
-function mine ()
+function mine( fieldNast )
    ai.weapset( 1 )
-   local fieldNast = ai.taskdata()
    local field     = fieldNast[1]
    local ast       = fieldNast[2]
    local p         = ai.pilot()
@@ -899,10 +874,10 @@ function mine ()
    local relvel = vec2.add( p:vel(), vec2.mul(vel,-1) ):mod()
 
    if relpos < wrange and relvel < 10 then
-      ai.pushsubtask("__killasteroid")
+      ai.pushsubtask("__killasteroid", fieldNast )
    end
 end
-function __killasteroid ()
+function __killasteroid( fieldNast )
    local fieldNast = ai.taskdata()
    local field     = fieldNast[1]
    local ast       = fieldNast[2]
