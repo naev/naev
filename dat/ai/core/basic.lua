@@ -1123,7 +1123,7 @@ function scan( target )
 
    -- Get closer and scan
    ai.iface( target )
-   if dist < 1000 then
+   if dist > 1000 then
       ai.accel()
    end
 end
