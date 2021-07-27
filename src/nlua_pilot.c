@@ -3387,15 +3387,13 @@ static int pilotL_cargoAdd( lua_State *L )
  * @brief Tries to remove cargo from the pilot's ship.
  *
  * @usage n = pilot.cargoRm(player.pilot(), "Food", 20)
- * @usage n = pilot.cargoRm(player.pilot(), "__allExceptMisn") -- Removes all cargo from the player, excepted mission cargo
  * @usage n = pilot.cargoRm(player.pilot(), "__all") -- Removes all cargo from the player
  *
  *    @luatparam Pilot p The pilot to remove cargo from.
  *    @luatparam Commodity|string cargo Type of cargo to remove, either
  *       as a Commodity object or as the raw (untranslated) name of a
- *       commodity. You can also pass the special values "__all" (which
- *       removes all cargo) and "__allExceptMisn" (which removes all
- *       non-mission cargo).
+ *       commodity. You can also pass the special value "__all" to
+ *       remove all cargo from the pilot.
  *    @luatparam number quantity Quantity of the cargo to remove.
  *    @luatreturn number The number of cargo removed.
  * @luafunc cargoRm
@@ -3416,13 +3414,8 @@ static int pilotL_cargoRm( lua_State *L )
       str = lua_tostring(L, 2);
 
       /* Check for special strings. */
-      if (strcmp(str, "__allExceptMisn") == 0) {
+      if (strcmp(str, "__all") == 0) {
          quantity = pilot_cargoRmAll(p, 0);
-         lua_pushnumber(L, quantity);
-         return 1;
-      }
-      else if (strcmp(str, "__all") == 0) {
-         quantity = pilot_cargoRmAll(p, 1);
          lua_pushnumber(L, quantity);
          return 1;
       }
