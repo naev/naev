@@ -35,6 +35,9 @@ first_hail_message = _('"Howdy Human! Er, I mean, Greetings! If you want to take
 board_message = _("You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. It is a mess of different wares and most don't seem of much value, there might be some interesting find.")
 
 function create ()
+   -- Make sure system isn't claimed, but we don't claim it
+   if not evt.claim( system.cur(), true ) then evt.finish() end
+
    -- Find planet
    local planets = planet.getAll()
    if planets == nil then
