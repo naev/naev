@@ -56,21 +56,21 @@ static ovr_marker_t *ovr_markers = NULL; /**< Overlay markers. */
 static Uint32 ovr_opened = 0; /**< Time last opened. */
 static int ovr_open = 0; /**< Is the overlay open? */
 static double ovr_res = 10.; /**< Resolution. */
-static const double ovr_coll_pixbuf = 5.; /**< Collision margin around overlay objects. */
 static const double ovr_text_pixbuf = 5.; /**< Extra margin around overlay text. */
+/* Rem: high pix_buffer ovr_text_pixbuff allows to do less iterations. */
 
 /*
  * Prototypes
  */
-static int force_collision( float *ox, float *oy,
+static void force_collision( float *ox, float *oy,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh );
 static void ovr_optimizeLayout( int items, const Vector2d** pos,
       MapOverlayPos** mo );
-static int ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
+static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       float x, float y, float w, float h, const Vector2d** pos,
-      MapOverlayPos** mo, int items, int self, unsigned int test_text,
-      float *offx, float *offy );
+      MapOverlayPos** mo, int items, int self,
+      float *offx, float *offy, float *offdx, float *offdy );
 /* Render. */
 void map_overlayToScreenPos( double *ox, double *oy, double x, double y );
 /* Markers. */
@@ -212,12 +212,15 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 {
    int i, j, k, iter;
    float cx, cy, r, sx, sy;
-   float x, y, w, h, off, mx, my, mw, mh;
+   float x, y, w, h, mx, my, mw, mh;
    float fx, fy, best, bx, by, val;
-   float *forces_xa, *forces_ya, *off_buffx, *off_buffy, *off_0x, *off_0y;
+   float *forces_xa, *forces_ya, *off_buffx, *off_buffy, *off_0x, *off_0y, *old_bx, *old_by, *off_dx, *off_dy;
 
    /* Parameters for the map overlay optimization. */
-   const int max_iters = 10; /**< Maximum amount of iterations to do. */
+   const int max_iters = 15;    /**< Maximum amount of iterations to do. */
+   const float kx      = .015;  /**< x softness factor. */
+   const float ky      = .045;  /**< y softness factor. */
+   const float eps_con = 1.3;   /**< Convergence criterion. */
 
    if (items <= 0)
       return;
@@ -235,8 +238,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    while (array_size( fits ) > 0) {
       float shrink_factor = 0;
       memset( must_shrink, 0, items );
-      for (i = 0; i < array_size( fits ); i++)
-      {
+      for (i = 0; i < array_size( fits ); i++) {
          r = fits[i].dist / (mo[fits[i].i]->radius + mo[fits[i].j]->radius);
          if (r >= 1)
             array_erase( &fits, &fits[i], &fits[i+1] );
@@ -252,6 +254,10 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    free( must_shrink );
    array_free( fits );
 
+   /* Limit shrinkage. */
+   for (i=0; i<items; i++)
+      mo[i]->radius = MAX( mo[i]->radius, 8 );
+
    /* Initialization offset list. */
    off_0x = calloc( items, sizeof(float) );
    off_0y = calloc( items, sizeof(float) );
@@ -266,10 +272,9 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       y = pos[i]->y/ovr_res - ovr_text_pixbuf;
       w = mo[i]->text_width + 2*ovr_text_pixbuf;
       h = gl_smallFont.h + 2*ovr_text_pixbuf;
-      off = mo[i]->radius/2 + 2*ovr_text_pixbuf;
 
-      const float tx[4] = { off, -off-w, -w/2. , -w/2. };
-      const float ty[4] = { -gl_smallFont.h/2.,  -gl_smallFont.h/2., off, -off-h };
+      const float tx[4] = { mo[i]->radius/2+ovr_text_pixbuf+.1, -mo[i]->radius/2-.1-w, -mo[i]->text_width/2. , -mo[i]->text_width/2. };
+      const float ty[4] = { -gl_smallFont.h/2.,  -gl_smallFont.h/2., mo[i]->radius/2+ovr_text_pixbuf+.1, -mo[i]->radius/2-.1-h };
 
       /* Check all combinations. */
       best = HUGE_VALF;
@@ -286,19 +291,18 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 
             force_collision( &fx, &fy, x+tx[k], y+ty[k], w, h, mx, my, mw, mh );
 
-            sx += fx;
-            sy += fy;
+            sx += ABS(fx);
+            sy += ABS(fy);
          }
-
-         val = pow2(sx)+pow2(sy);
+         val = sx + sy;
          /* Bias slightly toward the center, to avoid text going off the edge of the overlay. */
-/*         val -= 1. / (pow2(cx)+pow2(cy)+pow2(100.));*/ // TODO: see about that
+         /* TODO: take a decision: is it useful enought to be kept? (it's more costly cause (i) we do all 4 iterations and (ii) it puts Uzawa more under pressure.) */
+         /* valb = val - 1. / (pow2(x+tx[k])+pow2(y+ty[k])+pow2(100.)); */
          /* Keep best. */
          if (k == 0 || val < best) {
             bx = tx[k];
             by = ty[k];
             best = val;
-            //DEBUG("k=%i",k);
          }
          if (val==0)
             break;
@@ -323,25 +327,28 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    forces_xa = calloc( 2*items*items, sizeof(float) );
    forces_ya = calloc( 2*items*items, sizeof(float) );
 
-   /* And a buffer list. */
+   /* And buffer lists. */
    off_buffx = calloc( items, sizeof(float) );
    off_buffy = calloc( items, sizeof(float) );
+   old_bx    = calloc( items, sizeof(float) );
+   old_by    = calloc( items, sizeof(float) );
+   off_dx    = calloc( items, sizeof(float) );
+   off_dy    = calloc( items, sizeof(float) );
 
    /* Main Uzawa Loop. */
    for (iter=0; iter<max_iters; iter++) {
+      val = 0; /* This stores the stagnation indicator. */
       for (i=0; i<items; i++) {
          cx = pos[i]->x / ovr_res;
          cy = pos[i]->y / ovr_res;
          /* Compute the forces. */
-         //DEBUG("mo[i]->text_offx = %f",mo[i]->text_offx);
          ovr_refresh_uzawa_overlap(
                forces_xa, forces_ya,
-               cx + mo[i]->text_offx + off_0x[i] - ovr_text_pixbuf,
-               cy + mo[i]->text_offy + off_0y[i] - ovr_text_pixbuf,
+               cx + off_dx[i] + off_0x[i] - ovr_text_pixbuf,
+               cy + off_dy[i] + off_0y[i] - ovr_text_pixbuf,
                mo[i]->text_width + 2*ovr_text_pixbuf,
                gl_smallFont.h + 2*ovr_text_pixbuf,
-               pos, mo, items, i, 1, off_0x, off_0y );
-         /* TODO: That returns a collision status, but try to find a proper stopping condition. */
+               pos, mo, items, i, off_0x, off_0y, off_dx, off_dy );
 
          /* Do the sum. */
          sx = 0.;
@@ -349,56 +356,61 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
          for (j=0; j<items; j++) {
             sx += forces_xa[2*items*i+2*j+1] + forces_xa[2*items*i+2*j];
             sy += forces_ya[2*items*i+2*j+1] + forces_ya[2*items*i+2*j];
-/*            DEBUG("fx = %f",forces_xa[2*items*i+2*j+1]);*/
-/*            DEBUG("fx = %f",forces_xa[2*items*i+2*j]);*/
-/*            DEBUG("fy = %f",forces_ya[2*items*i+2*j+1]);*/
-/*            DEBUG("fy = %f",forces_ya[2*items*i+2*j]);*/
          }
 
-         //DEBUG("sy = %f",sy);
+         /* Store old version of buffers. */
+         old_bx[i] = off_buffx[i];
+         old_by[i] = off_buffy[i];
 
          /* Update positions (in buffer). Diagonal stiffness.
           * (moving along y is more likely to be the right solution). */
-         off_buffx[i] = .1 * sx; //.1 * sx; /* TODO: decide. */
-         off_buffy[i]  = .3 * sy; // .3
+         off_buffx[i] = kx * sx;
+         off_buffy[i] = ky * sy;
+
+         val = MAX( val, ABS(old_bx[i]-off_buffx[i]) + ABS(old_by[i]-off_buffy[i]) );
       }
-      //DEBUG("%f",((double*)forces_x->x)[items*0+1]);
-      //DEBUG("%f",sx);
-      //DEBUG("%d",items);
 
       /* Offsets are actually updated once the first loop is over. */
       for (i=0; i<items; i++) {
-         mo[i]->text_offx = off_buffx[i];
-         mo[i]->text_offy = off_buffy[i];
+         off_dx[i] = off_buffx[i];
+         off_dy[i] = off_buffy[i];
       }
+
+      /* Test stagnation. */
+      if (val <= eps_con)
+         break;
    }
 
    /* Permanently add the initialization offset to total offset. */
    for (i=0; i<items; i++) {
-      mo[i]->text_offx += off_0x[i];
-      mo[i]->text_offy += off_0y[i];
+      mo[i]->text_offx = off_dx[i] + off_0x[i];
+      mo[i]->text_offy = off_dy[i] + off_0y[i];
    }
 
-   /* Free the forces matrix. */
+   /* Free the forces matrix and the various buffers. */
    free( forces_xa );
    free( forces_ya );
    free( off_buffx );
    free( off_buffy );
+   free( old_bx );
+   free( old_by );
    free( off_0x );
    free( off_0y );
+   free( off_dx );
+   free( off_dy );
 }
 
 
 /**
  * @brief Compute a collision between two rectangles and direction to deduce the force.
  */
-static int force_collision( float *ox, float *oy,
+static void force_collision( float *ox, float *oy,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh )
 {
 
    /* No contact because of y offset (+tolerance). */
-   if ((y+h < my+ovr_coll_pixbuf) || (y+ovr_coll_pixbuf > my+mh))
+   if ((y+h < my+ovr_text_pixbuf) || (y+ovr_text_pixbuf > my+mh))
       *ox = 0;
    else {
       /* Case A is left of B. */
@@ -414,7 +426,7 @@ static int force_collision( float *ox, float *oy,
    }
 
    /* No contact because of x offset (+tolerance). */
-   if ((x+w < mx+ovr_coll_pixbuf) || (x+ovr_coll_pixbuf > mx+mw))
+   if ((x+w < mx+ovr_text_pixbuf) || (x+ovr_text_pixbuf > mx+mw))
       *oy = 0;
    else {
       /* Case A is below B. */
@@ -428,30 +440,20 @@ static int force_collision( float *ox, float *oy,
          *oy = MAX(0., *oy);
       }
    }
-
-   /* No collision. TODO: get rid of this one. */
-   if ((x+w < mx+ovr_coll_pixbuf) || (x+ovr_coll_pixbuf > mx+mw))
-      return 0;
-   if ((y+h < my+ovr_coll_pixbuf) || (y+ovr_coll_pixbuf > my+mh))
-      return 0;
-
-   return 1;
 }
 
 
 /**
  * @brief Compute how an element overlaps with text and force to move away.
  */
-static int ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
+static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       float x, float y, float w, float h, const Vector2d** pos,
-      MapOverlayPos** mo, int items, int self, unsigned int test_text,
-      float *offx, float *offy )
+      MapOverlayPos** mo, int items, int self,
+      float *offx, float *offy, float *offdx, float *offdy )
 {
-   int i, collided;
+   int i;
    float mx, my, mw, mh;
    const float pb2 = ovr_text_pixbuf*2.;
-
-   collided = 0;
 
    for (i=0; i<items; i++) {
       /* Collisions with planet circles and jp triangles (odd indices). */
@@ -459,21 +461,18 @@ static int ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       mh = mw;
       mx = pos[i]->x/ovr_res - mw/2.;
       my = pos[i]->y/ovr_res - mh/2.;
-      //DEBUG("x=%f, mx=%f, w=%f, mw=%f", x,mx,w,mw);
-      collided |= force_collision( &forces_x[2*items*self+2*i+1], &forces_y[2*items*self+2*i+1], x, y, w, h, mx, my, mw, mh );
+      force_collision( &forces_x[2*items*self+2*i+1], &forces_y[2*items*self+2*i+1], x, y, w, h, mx, my, mw, mh );
 
-      if (i == self || (!test_text)) // TODO: remove this test_text. It suuuucks
+      if (i == self)
          continue;
 
       /* Collisions with other texts (even indices) */
       mw = mo[i]->text_width + pb2;
       mh = gl_smallFont.h + pb2;
-      mx = pos[i]->x/ovr_res + mo[i]->text_offx + offx[i] - ovr_text_pixbuf; // TODO: rationalize this stuff
-      my = pos[i]->y/ovr_res + mo[i]->text_offy + offy[i] - ovr_text_pixbuf;
-      collided |= force_collision( &forces_x[2*items*self+2*i], &forces_y[2*items*self+2*i], x, y, w, h, mx, my, mw, mh );
+      mx = pos[i]->x/ovr_res + offdx[i] + offx[i] - ovr_text_pixbuf;
+      my = pos[i]->y/ovr_res + offdy[i] + offy[i] - ovr_text_pixbuf;
+      force_collision( &forces_x[2*items*self+2*i], &forces_y[2*items*self+2*i], x, y, w, h, mx, my, mw, mh );
    }
-
-   return collided;
 }
 
 
