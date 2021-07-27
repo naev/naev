@@ -27,6 +27,7 @@
 #include "log.h"
 #include "nlua.h"
 #include "nlua_col.h"
+#include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"
 #include "nlua_outfit.h"
