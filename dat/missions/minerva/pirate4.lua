@@ -113,9 +113,9 @@ They beam you a smile.]]))
       vn.func( function () misn_state=0 end )
       pir(_([["Glad to have you onboard again! So we have tracked down the mole and know that they are infiltrated in the station from the intercepted messages. It appears that they are most likely working at the station. Now there are not many places to work at the station so it is likely that they are involved in the gambling facility."]]))
       pir(_([["The bad news is we don't exactly know who the mole is. However, the good news is we were able to intercept a messenger. It was after a delivery so we weren't able to capture anything very interesting. But there was a small memo we found that could be a hint."
-They should you a crumpled up dirty piece of paper that has '10K 5-6-3-1' on it and hands it to you.]]))
+They should you a crumpled up dirty piece of paper that has '10k¤ 5-6-3-1' on it and hands it to you.]]))
       vn.func( function ()
-         local c = misn.cargoNew( _("Crumpled Up Note"), _("This is a crumpled up note that says '10K 5-6-3-1' on it. How could this be related to the Dvaered spy on Minerva Station?") )
+         local c = misn.cargoNew( _("Crumpled Up Note"), _("This is a crumpled up note that says '10k¤ 5-6-3-1' on it. How could this be related to the Dvaered spy on Minerva Station?") )
          misn.cargoAdd( c, 0 )
       end )
       pir(_([["We're still trying to figure exactly who they are, but that note is our best hint. Maybe it can be of use to you when looking for them. Once we get them we'll kindly escort them to an interrogation ship we have and we can try to get them to spill the beans."]]))
@@ -133,7 +133,7 @@ They should you a crumpled up dirty piece of paper that has '10K 5-6-3-1' on it 
    }
 
    vn.label("job")
-   pir(_([["How is the search going? We haven't been able to find any new leads on the mole. Our best bet is still the note I gave you that says '10K 5-6-3-1' on it. Maybe it's some sort of code for something?"]]))
+   pir(_([["How is the search going? We haven't been able to find any new leads on the mole. Our best bet is still the note I gave you that says '10k¤ 5-6-3-1' on it. Maybe it's some sort of code for something?"]]))
    vn.jump("menu_msg")
 
    vn.label("leave")
