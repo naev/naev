@@ -3326,20 +3326,22 @@ static int pilotL_cargoFree( lua_State *L )
  * @brief Checks to see how many tonnes of a specific type of cargo the pilot has.
  *
  *    @luatparam Pilot p The pilot to get the cargo count of.
- *    @luatparam string type Raw (untranslated) name of the cargo to count.
+ *    @luatparam Commodity|string cargo Type of cargo to check, either
+ *       as a Commodity object or as the raw (untranslated) name of a
+ *       commodity.
  *    @luatreturn number The amount of cargo the player has.
  * @luafunc cargoHas
  */
 static int pilotL_cargoHas( lua_State *L )
 {
    Pilot *p;
-   const char *str;
+   const Commodity *cargo;
    int quantity;
 
-   p = luaL_validpilot(L,1);
-   str = luaL_checkstring( L, 2 );
-   quantity = pilot_cargoOwned( p, str );
-   lua_pushnumber( L, quantity );
+   p = luaL_validpilot(L, 1);
+   cargo = luaL_validcommodity(L, 2);
+   quantity = pilot_cargoOwned(p, cargo->name);
+   lua_pushnumber(L, quantity);
    return 1;
 }
 
