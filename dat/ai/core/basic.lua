@@ -321,16 +321,21 @@ function __hyperspace_shoot( target )
    if target == nil then
       target = ai.rndhyptarget()
       if target == nil then
+         ai.poptask()
+         return
+      else
+         -- Push the new task
+         ai.pushsubtask("__hyperspace_shoot", target)
          return
       end
    end
    local pos = ai.sethyptarget(target)
    ai.pushsubtask( "__hyp_approach_shoot", pos )
 end
-function __hyp_approach_shoot ()
+function __hyp_approach_shoot( target )
    -- Shoot and approach
    __move_shoot()
-   __hyp_approach()
+   __hyp_approach( target )
 end
 
 
@@ -352,7 +357,7 @@ function __move_shoot ()
    -- Shoot while going somewhere
    -- The difference with run_turret is that we pick a new enemy in this one
    if ai.hasturrets() then
-      enemy = ai.getenemy()
+      local enemy = ai.getenemy()
       if enemy ~= nil then
          ai.weapset( 3 )
          ai.settarget( enemy )
@@ -654,13 +659,16 @@ function hyperspace( target )
       if target == nil then
          ai.poptask()
          return
+      else
+         -- Push the new task
+         ai.pushsubtask("hyperspace", target)
+         return
       end
    end
    local pos = ai.sethyptarget(target)
    ai.pushsubtask( "__hyp_approach", pos )
 end
-function __hyp_approach ()
-   local target   = ai.subtaskdata()
+function __hyp_approach( target )
    local dir
    local dist     = ai.dist( target )
    local bdist    = ai.minbrakedist()
