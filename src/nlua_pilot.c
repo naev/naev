@@ -1114,7 +1114,8 @@ static int pilotL_setTarget( lua_State *L )
  *
  *    @luatparam Pilot p Pilot to see if another pilot is in range.
  *    @luatparam Pilot target Target pilot.
- *    @luatreturn boolean Checks to see if the target is detected and if it's scanned.
+ *    @luatreturn boolean True if the pilot is visible at all.
+ *    @luatreturn boolean True if the pilot is visible and well-defined (not fuzzy)
  * @luafunc inrange
  */
 static int pilotL_inrange( lua_State *L )
