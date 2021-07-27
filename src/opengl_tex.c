@@ -353,14 +353,12 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
    md5_state_t md5;
    md5_byte_t *md5val;
 
-   if (name != NULL) {
-      if (!(flags & OPENGL_TEX_SKIPCACHE)) {
-         texture = gl_texExists( name, sx, sy );
-         if (texture != NULL) {
-            if (freesur)
-               SDL_FreeSurface( surface );
-            return texture;
-         }
+   if ((name != NULL) && !(flags & OPENGL_TEX_SKIPCACHE)) {
+      texture = gl_texExists( name, sx, sy );
+      if (texture != NULL) {
+         if (freesur)
+            SDL_FreeSurface( surface );
+         return texture;
       }
    }
 
@@ -460,12 +458,10 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
    glTexture *texture;
 
    /* Make sure doesn't already exist. */
-   if (name != NULL) {
-      if (!(flags & OPENGL_TEX_SKIPCACHE)) {
-         texture = gl_texExists( name, sx, sy );
-         if (texture != NULL)
-            return texture;
-      }
+   if ((name != NULL) && !(flags & OPENGL_TEX_SKIPCACHE)) {
+      texture = gl_texExists( name, sx, sy );
+      if (texture != NULL)
+         return texture;
    }
 
    if (flags & OPENGL_TEX_MAPTRANS)
