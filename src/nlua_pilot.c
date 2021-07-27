@@ -3350,7 +3350,9 @@ static int pilotL_cargoHas( lua_State *L )
  * @usage n = pilot.cargoAdd( player.pilot(), "Food", 20 )
  *
  *    @luatparam Pilot p The pilot to add cargo to.
- *    @luatparam string type Raw (untranslated) name of the cargo to add.
+ *    @luatparam Commodity|string cargo Type of cargo to add, either as
+ *       a Commodity object or as the raw (untranslated) name of a
+ *       commodity.
  *    @luatparam number quantity Quantity of cargo to add.
  *    @luatreturn number The quantity of cargo added.
  * @luafunc cargoAdd
@@ -3365,16 +3367,9 @@ static int pilotL_cargoAdd( lua_State *L )
    NLUA_CHECKRW(L);
 
    /* Parse parameters. */
-   p = luaL_validpilot(L,1);
-   str      = luaL_checkstring( L, 2 );
-   quantity = luaL_checknumber( L, 3 );
-
-   /* Get cargo. */
-   cargo    = commodity_get( str );
-   if (cargo == NULL) {
-      NLUA_ERROR( L, _("Cargo '%s' does not exist!"), str );
-      return 0;
-   }
+   p = luaL_validpilot(L, 1);
+   cargo = luaL_validcommodity(L, 2);
+   quantity = luaL_checknumber(L, 3);
 
    if (quantity < 0) {
       NLUA_ERROR( L, _("Quantity must be positive for pilot.cargoAdd (if removing, use pilot.cargoRm)") );
@@ -3391,12 +3386,16 @@ static int pilotL_cargoAdd( lua_State *L )
 /**
  * @brief Tries to remove cargo from the pilot's ship.
  *
- * @usage n = pilot.cargoRm( player.pilot(), "Food", 20 )
- * @usage n = pilot.cargoRm( player.pilot(), "__allExceptMisn" ) -- Removes all cargo from the player, excepted mission cargo
- * @usage n = pilot.cargoRm( player.pilot(), "__all" ) -- Removes all cargo from the player
+ * @usage n = pilot.cargoRm(player.pilot(), "Food", 20)
+ * @usage n = pilot.cargoRm(player.pilot(), "__allExceptMisn") -- Removes all cargo from the player, excepted mission cargo
+ * @usage n = pilot.cargoRm(player.pilot(), "__all") -- Removes all cargo from the player
  *
  *    @luatparam Pilot p The pilot to remove cargo from.
- *    @luatparam string type Raw (untranslated) name of the cargo to remove.
+ *    @luatparam Commodity|string cargo Type of cargo to remove, either
+ *       as a Commodity object or as the raw (untranslated) name of a
+ *       commodity. You can also pass the special values "__all" (which
+ *       removes all cargo) and "__allExceptMisn" (which removes all
+ *       non-mission cargo).
  *    @luatparam number quantity Quantity of the cargo to remove.
  *    @luatreturn number The number of cargo removed.
  * @luafunc cargoRm
@@ -3406,38 +3405,44 @@ static int pilotL_cargoRm( lua_State *L )
    Pilot *p;
    const char *str;
    int quantity;
-   Commodity *cargo;
+   Commodity *cargo = NULL;
 
    NLUA_CHECKRW(L);
 
    /* Parse parameters. */
-   p     = luaL_validpilot(L,1);
-   str   = luaL_checkstring(L,2);
+   p = luaL_validpilot(L, 1);
 
-   if (strcmp(str, "__allExceptMisn") == 0)
-      quantity = pilot_cargoRmAll( p, 0 );
-   else if (strcmp(str, "__all") == 0)
-      quantity = pilot_cargoRmAll( p, 1 );
-   else {
-      quantity = luaL_checknumber( L, 3 );
+   if (lua_isstring(L, 2)) {
+      str = lua_tostring(L, 2);
 
-      /* Get cargo. */
-      cargo    = commodity_get( str );
-      if (cargo == NULL) {
-         NLUA_ERROR( L, _("Cargo '%s' does not exist!"), str );
-         return 0;
+      /* Check for special strings. */
+      if (strcmp(str, "__allExceptMisn") == 0) {
+         quantity = pilot_cargoRmAll(p, 0);
+         lua_pushnumber(L, quantity);
+         return 1;
       }
-
-      if (quantity < 0) {
-         NLUA_ERROR( L, _("Quantity must be positive for pilot.cargoRm (if adding, use pilot.cargoAdd)") );
-         return 0;
+      else if (strcmp(str, "__all") == 0) {
+         quantity = pilot_cargoRmAll(p, 1);
+         lua_pushnumber(L, quantity);
+         return 1;
       }
-
-      /* Try to remove the cargo. */
-      quantity = pilot_cargoRm( p, cargo, quantity );
    }
 
-   lua_pushnumber( L, quantity );
+   /* No special string handling, just handle as a normal commodity. */
+   cargo = luaL_validcommodity(L, 2);
+   quantity = luaL_checknumber(L, 3);
+
+   if (quantity < 0) {
+      NLUA_ERROR(L,
+            _("Quantity must be positive for pilot.cargoRm (if adding, use"
+               " pilot.cargoAdd)"));
+      return 0;
+   }
+
+   /* Try to remove the cargo. */
+   quantity = pilot_cargoRm(p, cargo, quantity);
+
+   lua_pushnumber(L, quantity);
    return 1;
 }
 

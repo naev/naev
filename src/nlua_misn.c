@@ -686,7 +686,9 @@ static int misn_cargoNew( lua_State *L )
  * @brief Adds some mission cargo to the player. They cannot sell it nor get rid of it
  *  unless they abandons the mission in which case it'll get eliminated.
  *
- *    @luatparam string cargo Name of the cargo to add. This must match a cargo name defined in commodity.xml.
+ *    @luatparam Commodity|string cargo Type of cargo to add, either as
+ *       a Commodity object or as the raw (untranslated) name of a
+ *       commodity.
  *    @luatparam number quantity Quantity of cargo to add.
  *    @luatreturn number The id of the cargo which can be used in cargoRm.
  * @luafunc cargoAdd
