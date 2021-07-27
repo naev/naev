@@ -354,11 +354,13 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
    md5_byte_t *md5val;
 
    if (name != NULL) {
-      texture = gl_texExists( name, sx, sy );
-      if (texture != NULL) {
-         if (freesur)
-            SDL_FreeSurface( surface );
-         return texture;
+      if (!(flags & OPENGL_TEX_SKIPCACHE)) {
+         texture = gl_texExists( name, sx, sy );
+         if (texture != NULL) {
+            if (freesur)
+               SDL_FreeSurface( surface );
+            return texture;
+         }
       }
    }
 
@@ -459,9 +461,11 @@ glTexture* gl_loadImagePad( const char *name, SDL_Surface* surface,
 
    /* Make sure doesn't already exist. */
    if (name != NULL) {
-      texture = gl_texExists( name, sx, sy );
-      if (texture != NULL)
-         return texture;
+      if (!(flags & OPENGL_TEX_SKIPCACHE)) {
+         texture = gl_texExists( name, sx, sy );
+         if (texture != NULL)
+            return texture;
+      }
    }
 
    if (flags & OPENGL_TEX_MAPTRANS)
@@ -581,9 +585,11 @@ glTexture* gl_newImage( const char* path, const unsigned int flags )
    glTexture *t;
 
    /* Check if it already exists. */
-   t = gl_texExists( path, 1, 1 );
-   if (t != NULL)
-      return t;
+   if (!(flags & OPENGL_TEX_SKIPCACHE)) {
+      t = gl_texExists( path, 1, 1 );
+      if (t != NULL)
+         return t;
+   }
 
    /* Load the image */
    return gl_loadNewImage( path, flags );
@@ -607,9 +613,11 @@ glTexture* gl_newImageRWops( const char* path, SDL_RWops *rw, const unsigned int
    glTexture *t;
 
    /* Check if it already exists. */
-   t = gl_texExists( path, 1, 1 );
-   if (t != NULL)
-      return t;
+   if (!(flags & OPENGL_TEX_SKIPCACHE)) {
+      t = gl_texExists( path, 1, 1 );
+      if (t != NULL)
+         return t;
+   }
 
    /* Load the image */
    return gl_loadNewImageRWops( path, rw, flags );
@@ -698,7 +706,16 @@ glTexture* gl_newSprite( const char* path, const int sx, const int sy,
       const unsigned int flags )
 {
    glTexture* texture;
-   texture = gl_newImage( path, flags );
+
+   /* Check if it already exists. */
+   if (!(flags & OPENGL_TEX_SKIPCACHE)) {
+      texture = gl_texExists( path, sx, sy );
+      if (texture != NULL)
+         return texture;
+   }
+
+   /* Create new image. */
+   texture = gl_newImage( path, flags | OPENGL_TEX_SKIPCACHE );
    if (texture == NULL)
       return NULL;
 
@@ -728,7 +745,16 @@ glTexture* gl_newSpriteRWops( const char* path, SDL_RWops *rw,
    const int sx, const int sy, const unsigned int flags )
 {
    glTexture* texture;
-   texture = gl_newImageRWops( path, rw, flags );
+
+   /* Check if it already exists. */
+   if (!(flags & OPENGL_TEX_SKIPCACHE)) {
+      texture = gl_texExists( path, sx, sy );
+      if (texture != NULL)
+         return texture;
+   }
+
+   /* Create new image. */
+   texture = gl_newImageRWops( path, rw, flags | OPENGL_TEX_SKIPCACHE );
    if (texture == NULL)
       return NULL;
 
