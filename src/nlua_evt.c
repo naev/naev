@@ -323,6 +323,7 @@ static int evtL_save( lua_State *L )
  * @usage if not evt.claim( { system.get("Gamma Polaris"), 'some_string' } ) then evt.finish( false ) end
  *
  *    @luatparam System|String|{System,String...} params Table of systems/strings to claim or a single system/string.
+ *    @luatparam[opt=false] boolean onlytest Whether or not to only test the claim, but not apply it.
  *    @luatreturn boolean true if was able to claim, false otherwise.
  * @luafunc claim
  */
@@ -361,6 +362,13 @@ static int evtL_claim( lua_State *L )
       claim_addStr( claim, lua_tostring( L, 1 ) );
    else
       NLUA_INVALID_PARAMETER(L);
+
+   /* Only test, but don't apply case. */
+   if (lua_toboolean(L,2)) {
+      lua_pushboolean( L, !claim_test( claim ) );
+      claim_destroy( claim );
+      return 1;
+   }
 
    /* Test claim. */
    if (claim_test( claim )) {
