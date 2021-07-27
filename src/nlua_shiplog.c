@@ -107,8 +107,7 @@ static int shiplog_createLog( lua_State *L )
    maxLen      = luaL_optinteger(L,5,0);
    /* Create a new shiplog */
    shiplog_create( idstr, logname, logtype, overwrite, maxLen );
-   lua_pushnumber(L, 0);
-   return 1;
+   return 0;
 }
 
 /**
@@ -118,18 +117,15 @@ static int shiplog_createLog( lua_State *L )
  *
  *    @luatparam string idstr ID string of the log to append to.
  *    @luatparam string message Message to append to the log.
+ *    @luatreturn boolean true on success.
  * @luafunc append
  */
 static int shiplog_appendLog( lua_State *L )
 {
-   const char *msg;
-   int ret;
-   const char *idstr;
-   idstr = luaL_checkstring(L, 1);
-   msg = luaL_checkstring(L, 2);
-   ret = shiplog_append(idstr, msg);
-
-   lua_pushnumber(L, ret); /* 0 on success, -1 on failure */
+   const char *idstr = luaL_checkstring(L, 1);
+   const char *msg   = luaL_checkstring(L, 2);
+   int ret = shiplog_append(idstr, msg);
+   lua_pushboolean(L, !ret);
    return 1;
 }
 
