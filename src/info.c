@@ -1227,13 +1227,13 @@ static void shiplog_menu_update( unsigned int wid, char* str )
       logType = toolkit_getListPos( wid, "lstLogType" );
       log = toolkit_getListPos( wid, "lstLogs" );
 
-      if ( logType != selectedLogType ) {
+      if (logType != selectedLogType) {
          /* new log type selected */
          selectedLogType = logType;
          window_destroyWidget( wid, "lstLogs" );
          logs = NULL;
-         shiplog_listLogsOfType(info_getLogTypeFilter(selectedLogType), &nlogs, &logs, &logIDs, 1);
-         if ( selectedLog >= nlogs )
+         shiplog_listLogsOfType( info_getLogTypeFilter(selectedLogType), &nlogs, &logs, &logIDs, 1 );
+         if (selectedLog >= nlogs)
             selectedLog = 0;
          window_addList( wid, 20, 60 + BUTTON_HEIGHT  + LOGSPACING / 2,
                          w-40, LOGSPACING / 4,
@@ -1242,11 +1242,11 @@ static void shiplog_menu_update( unsigned int wid, char* str )
          toolkit_setListPos( wid, "lstLogs", selectedLog );
          regenerateEntries=1;
       }
-      if ( regenerateEntries || selectedLog != log ) {
-         selectedLog = log;
+      if (regenerateEntries || selectedLog != log) {
+         selectedLog = CLAMP( 0, nlogs-1, log );
          /* list log entries of selected log type */
          window_destroyWidget( wid, "lstLogEntries" );
-         shiplog_listLog(logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries, &logentries,1);
+         shiplog_listLog( logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries, &logentries, 1 );
          window_addList( wid, 20, 40 + BUTTON_HEIGHT,
                          w-40, LOGSPACING / 2-20,
                          "lstLogEntries", logentries, nentries, 0, shiplog_menu_update, info_shiplogView );
