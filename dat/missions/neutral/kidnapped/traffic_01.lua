@@ -158,11 +158,11 @@ function sys_enter ()
    else
       hook.timer( 3.0, "do_msg2" )
       broship = pilot.add( "Gawain", "Independent", bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), {ai="trader"} ) -- fast Gawain
-      broship:rmOutfit("cores")
+      broship:outfitRm("cores")
       broship:cargoRm("all")
-      broship:addOutfit("Unicorp D-2 Light Plating")
-      broship:addOutfit("Unicorp PT-68 Core System")
-      broship:addOutfit("Tricon Zephyr Engine")
+      broship:outfitAdd("Unicorp D-2 Light Plating")
+      broship:outfitAdd("Unicorp PT-68 Core System")
+      broship:outfitAdd("Tricon Zephyr Engine")
       broship:setHealth(100,100)
       broship:setEnergy(100)
       broship:setInvincible(true)
@@ -238,15 +238,15 @@ function spawn_baddies(sp)
       badguys[i]:setHostile(false)
 
       --Their outfits must be quite good
-      badguys[i]:rmOutfit("all")
-      badguys[i]:rmOutfit("cores")
+      badguys[i]:outfitRm("all")
+      badguys[i]:outfitRm("cores")
 
-      badguys[i]:addOutfit("Unicorp D-2 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-16 Core System")
-      badguys[i]:addOutfit("Tricon Zephyr Engine")
+      badguys[i]:outfitAdd("Unicorp D-2 Light Plating")
+      badguys[i]:outfitAdd("Unicorp PT-16 Core System")
+      badguys[i]:outfitAdd("Tricon Zephyr Engine")
 
-      badguys[i]:addOutfit("Laser Cannon MK2",3)
-      badguys[i]:addOutfit("Improved Stabilizer") -- Just try to avoid fight with these fellas
+      badguys[i]:outfitAdd("Laser Cannon MK2",3)
+      badguys[i]:outfitAdd("Improved Stabilizer") -- Just try to avoid fight with these fellas
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
@@ -256,17 +256,17 @@ function spawn_baddies(sp)
       badguys[i]:setHostile(false)
 
       --Their outfits must be quite good
-      badguys[i]:rmOutfit("all")
-      badguys[i]:rmOutfit("cores")
+      badguys[i]:outfitRm("all")
+      badguys[i]:outfitRm("cores")
 
-      badguys[i]:addOutfit("Unicorp D-4 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-68 Core System")
-      badguys[i]:addOutfit("Tricon Zephyr II Engine")
+      badguys[i]:outfitAdd("Unicorp D-4 Light Plating")
+      badguys[i]:outfitAdd("Unicorp PT-68 Core System")
+      badguys[i]:outfitAdd("Tricon Zephyr II Engine")
 
-      badguys[i]:addOutfit("Mass Driver")
-      badguys[i]:addOutfit("Shredder",2)
-      badguys[i]:addOutfit("Ripper Cannon")
-      badguys[i]:addOutfit("Shield Capacitor I",2)
+      badguys[i]:outfitAdd("Mass Driver")
+      badguys[i]:outfitAdd("Shredder",2)
+      badguys[i]:outfitAdd("Ripper Cannon")
+      badguys[i]:outfitAdd("Shield Capacitor I",2)
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
@@ -275,15 +275,15 @@ function spawn_baddies(sp)
       badguys[i] = pilot.add( "Admonisher", "Mercenary", sp, _("Mercenary") )
       badguys[i]:setHostile(false)
 
-      badguys[i]:rmOutfit("all")
-      badguys[i]:rmOutfit("cores")
+      badguys[i]:outfitRm("all")
+      badguys[i]:outfitRm("cores")
 
-      badguys[i]:addOutfit("Unicorp D-12 Medium Plating")
-      badguys[i]:addOutfit("Unicorp PT-200 Core System")
-      badguys[i]:addOutfit("Tricon Cyclone Engine")
+      badguys[i]:outfitAdd("Unicorp D-12 Medium Plating")
+      badguys[i]:outfitAdd("Unicorp PT-200 Core System")
+      badguys[i]:outfitAdd("Tricon Cyclone Engine")
 
-      badguys[i]:addOutfit("Razor Turret MK2",2)
-      badguys[i]:addOutfit("Unicorp Headhunter Launcher",2)
+      badguys[i]:outfitAdd("Razor Turret MK2",2)
+      badguys[i]:outfitAdd("Unicorp Headhunter Launcher",2)
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)

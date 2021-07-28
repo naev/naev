@@ -22,11 +22,11 @@ function turnon( p, po )
    np:setHealth( p:health() ) -- Copy health
    np:setNoDeath( true ) -- Dosen't die
    -- Copy outfits
-   np:rmOutfit("all")
+   np:outfitRm("all")
    for k,v in ipairs(p:outfits()) do
       -- We don't want holograms
       if v ~= hologram then
-         np:addOutfit( v, 1, true )
+         np:outfitAdd( v, 1, true )
       end
    end
    -- No damage and low health

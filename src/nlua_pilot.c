@@ -118,8 +118,8 @@ static int pilotL_setCooldown( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
 static int pilotL_setNoLand( lua_State *L );
 static int pilotL_setNoClear( lua_State *L );
-static int pilotL_addOutfit( lua_State *L );
-static int pilotL_rmOutfit( lua_State *L );
+static int pilotL_outfitAdd( lua_State *L );
+static int pilotL_outfitRm( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
 static int pilotL_intrinsicReset( lua_State *L );
 static int pilotL_intrinsicSet( lua_State *L );
@@ -247,8 +247,8 @@ static const luaL_Reg pilotL_methods[] = {
    { "broadcast", pilotL_broadcast },
    { "comm", pilotL_comm },
    /* Outfits. */
-   { "addOutfit", pilotL_addOutfit },
-   { "rmOutfit", pilotL_rmOutfit },
+   { "outfitAdd", pilotL_outfitAdd },
+   { "outfitRm", pilotL_outfitRm },
    { "setFuel", pilotL_setFuel },
    { "intrinsicReset", pilotL_intrinsicReset },
    { "intrinsicSet", pilotL_intrinsicSet },
@@ -2536,7 +2536,7 @@ static int pilotL_setNoClear( lua_State *L )
  *
  * This by default tries to add them to the first empty or defaultly equipped slot. Will not overwrite existing non-default outfits.
  *
- * @usage added = p:addOutfit( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
+ * @usage added = p:outfitAdd( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luatparam Pilot p Pilot to add outfit to.
  *    @luatparam string|outfit outfit Outfit or name of the outfit to add.
@@ -2544,9 +2544,9 @@ static int pilotL_setNoClear( lua_State *L )
  *    @luatparam[opt=false] boolean bypass_cpu Whether to skip CPU checks when adding an outfit.
  *    @luatparam[opt=false] boolean bypass_slot Whether or not to skip slot size checks before adding an outfit. Not that this implies skipping the CPU checks.
  *    @luatreturn number The number of outfits added.
- * @luafunc addOutfit
+ * @luafunc outfitAdd
  */
-static int pilotL_addOutfit( lua_State *L )
+static int pilotL_outfitAdd( lua_State *L )
 {
    int i;
    Pilot *p;
@@ -2630,18 +2630,18 @@ static int pilotL_addOutfit( lua_State *L )
  * "all" will remove all outfits except cores.
  * "cores" will remove all cores, but nothing else.
  *
- * @usage p:rmOutfit( "all" ) -- Leaves the pilot naked (except for cores).
- * @usage p:rmOutfit( "cores" ) -- Strips the pilot of its cores, leaving it dead in space.
- * @usage p:rmOutfit( "Neutron Disruptor" ) -- Removes a neutron disruptor.
- * @usage p:rmOutfit( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
+ * @usage p:outfitRm( "all" ) -- Leaves the pilot naked (except for cores).
+ * @usage p:outfitRm( "cores" ) -- Strips the pilot of its cores, leaving it dead in space.
+ * @usage p:outfitRm( "Neutron Disruptor" ) -- Removes a neutron disruptor.
+ * @usage p:outfitRm( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
  *
  *    @luatparam Pilot p Pilot to remove outfit from.
  *    @luatparam string|outfit outfit Outfit or name of the outfit to remove.
  *    @luatparam number q Quantity of the outfit to remove.
  *    @luatreturn number The number of outfits removed.
- * @luafunc rmOutfit
+ * @luafunc outfitRm
  */
-static int pilotL_rmOutfit( lua_State *L )
+static int pilotL_outfitRm( lua_State *L )
 {
    int i;
    Pilot *p;

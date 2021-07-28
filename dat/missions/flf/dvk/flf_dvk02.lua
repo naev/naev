@@ -202,7 +202,7 @@ function pilot_hail_boss ()
          tk.msg( title[8], text[9]:format(
             missys2:name(), tonnestring( ore_needed ), missys2:name() ) )
 
-         player.addOutfit( "Map: FLF-Pirate Route" )
+         player.outfitAdd( "Map: FLF-Pirate Route" )
          if marker ~= nil then misn.markerRm( marker ) end
          marker = misn.markerAdd( missys2, "plot" )
 

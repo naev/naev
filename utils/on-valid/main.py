@@ -131,7 +131,7 @@ class sanitizer:
             pilot\.add\(|
             addShips\(|
             player\.addShip\(|
-            addOutfit\(|
+            outfitAdd\(|
             diff\.apply\(|
             scom\.addPilot\()\s* (?P<hackery>pilots,|
         )\s*"(?P<content>[^"]+)"""
@@ -176,7 +176,7 @@ class sanitizer:
                     if info['func'] == 'pilot.addRaw':
                         if not shipdata.find(info['content']):
                             haserror=True
-                    if info['func'] == 'addOutfit':
+                    if info['func'] == 'outfitAdd':
                         if not outfitdata.find(info['content']):
                             haserror=True
                     if info['func'] == 'player.addShip':

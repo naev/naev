@@ -99,7 +99,7 @@ special_ships["Drone"] = function( p )
       "Neutron Disruptor",
       "Neutron Disruptor",
    } do
-      p:addOutfit( o, 1, true )
+      p:outfitAdd( o, 1, true )
    end
 end
 special_ships["Drone (Hyena)"] = special_ships["Drone"]
@@ -113,23 +113,23 @@ special_ships["Heavy Drone"] = function( p )
       "Neutron Disruptor",
       "Neutron Disruptor",
    } do
-      p:addOutfit( o, 1, true )
+      p:outfitAdd( o, 1, true )
    end
 end
 special_ships["Za'lek Scout Drone"] = function( p )
-   p:addOutfit( "Particle Lance")
+   p:outfitAdd( "Particle Lance")
 end
 special_ships["Za'lek Light Drone"] = function( p )
-   p:addOutfit( "Particle Lance")
+   p:outfitAdd( "Particle Lance")
 end
 special_ships["Za'lek Bomber Drone"] = function( p )
-   p:addOutfit( "Electron Burst Cannon" )
-   p:addOutfit( "Electron Burst Cannon" )
+   p:outfitAdd( "Electron Burst Cannon" )
+   p:outfitAdd( "Electron Burst Cannon" )
 end
 special_ships["Za'lek Heavy Drone"] = function( p )
-   p:addOutfit( "Orion Lance" )
-   p:addOutfit( "Orion Lance" )
-   p:addOutfit( "Electron Burst Cannon" )
+   p:outfitAdd( "Orion Lance" )
+   p:outfitAdd( "Orion Lance" )
+   p:outfitAdd( "Electron Burst Cannon" )
 end
 
 
@@ -235,7 +235,7 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Naked ship
    local ps = p:ship()
-   p:rmOutfit( "all" )
+   p:outfitRm( "all" )
 
    -- Special ships used fixed outfits
    local specship = special_ships[ ps:nameRaw() ]
@@ -255,10 +255,10 @@ function optimize.optimize( p, cores, outfit_list, params )
    if cores then
       -- Don't actually have to remove cores as it should overwrite default
       -- cores as necessary
-      --p:rmOutfit( "cores" )
+      --p:outfitRm( "cores" )
       -- Put cores
       for k,v in ipairs( cores ) do
-         local q = p:addOutfit( v, 1, true )
+         local q = p:outfitAdd( v, 1, true )
          if q < 1 then
             warn(string.format(_("Unable to equip core '%s' on '%s'!"), v, p:name()))
          end
@@ -646,7 +646,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       for i,s in ipairs(slots) do
          for j,o in ipairs(s.outfits) do
             if x[c] == 1 then
-               local q = p:addOutfit( o, 1, true )
+               local q = p:outfitAdd( o, 1, true )
                if q < 1 then
                   warn(string.format(_("Unable to equip outfit '%s' on '%s'!"), o,  p:name()))
                end
@@ -659,7 +659,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       -- energy, we'll try again with larger energy constraints
       local stn = p:stats()
       if stn.energy_regen < energygoal then
-         p:rmOutfit( "all" )
+         p:outfitRm( "all" )
          emod = emod * 1.5
          --print(string.format("Pilot %s: optimization attempt %d of %d: emod=%.3f", p:name(), try, 3, emod ))
          lp:set_row( 2, "energy_regen", nil, st.energy_regen - emod*energygoal )

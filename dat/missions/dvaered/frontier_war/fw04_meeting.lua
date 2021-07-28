@@ -605,14 +605,14 @@ end
 
 -- Equips a quick and strong Hyena
 function equipHyena( p )
-   p:rmOutfit("cores")
-   p:rmOutfit("all")
-   p:addOutfit("Tricon Zephyr Engine")
-   p:addOutfit("Milspec Orion 2301 Core System")
-   p:addOutfit("S&K Ultralight Combat Plating")
-   p:addOutfit("Gauss Gun",3)
-   p:addOutfit("Improved Stabilizer")
-   p:addOutfit("Hellburner")
+   p:outfitRm("cores")
+   p:outfitRm("all")
+   p:outfitAdd("Tricon Zephyr Engine")
+   p:outfitAdd("Milspec Orion 2301 Core System")
+   p:outfitAdd("S&K Ultralight Combat Plating")
+   p:outfitAdd("Gauss Gun",3)
+   p:outfitAdd("Improved Stabilizer")
+   p:outfitAdd("Hellburner")
    p:setHealth(100,100)
    p:setEnergy(100)
 

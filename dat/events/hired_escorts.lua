@@ -255,7 +255,7 @@ function enter ()
 
          edata.pilot = pilot.add(edata.ship, f, spawnpoint, edata.name, {naked=true})
          for j, o in ipairs(edata.outfits) do
-            edata.pilot:addOutfit(o)
+            edata.pilot:outfitAdd(o)
          end
          edata.pilot:fillAmmo()
          edata.pilot:setFriendly()

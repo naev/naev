@@ -243,15 +243,15 @@ function interceptors()
       badguys[i]:setHostile()
 
       --Their outfits must be quite good
-      badguys[i]:rmOutfit("all")
-      badguys[i]:rmOutfit("cores")
+      badguys[i]:outfitRm("all")
+      badguys[i]:outfitRm("cores")
 
-      badguys[i]:addOutfit("S&K Ultralight Combat Plating")
-      badguys[i]:addOutfit("Milspec Orion 2301 Core System")
-      badguys[i]:addOutfit("Tricon Zephyr Engine")
+      badguys[i]:outfitAdd("S&K Ultralight Combat Plating")
+      badguys[i]:outfitAdd("Milspec Orion 2301 Core System")
+      badguys[i]:outfitAdd("Tricon Zephyr Engine")
 
-      badguys[i]:addOutfit("Gauss Gun",3)
-      badguys[i]:addOutfit("Improved Stabilizer") -- Just try to avoid fight with these fellas
+      badguys[i]:outfitAdd("Gauss Gun",3)
+      badguys[i]:outfitAdd("Improved Stabilizer") -- Just try to avoid fight with these fellas
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
@@ -266,17 +266,17 @@ function hvy_intercept()
       badguys[i]:setHostile()
 
       --Their outfits must be quite good
-      badguys[i]:rmOutfit("all")
-      badguys[i]:rmOutfit("cores")
+      badguys[i]:outfitRm("all")
+      badguys[i]:outfitRm("cores")
 
-      badguys[i]:addOutfit("Unicorp D-4 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-68 Core System")
-      badguys[i]:addOutfit("Tricon Zephyr II Engine")
+      badguys[i]:outfitAdd("Unicorp D-4 Light Plating")
+      badguys[i]:outfitAdd("Unicorp PT-68 Core System")
+      badguys[i]:outfitAdd("Tricon Zephyr II Engine")
 
-      badguys[i]:addOutfit("TeraCom Fury Launcher")
-      badguys[i]:addOutfit("Laser Cannon MK2",2)
-      badguys[i]:addOutfit("Laser Cannon MK1")
-      badguys[i]:addOutfit("Reactor Class I")
+      badguys[i]:outfitAdd("TeraCom Fury Launcher")
+      badguys[i]:outfitAdd("Laser Cannon MK2",2)
+      badguys[i]:outfitAdd("Laser Cannon MK1")
+      badguys[i]:outfitAdd("Reactor Class I")
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
@@ -290,19 +290,19 @@ function corvette()
       badguys[i] = pilot.add( "Admonisher", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
-      badguys[i]:rmOutfit("all")
-      badguys[i]:rmOutfit("cores")
+      badguys[i]:outfitRm("all")
+      badguys[i]:outfitRm("cores")
 
-      badguys[i]:addOutfit("Unicorp D-12 Medium Plating")
-      badguys[i]:addOutfit("Unicorp PT-200 Core System")
-      badguys[i]:addOutfit("Tricon Cyclone Engine")
+      badguys[i]:outfitAdd("Unicorp D-12 Medium Plating")
+      badguys[i]:outfitAdd("Unicorp PT-200 Core System")
+      badguys[i]:outfitAdd("Tricon Cyclone Engine")
 
-      badguys[i]:addOutfit("Unicorp Headhunter Launcher",2)
-      badguys[i]:addOutfit("Razor Turret MK2")
-      badguys[i]:addOutfit("Razor Turret MK1",2)
+      badguys[i]:outfitAdd("Unicorp Headhunter Launcher",2)
+      badguys[i]:outfitAdd("Razor Turret MK2")
+      badguys[i]:outfitAdd("Razor Turret MK1",2)
 
-      badguys[i]:addOutfit("Shield Capacitor II")
-      badguys[i]:addOutfit("Reactor Class I",2)
+      badguys[i]:outfitAdd("Shield Capacitor II")
+      badguys[i]:outfitAdd("Reactor Class I",2)
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
@@ -314,20 +314,20 @@ function cruiser()
    badguy = pilot.add( "Kestrel", "Mercenary", nil, _("Mercenary") )
    badguy:setHostile()
 
-   badguy:rmOutfit("all")
-   badguy:rmOutfit("cores")
+   badguy:outfitRm("all")
+   badguy:outfitRm("cores")
 
-   badguy:addOutfit("Unicorp D-48 Heavy Plating")
-   badguy:addOutfit("Unicorp PT-500 Core System")
-   badguy:addOutfit("Krain Remige Engine")
+   badguy:outfitAdd("Unicorp D-48 Heavy Plating")
+   badguy:outfitAdd("Unicorp PT-500 Core System")
+   badguy:outfitAdd("Krain Remige Engine")
 
-   badguy:addOutfit("Heavy Laser Turret",2)
-   badguy:addOutfit("Unicorp Headhunter Launcher",4)
+   badguy:outfitAdd("Heavy Laser Turret",2)
+   badguy:outfitAdd("Unicorp Headhunter Launcher",4)
 
-   badguy:addOutfit("Pinpoint Combat AI")
-   badguy:addOutfit("Photo-Voltaic Nanobot Coating")
-   badguy:addOutfit("Reactor Class III")
-   badguy:addOutfit("Improved Stabilizer",3)
+   badguy:outfitAdd("Pinpoint Combat AI")
+   badguy:outfitAdd("Photo-Voltaic Nanobot Coating")
+   badguy:outfitAdd("Reactor Class III")
+   badguy:outfitAdd("Improved Stabilizer",3)
    badguy:setHealth(100,100)
    badguy:setEnergy(100)
 
@@ -340,17 +340,17 @@ function bombers()
       badguys[i] = pilot.add( "Ancestor", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
-      badguys[i]:rmOutfit("all")
-      badguys[i]:rmOutfit("cores")
+      badguys[i]:outfitRm("all")
+      badguys[i]:outfitRm("cores")
 
-      badguys[i]:addOutfit("Unicorp D-2 Light Plating")
-      badguys[i]:addOutfit("Unicorp PT-68 Core System")
-      badguys[i]:addOutfit("Tricon Zephyr II Engine")
+      badguys[i]:outfitAdd("Unicorp D-2 Light Plating")
+      badguys[i]:outfitAdd("Unicorp PT-68 Core System")
+      badguys[i]:outfitAdd("Tricon Zephyr II Engine")
 
-      badguys[i]:addOutfit("Unicorp Caesar IV Launcher",2)
-      badguys[i]:addOutfit("Gauss Gun",2)
+      badguys[i]:outfitAdd("Unicorp Caesar IV Launcher",2)
+      badguys[i]:outfitAdd("Gauss Gun",2)
 
-      badguys[i]:addOutfit("Reactor Class I")
+      badguys[i]:outfitAdd("Reactor Class I")
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)

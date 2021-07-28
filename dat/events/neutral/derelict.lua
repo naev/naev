@@ -143,7 +143,7 @@ function goodevent()
     elseif event == 2 then
         local choice = unknown[rnd.rnd(1,#unknown)]
         tk.msg(gtitle, gtext[2]:format(maps[choice]))
-        player.addOutfit(choice, 1)
+        player.outfitAdd(choice, 1)
     elseif event == 3 then
         local factions = {"Empire", "Dvaered", "Sirius", "Soromid"} -- TODO: Add more factions as they appear
         rndfact = factions[rnd.rnd(1, #factions)]

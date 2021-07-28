@@ -211,7 +211,7 @@ function board()
       pinnacle:setHealth(100,100)
       pinnacle:control(false)
       player.pay(reward)
-      player.addOutfit("Ugly Statue")
+      player.outfitAdd("Ugly Statue")
       misn.finish(true)
    end
    pinnacle:setHilight(false)

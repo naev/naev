@@ -130,14 +130,14 @@ function spawnBaddies ()
    thugs = addShips( 4, "Admonisher", "Thugs", sp, _("Thug"), {ai=ai} )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:setHostile(true) --they don't like you
-      pilot_object:rmOutfit("all") --strip them down
-      pilot_object:addOutfit("Ripper Cannon") --add everything but rockets
-      pilot_object:addOutfit("Plasma Blaster MK2", 2)
-      pilot_object:addOutfit("Vulcan Gun", 2)
-      pilot_object:addOutfit("Reactor Class II", 2)
-      pilot_object:addOutfit("Milspec Jammer")
-      pilot_object:addOutfit("Engine Reroute")
-      pilot_object:addOutfit("Shield Capacitor II")
+      pilot_object:outfitRm("all") --strip them down
+      pilot_object:outfitAdd("Ripper Cannon") --add everything but rockets
+      pilot_object:outfitAdd("Plasma Blaster MK2", 2)
+      pilot_object:outfitAdd("Vulcan Gun", 2)
+      pilot_object:outfitAdd("Reactor Class II", 2)
+      pilot_object:outfitAdd("Milspec Jammer")
+      pilot_object:outfitAdd("Engine Reroute")
+      pilot_object:outfitAdd("Shield Capacitor II")
       if system.cur() ~= targetsystem then
          -- TODO more sophisticated way of detecting the player
          if pilot_object:inrange( pp ) then

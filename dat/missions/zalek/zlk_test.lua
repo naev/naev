@@ -135,7 +135,7 @@ function accept()
 
    if misn.accept() then -- able to accept the mission
       stage = 0
-      player.addOutfit("Za'lek Test Engine")
+      player.outfitAdd("Za'lek Test Engine")
       tk.msg( msg_title[1], znpcs[ rnd.rnd(1, #znpcs) ] )
       tk.msg( msg_title[1], string.format( msg_msg[1], destplanet:name(), destsys:name() ))
 
@@ -198,7 +198,7 @@ function land()
    if planet.cur() == destplanet and stage == 0 then
       tk.msg( msg_title[3], msg_msg[3])
       player.pay(reward)
-      player.rmOutfit("Za'lek Test Engine")
+      player.outfitRm("Za'lek Test Engine")
 
       -- increase faction
       faction.modPlayerSingle("Za'lek", rnd.rnd(1, 2))
@@ -322,13 +322,13 @@ end
 
 function rmTheOutfit( addengine )
    if isMounted("Za'lek Test Engine") then
-      player.pilot():rmOutfit("Za'lek Test Engine")
+      player.pilot():outfitRm("Za'lek Test Engine")
    end
 
    -- Give them a bad engine just in case they are landed or on a planet
    -- where they can't equip. The bad engine is free so it shouldn't matter.
    if addengine then
-      player.pilot():addOutfit("Beat Up Small Engine")
+      player.pilot():outfitAdd("Beat Up Small Engine")
    end
 
    -- TODO Remove copies from all ships
@@ -342,7 +342,7 @@ function rmTheOutfit( addengine )
 
    -- Remove owned copies
    while isOwned("Za'lek Test Engine") do
-      player.rmOutfit("Za'lek Test Engine")
+      player.outfitRm("Za'lek Test Engine")
    end
 end
 

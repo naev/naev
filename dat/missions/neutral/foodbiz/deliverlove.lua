@@ -113,7 +113,7 @@ function land()
    if planet.cur() == targetworld then
       player.pay( reward )
       tk.msg( "", misn_accomplished:format( creditstring( reward ) ) )
-      player.addOutfit("Love Letter")
+      player.outfitAdd("Love Letter")
       addMiscLog( log_text )
       misn.finish( true )
    end

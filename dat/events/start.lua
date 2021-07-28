@@ -39,17 +39,17 @@ end
 
 function create()
    player.pilot():rename( name() ) -- Assign a random name to the player's ship.
-   player.pilot():addOutfit( "Laser Cannon MK1", 2 )
+   player.pilot():outfitAdd( "Laser Cannon MK1", 2 )
    jump.setKnown( "Hakoi", "Eneguoz" )
 
    -- Give all GUIs
    -- XXX: Would be better to remove these outfits and the association,
    -- but they're so tightly integrated atm (with no other way to define
    -- GUIs as usable) that I'm implementing it this way for now.
-   player.addOutfit( "GUI - Brushed" )
-   player.addOutfit( "GUI - Slim" )
-   player.addOutfit( "GUI - Slimv2" )
-   player.addOutfit( "GUI - Legacy" )
+   player.outfitAdd( "GUI - Brushed" )
+   player.outfitAdd( "GUI - Slim" )
+   player.outfitAdd( "GUI - Slimv2" )
+   player.outfitAdd( "GUI - Legacy" )
 
    hook.timer(1.0, "timer_tutorial")
 end

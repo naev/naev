@@ -126,7 +126,7 @@ function land ()
    -- Mission success
    if misn_stage == 1 and landed == homeworld then
       tk.msg( title[3], text[4] )
-      player.addOutfit( "Satellite Mock-up" )
+      player.outfitAdd( "Satellite Mock-up" )
       player.pay( credits )
       addMiscLog( log_text )
       misn.finish(true)

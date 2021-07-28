@@ -234,9 +234,9 @@ function addRefuelShip ()
    refship:setNoJump()
 
    -- Maximize fuel
-   refship:rmOutfit("all") -- Only will have fuel pods
+   refship:outfitRm("all") -- Only will have fuel pods
    local h,m,l = refship:ship():slots()
-   refship:addOutfit( "Small Fuel Pod", l )
+   refship:outfitAdd( "Small Fuel Pod", l )
    refship:setFuel( true ) -- Set fuel to max
 
    -- Add some escorts
@@ -279,7 +279,7 @@ function land ()
       player.pay( 5000000 ) -- 5m
 
       tk.msg( title[3], text[4] )
-      player.addOutfit("Left Boot")
+      player.outfitAdd("Left Boot")
 
       emp_addCollectiveLog( log_text_succeed )
 

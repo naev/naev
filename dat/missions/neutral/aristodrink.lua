@@ -190,7 +190,7 @@ function land ()
       end
    elseif hasDrink and planet.cur() == startplanet then
       tk.msg( finishedtitle, finishedtxt:format( creditstring(payment) ) )
-      player.addOutfit( "Swamp Bombing" )
+      player.outfitAdd( "Swamp Bombing" )
       player.pay( payment )
 
       hook.rm(landhook)

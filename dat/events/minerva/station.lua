@@ -340,7 +340,7 @@ function approach_terminal()
          local t = tradein_item
          minerva.tokens_pay( -t[2][1] )
          if t[2][2]=="outfit" then
-            player.addOutfit( t[1] )
+            player.outfitAdd( t[1] )
             player.msg( _("Gambling Bounty"), string.format(_("Obtained: %s"),t[1]))
          elseif t[2][2]=="ship" then
             player.addShip( t[1] )

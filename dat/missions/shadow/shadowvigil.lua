@@ -595,8 +595,8 @@ function killDiplomats()
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:taskClear()
-            j:rmOutfit("all")
-            j:addOutfit("Cheater's Ragnarok Beam", 1)
+            j:outfitRm("all")
+            j:outfitAdd("Cheater's Ragnarok Beam", 1)
             j:attack(dvaerplomat)
             j:setHilight(false)
         end
@@ -622,7 +622,7 @@ function escortFlee()
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:taskClear()
-            j:rmOutfit("all")
+            j:outfitRm("all")
             j:hyperspace()
             j:setInvincible(false)
             j:setInvincPlayer(false)
@@ -661,7 +661,7 @@ function board_escort( pilot )
    if not boarded_escort then
       tk.msg( disable_title, disable_text )
       player.unboard()
-      player.addOutfit("Vacuum Cleaner?")
+      player.outfitAdd("Vacuum Cleaner?")
       pilot:setHealth(0, 0) -- Make ship explode
       boarded_escort = true
    end

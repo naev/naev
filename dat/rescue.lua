@@ -354,8 +354,8 @@ function removeNonCores( slottype )
       local slot, _, prop = v:slot()
       if not prop and (not slottype or slot == slottype) then
          -- Store and remove old
-         player.addOutfit(v:nameRaw())
-         pp:rmOutfit(v:nameRaw())
+         player.outfitAdd(v:nameRaw())
+         pp:outfitRm(v:nameRaw())
       end
    end
 end
@@ -367,13 +367,13 @@ function removeEquipDefaults()
 
    -- Store and remove old outfits
    for k,v in ipairs( pp:outfits() ) do
-      player.addOutfit(v:nameRaw())
-      pp:rmOutfit(v:nameRaw())
+      player.outfitAdd(v:nameRaw())
+      pp:outfitRm(v:nameRaw())
    end
    -- Add core outfits
    for k,v in ipairs( pp:ship():getSlots() ) do
       if v.outfit then
-         pp:addOutfit( v.outfit, 1, true )
+         pp:outfitAdd( v.outfit, 1, true )
       end
    end
 end
@@ -389,11 +389,11 @@ function equipDefaults( defaults )
       -- Remove if required but not default.
       if required and v ~= defaults[prop].outfit then
          -- Store and remove old
-         player.addOutfit(v:nameRaw())
-         pp:rmOutfit(v:nameRaw())
+         player.outfitAdd(v:nameRaw())
+         pp:outfitRm(v:nameRaw())
 
          -- Add new
-         pp:addOutfit( defaults[k].outfit:nameRaw() )
+         pp:outfitAdd( defaults[k].outfit:nameRaw() )
 
          -- Remove the outfit from the to-add list.
          defaults[k] = nil
@@ -408,7 +408,7 @@ end
 function fillMissing( missing )
    -- Fill empty core slots with defaults.
    for k,v in pairs(missing) do
-      player.pilot():addOutfit( v.outfit:nameRaw() )
+      player.pilot():outfitAdd( v.outfit:nameRaw() )
    end
 end
 

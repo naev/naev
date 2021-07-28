@@ -292,7 +292,7 @@ function spawnNpcs()
             tk.msg( totalTitle, totalString ) -- Ex-aequo always profit the player.
             tk.msg("",reward_text0:format(competitors_names[10]))
 
-            player.addOutfit("Handbook for Dvaered Good Manners") -- TODO: add lore about this Handbook
+            player.outfitAdd("Handbook for Dvaered Good Manners") -- TODO: add lore about this Handbook
 
             -- Give a reward depending on the rank (10 is highest and 1 lowest)
             playerRank = elt_inlist( 10, iter )
@@ -304,30 +304,30 @@ function spawnNpcs()
                player.addShip("Vendetta")
             elseif playerRank == 8 then
                tk.msg("",reward_text2:format(_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")))
-               player.addOutfit("Tricon Zephyr II Engine")
-               player.addOutfit("Emergency Shield Booster")
+               player.outfitAdd("Tricon Zephyr II Engine")
+               player.outfitAdd("Emergency Shield Booster")
             elseif playerRank == 7 then
                tk.msg("",reward_text2:format(_("Milspec Orion 3701 Core System"),_("Shield Capacitor I")))
-               player.addOutfit("Milspec Orion 3701 Core System")
-               player.addOutfit("Shield Capacitor I")
+               player.outfitAdd("Milspec Orion 3701 Core System")
+               player.outfitAdd("Shield Capacitor I")
             elseif playerRank == 6 then
                tk.msg("",reward_text1:format(_("S&K Light Combat Plating")))
-               player.addOutfit("S&K Light Combat Plating")
+               player.outfitAdd("S&K Light Combat Plating")
             elseif playerRank == 5 then
                tk.msg("",reward_text3)
-               player.addOutfit("Shredder",3)
+               player.outfitAdd("Shredder",3)
             elseif playerRank == 4 then
                tk.msg("",reward_text1:format(_("Hellburner")))
-               player.addOutfit("Hellburner")
+               player.outfitAdd("Hellburner")
             elseif playerRank == 3 then
                tk.msg("",reward_text1:format(_("Reactor Class I")))
-               player.addOutfit("Reactor Class I")
+               player.outfitAdd("Reactor Class I")
             elseif playerRank == 2 then
                tk.msg("",reward_text1:format(_("Small Shield Booster")))
-               player.addOutfit("Small Shield Booster")
+               player.outfitAdd("Small Shield Booster")
             else
                tk.msg("",reward_text1:format(_("Shield Capacitor I")))
-               player.addOutfit("Shield Capacitor I")
+               player.outfitAdd("Shield Capacitor I")
             end
             tk.msg(warn_title,warn_text1)
             tk.msg(end_title,end_text1)

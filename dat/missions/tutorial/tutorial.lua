@@ -293,11 +293,11 @@ end
 
 function spawn_drone ()
    local p = pilot.add( "Hyena", "Dummy", dest_planet, _("Practice Drone"), {ai="baddie_norun"} )
-   p:rmOutfit( "all" )
-   p:rmOutfit( "cores" )
-   p:addOutfit( "Previous Generation Small Systems" )
-   p:addOutfit( "Patchwork Light Plating" )
-   p:addOutfit( "Beat Up Small Engine" )
+   p:outfitRm( "all" )
+   p:outfitRm( "cores" )
+   p:outfitAdd( "Previous Generation Small Systems" )
+   p:outfitAdd( "Patchwork Light Plating" )
+   p:outfitAdd( "Beat Up Small Engine" )
 
    p:setHealth( 100, 100 )
    p:setEnergy( 100 )

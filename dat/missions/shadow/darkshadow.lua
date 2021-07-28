@@ -329,8 +329,8 @@ function spawnSquads(highlight)
             hook.pilot(k, "attacked", "attacked")
             k:rename(_("Four Winds Patrol"))
             k:control()
-            k:rmOutfit("all")
-            k:addOutfit("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
+            k:outfitRm("all")
+            k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
             k:follow(squad[1]) -- Each ship in the squad follows the squad leader
         end
         squad[1]:taskClear() --...except the leader himself.
@@ -414,9 +414,9 @@ end
 -- Spawns the Genbu
 function spawnGenbu(sys)
     genbu = pilot.add( "Pirate Kestrel", "Four Winds", sys, _("Genbu") )
-    genbu:rmOutfit("all")
-    genbu:addOutfit("Turbolaser", 3)
-    genbu:addOutfit("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
+    genbu:outfitRm("all")
+    genbu:outfitAdd("Turbolaser", 3)
+    genbu:outfitAdd("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
     genbu:control()
     genbu:setHilight()
     genbu:setVisplayer()
@@ -453,10 +453,10 @@ end
 function spawnInterceptors()
     inters = addShips( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
     for _, j in ipairs(inters) do
-        j:rmOutfit("all")
-        j:addOutfit("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
-        j:addOutfit("Engine Reroute", 1)
-        j:addOutfit("Improved Stabilizer", 1)
+        j:outfitRm("all")
+        j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
+        j:outfitAdd("Engine Reroute", 1)
+        j:outfitAdd("Improved Stabilizer", 1)
         j:control()
         j:attack(player.pilot())
     end

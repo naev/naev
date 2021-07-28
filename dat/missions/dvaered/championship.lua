@@ -284,39 +284,39 @@ function enter()
       oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
       opponent = pilot.add( oppotype, "Thugs", mispla, opponame, {ai="baddie"} )
 
-      opponent:rmOutfit("all")
-      opponent:rmOutfit("cores")
+      opponent:outfitRm("all")
+      opponent:outfitRm("cores")
 
       oppotype = opponent:ship()
 
       --The core systems
       if oppotype == ship.get("Hyena") or  oppotype == ship.get("Shark") then
-         opponent:addOutfit("Tricon Zephyr Engine")
-         opponent:addOutfit("Milspec Orion 2301 Core System")
-         opponent:addOutfit("S&K Ultralight Combat Plating")
+         opponent:outfitAdd("Tricon Zephyr Engine")
+         opponent:outfitAdd("Milspec Orion 2301 Core System")
+         opponent:outfitAdd("S&K Ultralight Combat Plating")
       elseif oppotype == ship.get("Soromid Reaver") then
-         opponent:addOutfit("Light Brain Stage X")
-         opponent:addOutfit("Light Fast Gene Drive Stage X")
-         opponent:addOutfit("Light Shell Stage X")
+         opponent:outfitAdd("Light Brain Stage X")
+         opponent:outfitAdd("Light Fast Gene Drive Stage X")
+         opponent:outfitAdd("Light Shell Stage X")
       else
-         opponent:addOutfit("Tricon Zephyr II Engine")
-         opponent:addOutfit("Milspec Orion 3701 Core System")
-         opponent:addOutfit("S&K Light Combat Plating")
+         opponent:outfitAdd("Tricon Zephyr II Engine")
+         opponent:outfitAdd("Milspec Orion 3701 Core System")
+         opponent:outfitAdd("S&K Light Combat Plating")
       end
 
       -- Equipment
       local nhigh, nmedium, nlow = oppotype:slots()
 
       -- TODO: decide if the "Faraday Tempest Coating" is a good idea
-      opponent:addOutfit("Battery I",nlow)
+      opponent:outfitAdd("Battery I",nlow)
 
       hvy = 0
       if oppotype == ship.get("Lancelot") or oppotype == ship.get("Empire Lancelot") then
-         opponent:addOutfit("Heavy Ion Cannon")
+         opponent:outfitAdd("Heavy Ion Cannon")
          hvy = 1
       end
 
-      opponent:addOutfit("Ion Cannon", nhigh-hvy)
+      opponent:outfitAdd("Ion Cannon", nhigh-hvy)
 
       --Health
       opponent:setHealth(100,100)
@@ -340,22 +340,22 @@ function enter()
       hooks = {}
 
       for i, k in ipairs({sec11, sec12, sec21, sec22}) do
-         k:rmOutfit("all")
-         k:addOutfit("Gauss Gun", 3)
-         k:addOutfit("Improved Stabilizer")
+         k:outfitRm("all")
+         k:outfitAdd("Gauss Gun", 3)
+         k:outfitAdd("Improved Stabilizer")
       end
 
       for i, k in ipairs({tv1,tv2}) do
-         k:rmOutfit("all")
-         k:addOutfit("Improved Stabilizer", 2)
+         k:outfitRm("all")
+         k:outfitAdd("Improved Stabilizer", 2)
       end
 
       for i, k in ipairs({tv1, sec11, sec12, tv2, sec21, sec22}) do
          hooks[i] = hook.pilot(k, "attacked", "escort_attacked")
-         k:rmOutfit("cores")
-         k:addOutfit("Tricon Zephyr Engine")
-         k:addOutfit("Milspec Orion 2301 Core System")
-         k:addOutfit("S&K Ultralight Combat Plating")
+         k:outfitRm("cores")
+         k:outfitAdd("Tricon Zephyr Engine")
+         k:outfitAdd("Milspec Orion 2301 Core System")
+         k:outfitAdd("S&K Ultralight Combat Plating")
          k:setHealth(100,100)
          k:setEnergy(100)
          k:control()

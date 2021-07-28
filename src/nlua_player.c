@@ -135,8 +135,8 @@ static const luaL_Reg playerL_methods[] = {
    { "shipOutfits", playerL_shipOutfits },
    { "outfits", playerL_outfits },
    { "numOutfit", playerL_numOutfit },
-   { "addOutfit", playerL_addOutfit },
-   { "rmOutfit", playerL_rmOutfit },
+   { "outfitAdd", playerL_addOutfit },
+   { "outfitRm", playerL_rmOutfit },
    { "addShip", playerL_addShip },
    { "swapShip", playerL_swapShip },
    { "misnActive", playerL_misnActive },
@@ -1048,12 +1048,12 @@ static int playerL_numOutfit( lua_State *L )
 /**
  * @brief Adds an outfit to the player's outfit list.
  *
- * @usage player.addOutfit( "Laser Cannon" ) -- Gives the player a laser cannon
- * @usage player.addOutfit( "Plasma Blaster", 2 ) -- Gives the player two plasma blasters
+ * @usage player.outfitAdd( "Laser Cannon" ) -- Gives the player a laser cannon
+ * @usage player.outfitAdd( "Plasma Blaster", 2 ) -- Gives the player two plasma blasters
  *
  *    @luatparam string name Name of the outfit to give.
  *    @luatparam[opt=1] number q Quantity to give.
- * @luafunc addOutfit
+ * @luafunc outfitAdd
  */
 static int playerL_addOutfit( lua_State *L  )
 {
@@ -1083,11 +1083,11 @@ static int playerL_addOutfit( lua_State *L  )
  *
  * "all" will remove all outfits.
  *
- * @usage player.rmOutfit( "Plasma Blaster", 2 ) -- Removes two plasma blasters from the player
+ * @usage player.outfitRm( "Plasma Blaster", 2 ) -- Removes two plasma blasters from the player
  *
  *    @luatparam string name Name of the outfit to give.
  *    @luatparam[opt] number q Quantity to remove (default 1).
- * @luafunc rmOutfit
+ * @luafunc outfitRm
  */
 static int playerL_rmOutfit( lua_State *L )
 {

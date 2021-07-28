@@ -91,7 +91,7 @@ function accept ()
    misn.osdCreate(misn_title, misn_desc)
 
    tk.msg( title[2], text[2] )
-   player.addOutfit("Map: Collective Space")
+   player.outfitAdd("Map: Collective Space")
 
    hook.enter("enter")
    hook.land("land")

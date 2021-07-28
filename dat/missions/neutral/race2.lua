@@ -176,19 +176,19 @@ function takeoff()
    racers[2] = pilot.add("Gawain", "Independent", curplanet)
    racers[3] = pilot.add("Llama", "Independent", curplanet)
    if choice == 1 then
-      racers[1]:addOutfit("Engine Reroute")
-      racers[2]:addOutfit("Engine Reroute")
-      racers[3]:addOutfit("Improved Stabilizer")
+      racers[1]:outfitAdd("Engine Reroute")
+      racers[2]:outfitAdd("Engine Reroute")
+      racers[3]:outfitAdd("Improved Stabilizer")
    else
       for i in pairs(racers) do
-         racers[i]:rmOutfit("all")
-         racers[i]:rmOutfit("cores")
+         racers[i]:outfitRm("all")
+         racers[i]:outfitRm("cores")
 
-         racers[i]:addOutfit("Unicorp PT-16 Core System")
-         racers[i]:addOutfit("Unicorp D-2 Light Plating")
+         racers[i]:outfitAdd("Unicorp PT-16 Core System")
+         racers[i]:outfitAdd("Unicorp D-2 Light Plating")
          local en_choices = {
             "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }
-         racers[i]:addOutfit(en_choices[rnd.rnd(1, #en_choices)])
+         racers[i]:outfitAdd(en_choices[rnd.rnd(1, #en_choices)])
       end
    end
    for i, j in ipairs(racers) do
@@ -311,7 +311,7 @@ function land()
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
          if choice==2 and player.numOutfit("Racing Trophy") <= 0 then
             tk.msg(wintitle, firstwintext:format(creditstring(credits)))
-            player.addOutfit("Racing Trophy")
+            player.outfitAdd("Racing Trophy")
          else
             tk.msg(wintitle, wintext:format(creditstring(credits)))
          end
