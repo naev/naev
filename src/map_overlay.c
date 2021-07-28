@@ -214,12 +214,12 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    float cx, cy, r, sx, sy;
    float x, y, w, h, mx, my, mw, mh;
    float fx, fy, best, bx, by, val;
-   float *forces_xa, *forces_ya, *off_buffx, *off_buffy, *off_0x, *off_0y, *old_bx, *old_by, *off_dx, *off_dy;
+   float *forces_xa, *forces_ya, *off_buffx, *off_buffy, *off_0x, *off_0y, old_bx, old_by, *off_dx, *off_dy;
 
    /* Parameters for the map overlay optimization. */
    const int max_iters = 15;    /**< Maximum amount of iterations to do. */
    const float kx      = .015;  /**< x softness factor. */
-   const float ky      = .045;  /**< y softness factor. */
+   const float ky      = .045;  /**< y softness factor (moving along y is more likely to be the right solution). */
    const float eps_con = 1.3;   /**< Convergence criterion. */
 
    if (items <= 0)
@@ -279,7 +279,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       /* Check all combinations. */
       best = HUGE_VALF;
       for (k=0; k<4; k++) {
-         sx = sy = 0.;
+         val = 0.;
 
          /* Test intersection with the planet indicators. */
          for (j=0; j<items; j++) {
@@ -291,13 +291,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 
             force_collision( &fx, &fy, x+tx[k], y+ty[k], w, h, mx, my, mw, mh );
 
-            sx += ABS(fx);
-            sy += ABS(fy);
+            val += ABS(fx) + ABS(fy);
          }
-         val = sx + sy;
-         /* Bias slightly toward the center, to avoid text going off the edge of the overlay. */
-         /* TODO: take a decision: is it useful enought to be kept? (it's more costly cause (i) we do all 4 iterations and (ii) it puts Uzawa more under pressure.) */
-         /* valb = val - 1. / (pow2(x+tx[k])+pow2(y+ty[k])+pow2(100.)); */
          /* Keep best. */
          if (k == 0 || val < best) {
             bx = tx[k];
@@ -330,8 +325,6 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    /* And buffer lists. */
    off_buffx = calloc( items, sizeof(float) );
    off_buffy = calloc( items, sizeof(float) );
-   old_bx    = calloc( items, sizeof(float) );
-   old_by    = calloc( items, sizeof(float) );
    off_dx    = calloc( items, sizeof(float) );
    off_dy    = calloc( items, sizeof(float) );
 
@@ -351,23 +344,21 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
                pos, mo, items, i, off_0x, off_0y, off_dx, off_dy );
 
          /* Do the sum. */
-         sx = 0.;
-         sy = 0.;
-         for (j=0; j<items; j++) {
-            sx += forces_xa[2*items*i+2*j+1] + forces_xa[2*items*i+2*j];
-            sy += forces_ya[2*items*i+2*j+1] + forces_ya[2*items*i+2*j];
+         sx = sy = 0.;
+         for (j=0; j<2*items; j++) {
+            sx += forces_xa[2*items*i+j];
+            sy += forces_ya[2*items*i+j];
          }
 
          /* Store old version of buffers. */
-         old_bx[i] = off_buffx[i];
-         old_by[i] = off_buffy[i];
+         old_bx = off_buffx[i];
+         old_by = off_buffy[i];
 
-         /* Update positions (in buffer). Diagonal stiffness.
-          * (moving along y is more likely to be the right solution). */
+         /* Update positions (in buffer). Diagonal stiffness. */
          off_buffx[i] = kx * sx;
          off_buffy[i] = ky * sy;
 
-         val = MAX( val, ABS(old_bx[i]-off_buffx[i]) + ABS(old_by[i]-off_buffy[i]) );
+         val = MAX( val, ABS(old_bx-off_buffx[i]) + ABS(old_by-off_buffy[i]) );
       }
 
       /* Offsets are actually updated once the first loop is over. */
@@ -392,8 +383,6 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    free( forces_ya );
    free( off_buffx );
    free( off_buffy );
-   free( old_bx );
-   free( old_by );
    free( off_0x );
    free( off_0y );
    free( off_dx );
