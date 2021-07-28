@@ -41,5 +41,28 @@ float sdUnevenCapsuleY( vec2 p, float ra, float rb, float h )
                         return m                     - ra;
 }
 
+/* Uneven capsule between points pa and pb. */
+float sdUnevenCapsule( vec2 p, vec2 pa, vec2 pb, float ra, float rb )
+{
+    p  -= pa;
+    pb -= pa;
+    float h = dot(pb,pb);
+    vec2  q = vec2( dot(p,vec2(pb.y,-pb.x)), dot(p,pb) )/h;
+
+    q.x = abs(q.x);
+
+    float b = ra-rb;
+    vec2  c = vec2(sqrt(h-b*b),b);
+
+    float k = cro(c,q);
+    float m = dot(c,q);
+    float n = dot(q,q);
+
+         if( k < 0.0 ) return sqrt(h*(n            )) - ra;
+    else if( k > c.x ) return sqrt(h*(n+1.0-2.0*q.y)) - rb;
+                       return m                       - ra;
+}
+
+
 
 #endif /* _SDF_GLSL */
