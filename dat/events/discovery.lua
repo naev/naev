@@ -314,7 +314,7 @@ end
 
 
 function discover_trigger( event )
-   local msg  = string.format(_("You found #o%s!"),event.title)
+   local msg  = string.format(_("You found #o%s - %s!"),event.title,event.subtitle)
    -- Log and message
    player.msg( msg )
    local logid = shiplog.create( "discovery", _("Travel Log"), _("Discovery") )
@@ -338,7 +338,7 @@ end
 
 text_fadein = 1.5
 text_fadeout = 1.5
-text_length = 8.0
+text_length = 10.0
 function textinit( titletext, subtitletext )
    local fontname = _("fonts/CormorantUnicase-Medium.ttf")
    -- Title
@@ -465,5 +465,6 @@ function textfg ()
 end
 function textupdate( dt, real_dt )
    -- We want to show it regardless of the time compression and such
-   texttimer = texttimer + real_dt
+   -- TODO Why is real_dt not equal to dt / player.dt_mod()? :/
+   texttimer = texttimer + dt / player.dt_mod()
 end
