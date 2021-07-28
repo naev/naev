@@ -209,10 +209,30 @@ local function getCache ()
    local ncl = nc.lanes
    local sc = system.cur()
    if ncl.system ~= sc then
-      ncl.v, ncl.e = safelanesToGraph( safelanes.get() )
+      ncl.lanes = safelanes.get()
+      ncl.v, ncl.e = safelanesToGraph( ncl.lanes )
       ncl.system = sc
    end
    return ncl
+end
+
+
+--[[
+-- Gets distance and nearest point to safe lanes from a position
+--]]
+function lanes.getDistance( pos )
+   local ncl = getCache()
+   local d = math.huge
+   local p = pos
+   for k,v in ipairs(ncl) do
+      local pp = closestPointLine( v[1], v[2], pos )
+      local dp = pos:dist( pp )
+      if dp < d then
+         d = dp
+         p = pp
+      end
+   end
+   return d, p
 end
 
 
