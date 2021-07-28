@@ -852,7 +852,7 @@ static double fps_elapsed (void)
    if (use_posix_time) {
       if (clock_gettime(CLOCK_MONOTONIC, &ts)==0) {
          dt  = ts.tv_sec - global_time.tv_sec;
-         dt += (ts.tv_nsec - global_time.tv_nsec) / 1000000000.0;
+         dt += (ts.tv_nsec - global_time.tv_nsec) / 1e9;
          global_time = ts;
          return dt;
       }
