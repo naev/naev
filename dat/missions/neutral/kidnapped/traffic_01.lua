@@ -159,7 +159,7 @@ function sys_enter ()
       hook.timer( 3.0, "do_msg2" )
       broship = pilot.add( "Gawain", "Independent", bropla:pos() + vec2.new(-200,-200), _("Poppy Seed"), {ai="trader"} ) -- fast Gawain
       broship:rmOutfit("cores")
-      broship:cargoRm("__all")
+      broship:cargoRm("all")
       broship:addOutfit("Unicorp D-2 Light Plating")
       broship:addOutfit("Unicorp PT-68 Core System")
       broship:addOutfit("Tricon Zephyr Engine")

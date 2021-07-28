@@ -617,7 +617,7 @@ function equipHyena( p )
    p:setEnergy(100)
 
    -- Remove all cargo (to make them lighter)
-   p:cargoRm( "__all" )
+   p:cargoRm( "all" )
 end
 
 function hamelsenLanded()
@@ -700,8 +700,8 @@ function StraferNspy()
    alpha[2]:attack( spy )
 
    -- Remove all cargo (to control their speed)
-   alpha[2]:cargoRm( "__all" )
-   spy:cargoRm( "__all" )
+   alpha[2]:cargoRm( "all" )
+   spy:cargoRm( "all" )
 end
 
 -- Many enemies jump and kill Strafer

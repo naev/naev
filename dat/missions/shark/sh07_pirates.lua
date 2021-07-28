@@ -191,7 +191,7 @@ function enter()
       --The pirate becomes nice defensive outfits
       baddie:rmOutfit("all")
       baddie:rmOutfit("cores")
-      baddie:cargoRm( "__all" )
+      baddie:cargoRm( "all" )
 
       baddie:addOutfit("Nexus Light Stealth Plating")
       baddie:addOutfit("Milspec Orion 2301 Core System")

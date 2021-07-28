@@ -67,7 +67,7 @@ function ambusher()
    baddie:setHostile()
    baddie:rmOutfit("all")
    baddie:rmOutfit("cores")
-   baddie:cargoRm("__all")
+   baddie:cargoRm("all")
 
    if vel >= 350 then
       baddie:addOutfit("S&K Ultralight Combat Plating")

@@ -87,7 +87,7 @@ end
 
 -- Equips a Vendetta with full mace rockets
 function equipVendettaMace( pilot )
-   pilot:cargoRm( "__all" )
+   pilot:cargoRm( "all" )
    pilot:rmOutfit("all")
    pilot:rmOutfit("cores")
    pilot:addOutfit("S&K Light Combat Plating")

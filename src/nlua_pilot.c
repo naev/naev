@@ -3389,7 +3389,7 @@ static int pilotL_cargoAdd( lua_State *L )
  * @brief Tries to remove cargo from the pilot's ship.
  *
  * @usage n = pilot.cargoRm(player.pilot(), "Food", 20)
- * @usage n = pilot.cargoRm(player.pilot(), "__all") -- Removes all cargo from the player
+ * @usage n = pilot.cargoRm(player.pilot(), "all") -- Removes all cargo from the player
  *
  *    @luatparam Pilot p The pilot to remove cargo from.
  *    @luatparam Commodity|string cargo Type of cargo to remove, either
@@ -3416,7 +3416,7 @@ static int pilotL_cargoRm( lua_State *L )
       str = lua_tostring(L, 2);
 
       /* Check for special strings. */
-      if (strcmp(str, "__all") == 0) {
+      if (strcmp(str, "all") == 0) {
          quantity = pilot_cargoRmAll(p, 0);
          lua_pushnumber(L, quantity);
          return 1;

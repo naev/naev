@@ -268,7 +268,7 @@ function spawnTam( origin )
    majorTam:setHealth(100,100)
    majorTam:setEnergy(100)
    majorTam:setFuel(true)
-   majorTam:cargoRm( "__all" )
+   majorTam:cargoRm( "all" )
 
    dyingTam = hook.pilot(majorTam, "death", "tamDied")
 end
@@ -375,7 +375,7 @@ function meeting()
       tk.msg(meet_title2, meet_text2:format(nextsys:name()))
       stage = 3
       quickie = pilot.add( "Dvaered Vendetta", "Dvaered", destpla2 )
-      quickie:cargoRm( "__all" )
+      quickie:cargoRm( "all" )
       quickie:setFaction("Warlords")
 
       majorTam:taskClear()
