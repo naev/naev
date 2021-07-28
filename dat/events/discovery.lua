@@ -321,7 +321,7 @@ function discover_trigger( event )
    shiplog.append( "discovery", msg )
 
    -- Break autonav
-   player.autonavReset( 5 )
+   player.autonavReset( 3 )
 
    -- If custom function, run it
    if event.func then
