@@ -885,6 +885,38 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 
 
 /**
+ * @brief Triggers the discovered() function in the pilot's AI.
+ *
+ *    @param discovered Pilot that is discovered.
+ */
+void ai_discovered( Pilot* discovered )
+{
+   /* Behaves differently if manually overridden. */
+   pilot_runHook( discovered, PILOT_HOOK_DISCOVERED );
+   if (pilot_isFlag( discovered, PILOT_MANUAL_CONTROL ))
+      return;
+
+   /* Must have an AI profile and not be player. */
+   if (discovered->ai == NULL)
+      return;
+
+   ai_setPilot( discovered ); /* Sets cur_pilot. */
+
+   /* Only run if discovered function exists. */
+   nlua_getenv(cur_pilot->ai->env, "discovered");
+   if (lua_isnil(naevL,-1)) {
+      lua_pop(naevL,1);
+      return;
+   }
+
+   if (nlua_pcall(cur_pilot->ai->env, 0, 0)) {
+      WARN( _("Pilot '%s' ai -> 'discovered': %s"), cur_pilot->name, lua_tostring(naevL, -1));
+      lua_pop(naevL, 1);
+   }
+}
+
+
+/**
  * @brief Has a pilot attempt to refuel the other.
  *
  *    @param refueler Pilot doing the refueling.

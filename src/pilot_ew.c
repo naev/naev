@@ -530,6 +530,7 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
             player_message(_("You have been uncovered!"));
          else if (isplayer)
             player_message(_("You have uncovered '%s'!"), p->name);
+         ai_discovered( p );
       }
    }
 }

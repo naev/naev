@@ -956,6 +956,7 @@ static int hook_pilot( lua_State *L )
    else if (strcmp(hook_type,"hail")==0)     type = PILOT_HOOK_HAIL;
    else if (strcmp(hook_type,"land")==0)     type = PILOT_HOOK_LAND;
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
+   else if (strcmp(hook_type,"discovered")==0) type = PILOT_HOOK_DISCOVERED;
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
    else if (strcmp(hook_type,"lockon")==0)   type = PILOT_HOOK_LOCKON;
    else if (strcmp(hook_type,"stealth")==0)  type = PILOT_HOOK_STEALTH;
