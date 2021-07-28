@@ -33,9 +33,9 @@ logidstr = minerva.log.kex.idstr
 
 -- Mission states:
 --  nil: mission not accepted yet
---  0: mission accepted go to targetplanet
---  1: try to find dvaered dude
---  2: get ambushed
+--  0: mission accepted go to targetplanet and try to find dvaered dude
+--  1: get ambushed
+--  2: get ambushed again
 --  3: go to totoran
 --  4: duel finished
 --  5: return to Kex
@@ -108,13 +108,14 @@ function generate_npc ()
       vn.run()
 
       -- Advance the state
-      misn_state = 2
+      misn_state = 1
       misn.markerMove( misn_marker, system.get(lastsys) )
       misn.osdCreate( misn_title,
          { string.format(_("Look for Major Malik at %s in the %s system"), _(lastplanet), _(lastsys) ),
          _("Return to Kex at Minerva Station") } )
 
-   elseif misn_state==3 and planet.cur() == planet.get(lastplanet) then
+   elseif (misn_state==2 or misn_state==3) and planet.cur() == planet.get(lastplanet) then
+      misn_state = 3
       npc_malik = misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
 
    elseif misn_state==4 and planet.cur() == planet.get(lastplanet) then
@@ -203,7 +204,7 @@ He winks his cyborg eye at you.]]))
    end )
 
    vn.label("job")
-   if not misn_state or misn_state < 2 then
+   if not misn_state or misn_state < 1 then
       kex(_([["The job is pretty straightforward. We need Major Malik to talk about his dealings with the Minerva CEO. If you hand him the letter I gave you it should be enough to convince him."]]))
       kex(string.format(_([["You should be able to find him at %s in the %s system. I don't think he should give much trouble."]]), _(targetplanet), _(targetsys)))
    else
@@ -238,9 +239,8 @@ end
 
 
 function enter ()
-   if misn_state==2 and system.cur() == system.get(targetsys) then
-      -- Spawn thugs after the player. Player should likely be going to Dvaer
-      local pos = vec2.new( 15000, 15000 )
+   local function spawn_thugs( pos, dofollow )
+      thug_leader = nil -- Clear
       local thugs = {
          "Dvaered Vigilance",
          "Dvaered Vendetta",
@@ -267,11 +267,23 @@ function enter ()
 
       -- Try to make sure they meet up the player
       thug_leader:control()
-      thug_leader:follow( pp )
+      if dofollow then
+         thug_leader:follow( pp )
+      else
+         thug_leader:brake()
+      end
+   end
 
+   if misn_state==1 and system.cur() == system.get(targetsys) then
+      -- Spawn thugs after the player. Player should likely be going to Dvaer
+      spawn_thugs( vec2.new( 15000, 15000 ), true )
       -- Move to next state
-      misn_state = 3
-
+      misn_state = 2
+      -- Timer
+      hook.timer( 5, "thug_heartbeat" )
+   elseif misn_state==2 and system.cur() == system.get(lastsys) then
+      -- Spawn thugs from Totoran
+      spawn_thugs(planet.get(lastplanet):pos(), false )
       -- Timer
       hook.timer( 5, "thug_heartbeat" )
    end
@@ -282,10 +294,11 @@ function thug_heartbeat ()
    if det and fuz then
       -- Start the attack, should be close enough to aggro naturally
       thug_leader:control(false)
-      thug_leader:broadcast( _("That's the the one!"), true )
       for k,p in ipairs(thug_pilots) do
          p:setHostile(true)
       end
+      -- Broadcast after hostile
+      thug_leader:broadcast( _("That's the the one!"), true )
 
       -- Reset autonav just in case
       player.autonavReset( 5 )
