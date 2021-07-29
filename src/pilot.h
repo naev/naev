@@ -60,7 +60,7 @@ enum {
    PILOT_HOOK_HAIL,      /**< Pilot is hailed. */
    PILOT_HOOK_LAND,      /**< Pilot is landing. */
    PILOT_HOOK_ATTACKED,  /**< Pilot is in manual override and is being attacked. */
-   PILOT_HOOK_DISCOVERED,  /**< Pilot is in manual override and is being attacked. */
+   PILOT_HOOK_DISCOVERED,  /**< Pilot is in manual override and is discovered. */
    PILOT_HOOK_IDLE,      /**< Pilot is in manual override and has just become idle. */
    PILOT_HOOK_EXPLODED,  /**< Pilot died and exploded (about to be removed). */
    PILOT_HOOK_LOCKON,    /**< Pilot had a launcher lockon. */
