@@ -1190,7 +1190,7 @@ function __getscantarget ()
 
       if not __intable( inserted, v ) then
          if __wanttoscan(p,v) then
-            local d = ai.dist( v )
+            local d = ai.dist2( v )
             local m = v:mass()
             table.insert( pv, {p=v, d=d, m=m} )
          end
