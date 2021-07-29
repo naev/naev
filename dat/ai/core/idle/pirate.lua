@@ -4,6 +4,26 @@ require 'ai.core.idle.generic'
 -- Keep generic as backup
 idle_generic = idle
 
+function __getenemy( p )
+   local pv = {}
+   local r = math.pow( mem.lanedistance, 2 )
+   for k,v in ipairs(p:getHostiles( mem.enemyclose )) do
+      -- Make sure not in safe lanes
+      if lanes.getDistance2( v:pos() ) > r then
+         local d  = ai.dist2( v )
+         table.insert( pv, {p=v, d=d} )
+      end
+   end
+   table.sort( pv, function(a,b)
+      return a.d < b.d
+   end )
+
+   if #pv==0 then
+      return nil
+   end
+   return pv[1].p
+end
+
 -- Default task to run when idle
 function idle ()
    -- Not doing ambushes
@@ -49,7 +69,7 @@ function idle ()
 
    -- Just be an asshole if not stealthed and aggressive
    if not stealth and mem.aggressive then
-      local enemy  = ai.getenemy()
+      local enemy  = __getenemy(p)
       if enemy ~= nil and (not mem.enemyclose or ai.dist(enemy) < mem.enemyclose) then
          ai.pushtask( "attack", enemy )
          return
@@ -66,7 +86,7 @@ function idle ()
    end
 
    -- See if there is a nearby target to kill
-   local enemy = ai.getenemy()
+   local enemy = __getenemy(p)
    if enemy ~= nil and (not mem.enemyclose or ai.dist(enemy) < mem.enemyclose) then
       ai.pushtask( "ambush_stalk", enemy )
       return
@@ -80,6 +100,7 @@ function idle ()
    end
 
    -- Wasn't able to find out what to do, so just fallback to generic again...
+   print( "Wasn't able to find anything to do!")
    return idle_generic()
 end
 
@@ -87,4 +108,4 @@ end
 mem.loiter        = 3
 mem.ambush        = true
 mem.aggressive    = true -- Pirates are aggressive
-mem.lanedistance  = nil
+mem.lanedistance  = 2000
