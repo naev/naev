@@ -10,6 +10,9 @@ function spawn_patrol ()
    if rnd.rnd() < 0.7 then
       pilots.__nofleet = true
    end
+   if rnd.rnd() < 0.9 then
+      pilots.__stealth = true
+   end
    local r = rnd.rnd()
 
    if r < 0.3 then
@@ -34,6 +37,9 @@ function spawn_squad ()
    local pilots = {}
    if rnd.rnd() < 0.6 then
       pilots.__nofleet = true
+   end
+   if rnd.rnd() < 0.7 then
+      pilots.__stealth = true
    end
    local r = rnd.rnd()
 
@@ -67,6 +73,9 @@ function spawn_capship ()
    local pilots = {}
    if rnd.rnd() < 0.5 then
       pilots.__nofleet = true
+   end
+   if rnd.rnd() < 0.5 then
+      pilots.__stealth = true
    end
    local r = rnd.rnd()
 
