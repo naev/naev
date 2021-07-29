@@ -190,6 +190,7 @@ void conf_setGameplayDefaults (void)
    conf.save_compress         = SAVE_COMPRESSION_DEFAULT;
    conf.mouse_thrust          = MOUSE_THRUST_DEFAULT;
    conf.mouse_doubleclick     = MOUSE_DOUBLECLICK_TIME;
+   conf.mouse_fly             = MOUSE_FLY_DEFAULT;
    conf.autonav_reset_speed   = AUTONAV_RESET_SPEED_DEFAULT;
    conf.zoom_manual           = MANUAL_ZOOM_DEFAULT;
 }
@@ -394,6 +395,7 @@ int conf_loadConfig ( const char* file )
       conf_loadInt( lEnv, "afterburn_sensitivity", conf.afterburn_sens );
       conf_loadInt( lEnv, "mouse_thrust", conf.mouse_thrust );
       conf_loadFloat( lEnv, "mouse_doubleclick", conf.mouse_doubleclick );
+      conf_loadBool( lEnv, "mouse_fly", conf.mouse_fly );
       conf_loadFloat( lEnv, "autonav_abort", conf.autonav_reset_speed );
       conf_loadBool( lEnv, "devmode", conf.devmode );
       conf_loadBool( lEnv, "devautosave", conf.devautosave );

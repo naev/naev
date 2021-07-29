@@ -371,6 +371,9 @@ static void opt_gameplay( unsigned int wid )
          "chkAfterburn", _("Enable double-tap afterburn"), NULL, conf.afterburn_sens );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
+         "chkMouseFly", _("Enable mouse-flying (toggle with middle click)"), NULL, conf.mouse_fly );
+   y -= 25;
+   window_addCheckbox( wid, x, y, cw, 20,
          "chkMouseThrust", _("Enable mouse-flying thrust control"), NULL, conf.mouse_thrust );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
@@ -425,7 +428,12 @@ static int opt_gameplaySave( unsigned int wid, char *str )
 
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
+   conf.mouse_fly = window_checkboxState( wid, "chkMouseFly" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
+
+   /* Get rid of mouse if disabled. */
+   if (!conf.mouse_fly)
+      player_rmFlag( PLAYER_MFLY );
 
    /* Faders. */
    conf.autonav_reset_speed = window_getFaderValue(wid, "fadAutonav");
@@ -477,6 +485,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    /* Checkboxes. */
    window_checkboxSet( wid, "chkZoomManual", conf.zoom_manual );
    window_checkboxSet( wid, "chkAfterburn", conf.afterburn_sens );
+   window_checkboxSet( wid, "chkMouseFly", conf.mouse_fly );
    window_checkboxSet( wid, "chkMouseThrust", conf.mouse_thrust );
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 

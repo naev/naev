@@ -2319,6 +2319,9 @@ void player_autohail (void)
  */
 void player_toggleMouseFly(void)
 {
+   if (!conf.mouse_fly)
+      return;
+
    if (!player_isFlag(PLAYER_MFLY)) {
       input_mouseShow();
       player_message(_("#oMouse flying enabled."));
