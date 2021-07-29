@@ -12,7 +12,7 @@ function create ()
    local ps = p:ship()
 
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ps:price()/300, ps/70) )
+   ai.setcredits( rnd.rnd(ps:price()/300, ps:price()/70) )
 
    -- Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
    local r = rnd.rnd(0,20)

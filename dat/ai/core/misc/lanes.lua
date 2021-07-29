@@ -224,7 +224,7 @@ function lanes.getDistance( pos )
    local ncl = getCache()
    local d = math.huge
    local p = pos
-   for k,v in ipairs(ncl) do
+   for k,v in ipairs(ncl.lanes) do
       local pp = closestPointLine( v[1], v[2], pos )
       local dp = pos:dist( pp )
       if dp < d then
@@ -240,17 +240,21 @@ end
 -- Tries to get a point outside of the lanes, around a point at a radius rad.
 --]]
 function lanes.getNonPoint( pos, rad, margin )
-   local p = ai.pilot()
-   local ews = p:stats().ew_stealth
+   local p, ews
+   if not pos or not rad or not margin then
+      p = ai.pilot()
+      ews = p:stats().ew_stealth
+   end
    pos = pos or p:pos()
    rad = rad or math.min( 2000, ews )
-   margin = ews
+   margin = margin or ews
 
    -- Just some brute force sampling at different scales
    for s in ipairs{1.0, 0.5, 1.5, 2.0, 3.0} do
       for i=1,10 do
-         local pp = vec2.newP( rad * s, rnd.rnd()*360 )
-         if lanes.getDistance( pp ) < margin then
+         local pp = pos + vec2.newP( rad * s, rnd.rnd()*360 )
+         local d = lanes.getDistance( pp )
+         if d > margin then
             return pp
          end
       end
