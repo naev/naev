@@ -4,14 +4,32 @@ require 'ai.core.idle.generic'
 -- Keep generic as backup
 idle_generic = idle
 
+function __estimate_strength( pilots )
+   local str = 0
+   for k,p in ipairs(pilots) do
+      local s = p:ship():size()
+      str = str + s
+   end
+   return str
+end
+
 function __getenemy( p )
    local pv = {}
    local r = math.pow( mem.lanedistance, 2 )
    for k,v in ipairs(p:getHostiles( mem.ambushclose )) do
+      local vp = v:pos()
       -- Make sure not in safe lanes
-      if lanes.getDistance2( v:pos() ) > r then
-         local d  = ai.dist2( v )
-         table.insert( pv, {p=v, d=d} )
+      if lanes.getDistance2( vp ) > r then
+
+         -- Check to see vulnerability
+         local H = __estimate_strength( p:getHostiles( 1000, vp ) )
+         local F = __estimate_strength( p:getAllies( 1000, vp ) )
+                 + __estimate_strength( p:getAllies( 1000 ) )
+
+         if F > 2*H then
+            local d  = ai.dist2( v )
+            table.insert( pv, {p=v, d=d} )
+         end
       end
    end
    table.sort( pv, function(a,b)
