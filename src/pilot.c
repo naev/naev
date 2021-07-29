@@ -3362,7 +3362,9 @@ void pilots_update( double dt )
             !pilot_isFlag(p, PILOT_REFUELBOARDING) &&
             /* Must not be landing nor taking off. */
             !pilot_isFlag(p, PILOT_LANDING) &&
-            !pilot_isFlag(p, PILOT_TAKEOFF))
+            !pilot_isFlag(p, PILOT_TAKEOFF) &&
+            /* Must not be jumping in. */
+            !pilot_isFlag(p, PILOT_HYP_END))
          p->think(p, dt);
    }
 

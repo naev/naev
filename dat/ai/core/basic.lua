@@ -1282,3 +1282,9 @@ function enterdelay ()
       ai.pushtask("hyperspace")
    end
 end
+
+function idle_wait ()
+   if ai.timeup(0) then
+      ai.poptask()
+   end
+end

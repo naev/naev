@@ -467,9 +467,17 @@ end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
-   mem.tookoff    = ai.pilot():flags("takingoff")
+   local p = ai.pilot()
+   mem.tookoff    = p:flags("takingoff")
+   mem.jumpedin   = p:flags("jumpingin")
    mem.scanned    = {} -- must create for each pilot
    attack_choose()
+
+   -- Give a small delay
+   if mem.jumpedin then
+      ai.settimer( 0, rnd.uniform(3.0, 5.0) )
+      ai.pushtask("idle_wait")
+   end
 end
 
 -- taunts

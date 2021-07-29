@@ -3556,6 +3556,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "invisible", .id = PILOT_INVISIBLE },
    { .name = "disabled", .id = PILOT_DISABLED },
    { .name = "takingoff", .id = PILOT_TAKEOFF },
+   { .name = "jumpingin", .id = PILOT_HYP_END },
    { .name = "jumpingout", .id = PILOT_HYPERSPACE },
    { .name = "manualcontrol", .id = PILOT_MANUAL_CONTROL },
    { .name = "carried", .id = PILOT_CARRIED },
@@ -3622,6 +3623,9 @@ static int pilotL_flags( lua_State *L )
             lua_pushboolean( L, pilot_isFlag( p, pL_flags[i].id ) );
             return 1;
          }
+#if DEBUGGING
+      WARN(_("Tried to access unknown flag '%s' for pilot '%s'!"), name, p->name);
+#endif /* DEBUGGING */
       return 0;
    }
 
