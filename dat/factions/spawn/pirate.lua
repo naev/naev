@@ -7,7 +7,7 @@ end
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
    local pilots = {}
-   if rnd.rnd() < 0.5 then
+   if rnd.rnd() < 0.7 then
       pilots.__nofleet = true
    end
    local r = rnd.rnd()
@@ -32,7 +32,7 @@ end
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
    local pilots = {}
-   if rnd.rnd() < 0.4 then
+   if rnd.rnd() < 0.6 then
       pilots.__nofleet = true
    end
    local r = rnd.rnd()
@@ -65,7 +65,7 @@ end
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
    local pilots = {}
-   if rnd.rnd() < 0.3 then
+   if rnd.rnd() < 0.5 then
       pilots.__nofleet = true
    end
    local r = rnd.rnd()
