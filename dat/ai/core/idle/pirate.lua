@@ -49,6 +49,9 @@ function idle ()
       ai.pushtask( "ambush_moveto", target )
       return
    end
+
+   -- Wasn't able to find out what to do, so just fallback to generic again...
+   return idle_generic()
 end
 
 -- Settings
