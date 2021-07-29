@@ -891,8 +891,12 @@ static int pilotL_getPilots( lua_State *L )
 /**
  * @brief Gets hostile pilots to a pilot within a certain distance.
  *
- *    @luatparam Pilot pilot Pilot to get hostiles of.
+ * @usage p:getHostiles( 5000 ) -- get hostiles within 5000
+ * @usage pilot.getHostiles( faction.get("Pirate"), 5000, vec2.new(0,0) ) -- Got hostiles of "Pirate" faction 5000 units from origin
+ *
+ *    @luatparam Pilot|faction pilot Pilot or to get hostiles of.
  *    @luatparam[opt=infinity] number dist Distance to look for hostiles.
+ *    @luatparam[opt=pilot.pos] Vec2 pos Position to check from.
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc getHostiles
@@ -900,10 +904,31 @@ static int pilotL_getPilots( lua_State *L )
 static int pilotL_getHostiles( lua_State *L )
 {
    int i, k, dd;
-   Pilot *p    = luaL_validpilot(L,1);
-   double dist = luaL_optnumber(L,2,-1.);
-   int dis     = lua_toboolean(L,3);
+   Pilot *p;
+   double dist;
+   int dis;
+   Vector2d *v;
    Pilot *const* pilot_stack;
+   LuaFaction lf;
+
+   lf = -1;
+   if (lua_isfaction(L,1))
+      lf = lua_tofaction(L,1);
+   else if (lua_isstring(L,1))
+      lf = luaL_validfaction(L,1);
+   if (lf >= 0) {
+      dist  = luaL_optnumber(L,2,-1.);
+      v     = luaL_checkvector(L,3);
+      dis   = lua_toboolean(L,4);
+      p     = NULL;
+   }
+   else {
+      p     = luaL_validpilot(L,1);
+      dist  = luaL_optnumber(L,2,-1.);
+      v     = luaL_optvector(L,3,&p->solid->pos);
+      dis   = lua_toboolean(L,4);
+      lf    = p->faction;
+   }
 
    if (dist >= 0.)
       dd = dist*dist;
@@ -917,8 +942,8 @@ static int pilotL_getHostiles( lua_State *L )
       if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
          continue;
       /* Must be hostile. */
-      if (!(areEnemies( pilot_stack[i]->faction, p->faction )
-               || ((pilot_isWithPlayer(p))
+      if (!(areEnemies( pilot_stack[i]->faction, lf )
+               || ((p!= NULL) && (pilot_isWithPlayer(p))
                   && pilot_isHostile(pilot_stack[i]))))
          continue;
       /* Check if disabled. */
@@ -926,14 +951,13 @@ static int pilotL_getHostiles( lua_State *L )
          continue;
       /* Check distance if necessary. */
       if (dist >= 0. &&
-            vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos) > dd)
+            vect_dist2(&pilot_stack[i]->solid->pos, v) > dd)
          continue;
 
       lua_pushnumber(L, k++); /* key */
       lua_pushpilot(L, pilot_stack[i]->id); /* value */
       lua_rawset(L,-3); /* table[key] = value */
    }
-
    return 1;
 }
 

@@ -13,6 +13,8 @@
 
 #define VECTOR_METATABLE   "vec2"   /**< Vector metatable identifier. */
 
+/* Helper. */
+#define luaL_optvector(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checkvector)
 
 /*
  * Vector library.

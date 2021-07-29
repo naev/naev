@@ -77,11 +77,15 @@ function scom.spawn( pilots, faction )
    local origin
    if pilots.__stealth and naev.isSimulation() then
       -- Try to random sample a good point
-      local r = system.cur():radius()
+      local r = system.cur():radius() * 0.8
       local p = vec2.newP( rnd.rnd() * r, rnd.rnd() * 360 )
+      local m = 3000 -- margin
       for i = 1,20 do
-         origin = lanes.getNonPoint( p, r, 3000 )
-         if origin then break end
+         local np = lanes.getNonPoint( p, r, m )
+         if np and #pilot.getHostiles( faction, m, np ) == 0 then
+            origin = np
+            break
+         end
       end
    end
    if not origin then
