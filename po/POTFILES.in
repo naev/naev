@@ -2145,6 +2145,7 @@ dat/ai/core/core.lua
 dat/ai/core/idle/civilian.lua
 dat/ai/core/idle/generic.lua
 dat/ai/core/idle/miner.lua
+dat/ai/core/idle/pirate.lua
 dat/ai/core/idle/trader.lua
 dat/ai/core/misc/distress.lua
 dat/ai/core/misc/lanes.lua
@@ -2166,6 +2167,7 @@ dat/ai/frontier_police.lua
 dat/ai/goddard.lua
 dat/ai/guard.lua
 dat/ai/independent.lua
+dat/ai/marauder.lua
 dat/ai/mercenary.lua
 dat/ai/miner.lua
 dat/ai/noidle.lua
