@@ -158,6 +158,7 @@ static int aiL_pilot( lua_State *L ); /* number pilot() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
 static int aiL_getdistance( lua_State *L ); /* number getdist(Vector2d) */
+static int aiL_getdistance2( lua_State *L ); /* number getdist(Vector2d) */
 static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(Vector2d) */
 static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
 static int aiL_isbribed( lua_State *L ); /* bool isbribed( number ) */
@@ -269,6 +270,7 @@ static const luaL_Reg aiL_methods[] = {
    { "rndpilot", aiL_getrndpilot },
    { "nearestpilot", aiL_getnearestpilot },
    { "dist", aiL_getdistance },
+   { "dist2", aiL_getdistance2 },
    { "flyby_dist", aiL_getflybydistance },
    { "minbrakedist", aiL_minbrakedist },
    { "isbribed", aiL_isbribed },
@@ -1410,18 +1412,44 @@ static int aiL_getdistance( lua_State *L )
    /* vector as a parameter */
    if (lua_isvector(L,1))
       v = lua_tovector(L,1);
-
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
       p = luaL_validpilot(L,1);
       v = &p->solid->pos;
    }
-
    /* wrong parameter */
    else
       NLUA_INVALID_PARAMETER(L);
 
    lua_pushnumber(L, vect_dist(v, &cur_pilot->solid->pos));
+   return 1;
+}
+
+/**
+ * @brief Gets the squared distance from the pointer.
+ *
+ *    @luatparam Vec2|Pilot pointer
+ *    @luatreturn number The squared distance from the pointer.
+ *    @luafunc dist
+ */
+static int aiL_getdistance2( lua_State *L )
+{
+   Vector2d *v;
+   Pilot *p;
+
+   /* vector as a parameter */
+   if (lua_isvector(L,1))
+      v = lua_tovector(L,1);
+   /* pilot as parameter */
+   else if (lua_ispilot(L,1)) {
+      p = luaL_validpilot(L,1);
+      v = &p->solid->pos;
+   }
+   /* wrong parameter */
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   lua_pushnumber(L, vect_dist2(v, &cur_pilot->solid->pos));
    return 1;
 }
 
