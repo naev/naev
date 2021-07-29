@@ -6,7 +6,7 @@ function idle ()
    -- loitering, to avoid weird stuff starting to scan before attacking
    if mem.aggressive then
       local enemy  = ai.getenemy()
-      if enemy ~= nil then
+      if enemy ~= nil and (not mem.enemyclose or ai.dist(enemy) < mem.enemyclose) then
          ai.pushtask( "attack", enemy )
          return
       end
