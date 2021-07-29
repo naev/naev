@@ -80,13 +80,13 @@ function FLFSpawn ()
     source_system = system.get("Zacron")
 
     flfguys[flfwave] = {}
-    flfguys[flfwave][1] = pilot.add( "Vendetta", "FLF", source_system, _("FLF Vendetta") )
-    flfguys[flfwave][2] = pilot.add( "Vendetta", "FLF", source_system, _("FLF Vendetta") )
-    flfguys[flfwave][3] = pilot.add( "Vendetta", "FLF", source_system, _("FLF Vendetta") )
-    flfguys[flfwave][4] = pilot.add( "Vendetta", "FLF", source_system, _("FLF Vendetta") )
-    flfguys[flfwave][5] = pilot.add( "Pacifier", "FLF", source_system, _("FLF Pacifier") )
-    flfguys[flfwave][6] = pilot.add( "Lancelot", "FLF", source_system, _("FLF Lancelot") )
-    flfguys[flfwave][7] = pilot.add( "Lancelot", "FLF", source_system, _("FLF Lancelot") )
+    flfguys[flfwave][1] = pilot.add( "Vendetta", "FLF", source_system )
+    flfguys[flfwave][2] = pilot.add( "Vendetta", "FLF", source_system )
+    flfguys[flfwave][3] = pilot.add( "Vendetta", "FLF", source_system )
+    flfguys[flfwave][4] = pilot.add( "Vendetta", "FLF", source_system )
+    flfguys[flfwave][5] = pilot.add( "Pacifier", "FLF", source_system )
+    flfguys[flfwave][6] = pilot.add( "Lancelot", "FLF", source_system )
+    flfguys[flfwave][7] = pilot.add( "Lancelot", "FLF", source_system )
 
     flfwave = flfwave + 1
     if flfwave <=5 then

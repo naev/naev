@@ -300,7 +300,7 @@ function spawnFLF ()
    end
 
    local pos = player.pos() + vec2.new( x, y )
-   fleetFLF = addShips( 8, {"Vendetta", "Lancelot"}, "FLF", pos, {_("FLF Vendetta"), _("FLF Lancelot")}, {ai="flf_norun"} )
+   fleetFLF = addShips( 8, {"Vendetta", "Lancelot"}, "FLF", pos, nil, {ai="flf_norun"} )
 end
 
 

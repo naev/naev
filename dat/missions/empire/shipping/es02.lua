@@ -175,7 +175,7 @@ function enter ()
          v:setHostile()
       end
       -- To make it more interesting a vendetta will solely target the player.
-      p = pilot.add( "Vendetta", "FLF", enter_vect , _("FLF Vendetta") )
+      p = pilot.add( "Vendetta", "FLF", enter_vect )
       p:setHostile()
       -- If player is seen, have them target player
       local pp = player.pilot()

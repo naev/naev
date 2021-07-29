@@ -162,8 +162,7 @@ function takeoff ()
 
    -- Spawn FLF ships
    shptypes = {"Pacifier", "Lancelot", "Vendetta", "Lancelot", "Vendetta", "Lancelot", "Vendetta"}
-   shpnames = {_("FLF Pacifier"), _("FLF Lancelot"), _("FLF Vendetta"), _("FLF Lancelot"), _("FLF Vendetta"), _("FLF Lancelot"), _("FLF Vendetta")}
-   flf_ships = addShips( 5, shptypes, "FLF", ss:pos(), shpnames, {ai="flf_norun"} )
+   flf_ships = addShips( 5, shptypes, "FLF", ss:pos(), nil, {ai="flf_norun"} )
    for i, j in ipairs( flf_ships ) do
       j:setVisible()
       j:memory( "aggressive", true )
