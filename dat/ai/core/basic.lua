@@ -1245,7 +1245,14 @@ function ambush_moveto( target )
       ai.poptask()
       return
    end
-   moveto( target )
+   local dir = ai.face( target, nil, true )
+   local dist = ai.dist( target )
+   if dir < 10 then
+      ai.accel()
+   end
+   if dist < 300 then
+      ai.poptask()
+   end
 end
 
 

@@ -4,7 +4,7 @@ require 'ai.core.idle.generic'
 -- Keep generic as backup
 idle_generic = idle
 
-function __estimate_strength( pilots )
+local function __estimate_strength( pilots )
    local str = 0
    for k,p in ipairs(pilots) do
       local s = p:ship():size()
@@ -13,7 +13,7 @@ function __estimate_strength( pilots )
    return str
 end
 
-function __getenemy( p )
+local function __getenemy( p )
    local pv = {}
    local r = math.pow( mem.lanedistance, 2 )
    for k,v in ipairs(p:getHostiles( mem.ambushclose )) do
