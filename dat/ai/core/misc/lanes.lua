@@ -261,9 +261,14 @@ function lanes.getNonPoint( pos, rad, margin )
    local srad2 = math.pow( system.cur():radius(), 2 )
 
    -- Just some brute force sampling at different scales
-   for s in ipairs{1.0, 0.5, 1.5, 2.0, 3.0} do
-      for i=1,10 do
-         local pp = pos + vec2.newP( rad * s, rnd.rnd()*360 )
+   local n = 18
+   for s in ipairs{1.0, 0.5, 1.5, 2.0, 3.0, 5.0} do
+      local a = rnd.rnd() * 360
+      local inc = 360 / n
+      local r = rad * s
+      for i=1,n do
+         local pp = pos + vec2.newP( r, a )
+         a = a + inc
          if pp:dist2() < srad2 then
             local d = lanes.getDistance2( pp )
             if d > margin2 then
