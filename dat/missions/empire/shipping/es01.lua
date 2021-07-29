@@ -199,9 +199,9 @@ end
 function enemies ()
    -- Choose mercenaries
    merc = {}
-   if rnd.rnd() < 0.3 then table.insert( merc, "Mercenary Pacifier" ) end
-   if rnd.rnd() < 0.7 then table.insert( merc, "Mercenary Ancestor" ) end
-   if rnd.rnd() < 0.9 then table.insert( merc, "Mercenary Vendetta" ) end
+   if rnd.rnd() < 0.3 then table.insert( merc, "Pacifier" ) end
+   if rnd.rnd() < 0.7 then table.insert( merc, "Ancestor" ) end
+   if rnd.rnd() < 0.9 then table.insert( merc, "Vendetta" ) end
 
    -- Add mercenaries
    for k,v in ipairs(merc) do
@@ -210,7 +210,7 @@ function enemies ()
       d = rnd.rnd( 50, 75 )
       enter_vect:add( math.cos(a) * d, math.sin(a) * d )
       -- Add pilots
-      p = pilot.addFleet( v, enter_vect, {ai="mercenary"} )
+      p = pilot.add( v, "Mercenary", enter_vect )
       -- Set hostile
       for k,v in ipairs(p) do
          v:setHostile()
