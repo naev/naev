@@ -86,6 +86,7 @@ function create ()
 
    -- Set how far they attack
    mem.ambushclose = 4000 + 1000 * ps:size()
+   mem.stealth = p:flags("stealth") -- Follow however they were spawned
 
    -- Finish up creation
    create_post()

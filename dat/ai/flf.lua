@@ -1,4 +1,5 @@
 require 'ai.core.core'
+require 'ai.core.idle.pirate'
 require "numstring"
 
 -- Settings
@@ -11,15 +12,17 @@ mem.careful       = true
 mem.doscans       = false
 
 function create ()
+   local p = ai.pilot()
+   local ps = ai.pilot():ship()
 
    -- Give monies.
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/600 , ai.pilot():ship():price()/100) )
+   ai.setcredits( rnd.rnd(ps:price()/600, ps:price()/100) )
 
    -- Get standing.
-   local p = player.pilot()
+   local pp = player.pilot()
    local standing
-   if p:exists() then
-      standing = ai.getstanding( p ) or -1
+   if pp:exists() then
+      standing = ai.getstanding( pp ) or -1
    else
       standing = -1
    end
@@ -28,7 +31,7 @@ function create ()
    if standing < -30 then
       mem.bribe_no = _("\"The only way to deal with scum like you is with cannons!\"")
    else
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.rnd() + 850.)
+      mem.bribe = math.sqrt( p:stats().mass ) * (300. * rnd.rnd() + 850.)
       mem.bribe_prompt = string.format(_("\"It'll cost you %s for me to ignore your dirty presence.\""), creditstring(mem.bribe))
       mem.bribe_paid = _("\"Begone before I change my mind.\"")
    end
@@ -42,6 +45,11 @@ function create ()
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+
+
+   -- Set how far they attack
+   mem.ambushclose = 4000 + 1000 * ps:size()
+   mem.stealth = p:flags("stealth")
 
    -- Finish up creation
    create_post()
@@ -59,16 +67,16 @@ function taunt ( target, offense )
    local taunts
    if offense then
       taunts = {
-            _("For the Frontier!"),
-            _("You'll make great target practice!"),
-            _("Purge the oppressors!")
+         _("For the Frontier!"),
+         _("You'll make great target practice!"),
+         _("Purge the oppressors!")
       }
    else
       taunts = {
-            _("You are no match for the FLF."),
-            _("I've killed scum far more dangerous than you."),
-            _("You'll regret that!"),
-            _("Death to the enemies of the Frontier!")
+         _("You are no match for the FLF."),
+         _("I've killed scum far more dangerous than you."),
+         _("You'll regret that!"),
+         _("Death to the enemies of the Frontier!")
       }
    end
 
