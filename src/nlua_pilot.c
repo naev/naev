@@ -900,9 +900,9 @@ static int pilotL_getPilots( lua_State *L )
 static int pilotL_getHostiles( lua_State *L )
 {
    int i, k, dd;
-   Pilot *p = luaL_validpilot(L,1);
+   Pilot *p    = luaL_validpilot(L,1);
    double dist = luaL_optnumber(L,2,-1.);
-   int dis = lua_toboolean(L,3);
+   int dis     = lua_toboolean(L,3);
    Pilot *const* pilot_stack;
 
    if (dist >= 0.)
