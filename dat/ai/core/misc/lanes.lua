@@ -221,18 +221,8 @@ end
 -- Gets distance and nearest point to safe lanes from a position
 --]]
 function lanes.getDistance( pos )
-   local ncl = getCache()
-   local d = math.huge
-   local p = pos
-   for k,v in ipairs(ncl.lanes) do
-      local pp = closestPointLine( v[1], v[2], pos )
-      local dp = pos:dist( pp )
-      if dp < d then
-         d = dp
-         p = pp
-      end
-   end
-   return d, p
+   local d, p = lanes.getDistance2( pos )
+   return math.sqrt(d), p
 end
 
 
