@@ -1237,6 +1237,43 @@ function stealth( target )
 end
 
 
+function ambush_moveto( target )
+   -- Make sure stealthed
+   if not ai.stealth(true) then
+      ai.poptask()
+      return
+   end
+   moveto( target )
+end
+
+
+function ambush_stalk( target )
+   -- Make sure stealthed or attack
+   if not ai.stealth(true) then
+      ai.poptask()
+      ai.pushtask( "attack", target )
+      return
+   end
+
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+
+   local dir   = ai.face(target)
+   local dist  = ai.dist(target)
+
+   -- Must approach
+   local range = ai.getweaprange( 3 )
+   if dist < range * mem.atk_aim then
+      -- Go for the kill!
+      ai.pushtask( "attack", target )
+   elseif dir < 10 and dist > 300 then
+      ai.accel()
+   end
+end
+
+
 -- Delays the ship when entering systems so that it doesn't leave right away
 function enterdelay ()
    if ai.timeup(0) then
