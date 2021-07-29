@@ -179,7 +179,7 @@ function hail()
 --   eventually I'll implement a bonus
 --   tk.msg( title[7], text[7]:format( creditstring(bonus) ) )
 
-   hook.safe("closehail")
+   hook.update("closehail")
 end
 
 function closehail()
