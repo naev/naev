@@ -1262,7 +1262,8 @@ function ambush_stalk( target )
       return
    end
 
-   local dir   = ai.face(target)
+   -- Try to accurately face them
+   local dir   = ai.face(target, nil, true)
    local dist  = ai.dist(target)
 
    -- Must approach
