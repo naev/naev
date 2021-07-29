@@ -470,8 +470,8 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
          continue;
 
       /* Stealthed pilots don't reduce stealth. */
-      if (pilot_isFlag(t, PILOT_STEALTH))
-         continue;
+      //if (pilot_isFlag(t, PILOT_STEALTH))
+      //   continue;
 
       /* Compute distance. */
       dist = vect_dist2( &p->solid->pos, &t->solid->pos );
