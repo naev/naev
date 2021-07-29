@@ -240,14 +240,18 @@ function patrol_spawnPirates( n, boss )
    for i = 1, n do
       local x = rnd.rnd( -r, r )
       local y = rnd.rnd( -r, r )
+      local pilotname = nil
       local shipname
       if i == 1 and boss ~= nil then
          shipname = boss
       else
-         local shipnames = { "Pirate Hyena", "Pirate Shark", "Pirate Vendetta", "Pirate Ancestor" }
+         local shipnames = { "Hyena", "Pirate Shark", "Pirate Vendetta", "Pirate Ancestor" }
          shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
       end
-      local pstk = pilot.addFleet( shipname, vec2.new( x, y ), {ai="baddie_norun"} )
+      if shipname == "Hyena" then
+         pilotname = _("Pirate Hyena")
+      end
+      local pstk = pilot.add( shipname, "Pirate", vec2.new( x, y ), pilotname, {ai="baddie_norun"} )
       local p = pstk[1]
       hook.pilot( p, "death", "pilot_death_pirate" )
       p:setFaction( "Rogue Pirate" )
