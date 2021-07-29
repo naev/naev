@@ -85,7 +85,7 @@ function create ()
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Set how far they attack
-   mem.enemyclose = 4000 + 1000 * ps:size()
+   mem.ambushclose = 4000 + 1000 * ps:size()
 
    -- Finish up creation
    create_post()
