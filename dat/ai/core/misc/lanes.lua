@@ -237,6 +237,25 @@ end
 
 
 --[[
+-- Gets squared distance and nearest point to safe lanes from a position
+--]]
+function lanes.getDistance2( pos )
+   local ncl = getCache()
+   local d = math.huge
+   local p = pos
+   for k,v in ipairs(ncl.lanes) do
+      local pp = closestPointLine( v[1], v[2], pos )
+      local dp = pos:dist2( pp )
+      if dp < d then
+         d = dp
+         p = pp
+      end
+   end
+   return d, p
+end
+
+
+--[[
 -- Tries to get a point outside of the lanes, around a point at a radius rad.
 --]]
 function lanes.getNonPoint( pos, rad, margin )
@@ -248,14 +267,18 @@ function lanes.getNonPoint( pos, rad, margin )
    pos = pos or p:pos()
    rad = rad or math.min( 2000, ews )
    margin = margin or ews
+   local margin2 = margin*margin
+   local srad2 = math.pow( system.cur():radius(), 2 )
 
    -- Just some brute force sampling at different scales
    for s in ipairs{1.0, 0.5, 1.5, 2.0, 3.0} do
       for i=1,10 do
          local pp = pos + vec2.newP( rad * s, rnd.rnd()*360 )
-         local d = lanes.getDistance( pp )
-         if d > margin then
-            return pp
+         if pp:dist2() < srad2 then
+            local d = lanes.getDistance2( pp )
+            if d > margin2 then
+               return pp
+            end
          end
       end
    end
