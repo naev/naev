@@ -22,9 +22,9 @@ function __getenemy( p )
       if lanes.getDistance2( vp ) > r then
 
          -- Check to see vulnerability
-         local H = __estimate_strength( p:getHostiles( 1000, vp ) )
-         local F = __estimate_strength( p:getAllies( 1000, vp ) )
-                 + __estimate_strength( p:getAllies( 1000 ) )
+         local H = __estimate_strength( p:getHostiles( 1000, vp, true ) )
+         local F = __estimate_strength( p:getAllies( 1000, vp, true ) )
+                 + __estimate_strength( p:getAllies( 1000, nil, true ) )
 
          if F > 2*H then
             local d  = ai.dist2( v )

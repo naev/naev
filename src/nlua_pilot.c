@@ -896,10 +896,11 @@ static int pilotL_getPilots( lua_State *L )
  */
 static int pilotL_getFriendOrFoe( lua_State *L, int friend )
 {
-   int i, k, dd;
+   int i, k;
+   double dd, d2;
    Pilot *p;
    double dist;
-   int dis;
+   int inrange, dis;
    Vector2d *v;
    Pilot *const* pilot_stack;
    LuaFaction lf;
@@ -912,19 +913,21 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    if (lf >= 0) {
       dist  = luaL_optnumber(L,2,-1.);
       v     = luaL_checkvector(L,3);
-      dis   = lua_toboolean(L,4);
+      inrange = 0;
+      dis   = lua_toboolean(L,5);
       p     = NULL;
    }
    else {
       p     = luaL_validpilot(L,1);
       dist  = luaL_optnumber(L,2,-1.);
       v     = luaL_optvector(L,3,&p->solid->pos);
-      dis   = lua_toboolean(L,4);
+      inrange = lua_toboolean(L,4);
+      dis   = lua_toboolean(L,5);
       lf    = p->faction;
    }
 
    if (dist >= 0.)
-      dd = dist*dist;
+      dd = pow2(dist);
 
    /* Now put all the matching pilots in a table. */
    pilot_stack = pilot_getAll();
@@ -954,10 +957,20 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       /* Check if disabled. */
       if (dis && pilot_isDisabled(pilot_stack[i]))
          continue;
-      /* Check distance if necessary. */
-      if (dist >= 0. &&
-            vect_dist2(&pilot_stack[i]->solid->pos, v) > dd)
-         continue;
+
+      if (inrange) {
+         if (!pilot_inRangePilot( p, pilot_stack[i], &d2 ))
+            continue;
+         /* Check distance if necessary. */
+         if (dist >= 0. && d2 > dd)
+            continue;
+      }
+      else {
+         /* Check distance if necessary. */
+         if (dist >= 0. &&
+               vect_dist2(&pilot_stack[i]->solid->pos, v) > dd)
+            continue;
+      }
 
       lua_pushnumber(L, k++); /* key */
       lua_pushpilot(L, pilot_stack[i]->id); /* value */
@@ -976,6 +989,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
  *    @luatparam Pilot|faction pilot Pilot or to get allies of.
  *    @luatparam[opt=infinity] number dist Distance to look for allies.
  *    @luatparam[opt=pilot.pos] Vec2 pos Position to check from.
+ *    @luatparam[opt=false] boolean Whether or not to only check for pilots in range (only in the case of pilot, not faction)
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc getAllies
@@ -995,6 +1009,7 @@ static int pilotL_getAllies( lua_State *L )
  *    @luatparam Pilot|faction pilot Pilot or to get hostiles of.
  *    @luatparam[opt=infinity] number dist Distance to look for hostiles.
  *    @luatparam[opt=pilot.pos] Vec2 pos Position to check from.
+ *    @luatparam[opt=false] boolean Whether or not to only check for pilots in range (only in the case of pilot, not faction)
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc getHostiles
