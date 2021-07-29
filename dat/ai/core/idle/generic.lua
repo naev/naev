@@ -62,7 +62,12 @@ function idle ()
       if mem.doscans then
          local target = __getscantarget()
          if target then
-            __push_scan( target )
+            -- Don't scan if they're going to be attacked anyway
+            if ai.isenemy(target) then
+               ai.pushtask( "attack", target )
+            else
+               __push_scan( target )
+            end
             return
          end
       end
