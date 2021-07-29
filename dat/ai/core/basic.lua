@@ -749,6 +749,8 @@ function __boardstop( target )
    if vel < 10 then
       -- Try to board
       if ai.board(target) then
+         mem.boarded = mem.boarded or 0
+         mem.boarded = mem.boarded + 1
          ai.poptask()
          return
       end
