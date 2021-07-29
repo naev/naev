@@ -39,6 +39,7 @@ static int naev_keyEnableAll( lua_State *L );
 static int naev_keyDisableAll( lua_State *L );
 static int naev_eventStart( lua_State *L );
 static int naev_missionStart( lua_State *L );
+static int naev_isSimulation( lua_State *L );
 static int naevL_conf( lua_State *L );
 static int naevL_cache( lua_State *L );
 static const luaL_Reg naev_methods[] = {
@@ -51,6 +52,7 @@ static const luaL_Reg naev_methods[] = {
    { "keyDisableAll", naev_keyDisableAll },
    { "eventStart", naev_eventStart },
    { "missionStart", naev_missionStart },
+   { "isSimulation", naev_isSimulation },
    { "conf", naevL_conf },
    { "cache", naevL_cache },
    {0,0}
@@ -262,6 +264,19 @@ static int naev_missionStart( lua_State *L )
    lua_pop(L,1);
 
    lua_pushboolean( L, !ret );
+   return 1;
+}
+
+
+/**
+ * @brief Gets whether or not the universe is being simulated or not.
+ *
+ *    @luatreturn boolean true if the world is being simulated.
+ * @luafunc isSimulation
+ */
+static int naev_isSimulation( lua_State *L )
+{
+   lua_pushboolean( L, space_isSimulation() );
    return 1;
 }
 

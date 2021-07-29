@@ -1,5 +1,6 @@
-local scom = {}
+local lanes = require 'ai.core.misc.lanes'
 
+local scom = {}
 
 -- @brief Calculates when next spawn should occur
 function scom.calcNextSpawn( cur, new, max )
@@ -64,7 +65,7 @@ end
 
 
 -- @brief Actually spawns the pilots
-function scom.spawn( pilots, faction, guerilla )
+function scom.spawn( pilots, faction )
    local spawned = {}
 
    -- Case no pilots
@@ -73,7 +74,19 @@ function scom.spawn( pilots, faction, guerilla )
    end
 
    local leader
-   local origin = pilot.choosePoint( faction, false, guerilla ) -- Find a suitable spawn point
+   local origin
+   if pilots.__stealth and naev.isSimulation() then
+      -- Try to random sample a good point
+      local r = system.cur():radius()
+      local p = vec2.newP( rnd.rnd() * r, rnd.rnd() * 360 )
+      for i = 1,20 do
+         origin = lanes.getNonPoint( p, r, 3000 )
+         if origin then break end
+      end
+   end
+   if not origin then
+      origin = pilot.choosePoint( faction, false, pilots.__stealth ) -- Find a suitable spawn point
+   end
    for k,v in ipairs(pilots) do
       local params = v.params or {}
       if not leader then

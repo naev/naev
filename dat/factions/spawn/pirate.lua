@@ -131,7 +131,7 @@ function spawn ( presence, max )
    end
 
    -- Actually spawn the pilots
-   local pilots = scom.spawn( spawn_data, "Pirate", true )
+   local pilots = scom.spawn( spawn_data, "Pirate" )
 
    -- Calculate spawn data
    spawn_data = scom.choose( spawn_table )
