@@ -27,8 +27,8 @@ local function __getenemy( p )
                  + __estimate_strength( p:getAllies( 1000, nil, true ) )
 
          if F*1.5 >= H then
-            local d  = ai.dist2( v )
-            table.insert( pv, {p=v, d=d} )
+            local d = ai.dist2( v )
+            table.insert( pv, {p=v, d=d, F=F, H=H} )
          end
       end
    end
@@ -39,7 +39,7 @@ local function __getenemy( p )
    if #pv==0 then
       return nil
    end
-   return pv[1].p
+   return pv[1].p, pv[1].F, pv[1].H
 end
 
 function idle_leave ()
@@ -82,7 +82,7 @@ function idle_nostealth ()
 
    if mem.aggressive then
       local enemy = __getenemy(p)
-      if enemy ~= nil and (not mem.ambushclose or ai.dist(enemy) < mem.ambushclose) then
+      if enemy ~= nil then
          ai.pushtask( "attack", enemy )
          return
       end
@@ -126,8 +126,8 @@ function idle ()
 
    -- Just be an asshole if not stealthed and aggressive
    if not stealth and mem.aggressive then
-      local enemy  = __getenemy(p)
-      if enemy ~= nil and (not mem.ambushclose or ai.dist(enemy) < mem.ambushclose) then
+      local enemy = __getenemy(p)
+      if enemy ~= nil then
          ai.pushtask( "attack", enemy )
          return
       end
@@ -143,9 +143,16 @@ function idle ()
    end
 
    -- See if there is a nearby target to kill
-   local enemy = __getenemy(p)
-   if enemy ~= nil and (not mem.ambushclose or ai.dist(enemy) < mem.ambushclose) then
-      ai.pushtask( "ambush_stalk", enemy )
+   local enemy, F, H = __getenemy(p)
+   if enemy ~= nil then
+      -- Some criterion to determine whether to rambo or try to attack from
+      -- stealth
+      if F*2 > H then
+         ai.stealth(false)
+         ai.pushtask( "attack", enemy )
+      else
+         ai.pushtask( "ambush_stalk", enemy )
+      end
       return
    end
 
