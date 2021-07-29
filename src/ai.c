@@ -3357,7 +3357,7 @@ static int aiL_messages( lua_State *L )
 /**
  * @brief Tries to stealth or destealth the pilot.
  *
- *    @luatparam boolean enable Whether or not to try to stealth the pilot.
+ *    @luatparam[opt=true] boolean enable Whether or not to try to stealth the pilot.
  *    @luatreturn boolean Whether or not the stealthing or destealthing succeeded.
  * @luafunc stealth
  */
