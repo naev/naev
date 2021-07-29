@@ -247,6 +247,7 @@ end
 
 --[[
 -- Tries to get a point outside of the lanes, around a point at a radius rad.
+-- We'll project the pos into radius if it is out of bounds.
 --]]
 function lanes.getNonPoint( pos, rad, margin )
    local p, ews
@@ -259,6 +260,12 @@ function lanes.getNonPoint( pos, rad, margin )
    margin = margin or ews
    local margin2 = margin*margin
    local srad2 = math.pow( system.cur():radius(), 2 )
+
+   -- Make sure pos is in radius
+   if pos:dist2() > srad2 then
+      local m,a = pos:polar()
+      pos = vec2.newP( system.cur():radius(), a )
+   end
 
    -- Just some brute force sampling at different scales
    local n = 18
