@@ -208,16 +208,19 @@ function create ()
       misn.finish(false)
    end
 
+   aname = nil
+   bname = nil
    if target_faction == faction.get("FLF") then
       name = pilot_name()
-      ships = {"FLF Lancelot", "FLF Vendetta", "FLF Pacifier"}
-      aship = "FLF Pacifier"
-      bship = "FLF Lancelot"
+      ships = {"Lancelot", "Vendetta", "Pacifier"}
+      aship = "Pacifier"
+      bship = "Lancelot"
    else -- default Pirate
       name = pirate_name()
       ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
       aship = "Pirate Phalanx"
-      bship = "Pirate Hyena"
+      bship = "Hyena"
+      bname = _("Pirate Hyena")
    end
 
    ship = ships[rnd.rnd(1,#ships)]
@@ -302,7 +305,7 @@ function enter ()
          pilot.toggleSpawn( false )
          pilot.clear()
 
-         target_ship = pilot.addFleet( ship, pos )[1]
+         target_ship = pilot.add( ship, target_faction, pos )[1]
          target_ship:rename( name )
          target_ship:setHilight( true )
          target_ship:setVisplayer()
@@ -333,15 +336,15 @@ function trigger_ambush()
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[1] = pilot.addFleet( aship, pos )[1]
+   ambush[1] = pilot.add( aship, target_faction, pos, aname )[1]
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[2] = pilot.addFleet( bship, pos )[1]
+   ambush[2] = pilot.add( bship, target_faction, pos, bname )[1]
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[3] = pilot.addFleet( bship, pos )[1]
+   ambush[3] = pilot.add( bship, target_faction, pos, bname )[1]
 
    ambush[1]:setHostile()
    ambush[2]:setHostile()
