@@ -52,6 +52,7 @@ extern Pilot *cur_pilot;
 /*
  * Prototypes.
  */
+static int pilotL_getFriendOrFoe( lua_State *L, int friend );
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
 static int pilotL_addFleetFrom( lua_State *L, int from_ship );
 static int outfit_compareActive( const void *slot1, const void *slot2 );
@@ -65,6 +66,7 @@ static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
 static int pilotL_getPilots( lua_State *L );
+static int pilotL_getAllies( lua_State *L );
 static int pilotL_getHostiles( lua_State *L );
 static int pilotL_getVisible( lua_State *L );
 static int pilotL_eq( lua_State *L );
@@ -173,6 +175,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "addFleet", pilotL_addFleet },
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
+   { "getAllies", pilotL_getAllies },
    { "getHostiles", pilotL_getHostiles },
    { "getVisible", pilotL_getVisible },
    { "__eq", pilotL_eq },
@@ -888,20 +891,10 @@ static int pilotL_getPilots( lua_State *L )
 }
 
 
-/**
- * @brief Gets hostile pilots to a pilot within a certain distance.
- *
- * @usage p:getHostiles( 5000 ) -- get hostiles within 5000
- * @usage pilot.getHostiles( faction.get("Pirate"), 5000, vec2.new(0,0) ) -- Got hostiles of "Pirate" faction 5000 units from origin
- *
- *    @luatparam Pilot|faction pilot Pilot or to get hostiles of.
- *    @luatparam[opt=infinity] number dist Distance to look for hostiles.
- *    @luatparam[opt=pilot.pos] Vec2 pos Position to check from.
- *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
- *    @luatreturn {Pilot,...} A table containing the pilots.
- * @luafunc getHostiles
+/*
+ * Helper to get nearby friends or foes.
  */
-static int pilotL_getHostiles( lua_State *L )
+static int pilotL_getFriendOrFoe( lua_State *L, int friend )
 {
    int i, k, dd;
    Pilot *p;
@@ -941,11 +934,23 @@ static int pilotL_getHostiles( lua_State *L )
       /* Check if dead. */
       if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
          continue;
-      /* Must be hostile. */
-      if (!(areEnemies( pilot_stack[i]->faction, lf )
-               || ((p!= NULL) && (pilot_isWithPlayer(p))
-                  && pilot_isHostile(pilot_stack[i]))))
-         continue;
+      /* Check appropriate faction. */
+      if (friend) {
+         /* Must be friendly. */
+         if (!(areAllies( pilot_stack[i]->faction, lf )
+                  || ((p!= NULL) && (pilot_isWithPlayer(p))
+                     && (player.p != NULL)
+                     && pilot_isFriendly(player.p))))
+            continue;
+      }
+      else {
+         /* Must be hostile. */
+         if (!(areEnemies( pilot_stack[i]->faction, lf )
+                  || ((p!= NULL) && (pilot_isWithPlayer(p))
+                     && (player.p != NULL)
+                     && pilot_isHostile(player.p))))
+            continue;
+      }
       /* Check if disabled. */
       if (dis && pilot_isDisabled(pilot_stack[i]))
          continue;
@@ -959,6 +964,44 @@ static int pilotL_getHostiles( lua_State *L )
       lua_rawset(L,-3); /* table[key] = value */
    }
    return 1;
+}
+
+
+/**
+ * @brief Gets friendly pilots to a pilot (or faction) within a certain distance.
+ *
+ * @usage p:getAllies( 5000 ) -- get allies within 5000
+ * @usage pilot.getAllies( faction.get("Pirate"), 5000, vec2.new(0,0) ) -- Got allies of "Pirate" faction 5000 units from origin
+ *
+ *    @luatparam Pilot|faction pilot Pilot or to get allies of.
+ *    @luatparam[opt=infinity] number dist Distance to look for allies.
+ *    @luatparam[opt=pilot.pos] Vec2 pos Position to check from.
+ *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
+ *    @luatreturn {Pilot,...} A table containing the pilots.
+ * @luafunc getAllies
+ */
+static int pilotL_getAllies( lua_State *L )
+{
+   return pilotL_getFriendOrFoe( L, 1 );
+}
+
+
+/**
+ * @brief Gets hostile pilots to a pilot (or faction) within a certain distance.
+ *
+ * @usage p:getHostiles( 5000 ) -- get hostiles within 5000
+ * @usage pilot.getHostiles( faction.get("Pirate"), 5000, vec2.new(0,0) ) -- Got hostiles of "Pirate" faction 5000 units from origin
+ *
+ *    @luatparam Pilot|faction pilot Pilot or to get hostiles of.
+ *    @luatparam[opt=infinity] number dist Distance to look for hostiles.
+ *    @luatparam[opt=pilot.pos] Vec2 pos Position to check from.
+ *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
+ *    @luatreturn {Pilot,...} A table containing the pilots.
+ * @luafunc getHostiles
+ */
+static int pilotL_getHostiles( lua_State *L )
+{
+   return pilotL_getFriendOrFoe( L, 0 );
 }
 
 
