@@ -19,19 +19,22 @@ mem.careful       = true
 
 
 function create ()
+   local p = ai.pilot()
+   local ps = ai.pilot():ship()
+
    -- Some pirates do kill
    if rnd.rnd() < 0.1 then
       mem.atk_kill = true
    end
 
    -- Not too much money
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/80, ai.pilot():ship():price()/30) )
+   ai.setcredits( rnd.rnd(ps:price()/80, ps:price()/30) )
 
    -- Deal with bribeability
    if rnd.rnd() < 0.05 then
       mem.bribe_no = _("\"You won't be able to slide out of this one!\"")
    else
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300 * rnd.rnd() + 850)
+      mem.bribe = math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
       local bribe_prompt = {
             _("\"It'll cost you %s for me to ignore your pile of rubbish.\""),
             _("\"I'm in a good mood so I'll let you go for %s.\""),
@@ -68,9 +71,9 @@ function create ()
    end
 
    -- Deal with refueling
-   local p = player.pilot()
-   if p:exists() then
-      local standing = ai.getstanding( p ) or -1
+   local pp = player.pilot()
+   if pp:exists() then
+      local standing = ai.getstanding( pp ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing > 60 then
          mem.refuel = mem.refuel * 0.5
@@ -80,6 +83,9 @@ function create ()
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+
+   -- Set how far they attack
+   mem.enemyclose = 4000 + 1000 * ps:size()
 
    -- Finish up creation
    create_post()
