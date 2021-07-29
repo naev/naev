@@ -7,7 +7,7 @@ local function nearestVertex( vertices, pos )
    local n = nil
    local nd = math.huge
    for k,v in ipairs(vertices) do
-      local d = v:dist(pos)
+      local d = v:dist2(pos)
       if d < nd then
          nd = d
          n = k
@@ -26,10 +26,10 @@ local function safelanesToGraph( lanes )
    for k,v in ipairs(lanes) do
       local v1, v2
       for i,p in ipairs(vertices) do
-         if p:dist(v[1]) < eps then
+         if p:dist2(v[1]) < eps then
             v1 = i
          end
-         if p:dist(v[2]) < eps then
+         if p:dist2(v[2]) < eps then
             v2 = i
          end
       end
