@@ -81,8 +81,11 @@ function scom.spawn( pilots, faction, guerilla )
             leader:memory().formation = pilots.__formation
          end
       end
-      if pilots.__stealth then
+      if params.stealth==nil and pilots.__stealth then
          params.stealth= true
+      end
+      if params.ai==nil and pilots.__ai then
+         params.ai = pilots.__ai
       end
       local pfact = params.faction or faction
       local p = pilot.add( v["pilot"], pfact, origin, params.name, params )

@@ -60,8 +60,10 @@ function idle_leave ()
 end
 
 function idle_nostealth ()
+   local p = ai.pilot()
+
    if mem.aggressive then
-      local enemy = __getenemy()
+      local enemy = __getenemy(p)
       if enemy ~= nil and (not mem.ambushclose or ai.dist(enemy) < mem.ambushclose) then
          ai.pushtask( "attack", enemy )
          return
