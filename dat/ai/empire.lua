@@ -8,22 +8,24 @@ mem.aggressive = true
 
 
 function create ()
+   local p = ai.pilot()
+   local ps = p:ship()
 
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
+   ai.setcredits( rnd.rnd(ps:price()/300, ps/70) )
 
    -- Lines to annoy the player. Shouldn't be too common or Gamma Polaris and such get inundated.
    local r = rnd.rnd(0,20)
    if r == 0 then
-      ai.pilot():broadcast(_("The Empire is watching you."))
+      p:broadcast(_("The Empire is watching you."))
    elseif r == 1 then
-      ai.pilot():broadcast(_("The Emperor sees all."))
+      p:broadcast(_("The Emperor sees all."))
    end
 
    -- Get refuel chance
-   local p = player.pilot()
-   if p:exists() then
-      local standing = ai.getstanding( p ) or -1
+   local pp = player.pilot()
+   if pp:exists() then
+      local standing = ai.getstanding( pp ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing < 0 then
          mem.refuel_no = _("\"My fuel is property of the Empire.\"")
@@ -40,7 +42,7 @@ function create ()
 
    -- See if can be bribed
    if rnd.rnd() > 0.7 then
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
+      mem.bribe = math.sqrt( p:stats().mass ) * (500. * rnd.rnd() + 1750.)
       mem.bribe_prompt = string.format(_("\"For some %s I could forget about seeing you.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Now scram before I change my mind.\"")
    else
@@ -59,7 +61,7 @@ function create ()
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Set how far they attack
-   mem.enemyclose = 3000 * p:ship():size()
+   mem.enemyclose = 3000 * ps:size()
 
    -- Finish up creation
    create_post()

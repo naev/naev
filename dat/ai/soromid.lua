@@ -8,14 +8,16 @@ mem.aggressive = true
 
 
 function create ()
+   local p = ai.pilot()
+   local ps = p:ship()
 
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
+   ai.setcredits( rnd.rnd(ps:price()/300, ps:price()/70) )
 
    -- Get refuel chance
-   local p = player.pilot()
-   if p:exists() then
-      local standing = ai.getstanding( p ) or -1
+   local pp = player.pilot()
+   if pp:exists() then
+      local standing = ai.getstanding( pp ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing < 0 then
          mem.refuel_no = _("\"The warriors of Sorom are not your personal refueller.\"")
@@ -47,7 +49,7 @@ function create ()
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Set how far they attack
-   mem.enemyclose = 2000 + 2000 * p:ship():size()
+   mem.enemyclose = 2000 + 2000 * ps:size()
 
    -- Finish up creation
    create_post()

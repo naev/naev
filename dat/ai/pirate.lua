@@ -1,4 +1,5 @@
 require 'ai.core.core'
+require 'ai.core.idle.pirate'
 require "numstring"
 
 --[[
@@ -18,7 +19,6 @@ mem.careful       = true
 
 
 function create ()
-
    -- Some pirates do kill
    if rnd.rnd() < 0.1 then
       mem.atk_kill = true
@@ -87,7 +87,6 @@ end
 
 
 function taunt ( target, offense )
-
    -- Only 50% of actually taunting.
    if rnd.rnd(0,1) == 0 then
       return

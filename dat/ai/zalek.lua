@@ -17,6 +17,9 @@ local drones = {
 }
 
 function create()
+   local p = ai.pilot()
+   local ps = p:ship()
+
    -- See if a drone
    mem.isdrone = drones[ ai.pilot():ship():nameRaw() ]
    if mem.isdrone then
@@ -29,12 +32,12 @@ function create()
    end
 
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/200, ai.pilot():ship():price()/50) )
+   ai.setcredits( rnd.rnd( ps:price()/200, ps:price()/50) )
 
    -- Get refuel chance
-   local p = player.pilot()
-   if p:exists() then
-      local standing = ai.getstanding( p ) or -1
+   local pp = player.pilot()
+   if pp:exists() then
+      local standing = ai.getstanding( pp ) or -1
       mem.refuel = rnd.rnd( 1000, 2000 )
       if standing < -10 then
          mem.refuel_no = _("\"I do not have fuel to spare.\"")
@@ -47,7 +50,7 @@ function create()
 
    -- See if can be bribed
    if rnd.rnd() > 0.7 then
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
+      mem.bribe = math.sqrt( p:stats().mass ) * (500. * rnd.rnd() + 1750.)
       mem.bribe_prompt = string.format(_("\"We will agree to end the battle for %s.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Temporarily stopping fire.\"")
    else
@@ -66,7 +69,7 @@ function create()
    mem.loiter = 2 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Set how far they attack
-   mem.enemyclose = 3000 + 1000 * p:ship():size()
+   mem.enemyclose = 3000 + 1000 * ps:size()
 
    -- Finish up creation
    create_post()

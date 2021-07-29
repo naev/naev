@@ -237,6 +237,29 @@ end
 
 
 --[[
+-- Tries to get a point outside of the lanes, around a point at a radius rad.
+--]]
+function lanes.getNonPoint( pos, rad, margin )
+   local p = ai.pilot()
+   local ews = p:stats().ew_stealth
+   pos = pos or p:pos()
+   rad = rad or math.min( 2000, ews )
+   margin = ews
+
+   -- Just some brute force sampling at different scales
+   for s in ipairs{1.0, 0.5, 1.5, 2.0, 3.0} do
+      for i=1,10 do
+         local pp = vec2.newP( rad * s, rnd.rnd()*360 )
+         if lanes.getDistance( pp ) < margin then
+            return pp
+         end
+      end
+   end
+   return nil
+end
+
+
+--[[
 -- Gets a random point of interest
 --]]
 function lanes.getPointInterest( pos )

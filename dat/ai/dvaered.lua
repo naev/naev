@@ -6,9 +6,11 @@ mem.aggressive = true
 
 -- Create function
 function create ()
+   local p = ai.pilot()
+   local ps = p:ship()
 
    -- Credits.
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
+   ai.setcredits( rnd.rnd(ps:price()/300, ps:price()/100) )
 
    -- Handle bribing
    if rnd.rnd() > 0.4 then
@@ -25,9 +27,9 @@ function create ()
    end
 
    -- Handle refueling
-   local p = player.pilot()
-   if p:exists() then
-      local standing = ai.getstanding( p ) or -1
+   local pp = player.pilot()
+   if pp:exists() then
+      local standing = ai.getstanding( pp ) or -1
       mem.refuel = rnd.rnd( 1000, 3000 )
       if standing < 50 then
          mem.refuel_no = _("\"You are not worthy of my attention.\"")
@@ -40,7 +42,7 @@ function create ()
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Set how far they attack
-   mem.enemyclose = 3000 * p:ship():size()
+   mem.enemyclose = 3000 * ps:size()
 
    create_post()
 end
