@@ -8,10 +8,10 @@
  <class>Destroyer</class>
  <price>1400000</price>
  <time_mod>1.25</time_mod>
- <trail_generator x="-24" y="-20" h="-4" >nebula</trail_generator>
- <trail_generator x="-24" y="20" h="-4" >nebula</trail_generator>
- <trail_generator x="-28" y="6" h="5" />
- <trail_generator x="-28" y="-6" h="5" />
+ <trail_generator x="-24" y="-20" h="-4">nebula</trail_generator>
+ <trail_generator x="-24" y="20" h="-4">nebula</trail_generator>
+ <trail_generator x="-28" y="6" h="5">pirate</trail_generator>
+ <trail_generator x="-28" y="-6" h="5">pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <description>Even though the Starbridge is already a light and fast destroyer, Skull and Bones engineers managed to further improve its speed. Due to its large firepower and relatively high speed for its ship class, the Starbridge is truly a fearsome sight.</description>
  <health>
