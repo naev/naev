@@ -57,13 +57,10 @@ function comm( plt )
       local cost = mem.bribe
       local cstr = creditstring(cost)
       local chave = creditstring(player.credits())
-      if str then
-         return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
+      if not str then
+         str = string.format(_([["I'm gonna need at least %s to not leave you as a hunk of floating debris."]]), cstr)
       end
-      return string.format(_([["I'm gonna need at least %s to not leave you as a hunk of floating debris."
-
-You have %s.
-Pay #0%s#0r?"]]), cstr, chave, cstr )
+      return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
    end )
    vn.menu{
       {_("Pay"), "bribe_trypay"},
@@ -151,13 +148,10 @@ Pay #0%s#0r?"]]), cstr, chave, cstr )
       local cost = mem.refuel
       local cstr = creditstring(cost)
       local chave = creditstring(player.credits())
-      if str then
-         return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
+      if not str then
+         str = string.format(_([["I should be able to refuel you for %s."]]), cstr)
       end
-      return string.format(_([["I should be able to refuel you for %s."
-
-You have %s.
-Pay #r%s#0?]]), cstr, chave, cstr )
+      return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
    end )
    vn.menu{
       {_("Pay"), "refuel_trypay"},
