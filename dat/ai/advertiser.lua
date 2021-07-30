@@ -1,5 +1,5 @@
 require 'ai.core.core'
-require 'ai.core.idle.civilian'
+require 'ai.core.idle.advertiser'
 require 'ai.core.misc.distress'
 require "numstring"
 
