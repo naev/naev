@@ -27,6 +27,8 @@ function create()
       mem.refuel_no = msg
       mem.bribe_no = msg
       mem.armour_run = 0 -- Drones don't run
+      -- Drones can get indirectly bribed as part of fleets
+      mem.bribe = math.sqrt( p:stats().mass ) * (500. * rnd.rnd() + 1750.)
       create_post()
       return
    end
