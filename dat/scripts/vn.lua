@@ -1475,10 +1475,10 @@ Fully resets the VN environment to default values.
 <em>Note</em> This automatically does vn.clear() too.
 --]]
 function vn.reset()
-   vn.clear()
    for k,v in pairs(vn._default) do
       vn[k] = v
    end
+   vn.clear()
 end
 
 -- Default characters
