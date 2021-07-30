@@ -2,21 +2,6 @@ local vn = require 'vn'
 local lg = require 'love.graphics'
 require 'numstring'
 
--- Get nearby pilots for bribing (includes current pilot)
-local function nearby_bribeable( plt )
-   local pp = player.pilot()
-   local bribeable = {}
-   for k,v in ipairs(pp:getVisible()) do
-      if (v:faction() == plt:faction() and v:hostile()) then
-         local vmem = v:memory()
-         if not vmem.bribe_no and (vmem.bribe and vmem.bribe~=0) then
-            table.insert( bribeable, v )
-         end
-      end
-   end
-   return bribeable
-end
-
 -- See if part of a fleet
 local function bribe_fleet( plt )
    local lea = plt:leader()
@@ -41,6 +26,33 @@ local function bribe_fleet( plt )
       bribe_group = ng
    end
    return bribe_group
+end
+
+-- Get nearby pilots for bribing (includes current pilot)
+-- Respects fleets
+local function nearby_bribeable( plt )
+   local pp = player.pilot()
+   local bribe_list = {}
+   for k,v in ipairs(pp:getVisible()) do
+      if (v:faction() == plt:faction() and v:hostile()) then
+         local vmem = v:memory()
+         if not vmem.bribe_no and (vmem.bribe and vmem.bribe~=0) then
+            local flt = bribe_fleet( v )
+            if flt then
+               for i,p in ipairs(flt) do
+                  bribe_list[p] = true
+               end
+            else
+               bribe_list[v] = true
+            end
+         end
+      end
+   end
+   local bribeable = {}
+   for k,v in pairs(bribe_list) do
+      table.insert( bribeable, k )
+   end
+   return bribeable
 end
 
 local function bribe_cost( plt )
