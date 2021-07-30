@@ -136,8 +136,9 @@ function comm( plt )
       local cstr = creditstring(cost)
       local chave = creditstring(player.credits())
       if not str then
-         str = string.format(_([["We'll need at least %s to not leave you as a hunk of floating debris."]]), cstr)
+         str = _([["We'll need at least %s to not leave you as a hunk of floating debris."]])
       end
+      str = string.format( str, cstr )
       return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
    end )
    vn.menu{

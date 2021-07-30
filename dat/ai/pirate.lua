@@ -17,21 +17,39 @@ mem.atk_board     = true
 mem.atk_kill      = false
 mem.careful       = true
 
-local bribe_prompt_list = {
-   _([["It'll cost you %s for me to ignore your pile of rubbish."]]),
-   _([["I'm in a good mood so I'll let you go for %s."]]),
-   _([["Send me %s or you're dead."]]),
+local function join_tables( a, b )
+   for k,v in ipairs(b) do
+      table.insert( a, v )
+   end
+   return a
+end
+
+local bribe_prompt_common = {
    _([["Pay up %s or it's the end of the line."]]),
    _([["Your money or your life. %s and make the choice quickly."]]),
    _([["Money talks bub. %s up front or get off my channel."]]),
-   _([["Shut up and give me your money! %s now."]]),
    _([["You're either really desperate or really rich. %s or shut up."]]),
-   _([["If you're willing to negotiate I'll gladly take %s to not kill you."]]),
-   _([["You give me %s and I'll act like I never saw you."]]),
-   _([["So this is the part where you pay up or get shot up. Your choice. What'll be, %s or…"]]),
-   _([["Pay up or don't. %s now just means I'll wait till later to collect the rest."]]),
    _([["This is a toll road, pay up %s or die."]]),
+   _([["So this is the part where you pay up or get shot up. Your choice. What'll be, %s or…"]]),
 }
+local bribe_prompt_list = join_tables( {
+   _([["It'll cost you %s for me to ignore your pile of rubbish."]]),
+   _([["I'm in a good mood so I'll let you go for %s."]]),
+   _([["Send me %s or you're dead."]]),
+   _([["Shut up and give me your money! %s now."]]),
+   _([["You give me %s and I'll act like I never saw you."]]),
+   _([["If you're willing to negotiate I'll gladly take %s to not kill you."]]),
+   _([["Pay up or don't. %s now just means I'll wait till later to collect the rest."]]),
+}, bribe_prompt_common )
+local bribe_prompt_nearby_list = join_tables( {
+   _([["It'll cost you %s for us to ignore your pile of rubbish."]]),
+   _([["We'm in a good mood so we'll let you go for %s."]]),
+   _([["Send us %s or you're dead."]]),
+   _([["Shut up and give us your money! %s now."]]),
+   _([["You give us %s and we'll act like we never saw you."]]),
+   _([["If you're willing to negotiate we'll gladly take %s to not kill you."]]),
+   _([["Pay up or don't. %s now just means we'll wait till later to collect the rest."]]),
+}, bribe_prompt_common )
 local bribe_paid_list = {
    _([["You're lucky I'm so kind."]]),
    _([["Life doesn't get easier than this."]]),
@@ -117,6 +135,7 @@ function create ()
    else
       mem.bribe = math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
       mem.bribe_prompt = string.format(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], creditstring(mem.bribe))
+      mem.bribe_prompt_nearby = bribe_prompt_nearby_list[ rnd.rnd(1,#bribe_prompt_nearby_list) ]
       mem.bribe_paid = bribe_paid_list[ rnd.rnd(1,#bribe_paid_list) ]
    end
 
