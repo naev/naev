@@ -1032,7 +1032,7 @@ end
 -- Just loitering around.
 --]]
 function loiter( target )
-   local dir      = ai.face( target )
+   local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
    if dist < 200 then
       ai.poptask()
