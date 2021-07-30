@@ -41,8 +41,8 @@ function create ()
    end
 
    -- See if can be bribed
+   mem.bribe = math.sqrt( p:stats().mass ) * (500. * rnd.rnd() + 1750.)
    if rnd.rnd() > 0.7 then
-      mem.bribe = math.sqrt( p:stats().mass ) * (500. * rnd.rnd() + 1750.)
       mem.bribe_prompt = string.format(_("\"For some %s I could forget about seeing you.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Now scram before I change my mind.\"")
    else

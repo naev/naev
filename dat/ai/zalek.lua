@@ -49,8 +49,8 @@ function create()
    end
 
    -- See if can be bribed
+   mem.bribe = math.sqrt( p:stats().mass ) * (500. * rnd.rnd() + 1750.)
    if rnd.rnd() > 0.7 then
-      mem.bribe = math.sqrt( p:stats().mass ) * (500. * rnd.rnd() + 1750.)
       mem.bribe_prompt = string.format(_("\"We will agree to end the battle for %s.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Temporarily stopping fire.\"")
    else

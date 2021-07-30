@@ -37,8 +37,8 @@ function create ()
    end
 
    -- See if can be bribed
+   mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
    if rnd.rnd() > 0.6 then
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
       mem.bribe_prompt = string.format(_("\"The Proteron can always use some income. %s and you were never here.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Get lost before I have to dispose of you.\"")
    else

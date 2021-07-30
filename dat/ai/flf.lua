@@ -28,10 +28,10 @@ function create ()
    end
 
    -- Handle bribes.
+   mem.bribe = math.sqrt( p:stats().mass ) * (300. * rnd.rnd() + 850.)
    if standing < -30 then
       mem.bribe_no = _("\"The only way to deal with scum like you is with cannons!\"")
    else
-      mem.bribe = math.sqrt( p:stats().mass ) * (300. * rnd.rnd() + 850.)
       mem.bribe_prompt = string.format(_("\"It'll cost you %s for me to ignore your dirty presence.\""), creditstring(mem.bribe))
       mem.bribe_paid = _("\"Begone before I change my mind.\"")
    end

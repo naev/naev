@@ -10,8 +10,8 @@ function create ()
 
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/150, ai.pilot():ship():price()/50) )
 
+   mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750. * rnd.rnd() + 2500.)
    if rnd.rnd() > 0.7 then
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750. * rnd.rnd() + 2500.)
       mem.bribe_prompt = string.format(_("\"Your life is worth %s to me.\""), creditstring(mem.bribe) )
       mem.bribe_paid = _("\"Beat it.\"")
    else
