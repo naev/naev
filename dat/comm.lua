@@ -26,6 +26,7 @@ local function bribe_cost( plt )
    return mem.bribe
 end
 
+-- stolen from scripts/vn.lua
 local function _draw_bg( x, y, w, h, col, border_col, alpha )
    col = col or {0, 0, 0, 1}
    border_col = border_col or {0.5, 0.5, 0.5, 1}
@@ -35,13 +36,12 @@ local function _draw_bg( x, y, w, h, col, border_col, alpha )
    lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
 end
 
-
 function comm( plt )
    vn.reset()
    vn.scene()
 
    -- Shortcuts and graphics
-   local sgfx = lg.newImage( plt:ship():gfxComm() )
+   local shipgfx = lg.newImage( plt:ship():gfxComm() )
    local mem = plt:memory()
    local fac = plt:faction()
 
@@ -90,7 +90,7 @@ function comm( plt )
    end
    vn.setForeground( render_namebox )
 
-   local p = vn.newCharacter( plt:name(), { image=sgfx } )
+   local p = vn.newCharacter( plt:name(), { image=shipgfx } )
    vn.transition()
    if mem.comm_greet then
       p( mem.comm_greet )
