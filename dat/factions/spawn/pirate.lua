@@ -20,12 +20,12 @@ function spawn_patrol ()
    elseif r < 0.5 then
       scom.addPilot( pilots, "Pirate Shark", 20 )
    elseif r < 0.8 then
-      add_hyena( pilots )
       scom.addPilot( pilots, "Pirate Shark", 20 )
+      add_hyena( pilots )
    else
       scom.addPilot( pilots, "Pirate Vendetta", 25 )
-      add_hyena( pilots )
       scom.addPilot( pilots, "Pirate Shark", 20 )
+      add_hyena( pilots )
    end
 
    return pilots
@@ -50,18 +50,18 @@ function spawn_squad ()
       scom.addPilot( pilots, "Pirate Ancestor", 20 )
    elseif r < 0.6 then
       add_hyena( pilots )
-      scom.addPilot( pilots, "Pirate Shark", 20 )
       scom.addPilot( pilots, "Pirate Vendetta", 25 )
+      scom.addPilot( pilots, "Pirate Shark", 20 )
       scom.addPilot( pilots, "Pirate Ancestor", 20 )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Pirate Shark", 20 )
-      scom.addPilot( pilots, "Pirate Rhino", 35 )
+      scom.addPilot( pilots, "Pirate Rhino", 45 )
       scom.addPilot( pilots, "Pirate Phalanx", 45 )
-   else
-      add_hyena( pilots )
       scom.addPilot( pilots, "Pirate Shark", 20 )
-      scom.addPilot( pilots, "Pirate Vendetta", 25 )
+   else
       scom.addPilot( pilots, "Pirate Admonisher", 45 )
+      scom.addPilot( pilots, "Pirate Vendetta", 25 )
+      scom.addPilot( pilots, "Pirate Shark", 20 )
+      add_hyena( pilots )
    end
 
    return pilots

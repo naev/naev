@@ -57,6 +57,7 @@ function spawn_bounty_hunter_med ()
    return spawn_bounty_hunter{
       {"Admonisher", 45},
       {"Phalanx", 45},
+      {"Starbridge", 60},
       {"Vigilance", 70},
       {"Pacifier", 70},
    }
