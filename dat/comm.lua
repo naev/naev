@@ -36,7 +36,11 @@ function comm( plt )
    vn.scene()
    local p = vn.newCharacter( plt:name(), { image=gfx } )
    vn.transition()
-   vn.na(string.format(_("You open a communication channel with %s."), plt:name()))
+   if mem.comm_greet then
+      p( mem.comm_greet )
+   else
+      vn.na(string.format(_("You open a communication channel with %s."), plt:name()))
+   end
    vn.label("menu")
    vn.menu( function ()
       local hostile = plt:hostile()
