@@ -32,6 +32,38 @@ function spawn_patrol ()
 end
 
 
+function spawn_loner ()
+   local pilots = {}
+   pilots.__nofleet = true
+   pilots.__stealth = (rnd.rnd() < 0.7)
+   if rnd.rnd() < 0.5 then
+      pilots.__ai       = "marauder"
+      pilots.__stealth  = false
+   end
+
+   local r = rnd.rnd()
+   if r < 0.2 then
+      add_hyena( pilots )
+   elseif r < 0.3 then
+      scom.addPilot( pilots, "Pirate Shark", 20 )
+   elseif r < 0.4 then
+      scom.addPilot( pilots, "Pirate Vendetta", 25 )
+   elseif r < 0.55 then
+      scom.addPilot( pilots, "Pirate Ancestor", 20 )
+   elseif r < 0.7 then
+      scom.addPilot( pilots, "Pirate Phalanx", 45 )
+   elseif r < 0.8 then
+      scom.addPilot( pilots, "Pirate Rhino", 45 )
+   elseif r < 0.9 then
+      scom.addPilot( pilots, "Pirate Admonisher", 45 )
+   else
+      scom.addPilot( pilots, "Pirate Starbridge", 60 )
+   end
+
+   return pilots
+end
+
+
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
    local pilots = {}
@@ -43,25 +75,29 @@ function spawn_squad ()
    end
    local r = rnd.rnd()
 
-   if r < 0.4 then
-      add_hyena( pilots )
+   if r < 0.3 then
       scom.addPilot( pilots, "Pirate Vendetta", 25 )
       scom.addPilot( pilots, "Pirate Ancestor", 20 )
       scom.addPilot( pilots, "Pirate Ancestor", 20 )
-   elseif r < 0.6 then
       add_hyena( pilots )
+   elseif r < 0.5 then
       scom.addPilot( pilots, "Pirate Vendetta", 25 )
+      scom.addPilot( pilots, "Pirate Ancestor", 20 )
       scom.addPilot( pilots, "Pirate Shark", 20 )
-      scom.addPilot( pilots, "Pirate Ancestor", 20 )
-   elseif r < 0.8 then
+      add_hyena( pilots )
+   elseif r < 0.7 then
       scom.addPilot( pilots, "Pirate Rhino", 45 )
       scom.addPilot( pilots, "Pirate Phalanx", 45 )
       scom.addPilot( pilots, "Pirate Shark", 20 )
-   else
+   elseif r < 0.85 then
       scom.addPilot( pilots, "Pirate Admonisher", 45 )
       scom.addPilot( pilots, "Pirate Vendetta", 25 )
       scom.addPilot( pilots, "Pirate Shark", 20 )
       add_hyena( pilots )
+   else
+      scom.addPilot( pilots, "Pirate Starbridge", 60 )
+      scom.addPilot( pilots, "Pirate Shark", 20 )
+      scom.addPilot( pilots, "Pirate Shark", 20 )
    end
 
    return pilots
@@ -110,6 +146,7 @@ function create ( max )
 
    -- Create weights for spawn table
    weights[ spawn_patrol  ] = 100
+   weights[ spawn_loner   ] = 100
    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
