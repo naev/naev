@@ -148,6 +148,7 @@ function comm( plt )
    vn.menu_x = math.min( -1, 500 - nw/2 )
    vn.namebox_alpha = 0
    local namebox_font = vn.namebox_font
+   -- TODO show the faction standing / bribed status and update when bribed
    local namebox_text = string.format("%s\n%s", fac:name(), plt:name() )
    local namebox_col = fac:colour()
    if namebox_col then namebox_col = {namebox_col:rgb()}
