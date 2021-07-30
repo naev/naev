@@ -2,12 +2,12 @@ local vn = require 'vn'
 local lg = require 'love.graphics'
 require 'numstring'
 
--- Get nearby pilots for bribing
+-- Get nearby pilots for bribing (includes current pilot)
 local function nearby_bribeable( plt )
    local pp = player.pilot()
    local bribeable = {}
    for k,v in ipairs(pp:getVisible()) do
-      if v~=plt and (v:faction() == plt:faction() and v:hostile()) then
+      if (v:faction() == plt:faction() and v:hostile()) then
          local vmem = v:memory()
          if not vmem.bribe_no and (vmem.bribe and vmem.bribe~=0) then
             table.insert( bribeable, v )
@@ -18,6 +18,14 @@ local function nearby_bribeable( plt )
 end
 
 local function bribe_cost( plt )
+   if type(plt)=="table" then
+      local cost = 0
+      for k,v in ipairs(plt) do
+         cost = cost + bribe_cost(v)
+      end
+      return cost
+   end
+
    local mem = plt:memory()
    if not mem.bribe then
       warn(string.format(_("Pilot '%s' accepts bribes but doesn't give a price!"), plt:name() ))
@@ -110,8 +118,8 @@ function comm( plt )
             table.insert( opts, 1, {"Bribe", "bribe_0"} )
          else
             bribeable = nearby_bribeable( plt ) -- global
-            if #bribeable > 0 then
-               table.insert( opts, 1, {string.format(_("Bribe %d nearby %s pilots"), #bribeable+1, fac:name()), "bribe_nearby"} )
+            if #bribeable > 1 then
+               table.insert( opts, 1, {string.format(_("Bribe %d nearby %s pilots"), #bribeable, fac:name()), "bribe_nearby"} )
             end
             table.insert( opts, 1, {_("Bribe"), "bribe"} )
          end
@@ -188,9 +196,6 @@ function comm( plt )
    vn.label("bribe_nearby")
    p( function ()
       local cost = bribe_cost( plt )
-      for k,v in ipairs(bribeable) do
-         cost = cost + bribe_cost( v )
-      end
       bribe_nearby_cost = cost -- save as global again
       local str = mem.bribe_prompt_nearby
       local cstr = creditstring(cost)
@@ -199,7 +204,7 @@ function comm( plt )
          str = _([["We'll need at least %s to not leave you as a hunk of floating debris."]])
       end
       str = string.format( str, cstr )
-      return string.format(_("%s\n\nThis action will bribe %d %s pilots.\nYou have %s. Pay #r%s#0?"), str, #bribeable+1, plt:faction():name(), chave, cstr )
+      return string.format(_("%s\n\nThis action will bribe %d %s pilots.\nYou have %s. Pay #r%s#0?"), str, #bribeable, plt:faction():name(), chave, cstr )
    end )
    vn.menu{
       {_("Pay"), "bribe_nearby_trypay"},
@@ -230,7 +235,6 @@ function comm( plt )
    vn.func( function ()
       local cost = bribe_nearby_cost
       player.pay( -cost, true )
-      table.insert(bribeable, plt)
       for k,v in ipairs(bribeable) do
          v:credits( bribe_cost(v) )
          v:setBribed(true)
