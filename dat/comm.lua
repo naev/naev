@@ -42,7 +42,7 @@ function comm( plt )
    vn.label("bribe_0")
    p(_([["Money won't save your hide now!"]]))
    vn.jump("menu")
-   
+
    vn.label("bribe")
    vn.func( function ()
       if not mem.bribe then
@@ -60,7 +60,10 @@ function comm( plt )
       if str then
          return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
       end
-      return string.format(_([["I'm gonna need at least %s to not leave you as a hunk of floating debris.\"\n\nYou have %s.\nPay #0%s#0r?"]]), cstr, chave, cstr )
+      return string.format(_([["I'm gonna need at least %s to not leave you as a hunk of floating debris."
+
+You have %s.
+Pay #0%s#0r?"]]), cstr, chave, cstr )
    end )
    vn.menu{
       {_("Pay"), "bribe_trypay"},
@@ -78,7 +81,7 @@ function comm( plt )
       return string.format(_("You only have %s credits. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
    end )
    vn.jump("menu")
-  
+
    vn.label("bribe_trypay")
    vn.func( function ()
       local cost = mem.bribe
@@ -139,7 +142,7 @@ function comm( plt )
       end
       local msg = mem.refuel_msg
       local val = mem.refuel
-      if val==nil or msg==nil or plt:flags("manualcontrol") then
+      if val==nil or plt:flags("manualcontrol") then
          vn.jump("refuel_busy")
       end
    end )
@@ -148,7 +151,13 @@ function comm( plt )
       local cost = mem.refuel
       local cstr = creditstring(cost)
       local chave = creditstring(player.credits())
-      return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
+      if str then
+         return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
+      end
+      return string.format(_([["I should be able to refuel you for %s."
+
+You have %s.
+Pay #r%s#0?]]), cstr, chave, cstr )
    end )
    vn.menu{
       {_("Pay"), "refuel_trypay"},
@@ -162,7 +171,7 @@ function comm( plt )
       return string.format(_("You only have %s credits. You need #r%s#0 more to be able to afford the refueling!"), cstr, cdif )
    end )
    vn.jump("menu")
-  
+
    vn.label("refuel_trypay")
    vn.func( function ()
       local cost = mem.refuel
