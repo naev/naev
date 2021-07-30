@@ -146,7 +146,7 @@ void dialogue_alert( const char *fmt, ... )
    if (fmt == NULL) return;
    else { /* get the message */
       va_start(ap, fmt);
-      vsnprintf(msg, 512, fmt, ap);
+      vsnprintf(msg, sizeof(msg), fmt, ap);
       va_end(ap);
    }
 
@@ -587,7 +587,7 @@ static void select_call_wrapper(unsigned int wid, char* wgtname)
  */
 int dialogue_list( const char* title, char **items, int nitems, const char *fmt, ... )
 {
-   char msg[512];
+   char msg[STRMAX_SHORT];
    va_list ap;
 
    if (input_dialogue.input_wid) return -1;
@@ -595,7 +595,7 @@ int dialogue_list( const char* title, char **items, int nitems, const char *fmt,
    if (fmt == NULL) return -1;
    else { /* get the message */
       va_start(ap, fmt);
-      vsnprintf(msg, 512, fmt, ap);
+      vsnprintf(msg, sizeof(msg), fmt, ap);
       va_end(ap);
    }
 
@@ -635,7 +635,7 @@ int dialogue_listPanel( const char* title, char **items, int nitems, int extrawi
       void (*select_call) (unsigned int wid, char* wgtname, int x, int y, int w, int h),
       const char *fmt, ... )
 {
-   char msg[512];
+   char msg[STRMAX_SHORT];
    va_list ap;
 
    if (input_dialogue.input_wid)
@@ -646,7 +646,7 @@ int dialogue_listPanel( const char* title, char **items, int nitems, int extrawi
 
    /* get the message */
    va_start(ap, fmt);
-   vsnprintf(msg, 512, fmt, ap);
+   vsnprintf(msg, sizeof(msg), fmt, ap);
    va_end(ap);
 
    return dialogue_listPanelRaw( title, items, nitems, extrawidth, minheight,
