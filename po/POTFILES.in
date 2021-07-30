@@ -1370,6 +1370,7 @@ dat/outfits/core_engine/large/tricon_typhoon_engine.xml
 dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml
 dat/outfits/core_engine/large/unicorp_eagle_6500_engine.xml
 dat/outfits/core_engine/medium/beat_up_medium_engine.xml
+dat/outfits/core_engine/medium/krain_patagium_engine.xml
 dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml
 dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml
 dat/outfits/core_engine/medium/tricon_cyclone_engine.xml
@@ -1672,6 +1673,7 @@ dat/ships/pirate_kestrel.xml
 dat/ships/pirate_phalanx.xml
 dat/ships/pirate_rhino.xml
 dat/ships/pirate_shark.xml
+dat/ships/pirate_starbridge.xml
 dat/ships/pirate_vendetta.xml
 dat/ships/proteron_archimedes.xml
 dat/ships/proteron_derivative.xml
@@ -1698,6 +1700,7 @@ dat/ships/soromid_nyx.xml
 dat/ships/soromid_odium.xml
 dat/ships/soromid_reaver.xml
 dat/ships/soromid_vox.xml
+dat/ships/starbridge.xml
 dat/ships/thurion_apprehension.xml
 dat/ships/thurion_certitude.xml
 dat/ships/thurion_ingenuity.xml
@@ -2189,6 +2192,7 @@ dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
 dat/bkg/solarwind.lua
 dat/bkg/taiomi.lua
+dat/comm.lua
 dat/events/bioship_upgrade.lua
 dat/events/cinematic/DvdFLFbattle.lua
 dat/events/dev/system_tour.lua
