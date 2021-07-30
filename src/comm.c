@@ -22,6 +22,7 @@
 #include "escort.h"
 #include "hook.h"
 #include "log.h"
+#include "ndata.h"
 #include "nlua.h"
 #include "opengl.h"
 #include "pilot.h"
@@ -40,6 +41,7 @@ static Pilot *comm_pilot       = NULL; /**< Pilot currently talking to. */
 static Planet *comm_planet     = NULL; /**< Planet currently talking to. */
 static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 static int comm_commClose      = 0; /**< Close comm when done. */
+static nlua_env comm_env       = LUA_NOREF; /**< Rescue Lua env. */
 
 
 /*
@@ -165,8 +167,31 @@ int comm_openPilot( unsigned int pilot )
       return 0;
    }
 
-   /* Create the pilot window. */
-   comm_openPilotWindow();
+   /* Set up environment first time. */
+   if (comm_env == LUA_NOREF) {
+      comm_env = nlua_newEnv(1);
+      nlua_loadStandard( comm_env );
+
+      size_t bufsize;
+      char *buf = ndata_read( COMM_PATH, &bufsize );
+      if (nlua_dobufenv(comm_env, buf, bufsize, COMM_PATH) != 0) {
+         WARN( _("Error loading file: %s\n"
+             "%s\n"
+             "Most likely Lua file has improper syntax, please check"),
+               COMM_PATH, lua_tostring(naevL,-1));
+         free(buf);
+         return -1;
+      }
+      free(buf);
+   }
+
+   /* Run Lua. */
+   nlua_getenv(comm_env,"comm");
+   lua_pushpilot(naevL, p->id);
+   if (nlua_pcall(comm_env, 1, 0)) { /* error has occurred */
+      WARN( _("Comm: '%s'"), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
 
    return 0;
 }
@@ -287,7 +312,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    /* Get faction details. */
    comm_graphic = gfx;
    logo = NULL;
-   if ( faction_isKnown(faction) )
+   if (faction_isKnown(faction))
       logo = faction_logo(faction);
 
    /* Get standing colour / text. */

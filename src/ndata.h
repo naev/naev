@@ -74,6 +74,7 @@
 #define BACKGROUND_PATH          "bkg/"
 #define INTRO_PATH               "intro"
 #define RESCUE_PATH              "rescue.lua"
+#define COMM_PATH                "comm.lua"
 
 void ndata_setupWriteDir (void);
 void ndata_setupReadDirs (void);

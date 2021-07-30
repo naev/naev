@@ -44,6 +44,7 @@ static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
 static int shipL_fitsSlot( lua_State *L );
 static int shipL_CPU( lua_State *L );
+static int shipL_gfxComm( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
 static int shipL_gfx( lua_State *L );
 static int shipL_price( lua_State *L );
@@ -68,6 +69,7 @@ static const luaL_Reg shipL_methods[] = {
    { "price", shipL_price },
    { "time_mod", shipL_time_mod },
    { "size", shipL_getSize },
+   { "gfxComm", shipL_gfxComm },
    { "gfxTarget", shipL_gfxTarget },
    { "gfx", shipL_gfx },
    { "description", shipL_description },
@@ -556,6 +558,30 @@ static int shipL_getSize( lua_State *L )
 {
    const Ship *s = luaL_validship(L,1);
    lua_pushinteger(L, ship_size(s) );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the ship's target graphics.
+ *
+ * Will not work without access to the Tex module.
+ *
+ * @usage gfx = s:gfxComm()
+ *
+ *    @luatparam Ship s Ship to get comm graphics of.
+ *    @luatreturn Tex The comm graphics of the ship.
+ * @luafunc gfxComm
+ */
+static int shipL_gfxComm( lua_State *L )
+{
+   const Ship *s  = luaL_validship(L,1);
+   glTexture *tex = ship_loadCommGFX( s );
+   if (tex == NULL) {
+      WARN(_("Unable to get ship comm graphic for '%s'."), s->name);
+      return 0;
+   }
+   lua_pushtex( L, tex );
    return 1;
 }
 

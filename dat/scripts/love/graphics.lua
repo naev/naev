@@ -88,6 +88,9 @@ function graphics.newImage( filename )
       if ot=='ImageData' then
          ttex = naev.tex.open( filename.d, filename.w, filename.h )
       end
+   -- Assume Naev texture
+   elseif type(filename)=='userdata' then
+      ttex = filename
    end
    if ttex ~= nil then
       local t = graphics.Image.new()

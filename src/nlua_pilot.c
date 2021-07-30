@@ -152,6 +152,7 @@ static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
 static int pilotL_taskname( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
+static int pilotL_refuel( lua_State *L );
 static int pilotL_moveto( lua_State *L );
 static int pilotL_face( lua_State *L );
 static int pilotL_brake( lua_State *L );
@@ -270,6 +271,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "memory", pilotL_memory },
    { "taskname", pilotL_taskname },
    { "taskClear", pilotL_taskclear },
+   { "refuel", pilotL_refuel },
    { "moveto", pilotL_moveto },
    { "face", pilotL_face },
    { "brake", pilotL_brake },
@@ -288,7 +290,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "followers", pilotL_followers },
    { "hookClear", pilotL_hookClear },
    { "choosePoint", pilotL_choosePoint },
-   {0,0}
+   {0,0},
 }; /**< Pilot metatable methods. */
 
 
@@ -3648,6 +3650,7 @@ static const struct pL_flag pL_flags[] = {
    { .name = "manualcontrol", .id = PILOT_MANUAL_CONTROL },
    { .name = "carried", .id = PILOT_CARRIED },
    { .name = "hailing", .id = PILOT_HAILING },
+   { .name = "bribed", .id = PILOT_BRIBED },
    { .name = "boardable", .id = PILOT_BOARDABLE },
    { .name = "nojump", .id = PILOT_NOJUMP },
    { .name = "noland", .id = PILOT_NOLAND },
@@ -3902,6 +3905,26 @@ static int pilotL_taskclear( lua_State *L )
    NLUA_CHECKRW(L);
    Pilot *p = luaL_validpilot(L,1);
    ai_cleartasks( p );
+   return 0;
+}
+
+
+/**
+ * @brief Tries to refuel a pilot.
+ *
+ *    @luatparam Pilot p Pilot to do the refueling.
+ *    @luatparam Pilot target Target pilot to give fuel to.
+ * @luafunc refuel
+ */
+static int pilotL_refuel( lua_State *L )
+{
+   Pilot *p       = luaL_validpilot(L,1);
+   Pilot *target  = luaL_validpilot(L,2);
+   pilot_rmFlag(  p, PILOT_HYP_PREP);
+   pilot_rmFlag(  p, PILOT_HYP_BRAKE );
+   pilot_rmFlag(  p, PILOT_HYP_BEGIN);
+   pilot_setFlag( p, PILOT_REFUELING);
+   ai_refuel(     p, target->id );
    return 0;
 }
 
