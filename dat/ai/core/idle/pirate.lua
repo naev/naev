@@ -65,7 +65,7 @@ function idle_leave ()
    end
    if mem.goal then
       if mem.goal == "planet" then
-         ai.push("land")
+         ai.pushtask("land")
          return true
       elseif mem.goal == "hyperspace" then
          ai.pushtask("hyperspace", mem.goal_hyperspace)
