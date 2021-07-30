@@ -291,7 +291,7 @@ cores.elite.engines["Pirate Kestrel"] = cores.elite.engines["Kestrel"]
 cores.elite.engines["Starbridge"] = function( heavy )
    return choose_one{ "Tricon Cyclone II Engine", "Krain Patagium Engine" }
 end
-cores.elite.engines["Pirate Kestrel"] = cores.elite.engines["Kestrel"]
+cores.elite.engines["Pirate Starbridge"] = cores.elite.engines["Starbridge"]
 cores.elite.systems["Gawain"] = function( heavy )
    return choose_one{ "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System" }
 end
