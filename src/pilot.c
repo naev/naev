@@ -698,6 +698,61 @@ int pilot_isFriendly( const Pilot *p )
 
 
 /**
+ * @brief Like areAllies but for pilots.
+ */
+int pilot_areAllies( const Pilot *p, const Pilot *target )
+{
+   if (pilot_isWithPlayer(p)) {
+      if (pilot_isFriendly(target))
+         return 1;
+      else if (pilot_isFlag( target, PILOT_HOSTILE ))
+         return 0;
+   }
+   else if (pilot_isWithPlayer(target)) {
+      if (pilot_isFriendly(p))
+         return 1;
+      else if (pilot_isFlag( p, PILOT_HOSTILE ))
+         return 0;
+   }
+   else {
+      if (areAllies( p->faction, target->faction ))
+         return 1;
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Like areEnemies but for pilots.
+ */
+int pilot_areEnemies( const Pilot *p, const Pilot *target )
+{
+   if (pilot_isWithPlayer(p)) {
+      if (pilot_isHostile(target))
+         return 1;
+      else if (pilot_isFlag( target, PILOT_FRIENDLY ))
+         return 0;
+      else if (pilot_isFlag(target, PILOT_BRIBED))
+         return 0;
+   }
+   if (pilot_isWithPlayer(target)) {
+      if (pilot_isHostile(p))
+         return 1;
+      else if (pilot_isFlag( p, PILOT_FRIENDLY ))
+         return 0;
+      else if (pilot_isFlag(p, PILOT_BRIBED))
+         return 0;
+   }
+   else {
+      if (areEnemies( p->faction, target->faction ))
+         return 1;
+   }
+   return 0;
+}
+
+
+
+/**
  * @brief Gets the dock slot of the pilot.
  *
  *    @param p Pilot to get dock slot of.

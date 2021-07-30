@@ -428,6 +428,12 @@ void pilot_cooldown( Pilot *p );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 double pilot_aimAngle( Pilot *p, Pilot *target );
 
+/*
+ * Faction stuff.
+ */
+int pilot_areAllies( const Pilot *p, const Pilot *target );
+int pilot_areEnemies( const Pilot *p, const Pilot *target );
+
 
 /* Outfits */
 int pilot_numOutfit( const Pilot *p, const Outfit *o );

@@ -898,7 +898,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
 {
    int i, k;
    double dd, d2;
-   Pilot *p;
+   Pilot *p, *plt;
    double dist;
    int inrange, dis;
    Vector2d *v;
@@ -923,7 +923,6 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       v     = luaL_optvector(L,3,&p->solid->pos);
       inrange = lua_toboolean(L,4);
       dis   = lua_toboolean(L,5);
-      lf    = p->faction;
    }
 
    if (dist >= 0.)
@@ -934,32 +933,38 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    lua_newtable(L);
    k = 1;
    for (i=0; i<array_size(pilot_stack); i++) {
+      plt = pilot_stack[i];
+
       /* Check if dead. */
-      if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+      if (pilot_isFlag(plt, PILOT_DELETE))
          continue;
       /* Check appropriate faction. */
       if (friend) {
-         /* Must be friendly. */
-         if (!(areAllies( pilot_stack[i]->faction, lf )
-                  || ((p!= NULL) && (pilot_isWithPlayer(p))
-                     && (player.p != NULL)
-                     && pilot_isFriendly(player.p))))
-            continue;
+         if (p==NULL) {
+            if (!areAllies( plt->faction, lf ))
+               continue;
+         }
+         else {
+            if (!pilot_areAllies( p, plt ))
+               continue;
+         }
       }
       else {
-         /* Must be hostile. */
-         if (!(areEnemies( pilot_stack[i]->faction, lf )
-                  || ((p!= NULL) && (pilot_isWithPlayer(p))
-                     && (player.p != NULL)
-                     && pilot_isHostile(player.p))))
-            continue;
+         if (p==NULL) {
+            if (!areEnemies( plt->faction, lf ))
+               continue;
+         }
+         else {
+            if (!pilot_areEnemies( p, plt ))
+               continue;
+         }
       }
       /* Check if disabled. */
-      if (dis && pilot_isDisabled(pilot_stack[i]))
+      if (dis && pilot_isDisabled(plt))
          continue;
 
       if (inrange) {
-         if (!pilot_inRangePilot( p, pilot_stack[i], &d2 ))
+         if (!pilot_inRangePilot( p, plt, &d2 ))
             continue;
          /* Check distance if necessary. */
          if (dist >= 0. && d2 > dd)
@@ -968,12 +973,12 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       else {
          /* Check distance if necessary. */
          if (dist >= 0. &&
-               vect_dist2(&pilot_stack[i]->solid->pos, v) > dd)
+               vect_dist2(&plt->solid->pos, v) > dd)
             continue;
       }
 
       lua_pushnumber(L, k++); /* key */
-      lua_pushpilot(L, pilot_stack[i]->id); /* value */
+      lua_pushpilot(L, plt->id); /* value */
       lua_rawset(L,-3); /* table[key] = value */
    }
    return 1;
