@@ -1046,7 +1046,7 @@ end
 
 function __push_scan( target )
    -- Send a message if applicable
-   local msg = _("Prepare to be scanned.")
+   local msg = mem.scan_msg or _("Prepare to be scanned.")
    ai.pilot():comm( target, msg )
    ai.pushtask( "scan", target )
 end
@@ -1078,7 +1078,7 @@ function scan( target )
       if target:hasIllegal( p:faction() ) then
          ai.hostile( target )
          ai.pushtask( "attack", target )
-         local msg = _("Illegal objects detected! Do not resist!")
+         local msg = mem.scan_msg_bad or _("Illegal objects detected! Do not resist!")
          p:comm( target, msg )
 
          -- Make entire system hostile to player
@@ -1103,7 +1103,7 @@ function scan( target )
             p:msg( v, "e_attack", target )
          end
       else
-         local msg = _("Thank you for your cooperation.")
+         local msg = mem.scan_msg_ok or _("Thank you for your cooperation.")
          p:comm( target, msg )
 
          -- Tell friends about the scanning
