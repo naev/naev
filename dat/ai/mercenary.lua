@@ -22,6 +22,14 @@ function create ()
       end
    end
 
+   -- Refuel
+   mem.refuel = rnd.rnd( 3000, 5000 )
+   local pp = player.pilot()
+   if pp:exists() then
+      mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
+            creditstring(mem.refuel))
+   end
+
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Finish up creation
