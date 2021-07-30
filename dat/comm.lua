@@ -41,8 +41,8 @@ function comm( plt )
    vn.scene()
 
    -- Shortcuts and graphics
+   local sgfx = lg.newImage( plt:ship():gfxComm() )
    local mem = plt:memory()
-   local gfx = lg.newImage( plt:ship():gfxComm() )
    local fac = plt:faction()
 
    -- Set up the namebox
@@ -90,7 +90,7 @@ function comm( plt )
    end
    vn.setForeground( render_namebox )
 
-   local p = vn.newCharacter( plt:name(), { image=gfx } )
+   local p = vn.newCharacter( plt:name(), { image=sgfx } )
    vn.transition()
    if mem.comm_greet then
       p( mem.comm_greet )
