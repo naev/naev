@@ -26,17 +26,70 @@ local function bribe_cost( plt )
    return mem.bribe
 end
 
+local function _draw_bg( x, y, w, h, col, border_col, alpha )
+   col = col or {0, 0, 0, 1}
+   border_col = border_col or {0.5, 0.5, 0.5, 1}
+   vn.setColor( border_col, alpha )
+   lg.rectangle( "fill", x, y, w, h )
+   vn.setColor( col, alpha )
+   lg.rectangle( "fill", x+2, y+2, w-4, h-4 )
+end
+
+
 function comm( plt )
+   vn.reset()
+   vn.scene()
+
+   -- Shortcuts and graphics
    local mem = plt:memory()
    local gfx = lg.newImage( plt:ship():gfxComm() )
+   local fac = plt:faction()
 
-   -- TODO display more information like faction logo, standing, etc...
+   -- Set up the namebox
    local nw, nh = naev.gfx.dim()
    vn.menu_x = math.min( -1, 500 - nw/2 )
-   --nw - nw/2 - 100
+   vn.namebox_alpha = 0
+   local namebox_font = vn.namebox_font
+   local namebox_text = string.format("%s\n%s", fac:name(), plt:name() )
+   local namebox_col = fac:colour()
+   if namebox_col then namebox_col = {namebox_col:rgb()}
+   else namebox_col = {1,1,1}
+   end
+   local namebox_x = math.max( 1, nw/2-500 )
+   local namebox_y = vn.namebox_y + vn.namebox_h -- Correct
+   local namebox_text_w, wrapped = namebox_font:getWrap( namebox_text, nw )
+   local namebox_b = 20
+   namebox_w = namebox_text_w + 2*namebox_b
+   namebox_h = namebox_font:getLineHeight()*#wrapped + 2*namebox_b
+   namebox_y = namebox_y - namebox_h
 
-   vn.clear()
-   vn.scene()
+   -- Get the logo
+   local logo = fac:logo()
+   local logo_size = namebox_h - 2*namebox_b
+   local logo_scale
+   if logo then
+      namebox_w = namebox_w + logo_size + 10
+      logo = lg.newImage( logo )
+      local w, h = logo:getDimensions()
+      logo_scale = logo_size / math.max(w,h)
+   end
+
+   local function render_namebox ()
+      local bw, bh = namebox_b, namebox_b
+      local x, y = namebox_x, namebox_y
+      local w, h = namebox_w, namebox_h
+
+      _draw_bg( x, y, w, h, vn.namebox_bg, nil, 1 )
+      vn.setColor( namebox_col, 1 )
+      lg.print( namebox_text, namebox_font, x+bw, y+bh )
+
+      if logo then
+         vn.setColor( {1, 1, 1}, 1 )
+         logo:draw( x+namebox_text_w+10+bw, y+bh, 0, logo_scale )
+      end
+   end
+   vn.setForeground( render_namebox )
+
    local p = vn.newCharacter( plt:name(), { image=gfx } )
    vn.transition()
    if mem.comm_greet then
@@ -58,7 +111,7 @@ function comm( plt )
          else
             bribeable = nearby_bribeable( plt ) -- global
             if #bribeable > 0 then
-               table.insert( opts, 1, {string.format(_("Bribe %d nearby %s pilots"), #bribeable+1, plt:faction():name()), "bribe_nearby"} )
+               table.insert( opts, 1, {string.format(_("Bribe %d nearby %s pilots"), #bribeable+1, fac:name()), "bribe_nearby"} )
             end
             table.insert( opts, 1, {_("Bribe"), "bribe"} )
          end
