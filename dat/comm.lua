@@ -31,6 +31,9 @@ function comm( plt )
    local gfx = lg.newImage( plt:ship():gfxComm() )
 
    -- TODO display more information like faction logo, standing, etc...
+   local nw, nh = naev.gfx.dim()
+   vn.menu_x = math.min( -1, 500 - nw/2 )
+   --nw - nw/2 - 100
 
    vn.clear()
    vn.scene()

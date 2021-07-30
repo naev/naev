@@ -61,6 +61,8 @@ local function _setdefaults()
    vn._default.namebox_y = vn._default.textbox_y - vn._default.namebox_h - 20
    vn._default.namebox_bg = vn._default.textbox_bg
    vn._default.namebox_alpha = 1
+   vn._default.menu_x = nil
+   vn._default.menu_y = nil
    vn._default._postshader = nil
    vn._default._draw_fg = nil
    vn._default._draw_bg = nil
@@ -687,6 +689,20 @@ function vn.StateMenu:_init()
    self._h = h-b
    self._x = (love.w-self._w)/2
    self._y = (love.h-self._h)/2-100
+   if vn.menu_x then
+      if vn.menu_x > 0 then
+         self._x = vn.menu_x
+      else
+         self._x = love.w - self._w + vn.menu_x
+      end
+   end
+   if vn.menu_y then
+      if vn.menu_y > 0 then
+         self._y = vn.menu_y
+      else
+         self._y = love.w - self._w + vn.menu_y
+      end
+   end
    -- Make all boxes max width
    for k,v in ipairs(self._elem) do
       v[4] = self._w
@@ -1341,7 +1357,7 @@ function vn.setBackground( drawfunc )
 end
 
 --[[--
-Sets the foreground drawing function. Drawn behind the VN stuff.
+Sets the foreground drawing function. Drawn in front the VN stuff.
 
    @tparam func drawfunc Function to call to draw the foreground or nil to disable.
 --]]
