@@ -1,5 +1,8 @@
 require 'ai.pirate'
 
+mem.armour_run    = 60
+mem.careful       = false
+
 create_pirate = create
 
 function create ()
