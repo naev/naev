@@ -138,7 +138,7 @@ static void dialogue_cancel( unsigned int wid, char* str )
  */
 void dialogue_alert( const char *fmt, ... )
 {
-   char msg[512];
+   char msg[STRMAX_SHORT];
    va_list ap;
    unsigned int wdw;
    int h, done;
@@ -1013,6 +1013,7 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
    double dt, delay;
    unsigned int time_ms = SDL_GetTicks();
    const double fps_max = 1./30.;
+   int quit_game = 0;
 
    /* Delay a toolkit iteration. */
    toolkit_delay();
@@ -1030,6 +1031,7 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
             if (menu_askQuit()) {
                naev_quit(); /* Quit is handled here */
                *loop_done = 1; /* Exit loop and exit game. */
+               quit_game = 1;
                break;
             }
          }
@@ -1069,6 +1071,6 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
    if (dialogue_open < 0)
       WARN(_("Dialogue counter not in sync!"));
 
-   return 0;
+   return quit_game;
 }
 
