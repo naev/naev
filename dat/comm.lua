@@ -55,7 +55,7 @@ function comm( plt )
          else
             bribeable = nearby_bribeable( plt ) -- global
             if #bribeable > 0 then
-               table.insert( opts, 1, {_("Bribe Nearby"), "bribe_nearby"} )
+               table.insert( opts, 1, {string.format(_("Bribe %d nearby %s pilots"), #bribeable+1, plt:faction():name()), "bribe_nearby"} )
             end
             table.insert( opts, 1, {_("Bribe"), "bribe"} )
          end
@@ -87,7 +87,7 @@ function comm( plt )
       if not str then
          str = string.format(_([["I'm gonna need at least %s to not leave you as a hunk of floating debris."]]), cstr)
       end
-      return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
+      return string.format(_("%s\n\nYou have %s. Pay #r%s#0?"), str, chave, cstr )
    end )
    vn.menu{
       {_("Pay"), "bribe_trypay"},
@@ -143,7 +143,7 @@ function comm( plt )
          str = _([["We'll need at least %s to not leave you as a hunk of floating debris."]])
       end
       str = string.format( str, cstr )
-      return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
+      return string.format(_("%s\n\nThis action will bribe %d %s pilots.\nYou have %s. Pay #r%s#0?"), str, #bribeable+1, plt:faction():name(), chave, cstr )
    end )
    vn.menu{
       {_("Pay"), "bribe_nearby_trypay"},
@@ -239,7 +239,7 @@ function comm( plt )
       if not str then
          str = string.format(_([["I should be able to refuel you for %s."]]), cstr)
       end
-      return string.format(_("%s\n\nYou have %s.\nPay #r%s#0?"), str, chave, cstr )
+      return string.format(_("%s\n\nYou have %s. Pay #r%s#0?"), str, chave, cstr )
    end )
    vn.menu{
       {_("Pay"), "refuel_trypay"},
