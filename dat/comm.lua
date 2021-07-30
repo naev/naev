@@ -2,6 +2,26 @@ local vn = require 'vn'
 local lg = require 'love.graphics'
 require 'numstring'
 
+local function can_bribe( plt )
+   local mem = plt:memory()
+   if mem.bribe_no then
+      return false
+   end
+   if not mem.bribe then
+      return false
+   end
+   if mem.bribe==0 then
+      return false
+   end
+   if plt:flags("bribed") then
+      return false
+   end
+   if not plt:hostile() then
+      return false
+   end
+   return true
+end
+
 -- See if part of a fleet
 local function bribe_fleet( plt )
    local lea = plt:leader()
@@ -10,16 +30,21 @@ local function bribe_fleet( plt )
    bribe_group = nil
    if lea or fol then
       if lea then
+         if not can_bribe(lea) then
+            return nil
+         end
          bribe_group = lea:followers()
          table.insert( bribe_group, lea )
       else
+         if not can_bribe(plt) then
+            return nil
+         end
          bribe_group = fol
          table.insert( bribe_group, plt )
       end
       local ng = {}
       for k,v in ipairs(bribe_group) do
-         local vmem = v:memory()
-         if vmem.bribe and vmem.bribe~=0 then
+         if can_bribe( v ) then
             table.insert( ng, v )
          end
       end
@@ -32,25 +57,27 @@ end
 -- Respects fleets
 local function nearby_bribeable( plt )
    local pp = player.pilot()
-   local bribe_list = {}
+   local bribeable = {}
    for k,v in ipairs(pp:getVisible()) do
-      if (v:faction() == plt:faction() and v:hostile()) then
-         local vmem = v:memory()
-         if not vmem.bribe_no and (vmem.bribe and vmem.bribe~=0) then
-            local flt = bribe_fleet( v )
-            if flt then
-               for i,p in ipairs(flt) do
-                  bribe_list[p] = true
+      if v:faction() == plt:faction() and can_bribe(v) then
+         local flt = bribe_fleet( v )
+         if flt then
+            for i,p in ipairs(flt) do
+               local found = false
+               for j,c in ipairs(bribeable) do
+                  if c==p then
+                     found = true
+                     break
+                  end
                end
-            else
-               bribe_list[v] = true
+               if not found then
+                  table.insert( bribeable, p )
+               end
             end
+         else
+            table.insert( bribeable, v )
          end
       end
-   end
-   local bribeable = {}
-   for k,v in pairs(bribe_list) do
-      table.insert( bribeable, k )
    end
    return bribeable
 end
@@ -180,12 +207,12 @@ function comm( plt )
          elseif mem.bribe and mem.bribe == 0 then
             table.insert( opts, 1, {"Bribe", "bribe_0"} )
          else
+            bribe_group = bribe_fleet( plt )
             bribeable = nearby_bribeable( plt ) -- global
-            if #bribeable > 1 then
+            if #bribeable > 1 and not (bribe_group and #bribe_group==#bribeable) then
                table.insert( opts, 1, {string.format(_("Bribe %d nearby %s pilots"), #bribeable, fac:name()), "bribe_nearby"} )
             end
 
-            bribe_group = bribe_fleet( plt )
             if bribe_group then
                table.insert( opts, 1, {string.format(_("Bribe fleet (%d pilots)"), #bribe_group), "bribe"} )
             else
