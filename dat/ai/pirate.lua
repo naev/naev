@@ -130,10 +130,10 @@ function create ()
    ai.setcredits( rnd.rnd(ps:price()/80, ps:price()/30) )
 
    -- Deal with bribeability
+   mem.bribe = math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
    if rnd.rnd() < 0.05 then
-      mem.bribe_no = _("\"You won't be able to slide out of this one!\"")
+      mem.bribe_no = _([["You won't be able to slide out of this one!"]])
    else
-      mem.bribe = math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
       mem.bribe_prompt = string.format(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], creditstring(mem.bribe))
       mem.bribe_prompt_nearby = bribe_prompt_nearby_list[ rnd.rnd(1,#bribe_prompt_nearby_list) ]
       mem.bribe_paid = bribe_paid_list[ rnd.rnd(1,#bribe_paid_list) ]

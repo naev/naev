@@ -17,6 +17,32 @@ local function nearby_bribeable( plt )
    return bribeable
 end
 
+-- See if part of a fleet
+local function bribe_fleet( plt )
+   local lea = plt:leader()
+   local fol = plt:followers()
+   if #fol==0 then fol = nil end
+   bribe_group = nil
+   if lea or fol then
+      if lea then
+         bribe_group = lea:followers()
+         table.insert( bribe_group, lea )
+      else
+         bribe_group = fol
+         table.insert( bribe_group, plt )
+      end
+      local ng = {}
+      for k,v in ipairs(bribe_group) do
+         local vmem = v:memory()
+         if vmem.bribe and vmem.bribe~=0 then
+            table.insert( ng, v )
+         end
+      end
+      bribe_group = ng
+   end
+   return bribe_group
+end
+
 local function bribe_cost( plt )
    if type(plt)=="table" then
       local cost = 0
@@ -32,6 +58,31 @@ local function bribe_cost( plt )
       return 1e6 -- just ridiculous for now, players should report it
    end
    return mem.bribe
+end
+
+local function bribe_msg( plt, group )
+   local mem = plt:memory()
+   if group then
+      local cost = bribe_cost( group )
+      bribe_nearby_cost = cost -- save as global again
+      local str = mem.bribe_prompt_nearby
+      local cstr = creditstring(cost)
+      local chave = creditstring(player.credits())
+      if not str then
+         str = _([["We'll need at least %s to not leave you as a hunk of floating debris."]])
+      end
+      str = string.format( str, cstr )
+      return string.format(_("%s\n\nThis action will bribe %d %s pilots.\nYou have %s. Pay #r%s#0?"), str, #bribeable, plt:faction():name(), chave, cstr )
+   else
+      local cost = bribe_cost( plt )
+      local str = mem.bribe_prompt
+      local cstr = creditstring(cost)
+      local chave = creditstring(player.credits())
+      if not str then
+         str = string.format(_([["I'm gonna need at least %s to not leave you as a hunk of floating debris."]]), cstr)
+      end
+      return string.format(_("%s\n\nYou have %s. Pay #r%s#0?"), str, chave, cstr )
+   end
 end
 
 -- stolen from scripts/vn.lua
@@ -121,7 +172,13 @@ function comm( plt )
             if #bribeable > 1 then
                table.insert( opts, 1, {string.format(_("Bribe %d nearby %s pilots"), #bribeable, fac:name()), "bribe_nearby"} )
             end
-            table.insert( opts, 1, {_("Bribe"), "bribe"} )
+
+            bribe_group = bribe_fleet( plt )
+            if bribe_group then
+               table.insert( opts, 1, {string.format(_("Bribe fleet (%d pilots)"), #bribe_group), "bribe"} )
+            else
+               table.insert( opts, 1, {_("Bribe"), "bribe"} )
+            end
          end
       end
       if not hostile then
@@ -144,14 +201,7 @@ function comm( plt )
 
    vn.label("bribe")
    p( function ()
-      local cost = bribe_cost( plt )
-      local str = mem.bribe_prompt
-      local cstr = creditstring(cost)
-      local chave = creditstring(player.credits())
-      if not str then
-         str = string.format(_([["I'm gonna need at least %s to not leave you as a hunk of floating debris."]]), cstr)
-      end
-      return string.format(_("%s\n\nYou have %s. Pay #r%s#0?"), str, chave, cstr )
+      return bribe_msg( plt, bribe_group )
    end )
    vn.menu{
       {_("Pay"), "bribe_trypay"},
@@ -164,8 +214,14 @@ function comm( plt )
 
    vn.label("bribe_nomoney")
    vn.na( function ()
+      local cost
+      if bribe_group then
+         cost = bribe_cost( bribe_group )
+      else
+         cost = bribe_cost( plt )
+      end
       local cstr = creditstring( player.credits() )
-      local cdif = creditstring( mem.bribe - player.credits() )
+      local cdif = creditstring( cost - player.credits() )
       return string.format(_("You only have %s credits. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
    end )
    vn.jump("menu")
@@ -186,26 +242,25 @@ function comm( plt )
    vn.func( function ()
       local cost = bribe_cost( plt )
       player.pay( -cost, true )
-      plt:credits( cost )
-      plt:setBribed(true)
-      plt:setHostile(false)
-      mem.bribe = 0 -- Disable rebribes
+      if bribe_group then
+         for k,v in ipairs(bribe_group) do
+            v:credits( bribe_cost(v) )
+            v:setBribed(true)
+            v:setHostile(false)
+            local vmem = v:memory()
+            vmem.bribe = 0 -- Disable rebribes
+         end
+      else
+         plt:credits( cost )
+         plt:setBribed(true)
+         plt:setHostile(false)
+         mem.bribe = 0 -- Disable rebribes
+      end
    end )
    vn.jump("menu")
 
    vn.label("bribe_nearby")
-   p( function ()
-      local cost = bribe_cost( plt )
-      bribe_nearby_cost = cost -- save as global again
-      local str = mem.bribe_prompt_nearby
-      local cstr = creditstring(cost)
-      local chave = creditstring(player.credits())
-      if not str then
-         str = _([["We'll need at least %s to not leave you as a hunk of floating debris."]])
-      end
-      str = string.format( str, cstr )
-      return string.format(_("%s\n\nThis action will bribe %d %s pilots.\nYou have %s. Pay #r%s#0?"), str, #bribeable, plt:faction():name(), chave, cstr )
-   end )
+   p( function () return bribe_msg( plt, bribeable ) end )
    vn.menu{
       {_("Pay"), "bribe_nearby_trypay"},
       {_("Refuse"), "bribe_refuse"},
