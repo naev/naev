@@ -109,7 +109,12 @@ function comm( plt )
          vn.jump("bribe_nomoney")
       end
    end )
-   p(_([["Pleasure to do business with you."]]))
+   p( function ()
+      if mem.bribe_paid then
+         return mem.bribe_paid
+      end
+      return _([["Pleasure to do business with you."]])
+   end )
    vn.func( function ()
       local cost = bribe_cost( plt )
       player.pay( -cost, true )
@@ -155,7 +160,12 @@ function comm( plt )
          vn.jump("bribe_nearby_nomoney")
       end
    end )
-   p(_([["Pleasure to do business with you."]]))
+   p( function ()
+      if mem.bribe_paid then
+         return mem.bribe_paid
+      end
+      return _([["Pleasure to do business with you."]])
+   end )
    vn.func( function ()
       local cost = bribe_nearby_cost
       player.pay( -cost, true )
