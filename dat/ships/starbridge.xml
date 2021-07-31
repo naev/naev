@@ -2,7 +2,6 @@
 <ship name="Starbridge">
  <base_type>Starbridge</base_type>
  <GFX sx="10" sy="10">starbridge</GFX>
- <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
