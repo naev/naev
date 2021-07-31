@@ -16,12 +16,12 @@ require "jumpdist"
 
 header_table = {}
 
-header_table["Generic"] = _("We bring you the latest news in the galaxy.")
-header_table["Independent"] = _("Welcome to Universal News Feed. All the headlines all the time.")
+header_table["Generic"] = _("We bring you the latest news in the universe.")
+header_table["Independent"] = _("Welcome to Universal News Feed.")
 header_table["Empire"] = _("Welcome to the Empire News Centre.")
-header_table["Dvaered"] = _("Welcome to the Dvaered News Centre. All that happens. In simple words. So you can understand.")
-header_table["Goddard"] = _("Welcome to Goddard News Centre. We bring you the news from around the Empire.")
-header_table["Pirate"] = _("Pirate News. News that matters.")
+header_table["Dvaered"] = _("Welcome to the Dvaered News Centre.")
+header_table["Goddard"] = _("Welcome to Goddard News Centre.")
+header_table["Pirate"] = _("Pirate News Network.")
 header_table["Sirius"] = _("Sirius News Reel. Words of the Sirichana for all.")
 header_table["FLF"] = _("The word of the Free Resistance.")
 header_table["Frontier"] = _("News from the Frontier Alliance.")
@@ -34,16 +34,23 @@ greet_table = {}
 
 greet_table["Generic"] =  {""}
 greet_table["Independent"] = {
-   _("News from around the universe."),
+   _("Interesting events from around the universe."),
    _("Fair and unbiased news."),
+   _("All the headlines all the time."),
 }
 greet_table["Empire"] = {
    _("Fresh news from around the Empire."),
    _("Remembering the Incident."),
    _("Keeping you informed."),
 }
-greet_table["Dvaered"] = {""}
-greet_table["Goddard"] = {""}
+greet_table["Dvaered"] = {
+   _("Short and to the point news."),
+   _("All that happens. In simple words. So you can understand."),
+   _("Simple news for busy people."),
+}
+greet_table["Goddard"] = {
+   _("We bring you the news from around the Empire."),
+}
 greet_table["Pirate"] = {
    _("News that matters."),
    _("Adopt a cat today!"),
