@@ -188,6 +188,7 @@
   <item>Unicorp Hawk 350 Engine</item>
   <item>Nexus Dart 150 Engine</item>
   <item>Melendez Ox XL Engine</item>
+  <item>Krain Patagium Engine</item>
   <item>Tricon Zephyr Engine</item>
   <item>Tricon Zephyr II Engine</item>
   <item>Beat Up Medium Engine</item>
@@ -813,6 +814,7 @@
   <item>Lancelot</item>
   <item>Pacifier</item>
   <item>Vigilance</item>
+  <item>Starbridge</item>
   <item>Kestrel</item>
  </tech>
  <tech name="Goddard Ship">
@@ -842,6 +844,7 @@
  <tech name="Pirate Ships">
   <item>Pirate Admonisher</item>
   <item>Pirate Ancestor</item>
+  <item>Pirate Starbridge</item>
   <item>Pirate Kestrel</item>
   <item>Pirate Phalanx</item>
   <item>Pirate Rhino</item>
@@ -960,6 +963,7 @@
   <item>Unicorp Eagle 7000 Engine</item>
  </tech>
  <tech name="Engines High">
+  <item>Krain Patagium Engine</item>
   <item>Tricon Zephyr Engine</item>
   <item>Tricon Zephyr II Engine</item>
   <item>Tricon Cyclone Engine</item>
