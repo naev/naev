@@ -197,10 +197,19 @@ end
 
 -- Maikki stuff
 function minerva.maikki_mood_get()
-   return var.peek( "maikki_mood" ) or 0
-end
-function minerva.maikki_mood_mod( amount )
-   var.push( "maikki_mood", minerva.maikki_mood_get()+amount )
+   local mood = 0
+   if var.peek("maikki_gave_drink") then
+      mood = mood+1
+   end
+   local response = var.peek("maikki_response")
+   if response then
+      if response=="no" then
+         mood = mood-1
+      elseif response=="yes" then
+         mood = mood+1
+      end
+   end
+   return mood
 end
 
 return minerva

@@ -210,7 +210,7 @@ and %s in the %s system."]]),
       } )
       vn.label("doall")
       vn.func( function ()
-         minerva.maikki_mood_mod( 1 )
+         var.push("maikki_response","yes")
       end )
       maikki(_([["You know the Za'lek can be very stubborn at times and may need some convincing."
 She winks at you.]]))
@@ -222,7 +222,7 @@ She winks at you.]]))
 
       vn.label("donone")
       vn.func( function ()
-         minerva.maikki_mood_mod( -1 )
+         var.push("maikki_response","no")
       end )
       maikki(_([[She glares at you.
 "I hope you're joking. This is very important to me and I hope you don't lose this lead…"]]))

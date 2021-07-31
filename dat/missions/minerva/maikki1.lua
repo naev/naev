@@ -180,7 +180,7 @@ She gives out a heavy sigh.]]))
             vn.jump( "notenough" )
          else
             minerva.tokens_pay( -10 )
-            minerva.maikki_mood_mod( 1 )
+            var.push("maikki_gave_drink",true)
          end
       end )
       vn.na(_("You offer her a drink. After staring intently at the drink menu, she orders a strawberry cheesecake caramel parfait with extra berries. Wait, was that even on the menu?"))
