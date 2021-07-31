@@ -58,7 +58,7 @@ with open( "outfit_gfx.html", "w" ) as out:
         v = imgdict[k]
         out.write(f"""
   <div>
-   <img src='{path}' />
+   <img width="128" height="128" src='{path}' />
    <span>{k}: {v[0]}</span><br/>
    <span>{', '.join(v[1])}</span>
   </div>
