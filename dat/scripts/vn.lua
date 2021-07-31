@@ -662,6 +662,11 @@ function vn.StateMenu:_init()
    else
       self._items = self.items
    end
+   if __debugging then
+      if self._items == nil then
+         warn(_("[VN]: menu has no options!"))
+      end
+   end
    -- Set up the graphics stuff
    local font = vn.namebox_font
    -- Border information
@@ -1126,8 +1131,8 @@ end
 
 --[[--
 Opens a menu the player can select from.
-   @tparam tab items Table of items to select from, they should be of the form "{text, label}" where "text" is what is displayed and "label" is what is passed to the handler.
-   @tparam[opt=vn.jump] func handler Function to handle what happens when an item is selecetdd. Defaults to vn.jump.
+   @tparam table items Table of items to select from, they should be of the form "{text, label}" where "text" is what is displayed and "label" is what is passed to the handler.
+   @tparam[opt=vn.jump] function handler Function to handle what happens when an item is selecetdd. Defaults to vn.jump.
 --]]
 function vn.menu( items, handler )
    vn._checkstarted()
