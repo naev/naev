@@ -60,7 +60,7 @@ function _atk_decide_zz()
    local m, d2 = vec2.polar( target:pos() - pilot:pos() )
    local d = d1-d2
 
-   return ( (dist > (1.1*range)) and (ai.hasprojectile())
+   return ( (dist > range) and (ai.hasprojectile())
            and (dir < 10) and (dir > -10) and (d < 10) and (d > -10) )
 end
 
@@ -89,7 +89,7 @@ function _atk_zigzag()
    local dist  = ai.dist( target )
 
    -- Are we ready to shoot?
-   if dist < (1.1*range) then
+   if dist < range then
       ai.popsubtask()
       return
    end
