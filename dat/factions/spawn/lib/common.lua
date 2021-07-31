@@ -106,6 +106,8 @@ function scom.spawn( pilots, faction )
       end
       local pfact = params.faction or faction
       local p = pilot.add( v["pilot"], pfact, origin, params.name, params )
+      local mem = p:memory()
+      mem.natural = true -- mark that it was spawned naturally and not as part of a mission
       local presence = v["presence"]
       if not pilots.__nofleet then
          if leader == nil then
@@ -115,7 +117,6 @@ function scom.spawn( pilots, faction )
          end
       end
       if pilots.__doscans then
-         local mem = p:memory()
          mem.doscans = true
       end
       spawned[ #spawned+1 ] = { pilot=p, presence=presence }
