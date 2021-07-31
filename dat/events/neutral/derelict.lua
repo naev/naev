@@ -55,163 +55,162 @@ missionlist = {}
 
 
 function create ()
-    local nebu_dens, nebu_vol = system.cur():nebula()
-    if nebu_vol > 0 then
+   local nebu_dens, nebu_vol = system.cur():nebula()
+   if nebu_vol > 0 then
       evt.finish()
-    end
+   end
 
-    -- Get the derelict's ship.
-    r = rnd.rnd()
-    if r > 0.8 then
-        ship = "Gawain"
-    elseif r > 0.6 then
-        ship = "Mule"
-    elseif r > 0.4 then
-        ship = "Koala"
-    else
-        ship = "Llama"
-    end
+   -- Get the derelict's ship.
+   r = rnd.rnd()
+   if r > 0.8 then
+      ship = "Gawain"
+   elseif r > 0.6 then
+      ship = "Mule"
+   elseif r > 0.4 then
+      ship = "Koala"
+   else
+      ship = "Llama"
+   end
 
-    -- Create the derelict.
-    angle = rnd.rnd() * 2 * math.pi
-    dist  = rnd.rnd(400, system.cur():radius() * 0.6)
-    pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.add(ship, "Derelict", pos, nil, {ai="dummy"})
-    p:disable()
-    p:rename("Derelict")
-    hook.pilot(p, "board", "board")
-    hook.pilot(p, "death", "destroyevent")
-    hook.jumpout("destroyevent")
-    hook.land("destroyevent")
+   -- Create the derelict.
+   local dist  = rnd.rnd(400, system.cur():radius() * 0.6)
+   local pos   = vec2.newP( dist, rnd.rnd()*360 )
+   p     = pilot.add(ship, "Derelict", pos, nil, {ai="dummy"})
+   p:disable()
+   p:rename("Derelict")
+   hook.pilot(p, "board", "board")
+   hook.pilot(p, "death", "destroyevent")
+   hook.jumpout("destroyevent")
+   hook.land("destroyevent")
 end
 
 function board()
-    player.unboard()
-    -- Roll for events
-    local prob = rnd.rnd()
-    if prob <= 0.50 then
-        neutralevent()
-    elseif prob <= 0.70 then
-        goodevent()
-    elseif prob <= 0.85 then
-        badevent()
-    else
-        missionevent()
-    end
+   player.unboard()
+   -- Roll for events
+   local prob = rnd.rnd()
+   if prob <= 0.50 then
+      neutralevent()
+   elseif prob <= 0.70 then
+      goodevent()
+   elseif prob <= 0.85 then
+      badevent()
+   else
+      missionevent()
+   end
 end
 
 function neutralevent()
-    -- Pick a random message from the list, display it, unboard.
-    tk.msg(ntitle, ntext[rnd.rnd(1, #ntext)])
-    destroyevent()
+   -- Pick a random message from the list, display it, unboard.
+   tk.msg(ntitle, ntext[rnd.rnd(1, #ntext)])
+   destroyevent()
 end
 
 function goodevent()
-    -- Roll for good event, handle accordingly
-    event = rnd.rnd(1, #gtext)
+   -- Roll for good event, handle accordingly
+   event = rnd.rnd(1, #gtext)
 
-    -- Only give a map if unknown.
-    if event == 2 then
-        maps = {
-            ["Map: Dvaered-Soromid trade route"] = _("Dvaered-Soromid trade route"),
-            ["Map: Sirian border systems"] = _("Sirian border systems"),
-            ["Map: Dvaered Core"] = _("Dvaered core systems"),
-            ["Map: Empire Core"]  = _("Empire core systems"),
-            ["Map: Nebula Edge"]  = _("Sol nebula edge"),
-            ["Map: The Frontier"] = _("Frontier systems")
-        }
-        unknown = {}
+   -- Only give a map if unknown.
+   if event == 2 then
+      maps = {
+         ["Map: Dvaered-Soromid trade route"] = _("Dvaered-Soromid trade route"),
+         ["Map: Sirian border systems"] = _("Sirian border systems"),
+         ["Map: Dvaered Core"] = _("Dvaered core systems"),
+         ["Map: Empire Core"]  = _("Empire core systems"),
+         ["Map: Nebula Edge"]  = _("Sol nebula edge"),
+         ["Map: The Frontier"] = _("Frontier systems")
+      }
+      unknown = {}
 
-        for k,v in pairs(maps) do
-            if player.numOutfit(k) == 0 then
-                table.insert( unknown, k )
-            end
-        end
+      for k,v in pairs(maps) do
+         if player.numOutfit(k) == 0 then
+            table.insert( unknown, k )
+         end
+      end
 
-        -- All maps are known.
-        if #unknown == 0 then
-            while event == 2 do
-                event = rnd.rnd(1, #gtext)
-            end
-        end
-    end
+      -- All maps are known.
+      if #unknown == 0 then
+         while event == 2 do
+            event = rnd.rnd(1, #gtext)
+         end
+      end
+   end
 
 
-    if event == 1 then
-        tk.msg(gtitle, gtext[1])
-        player.pay(rnd.rnd(5000,30000)) --5K - 30K
-    elseif event == 2 then
-        local choice = unknown[rnd.rnd(1,#unknown)]
-        tk.msg(gtitle, gtext[2]:format(maps[choice]))
-        player.outfitAdd(choice, 1)
-    elseif event == 3 then
-        local factions = {"Empire", "Dvaered", "Sirius", "Soromid"} -- TODO: Add more factions as they appear
-        rndfact = factions[rnd.rnd(1, #factions)]
-        tk.msg(gtitle, string.format(gtext[3], rndfact))
-        faction.modPlayerSingle(rndfact, 3)
-    end
-    destroyevent()
+   if event == 1 then
+      tk.msg(gtitle, gtext[1])
+      player.pay(rnd.rnd(5000,30000)) --5K - 30K
+   elseif event == 2 then
+      local choice = unknown[rnd.rnd(1,#unknown)]
+      tk.msg(gtitle, gtext[2]:format(maps[choice]))
+      player.outfitAdd(choice, 1)
+   elseif event == 3 then
+      local factions = {"Empire", "Dvaered", "Sirius", "Soromid"} -- TODO: Add more factions as they appear
+      rndfact = factions[rnd.rnd(1, #factions)]
+      tk.msg(gtitle, string.format(gtext[3], rndfact))
+      faction.modPlayerSingle(rndfact, 3)
+   end
+   destroyevent()
 end
 
 function badevent()
-    -- Roll for bad event, handle accordingly
-    event = rnd.rnd(1, #btext)
-    if event == 1 then
-        p:hookClear() -- So the pilot doesn't end the event by dying.
-        tk.msg(btitle, btext[1])
-        p:setHealth(0,0)
-        player.pilot():control(true)
-        hook.pilot(p, "exploded", "derelict_exploded")
-    elseif event == 2 then
-        tk.msg(btitle, btext[2])
-        player.pilot():setFuel(false)
-        destroyevent()
-    elseif event == 3 then
-        tk.msg(btitle, btext[3])
-        v1 = pilot.add( "Pirate Vendetta", "Pirate", player.pos() + vec2.new( 300, 300) )
-        v2 = pilot.add( "Pirate Vendetta", "Pirate", player.pos() + vec2.new(-300, 300) )
-        a1 = pilot.add( "Pirate Ancestor", "Pirate", player.pos() + vec2.new(-300,-300) )
-        a2 = pilot.add( "Pirate Ancestor", "Pirate", player.pos() + vec2.new( 300,-300) )
-        v1:control()
-        v1:attack(player.pilot())
-        v2:control()
-        v2:attack(player.pilot())
-        a1:control()
-        a1:attack(player.pilot())
-        a2:control()
-        a2:attack(player.pilot())
-        destroyevent()
-    end
+   -- Roll for bad event, handle accordingly
+   event = rnd.rnd(1, #btext)
+   if event == 1 then
+      p:hookClear() -- So the pilot doesn't end the event by dying.
+      tk.msg(btitle, btext[1])
+      p:setHealth(0,0)
+      player.pilot():control(true)
+      hook.pilot(p, "exploded", "derelict_exploded")
+   elseif event == 2 then
+      tk.msg(btitle, btext[2])
+      player.pilot():setFuel(false)
+      destroyevent()
+   elseif event == 3 then
+      tk.msg(btitle, btext[3])
+      v1 = pilot.add( "Pirate Vendetta", "Pirate", player.pos() + vec2.new( 300, 300) )
+      v2 = pilot.add( "Pirate Vendetta", "Pirate", player.pos() + vec2.new(-300, 300) )
+      a1 = pilot.add( "Pirate Ancestor", "Pirate", player.pos() + vec2.new(-300,-300) )
+      a2 = pilot.add( "Pirate Ancestor", "Pirate", player.pos() + vec2.new( 300,-300) )
+      v1:control()
+      v1:attack(player.pilot())
+      v2:control()
+      v2:attack(player.pilot())
+      a1:control()
+      a1:attack(player.pilot())
+      a2:control()
+      a2:attack(player.pilot())
+      destroyevent()
+   end
 end
 
 function derelict_exploded()
    player.pilot():control(false)
    player.pilot():setHealth(42, 0)
-  destroyevent()
+   destroyevent()
 end
 
 function missionevent()
-    -- Fetch all missions that haven't been flagged as done yet.
-    local mymissions = {}
+   -- Fetch all missions that haven't been flagged as done yet.
+   local mymissions = {}
 
-    for i, mission in ipairs(missionlist) do
-        if not player.misnDone(mission) then
-            mymissions[#mymissions + 1] = mission
-        end
-    end
+   for i, mission in ipairs(missionlist) do
+      if not player.misnDone(mission) then
+         mymissions[#mymissions + 1] = mission
+      end
+   end
 
-    -- If no missions are available, default to a neutral event.
-    if #mymissions == 0 then
-        neutralevent()
-    else
-        -- Roll a random mission and start it.
-        local select = rnd.rnd(1, #mymissions)
-        naev.missionStart(mymissions[select])
+   -- If no missions are available, default to a neutral event.
+   if #mymissions == 0 then
+      neutralevent()
+   else
+      -- Roll a random mission and start it.
+      local select = rnd.rnd(1, #mymissions)
+      naev.missionStart(mymissions[select])
 
-        destroyevent()
-    end
+      destroyevent()
+   end
 end
 
 function destroyevent()
-    evt.finish()
+   evt.finish()
 end
