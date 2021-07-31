@@ -30,40 +30,46 @@ header_table["Za'lek"] = _("Scientific, Socioeconomic, and Sundry Events")
 header_table["Soromid"] = _("The voice of the future.")
 header_table["Thurion"] = _("Data Relay Network")
 
-greet_table={}
+greet_table = {}
 
-greet_table["Generic"] =      {""
-                              }
-greet_table["Independent"] =  {""
-                              }
-greet_table["Empire"] =       {_("Fresh news from around the Empire."),
-                              _("Remembering the Incident."),
-                              _("Keeping you informed.")
-                              }
-greet_table["Dvaered"] =      {""
-                              }
-greet_table["Goddard"] =      {""}
-greet_table["Pirate"] =       {_("News that matters."),
-                              _("Adopt a cat today!"),
-                              _("Laughing at the Emperor."),
-                              _("On top of the world."),
-                              _("Piracy has never been better.")
-                              }
-greet_table["FLF"] =          {""
-                              }
-greet_table["Frontier"] =     {_("News you can trust.")
-                              }
-greet_table["Sirius"] =       {_("Stay faithful."),
-                              _("Sirichana watches and guides you.")
-                              }
-greet_table["Proteron"] =     {""
-                              }
-greet_table["Za'lek"] =       {""
-                              }
-greet_table["Soromid"] =      {_("Genetically tailoured for you.")
-                              }
-greet_table["Thurion"] =      {""
-                              }
+greet_table["Generic"] =  {""}
+greet_table["Independent"] = {
+   _("News from around the universe."),
+   _("Fair and unbiased news."),
+}
+greet_table["Empire"] = {
+   _("Fresh news from around the Empire."),
+   _("Remembering the Incident."),
+   _("Keeping you informed."),
+}
+greet_table["Dvaered"] = {""}
+greet_table["Goddard"] = {""}
+greet_table["Pirate"] = {
+   _("News that matters."),
+   _("Adopt a cat today!"),
+   _("Laughing at the Emperor."),
+   _("On top of the world."),
+   _("Piracy has never been better."),
+}
+greet_table["FLF"] = {""}
+greet_table["Frontier"] = {
+   _("News you can trust."),
+}
+greet_table["Sirius"] = {
+   _("Stay faithful."),
+   _("Sirichana watches and guides you."),
+}
+greet_table["Proteron"] = {""}
+greet_table["Za'lek"] = {
+   _("Information by optimization."),
+   _("Statistically significant news."),
+   _("Peer reviewed news."),
+}
+greet_table["Soromid"] = {
+   _("Genetically tailoured for you."),
+   _("Naturally selected news."),
+}
+greet_table["Thurion"] = {""}
 
 articles={}
 
