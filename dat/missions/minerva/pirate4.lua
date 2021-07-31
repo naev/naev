@@ -432,7 +432,7 @@ function followup ()
 "I have some business to attend to."
 They give you a tired grin.
 "Anyway, I'll wire you a reward and meet me back at Minerva Station."]]))
-   vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
+   vn.na(string.format(_("You have received #g%s#0."), creditstring(reward_amount)))
    vn.func( function () -- Rewards
       player.pay( reward_amount )
       shiplog.append( logidstr, _("You helped defend an interrogation ship from Dvaered vessels.") )

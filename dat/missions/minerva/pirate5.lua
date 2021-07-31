@@ -111,7 +111,7 @@ They grin at you.
          shiplog.append( logidstr, _("You took down an advanced Za'lek hacking center and got rewarded for your efforts.") )
          faction.modPlayerSingle("Pirate", 5)
       end )
-      vn.na(string.format(_("You have received #g%s."), creditstring(reward_amount)))
+      vn.na(string.format(_("You have received #g%s#0."), creditstring(reward_amount)))
       vn.run()
       misn.finish(true)
    elseif  misn_state==nil then
