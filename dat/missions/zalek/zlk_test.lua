@@ -334,7 +334,7 @@ function rmTheOutfit( addengine )
    -- TODO Remove copies from all ships
    --[[
    for k,v in ipairs(player.ships()) do
-      local o = player.shipOutfits(v)
+      local o = player.shipOutfits(v.name)
       if isMounted("Za'lek Test Engine", o) then
       end
    end

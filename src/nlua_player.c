@@ -919,11 +919,18 @@ static int playerL_ships( lua_State *L )
 
    ships = player_getShipStack();
 
-   lua_newtable(L);
+   lua_newtable(L);  /* t */
    for (i=0; i<array_size(ships); i++) {
-      lua_pushnumber(L, i+1);
-      lua_pushstring(L, ships[i].p->name);
-      lua_rawset(L, -3);
+      lua_pushnumber(L, i+1); /* t, k */
+      lua_newtable(L);        /* t, k, t */
+
+      lua_pushstring(L, ships[i].p->name); /* t, k, t, s */
+      lua_setfield(L, -2, "name"); /* t, k, t */
+
+      lua_pushship(L, ships[i].p->ship); /* t, k, t, s */
+      lua_setfield(L, -2, "ship"); /* t, k, t */
+
+      lua_rawset(L, -3); /* t */
    }
 
    return 1;

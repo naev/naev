@@ -241,8 +241,8 @@ function check_stranded( missing )
    -- Add the player's other ships' outfits.
    if services["shipyard"] then
       for _, s in ipairs( player.ships() ) do
-         if s ~= pp:name() then
-            local outfits = player.shipOutfits(s)
+         if s.name ~= pp:name() then
+            local outfits = player.shipOutfits(s.name)
             for _, o in ipairs(outfits) do
                table.insert(inv, o)
             end
