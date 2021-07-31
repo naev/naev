@@ -399,6 +399,14 @@ function control ()
          __push_scan( target )
       end
    end
+
+   -- Run custom function if applicable
+   if control_custom and task then
+      local cc = control_custom[ task ]
+      if cc then
+         cc()
+      end
+   end
 end
 
 -- Required "attacked" function

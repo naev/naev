@@ -42,6 +42,22 @@ local function __getenemy( p )
    return pv[1].p, pv[1].F, pv[1].H
 end
 
+local function __tryengage( p )
+   local enemy, F, H = __getenemy(p)
+   if enemy ~= nil then
+      -- Some criterion to determine whether to rambo or try to attack from
+      -- stealth
+      if F*2 > H then
+         ai.stealth(false)
+         ai.pushtask( "attack", enemy )
+      else
+         ai.pushtask( "ambush_stalk", enemy )
+      end
+      return true
+   end
+   return false
+end
+
 function idle_leave ()
    -- Get a goal
    if not mem.goal then
@@ -143,18 +159,7 @@ function idle ()
    end
 
    -- See if there is a nearby target to kill
-   local enemy, F, H = __getenemy(p)
-   if enemy ~= nil then
-      -- Some criterion to determine whether to rambo or try to attack from
-      -- stealth
-      if F*2 > H then
-         ai.stealth(false)
-         ai.pushtask( "attack", enemy )
-      else
-         ai.pushtask( "ambush_stalk", enemy )
-      end
-      return
-   end
+   if __tryengage(p) then return end
 
    -- Just move around waiting for ambush
    local target = lanes.getNonPoint()
@@ -166,6 +171,27 @@ function idle ()
    -- Wasn't able to find out what to do, so just fallback to no stealth...
    return idle_nostealth()
 end
+
+control_custom = {
+   ["ambush_moveto"] = function ()
+      -- Try to engage hostiles
+      if __tryengage( ai.pilot() ) then return end
+   end,
+   ["ambush_stalk"] = function ()
+      local target = ai.taskdata()
+      -- Make sure target is not too far away
+      if mem.ambushclose and ai.dist2(target) > math.pow(2*mem.ambushclose,2) then
+         ai.poptask()
+         return
+      end
+      -- Ignore enemies that are in safe zone again
+      local r = math.pow( mem.lanedistance, 2 )
+      if lanes.getDistance2( vp ) < r then
+         ai.poptask()
+         return
+      end
+   end,
+}
 
 -- Settings
 mem.doscans       = false
