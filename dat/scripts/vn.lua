@@ -1486,6 +1486,7 @@ vn._me = vn.Character.new( "me", { color={1, 1, 1}, hidetitle=true } )
 vn._na = vn.Character.new( "narrator", { color={0.5, 0.5, 0.5}, hidetitle=true } )
 
 -- Set defaults
+_setdefaults()
 vn.reset()
 
 return vn
