@@ -65,7 +65,9 @@ function broadcast ()
         return
     end
     p:broadcast( string.format(broadcastmsg, shipname), true )
-    bctimer = hook.timer(15.0, "broadcast")
+    timer_delay = timer_delay or 10
+    timer_delay = timer_delay + 5
+    bctimer = hook.timer(timer_delay, "broadcast")
 end
 
 function rescue ()
