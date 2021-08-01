@@ -144,60 +144,63 @@ function comm( plt )
    local fac = plt:faction()
 
    -- Set up the namebox
-   local nw, nh = naev.gfx.dim()
-   vn.menu_x = math.min( -1, 500 - nw/2 )
-   vn.namebox_alpha = 0
-   local namebox_font = vn.namebox_font
-   local faction_str
-   if plt:flags("bribed") then
-      faction_str = _("#gBribed#0")
-   else
-      local std, str = fac:playerStanding()
-      if plt:hostile() then
-         faction_str = _("#rHostile#0")
+   local function setup_namebox ()
+      local nw, nh = naev.gfx.dim()
+      vn.menu_x = math.min( -1, 500 - nw/2 )
+      vn.namebox_alpha = 0
+      local namebox_font = vn.namebox_font
+      local faction_str
+      if plt:flags("bribed") then
+         faction_str = _("#gBribed#0")
       else
-         faction_str = str
+         local std, str = fac:playerStanding()
+         if plt:hostile() then
+            faction_str = _("#rHostile#0")
+         else
+            faction_str = str
+         end
       end
-   end
-   local namebox_text = string.format("%s\n%s\n%s", fac:name(), plt:name(), faction_str )
-   local namebox_col = fac:colour()
-   if namebox_col then namebox_col = {namebox_col:rgb()}
-   else namebox_col = {1,1,1}
-   end
-   local namebox_x = math.max( 1, nw/2-500 )
-   local namebox_y = vn.namebox_y + vn.namebox_h -- Correct
-   local namebox_text_w, wrapped = namebox_font:getWrap( namebox_text, nw )
-   local namebox_b = 20
-   namebox_w = namebox_text_w + 2*namebox_b
-   namebox_h = namebox_font:getLineHeight()*#wrapped + 2*namebox_b
-   namebox_y = namebox_y - namebox_h
+      local namebox_text = string.format("%s\n%s\n%s", fac:name(), plt:name(), faction_str )
+      local namebox_col = fac:colour()
+      if namebox_col then namebox_col = {namebox_col:rgb()}
+      else namebox_col = {1,1,1}
+      end
+      local namebox_x = math.max( 1, nw/2-600 )
+      local namebox_y = vn.namebox_y + vn.namebox_h -- Correct
+      local namebox_text_w, wrapped = namebox_font:getWrap( namebox_text, nw )
+      local namebox_b = 20
+      namebox_w = namebox_text_w + 2*namebox_b
+      namebox_h = namebox_font:getLineHeight()*#wrapped + 2*namebox_b
+      namebox_y = namebox_y - namebox_h
 
-   -- Get the logo
-   local logo = fac:logo()
-   local logo_size = namebox_h - 2*namebox_b
-   local logo_scale
-   if logo then
-      namebox_w = namebox_w + logo_size + 10
-      logo = lg.newImage( logo )
-      local w, h = logo:getDimensions()
-      logo_scale = logo_size / math.max(w,h)
-   end
-
-   local function render_namebox ()
-      local bw, bh = namebox_b, namebox_b
-      local x, y = namebox_x, namebox_y
-      local w, h = namebox_w, namebox_h
-
-      _draw_bg( x, y, w, h, vn.namebox_bg, nil, 0.5 )
-      vn.setColor( namebox_col, 1 )
-      lg.print( namebox_text, namebox_font, x+bw, y+bh )
-
+      -- Get the logo
+      local logo = fac:logo()
+      local logo_size = namebox_h - 2*namebox_b
+      local logo_scale
       if logo then
-         vn.setColor( {1, 1, 1}, 1 )
-         logo:draw( x+namebox_text_w+10+bw, y+bh, 0, logo_scale )
+         namebox_w = namebox_w + logo_size + 10
+         logo = lg.newImage( logo )
+         local w, h = logo:getDimensions()
+         logo_scale = logo_size / math.max(w,h)
       end
+
+      local function render_namebox ()
+         local bw, bh = namebox_b, namebox_b
+         local x, y = namebox_x, namebox_y
+         local w, h = namebox_w, namebox_h
+
+         _draw_bg( x, y, w, h, vn.namebox_bg, nil, 1 )
+         vn.setColor( namebox_col, 1 )
+         lg.print( namebox_text, namebox_font, x+bw, y+bh )
+
+         if logo then
+            vn.setColor( {1, 1, 1}, 1 )
+            logo:draw( x+namebox_text_w+10+bw, y+bh, 0, logo_scale )
+         end
+      end
+      vn.setForeground( render_namebox )
    end
-   vn.setForeground( render_namebox )
+   setup_namebox()
 
    local p = vn.newCharacter( plt:name(), { image=shipgfx } )
    vn.transition()
@@ -306,6 +309,7 @@ function comm( plt )
          plt:setHostile(false)
          mem.bribe = 0 -- Disable rebribes
       end
+      setup_namebox()
    end )
    vn.jump("menu")
 
@@ -347,6 +351,7 @@ function comm( plt )
          local vmem = v:memory()
          vmem.bribe = 0 -- Disable rebribes
       end
+      setup_namebox()
    end )
    vn.jump("menu")
 
