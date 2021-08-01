@@ -4,8 +4,7 @@
  <trigger>land</trigger>
  <chance>100</chance>
  <notes>
-  <campaign>Minerva</campaign>
-  <provides name="Minerva Station" />
+  <tier>1</tier>
  </notes>
 </event>
 --]]
@@ -209,11 +208,13 @@ function create ()
 
    -- Only allow once every 10 periods at best
    local lastplayed = var.peek("shiplover_lastplayed")
-   if lastplayed then
-      lastplayed = time.fromnumber( lastplayed )
-      if lastplayed + time.create( 0, 10, 0 ) > time.get() then
-         evt.finish()
-      end
+   if not lastplayed then
+      lastplayed = time.get():tonumber()
+      var.push( "shiplover_lastplayed", lastplayed )
+   end
+   lastplayed = time.fromnumber( lastplayed )
+   if lastplayed + time.create( 0, 10, 0 ) > time.get() then
+      evt.finish()
    end
 
    local whitelist = {
