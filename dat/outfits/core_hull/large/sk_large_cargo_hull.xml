@@ -5,7 +5,7 @@
   <slot prop="hull">structure</slot>
   <size>large</size>
   <priority>7</priority>
-  <mass>650</mass>
+  <mass>550</mass>
   <price>1100000</price>
   <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability.</description>
   <gfx_store>cargo_hull_l.webp</gfx_store>
