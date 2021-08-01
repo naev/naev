@@ -177,11 +177,12 @@ function comm( plt )
       local logo = fac:logo()
       local logo_size = namebox_h - 2*namebox_b
       local logo_scale
+      local logo_w, logo_h
       if logo then
          namebox_w = namebox_w + logo_size + 10
          logo = lg.newImage( logo )
-         local w, h = logo:getDimensions()
-         logo_scale = logo_size / math.max(w,h)
+         logo_w, logo_h = logo:getDimensions()
+         logo_scale = logo_size / math.max(logo_w,logo_h)
       end
 
       local function render_namebox ()
@@ -195,7 +196,7 @@ function comm( plt )
 
          if logo then
             vn.setColor( {1, 1, 1}, 1 )
-            logo:draw( x+namebox_text_w+10+bw, y+bh, 0, logo_scale )
+            logo:draw( x+namebox_text_w+10+bw + (logo_size-logo_w)*0.5, y+bh + (logo_size-logo_h)*0.5, 0, logo_scale )
          end
       end
       vn.setForeground( render_namebox )
