@@ -1197,6 +1197,9 @@ dat/outfits/accessory/satellite_mockup.xml
 dat/outfits/accessory/star_of_valor.xml
 dat/outfits/accessory/swamp_bombing.xml
 dat/outfits/accessory/toy_drone.xml
+dat/outfits/accessory/trading_card_common.xml
+dat/outfits/accessory/trading_card_rare.xml
+dat/outfits/accessory/trading_card_uncommon.xml
 dat/outfits/accessory/ugly_statue.xml
 dat/outfits/accessory/vacuum_cleaner.xml
 dat/outfits/bio_weapons/bioplasma_claw_stage_1.xml
@@ -2145,6 +2148,7 @@ dat/ai/core/control/generic.lua
 dat/ai/core/control/scout.lua
 dat/ai/core/control/trader.lua
 dat/ai/core/core.lua
+dat/ai/core/idle/advertiser.lua
 dat/ai/core/idle/civilian.lua
 dat/ai/core/idle/generic.lua
 dat/ai/core/idle/miner.lua
@@ -2223,6 +2227,7 @@ dat/events/neutral/news.lua
 dat/events/neutral/npc.lua
 dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
+dat/events/neutral/shiplover.lua
 dat/events/neutral/shipwreck.lua
 dat/events/pirate_fame.lua
 dat/events/shiplog.lua
