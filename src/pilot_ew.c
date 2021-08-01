@@ -476,7 +476,7 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
       /* Compute distance. */
       dist = vect_dist2( &p->solid->pos, &t->solid->pos );
       /* TODO maybe not hardcode the close value. */
-      if ((close != NULL) && (dist < pow2( MAX( 0., p->ew_stealth * t->stats.ew_detect * 1.5 ))))
+      if ((close != NULL) && !pilot_isFlag(t,PILOT_STEALTH) && (dist < pow2( MAX( 0., p->ew_stealth * t->stats.ew_detect * 1.5 ))))
          (*close)++;
       if (dist > pow2( MAX( 0., p->ew_stealth * t->stats.ew_detect )))
          continue;
