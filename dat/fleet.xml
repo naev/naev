@@ -1,26 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
- <fleet name="Independent Schroedinger">
-  <ai>independent</ai>
-  <faction>Independent</faction>
-  <pilots>
-   <pilot name="Independent Schroedinger" ship="Schroedinger"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Independent Hyena">
-  <ai>independent</ai>
-  <faction>Independent</faction>
-  <pilots>
-   <pilot name="Independent Hyena" ship="Hyena"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Independent Gawain">
-  <ai>independent</ai>
-  <faction>Independent</faction>
-  <pilots>
-   <pilot name="Independent Gawain" ship="Gawain"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Goddard Goddard">
   <ai>goddard</ai>
   <faction>Goddard</faction>
@@ -33,111 +12,6 @@
   <faction>Goddard</faction>
   <pilots>
    <pilot name="Goddard Lancelot" ship="Lancelot"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Miner Llama">
-  <ai>miner</ai>
-  <faction>Miner</faction>
-  <pilots>
-   <pilot name="Miner Llama" ship="Llama"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Miner Koala">
-  <ai>miner</ai>
-  <faction>Miner</faction>
-  <pilots>
-   <pilot name="Miner Koala" ship="Koala"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Miner Mule">
-  <ai>miner</ai>
-  <faction>Miner</faction>
-  <pilots>
-   <pilot name="Miner Mule" ship="Mule"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Trader Llama">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <pilots>
-   <pilot name="Trader Llama" ship="Llama"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Trader Koala">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <pilots>
-   <pilot name="Trader Koala" ship="Koala"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Trader Rhino">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <pilots>
-   <pilot name="Trader Rhino" ship="Rhino"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Trader Mule">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <pilots>
-   <pilot name="Trader Mule" ship="Mule"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Trader Gawain">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <pilots>
-   <pilot name="Trader Gawain" ship="Gawain"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Trader Quicksilver">
-  <ai>trader</ai>
-  <faction>Trader</faction>
-  <pilots>
-   <pilot name="Trader Quicksilver" ship="Quicksilver"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Traders Guild Llama">
-  <ai>trader</ai>
-  <faction>Traders Guild</faction>
-  <pilots>
-   <pilot name="Trader Llama" ship="Llama"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Traders Guild Koala">
-  <ai>trader</ai>
-  <faction>Traders Guild</faction>
-  <pilots>
-   <pilot name="Trader Koala" ship="Koala"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Traders Guild Rhino">
-  <ai>trader</ai>
-  <faction>Traders Guild</faction>
-  <pilots>
-   <pilot name="Trader Rhino" ship="Rhino"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Traders Guild Mule">
-  <ai>trader</ai>
-  <faction>Traders Guild</faction>
-  <pilots>
-   <pilot name="Traders Guild Mule" ship="Mule"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Traders Guild Gawain">
-  <ai>trader</ai>
-  <faction>Traders Guild</faction>
-  <pilots>
-   <pilot name="Trader Gawain" ship="Gawain"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Traders Guild Quicksilver">
-  <ai>trader</ai>
-  <faction>Traders Guild</faction>
-  <pilots>
-   <pilot name="Trader Quicksilver" ship="Quicksilver"></pilot>
   </pilots>
  </fleet>
  <fleet name="Proteron Kahan">
@@ -161,13 +35,6 @@
    <pilot name="Proteron Watson" ship="Proteron Watson"></pilot>
   </pilots>
  </fleet>
- <fleet name="Proteron Derivative">
-  <ai>proteron</ai>
-  <faction>Proteron</faction>
-  <pilots>
-   <pilot name="Proteron Derivative" ship="Proteron Derivative"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Frontier Lancelot">
   <ai>frontier_police</ai>
   <faction>Frontier</faction>
@@ -180,13 +47,6 @@
   <faction>Frontier</faction>
   <pilots>
    <pilot name="Frontier Phalanx" ship="Phalanx"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Frontier Hyena">
-  <ai>frontier_police</ai>
-  <faction>Frontier</faction>
-  <pilots>
-   <pilot name="Frontier Hyena" ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="Frontier Ancestor">
@@ -215,20 +75,6 @@
   <faction>FLF</faction>
   <pilots>
    <pilot name="FLF Lancelot" ship="Lancelot"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Rogue FLF Vendetta">
-  <ai>flf</ai>
-  <faction>Rogue FLF</faction>
-  <pilots>
-   <pilot name="Rogue FLF Vendetta" ship="Vendetta"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Rogue FLF Lancelot">
-  <ai>flf</ai>
-  <faction>Rogue FLF</faction>
-  <pilots>
-   <pilot name="Rogue FLF Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Hyena">
@@ -266,13 +112,6 @@
    <pilot name="Pirate Ancestor" ship="Pirate Ancestor"></pilot>
   </pilots>
  </fleet>
- <fleet name="Pirate Rhino">
-  <ai>pirate</ai>
-  <faction>Pirate</faction>
-  <pilots>
-   <pilot name="Pirate Rhino" ship="Pirate Rhino"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Pirate Phalanx">
   <ai>pirate</ai>
   <faction>Pirate</faction>
@@ -285,20 +124,6 @@
   <faction>Pirate</faction>
   <pilots>
    <pilot name="Pirate Kestrel" ship="Pirate Kestrel"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Collective Drone">
-  <ai>collective</ai>
-  <faction>Collective</faction>
-  <pilots>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Collective Heavy Drone">
-  <ai>collective</ai>
-  <faction>Collective</faction>
-  <pilots>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Collective Lge Swarm">
@@ -337,20 +162,6 @@
    <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
   </pilots>
  </fleet>
- <fleet name="Sirius Fidelity">
-  <ai>sirius</ai>
-  <faction>Sirius</faction>
-  <pilots>
-   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Sirius Shaman">
-  <ai>sirius</ai>
-  <faction>Sirius</faction>
-  <pilots>
-   <pilot name="Sirius Shaman" ship="Sirius Shaman"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Sirius Preacher">
   <ai>sirius</ai>
   <faction>Sirius</faction>
@@ -372,27 +183,6 @@
    <pilot name="Sirius Dogma" ship="Sirius Dogma"></pilot>
   </pilots>
  </fleet>
-  <fleet name="Soromid Brigand">
-  <ai>soromid</ai>
-  <faction>Soromid</faction>
-  <pilots>
-   <pilot name="Soromid Brigand" ship="Soromid Brigand"></pilot>
-  </pilots>
- </fleet>
-  <fleet name="Soromid Reaver">
-  <ai>soromid</ai>
-  <faction>Soromid</faction>
-  <pilots>
-   <pilot name="Soromid Reaver" ship="Soromid Reaver"></pilot>
-  </pilots>
- </fleet>
-  <fleet name="Soromid Marauder">
-  <ai>soromid</ai>
-  <faction>Soromid</faction>
-  <pilots>
-   <pilot name="Soromid Marauder" ship="Soromid Marauder"></pilot>
-  </pilots>
- </fleet>
   <fleet name="Soromid Odium">
   <ai>soromid</ai>
   <faction>Soromid</faction>
@@ -405,13 +195,6 @@
   <faction>Soromid</faction>
   <pilots>
    <pilot name="Soromid Nyx" ship="Soromid Nyx"></pilot>
-  </pilots>
- </fleet>
-  <fleet name="Soromid Ira">
-  <ai>soromid</ai>
-  <faction>Soromid</faction>
-  <pilots>
-   <pilot name="Soromid Ira" ship="Soromid Ira"></pilot>
   </pilots>
  </fleet>
   <fleet name="Soromid Arx">
@@ -493,54 +276,6 @@
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
- <fleet name="Dvaered Home Guard">
-  <ai>dvaered</ai>
-  <faction>Dvaered</faction>
-  <pilots>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Empire Shark">
-  <ai>empire</ai>
-  <faction>Empire</faction>
-  <pilots>
-   <pilot name="Empire Shark" ship="Empire Shark"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Empire Lancelot">
-  <ai>empire</ai>
-  <faction>Empire</faction>
-  <pilots>
-   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Empire Hawking">
-  <ai>empire</ai>
-  <faction>Empire</faction>
-  <pilots>
-   <pilot name="Empire Hawking" ship="Empire Hawking"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Empire Peacemaker">
-  <ai>empire</ai>
-  <faction>Empire</faction>
-  <pilots>
-   <pilot name="Empire Peacemaker" ship="Empire Peacemaker"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Empire Sml Defense">
   <ai>empire</ai>
   <faction>Empire</faction>
@@ -586,16 +321,6 @@
    <pilot name="Empire Hawking" ship="Empire Hawking"></pilot>
   </pilots>
  </fleet>
- <fleet name="Empire Sml Attack">
-  <ai>empire</ai>
-  <faction>Empire</faction>
-  <pilots>
-   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
-   <pilot name="Empire Pacifier" ship="Empire Pacifier"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Empire Flanking Fleet">
   <ai>empire</ai>
   <faction>Empire</faction>
@@ -606,55 +331,6 @@
    <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
    <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
    <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Empire Pacifier">
-  <ai>empire</ai>
-  <faction>Empire</faction>
-  <pilots>
-   <pilot name="Empire Pacifier" ship="Empire Pacifier"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Empire Admonisher">
-  <ai>empire</ai>
-  <faction>Empire</faction>
-  <pilots>
-   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Za'lek Light Drone">
-  <ai>zalek</ai>
-  <faction>Za'lek</faction>
-  <pilots>
-   <pilot name="Za'lek Light Drone" ship="Za'lek Light Drone"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Za'lek Scout Drone">
-  <ai>zalek</ai>
-  <faction>Za'lek</faction>
-  <pilots>
-   <pilot name="Za'lek Scout Drone" ship="Za'lek Scout Drone"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Za'lek Bomber Drone">
-  <ai>zalek</ai>
-  <faction>Za'lek</faction>
-  <pilots>
-   <pilot name="Za'lek Bomber Drone" ship="Za'lek Bomber Drone"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Za'lek Heavy Drone">
-  <ai>zalek</ai>
-  <faction>Za'lek</faction>
-  <pilots>
-   <pilot name="Za'lek Heavy Drone" ship="Za'lek Heavy Drone"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Za'lek Sting">
-  <ai>zalek</ai>
-  <faction>Za'lek</faction>
-  <pilots>
-   <pilot name="Za'lek Sting" ship="Za'lek Sting"></pilot>
   </pilots>
  </fleet>
  <fleet name="Za'lek Demon">
@@ -685,20 +361,6 @@
    <pilot name="Za'lek Hephaestus" ship="Za'lek Hephaestus"></pilot>
   </pilots>
  </fleet>
- <fleet name="Trinity">
-  <ai>empire</ai>
-  <faction>Empire</faction>
-  <pilots>
-   <pilot name="ESS Trinity" ship="Empire Hawking"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Starfire">
-  <ai>collective</ai>
-  <faction>Empire</faction>
-  <pilots>
-   <pilot name="Starfire" ship="Goddard"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Mercenary Pacifier">
   <ai>mercenary</ai>
   <faction>Mercenary</faction>
@@ -720,30 +382,6 @@
    <pilot name="Mercenary Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
- <fleet name="DTS Raiders">
-  <ai>pirate</ai>
-  <faction>Raider</faction>
-  <pilots>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-   <pilot name="Raider Hyena" ship="Hyena"></pilot>
-  </pilots>
- </fleet>
  <fleet name="DTS Defense Fleet">
   <ai>empire</ai>
   <faction>Trader</faction>
@@ -756,27 +394,6 @@
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Sindbad">
-  <ai>base</ai>
-  <faction>FLF</faction>
-  <pilots>
-   <pilot name="Sindbad" ship="Sindbad"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Raelid Outpost">
-  <ai>dvaered_norun</ai>
-  <faction>Dvaered</faction>
-  <pilots>
-   <pilot name="Raelid Outpost" ship="Raelid Outpost"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Raglan Outpost">
-  <ai>dvaered_norun</ai>
-  <faction>Dvaered</faction>
-  <pilots>
-   <pilot name="Raglan Outpost" ship="Raglan Outpost"></pilot>
   </pilots>
  </fleet>
  <fleet name="Vendetta Quartet">
@@ -806,15 +423,6 @@
    <pilot name="Pirate Attacker" ship="Pirate Vendetta"></pilot>
    <pilot name="Pirate Attacker" ship="Hyena"></pilot>
    <pilot name="Pirate Attacker" ship="Hyena"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Sml Trader Convoy">
-  <ai>trader</ai>
-  <faction>Traders Guild</faction>
-  <pilots>
-   <pilot name="Trader Llama" ship="Llama"></pilot>
-   <pilot name="Trader Llama" ship="Llama"></pilot>
-   <pilot name="Trader Koala" ship="Koala"></pilot>
   </pilots>
  </fleet>
   <fleet name="Trader Convoy 3">
@@ -933,16 +541,6 @@
    <pilot name="Hyena" ship="Hyena"></pilot>
   </pilots>
  </fleet>
- <fleet name="Pirate Hyena Pack">
-  <ai>pirate</ai>
-  <faction>Pirate</faction>
-  <pilots>
-   <pilot name="Pirate Hyena" ship="Hyena"></pilot>
-   <pilot name="Pirate Hyena" ship="Hyena"></pilot>
-   <pilot name="Pirate Hyena" ship="Hyena"></pilot>
-   <pilot name="Pirate Hyena" ship="Hyena"></pilot>
-  </pilots>
- </fleet>
  <fleet name="FLF Sml Force">
   <ai>flf</ai>
   <faction>FLF</faction>
@@ -975,41 +573,6 @@
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
- <fleet name="Thurion Perspicacity">
-  <ai>thurion</ai>
-  <faction>Thurion</faction>
-  <pilots>
-   <pilot name="Thurion Perspicacity" ship="Thurion Perspicacity"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Thurion Ingenuity">
-  <ai>thurion</ai>
-  <faction>Thurion</faction>
-  <pilots>
-   <pilot name="Thurion Ingenuity" ship="Thurion Ingenuity"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Thurion Scintillation">
-  <ai>thurion</ai>
-  <faction>Thurion</faction>
-  <pilots>
-   <pilot name="Thurion Scintillation" ship="Thurion Scintillation"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Thurion Virtuosity">
-  <ai>thurion</ai>
-  <faction>Thurion</faction>
-  <pilots>
-   <pilot name="Thurion Virtuosity" ship="Thurion Virtuosity"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Thurion Taciturnity">
-  <ai>thurion</ai>
-  <faction>Thurion</faction>
-  <pilots>
-   <pilot name="Thurion Taciturnity" ship="Thurion Taciturnity"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Thurion Apprehension">
   <ai>thurion</ai>
   <faction>Thurion</faction>
@@ -1022,20 +585,6 @@
   <faction>Thurion</faction>
   <pilots>
    <pilot name="Thurion Certitude" ship="Thurion Certitude"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Ghost Ship">
-  <ai>thurion</ai>
-  <faction>Thurion</faction>
-  <pilots>
-   <pilot name="Ghost Ship" ship="Thurion Ingenuity"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Nebula Research Shuttle">
-  <ai>zalek</ai>
-  <faction>Za'lek</faction>
-  <pilots>
-   <pilot name="Nebula Research Shuttle" ship="Rhino"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Recon Force">
@@ -1097,34 +646,6 @@
    <pilot name="Nasin Lancelot" ship="Lancelot"></pilot>
    <pilot name="Nasin Admonisher" ship="Admonisher"></pilot>
    <pilot name="Nasin Admonisher" ship="Admonisher"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Proteron Dissident Schroedinger">
-  <ai>proteron_dissident</ai>
-  <faction>Proteron Dissident</faction>
-  <pilots>
-   <pilot name="Civilian Schroedinger" ship="Schroedinger"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Proteron Dissident Hyena">
-  <ai>proteron_dissident</ai>
-  <faction>Proteron Dissident</faction>
-  <pilots>
-   <pilot name="Civilian Hyena" ship="Hyena"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Proteron Dissident Llama">
-  <ai>proteron_dissident</ai>
-  <faction>Proteron Dissident</faction>
-  <pilots>
-   <pilot name="Civilian Llama" ship="Llama"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Proteron Dissident Gawain">
-  <ai>proteron_dissident</ai>
-  <faction>Proteron Dissident</faction>
-  <pilots>
-   <pilot name="Civilian Gawain" ship="Gawain"></pilot>
   </pilots>
  </fleet>
 </Fleets>
