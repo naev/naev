@@ -5,7 +5,7 @@
   <slot prop="hull">structure</slot>
   <size>large</size>
   <priority>7</priority>
-  <mass>1500</mass>
+  <mass>1550</mass>
   <price>2900000</price>
   <description>Considered the best standard plating configuration on the market, this hull modification from Schafer &amp; Kane Industries is generally found only on important capital ships.</description>
   <gfx_store>combat_hull_x.webp</gfx_store>
