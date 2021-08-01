@@ -177,7 +177,6 @@ function gen_question_ship_guess( hard )
 end
 
 function gen_question( difficulty )
-   if true then return gen_question_ship_guess( false ) end
    local r = rnd.rnd()
    if difficulty == 1 then
       if r < 0.6 then
@@ -198,6 +197,25 @@ end
 
 function create ()
    if not var.peek("testing") then evt.finish() end
+
+   -- Make sure not same system as last time
+   local lastplanet = var.peek("shiplover_lastplanet")
+   if lastplanet then
+      local pnt, sys = planet.get(lastplanet)
+      if sys == system.cur() then
+         evt.finish()
+      end
+   end
+
+   -- Only allow once every 10 periods at best
+   local lastplayed = var.peek("shiplover_lastplayed")
+   if lastplayed then
+      lastplayed = time.fromnumber( lastplayed )
+      if lastplayed + time.create( 0, 10, 0 ) > time.get() then
+         evt.finish()
+      end
+   end
+
    local whitelist = {
       ["Independent"]= true,
       ["Empire"]     = true,
@@ -436,6 +454,9 @@ They take their leave.]]), question.answer))
 
    -- Finish event (removes npc)
    if remove_npc then
+      var.push( "shiplover_lastplayed", time.get():tonumber() )
+      var.push( "shiplover_lastplanet", planet.cur():nameRaw() )
+
       evt.finish()
    end
 end
