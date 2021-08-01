@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Trading Card (Rare)">
+ <general>
+  <unique/>
+  <typename>Accessory</typename>
+  <slot prop="accessory">utility</slot>
+  <size>small</size>
+  <priority>3</priority>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>A #oGolden Llama#0 trading card game card of #prare#0 rarity. Instead of going into the important details of the ship, it just shows a high definition holographic rendition of the supposed Golden Llama.</description>
+  <gfx_store>placeholder.webp</gfx_store>
+ <rarity>6</rarity></general>
+ <specific type="modification">
+  <absorb>5</absorb>
+  <cooldown_time>-10</cooldown_time>
+  <loot_mod>10</loot_mod>
+  <stress_dissipation>10</stress_dissipation>
+  <heat_dissipation>10</heat_dissipation>
+  <ew_hide>5</ew_hide>
+ </specific>
+</outfit>
+
+

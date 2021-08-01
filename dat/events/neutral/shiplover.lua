@@ -143,7 +143,7 @@ local faction_ships = merge_tables{
    pirate_ships,
 }
 
-function gen_question_ship_class ()
+function gen_question_ship_class( hard )
    -- Create question
    local ship_list
    if hard then
@@ -159,8 +159,14 @@ function gen_question_ship_class ()
    return { type="ship_class", question=question, options=options, answer=answer }
 end
 
-function gen_question ()
-   return gen_question_ship_class()
+function gen_question( difficulty )
+   if difficulty == 1 then
+      return gen_question_ship_class( false)
+   elseif difficulty == 2 then
+      return gen_question_ship_class( true )
+   else
+      return gen_question_ship_class( true )
+   end
 end
 
 function create ()
@@ -180,16 +186,70 @@ function create ()
       evt.finish()
    end
 
+   -- See how many times cleared
+   local quiz_types = {
+      "ship_class",
+   }
+   local nwon = 0
+   local nlost = 0
+   for k,v in ipairs(quiz_types) do
+      local nw = var.peek( "shiplover_quiz_right_"..v ) or 0
+      local nl = var.peek( "shiplover_quiz_wrong_"..v ) or 0
+      nwon = nwon + nw
+      nlost = nlost + nl
+   end
+   local nplayed = nwon + nlost
+
    -- Clear met if didn't play last time
-   if var.peek("shiplover_quiz") == nil then
+   if nplayed == 0 then
       var.pop("shiplover_met")
    end
 
-   -- Generate the question
-   question = gen_question()
+   -- Increase the difficulty as progresses
+   local difficulty = 1
+   if nwon >= 5 then
+      difficulty = 2
+   elseif nwon > 10 then
+      difficulty = 3
+   end
 
-   -- TODO better and randomized rewards
-   cash_reward = 50e3
+   -- Generate the question
+   question = gen_question( difficulty )
+
+   -- Determine reward
+   reward = {}
+   if nwon == 4 and player.numOutfit("Trading Card (Common)")<1 then
+      local outfit_reward = outfit.get("Trading Card (Common)")
+      reward.func = function ()
+         player.outfitAdd( outfit_reward )
+      end
+      reward.msg_shiplover = _([["Wow. This is the 5th time you got my quiz right. This deserves a special reward. Here, take this special trading card. Don't worry, I have a dozen like it. I'll have to step up my quiz game from now on."]])
+      reward.msg_obtain = string.format(_("You have received #g%s#0."), outfit_reward:name())
+   
+   elseif nwon == 9 and player.numOutfit("Trading Card (Uncommon)")<1 then
+      local outfit_reward = outfit.get("Trading Card (Uncommon)")
+      reward.func = function ()
+         player.outfitAdd( outfit_reward )
+      end
+      reward.msg_shiplover = _([["Wow. This is the 10th time you got my quiz right. You are doing much better than I anticipated. Here, take one of my favourite trading cards. Make sure not to lose it, this one is fairly special! I'll have to think of better quizzes from now on."]])
+      reward.msg_obtain = string.format(_("You have received #g%s#0."), outfit_reward:name())
+   
+   elseif nwon == 24 and player.numOutfit("Trading Card (Rare)")<1 then
+      local outfit_reward = outfit.get("Trading Card (Rare)")
+      reward.func = function ()
+         player.outfitAdd( outfit_reward )
+      end
+      reward.msg_shiplover = _([["Damn. This is the 25th time you got my quiz right. Nobody has played my quiz with me for this long. I guess I have to commemorate this in a special way. Here, take one of the rarest cards in my collection. I only have one copy of this one so make sure to take good care of it. No! Don't take it out of the card foil! It might get damaged that way!"]])
+      reward.msg_obtain = string.format(_("You have received #g%s#0."), outfit_reward:name())
+   
+   else
+      local cash_reward = 50e3
+      reward.func = function ()
+         player.pay( cash_reward, true ) -- Don't trigger hooks
+      end
+      reward.msg_shiplover = string.format(_([["That's right! Damn, I thought you wouldn't know this one. This is the %d time you got my quiz right! Here, take this as a reward for your performance."]]), nwon+1)
+      reward.msg_obtain = string.format(_("You have received #g%s#0."), creditstring(cash_reward))
+   end
 
    -- Set up NPC and hooks
    evt.npcAdd("approach_shiplover", shiplover_name, shiplover_portrait, shiplover_desc, shiplover_priority )
@@ -298,20 +358,17 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
 
    vn.label("answer_right")
    vn.func( function ()
-      increment_var( "shiplover_quiz" )
       increment_var( "shiplover_quiz_right_"..question.type )
    end )
    vn.sfxBingo()
-   sl(_([["That's right! Damn, I thought you wouldn't know this one. Here, take this as a reward for your performance."]]))
-   vn.func( function ()
-      player.pay( cash_reward, true ) -- Don't trigger hooks
-   end )
-   vn.na(string.format(_("You have received #g%s#0."), creditstring(cash_reward)))
+   -- Give reward
+   sl( reward.msg_shiplover )
+   vn.func( function () reward.func() end )
+   vn.na( reward.msg_obtain )
    vn.jump("remove_npc")
 
    vn.label("answer_wrong")
    vn.func( function ()
-      increment_var( "shiplover_quiz" )
       increment_var( "shiplover_quiz_wrong_"..question.type )
    end )
    -- TODO wrong sound
