@@ -23,7 +23,12 @@ for i in images:
 for file in glob(prefix+"/dat/outfits/**/*.xml", recursive=True):
     print( file )
     with open( file, 'r' ) as f:
-        m = re.search( "<gfx_store>(.+?)</gfx_store>", f.read() )
+        d = f.read()
+        m = re.search( "<specific type=\"(ammo|fighter)\">", d )
+        if m:
+            continue
+
+        m = re.search( "<gfx_store>(.+?)</gfx_store>", d )
         if m:
             s = m.group(1)
             v = imgdict.get(s)
