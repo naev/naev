@@ -140,10 +140,21 @@ local function _draw_character( c )
    else
       col = { 0.9, 0.9, 0.9 }
    end
-   local flip = 1
-   if c.offset > 0.5*lw then
-      flip = -1
-      x = x + scale*w
+   local flip
+   if c.params.flip~=nil then
+      if c.params.flip then
+         flip = -1
+         x = x + scale*w
+      else
+         flip = 1
+      end
+   else
+      if c.offset > 0.5*lw then
+         flip = -1
+         x = x + scale*w
+      else
+         flip = 1
+      end
    end
    local r = c.rotation or 0
    -- TODO why does rotation not work with shaders??

@@ -14,6 +14,7 @@
 -- Recurring ship lover event.
 --]]
 local vn = require 'vn'
+local lg = require 'love.graphics'
 require "numstring"
 
 shiplover_name    = _("Ship Enthusiast")
@@ -134,7 +135,7 @@ local pirate_ships = {
   "Pirate Rhino",
   "Pirate Kestrel",
 }
-local faction_ships = merge_tables{
+local faction_list = {
    sirius_ships,
    soromid_ships,
    dvaered_ships,
@@ -142,6 +143,7 @@ local faction_ships = merge_tables{
    zalek_ships,
    pirate_ships,
 }
+local faction_ships = merge_tables( faction_list )
 
 function gen_question_ship_class( hard )
    -- Create question
@@ -159,11 +161,36 @@ function gen_question_ship_class( hard )
    return { type="ship_class", question=question, options=options, answer=answer }
 end
 
+function gen_question_ship_guess( hard )
+   -- Create question
+   local ship_list
+   if hard then
+      ship_list = faction_list[ rnd.rnd(1,#faction_list) ]
+   else
+      ship_list = standard_ships
+   end
+   local ships = rnd.permutation( ship_list )
+   local question = _([["What is the name of this ship?"]])
+   local options  = getNUnique( ships, 5 )
+   local answer   = options[1]
+   return { type="ship_guess", question=question, options=options, answer=answer }
+end
+
 function gen_question( difficulty )
+   if true then return gen_question_ship_guess( false ) end
+   local r = rnd.rnd()
    if difficulty == 1 then
-      return gen_question_ship_class( false)
+      if r < 0.6 then
+         return gen_question_ship_guess( false )
+      else
+         return gen_question_ship_class( false )
+      end
    elseif difficulty == 2 then
-      return gen_question_ship_class( true )
+      if r < 0.5 then
+         return gen_question_ship_class( true )
+      else
+         return gen_question_ship_guess( true )
+      end
    else
       return gen_question_ship_class( true )
    end
@@ -189,6 +216,7 @@ function create ()
    -- See how many times cleared
    local quiz_types = {
       "ship_class",
+      "ship_guess",
    }
    local nwon = 0
    local nlost = 0
@@ -263,9 +291,9 @@ function approach_shiplover ()
    local remove_npc = false
    local first_meet = not var.peek("shiplover_met")
 
-   vn.clear()
+   vn.reset()
    vn.scene()
-   local sl = vn.newCharacter( shiplover_name, { image=shiplover_image } )
+   local sl = vn.newCharacter( shiplover_name, { image=shiplover_image, flip=false} )
    vn.transition()
 
    -- First meeting
@@ -338,6 +366,30 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
       sl(string.format(_([["Great! So here it goes. Listen carefully."
 
 %s]]), question.question))
+   elseif question.type == "ship_guess" then
+      local nw, nh = naev.gfx.dim()
+      local shipgfx = lg.newImage( ship.get(question.answer):gfxComm() )
+      local shipchar = vn.Character.new( "ship", {image=shipgfx, pos="left"} )
+      local function runinit ()
+         slpos = sl.offset
+         slnewpos = 0.75*nw
+      end
+      vn.animation( 1, function( alpha, dt, params )
+         sl.offset = slnewpos*alpha + slpos*(1-alpha)
+      end, nil, "ease-in-out", runinit )
+      vn.appear( shipchar )
+      vn.func( function ()
+         vn.menu_x = math.min( -1, 500 - nw/2 )
+      end )
+      sl(string.format(_([["Great! So take a look at this ship and listen carefully."
+
+%s]]), question.question))
+      function restore_vn ()
+         vn.disappear( shipchar )
+         vn.animation( 1, function( alpha, dt, params )
+            sl.offset = slpos*alpha + slnewpos*(1-alpha)
+         end, nil, "ease-in-out" )
+      end
    end
 
    -- Show choices
@@ -357,6 +409,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
    end )
 
    vn.label("answer_right")
+   if restore_vn then restore_vn() end
    vn.func( function ()
       increment_var( "shiplover_quiz_right_"..question.type )
    end )
@@ -368,6 +421,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
    vn.jump("remove_npc")
 
    vn.label("answer_wrong")
+   if restore_vn then restore_vn() end
    vn.func( function ()
       increment_var( "shiplover_quiz_wrong_"..question.type )
    end )
