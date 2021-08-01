@@ -221,11 +221,11 @@ function comm( plt )
             bribe_group = bribe_fleet( plt )
             bribeable = nearby_bribeable( plt ) -- global
             if #bribeable > 1 and not (bribe_group and #bribe_group==#bribeable) then
-               table.insert( opts, 1, {string.format(_("Bribe %d nearby %s pilots"), #bribeable, fac:name()), "bribe_nearby"} )
+               table.insert( opts, 1, {string.format(n_("Bribe %d nearby %s pilot","Bribe %d nearby %s pilots",#bribeable), #bribeable, fac:name()), "bribe_nearby"} )
             end
 
             if bribe_group then
-               table.insert( opts, 1, {string.format(_("Bribe fleet (%d pilots)"), #bribe_group), "bribe"} )
+               table.insert( opts, 1, {string.format(_("Bribe fleet (%d pilot)", "Bribe fleet (%d pilots)", #bribe_group), #bribe_group), "bribe"} )
             else
                table.insert( opts, 1, {_("Bribe"), "bribe"} )
             end
