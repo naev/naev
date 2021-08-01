@@ -232,16 +232,11 @@ function timer_start ()
          hook.hail( "hail" )
       end
 
-      civ_fleet = {}
-      local choices = {
-         "Civilian Llama", "Civilian Gawain", "Trader Llama",
-         "Trader Koala", "Trader Mule" }
+      local ships = { "Llama", "Gawain", "Llama", "Koala", "Mule" }
+      local factions = { "Independent", "Independent", "Trader", "Trader", "Trader" }
+      local pilotnames = { _("Llama"), _("Gawain"), _("Trader Llama"), _("Trader Koala"), _("Trader Mule") }
       local src = system.get( "Zacron" )
-      for i = 1, 12 do
-         local choice = choices[ rnd.rnd( 1, #choices ) ]
-         local nf = pilot.addFleet( choice, src )
-         civ_fleet[ #civ_fleet + 1 ] = nf[1]
-      end
+      civ_fleet = addShips( 12, ships, factions, src, pilotnames )
 
       local dest = system.get( "Tau Prime" )
       for i, j in ipairs( civ_fleet ) do
@@ -260,19 +255,17 @@ function timer_pirates ()
    civ_fleet[1]:comm( civcomm )
 
    local src = system.get( "Zacron" )
+   local ships = {
+      "Hyena", "Pirate Shark", "Pirate Admonisher",
+      "Pirate Vendetta", "Pirate Ancestor" }
+   local pilotnames = {
+      _("Pirate Hyena"), _("Pirate Shark"), _("Pirate Admonisher"),
+      _("Pirate Vendetta"), _("Pirate Ancestor") }
 
    pir_boss = pilot.add( "Pirate Kestrel", "Pirate", src )
-   pir_fleet = {pir_boss}
+   pir_fleet = addShips( 9, ships, "Pirate", src, pilotnames )
+   pir_fleet[ #pir_fleet + 1 ] = pir_boss
    hook.pilot( pir_boss, "death", "pilot_death_kestrel" )
-
-   local choices = {
-      "Pirate Hyena", "Pirate Shark", "Pirate Admonisher",
-      "Pirate Vendetta", "Pirate Ancestor" }
-   for i = 1, 9 do
-      local choice = choices[ rnd.rnd( 1, #choices ) ]
-      local nf = pilot.addFleet( choice, src )
-      pir_fleet[ #pir_fleet + 1 ] = nf[1]
-   end
 
    for i, j in ipairs( pir_fleet ) do
       j:control()
