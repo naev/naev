@@ -197,6 +197,22 @@ end
 function create ()
    if not var.peek("testing") then evt.finish() end
 
+   -- Only available on whitelisted factions
+   local whitelist = {
+      ["Independent"]= true,
+      ["Empire"]     = true,
+      ["Dvaered"]    = true,
+      ["Sirius"]     = true,
+      ["Soromid"]    = true,
+      ["Za'lek"]     = true,
+      ["Goddard"]    = true,
+      ["Frontier"]   = true,
+   }
+   local sfact = system.cur():faction():nameRaw()
+   if not whitelist[ sfact ] then
+      evt.finish()
+   end
+
    -- Make sure not same system as last time
    local lastplanet = var.peek("shiplover_lastplanet")
    if lastplanet then
@@ -214,21 +230,6 @@ function create ()
    end
    lastplayed = time.fromnumber( lastplayed )
    if lastplayed + time.create( 0, 10, 0 ) > time.get() then
-      evt.finish()
-   end
-
-   local whitelist = {
-      ["Independent"]= true,
-      ["Empire"]     = true,
-      ["Dvaered"]    = true,
-      ["Sirius"]     = true,
-      ["Soromid"]    = true,
-      ["Za'lek"]     = true,
-      ["Goddard"]    = true,
-      ["Frontier"]   = true,
-   }
-   local sfact = system.cur():faction():nameRaw()
-   if not whitelist[ sfact ] then
       evt.finish()
    end
 
