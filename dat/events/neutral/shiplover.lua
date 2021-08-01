@@ -183,14 +183,13 @@ function gen_question( difficulty )
       else
          return gen_question_ship_class( false )
       end
-   elseif difficulty == 2 then
+   --elseif difficulty == 2 then
+   else
       if r < 0.5 then
          return gen_question_ship_class( true )
       else
          return gen_question_ship_guess( true )
       end
-   else
-      return gen_question_ship_class( true )
    end
 end
 
