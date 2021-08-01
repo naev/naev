@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Ship Lover Quiz">
  <trigger>land</trigger>
- <chance>100</chance>
+ <chance>25</chance>
  <notes>
   <tier>1</tier>
  </notes>
@@ -194,8 +194,6 @@ function gen_question( difficulty )
 end
 
 function create ()
-   if not var.peek("testing") then evt.finish() end
-
    -- Only available on whitelisted factions
    local whitelist = {
       ["Independent"]= true,
@@ -457,7 +455,6 @@ They take their leave.]]), question.answer))
    if remove_npc then
       var.push( "shiplover_lastplayed", time.get():tonumber() )
       var.push( "shiplover_lastplanet", planet.cur():nameRaw() )
-
       evt.finish()
    end
 end
