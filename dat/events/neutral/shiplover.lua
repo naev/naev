@@ -262,7 +262,7 @@ function create ()
    question = gen_question( difficulty )
 
    -- Create the log if necessary.
-   shiplog.create( "shiplover", _("Miscellaneous"), _("Ship Quiz") )
+   shiplog.create( "shiplover", _("Ship Quiz"), _("Neutral") )
 
    -- Determine reward
    reward = {}
