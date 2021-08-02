@@ -907,11 +907,13 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    Pilot *const* pilot_stack;
    LuaFaction lf;
 
+   /* Check if using faction. */
    lf = -1;
    if (lua_isfaction(L,1))
       lf = lua_tofaction(L,1);
    else if (lua_isstring(L,1))
       lf = luaL_validfaction(L,1);
+   /* Faction case. */
    if (lf >= 0) {
       dist  = luaL_optnumber(L,2,-1.);
       v     = luaL_checkvector(L,3);
@@ -919,6 +921,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       dis   = lua_toboolean(L,5);
       p     = NULL;
    }
+   /* Pilot case. */
    else {
       p     = luaL_validpilot(L,1);
       dist  = luaL_optnumber(L,2,-1.);
@@ -944,7 +947,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       /* Check appropriate faction. */
       if (friend) {
          if (p==NULL) {
-            if (!areAllies( plt->faction, lf ))
+            if (!areAllies( lf, plt->faction ))
                continue;
          }
          else {
@@ -954,12 +957,12 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       }
       else {
          if (p==NULL) {
-            if (!areEnemies( plt->faction, lf ))
+            if (!areEnemies( lf, plt->faction ))
                continue;
          }
          else {
             if (inrange) {
-               if (!pilot_validEnemyDist( p, plt, &d2 ))
+               if (!pilot_validEnemy( p, plt ))
                   continue;
             }
             else {
@@ -973,7 +976,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
          continue;
 
       if (inrange) {
-         if ((d2<0.) && !pilot_inRangePilot( p, plt, &d2 ))
+         if (!pilot_inRangePilot( p, plt, &d2 ))
             continue;
          /* Check distance if necessary. */
          if ((dist >= 0.) && (d2 > dd))
