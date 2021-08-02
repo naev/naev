@@ -16,7 +16,7 @@ end
 local function __getenemy( p )
    local pv = {}
    local r = math.pow( mem.lanedistance, 2 )
-   for k,v in ipairs(p:getHostiles( mem.ambushclose )) do
+   for k,v in ipairs(p:getHostiles( mem.ambushclose, nil, true )) do
       local vp = v:pos()
       -- Make sure not in safe lanes
       if lanes.getDistance2( vp ) > r then
