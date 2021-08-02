@@ -120,8 +120,8 @@ function handle_messages ()
       -- (So far, only allies would send in the first place, but this check future-proofs things.
       -- One day it might be interesting to have non-allied snitches whose tips get checked out...)
       if sender:exists() and p:faction():areAllies( sender:faction() ) then
-         if mem.doscans and msgtype == "scanned" then
-            if data ~= nil and data:exists() then
+         if msgtype == "scanned" then
+            if mem.doscans and data ~= nil and data:exists() then
                table.insert( mem.scanned, data )
                -- Stop scanning if they got information about the scan
                if ai.taskname() == "scan" and ai.taskdata() == data then
