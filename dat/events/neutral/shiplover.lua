@@ -261,11 +261,15 @@ function create ()
    -- Generate the question
    question = gen_question( difficulty )
 
+   -- Create the log if necessary.
+   shiplog.create( "shiplover", _("Miscellaneous"), _("Ship Quiz") )
+
    -- Determine reward
    reward = {}
    if nwon == 4 and player.numOutfit("Trading Card (Common)")<1 then
       local outfit_reward = outfit.get("Trading Card (Common)")
       reward.func = function ()
+         shiplog.append( "shiplover", string.format(_("You obtained a %s from the Ship Enthusiast for getting 5 quizzes right."), outfit_reward:name())  )
          player.outfitAdd( outfit_reward )
       end
       reward.msg_shiplover = _([["Wow. This is the 5th time you got my quiz right. This deserves a special reward. Here, take this special trading card. Don't worry, I have a dozen like it. I'll have to step up my quiz game from now on."]])
@@ -274,6 +278,7 @@ function create ()
    elseif nwon == 9 and player.numOutfit("Trading Card (Uncommon)")<1 then
       local outfit_reward = outfit.get("Trading Card (Uncommon)")
       reward.func = function ()
+         shiplog.append( "shiplover", string.format(_("You obtained a %s from the Ship Enthusiast for getting 10 quizzes right."), outfit_reward:name())  )
          player.outfitAdd( outfit_reward )
       end
       reward.msg_shiplover = _([["Wow. This is the 10th time you got my quiz right. You are doing much better than I anticipated. Here, take one of my favourite trading cards. Make sure not to lose it, this one is fairly special! I'll have to think of better quizzes from now on."]])
@@ -282,6 +287,7 @@ function create ()
    elseif nwon == 24 and player.numOutfit("Trading Card (Rare)")<1 then
       local outfit_reward = outfit.get("Trading Card (Rare)")
       reward.func = function ()
+         shiplog.append( "shiplover", string.format(_("You obtained a %s from the Ship Enthusiast for getting 25 quizzes right."), outfit_reward:name())  )
          player.outfitAdd( outfit_reward )
       end
       reward.msg_shiplover = _([["Damn. This is the 25th time you got my quiz right. Nobody has played my quiz with me for this long. I guess I have to commemorate this in a special way. Here, take one of the rarest cards in my collection. I only have one copy of this one so make sure to take good care of it. No! Don't take it out of the card foil! It might get damaged that way!"]])
@@ -290,6 +296,7 @@ function create ()
    else
       local cash_reward = 50e3
       reward.func = function ()
+         shiplog.append( "shiplover", string.format(_("You obtained a %s from the Ship Enthusiast for getting a quiz right."), creditstring(cash_reward))  )
          player.pay( cash_reward, true ) -- Don't trigger hooks
       end
       reward.msg_shiplover = string.format(_([["That's right! Damn, I thought you wouldn't know this one. This is the %d time you got my quiz right! Here, take this as a reward for your performance."]]), nwon+1)
@@ -440,6 +447,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
    vn.label("answer_wrong")
    if restore_vn then restore_vn() end
    vn.func( function ()
+      shiplog.append( "shiplover", _("You got the Ship Enthusiast's quiz wrong.") )
       increment_var( "shiplover_quiz_wrong_"..question.type )
    end )
    -- TODO wrong sound
