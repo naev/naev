@@ -120,6 +120,16 @@ void player_board (void)
       return;
    }
 
+   /* Handle fighters. */
+   if (pilot_isFlag(p, PILOT_CARRIED) && (p->dockpilot == PLAYER_ID)) {
+      if (pilot_dock( p, player.p )) {
+         WARN(_("Unable to recover fighter."));
+         return;
+      }
+      player_message(_("#oYou recover your %s fighter."), p->name);
+      return;
+   }
+
    /* Is boarded. */
    board_boarded = 1;
 

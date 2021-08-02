@@ -148,7 +148,7 @@ unsigned int escort_create( Pilot *p, char *ship,
    pe = pilot_get(e);
    pe->parent = parent;
 
-   /* Computer fighter bay bonuses. */
+   /* Compute fighter bay bonuses. */
    if (pilot_isFlagRaw( f, PILOT_CARRIED )) {
       /* Damage. */
       pe->intrinsic_stats.launch_damage *= p->stats.fbay_damage;
