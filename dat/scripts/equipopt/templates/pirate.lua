@@ -68,7 +68,7 @@ local pirate_cores = {
             return ecores.get( p, { all=pirate_class, heavy=heavy } )
          end
          local c = ecores.get( p, { systems=pirate_class, hulls=pirate_class, heavy=false } )
-         table.insert( c, choose_one{ "Nexus Bolt 4500 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", } )
+         table.insert( c, choose_one{ "Nexus Bolt 3500 Engine", "Krain Remige Engine", "Tricon Typhoon Engine", } )
          return c
       end,
 }
