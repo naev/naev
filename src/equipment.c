@@ -1373,10 +1373,10 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    }
 
    /* Write to buffer. */
-   l = 0;
+   l = scnprintf( buf, max_len, "%s", s->name );
    if (dps > 0.)
       l += scnprintf( &buf[l], (max_len-l),
-            _("%s%.2f DPS [%.2f EPS]"), (l!=0)?"\n":"", dps, eps );
+            _("\n%.2f DPS [%.2f EPS]"), dps, eps );
    l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), l );
    return l;
 }
