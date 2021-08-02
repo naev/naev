@@ -241,8 +241,8 @@ static void info_openMain( unsigned int wid )
          "%d (%d %s)\n"
          "\n"
          "%.1f hours\n"
-         "%s\n"
-         "%s\n"
+         "%s MJ\n"
+         "%s MJ\n"
          "%s"),
          player.name,
          nt,
