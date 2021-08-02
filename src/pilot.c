@@ -1052,7 +1052,7 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
  *    @param p Pilot that aims.
  *    @param target Pilot that is being aimed at.
  */
-double pilot_aimAngle( Pilot *p, Pilot *target )
+double pilot_aimAngle( Pilot *p, const Pilot *target )
 {
    double x,y;
    double t;
