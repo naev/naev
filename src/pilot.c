@@ -232,14 +232,8 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
  */
 int pilot_validTarget( const Pilot* p, const Pilot* target )
 {
-   /* Must not be dead. */
-   if (pilot_isFlag( target, PILOT_DELETE ) ||
-         pilot_isFlag( target, PILOT_DEAD ))
-      return 0;
-
-   /* Must not be hidden nor invisible. */
-   if (pilot_isFlag( target, PILOT_HIDE ) ||
-         pilot_isFlag( target, PILOT_INVISIBLE))
+   /* Must be targetable. */
+   if (!pilot_canTarget( target ))
       return 0;
 
    /* Must be in range. */
@@ -289,10 +283,6 @@ int pilot_validEnemy( const Pilot* p, const Pilot* target )
  */
 int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
 {
-   /* Should either be hostile by faction or by player. */
-   if (!pilot_areEnemies( p, target ))
-      return 0;
-
    /* Shouldn't be disabled. */
    if (pilot_isDisabled(target))
       return 0;
@@ -308,6 +298,10 @@ int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
 
    /* Must be a valid target. */
    if (!pilot_validTarget( p, target ))
+      return 0;
+
+   /* Should either be hostile by faction or by player. */
+   if (!pilot_areEnemies( p, target ))
       return 0;
 
    /* Must not be fuzzy. */
