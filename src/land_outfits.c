@@ -188,9 +188,9 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
 
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20, -40,
-         w - (20 + iw + 20) - 260 - 20, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
+         w - (20 + iw + 20) - 264 - 40, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
    window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h - 30,
-         w - (20 + iw + 20) - 260 - 20, 320, 0, "txtDescShort", &gl_defFont, NULL, NULL );
+         w - (20 + iw + 20) - 264 - 40, 320, 0, "txtDescShort", &gl_defFont, NULL, NULL );
 
    window_addText( wid, 20 + iw + 20, 0,
          90, 160, 0, "txtSDesc", &gl_defFont, &cFontGrey,
