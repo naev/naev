@@ -1081,26 +1081,13 @@ function scan( target )
          local msg = mem.scan_msg_bad or _("Illegal objects detected! Do not resist!")
          p:comm( target, msg )
 
-         -- Make entire system hostile to player
+         -- Player gets faction hit and more hostiles on them
          if target == player.pilot() then
-            local f = p:faction()
-            for k,v in ipairs(pilot.get(f)) do
+            for k,v in ipairs(p:getAllies(5000, nil, true)) do
                v:setHostile(true)
             end
-            -- Do allies too :)
-            for kf,vf in ipairs(f:allies()) do
-               for k,v in ipairs(pilot.get(vf)) do
-                  v:setHostile(true)
-               end
-            end
-
             -- Small faction hit
-            f:modPlayer( -1 )
-         end
-
-         -- Have escorts attack
-         for k,v in ipairs(p:followers()) do
-            p:msg( v, "e_attack", target )
+            p:faction():modPlayer( -1 )
          end
       else
          local msg = mem.scan_msg_ok or _("Thank you for your cooperation.")
