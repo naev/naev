@@ -4118,6 +4118,9 @@ void player_stealth (void)
    }
    else {
       /* Stealth failed. */
-      player_message(_("#rUnable to stealth!"));
+      if (player.p->lockons > 0)
+         player_message(_("#rUnable to stealth: missiles locked on!"));
+      else
+         player_message(_("#rUnable to stealth: other pilots nearby!"));
    }
 }
