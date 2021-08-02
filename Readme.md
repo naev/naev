@@ -21,7 +21,7 @@ Naev requires the following:
 * SDL 2
 * libxml2
 * freetype2
-* glpk
+* GLPK
 * libpng
 * OpenAL
 * OpenBLAS
