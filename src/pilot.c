@@ -457,10 +457,6 @@ unsigned int pilot_getBoss( const Pilot* p )
 
    for (i=0; i<array_size(pilot_stack); i++) {
 
-      /* Must be in range. */
-      if (!pilot_inRangePilot( p, pilot_stack[i], NULL ))
-         continue;
-
       /* Must not be self. */
       if (pilot_stack[i] == p)
          continue;
