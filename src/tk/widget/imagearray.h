@@ -40,6 +40,8 @@ typedef struct WidgetImageArrayData_ {
    double pos; /**< Current y position. */
    int iw; /**< Image width to use. */
    int ih; /**< Image height to use. */
+   int mx; /**< Last mouse x position. */
+   int my; /**< Last mouse y position. */
    void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
    void (*rmptr) (unsigned int,char*); /**< Right click callback. */
    void (*dblptr) (unsigned int,char*); /**< Double click callback (for one selection). */

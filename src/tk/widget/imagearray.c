@@ -105,6 +105,8 @@ void window_addImageArray( const unsigned int wid,
    wgt->dat.iar.alty       = -1;
    wgt->dat.iar.iw         = iw;
    wgt->dat.iar.ih         = ih;
+   wgt->dat.iar.mx         = 0;
+   wgt->dat.iar.my         = 0;
    wgt->dat.iar.fptr       = call;
    wgt->dat.iar.rmptr      = rmcall;
    wgt->dat.iar.dblptr     = dblcall;
@@ -428,6 +430,10 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
  */
 static int iar_mdoubleclick( Widget* iar, int button, int x, int y )
 {
+   /* Update mouse position. */
+   iar->dat.iar.mx = x;
+   iar->dat.iar.my = y;
+
    /* Handle different mouse clicks. */
    iar_setAltTextPos( iar, x, y );
    switch (button) {
@@ -476,6 +482,10 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
    (void) rx;
    (void) ry;
    double hmax;
+
+   /* Update mouse position. */
+   iar->dat.iar.mx = x;
+   iar->dat.iar.my = y;
 
    if (iar->status == WIDGET_STATUS_SCROLLING) {
 
@@ -557,7 +567,7 @@ static void iar_scroll( Widget* iar, int direction )
    if (iar->dat.iar.fptr)
       iar->dat.iar.fptr( iar->wdw, iar->name );
 
-   iar_setAltTextPos( iar, iar->dat.iar.altx, iar->dat.iar.alty );
+   iar_mmove( iar, iar->dat.iar.mx, iar->dat.iar.my, 0, 0 );
 }
 
 
