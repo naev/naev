@@ -249,8 +249,7 @@ function patrol_spawnDV( n, boss )
          local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor" }
          shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
       end
-      local pstk = pilot.add( shipname, "Dvaered", vec2.new( x, y ), nil, {ai="dvaered_norun"} )
-      local p = pstk[1]
+      local p = pilot.add( shipname, "Dvaered", vec2.new( x, y ), nil, {ai="dvaered_norun"} )
       hook.pilot( p, "death", "pilot_death_dv" )
       p:setHostile()
       p:setVisible( true )

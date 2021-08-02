@@ -251,8 +251,7 @@ function patrol_spawnPirates( n, boss )
       if shipname == "Hyena" then
          pilotname = _("Pirate Hyena")
       end
-      local pstk = pilot.add( shipname, "Pirate", vec2.new( x, y ), pilotname, {ai="baddie_norun"} )
-      local p = pstk[1]
+      local p = pilot.add( shipname, "Pirate", vec2.new( x, y ), pilotname, {ai="baddie_norun"} )
       hook.pilot( p, "death", "pilot_death_pirate" )
       p:setFaction( "Rogue Pirate" )
       p:setHostile()

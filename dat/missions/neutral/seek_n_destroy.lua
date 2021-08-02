@@ -305,7 +305,7 @@ function enter ()
          pilot.toggleSpawn( false )
          pilot.clear()
 
-         target_ship = pilot.add( ship, target_faction, pos )[1]
+         target_ship = pilot.add( ship, target_faction, pos )
          target_ship:rename( name )
          target_ship:setHilight( true )
          target_ship:setVisplayer()
@@ -336,15 +336,15 @@ function trigger_ambush()
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[1] = pilot.add( aship, target_faction, pos, aname )[1]
+   ambush[1] = pilot.add( aship, target_faction, pos, aname )
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[2] = pilot.add( bship, target_faction, pos, bname )[1]
+   ambush[2] = pilot.add( bship, target_faction, pos, bname )
    x = 4000 * rnd.rnd() - 2000
    y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
-   ambush[3] = pilot.add( bship, target_faction, pos, bname )[1]
+   ambush[3] = pilot.add( bship, target_faction, pos, bname )
 
    ambush[1]:setHostile()
    ambush[2]:setHostile()

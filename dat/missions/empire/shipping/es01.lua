@@ -211,10 +211,7 @@ function enemies ()
       enter_vect:add( math.cos(a) * d, math.sin(a) * d )
       -- Add pilots
       p = pilot.add( v, "Mercenary", enter_vect )
-      -- Set hostile
-      for k,v in ipairs(p) do
-         v:setHostile()
-      end
+      p:setHostile()
    end
 end
 
