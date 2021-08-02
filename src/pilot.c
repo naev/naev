@@ -78,8 +78,6 @@ static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
 /* Clean up. */
 static void pilot_dead( Pilot* p, unsigned int killer );
-/* Targeting. */
-static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
@@ -280,16 +278,19 @@ int pilot_canTarget( const Pilot* p )
  *    @param target Pilot to see if is a valid enemy of the reference.
  *    @return 1 if it is valid, 0 otherwise.
  */
-static int pilot_validEnemy( const Pilot* p, const Pilot* target )
+int pilot_validEnemy( const Pilot* p, const Pilot* target )
+{
+   return pilot_validEnemyDist( p, target, NULL );
+}
+
+
+/**
+ * @brief Same as pilot_validEnemy, but able to store the distance too.
+ */
+int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
 {
    /* Should either be hostile by faction or by player. */
-   if ( !( areEnemies( p->faction, target->faction )
-            || (pilot_isWithPlayer(target)
-               && pilot_isHostile(p))))
-      return 0;
-
-   /* Shouldn't be bribed by player. */
-   if (pilot_isWithPlayer(target) && pilot_isFlag(p, PILOT_BRIBED))
+   if (!pilot_areEnemies( p, target ))
       return 0;
 
    /* Shouldn't be disabled. */
@@ -300,15 +301,20 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target )
    if (pilot_isFlag( target, PILOT_INVINCIBLE ))
       return 0;
 
+   /* Shouldn't be landing or taking off. */
+   if (pilot_isFlag( target, PILOT_LANDING) ||
+         pilot_isFlag( target, PILOT_TAKEOFF ))
+      return 0;
+
    /* Must be a valid target. */
    if (!pilot_validTarget( p, target ))
       return 0;
 
    /* Must not be fuzzy. */
-   if (pilot_inRangePilot( p, target, NULL ) != 1)
+   if (pilot_inRangePilot( p, target, dist ) != 1)
       return 0;
 
-   /* He's ok. */
+   /* They're ok. */
    return 1;
 }
 

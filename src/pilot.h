@@ -431,6 +431,8 @@ double pilot_aimAngle( Pilot *p, Pilot *target );
 /*
  * Faction stuff.
  */
+int pilot_validEnemy( const Pilot* p, const Pilot* target );
+int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist );
 int pilot_areAllies( const Pilot *p, const Pilot *target );
 int pilot_areEnemies( const Pilot *p, const Pilot *target );
 

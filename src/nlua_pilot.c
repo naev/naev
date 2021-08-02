@@ -929,6 +929,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
 
    if (dist >= 0.)
       dd = pow2(dist);
+   d2 = -1.;
 
    /* Now put all the matching pilots in a table. */
    pilot_stack = pilot_getAll();
@@ -957,8 +958,14 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
                continue;
          }
          else {
-            if (!pilot_areEnemies( p, plt ))
-               continue;
+            if (inrange) {
+               if (!pilot_validEnemyDist( p, plt, &d2 ))
+                  continue;
+            }
+            else {
+               if (!pilot_areEnemies( p, plt ))
+                  continue;
+            }
          }
       }
       /* Check if disabled. */
@@ -966,15 +973,15 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
          continue;
 
       if (inrange) {
-         if (!pilot_inRangePilot( p, plt, &d2 ))
+         if ((d2<0.) && !pilot_inRangePilot( p, plt, &d2 ))
             continue;
          /* Check distance if necessary. */
-         if (dist >= 0. && d2 > dd)
+         if ((dist >= 0.) && (d2 > dd))
             continue;
       }
       else {
          /* Check distance if necessary. */
-         if (dist >= 0. &&
+         if ((dist >= 0.) &&
                vect_dist2(&plt->solid->pos, v) > dd)
             continue;
       }
