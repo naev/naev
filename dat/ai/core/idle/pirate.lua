@@ -172,26 +172,24 @@ function idle ()
    return idle_nostealth()
 end
 
-control_custom = {
-   ["ambush_moveto"] = function ()
-      -- Try to engage hostiles
-      if __tryengage( ai.pilot() ) then return end
-   end,
-   ["ambush_stalk"] = function ()
-      local target = ai.taskdata()
-      -- Make sure target is not too far away
-      if mem.ambushclose and ai.dist2(target) > math.pow(2*mem.ambushclose,2) then
-         ai.poptask()
-         return
-      end
-      -- Ignore enemies that are in safe zone again
-      local r = math.pow( mem.lanedistance, 2 )
-      if lanes.getDistance2( vp ) < r then
-         ai.poptask()
-         return
-      end
-   end,
-}
+control_funcs.ambush_moveto = function ()
+   -- Try to engage hostiles
+   if __tryengage( ai.pilot() ) then return end
+end
+control_funcs.ambush_stalk = function ()
+   local target = ai.taskdata()
+   -- Make sure target is not too far away
+   if mem.ambushclose and ai.dist2(target) > math.pow(2*mem.ambushclose,2) then
+      ai.poptask()
+      return
+   end
+   -- Ignore enemies that are in safe zone again
+   local r = math.pow( mem.lanedistance, 2 )
+   if lanes.getDistance2( vp ) < r then
+      ai.poptask()
+      return
+   end
+end
 
 -- Settings
 mem.doscans       = false

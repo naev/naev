@@ -401,13 +401,15 @@ function control ()
    end
 
    -- Run custom function if applicable
-   if control_custom and task then
-      local cc = control_custom[ task ]
+   if task then
+      local cc = control_funcs[ task ]
       if cc then
          cc()
       end
    end
 end
+
+control_funcs = {}
 
 -- Required "attacked" function
 function attacked( attacker )
