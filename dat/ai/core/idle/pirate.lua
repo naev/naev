@@ -14,8 +14,9 @@ local function __estimate_strength( pilots )
    return str
 end
 
-local function __vulnerable( plt, threshold )
+local function __vulnerable( p, plt, threshold, r )
    local pos = plt:pos()
+   r = r or math.pow( mem.lanedistance, 2 )
    -- Make sure not in safe lanes
    if lanes.getDistance2( pos ) > r then
 
@@ -25,7 +26,7 @@ local function __vulnerable( plt, threshold )
                + __estimate_strength( p:getAllies( mem.vulnrange, nil, true ) )
 
       if F*threshold >= H then
-         return true
+         return true, F, H
       end
    end
    return false
@@ -35,7 +36,8 @@ local function __getenemy( p )
    local pv = {}
    local r = math.pow( mem.lanedistance, 2 )
    for k,v in ipairs(p:getHostiles( mem.ambushclose, nil, true )) do
-      if __vulnerable( v, mem.vulnattack ) then
+      local vuln, F, H = __vulnerable( p, v, mem.vulnattack, r )
+      if vuln then
          local d = ai.dist2( v )
          table.insert( pv, {p=v, d=d, F=F, H=H} )
       end
@@ -186,6 +188,11 @@ control_funcs.ambush_moveto = function ()
 end
 control_funcs.ambush_stalk = function ()
    local target = ai.taskdata()
+   if not target or not target:exists() then
+      ai.poptask()
+      return
+   end
+
    -- Make sure target is not too far away
    if mem.ambushclose and ai.dist2(target) > math.pow(2*mem.ambushclose,2) then
       ai.poptask()
@@ -193,7 +200,7 @@ control_funcs.ambush_stalk = function ()
    end
    -- Ignore enemies that are in safe zone again
    local r = math.pow( mem.lanedistance, 2 )
-   if lanes.getDistance2( vp ) < r then
+   if lanes.getDistance2( target:pos() ) < r then
       ai.poptask()
       return
    end
@@ -201,7 +208,12 @@ end
 control_funcs.attack = function ()
    -- Ignore non-vulnerable targets
    local target = ai.taskdata()
-   if not __vulnerable( target, mem.vulnabort ) then
+   if not target or not target:exists() then
+      ai.poptask()
+      return
+   end
+
+   if not __vulnerable( ai.pilot(), target, mem.vulnabort ) then
       ai.poptask()
       return true
    end
