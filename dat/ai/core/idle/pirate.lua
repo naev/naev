@@ -4,6 +4,23 @@ require 'ai.core.idle.generic'
 -- Keep generic as backup
 idle_generic = idle
 
+local function __join_tables( t1, t2 )
+   local t = t1
+   for k,v in ipairs(t2) do
+      local found = false
+      for i,u in ipairs(t1) do
+         if u==v then
+            found = true
+            break
+         end
+      end
+      if not found then
+         table.insert( t, v )
+      end
+   end
+   return t
+end
+
 local function __estimate_strength( pilots )
    local str = 0
    for k,p in ipairs(pilots) do
@@ -22,8 +39,9 @@ local function __vulnerable( p, plt, threshold, r )
 
       -- Check to see vulnerability
       local H = 1+__estimate_strength( p:getHostiles( mem.vulnrange, pos, true ) )
-      local F = 1+__estimate_strength( p:getAllies( mem.vulnrange, pos, true ) )
-               + __estimate_strength( p:getAllies( mem.vulnrange, nil, true ) )
+      local F = 1+__estimate_strength( __join_tables(
+            p:getAllies( mem.vulnrange, pos, true ),
+            p:getAllies( mem.vulnrange, nil, true ) ) )
 
       if F*threshold >= H then
          return true, F, H
@@ -35,7 +53,8 @@ end
 local function __getenemy( p )
    local pv = {}
    local r = math.pow( mem.lanedistance, 2 )
-   for k,v in ipairs(p:getHostiles( mem.ambushclose, nil, true )) do
+   -- Need to consider fighters here
+   for k,v in ipairs(p:getHostiles( mem.ambushclose, nil, true, false, true )) do
       local vuln, F, H = __vulnerable( p, v, mem.vulnattack, r )
       if vuln then
          local d = ai.dist2( v )
