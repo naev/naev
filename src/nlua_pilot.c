@@ -944,6 +944,12 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       /* Check if dead. */
       if (pilot_isFlag(plt, PILOT_DELETE))
          continue;
+
+      /* Check distance if necessary. */
+      if ((dist >= 0.) &&
+            vect_dist2(&plt->solid->pos, v) > dd)
+         continue;
+
       /* Check appropriate faction. */
       if (friend) {
          if (p==NULL) {
@@ -975,17 +981,9 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       if (dis && pilot_isDisabled(plt))
          continue;
 
-      if (inrange) {
+      /* Need extra check for friends. */
+      if ((p!=NULL) && inrange && friend) {
          if (!pilot_inRangePilot( p, plt, &d2 ))
-            continue;
-         /* Check distance if necessary. */
-         if ((dist >= 0.) && (d2 > dd))
-            continue;
-      }
-      else {
-         /* Check distance if necessary. */
-         if ((dist >= 0.) &&
-               vect_dist2(&plt->solid->pos, v) > dd)
             continue;
       }
 
