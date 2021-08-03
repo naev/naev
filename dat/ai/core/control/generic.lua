@@ -416,20 +416,21 @@ function control_funcs.board ()
    attack_think( target, si )
    return true
 end
-function control.attack ()
+function control_funcs.attack ()
    local task = ai.taskname()
    local si = _stateinfo( task )
    control_attack( si )
    return false
 end
-function control.attack_forced ()
+function control_funcs.attack_forced ()
+   -- Independent of control_funcs.attack
    local task = ai.taskname()
    local si = _stateinfo( task )
    control_attack( si )
    return true
 end
-function control.flyback () return true end
-function control.hold () return true end
+function control_funcs.flyback () return true end
+function control_funcs.hold () return true end
 
 -- Required "attacked" function
 function attacked( attacker )

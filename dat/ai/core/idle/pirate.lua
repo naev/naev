@@ -7,29 +7,37 @@ idle_generic = idle
 local function __estimate_strength( pilots )
    local str = 0
    for k,p in ipairs(pilots) do
-      local s = p:ship():size()
+      -- TODO this is awful, do something better
+      local s = math.pow( p:ship():size(), 1.5 )
       str = str + s
    end
    return str
+end
+
+local function __vulnerable( plt, threshold )
+   local pos = plt:pos()
+   -- Make sure not in safe lanes
+   if lanes.getDistance2( pos ) > r then
+
+      -- Check to see vulnerability
+      local H = 1+__estimate_strength( p:getHostiles( mem.vulnrange, pos, true ) )
+      local F = 1+__estimate_strength( p:getAllies( mem.vulnrange, pos, true ) )
+               + __estimate_strength( p:getAllies( mem.vulnrange, nil, true ) )
+
+      if F*threshold >= H then
+         return true
+      end
+   end
+   return false
 end
 
 local function __getenemy( p )
    local pv = {}
    local r = math.pow( mem.lanedistance, 2 )
    for k,v in ipairs(p:getHostiles( mem.ambushclose, nil, true )) do
-      local vp = v:pos()
-      -- Make sure not in safe lanes
-      if lanes.getDistance2( vp ) > r then
-
-         -- Check to see vulnerability
-         local H = 1+__estimate_strength( p:getHostiles( 1000, vp, true ) )
-         local F = 1+__estimate_strength( p:getAllies( 1000, vp, true ) )
-                 + __estimate_strength( p:getAllies( 1000, nil, true ) )
-
-         if F*1.5 >= H then
-            local d = ai.dist2( v )
-            table.insert( pv, {p=v, d=d, F=F, H=H} )
-         end
+      if __vulnerable( plt, mem.vulnattack ) then
+         local d = ai.dist2( v )
+         table.insert( pv, {p=v, d=d, F=F, H=H} )
       end
    end
    table.sort( pv, function(a,b)
@@ -190,6 +198,19 @@ control_funcs.ambush_stalk = function ()
       return
    end
 end
+control_funcs.attack = function ()
+   -- Ignore non-vulnerable targets
+   local target = ai.taskdata()
+   if not __vulnerable( target, mem.vulnabort ) then
+      ai.poptask()
+      return true
+   end
+
+   local task = ai.taskname()
+   local si = _stateinfo( task )
+   control_attack( si )
+   return false
+end
 
 -- Settings
 mem.doscans       = false
@@ -199,3 +220,6 @@ mem.aggressive    = true -- Pirates are aggressive
 mem.lanedistance  = 2000
 mem.enemyclose    = 1000 -- Don't aggro normally unless very close
 mem.ambushclose   = nil
+mem.vulnrange     = 4000
+mem.vulnattack    = 1.5 -- Vulnerability threshold to attack (higher is less vulnerable)
+mem.vulnabort     = 1.0 -- Vulnerability threshold to break off attack (lower is more vulnerable)
