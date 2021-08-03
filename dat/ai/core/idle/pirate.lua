@@ -103,7 +103,12 @@ end
 local function __loiter( p, taskname )
    local targetdir = mem.lastdirection
    if targetdir then
-      targetdir = targetdir + rnd.sigma() * 15
+      -- Low possibility of going in a new random direction
+      if rnd.rnd() < 0.1 then
+         targetdir = nil
+      else
+         targetdir = targetdir + rnd.sigma() * 15
+      end
    end
    local target = lanes.getNonPoint( nil, nil, nil, targetdir )
    if target then
