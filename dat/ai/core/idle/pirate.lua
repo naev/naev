@@ -57,7 +57,7 @@ local function __tryengage( p )
    if enemy ~= nil then
       -- Some criterion to determine whether to rambo or try to attack from
       -- stealth
-      if F*2 > H then
+      if F*mem.vulnrambo > H then
          ai.stealth(false)
          ai.pushtask( "attack", enemy )
       else
@@ -233,5 +233,6 @@ mem.lanedistance  = 2000
 mem.enemyclose    = 1000 -- Don't aggro normally unless very close
 mem.ambushclose   = nil
 mem.vulnrange     = 4000
+mem.vulnrambo     = 2.0
 mem.vulnattack    = 1.5 -- Vulnerability threshold to attack (higher is less vulnerable)
 mem.vulnabort     = 1.0 -- Vulnerability threshold to break off attack (lower is more vulnerable)
