@@ -2,6 +2,7 @@
    * Gameplay
       * Illegal cargo and ship-to-ship detection
       * Pilots can now go into stealth mode
+      * Systems have "safe lanes" patrolled by the governing faction
       * Electronic warfare parameters are simplified and visible
       * Overhaul and rebalance of most outfits
       * Wanted pirates no longer aggro defense forces (pirate bounties)
