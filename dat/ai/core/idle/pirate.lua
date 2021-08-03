@@ -54,10 +54,11 @@ end
 
 local function __tryengage( p )
    local enemy, F, H = __getenemy(p)
+   local stealth = p:flags("stealth")
    if enemy ~= nil then
       -- Some criterion to determine whether to rambo or try to attack from
       -- stealth
-      if F*mem.vulnrambo > H then
+      if not stealth or F*mem.vulnrambo > H then
          ai.stealth(false)
          ai.pushtask( "attack", enemy )
       else
