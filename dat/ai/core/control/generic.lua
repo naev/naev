@@ -321,9 +321,6 @@ function control ()
          idle()
       end
 
-   -- Think for attacking
-   elseif si.attack then
-      control_attack( si )
    end
 
 
@@ -404,6 +401,9 @@ function control_funcs.runaway ()
    gen_distress()
 end
 function control_funcs.board ()
+   local task = ai.taskname()
+   local si = _stateinfo( task )
+
    -- Needs to have a target
    local target = ai.taskdata()
    if not target or not target:exists() then
@@ -413,6 +413,19 @@ function control_funcs.board ()
    -- We want to think in case another attacker gets close
    attack_think( ai.taskdata(), si )
 end
+function control.attack ()
+   local task = ai.taskname()
+   local si = _stateinfo( task )
+   control_attack( si )
+end
+function control.attack_forced ()
+   local task = ai.taskname()
+   local si = _stateinfo( task )
+   control_attack( si )
+   return true
+end
+function control.flyback () return true end
+function control.hold () return true end
 
 -- Required "attacked" function
 function attacked( attacker )
