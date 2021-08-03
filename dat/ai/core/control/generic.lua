@@ -370,18 +370,19 @@ function control_funcs.loiter ()
          __push_scan( target )
       end
    end
+   return false
 end
 function control_funcs.runaway ()
    if mem.norun or ai.pilot():leader() ~= nil then
       ai.poptask()
-      return
+      return true
    end
    local target = ai.taskdata()
 
    -- Needs to have a target
    if not target:exists() then
       ai.poptask()
-      return
+      return true
    end
 
    local dist = ai.dist( target )
@@ -399,6 +400,7 @@ function control_funcs.runaway ()
 
    -- Handle distress
    gen_distress()
+   return true
 end
 function control_funcs.board ()
    local task = ai.taskname()
@@ -408,15 +410,17 @@ function control_funcs.board ()
    local target = ai.taskdata()
    if not target or not target:exists() then
       ai.poptask()
-      return
+      return true
    end
    -- We want to think in case another attacker gets close
-   attack_think( ai.taskdata(), si )
+   attack_think( target, si )
+   return true
 end
 function control.attack ()
    local task = ai.taskname()
    local si = _stateinfo( task )
    control_attack( si )
+   return false
 end
 function control.attack_forced ()
    local task = ai.taskname()
