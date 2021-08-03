@@ -183,6 +183,41 @@ function idle ()
    return idle_nostealth()
 end
 
+-- Try to back off from the target
+function backoff( target )
+   if not target or not target:exists() then
+      ai.poptask()
+      return
+   end
+
+   -- Target distance to get to
+   local tdist
+   if mem.stealth then
+      tdist = mem.ambushclose
+   else
+      tdist = enemyclose
+   end
+   tdist = tdist or 3000
+   tdist = tdist * 1.5
+
+   local p = ai.pilot()
+
+   -- Get away
+   ai.face( target, true )
+   ai.accel()
+
+   -- Afterburner handling.
+   if ai.hasafterburner() and p:energy() > 30 then
+      ai.weapset( 8, true )
+   end
+
+   -- When out of range pop task
+   if ai.dist2( target ) > math.pow(tdist,2) then
+      ai.poptask()
+      return
+   end
+end
+
 control_funcs.ambush_moveto = function ()
    -- Try to engage hostiles
    if __tryengage( ai.pilot() ) then return end
@@ -214,8 +249,17 @@ control_funcs.attack = function ()
       return
    end
 
-   if not __vulnerable( ai.pilot(), target, mem.vulnabort ) then
+   local p = ai.pilot()
+   if not __vulnerable( p, target, mem.vulnabort ) then
       ai.poptask()
+
+      -- Try to get a new enemy
+      local enemy = __getenemy(p)
+      if enemy ~= nil then
+         ai.pushtask( "attack", enemy )
+      else
+         ai.pushtask( "backoff", target )
+      end
       return true
    end
 
