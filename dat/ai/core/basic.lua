@@ -1083,7 +1083,7 @@ function scan( target )
 
          -- Player gets faction hit and more hostiles on them
          if target == player.pilot() then
-            for k,v in ipairs(p:getAllies(5000, nil, true)) do
+            for k,v in ipairs(p:getAllies(5000, nil, true, false, true)) do
                v:setHostile(true)
             end
             -- Small faction hit

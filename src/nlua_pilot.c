@@ -902,7 +902,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    double dd, d2;
    Pilot *p, *plt;
    double dist;
-   int inrange, dis;
+   int inrange, dis, fighters;
    Vector2d *v;
    Pilot *const* pilot_stack;
    LuaFaction lf;
@@ -919,6 +919,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       v     = luaL_checkvector(L,3);
       inrange = 0;
       dis   = lua_toboolean(L,5);
+      fighters = lua_toboolean(L,6);
       p     = NULL;
    }
    /* Pilot case. */
@@ -928,6 +929,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
       v     = luaL_optvector(L,3,&p->solid->pos);
       inrange = lua_toboolean(L,4);
       dis   = lua_toboolean(L,5);
+      fighters = lua_toboolean(L,6);
    }
 
    if (dist >= 0.)
@@ -943,6 +945,10 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
 
       /* Check if dead. */
       if (pilot_isFlag(plt, PILOT_DELETE))
+         continue;
+
+      /* Ignore fighters unless specified. */
+      if (!fighters && pilot_isFlag(plt, PILOT_CARRIED))
          continue;
 
       /* Check distance if necessary. */
@@ -1006,6 +1012,7 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
  *    @luatparam[opt=pilot.pos] Vec2 pos Position to check from.
  *    @luatparam[opt=false] boolean Whether or not to only check for pilots in range (only in the case of pilot, not faction)
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
+ *    @luatparam[opt=false] boolean fighters Whether or not to count deployed fighters.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc getAllies
  */
@@ -1026,6 +1033,7 @@ static int pilotL_getAllies( lua_State *L )
  *    @luatparam[opt=pilot.pos] Vec2 pos Position to check from.
  *    @luatparam[opt=false] boolean Whether or not to only check for pilots in range (only in the case of pilot, not faction)
  *    @luatparam[opt=false] boolean disabled Whether or not to count disabled pilots.
+ *    @luatparam[opt=false] boolean fighters Whether or not to count deployed fighters.
  *    @luatreturn {Pilot,...} A table containing the pilots.
  * @luafunc getHostiles
  */
