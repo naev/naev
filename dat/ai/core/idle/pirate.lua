@@ -28,7 +28,11 @@ local function __estimate_strength( pilots )
       local s = math.pow( p:ship():size(), 1.5 )
       str = str + s
    end
-   return str
+   -- Diminishing returns for large strengths
+   -- ((x+1)**(1-n) - 1)/(1-n)
+   local n = 0.3
+   return (math.pow(str+1, 1-n) - 1) / (1-n)
+   --return str
 end
 
 local function __vulnerable( p, plt, threshold, r )
