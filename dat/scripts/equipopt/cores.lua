@@ -121,10 +121,10 @@ seng["Destroyer"] = function( heavy )
    return "Unicorp Falcon 1300 Engine"
 end
 seng["Cruiser"] = function( heavy )
-   return "Unicorp Eagle 7000 Engine"
+   return "Nexus Bolt 3500 Engine"
 end
 seng["Battleship"] = function( heavy )
-   return "Nexus Bolt 4500 Engine"
+   return "Unicorp Eagle 7000 Engine"
 end
 seng["Carrier"] = function( heavy )
    return "Unicorp Eagle 7000 Engine"

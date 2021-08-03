@@ -79,7 +79,7 @@ local empire_cores = {
    ["Empire Hawking"] = function () return {
          "Milspec Orion 8601 Core System",
          "Tricon Typhoon Engine",
-         choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
+         "S&K Heavy Combat Plating",
       } end,
    ["Empire Peacemaker"] = function () return {
          "Milspec Orion 9901 Core System",
@@ -89,7 +89,7 @@ local empire_cores = {
 }
 
 --[[
--- @brief Does Dvaered pilot equipping
+-- @brief Does Empire pilot equipping
 --
 --    @param p Pilot to equip
 --]]
