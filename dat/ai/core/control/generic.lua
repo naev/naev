@@ -321,53 +321,24 @@ function control ()
          idle()
       end
 
-   -- Don't stop boarding
-   elseif task == "board" then
-      -- Needs to have a target
-      local target = ai.taskdata()
-      if not target or not target:exists() then
-         ai.poptask()
-         return
-      end
-      -- We want to think in case another attacker gets close
-      attack_think( ai.taskdata(), si )
-
    -- Think for attacking
    elseif si.attack then
       control_attack( si )
+   end
 
-   -- Pilot is running away
-   elseif task == "runaway" then
-      if mem.norun or ai.pilot():leader() ~= nil then
-         ai.poptask()
-         return
+
+   -- Run custom function if applicable
+   if task then
+      local cc = control_funcs[ task ]
+      if cc then
+         if cc() then
+            return
+         end
       end
-      local target = ai.taskdata()
+   end
 
-      -- Needs to have a target
-      if not target:exists() then
-         ai.poptask()
-         return
-      end
-
-      local dist = ai.dist( target )
-
-      -- Should return to combat?
-      local parmour, pshield = ai.pilot():health()
-      if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
-            (mem.armour_return > 0 and parmour >= mem.armour_return)) then
-         ai.poptask() -- "attack" should be above "runaway"
-
-      -- Try to jump
-      elseif dist > mem.safe_distance then
-         ai.hyperspace()
-      end
-
-      -- Handle distress
-      gen_distress()
-
-   -- Enemy sighted, handled after running away
-   elseif enemy ~= nil and mem.aggressive then
+   -- Enemy sighted, handled doing specific tasks
+   if enemy ~= nil and mem.aggressive then
       -- Don't start new attacks while refueling.
       if si.noattack then
          return
@@ -391,25 +362,57 @@ function control ()
          clean_task( task )
          ai.pushtask("attack", enemy)
       end
+   end
+end
 
-   -- Randomly choose to do a scan instead of loitering
-   elseif task == "loiter" and mem.doscans and rnd.rnd() < 0.1 then
+control_funcs = {}
+function control_funcs.loiter ()
+   if mem.doscans and rnd.rnd() < 0.1 then
       local target = __getscantarget()
       if target then
          __push_scan( target )
       end
    end
-
-   -- Run custom function if applicable
-   if task then
-      local cc = control_funcs[ task ]
-      if cc then
-         cc()
-      end
-   end
 end
+function control_funcs.runaway ()
+   if mem.norun or ai.pilot():leader() ~= nil then
+      ai.poptask()
+      return
+   end
+   local target = ai.taskdata()
 
-control_funcs = {}
+   -- Needs to have a target
+   if not target:exists() then
+      ai.poptask()
+      return
+   end
+
+   local dist = ai.dist( target )
+
+   -- Should return to combat?
+   local parmour, pshield = ai.pilot():health()
+   if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
+         (mem.armour_return > 0 and parmour >= mem.armour_return)) then
+      ai.poptask() -- "attack" should be above "runaway"
+
+   -- Try to jump
+   elseif dist > mem.safe_distance then
+      ai.hyperspace()
+   end
+
+   -- Handle distress
+   gen_distress()
+end
+function control_funcs.board ()
+   -- Needs to have a target
+   local target = ai.taskdata()
+   if not target or not target:exists() then
+      ai.poptask()
+      return
+   end
+   -- We want to think in case another attacker gets close
+   attack_think( ai.taskdata(), si )
+end
 
 -- Required "attacked" function
 function attacked( attacker )
