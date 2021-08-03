@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-01 13:51-0400\n"
-"PO-Revision-Date: 2021-07-16 00:38+0000\n"
+"PO-Revision-Date: 2021-08-03 19:35+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.2-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -193,10 +193,8 @@ msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 msgstr "Ian Douglas Scott „ids1024“ <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
-#, fuzzy
-#| msgid "   * Misc. Development"
 msgid "   * Misc. Development and Lua unifier"
-msgstr "   * Sonstige Entwicklung"
+msgstr "   * Sonstige Entwicklung und Lua-Vereiniger"
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
@@ -211,10 +209,8 @@ msgid "nenau"
 msgstr "nenau"
 
 #: dat/AUTHORS:17
-#, fuzzy
-#| msgid "   * Misc. Development"
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr "   * Sonstige Entwicklung"
+msgstr "   * Sonstige Entwicklung und Dvaered-Liebhaber"
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner <jack@emoss.org>"
@@ -226,13 +222,11 @@ msgstr "   * CI-Typ und Überbringer automatisierter Releases"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
-msgstr ""
+msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
-#, fuzzy
-#| msgid "   * Ship Models"
 msgid "   * 3D modelling"
-msgstr "   * Schiffsmodelle"
+msgstr "   * 3D-Modellierung"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
@@ -16778,10 +16772,8 @@ msgid "Wayline m1"
 msgstr "Weylein m1"
 
 #: dat/assets/wayline_m2.xml:2
-#, fuzzy
-#| msgid "Wayline m1"
 msgid "Wayline m2"
-msgstr "Weylein m1"
+msgstr "Weylein m2"
 
 #: dat/assets/wellen.xml:2
 msgid "Wellen"
@@ -18747,7 +18739,7 @@ msgstr ""
 
 #: dat/outfits/accessory/trading_card_common.xml:2
 msgid "Trading Card (Common)"
-msgstr ""
+msgstr "Sammelkarte (Gewöhnlich)"
 
 #: dat/outfits/accessory/trading_card_common.xml:11
 msgid ""
@@ -18756,12 +18748,14 @@ msgid ""
 "models of the Hyena put so much strain on the pilots that it could crush "
 "them during high acceleration?"
 msgstr ""
+"Eine #oHyänen#0-Sammelkarte eines Sammelkartenspiels, sie ist gewöhnlich. "
+"Sie beschreibt all die wichtigen Statistiken der Hyäne. Wusstest du, dass "
+"frühe Modelle der Hyäne die Piloten so sehr belasteten, dass sie bei hoher "
+"Beschleunigung zerdrückt hätten können?"
 
 #: dat/outfits/accessory/trading_card_rare.xml:2
-#, fuzzy
-#| msgid "Tracking (Turret)"
 msgid "Trading Card (Rare)"
-msgstr "Verfolgung (Geschützturm)"
+msgstr "Sammelkarte (Selten)"
 
 #: dat/outfits/accessory/trading_card_rare.xml:11
 msgid ""
@@ -18769,10 +18763,13 @@ msgid ""
 "going into the important details of the ship, it just shows a high "
 "definition holographic rendition of the supposed Golden Llama."
 msgstr ""
+"Eine #oGoldlama#0-Sammelkarte eines Sammelkartenspiels, sie ist #pselten#0. "
+"Statt die wichtigen Details des Schiffs zu beschreiben, zeigt sie nur ein "
+"hochauflösendes Hologramm des Goldlamas."
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:2
 msgid "Trading Card (Uncommon)"
-msgstr ""
+msgstr "Sammelkarte (Ungewöhnlich)"
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:11
 msgid ""
@@ -18782,6 +18779,11 @@ msgid ""
 "allowing the crew to man it past damage that would usually incapacitate "
 "normal ships?"
 msgstr ""
+"Eine #oDvaered-Vigilanz#0-Sammelkarte eines Sammelkartenspiels, sie ist "
+"#bungewöhnlich#0. Sie beschreibt im Detail alle wichtigen Statistiken der "
+"Dvaered Vigilanz. Wusstest du, dass die Vigilanz über dreifach redundante "
+"Lebenserhaltungssysteme verfügt, die es der Besatzung ermöglichen, Schäden "
+"zu überstehen, die normale Schiffe außer Gefecht setzen würden?"
 
 #: dat/outfits/accessory/ugly_statue.xml:2
 msgid "Ugly Statue"
@@ -20130,10 +20132,8 @@ msgid "Beat Up Medium Engine"
 msgstr "Ausgeleierter mittlerer Motor"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:2
-#, fuzzy
-#| msgid "Krain Remige Engine"
 msgid "Krain Patagium Engine"
-msgstr "Krain-Remige-Motor"
+msgstr "Krain-Patagium-Motor"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:10
 msgid ""
@@ -20142,6 +20142,11 @@ msgid ""
 "terms of maximum speed and manouverability, the engine is not adequate for "
 "most other destroyers due to their higher mass."
 msgstr ""
+"Der Patagium ist ein Zerstörertriebwerk, das von Krain Industries für die "
+"Sternenbrücke entwickelt wurde. Seine Leistung übertrifft zwar andere "
+"Zerstörertriebwerke in Bezug auf Höchstgeschwindigkeit und "
+"Manövrierfähigkeit, doch ist das Triebwerk für die meisten anderen Zerstörer "
+"aufgrund ihrer höheren Masse nicht geeignet."
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:2
 msgid "Melendez Buffalo XL Engine"
@@ -22554,6 +22559,8 @@ msgid ""
 "Able to compensate up to 30 MW of nebula volatility. Uses 1 MW of energy per "
 "MW of damage prevented."
 msgstr ""
+"Kann bis zu 30 MW an Nebelvolatilität kompensieren. Verbraucht 1 MW Energie "
+"pro MW verhindertem Schaden."
 
 #: dat/outfits/structure/plasteel_plating.xml:2
 msgid "Plasteel Plating"
@@ -24868,10 +24875,8 @@ msgstr ""
 "er wesentlich mehr Feuerkraft zum Einsatz bringen kann."
 
 #: dat/ships/pirate_starbridge.xml:2
-#, fuzzy
-#| msgid "Brandt Station"
 msgid "Pirate Starbridge"
-msgstr "Brandt-Station"
+msgstr "Piraten-Sternenbrücke"
 
 #: dat/ships/pirate_starbridge.xml:16
 msgid ""
@@ -24880,6 +24885,11 @@ msgid ""
 "firepower and relatively high speed for its ship class, the Starbridge is "
 "truly a fearsome sight."
 msgstr ""
+"Obwohl die Sternenbrücke bereits ein leichter und schneller Zerstörer ist, "
+"ist es den Ingenieuren von Totenkopf gelungen, ihre Geschwindigkeit weiter "
+"zu verbessern. Dank ihrer großen Feuerkraft und der für ihre Schiffsklasse "
+"relativ hohen Geschwindigkeit ist die Sternenbrücke ein wahrhaft "
+"furchterregender Anblick."
 
 #: dat/ships/pirate_vendetta.xml:16
 msgid ""
@@ -25222,11 +25232,6 @@ msgstr ""
 "schweren Kampfflugzeuge in der Galaxis macht."
 
 #: dat/ships/soromid_vox.xml:18
-#, fuzzy
-#| msgid ""
-#| "The Vox is the biggest vessel the Soromid field hands down. This "
-#| "dreadnought serves as the core of any given Soromid war fleet and only "
-#| "called upon in notable engagements."
 msgid ""
 "The Vox is the biggest vessel the Soromid field hands down. This battleship "
 "serves as the core of any given Soromid war fleet and only called upon in "
@@ -25237,10 +25242,8 @@ msgstr ""
 "wird nur in nennenswerten Gefechten eingesetzt."
 
 #: dat/ships/starbridge.xml:2
-#, fuzzy
-#| msgid "Starfire"
 msgid "Starbridge"
-msgstr "Sternfeuer"
+msgstr "Sternenbrücke"
 
 #: dat/ships/starbridge.xml:16
 msgid ""
@@ -25249,6 +25252,10 @@ msgid ""
 "comparable maximum speed. It's low mass comes at the cost of reduced "
 "structural space."
 msgstr ""
+"Die Sternenbrücke ist das jüngste von Krain Industries entworfene Schiff. "
+"Sie ist ein leichter Zerstörer, der die gleiche Manövrierfähigkeit wie eine "
+"Korvette und eine vergleichbare Höchstgeschwindigkeit erreicht. Seine "
+"geringe Masse geht auf Kosten eines reduzierten Bauraums."
 
 #: dat/ships/thurion_apprehension.xml:16 dat/ships/thurion_certitude.xml:17
 #: dat/ships/thurion_ingenuity.xml:15 dat/ships/thurion_perspicacity.xml:17
@@ -25703,10 +25710,8 @@ msgid "Anrique"
 msgstr "Anrique"
 
 #: dat/ssys/antares.xml:2
-#, fuzzy
-#| msgid "Zintar"
 msgid "Antares"
-msgstr "Zintar"
+msgstr "Antares"
 
 #: dat/ssys/apez.xml:2
 msgid "Apez"
@@ -26682,8 +26687,6 @@ msgid "Ruadan"
 msgstr "Ruadan"
 
 #: dat/ssys/ruadan.xml:4
-#, fuzzy
-#| msgid "#p0Za'lek Homeworld#0"
 msgid "#pZa'lek Homeworld#0"
 msgstr "#pZa'lek-Heimatwelt#0"
 
@@ -28749,8 +28752,6 @@ msgstr "Das war aber so nicht vereinbart!"
 
 #. Communication stuff
 #: dat/ai/miner.lua:11
-#, fuzzy
-#| msgid "\"I don't want any problem.\""
 msgid "\"I don't want any problems.\""
 msgstr "„Ich will keine Schwierigkeiten.“"
 
@@ -28788,10 +28789,7 @@ msgid "\"This is a toll road, pay up %s or die.\""
 msgstr "„Das ist eine Mautstraße, bezahle %s oder stirb.“"
 
 #: dat/ai/pirate.lua:33
-#, fuzzy, lua-format
-#| msgid ""
-#| "\"So this is the part where you pay up or get shot up. Your choice. "
-#| "What'll be, %s or...\""
+#, lua-format
 msgid ""
 "\"So this is the part where you pay up or get shot up. Your choice. What'll "
 "be, %s or…\""
@@ -28840,55 +28838,45 @@ msgstr ""
 "mir den Rest zu holen.“"
 
 #: dat/ai/pirate.lua:45
-#, fuzzy, lua-format
-#| msgid "\"It'll cost you %s for me to ignore your pile of rubbish.\""
+#, lua-format
 msgid "\"It'll cost you %s for us to ignore your pile of rubbish.\""
 msgstr "„Es wird dich %s kosten, deinen Schrotthaufen zu ignorieren.“"
 
 #: dat/ai/pirate.lua:46
-#, fuzzy, lua-format
-#| msgid "\"I'm in a good mood so I'll let you go for %s.\""
+#, lua-format
 msgid "\"We'm in a good mood so we'll let you go for %s.\""
-msgstr "„Ich bin gut gelaunt, also lass ich dich für %s gehen.“"
+msgstr "„Wir sind gut gelaunt, also lassen wir dich für %s gehen.“"
 
 #: dat/ai/pirate.lua:47
-#, fuzzy, lua-format
-#| msgid "\"Send me %s or you're dead.\""
+#, lua-format
 msgid "\"Send us %s or you're dead.\""
-msgstr "„Schick mir %s oder du bist tot.“"
+msgstr "„Schick uns %s oder du bist tot.“"
 
 #: dat/ai/pirate.lua:48
-#, fuzzy, lua-format
-#| msgid "\"Shut up and give me your money! %s now.\""
+#, lua-format
 msgid "\"Shut up and give us your money! %s now.\""
-msgstr "„Halt’s Maul und gib mir dein Geld! %s sofort.“"
+msgstr "„Halt’s Maul und gib uns dein Geld! %s sofort.“"
 
 #: dat/ai/pirate.lua:49
-#, fuzzy, lua-format
-#| msgid "\"You give me %s and I'll act like I never saw you.\""
+#, lua-format
 msgid "\"You give us %s and we'll act like we never saw you.\""
-msgstr "„Du gibst mir %s und ich tu so, als hätte ich dich nie gesehen.“"
+msgstr "„Du gibst uns %s und wir tun so, als hätten wir dich nie gesehen.“"
 
 #: dat/ai/pirate.lua:50
-#, fuzzy, lua-format
-#| msgid ""
-#| "\"If you're willing to negotiate I'll gladly take %s to not kill you.\""
+#, lua-format
 msgid ""
 "\"If you're willing to negotiate we'll gladly take %s to not kill you.\""
 msgstr ""
-"„Wenn du verhandeln willst, nehme ich gerne %s, um dich nicht zu töten.“"
+"„Wenn du verhandeln willst, nehmen wir gerne %s, um dich nicht zu töten.“"
 
 #: dat/ai/pirate.lua:51
-#, fuzzy, lua-format
-#| msgid ""
-#| "\"Pay up or don't. %s now just means I'll wait till later to collect the "
-#| "rest.\""
+#, lua-format
 msgid ""
 "\"Pay up or don't. %s now just means we'll wait till later to collect the "
 "rest.\""
 msgstr ""
-"„Zahle oder auch nicht. %s jetzt bedeutet nur, dass ich bis später warte, um "
-"mir den Rest zu holen.“"
+"„Zahle oder auch nicht. %s jetzt bedeutet nur, dass wir bis später warten, "
+"um uns den Rest zu holen.“"
 
 #: dat/ai/pirate.lua:54
 msgid "\"You're lucky I'm so kind.\""
@@ -29142,10 +29130,9 @@ msgstr "„So kommst du aber nicht davon!“"
 
 #. Deal with refueling
 #: dat/ai/pirate.lua:150
-#, fuzzy, lua-format
-#| msgid "\"For you, only %s for a hundred units of fuel.\""
+#, lua-format
 msgid "\"For you, only %s for a jump of fuel.\""
-msgstr "„Für dich, nur %s für einhundert Treibstoffeinheiten.“"
+msgstr "„Für dich, nur %s für einen Sprung an Treibstoff.“"
 
 #. This is the amount of waypoints the pilot will pass through before leaving the system
 #. Set how far they attack
@@ -29400,7 +29387,7 @@ msgstr "„Die Weltraumhändler verhandeln nicht mit Kriminellen.“"
 #. See if a drone
 #: dat/ai/zalek.lua:26
 msgid "\"Access denied\""
-msgstr ""
+msgstr "„Zugang verweigert“"
 
 #. Most likely no chance to refuel
 #: dat/ai/zalek.lua:50
@@ -29579,27 +29566,19 @@ msgstr "Das willst du tun? Deine Entscheidung."
 #. Get nearby pilots for bribing (includes current pilot)
 #. Respects fleets
 #: dat/comm.lua:96
-#, fuzzy, lua-format
-#| msgid "Pilot '%s' accepts bribes but doesn't give price!"
+#, lua-format
 msgid "Pilot '%s' accepts bribes but doesn't give a price!"
 msgstr "Pilot „%s“ ist bestechlich, sagt aber nicht, ab welchem Preis!"
 
 #. just ridiculous for now, players should report it
 #. save as global again
 #: dat/comm.lua:111
-#, fuzzy, lua-format
-#| msgid ""
-#| "\"I'm gonna need at least %s to not leave you as a hunk of floating "
-#| "debris.\"\n"
-#| "\n"
-#| "Pay %s?"
+#, lua-format
 msgid ""
 "\"We'll need at least %s to not leave you as a hunk of floating debris.\""
 msgstr ""
-"„Ich brauche mindestens %s, wenn du nicht in einen Haufen Weltraumschrott "
-"verwandelt werden willst.“\n"
-"\n"
-"%s zahlen?"
+"„Wir brauchen mindestens %s, wenn du nicht in einen Haufen Weltraumschrott "
+"verwandelt werden willst.“"
 
 #: dat/comm.lua:114
 #, lua-format
@@ -29611,19 +29590,12 @@ msgid ""
 msgstr ""
 
 #: dat/comm.lua:121
-#, fuzzy, lua-format
-#| msgid ""
-#| "\"I'm gonna need at least %s to not leave you as a hunk of floating "
-#| "debris.\"\n"
-#| "\n"
-#| "Pay %s?"
+#, lua-format
 msgid ""
 "\"I'm gonna need at least %s to not leave you as a hunk of floating debris.\""
 msgstr ""
 "„Ich brauche mindestens %s, wenn du nicht in einen Haufen Weltraumschrott "
-"verwandelt werden willst.“\n"
-"\n"
-"%s zahlen?"
+"verwandelt werden willst.“"
 
 #: dat/comm.lua:123 dat/comm.lua:413
 #, lua-format
@@ -29632,29 +29604,27 @@ msgid ""
 "\n"
 "You have %s. Pay #r%s#0?"
 msgstr ""
+"%s\n"
+"\n"
+"Du hast %s. #r%s#0 zahlen?"
 
 #. stolen from scripts/vn.lua
 #. Shortcuts and graphics
 #. Set up the namebox
 #: dat/comm.lua:154
-#, fuzzy
-#| msgid "Bribed"
 msgid "#gBribed#0"
-msgstr "Bestochen"
+msgstr "#gBestochen#0"
 
 #: dat/comm.lua:158
-#, fuzzy
-#| msgid "Hostile"
 msgid "#rHostile#0"
-msgstr "Feindlich"
+msgstr "#rFeindlich#0"
 
 #. Correct
 #. Get the logo
 #: dat/comm.lua:211
-#, fuzzy, lua-format
-#| msgid "Communication Channel"
+#, lua-format
 msgid "You open a communication channel with %s."
-msgstr "Kommunikationskanal"
+msgstr "Du öffnest einen Kommunikationskanal mit %s."
 
 #: dat/comm.lua:217 src/comm.c:353 src/console.c:684 src/dev_sysedit.c:1351
 #: src/dev_sysedit.c:1461 src/dev_sysedit.c:1524 src/dev_sysedit.c:1719
@@ -29675,10 +29645,9 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: dat/comm.lua:232
-#, fuzzy, lua-format
-#| msgid "Bribe Pilot"
+#, lua-format
 msgid "Bribe fleet (%d pilot)"
-msgstr "Pilot bestechen"
+msgstr "Flotte bestechen (%d Pilot)"
 
 #: dat/comm.lua:234 src/comm.c:233
 msgid "Bribe"
@@ -29694,10 +29663,8 @@ msgstr "„Jetzt wird dein Geld deine Haut auch nicht mehr retten!“"
 #. Disable rebribes
 #. Disable rebribes
 #: dat/comm.lua:261 dat/comm.lua:320 dat/comm.lua:416
-#, fuzzy
-#| msgid "Play"
 msgid "Pay"
-msgstr "Spielen"
+msgstr "Zahlen"
 
 #: dat/comm.lua:262 dat/comm.lua:321 dat/comm.lua:417
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:175
@@ -29715,6 +29682,8 @@ msgid ""
 "You only have %s credits. You need #r%s#0 more to be able to afford the "
 "bribe!"
 msgstr ""
+"Du hast nur %s Credits. Du brauchst noch #r%s#0, um dir die Bestechung "
+"leisten zu können!"
 
 #: dat/comm.lua:294 dat/comm.lua:343
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:72
@@ -29744,8 +29713,7 @@ msgid "Pilot is already refueling you."
 msgstr "Der Pilot tankt dich bereits auf."
 
 #: dat/comm.lua:411
-#, fuzzy, lua-format
-#| msgid "\"I would be able to refuel your ship for %s.\""
+#, lua-format
 msgid "\"I should be able to refuel you for %s.\""
 msgstr "„Ich könnte das Schiff für %s auftanken.“"
 
@@ -29755,6 +29723,8 @@ msgid ""
 "You only have %s credits. You need #r%s#0 more to be able to afford the "
 "refueling!"
 msgstr ""
+"Du hast nur %s Credits. Du brauchst noch #r%s#0, um dir das Auftanken "
+"leisten zu können!"
 
 #: dat/comm.lua:441
 msgid "\"On my way.\""
@@ -29951,10 +29921,8 @@ msgid "Convening of the Warlords"
 msgstr "Einberufung der Warlords"
 
 #: dat/events/discovery.lua:75
-#, fuzzy
-#| msgid "Remember me?"
 msgid "Remembering Sorom"
-msgstr "Erinnerst du dich an mich?"
+msgstr "Erinnerung an Sorom"
 
 #: dat/events/discovery.lua:82
 msgid "Crater City"
@@ -30944,10 +30912,8 @@ msgid "Poster"
 msgstr "Poster"
 
 #: dat/events/dvaered/poster.lua:49
-#, fuzzy
-#| msgid "There is a poster on the wall"
 msgid "There is a poster on the wall."
-msgstr "Da ist ein Poster an der Wand"
+msgstr "Da ist ein Poster an der Wand."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -31331,16 +31297,12 @@ msgid "Unlock Warlord Challenge"
 msgstr "Warlord-Herausforderung freischalten"
 
 #: dat/events/dvaered/totoran.lua:164
-#, fuzzy
-#| msgid ""
-#| "Unlocks participation in the most difficult Warlord Challenge meant for "
-#| "Cruiser and Carrier-class ships."
 msgid ""
 "Unlocks participation in the most difficult Warlord Challenge meant for "
 "Cruiser, Carrier, and Battleship-class ships."
 msgstr ""
 "Schaltet die Teilnahme an der schwierigsten Warlord-Herausforderung frei, "
-"die für Schiffe der Kreuzer- und Träger-Klasse gedacht ist."
+"die für Schiffe der Kreuzer-, Träger und Schlachtschiff-Klasse gedacht ist."
 
 #: dat/events/dvaered/totoran.lua:166
 msgid "Unlock Double Damage Enemies Perk"
@@ -31504,10 +31466,9 @@ msgstr ""
 #. Battle is happening
 #. Spawns a merchant ship that explains what happens
 #: dat/events/dvaered/warlords_battle.lua:84
-#, fuzzy, lua-format
-#| msgid "Trader"
+#, lua-format
 msgid "Trader %s"
-msgstr "Händler"
+msgstr "Händler %s"
 
 #. mass of the player's victims
 #. Both fleets are close enough: start the epic battle
@@ -32252,10 +32213,6 @@ msgstr ""
 "Mist zu betrügen!“"
 
 #: dat/events/minerva/altercation1.lua:50
-#, fuzzy
-#| msgid ""
-#| "\"Your logic makes no sense. Are you sure the excessive amounts of "
-#| "alcohol are making your rotten brain hallucinate?\""
 msgid ""
 "\"Your logic makes no sense. Are you sure the excessive amounts of alcohol "
 "aren't making your rotten brain hallucinate?\""
@@ -34652,38 +34609,28 @@ msgstr "Front-Systeme"
 #. --
 #. --
 #: dat/events/neutral/news.lua:19
-#, fuzzy
-#| msgid "We bring you the latest news in the galaxy."
 msgid "We bring you the latest news in the universe."
-msgstr "Wir bringen Ihnen die neuesten Nachrichten der Galaxis."
+msgstr "Wir bringen Ihnen die neuesten Nachrichten des Universums."
 
 #: dat/events/neutral/news.lua:20
-#, fuzzy
-#| msgid "Welcome to the Empire News Centre."
 msgid "Welcome to Universal News Feed."
-msgstr "Willkommen zum Nachrichtenzentrum des Imperiums."
+msgstr "Willkommen zu den Universalnachrichten."
 
 #: dat/events/neutral/news.lua:21
 msgid "Welcome to the Empire News Centre."
 msgstr "Willkommen zum Nachrichtenzentrum des Imperiums."
 
 #: dat/events/neutral/news.lua:22
-#, fuzzy
-#| msgid "Welcome to the Empire News Centre."
 msgid "Welcome to the Dvaered News Centre."
-msgstr "Willkommen zum Nachrichtenzentrum des Imperiums."
+msgstr "Willkommen zum Dvaered-Nachrichtenzentrum."
 
 #: dat/events/neutral/news.lua:23
-#, fuzzy
-#| msgid "Welcome to the Empire News Centre."
 msgid "Welcome to Goddard News Centre."
-msgstr "Willkommen zum Nachrichtenzentrum des Imperiums."
+msgstr "Willkommen zum Goddard-Nachrichtenzentrum."
 
 #: dat/events/neutral/news.lua:24
-#, fuzzy
-#| msgid "Pirate Ancestor"
 msgid "Pirate News Network."
-msgstr "Piraten-Ahne"
+msgstr "Piraten-Nachrichtenbund."
 
 #: dat/events/neutral/news.lua:25
 msgid "Sirius News Reel. Words of the Sirichana for all."
@@ -34714,20 +34661,16 @@ msgid "Data Relay Network"
 msgstr "Datenübertragungsnetzwerk"
 
 #: dat/events/neutral/news.lua:37
-#, fuzzy
-#| msgid "Fresh news from around the Empire."
 msgid "Interesting events from around the universe."
-msgstr "Frische Nachrichten rund ums Imperium."
+msgstr "Interessante Ereignisse aus dem Universum."
 
 #: dat/events/neutral/news.lua:38
 msgid "Fair and unbiased news."
-msgstr ""
+msgstr "Faire und neutrale Nachrichten."
 
 #: dat/events/neutral/news.lua:39
-#, fuzzy
-#| msgid "Welcome to Universal News Feed. All the headlines all the time."
 msgid "All the headlines all the time."
-msgstr "Willkomen zu den Universum-Nachrichten. Alle Schlagzeilen, jederzeit."
+msgstr "Alle Schlagzeilen, jederzeit."
 
 #: dat/events/neutral/news.lua:42
 msgid "Fresh news from around the Empire."
@@ -34743,27 +34686,19 @@ msgstr "Wir halten Sie auf dem Laufenden."
 
 #: dat/events/neutral/news.lua:47
 msgid "Short and to the point news."
-msgstr ""
+msgstr "Kurze und bündige Neuigkeiten."
 
 #: dat/events/neutral/news.lua:48
-#, fuzzy
-#| msgid ""
-#| "Welcome to the Dvaered News Centre. All that happens. In simple words. So "
-#| "you can understand."
 msgid "All that happens. In simple words. So you can understand."
-msgstr ""
-"Willkommen zum Dvaered-Nachrichtenzentrum. Alles, was passiert. In einfachen "
-"Woren. Damit Sie verstehen."
+msgstr "Alles, was passiert. In einfachen Woren. Damit Sie verstehen."
 
 #: dat/events/neutral/news.lua:49
 msgid "Simple news for busy people."
-msgstr ""
+msgstr "Einfache Nachrichten für geschäftige Leute."
 
 #: dat/events/neutral/news.lua:52
-#, fuzzy
-#| msgid "Fresh news from around the Empire."
 msgid "We bring you the news from around the Empire."
-msgstr "Frische Nachrichten rund ums Imperium."
+msgstr "Wir bringen Ihnen das Neuigkeiten aus dem Imperium."
 
 #: dat/events/neutral/news.lua:55
 msgid "News that matters."
@@ -34799,15 +34734,15 @@ msgstr "Sirichana wacht über uns und führt uns."
 
 #: dat/events/neutral/news.lua:71
 msgid "Information by optimization."
-msgstr ""
+msgstr "Information mittels Optimierung."
 
 #: dat/events/neutral/news.lua:72
 msgid "Statistically significant news."
-msgstr ""
+msgstr "Statistisch signifikante Nachrichten."
 
 #: dat/events/neutral/news.lua:73
 msgid "Peer reviewed news."
-msgstr ""
+msgstr "Wissenschaftlich überprüfte Nachrichten."
 
 #: dat/events/neutral/news.lua:76
 msgid "Genetically tailoured for you."
@@ -34815,7 +34750,7 @@ msgstr "Genetisch angepasst für Sie."
 
 #: dat/events/neutral/news.lua:77
 msgid "Naturally selected news."
-msgstr ""
+msgstr "Natürlich ausgelesene Nachrichten."
 
 #.
 #. Science and technology
@@ -36081,7 +36016,7 @@ msgstr "Diese Person durchstöbert stumm eine Nachrichtenkonsole."
 
 #: dat/events/neutral/npc.lua:47
 msgid "A worker sips a cold drink after a hard shift."
-msgstr ""
+msgstr "Ein Arbeiter nippt an einem kalten Drink nach einer harten Schicht."
 
 #: dat/events/neutral/npc.lua:48
 msgid "A worker slouched against the bar, nursing a drink."
@@ -37830,28 +37765,23 @@ msgstr "Vier-Winde-Vendetta"
 #. -- Recurring ship lover event.
 #. --
 #: dat/events/neutral/shiplover.lua:19
-#, fuzzy
-#| msgid "Ship Stats\n"
 msgid "Ship Enthusiast"
-msgstr "Schiffsstatistiken\n"
+msgstr "Schiffsenthusiast"
 
 #: dat/events/neutral/shiplover.lua:22
 msgid "You see an individual who is playing with a small ship model."
-msgstr ""
+msgstr "Du siehst jemanden, der mit einem kleinen Schiffsmodell spielt."
 
 #. Create question
 #: dat/events/neutral/shiplover.lua:156
-#, fuzzy, lua-format
-#| msgid "What the hell is happening?"
+#, lua-format
 msgid "\"What class is the #o%s#0 ship?\""
-msgstr "Was zur Hölle passiert?"
+msgstr "„Von welcher Klasse ist das ‚#o%s#0‘-Schiff?“"
 
 #. Create question
 #: dat/events/neutral/shiplover.lua:172
-#, fuzzy
-#| msgid "What the hell is happening?"
 msgid "\"What is the name of this ship?\""
-msgstr "Was zur Hölle passiert?"
+msgstr "„Wie heißt dieses Schiff?“"
 
 #. elseif difficulty == 2 then
 #. Only available on whitelisted factions
@@ -37874,10 +37804,9 @@ msgstr ""
 #: dat/missions/minerva/pirate1.lua:124 dat/missions/minerva/pirate2.lua:113
 #: dat/missions/minerva/pirate3.lua:158 dat/missions/minerva/pirate4.lua:435
 #: dat/missions/minerva/pirate5.lua:114
-#, fuzzy, lua-format
-#| msgid "Naev received %s!"
+#, lua-format
 msgid "You have received #g%s#0."
-msgstr "Naev hat %s erhalten!"
+msgstr "Du hast erhalten: #g%s#0."
 
 #: dat/events/neutral/shiplover.lua:279
 msgid ""
@@ -37925,7 +37854,7 @@ msgstr ""
 
 #: dat/events/neutral/shiplover.lua:323
 msgid "\"It's awful.\""
-msgstr ""
+msgstr "„Furchtbar.“"
 
 #: dat/events/neutral/shiplover.lua:324
 msgid "\"Aren't you too young to be here?\""
@@ -96286,10 +96215,8 @@ msgid "Cruiser"
 msgstr "Kreuzer"
 
 #: src/ship.c:221
-#, fuzzy
-#| msgid "Mothership"
 msgid "Battleship"
-msgstr "Mutterschiff"
+msgstr "Schlachtschiff"
 
 #: src/ship.c:223
 msgid "Carrier"
