@@ -4,6 +4,7 @@ require 'ai.core.idle.generic'
 -- Keep generic as backup
 idle_generic = idle
 
+-- Fuses t2 into t1 avoiding duplicates
 local function __join_tables( t1, t2 )
    local t = t1
    for k,v in ipairs(t2) do
@@ -21,6 +22,7 @@ local function __join_tables( t1, t2 )
    return t
 end
 
+-- Estimate the strength of a group of pilots
 local function __estimate_strength( pilots )
    local str = 0
    for k,p in ipairs(pilots) do
@@ -35,6 +37,7 @@ local function __estimate_strength( pilots )
    --return str
 end
 
+-- See if a target is vulnerable
 local function __vulnerable( p, plt, threshold, r )
    local pos = plt:pos()
    r = r or math.pow( mem.lanedistance, 2 )
@@ -54,6 +57,7 @@ local function __vulnerable( p, plt, threshold, r )
    return false
 end
 
+-- Get a nearby enemy using pirate heuristics
 local function __getenemy( p )
    local pv = {}
    local r = math.pow( mem.lanedistance, 2 )
@@ -65,6 +69,7 @@ local function __getenemy( p )
          table.insert( pv, {p=v, d=d, F=F, H=H} )
       end
    end
+   -- Attack nearest for now, would have to incorporate some other criteria here
    table.sort( pv, function(a,b)
       return a.d < b.d
    end )
@@ -75,6 +80,7 @@ local function __getenemy( p )
    return pv[1].p, pv[1].F, pv[1].H
 end
 
+-- Sees if there is an enemy nearby to engage
 local function __tryengage( p )
    local enemy, F, H = __getenemy(p)
    local stealth = p:flags("stealth")
@@ -91,6 +97,24 @@ local function __tryengage( p )
    end
    return false
 end
+
+
+-- Tries to loiter in roughly a straight line
+local function __loiter( p, taskname )
+   local targetdir = mem.lastdirection
+   if targetdir then
+      targetdir = targetdir + rnd.sigma() * 15
+   end
+   local target = lanes.getNonPoint( nil, nil, nil, targetdir )
+   if target then
+      local m, a = (target - p:pos()):polar()
+      mem.lastdirection = a -- bias towards moving in a straight line
+      ai.pushtask( taskname, target )
+      return true
+   end
+   return false
+end
+
 
 function idle_leave ()
    -- Get a goal
@@ -144,12 +168,7 @@ function idle_nostealth ()
    end
 
    -- Get a new point and loiter
-   local target = lanes.getNonPoint()
-   if target then
-      ai.pushtask( "loiter", target )
-      mem.loiter = mem.loiter - 1
-      return
-   end
+   if __loiter( p, "loiter" ) then return end
 
    -- Fallback to generic
    return idle_generic ()
@@ -196,11 +215,7 @@ function idle ()
    if __tryengage(p) then return end
 
    -- Just move around waiting for ambush
-   local target = lanes.getNonPoint()
-   if target then
-      ai.pushtask( "ambush_moveto", target )
-      return
-   end
+   if __loiter( p, "ambush_moveto" ) then return end
 
    -- Wasn't able to find out what to do, so just fallback to no stealth...
    return idle_nostealth()

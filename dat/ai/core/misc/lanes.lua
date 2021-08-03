@@ -249,7 +249,7 @@ end
 -- Tries to get a point outside of the lanes, around a point at a radius rad.
 -- We'll project the pos into radius if it is out of bounds.
 --]]
-function lanes.getNonPoint( pos, rad, margin )
+function lanes.getNonPoint( pos, rad, margin, biasdir )
    local p, ews
    if not pos or not rad or not margin then
       p = ai.pilot()
@@ -269,13 +269,16 @@ function lanes.getNonPoint( pos, rad, margin )
 
    -- Just some brute force sampling at different scales
    local n = 18
+   local inc = 360 / n
+   local sign = 1
+   if rnd.rnd() < 0.5 then sign = -1 end
    for s in ipairs{1.0, 0.5, 1.5, 2.0, 3.0, 5.0} do
-      local a = rnd.rnd() * 360
-      local inc = 360 / n
+      local a = biasdir or rnd.rnd() * 360
       local r = rad * s
       for i=1,n do
          local pp = pos + vec2.newP( r, a )
-         a = a + inc
+         a = a + i * inc * sign
+         sign = sign * -1
          if pp:dist2() < srad2 then
             local d = lanes.getDistance2( pp )
             if d > margin2 then
