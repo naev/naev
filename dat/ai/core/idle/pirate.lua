@@ -35,7 +35,7 @@ local function __getenemy( p )
    local pv = {}
    local r = math.pow( mem.lanedistance, 2 )
    for k,v in ipairs(p:getHostiles( mem.ambushclose, nil, true )) do
-      if __vulnerable( plt, mem.vulnattack ) then
+      if __vulnerable( v, mem.vulnattack ) then
          local d = ai.dist2( v )
          table.insert( pv, {p=v, d=d, F=F, H=H} )
       end
