@@ -7,7 +7,7 @@
   <mass>30</mass>
   <price>42000</price>
   <description>The BioPlasma Fang takes the enhancement of the BioPlasma Claw even further. While its cognitive requirements are relatively high, they're still low enough for medium-sized organisms to handle. They are commonly found on Soromid Odiums. This organ has reached Stage X, its full potential.</description>
-  <gfx_store>plasma2.webp</gfx_store>
+  <gfx_store>organic_plasma_s3.webp</gfx_store>
   <cpu>-32</cpu>
  </general>
  <specific type="bolt">
