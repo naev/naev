@@ -162,6 +162,27 @@ function handle_messages ()
    end
 end
 
+function should_attack( enemy )
+   if not enemy or not enemy:exists() then
+      return false
+   end
+
+   if not mem.aggressive then
+      return false
+   end
+
+   -- Check if we have minimum range to engage
+   if mem.enemyclose then
+      local dist = ai.dist2( enemy )
+      if mem.enemyclose*mem.enemyclose > dist then
+         return true
+      end
+   else
+      return true
+   end
+   return false
+end
+
 function control_attack( si )
    local target = ai.taskdata()
    -- Needs to have a target
@@ -295,23 +316,8 @@ function control ()
 
    -- Get new task
    if task == nil then
-      local attack = false
-
-      -- We'll first check enemy.
-      if enemy ~= nil and mem.aggressive then
-         -- Check if we have minimum range to engage
-         if mem.enemyclose then
-            local dist = ai.dist( enemy )
-            if mem.enemyclose > dist then
-               attack = true
-            end
-         else
-            attack = true
-         end
-      end
-
       -- See what decision to take
-      if attack then
+      if should_attack(enemy) then
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
@@ -341,20 +347,9 @@ function control ()
          return
       end
 
-      local attack = false
-
-      -- See if enemy is close enough to attack
-      if mem.enemyclose then
-         local dist = ai.dist( enemy )
-         if mem.enemyclose > dist then
-            attack = true
-         end
-      else
-         attack = true
-      end
-
       -- See if really want to attack
-      if attack then
+      if should_attack( enemy ) then
+         ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          clean_task( task )
          ai.pushtask("attack", enemy)
@@ -519,96 +514,80 @@ end
 
 -- Handle distress signals
 function distress ( pilot, attacker )
+   local p = ai.pilot()
+
    -- Make sure target exists
-   if not attacker:exists() then
-      return
-   end
+   if not attacker:exists() then return end
 
    -- Make sure pilot is setting their target properly
-   if pilot == attacker then
-      return
-   end
+   if pilot == attacker then return end
 
-   -- Ignore please of help when bribed by the attacker
-   if ai.isbribed(attacker) then
-      return
-   end
+   -- Ignore pleas of help when bribed by the attacker
+   if ai.isbribed(attacker) then return end
 
-   local pfact  = pilot:faction()
-   local afact  = attacker:faction()
-   local aifact = ai.pilot():faction()
+   local pfact   = pilot:faction()
+   local afact   = attacker:faction()
+   local aifact  = p:faction()
    local p_ally  = aifact:areAllies(pfact)
    local a_ally  = aifact:areAllies(afact)
    local p_enemy = aifact:areEnemies(pfact)
    local a_enemy = aifact:areEnemies(afact)
 
-   -- Ships should always defend their brethren.
-   if pfact == aifact then
-      -- We don't want to cause a complete breakdown in social order.
-      if afact == aifact then
-         return
-      else
-         t = attacker
-      end
-   elseif mem.aggressive then
-      -- Aggressive ships follow their brethren into battle!
-      if afact == aifact then
-         t = pilot
-      elseif p_ally then
-         -- When your allies are fighting, stay out of it.
-         if a_ally then
-            return
-         end
-
-         -- Victim is an ally, but the attacker isn't.
-         t = attacker
-      -- Victim isn't an ally. Attack the victim if the attacker is our ally.
-      elseif a_ally then
-         t = pilot
-      elseif p_enemy then
-         -- If they're both enemies, may as well let them destroy each other.
-         if a_enemy then
-            return
-         end
-
-         t = pilot
-      elseif a_enemy then
-         t = attacker
-      -- We'll be nice and go after the aggressor if the victim is peaceful.
-      elseif not pilot:memory().aggressive then
-         t = attacker
-      -- An aggressive, neutral ship is fighting another neutral ship. Who cares?
-      else
+   local badguy
+   -- Victim is ally
+   if p_ally then
+      -- When your allies are fighting, stay out of it.
+      if a_ally then
          return
       end
-   -- Non-aggressive ships will flee if their enemies attack neutral or allied vessels.
-   elseif a_enemy and not p_enemy then
-      t = attacker
-   else
-      return
+      -- Victim is an ally, but the attacker isn't.
+      badguy = attacker
+   -- Victim isn't an ally. Attack the victim if the attacker is our ally.
+   elseif a_ally then
+      badguy = pilot
+   elseif p_enemy then
+      -- If they're both enemies, may as well let them destroy each other.
+      if a_enemy then
+         return
+      end
+      badguy = pilot
+   elseif a_enemy then
+      badguy = attacker
+   -- We'll be nice and go after the aggressor if the victim is peaceful.
+   elseif not pilot:memory().aggressive then
+      badguy = attacker
    end
+
+   -- Cannot discern the bad guy, so just look the other way
+   if not badguy then return end
 
    local task = ai.taskname()
    local si   = _stateinfo( task )
    -- Already fighting
    if si.attack then
       if si.noattack then return end
+      -- Ignore if not interested in attacking
+      if not should_attack( badguy ) then return end
+
       local target = ai.taskdata()
 
-      if not target:exists() or ai.dist(target) > ai.dist(t) then
-         if ai.pilot():inrange( t ) then
-            ai.pushtask( "attack", t )
+      -- See if we want to switch targets
+      if not target:exists() or ai.dist2(target) > ai.dist2(badguy) then
+         if p:inrange( badguy ) then
+            ai.pushtask( "attack", badguy )
          end
       end
    -- If not fleeing or refueling, begin attacking
    elseif task ~= "runaway" and task ~= "refuel" then
       if not si.noattack and mem.aggressive then
-         if ai.pilot():inrange( t ) then -- TODO: something to help in the other case
+         -- Ignore if not interested in attacking
+         if not should_attack( badguy ) then return end
+         if p:inrange( badguy ) then -- TODO: something to help in the other case
             clean_task( task )
-            ai.pushtask( "attack", t )
+            ai.pushtask( "attack", badguy )
          end
       else
-         ai.pushtask( "runaway", t )
+         ai.pushtask( "runaway", badguy )
       end
    end
 end
