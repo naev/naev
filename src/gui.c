@@ -1318,7 +1318,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    if ( ((shape==RADAR_RECT) &&
             ((ABS(x) > (w+scale)/2.) || (ABS(y) > (h+scale)/2.)) ) ||
          ((shape==RADAR_CIRCLE) &&
-            ((pow(x)+pow(y)) > pow2(w))) ) {
+            ((pow2(x)+pow2(y)) > pow2(w))) ) {
 
       /* Draw little targeted symbol. */
       if (p->id == player.p->target && !overlay)
