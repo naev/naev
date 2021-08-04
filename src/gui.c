@@ -1295,8 +1295,7 @@ static const glColour* gui_getPilotColour( const Pilot* p )
  */
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
-   int x, y;
-   double scale;
+   double x, y, scale;
    glColour col;
 
    /* Make sure is in range. */
@@ -1305,12 +1304,12 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Get position. */
    if (overlay) {
-      x = (int)(p->solid->pos.x / res);
-      y = (int)(p->solid->pos.y / res);
+      x = (p->solid->pos.x / res);
+      y = (p->solid->pos.y / res);
    }
    else {
-      x = (int)((p->solid->pos.x - player.p->solid->pos.x) / res);
-      y = (int)((p->solid->pos.y - player.p->solid->pos.y) / res);
+      x = ((p->solid->pos.x - player.p->solid->pos.x) / res);
+      y = ((p->solid->pos.y - player.p->solid->pos.y) / res);
    }
    /* Get size. */
    scale = ((double)ship_size( p->ship ) + 1.)/2. * (1. + RADAR_RES_MAX / res );
@@ -1319,7 +1318,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    if ( ((shape==RADAR_RECT) &&
             ((ABS(x) > (w+scale)/2.) || (ABS(y) > (h+scale)/2.)) ) ||
          ((shape==RADAR_CIRCLE) &&
-            ((x*x+y*y) > (int)(w*w))) ) {
+            ((pow(x)+pow(y)) > pow2(w))) ) {
 
       /* Draw little targeted symbol. */
       if (p->id == player.p->target && !overlay)
@@ -1338,9 +1337,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    /* Draw selection if targeted. */
    /*col = cRadar_tPilot;
    col.a = 1.-interference_alpha; */
-   if (p->id == player.p->target) {
+   if (p->id == player.p->target)
       gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
-   }
 
    if (p->id == player.p->target)
       col = cRadar_hilight;
@@ -1373,7 +1371,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
  */
 void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay )
 {
-   int x, y, sx, sy, i, j, targeted;
+   int sx, sy, i, j, targeted;
+   double x, y;
    double px, py;
    const glColour *col;
    glColour ccol;
@@ -1392,12 +1391,12 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 
    /* Get position. */
    if (overlay) {
-      x = (int)(a->pos.x / res);
-      y = (int)(a->pos.y / res);
+      x = (a->pos.x / res);
+      y = (a->pos.y / res);
    }
    else {
-      x = (int)((a->pos.x - player.p->solid->pos.x) / res);
-      y = (int)((a->pos.y - player.p->solid->pos.y) / res);
+      x = ((a->pos.x - player.p->solid->pos.x) / res);
+      y = ((a->pos.y - player.p->solid->pos.y) / res);
    }
    /* Get size. */
    sx = 1.;
