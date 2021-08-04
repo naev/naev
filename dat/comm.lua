@@ -229,7 +229,7 @@ function comm( plt )
             end
 
             if bribe_group then
-               table.insert( opts, 1, {string.format(_("Bribe fleet (%d pilot)", "Bribe fleet (%d pilots)", #bribe_group), #bribe_group), "bribe"} )
+               table.insert( opts, 1, {string.format(n_("Bribe fleet (%d pilot)", "Bribe fleet (%d pilots)", #bribe_group), #bribe_group), "bribe"} )
             else
                table.insert( opts, 1, {_("Bribe"), "bribe"} )
             end
