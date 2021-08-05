@@ -2,10 +2,21 @@ require 'ai.core.core'
 require "numstring"
 
 -- Settings
-mem.armour_run = 0
+mem.armour_run    = 0
 mem.armour_return = 0
-mem.aggressive = true
+mem.aggressive    = true
 
+local bribe_no_list = {
+   _([["Your money is of no interest to me."]])
+}
+local taunt_list_offensive = {
+   _("The universe shall be cleansed of your presence!")
+}
+local taunt_list_defensive = {
+   _("Sirichana protect me!"),
+   _("You have made a grave error!"),
+   _("You do wrong in your provocations!")
+}
 
 function create ()
    local p = ai.pilot()
@@ -19,20 +30,21 @@ function create ()
    if pp:exists() then
       local standing = ai.getstanding( pp ) or -1
       mem.refuel = rnd.rnd( 1000, 2000 )
-      if standing < 50 then
-         mem.refuel_no = _("\"I do not have fuel to spare.\"")
+      if standing < 0 then
+         mem.refuel_no = _([["I do not have fuel to spare."]])
+      elseif standing > 30 then
+         if rnd.rnd() < 0.5 then
+            mem.refuel_no = _([["I do not have fuel to spare."]])
+         end
       else
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _("\"I would be able to refuel your ship for %s.\""), creditstring(mem.refuel) )
-   end
+      mem.refuel_msg = string.format( _([["I would be able to refuel your ship for %s."]]), creditstring(mem.refuel) )
 
-   -- Can't be bribed
-   local bribe_no = {
-          _("\"Your money is of no interest to me.\"")
-   }
-   mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
+      -- Can't be bribed
+      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+   end
 
    mem.loiter = 2 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
@@ -54,15 +66,9 @@ function taunt ( target, offense )
    -- some taunts
    local taunts
    if offense then
-      taunts = {
-            _("The universe shall be cleansed of your presence!")
-      }
+      taunts = taunt_list_offensive
    else
-      taunts = {
-            _("Sirichana protect me!"),
-            _("You have made a grave error!"),
-            _("You do wrong in your provocations!")
-      }
+      taunts = taunt_list_defensive
    end
 
    ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
