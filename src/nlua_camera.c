@@ -195,19 +195,8 @@ static int camL_getZoom( lua_State *L )
  */
 static int camL_shake( lua_State *L )
 {
-   double amplitude;
-
-   amplitude = 1;
-
    NLUA_CHECKRW(L);
-
-   if (lua_gettop(L) > 0) {
-      if (lua_isnumber(L,1))
-         amplitude = luaL_checknumber(L,1);
-      else
-         NLUA_INVALID_PARAMETER(L);
-   }
-
+   double amplitude = luaL_optnumber(L,1,1.);
    spfx_shake( amplitude );
    return 0;
 }
