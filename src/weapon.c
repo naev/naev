@@ -1552,10 +1552,11 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    mass        = w->outfit->mass;
    w->timer    = ammo->u.amm.duration * parent->stats.launch_range;
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
-   if (w->outfit->u.amm.thrust != 0.) {
+   if (w->outfit->u.amm.thrust > 0.) {
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
-      /* Limit speed, we only care if it has thrust and it is RELATIVE! */
-      w->solid->speed_max = VMOD(v) + w->outfit->u.amm.speed_max;
+      /* Limit speed, we only care if it has thrust + initial speed and it is RELATIVE! */
+      if (w->outfit->u.amm.speed > 0.)
+         w->solid->speed_max = VMOD(v) + w->outfit->u.amm.speed_max;
    }
 
    /* Handle seekers. */
