@@ -2,9 +2,32 @@ require 'ai.core.core'
 require 'numstring'
 
 -- Settings
-mem.armour_run = 40
+mem.armour_run    = 40
 mem.armour_return = 70
-mem.aggressive = true
+mem.aggressive    = true
+
+local bribe_no_list = {
+   _([["You won't buy your way out of this one."]]),
+   _([["The Empire likes to make examples out of scum like you."]]),
+   _([["You've made a huge mistake."]]),
+   _([["Bribery carries a harsh penalty, scum."]]),
+   _([["I'm not interested in your blood money!"]]),
+   _([["All the money in the world won't save you now!"]])
+}
+local taunt_list_offensive = {
+   _("There is no room in this universe for scum like you!"),
+   _("The Empire will enjoy your death!"),
+   _("Your head will make a fine gift for the Emperor!"),
+   _("None survive the wrath of the Emperor!"),
+   _("Enjoy your last moments, criminal!")
+}
+local taunt_list_defensive = {
+   _("You dare attack me?!"),
+   _("You are no match for the Empire!"),
+   _("The Empire will have your head!"),
+   _("You'll regret that!"),
+   _("That was a fatal mistake!")
+}
 
 function create ()
    local p = ai.pilot()
@@ -27,33 +50,27 @@ function create ()
       local standing = ai.getstanding( pp ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing < 0 then
-         mem.refuel_no = _("\"My fuel is property of the Empire.\"")
+         mem.refuel_no = _([["My fuel is property of the Empire."]])
       elseif standing < 40 then
          if rnd.rnd() > 0.8 then
-            mem.refuel_no = _("\"My fuel is property of the Empire.\"")
+            mem.refuel_no = _([["My fuel is property of the Empire."]])
          end
       else
          mem.refuel = mem.refuel * 0.6
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _("\"I suppose I could spare some fuel for %s, but you'll have to do the paperwork.\""), creditstring(mem.refuel) )
+      mem.refuel_msg = string.format( _([["I suppose I could spare some fuel for %s, but you'll have to do the paperwork."]]), creditstring(mem.refuel) )
 
       -- See if can be bribed
       mem.bribe = math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
-      if standing > 0 or (standing > -20 and rnd.rnd() > 0.7) or rnd.rnd() > 0.5 then
-         mem.bribe_prompt = string.format(_("\"For some %s I could forget about seeing you.\""), creditstring(mem.bribe) )
-         mem.bribe_paid = _("\"Now scram before I change my mind.\"")
+      if standing > 0 or
+            (standing > -20 and rnd.rnd() > 0.7) or
+            (standing > -50 and rnd.rnd() > 0.5) or
+            (rnd.rnd() > 0.3) then
+         mem.bribe_prompt = string.format(_([["For some %s I could forget about seeing you."]]), creditstring(mem.bribe) )
+         mem.bribe_paid = _([["Now scram before I change my mind."]])
       else
-      local bribe_no = {
-               _("\"You won't buy your way out of this one.\""),
-               _("\"The Empire likes to make examples out of scum like you.\""),
-               _("\"You've made a huge mistake.\""),
-               _("\"Bribery carries a harsh penalty, scum.\""),
-               _("\"I'm not interested in your blood money!\""),
-               _("\"All the money in the world won't save you now!\"")
-      }
-      mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
-
+         mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
       end
    end
 
@@ -76,21 +93,9 @@ function taunt ( target, offense )
    -- some taunts
    local taunts
    if offense then
-      taunts = {
-            _("There is no room in this universe for scum like you!"),
-            _("The Empire will enjoy your death!"),
-            _("Your head will make a fine gift for the Emperor!"),
-            _("None survive the wrath of the Emperor!"),
-            _("Enjoy your last moments, criminal!")
-      }
+      taunts = taunt_list_offensive
    else
-      taunts = {
-            _("You dare attack me?!"),
-            _("You are no match for the Empire!"),
-            _("The Empire will have your head!"),
-            _("You'll regret that!"),
-            _("That was a fatal mistake!")
-      }
+      taunts = taunt_list_defensive
    end
 
    ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
