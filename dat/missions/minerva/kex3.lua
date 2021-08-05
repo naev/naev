@@ -487,7 +487,13 @@ function malik_respawn ()
    hook.timer( 2, "malik_respawn_real", pos )
 end
 function malik_respawn_real( pos )
-   pmalik = pilot.add("Dvaered Goddard", enemy_faction, pos, _("Major Malik"))
+   pmalik = pilot.add("Dvaered Goddard", enemy_faction, pos, _("Major Malik"), {naked=true})
+   equipopt.dvaered( pmalik, {
+      type_range = {
+         ["Beam Turret"] = { max = 0 },
+         ["Beam Cannon"] = { max = 0 },
+      }
+   } )
    pmalik:setHostile(true)
    pmalik:setNoDeath(true)
    hook.pilot( pmalik, "disable", "malik_disabled" )
