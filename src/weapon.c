@@ -1551,7 +1551,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    /* Set up ammo details. */
    mass        = w->outfit->mass;
    w->timer    = ammo->u.amm.duration * parent->stats.launch_range;
-   w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_RK4 );
+   w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    if (w->outfit->u.amm.thrust != 0.) {
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
       w->solid->speed_max = w->outfit->u.amm.speed_max; /* Limit speed, we only care if it has thrust. */
