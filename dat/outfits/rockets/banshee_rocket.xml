@@ -15,8 +15,9 @@
   <spfx_armour>EmpS</spfx_armour>
   <trail_generator x="-10">fire-missile</trail_generator>
   <duration blowup="shield">7</duration>
-  <thrust>0</thrust>
-  <speed>250</speed>
+  <thrust>150</thrust>
+  <speed>200</speed>
+  <speed_max>300</speed_max>
   <damage>
    <type>impact</type>
    <penetrate>60</penetrate>

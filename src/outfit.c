@@ -757,15 +757,19 @@ double outfit_speed( const Outfit* o )
 {
    Outfit *amm;
    double t;
-   if (outfit_isBolt(o)) return o->u.blt.speed;
+   if (outfit_isBolt(o))
+      return o->u.blt.speed;
    else if (outfit_isAmmo(o)) {
-      if (o->u.amm.thrust == 0)
+      if (o->u.amm.thrust == 0.)
          return o->u.amm.speed;
-      else {     /*Gets the average speed*/
-         t = o->u.amm.speed / o->u.amm.thrust; /*time to reach max speed*/
+      else { /* Gets the average speed. */
+         t = (o->u.amm.speed_max - o->u.amm.speed) / o->u.amm.thrust; /* Time to reach max speed */
+         /* Reaches max speed. */
          if (t < o->u.amm.duration)
-            return ( o->u.amm.thrust * t * t / 2 + o->u.amm.speed * ( o->u.amm.duration - t ) ) / o->u.amm.duration;
-         else return o->u.amm.thrust * o->u.amm.duration/2;
+            return (o->u.amm.thrust * t * t / 2. + (o->u.amm.speed_max - o->u.amm.speed) * (o->u.amm.duration - t)) / o->u.amm.duration + o->u.amm.speed;
+         /* Doesn't reach max speed. */
+         else
+            return o->u.amm.thrust * o->u.amm.duration / 2. + o->u.amm.speed;
       }
    }
    else if (outfit_isLauncher(o)) {
@@ -1342,6 +1346,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"),
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy );
    SDESC_ADD(  l, temp, _("\n%s Range"), num2strU( temp->u.blt.range, 0 ) );
+   SDESC_ADD(  l, temp, _("\n%.0f Speed"), temp->u.blt.speed );
    SDESC_COND( l, temp, _("\n%.1f second heat up"), temp->u.blt.heatup);
    if (!outfit_isTurret(temp))
       SDESC_ADD(  l, temp, _("\n%.1f Degree Swivel"), temp->u.blt.swivel*180./M_PI );
@@ -1593,6 +1598,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->u.amm.sound_hit   = -1;
    temp->u.amm.trail_spec  = NULL;
    temp->u.amm.ai          = -1;
+   temp->u.amm.speed_max   = -1.;
 
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -1617,6 +1623,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"thrust",temp->u.amm.thrust);
       xmlr_float(node,"turn",temp->u.amm.turn);
       xmlr_float(node,"speed",temp->u.amm.speed);
+      xmlr_float(node,"speed_max",temp->u.amm.speed_max);
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"gfx")) {
          temp->u.amm.gfx_space = xml_parseTexture( node,
@@ -1684,6 +1691,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
    /* Post-processing */
    temp->u.amm.turn *= M_PI/180.; /* Convert to rad/s. */
+   if (temp->u.amm.speed_max < 0.)
+      temp->u.amm.speed_max = temp->u.amm.speed;
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1701,7 +1710,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
    if (outfit_isSeeker(temp)) {
       MELEMENT(temp->u.amm.turn==0,"turn");
    }
-   MELEMENT(temp->u.amm.speed==0,"speed");
+   MELEMENT(temp->u.amm.speed_max==0,"speed_max");
    MELEMENT(temp->u.amm.duration==0,"duration");
    MELEMENT(temp->u.amm.dmg.damage==0,"damage");
    /*MELEMENT(temp->u.amm.energy==0.,"energy");*/
@@ -2643,7 +2652,15 @@ static void outfit_launcherDesc( Outfit* o )
          1. / o->u.lau.delay * a->u.amm.dmg.disable, a->u.amm.dmg.disable );
    SDESC_ADD(  l, o, _("\n%.1f Shots Per Second"), 1. / o->u.lau.delay );
    SDESC_ADD(  l, o, _("\n%s Range [%.1f duration]"), num2strU( outfit_range(a), 0 ), a->u.amm.duration );
-   SDESC_ADD(  l, o, _("\n%.0f Maximum Speed"), a->u.amm.speed );
+   if (a->u.amm.thrust > 0.) {
+      if (a->u.amm.speed > 0.)
+         SDESC_ADD( l, o, _("\n%.0f Initial Speed (%.0f Thrust)"), a->u.amm.speed, a->u.amm.thrust );
+      else
+         SDESC_ADD( l, o, _("\n%.0f Thrust"), a->u.amm.thrust );
+   }
+   else
+      SDESC_COND( l, o, _("\n%.0f Speed"), a->u.amm.speed );
+   SDESC_ADD(  l, o, _("\n%.0f Maximum Speed"), a->u.amm.speed_max );
    SDESC_ADD(  l, o, _("\n%.1f Seconds to Reload"), o->u.lau.reload_time );
    SDESC_COND( l, o, _("\n%.1f EPS [%.0f Energy]"), o->u.lau.delay * a->u.amm.energy, a->u.amm.energy );
    SDESC_COND( l, o, _("\n%.1f%% Jam Resistance"), (1. - 0.5 / a->u.amm.resist) * 100.);

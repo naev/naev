@@ -1076,7 +1076,9 @@ static void weapon_sample_trail( Weapon* w )
    dy = w->outfit->u.amm.trail_x_offset * sin(a);
 
    /* Set the colour. */
-   if (w->solid->thrust > 0)
+   if ((w->outfit->u.amm.ai == AMMO_AI_UNGUIDED) ||
+        w->solid->vel.x*w->solid->vel.x + w->solid->vel.y*w->solid->vel.y + 1.
+        < w->solid->speed_max*w->solid->speed_max)
       mode = MODE_AFTERBURN;
    else if (w->solid->dir_vel != 0.)
       mode = MODE_GLOW;
@@ -1542,18 +1544,19 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
 
    /* If thrust is 0. we assume it starts out at speed. */
    v = *vel;
-   if (ammo->u.amm.thrust == 0.)
-      vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
-            sin(rdir) * w->outfit->u.amm.speed );
+   vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
+                  sin(rdir) * w->outfit->u.amm.speed );
    w->real_vel = VMOD(v);
 
    /* Set up ammo details. */
    mass        = w->outfit->mass;
    w->timer    = ammo->u.amm.duration * parent->stats.launch_range;
-   w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_RK4 );
-   if (w->outfit->u.amm.thrust != 0.) {
+   w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
+   if (w->outfit->u.amm.thrust > 0.) {
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
-      w->solid->speed_max = w->outfit->u.amm.speed; /* Limit speed, we only care if it has thrust. */
+      /* Limit speed, we only care if it has thrust + initial speed and it is RELATIVE! */
+      if (w->outfit->u.amm.speed > 0.)
+         w->solid->speed_max = VMOD(v) + w->outfit->u.amm.speed_max;
    }
 
    /* Handle seekers. */

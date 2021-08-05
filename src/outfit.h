@@ -216,7 +216,8 @@ typedef struct OutfitAmmoData_ {
    double resist;    /**< Lowers chance of jamming by this amount */
    OutfitAmmoAI ai;  /**< Smartness of ammo. */
 
-   double speed;     /**< Maximum speed */
+   double speed;     /**< Initial speed. */
+   double speed_max; /**< Maximum speed. Defaults to speed if not set. */
    double turn;      /**< Turn velocity in rad/s. */
    double thrust;    /**< Acceleration */
    double energy;    /**< Energy usage */
