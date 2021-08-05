@@ -211,7 +211,7 @@ function create()
    end
 
    if not misn.claim(destsys) then
-       misn.finish(false)
+      misn.finish(false)
    end
 
    misn.setNPC(npc_name, portrait_strafer, npc_desc1)
