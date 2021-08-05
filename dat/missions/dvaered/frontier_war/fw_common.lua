@@ -47,12 +47,6 @@ portrait_therus     = "dvaered/dv_military_f1.webp" -- Caporal Therus: subordina
 portrait_tronk      = "dvaered/dv_military_m5.webp" -- Private Tronk: subordinate of Captain Hamfresser
 
 
--- Decides wether the player is stronger than a corvette
-function playerMoreThanCorvette()
-   local playerclass = player.pilot():ship():class()
-   return (playerclass == "Destroyer" or playerclass == "Cruiser" or playerclass == "Carrier" or playerclass == "Battleship" or playerclass == "Armoured Transport")
-end
-
 -- When an escort is hailed
 function escort_hailed(pilot)
    local c = tk.choice(instr_title, instr_text, in_free, in_follow, in_nevermind)

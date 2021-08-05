@@ -460,7 +460,7 @@ end
 -- Decide if the Phalanx flees or fight
 function phalanx_attacked()
    hook.rm(pattacked)
-   if playerMoreThanCorvette() then
+   if player.pilot():ship():size() > 3 then
       p:taskClear()
       p:comm( phalanx_comm_flee )
       p:runaway(player.pilot())

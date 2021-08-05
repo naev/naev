@@ -578,7 +578,7 @@ function targetAttacked()
    target:setHostile(true)
 
    -- Decide between fight or runaway
-   if playerMoreThanCorvette() then
+   if player.pilot():ship():size() > 3 then
       target:taskClear()
       target:comm( sting_comm_flee )
       target:runaway(player.pilot())

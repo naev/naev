@@ -175,23 +175,12 @@ end
 
 function ambush()
    --Looking at the player ship's class in order to spawn the most dangerous enemy to him
-   playerclass = player.pilot():ship():class()
+   local playerSize = player.pilot():ship():size()
    badguys = {}
 
-   if playerclass == "Scout" or playerclass == "Fighter"
-         or playerclass == "Interceptor"
-         or playerclass == "Yacht"
-         or palyerclass == "Courier" then
-      if rnd.rnd() < 0.7 then
-         interceptors()
-      else
-         hvy_intercept()
-      end
-
-      elseif playerclass == "Bomber" then
-
+   if playerSize <= 2 then
       local rand = rnd.rnd()
-      if rand < 0.5 then
+      if rand < 0.3 then
          hvy_intercept()
       elseif  rand < 0.8 then
          interceptors()
@@ -199,18 +188,10 @@ function ambush()
          corvette()
       end
 
-      elseif playerclass == "Freighter" then  --what a strange idea to use a Mule in this situation...
-
-      if rnd.rnd() < 0.6 then
-         corvette()
-      else
-         cruiser()
-      end
-
-      elseif playerclass == "Corvette" or playerclass == "Destroyer" or playerclass == "Armoured Transport" then
+      elseif playerSize <= 4 then
 
       local rand = rnd.rnd()
-      if rand < 0.6 then
+      if rand < 0.5 then
          cruiser()
       elseif rand < 0.8 then
          corvette()
@@ -218,7 +199,7 @@ function ambush()
          hvy_intercept()
       end
 
-      elseif playerclass == "Cruiser" or playerclass == "Carrier" or playerclass == "Battleship" then
+      elseif playerSize <= 6 then
 
       if rnd.rnd() < 0.7 then
          bombers()
@@ -226,7 +207,7 @@ function ambush()
          hvy_intercept()
       end
 
-   else --The fact you don't have a ship class in the list doesn't means you're safe !
+   else -- We're never too sure
       littleofall()
    end
    --and a Llama for variety :
