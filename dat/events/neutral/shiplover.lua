@@ -205,8 +205,9 @@ function create ()
       ["Goddard"]    = true,
       ["Frontier"]   = true,
    }
-   local sfact = system.cur():faction():nameRaw()
-   if not whitelist[ sfact ] then
+
+   local pfact = planet.cur():faction()
+   if not pfact or not whitelist[ pfact:nameRaw() ] then
       evt.finish()
    end
 
