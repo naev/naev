@@ -16,7 +16,7 @@
   <duration blowup="armour">4</duration>
   <thrust>600</thrust>
   <turn>50</turn>
-  <speed>800</speed>
+  <speed_max>800</speed_max>
   <resist>10</resist>
   <damage>
    <type>impact</type>
