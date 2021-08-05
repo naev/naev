@@ -186,6 +186,7 @@ end
 function derelict_exploded()
    player.pilot():control(false)
    player.pilot():setHealth(42, 0)
+   camera.shake()
    destroyevent()
 end
 

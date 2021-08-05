@@ -237,6 +237,8 @@ function slow()
    -- Cancel autonav.
    player.cinematics(true)
    player.cinematics(false)
+   camera.shake()
+   audio.soundPlay( "empexplode" )
 
    local maxspeed = player.pilot():stats().speed
    local speed = maxspeed/3*(1 + 0.1*rnd.twosigma())
@@ -266,6 +268,7 @@ function outOfControl()
 
    -- Cancel autonav.
    player.cinematics(true)
+   camera.shake()
 
    player.pilot():control()
    for i = 1, 4, 1 do
@@ -281,6 +284,7 @@ function noAnswer()
 
    -- Cancel autonav.
    player.cinematics(true)
+   camera.shake()
 
    player.pilot():control()
    hook.timer(10.0, "backToControl")
