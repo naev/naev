@@ -171,6 +171,13 @@ function should_attack( enemy )
       return false
    end
 
+   -- Don't reattack the current enemy
+   local task = ai.taskname()
+   local si = _stateinfo( task )
+   if si.attack and enemy == ai.taskdata() then
+      return false
+   end
+
    -- Check if we have minimum range to engage
    if mem.enemyclose then
       local dist = ai.dist2( enemy )
