@@ -1076,7 +1076,9 @@ static void weapon_sample_trail( Weapon* w )
    dy = w->outfit->u.amm.trail_x_offset * sin(a);
 
    /* Set the colour. */
-   if (w->solid->thrust > 0)
+   if ((w->outfit->u.amm.ai == AMMO_AI_UNGUIDED) ||
+        w->solid->vel.x*w->solid->vel.x + w->solid->vel.y*w->solid->vel.y + 1.
+        < w->solid->speed_max*w->solid->speed_max)
       mode = MODE_AFTERBURN;
    else if (w->solid->dir_vel != 0.)
       mode = MODE_GLOW;
