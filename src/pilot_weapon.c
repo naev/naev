@@ -885,7 +885,7 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
  *    @param pos Target of the weapon.
  *    @param vel Target's velocity.
  */
-double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const Vector2d *pos, const Vector2d *vel)
+double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const Vector2d *pos, const Vector2d *vel )
 {
    Vector2d approach_vector, relative_location, orthoradial_vector;
    double speed, radial_speed, orthoradial_speed, dist, t;
@@ -905,10 +905,10 @@ double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const Vector2d *
 
    /* Missiles use absolute velocity while bolts and unguided rockets use relative vel */
    if (outfit_isLauncher(o) && o->u.lau.ammo->u.amm.ai != AMMO_AI_UNGUIDED)
-         vect_cset( &approach_vector, - vel->x, - vel->y );
+      vect_cset( &approach_vector, - vel->x, - vel->y );
    else
-         vect_cset( &approach_vector, VX(parent->solid->vel) - vel->x,
-               VY(parent->solid->vel) - vel->y );
+      vect_cset( &approach_vector, VX(parent->solid->vel) - vel->x,
+            VY(parent->solid->vel) - vel->y );
 
    speed = outfit_speed(o);
 
