@@ -2575,6 +2575,28 @@ Pilot *player_getShip( const char *shipname )
 
 
 /**
+ * @brief Gets a specific ship.
+ *
+ *    @param shipname Nome of the ship to get.
+ *    @return The ship matching name.
+ */
+PlayerShip_t *player_getPlayerShip( const char *shipname )
+{
+   int i;
+
+   if ((player.p != NULL) && (strcmp(shipname,player.p->name)==0))
+      return NULL;
+
+   for (i=0; i < array_size(player_stack); i++)
+      if (strcmp(player_stack[i].p->name, shipname)==0)
+         return &player_stack[i];
+
+   WARN(_("Player ship '%s' not found in stack"), shipname);
+   return NULL;
+}
+
+
+/**
  * @brief Gets how many of the outfit the player owns.
  *
  *    @param o Outfit to check how many the player owns.
@@ -3857,8 +3879,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    int favourite;
    PlayerShip_t *ps;
 
+   /* Parse attributes. */
    xmlr_attr_strd( parent, "name", name );
    xmlr_attr_strd( parent, "model", model );
+   xmlr_attr_int_def( parent, "favourite", favourite, 0 );
 
    /* Safe defaults. */
    pilot_clearFlagsRaw( flags );
@@ -3900,12 +3924,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    /* Defaults. */
    fuel      = -1;
    autoweap  = 1;
-   favourite = 0;
    aim_lines = 0;
 
    /* Start parsing. */
    node = parent->xmlChildrenNode;
-   xmlr_attr_int_def(node, "favourite", favourite, 0);
    do {
       /* get fuel */
       xmlr_int(node,"fuel",fuel);

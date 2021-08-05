@@ -80,6 +80,7 @@ static void equipment_genShipList( unsigned int wid );
 static void equipment_genOutfitList( unsigned int wid );
 /* Widget. */
 static void equipment_genLists( unsigned int wid );
+static void equipment_toggleFav( unsigned int wid, char *wgt );
 static void equipment_renderColumn( double x, double y, double w, double h,
       PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
@@ -271,7 +272,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
    if (cw != NULL)
       *cw = 120;
    if (ch != NULL)
-      *ch = 150;
+      *ch = 140;
 
    /* Calculate button dimensions. */
    if (bw != NULL)
@@ -380,6 +381,11 @@ void equipment_open( unsigned int wid )
          ow, gl_defFont.h, 0, "txtShipTitle", &gl_defFont, NULL, _("Available Ships") );
    window_addText( wid, 30, -40-sh-20,
          ow, gl_defFont.h, 0, "txtOutfitTitle", &gl_defFont, NULL, _("Available Outfits") );
+
+   /* Favourite checkbox, run before genLists. */
+   window_addCheckbox( wid, -20-(128-cw)/2, -20-150-ch, cw, 30, "chkFav", _("Favourite"), equipment_toggleFav, 0 );
+
+   /* Generate lists. */
    equipment_genLists( wid );
 
    /* Slot widget. Designed so that 10 slots barely fit. */
@@ -1383,6 +1389,28 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
 
 
 /**
+ * @brief Handles toggling of the favourite checkbox.
+ */
+static void equipment_toggleFav( unsigned int wid, char *wgt )
+{
+   const char *shipname;
+   PlayerShip_t *ps;
+   int state = window_checkboxState( wid, wgt );
+   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+   if (strcmp(shipname,player.p->name)==0) { /* no ships */
+      player.favourite = state;
+   }
+   else {
+      ps = player_getPlayerShip( shipname );
+      ps->favourite = state;
+   }
+
+   /* Update ship to reflect changes. */
+   equipment_regenLists( wid, 0, 1 );
+}
+
+
+/**
  * @brief Generates a new ship/outfit lists if needed.
  *
  *    @param wid Parent window id.
@@ -1634,9 +1662,11 @@ void equipment_updateShips( unsigned int wid, char* str )
    char sdet[NUM2STRLEN], seva[NUM2STRLEN], sste[NUM2STRLEN];
    char smass[NUM2STRLEN], sfuel[NUM2STRLEN];
    Pilot *ship;
+   PlayerShip_t *ps;
    char *nt;
    int onboard;
    int cargo, jumps;
+   int favourite;
 
    /* Clear defaults. */
    eq_wgt.slot          = -1;
@@ -1648,10 +1678,13 @@ void equipment_updateShips( unsigned int wid, char* str )
    if (strcmp(shipname,player.p->name)==0) { /* no ships */
       ship    = player.p;
       onboard = 1;
+      favourite = player.favourite;
    }
    else {
-      ship   = player_getShip( shipname );
+      ps      = player_getPlayerShip( shipname );
+      ship    = ps->p;
       onboard = 0;
+      favourite = ps->favourite;
    }
    eq_wgt.selected = ship;
 
@@ -1733,6 +1766,9 @@ void equipment_updateShips( unsigned int wid, char* str )
    /* Clean up. */
    free( buf );
    free( nt );
+
+   /* Set favourite checkbox. */
+   window_checkboxSet( wid, "chkFav", favourite );
 
    /* button disabling */
    if (onboard) {
