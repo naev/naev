@@ -78,6 +78,7 @@ typedef struct Player_s {
    double dt_mod; /**< Static modifier of dt applied to the game as a whole. */
    char *gui; /**< Player's GUI. */
    int guiOverride; /**< GUI is overridden (not default). */
+   int favourite; /**< Whether or not this ship is favourited. */
 
    /* Player data. */
    PlayerFlags flags; /**< Player's flags. */
@@ -126,6 +127,7 @@ typedef struct PlayerOutfit_s {
 typedef struct PlayerShip_s {
    Pilot* p;      /**< Pilot. */
    int autoweap;  /**< Automatically update weapon sets. */
+   int favourite; /**< Whether or not it is favourited. */
 } PlayerShip_t;
 
 

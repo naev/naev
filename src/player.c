@@ -151,7 +151,7 @@ static void player_initSound (void);
 /* save/load */
 static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
-static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship );
+static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite );
 static int player_saveMetadata( xmlTextWriterPtr writer );
 static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
@@ -509,6 +509,7 @@ static Pilot* player_newShipMake( const char* name )
       /* Create the ship. */
       ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
       new_pilot   = ship->p;
+      ship->favourite = 0;
    }
 
    if (player.p == NULL)
@@ -533,7 +534,7 @@ static Pilot* player_newShipMake( const char* name )
  */
 void player_swapShip( const char *shipname, int move_cargo )
 {
-   int i;
+   int i, fav;
    Pilot* ship;
    Vector2d v;
    double dir;
@@ -570,6 +571,11 @@ void player_swapShip( const char *shipname, int move_cargo )
       /* now swap the players */
       player_stack[i].p = player.p;
       player.p          = pilot_replacePlayer( ship );
+
+      /* Swap favouriteness. */
+      fav = player_stack[i].favourite;
+      player_stack[i].favourite = player.favourite;
+      player.favourite = fav;
 
       /* Copy position back. */
       player.p->solid->pos = v;
@@ -2446,6 +2452,11 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
    ps1 = (PlayerShip_t*) arg1;
    ps2 = (PlayerShip_t*) arg2;
 
+   if (ps1->favourite && !ps2->favourite)
+      return -1;
+   else if (ps2->favourite && !ps1->favourite)
+      return +1;
+
    /* Get prices. */
    p1 = pilot_worth( ps1->p );
    p2 = pilot_worth( ps2->p );
@@ -3047,12 +3058,12 @@ int player_save( xmlTextWriterPtr writer )
 
    /* Current ship. */
    xmlw_elem(writer, "location", "%s", land_planet->name);
-   player_saveShip( writer, player.p ); /* current ship */
+   player_saveShip( writer, player.p, player.favourite ); /* current ship */
 
    /* Ships. */
    xmlw_startElem(writer,"ships");
    for (i=0; i<array_size(player_stack); i++)
-      player_saveShip( writer, player_stack[i].p );
+      player_saveShip( writer, player_stack[i].p, player_stack[i].favourite );
    xmlw_endElem(writer); /* "ships" */
 
    /* GUIs. */
@@ -3137,9 +3148,10 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
  *
  *    @param writer XML writer.
  *    @param ship Ship to save.
+ *    @param favourite Whether or not this ship is a favourite.
  *    @return 0 on success.
  */
-static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
+static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite )
 {
    int i, j, k;
    int found;
@@ -3149,6 +3161,7 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship )
    xmlw_startElem(writer,"ship");
    xmlw_attr(writer,"name","%s",ship->name);
    xmlw_attr(writer,"model","%s",ship->ship->name);
+   xmlw_attr(writer,"favourite", "%d",favourite);
 
    /* save the fuel */
    xmlw_elem(writer,"fuel","%d",ship->fuel);
@@ -3841,6 +3854,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    PilotFlags flags;
    unsigned int pid;
    int autoweap, level, weapid, active_set, aim_lines, in_range, weap_type;
+   int favourite;
    PlayerShip_t *ps;
 
    xmlr_attr_strd( parent, "name", name );
@@ -3884,12 +3898,14 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    free(model);
 
    /* Defaults. */
-   fuel     = -1;
-   autoweap = 1;
+   fuel      = -1;
+   autoweap  = 1;
+   favourite = 0;
    aim_lines = 0;
 
    /* Start parsing. */
    node = parent->xmlChildrenNode;
+   xmlr_attr_int_def(node, "favourite", favourite, 0);
    do {
       /* get fuel */
       xmlr_int(node,"fuel",fuel);
@@ -3987,7 +4003,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    if (is_player == 0) {
       ps = &array_grow( &player_stack );
       ps->p = ship;
+      ps->favourite = favourite;
    }
+   else
+      player.favourite = favourite;
 
    /* Sets inrange by default if weapon sets are missing. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
