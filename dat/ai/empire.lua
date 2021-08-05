@@ -6,7 +6,6 @@ mem.armour_run = 40
 mem.armour_return = 70
 mem.aggressive = true
 
-
 function create ()
    local p = ai.pilot()
    local ps = p:ship()
@@ -38,24 +37,24 @@ function create ()
       end
       -- Most likely no chance to refuel
       mem.refuel_msg = string.format( _("\"I suppose I could spare some fuel for %s, but you'll have to do the paperwork.\""), creditstring(mem.refuel) )
-   end
 
-   -- See if can be bribed
-   mem.bribe = math.sqrt( p:stats().mass ) * (500. * rnd.rnd() + 1750.)
-   if rnd.rnd() > 0.7 then
-      mem.bribe_prompt = string.format(_("\"For some %s I could forget about seeing you.\""), creditstring(mem.bribe) )
-      mem.bribe_paid = _("\"Now scram before I change my mind.\"")
-   else
-     local bribe_no = {
-            _("\"You won't buy your way out of this one.\""),
-            _("\"The Empire likes to make examples out of scum like you.\""),
-            _("\"You've made a huge mistake.\""),
-            _("\"Bribery carries a harsh penalty, scum.\""),
-            _("\"I'm not interested in your blood money!\""),
-            _("\"All the money in the world won't save you now!\"")
-     }
-     mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
+      -- See if can be bribed
+      mem.bribe = math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
+      if standing > 0 or (standing > -20 and rnd.rnd() > 0.7) or rnd.rnd() > 0.5 then
+         mem.bribe_prompt = string.format(_("\"For some %s I could forget about seeing you.\""), creditstring(mem.bribe) )
+         mem.bribe_paid = _("\"Now scram before I change my mind.\"")
+      else
+      local bribe_no = {
+               _("\"You won't buy your way out of this one.\""),
+               _("\"The Empire likes to make examples out of scum like you.\""),
+               _("\"You've made a huge mistake.\""),
+               _("\"Bribery carries a harsh penalty, scum.\""),
+               _("\"I'm not interested in your blood money!\""),
+               _("\"All the money in the world won't save you now!\"")
+      }
+      mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
 
+      end
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
