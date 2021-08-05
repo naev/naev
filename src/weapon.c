@@ -348,7 +348,7 @@ static void think_seeker( Weapon* w, const double dt )
             /* Calculate time to reach target. */
             vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
                   p->solid->pos.y - w->solid->pos.y );
-            t = vect_odist( &v ) / w->outfit->u.amm.speed;
+            t = vect_odist( &v ) / w->outfit->u.amm.speed_max;
 
             /* Calculate target's movement. */
             vect_cset( &v, v.x + t*(p->solid->vel.x - w->solid->vel.x),
@@ -379,7 +379,7 @@ static void think_seeker( Weapon* w, const double dt )
    }
 
    /* Limit speed here */
-   w->real_vel = MIN( w->outfit->u.amm.speed, w->real_vel + w->outfit->u.amm.thrust*dt );
+   w->real_vel = MIN( w->outfit->u.amm.speed_max, w->real_vel + w->outfit->u.amm.thrust*dt );
    vect_pset( &w->solid->vel, /* ewtrack * */ w->real_vel, w->solid->dir );
 
    /* Modulate max speed. */
@@ -1554,9 +1554,10 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
    if (w->outfit->u.amm.thrust > 0.) {
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
-      /* Limit speed, we only care if it has thrust + initial speed and it is RELATIVE! */
+      /* Limit speed, we only relativize in the case it has thrust + initila speed. */
+      w->solid->speed_max = w->outfit->u.amm.speed_max;
       if (w->outfit->u.amm.speed > 0.)
-         w->solid->speed_max = VMOD(v) + w->outfit->u.amm.speed_max;
+         w->solid->speed_max += VMOD(*vel);
    }
 
    /* Handle seekers. */
