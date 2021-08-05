@@ -481,7 +481,7 @@ function spawnControl()
    types = { "Gawain", "Llama", "Schroedinger", "Hyena" }
    theTyp = types[ rnd.rnd(1,#types) ]
 
-   controls[noCtrl] = pilot.add( theTyp, "Independent", origin )[1]
+   controls[noCtrl] = pilot.add( theTyp, "Independent", origin )
    controls[noCtrl]:control()
    controls[noCtrl]:land(targpla)
 
