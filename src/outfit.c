@@ -1346,6 +1346,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    SDESC_COND( l, temp, _("\n%.1f EPS [%.0f Energy]"),
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy );
    SDESC_ADD(  l, temp, _("\n%s Range"), num2strU( temp->u.blt.range, 0 ) );
+   SDESC_ADD(  l, temp, _("\n%.0f Speed"), temp->u.blt.speed );
    SDESC_COND( l, temp, _("\n%.1f second heat up"), temp->u.blt.heatup);
    if (!outfit_isTurret(temp))
       SDESC_ADD(  l, temp, _("\n%.1f Degree Swivel"), temp->u.blt.swivel*180./M_PI );
@@ -2651,7 +2652,15 @@ static void outfit_launcherDesc( Outfit* o )
          1. / o->u.lau.delay * a->u.amm.dmg.disable, a->u.amm.dmg.disable );
    SDESC_ADD(  l, o, _("\n%.1f Shots Per Second"), 1. / o->u.lau.delay );
    SDESC_ADD(  l, o, _("\n%s Range [%.1f duration]"), num2strU( outfit_range(a), 0 ), a->u.amm.duration );
-   SDESC_ADD(  l, o, _("\n%.0f Maximum Speed"), a->u.amm.speed );
+   if (a->u.amm.thrust > 0.) {
+      if (a->u.amm.speed > 0.)
+         SDESC_ADD( l, o, _("\n%.0f Initial Speed (%.0f Thrust)"), a->u.amm.speed, a->u.amm.thrust );
+      else
+         SDESC_ADD( l, o, _("\n%.0f Thrust"), a->u.amm.thrust );
+   }
+   else
+      SDESC_COND( l, o, _("\n%.0f Speed"), a->u.amm.speed );
+   SDESC_ADD(  l, o, _("\n%.0f Maximum Speed"), a->u.amm.speed_max );
    SDESC_ADD(  l, o, _("\n%.1f Seconds to Reload"), o->u.lau.reload_time );
    SDESC_COND( l, o, _("\n%.1f EPS [%.0f Energy]"), o->u.lau.delay * a->u.amm.energy, a->u.amm.energy );
    SDESC_COND( l, o, _("\n%.1f%% Jam Resistance"), (1. - 0.5 / a->u.amm.resist) * 100.);
