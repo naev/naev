@@ -1368,10 +1368,10 @@ dat/outfits/core_engine/dummy_engine.xml
 dat/outfits/core_engine/large/beat_up_large_engine.xml
 dat/outfits/core_engine/large/krain_remige_engine.xml
 dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml
-dat/outfits/core_engine/large/nexus_bolt_4500_engine.xml
+dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml
 dat/outfits/core_engine/large/tricon_typhoon_engine.xml
 dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml
-dat/outfits/core_engine/large/unicorp_eagle_6500_engine.xml
+dat/outfits/core_engine/large/unicorp_eagle_7000_engine.xml
 dat/outfits/core_engine/medium/beat_up_medium_engine.xml
 dat/outfits/core_engine/medium/krain_patagium_engine.xml
 dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml
@@ -1388,6 +1388,7 @@ dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml
 dat/outfits/core_engine/small/zalek_test_engine.xml
 dat/outfits/core_hull/dummy_plating.xml
 dat/outfits/core_hull/large/patchwork_heavy_plating.xml
+dat/outfits/core_hull/large/sk_heavy_combat_plating.xml
 dat/outfits/core_hull/large/sk_large_cargo_hull.xml
 dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml
 dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml
