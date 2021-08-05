@@ -12,9 +12,9 @@ function create ()
 
    -- No bribe
    local bribe_msg = {
-      _("\"Just leave me alone!\""),
-      _("\"What do you want from me!?\""),
-      _("\"Get away from me!\"")
+      _([["Just leave me alone!"]]),
+      _([["What do you want from me!?"]]),
+      _([["Get away from me!"]])
    }
    mem.bribe_no = bribe_msg[ rnd.rnd(1,#bribe_msg) ]
 
@@ -22,7 +22,7 @@ function create ()
    mem.refuel = rnd.rnd( 1000, 3000 )
    local pp = player.pilot()
    if pp:exists() then
-      mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
+      mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
             creditstring(mem.refuel))
    end
 

@@ -13,7 +13,7 @@ function create ()
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/100, ai.pilot():ship():price()/25) )
 
    -- Communication stuff
-   mem.bribe_no = _("\"The Space Traders do not negotiate with criminals.\"")
+   mem.bribe_no = _([["The Space Traders do not negotiate with criminals."]])
    mem.refuel = rnd.rnd( 3000, 5000 )
    local p = player.pilot()
    if p:exists() then
@@ -23,7 +23,7 @@ function create ()
       elseif standing > 80 then
          mem.refuel = mem.refuel * 0.5
       end
-      mem.refuel_msg = string.format(_("\"I'll supply your ship with fuel for %s.\""),
+      mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
             creditstring(mem.refuel))
    end
 
