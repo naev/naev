@@ -27,6 +27,9 @@ shipname = _("August") --The ship will have a unique name
 shipwreck = _("Shipwrecked %s")
 
 function create ()
+   -- Make sure system isn't claimed, but we don't claim it
+   if not evt.claim( system.cur(), true ) then evt.finish() end
+
     -- The shipwreck will be a random trader vessel.
     r = rnd.rnd()
     if r > 0.95 then
