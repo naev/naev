@@ -1544,9 +1544,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
 
    /* If thrust is 0. we assume it starts out at speed. */
    v = *vel;
-   if (ammo->u.amm.thrust == 0.)
-      vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
-            sin(rdir) * w->outfit->u.amm.speed );
+   vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
+                  sin(rdir) * w->outfit->u.amm.speed );
    w->real_vel = VMOD(v);
 
    /* Set up ammo details. */
@@ -1555,7 +1554,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_RK4 );
    if (w->outfit->u.amm.thrust != 0.) {
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
-      w->solid->speed_max = w->outfit->u.amm.speed; /* Limit speed, we only care if it has thrust. */
+      w->solid->speed_max = w->outfit->u.amm.speed_max; /* Limit speed, we only care if it has thrust. */
    }
 
    /* Handle seekers. */

@@ -1593,6 +1593,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->u.amm.sound_hit   = -1;
    temp->u.amm.trail_spec  = NULL;
    temp->u.amm.ai          = -1;
+   temp->u.amm.speed_max   = -1.;
 
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -1617,6 +1618,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"thrust",temp->u.amm.thrust);
       xmlr_float(node,"turn",temp->u.amm.turn);
       xmlr_float(node,"speed",temp->u.amm.speed);
+      xmlr_float(node,"speed_max",temp->u.amm.speed_max);
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"gfx")) {
          temp->u.amm.gfx_space = xml_parseTexture( node,
@@ -1684,6 +1686,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
    /* Post-processing */
    temp->u.amm.turn *= M_PI/180.; /* Convert to rad/s. */
+   if (temp->u.amm.speed_max < 0.)
+      temp->u.amm.speed_max = temp->u.amm.speed;
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
