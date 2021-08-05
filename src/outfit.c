@@ -1705,7 +1705,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
    if (outfit_isSeeker(temp)) {
       MELEMENT(temp->u.amm.turn==0,"turn");
    }
-   MELEMENT(temp->u.amm.speed==0,"speed");
+   MELEMENT(temp->u.amm.speed_max==0,"speed_max");
    MELEMENT(temp->u.amm.duration==0,"duration");
    MELEMENT(temp->u.amm.dmg.damage==0,"damage");
    /*MELEMENT(temp->u.amm.energy==0.,"energy");*/
