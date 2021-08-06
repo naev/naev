@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
- <fleet name="Goddard Goddard">
-  <ai>goddard</ai>
-  <faction>Goddard</faction>
-  <pilots>
-   <pilot name="Goddard Goddard" ship="Goddard"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Goddard Lancelot">
-  <ai>goddard</ai>
-  <faction>Goddard</faction>
-  <pilots>
-   <pilot name="Goddard Lancelot" ship="Lancelot"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Proteron Kahan">
   <ai>proteron</ai>
   <faction>Proteron</faction>
@@ -33,48 +19,6 @@
   <faction>Proteron</faction>
   <pilots>
    <pilot name="Proteron Watson" ship="Proteron Watson"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Frontier Lancelot">
-  <ai>frontier_police</ai>
-  <faction>Frontier</faction>
-  <pilots>
-   <pilot name="Frontier Lancelot" ship="Lancelot"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Frontier Phalanx">
-  <ai>frontier_police</ai>
-  <faction>Frontier</faction>
-  <pilots>
-   <pilot name="Frontier Phalanx" ship="Phalanx"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Frontier Ancestor">
-  <ai>frontier_police</ai>
-  <faction>Frontier</faction>
-  <pilots>
-   <pilot name="Frontier Ancestor" ship="Ancestor"></pilot>
-  </pilots>
- </fleet>
- <fleet name="FLF Pacifier">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <pilots>
-   <pilot name="FLF Pacifier" ship="Pacifier"></pilot>
-  </pilots>
- </fleet>
- <fleet name="FLF Vendetta">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <pilots>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-  </pilots>
- </fleet>
- <fleet name="FLF Lancelot">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <pilots>
-   <pilot name="FLF Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
  <fleet name="Pirate Hyena">
@@ -267,15 +211,6 @@
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
- <fleet name="Dvaered Strike Force">
-  <ai>dvaered</ai>
-  <faction>Dvaered</faction>
-  <pilots>
-   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
-   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
-   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Empire Sml Defense">
   <ai>empire</ai>
   <faction>Empire</faction>
@@ -361,27 +296,6 @@
    <pilot name="Za'lek Hephaestus" ship="Za'lek Hephaestus"></pilot>
   </pilots>
  </fleet>
- <fleet name="Mercenary Pacifier">
-  <ai>mercenary</ai>
-  <faction>Mercenary</faction>
-  <pilots>
-   <pilot name="Mercenary Pacifier" ship="Pacifier"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Mercenary Ancestor">
-  <ai>mercenary</ai>
-  <faction>Mercenary</faction>
-  <pilots>
-   <pilot name="Mercenary Ancestor" ship="Ancestor"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Mercenary Vendetta">
-  <ai>mercenary</ai>
-  <faction>Mercenary</faction>
-  <pilots>
-   <pilot name="Mercenary Vendetta" ship="Vendetta"></pilot>
-  </pilots>
- </fleet>
  <fleet name="DTS Defense Fleet">
   <ai>empire</ai>
   <faction>Trader</faction>
@@ -394,16 +308,6 @@
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Vendetta Quartet">
-  <ai>flf</ai>
-  <faction>Independent</faction>
-  <pilots>
-   <pilot name="Independent Vendetta" ship="Vendetta"></pilot>
-   <pilot name="Independent Vendetta" ship="Vendetta"></pilot>
-   <pilot name="Independent Vendetta" ship="Vendetta"></pilot>
-   <pilot name="Independent Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Shadowvigil Ambush 1">
@@ -571,20 +475,6 @@
    <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
    <pilot name="Dvaered Phalanx" ship="Dvaered Phalanx"></pilot>
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Thurion Apprehension">
-  <ai>thurion</ai>
-  <faction>Thurion</faction>
-  <pilots>
-   <pilot name="Thurion Apprehension" ship="Thurion Apprehension"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Thurion Certitude">
-  <ai>thurion</ai>
-  <faction>Thurion</faction>
-  <pilots>
-   <pilot name="Thurion Certitude" ship="Thurion Certitude"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Recon Force">
