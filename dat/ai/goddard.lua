@@ -4,7 +4,7 @@ require "numstring"
 -- Settings
 mem.aggressive = true
 
-local bribe_no = {
+local bribe_no_list = {
    _([["You insult my honour."]]),
    _([["I find your lack of honour disturbing."]]),
    _([["You disgust me."]]),
