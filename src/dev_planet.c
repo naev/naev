@@ -113,6 +113,8 @@ int dpl_savePlanet( const Planet *p )
          xmlw_elemEmpty( writer, "blackmarket" );
       if (planet_isFlag( p, PLANET_NOMISNSPAWN ))
          xmlw_elemEmpty( writer, "nomissionspawn" );
+      if (planet_isFlag( p, PLANET_UNINHABITED ))
+         xmlw_elemEmpty( writer, "uninhabited" );
       xmlw_endElem( writer ); /* "services" */
       if (planet_hasService( p, PLANET_SERVICE_LAND )) {
          if (p->faction > 0) {
