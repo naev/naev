@@ -81,19 +81,19 @@ local minerva = {
    log = {
       kex = function( text )
          shiplog.create( "log_minerva_kex", _("Kex"), _("Minerva Station") )
-         shiplog.append( "log_minerva_kex", ext )
+         shiplog.append( "log_minerva_kex", text )
       end,
       maikki = function( text )
          shiplog.create( "log_minerva_maikki", _("Finding Maikki's Father"), _("Minerva Station") )
-         shiplog.append( "log_minerva_maikki", ext )
+         shiplog.append( "log_minerva_maikki", text )
       end,
       pirate = function( text )
          shiplog.create( "log_minerva_pirate", _("Shady Jobs at Minerva"), _("Minerva Station") )
-         shiplog.append( "log_minerva_pirate", ext )
+         shiplog.append( "log_minerva_pirate", text )
       end,
       misc = function( text )
          shiplog.create( "log_minerva_misc", _("Miscellaneous"), _("Minerva Station") )
-         shiplog.append( "log_minerva_misc", ext )
+         shiplog.append( "log_minerva_misc", text )
       end,
    },
 
