@@ -1196,9 +1196,9 @@ static void opt_video( unsigned int wid )
    cw = (w-60)/2;
    x = 20;
    y = -40;
-   window_addText( wid, x+20, y, 100, 20, 0, "txtSRes",
-         NULL, NULL, _("Resolution") );
-   y -= 40;
+   window_addText( wid, x, y, 100, 20, 0, "txtSRes",
+         NULL, NULL, _("Resolution:") );
+   y -= 30;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
    window_setInputFilter( wid, "inpRes", INPUT_FILTER_RESOLUTION );
    window_addCheckbox( wid, x+20+100, y, 100, 20,
@@ -1240,7 +1240,7 @@ static void opt_video( unsigned int wid )
       nres++;
    }
    window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes, NULL );
-   y -= 120;
+   y -= 110;
    window_addText( wid, x, y-3, 130, 20, 0, "txtScale",
          NULL, NULL, NULL );
    window_addFader( wid, x+140, y, cw-160, 20, "fadScale", log(1.), log(3.),
@@ -1258,12 +1258,12 @@ static void opt_video( unsigned int wid )
          log(conf.zoom_near+1.), opt_setZoomNear );
    opt_setZoomFar( wid, "fadZoomFar" );
    opt_setZoomNear( wid, "fadZoomNear" );
-   y -= 60;
+   y -= 40;
 
    /* FPS stuff. */
-   window_addText( wid, x+20, y, 100, 20, 0, "txtFPSTitle",
-         NULL, NULL, _("FPS Control") );
-   y -= 30;
+   window_addText( wid, x, y, 100, 20, 0, "txtFPSTitle",
+         NULL, NULL, _("FPS Control:") );
+   y -= 25;
    s = _("FPS Limit");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtSFPS",
@@ -1282,17 +1282,17 @@ static void opt_video( unsigned int wid )
    /* OpenGL options. */
    x = 20+cw+20;
    y = -40;
-   window_addText( wid, x+20, y, 100, 20, 0, "txtSGL",
-         NULL, NULL, _("OpenGL") );
-   y -= 30;
+   window_addText( wid, x, y, 100, 20, 0, "txtSGL",
+         NULL, NULL, _("OpenGL:") );
+   y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkVSync", _("Vertical Sync"), NULL, conf.vsync );
    y -= 40;
 
    /* Features. */
-   window_addText( wid, x+20, y, 100, 20, 0, "txtSFeatures",
-         NULL, NULL, _("Features") );
-   y -= 30;
+   window_addText( wid, x, y, 100, 20, 0, "txtSFeatures",
+         NULL, NULL, _("Features:") );
+   y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
    y -= 20;
@@ -1300,32 +1300,32 @@ static void opt_video( unsigned int wid )
          "chkColorblind", _("Colorblind mode"), opt_checkColorblind,
          conf.colorblind );
    y -= 30;
-   window_addText( wid, x+15, y-3, cw-20, 20, 0, "txtBGBrightness",
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtBGBrightness",
          NULL, NULL, NULL );
    y -= 20;
-   window_addFader( wid, x+40, y, cw-60, 20, "fadBGBrightness", 0., 1.,
+   window_addFader( wid, x+20, y, cw-60, 20, "fadBGBrightness", 0., 1.,
          conf.bg_brightness, opt_setBGBrightness );
    opt_setBGBrightness( wid, "fadBGBrightness" );
    y -= 20;
-   window_addText( wid, x+15, y-3, cw-20, 20, 0, "txtNebuBrightness",
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtNebuBrightness",
          NULL, NULL, NULL );
    y -= 20;
-   window_addFader( wid, x+40, y, cw-60, 20, "fadNebuBrightness", 0., 1.,
+   window_addFader( wid, x+20, y, cw-60, 20, "fadNebuBrightness", 0., 1.,
          conf.nebu_brightness, opt_setNebuBrightness );
    opt_setNebuBrightness( wid, "fadNebuBrightness" );
    y -= 20;
-   window_addText( wid, x+15, y-3, cw-20, 20, 0, "txtMOpacity",
+   window_addText( wid, x, y-3, cw-20, 20, 0, "txtMOpacity",
          &gl_smallFont, NULL, NULL );
    y -= 20;
-   window_addFader( wid, x+40, y, cw-60, 20, "fadMapOverlayOpacity", 0., 1.,
+   window_addFader( wid, x+20, y, cw-60, 20, "fadMapOverlayOpacity", 0., 1.,
          conf.map_overlay_opacity, opt_setMapOverlayOpacity );
    opt_setMapOverlayOpacity( wid ,"fadMapOverlayOpacity" );
    y -= 40;
 
    /* GUI */
-   window_addText( wid, x+20, y, 100, 20, 0, "txtSGUI",
-         NULL, NULL, _("GUI") );
-   y -= 30;
+   window_addText( wid, x, y, 100, 20, 0, "txtSGUI",
+         NULL, NULL, _("GUI:") );
+   y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkBigIcons", _("Bigger icons"), NULL, conf.big_icons );
 
