@@ -709,6 +709,7 @@ static int outfitL_specificStats( lua_State *L )
          SETFIELD( "swivel",     o->u.lau.swivel );
          /* Ammo stuff. */
          SETFIELD( "speed",      o->u.lau.ammo->u.amm.speed );
+         SETFIELD( "speed_max",  o->u.lau.ammo->u.amm.speed_max );
          SETFIELD( "turn",       o->u.lau.ammo->u.amm.turn );
          SETFIELD( "thrust",     o->u.lau.ammo->u.amm.thrust );
          SETFIELD( "energy",     o->u.lau.ammo->u.amm.energy );
