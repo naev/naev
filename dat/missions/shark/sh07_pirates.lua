@@ -242,14 +242,13 @@ function enter()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      baddie = pilot.add( "Goddard", "Goddard", vec2.new(0,0), _("Goddard Goddard"), {ai="pirate_norun"} ) --Faction's ships come with upgraded weaponry
+      baddie = pilot.add( "Goddard", "Goddard", vec2.new(0,0), godname, {ai="pirate_norun"} ) --Faction's ships come with upgraded weaponry
       baddie:setFaction("Pirate")
       baddie:changeAI( "pirate" )
 
       ancestor = pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) )
       hyena = pilot.add( "Hyena", "Pirate", vec2.new(0,100), _("Pirate Hyena") )
 
-      baddie:rename(godname)
       baddie:setHilight()
       baddie:setHostile()
 
