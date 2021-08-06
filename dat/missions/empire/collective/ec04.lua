@@ -135,11 +135,14 @@ function enter()
         system.mrkAdd(markername, waypoint1)
         system.mrkAdd(markername, waypoint2)
 
-        swarm1 = pilot.addFleet("Collective Lge Swarm", misn_target:pos())
-        swarm2 = pilot.addFleet("Collective Lge Swarm", misn_target:pos())
-        for _, j in ipairs(swarm2) do
-            swarm1[#swarm1 + 1] = j -- Combine the swarms into one swarm, for convenience.
+        swarm1 = {}
+        for i = 1,24 do
+           swarm1[i] = pilot.add("Drone", "Collective", misn_target, _("Collective Drone") )
         end
+        for i = 1,16 do
+           swarm1[i+24] = pilot.add("Heavy Drone", "Collective", misn_target, _("Collective Heavy Drone") )
+        end
+
         for _, j in ipairs(swarm1) do
             if j:exists() then
                 j:control()
@@ -165,9 +168,20 @@ function enter()
         fleet1[1]:comm(escort_msg2)
 
         -- TODO: Use heavier Collective ships here
-        swarm1 = pilot.addFleet("Collective Lge Swarm", pv + vec2.new(-3000, 500))
-        swarm2 = pilot.addFleet("Collective Lge Swarm", pv + vec2.new(-3000, 0))
-        swarm3 = pilot.addFleet("Collective Lge Swarm", pv + vec2.new(-3000, -500))
+        swarm1 = {}
+        swarm2 = {}
+        swarm3 = {}
+        for i = 1,12 do
+           swarm1[i] = pilot.add("Drone", "Collective", pv + vec2.new(-3000, 500), _("Collective Drone") )
+           swarm2[i] = pilot.add("Drone", "Collective", pv + vec2.new(-3000, 0), _("Collective Drone") )
+           swarm3[i] = pilot.add("Drone", "Collective", pv + vec2.new(-3000, -500), _("Collective Drone") )
+        end
+        for i = 1,8 do
+           swarm1[i+12] = pilot.add("Heavy Drone", "Collective", pv + vec2.new(-3000, 500), _("Collective Heavy Drone") )
+           swarm2[i+12] = pilot.add("Heavy Drone", "Collective", pv + vec2.new(-3000, 0), _("Collective Heavy Drone") )
+           swarm3[i+12] = pilot.add("Heavy Drone", "Collective", pv + vec2.new(-3000, -500), _("Collective Heavy Drone") )
+        end
+
         for i, _ in ipairs(swarm1) do -- Let's be lazy.
             swarm1[i]:setVisplayer()
             swarm2[i]:setVisplayer()

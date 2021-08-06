@@ -1,31 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
- <fleet name="Collective Lge Swarm">
-  <ai>collective</ai>
-  <faction>Collective</faction>
-  <pilots>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Collective Sml Swarm">
   <ai>collective</ai>
   <faction>Collective</faction>
