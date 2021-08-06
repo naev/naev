@@ -173,11 +173,11 @@ function abort ()
 
       local choices
       if f == faction.get( "Empire" ) then
-         choices = { "Empire Sml Defense", "Empire Lge Attack", "Empire Med Attack" }
+         choices = { "Empire Lancelot", "Empire Admonisher", "Empire Pacifier" }
       elseif f == faction.get( "Goddard" ) then
-         choices = { "Goddard Goddard", "Goddard Lancelot" }
+         choices = { "Goddard", "Lancelot" }
       elseif f == faction.get( "Dvaered" ) then
-         choices = { "Dvaered Big Patrol", "Dvaered Small Patrol", "Dvaered Strike Force" }
+         choices = { "Dvaered Vendetta", "Dvaered Phalanx", "Dvaered Vigilance" }
       elseif f == faction.get( "Soromid" ) then
          choices = { "Soromid Arx", "Soromid Vox", "Soromid Nyx", "Soromid Odium" }
       elseif f == faction.get( "Za'lek" ) then
@@ -185,27 +185,26 @@ function abort ()
       elseif f == faction.get( "Sirius" ) then
          choices = { "Sirius Preacher", "Sirius Divinity", "Sirius Dogma" }
       elseif f == faction.get( "Frontier" ) then
-         choices = { "Frontier Phalanx", "Frontier Lancelot", "Frontier Ancestor" }
+         choices = { "Phalanx", "Lancelot", "Ancestor" }
       elseif f == faction.get( "Thurion" ) then
          choices = { "Thurion Apprehension", "Thurion Certitude" }
       elseif f == faction.get( "Proteron" ) then
          choices = { "Proteron Kahan", "Proteron Watson", "Proteron Archimedes" }
       elseif f == faction.get( "Collective" ) then
-         choices = { "Collective Lge Swarm", "Collective Sml Swarm" }
+         choices = { "Collective Drone", "Collective Heavy Drone" }
       elseif f == faction.get( "FLF" ) then
-         choices = { "FLF Pacifier", "FLF Vendetta", "FLF Lancelot" }
+         choices = { "Pacifier", "Vendetta", "Lancelot" }
       elseif f == faction.get( "Pirate" ) then
          choices = { "Pirate Kestrel", "Pirate Phalanx", "Pirate Admonisher" }
       else
-         choices = { "Vendetta Quartet", "Mercenary Pacifier", "Mercenary Ancestor", "Mercenary Vendetta" }
+         f = faction.get( "Mercenary" )
+         choices = { "Lancelot", "Pacifier", "Ancestor", "Vendetta" }
       end
 
       for n = 1, rnd.rnd( 2, 4 ) do
          for i, j in ipairs( system.cur():jumps() ) do
-            local p = pilot.addFleet( choices[ rnd.rnd( 1, #choices ) ], j:dest() )
-            for k, v in ipairs( p ) do
-               v:setHostile()
-            end
+            local p = pilot.add( choices[ rnd.rnd( 1, #choices ) ], f, j:dest() )
+            p:setHostile()
          end
       end
 
