@@ -38,7 +38,7 @@ void news_exit (void);
 /*
  * Display.
  */
-int *generate_news( const char* faction );
+int *generate_news( int faction );
 void news_widget( unsigned int wid, int x, int y, int w, int h );
 
 /*

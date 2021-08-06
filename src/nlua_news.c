@@ -229,7 +229,7 @@ int newsL_add( lua_State *L )
 
       /* If we're landed, we should regenerate the news buffer. */
       if (landed) {
-         generate_news(faction_name(land_planet->faction));
+         generate_news(land_planet->faction);
          if (land_loaded)
             bar_regen();
       }
@@ -275,7 +275,7 @@ int newsL_add( lua_State *L )
 
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {
-      generate_news(faction_name(land_planet->faction));
+      generate_news(land_planet->faction);
       if (land_loaded)
          bar_regen();
    }
@@ -313,7 +313,7 @@ int newsL_rm( lua_State *L )
 
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {
-      generate_news(faction_name(land_planet->faction));
+      generate_news(land_planet->faction);
       if (land_loaded) {
          bar_regen();
       }

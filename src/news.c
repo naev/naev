@@ -19,6 +19,7 @@
 #include "news.h"
 
 #include "array.h"
+#include "faction.h"
 #include "log.h"
 #include "nlua.h"
 #include "nlua_diff.h"
@@ -252,14 +253,16 @@ news_t* news_get(int id)
  *    @param faction the faction of wanted news
  * @return 0 on success
  */
-int *generate_news( const char* faction )
+int *generate_news( int faction )
 {
    news_t *temp, *article_ptr;
    int p;
    char *article_time;
+   const char* fname;
 
    p = 0;
    article_ptr = news_list;
+   fname = (faction >= 0) ? faction_name( faction ) : NULL;
 
    /* Put all acceptable news into buf */
    do {
@@ -277,8 +280,8 @@ int *generate_news( const char* faction )
 
       /* if article is okay */
       if ( (strcmp(article_ptr->faction, "Generic") == 0)
-            || ( (faction != NULL)
-               && (strcmp(article_ptr->faction, faction) == 0) ) ) {
+            || ( (fname != NULL)
+               && (strcmp(article_ptr->faction, fname) == 0) ) ) {
          /* XXX: magic number */
          if (article_ptr->date && (article_ptr->date < 40000000000000)) {
             article_time = ntime_pretty(article_ptr->date, 1);
