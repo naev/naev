@@ -20,6 +20,7 @@
 #include "options.h"
 
 #include "conf.h"
+#include "colour.h"
 #include "dialogue.h"
 #include "input.h"
 #include "log.h"
@@ -48,7 +49,7 @@ static const char *opt_names[] = {
    N_("Audio"),
    N_("Input")
 };
-
+static const glColour *cHeader = &cFontGrey;
 
 static int opt_restart = 0;
 static PlayerConf_t local_conf;
@@ -312,7 +313,7 @@ static void opt_gameplay( unsigned int wid )
    window_addList( wid, x+l+20, y, cw-l-50, 100, "lstLanguage", ls, n, i, NULL, NULL );
    y -= 120;
    window_addText( wid, x, y, cw, 20, 0, "txtCompile",
-         NULL, NULL, _("Compilation Flags:") );
+         NULL, cHeader, _("Compilation Flags:") );
    y -= 30;
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
          NULL, &cFontOrange,
@@ -363,7 +364,7 @@ static void opt_gameplay( unsigned int wid )
    y -= 40;
 
    window_addText( wid, x, y, cw, 20, 0, "txtSettings",
-         NULL, NULL, _("Settings:") );
+         NULL, cHeader, _("Settings:") );
    y -= 25;
 
    window_addCheckbox( wid, x, y, cw, 20,
@@ -545,7 +546,7 @@ static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
 
    /* Get list dimensions. */
    if (lw != NULL)
-      *lw = *w - BUTTON_WIDTH - 60;
+      *lw = 350; //*w - BUTTON_WIDTH - 60;
    if (lh != NULL)
       *lh = *h - 60;
 }
@@ -564,7 +565,7 @@ static void opt_keybinds( unsigned int wid )
    /* Close button. */
    window_addButton( wid, -20, 20, bw, bh,
          "btnClose", _("OK"), opt_OK );
-   /* Restore deafaults button. */
+   /* Restore defaults button. */
    window_addButton( wid, -20, 40 + bh, bw, bh,
          "btnDefaults", _("Defaults"), opt_keyDefaults );
    /* Set button. */
@@ -572,9 +573,9 @@ static void opt_keybinds( unsigned int wid )
          "btnSet", _("Set Key"), opt_setKey );
 
    /* Text stuff. */
-   window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
-         NULL, NULL, NULL );
-   window_addText( wid, 20+lw+20, -90, w-(20+lw+20), h-170-3*bh,
+   window_addText( wid, -20, -40, w-(20+lw+20+20), 30, 1, "txtName",
+         NULL, cHeader, NULL );
+   window_addText( wid, -20, -90, w-(20+lw+20+20), h-170-3*bh,
          0, "txtDesc", NULL, NULL, NULL );
 
    /* Generate the list. */
@@ -894,8 +895,8 @@ static void opt_audio( unsigned int wid )
    /* Sound levels. */
    x = 20 + cw + 20;
    y = -60;
-   window_addText( wid, x+20, y, cw-40, 20, 0, "txtSVolume",
-         NULL, NULL, _("Volume Levels") );
+   window_addText( wid, x, y, cw-40, 20, 0, "txtSVolume",
+         NULL, cHeader, _("Volume Levels:") );
    y -= 30;
 
    /* Sound fader. */
@@ -1197,7 +1198,7 @@ static void opt_video( unsigned int wid )
    x = 20;
    y = -40;
    window_addText( wid, x, y, 100, 20, 0, "txtSRes",
-         NULL, NULL, _("Resolution:") );
+         NULL, cHeader, _("Resolution:") );
    y -= 30;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
    window_setInputFilter( wid, "inpRes", INPUT_FILTER_RESOLUTION );
@@ -1262,7 +1263,7 @@ static void opt_video( unsigned int wid )
 
    /* FPS stuff. */
    window_addText( wid, x, y, 100, 20, 0, "txtFPSTitle",
-         NULL, NULL, _("FPS Control:") );
+         NULL, cHeader, _("FPS Control:") );
    y -= 25;
    s = _("FPS Limit");
    l = gl_printWidthRaw( NULL, s );
@@ -1283,7 +1284,7 @@ static void opt_video( unsigned int wid )
    x = 20+cw+20;
    y = -40;
    window_addText( wid, x, y, 100, 20, 0, "txtSGL",
-         NULL, NULL, _("OpenGL:") );
+         NULL, cHeader, _("OpenGL:") );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkVSync", _("Vertical Sync"), NULL, conf.vsync );
@@ -1291,7 +1292,7 @@ static void opt_video( unsigned int wid )
 
    /* Features. */
    window_addText( wid, x, y, 100, 20, 0, "txtSFeatures",
-         NULL, NULL, _("Features:") );
+         NULL, cHeader, _("Features:") );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMinimize", _("Minimize on focus loss"), NULL, conf.minimize );
@@ -1324,7 +1325,7 @@ static void opt_video( unsigned int wid )
 
    /* GUI */
    window_addText( wid, x, y, 100, 20, 0, "txtSGUI",
-         NULL, NULL, _("GUI:") );
+         NULL, cHeader, _("GUI:") );
    y -= 20;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkBigIcons", _("Bigger icons"), NULL, conf.big_icons );
