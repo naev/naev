@@ -1287,9 +1287,6 @@ static void opt_video( unsigned int wid )
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkVSync", _("Vertical Sync"), NULL, conf.vsync );
-   y -= 20;
-   window_addText( wid, x, y, cw, 20, 1,
-         "txtSCompat", NULL, NULL, _("*Disable for compatibility.") );
    y -= 40;
 
    /* Features. */
@@ -1346,7 +1343,7 @@ static void opt_needRestart (void)
 
    /* Values. */
    opt_restart = 1;
-   s           = _("Restart Naev for changes to take effect.");
+   s           = _("#rRestart Naev for changes to take effect.#0");
 
    /* Modify widgets. */
    window_modifyText( opt_windows[ OPT_WIN_GAMEPLAY ], "txtRestart", s );
