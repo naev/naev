@@ -28,8 +28,6 @@ local love_shaders = require 'love_shaders'
 local vn = require 'vn'
 require 'numstring'
 
-logidstr = minerva.log.kex.idstr
-
 -- Mission states:
 --  nil: mission not accepted yet
 --  0: mission accepted go to targetplanet
@@ -67,7 +65,7 @@ function accept ()
 
    misn.accept()
 
-   shiplog.append( logidstr, _("You have agreed to help Kex steal information from Baroness Eve.") )
+   minerva.log.kex(_("You have agreed to help Kex steal information from Baroness Eve.") )
 
    misn.osdCreate( misn_title,
       { string.format(_("Go to %s in the %s system and hack the main database"), _(targetplanet), _(targetsys) ),
@@ -135,7 +133,7 @@ He plugs in the program directly into a port under his wing and his eyes go blan
       vn.sfxVictory()
       vn.run()
 
-      shiplog.append( logidstr, _("You stole information from Baroness Eve for Kex."))
+      minerva.log.kex(_("You stole information from Baroness Eve for Kex."))
       misn.finish( true )
       return
    end

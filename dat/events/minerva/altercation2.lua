@@ -101,6 +101,7 @@ function create ()
    vn.done("hexagon")
    vn.run()
 
+   minerva.log.misc(_("You sort of helped cyborg chicken get away from a thug."))
    evt.finish(true)
 end
 

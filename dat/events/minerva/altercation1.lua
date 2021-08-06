@@ -203,11 +203,14 @@ function dv_hail ()
    local dvc = vn.newCharacter( dvaered_name,
       { image=dvaered_holo, color=dvaered_colour, shader=love_shaders.hologram() } )
    vn.transition("electric")
-   dvc( _("\"Thank you for the help with the Za'lek scum. Let us celebrate with a drink in the bar down at Minerva Station!\"") )
+   dvc( _([["Thank you for the help with the Za'lek scum. Let us celebrate with a drink in the bar down at Minerva Station!"]]) )
    vn.done("electric")
    vn.run()
    var.push( "minerva_altercation_helped", "dvaered" )
+   dv:control(true)
    dv:land( planet.get("Minerva Station") )
+   dv:setInvincible(true)
+   minerva.log.misc(_("You helped a Dvaered pilot get rid of a Za'lek pilot they had a quarrel with."))
    player.commClose()
 end
 
@@ -237,11 +240,14 @@ function zl_hail ()
    local zlc = vn.newCharacter( zalek_name,
       { image=zalek_holo, color=zalek_colour, shader=love_shaders.hologram() } )
    vn.transition("electric")
-   zlc( _("\"As my computations predicted, the Dvaered scum was no match for the Za'lek superiority. Let us celebrate with a drink down at Minerva Station\"") )
+   zlc( _([["As my computations predicted, the Dvaered scum was no match for the Za'lek superiority. Let us celebrate with a drink down at Minerva Station"]]) )
    vn.done("electric")
    vn.run()
    var.push( "minerva_altercation_helped", "zalek" )
+   zl:control(true)
    zl:land( planet.get("Minerva Station") )
+   zl:setInvincible(true)
+   minerva.log.misc(_("You helped a Za'lek pilot get rid of a Dvaered pilot they had a quarrel with."))
    player.commClose()
 end
 

@@ -79,30 +79,31 @@ local minerva = {
    },
 
    log = {
-      kex = {
-         idstr = "log_minerva_kex",
-         logname = _("Kex"),
-         logtype = _("Minerva Station"),
-      },
-      maikki = {
-         idstr = "log_minerva_maikki",
-         logname = _("Finding Maikki's Father"),
-         logtype = _("Minerva Station"),
-      },
-      pirate = {
-         idstr = "log_minerva_pirate",
-         logname = _("Shady Jobs at Minerva"),
-         logtype = _("Minerva Station"),
-      },
+      kex = function( text )
+         shiplog.create( "log_minerva_kex", _("Kex"), _("Minerva Station") )
+         shiplog.append( "log_minerva_kex", ext )
+      end,
+      maikki = function( text )
+         shiplog.create( "log_minerva_maikki", _("Finding Maikki's Father"), _("Minerva Station") )
+         shiplog.append( "log_minerva_maikki", ext )
+      end,
+      pirate = function( text )
+         shiplog.create( "log_minerva_pirate", _("Shady Jobs at Minerva"), _("Minerva Station") )
+         shiplog.append( "log_minerva_pirate", ext )
+      end,
+      misc = function( text )
+         shiplog.create( "log_minerva_misc", _("Miscellaneous"), _("Minerva Station") )
+         shiplog.append( "log_minerva_misc", ext )
+      end,
    },
 
    loops = {
-      maikki = 'snd/sounds/songs/mushroom-background.ogg',
-      kex = 'snd/sounds/songs/feeling-good-05.ogg',
-      pirate = 'snd/sounds/songs/hip-hop-background.ogg',
+      maikki      = 'snd/sounds/songs/mushroom-background.ogg',
+      kex         = 'snd/sounds/songs/feeling-good-05.ogg',
+      pirate      = 'snd/sounds/songs/hip-hop-background.ogg',
       strangelove = 'snd/sounds/songs/space-exploration-08.ogg',
-      conflict = "snd/sounds/songs/run-for-your-life-00.ogg",
-      news = "snd/sounds/songs/news.ogg",
+      conflict    = "snd/sounds/songs/run-for-your-life-00.ogg",
+      news        = "snd/sounds/songs/news.ogg",
    },
 }
 

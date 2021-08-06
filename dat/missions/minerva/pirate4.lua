@@ -27,8 +27,6 @@ local vn = require 'vn'
 local love_shaders = require "love_shaders"
 require 'numstring'
 
-logidstr = minerva.log.pirate.idstr
-
 misn_title = _("Minerva Mole")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to deal with a Dvaered spy that appears to be located at Minerva Station.")
@@ -71,7 +69,7 @@ function accept ()
       _("Find out who the mole is"),
    } )
 
-   shiplog.append( logidstr, _("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
+   minerva.log.pirate(_("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
 
    hook.load("generate_npc")
    hook.land("generate_npc")
@@ -435,7 +433,7 @@ They give you a tired grin.
    vn.na(string.format(_("You have received #g%s#0."), creditstring(reward_amount)))
    vn.func( function () -- Rewards
       player.pay( reward_amount )
-      shiplog.append( logidstr, _("You helped defend an interrogation ship from Dvaered vessels.") )
+      minerva.log.pirate(_("You helped defend an interrogation ship from Dvaered vessels.") )
       faction.modPlayerSingle("Pirate", 5)
    end )
    vn.sfxVictory()

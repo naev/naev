@@ -26,8 +26,6 @@ local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
 
-logidstr = minerva.log.pirate.idstr
-
 misn_title = _("Dvaered Thugs")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to mess around with Dvaered thugs.")
@@ -93,8 +91,7 @@ They beam a smile at you.]]),_(runawaysys)))
       return
    end
 
-   shiplog.create( logidstr, minerva.log.pirate.logname, minerva.log.pirate.logtype )
-   shiplog.append( logidstr, _("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
+   minerva.log.pirate(_("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
 
    misn.accept()
    osd = misn.osdCreate( _("Thug Decoy"),
@@ -128,7 +125,7 @@ She winks at you and walks way.]]))
       vn.sfxVictory()
       vn.run()
 
-      shiplog.append( logidstr, _("You succeeded in making the Dvaered think that the Za'lek were harassing their thugs near Minerva station.") )
+      minerva.log.pirate(_("You succeeded in making the Dvaered think that the Za'lek were harassing their thugs near Minerva station.") )
       misn.finish(true)
    end
 end

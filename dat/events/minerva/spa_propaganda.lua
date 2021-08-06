@@ -44,6 +44,8 @@ The terminal pauses for effect.]]))
    vn.na(_("As if nothing happened, Minerva Station returns to normality."))
    vn.run()
 
+   minerva.log.misc(_("Minerva station terminals announced an event where you can buy a ticket to enter a raffle. The winner can go to the spa with cyborg chicken."))
+
    -- One off event
    evt.finish(true)
 end

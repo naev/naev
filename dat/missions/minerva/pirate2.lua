@@ -25,8 +25,6 @@ local portrait = require 'portrait'
 local vn = require 'vn'
 require 'numstring'
 
-logidstr = minerva.log.pirate.idstr
-
 misn_title = _("Dvaered Thugs")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to incapacitate a suspicious Za'lek drone.")
@@ -90,7 +88,7 @@ They smiles at you.]]))
           _("Go back to Minerva Station") } )
    misn.osdActive(1)
 
-   shiplog.append( logidstr, _("You accept another job from the shady individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
+   minerva.log.pirate(_("You accept another job from the shady individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
 
    hook.enter("enter")
    hook.load("land")
@@ -117,7 +115,7 @@ They wink at you.]]))
       vn.sfxVictory()
       vn.run()
 
-      shiplog.append( logidstr, _("You succeeded in destroying Za'lek drones and making it seem like the Dvaered were involved.") )
+      minerva.log.pirate(_("You succeeded in destroying Za'lek drones and making it seem like the Dvaered were involved.") )
 
       misn.finish(true)
    end

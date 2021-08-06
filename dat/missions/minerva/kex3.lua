@@ -29,8 +29,6 @@ local equipopt = require 'equipopt'
 local luaspfx  = require 'luaspfx'
 require 'numstring'
 
-logidstr = minerva.log.kex.idstr
-
 -- Mission states:
 --  nil: mission not accepted yet
 --  0: mission accepted go to targetplanet and try to find dvaered dude
@@ -79,7 +77,7 @@ function accept ()
 
    misn.accept()
 
-   shiplog.append( logidstr, _("You have agreed to help Kex obtain information from Major Malik.") )
+   minerva.log.kex(_("You have agreed to help Kex obtain information from Major Malik.") )
 
    misn.osdCreate( misn_title,
       { string.format(_("Go to %s in the %s system to find Major Malik"), _(targetplanet), _(targetsys) ),
@@ -164,7 +162,7 @@ He seems satisfied at his pun.]]))
       vn.na(_("As you take your leave you hear Kex beginning to hum an ancient-sounding tune. He seems happier than usual."))
       vn.run()
 
-      shiplog.append( logidstr, _("You defeated Major Malik in a lopsided duel in the Crimson Gauntlet, and acquired information related to money laundering at Minerva Station."))
+      minerva.log.kex(_("You defeated Major Malik in a lopsided duel in the Crimson Gauntlet, and acquired information related to money laundering at Minerva Station."))
       misn.finish( true )
       return
 

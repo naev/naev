@@ -28,8 +28,6 @@ local vn = require 'vn'
 local love_shaders = require "love_shaders"
 require 'numstring'
 
-logidstr = minerva.log.pirate.idstr
-
 misn_title = _("Finding the Dvaered Spy")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Someone wants you to find a Dvaered spy that appears to be located at Minerva Station.")
@@ -81,7 +79,7 @@ function accept ()
    osd = misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in a VIP room.") } )
 
-   shiplog.append( logidstr, _("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
+   minerva.log.pirate(_("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
 
    hook.enter("enter")
    hook.load("generate_npc")
@@ -158,7 +156,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
       vn.na(string.format(_("You have received #g%s#0."), creditstring(reward_amount)))
       vn.func( function ()
          player.pay( reward_amount )
-         shiplog.append( logidstr, _("You planted a listening device in the Minerva Spa to catch a mole and were rewarded for your actions.") )
+         minerva.log.pirate(_("You planted a listening device in the Minerva Spa to catch a mole and were rewarded for your actions.") )
       end )
       vn.sfxVictory()
       vn.done()
@@ -237,7 +235,7 @@ They start frantically typing into their portable holo-deck. It makes weird beep
          {_("Get Harper Bowdoin's ticket in Limbo.")},
          {_("Plant a listening device in a VIP room.") } )
       misn_state = 3
-      shiplog.append( logidstr, _("You did not obtain the winning ticket of the Minerva Spa event and were tasked with obtaining it from a so called Harper Bowdoin.") )
+      minerva.log.pirate(_("You did not obtain the winning ticket of the Minerva Spa event and were tasked with obtaining it from a so called Harper Bowdoin.") )
    end )
    vn.jump("menu_msg")
 
@@ -251,7 +249,7 @@ She beams you a smile.
       osd = misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in the Spa.") } )
       npc_spa = misn.npcAdd( "approach_spa", spa_name, spa_portrait, spa_description )
-      shiplog.append( logidstr, _("You obtained the winning ticket to enter the Minerva Spa.") )
+      minerva.log.pirate(_("You obtained the winning ticket to enter the Minerva Spa.") )
    end )
    vn.jump("menu_msg")
 

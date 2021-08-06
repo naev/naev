@@ -44,8 +44,6 @@ local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 require 'numstring'
 
-logidstr = minerva.log.maikki.idstr
-
 maikki_name = _("Distraught Young Woman")
 maikki_description = _("You see a small young woman sitting by herself. She has a worried expression on her face.")
 maikki_portrait = minerva.maikki.portrait
@@ -163,8 +161,7 @@ She trails off.]]) )
       vn.func( function ()
          misn.accept()
          misn_state = -1
-         shiplog.create( logidstr, minerva.log.maikki.logname, minerva.log.maikki.logtype )
-         shiplog.append( logidstr, _("You have agreed to help Maikki find her father (Kex).") )
+         minerva.log.maikki(_("You have agreed to help Maikki find her father (Kex)."))
       end )
       maikki(_([["I was told he would be here, but I've been here for ages and haven't gotten anywhere."
 She gives out a heavy sigh.]]))
@@ -229,7 +226,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
          misn_osd = misn.osdCreate( misn_title,
             { string.format(_("Look around the %s system"), _(searchsys)) } )
          misn_marker = misn.markerAdd( system.get(searchsys), "low" )
-         shiplog.append( logidstr, _("You were told her father colud be near Doeston.") )
+         minerva.log.maikki(_("You were told her father colud be near Doeston.") )
       end
    end )
    vn.jump( "menu_msg" )
@@ -256,7 +253,7 @@ She looks clearly excited at the possibility.]]))
    vn.func( function ()
       -- no reward, yet...
       mission_finish = true
-      shiplog.append( logidstr, _("You gave Maikki the information you found in the nebula about her father.") )
+      minerva.log.maikki(_("You gave Maikki the information you found in the nebula about her father.") )
    end )
    vn.done("hexagon")
 
@@ -413,7 +410,7 @@ He pats his biceps in a fairly uninspiring way.]]))
                { string.format(_("Follow the scavengers in the %s system"), _(stealthsys)) } )
             misn.markerMove( misn_marker, system.get(stealthsys) )
             misn_state=4
-            shiplog.append( logidstr, _("You overheard some scavengers talking about a wreck in Zerantix.") )
+            minerva.log.maikki(_("You overheard some scavengers talking about a wreck in Zerantix.") )
          end
       end )
    end
@@ -564,7 +561,7 @@ function cutscene_hail ()
       misn_state = 2
       hook.rm( cuttimer ) -- reset timer
       pilot.toggleSpawn(true)
-      shiplog.append( logidstr, _("You helped a scavenger in Arandon.") )
+      minerva.log.maikki(_("You helped a scavenger in Arandon."))
    end
 end
 
@@ -831,7 +828,7 @@ He seems to be clutching his head. A headache perhaps?]]))
             p:taskClear()
             p:hyperspace( system.get(cutscenesys) )
          end
-         shiplog.append( logidstr, _("You found a wreck and bribed scavengers so that they left.") )
+         minerva.log.maikki(_("You found a wreck and bribed scavengers so that they left.") )
       end
    end )
    vn.sfxMoney()
@@ -857,7 +854,7 @@ He seems to be clutching his head. A headache perhaps?]]))
          p:attack( player.pilot() )
          -- TODO add angry messages
       end
-      shiplog.append( logidstr, _("You found a wreck and were attacked by scavengers.") )
+      minerva.log.maikki(_("You found a wreck and were attacked by scavengers.") )
    end )
 
    vn.done("electric")
@@ -927,7 +924,7 @@ function board_wreck ()
    vn.done("hexagon")
    vn.run()
 
-   shiplog.append( logidstr, _("You boarded the wreck which seems to be Kex's ship. You found a picture of his family and signs that this was not an accident with possible Za'lek involvement.") )
+   minerva.log.maikki(_("You boarded the wreck which seems to be Kex's ship. You found a picture of his family and signs that this was not an accident with possible Za'lek involvement.") )
 
    -- Move target back to origin
    misn_osd = misn.osdCreate( misn_title,

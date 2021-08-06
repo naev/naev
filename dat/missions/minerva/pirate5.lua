@@ -33,8 +33,6 @@ local vn = require 'vn'
 local equipopt = require 'equipopt'
 require 'numstring'
 
-logidstr = minerva.log.pirate.idstr
-
 misn_title = _("Za'lek Hacking Center")
 misn_reward = _("Cold hard credits")
 misn_desc = _("Zuri wants you to disable a Za'lek hacking center located near Minerva Station.")
@@ -75,7 +73,7 @@ function accept ()
    } )
    mrk_mainsys = misn.markerAdd( system.get(mainsys) )
 
-   shiplog.append( logidstr, string.format(_("You accepted a job from Zuri to take out a Za'lek hacking center at the %s system"), mainsys) )
+   minerva.log.pirate( string.format(_("You accepted a job from Zuri to take out a Za'lek hacking center at the %s system"), mainsys) )
    local c = misn.cargoNew( _("High-Density Explosives"), _("Explosives that can be used to detonate all sorts of critical infrastructure.") )
    misn.cargoAdd( c, 0 )
 
@@ -108,7 +106,7 @@ They grin at you.
       vn.sfxVictory()
       vn.func( function () -- Rewards
          player.pay( reward_amount )
-         shiplog.append( logidstr, _("You took down an advanced Za'lek hacking center and got rewarded for your efforts.") )
+         minerva.log.pirate(_("You took down an advanced Za'lek hacking center and got rewarded for your efforts.") )
          faction.modPlayerSingle("Pirate", 5)
       end )
       vn.na(string.format(_("You have received #g%s#0."), creditstring(reward_amount)))
