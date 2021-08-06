@@ -50,7 +50,6 @@
   <item>Hulls Medium</item>
   <item>Hulls High</item>
   <item>Hulls Elite</item>
-  <item>Star Maps</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
   <item>Ion 1</item>
@@ -59,5 +58,6 @@
   <item>Engines Cargo</item>
   <item>Thurion Civilian Ships</item>
   <item>Thurion Elite Outfits</item>
+  <item>Thurion Maps</item>
  </tech>
 </asset>

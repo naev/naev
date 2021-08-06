@@ -463,7 +463,6 @@
   <item>Unicorp Fury Launcher</item>
   <item>Battery I</item>
   <item>Small Fuel Pod</item>
-  <item>Star Maps</item>
   <item>Large Civilian Vessel License</item>
   <item>Local System Map</item>
   <item>Previous Generation Small Systems</item>
@@ -507,7 +506,6 @@
   <item>Small Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
-  <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
@@ -584,7 +582,6 @@
   <item>Small Cargo Pod</item>
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
-  <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Sensor Array</item>
@@ -614,7 +611,6 @@
   <item>Medium Cargo Pod</item>
   <item>Large Cargo Pod</item>
   <item>Targeting Array</item>
-  <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Medium Weapon License</item>
@@ -636,7 +632,6 @@
   <item>Biometal Armour</item>
   <item>Droid Repair Crew</item>
   <item>Hellburner</item>
-  <item>Star Maps</item>
   <item>Milspec Scrambler</item>
   <item>Milspec Jammer</item>
   <item>Medium Weapon License</item>
@@ -742,8 +737,17 @@
  <tech name="Thurion Military Outfits">
   <!--<item>Nebular Shielding Prototype</item>-->
  </tech>
+ <tech name="Thurion Maps">
+  <item>Map: Sol</item>
+  <item>Map: Thurion Core</item>
+  <item>Local System Map</item>
+ </tech>
  <tech name="Proteron Military Outfits">
   <item>Proteron Derivative Fighter Bay</item>
+ </tech>
+ <tech name="Proteron Maps">
+  <item>Map: Sol</item>
+  <item>Local System Map</item>
  </tech>
  <tech name="Pirate Elite Outfits">
   <item>Low Radiation Sensor Modulator</item>
