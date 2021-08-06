@@ -1,0 +1,79 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Protera Blockade">
+ <trigger>enter</trigger>
+ <chance>100</chance>
+ <cond>system.cur() == system.get("Protera")</cond>
+</event>
+--]]
+
+--[[
+   Protera Blockade
+
+   This is just there to show off how the proteron are a bunch of fascist
+   xenophobes who don't like outsiders. It also hides the fact that there is no
+   content there (for now).
+--]]
+
+local pos_top = vec2.new(-15000, 2500)
+local pos_bot = vec2.new(-11000, -6000)
+
+local function spawn_fleet( pos )
+   local ships  = {}
+   if rnd.rnd() < 0.5 then
+      ships[1] = "Proteron Watson"
+   else
+      ships[1] = "Proteron Archimedes"
+   end
+
+   for i=1,rnd.rnd(1,3) do
+      table.insert( ships, "Proteron Kahan" )
+   end
+   for i=1,rnd.rnd(4,6) do
+      table.insert( ships, "Proteron Derivative" )
+   end
+
+   local plts = {}
+   for k,s in ipairs(ships) do
+      local leader = plts[1]
+      local p = pilot.add( s, "Proteron", pos, nil, {ai="guard"} )
+      local mem = p:memory()
+      mem.enemyclose    = 10e3
+      mem.guarddodist   = 10e3
+      mem.guardreturndist = 15e3
+      p:setHostile(true) -- TODO change this when something can make them non-hostile
+      if leader then
+         p:setLeader( leader )
+      end
+      table.insert( plts, p )
+      pos = pos + vec2.newP( 300, rnd.rnd()*360)
+   end
+   return plts
+end
+
+function create ()
+   proteron_blockade = {}
+   local n = rnd.rnd(5,6)
+   for i=1,n do
+      local pos = pos_top + (pos_bot - pos_top) * (i-1) / (n-1)
+      local plts = spawn_fleet( pos )
+      for k,v in ipairs(plts) do
+         table.insert( proteron_blockade, v )
+      end
+   end
+
+   hook.timer(3, "heartbeat")
+end
+
+
+function heartbeat ()
+   local pp = player.pilot()
+   for k,p in ipairs(proteron_blockade) do
+      if p:inrange( pp ) then
+         p:broadcast( _("Unknown vessel trying to breach blockade. All ships engage!"), true)
+         return
+      end
+   end
+
+   hook.timer(0.5, "heartbeat")
+end
