@@ -31,7 +31,6 @@
  <tech>
   <item>Basic Outfits 1</item>
   <item>Basic Outfits 2</item>
-  <item>Star Maps</item>
   <item>Systems Low</item>
   <item>Systems High</item>
   <item>Engines Low</item>
@@ -41,5 +40,6 @@
   <item>Ion 1</item>
   <item>Kinetic 1</item>
   <item>Laser 1</item>
+  <item>Proteron Maps</item>
  </tech>
 </asset>

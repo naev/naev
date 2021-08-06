@@ -44,6 +44,7 @@
   <item>Za'lek Military Outfits</item>
   <item>Za'lek Military Ships</item>
   <item>Low Tech Upgrades</item>
+  <item>Star Maps</item>
   <item>High Tech Upgrades 1</item>
   <item>High Tech Upgrades 2</item>
   <item>Basic Outfits 1</item>
@@ -54,7 +55,6 @@
   <item>Ion 1</item>
   <item>Beam 1</item>
   <item>Beam 2</item>
-  <item>Star Maps</item>
   <item>Za'lek Elite Outfits</item>
  </tech>
 </asset>

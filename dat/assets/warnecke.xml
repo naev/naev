@@ -38,6 +38,7 @@
   <item>Plasma 2</item>
   <item>Beam 1</item>
   <item>Low Tech Upgrades</item>
+  <item>Star Maps</item>
   <item>Basic Outfits 1</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
@@ -49,6 +50,5 @@
   <item>Systems Medium</item>
   <item>Hulls Low</item>
   <item>Hulls Medium</item>
-  <item>Star Maps</item>
  </tech>
 </asset>
