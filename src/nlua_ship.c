@@ -52,6 +52,7 @@ static int shipL_time_mod( lua_State *L );
 static int shipL_getSize( lua_State *L );
 static int shipL_description( lua_State *L );
 static int shipL_getShipStat( lua_State *L );
+static int shipL_getShipStatDesc( lua_State *L );
 static const luaL_Reg shipL_methods[] = {
    { "__tostring", shipL_name },
    { "__eq", shipL_eq },
@@ -74,6 +75,7 @@ static const luaL_Reg shipL_methods[] = {
    { "gfx", shipL_gfx },
    { "description", shipL_description },
    { "shipstat", shipL_getShipStat },
+   { "shipstatDesc", shipL_getShipStatDesc },
    {0,0}
 }; /**< Ship metatable methods. */
 
@@ -657,7 +659,7 @@ static int shipL_description( lua_State *L )
  *    @luatparam Ship s Ship to get ship stat of.
  *    @luatparam[opt=nil] string name Name of the ship stat to get.
  *    @luatparam[opt=false] boolean internal Whether or not to use the internal representation.
- *    @luareturn Value of the ship stat or a tale containing all the ship stats if name is not specified.
+ *    @luatreturn number|table Value of the ship stat or a tale containing all the ship stats if name is not specified.
  * @luafunc shipstat
  */
 static int shipL_getShipStat( lua_State *L )
@@ -666,5 +668,22 @@ static int shipL_getShipStat( lua_State *L )
    const char *str   = luaL_optstring(L,2,NULL);
    int internal      = lua_toboolean(L,3);
    ss_statsGetLua( L, &s->stats_array, str, internal );
+   return 1;
+}
+
+
+/**
+ * @brief Gets the ship stats description for a ship.
+ *
+ *    @luatparam Ship s Ship to get ship stat description of.
+ *    @luatreturn string Description of the ship's stats.
+ * @luafunc shipstatDesc
+ */
+static int shipL_getShipStatDesc( lua_State *L )
+{
+   char buf[STRMAX];
+   const Ship *s     = luaL_validship(L,1);
+   ss_statsDesc( &s->stats_array, buf, sizeof(buf), 0 );
+   lua_pushstring(L,buf);
    return 1;
 }
