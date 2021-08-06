@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Ship Lover Quiz">
  <trigger>land</trigger>
- <chance>25</chance>
+ <chance>10</chance>
  <notes>
   <tier>1</tier>
  </notes>
@@ -253,10 +253,13 @@ function create ()
 
    -- Increase the difficulty as progresses
    local difficulty = 1
+   local cash_reward = 10e3
    if nwon >= 5 then
       difficulty = 2
+      cash_reward = 25e3
    elseif nwon > 10 then
       difficulty = 3
+      cash_reward = 50e3
    end
 
    -- Generate the question
@@ -295,7 +298,6 @@ function create ()
       reward.msg_obtain = string.format(_("You have received #g%s#0."), outfit_reward:name())
    
    else
-      local cash_reward = 50e3
       reward.func = function ()
          shiplog.append( "shiplover", string.format(_("You obtained a %s from the Ship Enthusiast for getting a quiz right."), creditstring(cash_reward))  )
          player.pay( cash_reward, true ) -- Don't trigger hooks
