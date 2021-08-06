@@ -1536,7 +1536,7 @@ static void opt_setScalefactor( unsigned int wid, char *str )
 {
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
-   scale = round(scale * 10) / 10;     // Reasonable precision. Clearer value.
+   scale = round(scale * 10.) / 10.;     // Reasonable precision. Clearer value.
    if (FABS(conf.scalefactor-scale) > 1e-4)
       opt_needRestart();
    conf.scalefactor = scale;
