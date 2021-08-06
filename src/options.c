@@ -273,7 +273,7 @@ static void opt_gameplay( unsigned int wid )
    x = 20;
    y = -35;
    window_addText( wid, x, y, cw, 20, 1, "txtVersion",
-         &gl_smallFont, NULL, naev_version(1) );
+         NULL, NULL, naev_version(1) );
    y -= 20;
 
    paths = PHYSFS_getSearchPath();
@@ -287,7 +287,7 @@ static void opt_gameplay( unsigned int wid )
    PHYSFS_freeList(paths);
    paths = NULL;
    window_addText( wid, x, y, cw, 20, 1, "txtNdata",
-         &gl_smallFont, NULL, buf );
+         NULL, NULL, buf );
    y -= 40;
    by = y;
 
@@ -315,7 +315,7 @@ static void opt_gameplay( unsigned int wid )
          NULL, NULL, _("Compilation Flags:") );
    y -= 30;
    window_addText( wid, x, y, cw, h+y-20, 0, "txtFlags",
-         &gl_smallFont, &cFontOrange,
+         NULL, &cFontOrange,
          ""
 #if DEBUGGING
 #if DEBUG_PARANOID
@@ -356,7 +356,7 @@ static void opt_gameplay( unsigned int wid )
 
    /* Autonav abort fader. */
    window_addText( wid, x, y, cw, 20, 1, "txtAutonav",
-         &gl_smallFont, NULL, NULL );
+         NULL, NULL, NULL );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadAutonav", 0., 1.,
          conf.autonav_reset_speed, opt_setAutonavResetSpeed );
@@ -395,7 +395,7 @@ static void opt_gameplay( unsigned int wid )
 
    /* Restart text. */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT,
-         w - 40, 30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
+         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
 
    /* Update. */
    opt_gameplayUpdate( wid, NULL );
@@ -575,7 +575,7 @@ static void opt_keybinds( unsigned int wid )
    window_addText( wid, 20+lw+20, -40, w-(20+lw+20), 30, 1, "txtName",
          NULL, NULL, NULL );
    window_addText( wid, 20+lw+20, -90, w-(20+lw+20), h-170-3*bh,
-         0, "txtDesc", &gl_smallFont, NULL, NULL );
+         0, "txtDesc", NULL, NULL, NULL );
 
    /* Generate the list. */
    menuKeybinds_genList( wid );
@@ -916,7 +916,7 @@ static void opt_audio( unsigned int wid )
 
    /* Restart text. */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT,
-         w - 40, 30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
+         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
 
    opt_audioUpdate(wid);
 }
@@ -1127,7 +1127,7 @@ static void opt_setKey( unsigned int wid, char *str )
 
    /* Set text. */
    window_addText( new_wid, 20, -40, w-40, 60, 0, "txtInfo",
-         &gl_smallFont, NULL,
+         NULL, NULL,
          _("To use a modifier key hit that key twice in a row, otherwise it "
          "will register as a modifier. To set with any modifier click the checkbox.") );
 
@@ -1315,7 +1315,7 @@ static void opt_video( unsigned int wid )
    opt_setNebuBrightness( wid, "fadNebuBrightness" );
    y -= 20;
    window_addText( wid, x, y-3, cw-20, 20, 0, "txtMOpacity",
-         &gl_smallFont, NULL, NULL );
+         NULL, NULL, NULL );
    y -= 20;
    window_addFader( wid, x+20, y, cw-60, 20, "fadMapOverlayOpacity", 0., 1.,
          conf.map_overlay_opacity, opt_setMapOverlayOpacity );
@@ -1331,7 +1331,7 @@ static void opt_video( unsigned int wid )
 
    /* Restart text. */
    window_addText( wid, 20, 20 + BUTTON_HEIGHT,
-         w - 40, 30, 0, "txtRestart", &gl_smallFont, NULL, NULL );
+         w - 40, 30, 0, "txtRestart", NULL, NULL, NULL );
 }
 
 /**
