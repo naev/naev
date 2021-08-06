@@ -151,7 +151,7 @@ function create ()
    end
 
    name = pirate_name()
-   ship = "Pirate Hyena"
+   ship = "Hyena"
    credits = 50000
    reputation = 0
    board_failed = false

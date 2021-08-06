@@ -98,7 +98,7 @@ end
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
    if level == 1 then
-      ship = "Pirate Hyena"
+      ship = "Hyena"
       credits = 100e3 + rnd.sigma() * 30e3
       reputation = 0
    elseif level == 2 then
