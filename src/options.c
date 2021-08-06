@@ -1243,19 +1243,19 @@ static void opt_video( unsigned int wid )
    y -= 120;
    window_addText( wid, x, y-3, 130, 20, 0, "txtScale",
          NULL, NULL, NULL );
-   window_addFader( wid, x+140, y, cw-160, 20, "fadScale", 1., 3.,
-         conf.scalefactor, opt_setScalefactor );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadScale", log(1.), log(3.),
+         log(conf.scalefactor), opt_setScalefactor );
    opt_setScalefactor( wid, "fadScale" );
    y -= 30;
    window_addText( wid, x, y-3, 130, 20, 0, "txtZoomFar",
          NULL, NULL, NULL );
-   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomFar", 0.1, 2.0,
-         conf.zoom_far, opt_setZoomFar );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomFar", log(0.1+1.), log(2.0+1.),
+         log(conf.zoom_far+1.), opt_setZoomFar );
    y -= 30;
    window_addText( wid, x, y-3, 130, 20, 0, "txtZoomNear",
          NULL, NULL, NULL );
-   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomNear", 0.1, 2.0,
-         conf.zoom_near, opt_setZoomNear );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomNear", log(0.1+1.), log(2.0+1.),
+         log(conf.zoom_near+1.), opt_setZoomNear );
    opt_setZoomFar( wid, "fadZoomFar" );
    opt_setZoomNear( wid, "fadZoomNear" );
    y -= 60;
@@ -1534,9 +1534,9 @@ static void opt_videoDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkBigIcons", BIG_ICONS_DEFAULT );
 
    /* Faders. */
-   window_faderSetBoundedValue( wid, "fadScale", SCALE_FACTOR_DEFAULT );
-   window_faderSetBoundedValue( wid, "fadZoomFar", ZOOM_FAR_DEFAULT );
-   window_faderSetBoundedValue( wid, "fadZoomNear", ZOOM_NEAR_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadScale", log(SCALE_FACTOR_DEFAULT) );
+   window_faderSetBoundedValue( wid, "fadZoomFar", log(ZOOM_FAR_DEFAULT+1.) );
+   window_faderSetBoundedValue( wid, "fadZoomNear", log(ZOOM_NEAR_DEFAULT+1.) );
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadNebuBrightness", NEBU_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
@@ -1553,7 +1553,7 @@ static void opt_setScalefactor( unsigned int wid, char *str )
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
    //scale = round(scale * 10.) / 10.;
-   conf.scalefactor = scale;
+   conf.scalefactor = exp(scale);
    snprintf( buf, sizeof(buf), _("Scaling: %.1fx"), conf.scalefactor );
    window_modifyText( wid, "txtScale", buf );
    if (FABS(conf.scalefactor-local_conf.scalefactor) > 1e-4)
@@ -1572,11 +1572,11 @@ static void opt_setZoomFar( unsigned int wid, char *str )
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
    //scale = round(scale * 10.) / 10.;
-   conf.zoom_far = scale;
+   conf.zoom_far = exp(scale)-1.;
    snprintf( buf, sizeof(buf), _("Far Zoom: %.1fx"), conf.zoom_far );
    window_modifyText( wid, "txtZoomFar", buf );
    if (conf.zoom_far > conf.zoom_near) {
-      window_faderSetBoundedValue( wid, "fadZoomNear", conf.zoom_far );
+      window_faderSetBoundedValue( wid, "fadZoomNear", log(conf.zoom_far+1.) );
       opt_setZoomNear( wid, "fadZoomNear" );
    }
    if (FABS(conf.zoom_far-local_conf.zoom_far) > 1e-4)
@@ -1595,11 +1595,11 @@ static void opt_setZoomNear( unsigned int wid, char *str )
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
    //scale = round(scale * 10.) / 10.;
-   conf.zoom_near = scale;
+   conf.zoom_near = exp(scale)-1.;
    snprintf( buf, sizeof(buf), _("Near Zoom: %.1fx"), conf.zoom_near );
    window_modifyText( wid, "txtZoomNear", buf );
    if (conf.zoom_near < conf.zoom_far) {
-      window_faderSetBoundedValue( wid, "fadZoomFar", conf.zoom_near );
+      window_faderSetBoundedValue( wid, "fadZoomFar", log(conf.zoom_near+1.) );
       opt_setZoomFar( wid, "fadZoomFar" );
    }
    if (FABS(conf.zoom_near-local_conf.zoom_near) > 1e-4)
