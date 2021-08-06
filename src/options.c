@@ -1193,7 +1193,7 @@ static void opt_video( unsigned int wid )
    /* Resolution bits. */
    cw = (w-60)/2;
    x = 20;
-   y = -60;
+   y = -40;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSRes",
          NULL, NULL, _("Resolution") );
    y -= 40;
@@ -1259,8 +1259,7 @@ static void opt_video( unsigned int wid )
    window_setInputFilter( wid, "inpFPS", INPUT_FILTER_NUMBER );
    snprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
-   y -= 30;
-   window_addCheckbox( wid, x, y, cw, 20,
+   window_addCheckbox( wid, x+l+20+40+20, y, cw, 20,
          "chkFPS", _("Show FPS"), NULL, conf.fps_show );
 
    /* Sets inpRes to current resolution, must be after lstRes is added. */
@@ -1268,7 +1267,7 @@ static void opt_video( unsigned int wid )
 
    /* OpenGL options. */
    x = 20+cw+20;
-   y = -60;
+   y = -40;
    window_addText( wid, x+20, y, 100, 20, 0, "txtSGL",
          NULL, NULL, _("OpenGL") );
    y -= 30;
@@ -1289,7 +1288,7 @@ static void opt_video( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkColorblind", _("Colorblind mode"), opt_checkColorblind,
          conf.colorblind );
-   y -= 20;
+   y -= 30;
    window_addText( wid, x+15, y-3, cw-20, 20, 0, "txtBGBrightness",
          NULL, NULL, NULL );
    y -= 20;
