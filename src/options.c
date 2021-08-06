@@ -83,6 +83,8 @@ static int opt_videoSave( unsigned int wid, char *str );
 static void opt_videoDefaults( unsigned int wid, char *str );
 static void opt_getVideoMode( int *w, int *h, int *fullscreen );
 static void opt_setScalefactor( unsigned int wid, char *str );
+static void opt_setZoomFar( unsigned int wid, char *str );
+static void opt_setZoomNear( unsigned int wid, char *str );
 static void opt_setBGBrightness( unsigned int wid, char *str );
 static void opt_setNebuBrightness( unsigned int wid, char *str );
 static void opt_checkColorblind( unsigned int wid, char *str );
@@ -245,7 +247,7 @@ static char** lang_list( int *n )
 static void opt_gameplay( unsigned int wid )
 {
    (void) wid;
-   char buf[4096];
+   char buf[STRMAX];
    char **paths;
    int cw;
    int w, h, y, x, by, l, n, i;
@@ -1239,11 +1241,23 @@ static void opt_video( unsigned int wid )
    }
    window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes, NULL );
    y -= 120;
-   window_addText( wid, x, y-3, 110, 20, 0, "txtScale",
+   window_addText( wid, x, y-3, 130, 20, 0, "txtScale",
          NULL, NULL, NULL );
-   window_addFader( wid, x+120, y, cw-140, 20, "fadScale", 1., 3.,
+   window_addFader( wid, x+140, y, cw-160, 20, "fadScale", 1., 3.,
          conf.scalefactor, opt_setScalefactor );
    opt_setScalefactor( wid, "fadScale" );
+   y -= 30;
+   window_addText( wid, x, y-3, 130, 20, 0, "txtZoomFar",
+         NULL, NULL, NULL );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomFar", 0.1, 2.0,
+         conf.zoom_far, opt_setZoomFar );
+   y -= 30;
+   window_addText( wid, x, y-3, 130, 20, 0, "txtZoomNear",
+         NULL, NULL, NULL );
+   window_addFader( wid, x+140, y, cw-160, 20, "fadZoomNear", 0.1, 2.0,
+         conf.zoom_near, opt_setZoomNear );
+   opt_setZoomFar( wid, "fadZoomFar" );
+   opt_setZoomNear( wid, "fadZoomNear" );
    y -= 60;
 
    /* FPS stuff. */
@@ -1521,6 +1535,8 @@ static void opt_videoDefaults( unsigned int wid, char *str )
 
    /* Faders. */
    window_faderSetBoundedValue( wid, "fadScale", SCALE_FACTOR_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadZoomFar", ZOOM_FAR_DEFAULT );
+   window_faderSetBoundedValue( wid, "fadZoomNear", ZOOM_NEAR_DEFAULT );
    window_faderSetBoundedValue( wid, "fadBGBrightness", BG_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadNebuBrightness", NEBU_BRIGHTNESS_DEFAULT );
    window_faderSetBoundedValue( wid, "fadMapOverlayOpacity", MAP_OVERLAY_OPACITY_DEFAULT );
@@ -1536,13 +1552,60 @@ static void opt_setScalefactor( unsigned int wid, char *str )
 {
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
-   scale = round(scale * 10.) / 10.;     // Reasonable precision. Clearer value.
-   if (FABS(conf.scalefactor-scale) > 1e-4)
-      opt_needRestart();
+   //scale = round(scale * 10.) / 10.;
    conf.scalefactor = scale;
    snprintf( buf, sizeof(buf), _("Scaling: %.1fx"), conf.scalefactor );
    window_modifyText( wid, "txtScale", buf );
+   if (FABS(conf.scalefactor-local_conf.scalefactor) > 1e-4)
+      opt_needRestart();
 }
+
+
+/**
+ * @brief Callback to set the far zoom.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setZoomFar( unsigned int wid, char *str )
+{
+   char buf[STRMAX_SHORT];
+   double scale = window_getFaderValue(wid, str);
+   //scale = round(scale * 10.) / 10.;
+   conf.zoom_far = scale;
+   snprintf( buf, sizeof(buf), _("Far Zoom: %.1fx"), conf.zoom_far );
+   window_modifyText( wid, "txtZoomFar", buf );
+   if (conf.zoom_far > conf.zoom_near) {
+      window_faderSetBoundedValue( wid, "fadZoomNear", conf.zoom_far );
+      opt_setZoomNear( wid, "fadZoomNear" );
+   }
+   if (FABS(conf.zoom_far-local_conf.zoom_far) > 1e-4)
+      opt_needRestart();
+}
+
+
+/**
+ * @brief Callback to set the far zoom.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setZoomNear( unsigned int wid, char *str )
+{
+   char buf[STRMAX_SHORT];
+   double scale = window_getFaderValue(wid, str);
+   //scale = round(scale * 10.) / 10.;
+   conf.zoom_near = scale;
+   snprintf( buf, sizeof(buf), _("Near Zoom: %.1fx"), conf.zoom_near );
+   window_modifyText( wid, "txtZoomNear", buf );
+   if (conf.zoom_near < conf.zoom_far) {
+      window_faderSetBoundedValue( wid, "fadZoomFar", conf.zoom_near );
+      opt_setZoomFar( wid, "fadZoomFar" );
+   }
+   if (FABS(conf.zoom_near-local_conf.zoom_near) > 1e-4)
+      opt_needRestart();
+}
+
 
 /**
  * @brief Callback to set the background brightness.

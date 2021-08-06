@@ -138,9 +138,9 @@ void conf_setDefaults (void)
    conf.repeat_freq  = 30;
 
    /* Dynamic zoom. */
-   conf.zoom_manual  = 0;
-   conf.zoom_far     = 0.5;
-   conf.zoom_near    = 1.;
+   conf.zoom_manual  = MANUAL_ZOOM_DEFAULT;
+   conf.zoom_far     = ZOOM_FAR_DEFAULT;
+   conf.zoom_near    = ZOOM_NEAR_DEFAULT;
    conf.zoom_speed   = 0.25;
    conf.zoom_stars   = 1.;
 

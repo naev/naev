@@ -21,6 +21,8 @@
 #define MOUSE_FLY_DEFAULT                    1     /**< Whether or not middle clicking enables mouse flying. */
 #define AUTONAV_RESET_SPEED_DEFAULT          1.    /**< Shield level (0-1) to reset autonav speed at. 1 means at enemy presence, 0 means at armour damage. */
 #define MANUAL_ZOOM_DEFAULT                  0     /**< Whether or not to enable manual zoom controls. */
+#define ZOOM_FAR_DEFAULT                     0.5   /**< Far zoom distance (smaller is further) */
+#define ZOOM_NEAR_DEFAULT                    1.0   /**< Close zoom distance (bigger is larger) */
 #define MAP_OVERLAY_OPACITY_DEFAULT          0.3   /**< Opacity fraction (0-1) for the overlay map. */
 #define INPUT_MESSAGES_DEFAULT               5     /**< Amount of messages to display. */
 /* Video options */
