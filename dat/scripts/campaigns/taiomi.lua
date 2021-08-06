@@ -24,11 +24,10 @@ local taiomi = {
       colour = nil,
    },
    log = {
-      main = {
-         idstr = "log_taiomi_main",
-         logname = _("Taiomi"),
-         logtype = _("Taiomi"),
-      },
+      main = function( text )
+         shiplog.create( "log_taiomi_main", _("Taiomi"), _("Taiomi") )
+         shiplog.append( "log_taiomi_main", text )
+      end,
    }
 }
 
