@@ -30,6 +30,7 @@
 
 ]]--
 
+require "fleethelper"
 require "missions/empire/common"
 require "numstring"
 
@@ -130,14 +131,19 @@ function takeoff()
     tk.msg( title[1], string.format(text[4], misn_target:name()) )
     misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
 
+    local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }
+
     -- Build the actual cutscene
     player.pilot():setHide(true)
     player.cinematics(true)
-    swarm1 = pilot.addFleet("Collective Sml Swarm", vec2.new(-11000, 4000))
+    swarm1 = addShips( 1, sml_swarm, "Collective", vec2.new(-11000, 4000), _("Collective Drone") )
+    swarm1[4]:rename(_("Collective Heavy Drone"))
     moveSwarm(swarm1, vec2.new(-8000, -7500))
-    swarm2 = pilot.addFleet("Collective Sml Swarm", vec2.new(1700, 12000))
+    swarm2 = addShips( 1, sml_swarm, "Collective", vec2.new(1700, 12000), _("Collective Drone") )
+    swarm2[4]:rename(_("Collective Heavy Drone"))
     moveSwarm(swarm2, vec2.new(7000, -5000))
-    swarm3 = pilot.addFleet("Collective Sml Swarm", vec2.new(17000, 2500))
+    swarm3 = addShips( 1, sml_swarm, "Collective", vec2.new(17000, 2500), _("Collective Drone") )
+    swarm3[4]:rename(_("Collective Heavy Drone"))
     moveSwarm(swarm3, vec2.new(-9500, 13000))
 
     local delay = 1.0

@@ -47,6 +47,7 @@
 
 ]]--
 
+require "fleethelper"
 require "numstring"
 require "missions/empire/common"
 
@@ -292,7 +293,9 @@ end
 
 -- Jump in support
 function call_drones_jump ()
-   drone_reinforcements = pilot.addFleet("Collective Sml Swarm", misn_flee_sys)
+   local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }
+   drone_reinforcements = addShips( 1, sml_swarm, "Collective", misn_flee_sys, _("Collective Drone") )
+   drone_reinforcements[4]:rename(_("Collective Heavy Drone"))
    drone_controlled = true
    local tp = trinity:pos()
    for k,v in ipairs(drone_reinforcements) do

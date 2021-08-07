@@ -184,7 +184,8 @@ function enter ()
             dv_fleet[ #dv_fleet + 1 ] = j
          end
 
-         nf = pilot.addFleet( "Dvaered Big Patrol", ro:pos(), {ai="dvaered_norun"} )
+         local dv_big_patrol = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
+         nf = addShips( 1, dv_big_patrol, "Dvaered", ro:pos(), nil, {ai="dvaered_norun"} )
          for i, j in ipairs( nf ) do
             dv_fleet[ #dv_fleet + 1 ] = j
          end

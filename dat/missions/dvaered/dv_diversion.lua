@@ -301,7 +301,8 @@ function spawn_fleet() -- spawn warlord killing fleet
    player.cinematics(true)
    player.cinematics(false)
    jump_fleet_entered = true
-   jump_fleet = pilot.addFleet("Dvaered Med Force", system.get(destjumpname), {ai="dvaered_norun"})
+   local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
+   jump_fleet = addShips( 1, dv_med_force, "Dvaered", system.get(destjumpname), nil, {ai="dvaered_norun"} )
    broadcast_first(jump_fleet, string.format(chatter[8], destplanetname))
    for i, j in ipairs(jump_fleet) do
       j:changeAI("dvaered_norun")

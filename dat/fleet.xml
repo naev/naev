@@ -1,38 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
- <fleet name="Collective Sml Swarm">
-  <ai>collective</ai>
-  <faction>Collective</faction>
-  <pilots>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Dvaered Big Patrol">
-  <ai>dvaered</ai>
-  <faction>Dvaered</faction>
-  <pilots>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Dvaered Phalanx" ship="Dvaered Phalanx"></pilot>
-   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Empire Sml Defense">
-  <ai>empire</ai>
-  <faction>Empire</faction>
-  <pilots>
-   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
-   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
-   <pilot name="Empire Pacifier" ship="Empire Pacifier"></pilot>
-   <pilot name="Empire Hawking" ship="Empire Hawking"></pilot>
-   <pilot name="Empire Peacemaker" ship="Empire Peacemaker"></pilot>
-  </pilots>
- </fleet>
  <fleet name="DTS Defense Fleet">
   <ai>empire</ai>
   <faction>Trader</faction>
@@ -45,38 +12,6 @@
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
    <pilot name="Trader Gawain" ship="Gawain"></pilot>
-  </pilots>
- </fleet>
- <fleet name="FLF Sml Force">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <pilots>
-   <pilot name="FLF Hyena" ship="Hyena"></pilot>
-   <pilot name="FLF Admonisher" ship="Admonisher"></pilot>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-  </pilots>
- </fleet>
- <fleet name="FLF Med Force">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <pilots>
-   <pilot name="FLF Hyena" ship="Hyena"></pilot>
-   <pilot name="FLF Hyena" ship="Hyena"></pilot>
-   <pilot name="FLF Admonisher" ship="Admonisher"></pilot>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-   <pilot name="FLF Pacifier" ship="Pacifier"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Dvaered Med Force">
-  <ai>dvaered</ai>
-  <faction>Dvaered</faction>
-  <pilots>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Dvaered Phalanx" ship="Dvaered Phalanx"></pilot>
-   <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
 </Fleets>
