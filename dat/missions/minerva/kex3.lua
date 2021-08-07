@@ -57,7 +57,7 @@ malik_image = "major_malik.webp"
 money_reward = 400e3
 
 function create ()
-   if not misn.claim( system.get(targetsys) ) then
+   if not misn.claim( {system.get(targetsys), system.get(lastsys)} ) then
       misn.finish( false )
    end
    misn.setReward( misn_reward )
