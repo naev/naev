@@ -1,0 +1,331 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Kex's Freedom 4">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <location>Bar</location>
+  <chance>100</chance>
+  <planet>Minerva Station</planet>
+  <done>Kex's Freedom 3</done>
+ </avail>
+ <notes>
+  <campaign>Minerva</campaign>
+ </notes>
+</mission>
+--]]
+
+--[[
+   Freeing Kex 4
+--]]
+local minerva  = require "campaigns.minerva"
+local portrait = require 'portrait'
+local pp_shaders = require 'pp_shaders'
+local vn       = require 'vn'
+local equipopt = require 'equipopt'
+local luaspfx  = require 'luaspfx'
+require 'numstring'
+
+-- Mission states:
+--  nil: mission not accepted yet
+--  0: mission accepted try to go to targetplanet
+--  1: fight with dude
+--  2: return to kex
+misn_state = nil
+
+targetplanet = "Jorlan"
+targetsys = planet.get(targetplanet):system():nameRaw()
+
+misn_reward = _("A step closer to Kex's freedom")
+misn_title = _("Freeing Kex")
+misn_desc = string.format(_("You have been assigned with obtaining information from Jie de Luca at %s in the %s system."), _(targetplanet), _(targetsys))
+
+jie_portrait = "major_malik.webp"
+jie_image = "major_malik.webp"
+jie_description = _("")
+
+money_reward = 400e3
+
+function create ()
+   if not misn.claim( system.get(targetsys) ) then
+      misn.finish( false )
+   end
+   misn.setReward( misn_reward )
+   misn.setTitle( misn_title )
+   misn.setDesc( misn_desc )
+
+   misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
+end
+
+function accept ()
+   approach_kex()
+
+   -- If not accepted, misn_state will still be nil
+   if misn_state==nil then
+      return
+   end
+
+   misn.accept()
+
+   minerva.log.kex(_("You have agreed to help Kex obtain information from Jie de Luca.") )
+
+   misn.osdCreate( misn_title,
+      { string.format(_("Go to %s in the %s system to find Jie de Luca"), _(targetplanet), _(targetsys) ),
+      _("Return to Kex at Minerva Station") } )
+   misn_marker = misn.markerAdd( system.get(targetsys) )
+
+   hook.land("generate_npc")
+   hook.load("load_game")
+   hook.enter("enter")
+
+   generate_npc()
+end
+
+function load_game ()
+   if misn_state == 1 then
+      misn_state = 0
+   end
+   generate_npc()
+end
+
+function generate_npc ()
+   if planet.cur() == planet.get("Minerva Station") then
+      npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
+
+   elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
+      npc_jie = misn.npcAdd( "approach_jie", _("Jie de Luca"), jie_portrait, jie_description )
+
+   end
+end
+
+function approach_kex ()
+   vn.clear()
+   vn.scene()
+   vn.music( minerva.loops.kex )
+   local kex = vn.newCharacter( minerva.vn_kex() )
+   vn.transition()
+
+   -- Mission is over
+   if misn_state==2 then
+      -- TODO
+      kex(_([[""]]))
+      kex(_([[""]]))
+      kex(_([[""]]))
+      vn.sfxMoney()
+      vn.func( function () player.pay( money_reward ) end )
+      vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
+      vn.sfxVictory()
+      vn.na(_(""))
+      vn.run()
+
+      minerva.log.kex(_(""))
+      misn.finish( true )
+      return
+
+   elseif misn_state==nil then
+      vn.na(_("You approach Kex, who is once again taking a break at his favourite spot at Minerva station."))
+      kex(_([[He looks at you fairly somberly straight in the eyes.
+"You ever wonder what's the meaning of all this?"]]))
+      vn.menu{
+         { _([["Nice to see you again too."]]), "intro1" },
+         { _([["This?"]]), "intro1" },
+         { _([["No."]]), "intro1" },
+         { _([["What are you talking about?"]]), "intro1" },
+      }
+      vn.lable("intro1")
+      kex(_([["Well, I mean…"
+He seems at a loss of words.
+"You know…"]]))
+      vn.menu{
+         { _([["What?"]]), "intro2" },
+         { _("…"), "intro2" },
+      }
+      vn.label("intro2")
+      kex(_([[He lets out a deep sigh.
+"It's just sort of pointless. Even if we somehow get rid of the CEO and I get free, nothing really changes, you know? I'm still a damn duck. It's not like I'm getting my life back. It's just sometimes it all seems so hopeless and arbitrary. Like we're just some sort of random noise without any real purpose."]]))
+      kex(_([[Before you can speak, he keeps on going.
+"Anyway, don't let me silly thoughts bother you. Let us get back to topic."
+His eyes don't seem to have changed.]]))
+      kex(_([["So I was putting together the pieces and found out a close collaborator of the CEO, someone called Jie de Luca who seems to be situated in the frontier. They seem to go fairly far back with the CEO and probably have more information. As this is our best lead for now, I hate to ask this of you, but would you be able to check them out and see if we can get some more information?"]]))
+      vn.menu{
+         { _("Accept"), "accept" },
+         { _("Decline"), "decline" },
+      }
+      vn.label("decline")
+      kex(_([[He looks dejected.
+"I see. If you change your mind, I'll be around."]]))
+      vn.done()
+
+      vn.label("accept")
+      kex(string.format(_([["Thanks. Jie de Luca should be located at %s in the %s system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), _(targetplanet), _(targetsys)))
+      kex(_([["There shouldn't be much trouble, but I do think that we may have caused too much of a commotion, and I wouldn't be surprised if the CEO was starting to have suspicions. Make sure to be careful out there."]]))
+      vn.func( function ()
+         misn_state = 0
+      end )
+   else
+      vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
+   end
+
+   vn.label("menu_msg")
+   kex(_([["What's up kid?"]]))
+   vn.menu( function ()
+      local opts = {
+         { _("Ask about the job"), "job" },
+         { _("Ask if he's alright"), "alright" },
+         { _("Leave"), "leave" },
+      }
+      return opts
+   end )
+
+   vn.label("job")
+   kex(string.format(_([["Jie de Luca should be located at %s in the %s system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), _(targetplanet), _(targetsys)))
+   kex(_([["There shouldn't be much trouble, but I do think that we may have caused too much of a commotion, and I wouldn't be surprised if the CEO was starting to have suspicions. Make sure to be careful out there."]]))
+   vn.jump("menu_msg")
+
+   vn.label("alright")
+   -- TODO
+   kex(_([[""]]))
+   vn.jump("menu_msg")
+
+   vn.label("leave")
+   vn.na(_("You take your leave."))
+   vn.run()
+end
+
+function approach_jie ()
+   vn.clear()
+   vn.scene()
+   local jie = vn.newCharacter( _("Jie de Luca"), {image=jie_image} )
+   vn.transition()
+   vn.na(_("You approach a nonchalantly drink-sipping Jie de Luca. They seem to be reading some sort of document."))
+   jie(_([[Without looking up they address you.
+"So you're the one causing a ruckus here and there. You look a bit different from what I expected."
+They look up at you.]]))
+   jie(_([["Have you come to threaten me? Perhaps kill me?"
+They speak calmly, without so much as a tinge of urgency.]]))
+   vn.menu{
+      { _("Ask about Minerva Station"), "cont1" },
+      { _("Ask about the Minerva CEO"), "cont1" },
+   }
+   vn.label("cont1")
+   jie(_([["I see. I knew the day would come. Can't have a bunch of low-lives making a decent living can we now?"
+They take a sip from their drink.]]))
+   jie(_([["Me and the guy you call the Minerva CEO, we were born here in Jorlan. Not sure if we were orphaned or abandoned, but since a young age this world has taught us nothing but cruelty and suffering. Forced to work in the ore mines if we were to survive."]]))
+   jie(_([["I don't think a hired gun like you would truly what it's like to work nearly to death in the ore mines. Just here to do your master's bidding, like the loyal dog you are."
+They give a small chuckle and lean forward.]]))
+   jie(_([["Well honestly, I don't give a shit who your master is. The result is the same, you are trying to take what we worked hard for with blood, sweat, and tears."]]))
+   jie(_([[They clench their teeth.
+"I won't let you. Minerva Station is OURS! You have no idea of the hell we went through to get here, and I'll be damned if I let that get taken away from us!"]]))
+   vn.na(_([[In the split of an eye they fling their drink at you, which you manage to dodge most of. As you look back at them you see the table is empty. Shit, that went well.]]))
+   vn.na(_([[You rush to your ship to see if you can catch them in pursuit!]]))
+   vn.run()
+
+   -- Advance
+   misn_state = 1
+   player.takeoff()
+end
+
+local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+
+function enter ()
+   local function spawn_thugs( pos, dofollow )
+      thug_leader = nil -- Clear
+      local thugs = {
+         choose_one{ "Starbridge", "Admonisher", "Phalanx" },
+         choose_one{ "Lancelot", "Vendetta", "Shark", "Hyena" },
+         choose_one{ "Lancelot", "Vendetta", "Shark", "Hyena" },
+      }
+      local pp = player.pilot()
+      if pp:ship():size() > 4 then
+         table.insert( thugs, 1, choose_one{ "Pacifier", "Vigilance" } )
+         table.insert( thugs, choose_one{ "Ancestor", "Lancelot" } )
+         table.insert( thugs, choose_one{ "Ancestor", "Lancelot" } )
+      end
+      local fdv = faction.dynAdd( "Mercenary", "kex_bountyhunter", _("Bounty Hunter"), {ai="mercenary"} )
+      thug_pilots = {}
+      for k,v in ipairs(thugs) do
+         local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
+         local p = pilot.add( v, fdv, ppos, nil, {naked=true} )
+         equipopt.pirate( p )
+         if not thug_leader then
+            thug_leader = p
+         else
+            p:setLeader( thug_leader )
+         end
+         table.insert( thug_pilots, p )
+      end
+
+      -- Try to make sure they meet up the player
+      thug_leader:control()
+      if dofollow then
+         thug_leader:follow( pp )
+      else
+         thug_leader:brake()
+      end
+      thug_following = dofollow
+   end
+
+   thug_chance = thug_chance or 0.2
+
+   if misn_state==0 and system.cur() == system.get(targetsys) then
+      thug_chance = thug_chance / 0.8
+      -- Spawn thugs around planet
+      spawn_thugs( planet.get(targetplanet):pos(), false )
+      hook.timer( 5, "thug_heartbeat" )
+   elseif misn_state~=1 and rnd.rnd() < thug_chance then
+      -- Spawn near the center, they home in on player
+      spawn_thugs(planet.get(lastplanet):pos(), false )
+      -- Timer
+      hook.timer( 5, "thug_heartbeat" )
+   elseif misn_state==1 then
+
+      -- Main stuff
+   end
+end
+
+function thug_heartbeat ()
+   local det, fuz = thug_leader:inrange( player.pilot() )
+   if det and fuz then
+      -- Start the attack, should be close enough to aggro naturally
+      thug_leader:control(false)
+      for k,p in ipairs(thug_pilots) do
+         p:setHostile(true)
+      end
+
+      local msglist = {
+         _("Looks like we found our target!"),
+         _("That's the one!"),
+         _("Time to collect our bounty!"),
+         _("Target locked. Engaging."),
+      }
+      -- Broadcast after hostile
+      thug_leader:broadcast( msglist[ rnd.rnd(1,#msglist) ], true )
+
+      -- Decrease chance
+      thug_chance = thug_chance * 0.8
+
+      -- Reset autonav just in case
+      player.autonavReset( 5 )
+      return
+   end
+
+   -- Only chase if not hidden
+   local pp = player.pilot()
+   if pp:flags("stealth") then
+      if thug_following then
+         thug_leader:taskClear()
+         thug_leader:brake()
+         thug_following = false
+      end
+   else
+      if not thug_following then
+         thug_leader:taskClear()
+         thug_leader:follow( pp )
+         thug_following = true
+      end
+   end
+
+   -- Keep on beating
+   hook.timer( 1, "thug_heartbeat" )
+end
