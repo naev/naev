@@ -392,7 +392,8 @@ function jumpin()
             end
             jp2go = system.cur():jumpDist(misssys[4])
             if jp2go <= 2 and jp2go > 0 then -- Encounter
-                ambush = pilot.addFleet(string.format("Shadowvigil Ambush %i", 3 - jp2go), vec2.new(0, 0), {ai="baddie_norun"})
+                local ambush_ships = {{"Pirate Ancestor", "Hyena", "Hyena"}, {"Pirate Ancestor", "Pirate Vendetta", "Hyena", "Hyena"}}
+                ambush = addShips( 1,  ambush_ships[3 - jp2go], "Shadow_pirates", vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
                 kills = 0
                 for i, j in ipairs(ambush) do
                     if j:exists() then
