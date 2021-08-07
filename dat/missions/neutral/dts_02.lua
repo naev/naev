@@ -198,7 +198,8 @@ function defend_system()
       end
 
   -- And a fleet of defending independents
-      defense_fleet = pilot.addFleet( "DTS Defense Fleet", defense_position, {ai="def"} )
+      local dfleet = { "Mule", "Lancelot", "Ancestor", "Gawain" }
+      defense_fleet = addShips( 2, dfleet, "Trader", defense_position, _("Defender"), {ai="def"} )
       cadet1 = pilot.add( "Empire Lancelot", "Empire", defense_position, nil, {ai="def"} )
       do
          cadet1_alive = true

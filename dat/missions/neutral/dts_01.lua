@@ -188,7 +188,8 @@ function defend_system()
       end
 
   -- And a fleet of defending independents
-      defense_fleet = pilot.addFleet( "DTS Defense Fleet", defense_position, {ai="def"} )
+      local dfleet = { "Mule", "Lancelot", "Ancestor", "Gawain" }
+      defense_fleet = addShips( 2, dfleet, "Trader", defense_position, _("Defender"), {ai="def"} )
       for k,v in ipairs( defense_fleet) do
          v:setFriendly()
       end
