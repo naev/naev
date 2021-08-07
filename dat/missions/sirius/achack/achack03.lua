@@ -20,7 +20,7 @@
 -- This is the third mission in the Academy Hack minor campaign.
 --]]
 
-require "fleethelper"
+local fleet = require "fleet"
 require "proximity"
 require "missions/sirius/common"
 require "numstring"
@@ -161,7 +161,7 @@ function date()
       end
       spawnpoint = spawnpoints[rnd.rnd(#spawnpoints)]
 
-      harja = addShips(1, "Shark", "Achack_sirius", spawnpoint, _("Harja's Shark"), {ai="trader"})[1]
+      harja = fleet.add(1, "Shark", "Achack_sirius", spawnpoint, _("Harja's Shark"), {ai="trader"})[1]
       harja:memory().aggressive = true
       harja:control()
       harja:follow(player.pilot())

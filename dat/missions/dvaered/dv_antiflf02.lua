@@ -29,7 +29,7 @@
 
 -- localization stuff, translators would work here
 
-require "fleethelper"
+local fleet = require "fleet"
 local portrait = require "portrait"
 require "missions/dvaered/common"
 
@@ -175,7 +175,7 @@ end
 function spawnDV()
     misn.osdActive(3)
     missionstarted = true
-    fleetDV = addShips( 3, "Dvaered Vigilance", "Dvaered", last_sys, nil, {ai="dvaered_norun"} )
+    fleetDV = fleet.add( 3, "Dvaered Vigilance", "Dvaered", last_sys, nil, {ai="dvaered_norun"} )
     -- The Dvaered ships should attack the player, so set them hostile.
     -- These are Vigilances, so we should tune them WAY down so the player doesn't insta-die.
     for i, j in ipairs(fleetDV) do
@@ -223,7 +223,7 @@ function spawnFLF()
     angle = rnd.rnd() * 2 * math.pi
     dist = 800
     vecFLF = vec2.new(math.cos(angle) * dist, math.sin(angle) * dist)
-    fleetFLF = addShips( 4, "Vendetta", "FLF", player.pos() + vecFLF, nil, {ai="flf_norun"} )
+    fleetFLF = fleet.add( 4, "Vendetta", "FLF", player.pos() + vecFLF, nil, {ai="flf_norun"} )
     flfactive = #fleetFLF
     fleetDV[1]:comm(comm_msg["enter"])
 

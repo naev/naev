@@ -25,7 +25,7 @@
  --]]
 --Escort a convoy of traders to a destination--
 
-require "fleethelper"
+local fleet = require "fleet"
 require "nextjump"
 require "cargo_common"
 require "numstring"
@@ -296,19 +296,19 @@ function spawnConvoy ()
       {"Pirate Kestrel", "Pirate Admonisher", "Pirate Rhino", "Pirate Shark", "Pirate Shark", "Hyena", "Hyena", "Hyena"},
    }
    if convoysize == 1 then
-      ambush = addShips( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif convoysize == 2 then
-      ambush = addShips( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif convoysize == 3 then
-      ambush = addShips( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif convoysize == 4 then
-      ambush = addShips( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    else
-      ambush = addShips( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      ambush = fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    end
 
    --Spawn the convoy
-   convoy = addShips( convoy_n,  convoy_ships, "Traders Guild", origin, convoy_names )
+   convoy = fleet.add( convoy_n,  convoy_ships, "Traders Guild", origin, convoy_names )
    local minspeed = nil
    for i, p in ipairs(convoy) do
       if alive ~= nil and alive < i then

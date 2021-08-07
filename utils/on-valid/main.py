@@ -107,7 +107,7 @@ class sanitizer:
         (?P<func>
             pilot\.addFleet\(|
             pilot\.add\(|
-            addShips\(|
+            fleet.add\(|
             player\.addShip\(|
             outfitAdd\(|
             diff\.apply\(|

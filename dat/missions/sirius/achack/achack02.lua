@@ -23,7 +23,7 @@
 --]]
 
 require "scripts/nextjump"
-require "fleethelper"
+local fleet = require "fleet"
 require "selectiveclear"
 require "proximity"
 require "missions/sirius/common"
@@ -216,7 +216,7 @@ function enter()
       warnFuel = false
    end
 
-   joanne = addShips(1, "Sirius Fidelity", "Achack_sirius", origin, _("Joanne"))[1]
+   joanne = fleet.add(1, "Sirius Fidelity", "Achack_sirius", origin, _("Joanne"))[1]
    joanne:control()
    joanne:outfitRm("cores")
    joanne:outfitRm("all")
@@ -265,7 +265,7 @@ end
 
 -- Sets up the ambush ships and trigger area.
 function ambushSet(ships, location)
-   ambush = addShips(1, ships, "Achack_thugs", location)
+   ambush = fleet.add(1, ships, "Achack_thugs", location)
    for _, j in ipairs(ambush) do
       j:control()
    end

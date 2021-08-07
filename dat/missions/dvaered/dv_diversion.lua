@@ -24,7 +24,7 @@
 
 -- localization stuff, translators would work here
 
-require "fleethelper"
+local fleet = require "fleet"
 local portrait = require "portrait"
 
 
@@ -160,7 +160,7 @@ function enter()
       hawk:broadcast(string.format(chatter[0], destjumpname))
       hawk:setFaction(hawkfaction)
       fleethooks = {}
-      fleetdv = addShips( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, {ai="dvaered_norun"} )
+      fleetdv = fleet.add( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, {ai="dvaered_norun"} )
       for i, j in ipairs(fleetdv) do
          j:changeAI("dvaered_norun")
          j:setHilight(true)
@@ -302,7 +302,7 @@ function spawn_fleet() -- spawn warlord killing fleet
    player.cinematics(false)
    jump_fleet_entered = true
    local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
-   jump_fleet = addShips( 1, dv_med_force, "Dvaered", system.get(destjumpname), nil, {ai="dvaered_norun"} )
+   jump_fleet = fleet.add( 1, dv_med_force, "Dvaered", system.get(destjumpname), nil, {ai="dvaered_norun"} )
    broadcast_first(jump_fleet, string.format(chatter[8], destplanetname))
    for i, j in ipairs(jump_fleet) do
       j:changeAI("dvaered_norun")

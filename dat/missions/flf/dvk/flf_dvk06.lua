@@ -37,7 +37,7 @@
 --]]
 
 require "numstring"
-require "fleethelper"
+local fleet = require "fleet"
 require "missions/flf/flf_common"
 
 -- Localization stuff
@@ -162,7 +162,7 @@ function enter ()
             "Dvaered Goddard", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Ancestor", "Dvaered Ancestor",
             "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta",
             "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta"}
-         dv_fleet = addShips( 1, dv_ships, "Dvaered", ro:pos(), nil, {ai="dvaered_norun"} )
+         dv_fleet = fleet.add( 1, dv_ships, "Dvaered", ro:pos(), nil, {ai="dvaered_norun"} )
 
          for i, j in ipairs( dv_fleet ) do
             j:control()
@@ -173,7 +173,7 @@ function enter ()
          -- Spawn FLF ships
          local jmp, jmp2
          jmp, jpm2 = jump.get( "Haleb", "Theras" )
-         flf_fleet = addShips( 4, {"Vendetta", "Vendetta", "Lancelot"}, "FLF", jmp:pos() )
+         flf_fleet = fleet.add( 4, {"Vendetta", "Vendetta", "Lancelot"}, "FLF", jmp:pos() )
 
          for i, j in ipairs( flf_fleet ) do
             j:control()
@@ -216,7 +216,7 @@ function timer_start ()
       local factions = { "Independent", "Independent", "Trader", "Trader", "Trader" }
       local pilotnames = { _("Llama"), _("Gawain"), _("Trader Llama"), _("Trader Koala"), _("Trader Mule") }
       local src = system.get( "Triap" )
-      civ_fleet = addShips( 16, ships, factions, src, pilotnames )
+      civ_fleet = fleet.add( 16, ships, factions, src, pilotnames )
 
       local dest = system.get( "Slaccid" )
       for i, j in ipairs( civ_fleet ) do
@@ -243,7 +243,7 @@ function timer_pirates ()
       _("Pirate Vendetta"), _("Pirate Ancestor") }
 
    pir_boss = pilot.add( "Pirate Kestrel", "Pirate", src )
-   pir_fleet = addShips( 9, ships, "Pirate", src, pilotnames )
+   pir_fleet = fleet.add( 9, ships, "Pirate", src, pilotnames )
    pir_fleet[ #pir_fleet + 1 ] = pir_boss
    hook.pilot( pir_boss, "death", "pilot_death_kestrel" )
 

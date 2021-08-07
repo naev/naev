@@ -1,0 +1,100 @@
+--[[--
+Functions for adding fleets of pilots.
+
+@module fleet
+--]]
+local fleet = {}
+
+
+local function _buildDupeTable( input, count )
+   local tmp = {}
+   if type(input) == "table" then
+      if #input ~= count then
+         print(_("Warning: Tables are different lengths."))
+      end
+      return input
+   else
+      for i=1,count do
+         tmp[i] = input
+      end
+      return tmp
+   end
+end
+
+
+-- Randomly stagger the locations of ships so they don't all spawn on top of each other.
+local function _randomizePositions( ship, override )
+   if type(ship) ~= "table" and type(ship) ~= "userdata" then
+      print(_("_randomizePositions: Error, ship list is not a pilot or table of pilots!"))
+      return
+   elseif type(ship) == "userdata" then -- Put lone pilot into table.
+      ship = { ship }
+   end
+
+   local x = 0
+   local y = 0
+   for k,v in ipairs(ship) do
+      if k ~= 1 and not override then
+         if vec2.dist( ship[1]:pos(), v:pos() ) == 0 then
+            x = x + rnd.rnd(75,150) * (rnd.rnd(0,1) - 0.5) * 2
+            y = y + rnd.rnd(75,150) * (rnd.rnd(0,1) - 0.5) * 2
+            v:setPos( v:pos() + vec2.new( x, y ) )
+         end
+      end
+   end
+end
+
+
+--[[--
+Wrapper for pilot.add() that can operate on tables of ships.
+  
+   @usage pilots = fleet.add( 1, "Hyena", "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
+   @usage pilots = fleet.add( 1, "Hyena", "Pirate", nil, nil, {ai="pirate_norun"} ) -- Ditto, but use the "norun" AI variant.
+   @usage pilots = fleet.add( 2, { "Rhino", "Koala" }, "Trader" ) -- Creates four Trader ships.
+  
+      @param count Number of times to repeat the pattern.
+      @param ship Ship(s) to add.
+      @param faction Faction(s) to give the pilot.
+      @param location Location(s) to jump in from, take off from, or appear at.
+      @param pilotname Name(s) to give each pilot.
+      @param parameters Common table of extra parameters to pass pilot.add(), e.g. {ai="escort"}.
+      @return Table of created pilots.
+  
+      @TODO: With a little work we can support a table of parameters tables, but no one even wants that. (Yet?)
+--]]
+function fleet.add( count, ship, faction, location, pilotname, parameters )
+   local pilotnames = {}
+   local locations = {}
+   local factions = {}
+   local out = {}
+
+   if type(ship) ~= "table" and type(ship) ~= "string" then
+      print(_("fleet.add: Error, ship list is not a ship or table of ships!"))
+      return
+   elseif type(ship) == "string" then -- Put lone ship into table.
+      ship = { ship }
+   end
+   pilotnames= _buildDupeTable( pilotname, #ship )
+   locations = _buildDupeTable( location, #ship )
+   factions  = _buildDupeTable( faction, #ship )
+   if factions[1] == nil then
+      print(_("fleet.add: Error, raw ships must have factions!"))
+      return
+   end
+
+   if count == nil then
+      count = 1
+   end
+   for i=1,count do -- Repeat the pattern as necessary.
+      for k,v in ipairs(ship) do
+         out[k+(i-1)*#ship] = pilot.add( ship[k], factions[k], locations[k], pilotnames[k], parameters )
+      end
+   end
+   if #out > 1 then
+      _randomizePositions( out )
+   end
+   return out
+end
+
+
+return fleet

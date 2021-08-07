@@ -23,7 +23,7 @@
 -- This is the second mission in the baron string.
 --]]
 
-require "fleethelper"
+local fleet = require "fleet"
 require "numstring"
 local portrait = require "portrait"
 require "missions/baron/common"
@@ -358,7 +358,7 @@ function enter()
          count = 3
       end
       if choice <= 3 then
-         fleep = addShips( count, pilots, "Mercenary", nil, _("Artifact Hunter") );
+         fleep = fleet.add( count, pilots, "Mercenary", nil, _("Artifact Hunter") );
          for i, j in ipairs(fleep) do
             j:control()
             j:setHostile(true)

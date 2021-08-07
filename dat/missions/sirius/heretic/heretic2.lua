@@ -23,7 +23,7 @@
    nasin, The Wringer / Suna. House Sirius is sending in recon parties.
    The player's job is to take out any and all Sirius in the system.]]
 
-require "fleethelper"
+local fleet = require "fleet"
 require "numstring"
 require "missions/sirius/common"
 
@@ -101,8 +101,8 @@ end
 function takeoff()
    pilot.clear()
    pilot.toggleSpawn("Sirius",false) --the only Sirius i want in the system currently is the recon force
-   recon = addShips( 1, {"Sirius Preacher", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity"}, "Sirius", system.get("Herakin") )
-   attackers = addShips( 1, {"Lancelot",          "Lancelot",          "Lancelot",          "Admonisher"},
+   recon = fleet.add( 1, {"Sirius Preacher", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity"}, "Sirius", system.get("Herakin") )
+   attackers = fleet.add( 1, {"Lancelot",          "Lancelot",          "Lancelot",          "Admonisher"},
                             "Nasin", homeasset,
                             {_("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} ) --a little assistance
    n_recon = #recon --using a deathcounter to track success

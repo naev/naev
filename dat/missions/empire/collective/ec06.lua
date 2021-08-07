@@ -30,7 +30,7 @@
 ]]--
 
 require "proximity"
-require "fleethelper"
+local fleet = require "fleet"
 require "missions/empire/common"
 
 bar_desc = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.")

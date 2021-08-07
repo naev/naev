@@ -2496,7 +2496,7 @@ dat/scripts/equipopt/templates/sirius.lua
 dat/scripts/equipopt/templates/soromid.lua
 dat/scripts/equipopt/templates/thurion.lua
 dat/scripts/equipopt/templates/zalek.lua
-dat/scripts/fleethelper.lua
+dat/scripts/fleet.lua
 dat/scripts/formation.lua
 dat/scripts/jumpdist.lua
 dat/scripts/lmusic.lua

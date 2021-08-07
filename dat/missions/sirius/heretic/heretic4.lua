@@ -27,7 +27,7 @@
    to be very hard, and slightly combat oriented, but more supposed to
    involve smuggling elements.]]
 
-require "fleethelper"
+local fleet = require "fleet"
 require "numstring"
 require "missions/sirius/common"
 
@@ -112,11 +112,11 @@ function takeoff()
       "Sirius Fidelity",
       "Sirius Fidelity",
       "Sirius Fidelity" }
-   addShips( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) ) --left over fleets from the prior mission.
-   addShips( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
-   addShips( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
-   addShips( 3, {"Llama", "Llama", "Mule"}, "Nasin", homeasset, {_("Nasin Llama"), _("Nasin Llama"), _("Nasin Mule")}, {ai="civilian"} ) --other escapees.
-   addShips( 2, {"Lancelot", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", homeasset, {_("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} ) --these are trying to help.
+   fleet.add( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) ) --left over fleets from the prior mission.
+   fleet.add( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
+   fleet.add( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
+   fleet.add( 3, {"Llama", "Llama", "Mule"}, "Nasin", homeasset, {_("Nasin Llama"), _("Nasin Llama"), _("Nasin Mule")}, {ai="civilian"} ) --other escapees.
+   fleet.add( 2, {"Lancelot", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", homeasset, {_("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} ) --these are trying to help.
 end
 
 function lastsys()
@@ -140,15 +140,15 @@ function attacked() --several systems where the Sirius have 'strategically place
    local assault_force = {"Sirius Divinity", "Sirius Dogma", "Sirius Dogma", "Sirius Preacher", "Sirius Preacher", "Sirius Preacher", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity"}
    for i,sys in ipairs(dangersystems) do
       if system.cur() == sys then
-         addShips( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-300,300),rnd.rnd(-300,300)) )
+         fleet.add( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-300,300),rnd.rnd(-300,300)) )
       end
    end
    local chance_help,chance_civvie = rnd.rnd(1,3),rnd.rnd(1,3) --attack fleet and civvies are meant as a distraction to help the player.
    if chance_help == 1 then
-      addShips( 1, {"Lancelot", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", last_sys_in, {_("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} )
+      fleet.add( 1, {"Lancelot", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", last_sys_in, {_("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} )
    end
    for i = 1,chance_civvie do
-      addShips( 1, {"Llama", "Llama", "Mule"}, "Nasin", last_sys_in, {_("Nasin Llama"), _("Nasin Llama"), _("Nasin Mule")}, {ai="civilian"} )
+      fleet.add( 1, {"Llama", "Llama", "Mule"}, "Nasin", last_sys_in, {_("Nasin Llama"), _("Nasin Llama"), _("Nasin Mule")}, {ai="civilian"} )
    end
 end
 

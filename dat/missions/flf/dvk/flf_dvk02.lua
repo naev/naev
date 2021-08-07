@@ -37,7 +37,7 @@
 --]]
 
 require "numstring"
-require "fleethelper"
+local fleet = require "fleet"
 require "missions/flf/flf_common"
 
 -- Localization
@@ -274,7 +274,7 @@ function enter ()
          boss:setHilight()
 
          pirates_left = 4
-         pirates = addShips( pirates_left, "Hyena", "Pirate", vec, _("Pirate Hyena"), {ai="pirate_norun"} )
+         pirates = fleet.add( pirates_left, "Hyena", "Pirate", vec, _("Pirate Hyena"), {ai="pirate_norun"} )
          for i, j in ipairs( pirates ) do
             hook.pilot( j, "death", "pilot_death_pirate" )
             hook.pilot( j, "hail", "pilot_hail_pirate" )

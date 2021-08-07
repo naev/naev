@@ -30,7 +30,7 @@
 
 ]]--
 
-require "fleethelper"
+local fleet = require "fleet"
 require "missions/empire/common"
 require "numstring"
 
@@ -136,13 +136,13 @@ function takeoff()
     -- Build the actual cutscene
     player.pilot():setHide(true)
     player.cinematics(true)
-    swarm1 = addShips( 1, sml_swarm, "Collective", vec2.new(-11000, 4000), _("Collective Drone") )
+    swarm1 = fleet.add( 1, sml_swarm, "Collective", vec2.new(-11000, 4000), _("Collective Drone") )
     swarm1[4]:rename(_("Collective Heavy Drone"))
     moveSwarm(swarm1, vec2.new(-8000, -7500))
-    swarm2 = addShips( 1, sml_swarm, "Collective", vec2.new(1700, 12000), _("Collective Drone") )
+    swarm2 = fleet.add( 1, sml_swarm, "Collective", vec2.new(1700, 12000), _("Collective Drone") )
     swarm2[4]:rename(_("Collective Heavy Drone"))
     moveSwarm(swarm2, vec2.new(7000, -5000))
-    swarm3 = addShips( 1, sml_swarm, "Collective", vec2.new(17000, 2500), _("Collective Drone") )
+    swarm3 = fleet.add( 1, sml_swarm, "Collective", vec2.new(17000, 2500), _("Collective Drone") )
     swarm3[4]:rename(_("Collective Heavy Drone"))
     moveSwarm(swarm3, vec2.new(-9500, 13000))
 

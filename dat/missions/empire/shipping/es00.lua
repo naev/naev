@@ -27,7 +27,7 @@
 
 ]]--
 
-require "fleethelper"
+local fleet = require "fleet"
 require "numstring"
 require "missions/empire/common"
 
@@ -155,7 +155,7 @@ function enter ()
 
       -- Create some pilots to go after the player
       local flf_sml_force = { "Hyena", "Admonisher", "Vendetta" }
-      p = addShips( 1, flf_sml_force, "FLF", enter_vect, _("FLF Ambusher") )
+      p = fleet.add( 1, flf_sml_force, "FLF", enter_vect, _("FLF Ambusher") )
 
       -- Set hostile
       for k,v in ipairs(p) do
@@ -169,12 +169,12 @@ function enter ()
       -- We'll put the FLF first
       enter_vect = battle_pos + vec2.newP( rnd.rnd(700, 1000), rnd.rnd(0, 360) )
       local flf_med_force = { "Hyena", "Hyena", "Admonisher", "Vendetta", "Pacifier" }
-      addShips( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
+      fleet.add( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
 
       -- Now the Dvaered
       enter_vect = battle_pos + vec2.newP( rnd.rnd(200, 300), rnd.rnd(0, 360) )
       local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
-      addShips( 1, dv_med_force, "Dvaered", enter_vect )
+      fleet.add( 1, dv_med_force, "Dvaered", enter_vect )
 
       -- Player should not be able to reland
       player.allowLand(false,_("The docking stabilizers have been damaged by weapons fire!"))
