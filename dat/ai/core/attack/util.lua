@@ -100,6 +100,16 @@ end
 
 
 --[[
+-- Tries to shoot seekers at close range
+--]]
+function _atk_dogfight_seekers( dist, dir )
+   if dist < ai.getweaprange( 4 ) and dist > 100 and dir < 20 then
+      ai.weapset( 4 )
+   end
+end
+
+
+--[[
 -- Common control stuff
 --]]
 function _atk_com_think( target )

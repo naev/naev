@@ -104,9 +104,7 @@ function _atk_g_capital( target, dist )
       end
 
       -- Also try to shoot missiles
-      if dist < ai.getweaprange( 4 ) and dist > 100 and aimdir < 20 then
-         ai.weapset( 4 )
-      end
+      _atk_dogfight_seekers( dist, aimdir )
    end
 end
 

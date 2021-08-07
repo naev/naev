@@ -289,7 +289,5 @@ function _atk_g_melee( target, dist )
    ai.shoot(true)
 
    -- Also try to shoot missiles
-   if dist < ai.getweaprange( 4 ) and dist > 100 and dir < 20 then
-      ai.weapset( 4 )
-   end
+   _atk_dogfight_seekers( dist, dir )
 end
