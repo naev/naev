@@ -93,6 +93,7 @@ end
 function hail()
    hook.rm(hailhook)
    tk.msg(title[1], text[1]:format(source_system:name(), source_planet:name()))
+   player.commClose()
 end
 
 function hailmeagain()
