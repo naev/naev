@@ -10,16 +10,6 @@
    <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
   </pilots>
  </fleet>
- <fleet name="Dvaered Small Patrol">
-  <ai>dvaered</ai>
-  <faction>Dvaered</faction>
-  <pilots>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Dvaered Big Patrol">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
