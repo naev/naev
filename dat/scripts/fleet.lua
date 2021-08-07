@@ -47,11 +47,11 @@ end
 
 --[[--
 Wrapper for pilot.add() that can operate on tables of ships.
-  
+
    @usage pilots = fleet.add( 1, "Hyena", "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
    @usage pilots = fleet.add( 1, "Hyena", "Pirate", nil, nil, {ai="pirate_norun"} ) -- Ditto, but use the "norun" AI variant.
    @usage pilots = fleet.add( 2, { "Rhino", "Koala" }, "Trader" ) -- Creates four Trader ships.
-  
+
       @param count Number of times to repeat the pattern.
       @param ship Ship(s) to add.
       @param faction Faction(s) to give the pilot.
@@ -59,8 +59,8 @@ Wrapper for pilot.add() that can operate on tables of ships.
       @param pilotname Name(s) to give each pilot.
       @param parameters Common table of extra parameters to pass pilot.add(), e.g. {ai="escort"}.
       @return Table of created pilots.
-  
-      @TODO: With a little work we can support a table of parameters tables, but no one even wants that. (Yet?)
+
+      <em>TODO</em>: With a little work we can support a table of parameters tables, but no one even wants that. (Yet?)
 --]]
 function fleet.add( count, ship, faction, location, pilotname, parameters )
    local pilotnames = {}
