@@ -115,8 +115,8 @@ function takeoff()
    fleet.add( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) ) --left over fleets from the prior mission.
    fleet.add( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
    fleet.add( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
-   fleet.add( 3, {"Llama", "Llama", "Mule"}, "Nasin", homeasset, {_("Nasin Llama"), _("Nasin Llama"), _("Nasin Mule")}, {ai="civilian"} ) --other escapees.
-   fleet.add( 2, {"Lancelot", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", homeasset, {_("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} ) --these are trying to help.
+   fleet.add( 3, {"Mule", "Llama", "Llama"}, "Nasin", homeasset, {_("Nasin Mule"), _("Nasin Llama"), _("Nasin Llama")}, {ai="civilian"} ) --other escapees.
+   fleet.add( 2, {"Admonisher", "Lancelot", "Lancelot", "Lancelot"}, "Nasin", homeasset, {_("Nasin Admonisher"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot")} ) --these are trying to help.
 end
 
 function lastsys()
@@ -145,10 +145,10 @@ function attacked() --several systems where the Sirius have 'strategically place
    end
    local chance_help,chance_civvie = rnd.rnd(1,3),rnd.rnd(1,3) --attack fleet and civvies are meant as a distraction to help the player.
    if chance_help == 1 then
-      fleet.add( 1, {"Lancelot", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", last_sys_in, {_("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} )
+      fleet.add( 1, {"Admonisher", "Lancelot", "Lancelot", "Lancelot"}, "Nasin", last_sys_in, {_("Nasin Admonisher"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot")} )
    end
    for i = 1,chance_civvie do
-      fleet.add( 1, {"Llama", "Llama", "Mule"}, "Nasin", last_sys_in, {_("Nasin Llama"), _("Nasin Llama"), _("Nasin Mule")}, {ai="civilian"} )
+      fleet.add( 1, {"Mule", "Llama", "Llama"}, "Nasin", last_sys_in, {_("Nasin Mule"), _("Nasin Llama"), _("Nasin Llama")}, {ai="civilian"} )
    end
 end
 
