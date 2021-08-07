@@ -23,6 +23,7 @@
    when is instead ordered back to The Wringer to escape Sirius controlled
    space. thanks to nloewen and viashimo for help!]]
 
+require "fleethelper"
 require "numstring"
 require "missions/sirius/common"
 
@@ -102,7 +103,8 @@ function takeoff() --for when the player takes off from the wringer.
    pilot.clear() --clearing out all the pilots, and
    pilot.toggleSpawn("Sirius",false) --making the Sirius not spawn. I want the assault fleet the only Sirius in there.
    deathcounter = 0 -- Counts destroyed Nasin ships.
-   sirius_be_serious = pilot.addFleet("Sirius Assault Force", system.get("Herakin"))
+   local assault_force = {"Sirius Divinity", "Sirius Dogma", "Sirius Dogma", "Sirius Preacher", "Sirius Preacher", "Sirius Preacher", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity"}
+   sirius_be_serious = addShips( 1, assault_force, "Sirius", system.get("Herakin") )
 
    for _,p in ipairs(sirius_be_serious) do
       p:setHilight()
@@ -111,8 +113,8 @@ function takeoff() --for when the player takes off from the wringer.
       p:setHostile() --just in case. makes thing easier.
    end
 
-   de_fence = pilot.addFleet("Nasin Med Defense Fleet", homeasset)
-   de_fence_2 = pilot.addFleet("Nasin Med Defense Fleet", vec2.new(rnd.rnd(25,75),rnd.rnd(100,350)))
+   de_fence = addShips( 2, {"Shark", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", homeasset, {_("Nasin Shark"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} )
+   de_fence_2 = addShips( 2,  {"Shark", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", vec2.new(rnd.rnd(25,75),rnd.rnd(100,350)), {_("Nasin Shark"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} )
 
    for _,p in ipairs(de_fence) do
       p:setNoJump()
@@ -167,7 +169,8 @@ function out_sys_failure() --feel like jumping out? AWOL! its easier this way. t
 end
 
 function second_coming()
-   sirius_be_serious_2 = pilot.addFleet("Sirius Assault Force", system.get("Herakin"))
+   local assault_force = {"Sirius Divinity", "Sirius Dogma", "Sirius Dogma", "Sirius Preacher", "Sirius Preacher", "Sirius Preacher", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity"}
+   sirius_be_serious_2 = addShips( 1, assault_force, "Sirius", system.get("Herakin") )
    for i,p in ipairs(sirius_be_serious_2) do
       table.insert(sirius_be_serious,p) --inserting into the original table, for the death function.
       p:setHilight()
