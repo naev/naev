@@ -99,11 +99,23 @@ function accept()
 end
 
 function takeoff()
-   local assault_force = {"Sirius Divinity", "Sirius Dogma", "Sirius Dogma", "Sirius Preacher", "Sirius Preacher", "Sirius Preacher", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity"}
+   local assault_force = {
+      "Sirius Divinity",
+      "Sirius Dogma",
+      "Sirius Dogma",
+      "Sirius Preacher",
+      "Sirius Preacher",
+      "Sirius Preacher",
+      "Sirius Fidelity",
+      "Sirius Fidelity",
+      "Sirius Fidelity",
+      "Sirius Fidelity",
+      "Sirius Fidelity",
+      "Sirius Fidelity" }
    addShips( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) ) --left over fleets from the prior mission.
    addShips( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
    addShips( 1, assault_force, "Sirius", vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
-   addShips( 3, {"Llama", "Llama", "Mule"}, "Nasin", homeasset, {_("Nasin Llama"), _("Nasin Llama"), _("Nasin Mule")}, ai={"civilian"} ) --other escapees.
+   addShips( 3, {"Llama", "Llama", "Mule"}, "Nasin", homeasset, {_("Nasin Llama"), _("Nasin Llama"), _("Nasin Mule")}, {ai="civilian"} ) --other escapees.
    addShips( 2, {"Lancelot", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", homeasset, {_("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} ) --these are trying to help.
 end
 
@@ -136,7 +148,7 @@ function attacked() --several systems where the Sirius have 'strategically place
       addShips( 1, {"Lancelot", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", last_sys_in, {_("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} )
    end
    for i = 1,chance_civvie do
-      addShips( 1, {"Llama", "Llama", "Mule"}, "Nasin", last_sys_in, {_("Nasin Llama"), _("Nasin Llama"), _("Nasin Mule")}, ai={"civilian"} )
+      addShips( 1, {"Llama", "Llama", "Mule"}, "Nasin", last_sys_in, {_("Nasin Llama"), _("Nasin Llama"), _("Nasin Mule")}, {ai="civilian"} )
    end
 end
 

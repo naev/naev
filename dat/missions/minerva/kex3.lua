@@ -159,7 +159,7 @@ He seems satisfied at his pun.]]))
       vn.func( function () player.pay( money_reward ) end )
       vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
       vn.sfxVictory()
-      vn.na(_("As you take your leave you hear Kex beginning to hum an ancient-sounding tune. He seems happier than usual."))
+      vn.na(_("As you take your leave you hear Kex beginning to hum an ancient-sounding tune."))
       vn.run()
 
       minerva.log.kex(_("You defeated Major Malik in a lopsided duel in the Crimson Gauntlet, and acquired information related to money laundering at Minerva Station."))
@@ -176,7 +176,7 @@ He seems satisfied at his pun.]]))
       } )
       vn.label("decline")
       kex(_([[He looks dejected.
-   "I see. If you change your mind, I'll be around."]]))
+"I see. If you change your mind, I'll be around."]]))
       vn.done()
 
       vn.label("accept")
