@@ -39,7 +39,7 @@ Wrapper for pilot.add() that can operate on tables of ships.
    @usage pilots = fleet.add( 1, "Hyena", "Pirate", nil, nil, {ai="pirate_norun"} ) -- Ditto, but use the "norun" AI variant.
    @usage pilots = fleet.add( 2, { "Rhino", "Koala" }, "Trader" ) -- Creates four Trader ships.
 
-      @param count Number of times to repeat the pattern.
+      @param[opt=1] count Number of times to repeat the pattern.
       @param ship Ship(s) to add.
       @param faction Faction(s) to give the pilot.
       @param location Location(s) to jump in from, take off from, or appear at.
