@@ -53,13 +53,12 @@ extern Pilot *cur_pilot;
  */
 static int pilotL_getFriendOrFoe( lua_State *L, int friend );
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
-static int pilotL_addFleetFrom( lua_State *L );
+static int pilotL_add( lua_State *L );
 static int outfit_compareActive( const void *slot1, const void *slot2 );
 static int pilotL_setFlagWrapper( lua_State *L, int flag );
 
 
 /* Pilot metatable methods. */
-static int pilotL_addFleetRaw( lua_State *L );
 static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
@@ -170,7 +169,7 @@ static int pilotL_hookClear( lua_State *L );
 static int pilotL_choosePoint( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
-   { "add", pilotL_addFleetRaw },
+   { "add", pilotL_add},
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
    { "getAllies", pilotL_getAllies },
@@ -473,13 +472,38 @@ static int pilotL_choosePoint( lua_State *L )
 
 
 /**
- * @brief Wrapper with common code for pilotL_addFleet and pilotL_addFleetRaw.
+ * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
+ *
+ * @usage p = pilot.add( "Empire Shark", nil, "Empire" ) -- Creates a standard Empire Shark.
+ * @usage p = pilot.add( "Hyena", "Pirate", _("Pirate Hyena") ) -- Just adds the pilot (will jump in or take off).
+ * @usage p = pilot.add( "Llama", "Trader", nil, _("Trader Llama"), {ai="dummy"} ) -- Overrides AI with dummy ai.
+ * @usage p = pilot.add( "Gawain", "Civilian", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
+ * @usage p = pilot.add( "Empire Pacifier", "Empire", system.get("Goddard") ) -- Have the pilot jump in from the system.
+ * @usage p = pilot.add( "Goddard", "Goddard", planet.get("Zhiru") , _("Goddard Goddard") ) -- Have the pilot take off from a planet.
+ *
+ * How param works (by type of value passed): <br/>
+ *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>
+ *  - planet: pilot takes off from the planet <br/>
+ *  - system: jumps pilot in from the system <br/>
+ *  - vec2: pilot is created at the position (no jump/takeoff) <br/>
+ *  - true: Acts like nil, but does not avoid jump points with no presence <br/>
+ *
+ *    @luatparam string shipname Name of the ship to add.
+ *    @luatparam Faction faction Faction to give the pilot.
+ *    @luatparam System|Planet param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
+ *              a planet it'll try to take off from it.
+ *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to shipname.
+ *    @luatparam[opt] table parameters Table of extra keyword arguments. Supported arguments:
+ *                    "ai" (string): AI to give the pilot. Defaults to the faction's AI.
+ *                    "naked" (boolean): Whether or not to have the pilot spawn without outfits. Defaults to false.
+ *    @luatreturn Pilot The created pilot.
+ * @luafunc add
  */
-static int pilotL_addFleetFrom( lua_State *L )
+static int pilotL_add( lua_State *L )
 {
    Ship *ship;
-   const char *fltname, *fltai;
-   int i, i_parameters;
+   const char *shipname, *pilotname, *ai;
+   int i;
    unsigned int p;
    double a, r;
    Vector2d vv, vp, vn;
@@ -491,24 +515,26 @@ static int pilotL_addFleetFrom( lua_State *L )
    int ignore_rules;
    Pilot *pplt;
 
+   NLUA_CHECKRW(L);
+
    /* Default values. */
    pilot_clearFlagsRaw( flags );
    vectnull(&vn); /* Need to determine angle. */
    jump = NULL;
    a    = 0.;
 
-   /* Parse first argument - Fleet Name */
-   fltname = luaL_checkstring(L,1);
+   /* Parse first argument - Ship Name */
+   shipname = luaL_checkstring(L,1);
 
    /* pull the fleet */
    ship = NULL;
-   ship = ship_get( fltname );
+   ship = ship_get( shipname );
    if (ship == NULL) {
-      NLUA_ERROR(L,_("Ship '%s' not found!"), fltname);
+      NLUA_ERROR(L,_("Ship '%s' not found!"), shipname);
       return 0;
    }
    /* Get pilotname argument if provided. */
-   fltname = luaL_optstring( L, 4, fltname );
+   pilotname = luaL_optstring( L, 4, shipname );
    /* Get faction from string or number. */
    lf = luaL_validfaction(L,2);
 
@@ -529,13 +555,13 @@ static int pilotL_addFleetFrom( lua_State *L )
       }
       if (jump == NULL) {
          if (array_size(cur_system->jumps) > 0) {
-            WARN(_("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."),
-                  fltname, ss->name, cur_system->name );
+            WARN(_("Ship '%s' jumping in from non-adjacent system '%s' to '%s'."),
+                  pilotname, ss->name, cur_system->name );
             jump = cur_system->jumps[RNG_BASE(0, array_size(cur_system->jumps)-1)].returnJump;
          }
          else
-            WARN(_("Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."),
-                  fltname, ss->name, cur_system->name );
+            WARN(_("Ship '%s' attempting to jump in from '%s', but '%s' has no jump points."),
+                  pilotname, ss->name, cur_system->name );
       }
    }
    else if (lua_isplanet(L,3)) {
@@ -576,23 +602,22 @@ static int pilotL_addFleetFrom( lua_State *L )
    }
 
    /* Parse final argument - table of optional parameters */
-   i_parameters = 5;
-   fltai = NULL;
-   if (lua_gettop( L ) >= i_parameters && !lua_isnil( L, i_parameters )) {
-      if (!lua_istable( L, i_parameters )) {
+   ai = NULL;
+   if (lua_gettop( L ) >= 5 && !lua_isnil( L, 5 )) {
+      if (!lua_istable( L, 5 )) {
          NLUA_ERROR( L, _("'parameters' should be a table of options or omitted!") );
          return 0;
       }
-      lua_getfield( L, i_parameters, "ai" );
-      fltai = luaL_optstring( L, -1, NULL );
+      lua_getfield( L, 5, "ai" );
+      ai = luaL_optstring( L, -1, NULL );
       lua_pop( L, 1 );
 
-      lua_getfield( L, i_parameters, "naked" );
+      lua_getfield( L, 5, "naked" );
       if (lua_toboolean(L, -1))
          pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
       lua_pop( L, 1 );
 
-      lua_getfield( L, i_parameters, "stealth" );
+      lua_getfield( L, 5, "stealth" );
       if (lua_toboolean(L, -1))
          pilot_setFlagRaw( flags, PILOT_STEALTH );
       lua_pop( L, 1 );
@@ -610,7 +635,7 @@ static int pilotL_addFleetFrom( lua_State *L )
       a += 2.*M_PI;
 
    /* Create the pilot. */
-   p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, 0, 0 );
+   p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0 );
    lua_pushpilot(L,p);
 
    /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
@@ -619,41 +644,6 @@ static int pilotL_addFleetFrom( lua_State *L )
       space_calcJumpInPos( cur_system, jump->from, &pplt->solid->pos, &pplt->solid->vel, &pplt->solid->dir, pplt );
    }
    return 1;
-}
-
-
-/**
- * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
- *
- * @usage p = pilot.add( "Empire Shark", nil, "Empire" ) -- Creates a standard Empire Shark.
- * @usage p = pilot.add( "Hyena", "Pirate", _("Pirate Hyena") ) -- Just adds the pilot (will jump in or take off).
- * @usage p = pilot.add( "Llama", "Trader", nil, _("Trader Llama"), {ai="dummy"} ) -- Overrides AI with dummy ai.
- * @usage p = pilot.add( "Gawain", "Civilian", vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
- * @usage p = pilot.add( "Empire Pacifier", "Empire", system.get("Goddard") ) -- Have the pilot jump in from the system.
- * @usage p = pilot.add( "Goddard", "Goddard", planet.get("Zhiru") , _("Goddard Goddard") ) -- Have the pilot take off from a planet.
- *
- * How param works (by type of value passed): <br/>
- *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>
- *  - planet: pilot takes off from the planet <br/>
- *  - system: jumps pilot in from the system <br/>
- *  - vec2: pilot is created at the position (no jump/takeoff) <br/>
- *  - true: Acts like nil, but does not avoid jump points with no presence <br/>
- *
- *    @luatparam string shipname Name of the ship to add.
- *    @luatparam Faction faction Faction to give the pilot.
- *    @luatparam System|Planet param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
- *              a planet it'll try to take off from it.
- *    @luatparam[opt] string pilotname Name to give the pilot. Defaults to shipname.
- *    @luatparam[opt] table parameters Table of extra keyword arguments. Supported arguments:
- *                    "ai" (string): AI to give the pilot. Defaults to the faction's AI.
- *                    "naked" (boolean): Whether or not to have the pilot spawn without outfits. Defaults to false.
- *    @luatreturn Pilot The created pilot.
- * @luafunc add
- */
-static int pilotL_addFleetRaw(lua_State *L )
-{
-   NLUA_CHECKRW(L);
-   return pilotL_addFleetFrom( L );
 }
 
 
