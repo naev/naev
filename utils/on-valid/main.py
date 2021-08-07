@@ -42,10 +42,7 @@ class sanitizer:
             self.config['datpath'] = os.path.join(self.config['basepath'],
                                                   'dat/')
 
-        if self.config['use'] == 'xml':
-            self.dirtyfiles_from_xml()
-        elif self.config['use'] == 'rawfiles':
-            self.dirtyfiles_from_directory()
+        self.dirtyfiles_from_directory()
 
         print('Compiling script files...',end='      ')
         for root, dir, files in os.walk(self.config['basepath']+'/scripts/'):
@@ -78,22 +75,6 @@ class sanitizer:
             print('DONE')
         return True
 
-    def dirtyfiles_from_xml(self):
-        """
-        retrieve a list of files from the mission and event XML (the quiet british way)
-        """
-        import xml.etree.ElementTree as ET
-        for name in "mission", "event":
-            print('Compiling {0} file list ...'.format(name), end='      ')
-            file = os.path.join(self.config['basepath'], "{0}/{1}.xml".format(luapath, name))
-            naevxml = ET.parse(file)
-            for mission in naevxml.findall(name):
-                for lf in mission.findall('lua'):
-                    lf = os.path.join("{0}/{1}s".format(luapath, name), lf.text + '.lua')
-                    self.luaScripts.append(lf)
-            print('DONE')
-        return True
-
     def dah_doctor(self):
         """
         That's the doctor, it detect wrong stuff but can never heal you.
@@ -103,7 +84,6 @@ class sanitizer:
         2/ Then, initialize each reader with the appropriate config
         3/ Then, parse each lua file searching for function and content
         """
-        from readers import fleet
         from readers import ship
         from readers import outfit
         from readers import unidiff
@@ -117,11 +97,9 @@ class sanitizer:
         otech = tech(unidiffobj=udata,**self.config)
 
         # TODO: must be called when needed
-        fleetdata = fleet(datpath=self.config['datpath'],
-                        verbose=self.config['verbose'])
         shipdata = ship(datpath=self.config['datpath'],
                         verbose=self.config['verbose'],
-                        tech=otech, fleetobj=fleetdata)
+                        tech=otech)
         outfitdata = outfit(datpath=self.config['datpath'],
                         verbose=self.config['verbose'], tech=otech)
 
@@ -167,13 +145,10 @@ class sanitizer:
                             file=file
                     )
 
-                    if info['func'] == 'pilot.add':
-                        if not fleetdata.find(info['content']):
-                            haserror=True
                     if info['func'] == 'scom.addPilot':
-                        if not fleetdata.find(info['content']):
+                        if not shipdata.find(info['content']):
                             haserror=True
-                    if info['func'] == 'pilot.addRaw':
+                    if info['func'] == 'pilot.add':
                         if not shipdata.find(info['content']):
                             haserror=True
                     if info['func'] == 'outfitAdd':
@@ -202,8 +177,7 @@ class sanitizer:
         unused_data = dict()
 
         # makes sure that only category with unused stuff get listed
-        tocheck = ((fleetdata, 'fleet'), (udata,'unidiff'),
-                   (shipdata, 'ship'), (outfitdata, 'outfit'))
+        tocheck = ((udata,'unidiff'), (shipdata, 'ship'), (outfitdata, 'outfit'))
         for obj, key in tocheck:
             tmp = obj.get_unused()
             if len(tmp) > 0:
@@ -246,7 +220,6 @@ class sanitizer:
             # 'UNKNOWN'
             outfitdata.show_unused()
             shipdata.show_unused()
-            fleetdata.show_unused()
             udata.show_unused()
 
 if __name__ == "__main__":
@@ -255,17 +228,9 @@ if __name__ == "__main__":
                 Naev validity check v%s.
                 You are valid.
              """ %  __version__)
-    parser.add_argument('--use', '-u',
-                        choices=['xml','rawfiles'], default='xml',
-                        help="""
-                        Use the rawfiles option to run into the directory like
-                        a wild viking. Otherwise, the script will use the active
-                        mission list to load the file list.
-                        """)
 
-    gfleet = parser.add_argument_group('Fleets')
-    gfleet.add_argument('--show-unused', action='store_true', default=False,
-                        help='Show unused fleets from the xml files')
+    parser.add_argument('--show-unused', action='store_true', default=False,
+                        help='Show unused definitions from the xml files')
 
     parser.add_argument('--version', action='version',
                         version='%(prog)s '+__version__)
@@ -278,7 +243,7 @@ if __name__ == "__main__":
     basepath = os.path.abspath(args.basepath)
     luapath = os.path.abspath(basepath + '/dat/')
     invalid = sanitizer(basepath=basepath, luapath=luapath,
-                        verbose=args.verbose,use=args.use,
+                        verbose=args.verbose,
                         show_unused=args.show_unused)
 
     invalid.dah_doctor()

@@ -11,7 +11,6 @@ class ship(readers):
         readers.__init__(self, shipsXml, config['verbose'])
         self._componentName = 'ship'
         self._tech = config['tech']
-        self._fleet = config['fleetobj']
         self.used = list()
         self.unknown = list()
 
@@ -40,13 +39,6 @@ class ship(readers):
         else:
             print("DONE")
 
-        # Remove ships that are in fleets.
-        for ship in list(self.missingLua):
-            if self._fleet.findPilots(ship=ship):
-                self.missingLua.remove(ship)
-                if ship not in self.used:
-                    self.used.append(ship)
-
         self.missingLua.sort()
 
     def find(self, name):
@@ -71,8 +63,7 @@ class ship(readers):
         # Mission-specific ships.
         if len(self.missingLua) > 0:
             for item in self.missingLua:
-                print("Warning: mission item ''{0}`` is not found in "\
-                "fleet.xml nor lua files".format(item))
+                print("Warning: mission item ''{0}`` is not found in lua files".format(item))
 
         # Mission-specific ships should never be in tech.xml
         if len(self.missionInTech) > 0:
