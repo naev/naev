@@ -169,6 +169,7 @@ end
 function capHailed () --when hailing the capship back
    tk.msg( title[2], string.format( text[2], creditstring( reward ) ) ) --congratulates
    player.pay( reward )
+   player.commClose()
    misn.finish(true)
 end
 

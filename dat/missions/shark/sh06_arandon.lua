@@ -173,6 +173,7 @@ function hail_pacifier()
    pacifier:hookClear()
    hook.pilot( pacifier, "death", "dead" )
    hook.pilot(pacifier, "board", "board")
+   player.commClose()
 end
 
 function board()

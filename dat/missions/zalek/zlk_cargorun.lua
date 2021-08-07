@@ -180,6 +180,7 @@ function hail()
 --   tk.msg( title[7], text[7]:format( creditstring(bonus) ) )
 
    hook.update("closehail")
+   player.commClose()
 end
 
 function closehail()

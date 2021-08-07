@@ -147,5 +147,6 @@ function hail()
       misn.osdActive(2)
       misn.markerRm(marker)
       marker2 = misn.markerAdd(paysys, "low")
+      player.commClose()
    end
 end

@@ -383,6 +383,7 @@ function hail()
    boardhook = hook.pilot(pinnacle, "board", "board")
    hook.rm(idlehook)
    hook.rm(hhail)
+   player.commClose()
 end
 
 -- Function that tries to misspell whatever string is passed to it.
