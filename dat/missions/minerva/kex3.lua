@@ -176,7 +176,7 @@ He seems satisfied at his pun.]]))
       } )
       vn.label("decline")
       kex(_([[He looks dejected.
-   "I see. If you change your mind, I'll be around."]]))
+"I see. If you change your mind, I'll be around."]]))
       vn.done()
 
       vn.label("accept")
