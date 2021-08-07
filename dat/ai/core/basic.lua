@@ -85,6 +85,14 @@ function __zigzag ( dir, angle )
    end
    ai.accel()
 end
+function __zigzag_run_decide( self, target )
+   local relspe = self:stats().speed_max/target:stats().speed_max
+   return ( self:stats().mass <= 400 
+            and relspe <= 1.01 
+            and ai.hasprojectile() 
+            and (not ai.hasafterburner() or self:energy() < 10)
+          )
+end
 
 
 --[[
@@ -487,8 +495,7 @@ function __run_target( target )
    ai.settarget( target )
 
    -- See whether we have a chance to outrun the attacker
-   local relspe = plt:stats().speed_max/target:stats().speed_max
-   if plt:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and (not ai.hasafterburner()) then
+   if __zigzag_run_decide( plt, target ) then
       -- Pilot is agile, but too slow to outrun the enemy: dodge
       local dir = ai.dir(target) + 180      -- Reverse (run away)
       if dir > 180 then dir = dir - 360 end -- Because of periodicity
@@ -534,9 +541,7 @@ function __run_hyp( jump )
 
       local dozigzag = false
       if ai.taskdata():exists() then
-         local relspe = plt:stats().speed_max/ai.taskdata():stats().speed_max
-         if plt:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and
-            (not ai.hasafterburner()) and jdist > 3*bdist then
+         if __zigzag_run_decide( plt, ai.taskdata() ) and jdist > 3*bdist then
             dozigzag = true
          end
       end
@@ -597,9 +602,7 @@ function __run_landgo( target )
 
       local dozigzag = false
       if ai.taskdata():exists() then
-         local relspe = plt:stats().speed_max/ai.taskdata():stats().speed_max
-         if plt:stats().mass <= 400 and relspe <= 1.01 and ai.hasprojectile() and
-            (not ai.hasafterburner()) and dist > 3*bdist then
+         if __zigzag_run_decide( plt, ai.taskdata() ) and dist > 3*bdist then
             dozigzag = true
          end
       end
