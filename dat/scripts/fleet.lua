@@ -23,23 +23,10 @@ end
 
 
 -- Randomly stagger the locations of ships so they don't all spawn on top of each other.
-local function _randomizePositions( ship, override )
-   if type(ship) ~= "table" and type(ship) ~= "userdata" then
-      print(_("_randomizePositions: Error, ship list is not a pilot or table of pilots!"))
-      return
-   elseif type(ship) == "userdata" then -- Put lone pilot into table.
-      ship = { ship }
-   end
-
-   local x = 0
-   local y = 0
+local function _randomizePositions( ship )
    for k,v in ipairs(ship) do
-      if k ~= 1 and not override then
-         if vec2.dist( ship[1]:pos(), v:pos() ) == 0 then
-            x = x + rnd.rnd(75,150) * (rnd.rnd(0,1) - 0.5) * 2
-            y = y + rnd.rnd(75,150) * (rnd.rnd(0,1) - 0.5) * 2
-            v:setPos( v:pos() + vec2.new( x, y ) )
-         end
+      if k~=1 then
+         v:setPos( v:pos() + vec2.newP( rnd.rnd()*75 + 75, rnd.rnd() * 360 ) )
       end
    end
 end
@@ -63,31 +50,29 @@ Wrapper for pilot.add() that can operate on tables of ships.
       <em>TODO</em>: With a little work we can support a table of parameters tables, but no one even wants that. (Yet?)
 --]]
 function fleet.add( count, ship, faction, location, pilotname, parameters )
-   local pilotnames = {}
-   local locations = {}
-   local factions = {}
-   local out = {}
+   count = count or 1
 
-   if type(ship) ~= "table" and type(ship) ~= "string" then
-      print(_("fleet.add: Error, ship list is not a ship or table of ships!"))
-      return
-   elseif type(ship) == "string" then -- Put lone ship into table.
+   local pilotnames  = {}
+   local locations   = {}
+   local factions    = {}
+   local out         = {}
+
+   -- Put lone ship into table
+   if type(ship) ~= "table" then
       ship = { ship }
    end
    pilotnames= _buildDupeTable( pilotname, #ship )
-   locations = _buildDupeTable( location, #ship )
-   factions  = _buildDupeTable( faction, #ship )
+   locations = _buildDupeTable( location,  #ship )
+   factions  = _buildDupeTable( faction,   #ship )
    if factions[1] == nil then
       print(_("fleet.add: Error, raw ships must have factions!"))
       return
    end
 
-   if count == nil then
-      count = 1
-   end
    for i=1,count do -- Repeat the pattern as necessary.
       for k,v in ipairs(ship) do
-         out[k+(i-1)*#ship] = pilot.add( ship[k], factions[k], locations[k], pilotnames[k], parameters )
+         local p = pilot.add( ship[k], factions[k], locations[k], pilotnames[k], parameters )
+         table.insert( out, p )
       end
    end
    if #out > 1 then
