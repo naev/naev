@@ -235,8 +235,11 @@ function victorious()
       starting_vect = player.pos()
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 100, 200 )
-      empire_vect = starting_vect:add( math.cos(a) * d, math.sin(a) * d )
-      pilot.addFleet( "Empire Med Attack", empire_vect, {ai="def"} )
+      local empire_vect = starting_vect:add( math.cos(a) * d, math.sin(a) * d )
+      local empire_med_attack = {"Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
+                                 "Empire Admonisher", "Empire Admonisher",
+				 "Empire Pacifier", "Empire Hawking"}
+      addShips( 1, empire_med_attack, "Empire", empire_vect, nil, {ai="def"} )
 
 end
 
