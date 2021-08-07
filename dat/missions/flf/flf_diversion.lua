@@ -31,6 +31,7 @@
 
 --]]
 
+require "fleethelper"
 require "numstring"
 require "missions/flf/flf_common"
 
@@ -168,10 +169,22 @@ end
 function timer_spawn_dv ()
    dv_coming = false
    if not job_done then
-      local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Goddard", "Dvaered Small Patrol", "Dvaered Big Patrol" }
-      local shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
-      player.msg( msg:format( shipname ) )
-      for i, j in ipairs( pilot.addFleet( shipname ) ) do
+      local fleets = { {"Dvaered Vendetta"}, {"Dvaered Ancestor"}, {"Dvaered Phalanx"}, {"Dvaered Vigilance"}, {"Dvaered Goddard"},
+                       {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"},
+                       {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance"} }
+      local fleet = fleets[ rnd.rnd( 1, #fleets ) ]
+      local fleetname
+
+      if #fleet == 1 then
+         fleetname = _(fleet[1])
+      elseif #fleet < 5 then
+         fleetname = _("Dvaered Small Patrol")
+      else
+         fleetname = _("Dvaered Big Patrol")
+      end
+
+      player.msg( msg:format( _(fleetname) ) )
+      for i, j in ipairs( addShips( 1,  fleet, "Dvaered" ) ) do
          add_attention( j )
       end
    end
