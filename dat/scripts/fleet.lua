@@ -22,18 +22,10 @@ local function _buildDupeTable( input, count )
 end
 
 
--- Randomly stagger the locations of ships so they don't all spawn on top of each other.
-local function _randomizePositions( ship )
-   for k,v in ipairs(ship) do
-      if k~=1 then
-         v:setPos( v:pos() + vec2.newP( rnd.rnd()*75 + 75, rnd.rnd() * 360 ) )
-      end
-   end
-end
-
-
 --[[--
 Wrapper for pilot.add() that can operate on tables of ships.
+
+The first pilot is set to be the fleet leader.
 
    @usage pilots = fleet.add( 1, "Hyena", "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
    @usage pilots = fleet.add( 1, "Hyena", "Pirate", nil, nil, {ai="pirate_norun"} ) -- Ditto, but use the "norun" AI variant.
@@ -76,7 +68,13 @@ function fleet.add( count, ship, faction, location, pilotname, parameters )
       end
    end
    if #out > 1 then
-      _randomizePositions( out )
+      local leader = out[1]
+      for k,v in ipairs(out) do
+         if k~=1 then
+            v:setPos( v:pos() + vec2.newP( rnd.rnd()*75 + 75, rnd.rnd() * 360 ) )
+            v:setLeader( leader )
+         end
+      end
    end
    return out
 end
