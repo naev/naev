@@ -220,13 +220,16 @@ They give a small chuckle and lean forward.]]))
    jie(_([["Well honestly, I don't give a shit who your master is. The result is the same, you are trying to take what we worked hard for with blood, sweat, and tears."]]))
    jie(_([[They clench their teeth.
 "I won't let you! Minerva Station is OURS! You have no idea of the hell we went through to get here, and I'll be damned if I let that get taken away from us!"]]))
-   vn.na(_([[In the split of an eye they fling their drink at you. You manage to dodge most of it, but as you look back at them you see the table is empty. Shit, that went well.]]))
-   vn.na(_([[You rush to your ship to see if you can catch them in pursuit!]]))
+   vn.na(_([[In the split of an eye they fling their drink at you. You manage to dodge most of it, but as you look back at them you see the table is empty. Shit, that went well…
+You rush to your ship to see if you can catch them in pursuit!]]))
    vn.run()
 
    -- Advance
    misn_state = 1
    player.takeoff()
+   misn.osdCreate( misn_title,
+      { _("Deal with Jie de Luca"),
+      _("Return to Kex at Minerva Station") } )
 end
 
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
@@ -288,8 +291,11 @@ function enter ()
       pilot.toggleSpawn(false)
 
       local pos = vec2.new( 0, 0 )
-      jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {nake=true})
+      jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {nake=true, ai="baddie_norun"})
       equipopt.generic( jie, nil, "elite" )
+
+      hook.death("jie","jie_death")
+      hook.board("jie","jie_board")
 
       -- Henchmen
       local henchmen = {
@@ -305,7 +311,7 @@ function enter ()
       enemies = { jie }
       for k,p in ipairs(henchmen) do
          local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
-         local p = pilot.add( v, "Independent", ppos, nil, {naked=true} )
+         local p = pilot.add( v, "Independent", ppos, nil, {naked=true, ai="baddie_norun"} )
          equipopt.pirate( p )
          p:leader( jie )
          table.insert( enemies, p )
@@ -357,4 +363,13 @@ function thug_heartbeat ()
 
    -- Keep on beating
    hook.timer( 1, "thug_heartbeat" )
+end
+
+function jie_death ()
+   misn.markerMove( misn_marker, system.get("Limbo") )
+   misn.osdActive(2)
+   misn_state = 2
+end
+
+function jie_board ()
 end
