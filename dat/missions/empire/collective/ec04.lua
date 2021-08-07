@@ -31,6 +31,7 @@
 
 ]]--
 
+require "fleethelper"
 require "nextjump"
 require "proximity"
 require "numstring"
@@ -105,6 +106,9 @@ end
 -- Handles the Collective encounters.
 function enter()
     player.allowSave() -- This mission disables saving, which is dangerous. Should be turned back on ASAP.
+
+    local empire_flanking_fleet = {"Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot"}
+
     if system.cur() == misn_target_sys and misn_stage == 0 then
         -- Case jumped in before landing
         pilot.clear()
@@ -117,8 +121,8 @@ function enter()
         local waypoint12 = vec2.new(1500, 3000)
         local waypoint22 = vec2.new(1500, -500)
 
-        fleet1 = pilot.addFleet("Empire Flanking Fleet", fleetpos1, {ai="empire_norun"})
-        fleet2 = pilot.addFleet("Empire Flanking Fleet", fleetpos2, {ai="empire_norun"})
+        fleet1 = addShips( 1,  empire_flanking_fleet, "Empire", fleetpos1, nil, {ai="empire_norun"} )
+        fleet2 = addShips( 1,  empire_flanking_fleet, "Empire", fleetpos2, nil, {ai="empire_norun"} )
         empireAttack(fleet1)
         empireAttack(fleet2)
 
@@ -161,8 +165,8 @@ function enter()
 
         local pv = player.pos()
 
-        fleet1 = pilot.addFleet("Empire Flanking Fleet", pv + vec2.new(-150, 500))
-        fleet2 = pilot.addFleet("Empire Flanking Fleet", pv + vec2.new(-150, -500))
+        fleet1 = addShips( 1,  empire_flanking_fleet, "Empire", pv + vec2.new(-150, 500) )
+        fleet2 = addShips( 1,  empire_flanking_fleet, "Empire", pv + vec2.new(-150, -500) )
         empireRetreat(fleet1)
         empireRetreat(fleet2)
         fleet1[1]:comm(escort_msg2)
