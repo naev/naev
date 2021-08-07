@@ -46,8 +46,8 @@ end
 
 function spawn_bounty_hunter_sml ()
    return spawn_bounty_hunter{
-      {"Hyena", 10},
-      {"Shark", 20},
+      {"Hyena",    10},
+      {"Shark",    20},
       {"Lancelot", 25},
       {"Vendetta", 25},
       {"Ancestor", 20},
@@ -56,10 +56,10 @@ end
 function spawn_bounty_hunter_med ()
    return spawn_bounty_hunter{
       {"Admonisher", 45},
-      {"Phalanx", 45},
+      {"Phalanx",    45},
       {"Starbridge", 60},
-      {"Vigilance", 70},
-      {"Pacifier", 70},
+      {"Vigilance",  70},
+      {"Pacifier",   70},
    }
 end
 function spawn_bounty_hunter_lrg ()
