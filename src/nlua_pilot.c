@@ -73,6 +73,7 @@ static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
 static int pilotL_setTarget( lua_State *L );
 static int pilotL_inrange( lua_State *L );
+static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_activeWeapset( lua_State *L );
 static int pilotL_weapset( lua_State *L );
@@ -183,6 +184,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "target", pilotL_target },
    { "setTarget", pilotL_setTarget },
    { "inrange", pilotL_inrange },
+   { "withPlayer", pilotL_withPlayer },
    { "nav", pilotL_nav },
    { "activeWeapset", pilotL_activeWeapset },
    { "weapset", pilotL_weapset },
@@ -1180,6 +1182,21 @@ static int pilotL_inrange( lua_State *L )
       lua_pushboolean(L,0);
    }
    return 2;
+}
+
+
+/**
+ * @brief Checks to see if pilot is with player.
+ *
+ *    @luatparam Pilot p Pilot to check to see if is with player.
+ *    @luatreturn boolean true if pilot is with player.
+ * @luafunc withPlayer
+ */
+static int pilotL_withPlayer( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushboolean(L, pilot_isWithPlayer(p));
+   return 1;
 }
 
 
