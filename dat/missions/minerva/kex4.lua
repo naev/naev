@@ -212,12 +212,15 @@ They speak calmly, without so much as a tinge of urgency.]]))
    jie(_([["I see. I knew the day would come. Can't have a bunch of low-lives making a decent living can we now?"
 They take a sip from their drink.]]))
    jie(_([["Me and the guy you call the Minerva CEO, we were born here in Jorlan. Not sure if we were orphaned or abandoned, but since a young age this world has taught us nothing but cruelty and suffering. Forced to work in the ore mines if we were to survive."]]))
-   jie(_([["I don't think a hired gun like you would truly what it's like to work nearly to death in the ore mines. Just here to do your master's bidding, like the loyal dog you are."
+   jie(_([["This shithole taught us that nothing is given for free. You have to fight with tooth and nail to get what you want! No that's not it, what we deserve!"
+They hit the table for emphasis.]]))
+   jie(_([["This universe is rotten to the core you know. If you don't want to wind up as a husk of a human, toiling for the benefit of others, you have to take what you damn want. I'm not going to wind up as another corpse deep down underground."]]))
+   jie(_([["I don't think a hired gun like you would truly what the suffering is like when nearly working to death in the ore mines. Just here to do your master's bidding, like the loyal dog you are."
 They give a small chuckle and lean forward.]]))
    jie(_([["Well honestly, I don't give a shit who your master is. The result is the same, you are trying to take what we worked hard for with blood, sweat, and tears."]]))
    jie(_([[They clench their teeth.
-"I won't let you. Minerva Station is OURS! You have no idea of the hell we went through to get here, and I'll be damned if I let that get taken away from us!"]]))
-   vn.na(_([[In the split of an eye they fling their drink at you, which you manage to dodge most of. As you look back at them you see the table is empty. Shit, that went well.]]))
+"I won't let you! Minerva Station is OURS! You have no idea of the hell we went through to get here, and I'll be damned if I let that get taken away from us!"]]))
+   vn.na(_([[In the split of an eye they fling their drink at you. You manage to dodge most of it, but as you look back at them you see the table is empty. Shit, that went well.]]))
    vn.na(_([[You rush to your ship to see if you can catch them in pursuit!]]))
    vn.run()
 
@@ -242,11 +245,11 @@ function enter ()
          table.insert( thugs, choose_one{ "Ancestor", "Lancelot" } )
          table.insert( thugs, choose_one{ "Ancestor", "Lancelot" } )
       end
-      local fdv = faction.dynAdd( "Mercenary", "kex_bountyhunter", _("Bounty Hunter"), {ai="mercenary"} )
+      local fbh = faction.dynAdd( "Mercenary", "kex_bountyhunter", _("Bounty Hunter"), {ai="mercenary"} )
       thug_pilots = {}
       for k,v in ipairs(thugs) do
          local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
-         local p = pilot.add( v, fdv, ppos, nil, {naked=true} )
+         local p = pilot.add( v, fbh, ppos, nil, {naked=true} )
          equipopt.pirate( p )
          if not thug_leader then
             thug_leader = p
@@ -267,20 +270,46 @@ function enter ()
    end
 
    thug_chance = thug_chance or 0.2
-
    if misn_state==0 and system.cur() == system.get(targetsys) then
       thug_chance = thug_chance / 0.8
       -- Spawn thugs around planet
       spawn_thugs( planet.get(targetplanet):pos(), false )
       hook.timer( 5, "thug_heartbeat" )
+
    elseif misn_state~=1 and rnd.rnd() < thug_chance then
       -- Spawn near the center, they home in on player
       spawn_thugs(planet.get(lastplanet):pos(), false )
       -- Timer
       hook.timer( 5, "thug_heartbeat" )
-   elseif misn_state==1 then
 
+   elseif misn_state==1 then
       -- Main stuff
+      pilot.clear()
+      pilot.toggleSpawn(false)
+
+      local pos = vec2.new( 0, 0 )
+      jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {nake=true})
+      equipopt.generic( jie, nil, "elite" )
+
+      -- Henchmen
+      local henchmen = {
+         "Shark",
+         "Shark",
+         "Hyena",
+      }
+      if pp:ship():size() > 4 then
+         table.insert( henchmen, "Pacifier" )
+         table.insert( henchmen, "Ancestor" )
+         table.insert( henchmen, "Ancestor" )
+      end
+      enemies = { jie }
+      for k,p in ipairs(henchmen) do
+         local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
+         local p = pilot.add( v, "Independent", ppos, nil, {naked=true} )
+         equipopt.pirate( p )
+         p:leader( jie )
+         table.insert( enemies, p )
+      end
    end
 end
 
