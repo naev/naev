@@ -63,8 +63,9 @@ function create ()
    end
 
    hook.timer(3, "heartbeat")
+   hook.jumpout("cleanup")
+   hook.land("cleanup")
 end
-
 
 function heartbeat ()
    local pp = player.pilot()
@@ -76,4 +77,8 @@ function heartbeat ()
    end
 
    hook.timer(0.5, "heartbeat")
+end
+
+function cleanup ()
+   evt.finish()
 end
