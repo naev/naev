@@ -2060,6 +2060,12 @@ void pilot_update( Pilot* pilot, double dt )
          o->rtimer = MIN( o->rtimer, reload_time );
       }
 
+      /* Get the asteroid target. */
+      if (pilot->nav_asteroid != -1) {
+         field = &cur_system->asteroids[pilot->nav_anchor];
+         ast = &field->asteroids[pilot->nav_asteroid];
+      }
+
       /* Special case of beam weapons with weapon set only_inrange: turn off if needed. */
       if (outfit_isBeam(o->outfit)) {
          if(o->inrange) {
@@ -2069,8 +2075,6 @@ void pilot_update( Pilot* pilot, double dt )
                   l = 0;
             }
             if (pilot->nav_asteroid != -1) {
-               field = &cur_system->asteroids[pilot->nav_anchor];
-               ast = &field->asteroids[pilot->nav_asteroid];
                if (vect_dist( &pilot->solid->pos, &ast->pos ) <= o->outfit->u.bem.range)
                   l = 0;
             }
