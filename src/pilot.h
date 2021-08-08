@@ -131,6 +131,7 @@ typedef struct PilotOutfitSlot_ {
    double progress;  /**< Used to store state progress and used by Lua outfits. */
    int level;        /**< Level in current weapon set (-1 is none). */
    int weapset;      /**< First weapon set that uses the outfit (-1 is none). */
+   unsigned int inrange; /**< Should the slot be shut down when not inrange? (only used for beams). */
 
    /* Type-specific data. */
    union {

@@ -81,10 +81,12 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    Asteroid *ast;
    double time;
    const Outfit *o;
+   PilotOutfitSlot *slot;
 
    ret = 0;
    for (i=0; i<array_size(ws->slots); i++) {
-      o = ws->slots[i].slot->outfit;
+      slot = ws->slots[i].slot;
+      o = slot->outfit;
 
       /* Ignore NULL outfits. */
       if (o == NULL)
@@ -111,7 +113,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* Only "locked on" outfits. */
       if (outfit_isSeeker(o) &&
-            (ws->slots[i].slot->u.ammo.lockon_timer > 0.))
+            (slot->u.ammo.lockon_timer > 0.))
          continue;
 
       /* If inrange is set we only fire at targets in range. */
@@ -984,8 +986,10 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
    /** @TODO Make beams not fire all at once. */
    if (outfit_isBeam(o)) {
       for (i=0; i<array_size(ws->slots); i++)
-         if (ws->slots[i].slot->outfit == o && (level == -1 || level == ws->slots[i].level))
+         if (ws->slots[i].slot->outfit == o && (level == -1 || level == ws->slots[i].level)) {
             ret += pilot_shootWeapon( p, ws->slots[i].slot, 0 );
+            ws->slots[i].slot->inrange = ws->inrange; /* State if the weapon has to be turn off when out of range. */
+         }
       return ret;
    }
 
