@@ -2085,8 +2085,10 @@ void pilot_update( Pilot* pilot, double dt )
                   o->stimer = o->outfit->u.bem.min_duration -
                         (o->outfit->u.bem.duration - o->timer);
                   if (o->stimer > 0.)
-                     continue;
+                     l = 0;
                }
+            }
+            if (l) {
                beam_end( pilot->id, o->u.beamid );
                pilot_stopBeam(pilot, o);
             }
