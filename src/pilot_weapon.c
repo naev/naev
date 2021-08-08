@@ -192,8 +192,11 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
           * when it's not held anymore. */
          if (type > 0)
             ws->active = 1;
-         else if (type < 0)
+         else if (type < 0) {
             ws->active = 0;
+            if (pilot_weaponSetShootStop( p, ws, -1 )) /* De-activate weapon set. */
+               pilot_calcStats( p ); /* Just in case there is a activated outfit here. */
+         }
          break;
 
       case WEAPSET_TYPE_ACTIVE:
@@ -275,8 +278,6 @@ void pilot_weapSetUpdate( Pilot* p )
       if (ws->type == WEAPSET_TYPE_WEAPON) {
          if (ws->active)
             pilot_weapSetFire( p, ws, -1 );
-         else
-            pilot_weaponSetShootStop( p, ws, -1 );
       }
    }
 }
