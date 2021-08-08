@@ -21,10 +21,9 @@
 --]]
 local minerva  = require "campaigns.minerva"
 local portrait = require 'portrait'
-local pp_shaders = require 'pp_shaders'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'
-local luaspfx  = require 'luaspfx'
+local love_shaders = require 'love_shaders'
 require 'numstring'
 
 -- Mission states:
@@ -65,7 +64,6 @@ function accept ()
    if misn_state==nil then
       return
    end
-
    misn.accept()
 
    minerva.log.kex(_("You have agreed to help Kex obtain information from Jie de Luca.") )
@@ -90,6 +88,11 @@ function load_game ()
 end
 
 function generate_npc ()
+   if misn_state==1 then
+      player.msg(_("#rMISSION FAILED! You were supposed to take care of Jie!"))
+      misn.finish(false)
+   end
+
    if planet.cur() == planet.get("Minerva Station") then
       npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
@@ -220,6 +223,7 @@ They give a small chuckle and lean forward.]]))
    jie(_([["Well honestly, I don't give a shit who your master is. The result is the same, you are trying to take what we worked hard for with blood, sweat, and tears."]]))
    jie(_([[They clench their teeth.
 "I won't let you! Minerva Station is OURS! You have no idea of the hell we went through to get here, and I'll be damned if I let that get taken away from us!"]]))
+   vn.disappear(jie, "slideleft")
    vn.na(_([[In the split of an eye they fling their drink at you. You manage to dodge most of it, but as you look back at them you see the table is empty. Shit, that went well…
 You rush to your ship to see if you can catch them in pursuit!]]))
    vn.run()
@@ -235,6 +239,11 @@ end
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 function enter ()
+   if misn_state==1 and system.cur() ~= system.get(targetsys) then
+      player.msg(_("#rMISSION FAILED! You were supposed to take care of Jie!"))
+      misn.finish(false)
+   end
+
    local function spawn_thugs( pos, dofollow )
       thug_leader = nil -- Clear
       local thugs = {
@@ -290,12 +299,12 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      local pos = vec2.new( 0, 0 )
+      local pos = planet.get(targetplanet):pos() + vec2.new( 3000, rnd.rnd()*360 )
       jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {nake=true, ai="baddie_norun"})
       equipopt.generic( jie, nil, "elite" )
 
-      hook.death("jie","jie_death")
-      hook.board("jie","jie_board")
+      hook.pilot( jie, "death", "jie_death" )
+      hook.pilot( jie, "board", "jie_board" )
 
       -- Henchmen
       local henchmen = {
@@ -313,9 +322,11 @@ function enter ()
          local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
          local p = pilot.add( v, "Independent", ppos, nil, {naked=true, ai="baddie_norun"} )
          equipopt.pirate( p )
-         p:leader( jie )
+         p:setLeader( jie )
          table.insert( enemies, p )
       end
+
+      hook.timer( 3, "jie_takeoff" )
    end
 end
 
@@ -369,7 +380,40 @@ function jie_death ()
    misn.markerMove( misn_marker, system.get("Limbo") )
    misn.osdActive(2)
    misn_state = 2
+
+   hook.timer( 5, "jie_epilogue" )
 end
 
 function jie_board ()
+   vn.clear()
+   vn.scene()
+   local cjie = vn.Character.new( _("Jie de Luca"), {image=jie_image} )
+   vn.transition()
+   vn.na(_("You board the ship with your weapons drawn and make your way to the command center. You don't encounter any resistance on the way there."))
+   vn.na(_("Eventually you reach the command center and enter cautiously. The room is empty except for a chair in the center with it's back facing towards you."))
+   vn.appear(cjie)
+   vn.na(_("Slowly it turns around to reveal Jie de Luca, holding their head from which blood is gushing out. In their other hand they clutch a weapon, but it doesn't really look like they are in condition to use it."))
+   cjie(_([["Feeling proud of yourself dog? Wagging your tail thinking about getting a prize from your master?"
+They cough up and you can see some blood drip from the side of their mouth.]]))
+   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   cjie(_([["This is why we can't have nice things…"
+As their head slouches down, you hear an alarm blaring, and a voice announcing "Self-destruction imminent!".]]))
+   vn.na(_("You leave Jie behind as you rush to get back to your ship and get away from the explosion."))
+   vn.run()
+
+   jie:setHealth(-1,-1)
+   player.unboard()
+end
+
+function jie_takeoff ()
+   jie:broadcast(_("You aren't leaving this alive dog!"))
+end
+
+function jie_epilogue ()
+   vn.clear()
+   vn.scene()
+   vn.transition()
+   vn.na(_("As the debris of Jie's ship scatters you realize you never got around to questioning or getting any information at all…"))
+   vn.na(_("Might be best to head back to Kex for now and see what can be done."))
+   vn.run()
 end
