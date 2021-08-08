@@ -111,7 +111,6 @@ function approach_kex ()
 
    -- Mission is over
    if misn_state==2 then
-      -- TODO
       vn.na(_("You head towards Kex's usual spot."))
       kex(_([[He looks fairly tired.
 "What's up kid?"]]))
@@ -193,8 +192,23 @@ His eyes don't seem to have changed.]]))
    vn.jump("menu_msg")
 
    vn.label("alright")
-   -- TODO
-   kex(_([[""]]))
+   kex(_([["Been better kid. Just had some sleepless nights, staring at the ceiling while being able to move, haunted by past regrets."
+He looks visibly tired.
+"You ever do anything you regret kid?"]]))
+   vn.menu{
+      {_([["Of course"]]), "alright_ofcourse"},
+      {_([["No, never"]]), "alright_nonever"},
+   }
+   vn.label("alright_ofcourse")
+   kex(_([[He nods solemnly.
+"We all have our inner demons, refusing to let go no matter how many cycles pass."]]))
+   vn.jump("alright_cont1")
+   vn.label("alright_nonever")
+   kex(_([["I envy you kid. My regrets seem to follow me no matter how much I try to run away."]]))
+   vn.label("alright_cont1")
+   kex(_([["Lately, my past seems to haunt me. When I am able to sleep, I have been waking up in the middle of the night in cold sweat, well probably would if I had some damn sweat glands, gasping for breath."]]))
+   -- TODO from here on
+   kex(_([["I haven't really paid attention to it much, but's getting worse and worse as time goes by."]]))
    vn.jump("menu_msg")
 
    vn.label("leave")
@@ -412,7 +426,7 @@ As their head slouches down, you hear an alarm blaring, and a voice announcing "
 end
 
 function jie_takeoff ()
-   jie:broadcast(_("You aren't leaving this alive dog!"))
+   jie:broadcast(_("You aren't leaving this alive, dog!"))
 end
 
 function jie_epilogue ()
@@ -422,4 +436,7 @@ function jie_epilogue ()
    vn.na(_("As the debris of Jie's ship scatters you realize you never got around to questioning or getting any information at all…"))
    vn.na(_("Might be best to head back to Kex for now and see what can be done."))
    vn.run()
+
+   -- Spawns come back
+   pilot.toggleSpawn(true)
 end
