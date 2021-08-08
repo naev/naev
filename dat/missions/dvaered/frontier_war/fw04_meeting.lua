@@ -593,7 +593,6 @@ function spawnHam()
    hamelsen:land(targpla)
 
    hook.pilot( hamelsen, "land", "hamelsenLanded" )
-   hook.pilot( hamelsen, "hail", "controlHailed" )
    hook.timer(0.5, "proximity", {location = targpos, radius = 10000, funcname = ("incomingHamelsen"), focus = hamelsen})
 
    -- Hamelsen's partner, whose purpose is to make a fight occur
