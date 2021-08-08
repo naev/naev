@@ -112,17 +112,23 @@ function approach_kex ()
    -- Mission is over
    if misn_state==2 then
       -- TODO
-      kex(_([[""]]))
-      kex(_([[""]]))
-      kex(_([[""]]))
+      vn.na(_("You head towards Kex's usual spot."))
+      kex(_([[He looks fairly tired.
+"What's up kid?"]]))
+      vn.na(_("You explain that you weren't able to get anything out of Jie and that this time it was a failure."))
+      kex(_([["I see. That can't be helped. You win some, you lose some."]]))
+      kex(_([["While you were out I do think I got a lead on our next target, but it's not something i really wanted to deal with right now."]]))
+      kex(_([["Here, take some credits, and meet me up here in a period or so, I have to finish double checking something."
+He gives a sort of half-hearted grin and disappears into the shadows.]]))
+      vn.disappear(kex)
       vn.sfxMoney()
       vn.func( function () player.pay( money_reward ) end )
       vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
       vn.sfxVictory()
-      vn.na(_(""))
+      vn.na(_("You take your leave and wander back to the main station."))
       vn.run()
 
-      minerva.log.kex(_(""))
+      minerva.log.kex(_("You took down Jie de Luca, who seemed to be a close friend and associate of the Minerva CEO."))
       misn.finish( true )
       return
 
