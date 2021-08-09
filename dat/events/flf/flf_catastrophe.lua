@@ -29,7 +29,7 @@
 
 --]]
 
-require "fleethelper"
+local fleet = require "fleet"
 require "misnhelper"
 require "missions/flf/flf_common"
 
@@ -162,14 +162,14 @@ function takeoff ()
 
    -- Spawn FLF ships
    shptypes = {"Pacifier", "Lancelot", "Vendetta", "Lancelot", "Vendetta", "Lancelot", "Vendetta"}
-   flf_ships = addShips( 5, shptypes, "FLF", ss:pos(), nil, {ai="flf_norun"} )
+   flf_ships = fleet.add( 5, shptypes, "FLF", ss:pos(), nil, {ai="flf_norun"} )
    for i, j in ipairs( flf_ships ) do
       j:setVisible()
       j:memory( "aggressive", true )
    end
 
    -- Spawn Empire ships
-   emp_ships = addShips( 1, emp_shptypes, "Empire", emp_srcsys, nil, {ai="empire_norun"} )
+   emp_ships = fleet.add( 1, emp_shptypes, "Empire", emp_srcsys, nil, {ai="empire_norun"} )
    for i, j in ipairs( emp_ships ) do
       j:setHostile()
       j:setVisible()
@@ -186,7 +186,7 @@ function takeoff ()
       "Dvaered Phalanx", "Dvaered Ancestor", "Dvaered Ancestor",
       "Dvaered Ancestor", "Dvaered Vendetta", "Dvaered Vendetta",
       "Dvaered Vendetta", "Dvaered Vendetta" }
-   dv_ships = addShips( 1, shptypes, "Dvaered", emp_srcsys, nil, {ai="dvaered_norun"} )
+   dv_ships = fleet.add( 1, shptypes, "Dvaered", emp_srcsys, nil, {ai="dvaered_norun"} )
    for i, j in ipairs( dv_ships ) do
       j:setHostile()
       j:setVisible()
@@ -207,7 +207,7 @@ function pilot_death_emp( pilot, attacker, arg )
 
    if #emp_alive < emp_minsize or rnd.rnd() < 0.1 then
       emp_ships = emp_alive
-      local nf = addShips( 1, emp_shptypes, "Empire", emp_srcsys, nil, {ai="empire_norun"} )
+      local nf = fleet.add( 1, emp_shptypes, "Empire", emp_srcsys, nil, {ai="empire_norun"} )
       for i, j in ipairs( nf ) do
          j:setHostile()
          j:setVisible()

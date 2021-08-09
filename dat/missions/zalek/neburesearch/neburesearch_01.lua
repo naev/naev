@@ -26,7 +26,7 @@
 
 ]]--
 
-require "fleethelper"
+local fleet = require "fleet"
 require "nextjump"
 require "numstring"
 require "missions/zalek/common"
@@ -174,7 +174,7 @@ function jumpin()
         if not ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then
             hook.timer(2.0, "startAmbush")
         elseif system.cur()==system.get("Daan") or system.cur()==system.get("Provectus Nova") then
-            ambush = addShips( 1,  {"Pirate Ancestor", "Pirate Vendetta", "Pirate Vendetta", "Pirate Vendetta", "Hyena", "Hyena"}, "Pirate", vec2.new(0,0), nil, {ai="baddie_norun"} )
+            ambush = fleet.add( 1,  {"Pirate Ancestor", "Pirate Vendetta", "Pirate Vendetta", "Pirate Vendetta", "Hyena", "Hyena"}, "Pirate", vec2.new(0,0), nil, {ai="baddie_norun"} )
             for i, j in ipairs(ambush) do
                 j:setHostile()
                 j:control(true)
@@ -308,7 +308,7 @@ function spawnTransporter()
 end
 
 function startAmbush()
-    ships = addShips( 1,  {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"}, "Dvaered", vec2.new(-1000,0), nil, {ai="dvaered_norun"} )
+    ships = fleet.add( 1,  {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"}, "Dvaered", vec2.new(-1000,0), nil, {ai="dvaered_norun"} )
     for i, j in ipairs(ships) do
         j:control(true)
         j:moveto(vec2.new(-8000,0))

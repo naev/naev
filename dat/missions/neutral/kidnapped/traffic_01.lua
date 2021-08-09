@@ -196,6 +196,7 @@ function got_hailed(shipp)
    shipp:setActiveBoard(true)
    hook.pilot(shipp, "board", "got_boarded",shipp,jpt,badguys)
    hook.rm(idlehook)
+   player.commClose()
 end
 
 -- send ship to nearest jumppoint to escape, spawn baddies that might frighten you of from chasing

@@ -7,7 +7,7 @@
  *
  * @brief Handles the application and removal of 'diffs' to the universe.
  *
- * Diffs allow changing planets, fleets, factions, etc... in the universe.
+ * Diffs allow changing planets, factions, etc... in the universe.
  *  These are meant to be applied after the player triggers them, mostly
  *  through missions.
  */
@@ -23,7 +23,6 @@
 
 #include "array.h"
 #include "economy.h"
-#include "fleet.h"
 #include "log.h"
 #include "map_overlay.h"
 #include "ndata.h"

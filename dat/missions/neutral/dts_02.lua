@@ -41,7 +41,7 @@ Because of bad planning, this mission is badly organized.
 Anyone looking for a model of good mission-making should look elsewhere! -- the author
 ]]--
 
-require "fleethelper"
+local fleet = require "fleet"
 require "scripts/numstring"
 
 -- This section stores the strings (text) for the mission.
@@ -192,13 +192,14 @@ function defend_system()
       end
 
   -- Create a fleet of raiding pirates
-      raider_fleet = addShips( 18, "Hyena", "Raider", raider_position, _("Raider Hyena"), {ai="def"} )
+      raider_fleet = fleet.add( 18, "Hyena", "Raider", raider_position, _("Raider Hyena"), {ai="def"} )
       for k,v in ipairs( raider_fleet) do
          v:setHostile()
       end
 
   -- And a fleet of defending independents
-      defense_fleet = pilot.addFleet( "DTS Defense Fleet", defense_position, {ai="def"} )
+      local dfleet = { "Mule", "Lancelot", "Ancestor", "Gawain" }
+      defense_fleet = fleet.add( 2, dfleet, "Trader", defense_position, _("Defender"), {ai="def"} )
       cadet1 = pilot.add( "Empire Lancelot", "Empire", defense_position, nil, {ai="def"} )
       do
          cadet1_alive = true
@@ -262,7 +263,7 @@ end
 function second_wave_attacks()
 
       casualties = 0
-      second_wave = addShips( 4, "Hyena", "Pirate", player.pos(), _("Pirate Hyena"), {ai="def"} )
+      second_wave = fleet.add( 4, "Hyena", "Pirate", player.pos(), _("Pirate Hyena"), {ai="def"} )
       for k, v in ipairs( second_wave) do
          v:setFaction( "Raider")
          v:setHostile()

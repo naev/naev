@@ -36,6 +36,7 @@
       3) VIP died or jump out of system without VIP  --> mission failure.
 ]]--
 
+local fleet = require "fleet"
 require "numstring"
 require "missions/empire/common"
 
@@ -170,7 +171,8 @@ function enter ()
       hook.pilot( v, "death", "death" )
 
       -- FLF Spawn around the Gawain
-      p = pilot.addFleet( "FLF Med Force", enter_vect )
+      local flf_med_force = { "Hyena", "Hyena", "Admonisher", "Vendetta", "Pacifier" }
+      p = fleet.add( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
       for k,v in ipairs(p) do
          v:setHostile()
       end
@@ -186,7 +188,8 @@ function enter ()
 
       -- Now Dvaered
       -- They will jump together with you in the system at the jump point. (A.)
-      p = pilot.addFleet( "Dvaered Med Force", prevsys )
+      local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
+      p = fleet.add( 1, dv_med_force, "Dvaered", prevsys )
       for k,v in ipairs(p) do
          v:setFriendly()
       end
@@ -224,7 +227,8 @@ function delay_flf ()
    end
 
    -- More ships to pressure player from behind
-   p = pilot.addFleet( "FLF Sml Force", prevsys )
+   local flf_sml_force = { "Hyena", "Admonisher", "Vendetta" }
+   p = fleet.add( 1, flf_sml_force, "FLF", prevsys, _("FLF Ambusher") )
    for k,v in ipairs(p) do
       v:setHostile()
    end

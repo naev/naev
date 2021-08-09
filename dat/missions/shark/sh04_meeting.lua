@@ -31,7 +31,7 @@
 --needed scripts
 require "proximity"
 require "numstring"
-require "fleethelper"
+local fleet = require "fleet"
 require "missions/shark/common"
 
 
@@ -165,7 +165,7 @@ end
 
 function ambush()
    -- Adds the drones.
-   badguy = addShips(4, {"Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"}, "Za'lek", nil, "collective")
+   badguy = fleet.add(4, {"Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"}, "Za'lek", nil, "collective")
    badguyprox = {}
 
    for i, j in ipairs(badguy) do

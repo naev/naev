@@ -21,7 +21,6 @@
 #include "camera.h"
 #include "damagetype.h"
 #include "escort.h"
-#include "fleet.h"
 #include "gui.h"
 #include "land_outfits.h"
 #include "log.h"
@@ -54,14 +53,12 @@ extern Pilot *cur_pilot;
  */
 static int pilotL_getFriendOrFoe( lua_State *L, int friend );
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
-static int pilotL_addFleetFrom( lua_State *L, int from_ship );
+static int pilotL_add( lua_State *L );
 static int outfit_compareActive( const void *slot1, const void *slot2 );
 static int pilotL_setFlagWrapper( lua_State *L, int flag );
 
 
 /* Pilot metatable methods. */
-static int pilotL_addFleetRaw( lua_State *L );
-static int pilotL_addFleet( lua_State *L );
 static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
@@ -76,6 +73,7 @@ static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
 static int pilotL_setTarget( lua_State *L );
 static int pilotL_inrange( lua_State *L );
+static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_activeWeapset( lua_State *L );
 static int pilotL_weapset( lua_State *L );
@@ -172,8 +170,7 @@ static int pilotL_hookClear( lua_State *L );
 static int pilotL_choosePoint( lua_State *L );
 static const luaL_Reg pilotL_methods[] = {
    /* General. */
-   { "add", pilotL_addFleetRaw },
-   { "addFleet", pilotL_addFleet },
+   { "add", pilotL_add},
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
    { "getAllies", pilotL_getAllies },
@@ -187,6 +184,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "target", pilotL_target },
    { "setTarget", pilotL_setTarget },
    { "inrange", pilotL_inrange },
+   { "withPlayer", pilotL_withPlayer },
    { "nav", pilotL_nav },
    { "activeWeapset", pilotL_activeWeapset },
    { "weapset", pilotL_weapset },
@@ -476,211 +474,6 @@ static int pilotL_choosePoint( lua_State *L )
 
 
 /**
- * @brief Wrapper with common code for pilotL_addFleet and pilotL_addFleetRaw.
- */
-static int pilotL_addFleetFrom( lua_State *L, int from_ship )
-{
-   Fleet *flt;
-   Ship *ship;
-   const char *fltname, *fltai;
-   int i, first, i_parameters;
-   unsigned int p;
-   double a, r;
-   Vector2d vv, vp, vn;
-   FleetPilot *plt;
-   LuaFaction lf;
-   StarSystem *ss;
-   Planet *planet;
-   JumpPoint *jump;
-   PilotFlags flags;
-   int ignore_rules;
-   Pilot *pplt;
-
-   /* Default values. */
-   pilot_clearFlagsRaw( flags );
-   vectnull(&vn); /* Need to determine angle. */
-   jump = NULL;
-   a    = 0.;
-
-   /* Parse first argument - Fleet Name */
-   fltname = luaL_checkstring(L,1);
-
-   /* pull the fleet */
-   ship = NULL;
-   flt  = NULL;
-   if (from_ship) {
-      ship = ship_get( fltname );
-      if (ship == NULL) {
-         NLUA_ERROR(L,_("Ship '%s' not found!"), fltname);
-         return 0;
-      }
-      /* Get pilotname argument if provided. */
-      fltname = luaL_optstring( L, 4, fltname );
-      /* Get faction from string or number. */
-      lf = luaL_validfaction(L,2);
-   }
-   else {
-      flt = fleet_get( fltname );
-      if (flt == NULL) {
-         NLUA_ERROR(L,_("Fleet '%s' doesn't exist."), fltname);
-         return 0;
-      }
-      lf = flt->faction;
-   }
-
-   /* Handle position/origin argument. */
-   if (lua_isvector(L,2+from_ship)) {
-      vp = *lua_tovector(L,2+from_ship);
-      a = RNGF() * 2.*M_PI;
-      vectnull( &vv );
-   }
-   else if (lua_issystem(L,2+from_ship)) {
-      ss = system_getIndex( lua_tosystem(L,2+from_ship) );
-      for (i=0; i<array_size(cur_system->jumps); i++) {
-         if ((cur_system->jumps[i].target == ss)
-               && !jp_isFlag( cur_system->jumps[i].returnJump, JP_EXITONLY )) {
-            jump = cur_system->jumps[i].returnJump;
-            break;
-         }
-      }
-      if (jump == NULL) {
-         if (array_size(cur_system->jumps) > 0) {
-            WARN(_("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'."),
-                  fltname, ss->name, cur_system->name );
-            jump = cur_system->jumps[RNG_BASE(0, array_size(cur_system->jumps)-1)].returnJump;
-         }
-         else
-            WARN(_("Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points."),
-                  fltname, ss->name, cur_system->name );
-      }
-   }
-   else if (lua_isplanet(L,2+from_ship)) {
-      planet  = luaL_validplanet(L,2+from_ship);
-      pilot_setFlagRaw( flags, PILOT_TAKEOFF );
-      a = RNGF() * 2. * M_PI;
-      r = RNGF() * planet->radius;
-      vect_cset( &vp,
-            planet->pos.x + r * cos(a),
-            planet->pos.y + r * sin(a) );
-      a = RNGF() * 2.*M_PI;
-      vectnull( &vv );
-   }
-   /* Random. */
-   else {
-      /* Check if we should ignore the strict rules. */
-      ignore_rules = 0;
-      if (lua_isboolean(L,2+from_ship) && lua_toboolean(L,2+from_ship))
-         ignore_rules = 1;
-
-      /* Choose the spawn point and act in consequence.*/
-      pilot_choosePoint( &vp, &planet, &jump, lf, ignore_rules, 0 );
-
-      if (planet != NULL) {
-         pilot_setFlagRaw( flags, PILOT_TAKEOFF );
-         a = RNGF() * 2. * M_PI;
-         r = RNGF() * planet->radius;
-         vect_cset( &vp,
-               planet->pos.x + r * cos(a),
-               planet->pos.y + r * sin(a) );
-         a = RNGF() * 2.*M_PI;
-         vectnull( &vv );
-      }
-      else {
-         a = RNGF() * 2.*M_PI;
-         vectnull( &vv );
-      }
-   }
-
-   /* Parse final argument - table of optional parameters */
-   i_parameters = 3+2*from_ship;
-   fltai = NULL;
-   if (lua_gettop( L ) >= i_parameters && !lua_isnil( L, i_parameters )) {
-      if (!lua_istable( L, i_parameters )) {
-         NLUA_ERROR( L, _("'parameters' should be a table of options or omitted!") );
-         return 0;
-      }
-      lua_getfield( L, i_parameters, "ai" );
-      fltai = luaL_optstring( L, -1, NULL );
-      lua_pop( L, 1 );
-
-      lua_getfield( L, i_parameters, "naked" );
-      if (lua_toboolean(L, -1))
-         pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
-      lua_pop( L, 1 );
-
-      lua_getfield( L, i_parameters, "stealth" );
-      if (lua_toboolean(L, -1))
-         pilot_setFlagRaw( flags, PILOT_STEALTH );
-      lua_pop( L, 1 );
-   }
-
-   /* Set up velocities and such. */
-   if (jump != NULL) {
-      space_calcJumpInPos( cur_system, jump->from, &vp, &vv, &a, NULL );
-      pilot_setFlagRaw( flags, PILOT_HYP_END );
-   }
-
-   /* Make sure angle is valid. */
-   a = fmod( a, 2.*M_PI );
-   if (a < 0.)
-      a += 2.*M_PI;
-
-   if (from_ship) {
-      /* Create the pilot. */
-      p = pilot_create( ship, fltname, lf, fltai, a, &vp, &vv, flags, 0, 0 );
-      lua_pushpilot(L,p);
-
-      /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
-      if ((jump != NULL) && pilot_isFlagRaw( flags, PILOT_STEALTH )) {
-         pplt = pilot_get( p );
-         space_calcJumpInPos( cur_system, jump->from, &pplt->solid->pos, &pplt->solid->vel, &pplt->solid->dir, pplt );
-      }
-   }
-   else {
-      /* now we start adding pilots and toss ids into the table we return */
-      lua_newtable(L);
-      first = 1;
-      for (i=0; i<flt->npilots; i++) {
-         plt = &flt->pilots[i];
-
-         /* Fleet displacement - first ship is exact. */
-         if (!first)
-            vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
-                  RNG(75,150) * (RNG(0,1) ? 1 : -1));
-         first = 0;
-
-         /* Create the pilot. */
-         p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags );
-
-         /* we push each pilot created into a table and return it */
-         lua_pushnumber(L,i+1); /* index, starts with 1 */
-         lua_pushpilot(L,p); /* value = LuaPilot */
-         lua_rawset(L,-3); /* store the value in the table */
-      }
-   }
-   return 1;
-}
-
-
-/**
- * @brief Adds a fleet to the system.
- *
- * Do not use.
- *
- *    @luatparam string fleetname Name of the fleet to add.
- *    @luatparam System|Planet|Vec2 param Position to create the pilot at. See pilot.add for further information.
- *    @luatparam[opt] string|nil ai If set will override the standard fleet AI.  nil means use default.
- *    @luatreturn {Pilot,...} Table populated with all the pilots created.  The keys are ordered numbers.
- * @luafunc addFleet
- */
-static int pilotL_addFleet( lua_State *L )
-{
-   NLUA_CHECKRW(L);
-   return pilotL_addFleetFrom( L, 0 );
-}
-
-
-/**
  * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
  *
  * @usage p = pilot.add( "Empire Shark", nil, "Empire" ) -- Creates a standard Empire Shark.
@@ -708,10 +501,151 @@ static int pilotL_addFleet( lua_State *L )
  *    @luatreturn Pilot The created pilot.
  * @luafunc add
  */
-static int pilotL_addFleetRaw(lua_State *L )
+static int pilotL_add( lua_State *L )
 {
+   Ship *ship;
+   const char *shipname, *pilotname, *ai;
+   int i;
+   unsigned int p;
+   double a, r;
+   Vector2d vv, vp, vn;
+   LuaFaction lf;
+   StarSystem *ss;
+   Planet *planet;
+   JumpPoint *jump;
+   PilotFlags flags;
+   int ignore_rules;
+   Pilot *pplt;
+
    NLUA_CHECKRW(L);
-   return pilotL_addFleetFrom( L, 1 );
+
+   /* Default values. */
+   pilot_clearFlagsRaw( flags );
+   vectnull(&vn); /* Need to determine angle. */
+   jump = NULL;
+   a    = 0.;
+
+   /* Parse first argument - Ship Name */
+   shipname = luaL_checkstring(L,1);
+
+   /* pull the fleet */
+   ship = NULL;
+   ship = ship_get( shipname );
+   if (ship == NULL) {
+      NLUA_ERROR(L,_("Ship '%s' not found!"), shipname);
+      return 0;
+   }
+   /* Get pilotname argument if provided. */
+   pilotname = luaL_optstring( L, 4, shipname );
+   /* Get faction from string or number. */
+   lf = luaL_validfaction(L,2);
+
+   /* Handle position/origin argument. */
+   if (lua_isvector(L,3)) {
+      vp = *lua_tovector(L,3);
+      a = RNGF() * 2.*M_PI;
+      vectnull( &vv );
+   }
+   else if (lua_issystem(L,3)) {
+      ss = system_getIndex( lua_tosystem(L,3) );
+      for (i=0; i<array_size(cur_system->jumps); i++) {
+         if ((cur_system->jumps[i].target == ss)
+               && !jp_isFlag( cur_system->jumps[i].returnJump, JP_EXITONLY )) {
+            jump = cur_system->jumps[i].returnJump;
+            break;
+         }
+      }
+      if (jump == NULL) {
+         if (array_size(cur_system->jumps) > 0) {
+            WARN(_("Ship '%s' jumping in from non-adjacent system '%s' to '%s'."),
+                  pilotname, ss->name, cur_system->name );
+            jump = cur_system->jumps[RNG_BASE(0, array_size(cur_system->jumps)-1)].returnJump;
+         }
+         else
+            WARN(_("Ship '%s' attempting to jump in from '%s', but '%s' has no jump points."),
+                  pilotname, ss->name, cur_system->name );
+      }
+   }
+   else if (lua_isplanet(L,3)) {
+      planet  = luaL_validplanet(L,3);
+      pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+      a = RNGF() * 2. * M_PI;
+      r = RNGF() * planet->radius;
+      vect_cset( &vp,
+            planet->pos.x + r * cos(a),
+            planet->pos.y + r * sin(a) );
+      a = RNGF() * 2.*M_PI;
+      vectnull( &vv );
+   }
+   /* Random. */
+   else {
+      /* Check if we should ignore the strict rules. */
+      ignore_rules = 0;
+      if (lua_isboolean(L,3) && lua_toboolean(L,3))
+         ignore_rules = 1;
+
+      /* Choose the spawn point and act in consequence.*/
+      pilot_choosePoint( &vp, &planet, &jump, lf, ignore_rules, 0 );
+
+      if (planet != NULL) {
+         pilot_setFlagRaw( flags, PILOT_TAKEOFF );
+         a = RNGF() * 2. * M_PI;
+         r = RNGF() * planet->radius;
+         vect_cset( &vp,
+               planet->pos.x + r * cos(a),
+               planet->pos.y + r * sin(a) );
+         a = RNGF() * 2.*M_PI;
+         vectnull( &vv );
+      }
+      else {
+         a = RNGF() * 2.*M_PI;
+         vectnull( &vv );
+      }
+   }
+
+   /* Parse final argument - table of optional parameters */
+   ai = NULL;
+   if (lua_gettop( L ) >= 5 && !lua_isnil( L, 5 )) {
+      if (!lua_istable( L, 5 )) {
+         NLUA_ERROR( L, _("'parameters' should be a table of options or omitted!") );
+         return 0;
+      }
+      lua_getfield( L, 5, "ai" );
+      ai = luaL_optstring( L, -1, NULL );
+      lua_pop( L, 1 );
+
+      lua_getfield( L, 5, "naked" );
+      if (lua_toboolean(L, -1))
+         pilot_setFlagRaw( flags, PILOT_NO_OUTFITS );
+      lua_pop( L, 1 );
+
+      lua_getfield( L, 5, "stealth" );
+      if (lua_toboolean(L, -1))
+         pilot_setFlagRaw( flags, PILOT_STEALTH );
+      lua_pop( L, 1 );
+   }
+
+   /* Set up velocities and such. */
+   if (jump != NULL) {
+      space_calcJumpInPos( cur_system, jump->from, &vp, &vv, &a, NULL );
+      pilot_setFlagRaw( flags, PILOT_HYP_END );
+   }
+
+   /* Make sure angle is valid. */
+   a = fmod( a, 2.*M_PI );
+   if (a < 0.)
+      a += 2.*M_PI;
+
+   /* Create the pilot. */
+   p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0 );
+   lua_pushpilot(L,p);
+
+   /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
+   if ((jump != NULL) && pilot_isFlagRaw( flags, PILOT_STEALTH )) {
+      pplt = pilot_get( p );
+      space_calcJumpInPos( cur_system, jump->from, &pplt->solid->pos, &pplt->solid->vel, &pplt->solid->dir, pplt );
+   }
+   return 1;
 }
 
 
@@ -1248,6 +1182,21 @@ static int pilotL_inrange( lua_State *L )
       lua_pushboolean(L,0);
    }
    return 2;
+}
+
+
+/**
+ * @brief Checks to see if pilot is with player.
+ *
+ *    @luatparam Pilot p Pilot to check to see if is with player.
+ *    @luatreturn boolean true if pilot is with player.
+ * @luafunc withPlayer
+ */
+static int pilotL_withPlayer( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushboolean(L, pilot_isWithPlayer(p));
+   return 1;
 }
 
 

@@ -23,7 +23,7 @@ DESCRIPTION: Pirates chase you to Ogat.
 ]]--
 
 require "numstring"
-require "fleethelper"
+local fleet = require "fleet"
 
 NPC_name = _("A detective") --NPC params
 bar_desc = _("A private detective is signalling you to come speak with him.")
@@ -83,7 +83,7 @@ function enter () --aforementioned triggered function
    if system.cur() == targetsystem then --when in target system
       local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier", "Hawking", "Kestrel" }
       local jumpin = jump.pos(targetsystem, last_system)
-      defenders = addShips( 1, defenderships, "Associates", jumpin ) --add a defending force to help you
+      defenders = fleet.add( 1, defenderships, "Associates", jumpin ) --add a defending force to help you
       for pilot_number, pilot_object in pairs(defenders) do
          local rn = pilot_object:ship():nameRaw()
          if rn == "Lancelot" then
@@ -127,7 +127,7 @@ function spawnBaddies ()
    end
 
    local pp = player.pilot()
-   thugs = addShips( 4, "Admonisher", "Thugs", sp, _("Thug"), {ai=ai} )
+   thugs = fleet.add( 4, "Admonisher", "Thugs", sp, _("Thug"), {ai=ai} )
    for pilot_number, pilot_object in ipairs(thugs) do
       pilot_object:setHostile(true) --they don't like you
       pilot_object:outfitRm("all") --strip them down
@@ -169,6 +169,7 @@ end
 function capHailed () --when hailing the capship back
    tk.msg( title[2], string.format( text[2], creditstring( reward ) ) ) --congratulates
    player.pay( reward )
+   player.commClose()
    misn.finish(true)
 end
 

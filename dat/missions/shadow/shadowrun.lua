@@ -24,7 +24,7 @@
 --]]
 
 local portrait = require "portrait"
-require "fleethelper"
+local fleet = require "fleet"
 require "missions/shadow/common"
 
 
@@ -261,11 +261,11 @@ function enter()
     if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 2 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        pirates = addShips( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
+        pirates = fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
     elseif system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 3 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        addShips( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
+        fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,20) )
         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(-20,0) )
         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,-20) )

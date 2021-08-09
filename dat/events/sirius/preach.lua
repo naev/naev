@@ -15,7 +15,7 @@
 --Preliminary draft of a new event where the player meets one of the Touched, who tries to convert him
 --Sudarshan S <ssoxygen@users.sf.net>
 
-require("fleethelper")
+local fleet = require "fleet"
 
 commtitle=_("The preaching begins...")
 commtext=_([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.
@@ -174,7 +174,7 @@ function theFunBegins()
       followers[num] = followerShips[rnd.rnd(1, #followerShips)] -- Pick a follower ship at random.
    end
 
-   followers = addShips(1, followers, "Sirius", curr, nil, {ai="sirius_norun"}) -- The table now contains pilots, not ship names.
+   followers = fleet.add(1, followers, "Sirius", curr, nil, {ai="sirius_norun"}) -- The table now contains pilots, not ship names.
    for k,j in ipairs(followers) do
       j:rename( string.format( _("Converted %s"), j:name() ))
    end
@@ -191,7 +191,7 @@ function theFunBegins()
       sirianFollowerList[num] = sirianFollowers[rnd.rnd(1, #sirianFollowers)] -- Pick a follower ship at random.
    end
 
-   sirianFollowers = addShips(1, sirianFollowerList, "Sirius", curr, nil, {ai="sirius_norun"}) -- The table now contains pilots, not ship names.
+   sirianFollowers = fleet.add(1, sirianFollowerList, "Sirius", curr, nil, {ai="sirius_norun"}) -- The table now contains pilots, not ship names.
 
    for _, j in ipairs(sirianFollowers) do
       followers[#followers + 1] = j

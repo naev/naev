@@ -193,6 +193,7 @@ function hail()
       pinnacle:setActiveBoard(true)
       hook.pilot(pinnacle, "board", "board")
       hook.rm(idlehook)
+      player.commClose()
    end
 end
 

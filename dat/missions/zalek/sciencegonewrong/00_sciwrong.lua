@@ -28,7 +28,7 @@
 
 require "numstring"
 require "proximity"
-require "fleethelper"
+local fleet = require "fleet"
 require "missions/zalek/common"
 
 

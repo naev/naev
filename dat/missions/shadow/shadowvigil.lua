@@ -21,7 +21,7 @@
 
 require "proximity"
 require "nextjump"
-require "fleethelper"
+local fleet = require "fleet"
 require "chatter"
 require "selectiveclear"
 require "missions/shadow/common"
@@ -254,7 +254,7 @@ end
 function enter()
     if system.cur() == misssys[1] and stage == 1 and missend == false then
         -- case enter system where escorts wait
-        escorts = addShips( 3, "Lancelot", "Four Winds", vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
+        escorts = fleet.add( 3, "Lancelot", "Four Winds", vec2.new(0, 0), _("Four Winds Escort"), {ai="baddie_norun"} )
         for i, j in ipairs(escorts) do
             if not alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
@@ -315,7 +315,7 @@ function jumpin()
         pilot.clearSelect("Pirate")
 
         -- Spawn the escorts.
-        escorts = addShips( 3, "Lancelot", "Four Winds", origin, _("Four Winds Escort"), {ai="baddie_norun"} )
+        escorts = fleet.add( 3, "Lancelot", "Four Winds", origin, _("Four Winds Escort"), {ai="baddie_norun"} )
         for i, j in ipairs(escorts) do
             if not alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
@@ -393,7 +393,7 @@ function jumpin()
             jp2go = system.cur():jumpDist(misssys[4])
             if jp2go <= 2 and jp2go > 0 then -- Encounter
                 local ambush_ships = {{"Pirate Ancestor", "Hyena", "Hyena"}, {"Pirate Ancestor", "Pirate Vendetta", "Hyena", "Hyena"}}
-                ambush = addShips( 1,  ambush_ships[3 - jp2go], "Shadow_pirates", vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
+                ambush = fleet.add( 1,  ambush_ships[3 - jp2go], "Shadow_pirates", vec2.new(0, 0), _("Pirate Attacker"), {ai="baddie_norun"} )
                 kills = 0
                 for i, j in ipairs(ambush) do
                     if j:exists() then

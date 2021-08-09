@@ -32,7 +32,7 @@
 --]]
 
 require "numstring"
-require "fleethelper"
+local fleet = require "fleet"
 require "missions/flf/flf_common"
 
 misn_title  = {}
@@ -200,7 +200,7 @@ function rogue_spawnRogue( n )
       local y = rnd.rnd( -r, r )
       local shipnames = { "Vendetta", "Lancelot" }
       local pilotnames = { _("Rogue FLF Vendetta"), _("Rogue FLF Lancelot") }
-      local pstk = addShips( 1, shipnames, "Rogue FLF", vec2.new( x, y ), pilotnames, {ai="flf_rogue_norun"} )
+      local pstk = fleet.add( 1, shipnames, "Rogue FLF", vec2.new( x, y ), pilotnames, {ai="flf_rogue_norun"} )
       local p = pstk[1]
       hook.pilot( p, "death", "pilot_death_rogue" )
       p:setHostile()
@@ -216,8 +216,8 @@ end
 function rogue_spawnFLF( n, param )
    if rnd.rnd() < 0.25 then n = n - 1 end
    local lancelots = rnd.rnd( n )
-   fleetFLF = addShips( lancelots, "Lancelot", "FLF", param, nil, {ai="flf_norun"} )
-   local vendetta_fleet = addShips( n - lancelots, "Vendetta", "FLF", param, nil, {ai="flf_norun"} )
+   fleetFLF = fleet.add( lancelots, "Lancelot", "FLF", param, nil, {ai="flf_norun"} )
+   local vendetta_fleet = fleet.add( n - lancelots, "Vendetta", "FLF", param, nil, {ai="flf_norun"} )
    for i, j in ipairs( vendetta_fleet ) do
       fleetFLF[ #fleetFLF + 1 ] = j
    end

@@ -1,9 +1,14 @@
+--[[--
+Utility to swap the player's ship.
+
+@module swapship
+--]]
 require 'numstring'
 
 local swapship = {}
 
---[[
--- @brief Tests to see if it is possible to swap ships for the player.
+--[[--
+Tests to see if it is possible to swap ships for the player.
 --]]
 function swapship.test( template )
    local pp = player.pilot()
@@ -17,11 +22,11 @@ function swapship.test( template )
    return total_cargo <= template:cargoFree()
 end
 
---[[
--- @brief Swaps the player's ship.
---
---    @param template Should be a pilot template.
---    @return true on success, false otherwise
+--[[--
+Swaps the player's ship.
+
+      @param template Should be a pilot template.
+      @return true on success, false otherwise
 --]]
 function swapship.swap( template )
    local pp = player.pilot()

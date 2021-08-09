@@ -127,6 +127,8 @@ function _atk_f_flyby( target, dist )
       end
       ai.shoot(true)
 
+      -- Also try to shoot missiles
+      _atk_dogfight_seekers( dist, dir )
    end
 end
 
@@ -180,6 +182,9 @@ function _atk_f_space_sup( target, dist )
          ai.shoot()
       end
       ai.shoot(true)
+
+      -- Also try to shoot missiles
+      _atk_dogfight_seekers( dist, dir )
 
    --within close range; aim and blast away with everything
    else

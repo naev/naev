@@ -25,7 +25,7 @@
 
 -- localization stuff, translators would work here
 
-require "fleethelper"
+local fleet = require "fleet"
 require "missions/flf/flf_common"
 require "missions/dvaered/common"
 
@@ -148,7 +148,7 @@ function enter()
         pilot.clear()
 
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
-        fleetFLF = addShips(3, "Vendetta", "FLF", jumppos, nil, {ai="flf_norun"})
+        fleetFLF = fleet.add(3, "Vendetta", "FLF", jumppos, nil, {ai="flf_norun"})
         local c = player.pilot():ship():class()
         if c == "Cruiser" or c == "Carrier" or c == "Battleship" then
             local p = pilot.add( "Pacifier", "FLF", jumppos, nil, {ai="flf_norun"} )

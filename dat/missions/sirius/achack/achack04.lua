@@ -19,7 +19,7 @@
 -- This mission is started from a helper event.
 --]]
 
-require "fleethelper"
+local fleet = require "fleet"
 require "proximity"
 require "enum"
 require "missions/sirius/common"
@@ -205,7 +205,7 @@ end
 function jumpin()
    if system.cur() == destsys and stage == stages.killAssociates then
       bhfleet = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
-      bhfleet = addShips(1, bhfleet, "Achack_thugs", vec2.new(-3000, -7000), _("Bounty Hunter"))
+      bhfleet = fleet.add(1, bhfleet, "Achack_thugs", vec2.new(-3000, -7000), _("Bounty Hunter"))
       alive = #bhfleet
       for i, j in ipairs(bhfleet) do
          j:control()
@@ -226,7 +226,7 @@ end
 function enter()
    if stage == stages.finish then
       -- Remember, Harja will be with you. Always. Well, until the mission ends.
-      harja = addShips(1, "Shark", "Achack_sirius", enter_src, _("Harja's Shark"), {ai="trader"})[1]
+      harja = fleet.add(1, "Shark", "Achack_sirius", enter_src, _("Harja's Shark"), {ai="trader"})[1]
       harja:control()
       harja:setInvincible(true)
       harja:follow(player.pilot())

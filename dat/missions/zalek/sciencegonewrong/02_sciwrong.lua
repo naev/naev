@@ -24,7 +24,7 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
-require "fleethelper"
+local fleet = require "fleet"
 require "missions/zalek/common"
 
 

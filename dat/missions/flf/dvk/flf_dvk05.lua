@@ -31,7 +31,7 @@
 
 --]]
 
-require "fleethelper"
+local fleet = require "fleet"
 require "numstring"
 require "missions/flf/flf_pirates"
 

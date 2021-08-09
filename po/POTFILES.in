@@ -1183,7 +1183,6 @@ dat/asteroids.xml
 dat/commodity.xml
 dat/damagetype.xml
 dat/faction.xml
-dat/fleet.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
 dat/outfits/accessory/dv_handbook.xml
@@ -2497,7 +2496,7 @@ dat/scripts/equipopt/templates/sirius.lua
 dat/scripts/equipopt/templates/soromid.lua
 dat/scripts/equipopt/templates/thurion.lua
 dat/scripts/equipopt/templates/zalek.lua
-dat/scripts/fleethelper.lua
+dat/scripts/fleet.lua
 dat/scripts/formation.lua
 dat/scripts/jumpdist.lua
 dat/scripts/lmusic.lua
@@ -2613,8 +2612,6 @@ src/explosion.c
 src/explosion.h
 src/faction.c
 src/faction.h
-src/fleet.c
-src/fleet.h
 src/font.c
 src/font.h
 src/gettext.c

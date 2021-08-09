@@ -287,4 +287,7 @@ function _atk_g_melee( target, dist )
       ai.shoot()
    end
    ai.shoot(true)
+
+   -- Also try to shoot missiles
+   _atk_dogfight_seekers( dist, dir )
 end

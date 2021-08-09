@@ -19,7 +19,7 @@
 -- This is the third mission in the "shadow" series, featuring the return of SHITMAN.
 --]]
 
-require "fleethelper"
+local fleet = require "fleet"
 require "proximity"
 require "missions/shadow/common"
 
@@ -318,11 +318,11 @@ function spawnSquads(highlight)
     leaderdest[5] = vec2.new(1000, -1500)
 
     squads = {}
-    squads[1] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[1], _("Four Winds Vendetta") )
-    squads[2] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[2], _("Four Winds Vendetta") )
-    squads[3] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[3], _("Four Winds Vendetta") )
-    squads[4] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[4], _("Four Winds Vendetta") )
-    squads[5] = addShips( 4, "Vendetta", "Rogue Four Winds", leaderstart[5], _("Four Winds Vendetta") )
+    squads[1] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[1], _("Four Winds Vendetta") )
+    squads[2] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[2], _("Four Winds Vendetta") )
+    squads[3] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[3], _("Four Winds Vendetta") )
+    squads[4] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[4], _("Four Winds Vendetta") )
+    squads[5] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[5], _("Four Winds Vendetta") )
 
     for i, squad in ipairs(squads) do
         for j, k in ipairs(squad) do
@@ -451,7 +451,7 @@ end
 
 -- Spawns a wing of Lancelots that intercept the player.
 function spawnInterceptors()
-    inters = addShips( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
+    inters = fleet.add( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
     for _, j in ipairs(inters) do
         j:outfitRm("all")
         j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry

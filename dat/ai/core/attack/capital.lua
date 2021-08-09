@@ -94,12 +94,17 @@ function _atk_g_capital( target, dist )
       ai.shoot(true)
    end
 
-   if shoot and not mem.recharge then
-      -- test if, by chance, the target can be hit by cannons
-      if aimdir < 10 then
-         ai.shoot()
+   if shoot then
+      if not mem.recharge then
+         -- test if, by chance, the target can be hit by cannons
+         if aimdir < 10 then
+            ai.shoot()
+         end
+         ai.shoot(true)
       end
-      ai.shoot(true)
+
+      -- Also try to shoot missiles
+      _atk_dogfight_seekers( dist, aimdir )
    end
 end
 

@@ -31,7 +31,7 @@
 
 ]]--
 
-require "fleethelper"
+local fleet = require "fleet"
 require "nextjump"
 require "proximity"
 require "numstring"
@@ -121,8 +121,8 @@ function enter()
         local waypoint12 = vec2.new(1500, 3000)
         local waypoint22 = vec2.new(1500, -500)
 
-        fleet1 = addShips( 1,  empire_flanking_fleet, "Empire", fleetpos1, nil, {ai="empire_norun"} )
-        fleet2 = addShips( 1,  empire_flanking_fleet, "Empire", fleetpos2, nil, {ai="empire_norun"} )
+        fleet1 = fleet.add( 1,  empire_flanking_fleet, "Empire", fleetpos1, nil, {ai="empire_norun"} )
+        fleet2 = fleet.add( 1,  empire_flanking_fleet, "Empire", fleetpos2, nil, {ai="empire_norun"} )
         empireAttack(fleet1)
         empireAttack(fleet2)
 
@@ -165,8 +165,8 @@ function enter()
 
         local pv = player.pos()
 
-        fleet1 = addShips( 1,  empire_flanking_fleet, "Empire", pv + vec2.new(-150, 500) )
-        fleet2 = addShips( 1,  empire_flanking_fleet, "Empire", pv + vec2.new(-150, -500) )
+        fleet1 = fleet.add( 1,  empire_flanking_fleet, "Empire", pv + vec2.new(-150, 500) )
+        fleet2 = fleet.add( 1,  empire_flanking_fleet, "Empire", pv + vec2.new(-150, -500) )
         empireRetreat(fleet1)
         empireRetreat(fleet2)
         fleet1[1]:comm(escort_msg2)

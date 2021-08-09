@@ -31,7 +31,7 @@
 
 --]]
 
-require "fleethelper"
+local fleet = require "fleet"
 require "numstring"
 require "missions/flf/flf_common"
 
@@ -184,7 +184,7 @@ function timer_spawn_dv ()
       end
 
       player.msg( msg:format( _(fleetname) ) )
-      for i, j in ipairs( addShips( 1,  fleet, "Dvaered" ) ) do
+      for i, j in ipairs( fleet.add( 1,  fleet, "Dvaered" ) ) do
          add_attention( j )
       end
    end
