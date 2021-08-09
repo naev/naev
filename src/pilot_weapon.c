@@ -984,8 +984,10 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfi
    /** @TODO Make beams not fire all at once. */
    if (outfit_isBeam(o)) {
       for (i=0; i<array_size(ws->slots); i++)
-         if (ws->slots[i].slot->outfit == o && (level == -1 || level == ws->slots[i].level))
+         if (ws->slots[i].slot->outfit == o && (level == -1 || level == ws->slots[i].level)) {
             ret += pilot_shootWeapon( p, ws->slots[i].slot, 0 );
+            ws->slots[i].slot->inrange = ws->inrange; /* State if the weapon has to be turn off when out of range. */
+         }
       return ret;
    }
 
