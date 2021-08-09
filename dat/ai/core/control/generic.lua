@@ -122,6 +122,7 @@ function handle_messages ()
       if sender:exists() and p:faction():areAllies( sender:faction() ) then
          if msgtype == "scanned" then
             if mem.doscans and data ~= nil and data:exists() then
+               mem.scanned = mem.scanned or {} -- Create table if doesn't exist
                table.insert( mem.scanned, data )
                -- Stop scanning if they got information about the scan
                if ai.taskname() == "scan" and ai.taskdata() == data then
