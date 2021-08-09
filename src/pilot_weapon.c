@@ -49,6 +49,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
 static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time );
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time );
 static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
+unsigned int pilot_weaponSetShootStop( Pilot* p, PilotWeaponSet *ws, int level );
 
 
 /**
@@ -191,8 +192,11 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
           * when it's not held anymore. */
          if (type > 0)
             ws->active = 1;
-         else if (type < 0)
+         else if (type < 0) {
             ws->active = 0;
+            if (pilot_weaponSetShootStop( p, ws, -1 )) /* De-activate weapon set. */
+               pilot_calcStats( p ); /* Just in case there is a activated outfit here. */
+         }
          break;
 
       case WEAPSET_TYPE_ACTIVE:
@@ -792,12 +796,31 @@ int pilot_shoot( Pilot* p, int level )
  */
 void pilot_shootStop( Pilot* p, int level )
 {
-   int i, recalc;
    PilotWeaponSet *ws;
-   PilotOutfitSlot *slot;
 
-   /* Get active set. */
+   /* Find active set. */
    ws = pilot_weapSet( p, p->active_set );
+
+   /* Stop and see if must recalculate. */
+   if (pilot_weaponSetShootStop( p, ws, level ))
+      pilot_calcStats( p );
+}
+
+
+/**
+ * @brief Have pilot stop shooting a given weaponset.
+ *
+ * Only really deals with beam weapons.
+ *
+ *    @param p Pilot that was shooting.
+ *    @param level Level of the shot.
+ *    @param ws Weapon Set to stop shooting
+ *    @return 1 if some outfit has been deactivated
+ */
+unsigned int pilot_weaponSetShootStop( Pilot* p, PilotWeaponSet *ws, int level )
+{
+   int i, recalc;
+   PilotOutfitSlot *slot;
 
    /* Stop all beams. */
    recalc = 0;
@@ -839,9 +862,7 @@ void pilot_shootStop( Pilot* p, int level )
       }
    }
 
-   /* Must recalculate. */
-   if (recalc)
-      pilot_calcStats( p );
+   return recalc;
 }
 
 
