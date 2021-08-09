@@ -27,10 +27,10 @@ function create ()
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
 
    -- Handle refueling
+   mem.refuel = rnd.rnd( 1000, 3000 )
    local p = player.pilot()
    if p:exists() then
       local standing = ai.getstanding( p ) or -1
-      mem.refuel = rnd.rnd( 1000, 3000 )
       if standing > 50 or
             (standing > 0 and rnd.rnd() > 0.8) or
             (rnd.rnd() > 0.3) then
@@ -40,6 +40,7 @@ function create ()
       end
 
       -- Handle bribing
+      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750 * rnd.rnd() + 2500)
       if standing > 0 or
             (standing > -20 and rnd.rnd() > 0.8) or
             (standing > -50 and rnd.rnd() > 0.5) or
