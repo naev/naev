@@ -30,6 +30,8 @@ static int colL_hsv( lua_State *L );
 static int colL_setrgb( lua_State *L );
 static int colL_sethsv( lua_State *L );
 static int colL_setalpha( lua_State *L );
+static int colL_linearToGamma( lua_State *L );
+static int colL_gammaToLinear( lua_State *L );
 static const luaL_Reg colL_methods[] = {
    { "__eq", colL_eq },
    { "new", colL_new },
@@ -39,6 +41,8 @@ static const luaL_Reg colL_methods[] = {
    { "setRGB", colL_setrgb },
    { "setHSV", colL_sethsv },
    { "setAlpha", colL_setalpha },
+   { "linearToGamma", colL_linearToGamma },
+   { "gammaToLinear", colL_gammaToLinear },
    {0,0}
 }; /**< Colour metatable methods. */
 
@@ -351,5 +355,60 @@ static int colL_setalpha( lua_State *L )
    col = luaL_checkcolour(L,1);
    col->a = luaL_checknumber(L,2);
    return 0;
+}
+
+/*
+ * http://en.wikipedia.org/wiki/SRGB#The_forward_transformation_.28CIE_xyY_or_CIE_XYZ_to_sRGB.29
+ */
+static double linearToGamma( double x )
+{
+   if (x <= 0.0031308)
+      return x * 12.92;
+   return 1.055 * pow(x, 1.0 / 2.4) - 0.055;
+}
+/*
+ * http://en.wikipedia.org/wiki/SRGB#The_reverse_transformation
+ */
+static double gammaToLinear( double x )
+{
+   if (x <= 0.04045)
+      return x / 12.92;
+   return pow((x + 0.055) / 1.055, 2.4);
+}
+/**
+ * @brief Converts a colour from linear to gamma corrected.
+ *
+ *    @luatparam Colour col Colour to change from linear to gamma.
+ *    @luatreturn Colour Modified colour.
+ */
+static int colL_linearToGamma( lua_State *L )
+{
+   glColour *col = luaL_checkcolour(L,1);
+   glColour out;
+   out.r = linearToGamma( col->r );
+   out.g = linearToGamma( col->g );
+   out.b = linearToGamma( col->b );
+   out.a = col->a;
+   lua_pushcolour(L,out);
+   return 1;
+}
+
+
+/**
+ * @brief Converts a colour from gamma corrected to linear.
+ *
+ *    @luatparam Colour col Colour to change from gamma corrected to linear.
+ *    @luatreturn Colour Modified colour.
+ */
+static int colL_gammaToLinear( lua_State *L )
+{
+   glColour *col = luaL_checkcolour(L,1);
+   glColour out;
+   out.r = gammaToLinear( col->r );
+   out.g = gammaToLinear( col->g );
+   out.b = gammaToLinear( col->b );
+   out.a = col->a;
+   lua_pushcolour(L,out);
+   return 1;
 }
 
