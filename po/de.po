@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-07 08:55-0400\n"
-"PO-Revision-Date: 2021-08-04 04:34+0000\n"
+"PO-Revision-Date: 2021-08-11 12:33+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -19606,38 +19606,25 @@ msgstr ""
 "ausgestatteten Schlachtkreuzers."
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:2
-#, fuzzy
-#| msgid "Nexus Bolt 4500 Engine"
 msgid "Nexus Bolt 3500 Engine"
-msgstr "Nexus-Bolzen-4500-Motor"
+msgstr "Nexus-Bolzen-3500-Motor"
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:9
-#, fuzzy
-#| msgid ""
-#| "The Bolt 4500 is a somewhat uncommonly used engine designed for light "
-#| "cruisers. Like most Nexus engines, it doesn't excel in speed, but its low "
-#| "power consumption makes it an attractive option for some pilots."
 msgid ""
 "The Bolt 3500 is a somewhat uncommonly used engine designed for cruisers. "
 "Like most Nexus engines, it doesn't excel in speed, but its low power "
 "consumption makes it an attractive option for some pilots."
 msgstr ""
-"Der Bolzen 4500 ist ein etwas seltener verwendeter Motor, der für leichte "
-"Kreuzer entwickelt wurde. Wie die meisten Nexus-Motoren zeichnet er sich "
-"nicht durch hohe Geschwindigkeit aus, aber sein geringer Stromverbrauch "
-"macht ihn für einige Piloten zu einer attraktiven Option."
+"Der Bolzen 3500 ist ein etwas seltener verwendeter Motor, der für Kreuzer "
+"entwickelt wurde. Wie die meisten Nexus-Motoren zeichnet er sich nicht durch "
+"hohe Geschwindigkeit aus, aber sein geringer Stromverbrauch macht ihn für "
+"einige Piloten zu einer attraktiven Option."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
 msgstr "Tricon-Taifun-Motor"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:9
-#, fuzzy
-#| msgid ""
-#| "Development of the Typhoon engine was something of a prestige project for "
-#| "Tricon. Providing light cruisers with superb handling and speed, it's a "
-#| "favourite of many captains, though its high power consumption limits it "
-#| "to ships with powerful reactors."
 msgid ""
 "Development of the Typhoon engine was something of a prestige project for "
 "Tricon. Providing cruisers with superb handling and speed, it's a favourite "
@@ -19645,8 +19632,8 @@ msgid ""
 "powerful reactors."
 msgstr ""
 "Die Entwicklung des Taifun-Motors war für Tricon so etwas wie ein "
-"Prestigeprojekt. Er bietet leichten Kreuzern ein hervorragendes Handling und "
-"hohe Geschwindigkeit und ist ein Favorit vieler Kapitäne, obwohl sein hoher "
+"Prestigeprojekt. Er bietet Kreuzern ein hervorragendes Handling und hohe "
+"Geschwindigkeit und ist ein Favorit vieler Kapitäne, obwohl sein hoher "
 "Stromverbrauch ihn auf Schiffe mit leistungsstarken Reaktoren beschränkt."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
@@ -20579,19 +20566,14 @@ msgid "Hyena Fighter Bay"
 msgstr "Hyänen-Kämpferbucht"
 
 #: dat/outfits/fighter_bays/hyena_fighter_bay.xml:10
-#, fuzzy
-#| msgid ""
-#| "This fighter bay allows your ship to carry a pair of Lancelot class "
-#| "fighters. It comes with all the devices required for the maintenance and "
-#| "flight of the fighters."
 msgid ""
 "This fighter bay allows your ship to carry twin Hyena interceptors. It comes "
 "with all the amenities necessary for the maintenance and operation of the "
 "interceptors."
 msgstr ""
-"Diese Kämpferbucht ermöglicht es deinem Schiff, ein Paar Kämpfer der "
-"Lancelot-Klasse zu transportieren. Sie wird mit allen Geräten geliefert, die "
-"für die Wartung und den Flug der Jäger erforderlich sind."
+"Diese Kämpferbucht ermöglicht es deinem Schiff, zwei Abfangjäger der Hyänen-"
+"Klasse zu transportieren. Sie wird mit allen Ausstattungen geliefert, die "
+"für die Wartung der Abfangjäger erforderlich sind."
 
 #: dat/outfits/fighter_bays/hyena_fighter_dock.xml:2
 msgid "Hyena Fighter Dock"
@@ -20603,6 +20585,10 @@ msgid ""
 "Hyena interceptors that can be operated. It comes with all the amenities "
 "necessary for the maintenance and operation of the interceptors."
 msgstr ""
+"Dieses Dock ist eine Erweiterung der beliebten Hyänen-Kämpferbucht und "
+"verdoppelt die Anzahl der Hyenen-Abfangjäger, die betrieben werden können. "
+"Es verfügt über alle Vorzüge, die für die Wartung und den Betrieb der "
+"Abfangjäger erforderlich sind."
 
 #: dat/outfits/fighter_bays/lancelot_fighter_bay.xml:2
 msgid "Lancelot Fighter Bay"
@@ -22966,10 +22952,8 @@ msgstr ""
 "Sprungpunktsignaturen zu erreichen."
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
-#, fuzzy
-#| msgid "Only active when in stealth."
 msgid "#pOnly active when in stealth.#0"
-msgstr "Nur im Tarnmodus aktiv."
+msgstr "#pNur im Tarnmodus aktiv.#0"
 
 #: dat/outfits/utility/milspec_jammer.xml:2
 msgid "Milspec Jammer"
@@ -28331,12 +28315,13 @@ msgstr "„Mein Treibstoff ist Eigentum des Imperiums.“"
 
 #. Most likely no chance to refuel
 #: dat/ai/empire.lua:62
-#, fuzzy, lua-format
-#| msgid "\"I suppose I could spare some fuel for %s.\""
+#, lua-format
 msgid ""
 "\"I suppose I could spare some fuel for %s, but you'll have to do the "
 "paperwork.\""
-msgstr "„Ich denke, ich könnte etwas Treibstoff für %s abgeben.“"
+msgstr ""
+"„Ich denke, ich könnte etwas Treibstoff für %s abgeben, aber um den "
+"Papierkram müssen Sie sich kümmern.“"
 
 #. See if can be bribed
 #: dat/ai/empire.lua:70
@@ -28472,11 +28457,13 @@ msgstr ""
 #: dat/ai/frontier_police.lua:47
 #, lua-format
 msgid "\"For %s I'll let your grievances slide.\""
-msgstr ""
+msgstr "„Für %s lass ich Ihre Untaten außer Acht.“"
 
 #: dat/ai/frontier_police.lua:48
 msgid "\"Now get out of my sight and don't cause any more trouble.\""
 msgstr ""
+"„Nun verschwinden Sie aus meinem Sichtfeld und machen Sie nicht noch mehr "
+"Ärger.“"
 
 #: dat/ai/goddard.lua:12
 msgid "\"House Goddard does not lower itself to common scum.\""
@@ -29132,10 +29119,11 @@ msgstr "„Ich denke, ich könnte etwas Treibstoff für %s abgeben.“"
 #, lua-format
 msgid "\"For %s I'll give you enough time to get out of my sight.\""
 msgstr ""
+"„Für %s geb ich Ihnen genug Zeit, um aus meinem Sichtfeld zu verschwinden.“"
 
 #: dat/ai/soromid.lua:65
 msgid "\"Now get out of my sight.\""
-msgstr ""
+msgstr "„Jetzt verschwinden Sie!“"
 
 #: dat/ai/thurion.lua:13
 msgid "Vessel under attack! Requesting help!"
@@ -29377,6 +29365,10 @@ msgid ""
 "This action will bribe %d %s pilots.\n"
 "You have %s. Pay #r%s#0?"
 msgstr ""
+"%s\n"
+"\n"
+"Diese Aktion wird %d „%s“-Piloten bestechen.\n"
+"Du hast %s. #r%s#0 zahlen?"
 
 #: dat/comm.lua:121
 #, lua-format
@@ -29430,16 +29422,15 @@ msgstr "Schließen"
 #, lua-format
 msgid "Bribe %d nearby %s pilot"
 msgid_plural "Bribe %d nearby %s pilots"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d „%s“-Piloten in der Nähe bestechen"
+msgstr[1] "%d „%s“-Piloten in der Nähe bestechen"
 
 #: dat/comm.lua:232
-#, fuzzy, lua-format
-#| msgid "Bribe fleet (%d pilot)"
+#, lua-format
 msgid "Bribe fleet (%d pilot)"
 msgid_plural "Bribe fleet (%d pilots)"
 msgstr[0] "Flotte bestechen (%d Pilot)"
-msgstr[1] "Flotte bestechen (%d Pilot)"
+msgstr[1] "Flotte bestechen (%d Piloten)"
 
 #: dat/comm.lua:234 src/comm.c:233
 msgid "Bribe"
@@ -29844,10 +29835,9 @@ msgstr "Südliche Solarwinde"
 #. Nothing triggered
 #. Ends when player lands or leaves either way
 #: dat/events/discovery.lua:317
-#, fuzzy, lua-format
-#| msgid "You found #o%s!"
+#, lua-format
 msgid "You found #o%s - %s!"
-msgstr "Du hast #o%s gefunden!"
+msgstr "Du hast gefunden: #o%s – %s!"
 
 #. Log and message
 #: dat/events/discovery.lua:320 src/map.c:1942
@@ -31892,6 +31882,11 @@ msgid ""
 "Deposit: %s\n"
 "Royalty: %.1f%% of mission earnings"
 msgstr ""
+"Dieser Pilot scheint sich nach Arbeit umzusehen.\n"
+"\n"
+"Schiff: %s\n"
+"Anzahlung: %s\n"
+"Honorar: %.1f%% von Missionserträgen"
 
 #: dat/events/hired_escorts.lua:64
 msgid ""
@@ -32160,6 +32155,8 @@ msgstr ""
 msgid ""
 "You helped a Dvaered pilot get rid of a Za'lek pilot they had a quarrel with."
 msgstr ""
+"Du hast einem Dvaeredpiloten geholfen, einen Za'lek-Piloten, mit dem er im "
+"Streit war, los zu werden."
 
 #: dat/events/minerva/altercation1.lua:230
 msgid "Good riddance."
@@ -32178,6 +32175,8 @@ msgstr ""
 msgid ""
 "You helped a Za'lek pilot get rid of a Dvaered pilot they had a quarrel with."
 msgstr ""
+"Du hast einem Za'lek-Piloten geholfen, einen Dvaeredpiloten, mit dem er im "
+"Streit war, los zu werden."
 
 #. event ends on player leaving the system or landing
 #.
@@ -32302,6 +32301,7 @@ msgstr ""
 #: dat/events/minerva/altercation2.lua:104
 msgid "You sort of helped cyborg chicken get away from a thug."
 msgstr ""
+"Du hast irgendwie einem Cyborg-Huhn geholfen, vor einem Rowdy zu entkommen."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -33054,6 +33054,9 @@ msgid ""
 "Minerva station terminals announced an event where you can buy a ticket to "
 "enter a raffle. The winner can go to the spa with cyborg chicken."
 msgstr ""
+"Die Terminals der Minerva-Station kündigten eine Aktion an, bei der man ein "
+"Ticket für eine Tombola kaufen kann. Der Gewinner darf zur Spa mit dem "
+"Cyborg-Huhn gehen."
 
 #. One off event
 #.
@@ -37637,10 +37640,8 @@ msgstr "„Wie heißt dieses Schiff?“"
 #. Generate the question
 #. Create the log if necessary.
 #: dat/events/neutral/shiplover.lua:269
-#, fuzzy
-#| msgid "Ship"
 msgid "Ship Quiz"
-msgstr "Schiff"
+msgstr "Schiffs-Quiz"
 
 #: dat/events/neutral/shiplover.lua:269 dat/factions/standing/pirate.lua:35
 #: dat/factions/standing/skel.lua:33 dat/factions/standing/skel.lua:39
@@ -37653,6 +37654,8 @@ msgstr "Neutral"
 #, lua-format
 msgid "You obtained a %s from the Ship Enthusiast for getting 5 quizzes right."
 msgstr ""
+"Du hast 1 %s von dem Schiffsenthusiasten für 5 richtig gelöste Quizspiele "
+"erhalten."
 
 #: dat/events/neutral/shiplover.lua:279
 msgid ""
@@ -37660,6 +37663,10 @@ msgid ""
 "reward. Here, take this special trading card. Don't worry, I have a dozen "
 "like it. I'll have to step up my quiz game from now on.\""
 msgstr ""
+"„Wow. Das ist das fünfte Mal, dass du mein Quiz richtig gelöst hast. Dafür "
+"verdienst du eine besondere Belohnung. Hier, nimm diese besondere "
+"Sammelkarte. Keine Sorge, ich habe ein Dutzend solcher Karten. Von nun an "
+"muss ich mein Quizspiel verbessern.“"
 
 #: dat/events/neutral/shiplover.lua:280 dat/events/neutral/shiplover.lua:289
 #: dat/events/neutral/shiplover.lua:298 dat/events/neutral/shiplover.lua:306
@@ -37675,6 +37682,8 @@ msgstr "Du hast erhalten: #g%s#0."
 msgid ""
 "You obtained a %s from the Ship Enthusiast for getting 10 quizzes right."
 msgstr ""
+"Du hast 1 %s von dem Schiffsenthusiasten für 10 richtig gelöste Quizspiele "
+"erhalten."
 
 #: dat/events/neutral/shiplover.lua:288
 msgid ""
@@ -37683,12 +37692,19 @@ msgid ""
 "Make sure not to lose it, this one is fairly special! I'll have to think of "
 "better quizzes from now on.\""
 msgstr ""
+"„Wow. Das ist das 10. Mal, dass du mein Quiz richtig gelöst hast. Du bist "
+"viel besser, als ich erwartet habe. Hier, nimm eine meiner "
+"Lieblingssammelkarten. Pass auf, dass du sie nicht verlierst, denn die hier "
+"ist etwas ganz Besonderes! Ich muss mir von nun an bessere Quizfragen "
+"ausdenken.“"
 
 #: dat/events/neutral/shiplover.lua:294
 #, lua-format
 msgid ""
 "You obtained a %s from the Ship Enthusiast for getting 25 quizzes right."
 msgstr ""
+"Du hast 1 %s von dem Schiffsenthusiasten für 25 richtig gelöste Quizspiele "
+"erhalten."
 
 #: dat/events/neutral/shiplover.lua:297
 msgid ""
@@ -37698,11 +37714,18 @@ msgid ""
 "copy of this one so make sure to take good care of it. No! Don't take it out "
 "of the card foil! It might get damaged that way!\""
 msgstr ""
+"„Boah, ey. Das ist das 25. Mal, dass du mein Quiz richtig gemacht hast. So "
+"lange hat noch niemand mein Quiz mit mir gespielt. Das muss ich wohl auf "
+"besondere Weise würdigen. Hier, nimm eine der seltensten Karten in meiner "
+"Sammlung. Ich habe nur ein Exemplar davon, also pass gut darauf auf. Nein! "
+"Nimm sie nicht aus der Kartenfolie! Sie könnte sonst beschädigt werden!“"
 
 #: dat/events/neutral/shiplover.lua:302
 #, lua-format
 msgid "You obtained a %s from the Ship Enthusiast for getting a quiz right."
 msgstr ""
+"Du hast 1 %s von dem Schiffsenthusiasten für ein richtig gelöstes Quiz "
+"erhalten."
 
 #. Don't trigger hooks
 #: dat/events/neutral/shiplover.lua:305
@@ -37712,6 +37735,9 @@ msgid ""
 "time you got my quiz right! Here, take this as a reward for your performance."
 "\""
 msgstr ""
+"„Stimmt genau! Nicht schlecht, ich dachte, du würdest das nicht wissen. Das "
+"ist das %d. Mal, dass du mein Quiz richtig gelöst hast! Hier, nimm das als "
+"Belohnung für deine Leistung.“"
 
 #. Set up NPC and hooks
 #. First meeting
@@ -37720,16 +37746,20 @@ msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
 msgstr ""
+"Du näherst dich der Person, die seltsame Geräusche macht, die wahrscheinlich "
+"Raumschiffgeräusche imitieren, während sie mit einem Raumschiffspielzeug "
+"spielt."
 
 #: dat/events/neutral/shiplover.lua:329
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
 msgstr ""
+"„Hallo! Wie gefällt dir mein neues Lancelot-Modell in limitierter Auflage?“"
 
 #: dat/events/neutral/shiplover.lua:332
 msgid "\"It looks great!\""
-msgstr ""
+msgstr "„Sieht großartig aus!“"
 
 #: dat/events/neutral/shiplover.lua:333
 msgid "\"It's awful.\""
@@ -37737,17 +37767,19 @@ msgstr "„Furchtbar.“"
 
 #: dat/events/neutral/shiplover.lua:334
 msgid "\"Aren't you too young to be here?\""
-msgstr ""
+msgstr "„Bist du nicht zu jung, um hier zu sein?“"
 
 #: dat/events/neutral/shiplover.lua:345
 msgid "\"You know I own a real one.\""
-msgstr ""
+msgstr "„Weißt du, ich habe ein echtes Exemplar.“"
 
 #: dat/events/neutral/shiplover.lua:351
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
 msgstr ""
+"„Ich weiß! Es hat mich viel gekostet, es zu finden. Es war überall "
+"ausverkauft! Aber am Ende war es das alles wert.“"
 
 #: dat/events/neutral/shiplover.lua:355
 msgid ""
@@ -37757,12 +37789,21 @@ msgid ""
 "You look closely and indeed are able to see the pilots. The level of detail "
 "is fairly ridiculous."
 msgstr ""
+"„Pff! Du kannst diese Schönheit nicht würdigen. Sieh dir die Kurven an! Die "
+"leuchtenden Lichter! Es ist ein vollständig anatomisch korrektes Modell im "
+"Maßstab 1:128! Du kannst sogar die Piloten durch das Cockpit sehen.“\n"
+"Wenn man genau hinsieht, kann man die Piloten tatsächlich sehen. Der "
+"Detailreichtum ist geradezu absurd."
 
 #: dat/events/neutral/shiplover.lua:360
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
 msgstr ""
+"„Bist du nicht zu alt, um hier zu sein? Es ist ja nicht so, dass ich trinke "
+"oder so.“\n"
+"Der Enthusiast streckt dir die Zunge raus, während er immer noch mit dem "
+"Raumschiff spielt."
 
 #: dat/events/neutral/shiplover.lua:365
 msgid ""
@@ -37772,6 +37813,12 @@ msgid ""
 "The lift up their toy Lancelot. You can barely make out a golden Efreeti "
 "etched on the side."
 msgstr ""
+"„Wirklich? Ist es auch ein Modell der Sigma-5-Staffel Golden Efreeti?! Du "
+"weißt nicht, was das ist? Hör auf, mich zu verarschen, das ist "
+"wahrscheinlich nur eine weitere Massenproduktion von Lancelot ohne jegliche "
+"Geschichte dahinter. Das hier ist ein Meisterwerk!“\n"
+"Der Enthusiast hebt den Spielzeug-Lancelot hoch. Du kannst kaum erkennen, "
+"dass ein goldener Efreeti auf der Seite eingraviert ist."
 
 #: dat/events/neutral/shiplover.lua:370
 msgid ""
@@ -37779,50 +37826,58 @@ msgid ""
 "I'll ask you a question and if you get it right, I'll give you a nice "
 "reward. What do you say?\""
 msgstr ""
+"„Weißt du was, lass uns ein Spiel spielen. Ich weiß ALLE Fakten von allen "
+"Schiffen. Ich werde dir eine Frage stellen, und wenn du sie richtig "
+"beantwortest, bekommst du eine schöne Belohnung. Was sagst du dazu?“"
 
 #. Met, didn't play quiz and came back
 #: dat/events/neutral/shiplover.lua:376
-#, fuzzy
-#| msgid "You may not approach the Emperor."
 msgid "You once again approach the ship enthusiast."
-msgstr "Sie dürfen sich dem Imperator nicht nähern."
+msgstr "Du gehst erneut auf den Schiffsenthusiasten zu."
 
 #: dat/events/neutral/shiplover.lua:377
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
 msgstr ""
+"„Du bist also zurück. Hast du es dir mit meinem Schiffsquiz anders überlegt?“"
 
 #: dat/events/neutral/shiplover.lua:379
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
+"Du gehst erneut auf den Schiffsenthusiasten zu. Er scheint sich viel umher "
+"zu bewegen."
 
 #: dat/events/neutral/shiplover.lua:380
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely.\""
 msgstr ""
+"„Hast du Lust auf eine weitere Runde vom Schiffsquiz? Ich denke, die Frage, "
+"die ich vorbereitet habe, wird dich völlig überrumpeln.“"
 
 #: dat/events/neutral/shiplover.lua:383 dat/missions/minerva/maikki2.lua:205
 msgid "\"Yes!\""
-msgstr ""
+msgstr "„Ja!“"
 
 #: dat/events/neutral/shiplover.lua:384
 msgid "\"No.\""
-msgstr ""
+msgstr "„Nein.“"
 
 #: dat/events/neutral/shiplover.lua:388
 msgid "\"Oh well, your loss!\""
-msgstr ""
+msgstr "„Okay, dein Verlust!“"
 
 #: dat/events/neutral/shiplover.lua:393
-#, fuzzy, lua-format
-#| msgid "I hope everyone is listening carefully."
+#, lua-format
 msgid ""
 "\"Great! So here it goes. Listen carefully.\"\n"
 "\n"
 "%s"
-msgstr "Ich hoffe, dass jeder genau zuhört."
+msgstr ""
+"„Super! Okay, es geht los. Hör genau zu.“\n"
+"\n"
+"%s"
 
 #: dat/events/neutral/shiplover.lua:411
 #, lua-format
@@ -37831,12 +37886,15 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"„Großartig. Nun sieh dir dieses Schiff an und hör genau zu.“\n"
+"\n"
+"%s"
 
 #. Show choices
 #. Give reward
 #: dat/events/neutral/shiplover.lua:453
 msgid "You got the Ship Enthusiast's quiz wrong."
-msgstr ""
+msgstr "Du bist im Quiz des Schiffsenthusiasten durchgefallen."
 
 #. TODO wrong sound
 #: dat/events/neutral/shiplover.lua:457
@@ -37846,6 +37904,10 @@ msgid ""
 "\"The correct answer was #g%s#0! Better luck next time.\"\n"
 "They take their leave."
 msgstr ""
+"Der Enthusiast macht einen arroganten Blick und sagt „Falsch!“.\n"
+"„Die richtige Antwort war #g%s#0! Vielleicht hast du beim nächsten Mal mehr "
+"Glück.“\n"
+"Er verabschiedet sich."
 
 #. Finish event (removes npc)
 #.
@@ -37942,7 +38004,7 @@ msgstr "Schiffsbrüchiger %s"
 #. TODO change this when something can make them non-hostile
 #: dat/events/proteron/blockade.lua:74
 msgid "Unknown vessel trying to breach blockade. All ships engage!"
-msgstr ""
+msgstr "Unbekanntes Schiff versucht, Blockade zu brechen. Sofort angreifen!"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -38649,19 +38711,6 @@ msgstr ""
 "gezeichnet, die aus seinem Kopf kommen.)"
 
 #: dat/events/taiomi/find.lua:242
-#, fuzzy
-#| msgid ""
-#| "UST 602:1999\n"
-#| "\n"
-#| "We have finished loading the cargo, which consists of some sort of "
-#| "bottles of something like sand? The Captain said it is very expensive and "
-#| "was yelling at us all the time while we were loading the cargo. \n"
-#| "\n"
-#| "I have decided that once this is over I will try to find a new job. I "
-#| "don't think I will ever get used to the Captain's temper.\n"
-#| "\n"
-#| "Since it seems like the navigator has a bit of a hangover, we leave in 5 "
-#| "periods."
 msgid ""
 "UST 602:1999\n"
 "\n"
@@ -40077,10 +40126,8 @@ msgid "Trader Rhino"
 msgstr "Händler-Rhino"
 
 #: dat/factions/spawn/trader.lua:20
-#, fuzzy
-#| msgid "Pirate Shark"
 msgid "Trader Shark"
-msgstr "Piraten-Hai"
+msgstr "Händler-Hai"
 
 #. @brief Spawns a small trade fleet.
 #. @brief Spawns a larger trade fleet
@@ -44117,16 +44164,12 @@ msgstr "Ich erkläre mich hiermit zum Warlord von %s!"
 
 #. Create the custom factions
 #: dat/missions/dvaered/dv_diversion.lua:137
-#, fuzzy
-#| msgid "Hawk"
 msgid "The Hawk"
-msgstr "Hawk"
+msgstr "Der Hawk"
 
 #: dat/missions/dvaered/dv_diversion.lua:138
-#, fuzzy
-#| msgid "Pirate Attacker"
 msgid "Attackers"
-msgstr "Piratenangreifer"
+msgstr "Angreifer"
 
 #. Spawn people
 #. Half finished installing weapons. :)
@@ -48151,7 +48194,7 @@ msgstr "Eingehendes Schiff kontrollieren"
 
 #. This might be hard to translate, but that is not a problem IMHO as it is actually supposed to be an automatically generated message.
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:177
-#, fuzzy, lua-format
+#, lua-format
 msgid ""
 "As you approach the ship, your targeting array focuses on it, and its "
 "clearance code gets processed. You can soon read on your control pad: \"This "
@@ -48939,25 +48982,6 @@ msgid "Major Tam warns you, and gives you a new task."
 msgstr "Major Tam warnt dich und gibt dir eine neue Aufgabe."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:120
-#, fuzzy
-#| msgid ""
-#| "After the results have been announced, Major Tam gets close to you. He "
-#| "seems to have something important to say: \"It was your first ballet, "
-#| "right? You performed very well out there, citizen. \n"
-#| "   \"Anyway, there is a matter I need to discuss with you: one of my "
-#| "informants told me that the ex-colonel Hamelsen has put a price on your "
-#| "head. Yes. This kind of thing just happens, you know. It looks scary, "
-#| "doesn't it? Actually, many people here already have a price on their "
-#| "head, including me, General Klank and Captain Leblanc. And one can live "
-#| "very well with it. The only thing is to be a bit more careful than "
-#| "usual.\n"
-#| "   \"As Hamelsen has gotten so many mercenaries killed under her command, "
-#| "it is in fact rather unlikely that unrelated pilots jump in and try to "
-#| "kill you. I am pretty sure that the ones that will attack you are "
-#| "motivated by more than money. And I want to know what makes them continue "
-#| "to attack us after having recieved so many losses. So your mission will "
-#| "be the following: if some bounty hunter tries to kill you, catch them "
-#| "alive and bring them to me.\""
 msgid ""
 "After the results have been announced, Major Tam gets close to you. He seems "
 "to have something important to say: \"It was your first ballet, right? You "
@@ -49243,8 +49267,6 @@ msgstr "Gesamtpunktzahl"
 #. Mace Throw: spawn Llamas and competitors.
 #. Check the player only has mace rockets
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:447
-#, fuzzy
-#| msgid "Target: "
 msgid "Target "
 msgstr "Ziel "
 
