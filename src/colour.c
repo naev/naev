@@ -24,8 +24,8 @@
 
 #define _G(x)  (((x) <= 0.04045) ? ((x) / 12.92) : (pow((x + 0.055) / 1.055, 2.4)))
 
-#define COL(R,G,B)      {.r=_G(R), .g=_G(G), .b=_G(B), .a=1.0}
 #define ACOL(R,G,B,A)   {.r=_G(R), .g=_G(G), .b=_G(B), .a=A}
+#define COL(R,G,B)      ACOL(R,G,B,1.0)
 
 
 /*
