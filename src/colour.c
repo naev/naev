@@ -128,6 +128,25 @@ const glColour cFontGrey      = COL( 0.7, 0.7, 0.7 ); /**< Grey font colour. */
 const glColour cFontPurple    = COL( 1.0, 0.3, 1.0 ); /**< Purple font colour. */
 const glColour cFontOrange    = COL( 1.0, 0.7, 0.3 ); /**< Orange font colour. */
 
+/*
+ * http://en.wikipedia.org/wiki/SRGB#The_forward_transformation_.28CIE_xyY_or_CIE_XYZ_to_sRGB.29
+ */
+__attribute__((const)) double linearToGamma( double x )
+{
+   if (x <= 0.0031308)
+      return x * 12.92;
+   return 1.055 * pow(x, 1.0 / 2.4) - 0.055;
+}
+/*
+ * http://en.wikipedia.org/wiki/SRGB#The_reverse_transformation
+ */
+__attribute__((const)) double gammaToLinear( double x )
+{
+   if (x <= 0.04045)
+      return x / 12.92;
+   return pow((x + 0.055) / 1.055, 2.4);
+}
+
 
 /**
  * @brief Changes colour space from HSV to RGB.

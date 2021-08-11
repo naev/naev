@@ -637,6 +637,12 @@ function graphics.Canvas:getWidth(...) return self.t:getWidth(...) end
 function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
 
 
+--[[
+   Misc
+--]]
+function graphics.isGammaCorrect() return true end
+
+
 -- Set some sane defaults.
 local _pixelcode = [[
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )

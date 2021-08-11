@@ -47,8 +47,6 @@ static const luaL_Reg colL_methods[] = {
 }; /**< Colour metatable methods. */
 
 
-
-
 /**
  * @brief Loads the colour library.
  *
@@ -185,9 +183,9 @@ static int colL_new( lua_State *L )
       col.r = col.g = col.b = col.a = 1.;
    }
    else if (lua_isnumber(L,1)) {
-      col.r = luaL_checknumber(L,1);
-      col.g = luaL_checknumber(L,2);
-      col.b = luaL_checknumber(L,3);
+      col.r = gammaToLinear(luaL_checknumber(L,1));
+      col.g = gammaToLinear(luaL_checknumber(L,2));
+      col.b = gammaToLinear(luaL_checknumber(L,3));
       if (lua_isnumber(L,4))
          col.a = luaL_checknumber(L,4);
       else
@@ -357,24 +355,6 @@ static int colL_setalpha( lua_State *L )
    return 0;
 }
 
-/*
- * http://en.wikipedia.org/wiki/SRGB#The_forward_transformation_.28CIE_xyY_or_CIE_XYZ_to_sRGB.29
- */
-static double linearToGamma( double x )
-{
-   if (x <= 0.0031308)
-      return x * 12.92;
-   return 1.055 * pow(x, 1.0 / 2.4) - 0.055;
-}
-/*
- * http://en.wikipedia.org/wiki/SRGB#The_reverse_transformation
- */
-static double gammaToLinear( double x )
-{
-   if (x <= 0.04045)
-      return x / 12.92;
-   return pow((x + 0.055) / 1.055, 2.4);
-}
 /**
  * @brief Converts a colour from linear to gamma corrected.
  *
