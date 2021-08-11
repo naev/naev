@@ -392,8 +392,8 @@ void render_setGamma( double gamma )
    }
 
    /* Ignore small gamma. */
-   //if (fabs(gamma-1.) < 1e-3)
-   //   return;
+   if (fabs(gamma-1.) < 1e-3)
+      return;
 
    /* Set gamma and upload. */
    glUseProgram( shaders.gamma_correction.program );
