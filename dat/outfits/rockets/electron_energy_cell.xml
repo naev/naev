@@ -16,7 +16,7 @@
   <trail_generator x="-3">missile</trail_generator>
   <duration blowup="shield">1</duration>
   <thrust>0</thrust>
-  <speed_max>1500</speed_max>
+  <speed>1500</speed>
   <damage>
    <type>shieldbreaker</type>
    <penetrate>24</penetrate>
