@@ -589,6 +589,13 @@ function graphics.Shader:send( name, ... )
       self.shader:send( name, ... )
    end
 end
+function graphics.Shader:sendColor( name, col )
+   -- Convert to naev colour so it does gamma conversion and return
+   local c = naev.colour.new( table.unpack(col) )
+   local t = { c:rgb() }
+   t[4] = c:alpha()
+   self.shader:send( name, t )
+end
 function graphics.Shader:hasUniform( name )
    return self.shader:hasUniform( name )
 end
