@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Trail_types>
- <!-- Defalut Type trails -->
+ <!-- Default Type trails -->
  <trail name="default">
   <type>trail_default</type>
   <thickness>6</thickness>
