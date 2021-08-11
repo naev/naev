@@ -48,6 +48,7 @@
       * Added card games
       * Added dynamic factions
       * Added dynamic commodities
+      * Interally using linear colourspace
 
 * 0.8.2
    * Gameplay
