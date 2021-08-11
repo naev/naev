@@ -1716,6 +1716,8 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
    /*MELEMENT(temp->u.amm.energy==0.,"energy");*/
    MELEMENT(temp->cpu!=0.,"cpu");
 #undef MELEMENT
+   if (temp->u.amm.speed==0. && temp->u.amm.thrust==0.)
+      DEBUG(_("Outfit '%s' has no speed nor thrust set!"), temp->name);
 }
 
 
