@@ -259,7 +259,7 @@ glTexture* gl_loadImageData( float *data, int w, int h, int sx, int sy, const ch
    texture->texture = gl_texParameters( 0 );
 
    /* Copy over. */
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_FLOAT, data );
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, w, h, 0, GL_RGBA, GL_FLOAT, data );
    glBindTexture( GL_TEXTURE_2D, 0 );
 
    /* Check errors. */
@@ -300,7 +300,7 @@ static GLuint gl_loadSurface( SDL_Surface* surface, unsigned int flags, int free
    /* now load the texture data up */
    SDL_LockSurface( surface );
    glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
          surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
    SDL_UnlockSurface( surface );
 
