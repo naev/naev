@@ -22,8 +22,10 @@
 #include "nstring.h"
 
 
-#define COL(R,G,B)      {.r=R, .g=G, .b=B, .a=1.0}
-#define ACOL(R,G,B,A)   {.r=R, .g=G, .b=B, .a=A}
+#define _G(x)  (((x) <= 0.04045) ? ((x) / 12.92) : (pow((x + 0.055) / 1.055, 2.4)))
+
+#define COL(R,G,B)      {.r=_G(R), .g=_G(G), .b=_G(B), .a=1.0}
+#define ACOL(R,G,B,A)   {.r=_G(R), .g=_G(G), .b=_G(B), .a=A}
 
 
 /*
