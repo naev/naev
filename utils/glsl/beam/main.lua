@@ -356,7 +356,7 @@ vec4 beam_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    v = sharpbeam( y, m );
    y = pos_tex.y + 0.7 * snoise( 1.5*ncoord );
    v += sharpbeam( y, 2.0*m );
-   y = pos_tex.y + 0.7 * snoise( 2*ncoord );
+   y = pos_tex.y + 0.7 * snoise( 2.0*ncoord );
    v += sharpbeam( y, 4.0*m );
 
    v = abs(v);
