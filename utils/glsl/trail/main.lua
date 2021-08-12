@@ -404,6 +404,8 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    pos.y = 2*pos.y-1;
    pos.x = 1-pos.x;
 
+   color = gammaToLinear( color );
+
    if (type==1)
       color_out = trail_pulse( color, pos, pos_px );
    else if (type==2)
