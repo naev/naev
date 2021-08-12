@@ -148,6 +148,22 @@ __attribute__((const)) double gammaToLinear( double x )
 }
 
 
+void col_linearToGamma( glColour *c )
+{
+   c->r = linearToGamma( c->r );
+   c->g = linearToGamma( c->g );
+   c->b = linearToGamma( c->b );
+}
+
+
+void col_gammaToLinear( glColour *c )
+{
+   c->r = gammaToLinear( c->r );
+   c->g = gammaToLinear( c->g );
+   c->b = gammaToLinear( c->b );
+}
+
+
 /**
  * @brief Changes colour space from HSV to RGB.
  *

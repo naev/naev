@@ -122,6 +122,8 @@ const glColour* col_fromName( const char* name );
  */
 __attribute__((const)) double linearToGamma( double x );
 __attribute__((const)) double gammaToLinear( double x );
+void col_linearToGamma( glColour *c );
+void col_gammaToLinear( glColour *c );
 void col_hsv2rgb( glColour *c, float h, float s, float v );
 void col_rgb2hsv( float *h, float *s, float *v, float r, float g, float b );
 void col_blend( glColour *blend, const glColour *fg, const glColour *bg, float alpha );
