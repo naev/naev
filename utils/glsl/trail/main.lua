@@ -239,13 +239,13 @@ vec4 trail_default( vec4 color, vec2 pos_tex, vec2 pos_px )
    float m;
 
    // Modulate alpha base on length
-   color.a *= fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1.0 );
 
    // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
+   m = 0.5 + 0.5*impulse( 1.0-pos_tex.x, 30.0 );
 
    // Modulate width
-   color.a *= smoothbeam( pos_tex.y, 3.*m );
+   color.a *= smoothbeam( pos_tex.y, m );
 
    return color;
 }
@@ -257,16 +257,16 @@ vec4 trail_pulse( vec4 color, vec2 pos_tex, vec2 pos_px )
    float m, v;
 
    // Modulate alpha base on length
-   color.a *= fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1.0 );
 
    // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
+   m = 0.5 + 0.5*impulse( 1.0-pos_tex.x, 30.0 );
 
    // Modulate width
-   color.a *= smoothbeam( pos_tex.y, 3.*m );
+   color.a *= smoothbeam( pos_tex.y, 2.0*m );
 
-   v = smoothstep( 0., 0.5, 1-pos_tex.x );
-   color.a *=  0.8 + 0.2 * mix( 1, sin( 2*M_PI * (0.06 * pos_px.x + dt * 3) ), v );
+   v = smoothstep( 0.0, 0.5, 1.0-pos_tex.x );
+   color.a *=  0.8 + 0.2 * mix( 1.0, sin( 2.0*M_PI * (0.06 * pos_px.x + dt * 3.0) ), v );
 
    return color;
 }
@@ -278,15 +278,15 @@ vec4 trail_wave( vec4 color, vec2 pos_tex, vec2 pos_px )
    float m, p, y;
 
    // Modulate alpha base on length
-   color.a *= fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1.0 );
 
    // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
+   m = 0.5 + 0.5*impulse( 1.0-pos_tex.x, 30.0 );
 
    // Modulate width
-   p = 2*M_PI * (pos_tex.x*5 + dt * 0.5 + r);
-   y = pos_tex.y + 0.2 * smoothstep(0, 0.8, 1-pos_tex.x) * sin( p );
-   color.a *= smoothbeam( y, 2.*m );
+   p = 2.0*M_PI * (pos_tex.x*5.0 + dt * 0.5 + r);
+   y = pos_tex.y + 0.2 * smoothstep(0.0, 0.8, 1.0-pos_tex.x) * sin( p );
+   color.a *= smoothbeam( y, m );
 
    return color;
 }
@@ -298,17 +298,17 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos_px )
    float m, p, y;
 
    // Modulate alpha base on length
-   color.a *= fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1.0 );
 
    // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 30. );
+   m = 0.5 + 0.5*impulse( 1.0-pos_tex.x, 30.0 );
 
    // Modulate width
    // By multiplying two sine waves with different period it looks more like
    // a natural flame.
-   p = 2*M_PI * (pos_tex.x*5 + dt * 5 + r);
-   y = pos_tex.y + 0.2 * smoothstep(0, 0.8, 1-pos_tex.x) * sin( p ) * sin( 2.7*p );
-   color.a *= smoothbeam( y, 2.*m );
+   p = 2.0*M_PI * (pos_tex.x*5.0 + dt * 5.0 + r);
+   y = pos_tex.y + 0.2 * smoothstep(0, 0.8, 1.0-pos_tex.x) * sin( p ) * sin( 2.7*p );
+   color.a *= smoothbeam( y, m );
 
    return color;
 }
@@ -317,27 +317,34 @@ vec4 trail_flame( vec4 color, vec2 pos_tex, vec2 pos_px )
 TRAIL_FUNC_PROTOTYPE
 vec4 trail_nebula( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
+   const float SCALAR = pow(2., 4.0/3.0 );
    float m, f;
    vec2 coords;
-   const float SCALAR = pow(2., 4./3. );
+
+   color.rgb = gammaToLinear( vec3( 1.0, 1.0, 1.0 ) );
 
    // Modulate alpha base on length
-   color.a *= fastdropoff( pos_tex.x, 1 );
+   color.a *= fastdropoff( pos_tex.x, 1.0 );
 
    // Modulate alpha based on dispersion
    m = impulse( pos_tex.x, 0.3);
 
    // Modulate width
-   m *= 2-smoothstep( 0., 0.2, 1.-pos_tex.x );
-   color.a *= sharpbeam( pos_tex.y, 3*m );
-   color.a *= 0.2 + 0.8*smoothstep( 0., 0.05, 1.-pos_tex.x );
+   m *= 2.0-smoothstep( 0.0, 0.2, 1.0-pos_tex.x );
+   color.a *= sharpbeam( pos_tex.y, 5.0*m );
+   color.a *= 0.2 + 0.8*smoothstep( 0.0, 0.05, 1.0-pos_tex.x );
 
-   // We only do two iterations here
-   coords = 0.02 * pos_px + vec2( dt, 0 ) + 1000*r;
+   // We only do two iterations here (turbulence noise)
+   coords = 0.02 * pos_px + vec2( dt, 0.0 ) + 1000.0*r;
    f  = abs( cnoise( coords * SCALAR ) );
-   f += abs( cnoise( coords * pow(SCALAR,2.) ) );
-   color.a *=  0.5 + 0.7*f;
-   //color.a *=  0.5 + f;
+   f += abs( cnoise( coords * pow(SCALAR,2.0) ) );
+   color.a *= 0.5 + 0.7*f;
+
+   // Smoother end trails
+   if (pos_tex.x < 0.1) {
+      float offy = pow(abs(pos_tex.y),2.0);
+      color.a *= smoothstep( offy, 1.0, pow(pos_tex.x / 0.1, 0.5) );
+   }
 
    return color;
 }
@@ -350,23 +357,25 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    vec2 ncoord;
 
    // Modulate alpha base on length
-   color.a *= fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1.0 );
 
    // Modulate alpha based on dispersion
-   m = 1.5 + 1.5*impulse( 1.-pos_tex.x, 1. );
+   m = 1.5 + 1.5*impulse( 1.0-pos_tex.x, 1.0 );
 
-   // Modulate width
-   ncoord = vec2( 0.03 * pos_px.x, 7*dt ) + 1000 * r;
-   s =  0.6 * smoothstep(0, 0.2, 1.-pos_tex.x);
+   // Create three beams with varying parameters
+   ncoord = vec2( 0.03 * pos_px.x, 7.0*dt ) + 1000.0 * r;
+   s =  0.6 * smoothstep(0.0, 0.2, 1.0-pos_tex.x);
    p = pos_tex.y + s * snoise( ncoord );
    v = sharpbeam( p, m );
    p = pos_tex.y + s * snoise( 1.5*ncoord );
-   v += sharpbeam( p, 2*m );
-   p = pos_tex.y + s * snoise( 2*ncoord );
-   v += sharpbeam( p, 4*m );
+   v += sharpbeam( p, 2.0*m );
+   p = pos_tex.y + s * snoise( 2.0*ncoord );
+   v += sharpbeam( p, 4.0*m );
 
-   color.xyz *= 1 + max(0, 3*(v-0.9));
-   color.a   *= min(1, 0.6*v);
+   v = abs(v);
+   color.rgb  = mix( color.rgb, vec3(1.0), s*v*0.6 );
+   color.rgb  = pow( color.rgb, vec3(2.0) );
+   color.a   *= min(1.0, v);
 
    return color;
 }
@@ -375,23 +384,22 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
 TRAIL_FUNC_PROTOTYPE
 vec4 trail_bubbles( vec4 color, vec2 pos_tex, vec2 pos_px )
 {
+   const float speed = 16.0;   // How fast the trail moves
+   const float scale = 0.13;  // Noise scaling (sharpness)
    float m, p;
-   vec2 coords;
 
    // Modulate alpha base on length
-   color.a *= fastdropoff( pos_tex.x, 1. );
+   color.a *= fastdropoff( pos_tex.x, 1.0 );
 
    // Modulate alpha based on dispersion
-   m = 0.5 + 0.5*impulse( 1.-pos_tex.x, 3. );
+   m = 0.5 + 0.5*impulse( 1.0-pos_tex.x, 3.0 );
 
-   //coords = pos_px + vec2( 220*dt, 0 );
-   //p = 0.5 + min( 0.5, snoise( 0.08 * coords ) );
-   coords = pos_px + vec2( 120*dt, 0 ) + 1000 * r;
-   p = 1 - 0.7*cellular2x2( 0.13 * coords ).x;
+   // Compute the noise
+   p = 1.0 - 0.7*cellular2x2( scale * pos_px + vec2( speed*dt, 0.0 ) + 1000.0 * r ).x;
 
    // Modulate width
-   color.a   *= p * smoothbeam( pos_tex.y, 3.*m );
-   color.xyz *= 1 + max(0, 10*(p-0.8));
+   color.a   *= p * smoothbeam( pos_tex.y, 2.0*m );
+   color.rgb *= 1.0 + max(0.0, 10.0*(p-0.8));
 
    return color;
 }
