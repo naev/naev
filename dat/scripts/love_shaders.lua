@@ -571,12 +571,13 @@ end
 A windy type shader. Meant as/for backgrounds, however, it is highly transparent.
 
 @see shaderparams
-@tparam @{shaderparams} params Parameter table where "strength" and "speed" fields is used.
+@tparam @{shaderparams} params Parameter table where "strength", "speed", and "density" fields is used.
 --]]
 function love_shaders.windy( params )
    params = params or {}
    strength = params.strength or 1.0
    speed = params.speed or 1.0
+   density = params.density or 1.0
    local pixelcode = string.format([[
 #include "lib/simplex.glsl"
 
@@ -585,6 +586,7 @@ uniform vec3 u_camera = vec3( 0.0, 0.0, 1.0 );
 
 const float strength = %f;
 const float speed    = %f;
+const float density  = %f;
 const float u_r      = %f;
 
 const float noiseScale = 0.001;
@@ -616,10 +618,10 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
    uv *= vec3( noiseScale, noiseScale, noiseTimeScale );
 
    float noise = getNoise( uv );
-   noise = pow( noise, 4.0 ) * 2.0;  //more contrast
+   noise = pow( noise, 4.0 / density ) * 2.0;  //more contrast
    return color * vec4( 1.0, 1.0, 1.0, noise );
 }
-]], strength, speed, love_math.random() )
+]], strength, speed, density, love_math.random() )
 
    local shader = graphics.newShader( pixelcode, _vertexcode )
    shader._dt = 1000 * love_math.random()
