@@ -10,13 +10,10 @@ in vec2 localpos;
 out vec4 color_out;
 
 const float smoothness       = 0.5;
-const float value            = 0.4;
-const float nebu_brightness  = 0.5;
+const float value            = 0.6;
+const float nebu_brightness  = 0.4;
 
 void main(void) {
-   float f = 0.0;
-   vec3 uv;
-
    // Calculate coordinates
    vec2 rel_pos = localpos + globalpos;
    //rel_pos *= eddy_scale;
