@@ -1,5 +1,6 @@
 #include "lib/math.glsl"
 #include "lib/simplex.glsl"
+#include "lib/gamma.glsl"
 
 /* Common uniforms for special effects. */
 uniform float u_time = 0.0;   /**< Elapsed time. */
@@ -210,7 +211,8 @@ vec4 effect( vec2 texture_coords )
    }
 
    vec4 col = clamp( sum, 0.0, 1.0 );
-   col.xyz  = col.xyz*col.xyz*(1.0+CONTRAST-CONTRAST*col.xyz);
+   col.rgb  = col.rgb*col.rgb*(1.0+CONTRAST-CONTRAST*col.rgb);
+   col.rgb  = gammaToLinear( col.rgb );
    return col;
 }
 
