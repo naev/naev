@@ -1424,6 +1424,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          xmlr_attr_float(node, "b", temp->u.bem.colour.b);
          xmlr_attr_float(node, "a", temp->u.bem.colour.a);
          xmlr_attr_float(node, "width", temp->u.bem.width);
+         col_gammaToLinear( &temp->u.bem.colour );
          shader = xml_get(node);
          if (gl_has( OPENGL_SUBROUTINES )) {
             temp->u.bem.shader = glGetSubroutineIndex( shaders.beam.program, GL_FRAGMENT_SHADER, shader );
