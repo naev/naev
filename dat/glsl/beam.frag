@@ -61,9 +61,9 @@ vec4 beam_default( vec4 color, vec2 pos_tex, vec2 pos_px )
 
    // Normal beam
    coords = pos_px / 500.0 + vec2( -3.0*ANIM_SPEED*dt, 0 );
-   m = 2.0 + snoise( coords );
+   m = 1.5 + 0.5*snoise( coords );
    float a = smoothbeam( pos_tex.y, m );
-   color.xyz = mix( color.xyz, vec3(1.0), 3.0*smoothbeam( pos_tex.y, 0.1 ) );
+   color.rgb = mix( color.rgb, vec3(1.0), 3.0*smoothbeam( pos_tex.y, 0.1 ) );
    color.a *= a;
 
    // Do fancy noise effect
@@ -84,7 +84,7 @@ vec4 beam_unstable( vec4 color, vec2 pos_tex, vec2 pos_px )
 
    // Normal beam
    coords = vec2( 3.0*ANIM_SPEED*(dt+r), 0.0 );
-   m = 0.5 + 0.5*snoise( coords );
+   m = 0.3 + 0.3*snoise( coords );
 
    coords = pos_px/2000.0 + vec2( -3.0*ANIM_SPEED*dt, 1000.0 );
    y = pos_tex.y + 0.2*snoise( coords );
@@ -96,7 +96,7 @@ vec4 beam_unstable( vec4 color, vec2 pos_tex, vec2 pos_px )
    y = pos_tex.y + 0.7*snoise( coords );
    a += 0.5*smoothbeam( y, 0.5 );
    a = min( a, 1.0 );
-   color.xyz = mix( color.xyz, vec3(1.0), 3.0*smoothbeam( pos_tex.y, 0.1 ) );
+   color.rgb = mix( color.rgb, vec3(1.0), 3.0*smoothbeam( pos_tex.y, 0.1 ) );
    color.a *= a;
    color.a *= beamfade( pos_px.x, pos_tex.x );
 
@@ -118,16 +118,16 @@ vec4 beam_fuzzy( vec4 color, vec2 pos_tex, vec2 pos_px )
 
    // Normal beam
    coords = vec2( 3.0*ANIM_SPEED*dt, 0.0 );
-   m = 6.0 + snoise( coords );
+   m = 4.0 + snoise( coords );
    float a = smoothbeam( pos_tex.y, m );
-   color.xyz += 3.0 * a * smoothbeam( pos_tex.y, 0.1 );
+   color.rgb += 3.0 * a * smoothbeam( pos_tex.y, 0.1 );
    color.a *= a;
    color.a *= beamfade( pos_px.x, pos_tex.x );
 
    // Perlin noise
    coords = 0.2 * pos_px + vec2( -45.0*ANIM_SPEED*dt, 0.0 ) + 1000.0*r;
-   f = abs( cnoise( coords ) );
-   color.a *= 1.0 + f * smoothstep( 0.0, 1.0, abs(pos_tex.y) );
+   f = cnoise( coords );
+   color.a *= 1.0 + 1.0 * f * smoothstep( 0.0, 1.0, abs(pos_tex.y) );
 
    // Do fancy noise effect
    coords = pos_px * vec2( 0.03, 5.0 ) + vec2( -10.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
@@ -148,11 +148,11 @@ vec4 beam_wave( vec4 color, vec2 pos_tex, vec2 pos_px )
    color.a *= beamfade( pos_px.x, pos_tex.x );
 
    coords = pos_px / 500.0 + vec2( -3.0*ANIM_SPEED*dt, 0.0 );
-   m = 2.0 + snoise( coords );
+   m = 1.5 + 0.5*snoise( coords );
    p = 2.0*M_PI * (pos_px.x/20.0 - 8.0*ANIM_SPEED*dt + r);
    y = pos_tex.y + 0.2 * sin( p );
    color.a *= smoothbeam( y, m );
-   color.xyz = mix( color.xyz, vec3(1.0), 5.0*smoothbeam( y, 0.1 ) );
+   color.rgb = mix( color.rgb, vec3(1.0), 4.0*smoothbeam( y, 0.1 ) );
 
    // Do fancy noise effect
    coords = pos_px * vec2( 0.03, 5.0 ) + vec2( -10.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
@@ -173,7 +173,7 @@ vec4 beam_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    color.a *= beamfade( pos_px.x, pos_tex.x );
 
    // Modulate alpha based on dispersion
-   m = 3.0;
+   m = 4.0;
 
    // Modulate width
    ncoord = vec2( 0.03 * pos_px.x, 7.0*ANIM_SPEED*dt ) + 1000.0 * r;
@@ -184,8 +184,10 @@ vec4 beam_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    y = pos_tex.y + 0.7 * snoise( 2*ncoord );
    v += sharpbeam( y, 4.0*m );
 
-   color.xyz *= 1.0 + max(0.0, 2.0*(v-0.9));
-   color.a   *= min(1.0, 0.6*v);
+   v = abs(v);
+   color.rgb  = mix( color.rgb, vec3(1.0), v*0.5 );
+   color.rgb  = pow( color.rgb, vec3(3.0) );
+   color.a   *= min(1.0, v);
 
    return color;
 }
@@ -201,13 +203,15 @@ vec4 beam_helix( vec4 color, vec2 pos_tex, vec2 pos_px )
 
    m = 0.6 * (0.8 + 0.2*sin( 2.0*M_PI * 0.5*ANIM_SPEED*dt ) );
    p = 2.0*M_PI * (pos_px.x/40.0 - dt * 6.0 + r);
+   // First sine
    y = pos_tex.y + m * sin( p );
-   a = smoothbeam( y, 1.0 );
+   a = smoothbeam( y, 0.8 );
    v = 3.0*smoothbeam( y, 0.1 );
-   y = pos_tex.y + m * sin( p + M_PI );
-   a += smoothbeam( y, 1.0 );
+   // Second sine
+   y  = pos_tex.y + m * sin( p + M_PI );
+   a += smoothbeam( y, 0.8 );
    v += 3.0*smoothbeam( y, 0.1 );
-   color.xyz = mix( color.xyz, vec3(1.0), v );
+   color.rgb = mix( color.rgb, vec3(1.0), v );
    color.a *= a;
 
    // Do fancy noise effect
@@ -229,14 +233,15 @@ vec4 beam_organic( vec4 color, vec2 pos_tex, vec2 pos_px )
    color.a *= beamfade( pos_px.x, pos_tex.x );
 
    // Modulate alpha based on dispersion
-   m = 1.0;
+   m = 3.0;
 
    coords = pos_px + vec2( -320.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
    p = 1.0 - 0.7*cellular2x2( 0.13 * coords ).x;
 
    // Modulate width
-   color.a   *= p * smoothbeam( pos_tex.y, 3.0*m );
-   color.xyz = mix( color.xyz, vec3(1.0), max(0.0, 10.0*(p-0.9)) );
+   color.a   *= p * smoothbeam( pos_tex.y, m );
+   color.rgb = mix( color.rgb, vec3(1.0), max(0.0, 10.0*(p-0.9)) );
+   color.a    = pow( color.a, 1.5 );
 
    // Do fancy noise effect
    coords = pos_px * vec2( 0.03, 5.0 ) + vec2( -10.0*ANIM_SPEED*dt, 0.0 ) + 1000.0 * r;
