@@ -186,7 +186,7 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    color.a *= fastdropoff( pos_tex.x, 1.0 );
 
    // Modulate alpha based on dispersion
-   m = 1.5 + 1.5*impulse( 1.0-pos_tex.x, 1.0 );
+   m = 1.5 + 5.0*impulse( 1.0-pos_tex.x, 1.0 );
 
    // Create three beams with varying parameters
    ncoord = vec2( 0.03 * pos_px.x, 7.0*dt ) + 1000.0 * r;
@@ -199,8 +199,8 @@ vec4 trail_arc( vec4 color, vec2 pos_tex, vec2 pos_px )
    v += sharpbeam( p, 4.0*m );
 
    v = abs(v);
-   color.rgb  = mix( color.rgb, vec3(1.0), s*v*0.6 );
-   color.rgb  = pow( color.rgb, vec3(2.0) );
+   s = s + 0.1;
+   color.rgb  = mix( color.rgb, vec3(1.0), pow(s*v*0.8, 3.0) );
    color.a   *= min(1.0, v);
 
    return color;
