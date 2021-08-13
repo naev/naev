@@ -372,11 +372,11 @@ void load_loadGameMenu (void)
    }
 
    /* Player text. */
-   window_addText( wid, -20, -40, 200, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
+   window_addText( wid, -20, -40, 240, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
          0, "txtPilot", &gl_smallFont, NULL, NULL );
 
    window_addList( wid, 20, -50,
-         LOAD_WIDTH-200-60, LOAD_HEIGHT-110,
+         LOAD_WIDTH-240-60, LOAD_HEIGHT-110,
          "lstSaves", names, n, 0, load_menu_update, load_menu_load );
 
    /* Buttons */
