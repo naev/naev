@@ -427,6 +427,8 @@ static void think_beam( Weapon* w, const double dt )
       field = &cur_system->asteroids[p->nav_anchor];
       ast = &field->asteroids[p->nav_asteroid];
    }
+   else
+      ast = NULL;
    t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
 
    /* Check the beam is still in range. */
@@ -436,7 +438,7 @@ static void think_beam( Weapon* w, const double dt )
          if (vect_dist( &p->solid->pos, &t->solid->pos ) <= slot->outfit->u.bem.range)
             turn_off = 0;
       }
-      if (p->nav_asteroid != -1) {
+      if (ast != NULL) {
          if (vect_dist( &p->solid->pos, &ast->pos ) <= slot->outfit->u.bem.range)
             turn_off = 0;
       }
@@ -475,7 +477,7 @@ static void think_beam( Weapon* w, const double dt )
           */
          t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
          if (t == NULL) {
-            if (p->nav_asteroid >= 0) {
+            if (ast != NULL) {
                diff = angle_diff(w->solid->dir, /* Get angle to target pos */
                      vect_angle(&w->solid->pos, &ast->pos));
             }
