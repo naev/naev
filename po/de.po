@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-07 08:55-0400\n"
-"PO-Revision-Date: 2021-08-12 15:33+0000\n"
+"PO-Revision-Date: 2021-08-13 20:33+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -57595,14 +57595,12 @@ msgstr "Plünderer"
 #: dat/missions/minerva/maikki1.lua:60
 msgid ""
 "You see a pair of dirty looking fellows talking loudly among themselves."
-msgstr ""
+msgstr "Du siehst ein Paar verdreckt aussehender Leute sich laut unterhalten."
 
 #: dat/missions/minerva/maikki1.lua:68 dat/missions/minerva/maikki2.lua:72
 #: dat/scripts/campaigns/minerva.lua:87
-#, fuzzy
-#| msgid "Finding Father"
 msgid "Finding Maikki's Father"
-msgstr "Vater finden"
+msgstr "Maikkis Vater finden"
 
 #: dat/missions/minerva/maikki1.lua:69 dat/missions/minerva/maikki2.lua:73
 #: dat/missions/shadow/shadowvigil.lua:127 src/faction.c:1076
@@ -57612,7 +57610,7 @@ msgstr "???"
 
 #: dat/missions/minerva/maikki1.lua:70
 msgid "Maikki wants you to help her find her father."
-msgstr ""
+msgstr "Maikki möchte, dass du ihr hilfst, ihren Vater zu finden."
 
 #. Mission states:
 #. nil: mission not accepted yet
