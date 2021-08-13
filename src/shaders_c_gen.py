@@ -4,6 +4,57 @@ import collections
 
 Shader = collections.namedtuple("Shader", "name vs_path fs_path attributes uniforms subroutines")
 
+class Shader:
+    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines ):
+        self.name       = name
+        self.vs_path    = vs_path
+        self.fs_path    = fs_path
+        self.attributes = attributes
+        self.uniforms   = uniforms
+        self.subroutines= subroutines
+
+    def write_header(self, f):
+        f.write("   struct {\n")
+        f.write("      GLuint program;\n")
+        for attribute in self.attributes:
+            f.write("      GLuint {};\n".format(attribute))
+        for uniform in self.uniforms:
+            f.write("      GLuint {};\n".format(uniform))
+        for subroutine, routines in self.subroutines.items():
+            f.write("      struct {\n")
+            f.write("         GLuint uniform;\n")
+            for r in routines:
+                f.write(f"         GLuint {r};\n")
+            f.write(f"      }} {subroutine};\n")
+        f.write("   }} {};\n".format(self.name))
+
+    def write_source(self, f):
+        f.write("   shaders.{}.program = gl_program_vert_frag(\"{}\", \"{}\");\n".format(
+                 self.name,
+                 self.vs_path,
+                 self.fs_path))
+        for attribute in self.attributes:
+            f.write("   shaders.{}.{} = glGetAttribLocation(shaders.{}.program, \"{}\");\n".format(
+                    self.name,
+                    attribute,
+                    self.name,
+                    attribute))
+
+        for uniform in self.uniforms:
+            f.write("   shaders.{}.{} = glGetUniformLocation(shaders.{}.program, \"{}\");\n".format(
+                    self.name,
+                    uniform,
+                    self.name,
+                    uniform))
+
+        if len(self.subroutines) > 0:
+            f.write("   if (gl_has( OPENGL_SUBROUTINES )) {\n")
+            for subroutine, routines in self.subroutines.items():
+                f.write(f"      shaders.{self.name}.{subroutine}.uniform = glGetSubroutineUniformLocation( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n")
+                for r in routines:
+                    f.write(f"      shaders.{self.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n")
+            f.write("   }\n");
+
 SHADERS = [
    Shader(
       name = "circle",
@@ -234,24 +285,8 @@ def generate_h_file(f):
     f.write("typedef struct Shaders_ {\n")
 
     for shader in SHADERS:
-        f.write("   struct {\n")
+        shader.write_header( f )
 
-        f.write("      GLuint program;\n")
-
-        for attribute in shader.attributes:
-            f.write("      GLuint {};\n".format(attribute))
-
-        for uniform in shader.uniforms:
-            f.write("      GLuint {};\n".format(uniform))
-
-        for subroutine, routines in shader.subroutines.items():
-            f.write("      struct {\n")
-            f.write("         GLuint uniform;\n")
-            for r in routines:
-                f.write(f"         GLuint {r};\n")
-            f.write(f"      }} {subroutine};\n")
-
-        f.write("   }} {};\n".format(shader.name))
     f.write("} Shaders;\n\n")
 
     f.write("extern Shaders shaders;\n\n")
@@ -272,32 +307,7 @@ def generate_c_file(f):
 
     f.write("void shaders_load (void) {\n")
     for i, shader in enumerate(SHADERS):
-        f.write("   shaders.{}.program = gl_program_vert_frag(\"{}\", \"{}\");\n".format(
-                 shader.name,
-                 shader.vs_path,
-                 shader.fs_path))
-        for attribute in shader.attributes:
-            f.write("   shaders.{}.{} = glGetAttribLocation(shaders.{}.program, \"{}\");\n".format(
-                    shader.name,
-                    attribute,
-                    shader.name,
-                    attribute))
-
-        for uniform in shader.uniforms:
-            f.write("   shaders.{}.{} = glGetUniformLocation(shaders.{}.program, \"{}\");\n".format(
-                    shader.name,
-                    uniform,
-                    shader.name,
-                    uniform))
-
-        if len(shader.subroutines) > 0:
-            f.write("   if (gl_has( OPENGL_SUBROUTINES )) {\n")
-            for subroutine, routines in shader.subroutines.items():
-                f.write(f"      shaders.{shader.name}.{subroutine}.uniform = glGetSubroutineUniformLocation( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n")
-                for r in routines:
-                    f.write(f"      shaders.{shader.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{shader.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n")
-            f.write("   }\n");
-
+        shader.write_source( f )
         if i != len(SHADERS) - 1:
             f.write("\n")
     f.write("}\n\n")
