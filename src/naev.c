@@ -583,11 +583,25 @@ void loadscreen_render( double done, const char *msg )
    }
 
    /* Draw progress bar. */
-   /* BG. */
-   gl_renderRect( x-2., y-2., w+4., rh+4., &cBlack );
-   /* FG. */
-   gl_renderRect( x+done*w, y, (1.-done)*w, h, &cGrey30);
-   gl_renderRect( x, y, done*w, h, &cGrey70 );
+   /* Set the vertex. */
+   gl_Matrix4 projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
+   
+   glUseProgram(shaders.progressbar.program);
+   glEnableVertexAttribArray(shaders.progressbar.vertex);
+   gl_Matrix4_Uniform(shaders.progressbar.projection, projection);
+
+   glUniform2f( shaders.progressbar.dimensions, w, h );
+   glUniform1f( shaders.progressbar.progress, done );
+      
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.progressbar.vertex, 0, 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   
+   glDisableVertexAttribArray(shaders.progressbar.vertex);
+   glUseProgram(0);
+   gl_checkErr();
+   
 
    /* Draw text. */
    gl_printRaw( &gl_defFont, x, y + h + 3., &cFontWhite, -1., msg );

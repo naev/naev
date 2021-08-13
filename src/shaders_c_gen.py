@@ -210,6 +210,14 @@ SHADERS = [
       uniforms = ["projection", "ok"],
       subroutines = {},
    ),
+   Shader(
+      name = "progressbar",
+      vs_path = "project_pos.vert",
+      fs_path = "progressbar.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "dimensions", "progress"],
+      subroutines = {},
+   ),
 ]
 
 def write_header(f):
