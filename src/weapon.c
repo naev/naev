@@ -1854,6 +1854,12 @@ void beam_end( const unsigned int parent, unsigned int beam )
          return;
    }
 
+#if DEBUGGING
+   if (beam==0) {
+      WARN(_("Trying to remove beam with ID 0!"));
+      return;
+   }
+#endif /* DEBUGGING */
 
    /* Now try to destroy the beam. */
    for (i=0; i<array_size(curLayer); i++) {
