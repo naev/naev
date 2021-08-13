@@ -247,13 +247,9 @@ SHADERS = [
       uniforms = ["projection", "ok"],
       subroutines = {},
    ),
-   Shader(
+   SimpleShader(
       name = "progressbar",
-      vs_path = "project_pos.vert",
       fs_path = "progressbar.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "dimensions", "progress"],
-      subroutines = {},
    ),
    SimpleShader(
       name = "safelanes",

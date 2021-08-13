@@ -2,11 +2,12 @@
 #include "lib/sdf.glsl"
 
 uniform vec2 dimensions;
-uniform float progress;
+uniform float r;
 out vec4 color_out;
 in vec2 pos;
 
 void main(void) {
+   float progress = r;
    vec2 rel_pos = gl_FragCoord.xy * 0.05;
 
    const float margin = 0.05;
