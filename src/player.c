@@ -2104,6 +2104,18 @@ void player_targetClear (void)
 
 
 /**
+ * @brief Clears all player targets: hyperspace, planet, asteroid, etc...
+ */
+void player_targetClearAll (void)
+{
+   player_targetHyperspaceSet( -1 );
+   player_targetPlanetSet( -1 );
+   player_targetAsteroidSet( -1, -1 );
+   player_targetSet( PLAYER_ID );
+}
+
+
+/**
  * @brief Targets the pilot.
  *
  *    @param prev 1 if is cycling backwards.

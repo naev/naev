@@ -277,6 +277,7 @@ double player_dt_default (void);
  */
 /* Clearing. */
 void player_targetClear (void);
+void player_targetClearAll (void);
 /* Planets. */
 void player_targetPlanetSet( int id );
 void player_targetPlanet (void);
