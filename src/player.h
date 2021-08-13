@@ -73,29 +73,29 @@ enum {
  */
 typedef struct Player_s {
    /* Player intrinsics. */
-   Pilot *p; /**< Player's pilot. */
-   char *name; /**< Player's name. */
-   double dt_mod; /**< Static modifier of dt applied to the game as a whole. */
-   char *gui; /**< Player's GUI. */
-   int guiOverride; /**< GUI is overridden (not default). */
-   int favourite; /**< Whether or not this ship is favourited. */
+   Pilot *p;         /**< Player's pilot. */
+   char *name;       /**< Player's name. */
+   double dt_mod;    /**< Static modifier of dt applied to the game as a whole. */
+   char *gui;        /**< Player's GUI. */
+   int guiOverride;  /**< GUI is overridden (not default). */
+   int favourite;    /**< Whether or not this ship is favourited. */
 
    /* Player data. */
-   PlayerFlags flags; /**< Player's flags. */
-   int enemies; /**< Amount of enemies the player has. */
-   int disabled_enemies; /**< Amount of enemies that are disabled. */
-   int autonav; /**< Current autonav state. */
-   Vector2d autonav_pos; /**< Target autonav position. */
+   PlayerFlags flags;/**< Player's flags. */
+   int enemies;      /**< Amount of enemies the player has. */
+   int disabled_enemies;/**< Amount of enemies that are disabled. */
+   int autonav;      /**< Current autonav state. */
+   Vector2d autonav_pos;/**< Target autonav position. */
    char *autonavmsg; /**< String (allocated, may be NULL) to print on arrival. */
-   char autonavcol; /**< Colour for autonav target description (e.g., hostile). */
-   double tc_max; /**< Maximum time compression value (bounded by ship speed or conf setting). */
-   double autonav_timer; /**< Timer that prevents time accel after a reset. */
-   double mousex; /**< Mouse X position (for mouse flying). */
-   double mousey; /**< Mouse Y position (for mouse flying). */
-   double speed; /**< Gameplay speed modifier, multiplies the ship base speed. */
+   char autonavcol;  /**< Colour for autonav target description (e.g., hostile). */
+   double tc_max;    /**< Maximum time compression value (bounded by ship speed or conf setting). */
+   double autonav_timer;/**< Timer that prevents time accel after a reset. */
+   double mousex;    /**< Mouse X position (for mouse flying). */
+   double mousey;    /**< Mouse Y position (for mouse flying). */
+   double speed;     /**< Gameplay speed modifier, multiplies the ship base speed. */
 
    /* Loaded game version. */
-   char *loaded_version; /**< Version of the loaded save game. */
+   char *loaded_version;/**< Version of the loaded save game. */
 
    /* Meta-data. */
    time_t last_played; /**< Date the save was last played. */
@@ -106,6 +106,8 @@ typedef struct Player_s {
    double dmg_taken_shield; /**< Total damage taken to shields. */
    double dmg_taken_armour; /**< Total damage taken to armour. */
    unsigned int ships_destroyed[SHIP_CLASS_TOTAL]; /**< Total number of ships destroyed. */
+   unsigned int jumped_times; /**< Times the player jumped. */
+   unsigned int landed_times; /**< Times the player landed. */
 
    /* Meta-meta-data. */
    time_t time_since_save; /**< Time since last saved. */
