@@ -270,7 +270,7 @@ def generate_h_file(f):
     f.write("""
 #ifndef SHADER_GEN_C_H
 #define SHADER_GEN_C_H
-#include "opengl.h"
+#include "glad.h"
 
 typedef struct SimpleShader_ {
     GLuint program;
