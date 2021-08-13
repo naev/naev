@@ -479,12 +479,14 @@ static void gui_renderPlanetTarget( double dt )
    if (player.p->nav_asteroid >= 0) {
       field = &cur_system->asteroids[player.p->nav_anchor];
       ast   = &field->asteroids[player.p->nav_asteroid];
-      c = &cWhite;
+      c     = &cWhite;
 
       /* Recover the right gfx */
       at = space_getType( ast->type );
-      if (ast->gfxID >= array_size(at->gfxs))
+      if (ast->gfxID >= array_size(at->gfxs)) {
          WARN(_("Gfx index out of range"));
+         return;
+      }
 
       x = ast->pos.x - at->gfxs[ast->gfxID]->w / 2.;
       y = ast->pos.y + at->gfxs[ast->gfxID]->h / 2.;
