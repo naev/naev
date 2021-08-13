@@ -355,6 +355,7 @@ static int colL_setalpha( lua_State *L )
    return 0;
 }
 
+
 /**
  * @brief Converts a colour from linear to gamma corrected.
  *
