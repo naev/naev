@@ -583,7 +583,6 @@ void loadscreen_render( double done, const char *msg )
    }
 
    /* Draw progress bar. */
-   /* Set the vertex. */
    gl_Matrix4 projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
@@ -602,7 +601,6 @@ void loadscreen_render( double done, const char *msg )
    glUseProgram(0);
    gl_checkErr();
    
-
    /* Draw text. */
    gl_printRaw( &gl_defFont, x, y + h + 3., &cFontWhite, -1., msg );
 

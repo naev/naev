@@ -25,6 +25,13 @@ float sdCircle( vec2 p, float r )
    return length(p)-r;
 }
 
+/* Box at position b with border b. */
+float sdBox( vec2 p, vec2 b )
+{
+   vec2 d = abs(p)-b;
+   return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
+}
+
 /* Uneven capsule oriented on Y axis. */
 float sdUnevenCapsuleY( vec2 p, float ra, float rb, float h )
 {
