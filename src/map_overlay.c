@@ -277,6 +277,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       const float ty[4] = { -gl_smallFont.h/2.,  -gl_smallFont.h/2., mo[i]->radius/2+ovr_text_pixbuf+.1, -mo[i]->radius/2-.1-h };
 
       /* Check all combinations. */
+      bx = 0.;
+      by = 0.;
       best = HUGE_VALF;
       for (k=0; k<4; k++) {
          val = 0.;
@@ -299,7 +301,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
             by = ty[k];
             best = val;
          }
-         if (val==0)
+         if (val==0.)
             break;
       }
 
