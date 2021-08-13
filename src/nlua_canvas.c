@@ -164,6 +164,39 @@ static int canvasL_eq( lua_State *L )
 }
 
 
+int canvas_new( LuaCanvas_t *lc, int w, int h )
+{
+   GLenum status;
+   char *name;
+
+   /* Create the texture. */
+   asprintf( &name, "nlua_canvas_%03d", ++nlua_canvas_counter );
+   lc->tex = gl_loadImageData( NULL, w, h, 1, 1, name );
+   free( name );
+
+   /* Create the frame buffer. */
+   glGenFramebuffers( 1, &lc->fbo );
+   glBindFramebuffer(GL_FRAMEBUFFER, lc->fbo);
+
+   /* Attach the colour buffer. */
+   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, lc->tex->texture, 0);
+
+   /* Check status. */
+   status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+   if (status != GL_FRAMEBUFFER_COMPLETE)
+      return -1;
+
+   /* Clear the canvas. */
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+   /* Restore state. */
+   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+
+   gl_checkErr();
+   return 0;
+}
+
+
 /**
  * @brief Opens a new canvas.
  *
@@ -176,39 +209,13 @@ static int canvasL_new( lua_State *L )
 {
    LuaCanvas_t lc;
    int w, h;
-   GLenum status;
-   char *name;
 
    w = luaL_checkint(L,1);
    h = luaL_checkint(L,2);
 
    memset( &lc, 0, sizeof(LuaCanvas_t) );
-
-   /* Create the texture. */
-   asprintf( &name, "nlua_canvas_%03d", ++nlua_canvas_counter );
-   lc.tex = gl_loadImageData( NULL, w, h, 1, 1, name );
-   free( name );
-
-   /* Create the frame buffer. */
-   glGenFramebuffers( 1, &lc.fbo );
-   glBindFramebuffer(GL_FRAMEBUFFER, lc.fbo);
-
-   /* Attach the colour buffer. */
-   glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, lc.tex->texture, 0);
-
-   /* Check status. */
-   status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-   if (status != GL_FRAMEBUFFER_COMPLETE)
+   if (canvas_new( &lc, w, h ))
       NLUA_ERROR( L, _("Error setting up framebuffer!"));
-
-   /* Clear the canvas. */
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-   /* Restore state. */
-   glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
-
-   gl_checkErr();
-
    lua_pushcanvas( L, lc );
    return 1;
 }

@@ -39,6 +39,11 @@ LuaCanvas_t* luaL_checkcanvas( lua_State *L, int ind );
 LuaCanvas_t* lua_pushcanvas( lua_State *L, LuaCanvas_t canvas );
 int lua_iscanvas( lua_State *L, int ind );
 
+/*
+ * Misc helpers.
+ */
+int canvas_new( LuaCanvas_t *lc, int w, int h );
+
 
 #endif /* NLUA_CANVAS_H */
 
