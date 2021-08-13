@@ -780,8 +780,7 @@ static int playerL_land( lua_State *L )
 
       space_gfxUnload( cur_system );
 
-      player_targetHyperspaceSet( -1 );
-      player_targetPlanetSet( -1 );
+      player_targetClearAll();
 
       space_init( sysname );
 
@@ -1413,8 +1412,7 @@ static int playerL_teleport( lua_State *L )
     * target reset must be done prior to calling space_init and destroying
     * the old system.
     */
-   player_targetHyperspaceSet( -1 );
-   player_targetPlanetSet( -1 );
+   player_targetClearAll();
 
    /* Go to the new system. */
    space_init( name );
