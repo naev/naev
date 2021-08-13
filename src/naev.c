@@ -569,7 +569,7 @@ void loadscreen_render( double done, const char *msg )
    by = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2.;
    /* Loading bar. */
    w  = SCREEN_W * 0.4;
-   h  = SCREEN_H * 0.02;
+   h  = SCREEN_H * 0.025;
    rh = h + gl_defFont.h + 4.;
    x  = (SCREEN_W-w)/2.;
    y  = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2. - rh - 5.;
