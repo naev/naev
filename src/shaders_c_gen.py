@@ -45,7 +45,7 @@ class Shader:
 
 class SimpleShader(Shader):
     def __init__(self, name, fs_path):
-        super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","color","dimensions"], subroutines={} )
+        super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","color","dimensions","dt","r"], subroutines={} )
     def write_header(self, f):
         f.write(f"   SimpleShader {self.name};\n")
 
@@ -278,6 +278,8 @@ typedef struct SimpleShader_ {
     GLuint projection;
     GLuint color;
     GLuint dimensions;
+    GLuint dt;
+    GLuint r;
 } SimpleShader;
 
 typedef struct Shaders_ {
