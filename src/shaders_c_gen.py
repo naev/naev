@@ -46,6 +46,8 @@ class Shader:
 class SimpleShader(Shader):
     def __init__(self, name, fs_path):
         super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","color","dimensions"], subroutines={} )
+    def write_header(self, f):
+        f.write(f"   SimpleShader {self.name};\n")
 
 
 SHADERS = [
@@ -269,6 +271,14 @@ def generate_h_file(f):
 #ifndef SHADER_GEN_C_H
 #define SHADER_GEN_C_H
 #include "opengl.h"
+
+typedef struct SimpleShader_ {
+    GLuint program;
+    GLuint vertex;
+    GLuint projection;
+    GLuint color;
+    GLuint dimensions;
+} SimpleShader;
 
 typedef struct Shaders_ {
 """)
