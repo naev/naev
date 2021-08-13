@@ -68,7 +68,6 @@ double map_alpha_names        = 1.;
 double map_alpha_markers      = 1.;
 static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
-glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
 static int cur_commod         = -1; /**< Current commodity selected. */
 static int cur_commod_mode    = 0; /**< 0 for cost, 1 for difference. */
 static Commodity **commod_known = NULL; /**< index of known commodities */
@@ -109,7 +108,6 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static void map_reset (void);
-static glTexture *gl_genFactionDisk( int radius );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_buttonCommodity( unsigned int wid, char* str );
@@ -139,8 +137,6 @@ int map_init (void)
    vertex[4] = 1 + 3 * cos(beta);
    vertex[5] = -3 * sin(beta);
    marker_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 6, vertex );
-
-   gl_faction_disk = gl_genFactionDisk( 150. );
    return 0;
 }
 
@@ -154,8 +150,6 @@ void map_exit (void)
 
    gl_vboDestroy(map_vbo);
    map_vbo = NULL;
-
-   gl_freeTexture( gl_faction_disk );
 
    if (decorator_stack != NULL) {
       for (i=0; i<array_size(decorator_stack); i++)
@@ -791,60 +785,6 @@ static void map_drawMarker( double x, double y, double r, double a,
 }
 
 /**
- * @brief Generates a texture to represent factions
- *
- * @param radius radius of the disk
- * @return the texture
- */
-static glTexture *gl_genFactionDisk( int radius )
-{
-   int i, j;
-   uint8_t *pixels;
-   SDL_Surface *sur;
-   int dist;
-   double alpha;
-
-   /* Calculate parameters. */
-   const int w = 2 * radius + 1;
-   const int h = 2 * radius + 1;
-
-   /* Create the surface. */
-   sur = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
-
-   pixels = sur->pixels;
-   memset(pixels, 0xff, sizeof(uint8_t) * 4 * h * w);
-
-   /* Generate the circle. */
-   SDL_LockSurface( sur );
-
-   /* Draw the circle with filter. */
-   for (i=0; i<h; i++) {
-      for (j=0; j<w; j++) {
-         /* Calculate blur. */
-         dist = (i - radius) * (i - radius) + (j - radius) * (j - radius);
-         alpha = 0.;
-
-         if (dist < radius * radius) {
-            /* Computes alpha with an empirically chosen formula.
-             * This formula accounts for the fact that the eyes
-             * has a logarithmic sensitivity to light */
-            alpha = 1. * dist / (radius * radius);
-            alpha = (exp(1 / (alpha + 1) - 0.5) - 1) * 0xFF;
-         }
-
-         /* Sets the pixel alpha which is the forth byte
-          * in the pixel representation. */
-         pixels[i*sur->pitch + j*4 + 3] = (uint8_t)alpha;
-      }
-   }
-
-   SDL_UnlockSurface( sur );
-
-   /* Return texture. */
-   return gl_loadImage( sur, OPENGL_TEX_MIPMAPS );
-}
-
-/**
  * @brief Renders the custom map widget.
  *
  *    @param bx Base X position to render at.
@@ -1066,20 +1006,21 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
          presence = sqrt(sys->ownerpresence);
 
          /* draws the disk representing the faction */
-         sw = (60 + presence * 3) * map_zoom;
+         sw = (40 + presence * 3) * map_zoom;
          sh = sw;
 
          col = faction_colour(sys->faction);
          c.r = col->r;
          c.g = col->g;
          c.b = col->b;
-         //c.a = CLAMP( 0.6, 0.75, 20.0 / presence ) * cc;
-         c.a = 0.6*CLAMP( 0.4, 0.5, 13.3 / presence ) * alpha;
+         c.a = 0.6 * alpha;
 
-         gl_blitTexture(
-               gl_faction_disk,
-               tx - sw/2, ty - sh/2, sw, sh,
-               0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c, 0.);
+         gl_Matrix4 projection = gl_view_matrix;
+         projection = gl_Matrix4_Translate(projection, tx-sw/2, ty-sh/2, 0);
+         projection = gl_Matrix4_Scale(projection, sw, sh, 1);
+
+         glUseProgram(shaders.factiondisk.program);
+         gl_renderShaderH( &shaders.factiondisk, &projection, &c );
       }
    }
 }

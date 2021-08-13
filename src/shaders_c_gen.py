@@ -248,6 +248,10 @@ SHADERS = [
       subroutines = {},
    ),
    SimpleShader(
+      name = "factiondisk",
+      fs_path = "factiondisk.frag",
+   ),
+   SimpleShader(
       name = "progressbar",
       fs_path = "progressbar.frag",
    ),
