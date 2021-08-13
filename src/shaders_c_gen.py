@@ -17,36 +17,23 @@ class Shader:
         f.write("   struct {\n")
         f.write("      GLuint program;\n")
         for attribute in self.attributes:
-            f.write("      GLuint {};\n".format(attribute))
+            f.write(f"      GLuint {attribute};\n")
         for uniform in self.uniforms:
-            f.write("      GLuint {};\n".format(uniform))
+            f.write(f"      GLuint {uniform};\n")
         for subroutine, routines in self.subroutines.items():
             f.write("      struct {\n")
             f.write("         GLuint uniform;\n")
             for r in routines:
                 f.write(f"         GLuint {r};\n")
             f.write(f"      }} {subroutine};\n")
-        f.write("   }} {};\n".format(self.name))
+        f.write(f"   }} {self.name};\n")
 
     def write_source(self, f):
-        f.write("   shaders.{}.program = gl_program_vert_frag(\"{}\", \"{}\");\n".format(
-                 self.name,
-                 self.vs_path,
-                 self.fs_path))
+        f.write(f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n")
         for attribute in self.attributes:
-            f.write("   shaders.{}.{} = glGetAttribLocation(shaders.{}.program, \"{}\");\n".format(
-                    self.name,
-                    attribute,
-                    self.name,
-                    attribute))
-
+            f.write(f"   shaders.{self.name}.{attribute} = glGetAttribLocation(shaders.{self.name}.program, \"{attribute}\");\n")
         for uniform in self.uniforms:
-            f.write("   shaders.{}.{} = glGetUniformLocation(shaders.{}.program, \"{}\");\n".format(
-                    self.name,
-                    uniform,
-                    self.name,
-                    uniform))
-
+            f.write(f"   shaders.{self.name}.{uniform} = glGetUniformLocation(shaders.{self.name}.program, \"{uniform}\");\n")
         if len(self.subroutines) > 0:
             f.write("   if (gl_has( OPENGL_SUBROUTINES )) {\n")
             for subroutine, routines in self.subroutines.items():
