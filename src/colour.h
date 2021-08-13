@@ -72,8 +72,6 @@ extern const glColour cAqua;
  * game specific
  */
 extern const glColour cBlackHilight;
-/* toolkit */
-extern const glColour cHilight;
 /* outfit slot colours. */
 extern const glColour cOutfitHeavy;
 extern const glColour cOutfitMedium;

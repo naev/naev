@@ -84,8 +84,6 @@ const glColour cAqua       = COL( 0.00, 0.75, 1.00 ); /**< Aqua */
  * game specific
  */
 const glColour cBlackHilight  = ACOL( 0.0, 0.0, 0.0, 0.4 ); /**< Hilight colour over black background. */
-/* toolkit */
-const glColour cHilight       = ACOL( 0.1, 0.9, 0.1, 0.6 ); /**< Hilight colour */
 /* outfit slot colours.
  * Taken from https://cran.r-project.org/web/packages/khroma/vignettes/tol.html#muted
  */
