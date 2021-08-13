@@ -585,20 +585,14 @@ void loadscreen_render( double done, const char *msg )
 
    /* Draw progress bar. */
    /* BG. */
-   col.r = cBlack.r;
-   col.g = cBlack.g;
-   col.b = cBlack.b;
+   col = cBlack;
    col.a = 0.7;
    gl_renderRect( x-2., y-2., w+4., rh+4., &col );
    /* FG. */
-   col.r = cGreen.r;
-   col.g = cGreen.g;
-   col.b = cGreen.b;
+   col = cGreen;
    col.a = 0.2;
    gl_renderRect( x+done*w, y, (1.-done)*w, h, &col );
-   col.r = cPrimeGreen.r;
-   col.g = cPrimeGreen.g;
-   col.b = cPrimeGreen.b;
+   col = cPrimeGreen;
    col.a = 0.7;
    gl_renderRect( x, y, done*w, h, &col );
 
