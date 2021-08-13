@@ -94,6 +94,7 @@
 
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
+static double loading_r       = 0.; /**< Just to provide some randomness. */
 static glTexture *loading     = NULL; /**< Loading screen. */
 static glFont loading_font; /**< Loading font. */
 static char *loading_txt = NULL; /**< Loading text to display. */
@@ -521,6 +522,7 @@ void loadscreen_load (void)
    /* Load the texture */
    snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s", load );
    loading = gl_newImage( file_path, 0 );
+   loading_r = RNGF();
 
    /* Load the metadata. */
    snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s.txt", load );
@@ -589,7 +591,8 @@ void loadscreen_render( double done, const char *msg )
 
    glUseProgram(shaders.progressbar.program);
    glUniform2f( shaders.progressbar.dimensions, w, h );
-   glUniform1f( shaders.progressbar.r, done );
+   glUniform1f( shaders.progressbar.r, loading_r );
+   glUniform1f( shaders.progressbar.dt, done );
    gl_renderShaderH( &shaders.progressbar, &projection, NULL );
    
    /* Draw text. */
