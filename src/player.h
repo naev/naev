@@ -18,26 +18,26 @@ enum {
    PLAYER_TURN_LEFT,    /**< player is turning left */
    PLAYER_TURN_RIGHT,   /**< player is turning right */
    PLAYER_REVERSE,      /**< player is facing opposite of vel */
-   PLAYER_ACCEL,         /**< player is accelerating */
+   PLAYER_ACCEL,        /**< player is accelerating */
    PLAYER_DESTROYED,    /**< player is destroyed */
    PLAYER_FACE,         /**< player is facing target */
    PLAYER_PRIMARY,      /**< player is shooting primary weapon */
    PLAYER_PRIMARY_L,    /**< player shot primary weapon last frame. */
    PLAYER_SECONDARY,    /**< player is shooting secondary weapon */
    PLAYER_SECONDARY_L,  /**< player shot secondary last frame. */
-   PLAYER_BASICAPPROACH, /**< player is only doing a basic approach, no auto-landing (cleared on approach end). */
+   PLAYER_BASICAPPROACH,/**< player is only doing a basic approach, no auto-landing (cleared on approach end). */
    PLAYER_LANDACK,      /**< player has permission to land */
    PLAYER_CREATING,     /**< player is being created */
    PLAYER_AUTONAV,      /**< player has autonavigation on. */
    PLAYER_NOLAND,       /**< player is not allowed to land (cleared on enter). */
-   PLAYER_CINEMATICS_GUI, /**< Disable rendering the GUI when in cinematics mode. */
-   PLAYER_CINEMATICS_2X, /**< Disables usage of the 2x button when in cinematics mode. */
+   PLAYER_CINEMATICS_GUI,/**< Disable rendering the GUI when in cinematics mode. */
+   PLAYER_CINEMATICS_2X,/**< Disables usage of the 2x button when in cinematics mode. */
    PLAYER_HOOK_LAND,    /**< Hook hack to avoid running hooks in the middle of the pilot stack. */
    PLAYER_HOOK_JUMPIN,  /**< Hook hack to avoid running hooks in the middle of the pilot stack. */
    PLAYER_HOOK_HYPER,   /**< Hook hack to avoid runving hooks in the middle of the pilot stack. */
    PLAYER_MFLY,         /**< Player has enabled mouse flying. */
    PLAYER_NOSAVE,       /**< Player is not allowed to save. */
-   PLAYER_FLAGS_MAX     /* Maximum number of flags. */
+   PLAYER_FLAGS_MAX     /**< Maximum number of flags. */
 };
 
 /** player_land() outcomes. */
