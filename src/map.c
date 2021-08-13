@@ -1073,8 +1073,8 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
          c.r = col->r;
          c.g = col->g;
          c.b = col->b;
-         //c.a = CLAMP( .6, .75, 20 / presence ) * cc;
-         c.a = CLAMP( .4, .5, 13.3 / presence ) * alpha;
+         //c.a = CLAMP( 0.6, 0.75, 20.0 / presence ) * cc;
+         c.a = CLAMP( 0.4, 0.5, 13.3 / presence ) * alpha;
 
          gl_blitTexture(
                gl_faction_disk,
