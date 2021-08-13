@@ -10,6 +10,7 @@
 #include "opengl.h"
 #include "opengl_tex.h"
 #include "opengl_vbo.h"
+#include "shaders.gen.h"
 
 
 /*
@@ -83,6 +84,8 @@ void gl_endSolidProgram (void);
 void gl_beginSmoothProgram(gl_Matrix4 projection);
 void gl_endSmoothProgram (void);
 
+/* Simple Shaders. */
+void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glColour *c );
 
 /* Circles. */
 void gl_drawCircle( const double x, const double y,

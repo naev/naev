@@ -600,22 +600,10 @@ void ovr_render( double dt )
       projection = gl_Matrix4_Translate( projection, 0, -rw/2., 0 );
       projection = gl_Matrix4_Scale( projection, rh, rw, 1 );
 
-      /* Render.*/
+      /* Render. */
       glUseProgram(shaders.safelanes.program);
-      glEnableVertexAttribArray(shaders.safelanes.vertex);
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.safelanes.vertex, 0, 2, GL_FLOAT, 0 );
-
-      gl_uniformColor(shaders.safelanes.color, &col);
-      gl_Matrix4_Uniform(shaders.safelanes.projection, projection);
       glUniform2f(shaders.safelanes.dimensions, rh, rw);
-      //glUniform1f(shaders.safelanes.dt, 0.);
-      //glUniform1f(shaders.safelanes.r, rw+rh+x+y);
-
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      glDisableVertexAttribArray(shaders.safelanes.vertex);
-      glUseProgram(0);
-      gl_checkErr();
+      gl_renderShaderH( &shaders.safelanes, &projection, &col );
    }
    array_free( safelanes );
 

@@ -699,6 +699,31 @@ void gl_blitStatic( const glTexture* texture,
 
 
 /**
+ * @brief Renders a simple shader with a transformation.
+ *
+ *    @param shd Shader to render.
+ *    @param H Transformation matrix.
+ *    @param c Colour to use or NULL if not necessary.
+ */
+void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glColour *c )
+{
+   glEnableVertexAttribArray(shd->vertex);
+   gl_vboActivateAttribOffset( gl_squareVBO, shd->vertex, 0, 2, GL_FLOAT, 0 );
+
+   if (c != NULL)
+      gl_uniformColor(shd->color, c);
+
+   gl_Matrix4_Uniform(shd->projection, *H);
+
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   glDisableVertexAttribArray(shaders.safelanes.vertex);
+   glUseProgram(0);
+   gl_checkErr();
+}
+
+
+/**
  * @brief Draws a circle.
  *
  *    @param cx X position of the center in screen coordinates.
