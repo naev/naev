@@ -544,9 +544,8 @@ void loadscreen_load (void)
  */
 void loadscreen_render( double done, const char *msg )
 {
-   const double SHIP_IMAGE_WIDTH = 512.;  /**< Loadscreen Ship Image Width */
-   const double SHIP_IMAGE_HEIGHT = 512.; /**< Loadscreen Ship Image Height */
-   glColour col;
+   const double SHIP_IMAGE_WIDTH    = 512.;  /**< Loadscreen Ship Image Width */
+   const double SHIP_IMAGE_HEIGHT   = 512.; /**< Loadscreen Ship Image Height */
    double bx;  /**<  Blit Image X Coord */
    double by;  /**<  Blit Image Y Coord */
    double x;   /**<  Progress Bar X Coord */
@@ -585,19 +584,13 @@ void loadscreen_render( double done, const char *msg )
 
    /* Draw progress bar. */
    /* BG. */
-   col = cBlack;
-   col.a = 0.7;
-   gl_renderRect( x-2., y-2., w+4., rh+4., &col );
+   gl_renderRect( x-2., y-2., w+4., rh+4., &cBlack );
    /* FG. */
-   col = cGreen;
-   col.a = 0.2;
-   gl_renderRect( x+done*w, y, (1.-done)*w, h, &col );
-   col = cPrimeGreen;
-   col.a = 0.7;
-   gl_renderRect( x, y, done*w, h, &col );
+   gl_renderRect( x+done*w, y, (1.-done)*w, h, &cGrey30);
+   gl_renderRect( x, y, done*w, h, &cGrey70 );
 
    /* Draw text. */
-   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontGreen, -1., msg );
+   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontWhite, -1., msg );
 
    /* Get rid of events again. */
    while (SDL_PollEvent(&event));
