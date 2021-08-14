@@ -161,17 +161,15 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
 	/* Outter stuff. */
 	float w = 1.0 / dimensions.x;
 	float inner = 1.0-w-m;
-	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/2.0*3.0), inner, w );
+	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
-   const float arcseg = M_PI/30.0;
+   const float arcseg = M_PI/32.0;
    const vec2 shortarc = CS(arcseg);
-   d = min( d, sdArc( uv, CS(-M_PI/4.0), shortarc, inner, w ) );
-   d = min( d, sdArc( uv, CS(-M_PI/4.0+4.0*arcseg), shortarc, inner, w ) );
-   d = min( d, sdArc( uv, CS(-M_PI/4.0-4.0*arcseg), shortarc, inner, w ) );
-   d = min( d, sdArc( uv, CS(-M_PI/4.0+8.0*arcseg), shortarc, inner, w ) );
-   d = min( d, sdArc( uv, CS(-M_PI/4.0-8.0*arcseg), shortarc, inner, w ) );
-   d = min( d, sdArc( uv, CS(-M_PI/4.0+12.0*arcseg), shortarc, inner, w ) );
-   d = min( d, sdArc( uv, CS(-M_PI/4.0-12.0*arcseg), shortarc, inner, w ) );
+   vec2 auv = abs(uv);
+   d = min( d, sdArc( auv, CS(M_PI/2.0+2.0*arcseg), shortarc, inner, w ) );
+   d = min( d, sdArc( auv, CS(M_PI/2.0+6.0*arcseg), shortarc, inner, w ) );
+   d = min( d, sdArc( auv, CS(M_PI/2.0+10.0*arcseg), shortarc, inner, w ) );
+   d = min( d, sdArc( auv, CS(M_PI/2.0+14.0*arcseg), shortarc, inner, w ) );
 
 	/* Moving inner stuff. */
    const vec2 arclen = CS(M_PI/6.0);
