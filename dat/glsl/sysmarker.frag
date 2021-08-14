@@ -11,9 +11,9 @@ void main(void) {
    float m = 1.0 / dimensions.x;
 
    color_out = color;
-   float dist = sdRhombus( pos, b );
-   dist = max( -sdRhombus( pos*2.0, b ), dist );
-   dist = min(  dist, sdRhombus( pos*4.0, b ) );
-   color_out.a *= smoothstep( -m, m, -dist );
+   float d = sdRhombus( pos, b );
+   d = max( -sdRhombus( pos*2.0, b ), d );
+   d = min(  d, sdRhombus( pos*4.0, b ) );
+   color_out.a *= smoothstep( -m, m, -d );
 }
 
