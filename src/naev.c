@@ -564,7 +564,7 @@ void loadscreen_render( double done, const char *msg )
    bx = (SCREEN_W-SHIP_IMAGE_WIDTH)/2.;
    by = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2.;
    /* Loading bar. */
-   w  = SCREEN_W * 0.4;
+   w  = SCREEN_W * 0.5;
    h  = SCREEN_H * 0.025;
    rh = h + gl_defFont.h + 4.;
    x  = (SCREEN_W-w)/2.;
@@ -590,7 +590,7 @@ void loadscreen_render( double done, const char *msg )
    gl_renderShaderH( &shaders.progressbar, &projection, NULL );
    
    /* Draw text. */
-   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontWhite, -1., msg );
+   gl_printRaw( &gl_defFont, x+10., y + h + 3., &cFontWhite, -1., msg );
 
    /* Get rid of events again. */
    while (SDL_PollEvent(&event));
