@@ -151,6 +151,7 @@ vec4 bg( vec2 uv )
 		c = vec3( 0.2 );
    else
       c = vec3( 0.0 );
+   c = gammaToLinear( c );
    return vec4( c, 1.0 );
 }
 
