@@ -125,7 +125,7 @@ vec4 sdf_planet( vec4 color, vec2 uv )
 	/* Outter stuff. */
 	float w = 3.0 / dimensions.x;
 	float inner = 1.0-w-m;
-	float d = sdArc( uv, vec2(sin(M_PI/4.0),cos(M_PI/4.0)),
+	float d = sdArc( uv, vec2(sin(-M_PI/4.0),cos(-M_PI/4.0)),
 			 vec2(sin(M_PI/2.0*3.0), cos(M_PI/2.0*3.0)), inner, w );
 
 	/* Moving inner stuff. */
@@ -159,6 +159,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
    vec4 col_out;
    vec2 uv_rel = uv*2.0-1.0;
+   uv_rel.y = - uv_rel.y;
 
    //col_out = sdf_alarm( color, tex, uv, px );
    //col_out = sdf_pilot( color, uv_rel );
