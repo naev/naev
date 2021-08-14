@@ -120,11 +120,11 @@ def generate_h_file(f):
     f.write("""
 #ifndef COLOURS_GEN_C_H
 #define COLOURS_GEN_C_H
+
 """)
     for col in COLOURS:
         col.write_header( f )
     f.write("""
-
 const glColour* col_fromName( const char* name );
 
 #endif /* SHADERS_GEN_C_H */""")
@@ -141,7 +141,6 @@ def generate_c_file(f):
     for col in COLOURS:
         col.write_source( f )
     f.write("""
-
 const glColour* col_fromName( const char* name )
 {
 """)
