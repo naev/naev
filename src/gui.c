@@ -75,6 +75,7 @@
 /* some blinking stuff. */
 static double blink_pilot     = 0.; /**< Timer on target blinking on radar. */
 static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
+static double animation_dt    = 0.; /**< Used for animations. */
 
 /* for VBO. */
 static gl_vbo *gui_planet_vbo = NULL;
@@ -223,8 +224,8 @@ extern void weapon_minimap( const double res, const double w, const double h,
 static void gui_renderTargetReticles( double x, double y, double radius, const glColour* c );
 static void gui_borderIntersection( double *cx, double *cy, double rx, double ry, double hw, double hh );
 /* Render GUI. */
-static void gui_renderPilotTarget( double dt );
-static void gui_renderPlanetTarget( double dt );
+static void gui_renderPilotTarget (void);
+static void gui_renderPlanetTarget (void);
 static void gui_renderBorder( double dt );
 static void gui_renderMessages( double dt );
 static const glColour *gui_getPlanetColour( int i );
@@ -421,9 +422,8 @@ void player_message( const char *fmt, ... )
  *
  *    @param dt Current delta tick.
  */
-static void gui_renderPlanetTarget( double dt )
+static void gui_renderPlanetTarget (void)
 {
-   (void) dt;
    double x,y, r;
    const glColour *c;
    Planet *planet;
@@ -509,6 +509,7 @@ static void gui_renderTargetReticles( double x, double y, double radius, const g
    r = (double)radius *  1.2 * cam_getZoom();
 
    glUseProgram(shaders.targetship.program);
+   glUniform1f(shaders.targetship.dt, animation_dt);
    gl_renderShader( rx, ry, r, r, 0., &shaders.targetship, c, 1 );
 }
 
@@ -518,9 +519,8 @@ static void gui_renderTargetReticles( double x, double y, double radius, const g
  *
  *    @param dt Current delta tick.
  */
-static void gui_renderPilotTarget( double dt )
+static void gui_renderPilotTarget (void)
 {
-   (void) dt;
    Pilot *p;
    const glColour *c;
    double x, y, r;
@@ -562,6 +562,7 @@ static void gui_renderPilotTarget( double dt )
    r = p->ship->gfx_space->sw * 1.2 * cam_getZoom() * 0.5;
 
    glUseProgram(shaders.targetship.program);
+   glUniform1f(shaders.targetship.dt, animation_dt);
    gl_renderShader( x, y, r, r, p->solid->dir, &shaders.targetship, c, 1 );
 }
 
@@ -799,12 +800,14 @@ int gui_onScreenAsset( double *rx, double *ry, JumpPoint *jp, Planet *pnt )
  */
 void gui_renderReticles( double dt )
 {
+   (void) dt;
+
    /* Player must be alive. */
    if (player.p == NULL)
       return;
 
-   gui_renderPlanetTarget(dt);
-   gui_renderPilotTarget(dt);
+   gui_renderPlanetTarget();
+   gui_renderPilotTarget();
 }
 
 
@@ -839,6 +842,7 @@ void gui_render( double dt )
    /*
     * Countdown timers.
     */
+   animation_dt   += dt / dt_mod;
    blink_pilot    -= dt / dt_mod;
    if (blink_pilot < 0.)
       blink_pilot += RADAR_BLINK_PILOT;
@@ -2136,6 +2140,9 @@ void gui_cleanup (void)
    /* Delete the name. */
    free(gui_name);
    gui_name = NULL;
+
+   /* Clear timers. */
+   animation_dt = 0.;
 }
 
 
