@@ -20,6 +20,16 @@ float sdSmoothUnion( float d1, float d2, float k )
 	return smin( d1, d2, k );
 }
 
+
+// c=sin/cos of aperture
+float sdPie( vec2 p, vec2 c, float r )
+{
+   p.x = abs(p.x);
+   float l = length(p) - r;
+   float m = length(p-c*clamp(dot(p,c),0.0,r));
+   return max(l,m*sign(c.y*p.x-c.x*p.y));
+}
+
 float sdUnevenCapsuleY( in vec2 p, in float ra, in float rb, in float h )
 {
 	p.x = abs(p.x);
@@ -143,6 +153,41 @@ vec4 sdf_planet( vec4 color, vec2 uv )
    return color;
 }
 
+#define CS(A)  vec2(sin(A),cos(A))
+vec4 sdf_planet2( vec4 color, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+
+	/* Outter stuff. */
+	float w = 1.0 / dimensions.x;
+	float inner = 1.0-w-m;
+	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/2.0*3.0), inner, w );
+
+   const float arcseg = M_PI/30.0;
+   const vec2 shortarc = CS(arcseg);
+   d = min( d, sdArc( uv, CS(-M_PI/4.0), shortarc, inner, w ) );
+   d = min( d, sdArc( uv, CS(-M_PI/4.0+4.0*arcseg), shortarc, inner, w ) );
+   d = min( d, sdArc( uv, CS(-M_PI/4.0-4.0*arcseg), shortarc, inner, w ) );
+   d = min( d, sdArc( uv, CS(-M_PI/4.0+8.0*arcseg), shortarc, inner, w ) );
+   d = min( d, sdArc( uv, CS(-M_PI/4.0-8.0*arcseg), shortarc, inner, w ) );
+   d = min( d, sdArc( uv, CS(-M_PI/4.0+12.0*arcseg), shortarc, inner, w ) );
+   d = min( d, sdArc( uv, CS(-M_PI/4.0-12.0*arcseg), shortarc, inner, w ) );
+
+	/* Moving inner stuff. */
+   const vec2 arclen = CS(M_PI/6.0);
+	w = 2.0 / dimensions.x;
+	float o = 0.1 * dt;
+	inner -= 2.0*w+m;
+	d = min( d, sdArc( uv, CS(o), arclen, inner, w ) );
+	o += M_PI * 2.0/3.0;
+	d = min( d, sdArc( uv, CS(o), arclen, inner, w ) );
+	o += M_PI * 2.0/3.0;
+	d = min( d, sdArc( uv, CS(o), arclen, inner, w ) );
+
+   color.a *= smoothstep( -m, m, -d );
+   return color;
+}
+
 vec4 bg( vec2 uv )
 {
 	vec3 c;
@@ -163,7 +208,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    //col_out = sdf_alarm( color, tex, uv, px );
    //col_out = sdf_pilot( color, uv_rel );
-   col_out = sdf_planet( color, uv_rel );
+   //col_out = sdf_planet( color, uv_rel );
+   col_out = sdf_planet2( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
