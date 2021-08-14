@@ -567,7 +567,7 @@ static void gui_renderPilotTarget( double dt )
    r = p->ship->gfx_space->sw * 1.2 * cam_getZoom() * 0.5;
 
    glUseProgram(shaders.targetship.program);
-   gl_renderShader( x, y, r, r, 0., &shaders.targetship, c, 1 );
+   gl_renderShader( x, y, r, r, p->solid->dir, &shaders.targetship, c, 1 );
 }
 
 
