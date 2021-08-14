@@ -699,6 +699,27 @@ void gl_blitStatic( const glTexture* texture,
 
 
 /**
+ * @brief Renders a simple shader.
+ *
+ *    @param x X position.
+ *    @param y Y position.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param shd Shader to render.
+ *    @param c Colour to use or NULL if not necessary.
+ *    @param center Whether or not to center the shader on the position and use [-1,1] coordinates or set bottom-left and use [0,1] coordinates.
+ */
+void gl_renderShader( double x, double y, double w, double h, const SimpleShader *shd, const glColour *c, int center )
+{
+   gl_Matrix4 projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
+   glUniform2f( shd->dimensions, w, h );
+   gl_renderShaderH( shd, &projection, c, center );
+}
+
+
+/**
  * @brief Renders a simple shader with a transformation.
  *
  *    @param shd Shader to render.

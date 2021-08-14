@@ -1008,12 +1008,8 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
          c.b = col->b;
          c.a = 0.6 * alpha;
 
-         gl_Matrix4 projection = gl_view_matrix;
-         projection = gl_Matrix4_Translate(projection, tx, ty, 0);
-         projection = gl_Matrix4_Scale(projection, sw/2, sh/2, 1);
-
          glUseProgram(shaders.factiondisk.program);
-         gl_renderShaderH( &shaders.factiondisk, &projection, &c, 1 );
+         gl_renderShader( tx, ty, sw/2, sh/2, &shaders.factiondisk, &c, 1 );
       }
    }
 }

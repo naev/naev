@@ -579,15 +579,10 @@ void loadscreen_render( double done, const char *msg )
    }
 
    /* Draw progress bar. */
-   gl_Matrix4 projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, x, y, 0);
-   projection = gl_Matrix4_Scale(projection, w, h, 1);
-
    glUseProgram(shaders.progressbar.program);
-   glUniform2f( shaders.progressbar.dimensions, w, h );
    glUniform1f( shaders.progressbar.r, loading_r );
    glUniform1f( shaders.progressbar.dt, done );
-   gl_renderShaderH( &shaders.progressbar, &projection, NULL, 0 );
+   gl_renderShader( x, y, w, h, &shaders.progressbar, NULL, 0 );
    
    /* Draw text. */
    gl_printRaw( &gl_defFont, x+10., y + h + 3., &cFontWhite, -1., msg );
