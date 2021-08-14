@@ -387,7 +387,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
    vec4 screenColor = texture( tex, uv );
    uv.x = round(uv.x * glitchStep ) / glitchStep;
    vec4 glitchColor = texture( tex, uv );
-   return color * mix(screenColor, glitchColor, vec4(0.1*strength));
+   return color * mix(screenColor, glitchColor, vec4(0.03*strength));
 }
 ]], strength )
 
