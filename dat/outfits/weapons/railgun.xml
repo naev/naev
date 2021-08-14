@@ -24,8 +24,8 @@
   <gfx_end>massL-end.png</gfx_end>
   <energy>60</energy>
   <heatup>75</heatup>
-  <trackmin>7000</trackmin>
-  <trackmax>20000</trackmax>
+  <trackmin>4000</trackmin>
+  <trackmax>12000</trackmax>
   <swivel>22</swivel>
   <damage>
    <type>impact</type>

@@ -22,8 +22,8 @@
   <range blowup="armour">1200</range>
   <energy>7.5</energy>
   <heatup>50</heatup>
-  <trackmin>2000</trackmin>
-  <trackmax>8000</trackmax>
+  <trackmin>1000</trackmin>
+  <trackmax>4000</trackmax>
   <damage>
    <type>impact</type>
    <penetrate>36</penetrate>
