@@ -1,6 +1,7 @@
 local pixelcode_sdf = [[
 #pragma language glsl3
 uniform float u_time = 0.0;
+uniform float dt = 0.0;
 uniform float u_size = 100.0;
 uniform vec2 dimensions;
 
@@ -93,12 +94,15 @@ vec4 sdf_target( vec4 color, vec2 uv )
    float m = 1.0 / dimensions.x;
    uv = abs(uv);
 
+   const float arclen = M_PI/10.0;
+
    float d = sdArc( uv,
          vec2(sin(M_PI*0.75),cos(M_PI*0.75)),
-         vec2(sin(M_PI/10.0),cos(M_PI/10.0)),
+         vec2(sin(arclen),cos(arclen)),
          0.95, 0.03 );
 
    d = min( d, sdUnevenCapsule( uv, vec2(0.68), vec2(0.8), 0.07, 0.02) );
+   d -= (1.0+sin(3.0*dt)) * 0.007;
    d = max( -sdCircle( uv-vec2(0.68), 0.04 ), d );
 
    color.a *= smoothstep( -m, m, -d );
@@ -256,6 +260,9 @@ function love.update( dt )
    global_dt = (global_dt or 0) + dt
    if shader:hasUniform("u_time") then
       shader:send( "u_time", global_dt )
+   end
+   if shader:hasUniform("dt") then
+      shader:send( "dt", global_dt )
    end
 end
 

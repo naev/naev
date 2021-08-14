@@ -3,6 +3,7 @@
 
 uniform vec4 color;
 uniform vec2 dimensions;
+uniform float dt;
 
 in vec2 pos;
 out vec4 color_out;
@@ -16,6 +17,7 @@ void main(void) {
          vec2(sin(M_PI/10.0),cos(M_PI/10.0)), 0.95, 0.03 );
 
    d = min( d, sdUnevenCapsule( uv, vec2(0.68), vec2(0.8), 0.07, 0.02) );
+   d -= (1.0+sin(3.0*dt)) * 0.007;
    d = max( -sdCircle( uv-vec2(0.68), 0.04 ), d );
 
    color_out = color;
