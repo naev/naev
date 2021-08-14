@@ -196,8 +196,9 @@ function set_shader( num )
 end
 
 function love.load()
+   ww, wh = 1200, 600
    love.window.setTitle( "Naev Overlay Demo" )
-   love.window.setMode( 900, 500 )
+   love.window.setMode( ww, wh )
    --love.window.setMode( 0, 0, {fullscreen = true} )
    -- Set up the shader
    shader   = love.graphics.newShader( pixelcode_sdf, vertexcode)
@@ -222,18 +223,14 @@ function love.draw ()
    lg.setColor( 0, 0, 0, 1 )
    lg.rectangle( "fill", 0, 0, w, h )
 
-   lg.scale( 0.5 )
-
    local x, y = 0, 0
-   local function draw_shader( w, u_grain, u_speed, u_steps )
-      u_grain = u_grain or 1.0
-      u_speed = u_speed or 1.0
-      u_steps = u_steps or 24
+   local function draw_shader( w )
       local h = w
       shader:send("u_size",w/2)
       if shader:hasUniform("dimensions") then
          shader:send("dimensions", {w/2, w/2} )
       end
+      y = (wh-h)/2.0
       lg.setShader()
       lg.setColor( 0.0, 0.0, 0.0, 1 )
       lg.rectangle( "fill", x, y, w, h )
@@ -244,14 +241,11 @@ function love.draw ()
       x = x + w
    end
 
-   local s  = 0.3
-   draw_shader( 500, 0.35,  s, 16 )
-   draw_shader( 400, 0.325, s, 15 )
-   draw_shader( 300, 0.3,   s, 14 )
-   draw_shader( 200, 0.25,  s, 12 )
-   draw_shader( 100, 0.2,   s, 10 )
-   draw_shader( 70,  0.15,  s,  8 )
-   draw_shader( 40,  0.125, s,  6 )
+   draw_shader( 600 )
+   draw_shader( 300 )
+   draw_shader( 150 )
+   draw_shader(  75 )
+   draw_shader(  38 )
 
    lg.setShader()
 end
