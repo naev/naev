@@ -2,16 +2,12 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-
-
 #ifndef COLOUR_H
 #  define COLOUR_H
-
 
 /** @cond */
 #include "glad.h"
 /** @endcond */
-
 
 /**
  * @brief represents a colour via its RGBA values.
@@ -26,94 +22,7 @@ typedef struct glColour_ {
 /*
  * default colours
  */
-/* greyscale */
-extern const glColour cWhite;
-#define cGrey  cGrey70
-extern const glColour cBlack;
-/* greys */
-extern const glColour cGrey90;
-extern const glColour cGrey80;
-extern const glColour cGrey70;
-extern const glColour cGrey60;
-extern const glColour cGrey50;
-extern const glColour cGrey45;
-extern const glColour cGrey40;
-extern const glColour cGrey35;
-extern const glColour cGrey30;
-extern const glColour cGrey25;
-extern const glColour cGrey20;
-extern const glColour cGrey15;
-extern const glColour cGrey10;
-extern const glColour cGrey5;
-
-extern const glColour cDarkGreen;
-extern const glColour cGreen;
-extern const glColour cPrimeGreen;
-extern const glColour cDarkRed;
-extern const glColour cRed;
-extern const glColour cPrimeRed;
-extern const glColour cBrightRed;
-extern const glColour cOrange;
-extern const glColour cYellow;
-extern const glColour cMidnightBlue;
-extern const glColour cDarkBlue;
-extern const glColour cBlue;
-extern const glColour cLightBlue;
-extern const glColour cPrimeBlue;
-extern const glColour cCyan;
-extern const glColour cPurple;
-extern const glColour cDarkPurple;
-extern const glColour cBrown;
-extern const glColour cGold;
-extern const glColour cSilver;
-extern const glColour cAqua;
-
-/*
- * game specific
- */
-extern const glColour cBlackHilight;
-/* outfit slot colours. */
-extern const glColour cOutfitHeavy;
-extern const glColour cOutfitMedium;
-extern const glColour cOutfitLight;
-/* objects */
-extern const glColour cInert;
-extern const glColour cNeutral;
-extern const glColour cFriend;
-extern const glColour cHostile;
-extern const glColour cRestricted;
-/* mission markers */
-extern const glColour cMarkerNew;
-extern const glColour cMarkerComputer;
-extern const glColour cMarkerLow;
-extern const glColour cMarkerHigh;
-extern const glColour cMarkerPlot;
-/* radar */
-extern const glColour cRadar_player;
-extern const glColour cRadar_tPilot;
-extern const glColour cRadar_tPlanet;
-extern const glColour cRadar_weap;
-extern const glColour cRadar_hilight;
-/* health */
-extern const glColour cShield;
-extern const glColour cArmour;
-extern const glColour cEnergy;
-extern const glColour cFuel;
-/* Deiz's Super Font Palette */
-extern const glColour cFontRed;
-extern const glColour cFontGreen;
-extern const glColour cFontBlue;
-extern const glColour cFontOrange;
-extern const glColour cFontYellow;
-extern const glColour cFontWhite;
-extern const glColour cFontGrey;
-extern const glColour cFontPurple;
-
-
-/*
- * Misc functions.
- */
-const glColour* col_fromName( const char* name );
+#include "colours.gen.h"
 
 /*
  * Colour space conversion routines.
@@ -125,8 +34,6 @@ void col_gammaToLinear( glColour *c );
 void col_hsv2rgb( glColour *c, float h, float s, float v );
 void col_rgb2hsv( float *h, float *s, float *v, float r, float g, float b );
 void col_blend( glColour *blend, const glColour *fg, const glColour *bg, float alpha );
-
-
 
 #endif /* COLOUR_H */
 
