@@ -19,7 +19,7 @@
 --[[
    Freeing Kex 3
 
-   Go
+   Go to planet A, get ambushed twice, and then duel in the Crimson Gauntlet.
 --]]
 local minerva  = require "campaigns.minerva"
 local portrait = require 'portrait'
