@@ -94,6 +94,4 @@ float sdUnevenCapsule( vec2 p, vec2 pa, vec2 pb, float ra, float rb )
                        return m                       - ra;
 }
 
-
-
 #endif /* _SDF_GLSL */
