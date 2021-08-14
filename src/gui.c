@@ -225,6 +225,7 @@ extern void weapon_minimap( const double res, const double w, const double h,
  * internal
  */
 /* gui */
+static void gui_renderTargetReticles( double x, double y, double radius, const glColour* c );
 static void gui_borderIntersection( double *cx, double *cy, double rx, double ry, double hw, double hh );
 /* Render GUI. */
 static void gui_renderPilotTarget( double dt );
@@ -428,7 +429,7 @@ void player_message( const char *fmt, ... )
 static void gui_renderPlanetTarget( double dt )
 {
    (void) dt;
-   double x,y, w,h;
+   double x,y, r;
    const glColour *c;
    Planet *planet;
    JumpPoint *jp;
@@ -460,21 +461,19 @@ static void gui_renderPlanetTarget( double dt )
 
       c = &cGreen;
 
-      x = jp->pos.x - jumppoint_gfx->sw/2.;
-      y = jp->pos.y + jumppoint_gfx->sh/2.;
-      w = jumppoint_gfx->sw;
-      h = jumppoint_gfx->sh;
-      gui_renderTargetReticles( x, y, w, h, c );
+      x = jp->pos.x;
+      y = jp->pos.y;
+      r = jumppoint_gfx->sw * 0.5;
+      gui_renderTargetReticles( x, y, r, c );
    }
    if (player.p->nav_planet >= 0) {
       planet = cur_system->planets[player.p->nav_planet];
       c = planet_getColour( planet );
 
-      x = planet->pos.x - planet->gfx_space->w / 2.;
-      y = planet->pos.y + planet->gfx_space->h / 2.;
-      w = planet->gfx_space->w;
-      h = planet->gfx_space->h;
-      gui_renderTargetReticles( x, y, w, h, c );
+      x = planet->pos.x;
+      y = planet->pos.y;
+      r = planet->gfx_space->w * 0.5;
+      gui_renderTargetReticles( x, y, r, c );
    }
    if (player.p->nav_asteroid >= 0) {
       field = &cur_system->asteroids[player.p->nav_anchor];
@@ -488,11 +487,10 @@ static void gui_renderPlanetTarget( double dt )
          return;
       }
 
-      x = ast->pos.x - at->gfxs[ast->gfxID]->w / 2.;
-      y = ast->pos.y + at->gfxs[ast->gfxID]->h / 2.;
-      w = at->gfxs[ast->gfxID]->w;
-      h = at->gfxs[ast->gfxID]->h;
-      gui_renderTargetReticles( x, y, w, h, c );
+      x = ast->pos.x;
+      y = ast->pos.y;
+      r = at->gfxs[ast->gfxID]->w * 0.5;
+      gui_renderTargetReticles( x, y, r, c );
    }
 }
 
@@ -502,26 +500,21 @@ static void gui_renderPlanetTarget( double dt )
  *
  *    @param x X position of reticle segment.
  *    @param y Y position of reticle segment.
- *    @param w Width.
- *    @param h Height.
+ *    @param radius Radius.
  *    @param c Colour.
  */
-void gui_renderTargetReticles( int x, int y, int w, int h, const glColour* c )
+static void gui_renderTargetReticles( double x, double y, double radius, const glColour* c )
 {
+   double rx, ry, r;
    /* Must not be NULL. */
    if (gui_target_planet == NULL)
       return;
 
-   gl_blitSprite( gui_target_planet, x, y, 0, 0, c ); /* top left */
+   gl_gameToScreenCoords( &rx, &ry, x, y );
+   r = (double)radius *  1.2 * cam_getZoom();
 
-   x += w;
-   gl_blitSprite( gui_target_planet, x, y, 1, 0, c ); /* top right */
-
-   y -= h;
-   gl_blitSprite( gui_target_planet, x, y, 1, 1, c ); /* bottom right */
-
-   x -= w;
-   gl_blitSprite( gui_target_planet, x, y, 0, 1, c ); /* bottom left */
+   glUseProgram(shaders.targetship.program);
+   gl_renderShader( rx, ry, r, r, 0., &shaders.targetship, c, 1 );
 }
 
 
@@ -535,7 +528,7 @@ static void gui_renderPilotTarget( double dt )
    (void) dt;
    Pilot *p;
    const glColour *c;
-   double x, y;
+   double x, y, r;
 
    /* Player is most likely dead. */
    if (gui_target_pilot == NULL)
@@ -570,18 +563,11 @@ static void gui_renderPilotTarget( double dt )
    else
       c = &cNeutral;
 
-   x = p->solid->pos.x - p->ship->gfx_space->sw * PILOT_SIZE_APPROX/2.;
-   y = p->solid->pos.y + p->ship->gfx_space->sh * PILOT_SIZE_APPROX/2.;
-   gl_blitSprite( gui_target_pilot, x, y, 0, 0, c ); /* top left */
+   gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
+   r = p->ship->gfx_space->sw * 1.2 * cam_getZoom() * 0.5;
 
-   x += p->ship->gfx_space->sw * PILOT_SIZE_APPROX;
-   gl_blitSprite( gui_target_pilot, x, y, 1, 0, c ); /* top right */
-
-   y -= p->ship->gfx_space->sh * PILOT_SIZE_APPROX;
-   gl_blitSprite( gui_target_pilot, x, y, 1, 1, c ); /* bottom right */
-
-   x -= p->ship->gfx_space->sw * PILOT_SIZE_APPROX;
-   gl_blitSprite( gui_target_pilot, x, y, 0, 1, c ); /* bottom left */
+   glUseProgram(shaders.targetship.program);
+   gl_renderShader( x, y, r, r, 0., &shaders.targetship, c, 1 );
 }
 
 
