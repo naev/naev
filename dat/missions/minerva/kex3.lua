@@ -480,6 +480,7 @@ function malik_respawn ()
    luaspfx.init()
 
    enemies = {}
+   enemies_weak = {}
    local pos = player.pos()
    luaspfx.addfg( luaspfx.effects.alert{size=200}, 2.2, pos )
    hook.timer( 2, "malik_respawn_real", pos )
@@ -492,6 +493,7 @@ function malik_respawn_real( pos )
          ["Beam Cannon"] = { max = 0 },
       }
    } )
+   pmalik:intrinsicSet( "armour_mod", -50 )
    pmalik:setHostile(true)
    pmalik:setNoDeath(true)
    hook.pilot( pmalik, "disable", "malik_disabled" )
@@ -529,6 +531,7 @@ function malik_spawn_more_real( pos )
    local p = pilot.add("Dvaered Vendetta", enemy_faction, pos )
    p:setHostile(true)
    table.insert( enemies, p )
+   table.insert( enemies_weak, p )
 end
 function malik_spawn_more2 ()
    malik_spawn_more()
@@ -536,7 +539,7 @@ function malik_spawn_more2 ()
 end
 
 function noise_start ()
-   noise_shader = pp_shaders.corruption( 0.8 )
+   noise_shader = pp_shaders.corruption( 1.0 )
    shader.addPPShader( noise_shader, "gui" )
 end
 
@@ -558,7 +561,13 @@ function maikki_arrives ()
    end
 end
 function maikki_arrives_real( pos )
-   local p = pilot.add( "Pirate Kestrel", "Pirate", pos, _("Pink Demon") )
+   local p = pilot.add( "Pirate Kestrel", "Pirate", pos, _("Pink Demon"), {naked=true} )
+   equipopt.pirate( p, {
+      type_range = {
+         ["Launcher"] = { max = 0 },
+         ["Turret Launcher"] = { max = 0 },
+      }
+   } )
    p:setFriendly(true)
    p:control()
    p:attack( pmalik )
@@ -568,8 +577,8 @@ function maikki_arrives_real( pos )
    p:intrinsicSet( "armour", 1e6 )
    p:intrinsicSet( "shield", 1e6 )
    p:intrinsicSet( "energy", 1e6 )
-   p:intrinsicSet( "fwd_damage", 400 )
-   p:intrinsicSet( "tur_damage", 400 )
+   p:intrinsicSet( "fwd_damage", 500 )
+   p:intrinsicSet( "tur_damage", 500 )
    p:intrinsicSet( "fwd_dam_as_dis", 50 )
    p:intrinsicSet( "tur_dam_as_dis", 50 )
 
@@ -577,6 +586,13 @@ function maikki_arrives_real( pos )
    local mc = minerva.maikkiP.colour
    local col = colour.new( mc[1], mc[2], mc[3], 1.0 )
    player.omsgAdd( _("Ho ho ho and a bottle of rum!"), 5, nil, col )
+
+   -- Disable some of the vendettas
+   for k,p in ipairs(enemies_weak) do
+      if p:exists() and rnd.rnd() < 0.5 then
+         p:disable(true)
+      end
+   end
 end
 function maikki_arrives_extra ()
    local mc = minerva.maikkiP.colour
