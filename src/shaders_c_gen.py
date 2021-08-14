@@ -259,6 +259,10 @@ SHADERS = [
       name = "safelanes",
       fs_path = "safelanes.frag",
    ),
+   SimpleShader(
+      name = "sysmarker",
+      fs_path = "sysmarker.frag",
+   ),
 ]
 
 def write_header(f):

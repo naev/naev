@@ -14,9 +14,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 /*
+ * All these are centered at p with parameters being some sort of radius from the center.
+ */
+
+/*
  * Helper Functions.
  */
 float cro( vec2 a, vec2 b ) { return a.x*b.y - a.y*b.x; }
+float ndot( vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
 
 
 /* Circle. */
@@ -30,6 +35,15 @@ float sdBox( vec2 p, vec2 b )
 {
    vec2 d = abs(p)-b;
    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
+}
+
+/* Rhombus at position p with border b */
+float sdRhombus( vec2 p, vec2 b )
+{
+   vec2 q = abs(p);
+   float h = clamp((-2.0*ndot(q,b)+ndot(b,b))/dot(b,b),-1.0,1.0);
+   float d = length( q - 0.5*b*vec2(1.0-h,1.0+h) );
+   return d * sign( q.x*b.y + q.y*b.x - b.x*b.y );
 }
 
 /* Uneven capsule oriented on Y axis. */

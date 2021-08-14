@@ -77,7 +77,6 @@ static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
 static double map_nebu_dt     = 0.; /***< Nebula animation stuff. */
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
-static gl_vbo *marker_vbo = NULL;
 
 /*
  * extern
@@ -124,19 +123,8 @@ static void map_window_close( unsigned int wid, char *str );
  */
 int map_init (void)
 {
-   const double beta = M_PI / 9;
-   GLfloat vertex[6];
-
    /* Create the VBO. */
    map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 6*(2+4), NULL );
-
-   vertex[0] = 1;
-   vertex[1] = 0;
-   vertex[2] = 1 + 3 * cos(beta);
-   vertex[3] = 3 * sin(beta);
-   vertex[4] = 1 + 3 * cos(beta);
-   vertex[5] = -3 * sin(beta);
-   marker_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 6, vertex );
    return 0;
 }
 
@@ -774,15 +762,19 @@ static void map_drawMarker( double x, double y, double r, double a,
    col = *colours[type];
    col.a *= a;
 
-   glEnable(GL_POLYGON_SMOOTH);
-   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
+   x = x + 3.0*r * cos(alpha);
+   y = y + 3.0*r * sin(alpha);
+   r *= 2.0;
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, r, r, 1);
    projection = gl_Matrix4_Rotate2d(projection, alpha);
-   gl_beginSolidProgram(projection, &col);
-   gl_vboActivateAttribOffset( marker_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLES, 0, 3 );
-   gl_endSolidProgram();
-   glDisable(GL_POLYGON_SMOOTH);
+
+   glUseProgram(shaders.sysmarker.program);
+   //glUniform2f( shaders.sysmarker.dimensions, r, r );
+   //glUniform1f( shaders.sysmarker.r, loading_r );
+   //glUniform1f( shaders.sysmarker.dt, done );
+   gl_renderShaderH( &shaders.sysmarker, &projection, &col, 1 );
 }
 
 /**
