@@ -32,99 +32,99 @@
  * default colours
  */
 /* grey */
-const glColour cWhite      = {.r=0xff.fffffffffff8p-8, .g=0xff.fffffffffff8p-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< White */
-const glColour cGrey90     = {.r=0xc9.93da0f6c33b8p-8, .g=0xc9.93da0f6c33b8p-8, .b=0xc9.93da0f6c33b8p-8, .a=1.0}; /**< Grey 90% */
-const glColour cGrey80     = {.r=0x9a.946db0d07b98p-8, .g=0x9a.946db0d07b98p-8, .b=0x9a.946db0d07b98p-8, .a=1.0}; /**< Grey 80% */
-const glColour cGrey70     = {.r=0x72.af5e5c6cc2d8p-8, .g=0x72.af5e5c6cc2d8p-8, .b=0x72.af5e5c6cc2d8p-8, .a=1.0}; /**< Grey 70% */
-const glColour cGrey60     = {.r=0x51.8c481a4b1ebcp-8, .g=0x51.8c481a4b1ebcp-8, .b=0x51.8c481a4b1ebcp-8, .a=1.0}; /**< Grey 60% */
-const glColour cGrey50     = {.r=0x36.cb66725ea6a8p-8, .g=0x36.cb66725ea6a8p-8, .b=0x36.cb66725ea6a8p-8, .a=1.0}; /**< Grey 50% */
-const glColour cGrey45     = {.r=0x2b.af62f28e4a14p-8, .g=0x2b.af62f28e4a14p-8, .b=0x2b.af62f28e4a14p-8, .a=1.0}; /**< Grey 45% */
-const glColour cGrey40     = {.r=0x22.03a887bf80dep-8, .g=0x22.03a887bf80dep-8, .b=0x22.03a887bf80dep-8, .a=1.0}; /**< Grey 40% */
-const glColour cGrey35     = {.r=0x19.b927ff090438p-8, .g=0x19.b927ff090438p-8, .b=0x19.b927ff090438p-8, .a=1.0}; /**< Grey 35% */
-const glColour cGrey30     = {.r=0x12.bfc9c84a7aeep-8, .g=0x12.bfc9c84a7aeep-8, .b=0x12.bfc9c84a7aeep-8, .a=1.0}; /**< Grey 30% */
-const glColour cGrey25     = {.r=0x0d.06371ed8623ap-8, .g=0x0d.06371ed8623ap-8, .b=0x0d.06371ed8623ap-8, .a=1.0}; /**< Grey 25% */
-const glColour cGrey20     = {.r=0x08.798dd1c37f93p-8, .g=0x08.798dd1c37f93p-8, .b=0x08.798dd1c37f93p-8, .a=1.0}; /**< Grey 20% */
-const glColour cGrey15     = {.r=0x05.04f0fa29522cp-8, .g=0x05.04f0fa29522cp-8, .b=0x05.04f0fa29522cp-8, .a=1.0}; /**< Grey 15% */
-const glColour cGrey10     = {.r=0x02.90db1c0ebd3bp-8, .g=0x02.90db1c0ebd3bp-8, .b=0x02.90db1c0ebd3bp-8, .a=1.0}; /**< Grey 10% */
-const glColour cGrey5      = {.r=0x01.01f21b72f7fep-8, .g=0x01.01f21b72f7fep-8, .b=0x01.01f21b72f7fep-8, .a=1.0}; /**< Grey 5% */
-const glColour cBlack      = {.r=0x00.000000000000p-8, .g=0x00.000000000000p-8, .b=0x00.000000000000p-8, .a=1.0}; /**< Black */
+const glColour cWhite      = COL( 1.00, 1.00, 1.00 ); /**< White */
+const glColour cGrey90     = COL( 0.90, 0.90, 0.90 ); /**< Grey 90% */
+const glColour cGrey80     = COL( 0.80, 0.80, 0.80 ); /**< Grey 80% */
+const glColour cGrey70     = COL( 0.70, 0.70, 0.70 ); /**< Grey 70% */
+const glColour cGrey60     = COL( 0.60, 0.60, 0.60 ); /**< Grey 60% */
+const glColour cGrey50     = COL( 0.50, 0.50, 0.50 ); /**< Grey 50% */
+const glColour cGrey45     = COL( 0.45, 0.45, 0.45 ); /**< Grey 45% */
+const glColour cGrey40     = COL( 0.40, 0.40, 0.40 ); /**< Grey 40% */
+const glColour cGrey35     = COL( 0.35, 0.35, 0.35 ); /**< Grey 35% */
+const glColour cGrey30     = COL( 0.30, 0.30, 0.30 ); /**< Grey 30% */
+const glColour cGrey25     = COL( 0.25, 0.25, 0.25 ); /**< Grey 25% */
+const glColour cGrey20     = COL( 0.20, 0.20, 0.20 ); /**< Grey 20% */
+const glColour cGrey15     = COL( 0.15, 0.15, 0.15 ); /**< Grey 15% */
+const glColour cGrey10     = COL( 0.10, 0.10, 0.10 ); /**< Grey 10% */
+const glColour cGrey5      = COL( 0.05, 0.05, 0.05 ); /**< Grey 5% */
+const glColour cBlack      = COL( 0.00, 0.00, 0.00 ); /**< Black */
 
 /* Greens. */
-const glColour cDarkGreen  = {.r=0x02.90db1c0ebd3bp-8, .g=0x36.cb66725ea6a8p-8, .b=0x02.90db1c0ebd3bp-8, .a=1.0}; /**< Dark Green */
-const glColour cGreen      = {.r=0x08.798dd1c37f93p-8, .g=0x9a.946db0d07b98p-8, .b=0x08.798dd1c37f93p-8, .a=1.0}; /**< Green */
-const glColour cPrimeGreen = {.r=0x00.000000000000p-8, .g=0xff.fffffffffff8p-8, .b=0x00.000000000000p-8, .a=1.0}; /**< Primary Green */
+const glColour cDarkGreen  = COL( 0.10, 0.50, 0.10 ); /**< Dark Green */
+const glColour cGreen      = COL( 0.20, 0.80, 0.20 ); /**< Green */
+const glColour cPrimeGreen = COL( 0.00, 1.00, 0.00 ); /**< Primary Green */
 /* Reds. */
-const glColour cDarkRed    = {.r=0x51.8c481a4b1ebcp-8, .g=0x02.90db1c0ebd3bp-8, .b=0x02.90db1c0ebd3bp-8, .a=1.0}; /**< Dark Red */
-const glColour cRed        = {.r=0x9a.946db0d07b98p-8, .g=0x08.798dd1c37f93p-8, .b=0x08.798dd1c37f93p-8, .a=1.0}; /**< Red */
-const glColour cPrimeRed   = {.r=0xff.fffffffffff8p-8, .g=0x00.000000000000p-8, .b=0x00.000000000000p-8, .a=1.0}; /**< Primary Red */
-const glColour cBrightRed  = {.r=0xff.fffffffffff8p-8, .g=0x51.8c481a4b1ebcp-8, .b=0x51.8c481a4b1ebcp-8, .a=1.0}; /**< Bright Red */
+const glColour cDarkRed    = COL( 0.60, 0.10, 0.10 ); /**< Dark Red */
+const glColour cRed        = COL( 0.80, 0.20, 0.20 ); /**< Red */
+const glColour cPrimeRed   = COL( 1.00, 0.00, 0.00 ); /**< Primary Red */
+const glColour cBrightRed  = COL( 1.00, 0.60, 0.60 ); /**< Bright Red */
 /* Oranges. */
-const glColour cOrange     = {.r=0xc9.93da0f6c33b8p-8, .g=0x72.af5e5c6cc2d8p-8, .b=0x02.90db1c0ebd3bp-8, .a=1.0}; /**< Orange */
+const glColour cOrange     = COL( 0.90, 0.70, 0.10 ); /**< Orange */
 /* Yellows. */
-const glColour cGold       = {.r=0xff.fffffffffff8p-8, .g=0xac.820f118ca4a8p-8, .b=0x00.000000000000p-8, .a=1.0}; /**< Gold */
-const glColour cYellow     = {.r=0x9a.946db0d07b98p-8, .g=0x9a.946db0d07b98p-8, .b=0x00.000000000000p-8, .a=1.0}; /**< Yellow */
+const glColour cGold       = COL( 1.00, 0.84, 0.00 ); /**< Gold */
+const glColour cYellow     = COL( 0.80, 0.80, 0.00 ); /**< Yellow */
 /* Blues. */
-const glColour cMidnightBlue={.r=0x02.90db1c0ebd3bp-8, .g=0x02.90db1c0ebd3bp-8, .b=0x22.03a887bf80dep-8, .a=1.0}; /**< Midnight Blue. */
-const glColour cDarkBlue   = {.r=0x02.90db1c0ebd3bp-8, .g=0x02.90db1c0ebd3bp-8, .b=0x51.8c481a4b1ebcp-8, .a=1.0}; /**< Dark Blue */
-const glColour cBlue       = {.r=0x08.798dd1c37f93p-8, .g=0x08.798dd1c37f93p-8, .b=0x9a.946db0d07b98p-8, .a=1.0}; /**< Blue */
-const glColour cLightBlue  = {.r=0x22.03a887bf80dep-8, .g=0x22.03a887bf80dep-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< Light Blue */
-const glColour cPrimeBlue  = {.r=0x00.000000000000p-8, .g=0x00.000000000000p-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< Primary Blue */
-const glColour cCyan       = {.r=0x00.000000000000p-8, .g=0xff.fffffffffff8p-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< Cyan. */
+const glColour cMidnightBlue=COL( 0.10, 0.10, 0.4 ); /**< Midnight Blue. */
+const glColour cDarkBlue   = COL( 0.10, 0.10, 0.60 ); /**< Dark Blue */
+const glColour cBlue       = COL( 0.20, 0.20, 0.80 ); /**< Blue */
+const glColour cLightBlue  = COL( 0.40, 0.40, 1.00 ); /**< Light Blue */
+const glColour cPrimeBlue  = COL( 0.00, 0.00, 1.00 ); /**< Primary Blue */
+const glColour cCyan       = COL( 0.00, 1.00, 1.00 ); /**< Cyan. */
 /* Purples. */
-const glColour cPurple     = {.r=0xc9.93da0f6c33b8p-8, .g=0x02.90db1c0ebd3bp-8, .b=0xc9.93da0f6c33b8p-8, .a=1.0}; /**< Purple */
-const glColour cDarkPurple = {.r=0x6b.874d362149c8p-8, .g=0x06.f759ed40898ap-8, .b=0x5e.03dd5288c3d0p-8, .a=1.0}; /**< Dark Purple */
+const glColour cPurple     = COL( 0.90, 0.10, 0.90 ); /**< Purple */
+const glColour cDarkPurple = COL( 0.68, 0.18, 0.64 ); /**< Dark Purple */
 /* Browns. */
-const glColour cBrown      = {.r=0x4e.9781e2b01decp-8, .g=0x10.5033e0b9c184p-8, .b=0x00.000000000000p-8, .a=1.0}; /**< Brown */
+const glColour cBrown      = COL( 0.59, 0.28, 0.00 ); /**< Brown */
 /* Misc. */
-const glColour cSilver     = {.r=0x85.c3f8f9bfd4f0p-8, .g=0x85.c3f8f9bfd4f0p-8, .b=0x85.c3f8f9bfd4f0p-8, .a=1.0}; /**< Silver */
-const glColour cAqua       = {.r=0x00.000000000000p-8, .g=0x85.c3f8f9bfd4f0p-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< Aqua */
+const glColour cSilver     = COL( 0.75, 0.75, 0.75 ); /**< Silver */
+const glColour cAqua       = COL( 0.00, 0.75, 1.00 ); /**< Aqua */
 
 
 /*
  * game specific
  */
-const glColour cBlackHilight  = {.r=0x00.000000000000p-8, .g=0x00.000000000000p-8, .b=0x00.000000000000p-8, .a=0.4}; /**< Hilight colour over black background. */
+const glColour cBlackHilight  = ACOL( 0.0, 0.0, 0.0, 0.4 ); /**< Hilight colour over black background. */
 /* outfit slot colours.
  * Taken from https://cran.r-project.org/web/packages/khroma/vignettes/tol.html#muted
  */
-const glColour cOutfitHeavy   = {.r=0x9a.946db0d07b98p-8, .g=0x22.03a887bf80dep-8, .b=0x2d.ca42bfce5faap-8, .a=1.0}; /**< Heavy outfit colour (reddish). */
-const glColour cOutfitMedium  = {.r=0x08.798dd1c37f93p-8, .g=0x7d.ed7d1f37a810p-8, .b=0xd9.1c4fe20fe318p-8, .a=1.0}; /**< Medium outfit colour (blueish). */
-//const glColour cOutfitMedium = {.r=0x43.65e2d739ba08p-8, .g=0x9a.946db0d07b98p-8, .b=0xd9.1c4fe20fe318p-8, .a=1.0}; /**< Medium outfit colour (blueish). Technically color safe but doesn't work with our colorblind filter. */
-const glColour cOutfitLight   = {.r=0xb5.e7af7d25bbc8p-8, .g=0x9a.946db0d07b98p-8, .b=0x2d.ca42bfce5faap-8, .a=1.0}; /**< Light outfit colour (yellowish). */
+const glColour cOutfitHeavy   = COL( 0.8, 0.4, 0.46 ); /**< Heavy outfit colour (reddish). */
+const glColour cOutfitMedium  = COL( 0.2, 0.73, 0.93 ); /**< Medium outfit colour (blueish). */
+//const glColour cOutfitMedium = COL( 0.55, 0.8, 0.93 ); /**< Medium outfit colour (blueish). Technically color safe but doesn't work with our colorblind filter. */
+const glColour cOutfitLight   = COL( 0.86, 0.8, 0.46 ); /**< Light outfit colour (yellowish). */
 /* objects */
-const glColour cInert         = {.r=0xb9.1a2413ecc7b0p-8, .g=0xb9.1a2413ecc7b0p-8, .b=0xb9.1a2413ecc7b0p-8, .a=1.0}; /**< Inert object colour */
-const glColour cNeutral       = {.r=0xb9.1a2413ecc7b0p-8, .g=0x9a.946db0d07b98p-8, .b=0x2f.39c0d44f2606p-8, .a=1.0}; /**< Neutral object colour */
-const glColour cFriend        = {.r=0x0e.cc563033ac1ap-8, .g=0x66.e8040a191484p-8, .b=0x51.8c481a4b1ebcp-8, .a=1.0}; /**< Friend object colour */
-const glColour cHostile       = {.r=0x66.e8040a191484p-8, .g=0x0e.cc563033ac1ap-8, .b=0x51.8c481a4b1ebcp-8, .a=1.0}; /**< Hostile object colour */
-const glColour cRestricted    = {.r=0x51.8c481a4b1ebcp-8, .g=0x51.8c481a4b1ebcp-8, .b=0x08.798dd1c37f93p-8, .a=1.0}; /**< Restricted object colour. */
+const glColour cInert         = COL( 221./255., 221./255., 221./255. ); /**< Inert object colour */
+const glColour cNeutral       = COL( 221./255., 204./255., 119./255. ); /**< Neutral object colour */
+const glColour cFriend        = COL(  68./255., 170./255., 153./255. ); /**< Friend object colour */
+const glColour cHostile       = COL( 170./255.,  68./255., 153./255. ); /**< Hostile object colour */
+const glColour cRestricted    = COL( 153./255., 153./255.,  51./255. ); /**< Restricted object colour. */
 /* mission markers */
-const glColour cMarkerNew     = {.r=0x52.b9836b108a74p-8, .g=0x29.7ac1d55c7ce6p-8, .b=0x57.87b429036aacp-8, .a=1.0}; /**< New mission marker colour. */
-const glColour cMarkerComputer= {.r=0xa1.794cb85347c0p-8, .g=0xcc.91ff3dea7b38p-8, .b=0x97.32cbde266500p-8, .a=1.0}; /**< Computer mission marker colour. */
-const glColour cMarkerLow     = {.r=0xd2.a21652bf2970p-8, .g=0xdf.11ea5fc4c0d8p-8, .b=0x76.4aada1bfde08p-8, .a=1.0}; /**< Low priority mission marker colour. */
-const glColour cMarkerHigh    = {.r=0xf9.33b5e6b4d6f0p-8, .g=0xee.1bbec6607ea8p-8, .b=0xaa.56d26d4bd0d8p-8, .a=1.0}; /**< High priority mission marker colour. */
-const glColour cMarkerPlot    = {.r=0xff.fffffffffff8p-8, .g=0xff.fffffffffff8p-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< Plot mission marker colour. */
+const glColour cMarkerNew     = COL( 154./255., 112./255., 158./255. ); /**< New mission marker colour. */
+const glColour cMarkerComputer= COL( 208./255., 231./255., 202./255. ); /**< Computer mission marker colour. */
+const glColour cMarkerLow     = COL( 234./255., 240./255., 181./255. ); /**< Low priority mission marker colour. */
+const glColour cMarkerHigh    = COL( 252./255., 247./255., 213./255. ); /**< High priority mission marker colour. */
+const glColour cMarkerPlot    = COL( 255./255., 255./255., 255./255. ); /**< Plot mission marker colour. */
 /* radar */
-const glColour cRadar_player  = {.r=0xc9.93da0f6c33b8p-8, .g=0x02.90db1c0ebd3bp-8, .b=0xc9.93da0f6c33b8p-8, .a=1.0}; /**< Player colour on radar. */
-const glColour cRadar_tPilot  = {.r=0xff.fffffffffff8p-8, .g=0xff.fffffffffff8p-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< Targeted object colour on radar. */
-const glColour cRadar_tPlanet = {.r=0xff.fffffffffff8p-8, .g=0xff.fffffffffff8p-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< Targeted planet colour. */
-const glColour cRadar_weap    = {.r=0x9a.946db0d07b98p-8, .g=0x08.798dd1c37f93p-8, .b=0x08.798dd1c37f93p-8, .a=1.0}; /**< Weapon colour on radar. */
-const glColour cRadar_hilight = {.r=0x51.8c481a4b1ebcp-8, .g=0xff.fffffffffff8p-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< Radar hilighted object. */
+const glColour cRadar_player  = COL( 0.9, 0.1, 0.9 ); /**< Player colour on radar. */
+const glColour cRadar_tPilot  = COL( 1.0, 1.0, 1.0 ); /**< Targeted object colour on radar. */
+const glColour cRadar_tPlanet = COL( 1.0, 1.0, 1.0 ); /**< Targeted planet colour. */
+const glColour cRadar_weap    = COL( 0.8, 0.2, 0.2 ); /**< Weapon colour on radar. */
+const glColour cRadar_hilight = COL( 0.6, 1.0, 1.0 ); /**< Radar hilighted object. */
 /* health */
-const glColour cShield        = {.r=0x08.798dd1c37f93p-8, .g=0x08.798dd1c37f93p-8, .b=0x9a.946db0d07b98p-8, .a=1.0}; /**< Shield bar colour. */
-const glColour cArmour        = {.r=0x36.cb66725ea6a8p-8, .g=0x36.cb66725ea6a8p-8, .b=0x36.cb66725ea6a8p-8, .a=1.0}; /**< Armour bar colour. */
-const glColour cEnergy        = {.r=0x08.798dd1c37f93p-8, .g=0x9a.946db0d07b98p-8, .b=0x08.798dd1c37f93p-8, .a=1.0}; /**< Energy bar colour. */
-const glColour cFuel          = {.r=0xc9.93da0f6c33b8p-8, .g=0x02.90db1c0ebd3bp-8, .b=0x22.03a887bf80dep-8, .a=1.0}; /**< Fuel bar colour. */
+const glColour cShield        = COL( 0.2, 0.2, 0.8 ); /**< Shield bar colour. */
+const glColour cArmour        = COL( 0.5, 0.5, 0.5 ); /**< Armour bar colour. */
+const glColour cEnergy        = COL( 0.2, 0.8, 0.2 ); /**< Energy bar colour. */
+const glColour cFuel          = COL( 0.9, 0.1, 0.4 ); /**< Fuel bar colour. */
 
 /* Deiz's Super Font Palette */
 
-const glColour cFontRed       = {.r=0xff.fffffffffff8p-8, .g=0x22.03a887bf80dep-8, .b=0x22.03a887bf80dep-8, .a=1.0}; /**< Red font colour. */
-const glColour cFontGreen     = {.r=0x51.8c481a4b1ebcp-8, .g=0xff.fffffffffff8p-8, .b=0x22.03a887bf80dep-8, .a=1.0}; /**< Green font colour. */
-const glColour cFontBlue      = {.r=0x22.03a887bf80dep-8, .g=0x51.8c481a4b1ebcp-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< Blue font colour. */
-const glColour cFontYellow    = {.r=0xff.fffffffffff8p-8, .g=0xff.fffffffffff8p-8, .b=0x36.cb66725ea6a8p-8, .a=1.0}; /**< Yellow font colour. */
-const glColour cFontWhite     = {.r=0xe3.d764f44ce578p-8, .g=0xe3.d764f44ce578p-8, .b=0xe3.d764f44ce578p-8, .a=1.0}; /**< White font colour. */
-const glColour cFontGrey      = {.r=0x72.af5e5c6cc2d8p-8, .g=0x72.af5e5c6cc2d8p-8, .b=0x72.af5e5c6cc2d8p-8, .a=1.0}; /**< Grey font colour. */
-const glColour cFontPurple    = {.r=0xff.fffffffffff8p-8, .g=0x12.bfc9c84a7aeep-8, .b=0xff.fffffffffff8p-8, .a=1.0}; /**< Purple font colour. */
-const glColour cFontOrange    = {.r=0xff.fffffffffff8p-8, .g=0x72.af5e5c6cc2d8p-8, .b=0x12.bfc9c84a7aeep-8, .a=1.0}; /**< Orange font colour. */
+const glColour cFontRed       = COL( 1.0, 0.4, 0.4 ); /**< Red font colour. */
+const glColour cFontGreen     = COL( 0.6, 1.0, 0.4 ); /**< Green font colour. */
+const glColour cFontBlue      = COL( 0.4, 0.6, 1.0 ); /**< Blue font colour. */
+const glColour cFontYellow    = COL( 1.0, 1.0, 0.5 ); /**< Yellow font colour. */
+const glColour cFontWhite     = COL( 0.95, 0.95, 0.95 ); /**< White font colour. */
+const glColour cFontGrey      = COL( 0.7, 0.7, 0.7 ); /**< Grey font colour. */
+const glColour cFontPurple    = COL( 1.0, 0.3, 1.0 ); /**< Purple font colour. */
+const glColour cFontOrange    = COL( 1.0, 0.7, 0.3 ); /**< Orange font colour. */
 
 /*
  * http://en.wikipedia.org/wiki/SRGB#The_forward_transformation_.28CIE_xyY_or_CIE_XYZ_to_sRGB.29
