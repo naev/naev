@@ -37,6 +37,16 @@ float sdBox( vec2 p, vec2 b )
    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
 }
 
+/* sca is the sin/cos of the orientation
+   scb is the sin/cos of the aperture */
+float sdArc( vec2 p, vec2 sca, vec2 scb, float ra, float rb )
+{
+   p *= mat2(sca.x,sca.y,-sca.y,sca.x);
+   p.x = abs(p.x);
+   float k = (scb.y*p.x>scb.x*p.y) ? dot(p.xy,scb) : length(p);
+   return sqrt( dot(p,p) + ra*ra - 2.0*ra*k ) - rb;
+}
+
 /* Rhombus at position p with border b */
 float sdRhombus( vec2 p, vec2 b )
 {
