@@ -235,13 +235,9 @@ SHADERS = [
       uniforms = ["ClipSpaceFromLocal", "MainTex", "gamma"],
       subroutines = {},
    ),
-   Shader(
+   SimpleShader(
       name = "status",
-      vs_path = "project_pos.vert",
       fs_path = "status.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "ok"],
-      subroutines = {},
    ),
    SimpleShader(
       name = "factiondisk",

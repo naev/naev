@@ -156,35 +156,6 @@ void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled )
 
 
 /**
- * @brief Renders an OK / Not OK status (green circle or slashed red circle).
- *
- *    @param x X position to render rectangle at.
- *    @param y Y position to render rectangle at.
- *    @param w Rectangle width.
- *    @param h Rectangle height.
- *    @param ok Boolean to represent with the drawing.
- */
-void gl_renderStatus( double x, double y, double w, double h, int ok )
-{
-   gl_Matrix4 projection;
-
-   projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate( projection, x + w/2, y + h/2, 0 );
-   projection = gl_Matrix4_Scale( projection, w/2, h/2, 1 );
-
-   glUseProgram( shaders.status.program );
-   gl_Matrix4_Uniform( shaders.status.projection, projection );
-   glUniform1f( shaders.status.ok, ok );
-   glEnableVertexAttribArray( shaders.status.vertex );
-   gl_vboActivateAttribOffset( gl_circleVBO, shaders.status.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-   glDisableVertexAttribArray( shaders.status.vertex );
-   glUseProgram(0);
-   gl_checkErr();
-}
-
-
-/**
  * @brief Renders a cross at a given position.
  *
  *    @param x X position to center at.
