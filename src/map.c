@@ -771,9 +771,10 @@ static void map_drawMarker( double x, double y, double r, double a,
    alpha += M_PI*2. * (double)cur/(double)num;
 
    /* Draw the marking triangle. */
-   glEnable(GL_POLYGON_SMOOTH);
    col = *colours[type];
    col.a *= a;
+
+   glEnable(GL_POLYGON_SMOOTH);
    projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
    projection = gl_Matrix4_Scale(projection, r, r, 1);
    projection = gl_Matrix4_Rotate2d(projection, alpha);
@@ -1016,11 +1017,11 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
          c.a = 0.6 * alpha;
 
          gl_Matrix4 projection = gl_view_matrix;
-         projection = gl_Matrix4_Translate(projection, tx-sw/2, ty-sh/2, 0);
-         projection = gl_Matrix4_Scale(projection, sw, sh, 1);
+         projection = gl_Matrix4_Translate(projection, tx, ty, 0);
+         projection = gl_Matrix4_Scale(projection, sw/2, sh/2, 1);
 
          glUseProgram(shaders.factiondisk.program);
-         gl_renderShaderH( &shaders.factiondisk, &projection, &c );
+         gl_renderShaderH( &shaders.factiondisk, &projection, &c, 1 );
       }
    }
 }

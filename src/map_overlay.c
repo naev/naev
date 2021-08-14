@@ -603,7 +603,7 @@ void ovr_render( double dt )
       /* Render. */
       glUseProgram(shaders.safelanes.program);
       glUniform2f(shaders.safelanes.dimensions, rh, rw);
-      gl_renderShaderH( &shaders.safelanes, &projection, &col );
+      gl_renderShaderH( &shaders.safelanes, &projection, &col, 0 );
    }
    array_free( safelanes );
 

@@ -85,7 +85,7 @@ void gl_beginSmoothProgram(gl_Matrix4 projection);
 void gl_endSmoothProgram (void);
 
 /* Simple Shaders. */
-void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glColour *c );
+void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glColour *c, int center );
 
 /* Circles. */
 void gl_drawCircle( const double x, const double y,
