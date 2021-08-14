@@ -2075,7 +2075,7 @@ void sysedit_renderMap( double bx, double by, double w, double h, double x, doub
    map_renderDecorators( x, y, 1, 1. );
 
    /* Render faction disks. */
-   map_renderFactionDisks( x, y, 1, 1. );
+   map_renderFactionDisks( x, y, r, 1, 1. );
 
    /* Render environment stuff. */
    map_renderSystemEnvironment( x, y, 1, 1. );

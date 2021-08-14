@@ -836,7 +836,7 @@ else (x) = MAX( y, (x) - dt )
 
    /* Render faction disks. */
    if (map_alpha_faction > 0.)
-      map_renderFactionDisks( x, y, 0, map_alpha_faction );
+      map_renderFactionDisks( x, y, r, 0, map_alpha_faction );
 
       /* Render environmental features. */
    if (map_alpha_env > 0.)
@@ -967,14 +967,13 @@ void map_renderDecorators( double x, double y, int editor, double alpha )
 /**
  * @brief Renders the faction disks.
  */
-void map_renderFactionDisks( double x, double y, int editor, double alpha )
+void map_renderFactionDisks( double x, double y, double r, int editor, double alpha )
 {
    int i;
    const glColour *col;
    glColour c;
    StarSystem *sys;
-   int sw, sh;
-   double tx, ty, presence;
+   double tx, ty, sr, presence;
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
@@ -994,8 +993,7 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
          presence = sqrt(sys->ownerpresence);
 
          /* draws the disk representing the faction */
-         sw = (40 + presence * 3) * map_zoom;
-         sh = sw;
+         sr = (40 + presence * 3) * map_zoom * 0.5;
 
          col = faction_colour(sys->faction);
          c.r = col->r;
@@ -1004,7 +1002,8 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
          c.a = 0.6 * alpha;
 
          glUseProgram(shaders.factiondisk.program);
-         gl_renderShader( tx, ty, sw/2, sh/2, 0., &shaders.factiondisk, &c, 1 );
+         glUniform1f(shaders.factiondisk.r, r / sr );
+         gl_renderShader( tx, ty, sr, sr, 0., &shaders.factiondisk, &c, 1 );
       }
    }
 }

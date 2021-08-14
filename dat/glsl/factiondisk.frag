@@ -1,4 +1,5 @@
 uniform vec4 color;
+uniform float r;
 
 in vec2 pos;
 out vec4 color_out;
@@ -8,5 +9,6 @@ void main(void) {
    
    float dist = length(pos);
    color_out.a *= exp( 1.0 / (dist+1.0) - 0.5) - 1.0;
+   color_out.a *= smoothstep( 0.5*r, r, dist );
 }
 
