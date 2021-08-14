@@ -221,7 +221,7 @@ extern void weapon_minimap( const double res, const double w, const double h,
  * internal
  */
 /* gui */
-static void gui_renderTargetReticles( double x, double y, double radius, const glColour* c );
+static void gui_renderTargetReticles( const SimpleShader *shd, double x, double y, double radius, double angle, const glColour* c );
 static void gui_borderIntersection( double *cx, double *cy, double rx, double ry, double hw, double hh );
 /* Render GUI. */
 static void gui_renderPilotTarget (void);
@@ -419,8 +419,6 @@ void player_message( const char *fmt, ... )
 
 /**
  * @brief Sets up rendering of planet and jump point targeting reticles.
- *
- *    @param dt Current delta tick.
  */
 static void gui_renderPlanetTarget (void)
 {
@@ -459,7 +457,7 @@ static void gui_renderPlanetTarget (void)
       x = jp->pos.x;
       y = jp->pos.y;
       r = jumppoint_gfx->sw * 0.5;
-      gui_renderTargetReticles( x, y, r, c );
+      gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
    }
    if (player.p->nav_planet >= 0) {
       planet = cur_system->planets[player.p->nav_planet];
@@ -468,7 +466,7 @@ static void gui_renderPlanetTarget (void)
       x = planet->pos.x;
       y = planet->pos.y;
       r = planet->gfx_space->w * 0.5;
-      gui_renderTargetReticles( x, y, r, c );
+      gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
    }
    if (player.p->nav_asteroid >= 0) {
       field = &cur_system->asteroids[player.p->nav_anchor];
@@ -485,7 +483,7 @@ static void gui_renderPlanetTarget (void)
       x = ast->pos.x;
       y = ast->pos.y;
       r = at->gfxs[ast->gfxID]->w * 0.5;
-      gui_renderTargetReticles( x, y, r, c );
+      gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
    }
 }
 
@@ -493,12 +491,14 @@ static void gui_renderPlanetTarget (void)
 /**
  * @brief Renders planet and jump point targeting reticles.
  *
+ *    @param shd Shader to use to render.
  *    @param x X position of reticle segment.
  *    @param y Y position of reticle segment.
  *    @param radius Radius.
+ *    @param angle Angle to rotate.
  *    @param c Colour.
  */
-static void gui_renderTargetReticles( double x, double y, double radius, const glColour* c )
+static void gui_renderTargetReticles( const SimpleShader *shd, double x, double y, double radius, double angle, const glColour* c )
 {
    double rx, ry, r;
    /* Must not be NULL. */
@@ -508,22 +508,19 @@ static void gui_renderTargetReticles( double x, double y, double radius, const g
    gl_gameToScreenCoords( &rx, &ry, x, y );
    r = (double)radius *  1.2 * cam_getZoom();
 
-   glUseProgram(shaders.targetship.program);
-   glUniform1f(shaders.targetship.dt, animation_dt);
-   gl_renderShader( rx, ry, r, r, 0., &shaders.targetship, c, 1 );
+   glUseProgram(shd->program);
+   glUniform1f(shd->dt, animation_dt);
+   gl_renderShader( rx, ry, r, r, angle, shd, c, 1 );
 }
 
 
 /**
  * @brief Renders the players pilot target.
- *
- *    @param dt Current delta tick.
  */
 static void gui_renderPilotTarget (void)
 {
    Pilot *p;
    const glColour *c;
-   double x, y, r;
 
    /* Player is most likely dead. */
    if (gui_target_pilot == NULL)
@@ -558,12 +555,7 @@ static void gui_renderPilotTarget (void)
    else
       c = &cNeutral;
 
-   gl_gameToScreenCoords( &x, &y, p->solid->pos.x, p->solid->pos.y );
-   r = p->ship->gfx_space->sw * 1.2 * cam_getZoom() * 0.5;
-
-   glUseProgram(shaders.targetship.program);
-   glUniform1f(shaders.targetship.dt, animation_dt);
-   gl_renderShader( x, y, r, r, p->solid->dir, &shaders.targetship, c, 1 );
+   gui_renderTargetReticles( &shaders.targetship, p->solid->pos.x, p->solid->pos.y, p->ship->gfx_space->sw * 0.5, p->solid->dir, c );
 }
 
 

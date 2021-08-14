@@ -6,8 +6,19 @@ uniform float u_size = 100.0;
 uniform vec2 dimensions;
 
 const float M_PI        = 3.14159265358979323846;  /* pi */
+const float M_SQRT1_2   = 0.70710678118654752440;  /* 1/sqrt(2) */
 
 float cro(in vec2 a, in vec2 b ) { return a.x*b.y - a.y*b.x; }
+
+float smin( float a, float b, float k )
+{
+	float h = max( k-abs(a-b), 0.0 )/k;
+	return min( a, b ) - h*h*k*(1.0/4.0);
+}
+float sdSmoothUnion( float d1, float d2, float k )
+ {
+	return smin( d1, d2, k );
+}
 
 float sdUnevenCapsuleY( in vec2 p, in float ra, in float rb, in float h )
 {
@@ -89,26 +100,48 @@ vec4 sdf_alarm( vec4 color, Image tex, vec2 uv, vec2 px )
    return color;
 }
 
-vec4 sdf_target( vec4 color, vec2 uv )
+vec4 sdf_pilot( vec4 color, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
    uv = abs(uv);
 
-   const float arclen = M_PI/10.0;
-
    float d = sdArc( uv,
          vec2(sin(M_PI*0.75),cos(M_PI*0.75)),
-         vec2(sin(arclen),cos(arclen)),
-         0.95, 0.03 );
+         vec2(sin(M_PI/10.0),cos(M_PI/10.0)),
+         1.0, 0.03 );
 
-   d = min( d, sdUnevenCapsule( uv, vec2(0.68), vec2(0.8), 0.07, 0.02) );
+   d = min( d, sdUnevenCapsule( uv, vec2(M_SQRT1_2), vec2(0.8), 0.07, 0.02) );
    d -= (1.0+sin(3.0*dt)) * 0.007;
-   d = max( -sdCircle( uv-vec2(0.68), 0.04 ), d );
+   d = max( -sdCircle( uv-vec2(M_SQRT1_2), 0.04 ), d );
 
    color.a *= smoothstep( -m, m, -d );
    return color;
 }
 
+vec4 sdf_planet( vec4 color, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+
+	/* Outter stuff. */
+	float w = 3.0 / dimensions.x;
+	float inner = 1.0-w-m;
+	float d = sdArc( uv, vec2(sin(M_PI/4.0),cos(M_PI/4.0)),
+			 vec2(sin(M_PI/2.0*3.0), cos(M_PI/2.0*3.0)), inner, w );
+
+	/* Moving inner stuff. */
+   const vec2 arclen = vec2( sin(M_PI/6.0), cos(M_PI/6.0) );
+	w = 5.0 / dimensions.x;
+	float o = 0.1 * dt;
+	inner -= 2.0*w+m;
+	d = min( d, sdArc( uv, vec2(sin(o),cos(o)), arclen, inner, w ) );
+	o += M_PI * 2.0/3.0;
+	d = min( d, sdArc( uv, vec2(sin(o),cos(o)), arclen, inner, w ) );
+	o += M_PI * 2.0/3.0;
+	d = min( d, sdArc( uv, vec2(sin(o),cos(o)), arclen, inner, w ) );
+
+   color.a *= smoothstep( -m, m, -d );
+   return color;
+}
 
 vec4 bg( vec2 uv )
 {
@@ -127,7 +160,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    vec2 uv_rel = uv*2.0-1.0;
 
    //col_out = sdf_alarm( color, tex, uv, px );
-   col_out = sdf_target( color, uv_rel );
+   //col_out = sdf_pilot( color, uv_rel );
+   col_out = sdf_planet( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
