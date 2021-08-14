@@ -116,14 +116,6 @@ int space_spawn = 1; /**< Spawn enabled by default. */
 
 
 /*
- * Interference.
- */
-extern double interference_alpha; /* gui.c */
-//static double interference_target = 0.; /**< Target alpha level. */
-static double interference_timer  = 0.; /**< Interference timer. */
-
-
-/*
  * Internal Prototypes.
  */
 /* planet load */
@@ -1318,53 +1310,6 @@ void space_update( const double dt )
          pilot_hit( pilot_stack[i], NULL, 0, &dmg, 0 );
    }
 
-
-   /*
-    * Interference.
-    */
-   if (cur_system->interference > 0.) {
-      /* This interference mechanic is just annoying and doesn't bring much to
-       * the table. Disabling for now, but would need a proper removal. */
-#if 0
-      /* Always dark. */
-      if (cur_system->interference >= 1000.)
-         interference_alpha = 1.;
-
-      /* Normal scenario. */
-      else {
-         interference_timer -= dt;
-         if (interference_timer < 0.) {
-            /* 0    ->  [   1,   5   ]
-             * 250  ->  [ 0.75, 3.75 ]
-             * 500  ->  [  0.5, 2.5  ]
-             * 750  ->  [ 0.25, 1.25 ]
-             * 1000 ->  [   0,   0   ] */
-            interference_timer += (1000. - cur_system->interference) / 1000. *
-                  (3. + RNG_2SIGMA() );
-
-            /* 0    ->  [  0,   0  ]
-             * 250  ->  [-0.5, 1.5 ]
-             * 500  ->  [ -1,   3  ]
-             * 1000 ->  [  0,   6  ] */
-            interference_target = cur_system->interference/1000. * 2. *
-                  (1. + RNG_2SIGMA() );
-         }
-
-         /* Head towards target. */
-         if (FABS(interference_alpha - interference_target) > 1e-05) {
-            /* Asymptotic. */
-            interference_alpha += (interference_target - interference_alpha) * dt;
-
-            /* Limit alpha to [0.-1.]. */
-            if (interference_alpha > 1.)
-               interference_alpha = 1.;
-            else if (interference_alpha < 0.)
-               interference_alpha = 0.;
-         }
-      }
-#endif
-   }
-
    /* Faction updates. */
    if (space_fchg) {
       for (i=0; i<array_size(cur_system->planets); i++)
@@ -1536,7 +1481,6 @@ void space_init( const char* sysname )
    background_clear(); /* Get rid of the background. */
    factions_clearDynamic(); /* get rid of dynamic factions. */
    space_spawn = 1; /* spawn is enabled by default. */
-   interference_timer = 0.; /* Restart timer. */
    if (player.p != NULL) {
       pilot_lockClear( player.p );
       pilot_clearTimers( player.p ); /* Clear timers. */
@@ -1604,10 +1548,6 @@ void space_init( const char* sysname )
          debris_init(d);
       }
    }
-
-   /* Clear interference if you leave system with interference. */
-   if (cur_system->interference == 0.)
-      interference_alpha = 0.;
 
    /* See if we should get a new music song. */
    if (player.p != NULL)

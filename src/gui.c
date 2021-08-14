@@ -72,11 +72,6 @@
 #define RADAR_BLINK_PLANET       1. /**< Blink rate of the planet target on radar. */
 
 
-/* for interference. */
-static int interference_layer = 0; /**< Layer of the current interference. */
-double interference_alpha     = 0.; /**< Alpha of the current interference layer. */
-static double interference_t  = 0.; /**< Interference timer to control transitions. */
-
 /* some blinking stuff. */
 static double blink_pilot     = 0.; /**< Timer on target blinking on radar. */
 static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
@@ -637,16 +632,11 @@ static void gui_renderBorder( double dt )
    double rx,ry;
    double cx,cy;
    const glColour *col;
-   glColour ccol;
-   double int_a;
    Pilot *const* pilot_stack;
 
    /* Get player position. */
    hw    = SCREEN_W/2;
    hh    = SCREEN_H/2;
-
-   /* Interference. */
-   int_a = 1. - interference_alpha;
 
    /* Render borders to enhance contrast. */
    gl_renderRect( 0., 0., 15., SCREEN_H, &cBlackHilight );
@@ -673,11 +663,7 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getPlanetColour(i);
-         ccol.r = col->r;
-         ccol.g = col->g;
-         ccol.b = col->b;
-         ccol.a = int_a;
-         gl_drawCircle(cx, cy, 5, &ccol, 0);
+         gl_drawCircle(cx, cy, 5, col, 0);
       }
    }
 
@@ -699,12 +685,8 @@ static void gui_renderBorder( double dt )
             col = &cGreen;
          else
             col = &cWhite;
-         ccol.r = col->r;
-         ccol.g = col->g;
-         ccol.b = col->b;
-         ccol.a = int_a;
 
-         gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 1., &ccol );
+         gl_renderTriangleEmpty( cx, cy, -jp->angle, 10., 1., col );
       }
    }
 
@@ -724,11 +706,7 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getPilotColour(plt);
-         ccol.r = col->r;
-         ccol.g = col->g;
-         ccol.b = col->b;
-         ccol.a = int_a;
-         gl_renderRectEmpty(cx-5, cy-5, 10, 10, &ccol);
+         gl_renderRectEmpty(cx-5, cy-5, 10, 10, col);
       }
    }
 }
@@ -867,8 +845,6 @@ void gui_render( double dt )
    blink_planet   -= dt / dt_mod;
    if (blink_planet < 0.)
       blink_planet += RADAR_BLINK_PLANET;
-   if (interference_alpha > 0.)
-      interference_t += dt;
 
    /* Render the border ships and targets. */
    gui_renderBorder(dt);
@@ -1105,7 +1081,7 @@ void gui_radarRender( double x, double y )
     * weapons
     */
    weapon_minimap( radar->res, radar->w, radar->h,
-         radar->shape, 1.-interference_alpha );
+         radar->shape, 1. );
 
 
    /* render the pilot */
@@ -1284,7 +1260,7 @@ static const glColour* gui_getPilotColour( const Pilot* p )
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay )
 {
    double x, y, scale;
-   glColour col;
+   const glColour *col;
 
    /* Make sure is in range. */
    if (!pilot_validTarget( player.p, p ))
@@ -1323,28 +1299,24 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    }
 
    /* Draw selection if targeted. */
-   /*col = cRadar_tPilot;
-   col.a = 1.-interference_alpha; */
    if (p->id == player.p->target)
       gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
 
    if (p->id == player.p->target)
-      col = cRadar_hilight;
+      col = &cRadar_hilight;
    else if (pilot_isFlag(p, PILOT_HILIGHT))
-      col = cRadar_tPilot;
+      col = &cRadar_tPilot;
    else
-      col = *gui_getPilotColour(p);
-      // col = cRadar_hilight;
-   col.a = 1.-interference_alpha;
+      col = gui_getPilotColour(p);
 
    glLineWidth( 2. );
    gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., &cBlack );
    glLineWidth( 1. );
-   gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., &col );
+   gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., col );
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
-      gl_printMarkerRaw( &gl_smallFont, x+scale+5., y-gl_smallFont.h/2., &col, p->name );
+      gl_printMarkerRaw( &gl_smallFont, x+scale+5., y-gl_smallFont.h/2., col, p->name );
 }
 
 
@@ -1363,7 +1335,6 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    double x, y;
    double px, py;
    const glColour *col;
-   glColour ccol;
 
    /* Skip invisible asteroids */
    if (a->appearing == ASTEROID_INVISIBLE)
@@ -1410,15 +1381,10 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    else
       col = &cGrey70;
 
-   ccol.r = col->r;
-   ccol.g = col->g;
-   ccol.b = col->b;
-   ccol.a = 1.-interference_alpha;
-   gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), &ccol );
+   gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), col );
 
-   if (targeted){
-      gui_blink( w, h, 0, x, y, 12, RADAR_RECT, &ccol, RADAR_BLINK_PILOT, blink_pilot );
-   }
+   if (targeted)
+      gui_blink( w, h, 0, x, y, 12, RADAR_RECT, col, RADAR_BLINK_PILOT, blink_pilot );
 }
 
 
@@ -1428,12 +1394,6 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 void gui_renderPlayer( double res, int overlay )
 {
    double x, y, r;
-   // glColour textCol = { cRadar_player.r, cRadar_player.g, cRadar_player.b, 0.99 };
-   /* XXX: textCol is a hack to prevent the text from overly obscuring
-    * overlay display of other things. Effectively disables outlines for
-    * the text. Should ultimately be replaced with some other method of
-    * rendering the text, since the problem could be caused by as little
-    * as a font change, but using this fix for now. */
 
    if (overlay) {
       x = player.p->solid->pos.x / res + map_overlay_center_x();
@@ -1518,7 +1478,6 @@ static void gui_blink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarSh
 static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col )
 {
    double a, x, y, x2, y2;
-   glColour c;
 
    /* Draw a line like for pilots. */
    a = ANGLE(cx,cy);
@@ -1548,10 +1507,7 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
    x2 = x - .15 * w * cos(a);
    y2 = y - .15 * w * sin(a);
 
-   c = *col;
-   c.a = 1.-interference_alpha;
-
-   gl_drawLine( x, y, x2, y2, &c );
+   gl_drawLine( x, y, x2, y2, col );
 }
 
 
@@ -1563,7 +1519,7 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
 void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
    GLfloat cx, cy, x, y, r, vr, rc;
-   glColour col;
+   const glColour *col;
    Planet *planet;
    char buf[STRMAX_SHORT];
 
@@ -1619,13 +1575,11 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
 
    /* Get the colour. */
-   col = *gui_getPlanetColour(ind);
-   if (!overlay)
-      col.a = 1.-interference_alpha;
+   col = gui_getPlanetColour(ind);
 
    /* Do the blink. */
    if (ind == player.p->nav_planet)
-      gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet);
+      gui_blink( w, h, rc, cx, cy, vr, shape, col, RADAR_BLINK_PLANET, blink_planet);
 
    /*
    gl_beginSolidProgram(gl_Matrix4_Scale(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), vr, vr, 1), &col);
@@ -1642,13 +1596,13 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    gl_drawCircle( cx, cy + 1, vr/2.5, &cBlack, 0 );
    gl_renderCross( cx, cy + 1, vr/2.5, &cBlack );
 
-   gl_drawCircle( cx, cy, vr/2.5, &col, 0 );
-   gl_renderCross( cx, cy, vr/2.5, &col );
+   gl_drawCircle( cx, cy, vr/2.5, col, 0 );
+   gl_renderCross( cx, cy, vr/2.5, col );
    //glLineWidth(1.);
 
    if (overlay) {
       snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
-      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, buf );
+      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, col, buf );
    }
 }
 
@@ -1666,7 +1620,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
 {
    GLfloat cx, cy, x, y, r, vr, rc;
-   glColour col;
+   const glColour *col;
    JumpPoint *jp;
    char buf[STRMAX_SHORT];
 
@@ -1722,16 +1676,13 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Do the blink. */
    if (ind == player.p->nav_hyperspace) {
-      col = cWhite;
-      gui_blink( w, h, rc, cx, cy, vr, shape, &col, RADAR_BLINK_PLANET, blink_planet );
+      col = &cWhite;
+      gui_blink( w, h, rc, cx, cy, vr, shape, col, RADAR_BLINK_PLANET, blink_planet );
    }
    else if (jp_isFlag(jp, JP_HIDDEN))
-      col = cRed;
+      col = &cRed;
    else
-      col = cGreen;
-
-   if (!overlay)
-      col.a = 1.-interference_alpha;
+      col = &cGreen;
 
    glLineWidth( 3. );
    gl_renderTriangleEmpty( cx - 1, cy, -jp->angle, vr, 2., &cBlack );
@@ -1739,7 +1690,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    gl_renderTriangleEmpty( cx, cy - 1, -jp->angle, vr, 2., &cBlack );
    gl_renderTriangleEmpty( cx, cy + 1, -jp->angle, vr, 2., &cBlack );
 
-   gl_renderTriangleEmpty( cx, cy, -jp->angle, vr, 2., &col );
+   gl_renderTriangleEmpty( cx, cy, -jp->angle, vr, 2., col );
    glLineWidth( 1. );
 
    /* Render name. */
@@ -1747,7 +1698,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       snprintf(
             buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
             sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
-      gl_printMarkerRaw( &gl_smallFont, cx+jp->mo.text_offx, cy+jp->mo.text_offy, &col, buf );
+      gl_printMarkerRaw( &gl_smallFont, cx+jp->mo.text_offx, cy+jp->mo.text_offy, col, buf );
    }
 }
 
@@ -2168,11 +2119,6 @@ void gui_cleanup (void)
 
    /* Reset FPS. */
    fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
-
-   /* Clean up interference. */
-   interference_alpha = 0.;
-   interference_layer = 0;
-   interference_t     = 0.;
 
    /* Destroy offset. */
    gui_xoff = 0.;
