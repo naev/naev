@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-import collections
-
-Shader = collections.namedtuple("Shader", "name vs_path fs_path attributes uniforms subroutines")
-
 class Shader:
     def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines ):
         self.name       = name
