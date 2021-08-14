@@ -744,7 +744,6 @@ static void map_drawMarker( double x, double y, double r, double a,
 
    double alpha;
    glColour col;
-   gl_Matrix4 projection;
 
    /* Calculate the angle. */
    if ((num == 1) || (num == 2) || (num == 4))
@@ -765,16 +764,12 @@ static void map_drawMarker( double x, double y, double r, double a,
    x = x + 3.0*r * cos(alpha);
    y = y + 3.0*r * sin(alpha);
    r *= 2.0;
-   projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, x, y, 0);
-   projection = gl_Matrix4_Scale(projection, r, r, 1);
-   projection = gl_Matrix4_Rotate2d(projection, alpha);
 
    glUseProgram(shaders.sysmarker.program);
    //glUniform2f( shaders.sysmarker.dimensions, r, r );
    //glUniform1f( shaders.sysmarker.r, loading_r );
    //glUniform1f( shaders.sysmarker.dt, done );
-   gl_renderShaderH( &shaders.sysmarker, &projection, &col, 1 );
+   gl_renderShader( x, y, r, r, alpha, &shaders.sysmarker, &col, 1 );
 }
 
 /**
@@ -1009,7 +1004,7 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
          c.a = 0.6 * alpha;
 
          glUseProgram(shaders.factiondisk.program);
-         gl_renderShader( tx, ty, sw/2, sh/2, &shaders.factiondisk, &c, 1 );
+         gl_renderShader( tx, ty, sw/2, sh/2, 0., &shaders.factiondisk, &c, 1 );
       }
    }
 }

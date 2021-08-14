@@ -582,8 +582,8 @@ void loadscreen_render( double done, const char *msg )
    glUseProgram(shaders.progressbar.program);
    glUniform1f( shaders.progressbar.r, loading_r );
    glUniform1f( shaders.progressbar.dt, done );
-   gl_renderShader( x, y, w, h, &shaders.progressbar, NULL, 0 );
-   
+   gl_renderShader( x, y, w, h, 0., &shaders.progressbar, NULL, 0 );
+
    /* Draw text. */
    gl_printRaw( &gl_defFont, x+10., y + h + 3., &cFontWhite, -1., msg );
 
