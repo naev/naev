@@ -89,11 +89,9 @@
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
 
-#define NAEV_INIT_DELAY 3000 /**< Minimum amount of time_ms to wait with loading screen */
-
-
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
+static double loading_r       = 0.; /**< Just to provide some randomness. */
 static glTexture *loading     = NULL; /**< Loading screen. */
 static glFont loading_font; /**< Loading font. */
 static char *loading_txt = NULL; /**< Loading text to display. */
@@ -366,9 +364,6 @@ int main( int argc, char** argv )
 
    LOG( _( "Reached main menu" ) );
 
-   /* Force a minimum delay with loading screen */
-   if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
-      SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    fps_init(); /* initializes the time_ms */
 
 
@@ -521,6 +516,7 @@ void loadscreen_load (void)
    /* Load the texture */
    snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s", load );
    loading = gl_newImage( file_path, 0 );
+   loading_r = RNGF();
 
    /* Load the metadata. */
    snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s.txt", load );
@@ -544,9 +540,8 @@ void loadscreen_load (void)
  */
 void loadscreen_render( double done, const char *msg )
 {
-   const double SHIP_IMAGE_WIDTH = 512.;  /**< Loadscreen Ship Image Width */
-   const double SHIP_IMAGE_HEIGHT = 512.; /**< Loadscreen Ship Image Height */
-   glColour col;
+   const double SHIP_IMAGE_WIDTH    = 512.;  /**< Loadscreen Ship Image Width */
+   const double SHIP_IMAGE_HEIGHT   = 512.; /**< Loadscreen Ship Image Height */
    double bx;  /**<  Blit Image X Coord */
    double by;  /**<  Blit Image Y Coord */
    double x;   /**<  Progress Bar X Coord */
@@ -569,8 +564,8 @@ void loadscreen_render( double done, const char *msg )
    bx = (SCREEN_W-SHIP_IMAGE_WIDTH)/2.;
    by = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2.;
    /* Loading bar. */
-   w  = SCREEN_W * 0.4;
-   h  = SCREEN_H * 0.02;
+   w  = SCREEN_W * 0.5;
+   h  = SCREEN_H * 0.025;
    rh = h + gl_defFont.h + 4.;
    x  = (SCREEN_W-w)/2.;
    y  = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2. - rh - 5.;
@@ -584,26 +579,13 @@ void loadscreen_render( double done, const char *msg )
    }
 
    /* Draw progress bar. */
-   /* BG. */
-   col.r = cBlack.r;
-   col.g = cBlack.g;
-   col.b = cBlack.b;
-   col.a = 0.7;
-   gl_renderRect( x-2., y-2., w+4., rh+4., &col );
-   /* FG. */
-   col.r = cGreen.r;
-   col.g = cGreen.g;
-   col.b = cGreen.b;
-   col.a = 0.2;
-   gl_renderRect( x+done*w, y, (1.-done)*w, h, &col );
-   col.r = cPrimeGreen.r;
-   col.g = cPrimeGreen.g;
-   col.b = cPrimeGreen.b;
-   col.a = 0.7;
-   gl_renderRect( x, y, done*w, h, &col );
+   glUseProgram(shaders.progressbar.program);
+   glUniform1f( shaders.progressbar.r, loading_r );
+   glUniform1f( shaders.progressbar.dt, done );
+   gl_renderShader( x, y, w, h, 0., &shaders.progressbar, NULL, 0 );
 
    /* Draw text. */
-   gl_printRaw( &gl_defFont, x, y + h + 3., &cFontGreen, -1., msg );
+   gl_printRaw( &gl_defFont, x+10., y + h + 3., &cFontWhite, -1., msg );
 
    /* Get rid of events again. */
    while (SDL_PollEvent(&event));

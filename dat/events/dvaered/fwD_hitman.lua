@@ -3,7 +3,8 @@
 <event name="Division Marius">
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>player.misnDone("Dvaered Ballet") == true and not (player.misnDone("Dvaered Base") or player.misnActive("Dvaered Base") or player.misnDone("Dvaered Triathlon"))</cond>
+  <cond>false</cond>
+  <!--<cond>player.misnDone("Dvaered Ballet") and not (player.misnDone("Dvaered Base") or player.misnActive("Dvaered Base") or player.misnDone("Dvaered Triathlon"))</cond>-->
   <flags>
    <unique />
   </flags>
@@ -17,7 +18,7 @@
 -- Player is attacked by a hitman. If player disables and boards the hitman, this enables the Dvaered Base mission
 --]]
 -- TODO: this event is neutralized because the "Dvaered Base" mission has not been written yet
-attk_warn = _("You are being attacked: try to catch your attacker alive!")
+attk_warn = _("You are being attacked! You may get information from your attacker if you catch them alive!")
 
 death_title = _("Target destroyed")
 death_text = _([[While your attacker's ship gets transformed into a fireball, you hesitate between feeling relieved to be alive and disappointed not to have taken the pilot alive. There will however probably be other opportunities to do that.]])

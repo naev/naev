@@ -400,6 +400,10 @@ static void think_beam( Weapon* w, const double dt )
    Asteroid *ast;
    double diff, mod;
    Vector2d v;
+   PilotOutfitSlot *slot;
+   unsigned int turn_off;
+
+   slot = w->mount;
 
    /* Get pilot, if pilot is dead beam is destroyed. */
    p = pilot_get(w->parent);
@@ -411,20 +415,54 @@ static void think_beam( Weapon* w, const double dt )
    /* Check if pilot has enough energy left to keep beam active. */
    mod = (w->outfit->type == OUTFIT_TYPE_BEAM) ? p->stats.fwd_energy : p->stats.tur_energy;
    p->energy -= mod * dt*w->outfit->u.bem.energy;
-   pilot_heatAddSlotTime( p, w->mount, dt );
+   pilot_heatAddSlotTime( p, slot, dt );
    if (p->energy < 0.) {
       p->energy = 0.;
       w->timer = -1;
       return;
    }
 
+   /* Get the targets. */
+   if (p->nav_asteroid != -1) {
+      field = &cur_system->asteroids[p->nav_anchor];
+      ast = &field->asteroids[p->nav_asteroid];
+   }
+   else
+      ast = NULL;
+   t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
+
+   /* Check the beam is still in range. */
+   if(slot->inrange) {
+      turn_off = 1;
+      if (t != NULL) {
+         if (vect_dist( &p->solid->pos, &t->solid->pos ) <= slot->outfit->u.bem.range)
+            turn_off = 0;
+      }
+      if (ast != NULL) {
+         if (vect_dist( &p->solid->pos, &ast->pos ) <= slot->outfit->u.bem.range)
+            turn_off = 0;
+      }
+
+      /* Attempt to turn the beam off. */
+      if (turn_off) {
+         if (slot->outfit->u.bem.min_duration > 0.) {
+            slot->stimer = slot->outfit->u.bem.min_duration -
+                  (slot->outfit->u.bem.duration - slot->timer);
+            if (slot->stimer > 0.)
+               turn_off = 0;
+         }
+      }
+      if (turn_off) {
+         w->timer = -1;
+      }
+   }
+
    /* Use mount position. */
-   pilot_getMount( p, w->mount, &v );
+   pilot_getMount( p, slot, &v );
    w->solid->pos.x = p->solid->pos.x + v.x;
    w->solid->pos.y = p->solid->pos.y + v.y;
 
    /* Handle aiming at the target. */
-   t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
    switch (w->outfit->type) {
       case OUTFIT_TYPE_BEAM:
          if (w->outfit->u.bem.swivel > 0.)
@@ -439,10 +477,7 @@ static void think_beam( Weapon* w, const double dt )
           */
          t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
          if (t == NULL) {
-            if (p->nav_asteroid >= 0) {
-               field = &cur_system->asteroids[p->nav_anchor];
-               ast = &field->asteroids[p->nav_asteroid];
-
+            if (ast != NULL) {
                diff = angle_diff(w->solid->dir, /* Get angle to target pos */
                      vect_angle(&w->solid->pos, &ast->pos));
             }
@@ -1854,6 +1889,12 @@ void beam_end( const unsigned int parent, unsigned int beam )
          return;
    }
 
+#if DEBUGGING
+   if (beam==0) {
+      WARN(_("Trying to remove beam with ID 0!"));
+      return;
+   }
+#endif /* DEBUGGING */
 
    /* Now try to destroy the beam. */
    for (i=0; i<array_size(curLayer); i++) {

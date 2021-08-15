@@ -56,7 +56,7 @@ function pp_shaders.corruption( strength )
       vec4 screenColor = texture( tex, uv );
       uv.x = round(uv.x * glitchStep ) / glitchStep;
       vec4 glitchColor = texture( tex, uv );
-      return mix(screenColor, glitchColor, vec4(0.1*strength));
+      return mix(screenColor, glitchColor, vec4(0.03*strength));
    }
    ]], strength )
    return pp_shaders.newShader( pixelcode )

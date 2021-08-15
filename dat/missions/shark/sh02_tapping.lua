@@ -104,7 +104,7 @@ function accept()
 
    stage = 0
    reward = 750e3
-   proba = 0.3  --the chances you have to get an ambush
+   proba = 0.4  --the chances you have to get an ambush
 
    if tk.yesno(title[1], text[1]:format(pplname, psyname)) then
       misn.accept()
@@ -153,7 +153,7 @@ function enter()
    -- Ambush !
    if stage == 1 and rnd.rnd() < proba then
       hook.timer( 2.0, "ambush" )
-      proba = proba - 0.2
+      proba = proba - 0.1
    elseif stage == 1 then
       --the probability of an ambush goes up when you cross a system without meeting any ennemy
       proba = proba + 0.1
@@ -171,6 +171,14 @@ function beginrun()
 
    --remove the spy
    misn.npcRm(agent)
+
+   -- Initialize number of mercenaries
+   nInterce = 5
+   nFighter = 4
+   nBombers = 3
+   nCorvett = 3
+   nCruiser = 1
+   nLlamas  = 1
 end
 
 function ambush()
@@ -178,48 +186,47 @@ function ambush()
    local playerSize = player.pilot():ship():size()
    badguys = {}
 
-   if playerSize <= 2 then
-      local rand = rnd.rnd()
-      if rand < 0.3 then
-         hvy_intercept()
-      elseif  rand < 0.8 then
-         interceptors()
-      else
-         corvette()
-      end
-
-      elseif playerSize <= 4 then
-
-      local rand = rnd.rnd()
-      if rand < 0.5 then
-         cruiser()
-      elseif rand < 0.8 then
-         corvette()
-      else
-         hvy_intercept()
-      end
-
-      elseif playerSize <= 6 then
-
-      if rnd.rnd() < 0.7 then
-         bombers()
-      else
-         hvy_intercept()
-      end
-
-   else -- We're never too sure
-      littleofall()
-   end
-   --and a Llama for variety :
+   -- First: a victim Llama
    if rnd.rnd() < 0.5 then
       add_llama()
+   end
+
+   -- The kind of enemy is choosen randomly, but the weight is changed depending on the player's ship
+   -- And depending on the number of avaliable ships of the given class
+   if playerSize <= 2 then
+      choose( 3*nInterce, 2*nFighter, nBombers, nCorvett, nCruiser )
+      elseif playerSize <= 4 then
+      choose( nInterce, 2*nFighter, nBombers, 4*nCorvett, 5*nCruiser )
+      elseif playerSize <= 6 then
+      choose( nInterce, nFighter, 5*nBombers, nCorvett, 5*nCruiser )
+   else -- We're never too sure
+      choose( nInterce, nFighter, nBombers, nCorvett, nCruiser )
+   end
+end
+
+-- Choose a type of attackers with a weighted random pick
+function choose( wI, wF, wB, wCo, wCr )
+   local ntot = wI + wF + wB + wCo + wCr
+   if ntot ==0 then return end
+
+   local rand = rnd.rnd() * ntot
+   if rand < wI then
+      interceptors()
+   elseif rand < wI+wF then
+      hvy_intercept()
+   elseif rand < wI+wF+wB then
+      bombers()
+   elseif rand < wI+wF+wB+wCo then
+      corvette()
+   else
+      cruiser()
    end
 end
 
 function interceptors()
    --spawning high speed Hyenas
-   number = {1,2,3,4}
-   for i in ipairs(number) do
+   local nb = rndNb( nInterce )
+   for i = 1, nb do
       badguys[i] = pilot.add( "Hyena", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
@@ -236,13 +243,15 @@ function interceptors()
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
+
+      hook.pilot( badguys[i], "death", "InterceptorDead")
    end
 end
 
 function hvy_intercept()
    --spawning Lancelots
-   number = {1,2,3,4}
-   for i in ipairs(number) do
+   local nb = rndNb( nFighter )
+   for i = 1, nb do
       badguys[i] = pilot.add( "Lancelot", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
@@ -261,13 +270,15 @@ function hvy_intercept()
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
+
+      hook.pilot( badguys[i], "death", "FighterDead")
    end
 end
 
 function corvette()
    --spawning Admonishers
-   number = {1,2}
-   for i in ipairs(number) do
+   local nb = rndNb( nCorvett )
+   for i = 1, nb do
       badguys[i] = pilot.add( "Admonisher", "Mercenary", nil, _("Mercenary") )
       badguys[i]:setHostile()
 
@@ -287,38 +298,57 @@ function corvette()
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
+
+      hook.pilot( badguys[i], "death", "CorvetteDead")
    end
 end
 
 function cruiser()
    --spawning a Kestrel with massive missile weaponry
-   badguy = pilot.add( "Kestrel", "Mercenary", nil, _("Mercenary") )
-   badguy:setHostile()
+   if nCruiser == 1 then
+      origin = pilot.choosePoint( faction.get("Mercenary") )
 
-   badguy:outfitRm("all")
-   badguy:outfitRm("cores")
+      badguy = pilot.add( "Kestrel", "Mercenary", origin, _("Mercenary") )
+      badguy:setHostile()
 
-   badguy:outfitAdd("Unicorp D-48 Heavy Plating")
-   badguy:outfitAdd("Unicorp PT-500 Core System")
-   badguy:outfitAdd("Krain Remige Engine")
+      badguy:outfitRm("all")
+      badguy:outfitRm("cores")
 
-   badguy:outfitAdd("Heavy Laser Turret",2)
-   badguy:outfitAdd("Unicorp Headhunter Launcher",4)
+      badguy:outfitAdd("Unicorp D-48 Heavy Plating")
+      badguy:outfitAdd("Unicorp PT-500 Core System")
+      badguy:outfitAdd("Krain Remige Engine")
 
-   badguy:outfitAdd("Pinpoint Combat AI")
-   badguy:outfitAdd("Photo-Voltaic Nanobot Coating")
-   badguy:outfitAdd("Reactor Class III")
-   badguy:outfitAdd("Improved Stabilizer",3)
-   badguy:setHealth(100,100)
-   badguy:setEnergy(100)
+      badguy:outfitAdd("Heavy Laser Turret",2)
+      badguy:outfitAdd("Unicorp Headhunter Launcher",4)
+
+      badguy:outfitAdd("Pinpoint Combat AI")
+      badguy:outfitAdd("Photo-Voltaic Nanobot Coating")
+      badguy:outfitAdd("Reactor Class III")
+      badguy:outfitAdd("Improved Stabilizer",3)
+      badguy:setHealth(100,100)
+      badguy:setEnergy(100)
+
+      hook.pilot( badguys[i], "death", "CruiserDead")
+
+      -- Escort
+      if nCorvett >= 1 then
+         badguys[1] = pilot.add( "Admonisher", "Mercenary", origin, _("Mercenary") )
+         hook.pilot( badguys[1], "death", "CorvetteDead")
+         badguys[1]:setLeader(badguy)
+      end
+   end
 
 end
 
 function bombers()
    --spawning Ancestors
-   number = {1,2,3}
-   for i in ipairs(number) do
-      badguys[i] = pilot.add( "Ancestor", "Mercenary", nil, _("Mercenary") )
+   local nb = rndNb( nBombers )
+   local nI = nInterce
+   local nF = nFighter
+   for i = 1, nb do
+      origin = pilot.choosePoint( faction.get("Mercenary") )
+
+      badguys[i] = pilot.add( "Ancestor", "Mercenary", origin, _("Mercenary") )
       badguys[i]:setHostile()
 
       badguys[i]:outfitRm("all")
@@ -335,22 +365,61 @@ function bombers()
 
       badguys[i]:setHealth(100,100)
       badguys[i]:setEnergy(100)
+
+      hook.pilot( badguys[i], "death", "BomberDead")
+
+      -- Escort
+      if nI >= 1 then
+         badguys[nb+i] = pilot.add( "Hyena", "Mercenary", origin, _("Mercenary") )
+         hook.pilot( badguys[nb+i], "death", "InterceptorDead")
+         badguys[nb+i]:setLeader(badguys[i])
+         nI = nI - 1
+      elseif nF >= 1 then
+         badguys[nb+i] = pilot.add( "Lancelot", "Mercenary", origin, _("Mercenary") )
+         hook.pilot( badguys[nb+i], "death", "FighterDead")
+         badguys[nb+i]:setLeader(badguys[i])
+         nF = nF - 1
+      end
    end
 end
 
 function add_llama()
    --adding an useless Llama
-   useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
-   useless:setHostile()
+   if nLlamas == 1 then
+      useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
+      useless:setHostile()
+      hook.pilot( badguys[i], "death", "LlamaDead")
+   end
 end
 
-function littleofall()
-   --spawning random enemies
-   if rnd.rnd() < 0.5 then
-      interceptors()
+-- Random utility
+function rndNb( nmax )
+   if nmax <= 1 then
+      return nmax
    else
-      hvy_intercept()
+      local nmin = math.floor(nmax/2)
+      return rnd.rnd( nmin, nmax )
    end
+end
+
+-- Death functions: decrement enemy numbers
+function LlamaDead()
+   nLlamas = nLlamas - 1
+end
+function BomberDead()
+   nBombers = nBombers - 1
+end
+function CruiserDead()
+   nCruiser = nCruiser - 1
+end
+function CorvetteDead()
+   nCorvett = nCorvett - 1
+end
+function FighterDead()
+   nFighter = nFighter - 1
+end
+function InterceptorDead()
+   nInterce = nInterce - 1
 end
 
 function abort()

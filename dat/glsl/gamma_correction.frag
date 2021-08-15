@@ -1,3 +1,5 @@
+#include "lib/gamma.glsl"
+
 uniform sampler2D MainTex;
 uniform float gamma = 1.0;
 in vec4 VaryingTexCoord;

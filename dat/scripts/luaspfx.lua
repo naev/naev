@@ -61,17 +61,13 @@ function __luaspfx_render( tbl )
       local x = (ox-cx) / cz + nw2
       local y = nh2 - (oy-cy) / cz
       -- Run function (should render)
-      v.efx.func( v.efx, x, y, cz )
+      v.efx:func( x, y, cz )
    end
 end
 
-local function __luaspfx_add( tbl, efx, params, ttl, pos, vel )
-   params = params or {}
+local function __luaspfx_add( tbl, efx, ttl, pos, vel )
    vel = vel or vec2.new(0,0)
-   efx.params = params
-   if efx.create then
-      efx.create( efx, ttl, pos, vel )
-   end
+   efx:init( ttl, pos, vel )
    table.insert( tbl, {
       efx=efx,
       pos=pos,

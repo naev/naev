@@ -68,7 +68,6 @@ double map_alpha_names        = 1.;
 double map_alpha_markers      = 1.;
 static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
-glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
 static int cur_commod         = -1; /**< Current commodity selected. */
 static int cur_commod_mode    = 0; /**< 0 for cost, 1 for difference. */
 static Commodity **commod_known = NULL; /**< index of known commodities */
@@ -78,7 +77,6 @@ static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
 static double map_nebu_dt     = 0.; /***< Nebula animation stuff. */
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
-static gl_vbo *marker_vbo = NULL;
 
 /*
  * extern
@@ -109,7 +107,6 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
 static void map_reset (void);
-static glTexture *gl_genFactionDisk( int radius );
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, char* str );
 static void map_buttonCommodity( unsigned int wid, char* str );
@@ -126,21 +123,8 @@ static void map_window_close( unsigned int wid, char *str );
  */
 int map_init (void)
 {
-   const double beta = M_PI / 9;
-   GLfloat vertex[6];
-
    /* Create the VBO. */
    map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 6*(2+4), NULL );
-
-   vertex[0] = 1;
-   vertex[1] = 0;
-   vertex[2] = 1 + 3 * cos(beta);
-   vertex[3] = 3 * sin(beta);
-   vertex[4] = 1 + 3 * cos(beta);
-   vertex[5] = -3 * sin(beta);
-   marker_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 6, vertex );
-
-   gl_faction_disk = gl_genFactionDisk( 150. );
    return 0;
 }
 
@@ -154,8 +138,6 @@ void map_exit (void)
 
    gl_vboDestroy(map_vbo);
    map_vbo = NULL;
-
-   gl_freeTexture( gl_faction_disk );
 
    if (decorator_stack != NULL) {
       for (i=0; i<array_size(decorator_stack); i++)
@@ -441,7 +423,7 @@ static void map_update( unsigned int wid )
    int i;
    StarSystem *sys;
    int f, h, x, y, logow, logoh;
-   unsigned int services;
+   unsigned int services, services_h, services_u;
    int hasPlanets;
    char t;
    const char *sym, *adj;
@@ -643,21 +625,31 @@ static void map_update( unsigned int wid )
    window_moveWidget( wid, "txtSServices", x, y );
    window_moveWidget( wid, "txtServices", x + 50, y-gl_smallFont.h-5 );
    services = 0;
+   services_h = 0;
+   services_u = 0;
    for (i=0; i<array_size(sys->planets); i++)
-      if (planet_isKnown(sys->planets[i]))
-         services |= sys->planets[i]->services;
+      if (planet_isKnown(sys->planets[i])) {
+         if (sys->planets[i]->can_land)
+            services |= sys->planets[i]->services;
+         else if (areEnemies(sys->planets[i]->faction,FACTION_PLAYER))
+            services_h |= sys->planets[i]->services;
+         else
+            services_u |= sys->planets[i]->services;
+      }
    buf[0] = '\0';
    p = 0;
    /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
       if (services & i)
          p += scnprintf( &buf[p], sizeof(buf)-p, "%s\n", _(planet_getServiceName(i)) );
+      else if (services_h & i)
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#H!! %s\n", _(planet_getServiceName(i)) );
+      else if (services_u & i)
+         p += scnprintf( &buf[p], sizeof(buf)-p, "#R* %s\n", _(planet_getServiceName(i)) );
    if (buf[0] == '\0')
       p += scnprintf( &buf[p], sizeof(buf)-p, _("None"));
-   (void)p;
 
    window_modifyText( wid, "txtServices", buf );
-
 
    /*
     * System Status, if not showing commodity info
@@ -762,7 +754,6 @@ static void map_drawMarker( double x, double y, double r, double a,
 
    double alpha;
    glColour col;
-   gl_Matrix4 projection;
 
    /* Calculate the angle. */
    if ((num == 1) || (num == 2) || (num == 4))
@@ -777,71 +768,18 @@ static void map_drawMarker( double x, double y, double r, double a,
    alpha += M_PI*2. * (double)cur/(double)num;
 
    /* Draw the marking triangle. */
-   glEnable(GL_POLYGON_SMOOTH);
    col = *colours[type];
    col.a *= a;
-   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
-   projection = gl_Matrix4_Scale(projection, r, r, 1);
-   projection = gl_Matrix4_Rotate2d(projection, alpha);
-   gl_beginSolidProgram(projection, &col);
-   gl_vboActivateAttribOffset( marker_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLES, 0, 3 );
-   gl_endSolidProgram();
-   glDisable(GL_POLYGON_SMOOTH);
-}
 
-/**
- * @brief Generates a texture to represent factions
- *
- * @param radius radius of the disk
- * @return the texture
- */
-static glTexture *gl_genFactionDisk( int radius )
-{
-   int i, j;
-   uint8_t *pixels;
-   SDL_Surface *sur;
-   int dist;
-   double alpha;
+   x = x + 3.0*r * cos(alpha);
+   y = y + 3.0*r * sin(alpha);
+   r *= 2.0;
 
-   /* Calculate parameters. */
-   const int w = 2 * radius + 1;
-   const int h = 2 * radius + 1;
-
-   /* Create the surface. */
-   sur = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
-
-   pixels = sur->pixels;
-   memset(pixels, 0xff, sizeof(uint8_t) * 4 * h * w);
-
-   /* Generate the circle. */
-   SDL_LockSurface( sur );
-
-   /* Draw the circle with filter. */
-   for (i=0; i<h; i++) {
-      for (j=0; j<w; j++) {
-         /* Calculate blur. */
-         dist = (i - radius) * (i - radius) + (j - radius) * (j - radius);
-         alpha = 0.;
-
-         if (dist < radius * radius) {
-            /* Computes alpha with an empirically chosen formula.
-             * This formula accounts for the fact that the eyes
-             * has a logarithmic sensitivity to light */
-            alpha = 1. * dist / (radius * radius);
-            alpha = (exp(1 / (alpha + 1) - 0.5) - 1) * 0xFF;
-         }
-
-         /* Sets the pixel alpha which is the forth byte
-          * in the pixel representation. */
-         pixels[i*sur->pitch + j*4 + 3] = (uint8_t)alpha;
-      }
-   }
-
-   SDL_UnlockSurface( sur );
-
-   /* Return texture. */
-   return gl_loadImage( sur, OPENGL_TEX_MIPMAPS );
+   glUseProgram(shaders.sysmarker.program);
+   //glUniform2f( shaders.sysmarker.dimensions, r, r );
+   //glUniform1f( shaders.sysmarker.r, loading_r );
+   //glUniform1f( shaders.sysmarker.dt, done );
+   gl_renderShader( x, y, r, r, alpha, &shaders.sysmarker, &col, 1 );
 }
 
 /**
@@ -908,7 +846,7 @@ else (x) = MAX( y, (x) - dt )
 
    /* Render faction disks. */
    if (map_alpha_faction > 0.)
-      map_renderFactionDisks( x, y, 0, map_alpha_faction );
+      map_renderFactionDisks( x, y, r, 0, map_alpha_faction );
 
       /* Render environmental features. */
    if (map_alpha_env > 0.)
@@ -1039,14 +977,13 @@ void map_renderDecorators( double x, double y, int editor, double alpha )
 /**
  * @brief Renders the faction disks.
  */
-void map_renderFactionDisks( double x, double y, int editor, double alpha )
+void map_renderFactionDisks( double x, double y, double r, int editor, double alpha )
 {
    int i;
    const glColour *col;
    glColour c;
    StarSystem *sys;
-   int sw, sh;
-   double tx, ty, presence;
+   double tx, ty, sr, presence;
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
@@ -1066,20 +1003,17 @@ void map_renderFactionDisks( double x, double y, int editor, double alpha )
          presence = sqrt(sys->ownerpresence);
 
          /* draws the disk representing the faction */
-         sw = (60 + presence * 3) * map_zoom;
-         sh = sw;
+         sr = (40 + presence * 3) * map_zoom * 0.5;
 
          col = faction_colour(sys->faction);
          c.r = col->r;
          c.g = col->g;
          c.b = col->b;
-         //c.a = CLAMP( .6, .75, 20 / presence ) * cc;
-         c.a = CLAMP( .4, .5, 13.3 / presence ) * alpha;
+         c.a = 0.6 * alpha;
 
-         gl_blitTexture(
-               gl_faction_disk,
-               tx - sw/2, ty - sh/2, sw, sh,
-               0., 0., gl_faction_disk->srw, gl_faction_disk->srw, &c, 0.);
+         glUseProgram(shaders.factiondisk.program);
+         glUniform1f(shaders.factiondisk.r, r / sr );
+         gl_renderShader( tx, ty, sr, sr, 0., &shaders.factiondisk, &c, 1 );
       }
    }
 }

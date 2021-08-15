@@ -1169,6 +1169,7 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
                xmlr_attr_float_opt( cur, "b", tc->style[i].col.b );
                xmlr_attr_float_opt( cur, "a", tc->style[i].col.a );
                xmlr_attr_float_opt( cur, "scale", tc->style[i].thick );
+               col_gammaToLinear( &tc->style[i].col );
                break;
             }
          if (i == MODE_MAX)

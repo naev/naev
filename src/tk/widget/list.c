@@ -116,6 +116,7 @@ static void lst_render( Widget* lst, double bx, double by )
    int i;
    double x,y, tx,ty, miny;
    double w, scroll_pos;
+   const glColour *col;
 
    w = lst->w;
    x = bx + lst->x;
@@ -141,7 +142,7 @@ static void lst_render( Widget* lst, double bx, double by )
    /* draw selected item background */
    ty = y - 1 + lst->h - (1 + lst->dat.lst.selected - lst->dat.lst.pos)*CELLHEIGHT;
    if (ty > y && ty < y+lst->h-CELLHEIGHT)
-      toolkit_drawRect( x + 1, ty, w-1, CELLHEIGHT, &cHilight, NULL );
+      toolkit_drawRect( x + 1, ty, w-1, CELLHEIGHT, &cGrey30, NULL );
 
    /* draw content */
    tx = x + 6.;
@@ -149,8 +150,11 @@ static void lst_render( Widget* lst, double bx, double by )
    ty = y + lst->h - CELLPADV/2 - gl_smallFont.h;
    miny = y;
    for (i=lst->dat.lst.pos; i<lst->dat.lst.noptions; i++) {
-      gl_printMaxRaw( &gl_smallFont, w,
-            tx, ty, &cFontWhite, -1., lst->dat.lst.options[i] );
+      if (lst->dat.lst.selected==i)
+         col = &cWhite;
+      else
+         col = &cFontWhite;
+      gl_printMaxRaw( &gl_smallFont, w, tx, ty, col, -1., lst->dat.lst.options[i] );
       ty -= CELLHEIGHT;
 
       /* Check if out of bounds. */

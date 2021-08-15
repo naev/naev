@@ -493,7 +493,9 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             (lst[i].sslot->slot.type == o->slot.type)) {
          /* Render a thick frame with a yes/no color, and geometric cue. */
          int ok = (pilot_canEquip( p, &lst[i], o ) == NULL);
-         gl_renderStatus( x, y, w, h, ok );
+         glUseProgram( shaders.status.program );
+         glUniform1f( shaders.status.r, ok );
+         gl_renderShader( x, y, w, h, 0., &shaders.status, NULL, 0 );
       }
 
       /* Must rechoose colour based on slot properties. */

@@ -40,7 +40,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 }
 ]]
 local alert_sound = audio.newSource('snd/sounds/alarm_warning.ogg')
-local function __alert( efx, x, y, z )
+local alert_meta = {}
+function alert_meta.func( efx, x, y, z )
    if not effects.__alert_bg_shader then
       effects.__alert_bg_shader = lg.newShader(
          alert_bg_shader_frag,
@@ -58,7 +59,7 @@ local function __alert( efx, x, y, z )
    love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
    lg.setShader( old_shader )
 end
-local function __alert_create( efx, ttl, pos, vel )
+function alert_meta.init( efx, ttl, pos, vel )
    local dt_mod = player.dt_mod()
    local px, py = pos:get()
    local vx, vy = vel:get()
@@ -68,6 +69,12 @@ local function __alert_create( efx, ttl, pos, vel )
    efx.sound:setPitch( dt_mod )
    efx.sound:play( pos )
 end
-effects.alert = { func = __alert, create = __alert_create, sound=alert_sound:clone() }
+function effects.alert( params )
+   local efx = {}
+   setmetatable( efx, { __index = alert_meta } )
+   efx.sound = alert_sound:clone()
+   efx.params = params
+   return efx
+end
 
 return effects

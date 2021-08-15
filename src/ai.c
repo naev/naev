@@ -443,7 +443,7 @@ void ai_setPilot( Pilot *p )
 static void ai_run( nlua_env env, int nargs )
 {
    if (nlua_pcall(env, nargs, 0)) { /* error has occurred */
-      WARN( _("Pilot '%s' ai error: %s"), cur_pilot->name, lua_tostring(naevL,-1));
+      WARN( _("Pilot '%s' ai '%s' error: %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 }
@@ -488,7 +488,7 @@ int ai_pinit( Pilot *p, const char *ai )
    if (lua_isnil(naevL,-1))
       WARN( _("AI profile '%s' has no default memory for pilot '%s'."),
             buf, p->name );
-#endif
+#endif /* DEBUGGING */
    lua_pushnil(naevL);               /* pm, nt, dt, nil */
    while (lua_next(naevL,-2) != 0) { /* pm, nt, dt, k, v */
       lua_pushvalue(naevL,-2);       /* pm, nt, dt, k, v, k */
@@ -880,7 +880,7 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 
    lua_pushpilot(naevL, attacker);
    if (nlua_pcall(cur_pilot->ai->env, 1, 0)) {
-      WARN( _("Pilot '%s' ai -> 'attacked': %s"), cur_pilot->name, lua_tostring(naevL, -1));
+      WARN( _("Pilot '%s' ai '%s' -> 'attacked': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL, -1));
       lua_pop(naevL, 1);
    }
 }
@@ -912,7 +912,7 @@ void ai_discovered( Pilot* discovered )
    }
 
    if (nlua_pcall(cur_pilot->ai->env, 0, 0)) {
-      WARN( _("Pilot '%s' ai -> 'discovered': %s"), cur_pilot->name, lua_tostring(naevL, -1));
+      WARN( _("Pilot '%s' ai '%s' -> 'discovered': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL, -1));
       lua_pop(naevL, 1);
    }
 }
@@ -929,7 +929,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
    Task *t;
 
    if (cur_pilot->ai->ref_refuel==LUA_NOREF) {
-      WARN(_("Pilot '%s' is trying to refuel when no 'refuel' function is defined!"), cur_pilot->name);
+      WARN(_("Pilot '%s' (ai '%s') is trying to refuel when no 'refuel' function is defined!"), cur_pilot->name, cur_pilot->ai->name);
       return;
    }
 
@@ -984,7 +984,7 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
       lua_pushpilot(naevL, distressed->target);
 
    if (nlua_pcall(cur_pilot->ai->env, 2, 0)) {
-      WARN( _("Pilot '%s' ai -> 'distress': %s"), cur_pilot->name, lua_tostring(naevL,-1));
+      WARN( _("Pilot '%s' ai '%s' -> 'distress': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 }
@@ -1021,7 +1021,7 @@ static void ai_create( Pilot* pilot )
       lua_setfenv(naevL, -2);
       lua_pushpilot(naevL, pilot->id);
       if (nlua_pcall(env, 1, 0)) { /* Error has occurred. */
-         WARN( _("Pilot '%s' equip -> '%s': %s"), pilot->name, func, lua_tostring(naevL, -1));
+         WARN( _("Pilot '%s' equip '%s' -> '%s': %s"), pilot->name, pilot->ai->name, func, lua_tostring(naevL, -1));
          lua_pop(naevL, 1);
       }
    }
@@ -1041,7 +1041,7 @@ static void ai_create( Pilot* pilot )
 
    /* Run function. */
    if (nlua_pcall(cur_pilot->ai->env, 0, 0)) { /* error has occurred */
-      WARN( _("Pilot '%s' ai -> '%s': %s"), cur_pilot->name, "create", lua_tostring(naevL,-1));
+      WARN( _("Pilot '%s' ai '%s' -> '%s': %s"), cur_pilot->name, cur_pilot->ai->name, "create", lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
 
@@ -2385,7 +2385,7 @@ static int aiL_land( lua_State *L )
    ret = 0;
 
    if (cur_pilot->nav_planet < 0) {
-      NLUA_ERROR( L, _("Pilot '%s' has no land target"), cur_pilot->name );
+      NLUA_ERROR( L, _("Pilot '%s' (ai '%s') has no land target"), cur_pilot->name, cur_pilot->ai->name );
       return 0;
    }
 

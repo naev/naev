@@ -115,7 +115,7 @@ function sys_enter ()
       hook.timer( 2.0, "game_of_drones" )
    end
    if jumps ~= 0 then
-      if system.cur() == t_sys[3] then
+      if system.cur() == t_sys[3] and not captured then
          -- do something else
          hook.timer( 2.0, "chase_of_drones" )
       end

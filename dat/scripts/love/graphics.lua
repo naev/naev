@@ -589,6 +589,13 @@ function graphics.Shader:send( name, ... )
       self.shader:send( name, ... )
    end
 end
+function graphics.Shader:sendColor( name, col )
+   -- Convert to naev colour so it does gamma conversion and return
+   local c = naev.colour.new( table.unpack(col) )
+   local t = { c:rgb() }
+   t[4] = c:alpha()
+   self.shader:send( name, t )
+end
 function graphics.Shader:hasUniform( name )
    return self.shader:hasUniform( name )
 end
@@ -635,6 +642,12 @@ function graphics.Canvas:getWrap(...)  return self.t:getWrap(...) end
 function graphics.Canvas:getDimensions(...) return self.t:getDimensions(...) end
 function graphics.Canvas:getWidth(...) return self.t:getWidth(...) end
 function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
+
+
+--[[
+   Misc
+--]]
+function graphics.isGammaCorrect() return true end
 
 
 -- Set some sane defaults.

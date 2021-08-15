@@ -13,7 +13,7 @@ function background ()
    sf = naev.conf().nebu_scale
 
    -- Initialize shader
-   shader = love_shaders.windy{ strength=sf }
+   shader = love_shaders.windy{ strength=sf, density=0.7 }
    bgshaders.init( shader, sf )
 
    -- Default nebula background

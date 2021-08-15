@@ -53,6 +53,7 @@ static int gfxL_print( lua_State *L );
 static int gfxL_printText( lua_State *L );
 static int gfxL_setBlendMode( lua_State *L );
 static int gfxL_setScissor( lua_State *L );
+static int gfxL_screenshot( lua_State *L );
 static const luaL_Reg gfxL_methods[] = {
    /* Information. */
    { "dim", gfxL_dim },
@@ -79,6 +80,7 @@ static const luaL_Reg gfxL_methods[] = {
    /* Misc. */
    { "setBlendMode", gfxL_setBlendMode },
    { "setScissor", gfxL_setScissor },
+   { "screenshot", gfxL_screenshot },
    {0,0}
 }; /**< GFX methods. */
 
@@ -948,4 +950,43 @@ static int gfxL_setScissor( lua_State *L )
       gl_unclipRect();
 
    return 0;
+}
+
+
+/**
+ * @brief Takes the current rendered game screen and returns it as a canvas.
+ *
+ *    @luatparam[opt=nil] Canvas c Canvas to use instead of creating a new one.
+ *    @luatreturn Canvas A new canvas or parameter canvas if available with the screen data in it.
+ * @luafunc screenshot
+ */
+static int gfxL_screenshot( lua_State * L )
+{
+   LuaCanvas_t *lc;
+   int mustfree;
+
+   /* Set up canvas or try to reuse. */
+   if (lua_iscanvas(L,1)) {
+      lc = luaL_checkcanvas(L,1);
+      mustfree = 0;
+   }
+   else {
+      lc = calloc( 1, sizeof(LuaCanvas_t) );
+      canvas_new( lc, gl_screen.rw, gl_screen.rh );
+      mustfree = 1;
+   }
+
+   /* Copy over. */
+   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, lc->fbo);
+   /* We flip it over because that seems to be what love2d API wants. */
+   glBlitFramebuffer(0, 0, gl_screen.rw, gl_screen.rh, 0, lc->tex->h, lc->tex->w, 0,  GL_COLOR_BUFFER_BIT, GL_NEAREST);
+   glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+   glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+   /* Return new or old canvas. */
+   lua_pushcanvas(L, *lc);
+   if (mustfree)
+      free( lc );
+   return 1;
 }

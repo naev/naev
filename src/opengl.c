@@ -489,6 +489,9 @@ int gl_init (void)
    /* Set colorblind shader if necessary. */
    gl_colorblind( conf.colorblind );
 
+   /* Set colourspace. */
+   glEnable( GL_FRAMEBUFFER_SRGB );
+
    /* Cosmetic new line. */
    DEBUG_BLANK();
 

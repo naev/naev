@@ -150,7 +150,7 @@ static void iar_render( Widget* iar, double bx, double by )
    double scroll_pos;
    int xelem, yelem;
    const glColour *dc, *lc;
-   glColour fontcolour;
+   const glColour *fontcolour;
    int is_selected;
    double hmax;
 
@@ -207,13 +207,16 @@ static void iar_render( Widget* iar, double bx, double by )
 
          is_selected = (iar->dat.iar.selected == pos) ? 1 : 0;
 
-         fontcolour = cFontWhite;
+         if (is_selected)
+            fontcolour = &cWhite;
+         else
+            fontcolour = &cFontWhite;
          /* Draw background. */
          if (iar->dat.iar.images[pos].bg.a > 0.) {
             if (is_selected) {
                toolkit_drawRect( xcurs + 2.,
                      ycurs + 2.,
-                     w - 5., h - 5., &cDarkGreen, NULL );
+                     w - 5., h - 5., toolkit_col, NULL );
             } else {
                toolkit_drawRect( xcurs + 2.,
                      ycurs + 2.,
@@ -222,7 +225,7 @@ static void iar_render( Widget* iar, double bx, double by )
          } else if (is_selected) {
             toolkit_drawRect( xcurs + 2.,
                   ycurs + 2.,
-                  w - 5., h - 5., &cDarkGreen, NULL );
+                  w - 5., h - 5., toolkit_col, NULL );
          }
 
          /* image */
@@ -241,14 +244,14 @@ static void iar_render( Widget* iar, double bx, double by )
          /* caption */
          if (iar->dat.iar.images[pos].caption != NULL)
             gl_printMidRaw( &gl_smallFont, iar->dat.iar.iw, xcurs + 5., ycurs + 5.,
-                     &fontcolour, -1., iar->dat.iar.images[pos].caption );
+                     fontcolour, -1., iar->dat.iar.images[pos].caption );
 
          /* quantity. */
          if (iar->dat.iar.images[pos].quantity > 0) {
             /* Quantity number. */
             gl_printMax( &gl_smallFont, iar->dat.iar.iw,
                   xcurs + 5., ycurs + iar->dat.iar.ih + 4.,
-                  &fontcolour, "%d", iar->dat.iar.images[pos].quantity );
+                  fontcolour, "%d", iar->dat.iar.images[pos].quantity );
          }
 
          /* Slot type. */
@@ -256,7 +259,7 @@ static void iar_render( Widget* iar, double bx, double by )
             /* Slot size letter. */
             gl_printMaxRaw( &gl_smallFont, iar->dat.iar.iw,
                   xcurs + iar->dat.iar.iw - 10., ycurs + iar->dat.iar.ih + 4.,
-                  &fontcolour, -1., iar->dat.iar.images[pos].slottype );
+                  fontcolour, -1., iar->dat.iar.images[pos].slottype );
          }
 
          /* outline */

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-07 08:55-0400\n"
-"PO-Revision-Date: 2021-08-04 04:34+0000\n"
+"PO-Revision-Date: 2021-08-13 20:33+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -19606,38 +19606,25 @@ msgstr ""
 "ausgestatteten Schlachtkreuzers."
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:2
-#, fuzzy
-#| msgid "Nexus Bolt 4500 Engine"
 msgid "Nexus Bolt 3500 Engine"
-msgstr "Nexus-Bolzen-4500-Motor"
+msgstr "Nexus-Bolzen-3500-Motor"
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:9
-#, fuzzy
-#| msgid ""
-#| "The Bolt 4500 is a somewhat uncommonly used engine designed for light "
-#| "cruisers. Like most Nexus engines, it doesn't excel in speed, but its low "
-#| "power consumption makes it an attractive option for some pilots."
 msgid ""
 "The Bolt 3500 is a somewhat uncommonly used engine designed for cruisers. "
 "Like most Nexus engines, it doesn't excel in speed, but its low power "
 "consumption makes it an attractive option for some pilots."
 msgstr ""
-"Der Bolzen 4500 ist ein etwas seltener verwendeter Motor, der für leichte "
-"Kreuzer entwickelt wurde. Wie die meisten Nexus-Motoren zeichnet er sich "
-"nicht durch hohe Geschwindigkeit aus, aber sein geringer Stromverbrauch "
-"macht ihn für einige Piloten zu einer attraktiven Option."
+"Der Bolzen 3500 ist ein etwas seltener verwendeter Motor, der für Kreuzer "
+"entwickelt wurde. Wie die meisten Nexus-Motoren zeichnet er sich nicht durch "
+"hohe Geschwindigkeit aus, aber sein geringer Stromverbrauch macht ihn für "
+"einige Piloten zu einer attraktiven Option."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
 msgstr "Tricon-Taifun-Motor"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:9
-#, fuzzy
-#| msgid ""
-#| "Development of the Typhoon engine was something of a prestige project for "
-#| "Tricon. Providing light cruisers with superb handling and speed, it's a "
-#| "favourite of many captains, though its high power consumption limits it "
-#| "to ships with powerful reactors."
 msgid ""
 "Development of the Typhoon engine was something of a prestige project for "
 "Tricon. Providing cruisers with superb handling and speed, it's a favourite "
@@ -19645,8 +19632,8 @@ msgid ""
 "powerful reactors."
 msgstr ""
 "Die Entwicklung des Taifun-Motors war für Tricon so etwas wie ein "
-"Prestigeprojekt. Er bietet leichten Kreuzern ein hervorragendes Handling und "
-"hohe Geschwindigkeit und ist ein Favorit vieler Kapitäne, obwohl sein hoher "
+"Prestigeprojekt. Er bietet Kreuzern ein hervorragendes Handling und hohe "
+"Geschwindigkeit und ist ein Favorit vieler Kapitäne, obwohl sein hoher "
 "Stromverbrauch ihn auf Schiffe mit leistungsstarken Reaktoren beschränkt."
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
@@ -20579,19 +20566,14 @@ msgid "Hyena Fighter Bay"
 msgstr "Hyänen-Kämpferbucht"
 
 #: dat/outfits/fighter_bays/hyena_fighter_bay.xml:10
-#, fuzzy
-#| msgid ""
-#| "This fighter bay allows your ship to carry a pair of Lancelot class "
-#| "fighters. It comes with all the devices required for the maintenance and "
-#| "flight of the fighters."
 msgid ""
 "This fighter bay allows your ship to carry twin Hyena interceptors. It comes "
 "with all the amenities necessary for the maintenance and operation of the "
 "interceptors."
 msgstr ""
-"Diese Kämpferbucht ermöglicht es deinem Schiff, ein Paar Kämpfer der "
-"Lancelot-Klasse zu transportieren. Sie wird mit allen Geräten geliefert, die "
-"für die Wartung und den Flug der Jäger erforderlich sind."
+"Diese Kämpferbucht ermöglicht es deinem Schiff, zwei Abfangjäger der Hyänen-"
+"Klasse zu transportieren. Sie wird mit allen Ausstattungen geliefert, die "
+"für die Wartung der Abfangjäger erforderlich sind."
 
 #: dat/outfits/fighter_bays/hyena_fighter_dock.xml:2
 msgid "Hyena Fighter Dock"
@@ -20603,6 +20585,10 @@ msgid ""
 "Hyena interceptors that can be operated. It comes with all the amenities "
 "necessary for the maintenance and operation of the interceptors."
 msgstr ""
+"Dieses Dock ist eine Erweiterung der beliebten Hyänen-Kämpferbucht und "
+"verdoppelt die Anzahl der Hyenen-Abfangjäger, die betrieben werden können. "
+"Es verfügt über alle Vorzüge, die für die Wartung und den Betrieb der "
+"Abfangjäger erforderlich sind."
 
 #: dat/outfits/fighter_bays/lancelot_fighter_bay.xml:2
 msgid "Lancelot Fighter Bay"
@@ -22966,10 +22952,8 @@ msgstr ""
 "Sprungpunktsignaturen zu erreichen."
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
-#, fuzzy
-#| msgid "Only active when in stealth."
 msgid "#pOnly active when in stealth.#0"
-msgstr "Nur im Tarnmodus aktiv."
+msgstr "#pNur im Tarnmodus aktiv.#0"
 
 #: dat/outfits/utility/milspec_jammer.xml:2
 msgid "Milspec Jammer"
@@ -28331,12 +28315,13 @@ msgstr "„Mein Treibstoff ist Eigentum des Imperiums.“"
 
 #. Most likely no chance to refuel
 #: dat/ai/empire.lua:62
-#, fuzzy, lua-format
-#| msgid "\"I suppose I could spare some fuel for %s.\""
+#, lua-format
 msgid ""
 "\"I suppose I could spare some fuel for %s, but you'll have to do the "
 "paperwork.\""
-msgstr "„Ich denke, ich könnte etwas Treibstoff für %s abgeben.“"
+msgstr ""
+"„Ich denke, ich könnte etwas Treibstoff für %s abgeben, aber um den "
+"Papierkram müssen Sie sich kümmern.“"
 
 #. See if can be bribed
 #: dat/ai/empire.lua:70
@@ -28472,11 +28457,13 @@ msgstr ""
 #: dat/ai/frontier_police.lua:47
 #, lua-format
 msgid "\"For %s I'll let your grievances slide.\""
-msgstr ""
+msgstr "„Für %s lass ich Ihre Untaten außer Acht.“"
 
 #: dat/ai/frontier_police.lua:48
 msgid "\"Now get out of my sight and don't cause any more trouble.\""
 msgstr ""
+"„Nun verschwinden Sie aus meinem Sichtfeld und machen Sie nicht noch mehr "
+"Ärger.“"
 
 #: dat/ai/goddard.lua:12
 msgid "\"House Goddard does not lower itself to common scum.\""
@@ -29132,10 +29119,11 @@ msgstr "„Ich denke, ich könnte etwas Treibstoff für %s abgeben.“"
 #, lua-format
 msgid "\"For %s I'll give you enough time to get out of my sight.\""
 msgstr ""
+"„Für %s geb ich Ihnen genug Zeit, um aus meinem Sichtfeld zu verschwinden.“"
 
 #: dat/ai/soromid.lua:65
 msgid "\"Now get out of my sight.\""
-msgstr ""
+msgstr "„Jetzt verschwinden Sie!“"
 
 #: dat/ai/thurion.lua:13
 msgid "Vessel under attack! Requesting help!"
@@ -29377,6 +29365,10 @@ msgid ""
 "This action will bribe %d %s pilots.\n"
 "You have %s. Pay #r%s#0?"
 msgstr ""
+"%s\n"
+"\n"
+"Diese Aktion wird %d „%s“-Piloten bestechen.\n"
+"Du hast %s. #r%s#0 zahlen?"
 
 #: dat/comm.lua:121
 #, lua-format
@@ -29430,16 +29422,15 @@ msgstr "Schließen"
 #, lua-format
 msgid "Bribe %d nearby %s pilot"
 msgid_plural "Bribe %d nearby %s pilots"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d „%s“-Piloten in der Nähe bestechen"
+msgstr[1] "%d „%s“-Piloten in der Nähe bestechen"
 
 #: dat/comm.lua:232
-#, fuzzy, lua-format
-#| msgid "Bribe fleet (%d pilot)"
+#, lua-format
 msgid "Bribe fleet (%d pilot)"
 msgid_plural "Bribe fleet (%d pilots)"
 msgstr[0] "Flotte bestechen (%d Pilot)"
-msgstr[1] "Flotte bestechen (%d Pilot)"
+msgstr[1] "Flotte bestechen (%d Piloten)"
 
 #: dat/comm.lua:234 src/comm.c:233
 msgid "Bribe"
@@ -29844,10 +29835,9 @@ msgstr "Südliche Solarwinde"
 #. Nothing triggered
 #. Ends when player lands or leaves either way
 #: dat/events/discovery.lua:317
-#, fuzzy, lua-format
-#| msgid "You found #o%s!"
+#, lua-format
 msgid "You found #o%s - %s!"
-msgstr "Du hast #o%s gefunden!"
+msgstr "Du hast gefunden: #o%s – %s!"
 
 #. Log and message
 #: dat/events/discovery.lua:320 src/map.c:1942
@@ -31228,9 +31218,8 @@ msgstr "„Ich hoffe, Ihnen gefällt Ihr Kauf!“"
 #: dat/missions/minerva/kex3.lua:234 dat/missions/minerva/maikki1.lua:364
 #: dat/missions/minerva/maikki2.lua:576 dat/missions/minerva/pirate3.lua:260
 #: dat/missions/minerva/pirate4.lua:138 dat/missions/minerva/pirate5.lua:182
-#, fuzzy
 msgid "You take your leave."
-msgstr "Du wirst es nicht lebend hier raus schaffen!"
+msgstr "Du verabschiedest dich."
 
 #.
 #. -- Event is over when player takes off.
@@ -31892,6 +31881,11 @@ msgid ""
 "Deposit: %s\n"
 "Royalty: %.1f%% of mission earnings"
 msgstr ""
+"Dieser Pilot scheint sich nach Arbeit umzusehen.\n"
+"\n"
+"Schiff: %s\n"
+"Anzahlung: %s\n"
+"Honorar: %.1f%% von Missionserträgen"
 
 #: dat/events/hired_escorts.lua:64
 msgid ""
@@ -32160,6 +32154,8 @@ msgstr ""
 msgid ""
 "You helped a Dvaered pilot get rid of a Za'lek pilot they had a quarrel with."
 msgstr ""
+"Du hast einem Dvaeredpiloten geholfen, einen Za'lek-Piloten, mit dem er im "
+"Streit war, los zu werden."
 
 #: dat/events/minerva/altercation1.lua:230
 msgid "Good riddance."
@@ -32178,6 +32174,8 @@ msgstr ""
 msgid ""
 "You helped a Za'lek pilot get rid of a Dvaered pilot they had a quarrel with."
 msgstr ""
+"Du hast einem Za'lek-Piloten geholfen, einen Dvaeredpiloten, mit dem er im "
+"Streit war, los zu werden."
 
 #. event ends on player leaving the system or landing
 #.
@@ -32302,6 +32300,7 @@ msgstr ""
 #: dat/events/minerva/altercation2.lua:104
 msgid "You sort of helped cyborg chicken get away from a thug."
 msgstr ""
+"Du hast irgendwie einem Cyborg-Huhn geholfen, vor einem Rowdy zu entkommen."
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -33054,6 +33053,9 @@ msgid ""
 "Minerva station terminals announced an event where you can buy a ticket to "
 "enter a raffle. The winner can go to the spa with cyborg chicken."
 msgstr ""
+"Die Terminals der Minerva-Station kündigten eine Aktion an, bei der man ein "
+"Ticket für eine Tombola kaufen kann. Der Gewinner darf zur Spa mit dem "
+"Cyborg-Huhn gehen."
 
 #. One off event
 #.
@@ -37637,10 +37639,8 @@ msgstr "„Wie heißt dieses Schiff?“"
 #. Generate the question
 #. Create the log if necessary.
 #: dat/events/neutral/shiplover.lua:269
-#, fuzzy
-#| msgid "Ship"
 msgid "Ship Quiz"
-msgstr "Schiff"
+msgstr "Schiffs-Quiz"
 
 #: dat/events/neutral/shiplover.lua:269 dat/factions/standing/pirate.lua:35
 #: dat/factions/standing/skel.lua:33 dat/factions/standing/skel.lua:39
@@ -37653,6 +37653,8 @@ msgstr "Neutral"
 #, lua-format
 msgid "You obtained a %s from the Ship Enthusiast for getting 5 quizzes right."
 msgstr ""
+"Du hast 1 %s von dem Schiffsenthusiasten für 5 richtig gelöste Quizspiele "
+"erhalten."
 
 #: dat/events/neutral/shiplover.lua:279
 msgid ""
@@ -37660,6 +37662,10 @@ msgid ""
 "reward. Here, take this special trading card. Don't worry, I have a dozen "
 "like it. I'll have to step up my quiz game from now on.\""
 msgstr ""
+"„Wow. Das ist das fünfte Mal, dass du mein Quiz richtig gelöst hast. Dafür "
+"verdienst du eine besondere Belohnung. Hier, nimm diese besondere "
+"Sammelkarte. Keine Sorge, ich habe ein Dutzend solcher Karten. Von nun an "
+"muss ich mein Quizspiel verbessern.“"
 
 #: dat/events/neutral/shiplover.lua:280 dat/events/neutral/shiplover.lua:289
 #: dat/events/neutral/shiplover.lua:298 dat/events/neutral/shiplover.lua:306
@@ -37675,6 +37681,8 @@ msgstr "Du hast erhalten: #g%s#0."
 msgid ""
 "You obtained a %s from the Ship Enthusiast for getting 10 quizzes right."
 msgstr ""
+"Du hast 1 %s von dem Schiffsenthusiasten für 10 richtig gelöste Quizspiele "
+"erhalten."
 
 #: dat/events/neutral/shiplover.lua:288
 msgid ""
@@ -37683,12 +37691,19 @@ msgid ""
 "Make sure not to lose it, this one is fairly special! I'll have to think of "
 "better quizzes from now on.\""
 msgstr ""
+"„Wow. Das ist das 10. Mal, dass du mein Quiz richtig gelöst hast. Du bist "
+"viel besser, als ich erwartet habe. Hier, nimm eine meiner "
+"Lieblingssammelkarten. Pass auf, dass du sie nicht verlierst, denn die hier "
+"ist etwas ganz Besonderes! Ich muss mir von nun an bessere Quizfragen "
+"ausdenken.“"
 
 #: dat/events/neutral/shiplover.lua:294
 #, lua-format
 msgid ""
 "You obtained a %s from the Ship Enthusiast for getting 25 quizzes right."
 msgstr ""
+"Du hast 1 %s von dem Schiffsenthusiasten für 25 richtig gelöste Quizspiele "
+"erhalten."
 
 #: dat/events/neutral/shiplover.lua:297
 msgid ""
@@ -37698,11 +37713,18 @@ msgid ""
 "copy of this one so make sure to take good care of it. No! Don't take it out "
 "of the card foil! It might get damaged that way!\""
 msgstr ""
+"„Boah, ey. Das ist das 25. Mal, dass du mein Quiz richtig gemacht hast. So "
+"lange hat noch niemand mein Quiz mit mir gespielt. Das muss ich wohl auf "
+"besondere Weise würdigen. Hier, nimm eine der seltensten Karten in meiner "
+"Sammlung. Ich habe nur ein Exemplar davon, also pass gut darauf auf. Nein! "
+"Nimm sie nicht aus der Kartenfolie! Sie könnte sonst beschädigt werden!“"
 
 #: dat/events/neutral/shiplover.lua:302
 #, lua-format
 msgid "You obtained a %s from the Ship Enthusiast for getting a quiz right."
 msgstr ""
+"Du hast 1 %s von dem Schiffsenthusiasten für ein richtig gelöstes Quiz "
+"erhalten."
 
 #. Don't trigger hooks
 #: dat/events/neutral/shiplover.lua:305
@@ -37712,6 +37734,9 @@ msgid ""
 "time you got my quiz right! Here, take this as a reward for your performance."
 "\""
 msgstr ""
+"„Stimmt genau! Nicht schlecht, ich dachte, du würdest das nicht wissen. Das "
+"ist das %d. Mal, dass du mein Quiz richtig gelöst hast! Hier, nimm das als "
+"Belohnung für deine Leistung.“"
 
 #. Set up NPC and hooks
 #. First meeting
@@ -37720,16 +37745,20 @@ msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
 msgstr ""
+"Du näherst dich der Person, die seltsame Geräusche macht, die wahrscheinlich "
+"Raumschiffgeräusche imitieren, während sie mit einem Raumschiffspielzeug "
+"spielt."
 
 #: dat/events/neutral/shiplover.lua:329
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
 msgstr ""
+"„Hallo! Wie gefällt dir mein neues Lancelot-Modell in limitierter Auflage?“"
 
 #: dat/events/neutral/shiplover.lua:332
 msgid "\"It looks great!\""
-msgstr ""
+msgstr "„Sieht großartig aus!“"
 
 #: dat/events/neutral/shiplover.lua:333
 msgid "\"It's awful.\""
@@ -37737,17 +37766,19 @@ msgstr "„Furchtbar.“"
 
 #: dat/events/neutral/shiplover.lua:334
 msgid "\"Aren't you too young to be here?\""
-msgstr ""
+msgstr "„Bist du nicht zu jung, um hier zu sein?“"
 
 #: dat/events/neutral/shiplover.lua:345
 msgid "\"You know I own a real one.\""
-msgstr ""
+msgstr "„Weißt du, ich habe ein echtes Exemplar.“"
 
 #: dat/events/neutral/shiplover.lua:351
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
 msgstr ""
+"„Ich weiß! Es hat mich viel gekostet, es zu finden. Es war überall "
+"ausverkauft! Aber am Ende war es das alles wert.“"
 
 #: dat/events/neutral/shiplover.lua:355
 msgid ""
@@ -37757,12 +37788,21 @@ msgid ""
 "You look closely and indeed are able to see the pilots. The level of detail "
 "is fairly ridiculous."
 msgstr ""
+"„Pff! Du kannst diese Schönheit nicht würdigen. Sieh dir die Kurven an! Die "
+"leuchtenden Lichter! Es ist ein vollständig anatomisch korrektes Modell im "
+"Maßstab 1:128! Du kannst sogar die Piloten durch das Cockpit sehen.“\n"
+"Wenn man genau hinsieht, kann man die Piloten tatsächlich sehen. Der "
+"Detailreichtum ist geradezu absurd."
 
 #: dat/events/neutral/shiplover.lua:360
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
 msgstr ""
+"„Bist du nicht zu alt, um hier zu sein? Es ist ja nicht so, dass ich trinke "
+"oder so.“\n"
+"Der Enthusiast streckt dir die Zunge raus, während er immer noch mit dem "
+"Raumschiff spielt."
 
 #: dat/events/neutral/shiplover.lua:365
 msgid ""
@@ -37772,6 +37812,12 @@ msgid ""
 "The lift up their toy Lancelot. You can barely make out a golden Efreeti "
 "etched on the side."
 msgstr ""
+"„Wirklich? Ist es auch ein Modell der Sigma-5-Staffel Golden Efreeti?! Du "
+"weißt nicht, was das ist? Hör auf, mich zu verarschen, das ist "
+"wahrscheinlich nur eine weitere Massenproduktion von Lancelot ohne jegliche "
+"Geschichte dahinter. Das hier ist ein Meisterwerk!“\n"
+"Der Enthusiast hebt den Spielzeug-Lancelot hoch. Du kannst kaum erkennen, "
+"dass ein goldener Efreeti auf der Seite eingraviert ist."
 
 #: dat/events/neutral/shiplover.lua:370
 msgid ""
@@ -37779,50 +37825,58 @@ msgid ""
 "I'll ask you a question and if you get it right, I'll give you a nice "
 "reward. What do you say?\""
 msgstr ""
+"„Weißt du was, lass uns ein Spiel spielen. Ich weiß ALLE Fakten von allen "
+"Schiffen. Ich werde dir eine Frage stellen, und wenn du sie richtig "
+"beantwortest, bekommst du eine schöne Belohnung. Was sagst du dazu?“"
 
 #. Met, didn't play quiz and came back
 #: dat/events/neutral/shiplover.lua:376
-#, fuzzy
-#| msgid "You may not approach the Emperor."
 msgid "You once again approach the ship enthusiast."
-msgstr "Sie dürfen sich dem Imperator nicht nähern."
+msgstr "Du gehst erneut auf den Schiffsenthusiasten zu."
 
 #: dat/events/neutral/shiplover.lua:377
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
 msgstr ""
+"„Du bist also zurück. Hast du es dir mit meinem Schiffsquiz anders überlegt?“"
 
 #: dat/events/neutral/shiplover.lua:379
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
+"Du gehst erneut auf den Schiffsenthusiasten zu. Er scheint sich viel umher "
+"zu bewegen."
 
 #: dat/events/neutral/shiplover.lua:380
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely.\""
 msgstr ""
+"„Hast du Lust auf eine weitere Runde vom Schiffsquiz? Ich denke, die Frage, "
+"die ich vorbereitet habe, wird dich völlig überrumpeln.“"
 
 #: dat/events/neutral/shiplover.lua:383 dat/missions/minerva/maikki2.lua:205
 msgid "\"Yes!\""
-msgstr ""
+msgstr "„Ja!“"
 
 #: dat/events/neutral/shiplover.lua:384
 msgid "\"No.\""
-msgstr ""
+msgstr "„Nein.“"
 
 #: dat/events/neutral/shiplover.lua:388
 msgid "\"Oh well, your loss!\""
-msgstr ""
+msgstr "„Okay, dein Verlust!“"
 
 #: dat/events/neutral/shiplover.lua:393
-#, fuzzy, lua-format
-#| msgid "I hope everyone is listening carefully."
+#, lua-format
 msgid ""
 "\"Great! So here it goes. Listen carefully.\"\n"
 "\n"
 "%s"
-msgstr "Ich hoffe, dass jeder genau zuhört."
+msgstr ""
+"„Super! Okay, es geht los. Hör genau zu.“\n"
+"\n"
+"%s"
 
 #: dat/events/neutral/shiplover.lua:411
 #, lua-format
@@ -37831,12 +37885,15 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"„Großartig. Nun sieh dir dieses Schiff an und hör genau zu.“\n"
+"\n"
+"%s"
 
 #. Show choices
 #. Give reward
 #: dat/events/neutral/shiplover.lua:453
 msgid "You got the Ship Enthusiast's quiz wrong."
-msgstr ""
+msgstr "Du bist im Quiz des Schiffsenthusiasten durchgefallen."
 
 #. TODO wrong sound
 #: dat/events/neutral/shiplover.lua:457
@@ -37846,6 +37903,10 @@ msgid ""
 "\"The correct answer was #g%s#0! Better luck next time.\"\n"
 "They take their leave."
 msgstr ""
+"Der Enthusiast macht einen arroganten Blick und sagt „Falsch!“.\n"
+"„Die richtige Antwort war #g%s#0! Vielleicht hast du beim nächsten Mal mehr "
+"Glück.“\n"
+"Er verabschiedet sich."
 
 #. Finish event (removes npc)
 #.
@@ -37942,7 +38003,7 @@ msgstr "Schiffsbrüchiger %s"
 #. TODO change this when something can make them non-hostile
 #: dat/events/proteron/blockade.lua:74
 msgid "Unknown vessel trying to breach blockade. All ships engage!"
-msgstr ""
+msgstr "Unbekanntes Schiff versucht, Blockade zu brechen. Sofort angreifen!"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -38649,19 +38710,6 @@ msgstr ""
 "gezeichnet, die aus seinem Kopf kommen.)"
 
 #: dat/events/taiomi/find.lua:242
-#, fuzzy
-#| msgid ""
-#| "UST 602:1999\n"
-#| "\n"
-#| "We have finished loading the cargo, which consists of some sort of "
-#| "bottles of something like sand? The Captain said it is very expensive and "
-#| "was yelling at us all the time while we were loading the cargo. \n"
-#| "\n"
-#| "I have decided that once this is over I will try to find a new job. I "
-#| "don't think I will ever get used to the Captain's temper.\n"
-#| "\n"
-#| "Since it seems like the navigator has a bit of a hangover, we leave in 5 "
-#| "periods."
 msgid ""
 "UST 602:1999\n"
 "\n"
@@ -40077,10 +40125,8 @@ msgid "Trader Rhino"
 msgstr "Händler-Rhino"
 
 #: dat/factions/spawn/trader.lua:20
-#, fuzzy
-#| msgid "Pirate Shark"
 msgid "Trader Shark"
-msgstr "Piraten-Hai"
+msgstr "Händler-Hai"
 
 #. @brief Spawns a small trade fleet.
 #. @brief Spawns a larger trade fleet
@@ -44117,16 +44163,12 @@ msgstr "Ich erkläre mich hiermit zum Warlord von %s!"
 
 #. Create the custom factions
 #: dat/missions/dvaered/dv_diversion.lua:137
-#, fuzzy
-#| msgid "Hawk"
 msgid "The Hawk"
-msgstr "Hawk"
+msgstr "Der Hawk"
 
 #: dat/missions/dvaered/dv_diversion.lua:138
-#, fuzzy
-#| msgid "Pirate Attacker"
 msgid "Attackers"
-msgstr "Piratenangreifer"
+msgstr "Angreifer"
 
 #. Spawn people
 #. Half finished installing weapons. :)
@@ -48151,7 +48193,7 @@ msgstr "Eingehendes Schiff kontrollieren"
 
 #. This might be hard to translate, but that is not a problem IMHO as it is actually supposed to be an automatically generated message.
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:177
-#, fuzzy, lua-format
+#, lua-format
 msgid ""
 "As you approach the ship, your targeting array focuses on it, and its "
 "clearance code gets processed. You can soon read on your control pad: \"This "
@@ -48939,25 +48981,6 @@ msgid "Major Tam warns you, and gives you a new task."
 msgstr "Major Tam warnt dich und gibt dir eine neue Aufgabe."
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:120
-#, fuzzy
-#| msgid ""
-#| "After the results have been announced, Major Tam gets close to you. He "
-#| "seems to have something important to say: \"It was your first ballet, "
-#| "right? You performed very well out there, citizen. \n"
-#| "   \"Anyway, there is a matter I need to discuss with you: one of my "
-#| "informants told me that the ex-colonel Hamelsen has put a price on your "
-#| "head. Yes. This kind of thing just happens, you know. It looks scary, "
-#| "doesn't it? Actually, many people here already have a price on their "
-#| "head, including me, General Klank and Captain Leblanc. And one can live "
-#| "very well with it. The only thing is to be a bit more careful than "
-#| "usual.\n"
-#| "   \"As Hamelsen has gotten so many mercenaries killed under her command, "
-#| "it is in fact rather unlikely that unrelated pilots jump in and try to "
-#| "kill you. I am pretty sure that the ones that will attack you are "
-#| "motivated by more than money. And I want to know what makes them continue "
-#| "to attack us after having recieved so many losses. So your mission will "
-#| "be the following: if some bounty hunter tries to kill you, catch them "
-#| "alive and bring them to me.\""
 msgid ""
 "After the results have been announced, Major Tam gets close to you. He seems "
 "to have something important to say: \"It was your first ballet, right? You "
@@ -49243,8 +49266,6 @@ msgstr "Gesamtpunktzahl"
 #. Mace Throw: spawn Llamas and competitors.
 #. Check the player only has mace rockets
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:447
-#, fuzzy
-#| msgid "Target: "
 msgid "Target "
 msgstr "Ziel "
 
@@ -49442,10 +49463,13 @@ msgid ""
 "directly allows you to enter the different challenges and tournaments "
 "available."
 msgstr ""
+"Ein Terminal für den Zugriff auf die Virtuelle-Realitäts-Umgebung vom "
+"Blutroten Panzerhandschuh. Damit kannst du direkt an den verschiedenen "
+"Herausforderungen und Turnieren teilnehmen."
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:30
 msgid "Crimson Gauntlet Challenge"
-msgstr ""
+msgstr "Blutrote-Panzerhandschuh-Herausforderung"
 
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:31
 msgid "Annihilate all enemies in the Crimson Gauntlet."
@@ -52419,10 +52443,8 @@ msgstr "Kommandant"
 #: dat/missions/empire/shipping/es00.lua:172
 #: dat/missions/empire/shipping/es02.lua:175
 #: dat/missions/empire/shipping/es02.lua:231
-#, fuzzy
-#| msgid "FLF Admonisher"
 msgid "FLF Ambusher"
-msgstr "FLF-Admonierer"
+msgstr "FLF-Lauerjäger"
 
 #. Now the Dvaered
 #. Player should not be able to reland
@@ -54379,10 +54401,8 @@ msgstr ""
 
 #. Set mission details
 #: dat/missions/flf/flf_diversion.lua:181
-#, fuzzy
-#| msgid "Dvaered Patrol"
 msgid "Dvaered Small Patrol"
-msgstr "Dvaered-Patrouille"
+msgstr "Dvaered-Kleinpatrouille"
 
 #: dat/missions/flf/flf_diversion.lua:183
 msgid "Dvaered Big Patrol"
@@ -55853,12 +55873,16 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:190
 msgid "You find Kex taking a break at his favourite spot at Minerva station."
 msgstr ""
+"Du findest Kex bei einer Pause an seinem Lieblingsplatz an der Minerva-"
+"Station vor."
 
 #: dat/missions/minerva/kex1.lua:85
 msgid ""
 "You tell Kex about you encounter with the transports and how you weren't "
 "able to find the supposed cargo."
 msgstr ""
+"Du erzählst Kex von deiner Begegnung mit den Transportern und wie du die "
+"vermeintliche Fracht nicht finden konntest."
 
 #: dat/missions/minerva/kex1.lua:86
 msgid ""
@@ -55867,29 +55891,41 @@ msgid ""
 "the most likely, but there was also another at the same time and it could "
 "have been that one. \""
 msgstr ""
+"„Verdammt! Das muss ein Täuschungsmanöver gewesen sein. Die Lieferprotokolle "
+"sind immer unübersichtlich, und es scheinen sich immer wieder Einträge zu "
+"wiederholen, die geändert wurden. Ich habe den wahrscheinlichsten "
+"ausgewählt, aber es gab auch einen anderen zur gleichen Zeit, und der könnte "
+"es auch gewesen sein.“"
 
 #: dat/missions/minerva/kex1.lua:90
 msgid ""
 "You suddenly hear a large thump. You are only able to catch a glimpse of a "
 "shadow before it runs away."
 msgstr ""
+"Plötzlich hörst du einen dumpfen Schlag. Du kannst nur einen flüchtigen "
+"Blick auf einen Schatten erhaschen, bevor er davonläuft."
 
 #: dat/missions/minerva/kex1.lua:93
 msgid ""
 "You go investigate what happened and find a secured crate. Kex quietly "
 "follows and looks surprised when he sees the crate."
 msgstr ""
+"Du gehst nachsehen, was passiert ist, und findest eine gesicherte Kiste. Kex "
+"folgt dir leise und schaut überrascht, als er die Kiste sieht."
 
 #: dat/missions/minerva/kex1.lua:94
 msgid ""
 "\"This is one of the secured crates that I was talking about! How the hell "
 "did it get here?\""
 msgstr ""
+"„Das ist eine der gesicherten Kisten, von denen ich gesprochen habe! Wie zum "
+"Teufel ist sie hierher gekommen?“"
 
 #: dat/missions/minerva/kex1.lua:95
 msgid ""
 "You look around but there seems to be nobody else other than the two of you."
 msgstr ""
+"Du schaust dich um, aber es scheint niemand außer euch beiden da zu sein."
 
 #: dat/missions/minerva/kex1.lua:96
 msgid ""
@@ -55899,6 +55935,11 @@ msgid ""
 "nebula and nothing good ever came from investigating. Just remember to keep "
 "an eye open.\""
 msgstr ""
+"Kex sieht dir in die Augen.\n"
+"„In solchen Fällen ist es wahrscheinlich am besten, keine Fragen zu stellen "
+"und es einfach als eine Art Segen zu betrachten. Im Nebel sind solche Dinge "
+"immer wieder passiert, und die Nachforschungen haben nie etwas Gutes "
+"gebracht. Halte einfach die Augen offen.“"
 
 #: dat/missions/minerva/kex1.lua:98
 msgid ""
@@ -55907,6 +55948,10 @@ msgid ""
 "think they make these anymore. Shouldn't be a problem for my implant system."
 "\""
 msgstr ""
+"Er schaut nun auf die Kiste.\n"
+"„Mal sehen, ob ich die aufbekomme. Hmmm … Ziemlich schäbiges Nexus-Schloss. "
+"Ich glaube, die werden nicht mehr hergestellt. Sollte für mein "
+"Implantatsystem kein Problem sein.“"
 
 #: dat/missions/minerva/kex1.lua:100
 msgid ""
@@ -55914,6 +55959,10 @@ msgid ""
 "and he begins to hum an old tune, almost sounds like a nursery rhyme. This "
 "goes on for a while before he suddenly jolts back with his eyes open."
 msgstr ""
+"Er legt seinen Flügel auf das Schloss und du hörst eine Art Klicken. Seine "
+"Augen schließen sich und er beginnt eine alte Melodie zu summen, die fast "
+"wie ein Kinderlied klingt. Das geht eine Weile so weiter, bevor er plötzlich "
+"mit offenen Augen zurückschreckt."
 
 #: dat/missions/minerva/kex1.lua:102
 msgid ""
@@ -55922,6 +55971,10 @@ msgid ""
 "\"Damn, looks like we have no incriminating evidence, however, it does seem "
 "like we can use this as a starting point.\""
 msgstr ""
+"„OK, dann wollen wir mal sehen, was wir hier haben.“\n"
+"Die Kiste öffnet sich unspektakulär und Kex schaut herein.\n"
+"„Verdammt, sieht so aus, als hätten wir keine belastenden Beweise, aber es "
+"sieht so aus, als könnten wir das als Ausgangspunkt verwenden.“"
 
 #: dat/missions/minerva/kex1.lua:105
 msgid ""
@@ -55931,51 +55984,63 @@ msgid ""
 "you like with it.\"\n"
 "It is signed \"Baroness Eve\"."
 msgstr ""
+"Er reicht dir das Dokument, auf dem steht:\n"
+"„Die nächste Lieferung wird größer sein als erwartet, aber ich nehme an, "
+"dass du damit wie gewohnt umgehen kannst. Bitte nimm diesen Auftrag und mach "
+"damit, was du willst.“\n"
+"Unterzeichnet ist es mit „Baroness Eva“."
 
 #: dat/missions/minerva/kex1.lua:108
 msgid ""
 "\"I'm not too sure who this 'Baroness Eve' is, but let me see if I can get "
 "some information on them and we can see what we can do from there on.\""
 msgstr ""
+"„Ich bin mir nicht ganz sicher, wer diese ‚Baroness Eva‘ ist, aber lass mich "
+"mal sehen, ob ich ein paar Informationen über sie bekommen kann und dann "
+"können wir sehen, was wir von da an tun können.“"
 
 #: dat/missions/minerva/kex1.lua:109
 msgid ""
 "\"Oh, I almost forgot. There's quite a few credits in the crate too, I think "
 "it's only fair to give you most of them as a reward for your help.\""
 msgstr ""
+"„Oh, das hätte ich fast vergessen. In der Kiste sind auch ein paar Credits, "
+"ich denke, es ist nur fair, dir den Großteil davon als Belohnung für deine "
+"Hilfe zu geben.“"
 
 #: dat/missions/minerva/kex1.lua:112 dat/missions/minerva/kex2.lua:131
 #: dat/missions/minerva/kex3.lua:160
-#, fuzzy, lua-format
-#| msgid "Naev received %s!"
+#, lua-format
 msgid "You received #g%s#0."
-msgstr "Naev hat %s erhalten!"
+msgstr "Du hast #g%s#0 erhalten."
 
 #: dat/missions/minerva/kex1.lua:113
 msgid ""
 "\"Meet me up here again in a bit, I'm going to go get some information.\"\n"
 "Kex runs off and disappears into the station."
 msgstr ""
+"„Wir treffen uns gleich wieder hier oben, ich gehe ein paar Informationen "
+"einholen.“\n"
+"Kex rennt los und verschwindet in der Station."
 
 #: dat/missions/minerva/kex1.lua:118
 msgid ""
 "You managed to find a crate destined to the Minerva CEO through luck, and "
 "found that it was sent by Baroness Eve."
 msgstr ""
+"Durch Zufall hast du eine Kiste gefunden, die für den Geschäftsführer von "
+"Minerva bestimmt war, und festgestellt, dass sie von Baroness Eva geschickt "
+"wurde."
 
 #. Remove unnecessary variables to keep it clean
 #: dat/missions/minerva/kex1.lua:129 dat/missions/minerva/kex2.lua:144
 #: dat/missions/minerva/kex3.lua:194
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "\"What's up kid?\""
-msgstr "„Was willst du von mir!?“"
+msgstr "„Was geht, Freundchen?“"
 
 #: dat/missions/minerva/kex1.lua:132
-#, fuzzy
-#| msgid "Ask about the Nebula"
 msgid "Ask about the station"
-msgstr "Über den Nebel fragen"
+msgstr "Über die Station fragen"
 
 #: dat/missions/minerva/kex1.lua:136
 msgid "Ask about the CEO"
@@ -55984,10 +56049,8 @@ msgstr "Über den Geschäftsführer fragen"
 #: dat/missions/minerva/kex1.lua:139 dat/missions/minerva/kex2.lua:154
 #: dat/missions/minerva/kex3.lua:197 dat/missions/minerva/pirate3.lua:172
 #: dat/missions/minerva/pirate4.lua:128 dat/missions/minerva/pirate5.lua:149
-#, fuzzy
-#| msgid "Ask about the Nebula"
 msgid "Ask about the job"
-msgstr "Über den Nebel fragen"
+msgstr "Über den Auftrag fragen"
 
 #: dat/missions/minerva/kex1.lua:145
 msgid ""
@@ -55995,6 +56058,10 @@ msgid ""
 "people from all over the universe, most of whom end up returning in rags "
 "broke. This station is a graveyard of hopes and dreams.\""
 msgstr ""
+"„Es gibt nichts wirklich Großartiges an diesem Ort. Ich weiß nicht, warum er "
+"so viele Menschen aus dem ganzen Universum anzieht, von denen die meisten am "
+"Ende in Lumpen und pleite zurückkehren. Diese Station ist ein Friedhof der "
+"Hoffnungen und Träume.“"
 
 #: dat/missions/minerva/kex1.lua:146
 msgid ""
@@ -56002,6 +56069,9 @@ msgid ""
 "celebrate his engagement. They got absorbed into the game and decided to bet "
 "their savings for the wedding.\""
 msgstr ""
+"„In diesem Zyklus kam ein Kind, der mit seiner Jugendliebe verlobt war, um "
+"seine Verlobung zu feiern. Sie haben sich in das Spiel vertieft und "
+"beschlossen, ihre Ersparnisse für die Hochzeit zu verwetten.“"
 
 #: dat/missions/minerva/kex1.lua:147
 msgid ""
@@ -56009,30 +56079,46 @@ msgid ""
 "ended up getting into the fight with the security at the station, and ended "
 "up taken away in a stretcher with a broken back. Not very pretty.\""
 msgstr ""
+"„Er ließ sich nicht zur Vernunft bringen und verlor schließlich seine "
+"gesamten Ersparnisse. Schließlich geriet er in eine Schlägerei mit dem "
+"Sicherheitsdienst der Station und wurde mit einem gebrochenen Rücken auf "
+"einer Bahre abtransportiert. Nicht sehr schön.“"
 
 #: dat/missions/minerva/kex1.lua:148
 msgid ""
 "\"Despite a life destroyed, management was fairly happy, seems like he had "
 "quite a lot saved up until he came here. Just another day at the station.\""
 msgstr ""
+"„Trotz eines zerstörten Lebens war das Management ziemlich glücklich, es "
+"scheint, als hätte er ziemlich viel gespart, bis er hierher kam. Ein ganz "
+"normaler Tag auf der Station.“"
 
 #: dat/missions/minerva/kex1.lua:149
 msgid ""
 "\"When you spend here so long as I have, you tend to see rhythm of the "
 "station, and it isn't very good. Brings out the worst in people.\""
 msgstr ""
+"„Wenn man so lange hier verweilt wie ich, bekommt man den Rhythmus der "
+"Station zu spüren, und der ist nicht besonders gut. Er bringt das Schlimmste "
+"in den Menschen zum Vorschein.“"
 
 #: dat/missions/minerva/kex1.lua:150
 msgid ""
 "\"Most of the problem lies in the management, they're all a bunch of "
 "assholes led by the CEO, which is even a bigger asshole.\""
 msgstr ""
+"„Das größte Problem liegt im Management, das ist ein Haufen von "
+"Arschlöchern, angeführt vom Geschäftsführer, der ein noch größeres Arschloch "
+"ist.“"
 
 #: dat/missions/minerva/kex1.lua:162
 msgid ""
 "\"They've been running this joint since before I got here. Lots of rumours "
 "of them doing shady stuff that some are bound to be true.\""
 msgstr ""
+"„Die haben den Laden hier schon betrieben, bevor ich hierher kam. Es gibt "
+"viele Gerüchte, dass sie zwielichtige Dinge tun, von denen einige sicher "
+"wahr sind.“"
 
 #: dat/missions/minerva/kex1.lua:163
 msgid ""
@@ -56040,6 +56126,9 @@ msgid ""
 "is going on, but there are some patterns like mysterious packages and "
 "unaccounted amounts of credits disappearing.\""
 msgstr ""
+"„Die Station ist so belebt, dass es ziemlich schwierig ist, den Überblick zu "
+"behalten, aber es gibt einige Muster, wie z.B. mysteriöse Pakete und das "
+"Verschwinden von Guthaben in unbestimmter Höhe.“"
 
 #: dat/missions/minerva/kex1.lua:164
 msgid ""
@@ -56047,10 +56136,14 @@ msgid ""
 "owns me. They don't believe I am fully sentient, but I'm sure if they knew "
 "it would just make everything harder for me so I have to lay low.\""
 msgstr ""
+"„Das Einzige, was mich von meiner Freiheit abhält, ist die Tatsache, dass "
+"ich rechtlich gesehen dem Geschäftsführer gehöre. Sie glauben nicht, dass "
+"ich voll empfindungsfähig bin, aber ich bin sicher, wenn sie es wüssten, "
+"würde es mir nur noch schwerer fallen, also muss ich mich zurückhalten.“"
 
 #: dat/missions/minerva/kex1.lua:165
 msgid "You ask about where you can find the CEO."
-msgstr ""
+msgstr "Du fragst, wo du den Geschäftsführer finden kannst."
 
 #: dat/missions/minerva/kex1.lua:166
 msgid ""
@@ -56060,16 +56153,23 @@ msgid ""
 "work.\n"
 "He lets out a sigh.\""
 msgstr ""
+"„Bei seinen Trinkgewohnheiten sollte er meistens nicht allzu schwer zu "
+"finden sein. Man findet ihn normalerweise in der Bar-Lounge im 7. Stock. Du "
+"wirst doch nicht etwa mit ihm reden, oder? So etwas kann auf keinen Fall "
+"funktionieren.\n"
+"Er stößt einen Seufzer aus.“"
 
 #: dat/missions/minerva/kex1.lua:177
 msgid ""
 "\"Oh, you already talked to them? How did it go?\"\n"
 "He looks at you expectantly."
 msgstr ""
+"„Oh, du hast schon mit ihnen gesprochen? Wie ist es gelaufen?“\n"
+"Er sieht dich erwartungsvoll an."
 
 #: dat/missions/minerva/kex1.lua:179
 msgid "You mention that you got nowhere."
-msgstr ""
+msgstr "Du erwähnst, dass es nichts gebracht hat."
 
 #: dat/missions/minerva/kex1.lua:180
 msgid ""
@@ -56077,6 +56177,10 @@ msgid ""
 "\"Yeah, I don't think there is talking sense into that one… Maybe if we…\"\n"
 "He stops to think a bit."
 msgstr ""
+"Er sieht ein wenig mürrisch aus.\n"
+"„Ja, ich glaube nicht, dass man da vernünftig reden kann … Vielleicht, wenn "
+"wir …“\n"
+"Er hält inne und denkt ein wenig nach."
 
 #: dat/missions/minerva/kex1.lua:183
 msgid ""
@@ -56086,6 +56190,11 @@ msgid ""
 "\"Given that the issue is the CEO, if we can somehow get rid of the CEO, "
 "there should be no issue, right?\""
 msgstr ""
+"„Das klingt vielleicht verrückt, aber ich glaube, es könnte funktionieren. "
+"Du bist doch ein guter Pilot, wie ich gehört habe, richtig?“\n"
+"Du siehst dich entschlossen an.\n"
+"„Da das Problem der Geschäftsführer ist, sollte es doch kein Problem geben, "
+"wenn wir ihn irgendwie loswerden können, oder?“"
 
 #: dat/missions/minerva/kex1.lua:186
 msgid ""
@@ -56093,6 +56202,9 @@ msgid ""
 "unsavory business, all we have to do is get him bust and in the confusion it "
 "should be more than easy for me to go free.\""
 msgstr ""
+"„Da ich mit Sicherheit weiß, dass er in – nennen wir es – unappetitliche "
+"Geschäfte verwickelt ist, müssen wir ihn nur noch verhaften lassen und in "
+"dem Durcheinander sollte es für mich mehr als einfach sein, frei zu kommen.“"
 
 #: dat/missions/minerva/kex1.lua:187
 msgid ""
@@ -56100,16 +56212,17 @@ msgid ""
 "\"I know we've known each other for a relatively short time, but wouldn't "
 "you help a duck out? I might be able to make it worth your time afterwards.\""
 msgstr ""
+"Er schaut auf den Boden.\n"
+"„Ich weiß, dass wir uns erst seit relativ kurzer Zeit kennen, aber würdest "
+"du einer Ente nicht aushelfen? Vielleicht lohnt es sich danach für dich.“"
 
 #: dat/missions/minerva/kex1.lua:190
 msgid "Help a duck out."
-msgstr ""
+msgstr "Einer Ente aushelfen."
 
 #: dat/missions/minerva/kex1.lua:191
-#, fuzzy
-#| msgid "Maybe Another Time"
 msgid "Maybe later."
-msgstr "Vielleich ein anderes Mal"
+msgstr "Vielleicht später."
 
 #: dat/missions/minerva/kex1.lua:195
 #, lua-format
@@ -56120,6 +56233,11 @@ msgid ""
 "evidence and it should be easy as pie! I'll send you the precise information "
 "later.\""
 msgstr ""
+"„Großartig! Ich habe mir die Lieferprotokolle der Station angesehen und es "
+"scheint, dass hier eine zwielichtige Lieferung unterwegs ist. Wenn du zum "
+"‚%s‘-System gehen könntest. Du musst sie nur abfangen und die belastenden "
+"Beweise besorgen, dann sollte es ein Kinderspiel sein! Ich werde dir die "
+"genauen Informationen später zukommen lassen.“"
 
 #: dat/missions/minerva/kex1.lua:196 dat/missions/minerva/kex1.lua:226
 msgid ""
@@ -56127,6 +56245,10 @@ msgid ""
 "ideal, however, given that it is always delivered in secured vaults, you "
 "should be able to recover the vault from the debris if you roll that way.\""
 msgstr ""
+"„Wenn du das Schiff außer Gefecht setzen kannst und die Beweise selbst "
+"findest, wäre das ideal, aber da sie immer in gesicherten Tresoren geliefert "
+"werden, solltest du in der Lage sein, den Tresor aus den Trümmern zu bergen, "
+"wenn du so vorgehst.“"
 
 #: dat/missions/minerva/kex1.lua:200 dat/missions/zalek/zlk_test.lua:66
 #: src/land.c:639 src/npc.c:629
@@ -56138,6 +56260,8 @@ msgid ""
 "You agreed to help Kex to find dirt on the Minerva Station CEO to try to get "
 "him free."
 msgstr ""
+"Du hast zugestimmt, Kex zu helfen, Dreck über den Geschäftsführer der "
+"Minerva-Station zu finden, um zu versuchen, Kex zu befreien."
 
 #: dat/missions/minerva/kex1.lua:208
 #, lua-format
@@ -56146,10 +56270,8 @@ msgstr "Fang den Transport bei %s ab"
 
 #: dat/missions/minerva/kex1.lua:209 dat/missions/minerva/kex2.lua:72
 #: dat/missions/minerva/kex3.lua:84 dat/missions/minerva/kex3.lua:113
-#, fuzzy
-#| msgid "Minerva Station"
 msgid "Return to Kex at Minerva Station"
-msgstr "Minerva-Station"
+msgstr "Kehr zu Kex bei der Minerva-Station zurück"
 
 #: dat/missions/minerva/kex1.lua:219 dat/missions/minerva/kex2.lua:177
 #: dat/missions/minerva/kex3.lua:178
@@ -56157,12 +56279,16 @@ msgid ""
 "He looks dejected.\n"
 "\"I see. If you change your mind, I'll be around.\""
 msgstr ""
+"Er sieht niedergeschlagen aus.\n"
+"„Ich verstehe. Wenn du deine Meinung änderst, werde ich in der Nähe sein.“"
 
 #: dat/missions/minerva/kex1.lua:224
 msgid ""
 "\"We have to find the dirt on the CEO and get him removed. It is the only "
 "change I have for freedom.\""
 msgstr ""
+"„Wir müssen den Dreck über den Geschäftsführer finden und ihn aus dem Weg "
+"räumen. Das ist die einzige Chance, die ich für die Freiheit habe.“"
 
 #: dat/missions/minerva/kex1.lua:225
 #, lua-format
@@ -56171,12 +56297,18 @@ msgid ""
 "system before it gets here. I have sent you all the precise information. It "
 "should be a breeze with with your piloting skills."
 msgstr ""
+"Sie sollten eine Lieferung erhalten. Du solltest sie im ‚%s‘-System "
+"abfangen, bevor sie hier ankommt. Ich habe dir alle genauen Informationen "
+"zukommen lassen. Mit deinen fliegerischen Fähigkeiten sollte es ein "
+"Kinderspiel sein."
 
 #: dat/missions/minerva/kex1.lua:241
 msgid ""
 "You find the Minerva CEO drinking alone. He looks somewhat drunk. You "
 "approach him and start a conversation."
 msgstr ""
+"Du findest den Minerva-Geschäftsführer alleine trinkend vor. Er sieht etwas "
+"betrunken aus. Du sprichst ihn an und beginnst ein Gespräch."
 
 #: dat/missions/minerva/kex1.lua:243
 msgid ""
@@ -56185,16 +56317,18 @@ msgid ""
 "\"You're not Fred.\"\n"
 "He takes a large swig of his drink."
 msgstr ""
+"„Bist du das, Fred?“\n"
+"Er sieht dich an und blinzelt.\n"
+"„Du bist nicht Fred.“\n"
+"Er nimmt einen großen Schluck von seinem Drink."
 
 #: dat/missions/minerva/kex1.lua:247
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "\"Well, what do you want?\""
-msgstr "„Was willst du von mir!?“"
+msgstr "„Nun, was willst du von mir?“"
 
 #: dat/missions/minerva/kex1.lua:248
 msgid "You ask about the cyborg chicken."
-msgstr ""
+msgstr "Du fragst nach dem Cyborg-Huhn."
 
 #: dat/missions/minerva/kex1.lua:249
 msgid ""
@@ -56202,16 +56336,21 @@ msgid ""
 "uh… pineapple on the pizza?\"\n"
 "He furrows his brows a bit."
 msgstr ""
+"„Das Kronjuwel der Minerva-Station? Die Gans, die goldene Eier legt? Die, äh "
+"… Ananas auf der Pizza?“\n"
+"Er runzelt ein wenig die Stirn."
 
 #: dat/missions/minerva/kex1.lua:251
 msgid ""
 "\"Ever since I got that absurd chicken, business has been booming. I "
 "wouldn't sell the beast for all the credits in the world!\""
 msgstr ""
+"„Seit ich dieses absurde Huhn habe, boomt das Geschäft. Ich würde das Biest "
+"für kein Geld der Welt verkaufen!“"
 
 #: dat/missions/minerva/kex1.lua:252
 msgid "You mention that everything must have its price."
-msgstr ""
+msgstr "Du erwähnst, dass alles seinen Preis haben muss."
 
 #: dat/missions/minerva/kex1.lua:253
 msgid ""
@@ -56220,32 +56359,34 @@ msgid ""
 "Damn, that sounded better in my head.\"\n"
 "He takes another swig from his drinks."
 msgstr ""
+"Er blinzelt dich wieder an.\n"
+"„Ich mag deinen Mumm, aber dein Mumm bringt dich nicht dazu, zum Hühnchen zu "
+"kommen. Verdammt, das hat sich in meinem Kopf besser angehört.“\n"
+"Er nimmt einen weiteren Schluck von seinem Getränk."
 
 #: dat/missions/minerva/kex1.lua:256
 msgid "\"Now unless you are getting me another drink you can scoot off.\""
 msgstr ""
+"„Nun, wenn du mir nicht noch einen Drink holen willst, kannst du jetzt "
+"abhauen.“"
 
 #: dat/missions/minerva/kex1.lua:257
 msgid "It doesn't look like you are getting anywhere. You take your leave."
 msgstr ""
+"Es sieht nicht so aus, als würdest du etwas erreichen. Du verabschiedest "
+"dich."
 
 #: dat/missions/minerva/kex1.lua:268
-#, fuzzy
-#| msgid "MISSION FAILED: You were supposed to use a Shark."
 msgid "#rMISSION FAILED! You were supposed to raid the transport!"
-msgstr "MISSION FEHLGESCHLAGEN: Du hättest einen Hai benutzen sollen."
+msgstr "#rMISSION FEHLGESCHLAGEN! Du hättest den Transport überfallen sollen!"
 
 #: dat/missions/minerva/kex1.lua:273
-#, fuzzy
-#| msgid "Convoy Mule"
 msgid "Convoy"
-msgstr "Konvoi-Muli"
+msgstr "Konvoi"
 
 #: dat/missions/minerva/kex1.lua:277
-#, fuzzy
-#| msgid "Armoured Transport"
 msgid "Transport"
-msgstr "Gepanzerter Transport"
+msgstr "Transport"
 
 #: dat/missions/minerva/kex1.lua:288 src/faction.c:298 src/faction.c:1071
 #: src/faction.c:1124
@@ -56253,16 +56394,12 @@ msgid "Escort"
 msgstr "Geleit"
 
 #: dat/missions/minerva/kex1.lua:304
-#, fuzzy
-#| msgid "MISSION FAILURE! Target got away."
 msgid "#rMISSION FAILED! The transport got away!"
-msgstr "MISSION FEHLGESCHLAGEN! Ziel ist geflohen."
+msgstr "#rMISSION FEHLGESCHLAGEN! Der Transport ist entkommen!"
 
 #: dat/missions/minerva/kex1.lua:313
-#, fuzzy
-#| msgid "Convoy ships under attack! Requesting immediate assistance!"
 msgid "Transport under attack! Help requested immediately!"
-msgstr "Konvoischiffe unter Beschuss! Sofortige Hilfe erbeten!"
+msgstr "Transport unter Beschuss! Sofortige Hilfe erbeten!"
 
 #: dat/missions/minerva/kex1.lua:331
 msgid ""
@@ -56271,6 +56408,10 @@ msgid ""
 "proceed to explore the rest of the ship to see if there is anything of "
 "interest."
 msgstr ""
+"Du stürmst auf den Transporter zu und machst dich auf den Weg zum "
+"Frachtraum, doch als du dort ankommst, stellst du fest, dass er leer ist. Da "
+"er wahrscheinlich nicht groß ist, erkundest du den Rest des Schiffes, um zu "
+"sehen, ob es etwas Interessantes gibt."
 
 #: dat/missions/minerva/kex1.lua:332
 #, lua-format
@@ -56278,12 +56419,17 @@ msgid ""
 "You are not able to find what you were looking for, but you were able to "
 "find %s that likely won't be necessary to the crew anymore."
 msgstr ""
+"Du bist nicht in der Lage das zu finden, wonach du gesucht hast, aber du "
+"konntest %s finden, die wahrscheinlich nicht mehr für die Crew notwendig "
+"sind."
 
 #: dat/missions/minerva/kex1.lua:333
 msgid ""
 "It might be best to report back to Kex to see if his information was "
 "incorrect."
 msgstr ""
+"Am besten meldest du dich bei Kex zurück, um zu sehen, ob seine "
+"Informationen falsch waren."
 
 #. Permanently disable mainguy
 #. Message update
@@ -56292,18 +56438,24 @@ msgid ""
 "You boarded a transport destined to the Minerva CEO, but didn't find "
 "anything."
 msgstr ""
+"Du hast einen Transport, der für den Minerva-Geschäftsführer vorgesehen war, "
+"geentert, hast aber nichts gefunden."
 
 #: dat/missions/minerva/kex1.lua:352
 msgid ""
 "You scan the debris of the transport for any potential cargo, but can't find "
 "anything."
 msgstr ""
+"Du scannst die Trümmer des Transporters nach möglicher Fracht, kannst aber "
+"nichts finden."
 
 #: dat/missions/minerva/kex1.lua:353
 msgid ""
 "You destroyed a transport destined to the Minerva Ceo, but didn't find "
 "anything in the debris."
 msgstr ""
+"Du hast einen Transport zerstört, der für die Minerva-Geschäftsführer "
+"bestimmt war, hast aber in den Trümmern nichts gefunden."
 
 #: dat/missions/minerva/kex2.lua:43
 #, lua-format
@@ -56311,17 +56463,19 @@ msgid ""
 "You have been entrusted with stealing information from Baroness Eve at %s in "
 "the %s system."
 msgstr ""
+"Du wurdest beauftragt, Informationen von Baroness Eva bei %s im „%s“-System "
+"zu stehlen."
 
 #. If not accepted, misn_state will still be nil
 #: dat/missions/minerva/kex2.lua:68
 msgid "You have agreed to help Kex steal information from Baroness Eve."
 msgstr ""
+"Du hast zugestimmt, Kex zu helfen, Informationen von Baroness Eva zu stehlen."
 
 #: dat/missions/minerva/kex2.lua:71
-#, fuzzy, lua-format
-#| msgid "Fly to %s in the %s system and deliver the message"
+#, lua-format
 msgid "Go to %s in the %s system and hack the main database"
-msgstr "Flieg nach %s im „%s“-System und liefere die Nachricht aus"
+msgstr "Gehe zu %s im „%s“-System und hacke die Hauptdatenbank"
 
 #. Don't save in case the player gets stuck with a shitty ship and gets massacred over and over
 #: dat/missions/minerva/kex2.lua:96
@@ -56330,6 +56484,8 @@ msgid ""
 "You land on %s and proceed to discretely approach one of the terminals and "
 "connect the program that Kex gave you."
 msgstr ""
+"Du landest auf %s und gehst diskret zu einem der Terminals und schließt das "
+"Programm an, das Kex dir gegeben hat."
 
 #: dat/missions/minerva/kex2.lua:97
 msgid ""
@@ -56337,6 +56493,9 @@ msgid ""
 "program. After a while it seems to begin downloading large amounts of data "
 "while you impatiently wait."
 msgstr ""
+"Das Terminal leuchtet schwach auf und beginnt mit der Berechnung dessen, was "
+"auf dem Programm stand. Nach einer Weile scheint es zu beginnen, große "
+"Datenmengen herunterzuladen, während du ungeduldig wartest."
 
 #. blaring alarm
 #: dat/missions/minerva/kex2.lua:99
@@ -56346,6 +56505,11 @@ msgid ""
 "ship. In the background, you hear people yelling and running around. It "
 "seems like you have to get out of here as soon as possible."
 msgstr ""
+"Plötzlich beginnt ein Alarm zu schrillen. Bevor sich der "
+"Sicherheitsbildschirm im Terminal schließt, kannst du dir das Programm "
+"schnappen, während du zu deinem Schiff rennst. Im Hintergrund hörst du "
+"Menschen schreien und herumlaufen. Es scheint, als müsstest du so schnell "
+"wie möglich von hier verschwinden."
 
 #: dat/missions/minerva/kex2.lua:100
 msgid ""
@@ -56353,6 +56517,9 @@ msgid ""
 "have a head start on your pursuers, but you may not be able to count on it "
 "for long."
 msgstr ""
+"Das ist wahrscheinlich das, was Kex damit meinte, dass es hässlich werden "
+"könnte. Es scheint, als hättest du einen Vorsprung vor deinen Verfolgern, "
+"aber darauf kannst du dich vielleicht nicht lange verlassen."
 
 #. Advance mission and get out of there
 #. Mission is over
@@ -56361,16 +56528,20 @@ msgid ""
 "You return tired from your escapade once again to Kex, who is at his "
 "favourite spot at Minerva station."
 msgstr ""
+"Du kehrst müde von deiner Eskapade wieder zu Kex zurück, der an seinem "
+"Lieblingsplatz an der Minerva-Station ist."
 
 #: dat/missions/minerva/kex2.lua:122
 msgid "\"You look like a mess kid, You alright?\""
-msgstr ""
+msgstr "„Du siehst ganz schön fertig aus, Freundchen. Alles in Ordnung?“"
 
 #: dat/missions/minerva/kex2.lua:123
 msgid ""
 "You explain how you weren't able to get all the data before you had to scram "
 "out of there, and hand him the data you were able to recover."
 msgstr ""
+"Du erklärst ihm, dass du nicht alle Daten bekommen konntest, bevor du "
+"abhauen musstest, und überreichst ihm die Daten, die du retten konntest."
 
 #: dat/missions/minerva/kex2.lua:124
 msgid ""
@@ -56378,6 +56549,9 @@ msgid ""
 "it in one piece despite the opposition. Aristocrats always seem to have "
 "cards up their sleeves.\""
 msgstr ""
+"„Verdammt, die Sicherheit war stärker als erwartet. Ich bin froh, dass du es "
+"trotz des Widerstandes in einem Stück geschafft hast. Aristokraten scheinen "
+"immer ein Ass im Ärmel zu haben.“"
 
 #: dat/missions/minerva/kex2.lua:125
 msgid ""
@@ -56388,34 +56562,44 @@ msgid ""
 "database had much more than expected. It will probably take me quite a bit "
 "longer to process this all and see what we got."
 msgstr ""
+"„Lass mich einen kurzen Blick auf die Daten werfen, die du sammeln konntest.“"
+"\n"
+"Er schließt das Programm direkt an einen Port unter seinem Flügel an und "
+"seine Augen werden für einen Moment leer.\n"
+"„Verstehe, es sieht so aus, als hättest du eine ganze Menge an Daten sammeln "
+"können. Allerdings hatte ihre Datenbank viel mehr als erwartet. Es wird "
+"wahrscheinlich etwas länger dauern, bis ich das alles verarbeitet habe und "
+"sehe, was wir haben."
 
 #: dat/missions/minerva/kex2.lua:128
 msgid ""
 "\"In the meantime, it looks like we were also able to take some credits. "
 "I'll wire you up with a reward for your efforts.\""
 msgstr ""
+"„In der Zwischenzeit sieht es so aus, als ob wir auch einige Credits "
+"mitnehmen konnten. Ich werde dir eine Belohnung für deine Bemühungen "
+"überweisen.“"
 
 #: dat/missions/minerva/kex2.lua:132
 msgid ""
 "\"I'm going to go process this data. It's going to take me a while, but come "
 "back here in a period or so and I should hopefully have some more results.\""
 msgstr ""
+"„Ich werde diese Daten auswerten. Das wird eine Weile dauern, aber komm in "
+"einer Periode oder so wieder hierher, dann habe ich hoffentlich mehr "
+"Ergebnisse.“"
 
 #: dat/missions/minerva/kex2.lua:136
 msgid "You stole information from Baroness Eve for Kex."
-msgstr ""
+msgstr "Du hast Informationen von Baroness Eva für Kex gestohlen."
 
 #: dat/missions/minerva/kex2.lua:147
-#, fuzzy
-#| msgid "Ask about the Nebula"
 msgid "Ask about being a duck"
-msgstr "Über den Nebel fragen"
+msgstr "Nach dem Entendasein fragen"
 
 #: dat/missions/minerva/kex2.lua:151
-#, fuzzy
-#| msgid "Prof. Strangelove"
 msgid "Ask about Baroness Eve"
-msgstr "Prof. Seltsam"
+msgstr "Nach Baroness Eva fragen"
 
 #: dat/missions/minerva/kex2.lua:160
 #, lua-format
@@ -56424,6 +56608,10 @@ msgid ""
 "system. She deals in all sorts of trade between the Empire and Za'lek, "
 "although there also seems to be some bad rumours about her floating around.\""
 msgstr ""
+"„Gut, dass du fragst. Es hat sich herausgestellt, dass sie offenbar ein "
+"hohes Tier bei %s im ‚%s‘-System ist. Sie handelt mit allen möglichen "
+"Geschäften zwischen dem Imperium und den Za'lek, obwohl auch einige böse "
+"Gerüchte über sie im Umlauf zu sein scheinen.“"
 
 #: dat/missions/minerva/kex2.lua:161
 msgid ""
@@ -56432,6 +56620,10 @@ msgid ""
 "and pirates in the system. It disrupted the trade routes of the area for "
 "quite a few periods.\""
 msgstr ""
+"„Es ist zwar nicht ganz klar, was genau passiert ist, aber es gab einen "
+"ziemlich großen Zwischenfall, der in einem großen Kampf zwischen Söldnern, "
+"Streitkräften des Imperiums und Piraten im System endete. Dadurch wurden die "
+"Handelsrouten in diesem Gebiet für einige Zeit unterbrochen.“"
 
 #: dat/missions/minerva/kex2.lua:162
 msgid ""
@@ -56441,6 +56633,12 @@ msgid ""
 "to access their main database, however, I'm going to need you to connect it "
 "by hand.\""
 msgstr ""
+"„Ich konnte aus einigen anderen Dokumenten in der Kiste mehr Informationen "
+"herausfinden, denn es scheint, dass sie bei einigen Sicherheitsdetails "
+"ziemlich schlampig waren. Ich habe es geschafft, ein kleines Programm "
+"zusammenzustellen, das hoffentlich in der Lage sein sollte, auf ihre "
+"Hauptdatenbank zuzugreifen, aber ich werde dich brauchen, um es von Hand zu "
+"verbinden.“"
 
 #: dat/missions/minerva/kex2.lua:163
 #, lua-format
@@ -56450,20 +56648,23 @@ msgid ""
 "will be much more different once you get over to %s. Still, I think you "
 "should be able to handle this easily. Would you be up for the challenge?\""
 msgstr ""
+"„Diesmal wird die Aufgabe wahrscheinlich viel schwieriger sein als beim "
+"letzten Mal. Auch wenn die Dokumente einige Sicherheitsprobleme aufwiesen, "
+"werden die Dinge wahrscheinlich ganz anders sein, wenn du zu %s kommst. "
+"Dennoch denke ich, dass du diese Aufgabe leicht bewältigen kannst. Bist du "
+"bereit für die Herausforderung?“"
 
 #: dat/missions/minerva/kex2.lua:165 dat/missions/minerva/kex3.lua:174
 #: dat/missions/minerva/kex3.lua:322
 #: dat/missions/pirate/pir_contraband_cake.lua:99
-#, fuzzy
-#| msgid "Accelerate"
 msgid "Accept"
-msgstr "Beschleunigen"
+msgstr "Annehmen"
 
 #: dat/missions/minerva/kex2.lua:166 dat/missions/minerva/kex3.lua:175
 #: dat/missions/minerva/kex3.lua:323
 #: dat/missions/pirate/pir_contraband_cake.lua:100
 msgid "Decline"
-msgstr ""
+msgstr "Ablehnen"
 
 #: dat/missions/minerva/kex2.lua:170
 #, lua-format
@@ -56473,6 +56674,10 @@ msgid ""
 "That should also make it easier for you to get out of there if things go "
 "sour.\""
 msgstr ""
+"„Großartig! Lass mich dich mit dem Programm einrichten. Alles, was du tun "
+"musst, ist auf %s zu landen und es an irgendein Terminal anzuschließen, "
+"welche es rund um die Docks geben sollte. Das sollte es dir auch leichter "
+"machen, von dort wegzukommen, wenn die Dinge hässlich werden.“"
 
 #: dat/missions/minerva/kex2.lua:182
 msgid ""
@@ -56481,6 +56686,11 @@ msgid ""
 "that they have dealings with each other, it seems like there has to be "
 "something there if we can access all the data.\""
 msgstr ""
+"„Wir wollen also versuchen, uns in die Datenbank von Baroness Eve zu hacken, "
+"um zu sehen, ob wir etwas über den Geschäftsführer der Minerva-Station "
+"herausfinden können. Da wir bereits wissen, dass die beiden miteinander zu "
+"tun haben, muss es doch dort irgendetwas geben, wenn wir auf alle Daten "
+"zugreifen können.“"
 
 #: dat/missions/minerva/kex2.lua:183
 #, lua-format
@@ -56489,6 +56699,10 @@ msgid ""
 "terminal that there should be around the docks. That should also make it "
 "easier for you to get out of there if things go sour.\""
 msgstr ""
+"„Alles, was du tun musst, ist, auf %s zu landen und das Programm, das ich "
+"dir gegeben habe, an irgendein Terminal anzuschließen, welche es rund um die "
+"Docks geben sollte. Das sollte es dir auch leichter machen, von dort "
+"wegzukommen, wenn die Dinge hässlich werden.“"
 
 #: dat/missions/minerva/kex2.lua:184
 msgid ""
@@ -56496,6 +56710,9 @@ msgid ""
 "sure you take a ship that can deal with trouble. Although, I don't think "
 "that will be a problem for you.\""
 msgstr ""
+"„Es ist wahrscheinlich, dass es diesmal mehr Sicherheitspersonal geben wird, "
+"also nimm ein Schiff, das mit Ärger umgehen kann. Aber ich glaube nicht, "
+"dass das ein Problem für dich sein wird.“"
 
 #: dat/missions/minerva/kex2.lua:188
 msgid ""
@@ -56503,6 +56720,9 @@ msgid ""
 "fly short distances, but you can't reach any tall places and have to "
 "constantly avoid getting stepped on.\""
 msgstr ""
+"„Es ist so schlimm, wie man es erwarten würde. Ich meine, sicher, ich kann "
+"schweben und kurze Strecken fliegen, aber man kann keine hohen Stellen "
+"erreichen und muss ständig vermeiden, dass man getreten wird.“"
 
 #: dat/missions/minerva/kex2.lua:189
 msgid ""
@@ -56510,6 +56730,10 @@ msgid ""
 "humanity and can't engage in all the activities I used to like. You know, "
 "drinking with friends, going out, basic human empathy, shit like that.\""
 msgstr ""
+"„Das Schlimmste ist der Mangel an Kommunikation. Ich meine, ich habe "
+"sozusagen meine Menschlichkeit verloren und kann mich nicht mehr an all den "
+"Aktivitäten beteiligen, die ich früher mochte. Du weißt schon, mit Freunden "
+"trinken gehen, ausgehen, grundlegende menschliche Empathie und so weiter.“"
 
 #: dat/missions/minerva/kex2.lua:190
 msgid ""
@@ -56518,6 +56742,11 @@ msgid ""
 "in the morning, and you still haven't remembered you're a duck, but it soon "
 "comes crashing down. You just can't get used to it.\""
 msgstr ""
+"„Ich würde gerne denken, dass ich mich nach all diesen Zyklen daran gewöhnt "
+"habe, aber man gewöhnt sich nie daran. Es gibt einen Moment des Glücks, wenn "
+"man morgens aufwacht und sich noch nicht daran erinnert hat, dass man eine "
+"Ente ist, aber dann bricht es wieder zusammen. Man kann sich einfach nicht "
+"daran gewöhnen.“"
 
 #: dat/missions/minerva/kex2.lua:191
 msgid ""
@@ -56526,12 +56755,19 @@ msgid ""
 "All the things I used to have and cherish, they're all gone. My work, my "
 "friends, my family…\""
 msgstr ""
+"„Heutzutage kann ich es etwas besser verkraften, aber der Anfang war "
+"besonders hart. Man verliert einfach den ganzen Lebenswillen. Es gibt kein "
+"Zurück mehr, nicht wahr? All die Dinge, die ich früher hatte und schätzte, "
+"sind weg. Meine Arbeit, meine Freunde, meine Familie …“"
 
 #: dat/missions/minerva/kex2.lua:192
 msgid ""
 "\"I never chose to be in this state and often think that it would have been "
 "better if I had never been saved from the wreckage, but here I am.\""
 msgstr ""
+"„Ich habe mir diesen Zustand nie ausgesucht und denke oft, dass es besser "
+"gewesen wäre, wenn ich nie aus den Trümmern gerettet worden wäre, aber hier "
+"bin ich nun.“"
 
 #: dat/missions/minerva/kex2.lua:194
 msgid ""
@@ -56540,19 +56776,23 @@ msgid ""
 "did this to me. Turning me into this is beyond humiliating and I intend to "
 "have him suffer as much as I have.\""
 msgstr ""
+"Seine Miene verfinstert sich.\n"
+"„Das Einzige, was mich wirklich antreibt, ist Rache an dem Bastard, der mir "
+"das angetan hat. Mich in das hier zu verwandeln ist mehr als demütigend und "
+"ich habe vor, ihn genauso leiden zu lassen wie ich.“"
 
 #: dat/missions/minerva/kex2.lua:197
 msgid ""
 "\"If you can avoid, don't become a duck kid.\"\n"
 "He seems to lighten up a bit."
 msgstr ""
+"„Wenn du es vermeiden kannst, dann werde kein Entenkind.“\n"
+"Er scheint sich ein wenig zu entspannen."
 
 #. Main stuff starts
 #: dat/missions/minerva/kex2.lua:212
-#, fuzzy
-#| msgid "Darkness"
 msgid "Baroness Eve"
-msgstr "Darkness"
+msgstr "Baroness Eva"
 
 #: dat/missions/minerva/kex3.lua:52
 #, lua-format
@@ -56560,17 +56800,19 @@ msgid ""
 "You have been assigned with obtaining information from Major Malik at %s in "
 "the %s system."
 msgstr ""
+"Du wurdest damit beauftragt, Informationen von Major Malik bei %s im „%s“-"
+"System zu erhalten."
 
 #. If not accepted, misn_state will still be nil
 #: dat/missions/minerva/kex3.lua:80
 msgid "You have agreed to help Kex obtain information from Major Malik."
 msgstr ""
+"Du hast zugestimmt, Kex zu helfen, Informationen von Major Malik zu erhalten."
 
 #: dat/missions/minerva/kex3.lua:83
-#, fuzzy, lua-format
-#| msgid "Fly to %s in the %s system before %s"
+#, lua-format
 msgid "Go to %s in the %s system to find Major Malik"
-msgstr "Flieg nach %s im „%s“-System vor %s"
+msgstr "Gehe nach %s im „%s“-System, um Major Malik zu finden"
 
 #: dat/missions/minerva/kex3.lua:103
 msgid ""
@@ -56578,6 +56820,9 @@ msgid ""
 "over with. After glossing over the map of the installations, you are able to "
 "quickly locate their office and head down there."
 msgstr ""
+"Du landest und machst dich sofort auf die Suche nach Major Malik, um den "
+"Auftrag zu erledigen. Nachdem du die Karte der Anlage überflogen hast, "
+"kannst du schnell das Büro finden und dich auf den Weg dorthin machen."
 
 #: dat/missions/minerva/kex3.lua:105
 #, lua-format
@@ -56586,27 +56831,29 @@ msgid ""
 "enjoying some leisure time at %s in the %s system. Looks like you have no "
 "choice but to try to look for them there."
 msgstr ""
+"Du kommst an und erkundigst dich nach Major Malik, aber dir wird gesagt, "
+"dass er anscheinend seine Freizeit bei %s im „%s“-System genießt. Sieht so "
+"aus, als hättest du keine andere Wahl, als dort nach Malik zu suchen."
 
 #. Advance the state
 #: dat/missions/minerva/kex3.lua:112
-#, fuzzy, lua-format
-#| msgid "Look for Jorek on %s in the %s system"
+#, lua-format
 msgid "Look for Major Malik at %s in the %s system"
-msgstr "Halte nach Jorek auf %s im „%s“-System Ausschau"
+msgstr "Halte nach Major Malik auf %s im „%s“-System Ausschau"
 
 #. Reset autonav just in case
 #. Keep on beating
 #: dat/missions/minerva/kex3.lua:117 dat/missions/minerva/kex3.lua:313
 #: dat/missions/minerva/kex3.lua:398 dat/missions/minerva/kex3.lua:488
-#, fuzzy
-#| msgid "Major Tam"
 msgid "Major Malik"
-msgstr "Major Tam"
+msgstr "Major Malik"
 
 #: dat/missions/minerva/kex3.lua:117
 msgid ""
 "You see Major Malik who is fairly similar to the image shown to you by Kex."
 msgstr ""
+"Du siehst Major Malik, der dem Bild, das dir Kex gezeigt hat, ziemlich "
+"ähnlich ist."
 
 #: dat/missions/minerva/kex3.lua:123
 msgid ""
@@ -56615,6 +56862,11 @@ msgid ""
 "permeating the room. Furthermore, it looks like someone left in a hurry, but "
 "at least it seems like Major Malik is still at his terminal."
 msgstr ""
+"Du trennst dich von der virtuellen Realität des Blutroten Panzerhandschuhs "
+"und schaust dich in dem privaten Raum um, in dem du warst. Ein deutlicher "
+"Schweißgeruch durchdringt den Raum. Außerdem sieht es so aus, als hätte es "
+"jemand eilig gehabt zu gehen, aber zumindest scheint Major Malik noch an "
+"seinem Terminal zu sitzen."
 
 #: dat/missions/minerva/kex3.lua:124
 msgid ""
@@ -56623,6 +56875,10 @@ msgid ""
 "over and there is some white froth coming out of his mouth. Seems like some "
 "sort of mental shock killed him."
 msgstr ""
+"Du näherst dich Major Malik und merkst sofort, dass etwas nicht stimmt. Du "
+"nimmst ihm die Kopfbedeckung ab und siehst sofort, dass seine Augen glasig "
+"sind und ein weißer Schaum aus seinem Mund kommt. Es scheint, als hätte ihn "
+"eine Art mentaler Schock getötet."
 
 #: dat/missions/minerva/kex3.lua:125
 msgid ""
@@ -56631,6 +56887,10 @@ msgid ""
 "screen to you and try to see if you can find any of the information that Kex "
 "was looking for."
 msgstr ""
+"Aus den Augenwinkeln siehst du, dass das Terminal immer noch eingeloggt ist. "
+"Da du nichts mehr für Major Malik tun kannst, drehst du den Bildschirm zu "
+"dir und versuchst zu sehen, ob du die Informationen findest, nach denen Kex "
+"gesucht hat."
 
 #: dat/missions/minerva/kex3.lua:127
 msgid ""
@@ -56638,6 +56898,9 @@ msgid ""
 "find what seem to be the correct files, and you copy them over to a "
 "holodrive that you pocket with you. This should make Kex satisfied this time."
 msgstr ""
+"Die Verzeichnisse sind sehr übersichtlich, und es dauert nicht lange, bis du "
+"die scheinbar richtigen Dateien gefunden hast und sie auf ein Hololaufwerk "
+"kopiert, das du mit dir trägst. Dies sollte Kex diesmal zufrieden stellen."
 
 #: dat/missions/minerva/kex3.lua:128
 msgid ""
@@ -56647,11 +56910,19 @@ msgid ""
 "Crimson Gauntlet session. However, given the dead body in the room, you "
 "decide to take your leave before it attracts attention."
 msgstr ""
+"Du untersuchst den Raum ein letztes Mal, bevor du gehst. Du bemerkst, dass "
+"das Gehäuse, das einige der Terminals abdeckt, aufgebrochen wurde und einige "
+"interne Verbindungen freigelegt wurden. Es besteht kein Zweifel, dass sich "
+"jemand in deine Blutroter-Panzerhandschuh-Sitzung eingeklinkt hat. "
+"Angesichts der Leiche im Raum beschließt du jedoch, den Raum zu verlassen, "
+"bevor sie Aufmerksamkeit erregt."
 
 #: dat/missions/minerva/kex3.lua:129
 msgid ""
 "You better head over to Kex to rely the information back at Minerva Station."
 msgstr ""
+"Du solltest lieber zu Kex gehen, um die Informationen bei der Minerva-"
+"Station weiterzugeben."
 
 #. We're done here, go back to kex:)
 #. Mission is over
@@ -56660,10 +56931,12 @@ msgid ""
 "You return exhausted from the entire ordeal, with Major Malik's dead eyes "
 "are stilled ingrained in your memory, and approach Kex."
 msgstr ""
+"Du kehrst erschöpft von der ganzen Tortur zurück, mit Major Maliks toten "
+"Augen, die sich in dein Gedächtnis eingebrannt haben, und näherst dich Kex."
 
 #: dat/missions/minerva/kex3.lua:148
 msgid "\"You look like a mess, kid. What happened?\""
-msgstr ""
+msgstr "„Du siehst furchtbar aus, Freundchen. Was ist passiert?“"
 
 #: dat/missions/minerva/kex3.lua:149
 msgid ""
@@ -56671,6 +56944,9 @@ msgid ""
 "emerged with your life, and hand him the holodrive with the data you were "
 "able to collect."
 msgstr ""
+"Du erklärst ihm, was auf dem Server des Blutroten Panzerhandschuhs passiert "
+"ist und wie du gerade noch mit dem Leben davongekommen bist und überreichst "
+"ihm das Hololaufwerk mit den Daten, die du sammeln konntest."
 
 #: dat/missions/minerva/kex3.lua:150
 msgid ""
@@ -56679,8 +56955,14 @@ msgid ""
 "experience though. At least I'm glad you made it out of there alive. Don't "
 "know what I would do without you now.\""
 msgstr ""
+"„Verdammt. Als ich noch ein Mensch war, hatten wir diese schicke Virtuelle-"
+"Realitäts-Scheiße noch nicht. Es ist krank. Ich glaube nicht, dass ich es "
+"ausprobieren möchte, nachdem ich von deiner Erfahrung gehört habe. "
+"Wenigstens bin ich froh, dass du es lebend da raus geschafft hast. Ich "
+"wüsste nicht, was ich jetzt ohne dich machen würde.“"
 
 #: dat/missions/minerva/kex3.lua:151
+#, fuzzy
 msgid ""
 "\"Let me take a look at the data.\"\n"
 "He once again plugs the drive into a port somewhere under his wing and his "
@@ -56688,6 +56970,11 @@ msgid ""
 "\"Seems like that Major Malik was into some major shit.\"\n"
 "He seems satisfied at his pun."
 msgstr ""
+"„Lass mich einen Blick auf die Daten werfen.“\n"
+"Er schließt das Laufwerk wieder an einen Port irgendwo unter seinem Flügel "
+"an und seine Augen werden leer.\n"
+"„Scheint so, als wäre dieser Major Malik ein Opfer der Elektrik.“\n"
+"Er scheint mit seinem Wortspiel zufrieden zu sein."
 
 #: dat/missions/minerva/kex3.lua:155
 msgid ""
@@ -56696,30 +56983,45 @@ msgid ""
 "while to go over this. Meet me back up here in a period or so after I "
 "process all this data.\""
 msgstr ""
+"Er reißt sich aus seiner Verblüffung und sieht dich wieder an.\n"
+"„Scheint, als hättest du viel mehr bekommen, als ich erwartet habe. Es wird "
+"eine Weile dauern, bis ich das alles durchgesehen habe. Wir treffen uns in "
+"etwa einer Periode wieder hier oben, nachdem ich all diese Daten verarbeitet "
+"habe.“"
 
 #: dat/missions/minerva/kex3.lua:157
 msgid ""
 "\"Ah yes, before I get absorbed by the data processing, here, let me reward "
 "you for your troubles.\""
 msgstr ""
+"„Ah ja, bevor ich mich in die Datenverarbeitung vertiefe, hier, lass mich "
+"dich für deine Mühen belohnen.“"
 
 #: dat/missions/minerva/kex3.lua:162
 msgid ""
 "As you take your leave you hear Kex beginning to hum an ancient-sounding "
 "tune."
 msgstr ""
+"Als du dich verabschiedest, hörst du, wie Kex eine uralte Melodie zu summen "
+"beginnt."
 
 #: dat/missions/minerva/kex3.lua:165
 msgid ""
 "You defeated Major Malik in a lopsided duel in the Crimson Gauntlet, and "
 "acquired information related to money laundering at Minerva Station."
 msgstr ""
+"Du hast Major Malik in einem ungleichgewichtigen Duell im Blutroten "
+"Panzerhandschuh besiegt und Informationen über die Geldwäsche in der Minerva-"
+"Station erhalten."
 
 #: dat/missions/minerva/kex3.lua:170
 msgid ""
 "You find Kex taking a break at his favourite spot at Minerva station. His "
 "eyes light up when he sees you and he runs over to you."
 msgstr ""
+"Du findest Kex vor, der an seinem Lieblingsplatz in der Minerva-Station eine "
+"Pause macht. Seine Augen leuchten, als er dich sieht und er rennt zu dir "
+"hinüber."
 
 #: dat/missions/minerva/kex3.lua:171
 msgid ""
@@ -56727,6 +57029,11 @@ msgid ""
 "got some dirt on the CEO. It seems like they're involved in some sort of "
 "money laundering, but this alone won't get us anywhere, we need more intel.\""
 msgstr ""
+"„Gute Nachrichten, Freundchen! Es sieht so aus, als ob die Informationen, "
+"die wir von Baroness Eva erhalten haben, etwas über den Geschäftsführer "
+"herausgefunden haben. Es sieht so aus, als wären sie in eine Art Geldwäsche "
+"verwickelt, aber das allein wird uns nicht weiterbringen, wir brauchen mehr "
+"Informationen.“"
 
 #: dat/missions/minerva/kex3.lua:172
 msgid ""
@@ -56735,6 +57042,10 @@ msgid ""
 "laundering. Would you be up for paying them a visit and seeing what you can "
 "get out of them?\""
 msgstr ""
+"„Wir haben eine weitere Spur zu einem weiteren Mitverschwörer, diesmal im "
+"Dvaered-Raum. Eine Person namens Major Malik scheint ebenfalls in die "
+"Geldwäsche verwickelt zu sein. Wärst du bereit, ihm einen Besuch abzustatten "
+"und zu sehen, was du aus ihm herausbekommen kannst?“"
 
 #: dat/missions/minerva/kex3.lua:183
 #, lua-format
@@ -56745,8 +57056,15 @@ msgid ""
 "should be easy enough to convince him. I'll also send you a picture of him "
 "so you can easily recognize him when you see him.\""
 msgstr ""
+"„Dieses Mal hoffe ich, dass es ein Kinderspiel ist. Major Malik sollte bei "
+"%s im ‚%s‘-System sein. Der Major sollte ziemlich alt sein, also sollte es "
+"ausreichen, ihn einfach zu konfrontieren und zum Reden zu bringen. Ich gebe "
+"dir einen Zettel, der, wenn du ihn zeigst, es leicht machen sollte, ihn zu "
+"überzeugen. Ich schicke dir auch ein Bild von ihm, damit du ihn leicht "
+"erkennen kannst, wenn du ihn siehst.“"
 
 #: dat/missions/minerva/kex3.lua:184
+#, fuzzy
 msgid ""
 "\"The note? It's just your run-of-the-mill blackmail. We don't really care "
 "about Major Malik himself, what we want is dirt on the CEO. Hopefully "
@@ -56754,12 +57072,16 @@ msgid ""
 "what it takes in case they don't.\"\n"
 "He winks his cyborg eye at you."
 msgstr ""
+"„Die Nachricht? Die ist eine ganz gewöhnliche Erpressung. Major Malik selbst "
+"ist uns eigentlich egal, wir wollen nur Dreck über den Geschäftsführer. "
+"Hoffentlich sind sie vernünftig und geben uns, was wir wollen. Ich vertraue "
+"jedoch darauf, dass du tun wirst, was nötig ist, wenn sie es uns nicht "
+"geben.“\n"
+"Er zwinkert dir mit seinem Cyborg-Auge zu."
 
 #: dat/missions/minerva/kex3.lua:198
-#, fuzzy
-#| msgid "Ask about this place"
 msgid "Ask about his past"
-msgstr "Über diesen Ort fragen"
+msgstr "Nach seiner Vergangenheit fragen"
 
 #: dat/missions/minerva/kex3.lua:206
 msgid ""
@@ -56767,6 +57089,10 @@ msgid ""
 "dealings with the Minerva CEO. If you hand him the letter I gave you it "
 "should be enough to convince him.\""
 msgstr ""
+"„Die Aufgabe ist ziemlich simpel. Wir brauchen Major Malik, um über seine "
+"Geschäfte mit dem Minerva-Geschäftsführer zu sprechen. Wenn du ihm den Brief "
+"gibst, den ich dir gegeben habe, sollte das ausreichen, um ihn zu "
+"überzeugen.“"
 
 #: dat/missions/minerva/kex3.lua:207
 #, lua-format
@@ -56774,18 +57100,17 @@ msgid ""
 "\"You should be able to find him at %s in the %s system. I don't think he "
 "should give much trouble.\""
 msgstr ""
+"„Du solltest ihn bei %s im ‚%s‘-System finden können. Ich denke nicht, dass "
+"er viel Ärger machen sollte.“"
 
 #: dat/missions/minerva/kex3.lua:209
-#, fuzzy, lua-format
-#| msgid ""
-#| "\"Of course I have what you need. I'll trade it for some 3t phosphine. "
-#| "You can find it on %s in the %s system.\""
+#, lua-format
 msgid ""
 "\"Oh, so Major Malik wasn't at %s? That is really weird. Let's hope you can "
 "find him at %s in the %s system.\""
 msgstr ""
-"„Natürlich habe ich, was du brauchst. Ich werde es gegen 3t Phosphin "
-"eintauschen. Du kannst es unter %s im ‚%s‘-System finden.“"
+"„Oh, Major Malik war also nicht bei %s? Das ist wirklich seltsam. Hoffen "
+"wir, dass du ihn bei %s im ‚%s‘-System finden kannst.“"
 
 #: dat/missions/minerva/kex3.lua:214
 msgid ""
@@ -56795,6 +57120,11 @@ msgid ""
 "period drifting in the Nebula?\"\n"
 "\"No? Great!"
 msgstr ""
+"„Du bist ein ziemlich neugieriges Kind. Damals fand ich mein Leben nicht so "
+"toll und aufregend, aber in letzter Zeit sehne ich mich danach, wie in den "
+"guten alten Zeiten in die Lüfte zu steigen. Habe ich dir jemals von der "
+"Geschichte erzählt, als ich eine Kiloperiode lang im Nebel driftete?“\n"
+"„Nein? Toll!"
 
 #: dat/missions/minerva/kex3.lua:216
 msgid ""
@@ -56805,6 +57135,13 @@ msgid ""
 "Nothing is alive there, or at least, not in the sense we sort of think of as "
 "being alive.\""
 msgstr ""
+"„Es war nicht ungewöhnlich, dass Dinge schnell kaputt gingen und seltsam "
+"wurden, wenn man tief in den Nebel vordrang. Die Strahlung ist sehr "
+"schädlich für die Schiffspanzerung, so dass man immer die Energie für die "
+"Schilde maximieren muss. Das macht es schwer, Feuerkraft mitzubringen, aber "
+"in den Tiefen des Nebels nützt einem das auch nichts. Dort ist nichts "
+"lebendig, zumindest nicht in dem Sinne, was wir uns unter lebendig "
+"vorstellen.“"
 
 #: dat/missions/minerva/kex3.lua:217
 msgid ""
@@ -56815,6 +57152,13 @@ msgid ""
 "enter the Nebula, you forfeit all chance at salvation. Search parties tend "
 "to only rack up the body counts.\""
 msgstr ""
+"„Also, ich und Mireia hatten einen Hinweis auf eine Art seltsames Wrack tief "
+"hinter Arandon aufgeschnappt. Ein paar arme Trottel hatten sich auf die "
+"Suche danach gemacht und waren ein paar Hektoperioden lang nicht "
+"zurückgekommen, und einer ihrer Ehemänner begann, den Verstand zu verlieren, "
+"also kamen sie zu uns. Wir waren nicht daran interessiert, sie zu retten, "
+"denn sobald man den Nebel betritt, hat man jede Chance auf Rettung "
+"verspielt. Suchtrupps neigen dazu, nur die Zahl der Toten zu erhöhen.“"
 
 #: dat/missions/minerva/kex3.lua:218
 msgid ""
@@ -56824,6 +57168,11 @@ msgid ""
 "\"…things that shouldn't exist. Or better said, things that can't possibly "
 "exist.\""
 msgstr ""
+"„Wie auch immer, so wie es aussieht, war es ein sehr interessanter Fund. "
+"Manchmal findet man im Nebel wirklich seltsame Dinge.“\n"
+"Er lehnt sich näher zu dir und flüstert.\n"
+"„… Dinge, die nicht existieren sollten. Oder besser gesagt, Dinge, die es "
+"gar nicht geben kann.“"
 
 #: dat/missions/minerva/kex3.lua:221
 msgid ""
@@ -56834,6 +57183,13 @@ msgid ""
 "and the chaos of the Nebula, but you can never relax. It sort of gets into "
 "your bones and makes you lose your sleep.\""
 msgstr ""
+"„Also beluden wir unser treues Muli mit allen Schildgeneratoren und "
+"Überlebensmitteln, die wir unterbringen konnten, und machten uns auf den Weg "
+"zu dem ungefähren Ort, an dem sich das Wrack befinden sollte. Zuerst war es "
+"ziemlich normal, die Schilde liefen mit maximaler Leistung, und die Strahler "
+"waren auf maximale Leistung eingestellt. Man gewöhnt sich an das Brummen und "
+"das Chaos des Nebels, aber man kann sich nie entspannen. Es geht einem "
+"irgendwie in die Knochen und bringt einen um den Schlaf.“"
 
 #: dat/missions/minerva/kex3.lua:222
 msgid ""
@@ -56844,6 +57200,12 @@ msgid ""
 "The more you looked at it, the more it felt like it was burning into the "
 "back of your retina.\""
 msgstr ""
+"„Wir haben das eine gefühlte Ewigkeit lang gemacht. Die Sensoren sind da "
+"drin etwas unscharf, aber sie meldeten etwa eine Dekaperiode, als wir es "
+"sahen. Es war Teil von etwas sehr Großem, das fast wie eine Art "
+"Metallskelett aussah. Wir haben uns ihm vorsichtig genähert, weil die "
+"Strahlung extrem hoch war. Je länger man es ansah, desto mehr fühlte es sich "
+"an, als würde es sich in die Rückseite der Netzhaut einbrennen.“"
 
 #: dat/missions/minerva/kex3.lua:223
 msgid ""
@@ -56853,6 +57215,11 @@ msgid ""
 "only had a small laser turret, but we even tried shooting at it and nothing. "
 "Zip-O.\""
 msgstr ""
+"„Nach unserer flüchtigen Analyse wollten wir eine Probe entnehmen. Als wir "
+"jedoch versuchten, den Roboterarm an ihn heranzuführen, schien er nicht "
+"näher zu kommen. Er blieb immer in einer gewissen Entfernung von uns, egal "
+"was wir versuchten. Wir hatten nur einen kleinen Laserturm, aber wir haben "
+"sogar versucht, auf ihn zu schießen, aber nichts. Pech.“"
 
 #: dat/missions/minerva/kex3.lua:224
 msgid ""
@@ -56863,6 +57230,12 @@ msgid ""
 "the eye of a needle, like hyperspace sickness but much worse. And we passed "
 "out.\""
 msgstr ""
+"„Vielleicht war es die Erschöpfung oder etwas anderes, ich weiß es nicht, "
+"aber wir beschlossen, zu versuchen, ihn zu rammen. Wir beschleunigten also "
+"mit maximaler Geschwindigkeit, und dann passierte es. Plötzlich gab es ein "
+"furchtbares Kreischen und alles bebte. Als Nächstes fühlte es sich an, als "
+"würden wir durch ein Nadelöhr gezogen, wie die Hyperraumkrankheit, nur viel "
+"schlimmer. Und wir wurden ohnmächtig.“"
 
 #: dat/missions/minerva/kex3.lua:225
 msgid ""
@@ -56873,6 +57246,13 @@ msgid ""
 "hailed a ship, we found out there was a 1087 period difference between our "
 "system clock and theirs.\""
 msgstr ""
+"„Als wir aufwachten, war nichts um uns herum zu sehen. Nur Nebel. Einer der "
+"Schildgeneratoren war ausgefallen, also würden wir nicht lange überleben. "
+"Wir haben ein paar Notreparaturen durchgeführt und unsere Ärsche da "
+"rausgeschleppt. Als wir rauskamen, sagten unsere Systeme, dass wir nur etwa "
+"22 Perioden weg gewesen waren, aber als wir ein Schiff anfukten, fanden wir "
+"heraus, dass es einen Unterschied von 1087 Perioden zwischen unserer und "
+"ihrer Systemuhr gab.“"
 
 #: dat/missions/minerva/kex3.lua:226
 msgid ""
@@ -56882,6 +57262,11 @@ msgid ""
 "like that. We also had nothing from our encounter with the wreck or whatever "
 "that was.\""
 msgstr ""
+"„Das Seltsame ist, dass nicht viele Vorräte gefehlt haben, also kann das "
+"nicht wahr sein. Ich kratze mich heute noch am Kopf, wenn ich daran denke. "
+"Ich neigte zwar dazu, die Zeit aus den Augen zu verlieren und im tiefen "
+"Nebel den Hunger zu stillen, aber nichts dergleichen. Wir hatten auch nichts "
+"von unserer Begegnung mit dem Wrack oder was auch immer das war.“"
 
 #: dat/missions/minerva/kex3.lua:227
 msgid ""
@@ -56893,6 +57278,13 @@ msgid ""
 "after adventuring.\"\n"
 "He looks a bit glum."
 msgstr ""
+"„Danach bin ich wieder nach Hause gefahren und wurde von meiner Frau total "
+"fertig gemacht. Ich musste ein paar Wochen auf der Couch schlafen und Maikki "
+"hat lange Zeit nicht mit mir gesprochen.“\n"
+"Er seufzt wehmütig.\n"
+"„Das ist der Teil, den ich an meinem früheren Leben am meisten vermisse. "
+"Einen Ort zu haben, an den ich nach meinen Abenteuern gehen kann.“\n"
+"Er sieht ein wenig mürrisch aus."
 
 #. Try to make sure they meet up the player
 #. Spawn thugs after the player. Player should likely be going to Dvaer
@@ -56903,39 +57295,34 @@ msgstr ""
 #. Start the attack, should be close enough to aggro naturally
 #. Broadcast after hostile
 #: dat/missions/minerva/kex3.lua:299
-#, fuzzy
-#| msgid "That's our target! Get her, boys!"
 msgid "That's the the one!"
-msgstr "Das ist unser Ziel! Schnappt sie euch, Jungs!"
+msgstr "Das ist es!"
 
 #: dat/missions/minerva/kex3.lua:315
-#, fuzzy
-#| msgid ""
-#| "You see an Empire Lt. Commander who seems to be motioning you over to the "
-#| "counter."
 msgid "You approach Major Malik who seems to be enjoying a drink."
-msgstr ""
-"Du siehst einen Korvettenkapitän des Imperiums, der dich über den Tresen zu "
-"beobachten scheint."
+msgstr "Du näherst dich Major Malik, der anscheinend einen Drink genießt."
 
 #: dat/missions/minerva/kex3.lua:316 dat/missions/minerva/maikki2.lua:485
 #: dat/missions/minerva/maikki2.lua:766
-#, fuzzy
-#| msgid "\"What do you want from me!?\""
 msgid "\"What do you want?\""
-msgstr "„Was willst du von mir!?“"
+msgstr "„Was wollen Sie von mir?“"
 
 #: dat/missions/minerva/kex3.lua:317
 msgid ""
 "You hand him the note you got from Kex. He reads it and furrows his brows a "
 "bit."
 msgstr ""
+"Du gibst ihm den Zettel, den du von Kex bekommen hast. Er liest ihn und "
+"runzelt ein wenig die Stirn."
 
 #: dat/missions/minerva/kex3.lua:318
 msgid ""
 "\"I see. You think at my age I worry about what happens to me? I've had a "
 "good career with no regrets. Your threats don't sway me.\""
 msgstr ""
+"„Ich verstehe. Glauben Sie, in meinem Alter mache ich mir Sorgen darüber, "
+"was aus mir wird? Ich habe eine gute Karriere hinter mir und bereue nichts. "
+"Ihre Drohungen können mich nicht beeinflussen.“"
 
 #: dat/missions/minerva/kex3.lua:319
 msgid ""
@@ -56943,24 +57330,35 @@ msgid ""
 "private Crimson Gauntlet server here, let us duel in classic Dvaered "
 "fashion. If you win, I'll give you over the information you want.\""
 msgstr ""
+"„Aber ich bin heute gut gelaunt. Wie wäre es, wenn wir ein Spiel spielen? "
+"Ich habe hier einen privaten Blutroten-Panzerhandschuh-Server, lassen Sie "
+"uns in klassischer Dvaered-Manier duellieren. Wenn Sie gewinnen, gebe ich "
+"Ihnen die Informationen, die sie haben möchten.“"
 
 #: dat/missions/minerva/kex3.lua:320
 msgid ""
 "\"To make it more exciting, we can both duel in Vendettas. I'll provide you "
 "with one. What do you say?\""
 msgstr ""
+"„Um es spannender zu machen, können wir uns beide in Vendettas duellieren. "
+"Ich werde Ihnen eine zur Verfügung stellen. Was sagen Sie?“"
 
 #: dat/missions/minerva/kex3.lua:327
 msgid ""
 "\"OK, then it's settled then. Follow me to my private room and we'll get "
 "started.\""
 msgstr ""
+"„Okay, dann ist das ja geklärt. Folgen Sie mir in mein privates Zimmer und "
+"wir fangen an.“"
 
 #: dat/missions/minerva/kex3.lua:328
 msgid ""
 "Major Malik leads you through the installation to a private Crimson Gauntlet "
 "server room. You enter and see that there are two virtual reality terminals."
 msgstr ""
+"Major Malik führt dich durch die Installation zu einem privaten Blutroter-"
+"Panzerhandschuh-Serverraum. Du betrittst ihn und siehst, dass dort zwei "
+"Virtuelle-Realitäts-Terminals stehen."
 
 #: dat/missions/minerva/kex3.lua:329
 msgid ""
@@ -56968,6 +57366,9 @@ msgid ""
 "how this works right? Just connect yourself, and I'll set up the server "
 "details.\""
 msgstr ""
+"„Bitte setzen Sie sich zum Terminal dort drüben, ich werde an dem hier sein. "
+"Sie wissen, wie das funktioniert, oder? Schließen Sie sich einfach an, und "
+"ich richte die Serverdetails ein.“"
 
 #: dat/missions/minerva/kex3.lua:330
 msgid ""
@@ -56977,18 +57378,25 @@ msgid ""
 "#rHUMAN LIFE SAFETY OVERRIDE.\n"
 "DUEL TO THE DEATH MODE ENABLED.#0"
 msgstr ""
+"Du setzt sich hin und test, was man dir sagt. Schnell wechselt er zum "
+"Startbildschirm vom Blutroten Panzerhandschuh. Während er hochfährt, "
+"überfliegst du untätig die Detailinformationen des Servers. Plötzlich fällt "
+"dir etwas ins Auge:\n"
+"#rMENSCHENLEBENSSICHERHEITSÜBERSCHREIBUNG.\n"
+"TODESDUELLMODUS AKTIVIERT.#0"
 
 #: dat/missions/minerva/kex3.lua:334
 msgid ""
 "You try to remove the gear and stop the boot, but it is too late. The "
 "virtual reality of the Crimson Gauntlet envelopes you…"
 msgstr ""
+"Du versuchst, die Ausrüstung zu entfernen und den Bootvorgang zu stoppen, "
+"aber es ist zu spät. Die virtuelle Realität des Blutroten Panzerhandschuhs "
+"umhüllt dich …"
 
 #: dat/missions/minerva/kex3.lua:338
-#, fuzzy
-#| msgid "\"Ah, OK. Let me know if you change your mind.\""
 msgid "\"OK. I'll be here if you change your mind.\""
-msgstr "„Ah, OK. Lass mich wissen, wenn du deine Meinung geändert hast.“"
+msgstr "„Okay. Lassen Sie mich wissen, wenn Sie Ihre Meinung geändert haben.“"
 
 #.
 #. Common Teleporting Functions
@@ -57009,95 +57417,89 @@ msgstr "Ketchup"
 #: dat/missions/minerva/kex3.lua:459
 msgid "Back in my day we used to fly uphill both ways to go to work!"
 msgstr ""
+"Zu meiner Zeit mussten wir in beide Richtungen bergauf fliegen, um zur "
+"Arbeit zu kommen!"
 
 #: dat/missions/minerva/kex3.lua:460
 msgid "I'll be damned if I let a young whippersnapper get the best of me!"
 msgstr ""
+"Ich will verdammt sein, wenn ich mich von einem jungen Hüpfer überrumpeln "
+"lasse!"
 
 #: dat/missions/minerva/kex3.lua:461
 msgid "Nothing like some dogfighting to feel alive!"
-msgstr ""
+msgstr "Es geht nichts über ein paar Kämpfe, um sich lebendig zu fühlen!"
 
 #: dat/missions/minerva/kex3.lua:462
 msgid "Wait until this old dog shows you some new tricks!"
-msgstr ""
+msgstr "Warten Sie nur, bis dieser alte Hund Ihnen ein paar neue Tricks zeigt!"
 
 #: dat/missions/minerva/kex3.lua:463
-#, fuzzy
-#| msgid "You've been scouted!"
 msgid "Youth is overrated!"
-msgstr "Du wurdest ausgekundschaftet!"
+msgstr "Jugend ist überbewertet!"
 
 #: dat/missions/minerva/kex3.lua:464
 msgid "Feel the taste of my cannons!"
-msgstr ""
+msgstr "So spüret den Geschmack meiner Kanonen!"
 
 #: dat/missions/minerva/kex3.lua:503
-#, fuzzy
-#| msgid "Arrgh!"
 msgid "Aaaaaargh!"
-msgstr "Argh!"
+msgstr "Aaaaaargh!"
 
 #. Kill all enemies
 #. Maikki and friends go away
 #. Add more extras
 #: dat/missions/minerva/kex3.lua:561
-#, fuzzy
-#| msgid "Pink "
 msgid "Pink Demon"
-msgstr "Pinke "
+msgstr "Pinker Dämon"
 
 #. Make really really strong
 #. Fancy message
 #: dat/missions/minerva/kex3.lua:579
 msgid "Ho ho ho and a bottle of rum!"
-msgstr ""
+msgstr "Ho, ho, ho und eine Buddel voll Rum!"
 
 #: dat/missions/minerva/kex3.lua:606
 msgid "You come to my office to harass me…"
-msgstr ""
+msgstr "Sie kamen in mein Büro, um mich zu belästigen …"
 
 #: dat/missions/minerva/kex3.lua:607
 msgid "You interrupt my leisure with blackmail…"
-msgstr ""
+msgstr "Sie unterbrechen meine Auszeit mit Erpressung …"
 
 #: dat/missions/minerva/kex3.lua:608
-#, fuzzy
-#| msgid "Did you really think you would get away with that?"
 msgid "You really think you would be getting out of here alive?…"
-msgstr "Hast du wirklich geglaubt, du kämst damit durch?"
+msgstr "Haben Sie wirklich geglaubt, Sie würden hier lebendig rauskommen? …"
 
 #: dat/missions/minerva/kex3.lua:609
 msgid "You are in my realm now kid!"
-msgstr ""
+msgstr "Sie sind nun in meinem Reich, Sie Kind!"
 
 #: dat/missions/minerva/kex3.lua:610
 msgid "And the only way out is in a body bag!"
-msgstr ""
+msgstr "Und der einzige Weg nach draußen ist in einem Leichensack!"
 
 #: dat/missions/minerva/kex3.lua:611
 msgid "My power is limitless here!"
-msgstr ""
+msgstr "Hier ist meine Macht unbegrenzt!"
 
 #: dat/missions/minerva/kex3.lua:612
 msgid "You are a fool to have walked into my trap so willingly."
 msgstr ""
+"Sie sind ein Narr, dass Sie sich so bereitwillig in meine Falle begeben "
+"haben."
 
 #: dat/missions/minerva/kex3.lua:613
 msgid "Not so tough anymore! Ha ha ha!"
-msgstr ""
+msgstr "Nicht mehr so stark, wie? Hahaha!"
 
 #: dat/missions/minerva/kex3.lua:615
-#, fuzzy
-#| msgid "What is going on?"
 msgid "What is going on? It's not responding!"
-msgstr "Was geht da vor?"
+msgstr "Was passiert hier? Es reagiert nicht!"
 
 #: dat/missions/minerva/kex3.lua:617
-#, fuzzy
-#| msgid "What the?"
 msgid "What the hell?!"
-msgstr "Was zum?"
+msgstr "Was zur Hölle?!"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -57140,7 +57542,7 @@ msgstr "Was zum?"
 #. --
 #: dat/missions/minerva/maikki1.lua:47
 msgid "Distraught Young Woman"
-msgstr ""
+msgstr "Verzweifelte Junge Frau"
 
 #: dat/missions/minerva/maikki1.lua:48
 msgid ""
@@ -57183,6 +57585,8 @@ msgstr "Alter Mann"
 #: dat/missions/minerva/maikki1.lua:55
 msgid "You see a nonchalant old man sipping on his drink with a carefree aura."
 msgstr ""
+"Du siehst einen lässigen alten Mann, der mit einer unbekümmerten Aura an "
+"seinem Getränk nippt."
 
 #: dat/missions/minerva/maikki1.lua:58
 msgid "Scavengers"
@@ -57191,14 +57595,12 @@ msgstr "Plünderer"
 #: dat/missions/minerva/maikki1.lua:60
 msgid ""
 "You see a pair of dirty looking fellows talking loudly among themselves."
-msgstr ""
+msgstr "Du siehst ein Paar verdreckt aussehender Leute sich laut unterhalten."
 
 #: dat/missions/minerva/maikki1.lua:68 dat/missions/minerva/maikki2.lua:72
 #: dat/scripts/campaigns/minerva.lua:87
-#, fuzzy
-#| msgid "Finding Father"
 msgid "Finding Maikki's Father"
-msgstr "Vater finden"
+msgstr "Maikkis Vater finden"
 
 #: dat/missions/minerva/maikki1.lua:69 dat/missions/minerva/maikki2.lua:73
 #: dat/missions/shadow/shadowvigil.lua:127 src/faction.c:1076
@@ -57208,7 +57610,7 @@ msgstr "???"
 
 #: dat/missions/minerva/maikki1.lua:70
 msgid "Maikki wants you to help her find her father."
-msgstr ""
+msgstr "Maikki möchte, dass du ihr hilfst, ihren Vater zu finden."
 
 #. Mission states:
 #. nil: mission not accepted yet
@@ -57227,6 +57629,8 @@ msgid ""
 "You approach a young woman who seems somewhat distraught. It looks like she "
 "has something important on her mind."
 msgstr ""
+"Du näherst dich einer jungen Frau, die etwas verzweifelt aussieht. Sieht so "
+"aus, als wäre etwas wichtiges in ihrem Sinn."
 
 #: dat/missions/minerva/maikki1.lua:141
 msgid ""
@@ -93418,6 +93822,7 @@ msgstr ""
 #, c-format
 msgid "Unknown seek source '%s'! Should be either 'seconds' or 'samples'!"
 msgstr ""
+"Unbekannte „seek source“ „%s“! Sollte entweder „seconds“ oder „samples“ sein!"
 
 #: src/nlua_canvas.c:202 src/opengl_tex.c:235
 msgid "Error setting up framebuffer!"

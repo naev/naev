@@ -10,6 +10,7 @@
 #include "opengl.h"
 #include "opengl_tex.h"
 #include "opengl_vbo.h"
+#include "shaders.gen.h"
 
 
 /*
@@ -83,6 +84,9 @@ void gl_endSolidProgram (void);
 void gl_beginSmoothProgram(gl_Matrix4 projection);
 void gl_endSmoothProgram (void);
 
+/* Simple Shaders. */
+void gl_renderShader( double x, double y, double w, double h, double r, const SimpleShader *shd, const glColour *c, int center );
+void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glColour *c, int center );
 
 /* Circles. */
 void gl_drawCircle( const double x, const double y,
@@ -100,9 +104,6 @@ void gl_drawLine( const double x1, const double y1,
 void gl_renderRect( double x, double y, double w, double h, const glColour *c );
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c );
 void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled );
-
-/* OK / Not OK status (green circle or slashed red circle). */
-void gl_renderStatus( double x, double y, double w, double h, int ok );
 
 /* Cross. */
 void gl_renderCross( double x, double y, double r, const glColour *c );

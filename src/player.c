@@ -1966,6 +1966,9 @@ void player_brokeHyperspace (void)
 
    /* Player sound. */
    player_soundPlay( snd_hypJump, 1 );
+
+   /* Increment times jumped. */
+   player.jumped_times++;
 }
 
 
@@ -2097,6 +2100,18 @@ void player_targetClear (void)
    else
       player_targetSet( PLAYER_ID );
    gui_setNav();
+}
+
+
+/**
+ * @brief Clears all player targets: hyperspace, planet, asteroid, etc...
+ */
+void player_targetClearAll (void)
+{
+   player_targetHyperspaceSet( -1 );
+   player_targetPlanetSet( -1 );
+   player_targetAsteroidSet( -1, -1 );
+   player_targetSet( PLAYER_ID );
 }
 
 
@@ -3312,6 +3327,8 @@ static int player_saveMetadata( xmlTextWriterPtr writer )
    xmlw_elem(writer, "dmg_done_armour", "%f", player.dmg_done_armour);
    xmlw_elem(writer, "dmg_taken_shield", "%f", player.dmg_taken_shield);
    xmlw_elem(writer, "dmg_taken_armour", "%f", player.dmg_taken_armour);
+   xmlw_elem(writer, "jumped_times", "%u", player.jumped_times);
+   xmlw_elem(writer, "landed_times", "%u", player.landed_times);
 
    /* Ships destroyed by class. */
    xmlw_startElem(writer,"ships_destroyed");
@@ -3760,6 +3777,10 @@ static int player_parseMetadata( xmlNodePtr parent )
          player.dmg_taken_shield = xml_getFloat(node);
       else if (xml_isNode(node,"dmg_taken_armour"))
          player.dmg_taken_armour = xml_getFloat(node);
+      else if (xml_isNode(node,"jumped_times"))
+         player.jumped_times = xml_getUInt(node);
+      else if (xml_isNode(node,"landed_times"))
+         player.landed_times = xml_getUInt(node);
       else if (xml_isNode(node,"ships_destroyed")) {
          cur = node->xmlChildrenNode;
          do {

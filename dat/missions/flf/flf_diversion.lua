@@ -172,19 +172,19 @@ function timer_spawn_dv ()
       local fleets = { {"Dvaered Vendetta"}, {"Dvaered Ancestor"}, {"Dvaered Phalanx"}, {"Dvaered Vigilance"}, {"Dvaered Goddard"},
                        {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"},
                        {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance"} }
-      local fleet = fleets[ rnd.rnd( 1, #fleets ) ]
+      local ships = fleets[ rnd.rnd( 1, #fleets ) ]
       local fleetname
 
-      if #fleet == 1 then
-         fleetname = _(fleet[1])
-      elseif #fleet < 5 then
+      if #ships == 1 then
+         fleetname = _(ships[1])
+      elseif #ships < 5 then
          fleetname = _("Dvaered Small Patrol")
       else
          fleetname = _("Dvaered Big Patrol")
       end
 
       player.msg( msg:format( _(fleetname) ) )
-      for i, j in ipairs( fleet.add( 1,  fleet, "Dvaered" ) ) do
+      for i, j in ipairs( fleet.add( 1,  ships, "Dvaered" ) ) do
          add_attention( j )
       end
    end

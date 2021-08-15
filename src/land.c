@@ -1128,7 +1128,11 @@ void land( Planet* p, int load )
    /* Do not land twice. */
    if (landed)
       return;
-   
+ 
+   /* Incrcement times player landed. */
+   if (!load)
+      player.landed_times++;
+
    /* Clear some unnecessary flags. */
    pilot_rmFlag( player.p, PILOT_COOLDOWN_BRAKE);
    pilot_rmFlag( player.p, PILOT_COOLDOWN );

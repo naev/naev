@@ -26,10 +26,10 @@ function create ()
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
 
    -- Refueling
+   mem.refuel = rnd.rnd( 2000, 4000 )
    local p = player.pilot()
    if p:exists() then
       local standing = ai.getstanding( p ) or -1
-      mem.refuel = rnd.rnd( 2000, 4000 )
       if standing > 60 then mem.refuel = mem.refuel * 0.7 end
       mem.refuel_msg = string.format( _([["I could do you the favour of refueling for the price of %s."]]),
             creditstring(mem.refuel) )

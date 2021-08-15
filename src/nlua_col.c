@@ -30,6 +30,8 @@ static int colL_hsv( lua_State *L );
 static int colL_setrgb( lua_State *L );
 static int colL_sethsv( lua_State *L );
 static int colL_setalpha( lua_State *L );
+static int colL_linearToGamma( lua_State *L );
+static int colL_gammaToLinear( lua_State *L );
 static const luaL_Reg colL_methods[] = {
    { "__eq", colL_eq },
    { "new", colL_new },
@@ -39,10 +41,10 @@ static const luaL_Reg colL_methods[] = {
    { "setRGB", colL_setrgb },
    { "setHSV", colL_sethsv },
    { "setAlpha", colL_setalpha },
+   { "linearToGamma", colL_linearToGamma },
+   { "gammaToLinear", colL_gammaToLinear },
    {0,0}
 }; /**< Colour metatable methods. */
-
-
 
 
 /**
@@ -181,9 +183,9 @@ static int colL_new( lua_State *L )
       col.r = col.g = col.b = col.a = 1.;
    }
    else if (lua_isnumber(L,1)) {
-      col.r = luaL_checknumber(L,1);
-      col.g = luaL_checknumber(L,2);
-      col.b = luaL_checknumber(L,3);
+      col.r = gammaToLinear(luaL_checknumber(L,1));
+      col.g = gammaToLinear(luaL_checknumber(L,2));
+      col.b = gammaToLinear(luaL_checknumber(L,3));
       if (lua_isnumber(L,4))
          col.a = luaL_checknumber(L,4);
       else
@@ -351,5 +353,43 @@ static int colL_setalpha( lua_State *L )
    col = luaL_checkcolour(L,1);
    col->a = luaL_checknumber(L,2);
    return 0;
+}
+
+
+/**
+ * @brief Converts a colour from linear to gamma corrected.
+ *
+ *    @luatparam Colour col Colour to change from linear to gamma.
+ *    @luatreturn Colour Modified colour.
+ */
+static int colL_linearToGamma( lua_State *L )
+{
+   glColour *col = luaL_checkcolour(L,1);
+   glColour out;
+   out.r = linearToGamma( col->r );
+   out.g = linearToGamma( col->g );
+   out.b = linearToGamma( col->b );
+   out.a = col->a;
+   lua_pushcolour(L,out);
+   return 1;
+}
+
+
+/**
+ * @brief Converts a colour from gamma corrected to linear.
+ *
+ *    @luatparam Colour col Colour to change from gamma corrected to linear.
+ *    @luatreturn Colour Modified colour.
+ */
+static int colL_gammaToLinear( lua_State *L )
+{
+   glColour *col = luaL_checkcolour(L,1);
+   glColour out;
+   out.r = gammaToLinear( col->r );
+   out.g = gammaToLinear( col->g );
+   out.b = gammaToLinear( col->b );
+   out.a = col->a;
+   lua_pushcolour(L,out);
+   return 1;
 }
 

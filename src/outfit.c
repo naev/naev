@@ -1424,6 +1424,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          xmlr_attr_float(node, "b", temp->u.bem.colour.b);
          xmlr_attr_float(node, "a", temp->u.bem.colour.a);
          xmlr_attr_float(node, "width", temp->u.bem.width);
+         col_gammaToLinear( &temp->u.bem.colour );
          shader = xml_get(node);
          if (gl_has( OPENGL_SUBROUTINES )) {
             temp->u.bem.shader = glGetSubroutineIndex( shaders.beam.program, GL_FRAGMENT_SHADER, shader );
@@ -1716,6 +1717,8 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
    /*MELEMENT(temp->u.amm.energy==0.,"energy");*/
    MELEMENT(temp->cpu!=0.,"cpu");
 #undef MELEMENT
+   if (temp->u.amm.speed==0. && temp->u.amm.thrust==0.)
+      DEBUG(_("Outfit '%s' has no speed nor thrust set!"), temp->name);
 }
 
 

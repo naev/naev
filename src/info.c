@@ -197,6 +197,7 @@ static void info_openMain( unsigned int wid )
 {
    char str[STRMAX_SHORT], **buf, creds[ECON_CRED_STRLEN];
    char sdmgdone[NUM2STRLEN], sdmgtaken[NUM2STRLEN], sdestroyed[NUM2STRLEN];
+   char slanded[NUM2STRLEN], sjumped[NUM2STRLEN];
    char **licenses;
    int nlicenses;
    int i;
@@ -224,11 +225,15 @@ static void info_openMain( unsigned int wid )
          "Fuel:\n"
          "\n"
          "Time played:\n"
+         "Times jumped:\n"
+         "Times landed:\n"
          "Damage done:\n"
          "Damage taken:\n"
          "Ships destroyed:")
          );
    credits2str( creds, player.p->credits, 2 );
+   num2str( slanded, (double)player.landed_times, 0 );
+   num2str( sjumped, (double)player.jumped_times, 0 );
    num2str( sdmgdone, player.dmg_done_shield + player.dmg_done_armour, 0 );
    num2str( sdmgtaken, player.dmg_taken_shield + player.dmg_taken_armour, 0 );
    num2str( sdestroyed, destroyed, 0 );
@@ -241,6 +246,8 @@ static void info_openMain( unsigned int wid )
          "%d (%d %s)\n"
          "\n"
          "%.1f hours\n"
+         "%s\n"
+         "%s\n"
          "%s MJ\n"
          "%s MJ\n"
          "%s"),
@@ -251,6 +258,7 @@ static void info_openMain( unsigned int wid )
          player.p->fuel, pilot_getJumps(player.p),
          n_( "jump", "jumps", pilot_getJumps(player.p) ),
          player.time_played / 3600.,
+         sjumped, slanded,
          sdmgdone, sdmgtaken, sdestroyed );
    window_addText( wid, 180, 20,
          w-80-200-40+20-180, h-80,

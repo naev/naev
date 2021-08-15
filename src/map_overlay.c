@@ -277,6 +277,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       const float ty[4] = { -gl_smallFont.h/2.,  -gl_smallFont.h/2., mo[i]->radius/2+ovr_text_pixbuf+.1, -mo[i]->radius/2-.1-h };
 
       /* Check all combinations. */
+      bx = 0.;
+      by = 0.;
       best = HUGE_VALF;
       for (k=0; k<4; k++) {
          val = 0.;
@@ -299,7 +301,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
             by = ty[k];
             best = val;
          }
-         if (val==0)
+         if (val==0.)
             break;
       }
 
@@ -552,7 +554,7 @@ void ovr_render( double dt )
          col = cHostile;
       else
          col = cNeutral;
-      col.a = 0.2;
+      col.a = 0.1;
 
       /* This is a bit asinine, but should be easily replaceable by decent code when we have a System Objects API.
        * Specifically, a generic pos and isKnown test would clean this up nicely. */
@@ -598,22 +600,10 @@ void ovr_render( double dt )
       projection = gl_Matrix4_Translate( projection, 0, -rw/2., 0 );
       projection = gl_Matrix4_Scale( projection, rh, rw, 1 );
 
-      /* Render.*/
+      /* Render. */
       glUseProgram(shaders.safelanes.program);
-      glEnableVertexAttribArray(shaders.safelanes.vertex);
-      gl_vboActivateAttribOffset( gl_squareVBO, shaders.safelanes.vertex, 0, 2, GL_FLOAT, 0 );
-
-      gl_uniformColor(shaders.safelanes.color, &col);
-      gl_Matrix4_Uniform(shaders.safelanes.projection, projection);
       glUniform2f(shaders.safelanes.dimensions, rh, rw);
-      //glUniform1f(shaders.safelanes.dt, 0.);
-      //glUniform1f(shaders.safelanes.r, rw+rh+x+y);
-
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      glDisableVertexAttribArray(shaders.safelanes.vertex);
-      glUseProgram(0);
-      gl_checkErr();
+      gl_renderShaderH( &shaders.safelanes, &projection, &col, 0 );
    }
    array_free( safelanes );
 
