@@ -34,7 +34,7 @@
 
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */
 #define SHIP_3DEXT   ".obj" /**< Ship graphics extension format. */
-#define SHIP_ENGINE  "_engine" /**< Target graphic extension. */
+#define SHIP_ENGINE  "_engine" /**< Engine graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
 #define SHIP_COMM    "_comm" /**< Communication graphic extension. */
 
@@ -486,11 +486,11 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine, int 
          base[i] = '\0';
          break;
       }
-      base[i] = buf[i]; 
+      base[i] = buf[i];
    }
    if (i>=PATH_MAX) {
       WARN("Failed to get base path of '%s'.", buf);
-      return 1;
+      return -1;
    }
 
    /* Load the 3d model */
