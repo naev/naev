@@ -9,7 +9,7 @@ in vec2 pos;
 
 void main(void) {
    float progress = dt;
-   vec2 rel_pos = gl_FragCoord.xy * 0.05 + r*100.;
+   vec2 rel_pos = gl_FragCoord.xy * 0.05 + r*100.0;
 
    const float margin = 0.05;
    float relprog = smoothstep( -margin, margin, pos.x-progress);
