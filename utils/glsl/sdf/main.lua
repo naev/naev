@@ -144,6 +144,12 @@ vec4 sdf_planet( vec4 color, vec2 uv )
 	float inner = 1.0-w-m;
 	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
+   /* Rotation matrix. */
+   float c, s;
+   s = sin(dt*0.1);
+   c = cos(dt*0.1);
+   mat2 R = mat2( c, s, -s, c );
+
    vec2 auv = abs(uv);
    if (dimensions.x > 100) {
       const float arcseg = M_PI/64.0;
@@ -156,6 +162,17 @@ vec4 sdf_planet( vec4 color, vec2 uv )
       d = min( d, sdArc( auv, CS(M_PI/2.0+22.0*arcseg), shortarc, inner, w ) );
       d = min( d, sdArc( auv, CS(M_PI/2.0+26.0*arcseg), shortarc, inner, w ) );
       d = min( d, sdArc( auv, CS(M_PI/2.0+30.0*arcseg), shortarc, inner, w ) );
+
+      /* Moving inner stuff. */
+      uv = uv*R;
+      const vec2 arclen = CS(M_PI/9.0);
+      w = 2.0 / dimensions.x;
+      inner -= 2.0*w+m;
+      d = min( d, sdArc( uv, CS( 0.0*M_PI*2.0/5.0), arclen, inner, w ) );
+      d = min( d, sdArc( uv, CS( 1.0*M_PI*2.0/5.0), arclen, inner, w ) );
+      d = min( d, sdArc( uv, CS( 2.0*M_PI*2.0/5.0), arclen, inner, w ) );
+      d = min( d, sdArc( uv, CS( 3.0*M_PI*2.0/5.0), arclen, inner, w ) );
+      d = min( d, sdArc( uv, CS( 4.0*M_PI*2.0/5.0), arclen, inner, w ) );
    }
    else {
       const float arcseg = M_PI/32.0;
@@ -164,20 +181,16 @@ vec4 sdf_planet( vec4 color, vec2 uv )
       d = min( d, sdArc( auv, CS(M_PI/2.0+6.0*arcseg),  shortarc, inner, w ) );
       d = min( d, sdArc( auv, CS(M_PI/2.0+10.0*arcseg), shortarc, inner, w ) );
       d = min( d, sdArc( auv, CS(M_PI/2.0+14.0*arcseg), shortarc, inner, w ) );
-   }
 
-	/* Moving inner stuff. */
-   float c, s;
-   s = sin(dt*0.1);
-   c = cos(dt*0.1);
-   mat2 R = mat2( c, s, -s, c );
-   uv = uv*R;
-   const vec2 arclen = CS(M_PI/6.0);
-	w = 2.0 / dimensions.x;
-	inner -= 2.0*w+m;
-	d = min( d, sdArc( uv, CS( 0.0*M_PI*2.0/3.0), arclen, inner, w ) );
-	d = min( d, sdArc( uv, CS( 1.0*M_PI*2.0/3.0), arclen, inner, w ) );
-	d = min( d, sdArc( uv, CS( 2.0*M_PI*2.0/3.0), arclen, inner, w ) );
+      /* Moving inner stuff. */
+      uv = uv*R;
+      const vec2 arclen = CS(M_PI/6.0);
+      w = 2.0 / dimensions.x;
+      inner -= 2.0*w+m;
+      d = min( d, sdArc( uv, CS( 0.0*M_PI*2.0/3.0), arclen, inner, w ) );
+      d = min( d, sdArc( uv, CS( 1.0*M_PI*2.0/3.0), arclen, inner, w ) );
+      d = min( d, sdArc( uv, CS( 2.0*M_PI*2.0/3.0), arclen, inner, w ) );
+   }
 
    color.a *= smoothstep( -m, m, -d );
    return color;
