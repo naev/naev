@@ -40,6 +40,10 @@ typedef struct {
 } Vertex;
 
 
+static glTexture *emptyTexture = NULL;
+static unsigned int emptyTextureRefs = 0;
+
+
 static void mesh_create( Mesh **meshes, const char* name,
                          Vertex *corners, int material )
 {
@@ -72,33 +76,6 @@ static int readGLfloat( GLfloat *dest, int how_many, char **saveptr )
    if (how_many)
       assert(num == how_many);
    return num;
-}
-
-
-static int texture_loadFromFile( const char *filename, GLuint *texture )
-{
-   SDL_RWops *rw;
-   SDL_Surface *image;
-   DEBUG(_("Loading texture from %s"), filename);
-
-   /* Reads image and converts it to RGBA */
-   rw = PHYSFSRWOPS_openRead(filename);
-   image = rw ? IMG_Load_RW(rw, 1) : NULL;
-   if (image == NULL) {
-      WARN("Failed to load texture '%s' from ndata", filename);
-      return 0;
-   }
-
-   glGenTextures(1, texture);
-   glBindTexture(GL_TEXTURE_2D, *texture);
-
-   /* TODO use standard; texture is initially flipped vertically */
-   glTexImage2D(GL_TEXTURE_2D, 0, 4, image->w, image->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, image->pixels);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-   SDL_FreeSurface(image);
-   return 1;
 }
 
 
@@ -163,6 +140,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
          token = strtok_r(NULL, DELIM, &saveptr);
          curr = &array_grow(materials);
          curr->name = strdup(token);
+         curr->texture = NULL;
          DEBUG("Reading new material %s", curr->name);
       } else if (strcmp(token, "Ns") == 0) {
          readGLfloat(&curr->Ns, 1, &saveptr);
@@ -192,8 +170,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
          strcat(texture_filename, "/");
          strcat(texture_filename, token);
 
-         curr->has_texture = texture_loadFromFile(
-               texture_filename, &curr->texture) != 0;
+         curr->texture = gl_newImage(texture_filename, 0);
          free(copy_filename);
          free(texture_filename);
       } else if (token[0] == '#') {
@@ -228,6 +205,11 @@ Object *object_loadFromFile( const char *filename )
 
    char *name = NULL;
    int material = -1;
+
+   if (emptyTextureRefs++ == 0) {
+      float data[] = {1., 1., 1., 1.};
+      emptyTexture = gl_loadImageData( data, 1, 1, 1, 1, "solid_white" );
+   }
 
    Object *object = calloc(1, sizeof(Object));
    object->meshes = array_create(Mesh);
@@ -336,8 +318,7 @@ void object_free( Object *object )
    for (i = 0; i < (int)array_size(object->materials); ++i) {
       Material *material = &object->materials[i];
       free(material->name);
-      if (material->has_texture)
-         glDeleteTextures(1, &material->texture);
+      gl_freeTexture(material->texture);
    }
 
    for (i = 0; i < (int)array_size(object->meshes); ++i) {
@@ -348,6 +329,11 @@ void object_free( Object *object )
 
    array_free(object->meshes);
    array_free(object->materials);
+
+   if (--emptyTextureRefs == 0) {
+      gl_freeTexture(emptyTexture);
+      emptyTexture = NULL;
+   }
 }
 
 static void object_fix3d( gl_Matrix4* projection )
@@ -389,10 +375,7 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha, gl_Matri
    glUniform1f(shaders.material.Ns, material->Ns);
 
    /* binds textures */
-   if (material->has_texture) {
-      glBindTexture(GL_TEXTURE_2D, material->texture);
-   }
-   /* TODO: Else bind a solid (1,1,1,1). */
+   glBindTexture(GL_TEXTURE_2D, material->texture == NULL ? emptyTexture->texture : material->texture->texture);
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LESS);  /* XXX this changes the global DepthFunc */

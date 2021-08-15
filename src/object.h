@@ -16,9 +16,7 @@ typedef struct Material_ {
    char *name;
    GLfloat Ka[4], Kd[4], Ks[4];
    GLfloat Ns, Ni, d;
-   GLuint texture;
-
-   unsigned int has_texture:1;
+   glTexture *texture;
 } Material;
 
 typedef struct Mesh_ {
