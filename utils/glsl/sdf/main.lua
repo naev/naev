@@ -206,9 +206,9 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
    vec2 auv = abs(uv*R);
    const int nmax = 16;
    for (int i=0; i<nmax; i++)
-      d = min( d, sdSegment( auv, CS(float(i)*M_PI/nmax*0.5)*0.91, CS(float(i)*M_PI/nmax*0.5)*0.93 )-m );
-   d = min( d, sdSegment( auv, CS(M_PI*0.125)*0.89, CS(M_PI*0.125)*0.93 )-1.5*m );
-   d = min( d, sdSegment( auv, CS(M_PI*0.375)*0.89, CS(M_PI*0.375)*0.93 )-1.5*m );
+      d = min( d, sdSegment( auv, CS((float(i)+0.5)*M_PI/float(nmax)*0.5)*0.91, CS((float(i)+0.5)*M_PI/float(nmax)*0.5)*0.93 )-m );
+   d = min( d, sdSegment( auv, CS(M_PI*(0.125+0.25/float(nmax)))*0.89, CS(M_PI*(0.125+0.25/float(nmax)))*0.93 )-1.5*m );
+   d = min( d, sdSegment( auv, CS(M_PI*(0.375+0.25/float(nmax)))*0.89, CS(M_PI*(0.375+0.25/float(nmax)))*0.93 )-1.5*m );
 
    /* Circles on main. */
    d = sdf_emptyCircle( uv - CS(M_PI/4.0)*inner, d, m );
