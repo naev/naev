@@ -14,7 +14,7 @@ void main(void) {
    float m = 1.0 / dimensions.x;
 
 	/* Outter stuff. */
-	float w = 1.0 / dimensions.x;
+	float w = 1.0 * m;
 	float inner = 1.0-w-m;
 	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
@@ -34,7 +34,7 @@ void main(void) {
       /* Moving inner stuff. */
       uv = uv*R;
       const vec2 arclen = CS(M_PI/9.0);
-      w = 2.0 / dimensions.x;
+      w = 2.0 * m;
       inner -= 2.0*w+m;
       for (int i=0; i<5; i++)
          d = min( d, sdArc( uv, CS( float(i)*M_PI*2.0/5.0), arclen, inner, w ) );
@@ -48,7 +48,7 @@ void main(void) {
       /* Moving inner stuff. */
       uv = uv*R;
       const vec2 arclen = CS(M_PI/6.0);
-      w = 2.0 / dimensions.x;
+      w = 2.0 * m;
       inner -= 2.0*w+m;
       for (int i=0; i<3; i++)
          d = min( d, sdArc( uv, CS( float(i)*M_PI*2.0/3.0), arclen, inner, w ) );
