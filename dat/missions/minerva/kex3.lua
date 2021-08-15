@@ -131,6 +131,7 @@ function generate_npc ()
 
       misn_state = 5 -- We're done here, go back to kex:)
       misn.osdActive(2)
+      misn.markerMove( misn_marker, system.get("Limbo") )
    end
 end
 
