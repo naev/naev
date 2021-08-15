@@ -40,11 +40,12 @@ misn_reward = _("A step closer to Kex's freedom")
 misn_title = _("Freeing Kex")
 misn_desc = string.format(_("You have been assigned with obtaining information from Jie de Luca at %s in the %s system."), _(targetplanet), _(targetsys))
 
-jie_portrait = "major_malik.webp"
-jie_image = "major_malik.webp"
+-- TODO custom graphic?
+jie_portrait = portrait.get()
+jie_image = portrait.getFullPath(portrait)
 jie_description = _("You see an individual matching the description of Jie de Luca.")
 
-money_reward = 400e3
+money_reward = 700e3
 
 function create ()
    if not misn.claim( system.get(targetsys) ) then
