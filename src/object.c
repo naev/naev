@@ -1,16 +1,31 @@
-#include "object.h"
+/*
+ * See Licensing and Copyright notice in naev.h
+ */
 
+
+/**
+ * @file object.c
+ *
+ * @brief Object Loader.
+ * http://local.wasp.uwa.edu.au/~pbourke/dataformats/obj/
+ */
+
+
+/** @cond */
 #include <assert.h>
-#include <string.h>
 #include <libgen.h>
 #include <stddef.h>
-
-#include "array.h"
-#include "gui.h"
-#include "log.h"
-#include "camera.h"
+#include <string.h>
 #include "physfsrwops.h"
 #include "SDL_image.h"
+/** @endcond */
+
+#include "object.h"
+
+#include "array.h"
+#include "camera.h"
+#include "gui.h"
+#include "log.h"
 
 #if defined(_WIN32) || defined(_WIN64)
 # define strtok_r strtok_s

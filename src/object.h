@@ -1,12 +1,13 @@
 /**
- * Object Loader.
- * http://local.wasp.uwa.edu.au/~pbourke/dataformats/obj/
+ * See Licensing and Copyright notice in naev.h
  */
 
 #ifndef OBJECT_H
 #  define OBJECT_H
 
+/** @cond */
 #include "SDL.h"
+/** @endcond */
 
 #include "opengl.h"
 #include "physics.h"

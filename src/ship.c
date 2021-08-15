@@ -500,6 +500,7 @@ static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
  *    @param sx Number of X sprites in image.
  *    @param sy Number of Y sprites in image.
  *    @param engine Whether there is also an engine image to load.
+ *    @param has_3d_model Whether to look for a .obj file to load.
  */
 static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine, int has_3d_model )
 {
@@ -755,7 +756,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             temp->gfx_3d_scale = atof(stmp);
             free(stmp);
          }
-	 else
+         else
              temp->gfx_3d_scale = .01;
 
          /* Get sprite size. */
