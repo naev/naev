@@ -142,9 +142,10 @@ vec4 sdf_planet( vec4 color, vec2 uv )
 	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
    /* Rotation matrix. */
+   float dts = 0.1 * max( 0.5, 100.0 * m );
    float c, s;
-   s = sin(dt*0.1);
-   c = cos(dt*0.1);
+   s = sin(dt*dts);
+   c = cos(dt*dts);
    mat2 R = mat2( c, s, -s, c );
 
    vec2 auv = abs(uv);
@@ -241,8 +242,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    uv_rel.y = - uv_rel.y;
 
    //col_out = sdf_alarm( color, tex, uv, px );
-   col_out = sdf_pilot( color, uv_rel );
-   //col_out = sdf_planet( color, uv_rel );
+   //col_out = sdf_pilot( color, uv_rel );
+   col_out = sdf_planet( color, uv_rel );
    //col_out = sdf_planet2( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );

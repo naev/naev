@@ -19,9 +19,10 @@ void main(void) {
 	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
    /* Rotation matrix. */
+   float dts = 0.1 * max( 0.5, 100.0 * m );
    float c, s;
-   s = sin(dt*0.1);
-   c = cos(dt*0.1);
+   s = sin(dt*dts);
+   c = cos(dt*dts);
    mat2 R = mat2( c, s, -s, c );
 
    vec2 auv = abs(uv);
