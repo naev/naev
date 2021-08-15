@@ -257,6 +257,7 @@ function boardkidnappers()
   player.unboard()
   lhook = hook.land("land3", "land")
   rescued = true
+  kidnappers:setVisible(false)
 end
 
 function land3()
