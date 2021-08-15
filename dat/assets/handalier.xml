@@ -5,8 +5,8 @@
   <y>453.235106</y>
  </pos>
  <GFX>
-  <space>J06.png</space>
-  <exterior>gas.png</exterior>
+  <space>J06.webp</space>
+  <exterior>gas.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>J</class>
   <population>17500</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>dv_mil_restricted</land>
    <refuel/>
@@ -24,7 +24,7 @@
    <missions/>
   </services>
   <commodities/>
-  <description>Even the Dvaered need to operate testing facilities. Hence the House Dvaered Research Institute on Handalier. It is now known what goes on here, as the Dvaered tightly control the entire planet.</description>
+  <description>Even the Dvaered need to operate testing facilities. Hence the House Dvaered Research Institute on Handalier. It is not known what goes on here, as the Dvaered tightly control the entire planet.</description>
   <bar>The bar is fairly typical for a Dvaered bar in everything but the security cameras along the walls. Fairly paranoid here, it seems.</bar>
  </general>
 </asset>

@@ -5,8 +5,8 @@
   <y>-5153.224088</y>
  </pos>
  <GFX>
-  <space>station-powerplant.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>station-powerplant.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>300</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

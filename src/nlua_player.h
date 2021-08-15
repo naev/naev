@@ -6,11 +6,11 @@
 #ifndef NLUA_PLAYER
 #  define NLUA_PLAYER
 
-#include <lua.h>
+#include "nlua.h"
 
 
 /* individual library stuff */
-int nlua_loadPlayer( lua_State *L, int readonnly );
+int nlua_loadPlayer( nlua_env env );
 
 
 #endif /* NLUA_PLAYER */

@@ -51,8 +51,14 @@
   1999-05-03 lpd Original version.
  */
 
+/** @cond */
+#include "SDL.h"
+/** @endcond */
+
 #include "md5.h"
 #include "nstring.h"
+#define ARCH_IS_BIG_ENDIAN (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+
 
 #undef BYTE_ORDER /* 1 = big-endian, -1 = little-endian, 0 = unknown */
 #ifdef ARCH_IS_BIG_ENDIAN
@@ -163,7 +169,7 @@ md5_process(md5_state_t *pms, const md5_byte_t *data /*[64]*/)
         */
        if (!((data - (const md5_byte_t *)0) & 3)) {
       /* data are properly aligned */
-      X = (const md5_word_t *)data;
+      memcpy(&X, &data, sizeof(md5_word_t *));
        } else {
       /* not aligned */
       memcpy(xbuf, data, 64);

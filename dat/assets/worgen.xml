@@ -5,13 +5,13 @@
   <y>-654.104609</y>
  </pos>
  <GFX>
-  <space>D00.png</space>
-  <exterior>desertic4.png</exterior>
+  <space>D00.webp</space>
+  <exterior>desertic4.webp</exterior>
  </GFX>
  <general>
   <class>D</class>
   <population>0</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services/>
  </general>
 </asset>

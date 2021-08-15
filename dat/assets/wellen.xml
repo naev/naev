@@ -5,8 +5,8 @@
   <y>-3415.535179</y>
  </pos>
  <GFX>
-  <space>moon-J00.png</space>
-  <exterior>mining5.png</exterior>
+  <space>moon-J00.webp</space>
+  <exterior>mining5.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>A</class>
   <population>99654</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
@@ -34,11 +34,11 @@
   <item>Engines Medium</item>
   <item>Laser 1</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>Plasma 1</item>
   <item>Low Tech Upgrades</item>
   <item>Missiles 1</item>
-  <item>Star Maps</item>
   <item>Basic Civilian Ships</item>
  </tech>
 </asset>

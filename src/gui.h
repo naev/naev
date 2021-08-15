@@ -48,7 +48,6 @@ void gui_setGeneric ( Pilot* pilot );
  */
 void gui_renderReticles( double dt );
 void gui_render( double dt );
-void gui_renderTargetReticles( int x, int y, int w, int h, const glColour* c );
 void gui_forceBlink (void);
 
 /*
@@ -56,18 +55,33 @@ void gui_forceBlink (void);
  */
 void gui_messageInit( int width, int x, int y );
 void gui_clearMessages (void);
+void gui_cooldownEnd (void);
 void gui_messageScrollUp( int lines );
 void gui_messageScrollDown( int lines );
 
+
+/*
+ * Map overlay
+ */
+int map_overlay_width (void);
+int map_overlay_height (void);
+int map_overlay_center_x (void);
+int map_overlay_center_y (void);
+double map_overlay_scale_x (void);
+double map_overlay_scale_y (void);
+void gui_setMapOverlayBounds(int top, int right, int bottom, int left);
+int gui_getMapOverlayBoundTop(void);
+int gui_getMapOverlayBoundRight(void);
+int gui_getMapOverlayBoundBottom(void);
+int gui_getMapOverlayBoundLeft(void);
 
 /*
  * Radar.
  */
 int gui_radarInit( int circle, int w, int h );
 void gui_radarRender( double x, double y );
-void gui_radarGetPos( int *x, int *y );
-void gui_radarGetDim( int *w, int *h );
-void gui_radarGetRes( int *res );
+void gui_radarGetRes( double* res );
+int gui_radarClickEvent( SDL_Event* event );
 
 
 /*
@@ -76,6 +90,7 @@ void gui_radarGetRes( int *res );
 void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay );
 void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay );
 void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, double res, int overlay );
+void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay );
 void gui_renderPlayer( double res, int overlay );
 
 

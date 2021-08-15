@@ -14,16 +14,28 @@
   <asset>Amatiri I</asset>
   <asset>Amatiri II</asset>
   <asset>Amatiri Ia</asset>
+  <asset>Virtual Miner Small</asset>
   <asset>Virtual Pirate Small</asset>
  </assets>
  <jumps>
   <jump target="Ariadus">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Sleuth">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>massive</type>
+   <type>golden</type>
+   <radius>3000.000000</radius>
+   <pos x="4000.000000" y="-1000.000000"/>
+   <density>1.000000</density>
+  </asteroid>
+ </asteroids>
 </ssys>

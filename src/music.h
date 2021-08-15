@@ -8,7 +8,13 @@
 #  define MUSIC_H
 
 
+/** @cond */
 #include <lua.h>
+/** @endcond */
+
+
+#define MUSIC_FADEOUT_DELAY   1000 /**< Time it takes to fade out. */
+#define MUSIC_FADEIN_DELAY    2000 /**< Time it takes to fade in. */
 
 
 extern int music_disabled;
@@ -47,9 +53,13 @@ double music_playingTime (void);
 /*
  * Lua control
  */
+int music_luaFile( const char *filename );
+int music_luaString( const char *str );
 int music_choose( const char* situation );
 int music_chooseDelay( const char* situation, double delay );
 void music_rechoose (void);
+void music_tempDisable( int disable );
+void music_repeat( int repeat );
 
 
 #endif /* MUSIC_H */

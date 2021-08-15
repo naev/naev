@@ -5,8 +5,8 @@
   <y>-1715.052669</y>
  </pos>
  <GFX>
-  <space>A04.png</space>
-  <exterior>lava.png</exterior>
+  <space>A04.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>A</class>
   <population>1000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

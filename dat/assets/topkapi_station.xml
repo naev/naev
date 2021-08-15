@@ -5,8 +5,8 @@
   <y>13311.666640</y>
  </pos>
  <GFX>
-  <space>station-commerce.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>zalek_station1.webp</space>
+  <exterior>zalek_station1.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
@@ -16,17 +16,14 @@
  <general>
   <class>A</class>
   <population>1200</population>
-  <hide>0.750000</hide>
+  <hide>3.000000</hide>
   <services>
    <land/>
    <refuel/>
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Topkapi is a trade hub and research post for the radiation-bombarded planet of Anker. The Za'lek use the data gleaned from this research to create more hostile-environment resistant habitats and shielding for vessels.</description>
  </general>
 </asset>

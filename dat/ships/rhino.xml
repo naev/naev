@@ -1,16 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Rhino">
  <base_type>Rhino</base_type>
  <GFX sx="10" sy="10">rhino</GFX>
- <GUI>slim</GUI>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Armoured Transport</class>
  <price>1100000</price>
+ <time_mod>1.25</time_mod>
+ <trail_generator x="-35" y="4" h="10" />
+ <trail_generator x="-35" y="4" h="0" always_under="1" />
+ <trail_generator x="-35" y="-4" h="10" />
+ <trail_generator x="-35" y="-4" h="0" always_under="1" />
+ <trail_generator x="-35" y="0" h="5">nebula</trail_generator>
  <fabricator>Melendez Corp.</fabricator>
  <license>Large Civilian Vessel License</license>
  <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
  <health>
-  <absorb>19</absorb>
   <armour>450</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -21,23 +26,24 @@
   <cargo>100</cargo>
  </characteristics>
  <slots>
-  <weapon size="large" x="25" y="-3" h="4"/>
-  <weapon size="large" x="25" y="3" h="4"/>
-  <weapon size="medium" x="-15" y="-3" h="4"/>
-  <weapon size="medium" x="-15" y="3" h="4"/>
-  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-600 Core System</utility>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <utility size="medium"/>
-  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1200 Engine</structure>
-  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-12 Medium Plating</structure>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
-  <structure size="medium"/>
+  <weapon size="large" x="25" y="-3" h="4" />
+  <weapon size="large" x="25" y="3" h="4" />
+  <weapon size="medium" prop="fighter_bay" x="-15" y="-3" h="4" />
+  <weapon size="medium" prop="fighter_bay" x="-15" y="3" h="4" />
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-310 Core System</utility>
+  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-24 Medium Plating</structure>
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
+  <structure size="medium" />
  </slots>
  <stats>
   <cargo_mod>20</cargo_mod>
-  <cargo_inertia>-30</cargo_inertia>
+  <cargo_inertia>-10</cargo_inertia>
  </stats>
 </ship>

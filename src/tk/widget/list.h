@@ -16,7 +16,8 @@ typedef struct WidgetListData_ {
    int noptions; /**< Total number of options. */
    int selected; /**< Which option is currently selected. */
    int pos; /** Current topmost option (in view). */
-   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
+   void (*onSelect) (unsigned int,char*); /**< Modify callback - triggered on selection. */
+   void (*onActivate) (unsigned int,char*); /**< Activate callback - triggered on double-click. */
    int height; /**< Real height. */
 } WidgetListData;
 
@@ -26,7 +27,8 @@ void window_addList( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       char* name, char **items, int nitems, int defitem,
-      void (*call) (unsigned int,char*) );
+      void (*onSelect) (unsigned int, char*),
+      void (*onActivate) (unsigned int, char*) );
 
 /* Misc functions. */
 char* toolkit_getList( const unsigned int wid, const char* name );

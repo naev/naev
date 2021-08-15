@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Neutron Disruptor">
  <general>
   <slot>weapon</slot>
@@ -6,29 +6,30 @@
   <mass>6</mass>
   <price>18500</price>
   <license>Heavy Weapon License</license>
-  <description>The Neutron Disruptor uses high-energy pulses that modify the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, as until recently, firing it would produce radiation lethal to humans aboard the ship.</description>
-  <gfx_store>neutron</gfx_store>
-  <cpu>-8</cpu>
+  <rarity>3</rarity>
+  <description>The Neutron Disruptor uses high-energy pulses that alter the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, whose drones were immune to early versions' lethal backscatter radiation.</description>
+  <gfx_store>neutron.webp</gfx_store>
+  <cpu>-6</cpu>
  </general>
  <specific type="bolt">
-  <gfx>neutron</gfx>
+  <gfx>neutron.png</gfx>
   <sound>neutron</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>0.9</delay>
-  <speed>650</speed>
-  <range>425</range>
-  <falloff>250</falloff>
-  <gfx_end>neutron-end</gfx_end>
-  <energy>15</energy>
+  <delay>0.8</delay>
+  <speed>800</speed>
+  <range>450</range>
+  <falloff>325</falloff>
+  <gfx_end>neutron-end.png</gfx_end>
+  <energy>5</energy>
   <heatup>40</heatup>
-  <track>3</track>
-  <swivel>2.5</swivel>
+  <trackmin>0</trackmin>
+  <trackmax>3000</trackmax>
+  <swivel>22</swivel>
   <damage>
    <type>normal</type>
-   <penetrate>22</penetrate>
-   <physical>20</physical>
-   <disable>1</disable>
+   <penetrate>0</penetrate>
+   <physical>34</physical>
   </damage>
  </specific>
 </outfit>

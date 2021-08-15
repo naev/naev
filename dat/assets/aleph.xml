@@ -5,8 +5,8 @@
   <y>-3495.111376</y>
  </pos>
  <GFX>
-  <space>G02.png</space>
-  <exterior>mining6.png</exterior>
+  <space>G02.webp</space>
+  <exterior>mining6.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>G</class>
   <population>1700000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

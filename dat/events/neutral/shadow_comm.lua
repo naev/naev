@@ -1,37 +1,56 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Shadowcomm">
+  <trigger>enter</trigger>
+  <chance>3</chance>
+  <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadowrun") and not (player.misnDone("Shadow Vigil") or player.misnActive("Shadow Vigil")) and not (system.cur() == system.get("Pas"))</cond>
+  <flags>
+  </flags>
+  <notes>
+   <done_misn name="Shadowrun"/>
+   <campaign>Shadow</campaign>
+   <tier>3</tier>
+  </notes>
+ </event>
+ --]]
+--[[
 -- Comm Event for the Shadow missions
 --]]
 
-include "proximity.lua"
+require "proximity"
+require "missions/shadow/common"
+
 
 -- localization stuff, translators would work here
-lang = naev.lang()
-if lang == "es" then
-else -- default english
-    title = {}
-    text = {}
+title = {}
+text = {}
 
-    title[1] = "An open invitation"
-    text[1] = [["Greetings, %s," the pilot of the Vendetta says to you as soon as you answer his hail. "I have been looking for you on behalf of an acquaintance of yours. She wishes to meet with you at a place of her choosing, and a time of yours. It involves a proposition that you might find interesting - if you don't mind sticking your neck out."
+title[1] = _("An open invitation")
+text[1] = _([["Greetings, %s," the pilot of the Vendetta says to you as soon as you answer his hail. "I have been looking for you on behalf of an acquaintance of yours. She wishes to meet with you at a place of her choosing, and a time of yours. It involves a proposition that you might find interesting - if you don't mind sticking your neck out."
     You frown at that, but you ask the pilot where this acquaintance wishes you to go anyway.
-    "Fly to the %s system," he replies. "She will meet you there. There's no rush - but I suggest you go see her at the earliest opportunity."
-    The screen blinks out, and the Vendetta goes about its business, paying you no more attention. It seems there's someone out there who wants to see you, and there's only one way to find out what about. Perhaps you should make a note of the place you're supposed to meet her: the Pas system.]]
+    "Fly to the %s system," he replies. "She will meet you there. There's no rush, but I suggest you go see her at the earliest opportunity."
+    The screen blinks out and the Vendetta goes about its business, paying you no more attention. It seems there's someone out there who wants to see you, and there's only one way to find out what about. Perhaps you should make a note of the place you're supposed to meet her: the %s system.]])
 
-end
+log_text = _([[Someone has invited you to meet with her in the Pas system, supposedly an acquaintance of yours. The pilot who told you this said that there's no rush, "but I suggest you go see her at the earliest opportunity".]])
+
+yesnotxt = _("Do you intend to respond to the invitation?")
+
 
 function create ()
+     -- Claim: duplicates the claims in the mission.
+    misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")}
+    if not evt.claim(misssys) then
+        abort()
+    end
+
     sysname = "Pas"
-    destsys = system.get(sysname)
 
     -- Create a Vendetta who hails the player after a bit
-    hailed = false
-    vendetta = pilot.add("Four Winds Vendetta", nil, true)[1]
+    hail_time = nil
+    vendetta = pilot.add( "Vendetta", "Four Winds", true, _("Four Winds Vendetta"), {ai="trader"} )
     vendetta:control()
     vendetta:follow(player.pilot())
-    hook.timer(500, "proximityScan", {focus = vendetta, funcname = "hailme"})
-
-    -- Make sure the event can't reappear while it's active
-    var.push("shadowvigil_active", true)
+    hook.timer(0.5, "proximityScan", {focus = vendetta, funcname = "hailme"})
 
     -- Clean up on events that remove the Vendetta from the game
     hook1 = hook.pilot(vendetta, "jump", "finish")
@@ -48,54 +67,22 @@ end
 
 -- Triggered when the player hails the ship
 function hail(p)
-    hailed = true
-    tk.msg(title[1], string.format(text[1], player.name(), sysname))
-
-    -- The event should now remain active until Pas
-    -- Clear the hooks that would otherwise finish it
-    hook.rm(hook1)
-    hook.rm(hook2)
-    hook.rm(hook3)
-    hook.rm(hook4)
     hook.rm(hailhook)
-    
-    player.commClose()
 
+    tk.msg(title[1], text[1]:format(player.name(), sysname, sysname))
+    player.commClose()
     vendetta:control()
     vendetta:hyperspace()
 
-    -- Catch the player jumping into Pas
-    -- The player may save between now and then, make sure our hook is saved too
-    evt.save(true)
-    hook.jumpin("jumpin")
-end
-
-function jumpin()
-    if system.cur() == destsys then
-        seiryuu = pilot.add("Seiryuu", nil, vec2.new(0, -2000))[1]
-        seiryuu:control(true)
-        seiryuu:setActiveBoard(true)
-        seiryuu:setInvincible(true)
-        seiryuu:setHilight(true)
-        seiryuu:setVisplayer(true)
-        hook.pilot(seiryuu, "board", "board")
+    if tk.yesno( "", yesnotxt ) then
+        shadow_addLog( log_text )
+        naev.missionStart("Shadow Vigil")
+        evt.finish()
     end
-end
-
--- The player boards the Seiryuu
-function board()
-    player.unboard()
-    seiryuu:control(false)
-    seiryuu:setActiveBoard(false)
-    naev.missionStart("Shadow Vigil")
-    evt.finish()
 end
 
 -- Clean up
 function finish()
-    if not hailed then
-        var.pop("shadowvigil_active")
-    end
     if hailhook then
         hook.rm(hailhook)
     end

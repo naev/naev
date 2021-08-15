@@ -8,27 +8,32 @@
  * @brief Handles the star system editor.
  */
 
-#include "dev_sysedit.h"
-#include "dev_uniedit.h"
-
-#include "naev.h"
-
+/** @cond */
+#include "physfs.h"
 #include "SDL.h"
 
-#include "space.h"
-#include "toolkit.h"
-#include "opengl.h"
-#include "map.h"
+#include "naev.h"
+/** @endcond */
+
+#include "dev_sysedit.h"
+
+#include "array.h"
+#include "conf.h"
 #include "dev_planet.h"
 #include "dev_system.h"
-#include "unidiff.h"
+#include "dev_uniedit.h"
 #include "dialogue.h"
-#include "tk/toolkit_priv.h"
+#include "economy.h"
+#include "map.h"
 #include "ndata.h"
-#include "nfile.h"
 #include "nstring.h"
-#include "npng.h"
-#include "conf.h"
+#include "opengl.h"
+#include "opengl_render.h"
+#include "safelanes.h"
+#include "space.h"
+#include "tk/toolkit_priv.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 
 #define BUTTON_WIDTH    90 /**< Map button width. */
@@ -93,12 +98,6 @@ static double sysedit_my      = 0.; /**< Cursor Y position. */
 static int jp_hidden = 0; /**< Jump point hidden checkbox value. */
 static int jp_exit   = 0; /**< Jump point exit only checkbox value. */
 
-/*
- * Property editor stuff.
- */
-static glTexture **sysedit_tex = NULL; /**< Planet textures. */
-static int sysedit_ntex       = 0; /**< Number of planet textures. */
-
 
 /*
  * System editor Prototypes.
@@ -106,12 +105,14 @@ static int sysedit_ntex       = 0; /**< Number of planet textures. */
 /* Custom system editor widget. */
 static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
-static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y);
+static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected );
+static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected );
+static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y );
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double xr, double yr, void *data );
 /* Button functions. */
 static void sysedit_close( unsigned int wid, char *wgt );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
@@ -143,7 +144,7 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused );
 /* Jump editing */
 static void sysedit_editJump( void );
 /* Keybindings handling. */
-static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
+static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Selection. */
 static int sysedit_selectCmp( Select_t *a, Select_t *b );
 static void sysedit_checkButtons (void);
@@ -151,6 +152,8 @@ static void sysedit_deselect (void);
 static void sysedit_selectAdd( Select_t *sel );
 static void sysedit_selectRm( Select_t *sel );
 
+/* VBO. */
+static gl_vbo *sysedit_vbo = NULL; /**< Map VBO. */
 
 /**
  * @brief Opens the system editor interface.
@@ -160,6 +163,9 @@ void sysedit_open( StarSystem *sys )
    unsigned int wid;
    char buf[PATH_MAX];
    int i;
+
+   /* Create the VBO. */
+   sysedit_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
 
    /* Reconstructs the jumps - just in case. */
    systems_reconstructJumps();
@@ -175,64 +181,64 @@ void sysedit_open( StarSystem *sys )
    space_gfxLoad( sysedit_sys );
 
    /* Create the window. */
-   nsnprintf( buf, sizeof(buf), "%s - Star System Editor", sys->name );
-   wid = window_create( buf, -1, -1, -1, -1 );
+   snprintf( buf, sizeof(buf), _("%s - Star System Editor"), sys->name );
+   wid = window_create( "wdwSysEdit", buf, -1, -1, -1, -1 );
    window_handleKeys( wid, sysedit_keys );
    sysedit_wid = wid;
 
    window_setAccept( wid, sysedit_close );
 
    /* Close button. */
-   window_addButton( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", sysedit_close );
+   window_addButtonKey( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", _("Exit"), sysedit_close, SDLK_x );
    i = 1;
 
    /* Autosave toggle. */
-   window_addCheckbox( wid, -150, 25, 250, 20,
-         "chkEditAutoSave", "Automatically save changes", uniedit_autosave, conf.devautosave );
+   window_addCheckbox( wid, -150, 25, SCREEN_W/2 - 150, 20,
+         "chkEditAutoSave", _("Automatically save changes"), uniedit_autosave, conf.devautosave );
 
    /* Scale. */
    window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnScale", "Scale", sysedit_btnScale );
+         "btnScale", _("Scale"), sysedit_btnScale );
    i += 1;
 
    /* Reset. */
    window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnReset", "Reset Jumps", sysedit_btnReset, SDLK_r );
+         "btnReset", _("Reset Jumps"), sysedit_btnReset, SDLK_r );
    i += 1;
 
    /* Editing. */
    window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnEdit", "Edit", sysedit_btnEdit, SDLK_e );
+         "btnEdit", _("Edit"), sysedit_btnEdit, SDLK_e );
    i += 1;
 
    /* Remove. */
    window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRemove", "Remove", sysedit_btnRemove );
+         "btnRemove", _("Remove"), sysedit_btnRemove );
    i += 1;
 
    /* Rename. */
    window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRename", "Rename", sysedit_btnRename );
+         "btnRename", _("Rename"), sysedit_btnRename );
    i += 1;
 
-   /* New system. */
+   /* New planet. */
    window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", "New Planet", sysedit_btnNew, SDLK_n );
+         "btnNew", _("New Planet"), sysedit_btnNew, SDLK_n );
    i += 2;
 
    /* Toggle Grid. */
    window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnGrid", "Grid", sysedit_btnGrid, SDLK_g );
+         "btnGrid", _("Grid"), sysedit_btnGrid, SDLK_g );
 
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", sysedit_buttonZoom );
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", sysedit_buttonZoom );
 
    /* Selected text. */
-   nsnprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
-   window_addText( wid, 140, 10, SCREEN_W - 80 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
-         "txtSelected", &gl_smallFont, &cBlack, buf );
+   snprintf( buf, sizeof(buf), _("Radius: %.0f"), sys->radius );
+   window_addText( wid, 140, 10, SCREEN_W/2-140, 30, 0,
+         "txtSelected", &gl_smallFont, NULL, buf );
 
    /* Actual viewport. */
    window_addCust( wid, 20, -40, SCREEN_W - 150, SCREEN_H - 100,
@@ -247,7 +253,7 @@ void sysedit_open( StarSystem *sys )
 /**
  * @brief Handles keybindings.
  */
-static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
+static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) wid;
    (void) mod;
@@ -268,6 +274,10 @@ static void sysedit_close( unsigned int wid, char *wgt )
    /* Unload graphics. */
    space_gfxLoad( sysedit_sys );
 
+   /* Unload VBO */
+   gl_vboDestroy(sysedit_vbo);
+   sysedit_vbo = NULL;
+
    /* Remove selection. */
    sysedit_deselect();
 
@@ -280,6 +290,7 @@ static void sysedit_close( unsigned int wid, char *wgt )
 
    /* Reconstruct universe presences. */
    space_reconstructPresences();
+   safelanes_recalculate();
 
    /* Close the window. */
    window_close( wid, wgt );
@@ -289,6 +300,9 @@ static void sysedit_close( unsigned int wid, char *wgt )
 
    /* Propagate autosave checkbox state */
    uniedit_updateAutosave();
+
+   /* Unset. */
+   sysedit_wid = 0;
 }
 
 
@@ -309,8 +323,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    p->population = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
 
    inp = window_getInput( sysedit_widEdit, "inpClass" );
-   if (p->class != NULL)
-      free( p->class );
+   free( p->class );
 
    if ((inp == NULL) || (strlen(inp) == 0))
       p->class = NULL;
@@ -318,8 +331,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
       p->class = strdup( inp );
 
    inp = window_getInput( sysedit_widEdit, "inpLand" );
-   if (p->land_func != NULL)
-      free( p->land_func );
+   free( p->land_func );
 
    if ((inp == NULL) || (strlen(inp) == 0))
       p->land_func = NULL;
@@ -328,13 +340,17 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
    p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
-   p->hide           = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
+   p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    /* Add the new presence. */
    system_addPresence(sysedit_sys, p->faction, p->presenceAmount, p->presenceRange);
 
    if (conf.devautosave)
       dpl_savePlanet( p );
+
+   /* Clean up presences. */
+   space_reconstructPresences();
+   safelanes_recalculate();
 
    window_close( wid, unused );
 }
@@ -350,13 +366,13 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    char *name;
 
    /* Get new name. */
-   name = dialogue_inputRaw( "New Planet Creation", 1, 32, "What do you want to name the new planet?" );
+   name = dialogue_inputRaw( _("New Planet Creation"), 1, 32, _("What do you want to name the new planet?") );
    if (name == NULL)
       return;
 
    /* Check for collision. */
    if (planet_exists( name )) {
-      dialogue_alert( "Planet by the name of \er'%s'\e0 already exists in the \er'%s'\e0 system",
+      dialogue_alert( _("Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
             name, planet_getSystem( name ) );
       free(name);
       sysedit_btnNew( 0, NULL );
@@ -377,7 +393,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
    p->pos.x             = sysedit_xpos / sysedit_zoom;
    p->pos.y             = sysedit_ypos / sysedit_zoom;
-   p->hide              = pow2(HIDE_DEFAULT_PLANET);
+   p->hide              = HIDE_DEFAULT_PLANET;
    p->radius            = b->radius;
 
    /* Add new planet. */
@@ -408,14 +424,14 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
          p = sysedit_sys[i].planets[ sel->u.planet ];
 
          /* Get new name. */
-         name = dialogue_input( "New Planet Creation", 1, 32,
-               "What do you want to rename the planet \er%s\e0?", p->name );
+         name = dialogue_input( _("New Planet Creation"), 1, 32,
+               _("What do you want to rename the planet #r%s#0?"), p->name );
          if (name == NULL)
             continue;
 
          /* Check for collision. */
          if (planet_exists( name )) {
-            dialogue_alert( "Planet by the name of \er'%s'\e0 already exists in the \er'%s'\e0 system",
+            dialogue_alert( _("Planet by the name of #r'%s'#0 already exists in the #r'%s'#0 system"),
                   name, planet_getSystem( name ) );
             free(name);
             continue;
@@ -423,16 +439,14 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
 
          /* Rename. */
          filtered = uniedit_nameFilter(p->name);
-         oldName = malloc(16 + strlen(filtered));
-         nsnprintf(oldName, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
+         asprintf(&oldName, "dat/assets/%s.xml", filtered);
          free(filtered);
 
          filtered = uniedit_nameFilter(name);
-         newName = malloc(16 + strlen(filtered));
-         nsnprintf(newName, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
+         asprintf(&newName, "dat/assets/%s.xml", filtered);
          free(filtered);
 
-         nfile_rename(oldName, newName);
+         rename(oldName, newName);
 
          free(oldName);
          free(newName);
@@ -457,14 +471,13 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
    char *file, *filtered;
    int i;
 
-   if (dialogue_YesNo( "Remove selected planets?", "This can not be undone." )) {
+   if (dialogue_YesNo( _("Remove selected planets?"), _("This can not be undone.") )) {
       for (i=0; i<sysedit_nselect; i++) {
          sel = &sysedit_select[i];
          if (sel->type == SELECT_PLANET) {
             filtered = uniedit_nameFilter( sysedit_sys->planets[ sel->u.planet ]->name );
-            file = malloc(16 + strlen(filtered));
-            nsnprintf(file, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
-            nfile_delete(file);
+            asprintf(&file, "dat/assets/%s.xml", filtered);
+            remove(file);
 
             free(filtered);
             free(file);
@@ -512,7 +525,7 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
    StarSystem *sys;
 
    /* Prompt scale amount. */
-   str = dialogue_inputRaw( "Scale Star System", 1, 32, "By how much do you want to scale the star system?" );
+   str = dialogue_inputRaw( _("Scale Star System"), 1, 32, _("By how much do you want to scale the star system?") );
    if (str == NULL)
       return;
 
@@ -522,7 +535,7 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
 
    /* In case screwed up. */
    if ((s < 0.1) || (s > 10.)) {
-      i = dialogue_YesNo( "Scale Star System", "Are you sure you want to scale the star system by %.2f (from %.2f to %.2f)?",
+      i = dialogue_YesNo( _("Scale Star System"), _("Are you sure you want to scale the star system by %.2f (from %.2f to %.2f)?"),
             s, sys->radius, sys->radius*s );
       if (i==0)
          return;
@@ -543,17 +556,18 @@ void sysedit_sysScale( StarSystem *sys, double factor )
 
    /* Scale radius. */
    sys->radius *= factor;
-   nsnprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
-   window_modifyText( sysedit_wid, "txtSelected", buf );
+   snprintf( buf, sizeof(buf), _("Radius: %.0f"), sys->radius );
+   if (sysedit_wid > 0)
+      window_modifyText( sysedit_wid, "txtSelected", buf );
 
    /* Scale planets. */
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       p     = sys->planets[i];
       vect_cset( &p->pos, p->pos.x*factor, p->pos.y*factor );
    }
 
    /* Scale jumps. */
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp    = &sys->jumps[i];
       vect_cset( &jp->pos, jp->pos.x*factor, jp->pos.y*factor );
    }
@@ -584,6 +598,8 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    StarSystem *sys;
    Planet *p;
    JumpPoint *jp;
+   AsteroidAnchor *ast;
+   AsteroidExclusion *aexcl;
    double x,y, z;
    const glColour *c;
    int selected;
@@ -601,7 +617,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    sysedit_renderBG( bx, by, w, h, x, y );
 
    /* Render planets. */
-   for (i=0; i<sys->nplanets; i++) {
+   for (i=0; i<array_size(sys->planets); i++) {
       p              = sys->planets[i];
 
       /* Must be real. */
@@ -624,7 +640,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render jump points. */
-   for (i=0; i<sys->njumps; i++) {
+   for (i=0; i<array_size(sys->jumps); i++) {
       jp    = &sys->jumps[i];
 
       /* Choose colour. */
@@ -649,6 +665,20 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
             jp->sx, jp->sy, c, selected, jp->target->name );
    }
 
+   /* Render asteroids */
+   for (i=0; i<array_size(sys->asteroids); i++) {
+      ast = &sys->asteroids[i];
+      selected = 0;
+      sysedit_renderAsteroidsField( x, y, ast, selected );
+   }
+
+   /* Render asteroid exclusions */
+   for (i=0; i<array_size(sys->astexclude); i++) {
+      aexcl = &sys->astexclude[i];
+      selected = 0;
+      sysedit_renderAsteroidExclusion( x, y, aexcl, selected );
+   }
+
    /* Render cursor position. */
    gl_print( &gl_smallFont, bx + 5., by + 5.,
          &cWhite, "%.2f, %.2f",
@@ -658,12 +688,63 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
 
 
 /**
+ * @brief Draws an asteroid field on the map.
+ *
+ */
+static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected )
+{
+   double tx, ty, z;
+
+   /* Render icon */
+   sysedit_renderSprite( asteroid_gfx[0], bx, by, ast->pos.x, ast->pos.y,
+                         0, 0, NULL, selected, _("Asteroid Field") );
+
+   /* Inits. */
+   z  = sysedit_zoom;
+
+   /* Translate asteroid field center's coords. */
+   tx = bx + ast->pos.x*z;
+   ty = by + ast->pos.y*z;
+
+   gl_drawCircle( tx, ty, ast->radius * sysedit_zoom, &cOrange, 0 );
+}
+
+/**
+ * @brief Draws an asteroid exclusion zone on the map.
+ *
+ */
+static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected )
+{
+   (void) selected;
+   double tx, ty, z, r, rr;
+
+   /* Inits. */
+   z  = sysedit_zoom;
+
+   /* Translate asteroid field center's coords. */
+   tx = bx + aexcl->pos.x*z;
+   ty = by + aexcl->pos.y*z;
+   r = aexcl->radius * sysedit_zoom;
+   rr = r * sin(M_PI / 4);
+
+   gl_drawCircle( tx, ty, r, &cRed, 0 );
+   gl_renderCross( tx, ty, r, &cRed );
+   gl_renderRectEmpty( tx - rr, ty - rr, rr * 2, rr * 2, &cRed );
+}
+
+/**
  * @brief Renders the custom widget background.
  */
 static void sysedit_renderBG( double bx, double by, double w, double h, double x, double y )
 {
-   double z, s;
-   double sx, sy, sz;
+   /* Comfort. */
+   const double z = sysedit_zoom;
+   const double s = 1000.;
+
+   /* Vars */
+   double startx, starty, spacing, d;
+   int    nx, ny;
+   int    i;
 
    /* Render blackness. */
    gl_renderRect( bx, by, w, h, &cBlack );
@@ -672,28 +753,30 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
    if (!sysedit_grid)
       return;
 
-   /* Comfort. */
-   z  = sysedit_zoom;
-   s  = 1000.;
-
    /* Draw lines that go through 0,0 */
-   gl_renderRect( x-1., by, 3., h, &cLightBlue );
-   gl_renderRect( bx, y-1., w, 3., &cLightBlue );
+   gl_renderRect( x - 1., by, 3., h, &cLightBlue );
+   gl_renderRect( bx, y - 1., w, 3., &cLightBlue );
 
    /* Render lines. */
-   sz    = s*z;
-   sx    = w/2. - fmod( sysedit_xpos, sz ) - sz*round( w/2. / sz );
-   sy    = h/2. - fmod( sysedit_ypos, sz ) - sz*round( h/2. / sz );
-   /* Vertical. */
-   for (   ; sx<w; sx += sz)
-      gl_renderRect( bx+sx, by, 1., h, &cBlue );
-   /* Horizontal. */
-   for (   ; sy<w; sy += sz)
-      gl_renderRect( bx, by+sy, w, 1., &cBlue );
+   spacing = s * z;
+   startx  = bx + fmod( x - bx, spacing );
+   starty  = by + fmod( y - by, spacing );
 
-   glEnable(GL_LINE_SMOOTH);
-   gl_drawCircleLoop( x, y, sysedit_sys->radius * sysedit_zoom, &cLightBlue );
-   glDisable(GL_LINE_SMOOTH);
+   nx = lround( w / spacing );
+   ny = lround( h / spacing );
+
+   /* Vertical. */
+   for ( i = 0; i < nx; i += 1 ) {
+      d = startx + ( i * spacing );
+      gl_drawLine( d, by, d, by + h, &cBlue );
+   }
+   /* Horizontal. */
+   for ( i = 0; i < ny; i += 1 ) {
+      d = starty + ( i * spacing );
+      gl_drawLine( bx, d, bx + w, d, &cBlue );
+   }
+
+   gl_drawCircle( x, y, sysedit_sys->radius * z, &cLightBlue, 0 );
 }
 
 
@@ -733,7 +816,7 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       else
          col = c;
       gl_printMidRaw( &gl_smallFont, gfx->sw*z+100,
-            tx - 50, ty - gl_smallFont.h - 5, col, caption );
+            tx - 50, ty - gl_smallFont.h - 5, col, -1., caption );
    }
 }
 
@@ -754,13 +837,13 @@ static void sysedit_renderOverlay( double bx, double by, double bw, double bh, v
  * @brief System editor custom widget mouse handling.
  */
 static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double xr, double yr, void *data )
 {
    (void) wid;
    (void) data;
    int i, j;
    double x,y, t;
-   SDLMod mod;
+   SDL_Keymod mod;
    StarSystem *sys;
    Planet *p;
    JumpPoint *jp;
@@ -774,7 +857,6 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
    switch (event->type) {
 
-#if SDL_VERSION_ATLEAST(2,0,0)
       case SDL_MOUSEWHEEL:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
@@ -786,20 +868,11 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             sysedit_buttonZoom( 0, "btnZoomOut" );
 
          return 1;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
-
-#if !SDL_VERSION_ATLEAST(2,0,0)
-         /* Zooming */
-         if (event->button.button == SDL_BUTTON_WHEELUP)
-            sysedit_buttonZoom( 0, "btnZoomIn" );
-         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
-            sysedit_buttonZoom( 0, "btnZoomOut" );
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
          /* selecting star system */
          else {
@@ -808,7 +881,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
 
             /* Check planets. */
-            for (i=0; i<sys->nplanets; i++) {
+            for (i=0; i<array_size(sys->planets); i++) {
                p = sys->planets[i];
 
                /* Must be real. */
@@ -873,7 +946,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             }
 
             /* Check jump points. */
-            for (i=0; i<sys->njumps; i++) {
+            for (i=0; i<array_size(sys->jumps); i++) {
                jp = &sys->jumps[i];
 
                /* Position. */
@@ -895,7 +968,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                   for (j=0; j<sysedit_nselect; j++) {
                      if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
                         sysedit_dragSel   = 1;
-			sysedit_tsel      = sel;
+                        sysedit_tsel      = sel;
 
                         /* Check modifier. */
                         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
@@ -986,11 +1059,11 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* Handle dragging. */
          if (sysedit_drag) {
             /* axis is inverted */
-            sysedit_xpos -= event->motion.xrel;
-            sysedit_ypos += event->motion.yrel;
+            sysedit_xpos -= xr;
+            sysedit_ypos += yr;
 
             /* Update mouse movement. */
-            sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
+            sysedit_moved += ABS(xr) + ABS(yr);
          }
          /* Dragging selection around. */
          else if (sysedit_dragSel && (sysedit_nselect > 0)) {
@@ -1000,21 +1073,21 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                   /* Planets. */
                   if (sysedit_select[i].type == SELECT_PLANET) {
                      p = sys->planets[ sysedit_select[i].u.planet ];
-                     p->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
-                     p->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
+                     p->pos.x += xr / sysedit_zoom;
+                     p->pos.y -= yr / sysedit_zoom;
                   }
                   /* Jump point. */
                   else if (sysedit_select[i].type == SELECT_JUMPPOINT) {
                      jp         = &sys->jumps[ sysedit_select[i].u.jump ];
                      jp->flags &= ~(JP_AUTOPOS);
-                     jp->pos.x += ((double)event->motion.xrel) / sysedit_zoom;
-                     jp->pos.y -= ((double)event->motion.yrel) / sysedit_zoom;
+                     jp->pos.x += xr / sysedit_zoom;
+                     jp->pos.y -= yr / sysedit_zoom;
                   }
                }
             }
 
             /* Update mouse movement. */
-            sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
+            sysedit_moved += ABS(xr) + ABS(yr);
          }
          break;
    }
@@ -1064,7 +1137,7 @@ static void sysedit_deselect (void)
    sysedit_nselect   = 0;
    sysedit_mselect   = 0;
 
-   /* Button sanity. */
+   /* Button check. */
    sysedit_checkButtons();
 }
 
@@ -1130,7 +1203,7 @@ static void sysedit_selectAdd( Select_t *sel )
    sysedit_select[ sysedit_nselect ] = *sel;
    sysedit_nselect++;
 
-   /* Button sanity. */
+   /* Button check. */
    sysedit_checkButtons();
 }
 
@@ -1146,12 +1219,12 @@ static void sysedit_selectRm( Select_t *sel )
          sysedit_nselect--;
          memmove( &sysedit_select[i], &sysedit_select[i+1],
                sizeof(Select_t) * (sysedit_nselect - i) );
-         /* Button sanity. */
+         /* Button check. */
          sysedit_checkButtons();
          return;
       }
    }
-   WARN("Trying to unselect item that is not in selection!");
+   WARN(_("Trying to deselect item that is not in selection!"));
 }
 
 
@@ -1173,14 +1246,15 @@ static void sysedit_editPnt( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024], *s, title[100];
+   char buf[1024], title[100];
+   const char *s;
    Planet *p;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Create the window. */
-   sprintf(title, "Planet Property Editor - %s", p->name);
-   wid = window_create( title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   snprintf(title, sizeof(title), _("Planet Property Editor - %s"), p->name);
+   wid = window_create( "wdwSysEditPnt", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
    window_setCancel( wid, sysedit_editPntClose );
@@ -1189,104 +1263,104 @@ static void sysedit_editPnt( void )
 
    /* Rename button. */
    y = -40;
-   nsnprintf( buf, sizeof(buf), "Name: " );
+   snprintf( buf, sizeof(buf), _("Name: ") );
    w = gl_printWidthRaw( NULL, buf );
-   window_addText( wid, 20, y, 180, 15, 0, "txtNameLabel", &gl_smallFont, &cDConsole, buf );
-   nsnprintf( buf, sizeof(buf), "%s", p->name );
-   window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
+   window_addText( wid, 20, y, 180, 15, 0, "txtNameLabel", &gl_smallFont, NULL, buf );
+   snprintf( buf, sizeof(buf), "%s", p->name );
+   window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
    window_addButton( wid, -20, y - gl_defFont.h/2. + BUTTON_HEIGHT/2., bw, BUTTON_HEIGHT, "btnRename",
-         "Rename", sysedit_btnRename );
+         _("Rename"), sysedit_btnRename );
    window_addButton( wid, -20 - 15 - bw, y - gl_defFont.h/2. + BUTTON_HEIGHT/2., bw, BUTTON_HEIGHT, "btnFaction",
-         "Faction", sysedit_btnFaction );
+         _("Faction"), sysedit_btnFaction );
 
    y -= gl_defFont.h + 5;
 
-   window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, &cDConsole, "Faction: " );
-   nsnprintf( buf, sizeof(buf), "%s", p->faction > 0 ? faction_name( p->faction ) : "None" );
-   window_addText( wid, 20 + w, y, 180, 15, 0, "txtFaction", &gl_smallFont, &cBlack, buf );
+   window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, NULL, _("Faction: ") );
+   snprintf( buf, sizeof(buf), "%s", p->faction > 0 ? faction_name( p->faction ) : _("None") );
+   window_addText( wid, 20 + w, y, 180, 15, 0, "txtFaction", &gl_smallFont, NULL, buf );
    y -= gl_defFont.h + 5;
 
    /* Input widgets and labels. */
    x = 20;
-   s = "Population";
+   s = _("Population");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPop",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 80, 20, "inpPop", 12, 1, NULL );
-   window_setInputFilter( wid, "inpPop",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
+   window_setInputFilter( wid, "inpPop", INPUT_FILTER_NUMBER );
    x += 80 + 10;
 
-   s = "Class";
+   s = _("Class");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtClass",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 30, 20, "inpClass", 1, 1, NULL );
    x += 30 + 10;
 
-   s = "Land";
+   s = _("Land");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtLand",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 150, 20, "inpLand", 20, 1, NULL );
    y -= gl_defFont.h + 15;
 
+   (void)x;
+
    /* Second row. */
    x = 20;
-   s = "Presence";
+   s = _("Presence");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresence",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 60, 20, "inpPresence", 5, 1, NULL );
-   window_setInputFilter( wid, "inpPresence",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpPresence", INPUT_FILTER_NUMBER );
    x += 60 + 10;
 
-   s = "Range";
+   s = _("Range");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresenceRange",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 30, 20, "inpPresenceRange", 1, 1, NULL );
-   window_setInputFilter( wid, "inpPresenceRange",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
+   window_setInputFilter( wid, "inpPresenceRange", INPUT_FILTER_NUMBER );
    x += 30 + 10;
 
-   s = "hide";
+   s = _("hide");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtHide",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 50, 20, "inpHide", 4, 1, NULL );
-   window_setInputFilter( wid, "inpHide",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpHide", INPUT_FILTER_NUMBER );
    x += 50 + 10;
+
+   (void)x;
 
    /* Bottom buttons. */
    window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
-         "btnRmService", "Rm Service", sysedit_btnRmService );
+         "btnRmService", _("Rm Service"), sysedit_btnRmService );
    window_addButton( wid, -20 - bw*2 - 15*2, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
-         "btnAddService", "Add Service", sysedit_btnAddService );
+         "btnAddService", _("Add Service"), sysedit_btnAddService );
    window_addButton( wid, -20 - bw - 15, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
-         "btnEditTech", "Edit Tech", sysedit_btnTechEdit );
+         "btnEditTech", _("Edit Tech"), sysedit_btnTechEdit );
    window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
-         "btnDesc", "Description", sysedit_planetDesc );
+         "btnDesc", _("Description"), sysedit_planetDesc );
    window_addButton( wid, -20 - bw*2 - 15*2, 20, bw, BUTTON_HEIGHT,
-         "btnLandGFX", "Land GFX", sysedit_planetGFX );
+         "btnLandGFX", _("Land GFX"), sysedit_planetGFX );
    window_addButton( wid, -20 - bw - 15, 20, bw, BUTTON_HEIGHT,
-         "btnSpaceGFX", "Space GFX", sysedit_planetGFX );
+         "btnSpaceGFX", _("Space GFX"), sysedit_planetGFX );
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
-         "btnClose", "Close", sysedit_editPntClose );
+         "btnClose", _("Close"), sysedit_editPntClose );
 
    /* Load current values. */
-   nsnprintf( buf, sizeof(buf), "%"PRIu64, p->population );
+   snprintf( buf, sizeof(buf), "%"PRIu64, p->population );
    window_setInput( wid, "inpPop", buf );
-   nsnprintf( buf, sizeof(buf), "%s", p->class );
+   snprintf( buf, sizeof(buf), "%s", p->class );
    window_setInput( wid, "inpClass", buf );
    window_setInput( wid, "inpLand", p->land_func );
-   nsnprintf( buf, sizeof(buf), "%g", p->presenceAmount );
+   snprintf( buf, sizeof(buf), "%g", p->presenceAmount );
    window_setInput( wid, "inpPresence", buf );
-   nsnprintf( buf, sizeof(buf), "%d", p->presenceRange );
+   snprintf( buf, sizeof(buf), "%d", p->presenceRange );
    window_setInput( wid, "inpPresenceRange", buf );
-   nsnprintf( buf, sizeof(buf), "%g", sqrt(p->hide) );
+   snprintf( buf, sizeof(buf), "%g", p->hide );
    window_setInput( wid, "inpHide", buf );
 
    /* Generate the list. */
@@ -1332,24 +1406,25 @@ static void sysedit_editJump( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024], *s;
+   char buf[1024];
+   const char *s;
    JumpPoint *j;
 
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
 
    /* Create the window. */
-   wid = window_create( "Jump Point Editor", -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwJumpPointEditor", _("Jump Point Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
 
    /* Target lable. */
    y = -40;
-   nsnprintf( buf, sizeof(buf), "Target: " );
+   snprintf( buf, sizeof(buf), _("Target: ") );
    w = gl_printWidthRaw( NULL, buf );
-   window_addText( wid, 20, y, 180, 15, 0, "txtTargetLabel", &gl_smallFont, &cDConsole, buf );
-   nsnprintf( buf, sizeof(buf), "%s", j->target->name );
-   window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
+   window_addText( wid, 20, y, 180, 15, 0, "txtTargetLabel", &gl_smallFont, NULL, buf );
+   snprintf( buf, sizeof(buf), "%s", j->target->name );
+   window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
 
    y -= gl_defFont.h + 10;
 
@@ -1365,27 +1440,28 @@ static void sysedit_editJump( void )
       jp_exit   = 1;
    /* Create check boxes. */
    window_addCheckbox( wid, x, y, 100, 20,
-         "chkHidden", "Hidden", jp_type_check_hidden_update, jp_hidden );
+         "chkHidden", _("Hidden"), jp_type_check_hidden_update, jp_hidden );
    y -= 20;
    window_addCheckbox( wid, x, y, 100, 20,
-         "chkExit", "Exit only", jp_type_check_exit_update, jp_exit );
+         "chkExit", _("Exit only"), jp_type_check_exit_update, jp_exit );
    y -= 30;
 
-   s = "Hide"; /* TODO: if inpType == 0 disable hide box */
+   s = _("Hide"); /* TODO: if inpType == 0 disable hide box */
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtHide",
-         NULL, &cBlack, s );
+         NULL, NULL, s );
    window_addInput( wid, x + l + 8, y, 50, 20, "inpHide", 4, 1, NULL );
-   window_setInputFilter( wid, "inpHide",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   window_setInputFilter( wid, "inpHide", INPUT_FILTER_NUMBER );
    x += 50 + 10;
+
+   (void)x;
 
    /* Bottom buttons. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
-         "btnClose", "Close", sysedit_editJumpClose );
+         "btnClose", _("Close"), sysedit_editJumpClose );
 
    /* Load current values. */
-   nsnprintf( buf, sizeof(buf), "%g", sqrt(j->hide) );
+   snprintf( buf, sizeof(buf), "%g", j->hide );
    window_setInput( wid, "inpHide", buf );
 }
 
@@ -1410,7 +1486,7 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
       jp_rmFlag( j, JP_HIDDEN );
       jp_rmFlag( j, JP_EXITONLY );
    }
-   j->hide  = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
+   j->hide  = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    window_close( wid, unused );
 }
@@ -1423,32 +1499,33 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    (void) unused;
    int x, y, h, w, bw;
    Planet *p;
-   char *desc, *bardesc, title[100];
+   const char *desc, *bardesc;
+   char title[100];
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Create the window. */
-   sprintf(title, "Planet Information - %s", p->name);
-   wid = window_create( title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   snprintf(title, sizeof(title), _("Planet Information - %s"), p->name);
+   wid = window_create( "wdwPlanetDesc", title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    x = 20;
    y = -40;
    w = SYSEDIT_EDIT_WIDTH - 40;
    h = (SYSEDIT_EDIT_HEIGHT - gl_defFont.h * 2 - 30 - 60 - BUTTON_HEIGHT - 10) / 2.;
-   desc    = p->description ? p->description : "None";
-   bardesc = p->bar_description ? p->bar_description : "None";
+   desc    = p->description ? p->description : _("None");
+   bardesc = p->bar_description ? p->bar_description : _("None");
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
 
    window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
-         "btnProperties", "Properties", sysedit_planetDescReturn );
+         "btnProperties", _("Properties"), sysedit_planetDescReturn );
 
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
-         "btnClose", "Close", sysedit_planetDescClose );
+         "btnClose", _("Close"), sysedit_planetDescClose );
 
    /* Description label and text. */
-   window_addText( wid, x, y, w, gl_defFont.h, 0, "txtDescriptionLabel", &gl_defFont, &cBlack,
-         "Landing Description" );
+   window_addText( wid, x, y, w, gl_defFont.h, 0, "txtDescriptionLabel", &gl_defFont, NULL,
+         _("Landing Description") );
    y -= gl_defFont.h + 10;
    window_addInput( wid, x, y, w, h, "txtDescription", 1024, 0,
          NULL );
@@ -1459,8 +1536,8 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    window_setInput( wid, "txtDescription", desc );
 
    /* Bar description label and text. */
-   window_addText( wid, x, y, w, gl_defFont.h, 0, "txtBarDescriptionLabel", &gl_defFont, &cBlack,
-         "Bar Description" );
+   window_addText( wid, x, y, w, gl_defFont.h, 0, "txtBarDescriptionLabel", &gl_defFont, NULL,
+         _("Bar Description") );
    y -= gl_defFont.h + 10;
    window_addInput( wid, x, y, w, h, "txtBarDescription", 1024, 0,
          NULL );
@@ -1483,10 +1560,8 @@ static void sysedit_planetDescReturn( unsigned int wid, char *unused )
    mydesc    = window_getInput( wid, "txtDescription" );
    mybardesc = window_getInput( wid, "txtBarDescription" );
 
-   if (p->description)
-      free(p->description);
-   if (p->bar_description)
-      free(p->bar_description);
+   free(p->description);
+   free(p->bar_description);
    p->description     = NULL;
    p->bar_description = NULL;
 
@@ -1546,28 +1621,28 @@ static void sysedit_genServicesList( unsigned int wid )
    j = 0;
    have = malloc( sizeof(char*) * MAX(nservices - n, 1) );
    if (nservices == n)
-      have[j++] = strdup("None");
+      have[j++] = strdup(_("None"));
    else
       for (i=1; i<PLANET_SERVICES_MAX; i<<=1)
          if (planet_hasService(p, i)  && (i != PLANET_SERVICE_INHABITED))
             have[j++] = strdup( planet_getServiceName( i ) );
 
    /* Add list. */
-   window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL );
+   window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL, sysedit_btnRmService );
    x += w + 15;
 
    /* Add list of services the planet lacks. */
    j = 0;
    lack = malloc( sizeof(char*) * MAX(1, n) );
    if (!n)
-      lack[j++] = strdup( "None" );
+      lack[j++] = strdup( _("None") );
    else
       for (i=1; i<PLANET_SERVICES_MAX; i<<=1)
          if (!planet_hasService(p, i) && (i != PLANET_SERVICE_INHABITED))
             lack[j++] = strdup( planet_getServiceName(i) );
 
    /* Add list. */
-   window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL );
+   window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL, sysedit_btnAddService );
 
    /* Restore positions. */
    if (hpos != -1 && lpos != -1) {
@@ -1587,7 +1662,7 @@ static void sysedit_btnAddService( unsigned int wid, char *unused )
    Planet *p;
 
    selected = toolkit_getList( wid, "lstServicesLacked" );
-   if ((selected == NULL) || (strcmp(selected,"None")==0))
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
       return;
 
    /* Enable the service. All services imply landability. */
@@ -1609,7 +1684,7 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
    Planet *p;
 
    selected = toolkit_getList( wid, "lstServicesHave" );
-   if ((selected==NULL) || (strcmp(selected,"None")==0))
+   if ((selected==NULL) || (strcmp(selected,_("None"))==0))
       return;
 
    /* Flip the bit. Safe enough, as it's always 1 to start with. */
@@ -1633,7 +1708,7 @@ static void sysedit_btnTechEdit( unsigned int wid, char *unused )
    int y, w, bw;
 
    /* Create the window. */
-   wid = window_create( "Planet Tech Editor", -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwPlanetTechEditor", _("Planet Tech Editor"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    w = (SYSEDIT_EDIT_WIDTH - 40 - 15) / 2.;
@@ -1641,16 +1716,16 @@ static void sysedit_btnTechEdit( unsigned int wid, char *unused )
 
    /* Close button. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
-         "btnClose", "Close", window_close );
+         "btnClose", _("Close"), window_close );
    y = 20 + BUTTON_HEIGHT + 15;
 
    /* Remove button. */
    window_addButton( wid, -20-(w+15), y, w, BUTTON_HEIGHT,
-         "btnRm", "Rm Tech", sysedit_btnRmTech );
+         "btnRm", _("Rm Tech"), sysedit_btnRmTech );
 
    /* Add button. */
    window_addButton( wid, -20, y, w, BUTTON_HEIGHT,
-         "btnAdd", "Add Tech", sysedit_btnAddTech );
+         "btnAdd", _("Add Tech"), sysedit_btnAddTech );
 
    sysedit_genTechList( wid );
 }
@@ -1688,11 +1763,11 @@ static void sysedit_genTechList( unsigned int wid )
       have = tech_getItemNames( p->tech, &n );
    else {
       have = malloc( sizeof(char*) );
-      have[n++] = strdup("None");
+      have[n++] = strdup(_("None"));
    }
 
    /* Add list. */
-   window_addList( wid, x, y, w, h, "lstTechsHave", have, n, 0, NULL );
+   window_addList( wid, x, y, w, h, "lstTechsHave", have, n, 0, NULL, sysedit_btnRmTech );
    x += w + 15;
 
    /* Omit the techs that the planet already has from the list.  */
@@ -1705,7 +1780,7 @@ static void sysedit_genTechList( unsigned int wid )
 
       if (!n) {
          lack = malloc( sizeof(char*) );
-         lack[n++] = strdup("None");
+         lack[n++] = strdup(_("None"));
       }
       else {
          lack = malloc( sizeof(char*) * j );
@@ -1725,7 +1800,7 @@ static void sysedit_genTechList( unsigned int wid )
       lack = tech_getAllItemNames( &n );
 
    /* Add list. */
-   window_addList( wid, x, y, w, h, "lstTechsLacked", lack, n, 0, NULL );
+   window_addList( wid, x, y, w, h, "lstTechsLacked", lack, n, 0, NULL, sysedit_btnAddTech );
 
    /* Restore positions. */
    if (hpos != -1 && lpos != -1) {
@@ -1745,7 +1820,7 @@ static void sysedit_btnAddTech( unsigned int wid, char *unused )
    Planet *p;
 
    selected = toolkit_getList( wid, "lstTechsLacked" );
-   if ((selected == NULL) || (strcmp(selected,"None")==0))
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
       return;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
@@ -1769,7 +1844,7 @@ static void sysedit_btnRmTech( unsigned int wid, char *unused )
    int n;
 
    selected = toolkit_getList( wid, "lstTechsHave" );
-   if ((selected == NULL) || (strcmp(selected,"None")==0))
+   if ((selected == NULL) || (strcmp(selected,_("None"))==0))
       return;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
@@ -1793,34 +1868,36 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    unsigned int wid;
-   int i, j, y, h, n, bw, *factions;
+   int i, j, y, h, bw, *factions;
    char **str;
 
    /* Create the window. */
-   wid = window_create( "Modify Faction", -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "wdwModifyFaction", _("Modify Faction"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    /* Generate factions list. */
-   factions = faction_getAll( &n );
-   str = malloc( sizeof(char*) * (n+1));
+   factions = faction_getAll();
+   str = malloc( sizeof(char*) * (array_size(factions) + 1) );
    j   = 0;
-   for (i=0; i<n; i++)
+   for (i=0; i<array_size(factions); i++)
       str[j++] = strdup( faction_name( factions[i] ) );
-   str[j++] = strdup( "None" );
+   str[j++] = strdup( _("None") );
 
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
    y = 20 + BUTTON_HEIGHT + 15;
    h = SYSEDIT_EDIT_HEIGHT - y - 30;
    window_addList( wid, 20, -40, SYSEDIT_EDIT_WIDTH-40, h,
-         "lstFactions", str, j, 0, NULL );
+         "lstFactions", str, j, 0, NULL, sysedit_btnFactionSet );
 
    /* Close button. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
-         "btnClose", "Close", window_close );
+         "btnClose", _("Close"), window_close );
 
    /* Add button. */
    window_addButton( wid, -20-(bw+15), 20, bw, BUTTON_HEIGHT,
-         "btnAdd", "Set", sysedit_btnFactionSet );
+         "btnAdd", _("Set"), sysedit_btnFactionSet );
+
+   array_free( factions );
 }
 
 
@@ -1839,13 +1916,13 @@ static void sysedit_btnFactionSet( unsigned int wid, char *unused )
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
    /* Set the faction. */
-   if (strcmp(selected,"None")==0)
+   if (strcmp(selected,_("None"))==0)
       p->faction = -1;
    else
       p->faction = faction_get( selected );
 
    /* Update the editor window. */
-   window_modifyText( sysedit_widEdit, "txtFaction", p->faction > 0 ? faction_name( p->faction ) : "None" );
+   window_modifyText( sysedit_widEdit, "txtFaction", p->faction > 0 ? faction_name( p->faction ) : _("None") );
 
    window_close( wid, unused );
 }
@@ -1876,20 +1953,22 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
 {
    (void) wid_unused;
    unsigned int wid;
-   uint32_t nfiles, i, j;
+   size_t nfiles, i, j;
    char *path, buf[PATH_MAX];
-   char **files, **png_files;
-   glTexture **tex, *t;
+   char **files;
+   glTexture *t;
+   ImageArrayCell *cells;
    int w, h, land;
    Planet *p;
-   glColour *bg, c;
+   glColour c;
+   PHYSFS_Stat path_stat;
 
-   land = !strcmp(wgt,"btnLandGFX");
+   land = (strcmp(wgt,"btnLandGFX") == 0);
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
    /* Create the window. */
-   nsnprintf( buf, sizeof(buf), "%s - Planet Properties", p->name );
-   wid = window_create( buf, -1, -1, -1, -1 );
+   snprintf( buf, sizeof(buf), _("%s - Planet Properties"), p->name );
+   wid = window_create( "wdwPlanetGFX", buf, -1, -1, -1, -1 );
    window_dimWindow( wid, &w, &h );
 
    window_setCancel( wid, sysedit_btnGFXClose );
@@ -1897,41 +1976,43 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", sysedit_btnGFXClose );
+         "btnClose", _("Close"), sysedit_btnGFXClose );
 
    /* Apply button. */
    window_addButton( wid, -20, 20+(20+BUTTON_HEIGHT), BUTTON_WIDTH, BUTTON_HEIGHT,
-         land ? "btnApplyLand" : "btnApplySpace", "Apply", sysedit_btnGFXApply );
+         land ? "btnApplyLand" : "btnApplySpace", _("Apply"), sysedit_btnGFXApply );
 
    /* Find images first. */
    path           = land ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;
-   files          = ndata_list( path, &nfiles );
-   ndata_sortName( files, nfiles );
-   png_files      = malloc( sizeof(char*) * nfiles );
-   tex            = malloc( sizeof(glTexture*) * nfiles );
-   sysedit_tex    = malloc( sizeof(glTexture*) * nfiles );
-   bg             = malloc( sizeof(glColour) * nfiles );
+   files          = PHYSFS_enumerateFiles( path );
+   for (nfiles=0; files[nfiles]; nfiles++) {}
+   cells          = calloc( nfiles, sizeof(ImageArrayCell) );
+
    j              = 0;
    for (i=0; i<nfiles; i++) {
-      nsnprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
-      t              = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
-      if (t != NULL) {
-         tex[j]         = t;
-         sysedit_tex[j] = tex[j];
-         png_files[j]   = strdup( files[i] );
-         c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
-         bg[j] = c;
-         j++;
+      snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
+      /* Ignore directories. */
+      if (!PHYSFS_stat( buf, &path_stat )) {
+         WARN(_("Unable to check file type for '%s'!"), buf);
+         continue;
       }
-      free( files[i] );
+      if (path_stat.filetype != PHYSFS_FILETYPE_REGULAR)
+         continue;
+
+      t              = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
+      if (t == NULL)
+         continue;
+      cells[j].image   = t;
+      cells[j].caption = strdup( files[i] );
+      c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
+      memcpy( &cells[j].bg, &c, sizeof(glColour) );
+      j++;
    }
-   free( files );
-   sysedit_ntex   = j;
+   PHYSFS_freeList( files );
 
    /* Add image array. */
-   window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, tex, png_files, j, NULL, NULL );
+   window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, cells, j, NULL, NULL, NULL );
    toolkit_setImageArray( wid, "iarGFX", path );
-   toolkit_setImageArrayBackground( wid, "iarGFX", bg );
 }
 
 
@@ -1940,13 +2021,6 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
  */
 static void sysedit_btnGFXClose( unsigned int wid, char *wgt )
 {
-   int i;
-   for (i=0; i<sysedit_ntex; i++)
-      gl_freeTexture( sysedit_tex[i] );
-   if (sysedit_tex != NULL)
-      free( sysedit_tex );
-   sysedit_tex    = NULL;
-   sysedit_ntex   = 0;
    window_close( wid, wgt );
 }
 
@@ -1960,7 +2034,7 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
    char *str, *path, buf[PATH_MAX];
    int land;
 
-   land = !strcmp(wgt,"btnApplyLand");
+   land = (strcmp(wgt,"btnApplyLand") == 0);
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Get output. */
@@ -1970,22 +2044,49 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
 
    /* New path. */
    path = land ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;
-   nsnprintf( buf, sizeof(buf), "%s/%s", path, str );
+   snprintf( buf, sizeof(buf), "%s/%s", path, str );
 
    if (land) {
       free( p->gfx_exteriorPath );
-      nsnprintf( buf, sizeof(buf), PLANET_GFX_EXTERIOR_PATH"%s", str );
+      free( p->gfx_exterior );
+      snprintf( buf, sizeof(buf), PLANET_GFX_EXTERIOR_PATH"%s", str );
       p->gfx_exteriorPath = strdup( str );
       p->gfx_exterior = strdup( buf );
    }
    else { /* Free old texture, load new. */
       free( p->gfx_spacePath );
       gl_freeTexture( p->gfx_space );
-      p->gfx_space     = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
       p->gfx_spacePath = strdup( str );
-      planet_setRadiusFromGFX(p);
+      p->gfx_space = NULL;
+      planet_gfxLoad( p );
    }
 
    /* For now we close. */
    sysedit_btnGFXClose( wid, wgt );
 }
+
+/* @brief Renders important map stuff.
+ */
+void sysedit_renderMap( double bx, double by, double w, double h, double x, double y, double r )
+{
+   /* background */
+   gl_renderRect( bx, by, w, h, &cBlack );
+
+   map_renderDecorators( x, y, 1, 1. );
+
+   /* Render faction disks. */
+   map_renderFactionDisks( x, y, r, 1, 1. );
+
+   /* Render environment stuff. */
+   map_renderSystemEnvironment( x, y, 1, 1. );
+
+   /* Render jump paths. */
+   map_renderJumps( x, y, 1 );
+
+   /* Render systems. */
+   map_renderSystems( bx, by, x, y, w, h, r, 1 );
+
+   /* Render system names. */
+   map_renderNames( bx, by, x, y, w, h, 1, 1. );
+}
+

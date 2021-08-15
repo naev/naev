@@ -1,4 +1,19 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="FLF Commodity Run">
+  <avail>
+   <priority>5</priority>
+   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+   <chance>90</chance>
+   <location>Computer</location>
+   <faction>FLF</faction>
+  </avail>
+  <notes>
+   <done_misn name="Deal with the FLF agent"/>
+  </notes>
+ </mission>
+ --]]
+--[[
 
    FLF Commodity Delivery Mission
 
@@ -17,22 +32,18 @@
 
 --]]
 
-include "dat/missions/neutral/commodity_run.lua"
+require "missions/neutral/commodity_run"
 
-lang = naev.lang()
-if lang == "notreal" then
-else -- default english
-   misn_title = "FLF: %s Supply Run"
-   misn_desc = "There is a need for more %s at this base. Find a planet where you can buy this commodity and bring as much of it back as possible."
+misn_title = _("FLF: %s Supply Run")
+misn_desc = _("There is a need to supply %s with more %s. Find a planet where you can buy this commodity and bring as much of it back as possible.")
 
-   cargo_land_p2 = {}
-   cargo_land_p2[1] = " are carried out of your ship and tallied. After making sure nothing was missed from your cargo hold, you are paid %s credits, thanked for assisting the FLF's operations, and dismissed."
-   cargo_land_p2[2] = " are quickly and efficiently unloaded and transported to the storage facility. The FLF officer in charge thanks you with a credit chip worth %s credits."
-   cargo_land_p2[3] = " are unloaded from your vessel by a team of FLF soldiers who are in no rush to finish, eventually delivering %s credits after the number of tons is determined."
+cargo_land = {}
+cargo_land[1] = _("The containers of %s are carried out of your ship and tallied. After making sure nothing was missed from your cargo hold, you are paid %s, thanked for assisting the FLF's operations, and dismissed.")
+cargo_land[2] = _("The containers of %s are quickly and efficiently unloaded and transported to the storage facility. The FLF officer in charge thanks you with a credit chip worth %s.")
+cargo_land[3] = _("The containers of %s are unloaded from your vessel by a team of FLF soldiers who are in no rush to finish, eventually delivering %s after the number of tonnes is determined.")
 
-   osd_title = "FLF Supply Run"
-end
+osd_title = _("FLF Supply Run")
 
 
-commchoices = { "Food", "Ore", "Industrial Goods", "Medicine" }
+commchoices = { "Food", "Ore", "Industrial Goods", "Medicine", "Water" }
 

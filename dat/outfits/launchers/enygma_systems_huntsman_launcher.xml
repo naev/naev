@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Enygma Systems Huntsman Launcher">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Heavy Weapon License</license>
+  <rarity>2</rarity>
+  <mass>60</mass>
+  <price>200000</price>
+  <description>Enygma Systems found that there was an unexploited niche in disabling weapons aimed at larger warships. Finding Medusa missiles and ion weaponry insufficient, they redisgned Unicorp's Caesar IV torpedo as a heavy EMP weapon, capable of rapidly frying the systems of even the largest warships.</description>
+  <gfx_store>caesarlauncher_blue.webp</gfx_store>
+  <cpu>-16</cpu>
+ </general>
+ <specific type="launcher" secondary="1">
+  <ammo>Huntsman Torpedo</ammo>
+  <delay>8</delay>
+  <reload_time>90</reload_time>
+  <lockon>11</lockon>
+  <arc>60</arc>
+  <trackmin>5000</trackmin>
+  <trackmax>25000</trackmax>
+  <amount>6</amount>
+ </specific>
+</outfit>

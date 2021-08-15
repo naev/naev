@@ -5,8 +5,8 @@
   <y>16085.639162</y>
  </pos>
  <GFX>
-  <space>X01.png</space>
-  <exterior>gas.png</exterior>
+  <space>X01.webp</space>
+  <exterior>gas.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>X</class>
   <population>100000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -34,10 +34,10 @@
   <item>Kinetic 3</item>
   <item>Laser 1</item>
   <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
   <item>Heavy Weapons 1</item>
   <item>Basic Outfits 1</item>
   <item>Low Tech Upgrades</item>
   <item>Missiles 1</item>
-  <item>Star Maps</item>
  </tech>
 </asset>

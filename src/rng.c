@@ -11,25 +11,27 @@
  */
 
 
-#include "rng.h"
+/** @cond */
+#include <errno.h>
+#include <math.h>
+#include <stdint.h>
+#include <time.h>
+#include <unistd.h>
+#include "SDL.h"
 
 #include "naev.h"
 
-#include <stdint.h>
-#include <math.h>
-#include <unistd.h>
-#include <time.h>
-#include <errno.h>
 #if HAS_POSIX
-#include <sys/time.h>
 #include <fcntl.h>
+#include <sys/time.h>
 #endif /* HAS_POSIX */
-#if HAS_WIN32
-#include <sys/types.h>
+#if WIN32
 #include <sys/timeb.h>
-#endif /* HAS_WIN32 */
+#include <sys/types.h>
+#endif /* WIN32 */
+/** @endcond */
 
-#include "SDL.h"
+#include "rng.h"
 
 #include "log.h"
 
@@ -63,7 +65,7 @@ void rng_init (void)
    int need_init;
 
    need_init = 1; /* initialize by default */
-#if HAS_LINUX
+#if LINUX
    int fd;
    fd = open("/dev/urandom", O_RDONLY); /* /dev/urandom is better than time seed */
    if (fd != -1) {
@@ -76,9 +78,9 @@ void rng_init (void)
    }
    else
       i = rng_timeEntropy();
-#else /* HAS_LINUX */
+#else /* LINUX */
    i = rng_timeEntropy();
-#endif /* HAS_LINUX */
+#endif /* LINUX */
 
    if (need_init)
       mt_initArray( i );
@@ -101,7 +103,7 @@ static uint32_t rng_timeEntropy (void)
    struct timeval tv;
    gettimeofday( &tv, NULL );
    i = tv.tv_sec * 1000000 + tv.tv_usec;
-#elif HAS_WIN32
+#elif WIN32
    struct _timeb tb;
    _ftime( &tb );
    i = tb.time * 1000 + tb.millitm;

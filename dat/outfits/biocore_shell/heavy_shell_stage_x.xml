@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Heavy Shell Stage X">
+ <general>
+  <typename>Bioship Shell</typename>
+  <slot prop="bio_hull">structure</slot>
+  <size>large</size>
+  <rarity>2</rarity>
+  <mass>1150</mass>
+  <price>2200000</price>
+  <description>The shell is a Soromid bioship's natural protection, equivalent to hulls of synthetic ships. The shell is responsible both for protecting the organism's internal organs and for creating camouflage to reduce the risk of being detected by hostiles. This shell has reached stage X, its full potential.</description>
+  <gfx_store>organic_hull_h.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <cargo>70</cargo>
+  <absorb>56</absorb>
+  <armour>1650</armour>
+  <armour_regen>0</armour_regen>
+ </specific>
+</outfit>

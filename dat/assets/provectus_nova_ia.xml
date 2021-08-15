@@ -5,13 +5,13 @@
   <y>-2294.350136</y>
  </pos>
  <GFX>
-  <space>moon-O01.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>moon-O01.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services/>
  </general>
 </asset>

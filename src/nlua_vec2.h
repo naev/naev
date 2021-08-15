@@ -7,17 +7,19 @@
 #  define NLUA_VEC2_H
 
 
-#include <lua.h>
+#include "nlua.h"
 #include "physics.h"
 
 
 #define VECTOR_METATABLE   "vec2"   /**< Vector metatable identifier. */
 
+/* Helper. */
+#define luaL_optvector(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checkvector)
 
 /*
  * Vector library.
  */
-int nlua_loadVector( lua_State *L );
+int nlua_loadVector( nlua_env env );
 
 /*
  * Vector operations.

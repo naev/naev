@@ -7,8 +7,7 @@
 #  define NLUA_TIME_H
 
 
-#include <lua.h>
-
+#include "nlua.h"
 #include "ntime.h"
 
 
@@ -18,7 +17,7 @@
 /*
  * Library stuff.
  */
-int nlua_loadTime( lua_State *L, int readonly );
+int nlua_loadTime( nlua_env env );
 
 /*
  * Time operations.

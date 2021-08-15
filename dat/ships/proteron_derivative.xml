@@ -1,16 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <ship name="Proteron Derivative">
  <base_type>Derivative</base_type>
  <GFX>derivative</GFX>
- <GUI>slim</GUI>
+ <rarity>3</rarity>
+ <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
  <price>290000</price>
+ <time_mod>0.8</time_mod>
+ <trail_generator x="-7" y="9" h="-9" always_under="1" />
+ <trail_generator x="-7" y="-9" h="-9" always_under="1" />
+ <trail_generator x="-7" y="0" h="13" />
+ <trail_generator x="-5" y="0" h="0">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
  <license>Light Combat Vessel License</license>
- <description>While smaller and less intimidating than it's bigger brothers in the Proteron arsenal, a pack of Derivatives is still a foe to be reckoned with. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
+ <description>While smaller and less intimidating than its bigger siblings in the Proteron arsenal, a pack of Derivatives is still a foe to be reckoned with. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
  <health>
-  <absorb>5</absorb>
   <armour>35</armour>
   <armour_regen>0</armour_regen>
  </health>
@@ -21,16 +26,17 @@
   <cargo>10</cargo>
  </characteristics>
  <slots>
-  <weapon size="small" x="10" y="0" h="0"/>
-  <weapon size="small" x="0" y="-4" h="-3"/>
-  <weapon size="small" x="0" y="4" h="-3"/>
-  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
-  <utility size="small"/>
-  <utility size="small"/>
-  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <weapon size="small" x="10" y="0" h="0" />
+  <weapon size="small" x="0" y="-4" h="-3" />
+  <weapon size="small" x="0" y="4" h="-3" />
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-16 Core System</utility>
+  <utility size="small" prop="accessory" exclusive="1" />
+  <utility size="small" />
+  <utility size="small" />
+  <structure size="small" prop="engines" exclusive="1" required="1">Nexus Dart 150 Engine</structure>
   <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
-  <structure size="small"/>
-  <structure size="small"/>
+  <structure size="small" />
+  <structure size="small" />
  </slots>
  <stats>
   <shield_mod>15</shield_mod>

@@ -5,8 +5,8 @@
   <y>1774.888885</y>
  </pos>
  <GFX>
-  <space>moon-D02.png</space>
-  <exterior>mining.png</exterior>
+  <space>moon-D02.webp</space>
+  <exterior>mining.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,12 +16,13 @@
  <general>
   <class>D</class>
   <population>453453</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>srm_mil_restricted</land>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
   </services>
   <commodities/>
   <description>Werlen is a world devoted to the cultivation of the raw materials the Soromid use to fabricate their ships. The world is off-limits to casual traffic, and only those trusted by the Soromid are permitted access.</description>

@@ -1,7 +1,30 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Patrol">
+  <avail>
+   <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+   <chance>560</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Proteron</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Thurion</faction>
+   <faction>Za'lek</faction>
+  </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
+ </mission>
+--]]
+--[[
 
    Patrol
-   Copyright 2014-2016 Julie Marchant
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -23,56 +46,53 @@
 
 --]]
 
-include "numstring.lua"
-include "jumpdist.lua"
+require "numstring"
+require "jumpdist"
 
-lang = naev.lang()
-if lang == "es" then
-else -- Default to English
-   pay_title = "Mission Completed"
-   pay_text    = {}
-   pay_text[1] = "After going through some paperwork, an officer hands you your pay and sends you off."
-   pay_text[2] = "A tired-looking officer verifies your mission log and hands you your pay."
-   pay_text[3] = "The officer you deal with thanks you for your work, hands you your pay, and sends you off."
-   pay_text[4] = "An officer goes through the necessary paperwork, looking bored the entire time, and hands you your fee."
+pay_title = _("Mission Completed")
+pay_text    = {}
+pay_text[1] = _("After going through some paperwork, an officer hands you your pay and sends you off.")
+pay_text[2] = _("A tired-looking officer verifies your mission log and hands you your pay.")
+pay_text[3] = _("The officer you deal with thanks you for your work, hands you your pay, and sends you off.")
+pay_text[4] = _("An officer goes through the necessary paperwork, looking bored the entire time, and hands you your fee.")
 
-   abandon_title = "Mission Abandoned"
-   abandon_text    = {}
-   abandon_text[1] = "You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not recieve payment."
+abandon_title = _("Mission Abandoned")
+abandon_text    = {}
+abandon_text[1] = _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not receive payment.")
 
 
-   -- Mission details
-   misn_title  = "Patrol of the %s System"
-   misn_reward = "%s credits"
-   misn_desc   = "Patrol specified points in the %s system, eliminating any hostiles you encounter."
+-- Mission details
+misn_title  = _("Patrol of the %s System")
+misn_desc   = _("Patrol specified points in the %s system, eliminating any hostiles you encounter.")
 
-   -- Messages
-   msg    = {}
-   msg[1] = "Point secure."
-   msg[2] = "Hostiles detected. Engage hostiles."
-   msg[3] = "Hostiles eliminated."
-   msg[4] = "Patrol complete. You can now collect your pay."
-   msg[5] = "MISSION FAILURE! You showed up too late."
-   msg[6] = "MISSION FAILURE! You have left the %s system."
+-- Messages
+msg    = {}
+msg[1] = _("Point secure.")
+msg[2] = _("Hostiles detected. Engage hostiles.")
+msg[3] = _("Hostiles eliminated.")
+msg[4] = _("Patrol complete. You can now collect your pay.")
+msg[5] = _("MISSION FAILURE! You showed up too late.")
+msg[6] = _("MISSION FAILURE! You have left the %s system.")
 
-   osd_title  = "Patrol of %s"
-   osd_msg    = {}
-   osd_msg[1] = "Fly to the %s system"
-   osd_msg_2  = "Go to indicated point (%d remaining)"
-   osd_msg[2] = "(null)"
-   osd_msg[3] = "Eliminate hostiles"
-   osd_msg[4] = "Land on the nearest %s planet and collect your pay"
-   osd_msg["__save"] = true
+osd_title  = _("Patrol")
+osd_msg    = {}
+osd_msg[1] = _("Fly to the %s system")
+osd_msg[2] = "(null)"
+osd_msg[3] = _("Eliminate hostiles")
+osd_msg[4] = _("Land in %s territory to collect your pay")
+osd_msg["__save"] = true
 
-   mark_name = "Patrol Point"
-end
+mark_name = _("Patrol Point")
+
+
+use_hidden_jumps = false
 
 
 -- Get the number of enemies in a particular system
 function get_enemies( sys )
    local enemies = 0
    for i, j in ipairs( paying_faction:enemies() ) do
-      local p = sys:presences()[j:name()]
+      local p = sys:presences()[j:nameRaw()]
       if p ~= nil then
          enemies = enemies + p
       end
@@ -86,9 +106,9 @@ function create ()
 
    local systems = getsysatdistance( system.cur(), 1, 2,
       function(s)
-         local this_faction = s:presences()[paying_faction:name()]
+         local this_faction = s:presences()[paying_faction:nameRaw()]
          return this_faction ~= nil and this_faction > 0 and get_enemies(s) > 0
-      end )
+      end, nil, use_hidden_jumps )
    if get_enemies( system.cur() ) then
       systems[ #systems + 1 ] = system.cur()
    end
@@ -121,7 +141,7 @@ function create ()
       misn.finish( false )
    end
 
-   jumps_permitted = missys:jumpDist() + 3
+   jumps_permitted = system.cur():jumpDist(missys) + 3
    hostiles = {}
    hostiles["__save"] = true
    hostiles_encountered = false
@@ -137,7 +157,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
    misn.setDesc( misn_desc:format( missys:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 
@@ -145,9 +165,12 @@ end
 function accept ()
    misn.accept()
 
-   osd_title = osd_title:format( missys:name() )
    osd_msg[1] = osd_msg[1]:format( missys:name() )
-   osd_msg[2] = osd_msg_2:format( #points )
+   osd_msg[2] = gettext.ngettext(
+      "Go to indicated point (%d remaining)",
+      "Go to indicated point (%d remaining)",
+      #points
+   ):format( #points )
    osd_msg[4] = osd_msg[4]:format( paying_faction:name() )
    misn.osdCreate( osd_title, osd_msg )
 
@@ -220,7 +243,7 @@ end
 function timer ()
    if timer_hook ~= nil then hook.rm( timer_hook ) end
 
-   local player_pos = player.pilot():pos()
+   local player_pos = player.pos()
    local enemies = pilot.get( paying_faction:enemies() )
 
    for i, j in ipairs( enemies ) do
@@ -273,7 +296,11 @@ function timer ()
          points["__save"] = true
 
          player.msg( msg[1] )
-         osd_msg[2] = osd_msg_2:format( #points )
+         osd_msg[2] = gettext.ngettext(
+            "Go to indicated point (%d remaining)",
+            "Go to indicated point (%d remaining)",
+            #points
+         ):format( #points )
          misn.osdCreate( osd_title, osd_msg )
          misn.osdActive(2)
          if mark ~= nil then
@@ -291,7 +318,7 @@ function timer ()
    end
 
    if not job_done then
-      timer_hook = hook.timer( 50, "timer" )
+      timer_hook = hook.timer( 0.05, "timer" )
    end
 end
 
@@ -300,11 +327,11 @@ end
 function fail( message )
    if message ~= nil then
       -- Pre-colourized, do nothing.
-      if message:find("\027") then
+      if message:find("#") then
          player.msg( message )
       -- Colourize in red.
       else
-         player.msg( "\027r" .. message .. "\0270" )
+         player.msg( "#r" .. message .. "#0" )
       end
    end
    misn.finish( false )

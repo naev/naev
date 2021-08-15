@@ -8,9 +8,11 @@
 #  define TOOLKIT_PRIV_H
 
 
+/** @cond */
 #include "naev.h"
-#include "log.h"
+/** @endcond */
 
+#include "log.h"
 #include "tk/widget.h"
 
 
@@ -20,6 +22,12 @@
 extern const glColour* toolkit_colLight;
 extern const glColour* toolkit_col;
 extern const glColour* toolkit_colDark;
+
+extern const glColour* tab_active;
+extern const glColour* tab_activeB;
+extern const glColour* tab_inactive;
+extern const glColour* tab_inactiveB;
+extern const glColour* tab_background;
 
 
 /**
@@ -93,13 +101,12 @@ typedef struct Widget_ {
    unsigned int flags; /**< Widget flags. */
 
    /* Event abstraction. */
-   int (*keyevent) ( struct Widget_ *wgt, SDLKey k, SDLMod m ); /**< Key event handler function for the widget. */
+   int (*keyevent) ( struct Widget_ *wgt, SDL_Keycode k, SDL_Keymod m ); /**< Key event handler function for the widget. */
    int (*textevent) ( struct Widget_ *wgt, const char *text ); /**< Text event function handler for the widget. */
    int (*mmoveevent) ( struct Widget_ *wgt, int x, int y, int rx, int ry); /**< Mouse movement handler function for the widget. */
    int (*mclickevent) ( struct Widget_ *wgt, int button, int x, int y ); /**< Mouse click event handler function for the widget. */
-#if SDL_VERSION_ATLEAST(2,0,0)
+   int (*mdoubleclickevent) ( struct Widget_ *wgt, int button, int x, int y ); /**< Double-click handler, bypassing the click handler if provided. */
    int (*mwheelevent) ( struct Widget_ *wgt, SDL_MouseWheelEvent event ); /**< Mouse click event handler function for the widget. */
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    void (*scrolldone) ( struct Widget_ *wgt ); /**< Scrolling is over. */
    int (*rawevent) ( struct Widget_ *wgt, SDL_Event *event ); /**< Raw event handler function for widget. */
    void (*exposeevent) ( struct Widget_ *wgt, int exposed ); /**< Widget show and hide handler. */
@@ -134,8 +141,10 @@ typedef struct Widget_ {
 #define WINDOW_NOFOCUS     (1<<0) /**< Window can not be active window. */
 #define WINDOW_NOINPUT     (1<<1) /**< Window receives no input. */
 #define WINDOW_NORENDER    (1<<2) /**< Window does not render even if it should. */
-#define WINDOW_NOBORDER    (1<<3) /**< Window does not need border. */
+#define WINDOW_NOBORDER    (1<<3) /**< Window does not need border (this is the window background and title, only renders widgets). */
 #define WINDOW_FULLSCREEN  (1<<4) /**< Window is fullscreen. */
+#define WINDOW_CENTERX     (1<<5) /**< Window is X-centered. */
+#define WINDOW_CENTERY     (1<<6) /**< Window is Y-centered. */
 #define WINDOW_KILL        (1<<9) /**< Window should die. */
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
@@ -152,6 +161,7 @@ typedef struct Window_ {
 
    unsigned int id; /**< Unique ID. */
    char *name; /**< Window name - should be unique. */
+   char *displayname; /**< Display name obtained with gettext. */
    unsigned int flags; /**< Window flags. */
    int idgen; /**< ID generator for widgets. */
 
@@ -160,7 +170,7 @@ typedef struct Window_ {
 
    void (*accept_fptr)(unsigned int wid, char* name); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
    void (*cancel_fptr)(unsigned int wid, char* name); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
-   int (*keyevent)(unsigned int wid,SDLKey,SDLMod); /**< User defined custom key event handler. */
+   int (*keyevent)(unsigned int wid,SDL_Keycode,SDL_Keymod); /**< User defined custom key event handler. */
    int (*eventevent)(unsigned int wid,SDL_Event *evt); /**< User defined event handler. */
 
    /* Position and dimensions. */
@@ -208,6 +218,8 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
 void toolkit_drawScrollbar( int x, int y, int w, int h, double pos );
 void toolkit_drawRect( int x, int y, int w, int h,
                        const glColour* c, const glColour* lc );
+void toolkit_drawTriangle( int x1, int y1, int x2, int y2, int x3, int y3,
+                       const glColour* c );
 void toolkit_drawAltText( int bx, int by, const char *alt );
 
 

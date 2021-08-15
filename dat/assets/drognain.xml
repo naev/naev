@@ -5,8 +5,8 @@
   <y>5635.272211</y>
  </pos>
  <GFX>
-  <space>K02.png</space>
-  <exterior>methane.png</exterior>
+  <space>K02.webp</space>
+  <exterior>methane.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
@@ -16,18 +16,13 @@
  <general>
   <class>K</class>
   <population>12000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
    <missions/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
-  <description>Dronain is an example of the Za'lek intellectual elite's more excessive traits and occasional flamboyant failures.. The planet is an abysmal hell that has only gotten worse thanks to being the foreground of various terraforming experiments that failed. However, the Za'lek still maintain a presence on the world despite this, mostly through borderline force.</description>
+  <commodities/>
+  <description>Drognain is an example of the Za'lek intellectual elite's more excessive traits and occasional flamboyant failures.. The planet is an abysmal hell that has only gotten worse thanks to being the foreground of various terraforming experiments that failed. However, the Za'lek still maintain a presence on the world despite this, mostly through borderline force.</description>
  </general>
 </asset>

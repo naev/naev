@@ -9,9 +9,11 @@
  */
 
 
-#include "shipstats.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "shipstats.h"
 
 #include "log.h"
 #include "nstring.h"
@@ -23,6 +25,7 @@
 typedef enum StatDataType_ {
    SS_DATA_TYPE_DOUBLE,          /**< Relative [0:inf] value. */
    SS_DATA_TYPE_DOUBLE_ABSOLUTE, /**< Absolute double value. */
+   SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, /**< Absolute double value as a percent. */
    SS_DATA_TYPE_INTEGER,         /**< Absolute integer value. */
    SS_DATA_TYPE_BOOLEAN          /**< Boolean value, defaults 0. */
 } StatDataType;
@@ -56,6 +59,8 @@ typedef struct ShipStatsLookup_ {
    ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE, 0 )
 #define A__ELEM( t, n, dsp ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 0 )
+#define P__ELEM( t, n, dsp ) \
+   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, 0 )
 #define I__ELEM( t, n, dsp ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_INTEGER, 0 )
 #define B__ELEM( t, n, dsp ) \
@@ -65,6 +70,8 @@ typedef struct ShipStatsLookup_ {
    ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE, 1 )
 #define AI_ELEM( t, n, dsp ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 1 )
+#define PI_ELEM( t, n, dsp ) \
+   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT, 1 )
 #define II_ELEM( t, n, dsp ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_INTEGER, 1 )
 #define BI_ELEM( t, n, dsp ) \
@@ -80,60 +87,96 @@ static const ShipStatsLookup ss_lookup[] = {
    /* Null element. */
    N__ELEM( SS_TYPE_NIL ),
 
-   D__ELEM( SS_TYPE_D_SPEED_MOD,          speed_mod,           "Speed" ),
-   D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,            "Turn" ),
-   D__ELEM( SS_TYPE_D_THRUST_MOD,         thrust_mod,          "Thrust" ),
-   D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,           "Cargo space" ),
-   D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,          "Armour strength" ),
-   D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod,    "Armour regeneration" ),
-   D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,          "Shield strength" ),
-   D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod,    "Shield regeneration" ),
-   D__ELEM( SS_TYPE_D_ENERGY_MOD,         energy_mod,          "Energy capacity" ),
-   D__ELEM( SS_TYPE_D_ENERGY_REGEN_MOD,   energy_regen_mod,    "Energy regeneration" ),
-   D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,             "CPU capacity" ),
+   D__ELEM( SS_TYPE_D_SPEED_MOD,          speed_mod,           N_("Speed") ),
+   D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,            N_("Turn") ),
+   D__ELEM( SS_TYPE_D_THRUST_MOD,         thrust_mod,          N_("Thrust") ),
+   D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,           N_("Cargo Space") ),
+   D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,          N_("Armour Strength") ),
+   D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod,    N_("Armour Regeneration") ),
+   D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,          N_("Shield Strength") ),
+   D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod,    N_("Shield Regeneration") ),
+   D__ELEM( SS_TYPE_D_ENERGY_MOD,         energy_mod,          N_("Energy Capacity") ),
+   D__ELEM( SS_TYPE_D_ENERGY_REGEN_MOD,   energy_regen_mod,    N_("Energy Regeneration") ),
+   D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,             N_("CPU Capacity") ),
 
-   DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,          "Jump Time" ),
-   DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia,       "Cargo Inertia" ),
+   DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,          N_("Jump Time") ),
+   DI_ELEM( SS_TYPE_D_LAND_DELAY,         land_delay,          N_("Landing Time") ),
+   DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia,       N_("Cargo Inertia") ),
 
-   D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             "Cloaking" ),
-   D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,           "Detection" ),
-   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,       "Jump Detection" ),
+   D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,             N_("Concealment") ),
+   D__ELEM( SS_TYPE_D_EW_EVADE,           ew_evade,            N_("Evasion") ),
+   D__ELEM( SS_TYPE_D_EW_STEALTH,         ew_stealth,          N_("Stealth") ),
+   D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,           N_("Detection") ),
+   D__ELEM( SS_TYPE_D_EW_TRACK,           ew_track,            N_("Tracking") ),
+   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,      ew_jump_detect,      N_("Jump Detection") ),
+   DI_ELEM( SS_TYPE_D_EW_STEALTH_TIMER,   ew_stealth_timer,    N_("Stealth Discovered Speed") ),
 
-   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         "Launch Rate" ),
-   D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,        "Launch Range" ),
-   D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       "Ammo Capacity" ),
-   D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       "Launch Lockon" ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,         N_("Fire Rate (Launcher)") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,        N_("Launch Range") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_DAMAGE,      launch_damage,       N_("Damage (Launcher)") ),
+   D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity,       N_("Ammo Capacity") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon,       N_("Launch Lock-on") ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RELOAD,      launch_reload,       N_("Ammo Reload Rate") ),
 
-   DI_ELEM( SS_TYPE_D_FORWARD_HEAT,       fwd_heat,            "Heat (Cannon)" ),
-   D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,     fwd_damage,          "Damage (Cannon)" ),
-   D__ELEM( SS_TYPE_D_FORWARD_FIRERATE,   fwd_firerate,        "Fire Rate (Cannon)" ),
-   DI_ELEM( SS_TYPE_D_FORWARD_ENERGY,     fwd_energy,          "Energy Usage (Cannon)" ),
+   D__ELEM( SS_TYPE_D_FBAY_DAMAGE,        fbay_damage,         N_("Fighter Damage") ),
+   D__ELEM( SS_TYPE_D_FBAY_HEALTH,        fbay_health,         N_("Fighter Health") ),
+   D__ELEM( SS_TYPE_D_FBAY_MOVEMENT,      fbay_movement,       N_("Fighter Movement") ),
+   D__ELEM( SS_TYPE_D_FBAY_CAPACITY,      fbay_capacity,       N_("Fighter Bay Capacity") ),
+   D__ELEM( SS_TYPE_D_FBAY_RATE,          fbay_rate,           N_("Fighter Bay Launch Rate") ),
+   D__ELEM( SS_TYPE_D_FBAY_RELOAD,        fbay_reload,         N_("Fighter Reload Rate") ),
 
-   DI_ELEM( SS_TYPE_D_TURRET_HEAT,        tur_heat,            "Heat (Turret)" ),
-   D__ELEM( SS_TYPE_D_TURRET_DAMAGE,      tur_damage,          "Damage (Turret)" ),
-   D__ELEM( SS_TYPE_D_TURRET_TRACKING,    tur_tracking,        "Tracking (Turret)" ),
-   D__ELEM( SS_TYPE_D_TURRET_FIRERATE,    tur_firerate,        "Fire Rate (Turret)" ),
-   DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,          "Energy Usage (Turret)" ),
+   DI_ELEM( SS_TYPE_D_FORWARD_HEAT,       fwd_heat,            N_("Heat (Cannon)") ),
+   D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,     fwd_damage,          N_("Damage (Cannon)") ),
+   D__ELEM( SS_TYPE_D_FORWARD_FIRERATE,   fwd_firerate,        N_("Fire Rate (Cannon)") ),
+   DI_ELEM( SS_TYPE_D_FORWARD_ENERGY,     fwd_energy,          N_("Energy Usage (Cannon)") ),
+   D__ELEM( SS_TYPE_D_FORWARD_DAMAGE_AS_DISABLE,fwd_dam_as_dis,N_("Damage as Disable (Cannon)") ),
 
-   D__ELEM( SS_TYPE_D_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   "Nebula Resistance (Shield)" ),
-   D__ELEM( SS_TYPE_D_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   "Nebula Resistance (Armour)" ),
+   DI_ELEM( SS_TYPE_D_TURRET_HEAT,        tur_heat,            N_("Heat (Turret)") ),
+   D__ELEM( SS_TYPE_D_TURRET_DAMAGE,      tur_damage,          N_("Damage (Turret)") ),
+   D__ELEM( SS_TYPE_D_TURRET_TRACKING,    tur_tracking,        N_("Tracking (Turret)") ),
+   D__ELEM( SS_TYPE_D_TURRET_FIRERATE,    tur_firerate,        N_("Fire Rate (Turret)") ),
+   DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,          N_("Energy Usage (Turret)") ),
+   D__ELEM( SS_TYPE_D_TURRET_DAMAGE_AS_DISABLE, tur_dam_as_dis,N_("Damage as Disable (Turret)") ),
 
-   D__ELEM( SS_TYPE_D_HEAT_DISSIPATION,   heat_dissipation,    "Heat Dissipation" ),
-   D__ELEM( SS_TYPE_D_STRESS_DISSIPATION, stress_dissipation,  "Stress Dissipation" ),
-   D__ELEM( SS_TYPE_D_CREW,               crew_mod,            "Crew" ),
-   D__ELEM( SS_TYPE_D_MASS,               mass_mod,            "Mass" ),
-   D__ELEM( SS_TYPE_D_ENGINE_LIMIT_REL,   engine_limit_rel,    "Engine Mass Limit" ),
+   D__ELEM( SS_TYPE_D_HEAT_DISSIPATION,   heat_dissipation,    N_("Heat Dissipation") ),
+   D__ELEM( SS_TYPE_D_STRESS_DISSIPATION, stress_dissipation,  N_("Stress Dissipation") ),
+   D__ELEM( SS_TYPE_D_CREW,               crew_mod,            N_("Crew") ),
+   DI_ELEM( SS_TYPE_D_MASS,               mass_mod,            N_("Ship Mass") ),
+   D__ELEM( SS_TYPE_D_ENGINE_LIMIT_REL,   engine_limit_rel,    N_("Engine Mass Limit") ),
+   D__ELEM( SS_TYPE_D_LOOT_MOD,           loot_mod,            N_("Boarding Bonus") ),
+   DI_ELEM( SS_TYPE_D_TIME_MOD,           time_mod,            N_("Time Constant") ),
+   D__ELEM( SS_TYPE_D_TIME_SPEEDUP,       time_speedup,        N_("Speed-Up") ),
+   DI_ELEM( SS_TYPE_D_COOLDOWN_TIME,      cooldown_time,       N_("Ship Cooldown Time") ),
+   D__ELEM( SS_TYPE_D_JUMP_DISTANCE,      jump_distance,       N_("Jump Distance") ),
 
-   A__ELEM( SS_TYPE_A_ENERGY_FLAT,        energy_flat,         "Energy Capacity" ),
-   AI_ELEM( SS_TYPE_A_ENERGY_REGEN_FLAT,  energy_usage,        "Energy Usage" ),
-   A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             "CPU Capacity" ),
+   A__ELEM( SS_TYPE_A_THRUST,             thrust,              N_("kN/tonne Thrust") ),
+   A__ELEM( SS_TYPE_A_TURN,               turn,                N_("deg/s Turn Rate") ),
+   A__ELEM( SS_TYPE_A_SPEED,              speed,               N_("m/s Maximum Speed") ),
+   A__ELEM( SS_TYPE_A_ENERGY,             energy,              N_("MJ Energy Capacity") ),
+   A__ELEM( SS_TYPE_A_ENERGY_REGEN,       energy_regen,        N_("MW Energy Regeneration") ),
+   AI_ELEM( SS_TYPE_A_ENERGY_REGEN_MALUS, energy_regen_malus,  N_("MW Energy Usage") ),
+   AI_ELEM( SS_TYPE_A_ENERGY_LOSS,        energy_loss,         N_("MW Energy Usage") ),
+   A__ELEM( SS_TYPE_A_SHIELD,             shield,              N_("MJ Shield Capacity") ),
+   A__ELEM( SS_TYPE_A_SHIELD_REGEN,       shield_regen,        N_("MW Shield Regeneration") ),
+   AI_ELEM( SS_TYPE_A_SHIELD_REGEN_MALUS, shield_regen_malus,  N_("MW Shield Usage") ),
+   A__ELEM( SS_TYPE_A_ARMOUR,             armour,              N_("MJ Armour") ),
+   A__ELEM( SS_TYPE_A_ARMOUR_REGEN,       armour_regen,        N_("MW Armour Regeneration") ),
+   AI_ELEM( SS_TYPE_A_ARMOUR_REGEN_MALUS, armour_regen_malus,  N_("MW Armour Damage") ),
 
-   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        "Engine Mass Limit" ),
+   A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity") ),
+   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit") ),
 
-   I__ELEM( SS_TYPE_I_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, "Hidden Jump Detection" ),
+   P__ELEM( SS_TYPE_P_ABSORB,             absorb,              N_("Damage Absorption") ),
 
-   B__ELEM( SS_TYPE_B_INSTANT_JUMP,       misc_instant_jump,   "Instant Jump" ),
-   B__ELEM( SS_TYPE_B_REVERSE_THRUST,     misc_reverse_thrust, "Reverse Thrusters" ),
+   P__ELEM( SS_TYPE_P_NEBULA_ABSORB,      nebu_absorb,         N_("Nebula Resistance") ),
+
+   B__ELEM( SS_TYPE_I_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, N_("Hidden Jump Detection") ),
+   I__ELEM( SS_TYPE_I_FUEL,               fuel,                N_("units Fuel") ),
+   I__ELEM( SS_TYPE_I_CARGO,              cargo,               N_("tonnes Cargo Space") ),
+
+   B__ELEM( SS_TYPE_B_INSTANT_JUMP,       misc_instant_jump,   N_("Instant Jump") ),
+   B__ELEM( SS_TYPE_B_REVERSE_THRUST,     misc_reverse_thrust, N_("Reverse Thrusters") ),
+   B__ELEM( SS_TYPE_B_ASTEROID_SCAN,      misc_asteroid_scan,  N_("Asteroid Scanner") ),
 
    /* Sentinel. */
    N__ELEM( SS_TYPE_SENTINEL )
@@ -149,6 +192,8 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
 static int ss_printA( char *buf, int len, int newline, double d, const ShipStatsLookup *sl );
 static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLookup *sl );
 static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLookup *sl );
+static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type );
+static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal );
 
 
 /**
@@ -178,6 +223,7 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
    sl = &ss_lookup[ type ];
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
          ll->d.d     = xml_getFloat(node) / 100.;
          break;
 
@@ -199,7 +245,7 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
 
 
 /**
- * @brief Checks for sanity.
+ * @brief Checks for validity.
  */
 int ss_check (void)
 {
@@ -207,7 +253,7 @@ int ss_check (void)
 
    for (i=0; i<=SS_TYPE_SENTINEL; i++) {
       if (ss_lookup[i].type != i) {
-         WARN("ss_lookup: %s should have id %d but has %d",
+         WARN(_("ss_lookup: %s should have id %d but has %d"),
                ss_lookup[i].name, i, ss_lookup[i].type );
          return -1;
       }
@@ -224,6 +270,7 @@ int ss_statsInit( ShipStats *stats )
 {
    int i;
    char *ptr;
+   char *fieldptr;
    double *dbl;
    const ShipStatsLookup *sl;
 
@@ -241,14 +288,74 @@ int ss_statsInit( ShipStats *stats )
       /* Handle doubles. */
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
-            dbl   = (double*) &ptr[ sl->offset ];
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&dbl, &fieldptr, sizeof(double*));
             *dbl  = 1.0;
             break;
 
          /* No need to set, memset does the work. */
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
          case SS_DATA_TYPE_INTEGER:
          case SS_DATA_TYPE_BOOLEAN:
+            break;
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Merges two different ship stats.
+ *
+ *    @param dest Destination ship stats.
+ *    @param src Source to be merged with destination.
+ */
+int ss_statsMerge( ShipStats *dest, const ShipStats *src )
+{
+   int i;
+   int *destint;
+   const int *srcint;
+   double *destdbl;
+   const double *srcdbl;
+   char *destptr;
+   const char *srcptr;
+   const ShipStatsLookup *sl;
+
+   destptr = (char*) dest;
+   srcptr = (const char*) src;
+   for (i=0; i<SS_TYPE_SENTINEL; i++) {
+      sl = &ss_lookup[ i ];
+
+      /* Only want valid names. */
+      if (sl->name == NULL)
+         continue;
+
+      switch (sl->data) {
+         case SS_DATA_TYPE_DOUBLE:
+            destdbl = (double*) &destptr[ sl->offset ];
+            srcdbl = (const double*) &srcptr[ sl->offset ];
+            *destdbl = (*destdbl) * (*srcdbl);
+            break;
+
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+            destdbl = (double*) &destptr[ sl->offset ];
+            srcdbl = (const double*) &srcptr[ sl->offset ];
+            *destdbl = (*destdbl) + (*srcdbl);
+            break;
+
+         case SS_DATA_TYPE_INTEGER:
+            destint = (int*) &destptr[ sl->offset ];
+            srcint = (const int*) &srcptr[ sl->offset ];
+            *destint = (*destint) + (*srcint);
+            break;
+
+         case SS_DATA_TYPE_BOOLEAN:
+            destint = (int*) &destptr[ sl->offset ];
+            srcint = (const int*) &srcptr[ sl->offset ];
+            *destint = !!((*destint) + (*srcint));
             break;
       }
    }
@@ -262,12 +369,12 @@ int ss_statsInit( ShipStats *stats )
  *
  *    @param stats Stat structure to modify.
  *    @param list Single element to apply.
- *    @param amount If non nil stores the number found in amount.
  *    @return 0 on success.
  */
-int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipStats *amount )
+int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
 {
    char *ptr;
+   char *fieldptr;
    double *dbl;
    int *i;
    const ShipStatsLookup *sl = &ss_lookup[ list->type ];
@@ -275,38 +382,29 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
    ptr = (char*) stats;
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
-      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-         dbl   = (double*) &ptr[ sl->offset ];
-         *dbl += list->d.d;
-         if ((sl->data==SS_DATA_TYPE_DOUBLE) && (*dbl < 0.)) /* Don't let the values go negative. */
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&dbl, &fieldptr, sizeof(double*));
+         *dbl *= 1.0+list->d.d;
+         if (*dbl < 0.) /* Don't let the values go negative. */
             *dbl = 0.;
+         break;
 
-         /* We'll increment amount. */
-         if (amount != NULL) {
-            if ((sl->inverted && (list->d.d < 0.)) ||
-                  (!sl->inverted && (list->d.d > 0.))) {
-               ptr      = (char*) amount;
-               dbl      = (double*) &ptr[ sl->offset ];
-               (*dbl)  += 1.0;
-            }
-         }
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&dbl, &fieldptr, sizeof(double*));
+         *dbl += list->d.d;
          break;
 
       case SS_DATA_TYPE_INTEGER:
-         i     = (int*) &ptr[ sl->offset ];
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&i, &fieldptr, sizeof(int*));
          *i   += list->d.i;
-         if (amount != NULL) {
-            if ((sl->inverted && (list->d.i < 0)) ||
-                  (!sl->inverted && (list->d.i > 0))) {
-               ptr      = (char*) amount;
-               i        = (int*) &ptr[ sl->offset ];
-               (*i)    += 1;
-            }
-         }
          break;
 
       case SS_DATA_TYPE_BOOLEAN:
-         i     = (int*) &ptr[ sl->offset ];
+         fieldptr = &ptr[ sl->offset ];
+         memcpy(&i, &fieldptr, sizeof(int*));
          *i    = 1; /* Can only set to true. */
          break;
    }
@@ -320,16 +418,15 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
  *
  *    @param stats Stats to update.
  *    @param list List to update from.
- *    @param amount If non nil stores the number found in amount.
  */
-int ss_statsModFromList( ShipStats *stats, const ShipStatList* list, const ShipStats *amount )
+int ss_statsModFromList( ShipStats *stats, const ShipStatList* list )
 {
    int ret;
    const ShipStatList *ll;
 
    ret = 0;
    for (ll = list; ll != NULL; ll = ll->next)
-      ret |= ss_statsModSingle( stats, ll, amount );
+      ret |= ss_statsModSingle( stats, ll );
 
    return ret;
 }
@@ -374,7 +471,7 @@ ShipStatsType ss_typeFromName( const char *name )
       if ((ss_lookup[i].name != NULL) && (strcmp(name,ss_lookup[i].name)==0))
          return ss_lookup[i].type;
 
-   WARN("ss_typeFromName: No ship stat matching '%s'", name);
+   WARN(_("ss_typeFromName: No ship stat matching '%s'"), name);
    return SS_TYPE_NIL;
 }
 
@@ -386,12 +483,12 @@ static const char* ss_printD_colour( double d, const ShipStatsLookup *sl )
 {
    if (sl->inverted) {
       if (d < 0.)
-         return "D";
+         return "g";
       return "r";
    }
 
    if (d > 0.)
-      return "D";
+      return "g";
    return "r";
 }
 /**
@@ -401,12 +498,12 @@ static const char* ss_printI_colour( int i, const ShipStatsLookup *sl )
 {
    if (sl->inverted) {
       if (i < 0)
-         return "D";
+         return "g";
       return "r";
    }
 
    if (i > 0)
-      return "D";
+      return "g";
    return "r";
 }
 
@@ -416,12 +513,12 @@ static const char* ss_printI_colour( int i, const ShipStatsLookup *sl )
  */
 static int ss_printD( char *buf, int len, int newline, double d, const ShipStatsLookup *sl )
 {
-   if (fabs(d) < 1e-10)
+   if (FABS(d) < 1e-10)
       return 0;
-   return nsnprintf( buf, len, "%s\e%s%+.0f%% %s\e0",
+   return scnprintf( buf, len, "%s#%s%+.0f%% %s#0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
-         d*100., sl->display );
+         d*100., _(sl->display) );
 }
 
 
@@ -430,12 +527,12 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
  */
 static int ss_printA( char *buf, int len, int newline, double d, const ShipStatsLookup *sl )
 {
-   if (fabs(d) < 1e-10)
+   if (FABS(d) < 1e-10)
       return 0;
-   return nsnprintf( buf, len, "%s\e%s%+.0f %s\e0",
+   return scnprintf( buf, len, "%s#%s%+.0f %s#0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
-         d, sl->display );
+         d, _(sl->display) );
 }
 
 
@@ -446,10 +543,10 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 {
    if (i == 0)
       return 0;
-   return nsnprintf( buf, len, "%s\e%s%+d %s\e0",
+   return scnprintf( buf, len, "%s#%s%+d %s#0",
          (newline) ? "\n" : "",
          ss_printI_colour( i, sl ),
-         i, sl->display );
+         i, _(sl->display) );
 }
 
 
@@ -460,10 +557,10 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 {
    if (!b)
       return 0;
-   return nsnprintf( buf, len, "%s\e%s%s\e0",
+   return scnprintf( buf, len, "%s#%s%s#0",
          (newline) ? "\n" : "",
          ss_printI_colour( b, sl ),
-         sl->display );
+         _(sl->display) );
 }
 
 
@@ -472,7 +569,7 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 /**
  * @brief Writes the ship statistics description.
  *
- *    @param s Ship stats to use.
+ *    @param ll Ship stats to use.
  *    @param buf Buffer to write to.
  *    @param len Space left in the buffer.
  *    @param newline Add a newline at start.
@@ -492,6 +589,7 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
 
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
             i += ss_printD( &buf[i], left, newl, ll->d.d, sl );
             break;
 
@@ -521,13 +619,13 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
  *    @param buf Buffer to write to.
  *    @param len Space left in the buffer.
  *    @param newline Add a newline at start.
- *    @param pilot Stats come from a pilot.
  *    @return Number of characters written.
  */
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 {
    int i, l, left;
    char *ptr;
+   char *fieldptr;
    double *dbl;
    int *num;
    const ShipStatsLookup *sl;
@@ -548,87 +646,37 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
-            dbl   = (double*) &ptr[ sl->offset ];
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&dbl, &fieldptr, sizeof(double*));
             l    += ss_printD( &buf[l], left, (newline||(l!=0)), ((*dbl)-1.), sl );
             break;
 
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&dbl, &fieldptr, sizeof(double*));
+            l    += ss_printD( &buf[l], left, (newline||(l!=0)), (*dbl), sl );
+            break;
+
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-            dbl   = (double*) &ptr[ sl->offset ];
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&dbl, &fieldptr, sizeof(double*));
             l    += ss_printA( &buf[l], left, (newline||(l!=0)), (*dbl), sl );
             break;
 
          case SS_DATA_TYPE_INTEGER:
-            num   = (int*) &ptr[ sl->offset ];
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&num, &fieldptr, sizeof(int*));
             l    += ss_printI( &buf[l], left, (newline||(l!=0)), (*num), sl );
             break;
 
          case SS_DATA_TYPE_BOOLEAN:
-            num   = (int*) &ptr[ sl->offset ];
+            fieldptr = &ptr[ sl->offset ];
+            memcpy(&num, &fieldptr, sizeof(int*));
             l    += ss_printB( &buf[l], left, (newline||(l!=0)), (*num), sl );
             break;
       }
    }
 
-   return l;
-}
-
-
-/**
- * @brief Generates CSV output for the given ship stats.
- *
- *    @param s Ship stats to use.
- *    @param[out] buf Buffer to write to.
- *    @param len Space left in the buffer.
- *    @return Number of characters written.
- */
-int ss_csv( const ShipStats *s, char *buf, int len )
-{
-   int i, l, left, num;
-   double dbl;
-   char *ptr;
-   const ShipStatsLookup *sl;
-
-   l = 0;
-   ptr = (char*) s;
-   for (i=0; i<SS_TYPE_SENTINEL; i++) {
-      sl = &ss_lookup[ i ];
-
-      /* Only want valid names. */
-      if (sl->name == NULL)
-         continue;
-
-      /* Calculate offset left. */
-      left = len - l;
-      if (left < 0) {
-         WARN("Buffer out of space, CSV output truncated");
-         break;
-      }
-
-      if (s == NULL) {
-         l += nsnprintf( &buf[l], left, "%s,", sl->name );
-         continue;
-      }
-
-      switch (sl->data) {
-         case SS_DATA_TYPE_DOUBLE:
-            dbl = *(double*) &ptr[ sl->offset ];
-            l  += nsnprintf( &buf[l], left, "%f,", (dbl - 1.) * 100. );
-            break;
-
-         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-            dbl = *(double*) &ptr[ sl->offset ];
-            l  += nsnprintf( &buf[l], left, "%f,", dbl );
-            break;
-
-         case SS_DATA_TYPE_INTEGER:
-         case SS_DATA_TYPE_BOOLEAN:
-            num = *(int*) &ptr[ sl->offset ];
-            l  += nsnprintf( &buf[l], left, "%d,", num );
-            break;
-      }
-   }
-
-   buf[l-1] = '\n'; /* Terminate with a newline. */
    return l;
 }
 
@@ -649,3 +697,202 @@ void ss_free( ShipStatList *ll )
 
 
 
+/**
+ * @brief Sets a ship stat by name.
+ */
+int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
+{
+   const ShipStatsLookup *sl;
+   ShipStatsType type;
+   char *ptr;
+   double *destdbl;
+   int *destint;
+   double v;
+
+   type = ss_typeFromName( name );
+   if (type == SS_TYPE_NIL) {
+      WARN(_("Unknown ship stat type '%s'!"), name );
+      return -1;
+   }
+
+   sl = &ss_lookup[ type ];
+   ptr = (char*) s;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         destdbl = (double*) &ptr[ sl->offset ];
+         v = 1.0 + value / 100.;
+         if (overwrite)
+            *destdbl = v;
+         else
+            *destdbl *= v;
+         break;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+         destdbl  = (double*) &ptr[ sl->offset ];
+         if (overwrite)
+            *destdbl = value;
+         else
+            *destdbl += value;
+         break;
+
+      case SS_DATA_TYPE_BOOLEAN:
+         destint  = (int*) &ptr[ sl->offset ];
+         if (overwrite)
+            *destint = !(fabs(value) > 1e-5);
+         else
+            *destint |= !(fabs(value) > 1e-5);
+         break;
+
+      case SS_DATA_TYPE_INTEGER:
+         destint  = (int*) &ptr[ sl->offset ];
+         if (overwrite)
+            *destint = round(value);
+         else
+            *destint += round(value);
+         break;
+   }
+
+   return 0;
+}
+
+
+static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type )
+{
+   const ShipStatsLookup *sl;
+   const char *ptr;
+   const double *destdbl;
+   const int *destint;
+
+   sl = &ss_lookup[ type ];
+   ptr = (const char*) s;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         destdbl = (const double*) &ptr[ sl->offset ];
+         return 100.*((*destdbl) - 1.0);
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+         destdbl = (const double*) &ptr[ sl->offset ];
+         return 100.*(*destdbl);
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         destdbl  = (const double*) &ptr[ sl->offset ];
+         return *destdbl;
+
+      case SS_DATA_TYPE_BOOLEAN:
+      case SS_DATA_TYPE_INTEGER:
+         destint  = (const int*) &ptr[ sl->offset ];
+         return *destint;
+   }
+   return 0.;
+}
+
+
+static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal )
+{
+   const ShipStatsLookup *sl;
+   const char *ptr;
+   const double *destdbl;
+   const int *destint;
+
+   sl = &ss_lookup[ type ];
+   ptr = (const char*) s;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         destdbl = (const double*) &ptr[ sl->offset ];
+         if (internal)
+            lua_pushnumber(L, *destdbl );
+         else
+            lua_pushnumber(L, 100.*((*destdbl) - 1.0) );
+         return 0;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+         destdbl = (const double*) &ptr[ sl->offset ];
+         if (internal)
+            lua_pushnumber(L, *destdbl );
+         else
+            lua_pushnumber(L, 100.*(*destdbl));
+         return 0;
+
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         destdbl  = (const double*) &ptr[ sl->offset ];
+         lua_pushnumber(L, *destdbl);
+         return 0;
+
+      case SS_DATA_TYPE_BOOLEAN:
+         destint  = (const int*) &ptr[ sl->offset ];
+         lua_pushboolean(L, *destint);
+         return 0;
+
+      case SS_DATA_TYPE_INTEGER:
+         destint  = (const int*) &ptr[ sl->offset ];
+         lua_pushinteger(L, *destint);
+         return 0;
+   }
+   lua_pushnil(L);
+   return -1;
+}
+
+
+
+/**
+ * @brief Gets a ship stat value by name.
+ */
+double ss_statsGet( const ShipStats *s, const char *name )
+{
+   ShipStatsType type;
+
+   type = ss_typeFromName( name );
+   if (type == SS_TYPE_NIL) {
+      WARN(_("Unknown ship stat type '%s'!"), name );
+      return 0;
+   }
+
+   return ss_statsGetInternal( s, type );
+}
+
+/**
+ * @brief Gets a ship stat value by name and pushes it to Lua.
+ */
+int ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name, int internal )
+{
+   ShipStatsType type;
+
+   if (name==NULL)
+      return ss_statsGetLuaTable( L, s, internal );
+
+   type = ss_typeFromName( name );
+   if (type == SS_TYPE_NIL) {
+      WARN(_("Unknown ship stat type '%s'!"), name );
+      return -1;
+   }
+
+   return ss_statsGetLuaInternal( L, s, type, internal );
+}
+
+
+/**
+ * @brief Converts ship stats to a Lua table, which is pushed on the Lua stack.
+ */
+int ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal )
+{
+   int i;
+   const ShipStatsLookup *sl;
+
+   lua_newtable(L);
+
+   for (i=0; i<SS_TYPE_SENTINEL; i++) {
+      sl = &ss_lookup[ i ];
+
+      /* Only want valid names. */
+      if (sl->name == NULL)
+         continue;
+
+      /* Push name and get value. */
+      lua_pushstring(L, sl->name);
+      ss_statsGetLuaInternal( L, s, i, internal );
+      lua_rawset( L, -3 );
+   }
+
+   return 0;
+}

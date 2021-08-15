@@ -8,7 +8,7 @@
  * @brief Provides macros to work with dynamic arrays.
  *
  * @note Except were noted, macros do not have side effects from
- * expations.
+ * expansions.
  *
  * Usage example:
  *
@@ -23,7 +23,7 @@
  *    need_fill = fill_array_member( &array_grow( &my_array ) );
  *
  * // Shrink to minimum (if static it's a good idea).
- * array_shrink( my_array );
+ * array_shrink( &my_array );
  *
  * // Do stuff
  * for (i=0; i<array_size( my_array ); i++)
@@ -38,33 +38,37 @@
 #ifndef ARRAY_H
 #  define ARRAY_H
 
-#include <stddef.h>
+/** @cond */
 #include <assert.h>
+#include <stddef.h>
+#include <stdalign.h>
 #include <stdint.h>
+/** @endcond */
 
-#ifdef DEBUGGING
-#define SENTINEL ((int)0xbabecafe) /**< Badass sentinel. */
-#endif
+#include "attributes.h"
+
+#define ARRAY_SENTINEL 0x15bada55 /**< Badass sentinel. */
 
 /**
  * @brief Private container type for the arrays.
  */
 typedef struct {
-#ifdef DEBUGGING
+#if DEBUG_ARRAYS
    int _sentinel;         /**< Sentinel for when debugging. */
-#endif
-   int _reserved;         /**< Number of elements reserved */
-   int _size;             /**< Number of elements in the array */
-   char _array[0];        /**< Begin of the array */
+#endif /* DEBUG_ARRAYS */
+   size_t _reserved;      /**< Number of elements reserved */
+   size_t _size;          /**< Number of elements in the array */
+   char alignas(max_align_t) _array[0];  /**< Begin of the array */
 } _private_container;
 
 
-void *_array_create_helper(size_t e_size);
+void *_array_create_helper(size_t e_size, size_t initial_size);
 void *_array_grow_helper(void **a, size_t e_size);
-void _array_resize_helper(void **a, size_t e_size, int new_size);
+void _array_resize_helper(void **a, size_t e_size, size_t new_size);
 void _array_erase_helper(void **a, size_t e_size, void *first, void *last);
 void _array_shrink_helper(void **a, size_t e_size);
 void _array_free_helper(void *a);
+void *_array_copy_helper(size_t e_size, void *a);
 
 /**
  * @brief Gets the container of an array.
@@ -72,30 +76,17 @@ void _array_free_helper(void *a);
  *    @param a Array to get container of.
  *    @return The container of the array a.
  */
-__inline__ static _private_container *_array_private_container(void *a)
+static inline _private_container *_array_private_container(void *a)
 {
    assert("NULL array!" && (a != NULL));
 
    _private_container *c = (_private_container *)a - 1;
 
-#ifdef DEBUGGING
-   assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == SENTINEL));
-#endif
+#if DEBUG_ARRAYS
+   assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == ARRAY_SENTINEL));
+#endif /* DEBUG_ARRAYS */
 
    return c;
-}
-
-/**
- * @brief Gets the end of the array.
- *
- *    @param a Array to get end of.
- *    @param e_size Size of array members.
- *    @return The end of the array a.
- */
-__inline__ static void *_array_end_helper(void *a, size_t e_size)
-{
-   _private_container *c = _array_private_container(a);
-   return c->_array + c->_size * e_size;
 }
 
 /**
@@ -104,7 +95,16 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  *    @param basic_type Type of the array to create.
  */
 #define array_create(basic_type) \
-      ((basic_type *)(_array_create_helper(sizeof(basic_type))))
+      ((basic_type *)(_array_create_helper(sizeof(basic_type), 1)))
+
+/**
+ * @brief Creates a new dynamic array of `basic_type' with an initial capacity
+ *
+ *    @param basic_type Type of the array to create.
+ *    @param capacity Initial size.
+ */
+#define array_create_size(basic_type, capacity) \
+      ((basic_type *)(_array_create_helper(sizeof(basic_type), capacity)))
 /**
  * @brief Resizes the array to accomodate new_size elements.
  *
@@ -164,32 +164,46 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
 
 /**
  * @brief Returns number of elements in the array.
+ * \warning macro, may evaluate argument twice.
  *
- *    @param ptr_array Array being manipulated.
+ *    @param array Array being manipulated.
  *    @return The size of the array (number of elements).
  */
-#define array_size(array) (_array_private_container(array)->_size)
+ALWAYS_INLINE static inline int array_size(const void *array)
+{
+   const _private_container *c1 = array;
+
+   if (c1 == NULL)
+      return 0;
+
+#if DEBUG_ARRAYS
+   assert("Sentinel not found. Use array_create() to create the array." && (c1[-1]._sentinel == ARRAY_SENTINEL));
+#endif /* DEBUG_ARRAYS */
+
+   return c1[-1]._size;
+}
 /**
  * @brief Returns number of elements reserved.
  *
- *    @param ptr_array Array being manipulated.
+ *    @param array Array being manipulated.
  *    @return The size of the array (memory usage).
  */
 #define array_reserved(array) (_array_private_container(array)->_reserved)
 /**
  * @brief Returns a pointer to the beginning of the reserved memory space.
  *
- *    @param ptr_array Array being manipulated.
+ *    @param array Array being manipulated.
  *    @return Beginning of memory space.
  */
 #define array_begin(array) (array)
 /**
  * @brief Returns a pointer to the end of the reserved memory space.
+ * \warning macro, may evaluate argument twice.
  *
- *    @param ptr_array Array being manipulated.
+ *    @param array Array being manipulated.
  *    @return End of memory space.
  */
-#define array_end(array) ((__typeof__(array))_array_end_helper((array), sizeof((array)[0])))
+#define array_end(array) ((array) + array_size(array))
 /**
  * @brief Returns the first element in the array.
  *
@@ -204,6 +218,9 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  *    @return The last element in the array.
  */
 #define array_back(ptr_array) (*(array_end(ptr_array) - 1))
+/** @brief Returns a shallow copy of the input array.  */
+#define array_copy(basic_type, ptr_array) \
+      ((basic_type *)(_array_copy_helper(sizeof(basic_type), (void *)(ptr_array))))
 
 
 #endif /* ARRAY_H */

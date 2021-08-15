@@ -16,17 +16,18 @@
   <asset>Pudas II</asset>
   <asset>Sudra</asset>
   <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Independent Trader Area</asset>
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Daravon">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Zied">
    <autopos/>
    <exitonly/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

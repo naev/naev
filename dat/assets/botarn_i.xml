@@ -5,13 +5,13 @@
   <y>-2757.751355</y>
  </pos>
  <GFX>
-  <space>X01.png</space>
-  <exterior>aquatic2.png</exterior>
+  <space>X01.webp</space>
+  <exterior>aquatic2.webp</exterior>
  </GFX>
  <general>
   <class>X</class>
   <population>0</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services/>
  </general>
 </asset>

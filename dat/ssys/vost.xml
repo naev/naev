@@ -19,9 +19,9 @@
   <asset>Xavier</asset>
  </assets>
  <jumps>
-  <jump target="Olypmus">
+  <jump target="Olympus">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Poltergeist">
    <autopos/>

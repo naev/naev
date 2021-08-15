@@ -7,18 +7,21 @@
 #  define NLUA_COL_H
 
 
-#include <lua.h>
-
 #include "colour.h"
+#include "nlua.h"
 
 
 #define COL_METATABLE      "colour" /**< COL metatable identifier. */
 
 
+/* Helper. */
+#define luaL_optcolour(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checkcolour)
+
+
 /*
  * Library loading
  */
-int nlua_loadCol( lua_State *L, int readonly );
+int nlua_loadCol( nlua_env env );
 
 /*
  * Colour operations

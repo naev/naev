@@ -1,3 +1,10 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Pirate Fame">
+  <trigger>enter</trigger>
+  <chance>100</chance>
+ </event>
+ --]]
 
 --[[
 -- Pirate Fame/Faction Standing script
@@ -27,64 +34,50 @@ end
 -- ship.
 --]]
 local function using_pirate_ship()
-   local s = player.pilot():ship():name()
+   local s = player.pilot():ship():nameRaw()
 
    return has(s, {
+      "Hyena",
       "Pirate Kestrel",
       "Pirate Admonisher",
       "Pirate Phalanx",
       "Pirate Ancestor",
       "Pirate Vendetta",
       "Pirate Shark",
-      "Pirate Rhino"
+      "Pirate Rhino",
    })
 end
 
 --[[
--- Returns a boolean indicating whether or not the player is using some kind
--- of monstruously powerfull or intimidating ship, like another’s faction
+-- Returns a boolean indicating whether or not the player is using some
+-- kind of monstrously powerful or intimidating ship, like a
 -- cruiser or carrier.
 --]]
 local function using_impressive_ship()
-   local s = player.pilot():ship():name()
-
-   return has(s, {
-      "Empire Peacemaker",
-      "Empire Hawking",
-      "Sirius Divinity",
-      "Sirius Dogma",
-      "Soromid Arx",
-      "Soromid Ira",
-      "Dvaered Goddard",
-      -- Still impressive, but purely “civilian”
-      "Goddard",
-      "Hawking",
-      "Kestrel"
-   })
+   local t = player.pilot():ship():baseType()
+   local c = player.pilot():ship():class()
+   return ( c == "Cruiser" or c == "Carrier" or c == "Battleship" )
 end
 
 function create()
    local fame = faction.playerStanding("Pirate")
 
-   -- If the player already has a low reputation, just stop there. 20 is the
-   -- minimum required to land on a pirate planet without having to bribe the
-   -- guy in charge of landing ships.
-   if fame <= 20 then
+   local floor = var.peek("_ffloor_decay_pirate")
+   if floor == nil then floor = -20 end
+   if fame <= floor then
       evt.finish()
    end
 
-   local maybe
+   local amt
    if using_pirate_ship() then
-      maybe = 0.05
+      amt = 0.15 + rnd.sigma() * 0.05
    elseif using_impressive_ship() then
-      maybe = 0.10
+      amt = 0.5 + rnd.sigma() * 0.10
    else
-      maybe = 0.15
+      amt = 1 + rnd.sigma() * 0.25
    end
 
-   if rnd.rnd() < maybe then
-      faction.modPlayerSingle("Pirate",-1)
-   end
+   faction.modPlayerSingle( "Pirate", -amt )
 
    evt.finish()
 end

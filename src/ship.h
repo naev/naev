@@ -8,17 +8,19 @@
 #  define SHIP_H
 
 
+#include "collision.h"
+#include "commodity.h"
+#include "nxml.h"
+#include "object.h"
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"
-#include "object.h"
-#include "nxml.h"
-#include "economy.h"
+#include "spfx.h"
 
 
 /* target gfx dimensions */
 #define SHIP_TARGET_W   128 /**< Ship target graphic width. */
-#define SHIP_TARGET_H   96 /**< Ship target graphic height. */
+#define SHIP_TARGET_H   128 /**< Ship target graphic height. */
 
 
 /**
@@ -32,28 +34,23 @@
 typedef enum ShipClass_ {
    SHIP_CLASS_NULL,        /**< Invalid ship class. */
    /* Civilian. */
-   SHIP_CLASS_YACHT,       /**< Small cheap ship. */
-   SHIP_CLASS_LUXURY_YACHT, /**< Small expensive ship. */
-   SHIP_CLASS_CRUISE_SHIP, /**< Medium ship. */
-   /* Merchant. */
+   SHIP_CLASS_YACHT,       /**< Ultra-small ship. */
    SHIP_CLASS_COURIER,     /**< Small ship. */
-   SHIP_CLASS_ARMOURED_TRANSPORT, /**< Medium, somewhat combat-oriented ship. */
    SHIP_CLASS_FREIGHTER,   /**< Medium ship. */
    SHIP_CLASS_BULK_CARRIER, /**< Large ship. */
+   SHIP_CLASS_ARMOURED_TRANSPORT, /**< Medium, somewhat combat-oriented ship. */
    /* Military. */
    SHIP_CLASS_SCOUT,       /**< Small scouter. */
+   SHIP_CLASS_INTERCEPTOR, /**< Ultra small attack ship. */
    SHIP_CLASS_FIGHTER,     /**< Small attack ship. */
    SHIP_CLASS_BOMBER,      /**< Small attack ship with many missiles. */
    SHIP_CLASS_CORVETTE,    /**< Very agile medium ship. */
    SHIP_CLASS_DESTROYER,   /**< Not so agile medium ship. */
    SHIP_CLASS_CRUISER,     /**< Large ship. */
+   SHIP_CLASS_BATTLESHIP,  /**< Larger ship. */
    SHIP_CLASS_CARRIER,     /**< Large ship with fighter bays. */
-   /* Robotic */
-   SHIP_CLASS_DRONE,       /**< Unmanned small robotic ship. */
-   SHIP_CLASS_HEAVY_DRONE, /**< Unmanned medium robotic ship. */
-   SHIP_CLASS_MOTHERSHIP   /**< Unmanned large robotic carrier. */
-   /* Hybrid */
    /** @todo hybrid ship classification. */
+   SHIP_CLASS_TOTAL,       /**< Sentinal for total amount of ship classes. */
 } ShipClass;
 
 
@@ -80,12 +77,26 @@ typedef struct ShipOutfitSlot_ {
 
 
 /**
+ * @brief Ship trail emitter.
+ */
+typedef struct ShipTrailEmitter_ {
+   double x_engine;   /**< Offset x. */
+   double y_engine;   /**< Offset y. */
+   double h_engine;   /**< Offset z. */
+   unsigned int always_under; /**< Should this trail be always drawn under the ship? */
+   const TrailSpec* trail_spec; /**< Trail type to emit. */
+} ShipTrailEmitter;
+
+
+/**
  * @brief Represents a space ship.
  */
 typedef struct Ship_ {
    char* name;       /**< Ship name */
    char* base_type;  /**< Ship's base type, basically used for figuring out what ships are related. */
    ShipClass class;  /**< Ship class */
+   char *class_display; /**< Custom ship class. */
+   int rarity;       /**< Rarity. */
 
    /* store stuff */
    credits_t price;  /**< Cost to buy */
@@ -103,8 +114,9 @@ typedef struct Ship_ {
    double mass;             /**< Mass ship has. */
    double cpu;              /**< Amount of CPU the ship has. */
    int fuel;                /**< How much fuel by default. */
-   double fuel_consumption; /**< Fuel consumption by engine. */
+   int fuel_consumption; /**< Fuel consumption by engine. */
    double cap_cargo;        /**< Cargo capacity (in volume). */
+   double dt_default;      /**< Default/minimum time delta. */
 
    /* health */
    double armour;    /**< Maximum base armour in MJ. */
@@ -123,6 +135,11 @@ typedef struct Ship_ {
    glTexture *gfx_target; /**< Targeting window graphic. */
    glTexture *gfx_store; /**< Store graphic. */
    char* gfx_comm;   /**< Name of graphic for communication. */
+   glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
+   ShipTrailEmitter* trail_emitters; /**< Trail emitters. */
+
+   /* collision polygon */
+   CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 
    /* GUI interface */
    char* gui;        /**< Name of the GUI the ship uses by default. */
@@ -131,12 +148,9 @@ typedef struct Ship_ {
    int sound;        /**< Sound motor uses. */
 
    /* outfits */
-   int outfit_nstructure; /**< Number of structure outfit slots. */
-   ShipOutfitSlot *outfit_structure; /**< Outfit structure slots. */
-   int outfit_nutility; /**< Number of utility outfit slots. */
-   ShipOutfitSlot *outfit_utility; /**< Outfit utility slots. */
-   int outfit_nweapon; /**< Number of weapon outfit slots. */
-   ShipOutfitSlot *outfit_weapon; /**< Outfit weapons slots. */
+   ShipOutfitSlot *outfit_structure; /**< Array (array.h): Outfit structure slots. */
+   ShipOutfitSlot *outfit_utility; /**< Array (array.h): Outfit utility slots. */
+   ShipOutfitSlot *outfit_weapon; /**< Array (array.h): Outfit weapons slots. */
 
    /* mounts */
    double mangle;    /**< Mount angle to simplify mount calculations. */
@@ -160,12 +174,15 @@ void ships_free (void);
 Ship* ship_get( const char* name );
 Ship* ship_getW( const char* name );
 const char *ship_existsCase( const char* name );
-Ship* ship_getAll( int *n );
-char* ship_class( Ship* s );
-ShipClass ship_classFromString( char* str );
+const Ship* ship_getAll (void);
+const char* ship_class( const Ship* s );
+const char* ship_classDisplay( const Ship* s );
+const char *ship_classToString( ShipClass class );
+ShipClass ship_classFromString( const char* str );
 credits_t ship_basePrice( const Ship* s );
 credits_t ship_buyPrice( const Ship* s );
-glTexture* ship_loadCommGFX( Ship* s );
+glTexture* ship_loadCommGFX( const Ship* s );
+int ship_size( const Ship *s );
 
 
 /*

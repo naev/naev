@@ -8,13 +8,14 @@
  * @brief Lua jump module.
  */
 
-#include "nlua_jump.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nlua.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_jump.h"
+
 #include "nluadef.h"
 #include "nlua_vec2.h"
 #include "nlua_system.h"
@@ -22,8 +23,7 @@
 #include "log.h"
 
 
-static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, int *offset, StarSystem **sys );
-
+RETURNS_NONNULL static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset );
 
 /* Jump metatable methods */
 static int jumpL_get( lua_State *L );
@@ -36,7 +36,7 @@ static int jumpL_system( lua_State *L );
 static int jumpL_dest( lua_State *L );
 static int jumpL_isKnown( lua_State *L );
 static int jumpL_setKnown( lua_State *L );
-static const luaL_reg jump_methods[] = {
+static const luaL_Reg jump_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
    { "pos", jumpL_position },
@@ -49,45 +49,17 @@ static const luaL_reg jump_methods[] = {
    { "setKnown", jumpL_setKnown },
    {0,0}
 }; /**< Jump metatable methods. */
-static const luaL_reg jump_cond_methods[] = {
-   { "get", jumpL_get },
-   { "__eq", jumpL_eq },
-   { "pos", jumpL_position },
-   { "angle", jumpL_angle },
-   { "hidden", jumpL_hidden },
-   { "exitonly", jumpL_exitonly },
-   { "system", jumpL_system },
-   { "dest", jumpL_dest },
-   { "known", jumpL_isKnown },
-   {0,0}
-}; /**< Read only jump metatable methods. */
 
 
 /**
  * @brief Loads the jump library.
  *
- *    @param L State to load jump library into.
- *    @param readonly Load read only functions?
+ *    @param env Environment to load jump library into.
  *    @return 0 on success.
  */
-int nlua_loadJump( lua_State *L, int readonly )
+int nlua_loadJump( nlua_env env )
 {
-   /* Create the metatable */
-   luaL_newmetatable(L, JUMP_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   if (readonly)
-      luaL_register(L, NULL, jump_cond_methods);
-   else
-      luaL_register(L, NULL, jump_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, JUMP_METATABLE);
-
+   nlua_register(env, JUMP_METATABLE, jump_methods, 1);
    return 0; /* No error */
 }
 
@@ -122,7 +94,7 @@ LuaJump* lua_tojump( lua_State *L, int ind )
  * @brief Gets jump at index raising an error if isn't a jump.
  *
  *    @param L Lua state to get jump from.
- *    @param a Index to check.
+ *    @param ind Index to check.
  *    @return Jump found at the index in the state.
  */
 LuaJump* luaL_checkjump( lua_State *L, int ind )
@@ -140,12 +112,11 @@ LuaJump* luaL_checkjump( lua_State *L, int ind )
  *    @param L Lua state to get jump from.
  *    @param ind Index to check.
  *    @param[out] offset How many Lua arguments were passed.
- *    @param[out] sys System the jump exists in.
  *    @return Jump found at the index in the state.
  *
  * @sa luaL_validjump
  */
-static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, int *offset, StarSystem **outsys )
+static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, int *offset )
 {
    LuaJump *lj;
    JumpPoint *jp;
@@ -179,17 +150,15 @@ static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, int *offset, Star
    }
    else {
       luaL_typerror(L, ind, JUMP_METATABLE);
-      return NULL;
+      // noreturn
    }
 
    if (b != NULL && a != NULL)
          jp = jump_getTarget( b, a );
 
    if (jp == NULL)
-      NLUA_ERROR(L, "Jump is invalid");
+      NLUA_ERROR(L, _("Jump is invalid"));
 
-   if (outsys != NULL)
-      *outsys = a;
    return jp;
 }
 
@@ -199,12 +168,11 @@ static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, int *offset, Star
  *
  *    @param L Lua state to get jump from.
  *    @param ind Index to check.
- *    @param[out] sys System the jump exists in.
  *    @return Jump found at the index in the state.
  */
 JumpPoint* luaL_validjump( lua_State *L, int ind )
 {
-   return luaL_validjumpSystem(L, ind, NULL, NULL);
+   return luaL_validjumpSystem( L, ind, NULL );
 }
 
 
@@ -256,63 +224,49 @@ int lua_isjump( lua_State *L, int ind )
  *    - system : Gets the jump by system. <br/>
  *
  * @usage j,r  = jump.get( "Ogat", "Goddard" ) -- Returns the Ogat to Goddard and Goddard to Ogat jumps.
- *    @luatparam string|System param See description.
- *    @luareturn Jump Returns the jump.
- *    @luareturn Jump Returns the inverse.
- * @luafunc get( param )
+ *    @luatparam string|System src See description.
+ *    @luatparam string|System dest See description.
+ *    @luatreturn Jump Returns the jump.
+ *    @luatreturn Jump Returns the inverse.
+ * @luafunc get
  */
 static int jumpL_get( lua_State *L )
 {
    LuaJump lj;
    StarSystem *a, *b;
 
-   /* Defaults. */
-   a = NULL;
-   b = NULL;
+   a = luaL_validsystem(L,1);
+   b = luaL_validsystem(L,2);
 
-   if (lua_gettop(L) > 1) {
-      if (lua_isstring(L, 1))
-         a = system_get( lua_tostring(L, 1));
-      else if (lua_issystem(L, 1))
-         a = system_getIndex( lua_tosystem(L, 1) );
-
-      if (lua_isstring(L, 2))
-         b = system_get( lua_tostring(L, 2));
-      else if (lua_issystem(L, 2))
-         b = system_getIndex( lua_tosystem(L, 2) );
-
-      if ((a == NULL) || (b == NULL)) {
-         NLUA_ERROR(L, "No matching jump points found.");
-         return 0;
-      }
-
-      if (jump_getTarget(b, a) != NULL) {
-         lj.srcid  = a->id;
-         lj.destid = b->id;
-         lua_pushjump(L, lj);
-
-         /* The inverse. If it doesn't exist, there are bigger problems. */
-         lj.srcid  = b->id;
-         lj.destid = a->id;
-         lua_pushjump(L, lj);
-         return 2;
-      }
+   if ((a == NULL) || (b == NULL)) {
+      NLUA_ERROR(L, _("No matching jump points found."));
+      return 0;
    }
-   else
-      NLUA_INVALID_PARAMETER(L);
+
+   if (jump_getTarget(b, a) != NULL) {
+      lj.srcid  = a->id;
+      lj.destid = b->id;
+      lua_pushjump(L, lj);
+
+      /* The inverse. If it doesn't exist, there are bigger problems. */
+      lj.srcid  = b->id;
+      lj.destid = a->id;
+      lua_pushjump(L, lj);
+      return 2;
+   }
 
    return 0;
 }
 
 
 /**
- * @brief You can use the '=' operator within Lua to compare jumps with this.
+ * @brief You can use the '==' operator within Lua to compare jumps with this.
  *
  * @usage if j:__eq( jump.get( "Rhu", "Ruttwi" ) ) then -- Do something
  *    @luatparam Jump j Jump comparing.
  *    @luatparam Jump comp jump to compare against.
  *    @luatreturn boolean true if both jumps are the same.
- * @luafunc __eq( j, comp )
+ * @luafunc __eq
  */
 static int jumpL_eq( lua_State *L )
 {
@@ -330,7 +284,7 @@ static int jumpL_eq( lua_State *L )
  * @usage v = j:pos()
  *    @luatparam Jump j Jump to get the position of.
  *    @luatreturn Vec2 The position of the jump in the system.
- * @luafunc pos( j )
+ * @luafunc pos
  */
 static int jumpL_position( lua_State *L )
 {
@@ -347,7 +301,7 @@ static int jumpL_position( lua_State *L )
  * @usage v = j:angle()
  *    @luatparam Jump j Jump to get the angle of.
  *    @luatreturn number The angle.
- * @luafunc angle( j )
+ * @luafunc angle
  */
 static int jumpL_angle( lua_State *L )
 {
@@ -365,7 +319,7 @@ static int jumpL_angle( lua_State *L )
  * @usage if not j:hidden() then -- Exclude hidden jumps.
  *    @luatparam Jump j Jump to get the hidden status of.
  *    @luatreturn boolean Whether the jump is hidden.
- * @luafunc hidden( j )
+ * @luafunc hidden
  */
 static int jumpL_hidden( lua_State *L )
 {
@@ -382,7 +336,7 @@ static int jumpL_hidden( lua_State *L )
  * @usage if jump.exitonly("Eneguoz", "Zied") then -- The jump point in Eneguoz cannot be entered.
  *    @luatparam Jump j Jump to get the exit-only status of.
  *    @luatreturn boolean Whether the jump is exit-only.
- * @luafunc exitonly( j )
+ * @luafunc exitonly
  */
 static int jumpL_exitonly( lua_State *L )
 {
@@ -399,14 +353,13 @@ static int jumpL_exitonly( lua_State *L )
  * @usage s = j:system()
  *    @luatparam Jump j Jump to get the system of.
  *    @luatreturn System The jump's system.
- * @luafunc system( j )
+ * @luafunc system
  */
 static int jumpL_system( lua_State *L )
 {
-   StarSystem *sys;
-
-   luaL_validjumpSystem(L, 1, NULL, &sys);
-   lua_pushsystem(L,sys->id);
+   JumpPoint *jp;
+   jp = luaL_validjumpSystem( L, 1, NULL );
+   lua_pushsystem( L, jp->from->id );
    return 1;
 }
 
@@ -417,7 +370,7 @@ static int jumpL_system( lua_State *L )
  * @usage v = j:dest()
  *    @luatparam Jump j Jump to get the destination of.
  *    @luatreturn System The jump's destination system.
- * @luafunc dest( j )
+ * @luafunc dest
  */
 static int jumpL_dest( lua_State *L )
 {
@@ -436,7 +389,7 @@ static int jumpL_dest( lua_State *L )
  *
  *    @luatparam Jump j Jump to check if the player knows.
  *    @luatreturn boolean true if the player knows the jump.
- * @luafunc known( j )
+ * @luafunc known
  */
 static int jumpL_isKnown( lua_State *L )
 {
@@ -453,14 +406,17 @@ static int jumpL_isKnown( lua_State *L )
  * @usage j:setKnown( false ) -- Makes jump unknown.
  *    @luatparam Jump j Jump to set known.
  *    @luatparam[opt=true] boolean value Whether or not to set as known.
- * @luafunc setKnown( j, value )
+ * @luafunc setKnown
  */
 static int jumpL_setKnown( lua_State *L )
 {
    int b, offset, changed;
    JumpPoint *jp;
 
-   jp = luaL_validjumpSystem(L, 1, &offset, NULL);
+   NLUA_CHECKRW(L);
+
+   offset = 0;
+   jp     = luaL_validjumpSystem( L, 1, &offset );
 
    /* True if boolean isn't supplied. */
    if (lua_gettop(L) > offset)

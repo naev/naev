@@ -12,7 +12,7 @@
       If that fails, then the player is presented with various options:
 
          a) Remove all non-cores
-         b) Remove weapons, utility, or sructure outfits separately
+         b) Remove weapons, utility, or structure outfits separately
          b) Replace cores with defaults
 
       There is no failure mode beyond this, as a ship that isn't spaceworthy
@@ -28,56 +28,48 @@
 
 --]]
 
-lang = naev.lang()
-if lang == "es" then
-   -- Break everything. Why do we do this?
-else -- default english
+required = {} -- Slots that must be filled in order to take off.
+equipped = {} -- Outfits equipped in required slots.
+missing  = {} -- Array of empty required slots and their default outfits.
 
-   required = {} -- Slots that must be filled in order to take off.
-   equipped = {} -- Outfits equipped in required slots.
-   missing  = {} -- Array of empty required slots and their default outfits.
+nrequired = 0
+nequipped = 0
 
-   nrequired = 0
-   nequipped = 0
+-- Array of tasks for filling in missing slots in the following format:
+--    { { desc, callback }, ... }
+mtasks = {
+   { _("Remove outfits and use default cores"), function() removeEquipDefaults() end },
+   { _("Add missing default cores"), function() fillMissing( missing ) end },
+   { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
+   { _("Cancel"), function() tk.msg( msg_title, msg_refuse ) end }
+   -- TODO: Possibly add a "Select from inventory" option
+}
 
-   -- Array of tasks for filling in missing slots in the following format:
-   --    { { desc, callback }, ... }
-   mtasks = {
-      { 'Add missing default cores', function() fillMissing( missing ) end },
-      { 'Replace all cores with defaults', function() equipDefaults( required ) end },
-      { 'Cancel', function() tk.msg( msg_title, msg_refuse ) end }
-      -- TODO: Possibly add a "Select from inventory" option
-   }
+tasks = {
+   { _("Remove all outfits and set cores to defaults"), function() removeEquipDefaults() end },
+   { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
+   { _("Remove all non-core outfits"), function() removeNonCores() end },
+   { _("Remove weapons"), function() removeNonCores( "Weapon" ) end },
+   { _("Remove utility outfits"), function() removeNonCores( "Utility" ) end },
+   { _("Remove structure outfits"), function() removeNonCores( "Structure" ) end },
+   { _("Cancel"), function() tk.msg( msg_title, msg_refuse ) end }
+}
 
-   tasks = {
-      { 'Replace all cores with defaults', function() equipDefaults( required ) end },
-      { 'Remove all non-core outfits', function() removeNonCores() end },
-      { 'Remove weapons', function() removeNonCores( "Weapon" ) end },
-      { 'Remove utility outfits', function() removeNonCores( "Utility" ) end },
-      { 'Remove structure outfits', function() removeNonCores( "Structure" ) end },
-      { 'Cancel', function() tk.msg( msg_title, msg_refuse ) end }
-   }
+msg_title = _("Stranded")
 
-   msg_title = "Stranded"
+msg_prompt = _([[The following actions are available to make your ship spaceworthy:]])
 
-   msg_missing = [[Your ship is missing %d core outfit%s. How do you want to resolve this?]]
+msg_failure = _([[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]])
 
-   msg_prompt = [[The following actions are available to make your ship spaceworthy:]]
+msg_failure_final = _([[Well... this isn't good. Your ship has been restored to its default configuration, yet still isn't spaceworthy.
 
-   msg_success = [[After adding the missing outfit%s, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]]
+Please report this to the developers along with a copy of your save file.]])
 
-   msg_failure = [[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]]
+msg_success_generic = _([[Your ship is now spaceworthy, though you should get to an outfitter as soon as possible.]])
 
-   msg_failure_final = [[Well... this isn't good. Your ship has been restored to its default configuration, yet still isn't spaceworthy.
+msg_refuse = _([[Very well, but it's unlikely you'll be able to take off.
 
-Please report this to the developers along with a copy of your save file.]]
-
-   msg_success_generic = [[Your ship is now spaceworthy, though you should get to an outfitter as soon as possible.]]
-
-   msg_refuse = [[Very well, but it's unlikely you'll be able to take off.
-
-If you can't find a way to make your ship spaceworthy, you can always attempt to take off again to trigger this dialogue, or try loading your backup save.]]
-end
+If you can't find a way to make your ship spaceworthy, you can always attempt to take off again to trigger this dialogue, or try loading your backup save.]])
 
 
 function rescue()
@@ -97,11 +89,6 @@ function rescue()
    if #mtasks > 0 and #missing > 0 then
       local defaults, weapons, utility, structure = assessOutfits()
 
-      local suffix = "s"
-      if #missing == 1 then
-         suffix = ""
-      end
-
       -- Build list of suitable tasks.
       local opts = {}
       for k,v in ipairs(mtasks) do
@@ -117,17 +104,24 @@ function rescue()
          strings[k] = v[1]
       end
 
+
+      local msg_missing = gettext.ngettext(
+         [[Your ship is missing %d core outfit. How do you want to resolve this?]],
+         [[Your ship is missing %d core outfits. How do you want to resolve this?]], #missing)
       local ind, str = tk.choice( msg_title,
-            string.format(msg_missing, #missing, suffix), unpack(strings) )
+            string.format(msg_missing, #missing), table.unpack(strings) )
 
       opts[ind][2]() -- Run callback.
-      if str == "Cancel" then
+      if str == _("Cancel") then
          return
       end
 
       -- If ship is now spaceworthy, bail out.
       if player.pilot():spaceworthy() then
-         tk.msg(msg_title, string.format(msg_success, suffix))
+         local msg_success = gettext.ngettext(
+            [[After adding the missing outfit, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]],
+            [[After adding the missing outfits, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]], #missing)
+         tk.msg(msg_title, msg_success)
          return
       end
 
@@ -164,10 +158,10 @@ function rescue()
          return
       end
 
-      local ind, str = tk.choice( msg_title, msg_prompt, unpack(strings) )
+      local ind, str = tk.choice( msg_title, msg_prompt, table.unpack(strings) )
 
       opts[ind][2]() -- Run callback.
-      if str == "Cancel" then
+      if str == _("Cancel") then
          return
       end
 
@@ -247,8 +241,8 @@ function check_stranded( missing )
    -- Add the player's other ships' outfits.
    if services["shipyard"] then
       for _, s in ipairs( player.ships() ) do
-         if s ~= pp:name() then
-            local outfits = player.shipOutfits(s)
+         if s.name ~= pp:name() then
+            local outfits = player.shipOutfits(s.name)
             for _, o in ipairs(outfits) do
                table.insert(inv, o)
             end
@@ -264,7 +258,7 @@ function check_stranded( missing )
    end
 
    -- Generate a deduplicated list.
-   table.sort( inv, function(a, b) return a:name() < b:name() end )
+   table.sort( inv, function(a, b) return a:nameRaw() < b:nameRaw() end )
 
    local last  = nil
    local found = 0
@@ -312,7 +306,7 @@ function buildTables()
 
    -- Find the number of required cores, and their default outfits.
    for k,v in pairs(slots) do
-      if v.property then
+      if v.required then
          required[ v.property ] = v
          nrequired = nrequired + 1
       end
@@ -344,7 +338,7 @@ function buildOutfitTable( size, property, outfits )
    for k,v in ipairs( outfits ) do
       local _, osize, oprop = v:slot()
       if size == osize and property == oprop then
-         table.insert(out, v:name())
+         table.insert(out, v:nameRaw())
       end
    end
 
@@ -360,8 +354,26 @@ function removeNonCores( slottype )
       local slot, _, prop = v:slot()
       if not prop and (not slottype or slot == slottype) then
          -- Store and remove old
-         player.addOutfit(v:name())
-         pp:rmOutfit(v:name())
+         player.outfitAdd(v:nameRaw())
+         pp:outfitRm(v:nameRaw())
+      end
+   end
+end
+
+
+-- Replace all cores with the ship's defaults.
+function removeEquipDefaults()
+   local pp = player.pilot() -- Convenience.
+
+   -- Store and remove old outfits
+   for k,v in ipairs( pp:outfits() ) do
+      player.outfitAdd(v:nameRaw())
+      pp:outfitRm(v:nameRaw())
+   end
+   -- Add core outfits
+   for k,v in ipairs( pp:ship():getSlots() ) do
+      if v.outfit then
+         pp:outfitAdd( v.outfit, 1, true )
       end
    end
 end
@@ -372,16 +384,16 @@ function equipDefaults( defaults )
    local pp = player.pilot() -- Convenience.
 
    for k,v in ipairs( pp:outfits() ) do
-      local _, _, prop = v:slot()
+      local _, _, prop, required = v:slot()
 
       -- Remove if required but not default.
-      if prop and v ~= defaults[prop].outfit then
+      if required and v ~= defaults[prop].outfit then
          -- Store and remove old
-         player.addOutfit(v:name())
-         pp:rmOutfit(v:name())
+         player.outfitAdd(v:nameRaw())
+         pp:outfitRm(v:nameRaw())
 
          -- Add new
-         pp:addOutfit( defaults[k].outfit:name() )
+         pp:outfitAdd( defaults[k].outfit:nameRaw() )
 
          -- Remove the outfit from the to-add list.
          defaults[k] = nil
@@ -396,7 +408,7 @@ end
 function fillMissing( missing )
    -- Fill empty core slots with defaults.
    for k,v in pairs(missing) do
-      player.pilot():addOutfit( v.outfit:name() )
+      player.pilot():outfitAdd( v.outfit:nameRaw() )
    end
 end
 

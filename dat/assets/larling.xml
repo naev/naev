@@ -5,8 +5,8 @@
   <y>680.000000</y>
  </pos>
  <GFX>
-  <space>K00.png</space>
-  <exterior>desertic3.png</exterior>
+  <space>K00.webp</space>
+  <exterior>desertic3.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -15,8 +15,8 @@
  </presence>
  <general>
   <class>K</class>
-  <population>0</population>
-  <hide>0.250000</hide>
+  <population>20000000</population>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -25,11 +25,7 @@
    <commodity/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Larling is a popular world for businesses and industries to settle. Sergio Vix is located close to a number of important Soromid systems, and the price of real estate on Larling is low. In addition, the world has quite relaxed environmental legislation, which means industries can cut on emission reduction costs.</description>
   <bar>You won't find Larling's spaceport bar in any top 100 list, but that doesn't mean it's bad. There's just nothing particularly exceptional about it.</bar>
  </general>

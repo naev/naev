@@ -12,40 +12,34 @@
  */
 
 
-#include "intro.h"
-
-#include "naev.h"
-
-#include "nstring.h"
-
+/** @cond */
 #include "SDL.h"
 
-#include "log.h"
-#include "ndata.h"
-#include "font.h"
-#include "music.h"
-#include "nstd.h"
-#include "toolkit.h"
+#include "naev.h"
+/** @endcond */
+
+#include "intro.h"
+
 #include "conf.h"
+#include "font.h"
+#include "log.h"
+#include "music.h"
+#include "ndata.h"
+#include "nstring.h"
+#include "toolkit.h"
 
 
 #define INTRO_SPEED        30. /**< Speed of text in characters / second. */
+#define SIDE_MARGIN       100. /**< Minimum space on either side of the text. */
+#define IMAGE_WIDTH       300. /**< Width to reserve for images on the side. */
 
-
-/**
- * @brief Scroll Buffer: For a linked list of render text.
- */
-typedef struct scroll_buf_t_ {
-   const char *text;            /* Text to render. */
-   struct scroll_buf_t_ *next;  /* Next line in the linked list. */
-} scroll_buf_t;
 
 /**
  * @brief Intro Image: to be displayed to the side of the scrolling.
  */
 typedef struct intro_img_t_ {
    glTexture *tex;     /* Image. */
-   double x, y;        /* Position. */
+   double x, y, w, h;  /* Position. */
    glColour c;         /* Alpha channel for fading. */
    double fade_rate;   /* Positive for fade-in, negative for fade-out. */
 } intro_img_t;
@@ -55,7 +49,6 @@ typedef struct intro_img_t_ {
  */
 static char **intro_lines = NULL;  /**< Introduction text lines. */
 static int intro_nlines = 0;       /**< Number of introduction text lines. */
-static int intro_length = 0;       /**< Length of the text. */
 static glFont intro_font;          /**< Introduction font. */
 
 static int has_side_gfx = 0;       /* Determines how wide to make the text. */
@@ -65,13 +58,12 @@ static int has_side_gfx = 0;       /* Determines how wide to make the text. */
  */
 static int intro_load( const char *text );
 static void intro_cleanup (void);
-static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n );
 static void intro_event_handler( int *stop, double *offset, double *vel );
 static void initialize_image( intro_img_t *img );
+static void load_image( intro_img_t *img, const char *img_file );
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
                                  const char *img_file );
-static int intro_draw_text( scroll_buf_t *sb_list, double offset,
-                            double line_height );
+static int  intro_draw_text( char **const sb_list, int sb_size, int sb_index, double offset, double line_height );
 
 
 /**
@@ -79,52 +71,76 @@ static int intro_draw_text( scroll_buf_t *sb_list, double offset,
  */
 static int intro_load( const char *text )
 {
-   uint32_t intro_size;
+   size_t intro_size;
    char *intro_buf;
-   char img_src[128];     /* path to image to be displayed alongside text. */
+   const char *cur_line;
+   char *rest_of_file;
+   char img_src[STRMAX_SHORT];     /* path to image to be displayed alongside text. */
    int length;
-   int i, p, n;
+   int i, n;
    int mem;
 
    has_side_gfx = 0;
 
    /* Load text. */
    intro_buf = ndata_read( text, &intro_size );
-   intro_length = intro_size; /* Length approximation. */
 
    /* Create intro font. */
-   gl_fontInit( &intro_font, "dat/mono.ttf", conf.font_size_intro );
+   gl_fontInit( &intro_font, FONT_MONOSPACE_PATH, conf.font_size_intro, FONT_PATH_PREFIX, 0 );
 
-   /* Load lines. */
-   p = 0;
+   /* Accumulate text into intro_lines. At each step, keep track of:
+    * * cur_line: text to go from the current input line, after word-wrapping.
+    * * rest_of_file: pointer to just after the current input line (or NULL if we're on the last one).
+    * * n: output line #
+    * * i: current line length (strlen(cur_line), or less if we must word-wrap).
+    * We can start in a state with no word-wrap spill-over and "rest_of_file" pointing to the full input.
+    */
    n = 0;
    mem = 0;
-   while ((uint32_t)p < intro_size) {
+   cur_line = "";
+   rest_of_file = intro_buf;
+   while (1) {
+      i = strlen(cur_line);
+      /* Advance a line in the source file if necesary. */
+      if (i == 0) {
+         if (rest_of_file == NULL)
+            break;
+         cur_line = rest_of_file;
+         rest_of_file = strchr(cur_line, '\n');
+         /* If there's a next line, split the string and point rest_of_file to it. */
+         if (rest_of_file != NULL) {
+            /* Check for CRLF endings -- if present, zero both parts. */
+            if (rest_of_file > cur_line && *(rest_of_file-1) == '\r')
+               *(rest_of_file-1) = '\0';
+            *rest_of_file++ = '\0';
+         }
+         /* Translate if plain text (not empty, not a directive). */
+         if (cur_line[0] != '\0' && cur_line[0] != '[')
+            cur_line = _(cur_line);
+         i = strlen(cur_line);
+      }
       /* Copy the line. */
       if (n+1 > mem) {
          mem += 128;
          intro_lines = realloc( intro_lines, sizeof(char*) * mem );
       }
 
-      if ( intro_buf[p] == '[' /* Don't do sscanf for every line! */
-           && sscanf( &intro_buf[p], "[fadein %s", img_src ) == 1 ) {
+      if ( cur_line[0] == '[' /* Don't do sscanf for every line! */
+           && sscanf( &cur_line[0], "[fadein %s", img_src ) == 1 ) {
          /* an image to appear next to text. */
-         /* Get the length. */
-         for (i = 0; intro_buf[p + i] != '\n' && intro_buf[p + i] != '\0'; ++i);
 
          length = strlen( img_src );
          intro_lines[n] = malloc( length + 2 );
          intro_lines[n][0] = 'i';
-         strncpy( &intro_lines[n][1], img_src, length );
+         strncpy( &intro_lines[n][1], img_src, length + 1 );
          intro_lines[n][length] = '\0';
 
          /* Mark that there are graphics. */
          has_side_gfx = 1;
 
-      } else if ( intro_buf[p] == '[' /* Don't do strncmp for every line! */
-           && strncmp( &intro_buf[p], "[fadeout]", 9 ) == 0 ) {
+      } else if ( cur_line[0] == '[' /* Don't do strncmp for every line! */
+           && strncmp( &cur_line[0], "[fadeout]", 9 ) == 0 ) {
          /* fade out the image next to the text. */
-         for (i = 0; intro_buf[p + i] != '\n' && intro_buf[p + i] != '\0'; ++i);
 
          intro_lines[n] = malloc( 2 );
          intro_lines[n][0] = 'o';
@@ -132,15 +148,15 @@ static int intro_load( const char *text )
 
       } else { /* plain old text. */
          /* Get the length. */
-         i = gl_printWidthForText( &intro_font, &intro_buf[p], SCREEN_W - 500. );
+         i = gl_printWidthForText( &intro_font, cur_line, SCREEN_W - 2*SIDE_MARGIN - IMAGE_WIDTH, NULL );
 
          intro_lines[n] = malloc( i + 2 );
          intro_lines[n][0] = 't';
-         strncpy( &intro_lines[n][1], &intro_buf[p], i );
+         strncpy( &intro_lines[n][1], cur_line, i );
          intro_lines[n][i+1] = '\0';
       }
 
-      p += i + 1; /* Move pointer. */
+      cur_line += i; /* Move pointer. */
       n++; /* New line. */
    }
 
@@ -171,27 +187,6 @@ static void intro_cleanup (void)
 }
 
 /**
- * @brief Convert an array of scroll_buf_t into a circularly linked list.
- *
- *    @brief arr Input array.
- *    @brief n Number of elements.
- *    @return A pointer into the circular list.
- */
-static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n )
-{
-   scroll_buf_t *sb_list = &arr[n - 1];
-   int i;
-
-   for (i = 0; i < n; ++i) {
-      arr[i].text = NULL;
-      arr[i].next = sb_list;
-      sb_list = &arr[i];
-   }
-
-   return sb_list;
-}
-
-/**
  * @brief Initialize an intro_img_t to default values.
  *
  *    @brief img Image to initialize.
@@ -199,7 +194,6 @@ static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n )
 static void initialize_image( intro_img_t *img )
 {
    img->tex = NULL;
-   img->x   = 100.;
    img->c.r = 1.0;
    img->c.g = 1.0;
    img->c.b = 1.0;
@@ -209,22 +203,35 @@ static void initialize_image( intro_img_t *img )
 
 
 /**
+ * @brief Initialize an intro_img_t to default values.
+ *
+ *    @brief img Image to initialize.
+ *    @brief img_file Path to the image file on disk.
+ */
+static void load_image( intro_img_t *img, const char *img_file )
+{
+      img->tex = gl_newImage( img_file, 0 );
+      img->w = MIN( img->tex->w, IMAGE_WIDTH );
+      img->h = img->tex->h * img->w / img->tex->w;
+      img->x = (IMAGE_WIDTH + SIDE_MARGIN - img->w) / 2.0;
+      img->y = (double)SCREEN_H / 2.0 - (img->h / 2.0);
+      img->c.a = 0.0;
+      img->fade_rate = 0.1;
+}
+
+
+/**
  * @brief Fade an image in.
  *
  *    @brief side Present image being displayed.
  *    @brief transition Image in transition or on deck.
- *    @brief img_file Path to the PNG on disk.
+ *    @brief img_file Path to the image file on disk.
  */
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
                                  const char *img_file )
 {
-   if (NULL == side->tex) {
-      /* Simple fade-in. */
-      side->tex = gl_newImage( img_file, 0 );
-      side->y = (double)SCREEN_H / 2.0 - (side->tex->h / 2.0);
-      side->c.a = 0.0;
-      side->fade_rate = 0.1;
-   }
+   if (NULL == side->tex)
+      load_image( side, img_file ); /* Simple fade-in. */
    else {
       /*
        * Transition or on-deck. The difference is whether one image is
@@ -236,18 +243,14 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
        */
       if (NULL != transition->tex) {
          /* Scrolling is happening faster than fading... */
-         WARN( "Intro scrolling too fast!" );
+         WARN( _("Intro scrolling too fast!") );
          gl_freeTexture( transition->tex );
       }
-      transition->tex = gl_newImage( img_file, 0 );
-      transition->y =
-         (double)SCREEN_H / 2.0 - (transition->tex->h / 2.0);
-      transition->c.a = 0.0;
+      load_image( transition, img_file );
       if (side->fade_rate < 0.0)
          transition->fade_rate = 0.0; /* put an image on deck. */
       else {
          /* transition. */
-         transition->fade_rate = 0.1;
          side->fade_rate = -0.1; /* begin fading out. */
          side->c.a = 0.99;
       }
@@ -266,13 +269,11 @@ static void intro_event_handler( int *stop, double *offset, double *vel )
    SDL_Event event;           /* user key-press, mouse-push, etc. */
 
    while (SDL_PollEvent(&event)) {
-#if SDL_VERSION_ATLEAST(2,0,0)
       if (event.type == SDL_WINDOWEVENT &&
             event.window.event == SDL_WINDOWEVENT_RESIZED) {
-         naev_resize( event.window.data1, event.window.data2 );
+         naev_resize();
          continue;
       }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       if (event.type != SDL_KEYDOWN)
          continue;
@@ -320,29 +321,27 @@ static void intro_event_handler( int *stop, double *offset, double *vel )
  *    @brief line_height V-space of the font (plus leading).
  *    @return Whether to stop.  1 if no text was rendered, 0 otherwise.
  */
-static int intro_draw_text( scroll_buf_t *sb_list, double offset,
-                            double line_height)
+static int intro_draw_text( char **const sb_list, int sb_size, int sb_index, double offset, double line_height )
 {
-   double x, y;               /* render position. */
-   scroll_buf_t *list_iter;   /* iterator through sb_list. */
+   double       x, y; /* render position. */
+   int          i;
    register int stop = 1;
 
+   x = SIDE_MARGIN;
    if (has_side_gfx)
-      x = 400.0; /* leave some space for graphics if they exist. */
-   else
-      x = 100.0;
+      x += IMAGE_WIDTH;
 
-   list_iter = sb_list;
+   i = sb_index;
    y = SCREEN_H + offset - line_height;
    do {
-      if (NULL != list_iter->text) {
+      if ( sb_list[ i ] != NULL ) {
          stop = 0;
-         gl_print( &intro_font, x, y, &cConsole, list_iter->text );
+         gl_printRaw( &intro_font, x, y, &cFontGreen, -1, sb_list[ i ] );
       }
 
       y -= line_height;
-      list_iter = list_iter->next;
-   } while (list_iter != sb_list);
+      i = ( i + 1 ) % sb_size;
+   } while ( i != sb_index );
 
    return stop;
 }
@@ -356,18 +355,18 @@ static int intro_draw_text( scroll_buf_t *sb_list, double offset,
  */
 int intro_display( const char *text, const char *mus )
 {
-   double offset;             /* distance from bottom of the top line. */
-   double line_height;        /* # pixels per line. */
-   int lines_per_screen;      /* max appearing lines on the screen. */
-   scroll_buf_t *sb_arr;      /* array of lines to render. */
-   scroll_buf_t *sb_list;     /* list   "   "    "    "    */
-   double vel = 16.;          /* velocity: speed of text. */
-   int stop = 0;              /* stop the intro. */
-   unsigned int tcur, tlast;  /* timers. */
-   double delta;              /* time diff from last render to this one. */
-   int line_index = 0;        /* index into the big list of intro lines. */
-   intro_img_t side_image;    /* image to go along with the text. */
-   intro_img_t transition;    /* image for transitioning. */
+   double       offset;           /* distance from bottom of the top line. */
+   double       line_height;      /* # pixels per line. */
+   int          lines_per_screen; /* max appearing lines on the screen. */
+   char **      sb_arr;           /* array of lines to render. */
+   int          sb_index;         /* Position in the line array. */
+   double       vel  = 16.;       /* velocity: speed of text. */
+   int          stop = 0;         /* stop the intro. */
+   unsigned int tcur, tlast;      /* timers. */
+   double       delta;            /* time diff from last render to this one. */
+   int          line_index = 0;   /* index into the big list of intro lines. */
+   intro_img_t  side_image;       /* image to go along with the text. */
+   intro_img_t  transition;       /* image for transitioning. */
 
    /* Load the introduction. */
    if (intro_load(text) < 0)
@@ -380,22 +379,16 @@ int intro_display( const char *text, const char *mus )
    /* We need to clear key repeat to avoid infinite loops. */
    toolkit_clearKey();
 
-   /* Enable keyrepeat just for the intro. */
-#if !SDL_VERSION_ATLEAST(2,0,0)
-   SDL_EnableKeyRepeat( conf.repeat_delay, conf.repeat_freq );
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
-
    /* Do a few calculations to figure out how many lines can be present on the
       screen at any given time. */
    line_height = (double)intro_font.h * 1.3;
    lines_per_screen = (int)(SCREEN_H / line_height + 1.5); /* round up + 1 */
-   sb_arr = (scroll_buf_t*)malloc( sizeof(scroll_buf_t) * lines_per_screen );
+
+   sb_arr   = calloc( lines_per_screen, sizeof( char * ) );
+   sb_index = 0;
 
    /* Force the first line to be loaded immediately. */
    offset = line_height;
-
-   /* Create a cycle of lines. */
-   sb_list = arrange_scroll_buf( sb_arr, lines_per_screen );
 
    /* Unset the side image. */
    initialize_image( &side_image );
@@ -415,9 +408,9 @@ int intro_display( const char *text, const char *mus )
          if (line_index < intro_nlines) {
             switch (intro_lines[line_index][0]) {
             case 't': /* plain ol' text. */
-               sb_list->text = &intro_lines[line_index][1];
+               sb_arr[ sb_index ] = &intro_lines[ line_index ][ 1 ];
                offset -= line_height;
-               sb_list = sb_list->next;
+               sb_index = ( sb_index + 1 ) % lines_per_screen;
                break;
             case 'i': /* fade in image. */
                intro_fade_image_in( &side_image, &transition,
@@ -425,7 +418,7 @@ int intro_display( const char *text, const char *mus )
                break;
             case 'o': /* fade out image. */
                if (NULL == side_image.tex) {
-                  WARN("Tried to fade out without an image." );
+                  WARN(_("Tried to fade out without an image.") );
                   break;
                }
                side_image.fade_rate = -0.1;
@@ -436,9 +429,9 @@ int intro_display( const char *text, const char *mus )
             }
             ++line_index;
          } else {
-            sb_list->text = NULL;
+            sb_arr[ sb_index ] = NULL;
             offset -= line_height;
-            sb_list = sb_list->next;
+            sb_index = ( sb_index + 1 ) % lines_per_screen;
          }
       } /* while (offset > line_height) */
 
@@ -460,6 +453,8 @@ int intro_display( const char *text, const char *mus )
             if (transition.tex != NULL) {
                side_image.tex = transition.tex;
                side_image.c.a = transition.c.a;
+               side_image.w   = transition.w;
+               side_image.h   = transition.h;
                side_image.y   = transition.y;
                side_image.fade_rate = 0.1;
                transition.tex = NULL;
@@ -480,24 +475,20 @@ int intro_display( const char *text, const char *mus )
       music_update( 0. );
 
       /* Draw text. */
-      stop = intro_draw_text( sb_list, offset, line_height );
+      stop = intro_draw_text( sb_arr, lines_per_screen, sb_index, offset, line_height );
 
       if (NULL != side_image.tex)
          /* Draw the image next to the text. */
          gl_blitScale( side_image.tex, side_image.x, side_image.y,
-                       side_image.tex->w, side_image.tex->h, &side_image.c );
+                       side_image.w, side_image.h, &side_image.c );
 
       if (NULL != transition.tex && transition.c.a > 0.0)
          /* Draw the image in transition. */
          gl_blitScale( transition.tex, transition.x, transition.y,
-                       transition.tex->w, transition.tex->h, &transition.c );
+                       transition.w, transition.h, &transition.c );
 
       /* Display stuff. */
-#if SDL_VERSION_ATLEAST(2,0,0)
       SDL_GL_SwapWindow( gl_screen.window );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-      SDL_GL_SwapBuffers();
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
       SDL_Delay(10); /* No need to burn CPU. */
@@ -509,16 +500,8 @@ int intro_display( const char *text, const char *mus )
 
    /* free malloc'd memory. */
    free( sb_arr );
-   if (NULL != side_image.tex)
-      gl_freeTexture( side_image.tex );
-
-   if (NULL != transition.tex)
-      gl_freeTexture( transition.tex );
-
-   /* Disable intro's key repeat. */
-#if !SDL_VERSION_ATLEAST(2,0,0)
-   SDL_EnableKeyRepeat( 0, 0 );
-#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
+   gl_freeTexture( side_image.tex );
+   gl_freeTexture( transition.tex );
 
    /* Stop music, normal music will start shortly after. */
    music_stop();

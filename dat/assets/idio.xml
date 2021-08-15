@@ -5,8 +5,8 @@
   <y>22151.369123</y>
  </pos>
  <GFX>
-  <space>G02.png</space>
-  <exterior>desertic.png</exterior>
+  <space>G02.webp</space>
+  <exterior>desertic.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -15,8 +15,8 @@
  </presence>
  <general>
   <class>G</class>
-  <population>0</population>
-  <hide>0.250000</hide>
+  <population>500000</population>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Idio is a densely populated world, but not a particularly rich one. It just so happens that the planet offers a lot of buildable terrain and little in the way of natural hazards, so it's an attractive place to live.</description>
   <bar>For some reason, whenever you order a drink here, you always get a different one. It seems to be some kind of running joke.</bar>
  </general>

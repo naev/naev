@@ -5,8 +5,8 @@
   <y>746.353155</y>
  </pos>
  <GFX>
-  <space>L00.png</space>
-  <exterior>desertic4.png</exterior>
+  <space>L00.webp</space>
+  <exterior>desertic4.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -15,8 +15,8 @@
  </presence>
  <general>
   <class>L</class>
-  <population>0</population>
-  <hide>0.250000</hide>
+  <population>200</population>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -26,9 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Silverstone is one of the Soromid's greatest producers of ships and weapons. Growing bioships is only useful if those ships can be equipped with guns, as the local governor argues.</description>
   <bar>As Silverstone is a semi-military business world, the locals take security seriously. All visitors to the spaceport bar must relinquish any weapons on their persons, and submit to a scan upon entry.</bar>
  </general>
@@ -39,6 +37,7 @@
   <item>Engines Medium</item>
   <item>Plasma 1</item>
   <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
   <item>Basic Civilian Ships</item>

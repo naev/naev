@@ -7,16 +7,33 @@
 # define NLUADEF_H
 
 
-#include <lua.h>
+/** @cond */
 #include <lauxlib.h>
+#include <lua.h>
 #include <lualib.h>
+/** @endcond */
+
+#include "attributes.h"
 #include "log.h"
 
 
 /*
+ * A number of lua error functions don't ruturn, but arnen't marked
+ * as such. These redeclarations ensure that the compiler and analizer are
+ * aware that no return will take place when compiling our code.
+ */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wredundant-decls"
+
+NORETURN extern int lua_error( lua_State *L );
+NORETURN extern int luaL_error( lua_State *L, const char *fmt, ... );
+NORETURN extern int luaL_typerror( lua_State *L, int narg, const char *tname );
+
+#pragma GCC diagnostic pop
+
+/*
  * debug stuff
  */
-#ifdef DEBUGGING
 #ifdef DEBUG_PARANOID
 #define NLUA_DEBUG(str, args...) \
    (DEBUG("Lua: "str"\n", ## args), abort())
@@ -36,11 +53,6 @@
       luaL_error( L, "Too few arguments for %s.", __func__ ); \
       return 0; \
    }
-#else /* DEBUGGING */
-#define NLUA_DEBUG(str, args...) do {;} while(0)
-#define NLUA_MIN_ARGS(n)         do {;} while(0)
-#define NLUA_INVALID_PARAMETER(L) do {;} while(0)
-#endif /* DEBUGGING */
 
 
 /*
@@ -48,12 +60,16 @@
  */
 #define NLUA_ERROR(L,str, args...)  (luaL_error(L,str, ## args))
 
-
-/*
- * comfortability macros
- */
-#define luaL_dobuffer(L, b, n, s) \
-   (luaL_loadbuffer(L, b, n, s) || lua_pcall(L, 0, LUA_MULTRET, 0))
+#define NLUA_CHECKRW(L) \
+{ \
+   nlua_getenv(__NLUA_CURENV, "__RW"); \
+   if (!lua_toboolean(L, -1)) { \
+      DEBUG( "Cannot call %s in read-only environment.", __func__ ); \
+      luaL_error( L, "Cannot call %s in read-only environment.", __func__ ); \
+      return 0; \
+   } \
+   lua_pop(L, 1); \
+}
 
 
 #endif /* NLUADEF_H */

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Targeting Conduit">
+ <general>
+  <typename>System Improvement</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <mass>3</mass>
+  <price>430000</price>
+  <gfx_store>reroute.webp</gfx_store>
+  <description>The targeting conduit redirects surplus shield energy into the targeting systems of a ship, allowing for a much quicker target lock time, albeit at the cost of reduced range due to the inherent instability caused by overloading the systems.</description>
+  <desc_extra>Only active when shield is above 70%.</desc_extra>
+ </general>
+ <specific type="modification">
+  <launch_lockon>25</launch_lockon>
+  <launch_range>-10</launch_range>
+  <lua>outfits/utility/targeting_conduit.lua</lua>
+ </specific>
+</outfit>

@@ -7,13 +7,13 @@
 #  define NLUA_BKG_H
 
 
-#include <lua.h>
+#include "nlua.h"
 
 
 /*
  * Library loading
  */
-int nlua_loadBackground( lua_State *L, int readonly );
+int nlua_loadBackground( nlua_env env );
 
 
 #endif /* NLUA_BKG_H */

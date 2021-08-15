@@ -1,50 +1,77 @@
-include("dat/ai/tpl/generic.lua")
-include("dat/ai/personality/patrol.lua")
+require 'ai.core.core'
+require "numstring"
 
 -- Settings
-mem.armour_run = 40
+mem.armour_run    = 40
 mem.armour_return = 70
-mem.aggressive = true
+mem.aggressive    = true
 
+local bribe_no_list = {
+   _([["I shall especially enjoy your death."]]),
+   _([["Snivelling waste of carbon."]]),
+   _([["Money won't save you from being purged from the gene pool."]]),
+   _([["Culling you will be doing humanity a service."]]),
+   _([["We do not consort with vermin."]]),
+   _([["Who do you take us for, the Empire?"]])
+}
+local taunt_list_offensive = {
+   _("There is no room in this universe for scum like you!"),
+   _("Culling you will be doing humanity a service."),
+   _("Enjoy your last moments, worm!"),
+   _("Time for a little natural selection!"),
+   _("Might makes right!"),
+   _("Embrace your weakness!")
+}
+local taunt_list_defensive= {
+   _("Cunning, but foolish."),
+   _("Ambush! Defend yourselves!"),
+   _("You should have picked easier prey!"),
+   _("You'll regret that!"),
+   _("That was a fatal mistake!")
+}
 
 function create ()
+   local p = ai.pilot()
+   local ps = p:ship()
 
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
+   ai.setcredits( rnd.rnd(ps:price()/300, ps:price()/70) )
 
    -- Get refuel chance
-   p = player.pilot()
-   if p:exists() then
-      standing = ai.getstanding( p ) or -1
+   local pp = player.pilot()
+   if pp:exists() then
+      local standing = ai.getstanding( pp ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
-      if standing < 20 then
-         mem.refuel_no = "\"The warriors of Sorom are not your personal refueller.\""
-      elseif standing < 70 then
-         if rnd.rnd() > 0.2 then
-            mem.refuel_no = "\"The warriors of Sorom are not your personal refueller.\""
+      if standing < 0 then
+         mem.refuel_no = _([["The warriors of Sorom are not your personal refueller."]])
+      elseif standing < 40 then
+         if rnd.rnd() > 0.4 then
+            mem.refuel_no = _([["The warriors of Sorom are not your personal refueller."]])
          end
       else
-         mem.refuel = mem.refuel * 0.6
+         mem.refuel = mem.refuel * 0.5
       end
       -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( "\"I suppose I could spare some fuel for %d credits.\"", mem.refuel )
-   end
+      mem.refuel_msg = string.format( _([["I suppose I could spare some fuel for %s."]]), creditstring(mem.refuel) )
 
-   -- Handle bribing
-   if rnd.int() > 0.4 then
-      mem.bribe_no = "\"I shall especially enjoy your death.\""
-   else
-      bribe_no = {
-         "\"Snivelling waste of carbon.\"",
-         "\"Money won't save you from being purged from the gene pool.\"",
-         "\"Culling you will be doing humanity a service.\"",
-         "\"We do not consort with vermin.\"",
-         "\"Who do you take us for, the Empire?\""
-      }
-      mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
+      -- Handle bribing
+      mem.bribe = 3 * math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
+      if standing > 20 or
+            (standing > 0 and rnd.rnd() > 0.8) or
+            (standing > -20 and rnd.rnd() > 0.6) or
+            (standing > -50 and rnd.rnd() > 0.4) or
+            (rnd.rnd() > 0.2) then
+         mem.bribe_prompt = string.format(_([["For %s I'll give you enough time to get out of my sight."]]), creditstring(mem.bribe) )
+         mem.bribe_paid = _([["Now get out of my sight."]])
+      else
+         mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+      end
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+
+   -- Set how far they attack
+   mem.enemyclose = 2000 + 2000 * ps:size()
 
    -- Finish up creation
    create_post()
@@ -59,23 +86,11 @@ function taunt ( target, offense )
    end
 
    -- some taunts
+   local taunts
    if offense then
-      taunts = {
-         "There is no room in this universe for scum like you!",
-         "Culling you will be doing humanity a service.",
-         "Enjoy your last moments, worm!",
-         "Time for a little natural selection!",
-         "Might makes right!",
-         "Embrace your weakness!"
-      }
+      taunts = taunt_list_offensive
    else
-      taunts = {
-         "Cunning, but foolish.",
-         "Ambush! Defend yourselves!",
-         "You should have picked easier prey!",
-         "You'll regret that!",
-         "That was a fatal mistake!"
-      }
+      taunts = taunt_list_defensive
    end
 
    ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])

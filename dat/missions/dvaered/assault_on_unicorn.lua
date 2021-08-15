@@ -1,37 +1,47 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Assault on Unicorn">
+  <avail>
+   <priority>3</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0 and faction.playerStanding("Dvaered") &gt; 5 and system.cur() == system.get("Amaroq") and not var.peek("assault_on_unicorn_check")</cond>
+   <chance>36</chance>
+   <location>Computer</location>
+   <done>Empire Shipping 3</done>
+  </avail>
+  <notes>
+   <tier>3</tier>
+  </notes>
+ </mission>
+ --]]
+--[[
 
    MISSION: Assault on Unicorn
    DESCRIPTION: Kill some pirates!
 
 --]]
 
-include "dat/scripts/numstring.lua"
+require "scripts/numstring"
 
-lang = naev.lang()
-if lang == "es" then
-else 
-   misn_title = "DV: Assault on Unicorn" 
-   misn_reward = "Variable"
-   misn_desc = "It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s credits."
+misn_title = _("DV: Assault on Unicorn")
+misn_reward = _("Variable")
+misn_desc = _("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s.")
 
-   title = {}
-   text = {}
-   title[2] = "Mission accomplished"
-   text[2] = "As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth %s credits."
+title = {}
+text = {}
+title[2] = _("Mission accomplished")
+text[2] = _("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth %s.")
 
-   osd_msg = {}
-   osd_msg[1] = "Fly to the Unicorn system."
-   osd_msg[2] = ""
-   osd_msg2 = "Destroy some pirates! You have killed %d and have earned %s credits. If finished, return to %s."
-   osd_msg3 = "You have reached your maximum payment. Return to %s."
-
-end
+osd_msg = {}
+osd_msg[1] = _("Fly to the Unicorn system.")
+osd_msg[2] = ""
+osd_msg2 = _("Destroy some pirates! You have killed %d and have earned %s. If finished, return to %s.")
+osd_msg3 = _("You have reached your maximum payment. Return to %s.")
 
 function create ()
    rep = faction.playerStanding("Dvaered")
    -- Round the payment to the nearest thousand.
-   max_payment = math.floor( (10000 * math.sqrt(rep) * rep/10 / 1e3) + .5 ) * 1e3
-   misn_desc = misn_desc:format( numstring(max_payment) )
+   max_payment = rep * 50000
+   misn_desc = misn_desc:format( creditstring(max_payment) )
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
    misn.setDesc(misn_desc)
@@ -55,7 +65,7 @@ function accept ()
       misn_stage = 0
       misn_target_sys = system.get("Unicorn")
 
-      osd_msg[2] = osd_msg2:format(pirates_killed, numstring(bounty_earned), planet_start_name)
+      osd_msg[2] = osd_msg2:format(pirates_killed, creditstring(bounty_earned), planet_start_name)
       misn.osdCreate(misn_title,osd_msg)
       misn.osdActive(1)
 
@@ -72,26 +82,28 @@ function jumpin()
 end
 
 function death(pilot,killer)
-   if pilot:faction() == faction.get("Pirate") and killer == player.pilot() then
+   if pilot:faction() == faction.get("Pirate")
+         and (killer == player.pilot()
+            or killer:leader() == player.pilot()) then
       reward_table = {
-         ["Hyena"]             =  1000,
-         ["Pirate Shark"]      =  2000,
-         ["Pirate Vendetta"]   =  4000,
-         ["Pirate Ancestor"]   =  5000,
-         ["Pirate Rhino"]      = 10000,
-         ["Pirate Phalanx"]    = 11000,
-         ["Pirate Admonisher"] = 12000,
-         ["Pirate Kestrel"]    = 24000
+         ["Hyena"]             =  10000,
+         ["Pirate Shark"]      =  30000,
+         ["Pirate Vendetta"]   =  80000,
+         ["Pirate Ancestor"]   = 100000,
+         ["Pirate Rhino"]      = 120000,
+         ["Pirate Phalanx"]    = 140000,
+         ["Pirate Admonisher"] = 150000,
+         ["Pirate Kestrel"]    = 600000
       }
 
-      killed_ship = pilot:ship():name()
+      killed_ship = pilot:ship():nameRaw()
       reward_earned = reward_table[killed_ship]
       pirates_killed = pirates_killed + 1
       bounty_earned = math.min( max_payment, bounty_earned + reward_earned )
       if bounty_earned == max_payment then
          osd_msg[2] = osd_msg3:format(planet_start_name)
       else
-         osd_msg[2] = osd_msg2:format(pirates_killed, numstring( bounty_earned ), planet_start_name)
+         osd_msg[2] = osd_msg2:format(pirates_killed, creditstring( bounty_earned ), planet_start_name)
       end
       misn.osdCreate(misn_title, osd_msg)
       misn.osdActive(2)
@@ -104,7 +116,7 @@ function land()
          var.pop( "assault_on_unicorn_check" )
       end
 
-      tk.msg(title[2], text[2]:format( numstring( bounty_earned )))
+      tk.msg(title[2], text[2]:format( creditstring( bounty_earned )))
       player.pay(bounty_earned)
       faction.modPlayerSingle( "Dvaered", math.pow( bounty_earned, 0.5 ) / 100 )
       misn.finish(true)

@@ -5,10 +5,10 @@
 -- radius: The radius around the location or anchor
 -- focus: The pilot that's polled for. If omitted, defaults to the player.
 -- funcname: The name of the function to be called when the player is in proximity.
--- 
--- Example usage: hook.timer(500, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "function"})
--- Example usage: hook.timer(500, "proximity", {anchor = mypilot, radius = 500, funcname = "function"})
--- Example usage: hook.timer(500, "proximity", {anchor = mypilot, radius = 500, funcname = "function", focus = theirpilot})
+--
+-- Example usage: hook.timer(0.5, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "function"})
+-- Example usage: hook.timer(0.5, "proximity", {anchor = mypilot, radius = 500, funcname = "function"})
+-- Example usage: hook.timer(0.5, "proximity", {anchor = mypilot, radius = 500, funcname = "function", focus = theirpilot})
 function proximity( trigger )
    if trigger.focus == nil then
       trigger.focus = player.pilot()
@@ -22,8 +22,8 @@ end
 -- focus: The pilot that's polled for.
 -- funcname: The name of the function to be called when the player is in proximity.
 --
--- Example usage: hook.timer(500, "proximityScan", {focus = theirpilot, funcname = "function"}) -- Triggers when theirpilot is detected by the player
--- Example usage: hook.timer(500, "proximityScan", {anchor = theirpilot, focus = mypilot, funcname = "function"}) -- Triggers when mypilot is detected by theirpilot
+-- Example usage: hook.timer(0.5, "proximityScan", {focus = theirpilot, funcname = "function"}) -- Triggers when theirpilot is detected by the player
+-- Example usage: hook.timer(0.5, "proximityScan", {anchor = theirpilot, focus = mypilot, funcname = "function"}) -- Triggers when mypilot is detected by theirpilot
 function proximityScan( trigger )
    if trigger.anchor == nil then
       trigger.anchor = player.pilot()
@@ -65,7 +65,7 @@ function _proximity( trigger )
     end
 
     -- Set new timer hook
-    local hook_id = hook.timer(500, "_proximity", trigger)
+    local hook_id = hook.timer(0.5, "_proximity", trigger)
     trigger.hook_tbl[1] = hook_id
 end
 
@@ -99,7 +99,7 @@ function _proximityScan( trigger )
     end
 
     -- Set new timer hook
-    local hook_id = hook.timer(500, "_proximityScan", trigger)
+    local hook_id = hook.timer(0.5, "_proximityScan", trigger)
     trigger.hook_tbl[1] = hook_id
 end
 

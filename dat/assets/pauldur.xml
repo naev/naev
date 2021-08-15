@@ -5,8 +5,8 @@
   <y>-7782.151406</y>
  </pos>
  <GFX>
-  <space>moon-M06.png</space>
-  <exterior>forest.png</exterior>
+  <space>moon-M06.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>15000000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Pauldur is a small Sirius community, the only inhabited planet in a remote area of Sirius space. Though economically struggling at the best of times, the people here make the most of their situation. Life isn't bad, but it's hard to get the latest fashion items sometimes.</description>
   <bar>This bar is fairly quiet. Not many people stop by Pauldur who aren't from the moon to begin with, and those who are from here don't usually stop by the spaceport bar.</bar>
  </general>

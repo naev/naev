@@ -7,7 +7,10 @@
 #  define LOAD_H
 
 
+/** @cond */
 #include <stdint.h>
+#include <time.h>
+/** @endcond */
 
 #include "ntime.h"
 
@@ -17,10 +20,10 @@
  */
 typedef struct nsave_s {
    char *name; /**< Player name. */
-   char *path; /**< File path. */
+   char *path; /**< File path relative to PhysicsFS write directory. */
 
    /* Naev info. */
-   int version[3]; /**< Naev version in MAJOR/MINOR/PATCH format. */
+   char *version; /**< Naev version. */
    char *data; /**< Data name. */
 
    /* Player info. */
@@ -35,11 +38,13 @@ typedef struct nsave_s {
 
 
 void load_loadGameMenu (void);
-int load_game( const char* file, int version_diff );
+int load_gameDiff( const char* file );
+int load_gameFile( const char* file );
+int load_game( nsave_t *ns );
 
 int load_refresh (void);
 void load_free (void);
-nsave_t *load_getList( int *n );
+const nsave_t *load_getList (void);
 
 
 #endif /* LOAD_H */

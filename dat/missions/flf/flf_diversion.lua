@@ -1,7 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Divert the Dvaered Forces">
+  <avail>
+   <priority>3</priority>
+   <chance>550</chance>
+   <done>Diversion from Raelid</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
+   <faction>Frontier</faction>
+   <cond>not diff.isApplied( "flf_dead" )</cond>
+  </avail>
+ </mission>
+ --]]
+--[[
 
    FLF diversion mission.
-   Copyright (C) 2014, 2015 Julie Marchant <onpon4@riseup.net>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,32 +31,30 @@
 
 --]]
 
-include "numstring.lua"
-include "dat/missions/flf/flf_common.lua"
+local fleet = require "fleet"
+require "numstring"
+require "missions/flf/flf_common"
 
 -- localization stuff
-lang = naev.lang()
-if lang == "notreal" then
-else -- default English
-   misn_title  = "FLF: Diversion in %s"
-   misn_reward = "%s credits"
+misn_title  = _("FLF: Diversion in %s")
 
-   success_text = {}
-   success_text[1] = "You receive a transmission from an FLF officer saying that the operation has completed, and you can now return to the base."
+success_text = {}
+success_text[1] = _("You receive a transmission from an FLF officer saying that the operation has completed, and you can now return to the base.")
 
-   pay_text = {}
-   pay_text[1] = "The FLF officer in charge of the primary operation thanks you for your contribution and hands you your pay."
-   pay_text[2] = "You greet the FLF officer in charge of the primary operation, who seems happy that the mission was a success. You congratulate each other, and the officer hands you your pay."
+pay_text = {}
+pay_text[1] = _("The FLF officer in charge of the primary operation thanks you for your contribution and hands you your pay.")
+pay_text[2] = _("You greet the FLF officer in charge of the primary operation, who seems happy that the mission was a success. You congratulate each other, and the officer hands you your pay.")
 
-   misn_desc = "A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby %s system."
+misn_desc = _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby %s system.")
 
-   osd_title   = "FLF Diversion"
-   osd_desc    = {}
-   osd_desc[1] = "Fly to the %s system"
-   osd_desc[2] = "Engage and destroy Dvaered ships to get their attention"
-   osd_desc[3] = "Return to FLF base"
-   osd_desc["__save"] = true
-end
+msg = _("%s has warped in!")
+
+osd_title   = _("FLF Diversion")
+osd_desc    = {}
+osd_desc[1] = _("Fly to the %s system")
+osd_desc[2] = _("Engage and destroy Dvaered ships to get their attention")
+osd_desc[3] = _("Return to FLF base")
+osd_desc["__save"] = true
 
 
 function create ()
@@ -57,7 +68,7 @@ function create ()
    if num_empire == nil then num_empire = 0 end
    if num_flf == nil then num_flf = 0 end
    dv_attention_target = num_dvaereds / 50
-   credits = 200 * (num_dvaereds + num_empire - num_flf) * system.cur():jumpDist( missys ) / 3
+   credits = 200 * (num_dvaereds + num_empire - num_flf) * system.cur():jumpDist( missys, true ) / 3
    credits = credits + rnd.sigma() * 10000
    reputation = math.max( (num_dvaereds + num_empire - num_flf) / 25, 1 )
    if credits < 10000 then misn.finish( false ) end
@@ -65,7 +76,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
    misn.setDesc( misn_desc:format( missys:name() ) )
-   misn.setReward( misn_reward:format( numstring( credits ) ) )
+   misn.setReward( creditstring( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 
@@ -109,7 +120,7 @@ function update_dv ()
       hook.pilot( j, "attacked", "pilot_attacked_dv" )
       hook.pilot( j, "death", "pilot_death_dv" )
    end
-   update_dv_hook = hook.timer( 3000, "update_dv" )
+   update_dv_hook = hook.timer( 3.0, "update_dv" )
 end
 
 
@@ -120,7 +131,7 @@ function add_attention( p )
       dv_attention = dv_attention + 1
       if dv_attention >= dv_attention_target and dv_attention - 1 < dv_attention_target then
          if success_hook ~= nil then hook.rm( success_hook ) end
-         success_hook = hook.timer( 30000, "timer_mission_success" )
+         success_hook = hook.timer( 30.0, "timer_mission_success" )
       end
 
       hook.pilot( p, "jump", "rm_attention" )
@@ -138,17 +149,19 @@ end
 
 
 function pilot_attacked_dv( p, attacker )
-   if attacker == player.pilot() and not dv_coming and rnd.rnd() < 0.01 then
+   if (attacker == player.pilot() or attacker:leader() == player.pilot())
+         and not dv_coming and rnd.rnd() < 0.1 then
       dv_coming = true
-      hook.timer( 10000, "timer_spawn_dv" )
+      hook.timer( 10.0, "timer_spawn_dv" )
    end
 end
 
 
 function pilot_death_dv( p, attacker )
-   if attacker == player.pilot() and not dv_coming and rnd.rnd() < 0.25 then
+   if (attacker == player.pilot() or attacker:leader() == player.pilot())
+         and not dv_coming then
       dv_coming = true
-      hook.timer( 10000, "timer_spawn_dv" )
+      hook.timer( 10.0, "timer_spawn_dv" )
    end
 end
 
@@ -156,9 +169,22 @@ end
 function timer_spawn_dv ()
    dv_coming = false
    if not job_done then
-      local shipnames = { "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance", "Dvaered Goddard", "Dvaered Small Patrol", "Dvaered Big Patrol" }
-      local shipname = shipnames[ rnd.rnd( 1, #shipnames ) ]
-      for i, j in ipairs( pilot.add( shipname ) ) do
+      local fleets = { {"Dvaered Vendetta"}, {"Dvaered Ancestor"}, {"Dvaered Phalanx"}, {"Dvaered Vigilance"}, {"Dvaered Goddard"},
+                       {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"},
+                       {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance"} }
+      local ships = fleets[ rnd.rnd( 1, #fleets ) ]
+      local fleetname
+
+      if #ships == 1 then
+         fleetname = _(ships[1])
+      elseif #ships < 5 then
+         fleetname = _("Dvaered Small Patrol")
+      else
+         fleetname = _("Dvaered Big Patrol")
+      end
+
+      player.msg( msg:format( _(fleetname) ) )
+      for i, j in ipairs( fleet.add( 1,  ships, "Dvaered" ) ) do
          add_attention( j )
       end
    end
@@ -178,7 +204,7 @@ end
 
 
 function land ()
-   if planet.cur():faction():name() == "FLF" then
+   if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( credits )
       faction.get("FLF"):modPlayer( reputation )

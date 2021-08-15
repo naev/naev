@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Dummy Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>small</size>
+  <mass>24</mass>
+  <price>0</price>
+  <description>This is a dummy hull for use in missions only, which does nothing. DO NOT BUY.</description>
+  <gfx_store>plating_patchwork.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>0</cargo>
+  <absorb>0</absorb>
+  <armour>0</armour>
+ </specific>
+</outfit>

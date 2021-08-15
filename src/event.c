@@ -13,39 +13,40 @@
  */
 
 
-#include "event.h"
-
-#include "naev.h"
-
-#include <stdint.h>
+/** @cond */
 #include "nstring.h"
+#include <stdint.h>
 #include <stdlib.h>
 
-#include "log.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_evt.h"
-#include "nlua_hook.h"
-#include "nlua_tk.h"
-#include "nlua_camera.h"
-#include "nlua_bkg.h"
-#include "nlua_tex.h"
-#include "nlua_music.h"
-#include "nlua_tut.h"
-#include "rng.h"
-#include "ndata.h"
-#include "nxml.h"
-#include "nxml_lua.h"
+#include "naev.h"
+/** @endcond */
+
+#include "event.h"
+
+#include "array.h"
 #include "cond.h"
 #include "hook.h"
-#include "player.h"
+#include "log.h"
+#include "ndata.h"
+#include "nlua.h"
+#include "nlua_audio.h"
+#include "nlua_bkg.h"
+#include "nlua_camera.h"
+#include "nlua_evt.h"
+#include "nlua_hook.h"
+#include "nlua_music.h"
+#include "nlua_tex.h"
+#include "nlua_tk.h"
+#include "nluadef.h"
 #include "npc.h"
+#include "nxml.h"
+#include "nxml_lua.h"
+#include "player.h"
+#include "rng.h"
 
 
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
 #define XML_EVENT_TAG         "event" /**< XML event tag. */
-
-#define EVENT_CHUNK           32 /**< Size to grow event data by. */
 
 
 #define EVENT_FLAG_UNIQUE     (1<<0) /**< Unique event. */
@@ -54,22 +55,23 @@
 /**
  * @brief Event data structure.
  */
-typedef struct EventData_s {
+typedef struct EventData_ {
    char *name; /**< Name of the event. */
-   char *lua; /**< Name of Lua file to use. */
+   char *sourcefile; /**< Source file code. */
+   char *lua; /**< Lua code. */
    unsigned int flags; /**< Bit flags. */
 
    EventTrigger_t trigger; /**< What triggers the event. */
    char *cond; /**< Conditional Lua code to execute. */
    double chance; /**< Chance of appearing. */
-} EventData_t;
+   int priority; /**< Event priority: 0 = main plot, 5 = default, 10 = insignificant. */
+} EventData;
 
 
 /*
  * Event data.
  */
-static EventData_t *event_data   = NULL; /**< Allocated event data. */
-static int event_ndata           = 0; /**< Number of actual event data. */
+static EventData *event_data   = NULL; /**< Allocated event data. */
 
 
 /*
@@ -77,19 +79,19 @@ static int event_ndata           = 0; /**< Number of actual event data. */
  */
 static unsigned int event_genid  = 0; /**< Event ID generator. */
 static Event_t *event_active     = NULL; /**< Active events. */
-static int event_nactive         = 0; /**< Number of active events. */
-static int event_mactive         = 0; /**< Allocated space for active events. */
 
 
 /*
  * Prototypes.
  */
 static unsigned int event_genID (void);
-static int event_parse( EventData_t *temp, const xmlNodePtr parent );
-static void event_freeData( EventData_t *event );
+static int event_cmp( const void* a, const void* b );
+static int event_parseFile( const char* file );
+static int event_parseXML( EventData *temp, const xmlNodePtr parent );
+static void event_freeData( EventData *event );
 static int event_create( int dataid, unsigned int *id );
 int events_saveActive( xmlTextWriterPtr writer );
-int events_loadActive( xmlNodePtr parent );;
+int events_loadActive( xmlNodePtr parent );
 static int events_parseActive( xmlNodePtr parent );
 
 
@@ -102,13 +104,12 @@ Event_t *event_get( unsigned int eventid )
    Event_t *ev;
 
    /* Iterate. */
-   for (i=0; i<event_nactive; i++) {
+   for (i=0; i<array_size(event_active); i++) {
       ev = &event_active[i];
       if (ev->id == eventid)
          return ev;
    }
 
-   /*WARN( "Event '%u' not found in stack.", eventid );*/
    return NULL;
 }
 
@@ -138,58 +139,9 @@ int event_start( const char *name, unsigned int *id )
 
 
 /**
- * @brief Starts running a function, allows programmer to set up arguments.
- */
-lua_State *event_runStart( unsigned int eventid, const char *func )
-{
-   Event_t *ev;
-
-   ev = event_get( eventid );
-   if (ev == NULL)
-      return NULL;
-
-   return event_setupLua( ev, func );
-}
-
-
-/**
- * @brief Runs a function previously set up with event_runStart.
- */
-int event_runFunc( unsigned int eventid, const char *func, int nargs )
-{
-   Event_t *ev;
-
-   ev = event_get( eventid );
-   if (ev == NULL)
-      return 0;
-
-   return event_runLuaFunc( ev, func, nargs );
-}
-
-
-/**
- * @brief Runs the event function.
- *
- *    @param eventid ID of the event to run Lua function on.
- *    @param func Name of the function to run.
- *    @return 0 on success.
- */
-int event_run( unsigned int eventid, const char *func )
-{
-   Event_t *ev;
-
-   ev = event_get( eventid );
-   if (ev == NULL)
-      return -1;
-
-   return event_runLua( ev, func );
-}
-
-
-/**
  * @brief Gets the name of the event data.
  *
- *    @param ev Event to get name of data from.
+ *    @param eventid Event to get name of data from.
  *    @return Name of data ev has.
  */
 const char *event_getData( unsigned int eventid )
@@ -238,25 +190,20 @@ static unsigned int event_genID (void)
 /**
  * @brief Creates an event.
  *
- *    @param data Data to base event off of.
+ *    @param dataid Data to base event off of.
  *    @param id ID to use (0 to generate).
  *    @return 0 on success.
  */
 static int event_create( int dataid, unsigned int *id )
 {
-   lua_State *L;
-   uint32_t bufsize;
-   char *buf;
    Event_t *ev;
-   EventData_t *data;
+   EventData *data;
+
+   if (event_active==NULL)
+      event_active = array_create( Event_t );
 
    /* Create the event. */
-   event_nactive++;
-   if (event_nactive > event_mactive) {
-      event_mactive += EVENT_CHUNK;
-      event_active = realloc( event_active, sizeof(Event_t) * event_mactive );
-   }
-   ev = &event_active[ event_nactive-1 ];
+   ev = &array_grow( &event_active );
    memset( ev, 0, sizeof(Event_t) );
    if ((id != NULL) && (*id != 0))
       ev->id = *id;
@@ -268,38 +215,29 @@ static int event_create( int dataid, unsigned int *id )
    data = &event_data[dataid];
 
    /* Open the new state. */
-   ev->L = nlua_newState();
-   L = ev->L;
-   nlua_loadStandard(L,0);
-   nlua_loadEvt(L);
-   nlua_loadHook(L);
-   nlua_loadTk(L);
-   nlua_loadBackground(L,1);
-   nlua_loadCamera(L,0);
-   nlua_loadTex(L,0);
-   nlua_loadMusic(L,0);
-   if (player_isTut())
-      nlua_loadTut(L);
+   ev->env = nlua_newEnv(1);
+   nlua_loadStandard(ev->env);
+   nlua_loadEvt(ev->env);
+   nlua_loadHook(ev->env);
+   nlua_loadCamera(ev->env);
+   nlua_loadTex(ev->env);
+   nlua_loadBackground(ev->env);
+   nlua_loadMusic(ev->env);
+   nlua_loadAudio(ev->env);
+   nlua_loadTk(ev->env);
 
    /* Load file. */
-   buf = ndata_read( data->lua, &bufsize );
-   if (buf == NULL) {
-      WARN("Event '%s' Lua script not found.", data->lua );
-      return -1;
-   }
-   if (luaL_dobuffer(L, buf, bufsize, data->lua) != 0) {
-      WARN("Error loading event file: %s\n"
+   if (nlua_dobufenv(ev->env, data->lua, strlen(data->lua), data->sourcefile) != 0) {
+      WARN(_("Error loading event file: %s\n"
             "%s\n"
-            "Most likely Lua file has improper syntax, please check",
-            data->lua, lua_tostring(L,-1));
-      free(buf);
+            "Most likely Lua file has improper syntax, please check"),
+            data->sourcefile, lua_tostring(naevL,-1));
       return -1;
    }
-   free(buf);
 
    /* Run Lua. */
    if ((id==NULL) || (*id==0))
-      event_runLua( ev, "create" );
+      event_run( ev->id, "create" );
    if (id != NULL)
       *id = ev->id;
 
@@ -314,8 +252,8 @@ static int event_create( int dataid, unsigned int *id )
  */
 static void event_cleanup( Event_t *ev )
 {
-   /* Destroy Lua. */
-   lua_close(ev->L);
+   /* Free lua env. */
+   nlua_freeEnv(ev->env);
 
    /* Free hooks. */
    hook_rmEventParent(ev->id);
@@ -340,21 +278,19 @@ void event_remove( unsigned int eventid )
    Event_t *ev;
 
    /* Find the event. */
-   for (i=0; i<event_nactive; i++) {
+   for (i=0; i<array_size(event_active); i++) {
       ev = &event_active[i];
       if (ev->id == eventid) {
          /* Clean up event. */
          event_cleanup(ev);
 
          /* Move memory. */
-         memmove( &event_active[i], &event_active[i+1],
-               sizeof(Event_t) * (event_nactive-i-1) );
-         event_nactive--;
+         array_erase( &event_active, &event_active[i], &event_active[i+1] );
          return;
       }
    }
 
-   WARN("Event ID '%u' not valid.", eventid);
+   WARN(_("Event ID '%u' not valid."), eventid);
 }
 
 
@@ -382,7 +318,7 @@ int event_alreadyRunning( int data )
    Event_t *ev;
 
    /* Find events. */
-   for (i=0; i<event_nactive; i++) {
+   for (i=0; i<array_size(event_active); i++) {
       ev = &event_active[i];
       if (ev->data == data)
          return 1;
@@ -402,12 +338,8 @@ void events_trigger( EventTrigger_t trigger )
    int i, c;
    int created;
 
-   /* Events can't be triggered by tutorial. */
-   if (player_isTut())
-      return;
-
    created = 0;
-   for (i=0; i<event_ndata; i++) {
+   for (i=0; i<array_size(event_data); i++) {
       /* Make sure trigger matches. */
       if (event_data[i].trigger != trigger)
          continue;
@@ -425,7 +357,7 @@ void events_trigger( EventTrigger_t trigger )
       if (event_data[i].cond != NULL) {
          c = cond_check(event_data[i].cond);
          if (c<0) {
-            WARN("Conditional for event '%s' failed to run.", event_data[i].name);
+            WARN(_("Conditional for event '%s' failed to run."), event_data[i].name);
             continue;
          }
          else if (!c)
@@ -450,25 +382,17 @@ void events_trigger( EventTrigger_t trigger )
  *    @param parent Event parent node.
  *    @return 0 on success.
  */
-static int event_parse( EventData_t *temp, const xmlNodePtr parent )
+static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
-   char str[PATH_MAX] = "\0";
    char *buf;
 
-#ifdef DEBUGGING
-   /* To check if event is valid. */
-   lua_State *L;
-   int ret;
-   uint32_t len;
-#endif /* DEBUGGING */
-
-   memset( temp, 0, sizeof(EventData_t) );
+   memset( temp, 0, sizeof(EventData) );
 
    /* get the name */
-   temp->name = xml_nodeProp(parent, "name");
+   xmlr_attr_strd(parent, "name", temp->name);
    if (temp->name == NULL)
-      WARN("Event in "EVENT_DATA_PATH" has invalid or no name");
+      WARN(_("Event in %s has invalid or no name"), EVENT_DATA_PATH);
 
    node = parent->xmlChildrenNode;
 
@@ -477,32 +401,11 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
       /* Only check nodes. */
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"lua")) {
-         nsnprintf( str, PATH_MAX, EVENT_LUA_PATH"%s.lua", xml_get(node) );
-         temp->lua = strdup( str );
-         str[0] = '\0';
-
-#ifdef DEBUGGING
-         /* Check to see if syntax is valid. */
-         L = luaL_newstate();
-         buf = ndata_read( temp->lua, &len );
-         ret = luaL_loadbuffer(L, buf, len, temp->name );
-         if (ret == LUA_ERRSYNTAX) {
-            WARN("Event Lua '%s' of event '%s' syntax error: %s",
-                  temp->name, temp->lua, lua_tostring(L,-1) );
-         }
-         free(buf);
-         lua_close(L);
-#endif /* DEBUGGING */
-
-         continue;
-      }
-
       /* Trigger. */
-      else if (xml_isNode(node,"trigger")) {
+      if (xml_isNode(node,"trigger")) {
          buf = xml_get(node);
          if (buf == NULL)
-            WARN("Event '%s': Null trigger type.", temp->name);
+            WARN(_("Event '%s': Null trigger type."), temp->name);
          else if (strcmp(buf,"enter")==0)
             temp->trigger = EVENT_TRIGGER_ENTER;
          else if (strcmp(buf,"land")==0)
@@ -512,7 +415,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
          else if (strcmp(buf,"none")==0)
             temp->trigger = EVENT_TRIGGER_NONE;
          else
-            WARN("Event '%s' has invalid 'trigger' parameter: %s", temp->name, buf);
+            WARN(_("Event '%s' has invalid 'trigger' parameter: %s"), temp->name, buf);
 
          continue;
       }
@@ -526,10 +429,13 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
                temp->flags |= EVENT_FLAG_UNIQUE;
                continue;
             }
-            WARN("Event '%s' has unknown flag node '%s'.", temp->name, cur->name);
+            WARN(_("Event '%s' has unknown flag node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
+
+      /* Notes for the python mission mapping script. */
+      else if (xml_isNode(node,"notes")) continue;
 
       /* Condition. */
       xmlr_strd(node,"cond",temp->cond);
@@ -537,20 +443,35 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
       /* Get chance. */
       xmlr_float(node,"chance",temp->chance);
 
-      DEBUG("Unknown node '%s' in event '%s'", node->name, temp->name);
+      /* Get proirity. */
+      xmlr_int(node,"priority",temp->priority);
+
+      DEBUG(_("Unknown node '%s' in event '%s'"), node->name, temp->name);
    } while (xml_nextNode(node));
 
    /* Process. */
    temp->chance /= 100.;
 
 #define MELEMENT(o,s) \
-   if (o) WARN("Mission '%s' missing/invalid '"s"' element", temp->name)
-   MELEMENT(temp->lua==NULL,"lua");
+   if (o) WARN(_("Event '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT((temp->trigger!=EVENT_TRIGGER_NONE) && (temp->chance==0.),"chance");
    MELEMENT(temp->trigger==EVENT_TRIGGER_NULL,"trigger");
 #undef MELEMENT
 
    return 0;
+}
+
+
+static int event_cmp( const void* a, const void* b )
+{
+   const EventData *ea, *eb;
+   ea = (const EventData*) a;
+   eb = (const EventData*) b;
+   if (ea->priority < eb->priority)
+      return -1;
+   else if (ea->priority > eb->priority)
+      return +1;
+   return strcmp( ea->name, eb->name );
 }
 
 
@@ -561,64 +482,103 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
  */
 int events_load (void)
 {
-   int m;
-   uint32_t bufsize;
-   char *buf;
+   int    i;
+   char **event_files;
+
+   /* Run over events. */
+   event_files = ndata_listRecursive( EVENT_DATA_PATH );
+   event_data  = array_create_size( EventData, array_size( event_files ) );
+   for ( i = 0; i < array_size( event_files ); i++ ) {
+      event_parseFile( event_files[ i ] );
+      free( event_files[ i ] );
+   }
+   array_free( event_files );
+   array_shrink( &event_data );
+
+   /* Sort based on priority so higher priority missions can establish claims first. */
+   qsort( event_data, array_size(event_data), sizeof(EventData), event_cmp );
+
+   DEBUG( n_("Loaded %d Event", "Loaded %d Events", array_size(event_data) ), array_size(event_data) );
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses an event file.
+ */
+static int event_parseFile( const char* file )
+{
+   size_t bufsize;
    xmlNodePtr node;
    xmlDocPtr doc;
+   char *filebuf;
+   const char *pos, *start_pos;
+   EventData *temp;
 
-   /* Load the data. */
-   buf = ndata_read( EVENT_DATA_PATH, &bufsize );
-   if (buf == NULL) {
-      WARN("Unable to read data from '%s'", EVENT_DATA_PATH);
+#ifdef DEBUGGING
+   /* To check if event is valid. */
+   int ret;
+#endif /* DEBUGGING */
+
+   /* Load string. */
+   filebuf = ndata_read( file, &bufsize );
+   if (filebuf == NULL) {
+      WARN(_("Unable to read data from '%s'"), file);
       return -1;
    }
 
-   /* Load the document. */
-   doc = xmlParseMemory( buf, bufsize );
+   /* Skip if no XML. */
+   pos = strnstr( filebuf, "</event>", bufsize );
+   if (pos==NULL) {
+      pos = strnstr( filebuf, "function create", bufsize );
+      if ((pos != NULL) && !strncmp(pos,"--common",bufsize))
+         WARN(_("Event '%s' has create function but no XML header!"), file);
+      free(filebuf);
+      return 0;
+   }
+
+   /* Separate XML header and Lua. */
+   start_pos = strnstr( filebuf, "<?xml ", bufsize );
+   pos = strnstr( filebuf, "--]]", bufsize );
+   if (pos == NULL || start_pos == NULL) {
+      WARN(_("Event file '%s' has missing XML header!"), file);
+      return -1;
+   }
+
+   /* Parse the header. */
+   doc = xmlParseMemory( start_pos, pos-start_pos );
    if (doc == NULL) {
-      WARN("Unable to parse document '%s'", EVENT_DATA_PATH);
+      WARN(_("Unable to parse document XML header for Event '%s'"), file);
       return -1;
    }
 
    /* Get the root node. */
    node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_EVENT_ID)) {
-      WARN("Malformed '"EVENT_DATA_PATH"' file: missing root element '"XML_EVENT_ID"'");
+   if (!xml_isNode(node,XML_EVENT_TAG)) {
+      WARN(_("Malformed '%s' file: missing root element '%s'"), file, XML_EVENT_TAG);
       return -1;
    }
 
-   /* Get the first node. */
-   node = node->xmlChildrenNode; /* first event node */
-   if (node == NULL) {
-      WARN("Malformed '"EVENT_DATA_PATH"' file: does not contain elements");
-      return -1;
+   temp = &array_grow(&event_data);
+   event_parseXML( temp, node );
+   temp->lua = strdup(filebuf);
+   temp->sourcefile = strdup(file);
+
+#ifdef DEBUGGING
+   /* Check to see if syntax is valid. */
+   ret = luaL_loadbuffer(naevL, temp->lua, strlen(temp->lua), temp->name );
+   if (ret == LUA_ERRSYNTAX) {
+      WARN(_("Event Lua '%s' syntax error: %s"),
+            file, lua_tostring(naevL,-1) );
+   } else {
+      lua_pop(naevL, 1);
    }
-
-   m = 0;
-   do {
-      if (xml_isNode(node,XML_EVENT_TAG)) {
-
-         /* See if must grow. */
-         event_ndata++;
-         if (event_ndata > m) {
-            m += EVENT_CHUNK;
-            event_data = realloc(event_data, sizeof(EventData_t)*m);
-         }
-
-         /* Load it. */
-         event_parse( &event_data[event_ndata-1], node );
-      }
-   } while (xml_nextNode(node));
-
-   /* Shrink to minimum. */
-   event_data = realloc(event_data, sizeof(EventData_t)*event_ndata);
+#endif /* DEBUGGING */
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
-
-   DEBUG("Loaded %d Event%s", event_ndata, (event_ndata==1) ? "" : "s" );
+   free(filebuf);
 
    return 0;
 }
@@ -629,13 +589,14 @@ int events_load (void)
  *
  *    @param event Event Data to free.
  */
-static void event_freeData( EventData_t *event )
+static void event_freeData( EventData *event )
 {
    free( event->name );
    free( event->lua );
+   free( event->sourcefile );
    free( event->cond );
 #if DEBUGGING
-   memset( event, 0, sizeof(EventData_t) );
+   memset( event, 0, sizeof(EventData) );
 #endif /* DEBUGGING */
 }
 
@@ -648,14 +609,10 @@ void events_cleanup (void)
    int i;
 
    /* Free active events. */
-   for (i=0; i<event_nactive; i++)
+   for (i=0; i<array_size(event_active); i++)
       event_cleanup( &event_active[i] );
-   if (event_active != NULL)
-      free(event_active);
-
+   array_free(event_active);
    event_active = NULL;
-   event_nactive = 0;
-   event_mactive = 0;
 }
 
 
@@ -669,13 +626,10 @@ void events_exit (void)
    events_cleanup();
 
    /* Free data. */
-   if (event_data != NULL) {
-      for (i=0; i<event_ndata; i++)
-         event_freeData( &event_data[i] );
-      free(event_data);
-   }
+   for (i=0; i<array_size(event_data); i++)
+      event_freeData( &event_data[i] );
+   array_free(event_data);
    event_data  = NULL;
-   event_ndata = 0;
 }
 
 
@@ -689,10 +643,10 @@ int event_dataID( const char *evdata )
 {
    int i;
 
-   for (i=0; i<event_ndata; i++)
+   for (i=0; i<array_size(event_data); i++)
       if (strcmp(event_data[i].name, evdata)==0)
          return i;
-   WARN("No event data found matching name '%s'.", evdata);
+   WARN(_("No event data found matching name '%s'."), evdata);
    return -1;
 }
 
@@ -717,7 +671,7 @@ void event_activateClaims (void)
    int i;
 
    /* Free active events. */
-   for (i=0; i<event_nactive; i++)
+   for (i=0; i<array_size(event_active); i++)
       if (event_active[i].claims != NULL)
          claim_activate( event_active[i].claims );
 }
@@ -730,20 +684,24 @@ int event_testClaims( unsigned int eventid, int sys )
 {
    Event_t *ev;
    ev = event_get( eventid );
+   if (ev==NULL) {
+      WARN(_("Trying to test claims of unknown event with id '%d'!"), eventid);
+      return 0;
+   }
    return claim_testSys( ev->claims, sys );
 }
 
 
 /**
- * @brief Checks the event sanity and cleans up after them.
+ * @brief Checks the event validity and cleans up after them.
  */
-void event_checkSanity (void)
+void event_checkValidity (void)
 {
    int i;
    Event_t *ev;
 
    /* Iterate. */
-   for (i=0; i<event_nactive; i++) {
+   for (i=0; i<array_size(event_active); i++) {
       ev = &event_active[i];
 
       /* Check if has children. */
@@ -751,10 +709,10 @@ void event_checkSanity (void)
          continue;
 
       /* Must delete. */
-      WARN("Detected event '%s' without any hooks and is therefore insane. Removing event.",
+      WARN(_("Detected event '%s' without any hooks and is therefore invalid. Removing event."),
             event_dataName( ev->data ));
       event_remove( ev->id );
-      i--; /* Keep iteration sane. */
+      i--; /* Keep iteration safe. */
    }
 }
 
@@ -772,7 +730,7 @@ int events_saveActive( xmlTextWriterPtr writer )
 
    xmlw_startElem(writer,"events");
 
-   for (i=0; i<event_nactive; i++) {
+   for (i=0; i<array_size(event_active); i++) {
       ev = &event_active[i];
       if (!ev->save) /* Only save events that want to be saved. */
          continue;
@@ -789,7 +747,7 @@ int events_saveActive( xmlTextWriterPtr writer )
 
       /* Write Lua magic */
       xmlw_startElem(writer,"lua");
-      nxml_persistLua( ev->L, writer );
+      nxml_persistLua( ev->env, writer );
       xmlw_endElem(writer); /* "lua" */
 
       xmlw_endElem(writer); /* "event" */
@@ -843,27 +801,21 @@ static int events_parseActive( xmlNodePtr parent )
       if (!xml_isNode(node,"event"))
          continue;
 
-      xmlr_attr(node,"name",buf);
+      xmlr_attr_strd(node,"name",buf);
       if (buf==NULL) {
-         WARN("Event has missing 'name' attribute, skipping.");
+         WARN(_("Event has missing 'name' attribute, skipping."));
          continue;
       }
       data = event_dataID( buf );
       if (data < 0) {
-         WARN("Event in save has name '%s' but event data not found matching name. Skipping.", buf);
+         WARN(_("Event in save has name '%s' but event data not found matching name. Skipping."), buf);
          free(buf);
          continue;
       }
       free(buf);
-      xmlr_attr(node,"id",buf);
-      if (buf==NULL) {
-         WARN("Event with data '%s' has missing 'id' attribute, skipping.", event_dataName(data));
-         continue;
-      }
-      id = atoi(buf);
-      free(buf);
+      xmlr_attr_uint(node,"id",id);
       if (id==0) {
-         WARN("Event with data '%s' has invalid 'id' attribute, skipping.", event_dataName(data));
+         WARN(_("Event with data '%s' has invalid 'id' attribute, skipping."), event_dataName(data));
          continue;
       }
 
@@ -871,7 +823,7 @@ static int events_parseActive( xmlNodePtr parent )
       event_create( data, &id );
       ev = event_get( id );
       if (ev == NULL) {
-         WARN("Event with data '%s' was not created, skipping.", event_dataName(data));
+         WARN(_("Event with data '%s' was not created, skipping."), event_dataName(data));
          continue;
       }
       ev->save = 1; /* Should save by default again. */
@@ -880,7 +832,7 @@ static int events_parseActive( xmlNodePtr parent )
       cur = node->xmlChildrenNode;
       do {
          if (xml_isNode(cur,"lua"))
-            nxml_unpersistLua( ev->L, cur );
+            nxml_unpersistLua( ev->env, cur );
       } while (xml_nextNode(cur));
 
       /* Claims. */

@@ -5,8 +5,8 @@
   <y>14128.452439</y>
  </pos>
  <GFX>
-  <space>station-agriculture.png</space>
-  <exterior>forest.png</exterior>
+  <space>station-agriculture.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>500</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -24,9 +24,7 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Urbanus Crops is one of House Dvaered's crop growing complexes. Though the idea was largely 'borrowed' from the Empire's INSS series, the efficiency of the actual installation is somewhat lower, because of the Dvaered's inferior technological background. Urbanus Crops gets the job done, though, and in fact most of Trincea's food is grown here.</description>
   <bar>If you didn't know better, you'd think you were on a Dvaered military base, from the look of the bar. It's utterly utilitarian, though in the owner's defense an attempt has been made at fitting in with the station's purpose, testament the withered plant on the corner of the bar.</bar>
  </general>

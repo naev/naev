@@ -10,11 +10,26 @@
   <x>-371.489640</x>
   <y>-1109.550320</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>WSTHVN D-1</asset>
+  <asset>WSTHVN P-1</asset>
+ </assets>
  <jumps>
   <jump target="Straight Row">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>default</type>
+   <type>liquid</type>
+   <radius>5000.000000</radius>
+   <pos x="7000.000000" y="-7000.000000"/>
+   <density>0.666000</density>
+  </asteroid>
+ </asteroids>
 </ssys>

@@ -8,24 +8,27 @@
  * @brief Lua system module.
  */
 
-#include "nlua_system.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_faction.h"
-#include "nlua_vec2.h"
-#include "nlua_planet.h"
-#include "nlua_jump.h"
-#include "log.h"
-#include "rng.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_system.h"
+
+#include "array.h"
 #include "land.h"
 #include "land_outfits.h"
+#include "log.h"
 #include "map.h"
 #include "map_overlay.h"
+#include "nebula.h"
+#include "nlua_faction.h"
+#include "nlua_jump.h"
+#include "nlua_planet.h"
+#include "nlua_vec2.h"
+#include "nluadef.h"
+#include "rng.h"
 #include "space.h"
 
 
@@ -35,94 +38,74 @@ static int systemL_get( lua_State *L );
 static int systemL_getAll( lua_State *L );
 static int systemL_eq( lua_State *L );
 static int systemL_name( lua_State *L );
+static int systemL_nameRaw( lua_State *L );
 static int systemL_faction( lua_State *L );
 static int systemL_nebula( lua_State *L );
+static int systemL_interference( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_jumpPath( lua_State *L );
 static int systemL_adjacent( lua_State *L );
 static int systemL_jumps( lua_State *L );
+static int systemL_asteroidFields( lua_State *L );
+static int systemL_asteroid( lua_State *L );
+static int systemL_asteroidPos( lua_State *L );
+static int systemL_asteroidDestroyed( lua_State *L );
+static int systemL_addGatherable( lua_State *L );
 static int systemL_presences( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
 static int systemL_isknown( lua_State *L );
 static int systemL_setknown( lua_State *L );
+static int systemL_hidden( lua_State *L );
+static int systemL_setHidden( lua_State *L );
 static int systemL_mrkClear( lua_State *L );
 static int systemL_mrkAdd( lua_State *L );
 static int systemL_mrkRm( lua_State *L );
-static const luaL_reg system_methods[] = {
+static const luaL_Reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
    { "getAll", systemL_getAll },
    { "__eq", systemL_eq },
    { "__tostring", systemL_name },
    { "name", systemL_name },
+   { "nameRaw", systemL_nameRaw },
    { "faction", systemL_faction },
    { "nebula", systemL_nebula },
+   { "interference", systemL_interference },
    { "jumpDist", systemL_jumpdistance },
    { "jumpPath", systemL_jumpPath },
    { "adjacentSystems", systemL_adjacent },
    { "jumps", systemL_jumps },
+   { "asteroidFields", systemL_asteroidFields },
+   { "asteroid", systemL_asteroid },
+   { "asteroidPos", systemL_asteroidPos },
+   { "asteroidDestroyed", systemL_asteroidDestroyed },
+   { "addGatherable", systemL_addGatherable },
    { "presences", systemL_presences },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
    { "known", systemL_isknown },
    { "setKnown", systemL_setknown },
+   { "hidden", systemL_hidden },
+   { "setHidden", systemL_setHidden },
    { "mrkClear", systemL_mrkClear },
    { "mrkAdd", systemL_mrkAdd },
    { "mrkRm", systemL_mrkRm },
    {0,0}
 }; /**< System metatable methods. */
-static const luaL_reg system_cond_methods[] = {
-   { "cur", systemL_cur },
-   { "get", systemL_get },
-   { "getAll", systemL_getAll },
-   { "__eq", systemL_eq },
-   { "__tostring", systemL_name },
-   { "name", systemL_name },
-   { "faction", systemL_faction },
-   { "nebula", systemL_nebula },
-   { "jumpDist", systemL_jumpdistance },
-   { "jumpPath", systemL_jumpPath },
-   { "adjacentSystems", systemL_adjacent },
-   { "jumps", systemL_jumps },
-   { "presences", systemL_presences },
-   { "planets", systemL_planets },
-   { "presence", systemL_presence },
-   { "radius", systemL_radius },
-   { "known", systemL_isknown },
-   {0,0}
-}; /**< Read only system metatable methods. */
 
 
 /**
  * @brief Loads the system library.
  *
- *    @param L State to load system library into.
- *    @param readonly Load read only functions?
+ *    @param env Environment to load system library into.
  *    @return 0 on success.
  */
-int nlua_loadSystem( lua_State *L, int readonly )
+int nlua_loadSystem( nlua_env env )
 {
-   (void)readonly; /* only read only atm */
-
-   /* Create the metatable */
-   luaL_newmetatable(L, SYSTEM_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   if (readonly)
-      luaL_register(L, NULL, system_cond_methods);
-   else
-      luaL_register(L, NULL, system_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, SYSTEM_METATABLE);
-
+   nlua_register(env, SYSTEM_METATABLE, system_methods, 1);
    return 0; /* No error */
 }
 
@@ -190,7 +173,7 @@ StarSystem* luaL_validsystem( lua_State *L, int ind )
    }
 
    if (s == NULL)
-      NLUA_ERROR(L, "System is invalid");
+      NLUA_ERROR(L, _("System is invalid"));
 
    return s;
 }
@@ -242,7 +225,7 @@ int lua_issystem( lua_State *L, int ind )
  * @usage sys = system.cur() -- Gets the current system
  *
  *    @luatreturn System Current system.
- * @luafunc cur()
+ * @luafunc cur
  */
 static int systemL_cur( lua_State *L )
 {
@@ -255,7 +238,7 @@ static int systemL_cur( lua_State *L )
  * @brief Gets a system.
  *
  * Behaves differently depending on what you pass as param: <br/>
- *    - string : Gets the system by name. <br/>
+ *    - string : Gets the system by raw (untranslated) name. <br/>
  *    - planet : Gets the system by planet. <br/>
  *
  * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
@@ -263,7 +246,7 @@ static int systemL_cur( lua_State *L )
  *
  *    @luatparam string|Planet param Read description for details.
  *    @luatreturn System System matching param.
- * @luafunc get( param )
+ * @luafunc get
  */
 static int systemL_get( lua_State *L )
 {
@@ -283,7 +266,7 @@ static int systemL_get( lua_State *L )
 
    /* Error checking. */
    if (ss == NULL) {
-      NLUA_ERROR(L, "No matching systems found.");
+      NLUA_ERROR(L, _("No matching systems found."));
       return 0;
    }
 
@@ -295,18 +278,18 @@ static int systemL_get( lua_State *L )
 /**
  * @brief Gets all the systems.
  *    @luatreturn {System,...} A list of all the systems.
- * @luafunc getAll()
+ * @luafunc getAll
  */
 static int systemL_getAll( lua_State *L )
 {
    StarSystem *sys;
-   int i, ind, n;
+   int i, ind;
 
    lua_newtable(L);
-   sys = system_getAll( &n );
+   sys = system_getAll();
 
    ind = 1;
-   for (i=0; i<n; i++) {
+   for (i=0; i<array_size(sys); i++) {
       lua_pushnumber( L, ind++ );
       lua_pushsystem( L, system_index( &sys[i] ) );
       lua_settable(   L, -3 );
@@ -317,14 +300,14 @@ static int systemL_getAll( lua_State *L )
 /**
  * @brief Check systems for equality.
  *
- * Allows you to use the '=' operator in Lua with systems.
+ * Allows you to use the '==' operator in Lua with systems.
  *
  * @usage if sys == system.get( "Draygar" ) then -- Do something
  *
  *    @luatparam System s System comparing.
  *    @luatparam System comp System to compare against.
  *    @luatreturn boolean true if both systems are the same.
- * @luafunc __eq( s, comp )
+ * @luafunc __eq
  */
 static int systemL_eq( lua_State *L )
 {
@@ -339,15 +322,40 @@ static int systemL_eq( lua_State *L )
 }
 
 /**
- * @brief Returns the system's name.
+ * @brief Returns the system's translated name.
  *
- * @usage name = sys:name()
+ * This translated name should be used for display purposes (e.g.
+ * messages). It cannot be used as an identifier for the system; for
+ * that, use system.nameRaw() instead.
  *
- *    @luatparam System s System to get name of.
- *    @luatreturn string The name of the system.
- * @luafunc name( s )
+ * @usage name = sys:name() -- Equivalent to `_(sys:nameRaw())`
+ *
+ *    @luatparam System s System to get the translated name of.
+ *    @luatreturn string The translated name of the system.
+ * @luafunc name
  */
 static int systemL_name( lua_State *L )
+{
+   StarSystem *sys;
+   sys = luaL_validsystem(L,1);
+   lua_pushstring(L, _(sys->name));
+   return 1;
+}
+
+/**
+ * @brief Returns the system's raw (untranslated) name.
+ *
+ * This untranslated name should be used for identification purposes
+ * (e.g. can be passed to system.get()). It should not be used directly
+ * for display purposes without manually translating it with _().
+ *
+ * @usage name = sys:nameRaw()
+ *
+ *    @luatparam System s System to get the raw name of.
+ *    @luatreturn string The raw name of the system.
+ * @luafunc nameRaw
+ */
+static int systemL_nameRaw( lua_State *L )
 {
    StarSystem *sys;
    sys = luaL_validsystem(L,1);
@@ -360,7 +368,7 @@ static int systemL_name( lua_State *L )
  *
  *    @luatparam System s System to get the faction of.
  *    @luatreturn Faction The dominant faction in the system.
- * @luafunc faction( s )
+ * @luafunc faction
  */
 static int systemL_faction( lua_State *L )
 {
@@ -380,18 +388,17 @@ static int systemL_faction( lua_State *L )
 /**
  * @brief Gets the system's nebula parameters.
  *
- * @usage density, volatility = sys:nebula()
+ * @usage density, volatility, damage = sys:nebula()
  *
  *    @luatparam System s System to get nebula parameters from.
  *    @luatreturn number The density of the system.
  *    @luatreturn number The volatility of the system.
- * @luafunc nebula( s )
+ *    @luatreturn number The amount of nebula damage done per second.
+ * @luafunc nebula
  */
 static int systemL_nebula( lua_State *L )
 {
-   StarSystem *s;
-
-   s = luaL_validsystem(L,1);
+   StarSystem *s = luaL_validsystem(L,1);
 
    /* Push the density and volatility. */
    lua_pushnumber(L, s->nebu_density);
@@ -402,34 +409,50 @@ static int systemL_nebula( lua_State *L )
 
 
 /**
+ * @brief Gets the system's interference level.
+ *
+ *    @luatparam System s System to get interference of.
+ *    @luatreturn number The amount of interference (in percent).
+ * @luafunc interference
+ */
+static int systemL_interference( lua_State *L )
+{
+   StarSystem *s = luaL_validsystem(L,1);
+   lua_pushnumber( L, s->interference );
+   return 1;
+}
+
+
+/**
  * @brief Gets jump distance from current system, or to another.
  *
  * Does different things depending on the parameter type:
- *    - nil : Gets distance from current system.
- *    - string : Gets distance from system matching name.
- *    - system : Gets distance from system
+ *    - nil : Gets distance to current system.
+ *    - string : Gets distance to system matching name.
+ *    - system : Gets distance to system
  *
- * @usage d = sys:jumpDist() -- Distance from current system.
- * @usage d = sys:jumpDist( "Draygar" ) -- Distance from system Draygar.
- * @usage d = sys:jumpDist( another_sys ) -- Distance from system another_sys.
+ * @usage d = sys:jumpDist() -- Distance from sys to current system.
+ * @usage d = sys:jumpDist( "Draygar" ) -- Distance from sys to system Draygar.
+ * @usage d = sys:jumpDist( another_sys ) -- Distance from sys to another_sys.
  *
- *    @luatparam System s System to get distance from.
- *    @luatparam nil|string|System param See description.
+ *    @luatparam System s Starting system.
+ *    @luatparam nil|string|Goal system param See description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden jumps.
+ *    @luatparam[opt=false] boolean known Whether or not to consider only jumps known by the player.
  *    @luatreturn number Number of jumps to system.
- * @luafunc jumpDist( s, param, hidden )
+ * @luafunc jumpDist
  */
 static int systemL_jumpdistance( lua_State *L )
 {
    StarSystem *sys, *sysp;
    StarSystem **s;
-   int jumps;
    const char *start, *goal;
-   int h;
+   int h, k;
 
    sys = luaL_validsystem(L,1);
    start = sys->name;
    h   = lua_toboolean(L,3);
+   k   = !lua_toboolean(L,4);
 
    if (lua_gettop(L) > 1) {
       if (lua_isstring(L,2))
@@ -443,10 +466,10 @@ static int systemL_jumpdistance( lua_State *L )
    else
       goal = cur_system->name;
 
-   s = map_getJumpPath( &jumps, start, goal, 1, h, NULL );
-   free(s);
+   s = map_getJumpPath( start, goal, k, h, NULL );
+   lua_pushnumber(L,array_size(s));
 
-   lua_pushnumber(L,jumps);
+   array_free(s);
    return 1;
 }
 
@@ -455,53 +478,40 @@ static int systemL_jumpdistance( lua_State *L )
  * @brief Gets jump path from current system, or to another.
  *
  * Does different things depending on the parameter type:
- *    - nil : Gets path from current system.
- *    - string : Gets path from system matching name.
- *    - system : Gets path from system
+ * <ul>
+ *    <li>nil : Gets path to current system.</li>
+ *    <li>string : Gets path to system with the given raw (untranslated) name.</li>
+ *    <li>system : Gets path to system</li>
+ * </ul>
  *
- * @usage jumps = sys:jumpPath() -- Path to current system.
- * @usage jumps = sys:jumpPath( "Draygar" ) -- Path from current sys to Draygar.
+ * @usage jumps = sys:jumpPath( system.cur() ) -- Path from sys to current system.
+ * @usage jumps = sys:jumpPath( "Draygar" ) -- Path from sys to Draygar.
  * @usage jumps = system.jumpPath( "Draygar", another_sys ) -- Path from Draygar to another_sys.
  *
- *    @luatparam System s System to get path from.
- *    @luatparam nil|string|System param See description.
+ *    @luatparam System s Starting system.
+ *    @luatparam System goal Goal system param See description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden jumps.
  *    @luatreturn {Jump,...} Table of jumps.
- * @luafunc jumpPath( s, param, hidden )
+ * @luafunc jumpPath
  */
 static int systemL_jumpPath( lua_State *L )
 {
    LuaJump lj;
    StarSystem *sys, *sysp;
    StarSystem **s;
-   int i, sid, jumps, pushed, h;
+   int i, sid, pushed, h;
    const char *start, *goal;
 
    h   = lua_toboolean(L,3);
 
    /* Foo to Bar */
-   if (lua_gettop(L) > 1) {
-      sys   = luaL_validsystem(L,1);
-      start = sys->name;
-      sid   = sys->id;
+   sys   = luaL_validsystem(L,1);
+   start = sys->name;
+   sid   = sys->id;
+   sysp  = luaL_validsystem(L,2);
+   goal  = sysp->name;
 
-      if (lua_isstring(L,2))
-         goal = lua_tostring(L,2);
-      else if (lua_issystem(L,2)) {
-         sysp = luaL_validsystem(L,2);
-         goal = sysp->name;
-      }
-      else NLUA_INVALID_PARAMETER(L);
-   }
-   /* Current to Foo */
-   else {
-      start = cur_system->name;
-      sid   = cur_system->id;
-      sys   = luaL_validsystem(L,1);
-      goal  = sys->name;
-   }
-
-   s = map_getJumpPath( &jumps, start, goal, 1, h, NULL );
+   s = map_getJumpPath( start, goal, 1, h, NULL );
    if (s == NULL)
       return 0;
 
@@ -517,7 +527,7 @@ static int systemL_jumpPath( lua_State *L )
    lua_pushjump(L, lj);         /* value. */
    lua_rawset(L, -3);
 
-   for (i=0; i<(jumps - 1); i++) {
+   for (i=0; i<array_size(s)-1; i++) {
       lj.srcid  = s[i]->id;
       lj.destid = s[i+1]->id;
 
@@ -525,7 +535,7 @@ static int systemL_jumpPath( lua_State *L )
       lua_pushjump(L, lj);         /* value. */
       lua_rawset(L, -3);
    }
-   free(s);
+   array_free(s);
 
    return 1;
 }
@@ -534,12 +544,12 @@ static int systemL_jumpPath( lua_State *L )
 /**
  * @brief Gets all the adjacent systems to a system.
  *
- * @usage for _,s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
+ * @usage for i, s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
  *
  *    @luatparam System s System to get adjacent systems of.
  *    @luatparam[opt=false] boolean hidden Whether or not to show hidden jumps also.
  *    @luatreturn {System,...} An ordered table with all the adjacent systems.
- * @luafunc adjacentSystems( s, hidden )
+ * @luafunc adjacentSystems
  */
 static int systemL_adjacent( lua_State *L )
 {
@@ -553,7 +563,7 @@ static int systemL_adjacent( lua_State *L )
 
    /* Push all adjacent systems. */
    lua_newtable(L);
-   for (i=0; i<s->njumps; i++) {
+   for (i=0; i<array_size(s->jumps); i++) {
       if (jp_isFlag(&s->jumps[i], JP_EXITONLY ))
          continue;
       if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
@@ -573,12 +583,12 @@ static int systemL_adjacent( lua_State *L )
 /**
  * @brief Gets all the jumps in a system.
  *
- * @usage for _,s in ipairs( sys:jumps() ) do -- Iterate over jumps.
+ * @usage for i, s in ipairs( sys:jumps() ) do -- Iterate over jumps.
  *
  *    @luatparam System s System to get the jumps of.
  *    @luatparam[opt=false] boolean exitonly Whether to exclude exit-only jumps.
  *    @luatreturn {Jump,...} An ordered table with all the jumps.
- * @luafunc jumps( s, exitonly )
+ * @luafunc jumps
  */
 static int systemL_jumps( lua_State *L )
 {
@@ -592,10 +602,9 @@ static int systemL_jumps( lua_State *L )
 
    /* Push all jumps. */
    lua_newtable(L);
-   for (i=0; i<s->njumps; i++) {
+   for (i=0; i<array_size(s->jumps); i++) {
       /* Skip exit-only jumps if requested. */
-      if ((exitonly) && (jp_isFlag( jump_getTarget( s->jumps[i].target, s ),
-            JP_EXITONLY)))
+      if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
             continue;
 
       lj.srcid  = s->id;
@@ -610,14 +619,214 @@ static int systemL_jumps( lua_State *L )
 
 
 /**
+ * @brief Gets all the asteroid fields in a system.
+ *
+ * @usage for i, s in ipairs( sys:asteroidFields() ) do -- Iterate over asteroid fields
+ *
+ *    @luatparam System s System to get the asteroid fields of.
+ *    @luatreturn {Table,...} An ordered table with all the asteroid fields.
+ * @luafunc asteroidFields
+ */
+static int systemL_asteroidFields( lua_State *L )
+{
+   int i, pushed;
+   StarSystem *s = luaL_validsystem(L,1);
+
+   /* Push all jumps. */
+   pushed = 0;
+   lua_newtable(L);
+   for (i=0; i<array_size(s->asteroids); i++) {
+      lua_pushnumber(L,++pushed);   /* key. */
+      lua_newtable(L);              /* key, t */
+
+      lua_pushstring(L,"pos");      /* key, t, k */
+      lua_pushvector(L,s->asteroids[i].pos); /* key, t, k, v */
+      lua_rawset(L,-3);
+
+      lua_pushstring(L,"density");      /* key, t, k */
+      lua_pushnumber(L,s->asteroids[i].density); /* key, t, k, v */
+      lua_rawset(L,-3);
+
+      lua_pushstring(L,"radius");      /* key, t, k */
+      lua_pushnumber(L,s->asteroids[i].radius); /* key, t, k, v */
+      lua_rawset(L,-3);
+
+      lua_rawset(L,-3);
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets a random asteroid in the current system
+ *
+ * @usage anchor, ast = system.asteroid()
+ *
+ *    @luatreturn int anchor Id of an asteroid anchor.
+ *    @luatreturn int asteroid Id of an asteroid of this anchor.
+ * @luafunc asteroid
+ */
+static int systemL_asteroid( lua_State *L )
+{
+   int field, ast;
+   int bad_asteroid;
+   int i;
+
+   if (array_size(cur_system->asteroids) > 0) {
+      field = RNG(0,array_size(cur_system->asteroids)-1);
+      ast   = RNG(0,cur_system->asteroids[field].nb-1);
+      bad_asteroid = 0;
+      if ( (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INVISIBLE) ||
+            (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INIT)) {
+         /* Switch to next index until we find a valid one, or until we come full-circle. */
+         bad_asteroid = 1;
+         for (i=0; i<cur_system->asteroids[field].nb; i++) {
+            ast = (ast + 1) % cur_system->asteroids[field].nb;
+            if ( (cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_INVISIBLE) &&
+                  (cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_INIT)) {
+               bad_asteroid = 0;
+               break;
+            }
+         }
+      }
+
+      if (bad_asteroid) {
+         WARN("Failed to get a valid asteroid in field %d.", field);
+         return 0;
+      }
+
+      lua_pushnumber(L,field);
+      lua_pushnumber(L,ast);
+      return 2;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Gets the position and velocity of an asteroid
+ *
+ * @usage pos = system.asteroidPos( anchor, ast )
+ *
+ *    @luatparam int anchor Id of the asteroid anchor.
+ *    @luatparam int asteroid Id of the asteroid of this anchor.
+ *    @luatreturn Vec2 pos position of the asteroid.
+ *    @luatreturn Vec2 vel velocity of the asteroid.
+ * @luafunc asteroidPos
+ */
+static int systemL_asteroidPos( lua_State *L )
+{
+   int field, ast;
+
+   field = luaL_checkint(L,1);
+   ast   = luaL_checkint(L,2);
+
+   if ( field >= array_size(cur_system->asteroids) ) {
+      WARN(_("field index %d too high"), field);
+      return 0;
+   }
+
+   if ( ast >= cur_system->asteroids[field].nb ) {
+      WARN(_("asteroid index too high"));
+      return 0;
+   }
+
+   lua_pushvector(L, cur_system->asteroids[field].asteroids[ast].pos);
+   lua_pushvector(L, cur_system->asteroids[field].asteroids[ast].vel);
+   return 2;
+}
+
+
+/**
+ * @brief Sees if a given asteroid has been destroyed recently
+ *
+ * @usage i = system.asteroidDestroyed( anchor, ast )
+ *
+ *    @luatparam int anchor Id of the asteroid anchor.
+ *    @luatparam int asteroid Id of the asteroid of this anchor.
+ *    @luatreturn bool i true if the asteroid was destroyed.
+ * @luafunc asteroidDestroyed
+ */
+static int systemL_asteroidDestroyed( lua_State *L )
+{
+   int field, ast, isdestroyed;
+
+   field = luaL_checkint(L,1);
+   ast   = luaL_checkint(L,2);
+
+   if ( field >= array_size(cur_system->asteroids) ) {
+      WARN(_("field index %d too high"), field);
+      return 0;
+   }
+
+   if ( ast >= cur_system->asteroids[field].nb ) {
+      WARN(_("asteroid index too high"));
+      return 0;
+   }
+
+   /* If the asteroid is re-appearing, it was destroyed recently. */
+   isdestroyed = (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_GROWING);
+   lua_pushboolean(L, isdestroyed);
+   return 1;
+}
+
+
+/**
+ * @brief Adds a gatherable object
+ *
+ * @usage i = system.addGatherable( "Gold", 5, vec2.new(0,0), vec2.new(0,0) ) -- creates 5 tons of gold at the origin
+ *
+ *    @luatparam string commodity name of the commodity.
+ *    @luatparam int nb quantity of commodity in the gatherable .
+ *    @luatparam Vec2 pos position of the gatherable.
+ *    @luatparam Vec2 vel velocity of the gatherable.
+ *    @luatparam[opt] number lifelength Lifelength of the gatherable.
+ *    @luatreturn int i Id of the created gatherable object.
+ * @luafunc addGatherable
+ */
+static int systemL_addGatherable( lua_State *L )
+{
+   int nb;
+   const char *name;
+   Commodity *commodity;
+   Vector2d *pos, *vel;
+   double lifelength;
+
+   /* Handle parameters. */
+   name = luaL_checkstring(L,1);
+   nb = luaL_checkint(L,2);
+   pos = luaL_checkvector(L,3);
+   vel = luaL_checkvector(L,4);
+   if (lua_gettop(L) > 4)
+      lifelength = luaL_checknumber(L,5);
+   else
+      lifelength = -1.; /* This means random life length. */
+
+   /* Get commodity. */
+   commodity = commodity_get( name );
+   if (commodity == NULL) {
+      NLUA_ERROR(L,_("Commodity '%s' not found!"), name);
+      return 0;
+   }
+
+   lua_pushnumber( L, gatherable_init( commodity, *pos, *vel, lifelength, nb ) );
+   return 1;
+}
+
+
+/**
  * @brief Returns the factions that have presence in a system and their respective presence values.
+ *        Faction names are internal -- can be passed to other functions as a faction identifier, but
+ *        should not be shown to the user without being translated by _().
  *
  *  @usage if sys:presences()["Empire"] then -- Checks to see if Empire has ships in the system
  *  @usage if sys:presences()[faction.get("Pirate")] then -- Checks to see if the Pirates have ships in the system
  *
  *    @luatparam System s System to get the factional presences of.
  *    @luatreturn {Faction,...} A table with the factions that have presence in the system.
- * @luafunc presences( s )
+ * @luafunc presences
  */
 static int systemL_presences( lua_State *L )
 {
@@ -628,7 +837,7 @@ static int systemL_presences( lua_State *L )
 
    /* Return result in table */
    lua_newtable(L);
-   for (i=0; i<s->npresence; i++) {
+   for (i=0; i<array_size(s->presence); i++) {
       /* Only return positive presences. */
       if (s->presence[i].value <= 0)
          continue;
@@ -646,11 +855,11 @@ static int systemL_presences( lua_State *L )
  * @brief Gets the planets in a system.
  *
  * @usage for key, planet in ipairs( sys:planets() ) do -- Iterate over planets in system
- * @usage if #sys:planets() > 0 then -- System has planets
+ * @usage if \#sys:planets() > 0 then -- System has planets
  *
  *    @luatparam System s System to get planets of
  *    @luatreturn {Planet,...} A table with all the planets
- * @luafunc planets( s )
+ * @luafunc planets
  */
 static int systemL_planets( lua_State *L )
 {
@@ -662,8 +871,8 @@ static int systemL_planets( lua_State *L )
    /* Push all planets. */
    lua_newtable(L);
    key = 0;
-   for (i=0; i<s->nplanets; i++) {
-      if(s->planets[i]->real == ASSET_REAL) {
+   for (i=0; i<array_size(s->planets); i++) {
+      if (s->planets[i]->real == ASSET_REAL) {
          key++;
          lua_pushnumber(L,key); /* key */
          lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
@@ -690,13 +899,12 @@ static int systemL_planets( lua_State *L )
  *
  *    @luatparam System s System to get presence level of.
  *    @luatreturn number The presence level in sys (absolute value).
- * @luafunc presence( s )
+ * @luafunc presence
  */
 static int systemL_presence( lua_State *L )
 {
    StarSystem *sys;
    int *fct;
-   int nfct;
    double presence, v;
    int i, f, used;
    const char *cmd;
@@ -706,23 +914,23 @@ static int systemL_presence( lua_State *L )
 
    /* Allow fall-through. */
    used = 0;
+   fct  = NULL;
 
    /* Get the second parameter. */
    if (lua_isstring(L, 2)) {
       /* A string command has been given. */
       cmd  = lua_tostring(L, 2);
-      nfct = 0;
       used = 1;
 
       /* Check the command string and get the appropriate faction group.*/
-      if(strcmp(cmd, "all") == 0)
-         fct = faction_getGroup(&nfct, 0);
-      else if(strcmp(cmd, "friendly") == 0)
-         fct = faction_getGroup(&nfct, 1);
-      else if(strcmp(cmd, "hostile") == 0)
-         fct = faction_getGroup(&nfct, 3);
-      else if(strcmp(cmd, "neutral") == 0)
-         fct = faction_getGroup(&nfct, 2);
+      if (strcmp(cmd, "all") == 0)
+         fct = faction_getGroup(0);
+      else if (strcmp(cmd, "friendly") == 0)
+         fct = faction_getGroup(1);
+      else if (strcmp(cmd, "hostile") == 0)
+         fct = faction_getGroup(3);
+      else if (strcmp(cmd, "neutral") == 0)
+         fct = faction_getGroup(2);
       else /* Invalid command string. */
          used = 0;
    }
@@ -730,14 +938,13 @@ static int systemL_presence( lua_State *L )
    if (!used) {
       /* A faction id was given. */
       f      = luaL_validfaction(L, 2);
-      nfct   = 1;
-      fct    = malloc(sizeof(int));
-      fct[0] = f;
+      fct    = array_create(int);
+      array_push_back(&fct, f);
    }
 
    /* Add up the presence values. */
    presence = 0;
-   for(i=0; i<nfct; i++) {
+   for (i=0; i<array_size(fct); i++) {
       /* Only count positive presences. */
       v = system_getPresence( sys, fct[i] );
       if (v > 0)
@@ -745,7 +952,7 @@ static int systemL_presence( lua_State *L )
    }
 
    /* Clean up after ourselves. */
-   free(fct);
+   array_free(fct);
 
    /* Push it back to Lua. */
    lua_pushnumber(L, presence);
@@ -762,15 +969,11 @@ static int systemL_presence( lua_State *L )
  *
  *    @luatparam System s System to get the radius of.
  *    @luatreturn number The radius of the system.
- * @luafunc radius( s )
+ * @luafunc radius
  */
 static int systemL_radius( lua_State *L )
 {
-   StarSystem *sys;
-
-   /* Get parameters. */
-   sys = luaL_validsystem(L, 1);
-
+   StarSystem *sys = luaL_validsystem(L, 1);
    lua_pushnumber( L, sys->radius );
    return 1;
 }
@@ -783,7 +986,7 @@ static int systemL_radius( lua_State *L )
  *
  *    @luatparam System s System to check if the player knows.
  *    @luatreturn boolean true if the player knows the system.
- * @luafunc known( s )
+ * @luafunc known
  */
 static int systemL_isknown( lua_State *L )
 {
@@ -800,12 +1003,14 @@ static int systemL_isknown( lua_State *L )
  *    @luatparam System  s System to set known.
  *    @luatparam[opt=false] boolean b Whether or not to set as known.
  *    @luatparam[opt=false] boolean r Whether or not to iterate over the system's assets and jump points.
- * @luafunc setKnown( s, b, r )
+ * @luafunc setKnown
  */
 static int systemL_setknown( lua_State *L )
 {
    int b, r, i;
    StarSystem *sys;
+
+   NLUA_CHECKRW(L);
 
    r = 0;
    sys = luaL_validsystem(L, 1);
@@ -820,15 +1025,15 @@ static int systemL_setknown( lua_State *L )
 
    if (r) {
       if (b) {
-         for (i=0; i < sys->nplanets; i++)
+         for (i=0; i < array_size(sys->planets); i++)
             planet_setKnown( sys->planets[i] );
-         for (i=0; i < sys->njumps; i++)
+         for (i=0; i < array_size(sys->jumps); i++)
             jp_setFlag( &sys->jumps[i], JP_KNOWN );
      }
      else {
-         for (i=0; i < sys->nplanets; i++)
+         for (i=0; i < array_size(sys->planets); i++)
             planet_rmFlag( sys->planets[i], PLANET_KNOWN );
-         for (i=0; i < sys->njumps; i++)
+         for (i=0; i < array_size(sys->jumps); i++)
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );
      }
    }
@@ -841,17 +1046,56 @@ static int systemL_setknown( lua_State *L )
 
 
 /**
+ * @brief Checks to see if a system is hidden by the player.
+ *
+ * @usage b = s:hidden()
+ *
+ *    @luatparam System s System to check if the player knows.
+ *    @luatreturn boolean true if the player knows the system.
+ * @luafunc hidden
+ */
+static int systemL_hidden( lua_State *L )
+{
+   StarSystem *sys = luaL_validsystem(L, 1);
+   lua_pushboolean(L, sys_isFlag( sys, SYSTEM_HIDDEN ));
+   return 1;
+}
+
+
+/**
+ * @brief Sets a system to be hidden to the player.
+ *
+ * @usage s:setHidden( true )
+ *
+ *    @luatparam System s System to check if the player knows.
+ *    @luatparam boolean hide Whether or not to hide the system.
+ * @luafunc hidden
+ */
+static int systemL_setHidden( lua_State *L )
+{
+   StarSystem *sys = luaL_validsystem(L, 1);
+   int b = lua_toboolean(L,2);
+   if (b)
+      sys_setFlag( sys, SYSTEM_HIDDEN );
+   else
+      sys_rmFlag( sys, SYSTEM_HIDDEN );
+   return 0;
+}
+
+
+/**
  * @brief Clears the system markers.
  *
  * This can be dangerous and clash with other missions, do not try this at home kids.
  *
  * @usage system.mrkClear()
  *
- * @luafunc mrkClear()
+ * @luafunc mrkClear
  */
 static int systemL_mrkClear( lua_State *L )
 {
    (void) L;
+   NLUA_CHECKRW(L);
    ovr_mrkClear();
    return 0;
 }
@@ -865,13 +1109,15 @@ static int systemL_mrkClear( lua_State *L )
  *    @luatparam string str String to display next to marker.
  *    @luatparam Vec2 v Position to display marker at.
  *    @luatreturn number The id of the marker.
- * @luafunc mrkAdd( str, v )
+ * @luafunc mrkAdd
  */
 static int systemL_mrkAdd( lua_State *L )
 {
    const char *str;
    Vector2d *vec;
    unsigned int id;
+
+   NLUA_CHECKRW(L);
 
    /* Handle parameters. */
    str   = luaL_checkstring( L, 1 );
@@ -890,11 +1136,12 @@ static int systemL_mrkAdd( lua_State *L )
  * @usage system.mrkRm( mrk_id ) -- Removes a marker by mrk_id
  *
  *    @luatparam number id ID of the marker to remove.
- * @luafunc mrkRm( id )
+ * @luafunc mrkRm
  */
 static int systemL_mrkRm( lua_State *L )
 {
    unsigned int id;
+   NLUA_CHECKRW(L);
    id = luaL_checklong( L, 1 );
    ovr_mrkRm( id );
    return 0;

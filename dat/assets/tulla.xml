@@ -5,8 +5,8 @@
   <y>-2888.816545</y>
  </pos>
  <GFX>
-  <space>M01.png</space>
-  <exterior>forest.png</exterior>
+  <space>M01.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>7805000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -33,8 +33,8 @@
   <item>Laser 1</item>
   <item>Ion 1</item>
   <item>Basic Outfits 1</item>
-  <item>Low Tech Upgrades</item>
   <item>Star Maps</item>
+  <item>Low Tech Upgrades</item>
   <item>Basic Civilian Ships</item>
  </tech>
 </asset>

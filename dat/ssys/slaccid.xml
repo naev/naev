@@ -11,16 +11,17 @@
   <y>-447.000000</y>
  </pos>
  <assets>
+  <asset>Virtual Independent Trader Area</asset>
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Haleb">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Norpin">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

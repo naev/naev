@@ -5,8 +5,8 @@
   <y>6172.702430</y>
  </pos>
  <GFX>
-  <space>003.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>003.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
@@ -16,12 +16,12 @@
  <general>
   <class>2</class>
   <population>5000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
   </services>
   <commodities/>
-  <description>The Crucible is a hive of scum and villainy. All sorts of illicit activities go on here including gambling, drug dealing and money laundering. Though the station is within Empire controlled territory, the Pirates have an interest in keeping the station online so they make sure the local Imperial forces have more important things to worry about than shutting down it down.</description>
+  <description>The Crucible is a hive of scum and villainy. All sorts of illicit activities go on here including gambling, drug dealing and money laundering. Though the station is within Empire controlled territory, the Pirates have an interest in keeping the station online so they make sure the local Imperial forces have more important things to worry about than shutting it down.</description>
  </general>
 </asset>

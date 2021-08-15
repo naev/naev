@@ -7,7 +7,9 @@
 #  define NLUA_PILOT_H
 
 
+/** @cond */
 #include <lua.h>
+/** @endcond */
 
 #include "pilot.h"
 
@@ -24,7 +26,7 @@ typedef unsigned int LuaPilot; /**< Wrapper for a Pilot. */
 /*
  * Library loading
  */
-int nlua_loadPilot( lua_State *L, int readonly );
+int nlua_loadPilot( nlua_env env );
 
 /*
  * Pilot operations

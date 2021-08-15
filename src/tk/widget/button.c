@@ -9,15 +9,16 @@
  */
 
 
-#include "tk/toolkit_priv.h"
-#include "nstring.h"
-
+/** @cond */
 #include <stdlib.h>
+/** @endcond */
+
 #include "nstring.h"
+#include "tk/toolkit_priv.h"
 
 
 static int btn_mclick( Widget* btn, int button, int x, int y );
-static int btn_key( Widget* btn, SDLKey key, SDLMod mod );
+static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod );
 static void btn_render( Widget* btn, double bx, double by );
 static void btn_cleanup( Widget* btn );
 static Widget* btn_get( const unsigned int wid, const char* name );
@@ -44,9 +45,9 @@ static void btn_updateHotkey( Widget *btn );
 void window_addButtonKey( const unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
-                       char* name, char* display,
+                       const char* name, const char* display,
                        void (*call) (unsigned int wgt, char* wdwname),
-                       SDLKey key )
+                       SDL_Keycode key )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -104,7 +105,7 @@ void window_addButtonKey( const unsigned int wid,
 void window_addButton( const unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
-                       char* name, char* display,
+                       const char* name, const char* display,
                        void (*call) (unsigned int wgt, char* wdwname) )
 {
    window_addButtonKey( wid, x, y, w, h, name, display, call, 0 );
@@ -139,7 +140,7 @@ static Widget* btn_get( const unsigned int wid, const char* name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to disable.
  */
-void window_disableButton( const unsigned int wid, char* name )
+void window_disableButton( const unsigned int wid, const char* name )
 {
    Widget *wgt;
    Window *wdw;
@@ -164,7 +165,7 @@ void window_disableButton( const unsigned int wid, char* name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to disable.
  */
-void window_disableButtonSoft( const unsigned int wid, char *name )
+void window_disableButtonSoft( const unsigned int wid, const char *name )
 {
    Widget *wgt;
 
@@ -184,7 +185,7 @@ void window_disableButtonSoft( const unsigned int wid, char *name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to enable.
  */
-void window_enableButton( const unsigned int wid, char *name )
+void window_enableButton( const unsigned int wid, const char *name )
 {
    Widget *wgt;
 
@@ -206,7 +207,7 @@ void window_enableButton( const unsigned int wid, char *name )
  *    @param name Name of the button to change caption.
  *    @param display New caption to display.
  */
-void window_buttonCaption( const unsigned int wid, char *name, char *display )
+void window_buttonCaption( const unsigned int wid, const char *name, const char *display )
 {
 
    Widget *wgt;
@@ -216,8 +217,7 @@ void window_buttonCaption( const unsigned int wid, char *name, char *display )
    if (wgt == NULL)
       return;
 
-   if (wgt->dat.btn.display != NULL)
-      free(wgt->dat.btn.display);
+   free(wgt->dat.btn.display);
    wgt->dat.btn.display = strdup(display);
 
    if (wgt->dat.btn.key != 0)
@@ -259,9 +259,8 @@ static void btn_updateHotkey( Widget *btn )
    display[match] = '\0'; /* Cuts the string into two. */
 
    /* Copy both parts and insert the character in the middle. */
-   nsnprintf( buf, sizeof(buf), "%s\eb%c\e0%s", display, target, &display[match+1] );
+   snprintf( buf, sizeof(buf), "%s#w%c#0%s", display, target, &display[match+1] );
 
-   /* Should never be NULL. */
    free(btn->dat.btn.display);
    btn->dat.btn.display = strdup(buf);
 }
@@ -275,7 +274,7 @@ static void btn_updateHotkey( Widget *btn )
  *    @param mod Mods when key is being pressed.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
+static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 
@@ -301,61 +300,47 @@ static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
  */
 static void btn_render( Widget* btn, double bx, double by )
 {
-   const glColour *c, *dc, *lc, *fc;
+   const glColour *c, *fc, *outline;
    double x, y;
 
    x = bx + btn->x;
    y = by + btn->y;
 
    /* set the colours */
-   if (btn->dat.btn.disabled==1) {
-      lc = &cGrey60;
-      c  = &cGrey20;
-      dc = &cGrey40;
-      fc = &cRed;
+   if (btn->dat.btn.disabled) {
+      c = &cGrey20;  // cGrey20 is also the background color
+      fc = &cGrey50; // Enabled text is cFontGrey 0.7; a little lighter
+      outline = &cGrey15;  // Slightly darker than the background
    }
    else {
-      fc = &cDarkRed;
+      fc = &cFontGrey;
+      outline = &cGrey15;
       switch (btn->status) {
          case WIDGET_STATUS_MOUSEOVER:
-            lc = &cGrey90;
-            c  = &cGrey70;
-            dc = &cGrey50;
+            c  = &cGrey30;
             break;
          case WIDGET_STATUS_MOUSEDOWN:
-            lc = &cGrey90;
-            c  = &cGrey50;
-            dc = &cGrey70;
+            c  = &cGrey35;
             break;
          case WIDGET_STATUS_NORMAL:
          default:
-            lc = &cGrey80;
-            c  = &cGrey60;
-            dc = &cGrey40;
-            break;
+            c  = &cGrey25;
       }
    }
 
-
-   /* shaded base */
-   if (btn->dat.btn.disabled==1) {
-      toolkit_drawRect( x, y,            btn->w, 0.4*btn->h, dc, NULL );
-      toolkit_drawRect( x, y+0.4*btn->h, btn->w, 0.6*btn->h, dc, c );
-   }
-   else {
-      toolkit_drawRect( x, y,            btn->w, 0.6*btn->h, dc, c );
-      toolkit_drawRect( x, y+0.6*btn->h, btn->w, 0.4*btn->h, c, NULL );
-   }
+   /* The face of the button, with c being the color */
+   toolkit_drawRect( x, y, btn->w, btn->h, c, NULL );
 
    /* inner outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 0., lc, c );
-   /* outer outline */
-   toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
+   // toolkit_drawOutline( x, y, btn->w, btn->h, 0, outline, NULL );
 
-   gl_printMidRaw( NULL, (int)btn->w,
+   /* outer outline */
+   toolkit_drawOutlineThick( x, y, btn->w, btn->h, 1, 2, outline, NULL );
+
+   gl_printMidRaw( &gl_smallFont, (int)btn->w,
          bx + btn->x,
-         by + btn->y + (btn->h - gl_defFont.h)/2.,
-         fc, btn->dat.btn.display );
+         by + btn->y + (btn->h - gl_smallFont.h)/2.,
+         fc, -1., btn->dat.btn.display );
 }
 
 
@@ -366,8 +351,7 @@ static void btn_render( Widget* btn, double bx, double by )
  */
 static void btn_cleanup( Widget *btn )
 {
-   if (btn->dat.btn.display != NULL)
-      free(btn->dat.btn.display);
+   free(btn->dat.btn.display);
 }
 
 

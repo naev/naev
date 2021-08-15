@@ -13,10 +13,14 @@
 
 
 /* Autonav states. */
-#define AUTONAV_JUMP_APPROACH   0 /**< Player is approaching a jump. */
-#define AUTONAV_JUMP_BRAKE      1 /**< Player is braking at a jump. */
-#define AUTONAV_POS_APPROACH   10 /**< Player is going to a position. */
-#define AUTONAV_PNT_APPROACH   11 /**< Player is going to a planet. */
+enum {
+   AUTONAV_JUMP_APPROACH,  /**< Player is approaching a jump. */
+   AUTONAV_JUMP_BRAKE,     /**< Player is braking at a jump. */
+   AUTONAV_POS_APPROACH,   /**< Player is going to a position. */
+   AUTONAV_PNT_APPROACH,   /**< Player is going to a planet. */
+   AUTONAV_PNT_BRAKE,      /**< Player is braking at a planet. */
+   AUTONAV_PLT_FOLLOW,     /**< Player is following a pilot. */
+};
 
 
 void player_thinkAutonav( Pilot *pplayer, double dt );
@@ -30,6 +34,7 @@ int player_autonavShouldResetSpeed (void);
 void player_autonavStartWindow( unsigned int wid, char *str);
 void player_autonavPos( double x, double y );
 void player_autonavPnt( char *name );
+void player_autonavPil( unsigned int p );
 
 
 #endif /* PLAYER_AUTONAV_H */

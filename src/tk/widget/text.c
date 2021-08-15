@@ -9,10 +9,12 @@
  */
 
 
-#include "tk/toolkit_priv.h"
-
+/** @cond */
 #include <stdlib.h>
+/** @endcond */
+
 #include "nstring.h"
+#include "tk/toolkit_priv.h"
 
 
 static void txt_render( Widget* txt, double bx, double by );
@@ -54,7 +56,7 @@ void window_addText( const unsigned int wid,
    wgt->render             = txt_render;
    wgt->cleanup            = txt_cleanup;
    wgt->dat.txt.font       = (font==NULL) ? &gl_defFont : font;
-   wgt->dat.txt.colour     = (colour==NULL) ? cBlack : *colour;
+   wgt->dat.txt.colour     = (colour==NULL) ? cFontWhite : *colour;
    wgt->dat.txt.centered   = centered;
    wgt->dat.txt.text       = (string==NULL) ? NULL : strdup(string);
 
@@ -82,11 +84,11 @@ static void txt_render( Widget* txt, double bx, double by )
       gl_printMidRaw( txt->dat.txt.font, txt->w,
             bx + txt->x,
             by + txt->y + (txt->h - txt->dat.txt.font->h)/2.,
-            &txt->dat.txt.colour, txt->dat.txt.text );
+            &txt->dat.txt.colour, -1., txt->dat.txt.text );
    else
       gl_printTextRaw( txt->dat.txt.font, txt->w, txt->h,
-            bx + txt->x, by + txt->y,
-            &txt->dat.txt.colour, txt->dat.txt.text );
+            bx + txt->x, by + txt->y, 0,
+            &txt->dat.txt.colour, -1., txt->dat.txt.text );
 }
 
 
@@ -97,8 +99,7 @@ static void txt_render( Widget* txt, double bx, double by )
  */
 static void txt_cleanup( Widget* txt )
 {
-   if (txt->dat.txt.text != NULL)
-      free(txt->dat.txt.text);
+   free(txt->dat.txt.text);
 }
 
 
@@ -131,3 +132,21 @@ void window_modifyText( const unsigned int wid,
    wgt->dat.txt.text = (newstring) ?  strdup(newstring) : NULL;
 }
 
+
+/**
+ * @brief Gets the content height of a text box, without drawing.
+ *
+ *    @param wid Window to which the text widget belongs.
+ *    @param name Name of the text widget.
+ */
+int window_getTextHeight( const unsigned int wid, const char *name )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt( wid, name );
+   if (wgt == NULL || wgt->type != WIDGET_TEXT)
+      return 0;
+
+   return gl_printHeightRaw( wgt->dat.txt.font, wgt->w, wgt->dat.txt.text );
+}

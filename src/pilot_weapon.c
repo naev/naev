@@ -27,30 +27,29 @@
  */
 
 
-#include "pilot.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
 
-#include "nxml.h"
-
-#include "log.h"
 #include "array.h"
-#include "weapon.h"
 #include "escort.h"
-
+#include "log.h"
+#include "nxml.h"
+#include "pilot.h"
 #include "player.h"
 #include "spfx.h"
+#include "weapon.h"
 
 
 /*
  * Prototypes.
  */
 static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
-static PilotWeaponSet* pilot_weapSet( Pilot* p, int id );
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
-static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, int level, double time );
+static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time );
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time );
-static void pilot_weapSetUpdateRange( PilotWeaponSet *ws );
+static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws );
+unsigned int pilot_weaponSetShootStop( Pilot* p, PilotWeaponSet *ws, int level );
 
 
 /**
@@ -60,7 +59,7 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws );
  *    @param id ID of the weapon set.
  *    @return The weapon set matching id.
  */
-static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
+PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
 {
    return &p->weapon_sets[ id ];
 }
@@ -72,20 +71,18 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
  *    @param p Pilot firing weaponsets.
  *    @param ws Weapon set to fire.
  *    @param level Level of the firing weapon set.
+ *    @return Number of weapons shot.
  */
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
    int i, j, ret, s;
    Pilot *pt;
+   AsteroidAnchor *field;
+   Asteroid *ast;
    double time;
-   Outfit *o;
+   const Outfit *o;
 
-   /* Case no outfits. */
-   if (ws->slots == NULL)
-      return 0;
-
-   /* Fire. */
-   ret    = 0;
+   ret = 0;
    for (i=0; i<array_size(ws->slots); i++) {
       o = ws->slots[i].slot->outfit;
 
@@ -119,19 +116,31 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* If inrange is set we only fire at targets in range. */
       time = INFINITY;  /* With no target we just set time to infinity. */
-      if (p->target != p->id){
+
+      /* Calculate time to target if it is there. */
+      if (p->target != p->id) {
          pt = pilot_get( p->target );
          if (pt != NULL)
-            time = pilot_weapFlyTime( o, p, pt);
-         }
+            time = pilot_weapFlyTime( o, p, &pt->solid->pos, &pt->solid->vel);
+      }
+      /* Looking for a closer targeted asteroid */
+      if (p->nav_asteroid != -1) {
+         field = &cur_system->asteroids[p->nav_anchor];
+         ast = &field->asteroids[p->nav_asteroid];
+         time = MIN( time, pilot_weapFlyTime( o, p, &ast->pos, &ast->vel) );
+      }
 
       /* Only "inrange" outfits. */
-      if ( ws->inrange && outfit_duration(o) < time)
+      if (ws->inrange && outfit_duration(o) < time)
          continue;
 
       /* Shoot the weapon of the weaponset. */
       ret += pilot_shootWeaponSetOutfit( p, ws, o, level, time );
    }
+
+   /* Destealth when attacking. */
+   if (pilot_isFlag( p, PILOT_STEALTH) && (ret>0))
+      pilot_destealth( p );
 
    return ret;
 }
@@ -162,7 +171,6 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
 {
    int i, l, on, n;
    PilotWeaponSet *ws;
-
    ws = pilot_weapSet(p,id);
    /* Case no outfits. */
    if (ws->slots == NULL)
@@ -184,8 +192,11 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
           * when it's not held anymore. */
          if (type > 0)
             ws->active = 1;
-         else if (type < 0)
+         else if (type < 0) {
             ws->active = 0;
+            if (pilot_weaponSetShootStop( p, ws, -1 )) /* De-activate weapon set. */
+               pilot_calcStats( p ); /* Just in case there is a activated outfit here. */
+         }
          break;
 
       case WEAPSET_TYPE_ACTIVE:
@@ -226,18 +237,18 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             for (i=0; i<l; i++) {
                if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF)
                   continue;
-               if (outfit_isAfterburner(ws->slots[i].slot->outfit))
-                  pilot_afterburn( p );
-               else {
-                  ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
-                  ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
-               }
-               n++;
+
+               n += pilot_outfitOn( p, ws->slots[i].slot );
             }
          }
          /* Must recalculate stats. */
-         if (n > 0)
-            pilot_calcStats( p );
+         if (n > 0) {
+            /* pilot_destealth should run calcStats already. */
+            if (pilot_isFlag( p, PILOT_STEALTH ))
+               pilot_destealth( p );
+            else
+               pilot_calcStats( p );
+         }
 
          break;
    }
@@ -279,12 +290,11 @@ static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
 {
    int i;
 
-   for (i=0; i<p->noutfits; i++)
+   for (i=0; i<array_size(p->outfits); i++)
       p->outfits[i]->level = -1;
 
-   if (ws->slots != NULL)
-      for (i=0; i<array_size(ws->slots); i++)
-         ws->slots[i].slot->level = ws->slots[i].level;
+   for (i=0; i<array_size(ws->slots); i++)
+      ws->slots[i].slot->level = ws->slots[i].level;
 }
 
 
@@ -308,7 +318,7 @@ int pilot_weapSetTypeCheck( Pilot* p, int id )
  *
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set.
- *    @param fire Whether or not to enable fire mode.
+ *    @param type The mode (a WEAPSET_TYPE constant).
  */
 void pilot_weapSetType( Pilot* p, int id, int type )
 {
@@ -319,10 +329,6 @@ void pilot_weapSetType( Pilot* p, int id, int type )
    ws->type = type;
 
    /* Set levels just in case. */
-   if (ws->slots == NULL)
-      return;
-
-   /* See if we must overwrite levels. */
    if ((ws->type == WEAPSET_TYPE_WEAPON) ||
          (ws->type == WEAPSET_TYPE_ACTIVE))
       for (i=0; i<array_size(ws->slots); i++)
@@ -367,12 +373,12 @@ const char *pilot_weapSetName( Pilot* p, int id )
 {
    PilotWeaponSet *ws;
    ws = pilot_weapSet(p,id);
-   if ((ws->slots == NULL) || (array_size(ws->slots)==0))
-      return "Unused";
+   if (array_size(ws->slots)==0)
+      return _("Unused");
    switch (ws->type) {
-      case WEAPSET_TYPE_CHANGE: return "Weapons - Switched";  break;
-      case WEAPSET_TYPE_WEAPON: return "Weapons - Instant";   break;
-      case WEAPSET_TYPE_ACTIVE: return "Abilities - Toggled"; break;
+      case WEAPSET_TYPE_CHANGE: return _("Weapons - Switched");  break;
+      case WEAPSET_TYPE_WEAPON: return _("Weapons - Instant");   break;
+      case WEAPSET_TYPE_ACTIVE: return _("Abilities - Toggled"); break;
    }
    return NULL;
 }
@@ -418,7 +424,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
 {
    PilotWeaponSet *ws;
    PilotWeaponSetOutfit *slot;
-   Outfit *oo;
+   const Outfit *oo;
    int i, j;
    double r;
 
@@ -430,7 +436,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
       return;
 
    /* Make sure outfit type is weapon (or usable). */
-   if (!outfit_isActive(oo))
+   if (!pilot_slotIsActive(o))
       return;
 
    /* Create if needed. */
@@ -467,7 +473,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    }
 
    /* Update range. */
-   pilot_weapSetUpdateRange( ws );
+   pilot_weapSetUpdateRange( p, ws );
 
    /* Update if needed. */
    if (id == p->active_set)
@@ -487,12 +493,7 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
    PilotWeaponSet *ws;
    int i, j;
 
-   /* Make sure it has slots. */
    ws = pilot_weapSet(p,id);
-   if (ws->slots == NULL)
-      return;
-
-   /* Find the slot. */
    for (i=0; i<array_size(ws->slots); i++) {
       if (ws->slots[i].slot != o)
          continue;
@@ -500,7 +501,7 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
       array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
 
       /* Update range. */
-      pilot_weapSetUpdateRange( ws );
+      pilot_weapSetUpdateRange( p, ws );
 
       /* Update if needed. */
       if (id == p->active_set)
@@ -533,12 +534,7 @@ int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o )
    PilotWeaponSet *ws;
    int i;
 
-   /* Make sure it has slots. */
    ws = pilot_weapSet(p,id);
-   if (ws->slots == NULL)
-      return -1;
-
-   /* Find the slot. */
    for (i=0; i<array_size(ws->slots); i++)
       if (ws->slots[i].slot == o)
          return ws->slots[i].level;
@@ -549,11 +545,25 @@ int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o )
 
 
 /**
+ * @brief Update the weapon sets given pilot stat changes.
+ *
+ *    @param p Pilot to update.
+ */
+void pilot_weapSetUpdateStats( Pilot *p )
+{
+   int i;
+   for (i=0; i<PILOT_WEAPON_SETS; i++)
+      pilot_weapSetUpdateRange( p, &p->weapon_sets[i] );
+}
+
+
+/**
  * @brief Updates the weapon range for a pilot weapon set.
  *
+ *    @param p Pilot whos weapon set is being updated.
  *    @param ws Weapon Set to update range for.
  */
-static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
+static void pilot_weapSetUpdateRange( const Pilot *p, PilotWeaponSet *ws )
 {
    int i, lev;
    double range, speed;
@@ -561,15 +571,6 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
    int range_num[PILOT_WEAPSET_MAX_LEVELS];
    double speed_accum[PILOT_WEAPSET_MAX_LEVELS];
    int speed_num[PILOT_WEAPSET_MAX_LEVELS];
-
-   /* No slots. */
-   if (ws->slots == NULL) {
-      for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++) {
-         ws->range[i] = 0.;
-         ws->speed[i] = 0.;
-      }
-      return;
-   }
 
    /* Calculate ranges. */
    for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++) {
@@ -588,11 +589,13 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
          continue;
 
       /* Empty Launchers aren't valid */
-      if (outfit_isLauncher(ws->slots[i].slot->outfit) && ws->slots[i].slot->u.ammo.quantity <= 0)
+      if (outfit_isLauncher(ws->slots[i].slot->outfit) && (ws->slots[i].slot->u.ammo.quantity <= 0))
          continue;
 
       /* Get range. */
       range = outfit_range(ws->slots[i].slot->outfit);
+      if (outfit_isLauncher(ws->slots[i].slot->outfit))
+         range *= p->stats.launch_range;
       if (range >= 0.) {
          /* Calculate. */
          range_accum[ lev ] += range;
@@ -630,7 +633,7 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
  *
  *    @param p Pilot to get the range of.
  *    @param id ID of weapon set to get the range of.
- *    @param Level of the weapons to get the range of (-1 for all).
+ *    @param level Level of the weapons to get the range of (-1 for all).
  */
 double pilot_weapSetRange( Pilot* p, int id, int level )
 {
@@ -656,7 +659,7 @@ double pilot_weapSetRange( Pilot* p, int id, int level )
  *
  *    @param p Pilot to get the speed of.
  *    @param id ID of weapon set to get the speed of.
- *    @param Level of the weapons to get the speed of (-1 for all).
+ *    @param level Level of the weapons to get the speed of (-1 for all).
  */
 double pilot_weapSetSpeed( Pilot* p, int id, int level )
 {
@@ -678,6 +681,37 @@ double pilot_weapSetSpeed( Pilot* p, int id, int level )
 
 
 /**
+ * @brief Gets the ammo of the current pilot weapon set.
+ *
+ *    @param p Pilot to get the speed of.
+ *    @param id ID of weapon set to get the speed of.
+ *    @param level Level of the weapons to get the speed of (-1 for all).
+ */
+double pilot_weapSetAmmo( Pilot* p, int id, int level )
+{
+   PilotWeaponSet *ws;
+   PilotOutfitSlot *s;
+   int i, amount, nammo;
+   double ammo;
+
+   ammo = 0.;
+   nammo = 0;
+   ws = pilot_weapSet(p,id);
+   for (i=0; i<array_size(ws->slots); i++) {
+      if ((level >= 0) && (ws->slots[i].level != level))
+         continue;
+      s = ws->slots[i].slot;
+      amount = pilot_maxAmmoO( p, s->outfit );
+      if (amount > 0) {
+         ammo += (double)s->u.ammo.quantity / (double)amount;
+         nammo++;
+      }
+   }
+   return (nammo==0) ? 0. : ammo / (double)nammo;
+}
+
+
+/**
  * @brief Cleans up a weapon set.
  *
  *    @param p Pilot who owns the weapon set.
@@ -689,12 +723,11 @@ void pilot_weapSetCleanup( Pilot* p, int id )
 
    ws = pilot_weapSet(p,id);
 
-   if (ws->slots != NULL)
-      array_free( ws->slots );
+   array_free( ws->slots );
    ws->slots = NULL;
 
    /* Update range. */
-   pilot_weapSetUpdateRange( ws );
+   pilot_weapSetUpdateRange( p, ws );
 }
 
 
@@ -715,21 +748,11 @@ void pilot_weapSetFree( Pilot* p )
  *
  *    @param p Pilot who owns the weapon set.
  *    @param id ID of the weapon set.
- *    @param[out] n Number of elements in the list.
- *    @return The array of pilot weaponset outfits.
+ *    @return The array (array.h) of pilot weaponset outfits.
  */
-PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id, int *n )
+PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id )
 {
-   PilotWeaponSet *ws;
-
-   ws = pilot_weapSet(p,id);
-   if (ws->slots == NULL) {
-      *n = 0;
-      return NULL;
-   }
-
-   *n = array_size(ws->slots);
-   return ws->slots;
+   return pilot_weapSet( p, id )->slots;
 }
 
 
@@ -773,16 +796,31 @@ int pilot_shoot( Pilot* p, int level )
  */
 void pilot_shootStop( Pilot* p, int level )
 {
-   int i, recalc;
    PilotWeaponSet *ws;
-   PilotOutfitSlot *slot;
 
-   /* Get active set. */
+   /* Find active set. */
    ws = pilot_weapSet( p, p->active_set );
 
-   /* Case no outfits. */
-   if (ws->slots == NULL)
-      return;
+   /* Stop and see if must recalculate. */
+   if (pilot_weaponSetShootStop( p, ws, level ))
+      pilot_calcStats( p );
+}
+
+
+/**
+ * @brief Have pilot stop shooting a given weaponset.
+ *
+ * Only really deals with beam weapons.
+ *
+ *    @param p Pilot that was shooting.
+ *    @param level Level of the shot.
+ *    @param ws Weapon Set to stop shooting
+ *    @return 1 if some outfit has been deactivated
+ */
+unsigned int pilot_weaponSetShootStop( Pilot* p, PilotWeaponSet *ws, int level )
+{
+   int i, recalc;
+   PilotOutfitSlot *slot;
 
    /* Stop all beams. */
    recalc = 0;
@@ -824,9 +862,7 @@ void pilot_shootStop( Pilot* p, int level )
       }
    }
 
-   /* Must recalculate. */
-   if (recalc)
-      pilot_calcStats( p );
+   return recalc;
 }
 
 
@@ -853,8 +889,9 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
 
-   /* Beam duration used. */
-   used = w->outfit->u.bem.duration - w->timer;
+   /* Beam duration used. Compensate for the fact it's duration might have
+    * been shortened by heat. */
+   used = w->outfit->u.bem.duration - w->timer*(1.-pilot_heatAccuracyMod(w->heat_T));
 
    w->timer = rate_mod * (used / w->outfit->u.bem.duration) * outfit_delay( w->outfit );
    w->u.beamid = 0;
@@ -864,45 +901,45 @@ void pilot_stopBeam( Pilot *p, PilotOutfitSlot *w )
 /**
  * @brief Computes an estimation of ammo flying time
  *
- *    @param w the weapon that shoot
- *    @param parent Parent of the weapon
- *    @param target Target of the weapon
+ *    @param o the weapon to shoot.
+ *    @param parent Parent of the weapon.
+ *    @param pos Target of the weapon.
+ *    @param vel Target's velocity.
  */
-double pilot_weapFlyTime( Outfit *o, Pilot *parent, Pilot *target)
+double pilot_weapFlyTime( const Outfit *o, const Pilot *parent, const Vector2d *pos, const Vector2d *vel )
 {
    Vector2d approach_vector, relative_location, orthoradial_vector;
    double speed, radial_speed, orthoradial_speed, dist, t;
 
-   dist = vect_dist( &parent->solid->pos, &target->solid->pos );
+   dist = vect_dist( &parent->solid->pos, pos );
 
    /* Beam weapons */
-   if (outfit_isBeam(o))
-      {
+   if (outfit_isBeam(o)) {
       if (dist > o->u.bem.range)
          return INFINITY;
       return 0.;
-      }
+   }
 
    /* A bay doesn't have range issues */
    if (outfit_isFighterBay(o))
       return 0.;
 
-   /* Rockets use absolute velocity while bolt use relative vel */
-   if (outfit_isLauncher(o))
-         vect_cset( &approach_vector, - VX(target->solid->vel), - VY(target->solid->vel) );
+   /* Missiles use absolute velocity while bolts and unguided rockets use relative vel */
+   if (outfit_isLauncher(o) && o->u.lau.ammo->u.amm.ai != AMMO_AI_UNGUIDED)
+      vect_cset( &approach_vector, - vel->x, - vel->y );
    else
-         vect_cset( &approach_vector, VX(parent->solid->vel) - VX(target->solid->vel),
-               VY(parent->solid->vel) - VY(target->solid->vel) );
+      vect_cset( &approach_vector, VX(parent->solid->vel) - vel->x,
+            VY(parent->solid->vel) - vel->y );
 
    speed = outfit_speed(o);
 
-   /* Get the vector : shooter -> target*/
-   vect_cset( &relative_location, VX(target->solid->pos) - VX(parent->solid->pos),
-         VY(target->solid->pos) - VY(parent->solid->pos) );
+   /* Get the vector : shooter -> target */
+   vect_cset( &relative_location, pos->x - VX(parent->solid->pos),
+         pos->y - VY(parent->solid->pos) );
 
-   /* Get the orthogonal vector*/
-   vect_cset(&orthoradial_vector, VY(parent->solid->pos) - VY(target->solid->pos),
-         VX(target->solid->pos) -  VX(parent->solid->pos) );
+   /* Get the orthogonal vector */
+   vect_cset(&orthoradial_vector, VY(parent->solid->pos) - pos->y,
+         pos->x -  VX(parent->solid->pos) );
 
    radial_speed = vect_dot( &approach_vector, &relative_location );
    radial_speed = radial_speed / VMOD(relative_location);
@@ -910,18 +947,18 @@ double pilot_weapFlyTime( Outfit *o, Pilot *parent, Pilot *target)
    orthoradial_speed = vect_dot(&approach_vector, &orthoradial_vector);
    orthoradial_speed = orthoradial_speed / VMOD(relative_location);
 
-   if( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
+   if ( ((speed*speed - VMOD(approach_vector)*VMOD(approach_vector)) != 0) && (speed*speed - orthoradial_speed*orthoradial_speed) > 0)
       t = dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) - radial_speed) /
             (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
    else
       return INFINITY;
 
-   /* if t < 0, try the other solution*/
+   /* if t < 0, try the other solution */
    if (t < 0)
       t = - dist * (sqrt( speed*speed - orthoradial_speed*orthoradial_speed ) + radial_speed) /
             (speed*speed - VMOD(approach_vector)*VMOD(approach_vector));
 
-   /* if t still < 0, no solution*/
+   /* if t still < 0, no solution */
    if (t < 0)
       return INFINITY;
 
@@ -932,7 +969,7 @@ double pilot_weapFlyTime( Outfit *o, Pilot *parent, Pilot *target)
 /**
  * @brief Calculates and shoots the appropriate weapons in a weapon set matching an outfit.
  */
-static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, int level, double time )
+static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, const Outfit *o, int level, double time )
 {
    int i, ret;
    int is_launcher, is_bay;
@@ -947,8 +984,10 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, 
    /** @TODO Make beams not fire all at once. */
    if (outfit_isBeam(o)) {
       for (i=0; i<array_size(ws->slots); i++)
-         if (ws->slots[i].slot->outfit == o)
+         if (ws->slots[i].slot->outfit == o && (level == -1 || level == ws->slots[i].level)) {
             ret += pilot_shootWeapon( p, ws->slots[i].slot, 0 );
+            ws->slots[i].slot->inrange = ws->inrange; /* State if the weapon has to be turn off when out of range. */
+         }
       return ret;
    }
 
@@ -1030,6 +1069,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
    double rate_mod, energy_mod;
    double energy;
    int j;
+   int dockslot = -1;
 
    /* Make sure weapon has outfit. */
    if (w->outfit == NULL)
@@ -1100,8 +1140,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
     */
    else if (outfit_isLauncher(w->outfit)) {
 
-      /* Shooter can't be the target - sanity check for the player.p */
-      if ((w->outfit->u.lau.ammo->u.amm.ai != AMMO_AI_DUMB) && (p->id==p->target))
+      /* Shooter can't be the target - safety check for the player.p */
+      if ((w->outfit->u.lau.ammo->u.amm.ai != AMMO_AI_UNGUIDED) && (p->id==p->target))
          return 0;
 
       /* Must have ammo left. */
@@ -1118,16 +1158,16 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       weapon_add( w->outfit, w->heat_T, p->solid->dir,
             &vp, &p->solid->vel, p, p->target, time );
 
-      w->u.ammo.quantity -= 1; /* we just shot it */
-      p->mass_outfit     -= w->u.ammo.outfit->mass;
-      p->solid->mass     -= w->u.ammo.outfit->mass;
+      pilot_rmAmmo( p, w, 1 );
 
-      pilot_updateMass( p );
+      /* Make the AI aware a seeker has been shot */
+      if (outfit_isSeeker(w->outfit))
+         p->shoot_indicator = 1;
 
       /* If last ammo was shot, update the range */
       if (w->u.ammo.quantity <= 0) {
          for (j=0; j<PILOT_WEAPON_SETS; j++)
-            pilot_weapSetUpdateRange( &p->weapon_sets[j] );
+            pilot_weapSetUpdateRange( p, &p->weapon_sets[j] );
       }
    }
 
@@ -1140,17 +1180,22 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
       if ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0))
          return 0;
 
+      /* Get index of outfit slot */
+      for (j=0; j<array_size(p->outfits); j++) {
+         if (p->outfits[j] == w)
+            dockslot = j;
+      }
+
       /* Create the escort. */
       escort_create( p, w->u.ammo.outfit->u.fig.ship,
-            &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1 );
+            &vp, &p->solid->vel, p->solid->dir, ESCORT_TYPE_BAY, 1, dockslot );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;
-      w->u.ammo.deployed += 1; /* Mark as deployed. */
       pilot_updateMass( p );
    }
    else
-      WARN("Shooting unknown weapon type: %s", w->outfit->name);
+      WARN(_("Shooting unknown weapon type: %s"), w->outfit->name);
 
 
    /* Reset timer. */
@@ -1166,19 +1211,32 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w, double time )
  *    @param[out] rate_mod Fire rate multiplier.
  *    @param[out] energy_mod Energy use multiplier.
  *    @param p Pilot who owns the outfit.
- *    @param w Pilot's outfit.
+ *    @param o Pilot's outfit.
  */
 void pilot_getRateMod( double *rate_mod, double* energy_mod,
-      Pilot* p, Outfit *o )
+      const Pilot* p, const Outfit *o )
 {
    switch (o->type) {
       case OUTFIT_TYPE_BOLT:
-         *rate_mod   = 2. - p->stats.fwd_firerate; /* Invert. */
+      case OUTFIT_TYPE_BEAM:
+         *rate_mod   = 1. / p->stats.fwd_firerate; /* Invert. */
          *energy_mod = p->stats.fwd_energy;
          break;
       case OUTFIT_TYPE_TURRET_BOLT:
-         *rate_mod   = 2. - p->stats.tur_firerate; /* Invert. */
+      case OUTFIT_TYPE_TURRET_BEAM:
+         *rate_mod   = 1. / p->stats.tur_firerate; /* Invert. */
          *energy_mod = p->stats.tur_energy;
+         break;
+
+      case OUTFIT_TYPE_LAUNCHER:
+      case OUTFIT_TYPE_TURRET_LAUNCHER:
+         *rate_mod   = 1. / p->stats.launch_rate;
+         *energy_mod = 1.;
+         break;
+
+      case OUTFIT_TYPE_FIGHTER_BAY:
+         *rate_mod   = 1. / p->stats.fbay_rate;
+         *energy_mod = 1.;
          break;
 
       default:
@@ -1201,8 +1259,7 @@ void pilot_weaponClear( Pilot *p )
 
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       ws = pilot_weapSet( p, i );
-      if (ws->slots != NULL)
-         array_erase( &ws->slots, &ws->slots[0], &ws->slots[ array_size(ws->slots) ] );
+      array_erase( &ws->slots, array_begin(ws->slots), array_end(ws->slots) );
    }
 }
 
@@ -1222,7 +1279,7 @@ void pilot_weaponClear( Pilot *p )
 void pilot_weaponAuto( Pilot *p )
 {
    PilotOutfitSlot *slot;
-   Outfit *o;
+   const Outfit *o;
    int i, level, id;
 
    /* Clear weapons. */
@@ -1242,14 +1299,14 @@ void pilot_weaponAuto( Pilot *p )
 
    /* All should be inrange. */
    if (!pilot_isPlayer(p))
-      for (i=0; i<PILOT_WEAPON_SETS; i++){
+      for (i=0; i<PILOT_WEAPON_SETS; i++) {
          pilot_weapSetInrange( p, i, 1 );
          /* Update range and speed (at 0)*/
-         pilot_weapSetUpdateRange( &p->weapon_sets[i] );
+         pilot_weapSetUpdateRange( p, &p->weapon_sets[i] );
       }
 
    /* Iterate through all the outfits. */
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       slot = p->outfits[i];
       o    = slot->outfit;
 
@@ -1315,7 +1372,7 @@ void pilot_weaponSetDefault( Pilot *p )
    int i;
 
    /* If current set isn't a fire group no need to worry. */
-   if (!p->weapon_sets[ p->active_set ].type == WEAPSET_TYPE_CHANGE) {
+   if (p->weapon_sets[ p->active_set ].type != WEAPSET_TYPE_CHANGE) {
       /* Update active weapon set. */
       pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
       return;
@@ -1323,7 +1380,7 @@ void pilot_weaponSetDefault( Pilot *p )
 
    /* Find first fire group. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (!p->weapon_sets[i].type != WEAPSET_TYPE_CHANGE)
+      if (p->weapon_sets[i].type == WEAPSET_TYPE_CHANGE)
          break;
 
    /* Set active set to first if all fire groups or first non-fire group. */
@@ -1338,11 +1395,11 @@ void pilot_weaponSetDefault( Pilot *p )
 
 
 /**
- * @brief Sets the weapon set as sane.
+ * @brief Sets the weapon set as safe.
  *
- *    @param p Pilot to set weapons as sane.
+ *    @param p Pilot to set weapons as safe.
  */
-void pilot_weaponSane( Pilot *p )
+void pilot_weaponSafe( Pilot *p )
 {
    int i, j;
    int n, l;
@@ -1350,9 +1407,6 @@ void pilot_weaponSane( Pilot *p )
 
    for (j=0; j<PILOT_WEAPON_SETS; j++) {
       ws = &p->weapon_sets[j];
-      if (ws->slots == NULL)
-         continue;
-
       l = array_size(ws->slots);
       n = 0;
       for (i=0; i<l; i++) {
@@ -1375,13 +1429,14 @@ void pilot_weaponSane( Pilot *p )
    }
 
    /* Update range. */
-   pilot_weapSetUpdateRange( ws );
+   pilot_weapSetUpdateRange( p, ws );
 }
 
 /**
  * @brief Disables a given active outfit.
  *
  * @param p Pilot whose outfit we are disabling.
+ * @param o Outfit to disable.
  * @return Whether the outfit was actually disabled.
  */
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
@@ -1394,11 +1449,42 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       pilot_afterburnOver( p );
    else if (outfit_isBeam( o->outfit )) {
       /* Beams use stimer to represent minimum time until shutdown. */
-      o->stimer = -1;
+      if (o->u.beamid>0) {
+         beam_end( p->id, o->u.beamid );
+         pilot_stopBeam(p, o);
+      }
    }
+   else if (!o->active)
+      /* Case of a mod we can't toggle. */
+      return 0;
+   else if (outfit_isMod(o->outfit) && o->outfit->u.mod.lua_ontoggle != LUA_NOREF)
+      /* TODO toggle Lua outfit. */
+      return pilot_outfitLOntoggle( p, o, 0 );
    else {
       o->stimer = outfit_cooldown( o->outfit );
       o->state  = PILOT_OUTFIT_COOLDOWN;
+   }
+
+   return 1;
+}
+
+/**
+ * @brief Enable a given active outfit.
+ *
+ * @param p Pilot whose outfit we are enabling.
+ * @param o Outfit to enable.
+ * @return Whether the outfit was actually enabled.
+ */
+int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o )
+{
+   if (outfit_isAfterburner(o->outfit))
+      pilot_afterburn( p );
+   else if (outfit_isMod(o->outfit) && o->outfit->u.mod.lua_ontoggle != LUA_NOREF)
+      /* TODO toggle Lua outfit. */
+      return pilot_outfitLOntoggle( p, o, 1 );
+   else {
+      o->state  = PILOT_OUTFIT_ON;
+      o->stimer = outfit_duration( o->outfit );
    }
 
    return 1;
@@ -1417,12 +1503,10 @@ int pilot_outfitOffAll( Pilot *p )
    int i;
 
    nchg = 0;
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       o = p->outfits[i];
       /* Picky about our outfits. */
       if (o->outfit == NULL)
-         continue;
-      if (!o->active)
          continue;
       if (o->state == PILOT_OUTFIT_ON)
          nchg += pilot_outfitOff( p, o );
@@ -1464,6 +1548,7 @@ void pilot_afterburn (Pilot *p)
       p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
       pilot_setFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
+      pilot_destealth( p ); /* No afterburning stealth. */
 
       /* @todo Make this part of a more dynamic activated outfit sound system. */
       sound_playPos(p->afterburner->outfit->u.afb.sound_on,
@@ -1472,7 +1557,7 @@ void pilot_afterburn (Pilot *p)
 
    if (pilot_isPlayer(p)) {
       afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
-      spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
+      spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble );
    }
 }
 

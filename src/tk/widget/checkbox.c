@@ -9,14 +9,16 @@
  */
 
 
-#include "tk/toolkit_priv.h"
-
+/** @cond */
 #include <stdlib.h>
+/** @endcond */
+
 #include "nstring.h"
+#include "tk/toolkit_priv.h"
 
 
 static Widget *chk_getWgt( const unsigned int wid, const char *name );
-static int chk_key( Widget* chk, SDLKey key, SDLMod mod );
+static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod );
 static int chk_mclick( Widget* chk, int button, int x, int y );
 static void chk_render( Widget* chk, double bx, double by );
 static void chk_cleanup( Widget* chk );
@@ -42,7 +44,7 @@ static void chk_toggleState( Widget *chk );
 void window_addCheckbox( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
-      char* name, char* display, /* label name, display name */
+      char* name, const char* display, /* label name, display name */
       void (*call) (unsigned int,char*), /* toggle function */
       int default_state ) /* default state. */
 {
@@ -106,8 +108,7 @@ void window_checkboxCaption( const unsigned int wid, const char *name, char *dis
    if (wgt == NULL)
       return;
 
-   if (wgt->dat.chk.display != NULL)
-      free(wgt->dat.chk.display);
+   free(wgt->dat.chk.display);
    wgt->dat.chk.display = strdup(display);
 }
 
@@ -165,7 +166,7 @@ static void chk_toggleState( Widget *chk )
  *    @param mod Mods when key is being pressed.
  *    @return 1 if the event was used, 0 if it wasn't.
  */
-static int chk_key( Widget* chk, SDLKey key, SDLMod mod )
+static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod )
 {
    (void) mod;
 
@@ -212,17 +213,14 @@ static void chk_render( Widget* chk, double bx, double by )
    switch (chk->status) {
       case WIDGET_STATUS_NORMAL:
          lc = &cGrey80;
-         /*c = &cGrey60;*/
          dc = &cGrey40;
          break;
       case WIDGET_STATUS_MOUSEOVER:
          lc = &cWhite;
-         /*c = &cGrey80;*/
          dc = &cGrey60;
          break;
       case WIDGET_STATUS_MOUSEDOWN:
          lc = &cGreen;
-         /*c = &cGreen;*/
          dc = &cGrey40;
          break;
       default:
@@ -231,10 +229,10 @@ static void chk_render( Widget* chk, double bx, double by )
 #endif
 
    /* Draw rect. */
-   toolkit_drawRect( x-1, y-1 + (chk->h-10.)/2., 12., 12., &cGrey40, NULL );
-   toolkit_drawRect( x, y + (chk->h-10.)/2., 10., 10., &cGrey90, NULL );
+   toolkit_drawRect( x-1, y-1 + (chk->h-10.)/2., 12., 12., toolkit_colDark, NULL );
+   toolkit_drawRect( x, y + (chk->h-10.)/2., 10., 10., toolkit_colLight, NULL );
    if (chk->dat.chk.state)
-      toolkit_drawRect( x+1., y+1. + (chk->h-10.)/2., 8., 8., &cGrey20, NULL );
+      toolkit_drawRect( x+2., y+2. + (chk->h-10.)/2., 6., 6., toolkit_colDark, NULL );
 
 #if 0
    /* Inner outline */
@@ -247,7 +245,7 @@ static void chk_render( Widget* chk, double bx, double by )
    gl_printMaxRaw( NULL, chk->w - 20,
          bx + chk->x + 15,
          by + chk->y + (chk->h - gl_defFont.h)/2.,
-         &cBlack, chk->dat.chk.display );
+         &cFontWhite, -1., chk->dat.chk.display );
 }
 
 

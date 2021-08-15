@@ -5,8 +5,8 @@
   <y>6002.748046</y>
  </pos>
  <GFX>
-  <space>H03.png</space>
-  <exterior>desertic2.png</exterior>
+  <space>H03.webp</space>
+  <exterior>desertic2.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -15,8 +15,8 @@
  </presence>
  <general>
   <class>H</class>
-  <population>100</population>
-  <hide>0.250000</hide>
+  <population>29000</population>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
@@ -35,6 +35,7 @@
   <item>Ion 1</item>
   <item>Kinetic 1</item>
   <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
   <item>Bulk Trade Ships</item>
   <item>Hulls High</item>
  </tech>

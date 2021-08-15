@@ -5,8 +5,8 @@
   <y>26782.578820</y>
  </pos>
  <GFX>
-  <space>A03.png</space>
-  <exterior>lava.png</exterior>
+  <space>A03.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
@@ -16,17 +16,13 @@
  <general>
   <class>A</class>
   <population>600000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
-  <description>Avoss was originally a mediocre but habitable world. So, when the fourteenth colony ship, Petrovsk, arrived, its colonists considered themselves fairly fortunate to have found a place they could call home. However, some fifty years after the expedition had touched down, the world began to change. Seismic activity everywhere began escalating off the charts causing earthquakes and volcanic eruptions the world over. The world is now devastated, a mere shadow of its former self. The colonists have managed to survive however, the hardy remain even today.</description>
+  <commodities/>
+  <description>Avoss was originally a mediocre but habitable world. When the fourteenth colony ship, Petrovsk, arrived, its colonists considered themselves fairly fortunate to have found a place they could call home. However, some fifty years after the expedition had touched down, the world began to change. Seismic activity everywhere began escalating off the charts causing earthquakes and volcanic eruptions the world over. The world is now devastated, a mere shadow of its former self. The colonists have managed to survive, however, and the hardy remain even today.</description>
  </general>
 </asset>

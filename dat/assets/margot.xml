@@ -5,8 +5,8 @@
   <y>9649.058473</y>
  </pos>
  <GFX>
-  <space>O01.png</space>
-  <exterior>oceanic.png</exterior>
+  <space>O01.webp</space>
+  <exterior>oceanic.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>O</class>
   <population>1500000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -27,7 +27,7 @@
   </services>
   <commodities/>
   <description>Margot teeters on the brink of classes M and O. It just about matches the criteria for class O, having a dry surface area just short of the maximum area allowed. The difference is minimal, however, and it is speculated that if the world had a moon, the tides would reveal just enough extra land to switch the planet to class M during low tide.</description>
-  <bar>This bar is a commuter's bar. Every day, a large stream of people flows to and from the spaceport, where vast transport ships ferry them to the nearby planet of Zazarin to work. The flow is fairly continuous in both directions, as day-night cycles tend to lose their meaning when more than one planet is involved.</bar>
+  <bar>This bar is a commuters' bar. Every day, a large stream of people flows to and from the spaceport, where vast transport ships ferry them to the nearby planet of Zazarin to work. The flow is fairly continuous in both directions, as day-night cycles tend to lose their meaning when more than one planet is involved.</bar>
  </general>
  <tech>
   <item>Engines Cargo</item>
@@ -36,7 +36,7 @@
   <item>Bulk Trade Ships</item>
   <item>Basic Trade Ships</item>
   <item>Basic Outfits 2</item>
-  <item>Missiles 1</item>
   <item>Star Maps</item>
+  <item>Missiles 1</item>
  </tech>
 </asset>

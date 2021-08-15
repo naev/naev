@@ -5,13 +5,13 @@
   <y>14886.294802</y>
  </pos>
  <GFX>
-  <space>I01.png</space>
-  <exterior>lava.png</exterior>
+  <space>I01.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services/>
  </general>
 </asset>

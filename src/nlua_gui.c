@@ -8,21 +8,22 @@
  * @brief Bindings for GUI functionality from Lua.
  */
 
-#include "nlua_gui.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <lauxlib.h>
 
-#include "nlua.h"
-#include "nluadef.h"
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_gui.h"
+
 #include "gui.h"
-#include "gui_osd.h"
 #include "gui_omsg.h"
-#include "nlua_tex.h"
-#include "menu.h"
+#include "gui_osd.h"
 #include "info.h"
+#include "log.h"
+#include "menu.h"
+#include "nlua_tex.h"
+#include "nluadef.h"
 
 
 /* GUI methods. */
@@ -39,7 +40,8 @@ static int guiL_mouseClickEnable( lua_State *L );
 static int guiL_mouseMoveEnable( lua_State *L );
 static int guiL_menuInfo( lua_State *L );
 static int guiL_menuSmall( lua_State *L );
-static const luaL_reg guiL_methods[] = {
+static int guiL_setMapOverlayBounds( lua_State *L );
+static const luaL_Reg guiL_methods[] = {
    { "viewport", guiL_viewport },
    { "fpsPos", guiL_fpsPos },
    { "osdInit", guiL_osdInit },
@@ -53,6 +55,7 @@ static const luaL_reg guiL_methods[] = {
    { "mouseMoveEnable", guiL_mouseMoveEnable },
    { "menuInfo", guiL_menuInfo },
    { "menuSmall", guiL_menuSmall },
+   { "setMapOverlayBounds", guiL_setMapOverlayBounds },
    {0,0}
 }; /**< GUI methods. */
 
@@ -62,16 +65,13 @@ static const luaL_reg guiL_methods[] = {
 /**
  * @brief Loads the GUI library.
  *
- *    @param L State to load GUI library into.
+ *    @param env Environment to load GUI library into.
  *    @return 0 on success.
  */
-int nlua_loadGUI( lua_State *L, int readonly )
+int nlua_loadGUI( nlua_env env )
 {
-   if (readonly) /* Nothing is read only */
-      return 0;
-
    /* Register the values */
-   luaL_register(L, "gui", guiL_methods);
+   nlua_register(env, "gui", guiL_methods, 0);
 
    return 0;
 }
@@ -104,11 +104,13 @@ int nlua_loadGUI( lua_State *L, int readonly )
  *    @luatparam number y Y position to start clipping (bottom left is 0.)
  *    @luatparam number w Width of the clipping (width of the screen is default).
  *    @luatparam number h Height of the clipping (height of the screen is default).
- * @luafunc viewport( x, y, w, h )
+ * @luafunc viewport
  */
 static int guiL_viewport( lua_State *L )
 {
    double x,y, w,h;
+
+   NLUA_CHECKRW(L);
 
    /* Parameters. */
    x = luaL_checknumber(L,1);
@@ -129,11 +131,12 @@ static int guiL_viewport( lua_State *L )
  *
  *    @luaparam x X position for the fps stuff.
  *    @luaparam y Y position for the fps stuff.
- * @luafunc fpsPos( x, y )
+ * @luafunc fpsPos
  */
 static int guiL_fpsPos( lua_State *L )
 {
    double x,y;
+   NLUA_CHECKRW(L);
    x = luaL_checknumber(L,1);
    y = luaL_checknumber(L,2);
    fps_setPos( x, y );
@@ -148,11 +151,13 @@ static int guiL_fpsPos( lua_State *L )
  *    @luatparam number y Y position of the OSD display.
  *    @luatparam number w Width of the OSD display.
  *    @luatparam number h Height of the OSD display.
- * @luafunc osdInit( x, y, w, h )
+ * @luafunc osdInit
  */
 static int guiL_osdInit( lua_State *L )
 {
    int x,y, w,h;
+
+   NLUA_CHECKRW(L);
 
    /* Parameters. */
    x = luaL_checkinteger(L,1);
@@ -172,11 +177,13 @@ static int guiL_osdInit( lua_State *L )
  *    @luatparam number width Width of the message box.
  *    @luatparam number x X position of message box.
  *    @luatparam number y Y position of message box.
- * @luafunc mesgInit( width, x, y )
+ * @luafunc mesgInit
  */
 static int guiL_mesgInit( lua_State *L )
 {
    int w, x, y;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    w = luaL_checkinteger( L, 1 );
@@ -195,11 +202,13 @@ static int guiL_mesgInit( lua_State *L )
  *    @luatparam number width Width of the omsg messages.
  *    @luatparam number x X center of the omsg messages.
  *    @luatparam number y Y center of the omsg messages.
- * @luafunc omsgInit( width, x, y )
+ * @luafunc omsgInit
  */
 static int guiL_omsgInit( lua_State *L )
 {
    double w, x, y;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    w = luaL_checkinteger( L, 1 );
@@ -220,11 +229,13 @@ static int guiL_omsgInit( lua_State *L )
  *    @luatparam number circle Whether or not it should be a circle.
  *    @luatparam number width Width if it's not a circle or radius if it is a circle.
  *    @luatparam number height Only needed if not a circle.
- * @luafunc radarInit( circle, width, height )
+ * @luafunc radarInit
  */
 static int guiL_radarInit( lua_State *L )
 {
    int id, circle, width, height;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    circle = lua_toboolean( L, 1 );
@@ -248,11 +259,13 @@ static int guiL_radarInit( lua_State *L )
  *
  *    @luatparam number x X position to render at.
  *    @luatparam number y Y position to render at.
- * @luafunc radarRender( x, y )
+ * @luafunc radarRender
  */
 static int guiL_radarRender( lua_State *L )
 {
    double x, y;
+
+   NLUA_CHECKRW(L);
 
    /* Parse parameters. */
    x     = luaL_checknumber( L, 1 );
@@ -268,10 +281,11 @@ static int guiL_radarRender( lua_State *L )
  * @brief Sets the Lua planet target GFX.
  *
  *    @luatparam Tex tex Texture to set for the planet targeting.
- * @luafunc targetPlanetGFX( tex )
+ * @luafunc targetPlanetGFX
  */
 static int guiL_targetPlanetGFX( lua_State *L )
 {
+   NLUA_CHECKRW(L);
    gui_targetPlanetGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
@@ -281,10 +295,11 @@ static int guiL_targetPlanetGFX( lua_State *L )
  * @brief Sets the Lua planet target GFX.
  *
  *    @luatparam Tex tex Texture to set for the planet targeting.
- * @luafunc targetPlanetGFX( tex )
+ * @luafunc targetPlanetGFX
  */
 static int guiL_targetPilotGFX( lua_State *L )
 {
+   NLUA_CHECKRW(L);
    gui_targetPilotGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
@@ -298,11 +313,12 @@ static int guiL_targetPilotGFX( lua_State *L )
  * With button being the ID of the button, x/y being the position clicked and state being true if pressed, false if lifted. It should return true if it used the mouse event or false if it let it through.
  *
  *    @luatparam[opt=true] boolean enable Whether or not to enable the mouse click callback.
- * @luafunc mouseClickEnable()
+ * @luafunc mouseClickEnable
  */
 static int guiL_mouseClickEnable( lua_State *L )
 {
    int b;
+   NLUA_CHECKRW(L);
    if (lua_gettop(L) > 0)
       b = lua_toboolean(L,1);
    else
@@ -320,11 +336,12 @@ static int guiL_mouseClickEnable( lua_State *L )
  * With x/y being the position of the mouse.
  *
  *    @luatparam[opt] boolean enable Whether or not to enable the mouse movement callback.
- * @luafunc mouseMoveEnable()
+ * @luafunc mouseMoveEnable
  */
 static int guiL_mouseMoveEnable( lua_State *L )
 {
    int b;
+   NLUA_CHECKRW(L);
    if (lua_gettop(L) > 0)
       b = lua_toboolean(L,1);
    else
@@ -348,12 +365,14 @@ static int guiL_mouseMoveEnable( lua_State *L )
  * @usage gui.menuInfo( "ship" ) -- Opens ship tab
  *
  *    @luatparam[opt="main"] string window parameter indicating the tab to open at.
- * @luafunc menuInfo( window )
+ * @luafunc menuInfo
  */
 static int guiL_menuInfo( lua_State *L )
 {
    const char *str;
    int window;
+
+   NLUA_CHECKRW(L);
 
    if (menu_open)
       return 0;
@@ -380,7 +399,7 @@ static int guiL_menuInfo( lua_State *L )
    else if (strcasecmp( str, "standings" )==0)
       window = INFO_STANDINGS;
    else {
-      NLUA_ERROR(L,"Invalid window info name '%s'.", str);
+      NLUA_ERROR(L,_("Invalid window info name '%s'."), str);
       return 0;
    }
 
@@ -396,15 +415,39 @@ static int guiL_menuInfo( lua_State *L )
  *
  * @usage gui.menuSmall()
  *
- * @luafunc menuSmall()
+ * @luafunc menuSmall
  */
 static int guiL_menuSmall( lua_State *L )
 {
    (void) L;
+   NLUA_CHECKRW(L);
    if (menu_open)
       return 0;
    menu_small();
    return 0;
 }
 
+
+/**
+ * @brief Sets map boundaries
+ *
+ *    @luatparam number top Top boundary in pixels
+ *    @luatparam number right Right boundary in pixels
+ *    @luatparam number bottom Bottom boundary in pixels
+ *    @luatparam number left Left boundary in pixels
+ * @luafunc setMapOverlayBounds
+ */
+static int guiL_setMapOverlayBounds( lua_State *L )
+{
+   int top, right, bottom, left;
+   NLUA_CHECKRW(L);
+
+   top = luaL_checkinteger(L,1);
+   right = luaL_checkinteger(L,2);
+   bottom = luaL_checkinteger(L,3);
+   left = luaL_checkinteger(L,4);
+
+   gui_setMapOverlayBounds(top, right, bottom, left);
+   return 0;
+}
 

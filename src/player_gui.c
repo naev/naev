@@ -9,12 +9,16 @@
  */
 
 
-#include "player_gui.h"
+/** @cond */
+#include "physfsrwops.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "log.h"
+#include "player_gui.h"
+
 #include "array.h"
+#include "log.h"
 #ifdef DEBUGGING
 #include "ndata.h"
 #endif /* DEBUGGING */
@@ -31,11 +35,9 @@ static char** gui_list = NULL; /**< List of GUIs the player has. */
 void player_guiCleanup (void)
 {
    int i;
-   if (gui_list != NULL) {
-      for (i=0; i<array_size(gui_list); i++)
-         free( gui_list[i] );
-      array_free( gui_list );
-   }
+   for (i=0; i<array_size(gui_list); i++)
+      free( gui_list[i] );
+   array_free( gui_list );
    gui_list = NULL;
 }
 
@@ -63,10 +65,10 @@ int player_guiAdd( char* name )
    /* Make sure the GUI is vaild. */
    SDL_RWops *rw;
    char buf[PATH_MAX];
-   nsnprintf( buf, sizeof(buf), "dat/gui/%s.lua", name );
-   rw = ndata_rwops( buf );
+   snprintf( buf, sizeof(buf), GUI_PATH"%s.lua", name );
+   rw = PHYSFSRWOPS_openRead( buf );
    if (rw == NULL) {
-      WARN("GUI '%s' does not exist as a file: '%s' not found.", name, buf );
+      WARN(_("GUI '%s' does not exist as a file: '%s' not found."), name, buf );
       return -1;
    }
    SDL_RWclose(rw);
@@ -97,9 +99,6 @@ int player_guiCheck( char* name )
 {
    int i;
 
-   if (gui_list == NULL)
-      return 0;
-
    if (name == NULL)
       return 0;
 
@@ -114,14 +113,8 @@ int player_guiCheck( char* name )
 /**
  * @brief Gets the list of GUIs.
  */
-char** player_guiList( int *n )
+char** player_guiList (void)
 {
-   if (gui_list == NULL) {
-      *n = 0;
-      return NULL;
-   }
-
-   *n = array_size(gui_list);
    return gui_list;
 }
 

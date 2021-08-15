@@ -5,8 +5,8 @@
   <y>6364.565702</y>
  </pos>
  <GFX>
-  <space>M09.png</space>
-  <exterior>forest2.png</exterior>
+  <space>M09.webp</space>
+  <exterior>forest2.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>15000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -24,11 +24,8 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
-  <description>Most of Zeo's inhabitation is recently new. After the Incident, real estate prices had a major overhaul all across the galaxy, and the once neglected backwater world of Zeo quickly became prime land to settle for Imperial citizens. Though the population is still on the low side compared to older civilian worlds, the number of people living here rises by the day.</description>
+  <commodities/>
+  <description>Most of Zeo's habitation is recently new. After the Incident, real estate prices had a major overhaul all across the galaxy, and the once neglected backwater world of Zeo quickly became prime land to settle for Imperial citizens. Though the population is still on the low side compared to older civilian worlds, the number of people living here rises by the day.</description>
   <bar>Because of Zeo's abrupt rise in value after the Incident, the antiquated facilities at the time had to be replaced to handle the influx of Imperial colonists. As a result, most of the infrastructure here is relatively modern. You won't find anything out of order or slow to respond in this bar.</bar>
  </general>
  <tech>
@@ -37,6 +34,7 @@
   <item>Hulls Medium</item>
   <item>Laser 1</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Missiles 1</item>
  </tech>
 </asset>

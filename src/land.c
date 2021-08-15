@@ -9,51 +9,47 @@
  */
 
 
-#include "land.h"
+/** @cond */
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "physfs.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
-#include <math.h>
+#include "land.h"
 
+#include "camera.h"
+#include "conf.h"
+#include "dialogue.h"
+#include "economy.h"
+#include "equipment.h"
+#include "escort.h"
+#include "event.h"
+#include "gui.h"
+#include "hook.h"
 #include "land_outfits.h"
 #include "land_shipyard.h"
 #include "land_trade.h"
-
 #include "log.h"
-#include "toolkit.h"
-#include "dialogue.h"
+#include "map.h"
+#include "menu.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
+#include "news.h"
+#include "nlua.h"
+#include "nlua_tk.h"
+#include "nluadef.h"
+#include "npc.h"
+#include "nstring.h"
+#include "ntime.h"
 #include "player.h"
 #include "rng.h"
-#include "music.h"
-#include "economy.h"
-#include "hook.h"
-#include "mission.h"
-#include "ntime.h"
 #include "save.h"
-#include "map.h"
-#include "news.h"
-#include "escort.h"
-#include "event.h"
-#include "conf.h"
-#include "gui.h"
-#include "equipment.h"
-#include "npc.h"
-#include "camera.h"
-#include "menu.h"
-#include "ndata.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_tk.h"
-
-
-/* global/main window */
-#define LAND_WIDTH   800 /**< Land window width. */
-#define LAND_HEIGHT  600 /**< Land window height. */
-#define PORTRAIT_WIDTH 200
-#define PORTRAIT_HEIGHT 150
+#include "shiplog.h"
+#include "toolkit.h"
 
 
 /*
@@ -80,15 +76,6 @@ int landed = 0; /**< Is player landed. */
 int land_loaded = 0; /**< Finished loading? */
 unsigned int land_wid = 0; /**< Land window ID, also used in gui.c */
 static int land_regen = 0; /**< Whether or not regenning. */
-static const char *land_windowNames[LAND_NUMWINDOWS] = {
-   "Landing Main",
-   "Spaceport Bar",
-   "Missions",
-   "Outfits",
-   "Shipyard",
-   "Equipment",
-   "Commodity"
-};
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
@@ -114,8 +101,8 @@ static int last_window = 0; /**< Default window. */
 /*
  * Error handling.
  */
-static char errorlist[512];
-static char errorreason[512];
+static char errorlist[STRMAX_SHORT];
+static char errorreason[STRMAX_SHORT];
 static int errorappend;
 static char *errorlist_ptr;
 
@@ -123,7 +110,7 @@ static char *errorlist_ptr;
 /*
  * Rescue.
  */
-static lua_State *rescue_L = NULL; /**< Rescue Lua state. */
+static nlua_env rescue_env = LUA_NOREF; /**< Rescue Lua env. */
 static void land_stranded (void);
 
 
@@ -171,32 +158,31 @@ int land_doneLoading (void)
 
 
 /**
- * @brief Makes sure it's sane to change ships in the equipment view.
+ * @brief Makes sure it's valid to change ships in the equipment view.
  *    @param shipname Ship being changed to.
  */
-int can_swapEquipment( char* shipname )
+int can_swapEquipment( const char *shipname )
 {
    int failure = 0;
-   char *loc = player_getLoc(shipname);
    Pilot *newship;
    newship = player_getShip(shipname);
+   int diff;
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
-      land_errDialogueBuild( "You're already onboard the %s.", shipname );
-      failure = 1;
-   }
-   if (strcmp(loc,land_planet->name)) { /* Ship isn't here. */
-      dialogue_alert( "You must transport the ship to %s to be able to get in.",
-            land_planet->name );
+      land_errDialogueBuild( _("You're already onboard the %s."), shipname );
       failure = 1;
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
-      land_errDialogueBuild( "You have %d tons more cargo than the new ship can hold.",
-            pilot_cargoUsed(player.p) - pilot_cargoFree(newship), shipname );
+      diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
+      land_errDialogueBuild( n_(
+               "You have %d tonne more cargo than the new ship can hold.",
+               "You have %d tonnes more cargo than the new ship can hold.",
+               diff),
+            diff );
       failure = 1;
    }
    if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
-      land_errDialogueBuild( "You can't strand your fighters in space.");
+      land_errDialogueBuild( _("You can't strand your fighters in space.") );
       failure = 1;
    }
    return !failure;
@@ -208,7 +194,7 @@ int can_swapEquipment( char* shipname )
  *    @param name Name of the ship, outfit or commodity being acted upon.
  *    @param type Type of action.
  */
-int land_errDialogue( char* name, char* type )
+int land_errDialogue( const char *name, char *type )
 {
    errorlist_ptr = NULL;
    if (strcmp(type,"tradeShip")==0)
@@ -226,9 +212,9 @@ int land_errDialogue( char* name, char* type )
    else if (strcmp(type,"sellOutfit")==0)
       outfit_canSell( name );
    else if (strcmp(type,"buyCommodity")==0)
-      commodity_canBuy( name );
+      commodity_canBuy( commodity_get( name ) );
    else if (strcmp(type,"sellCommodity")==0)
-      commodity_canSell( name );
+      commodity_canSell( commodity_get( name ) );
    if (errorlist_ptr != NULL) {
       dialogue_alert( "%s", errorlist );
       return 1;
@@ -248,14 +234,14 @@ void land_errDialogueBuild( const char *fmt, ... )
       return;
    else { /* get the message */
       va_start(ap, fmt);
-      vsnprintf(errorreason, 512, fmt, ap);
+      vsnprintf(errorreason, sizeof(errorreason), fmt, ap);
       va_end(ap);
    }
 
    if (errorlist_ptr == NULL) /* Initialize on first run. */
-      errorappend = nsnprintf( errorlist, sizeof(errorlist), "%s", errorreason );
+      errorappend = scnprintf( errorlist, sizeof(errorlist), "%s", errorreason );
    else /* Append newest error to the existing list. */
-      nsnprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
+      scnprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
    errorlist_ptr = errorlist;
 }
 
@@ -270,7 +256,7 @@ static void bar_getDim( int wid,
    window_dimWindow( wid, w, h );
 
    /* Calculate dimensions of portraits. */
-   *iw = 300 + (*w - 800);
+   *iw = 704 + (*w - LAND_WIDTH);
    *ih = *h - 60;
 
    /* Calculate button dimensions. */
@@ -292,7 +278,7 @@ static void bar_open( unsigned int wid )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
+   dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, _(land_planet->bar_description) );
 
    /* Approach when pressing enter */
    window_setAccept( wid, bar_approach );
@@ -300,28 +286,28 @@ static void bar_open( unsigned int wid )
    /* Buttons */
    window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseBar",
-         "Take Off", land_buttonTakeoff, SDLK_t );
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
    window_addButtonKey( wid, -20 - bw - 20, 20,
          bw, bh, "btnApproach",
-         "Approach", bar_approach, SDLK_a );
+         _("Approach"), bar_approach, SDLK_a );
 
    /* Bar description. */
    window_addText( wid, iw + 40, -40,
          w - iw - 60, dh, 0,
-         "txtDescription", &gl_smallFont, &cBlack,
-         land_planet->bar_description );
+         "txtDescription", &gl_defFont, NULL,
+         _(land_planet->bar_description) );
 
    /* Add portrait text. */
    th = -40 - dh - 40;
    window_addText( wid, iw + 40, th,
          w - iw - 60, gl_defFont.h, 1,
-         "txtPortrait", &gl_defFont, &cDConsole, NULL );
+         "txtPortrait", &gl_defFont, NULL, NULL );
 
    /* Add mission description text. */
    th -= 20 + PORTRAIT_HEIGHT + 20 + 20;
    window_addText( wid, iw + 60, th,
          w - iw - 100, h + th - (2*bh+60), 0,
-         "txtMission", &gl_smallFont, &cBlack, NULL );
+         "txtMission", &gl_defFont, NULL, NULL );
 
    /* Generate the mission list. */
    bar_genList( wid );
@@ -336,12 +322,13 @@ static void bar_open( unsigned int wid )
  */
 static int bar_genList( unsigned int wid )
 {
-   glTexture **portraits;
-   char **names, *focused;
+   ImageArrayCell *portraits, *p;
+   glTexture *bg;
+   char *focused;
    int w, h, iw, ih, bw, bh;
-   int n, pos;
+   int i, n, pos;
 
-   /* Sanity check. */
+   /* Validity check. */
    if (wid == 0)
       return 0;
 
@@ -349,7 +336,7 @@ static int bar_genList( unsigned int wid )
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus( wid );
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" )) {
@@ -366,27 +353,36 @@ static int bar_genList( unsigned int wid )
 
    /* Set up missions. */
    if (mission_portrait == NULL)
-      mission_portrait = gl_newImage( PORTRAIT_GFX_PATH"news.png", 0 );
+      mission_portrait = gl_newImage( PORTRAIT_GFX_PATH"news.webp", 0 );
    n = npc_getArraySize();
    if (n <= 0) {
       n            = 1;
-      portraits    = malloc(sizeof(glTexture*));
-      portraits[0] = mission_portrait;
-      names        = malloc(sizeof(char*));
-      names[0]     = strdup("News");
+      portraits    = calloc(1, sizeof(ImageArrayCell));
+      portraits[0].image = gl_dupTexture(mission_portrait);
+      portraits[0].caption = strdup(_("News"));
    }
    else {
       n            = n+1;
-      portraits    = malloc( sizeof(glTexture*) * n );
-      portraits[0] = mission_portrait;
-      npc_getTextureArray( &portraits[1], n-1 );
-      names        = malloc( sizeof(char*) * n );
-      names[0]     = strdup("News");
-      npc_getNameArray( &names[1], n-1 );
+      portraits    = calloc(n, sizeof(ImageArrayCell));
+      portraits[0].image = gl_dupTexture(mission_portrait);
+      portraits[0].caption = strdup(_("News"));
+      for (i=0; i<npc_getArraySize(); i++) {
+         p = &portraits[i+1];
+         bg = npc_getBackground(i);
+         p->caption = strdup( npc_getName(i) );
+         if (bg!=NULL) {
+            p->image = gl_dupTexture( bg );
+            p->layers = gl_addTexArray( p->layers, &p->nlayers, gl_dupTexture( npc_getTexture(i) ) );
+         }
+         else
+            p->image = gl_dupTexture( npc_getTexture(i) );
+         if (npc_isImportant(i))
+            p->layers = gl_addTexArray( p->layers, &p->nlayers, gl_newImage( OVERLAY_GFX_PATH"portrait_exclamation.webp", 0 ) );
+      }
    }
    window_addImageArray( wid, 20, -40,
-         iw, ih, "iarMissions", 100, 75,
-         portraits, names, n, bar_update, bar_approach );
+         iw, ih, "iarMissions", 128, 96,
+         portraits, n, bar_update, bar_approach, bar_approach );
 
    /* Restore position. */
    toolkit_setImageArrayPos( wid, "iarMissions", pos );
@@ -407,6 +403,8 @@ void bar_regen (void)
 {
    if (!landed)
       return;
+   if (!land_loaded)
+      return;
    bar_genList( land_getWid(LAND_WINDOW_BAR) );
 }
 /**
@@ -422,7 +420,7 @@ static void bar_update( unsigned int wid, char* str )
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
-   dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
+   dh = gl_printHeightRaw( &gl_defFont, w - iw - 60, _(land_planet->bar_description) );
 
    /* Get array. */
    pos = toolkit_getImageArrayPos( wid, "iarMissions" );
@@ -436,6 +434,8 @@ static void bar_update( unsigned int wid, char* str )
       /* Destroy portrait. */
       if (widget_exists(wid, "imgPortrait"))
          window_destroyWidget(wid, "imgPortrait");
+      if (widget_exists(wid, "imgPortraitBG"))
+         window_destroyWidget(wid, "imgPortraitBG");
 
       /* Disable button. */
       window_disableButton( wid, "btnApproach" );
@@ -458,6 +458,10 @@ static void bar_update( unsigned int wid, char* str )
       window_destroyWidget( wid, "cstNews" );
 
    /* Create widgets if needed. */
+   if (!widget_exists(wid, "imgPortraitBG")) /* Must be first */
+      window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2,
+            -(40 + dh + 40 + gl_defFont.h + 20 + PORTRAIT_HEIGHT),
+            0, 0, "imgPortraitBG", NULL, 1 );
    if (!widget_exists(wid, "imgPortrait"))
       window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2,
             -(40 + dh + 40 + gl_defFont.h + 20 + PORTRAIT_HEIGHT),
@@ -468,7 +472,10 @@ static void bar_update( unsigned int wid, char* str )
 
    /* Set portrait. */
    window_modifyText(  wid, "txtPortrait", npc_getName( pos ) );
-   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ), 0, 0 );
+   window_modifyImage( wid, "imgPortrait", npc_getTexture( pos ),
+         PORTRAIT_WIDTH, PORTRAIT_HEIGHT );
+   window_modifyImage( wid, "imgPortraitBG", npc_getBackground( pos ),
+         PORTRAIT_WIDTH, PORTRAIT_HEIGHT );
 
    /* Set mission description. */
    window_modifyText(  wid, "txtMission", npc_getDesc( pos ));
@@ -489,8 +496,7 @@ static void bar_close( unsigned int wid, char *name )
       return;
    }
 
-   if (mission_portrait != NULL)
-      gl_freeTexture(mission_portrait);
+   gl_freeTexture(mission_portrait);
    mission_portrait = NULL;
 }
 /**
@@ -513,6 +519,9 @@ static void bar_approach( unsigned int wid, char *str )
 
    n = npc_getArraySize();
    npc_approach( pos );
+   /* This check is necessary if the player quits the game in the middle of an NPC approach. */
+   if (land_planet==NULL)
+      return;
    bar_genList( wid ); /* Always just in case. */
 
    /* Focus the news if the number of NPCs has changed. */
@@ -533,7 +542,7 @@ static void bar_approach( unsigned int wid, char *str )
  */
 static int news_load (void)
 {
-   generate_news(faction_name(land_planet->faction));
+   generate_news(land_planet->faction);
    return 0;
 }
 
@@ -559,32 +568,29 @@ static void misn_open( unsigned int wid )
    /* buttons */
    window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnCloseMission",
-         "Take Off", land_buttonTakeoff, SDLK_t );
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
    window_addButtonKey( wid, -20, 40+LAND_BUTTON_HEIGHT,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAcceptMission",
-         "Accept Mission", misn_accept, SDLK_a );
+         _("Accept Mission"), misn_accept, SDLK_a );
 
    /* text */
    y = -60;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 40, 0,
-         "txtSDate", NULL, &cDConsole,
-         "Date:\n"
-         "Free Space:");
+         "txtSDate", NULL, NULL,
+         _("Date:\n"
+         "Free Space:"));
    window_addText( wid, w/2 + 110, y,
-         w/2 - 90, 40, 0,
-         "txtDate", NULL, &cBlack, NULL );
+         w/2 - 130, 40, 0,
+         "txtDate", NULL, NULL, NULL );
    y -= 2 * gl_defFont.h + 50;
    window_addText( wid, w/2 + 10, y,
          w/2 - 30, 20, 0,
-         "txtSReward", &gl_smallFont, &cDConsole, "Reward:" );
-   window_addText( wid, w/2 + 70, y,
-         w/2 - 90, 20, 0,
-         "txtReward", &gl_smallFont, &cBlack, NULL );
+         "txtReward", &gl_defFont, NULL, _("#nReward:#0 None") );
    y -= 20;
    window_addText( wid, w/2 + 10, y,
-         w/2 - 30, h/2-90, 0,
-         "txtDesc", &gl_smallFont, &cBlack, NULL );
+         w/2 - 30, y - 40 + h - 2*LAND_BUTTON_HEIGHT, 0,
+         "txtDesc", &gl_defFont, NULL, NULL );
 
    /* map */
    map_show( wid, 20, 20,
@@ -623,23 +629,23 @@ static void misn_accept( unsigned int wid, char* str )
    misn_name = toolkit_getList( wid, "lstMission" );
 
    /* Make sure you have missions. */
-   if (strcmp(misn_name,"No Missions")==0)
+   if (strcmp(misn_name,_("No Missions"))==0)
       return;
 
    /* Make sure player can accept the mission. */
    for (i=0; i<MISSION_MAX; i++)
       if (player_missions[i]->data == NULL) break;
    if (i >= MISSION_MAX) {
-      dialogue_alert("You have too many active missions.");
+      dialogue_alert( _("You have too many active missions.") );
       return;
    }
 
-   if (dialogue_YesNo("Accept Mission",
-         "Are you sure you want to accept this mission?")) {
+   if (dialogue_YesNo( _("Accept Mission"),
+         _("Are you sure you want to accept this mission?"))) {
       pos = toolkit_getListPos( wid, "lstMission" );
       misn = &mission_computer[pos];
       ret = mission_accept( misn );
-      if ((ret==0) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
+      if ((ret==0) || (ret==3) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
          if (ret==-1)
             mission_cleanup( &mission_computer[pos] );
          memmove( &mission_computer[pos], &mission_computer[pos+1],
@@ -669,7 +675,7 @@ static void misn_genList( unsigned int wid, int first )
    int w,h;
 
    /* Save focus. */
-   focused = strdup(window_getFocus(wid));
+   focused = window_getFocus(wid);
 
    if (!first)
       window_destroyWidget( wid, "lstMission" );
@@ -691,12 +697,12 @@ static void misn_genList( unsigned int wid, int first )
       if (j==0)
          free(misn_names);
       misn_names = malloc(sizeof(char*));
-      misn_names[0] = strdup("No Missions");
+      misn_names[0] = strdup(_("No Missions"));
       j = 1;
    }
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
-         "lstMission", misn_names, j, 0, misn_update );
+         "lstMission", misn_names, j, 0, misn_update, misn_accept );
 
    /* Restore focus. */
    window_setFocus( wid, focused );
@@ -713,22 +719,24 @@ static void misn_update( unsigned int wid, char* str )
    (void) str;
    char *active_misn;
    Mission* misn;
-   char txt[256], *buf;
+   char txt[512], *buf;
 
    /* Clear computer markers. */
    space_clearComputerMarkers();
 
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
-   nsnprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player.p->cargo_free );
+   snprintf( txt, sizeof(txt), n_(
+            "%s\n%d Tonne", "%s\n%d Tonnes", player.p->cargo_free),
+         buf, player.p->cargo_free );
    free(buf);
    window_modifyText( wid, "txtDate", txt );
 
    active_misn = toolkit_getList( wid, "lstMission" );
-   if (strcmp(active_misn,"No Missions")==0) {
-      window_modifyText( wid, "txtReward", "None" );
+   if (strcmp(active_misn,_("No Missions"))==0) {
+      window_modifyText( wid, "txtReward", _("#nReward:#0 None") );
       window_modifyText( wid, "txtDesc",
-            "There are no missions available here." );
+            _("There are no missions available here.") );
       window_disableButton( wid, "btnAcceptMission" );
       return;
    }
@@ -737,7 +745,8 @@ static void misn_update( unsigned int wid, char* str )
    mission_sysComputerMark( misn );
    if (misn->markers != NULL)
       map_center( system_getIndex( misn->markers[0].sys )->name );
-   window_modifyText( wid, "txtReward", misn->reward );
+   snprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
+   window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );
    window_enableButton( wid, "btnAcceptMission" );
 }
@@ -782,7 +791,7 @@ static void spaceport_buyMap( unsigned int wid, char *str )
 
    o = outfit_get( LOCAL_MAP_NAME );
    if (o == NULL) {
-      WARN("Outfit '%s' does not exist!", LOCAL_MAP_NAME);
+      WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
       return;
    }
 
@@ -796,16 +805,37 @@ static void spaceport_buyMap( unsigned int wid, char *str )
    w = land_getWid( LAND_WINDOW_OUTFITS );
    if (w > 0)
       outfits_regenList( w, NULL );
+
+   /* Update main tab. */
+   land_updateMainTab();
 }
 
 
 /**
- * @brief Adds the "Buy Local Map" button if needed.
+ * @brief Adds the "Buy Local Map" button if needed and updates info.
  */
-void land_checkAddMap (void)
+void land_updateMainTab (void)
 {
-   char buf[ECON_CRED_STRLEN], cred[ECON_CRED_STRLEN];
+   char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
    Outfit *o;
+
+   /* Update credits. */
+   tonnes2str( tons, player.p->cargo_free );
+   credits2str( cred, player.p->credits, 2 );
+   snprintf( buf, sizeof(buf),
+         _("%s (%s system)\n"
+         "%s (%s-class)\n"
+         "%s\n"
+         "roughly %s\n"
+         "\n"
+         "%s\n"
+         "%s"),
+         _(land_planet->name), _(cur_system->name),
+         planet_getClassName(land_planet->class), _(land_planet->class),
+         land_planet->faction >= 0 ? _(faction_name(land_planet->faction)) : _("None"),
+         space_populationStr( land_planet->population ),
+         tons, cred );
+   window_modifyText( land_windows[0], "txtDInfo", buf );
 
    /* Maps are only offered if the planet provides fuel. */
    if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL))
@@ -813,7 +843,7 @@ void land_checkAddMap (void)
 
    o = outfit_get( LOCAL_MAP_NAME );
    if (o == NULL) {
-      WARN("Outfit '%s' does not exist!", LOCAL_MAP_NAME);
+      WARN( _("Outfit '%s' does not exist!"), LOCAL_MAP_NAME);
       return;
    }
 
@@ -823,10 +853,10 @@ void land_checkAddMap (void)
    /* Else create it. */
    else {
       /* Refuel button. */
-      credits2str( cred, o->price, 2 );
-      nsnprintf( buf, sizeof(buf), "Buy Local Map (%s)", cred );
+      credits2str( cred, o->price, 0 );
+      snprintf( buf, sizeof(buf), _("Buy Local Map (%s)"), cred );
       window_addButtonKey( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
-            LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnMap",
+            LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnMap",
             buf, spaceport_buyMap, SDLK_b );
    }
 
@@ -919,15 +949,15 @@ void land_genWindows( int load, int changetab )
    regen = landed;
 
    /* Create window. */
-   if ((gl_screen.rw < 1024) || (gl_screen.rh < 768)) {
+   if (SCREEN_W < LAND_WIDTH || SCREEN_H < LAND_HEIGHT) {
       w = -1; /* Fullscreen. */
       h = -1;
    }
    else {
-      w = 800 + 0.5 * (SCREEN_W - 800);
-      h = 600 + 0.5 * (SCREEN_H - 600);
+      w = LAND_WIDTH + 0.5 * (SCREEN_W - LAND_WIDTH);
+      h = LAND_HEIGHT + 0.5 * (SCREEN_H - LAND_HEIGHT);
    }
-   land_wid = window_create( p->name, -1, -1, w, h );
+   land_wid = window_create( "wdwLand", _(p->name), -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Set window map to invalid. */
@@ -938,37 +968,37 @@ void land_genWindows( int load, int changetab )
    j = 0;
    /* Main. */
    land_windowsMap[LAND_WINDOW_MAIN] = j;
-   names[j++] = land_windowNames[LAND_WINDOW_MAIN];
+   names[j++] = _("Landing Main");
    /* Bar. */
    if (planet_hasService(land_planet, PLANET_SERVICE_BAR)) {
       land_windowsMap[LAND_WINDOW_BAR] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_BAR];
+      names[j++] = _("Spaceport Bar");
    }
    /* Missions. */
    if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS)) {
       land_windowsMap[LAND_WINDOW_MISSION] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_MISSION];
+      names[j++] = _("Missions");
    }
    /* Outfits. */
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
       land_windowsMap[LAND_WINDOW_OUTFITS] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_OUTFITS];
+      names[j++] = _("Outfits");
    }
    /* Shipyard. */
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
       land_windowsMap[LAND_WINDOW_SHIPYARD] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_SHIPYARD];
+      names[j++] = _("Shipyard");
    }
    /* Equipment. */
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS) ||
          planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
       land_windowsMap[LAND_WINDOW_EQUIPMENT] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_EQUIPMENT];
+      names[j++] = _("Equipment");
    }
    /* Commodity. */
    if (planet_hasService(land_planet, PLANET_SERVICE_COMMODITY)) {
       land_windowsMap[LAND_WINDOW_COMMODITY] = j;
-      names[j++] = land_windowNames[LAND_WINDOW_COMMODITY];
+      names[j++] = _("Commodity");
    }
 
    /* Create tabbed window. */
@@ -987,25 +1017,28 @@ void land_genWindows( int load, int changetab )
    land_createMainTab( land_getWid(LAND_WINDOW_MAIN) );
 
    /* Add local system map button. */
-   land_checkAddMap();
+   land_updateMainTab();
 
    /* 2) Set as landed and run hooks. */
    if (!regen) {
       landed = 1;
       music_choose("land"); /* Must be before hooks in case hooks change music. */
-      if (!load) {
+      /* We don't run the "land" hook when loading. If you want to have it do stuff when loading, use the "load" hook.
+       * Note that you can use the same function for both hooks. */
+      if (!load)
          hooks_run("land");
-      }
       events_trigger( EVENT_TRIGGER_LAND );
 
       /* 3) Generate computer and bar missions. */
+      /* Generate bar missions first for claims. */
+      if (planet_hasService(land_planet, PLANET_SERVICE_BAR) && !planet_isFlag(land_planet, PLANET_NOMISNSPAWN))
+         npc_generateMissions(); /* Generate bar npc. */
       if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
          mission_computer = missions_genList( &mission_ncomputer,
                land_planet->faction, land_planet->name, cur_system->name,
                MIS_AVAIL_COMPUTER );
-      if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
-         npc_generate(); /* Generate bar npc. */
    }
+
 
    /* 4) Create other tabs. */
 #define should_open(s, w) \
@@ -1023,7 +1056,7 @@ void land_genWindows( int load, int changetab )
       misn_open( land_getWid(LAND_WINDOW_MISSION) );
    /* Outfits. */
    if (should_open( PLANET_SERVICE_OUTFITS, LAND_WINDOW_OUTFITS ))
-      outfits_open( land_getWid(LAND_WINDOW_OUTFITS) );
+      outfits_open( land_getWid(LAND_WINDOW_OUTFITS), NULL );
    /* Shipyard. */
    if (should_open( PLANET_SERVICE_SHIPYARD, LAND_WINDOW_SHIPYARD ))
       shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );
@@ -1057,20 +1090,23 @@ void land_genWindows( int load, int changetab )
    /* Refresh the map button in case the player couldn't afford it prior to
     * mission payment.
     */
-   land_checkAddMap();
+   land_updateMainTab();
 
    /* Refuel if necessary. */
    land_refuel();
 
    /* Finished loading. */
    land_loaded = 1;
+
+   /* Necessary if player.land() was run in an abort() function. */
+   window_lower( land_wid );
 }
 
 
 /**
  * @brief Sets the land window tab.
  *
- *    @param Tab to set like LAND_WINDOW_COMMODITY.
+ *    @param window Tab to set like LAND_WINDOW_COMMODITY.
  *    @return 0 on success.
  */
 int land_setWindow( int window )
@@ -1092,6 +1128,14 @@ void land( Planet* p, int load )
    /* Do not land twice. */
    if (landed)
       return;
+ 
+   /* Incrcement times player landed. */
+   if (!load)
+      player.landed_times++;
+
+   /* Clear some unnecessary flags. */
+   pilot_rmFlag( player.p, PILOT_COOLDOWN_BRAKE);
+   pilot_rmFlag( player.p, PILOT_COOLDOWN );
 
    /* Resets the player's heat. */
    pilot_heatReset( player.p );
@@ -1110,6 +1154,9 @@ void land( Planet* p, int load )
    if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       news_load();
 
+   /* Average economy prices that player has seen */
+   economy_averageSeenPrices( p );
+
    /* Clear the NPC. */
    npc_clear();
 
@@ -1119,6 +1166,9 @@ void land( Planet* p, int load )
    /* Hack so that load can run player.takeoff(). */
    if (load)
       hooks_run( "load" );
+
+   /* Just in case? */
+   bar_regen();
 
    /* Mission forced take off. */
    if (land_takeoff)
@@ -1135,7 +1185,8 @@ static void land_createMainTab( unsigned int wid )
 {
    glTexture *logo;
    int offset;
-   int w,h;
+   int w, h, logow, logoh, th;
+   const char *bufSInfo;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1145,21 +1196,38 @@ static void land_createMainTab( unsigned int wid )
     */
    offset = 20;
    if (land_planet->faction != -1) {
-      logo = faction_logoSmall(land_planet->faction);
+      logo = faction_logo(land_planet->faction);
       if (logo != NULL) {
-         window_addImage( wid, 440 + (w-460-logo->w)/2, -20,
-               0, 0, "imgFaction", logo, 0 );
-         offset = 84;
+         logow = logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+         logoh = logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
+         window_addImage( wid, 440 + (w-460-logow)/2, -20,
+               logow, logoh, "imgFaction", logo, 0 );
+         offset += FACTION_LOGO_SM;
       }
    }
 
    /*
     * Pretty display.
     */
-   window_addImage( wid, 20, -40, 0, 0, "imgPlanet", gfx_exterior, 1 );
+   window_addImage( wid, 20, -40, 400, 400, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-         "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
+         "txtPlanetDesc", &gl_defFont, NULL, _(land_planet->description) );
+
+   /* Player stats. */
+   bufSInfo = _(
+         "#nStationed at:\n"
+         "Class:\n"
+         "Faction:\n"
+         "Population:\n"
+         "\n"
+         "Free Space:\n"
+         "Money:" );
+   th = gl_printHeightRaw( &gl_defFont, 200, bufSInfo );
+   window_addText( wid, 20, 20, 200, th,
+         0, "txtSInfo", &gl_defFont, NULL, bufSInfo );
+   window_addText( wid, 20+120, 20, w - 20 - (20+200) - LAND_BUTTON_WIDTH,
+         th, 0, "txtDInfo", &gl_defFont, NULL, NULL );
 
    /*
     * buttons
@@ -1167,13 +1235,13 @@ static void land_createMainTab( unsigned int wid )
    /* first column */
    window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnTakeoff",
-         "Take Off", land_buttonTakeoff, SDLK_t );
+         _("Take Off"), land_buttonTakeoff, SDLK_t );
 
    /* Add "no refueling" notice if needed. */
    if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
       window_addText( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,
                200, gl_defFont.h, 1, "txtRefuel",
-               &gl_defFont, &cBlack, "No refueling services." );
+               &gl_defFont, NULL, _("No refueling services.") );
    }
 }
 
@@ -1197,7 +1265,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
    const char *torun_hook;
    unsigned int to_visit;
 
-   /* Sane defaults. */
+   /* Safe defaults. */
    torun_hook = NULL;
    to_visit   = 0;
 
@@ -1210,7 +1278,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
          /* Must regenerate outfits. */
          switch (i) {
             case LAND_WINDOW_MAIN:
-               land_checkAddMap();
+               land_updateMainTab();
                break;
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
@@ -1279,7 +1347,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
  */
 void takeoff( int delay )
 {
-   int h;
+   int h, stu;
    char *nt;
    double a, r;
 
@@ -1288,9 +1356,9 @@ void takeoff( int delay )
 
    /* Player's ship is not able to fly. */
    if (!player_canTakeoff()) {
-      char message[512];
+      char message[STRMAX_SHORT];
       pilot_reportSpaceworthy( player.p, message, sizeof(message) );
-      dialogue_msg( "Ship not fit for flight", message );
+      dialogue_msgRaw( _("Ship not fit for flight"), message );
 
       /* Check whether the player needs rescuing. */
       land_stranded();
@@ -1327,8 +1395,14 @@ void takeoff( int delay )
    /* heal the player */
    pilot_healLanded( player.p );
 
+   /* Refill ammo */
+   pilot_fillAmmo( player.p );
+
    /* Clear planet target. Allows for easier autonav out of the system. */
    player_targetPlanetSet( -1 );
+
+   /* Clear pilots other than player. */
+   pilots_clean(0);
 
    /* initialize the new space */
    h = player.p->nav_hyperspace;
@@ -1337,13 +1411,16 @@ void takeoff( int delay )
 
    /* cleanup */
    if (save_all() < 0) /* must be before cleaning up planet */
-      dialogue_alert( "Failed to save game! You should exit and check the log to see what happened and then file a bug report!" );
+      dialogue_alert( _("Failed to save game! You should exit and check the log to see what happened and then file a bug report!") );
 
    /* time goes by, triggers hook before takeoff */
-   if (delay)
-      ntime_inc( ntime_create( 0, 1, 0 ) ); /* 1 STP */
+   if (delay) {
+      /* TODO should this depend on something else? */
+      stu = (int)(NT_PERIOD_SECONDS * player.p->stats.land_delay);
+      ntime_inc( ntime_create( 0, 0, stu ) );
+   }
    nt = ntime_pretty( 0, 2 );
-   player_message("\epTaking off from %s on %s.", land_planet->name, nt);
+   player_message( _("#oTaking off from %s on %s."), _(land_planet->name), nt);
    free(nt);
 
    /* Hooks and stuff. */
@@ -1360,11 +1437,18 @@ void takeoff( int delay )
    missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
    if (menu_isOpen(MENU_MAIN))
       return;
-   player.p->ptimer = PILOT_TAKEOFF_DELAY;
+   player.p->landing_delay = PILOT_TAKEOFF_DELAY * player_dt_default();
+   player.p->ptimer = player.p->landing_delay;
    pilot_setFlag( player.p, PILOT_TAKEOFF );
    pilot_setThrust( player.p, 0. );
    pilot_setTurn( player.p, 0. );
-   }
+
+   /* Update lua stuff. */
+   pilot_outfitLInitAll( player.p );
+
+   /* Reset speed */
+   player_autonavResetSpeed();
+}
 
 
 /**
@@ -1373,53 +1457,36 @@ void takeoff( int delay )
 static void land_stranded (void)
 {
    char *buf;
-   uint32_t bufsize;
-   const char *file = "dat/rescue.lua";
-   int errf;
-   lua_State *L;
+   size_t bufsize;
+   const char *file = RESCUE_PATH;
 
    /* Nothing to do if there's no rescue script. */
-   if (!ndata_exists(file))
+   if (!PHYSFS_exists(file))
       return;
 
-   if (rescue_L == NULL) {
-      rescue_L = nlua_newState();
-      nlua_loadStandard( rescue_L, 0 );
-      nlua_loadTk( rescue_L );
-
-      L = rescue_L;
+   if (rescue_env == LUA_NOREF) {
+      rescue_env = nlua_newEnv(1);
+      nlua_loadStandard( rescue_env );
+      nlua_loadTk( rescue_env );
 
       buf = ndata_read( file, &bufsize );
-      if (luaL_dobuffer(L, buf, bufsize, file) != 0) {
-         WARN("Error loading file: %s\n"
+      if (nlua_dobufenv(rescue_env, buf, bufsize, file) != 0) {
+         WARN( _("Error loading file: %s\n"
              "%s\n"
-             "Most likely Lua file has improper syntax, please check",
-               file, lua_tostring(L,-1));
+             "Most likely Lua file has improper syntax, please check"),
+               file, lua_tostring(naevL,-1));
          free(buf);
          return;
       }
       free(buf);
    }
-   else
-      L = rescue_L;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -2;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
 
    /* Run Lua. */
-   lua_getglobal(L,"rescue");
-   if (lua_pcall(L, 0, 0, errf)) { /* error has occurred */
-      WARN("Rescue: 'rescue' : '%s'", lua_tostring(L,-1));
-      lua_pop(L,1);
+   nlua_getenv(rescue_env,"rescue");
+   if (nlua_pcall(rescue_env, 0, 0)) { /* error has occurred */
+      WARN( _("Rescue: 'rescue' : '%s'"), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
    }
-#if DEBUGGING
-   lua_pop(L,1);
-#endif
 }
 
 
@@ -1450,18 +1517,20 @@ void land_cleanup (void)
    /* Clean up mission computer. */
    for (i=0; i<mission_ncomputer; i++)
       mission_cleanup( &mission_computer[i] );
-   if (mission_computer != NULL)
-      free(mission_computer);
+   free(mission_computer);
    mission_computer  = NULL;
    mission_ncomputer = 0;
 
    /* Clean up bar missions. */
-   npc_freeAll();
+   npc_clear();
+
+   /* Clean up shipyard. */
+   shipyard_cleanup();
 
    /* Clean up rescue Lua. */
-   if (rescue_L != NULL) {
-      lua_close(rescue_L);
-      rescue_L = NULL;
+   if (rescue_env != LUA_NOREF) {
+      nlua_freeEnv(rescue_env);
+      rescue_env = LUA_NOREF;
    }
 }
 

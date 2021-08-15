@@ -5,8 +5,8 @@
   <y>5344.310609</y>
  </pos>
  <GFX>
-  <space>K03.png</space>
-  <exterior>gas.png</exterior>
+  <space>K03.webp</space>
+  <exterior>gas.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>K</class>
   <population>25000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>emp_mil_restricted</land>
    <refuel/>
@@ -24,7 +24,7 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>Astana is the home of the Imperial Experimental Weapons Testing Facility. It is here where most of the newer weapons and outfits equipped by the Empire military are tested and qualified for active service. Ths planet is an ideal spot for this as, besides the scientists who work here, no one else wants to land on the planet.</description>
+  <description>Astana is the home of the Imperial Experimental Weapons Testing Facility. It is here where most of the newer weapons and outfits equipped by the Empire military are tested and qualified for active service. This planet is an ideal spot for this as, besides the scientists who work here, no one else wants to land on the planet.</description>
   <bar>The bar is where many of the workers for the IEWTF take a moment to relax, several of them are talking about a project that leaves you baffled. Other than the IEWTF there is little reason to remain on the world for very long apart from the bar.</bar>
  </general>
  <tech>
@@ -35,6 +35,7 @@
   <item>Heavy Weapons 1</item>
   <item>Heavy Weapons 2</item>
   <item>High Tech Upgrades 1</item>
+  <item>Star Maps</item>
   <item>High Tech Upgrades 2</item>
   <item>Laser 2</item>
   <item>Laser 3</item>
@@ -42,5 +43,6 @@
   <item>Ion 3</item>
   <item>Beam 1</item>
   <item>Beam 2</item>
+  <item>Empire Elite Outfits</item>
  </tech>
 </asset>

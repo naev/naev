@@ -5,13 +5,13 @@
   <y>-9053.807598</y>
  </pos>
  <GFX>
-  <space>J02.png</space>
-  <exterior>methane.png</exterior>
+  <space>J02.webp</space>
+  <exterior>methane.webp</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services/>
  </general>
 </asset>

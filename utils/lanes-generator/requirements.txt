@@ -1,0 +1,5 @@
+Cython>=0.29.23
+numpy>=1.21.0
+scipy>=1.7.0
+scikit-sparse>=0.4.5
+matplotlib>=3.4.2

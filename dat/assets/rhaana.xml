@@ -5,8 +5,8 @@
   <y>-8235.000000</y>
  </pos>
  <GFX>
-  <space>M02.png</space>
-  <exterior>desertic4.png</exterior>
+  <space>M02.webp</space>
+  <exterior>desertic4.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>D</class>
   <population>1250000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -24,7 +24,7 @@
    <missions/>
   </services>
   <commodities/>
-  <description>Rhanna is one of the outer worlds of Dvaered control. The population is high, but forced to live in insulated containment centers. It is a poor world, with little to recommend it to the wider galaxy. Thusly, it's very quiet.</description>
+  <description>Rhaana is one of the outer worlds of Dvaered control. The population is high, but forced to live in insulated containment centers. It is a poor world, with little to recommend it to the wider galaxy. Thusly, it's very quiet.</description>
   <bar>The bar is a standard-issue model, seen in most space stations. Other than that, it is as overlarge and dingy as any Dvaered bar.</bar>
  </general>
 </asset>

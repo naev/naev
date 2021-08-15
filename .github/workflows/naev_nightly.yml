@@ -1,0 +1,356 @@
+on:
+  repository_dispatch:
+    types: manual-nightly
+  schedule:
+    - cron: "0 0 * * *"
+
+name: Nightly Release
+
+jobs:
+  "Package_Source":
+    runs-on: ubuntu-latest
+
+    container:
+      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+
+    steps:
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          path: source
+          submodules: true
+
+      - name: Package Dist
+        run: |
+          meson setup build source -Dnightly=true -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+          meson dist -C build --no-tests --include-subprojects
+
+      - name: Collect Artifacts
+        run: |
+          mkdir -p build/dist
+          cp -r source/utils/ci/itch source/utils/ci/steam build/dist/
+          mv build/meson-dist/naev-*.tar.xz build/dist/source.tar.xz
+          cp source/dat/VERSION build/dist
+
+      - name: Upload Source Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-dist
+          path: ${{ github.workspace }}/build/dist/source.tar.xz
+          if-no-files-found: error
+
+      - name: Upload Version Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-version
+          path: ${{ github.workspace }}/build/dist/VERSION
+          if-no-files-found: error
+
+      - name: Upload Steam Deployment Script Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-steam-deployment
+          path: ${{ github.workspace }}/build/dist/steam/*
+          if-no-files-found: error
+
+      - name: Upload Itch Deployment Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-itch-deployment
+          path: ${{ github.workspace }}/build/dist/itch/*
+          if-no-files-found: error
+
+  "Linux_Naev_Release":
+    needs: "Package_Source"
+    runs-on: ubuntu-latest
+
+    container:
+      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v2
+        with:
+          name: naev-dist
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf source.tar.xz -C source --strip 1
+
+      - name: Compile AppImage
+        run: |
+          ./source/utils/buildAppImage.sh -m -s "source" -b "build"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-linux-x86-64
+          path: "${{ github.workspace }}/build/dist/*.AppImage"
+
+  "Windows_Naev_Release":
+    needs: "Package_Source"
+    runs-on: ubuntu-latest
+
+    container:
+      image: "ghcr.io/projectsynchro/naev-windows:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v2
+        with:
+          name: naev-dist
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf source.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        run: |
+          meson setup build source \
+              --prefix="$(pwd)"/source/extras/windows/installer \
+              --bindir=bin \
+              -Dndata_path=bin \
+              --cross-file='source/utils/build/windows_cross_mxe.ini' \
+              --buildtype=release \
+              --force-fallback-for=glpk,SuiteSparse \
+              -Dnightly=true \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Meson Compile
+        run: |
+          meson compile -C build
+
+      - name: Meson Install
+        run: |
+          meson install -C build
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-win64
+          path: ${{ github.workspace }}/build/dist/*
+          if-no-files-found: error
+
+  "Darwin_Naev_Release":
+    needs: "Package_Source"
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/naev-macos:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v2
+        with:
+          name: naev-dist
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf source.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        run: |
+          meson setup build source \
+              --prefix="$(pwd)"/build/dist/Naev.app \
+              --bindir=Contents/MacOS \
+              -Dndata_path=Contents/Resources \
+              --cross-file='source/utils/build/macos_cross_osxcross.ini' \
+              --buildtype=release \
+              -Dnightly=true \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Meson Compile
+        run: |
+          meson compile -C build
+
+      - name: Meson Install
+        run: |
+          meson install -C build
+          cd build/dist
+          zip -r naev-macos.zip Naev.app/*
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-macos
+          path: ${{ github.workspace }}/build/dist/*.zip
+          if-no-files-found: error
+
+  "Steam_Naev_Release":
+    needs: "Package_Source"
+    runs-on: ubuntu-latest
+
+    container:
+      image: "ghcr.io/projectsynchro/naev-steamruntime:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v1
+        with:
+          name: naev-dist
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf naev-dist/source.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        run: |
+          meson setup build source \
+              --native-file='source/utils/build/linux_steamruntime.ini' \
+              --buildtype=release \
+              --force-fallback-for=SuiteSparse,sdl2_image \
+              -Dprefix="/usr" \
+              -Dnightly=true \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Meson Compile
+        run: |
+          meson compile -C build
+
+      - name: Meson Install
+        run: |
+          meson install -C build
+        env:
+          DESTDIR: ${{ github.workspace }}/staging
+
+      - name: Collect Steam Linux64 Artifacts
+        run: |
+          mkdir -p build/dist/
+
+          mv staging/usr/bin/naev build/dist/naev.x64
+          chmod +x build/dist/naev.x64
+
+          tar -cJvf build/dist/steam-ndata.tar.xz -C staging/usr/share/naev dat
+
+      - name: Upload Naev Binary Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: naev-steamruntime
+          path: build/dist/naev.x64
+
+      - name: Upload Naev Data Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: naev-ndata
+          path: build/dist/steam-ndata.tar.xz
+
+  "Upload_Naev_Release":
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - releasetype: github
+          - releasetype: steam
+          - releasetype: itch
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+
+    needs:
+      [
+        Package_Source,
+        Linux_Naev_Release,
+        Windows_Naev_Release,
+        Darwin_Naev_Release,
+        Steam_Naev_Release,
+      ]
+    if: ${{ github.repository == 'naev/naev' }}
+
+    steps:
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        if: ${{ matrix.releasetype == 'github' }}
+
+      - name: Generate commit changelog
+        uses: Bullrich/generate-release-changelog@2.0.1
+        if: ${{ matrix.releasetype == 'github' }}
+        id: changelog
+        env:
+          REPO: ${{ github.repository }}
+
+      - name: Delete old nightly tag and release.
+        uses: dev-drprasad/delete-tag-and-release@v0.1.2
+        if: ${{ matrix.releasetype == 'github' }}
+        with:
+          delete_release: true
+          tag_name: nightly
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create 'nightly' tag
+        uses: EndBug/latest-tag@latest
+        if: ${{ matrix.releasetype == 'github' }}
+        with:
+          tag-name: nightly
+
+      - name: Create Release Staging and Output Areas
+        run: |
+          mkdir -p temp build/{staging,dist/{lin64,macos,win64}}
+        working-directory: ${{ github.workspace }}
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ${{ github.workspace }}/build/staging
+
+      - name: Build Github Release
+        if: ${{ matrix.releasetype == 'github' }}
+        run: |
+          BUILD_DATE="$(date +%Y%m%d)"
+          VERSION="$(<"build/staging/naev-version/VERSION")"
+          SUFFIX="$VERSION.$BUILD_DATE"
+
+          mv build/staging/naev-linux-x86-64/*.AppImage build/dist/naev-$SUFFIX-linux-x86-64.AppImage
+          mv build/staging/naev-macos/*.zip build/dist/naev-$SUFFIX-macos.zip
+          mv build/staging/naev-win64/naev*.exe build/dist/naev-$SUFFIX-win64.exe
+          mv build/staging/naev-dist/source.tar.xz build/dist/naev-$SUFFIX-source.tar.xz
+
+          chmod +x build/dist/naev-$SUFFIX-linux-x86-64.AppImage
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.8.6
+        if: ${{ matrix.releasetype == 'github' }}
+        with:
+          artifacts: "${{ github.workspace }}/build/dist/*.*"
+          name: "Nightly Build"
+          body: ${{ steps.changelog.outputs.changelog }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: true
+          tag: "nightly"
+
+      - name: Build and Upload itch.io Release
+        if: ${{ matrix.releasetype == 'itch' }}
+        run: |
+          chmod -R +x build/staging/naev-itch-deployment
+          cp -r build/staging/naev-itch-deployment/* "$(pwd)"
+          ./ItchDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist"
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+
+      - name: Build and Upload Steam Release
+        if: ${{ matrix.releasetype == 'steam' }}
+        run: |
+          chmod -R +x build/staging/naev-steam-deployment
+          cp -r build/staging/naev-steam-deployment/* "$(pwd)"
+          ./SteamDeploy.sh -n -t "$(pwd)/build/staging" -o "$(pwd)/build/dist"
+        env:
+          STEAMCMD_USER: ${{ secrets.STEAMCMD_USER }}
+          STEAMCMD_PASS: ${{ secrets.STEAMCMD_PASS }}
+          TFA_IMAP: ${{ secrets.TFA_IMAP }}
+          TFA_PASS: ${{ secrets.TFA_PASS }}
+          TFA_USER: ${{ secrets.TFA_USER }}

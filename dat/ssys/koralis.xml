@@ -18,6 +18,7 @@
   <asset>Luxsor</asset>
   <asset>Paxsor</asset>
   <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Independent Trader Area</asset>
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
@@ -31,7 +32,7 @@
   </jump>
   <jump target="Qex">
    <pos x="-8810.152489" y="-15443.708459"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

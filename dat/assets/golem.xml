@@ -5,8 +5,8 @@
   <y>6131.938185</y>
  </pos>
  <GFX>
-  <space>K02.png</space>
-  <exterior>station04.png</exterior>
+  <space>K02.webp</space>
+  <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>K</class>
   <population>211243</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -36,16 +36,17 @@
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>Heavy Weapons 1</item>
   <item>Low Tech Upgrades</item>
   <item>High Tech Upgrades 1</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
-  <item>Star Maps</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
   <item>Bulk Trade Ships</item>
   <item>Hulls Elite</item>
+  <item>Dvaered Elite Outfits</item>
  </tech>
 </asset>

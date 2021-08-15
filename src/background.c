@@ -8,28 +8,30 @@
  * @brief Handles displaying backgrounds.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "background.h"
 
-#include "naev.h"
-
-#include "nxml.h"
-
-#include "opengl.h"
-#include "log.h"
-#include "player.h"
-#include "conf.h"
-#include "rng.h"
-#include "pause.h"
 #include "array.h"
-#include "ndata.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_tex.h"
-#include "nlua_col.h"
-#include "nlua_bkg.h"
 #include "camera.h"
+#include "conf.h"
+#include "log.h"
+#include "ndata.h"
 #include "nebula.h"
+#include "nlua.h"
+#include "nlua_bkg.h"
+#include "nlua_col.h"
+#include "nlua_tex.h"
+#include "nlua_camera.h"
+#include "nluadef.h"
 #include "nstring.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "pause.h"
+#include "player.h"
+#include "rng.h"
 
 
 /**
@@ -54,8 +56,11 @@ static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
 /**
  * @brief Backgrounds.
  */
-static lua_State *bkg_cur_L = NULL; /**< Current Lua state. */
-static lua_State *bkg_def_L = NULL; /**< Default Lua state. */
+static nlua_env bkg_cur_env = LUA_NOREF; /**< Current Lua state. */
+static nlua_env bkg_def_env = LUA_NOREF; /**< Default Lua state. */
+static int bkg_L_renderbg = LUA_NOREF; /**< Background rendering function. */
+static int bkg_L_renderfg = LUA_NOREF; /**< Foreground rendering function. */
+static int bkg_L_renderov = LUA_NOREF; /**< Overlay rendering function. */
 
 
 /*
@@ -63,11 +68,7 @@ static lua_State *bkg_def_L = NULL; /**< Default Lua state. */
  */
 #define STAR_BUF     250 /**< Area to leave around screen for stars, more = less repetition */
 static gl_vbo *star_vertexVBO = NULL; /**< Star Vertex VBO. */
-static gl_vbo *star_colourVBO = NULL; /**< Star Colour VBO. */
-static GLfloat *star_vertex = NULL; /**< Vertex of the stars. */
-static GLfloat *star_colour = NULL; /**< Brightness of the stars. */
 static unsigned int nstars = 0; /**< Total stars. */
-static unsigned int mstars = 0; /**< Memory stars are taking. */
 static GLfloat star_x = 0.; /**< Star X movement. */
 static GLfloat star_y = 0.; /**< Star Y movement. */
 
@@ -76,7 +77,7 @@ static GLfloat star_y = 0.; /**< Star Y movement. */
  * Prototypes.
  */
 static void background_renderImages( background_image_t *bkg_arr );
-static lua_State* background_create( const char *path );
+static nlua_env background_create( const char *path );
 static void background_clearCurrent (void);
 static void background_clearImgArr( background_image_t **arr );
 /* Sorting. */
@@ -94,6 +95,7 @@ void background_initStars( int n )
    unsigned int i;
    GLfloat w, h, hw, hh;
    double size;
+   GLfloat *star_vertex;
 
    /* Calculate size. */
    size  = SCREEN_W*SCREEN_H+STAR_BUF*STAR_BUF;
@@ -111,44 +113,26 @@ void background_initStars( int n )
    size  *= n;
    nstars = (unsigned int)(size/(800.*600.));
 
-   if (mstars < nstars) {
-      /* Create data. */
-      star_vertex = realloc( star_vertex, nstars * sizeof(GLfloat) * 4 );
-      star_colour = realloc( star_colour, nstars * sizeof(GLfloat) * 8 );
-      mstars = nstars;
-   }
+   /* Create data. */
+   star_vertex = malloc( nstars * sizeof(GLfloat) * 6 );
+
    for (i=0; i < nstars; i++) {
       /* Set the position. */
-      star_vertex[4*i+0] = RNGF()*w - hw;
-      star_vertex[4*i+1] = RNGF()*h - hh;
-      star_vertex[4*i+2] = 0.;
-      star_vertex[4*i+3] = 0.;
+      star_vertex[6*i+0] = RNGF()*w - hw;
+      star_vertex[6*i+1] = RNGF()*h - hh;
+      star_vertex[6*i+3] = star_vertex[6*i+0];
+      star_vertex[6*i+4] = star_vertex[6*i+1];
       /* Set the colour. */
-      star_colour[8*i+0] = 1.;
-      star_colour[8*i+1] = 1.;
-      star_colour[8*i+2] = 1.;
-      star_colour[8*i+3] = RNGF()*0.6 + 0.2;
-      star_colour[8*i+4] = 1.;
-      star_colour[8*i+5] = 1.;
-      star_colour[8*i+6] = 1.;
-      star_colour[8*i+7] = 0.;
+      star_vertex[6*i+2] = RNGF()*0.6 + 0.2;
+      star_vertex[6*i+5] = star_vertex[6*i+2];
    }
 
-   /* Destroy old VBO. */
-   if (star_vertexVBO != NULL) {
-      gl_vboDestroy( star_vertexVBO );
-      star_vertexVBO = NULL;
-   }
-   if (star_colourVBO != NULL) {
-      gl_vboDestroy( star_colourVBO );
-      star_colourVBO = NULL;
-   }
+   /* Recreate VBO. */
+   gl_vboDestroy( star_vertexVBO );
+   star_vertexVBO = gl_vboCreateStatic(
+         nstars * sizeof(GLfloat) * 6, star_vertex );
 
-   /* Create now VBO. */
-   star_vertexVBO = gl_vboCreateStream(
-         nstars * sizeof(GLfloat) * 4, star_vertex );
-   star_colourVBO = gl_vboCreateStatic(
-         nstars * sizeof(GLfloat) * 8, star_colour );
+   free(star_vertex);
 }
 
 
@@ -168,93 +152,33 @@ void background_moveStars( double x, double y )
 /**
  * @brief Renders the starry background.
  *
- * This could really benefit from OpenCL directly. It would probably give a great
- *  speed up, although we'll consider it when we get a runtime linking OpenCL
- *  framework someday.
- *
  *    @param dt Current delta tick.
  */
 void background_renderStars( const double dt )
 {
    (void) dt;
-   unsigned int i;
-   GLfloat hh, hw, h, w;
-   GLfloat x, y, m, b;
-   GLfloat brightness;
+   GLfloat h, w;
+   GLfloat x, y, m;
    double z;
-   double sx, sy;
-   int shade_mode;
-   int j, n;
+   gl_Matrix4 projection;
 
+   glUseProgram(shaders.stars.program);
 
-   /*
-    * gprof claims it's the slowest thing in the game!
-    */
+   glLineWidth(1 / gl_screen.scale);
 
    /* Do some scaling for now. */
    z = cam_getZoom();
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
-   gl_matrixPush();
-      gl_matrixTranslate( SCREEN_W/2., SCREEN_H/2. );
-      gl_matrixScale( z, z );
-
-   if (!paused && (player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
-         !player_isFlag(PLAYER_CREATING)) { /* update position */
-
-      /* Calculate some dimensions. */
-      w  = (SCREEN_W + 2.*STAR_BUF);
-      w += conf.zoom_stars * (w / conf.zoom_far - 1.);
-      h  = (SCREEN_H + 2.*STAR_BUF);
-      h += conf.zoom_stars * (h / conf.zoom_far - 1.);
-      hw = w/2.;
-      hh = h/2.;
-
-      /* Calculate multiple updates in the case the ship is moving really ridiculously fast. */
-      if ((star_x > SCREEN_W) || (star_y > SCREEN_H)) {
-         sx = ceil( star_x / SCREEN_W );
-         sy = ceil( star_y / SCREEN_H );
-         n  = MAX( sx, sy );
-         star_x /= (double)n;
-         star_y /= (double)n;
-      }
-      else
-         n = 1;
-
-      /* Calculate new star positions. */
-      for (j=0; j < n; j++) {
-         for (i=0; i < nstars; i++) {
-
-            /* Calculate new position */
-            b = 1./(9. - 10.*star_colour[8*i+3]);
-            star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
-            star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
-
-            /* check boundaries */
-            if (star_vertex[4*i+0] > hw)
-               star_vertex[4*i+0] -= w;
-            else if (star_vertex[4*i+0] < -hw)
-               star_vertex[4*i+0] += w;
-            if (star_vertex[4*i+1] > hh)
-               star_vertex[4*i+1] -= h;
-            else if (star_vertex[4*i+1] < -hh)
-               star_vertex[4*i+1] += h;
-         }
-      }
-
-      /* Upload the data. */
-      gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-   }
+   projection = gl_Matrix4_Translate( gl_view_matrix, SCREEN_W/2., SCREEN_H/2., 0 );
+   projection = gl_Matrix4_Scale( projection, z, z, 1 );
 
    /* Decide on shade mode. */
-   shade_mode = 0;
+   x = 0;
+   y = 0;
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {
 
       if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
-
-         glShadeModel(GL_SMOOTH);
-         shade_mode = 1;
-
          /* lines get longer the closer we are to finishing the jump */
          m  = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
          m /= HYPERSPACE_STARS_BLUR;
@@ -262,11 +186,7 @@ void background_renderStars( const double dt )
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
-      else if (dt_mod * VMOD(player.p->solid->vel) > 500. ){
-
-         glShadeModel(GL_SMOOTH);
-         shade_mode = 1;
-
+      else if (dt_mod * VMOD(player.p->solid->vel) > 500. ) {
          /* Very short lines tend to flicker horribly. A stock Llama at 2x
           * speed just so happens to make very short lines. A 5px minimum
           * is long enough to (mostly) alleviate the flickering.
@@ -275,40 +195,36 @@ void background_renderStars( const double dt )
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
-
-      if (shade_mode) {
-         /* Generate lines. */
-         for (i=0; i < nstars; i++) {
-            brightness = star_colour[8*i+3];
-            star_vertex[4*i+2] = star_vertex[4*i+0] + x*brightness;
-            star_vertex[4*i+3] = star_vertex[4*i+1] + y*brightness;
-         }
-
-         /* Upload new data. */
-         gl_vboSubData( star_vertexVBO, 0, nstars * 4 * sizeof(GLfloat), star_vertex );
-      }
    }
+
+   /* Calculate some dimensions. */
+   w  = (SCREEN_W + 2.*STAR_BUF);
+   w += conf.zoom_stars * (w / conf.zoom_far - 1.);
+   h  = (SCREEN_H + 2.*STAR_BUF);
+   h += conf.zoom_stars * (h / conf.zoom_far - 1.);
 
    /* Render. */
-   gl_vboActivate( star_vertexVBO, GL_VERTEX_ARRAY, 2, GL_FLOAT, 2 * sizeof(GLfloat) );
-   gl_vboActivate( star_colourVBO, GL_COLOR_ARRAY,  4, GL_FLOAT, 4 * sizeof(GLfloat) );
-   if (shade_mode) {
-      glDrawArrays( GL_LINES, 0, nstars );
-      glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */
-      glShadeModel(GL_FLAT);
-   }
-   else
-      glDrawArrays( GL_POINTS, 0, nstars );
+   glEnableVertexAttribArray( shaders.stars.vertex );
+   glEnableVertexAttribArray( shaders.stars.brightness );
+   gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.vertex, 0,
+         2, GL_FLOAT, 3 * sizeof(GLfloat) );
+   gl_vboActivateAttribOffset( star_vertexVBO, shaders.stars.brightness, 2 * sizeof(GLfloat),
+         1, GL_FLOAT, 3 * sizeof(GLfloat) );
 
-   /* Clear star movement. */
-   star_x = 0.;
-   star_y = 0.;
+   gl_Matrix4_Uniform(shaders.stars.projection, projection);
+   glUniform2f(shaders.stars.star_xy, star_x, star_y);
+   glUniform2f(shaders.stars.wh, w, h);
+   glUniform2f(shaders.stars.xy, x, y);
+   glUniform1f(shaders.stars.scale, 1 / gl_screen.scale);
+   glDrawArrays( GL_LINES, 0, nstars );
 
    /* Disable vertex array. */
-   gl_vboDeactivate();
+   glDisableVertexAttribArray( shaders.stars.vertex );
+   glDisableVertexAttribArray( shaders.stars.brightness );
 
-   /* Pop matrix. */
-   gl_matrixPop();
+   glLineWidth(1 / gl_screen.scale);
+
+   glUseProgram(0);
 
    /* Check for errors. */
    gl_checkErr();
@@ -320,9 +236,43 @@ void background_renderStars( const double dt )
  */
 void background_render( double dt )
 {
+   if (bkg_L_renderbg != LUA_NOREF) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
+      lua_pushnumber( naevL, dt );
+      if (nlua_pcall( bkg_cur_env, 1, 0 )) {
+         WARN( _("Background script 'renderbg' error:\n%s"), lua_tostring(naevL,-1));
+         lua_pop( naevL, 1 );
+      }
+   }
+
    background_renderImages( bkg_image_arr_bk );
    background_renderStars(dt);
    background_renderImages( bkg_image_arr_ft );
+
+   if (bkg_L_renderfg != LUA_NOREF) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderfg );
+      lua_pushnumber( naevL, dt );
+      if (nlua_pcall( bkg_cur_env, 1, 0 )) {
+         WARN( _("Background script 'renderfg' error:\n%s"), lua_tostring(naevL,-1));
+         lua_pop( naevL, 1 );
+      }
+   }
+}
+
+
+/**
+ * @brief Renders the background overlay.
+ */
+void background_renderOverlay( double dt )
+{
+   if (bkg_L_renderov != LUA_NOREF) {
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, bkg_L_renderov );
+      lua_pushnumber( naevL, dt );
+      if (nlua_pcall( bkg_cur_env, 1, 0 )) {
+         WARN( _("Background script 'renderov' error:\n%s"), lua_tostring(naevL,-1));
+         lua_pop( naevL, 1 );
+      }
+   }
 }
 
 
@@ -395,9 +345,10 @@ static void background_renderImages( background_image_t *bkg_arr )
    int i;
    background_image_t *bkg;
    double px,py, x,y, xs,ys, z;
+   glColour col;
 
-   /* Must have an image array created. */
-   if (bkg_arr == NULL)
+   /* Skip rendering altogether if disabled. */
+   if (conf.bg_brightness <= 0.)
       return;
 
    /* Render images in order. */
@@ -410,8 +361,13 @@ static void background_renderImages( background_image_t *bkg_arr )
       gl_gameToScreenCoords( &xs, &ys, x, y );
       z = cam_getZoom();
       z *= bkg->scale;
+      /* TODO add rotation too! */
+      col.r = bkg->col.r * conf.bg_brightness;
+      col.g = bkg->col.g * conf.bg_brightness;
+      col.b = bkg->col.b * conf.bg_brightness;
+      col.a = bkg->col.a;
       gl_blitScale( bkg->image, xs, ys,
-            z*bkg->image->sw, z*bkg->image->sh, &bkg->col );
+            z*bkg->image->sw, z*bkg->image->sh, &col );
    }
 }
 
@@ -419,44 +375,45 @@ static void background_renderImages( background_image_t *bkg_arr )
 /**
  * @brief Creates a background Lua state from a script.
  */
-static lua_State* background_create( const char *name )
+static nlua_env background_create( const char *name )
 {
-   uint32_t bufsize;
+   size_t bufsize;
    char path[PATH_MAX];
    char *buf;
-   lua_State *L;
+   nlua_env env;
 
    /* Create file name. */
-   nsnprintf( path, sizeof(path), "dat/bkg/%s.lua", name );
+   snprintf( path, sizeof(path), BACKGROUND_PATH"%s.lua", name );
 
-   /* Create the Lua state. */
-   L = nlua_newState();
-   nlua_loadStandard(L,1);
-   nlua_loadTex(L,0);
-   nlua_loadCol(L,0);
-   nlua_loadBackground(L,0);
+   /* Create the Lua env. */
+   env = nlua_newEnv(1);
+   nlua_loadStandard(env);
+   nlua_loadTex(env);
+   nlua_loadCol(env);
+   nlua_loadBackground(env);
+   nlua_loadCamera(env);
 
    /* Open file. */
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
-      WARN("Default background script '%s' not found.", path);
-      lua_close(L);
-      return NULL;
+      WARN( _("Background script '%s' not found."), path);
+      nlua_freeEnv(env);
+      return LUA_NOREF;
    }
 
    /* Load file. */
-   if (luaL_dobuffer(L, buf, bufsize, path) != 0) {
-      WARN("Error loading background file: %s\n"
+   if (nlua_dobufenv(env, buf, bufsize, path) != 0) {
+      WARN( _("Error loading background file: %s\n"
             "%s\n"
-            "Most likely Lua file has improper syntax, please check",
-            path, lua_tostring(L,-1));
+            "Most likely Lua file has improper syntax, please check"),
+            path, lua_tostring(naevL,-1));
       free(buf);
-      lua_close(L);
-      return NULL;
+      nlua_freeEnv(env);
+      return LUA_NOREF;
    }
    free(buf);
 
-   return L;
+   return env;
 }
 
 
@@ -466,7 +423,8 @@ static lua_State* background_create( const char *name )
 int background_init (void)
 {
    /* Load Lua. */
-   bkg_def_L = background_create( "default" );
+   bkg_def_env = background_create( "default" );
+
    return 0;
 }
 
@@ -476,8 +434,8 @@ int background_init (void)
  */
 int background_load( const char *name )
 {
-   int ret, errf;
-   lua_State *L;
+   int ret;
+   nlua_env env;
    const char *err;
 
    /* Free if exists. */
@@ -485,35 +443,31 @@ int background_load( const char *name )
 
    /* Load default. */
    if (name == NULL)
-      bkg_cur_L = bkg_def_L;
+      bkg_cur_env = bkg_def_env;
    /* Load new script. */
    else
-      bkg_cur_L = background_create( name );
+      bkg_cur_env = background_create( name );
 
    /* Comfort. */
-   L = bkg_cur_L;
-   if (L == NULL)
+   env = bkg_cur_env;
+   if (env == LUA_NOREF)
       return -1;
 
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -2;
-#else /* DEBUGGING */
-   errf = 0;
-#endif /* DEBUGGING */
-
    /* Run Lua. */
-   lua_getglobal(L,"background");
-   ret = lua_pcall(L, 0, 0, errf);
+   nlua_getenv(env,"background");
+   ret = nlua_pcall(env, 0, 0);
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      WARN("Background -> 'background' : %s",
-            (err) ? err : "unknown error");
-      lua_pop(L, 1);
+      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
+      WARN( _("Background -> 'background' : %s"),
+            (err) ? err : _("unknown error"));
+      lua_pop(naevL, 1);
    }
-#if DEBUGGING
-   lua_pop(L, 1);
-#endif /* DEBUGGING */
+
+   /* See if there are render functions. */
+   bkg_L_renderbg = nlua_refenv( env, "renderbg" );
+   bkg_L_renderfg = nlua_refenv( env, "renderfg" );
+   bkg_L_renderov = nlua_refenv( env, "renderov" );
+
    return ret;
 }
 
@@ -523,11 +477,18 @@ int background_load( const char *name )
  */
 static void background_clearCurrent (void)
 {
-   if (bkg_cur_L != bkg_def_L) {
-      if (bkg_cur_L != NULL)
-         lua_close( bkg_cur_L );
+   if (bkg_cur_env != bkg_def_env) {
+      if (bkg_cur_env != LUA_NOREF)
+         nlua_freeEnv( bkg_cur_env );
    }
-   bkg_cur_L = NULL;
+   bkg_cur_env = LUA_NOREF;
+
+   luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderbg );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderfg );
+   luaL_unref( naevL, LUA_REGISTRYINDEX, bkg_L_renderov );
+   bkg_L_renderbg = LUA_NOREF;
+   bkg_L_renderfg = LUA_NOREF;
+   bkg_L_renderov = LUA_NOREF;
 }
 
 
@@ -555,17 +516,13 @@ static void background_clearImgArr( background_image_t **arr )
    int i;
    background_image_t *bkg;
 
-   /* Must have an image array created. */
-   if (*arr == NULL)
-      return;
-
    for (i=0; i<array_size(*arr); i++) {
       bkg = &((*arr)[i]);
       gl_freeTexture( bkg->image );
    }
 
    /* Erase it all. */
-   array_erase( arr, &(*arr)[0], &(*arr)[ array_size(*arr) ] );
+   array_erase( arr, array_begin(*arr), array_end(*arr) );
 }
 
 
@@ -576,45 +533,37 @@ void background_free (void)
 {
    /* Free the Lua. */
    background_clear();
-   if (bkg_def_L != NULL)
-      lua_close( bkg_def_L );
-   bkg_def_L = NULL;
+   if (bkg_def_env != LUA_NOREF)
+      nlua_freeEnv( bkg_def_env );
+   bkg_def_env = LUA_NOREF;
 
    /* Free the images. */
-   if (bkg_image_arr_ft != NULL) {
-      array_free( bkg_image_arr_ft );
-      bkg_image_arr_ft = NULL;
-   }
-   if (bkg_image_arr_bk != NULL) {
-      array_free( bkg_image_arr_bk );
-      bkg_image_arr_bk = NULL;
-   }
+   array_free( bkg_image_arr_ft );
+   bkg_image_arr_ft = NULL;
+   array_free( bkg_image_arr_bk );
+   bkg_image_arr_bk = NULL;
 
    /* Free the Lua. */
-   if (bkg_cur_L != NULL)
-      lua_close( bkg_cur_L );
-   bkg_cur_L = NULL;
+   if (bkg_cur_env != LUA_NOREF)
+      nlua_freeEnv( bkg_cur_env );
+   bkg_cur_env = LUA_NOREF;
 
-   /* Destroy VBOs. */
-   if (star_vertexVBO != NULL) {
-      gl_vboDestroy( star_vertexVBO );
-      star_vertexVBO = NULL;
-   }
-   if (star_colourVBO != NULL) {
-      gl_vboDestroy( star_colourVBO );
-      star_colourVBO = NULL;
-   }
+   gl_vboDestroy( star_vertexVBO );
+   star_vertexVBO = NULL;
 
-   /* Free the stars. */
-   if (star_vertex != NULL) {
-      free(star_vertex);
-      star_vertex = NULL;
-   }
-   if (star_colour != NULL) {
-      free(star_colour);
-      star_colour = NULL;
-   }
    nstars = 0;
-   mstars = 0;
 }
 
+/**
+ * @brief returns the background images, and number of these
+ */
+glTexture** background_getTextures (void)
+{
+  int i;
+  glTexture **imgs;
+
+  imgs = array_create_size( glTexture*, array_size( bkg_image_arr_bk ));
+  for ( i=0; i<array_size(bkg_image_arr_bk); i++ )
+    array_push_back( &imgs, gl_dupTexture(bkg_image_arr_bk[i].image) );
+  return imgs;
+}

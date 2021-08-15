@@ -16,15 +16,29 @@
   <asset>Gammacron Va</asset>
   <asset>Gammacron Vb</asset>
   <asset>Pund</asset>
+  <asset>Virtual Miner Small</asset>
  </assets>
  <jumps>
   <jump target="Daan">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Limbo">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <type>diamond</type>
+   <radius>1500.000000</radius>
+   <pos x="1200.000000" y="4032.000000"/>
+   <density>10.000000</density>
+  </asteroid>
+  <exclusion>
+   <radius>1000.000000</radius>
+   <pos x="1200.000000" y="4032.000000"/>
+  </exclusion>
+ </asteroids>
 </ssys>

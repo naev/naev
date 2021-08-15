@@ -8,6 +8,8 @@
 #  define GUI_OMSG_H
 
 
+#include "colour.h"
+
 
 #define OMSG_FONT_DEFAULT_SIZE      16
 
@@ -15,7 +17,7 @@
 /*
  * Creation and management.
  */
-unsigned int omsg_add( const char *msg, double duration, int fontsize );
+unsigned int omsg_add( const char *msg, double duration, int fontsize, const glColour *col );
 int omsg_change( unsigned int id, const char *msg, double duration );
 int omsg_exists( unsigned int id );
 void omsg_rm( unsigned int id );

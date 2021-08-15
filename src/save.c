@@ -8,32 +8,35 @@
  * @brief Handles saving/loading games.
  */
 
-#include "save.h"
+/** @cond */
+#include <errno.h>
+#include "physfs.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include <errno.h> /* errno */
+#include "save.h"
 
-#include "log.h"
-#include "nxml.h"
-#include "nstring.h"
-#include "player.h"
-#include "dialogue.h"
-#include "menu.h"
-#include "nfile.h"
-#include "hook.h"
-#include "ndata.h"
-#include "unidiff.h"
-#include "nlua_var.h"
-#include "event.h"
-#include "news.h"
 #include "conf.h"
-#include "land.h"
+#include "dialogue.h"
+#include "event.h"
 #include "gui.h"
+#include "hook.h"
+#include "land.h"
 #include "load.h"
+#include "log.h"
+#include "menu.h"
+#include "news.h"
+#include "ndata.h"
+#include "nlua_var.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "player.h"
+#include "shiplog.h"
+#include "start.h"
+#include "unidiff.h"
 
-
-int save_loaded   = 0; /**< Just loaded the savegame. */
+int save_loaded   = 0; /**< Just loaded the saved game. */
 
 
 /*
@@ -42,8 +45,6 @@ int save_loaded   = 0; /**< Just loaded the savegame. */
 /* externs */
 /* player.c */
 extern int player_save( xmlTextWriterPtr writer ); /**< Saves player related stuff. */
-/* mission.c */
-extern int missions_saveActive( xmlTextWriterPtr writer ); /**< Saves active missions. */
 /* event.c */
 extern int events_saveActive( xmlTextWriterPtr writer );
 /* news.c */
@@ -56,6 +57,8 @@ extern int pfaction_save( xmlTextWriterPtr writer ); /**< Saves faction data. */
 extern int hook_save( xmlTextWriterPtr writer ); /**< Saves hooks. */
 /* space.c */
 extern int space_sysSave( xmlTextWriterPtr writer ); /**< Saves the space stuff. */
+/* economy.c */
+extern int economy_sysSave( xmlTextWriterPtr writer ); /**< Saves the economy stuff. */
 /* unidiff.c */
 extern int diff_save( xmlTextWriterPtr writer ); /**< Saves the universe diffs. */
 /* static */
@@ -80,7 +83,8 @@ static int save_data( xmlTextWriterPtr writer )
    if (pfaction_save(writer) < 0) return -1;
    if (hook_save(writer) < 0) return -1;
    if (space_sysSave(writer) < 0) return -1;
-
+   if (economy_sysSave(writer) < 0) return -1;
+   if (shiplog_save(writer) < 0) return -1;
    return 0;
 }
 
@@ -96,14 +100,14 @@ int save_all (void)
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
-   /* Do not save during tutorial. Or if saving is off. */
-   if (player_isTut() || player_isFlag(PLAYER_NOSAVE))
+   /* Do not save if saving is off. */
+   if (player_isFlag(PLAYER_NOSAVE))
       return 0;
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, conf.save_compress);
    if (writer == NULL) {
-      ERR("testXmlwriterDoc: Error creating the xml writer");
+      ERR(_("testXmlwriterDoc: Error creating the xml writer"));
       return -1;
    }
 
@@ -116,13 +120,16 @@ int save_all (void)
 
    /* Save the version and such. */
    xmlw_startElem(writer,"version");
-   xmlw_elem( writer, "naev", "%d.%d.%d", VMAJOR, VMINOR, VREV );
-   xmlw_elem( writer, "data", "%s", ndata_name() );
+   xmlw_elem( writer, "naev", "%s", VERSION );
+   xmlw_elem( writer, "data", "%s", start_name() );
    xmlw_endElem(writer); /* "version" */
+
+   /* Save last played. */
+   xmlw_saveTime( writer, "last_played", time(NULL) );
 
    /* Save the data. */
    if (save_data(writer) < 0) {
-      ERR("Trying to save game data");
+      ERR(_("Trying to save game data"));
       goto err_writer;
    }
 
@@ -131,17 +138,17 @@ int save_all (void)
    xmlw_done(writer);
 
    /* Write to file. */
-   if ((nfile_dirMakeExist("%s", nfile_dataPath()) < 0) ||
-         (nfile_dirMakeExist("%ssaves", nfile_dataPath()) < 0)) {
-      WARN("Failed to create save directory '%ssaves'.", nfile_dataPath());
+   if (PHYSFS_mkdir("saves") == 0) {
+      snprintf(file, sizeof(file), "%s/saves", PHYSFS_getWriteDir());
+      WARN(_( "Dir '%s' does not exist and unable to create: %s" ), file, PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
       goto err_writer;
    }
-   nsnprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
+   snprintf(file, sizeof(file), "saves/%s.ns", player.name);
 
-   /* Back up old savegame. */
+   /* Back up old saved game. */
    if (!save_loaded) {
-      if (nfile_backupIfExists(file) < 0) {
-         WARN("Aborting save...");
+      if (ndata_backupIfExists(file) < 0) {
+         WARN(_("Aborting save..."));
          goto err_writer;
       }
    }
@@ -150,8 +157,9 @@ int save_all (void)
    /* Critical section, if crashes here player's game gets corrupted.
     * Luckily we have a copy just in case... */
    xmlFreeTextWriter(writer);
+   snprintf(file, sizeof(file), "%s/saves/%s.ns", PHYSFS_getWriteDir(), player.name); /* TODO: write via physfs */
    if (xmlSaveFileEnc(file, doc, "UTF-8") < 0) {
-      WARN("Failed to write savegame!  You'll most likely have to restore it by copying your backup savegame over your current savegame.");
+      WARN(_("Failed to write saved game!  You'll most likely have to restore it by copying your backup saved game over your current saved game."));
       goto err;
    }
    xmlFreeDoc(doc);
@@ -166,45 +174,11 @@ err:
 }
 
 /**
- * @brief Reload the current savegame.
+ * @brief Reload the current saved game.
  */
 void save_reload (void)
 {
    char path[PATH_MAX];
-   nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
-   load_game( path, 0 );
+   snprintf(path, sizeof(path), "saves/%s.ns", player.name);
+   load_gameFile( path );
 }
-
-
-/**
- * @brief Checks to see if there's a savegame available.
- *
- *    @return 1 if a savegame is available, 0 otherwise.
- */
-int save_hasSave (void)
-{
-   char **files;
-   int nfiles, i, len;
-   int has_save;
-
-   /* Look for saved games. */
-   files = nfile_readDir( &nfiles, "%ssaves", nfile_dataPath() );
-   has_save = 0;
-   for (i=0; i<nfiles; i++) {
-      len = strlen(files[i]);
-
-      /* no save extension */
-      if ((len >= 5) && (strcmp(&files[i][len-3],".ns")==0)) {
-         has_save = 1;
-         break;
-      }
-   }
-
-   /* Clean up. */
-   for (i=0; i<nfiles; i++)
-      free(files[i]);
-   free(files);
-
-   return has_save;
-}
-

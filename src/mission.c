@@ -9,40 +9,39 @@
  */
 
 
-#include "mission.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdint.h>
-#include "nstring.h"
 #include <stdlib.h>
 
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_space.h"
-#include "nlua_faction.h"
-#include "nlua_ship.h"
-#include "nlua_misn.h"
-#include "rng.h"
-#include "log.h"
+#include "naev.h"
+/** @endcond */
+
+#include "mission.h"
+
+#include "array.h"
+#include "cond.h"
+#include "faction.h"
+#include "gui_osd.h"
 #include "hook.h"
+#include "land.h"
+#include "log.h"
 #include "ndata.h"
+#include "nlua.h"
+#include "nlua_faction.h"
+#include "nlua_misn.h"
+#include "nlua_ship.h"
+#include "nlua_shiplog.h"
+#include "nluadef.h"
+#include "npc.h"
+#include "nstring.h"
 #include "nxml.h"
 #include "nxml_lua.h"
-#include "faction.h"
 #include "player.h"
+#include "rng.h"
 #include "space.h"
-#include "cond.h"
-#include "gui_osd.h"
-#include "npc.h"
-#include "array.h"
-#include "land.h"
 
 
-#define XML_MISSION_ID        "Missions" /**< XML document identifier */
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
-
-#define MISSION_CHUNK         32 /**< Chunk allocation. */
 
 
 /*
@@ -56,7 +55,6 @@ Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
  * mission stack
  */
 static MissionData *mission_stack = NULL; /**< Unmutable after creation */
-static int mission_nstack = 0; /**< Missions in stack. */
 
 
 /*
@@ -72,13 +70,12 @@ static int mission_compare( const void* arg1, const void* arg2 );
 static int mission_meetReq( int mission, int faction,
       const char* planet, const char* sysname );
 static int mission_matchFaction( MissionData* misn, int faction );
-static int mission_location( const char* loc );
+static int mission_location( const char *loc );
 /* Loading. */
-static int mission_parse( MissionData* temp, const xmlNodePtr parent );
+static int missions_cmp( const void *a, const void *b );
+static int mission_parseFile( const char* file );
+static int mission_parseXML( MissionData *temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
-/* externed */
-int missions_saveActive( xmlTextWriterPtr writer );
-int missions_loadActive( xmlNodePtr parent );
 
 
 /**
@@ -109,11 +106,11 @@ int mission_getID( const char* name )
 {
    int i;
 
-   for (i=0; i<mission_nstack; i++)
+   for (i=0; i<array_size(mission_stack); i++)
       if (strcmp(name,mission_stack[i].name)==0)
          return i;
 
-   DEBUG("Mission '%s' not found in stack", name);
+   DEBUG(_("Mission '%s' not found in stack"), name);
    return -1;
 }
 
@@ -126,7 +123,7 @@ int mission_getID( const char* name )
  */
 MissionData* mission_get( int id )
 {
-   if ((id < 0) || (id >= mission_nstack)) return NULL;
+   if ((id < 0) || (id >= array_size(mission_stack))) return NULL;
    return &mission_stack[id];
 }
 
@@ -158,8 +155,6 @@ MissionData* mission_getFromName( const char* name )
  */
 static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id )
 {
-   char *buf;
-   uint32_t bufsize;
    int ret;
 
    /* clear the mission */
@@ -167,38 +162,28 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
 
    /* Create id if needed. */
    mission->id    = (genid) ? mission_genID() : 0;
+
    if (id != NULL)
       *id         = mission->id;
    mission->data  = misn;
    if (create) {
-      mission->title = strdup(misn->name);
-      mission->desc  = strdup("No description.");
+      mission->title = strdup(_(misn->name));
+      mission->desc  = strdup(_("No description."));
    }
 
    /* init Lua */
-   mission->L = nlua_newState();
-   if (mission->L == NULL) {
-      WARN("Unable to create a new Lua state.");
-      return -1;
-   }
-   nlua_loadBasic( mission->L ); /* pairs and such */
-   misn_loadLibs( mission->L ); /* load our custom libraries */
+   mission->env = nlua_newEnv(1);
+
+   misn_loadLibs( mission->env ); /* load our custom libraries */
 
    /* load the file */
-   buf = ndata_read( misn->lua, &bufsize );
-   if (buf == NULL) {
-      WARN("Mission '%s' Lua script not found.", misn->lua );
-      return -1;
-   }
-   if (luaL_dobuffer(mission->L, buf, bufsize, misn->lua) != 0) {
-      WARN("Error loading mission file: %s\n"
+   if (nlua_dobufenv(mission->env, misn->lua, strlen(misn->lua), misn->sourcefile) != 0) {
+      WARN(_("Error loading mission file: %s\n"
           "%s\n"
-          "Most likely Lua file has improper syntax, please check",
-            misn->lua, lua_tostring(mission->L,-1));
-      free(buf);
+          "Most likely Lua file has improper syntax, please check"),
+           misn->sourcefile, lua_tostring(naevL, -1));
       return -1;
    }
-   free(buf);
 
    /* run create function */
    if (create) {
@@ -286,7 +271,7 @@ static int mission_meetReq( int mission, int faction,
    if (misn->avail.cond != NULL) {
       c = cond_check(misn->avail.cond);
       if (c < 0) {
-         WARN("Conditional for mission '%s' failed to run", misn->name);
+         WARN(_("Conditional for mission '%s' failed to run"), misn->name);
          return 0;
       }
       else if (!c)
@@ -317,7 +302,7 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
    int i;
    double chance;
 
-   for (i=0; i<mission_nstack; i++) {
+   for (i=0; i<array_size(mission_stack); i++) {
       misn = &mission_stack[i];
       if (misn->avail.loc != loc)
          continue;
@@ -417,9 +402,6 @@ void mission_sysMark (void)
       /* Must be a valid player mission. */
       if (player_missions[i]->id == 0)
          continue;
-      /* Must have markers. */
-      if (player_missions[i]->markers == NULL)
-         continue;
 
       n = array_size( player_missions[i]->markers );
       for (j=0; j<n; j++) {
@@ -448,12 +430,10 @@ void mission_sysComputerMark( Mission* misn )
    space_clearComputerMarkers();
 
    /* Set all the markers. */
-   if (misn->markers != NULL) {
-      n = array_size(misn->markers);
-      for (i=0; i<n; i++) {
-         sys = system_getIndex( misn->markers[i].sys );
-         sys_setFlag( sys,SYSTEM_CMARKED );
-      }
+   n = array_size(misn->markers);
+   for (i=0; i<n; i++) {
+      sys = system_getIndex( misn->markers[i].sys );
+      sys_setFlag( sys,SYSTEM_CMARKED );
    }
 }
 
@@ -467,9 +447,9 @@ void mission_sysComputerMark( Mission* misn )
  */
 int mission_linkCargo( Mission* misn, unsigned int cargo_id )
 {
-   misn->ncargo++;
-   misn->cargo = realloc( misn->cargo, sizeof(unsigned int) * misn->ncargo);
-   misn->cargo[ misn->ncargo-1 ] = cargo_id;
+   if (misn->cargo == NULL)
+      misn->cargo = array_create( unsigned int );
+   array_push_back( &misn->cargo, cargo_id );
 
    return 0;
 }
@@ -485,20 +465,18 @@ int mission_linkCargo( Mission* misn, unsigned int cargo_id )
 int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
 {
    int i;
-   for (i=0; i<misn->ncargo; i++)
+   for (i=0; i<array_size(misn->cargo); i++)
       if (misn->cargo[i] == cargo_id)
          break;
 
-   if (i>=misn->ncargo) { /* not found */
-      DEBUG("Mission '%s' attempting to unlink inexistant cargo %d.",
+   if (i>=array_size(misn->cargo)) { /* not found */
+      DEBUG(_("Mission '%s' attempting to unlink nonexistent cargo %d."),
             misn->title, cargo_id);
       return 1;
    }
 
-   /* shrink cargo size - no need to realloc */
-   memmove( &misn->cargo[i], &misn->cargo[i+1],
-         sizeof(unsigned int) * (misn->ncargo-i-1) );
-   misn->ncargo--;
+   /* shrink cargo size. */
+   array_erase( &misn->cargo, &misn->cargo[i], &misn->cargo[i+1] );
 
    return 0;
 }
@@ -516,40 +494,38 @@ void mission_cleanup( Mission* misn )
    /* Hooks and missions. */
    if (misn->id != 0) {
       hook_rmMisnParent( misn->id ); /* remove existing hooks */
-      npc_rm_parentMission( misn ); /* remove existing npc */
+      npc_rm_parentMission( misn->id ); /* remove existing npc */
    }
 
    /* Cargo. */
-   if (misn->cargo != NULL) {
-      for (i=0; i<misn->ncargo; i++) { /* must unlink all the cargo */
-         if (player.p != NULL) { /* Only remove if player exists. */
-            ret = pilot_rmMissionCargo( player.p, misn->cargo[i], 0 );
-            if (ret)
-               WARN("Failed to remove mission cargo '%d' for mission '%s'.", misn->cargo[i], misn->title);
-         }
+   for (i=0; i<array_size(misn->cargo); i++) { /* must unlink all the cargo */
+      if (player.p != NULL) { /* Only remove if player exists. */
+         ret = pilot_rmMissionCargo( player.p, misn->cargo[i], 0 );
+         if (ret)
+            WARN(_("Failed to remove mission cargo '%d' for mission '%s'."), misn->cargo[i], misn->title);
       }
-      free(misn->cargo);
    }
+   array_free(misn->cargo);
    if (misn->osd > 0)
       osd_destroy(misn->osd);
-   if (misn->L)
-      lua_close(misn->L);
+   /*
+    * XXX With the way the mission code works, this function is called on a
+    * Mission struct of all zeros. Looking at the implementation, luaL_ref()
+    * never returns 0, but this is probably undefined behavior.
+    */
+   if (misn->env != LUA_NOREF && misn->env != 0)
+      nlua_freeEnv(misn->env);
 
    /* Data. */
-   if (misn->title != NULL)
-      free(misn->title);
-   if (misn->desc != NULL)
-      free(misn->desc);
-   if (misn->reward != NULL)
-      free(misn->reward);
-   if (misn->portrait != NULL)
-      gl_freeTexture(misn->portrait);
-   if (misn->npc != NULL)
-      free(misn->npc);
+   free(misn->title);
+   free(misn->desc);
+   free(misn->reward);
+   gl_freeTexture(misn->portrait);
+   free(misn->npc);
+   free(misn->npc_desc);
 
    /* Markers. */
-   if (misn->markers != NULL)
-      array_free( misn->markers );
+   array_free( misn->markers );
 
    /* Claims. */
    if (misn->claims != NULL)
@@ -591,20 +567,14 @@ void mission_shift( int pos )
  */
 static void mission_freeData( MissionData* mission )
 {
-   if (mission->name)
-      free(mission->name);
-   if (mission->lua)
-      free(mission->lua);
-   if (mission->avail.planet)
-      free(mission->avail.planet);
-   if (mission->avail.system)
-      free(mission->avail.system);
-   if (mission->avail.factions)
-      free(mission->avail.factions);
-   if (mission->avail.cond)
-      free(mission->avail.cond);
-   if (mission->avail.done)
-      free(mission->avail.done);
+   free(mission->name);
+   free(mission->lua);
+   free(mission->sourcefile);
+   free(mission->avail.planet);
+   free(mission->avail.system);
+   array_free(mission->avail.factions);
+   free(mission->avail.cond);
+   free(mission->avail.done);
 
    /* Clear the memory. */
 #ifdef DEBUGGING
@@ -625,11 +595,11 @@ static int mission_matchFaction( MissionData* misn, int faction )
    int i;
 
    /* No faction always accepted. */
-   if (misn->avail.nfactions <= 0)
+   if (array_size(misn->avail.factions) == 0)
       return 1;
 
    /* Check factions. */
-   for (i=0; i<misn->avail.nfactions; i++)
+   for (i=0; i<array_size(misn->avail.factions); i++)
       if (faction == misn->avail.factions[i])
          return 1;
 
@@ -663,9 +633,9 @@ static int mission_compare( const void* arg1, const void* arg2 )
 
    /* Check priority - lower is more important. */
    if (m1->data->avail.priority < m2->data->avail.priority)
-      return +1;
-   else if (m1->data->avail.priority > m2->data->avail.priority)
       return -1;
+   else if (m1->data->avail.priority > m2->data->avail.priority)
+      return +1;
 
    /* Compare NPC. */
    if ((m1->npc != NULL) && (m2->npc != NULL))
@@ -676,7 +646,7 @@ static int mission_compare( const void* arg1, const void* arg2 )
       return strcmp( m1->title, m2->title );
 
    /* Tied. */
-   return 0.;
+   return strcmp(m1->data->name, m2->data->name);
 }
 
 
@@ -700,17 +670,11 @@ Mission* missions_genList( int *n, int faction,
    Mission* tmp;
    MissionData* misn;
 
-   /* Missions can't be generated by tutorial. */
-   if (player_isTut()) {
-      *n = 0;
-      return NULL;
-   }
-
    /* Find available missions. */
    tmp      = NULL;
    m        = 0;
    alloced  = 0;
-   for (i=0; i<mission_nstack; i++) {
+   for (i=0; i<array_size(mission_stack); i++) {
       misn = &mission_stack[i];
       if (misn->avail.loc == loc) {
 
@@ -760,16 +724,26 @@ Mission* missions_genList( int *n, int faction,
  *    @param loc String to get the location of.
  *    @return Location matching loc.
  */
-static int mission_location( const char* loc )
+static int mission_location( const char *loc )
 {
-   if (strcmp(loc,"None")==0) return MIS_AVAIL_NONE;
-   else if (strcmp(loc,"Computer")==0) return MIS_AVAIL_COMPUTER;
-   else if (strcmp(loc,"Bar")==0) return MIS_AVAIL_BAR;
-   else if (strcmp(loc,"Outfit")==0) return MIS_AVAIL_OUTFIT;
-   else if (strcmp(loc,"Shipyard")==0) return MIS_AVAIL_SHIPYARD;
-   else if (strcmp(loc,"Land")==0) return MIS_AVAIL_LAND;
-   else if (strcmp(loc,"Commodity")==0) return MIS_AVAIL_COMMODITY;
-   else if (strcmp(loc,"Space")==0) return MIS_AVAIL_SPACE;
+   if ( loc != NULL ) {
+      if ( strcmp( loc, "None" ) == 0 )
+         return MIS_AVAIL_NONE;
+      else if ( strcmp( loc, "Computer" ) == 0 )
+         return MIS_AVAIL_COMPUTER;
+      else if ( strcmp( loc, "Bar" ) == 0 )
+         return MIS_AVAIL_BAR;
+      else if ( strcmp( loc, "Outfit" ) == 0 )
+         return MIS_AVAIL_OUTFIT;
+      else if ( strcmp( loc, "Shipyard" ) == 0 )
+         return MIS_AVAIL_SHIPYARD;
+      else if ( strcmp( loc, "Land" ) == 0 )
+         return MIS_AVAIL_LAND;
+      else if ( strcmp( loc, "Commodity" ) == 0 )
+         return MIS_AVAIL_COMMODITY;
+      else if ( strcmp( loc, "Space" ) == 0 )
+         return MIS_AVAIL_SPACE;
+   }
    return -1;
 }
 
@@ -781,17 +755,9 @@ static int mission_location( const char* loc )
  *    @param parent Node containing the mission.
  *    @return 0 on success.
  */
-static int mission_parse( MissionData* temp, const xmlNodePtr parent )
+static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
-
-#ifdef DEBUGGING
-   /* To check if mission is valid. */
-   lua_State *L;
-   int ret;
-   char *buf;
-   uint32_t len;
-#endif /* DEBUGGING */
 
    /* Clear memory. */
    memset( temp, 0, sizeof(MissionData) );
@@ -800,40 +766,18 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
    temp->avail.priority = 5;
 
    /* get the name */
-   temp->name = xml_nodeProp(parent,"name");
+   xmlr_attr_strd(parent,"name",temp->name);
    if (temp->name == NULL)
-      WARN("Mission in "MISSION_DATA_PATH" has invalid or no name");
+      WARN( _("Mission in %s has invalid or no name"), MISSION_DATA_PATH );
 
    node = parent->xmlChildrenNode;
-
-   char str[PATH_MAX] = "\0";
 
    do { /* load all the data */
 
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"lua")) {
-         nsnprintf( str, PATH_MAX, MISSION_LUA_PATH"%s.lua", xml_get(node) );
-         temp->lua = strdup( str );
-         str[0] = '\0';
-
-#ifdef DEBUGGING
-         /* Check to see if syntax is valid. */
-         L = luaL_newstate();
-         buf = ndata_read( temp->lua, &len );
-         ret = luaL_loadbuffer(L, buf, len, temp->name );
-         if (ret == LUA_ERRSYNTAX) {
-            WARN("Mission Lua '%s' of mission '%s' syntax error: %s",
-                  temp->name, temp->lua, lua_tostring(L,-1) );
-         }
-         free(buf);
-         lua_close(L);
-#endif /* DEBUGGING */
-
-         continue;
-      }
-      else if (xml_isNode(node,"flags")) { /* set the various flags */
+      if (xml_isNode(node,"flags")) { /* set the various flags */
          cur = node->children;
          do {
             xml_onlyNodes(cur);
@@ -841,7 +785,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
                mis_setFlag(temp,MISSION_UNIQUE);
                continue;
             }
-            WARN("Mission '%s' has unknown flag node '%s'.", temp->name, cur->name);
+            WARN(_("Mission '%s' has unknown flag node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -857,31 +801,46 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
             xmlr_strd(cur,"planet",temp->avail.planet);
             xmlr_strd(cur,"system",temp->avail.system);
             if (xml_isNode(cur,"faction")) {
-               temp->avail.factions = realloc( temp->avail.factions,
-                     sizeof(int) * ++temp->avail.nfactions );
-               temp->avail.factions[temp->avail.nfactions-1] =
-                     faction_get( xml_get(cur) );
+               if (temp->avail.factions == NULL)
+                  temp->avail.factions = array_create( int );
+               array_push_back( &temp->avail.factions, faction_get( xml_get(cur) ) );
                continue;
             }
             xmlr_strd(cur,"cond",temp->avail.cond);
             xmlr_strd(cur,"done",temp->avail.done);
             xmlr_int(cur,"priority",temp->avail.priority);
-            WARN("Mission '%s' has unknown avail node '%s'.", temp->name, cur->name);
+            WARN(_("Mission '%s' has unknown avail node '%s'."), temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
+      else if (xml_isNode(node,"notes")) continue; /* Notes for the python mission mapping script */
 
-      DEBUG("Unknown node '%s' in mission '%s'",node->name,temp->name);
+      DEBUG(_("Unknown node '%s' in mission '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
-   if (o) WARN("Mission '%s' missing/invalid '"s"' element", temp->name)
-   MELEMENT(temp->lua==NULL,"lua");
+   if (o) WARN( _("Mission '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT(temp->avail.loc==-1,"location");
    MELEMENT((temp->avail.loc!=MIS_AVAIL_NONE) && (temp->avail.chance==0),"chance");
 #undef MELEMENT
 
    return 0;
+}
+
+
+/**
+ * @brief Ordering function for missions.
+ */
+static int missions_cmp( const void *a, const void *b )
+{
+   const MissionData *ma, *mb;
+   ma = (const MissionData*) a;
+   mb = (const MissionData*) b;
+   if (ma->avail.priority < mb->avail.priority)
+      return -1;
+   else if (ma->avail.priority > mb->avail.priority)
+      return +1;
+   return strcmp( ma->name, mb->name );
 }
 
 
@@ -892,54 +851,106 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
  */
 int missions_load (void)
 {
-   int i, m;
-   uint32_t bufsize;
-   char *buf;
+   int    i;
+   char **mission_files;
 
+   /* Allocate player missions. */
    for (i=0; i<MISSION_MAX; i++)
       player_missions[i] = calloc(1, sizeof(Mission));
 
-   buf = ndata_read( MISSION_DATA_PATH, &bufsize );
+   /* Run over missions. */
+   mission_files = ndata_listRecursive( MISSION_DATA_PATH );
+   mission_stack = array_create_size( MissionData, array_size( mission_files ) );
+   for ( i = 0; i < array_size( mission_files ); i++ ) {
+      mission_parseFile( mission_files[i] );
+      free( mission_files[i] );
+   }
+   array_free( mission_files );
+   array_shrink(&mission_stack);
 
+   /* Sort based on priority so higher priority missions can establish claims first. */
+   qsort( mission_stack, array_size(mission_stack), sizeof(MissionData), missions_cmp );
+
+   DEBUG( n_("Loaded %d Mission", "Loaded %d Missions", array_size(mission_stack) ), array_size(mission_stack) );
+
+   return 0;
+}
+
+
+/**
+ * @brief Parses a single mission.
+ */
+static int mission_parseFile( const char* file )
+{
+   xmlDocPtr doc;
    xmlNodePtr node;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   size_t bufsize;
+   char *filebuf;
+   const char *pos, *start_pos;
+   MissionData *temp;
+
+#ifdef DEBUGGING
+   /* To check if mission is valid. */
+   int ret;
+#endif /* DEBUGGING */
+
+   /* Load string. */
+   filebuf = ndata_read( file, &bufsize );
+   if (filebuf == NULL) {
+      WARN(_("Unable to read data from '%s'"), file);
+      return -1;
+   }
+
+   /* Skip if no XML. */
+   pos = strnstr( filebuf, "</mission>", bufsize );
+   if (pos==NULL) {
+      pos = strnstr( filebuf, "function create", bufsize );
+      if ((pos != NULL) && !strncmp(pos,"--common",bufsize))
+         WARN(_("Mission '%s' has create function but no XML header!"), file);
+      free(filebuf);
+      return 0;
+   }
+
+   /* Separate XML header and Lua. */
+   start_pos = strnstr( filebuf, "<?xml ", bufsize );
+   pos = strnstr( filebuf, "--]]", bufsize );
+   if (pos == NULL || start_pos == NULL) {
+      WARN(_("Mission file '%s' has missing XML header!"), file);
+      return -1;
+   }
+
+   /* Parse the header. */
+   doc = xmlParseMemory( start_pos, pos-start_pos);
+   if (doc == NULL) {
+      WARN(_("Unable to parse document XML header for Mission '%s'"), file);
+      return -1;
+   }
 
    node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_MISSION_ID)) {
-      ERR("Malformed '"MISSION_DATA_PATH"' file: missing root element '"XML_MISSION_ID"'");
+   if (!xml_isNode(node,XML_MISSION_TAG)) {
+      ERR( _("Malformed XML header for '%s' mission: missing root element '%s'"), file, XML_MISSION_TAG );
       return -1;
    }
 
-   node = node->xmlChildrenNode; /* first mission node */
-   if (node == NULL) {
-      ERR("Malformed '"MISSION_DATA_PATH"' file: does not contain elements");
-      return -1;
+   temp = &array_grow(&mission_stack);
+   mission_parseXML( temp, node );
+   temp->lua = strdup(filebuf);
+   temp->sourcefile = strdup(file);
+
+#ifdef DEBUGGING
+   /* Check to see if syntax is valid. */
+   ret = luaL_loadbuffer(naevL, temp->lua, strlen(temp->lua), temp->name );
+   if (ret == LUA_ERRSYNTAX) {
+      WARN(_("Mission Lua '%s' syntax error: %s"),
+            file, lua_tostring(naevL,-1) );
+   } else {
+      lua_pop(naevL, 1);
    }
-
-   m = 0;
-   do {
-      if (xml_isNode(node,XML_MISSION_TAG)) {
-
-         /* See if must grow. */
-         mission_nstack++;
-         if (mission_nstack > m) {
-            m += MISSION_CHUNK;
-            mission_stack = realloc(mission_stack, sizeof(MissionData)*m);
-         }
-
-         /* Load it. */
-         mission_parse( &mission_stack[mission_nstack-1], node );
-      }
-   } while (xml_nextNode(node));
-
-   /* Shrink to minimum. */
-   mission_stack = realloc(mission_stack, sizeof(MissionData)*mission_nstack);
+#endif /* DEBUGGING */
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
-
-   DEBUG("Loaded %d Mission%s", mission_nstack, (mission_nstack==1) ? "" : "s" );
+   free(filebuf);
 
    return 0;
 }
@@ -956,11 +967,10 @@ void missions_free (void)
    missions_cleanup();
 
    /* Free the mission data. */
-   for (i=0; i<mission_nstack; i++)
+   for (i=0; i<array_size(mission_stack); i++)
       mission_freeData( &mission_stack[i] );
-   free( mission_stack );
+   array_free( mission_stack );
    mission_stack = NULL;
-   mission_nstack = 0;
 
    /* Free the player mission stack. */
    for (i=0; i<MISSION_MAX; i++)
@@ -989,11 +999,24 @@ void missions_cleanup (void)
 int missions_saveActive( xmlTextWriterPtr writer )
 {
    int i,j,n;
-   int nitems;
    char **items;
+   const Commodity *c;
+
+   /* We also save specially created cargos here. Since it can only be mission
+    * cargo and can only be placed on the player's main ship, we don't have to
+    * worry about it being on other ships. */
+   xmlw_startElem(writer,"mission_cargo");
+   for (i=0; i<array_size(player.p->commodities); i++) {
+      c = player.p->commodities[i].commodity;
+      if (!c->istemp)
+         continue;
+      xmlw_startElem(writer,"cargo");
+      missions_saveTempCommodity( writer, c );
+      xmlw_endElem(writer); /* "cargo" */
+   }
+   xmlw_endElem(writer); /* "missions_cargo */
 
    xmlw_startElem(writer,"missions");
-
    for (i=0; i<MISSION_MAX; i++) {
       if (player_missions[i]->id != 0) {
          xmlw_startElem(writer,"mission");
@@ -1008,21 +1031,19 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
          /* Markers. */
          xmlw_startElem( writer, "markers" );
-         if (player_missions[i]->markers != NULL) {
-            n = array_size( player_missions[i]->markers );
-            for (j=0; j<n; j++) {
-               xmlw_startElem(writer,"marker");
-               xmlw_attr(writer,"id","%d",player_missions[i]->markers[j].id);
-               xmlw_attr(writer,"type","%d",player_missions[i]->markers[j].type);
-               xmlw_str(writer,"%s", system_getIndex(player_missions[i]->markers[j].sys)->name);
-               xmlw_endElem(writer); /* "marker" */
-            }
+         n = array_size( player_missions[i]->markers );
+         for (j=0; j<n; j++) {
+            xmlw_startElem(writer,"marker");
+            xmlw_attr(writer,"id","%d",player_missions[i]->markers[j].id);
+            xmlw_attr(writer,"type","%d",player_missions[i]->markers[j].type);
+            xmlw_str(writer,"%s", system_getIndex(player_missions[i]->markers[j].sys)->name);
+            xmlw_endElem(writer); /* "marker" */
          }
          xmlw_endElem( writer ); /* "markers" */
 
          /* Cargo */
          xmlw_startElem(writer,"cargos");
-         for (j=0; j<player_missions[i]->ncargo; j++)
+         for (j=0; j<array_size(player_missions[i]->cargo); j++)
             xmlw_elem(writer,"cargo","%u", player_missions[i]->cargo[j]);
          xmlw_endElem(writer); /* "cargos" */
 
@@ -1031,13 +1052,13 @@ int missions_saveActive( xmlTextWriterPtr writer )
             xmlw_startElem(writer,"osd");
 
             /* Save attributes. */
-            items = osd_getItems(player_missions[i]->osd, &nitems);
+            items = osd_getItems(player_missions[i]->osd);
             xmlw_attr(writer,"title","%s",osd_getTitle(player_missions[i]->osd));
-            xmlw_attr(writer,"nitems","%d",nitems);
+            xmlw_attr(writer,"nitems","%d",array_size(items));
             xmlw_attr(writer,"active","%d",osd_getActive(player_missions[i]->osd));
 
             /* Save messages. */
-            for (j=0; j<nitems; j++)
+            for (j=0; j<array_size(items); j++)
                xmlw_elem(writer,"msg","%s",items[j]);
 
             xmlw_endElem(writer); /* "osd" */
@@ -1050,16 +1071,111 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
          /* Write Lua magic */
          xmlw_startElem(writer,"lua");
-         nxml_persistLua( player_missions[i]->L, writer );
+         nxml_persistLua( player_missions[i]->env, writer );
          xmlw_endElem(writer); /* "lua" */
 
          xmlw_endElem(writer); /* "mission" */
       }
    }
-
    xmlw_endElem(writer); /* "missions" */
 
    return 0;
+}
+
+
+/**
+ * @brief Saves a temporary commodity's defintion into the current node.
+ *
+ *    @param writer XML Write to use to save missions.
+ *    @param c Commodity to save.
+ *    @return 0 on success.
+ */
+int missions_saveTempCommodity( xmlTextWriterPtr writer, const Commodity *c )
+{
+   xmlw_attr( writer, "name", "%s", c->name );
+   xmlw_attr( writer, "description", "%s", c->description );
+   for ( int j = 0; j < array_size( c->illegalto ); j++ )
+      xmlw_elem( writer, "illegalto", "%s", faction_name( c->illegalto[ j ] ) );
+   return 0;
+}
+
+
+/**
+ * @brief Loads the player's special mission commodities.
+ *
+ *    @param parent Node containing the player's special mission cargo.
+ *    @return 0 on success.
+ */
+int missions_loadCommodity( xmlNodePtr parent )
+{
+   xmlNodePtr node, cur;
+
+   /* We have to ensure the mission_cargo stuff is loaded first. */
+   node = parent->xmlChildrenNode;
+   do {
+      xml_onlyNodes(node);
+
+      if (xml_isNode(node,"mission_cargo")) {
+         cur = node->xmlChildrenNode;
+         do {
+            xml_onlyNodes(cur);
+            if ( xml_isNode( cur, "cargo" ) )
+               (void)missions_loadTempCommodity( cur );
+         } while ( xml_nextNode( cur ) );
+         continue;
+      }
+   } while ( xml_nextNode( node ) );
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads a temporary commodity.
+ *
+ *    @param cur Node defining the commodity.
+ *    @return The temporary commodity, or NULL on failure.
+ */
+Commodity *missions_loadTempCommodity( xmlNodePtr cur )
+{
+   xmlNodePtr ccur;
+   char *     name, *desc;
+   Commodity *c;
+   int        f;
+
+   xmlr_attr_strd( cur, "name", name );
+   if ( name == NULL ) {
+      WARN( _( "Mission cargo without name!" ) );
+      return NULL;
+   }
+
+   c = commodity_getW( name );
+   if ( c != NULL ) {
+      free( name );
+      return c;
+   }
+
+   xmlr_attr_strd( cur, "description", desc );
+   if ( desc == NULL ) {
+      WARN( _( "Mission temporary cargo '%s' missing description!" ), name );
+      free( name );
+      return NULL;
+   }
+
+   c = commodity_newTemp( name, desc );
+
+   ccur = cur->xmlChildrenNode;
+   do {
+      xml_onlyNodes( ccur );
+      if ( xml_isNode( ccur, "illegalto" ) ) {
+         f = faction_get( xml_get( ccur ) );
+         commodity_tempIllegalto( c, f );
+      }
+   } while ( xml_nextNode( ccur ) );
+
+   free( name );
+   free( desc );
+   return c;
 }
 
 
@@ -1076,10 +1192,15 @@ int missions_loadActive( xmlNodePtr parent )
    /* cleanup old missions */
    missions_cleanup();
 
+   /* After load the normal missions. */
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"missions"))
-         if (missions_parseActive( node ) < 0) return -1;
+      xml_onlyNodes(node);
+      if (xml_isNode(node,"missions")) {
+         if (missions_parseActive( node ) < 0)
+            return -1;
+         continue;
+      }
    } while (xml_nextNode(node));
 
    return 0;
@@ -1100,7 +1221,7 @@ static int missions_parseActive( xmlNodePtr parent )
    char *buf;
    char *title;
    const char **items;
-   int nitems;
+   int nitems, active;
    int id, sys, type;
    StarSystem *ssys;
 
@@ -1109,20 +1230,20 @@ static int missions_parseActive( xmlNodePtr parent )
    m = 0; /* start with mission 0 */
    node = parent->xmlChildrenNode;
    do {
-      if (xml_isNode(node,"mission")) {
+      if (xml_isNode(node, "mission")) {
          misn = player_missions[m];
 
          /* process the attributes to create the mission */
-         xmlr_attr(node,"data",buf);
+         xmlr_attr_strd(node, "data", buf);
          data = mission_get(mission_getID(buf));
          if (data == NULL) {
-            WARN("Mission '%s' from savegame not found in game - ignoring.", buf);
+            WARN(_("Mission '%s' from saved game not found in game - ignoring."), buf);
             free(buf);
             continue;
          }
          else {
             if (mission_init( misn, data, 0, 0, NULL )) {
-               WARN("Mission '%s' from savegame failed to load properly - ignoring.", buf);
+               WARN(_("Mission '%s' from saved game failed to load properly - ignoring."), buf);
                free(buf);
                continue;
             }
@@ -1131,13 +1252,10 @@ static int missions_parseActive( xmlNodePtr parent )
          free(buf);
 
          /* this will orphan an identifier */
-         xmlr_attr(node,"id",buf);
-         misn->id = atol(buf);
-         free(buf);
+         xmlr_attr_int(node, "id", misn->id);
 
          cur = node->xmlChildrenNode;
          do {
-
             xmlr_strd(cur,"title",misn->title);
             xmlr_strd(cur,"desc",misn->desc);
             xmlr_strd(cur,"reward",misn->reward);
@@ -1147,20 +1265,12 @@ static int missions_parseActive( xmlNodePtr parent )
                nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"marker")) {
-                     /* Get ID. */
-                     xmlr_attr(nest,"id",buf);
-                     id = (buf != NULL) ? atoi(buf) : -1;
-                     if (buf != NULL)
-                        free(buf);
-                     /* Get type. */
-                     xmlr_attr(nest,"type",buf);
-                     type = (buf != NULL) ? atoi(buf) : -1;
-                     if (buf != NULL)
-                        free(buf);
+                     xmlr_attr_int_def( nest, "id", id, -1 );
+                     xmlr_attr_int_def( nest, "type", type, -1 );
                      /* Get system. */
                      ssys = system_get( xml_get( nest ));
                      if (ssys == NULL) {
-                        WARN( "System Marker to '%s' does not exist", xml_get( nest ) );
+                        WARN( _("System Marker to '%s' does not exist"), xml_get( nest ) );
                         continue;
                      }
                      sys = system_index( ssys );
@@ -1180,21 +1290,17 @@ static int missions_parseActive( xmlNodePtr parent )
 
             /* OSD. */
             if (xml_isNode(cur,"osd")) {
-               xmlr_attr(cur,"nitems",buf);
-               if (buf != NULL) {
-                  nitems = atoi(buf);
-                  free(buf);
-               }
-               else
+               xmlr_attr_int_def( cur, "nitems", nitems, -1 );
+               if (nitems == -1)
                   continue;
-               xmlr_attr(cur,"title",title);
+               xmlr_attr_strd(cur,"title",title);
                items = malloc( nitems * sizeof(char*) );
                i = 0;
                nest = cur->xmlChildrenNode;
                do {
                   if (xml_isNode(nest,"msg")) {
                      if (i > nitems) {
-                        WARN("Inconsistency with 'nitems' in savefile.");
+                        WARN(_("Inconsistency with 'nitems' in save file."));
                         break;
                      }
                      items[i] = xml_get(nest);
@@ -1202,17 +1308,15 @@ static int missions_parseActive( xmlNodePtr parent )
                   }
                } while (xml_nextNode(nest));
 
-               /* Create the osd. */
+               /* Create the OSD. */
                misn->osd = osd_create( title, nitems, items, data->avail.priority );
                free(items);
                free(title);
 
                /* Set active. */
-               xmlr_attr(cur,"active",buf);
-               if (buf != NULL) {
-                  osd_active( misn->osd, atoi(buf) );
-                  free(buf);
-               }
+               xmlr_attr_int_def( cur, "active", active, -1 );
+               if (active != -1)
+                  osd_active( misn->osd, active );
             }
 
             /* Claims. */
@@ -1221,7 +1325,7 @@ static int missions_parseActive( xmlNodePtr parent )
 
             if (xml_isNode(cur,"lua"))
                /* start the unpersist routine */
-               nxml_unpersistLua( misn->L, cur );
+               nxml_unpersistLua( misn->env, cur );
 
          } while (xml_nextNode(cur));
 

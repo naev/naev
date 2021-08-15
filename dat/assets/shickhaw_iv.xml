@@ -5,13 +5,13 @@
   <y>35214.619688</y>
  </pos>
  <GFX>
-  <space>P01.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>P01.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services/>
  </general>
 </asset>

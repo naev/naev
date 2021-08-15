@@ -80,7 +80,7 @@ static void rct_render( Widget* rct, double bx, double by )
    if (rct->dat.rct.border) {
       /* inner outline */
       toolkit_drawOutline( x, y, rct->w, rct->h, 0.,
-            toolkit_colLight, toolkit_col );
+            toolkit_colLight, NULL );
       /* outer outline */
       toolkit_drawOutline( x, y, rct->w, rct->h, 1.,
             toolkit_colDark, NULL );

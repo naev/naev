@@ -5,8 +5,8 @@
   <y>2440.546171</y>
  </pos>
  <GFX>
-  <space>station-fleetbase2.png</space>
-  <exterior>station05.png</exterior>
+  <space>station-fleetbase2.webp</space>
+  <exterior>station05.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>1000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>srs_mil_restricted</land>
    <refuel/>
@@ -33,6 +33,7 @@
   <item>Engines Medium</item>
   <item>Ion 1</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Missiles 2</item>
  </tech>
 </asset>

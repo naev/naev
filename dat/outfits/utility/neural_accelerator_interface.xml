@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Neural Accelerator Interface">
+ <general>
+  <typename>Speed Modifier</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <rarity>1</rarity>
+  <license>Medium Weapon License</license>
+  <mass>1</mass>
+  <price>450000</price>
+  <description>The flow of time is in general not perceived as a constant value, rather it fluctuates greatly depending on the circumstances. Using latest in neuro-interface technology, the Neural Accelerator Interface is able to exploit large amounts of ship energy to change the perception of time and accelerate the piloted ship.</description>
+  <desc_extra>Active for 5 seconds with a cooldown of 20 seconds.</desc_extra>
+  <gfx_store>neural_accelerator_interface.webp</gfx_store>
+  <limit>neural_accelerator_interface</limit>
+ </general>
+ <specific type="modification" group="8">
+  <lua>outfits/utility/neural_accelerator_interface.lua</lua>
+  <energy_regen_mod>-80</energy_regen_mod>
+  <time_mod>-50</time_mod>
+  <time_speedup>50</time_speedup>
+ </specific>
+</outfit>

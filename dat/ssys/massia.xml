@@ -20,6 +20,8 @@
   <asset>Sinclair</asset>
   <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Independent Trader Area</asset>
+  <asset>Virtual Independent Trader Area</asset>
   <asset>Virtual Pirate Small</asset>
   <asset>Virtual Trader Area</asset>
   <asset>Virtual Trader Area</asset>
@@ -27,7 +29,7 @@
  <jumps>
   <jump target="Klantar">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

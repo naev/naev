@@ -5,8 +5,8 @@
   <y>-9372.732177</y>
  </pos>
  <GFX>
-  <space>station-commerce2.png</space>
-  <exterior>station05.png</exterior>
+  <space>station-commerce2.webp</space>
+  <exterior>station05.webp</exterior>
  </GFX>
  <presence>
   <faction>Independent</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>14000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -26,13 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Renowned for its outfit market and shipyards, nearly the entirety of the Darkshed station is dedicated to trading outfits and ships. Mercenaries and bounty hunters from all over the galaxy come here to see and try the newest enhancements available on the market. It also tends to attract many of the shadier characters in the universe, leading to frequent fights in which they test their newly bought outfits.</description>
   <bar>The Darkshed canteen is decorated with all sorts of odd artifacts that chronicle trends in spaceship outfitting over the years since the station was established. Scale models of many popular ships hang from the ceiling.</bar>
  </general>
@@ -46,6 +40,7 @@
   <item>Kinetic 1</item>
   <item>Plasma 1</item>
   <item>High Tech Upgrades 2</item>
+  <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>Basic Trade Ships</item>
   <item>Bulk Trade Ships</item>

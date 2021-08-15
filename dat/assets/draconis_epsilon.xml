@@ -5,8 +5,8 @@
   <y>22915.385326</y>
  </pos>
  <GFX>
-  <space>M01.png</space>
-  <exterior>station04.png</exterior>
+  <space>M01.webp</space>
+  <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>7900000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Medicine</commodity>
-   <commodity>Luxury Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Draconis Epsilon is a densely populated Imperial world. It grew rich in the days before the Incident, when Draconis was still a core system, not at the outer fringes of Imperial controlled territory. The inhabitants here have suffered from the change, but not as much as you might expect. The world maintains a solid consumer base.</description>
   <bar>The spaceport bar on Draconis Epsilon is circular in shape, with exits all around leading to the various spaceport platforms. The place is gigantic, providing seats for up to ten thousand customers at the same time, and more at the bar. Most spacers who have visited Epsilon Draconis agree that few spaceport bars are quite as impressive as this one.</bar>
  </general>
@@ -39,7 +35,9 @@
   <item>Hulls Low</item>
   <item>Laser 2</item>
   <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
   <item>High Tech Upgrades 1</item>
   <item>Systems High</item>
+  <item>Empire Elite Outfits</item>
  </tech>
 </asset>

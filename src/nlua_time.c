@@ -8,17 +8,17 @@
  * @brief Time manipulation Lua bindings.
  */
 
-#include "nlua_time.h"
-
-#include "naev.h"
-
+/** @cond */
+#include <lauxlib.h>
 #include <stdlib.h>
 
-#include <lauxlib.h>
+#include "naev.h"
+/** @endcond */
 
-#include "nlua.h"
-#include "nluadef.h"
+#include "nlua_time.h"
+
 #include "log.h"
+#include "nluadef.h"
 #include "ntime.h"
 
 
@@ -36,7 +36,7 @@ static int time_str( lua_State *L );
 static int time_inc( lua_State *L );
 static int time_tonumber( lua_State *L );
 static int time_fromnumber( lua_State *L );
-static const luaL_reg time_methods[] = {
+static const luaL_Reg time_methods[] = {
    { "create", time_create },
    { "add", time_add__ },
    { "__add", time_add },
@@ -53,50 +53,17 @@ static const luaL_reg time_methods[] = {
    { "fromnumber", time_fromnumber },
    {0,0}
 }; /**< Time Lua methods. */
-static const luaL_reg time_cond_methods[] = {
-   { "create", time_create },
-   { "add", time_add__ },
-   { "__add", time_add },
-   { "sub", time_sub__ },
-   { "__sub", time_sub },
-   { "__eq", time_eq },
-   { "__lt", time_lt },
-   { "__le", time_le },
-   { "get", time_get },
-   { "str", time_str },
-   { "__tostring", time_str },
-   { "tonumber", time_tonumber },
-   { "fromnumber", time_fromnumber },
-   {0,0}
-}; /**< Time Lua conditional methods. */
 
 
 /**
  * @brief Loads the Time Lua library.
  *
- *    @param L Lua state.
- *    @param readonly Whether to open it as read only.
+ *    @param env Lua environment.
  *    @return 0 on success.
  */
-int nlua_loadTime( lua_State *L, int readonly )
+int nlua_loadTime( nlua_env env )
 {
-   (void) readonly;
-   /* Create the metatable */
-   luaL_newmetatable(L, TIME_METATABLE);
-
-   /* Create the access table */
-   lua_pushvalue(L,-1);
-   lua_setfield(L,-2,"__index");
-
-   /* Register the values */
-   if (readonly)
-      luaL_register(L, NULL, time_cond_methods);
-   else
-      luaL_register(L, NULL, time_methods);
-
-   /* Clean up. */
-   lua_setfield(L, LUA_GLOBALSINDEX, TIME_METATABLE);
-
+   nlua_register(env, TIME_METATABLE, time_methods, 1);
    return 0; /* No error */
 }
 
@@ -199,23 +166,23 @@ int lua_istime( lua_State *L, int ind )
  *
  * @usage t = time.create( 591, 3271, 12801 ) -- Gets a time near when the incident happened.
  *
- *    @luatparam number scu SCU for the new time.
- *    @luatparam number stp STP for the new time.
- *    @luatparam number stu STU for the new time.
+ *    @luatparam number cycles Cycles for the new time.
+ *    @luatparam number periods Periods for the new time.
+ *    @luatparam number seconds Seconds for the new time.
  *    @luatreturn Time A newly created time metatable.
- * @luafunc create( scu, stp, stu )
+ * @luafunc create
  */
 static int time_create( lua_State *L )
 {
-   int scu, stp, stu;
+   int cycles, periods, seconds;
 
    /* Parameters. */
-   scu = luaL_checkint(L,1);
-   stp = luaL_checkint(L,2);
-   stu = luaL_checkint(L,3);
+   cycles = luaL_checkint(L,1);
+   periods = luaL_checkint(L,2);
+   seconds = luaL_checkint(L,3);
 
    /* Create the time. */
-   lua_pushtime( L, ntime_create( scu, stp, stu ) );
+   lua_pushtime( L, ntime_create( cycles, periods, seconds ) );
    return 1;
 }
 /**
@@ -223,11 +190,11 @@ static int time_create( lua_State *L )
  *
  * Overrides the addition operator.
  *
- * @usage new_time = time.get() + time.create( 0, 5, 0 ) -- Adds 5 STP to the current date
+ * @usage new_time = time.get() + time.create( 0, 5, 0 ) -- Adds 5 periods to the current date
  *
  *    @luatparam Time t1 Time metatable to add to.
  *    @luatparam Time t2 Time metatable added.
- * @luafunc add( t1, t2)
+ * @luafunc add
  */
 static int time_add( lua_State *L )
 {
@@ -266,11 +233,11 @@ static int time_add__( lua_State *L )
  *
  * Overrides the subtraction operator.
  *
- * @usage new_time = time.get() - time.create( 0, 3, 0 ) -- Subtracts 3 STP to the current date
+ * @usage new_time = time.get() - time.create( 0, 3, 0 ) -- Subtracts 3 periods from the current date
  *
  *    @luatparam Time t1 Time metatable to subtract from.
  *    @luatparam Time t2 Time metatable subtracted.
- * @luafunc sub( t1, t2)
+ * @luafunc sub
  */
 static int time_sub( lua_State *L )
 {
@@ -314,7 +281,7 @@ static int time_sub__( lua_State *L )
  *    @luatparam Time t1 Time to compare for equality.
  *    @luatparam Time t2 Time to compare for equality.
  *    @luatreturn boolean true if they're equal.
- * @luafunc __eq( t1, t2 )
+ * @luafunc __eq
  */
 static int time_eq( lua_State *L )
 {
@@ -332,7 +299,7 @@ static int time_eq( lua_State *L )
  *    @luatparam Time t1 Time to see if is is smaller than t2.
  *    @luatparam Time t2 Time see if is larger than t1.
  *    @luatreturn boolean true if t1 < t2
- * @luafunc __lt( t1, t2 )
+ * @luafunc __lt
  */
 static int time_lt( lua_State *L )
 {
@@ -350,7 +317,7 @@ static int time_lt( lua_State *L )
  *    @luatparam Time t1 Time to see if is is smaller or equal to than t2.
  *    @luatparam Time t2 Time see if is larger or equal to than t1.
  *    @luatreturn boolean true if t1 <= t2
- * @luafunc __le( t1, t2 )
+ * @luafunc __le
  */
 static int time_le( lua_State *L )
 {
@@ -366,7 +333,7 @@ static int time_le( lua_State *L )
  * @usage t = time.get()
  *
  *    @luatreturn Time Time in internal representation time.
- * @luafunc get()
+ * @luafunc get
  */
 static int time_get( lua_State *L )
 {
@@ -377,14 +344,14 @@ static int time_get( lua_State *L )
  * @brief Converts the time to a pretty human readable format.
  *
  * @usage strt = time.str() -- Gets current time
- * @uasge strt = time.str( nil, 5 ) -- Gets current time with full decimals
- * @usage strt = time.str( time.get() + time.create(0,5,0) ) -- Gets time in 5 STP
+ * @usage strt = time.str( nil, 5 ) -- Gets current time with full decimals
+ * @usage strt = time.str( time.get() + time.create(0,5,0) ) -- Gets time in 5 periods
  * @usage strt = t:str() -- Gets the string of t
  *
  *    @luatparam Time t Time to convert to pretty format.  If omitted, current time is used.
- *    @luatparam[opt=2] number d Decimals to use for displaying STU (should be between 0 and 5).
+ *    @luatparam[opt=2] number d Decimals to use for displaying seconds (should be between 0 and 5).
  *    @luatreturn string The time in human readable format.
- * @luafunc str( t, d )
+ * @luafunc str
  */
 static int time_str( lua_State *L )
 {
@@ -393,17 +360,13 @@ static int time_str( lua_State *L )
    char nt[64];
    int d;
 
-   /* Defaults. */
-   d = 2;
-
    /* Parse parameters. */
    top = lua_gettop(L);
    if ((top > 0) && !lua_isnil(L,1))
       t = luaL_validtime(L,1);
    else
       t = ntime_get();
-   if (top > 1)
-      d = luaL_checkint(L,2);
+   d = luaL_optinteger(L,2,2); /* Defaults to 2 decimals. */
 
    /* Push string. */
    ntime_prettyBuf( nt, sizeof(nt), t, d );
@@ -415,13 +378,14 @@ static int time_str( lua_State *L )
 /**
  * @brief Increases or decreases the time.
  *
- * @usage time.inc( time.create(0,0,100) ) -- Increments the time by 100 STU.
+ * @usage time.inc( time.create(0,0,100) ) -- Increments the time by 100 seconds.
  *
  *    @luatparam Time t Amount to increment or decrement the time by.
- * @luafunc inc( t )
+ * @luafunc inc
  */
 static int time_inc( lua_State *L )
 {
+   NLUA_CHECKRW(L);
    ntime_inc( luaL_validtime(L,1) );
    return 0;
 }
@@ -436,7 +400,7 @@ static int time_inc( lua_State *L )
  *
  *    @luatparam Time t Time to get number of.
  *    @luatreturn number Number representing time.
- * @luafunc tonumber( t )
+ * @luafunc tonumber
  */
 static int time_tonumber( lua_State *L )
 {
@@ -455,7 +419,7 @@ static int time_tonumber( lua_State *L )
  *
  *    @luatparam number num Number to get time from.
  *    @luatreturn Time Time representing number.
- * @luafunc fromnumber( num )
+ * @luafunc fromnumber
  */
 static int time_fromnumber( lua_State *L )
 {

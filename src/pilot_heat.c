@@ -10,13 +10,22 @@
  */
 
 
-#include "pilot_heat.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <math.h>
 
+#include "naev.h"
+/** @endcond */
+
+#include "pilot_heat.h"
+
+#include "array.h"
 #include "log.h"
+
+
+/*
+ * Prototypes.
+ */
+static double pilot_heatOutfitMod( const Pilot *p, const Outfit *o );
 
 
 /**
@@ -103,8 +112,28 @@ void pilot_heatReset( Pilot *p )
    int i;
 
    p->heat_T = CONST_SPACE_STAR_TEMP;
-   for (i=0; i<p->noutfits; i++)
+   for (i=0; i<array_size(p->outfits); i++)
       p->outfits[i]->heat_T = CONST_SPACE_STAR_TEMP;
+}
+
+
+/**
+ * @brief Gets the heat mod for an outfit.
+ */
+static double pilot_heatOutfitMod( const Pilot *p, const Outfit *o )
+{
+   switch (o->type) {
+      case OUTFIT_TYPE_BOLT:
+      case OUTFIT_TYPE_BEAM:
+         return p->stats.fwd_heat;
+
+      case OUTFIT_TYPE_TURRET_BOLT:
+      case OUTFIT_TYPE_TURRET_BEAM:
+         return p->stats.tur_heat;
+
+      default:
+         return 1;
+   }
 }
 
 
@@ -114,17 +143,12 @@ void pilot_heatReset( Pilot *p )
  *    @param p Pilot whose slot it is.
  *    @param o The slot in question.
  */
-void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
+void pilot_heatAddSlot( const Pilot *p, PilotOutfitSlot *o )
 {
-   double hmod;
    /* We consider that only 1% of the energy is lost in the form of heat,
-    * this keeps numbers sane. */
-   if (o->outfit->type == OUTFIT_TYPE_BOLT)
-      hmod = p->stats.fwd_heat;
-   else if (o->outfit->type == OUTFIT_TYPE_TURRET_BOLT)
-      hmod = p->stats.tur_heat;
-   else
-      hmod = 1.;
+    * this keeps numbers safe. */
+   double hmod = pilot_heatOutfitMod( p, o->outfit );
+
    o->heat_T += hmod * outfit_heat(o->outfit) / o->heat_C;
 
    /* Enforce a minimum value as a safety measure. */
@@ -139,13 +163,10 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
  *    @param o The slot in question.
  *    @param dt Delta tick.
  */
-void pilot_heatAddSlotTime( Pilot *p, PilotOutfitSlot *o, double dt )
+void pilot_heatAddSlotTime( const Pilot *p, PilotOutfitSlot *o, double dt )
 {
-   (void) p;
-   double hmod;
+   double hmod = pilot_heatOutfitMod( p, o->outfit );
 
-   /* @todo Handle beam modifiers for ships here. */
-   hmod = 1.;
    o->heat_T += (hmod * outfit_heat(o->outfit) / o->heat_C) * dt;
 
    /* Enforce a minimum value as a safety measure. */
@@ -171,7 +192,7 @@ void pilot_heatAddSlotTime( Pilot *p, PilotOutfitSlot *o, double dt )
  *    @param dt Delta tick.
  *    @return The energy transferred.
  */
-double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt )
+double pilot_heatUpdateSlot( const Pilot *p, PilotOutfitSlot *o, double dt )
 {
    double Q;
 
@@ -204,7 +225,7 @@ double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt )
  *  To being "space temperature"
  *
  *    @param p Pilot to update.
- *    @param Q Heat energy moved from slots.
+ *    @param Q_cond Heat energy moved from slots.
  *    @param dt Delta tick.
  */
 void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
@@ -239,22 +260,42 @@ double pilot_heatEfficiencyMod( double T, double Tb, double Tc )
  * @brief Overrides the usual heat model during active cooldown.
  *
  *    @param p  Pilot to update.
- *    @param dt Delta tick.
  */
 void pilot_heatUpdateCooldown( Pilot *p )
 {
    double t;
-   int i;
+   int i, ammo_threshold;
    PilotOutfitSlot *o;
+   Outfit *ammo;
 
    t = pow2( 1. - p->ctimer / p->cdelay );
    p->heat_T = p->heat_start - CONST_SPACE_STAR_TEMP - (p->heat_start -
          CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
 
-   for (i=0; i<p->noutfits; i++) {
+   for (i=0; i<array_size(p->outfits); i++) {
       o = p->outfits[i];
       o->heat_T = o->heat_start - CONST_SPACE_STAR_TEMP - (o->heat_start -
             CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
+
+      /* Refill ammo too (also part of Active Cooldown) */
+      /* Must be valid outfit. */
+      if (o->outfit == NULL)
+         continue;
+
+      /* Add ammo if able to. */
+      ammo = outfit_ammo( o->outfit );
+      if (ammo == NULL)
+         continue;
+
+      /* Initial (raw) ammo threshold */
+      ammo_threshold = round(t * pilot_maxAmmoO(p,o->outfit));
+
+      /* Adjust for deployed fighters if needed */
+      if ( outfit_isFighterBay( o->outfit ) )
+         ammo_threshold -= o->u.ammo.deployed;
+
+      if ( o->u.ammo.quantity < ammo_threshold )
+         pilot_addAmmo( p, p->outfits[i], ammo, ammo_threshold - o->u.ammo.quantity );
    }
 }
 
@@ -281,6 +322,6 @@ double pilot_heatFireRateMod( double T )
  */
 double pilot_heatFirePercent( double T )
 {
-   return 2*pilot_heatAccuracyMod(T);
+   return 2.*pilot_heatAccuracyMod(T);
 }
 

@@ -1,4 +1,20 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Drinking Aristocrat">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>5</chance>
+  <location>Bar</location>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
+--[[
 
   Drinking Aristocrat
   Author: geekt
@@ -10,88 +26,76 @@ Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning
 
 ]]--
 
-include "dat/scripts/jumpdist.lua"
-include "dat/scripts/numstring.lua"
+require "jumpdist"
+require "numstring"
+require "missions/neutral/common"
 
-bar_desc = "You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip."
+
+bar_desc = _("You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip.")
 
 -- Mission Details
-misn_title = "Drinking Aristocrat"
-misn_reward = "He will pay handsomely."
-misn_desc = "Go find a specific drink for an aristocrat."
+misn_title = _("Drinking Aristocrat")
+misn_reward = _("He will pay handsomely.")
+misn_desc = _("Go find a specific drink for an aristocrat.")
 
 -- OSD
-OSDtitle = "Find the Drink"
-OSDdesc = "Go to %s in the %s system and look for the special drink that the Aristocrat wants."
+OSDtitle = _("Find the Drink")
+OSDdesc = _("Go to %s in the %s system and look for the special drink that the Aristocrat wants")
 OSDtable = {}
 
 -- defines Previous Planets table
 prevPlanets = {}
 prevPlanets.__save = true
 
-payment = 75000
+payment = 200e3
 
 title = {}  --stage titles
 text = {}   --mission text
 
-title[1] = "Drinking Aristocrat"
-text[1] = [[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so, common.
-    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been %s in the %s system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]
+title[1] = _("Drinking Aristocrat")
+text[1] = _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so, common.
+    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been %s in the %s system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]])
 
-title[2] = "Leave Immediately"
-text[2] = [["Oh good! Of course you will be paid handsomely for your efforts. I trust you can figure out how to get it here intact on your own." The aristocrat goes back to sipping his drink, making an awful face every time he tastes it, ignoring you. You walk away, a bit confused.]]
+title[2] = _("Leave Immediately")
+text[2] = _([["Oh good! Of course you will be paid handsomely for your efforts. I trust you can figure out how to get it here intact on your own." The aristocrat goes back to sipping his drink, making an awful face every time he tastes it, ignoring you. You walk away, a bit confused.]])
 
-title[3] = "Refuse"
-text[3] = [["What do you mean, you can't leave right away? Then why even bother? Remove yourself from my sight." The aristocrat makes a horrible face, and sips his drink, only to look even more disgusted. He puts his drink back on the table and motions to the bartender, ignoring you beyond now.]]
+title[3] = _("Refuse")
+text[3] = _([["What do you mean, you can't leave right away? Then why even bother? Remove yourself from my sight." The aristocrat makes a horrible face, and sips his drink, only to look even more disgusted. He puts his drink back on the table and motions to the bartender, ignoring you beyond now.]])
 
-cluetitle = "Clue"
-cluetxt = [[You walk into the bar and approach the bartender, a %s %s with %s hair, wearing %s. You describe the drink to %s, but %s doesn't seem to know what you're talking about. There is another bartender that %s thinks may be able to help you though, at %s in the %s system.]]
+cluetitle = _("Clue")
+cluetxt = _([[You walk into the bar and approach the bartender. You describe the drink, but the bartender doesn't seem to know what you're talking about. There is another bartender that they think may be able to help you though, at %s in the %s system.]])
 
-moreinfotitle = "A bit more info..."
-moreinfotxt = [[You walk into the bar and see a %s %s behind the bar wearing %s. When you approach %s and describe the drink, %s tells you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender that used to work here. "It's called a Swamp Bombing." Although %s is not sure where %s works now, %s can tell you where %s started working after %s left. If you're lucky, %s will still be working there. With high hopes, you decide to set off to %s in the %s system.]]
+moreinfotitle = _("A bit more info...")
+moreinfotxt = {}
+moreinfotxt[1] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where they work now, but they started working at the bar on %s in the %s system after they left here. Good luck!" With high hopes, you decide to head off to there.]])
+moreinfotxt[2] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where he works now, but he started working at the bar on %s in the %s system after he left here. Good luck!" With high hopes, you decide to head off to there.]])
+moreinfotxt[3] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where she works now, but she started working at the bar on %s in the %s system after she left here. Good luck!" With high hopes, you decide to head off to there.]])
 
-exworktitle = "Is this it?"
-exworktxt = [[You walk into the bar fully confident that this is the bar. You walk up to the bartender, a %s %s with %s hair wearing %s, and ask for a Swamp Bombing. "A wha???" Guess this isn't the right bar. You get another possible clue, %s in the %s system, and head on your way.]]
+exworktitle = _("Is this it?")
+exworktxt = _([[You walk into the bar fully confident that this is the bar. You walk up to the bartender and ask for a Swamp Bombing. "A wha???" Guess this isn't the right bar. You get another possible clue, %s in the %s system, and head on your way.]])
 
-worktitle = "This is it!"
-worktxt = [[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, a %s %s with %s hair, wearing %s, and smile. This has to be %s. You start to describe the drink to %s and %s interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if %s can make it to go, and %s laughs and says "Sure, I guess."
-    Just as %s is about to start making it though, you stop %s and tell %s you'll have one here after all. As long as you came all this way, you might as well try it. You're amazed at how quickly and gracefully %s trained hands move, flipping bottles and shaking various containers. Before you know it, %s is setting a drink before you, and closing another container for you to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]]
+worktitle = _("This is it!")
+worktxt = {}
+worktxt[1] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be them. You start to describe the drink to them and they interrupt. "A Swamp Bombing. Of course, that's my specialty." You ask if they can make it to go, prompting a bit of a chuckle. "Sure, why not?"
+    Just as they're about to start making it, though, you stop them and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully their trained hands move, flipping bottles and shaking various containers. Before you know it, they've set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
+worktxt[2] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be him. You start to describe the drink to them and he interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if he can make it to go, prompting a bit of a chuckle. "Sure, why not?"
+    Just as he's about to start making it, though, you stop him and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully his trained hands move, flipping bottles and shaking various containers. Before you know it, he's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
+worktxt[3] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be her. You start to describe the drink to her and she interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if she can make it to go, prompting a bit of a chuckle. "Sure, why not?"
+    Just as she's about to start making it, though, you stop her and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully her trained hands move, flipping bottles and shaking various containers. Before you know it, she's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
 
-finishedtitle = "Delivery"
-finishedtxt = [["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %s credits should be appropriate."
-    Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.]]
+finishedtitle = _("Delivery")
+finishedtxt = _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %s should be appropriate."
+    Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
+    When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]])
 
-gender = {}
-gender[1] = "man"
-gender[2] = "woman"
+log_text = _([[You delivered a special drink called a Swamp Bombing to an aristocrat.]])
 
-himher = {}
-himher[1] = "him"
-himher[2] = "her"
-
-hisher = {}
-hisher[1] = "his"
-hisher[2] = "her"
-
-heshe = {}
-heshe[1] = "he"
-heshe[2] = "she"
-
-desc = { "tall", "short", "fat", "ugly", "scary", "muscular", "nice looking" }
-
-hairdesc = { "no", "brown", "brunette", "blonde", "red", "strawberry blonde", "golden blonde", "dirty blonde", "white", "blue", "orange", "green", "dark", "dark brown", "dark brunette", "dark red", "dark blue", "dark orange", "dark green", "light", "light brown", "light brunette", "light blonde", "light strawberry blonde", "light golden blonde", "light dirty blonde", "light red", "light blue", "light orange", "light green", "short", "short brown", "short brunette", "short blonde", "short strawberry blonde", "short golden blonde", "short dirty blonde", "short red", "short blue", "short white", "short orange", "short green", "short dark", "long", "long brown", "long brunette", "long blonde", "long strawberry blonde", "long golden blonde", "long dirty blonde", "long red", "long blue", "long white", "long orange", "long green", "long dark", "curly", "curly, brown", "curly, brunette", "curly, blonde", "curly, strawberry blonde", "curly, golden blonde", "curly, dirty blonde", "curly, red", "curly, blue", "curly, white", "curly, orange", "curly, green", "curly, dark", "wavy", "wavy, brown", "wavy, brunette", "wavy, blonde", "wavy, strawberry blonde", "wavy, golden blonde", "wavy, dirty blonde", "wavy, red", "wavy, blue", "wavy, white", "wavy, orange", "wavy, green", "wavy, dark", "natty", "greasy", "dirty", "smelly" }
-
-clothing = {}
-clothing[1] = { "a suit", "a black suit", "a purple suit", "a blue suit", "a beach shirt", "a floral shirt", "a blue shirt", "a red shirt", "a white shirt", "a white dress shirt", "a red vest", "a blue vest", "a tux", "a black tux", "robes", "brown robes", "black robes", "blue robes", "dark blue robes", "all black", "all blue", "all purple", "all red"}
-
-clothing[2] = { "a dress", "a blue dress", "a black dress", "a purple dress", "a red dress", "a sexy blue dress", "a sexy red dress", "a sexy black dress", "a short blue dress", "a short red dress", "a short black dress", "a beach shirt", "a floral shirt", "a blue shirt", "a red shirt", "a white shirt", "a white dress shirt", "robes", "brown robes", "black robes", "blue robes", "dark blue robes", "all black", "all blue", "all purple", "all red"}
 
 function create ()
    -- Note: this mission does not make any system claims.
 
    -- creates the NPC at the bar to create the mission
-   misn.setNPC( "Drinking Aristocrat", "neutral/unique/aristocrat" )
-   misn.setDesc( bar_desc )
+   misn.setNPC( _("Drinking Aristocrat"), "neutral/unique/aristocrat.webp", bar_desc )
 
    startplanet, startsys = planet.cur()
 
@@ -127,10 +131,7 @@ function accept ()
       numexwork = rnd.rnd(1,3)
 
       -- final bartender data
-      fintendergen = rnd.rnd(1,2)
-      fintenderdesc = rnd.rnd(1, #desc)
-      fintenderhair = rnd.rnd(1, #hairdesc)
-      fintendercloth = rnd.rnd(1, #clothing[fintendergen])
+      fintendergen = rnd.rnd(1,3)
 
       -- hooks
       landhook = hook.land ("land", "bar")
@@ -144,18 +145,13 @@ function land ()
          numclues = numclues - 1
          numjumps = numjumps + 1
 
-         -- current bartender data
-         curtendergen = rnd.rnd(1,2)
-         curtenderdesc = rnd.rnd(1, #desc)
-         curtenderhair = rnd.rnd(1, #hairdesc)
-         curtendercloth = rnd.rnd(1, #clothing[curtendergen])
-
          -- next planet
          clueplanet, cluesys = getclueplanet(1, 3)
          misn.markerMove( landmarker, cluesys )
          prevPlanets[#prevPlanets+1] = clueplanet
 
-         tk.msg( cluetitle, cluetxt:format( desc[curtenderdesc], gender[curtendergen], hairdesc[curtenderhair], clothing[curtendergen][curtendercloth], himher[curtendergen], heshe[curtendergen], heshe[curtendergen], clueplanet:name(), cluesys:name() ) )
+         tk.msg( cluetitle, cluetxt:format(
+            clueplanet:name(), cluesys:name() ) )
 
       else
          if not foundexwork then   -- find out that it's a bartender's specialty
@@ -163,51 +159,43 @@ function land ()
             numexwork = numexwork - 1
             numjumps = numjumps + 1
 
-            -- current bartender data
-            curtendergen = rnd.rnd(1,2)
-            curtenderdesc = rnd.rnd(1, #desc)
-            curtenderhair = rnd.rnd(1, #hairdesc)
-            curtendercloth = rnd.rnd(1, #clothing[curtendergen])
-
             -- next planet
             clueplanet, cluesys = getclueplanet(1, 5)
             misn.markerMove( landmarker, cluesys )
             prevPlanets[#prevPlanets+1] = clueplanet
 
-            tk.msg( moreinfotitle, moreinfotxt:format( desc[curtenderdesc], gender[curtendergen], clothing[curtendergen][curtendercloth], himher[curtendergen], heshe[curtendergen], heshe[curtendergen], heshe[fintendergen], heshe[curtendergen], heshe[fintendergen], heshe[fintendergen], heshe[fintendergen], clueplanet:name(), cluesys:name() ) )
+            tk.msg( moreinfotitle, moreinfotxt[fintendergen]:format(
+               clueplanet:name(), cluesys:name() ) )
 
          else   -- find another bar that the bartender used to work at
             if numexwork > 0 then
                numexwork = numexwork - 1
-
-               -- current bartender data
-               curtendergen = rnd.rnd(1,2)
-               curtenderdesc = rnd.rnd(1, #desc)
-               curtenderhair = rnd.rnd(1, #hairdesc)
-               curtendercloth = rnd.rnd(1, #clothing[curtendergen])
 
                -- next planet
                clueplanet, cluesys = getclueplanet(1, 5)
                misn.markerMove( landmarker, cluesys )
                prevPlanets[#prevPlanets+1] = clueplanet
 
-               tk.msg( exworktitle, exworktxt:format( desc[curtenderdesc], gender[curtendergen], hairdesc[curtenderhair], clothing[curtendergen][curtendercloth], clueplanet:name(), cluesys:name() ) )
+               tk.msg( exworktitle, exworktxt:format(
+                  clueplanet:name(), cluesys:name() ) )
 
-            else  -- get the drink
+            elseif not hasDrink then  -- get the drink
                hasDrink = true
 
-               tk.msg( worktitle, worktxt:format( desc[fintenderdesc], gender[fintendergen], hairdesc[fintenderhair], clothing[fintendergen][fintendercloth], himher[fintendergen], himher[fintendergen], heshe[fintendergen], heshe[fintendergen], heshe[fintendergen], heshe[fintendergen], himher[fintendergen], himher[fintendergen], hisher[fintendergen], heshe[fintendergen] ) )
+               tk.msg( worktitle, worktxt[fintendergen] )
 
                misn.markerMove(landmarker, startsys)
             end
          end
       end
    elseif hasDrink and planet.cur() == startplanet then
-      tk.msg( finishedtitle, finishedtxt:format( numstring(payment) ) )
+      tk.msg( finishedtitle, finishedtxt:format( creditstring(payment) ) )
+      player.outfitAdd( "Swamp Bombing" )
       player.pay( payment )
 
       hook.rm(landhook)
       hook.rm(takeoffhook)
+      addMiscLog( log_text )
       misn.finish( true )
    end
 end
@@ -232,7 +220,7 @@ end
 
 function isPrevPlanet ( passedPlanet )
    for i = 1, #prevPlanets, 1 do
-      if prevPlanets[i]:name() == passedPlanet:name() then
+      if prevPlanets[i] == passedPlanet then
          return true
       end
    end
@@ -240,7 +228,7 @@ end
 
 function takeoff ()
    if hasDrink then
-      OSDdesc = "Return the drink to the Aristocrat at %s in the %s system."
+      OSDdesc = _("Return the drink to the Aristocrat at %s in the %s system.")
       OSDtable[1] = OSDdesc:format( startplanet:name(), startsys:name() )
       misn.osdCreate( OSDtitle, OSDtable )
    else

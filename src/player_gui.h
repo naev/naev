@@ -16,7 +16,7 @@ void player_guiRm( char* name );
 int player_guiCheck( char* name );
 
 /* High level. */
-char** player_guiList( int *n );
+char** player_guiList (void);
 
 
 #endif /* PLAYER_GUI_H */

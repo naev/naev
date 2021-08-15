@@ -9,33 +9,40 @@
  */
 
 
-#include "nlua_music.h"
-
-#include "naev.h"
-
+/** @cond */
 #include "SDL.h"
 
-#include "nlua.h"
-#include "nluadef.h"
-#include "music.h"
+#include "naev.h"
+/** @endcond */
+
+#include "nlua_music.h"
+
 #include "log.h"
+#include "music.h"
 #include "ndata.h"
+#include "nluadef.h"
 
 
 /* Music methods. */
 static int musicL_delay( lua_State* L );
 static int musicL_load( lua_State* L );
 static int musicL_play( lua_State* L );
+static int musicL_pause( lua_State* L );
+static int musicL_resume( lua_State* L );
 static int musicL_stop( lua_State* L );
 static int musicL_isPlaying( lua_State* L );
 static int musicL_current( lua_State* L );
-static const luaL_reg music_methods[] = {
+static int musicL_setRepeat( lua_State* L );
+static const luaL_Reg music_methods[] = {
    { "delay", musicL_delay },
    { "load", musicL_load },
    { "play", musicL_play },
+   { "pause", musicL_pause },
+   { "resume", musicL_resume },
    { "stop", musicL_stop },
    { "isPlaying", musicL_isPlaying },
    { "current", musicL_current },
+   { "setRepeat", musicL_setRepeat },
    {0,0}
 }; /**< Music specific methods. */
 
@@ -56,14 +63,12 @@ static const luaL_reg music_methods[] = {
 /**
  * @brief Loads the music functions into a lua_State.
  *
- *    @param L Lua State to load the music functions into.
- *    @param read_only Load the write functions?
+ *    @param env Lua environment to load the music functions into.
  *    @return 0 on success.
  */
-int nlua_loadMusic( lua_State *L, int read_only )
+int nlua_loadMusic( nlua_env env )
 {
-   (void)read_only; /* future proof */
-   luaL_register(L, "music", music_methods);
+   nlua_register(env, "music", music_methods, 0);
    return 0;
 }
 
@@ -75,7 +80,7 @@ int nlua_loadMusic( lua_State *L, int read_only )
  *
  *    @luatparam string situation Situation to choose.
  *    @luatparam number delay Delay in seconds.
- * @luafunc delay( situation, delay )
+ * @luafunc delay
  */
 static int musicL_delay( lua_State* L )
 {
@@ -95,8 +100,10 @@ static int musicL_delay( lua_State* L )
 /**
  * @brief Loads a song.
  *
+ * Restores the music system if it was temporarily disabled.
+ *
  *    @luatparam string name Name of the song to load.
- * @luafunc load( name )
+ * @luafunc load
  */
 static int musicL_load( lua_State *L )
 {
@@ -105,9 +112,10 @@ static int musicL_load( lua_State *L )
    /* check parameters */
    str = luaL_checkstring(L,1);
    if (music_load( str )) {
-      NLUA_ERROR(L,"Music '%s' invalid or failed to load.", str );
+      NLUA_ERROR(L,_("Music '%s' invalid or failed to load."), str );
       return 0;
    }
+   music_tempDisable( 0 );
 
    return 0;
 }
@@ -116,12 +124,37 @@ static int musicL_load( lua_State *L )
 /**
  * @brief Plays the loaded song.
  *
- * @luafunc play()
+ * Restores the music system if it was temporarily disabled.
+ *
+ * @luafunc play
  */
 static int musicL_play( lua_State *L )
 {
    (void)L;
+   music_tempDisable( 0 );
    music_play();
+   return 0;
+}
+
+
+/**
+ * @brief Pauses the music engine.
+ */
+static int musicL_pause( lua_State* L )
+{
+   (void)L;
+   music_pause();
+   return 0;
+}
+
+
+/**
+ * @brief Resumes the music engine.
+ */
+static int musicL_resume( lua_State* L )
+{
+   (void)L;
+   music_resume();
    return 0;
 }
 
@@ -129,12 +162,14 @@ static int musicL_play( lua_State *L )
 /**
  * @brief Stops playing the current song.
  *
- * @luafunc stop()
+ *    @luatparam[opt=false] boolean disable Whether or not to disable the music system temporarily after stopping.
+ * @luafunc stop
  */
 static int musicL_stop( lua_State *L )
 {
-   (void)L;
+   int disable = lua_toboolean(L,1);
    music_stop();
+   music_tempDisable( disable );
    return 0;
 }
 
@@ -143,7 +178,7 @@ static int musicL_stop( lua_State *L )
  * @brief Checks to see if something is playing.
  *
  *    @luatreturn boolean true if something is playing.
- * @luafunc isPlaying()
+ * @luafunc isPlaying
  */
 static int musicL_isPlaying( lua_State* L )
 {
@@ -159,7 +194,7 @@ static int musicL_isPlaying( lua_State* L )
  *
  *    @luatreturn string The name of the current playing song or "none" if no song is playing.
  *    @luatreturn number The current offset inside the song (0. if music is none).
- * @luafunc current()
+ * @luafunc current
  */
 static int musicL_current( lua_State* L )
 {
@@ -174,4 +209,15 @@ static int musicL_current( lua_State* L )
 }
 
 
-
+/**
+ * @brief Makes the music repeat. This gets turned of when a new music is chosen, e.g., take-off or landing.
+ *
+ *    @luatparam boolean repeat Whether or not repeat should be set.
+ * @luafunc setRepeat
+ */
+static int musicL_setRepeat( lua_State* L )
+{
+   int b = lua_toboolean(L,1);
+   music_repeat( b );
+   return 0;
+}

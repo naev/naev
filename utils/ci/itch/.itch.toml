@@ -1,0 +1,5 @@
+[[actions]]
+name = "play"
+path = "%EXECNAME%"
+platform = "%PLATFORM%"
+args = []

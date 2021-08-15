@@ -5,8 +5,8 @@
   <y>11337.867925</y>
  </pos>
  <GFX>
-  <space>Y00.png</space>
-  <exterior>methane.png</exterior>
+  <space>Y00.webp</space>
+  <exterior>methane.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,17 +16,18 @@
  <general>
   <class>Y</class>
   <population>500000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
   </services>
   <commodities/>
   <description>Zhang Lu is a world with vast mountain ranges, the biggest of which reaches almost a third of the way around the planet. The world is utterly uninteresting for habitation even by Soromid standards, but the rugged terrain is irresistible for people who like mountaineering. There are countless peaks that have never been conquered, so tourists like to try and be the first to climb one.</description>
-  <bar>The spaceport is build in a valley. The reason for this is that tourists arriving will immediately be presented with mountains towering over them on all sides, which really gets them in the mood. Unfortunately this location is less than practical from a pilot's point of view, as having mountains all around the spaceport severely limits the choice in approach vectors.</bar>
+  <bar>The spaceport is built in a valley. The reason for this is that tourists arriving will immediately be presented with mountains towering over them on all sides, which really gets them in the mood. Unfortunately this location is less than practical from a pilot's point of view, as having mountains all around the spaceport severely limits the choice in approach vectors.</bar>
  </general>
  <tech>
   <item>Systems Low</item>
@@ -34,6 +35,7 @@
   <item>Engines Low</item>
   <item>Plasma 1</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Ion 1</item>
   <item>Missiles 1</item>
  </tech>

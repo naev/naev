@@ -26,12 +26,14 @@
  */
 
 
-#include "threadpool.h"
-
-#include "SDL.h"
-#include "SDL_thread.h"
-
+/** @cond */
 #include <stdlib.h>
+#include "SDL.h"
+#include "SDL_error.h"
+#include "SDL_thread.h"
+/** @endcond */
+
+#include "threadpool.h"
 
 #include "log.h"
 
@@ -196,7 +198,7 @@ static void* tq_dequeue( ThreadQueue *q )
 
    /* Head not consistent. */
    if (newhead == NULL) {
-      WARN("Tried to dequeue while the queue was empty!");
+      WARN(_("Tried to dequeue while the queue was empty!"));
       /* Ugly fix :/ */
       /*
       SDL_mutexV(q->h_lock);
@@ -258,7 +260,7 @@ int threadpool_newJob( int (*function)(void *), void *data )
    ThreadQueueData *node;
 
    if (global_queue == NULL) {
-      WARN("Threadpool has not been initialized yet!");
+      WARN(_("Threadpool has not been initialized yet!"));
       return -2;
    }
 
@@ -294,7 +296,7 @@ static int threadpool_worker( void *data )
       while (SDL_SemWait( work->semaphore ) == -1) {
           /* Putting this in a while-loop is probably a really bad idea, but I
            * don't have any better ideas. */
-          WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
+          WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
       }
       /* Break if received signal to stop */
       if (work->signal == THREADSIG_STOP)
@@ -400,7 +402,7 @@ static int threadpool_handler( void *data )
           * threadpool is just patiently waiting for work to arrive.
           */
          if (SDL_SemWait( global_queue->semaphore ) == -1) {
-             WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
+             WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
              continue;
          }
 
@@ -431,7 +433,7 @@ static int threadpool_handler( void *data )
       else {
          while (SDL_SemWait(idle->semaphore) == -1) {
              /* Bad idea */
-             WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
+             WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
          }
          threadarg         = tq_dequeue( idle );
       }
@@ -445,9 +447,7 @@ static int threadpool_handler( void *data )
       /* Start a new thread and increment the thread counter */
       if (newthread) {
          SDL_CreateThread( threadpool_worker,
-#if SDL_VERSION_ATLEAST(1,3,0)
                "threadpool_worker",
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
                threadarg );
          nrunning += 1;
       }
@@ -472,13 +472,11 @@ static int threadpool_handler( void *data )
  */
 int threadpool_init (void)
 {
-#if SDL_VERSION_ATLEAST(1,3,0)
    MAXTHREADS = SDL_GetCPUCount() + 1; /* SDL 1.3 is pretty cool. */
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* There's already a queue */
    if (global_queue != NULL) {
-      WARN("Threadpool has already been initialized!");
+      WARN(_("Threadpool has already been initialized!"));
       return -1;
    }
 
@@ -486,11 +484,10 @@ int threadpool_init (void)
    global_queue = tq_create();
 
    /* Initialize the threadpool handler. */
-   SDL_CreateThread( threadpool_handler,
-#if SDL_VERSION_ATLEAST(1,3,0)
-               "threadpool_handler",
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
-               NULL );
+   if ( SDL_CreateThread( threadpool_handler, "threadpool_handler", NULL ) == NULL ) {
+      ERR( _( "Threadpool init failed: %s" ), SDL_GetError() );
+      return -1;
+   }
 
    return 0;
 }
@@ -591,7 +588,7 @@ void vpool_wait( ThreadQueue *queue )
       /* This is needed to keep the invariants of the queue */
       while (SDL_SemWait( queue->semaphore ) == -1) {
           /* Again, a really bad idea */
-          WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
+          WARN(_("SDL_SemWait failed! Error: %s"), SDL_GetError());
       }
       node = tq_dequeue( queue );
 

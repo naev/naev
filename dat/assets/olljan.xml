@@ -5,8 +5,8 @@
   <y>3720.894098</y>
  </pos>
  <GFX>
-  <space>O00.png</space>
-  <exterior>aquatic2.png</exterior>
+  <space>O00.webp</space>
+  <exterior>aquatic2.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>O</class>
   <population>10000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -33,8 +33,8 @@
   <item>Hulls Medium</item>
   <item>Engines Medium</item>
   <item>Basic Outfits 1</item>
-  <item>Missiles 1</item>
   <item>Star Maps</item>
+  <item>Missiles 1</item>
   <item>Low Tech Upgrades</item>
  </tech>
 </asset>

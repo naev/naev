@@ -5,28 +5,30 @@ try:
     from lxml import etree as ET
 except ImportError:
     try:
-        import xml.etree.cElementTree as ET
+        import xml.etree.ElementTree as ET
     except ImportError:
-        try:
-            import xml.etree.ElementTree as ET
-        except ImportError:
-            print "Failed to import ElementTree"
+        print("Failed to import ElementTree")
 
 class readers:
     """
     Simple master object
+    CAUTION: This has been updated enough to work, but there's already a set of
+    similar-looking but newer classes in utils/on-valid/readers.
     """
     _verbose=None
     xmlData=None
 
-    def __init__(self, xmlPath, xmlFile, verbose=False):
+    def __init__(self, xmlPath, subdir, verbose=False):
         self._verbose = verbose
         if self.xmlData is None:
-            self.xmlData = ET.parse(os.path.join(xmlPath, xmlFile))
+            self.xmlData = ET.Element('directory')
+            for path, _, fnames in os.walk(os.path.join(xmlPath, subdir)):
+                self.xmlData.extend(ET.parse(os.path.join(path, fn)).getroot()
+                                    for fn in fnames)
 
 class ssys(readers):
     def __init__(self, datPath, verbose=False):
-        readers.__init__(self, datPath, 'ssys.xml', verbose)
+        readers.__init__(self, datPath, 'ssys', verbose)
 
         tmp = self.xmlData.findall('ssys')
         self.jumpsList = dict()
@@ -51,7 +53,7 @@ class ssys(readers):
         Return a list of planets for the system systemName
         """
         if systemName.find('Virtual') == 0 or \
-         not self.assetsList.has_key(systemName):
+         systemName not in self.assetsList:
             return None
         return self.assetsList.systemName
 
@@ -68,7 +70,7 @@ class assets(readers):
     tagWhiteList = ('class','population')
 
     def __init__(self, datPath, verbose=False):
-        readers.__init__(self, datPath, 'asset.xml', verbose)
+        readers.__init__(self, datPath, 'assets', verbose)
 
         # we loads all the assets
         tmp = self.xmlData.findall('asset')
@@ -100,14 +102,14 @@ class assets(readers):
         The details depends on the tagWhitelist.
         Format is {tagName: data}
         """
-        if not self.assets.has_key(planetName):
+        if planetName not in self.assets:
             return None
         return self.assets[planetName]
 
     def getPopulationGreaterThan(self, population):
         myList = list()
         for (planetName, details) in self.assets:
-            if population > details['population']:
+            if population > int(details['population']):
                 myList.append(planetName)
 
         return myList

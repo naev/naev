@@ -4,15 +4,16 @@
 
 
 
-#include "physics.h"
+/** @cond */
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "naev.h"
-
-#include <stdlib.h>
-#include <stdio.h>
-#include "nstring.h"
+/** @endcond */
 
 #include "log.h"
+#include "nstring.h"
+#include "physics.h"
 
 
 /*
@@ -280,6 +281,10 @@ static void solid_update_euler (Solid *obj, const double dt)
    px += vx*dt + 0.5*ax * dt*dt;
    py += vy*dt + 0.5*ay * dt*dt;
 
+   /* v = a*dt */
+   vx += ax*dt;
+   vy += ay*dt;
+
    /* Update position and velocity. */
    vect_cset( &obj->vel, vx, vy );
    vect_cset( &obj->pos, px, py );
@@ -386,7 +391,7 @@ static void solid_update_rk4 (Solid *obj, const double dt)
    vect_cset( &obj->vel, vx, vy );
    vect_cset( &obj->pos, px, py );
 
-   /* Sanity check. */
+   /* Validity check. */
    if (obj->dir >= 2.*M_PI)
       obj->dir -= 2.*M_PI;
    else if (obj->dir < 0.)
@@ -456,7 +461,7 @@ void solid_init( Solid* dest, const double mass, const double dir,
          break;
 
       default:
-         WARN("Solid initialization did not specify correct update function!");
+         WARN(_("Solid initialization did not specify correct update function!"));
          dest->update = solid_update_rk4;
          break;
    }
@@ -477,7 +482,7 @@ Solid* solid_create( const double mass, const double dir,
 {
    Solid* dyn = malloc(sizeof(Solid));
    if (dyn==NULL)
-      ERR("Out of Memory");
+      ERR(_("Out of Memory"));
    solid_init( dyn, mass, dir, pos, vel, update );
    return dyn;
 }

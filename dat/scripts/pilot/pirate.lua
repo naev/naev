@@ -1,335 +1,530 @@
-include("pilot/generic.lua")
-include("dat/factions/equip/helper.lua")
-include("dat/factions/equip/outfits.lua")
-
-
 --[[
--- @brief Creates a mighty pirate of epic proportions.
---
---    @param pirate_create If nil or true actually creates a pirate with a
---           random name and all, otherwise it'll give ship type and outfits.
---    @return If pirate_create is false it'll return a string containing the
---           name of the ship of the pirate and a table containing the outfits,
---           otherwise it'll return the pirate itself and the outfit table.
---]]
-function pirate_create( pirate_create )
-   -- Create by default
-   if pirate_create == nil then
-      pirate_create = true
-   end
-
-   -- Choose pirate type
-   local z = rnd.rnd()
-   local p, o
-   if z < 0.25 then
-      p,o = pirate_createKestrel( pirate_create )
-   elseif z < 0.5 then
-      p,o = pirate_createAdmonisher( pirate_create )
-   elseif z < 0.75 then
-      p,o = pirate_createAncestor( pirate_create )
-   else
-      p,o = pirate_createVendetta( pirate_create )
-   end
-
-   -- Set name
-   if pirate_create then
-      p:rename( pirate_name() )
-   end
-   return p,o
-end
-
-
--- Creates an empty ship for the pirate
-function pirate_createEmpty( ship )
-   -- Create the pilot
-   local pilots   = pilot.add( ship )
-   local p        = pilots[1]
-
-   -- Remove outfits
-   p:rmOutfit( "all" )
-
-   return p
-end
-
--- Creates a pirate flying a "Pirate Kestrel"
-function pirate_createKestrel( pirate_create )
-   -- Create by default
-   if pirate_create == nil then
-      pirate_create = true
-   end
-
-   -- Create the pirate ship
-   local p, s, olist
-   if pirate_create then
-      p     = pirate_createEmpty( "Pirate Kestrel" )
-      s     = p:ship()
-      olist = nil
-   else
-      p     = "Pirate Kestrel"
-      s     = ship.get(p)
-      olist = { }
-   end
-
-   -- Equipment vars
-   local primary, secondary, medium, low
-   local use_primary, use_secondary, use_medium, use_low
-   local nhigh, nmedium, nlow = s:slots()
-
-   -- Kestrel gets some good stuff
-   primary        = { "Heavy Ion Turret", "Razor Turret MK2", "Laser Turret MK2", "Turreted Vulcan Gun" }
-   secondary      = { "Unicorp Headhunter Launcher" }
-   use_primary    = nhigh-2
-   use_secondary  = 2
-   addWeapons( primary, use_primary )
-   addWeapons( secondary, use_secondary )
-   medium         = equip_mediumHig()
-   low            = equip_lowHig()
-
-   -- FInally add outfits
-   equip_ship( p, true, weapons, medium, low,
-         use_medium, use_low, olist )
-
-   return p,olist
-end
-
-
--- Creates a pirate flying a "Pirate Admonisher"
-function pirate_createAdmonisher( pirate_create )
-   -- Create by default
-   if pirate_create == nil then
-      pirate_create = true
-   end
-
-   -- Create the pirate ship
-   local p, s, olist
-   if pirate_create then
-      p     = pirate_createEmpty( "Pirate Admonisher" )
-      s     = p:ship()
-      olist = nil
-   else
-      p     = "Pirate Admonisher"
-      s     = ship.get(p)
-      olist = { }
-   end
-
-   -- Equipment vars
-   local primary, secondary, medium, low
-   local use_primary, use_secondary, use_medium, use_low
-   local nhigh, nmedium, nlow = s:slots()
-
-   -- Admonisher specializes in forward-firing weapons.
-   primary        = { "Mass Driver MK2", "Plasma Blaster MK2", "Vulcan Gun" }
-   secondary      = { "Unicorp Headhunter Launcher", "Unicorp Fury Launcher", "Unicorp Banshee Launcher" }
-   use_primary    = nhigh-1
-   use_secondary  = 1
-   addWeapons( primary, use_primary )
-   addWeapons( secondary, use_secondary )
-   medium         = equip_mediumMed()
-   low            = equip_lowMed()
-
-   -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low,
-         use_medium, use_low, olist )
-
-   return p,olist
-end
-
-
--- Creates a pirate flying a "Pirate Ancestor"
-function pirate_createAncestor( pirate_create )
-   -- Create by default
-   if pirate_create == nil then
-      pirate_create = true
-   end
-
-   -- Create the pirate ship
-   local p, s, olist
-   if pirate_create then
-      p     = pirate_createEmpty( "Pirate Ancestor" )
-      s     = p:ship()
-      olist = nil
-   else
-      p     = "Pirate Ancestor"
-      s     = ship.get(p)
-      olist = { }
-   end
-
-   -- Equipment vars
-   local primary, secondary, medium, low
-   local use_primary, use_secondary, use_medium, use_low
-   local nhigh, nmedium, nlow = s:slots()
-
-   -- Ancestor specializes in ranged combat.
-   primary        = { "Laser Cannon MK1", "Laser Cannon MK2", "Plasma Blaster MK1", "Plasma Blaster MK2", "Razor MK1", "Razor MK2" }
-   secondary      = { "Unicorp Fury Launcher" }
-   use_primary    = nhigh-2
-   use_secondary  = 2
-   addWeapons( primary, use_primary )
-   addWeapons( secondary, use_secondary )
-   medium         = equip_mediumMed()
-   low            = equip_lowMed()
-
-   -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low,
-         use_medium, use_low, olist )
-
-   return p,olist
-end
-
-
--- Ceates a pirate flying a "Pirate Vendetta"
-function pirate_createVendetta( pirate_create )
-   -- Create by default
-   if pirate_create == nil then
-      pirate_create = true
-   end
-
-   -- Create the pirate ship
-   local p, s, olist
-   if pirate_create then
-      p     = pirate_createEmpty( "Pirate Vendetta" )
-      s     = p:ship()
-      olist = nil
-   else
-      p     = "Pirate Vendetta"
-      s     = ship.get(p)
-      olist = { } 
-   end
-
-   -- Equipment vars
-   local primary, secondary, medium, low
-   local use_primary, use_secondary, use_medium, use_low
-   local nhigh, nmedium, nlow = s:slots()
-
-   -- Vendettas are all about close-range firepower.
-   primary        = { "Plasma Blaster MK1", "Plasma Blaster MK2", "Laser Cannon MK1", "Razor MK2" }
-   secondary      = { "Unicorp Fury Launcher", "Unicorp Banshee Launcher" }
-   use_primary    = nhigh-1
-   use_secondary  = 1
-   addWeapons( primary, use_primary )
-   addWeapons( secondary, use_secondary )
-   medium         = equip_mediumLow()
-   low            = equip_lowLow()
-
-   -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low,
-         use_medium, use_low, olist )
-
-   return p,olist
-end
-
-
---[[
--- @brief Generates pilot names
+-- @brief Generates pirate names
 --]]
 function pirate_name ()
+   -- For translation, just transliterate if necessary. (Note the space
+   -- appended to each entry; this can be omitted for transliterations
+   -- to languages that don't use spaces, like Japanese.)
    local articles = {
-      "The",
+      _("Das "),
+      _("Der "),
+      _("Kono "),
+      _("La "),
+      _("Le "),
+      _("The "),
+      _("Ye "),
    }
    local descriptors = {
-      "Lustful",
-      "Bloody",
-      "Morbid",
-      "Horrible",
-      "Terrible",
-      "Very Bad",
-      "No Good",
-      "Dark",
-      "Evil",
-      "Murderous",
-      "Fearsome",
-      "Defiant",
-      "Unsightly",
-      "Pirate's",
-      "Night's",
-      "Space",
-      "Astro",
-      "Delicious",
-      "Fearless",
-      "Eternal",
-      "Mighty"
+      _("Aerobic "),
+      _("Aku No "),
+      _("Amai "),
+      _("Ancient "),
+      _("Astro "),
+      _("Baggy "),
+      _("Bakana "),
+      _("Bald "),
+      _("Beautiful "),
+      _("Benevolent "),
+      _("Bedrohliche "),
+      _("Big "),
+      _("Big Bad "),
+      _("Bloody "),
+      _("Bright "),
+      _("Brooding "),
+      _("BT "),
+      _("Bureina "),
+      _("Caped "),
+      _("Citrus "),
+      _("Clustered "),
+      _("Cocky "),
+      _("Creamy "),
+      _("Crisis "),
+      _("Crusty "),
+      _("Dark "),
+      _("Deadly "),
+      _("Deathly "),
+      _("Defiant "),
+      _("Delicious "),
+      _("Despicable "),
+      _("Destructive "),
+      _("Diligent "),
+      _("Drunk "),
+      _("Egotistical "),
+      _("Electromagnetic "),
+      _("Erroneous "),
+      _("Escaped "),
+      _("Eternal "),
+      _("Evil "),
+      _("Fallen "),
+      _("Fearless "),
+      _("Fearsome "),
+      _("Filthy "),
+      _("Flightless "),
+      _("Flying "),
+      _("Foreboding "),
+      _("Fuketeru "),
+      _("Full-Motion "),
+      _("Furchtlose "),
+      _("General "),
+      _("Gigantic "),
+      _("Glittery "),
+      _("Glorious "),
+      _("Great "),
+      _("Groß "),
+      _("Grumpy "),
+      _("Hairy "),
+      _("Hammy "),
+      _("Handsome "),
+      _("Happy "),
+      _("Hashitteru "),
+      _("Hellen "),
+      _("Hen'na "),
+      _("Hidoi "),
+      _("Hilarious "),
+      _("Hitori No "),
+      _("Horrible "),
+      _("IDS "),
+      _("Imperial "),
+      _("Impressive "),
+      _("Insatiable "),
+      _("Ionic "),
+      _("Iron "),
+      _("Justice "),
+      _("Kakkowarui "),
+      _("Koronderu "),
+      _("Kowai "),
+      _("Lesser "),
+      _("Lightspeed "),
+      _("Lone "),
+      _("Loud "),
+      _("Lovely "),
+      _("Lustful "),
+      _("Mächtige "),
+      _("Malodorous "),
+      _("Messy "),
+      _("Mighty "),
+      _("Mijikai "),
+      _("Morbid "),
+      _("Mukashi No "),
+      _("Murderous "),
+      _("Nai "),
+      _("Naïve "),
+      _("Neutron-Accelerated "),
+      _("New "),
+      _("Night's "),
+      _("Nimble "),
+      _("Ninkyōna "),
+      _("No Good "),
+      _("Numb "),
+      _("Oishī "),
+      _("Ōkina "),
+      _("Old "),
+      _("Oshirisu No"),
+      _("Oyoideru "),
+      _("Pale "),
+      _("Perilous "),
+      _("Pirate's "),
+      _("Pocket "),
+      _("Princeless "),
+      _("Psychic "),
+      _("Raging "),
+      _("Reclusive "),
+      _("Relentless "),
+      _("Rostige "),
+      _("Rough "),
+      _("Ruthless "),
+      _("Saccharin "),
+      _("Salty "),
+      _("Samui "),
+      _("Satanic "),
+      _("Secluded "),
+      _("Seltsame "),
+      _("Serial "),
+      _("Sharing "),
+      _("Silly "),
+      _("Single "),
+      _("Sleepy "),
+      _("Slimy "),
+      _("Smelly "),
+      _("Solar "),
+      _("Space "),
+      _("Stained "),
+      _("Static "),
+      _("Steel "),
+      _("Strange "),
+      _("Strawhat "),
+      _("Sukina "),
+      _("Super "),
+      _("Sweaty "),
+      _("Sweet "),
+      _("Tall "),
+      _("Takai "),
+      _("Terrible "),
+      _("Tired "),
+      _("Toothless "),
+      _("Tropical "),
+      _("Tsukareteru "),
+      _("Typical "),
+      _("Ultimate "),
+      _("Umai "),
+      _("Uncombed "),
+      _("Undead "),
+      _("Unersättliche "),
+      _("Unhealthy "),
+      _("Unreal "),
+      _("Unsightly "),
+      _("Urusai "),
+      _("Utsukushī "),
+      _("Vengeful "),
+      _("Very Bad "),
+      _("Violent "),
+      _("Warui "),
+      _("Weeping "),
+      _("Wild "),
+      _("Winged "),
+      _("Wretched "),
+      _("Yaseteru "),
+      _("Yasui "),
+      _("Yasashī "),
+      _("Yummy "),
    }
    local colours = {
-      "Red",
-      "Green",
-      "Blue",
-      "Cyan",
-      "Black",
-      "Brown",
-      "Mauve",
-      "Crimson",
-      "Yellow",
-      "Purple"
+      _("Akai "),
+      _("Amarillo "),
+      _("Aoi "),
+      _("Azul "),
+      _("Blau "),
+      _("Bleu "),
+      _("Blue "),
+      _("Chairo No "),
+      _("Crimson "),
+      _("Cyan "),
+      _("Gelb "),
+      _("Gin'iro No "),
+      _("Golden "),
+      _("Gray "),
+      _("Green "),
+      _("Grün "),
+      _("Haiiro No "),
+      _("Kiiroi "),
+      _("Kin'iro No "),
+      _("Kuroi "),
+      _("Mauve "),
+      _("Midori No "),
+      _("Murasaki No "),
+      _("Pink "),
+      _("Purple "),
+      _("Red "),
+      _("Roho "),
+      _("Schwarz "),
+      _("Shiroi "),
+      _("Silver "),
+      _("Violet "),
+      _("Yellow "),
    }
    local actors = {
-      "Beard",
-      "Moustache",
-      "Neckbeard",
-      "Demon",
-      "Vengeance",
-      "Corsair",
-      "Pride",
-      "Insanity",
-      "Peril",
-      "Death",
-      "Doom",
-      "Raider",
-      "Devil",
-      "Serpent",
-      "Bulk",
-      "Killer",
-      "Thunder",
-      "Tyrant",
-      "Lance",
-      "Destroyer",
-      "Horror",
-      "Dread",
-      "Blargh",
-      "Terror"
-   }
-   local actorspecials = {
-      "Angle Grinder",
-      "Belt Sander",
-      "Chainsaw",
-      "Impact Wrench",
-      "Band Saw",
-      "Table Saw",
-      "Drill Press",
-      "Jigsaw",
-      "Turret Lathe",
-      "Claw Hammer",
-      "Rubber Mallet",
-      "Squeegee",
-      "Pipe Wrench",
-      "Bolt Cutter",
-      "Staple Gun",
-      "Crowbar",
-      "Pickaxe",
-      "Bench Grinder",
-      "Scythe"
+      _("1024"),
+      _("Aku"),
+      _("Akuma"),
+      _("Alphabet Soup"),
+      _("Amigo"),
+      _("Angel"),
+      _("Angle Grinder"),
+      _("Anvil"),
+      _("Ari"),
+      _("Arrow"),
+      _("Ass"),
+      _("Atama"),
+      _("Aunt"),
+      _("Auster"),
+      _("Avenger"),
+      _("Axis"),
+      _("Baka"),
+      _("Bakemono"),
+      _("Band Saw"),
+      _("Bat"),
+      _("Beard"),
+      _("Belt Sander"),
+      _("Bench Grinder"),
+      _("Bengoshi"),
+      _("Black Hole"),
+      _("Blarg"),
+      _("Blitzschneider"),
+      _("Blizzard"),
+      _("Blood"),
+      _("Blunder"),
+      _("Boot"),
+      _("Bobber"),
+      _("Bolt Cutter"),
+      _("Bōshi"),
+      _("Brain"),
+      _("Breeze"),
+      _("Bride"),
+      _("Brigand"),
+      _("Bulk"),
+      _("Burglar"),
+      _("Cane"),
+      _("Chainsaw"),
+      _("Cheese"),
+      _("Cheese Grater"),
+      _("Chi"),
+      _("Chicken"),
+      _("Circle"),
+      _("Claw"),
+      _("Claw Hammer"),
+      _("Club"),
+      _("Coconut"),
+      _("Coot"),
+      _("Corsair"),
+      _("Cougar"),
+      _("Crisis"),
+      _("Crow"),
+      _("Crowbar"),
+      _("Crusader"),
+      _("Curse"),
+      _("Cyborg"),
+      _("Darkness"),
+      _("Death"),
+      _("Deity"),
+      _("Demon"),
+      _("Destruction"),
+      _("Devil"),
+      _("Dictator"),
+      _("Disaster"),
+      _("Discord"),
+      _("Donkey"),
+      _("Doom"),
+      _("Drache"),
+      _("Dragon"),
+      _("Dread"),
+      _("Drifter"),
+      _("Drill Press"),
+      _("Duckling"),
+      _("Eagle"),
+      _("Eggplant"),
+      _("Ego"),
+      _("Electricity"),
+      _("Emperor"),
+      _("Energy-Volt"),
+      _("Engine"),
+      _("Fang"),
+      _("Flare"),
+      _("Flash"),
+      _("Fox"),
+      _("Friend"),
+      _("Fugitive"),
+      _("Gaki"),
+      _("Geschützturmdrehbank"),
+      _("Giant"),
+      _("Gift"),
+      _("Gohan"),
+      _("Goose"),
+      _("Gorilla"),
+      _("Gun"),
+      _("Hae"),
+      _("Hamburger"),
+      _("Hammer"),
+      _("Headache"),
+      _("Hex"),
+      _("Hikari"),
+      _("Horobi"),
+      _("Horror"),
+      _("Hunter"),
+      _("Husband"),
+      _("Ichigo"),
+      _("Id"),
+      _("Impact Wrench"),
+      _("Inazuma"),
+      _("Ionizer"),
+      _("Ishi"),
+      _("Itoyōji"),
+      _("Jalapeño"),
+      _("Jigsaw"),
+      _("Jishin"),
+      _("Jinx"),
+      _("Ka"),
+      _("Kailan"),
+      _("Kaji"),
+      _("Kamakiri"),
+      _("Kame"),
+      _("Kami"),
+      _("Kamikaze"),
+      _("Kappa"),
+      _("Karaoke"),
+      _("Katana"),
+      _("Kaze"),
+      _("Keel"),
+      _("Ketchup"),
+      _("Killer"),
+      _("Kirin"),
+      _("Kitchen Knife"),
+      _("Kitsune"),
+      _("Kitten"),
+      _("Knave"),
+      _("Knife"),
+      _("Knight"),
+      _("Kōmori"),
+      _("Kumo"),
+      _("Lance"),
+      _("Lanze"),
+      _("Lantern"),
+      _("Lawyer"),
+      _("League"),
+      _("Lust"),
+      _("Madōshi"),
+      _("Magician"),
+      _("Mahō"),
+      _("Maize"),
+      _("Mangaka"),
+      _("Mangekyō"),
+      _("Mango"),
+      _("Mech"),
+      _("Melon"),
+      _("Mind"),
+      _("Model"),
+      _("Monster"),
+      _("Mosquito"),
+      _("Moustache"),
+      _("Mugi"),
+      _("Nanika"),
+      _("Neckbeard"),
+      _("Necromancer"),
+      _("Neko"),
+      _("Nezumi"),
+      _("Night"),
+      _("Niku"),
+      _("Ninja"),
+      _("Niwatori"),
+      _("Nova"),
+      _("Ogre"),
+      _("Oni"),
+      _("Onion"),
+      _("Osiris"),
+      _("Outlaw"),
+      _("Oyster"),
+      _("Panther"),
+      _("Paste"),
+      _("Pea"),
+      _("Peapod"),
+      _("Peril"),
+      _("Pickaxe"),
+      _("Pipe Wrench"),
+      _("Pitchfork"),
+      _("Politician"),
+      _("Potato"),
+      _("Potter"),
+      _("Pride"),
+      _("Princess"),
+      _("Pulse"),
+      _("Puppy"),
+      _("Python"),
+      _("Raigeki"),
+      _("Ramen"),
+      _("Rat"),
+      _("Ratte"),
+      _("Ravager"),
+      _("Raven"),
+      _("Reaver"),
+      _("Recluse"),
+      _("Rice"),
+      _("Ring"),
+      _("River"),
+      _("Roba"),
+      _("Rōjin"),
+      _("Rubber Mallet"),
+      _("Ryū"),
+      _("Sakura"),
+      _("Salad"),
+      _("Samurai"),
+      _("Sasori"),
+      _("Scythe"),
+      _("Sea"),
+      _("Seaweed"),
+      _("Seijika"),
+      _("Sentinel"),
+      _("Serpent"),
+      _("Shepherd"),
+      _("Shinigami"),
+      _("Shinobi"),
+      _("Shock"),
+      _("Shovel"),
+      _("Shujin"),
+      _("Siren"),
+      _("Slayer"),
+      _("Space Dog"),
+      _("Spade"),
+      _("Spaghetti"),
+      _("Spaghetti Monster"),
+      _("Spider"),
+      _("Squeegee"),
+      _("Staple Gun"),
+      _("Stern"),
+      _("Stir-fry"),
+      _("Storm"),
+      _("Supernova"),
+      _("Surströmming"),
+      _("Table Saw"),
+      _("Tallman"),
+      _("Tanoshimi"),
+      _("Tatsumaki"),
+      _("Tegami"),
+      _("Teineigo"),
+      _("Tenkūryū"),
+      _("Terror"),
+      _("Thunder"),
+      _("Tomodachi"),
+      _("Tooth"),
+      _("Tora"),
+      _("Tori"),
+      _("Treasure Hunter"),
+      _("Tree"),
+      _("Tsuchi"),
+      _("Tumbler"),
+      _("Turret Lathe"),
+      _("Twilight"),
+      _("Tyrant"),
+      _("Umi"),
+      _("Urchin"),
+      _("Velocity"),
+      _("Vengeance"),
+      _("Void"),
+      _("Vomit"),
+      _("Wache"),
+      _("Watcher"),
+      _("Wedge"),
+      _("Widget"),
+      _("Widow"),
+      _("Wight"),
+      _("Willow"),
+      _("Wind"),
+      _("Wizard"),
+      _("Wolf"),
+      _("Yakuza"),
+      _("Yama"),
+      _("Yami"),
+      _("Yarou"),
+      _("Yasai"),
+      _("Yatsu"),
+      _("Youma"),
+      _("Zombie"),
    }
    local article = articles[ rnd.rnd(1,#articles) ]
    local descriptor = descriptors[ rnd.rnd(1,#descriptors) ]
    local colour = colours[ rnd.rnd(1,#colours) ]
    local actor = actors[ rnd.rnd(1,#actors) ]
-   local actorspecial = actorspecials[ rnd.rnd(1,#actorspecials) ]
 
-   if rnd.rnd() < 0.25 then
-      return article .. " " .. actorspecial
+   local r = rnd.rnd()
+   if r < 0.166 then
+      return article .. actor
+   elseif r < 0.333 then
+      return colour .. actor
+   elseif r < 0.50 then
+      return descriptor .. actor
+   elseif r < 0.666 then
+      return article .. descriptor .. actor
+   elseif r < 0.833 then
+      return article .. colour .. actor
    else
-      local r = rnd.rnd()
-      if r < 0.166 then
-         return article .. " " .. actor
-      elseif r < 0.333 then
-         return colour .. " " .. actor
-      elseif r < 0.50 then
-         return descriptor .. " " .. actor
-      elseif r < 0.666 then
-         return article .. " " .. descriptor .. " " .. actor
-      elseif r < 0.833 then
-         return article .. " " .. colour .. " " .. actor
-      else
-         return article .. " " .. descriptor .. " " .. colour .. " " .. actor
-      end
+      return article .. descriptor .. colour .. actor
    end
 end

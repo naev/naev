@@ -5,8 +5,8 @@
   <y>-9072.781321</y>
  </pos>
  <GFX>
-  <space>000.png</space>
-  <exterior>station03.png</exterior>
+  <space>000.webp</space>
+  <exterior>station03.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>1000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>srm_mil_restricted</land>
    <refuel/>
@@ -31,10 +31,19 @@
  <tech>
   <item>Systems Low</item>
   <item>Engines Low</item>
+  <item>Hulls Low</item>
   <item>Plasma 2</item>
   <item>Heavy Weapons 1</item>
   <item>Heavy Weapons 2</item>
+  <item>Missiles 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Star Maps</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Bioship Outfits</item>
   <item>Soromid Military Ships</item>
   <item>Heavy Civilian Combat Ships</item>
+  <item>Soromid Elite Outfits</item>
  </tech>
 </asset>

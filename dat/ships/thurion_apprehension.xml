@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Thurion Apprehension">
+ <base_type>Apprehension</base_type>
+ <GFX sx="12" sy="12">apprehension</GFX>
+ <rarity>3</rarity>
+ <GUI>brushed</GUI>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>1500000</price>
+ <time_mod>1.25</time_mod>
+ <trail_generator x="-30" y="9" h="-5" />
+ <trail_generator x="-30" y="-9" h="-5" />
+ <trail_generator x="-30" y="0" h="10" />
+ <trail_generator x="-20" y="-20" h="10" >nebula</trail_generator>
+ <trail_generator x="-20" y="20" h="10" >nebula</trail_generator>
+ <fabricator>Thurion shipyards</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>...</description>
+ <health>
+  <armour>550</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>12</crew>
+  <mass>320</mass>
+  <fuel_consumption>200</fuel_consumption>
+  <cargo>50</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" x="23" y="0" h="4" />
+  <weapon size="large" x="6" y="0" h="6" />
+  <weapon size="medium" prop="fighter_bay" x="8" y="0" h="-6" />
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-310 Core System</utility>
+  <utility size="medium" prop="accessory" exclusive="1" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="medium" />
+  <utility size="medium" />
+  <structure size="medium" prop="engines" exclusive="1" required="1">Unicorp Falcon 1300 Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unicorp D-24 Medium Plating</structure>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="medium" />
+ </slots>
+ <stats>
+  <shield_mod>10</shield_mod>
+  <shield_regen_mod>15</shield_regen_mod>
+  <ew_hide>30</ew_hide>
+  <nebu_absorb>15</nebu_absorb>
+ </stats>
+</ship>

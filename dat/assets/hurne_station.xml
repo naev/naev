@@ -5,8 +5,8 @@
   <y>10533.610557</y>
  </pos>
  <GFX>
-  <space>station-fleetbase3.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>station-fleetbase3.webp</space>
+  <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>5000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Hurne Station is a commercial center for this region of Sirius space. It serves as a local commodity exchange as well as a warehouse for traders with a long-term strategy. Traders coming from the Frontier often stop by this place, as it is the closest commerce station to the Frontier-Sirius border.</description>
   <bar>As is common on commerce stations, the spacedock bar is both a place to do business and a place to hear the latest rumors about the state of the galaxy.</bar>
  </general>
@@ -39,7 +35,7 @@
   <item>Hulls Medium</item>
   <item>Engines Low</item>
   <item>Basic Outfits 2</item>
-  <item>Missiles 2</item>
   <item>Star Maps</item>
+  <item>Missiles 2</item>
  </tech>
 </asset>

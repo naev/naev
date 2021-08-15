@@ -7,13 +7,13 @@
 #  define NLUA_GUI_H
 
 
-#include <lua.h>
+#include "nlua.h"
 
 
 /*
  * Library loading
  */
-int nlua_loadGUI( lua_State *L, int readonly );
+int nlua_loadGUI( nlua_env env );
 
 
 #endif /* NLUA_GUI_H */

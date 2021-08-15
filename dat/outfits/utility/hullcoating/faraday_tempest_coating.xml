@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Faraday Tempest Coating">
+ <general>
+  <typename>Hull Coating</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>310000</price>
+  <description>Modern ionic weaponry has found ways to overcome the armour of the ship and directly attack the vulnerable electronic systems. The Faraday Tempest Coating is able to counteract disabling weaponry by dissipating it a harmless evanescent fields, greatly speeding up the recovery from system damage.</description>
+  <gfx_store>faraday_tempest_coating.webp</gfx_store>
+  <limit>hullcoat</limit>
+ </general>
+ <specific type="modification">
+  <stress_dissipation>50</stress_dissipation>
+ </specific>
+</outfit>

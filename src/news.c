@@ -9,28 +9,30 @@
  */
 
 
-#include "news.h"
-
-#include "naev.h"
-
+/** @cond */
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "naev.h"
+/** @endcond */
 
+#include "news.h"
+
+#include "array.h"
+#include "faction.h"
 #include "log.h"
 #include "nlua.h"
-#include "nluadef.h"
-#include "nlua_misn.h"
-#include "nlua_faction.h"
 #include "nlua_diff.h"
+#include "nlua_faction.h"
+#include "nlua_misn.h"
 #include "nlua_var.h"
-#include "ndata.h"
-#include "toolkit.h"
+#include "nluadef.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "nxml.h"
 #include "nxml_lua.h"
 #include "space.h"
+#include "toolkit.h"
 
 
 #define NEWS_MAX_LENGTH       8192
@@ -53,10 +55,8 @@ static unsigned int news_tick = 0; /**< Last news tick. */
 static int news_drag          = 0; /**< Is dragging news? */
 static double news_pos        = 0.; /**< Position of the news feed. */
 static glFont *news_font      = &gl_defFont; /**< Font to use. */
-static char **news_lines      = NULL; /**< Text per line. */
-static glFontRestore *news_restores = NULL; /**< Restorations. */
-static int news_nlines        = 0; /**< Number of lines used. */
-static int news_mlines        = 0; /**< Lines allocated. */
+static char **news_lines      = NULL; /**< Array (array.h) of each line's text. */
+static glFontRestore *news_restores = NULL; /**< Array (array.h) of restorations. */
 static double textlength      = 0.;
 
 /**
@@ -69,7 +69,7 @@ static int largestID;
  */
 static void news_render( double bx, double by, double w, double h, void *data );
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
-      double w, double h, void *data );
+      double w, double h, double rx, double ry, void *data );
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer ); /* externed in save.c */
 int news_loadArticles( xmlNodePtr parent ); /* externed in load.c */
@@ -86,7 +86,7 @@ static void clear_newslines (void);
  *    @param date_to_rm date to remove the article
  * @return pointer to new article
  */
-news_t* new_article(char* title, char* content, char* faction, ntime_t date,
+news_t* new_article(char* title, char* content, const char* faction, ntime_t date,
     ntime_t date_to_rm)
 {
    news_t *article_ptr, *n_article;
@@ -100,7 +100,7 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date,
    if ( !( (n_article->title = strdup(title)) &&
          (n_article->desc = strdup(content)) &&
          (n_article->faction = strdup(faction)))) {
-      ERR("Out of Memory.");
+      ERR(_("Out of Memory"));
       return NULL;
    }
 
@@ -144,7 +144,7 @@ int free_article(int id)
       news_list = news_list->next;
 
       if (article_to_rm->next == NULL) {
-         WARN("\nLast article, do not remove");
+         WARN(_("\nLast article, do not remove"));
          return -1;
       }
    }
@@ -154,7 +154,7 @@ int free_article(int id)
          article_ptr = article_ptr->next;
 
       if (article_ptr->next == NULL) {
-         WARN("\nArticle to remove not found");
+         WARN(_("\nArticle to remove not found"));
          return -1;
       }
 
@@ -182,6 +182,8 @@ int news_init (void)
       news_exit();
 
    news_list = calloc(sizeof(news_t), 1);
+   news_lines = array_create( char* );
+   news_restores = array_create( glFontRestore );
 
    return 0;
 }
@@ -212,18 +214,12 @@ void news_exit (void)
       free(temp);
    }
 
-   if (news_nlines != 0) {
-      for (i=0; i<news_nlines; i++)
-         free(news_lines[i]);
-      news_nlines = 0;
-   }
-
-   free(news_lines);
-   free(news_restores);
+   for (i=0; i<array_size(news_lines); i++)
+      free(news_lines[i]);
+   array_free(news_lines);
+   array_free(news_restores);
    news_lines  = NULL;
    news_restores = NULL;
-   news_nlines = 0;
-   news_mlines = 0;
    textlength  = 0;
 
    news_list = NULL;
@@ -254,16 +250,19 @@ news_t* news_get(int id)
 /**
  * @brief Generates news from newslist from specific faction AND Generic news
  *
- *    @param the faction of wanted news
+ *    @param faction the faction of wanted news
  * @return 0 on success
  */
-int *generate_news( char* faction )
+int *generate_news( int faction )
 {
    news_t *temp, *article_ptr;
    int p;
+   char *article_time;
+   const char* fname;
 
    p = 0;
    article_ptr = news_list;
+   fname = (faction >= 0) ? faction_name( faction ) : NULL;
 
    /* Put all acceptable news into buf */
    do {
@@ -280,29 +279,34 @@ int *generate_news( char* faction )
       }
 
       /* if article is okay */
-      if (!strcmp(article_ptr->faction, "Generic") || !strcmp(article_ptr->faction, faction)) {
-         if (article_ptr->date && article_ptr->date<40000000000000) {
-            p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
+      if ( (strcmp(article_ptr->faction, "Generic") == 0)
+            || ( (fname != NULL)
+               && (strcmp(article_ptr->faction, fname) == 0) ) ) {
+         /* XXX: magic number */
+         if (article_ptr->date && (article_ptr->date < 40000000000000)) {
+            article_time = ntime_pretty(article_ptr->date, 1);
+            p += scnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s: %s\e0\n\n"
-               , article_ptr->title, ntime_pretty(article_ptr->date, 1), article_ptr->desc );
+               "%s: %s#0\n\n"
+               , article_ptr->title, article_time, article_ptr->desc );
+            free( article_time );
          }
          else {
-            p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
+            p += scnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
-               "%s\e0\n\n"
+               "%s#0\n\n"
                , article_ptr->title, article_ptr->desc );
          }
       }
 
       article_ptr = article_ptr->next;
 
-   } while(article_ptr != NULL);
+   } while (article_ptr != NULL && p < NEWS_MAX_LENGTH);
 
    if (p == 0)
-      nsnprintf(buf, NEWS_MAX_LENGTH, "\n\nSorry, no news today\n\n\n");
+      p = scnprintf(buf, NEWS_MAX_LENGTH, _("\n\nSorry, no news today\n\n\n"));
 
-   len = p;
+   len = MIN( p, NEWS_MAX_LENGTH );
 
    return 0;
 }
@@ -321,45 +325,30 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 {
    int i, p;
 
-   /* Sane defaults. */
+   /* Safe defaults. */
    news_pos    = h/3;
    news_tick   = SDL_GetTicks();
 
-   if (news_nlines>0)
-      clear_newslines();
-
+   clear_newslines();
 
    /* Now load up the text. */
-   i = 0;
    p = 0;
-   news_nlines = 0;
 
    while (p < len) {
-
       /* Get the length. */
-      i = gl_printWidthForText( NULL, &buf[p], w-40 );
+      i = gl_printWidthForText( NULL, &buf[p], w-40, NULL );
 
       /* Copy the line. */
-      if (news_nlines+1 > news_mlines) {
-         if (news_mlines == 0)
-            news_mlines = 256;
-         else
-            news_mlines *= 2;
-         news_lines    = realloc( news_lines, sizeof(char*) * news_mlines );
-         news_restores = realloc( news_restores, sizeof(glFontRestore) * news_mlines );
-      }
-      news_lines[ news_nlines ]    = malloc( i + 1 );
-      strncpy( news_lines[news_nlines], buf+p, i );
-      news_lines[ news_nlines ][i] = '\0';
-      if (news_nlines == 0)
-         gl_printRestoreInit( &news_restores[ news_nlines ] );
+      array_push_back( &news_lines, strndup( buf+p, i ) );
+      if (array_size( news_restores ) == 0)
+         gl_printRestoreInit( &array_grow( &news_restores ) );
       else {
-         news_restores[ news_nlines ] = news_restores[ news_nlines-1 ];
-         gl_printStore( &news_restores[ news_nlines ], news_lines[ news_nlines-1 ] );
+         glFontRestore restore = array_back( news_restores );
+         gl_printStore( &restore, news_lines[ array_size(news_lines)-2 ] );
+         array_push_back( &news_restores, restore );
       }
 
       p += i + 1;    /* Move pointer. */
-      news_nlines++; /* New line. */
    }
    /* </load text> */
 
@@ -373,30 +362,35 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 void clear_newslines (void)
 {
    int i;
-   for (i=0; i<news_nlines; i++)
+   for (i=0; i<array_size(news_lines); i++)
       free(news_lines[i]);
 
-   news_nlines = 0;
+   array_resize(&news_lines, 0);
+   array_resize(&news_restores, 0);
 }
 
 
 /**
- * @brief wid Window receiving the mouse events.
+ * @brief News widget mouse event handler.
  *
+ *    @param wid Window receiving the mouse events.
  *    @param event Mouse event being received.
  *    @param mx X position of the mouse.
  *    @param my Y position of the mouse.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
+ *    @param rx Relative X movement (only valid for motion).
+ *    @param ry Relative Y movement (only valid for motion).
+ *    @param data Unused.
  */
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
-      double w, double h, void *data )
+      double w, double h, double rx, double ry, void *data )
 {
    (void) wid;
    (void) data;
+   (void) rx;
 
    switch (event->type) {
-#if SDL_VERSION_ATLEAST(2,0,0)
       case SDL_MOUSEWHEEL:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
@@ -407,22 +401,13 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
          else
             news_pos += h/3.;
          return 1;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
             return 0;
 
-#if SDL_VERSION_ATLEAST(2,0,0)
          if (!news_drag)
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-         if (event->button.button == SDL_BUTTON_WHEELUP)
-            news_pos -= h/3.;
-         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
-            news_pos += h/3.;
-         else if (!news_drag)
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
             news_drag = 1;
          return 1;
 
@@ -433,7 +418,7 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
 
       case SDL_MOUSEMOTION:
          if (news_drag)
-            news_pos -= event->motion.yrel;
+            news_pos -= ry;
          break;
    }
 
@@ -448,6 +433,7 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
  *    @param by Base Y position to render at.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
+ *    @param data Unused.
  */
 static void news_render( double bx, double by, double w, double h, void *data )
 {
@@ -475,29 +461,27 @@ static void news_render( double bx, double by, double w, double h, void *data )
    /* Render the text. */
    p = (int)ceil( news_pos / (news_font->h + 5.));
    m = (int)ceil(        h / (news_font->h + 5.));
-   if (p > news_nlines + m + 1) {
+   if (p > array_size( news_lines ) + m + 1) {
       news_pos = 0.;
       return;
    }
 
    /* Get positions to make sure inbound. */
    s = MAX(0, p - m);
-   p = MIN(p + 1, news_nlines - 1);
+   p = MIN(p + 1, array_size( news_lines ) - 1);
 
    /* Get start position. */
    y = news_pos - s * (news_font->h+5.);
 
    /* Draw loop. */
    for (i=s; i<p; i++) {
-
       gl_printRestore( &news_restores[i] );
       gl_printMidRaw( news_font, w-40.,
-            bx+10, by+y, &cConsole, news_lines[i] );
+            bx+10, by+y, &cFontGreen, -1., news_lines[i] );
 
       /* Increment line and position. */
       y -= news_font->h + 5.;
    }
-
 }
 
 /*
@@ -505,15 +489,16 @@ static void news_render( double bx, double by, double w, double h, void *data )
  */
 static char* make_clean( char* unclean )
 {
-   int i, j;
+   int i, j, l;
    char *new;
 
-   new = malloc( 4*strlen(unclean)+1 );
+   l = 4*strlen(unclean)+1;
+   new = malloc( l );
 
    for (i=0, j=0; unclean[i] != 0; i++, j++) {
       if (unclean[i] == 27) {
          new[j++] = '\\';
-         j += sprintf( &new[j], "%.3d", unclean[i] )-1;
+         j += scnprintf( &new[j], l, "%.3d", unclean[i] )-1;
       }
       else
          new[j] = unclean[i];
@@ -644,7 +629,7 @@ int news_loadArticles( xmlNodePtr parent )
  */
 static int news_parseArticle( xmlNodePtr parent )
 {
-   char *ntitle, *ndesc, *title, *desc, *faction, *tag;
+   char *ntitle, *ndesc, *title, *desc, *faction;
    char *buff;
    ntime_t date, date_to_rm;
    xmlNodePtr node;
@@ -654,8 +639,8 @@ static int news_parseArticle( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
 
 #define NEWS_READ(elem, s) \
-xmlr_attr(node, s, elem); \
-if (elem == NULL) { WARN("Event is missing '"s"', skipping."); goto cleanup; }
+xmlr_attr_strd(node, s, elem); \
+if (elem == NULL) { WARN(_("Event is missing '%s', skipping."), s); goto cleanup; }
 
    do {
 
@@ -668,7 +653,6 @@ if (elem == NULL) { WARN("Event is missing '"s"', skipping."); goto cleanup; }
       title   = NULL;
       desc    = NULL;
       faction = NULL;
-      tag     = NULL;
 
       NEWS_READ(title, "title");
       NEWS_READ(desc, "desc");
@@ -691,13 +675,11 @@ if (elem == NULL) { WARN("Event is missing '"s"', skipping."); goto cleanup; }
       ntitle = get_fromclean(title);
       ndesc  = get_fromclean(desc);
 
-      /* Optional. */
-      xmlr_attr(node, "tag", tag);
 
       /* make the article*/
       n_article = new_article(ntitle, ndesc, faction, date, date_to_rm);
-      if (tag != NULL)
-         n_article->tag = strdup(tag);
+      /* Read optional tag. */
+      xmlr_attr_strd(node, "tag", n_article->tag);
 
 cleanup:
       free(ntitle);
@@ -705,7 +687,6 @@ cleanup:
       free(title);
       free(desc);
       free(faction);
-      free(tag);
    } while (xml_nextNode(node));
 #undef NEWS_READ
 

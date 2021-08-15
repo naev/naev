@@ -5,8 +5,8 @@
   <y>2844.189863</y>
  </pos>
  <GFX>
-  <space>moon-J01.png</space>
-  <exterior>lava.png</exterior>
+  <space>moon-J01.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
@@ -16,16 +16,14 @@
  <general>
   <class>A</class>
   <population>750</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Ore</commodity>
-  </commodities>
+  <commodities/>
   <description>This small moon is a mining world run by House Za'lek; it is regarded as so insignificant that it does not even have a formal name yet, and likely never will.</description>
  </general>
 </asset>

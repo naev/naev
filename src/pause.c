@@ -12,9 +12,11 @@
  */
 
 
-#include "pause.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
+
+#include "pause.h"
 
 #include "player.h"
 #include "sound.h"
@@ -69,7 +71,6 @@ void unpause_game (void)
 void pause_setSpeed( double mod )
 {
    dt_mod = mod;
-   sound_setSpeed( mod );
 }
 
 

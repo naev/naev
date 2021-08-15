@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Pinpoint Combat AI">
+ <general>
+  <typename>Combat AI</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <rarity>1</rarity>
+  <license>Heavy Weapon License</license>
+  <mass>0</mass>
+  <price>850000</price>
+  <description>Developed to solve needle in haystack-type problems, the Pinpoint Combat AI excels at finding and locking on small objects in the vastness of space. Through fusing it with the ship's missile launching systems, the AI is able to increase both the range and the lock-on time of all missile launchers on the ship.</description>
+  <gfx_store>pinpoint_combat_ai.webp</gfx_store>
+  <limit>combatai</limit>
+ </general>
+ <specific type="modification">
+  <launch_lockon>20</launch_lockon>
+  <launch_range>10</launch_range>
+ </specific>
+</outfit>

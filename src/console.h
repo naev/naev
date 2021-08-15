@@ -18,6 +18,7 @@ void cli_exit (void);
  */
 void cli_open (void);
 void cli_addMessage( const char *msg );
+void cli_addMessageMax( const char *msg, const int l );
 
 
 #endif /* CONSOLE_H */

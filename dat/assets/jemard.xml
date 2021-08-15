@@ -5,8 +5,8 @@
   <y>-7950.928562</y>
  </pos>
  <GFX>
-  <space>moon-A00.png</space>
-  <exterior>gas.png</exterior>
+  <space>moon-A00.webp</space>
+  <exterior>gas.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,12 +16,13 @@
  <general>
   <class>A</class>
   <population>50000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <shipyard/>
   </services>
   <commodities/>

@@ -5,8 +5,8 @@
   <y>-5070.000000</y>
  </pos>
  <GFX>
-  <space>P03.png</space>
-  <exterior>aquatic.png</exterior>
+  <space>P03.webp</space>
+  <exterior>aquatic.webp</exterior>
  </GFX>
  <presence>
   <faction>Frontier</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>P</class>
   <population>2000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Atalanta is named directly after the colony ship that settled it, Atalanta. Though the planet is too cold to be of any real value, the population is making a decent enough living thanks to the caches of heavy elements trapped under the ice.</description>
   <bar>Like all structures on the planet, Atalanta's bar is built under the ice but it is quite close to the surface. This is because a spectacular lighting effect can be observed overhead when the sun shines directly onto the ice. Atalanta's orbit makes this a rare occurrence but the bar's profits soar every cycle.</bar>
  </general>
@@ -38,6 +34,7 @@
   <item>Hulls Medium</item>
   <item>Engines Medium</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
  </tech>

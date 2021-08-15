@@ -18,21 +18,23 @@
   <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Empire Unpresence</asset>
+  <asset>Virtual Independent Trader Area</asset>
+  <asset>Virtual Independent Trader Local</asset>
   <asset>Virtual Trader Area</asset>
-  <asset>Virtual Trader Local</asset>
+  <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Copernicus">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Corinth">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Octavian">
    <autopos/>
-   <hide>1.200000</hide>
+   <hide>1.095445</hide>
   </jump>
   <jump target="Vost">
    <autopos/>

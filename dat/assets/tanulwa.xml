@@ -5,8 +5,8 @@
   <y>-1987.421180</y>
  </pos>
  <GFX>
-  <space>moon-L00.png</space>
-  <exterior>mining6.png</exterior>
+  <space>moon-L00.webp</space>
+  <exterior>mining6.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>L</class>
   <population>10000000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>srm_mil_restricted</land>
    <refuel/>

@@ -9,11 +9,80 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "collision.h"
 
-#include "naev.h"
-
 #include "log.h"
+
+
+/*
+ * Prototypes
+ */
+static int pointInPolygon( const CollPoly* at, const Vector2d* ap,
+      float x, float y );
+static int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
+      float x1, float y1, float x2, float y2, Vector2d* crash );
+
+
+/**
+ * @brief Loads a polygon from an xml node.
+ *
+ *    @param[out] polygon Polygon.
+ *    @param[in] node xml node.
+ */
+void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
+{
+   float d;
+   xmlNodePtr cur;
+   char *list, *ch;
+   int i;
+
+   cur = node->children;
+   do {
+      if (xml_isNode(cur,"x")) {
+         list = xml_get(cur);
+         i = 0;
+         /* split the list of coordiantes */
+         ch = strtok(list, ",");
+         polygon->x = malloc( sizeof(float) );
+         polygon->xmin = 0;
+         polygon->xmax = 0;
+         while ( ch != NULL ) {
+            i++;
+            polygon->x = realloc( polygon->x, sizeof(float) * i );
+            d = atof(ch);
+            polygon->x[i-1] = d;
+            polygon->xmin = MIN( polygon->xmin, d );
+            polygon->xmax = MAX( polygon->xmax, d );
+            ch = strtok(NULL, ",");
+         }
+      }
+      else if (xml_isNode(cur,"y")) {
+         list = xml_get(cur);
+         i = 0;
+         /* split the list of coordiantes */
+         ch = strtok(list, ",");
+         polygon->y = malloc( sizeof(float) );
+         polygon->ymin = 0;
+         polygon->ymax = 0;
+         while ( ch != NULL ) {
+            i++;
+            polygon->y = realloc( polygon->y, sizeof(float) * i );
+            d = atof(ch);
+            polygon->y[i-1] = d;
+            polygon->ymin = MIN( polygon->ymin, d );
+            polygon->ymax = MAX( polygon->ymax, d );
+            ch = strtok(NULL, ",");
+         }
+         polygon->npt = i;
+      }
+   } while (xml_nextNode(cur));
+
+   return;
+}
 
 
 /**
@@ -47,11 +116,11 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
 #if DEBUGGING
    /* Make sure the surfaces have transparency maps. */
    if (at->trans == NULL) {
-      WARN("Texture '%s' has no transparency map.", at->name);
+      WARN(_("Texture '%s' has no transparency map"), at->name);
       return 0;
    }
    if (bt->trans == NULL) {
-      WARN("Texture '%s' has no transparency map.", bt->name);
+      WARN(_("Texture '%s' has no transparency map"), bt->name);
       return 0;
    }
 #endif /* DEBUGGING */
@@ -69,8 +138,8 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
    by2 = by1 + bt->sh - 1;
 
    /* check if bounding boxes intersect */
-   if((bx2 < ax1) || (ax2 < bx1)) return 0;
-   if((by2 < ay1) || (ay2 < by1)) return 0;
+   if ((bx2 < ax1) || (ax2 < bx1)) return 0;
+   if ((by2 < ay1) || (ay2 < by1)) return 0;
 
    /* define the remaining binding box */
    inter_x0 = MAX( ax1, bx1 );
@@ -99,6 +168,244 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
             crash->y = y;
             return 1;
          }
+
+   return 0;
+}
+
+
+/**
+ * @brief Checks whether or not a sprite collides with a polygon.
+ *
+ *    @param[in] at Polygon a.
+ *    @param[in] ap Position in space of polygon a.
+ *    @param[in] bt Texture b.
+ *    @param[in] bsx Position of x of sprite b.
+ *    @param[in] bsy Position of y of sprite b.
+ *    @param[in] bp Position in space of sprite b.
+ *    @param[out] crash Actual position of the collision (only set on collision).
+ *    @return 1 on collision, 0 else.
+ */
+int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
+      const glTexture* bt, const int bsx, const int bsy, const Vector2d* bp,
+      Vector2d* crash )
+{
+   int x,y;
+   int ax1,ax2, ay1,ay2;
+   int bx1,bx2, by1,by2;
+   int inter_x0, inter_x1, inter_y0, inter_y1;
+   int rbsy;
+   int bbx, bby;
+
+#if DEBUGGING
+   /* Make sure the surfaces have transparency maps. */
+   if (bt->trans == NULL) {
+      WARN(_("Texture '%s' has no transparency map"), bt->name);
+      return 0;
+   }
+#endif /* DEBUGGING */
+
+   /* a - cube coordinates */
+   ax1 = (int)VX(*ap) + (int)(at->xmin);
+   ay1 = (int)VY(*ap) + (int)(at->ymin);
+   ax2 = (int)VX(*ap) + (int)(at->xmax);
+   ay2 = (int)VY(*ap) + (int)(at->ymax);
+
+   /* b - cube coordinates */
+   bx1 = (int)VX(*bp) - (int)(bt->sw)/2;
+   by1 = (int)VY(*bp) - (int)(bt->sh)/2;
+   bx2 = bx1 + bt->sw - 1;
+   by2 = by1 + bt->sh - 1;
+
+   /* check if bounding boxes intersect */
+   if ((bx2 < ax1) || (ax2 < bx1)) return 0;
+   if ((by2 < ay1) || (ay2 < by1)) return 0;
+
+   /* define the remaining binding box */
+   inter_x0 = MAX( ax1, bx1 );
+   inter_x1 = MIN( ax2, bx2 );
+   inter_y0 = MAX( ay1, by1 );
+   inter_y1 = MIN( ay2, by2 );
+
+   /* real vertical sprite value (flipped) */
+   rbsy = bt->sy - bsy - 1;
+
+   /* set up the base points */
+   bbx =  bsx*(int)(bt->sw) - bx1;
+   bby = rbsy*(int)(bt->sh) - by1;
+   for (y=inter_y0; y<=inter_y1; y++) {
+      for (x=inter_x0; x<=inter_x1; x++) {
+         /* compute offsets for surface before pass to TransparentPixel test */
+         if ((!gl_isTrans(bt, bbx + x, bby + y))) {
+            if (pointInPolygon( at, ap, (float)x, (float)y )) {
+               crash->x = x;
+               crash->y = y;
+               return 1;
+            }
+         }
+      }
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Checks whether or not two polygons collide.
+ *  /!\ The function is not symmetric: the points of polygon 2 are tested
+ * against the polygon 1. Consequently, it works better if polygon 2 is small
+ *
+ *    @param[in] at Polygon a.
+ *    @param[in] ap Position in space of polygon a.
+ *    @param[in] bt Polygon b.
+ *    @param[in] bp Position in space of polygon b.
+ *    @param[out] crash Actual position of the collision (only set on collision).
+ *    @return 1 on collision, 0 else.
+ */
+int CollidePolygon( const CollPoly* at, const Vector2d* ap,
+      const CollPoly* bt, const Vector2d* bp, Vector2d* crash )
+{
+   int i;
+   int ax1,ax2, ay1,ay2;
+   int bx1,bx2, by1,by2;
+   int inter_x0, inter_x1, inter_y0, inter_y1;
+   float xabs, yabs, x1, y1, x2, y2;
+
+   /* a - cube coordinates */
+   ax1 = (int)VX(*ap) + (int)(at->xmin);
+   ay1 = (int)VY(*ap) + (int)(at->ymin);
+   ax2 = (int)VX(*ap) + (int)(at->xmax);
+   ay2 = (int)VY(*ap) + (int)(at->ymax);
+
+   /* b - cube coordinates */
+   bx1 = (int)VX(*bp) + (int)(bt->xmin);
+   by1 = (int)VY(*bp) + (int)(bt->ymin);
+   bx2 = (int)VX(*bp) + (int)(bt->xmax);
+   by2 = (int)VY(*bp) + (int)(bt->ymax);
+
+   /* check if bounding boxes intersect */
+   if ((bx2 < ax1) || (ax2 < bx1)) return 0;
+   if ((by2 < ay1) || (ay2 < by1)) return 0;
+
+   /* define the remaining binding box */
+   inter_x0 = MAX( ax1, bx1 );
+   inter_x1 = MIN( ax2, bx2 );
+   inter_y0 = MAX( ay1, by1 );
+   inter_y1 = MIN( ay2, by2 );
+
+   /* loop on the points of bt to see if one of them is in polygon at. */
+   for (i=0; i<=bt->npt-1; i++) {
+      xabs = bt->x[i] + VX(*bp);
+      yabs = bt->y[i] + VY(*bp);
+
+      if ((xabs<inter_x0) || (xabs>inter_x1) ||
+          (yabs<inter_y0) || (yabs>inter_y1)) {
+         if (pointInPolygon( at, ap, xabs, yabs )) {
+            crash->x = (int)xabs;
+            crash->y = (int)yabs;
+            return 1;
+         }
+      }
+   }
+
+   /* loop on the lines of bt to see if one of them intersects a line of at. */
+   x1 = bt->x[0] + VX(*bp);
+   y1 = bt->y[0] + VY(*bp);
+   x2 = bt->x[bt->npt-1] + VX(*bp);
+   y2 = bt->y[bt->npt-1] + VY(*bp);
+   if ( LineOnPolygon( at, ap, x1, y1, x2, y2, crash ) )
+      return 1;
+   for (i=0; i<=bt->npt-2; i++) {
+      x1 = bt->x[i] + VX(*bp);
+      y1 = bt->y[i] + VY(*bp);
+      x2 = bt->x[i+1] + VX(*bp);
+      y2 = bt->y[i+1] + VY(*bp);
+      if ( LineOnPolygon( at, ap, x1, y1, x2, y2, crash ) )
+         return 1;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Checks whether or not a point is inside a polygon.
+ *
+ *    @param[in] at Polygon a.
+ *    @param[in] ap Position in space of polygon a.
+ *    @param[in] x Coordiante of point.
+ *    @param[in] y Coordinate of point.
+ *    @return 1 on collision, 0 else.
+ */
+int pointInPolygon( const CollPoly* at, const Vector2d* ap,
+      float x, float y )
+{
+   int i;
+   float vprod, sprod, angle;
+   float dxi, dxip, dyi, dyip;
+
+   /* See if the pixel is inside the polygon:
+      We increment the angle when doing a loop along all the points
+      If the final angle is 0, we are outside the polygon
+      Otherwise, the angle should be +/- 2pi*/
+   angle = 0.0;
+   for (i=0; i<=at->npt-2; i++) {
+      dxi  = at->x[i]  +VX(*ap)-x;
+      dxip = at->x[i+1]+VX(*ap)-x;
+      dyi  = at->y[i]  +VY(*ap)-y;
+      dyip = at->y[i+1]+VY(*ap)-y;
+      sprod = dxi * dxip + dyi * dyip;
+      vprod = dxi * dyip - dyi * dxip;
+      angle += atan2(vprod, sprod);
+   }
+   dxi  = at->x[at->npt-1] + VX(*ap) - x;
+   dxip = at->x[0] + VX(*ap) - x;
+   dyi  = at->y[at->npt-1] + VY(*ap)- y;
+   dyip = at->y[0] + VY(*ap) - y;
+   sprod = dxi * dxip + dyi * dyip;
+   vprod = dxi * dyip - dyi * dxip;
+   angle += atan2(vprod, sprod);
+
+   if (FABS(angle) < 1e-5)
+      return 0;
+
+   return 1;
+}
+
+
+/**
+ * @brief Checks whether or not a line intersects a polygon.
+ *
+ *    @param[in] at Polygon a.
+ *    @param[in] ap Position in space of polygon a.
+ *    @param[in] x1 Coordiante of point 1.
+ *    @param[in] y1 Coordinate of point 1.
+ *    @param[in] x2 Coordiante of point 2.
+ *    @param[in] y2 Coordinate of point 2.
+ *    @param[out] crash coordinates of the intersection.
+ *    @return 1 on collision, 0 else.
+ */
+int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
+      float x1, float y1, float x2, float y2, Vector2d* crash )
+{
+   float xi, xip, yi, yip;
+   int i;
+
+   /* In this function, we are only looking for one collision point. */
+
+   xi  = at->x[at->npt-1] + ap->x;
+   xip = at->x[0]         + ap->x;
+   yi  = at->y[at->npt-1] + ap->y;
+   yip = at->y[0]         + ap->y;
+   if ( CollideLineLine(x1, y1, x2, y2, xi, yi, xip, yip, crash) == 1 )
+      return 1;
+   for (i=0; i<=at->npt-2; i++) {
+      xi  = at->x[i]   + ap->x;
+      xip = at->x[i+1] + ap->x;
+      yi  = at->y[i]   + ap->y;
+      yip = at->y[i+1] + ap->y;
+      if ( CollideLineLine(x1, y1, x2, y2, xi, yi, xip, yip, crash) == 1 )
+         return 1;
+   }
 
    return 0;
 }
@@ -184,7 +491,7 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
 
    /* Make sure texture has transparency map. */
    if (bt->trans == NULL) {
-      WARN("Texture '%s' has no transparency map.", bt->name);
+      WARN(_("Texture '%s' has no transparency map"), bt->name);
       return 0;
    }
 
@@ -307,3 +614,256 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
 }
 
 
+/**
+ * @brief Checks to see if a line collides with a polygon.
+ *
+ * First collisions are detected on all the walls of the polygon's rectangle.
+ *  Then the collisions are tested on every line of the polygon.
+ *
+ *    @param[in] ap Origin of the line.
+ *    @param[in] ad Direction of the line.
+ *    @param[in] al Length of the line.
+ *    @param[in] bt Polygon b.
+ *    @param[in] bp Position in space of polygon b.
+ *    @param[out] crash Position of the collision.
+ *    @return 1 on collision, 0 else.
+ *
+ * @sa CollideLinePolygon
+ */
+int CollideLinePolygon( const Vector2d* ap, double ad, double al,
+      const CollPoly* bt, const Vector2d* bp, Vector2d crash[2] )
+{
+   int i;
+   double ep[2], bl[2], tr[2];
+   double xi, yi, xip, yip;
+   int hits, real_hits;
+   Vector2d tmp_crash;
+
+   /* Set up end point of line. */
+   ep[0] = ap->x + al*cos(ad);
+   ep[1] = ap->y + al*sin(ad);
+
+   real_hits = 0;
+   vectnull( &tmp_crash );
+
+   /* Check if the beginning point is inside polygon */
+   if ( pointInPolygon( bt, bp, (float) ap->x, (float) ap->y ) ) {
+      crash[real_hits].x = ap->x;
+      crash[real_hits].y = ap->y;
+      real_hits++;
+   }
+
+   /* same thing for end point */
+   if ( pointInPolygon( bt, bp, (float) ep[0], (float) ep[1] ) ) {
+      crash[real_hits].x = ep[0];
+      crash[real_hits].y = ep[1];
+      real_hits++;
+   }
+
+   /* If both are inside, we got the two collision points. */
+   if (real_hits == 2)
+      return 1;
+
+   /* None is inside, check if there is a chance of intersection */
+   if (real_hits == 0) {
+      /* Set up top right corner of the rectangle. */
+      tr[0] = bp->x + (double)bt->xmax;
+      tr[1] = bp->y + (double)bt->ymax;
+      /* Set up bottom left corner of the rectangle. */
+      bl[0] = bp->x + (double)bt->xmin;
+      bl[1] = bp->y + (double)bt->ymin;
+
+      /*
+       * Start check for rectangular collisions.
+       */
+      hits = 0;
+      /* Left border. */
+      if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+            bl[0], bl[1], bl[0], tr[1], &tmp_crash) == 1)
+         hits++;
+
+      /* Top border. */
+      if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+            bl[0], tr[1], tr[0], tr[1], &tmp_crash) == 1)
+         hits++;
+
+      /* Right border. */
+      if (CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+            tr[0], tr[1], tr[0], bl[1], &tmp_crash) == 1)
+         hits++;
+
+      /* Bottom border. */
+      if ((hits < 2) && CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+            tr[0], bl[1], bl[0], bl[1], &tmp_crash) == 1)
+         hits++;
+
+      /* No hits - missed. No need to go further */
+      if (hits == 0)
+         return 0;
+   }
+
+   /*
+    * Now we check any line of the polygon
+    */
+   xi  = (double)bt->x[bt->npt-1] + bp->x;
+   xip = (double)bt->x[0]         + bp->x;
+   yi  = (double)bt->y[bt->npt-1] + bp->y;
+   yip = (double)bt->y[0]         + bp->y;
+   if ( CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+        xi, yi, xip, yip, &tmp_crash) ) {
+      crash[real_hits].x = tmp_crash.x;
+      crash[real_hits].y = tmp_crash.y;
+      real_hits++;
+      if (real_hits == 2)
+         return 1;
+   }
+   for (i=0; i<=bt->npt-2; i++) {
+      xi  = (double)bt->x[i]   + bp->x;
+      xip = (double)bt->x[i+1] + bp->x;
+      yi  = (double)bt->y[i]   + bp->y;
+      yip = (double)bt->y[i+1] + bp->y;
+      if ( CollideLineLine(ap->x, ap->y, ep[0], ep[1],
+           xi, yi, xip, yip, &tmp_crash) ) {
+         crash[real_hits].x = tmp_crash.x;
+         crash[real_hits].y = tmp_crash.y;
+         real_hits++;
+         if (real_hits == 2)
+            return 1;
+      }
+   }
+
+   /* Actually missed. */
+   if (real_hits == 0)
+      return 0;
+
+   /* Strange situation, should never happen but just in case we duplicate
+    *  the hit. */
+   if (real_hits == 1) {
+      crash[1].x = crash[0].x;
+      crash[1].y = crash[0].y;
+   }
+
+   /* We hit. */
+   return 1;
+}
+
+
+static int linePointOnSegment( double d1, double x1, double y1, double x2, double y2, double x, double y )
+{
+   //double d1 = hypot( x2-x1, y2-y1 ); /* Distance between end-points. */
+   double d2 = hypot( x-x1,  y-y1 );  /* Distance from point to one end. */
+   double d3 = hypot( x2-x,  y2-y );  /* Distance to the other end. */
+   return fabs(d1 - d2 - d3) < 1e-8;   /* True if smaller than some tolerance. */
+}
+
+
+#define FX( A, B, C, x )   (-(A * x + C) / B)
+#define FY( A, B, C , y )  (-(B * y + C) / A)
+/**
+ * @brief Checks to see if a line collides with a circle
+ *
+ *    @param[in] p1 Point 1 of the line segment.
+ *    @param[in] p2 Point 2 of the line segment.
+ *    @param[in] cc Center of the circle.
+ *    @param[in] cr Radius of the circle.
+ *    @param[out] crash Position of the collision.
+ *    @return 1 on collision, 0 else.
+ */
+int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
+      const Vector2d *cc, double cr, Vector2d crash[2] )
+{
+   double x0 = cc->x;
+   double y0 = cc->y;
+   double x1 = p1->x;
+   double y1 = p1->y;
+   double x2 = p2->x;
+   double y2 = p2->y;
+
+   double A = y2 - y1;
+   double B = x1 - x2;
+   double C = x2 * y1 - x1 * y2;
+
+   double a = pow2(A) + pow2(B);
+   double b, c, d;
+
+   int bnz, cnt;
+
+   double x, y, d1;
+
+   /* Non-vertical case. */
+   if (fabs(B) >= 1e-8) {
+      b = 2. * (A * C + A * B * y0 - pow2(B) * x0);
+      c = pow2(C) + 2. * B * C * y0 - pow2(B) * (pow2(cr) - pow2(x0) - pow2(y0));
+      bnz = 1;
+   }
+   /* Have to have special care when line is vertical. */
+   else {
+      b = 2. * (B * C + A * B * x0 - pow2(A) * y0);
+      c = pow2(C) + 2. * A * C * x0 - pow2(A) * (pow2(cr) - pow2(x0) - pow2(y0));
+      bnz = 0;
+   }
+   d = pow2(b) - 4. * a * c; /* Discriminant. */
+   if (d < 0.)
+      return 0;
+
+   cnt = 0;
+   d1 = hypot( x2-x1, y2-y1 );
+   /* Line is tangent, so only one intersection. */
+   if (d == 0.) {
+      if (bnz) {
+         x = -b / (2. * a);
+         y = FX(A, B, C, x);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+      } else {
+         y = -b / (2. * a);
+         x = FY(A, B, C, y);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+      }
+   }
+   /* Two intersections. */
+   else {
+      d = sqrt(d);
+      if (bnz) {
+         x = (-b + d) / (2. * a);
+         y = FX(A, B, C, x);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+         x = (-b - d) / (2. * a);
+         y = FX(A, B, C, x);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+      } else {
+         y = (-b + d) / (2. * a);
+         x = FY(A, B, C, y);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+         y = (-b - d) / (2. * a);
+         x = FY(A, B, C, y);
+         if (linePointOnSegment( d1, x1, y1, x2, y2, x, y )) {
+            crash[cnt].x = x;
+            crash[cnt].y = y;
+            cnt++;
+         }
+      }
+   }
+   return cnt;
+}
+#undef FX
+#undef FY

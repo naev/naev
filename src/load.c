@@ -9,42 +9,54 @@
  */
 
 
-#include "load.h"
+/** @cond */
+#include "physfs.h"
 
 #include "naev.h"
+/** @endcond */
 
-#include "nxml.h"
-#include "log.h"
-#include "player.h"
-#include "nfile.h"
+#include "load.h"
+
 #include "array.h"
-#include "space.h"
-#include "toolkit.h"
-#include "menu.h"
 #include "dialogue.h"
+#include "economy.h"
 #include "event.h"
-#include "news.h"
-#include "mission.h"
 #include "faction.h"
 #include "gui.h"
-#include "unidiff.h"
-#include "nlua_var.h"
-#include "land.h"
 #include "hook.h"
+#include "land.h"
+#include "log.h"
+#include "menu.h"
+#include "mission.h"
+#include "news.h"
+#include "ndata.h"
+#include "nlua_var.h"
 #include "nstring.h"
+#include "nxml.h"
 #include "outfit.h"
-
+#include "player.h"
+#include "shiplog.h"
+#include "space.h"
+#include "toolkit.h"
+#include "unidiff.h"
 
 #define LOAD_WIDTH      600 /**< Load window width. */
 #define LOAD_HEIGHT     500 /**< Load window height. */
 
-#define BUTTON_WIDTH    80 /**< Button width. */
+#define BUTTON_WIDTH    200 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
 
 
+/**
+ * @brief Struct containing a file's name and stat structure.
+ */
+typedef struct filedata {
+   char *name;
+   PHYSFS_Stat stat;
+} filedata_t;
+
+
 static nsave_t *load_saves = NULL; /**< Array of save.s */
-
-
 extern int save_loaded; /**< From save.c */
 
 
@@ -54,8 +66,6 @@ extern int save_loaded; /**< From save.c */
 /* externs */
 /* player.c */
 extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff. */
-/* mission.c */
-extern int missions_loadActive( xmlNodePtr parent ); /**< Loads active missions. */
 /* event.c */
 extern int events_loadActive( xmlNodePtr parent );
 /* news.c */
@@ -68,6 +78,8 @@ extern int pfaction_load( xmlNodePtr parent ); /**< Loads faction data. */
 extern int hook_load( xmlNodePtr parent ); /**< Loads hooks. */
 /* space.c */
 extern int space_sysLoad( xmlNodePtr parent ); /**< Loads the space stuff. */
+/* economy.c */
+extern int economy_sysLoad( xmlNodePtr parent ); /**< Loads the economy stuff. */
 /* unidiff.c */
 extern int diff_load( xmlNodePtr parent ); /**< Loads the universe diffs. */
 /* static */
@@ -76,29 +88,34 @@ static void load_menu_close( unsigned int wdw, char *str );
 static void load_menu_load( unsigned int wdw, char *str );
 static void load_menu_delete( unsigned int wdw, char *str );
 static int load_load( nsave_t *save, const char *path );
+static int load_gameInternal( const char* file, const char* version );
+static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
+static int load_sortCompare( const void *p1, const void *p2 );
+static xmlDocPtr load_xml_parsePhysFS( const char* filename );
 
 
 /**
  * @brief Loads an individual save.
+ * @param[out] save Structure to populate.
+ * @param path PhysicsFS path (i.e., relative path starting with "saves/").
  */
 static int load_load( nsave_t *save, const char *path )
 {
    xmlDocPtr doc;
    xmlNodePtr root, parent, node, cur;
-   int scu, stp, stu;
-   char *version = NULL;
+   int cycles, periods, seconds;
 
    memset( save, 0, sizeof(nsave_t) );
 
    /* Load the XML. */
-   doc   = xmlParseFile(path);
+   doc = load_xml_parsePhysFS( path );
    if (doc == NULL) {
-      WARN("Unable to parse save path '%s'.", path);
+      WARN( _("Unable to parse save path '%s'."), path);
       return -1;
    }
    root = doc->xmlChildrenNode; /* base node */
    if (root == NULL) {
-      WARN("Unable to get child node of save '%s'.",path);
+      WARN( _("Unable to get child node of save '%s'."), path);
       xmlFreeDoc(doc);
       return -1;
    }
@@ -112,56 +129,50 @@ static int load_load( nsave_t *save, const char *path )
       xml_onlyNodes(parent);
 
       /* Info. */
-      if (xml_isNode(parent,"version")) {
+      if (xml_isNode(parent, "version")) {
          node = parent->xmlChildrenNode;
          do {
-            xmlr_strd(node,"naev",version);
-            xmlr_strd(node,"data",save->data);
+            xmlr_strd(node, "naev", save->version);
+            xmlr_strd(node, "data", save->data);
          } while (xml_nextNode(node));
          continue;
       }
 
-      if (xml_isNode(parent,"player")) {
+      else if (xml_isNode(parent, "player")) {
          /* Get name. */
-         xmlr_attr(parent,"name",save->name);
+         xmlr_attr_strd(parent, "name", save->name);
          /* Parse rest. */
          node = parent->xmlChildrenNode;
          do {
             xml_onlyNodes(node);
 
             /* Player info. */
-            xmlr_strd(node,"location",save->planet);
-            xmlr_ulong(node,"credits",save->credits);
+            xmlr_strd(node, "location", save->planet);
+            xmlr_ulong(node, "credits", save->credits);
 
             /* Time. */
-            if (xml_isNode(node,"time")) {
+            if (xml_isNode(node, "time")) {
                cur = node->xmlChildrenNode;
-               scu = stp = stu = 0;
+               cycles = periods = seconds = 0;
                do {
-                  xmlr_int(cur,"SCU",scu);
-                  xmlr_int(cur,"STP",stp);
-                  xmlr_int(cur,"STU",stu);
+                  xmlr_int(cur, "SCU", cycles);
+                  xmlr_int(cur, "STP", periods);
+                  xmlr_int(cur, "STU", seconds);
                } while (xml_nextNode(cur));
-               save->date = ntime_create( scu, stp, stu );
+               save->date = ntime_create( cycles, periods, seconds );
                continue;
             }
 
             /* Ship info. */
-            if (xml_isNode(node,"ship")) {
-               xmlr_attr(node,"name",save->shipname);
-               xmlr_attr(node,"model",save->shipmodel);
+            if (xml_isNode(node, "ship")) {
+               xmlr_attr_strd(node, "name", save->shipname);
+               xmlr_attr_strd(node, "model", save->shipmodel);
                continue;
             }
          } while (xml_nextNode(node));
          continue;
       }
    } while (xml_nextNode(parent));
-
-   /* Handle version. */
-   if (version != NULL) {
-      naev_versionParse( save->version, version, strlen(version) );
-      free(version);
-   }
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -175,44 +186,35 @@ static int load_load( nsave_t *save, const char *path )
  */
 int load_refresh (void)
 {
-   char **files, buf[PATH_MAX], *tmp;
-   int nfiles, i, len;
-   int ok;
+   char buf[PATH_MAX];
+   filedata_t *files, tmp;
+   size_t len;
+   int i, ok;
    nsave_t *ns;
 
    if (load_saves != NULL)
       load_free();
-   load_saves = array_create( nsave_t );
 
    /* load the saves */
-   files = nfile_readDir( &nfiles, "%ssaves", nfile_dataPath() );
-   for (i=0; i<nfiles; i++) {
-      len = strlen(files[i]);
+   files = array_create( filedata_t );
+   PHYSFS_enumerate( "saves", load_enumerateCallback, &files );
+   qsort(files, array_size(files), sizeof(filedata_t), load_sortCompare);
 
-      /* no save or backup save extension */
-      if (((len < 5) || strcmp(&files[i][len-3],".ns")) &&
-            ((len < 12) || strcmp(&files[i][len-10],".ns.backup"))) {
-         free(files[i]);
-         memmove( &files[i], &files[i+1], sizeof(char*) * (nfiles-i-1) );
-         nfiles--;
-         i--;
-      }
+   if (array_size(files) == 0) {
+      array_free( files );
+      return 0;
    }
 
-   /* Make sure files are none. */
-   if (files == NULL)
-      return 0;
-
    /* Make sure backups are after saves. */
-   for (i=0; i<nfiles-1; i++) {
-      len = strlen( files[i] );
+   for (i=0; i<array_size(files)-1; i++) {
+      len = strlen( files[i].name );
 
       /* Only interested in swapping backup with file after it if it's not backup. */
-      if ((len < 12) || strcmp( &files[i][len-10],".ns.backup" ))
+      if ((len < 11) || strcmp( &files[i].name[len-10],".ns.backup" ))
          continue;
 
       /* Don't match. */
-      if (strncmp( files[i], files[i+1], (len-10) ))
+      if (strncmp( files[i].name, files[i+1].name, len-10 ))
          continue;
 
       /* Swap around. */
@@ -224,10 +226,11 @@ int load_refresh (void)
    /* Allocate and parse. */
    ok = 0;
    ns = NULL;
-   for (i=0; i<nfiles; i++) {
+   load_saves = array_create_size( nsave_t, array_size(files) );
+   for (i=0; i<array_size(files); i++) {
       if (!ok)
          ns = &array_grow( &load_saves );
-      nsnprintf( buf, sizeof(buf), "%ssaves/%s", nfile_dataPath(), files[i] );
+      snprintf( buf, sizeof(buf), "saves/%s", files[i].name );
       ok = load_load( ns, buf );
    }
 
@@ -236,11 +239,64 @@ int load_refresh (void)
       array_resize( &load_saves, array_size(load_saves)-1 );
 
    /* Clean up memory. */
-   for (i=0; i<nfiles; i++)
-      free(files[i]);
-   free(files);
+   for (i=0; i<array_size(files); i++)
+      free( files[i].name );
+   array_free( files );
 
    return 0;
+}
+
+
+/**
+ * @brief The PHYSFS_EnumerateCallback for load_refresh
+ */
+static int load_enumerateCallback( void* data, const char* origdir, const char* fname )
+{
+   char *path;
+   const char *fmt;
+   size_t dir_len, name_len;
+   filedata_t *tmp;
+   PHYSFS_Stat stat;
+
+   dir_len = strlen( origdir );
+   name_len = strlen( fname );
+
+   /* no save or backup save extension? */
+   if ((name_len < 4 || strcmp( &fname[name_len-3], ".ns" )) && (name_len < 11 || strcmp( &fname[name_len-10], ".ns.backup" )))
+      return PHYSFS_ENUM_OK;
+
+   fmt = dir_len && origdir[dir_len-1]=='/' ? "%s%s" : "%s/%s";
+   asprintf( &path, fmt, origdir, fname );
+   if (!PHYSFS_stat( path, &stat ))
+      WARN( _("PhysicsFS: Cannot stat %s: %s"), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+   else if (stat.filetype == PHYSFS_FILETYPE_REGULAR) {
+      tmp = &array_grow( (filedata_t**)data );
+      tmp->name = strdup( fname );
+      tmp->stat = stat;
+   }
+
+   free( path );
+   return PHYSFS_ENUM_OK;
+}
+
+
+/**
+ * @brief qsort compare function for files.
+ */
+static int load_sortCompare( const void *p1, const void *p2 )
+{
+   filedata_t *f1, *f2;
+
+   f1 = (filedata_t*) p1;
+   f2 = (filedata_t*) p2;
+
+   if (f1->stat.modtime > f2->stat.modtime)
+      return -1;
+   else if (f1->stat.modtime < f2->stat.modtime)
+      return +1;
+
+   return strcmp( f1->name, f2->name );
 }
 
 
@@ -252,41 +308,26 @@ void load_free (void)
    int i;
    nsave_t *ns;
 
-   if (load_saves != NULL) {
-      for (i=0; i<array_size(load_saves); i++) {
-         ns = &load_saves[i];
-         free(ns->path);
-         if (ns->name != NULL)
-            free(ns->name);
-
-         if (ns->data != NULL)
-            free(ns->data);
-
-         if (ns->planet != NULL)
-            free(ns->planet);
-
-         if (ns->shipname != NULL)
-            free(ns->shipname);
-         if (ns->shipmodel != NULL)
-            free(ns->shipmodel);
-      }
-      array_free( load_saves );
+   for (i=0; i<array_size(load_saves); i++) {
+      ns = &load_saves[i];
+      free(ns->path);
+      free(ns->name);
+      free(ns->version);
+      free(ns->data);
+      free(ns->planet);
+      free(ns->shipname);
+      free(ns->shipmodel);
    }
+   array_free( load_saves );
    load_saves = NULL;
 }
 
 
 /**
- * @brief Gets the list of loaded saves.
+ * @brief Gets the array (array.h) of loaded saves.
  */
-nsave_t *load_getList( int *n )
+const nsave_t *load_getList (void)
 {
-   if (load_saves == NULL) {
-      *n = 0;
-      return NULL;
-   }
-
-   *n = array_size( load_saves );
    return load_saves;
 }
 
@@ -297,11 +338,11 @@ void load_loadGameMenu (void)
 {
    unsigned int wid;
    char **names, buf[PATH_MAX];
-   nsave_t *nslist, *ns;
+   nsave_t *ns;
    int i, n, len;
 
    /* window */
-   wid = window_create( "Load Game", -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
+   wid = window_create( "wdwLoadGameMenu", _("Load Game"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
    window_setAccept( wid, load_menu_load );
    window_setCancel( wid, load_menu_close );
 
@@ -309,14 +350,14 @@ void load_loadGameMenu (void)
    load_refresh();
 
    /* load the saves */
-   nslist = load_getList( &n );
+   n = array_size( load_saves );
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
       for (i=0; i<n; i++) {
-         ns       = &nslist[i];
+         ns       = &load_saves[i];
          len      = strlen(ns->path);
          if (strcmp(&ns->path[len-10],".ns.backup")==0) {
-            nsnprintf( buf, sizeof(buf), "%s \er(Backup)\e0", ns->name );
+            snprintf( buf, sizeof(buf), _("%s #r(Backup)#0"), ns->name );
             names[i] = strdup(buf);
          }
          else
@@ -326,25 +367,25 @@ void load_loadGameMenu (void)
    /* case there are no files */
    else {
       names = malloc(sizeof(char*));
-      names[0] = strdup("None");
+      names[0] = strdup(_("None"));
       n     = 1;
    }
 
    /* Player text. */
-   window_addText( wid, -20, -40, 200, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
-         0, "txtPilot", NULL, &cBlack, NULL );
+   window_addText( wid, -20, -40, 240, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
+         0, "txtPilot", &gl_smallFont, NULL, NULL );
 
    window_addList( wid, 20, -50,
-         LOAD_WIDTH-200-60, LOAD_HEIGHT-110,
-         "lstSaves", names, n, 0, load_menu_update );
+         LOAD_WIDTH-240-60, LOAD_HEIGHT-110,
+         "lstSaves", names, n, 0, load_menu_update, load_menu_load );
 
    /* Buttons */
    window_addButtonKey( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnBack", "Back", load_menu_close, SDLK_b );
+         "btnBack", _("Back"), load_menu_close, SDLK_b );
    window_addButtonKey( wid, -20, 20 + BUTTON_HEIGHT+20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnLoad", "Load", load_menu_load, SDLK_l );
+         "btnLoad", _("Load"), load_menu_load, SDLK_l );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnDelete", "Del", load_menu_delete );
+         "btnDelete", _("Delete"), load_menu_delete );
 }
 /**
  * @brief Closes the load game menu.
@@ -358,7 +399,7 @@ static void load_menu_close( unsigned int wdw, char *str )
 }
 /**
  * @brief Updates the load menu.
- *    @param wdw Window triggering function.
+ *    @param wid Widget triggering function.
  *    @param str Unused.
  */
 static void load_menu_update( unsigned int wid, char *str )
@@ -366,40 +407,37 @@ static void load_menu_update( unsigned int wid, char *str )
    (void) str;
    int pos;
    nsave_t *ns;
-   int n;
    char *save;
-   char buf[256], credits[ECON_CRED_STRLEN], date[64], version[256];
+   char buf[STRMAX_SHORT], credits[ECON_CRED_STRLEN], date[64];
 
    /* Make sure list is ok. */
    save = toolkit_getList( wid, "lstSaves" );
-   if (strcmp(save,"None") == 0)
+   if (strcmp(save,_("None")) == 0)
       return;
 
    /* Get position. */
    pos = toolkit_getListPos( wid, "lstSaves" );
-   ns  = load_getList( &n );
-   ns  = &ns[pos];
+   ns  = &load_saves[pos];
 
    /* Display text. */
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
-   naev_versionString( version, sizeof(version), ns->version[0], ns->version[1], ns->version[2] );
-   nsnprintf( buf, sizeof(buf),
-         "\eDName:\n"
-         "\e0   %s\n"
-         "\eDVersion:\n"
-         "\e0   %s\n"
-         "\eDDate:\n"
-         "\e0   %s\n"
-         "\eDPlanet:\n"
-         "\e0   %s\n"
-         "\eDCredits:\n"
-         "\e0   %s\n"
-         "\eDShip Name:\n"
-         "\e0   %s\n"
-         "\eDShip Model:\n"
-         "\e0   %s",
-         ns->name, version, date, ns->planet,
+   snprintf( buf, sizeof(buf),
+         _("#nName:\n"
+         "#0   %s\n\n"
+         "#nVersion:\n"
+         "#0   %s\n\n"
+         "#nDate:\n"
+         "#0   %s\n\n"
+         "#nPlanet:\n"
+         "#0   %s\n\n"
+         "#nCredits:\n"
+         "#0   %s\n\n"
+         "#nShip Name:\n"
+         "#0   %s\n\n"
+         "#nShip Model:\n"
+         "#0   %s"),
+         ns->name, ns->version, date, ns->planet,
          credits, ns->shipname, ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
 }
@@ -413,31 +451,25 @@ static void load_menu_load( unsigned int wdw, char *str )
    (void)str;
    char *save;
    int wid, pos;
-   nsave_t *ns;
-   int n;
-   char version[64];
    int diff;
 
-   wid = window_get( "Load Game" );
+   wid = window_get( "wdwLoadGameMenu" );
    save = toolkit_getList( wid, "lstSaves" );
 
-   if (strcmp(save,"None") == 0)
+   if (strcmp(save,_("None")) == 0)
       return;
 
    pos = toolkit_getListPos( wid, "lstSaves" );
-   ns  = load_getList( &n );
 
    /* Check version. */
-   diff = naev_versionCompare( ns[pos].version );
+   diff = naev_versionCompare( load_saves[pos].version );
    if (ABS(diff) >= 2) {
-      naev_versionString( version, sizeof(version), ns[pos].version[0],
-            ns[pos].version[1], ns[pos].version[2] );
-      if (!dialogue_YesNo( "Save game version mismatch",
-            "Save game '%s' version does not match Naev version:\n"
-            "   Save version: \er%s\e0\n"
-            "   Naev version: \eD%s\e0\n"
-            "Are you sure you want to load this game? It may lose data.",
-            save, version, naev_version(0) ))
+      if (!dialogue_YesNo( _("Save game version mismatch"),
+            _("Save game '%s' version does not match Naev version:\n"
+            "   Save version: #r%s#0\n"
+            "   Naev version: %s\n"
+            "Are you sure you want to load this game? It may lose data."),
+            save, load_saves[pos].version, VERSION ))
          return;
    }
 
@@ -448,7 +480,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    menu_main_close();
 
    /* Try to load the game. */
-   if (load_game( ns[pos].path, diff )) {
+   if (load_game( &load_saves[pos] )) {
       /* Failed so reopen both. */
       menu_main();
       load_loadGameMenu();
@@ -464,23 +496,20 @@ static void load_menu_delete( unsigned int wdw, char *str )
    (void)str;
    char *save;
    int wid, pos;
-   nsave_t *ns;
-   int n;
 
-   wid = window_get( "Load Game" );
+   wid = window_get( "wdwLoadGameMenu" );
    save = toolkit_getList( wid, "lstSaves" );
 
    if (strcmp(save,"None") == 0)
       return;
 
-   if (dialogue_YesNo( "Permanently Delete?",
-      "Are you sure you want to permanently delete '%s'?", save) == 0)
+   if (dialogue_YesNo( _("Permanently Delete?"),
+      _("Are you sure you want to permanently delete '%s'?"), save) == 0)
       return;
 
    /* Remove it. */
    pos = toolkit_getListPos( wid, "lstSaves" );
-   ns  = load_getList( &n );
-   remove( ns[pos].path ); /* remove is portable and will call unlink on linux. */
+   PHYSFS_delete( load_saves[pos].path );
 
    /* need to reload the menu */
    load_menu_close(wdw, NULL);
@@ -507,7 +536,7 @@ static void load_compatSlots (void)
       if (i >= 0)
          ship = player_getShip( sships[i] );
       /* Remove all outfits. */
-      for (j=0; j<ship->noutfits; j++) {
+      for (j=0; j<array_size(ship->outfits); j++) {
          if (ship->outfits[j]->outfit != NULL) {
             player_addOutfit( ship->outfits[j]->outfit, 1 );
             pilot_rmOutfitRaw( ship, ship->outfits[j] );
@@ -531,25 +560,92 @@ static void load_compatSlots (void)
 
 
 /**
- * @brief Actually loads a new game based on file.
+ * @brief Loads the diffs from game file.
  *
- *    @param file File that contains the new game.
+ *    @param file PhysicsFS path (i.e., relative path starting with "saves/").
  *    @return 0 on success.
  */
-int load_game( const char* file, int version_diff )
+int load_gameDiff( const char* file )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
-   Planet *pnt;
 
    /* Make sure it exists. */
-   if (!nfile_fileExists(file)) {
-      dialogue_alert("Savegame file seems to have been deleted.");
+   if (!PHYSFS_exists( file )) {
+      dialogue_alert( _("Saved game file seems to have been deleted.") );
       return -1;
    }
 
    /* Load the XML. */
-   doc   = xmlParseFile(file);
+   doc = load_xml_parsePhysFS( file );
+   if (doc == NULL)
+      goto err;
+   node  = doc->xmlChildrenNode; /* base node */
+   if (node == NULL)
+      goto err_doc;
+
+   /* Diffs should be cleared automatically first. */
+   diff_load(node);
+
+   /* Free. */
+   xmlFreeDoc(doc);
+
+   return 0;
+
+err_doc:
+   xmlFreeDoc(doc);
+err:
+   WARN( _("Saved game '%s' invalid!"), file);
+   return -1;
+}
+
+
+/**
+ * @brief Loads the game from a file.
+ *
+ *    @param file PhysicsFS path (i.e., relative path starting with "saves/").
+ *    @return 0 on success
+ */
+int load_gameFile( const char *file )
+{
+   return load_gameInternal( file, naev_version(0) );
+}
+
+
+/**
+ * @brief Actually loads a new game based on save structure.
+ *
+ *    @param ns Save game to load.
+ *    @return 0 on success.
+ */
+int load_game( nsave_t *ns )
+{
+   return load_gameInternal( ns->path, ns->version );
+}
+
+
+/**
+ * @brief Actually loads a new game.
+ *
+ *    @param file PhysicsFS path (i.e., relative path starting with "saves/").
+ *    @param version Version string of game to load.
+ *    @return 0 on success.
+ */
+static int load_gameInternal( const char* file, const char* version )
+{
+   xmlNodePtr node;
+   xmlDocPtr doc;
+   Planet *pnt;
+   int version_diff = (version!=NULL) ? naev_versionCompare(version) : 0;
+
+   /* Make sure it exists. */
+   if (!PHYSFS_exists( file )) {
+      dialogue_alert( _("Saved game file seems to have been deleted.") );
+      return -1;
+   }
+
+   /* Load the XML. */
+   doc = load_xml_parsePhysFS( file );
    if (doc == NULL)
       goto err;
    node  = doc->xmlChildrenNode; /* base node */
@@ -560,17 +656,19 @@ int load_game( const char* file, int version_diff )
    player_cleanup();
 
    /* Welcome message - must be before space_init. */
-   player_message( "\egWelcome to "APPNAME"!" );
-   player_message( "\eg v%s", naev_version(0) );
+   player_message( _("#gWelcome to %s!"), APPNAME );
+   player_message( "#g v%s", naev_version(0) );
 
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
+   missions_loadCommodity(node); /* Must be loaded before player. */
    pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
    pnt = player_load(node);
+   player.loaded_version = strdup( (version!=NULL) ? version : naev_version(0) );
 
    /* Sanitize for new version. */
    if (version_diff <= -2) {
-      WARN("Old version detected. Sanitizing ships for slots");
+      WARN( _("Old version detected. Sanitizing ships for slots") );
       load_compatSlots();
    }
 
@@ -584,9 +682,14 @@ int load_game( const char* file, int version_diff )
 
    /* Initialize the economy. */
    economy_init();
+   economy_sysLoad(node);
 
-   /* Check sanity. */
-   event_checkSanity();
+   /* Initialise the ship log */
+   shiplog_new();
+   shiplog_load(node);
+
+   /* Check validity. */
+   event_checkValidity();
 
    /* Run the load event trigger. */
    events_trigger( EVENT_TRIGGER_LOAD );
@@ -617,8 +720,18 @@ int load_game( const char* file, int version_diff )
 err_doc:
    xmlFreeDoc(doc);
 err:
-   WARN("Savegame '%s' invalid!", file);
+   WARN( _("Saved game '%s' invalid!"), file);
    return -1;
 }
 
 
+/**
+ * @brief Temporary (hopefully) wrapper around xml_parsePhysFS in support of gzipped XML (like .ns files).
+ */
+static xmlDocPtr load_xml_parsePhysFS( const char* filename )
+{
+   char buf[PATH_MAX];
+
+   snprintf( buf, sizeof(buf), "%s/%s", PHYSFS_getWriteDir(), filename);
+   return xmlParseFile( buf );
+}

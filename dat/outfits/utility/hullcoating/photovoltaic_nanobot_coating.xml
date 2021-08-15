@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Photo-Voltaic Nanobot Coating">
+ <general>
+  <typename>Hull Coating</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>225000</price>
+  <description>A coating of photo-voltaic nanobot paint covers the entire ship hull and is able harness solar energy and redirect it to the power system of the ship. The nanobots are self-regulating and self-repairing, requiring no maintenance once a colony has been established.</description>
+  <gfx_store>photovoltaic_nanobot_coating.webp</gfx_store>
+  <limit>hullcoat</limit>
+ </general>
+ <specific type="modification">
+  <energy_regen_mod>10</energy_regen_mod>
+ </specific>
+</outfit>

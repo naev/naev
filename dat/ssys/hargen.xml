@@ -11,12 +11,13 @@
   <y>-691.480081</y>
  </pos>
  <assets>
+  <asset>Virtual Independent Trader Area</asset>
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Ganth">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Pultatis">
    <autopos/>
@@ -28,7 +29,7 @@
   </jump>
   <jump target="Seelie">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

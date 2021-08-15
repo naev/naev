@@ -8,9 +8,9 @@
 #include "array.h"
 #include "gui.h"
 #include "log.h"
-#include "ndata.h"
 #include "camera.h"
-#include "npng.h"
+#include "physfsrwops.h"
+#include "SDL_image.h"
 
 #if defined(_WIN32) || defined(_WIN64)
 # define strtok_r strtok_s
@@ -63,17 +63,13 @@ static int readGLfloat( GLfloat *dest, int how_many, char **saveptr )
 static int texture_loadFromFile( const char *filename, GLuint *texture )
 {
    SDL_RWops *rw;
-   npng_t *npng;
    SDL_Surface *image;
-   DEBUG("Loading texture from %s", filename);
+   DEBUG(_("Loading texture from %s"), filename);
 
    /* Reads image and converts it to RGBA */
-   rw = ndata_rwops(filename);
-   if (rw != NULL)
-      npng = npng_open(rw);
-   if (npng != NULL)
-      image = npng_readSurface(npng, 0, 0);
-   if (rw == NULL || npng == NULL || image == NULL) {
+   rw = PHYSFSRWOPS_openRead(filename);
+   image = rw ? IMG_Load_RW(rw, 1) : NULL;
+   if (image == NULL) {
       WARN("Failed to load texture '%s' from ndata", filename);
       return 0;
    }
@@ -81,14 +77,12 @@ static int texture_loadFromFile( const char *filename, GLuint *texture )
    glGenTextures(1, texture);
    glBindTexture(GL_TEXTURE_2D, *texture);
 
+   /* TODO use standard; texture is initially flipped vertically */
    glTexImage2D(GL_TEXTURE_2D, 0, 4, image->w, image->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, image->pixels);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
    SDL_FreeSurface(image);
-   npng_close(npng);
-   SDL_RWclose(rw);
    return 1;
 }
 
@@ -135,7 +129,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
 {
    DEBUG("Loading material from %s", filename);
 
-   SDL_RWops *f = ndata_rwops(filename);
+   SDL_RWops *f = PHYSFSRWOPS_openRead(filename);
    if (!f)
       ERR("Cannot open object file %s", filename);
 
@@ -213,7 +207,7 @@ Object *object_loadFromFile( const char *filename )
    GLfloat *texture = array_create(GLfloat);  /**< texture coordinates */
    Vertex *corners = array_create(Vertex);    /**< corners of the triangle faces */
 
-   SDL_RWops *f = ndata_rwops(filename);
+   SDL_RWops *f = PHYSFSRWOPS_openRead(filename);
    if (!f)
       ERR("Cannot open object file %s", filename);
 
@@ -341,41 +335,18 @@ void object_free( Object *object )
    array_free(object->materials);
 }
 
-static void object_fix3d( void )
+static void object_fix3d( gl_Matrix4* projection )
 {
    double zoom;
 
-   /* XXX changes the projection */
-   glMatrixMode(GL_PROJECTION);
-   glPushMatrix();
-   glLoadIdentity();
-
    /* rotates and scales the object to match projection */
    zoom = cam_getZoom();
-   glMatrixMode(GL_MODELVIEW);
-   glPushMatrix();
-   glScalef(zoom, zoom, zoom);
-   glRotatef(180., 0., 1., 0.);
-   glRotatef(90., 1., 0., 0.);
-
-   /* texture is initially flipped vertically */
-   glMatrixMode(GL_TEXTURE);
-   glPushMatrix();
-   glScalef(+1., -1., +1.);
+   *projection = gl_Matrix4_Scale(*projection, zoom, zoom, zoom);
+   *projection = gl_Matrix4_Rotate(*projection, M_PI, 0., 1., 0.);
+   *projection = gl_Matrix4_Rotate(*projection, M_PI/2, 1., 0., 0.);
 }
 
-static void object_restore2d( void )
-{
-   /* restores all matrices */
-   glMatrixMode(GL_PROJECTION);
-   glPopMatrix();
-   glMatrixMode(GL_TEXTURE);
-   glPopMatrix();
-   glMatrixMode(GL_MODELVIEW);
-   glPopMatrix();
-}
-
-static void object_renderMesh( Object *object, int part, GLfloat alpha )
+static void object_renderMesh( Object *object, int part, GLfloat alpha, gl_Matrix4 projection )
 {
    Mesh *mesh = &object->meshes[part];
 
@@ -384,10 +355,11 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
    const int tex_offset = offsetof(Vertex, tex);
 
    /* activates vertices and texture coords */
-   gl_vboActivateOffset(mesh->vbo,
-         GL_VERTEX_ARRAY, ver_offset, 3, GL_FLOAT, sizeof(Vertex));
-   gl_vboActivateOffset(mesh->vbo,
-         GL_TEXTURE_COORD_ARRAY, tex_offset, 2, GL_FLOAT, sizeof(Vertex));
+   glUseProgram(shaders.material.program);
+   glEnableVertexAttribArray(shaders.material.vertex);
+   gl_vboActivateAttribOffset(mesh->vbo, shaders.material.vertex, ver_offset, 3, GL_FLOAT, sizeof(Vertex));
+   glEnableVertexAttribArray(shaders.material.tex_coord);
+   gl_vboActivateAttribOffset(mesh->vbo, shaders.material.tex_coord, tex_offset, 2, GL_FLOAT, sizeof(Vertex));
 
    /* Set material */
    /* XXX Ni, d ?? */
@@ -395,26 +367,17 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
    Material *material = object->materials + mesh->material;
    material->Kd[3] = alpha;
 
-   if (glIsEnabled(GL_LIGHTING)) {
-      glMaterialfv(GL_FRONT, GL_AMBIENT,  material->Ka);
-      glMaterialfv(GL_FRONT, GL_DIFFUSE,  material->Kd);
-      glMaterialfv(GL_FRONT, GL_SPECULAR, material->Ks);
-      glMaterialf(GL_FRONT, GL_SHININESS, material->Ns);
-   } else {
-#if 0
-      DEBUG("No lighting kd = %.3lf %.3lf %.3lf %.3lf",
-            material->Kd[0], material->Kd[1],
-            material->Kd[2], material->Kd[3]);
-#endif
-      glColor4fv(material->Kd);
-   }
+   gl_Matrix4_Uniform(shaders.material.projection, projection);
+   glUniform4fv(shaders.material.Ka, 1, material->Ka);
+   glUniform4fv(shaders.material.Kd, 1, material->Kd);
+   glUniform4fv(shaders.material.Ks, 1, material->Ks);
+   glUniform1f(shaders.material.Ns, material->Ns);
 
    /* binds textures */
    if (material->has_texture) {
       glBindTexture(GL_TEXTURE_2D, material->texture);
-      glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-      glEnable(GL_TEXTURE_2D);
    }
+   /* TODO: Else bind a solid (1,1,1,1). */
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LESS);  /* XXX this changes the global DepthFunc */
@@ -422,15 +385,14 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
    glDrawArrays(GL_TRIANGLES, 0, mesh->num_corners);
 
    glDisable(GL_DEPTH_TEST);
-   if (material->has_texture)
-      glDisable(GL_TEXTURE_2D);
-   gl_vboDeactivate();
-
+   glUseProgram(0);
+   gl_checkErr();
 }
 
 
 void object_renderSolidPart( Object *object, const Solid *solid, const char *part_name, GLfloat alpha, double scale )
 {
+   gl_Matrix4 projection;
    double x, y, cx, cy, gx, gy, zoom;
    int i;
 
@@ -443,21 +405,15 @@ void object_renderSolidPart( Object *object, const Solid *solid, const char *par
    x = (solid->pos.x - cx + gx) * zoom / gl_screen.nw * 2;
    y = (solid->pos.y - cy + gy) * zoom / gl_screen.nh * 2;
 
-   glMatrixMode(GL_MODELVIEW);
-   glPushMatrix();
-   glTranslatef(x, y, 0.);
-   glRotatef(90., 0., 0., 1.);
-   glRotatef(-45., 0., 1., 0.);
-   glRotatef(solid->dir / M_PI * 180., 0., 0., 1.);
-   glRotatef(90., 1., 0., 0.);
-   glScalef(scale, scale, scale);
+   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0. );
+   projection = gl_Matrix4_Rotate(projection, M_PI/2, 0., 0., 1.);
+   projection = gl_Matrix4_Rotate(projection, -M_PI/4, 0., 1., 0.);
+   projection = gl_Matrix4_Rotate(projection, solid->dir, 0., 0., 1.);
+   projection = gl_Matrix4_Rotate(projection, M_PI/2, 1., 0., 0.);
+   projection = gl_Matrix4_Scale(projection, scale, scale, scale);
 
-   object_fix3d();
+   object_fix3d( &projection );
    for (i = 0; i < array_size(object->meshes); ++i)
       if (strcmp(part_name, object->meshes[i].name) == 0)
-         object_renderMesh(object, i, alpha);
-   object_restore2d();
-
-   glMatrixMode(GL_MODELVIEW);
-   glPopMatrix();
+         object_renderMesh(object, i, alpha, projection);
 }

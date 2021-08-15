@@ -17,17 +17,18 @@
   <asset>Racheka</asset>
   <asset>Racheka Secundus</asset>
   <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Independent Trader Area</asset>
   <asset>Virtual Pirate Medium</asset>
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Humdrum">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Lapis">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

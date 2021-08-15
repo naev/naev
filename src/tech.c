@@ -10,17 +10,19 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "tech.h"
 
-#include "naev.h"
-
-#include "nxml.h"
+#include "array.h"
+#include "economy.h"
 #include "log.h"
 #include "ndata.h"
+#include "nxml.h"
 #include "outfit.h"
 #include "ship.h"
-#include "economy.h"
-#include "array.h"
 
 
 #define XML_TECH_ID         "Techs"          /**< Tech xml document tag. */
@@ -51,7 +53,7 @@ typedef struct tech_item_s {
       Ship *ship;          /**< Ship pointer. */
       Commodity *comm;     /**< Commodity pointer. */
       int grp;             /**< Identifier of another tech group. */
-      tech_group_t *grpptr; /**< Pointer to another tech group. */
+      const tech_group_t *grpptr; /**< Pointer to another tech group. */
    } u;                    /**< Data union. */
 } tech_item_t;
 
@@ -85,10 +87,10 @@ static int tech_addItemOutfit( tech_group_t *grp, const char* name );
 static int tech_addItemShip( tech_group_t *grp, const char* name );
 static int tech_addItemCommodity( tech_group_t *grp, const char* name );
 static int tech_getID( const char *name );
-static int tech_addItemGroupPointer( tech_group_t *grp, tech_group_t *ptr );
+static int tech_addItemGroupPointer( tech_group_t *grp, const tech_group_t *ptr );
 static int tech_addItemGroup( tech_group_t *grp, const char* name );
 /* Getting by tech. */
-static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group_t *tech, int *n, int *m );
+static void** tech_addGroupItem( void **items, tech_item_type_t type, const tech_group_t *tech );
 
 
 /**
@@ -97,35 +99,27 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 int tech_load (void)
 {
    int i, ret, s;
-   uint32_t bufsize;
-   char *buf, *data;
+   char *buf;
    xmlNodePtr node, parent;
    xmlDocPtr doc;
    tech_group_t *tech;
 
    /* Load the data. */
-   data = ndata_read( TECH_DATA_PATH, &bufsize );
-   if (data == NULL)
+   doc = xml_parsePhysFS( TECH_DATA_PATH );
+   if (doc == NULL)
       return -1;
-
-   /* Load the document. */
-   doc = xmlParseMemory( data, bufsize );
-   if (doc == NULL) {
-      WARN("'%s' is not a valid XML file.", TECH_DATA_PATH);
-      return -1;
-   }
 
    /* Load root element. */
    parent = doc->xmlChildrenNode;
    if (!xml_isNode(parent,XML_TECH_ID)) {
-      WARN("Malformed "TECH_DATA_PATH" file: missing root element '"XML_TECH_ID"'");
+      WARN(_("Malformed %s file: missing root element '%s'"), TECH_DATA_PATH, XML_TECH_ID);
       return -1;
    }
 
    /* Get first node. */
    node = parent->xmlChildrenNode;
    if (node == NULL) {
-      WARN("Malformed "TECH_DATA_PATH" file: does not contain elements");
+      WARN(_("Malformed %s file: does not contain elements"), TECH_DATA_PATH);
       return -1;
    }
 
@@ -139,7 +133,7 @@ int tech_load (void)
       xml_onlyNodes(node);
       /* Must match tag. */
       if (!xml_isNode(node, XML_TECH_TAG)) {
-         WARN("'"XML_TECH_ID"' has unknown node '%s'.", node->name);
+         WARN(_("'%s' has unknown node '%s'."), XML_TECH_ID, node->name);
          continue;
       }
       if (ret==0) /* Write over failures. */
@@ -156,8 +150,7 @@ int tech_load (void)
       if (!xml_isNode(node, XML_TECH_TAG))
          continue;
 
-      /* Must avoid warning by checking explicit NULL. */
-      xmlr_attr( node, "name", buf );
+      xmlr_attr_strd( node, "name", buf );
       if (buf == NULL)
          continue;
 
@@ -173,10 +166,9 @@ int tech_load (void)
    } while (xml_nextNode(node));
 
    /* Info. */
-   DEBUG("Loaded %d tech group%s", s, (s == 1) ? "" : "s" );
+   DEBUG( n_( "Loaded %d tech group", "Loaded %d tech groups", s ), s );
 
    /* Free memory. */
-   free(data);
    xmlFreeDoc(doc);
 
    return 0;
@@ -205,10 +197,8 @@ void tech_free (void)
  */
 static void tech_freeGroup( tech_group_t *grp )
 {
-   if (grp->name != NULL)
-      free(grp->name);
-   if (grp->items != NULL)
-      array_free( grp->items );
+   free(grp->name);
+   array_free( grp->items );
 }
 
 
@@ -314,9 +304,9 @@ static int tech_parseNode( tech_group_t *tech, xmlNodePtr parent )
    memset( tech, 0, sizeof(tech_group_t) );
 
    /* Get name. */
-   xmlr_attr( parent, "name", tech->name);
+   xmlr_attr_strd( parent, "name", tech->name );
    if (tech->name == NULL) {
-      WARN("tech node does not have 'name' attribute");
+      WARN(_("tech node does not have 'name' attribute"));
       return 1;
    }
 
@@ -342,12 +332,12 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
          /* Must have name. */
          name = xml_get( node );
          if (name == NULL) {
-            WARN("Tech group '%s' has an item without a value.", tech->name);
+            WARN(_("Tech group '%s' has an item without a value."), tech->name);
             continue;
          }
 
          /* Try to find hard-coded type. */
-         buf = xml_nodeProp( node, "type" );
+         xmlr_attr_strd( node, "type", buf );
          if (buf == NULL) {
             ret = 1;
             if (ret)
@@ -358,43 +348,34 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
                ret = tech_addItemShip( tech, name );
             if (ret)
                ret = tech_addItemCommodity( tech, name );
-            if (ret) {
-               WARN("Generic item '%s' not found in tech group '%s'",
+            if (ret)
+               WARN(_("Generic item '%s' not found in tech group '%s'"),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"group")==0) {
-            if (!tech_addItemGroup( tech, name )) {
-               WARN("Group item '%s' not found in tech group '%s'.",
+            if (!tech_addItemGroup( tech, name ))
+               WARN(_("Group item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"outfit")==0) {
-            if (!tech_addItemGroup( tech, name )) {
-               WARN("Outfit item '%s' not found in tech group '%s'.",
+            if (!tech_addItemGroup( tech, name ))
+               WARN(_("Outfit item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"ship")==0) {
-            if (!tech_addItemGroup( tech, name )) {
-               WARN("Ship item '%s' not found in tech group '%s'.",
+            if (!tech_addItemGroup( tech, name ))
+               WARN(_("Ship item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
          else if (strcmp(buf,"commodity")==0) {
-            if (!tech_addItemGroup( tech, name )) {
-               WARN("Commodity item '%s' not found in tech group '%s'.",
+            if (!tech_addItemGroup( tech, name ))
+               WARN(_("Commodity item '%s' not found in tech group '%s'."),
                      name, tech->name );
-               continue;
-            }
          }
+         free( buf );
          continue;
       }
-      WARN("Tech group '%s' has unknown node '%s'.", tech->name, node->name);
+      WARN(_("Tech group '%s' has unknown node '%s'."), tech->name, node->name);
    } while (xml_nextNode( node ));
 
    return 0;
@@ -487,7 +468,7 @@ int tech_addItem( const char *name, const char *value )
    /* Get ID. */
    id = tech_getID( name );
    if (id < 0) {
-      WARN("Trying to add item '%s' to non-existant tech '%s'.", value, name );
+      WARN(_("Trying to add item '%s' to non-existent tech '%s'."), value, name );
       return -1;
    }
 
@@ -503,7 +484,7 @@ int tech_addItem( const char *name, const char *value )
    if (ret)
       ret = tech_addItemCommodity( tech, value );
    if (ret) {
-      WARN("Generic item '%s' not found in tech group '%s'", value, name );
+      WARN(_("Generic item '%s' not found in tech group '%s'"), value, name );
       return -1;
    }
 
@@ -527,7 +508,7 @@ int tech_addItemTech( tech_group_t *tech, const char *value )
    if (ret)
       ret = tech_addItemCommodity( tech, value );
    if (ret) {
-      WARN("Generic item '%s' not found in tech group", value );
+      WARN(_("Generic item '%s' not found in tech group"), value );
       return -1;
    }
 
@@ -553,13 +534,13 @@ int tech_rmItemTech( tech_group_t *tech, const char *value )
       }
    }
 
-   WARN("Item '%s' not found in tech group", value );
+   WARN(_("Item '%s' not found in tech group"), value );
    return -1;
 }
 
 
 /**
- * @Brief Removes a tech item.
+ * @brief Removes a tech item.
  */
 int tech_rmItem( const char *name, const char *value )
 {
@@ -570,7 +551,7 @@ int tech_rmItem( const char *name, const char *value )
    /* Get ID. */
    id = tech_getID( name);
    if (id < 0) {
-      WARN("Trying to remove item '%s' to non-existant tech '%s'.", value, name );
+      WARN(_("Trying to remove item '%s' to non-existent tech '%s'."), value, name );
       return -1;
    }
 
@@ -587,7 +568,7 @@ int tech_rmItem( const char *name, const char *value )
       }
    }
 
-   WARN("Item '%s' not found in tech group '%s'", value, name );
+   WARN(_("Item '%s' not found in tech group '%s'"), value, name );
    return -1;
 }
 
@@ -599,10 +580,6 @@ static int tech_getID( const char *name )
 {
    int i, s;
    tech_group_t *tech;
-
-   /* NULL case. */
-   if (tech_groups == NULL)
-      return -1;
 
    s  = array_size( tech_groups );
    for (i=0; i<s; i++) {
@@ -620,7 +597,7 @@ static int tech_getID( const char *name )
 /**
  * @brief Adds a group pointer to a group.
  */
-static int tech_addItemGroupPointer( tech_group_t *grp, tech_group_t *ptr )
+static int tech_addItemGroupPointer( tech_group_t *grp, const tech_group_t *ptr )
 {
    tech_item_t *item;
 
@@ -678,16 +655,12 @@ static void tech_createMetaGroup( tech_group_t *grp, tech_group_t **tech, int nu
 /**
  * @brief Recursive function for creating an array of commodities from a tech group.
  */
-static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group_t *tech, int *n, int *m )
+static void** tech_addGroupItem( void **items, tech_item_type_t type, const tech_group_t *tech )
 {
    int i, j, size, f;
    tech_item_t *item;
 
-   /* Must have items. */
-   if (tech->items == NULL)
-      return items;
-
-   /* Comfort. */
+   /* Set up. */
    size  = array_size( tech->items );
 
    /* Load commodities first, then we handle groups. */
@@ -700,7 +673,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 
       /* Skip if already in list. */
       f = 0;
-      for (j=0; j<*n; j++) {
+      for (j=0; j<array_size(items); j++) {
          if (items[j] == item->u.ptr) {
             f = 1;
             break;
@@ -709,17 +682,10 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
       if (f == 1)
          continue;
 
-      /* Allocate memory if needed. */
-      (*n)++;
-      if ((*n) > (*m)) {
-         if ((*m) == 0)
-            (*m)  = 16;
-         (*m) *= 2;
-         items = realloc( items, sizeof(void*) * (*m) );
-      }
-
       /* Add. */
-      items[ (*n)-1 ]  = item->u.ptr;
+      if (items == NULL)
+         items = array_create( void* );
+      array_push_back( &items, item->u.ptr );
    }
 
    /* Now handle other groups. */
@@ -728,9 +694,9 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 
       /* Only handle commodities for now. */
       if (item->type == TECH_TYPE_GROUP)
-         items  = tech_addGroupItem( items, type, &tech_groups[ item->u.grp ], n, m );
+         items  = tech_addGroupItem( items, type, &tech_groups[ item->u.grp ] );
       else if (item->type == TECH_TYPE_GROUP_POINTER)
-         items  = tech_addGroupItem( items, type, item->u.grpptr, n, m );
+         items  = tech_addGroupItem( items, type, item->u.grpptr );
    }
 
    return items;
@@ -744,7 +710,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
  *    @param item The item name to search for.
  *    @return Whether or not the item was found.
  */
-int tech_hasItem( tech_group_t *tech, char *item )
+int tech_hasItem( const tech_group_t *tech, char *item )
 {
    int i, s;
    char *buf;
@@ -765,7 +731,7 @@ int tech_hasItem( tech_group_t *tech, char *item )
  *
  *   @return Number of techs.
  */
-int tech_getItemCount( tech_group_t *tech )
+int tech_getItemCount( const tech_group_t *tech )
 {
    return array_size( tech->items );
 }
@@ -778,7 +744,7 @@ int tech_getItemCount( tech_group_t *tech )
  *    @param[out] n Number of techs in the group.
  *    @return The names of the techs contained within the group.
  */
-char** tech_getItemNames( tech_group_t *tech, int *n )
+char** tech_getItemNames( const tech_group_t *tech, int *n )
 {
    int i, s;
    char **names;
@@ -820,32 +786,21 @@ char** tech_getAllItemNames( int *n )
  * @note The returned list must be freed (but not the pointers).
  *
  *    @param tech Tech to get outfits from.
- *    @param[out] n The number of outfits found.
- *    @return Outfits found.
+ *    @return Array (array.h): Outfits found.
  */
-Outfit** tech_getOutfit( tech_group_t *tech, int *n )
+Outfit** tech_getOutfit( const tech_group_t *tech )
 {
-   int m;
    Outfit **o;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
-   /* Get the outfits. */
-   *n = 0;
-   m  = 0;
-   o  = (Outfit**)tech_addGroupItem( NULL, TECH_TYPE_OUTFIT, tech, n, &m );
-
-   /* None found case. */
-   if (o == NULL) {
-      *n = 0;
-      return NULL;
-   }
+   o  = (Outfit**)tech_addGroupItem( NULL, TECH_TYPE_OUTFIT, tech );
 
    /* Sort. */
-   qsort( o, *n, sizeof(Outfit*), outfit_compareTech );
+   if (o != NULL)
+      qsort( o, array_size(o), sizeof(Outfit*), outfit_compareTech );
+
    return o;
 }
 
@@ -857,21 +812,18 @@ Outfit** tech_getOutfit( tech_group_t *tech, int *n )
  *
  *    @param tech Array of techs to get from.
  *    @param num Number of elements in the array.
- *    @param[out] n The number of outfits found.
- *    @return Outfits found.
+ *    @return Array (array.h): Outfits found.
  */
-Outfit** tech_getOutfitArray( tech_group_t **tech, int num, int *n )
+Outfit** tech_getOutfitArray( tech_group_t **tech, int num )
 {
    tech_group_t grp;
    Outfit **o;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
    tech_createMetaGroup( &grp, tech, num );
-   o = tech_getOutfit( &grp, n );
+   o = tech_getOutfit( &grp );
    tech_freeGroup( &grp );
 
    return o;
@@ -884,32 +836,22 @@ Outfit** tech_getOutfitArray( tech_group_t **tech, int num, int *n )
  * @note The returned array must be freed (but not the pointers).
  *
  *    @param tech Tech group to get list of ships from.
- *    @param[out] n The number of ships found.
- *    @return The ships found.
+ *    @return Array (array.h): The ships found.
  */
-Ship** tech_getShip( tech_group_t *tech, int *n )
+Ship** tech_getShip( const tech_group_t *tech )
 {
-   int m;
    Ship **s;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
    /* Get the outfits. */
-   *n = 0;
-   m  = 0;
-   s  = (Ship**) tech_addGroupItem( NULL, TECH_TYPE_SHIP, tech, n, &m );
-
-   /* None found case. */
-   if (s == NULL) {
-      *n = 0;
-      return NULL;
-   }
+   s  = (Ship**) tech_addGroupItem( NULL, TECH_TYPE_SHIP, tech );
 
    /* Sort. */
-   qsort( s, *n, sizeof(Ship*), ship_compareTech );
+   if (s != NULL)
+      qsort( s, array_size(s), sizeof(Ship*), ship_compareTech );
+
    return s;
 }
 
@@ -921,21 +863,18 @@ Ship** tech_getShip( tech_group_t *tech, int *n )
  *
  *    @param tech Array of techs to get from.
  *    @param num Number of elements in the array.
- *    @param[out] n The number of ships found.
- *    @return Ships found.
+ *    @return Array (array.h): Ships found.
  */
-Ship** tech_getShipArray( tech_group_t **tech, int num, int *n )
+Ship** tech_getShipArray( tech_group_t **tech, int num )
 {
    tech_group_t grp;
    Ship **s;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
    tech_createMetaGroup( &grp, tech, num );
-   s = tech_getShip( &grp, n );
+   s = tech_getShip( &grp );
    tech_freeGroup( &grp );
 
    return s;
@@ -949,21 +888,18 @@ Ship** tech_getShipArray( tech_group_t **tech, int num, int *n )
  *
  *    @param tech Array of techs to get from.
  *    @param num Number of elements in the array.
- *    @param[out] n The number of ships found.
- *    @return Ships found.
+ *    @return Array (array.h): Commodities found.
  */
-Commodity** tech_getCommodityArray( tech_group_t **tech, int num, int *n )
+Commodity** tech_getCommodityArray( tech_group_t **tech, int num )
 {
    tech_group_t grp;
    Commodity **c;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
    tech_createMetaGroup( &grp, tech, num );
-   c = tech_getCommodity( &grp, n );
+   c = tech_getCommodity( &grp );
    tech_freeGroup( &grp );
 
    return c;
@@ -976,33 +912,21 @@ Commodity** tech_getCommodityArray( tech_group_t **tech, int num, int *n )
  * @note The returned array must be freed (but not the pointers).
  *
  *    @param tech Tech group to get list of ships from.
- *    @param[out] n The number of ships found.
- *    @return The ships found.
+ *    @return Array (array.h): The commodities found.
  */
-Commodity** tech_getCommodity( tech_group_t *tech, int *n )
+Commodity** tech_getCommodity( const tech_group_t *tech )
 {
-   int m;
    Commodity **c;
 
-   if (tech==NULL) {
-      *n = 0;
+   if (tech==NULL)
       return NULL;
-   }
 
    /* Get the commodities. */
-   *n = 0;
-   m  = 0;
-   c  = (Commodity**) tech_addGroupItem( NULL, TECH_TYPE_COMMODITY, tech, n, &m );
-
-   /* None found case. */
-   if (c == NULL) {
-      *n = 0;
-      return NULL;
-   }
+   c  = (Commodity**) tech_addGroupItem( NULL, TECH_TYPE_COMMODITY, tech );
 
    /* Sort. */
-   qsort( c, *n, sizeof(Commodity*), commodity_compareTech );
+   if (c != NULL)
+      qsort( c, array_size(c), sizeof(Commodity*), commodity_compareTech );
+
    return c;
 }
-
-

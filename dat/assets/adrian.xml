@@ -5,8 +5,8 @@
   <y>5286.959359</y>
  </pos>
  <GFX>
-  <space>P04.png</space>
-  <exterior>snow.png</exterior>
+  <space>P04.webp</space>
+  <exterior>snow.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>P</class>
   <population>4000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

@@ -9,9 +9,8 @@
  */
 
 
-#include "tk/toolkit_priv.h"
-
 #include "opengl.h"
+#include "tk/toolkit_priv.h"
 
 
 static void cst_render( Widget* cst, double bx, double by );
@@ -46,7 +45,8 @@ void window_addCust( const unsigned int wid,
                      char* name, const int border,
                      void (*render) (double x, double y, double w, double h, void *data),
                      int (*mouse) (unsigned int wid, SDL_Event* event,
-                                    double x, double y, double w, double h, void *data),
+                                    double x, double y, double w, double h,
+                                    double rx, double ry, void *data),
                      void *data )
 {
    Window *wdw = window_wget(wid);
@@ -90,7 +90,7 @@ static void cst_render( Widget* cst, double bx, double by )
    if (cst->dat.cst.border) {
       /* inner outline */
       toolkit_drawOutline( x, y+1, cst->w+1, cst->h+1, 0.,
-            toolkit_colLight, toolkit_col );
+            toolkit_colLight, NULL );
       /* outer outline */
       toolkit_drawOutline( x, y, cst->w+1, cst->h+1, 1.,
             toolkit_colDark, NULL );

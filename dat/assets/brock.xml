@@ -5,8 +5,8 @@
   <y>-11971.255763</y>
  </pos>
  <GFX>
-  <space>S00.png</space>
-  <exterior>methane.png</exterior>
+  <space>S00.webp</space>
+  <exterior>methane.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>S</class>
   <population>25114</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -35,11 +35,11 @@
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>Heavy Weapons 1</item>
   <item>Low Tech Upgrades</item>
   <item>Missiles 1</item>
-  <item>Star Maps</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
   <item>Systems Elite</item>

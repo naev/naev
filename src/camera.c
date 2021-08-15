@@ -9,24 +9,27 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "camera.h"
 
-#include "naev.h"
-
-#include "log.h"
+#include "background.h"
 #include "conf.h"
-#include "space.h"
 #include "gui.h"
+#include "log.h"
 #include "nebula.h"
 #include "pause.h"
-#include "background.h"
 #include "player.h"
+#include "space.h"
 
 
 #define CAMERA_DIR      (M_PI/2.)
 
 
 static unsigned int camera_followpilot = 0; /**< Pilot to follow. */
+static int zoom_override   = 0; /**< Whether or not to override the zoom. */
 /* Current camera position. */
 static double camera_Z     = 1.; /**< Current in-game zoom. */
 static double camera_X     = 0.; /**< X position of camera. */
@@ -46,9 +49,20 @@ static double camera_flyspeed = 0.; /**< Speed when flying. */
  * Prototypes.
  */
 static void cam_updateFly( double x, double y, double dt );
-static void cam_updatePilot( Pilot *follow, double dt );
-static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt );
+static void cam_updatePilot( const Pilot *follow, double dt );
+static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, double dt );
 static void cam_updateManualZoom( double dt );
+
+
+/**
+ * @brief Overrides the zoom system.
+ *
+ *    @param enable Whether or not to override the zoom system.
+ */
+void cam_zoomOverride( int enable )
+{
+   zoom_override = enable;
+}
 
 
 /**
@@ -232,11 +246,11 @@ void cam_update( double dt )
    }
 
    /* Update manual zoom. */
-   if (conf.zoom_manual)
+   if (conf.zoom_manual || zoom_override)
       cam_updateManualZoom( dt );
 
    /* Set the sound. */
-   if ((p==NULL) || !conf.snd_pilotrel) {
+   if ((p==NULL) || !SOUND_PILOT_RELATIVE) {
       dx = dt*(dx-camera_X);
       dy = dt*(dy-camera_Y);
       sound_updateListener( CAMERA_DIR, camera_X, camera_Y, dx, dy );
@@ -272,7 +286,7 @@ static void cam_updateFly( double x, double y, double dt )
    background_moveStars( -dx, -dy );
 
    /* Stop within 100 pixels. */
-   if (fabs((pow2(camera_X)+pow2(camera_Y)) - (pow2(x)+pow2(y))) < 100*100) {
+   if (FABS((pow2(camera_X)+pow2(camera_Y)) - (pow2(x)+pow2(y))) < 100*100) {
       old_X = camera_X;
       old_Y = camera_Y;
       camera_fly = 0;
@@ -283,10 +297,10 @@ static void cam_updateFly( double x, double y, double dt )
 /**
  * @brief Updates a camera following a pilot.
  */
-static void cam_updatePilot( Pilot *follow, double dt )
+static void cam_updatePilot( const Pilot *follow, double dt )
 {
    Pilot *target;
-   double diag2, a, r, dir, k;
+   double a, r, dir, k;
    double x,y, dx,dy, mx,my, targ_x,targ_y, bias_x,bias_y, vx,vy;
 
    /* Get target. */
@@ -299,7 +313,7 @@ static void cam_updatePilot( Pilot *follow, double dt )
     * we'll just use the largest of the two. */
    /*diag2 = pow2(SCREEN_W) + pow2(SCREEN_H);*/
    /*diag2 = pow2( MIN(SCREEN_W, SCREEN_H) );*/
-   diag2 = 100*100;
+   const double diag2 = 100*100;
    x = follow->solid->pos.x;
    y = follow->solid->pos.y;
 
@@ -327,7 +341,7 @@ static void cam_updatePilot( Pilot *follow, double dt )
    vx       = follow->solid->vel.x*1.5;
    vy       = follow->solid->vel.y*1.5;
    dir      = angle_diff( atan2(vy,vx), follow->solid->dir);
-   dir      = (M_PI - fabs(dir)) /  M_PI; /* Normalize. */
+   dir      = (M_PI - FABS(dir)) /  M_PI; /* Normalize. */
    vx      *= dir;
    vy      *= dir;
    bias_x  += vx;
@@ -392,14 +406,14 @@ static void cam_updateManualZoom( double dt )
 /**
  * @brief Updates the camera zoom.
  */
-static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
+static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, double dt )
 {
    double d, x,y, z,tz, dx, dy;
    double zfar, znear;
    double c;
 
    /* Must have auto zoom enabled. */
-   if (conf.zoom_manual)
+   if (conf.zoom_manual || zoom_override)
       return;
 
    /* Minimum depends on velocity normally.
@@ -429,21 +443,26 @@ static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
     * Set Zoom to pilot target.
     */
    z = cam_getZoom();
-   if (target != NULL) {
-      /* Get current relative target position. */
-      gui_getOffset( &x, &y );
-      x += target->solid->pos.x - follow->solid->pos.x;
-      y += target->solid->pos.y - follow->solid->pos.y;
-
-      /* Get distance ratio. */
-      dx = (SCREEN_W/2.) / (FABS(x) + 2*target->ship->gfx_space->sw);
-      dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
-
-      /* Get zoom. */
-      tz = MIN( dx, dy );
+   if (pilot_isFlag( follow, PILOT_STEALTH )) {
+      tz = zfar;
    }
-   else
-      tz = znear; /* Aim at in. */
+   else {
+      if (target != NULL) {
+         /* Get current relative target position. */
+         gui_getOffset( &x, &y );
+         x += target->solid->pos.x - follow->solid->pos.x;
+         y += target->solid->pos.y - follow->solid->pos.y;
+
+         /* Get distance ratio. */
+         dx = (SCREEN_W/2.) / (FABS(x) + 2*target->ship->gfx_space->sw);
+         dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
+
+         /* Get zoom. */
+         tz = MIN( dx, dy );
+      }
+      else
+         tz = znear; /* Aim at in. */
+   }
 
    /* Gradually zoom in/out. */
    d  = CLAMP(-conf.zoom_speed, conf.zoom_speed, tz - z);

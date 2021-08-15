@@ -35,7 +35,7 @@ ThreadQueue* vpool_create( void );
  * another job to be done as this could lead to a deadlock. */
 void vpool_enqueue( ThreadQueue* queue, int (*function)(void *), void *data );
 
-/* Run every job in the vpool queue and block untill every job in the queue is
+/* Run every job in the vpool queue and block until every job in the queue is
  * done. It destroys the queue when it's done. */
 void vpool_wait( ThreadQueue* queue );
 

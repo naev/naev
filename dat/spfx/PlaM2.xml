@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spfx name="PlaM2">
+ <anim>741</anim>
+ <shader>
+  <vert>project_pos.vert</vert>
+  <frag>explosion.frag</frag>
+  <size>60</size>
+  <uniforms>
+   <u_colorbase x="0.1" y="0.9" z="0.1" w="0.2" />
+   <u_colorsmoke x="0.6" y="0.7" z="0.1" w="0.5" />
+   <u_smokiness x="0.4" />
+   <u_smoke_fade x="1.6" />
+   <u_roll_speed x="0.3" />
+   <u_grain x="0.15" />
+   <u_speed x="1.35" />
+   <u_steps int="1" x="8" />
+  </uniforms>
+ </shader>
+</spfx>

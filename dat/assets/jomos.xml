@@ -5,8 +5,8 @@
   <y>-8615.855896</y>
  </pos>
  <GFX>
-  <space>moon-O00.png</space>
-  <exterior>aquatic3.png</exterior>
+  <space>moon-O00.webp</space>
+  <exterior>aquatic3.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>O</class>
   <population>500000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>land_hiclass</land>
    <refuel/>

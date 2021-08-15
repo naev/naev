@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Za'lek Heavy Drone Fighter Dock">
+ <general>
+  <slot prop="fighter_bay">weapon</slot>
+  <size>large</size>
+  <license>Light Combat Vessel License</license>
+  <rarity>2</rarity>
+  <mass>520</mass>
+  <price>1200000</price>
+  <gfx_store>zalek_drone_heavy_fighter_swarm.webp</gfx_store>
+  <description>Only the largest ships can comfortably support this drone dock, but those that do have a deadly and versatile squadron of heavy drones at their disposal. The drones are capable of fighting all but the biggest ships in packs.</description>
+  <cpu>-600</cpu>
+ </general>
+ <specific type="fighter bay" secondary="1">
+  <ammo>Za'lek Heavy Drone Fighter</ammo>
+  <delay>5</delay>
+  <reload_time>90</reload_time>
+  <amount>6</amount>
+ </specific>
+</outfit>

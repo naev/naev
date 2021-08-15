@@ -5,8 +5,8 @@
   <y>2327.102217</y>
  </pos>
  <GFX>
-  <space>P01.png</space>
-  <exterior>aquatic3.png</exterior>
+  <space>P01.webp</space>
+  <exterior>aquatic3.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>O</class>
   <population>1000000</population>
-  <hide>0.150000</hide>
+  <hide>0.600000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>

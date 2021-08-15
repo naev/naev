@@ -1,0 +1,69 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Make",
+            "command": "bear --append make",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "dependsOn": "Configure",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "AutoGen",
+            "command": "[ -f configure ] && echo 'Already generated' || autogen.sh",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "Configure",
+            "command": "[ -f Makefile ] && echo 'Already configured' || ./configure --enable-debug",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": "build",
+            "dependsOn": "AutoGen"
+        },
+        {
+            "type": "shell",
+            "label": "AutoGen (force)",
+            "command": "autogen.sh",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "Configure (force)",
+            "command": "./configure --enable-debug",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "group": "build",
+            "dependsOn": "AutoGen"
+        }
+
+    ],
+    "version": "2.0.0"
+}

@@ -25,6 +25,7 @@ void gl_exitVBO (void);
  * Create.
  */
 gl_vbo* gl_vboCreateStream( GLsizei size, void* data );
+gl_vbo* gl_vboCreateDynamic( GLsizei size, void* data );
 gl_vbo* gl_vboCreateStatic( GLsizei size, void* data );
 
 
@@ -38,19 +39,14 @@ void gl_vboUnmap( gl_vbo *vbo );
 void gl_vboActivate( gl_vbo *vbo, GLuint class, GLint size, GLenum type, GLsizei stride );
 void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
       GLint size, GLenum type, GLsizei stride );
-void gl_vboDeactivate (void);
+void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
+      GLint size, GLenum type, GLsizei stride );
 
 
 /*
  * Destroy.
  */
 void gl_vboDestroy( gl_vbo* vbo );
-
-
-/*
- * Info.
- */
-int gl_vboIsHW (void);
 
 
 #endif /* OPENGL_VBO_H */

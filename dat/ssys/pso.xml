@@ -3,8 +3,8 @@
  <general>
   <radius>14500.000000</radius>
   <stars>400</stars>
-  <interference>50.000000</interference>
-  <nebula volatility="0.000000">300.000000</nebula>
+  <interference>5.882353</interference>
+  <nebula volatility="0.000000" hue="310.000000">300.000000</nebula>
  </general>
  <pos>
   <x>92.652554</x>
@@ -19,15 +19,24 @@
  <jumps>
   <jump target="Amaroq">
    <pos x="-21607.690780" y="-15135.895743"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Faust">
    <pos x="22307.480886" y="2324.437919"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Sultan">
    <pos x="13426.403116" y="16833.176987"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
+ <asteroids>
+  <asteroid>
+   <type>default</type>
+   <type>liquid</type>
+   <radius>3000.000000</radius>
+   <pos x="7500.000000" y="1000.000000"/>
+   <density>1.000000</density>
+  </asteroid>
+ </asteroids>
 </ssys>

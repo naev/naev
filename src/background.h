@@ -8,12 +8,13 @@
 #  define BACKGROUND_H
 
 
-#include "opengl.h"
 #include "colour.h"
+#include "opengl.h"
 
 
 /* Render. */
 void background_render( double dt );
+void background_renderOverlay( double dt );
 
 /* Add images. */
 unsigned int background_addImage( glTexture *image, double x, double y,
@@ -33,6 +34,8 @@ int background_load( const char *name );
 void background_clear (void);
 void background_free (void);
 
+/* Get image textures */
+glTexture** background_getTextures (void);
 
 #endif /* BACKGROUND_H */
 

@@ -5,8 +5,8 @@
   <y>10261.076369</y>
  </pos>
  <GFX>
-  <space>H02.png</space>
-  <exterior>desertic4.png</exterior>
+  <space>H02.webp</space>
+  <exterior>desertic4.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -16,12 +16,13 @@
  <general>
   <class>H</class>
   <population>464284</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
   </services>
   <commodities/>
   <description>Dun Hill is one of those little mining worlds that is regarded as being totally insignificant. Indeed, the world has no real personality of its own as the population is imported from nearby planets. It isn't a pleasant place to live but, none-the-less, it has valuable resources the Empire would rather not go without.</description>

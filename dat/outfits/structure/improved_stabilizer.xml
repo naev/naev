@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Improved Stabilizer">
+ <general>
+  <typename>Manoeuvrability Modifier</typename>
+  <slot>structure</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>135000</price>
+  <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds and turning while still keeping the ship stable. As another side effect, the improved stabilizers allowing reversing the thrusters with a small loss of thrust.</description>
+  <gfx_store>stabilizer.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <speed_mod>10</speed_mod>
+  <turn_mod>10</turn_mod>
+  <energy_regen_mod>-20</energy_regen_mod>
+  <energy_mod>-20</energy_mod>
+  <misc_reverse_thrust>1</misc_reverse_thrust>
+ </specific>
+</outfit>

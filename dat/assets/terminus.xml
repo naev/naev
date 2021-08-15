@@ -5,8 +5,8 @@
   <y>-20860.000000</y>
  </pos>
  <GFX>
-  <space>moon-A01.png</space>
-  <exterior>gas.png</exterior>
+  <space>moon-A01.webp</space>
+  <exterior>gas.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -15,8 +15,8 @@
  </presence>
  <general>
   <class>A</class>
-  <population>0</population>
-  <hide>0.500000</hide>
+  <population>1700000</population>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -24,11 +24,8 @@
    <missions/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
-  <blackmarket/>
+  <commodities/>
   <description>A small, volcanic world on the edge of the Uridhrion system, Terminus provides Heronus with raw materials needed to grow new ships.</description>
-  <bar>Terminus' bar is permanently sooty because of the volcanic activity going on all around outside. The facility does have air filters, but the stuff always manages to get in anyway.</bar>
+  <bar>Terminus's bar is permanently sooty because of the volcanic activity going on all around outside. The facility does have air filters, but the stuff always manages to get in anyway.</bar>
  </general>
 </asset>

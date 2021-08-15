@@ -5,8 +5,8 @@
   <y>-1440.447283</y>
  </pos>
  <GFX>
-  <space>G01.png</space>
-  <exterior>mining.png</exterior>
+  <space>G01.webp</space>
+  <exterior>mining.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>A</class>
   <population>100000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
@@ -32,6 +32,7 @@
   <item>Hulls Medium</item>
   <item>Laser 1</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Missiles 1</item>
  </tech>
 </asset>

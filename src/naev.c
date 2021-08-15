@@ -13,107 +13,94 @@
  * @brief Controls the overall game flow: data loading/unloading and game loop.
  */
 
-/*
- * includes
- */
-/* localised global */
+/** @cond */
+#include "physfsrwops.h"
 #include "SDL.h"
+#include "SDL_error.h"
+#include "SDL_image.h"
 
 #include "naev.h"
-#include "log.h" /* for DEBUGGING */
-
-
-/* global */
-#include "nstring.h" /* strdup */
 
 #if HAS_POSIX
 #include <time.h>
 #include <unistd.h>
 #endif /* HAS_POSIX */
+/** @endcond */
 
-#if defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE)
-#include <fenv.h>
-#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
-
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
-#include <signal.h>
-#include <execinfo.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <bfd.h>
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
-
-/* local */
-#include "conf.h"
-#include "physics.h"
-#include "opengl.h"
-#include "font.h"
-#include "ship.h"
-#include "pilot.h"
-#include "fleet.h"
-#include "player.h"
-#include "input.h"
-#include "joystick.h"
-#include "space.h"
-#include "rng.h"
 #include "ai.h"
-#include "outfit.h"
-#include "weapon.h"
-#include "faction.h"
-#include "nxml.h"
-#include "toolkit.h"
-#include "pause.h"
-#include "sound.h"
-#include "music.h"
-#include "spfx.h"
-#include "damagetype.h"
-#include "economy.h"
-#include "menu.h"
-#include "mission.h"
-#include "nlua_misn.h"
-#include "nfile.h"
-#include "nebula.h"
-#include "unidiff.h"
-#include "ndata.h"
-#include "gui.h"
-#include "news.h"
-#include "nlua_var.h"
-#include "map.h"
-#include "event.h"
-#include "cond.h"
-#include "land.h"
-#include "tech.h"
-#include "hook.h"
-#include "npc.h"
-#include "console.h"
-#include "npng.h"
-#include "dev.h"
 #include "background.h"
 #include "camera.h"
-#include "map_overlay.h"
-#include "start.h"
-#include "threadpool.h"
-#include "load.h"
-#include "options.h"
+#include "cond.h"
+#include "conf.h"
+#include "console.h"
+#include "damagetype.h"
+#include "debug.h"
 #include "dialogue.h"
+#include "economy.h"
+#include "env.h"
+#include "event.h"
+#include "faction.h"
+#include "font.h"
+#include "gui.h"
+#include "hook.h"
+#include "input.h"
+#include "joystick.h"
+#include "land.h"
+#include "load.h"
+#include "log.h"
+#include "map.h"
+#include "map_overlay.h"
+#include "map_system.h"
+#include "menu.h"
+#include "mission.h"
+#include "music.h"
+#include "ndata.h"
+#include "nebula.h"
+#include "news.h"
+#include "nfile.h"
+#include "nlua_misn.h"
+#include "nlua_var.h"
+#include "npc.h"
+#include "nstring.h"
+#include "nxml.h"
+#include "opengl.h"
+#include "options.h"
+#include "outfit.h"
+#include "pause.h"
+#include "physics.h"
+#include "pilot.h"
+#include "player.h"
+#include "render.h"
+#include "rng.h"
+#include "safelanes.h"
+#include "semver.h"
+#include "ship.h"
 #include "slots.h"
-
+#include "sound.h"
+#include "space.h"
+#include "spfx.h"
+#include "start.h"
+#include "tech.h"
+#include "threadpool.h"
+#include "toolkit.h"
+#include "unidiff.h"
+#include "weapon.h"
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
 
-#define NAEV_INIT_DELAY 3000 /**< Minimum amount of time_ms to wait with loading screen */
-
-
 static int quit               = 0; /**< For primary loop */
 static unsigned int time_ms   = 0; /**< used to calculate FPS and movement. */
-static char short_version[64]; /**< Contains version. */
-static char human_version[256]; /**< Human readable version. */
+static double loading_r       = 0.; /**< Just to provide some randomness. */
 static glTexture *loading     = NULL; /**< Loading screen. */
-static char *binary_path      = NULL; /**< argv[0] */
+static glFont loading_font; /**< Loading font. */
+static char *loading_txt = NULL; /**< Loading text to display. */
 static SDL_Surface *naev_icon = NULL; /**< Icon. */
 static int fps_skipped        = 0; /**< Skipped last frame? */
-
+/* Version stuff. */
+static semver_t version_binary; /**< Naev binary version. */
+//static semver_t version_data; /**< Naev data version. */
+static char version_human[STRMAX_SHORT]; /**< Human readable version. */
 
 /*
  * FPS stuff.
@@ -121,14 +108,11 @@ static int fps_skipped        = 0; /**< Skipped last frame? */
 static double fps_dt    = 1.; /**< Display fps accumulator. */
 static double game_dt   = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt   = 0.; /**< Real deltatick. */
-const double fps_min    = 1./30.; /**< Minimum fps to run at. */
+static double fps     = 0.; /**< FPS to finally display. */
+static double fps_cur = 0.; /**< FPS accumulator to trigger change. */
 static double fps_x     =  15.; /**< FPS X position. */
 static double fps_y     = -15.; /**< FPS Y position. */
-
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
-static bfd *abfd      = NULL;
-static asymbol **syms = NULL;
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
+const double fps_min    = 1./30.; /**< Minimum fps to run at. */
 
 /*
  * prototypes
@@ -139,18 +123,14 @@ static void loadscreen_load (void);
 static void loadscreen_unload (void);
 static void load_all (void);
 static void unload_all (void);
-static void display_fps( const double dt );
 static void window_caption (void);
-static void debug_sigInit (void);
-static void debug_sigClose (void);
 /* update */
 static void fps_init (void);
 static double fps_elapsed (void);
 static void fps_control (void);
 static void update_all (void);
-static void render_all (void);
 /* Misc. */
-void loadscreen_render( double done, const char *msg ); /* nebula.c */
+static void loadscreen_render( double done, const char *msg );
 void main_loop( int update ); /* dialogue.c */
 
 
@@ -164,6 +144,15 @@ void naev_quit (void)
 
 
 /**
+ * @brief Get if Naev is trying to quit.
+ */
+int naev_isQuit (void)
+{
+   return quit;
+}
+
+
+/**
  * @brief The entry point of Naev.
  *
  *    @param[in] argc Number of arguments.
@@ -172,32 +161,44 @@ void naev_quit (void)
  */
 int main( int argc, char** argv )
 {
-   char buf[PATH_MAX];
+   char conf_file_path[PATH_MAX], **search_path, **p;
 
+#ifdef DEBUGGING
+   /* Set Debugging flags. */
+   memset( debug_flags , 0, DEBUG_FLAGS_MAX );
+#endif /* DEBUGGING */
 
-   if (!log_isTerminal())
-      log_copy(1);
-#if HAS_WIN32
-   else {
-      /* Windows has no line-buffering, so use unbuffered output
-       * when running from a terminal.
-       */
-      setvbuf( stdout, NULL, _IONBF, 0 );
-      setvbuf( stderr, NULL, _IONBF, 0 );
+   env_detect( argc, argv );
+
+   log_init();
+
+   /* Set up PhysicsFS. */
+   if( PHYSFS_init( env.argv0 ) == 0 ) {
+      ERR( "PhysicsFS initialization failed: %s",
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ) );
+      return -1;
    }
-#endif
 
-   /* Save the binary path. */
-   binary_path = strdup(argv[0]);
+   /* Set up locales. */
+   gettext_init();
+
+   /* Parse version. */
+   if (semver_parse( VERSION, &version_binary ))
+      WARN( _("Failed to parse version string '%s'!"), VERSION );
 
    /* Print the version */
-   LOG( " "APPNAME" v%s", naev_version(0) );
-#ifdef GIT_COMMIT
-   DEBUG( " git HEAD at " GIT_COMMIT );
-#endif /* GIT_COMMIT */
+   LOG( " %s v%s (%s)", APPNAME, naev_version(0), HOST );
+
+   if ( env.isAppImage )
+      LOG( "AppImage detected. Running from: %s", env.appdir );
+   else
+      DEBUG( "AppImage not detected." );
 
    /* Initializes SDL for possible warnings. */
-   SDL_Init(0);
+   if ( SDL_Init( 0 ) ) {
+      ERR( _( "Unable to initialize SDL: %s" ), SDL_GetError() );
+      return -1;
+   }
 
    /* Initialize the threadpool */
    threadpool_init();
@@ -207,29 +208,14 @@ int main( int argc, char** argv )
 
 #if HAS_UNIX
    /* Set window class and name. */
-   setenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
+   nsetenv("SDL_VIDEO_X11_WMCLASS", APPNAME, 0);
 #endif /* HAS_UNIX */
 
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
-      WARN("Unable to initialize SDL Video: %s", SDL_GetError());
+      WARN( _("Unable to initialize SDL Video: %s"), SDL_GetError());
       return -1;
    }
-
-   /* Get desktop dimensions. */
-#if SDL_VERSION_ATLEAST(2,0,0)
-   SDL_DisplayMode current;
-   SDL_GetCurrentDisplayMode( 0, &current );
-   gl_screen.desktop_w = current.w;
-   gl_screen.desktop_h = current.h;
-#elif SDL_VERSION_ATLEAST(1,2,10)
-   const SDL_VideoInfo *vidinfo = SDL_GetVideoInfo();
-   gl_screen.desktop_w = vidinfo->current_w;
-   gl_screen.desktop_h = vidinfo->current_h;
-#else /* #elif SDL_VERSION_ATLEAST(1,2,10) */
-   gl_screen.desktop_w = 0;
-   gl_screen.desktop_h = 0;
-#endif /* #elif SDL_VERSION_ATLEAST(1,2,10) */
 
    /* We'll be parsing XML. */
    LIBXML_TEST_VERSION
@@ -237,6 +223,8 @@ int main( int argc, char** argv )
 
    /* Input must be initialized for config to work. */
    input_init();
+
+   lua_init(); /* initializes lua */
 
    conf_setDefaults(); /* set the default config values */
 
@@ -247,62 +235,44 @@ int main( int argc, char** argv )
     */
    conf_loadConfigPath();
 
-   /* Parse the user data path override first. */
-   conf_parseCLIPath( argc, argv );
-
    /* Create the home directory if needed. */
-   if (nfile_dirMakeExist("%s", nfile_configPath()))
-      WARN("Unable to create config directory '%s'", nfile_configPath());
+   if ( nfile_dirMakeExist( nfile_configPath() ) )
+      WARN( _("Unable to create config directory '%s'"), nfile_configPath());
 
    /* Set the configuration. */
-   nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
+   snprintf(conf_file_path, sizeof(conf_file_path), "%s"CONF_FILE, nfile_configPath());
 
-#if HAS_UNIX
-   /* TODO get rid of this cruft ASAP. */
-   int oldconfig = 0;
-   if (!nfile_fileExists( buf )) {
-      char *home, buf2[PATH_MAX];
-      home = SDL_getenv( "HOME" );
-      if (home != NULL) {
-         nsnprintf( buf2, PATH_MAX, "%s/.naev/"CONF_FILE, home );
-         if (nfile_fileExists( buf2 ))
-            oldconfig = 1;
-      }
-   }
-#endif /* HAS_UNIX */
-
-   conf_loadConfig(buf); /* Lua to parse the configuration file */
+   conf_loadConfig(conf_file_path); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
-   if (conf.redirect_file && log_copying()) {
-      log_redirect();
-      log_copy(0);
-   }
-   else
-      log_purge();
-
+   /* Set up I/O. */
+   ndata_setupWriteDir();
+   log_redirect();
+   ndata_setupReadDirs();
+   gettext_setLanguage( conf.language ); /* now that we can find translations */
+   LOG( _("Loaded configuration: %s"), conf_file_path );
+   search_path = PHYSFS_getSearchPath();
+   LOG( "%s", _("Read locations, searched in order:") );
+   for (p = search_path; *p != NULL; p++)
+      LOG( "    %s", *p );
+   PHYSFS_freeList( search_path );
+   /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
+   DEBUG( _("Cache location: %s"), nfile_cachePath() );
+   LOG( _("Write location: %s\n"), PHYSFS_getWriteDir() );
 
    /* Enable FPU exceptions. */
-#if defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING)
    if (conf.fpu_except)
-      feenableexcept( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW );
-#endif /* defined(HAVE_FEENABLEEXCEPT) && defined(DEBUGGING) */
-
-   /* Open data. */
-   if (ndata_open() != 0)
-      ERR("Failed to open ndata.");
+      debug_enableFPUExcept();
 
    /* Load the start info. */
    if (start_load())
-      ERR("Failed to load module start data.");
-
-   /* Load the data basics. */
-   LOG(" %s", ndata_name());
-   DEBUG();
+      ERR( _("Failed to load module start data.") );
+   LOG(" %s", start_name());
+   DEBUG_BLANK();
 
    /* Display the SDL Version. */
    print_SDLversion();
-   DEBUG();
+   DEBUG_BLANK();
 
    /* random numbers */
    rng_init();
@@ -311,83 +281,80 @@ int main( int argc, char** argv )
     * OpenGL
     */
    if (gl_init()) { /* initializes video output */
-      ERR("Initializing video output failed, exiting...");
+      ERR( _("Initializing video output failed, exiting...") );
       SDL_Quit();
       exit(EXIT_FAILURE);
    }
    window_caption();
-   gl_fontInit( NULL, NULL, conf.font_size_def ); /* initializes default font to size */
-   gl_fontInit( &gl_smallFont, NULL, conf.font_size_small ); /* small font */
-   gl_fontInit( &gl_defFontMono, "dat/mono.ttf", conf.font_size_def );
 
-#if SDL_VERSION_ATLEAST(2,0,0)
+   /* Have to set up fonts before rendering anything. */
+   //DEBUG("Using '%s' as main font and '%s' as monospace font.", _(FONT_DEFAULT_PATH), _(FONT_MONOSPACE_PATH));
+   gl_fontInit( &gl_defFont, _(FONT_DEFAULT_PATH), conf.font_size_def, FONT_PATH_PREFIX, 0 ); /* initializes default font to size */
+   gl_fontInit( &gl_smallFont, _(FONT_DEFAULT_PATH), conf.font_size_small, FONT_PATH_PREFIX, 0 ); /* small font */
+   gl_fontInit( &gl_defFontMono, _(FONT_MONOSPACE_PATH), conf.font_size_def, FONT_PATH_PREFIX, 0 );
+
    /* Detect size changes that occurred after window creation. */
-   naev_resize( -1., -1. );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+   naev_resize();
 
    /* Display the load screen. */
    loadscreen_load();
-   loadscreen_render( 0., "Initializing subsystems..." );
+   loadscreen_render( 0., _("Initializing subsystems...") );
    time_ms = SDL_GetTicks();
-
 
    /*
     * Input
     */
    if ((conf.joystick_ind >= 0) || (conf.joystick_nam != NULL)) {
-      if (joystick_init()) WARN("Error initializing joystick input");
+      if (joystick_init())
+         WARN( _("Error initializing joystick input") );
       if (conf.joystick_nam != NULL) { /* use the joystick name to find a joystick */
          if (joystick_use(joystick_get(conf.joystick_nam))) {
-            WARN("Failure to open any joystick, falling back to default keybinds");
+            WARN( _("Failure to open any joystick, falling back to default keybinds") );
             input_setDefault(1);
          }
          free(conf.joystick_nam);
       }
       else if (conf.joystick_ind >= 0) /* use a joystick id instead */
          if (joystick_use(conf.joystick_ind)) {
-            WARN("Failure to open any joystick, falling back to default keybinds");
+            WARN( _("Failure to open any joystick, falling back to default keybinds") );
             input_setDefault(1);
          }
    }
-
 
    /*
     * OpenAL - Sound
     */
    if (conf.nosound) {
-      LOG("Sound is disabled!");
+      LOG( _("Sound is disabled!") );
       sound_disabled = 1;
       music_disabled = 1;
    }
-   if (sound_init()) WARN("Problem setting up sound!");
+   if (sound_init())
+      WARN( _("Problem setting up sound!") );
    music_choose("load");
 
    /* FPS stuff. */
    fps_setPos( 15., (double)(gl_screen.h-15-gl_defFont.h) );
 
    /* Misc graphics init */
+   render_init();
    if (nebu_init() != 0) { /* Initializes the nebula */
       /* An error has happened */
-      ERR("Unable to initialize the Nebula subsystem!");
+      ERR( _("Unable to initialize the Nebula subsystem!") );
       /* Weirdness will occur... */
    }
    gui_init(); /* initializes the GUI graphics */
    toolkit_init(); /* initializes the toolkit */
    map_init(); /* initializes the map. */
+   map_system_init(); /* Initialise the solar system map */
    cond_init(); /* Initialize conditional subsystem. */
    cli_init(); /* Initialize console. */
 
    /* Data loading */
    load_all();
 
-#if SDL_VERSION_ATLEAST(2,0,0)
    /* Detect size changes that occurred during load. */
-   naev_resize( -1., -1. );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
-
-   /* Generate the CSV. */
-   if (conf.devcsv)
-      dev_csv();
+   naev_resize();
 
    /* Unload load screen. */
    loadscreen_unload();
@@ -395,74 +362,10 @@ int main( int argc, char** argv )
    /* Start menu. */
    menu_main();
 
-   /* Force a minimum delay with loading screen */
-   if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
-      SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
+   LOG( _( "Reached main menu" ) );
+
    fps_init(); /* initializes the time_ms */
 
-#if HAS_UNIX
-   /* Tell the player to migrate their configuration files out of ~/.naev */
-   /* TODO get rid of this cruft ASAP. */
-   if ((oldconfig) && (!conf.datapath)) {
-      char path[PATH_MAX], *script, *home;
-      uint32_t scriptsize;
-      int ret;
-
-      nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
-      home = SDL_getenv("HOME");
-      ret = dialogue_YesNo( "Warning", "Your configuration files are in a deprecated location and must be migrated:\n"
-            "   \er%s/.naev/\e0\n\n"
-            "The update script can likely be found in your Naev data directory:\n"
-            "   \er%s\e0\n\n"
-            "Would you like to run it automatically?", home, path );
-
-      /* Try to run the script. */
-      if (ret) {
-         ret = -1;
-         /* Running from ndata. */
-         if (ndata_getPath() != NULL) {
-            script = ndata_read( "naev-confupdate.sh", &scriptsize );
-            if (script != NULL)
-               ret = system(script);
-         }
-
-         /* Running from laid-out files or ndata_read failed. */
-         if ((nfile_fileExists(path)) && (ret == -1)) {
-            script = nfile_readFile( (int*)&scriptsize, path );
-            if (script != NULL)
-               ret = system(script);
-         }
-
-         /* We couldn't find the script. */
-         if (ret == -1) {
-            dialogue_alert( "The update script was not found at:\n\er%s\e0\n\n"
-                  "Please locate and run it manually.", path );
-         }
-         /* Restart, as the script succeeded. */
-         else if (!ret) {
-            dialogue_msg( "Update Completed",
-                  "Configuration files were successfully migrated. Naev will now restart." );
-            execv(argv[0], argv);
-         }
-         else { /* I sincerely hope this else is never hit. */
-            dialogue_alert( "The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
-                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
-                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
-                  "\er%s/%s\e0 =>\n   \eD%snebula/\e0\n\n",
-                  home, ".naev/conf.lua", nfile_configPath(),
-                  home, ".naev/{saves,screenshots}/", nfile_dataPath(),
-                  home, ".naev/gen/*.png", nfile_cachePath() );
-         }
-      }
-      else {
-         dialogue_alert(
-               "To manually migrate your configuration files "
-               "please exit Naev and run the update script, "
-               "likely found in your Naev data directory:\n"
-               "   \er%s/naev-confupdate.sh\e0", home, path );
-      }
-   }
-#endif
 
    /*
     * main loop
@@ -471,31 +374,52 @@ int main( int argc, char** argv )
    /* flushes the event loop since I noticed that when the joystick is loaded it
     * creates button events that results in the player starting out acceling */
    while (SDL_PollEvent(&event));
+
+   /* Incomplete game note (shows every time version number changes). */
+   if ( conf.lastversion == NULL || naev_versionCompare(conf.lastversion) != 0 ) {
+      free( conf.lastversion );
+      conf.lastversion = strdup( naev_version(0) );
+      dialogue_msg(
+         _("Welcome to Naev"),
+         _("Welcome to Naev version %s, and thank you for playing! We hope you"
+            " enjoy this game and all it has to offer. This is a passion"
+            " project developed exclusively by volunteers and it gives us all"
+            " great joy to know that there are others who love this game as"
+            " much as we do!\n"
+            "    Of course, please note that this is an incomplete game. You"
+            " will encounter dead ends to storylines, missing storylines, and"
+            " possibly even some bugs, although we try to keep those to a"
+            " minimum of course. So be prepared for some rough edges for the"
+            " time being. That said, we are working on this game every day and"
+            " hope to one day finish this massive project on our hands."
+            " Perhaps you could become one of us, who knows?\n"
+            "    For more information about the game and its development"
+            " state, take a look at naev.org; it has all the relevant links."
+            " And again, thank you for playing!"), conf.lastversion );
+   }
+
    /* primary loop */
    while (!quit) {
-      while (SDL_PollEvent(&event)) { /* event loop */
+      while (!quit && SDL_PollEvent(&event)) { /* event loop */
          if (event.type == SDL_QUIT) {
-            if (menu_askQuit()) {
+            if (quit || menu_askQuit()) {
                quit = 1; /* quit is handled here */
                break;
             }
          }
-#if SDL_VERSION_ATLEAST(2,0,0)
          else if (event.type == SDL_WINDOWEVENT &&
                event.window.event == SDL_WINDOWEVENT_RESIZED) {
-            naev_resize( event.window.data1, event.window.data2 );
+            naev_resize();
             continue;
          }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          input_handle(&event); /* handles all the events and player keybinds */
       }
 
       main_loop( 1 );
    }
 
-
    /* Save configuration. */
-   conf_saveConfig(buf);
+   conf_saveConfig(conf_file_path);
 
    /* data unloading */
    unload_all();
@@ -505,15 +429,11 @@ int main( int argc, char** argv )
    gl_freeFont(&gl_smallFont);
    gl_freeFont(&gl_defFontMono);
 
-   /* Close data. */
-   ndata_close();
-   start_cleanup();
-
-   /* Destroy conf. */
-   conf_cleanup(); /* Frees some memory the configuration allocated. */
+   start_cleanup(); /* Cleanup from start.c, not the first cleanup step. :) */
 
    /* exit subsystems */
    cli_exit(); /* Clean up the console. */
+   map_system_exit(); /* Destroys the solar system map. */
    map_exit(); /* Destroys the map. */
    ovr_mrkFree(); /* Clear markers. */
    toolkit_exit(); /* Kills the toolkit */
@@ -521,14 +441,20 @@ int main( int argc, char** argv )
    joystick_exit(); /* Releases joystick */
    input_exit(); /* Cleans up keybindings */
    nebu_exit(); /* Destroys the nebula */
+   lua_exit(); /* Closes Lua state. */
+   render_exit(); /* Cleans up post-processing. */
    gl_exit(); /* Kills video output */
    sound_exit(); /* Kills the sound */
    news_exit(); /* Destroys the news. */
+
+   /* Has to be run last or it will mess up sound settings. */
+   conf_cleanup(); /* Free some memory the configuration allocated. */
 
    /* Free the icon. */
    if (naev_icon)
       SDL_FreeSurface(naev_icon);
 
+   IMG_Quit(); /* quits SDL_image */
    SDL_Quit(); /* quits SDL */
 
    /* Clean up parser. */
@@ -537,11 +463,10 @@ int main( int argc, char** argv )
    /* Clean up signal handler. */
    debug_sigClose();
 
-   /* Last free. */
-   free(binary_path);
-
    /* Delete logs if empty. */
    log_clean();
+
+   PHYSFS_deinit();
 
    /* all is well */
    exit(EXIT_SUCCESS);
@@ -553,35 +478,57 @@ int main( int argc, char** argv )
  */
 void loadscreen_load (void)
 {
-   unsigned int i;
    char file_path[PATH_MAX];
-   char **loadscreens;
-   uint32_t nload;
+   char **loadpaths, **loadscreens, *load;
+   size_t nload, nreal, nbuf;
+   const char *loading_prefix = "webp";
 
    /* Count the loading screens */
-   loadscreens = ndata_list( GFX_PATH"loading/", &nload );
+   loadpaths = PHYSFS_enumerateFiles( GFX_PATH"loading/" );
+
+   for (nload=0; loadpaths[nload]!=NULL; nload++) {}
+   loadscreens = calloc( nload, sizeof(char*) );
+   nreal = 0;
+   for (nload=0; loadpaths[nload]!=NULL; nload++) {
+      if (!ndata_matchExt( loadpaths[nload], loading_prefix ))
+         continue;
+      loadscreens[nreal++] = loadpaths[nload];
+   }
 
    /* Must have loading screens */
-   if (nload==0) {
-      WARN("No loading screens found!");
+   if (nreal==0) {
+      WARN( _("No loading screens found!") );
+      PHYSFS_freeList( loadpaths );
+      free( loadscreens );
       loading = NULL;
       return;
    }
 
+   /* Load the loading font. */
+   gl_fontInit( &loading_font, _(FONT_DEFAULT_PATH), 24, FONT_PATH_PREFIX, 0 ); /* initializes default font to size */
+
    /* Set the zoom. */
    cam_setZoom( conf.zoom_far );
 
+   /* Choose the screen. */
+   load = loadscreens[ RNG_BASE(0,nreal-1) ];
+
    /* Load the texture */
-   nsnprintf( file_path, PATH_MAX, GFX_PATH"loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
+   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s", load );
    loading = gl_newImage( file_path, 0 );
+   loading_r = RNGF();
+
+   /* Load the metadata. */
+   snprintf( file_path, sizeof(file_path), GFX_PATH"loading/%s.txt", load );
+   free( loading_txt );
+   loading_txt = ndata_read( file_path, &nbuf );
 
    /* Create the stars. */
    background_initStars( 1000 );
 
    /* Clean up. */
-   for (i=0; i<nload; i++)
-      free(loadscreens[i]);
-   free(loadscreens);
+   PHYSFS_freeList( loadpaths );
+   free( loadscreens );
 }
 
 
@@ -593,9 +540,15 @@ void loadscreen_load (void)
  */
 void loadscreen_render( double done, const char *msg )
 {
-   glColour col;
-   double bx,by, bw,bh;
-   double x,y, w,h, rh;
+   const double SHIP_IMAGE_WIDTH    = 512.;  /**< Loadscreen Ship Image Width */
+   const double SHIP_IMAGE_HEIGHT   = 512.; /**< Loadscreen Ship Image Height */
+   double bx;  /**<  Blit Image X Coord */
+   double by;  /**<  Blit Image Y Coord */
+   double x;   /**<  Progress Bar X Coord */
+   double y;   /**<  Progress Bar Y Coord */
+   double w;   /**<  Progress Bar Width Basis */
+   double h;   /**<  Progress Bar Height Basis */
+   double rh;  /**<  Loading Progress Text Relative Height */
    SDL_Event event;
 
    /* Clear background. */
@@ -608,55 +561,38 @@ void loadscreen_render( double done, const char *msg )
     * Dimensions.
     */
    /* Image. */
-   bw = 512.;
-   bh = 512.;
-   bx = (SCREEN_W-bw)/2.;
-   by = (SCREEN_H-bh)/2.;
+   bx = (SCREEN_W-SHIP_IMAGE_WIDTH)/2.;
+   by = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2.;
    /* Loading bar. */
-   w  = gl_screen.w * 0.4;
-   h  = gl_screen.h * 0.02;
+   w  = SCREEN_W * 0.5;
+   h  = SCREEN_H * 0.025;
    rh = h + gl_defFont.h + 4.;
    x  = (SCREEN_W-w)/2.;
-   if (SCREEN_H < 768)
-      y  = (SCREEN_H-h)/2.;
-   else
-      y  = (SCREEN_H-bw)/2 - rh - 5.;
+   y  = (SCREEN_H-SHIP_IMAGE_HEIGHT)/2. - rh - 5.;
 
    /* Draw loading screen image. */
    if (loading != NULL)
-      gl_blitScale( loading, bx, by, bw, bh, NULL );
+      gl_blitScale( loading, bx, by, SHIP_IMAGE_WIDTH, SHIP_IMAGE_HEIGHT, NULL );
+   if (loading_txt != NULL) {
+      int tw = gl_printWidthRaw( &loading_font, loading_txt );
+      gl_printRaw( &loading_font, bx+SHIP_IMAGE_WIDTH-tw, by+20, &cFontWhite, 1, loading_txt );
+   }
 
    /* Draw progress bar. */
-   /* BG. */
-   col.r = cBlack.r;
-   col.g = cBlack.g;
-   col.b = cBlack.b;
-   col.a = 0.7;
-   gl_renderRect( x-2., y-2., w+4., rh+4., &col );
-   /* FG. */
-   col.r = cDConsole.r;
-   col.g = cDConsole.g;
-   col.b = cDConsole.b;
-   col.a = 0.2;
-   gl_renderRect( x+done*w, y, (1.-done)*w, h, &col );
-   col.r = cConsole.r;
-   col.g = cConsole.g;
-   col.b = cConsole.b;
-   col.a = 0.7;
-   gl_renderRect( x, y, done*w, h, &col );
+   glUseProgram(shaders.progressbar.program);
+   glUniform1f( shaders.progressbar.r, loading_r );
+   glUniform1f( shaders.progressbar.dt, done );
+   gl_renderShader( x, y, w, h, 0., &shaders.progressbar, NULL, 0 );
 
    /* Draw text. */
-   gl_printRaw( &gl_defFont, x, y + h + 3., &cConsole, msg );
-
-   /* Flip buffers. */
-#if SDL_VERSION_ATLEAST(2,0,0)
-   SDL_GL_SwapWindow( gl_screen.window );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   SDL_GL_SwapBuffers();
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+   gl_printRaw( &gl_defFont, x+10., y + h + 3., &cFontWhite, -1., msg );
 
    /* Get rid of events again. */
    while (SDL_PollEvent(&event));
+
+   /* Flip buffers. HACK: Also try to catch a late-breaking resize from the WM (...or a crazy user?). */
+   SDL_GL_SwapWindow( gl_screen.window );
+   naev_resize();
 }
 
 
@@ -665,52 +601,74 @@ void loadscreen_render( double done, const char *msg )
  */
 static void loadscreen_unload (void)
 {
-   /* Free the textures */
-   if (loading != NULL)
-      gl_freeTexture(loading);
+   gl_freeTexture(loading);
    loading = NULL;
+   gl_freeFont( &loading_font );
+   free( loading_txt );
 }
 
 
 /**
  * @brief Loads all the data, makes main() simpler.
  */
-#define LOADING_STAGES     12. /**< Amount of loading stages. */
+#define LOADING_STAGES     16. /**< Amount of loading stages. */
 void load_all (void)
 {
+   int stage = 0;
    /* We can do fast stuff here. */
    sp_load();
 
    /* order is very important as they're interdependent */
-   loadscreen_render( 1./LOADING_STAGES, "Loading Commodities..." );
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Commodities...") );
    commodity_load(); /* dep for space */
-   loadscreen_render( 2./LOADING_STAGES, "Loading Factions..." );
-   factions_load(); /* dep for fleet, space, missions, AI */
-   loadscreen_render( 3./LOADING_STAGES, "Loading AI..." );
-   ai_load(); /* dep for fleets */
-   loadscreen_render( 4./LOADING_STAGES, "Loading Missions..." );
-   missions_load(); /* no dep */
-   loadscreen_render( 5./LOADING_STAGES, "Loading Events..." );
-   events_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, "Loading Special Effects..." );
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Special Effects...") );
    spfx_load(); /* no dep */
-   loadscreen_render( 6./LOADING_STAGES, "Loading Damage Types..." );
-   dtype_load(); /* no dep */
-   loadscreen_render( 7./LOADING_STAGES, "Loading Outfits..." );
-   outfit_load(); /* dep for ships */
-   loadscreen_render( 8./LOADING_STAGES, "Loading Ships..." );
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Damage Types...") );
+   dtype_load(); /* dep for outfits */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Outfits...") );
+   outfit_load(); /* dep for ships, factions */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Ships...") );
    ships_load(); /* dep for fleet */
-   loadscreen_render( 9./LOADING_STAGES, "Loading Fleets..." );
-   fleet_load(); /* dep for space */
-   loadscreen_render( 10./LOADING_STAGES, "Loading Techs..." );
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Factions...") );
+   factions_load(); /* dep for fleet, space, missions, AI */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events...") );
+   events_load(); /* no dep */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Missions...") );
+   missions_load(); /* no dep */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading AI...") );
+   ai_load(); /* dep for fleets */
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading Techs...") );
    tech_load(); /* dep for space */
-   loadscreen_render( 11./LOADING_STAGES, "Loading the Universe..." );
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading the Universe...") );
    space_load();
-   loadscreen_render( 12./LOADING_STAGES, "Populating Maps..." );
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Loading the UniDiffs...") );
+   diff_loadAvailable();
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Populating Maps...") );
    outfit_mapParse();
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Calculating Patrols...") );
+   safelanes_init();
+
+   loadscreen_render( ++stage/LOADING_STAGES, _("Initializing Details..") );
    background_init();
+   map_load();
+   map_system_load();
+   pilots_init();
+   weapon_init();
    player_init(); /* Initialize player stuff. */
-   loadscreen_render( 1., "Loading Completed!" );
+   loadscreen_render( 1., _("Loading Completed!") );
 }
 /**
  * @brief Unloads all data, simplifies main().
@@ -727,16 +685,17 @@ void unload_all (void)
    npc_clear(); /* In case exiting while landed. */
    background_free(); /* Destroy backgrounds. */
    load_free(); /* Clean up loading game stuff stuff. */
+   safelanes_destroy();
+   diff_free();
    economy_destroy(); /* must be called before space_exit */
    space_exit(); /* cleans up the universe itself */
    tech_free(); /* Frees tech stuff. */
-   fleet_free();
    ships_free();
    outfit_free();
    spfx_free(); /* gets rid of the special effect */
    dtype_free(); /* gets rid of the damage types */
    missions_free();
-   events_cleanup(); /* Clean up events. */
+   events_exit(); /* Clean up events. */
    factions_free();
    commodity_free();
    var_cleanup(); /* cleans up mission variables */
@@ -766,42 +725,45 @@ void main_loop( int update )
       player_updateAutonav( real_dt );
       update_all(); /* update game */
    }
+   else if (!dialogue_isOpen()) {
+      /* We run the exclusion end here to handle any hooks that are potentially manually triggered by hook.trigger. */
+      hook_exclusionEnd( 0. );
+   }
+
+   /* Safe hook should be run every frame regardless of whether game is paused or not. */
+   hooks_run( "safe" );
+
+   /* Checks to see if we want to land. */
+   space_checkLand();
 
    /*
     * Handle render.
     */
    /* Clear buffer. */
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   render_all();
-   /* Toolkit is rendered on top. */
-   if (toolkit_isOpen())
-      toolkit_render();
-   gl_checkErr(); /* check error every loop */
+   render_all( game_dt, real_dt );
    /* Draw buffer. */
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_GL_SwapWindow( gl_screen.window );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   SDL_GL_SwapBuffers();
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 /**
  * @brief Wrapper for gl_resize that handles non-GL reinitialization.
  */
-void naev_resize( int w, int h )
+void naev_resize (void)
 {
    /* Auto-detect window size. */
-   if ((w < 0.) && (h < 0.))
-      SDL_GetWindowSize( gl_screen.window, &w, &h );
+   int w, h;
+   SDL_GL_GetDrawableSize( gl_screen.window, &w, &h );
+
+   /* Update options menu, if open. (Never skip, in case the fullscreen mode alone changed.) */
+   opt_resize();
 
    /* Nothing to do. */
    if ((w == gl_screen.rw) && (h == gl_screen.rh))
       return;
 
    /* Resize the GL context, etc. */
-   gl_resize( w, h );
+   gl_resize();
 
    /* Regenerate the background stars. */
    if (cur_system != NULL)
@@ -815,20 +777,11 @@ void naev_resize( int w, int h )
    /* Reload the GUI (may regenerate land window) */
    gui_reload();
 
-   /* Resets the overlay dimensions. */
+   /* Resets dimensions in other components which care. */
    ovr_refresh();
-
-   if (nebu_isLoaded())
-      nebu_vbo_init();
-
-   /* Re-center windows. */
    toolkit_reposition();
-
-   /* Reposition main menu, if open. */
    menu_main_resize();
-
-   /* Update options menu, if open. */
-   opt_resize();
+   nebu_resize();
 }
 
 /*
@@ -836,50 +789,13 @@ void naev_resize( int w, int h )
  */
 void naev_toggleFullscreen (void)
 {
-   int w, h, mode;
-   SDL_DisplayMode current;
-
-   /* @todo Remove code duplication between this and opt_videoSave */
-   if (conf.fullscreen) {
-      conf.fullscreen = 0;
-      /* Restore windowed mode. */
-      SDL_SetWindowFullscreen( gl_screen.window, 0 );
-
-      SDL_SetWindowSize( gl_screen.window, conf.width, conf.height );
-      naev_resize( conf.width, conf.height );
-      SDL_SetWindowPosition( gl_screen.window,
-            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED );
-
-      return;
-   }
-
-   conf.fullscreen = 1;
-
-   if (conf.modesetting) {
-      mode = SDL_WINDOW_FULLSCREEN;
-
-      SDL_GetWindowDisplayMode( gl_screen.window, &current );
-
-      current.w = conf.width;
-      current.h = conf.height;
-
-      SDL_SetWindowDisplayMode( gl_screen.window, &current );
-   }
-   else
-      mode = SDL_WINDOW_FULLSCREEN_DESKTOP;
-
-   SDL_SetWindowFullscreen( gl_screen.window, mode );
-
-   SDL_GetWindowSize( gl_screen.window, &w, &h );
-   if ((w != conf.width) || (h != conf.height))
-      naev_resize( w, h );
+   opt_setVideoMode( conf.width, conf.height, !conf.fullscreen, 0 );
 }
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
 
 #if HAS_POSIX && defined(CLOCK_MONOTONIC)
 static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
-static int use_posix_time; /**< Whether or not to use posix time. */
+static int use_posix_time; /**< Whether or not to use POSIX time. */
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 /**
  * @brief Initializes the fps engine.
@@ -893,7 +809,7 @@ static void fps_init (void)
     * could skew up the dt calculations. */
    if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
       return;
-   WARN("clock_gettime failed, disabling posix time.");
+   WARN( _("clock_gettime failed, disabling POSIX time.") );
    use_posix_time = 0;
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
    time_ms  = SDL_GetTicks();
@@ -914,11 +830,11 @@ static double fps_elapsed (void)
    if (use_posix_time) {
       if (clock_gettime(CLOCK_MONOTONIC, &ts)==0) {
          dt  = ts.tv_sec - global_time.tv_sec;
-         dt += (ts.tv_nsec - global_time.tv_nsec) / 1000000000.0;
+         dt += (ts.tv_nsec - global_time.tv_nsec) / 1e9;
          global_time = ts;
          return dt;
       }
-      WARN( "clock_gettime failed!" );
+      WARN( _("clock_gettime failed!") );
    }
 #endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 
@@ -965,6 +881,56 @@ static void fps_control (void)
 
 
 /**
+ * @brief Sets the position to display the FPS.
+ */
+void fps_setPos( double x, double y )
+{
+   fps_x = x;
+   fps_y = y;
+}
+
+
+/**
+ * @brief Displays FPS on the screen.
+ *
+ *    @param[in] dt Current delta tick.
+ */
+void display_fps( const double dt )
+{
+   double x,y;
+   double dt_mod_base = 1.;
+
+   fps_dt  += dt;
+   fps_cur += 1.;
+   if (fps_dt > 1.) { /* recalculate every second */
+      fps = fps_cur / fps_dt;
+      fps_dt = fps_cur = 0.;
+   }
+
+   x = fps_x;
+   y = fps_y;
+   if (conf.fps_show) {
+      gl_print( NULL, x, y, NULL, "%3.2f", fps );
+      y -= gl_defFont.h + 5.;
+   }
+
+   if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
+         !player_isFlag(PLAYER_CREATING)) {
+      dt_mod_base = player_dt_default();
+   }
+   if (dt_mod != dt_mod_base)
+      gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod / dt_mod_base);
+
+   if (!paused || !player_paused || !conf.pause_show)
+      return;
+
+   y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
+   gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
+         NULL, -1., _("PAUSED") );
+}
+
+
+/**
  * @brief Updates the game itself (player flying around and friends).
  *
  *    @brief Mainly uses game dt.
@@ -989,7 +955,7 @@ static void update_all (void)
       accumdt = 0.;
       for (i=0; i<n; i++) {
          update_routine( microdt, 0 );
-         /* Ok, so we need a bit of hackish logic here in case we are chopping up a
+         /* OK, so we need a bit of hackish logic here in case we are chopping up a
           * very large dt and it turns out time compression changes so we're now
           * updating in "normal time compression" zone. This amounts to many updates
           * being run when time compression has changed and thus can cause, say, the
@@ -1013,9 +979,12 @@ static void update_all (void)
  * @brief Actually runs the updates
  *
  *    @param[in] dt Current delta tick.
+ *    @param[in] enter_sys Whether this is the initial update upon entering the system.
  */
 void update_routine( double dt, int enter_sys )
 {
+   HookParam h[3];
+
    if (!enter_sys) {
       hook_exclusionStart();
 
@@ -1026,107 +995,24 @@ void update_routine( double dt, int enter_sys )
    /* Update engine stuff. */
    space_update(dt);
    weapons_update(dt);
-   spfx_update(dt);
+   spfx_update(dt, real_dt);
    pilots_update(dt);
 
    /* Update camera. */
    cam_update( dt );
 
-   if (!enter_sys)
+   if (!enter_sys) {
       hook_exclusionEnd( dt );
-}
 
-
-/**
- * @brief Renders the game itself (player flying around and friends).
- *
- * Blitting order (layers):
- *   - BG
- *     - stars and planets
- *     - background player stuff (planet targeting)
- *     - background particles
- *     - back layer weapons
- *   - N
- *     - NPC ships
- *     - front layer weapons
- *     - normal layer particles (above ships)
- *   - FG
- *     - player
- *     - foreground particles
- *     - text and GUI
- */
-static void render_all (void)
-{
-   double dt;
-
-   dt = (paused) ? 0. : game_dt;
-
-   /* setup */
-   spfx_begin(dt, real_dt);
-   /* BG */
-   space_render(dt);
-   planets_render();
-   weapons_render(WEAPON_LAYER_BG, dt);
-   /* N */
-   pilots_render(dt);
-   weapons_render(WEAPON_LAYER_FG, dt);
-   spfx_render(SPFX_LAYER_BACK);
-   /* FG */
-   player_render(dt);
-   spfx_render(SPFX_LAYER_FRONT);
-   space_renderOverlay(dt);
-   gui_renderReticles(dt);
-   pilots_renderOverlay(dt);
-   spfx_end();
-   gui_render(dt);
-   ovr_render(dt);
-   display_fps( real_dt ); /* Exception. */
-}
-
-
-static double fps     = 0.; /**< FPS to finally display. */
-static double fps_cur = 0.; /**< FPS accumulator to trigger change. */
-/**
- * @brief Displays FPS on the screen.
- *
- *    @param[in] dt Current delta tick.
- */
-static void display_fps( const double dt )
-{
-   double x,y;
-
-   fps_dt  += dt;
-   fps_cur += 1.;
-   if (fps_dt > 1.) { /* recalculate every second */
-      fps = fps_cur / fps_dt;
-      fps_dt = fps_cur = 0.;
+      /* Hook set up. */
+      h[0].type = HOOK_PARAM_NUMBER;
+      h[0].u.num = dt;
+      h[1].type = HOOK_PARAM_NUMBER;
+      h[1].u.num = real_dt;
+      h[2].type = HOOK_PARAM_SENTINEL;
+      /* Run the update hook. */
+      hooks_runParam( "update", h );
    }
-
-   x = fps_x;
-   y = fps_y;
-   if (conf.fps_show) {
-      gl_print( NULL, x, y, NULL, "%3.2f", fps );
-      y -= gl_defFont.h + 5.;
-   }
-   if (dt_mod != 1.)
-      gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod);
-
-   if (!paused || !player_paused || !conf.pause_show)
-      return;
-
-   y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
-   gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
-         NULL, "PAUSED" );
-}
-
-
-/**
- * @brief Sets the position to display the FPS.
- */
-void fps_setPos( double x, double y )
-{
-   fps_x = x;
-   fps_y = y;
 }
 
 
@@ -1137,52 +1023,23 @@ static void window_caption (void)
 {
    char buf[PATH_MAX];
    SDL_RWops *rw;
-   npng_t *npng;
 
    /* Load icon. */
-   rw = ndata_rwops( GFX_PATH"icon.png" );
+   rw = PHYSFSRWOPS_openRead( GFX_PATH"icon.webp" );
    if (rw == NULL) {
-      WARN("Icon (icon.png) not found!");
+      WARN( _("Icon (icon.webp) not found!") );
       return;
    }
-   npng        = npng_open( rw );
-   naev_icon   = npng_readSurface( npng, 0, 0 );
-   npng_close( npng );
-   SDL_RWclose( rw );
+   naev_icon   = IMG_Load_RW( rw, 1 );
    if (naev_icon == NULL) {
-      WARN("Unable to load icon.png!");
+      WARN( _("Unable to load icon.webp!") );
       return;
    }
 
    /* Set caption. */
-   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
-#if SDL_VERSION_ATLEAST(2,0,0)
+   snprintf(buf, sizeof(buf), APPNAME" - %s", start_name());
    SDL_SetWindowTitle( gl_screen.window, buf );
    SDL_SetWindowIcon(  gl_screen.window, naev_icon );
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   SDL_WM_SetCaption(buf, APPNAME);
-   SDL_WM_SetIcon( naev_icon, NULL );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
-}
-
-/**
- * @Brief Gets a short human readable string of the version.
- *
- *    @param[out] str String to output.
- *    @param slen Maximum length of the string.
- *    @param major Major version.
- *    @param minor Minor version.
- *    @param rev Revision.
- *    @return Number of characters written.
- */
-int naev_versionString( char *str, size_t slen, int major, int minor, int rev )
-{
-   int n;
-   if (rev<0)
-      n = nsnprintf( str, slen, "%d.%d.0-beta%d", major, minor, ABS(rev) );
-   else
-      n = nsnprintf( str, slen, "%d.%d.%d", major, minor, rev );
-   return n;
 }
 
 
@@ -1194,102 +1051,53 @@ int naev_versionString( char *str, size_t slen, int major, int minor, int rev )
  */
 char *naev_version( int long_version )
 {
-   /* Set short version if needed. */
-   if (short_version[0] == '\0')
-      naev_versionString( short_version, sizeof(short_version), VMAJOR, VMINOR, VREV );
-
    /* Set up the long version. */
    if (long_version) {
-      if (human_version[0] == '\0')
-         nsnprintf( human_version, sizeof(human_version),
-               " "APPNAME" v%s%s - %s", short_version,
+      if (version_human[0] == '\0')
+         snprintf( version_human, sizeof(version_human),
+               " "APPNAME" v%s%s - %s", VERSION,
 #ifdef DEBUGGING
-               " debug",
+               _(" debug"),
 #else /* DEBUGGING */
                "",
 #endif /* DEBUGGING */
-               ndata_name() );
-      return human_version;
+               start_name() );
+      return version_human;
    }
 
-   return short_version;
+   return VERSION;
 }
 
 
-/**
- * @brief Parses the naev version.
- *
- *    @param[out] version Version parsed.
- *    @param buf Buffer to parse.
- *    @param nbuf Length of the buffer to parse.
- *    @return 0 on success.
- */
-int naev_versionParse( int version[3], char *buf, int nbuf )
-{
-   int i, j, s;
-   char cbuf[64];
-
-   /* Check length. */
-   if (nbuf > (int)sizeof(cbuf)) {
-      WARN("Version format is too long!");
-      return -1;
-   }
-
-   s = 0;
-   j = 0;
-   for (i=0; i < MIN(nbuf,(int)sizeof(cbuf)); i++) {
-      cbuf[j++] = buf[i];
-      if (buf[i] == '.') {
-         cbuf[j] = '\0';
-         version[s++] = atoi(cbuf);
-         if (s >= 3) {
-            WARN("Version has too many '.'.");
-            return -1;
-         }
-         j = 0;
-      }
-   }
-   if (s<3) {
-      cbuf[j++] = '\0';
-      version[s++] = atoi(cbuf);
-   }
-
-   return 0;
+static int
+binary_comparison (int x, int y) {
+  if (x == y) return 0;
+  if (x > y) return 1;
+  return -1;
 }
-
-
 /**
  * @brief Compares the version against the current naev version.
  *
  *    @return positive if version is newer or negative if version is older.
  */
-int naev_versionCompare( int version[3] )
+int naev_versionCompare( const char *version )
 {
-   if (VMAJOR > version[0])
-      return -3;
-   else if (VMAJOR < version[0])
-      return +3;
+   int res;
+   semver_t sv;
 
-   if (VMINOR > version[1])
-      return -2;
-   else if (VMINOR < version[1])
-      return +2;
-
-   if (VREV > version[2])
+   if (semver_parse( version, &sv ))
+   {
+      WARN( _("Failed to parse version string '%s'!"), version );
       return -1;
-   else if (VREV < version[2])
-      return +1;
+   }
 
-   return 0;
-}
-
-
-/**
- * @brief Returns the naev binary path.
- */
-char *naev_binary (void)
-{
-   return binary_path;
+   if ((res = 3*binary_comparison(version_binary.major, sv.major)) == 0) {
+      if ((res = 2*binary_comparison(version_binary.minor, sv.minor)) == 0) {
+         res = semver_compare( version_binary, sv );
+      }
+   }
+   semver_free( &sv );
+   return res;
 }
 
 
@@ -1304,14 +1112,10 @@ static void print_SDLversion (void)
 
    /* Extract information. */
    SDL_VERSION(&compiled);
-#if SDL_VERSION_ATLEAST(2,0,0)
    SDL_version ll;
    SDL_GetVersion( &ll );
    linked = &ll;
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-   linked = SDL_Linked_Version();
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
-   DEBUG("SDL: %d.%d.%d [compiled: %d.%d.%d]",
+   DEBUG( _("SDL: %d.%d.%d [compiled: %d.%d.%d]"),
          linked->major, linked->minor, linked->patch,
          compiled.major, compiled.minor, compiled.patch);
 
@@ -1321,179 +1125,13 @@ static void print_SDLversion (void)
 
    /* Check if major/minor version differ. */
    if (version_linked > version_compiled)
-      WARN("SDL is newer than compiled version");
+      WARN( _("SDL is newer than compiled version") );
    if (version_linked < version_compiled)
-      WARN("SDL is older than compiled version.");
+      WARN( _("SDL is older than compiled version.") );
 }
 
-
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
-/**
- * @brief Gets the string related to the signal code.
- *
- *    @param sig Signal to which code belongs.
- *    @param sig_code Signal code to get string of.
- *    @return String of signal code.
- */
-static const char* debug_sigCodeToStr( int sig, int sig_code )
+double naev_getrealdt (void)
 {
-   if (sig == SIGFPE)
-      switch (sig_code) {
-         case SI_USER: return "SIGFPE (raised by program)";
-         case FPE_INTDIV: return "SIGFPE (integer divide by zero)";
-         case FPE_INTOVF: return "SIGFPE (integer overflow)";
-         case FPE_FLTDIV: return "SIGFPE (floating-point divide by zero)";
-         case FPE_FLTOVF: return "SIGFPE (floating-point overflow)";
-         case FPE_FLTUND: return "SIGFPE (floating-point underflow)";
-         case FPE_FLTRES: return "SIGFPE (floating-point inexact result)";
-         case FPE_FLTINV: return "SIGFPE (floating-point invalid operation)";
-         case FPE_FLTSUB: return "SIGFPE (subscript out of range)";
-         default: return "SIGFPE";
-      }
-   else if (sig == SIGSEGV)
-      switch (sig_code) {
-         case SI_USER: return "SIGSEGV (raised by program)";
-         case SEGV_MAPERR: return "SIGSEGV (address not mapped to object)";
-         case SEGV_ACCERR: return "SIGSEGV (invalid permissions for mapped object)";
-         default: return "SIGSEGV";
-      }
-   else if (sig == SIGABRT)
-      switch (sig_code) {
-         case SI_USER: return "SIGABRT (raised by program)";
-         default: return "SIGABRT";
-      }
-
-   /* No suitable code found. */
-   return strsignal(sig);
+   return real_dt;
 }
 
-/**
- * @brief Translates and displays the address as something humans can enjoy.
- */
-static void debug_translateAddress( const char *symbol, bfd_vma address )
-{
-   const char *file, *func;
-   unsigned int line;
-   asection *section;
-
-   for (section = abfd->sections; section != NULL; section = section->next) {
-      if ((bfd_get_section_flags(abfd, section) & SEC_ALLOC) == 0)
-         continue;
-
-      bfd_vma vma = bfd_get_section_vma(abfd, section);
-      bfd_size_type size = bfd_get_section_size(section);
-      if (address < vma || address >= vma + size)
-         continue;
-
-      if (!bfd_find_nearest_line(abfd, section, syms, address - vma,
-            &file, &func, &line))
-         continue;
-
-      do {
-         if (func == NULL || func[0] == '\0')
-            func = "??";
-         if (file == NULL || file[0] == '\0')
-            file = "??";
-         DEBUG("%s %s(...):%u %s", symbol, func, line, file);
-      } while (bfd_find_inliner_info(abfd, &file, &func, &line));
-
-      return;
-   }
-
-   DEBUG("%s %s(...):%u %s", symbol, "??", 0, "??");
-}
-
-
-/**
- * @brief Backtrace signal handler for Linux.
- *
- *    @param sig Signal.
- *    @param info Signal information.
- *    @param unused Unused.
- */
-static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
-{
-   (void)sig;
-   (void)unused;
-   int i, num;
-   void *buf[64];
-   char **symbols;
-
-   num      = backtrace(buf, 64);
-   symbols  = backtrace_symbols(buf, num);
-
-   DEBUG("Naev received %s!",
-         debug_sigCodeToStr(info->si_signo, info->si_code) );
-   for (i=0; i<num; i++) {
-      if (abfd != NULL)
-         debug_translateAddress(symbols[i], (bfd_vma) (bfd_hostptr_t) buf[i]);
-      else
-         DEBUG("   %s", symbols[i]);
-   }
-   DEBUG("Report this to project maintainer with the backtrace.");
-
-   /* Always exit. */
-   exit(1);
-}
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
-
-
-/**
- * @brief Sets up the SignalHandler for Linux.
- */
-static void debug_sigInit (void)
-{
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
-   char **matching;
-   struct sigaction sa, so;
-   long symcount;
-   unsigned int size;
-
-   bfd_init();
-
-   /* Read the executable */
-   abfd = bfd_openr("/proc/self/exe", NULL);
-   if (abfd != NULL) {
-      bfd_check_format_matches(abfd, bfd_object, &matching);
-
-      /* Read symbols */
-      if (bfd_get_file_flags(abfd) & HAS_SYMS) {
-
-         /* static */
-         symcount = bfd_read_minisymbols (abfd, FALSE, (void **)&syms, &size);
-         if (symcount == 0) /* dynamic */
-            symcount = bfd_read_minisymbols (abfd, TRUE, (void **)&syms, &size);
-         assert(symcount >= 0);
-      }
-   }
-
-   /* Set up handler. */
-   sa.sa_handler   = NULL;
-   sa.sa_sigaction = debug_sigHandler;
-   sigemptyset(&sa.sa_mask);
-   sa.sa_flags     = SA_SIGINFO;
-
-   /* Attach signals. */
-   sigaction(SIGSEGV, &sa, &so);
-   if (so.sa_handler == SIG_IGN)
-      DEBUG("Unable to set up SIGSEGV signal handler.");
-   sigaction(SIGFPE, &sa, &so);
-   if (so.sa_handler == SIG_IGN)
-      DEBUG("Unable to set up SIGFPE signal handler.");
-   sigaction(SIGABRT, &sa, &so);
-   if (so.sa_handler == SIG_IGN)
-      DEBUG("Unable to set up SIGABRT signal handler.");
-   DEBUG("BFD backtrace catching enabled.");
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
-}
-
-
-/**
- * @brief Closes the SignalHandler for Linux.
- */
-static void debug_sigClose (void)
-{
-#if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
-   bfd_close( abfd );
-#endif /* HAS_LINUX && HAS_BFD && defined(DEBUGGING) */
-}

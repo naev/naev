@@ -5,8 +5,8 @@
   <y>-5683.691180</y>
  </pos>
  <GFX>
-  <space>H00.png</space>
-  <exterior>desertic.png</exterior>
+  <space>H00.webp</space>
+  <exterior>desertic.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>H</class>
   <population>1000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
@@ -26,11 +26,12 @@
   </services>
   <commodities/>
   <description>Magellan, named after the famous Earth explorer, is one of the Soromid's more recent terraforming ventures. The planet is arid and inhospitable, but work has begun to change the ecosphere and introduce weather systems that will support life. Support from the Soromid core is sketchy though, and the colonists here have to improvise a lot of the time.</description>
-  <bar>The spaceport bar is full of bedraggled colonists who are trying to get away from their hard everyday lives. Though a fairly unimpressive facility, it still beats the hab complexes that litter the surrounding desert. Magellan has a long way to go.</bar>
+  <bar>The spaceport bar is full of bedraggled colonists who are trying to get away from their hard everyday lives. Though a fairly unimpressive facility, it still beats the habitat complexes that litter the surrounding desert. Magellan has a long way to go.</bar>
  </general>
  <tech>
   <item>Systems Medium</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Missiles 1</item>
  </tech>
 </asset>

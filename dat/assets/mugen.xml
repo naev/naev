@@ -5,8 +5,8 @@
   <y>-1382.510592</y>
  </pos>
  <GFX>
-  <space>moon-J01.png</space>
-  <exterior>lava.png</exterior>
+  <space>moon-J01.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>J</class>
   <population>1254573</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

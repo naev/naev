@@ -2,24 +2,22 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-#if USE_OPENAL
+/** @cond */
+#include <math.h>
+#include <vorbis/vorbisfile.h>
+#include "SDL.h"
+#include "SDL_rwops.h"
+#include "SDL_thread.h"
 
+#include "naev.h"
+/** @endcond */
 
 #include "music_openal.h"
 
-#include <math.h>
-
-#include "SDL.h"
-#include "SDL_thread.h"
-#include "SDL_rwops.h"
-
-#include <vorbis/vorbisfile.h>
-
+#include "conf.h"
+#include "log.h"
 #include "music.h"
 #include "sound_openal.h"
-#include "naev.h"
-#include "log.h"
-#include "conf.h"
 
 
 /**
@@ -27,10 +25,6 @@
  */
 #define RG_PREAMP_DB       0.0
 
-
-/* Lock for OpenAL operations. */
-#define soundLock()        SDL_mutexP(sound_lock)
-#define soundUnlock()      SDL_mutexV(sound_lock)
 
 /* Lock for all state/cond operations. */
 #define musicLock()        SDL_mutexP(music_state_lock)
@@ -60,11 +54,6 @@ typedef enum music_state_e {
    MUSIC_STATE_FADEOUT,
    MUSIC_STATE_PLAYING,
    MUSIC_STATE_PAUSED,
-   /* Internal usage. */
-   MUSIC_STATE_LOADING,
-   MUSIC_STATE_STOPPING,
-   MUSIC_STATE_PAUSING,
-   MUSIC_STATE_RESUMING
 } music_state_t;
 
 
@@ -73,14 +62,13 @@ static SDL_Thread *music_player = NULL; /**< Music player thread. */
 /*
  * Playing buffers.
  */
-static int music_bufSize            = 32*1024; /**< Size of music playing buffer. */
+static const int music_bufSize      = SOUND_BUFFER_SIZE*1024; /**< Size of music playing buffer. */
 static char *music_buf              = NULL; /**< Music playing buffer. */
 
 
 /*
  * Locks.
  */
-extern SDL_mutex *sound_lock; /**< Global sound lock, used for all OpenAL calls. */
 static SDL_mutex *music_vorbis_lock = NULL; /**< Lock for vorbisfile operations. */
 static SDL_cond  *music_state_cond  = NULL; /**< Cond for thread to signal status updates. */
 static SDL_mutex *music_state_lock  = NULL; /**< Lock for music state. */
@@ -93,7 +81,6 @@ static int music_forced             = 0; /**< Whether or not music is force stop
  * saves the music to ram in this structure
  */
 typedef struct alMusic_ {
-   char name[64]; /**< Song name. */
    SDL_RWops *rw; /**< RWops file reading from. */
    OggVorbis_File stream; /**< Vorbis file stream. */
    vorbis_info* info; /**< Information of the stream. */
@@ -104,12 +91,24 @@ typedef struct alMusic_ {
 } alMusic;
 
 
+typedef struct MusicData_s {
+   music_state_t state;
+   int active; /* active buffer */
+   ALint alstate;
+   ALuint removed[2];
+   ALenum value;
+   ALfloat gain;
+   int fadein_start;
+   uint32_t fade, fade_timer;
+} MusicData;
+
+
 /*
  * song currently playing
  */
 static alMusic music_vorbis; /**< Current music. */
 static ALuint music_buffer[2]; /**< Front and back buffer. */
-ALuint music_source                    = 0; /**< Source associated to music. */
+static ALuint music_source = 0; /**< Source associated to music. */
 
 
 /*
@@ -122,12 +121,146 @@ static ALfloat music_vol_lin = 1.; /**< Current volume level (linear). */
 /*
  * prototypes
  */
-#ifdef HAVE_OV_READ_FILTER
 static void rg_filter( float **pcm, long channels, long samples, void *filter_param );
-#endif /* HAVE_OV_READ_FILTER */
 static void music_kill (void);
 static int music_thread( void* unused );
 static int stream_loadBuffer( ALuint buffer );
+
+
+/*
+ * Internal stuff.
+ */
+static int mal_stop( MusicData *m )
+{
+   /* Notify of stopped. */
+   if (music_state == MUSIC_STATE_IDLE)
+      return 0;
+   else {
+      soundLock();
+
+      /* Stop and remove buffers. */
+      alSourceStop( music_source );
+      alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &m->value );
+      if (m->value > 0)
+         alSourceUnqueueBuffers( music_source, m->value, m->removed );
+      /* Clear timer. */
+      m->fade_timer = 0;
+
+      /* Reset volume. */
+      alSourcef( music_source, AL_GAIN, music_vol );
+
+      al_checkErr();
+      soundUnlock();
+
+      music_state = MUSIC_STATE_IDLE;
+      if (!music_forced)
+         music_rechoose();
+   }
+   return 0;
+}
+static int mal_load( MusicData *m )
+{
+   int ret;
+
+   /* Load buffer and start playing. */
+   m->active = 0; /* load first buffer */
+   ret = stream_loadBuffer( music_buffer[m->active] );
+   soundLock();
+   alSourceQueueBuffers( music_source, 1, &music_buffer[m->active] );
+
+   /* Special case NULL file or error. */
+   if (ret < 0) {
+      soundUnlock();
+      return -1;
+   }
+   /* Force volume level. */
+   alSourcef( music_source, AL_GAIN, (m->fadein_start) ? 0. : music_vol );
+
+   /* Start playing. */
+   alSourcePlay( music_source );
+
+   /* Check for errors. */
+   al_checkErr();
+
+   soundUnlock();
+   /* Special case of a very short song. */
+   if (ret > 1) {
+      m->active = -1;
+      return 0;
+   }
+
+   /* Load second buffer. */
+   m->active = 1;
+   ret = stream_loadBuffer( music_buffer[m->active] );
+   if (ret < 0)
+      m->active = -1;
+   else {
+      soundLock();
+      alSourceQueueBuffers( music_source, 1, &music_buffer[m->active] );
+      /* Check for errors. */
+      al_checkErr();
+      soundUnlock();
+      m->active = 1 - m->active;
+   }
+   return 0;
+}
+static int mal_play( MusicData *m )
+{
+   /* Set appropriate state. */
+   if (music_state == MUSIC_STATE_PAUSED) {
+      soundLock();
+      alSourcePlay( music_source );
+      alSourcef( music_source, AL_GAIN, music_vol );
+      /* Check for errors. */
+      al_checkErr();
+      soundUnlock();
+   }
+   else if (music_state == MUSIC_STATE_FADEIN)
+      m->fade_timer = SDL_GetTicks() - MUSIC_FADEIN_DELAY;
+   else
+      mal_load( m );
+   /* Disable fadein. */
+   m->fadein_start = 0;
+   music_state = MUSIC_STATE_PLAYING;
+   return 0;
+}
+static int mal_fadeout( MusicData *m )
+{
+   if (music_state == MUSIC_STATE_IDLE)
+      return 0;
+   /* Set timer. */
+   music_state = MUSIC_STATE_FADEOUT;
+   m->fade_timer = SDL_GetTicks();
+   music_state = MUSIC_STATE_FADEOUT;
+   return 0;
+}
+static int mal_fadein( MusicData *m )
+{
+   if ((music_state == MUSIC_STATE_FADEIN) ||
+         (music_state == MUSIC_STATE_PLAYING))
+      return 0;
+   mal_load( m );
+   /* Set timer. */
+   m->fade_timer = SDL_GetTicks();
+   m->fadein_start = 1;
+   music_state = MUSIC_STATE_FADEIN;
+   return 0;
+}
+static int mal_pause( MusicData *m )
+{
+   (void) m;
+   if ((music_state == MUSIC_STATE_PLAYING) ||
+         (music_state == MUSIC_STATE_FADEIN)) {
+      soundLock();
+      alSourcePause( music_source );
+      /* Check for errors. */
+      al_checkErr();
+      soundUnlock();
+
+      music_state = MUSIC_STATE_PAUSED;
+   }
+   return 0;
+}
 
 
 /**
@@ -140,14 +273,8 @@ static int music_thread( void* unused )
    (void)unused;
 
    int ret;
-   int active = 0; /* active buffer */
-   ALint state;
-   ALuint removed[2];
-   ALenum value;
-   music_state_t cur_state;
-   ALfloat gain;
-   int fadein_start = 0;
-   uint32_t fade, fade_timer = 0;
+   MusicData m;
+   memset( &m, 0, sizeof(MusicData) );
 
    while (1) {
       /* Handle states. */
@@ -156,80 +283,31 @@ static int music_thread( void* unused )
       /* Handle new command. */
       switch (music_command) {
          case MUSIC_CMD_KILL:
-            if (music_state != MUSIC_STATE_IDLE)
-               music_state = MUSIC_STATE_STOPPING;
-            else
-               music_state = MUSIC_STATE_DEAD;
-
-            /* Does not clear command. */
-            break;
-
-         case MUSIC_CMD_STOP:
-            /* Notify of stopped. */
-            if (music_state == MUSIC_STATE_IDLE)
-               SDL_CondBroadcast( music_state_cond );
-            else
-               music_state = MUSIC_STATE_STOPPING;
-            break;
-
-         case MUSIC_CMD_PLAY:
-            /* Set appropriate state. */
-            if (music_state == MUSIC_STATE_PAUSING)
-               music_state = MUSIC_STATE_RESUMING;
-            else if (music_state == MUSIC_STATE_FADEIN)
-               fade_timer = SDL_GetTicks() - MUSIC_FADEIN_DELAY;
-            else
-               music_state = MUSIC_STATE_LOADING;
-            /* Disable fadein. */
-            fadein_start = 0;
-            /* Clear command. */
-            music_command = MUSIC_CMD_NONE;
+            mal_stop( &m );
+            music_state = MUSIC_STATE_DEAD;
             SDL_CondBroadcast( music_state_cond );
-            break;
+            musicUnlock();
+            return 0;
 
-         case MUSIC_CMD_FADEOUT:
-            /* Notify of stopped. */
-            if (music_state != MUSIC_STATE_IDLE) {
-               music_state = MUSIC_STATE_FADEOUT;
-               /* Set timer. */
-               fade_timer = SDL_GetTicks();
-            }
-            /* Clear command. */
-            music_command = MUSIC_CMD_NONE;
-            SDL_CondBroadcast( music_state_cond );
-            break;
-
-         case MUSIC_CMD_FADEIN:
-            if ((music_state == MUSIC_STATE_FADEIN) ||
-                  (music_state == MUSIC_STATE_PLAYING))
-               SDL_CondBroadcast( music_state_cond );
-            else {
-               music_state = MUSIC_STATE_LOADING;
-               /* Set timer. */
-               fade_timer = SDL_GetTicks();
-               fadein_start = 1;
-            }
-            /* Clear command. */
-            music_command = MUSIC_CMD_NONE;
-            break;
-
-         case MUSIC_CMD_PAUSE:
-            if (music_state == MUSIC_STATE_PAUSED)
-               SDL_CondBroadcast( music_state_cond );
-            else if ((music_state == MUSIC_STATE_PLAYING) ||
-                  (music_state == MUSIC_STATE_FADEIN))
-               music_state = MUSIC_STATE_PAUSING;
-            music_command = MUSIC_CMD_NONE;
-            break;
+         case MUSIC_CMD_STOP:    mal_stop( &m ); break;
+         case MUSIC_CMD_PLAY:    mal_play( &m ); break;
+         case MUSIC_CMD_FADEOUT: mal_fadeout( &m ); break;
+         case MUSIC_CMD_FADEIN:  mal_fadein( &m ); break;
+         case MUSIC_CMD_PAUSE:   mal_pause( &m ); break;
 
          case MUSIC_CMD_NONE:
             break;
       }
-      cur_state = music_state;
+      m.state = music_state;
+      if (music_command != MUSIC_CMD_NONE) {
+         music_command = MUSIC_CMD_NONE;
+         SDL_CondBroadcast( music_state_cond );
+      }
+
       musicUnlock();
 
       /* Main processing loop. */
-      switch (cur_state) {
+      switch (m.state) {
          /* Basically send a message that thread is up and running. */
          case MUSIC_STATE_STARTUP:
             musicLock();
@@ -238,151 +316,22 @@ static int music_thread( void* unused )
             musicUnlock();
             break;
 
-         /* We died. */
-         case MUSIC_STATE_DEAD:
-            musicLock();
-            music_state = MUSIC_STATE_DEAD;
-            SDL_CondBroadcast( music_state_cond );
-            musicUnlock();
-            return 0;
-            break;
-
          /* Delays at the end. */
+         case MUSIC_STATE_DEAD:
          case MUSIC_STATE_PAUSED:
          case MUSIC_STATE_IDLE:
-            break;
-
-         /* Resumes the paused song. */
-         case MUSIC_STATE_RESUMING:
-            soundLock();
-            alSourcePlay( music_source );
-            alSourcef( music_source, AL_GAIN, music_vol );
-            /* Check for errors. */
-            al_checkErr();
-            soundUnlock();
-
-            musicLock();
-            music_state = MUSIC_STATE_PLAYING;
-            SDL_CondBroadcast( music_state_cond );
-            musicUnlock();
-            break;
-
-         /* Pause the song. */
-         case MUSIC_STATE_PAUSING:
-            soundLock();
-            alSourcePause( music_source );
-            /* Check for errors. */
-            al_checkErr();
-            soundUnlock();
-
-            musicLock();
-            music_state = MUSIC_STATE_PAUSED;
-            SDL_CondBroadcast( music_state_cond );
-            musicUnlock();
-            break;
-
-         /* Stop song setting to IDLE. */
-         case MUSIC_STATE_STOPPING:
-            soundLock();
-
-            /* Stop and remove buffers. */
-            alSourceStop( music_source );
-            alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &value );
-            if (value > 0)
-               alSourceUnqueueBuffers( music_source, value, removed );
-            /* Clear timer. */
-            fade_timer = 0;
-
-            /* Reset volume. */
-            alSourcef( music_source, AL_GAIN, music_vol );
-
-            soundUnlock();
-
-            musicLock();
-            music_state = MUSIC_STATE_IDLE;
-            SDL_CondBroadcast( music_state_cond );
-            if (!music_forced)
-               music_rechoose();
-            musicUnlock();
-            break;
-
-         /* Load the song. */
-         case MUSIC_STATE_LOADING:
-            /* Load buffer and start playing. */
-            active = 0; /* load first buffer */
-            ret = stream_loadBuffer( music_buffer[active] );
-            soundLock();
-            alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
-
-            /* Special case NULL file or error. */
-            if (ret < 0) {
-               soundUnlock();
-               /* Force state to stopped. */
-               musicLock();
-               music_state = MUSIC_STATE_IDLE;
-               SDL_CondBroadcast( music_state_cond );
-               if (!music_forced)
-                  music_rechoose();
-               musicUnlock();
-               break;
-            }
-            /* Force volume level. */
-            alSourcef( music_source, AL_GAIN, (fadein_start) ? 0. : music_vol );
-
-            /* Start playing. */
-            alSourcePlay( music_source );
-
-            /* Check for errors. */
-            al_checkErr();
-
-            soundUnlock();
-            /* Special case of a very short song. */
-            if (ret > 1) {
-               active = -1;
-
-               musicLock();
-               if (fadein_start)
-                  music_state = MUSIC_STATE_FADEIN;
-               else
-                  music_state = MUSIC_STATE_PLAYING;
-               SDL_CondBroadcast( music_state_cond );
-               musicUnlock();
-               break;
-            }
-
-            /* Load second buffer. */
-            active = 1;
-            ret = stream_loadBuffer( music_buffer[active] );
-            if (ret < 0)
-               active = -1;
-            else {
-               soundLock();
-               alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
-               /* Check for errors. */
-               al_checkErr();
-               soundUnlock();
-               active = 1 - active;
-            }
-
-            musicLock();
-            if (fadein_start)
-               music_state = MUSIC_STATE_FADEIN;
-            else
-               music_state = MUSIC_STATE_PLAYING;
-            SDL_CondBroadcast( music_state_cond );
-            musicUnlock();
             break;
 
          /* Fades in the music. */
          case MUSIC_STATE_FADEOUT:
          case MUSIC_STATE_FADEIN:
             /* See if must still fade. */
-            fade = SDL_GetTicks() - fade_timer;
-            if (cur_state == MUSIC_STATE_FADEIN) {
-               if (fade < MUSIC_FADEIN_DELAY) {
-                  gain = (ALfloat)fade / (ALfloat)MUSIC_FADEIN_DELAY;
+            m.fade = SDL_GetTicks() - m.fade_timer;
+            if (m.state == MUSIC_STATE_FADEIN) {
+               if (m.fade < MUSIC_FADEIN_DELAY) {
+                  m.gain = (ALfloat)m.fade / (ALfloat)MUSIC_FADEIN_DELAY;
                   soundLock();
-                  alSourcef( music_source, AL_GAIN, gain*music_vol );
+                  alSourcef( music_source, AL_GAIN, m.gain*music_vol );
                   /* Check for errors. */
                   al_checkErr();
                   soundUnlock();
@@ -402,37 +351,34 @@ static int music_thread( void* unused )
                   musicUnlock();
                }
             }
-            else if (cur_state == MUSIC_STATE_FADEOUT) {
-               if (fade < MUSIC_FADEOUT_DELAY) {
-                  gain = 1. - (ALfloat)fade / (ALfloat)MUSIC_FADEOUT_DELAY;
+            else if (m.state == MUSIC_STATE_FADEOUT) {
+               if (m.fade < MUSIC_FADEOUT_DELAY) {
+                  m.gain = 1. - (ALfloat)m.fade / (ALfloat)MUSIC_FADEOUT_DELAY;
                   soundLock();
-                  alSourcef( music_source, AL_GAIN, gain*music_vol );
+                  alSourcef( music_source, AL_GAIN, m.gain*music_vol );
                   /* Check for errors. */
                   al_checkErr();
                   soundUnlock();
                }
                else {
-                  /* Music should stop. */
-                  musicLock();
-                  music_state = MUSIC_STATE_STOPPING;
-                  musicUnlock();
+                  mal_stop( &m );
                   break;
                }
             }
-
-            /* Purpose fallthrough. */
+            /* fallthrough */
 
          /* Play the song if needed. */
          case MUSIC_STATE_PLAYING:
             /* Special case where file has ended. */
-            if (active < 0) {
+            if (m.active < 0) {
                soundLock();
-               alGetSourcei( music_source, AL_SOURCE_STATE, &state );
+               alGetSourcei( music_source, AL_SOURCE_STATE, &m.alstate );
 
-               if (state == AL_STOPPED) {
-                  alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &value );
-                  if (value > 0)
-                     alSourceUnqueueBuffers( music_source, value, removed );
+               if (m.alstate == AL_STOPPED) {
+                  alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &m.value );
+                  if (m.value > 0)
+                     alSourceUnqueueBuffers( music_source, m.value, m.removed );
+                  al_checkErr();
                   soundUnlock();
 
                   musicLock();
@@ -443,24 +389,26 @@ static int music_thread( void* unused )
                   break;
                }
 
+               al_checkErr();
                soundUnlock();
 
                break;
             }
 
+            al_checkErr();
             soundLock();
 
             /* See if needs another buffer set. */
-            alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &state );
-            if (state > 0) {
+            alGetSourcei( music_source, AL_BUFFERS_PROCESSED, &m.alstate );
+            if (m.alstate > 0) {
                /* refill active buffer */
-               alSourceUnqueueBuffers( music_source, 1, removed );
-               ret = stream_loadBuffer( music_buffer[active] );
+               alSourceUnqueueBuffers( music_source, 1, m.removed );
+               ret = stream_loadBuffer( music_buffer[m.active] );
                if (ret < 0)
-                  active = -1;
+                  m.active = -1;
                else {
-                  alSourceQueueBuffers( music_source, 1, &music_buffer[active] );
-                  active = 1 - active;
+                  alSourceQueueBuffers( music_source, 1, &music_buffer[m.active] );
+                  m.active = 1 - m.active;
                }
             }
 
@@ -479,7 +427,6 @@ static int music_thread( void* unused )
 }
 
 
-#ifdef HAVE_OV_READ_FILTER
 /**
  * @brief This is the filter function for the decoded Ogg Vorbis stream.
  *
@@ -498,8 +445,8 @@ static void rg_filter( float **pcm, long channels, long samples, void *filter_pa
 
    /* Apply the gain, and any limiting necessary */
    if (scale_factor > max_scale) {
-      for(i = 0; i < channels; i++)
-         for(j = 0; j < samples; j++) {
+      for (i = 0; i < channels; i++)
+         for (j = 0; j < samples; j++) {
             cur_sample = pcm[i][j] * scale_factor;
             /*
              * This is essentially the scaled hard-limiting algorithm
@@ -514,11 +461,10 @@ static void rg_filter( float **pcm, long channels, long samples, void *filter_pa
          }
    }
    else if (scale_factor > 0.0)
-      for(i = 0; i < channels; i++)
-         for(j = 0; j < samples; j++)
+      for (i = 0; i < channels; i++)
+         for (j = 0; j < samples; j++)
             pcm[i][j] *= scale_factor;
 }
-#endif /* HAVE_OV_READ_FILTER */
 
 
 /**
@@ -541,28 +487,16 @@ static int stream_loadBuffer( ALuint buffer )
    ret  = 0;
    size = 0;
    while (size < music_bufSize) { /* file up the entire data buffer */
-
-#ifdef HAVE_OV_READ_FILTER
       result = ov_read_filter(
             &music_vorbis.stream,   /* stream */
             &music_buf[size],       /* data */
             music_bufSize - size,   /* amount to read */
-            VORBIS_ENDIAN,          /* big endian? */
+            (SDL_BYTEORDER == SDL_BIG_ENDIAN),
             2,                      /* 16 bit */
             1,                      /* signed */
             &section,               /* current bitstream */
             rg_filter,              /* filter function */
             &music_vorbis );        /* filter parameter */
-#else /* HAVE_OV_READ_FILTER */
-      result = ov_read(
-            &music_vorbis.stream,   /* stream */
-            &music_buf[size],       /* data */
-            music_bufSize - size,   /* amount to read */
-            VORBIS_ENDIAN,          /* big endian? */
-            2,                      /* 16 bit */
-            1,                      /* signed */
-            &section );             /* current bitstream */
-#endif /* HAVE_OV_READ_FILTER */
 
       /* End of file. */
       if (result == 0) {
@@ -576,13 +510,13 @@ static int stream_loadBuffer( ALuint buffer )
       /* Hole error. */
       else if (result == OV_HOLE) {
          musicVorbisUnlock();
-         WARN("OGG: Vorbis hole detected in music!");
+         WARN(_("OGG: Vorbis hole detected in music!"));
          return 0;
       }
       /* Bad link error. */
       else if (result == OV_EBADLINK) {
          musicVorbisUnlock();
-         WARN("OGG: Invalid stream section or corrupt link in music!");
+         WARN(_("OGG: Invalid stream section or corrupt link in music!"));
          return -1;
       }
 
@@ -595,6 +529,7 @@ static int stream_loadBuffer( ALuint buffer )
    soundLock();
    alBufferData( buffer, music_vorbis.format,
          music_buf, size, music_vorbis.info->rate );
+   al_checkErr();
    soundUnlock();
 
    return ret;
@@ -615,12 +550,12 @@ int music_al_init (void)
    music_vorbis.rw   = NULL; /* indication it's not loaded */
 
    /* Create the buffer. */
-   music_bufSize     = conf.al_bufsize * 1024;
    music_buf         = malloc( music_bufSize );
 
    soundLock();
 
-   /* music_source created in sound_al_init. */
+   /* Allocate source for music. */
+   alGenSources( 1, &music_source );
 
    /* Generate buffers and sources. */
    alGenBuffers( 2, music_buffer );
@@ -645,9 +580,7 @@ int music_al_init (void)
    musicLock();
    music_state  = MUSIC_STATE_STARTUP;
    music_player = SDL_CreateThread( music_thread,
-#if SDL_VERSION_ATLEAST(1,3,0)
          "music_thread",
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
          NULL );
    SDL_CondWait( music_state_cond, music_state_lock );
    musicUnlock();
@@ -674,9 +607,7 @@ void music_al_exit (void)
 
    soundUnlock();
 
-   /* Free the buffer. */
-   if (music_buf != NULL)
-      free(music_buf);
+   free(music_buf);
    music_buf = NULL;
 
    /* Destroy the mutex. */
@@ -698,14 +629,11 @@ int music_al_load( const char* name, SDL_RWops *rw )
 
    musicVorbisLock();
 
-   /* set the new name */
-   strncpy( music_vorbis.name, name, 64 );
-
    /* Load new ogg. */
    music_vorbis.rw = rw;
    if (ov_open_callbacks( music_vorbis.rw, &music_vorbis.stream,
             NULL, 0, sound_al_ovcall ) < 0) {
-      WARN("Song '%s' does not appear to be a vorbis bitstream.", name);
+      WARN(_("Song '%s' does not appear to be a Vorbis bitstream."), name);
       musicUnlock();
       return -1;
    }
@@ -727,7 +655,7 @@ int music_al_load( const char* name, SDL_RWops *rw )
    music_vorbis.rg_scale_factor = pow(10.0, (track_gain_db + RG_PREAMP_DB)/20);
    music_vorbis.rg_max_scale = 1.0 / track_peak;
    if (!rg)
-      DEBUG("Song '%s' has no replaygain information.", name );
+      DEBUG(_("Song '%s' has no replaygain information."), name );
 
    /* Set the format */
    if (music_vorbis.info->channels == 1)
@@ -751,13 +679,10 @@ void music_al_free (void)
    if (music_state != MUSIC_STATE_IDLE) {
       music_command = MUSIC_CMD_STOP;
       music_forced  = 1;
-      while (1) {
-         SDL_CondWait( music_state_cond, music_state_lock );
-         if (music_state == MUSIC_STATE_IDLE) {
-            music_forced = 0;
-            break;
-         }
-      }
+
+      SDL_CondWait( music_state_cond, music_state_lock );
+      if (music_state == MUSIC_STATE_IDLE)
+         music_forced = 0;
    }
    musicUnlock();
 
@@ -826,11 +751,7 @@ void music_al_play (void)
    musicLock();
 
    music_command = MUSIC_CMD_FADEIN;
-   while (1) {
-      SDL_CondWait( music_state_cond, music_state_lock );
-      if (music_isPlaying())
-         break;
-   }
+   SDL_CondWait( music_state_cond, music_state_lock );
 
    musicUnlock();
 }
@@ -844,12 +765,7 @@ void music_al_stop (void)
    musicLock();
 
    music_command = MUSIC_CMD_FADEOUT;
-   while (1) {
-      SDL_CondWait( music_state_cond, music_state_lock );
-      if ((music_state == MUSIC_STATE_IDLE) ||
-            (music_state == MUSIC_STATE_FADEOUT))
-         break;
-   }
+   SDL_CondWait( music_state_cond, music_state_lock );
 
    musicUnlock();
 }
@@ -863,12 +779,7 @@ void music_al_pause (void)
    musicLock();
 
    music_command = MUSIC_CMD_PAUSE;
-   while (1) {
-      SDL_CondWait( music_state_cond, music_state_lock );
-      if ((music_state == MUSIC_STATE_IDLE) ||
-            (music_state == MUSIC_STATE_PAUSED))
-         break;
-   }
+   SDL_CondWait( music_state_cond, music_state_lock );
 
    musicUnlock();
 }
@@ -882,11 +793,7 @@ void music_al_resume (void)
    musicLock();
 
    music_command = MUSIC_CMD_PLAY;
-   while (1) {
-      SDL_CondWait( music_state_cond, music_state_lock );
-      if (music_isPlaying())
-         break;
-   }
+   SDL_CondWait( music_state_cond, music_state_lock );
 
    musicUnlock();
 }
@@ -908,7 +815,7 @@ void music_al_setPos( double sec )
    musicVorbisUnlock();
 
    if (ret != 0)
-      WARN("Unable to seek vorbis file.");
+      WARN(_("Unable to seek Vorbis file."));
 }
 
 
@@ -922,8 +829,6 @@ int music_al_isPlaying (void)
    musicLock();
 
    if ((music_state == MUSIC_STATE_PLAYING) ||
-         (music_state == MUSIC_STATE_LOADING) ||
-         (music_state == MUSIC_STATE_RESUMING) ||
          (music_state == MUSIC_STATE_FADEIN) ||
          (music_state == MUSIC_STATE_FADEOUT) ||
          (music_state == MUSIC_STATE_PAUSED))
@@ -947,26 +852,11 @@ static void music_kill (void)
 
    music_command = MUSIC_CMD_KILL;
    music_forced  = 1;
-   while (1) {
-      ret = SDL_CondWaitTimeout( music_state_cond, music_state_lock, 3000 );
+   ret = SDL_CondWaitTimeout( music_state_cond, music_state_lock, 3000 );
 
-      /* Timed out, just slaughter the thread. */
-      if (ret == SDL_MUTEX_TIMEDOUT) {
-#if SDL_VERSION_ATLEAST(2,0,0)
-         WARN("Music thread did not exit when asked, ignoring...");
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
-         WARN("Music thread did not exit when asked, slaughtering...");
-         SDL_KillThread( music_player );
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
-         break;
-      }
-
-      /* Ended properly, breaking. */
-      if (music_state == MUSIC_STATE_DEAD)
-         break;
-   }
+   /* Timed out, just slaughter the thread. */
+   if (ret == SDL_MUTEX_TIMEDOUT)
+      WARN(_("Music thread did not exit when asked, ignoring..."));
 
    musicUnlock();
 }
-
-#endif /* USE_OPENAL */

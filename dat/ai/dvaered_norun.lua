@@ -1,4 +1,4 @@
-include("dat/ai/dvaered.lua")
+require "ai.dvaered"
 
 mem.armour_run = 0
 
@@ -6,6 +6,6 @@ function donothing ()
     ai.brake()
 end
 
-function idle () 
-    ai.pushtask("donothing") 
+function idle ()
+    ai.pushtask("donothing")
 end

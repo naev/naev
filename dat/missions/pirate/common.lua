@@ -7,17 +7,26 @@
 
 
 --[[
--- @brief Gets a random pirate lord portrait name.
---
--- @return A random pirete lord portrait name.
+   @brief Increases the reputation limit of the player.
 --]]
-function pir_getLordRandomPortrait ()
-   local portraits = {
-      "pirate/pirate1",
-      "pirate/pirate2",
-      "pirate/pirate3",
-      "pirate/pirate4",
-   }
+function pir_modReputation( increment )
+   local cur = var.peek("_fcap_pirate") or 30
+   var.push( "_fcap_pirate", math.min(cur+increment, 100) )
+end
 
-   return portraits[ rnd.rnd( 1, #portraits ) ]
+
+--[[
+   @brief Increases the decay floor (how low reputation can decay to).
+--]]
+function pir_modDecayFloor( n )
+   local floor = var.peek("_ffloor_decay_pirate")
+   if floor == nil then floor = -20 end
+   floor = math.min(floor + n, -1)
+   var.push("_ffloor_decay_pirate", floor)
+end
+
+
+function pir_addMiscLog( text )
+   shiplog.create("pir_misc", _("Miscellaneous"), _("Pirate"))
+   shiplog.append("pir_misc", text)
 end

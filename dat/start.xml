@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Start>
  <name>Sea of Darkness</name>
  <player>
@@ -16,12 +16,4 @@
   <stp>3726</stp>
   <stu>2871</stu>
  </date>
- <tutorial>
-  <system>
-   <name>Mohawk</name>
-   <x>0</x>
-   <y>0</y>
-  </system>
-  <event>Tutorial</event>
- </tutorial>
 </Start>

@@ -30,9 +30,8 @@ void window_addText( const unsigned int wid,
       glFont* font, const glColour* colour, const char* string ); /* font, colour and actual text */
 
 /* Misc functions. */
-void window_modifyText( const unsigned int wid,
-      const char* name, const char* newstring );
-
+void window_modifyText( const unsigned int wid, const char *name, const char *newstring );
+int  window_getTextHeight( const unsigned int wid, const char *name );
 
 #endif /* WGT_TEXT_H */
 

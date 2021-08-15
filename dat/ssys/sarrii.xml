@@ -12,23 +12,24 @@
  </pos>
  <assets>
   <asset>Sarrii Station</asset>
+  <asset>Virtual Independent Trader Area</asset>
   <asset>Virtual Trader Area</asset>
   <asset>Wayline</asset>
   <asset>Wayline m1</asset>
-  <asset>Wayling m2</asset>
+  <asset>Wayline m2</asset>
  </assets>
  <jumps>
   <jump target="Felzen">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Palin">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Peter">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

@@ -5,8 +5,8 @@
   <y>-4794.935802</y>
  </pos>
  <GFX>
-  <space>station-commerce2.png</space>
-  <exterior>station01.png</exterior>
+  <space>station-commerce2.webp</space>
+  <exterior>station01.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,12 +16,13 @@
  <general>
   <class>0</class>
   <population>1000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
+   <commodity/>
   </services>
   <commodities/>
-  <description>As everyone knows, the Soromid are exporters of genetic treatment services. People from all over the galaxy travel to Soromid space to have their natural abilities enhanced, diseases cured or appearances improved. All of these people need to be treated somewhere, and this is one such place. Soromid Wards Alpha is a massive medical facility, the largest of all the Soromid Wards. Thousands of clients can be treated here at any one time. Most of the station's volume is taken up by personal treatment tanks, where clients spend anything from a week to months in an artificial coma while their genetic code is rewritten.</description>
+  <description>As everyone knows, the Soromid are exporters of genetic treatment services. People from all over the galaxy travel to Soromid space to have their natural abilities enhanced, diseases cured or appearances improved. All of these people need to be treated somewhere, and this is one such place. Soromid Wards Alpha is a massive medical facility, the largest of all the Soromid Wards. Thousands of clients can be treated here at any one time. Most of the station's volume is taken up by personal treatment tanks, where clients spend anywhere from a 5 to 65 decaperiods in an artificial coma while their genetic code is rewritten.</description>
  </general>
 </asset>

@@ -1,0 +1,26 @@
+"DepotBuildConfig"
+{
+	// Set your assigned depot ID here
+	"DepotID" "598534"
+
+	// include all files recursivley
+  "FileMapping"
+  {
+  	// This can be a full path, or a path relative to ContentRoot
+    "LocalPath" "./win64/*"
+    
+    // This is a path relative to the install folder of your game
+    "DepotPath" "."
+    
+    // If LocalPath contains wildcards, setting this means that all
+    // matching files within subdirectories of LocalPath will also
+    // be included.
+    "recursive" "1"
+  }
+
+	// but exclude all symbol files  
+	// This can be a full path, or a path relative to ContentRoot
+  "FileExclusion" "*.x64"
+  "FileExclusion" "*.x32"
+  "FileExclusion" "*.so"
+}

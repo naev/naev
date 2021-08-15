@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="S&amp;K Medium Combat Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>medium</size>
+  <mass>140</mass>
+  <price>360000</price>
+  <description>Designed for corvettes and similarly-sized vessels, Schafer &amp; Kane's medium combat plating provides ample protection utilizing the latest in defensive materials.</description>
+  <gfx_store>combat_hull_m.webp</gfx_store>
+  <priority>3</priority>
+ </general>
+ <specific type="modification">
+  <cargo>12</cargo>
+  <absorb>15</absorb>
+  <armour>320</armour>
+  <heat_dissipation>10</heat_dissipation>
+ </specific>
+</outfit>

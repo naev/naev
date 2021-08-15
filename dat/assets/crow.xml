@@ -5,8 +5,8 @@
   <y>3893.363862</y>
  </pos>
  <GFX>
-  <space>M07.png</space>
-  <exterior>forest.png</exterior>
+  <space>M07.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,12 +16,13 @@
  <general>
   <class>M</class>
   <population>450000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
    <shipyard/>
   </services>
@@ -35,6 +36,7 @@
   <item>Engines Medium</item>
   <item>Engines Cargo</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>Heavy Weapons 1</item>
   <item>Heavy Weapons 2</item>
@@ -42,10 +44,10 @@
   <item>High Tech Upgrades 1</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
-  <item>Star Maps</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
   <item>Bulk Trade Ships</item>
   <item>Light Civilian Combat Ships</item>
+  <item>Soromid Elite Outfits</item>
  </tech>
 </asset>

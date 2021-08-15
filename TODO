@@ -1,50 +1,25 @@
-
+For live issue tracking see here: https://github.com/naev/naev/issues/
+For live release tracking see here: https://github.com/naev/naev/projects/
 
    VITAL
 
-   *) Asteroids
    *) More missions
-       *) FLF Nebula Campaign
-       *) Space Trader Missions
-       *) Misc Empire Guard missions
-       *) Pirate Missions
-       *) FLF Missions
 
 
    MAJOR
 
-   *) Escorts available for hire
-   *) Better AI
-      *) boids ship fleet movement (have them behave like fleets)
    *) Simplify controls
       *) Emacs-style bindings
       *) Combine similar commands into one
-      *) Short cut keys for buttons in toolkit windows like land
 
 
    MINOR
 
-   *) Hybrid ships
-      *) Start out with X skillpoints that get spread out by use, use fast at first
-      *) Can't use normal gear
-      *) very rare
-      *) random mutation for cloaking/displacement abilities
    *) Graphic improvements
-      *) have ships flying in nebula leave traces
-      *) missile smoke
-      *) more special effects
-      *) cloaking effects
       *) fancy displacement effects for some ships
-   *) Dynamic Politics - Faction wide AI
    *) Allow player to create faction and control fleets
-   *) Allow subsystems to get damage
-   *) Pilot titles
-      *) would usually indicate changes on the base ship equipment
-   *) Radar improvements
-      *) non-linear - see alot more data then currently possible
+   *) Minimap/Radar improvements
       *) objects always in sight (depending on resolution)
-   *) Allow creating collision masks to make collision more realistic.
-   *) Improve font system to handle unicode
    *) Different optimization strategies
       *) Optimize for CPU/Memory (different levels)
       *) Optimize cache for loading

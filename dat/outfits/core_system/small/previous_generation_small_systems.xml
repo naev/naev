@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Previous Generation Small Systems">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>small</size>
+  <mass>18</mass>
+  <price>0</price>
+  <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
+  <gfx_store>apu.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>10</cpu_max>
+  <energy>100</energy>
+  <energy_regen>10</energy_regen>
+  <shield>110</shield>
+  <shield_regen>4</shield_regen>
+ </specific>
+</outfit>

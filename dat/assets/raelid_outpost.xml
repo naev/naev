@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Raelid Outpost">
  <pos>
-  <x>3521.076561</x>
-  <y>-4727.509766</y>
+  <x>3598.832090</x>
+  <y>-4493.722479</y>
  </pos>
  <GFX>
-  <space>002.png</space>
-  <exterior>station02.png</exterior>
+  <space>002.webp</space>
+  <exterior>station02.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>3000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -33,6 +33,7 @@
   <item>Engines Medium</item>
   <item>Kinetic 1</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Missiles 1</item>
  </tech>
 </asset>

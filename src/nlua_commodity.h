@@ -7,9 +7,8 @@
 #  define NLUA_COMMODITY_H
 
 
-#include <lua.h>
-
-#include "economy.h"
+#include "commodity.h"
+#include "nlua.h"
 
 
 #define COMMODITY_METATABLE   "commodity" /**< Commodity metatable identifier. */
@@ -18,7 +17,7 @@
 /*
  * Library loading
  */
-int nlua_loadCommodity( lua_State *L, int readonly );
+int nlua_loadCommodity( nlua_env env );
 
 /*
  * Commodity operations

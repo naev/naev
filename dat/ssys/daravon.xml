@@ -16,6 +16,8 @@
   <asset>Eclipse Station</asset>
   <asset>Vilati Vilata</asset>
   <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Independent Trader Area</asset>
+  <asset>Virtual Independent Trader Area</asset>
   <asset>Virtual Trader Area</asset>
   <asset>Virtual Trader Area</asset>
  </assets>
@@ -30,11 +32,11 @@
   </jump>
   <jump target="Perhelion">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Pudas">
    <pos x="-8387.765035" y="-20971.033465"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

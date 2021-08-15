@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unidiff name="collective_dead">
+ <system name="C-00">
+  <asset name="S00000">remove</asset>
+  <asset name="S23001">remove</asset>
+  <asset name="S49588">remove</asset>
+ </system>
+ <system name="C-14">
+  <asset name="S49281">remove</asset>
+  <asset name="S49335">remove</asset>
+ </system>
+ <system name="C-28">
+  <asset name="S00018">remove</asset>
+  <asset name="S00522">remove</asset>
+  <asset name="S00653">remove</asset>
+  <asset name="S38729">remove</asset>
+ </system>
+ <system name="C-59">
+  <asset name="S13024">remove</asset>
+  <asset name="S72288">remove</asset>
+  <asset name="S72839">remove</asset>
+ </system>
+ <system name="C-43">
+  <asset name="S23491">remove</asset>
+  <asset name="S58309">remove</asset>
+  <asset name="S91456">remove</asset>
+ </system>
+ <tech name="Heavy Civilian Combat Ships">
+  <add>__Collective</add>
+ </tech>
+ <faction name="Collective">
+  <invisible />
+ </faction>
+</unidiff>
+

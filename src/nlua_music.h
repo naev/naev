@@ -8,13 +8,13 @@
 #  define NLUA_MUSIC_H
 
 
-#include <lua.h>
+#include "nlua.h"
 
 
 /*
  * Lua control
  */
-int nlua_loadMusic( lua_State *L, int read_only );
+int nlua_loadMusic( nlua_env env );
 
 
 #endif /* NLUA_MUSIC_H */

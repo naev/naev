@@ -1,18 +1,31 @@
---[[ 
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Kidnapped">
+  <trigger>enter</trigger>
+  <chance>15</chance>
+  <cond>player.misnDone("Kidnapped") == false and player.misnActive("Kidnapped") == false and system.cur() == system.get("Arcturus") and player.numOutfit("Mercenary License") &gt; 0</cond>
+  <notes>
+   <campaign>Kidnapping</campaign>
+   <tier>3</tier>
+  </notes>
+ </event>
+--]]
+--[[
 --Event for kidnapped mission.
 --]]
 
 --Create Mom and Dad in their spaceship, and have them come from the planet Brooks in Arcturus system, following the player.
 function create ()
-    panma = pilot.add("Civilian Llama", "civilian", planet.get("Brooks"))[1]
+    local pnt = planet.get("Brooks")
+    panma = pilot.add( "Llama", "Independent", pnt )
     panma:control()
     panma:follow(player.pilot())
     hook.pilot(panma, "jump", "finish")
     hook.pilot(panma, "death", "finish")
     hook.land("finish")
     hook.jumpout("finish")
-    
-    yohail = hook.timer( 2000., "hailme" );
+
+    yohail = hook.timer( 2.0, "hailme" );
 end
 
 --Pa and Ma are hailing the player!

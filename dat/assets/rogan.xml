@@ -5,8 +5,8 @@
   <y>-13921.738082</y>
  </pos>
  <GFX>
-  <space>H03.png</space>
-  <exterior>oceanic.png</exterior>
+  <space>H03.webp</space>
+  <exterior>oceanic.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -16,12 +16,13 @@
  <general>
   <class>H</class>
   <population>250000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
    <bar/>
    <missions/>
+   <commodity/>
    <outfits/>
   </services>
   <commodities/>
@@ -34,12 +35,13 @@
   <item>Hulls Medium</item>
   <item>Kinetic 1</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>High Tech Upgrades 1</item>
   <item>High Tech Upgrades 2</item>
   <item>Missiles 2</item>
-  <item>Star Maps</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
+  <item>Empire Elite Outfits</item>
  </tech>
 </asset>

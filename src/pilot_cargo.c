@@ -10,14 +10,21 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "pilot_cargo.h"
 
-#include "naev.h"
-
-#include "log.h"
+#include "array.h"
 #include "economy.h"
 #include "gui.h"
+#include "log.h"
 
+
+/* Private common implementation */
+static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
+      int quantity, unsigned int id );
 
 /* ID Generators. */
 static unsigned int mission_cargo_id = 0; /**< ID generator for special mission cargo.
@@ -29,16 +36,17 @@ static unsigned int mission_cargo_id = 0; /**< ID generator for special mission 
 /**
  * @brief Gets how many of the commodity the player.p has.
  *
- * @param commodityname Commodity to check how many the player.p owns.
+ * @param pilot Pilot to check.
+ * @param cargo Commodity to check how many the player.p owns.
  * @return The number of commodities owned matching commodityname.
  */
-int pilot_cargoOwned( Pilot* pilot, const char* commodityname )
+int pilot_cargoOwned( const Pilot* pilot, const Commodity* cargo )
 {
    int i;
 
-   for (i=0; i<pilot->ncommodities; i++)
+   for (i=0; i<array_size(pilot->commodities); i++)
       if (!pilot->commodities[i].id &&
-            strcmp(commodityname, pilot->commodities[i].commodity->name)==0)
+            strcmp(cargo->name, pilot->commodities[i].commodity->name)==0)
          return pilot->commodities[i].quantity;
    return 0;
 }
@@ -50,7 +58,7 @@ int pilot_cargoOwned( Pilot* pilot, const char* commodityname )
  *    @param p Pilot to get the free space of.
  *    @return Free cargo space on pilot.
  */
-int pilot_cargoFree( Pilot* p )
+int pilot_cargoFree( const Pilot* p )
 {
    return p->cargo_free;
 }
@@ -67,32 +75,62 @@ int pilot_cargoFree( Pilot* p )
  */
 int pilot_cargoMove( Pilot* dest, Pilot* src )
 {
-   /* Nothing to copy, success! */
-   if (src->ncommodities == 0)
-      return 0;
+   int i;
 
    /* Check if it fits. */
    if (pilot_cargoUsed(src) > pilot_cargoFree(dest)) {
-      WARN("Unable to copy cargo over from pilot '%s' to '%s'", src->name, dest->name );
+      WARN(_("Unable to copy cargo over from pilot '%s' to '%s'. Leaving cargo as is."), src->name, dest->name );
       return -1;
    }
 
-   /* Allocate new space. */
-   dest->ncommodities += src->ncommodities;
-   dest->commodities   = realloc( dest->commodities,
-         sizeof(PilotCommodity)*dest->ncommodities);
-
    /* Copy over. */
-   memmove( &dest->commodities[0], &src->commodities[0],
-         sizeof(PilotCommodity) * src->ncommodities);
+   for (i=0; i<array_size(src->commodities); i++)
+      pilot_cargoAddNeglectingStats( dest, src->commodities[i].commodity,
+            src->commodities[i].quantity, src->commodities[i].id );
 
    /* Clean src. */
-   if (src->commodities != NULL)
-      free(src->commodities);
-   src->ncommodities = 0;
+   array_free(src->commodities);
    src->commodities  = NULL;
 
    return 0;
+}
+
+
+/**
+ * @brief Adds cargo to the pilot's "commodities" array only.
+ *
+ *    @param pilot Pilot to add cargo to.
+ *    @param cargo Cargo to add.
+ *    @param quantity Quantity to add.
+ *    @param id Mission ID to add (0 is none).
+ */
+static int pilot_cargoAddNeglectingStats( Pilot* pilot, const Commodity* cargo,
+      int quantity, unsigned int id )
+{
+   int i, q;
+   PilotCommodity *pc;
+
+   q = quantity;
+
+   /* If not mission cargo check to see if already exists. */
+   if (id == 0) {
+      for (i=0; i<array_size(pilot->commodities); i++)
+         if (!pilot->commodities[i].id &&
+               (pilot->commodities[i].commodity == cargo)) {
+            pilot->commodities[i].quantity += q;
+            return q;
+         }
+   }
+
+   /* Create the memory space. */
+   if (pilot->commodities == NULL)
+      pilot->commodities = array_create( PilotCommodity );
+   pc = &array_grow( &pilot->commodities );
+   pc->commodity = cargo;
+   pc->id       = id;
+   pc->quantity = q;
+
+   return q;
 }
 
 
@@ -106,44 +144,15 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
  *    @param quantity Quantity to add.
  *    @param id Mission ID to add (0 is none).
  */
-int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
+int pilot_cargoAddRaw( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id )
 {
-   int i, q;
+   int q;
 
-   q = quantity;
-
-   /* If not mission cargo check to see if already exists. */
-   if (id == 0) {
-      for (i=0; i<pilot->ncommodities; i++)
-         if (!pilot->commodities[i].id &&
-               (pilot->commodities[i].commodity == cargo)) {
-
-            /* Tweak results. */
-            pilot->commodities[i].quantity += q;
-            pilot->cargo_free              -= q;
-            pilot->mass_cargo              += q;
-            pilot->solid->mass             += pilot->stats.cargo_inertia * q;
-            pilot_updateMass( pilot );
-            gui_setGeneric( pilot );
-            return q;
-         }
-   }
-
-   /* Create the memory space. */
-   pilot->commodities = realloc( pilot->commodities,
-         sizeof(PilotCommodity) * (pilot->ncommodities+1));
-   pilot->commodities[ pilot->ncommodities ].commodity = cargo;
-
-   /* Set parameters. */
-   pilot->commodities[ pilot->ncommodities ].id       = id;
-   pilot->commodities[ pilot->ncommodities ].quantity = q;
-
-   /* Tweak pilot. */
+   q = pilot_cargoAddNeglectingStats( pilot, cargo, quantity, id );
    pilot->cargo_free    -= q;
    pilot->mass_cargo    += q;
    pilot->solid->mass   += pilot->stats.cargo_inertia * q;
-   pilot->ncommodities++;
    pilot_updateMass( pilot );
    gui_setGeneric( pilot );
 
@@ -160,15 +169,15 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
  *    @param id Mission ID to add (0 is none).
  *    @return Quantity actually added.
  */
-int pilot_cargoAdd( Pilot* pilot, Commodity* cargo,
+int pilot_cargoAdd( Pilot* pilot, const Commodity* cargo,
       int quantity, unsigned int id )
 {
-   int free;
+   int freespace;
 
    /* Check to see how much to add. */
-   free = pilot_cargoFree(pilot);
-   if (free < quantity)
-      quantity = free;
+   freespace = pilot_cargoFree(pilot);
+   if (freespace < quantity)
+      quantity = freespace;
 
    return pilot_cargoAddRaw( pilot, cargo, quantity, id );
 }
@@ -180,12 +189,12 @@ int pilot_cargoAdd( Pilot* pilot, Commodity* cargo,
  *    @param pilot Pilot to get used cargo space of.
  *    @return The used cargo space by pilot.
  */
-int pilot_cargoUsed( Pilot* pilot )
+int pilot_cargoUsed( const Pilot* pilot )
 {
    int i, q;
 
    q = 0;
-   for (i=0; i<pilot->ncommodities; i++)
+   for (i=0; i<array_size(pilot->commodities); i++)
       q += pilot->commodities[i].quantity;
 
    return q;
@@ -214,7 +223,7 @@ void pilot_cargoCalc( Pilot* pilot )
  *    @param quantity Quantity to add.
  *    @return The Mission Cargo ID of created cargo.
  */
-unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity )
+unsigned int pilot_addMissionCargo( Pilot* pilot, const Commodity* cargo, int quantity )
 {
    int i;
    unsigned int id, max_id;
@@ -224,7 +233,7 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
 
    /* Check for collisions with pilot and set ID generator to the max. */
    max_id = 0;
-   for (i=0; i<pilot->ncommodities; i++)
+   for (i=0; i<array_size(pilot->commodities); i++)
       if (pilot->commodities[i].id > max_id)
          max_id = pilot->commodities[i].id;
    if (max_id >= id) {
@@ -252,10 +261,10 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
    int i;
 
    /* check if pilot has it */
-   for (i=0; i<pilot->ncommodities; i++)
+   for (i=0; i<array_size(pilot->commodities); i++)
       if (pilot->commodities[i].id == cargo_id)
          break;
-   if (i>=pilot->ncommodities)
+   if (i >= array_size(pilot->commodities))
       return 1; /* pilot doesn't have it */
 
    if (jettison)
@@ -266,19 +275,10 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
    pilot->cargo_free    += pilot->commodities[i].quantity;
    pilot->mass_cargo    -= pilot->commodities[i].quantity;
    pilot->solid->mass   -= pilot->stats.cargo_inertia * pilot->commodities[i].quantity;
-   pilot->ncommodities--;
-   if (pilot->ncommodities <= 0) {
-      if (pilot->commodities != NULL) {
-         free( pilot->commodities );
-         pilot->commodities   = NULL;
-      }
-      pilot->ncommodities  = 0;
-   }
-   else {
-      memmove( &pilot->commodities[i], &pilot->commodities[i+1],
-            sizeof(PilotCommodity) * (pilot->ncommodities-i) );
-      pilot->commodities = realloc( pilot->commodities,
-            sizeof(PilotCommodity) * pilot->ncommodities );
+   array_erase( &pilot->commodities, &pilot->commodities[i], &pilot->commodities[i+1] );
+   if (array_size(pilot->commodities) <= 0) {
+      array_free( pilot->commodities );
+      pilot->commodities   = NULL;
    }
 
    /* Update mass. */
@@ -298,14 +298,14 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
  *    @param cleanup Whether we're cleaning up or not (removes mission cargo).
  *    @return Amount of cargo gotten rid of.
  */
-int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup )
+int pilot_cargoRmRaw( Pilot* pilot, const Commodity* cargo, int quantity, int cleanup )
 {
    int i;
    int q;
 
    /* check if pilot has it */
    q = quantity;
-   for (i=0; i<pilot->ncommodities; i++) {
+   for (i=0; i<array_size(pilot->commodities); i++) {
       if (pilot->commodities[i].commodity != cargo)
          continue;
 
@@ -317,19 +317,10 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
          q = pilot->commodities[i].quantity;
 
          /* remove cargo */
-         pilot->ncommodities--;
-         if (pilot->ncommodities <= 0) {
-            if (pilot->commodities != NULL) {
-               free( pilot->commodities );
-               pilot->commodities   = NULL;
-            }
-            pilot->ncommodities  = 0;
-         }
-         else {
-            memmove( &pilot->commodities[i], &pilot->commodities[i+1],
-                  sizeof(PilotCommodity) * (pilot->ncommodities-i) );
-            pilot->commodities = realloc( pilot->commodities,
-                  sizeof(PilotCommodity) * pilot->ncommodities );
+         array_erase( &pilot->commodities, &pilot->commodities[i], &pilot->commodities[i+1] );
+         if (array_size(pilot->commodities) <= 0) {
+            array_free( pilot->commodities );
+            pilot->commodities = NULL;
          }
       }
       else
@@ -338,10 +329,53 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
       pilot->mass_cargo    -= q;
       pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
       pilot_updateMass( pilot );
-      gui_setGeneric( pilot );
+      /* This can call Lua code and be called during takeoff (pilot cleanup), causing
+       * the Lua code to be run with a half-assed pilot state crashing the game. */
+      if (!cleanup)
+         gui_setGeneric( pilot );
       return q;
    }
    return 0; /* pilot didn't have it */
+}
+
+/**
+ * @brief Gets rid of all cargo from pilot.  Can remove mission cargo.
+ *
+ *    @param pilot Pilot to get rid of cargo.
+ *    @param cleanup Whether we're cleaning up or not (removes mission cargo).
+ *    @return Amount of cargo gotten rid of.
+ */
+int pilot_cargoRmAll( Pilot* pilot, int cleanup )
+{
+   int i;
+   int q;
+
+   /* check if pilot has it */
+   q = 0;
+   for (i=array_size(pilot->commodities)-1; i>=0; i--) {
+      /* Must not be mission cargo unless cleaning up. */
+      if (!cleanup && (pilot->commodities[i].id != 0))
+         continue;
+
+      q += pilot->commodities[i].quantity;
+      array_erase( &pilot->commodities, &pilot->commodities[i], &pilot->commodities[i+1] );
+   }
+
+   if (array_size(pilot->commodities) <= 0) {
+      array_free( pilot->commodities );
+      pilot->commodities = NULL;
+   }
+
+   pilot->cargo_free    += q;
+   pilot->mass_cargo    -= q;
+   pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
+   pilot_updateMass( pilot );
+
+   /* If we're updating this ship's status, communicate the update to the GUI.
+    * Caution: it could make sense to communicate a deletion, but particularly in the middle of pilots_clean() that's unsafe. */
+   if (!cleanup)
+      gui_setGeneric( pilot );
+   return q;
 }
 
 /**
@@ -352,7 +386,7 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
  *    @param quantity Amount of cargo to get rid of.
  *    @return Amount of cargo gotten rid of.
  */
-int pilot_cargoRm( Pilot* pilot, Commodity* cargo, int quantity )
+int pilot_cargoRm( Pilot* pilot, const Commodity* cargo, int quantity )
 {
    return pilot_cargoRmRaw( pilot, cargo, quantity, 0 );
 }

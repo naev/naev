@@ -1,7 +1,6 @@
 --[[
 
    Static standing script
-   Copyright (C) 2015 Julian Marchant <onpon4@riseup.net>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,7 +18,7 @@
 --]]
 
 
-include "dat/factions/standing/skel.lua"
+require "factions/standing/skel"
 
 
 function faction_hit( current, amount, source, secondary )

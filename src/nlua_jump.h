@@ -7,8 +7,7 @@
 #  define NLUA_JUMP_H
 
 
-#include <lua.h>
-
+#include "nlua.h"
 #include "space.h"
 
 
@@ -27,7 +26,7 @@ typedef struct LuaJump_s {
 /*
  * Load the jump library.
  */
-int nlua_loadJump( lua_State *L, int readonly );
+int nlua_loadJump( nlua_env env );
 
 /*
  * Jump operations.

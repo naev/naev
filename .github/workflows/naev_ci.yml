@@ -1,0 +1,317 @@
+on: [push, pull_request]
+
+name: CI
+
+jobs:
+  "Package_Source":
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/naev-linux-lts:latest"
+
+    steps:
+      - name: Checkout Naev Repository
+        uses: actions/checkout@v2
+        with:
+          path: source
+          fetch-depth: 0
+          submodules: true
+
+      - name: Package Dist
+        run: |
+          meson setup build source -Dnightly=false -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+          meson dist -C build --no-tests --include-subprojects
+
+      - name: Upload Dist Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: naev-dist-${{ github.sha }}
+          path: ${{ github.workspace }}/build/meson-dist/*
+
+  "Linux_Compile_Naev":
+    needs: "Package_Source"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: naev-linux-latest
+            config: linux.ini
+          - image: naev-linux-lts
+            config: linux.ini
+          - image: naev-steamruntime
+            config: linux_steamruntime.ini
+
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/${{ matrix.image }}:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v1
+        with:
+          name: naev-dist-${{ github.sha }}
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        id: setup
+        run: |
+          meson setup build source \
+              --native-file='source/utils/build/${{ matrix.config }}' \
+              --buildtype=debug \
+              --wrap-mode=forcefallback \
+              -Dnightly=false \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Upload Setup Log
+        uses: actions/upload-artifact@v1
+        if: ${{ success() || steps.setup.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Meson Compile
+        id: compile
+        run: |
+          meson compile -C build
+
+      - name: Upload Compile Log
+        uses: actions/upload-artifact@v1
+        if: ${{ success() || steps.compile.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
+          path: |
+            ${{ github.workspace }}/build
+
+      - name: Test Install
+        run: |
+          meson install -C build
+        env:
+          DESTDIR: "${{ github.workspace }}/staging"
+
+      - name: Upload Install Log
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-install-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Compile AppImage
+        id: appimageCompile
+        run: |
+          ./source/utils/buildAppImage.sh -c -m -s source -b appImageBuild | tee appImageBuildLog.txt
+
+      - name: Upload AppImage Compile Log
+        uses: actions/upload-artifact@v2
+        if: ${{ (success() || steps.appimageCompile.outcome == 'failure') }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-AppImageBuild-log
+          path: |
+            ${{ github.workspace }}/appImageBuildLog.txt
+
+  "Windows_Compile_Naev":
+    needs: "Package_Source"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: naev-windows
+            config: windows_cross_mxe.ini
+
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/${{ matrix.image }}:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v1
+        with:
+          name: naev-dist-${{ github.sha }}
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        id: setup
+        run: |
+          meson setup build source \
+              --prefix="$(pwd)"/source/extras/windows/installer \
+              --bindir=bin \
+              -Dndata_path=bin \
+              --cross-file='source/utils/build/${{ matrix.config }}' \
+              --buildtype=debug \
+              --wrap-mode=forcefallback \
+              -Dnightly=false \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Upload Setup Log
+        uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.setup.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Meson Compile
+        id: compile
+        run: |
+          meson compile -C build
+
+      - name: Upload Compile Log
+        uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.compile.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
+          path: |
+            ${{ github.workspace }}/build
+          if-no-files-found: error
+
+      - name: Test Install
+        run: |
+          meson install -C build
+
+      - name: Upload Install Log
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-install-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+  "Darwin_Compile_Naev":
+    needs: "Package_Source"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: naev-macos
+            config: macos_cross_osxcross.ini
+
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/${{ matrix.image }}:latest"
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v1
+        with:
+          name: naev-dist-${{ github.sha }}
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        id: setup
+        run: |
+          meson setup build source \
+              --prefix="$(pwd)"/build/dist/Naev.app \
+              --bindir=Contents/MacOS \
+              -Dndata_path=Contents/Resources \
+              --cross-file='source/utils/build/${{ matrix.config }}' \
+              --buildtype=debug \
+              -Dnightly=false \
+              -Db_lto=true \
+              -Dauto_features=enabled \
+              -Ddocs_c=disabled \
+              -Ddocs_lua=disabled
+
+      - name: Upload Setup Log
+        uses: actions/upload-artifact@v1
+        if: ${{ success() || steps.setup.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-setup-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Meson Compile
+        id: compile
+        run: |
+          meson compile -C build
+
+      - name: Upload Compile Log
+        uses: actions/upload-artifact@v2
+        if: ${{ success() || steps.compile.outcome == 'failure' }}
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-compile-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-buildArtifacts
+          path: |
+            ${{ github.workspace }}/build
+          if-no-files-found: error
+
+      - name: Test Install
+        run: |
+          meson install -C build
+
+      - name: Upload Install Log
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.image }}-${{ github.sha }}-install-log
+          path: ${{ github.workspace }}/build/meson-logs/meson-log.txt
+
+  "Lua_Documentation":
+    runs-on: ubuntu-latest
+    container:
+      image: "ghcr.io/projectsynchro/naev-linux-latest:latest"
+    needs:
+      [
+        Package_Source,
+        Linux_Compile_Naev,
+        Windows_Compile_Naev,
+        Darwin_Compile_Naev,
+      ]
+
+    steps:
+      - name: Get Source
+        uses: actions/download-artifact@v1
+        with:
+          name: naev-dist-${{ github.sha }}
+
+      - name: Extract Source
+        run: |
+          mkdir source
+          tar -xf naev-dist-${{ github.sha }}/naev-*.tar.xz -C source --strip 1
+
+      - name: Meson Setup
+        run: |
+          meson setup build source \
+              -Dnightly=false \
+              -Dexecutable=disabled
+
+      - name: Meson Compile
+        run: |
+          meson compile -C build
+
+      - name: Trigger API Documentation Update
+        if: ${{ github.event_name == 'push' && github.repository == 'naev/naev' }}
+        run: |
+          curl -X POST https://api.github.com/repos/naev/naev.github.io/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.WEBSITE_ACCESS_TOKEN }} \
+          --data '{"event_type": "api", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'

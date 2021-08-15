@@ -5,22 +5,22 @@
 -- The following example gets a random Sirius M class planet between 1 to 6 jumps away.
 --
 -- @code
--- local planets = {} 
+-- local planets = {}
 -- getsysatdistance( system.cur(), 1, 6,
 --     function(s)
 --         for i, v in ipairs(s:planets()) do
 --             if v:faction() == faction.get("Sirius") and v:class() == "M" then
 --                 return true
 --             end
---         end 
+--         end
 --         return false
 --     end )
--- 
--- if #planets == 0 then abort() end -- Sanity in case no suitable planets are in range.
--- 
+--
+-- if #planets == 0 then abort() end -- In case no suitable planets are in range.
+--
 -- local index = rnd.rnd(1, #planets)
 -- destplanet = planets[index][1]
--- destsys = planets[index][2]     
+-- destsys = planets[index][2]
 -- @endcode
 --
 --    @param sys System to calculate distance from or nil to use current system
@@ -41,8 +41,8 @@ function getsysatdistance( sys, min, max, filter, data, hidden )
    end
 
    open  = { sys }
-   close = { [sys:name()]=sys }
-   dist  = { [sys:name()]=0 }
+   close = { [sys:nameRaw()]=sys }
+   dist  = { [sys:nameRaw()]=0 }
 
    -- Run max times
    for i=1,max do
@@ -52,10 +52,10 @@ function getsysatdistance( sys, min, max, filter, data, hidden )
          adjsys = s:adjacentSystems( hidden ) -- Get them all
          for _,a in ipairs(adjsys) do
             -- Must not have been explored previously
-            if close[ a:name() ] == nil then
+            if close[ a:nameRaw() ] == nil then
                nopen[ #nopen+1 ] = a
-               close[ a:name() ] = a
-               dist[  a:name() ] = i
+               close[ a:nameRaw() ] = a
+               dist[  a:nameRaw() ] = i
             end
          end
       end

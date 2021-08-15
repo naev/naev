@@ -1,4 +1,26 @@
 --[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Anxious Merchant">
+ <avail>
+  <priority>3</priority>
+  <chance>1</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
+--[[
 
    Anxious Merchant
    Author: PhoenixRiver (from an idea on the wiki)
@@ -11,86 +33,52 @@
 
 ]]--
 
-include "dat/scripts/cargo_common.lua"
-include "dat/scripts/numstring.lua"
-
-lang = naev.lang()
-if lang == "es" then
-elseif lang == "de" then
-else -- default to English
-   -- non-gender specific section
-   bar_desc = "You see a merchant at the bar in a clear state of anxiety."
-
-   --- Missions details
-   misn_title = "Anxious Merchant"
-   misn_reward = "Peace of mind (and %d credits)!"
-
-   -- OSD
-   osd_title = "Help the Merchant"
-   osd_desc = {}
-   osd_desc[1] = "Drop off the goods at %s in the %s system. You have %s remaining."
-   osd_desc[2] = "Drop off the goods at %s in the %s system. You are late."
-
-   -- Cargo Details
-   cargo = "Goods"
-
-   title = {}  --stage titles
-   text = {}   --mission text
-   title[1] = "Spaceport Bar"
-   title[2] = "Happy Day"
-   title[3] = "Deliver the Goods"
-   title[4] = "Deliver the Goods... late"
+require "cargo_common"
+require "numstring"
+local portrait = require "portrait"
 
 
-   full_title = "No Room"
-   full_text = [[You don't have enough cargo space to accept this mission.]]
+bar_desc = _("You see a merchant at the bar in a clear state of anxiety.")
 
-   slow_title = "Too slow"
-   slow_text = [[The goods have to arrive in %s but it will take about %s for your ship to reach %s.
+--- Missions details
+misn_title = _("Anxious Merchant")
 
-Accept the mission anyway?]]
+-- OSD
+osd_title = _("Help the Merchant")
+osd_desc = {}
+osd_desc[1] = _("Drop off the goods at %s in the %s system (You have %s remaining)")
+osd_desc[2] = _("Drop off the goods at %s in the %s system (You are late)")
 
-   jet_msg = "You load up the airlock with the last of the %s and hit the big red airlock cycle button - who's to know, right?"
+-- Cargo Details
+cargo = "Goods"
 
-   -- choose a gender for the merchant (could be useful for translations into languages that don't have gender neutrality)
-   if rnd.rnd() >= 0.5 then
-      -- Portrait Choice
-      portrait = {"neutral/male1",
-                  "neutral/thief1",
-                 }
+title = {}  --stage titles
+text = {}   --mission text
+title[1] = _("Spaceport Bar")
+title[2] = _("Happy Day")
+title[3] = _("Deliver the Goods")
+title[4] = _("Deliver the Goods... late")
 
-      misn_desc = "You decided to help a fraught merchant at a bar by delivering some goods to %s for him."
 
-      text[1] = [[    As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can you see I've enough on my plate as it is?" "Hey, dude, calm down...", you say, "Here, how about I buy you a drink and you tell me about it?" "Jeeze, that's nice of you... ha, maybe I can cut a break today!"
-    You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as he starts to talk. "So, I work for Wernet Trading and the deal is I transport stuff for them, they pay me, only I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline and to top it off I'm late on my bills as it is so those engines are gonna have to last 'til this paycheck comes in... see where this is going? I'm in the Sol nebula without a shield generator."
-    "Don't worry so much dude, I'm sure they'll cut you some slack if you're back only a little late", you say reassuringly. "The hell they will! If I don't get this %d tons of %s to %s the next guy's gonna be late and then the customer will be on us and we'll all get it from management, geeze... but that's a thought, if someone else gets it there in time then at least I'll only get a bit of grief... hey, you wouldn't take this stuff for me would you? It's needs to get to the %s system in %s, could you do that for me? I'd sure appreciate it!]]
+full_title = _("No Room")
+full_text = _([[You don't have enough cargo space to accept this mission.]])
 
-      text[2] = [[    The merchant stands up and shakes your hand, "Thank you so much for this, I've a mate at this dock who can sort the cargo transfer and here's the chit you need to give to the cargo guy at %s. Of course payment is done by credit chip so that's yours to keep but at least I'll have a little time to work on those engines before I have to get back on the job! I definietly owe you one for this."]]
+slow_title = _("Too slow")
+slow_text = _([[The goods have to arrive in %s but it will take %s for your ship to reach %s. Accept the mission anyway?]])
 
-      text[3] = [[    As you touch down at the spaceport you see the Wernet Trading depot surrounded by a hustle and bustle. Once outside you head over to the cargo office and hand over the chit the merchant gave you. The Cargo Inspector looks up at you in surprise and so you explain to him what happened as the cargo is unloaded from your ship. "Wow, thanks for the help, you definitely saved us a ton of grief, here's your payment and, again, thanks for your help - maybe I can buy you a drink some time!" You laugh and part ways.]]
+misn_desc = _("You decided to help a fraught merchant by delivering some goods to %s.")
 
-      text[4] = [[    Landing at the spaceport you see the Wernet Trading depot surrounded by a fraught hum of activity. Once outside you thread your way through the throngs of running and shouting people and finally find the Cargo Inspector. You hand him the chit and he looks at you with surpise and then anger, "What the hell is this!?! This shipment was supposed to be here ages ago! We've been shifting stuff around to make up for it and then you come waltzing in here... where the heck is the guy that was supposed to bring this stuff?? The one who was supposed to bring us this damn stuff???" A group of workers rushes along with the Inspector and you as you try to explain what happened on the way to unload your ship. "Bugger that! He's damn'd well fired and if I see him again there's gonna be another damn Incident!!!"
-    You wait to one side as the cargo is hauled off your ship at breakneck speed and wonder if you shouldn't have just dumped the stuff in space. Just as the last of the cargo is taken off your ship the Inspector, who has clearly cooled off a bit, comes up to you and says "Look, I know you were trying to do us a favour but next time don't bother if you can't make it on time, but thank you for delivering the stuff at all; we've had one or two wazzocks who just dumped it all in space", then he snears, "Didn't take long for it to catch up to them though..." As you leave you are happy to be away, even if you didn't get paid.]]
-   else
-      -- Portrait Choice
-      portrait = {"neutral/female1",
-                  "neutral/thief3",
-                 }
+text[1] = _([[As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can't you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeez, that's nice of you... ha, maybe I can cut a break today!"
+    You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as they start to talk. "So, I work for the Traders Guild. I transport stuff for them, they pay me. Only problem is I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline. And to top it all off, I'm late on my bills as is; I can't afford new engines now! it's like I'm in the Sol nebula without a shield generator."
+    You attempt to reassure the merchant by telling them that surely the company will cut some slack. "Like hell they will! I've already been scolded by management for this exact same thing before! If I don't get this shipment of %s of %s to %s... I really need this job, you know? I don't know what to do...." The merchant pauses. "Unless... say, you wouldn't be able to help me out here, would you? I'd just need you to take the cargo to %s in the %s system. Could you? I'll give you the payment for the mission if you do it; it means a lot!"]])
 
-      misn_desc = "You decided to help a fraught merchant at a bar by delivering some goods to %s for her."
+text[2] = _([[The merchant sighs in relief. "Thank you so much for this. Just bring the cargo to the cargo guy at %s. They should pay you %s when you get there. Don't be late, OK?"]])
 
-      text[1] = [[    As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can you see I've enough on my plate as it is?" "Hey, lady, calm down...", you say, "Here, how about I buy you a drink and you tell me about it?" "Jeeze, that's nice of you... ha, maybe I can cut a break today!"
-    You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as she starts to talk. "So, I work for Wernet Trading and the deal is I transport stuff for them, they pay me, only I got kinda beat up fighting pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline and to top it off I'm late on my bills as it is so those engines are gonna have to last 'til this paycheck comes in... see where this is going? I'm in the Sol nebula without a shield generator."
-    "Don't worry so much lady, I'm sure they'll cut you some slack if you're back only a little late", you say reassuringly. "The hell they will! If I don't get this %d tons of %s to %s the next gal's gonna be late and then the customer will be on us and we'll all get it from management, geeze... but that's a thought, if someone else gets it there in time then at least I'll only get a bit of grief... hey, you wouldn't take this stuff for me would you? It's needs to get to the %s system in %s, could you do that for me? I'd sure appreciate it!]]
+text[3] = _([[As you touch down at the spaceport you see the Traders Guild depot surrounded by a hustle and bustle. The cargo inspector looks at you with surprise and you explain to him what happened as the cargo is unloaded from your ship. "Wow, thanks for the help! You definitely saved us a ton of grief. Here's your payment. Maybe I can buy you a drink some time!" You laugh and part ways.]])
 
-      text[2] = [[    The merchant stands up and hugs you, "Thank you so much for this, I've a guy at this dock who can sort the cargo transfer and here's the chit you need to give to the cargo gal at %s. Of course payment is done by credit chip so that's yours to keep but at least I'll have a little time to work on those engines before I have to get back on the job! I definietly owe you one for this."]]
+text[4] = _([[Landing at the spaceport you see the Traders Guild depot surrounded by a fraught hum of activity. The cargo inspector looks at you with surprise and then anger, "What the hell is this?! This shipment was supposed to be here ages ago! We've been shifting stuff around to make up for it and then you come waltzing in here... where the hell is the employee who was supposed to deliver this stuff?" A group of workers rushes along with the Inspector and you as you try to explain what happened. "That fool has been causing us all sorts of problems, and passing on the job to someone as incompetent as you is the last straw! I swear!"
+    You wait to one side as the cargo is hauled off your ship at breakneck speed and wonder if you should have just dumped the stuff in space. Just as the last of the cargo is taken off your ship the inspector, who has clearly cooled off a bit, comes up to you and says "Look, I know you were trying to do us a favor but next time don't bother if you can't make it on time. I'm glad you didn't just dump it all into space like some people have done, but I can't pay you for this." He shakes his head and walks away. "That pilot is so fired...."]])
 
-      text[3] = [[    Landing at the spaceport you see the Wernet Trading depot surrounded by a hustle and bustle. Once outside you head over to the cargo depot and hand over the chit the merchant gave you. The Cargo Inspector looks up at you in surprise and so you explain to her what happened as the cargo is unloaded from your ship. "Wow, thanks for the help, you definitely saved us a ton of trouble, here's your payment and if you're ever looking for a steady job give me a call - it's not great pay but we guarentee you'll get work, assuming you can make it on time, of course!" You laugh and part ways.]]
-
-      text[4] = [[    Coming down at the spaceport you see the Wernet Trading depot surrounded by a fraught buzz of activity. Once outside you thread your way through the throngs of running and shouting people and finally find the Cargo Inspector. You hand her the chit and she looks at you with contempt and distaste, "What in damnation is this! This shipment was supposed to have been here ages ago! You wouldn't believe what we've had to do to deal with this and then you come waltzing in here... where the heck is the lassie that was supposed to bring this stuff??" A group of workers rushes along with the Inspector as you try to explain what happened on the way to unload your ship. "If I ever get my hands on her she's gonna be mincemeat and I'll stuff her in pies and send them to her family, that bitch better never show her face here again, I'm telling you!"
-    You timidly stand to one side as the cargo is hauled off your ship and wonder if you shouldn't have just dumped the stuff in space. Just as the last of the cargo is hauled away the Inspector calmly comes up to you and says "See, I know you were trying to do us a favour but next time don't unless you can make it. I should say 'thank you' for delivering the stuff at all", she adds, "but then the ones who ditch it learn one way or another..." As you leave you are happy to be away, even if you didn't get paid.]]
-   end
-end
 
 function create()
    -- Note: this mission does not make any system claims.
@@ -101,8 +89,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC("Merchant", portrait[rnd.rnd(1, #portrait)]) -- creates the merchant at the bar
-   misn.setDesc(bar_desc) -- merchant's description
+   misn.setNPC(_("Merchant"), portrait.get("Trader"), bar_desc) -- creates the merchant at the bar
 
    stu_distance = 0.2 * travel_dist
    stu_jumps = 10300 * num_jumps
@@ -115,14 +102,14 @@ function create()
         time_limit:add(time.create( 0, 0, math.floor((num_jumps-1) / jumpsperstop) * stu_jumps ))
     end
 
-   payment = stu_distance + (stu_jumps / 10)
+   payment = 20 * (stu_distance + (stu_jumps / 10))
 
    -- Range of 5-10 tons for tier 0, 21-58 for tier 4.
    cargo_size = rnd.rnd( 5 + 4 * tier, 10 + 12 * tier )
 end
 
 function accept()
-   if not tk.yesno(title[1], text[1]:format(cargo_size, cargo, dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())) then
+   if not tk.yesno(title[1], text[1]:format(tonnestring(cargo_size), _(cargo), dest_planet:name(), dest_planet:name(), dest_sys:name())) then
       misn.finish()
    end
    if player.pilot():cargoFree() < cargo_size then
@@ -142,7 +129,7 @@ function accept()
 
    -- mission details
    misn.setTitle(misn_title)
-   misn.setReward(misn_reward:format(payment))
+   misn.setReward(creditstring(payment))
    misn.setDesc(misn_desc:format(dest_planet:name()))
    marker = misn.markerAdd(dest_sys, "low") -- destination
    cargo_ID = misn.cargoAdd(cargo, cargo_size) -- adds cargo
@@ -151,10 +138,10 @@ function accept()
    osd_msg = {osd_desc[1]:format(dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())}
    osd = misn.osdCreate(osd_title, osd_msg)
 
-   tk.msg(title[2], text[2]:format(dest_planet:name()))
+   tk.msg(title[2], text[2]:format(dest_planet:name(), creditstring(payment)))
 
    intime = true
-   faction = faction.get("Trader")
+   faction = faction.get("Traders Guild")
    land_hook = hook.land("land")
    date_hook = hook.date(time.create(0, 0, 42), "tick") -- 42STU per tick
 end
@@ -166,7 +153,6 @@ function land()
          tk.msg(title[3], text[3])
          player.pay(payment)
       else
-         faction:modPlayerSingle(-1)
          tk.msg(title[4], text[4])
       end
       misn.cargoRm(cargo_ID)
@@ -187,15 +173,4 @@ function tick()
         hook.rm(date_hook)
     end
     misn.osdCreate(osd_title, osd_msg)
-end
-
-function abort()
-   misn.cargoRm(cargo_ID)
-   player.msg(jet_msg:format(cargo))
-   faction:modPlayerSingle(-5)
-   misn.osdDestroy(osd)
-   misn.markerRm(marker)
-   hook.rm(land_hook)
-   hook.rm(date_hook)
-   misn.finish(false)
 end

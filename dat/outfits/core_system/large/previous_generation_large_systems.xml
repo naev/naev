@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Previous Generation Large Systems">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>large</size>
+  <mass>640</mass>
+  <price>0</price>
+  <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
+  <gfx_store>misc02.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>640</cpu_max>
+  <energy>2200</energy>
+  <energy_regen>100</energy_regen>
+  <shield>700</shield>
+  <shield_regen>10</shield_regen>
+ </specific>
+</outfit>

@@ -5,8 +5,8 @@
   <y>5008.117353</y>
  </pos>
  <GFX>
-  <space>station-shipyard2.png</space>
-  <exterior>station04.png</exterior>
+  <space>station-shipyard2.webp</space>
+  <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>12000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>emp_mil_restricted</land>
    <refuel/>
@@ -37,6 +37,7 @@
   <item>Basic Civilian Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>
  </tech>

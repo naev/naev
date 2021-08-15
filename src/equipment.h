@@ -8,8 +8,8 @@
 #  define EQUIPMENT_H
 
 
-#include "pilot.h"
 #include "outfit.h"
+#include "pilot.h"
 
 
 /*

@@ -10,7 +10,9 @@
   <x>-220.000000</x>
   <y>-550.000000</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Pirate Small</asset>
+ </assets>
  <jumps>
   <jump target="Effetey">
    <autopos/>
@@ -19,7 +21,7 @@
   </jump>
   <jump target="Overture">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

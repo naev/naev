@@ -5,18 +5,18 @@
   <y>400.000000</y>
  </pos>
  <GFX>
-  <space>002.png</space>
-  <exterior>station04.png</exterior>
+  <space>002.webp</space>
+  <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Thurion</faction>
-  <value>10.000000</value>
+  <value>100.000000</value>
   <range>0</range>
  </presence>
  <general>
   <class>1</class>
   <population>100</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>

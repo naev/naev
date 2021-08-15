@@ -5,8 +5,8 @@
   <y>-9180.435271</y>
  </pos>
  <GFX>
-  <space>M07.png</space>
-  <exterior>lava.png</exterior>
+  <space>M07.webp</space>
+  <exterior>lava.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>3000000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -25,11 +25,7 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Industrial Goods</commodity>
-  </commodities>
+  <commodities/>
   <description>Ohon is far from Mutris, but the hearts of its people are not. As devout as Sirians come, they labor in Sirichana's name and never miss a prayer.</description>
   <bar>The bar is fairly tidy. It doubles as a small place of worship for Sirian spacers who haven't got time to travel to the urban centers and still want to practise their spirituality.</bar>
  </general>
@@ -41,5 +37,6 @@
   <item>Engines Medium</item>
   <item>Ion 1</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
  </tech>
 </asset>

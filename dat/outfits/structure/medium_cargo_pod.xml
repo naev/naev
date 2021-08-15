@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Medium Cargo Pod">
+ <general>
+  <typename>Cargo Expansion</typename>
+  <slot>structure</slot>
+  <size>medium</size>
+  <mass>6</mass>
+  <price>85000</price>
+  <description>Cargo pods are large containers that increase a ship's cargo capacity. Due to being externally added to the ship's hull, it has the side effect of slightly increasing the cargo inertia.</description>
+  <gfx_store>cargopod.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>60</cargo>
+  <cargo_inertia>10</cargo_inertia>
+ </specific>
+</outfit>

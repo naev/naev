@@ -1,14 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Map: Qorel Expanse">
  <general>
+  <rarity>2</rarity>
   <mass>0</mass>
   <price>500000</price>
   <description>This map contains the location of the jump points in and out of the Qorel expanse, a set of systems not accessible through standard jump points. Getting the location of these very special jump points is usually very costly to reduce the number of people having access to it.</description>
-  <gfx_store>map</gfx_store>
+  <gfx_store>map.webp</gfx_store>
  </general>
  <specific type="map">
   <sys name="Acheron">
    <jump>Terminus</jump>
+   <jump>Merisi</jump>
+  </sys>
+  <sys name="Merisi">
+   <jump>Borla</jump>
+   <jump>Acheron</jump>
+  </sys>
+  <sys name="Borla">
+   <jump>Merisi</jump>
+   <jump>Mural</jump>
+  </sys>
+  <sys name="Mural">
+   <jump>Borla</jump>
+   <jump>Salvador</jump>
   </sys>
   <sys name="Terminus">
    <jump>Acheron</jump>
@@ -48,6 +62,7 @@
   <sys name="Salvador">
    <jump>Doowa</jump>
    <jump>Hakoi</jump>
+   <jump>Mural</jump>
   </sys>
   <sys name="Doowa">
    <jump>Vlexon</jump>

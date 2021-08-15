@@ -9,22 +9,27 @@
  */
 
 
-#include "player.h"
+/** @cond */
+#include <time.h>
 
 #include "naev.h"
+/** @endcond */
 
-#include "toolkit.h"
-#include "pause.h"
 #include "player.h"
+
+#include "array.h"
+#include "conf.h"
+#include "map.h"
+#include "pause.h"
 #include "pilot.h"
 #include "pilot_ew.h"
+#include "player.h"
+#include "sound.h"
 #include "space.h"
-#include "conf.h"
-#include <time.h>
+#include "toolkit.h"
 
 
 extern double player_acc; /**< Player acceleration. */
-extern int map_npath; /**< @todo remove */
 
 static double tc_mod    = 1.; /**< Time compression modifier. */
 static double tc_base   = 1.; /**< Base compression modifier. */
@@ -39,6 +44,7 @@ static double lasta;
 static int player_autonavSetup (void);
 static void player_autonav (void);
 static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
+static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 );
 static int player_autonavBrake (void);
 
 
@@ -47,14 +53,9 @@ static int player_autonavBrake (void);
  */
 void player_autonavResetSpeed (void)
 {
-   if (player_isFlag(PLAYER_DOUBLESPEED)) {
-     tc_mod         = 2.;
-     pause_setSpeed( 2. );
-   } else {
-     tc_mod         = 1.;
-     pause_setSpeed( 1. );
-   }
+   tc_mod = 1.;
    tc_rampdown = 0;
+   player_resetSpeed();
 }
 
 
@@ -71,17 +72,18 @@ void player_autonavStart (void)
    if ((player.p->nav_hyperspace == -1) && (player.p->nav_planet== -1))
       return;
    else if ((player.p->nav_planet != -1) && !player_getHypPreempt()) {
+      player_setFlag( PLAYER_BASICAPPROACH );
       player_autonavPnt( cur_system->planets[ player.p->nav_planet ]->name );
       return;
    }
 
    if (player.p->fuel < player.p->fuel_consumption) {
-      player_message("\erNot enough fuel to jump for autonav.");
+      player_message(_("#rNot enough fuel to jump for autonav."));
       return;
    }
 
    if (pilot_isFlag( player.p, PILOT_NOJUMP)) {
-      player_message("\erHyperspace drive is offline.");
+      player_message(_("#rHyperspace drive is offline."));
       return;
    }
 
@@ -107,10 +109,9 @@ static int player_autonavSetup (void)
    /* Autonav is mutually-exclusive with other autopilot methods. */
    player_restoreControl( PINPUT_AUTONAV, NULL );
 
-   player_message("\epAutonav initialized.");
+   player_message(_("#oAutonav: initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
-
-      tc_base   = player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.;
+      tc_base   = player_dt_default() * player.speed;
       tc_mod    = tc_base;
       if (conf.compression_mult >= 1.)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
@@ -122,7 +123,9 @@ static int player_autonavSetup (void)
       player.tc_max = MAX( 1., player.tc_max );
    }
 
-   /* Sane values. */
+   /* Safe values. */
+   free( player.autonavmsg );
+   player.autonavmsg = NULL;
    tc_rampdown  = 0;
    tc_down      = 0.;
    lasts        = player.p->shield / player.p->shield_max;
@@ -131,6 +134,7 @@ static int player_autonavSetup (void)
    /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
    pause_setSpeed( tc_mod );
+   sound_setSpeed( tc_mod );
 
    /* Make sure time acceleration starts immediately. */
    player.autonav_timer = 0.;
@@ -146,6 +150,8 @@ void player_autonavEnd (void)
 {
    player_rmFlag(PLAYER_AUTONAV);
    player_autonavResetSpeed();
+   free( player.autonavmsg );
+   player.autonavmsg = NULL;
 }
 
 
@@ -169,7 +175,8 @@ void player_autonavPos( double x, double y )
       return;
 
    player.autonav    = AUTONAV_POS_APPROACH;
-   player.autonavmsg = "position";
+   player.autonavmsg = strdup( _("position" ));
+   player.autonavcol = '0';
    vect_cset( &player.autonav_pos, x, y );
 }
 
@@ -186,8 +193,30 @@ void player_autonavPnt( char *name )
       return;
 
    player.autonav    = AUTONAV_PNT_APPROACH;
-   player.autonavmsg = p->name;
+   player.autonavmsg = strdup( _(p->name) );
+   player.autonavcol = planet_getColourChar( p );
    vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
+}
+
+
+/**
+ * @brief Starts autonav with a pilot to follow.
+ */
+void player_autonavPil( unsigned int p )
+{
+   Pilot *pilot;
+   int inrange;
+
+   pilot = pilot_get( p );
+
+   inrange = pilot_inRangePilot( player.p, pilot, NULL );
+   if (!player_autonavSetup() || !inrange)
+      return;
+
+   player.autonav    = AUTONAV_PLT_FOLLOW;
+   player.autonavmsg = strdup( pilot->name );
+   player.autonavcol = '0';
+   player_message(_("#oAutonav: following %s."), inrange == 1 ? pilot->name : _("Unknown") );
 }
 
 
@@ -247,9 +276,9 @@ void player_autonavAbort( const char *reason )
 
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (reason != NULL)
-         player_message("\erAutonav aborted: %s!", reason);
+         player_message(_("#rAutonav: aborted due to '%s'!"), reason);
       else
-         player_message("\erAutonav aborted!");
+         player_message(_("#rAutonav: aborted!"));
       player_rmFlag(PLAYER_AUTONAV);
 
       /* Get rid of acceleration. */
@@ -258,7 +287,7 @@ void player_autonavAbort( const char *reason )
       /* Break possible hyperspacing. */
       if (pilot_isFlag(player.p, PILOT_HYP_PREP)) {
          pilot_hyperspaceAbort(player.p);
-         player_message("\epAborting hyperspace sequence.");
+         player_message(_("#oAutonav: aborting hyperspace sequence."));
       }
 
       /* Reset time compression. */
@@ -273,9 +302,12 @@ void player_autonavAbort( const char *reason )
 static void player_autonav (void)
 {
    JumpPoint *jp;
-   int ret;
+   Pilot *p;
+   int ret, map_npath;
    double d, t, tint;
    double vel;
+
+   (void)map_getDestination( &map_npath );
 
    switch (player.autonav) {
       case AUTONAV_JUMP_APPROACH:
@@ -342,22 +374,64 @@ static void player_autonav (void)
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( "\epAutonav arrived at position." );
+            player_message( _("#oAutonav: arrived at position.") );
             player_autonavEnd();
          }
          else if (!tc_rampdown)
             player_autonavRampdown(d);
          break;
+
       case AUTONAV_PNT_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( "\epAutonav arrived at \e%c%s\e\0.",
-                  planet_getColourChar( planet_get(player.autonavmsg) ),
-                  player.autonavmsg );
-            player_autonavEnd();
+            if (player_isFlag(PLAYER_BASICAPPROACH)) {
+               player_rmFlag(PLAYER_BASICAPPROACH);
+               player_message( _("#oAutonav: arrived at #%c%s#0."),
+                     player.autonavcol,
+                     player.autonavmsg );
+               player_autonavEnd();
+            }
+            else
+               player.autonav = AUTONAV_PNT_BRAKE;
          }
          else if (!tc_rampdown)
             player_autonavRampdown(d);
+         break;
+
+      case AUTONAV_PNT_BRAKE:
+         ret = player_autonavBrake();
+
+         /* Try to land. */
+         if (ret) {
+            if (player_land(0) == PLAYER_LAND_DENIED)
+               player_autonavAbort(NULL);
+            else
+               player.autonav = AUTONAV_PNT_APPROACH;
+         }
+
+         /* See if should ramp down. */
+         if (!tc_rampdown) {
+            tc_rampdown = 1;
+            tc_down     = (tc_mod-tc_base) / 3.;
+         }
+         break;
+
+      case AUTONAV_PLT_FOLLOW:
+         p = pilot_get( player.p->target );
+         if (p == NULL)
+            p = pilot_get( PLAYER_ID );
+         if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p, NULL ))) {
+            /* TODO : handle the different reasons: pilot is too far, jumped, landed or died. */
+            player_message( _("#oAutonav: following target  %s has been lost."),
+                              player.autonavmsg );
+            player_accel( 0. );
+            player_autonavEnd();
+         }
+         else {
+            player_autonavFollow( &p->solid->pos, &p->solid->vel, pilot_isDisabled(p)==0, &d );
+            if (pilot_isDisabled(p) && (!tc_rampdown))
+               player_autonavRampdown(d);
+         }
          break;
    }
 }
@@ -413,6 +487,50 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
 
 
 /**
+ * @brief Handles following a moving point with autonav (PD controller).
+ *
+ *    @param[in] pos Position to go to.
+ *    @param[in] vel Velocity of the target.
+ *    @param[in] follow Whether to follow, or arrive at
+ *    @param[out] dist2 Distance left to target.
+ */
+static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 )
+{
+   double Kp, Kd, angle, radius, d;
+   Vector2d dir, point;
+
+   /* Define the control coefficients. If needed, they could be adapted.
+      Maybe radius could be adjustable by the player. */
+   Kp = 10;
+   Kd = 20;
+   radius = 100;
+
+   /* Find a point behind the target at a distance of radius unless stationary, or not following. */
+   if ( !follow || ( vel->x == 0 && vel->y == 0 ) )
+      radius = 0;
+   angle = M_PI + vel->angle;
+   vect_cset( &point, pos->x + radius * cos(angle),
+              pos->y + radius * sin(angle) );
+
+   vect_cset( &dir, (point.x - player.p->solid->pos.x) * Kp +
+         (vel->x - player.p->solid->vel.x) *Kd,
+         (point.y - player.p->solid->pos.y) * Kp +
+         (vel->y - player.p->solid->vel.y) *Kd );
+
+   d = pilot_face( player.p, VANGLE(dir) );
+
+   if ((FABS(d) < MIN_DIR_ERR) && (VMOD(dir) > 300))
+      player_accel( 1. );
+   else
+      player_accel( 0. );
+
+   /* If aiming exactly at the point, should say when approaching. */
+   if (!follow)
+      *dist2 = vect_dist( pos, &player.p->solid->pos );
+}
+
+
+/**
  * @brief Handles the autonav braking.
  *
  *    @return 1 on completion.
@@ -448,8 +566,8 @@ static int player_autonavBrake (void)
 int player_autonavShouldResetSpeed (void)
 {
    double failpc, shield, armour;
-   int i, n;
-   Pilot **pstk;
+   int i;
+   Pilot *const*pstk;
    int hostiles, will_reset;
 
    if (!player_isFlag(PLAYER_AUTONAV))
@@ -462,12 +580,11 @@ int player_autonavShouldResetSpeed (void)
    shield = player.p->shield / player.p->shield_max;
    armour = player.p->armour / player.p->armour_max;
 
-   pstk = pilot_getAll( &n );
-   for (i=0; i<n; i++) {
-      if ((pstk[i]->id != PLAYER_ID) && pilot_isHostile( pstk[i] ) &&
-            pilot_inRangePilot( player.p, pstk[i] ) &&
-            !pilot_isDisabled( pstk[i] ) &&
-            !pilot_isFlag( pstk[i], PILOT_BRIBED )) {
+   pstk = pilot_getAll();
+   for (i=0; i<array_size(pstk); i++) {
+      if ( ( pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
+            && pilot_inRangePilot( player.p, pstk[i], NULL ) == 1
+            && !pilot_isDisabled( pstk[i] ) ) {
          hostiles = 1;
          break;
       }
@@ -499,6 +616,7 @@ int player_autonavShouldResetSpeed (void)
  * @brief Handles autonav thinking.
  *
  *    @param pplayer Player doing the thinking.
+ *    @param dt Current delta tick.
  */
 void player_thinkAutonav( Pilot *pplayer, double dt )
 {
@@ -510,11 +628,11 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
          (player.autonav == AUTONAV_JUMP_BRAKE)) {
       /* If we're already at the target. */
       if (player.p->nav_hyperspace == -1)
-         player_autonavAbort("Target changed to current system");
+         player_autonavAbort(_("Target changed to current system"));
 
       /* Need fuel. */
       else if (pplayer->fuel < pplayer->fuel_consumption)
-         player_autonavAbort("Not enough fuel for autonav to continue");
+         player_autonavAbort(_("Not enough fuel for autonav to continue"));
 
       else
          player_autonav();
@@ -566,6 +684,7 @@ void player_updateAutonav( double dt )
             tc_mod = MIN( dis_max, tc_mod + dis_mod*dt );
       }
       pause_setSpeed( tc_mod );
+      sound_setSpeed( tc_mod / player_dt_default() );
       return;
    }
 
@@ -578,6 +697,7 @@ void player_updateAutonav( double dt )
       if (tc_mod != tc_base) {
          tc_mod = MAX( tc_base, tc_mod-tc_down*dt );
          pause_setSpeed( tc_mod );
+         sound_setSpeed( tc_mod / player_dt_default() );
       }
       return;
    }
@@ -591,6 +711,7 @@ void player_updateAutonav( double dt )
    if (tc_mod > player.tc_max)
       tc_mod = player.tc_max;
    pause_setSpeed( tc_mod );
+   sound_setSpeed( tc_mod / player_dt_default() );
 }
 
 

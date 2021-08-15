@@ -5,8 +5,8 @@
   <y>11262.053354</y>
  </pos>
  <GFX>
-  <space>K03.png</space>
-  <exterior>mining3.png</exterior>
+  <space>K03.webp</space>
+  <exterior>mining3.webp</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
@@ -16,17 +16,13 @@
  <general>
   <class>K</class>
   <population>13500</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
    <commodity/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
+  <commodities/>
   <description>Wa'kan is a mining world where the mines are solely worked by prisoners. There is a guard detail posted and a small degree of Za'lek researchers here working on criminal justice programs.</description>
  </general>
 </asset>

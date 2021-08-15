@@ -1,100 +1,113 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<event name="Preacher">
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
+  <flags>
+   <unique />
+  </flags>
+  <notes>
+   <tier>1</tier>
+  </notes>
+ </event>
+ --]]
 --Preliminary draft of a new event where the player meets one of the Touched, who tries to convert him
 --Sudarshan S <ssoxygen@users.sf.net>
 
-include("fleethelper.lua")
+local fleet = require "fleet"
 
-commtitle="The preaching begins..."
-commtext=[[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.
-"Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
-
-You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]
+commtitle=_("The preaching begins...")
+commtext=_([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.
+    "Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
+    You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]])
 
 althoughEnemy={
-"%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!",
-"%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I believe mercy is a great Truth!",
-"%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for you too are Sirichana's child!"
+_("%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!"),
+_("%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I believe mercy is a great Truth!"),
+_("%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for you too are Sirichana's child!")
 }
 
 friend={
-"%s, I foresee in you a great Sirian citizen, and I look forward to your friendship!",
-"%s, I foresee a bright future for you, illuminated by Sirichana's light!",
-"%s, may Sirichana's light illuminate your path!"
+_("%s, I foresee in you a great Sirian citizen, and I look forward to your friendship!"),
+_("%s, I foresee a bright future for you, illuminated by Sirichana's light!"),
+_("%s, may Sirichana's light illuminate your path!")
 }
 
 followSirichana={
-"You shall all follow Sirichana henceforth!",
-"Sirichana shall lead you to peace and wisdom!",
-"Sirichana is the Father of you all!",
-"Sirichana's grace shall liberate you!",
-"May Sirichana's light shine on you henceforth!"
+_("You shall all follow Sirichana henceforth!"),
+_("Sirichana shall lead you to peace and wisdom!"),
+_("Sirichana is the Father of you all!"),
+_("Sirichana's grace shall liberate you!"),
+_("May Sirichana's light shine on you henceforth!")
 }
 
 praiseSirichana={
-"We shall all follow Sirichana now!",
-"We have been liberated from our evil ways!",
-"No more shall we tread the path of evil!",
-"We see the True path now!",
-"No more shall we commit sins!"
+_("We shall all follow Sirichana now!"),
+_("We have been liberated from our evil ways!"),
+_("No more shall we tread the path of evil!"),
+_("We see the True path now!"),
+_("No more shall we commit sins!")
 }
 
 attackerPunished={
-"Serves you right for attacking a Touched!",
-"Fry in hell, demon!",
-"May you suffer eternal torment!",
-"Your doom is Sirichana's curse!"
+_("Serves you right for attacking a Touched!"),
+_("Fry in hell, demon!"),
+_("May you suffer eternal torment!"),
+_("Your doom is Sirichana's curse!")
 }
 
 attackersDead={
-"All the attackers are dead!",
-"We can resume our Quest now!",
-"The glory of Sirichana remains unblemished!",
-"All heretics have been destroyed!"
+_("All the attackers are dead!"),
+_("We can resume our Quest now!"),
+_("The glory of Sirichana remains unblemished!"),
+_("All heretics have been destroyed!")
 }
 
 whatHappened={
-"Do you think everyone can be brainwashed?",
-"You shall convert no more of us!",
-"Some of us shall not be converted, fool!",
-"You'll never convert me!",
-"I shall never be converted!"
+_("Do you think everyone can be brainwashed?"),
+_("You shall convert no more of us!"),
+_("Some of us shall not be converted, fool!"),
+_("You'll never convert me!"),
+_("I shall never be converted!")
 }
 
 presence={
-"You feel an overwhelming presence nearby!",
-"Something compels you to stop",
-"You are jerked awake by a mysterious but compelling urge",
-"You feel... Touched... by a magical power"
+_("You feel an overwhelming presence nearby!"),
+_("Something compels you to stop"),
+_("You are jerked awake by a mysterious but compelling urge"),
+_("You feel... Touched... by a magical power")
 }
 
 startCombat={
-"Die, heretics!",
-"Those who insult the Sirichana shall die!",
-"You've commited an unpardonable sin!",
-"Hell awaits, fools!"
+_("Die, heretics!"),
+_("Those who insult the Sirichana shall die!"),
+_("You've committed an unpardonable sin!"),
+_("Hell awaits, fools!")
 }
 
 preacherDead={
-"Oh no! The Touched One is dead!",
-"Sirichana save our souls!",
-"We shall never forget You, O Touched One!",
-"We swear eternal revenge!"
+_("Oh no! The Touched One is dead!"),
+_("Sirichana save our souls!"),
+_("We shall never forget You, O Touched One!"),
+_("We swear eternal revenge!")
 }
 
 urge={
-"You feel an overwhelming urge to hear him out!",
-"A mysterious force forces you to listen!",
-"You feel compelled to listen!"
+_("You feel an overwhelming urge to hear him out!"),
+_("A mysterious force forces you to listen!"),
+_("You feel compelled to listen!")
 }
 
 dyingMessage={
-"With my dying breath, I curse you!",
-"Sirichana speed you to hell!",
-"Sirichana, I did my best!"
+_("With my dying breath, I curse you!"),
+_("Sirichana speed you to hell!"),
+_("Sirichana, I did my best!")
 }
 
 dead={
-"The Reverence is dead!",
-"Someone killed the preacher!"
+_("The Reverence is dead!"),
+_("Someone killed the preacher!")
 }
 
 --initialize the event
@@ -117,7 +130,7 @@ end
 function funStartsSoon()
    playerP=player.pilot() --save player's pilot
    rep=faction.playerStanding(faction.get("Sirius"))
-   hook.timer(5000, "theFunBegins") --for effect, so that we can see them jumping in!
+   hook.timer(5.0, "theFunBegins") --for effect, so that we can see them jumping in!
 end
 
 --the preaching's about to begin!
@@ -125,12 +138,12 @@ function theFunBegins()
    if rep < 0 then
       local dist = vec2.dist(jump.get(system.cur(),curr):pos(),player.pos()) --please note the order of system.cur() and curr matters!
       if dist < 6000 then
-         hook.timer(5000,"theFunBegins") --wait some more time
+         hook.timer(5.0,"theFunBegins") --wait some more time
          return
       end
    end
    --summon a preacher from the jump point and highlight him and take control and focus on him
-   preacher=pilot.addRaw("Sirius Reverence", "sirius_norun", curr, "Sirius")[1]
+   preacher=pilot.add("Sirius Reverence", "Sirius", curr, nil, {ai="sirius_norun"})
    preacher:setHilight()
    preacher:setVisplayer()
    preacher:control()
@@ -161,9 +174,9 @@ function theFunBegins()
       followers[num] = followerShips[rnd.rnd(1, #followerShips)] -- Pick a follower ship at random.
    end
 
-   followers = addRawShips(followers, "sirius_norun", curr, "Sirius") -- The table now contains pilots, not ship names.
-   for _,j in ipairs(followers) do
-      j:rename("Converted "..j:name())
+   followers = fleet.add(1, followers, "Sirius", curr, nil, {ai="sirius_norun"}) -- The table now contains pilots, not ship names.
+   for k,j in ipairs(followers) do
+      j:rename( string.format( _("Converted %s"), j:name() ))
    end
 
    --pick a random converted pirate and have him praise the Sirichana
@@ -178,7 +191,7 @@ function theFunBegins()
       sirianFollowerList[num] = sirianFollowers[rnd.rnd(1, #sirianFollowers)] -- Pick a follower ship at random.
    end
 
-   sirianFollowers = addRawShips(sirianFollowerList, "sirius_norun", curr, "Sirius") -- The table now contains pilots, not ship names.
+   sirianFollowers = fleet.add(1, sirianFollowerList, "Sirius", curr, nil, {ai="sirius_norun"}) -- The table now contains pilots, not ship names.
 
    for _, j in ipairs(sirianFollowers) do
       followers[#followers + 1] = j
@@ -198,16 +211,16 @@ function theFunBegins()
    preacher:setFriendly()
 
    --pick a random follower and have him praise Sirichana, after a delay
-   hook.timer(4000,"praise")
+   hook.timer(4.0, "praise")
 
    --have the preacher say something cool
-   hook.timer(8000,"preacherSpeak")
+   hook.timer(8.0, "preacherSpeak")
 
    --add some normal pirates for fun :)
-   hook.timer(12500,"pirateSpawn")
+   hook.timer(12.5, "pirateSpawn")
 
    --hook up timers for releasing cinematics (and you of course :P)
-   hook.timer(17500,"release")
+   hook.timer(17.5, "release")
 
    --hook up timer for re-hailing player
    hailHook=hook.date(time.create(0, 0, 1000), "reHail") --hail every 1000 STU till player answers
@@ -246,7 +259,7 @@ function pirateSpawn()
    local shiptype={"Pirate Shark","Pirate Vendetta"}
    local thepilot
    for num=1,numships,1 do
-      thepilot = pilot.add(shiptype[rnd.rnd(1,#shiptype)], nil, curr)[1]
+      thepilot = pilot.add(shiptype[rnd.rnd(1,#shiptype)], "Pirate", curr)
       if num==curiousNumber then
          thepilot:broadcast(whatHappened[rnd.rnd(1,#whatHappened)],true)
          camera.set(thepilot,true)
@@ -289,7 +302,7 @@ function anotherdead(enemy, attacker)
       attacker=preacher
    end
 
-   if attacker:exists() then --in case the attacker was parallely killed
+   if attacker:exists() then --in case the attacker was killed in parallel
       attacker:broadcast(attackerPunished[rnd.rnd(1,#attackerPunished)],true)
    end
 
@@ -311,7 +324,7 @@ end
 function getPreacherTarget()
    local sirius=faction.get( "Sirius" )
 
-   --look for nearby landable sirian planet to land
+   --look for nearby landable Sirian planet to land
    for key, planet in ipairs( system.cur():planets() ) do
       if planet:faction()==sirius and planet:services()["land"]  then
          target = planet
@@ -319,7 +332,7 @@ function getPreacherTarget()
       end
    end
 
-   --if no landable sirian planets found, jump to random system
+   --if no landable Sirian planets found, jump to random system
    --TODO: prevent jump back through the entry point
    if target then
       preacher:land(target)
@@ -365,7 +378,7 @@ function cleanup()
    player.pilot():control(false)
    camera.set()
    player.cinematics(false)
-   evt.finish()
+   evt.finish(true)
 end
 
 --oops, it seems the preacher died. End gracefully
@@ -384,7 +397,7 @@ function badCleanup()
       follower=survivors[rnd.rnd(1,#survivors)]
       follower:broadcast(preacherDead[rnd.rnd(1,#preacherDead)],true)
    end
-   evt.finish()
+   evt.finish(false)
 end
 
 --the preacher has landed. Land all his followers too
@@ -396,7 +409,7 @@ function landCleanup()
          j:land(target)
       end
    end
-   evt.finish()
+   evt.finish(true)
 end
 
 --the preacher has jumped. Jump all his followers too
@@ -409,5 +422,5 @@ function jumpCleanup()
          j:hyperspace(target,true) --attack back as they move away?
       end
    end
-   evt.finish()
+   evt.finish(true)
 end

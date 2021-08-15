@@ -5,8 +5,8 @@
   <y>767.371325</y>
  </pos>
  <GFX>
-  <space>000.png</space>
-  <exterior>station00.png</exterior>
+  <space>000.webp</space>
+  <exterior>station00.webp</exterior>
  </GFX>
  <presence>
   <faction>Pirate</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>2</class>
   <population>1500</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -30,5 +30,6 @@
   <item>Pirate Maps</item>
   <item>Laser 1</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
  </tech>
 </asset>

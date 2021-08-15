@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Scanning Combat AI">
+ <general>
+  <typename>Combat AI</typename>
+  <slot>utility</slot>
+  <size>medium</size>
+  <rarity>1</rarity>
+  <license>Heavy Weapon License</license>
+  <mass>0</mass>
+  <price>675000</price>
+  <description>This Combat AI focuses on the optimization of the ship's sensor infrastructure. By making small tweaks online, it is able to effectively increase the range at which other ships are detected.</description>
+  <gfx_store>scanning_combat_ai.webp</gfx_store>
+  <limit>combatai</limit>
+ </general>
+ <specific type="modification">
+  <ew_detect>15</ew_detect>
+ </specific>
+</outfit>

@@ -5,8 +5,8 @@
   <y>-2078.153500</y>
  </pos>
  <GFX>
-  <space>moon-P00.png</space>
-  <exterior>snow.png</exterior>
+  <space>moon-P00.webp</space>
+  <exterior>snow.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>P</class>
   <population>100000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -34,9 +34,9 @@
   <item>Hulls Medium</item>
   <item>Engines Medium</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
-  <item>Star Maps</item>
   <item>Plasma 1</item>
   <item>Low Tech Upgrades</item>
  </tech>

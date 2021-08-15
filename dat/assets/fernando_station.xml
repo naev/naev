@@ -5,8 +5,8 @@
   <y>625.892062</y>
  </pos>
  <GFX>
-  <space>station-fleetbase.png</space>
-  <exterior>station05.png</exterior>
+  <space>station-fleetbase.webp</space>
+  <exterior>station05.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>1</class>
   <population>2000</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services>
    <land>dv_mil_restricted</land>
    <refuel/>
@@ -35,6 +35,7 @@
   <item>Kinetic 2</item>
   <item>Kinetic 3</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
  </tech>

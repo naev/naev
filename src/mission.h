@@ -7,9 +7,11 @@
 #  define MISSION_H
 
 
-#include "opengl.h"
 #include "claim.h"
+#include "commodity.h"
 #include "nlua.h"
+#include "nxml.h"
+#include "opengl.h"
 
 
 /* availability by location */
@@ -56,8 +58,7 @@ typedef struct MissionAvail_s {
    char *system; /**< System name. */
 
    /* for generic cases */
-   int* factions; /**< To certain factions. */
-   int nfactions; /**< Number of factions in factions. */
+   int* factions; /**< Array (array.h): To certain factions. */
 
    char* cond; /**< Condition that must be met (Lua). */
    char* done; /**< Previous mission that must have been done. */
@@ -77,7 +78,8 @@ typedef struct MissionData_ {
    MissionAvail_t avail; /**< Mission availability. */
 
    unsigned int flags; /**< Flags to store binary properties */
-   char* lua; /**< Lua file to use. */
+   char* lua; /**< Lua data to use. */
+   char* sourcefile; /**< Source file name. */
 } MissionData;
 
 
@@ -106,10 +108,10 @@ typedef struct Mission_ {
    char *reward; /**< Rewards in text */
    glTexture *portrait; /**< Portrait of the mission giver if applicable. */
    char *npc; /**< Name of the NPC giving the mission. */
+   char *npc_desc; /**< Description of the giver NPC. */
 
    /* mission cargo given to the player - need to cleanup */
-   unsigned int *cargo; /**< Cargos given to player. */
-   int ncargo; /**< Number of cargos given to player. */
+   unsigned int *cargo; /**< Array (array.h): Cargos given to player. */
 
    /* Markers. */
    MissionMarker *markers; /**< Markers array. */
@@ -119,9 +121,9 @@ typedef struct Mission_ {
    int osd_set; /**< OSD was set explicitly. */
 
    /* Claims. */
-   SysClaim_t *claims; /**< System claims. */
+   Claim_t *claims; /**< System claims. */
 
-   lua_State *L; /**< The state of the running Lua code. */
+   nlua_env env; /**< The environment of the running Lua code. */
 } Mission;
 
 
@@ -164,6 +166,11 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id );
  * load/quit
  */
 int missions_load (void);
+int missions_loadActive( xmlNodePtr parent );
+int missions_loadCommodity( xmlNodePtr parent );
+Commodity* missions_loadTempCommodity( xmlNodePtr parent );
+int missions_saveActive( xmlTextWriterPtr writer );
+int missions_saveTempCommodity( xmlTextWriterPtr writer, const Commodity* c );
 void mission_cleanup( Mission* misn );
 void mission_shift( int pos );
 void missions_free (void);
@@ -173,16 +180,14 @@ void missions_cleanup (void);
  * Actually in nlua_misn.h
  */
 int misn_tryRun( Mission *misn, const char *func );
-lua_State *misn_runStart( Mission *misn, const char *func );
+void misn_runStart( Mission *misn, const char *func );
 int misn_runFunc( Mission *misn, const char *func, int nargs );
 int misn_run( Mission *misn, const char *func );
 
 /*
- * CLaims.
+ * Claims.
  */
 void missions_activateClaims (void);
 
 
 #endif /* MISSION_H */
-
-

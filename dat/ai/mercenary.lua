@@ -1,26 +1,44 @@
-include("dat/ai/tpl/generic.lua")
-include("dat/ai/personality/patrol.lua")
+require 'ai.core.core'
+require "numstring"
 
 -- Settings
-mem.armour_run = 40
+mem.armour_run    = 40
 mem.armour_return = 70
-mem.aggressive = true
+mem.aggressive    = true
 
+local bribe_no_list = {
+   _([["You won't buy your way out of this one."]]),
+   _([["I'm afraid you can't make it worth my while."]]),
+}
+local taunt_list_offensive = {
+   _("Don't take this personally."),
+   _("It's just business."),
+}
+local taunt_list_defensive = {
+   _("Your skull will make a great hood ornament."),
+   _("I've destroyed ships twice the size of yours!"),
+   _("I'll crush you like a grape!"),
+   _("This isn't what I signed up for!"),
+}
 
 function create ()
 
-   ai.setcredits( rnd.int(ai.pilot():ship():price()/150, ai.pilot():ship():price()/50) )
+   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/150, ai.pilot():ship():price()/50) )
 
-   if rnd.int() > 0.7 then
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750. * rnd.int() + 2500.)
-      mem.bribe_prompt = string.format("\"Your life is worth %d credits to me.\"", mem.bribe )
-      mem.bribe_paid = "\"Beat it.\""
+   mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750 * rnd.rnd() + 2500)
+   if rnd.rnd() > 0.7 then
+      mem.bribe_prompt = string.format(_([["Your life is worth %s to me."]]), creditstring(mem.bribe) )
+      mem.bribe_paid = _([["Beat it."]])
    else
-      if rnd.int() > 0.5 then
-         mem.bribe_no = "\"You won't buy your way out of this one.\""
-      else
-         mem.bribe_no = "\"I'm afraid you can't make it worth my while.\""
-      end
+      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+   end
+
+   -- Refuel
+   mem.refuel = rnd.rnd( 3000, 5000 )
+   local pp = player.pilot()
+   if pp:exists() then
+      mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
+            creditstring(mem.refuel))
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
@@ -31,28 +49,20 @@ end
 
 -- taunts
 function taunt ( target, offense )
-
    -- Only 20% of actually taunting.
-   if rnd.int(0,4) ~= 0 then
+   if rnd.rnd() > 0.2 then
       return
    end
 
    -- some taunts
+   local taunts
    if offense then
-      taunts = {
-            "Don't take this personally.",
-            "It's just business."
-      }
+      taunts = taunt_list_offensive
    else
-      taunts = {
-            "Your skull will make a great hood ornament.",
-            "I've destroyed ships twice the size of yours!",
-            "I'll crush you like a grape!",
-            "This isn't what I signed up for!"
-      }
+      taunts = taunt_list_defensive
    end
 
-   ai.pilot():comm(target, taunts[ rnd.int(1,#taunts) ])
+   ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])
 end
 
 

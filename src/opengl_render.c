@@ -26,43 +26,68 @@
  */
 
 
-#include "opengl.h"
-
+/** @cond */
 #include "naev.h"
+/** @endcond */
 
+#include "opengl_render.h"
+
+#include "camera.h"
+#include "conf.h"
+#include "gui.h"
 #include "log.h"
 #include "ndata.h"
-#include "gui.h"
-#include "conf.h"
-#include "camera.h"
 #include "nstring.h"
+#include "opengl.h"
 
 
 #define OPENGL_RENDER_VBO_SIZE      256 /**< Size of VBO. */
 
 
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
+gl_vbo *gl_squareVBO = 0;
+static gl_vbo *gl_squareEmptyVBO = 0;
+gl_vbo *gl_circleVBO = 0;
+static gl_vbo *gl_crossVBO = 0;
+static gl_vbo *gl_lineVBO = 0;
+static gl_vbo *gl_triangleVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
 static int gl_renderVBOcolOffset = 0; /**< VBO colour offset. */
-
-
-/*
- * Circle textures.
- */
-static glTexture *gl_circle      = NULL; /**< Circle mipmap. */
-
 
 /*
  * prototypes
  */
-static void gl_drawCircleEmpty( const double cx, const double cy,
-      const double r, const glColour *c );
-static void gl_blitTextureInterpolate(  const glTexture* ta,
-      const glTexture* tb, const double inter,
-      const double x, const double y,
-      const double w, const double h,
-      const double tx, const double ty,
-      const double tw, const double th, const glColour *c );
+
+void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c)
+{
+   glUseProgram(shaders.solid.program);
+   glEnableVertexAttribArray(shaders.solid.vertex);
+   gl_uniformColor(shaders.solid.color, c);
+   gl_Matrix4_Uniform(shaders.solid.projection, projection);
+}
+
+void gl_endSolidProgram (void)
+{
+   glDisableVertexAttribArray(shaders.solid.vertex);
+   glUseProgram(0);
+   gl_checkErr();
+}
+
+
+void gl_beginSmoothProgram(gl_Matrix4 projection)
+{
+   glUseProgram(shaders.smooth.program);
+   glEnableVertexAttribArray(shaders.smooth.vertex);
+   glEnableVertexAttribArray(shaders.smooth.vertex_color);
+   gl_Matrix4_Uniform(shaders.smooth.projection, projection);
+}
+
+void gl_endSmoothProgram() {
+   glDisableVertexAttribArray(shaders.smooth.vertex);
+   glDisableVertexAttribArray(shaders.smooth.vertex_color);
+   glUseProgram(0);
+   gl_checkErr();
+}
 
 
 /**
@@ -76,53 +101,14 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
  */
 void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 {
-   GLfloat vertex[4*2], col[4*4];
+   gl_Matrix4 projection;
 
    /* Set the vertex. */
-   /*   1--2
-    *   |  |
-    *   3--4
-    */
-   vertex[0] = (GLfloat)x;
-   vertex[4] = vertex[0];
-   vertex[2] = vertex[0] + (GLfloat)w;
-   vertex[6] = vertex[2];
-   vertex[1] = (GLfloat)y;
-   vertex[3] = vertex[1];
-   vertex[5] = vertex[1] + (GLfloat)h;
-   vertex[7] = vertex[5];
-   gl_vboSubData( gl_renderVBO, 0, 4*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
 
-   /* Set the colour. */
-   col[0] = c->r;
-   col[1] = c->g;
-   col[2] = c->b;
-   col[3] = c->a;
-   col[4] = col[0];
-   col[5] = col[1];
-   col[6] = col[2];
-   col[7] = col[3];
-   col[8] = col[0];
-   col[9] = col[1];
-   col[10] = col[2];
-   col[11] = col[3];
-   col[12] = col[0];
-   col[13] = col[1];
-   col[14] = col[2];
-   col[15] = col[3];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   gl_vboDeactivate();
-
-   /* Check errors. */
-   gl_checkErr();
+   gl_renderRectH( &projection, c, 1 );
 }
 
 
@@ -137,62 +123,35 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
  */
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c )
 {
-   GLfloat vx, vy, vxw, vyh;
-   GLfloat vertex[5*2], col[5*4];
+   gl_Matrix4 projection;
 
-   /* Helper variables. */
-   vx  = (GLfloat) x;
-   vy  = (GLfloat) y;
-   vxw = vx + (GLfloat) w;
-   vyh = vy + (GLfloat) h;
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
 
-   /* Set the vertex. */
-   vertex[0] = vx;
-   vertex[1] = vy;
-   vertex[2] = vxw;
-   vertex[3] = vy;
-   vertex[4] = vxw;
-   vertex[5] = vyh;
-   vertex[6] = vx;
-   vertex[7] = vyh;
-   vertex[8] = vx;
-   vertex[9] = vy;
-   gl_vboSubData( gl_renderVBO, 0, sizeof(vertex), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   gl_renderRectH( &projection, c, 0 );
+}
 
-   /* Set the colour. */
-   col[0] = c->r;
-   col[1] = c->g;
-   col[2] = c->b;
-   col[3] = c->a;
-   col[4] = col[0];
-   col[5] = col[1];
-   col[6] = col[2];
-   col[7] = col[3];
-   col[8] = col[0];
-   col[9] = col[1];
-   col[10] = col[2];
-   col[11] = col[3];
-   col[12] = col[0];
-   col[13] = col[1];
-   col[14] = col[2];
-   col[15] = col[3];
-   col[16] = col[0];
-   col[17] = col[1];
-   col[18] = col[2];
-   col[19] = col[3];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, sizeof(col), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
 
-   /* Draw. */
-   glDrawArrays( GL_LINE_STRIP, 0, 5 );
-
-   /* Clear state. */
-   gl_vboDeactivate();
-
-   /* Check errors. */
-   gl_checkErr();
+/**
+ * @brief Renders a rectangle.
+ *
+ *    @param H Transformation matrix to apply.
+ *    @param filled Whether or not to fill.
+ *    @param c Rectangle colour.
+ */
+void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled )
+{
+   gl_beginSolidProgram(*H, c);
+   if (filled) {
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   }
+   else {
+      gl_vboActivateAttribOffset( gl_squareEmptyVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+      glDrawArrays( GL_LINE_STRIP, 0, 5 );
+   }
+   gl_endSolidProgram();
 }
 
 
@@ -206,40 +165,41 @@ void gl_renderRectEmpty( double x, double y, double w, double h, const glColour 
  */
 void gl_renderCross( double x, double y, double r, const glColour *c )
 {
-   int i;
-   GLfloat vertex[2*4], colours[4*4];
-   GLfloat vx,vy, vr;
+   gl_Matrix4 projection;
 
-   /* Set up stuff. */
-   vx = x;
-   vy = y;
-   vr = r;
+   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, r, r, 1);
 
-   /* the + sign in the middle of the radar representing the player */
-   for (i=0; i<4; i++) {
-      colours[4*i + 0] = c->r;
-      colours[4*i + 1] = c->g;
-      colours[4*i + 2] = c->b;
-      colours[4*i + 3] = c->a;
-   }
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset,
-         sizeof(GLfloat) * 4*4, colours );
-   /* Set up vertex. */
-   vertex[0] = vx+0.;
-   vertex[1] = vy-vr;
-   vertex[2] = vx+0.;
-   vertex[3] = vy+vr;
-   vertex[4] = vx-vr;
-   vertex[5] = vy+0.;
-   vertex[6] = vx+vr;
-   vertex[7] = vy+0.;
-   gl_vboSubData( gl_renderVBO, 0, sizeof(GLfloat) * 4*2, vertex );
-   /* Draw tho VBO. */
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( gl_crossVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_LINES, 0, 4 );
-   gl_vboDeactivate();
+   gl_endSolidProgram();
+}
+
+
+/**
+ * @brief Renders a triangle at a given position.
+ *
+ *    @param x X position to center at.
+ *    @param y Y position to center at.
+ *    @param a Angle the triangle should "face" (right is 0.)
+ *    @param s Scaling of the triangle.
+ *    @param length Length deforming factor. Setting it to a value of other than 1. moves away from an equilateral triangle.
+ *    @param c Colour to use.
+ */
+void gl_renderTriangleEmpty( double x, double y, double a, double s, double length, const glColour *c )
+{
+   gl_Matrix4 projection;
+
+   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
+   if (a != 0.)
+      projection = gl_Matrix4_Rotate2d(projection, a);
+   projection = gl_Matrix4_Scale(projection, s*length, s, 1.);
+
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( gl_triangleVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINE_STRIP, 0, 4 );
+   gl_endSolidProgram();
 }
 
 
@@ -256,78 +216,65 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
  *    @param tw Texture width. [0:1]
  *    @param th Texture height. [0:1]
  *    @param c Colour to use (modifies texture colour).
+ *    @param angle Rotation to apply (radians ccw around the center).
  */
 void gl_blitTexture(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty,
-      const double tw, const double th, const glColour *c )
+      const double tw, const double th, const glColour *c, const double angle )
 {
-   GLfloat vertex[4*2], tex[4*2], col[4*4];
+   // Half width and height
+   double hw, hh;
+   gl_Matrix4 projection, tex_mat;
+
+   glUseProgram(shaders.texture.program);
 
    /* Bind the texture. */
-   glEnable(GL_TEXTURE_2D);
    glBindTexture( GL_TEXTURE_2D, texture->texture);
 
    /* Must have colour for now. */
    if (c == NULL)
       c = &cWhite;
 
+   hw = w/2.;
+   hh = h/2.;
+
    /* Set the vertex. */
-   vertex[0] = (GLfloat)x;
-   vertex[4] = vertex[0];
-   vertex[2] = vertex[0] + (GLfloat)w;
-   vertex[6] = vertex[2];
-   vertex[1] = (GLfloat)y;
-   vertex[3] = vertex[1];
-   vertex[5] = vertex[1] + (GLfloat)h;
-   vertex[7] = vertex[5];
-   gl_vboSubData( gl_renderVBO, 0, 4*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   projection = gl_view_matrix;
+   if (angle==0.){
+     projection = gl_Matrix4_Translate(projection, x, y, 0);
+     projection = gl_Matrix4_Scale(projection, w, h, 1);
+   } else {
+     projection = gl_Matrix4_Translate(projection, x+hw, y+hh, 0);
+     projection = gl_Matrix4_Rotate2d(projection, angle);
+     projection = gl_Matrix4_Translate(projection, -hw, -hh, 0);
+     projection = gl_Matrix4_Scale(projection, w, h, 1);
+   }
+   glEnableVertexAttribArray( shaders.texture.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
+         0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
-   tex[0] = (GLfloat)tx;
-   tex[4] = tex[0];
-   tex[2] = tex[0] + (GLfloat)tw;
-   tex[6] = tex[2];
-   tex[1] = (GLfloat)ty;
-   tex[3] = tex[1];
-   tex[5] = tex[1] + (GLfloat)th;
-   tex[7] = tex[5];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOtexOffset, 4*2*sizeof(GLfloat), tex );
-   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE_COORD_ARRAY,
-         gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
+   tex_mat = (texture->flags & OPENGL_TEX_VFLIP) ? gl_Matrix4_Ortho(-1, 1, 2, 0, 1, -1) : gl_Matrix4_Identity();
+   tex_mat = gl_Matrix4_Translate(tex_mat, tx, ty, 0);
+   tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
 
-   /* Set the colour. */
-   col[0] = c->r;
-   col[1] = c->g;
-   col[2] = c->b;
-   col[3] = c->a;
-   col[4] = col[0];
-   col[5] = col[1];
-   col[6] = col[2];
-   col[7] = col[3];
-   col[8] = col[0];
-   col[9] = col[1];
-   col[10] = col[2];
-   col[11] = col[3];
-   col[12] = col[0];
-   col[13] = col[1];
-   col[14] = col[2];
-   col[15] = col[3];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
+   /* Set shader uniforms. */
+   gl_uniformColor(shaders.texture.color, c);
+   gl_Matrix4_Uniform(shaders.texture.projection, projection);
+   gl_Matrix4_Uniform(shaders.texture.tex_mat, tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   gl_vboDeactivate();
-   glDisable(GL_TEXTURE_2D);
+   glDisableVertexAttribArray( shaders.texture.vertex );
 
    /* anything failed? */
    gl_checkErr();
+
+   glUseProgram(0);
 }
 
 
@@ -341,173 +288,87 @@ void gl_blitTexture(  const glTexture* texture,
  *    @param inter Amount of interpolation to do.
  *    @param x X position of the texture on the screen.
  *    @param y Y position of the texture on the screen.
+ *    @param w Width on the screen. (units pixels)
+ *    @param h Height on the screen. (units pixels)
  *    @param tx X position within the texture.
  *    @param ty Y position within the texture.
  *    @param tw Texture width.
  *    @param th Texture height.
  *    @param c Colour to use (modifies texture colour).
  */
-static void gl_blitTextureInterpolate(  const glTexture* ta,
+void gl_blitTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, const double inter,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c )
 {
-   GLfloat vertex[4*2], tex[4*2], col[4*4];
-   GLfloat mcol[4] = { 0., 0., 0. };
-
    /* No interpolation. */
-   if (!conf.interpolate || (tb == NULL)) {
-      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
+   if (tb == NULL) {
+      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
 
    /* Corner cases. */
    if (inter == 1.) {
-      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
+      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
    else if (inter == 0.) {
-      gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
+      gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
 
-   /* No multitexture. */
-   if (nglActiveTexture == NULL) {
-      if (inter > 0.5)
-         gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c );
-      else
-         gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c );
-      return;
-   }
+   gl_Matrix4 projection, tex_mat;
 
-   /* Set default colour. */
+   glUseProgram(shaders.texture_interpolate.program);
+
+   /* Bind the textures. */
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE_2D, ta->texture);
+   glActiveTexture( GL_TEXTURE1 );
+   glBindTexture( GL_TEXTURE_2D, tb->texture);
+
+   /* Must have colour for now. */
    if (c == NULL)
       c = &cWhite;
 
-   /* Bind the textures. */
-   /* Texture 0. */
-   nglActiveTexture( GL_TEXTURE0 );
-   glEnable(GL_TEXTURE_2D);
-   glBindTexture( GL_TEXTURE_2D, ta->texture);
-
-   /* Set the mode. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
-
-   /* Interpolate texture and alpha. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_INTERPOLATE );
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_INTERPOLATE );
-   mcol[3] = inter;
-   glTexEnvfv( GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, mcol );
-
-   /* Arguments. */
-   /* Arg0. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB,    GL_TEXTURE0 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA,  GL_TEXTURE0 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
-   /* Arg1. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_RGB,    GL_TEXTURE1 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_TEXTURE1 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
-   /* Arg2. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_RGB,    GL_CONSTANT );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_RGB,   GL_SRC_ALPHA );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_ALPHA,  GL_CONSTANT );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
-
-   /* Texture 1. */
-   nglActiveTexture( GL_TEXTURE1 );
-   glEnable(GL_TEXTURE_2D);
-   glBindTexture( GL_TEXTURE_2D, tb->texture);
-
-   /* Set the mode. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
-
-   /* Interpolate texture and alpha. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_MODULATE );
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_MODULATE );
-
-   /* Arguments. */
-   /* Arg0. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB,    GL_PREVIOUS );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA,  GL_PREVIOUS );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
-   /* Arg1. */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_RGB,    GL_PRIMARY_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_PRIMARY_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
-
-   /* Set the colour. */
-   col[0] = c->r;
-   col[1] = c->g;
-   col[2] = c->b;
-   col[3] = c->a;
-   col[4] = col[0];
-   col[5] = col[1];
-   col[6] = col[2];
-   col[7] = col[3];
-   col[8] = col[0];
-   col[9] = col[1];
-   col[10] = col[2];
-   col[11] = col[3];
-   col[12] = col[0];
-   col[13] = col[1];
-   col[14] = col[2];
-   col[15] = col[3];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, 4*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
-
    /* Set the vertex. */
-   vertex[0] = (GLfloat)x;
-   vertex[4] = vertex[0];
-   vertex[2] = vertex[0] + (GLfloat)w;
-   vertex[6] = vertex[2];
-   vertex[1] = (GLfloat)y;
-   vertex[3] = vertex[1];
-   vertex[5] = vertex[1] + (GLfloat)h;
-   vertex[7] = vertex[5];
-   gl_vboSubData( gl_renderVBO, 0, 4*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
+   glEnableVertexAttribArray( shaders.texture_interpolate.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture_interpolate.vertex, 0, 2, GL_FLOAT, 0 );
 
    /* Set the texture. */
-   tex[0] = (GLfloat)tx;
-   tex[4] = tex[0];
-   tex[2] = tex[0] + (GLfloat)tw;
-   tex[6] = tex[2];
-   tex[1] = (GLfloat)ty;
-   tex[3] = tex[1];
-   tex[5] = tex[1] + (GLfloat)th;
-   tex[7] = tex[5];
-   gl_vboSubData( gl_renderVBO, gl_renderVBOtexOffset, 4*2*sizeof(GLfloat), tex );
-   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE0,
-         gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( gl_renderVBO, GL_TEXTURE1,
-         gl_renderVBOtexOffset, 2, GL_FLOAT, 0 );
+   tex_mat = (ta->flags & OPENGL_TEX_VFLIP) ? gl_Matrix4_Ortho(-1, 1, 2, 0, 1, -1) : gl_Matrix4_Identity();
+   tex_mat = gl_Matrix4_Translate(tex_mat, tx, ty, 0);
+   tex_mat = gl_Matrix4_Scale(tex_mat, tw, th, 1);
+
+   /* Set shader uniforms. */
+   glUniform1i(shaders.texture_interpolate.sampler1, 0);
+   glUniform1i(shaders.texture_interpolate.sampler2, 1);
+   gl_uniformColor(shaders.texture_interpolate.color, c);
+   glUniform1f(shaders.texture_interpolate.inter, inter);
+   gl_Matrix4_Uniform(shaders.texture_interpolate.projection, projection);
+   gl_Matrix4_Uniform(shaders.texture_interpolate.tex_mat, tex_mat);
 
    /* Draw. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
    /* Clear state. */
-   gl_vboDeactivate();
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-   glDisable(GL_TEXTURE_2D);
-   nglActiveTexture( GL_TEXTURE0 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-   glDisable(GL_TEXTURE_2D);
+   glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
+   glActiveTexture( GL_TEXTURE0 );
 
    /* anything failed? */
    gl_checkErr();
+
+   glUseProgram(0);
 }
 
 
 /**
- * @brief Converts ingame coordinates to screen coordinates.
+ * @brief Converts in-game coordinates to screen coordinates.
  *
  *    @param[out] nx New screen X coord.
  *    @param[out] ny New screen Y coord.
@@ -530,10 +391,10 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
 
 
 /**
- * @brief Converts screen coordinates to ingame coordinates.
+ * @brief Converts screen coordinates to in-game coordinates.
  *
- *    @param[out] nx New ingame X coord.
- *    @param[out] ny New ingame Y coord.
+ *    @param[out] nx New in-game X coord.
+ *    @param[out] ny New in-game Y coord.
  *    @param bx Screen X coord to translate.
  *    @param by Screen Y coord to translate.
  */
@@ -584,11 +445,11 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
       return;
 
    /* texture coords */
-   tx = sprite->sw*(double)(sx)/sprite->rw;
-   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
+   tx = sprite->sw*(double)(sx)/sprite->w;
+   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->h;
 
    gl_blitTexture( sprite, x, y, w, h,
-         tx, ty, sprite->srw, sprite->srh, c );
+         tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
 
@@ -630,6 +491,8 @@ void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
  *    @param inter Amount to interpolate.
  *    @param bx X position of the texture relative to the player.
  *    @param by Y position of the texture relative to the player.
+ *    @param scalew X scale factor.
+ *    @param scaleh Y scale factor.
  *    @param sx X position of the sprite to use.
  *    @param sy Y position of the sprite to use.
  *    @param c Colour to use (modifies texture colour).
@@ -655,8 +518,8 @@ void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
       return;
 
    /* texture coords */
-   tx = sa->sw*(double)(sx)/sa->rw;
-   ty = sa->sh*(sa->sy-(double)sy-1)/sa->rh;
+   tx = sa->sw*(double)(sx)/sa->w;
+   ty = sa->sh*(sa->sy-(double)sy-1)/sa->h;
 
    gl_blitTextureInterpolate( sa, sb, inter, x, y, w, h,
          tx, ty, sa->srw, sa->srh, c );
@@ -682,12 +545,12 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
    y = by;
 
    /* texture coords */
-   tx = sprite->sw*(double)(sx)/sprite->rw;
-   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
+   tx = sprite->sw*(double)(sx)/sprite->w;
+   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->h;
 
    /* actual blitting */
    gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh,
-         tx, ty, sprite->srw, sprite->srh, c );
+         tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
 
@@ -714,12 +577,12 @@ void gl_blitScaleSprite( const glTexture* sprite,
    y = by;
 
    /* texture coords */
-   tx = sprite->sw*(double)(sx)/sprite->rw;
-   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->rh;
+   tx = sprite->sw*(double)(sx)/sprite->w;
+   ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->h;
 
    /* actual blitting */
    gl_blitTexture( sprite, x, y, bw, bh,
-         tx, ty, sprite->srw, sprite->srh, c );
+         tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
 
@@ -749,8 +612,39 @@ void gl_blitScale( const glTexture* texture,
 
    /* Actual blitting. */
    gl_blitTexture( texture, x, y, bw, bh,
-         tx, ty, texture->srw, texture->srh, c );
+         tx, ty, texture->srw, texture->srh, c, 0. );
 }
+
+
+/**
+ * @brief Blits a texture scaling it to fit a rectangle, but conserves aspect
+ * ratio.
+ *
+ *    @param texture Texture to blit.
+ *    @param bx X position of the texture in screen coordinates.
+ *    @param by Y position of the texture in screen coordinates.
+ *    @param bw Width to scale to.
+ *    @param bh Height to scale to.
+ *    @param c Colour to use (modifies texture colour).
+ */
+void gl_blitScaleAspect( const glTexture* texture,
+   double bx, double by, double bw, double bh,
+   const glColour *c )
+{
+   double scale;
+   double nw, nh;
+
+   scale = MIN( bw / texture->w, bh / texture->h );
+
+   nw = scale * texture->w;
+   nh = scale * texture->h;
+
+   bx += (bw-nw)/2.;
+   by += (bh-nh)/2.;
+
+   gl_blitScale( texture, bx, by, nw, nh, c );
+}
+
 
 /**
  * @brief Blits a texture to a position
@@ -771,153 +665,64 @@ void gl_blitStatic( const glTexture* texture,
 
    /* actual blitting */
    gl_blitTexture( texture, x, y, texture->sw, texture->sh,
-         0., 0., texture->srw, texture->srh, c );
-}
-
-
-void gl_drawCircleLoop( const double cx, const double cy,
-      const double r, const glColour *c )
-{
-   int i, points;
-   double angi, cosi, sini;
-   double nxc, xc, yc;
-   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
-
-   /* Aim for 10 px between each vertex. */
-   points = CLAMP( 8, OPENGL_RENDER_VBO_SIZE, (int)ceil(M_PI * r * 5.) );
-
-   angi = 2. * M_PI / (double)points;
-   cosi = cos(angi);
-   sini = sin(angi);
-
-   vertex[0] = cx + r;
-   vertex[1] = cy;
-
-   xc = 1.;
-   yc = 0.;
-
-   /* Calculate the vertices by iterating counter-clockwise. */
-   for (i=1; i<points; i++) {
-      nxc = cosi * xc - sini * yc;
-      yc  = sini * xc + cosi * yc;
-      xc  = nxc;
-
-      vertex[i*2+0] = cx + xc * r;
-      vertex[i*2+1] = cy + yc * r;
-   }
-
-   gl_vboSubData( gl_renderVBO, 0, points*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-
-   /* Set up the colour. */
-   for (i=0; i<points; i++) {
-      col[4*i+0] = c->r;
-      col[4*i+1] = c->g;
-      col[4*i+2] = c->b;
-      col[4*i+3] = c->a;
-   }
-
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, points*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
-
-   /* Draw. */
-   glDrawArrays( GL_LINE_LOOP, 0, points );
-
-   /* Clear state. */
-   gl_vboDeactivate();
+         0., 0., texture->srw, texture->srh, c, 0. );
 }
 
 
 /**
- * @brief Draws an empty circle.
+ * @brief Renders a simple shader.
  *
- *    @param cx X position of the center in screen coordinates..
- *    @param cy Y position of the center in screen coordinates.
- *    @param r Radius of the circle.
- *    @param c Colour to use.
+ *    @param x X position.
+ *    @param y Y position.
+ *    @param w Width.
+ *    @param h Height.
+ *    @param r Rotation or 0. to disable.
+ *    @param shd Shader to render.
+ *    @param c Colour to use or NULL if not necessary.
+ *    @param center Whether or not to center the shader on the position and use [-1,1] coordinates or set bottom-left and use [0,1] coordinates.
  */
-#define PIXEL(x,y)   \
-if (i<OPENGL_RENDER_VBO_SIZE) { \
-   vertex[2*i+0] = x; \
-   vertex[2*i+1] = y; \
-   i++; \
-}
-static void gl_drawCircleEmpty( const double cx, const double cy,
-      const double r, const glColour *c )
+void gl_renderShader( double x, double y, double w, double h, double r, const SimpleShader *shd, const glColour *c, int center )
 {
-   int i, j;
-   double x,y,p;
-   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
-
-   /* Starting parameters. */
-   i = 0;
-   x = 0;
-   y = r;
-   p = (5. - (r*4.)) / 4.;
-
-   PIXEL( cx,   cy+y );
-   PIXEL( cx,   cy-y );
-   PIXEL( cx+y, cy   );
-   PIXEL( cx-y, cy   );
-
-   while (x<y) {
-      x++;
-      if (p < 0) p += 2*(double)(x)+1;
-      else p += 2*(double)(x-(--y))+1;
-
-      if (x==0) {
-         PIXEL( cx,   cy+y );
-         PIXEL( cx,   cy-y );
-         PIXEL( cx+y, cy   );
-         PIXEL( cx-y, cy   );
-      }
-      else
-         if (x==y) {
-            PIXEL( cx+x, cy+y );
-            PIXEL( cx-x, cy+y );
-            PIXEL( cx+x, cy-y );
-            PIXEL( cx-x, cy-y );
-         }
-         else
-            if (x<y) {
-               PIXEL( cx+x, cy+y );
-               PIXEL( cx-x, cy+y );
-               PIXEL( cx+x, cy-y );
-               PIXEL( cx-x, cy-y );
-               PIXEL( cx+y, cy+x );
-               PIXEL( cx-y, cy+x );
-               PIXEL( cx+y, cy-x );
-               PIXEL( cx-y, cy-x );
-            }
-   }
-   gl_vboSubData( gl_renderVBO, 0, i*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-
-   /* Set up the colour. */
-   for (j=0; j<i; j++) {
-      col[4*j+0] = c->r;
-      col[4*j+1] = c->g;
-      col[4*j+2] = c->b;
-      col[4*j+3] = c->a;
-   }
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, j*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
-
-   /* Draw. */
-   glDrawArrays( GL_POINTS, 0, i );
-
-   /* Clear state. */
-   gl_vboDeactivate();
+   gl_Matrix4 projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, x, y, 0);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
+   if (r != 0.)
+      projection = gl_Matrix4_Rotate2d(projection, r);
+   glUniform2f( shd->dimensions, w, h );
+   gl_renderShaderH( shd, &projection, c, center );
 }
-#undef PIXEL
+
+
+/**
+ * @brief Renders a simple shader with a transformation.
+ *
+ *    @param shd Shader to render.
+ *    @param H Transformation matrix.
+ *    @param c Colour to use or NULL if not necessary.
+ *    @param center Whether or not to center the shader on the position and use [-1,1] coordinates or set bottom-left and use [0,1] coordinates.
+ */
+void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glColour *c, int center )
+{
+   glEnableVertexAttribArray(shd->vertex);
+   gl_vboActivateAttribOffset( center ? gl_circleVBO : gl_squareVBO, shd->vertex, 0, 2, GL_FLOAT, 0 );
+
+   if (c != NULL)
+      gl_uniformColor(shd->color, c);
+
+   gl_Matrix4_Uniform(shd->projection, *H);
+
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   glDisableVertexAttribArray(shaders.safelanes.vertex);
+   glUseProgram(0);
+   gl_checkErr();
+}
 
 
 /**
  * @brief Draws a circle.
  *
- *    @param cx X position of the center in screen coordinates..
+ *    @param cx X position of the center in screen coordinates.
  *    @param cy Y position of the center in screen coordinates.
  *    @param r Radius of the circle.
  *    @param c Colour to use.
@@ -926,13 +731,164 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
 void gl_drawCircle( const double cx, const double cy,
       const double r, const glColour *c, int filled )
 {
-   if (filled)
-      gl_blitTexture( gl_circle, cx-r, cy-r, 2.*r, 2.*r,
-         0., 0., gl_circle->srw, gl_circle->srh, c );
-   else if (gl_vendorIsIntel())
-      gl_drawCircleEmpty( cx, cy, r, c );
-   else
-      gl_drawCircleLoop( cx, cy, r, c );
+   gl_Matrix4 projection;
+
+   /* Set the vertex. */
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, cx, cy, 0);
+   projection = gl_Matrix4_Scale(projection, r, r, 1);
+
+   /* Draw! */
+   gl_drawCircleH( &projection, c, filled );
+}
+
+
+/**
+ * @brief Draws a circle.
+ *
+ *    @param H Transformation matrix to draw the circle.
+ *    @param c Colour to use.
+ *    @param filled Whether or not it should be filled.
+ */
+void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
+{
+   // TODO handle shearing and different x/y scaling
+   GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
+
+   if (filled) {
+      glUseProgram( shaders.circle_filled.program );
+
+      glEnableVertexAttribArray( shaders.circle_filled.vertex );
+      gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle_filled.vertex,
+            0, 2, GL_FLOAT, 0 );
+
+      /* Set shader uniforms. */
+      gl_uniformColor( shaders.circle_filled.color, c );
+      gl_Matrix4_Uniform( shaders.circle_filled.projection, *H );
+      glUniform1f( shaders.circle_filled.radius, r );
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.circle_filled.vertex );
+   }
+   else {
+      glUseProgram( shaders.circle.program );
+
+      glEnableVertexAttribArray( shaders.circle.vertex );
+      gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle.vertex,
+            0, 2, GL_FLOAT, 0 );
+
+      /* Set shader uniforms. */
+      gl_uniformColor( shaders.circle.color, c );
+      gl_Matrix4_Uniform( shaders.circle.projection, *H );
+      glUniform1f( shaders.circle.radius, r );
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.circle.vertex );
+   }
+   glUseProgram(0);
+
+   /* Check errors. */
+   gl_checkErr();
+}
+
+
+/**
+ * @brief Draws a partial circle.
+ *
+ *    @param cx X position of the center in screen coordinates.
+ *    @param cy Y position of the center in screen coordinates.
+ *    @param r Radius of the circle.
+ *    @param c Colour to use.
+ *    @param angle Starting angle in radians.
+ *    @param arc Length of the arc (0 to 2 pi)
+ */
+void gl_drawCirclePartial( const double cx, const double cy,
+      const double r, const glColour *c, double angle, double arc )
+{
+   gl_Matrix4 projection;
+
+   /* Set the vertex. */
+   projection = gl_view_matrix;
+   projection = gl_Matrix4_Translate(projection, cx, cy, 0);
+   projection = gl_Matrix4_Scale(projection, r, r, 1);
+
+   /* Draw! */
+   gl_drawCirclePartialH( &projection, c, angle, arc );
+}
+
+
+/**
+ * @brief Draws a partial circle.
+ *
+ *    @param H Transformation matrix to draw the circle.
+ *    @param c Colour to use.
+ *    @param angle Starting angle in radians.
+ *    @param arc Length of the arc (0 to 2 pi)
+ */
+void gl_drawCirclePartialH( const gl_Matrix4 *H, const glColour *c, double angle, double arc )
+{
+   // TODO handle shearing and different x/y scaling
+   GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
+
+   /* Draw. */
+   glUseProgram( shaders.circle_partial.program );
+
+   glEnableVertexAttribArray( shaders.circle_partial.vertex );
+   gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle_partial.vertex,
+         0, 2, GL_FLOAT, 0 );
+
+   /* Set shader uniforms. */
+   gl_uniformColor( shaders.circle_partial.color, c );
+   gl_Matrix4_Uniform( shaders.circle_partial.projection, *H );
+   glUniform1f( shaders.circle_partial.radius, r );
+   glUniform1f( shaders.circle_partial.angle1, angle );
+   glUniform1f( shaders.circle_partial.angle2, arc );
+
+   /* Draw. */
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+   /* Clear state. */
+   glDisableVertexAttribArray( shaders.circle_partial.vertex );
+
+   glUseProgram(0);
+   gl_checkErr();
+}
+
+
+/**
+ * @brief Draws a line.
+ *
+ *    @param x1 X position of the first point in screen coordinates.
+ *    @param y1 Y position of the first point in screen coordinates.
+ *    @param x2 X position of the second point in screen coordinates.
+ *    @param y2 Y position of the second point in screen coordinates.
+ *    @param c Colour to use.
+ */
+void gl_drawLine( const double x1, const double y1,
+      const double x2, const double y2, const glColour *c )
+{
+   gl_Matrix4 projection;
+   double a, s;
+
+   a = atan2( y2-y1, x2-x1 );
+   s = hypotf( x2-x1, y2-y1 );
+
+   projection = gl_view_matrix;
+
+   projection = gl_Matrix4_Translate(projection, x1, y1, 0);
+   projection = gl_Matrix4_Rotate2d(projection, a);
+   projection = gl_Matrix4_Scale(projection, s, s, 1);
+
+   gl_beginSolidProgram(projection, c);
+   gl_vboActivateAttribOffset( gl_lineVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_LINES, 0, 2 );
+   gl_endSolidProgram();
 }
 
 
@@ -967,201 +923,79 @@ void gl_unclipRect (void)
 
 
 /**
- * @brief Only displays the pixel if it's in the screen.
- */
-#define PIXEL(x,y)   \
-if ((x>rx) && (y>ry) && (x<rxw) && (y<ryh) && (i<OPENGL_RENDER_VBO_SIZE)) { \
-   vertex[2*i+0] = x; \
-   vertex[2*i+1] = y; \
-   i++; \
-}
-/**
- * @brief Draws a circle in a rectangle.
- *
- *    @param cx X position of the center in screen coordinates..
- *    @param cy Y position of the center in screen coordinates.
- *    @param r Radius of the circle.
- *    @param rx X position of the rectangle limiting the circle in screen coords.
- *    @param ry Y position of the rectangle limiting the circle in screen coords.
- *    @param rw Width of the limiting rectangle.
- *    @param rh Height of the limiting rectangle.
- *    @param c Colour to use.
- */
-void gl_drawCircleInRect( const double cx, const double cy, const double r,
-      const double rx, const double ry, const double rw, const double rh,
-      const glColour *c, int filled )
-{
-   int i, j;
-   double rxw,ryh, x,y,p, w,h, tx,ty, tw,th, r2;
-   GLfloat vertex[2*OPENGL_RENDER_VBO_SIZE], col[4*OPENGL_RENDER_VBO_SIZE];
-
-   rxw = rx+rw;
-   ryh = ry+rh;
-
-   /* is offscreen? */
-   if ((cx+r < rx) || (cy+r < ry) || (cx-r > rxw) || (cy-r > ryh))
-      return;
-   /* can be drawn normally? */
-   else if ((cx-r > rx) && (cy-r > ry) && (cx+r < rxw) && (cy+r < ryh)) {
-      gl_drawCircle( cx, cy, r, c, filled );
-      return;
-   }
-
-   /* Case if filled. */
-   if (filled) {
-      r2 = 2.*r;
-      /* Clamp bottom left. */
-      x  = CLAMP( rx, rxw, cx-r );
-      y  = CLAMP( ry, ryh, cy-r );
-      /* Clamp width. */
-      w  = CLAMP( rx, rxw, cx+r ) - x;
-      h  = CLAMP( ry, ryh, cy+r ) - y;
-      /* Calculate texture bottom left. */
-      tx  = x - (cx-r);
-      tx *= gl_circle->srw / r2; /* Transform to unitary coordinates. */
-      ty  = y - (cy-r);
-      ty *= gl_circle->srh / r2;
-      /* Calculate dimensions of texture. */
-      tw  = w/r2 * gl_circle->srw;
-      th  = h/r2 * gl_circle->srh;
-      /* Render. */
-      gl_blitTexture( gl_circle, x, y, w, h, tx, ty, tw, th, c );
-      return;
-   }
-
-   /* Starting parameters. */
-   i = 0;
-   x = 0;
-   y = r;
-   p = (5. - (r*4.)) / 4.;
-
-   PIXEL( cx,   cy+y );
-   PIXEL( cx,   cy-y );
-   PIXEL( cx+y, cy   );
-   PIXEL( cx-y, cy   );
-
-   while (x<y) {
-      x++;
-      if (p < 0) p += 2*(double)(x)+1;
-      else p += 2*(double)(x-(--y))+1;
-
-      if (x==0) {
-         PIXEL( cx,   cy+y );
-         PIXEL( cx,   cy-y );
-         PIXEL( cx+y, cy   );
-         PIXEL( cx-y, cy   );
-      }
-      else
-         if (x==y) {
-            PIXEL( cx+x, cy+y );
-            PIXEL( cx-x, cy+y );
-            PIXEL( cx+x, cy-y );
-            PIXEL( cx-x, cy-y );
-         }
-         else
-            if (x<y) {
-               PIXEL( cx+x, cy+y );
-               PIXEL( cx-x, cy+y );
-               PIXEL( cx+x, cy-y );
-               PIXEL( cx-x, cy-y );
-               PIXEL( cx+y, cy+x );
-               PIXEL( cx-y, cy+x );
-               PIXEL( cx+y, cy-x );
-               PIXEL( cx-y, cy-x );
-            }
-   }
-   gl_vboSubData( gl_renderVBO, 0, i*2*sizeof(GLfloat), vertex );
-   gl_vboActivateOffset( gl_renderVBO, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-
-   /* Set up the colour. */
-   for (j=0; j<i; j++) {
-      col[4*j+0] = c->r;
-      col[4*j+1] = c->g;
-      col[4*j+2] = c->b;
-      col[4*j+3] = c->a;
-   }
-   gl_vboSubData( gl_renderVBO, gl_renderVBOcolOffset, i*4*sizeof(GLfloat), col );
-   gl_vboActivateOffset( gl_renderVBO, GL_COLOR_ARRAY,
-         gl_renderVBOcolOffset, 4, GL_FLOAT, 0 );
-
-   /* Draw. */
-   glDrawArrays( GL_POINTS, 0, i );
-
-   /* Clear state. */
-   gl_vboDeactivate();
-}
-#undef PIXEL
-
-
-
-/**
- * @brief Generates an filled circle texture.
- *
- *    @param radius Radius of the circle to generate.
- *    @return The tetxure containing the generated circle.
- */
-glTexture *gl_genCircle( int radius )
-{
-   int i, j, edge, blur;
-   SDL_Surface *sur;
-   uint8_t *pix;
-   int h, w;
-   double dist;
-   char name[PATH_MAX];
-
-   /* Calculate parameters. */
-   w = 2*radius+1;
-   h = 2*radius+1;
-
-   /* Create the surface. */
-   sur = SDL_CreateRGBSurface( SDL_SWSURFACE, w, h, 32, RGBAMASK );
-   pix = sur->pixels;
-
-   /* Generate the circle. */
-   SDL_LockSurface( sur );
-
-   edge = pow2(radius);
-   blur = pow2(radius - 1);
-
-   for (i=0; i<w; i++) {
-      for (j=0; j<h; j++) {
-         dist = pow2(i - radius) + pow2(j - radius);
-         if (dist > edge)
-            pix[i*sur->pitch + j*4 + 3] = 0;
-         else if (dist <= blur)
-            pix[i*sur->pitch + j*4 + 3] = 0xFF;
-         else
-            pix[i*sur->pitch + j*4 + 3] = CLAMP(0, 0xFF, (edge - dist) / (edge - blur) * 0xFF);
-
-         pix[i*sur->pitch + j*4 + 0] = 0xFF;
-         pix[i*sur->pitch + j*4 + 1] = 0xFF;
-         pix[i*sur->pitch + j*4 + 2] = 0xFF;
-      }
-   }
-
-   SDL_UnlockSurface( sur );
-
-   /* Return texture. */
-   nsnprintf( name, sizeof(name), "gencircle%d", radius );
-   return gl_loadImagePad( name, sur, OPENGL_TEX_MIPMAPS, sur->w, sur->h, 1, 1, 1 );
-}
-
-
-/**
  * @brief Initializes the OpenGL rendering routines.
  *
  *    @return 0 on success.
  */
 int gl_initRender (void)
 {
+   GLfloat vertex[10];
+
    /* Initialize the VBO. */
    gl_renderVBO = gl_vboCreateStream( sizeof(GLfloat) *
          OPENGL_RENDER_VBO_SIZE*(2 + 2 + 4), NULL );
    gl_renderVBOtexOffset = sizeof(GLfloat) * OPENGL_RENDER_VBO_SIZE*2;
    gl_renderVBOcolOffset = sizeof(GLfloat) * OPENGL_RENDER_VBO_SIZE*(2+2);
 
-   /* Initialize the circles. */
-   gl_circle      = gl_genCircle( 128 );
+   vertex[0] = 0.;
+   vertex[1] = 0.;
+   vertex[2] = 1.;
+   vertex[3] = 0.;
+   vertex[4] = 0.;
+   vertex[5] = 1.;
+   vertex[6] = 1.;
+   vertex[7] = 1.;
+   gl_squareVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
+
+   vertex[0] = -1.;
+   vertex[1] = -1.;
+   vertex[2] = 1.;
+   vertex[3] = -1.;
+   vertex[4] = -1.;
+   vertex[5] = 1.;
+   vertex[6] = 1.;
+   vertex[7] = 1.;
+   gl_circleVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
+
+   vertex[0] = 0.;
+   vertex[1] = 0.;
+   vertex[2] = 1.;
+   vertex[3] = 0.;
+   vertex[4] = 1.;
+   vertex[5] = 1.;
+   vertex[6] = 0.;
+   vertex[7] = 1.;
+   vertex[8] = 0.;
+   vertex[9] = 0.;
+   gl_squareEmptyVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
+
+   vertex[0] = 0.;
+   vertex[1] = -1.;
+   vertex[2] = 0.;
+   vertex[3] = 1.;
+   vertex[4] = -1.;
+   vertex[5] = 0.;
+   vertex[6] = 1.;
+   vertex[7] = 0.;
+   gl_crossVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
+
+   vertex[0] = 0.;
+   vertex[1] = 0.;
+   vertex[2] = 1.;
+   vertex[3] = 0.;
+   gl_lineVBO = gl_vboCreateStatic( sizeof(GLfloat) * 4, vertex );
+
+   vertex[0] = 0.5*cos(4.*M_PI/3.);
+   vertex[1] = 0.5*sin(4.*M_PI/3.);
+   vertex[2] = 0.5*cos(0.);
+   vertex[3] = 0.5*sin(0.);
+   vertex[4] = 0.5*cos(2.*M_PI/3.);
+   vertex[5] = 0.5*sin(2.*M_PI/3.);
+   vertex[6] = vertex[0];
+   vertex[7] = vertex[1];
+   gl_triangleVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
+
+   gl_checkErr();
 
    return 0;
 }
@@ -1174,10 +1008,11 @@ void gl_exitRender (void)
 {
    /* Destroy the VBO. */
    gl_vboDestroy( gl_renderVBO );
+   gl_vboDestroy( gl_squareVBO );
+   gl_vboDestroy( gl_circleVBO );
+   gl_vboDestroy( gl_squareEmptyVBO );
+   gl_vboDestroy( gl_crossVBO );
+   gl_vboDestroy( gl_lineVBO );
+   gl_vboDestroy( gl_triangleVBO );
    gl_renderVBO = NULL;
-
-   /* Destroy the circles. */
-   gl_freeTexture(gl_circle);
-   gl_circle = NULL;
 }
-

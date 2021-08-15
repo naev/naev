@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Enygma Systems Spearhead Launcher">
  <general>
   <slot>weapon</slot>
@@ -6,16 +6,18 @@
   <license>Medium Weapon License</license>
   <mass>15</mass>
   <price>70000</price>
-  <description>This launcher fires Spearhead class shieldbreaker missiles. Its basic design is largely similar to that of most conventional missile launchers, save for the unique mechanism that charges and primes the missile warheads.</description>
-  <gfx_store>headhunterlauncher</gfx_store>
+  <description>The Spearhead class shieldbreaker missile is one of Enygma Systems' more specialised pieces of hardware. Its sole function is to do massive damage to shielding. It uses a special energy discharge warhead that is quite effective at disrupting shields, but has little effect on physical objects. The Spearhead's limited agility make it primarily suited to fighting corvette class ships or heavier.</description>
+  <gfx_store>headhunterlauncher.webp</gfx_store>
   <cpu>-7</cpu>
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Spearhead Missile</ammo>
   <delay>4</delay>
+  <reload_time>60</reload_time>
   <amount>8</amount>
   <lockon>10</lockon>
-  <arc>6</arc>
-  <ew_target>1.25</ew_target>
+  <arc>60</arc>
+  <trackmin>0</trackmin>
+  <trackmax>10000</trackmax>
  </specific>
 </outfit>

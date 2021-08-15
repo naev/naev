@@ -8,64 +8,48 @@
  * @brief Handles rendering and generating the nebula.
  */
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "nebula.h"
 
-#include "naev.h"
-
-#include <errno.h>
-
-#include "log.h"
-#include "opengl.h"
-#include "nfile.h"
-#include "perlin.h"
-#include "rng.h"
-#include "menu.h"
-#include "player.h"
-#include "pause.h"
-#include "gui.h"
-#include "conf.h"
-#include "spfx.h"
-#include "npng.h"
 #include "camera.h"
-#include "nstring.h"
-#include "ndata.h"
+#include "conf.h"
+#include "gui.h"
+#include "log.h"
+#include "menu.h"
+#include "opengl.h"
+#include "perlin.h"
+#include "player.h"
+#include "rng.h"
+#include "spfx.h"
 
 
-#define NEBULA_Z             16 /**< Z plane */
 #define NEBULA_PUFFS         32 /**< Amount of puffs to generate */
-#define NEBULA_PATH_BG       "nebu_bg_%dx%d_%02d.png" /**< Nebula path format. */
-
 #define NEBULA_PUFF_BUFFER   300 /**< Nebula buffer */
 
 
-/* Externs */
-extern void loadscreen_render( double done, const char *msg ); /**< from naev.c */
-
-
-/* The nebula textures */
-static GLuint nebu_textures[NEBULA_Z]; /**< BG Nebula textures. */
-static int nebu_w    = 0; /**< BG Nebula width. */
-static int nebu_h    = 0; /**< BG Nebula height. */
-static int nebu_pw   = 0; /**< BG Padded Nebula width. */
-static int nebu_ph   = 0; /**< BG Padded Nebula height. */
-
-/* Information on rendering */
-static int cur_nebu[2]           = { 0, 1 }; /**< Nebulae currently rendering. */
-static double nebu_timer         = 0.; /**< Timer since last render. */
-
 /* Nebula properties */
+static double nebu_hue = 0.; /**< The hue. */
+static double nebu_density = 0.; /**< The density. */
+static double nebu_dx   = 0.; /**< Length scale (space coords) for turbulence/eddies we draw. */
 static double nebu_view = 0.; /**< How far player can see. */
 static double nebu_dt   = 0.; /**< How fast nebula changes. */
+static double nebu_time = 0.; /**< Timer since last render. */
+
+/* Nebula scaling stuff. */
+static double nebu_scale = 4.; /**< How much to scale nebula. */
+static int nebu_dofbo    = 0;
+static GLuint nebu_fbo   = GL_INVALID_VALUE;
+static GLuint nebu_tex   = GL_INVALID_VALUE;
+static GLfloat nebu_render_w= 0.;
+static GLfloat nebu_render_h= 0.;
+static gl_Matrix4 nebu_render_P;
 
 /* puff textures */
 static glTexture *nebu_pufftexs[NEBULA_PUFFS]; /**< Nebula puffs. */
 
-/* Misc. */
-static int nebu_loaded = 0; /**< Whether the nebula has been loaded. */
-
-/* VBOs */
-static gl_vbo *nebu_vboOverlay   = NULL; /**< Overlay VBO. */
-static gl_vbo *nebu_vboBG        = NULL; /**< BG VBO. */
 
 /**
  * @struct NebulaPuff
@@ -77,6 +61,7 @@ typedef struct NebulaPuff_ {
    double y; /**< Y position */
    double height; /**< height vs player */
    int tex; /**< Texture */
+   glColour col; /**< Colour. */
 } NebulaPuff;
 static NebulaPuff *nebu_puffs = NULL; /**< Stack of puffs. */
 static int nebu_npuffs        = 0; /**< Number of puffs. */
@@ -87,18 +72,13 @@ static double puff_y          = 0.;
 /*
  * prototypes
  */
-static int nebu_init_recursive( int iter );
-static int nebu_checkCompat( const char* file );
-static int nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex );
-static int nebu_generate (void);
-static int saveNebula( float *map, const uint32_t w, const uint32_t h, const char* file );
-static SDL_Surface* loadNebula( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const int h );
 /* Puffs. */
 static void nebu_generatePuffs (void);
 static void nebu_renderPuffs( int below_player );
 /* Nebula render methods. */
-static void nebu_renderMultitexture( const double dt );
+static void nebu_renderBackground( const double dt );
+static void nebu_blitFBO (void);
 
 
 /**
@@ -108,140 +88,49 @@ static void nebu_renderMultitexture( const double dt );
  */
 int nebu_init (void)
 {
-   return nebu_init_recursive( 0 );
+   nebu_time = -1000.0 * RNGF();
+   nebu_generatePuffs();
+   return nebu_resize();
 }
 
 
 /**
- * @brief Small wrapper that handles recursivity limits.
+ * @brief Handles a screen s
  *
- *    @param iter Iteration of recursivity.
  *    @return 0 on success.
  */
-static int nebu_init_recursive( int iter )
+int nebu_resize (void)
 {
-   int i;
-   char nebu_file[PATH_MAX];
-   SDL_Surface* nebu_sur;
-   int ret;
+   double scale;
+   GLfloat fbo_w, fbo_h;
 
-   /* Avoid too much recursivity. */
-   if (iter > 3) {
-      WARN("Unable to generate nebula after 3 attempts, something has really gone wrong!");
-      return -1;
-   }
+   scale = conf.nebu_scale * gl_screen.scale;
+   fbo_w = round(gl_screen.nw/scale);
+   fbo_h = round(gl_screen.nh/scale);
+   if (scale == nebu_scale && fbo_w == nebu_render_w && fbo_h == nebu_render_h)
+      return 0;
 
-   /* Special code to regenerate the nebula */
-   if ((nebu_w == -9) && (nebu_h == -9))
-      nebu_generate();
+   nebu_scale = scale;
+   nebu_render_w = fbo_w;
+   nebu_render_h = fbo_h;
+   nebu_dofbo = (nebu_scale != 1.);
+   glDeleteTextures( 1, &nebu_tex );
+   glDeleteFramebuffers( 1, &nebu_fbo );
 
-   /* Set expected sizes */
-   nebu_w  = SCREEN_W;
-   nebu_h  = SCREEN_H;
-   if (gl_needPOT()) {
-      nebu_pw = gl_pot(nebu_w);
-      nebu_ph = gl_pot(nebu_h);
-   }
-   else {
-      nebu_pw = nebu_w;
-      nebu_ph = nebu_h;
-   }
+   if (nebu_dofbo)
+      gl_fboCreate( &nebu_fbo, &nebu_tex, nebu_render_w, nebu_render_h );
 
-   /* Load each, checking for compatibility and padding */
-   glGenTextures( NEBULA_Z, nebu_textures );
-   for (i=0; i<NEBULA_Z; i++) {
-      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
-
-      /* Check compatibility. */
-      if (nebu_checkCompat( nebu_file ))
-         goto no_nebula;
-
-      /* Try to load. */
-      nebu_sur = loadNebula( nebu_file );
-      if (nebu_sur == NULL)
-         goto no_nebula;
-      if ((nebu_sur->w != nebu_w) || (nebu_sur->h != nebu_h))
-         WARN("Nebula raw size doesn't match expected! (%dx%d instead of %dx%d)",
-               nebu_sur->w, nebu_sur->h, nebu_w, nebu_h );
-
-      /* Load the texture */
-      ret = nebu_loadTexture( nebu_sur, nebu_pw, nebu_ph, nebu_textures[i] );
-      if (ret)
-         goto no_nebula;
-   }
-
-   /* Generate puffs after the recursivity stuff. */
-   nebu_generatePuffs();
-
-   /* Display loaded nebulas. */
-   DEBUG("Loaded %d Nebula Layers", NEBULA_Z);
-
-   nebu_vbo_init();
-   nebu_loaded = 1;
+   /* Set up the matrices. */
+   nebu_render_P = gl_Matrix4_Identity();
+   nebu_render_P = gl_Matrix4_Translate(nebu_render_P, -nebu_render_w/2., -nebu_render_h/2., 0. );
+   nebu_render_P = gl_Matrix4_Scale(nebu_render_P, nebu_render_w, nebu_render_h, 1);
+   glUseProgram(shaders.nebula_background.program);
+   gl_Matrix4_Uniform(shaders.nebula_background.projection, nebu_render_P);
+   glUseProgram(shaders.nebula.program);
+   gl_Matrix4_Uniform(shaders.nebula.projection, nebu_render_P);
+   glUseProgram(0);
 
    return 0;
-no_nebula:
-   LOG("No nebula found, generating (this may take a while).");
-
-   /* So we generate and reload */
-   ret = nebu_generate();
-   if (ret != 0) /* An error has happened - break recursivity*/
-      return ret;
-
-   return nebu_init_recursive( iter+1 );
-}
-
-
-/**
- * @brief Initializes the nebula VBO.
- */
-void nebu_vbo_init (void)
-{
-   GLfloat vertex[4*3*2];
-   GLfloat tw, th;
-
-   /* Free the VBO if it exists. */
-   if (nebu_vboBG != NULL) {
-      gl_vboDestroy( nebu_vboBG );
-      nebu_vboBG = NULL;
-   }
-
-   /* Vertex. */
-   vertex[0] = 0;
-   vertex[1] = 0;
-   vertex[2] = 0;
-   vertex[3] = SCREEN_H;
-   vertex[4] = SCREEN_W;
-   vertex[5] = 0;
-   vertex[6] = SCREEN_W;
-   vertex[7] = SCREEN_H;
-   /* Texture 0. */
-   tw = (double)nebu_w / (double)nebu_pw;
-   th = (double)nebu_h / (double)nebu_ph;
-   vertex[8]  = 0.;
-   vertex[9]  = 0.;
-   vertex[10] = tw;
-   vertex[11] = 0.;
-   vertex[12] = 0.;
-   vertex[13] = th;
-   vertex[14] = tw;
-   vertex[15] = th;
-   /* Texture 1. */
-   vertex[16] = 0.;
-   vertex[17] = 0.;
-   vertex[18] = tw;
-   vertex[19] = 0.;
-   vertex[20] = 0.;
-   vertex[21] = th;
-   vertex[22] = tw;
-   vertex[23] = th;
-   nebu_vboBG = gl_vboCreateStatic( sizeof(GLfloat) * (4*2*3), vertex );
-}
-
-
-int nebu_isLoaded (void)
-{
-   return nebu_loaded;
 }
 
 
@@ -257,65 +146,19 @@ double nebu_getSightRadius (void)
 
 
 /**
- * @brief Loads sur into tex, checks for expected size of w and h.
- *
- *    @param sur Surface to load into texture.
- *    @param w Expected width of surface.
- *    @param h Expected height of surface.
- *    @param tex Already generated texture to load into.
- *    @return 0 on success;
- */
-static int nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex )
-{
-   SDL_Surface *nebu_sur;
-
-   nebu_sur = gl_prepareSurface( sur );
-   if ((w!=0) && (h!=0) &&
-         ((nebu_sur->w != w) || (nebu_sur->h != h))) {
-      WARN("Nebula size doesn't match expected! (%dx%d instead of %dx%d)",
-            nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
-      return -1;
-   }
-
-   /* Load the texture */
-   glBindTexture( GL_TEXTURE_2D, tex );
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-   /* Store into opengl saving only alpha channel in video memory */
-   SDL_LockSurface( nebu_sur );
-   glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, nebu_sur->w, nebu_sur->h,
-         0, GL_RGBA, GL_UNSIGNED_BYTE, nebu_sur->pixels );
-   SDL_UnlockSurface( nebu_sur );
-
-   SDL_FreeSurface(nebu_sur);
-   gl_checkErr();
-   return 0;
-}
-
-
-/**
  * @brief Cleans up the nebu subsystem.
  */
 void nebu_exit (void)
 {
    int i;
 
-   /* Free the Nebula BG. */
-   glDeleteTextures( NEBULA_Z, nebu_textures );
-
    /* Free the puffs. */
    for (i=0; i<NEBULA_PUFFS; i++)
       gl_freeTexture( nebu_pufftexs[i] );
 
-   /* Free the VBO. */
-   if (nebu_vboBG != NULL) {
-      gl_vboDestroy( nebu_vboBG );
-      nebu_vboBG = NULL;
-   }
-   if (nebu_vboOverlay != NULL) {
-      gl_vboDestroy( nebu_vboOverlay );
-      nebu_vboOverlay= NULL;
+   if (nebu_dofbo) {
+      glDeleteFramebuffers( 1, &nebu_fbo );
+      glDeleteTextures( 1, &nebu_tex );
    }
 }
 
@@ -327,15 +170,7 @@ void nebu_exit (void)
  */
 void nebu_render( const double dt )
 {
-   /* Must exist. */
-   if (nebu_vboBG == NULL)
-      return;
-
-   /* Different rendering backends. */
-   if (nglActiveTexture != NULL)
-      nebu_renderMultitexture(dt);
-
-   /* Now render the puffs, they are generic. */
+   nebu_renderBackground(dt);
    nebu_renderPuffs( 1 );
 }
 
@@ -345,229 +180,81 @@ void nebu_render( const double dt )
  *
  *    @param dt Current delta tick.
  */
-static void nebu_renderMultitexture( const double dt )
+static void nebu_renderBackground( const double dt )
 {
-   GLfloat col[4];
-   int temp;
-   double sx, sy;
-
    /* calculate frame to draw */
-   nebu_timer -= dt;
-   if (nebu_timer < 0.) { /* Time to change. */
-      temp         = cur_nebu[0] - cur_nebu[1];
-      cur_nebu[1]  = cur_nebu[0];
-      cur_nebu[0] += temp;
+   nebu_time += dt * nebu_dt;
 
-      if (cur_nebu[0] >= NEBULA_Z)
-         cur_nebu[0] = cur_nebu[1] - 1;
-      else if (cur_nebu[0] < 0)
-         cur_nebu[0] = cur_nebu[1] + 1;
-
-      /* Change timer. */
-      nebu_timer += nebu_dt;
-
-      /* Case it hasn't rendered in a while so it doesn't go crazy. */
-      if (nebu_timer < 0)
-         nebu_timer = nebu_dt;
+   if (nebu_dofbo) {
+      glBindFramebuffer(GL_FRAMEBUFFER, nebu_fbo);
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    }
 
-   /* Set the colour */
-   col[0] = cBlue.r;
-   col[1] = cBlue.g;
-   col[2] = cBlue.b;
-   col[3] = (nebu_dt - nebu_timer) / nebu_dt;
+   /* Start the program. */
+   glUseProgram(shaders.nebula_background.program);
 
-   /* Set up the targets */
-   /* Texture 0 */
-   nglActiveTexture( GL_TEXTURE0 );
-   glEnable(GL_TEXTURE_2D);
-   glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[1]]);
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
-   /* Texture 1 */
-   nglActiveTexture( GL_TEXTURE1 );
-   glEnable(GL_TEXTURE_2D);
-   glBindTexture( GL_TEXTURE_2D, nebu_textures[cur_nebu[0]]);
+   /* Set shader uniforms. */
+   glUniform1f(shaders.nebula_background.eddy_scale, nebu_view * cam_getZoom() / nebu_scale);
+   glUniform1f(shaders.nebula_background.time, nebu_time);
+   glUniform1f(shaders.nebula_background.brightness, conf.nebu_brightness);
 
-   /* Prepare it */
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_RGB,      GL_REPLACE );
-   glTexEnvi( GL_TEXTURE_ENV, GL_COMBINE_ALPHA,    GL_INTERPOLATE );
-   /* Colour */
-   glTexEnvfv( GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, col );
-
-   /* Arguments */
-   /* Arg0 */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_RGB,    GL_CONSTANT );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_RGB,   GL_SRC_COLOR );
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE0_ALPHA,  GL_TEXTURE );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
-   /* Arg1 */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE1_ALPHA,  GL_PREVIOUS );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
-   /* Arg2 */
-   glTexEnvi( GL_TEXTURE_ENV, GL_SOURCE2_ALPHA,  GL_CONSTANT );
-   glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
-
-   /* Compensate possible rumble */
-   spfx_getShake( &sx, &sy );
-   gl_matrixPush();
-      gl_matrixTranslate( -sx, -sy );
-
-   /* Now render! */
-   gl_vboActivateOffset( nebu_vboBG, GL_VERTEX_ARRAY,
-         sizeof(GL_FLOAT) * 0*2*4, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( nebu_vboBG, GL_TEXTURE0,
-         sizeof(GL_FLOAT) * 1*2*4, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( nebu_vboBG, GL_TEXTURE1,
-         sizeof(GL_FLOAT) * 2*2*4, 2, GL_FLOAT, 0 );
+   /* Draw. */
+   glEnableVertexAttribArray( shaders.nebula_background.vertex );
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.nebula_background.vertex, 0, 2, GL_FLOAT, 0 );
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-   gl_vboDeactivate();
+   nebu_blitFBO();
 
-   gl_matrixPop();
-
-   /* Set values to defaults */
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-   glDisable(GL_TEXTURE_2D);
-   nglActiveTexture( GL_TEXTURE0 );
-   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-   glDisable(GL_TEXTURE_2D);
-
-   /* Anything failed? */
+   /* Clean up. */
+   glDisableVertexAttribArray( shaders.nebula_background.vertex );
+   glUseProgram(0);
    gl_checkErr();
 }
 
 
-#define ANG45     0.70710678118654757 /**< 1./sqrt(2) */
-#define COS225    0.92387953251128674 /**< cos(225) */
-#define SIN225    0.38268343236508978 /**< sin(225) */
 /**
- * @brief Regenerates the overlay.
+ * @brief If we're drawing the nebula buffered, copy to the screen.
  */
-void nebu_genOverlay (void)
+static void nebu_blitFBO (void)
 {
-   int i;
-   GLfloat *data;
-   double a;
-   double gx, gy;
-   double z;
+   if (nebu_dofbo) {
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
 
-   /* Get GUI offsets. */
-   gui_getOffset( &gx, &gy );
+      glUseProgram(shaders.texture.program);
 
-   /* Here we calculate outer corners. It should actually be /2. because we
-    * are centered around 0,0. However, we treat this extra space as a buffer
-    * for when it's shaking. */
-   z = 1./conf.zoom_far;
+      glBindTexture( GL_TEXTURE_2D, nebu_tex );
 
-   /* See if need to generate overlay. */
-   if (nebu_vboOverlay == NULL) {
-      nebu_vboOverlay = gl_vboCreateStatic( sizeof(GLfloat) *
-            ((2+4)*18 + 2*28 + 4*7), NULL );
+      glEnableVertexAttribArray( shaders.texture.vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.texture.vertex,
+            0, 2, GL_FLOAT, 0 );
 
-      /* Set colors, those will be pure static. */
-      data = gl_vboMap( nebu_vboOverlay );
+      /* Set shader uniforms. */
+      gl_uniformColor(shaders.texture.color, &cWhite);
+      gl_Matrix4_Uniform(shaders.texture.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
+      gl_Matrix4_Uniform(shaders.texture.tex_mat, gl_Matrix4_Identity());
 
-      /* Alpha overlay. */
-      for (i=0; i<18; i++) {
-         data[2*18 + 4*i + 0] = cDarkBlue.r;
-         data[2*18 + 4*i + 1] = cDarkBlue.g;
-         data[2*18 + 4*i + 2] = cDarkBlue.b;
-         data[2*18 + 4*i + 3] = cDarkBlue.a;
-      }
-      data[2*18 + 3] = 0.; /* Origin is transparent. */
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
-      /* Solid overlay. */
-      for (i=0; i<7; i++) {
-         data[(2+4)*18 + 2*28 + 4*i + 0] = cDarkBlue.r;
-         data[(2+4)*18 + 2*28 + 4*i + 1] = cDarkBlue.g;
-         data[(2+4)*18 + 2*28 + 4*i + 2] = cDarkBlue.b;
-         data[(2+4)*18 + 2*28 + 4*i + 3] = cDarkBlue.a;
-      }
-
-      gl_vboUnmap( nebu_vboOverlay );
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.texture.vertex );
    }
-
-   /* Generate the main chunk. */
-   data = gl_vboMap( nebu_vboOverlay );
-
-   /* Main chunk. */
-   data[0] = 0.;
-   data[1] = 0.;
-   for (i=0; i<17; i++) {
-      a = M_PI*2./16. * (double)i;
-      data[2*(i+1) + 0] = nebu_view * cos(a);
-      data[2*(i+1) + 1] = nebu_view * sin(a);
-   }
-
-   /* Top Left */
-   data[(2+4)*18+0]  = -SCREEN_W*z-gx;
-   data[(2+4)*18+1]  = SCREEN_H*z-gy;
-   data[(2+4)*18+2]  = -nebu_view;
-   data[(2+4)*18+3]  = 0.;
-   data[(2+4)*18+4]  = -nebu_view*COS225;
-   data[(2+4)*18+5]  = nebu_view*SIN225;
-   data[(2+4)*18+6]  = -nebu_view*ANG45;
-   data[(2+4)*18+7]  = nebu_view*ANG45;
-   data[(2+4)*18+8]  = -nebu_view*SIN225;
-   data[(2+4)*18+9]  = nebu_view*COS225;
-   data[(2+4)*18+10] = 0.;
-   data[(2+4)*18+11] = nebu_view;
-   data[(2+4)*18+12] = SCREEN_W*z-gx;
-   data[(2+4)*18+13] = SCREEN_H*z-gy;
-
-   /* Top Right */
-   data[(2+4)*18+14] = SCREEN_W*z-gx;
-   data[(2+4)*18+15] = SCREEN_H*z-gy;
-   data[(2+4)*18+16] = 0.;
-   data[(2+4)*18+17] = nebu_view;
-   data[(2+4)*18+18] = nebu_view*SIN225;
-   data[(2+4)*18+19] = nebu_view*COS225;
-   data[(2+4)*18+20] = nebu_view*ANG45;
-   data[(2+4)*18+21] = nebu_view*ANG45;
-   data[(2+4)*18+22] = nebu_view*COS225;
-   data[(2+4)*18+23] = nebu_view*SIN225;
-   data[(2+4)*18+24] = nebu_view;
-   data[(2+4)*18+25] = 0.;
-   data[(2+4)*18+26] = SCREEN_W*z-gx;
-   data[(2+4)*18+27] = -SCREEN_H*z-gy;
-
-   /* Bottom Right */
-   data[(2+4)*18+28] = SCREEN_W*z-gx;
-   data[(2+4)*18+29] = -SCREEN_H*z-gy;
-   data[(2+4)*18+30] = nebu_view;
-   data[(2+4)*18+31] = 0.;
-   data[(2+4)*18+32] = nebu_view*COS225;
-   data[(2+4)*18+33] = -nebu_view*SIN225;
-   data[(2+4)*18+34] = nebu_view*ANG45;
-   data[(2+4)*18+35] = -nebu_view*ANG45;
-   data[(2+4)*18+36] = nebu_view*SIN225;
-   data[(2+4)*18+37] = -nebu_view*COS225;
-   data[(2+4)*18+38] = 0.;
-   data[(2+4)*18+39] = -nebu_view;
-   data[(2+4)*18+40] = -SCREEN_W*z-gx;
-   data[(2+4)*18+41] = -SCREEN_H*z-gy;
-
-   /* Bottom left */
-   data[(2+4)*18+42] = -SCREEN_W*z-gx;
-   data[(2+4)*18+43] = -SCREEN_H*z-gy;
-   data[(2+4)*18+44] = 0.;
-   data[(2+4)*18+45] = -nebu_view;
-   data[(2+4)*18+46] = -nebu_view*SIN225;
-   data[(2+4)*18+47] = -nebu_view*COS225;
-   data[(2+4)*18+48] = -nebu_view*ANG45;
-   data[(2+4)*18+49] = -nebu_view*ANG45;
-   data[(2+4)*18+50] = -nebu_view*COS225;
-   data[(2+4)*18+51] = -nebu_view*SIN225;
-   data[(2+4)*18+52] = -nebu_view;
-   data[(2+4)*18+53] = 0.;
-   data[(2+4)*18+54] = -SCREEN_W*z-gx;
-   data[(2+4)*18+55] = SCREEN_H*z-gy;
-
-   gl_vboUnmap( nebu_vboOverlay );
 }
-#undef ANG45
-#undef COS225
-#undef SIN225
+
+
+/**
+ * @brief Updates visibility and stuff.
+ */
+void nebu_update( double dt )
+{
+   (void) dt;
+   double mod = 1.;
+
+   if (player.p != NULL)
+      mod = player.p->stats.ew_detect;
+
+   /* At density 1000 you have zero visibility. */
+   nebu_view = (1000. - nebu_density) * mod;
+}
 
 
 /**
@@ -579,9 +266,7 @@ void nebu_renderOverlay( const double dt )
 {
    (void) dt;
    double gx, gy;
-   double ox, oy;
    double z;
-   double sx, sy;
 
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
@@ -595,96 +280,79 @@ void nebu_renderOverlay( const double dt )
    nebu_renderPuffs( 0 );
 
    /* Prepare the matrix */
-   ox = gx;
-   oy = gy;
-   spfx_getShake( &sx, &sy );
-   ox += sx;
-   oy += sy;
-   gl_matrixPush();
-      gl_matrixTranslate( SCREEN_W/2.+ox, SCREEN_H/2.+oy );
-      gl_matrixScale( z, z );
+   if (nebu_dofbo) {
+      glBindFramebuffer(GL_FRAMEBUFFER, nebu_fbo);
+      glClearColor( 0., 0., 0., 0. );
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   }
 
-   /*
-    * Mask for area player can still see (partially)
-    */
-   glShadeModel(GL_SMOOTH);
-   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-   gl_vboActivateOffset( nebu_vboOverlay, GL_COLOR_ARRAY,
-         sizeof(GLfloat)*2*18, 4, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_FAN, 0, 18 );
+   /* Start the program. */
+   glUseProgram(shaders.nebula.program);
 
+   /* Set shader uniforms. */
+   glUniform1f(shaders.nebula.horizon, nebu_view * z / nebu_scale);
+   glUniform1f(shaders.nebula.eddy_scale, nebu_dx * z / nebu_scale);
+   glUniform1f(shaders.nebula.time, nebu_time);
+   glUniform1f(shaders.nebula.brightness, conf.nebu_brightness);
 
-   /*
-    * Solid nebula for areas the player can't see
-    */
-   glShadeModel(GL_FLAT);
-   /* Colour is shared. */
-   gl_vboActivateOffset( nebu_vboOverlay, GL_COLOR_ARRAY,
-         sizeof(GLfloat)*((2+4)*18 + 2*28), 4, GL_FLOAT, 0 );
-   /* Top left. */
-   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY,
-         sizeof(GLfloat)*((2+4)*18 + 0*2*7), 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
-   /* Top right. */
-   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY,
-         sizeof(GLfloat)*((2+4)*18 + 1*2*7), 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
-   /* Bottom right. */
-   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY,
-         sizeof(GLfloat)*((2+4)*18 + 2*2*7), 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
-   /* Bottom left. */
-   gl_vboActivateOffset( nebu_vboOverlay, GL_VERTEX_ARRAY,
-         sizeof(GLfloat)*((2+4)*18 + 3*2*7), 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_TRIANGLE_FAN, 0, 7 );
+   /* Draw. */
+   glEnableVertexAttribArray(shaders.nebula.vertex);
+   gl_vboActivateAttribOffset( gl_squareVBO, shaders.nebula.vertex, 0, 2, GL_FLOAT, 0 );
+   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+   nebu_blitFBO();
 
-   gl_vboDeactivate();
-   gl_matrixPop();
+   /* Clean up. */
+   glDisableVertexAttribArray( shaders.nebula.vertex );
+   glClearColor( 0., 0., 0., 1. );
+   glUseProgram(0);
+   gl_checkErr();
 
    /* Reset puff movement. */
    puff_x = 0.;
    puff_y = 0.;
-
-   gl_checkErr();
 }
 
 
 /**
  * @brief Renders the puffs.
  *
- *    @param dt Current delta tick.
  *    @param below_player Render the puffs below player or above player?
  */
 static void nebu_renderPuffs( int below_player )
 {
    int i;
+   NebulaPuff *puff;
+   glColour col;
 
    /* Main menu shouldn't have puffs */
-   if (menu_isOpen(MENU_MAIN)) return;
+   if (menu_isOpen(MENU_MAIN))
+      return;
 
    for (i=0; i<nebu_npuffs; i++) {
+      puff = &nebu_puffs[i];
 
       /* Separate by layers */
-      if ((below_player && (nebu_puffs[i].height < 1.)) ||
-            (!below_player && (nebu_puffs[i].height > 1.))) {
+      if ((below_player && (puff->height < 1.)) ||
+            (!below_player && (puff->height > 1.))) {
 
          /* calculate new position */
-         nebu_puffs[i].x += puff_x * nebu_puffs[i].height;
-         nebu_puffs[i].y += puff_y * nebu_puffs[i].height;
+         puff->x += puff_x * puff->height;
+         puff->y += puff_y * puff->height;
 
          /* Check boundaries */
-         if (nebu_puffs[i].x > SCREEN_W + NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].x -= SCREEN_W + 2*NEBULA_PUFF_BUFFER;
-         else if (nebu_puffs[i].y > SCREEN_H + NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].y -= SCREEN_H + 2*NEBULA_PUFF_BUFFER;
-         else if (nebu_puffs[i].x < -NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].x += SCREEN_W + 2*NEBULA_PUFF_BUFFER;
-         else if (nebu_puffs[i].y < -NEBULA_PUFF_BUFFER)
-            nebu_puffs[i].y += SCREEN_H + 2*NEBULA_PUFF_BUFFER;
+         if (puff->x > SCREEN_W + NEBULA_PUFF_BUFFER)
+            puff->x -= SCREEN_W + 2*NEBULA_PUFF_BUFFER;
+         else if (puff->y > SCREEN_H + NEBULA_PUFF_BUFFER)
+            puff->y -= SCREEN_H + 2*NEBULA_PUFF_BUFFER;
+         else if (puff->x < -NEBULA_PUFF_BUFFER)
+            puff->x += SCREEN_W + 2*NEBULA_PUFF_BUFFER;
+         else if (puff->y < -NEBULA_PUFF_BUFFER)
+            puff->y += SCREEN_H + 2*NEBULA_PUFF_BUFFER;
 
          /* Render */
-         gl_blitStatic( nebu_pufftexs[nebu_puffs[i].tex],
-               nebu_puffs[i].x, nebu_puffs[i].y, &cLightBlue );
+	 col_blend( &col, &puff->col, &cBlack, conf.nebu_brightness );
+         gl_blitStatic( nebu_pufftexs[puff->tex],
+               puff->x, puff->y, &col );
       }
    }
 }
@@ -705,17 +373,37 @@ void nebu_movePuffs( double x, double y )
  *
  *    @param density Density of the nebula (0-1000).
  *    @param volatility Volatility of the nebula (0-1000).
+ *    @param hue Hue of the nebula (0-1).
  */
-void nebu_prep( double density, double volatility )
+void nebu_prep( double density, double volatility, double hue )
 {
    (void)volatility;
    int i;
+   float puffhue;
+   glColour col;
 
-   nebu_view = 1000. - density;  /* At density 1000 you're blind */
-   nebu_dt   = 2000. / (density + 100.); /* Faster at higher density */
-   nebu_timer = nebu_dt;
+   /* Set the hue. */
+   nebu_hue = hue;
+   glUseProgram(shaders.nebula.program);
+   glUniform1f(shaders.nebula.hue, nebu_hue);
+   glUseProgram(shaders.nebula_background.program);
+   glUniform1f(shaders.nebula_background.hue, nebu_hue);
+   glUseProgram(0);
 
-   nebu_npuffs = density/4.;
+   /* Also set the hue for trails */
+   col_hsv2rgb( &col, nebu_hue*360., 0.7, 1.0 );
+   glUseProgram(shaders.trail.program);
+   glUniform3f( shaders.trail.nebu_col, col.r, col.g, col.b );
+   glUseProgram(0);
+
+   /* Set density parameters. */
+   nebu_density = density;
+   nebu_update( 0. );
+   nebu_dt   = (2.*density + 200.) / 10000.; /* Faster at higher density */
+   nebu_dx   = 15000. / pow(density, 1./3.); /* Closer at higher density */
+   nebu_time = 0.;
+
+   nebu_npuffs = density/2.;
    nebu_puffs = realloc(nebu_puffs, sizeof(NebulaPuff)*nebu_npuffs);
    for (i=0; i<nebu_npuffs; i++) {
       /* Position */
@@ -727,65 +415,12 @@ void nebu_prep( double density, double volatility )
       /* Maybe make size related? */
       nebu_puffs[i].tex = RNG(0,NEBULA_PUFFS-1);
       nebu_puffs[i].height = RNGF() + 0.2;
+
+      /* Set the colour, with less saturation. */
+      puffhue = nebu_hue * 360.0 + 0.1*(RNGF()*2.-1.);
+      col_hsv2rgb( &nebu_puffs[i].col, puffhue, 0.6, 1.0 );
+      nebu_puffs[i].col.a = 1.0;
    }
-
-   /* Generate the overlay. */
-   nebu_genOverlay();
-}
-
-
-/**
- * @brief Forces generation of new nebula on init.
- */
-void nebu_forceGenerate (void)
-{
-   nebu_w = nebu_h = -9; /* \o/ magic numbers */
-}
-
-
-/**
- * @brief Generates the nebula.
- *
- *    @return 0 on success.
- */
-static int nebu_generate (void)
-{
-   int i;
-   float *nebu;
-   const char *cache;
-   char nebu_file[PATH_MAX];
-   int w,h;
-   int ret;
-
-   /* Warn user of what is happening. */
-   loadscreen_render( 0.05, "Generating Nebula (slow, run once)..." );
-
-   /* Get resolution to create at. */
-   w = SCREEN_W;
-   h = SCREEN_H;
-
-   /* Try to make the dir first if it fails. */
-   cache = nfile_cachePath();
-   nfile_dirMakeExist( "%s", cache );
-   nfile_dirMakeExist( "%s"NEBULA_PATH, cache );
-
-   /* Generate all the nebula backgrounds */
-   nebu = noise_genNebulaMap( w, h, NEBULA_Z, 5. );
-
-   /* Start saving - compression can take a bit. */
-   loadscreen_render( 0.05, "Compressing Nebula layers..." );
-
-   /* Save each nebula as an image */
-   for (i=0; i<NEBULA_Z; i++) {
-      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, w, h, i );
-      ret = saveNebula( &nebu[ i*w*h ], w, h, nebu_file );
-      if (ret != 0)
-         break; /* An error has happened */
-   }
-
-   /* Cleanup */
-   free(nebu);
-   return ret;
 }
 
 
@@ -799,12 +434,8 @@ static void nebu_generatePuffs (void)
    SDL_Surface *sur;
    float *nebu;
 
-   /* Warn user of what is happening. */
-   loadscreen_render( 0.05, "Generating Nebula Puffs..." );
-
    /* Generate the nebula puffs */
    for (i=0; i<NEBULA_PUFFS; i++) {
-
       /* Generate the nebula */
       w = h = RNG(20,64);
       nebu = noise_genNebulaPuffMap( w, h, 1. );
@@ -815,89 +446,6 @@ static void nebu_generatePuffs (void)
       nebu_pufftexs[i] =  gl_loadImage( sur, 0 );
    }
 }
-
-
-/**
- * @brief Checks the validity of a nebula.
- *
- *    @param file Path of the nebula to check (relative to base directory).
- *    @return 0 on success.
- */
-static int nebu_checkCompat( const char* file )
-{
-   /* first check to see if file exists */
-   if (nfile_fileExists("%s"NEBULA_PATH"%s", nfile_cachePath(), file) == 0)
-      return -1;
-   return 0;
-}
-
-
-/**
- * @brief Saves a nebula.
- *
- *    @param map Nebula map to save.
- *    @param w Width of nebula map.
- *    @param h Height of nebula map.
- *    @param file Path to save into.
- *    @return 0 on success.
- */
-static int saveNebula( float *map, const uint32_t w, const uint32_t h, const char* file )
-{
-   char file_path[PATH_MAX];
-   SDL_Surface* sur;
-   int ret;
-
-   /* fix surface */
-   sur = nebu_surfaceFromNebulaMap( map, w, h );
-
-   /* save */
-   nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH"%s", nfile_cachePath(), file );
-   ret = SDL_SavePNG( sur, file_path );
-
-   /* cleanup */
-   SDL_FreeSurface( sur );
-
-   return ret;
-}
-
-
-/**
- * @brief Loads the nebulae from file.
- *
- *    @param file Path of the nebula to load.  Relative to base directory.
- *    @return A SDL surface with the nebula.
- */
-static SDL_Surface* loadNebula( const char* file )
-{
-   char file_path[PATH_MAX];
-   SDL_Surface* sur;
-   SDL_RWops *rw;
-   npng_t *npng;
-
-   /* loads the file */
-   nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH"%s", nfile_cachePath(), file );
-   rw    = SDL_RWFromFile( file_path, "rb" );;
-   if (rw == NULL) {
-      WARN("Unable to create rwops from Nebula image: %s", file);
-      return NULL;
-   }
-   npng  = npng_open( rw );
-   if (npng == NULL) {
-      WARN("Unable to open Nebula image: %s", file);
-      SDL_RWclose( rw );
-      return NULL;
-   }
-   sur   = npng_readSurface( npng, 0, 1 );
-   npng_close( npng );
-   SDL_RWclose( rw );
-   if (sur == NULL) {
-      WARN("Unable to load Nebula image: %s", file);
-      return NULL;
-   }
-
-   return sur;
-}
-
 
 
 /**

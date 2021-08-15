@@ -10,7 +10,9 @@
   <x>181.518949</x>
   <y>146.341840</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Pirate Small</asset>
+ </assets>
  <jumps>
   <jump target="Bastion">
    <autopos/>
@@ -19,11 +21,11 @@
   </jump>
   <jump target="Dune">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Pilatis">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

@@ -5,8 +5,8 @@
   <y>559.700844</y>
  </pos>
  <GFX>
-  <space>P03.png</space>
-  <exterior>snow.png</exterior>
+  <space>P03.webp</space>
+  <exterior>snow.webp</exterior>
  </GFX>
  <presence>
   <faction>Dvaered</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>P</class>
   <population>100</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>

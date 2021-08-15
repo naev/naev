@@ -7,8 +7,7 @@
 #  define NLUA_SYSTEM_H
 
 
-#include <lua.h>
-
+#include "nlua.h"
 #include "space.h"
 
 
@@ -24,7 +23,7 @@ typedef int LuaSystem;
 /*
  * Load the system library.
  */
-int nlua_loadSystem( lua_State *L, int readonly );
+int nlua_loadSystem( nlua_env env );
 
 /*
  * System operations.

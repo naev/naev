@@ -20,7 +20,7 @@
  <jumps>
   <jump target="Garten">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Ruadan">
    <autopos/>
@@ -28,7 +28,7 @@
   </jump>
   <jump target="Severus">
    <pos x="25200.916889" y="-17334.000223"/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Za'lek">
    <autopos/>

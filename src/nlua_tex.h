@@ -7,8 +7,7 @@
 #  define NLUA_TEX_H
 
 
-#include <lua.h>
-
+#include "nlua.h"
 #include "opengl.h"
 
 
@@ -18,7 +17,7 @@
 /*
  * Library loading
  */
-int nlua_loadTex( lua_State *L, int readonly );
+int nlua_loadTex( nlua_env );
 
 /*
  * Texture operations

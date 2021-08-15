@@ -5,8 +5,8 @@
   <y>-2171.134959</y>
  </pos>
  <GFX>
-  <space>M08.png</space>
-  <exterior>forest.png</exterior>
+  <space>M08.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>400000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -27,7 +27,7 @@
   </services>
   <commodities/>
   <description>Though a fairly pleasant planet, Janko is a little too backwater to really flourish. The local population is largely self-sufficient and doesn't export much. As a result the amount of inhabitants is quite a bit lower than what a world of this size and quality could support in a busier area of space.</description>
-  <bar>Thanks to its somewhat sparse population density, Janko can afford to have its spaceport well away from the bigger residential centers. The spaceport bar has exits leading directly to the hypermag transport system. A ten-STU trip will take you to the capital city.</bar>
+  <bar>Thanks to its somewhat sparse population density, Janko can afford to have its spaceport well away from the bigger residential centers. The spaceport bar has exits leading directly to the hypermag transport system. A ten-second trip will take you to the capital city.</bar>
  </general>
  <tech>
   <item>Engines Cargo</item>
@@ -36,12 +36,13 @@
   <item>Plasma 1</item>
   <item>Plasma 2</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Heavy Weapons 1</item>
   <item>High Tech Upgrades 1</item>
   <item>Missiles 2</item>
-  <item>Star Maps</item>
   <item>Bulk Trade Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Basic Civilian Ships</item>
+  <item>Soromid Elite Outfits</item>
  </tech>
 </asset>

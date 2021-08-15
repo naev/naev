@@ -5,8 +5,8 @@
   <y>-3918.579198</y>
  </pos>
  <GFX>
-  <space>moon-M05.png</space>
-  <exterior>forest.png</exterior>
+  <space>moon-M05.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -15,8 +15,8 @@
  </presence>
  <general>
   <class>M</class>
-  <population>0</population>
-  <hide>0.500000</hide>
+  <population>300000</population>
+  <hide>2.000000</hide>
   <services>
    <land/>
    <refuel/>
@@ -25,17 +25,14 @@
    <commodity/>
    <outfits/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-   <commodity>Ore</commodity>
-   <commodity>Medicine</commodity>
-  </commodities>
-  <description>Percola is a small world, but it is a rather major producer of food within Soromid space. The planet is rich in carbon and gets a lot of sun, so plant life thrives here. The planet sometimes manages as many as four harvests a cycle. About seventy per cent of the land surface is used for agriculture, ten per cent is used for livestock and the remaining twenty per cent is for the residents and supporting infrastructure.</description>
+  <commodities/>
+  <description>Percola is a small world, but it is a rather major producer of food within Soromid space. The planet is rich in carbon and gets a lot of sun, so plant life thrives here. The planet sometimes manages as many as four harvests a cycle. About seventy percent of the land surface is used for agriculture, ten percent is used for livestock and the remaining twenty percent is for the residents and supporting infrastructure.</description>
   <bar>This spaceport bar has a view on one of the nearby mega-meadows that sprawl across Percola. The endless sea of uniform vegetation is impressive to behold, but it's only really a small part of what's out there.</bar>
  </general>
  <tech>
   <item>Engines Medium</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Low Tech Upgrades</item>
   <item>Engines High</item>
  </tech>

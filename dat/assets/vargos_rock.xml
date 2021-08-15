@@ -5,8 +5,8 @@
   <y>-6063.478210</y>
  </pos>
  <GFX>
-  <space>D01.png</space>
-  <exterior>station04.png</exterior>
+  <space>D01.webp</space>
+  <exterior>station04.webp</exterior>
  </GFX>
  <presence>
   <faction>Sirius</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>D</class>
   <population>500000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>

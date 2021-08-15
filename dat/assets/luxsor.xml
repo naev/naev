@@ -5,13 +5,13 @@
   <y>8974.249360</y>
  </pos>
  <GFX>
-  <space>moon-A00.png</space>
-  <exterior>forest.png</exterior>
+  <space>moon-A00.webp</space>
+  <exterior>forest.webp</exterior>
  </GFX>
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.500000</hide>
+  <hide>2.000000</hide>
   <services/>
  </general>
 </asset>

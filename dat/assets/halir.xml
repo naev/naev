@@ -5,8 +5,8 @@
   <y>-6447.649991</y>
  </pos>
  <GFX>
-  <space>M07.png</space>
-  <exterior>oceanic.png</exterior>
+  <space>M07.webp</space>
+  <exterior>oceanic.webp</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -16,7 +16,7 @@
  <general>
   <class>M</class>
   <population>3000000000</population>
-  <hide>0.250000</hide>
+  <hide>1.000000</hide>
   <services>
    <land>land_lowclass</land>
    <refuel/>
@@ -26,9 +26,7 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities>
-   <commodity>Food</commodity>
-  </commodities>
+  <commodities/>
   <description>Before there was Emperor's Fist, before there was even the Incident, there was Halir, located in the Gamma Polaris system. While near the outskirts of the Empire, it served as one of the largest local civilian hubs, with a strong economy and considerable political influence. Then, one day, the new Emperor had Polaris Prime built, renamed most of the worlds in the system, and subsequently started the Emperor's Fist project. Halir was reduced to an economic support role. However, the local government has stubbornly clung on to the right to sovereignty, and so Halir remains a civilian world.</description>
   <bar>Halir's bar has everything the weary traveller could hope for, from drinks to data uplink terminals to per-table sound dampening fields and music generators. In short it is a luxurious place, which is largely due to Halir's long history of economic success. Anything you can't find in the bar you can find in the pleasure district, which is just a single tube station away.</bar>
  </general>
@@ -39,6 +37,7 @@
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>
   <item>Basic Civilian Ships</item>

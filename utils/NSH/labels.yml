@@ -15,7 +15,7 @@ shipstats:
   launch_rate: Launch Rate
   launch_range: Launch Range
   ammo_capacity: Ammo Capacity
-  launch_lockon: Launch Lockon
+  launch_lockon: Launch Lock-on
   fwd_heat: Heat (Cannon)
   fwd_damage: Damage (Cannon)
   fwd_firerate: Fire Rate (Cannon)

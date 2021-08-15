@@ -9,21 +9,21 @@
  */
 
 
+/** @cond */
+#include "naev.h"
+/** @endcond */
+
 #include "slots.h"
 
-#include "naev.h"
-
-#include "nxml.h"
-
-#include "log.h"
-#include "ndata.h"
 #include "array.h"
+#include "log.h"
+#include "nxml.h"
 
 
 #define SP_XML_ID     "Slots" /**< XML Document tag. */
 #define SP_XML_TAG    "slot" /**< SP XML node tag. */
 
-#define SP_DATA       "dat/slots.xml" /**< Location of the sp datafile. */
+#define SP_DATA_PATH  "slots.xml" /**< Location of the sp datafile. */
 
 
 /**
@@ -52,27 +52,26 @@ static int sp_check( unsigned int spid );
  */
 int sp_load (void)
 {
-   uint32_t bufsize;
-   char *buf;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    SlotProperty_t *sp;
 
    /* Load and read the data. */
-   buf = ndata_read( SP_DATA, &bufsize );
-   doc = xmlParseMemory( buf, bufsize );
+   doc = xml_parsePhysFS( SP_DATA_PATH );
+   if (doc == NULL)
+      return -1;
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,SP_XML_ID)) {
-      ERR("Malformed '"SP_DATA"' file: missing root element '"SP_XML_ID"'");
+      ERR(_("Malformed '%s' file: missing root element '%s'"), SP_DATA_PATH, SP_XML_ID);
       return -1;
    }
 
    /* Check to see if is populated. */
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
-      ERR("Malformed '"SP_DATA"' file: does not contain elements");
+      ERR(_("Malformed '%s' file: does not contain elements"), SP_DATA_PATH);
       return -1;
    }
 
@@ -81,13 +80,13 @@ int sp_load (void)
    do {
       xml_onlyNodes(node);
       if (!xml_isNode(node,SP_XML_TAG)) {
-         WARN("'"SP_DATA"' has unknown node '%s'.", node->name);
+         WARN(_("'%s' has unknown node '%s'."), SP_DATA_PATH, node->name);
          continue;
       }
 
       sp    = &array_grow( &sp_array );
       memset( sp, 0, sizeof(SlotProperty_t) );
-      xmlr_attr( node, "name", sp->name );
+      xmlr_attr_strd( node, "name", sp->name );
       cur   = node->xmlChildrenNode;
       do {
          xml_onlyNodes(cur);
@@ -104,14 +103,13 @@ int sp_load (void)
             continue;
          }
 
-         WARN("Slot Property '%s' has unknown node '%s'.", cur->name);
+         WARN(_("Slot Property '%s' has unknown node '%s'."), node->name, cur->name);
       } while (xml_nextNode(cur));
 
    } while (xml_nextNode(node));
 
    /* Clean up. */
    xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }
@@ -138,7 +136,7 @@ void sp_cleanup (void)
 /**
  * @brief Gets the id of a slot property.
  *
- *    @pram name Name to match.
+ *    @param name Name to match.
  *    @return ID of the slot property.
  */
 unsigned int sp_get( const char *name )
@@ -152,7 +150,7 @@ unsigned int sp_get( const char *name )
       if (strcmp( sp->name, name ) == 0)
          return i+1;
    }
-   WARN("Slot property '%s' not found in array.", name);
+   WARN(_("Slot property '%s' not found in array."), name);
    return 0;
 }
 
@@ -169,7 +167,7 @@ static int sp_check( unsigned int spid )
 
 
 /**
- * @brief Gets the display name of a slot property.
+ * @brief Gets the display name of a slot property (in English).
  */
 const char *sp_display( unsigned int spid )
 {
@@ -180,7 +178,7 @@ const char *sp_display( unsigned int spid )
 
 
 /**
- * @brief Gets the description of a slot property.
+ * @brief Gets the description of a slot property (in English).
  */
 const char *sp_description( unsigned int spid )
 {

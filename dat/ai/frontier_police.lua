@@ -1,39 +1,54 @@
-include("dat/ai/tpl/generic.lua")
-include("dat/ai/personality/patrol.lua")
+require 'ai.core.core'
+require "numstring"
 
 -- Settings
 mem.aggressive = true
 
+local bribe_no_list = {
+   _([["I shall especially enjoy your death."]]),
+   _([["You insult my honour."]]),
+   _([["I find your lack of honour disturbing."]]),
+   _([["You disgust me."]]),
+   _([["Bribery carries a harsh penalty."]]),
+   _([["The Frontier does not lower itself to common scum."]]),
+}
+local taunt_list = {
+   _("Alea iacta est!"),
+   _("Morituri te salutant!"),
+   _("Your head will make a great trophy!"),
+   _("Cave canem!"),
+   _("Death awaits you!"),
+}
 
 -- Create function
 function create ()
 
    -- Credits.
-   ai.setcredits( rnd.int(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
-
-   -- Handle bribing
-   if rnd.int() > 0.4 then
-      mem.bribe_no = "\"I shall especially enjoy your death.\""
-   else
-      bribe_no = {
-            "\"You insult my honour.\"",
-            "\"I find your lack of honour disturbing.\"",
-            "\"You disgust me.\"",
-            "\"Bribery carries a harsh penalty.\"",
-            "\"The Frontier does not lower itself to common scum.\""
-     }
-     mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
-   end
+   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
 
    -- Handle refueling
-   p = player.pilot()
+   mem.refuel = rnd.rnd( 1000, 3000 )
+   local p = player.pilot()
    if p:exists() then
-      standing = ai.getstanding( p ) or -1
-      mem.refuel = rnd.rnd( 1000, 3000 )
-      if standing < 50 then
-         mem.refuel_no = "\"Mare magno turbantibus. That means that I don't care about your problems.\""
+      local standing = ai.getstanding( p ) or -1
+      if standing > 50 or
+            (standing > 0 and rnd.rnd() > 0.8) or
+            (rnd.rnd() > 0.3) then
+         mem.refuel_no = _([["Mare magno turbantibus. That means that I don't care about your problems."]])
       else
-         mem.refuel_msg = string.format("\"For you I could make an exception for %d credits.\"", mem.refuel)
+         mem.refuel_msg = string.format(_([["For you I could make an exception for %s."]]), creditstring(mem.refuel))
+      end
+
+      -- Handle bribing
+      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750 * rnd.rnd() + 2500)
+      if standing > 0 or
+            (standing > -20 and rnd.rnd() > 0.8) or
+            (standing > -50 and rnd.rnd() > 0.5) or
+            (rnd.rnd() > 0.3) then
+         mem.bribe_prompt = string.format(_([["For %s I'll let your grievances slide."]]), creditstring(mem.bribe) )
+         mem.bribe_paid = _([["Now get out of my sight and don't cause any more trouble."]])
+      else
+         mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
       end
    end
 
@@ -45,20 +60,13 @@ end
 
 -- taunts
 function taunt ( target, offense )
-
    -- Only 50% of actually taunting.
    if rnd.rnd(0,1) == 0 then
       return
    end
 
    -- Offense is not actually used
-   taunts = {
-       "Alea iacta est!",
-       "Morituri te salutant!",
-       "Your head will make a great trophy!",
-       "Cave canem!",
-       "Death awaits you!"
-   }
-   ai.pilot():comm( target, taunts[ rnd.int(1,#taunts) ] )
+   local taunts = taunt_list
+   ai.pilot():comm( target, taunts[ rnd.rnd(1,#taunts) ] )
 end
 

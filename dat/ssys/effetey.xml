@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-144.800000</x>
-  <y>-596.800000</y>
+  <x>-166.800000</x>
+  <y>-589.800000</y>
  </pos>
  <assets>
   <asset>Efferey</asset>
@@ -21,7 +21,7 @@
   </jump>
   <jump target="Frolina">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
   <jump target="Pas">
    <autopos/>
@@ -35,7 +35,7 @@
   </jump>
   <jump target="Trohem">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

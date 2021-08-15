@@ -19,7 +19,8 @@
   <asset>Uuries</asset>
   <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Civilian Standard</asset>
-  <asset>Virtual Trader Local</asset>
+  <asset>Virtual Independent Trader Local</asset>
+  <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Fulcrum">
@@ -29,7 +30,7 @@
   </jump>
   <jump target="Karman">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.118034</hide>
   </jump>
  </jumps>
 </ssys>

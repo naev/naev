@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Nexus Light Stealth Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>small</size>
+  <priority>7</priority>
+  <mass>50</mass>
+  <price>180000</price>
+  <description>Designed for military scouting and patrol vessels, Nexus' Light Stealth Plating configuration features the latest in sensor-absorbing materials and geometry.</description>
+  <gfx_store>stealth_hull_s.webp</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>3</cargo>
+  <absorb>3</absorb>
+  <armour>60</armour>
+  <ew_hide>15</ew_hide>
+ </specific>
+</outfit>
