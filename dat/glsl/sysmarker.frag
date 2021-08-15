@@ -14,6 +14,6 @@ void main(void) {
    float d = sdRhombus( pos, b );
    d = max( -sdRhombus( pos*2.0, b ), d );
    d = min(  d, sdRhombus( pos*4.0, b ) );
-   color_out.a *= smoothstep( -m, m, -d );
+   color_out.a *= smoothstep( -m, 0.0, -d );
 }
 
