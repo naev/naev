@@ -121,7 +121,7 @@ function approach_kex ()
 "What's up kid?"]]))
       vn.na(_("You explain that you weren't able to get anything out of Jie and that this time it was a failure."))
       kex(_([["I see. That can't be helped. You win some, you lose some."]]))
-      kex(_([["While you were out I do think I got a lead on our next target, but it's not something i really wanted to deal with right now."]]))
+      kex(_([["While you were out I, think I got a lead on our next target, but it's not something I really wanted to deal with right now."]]))
       kex(_([["Here, take some credits, and meet me up here in a period or so, I have to finish double checking something."
 He gives a sort of half-hearted grin and disappears into the shadows.]]))
       vn.disappear(kex)
@@ -199,7 +199,7 @@ His eyes don't seem to have changed.]]))
    vn.label("alright")
    kex(_([["Been better kid. Just had some sleepless nights, staring at the ceiling while being able to move, haunted by past regrets."
 He looks visibly tired.
-"You ever do anything you regret kid?"]]))
+"You ever do anything you regret, kid?"]]))
    vn.menu{
       {_([["Of course"]]), "alright_ofcourse"},
       {_([["No, never"]]), "alright_nonever"},
@@ -243,7 +243,7 @@ They speak calmly, without so much as a tinge of urgency.]]))
    vn.label("cont1")
    jie(_([["I see. I knew the day would come. Can't have a bunch of low-lives making a decent living can we now?"
 They take a sip from their drink.]]))
-   jie(_([["Me and the guy you call the Minerva CEO, we were born here in Jorlan. Not sure if we were orphaned or abandoned, but since a young age this world has taught us nothing but cruelty and suffering. Forced to work in the ore mines if we were to survive."]]))
+   jie(_([["Me and the guy you call the Minerva CEO, we were born here in Jorlan. Not sure if we were orphaned or abandoned, but since a young age this world has taught us nothing but cruelty and suffering. Forced to work in the ore mines to survive."]]))
    jie(_([["This shithole taught us that nothing is given for free. You have to fight with tooth and nail to get what you want! No that's not it, what we deserve!"
 They hit the table for emphasis.]]))
    jie(_([["This universe is rotten to the core you know. If you don't want to wind up as a husk of a human, toiling for the benefit of others, you have to take what you damn want. I'm not going to wind up as another corpse deep down underground."]]))
