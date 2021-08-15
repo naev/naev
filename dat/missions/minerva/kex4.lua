@@ -42,7 +42,7 @@ misn_desc = string.format(_("You have been assigned with obtaining information f
 
 jie_portrait = "major_malik.webp"
 jie_image = "major_malik.webp"
-jie_description = _("")
+jie_description = _("You see an individual matching the description of Jie de Luca.")
 
 money_reward = 400e3
 
@@ -207,8 +207,12 @@ He looks visibly tired.
    kex(_([["I envy you kid. My regrets seem to follow me no matter how much I try to run away."]]))
    vn.label("alright_cont1")
    kex(_([["Lately, my past seems to haunt me. When I am able to sleep, I have been waking up in the middle of the night in cold sweat, well probably would if I had some damn sweat glands, gasping for breath."]]))
-   -- TODO from here on
-   kex(_([["I haven't really paid attention to it much, but's getting worse and worse as time goes by."]]))
+   kex(_([["I haven't really paid attention to it much, but it's getting worse and worse as time goes by. I'm sure it will all get better when this is over. I mean, it has to, right?"]]))
+   kex(_([[After a short pause he continues. "You know, ever since I was a kid, I always loved adventure: being at the center of everything and braving adversity. I loved the adrenaline rush and could never get enough of it all."]]))
+   kex(_([["When I was getting older, I guess I tried to follow what everyone was doing and sort of settle down, but I was never very good at staying still. Whenever I stayed in the same place too long I got all itchy. It's like my soul was yearning to go out and adventure.]]))
+   kex(_([["Even when I had my first child, I just couldn't stay behind. I just had to go out. But now…"
+His biological eye looks a bit hazy.
+"I guess you don't appreciate what you have until you lose it all."]]))
    vn.jump("menu_msg")
 
    vn.label("leave")
