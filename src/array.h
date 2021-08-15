@@ -61,7 +61,6 @@ typedef struct {
 
 void *_array_create_helper(size_t e_size);
 void *_array_grow_helper(void **a, size_t e_size);
-void *_array_end_helper(void *a, size_t e_size);
 void _array_resize_helper(void **a, size_t e_size, int new_size);
 void _array_erase_helper(void **a, size_t e_size, void *first, void *last);
 void _array_shrink_helper(void **a, size_t e_size);
@@ -84,6 +83,19 @@ __inline__ static _private_container *_array_private_container(void *a)
 #endif
 
    return c;
+}
+
+/**
+ * @brief Gets the end of the array.
+ *
+ *    @param a Array to get end of.
+ *    @param e_size Size of array members.
+ *    @return The end of the array a.
+ */
+__inline__ static void *_array_end_helper(void *a, size_t e_size)
+{
+   _private_container *c = _array_private_container(a);
+   return c->_array + c->_size * e_size;
 }
 
 /**
@@ -192,14 +204,6 @@ __inline__ static _private_container *_array_private_container(void *a)
  *    @return The last element in the array.
  */
 #define array_back(ptr_array) (*(array_end(ptr_array) - 1))
-
-
-/** @brief Clears the array
- * NOTE: Invalidates all iterators. */
-#define array_clear(array) \
-   do { \
-      _array_private_container(array)->_size = 0; \
-   } while (0)
 
 
 #endif /* ARRAY_H */

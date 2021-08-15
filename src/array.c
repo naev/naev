@@ -54,13 +54,6 @@ void *_array_grow_helper(void **a, size_t e_size)
    return c->_array + (c->_size++) * e_size;
 }
 
-void *_array_end_helper(void *a, size_t e_size)
-{
-   _private_container *c = _array_private_container(a);
-   return c->_array + c->_size * e_size;
-}
-
-
 void _array_erase_helper(void **a, size_t e_size, void *first, void *last)
 {
    intptr_t diff = (char *)last - (char *)first;

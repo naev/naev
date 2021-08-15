@@ -40,7 +40,7 @@ static void mesh_create( Mesh **meshes, const char* name,
    mesh->vbo = gl_vboCreateStatic(array_size(corners) * sizeof(Vertex), corners);
    mesh->num_corners = array_size(corners);
    mesh->material = material;
-   array_clear(corners);
+   array_resize(&corners, 0);
 }
 
 static int readGLfloat( GLfloat *dest, int how_many, char **saveptr )
