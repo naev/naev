@@ -510,6 +510,7 @@ static void gui_renderTargetReticles( const SimpleShader *shd, double x, double 
 
    glUseProgram(shd->program);
    glUniform1f(shd->dt, animation_dt);
+   glUniform1f(shd->r, radius);
    gl_renderShader( rx, ry, r, r, angle, shd, c, 1 );
 }
 
