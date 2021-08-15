@@ -27,7 +27,6 @@ local minerva  = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'
-local love_shaders = require 'love_shaders'
 require 'numstring'
 
 -- Mission states:
