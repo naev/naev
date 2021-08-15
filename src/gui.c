@@ -166,7 +166,7 @@ typedef struct Radar_ {
    double res; /**< Resolution */
 } Radar;
 /* radar resolutions */
-#define RADAR_RES_MAX      100. /**< Maximum radar resolution. */
+#define RADAR_RES_MAX      300. /**< Maximum radar resolution. */
 #define RADAR_RES_MIN      10. /**< Minimum radar resolution. */
 #define RADAR_RES_INTERVAL 10. /**< Steps used to increase/decrease resolution. */
 static Radar gui_radar;
