@@ -336,18 +336,7 @@ void object_free( Object *object )
    }
 }
 
-static void object_fix3d( gl_Matrix4* projection )
-{
-   double zoom;
-
-   /* rotates and scales the object to match projection */
-   zoom = cam_getZoom();
-   *projection = gl_Matrix4_Scale(*projection, zoom, zoom, zoom);
-   *projection = gl_Matrix4_Rotate(*projection, M_PI, 0., 1., 0.);
-   *projection = gl_Matrix4_Rotate(*projection, M_PI/2, 1., 0., 0.);
-}
-
-static void object_renderMesh( Object *object, int part, GLfloat alpha, gl_Matrix4 projection )
+static void object_renderMesh( Object *object, int part, GLfloat alpha )
 {
    Mesh *mesh = &object->meshes[part];
 
@@ -356,10 +345,7 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha, gl_Matri
    const int tex_offset = offsetof(Vertex, tex);
 
    /* activates vertices and texture coords */
-   glUseProgram(shaders.material.program);
-   glEnableVertexAttribArray(shaders.material.vertex);
    gl_vboActivateAttribOffset(mesh->vbo, shaders.material.vertex, ver_offset, 3, GL_FLOAT, sizeof(Vertex));
-   glEnableVertexAttribArray(shaders.material.tex_coord);
    gl_vboActivateAttribOffset(mesh->vbo, shaders.material.tex_coord, tex_offset, 2, GL_FLOAT, sizeof(Vertex));
 
    /* Set material */
@@ -368,7 +354,6 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha, gl_Matri
    Material *material = object->materials + mesh->material;
    material->Kd[3] = alpha;
 
-   gl_Matrix4_Uniform(shaders.material.projection, projection);
    glUniform4fv(shaders.material.Ka, 1, material->Ka);
    glUniform4fv(shaders.material.Kd, 1, material->Kd);
    glUniform4fv(shaders.material.Ks, 1, material->Ks);
@@ -377,14 +362,7 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha, gl_Matri
    /* binds textures */
    glBindTexture(GL_TEXTURE_2D, material->texture == NULL ? emptyTexture->texture : material->texture->texture);
 
-   glEnable(GL_DEPTH_TEST);
-   glDepthFunc(GL_LESS);  /* XXX this changes the global DepthFunc */
-
    glDrawArrays(GL_TRIANGLES, 0, mesh->num_corners);
-
-   glDisable(GL_DEPTH_TEST);
-   glUseProgram(0);
-   gl_checkErr();
 }
 
 
@@ -398,10 +376,15 @@ void object_renderSolidPart( Object *object, const Solid *solid, const char *par
    cam_getPos(&cx, &cy);
    gui_getOffset(&gx, &gy);
    zoom = cam_getZoom();
+   scale *= zoom;
 
    /* calculate position - we'll use relative coords to player */
    x = (solid->pos.x - cx + gx) * zoom / gl_screen.nw * 2;
    y = (solid->pos.y - cy + gy) * zoom / gl_screen.nh * 2;
+
+   glUseProgram(shaders.material.program);
+   glEnableVertexAttribArray(shaders.material.vertex);
+   glEnableVertexAttribArray(shaders.material.tex_coord);
 
    projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0. );
    projection = gl_Matrix4_Rotate(projection, M_PI/2, 0., 0., 1.);
@@ -409,9 +392,18 @@ void object_renderSolidPart( Object *object, const Solid *solid, const char *par
    projection = gl_Matrix4_Rotate(projection, solid->dir, 0., 0., 1.);
    projection = gl_Matrix4_Rotate(projection, M_PI/2, 1., 0., 0.);
    projection = gl_Matrix4_Scale(projection, scale, scale, scale);
+   projection = gl_Matrix4_Rotate(projection, M_PI, 0., 1., 0.);
+   projection = gl_Matrix4_Rotate(projection, M_PI/2, 1., 0., 0.);
+   gl_Matrix4_Uniform(shaders.material.projection, projection);
 
-   object_fix3d( &projection );
+   glEnable(GL_DEPTH_TEST);
+   glDepthFunc(GL_LESS);  /* XXX this changes the global DepthFunc */
+
    for (i = 0; i < array_size(object->meshes); ++i)
       if (strcmp(part_name, object->meshes[i].name) == 0)
-         object_renderMesh(object, i, alpha, projection);
+         object_renderMesh(object, i, alpha);
+
+   glDisable(GL_DEPTH_TEST);
+   glUseProgram(0);
+   gl_checkErr();
 }
