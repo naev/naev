@@ -463,7 +463,7 @@ function runaway( target )
       ai.pushsubtask( "__run_hyp", pos )
    elseif t == nil then
       mem.land = p:pos()
-      ai.pushsubtask( "__landgo" )
+      ai.pushsubtask( "__run_landgo" )
    else
       -- find which one is the closest
       local pilpos = ai.pilot():pos()
