@@ -18,6 +18,10 @@
 
 --[[
    Freeing Kex 4
+
+   Player has to go confront a guy in the frontier and is constantly harassed
+   by bounty hunters while active. Fairly straight forward with a pretty hard
+   fight at the end.
 --]]
 local minerva  = require "campaigns.minerva"
 local portrait = require 'portrait'
