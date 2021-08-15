@@ -324,8 +324,9 @@ function enter ()
       pilot.toggleSpawn(false)
 
       local pos = planet.get(targetplanet):pos() + vec2.new( 3000, rnd.rnd()*360 )
-      jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {nake=true, ai="baddie_norun"})
+      jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {naked=true, ai="baddie_norun"})
       equipopt.generic( jie, nil, "elite" )
+      jie:setHostile(true)
 
       hook.pilot( jie, "death", "jie_death" )
       hook.pilot( jie, "board", "jie_board" )
@@ -336,17 +337,19 @@ function enter ()
          "Shark",
          "Hyena",
       }
+      local pp = player.pilot()
       if pp:ship():size() > 4 then
          table.insert( henchmen, "Pacifier" )
          table.insert( henchmen, "Ancestor" )
          table.insert( henchmen, "Ancestor" )
       end
       enemies = { jie }
-      for k,p in ipairs(henchmen) do
+      for k,v in ipairs(henchmen) do
          local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
          local p = pilot.add( v, "Independent", ppos, nil, {naked=true, ai="baddie_norun"} )
          equipopt.pirate( p )
          p:setLeader( jie )
+         p:setHostile(true)
          table.insert( enemies, p )
       end
 
