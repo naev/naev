@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-07 08:55-0400\n"
-"PO-Revision-Date: 2021-08-13 20:33+0000\n"
+"PO-Revision-Date: 2021-08-15 13:05+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -57638,14 +57638,18 @@ msgid ""
 "told they would be here, but I never expected this place to be so…\"\n"
 "She trails off."
 msgstr ""
+"„Sie sind nicht zufällig aus der Gegend? Ich bin auf der Suche nach "
+"jemandem. Mir wurde gesagt, dass sie hier sein würden, aber ich hätte nie "
+"erwartet, dass dieser Ort so …“\n"
+"Sie schweift ab."
 
 #: dat/missions/minerva/maikki1.lua:144
 msgid "\"spacious?\""
-msgstr ""
+msgstr "„… geräumig ist?“"
 
 #: dat/missions/minerva/maikki1.lua:145
 msgid "\"grubby?\""
-msgstr ""
+msgstr "„… schmutzig ist?“"
 
 #: dat/missions/minerva/maikki1.lua:148
 msgid ""
@@ -57653,6 +57657,9 @@ msgid ""
 "\"…unsubstantial. Furthermore, it is all so tacky! I thought such a famous "
 "gambling world would be much more cute!\""
 msgstr ""
+"Sie runzelt ein wenig die Stirn.\n"
+"„… egal. Außerdem ist das alles so kitschig! Ich dachte, so eine berühmte "
+"Glücksspielwelt wäre viel niedlicher!“"
 
 #: dat/missions/minerva/maikki1.lua:150
 msgid ""
@@ -57660,6 +57667,10 @@ msgid ""
 "\"You wouldn't happen to be familiar with the station? I'm looking for "
 "someone\""
 msgstr ""
+"Plötzlich erinnert sie sich daran, warum sie hergekommen ist, und Ihre Augen "
+"leuchten auf.\n"
+"„Sie kennen sich nicht zufällig mit der Station aus? Ich bin auf der Suche "
+"nach jemandem.“"
 
 #: dat/missions/minerva/maikki1.lua:153
 msgid "Offer to help her"
@@ -57667,17 +57678,20 @@ msgstr "Hilfe anbieten"
 
 #: dat/missions/minerva/maikki1.lua:154 dat/missions/minerva/maikki2.lua:188
 msgid "Decline to help"
-msgstr ""
+msgstr "Nicht helfen"
 
 #: dat/missions/minerva/maikki1.lua:157 dat/missions/minerva/maikki2.lua:191
 msgid ""
 "You feel it is best to leave her alone for now and disappear into the crowds "
 "leaving her once again alone to her worries."
 msgstr ""
+"Du hältst es für das Beste, sie vorerst in Ruhe zu lassen und in der Menge "
+"zu verschwinden, um sie wieder mit ihren Sorgen allein zu lassen."
 
 #: dat/missions/minerva/maikki1.lua:164
 msgid "You have agreed to help Maikki find her father (Kex)."
 msgstr ""
+"Du hast zugestimmt, Maikki bei der Suche nach ihrem Vater (Kex) zu helfen."
 
 #: dat/missions/minerva/maikki1.lua:166
 msgid ""
@@ -57685,10 +57699,13 @@ msgid ""
 "gotten anywhere.\"\n"
 "She gives out a heavy sigh."
 msgstr ""
+"„Mir wurde gesagt, dass er hier sein würde, aber ich bin schon seit "
+"Ewigkeiten hier und habe nichts erreicht.“\n"
+"Sie stößt einen schweren Seufzer aus."
 
 #: dat/missions/minerva/maikki1.lua:169
 msgid "\"My name is Maisie, but you can call me Maikki.\""
-msgstr ""
+msgstr "„Ich heiße Maisie, aber Sie können mich Maikki nennen.“"
 
 #: dat/missions/minerva/maikki1.lua:171
 #, lua-format
@@ -57705,12 +57722,17 @@ msgid ""
 "a strawberry cheesecake caramel parfait with extra berries. Wait, was that "
 "even on the menu?"
 msgstr ""
+"Du bietest ihr ein Getränk an. Nachdem sie angestrengt auf die Getränkekarte "
+"gestarrt hat, bestellt sie ein Erdbeer-Käsekuchen-Karamell-Parfait mit extra "
+"Beeren. Warte, war das überhaupt auf der Karte?"
 
 #: dat/missions/minerva/maikki1.lua:184
 msgid ""
 "\"Thank you! At least the food isn't bad here!\"\n"
 "She starts eating the parfait, which seems to be larger than her head."
 msgstr ""
+"„Danke! Wenigstens ist das Essen hier nicht schlecht!“\n"
+"Sie beginnt das Parfait zu essen, das größer zu sein scheint als ihr Kopf."
 
 #: dat/missions/minerva/maikki1.lua:189
 msgid "You do not have enough Minerva Tokens to buy her a drink."
@@ -57721,63 +57743,83 @@ msgid ""
 "\"The truth is I am looking for my father. He disappeared when I was a "
 "little girl and I don't even remember a single memory of him.\""
 msgstr ""
+"„Die Wahrheit ist, dass ich meinen Vater suche. Er verschwand, als ich noch "
+"ein kleines Mädchen war, und ich kann mich an nichts mehr erinnern, was ihn "
+"betrifft.“"
 
 #: dat/missions/minerva/maikki1.lua:196
 msgid "You approach Maikki who seems to be enjoying a parfait."
-msgstr ""
+msgstr "Du näherst dich Maikki, die ein Parfait zu genießen scheint."
 
 #. Normal chitchat
 #: dat/missions/minerva/maikki1.lua:201
 msgid "Ask about her father"
-msgstr ""
+msgstr "Nach ihrem Vater fragen"
 
 #: dat/missions/minerva/maikki1.lua:205
 msgid "Show her the picture"
-msgstr ""
+msgstr "Ihr das Bild zeigen"
 
 #: dat/missions/minerva/maikki1.lua:211
 msgid ""
 "\"I don't remember him at all since he disappeared when I was only 5 cycles "
 "old, but before my mother died, she told me he was a famous space pilot.\""
 msgstr ""
+"„Ich erinnere mich überhaupt nicht an ihn, da er verschwand, als ich erst 5 "
+"Jahre alt war, aber bevor meine Mutter starb, erzählte sie mir, dass er ein "
+"berühmter Raumfahrtpilot war.“"
 
 #: dat/missions/minerva/maikki1.lua:212
 msgid ""
 "\"She used to tell me stories about how he would go on all sorts of brave "
 "adventures in the nebula to recover artefacts of human history.\""
 msgstr ""
+"„Sie erzählte mir Geschichten darüber, wie er alle möglichen mutigen "
+"Abenteuer im Nebel erlebte, um Artefakte der Menschheitsgeschichte zu "
+"bergen.“"
 
 #: dat/missions/minerva/maikki1.lua:214
 msgid "\"He was a scavenger?\""
-msgstr ""
+msgstr "„Er war ein Sammler?“"
 
 #: dat/missions/minerva/maikki1.lua:215
 msgid "\"He was a scholar?\""
-msgstr ""
+msgstr "„Er war ein Gelehrter?“"
 
 #: dat/missions/minerva/maikki1.lua:218
 msgid ""
 "\"I like to think that he was a scholar, but most people would call him a "
 "scavenger.\""
 msgstr ""
+"„Ich denke gerne, dass er ein Gelehrter war, aber die meisten Leute würden "
+"ihn einen Sammler nennen.“"
 
 #: dat/missions/minerva/maikki1.lua:219
 msgid ""
 "\"My mother died without telling me, but after her death, while going "
 "through her stuff, I found out that my father was the famous Kex McPherson!\""
 msgstr ""
+"„Meine Mutter starb, ohne es mir zu sagen, aber nach ihrem Tod, als ich ihre "
+"Sachen durchsah, fand ich heraus, dass mein Vater der berühmte Kex McPherson "
+"war!“"
 
 #: dat/missions/minerva/maikki1.lua:220
 msgid ""
 "\"Apparently, one day he went into the nebula with his business partner "
 "Mireia and they were never seen again. All attempts to find them failed.\""
 msgstr ""
+"„Anscheinend ging er eines Tages mit seiner Geschäftspartnerin Mireia in den "
+"Nebel und sie wurden nie wieder gesehen. Alle Versuche, sie zu finden, "
+"schlugen fehl.“"
 
 #: dat/missions/minerva/maikki1.lua:221
 msgid ""
 "\"Most people believe they are dead, but I think he was kidnapped and is "
 "being held here. Maybe he hit his head and even forgot who he was!\""
 msgstr ""
+"„Die meisten Leute glauben, dass sie tot sind, aber ich glaube, er wurde "
+"entführt und wird hier festgehalten. Vielleicht hat er sich den Kopf "
+"gestoßen und sogar vergessen, wer er war!“"
 
 #: dat/missions/minerva/maikki1.lua:222
 msgid ""
@@ -57785,6 +57827,10 @@ msgid ""
 "look for hints around where he went missing? I heard he was very fond of the "
 "Cerberus bar in Doeston. Maybe there is a hint there.\""
 msgstr ""
+"„Ich habe kein Raumschiff, aber während ich mich hier umsehe, könntest du "
+"versuchen, nach Hinweisen zu suchen, wo er verschwunden ist? Ich habe "
+"gehört, dass er die Zerberus-Bar in Doeston sehr mochte. Vielleicht gibt es "
+"dort einen Hinweis.“"
 
 #: dat/missions/minerva/maikki1.lua:227
 #, lua-format
@@ -57793,16 +57839,18 @@ msgstr "Sieh dich im „%s“-System um"
 
 #: dat/missions/minerva/maikki1.lua:229
 msgid "You were told her father colud be near Doeston."
-msgstr ""
+msgstr "Man sagte dir, ihr Vater könnte in der Nähe von Doeston sein."
 
 #: dat/missions/minerva/maikki1.lua:235
 msgid "You show her the picture you found in Zerantix of her and her parents."
 msgstr ""
+"Du zeigst ihr das Bild, das du in Zerantix von ihr und ihren Eltern gefunden "
+"hast."
 
 #. TODO show picture
 #: dat/missions/minerva/maikki1.lua:237
 msgid "As she stares deeply at the picture, her eyes tear up."
-msgstr ""
+msgstr "Als sie tief auf das Bild starrt, tränen ihre Augen."
 
 #: dat/missions/minerva/maikki1.lua:238
 msgid ""
@@ -57810,6 +57858,9 @@ msgid ""
 "seeing us together just brings back some memories which I had thought I had "
 "forgotten.\""
 msgstr ""
+"„Es tut mir leid, ich sollte nicht weinen. Ich kenne den Mann kaum. Uns "
+"zusammen zu sehen, bringt nur einige Erinnerungen zurück, von denen ich "
+"dachte, ich hätte sie vergessen.“"
 
 #: dat/missions/minerva/maikki1.lua:239
 msgid ""
@@ -57817,6 +57868,9 @@ msgid ""
 "what should have been my childhood…\"\n"
 "She reminisces."
 msgstr ""
+"„Er sieht auf diesem Bild so albern aus, und meine Mutter sieht so glücklich "
+"aus … So hätte meine Kindheit sein sollen …“\n"
+"Sie schwelgt in Erinnerungen."
 
 #. TODO flashback with her family
 #: dat/missions/minerva/maikki1.lua:242
@@ -57824,6 +57878,9 @@ msgid ""
 "You give a few moments to recover before explaining her what you saw in the "
 "wreck and your encounter with the scavengers."
 msgstr ""
+"Du gibst dir ein paar Augenblicke Zeit, um dich zu erholen, bevor du ihr "
+"erzählst, was du in dem Wrack gesehen hast und was du mit den Sammlern "
+"erlebt hast."
 
 #: dat/missions/minerva/maikki1.lua:243
 msgid ""
@@ -57832,6 +57889,10 @@ msgid ""
 "\"From what you tell me, it seems like it wasn't an accident…\"\n"
 "She looks up expectantly."
 msgstr ""
+"Sie trocknet sich die Augen mit einem Taschentuch und versucht vergeblich, "
+"ihr Make-up nicht zu verschmieren.\n"
+"„Nach dem, was Sie mir erzählen, scheint es kein Unfall gewesen zu sein …“\n"
+"Sie blickt erwartungsvoll auf."
 
 #: dat/missions/minerva/maikki1.lua:246
 msgid ""
@@ -57839,6 +57900,9 @@ msgid ""
 "dies that easily!\"\n"
 "She looks clearly excited at the possibility."
 msgstr ""
+"„Wenn Sie keine Leiche gefunden haben, bin ich sicher, dass er überlebt hat! "
+"Er sollte kein Typ sein, der so leicht stirbt!“\n"
+"Sie sieht sichtlich erregt aus bei dieser Möglichkeit."
 
 #: dat/missions/minerva/maikki1.lua:248
 msgid ""
@@ -57847,6 +57911,10 @@ msgid ""
 "have to do with my father so far away? I always thought those creeps "
 "couldn't be up to anything good.\""
 msgstr ""
+"Sie runzelt die Stirn.\n"
+"„Die Sammler haben doch an die Za'lek verkauft, oder? Was könnten die Za'lek "
+"so weit weg mit meinem Vater zu tun haben? Ich dachte immer, diese "
+"Widerlinge könnten nichts Gutes im Schilde führen.“"
 
 #: dat/missions/minerva/maikki1.lua:250
 msgid ""
@@ -57854,20 +57922,25 @@ msgid ""
 "\"I think I have an idea for our next steps. Meet me up here in a bit. I "
 "have to get some information first.\""
 msgstr ""
+"Ihr Gesicht strahlt.\n"
+"„Ich glaube, ich habe eine Idee für unsere nächsten Schritte. Wir treffen "
+"uns gleich hier oben. Ich muss erst ein paar Informationen einholen.“"
 
 #. no reward, yet...
 #: dat/missions/minerva/maikki1.lua:256
 msgid ""
 "You gave Maikki the information you found in the nebula about her father."
 msgstr ""
+"Du hast Maikki die Informationen gegeben, die du im Nebel über ihren Vater "
+"gefunden hast."
 
 #: dat/missions/minerva/maikki1.lua:261 dat/missions/minerva/maikki2.lua:292
 msgid "\"Is there anything you would like to know about?\""
-msgstr ""
+msgstr "„Gibt es etwas, das Sie wissen möchten?“"
 
 #: dat/missions/minerva/maikki1.lua:265 dat/missions/minerva/maikki2.lua:296
 msgid "You take your leave to continue the search for her father."
-msgstr ""
+msgstr "Du nimmst Abschied, um die Suche nach ihrem Vater fortzusetzen."
 
 #. Can't run it in the VN or it causes an error
 #: dat/missions/minerva/maikki1.lua:282
