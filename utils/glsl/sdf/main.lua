@@ -116,25 +116,22 @@ vec4 sdf_alarm( vec4 color, Image tex, vec2 uv, vec2 px )
    return color;
 }
 
+#define CS(A)  vec2(sin(A),cos(A))
 vec4 sdf_pilot( vec4 color, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
    uv = abs(uv);
 
-   float d = sdArc( uv,
-         vec2(sin(M_PI*0.75),cos(M_PI*0.75)),
-         vec2(sin(M_PI/10.0),cos(M_PI/10.0)),
-         1.0, 0.03 );
+   float d = sdArc( uv, CS(M_PI*0.75), CS(M_PI/10.0), 1.0, 0.02 );
 
    d = min( d, sdUnevenCapsule( uv, vec2(M_SQRT1_2), vec2(0.8), 0.07, 0.02) );
    d -= (1.0+sin(3.0*dt)) * 0.007;
    d = max( -sdCircle( uv-vec2(M_SQRT1_2), 0.04 ), d );
 
-   color.a *= smoothstep( -m, m, -d );
+   color.a *= smoothstep( -m, 0.0, -d );
    return color;
 }
 
-#define CS(A)  vec2(sin(A),cos(A))
 vec4 sdf_planet( vec4 color, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
@@ -161,7 +158,7 @@ vec4 sdf_planet( vec4 color, vec2 uv )
       uv = uv*R;
       const vec2 arclen = CS(M_PI/9.0);
       w = 2.0 * m;
-      inner -= 2.0*w+m;
+      inner -= 2.0*(w+m);
       for (int i=0; i<5; i++)
          d = min( d, sdArc( uv, CS( float(i)*M_PI*2.0/5.0), arclen, inner, w ) );
    }
@@ -175,12 +172,12 @@ vec4 sdf_planet( vec4 color, vec2 uv )
       uv = uv*R;
       const vec2 arclen = CS(M_PI/6.0);
       w = 2.0 * m;
-      inner -= 2.0*w+m;
+      inner -= 2.0*(w+m);
       for (int i=0; i<3; i++)
          d = min( d, sdArc( uv, CS( float(i)*M_PI*2.0/3.0), arclen, inner, w ) );
    }
 
-   color.a *= smoothstep( -m, m, -d );
+   color.a *= smoothstep( -m, 0.0, -d );
    return color;
 }
 
@@ -221,7 +218,7 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
    d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*0.9)*inner, d, m );
    d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*1.1)*inner, d, m );
 
-   color.a *= smoothstep( -m, m, -d );
+   color.a *= smoothstep( -m, 0.0, -d );
    return color;
 }
 
@@ -244,8 +241,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    uv_rel.y = - uv_rel.y;
 
    //col_out = sdf_alarm( color, tex, uv, px );
-   //col_out = sdf_pilot( color, uv_rel );
-   col_out = sdf_planet( color, uv_rel );
+   col_out = sdf_pilot( color, uv_rel );
+   //col_out = sdf_planet( color, uv_rel );
    //col_out = sdf_planet2( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );

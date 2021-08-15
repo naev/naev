@@ -35,7 +35,7 @@ void main(void) {
       uv = uv*R;
       const vec2 arclen = CS(M_PI/9.0);
       w = 2.0 * m;
-      inner -= 2.0*w+m;
+      inner -= 2.0*(w+m);
       for (int i=0; i<5; i++)
          d = min( d, sdArc( uv, CS( float(i)*M_PI*2.0/5.0), arclen, inner, w ) );
    }
@@ -49,12 +49,12 @@ void main(void) {
       uv = uv*R;
       const vec2 arclen = CS(M_PI/6.0);
       w = 2.0 * m;
-      inner -= 2.0*w+m;
+      inner -= 2.0*(w+m);
       for (int i=0; i<3; i++)
          d = min( d, sdArc( uv, CS( float(i)*M_PI*2.0/3.0), arclen, inner, w ) );
    }
 
    color_out = color;
-   color_out.a *= 0.6*smoothstep( -m, m, -d );
+   color_out.a *= 0.6*smoothstep( -m, 0.0, -d );
 }
 
