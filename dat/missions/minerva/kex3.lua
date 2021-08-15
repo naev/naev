@@ -57,7 +57,7 @@ malik_image = "major_malik.webp"
 money_reward = 400e3
 
 function create ()
-   if not misn.claim( system.get(targetsys) ) then
+   if not misn.claim( {system.get(targetsys), system.get(lastsys)} ) then
       misn.finish( false )
    end
    misn.setReward( misn_reward )
@@ -131,6 +131,7 @@ function generate_npc ()
 
       misn_state = 5 -- We're done here, go back to kex:)
       misn.osdActive(2)
+      misn.markerMove( misn_marker, system.get("Limbo") )
    end
 end
 

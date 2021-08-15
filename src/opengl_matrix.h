@@ -29,6 +29,7 @@ __attribute__((const)) gl_Matrix4 gl_Matrix4_Ortho( double left, double right,
                            double bottom, double top, double nearVal, double farVal );
 __attribute__((const)) gl_Matrix4 gl_Matrix4_Scale( gl_Matrix4 m, double x, double y, double z );
 __attribute__((const)) gl_Matrix4 gl_Matrix4_Translate( gl_Matrix4 m, double x, double y, double z );
+__attribute__((const)) gl_Matrix4 gl_Matrix4_Rotate( gl_Matrix4 m, double angle, double x, double y, double z );
 __attribute__((const)) gl_Matrix4 gl_Matrix4_Rotate2d( gl_Matrix4 m, double angle );
 __attribute__((const)) gl_Matrix4 gl_Matrix4_Rotate2dv( gl_Matrix4 m, double x, double y );
 GLfloat *gl_Matrix4_Ptr( gl_Matrix4 *m );

@@ -973,11 +973,7 @@ static int systemL_presence( lua_State *L )
  */
 static int systemL_radius( lua_State *L )
 {
-   StarSystem *sys;
-
-   /* Get parameters. */
-   sys = luaL_validsystem(L, 1);
-
+   StarSystem *sys = luaL_validsystem(L, 1);
    lua_pushnumber( L, sys->radius );
    return 1;
 }

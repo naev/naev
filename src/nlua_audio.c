@@ -88,7 +88,7 @@ static int audioL_isBool( lua_State *L, ALenum param )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    int b = 1;
-   if (!conf.nosound) {
+   if (!sound_disabled) {
       soundLock();
       alGetSourcei( la->source, param, &b );
       al_checkErr();
@@ -106,7 +106,7 @@ static int audioL_isState( lua_State *L, ALenum state )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    int s = AL_STOPPED;
-   if (!conf.nosound) {
+   if (!sound_disabled) {
       soundLock();
       alGetSourcei( la->source, AL_SOURCE_STATE, &s );
       al_checkErr();
@@ -210,7 +210,7 @@ int lua_isaudio( lua_State *L, int ind )
 static int audioL_gc( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (conf.nosound)
+   if (sound_disabled)
       return 0;
    soundLock();
    alDeleteSources( 1, &la->source );
@@ -273,7 +273,7 @@ static int audioL_new( lua_State *L )
       NLUA_INVALID_PARAMETER(L);
 
    memset( &la, 0, sizeof(LuaAudio_t) );
-   if (!conf.nosound) {
+   if (!sound_disabled) {
       rw = PHYSFSRWOPS_openRead( name );
       if (rw==NULL)
          NLUA_ERROR(L,"Unable to open '%s'", name );
@@ -327,7 +327,7 @@ static int audioL_clone( lua_State *L )
    double master;
 
    memset( &la, 0, sizeof(LuaAudio_t) );
-   if (conf.nosound) {
+   if (sound_disabled) {
       lua_pushaudio(L, la);
       return 1;
    }
@@ -368,7 +368,7 @@ static int audioL_clone( lua_State *L )
 static int audioL_play( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (!conf.nosound) {
+   if (!sound_disabled) {
       soundLock();
       alSourcePlay( la->source );
       al_checkErr();
@@ -389,7 +389,7 @@ static int audioL_play( lua_State *L )
 static int audioL_pause( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (conf.nosound)
+   if (sound_disabled)
       return 0;
    soundLock();
    alSourcePause( la->source );
@@ -421,7 +421,7 @@ static int audioL_isPaused( lua_State *L )
 static int audioL_stop( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (conf.nosound)
+   if (sound_disabled)
       return 0;
 
    soundLock();
@@ -454,7 +454,7 @@ static int audioL_isStopped( lua_State *L )
 static int audioL_rewind( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (!conf.nosound) {
+   if (!sound_disabled) {
       soundLock();
       alSourceRewind( la->source );
       al_checkErr();
@@ -477,7 +477,7 @@ static int audioL_seek( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double offset = luaL_checknumber(L,2);
    const char *unit = luaL_optstring(L,3,"seconds");
-   if (!conf.nosound) {
+   if (!sound_disabled) {
       soundLock();
       if (strcmp(unit,"seconds")==0)
          alSourcef( la->source, AL_SEC_OFFSET, offset );
@@ -505,7 +505,7 @@ static int audioL_tell( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    const char *unit = luaL_optstring(L,2,"seconds");
    float offset = -1.0;
-   if (!conf.nosound) {
+   if (!sound_disabled) {
       soundLock();
       if (strcmp(unit,"seconds")==0)
          alGetSourcef( la->source, AL_SEC_OFFSET, &offset );
@@ -533,7 +533,7 @@ static int audioL_setVolume( lua_State *L )
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double volume = CLAMP( 0.0, 1.0,  luaL_checknumber(L,2) );
    double master = sound_getVolumeLog();
-   if (conf.nosound)
+   if (sound_disabled)
       return 0;
 
    soundLock();
@@ -556,7 +556,7 @@ static int audioL_getVolume( lua_State *L )
    LuaAudio_t *la;
    double volume, master;
    ALfloat alvol;
-   if (conf.nosound)
+   if (sound_disabled)
       volume = 0.;
    else {
       soundLock();
@@ -585,7 +585,7 @@ static int audioL_getVolume( lua_State *L )
 static int audioL_setRelative( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (conf.nosound)
+   if (sound_disabled)
       return 0;
 
    soundLock();
@@ -609,7 +609,7 @@ static int audioL_setPosition( lua_State *L )
 {
    ALfloat pos[3];
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (conf.nosound)
+   if (sound_disabled)
       return 0;
 
    pos[0] = luaL_optnumber(L,2,0.);
@@ -637,7 +637,7 @@ static int audioL_getPosition( lua_State *L )
 {
    ALfloat pos[3];
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (conf.nosound) {
+   if (sound_disabled) {
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
@@ -669,7 +669,7 @@ static int audioL_setVelocity( lua_State *L )
 {
    ALfloat vel[3];
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (conf.nosound)
+   if (sound_disabled)
       return 0;
 
    vel[0] = luaL_optnumber(L,2,0.);
@@ -697,7 +697,7 @@ static int audioL_getVelocity( lua_State *L )
 {
    ALfloat vel[3];
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   if (conf.nosound) {
+   if (sound_disabled) {
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
       lua_pushnumber(L,0.);
@@ -727,7 +727,7 @@ static int audioL_setLooping( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    int b = lua_toboolean(L,2);
-   if (!conf.nosound) {
+   if (!sound_disabled) {
       soundLock();
       alSourcei( la->source, AL_LOOPING, b );
       al_checkErr();
@@ -761,7 +761,7 @@ static int audioL_setPitch( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    double pitch = luaL_checknumber(L,2);
-   if (conf.nosound)
+   if (sound_disabled)
       return 0;
    soundLock();
    alSourcef( la->source, AL_PITCH, pitch );
@@ -782,7 +782,7 @@ static int audioL_getPitch( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
    float p = 1.0;
-   if (!conf.nosound) {
+   if (!sound_disabled) {
       soundLock();
       alGetSourcef( la->source, AL_PITCH, &p );
       al_checkErr();
