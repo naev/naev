@@ -46,6 +46,8 @@ misn_reward = _("A step closer to Kex's freedom")
 misn_title = _("Freeing Kex")
 misn_desc = string.format(_("Kex wants you to kill Dr. Strangelove at %s in the %s system."), _(targetplanet), _(targetsys))
 
+eccdiff = "strangelove"
+
 money_reward = 700e3
 
 function create ()
@@ -69,10 +71,10 @@ function accept ()
    end
    misn.accept()
 
-   minerva.log.kex(_("You have agreed to help Kex obtain information from Jie de Luca.") )
+   minerva.log.kex(_("You have agreed to help Kex deal with Dr. Strangelove.") )
 
    misn.osdCreate( misn_title,
-      { string.format(_("Go to %s in the %s system to find Jie de Luca"), _(targetplanet), _(targetsys) ),
+      { string.format(_("Go to Dr. Strangelove at %s in the %s system"), _(targetplanet), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
    misn_marker = misn.markerAdd( system.get(targetsys) )
 
@@ -213,8 +215,9 @@ function enter ()
          end
 
       elseif misn_state == 2 then
+         -- Should be taking off from the Lab
 
-         -- Spawn 
+         -- Spawn
          local pos = planet.get(targetplanet):pos() + vec2.new(4000, 6000)
          local p = pilot.add("Za'lek Sting", "Za'lek", pos, minerva.strangelove.name )
          p:setInvincible(true)
@@ -226,6 +229,9 @@ function enter ()
          hook.pilot( p, "board", "strangelove_board" )
          strangelove_ship = p
          hook.timer( 5, "strangelove_hail" )
+
+         -- Remove station
+         diff.remove( eccdiff )
       end
 
    elseif misn_state~=1 and rnd.rnd() < thug_chance then
@@ -286,7 +292,7 @@ end
 
 function thug_dead ()
    local stillalive = {}
-   for k,v in ipairs(thug_pilots) do 
+   for k,v in ipairs(thug_pilots) do
       if v:exists() then
          table.insert( stillalive, v )
       end
@@ -302,6 +308,9 @@ function thugs_cleared ()
    vn.scene()
    vn.transition()
    vn.run()
+
+   misn_state = 1
+   player.allowLand( true )
 end
 
 function landed_lab ()
@@ -309,7 +318,10 @@ function landed_lab ()
    vn.scene()
    vn.transition()
    vn.run()
+
+   -- Take off
    misn_state = 2
+   player.takeoff()
 end
 
 function strangelove_hail ()
@@ -333,10 +345,9 @@ function strangelove_board ()
    vn.scene()
    vn.music( minerva.loops.strangelove )
    local dr = vn.newCharacter( strangelove.name,
-         { color=strangelove.colour, image=minerva.strangelove.image,
-           shader=love_shaders.hologram() } )
-   vn.transition( "electric" )
+         { color=strangelove.colour, image=minerva.strangelove.image, } )
    -- TODO small scene
-   vn.done( "electric" )
    vn.run()
+
+   misn_state = 2
 end
