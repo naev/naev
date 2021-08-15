@@ -141,7 +141,7 @@ He gives a sort of half-hearted grin and disappears into the shadows.]]))
          { _([["No."]]), "intro1" },
          { _([["What are you talking about?"]]), "intro1" },
       }
-      vn.lable("intro1")
+      vn.label("intro1")
       kex(_([["Well, I mean…"
 He seems at a loss of words.
 "You know…"]]))
@@ -209,7 +209,7 @@ He looks visibly tired.
    kex(_([["Lately, my past seems to haunt me. When I am able to sleep, I have been waking up in the middle of the night in cold sweat, well probably would if I had some damn sweat glands, gasping for breath."]]))
    kex(_([["I haven't really paid attention to it much, but it's getting worse and worse as time goes by. I'm sure it will all get better when this is over. I mean, it has to, right?"]]))
    kex(_([[After a short pause he continues. "You know, ever since I was a kid, I always loved adventure: being at the center of everything and braving adversity. I loved the adrenaline rush and could never get enough of it all."]]))
-   kex(_([["When I was getting older, I guess I tried to follow what everyone was doing and sort of settle down, but I was never very good at staying still. Whenever I stayed in the same place too long I got all itchy. It's like my soul was yearning to go out and adventure.]]))
+   kex(_([["When I was getting older, I guess I tried to follow what everyone was doing and sort of settle down, but I was never very good at staying still. Whenever I stayed in the same place too long I got all itchy. It's like my soul was yearning to go out and adventure."]]))
    kex(_([["Even when I had my first child, I just couldn't stay behind. I just had to go out. But now…"
 His biological eye looks a bit hazy.
 "I guess you don't appreciate what you have until you lose it all."]]))
@@ -314,7 +314,7 @@ function enter ()
 
    elseif misn_state~=1 and rnd.rnd() < thug_chance then
       -- Spawn near the center, they home in on player
-      spawn_thugs(planet.get(lastplanet):pos(), false )
+      spawn_thugs( vec2.newP(0.7*system.cur():radius()*rnd.rnd(),360*rnd.rnd()), false )
       -- Timer
       hook.timer( 5, "thug_heartbeat" )
 
@@ -355,6 +355,7 @@ function enter ()
 end
 
 function thug_heartbeat ()
+   if not thug_leader or not thug_leader:exists() then return end
    local det, fuz = thug_leader:inrange( player.pilot() )
    if det and fuz then
       -- Start the attack, should be close enough to aggro naturally
