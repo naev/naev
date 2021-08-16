@@ -145,7 +145,7 @@ function handle_messages( si )
                ai.pushtask("attack", data)
                -- Also signal to other followers
                for k,v in ipairs(p:followers()) do
-                  p:msg( v, "l_attacked", attacker )
+                  p:msg( v, "l_attacked", data )
                end
             end
          end

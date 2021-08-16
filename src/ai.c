@@ -1430,7 +1430,7 @@ static int aiL_getdistance( lua_State *L )
  *
  *    @luatparam Vec2|Pilot pointer
  *    @luatreturn number The squared distance from the pointer.
- *    @luafunc dist
+ *    @luafunc dist2
  */
 static int aiL_getdistance2( lua_State *L )
 {
