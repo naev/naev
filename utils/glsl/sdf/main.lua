@@ -82,7 +82,7 @@ float sdArc( in vec2 p, in vec2 sca, in vec2 scb, in float ra, in float rb )
    p *= mat2(sca.x,sca.y,-sca.y,sca.x);
    p.x = abs(p.x);
    float k = (scb.y*p.x>scb.x*p.y) ? dot(p.xy,scb) : length(p);
-   return sqrt( dot(p,p) + ra*ra - 2.0*ra*k ) - rb;
+   return sqrt( max(0.0, dot(p,p) + ra*ra - 2.0*ra*k) ) - rb;
 }
 
 float sdCircle( in vec2 p, in float r )
@@ -244,8 +244,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    //col_out = sdf_alarm( color, tex, uv, px );
    //col_out = sdf_pilot( color, uv_rel );
-   //col_out = sdf_planet( color, uv_rel );
-   col_out = sdf_planet2( color, uv_rel );
+   col_out = sdf_planet( color, uv_rel );
+   //col_out = sdf_planet2( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
