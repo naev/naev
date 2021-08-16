@@ -204,7 +204,7 @@ function should_attack( enemy, si )
    -- Check if we have minimum range to engage
    if mem.enemyclose then
       local dist = ai.dist2( enemy )
-      if mem.enemyclose*mem.enemyclose < dist then
+      if mem.enemyclose*mem.enemyclose > dist then
          return true
       end
    else
