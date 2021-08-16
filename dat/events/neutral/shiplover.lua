@@ -194,6 +194,21 @@ function gen_question( difficulty )
 end
 
 function create ()
+   local pnt = planet.cur()
+
+   -- Ignore claimed systems (don't want to ruin the atmosphere)
+   if not evt.claim( system.cur(), true ) then evt.finish() end
+
+   -- Do not spawn on restricted assets
+   if pnt:restricted() then evt.finish() end
+
+   -- Ignore on uninhabited and planets without bars
+   local services = pnt:services()
+   local flags = pnt:flags()
+   if not services.inhabited or not services.bar or flags.nomissionspawn then
+      evt.finish()
+   end
+
    -- Only available on whitelisted factions
    local whitelist = {
       ["Independent"]= true,
@@ -206,7 +221,7 @@ function create ()
       ["Frontier"]   = true,
    }
 
-   local pfact = planet.cur():faction()
+   local pfact = pnt:faction()
    if not pfact or not whitelist[ pfact:nameRaw() ] then
       evt.finish()
    end
@@ -278,7 +293,7 @@ function create ()
       end
       reward.msg_shiplover = _([["Wow. This is the 5th time you got my quiz right. This deserves a special reward. Here, take this special trading card. Don't worry, I have a dozen like it. I'll have to step up my quiz game from now on."]])
       reward.msg_obtain = string.format(_("You have received #g%s#0."), outfit_reward:name())
-   
+
    elseif nwon == 9 and player.numOutfit("Trading Card (Uncommon)")<1 then
       local outfit_reward = outfit.get("Trading Card (Uncommon)")
       reward.func = function ()
@@ -287,7 +302,7 @@ function create ()
       end
       reward.msg_shiplover = _([["Wow. This is the 10th time you got my quiz right. You are doing much better than I anticipated. Here, take one of my favourite trading cards. Make sure not to lose it, this one is fairly special! I'll have to think of better quizzes from now on."]])
       reward.msg_obtain = string.format(_("You have received #g%s#0."), outfit_reward:name())
-   
+
    elseif nwon == 24 and player.numOutfit("Trading Card (Rare)")<1 then
       local outfit_reward = outfit.get("Trading Card (Rare)")
       reward.func = function ()
@@ -296,7 +311,7 @@ function create ()
       end
       reward.msg_shiplover = _([["Damn. This is the 25th time you got my quiz right. Nobody has played my quiz with me for this long. I guess I have to commemorate this in a special way. Here, take one of the rarest cards in my collection. I only have one copy of this one so make sure to take good care of it. No! Don't take it out of the card foil! It might get damaged that way!"]])
       reward.msg_obtain = string.format(_("You have received #g%s#0."), outfit_reward:name())
-   
+
    else
       reward.func = function ()
          shiplog.append( "shiplover", string.format(_("You obtained a %s from the Ship Enthusiast for getting a quiz right."), creditstring(cash_reward))  )
@@ -327,7 +342,7 @@ function approach_shiplover ()
    if first_meet then
       vn.na(_("You approach the individual who is making weird noises, likely imitating space ship noises, while playing with a space ship toy."))
       sl(_([["Why hello there. How do you like my new limited edition Lancelot figurine?"]]))
-      vn.menu( function () 
+      vn.menu( function ()
          local opts = {
             { _([["It looks great!"]]), "first_great" },
             { _([["It's awful."]]), "first_awful" },

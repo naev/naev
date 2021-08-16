@@ -132,6 +132,31 @@ vec4 sdf_pilot( vec4 color, vec2 uv )
    return color;
 }
 
+vec4 sdf_pilot2( vec4 color, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+
+   const float arclen1 = M_PI/4.0;
+   const float arclen2 = M_PI/7.0;
+
+	float w = 2.0 * m;
+	float inner = 1.0-w-m;
+   float d = sdArc( uv, CS(0.0), CS(arclen1), inner, w );
+
+   vec2 yuv = vec2( uv.x, abs(uv.y) );
+
+   d = min( d, sdCircle( yuv-CS(M_PI*3.0/2.0+arclen1)*inner, 7.0 * m) );
+   d = max( -sdCircle(   yuv-CS(M_PI*3.0/2.0+arclen1)*inner, 3.5 * m), d );
+
+   d = min( d, sdArc( uv, CS(M_PI), CS(arclen2), inner, w ) );
+
+   d = min( d, sdCircle( yuv-CS(M_PI/2.0-arclen2)*inner, 7.0 * m) );
+   d = max( -sdCircle(   yuv-CS(M_PI/2.0-arclen2)*inner, 3.5 * m), d );
+
+   color.a *= smoothstep( -m, 0.0, -d );
+   return color;
+}
+
 vec4 sdf_planet( vec4 color, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
@@ -253,8 +278,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    //col_out = sdf_alarm( color, tex, uv, px );
    //col_out = sdf_pilot( color, uv_rel );
+   col_out = sdf_pilot2( color, uv_rel );
    //col_out = sdf_planet( color, uv_rel );
-   col_out = sdf_planet2( color, uv_rel );
+   //col_out = sdf_planet2( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
