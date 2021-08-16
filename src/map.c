@@ -1313,8 +1313,8 @@ void map_renderNames( double bx, double by, double x, double y,
          continue;
 
       textw = gl_printWidthRaw( &gl_smallFont, _(sys->name) );
-      tx = x + (sys->pos.x+11.) * map_zoom;
-      ty = y + (sys->pos.y-5.) * map_zoom;
+      tx = x + (sys->pos.x+12.) * map_zoom;
+      ty = y + (sys->pos.y) * map_zoom - gl_smallFont.h*0.5;
 
       /* Skip if out of bounds. */
       if (!rectOverlap(tx, ty, textw, gl_smallFont.h, bx, by, w, h))
