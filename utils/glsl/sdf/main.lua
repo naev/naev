@@ -195,7 +195,7 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
    float m = 1.0 / dimensions.x;
 
 	/* Outter stuff. */
-	float w = 2.0 / dimensions.x;
+	float w = 2.0 * m;
 	float inner = 1.0-w-m;
 	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
@@ -210,8 +210,12 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
       auv.xy = vec2( auv.y, auv.x );
    const int nmax = 9; // only works well with odd numbers
    for (int i=0; i<nmax; i++)
-      d = min( d, sdSegment( auv, CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.91, CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.93 )-m );
-   d = min( d, sdSegment( auv, CS((float(nmax/2)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.89, CS((float(nmax/2)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.93 )-1.5*m );
+      d = min( d, sdSegment( auv,
+            CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.91,
+            CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.93 )-m );
+   d = min( d, sdSegment( auv,
+         CS((float(nmax/2)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.89,
+         CS((float(nmax/2)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.93 )-1.5*m );
 
    /* Circles on main. */
    if (uv.y < uv.x)
