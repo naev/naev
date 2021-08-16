@@ -130,7 +130,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
    char line[256];
    while (SDL_RWgets(line, sizeof(line), f)) {
       const char *token;
-      char *saveptr;
+      char *saveptr, *copy_filename, *texture_filename;
       assert("Line too long" && (line[strlen(line) - 1] == '\n'));
       token = strtok_r(line, DELIM, &saveptr);
 
@@ -163,13 +163,8 @@ static void materials_readFromFile( const char *filename, Material **materials )
             ERR("Options not supported for map_Kd");
 
          /* computes the path to texture */
-         char *copy_filename = strdup(filename);
-         char *dn = dirname(copy_filename);
-         char *texture_filename = malloc(strlen(filename) + 1 + strlen(token) + 1);
-         strcpy(texture_filename, dn);
-         strcat(texture_filename, "/");
-         strcat(texture_filename, token);
-
+         copy_filename = strdup(filename);
+	 asprintf(&texture_filename, "%s/%s", dirname(copy_filename), token);
          curr->texture = gl_newImage(texture_filename, 0);
          free(copy_filename);
          free(texture_filename);
@@ -219,23 +214,16 @@ Object *object_loadFromFile( const char *filename )
    while (SDL_RWgets(line, sizeof(line), f)) {
       const char *token;
       assert("Line too long" && (line[strlen(line) - 1] == '\n'));
-      char *saveptr;
+      char *saveptr, *copy_filename, *material_filename;
       token = strtok_r(line, DELIM, &saveptr);
 
       if (token == NULL) {
          /* Missing */
       } else if (strcmp(token, "mtllib") == 0) {
          while ((token = strtok_r(NULL, DELIM, &saveptr)) != NULL) {
-            /* token contains the filename describing materials */
-
             /* computes the path to materials */
-            char *copy_filename = strdup(filename);
-            char *dn = dirname(copy_filename);
-            char *material_filename = malloc(strlen(filename) + 1 + strlen(token) + 1);
-            strcpy(material_filename, dn);
-            strcat(material_filename, "/");
-            strcat(material_filename, token);
-
+            copy_filename = strdup(filename);
+	    asprintf(&material_filename, "%s/%s", dirname(copy_filename), token);
             materials_readFromFile(material_filename, &object->materials);
             free(copy_filename);
             free(material_filename);
