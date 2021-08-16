@@ -91,17 +91,18 @@ function _stateinfo( task )
 end
 
 function lead_fleet ()
-   if #ai.pilot():followers() ~= 0 then
+   local p = ai.pilot()
+   if #p:followers() ~= 0 then
       if mem.formation == nil then
-         formation.clear(ai.pilot())
+         formation.clear(p)
          return
       end
 
       local form = formation[mem.formation]
       if form == nil then
-         warn(string.format(_("Formation '%s' not found"), mem.formation))
+         warn(string.format(_("Pilot '%s': formation '%s' not found!"), p:name(), mem.formation))
       else
-         form(ai.pilot())
+         form(p)
       end
    end
 end
