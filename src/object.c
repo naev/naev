@@ -357,18 +357,12 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
 void object_renderSolidPart( Object *object, const Solid *solid, const char *part_name, GLfloat alpha, double scale )
 {
    gl_Matrix4 projection;
-   double x, y, cx, cy, gx, gy, zoom;
+   double x, y;
    int i;
 
    /* get parameters. */
-   cam_getPos(&cx, &cy);
-   gui_getOffset(&gx, &gy);
-   zoom = cam_getZoom();
-   scale *= zoom;
-
-   /* calculate position - we'll use relative coords to player */
-   x = (solid->pos.x - cx + gx) * zoom / gl_screen.nw * 2;
-   y = (solid->pos.y - cy + gy) * zoom / gl_screen.nh * 2;
+   gl_gameToScreenCoords(&x, &y, solid->pos.x, solid->pos.y);
+   scale *= cam_getZoom();
 
    glUseProgram(shaders.material.program);
    glEnableVertexAttribArray(shaders.material.vertex);
