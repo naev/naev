@@ -1301,6 +1301,7 @@ void map_renderNames( double bx, double by, double x, double y,
    int i, j;
    char buf[32];
    glColour col;
+   glFont *font;
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
@@ -1312,17 +1313,19 @@ void map_renderNames( double bx, double by, double x, double y,
       if ((!editor && !sys_isKnown(sys)) || (map_zoom <= 0.5 ))
          continue;
 
-      textw = gl_printWidthRaw( &gl_smallFont, _(sys->name) );
-      tx = x + (sys->pos.x+11.) * map_zoom;
-      ty = y + (sys->pos.y-5.) * map_zoom;
+      font = (map_zoom >= 1.5) ? &gl_defFont : &gl_smallFont;
+
+      textw = gl_printWidthRaw( font, _(sys->name) );
+      tx = x + (sys->pos.x+12.) * map_zoom;
+      ty = y + (sys->pos.y) * map_zoom - font->h*0.5;
 
       /* Skip if out of bounds. */
-      if (!rectOverlap(tx, ty, textw, gl_smallFont.h, bx, by, w, h))
+      if (!rectOverlap(tx, ty, textw, font->h, bx, by, w, h))
          continue;
 
       col = cWhite;
       col.a = alpha;
-      gl_printRaw( &gl_smallFont, tx, ty, &col, -1, _(sys->name) );
+      gl_printRaw( font, tx, ty, &col, -1, _(sys->name) );
 
    }
 
