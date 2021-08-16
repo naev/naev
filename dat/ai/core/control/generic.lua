@@ -111,7 +111,7 @@ function control_manual ()
    lead_fleet()
 end
 
-function handle_messages ()
+function handle_messages( si )
    local p = ai.pilot()
    local l = p:leader()
    for _, v in ipairs(ai.messages()) do
@@ -140,6 +140,11 @@ function handle_messages ()
          elseif msgtype == "land" then
             mem.land = ai.planetfrompos(data):pos()
             ai.pushtask("land")
+         elseif msgtype == "l_attacked" then
+            if not si.fighting and should_attack( data, si ) then
+               ai.pushtask("attack", data)
+            end
+
          -- Escort commands
          -- Attack target
          elseif msgtype == "e_attack" then
@@ -151,7 +156,7 @@ function handle_messages ()
             end
          -- Hold position
          elseif msgtype == "e_hold" then
-            ai.pushtask("hold" )
+            ai.pushtask("hold")
          -- Return to carrier
          elseif msgtype == "e_return" then
             ai.pushtask( "flyback", p:flags("carried") )
@@ -163,7 +168,7 @@ function handle_messages ()
    end
 end
 
-function should_attack( enemy )
+function should_attack( enemy, si )
    if not enemy or not enemy:exists() then
       return false
    end
@@ -173,8 +178,6 @@ function should_attack( enemy )
    end
 
    -- Don't reattack the current enemy
-   local task = ai.taskname()
-   local si = _stateinfo( task )
    if si.attack and enemy == ai.taskdata() then
       return false
    end
@@ -231,12 +234,12 @@ function control ()
    local p = ai.pilot()
    local enemy = ai.getenemy()
 
-   lead_fleet()
-   handle_messages()
-
    -- Task information stuff
    local task = ai.taskname()
    local si = _stateinfo( task )
+
+   lead_fleet()
+   handle_messages( si )
 
    -- Select new leader
    local l = p:leader()
@@ -325,7 +328,7 @@ function control ()
    -- Get new task
    if task == nil then
       -- See what decision to take
-      if should_attack(enemy) then
+      if should_attack( enemy, si ) then
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
@@ -356,7 +359,7 @@ function control ()
       end
 
       -- See if really want to attack
-      if should_attack( enemy ) then
+      if should_attack( enemy, si ) then
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          clean_task( task )
@@ -467,6 +470,13 @@ function attacked( attacker )
       return
    end
 
+   -- Notify followers that we've been attacked
+   if not si.fighting then
+      for k,v in ipairs(p:followers()) do
+         p:msg( v, "l_attacked", attacker )
+      end
+   end
+
    if not si.fighting then
 
       if mem.defensive then
@@ -575,7 +585,7 @@ function distress ( pilot, attacker )
    if si.attack then
       if si.noattack then return end
       -- Ignore if not interested in attacking
-      if not should_attack( badguy ) then return end
+      if not should_attack( badguy, si ) then return end
 
       local target = ai.taskdata()
 
@@ -589,7 +599,7 @@ function distress ( pilot, attacker )
    elseif task ~= "runaway" and task ~= "refuel" then
       if not si.noattack and mem.aggressive then
          -- Ignore if not interested in attacking
-         if not should_attack( badguy ) then return end
+         if not should_attack( badguy, si ) then return end
          if p:inrange( badguy ) then -- TODO: something to help in the other case
             clean_task( task )
             ai.pushtask( "attack", badguy )

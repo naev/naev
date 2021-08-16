@@ -2,11 +2,13 @@ local lanes = require 'ai.core.misc.lanes'
 
 -- Default task to run when idle
 function idle ()
+   local task = ai.taskname()
+   local si = _stateinfo( task )
    -- Aggressives will try to find enemies first, before falling back on
    -- loitering, to avoid weird stuff starting to scan before attacking
    if mem.aggressive then
       local enemy  = ai.getenemy()
-      if enemy ~= nil and (not mem.enemyclose or ai.dist(enemy) < mem.enemyclose) then
+      if should_attack( enemy,  si ) then
          ai.pushtask( "attack", enemy )
          return
       end
@@ -64,6 +66,7 @@ function idle ()
          if target then
             -- Don't scan if they're going to be attacked anyway
             if ai.isenemy(target) then
+               -- TODO probably use should_attack here
                ai.pushtask( "attack", target )
             else
                __push_scan( target )
