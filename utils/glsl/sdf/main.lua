@@ -203,20 +203,23 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
    s = sin(dt*dts);
    c = cos(dt*dts);
    mat2 R = mat2( c, s, -s, c );
-   vec2 auv = abs(uv*R);
-   const int nmax = 16;
+   vec2 auv = abs(uv);
+   if (auv.y < auv.x)
+      auv.xy = vec2( auv.y, auv.x );
+   const int nmax = 9; // only works well with odd numbers
    for (int i=0; i<nmax; i++)
-      d = min( d, sdSegment( auv, CS((float(i)+0.5)*M_PI/float(nmax)*0.5)*0.91, CS((float(i)+0.5)*M_PI/float(nmax)*0.5)*0.93 )-m );
-   d = min( d, sdSegment( auv, CS(M_PI*(0.125+0.25/float(nmax)))*0.89, CS(M_PI*(0.125+0.25/float(nmax)))*0.93 )-1.5*m );
-   d = min( d, sdSegment( auv, CS(M_PI*(0.375+0.25/float(nmax)))*0.89, CS(M_PI*(0.375+0.25/float(nmax)))*0.93 )-1.5*m );
+      d = min( d, sdSegment( auv, CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.91, CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.93 )-m );
+   d = min( d, sdSegment( auv, CS((float(nmax/2)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.89, CS((float(nmax/2)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.93 )-1.5*m );
 
    /* Circles on main. */
+   if (uv.y < uv.x)
+      uv.xy = vec2(uv.y, uv.x);
    d = sdf_emptyCircle( uv - CS(M_PI/4.0)*inner, d, m );
    d = sdf_emptyCircle( uv - CS(M_PI/4.0+M_PI/22.0*32.0)*inner, d, m );
-   d = sdf_emptyCircle( uv - CS(M_PI/4.0-M_PI/22.0*32.0)*inner, d, m );
+   //d = sdf_emptyCircle( uv - CS(M_PI/4.0-M_PI/22.0*32.0)*inner, d, m );
 
    /* Circles off main. */
-   d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*0.9)*inner, d, m );
+   //d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*0.9)*inner, d, m );
    d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*1.0)*inner, d, m );
    d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*1.1)*inner, d, m );
 
@@ -244,8 +247,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    //col_out = sdf_alarm( color, tex, uv, px );
    //col_out = sdf_pilot( color, uv_rel );
-   col_out = sdf_planet( color, uv_rel );
-   //col_out = sdf_planet2( color, uv_rel );
+   //col_out = sdf_planet( color, uv_rel );
+   col_out = sdf_planet2( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
