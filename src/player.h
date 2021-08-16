@@ -79,6 +79,7 @@ typedef struct Player_s {
    char *gui;        /**< Player's GUI. */
    int guiOverride;  /**< GUI is overridden (not default). */
    int favourite;    /**< Whether or not this ship is favourited. */
+   double radar_res;    /**< Player's radar resolution. */
 
    /* Player data. */
    PlayerFlags flags;/**< Player's flags. */
