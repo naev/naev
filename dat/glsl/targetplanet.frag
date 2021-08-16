@@ -27,10 +27,12 @@ void main(void) {
    mat2 R = mat2( c, s, -s, c );
 
    vec2 auv = abs(uv);
+   if (auv.y < auv.x)
+      auv.xy = vec2( auv.y, auv.x );
    if (r > 100.0) {
       const float arcseg = M_PI/64.0;
       const vec2 shortarc = CS(arcseg);
-      for (int i=2; i<32; i+=4)
+      for (int i=2; i<16; i+=4)
          d = min( d, sdArc( auv, CS(M_PI/2.0+float(i)*arcseg),  shortarc, inner, w ) );
 
       /* Moving inner stuff. */
@@ -44,7 +46,7 @@ void main(void) {
    else {
       const float arcseg = M_PI/32.0;
       const vec2 shortarc = CS(arcseg);
-      for (int i=2; i<16; i+=4)
+      for (int i=2; i<8; i+=4)
          d = min( d, sdArc( auv, CS(M_PI/2.0+float(i)*arcseg),  shortarc, inner, w ) );
 
       /* Moving inner stuff. */
