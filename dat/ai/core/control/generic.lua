@@ -131,8 +131,21 @@ function handle_messages( si )
             end
          end
       end
+
+      -- Messages coming from followers
+      if sender:leader() == p then
+         if msgtype == "f_attacked" then
+            if not si.fighting and should_attack( data, si ) then
+               ai.pushtask("attack", data)
+               -- Also signal to other followers
+               for k,v in ipairs(p:followers()) do
+                  p:msg( v, "l_attacked", attacker )
+               end
+            end
+         end
+
       -- Below we only handle if they came from the glorious leader
-      if sender == l then
+      elseif sender == l then
          if msgtype == "form-pos" then
             mem.form_pos = data
          elseif msgtype == "hyperspace" then
@@ -474,6 +487,10 @@ function attacked( attacker )
    if not si.fighting then
       for k,v in ipairs(p:followers()) do
          p:msg( v, "l_attacked", attacker )
+      end
+      local l = p:leader()
+      if l and l:exists() then
+         p:msg( l, "f_attacked", attacker )
       end
    end
 
