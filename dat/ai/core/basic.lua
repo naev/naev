@@ -329,7 +329,7 @@ function __hyperspace_shoot( target )
          return
       end
    end
-   --ai.sethyptarget(target)
+   mem.land_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
    ai.pushsubtask( "__hyp_approach_shoot", target )
 end
 function __hyp_approach_shoot( target )
@@ -449,9 +449,10 @@ function runaway( target )
    if p == nil and t == nil then
       ai.pushsubtask( "__run_target" )
    elseif p == nil then
-      --ai.sethyptarget(t)
+      mem.land_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
       ai.pushsubtask( "__run_hyp", {target, t} )
    elseif t == nil then
+      mem.land_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
       ai.pushsubtask( "__run_landgo", {target,p} )
    else
       -- find which one is the closest
@@ -459,9 +460,10 @@ function runaway( target )
       local modt = vec2.mod(t:pos()-pilpos)
       local modp = vec2.mod(p:pos()-pilpos)
       if modt < modp then
-         --ai.sethyptarget(t)
+         mem.land_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
          ai.pushsubtask( "__run_hyp", {target, t} )
       else
+         mem.land_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
          ai.pushsubtask( "__run_landgo", {target,p} )
       end
    end
@@ -640,7 +642,7 @@ function hyperspace( target )
          return
       end
    end
-   --ai.sethyptarget(target)
+   mem.land_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
    ai.pushsubtask( "__hyp_approach", target )
 end
 function __hyp_approach( target )

@@ -28,6 +28,7 @@ RETURNS_NONNULL static JumpPoint *luaL_validjumpSystem( lua_State *L, int ind, i
 /* Jump metatable methods */
 static int jumpL_get( lua_State *L );
 static int jumpL_eq( lua_State *L );
+static int jumpL_radius( lua_State *L );
 static int jumpL_position( lua_State *L );
 static int jumpL_angle( lua_State *L );
 static int jumpL_hidden( lua_State *L );
@@ -39,6 +40,7 @@ static int jumpL_setKnown( lua_State *L );
 static const luaL_Reg jump_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
+   { "radius", jumpL_radius },
    { "pos", jumpL_position },
    { "angle", jumpL_angle },
    { "hidden", jumpL_hidden },
@@ -274,6 +276,23 @@ static int jumpL_eq( lua_State *L )
    a = luaL_checkjump(L,1);
    b = luaL_checkjump(L,2);
    lua_pushboolean(L,((a->srcid == b->srcid) && (a->destid == b->destid)));
+   return 1;
+}
+
+
+/**
+ * @brief Gets the jump's radius.
+ *
+ * @usage radius = j:radius()
+ *    @luatparam Jump j Jump to get the radius of.
+ *    @luatreturn number The jump's radius.
+ * @luafunc radius
+ */
+static int jumpL_radius( lua_State *L )
+{
+   JumpPoint *jp;
+   jp = luaL_validjump(L,1);
+   lua_pushnumber(L,jp->radius);
    return 1;
 }
 
