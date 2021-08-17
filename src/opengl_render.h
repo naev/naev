@@ -24,6 +24,7 @@ void gl_exitRender (void);
  * Coordinate translation.
  */
 void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by );
+__attribute__((const)) gl_Matrix4 gl_gameToScreenMatrix( gl_Matrix4 lhs );
 void gl_screenToGameCoords( double *nx, double *ny, int bx, int by );
 
 
