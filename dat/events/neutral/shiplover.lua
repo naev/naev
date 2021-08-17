@@ -19,7 +19,7 @@ require "numstring"
 shiplover_name    = _("Ship Enthusiast")
 shiplover_portrait= "shiplover.webp"
 shiplover_image   = "shiplover.webp"
-shiplover_desc    = _("You see an individual who is playing with a small ship model.")
+shiplover_desc    = _("You see a surprisingly young individual who is playing with a small ship model.")
 shiplover_priority= 5
 
 local function getNUnique( t, n )
