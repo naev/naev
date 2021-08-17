@@ -323,7 +323,7 @@ function hyperspace_shoot( target )
          return
       end
    end
-   mem.land_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
+   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
    ai.pushsubtask( "_hyp_approach_shoot", target )
 end
 function _hyp_approach_shoot( target )
@@ -373,7 +373,7 @@ function __choose_land_target ()
    end
 
    -- Decide exact land point
-   mem.land_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
+   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
 
    return target
 end
@@ -386,7 +386,7 @@ function _landgo( planet )
    __landgo(planet)
 end
 function __landgo ( planet )
-   local pl_pos = planet:pos() + mem.land_bias
+   local pl_pos = planet:pos() + mem.target_bias
 
    local dist     = ai.dist( pl_pos )
    local bdist    = ai.minbrakedist()
@@ -441,10 +441,10 @@ function runaway( target )
    if p == nil and t == nil then
       ai.pushsubtask( "_run_target" )
    elseif p == nil then
-      mem.land_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
+      mem.target_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
       ai.pushsubtask( "_run_hyp", {target, t} )
    elseif t == nil then
-      mem.land_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
+      mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
       ai.pushsubtask( "_run_landgo", {target,p} )
    else
       -- find which one is the closest
@@ -452,10 +452,10 @@ function runaway( target )
       local modt = vec2.mod(t:pos()-pilpos)
       local modp = vec2.mod(p:pos()-pilpos)
       if modt < modp then
-         mem.land_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
+         mem.target_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
          ai.pushsubtask( "_run_hyp", {target, t} )
       else
-         mem.land_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
+         mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
          ai.pushsubtask( "_run_landgo", {target,p} )
       end
    end
@@ -515,7 +515,7 @@ end
 function _run_hyp( data )
    local enemy  = data[1]
    local jump   = data[2]
-   local jp_pos = jump:pos()
+   local jp_pos = jump:pos() + mem.target_bias
 
    -- Shoot the target
    __shoot_turret( enemy )
@@ -570,7 +570,7 @@ end
 function _run_landgo( data )
    local enemy  = data[1]
    local planet = data[2]
-   local pl_pos = planet:pos() + mem.land_bias
+   local pl_pos = planet:pos() + mem.target_bias
 
    -- Shoot the target
    __shoot_turret( enemy )
@@ -637,7 +637,7 @@ function hyperspace( target )
          return
       end
    end
-   mem.land_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
+   mem.target_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
    ai.pushsubtask( "_hyp_approach", target )
 end
 function _hyp_approach( target )
@@ -645,7 +645,7 @@ function _hyp_approach( target )
 end
 function __hyp_approach( target )
    local dir
-   local pos      = target:pos()
+   local pos      = target:pos() + mem.target_bias
    local dist     = ai.dist( pos )
    local bdist    = ai.minbrakedist()
 
