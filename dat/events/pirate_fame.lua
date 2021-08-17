@@ -44,6 +44,7 @@ local function using_pirate_ship()
       "Pirate Ancestor",
       "Pirate Vendetta",
       "Pirate Shark",
+      "Pirate Starbridge",
       "Pirate Rhino",
    })
 end
@@ -54,8 +55,9 @@ end
 -- cruiser or carrier.
 --]]
 local function using_impressive_ship()
-   local t = player.pilot():ship():baseType()
-   local c = player.pilot():ship():class()
+   local s = player.pilot():ship()
+   local t = s:baseType()
+   local c = s:class()
    return ( c == "Cruiser" or c == "Carrier" or c == "Battleship" )
 end
 
