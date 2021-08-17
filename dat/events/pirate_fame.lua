@@ -20,33 +20,23 @@
 
 --]]
 
-local function has(i,t)
-   for n = 1,#t do
-      if t[n] == i then
-         return true
-      end
-   end
-   return false
-end
-
 --[[
 -- Returns a boolean indicating whether or not the player is using a pirate
 -- ship.
 --]]
 local function using_pirate_ship()
-   local s = player.pilot():ship():nameRaw()
-
-   return has(s, {
-      "Hyena",
-      "Pirate Kestrel",
-      "Pirate Admonisher",
-      "Pirate Phalanx",
-      "Pirate Ancestor",
-      "Pirate Vendetta",
-      "Pirate Shark",
-      "Pirate Starbridge",
-      "Pirate Rhino",
-   })
+   local pirships = {
+      ["Hyena"]            = true,
+      ["Pirate Kestrel"]   = true,
+      ["Pirate Admonisher"]= true,
+      ["Pirate Phalanx"]   = true,
+      ["Pirate Ancestor"]  = true,
+      ["Pirate Vendetta"]  = true,
+      ["Pirate Shark"]     = true,
+      ["Pirate Starbridge"]= true,
+      ["Pirate Rhino"]     = true,
+   }
+   return pirships[ player.pilot():ship():nameRaw() ]
 end
 
 --[[
@@ -55,9 +45,7 @@ end
 -- cruiser or carrier.
 --]]
 local function using_impressive_ship()
-   local s = player.pilot():ship()
-   local t = s:baseType()
-   local c = s:class()
+   local c = player.pilot():ship():class()
    return ( c == "Cruiser" or c == "Carrier" or c == "Battleship" )
 end
 
