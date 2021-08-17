@@ -5,6 +5,13 @@
 -- functions and such for each AI.
 --]]
 
+--[[
+-- Naming convention:
+
+function foo( data ) -- normal task
+function _bar( data ) -- subtask
+function __hoge( data ) -- internal use function
+--]]
 
 --[[
 -- Helper function that checks to see if a value is in a table
@@ -22,10 +29,10 @@ end
 --[[
 -- Faces the target.
 --]]
-function __face( target )
+function face( target )
    ai.face( target )
 end
-function __face_towards( target )
+function face_towards( target )
    local off = ai.face( target )
    if math.abs(off) < 5 then
       ai.poptask()
@@ -49,7 +56,7 @@ end
 --[[
 -- Brakes the ship
 --]]
-function __subbrake ()
+function _subbrake ()
    ai.brake()
    if ai.isstopped() then
       ai.stop()
@@ -98,7 +105,7 @@ end
 --[[
 -- Goes to a target position without braking
 --]]
-function __moveto_nobrake( target )
+function moveto_nobrake( target )
    local dir      = ai.face( target, nil, true )
    __moveto_generic( target, dir, false )
 end
@@ -107,7 +114,7 @@ end
 --[[
 -- Goes to a target position without braking
 --]]
-function __moveto_nobrake_raw( target )
+function moveto_nobrake_raw( target )
    local dir      = ai.face( target )
    __moveto_generic( target, dir, false )
 end
@@ -116,7 +123,7 @@ end
 --[[
 -- Goes to a precise position.
 --]]
-function __moveto_precise( target )
+function moveto_precise( target )
    local dir      = ai.face( target, nil, true )
    local dist     = ai.dist( target )
 
@@ -134,7 +141,7 @@ function __moveto_precise( target )
 
    -- Need to start braking
    elseif dist < bdist then
-      ai.pushsubtask("__subbrake")
+      ai.pushsubtask("_subbrake")
    end
 end
 
@@ -151,10 +158,11 @@ end
 
 
 --[[
--- Goes to a point in order to inspect (same as moveto, but pops when attacking)
+-- Goes to a point in order to inspect (same as moveto_nobrake, but pops when attacking)
 --]]
 function inspect_moveto( target )
-   __moveto_nobrake( target )
+   local dir      = ai.face( target, nil, true )
+   __moveto_generic( target, dir, false )
 end
 
 
@@ -296,28 +304,14 @@ function follow_fleet ()
    end
 end
 
---[[
--- Tries to runaway and jump asap.
---]]
-function __runaway( target )
-   runaway( target )
-end
-
---[[
--- Runaway without jumping
---]]
-function __runaway_nojump( target )
-   runaway_nojump( target )
-end
-
 
 --[[
 -- Tries to hyperspace asap.
 --]]
-function __hyperspace( target )
+function hyperspace( target )
    hyperspace( target )
 end
-function __hyperspace_shoot( target )
+function hyperspace_shoot( target )
    if target == nil then
       target = ai.rndhyptarget()
       if target == nil then
@@ -325,31 +319,26 @@ function __hyperspace_shoot( target )
          return
       else
          -- Push the new task
-         ai.pushsubtask("__hyperspace_shoot", target)
+         ai.pushsubtask("hyperspace_shoot", target)
          return
       end
    end
    mem.land_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
-   ai.pushsubtask( "__hyp_approach_shoot", target )
+   ai.pushsubtask( "_hyp_approach_shoot", target )
 end
-function __hyp_approach_shoot( target )
+function _hyp_approach_shoot( target )
    -- Shoot and approach
    local enemy = ai.getenemy()
    __shoot_turret( enemy )
    __hyp_approach( target )
 end
 
-
-function __land ()
-   land()
-end
-
-function __land_shoot ()
+function land_shoot ()
    local planet = __choose_land_target ()
-   ai.pushsubtask( "__landgo_shoot", planet )
+   ai.pushsubtask( "_landgo_shoot", planet )
 end
 
-function __landgo_shoot ( planet )
+function _landgo_shoot ( planet )
    local enemy = ai.getenemy()
    __shoot_turret( enemy )
    __landgo( planet )
@@ -391,7 +380,10 @@ end
 
 function land ( )
    local planet = __choose_land_target ()
-   ai.pushsubtask( "__landgo", planet )
+   ai.pushsubtask( "_landgo", planet )
+end
+function _landgo( planet )
+   __landgo(planet)
 end
 function __landgo ( planet )
    local pl_pos = planet:pos() + mem.land_bias
@@ -413,11 +405,11 @@ function __landgo ( planet )
 
    -- Need to start braking
    elseif dist < bdist then
-      ai.pushsubtask( "__landstop", planet )
+      ai.pushsubtask( "_landstop", planet )
    end
 
 end
-function __landstop ( planet )
+function _landstop ( planet )
    ai.brake()
    if ai.isstopped() then
       ai.stop() -- Will stop the pilot if below err vel
@@ -447,13 +439,13 @@ function runaway( target )
    local p = ai.nearestplanet()
 
    if p == nil and t == nil then
-      ai.pushsubtask( "__run_target" )
+      ai.pushsubtask( "_run_target" )
    elseif p == nil then
       mem.land_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
-      ai.pushsubtask( "__run_hyp", {target, t} )
+      ai.pushsubtask( "_run_hyp", {target, t} )
    elseif t == nil then
       mem.land_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
-      ai.pushsubtask( "__run_landgo", {target,p} )
+      ai.pushsubtask( "_run_landgo", {target,p} )
    else
       -- find which one is the closest
       local pilpos = ai.pilot():pos()
@@ -461,16 +453,19 @@ function runaway( target )
       local modp = vec2.mod(p:pos()-pilpos)
       if modt < modp then
          mem.land_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
-         ai.pushsubtask( "__run_hyp", {target, t} )
+         ai.pushsubtask( "_run_hyp", {target, t} )
       else
          mem.land_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
-         ai.pushsubtask( "__run_landgo", {target,p} )
+         ai.pushsubtask( "_run_landgo", {target,p} )
       end
    end
 end
 function runaway_nojump( target )
    if __run_target( target ) then return end
    __shoot_turret( target )
+end
+function _run_target( target )
+   __run_target( target )
 end
 function __run_target( target )
    local plt    = ai.pilot()
@@ -517,7 +512,7 @@ function __shoot_turret( target )
       end
    end
 end
-function __run_hyp( data )
+function _run_hyp( data )
    local enemy  = data[1]
    local jump   = data[2]
    local jp_pos = jump:pos()
@@ -556,9 +551,9 @@ function __run_hyp( data )
       end
    else
       if ai.instantJump() then
-         ai.pushsubtask( "__hyp_jump", jump )
+         ai.pushsubtask( "_hyp_jump", jump )
       else
-         ai.pushsubtask( "__hyp_brake", jump )
+         ai.pushsubtask( "_hyp_brake", jump )
       end
    end
 
@@ -572,7 +567,7 @@ function __run_hyp( data )
    end
 end
 
-function __run_landgo( data )
+function _run_landgo( data )
    local enemy  = data[1]
    local planet = data[2]
    local pl_pos = planet:pos() + mem.land_bias
@@ -585,7 +580,7 @@ function __run_landgo( data )
    local plt      = ai.pilot()
 
    if dist < bdist then -- Need to start braking
-      ai.pushsubtask( "__landstop", planet )
+      ai.pushsubtask( "_landstop", planet )
    else
 
       local dozigzag = false
@@ -643,7 +638,10 @@ function hyperspace( target )
       end
    end
    mem.land_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
-   ai.pushsubtask( "__hyp_approach", target )
+   ai.pushsubtask( "_hyp_approach", target )
+end
+function _hyp_approach( target )
+   __hyp_approach( target )
 end
 function __hyp_approach( target )
    local dir
@@ -664,21 +662,21 @@ function __hyp_approach( target )
    -- Need to start braking
    elseif dist < bdist then
       if ai.instantJump() then
-         ai.pushsubtask("__hyp_jump", target)
+         ai.pushsubtask("_hyp_jump", target)
       else
-         ai.pushsubtask("__hyp_brake", target)
+         ai.pushsubtask("_hyp_brake", target)
       end
    end
 end
-function __hyp_brake ( jump )
+function _hyp_brake ( jump )
    ai.brake()
    if ai.isstopped() then
       ai.stop()
       ai.popsubtask()
-      ai.pushsubtask("__hyp_jump", jump)
+      ai.pushsubtask("_hyp_jump", jump)
    end
 end
-function __hyp_jump ( jump )
+function _hyp_jump ( jump )
    if ai.hyperspace( jump ) == nil then
       local p = ai.pilot()
       p:msg(p:followers(), "hyperspace", jump)
@@ -711,7 +709,7 @@ function board( target )
 
    -- See if must brake or approach
    if dist < bdist then
-      ai.pushsubtask( "__boardstop", target )
+      ai.pushsubtask( "_boardstop", target )
    elseif dir < 10 then
       ai.accel()
    end
@@ -721,7 +719,7 @@ end
 --[[
 -- Attempts to brake on the target.
 --]]
-function __boardstop( target )
+function _boardstop( target )
    -- make sure pilot exists
    if not target:exists() then
       ai.poptask()
@@ -783,7 +781,7 @@ function refuel( target )
 
    -- See if must brake or approach
    if dist < bdist then
-      ai.pushsubtask( "__refuelstop", target )
+      ai.pushsubtask( "_refuelstop", target )
    elseif dir < 10 then
       ai.accel()
    end
@@ -792,7 +790,7 @@ end
 --[[
 -- Attempts to brake on the target.
 --]]
-function __refuelstop( target )
+function _refuelstop( target )
    -- make sure pilot exists
    if not target:exists() then
       ai.poptask()
@@ -868,10 +866,10 @@ function mine( fieldNast )
    local relvel = vec2.add( p:vel(), vec2.mul(vel,-1) ):mod()
 
    if relpos < wrange and relvel < 10 then
-      ai.pushsubtask("__killasteroid", fieldNast )
+      ai.pushsubtask("_killasteroid", fieldNast )
    end
 end
-function __killasteroid( fieldNast )
+function _killasteroid( fieldNast )
    local fieldNast = ai.taskdata()
    local field     = fieldNast[1]
    local ast       = fieldNast[2]

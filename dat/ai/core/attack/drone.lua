@@ -39,7 +39,7 @@ end
 --[[
 -- Enters ranged combat with the target - modified version for drones
 --]]
-function _atk_drone_ranged( target, dist )
+function __atk_drone_ranged( target, dist )
    --local dir = ai.face(target) -- Normal face the target
   local dir = ai.aim(target) -- Aim for the target
    -- TODO: should modify this line
@@ -49,7 +49,7 @@ function _atk_drone_ranged( target, dist )
       ai.weapset( 4 )
    else
       -- First test if we should zz
-      if _atk_decide_zz() then
+      if __atk_decide_zz() then
          ai.pushsubtask("_atk_zigzag", target)
       end
    end
@@ -67,7 +67,7 @@ end
 -- Main control function for drone behavior.
 --]]
 function atk_drone( target )
-   target = _atk_com_think( target )
+   target = __atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff
@@ -75,7 +75,7 @@ function atk_drone( target )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable( target ) then return end
+   if not __atk_check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -83,14 +83,14 @@ function atk_drone( target )
 
    -- We first bias towards range
    if dist > range * mem.atk_approach then
-      _atk_drone_ranged( target, dist ) -- Use generic ranged function
+      __atk_drone_ranged( target, dist ) -- Use generic ranged function
 
    -- Otherwise melee
    else
       if target:stats().mass < 200 then
-         _atk_d_space_sup( target, dist )
+         __atk_d_space_sup( target, dist )
       else
-         _atk_d_flyby( target, dist )
+         __atk_d_flyby( target, dist )
       end
    end
 end
@@ -101,13 +101,13 @@ end
 -- Uses a combination of facing and distance to determine what action to take
 -- This version is slightly less aggressive and cruises by the target
 --]]
-function _atk_d_flyby( target, dist )
+function __atk_d_flyby( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if _atk_decide_zz() then
+   if __atk_decide_zz() then
       ai.pushsubtask("_atk_zigzag", target)
    end
 
@@ -115,7 +115,7 @@ function _atk_d_flyby( target, dist )
    if dist > (3 * range) then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         --_atk_keep_distance()
+         --__atk_keep_distance()
          atk_spiral_approach(target, dist)  -- mod
          ai.accel()
       else
@@ -165,13 +165,13 @@ end
 --
 --This is designed for drones engaging other drones
 --]]
-function _atk_d_space_sup( target, dist )
+function __atk_d_space_sup( target, dist )
    local range = ai.getweaprange(3)
    local dir   = 0
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if _atk_decide_zz() then
+   if __atk_decide_zz() then
       ai.pushsubtask("_atk_zigzag", target)
    end
 
@@ -179,7 +179,7 @@ function _atk_d_space_sup( target, dist )
    if dist > (1.1*range) then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         _atk_keep_distance()
+         __atk_keep_distance()
          ai.accel()
       else
          dir = ai.iface(target)

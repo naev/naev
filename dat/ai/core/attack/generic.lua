@@ -67,7 +67,7 @@ end
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
 function atk_generic( target )
-   target = _atk_com_think( target )
+   target = __atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff
@@ -75,7 +75,7 @@ function atk_generic( target )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable( target ) then return end
+   if not __atk_check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -83,20 +83,20 @@ function atk_generic( target )
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
-      _atk_g_ranged( target, dist )
+      __atk_g_ranged( target, dist )
 
    -- Now we do an approach
    elseif dist > range * mem.atk_aim then
-      _atk_g_approach( target, dist )
+      __atk_g_approach( target, dist )
 
    -- Close enough to melee
    else
-      _atk_g_melee( target, dist )
+      __atk_g_melee( target, dist )
    end
 end
 
 
-function _atk_g_ranged_dogfight( target, dist )
+function ___atk_g_ranged_dogfight( target, dist )
    local dir
    if not mem.careful or dist < 3 * ai.getweaprange(3, 0) * mem.atk_approach then
       dir = ai.face(target) -- Normal face the target
@@ -109,7 +109,7 @@ function _atk_g_ranged_dogfight( target, dist )
       ai.weapset( 4 )
    else
       -- Test if we should zz
-      if ai.pilot():stats().mass < 400 and _atk_decide_zz() then
+      if ai.pilot():stats().mass < 400 and __atk_decide_zz() then
          ai.pushsubtask("_atk_zigzag", target)
       end
    end
@@ -121,7 +121,7 @@ function _atk_g_ranged_dogfight( target, dist )
       ai.shoot()
    end
 end
-function _atk_g_ranged_strafe( target, dist )
+function ___atk_g_ranged_strafe( target, dist )
 --[[ The pilot tries first to place himself at range and at constant velocity.
       When he is stabilized, he starts shooting until he has to correct his trajectory again
 
@@ -186,7 +186,7 @@ function _atk_g_ranged_strafe( target, dist )
       ai.settimer(1, mod/p:stats().speed*0.7 )
    end
 end
-function _atk_g_ranged_kite( target, dist )
+function ___atk_g_ranged_kite( target, dist )
    local p = ai.pilot()
 
    -- Estimate the range
@@ -221,7 +221,7 @@ end
 --[[
 -- Enters ranged combat with the target
 --]]
-function _atk_g_ranged( target, dist )
+function __atk_g_ranged( target, dist )
    local range = ai.getweaprange( 4 )
    local relvel = ai.relvel( target )
    local istargeted = (target:target()==ai.pilot())
@@ -231,21 +231,21 @@ function _atk_g_ranged( target, dist )
    if ai.relhp(target)*ai.reldps(target) >= 0.25
          or ai.getweapspeed(4) < target:stats().speed_max*1.2
          or range < ai.getweaprange(1)*1.5 then
-      _atk_g_ranged_dogfight( target, dist )
+      ___atk_g_ranged_dogfight( target, dist )
    elseif target:target()==ai.pilot() and dist < range and ai.hasprojectile() then
       local tvel = target:vel()
       local pvel = ai.pilot():vel()
       local vel = (tvel-pvel):polar()
       -- If will make contact soon, try to engage
       if dist < wrange+8*vel then
-         _atk_g_ranged_dogfight( target, dist )
+         ___atk_g_ranged_dogfight( target, dist )
       else
       -- Getting chased, try to kite
-         _atk_g_ranged_kite( target, dist )
+         ___atk_g_ranged_kite( target, dist )
       end
    else
       -- Enemy is distracted, try to strafe and harass without engaging
-      _atk_g_ranged_strafe( target, dist )
+      ___atk_g_ranged_strafe( target, dist )
    end
 
    -- Always launch fighters for now
@@ -256,10 +256,10 @@ end
 --[[
 -- Approaches the target
 --]]
-function _atk_g_approach( target, dist )
+function __atk_g_approach( target, dist )
    dir = ai.idir(target)
    if dir < 10 and dir > -10 then
-      _atk_keep_distance()
+      __atk_keep_distance()
    else
       dir = ai.iface(target)
    end
@@ -272,7 +272,7 @@ end
 --[[
 -- Melees the target
 --]]
-function _atk_g_melee( target, dist )
+function __atk_g_melee( target, dist )
    local dir   = ai.aim(target) -- We aim instead of face
    local range = ai.getweaprange( 3 )
    ai.weapset( 3 ) -- Set turret/forward weaponset.
@@ -289,5 +289,5 @@ function _atk_g_melee( target, dist )
    ai.shoot(true)
 
    -- Also try to shoot missiles
-   _atk_dogfight_seekers( dist, dir )
+   __atk_dogfight_seekers( dist, dir )
 end

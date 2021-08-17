@@ -3958,13 +3958,13 @@ static int pilotL_moveto( lua_State *L )
 
    /* Set the task. */
    if (brake) {
-      tsk = "__moveto_precise";
+      tsk = "moveto_precise";
    }
    else {
       if (compensate)
-         tsk = "__moveto_nobrake";
+         tsk = "moveto_nobrake";
       else
-         tsk = "__moveto_nobrake_raw";
+         tsk = "moveto_nobrake_raw";
    }
    t        = pilotL_newtask( L, p, tsk );
    lua_pushvector( L, *vec );
@@ -4007,9 +4007,9 @@ static int pilotL_face( lua_State *L )
 
    /* Set the task. */
    if (towards)
-      t     = pilotL_newtask( L, p, "__face_towards" );
+      t     = pilotL_newtask( L, p, "face_towards" );
    else
-      t     = pilotL_newtask( L, p, "__face" );
+      t     = pilotL_newtask( L, p, "face" );
    if (pt != NULL) {
       lua_pushpilot(L, pt->id);
    }
@@ -4148,7 +4148,7 @@ static int pilotL_runaway( lua_State *L )
    nojump = lua_toboolean(L,3);
 
    /* Set the task. */
-   t        = pilotL_newtask( L, p, (nojump) ? "__runaway_nojump" : "__runaway" );
+   t        = pilotL_newtask( L, p, (nojump) ? "runaway_nojump" : "runaway" );
    lua_pushpilot(L, pt->id);
    t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
@@ -4211,9 +4211,9 @@ static int pilotL_hyperspace( lua_State *L )
 
    /* Set the task. */
    if (shoot)
-      t = pilotL_newtask( L, p, "__hyperspace_shoot" );
+      t = pilotL_newtask( L, p, "hyperspace_shoot" );
    else
-      t = pilotL_newtask( L, p, "__hyperspace" );
+      t = pilotL_newtask( L, p, "hyperspace" );
    if (ss == NULL)
       return 0;
    /* Find the jump. */
@@ -4296,9 +4296,9 @@ static int pilotL_land( lua_State *L )
 
    /* Set the task. */
    if (shoot)
-      t = pilotL_newtask( L, p, "__land_shoot" );
+      t = pilotL_newtask( L, p, "land_shoot" );
    else
-      t = pilotL_newtask( L, p, "__land" );
+      t = pilotL_newtask( L, p, "land" );
 
    if (pnt != NULL) {
       /* Find the planet. */
