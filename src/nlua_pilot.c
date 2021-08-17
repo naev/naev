@@ -4130,7 +4130,7 @@ static int pilotL_attack( lua_State *L )
  * @usage p:runaway( p_enemy, true ) -- Run away from p_enemy but do not jump
  *    @luatparam Pilot p Pilot to tell to runaway from another pilot.
  *    @luatparam Pilot tp Target pilot to runaway from.
- *    @luatparam[opt=false] boolean nojump Whether or not the pilot should try to jump when running away.
+ *    @luatparam[opt=false] boolean nojump Whether or not the pilot should try to leave the system (jump or land) when running away.
  * @luasee control
  * @luafunc runaway
  */
