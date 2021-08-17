@@ -333,8 +333,8 @@ function _hyp_approach_shoot( target )
    __hyp_approach( target )
 end
 
-function land_shoot ()
-   local planet = __choose_land_target ()
+function land_shoot ( target )
+   local planet = __choose_land_target ( target )
    ai.pushsubtask( "_landgo_shoot", planet )
 end
 
@@ -347,15 +347,12 @@ end
 --[[
 -- Attempts to land on a planet.
 --]]
-function __choose_land_target ()
+function __choose_land_target ( target )
    -- Only want to land once, prevents guys from never leaving.
    if mem.landed then
       ai.poptask()
       return
    end
-
-   -- Set target if necessary
-   local target = ai.taskdata()
 
    -- Make sure tarfet is valid
    if target == nil then
@@ -378,8 +375,8 @@ function __choose_land_target ()
    return target
 end
 
-function land ( )
-   local planet = __choose_land_target ()
+function land ( target )
+   local planet = __choose_land_target ( target )
    ai.pushsubtask( "_landgo", planet )
 end
 function _landgo( planet )
@@ -870,7 +867,6 @@ function mine( fieldNast )
    end
 end
 function _killasteroid( fieldNast )
-   local fieldNast = ai.taskdata()
    local field     = fieldNast[1]
    local ast       = fieldNast[2]
    local wrange    = ai.getweaprange()
