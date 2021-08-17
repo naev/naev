@@ -395,6 +395,9 @@ function __choose_land_target ()
       end
    end
 
+   -- Decide exact land point
+   mem.land_bias = vec2.newP( rnd.rnd()*target:radius()/2, rnd.rnd()*360 )
+
    return target
 end
 
@@ -403,7 +406,7 @@ function land ( )
    ai.pushsubtask( "__landgo", planet )
 end
 function __landgo ( planet )
-   local pl_pos = planet:pos()
+   local pl_pos = planet:pos() + mem.land_bias
 
    local dist     = ai.dist( pl_pos )
    local bdist    = ai.minbrakedist()
@@ -591,7 +594,7 @@ end
 function __run_landgo( data )
    local enemy  = data[1]
    local planet = data[2]
-   local pl_pos = planet:pos()
+   local pl_pos = planet:pos() + mem.land_bias
 
    -- Shoot the target
    __run_turret( enemy )
