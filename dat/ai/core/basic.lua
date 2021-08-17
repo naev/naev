@@ -334,7 +334,8 @@ function __hyperspace_shoot( target )
 end
 function __hyp_approach_shoot( target )
    -- Shoot and approach
-   __move_shoot()
+   local enemy = ai.getenemy()
+   __shoot_turret( enemy )
    __hyp_approach( target )
 end
 
@@ -349,23 +350,10 @@ function __land_shoot ()
 end
 
 function __landgo_shoot ( planet )
-   __move_shoot()
+   local enemy = ai.getenemy()
+   __shoot_turret( enemy )
    __landgo( planet )
 end
-
-function __move_shoot ()
-   -- Shoot while going somewhere
-   -- The difference with run_turret is that we pick a new enemy in this one
-   if ai.hasturrets() then
-      local enemy = ai.getenemy()
-      if enemy ~= nil then
-         ai.weapset( 3 )
-         ai.settarget( enemy )
-         ai.shoot( true )
-      end
-   end
-end
-
 
 --[[
 -- Attempts to land on a planet.
@@ -480,7 +468,7 @@ function runaway( target )
 end
 function runaway_nojump( target )
    if __run_target( target ) then return end
-   __run_turret( target )
+   __shoot_turret( target )
 end
 function __run_target( target )
    local plt    = ai.pilot()
@@ -512,7 +500,7 @@ function __run_target( target )
 
    return false
 end
-function __run_turret( target )
+function __shoot_turret( target )
    -- Shoot the target
    if target:exists() then
       ai.hostile(target)
@@ -533,7 +521,7 @@ function __run_hyp( data )
    local jp_pos = jump:pos()
 
    -- Shoot the target
-   __run_turret( enemy )
+   __shoot_turret( enemy )
 
    -- Go towards jump
    local jdir
@@ -581,15 +569,6 @@ function __run_hyp( data )
       end
    end
 end
-function __run_hypbrake ( jump ) -- TODO: remove
-   -- The braking
-   ai.brake()
-   if ai.isstopped() then
-      ai.stop()
-      ai.popsubtask()
-      ai.pushsubtask( "__hyp_jump", jump )
-   end
-end
 
 function __run_landgo( data )
    local enemy  = data[1]
@@ -597,7 +576,7 @@ function __run_landgo( data )
    local pl_pos = planet:pos() + mem.land_bias
 
    -- Shoot the target
-   __run_turret( enemy )
+   __shoot_turret( enemy )
 
    local dist     = ai.dist( pl_pos )
    local bdist    = ai.minbrakedist()
