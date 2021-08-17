@@ -157,8 +157,7 @@ function handle_messages( si )
          elseif msgtype == "hyperspace" then
             ai.pushtask("hyperspace", data)
          elseif msgtype == "land" then
-            mem.land = ai.planetfrompos(data):pos()
-            ai.pushtask("land")
+            ai.pushtask("land", data)
          elseif msgtype == "l_attacked" then
             if not si.fighting and should_attack( data, si ) then
                ai.pushtask("attack", data)

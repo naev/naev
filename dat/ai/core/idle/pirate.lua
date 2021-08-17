@@ -130,7 +130,6 @@ function idle_leave ()
             mem.goal = "planet"
             mem.goal_planet = planet
             mem.goal_pos = planet:pos()
-            mem.land = mem.goal_pos
          end
       end
       if not mem.goal then
@@ -144,7 +143,7 @@ function idle_leave ()
    end
    if mem.goal then
       if mem.goal == "planet" then
-         ai.pushtask("land")
+         ai.pushtask("land", mem.goal_planet)
          return true
       elseif mem.goal == "hyperspace" then
          ai.pushtask("hyperspace", mem.goal_hyperspace)

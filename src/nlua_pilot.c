@@ -4318,15 +4318,16 @@ static int pilotL_land( lua_State *L )
       if (p->id == PLAYER_ID)
          gui_setNav();
 
-      /* Copy vector. */
-      v = pnt->pos;
+      /* Copy vector. */ // TODO: introcude error an other way
+      //v = pnt->pos;
 
       /* Introduce some error. */
-      a = RNGF() * 2. * M_PI;
-      r = RNGF() * pnt->radius;
-      vect_cadd( &v, r*cos(a), r*sin(a) );
+      //a = RNGF() * 2. * M_PI;
+      //r = RNGF() * pnt->radius;
+      //vect_cadd( &v, r*cos(a), r*sin(a) );
 
-      lua_pushvector(L, v);
+      //lua_pushvector(L, v);
+      lua_pushplanet(L, pnt->id);
       t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
    }
 

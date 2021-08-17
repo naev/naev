@@ -329,8 +329,8 @@ function __hyperspace_shoot( target )
          return
       end
    end
-   local pos = ai.sethyptarget(target)
-   ai.pushsubtask( "__hyp_approach_shoot", pos )
+   --ai.sethyptarget(target)
+   ai.pushsubtask( "__hyp_approach_shoot", target )
 end
 function __hyp_approach_shoot( target )
    -- Shoot and approach
@@ -344,13 +344,13 @@ function __land ()
 end
 
 function __land_shoot ()
-   __choose_land_target ()
-   ai.pushsubtask( "__landgo_shoot" )
+   local planet = __choose_land_target ()
+   ai.pushsubtask( "__landgo_shoot", planet )
 end
 
-function __landgo_shoot ()
+function __landgo_shoot ( planet )
    __move_shoot()
-   __landgo()
+   __landgo( planet )
 end
 
 function __move_shoot ()
@@ -379,15 +379,12 @@ function __choose_land_target ()
 
    -- Set target if necessary
    local target = ai.taskdata()
-   if target ~= nil then
-      mem.land = target
-   end
 
-   -- Make sure mem.land is valid target
-   if mem.land == nil then
+   -- Make sure tarfet is valid
+   if target == nil then
       local landplanet = ai.landplanet()
       if landplanet ~= nil then
-         mem.land = landplanet
+         target = landplanet
 
       -- Bail out if no valid planet could be found.
       else
@@ -397,24 +394,26 @@ function __choose_land_target ()
          return
       end
    end
+
+   return target
 end
 
-function land ()
-   __choose_land_target ()
-   ai.pushsubtask( "__landgo" )
+function land ( )
+   local planet = __choose_land_target ()
+   ai.pushsubtask( "__landgo", planet )
 end
-function __landgo ()
-   local target   = mem.land
+function __landgo ( planet )
+   local pl_pos = planet:pos()
 
-   local dist     = ai.dist( target )
+   local dist     = ai.dist( pl_pos )
    local bdist    = ai.minbrakedist()
 
    -- 2 methods depending on mem.careful
    local dir
    if not mem.careful or dist < 3*bdist then
-      dir = ai.face( target )
+      dir = ai.face( pl_pos )
    else
-      dir = ai.careful_face( target )
+      dir = ai.careful_face( pl_pos )
    end
 
    -- Need to get closer
@@ -423,19 +422,19 @@ function __landgo ()
 
    -- Need to start braking
    elseif dist < bdist then
-      ai.pushsubtask( "__landstop" )
+      ai.pushsubtask( "__landstop", planet )
    end
 
 end
-function __landstop ()
+function __landstop ( planet )
    ai.brake()
    if ai.isstopped() then
       ai.stop() -- Will stop the pilot if below err vel
-      if not ai.land() then
+      if not ai.land( planet ) then
          ai.popsubtask()
       else
          local p = ai.pilot()
-         p:msg(p:followers(), "land", mem.land)
+         p:msg(p:followers(), "land", planet)
          ai.poptask() -- Done, pop task
       end
    end
@@ -459,22 +458,20 @@ function runaway( target )
    if p == nil and t == nil then
       ai.pushsubtask( "__run_target" )
    elseif p == nil then
-      local pos = ai.sethyptarget(t)
-      ai.pushsubtask( "__run_hyp", pos )
+      --ai.sethyptarget(t)
+      ai.pushsubtask( "__run_hyp", {target, t} )
    elseif t == nil then
-      mem.land = p:pos()
-      ai.pushsubtask( "__run_landgo" )
+      ai.pushsubtask( "__run_landgo", {target,p} )
    else
       -- find which one is the closest
       local pilpos = ai.pilot():pos()
       local modt = vec2.mod(t:pos()-pilpos)
       local modp = vec2.mod(p:pos()-pilpos)
       if modt < modp then
-         local pos = ai.sethyptarget(t)
-         ai.pushsubtask( "__run_hyp", pos )
+         --ai.sethyptarget(t)
+         ai.pushsubtask( "__run_hyp", {target, t} )
       else
-         mem.land = p:pos()
-         ai.pushsubtask( "__run_landgo" )
+         ai.pushsubtask( "__run_landgo", {target,p} )
       end
    end
 end
@@ -527,34 +524,38 @@ function __run_turret( target )
       end
    end
 end
-function __run_hyp( jump )
+function __run_hyp( data )
+   local enemy  = data[1]
+   local jump   = data[2]
+   local jp_pos = jump:pos()
+
    -- Shoot the target
-   __run_turret( ai.taskdata() )
+   __run_turret( enemy )
 
    -- Go towards jump
    local jdir
    local bdist    = ai.minbrakedist()
-   local jdist    = ai.dist(jump)
+   local jdist    = ai.dist(jp_pos)
    local plt      = ai.pilot()
 
    if jdist > bdist then
 
       local dozigzag = false
-      if ai.taskdata():exists() then
-         if __zigzag_run_decide( plt, ai.taskdata() ) and jdist > 3*bdist then
+      if enemy:exists() then
+         if __zigzag_run_decide( plt, enemy ) and jdist > 3*bdist then
             dozigzag = true
          end
       end
 
       if dozigzag then
          -- Pilot is agile, but too slow to outrun the enemy: dodge
-         local dir = ai.dir(jump)
+         local dir = ai.dir(jp_pos)
          __zigzag(dir, 70)
       else
          if jdist > 3*bdist and plt:stats().mass < 600 then
-            jdir = ai.careful_face(jump)
+            jdir = ai.careful_face(jp_pos)
          else --Heavy ships should rush to jump point
-            jdir = ai.face( jump, nil, true )
+            jdir = ai.face( jp_pos, nil, true )
          end
          if jdir < 10 then
             ai.accel()
@@ -562,9 +563,9 @@ function __run_hyp( jump )
       end
    else
       if ai.instantJump() then
-         ai.pushsubtask( "__hyp_jump" )
+         ai.pushsubtask( "__hyp_jump", jump )
       else
-         ai.pushsubtask( "__run_hypbrake" )
+         ai.pushsubtask( "__hyp_brake", jump )
       end
    end
 
@@ -577,48 +578,51 @@ function __run_hyp( jump )
       end
    end
 end
-function __run_hypbrake ()
+function __run_hypbrake ( jump ) -- TODO: remove
    -- The braking
    ai.brake()
    if ai.isstopped() then
       ai.stop()
       ai.popsubtask()
-      ai.pushsubtask( "__hyp_jump" )
+      ai.pushsubtask( "__hyp_jump", jump )
    end
 end
 
-function __run_landgo( target )
-   -- Shoot the target
-   __run_turret( target )
+function __run_landgo( data )
+   local enemy  = data[1]
+   local planet = data[2]
+   local pl_pos = planet:pos()
 
-   local target   = mem.land
-   local dist     = ai.dist( target )
+   -- Shoot the target
+   __run_turret( enemy )
+
+   local dist     = ai.dist( pl_pos )
    local bdist    = ai.minbrakedist()
    local plt      = ai.pilot()
 
    if dist < bdist then -- Need to start braking
-      ai.pushsubtask( "__landstop" )
+      ai.pushsubtask( "__landstop", planet )
    else
 
       local dozigzag = false
-      if ai.taskdata():exists() then
-         if __zigzag_run_decide( plt, ai.taskdata() ) and dist > 3*bdist then
+      if enemy:exists() then
+         if __zigzag_run_decide( plt, enemy ) and dist > 3*bdist then
             dozigzag = true
          end
       end
 
       if dozigzag then
          -- Pilot is agile, but too slow to outrun the enemy: dodge
-         local dir = ai.dir(target)
+         local dir = ai.dir(pl_pos)
          __zigzag(dir, 70)
       else
 
          -- 2 methods depending on mem.careful
          local dir
          if not mem.careful or dist < 3*bdist then
-            dir = ai.face( target )
+            dir = ai.face( pl_pos )
          else
-            dir = ai.careful_face( target )
+            dir = ai.careful_face( pl_pos )
          end
          if dir < 10 then
             ai.accel()
@@ -654,19 +658,20 @@ function hyperspace( target )
          return
       end
    end
-   local pos = ai.sethyptarget(target)
-   ai.pushsubtask( "__hyp_approach", pos )
+   --ai.sethyptarget(target)
+   ai.pushsubtask( "__hyp_approach", target )
 end
 function __hyp_approach( target )
    local dir
-   local dist     = ai.dist( target )
+   local pos      = target:pos()
+   local dist     = ai.dist( pos )
    local bdist    = ai.minbrakedist()
 
    -- 2 methods for dir
    if not mem.careful or dist < 3*bdist then
-      dir = ai.face( target, nil, true )
+      dir = ai.face( pos, nil, true )
    else
-      dir = ai.careful_face( target )
+      dir = ai.careful_face( pos )
    end
 
    -- Need to get closer
@@ -675,24 +680,24 @@ function __hyp_approach( target )
    -- Need to start braking
    elseif dist < bdist then
       if ai.instantJump() then
-         ai.pushsubtask("__hyp_jump")
+         ai.pushsubtask("__hyp_jump", target)
       else
-         ai.pushsubtask("__hyp_brake")
+         ai.pushsubtask("__hyp_brake", target)
       end
    end
 end
-function __hyp_brake ()
+function __hyp_brake ( jump )
    ai.brake()
    if ai.isstopped() then
       ai.stop()
       ai.popsubtask()
-      ai.pushsubtask("__hyp_jump")
+      ai.pushsubtask("__hyp_jump", jump)
    end
 end
-function __hyp_jump ()
-   if ai.hyperspace() == nil then
+function __hyp_jump ( jump )
+   if ai.hyperspace( jump ) == nil then
       local p = ai.pilot()
-      p:msg(p:followers(), "hyperspace", ai.nearhyptarget())
+      p:msg(p:followers(), "hyperspace", jump)
    end
    ai.popsubtask() -- Keep the task even if succeeding in case pilot gets pushed away.
 end
