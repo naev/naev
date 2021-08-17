@@ -14,9 +14,9 @@
 
 typedef struct Material_ {
    char *name;
-   GLfloat Ka[4], Kd[4], Ks[4];
-   GLfloat Ns, Ni, d;
-   glTexture *texture;
+   GLfloat Ka[3], Kd[3], Ks[3];
+   GLfloat Ns, Ni, d, bm;
+   glTexture *map_Kd, *map_Bump;
 } Material;
 
 typedef struct Mesh_ {

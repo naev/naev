@@ -37,10 +37,12 @@
 typedef struct {
    GLfloat ver[3];
    GLfloat tex[2];
+   GLfloat nor[3];
 } Vertex;
 
 
-static glTexture *emptyTexture = NULL;
+static glTexture *zeroTexture = NULL;
+static glTexture *oneTexture = NULL;
 static unsigned int emptyTextureRefs = 0;
 
 
@@ -140,7 +142,9 @@ static void materials_readFromFile( const char *filename, Material **materials )
          token = strtok_r(NULL, DELIM, &saveptr);
          curr = &array_grow(materials);
          curr->name = strdup(token);
-         curr->texture = NULL;
+         curr->d = 1.;
+         curr->bm = 0.;
+         curr->map_Kd = curr->map_Bump = NULL;
          DEBUG("Reading new material %s", curr->name);
       } else if (strcmp(token, "Ns") == 0) {
          readGLfloat(&curr->Ns, 1, &saveptr);
@@ -150,13 +154,10 @@ static void materials_readFromFile( const char *filename, Material **materials )
          readGLfloat(&curr->d, 1, &saveptr);
       } else if (strcmp(token, "Ka") == 0) {
          readGLfloat(curr->Ka, 3, &saveptr);
-         curr->Ka[3] = 1.0;
       } else if (strcmp(token, "Kd") == 0) {
          readGLfloat(curr->Kd, 3, &saveptr);
-         curr->Kd[3] = 1.0;
       } else if (strcmp(token, "Ks") == 0) {
          readGLfloat(curr->Ks, 3, &saveptr);
-         curr->Ks[3] = 1.0;
       } else if (strcmp(token, "map_Kd") == 0) {
          token = strtok_r(NULL, DELIM, &saveptr);
          if (token[0] == '-')
@@ -165,9 +166,26 @@ static void materials_readFromFile( const char *filename, Material **materials )
          /* computes the path to texture */
          copy_filename = strdup(filename);
 	 asprintf(&texture_filename, "%s/%s", dirname(copy_filename), token);
-         curr->texture = gl_newImage(texture_filename, 0);
+         curr->map_Kd = gl_newImage(texture_filename, 0);
          free(copy_filename);
          free(texture_filename);
+      } else if (strcmp(token, "map_Bump") == 0) {
+         token = strtok_r(NULL, DELIM, &saveptr);
+	 if (strcmp(token, "-bm") == 0) {
+            readGLfloat(&curr->bm, 1, &saveptr);
+            token = strtok_r(NULL, DELIM, &saveptr);
+	 }
+	 if (token[0] == '-')
+            ERR("Options not supported for map_Bump");
+
+         /* computes the path to texture */
+         copy_filename = strdup(filename);
+	 asprintf(&texture_filename, "%s/%s", dirname(copy_filename), token);
+         curr->map_Bump = gl_newImage(texture_filename, 0);
+         free(copy_filename);
+         free(texture_filename);
+      } else if (strcmp(token, "Ke") == 0 || strcmp(token, "illum") == 0) {
+         /* Ignore commands: [e]missive coefficient, illumination mode */
       } else if (token[0] == '#') {
          /* Comment */
       } else {
@@ -192,6 +210,7 @@ Object *object_loadFromFile( const char *filename )
 {
    GLfloat *vertex = array_create(GLfloat);   /**< vertex coordinates */
    GLfloat *texture = array_create(GLfloat);  /**< texture coordinates */
+   GLfloat *normal = array_create(GLfloat);  /**< normal coordinates */
    Vertex *corners = array_create(Vertex);    /**< corners of the triangle faces */
 
    SDL_RWops *f = PHYSFSRWOPS_openRead(filename);
@@ -202,8 +221,10 @@ Object *object_loadFromFile( const char *filename )
    int material = -1;
 
    if (emptyTextureRefs++ == 0) {
-      float data[] = {1., 1., 1., 1.};
-      emptyTexture = gl_loadImageData( data, 1, 1, 1, 1, "solid_white" );
+      float zero[] = {0., 0., 0., 0.};
+      float one[] = {1., 1., 1., 1.};
+      zeroTexture = gl_loadImageData( zero, 1, 1, 1, 1, "solid_zero" );
+      oneTexture = gl_loadImageData( one, 1, 1, 1, 1, "solid_white" );
    }
 
    Object *object = calloc(1, sizeof(Object));
@@ -241,23 +262,30 @@ Object *object_loadFromFile( const char *filename )
          (void)array_grow(&texture);
          (void)array_grow(&texture);
          readGLfloat(array_end(texture) - 2, 2, &saveptr);
+      } else if (strcmp(token, "vn") == 0) {
+         (void)array_grow(&normal);
+         (void)array_grow(&normal);
+         (void)array_grow(&normal);
+         readGLfloat(array_end(normal) - 3, 3, &saveptr);
       } else if (strcmp(token, "f") == 0) {
-         /* XXX reads only the geometric & texture vertices.
-          * The standards says corners can also include normal vertices.
-          */
          int num = 0;
          while ((token = strtok_r(NULL, DELIM, &saveptr)) != NULL) {
-            int i_v, i_t;
-            if (sscanf(token, "%d/%d", &i_v, &i_t) == 1)
-               i_t = 0;
+            int i_v = 0, i_t = 0, i_n = 0;
+            if (sscanf(token, "%d//%d", &i_v, &i_n) < 2)
+               sscanf(token, "%d/%d/%d", &i_v, &i_t, &i_n);
 
             assert("Vertex index out of range." && (0 < i_v && i_v <= array_size(vertex) / 3));
             assert("Texture index out of range." && (0 <= i_t && i_t <= array_size(texture) / 2));
+            assert("Normal index out of range." && (0 < i_n && i_n <= array_size(normal) / 3));
 
             Vertex *face = &array_grow(&corners);
-            --i_v, --i_t;
+            --i_v, --i_t, --i_n;
             memcpy(face->ver, vertex  + i_v * 3, sizeof(GLfloat) * 3);
-            memcpy(face->tex, texture + i_t * 2, sizeof(GLfloat) * 2);
+            if (i_t >= 0)
+               memcpy(face->tex, texture + i_t * 2, sizeof(GLfloat) * 2);
+	    else
+               memset(face->tex, 0, sizeof(GLfloat) * 2);
+            memcpy(face->nor, normal  + i_n * 3, sizeof(GLfloat) * 3);
             ++num;
          }
 
@@ -275,7 +303,10 @@ Object *object_loadFromFile( const char *filename )
             ERR("No such material %s", token);
       } else if (token[0] == '#') {
          /* Comment */
+      } else if (strcmp(token, "l") == 0 || strcmp(token, "s") == 0) {
+         /* Ignore commands: line, smoothing */
       } else {
+         /* TODO Ignore s (smoothing), l (line) with no regrets? */
          WARN("Can't understand token %s", token);
       }
    }
@@ -286,6 +317,7 @@ Object *object_loadFromFile( const char *filename )
    /* cleans up */
    array_free(vertex);
    array_free(texture);
+   array_free(normal);
    array_free(corners);
    SDL_RWclose(f);
 
@@ -306,7 +338,8 @@ void object_free( Object *object )
    for (i = 0; i < (int)array_size(object->materials); ++i) {
       Material *material = &object->materials[i];
       free(material->name);
-      gl_freeTexture(material->texture);
+      gl_freeTexture(material->map_Kd);
+      gl_freeTexture(material->map_Bump);
    }
 
    for (i = 0; i < (int)array_size(object->meshes); ++i) {
@@ -319,8 +352,9 @@ void object_free( Object *object )
    array_free(object->materials);
 
    if (--emptyTextureRefs == 0) {
-      gl_freeTexture(emptyTexture);
-      emptyTexture = NULL;
+      gl_freeTexture(zeroTexture);
+      gl_freeTexture(oneTexture);
+      zeroTexture = oneTexture = NULL;
    }
 }
 
@@ -331,24 +365,33 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
    /* computes relative addresses of the vertice and texture coords */
    const int ver_offset = offsetof(Vertex, ver);
    const int tex_offset = offsetof(Vertex, tex);
+   const int nor_offset = offsetof(Vertex, nor);
 
    /* activates vertices and texture coords */
+   glEnableVertexAttribArray(shaders.material.vertex);
    gl_vboActivateAttribOffset(mesh->vbo, shaders.material.vertex, ver_offset, 3, GL_FLOAT, sizeof(Vertex));
-   gl_vboActivateAttribOffset(mesh->vbo, shaders.material.tex_coord, tex_offset, 2, GL_FLOAT, sizeof(Vertex));
+   glEnableVertexAttribArray(shaders.material.tex);
+   gl_vboActivateAttribOffset(mesh->vbo, shaders.material.tex, tex_offset, 2, GL_FLOAT, sizeof(Vertex));
+   glEnableVertexAttribArray(shaders.material.normal);
+   gl_vboActivateAttribOffset(mesh->vbo, shaders.material.normal, nor_offset, 3, GL_FLOAT, sizeof(Vertex));
 
    /* Set material */
-   /* XXX Ni, d ?? */
    assert("Part has no material" && (mesh->material != -1));
    Material *material = object->materials + mesh->material;
    material->Kd[3] = alpha;
 
-   glUniform4fv(shaders.material.Ka, 1, material->Ka);
-   glUniform4fv(shaders.material.Kd, 1, material->Kd);
-   glUniform4fv(shaders.material.Ks, 1, material->Ks);
-   glUniform1f(shaders.material.Ns, material->Ns);
+   glUniform3fv(shaders.material.Ka, 1, material->Ka);
+   glUniform3fv(shaders.material.Kd, 1, material->Kd);
+   glUniform1f(shaders.material.d, material->d * alpha);
+   glUniform1f(shaders.material.bm, material->bm);
 
    /* binds textures */
-   glBindTexture(GL_TEXTURE_2D, material->texture == NULL ? emptyTexture->texture : material->texture->texture);
+   glUniform1i(shaders.material.map_Kd, 0);
+   glUniform1i(shaders.material.map_Bump, 1);
+   glActiveTexture(GL_TEXTURE1);
+   glBindTexture(GL_TEXTURE_2D, material->map_Bump == NULL ? zeroTexture->texture : material->map_Bump->texture);
+   glActiveTexture(GL_TEXTURE0);
+   glBindTexture(GL_TEXTURE_2D, material->map_Kd == NULL ? oneTexture->texture : material->map_Kd->texture);
 
    glDrawArrays(GL_TRIANGLES, 0, mesh->num_corners);
 }
@@ -365,8 +408,6 @@ void object_renderSolidPart( Object *object, const Solid *solid, const char *par
    scale *= cam_getZoom();
 
    glUseProgram(shaders.material.program);
-   glEnableVertexAttribArray(shaders.material.vertex);
-   glEnableVertexAttribArray(shaders.material.tex_coord);
 
    projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0. );
    projection = gl_Matrix4_Rotate(projection, M_PI/2, 0., 0., 1.);
@@ -374,9 +415,7 @@ void object_renderSolidPart( Object *object, const Solid *solid, const char *par
    projection = gl_Matrix4_Rotate(projection, solid->dir, 0., 0., 1.);
    projection = gl_Matrix4_Rotate(projection, M_PI/2, 1., 0., 0.);
    projection = gl_Matrix4_Scale(projection, scale, scale, scale);
-   projection = gl_Matrix4_Rotate(projection, M_PI, 0., 1., 0.);
-   projection = gl_Matrix4_Rotate(projection, M_PI/2, 1., 0., 0.);
-   gl_Matrix4_Uniform(shaders.material.projection, projection);
+   gl_Matrix4_Uniform(shaders.material.trans, projection);
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LESS);  /* XXX this changes the global DepthFunc */

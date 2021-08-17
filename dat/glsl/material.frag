@@ -1,12 +1,27 @@
-uniform vec4 Ka;
-uniform vec4 Kd;
-uniform vec4 Ks;
-uniform float Ns;
-uniform sampler2D sampler;
+uniform mat4 trans;
 
-in vec2 tex_coord_out;
+uniform sampler2D map_Kd, map_Bump;
+
+uniform vec3 Ka, Kd;
+uniform float d, bm;
+
+in vec2 tex_out;
+in vec3 normal_out;
 out vec4 color_out;
 
+const vec3 lightDir = vec3(0, 0, -1);
+
 void main(void) {
-   color_out = Kd * texture(sampler, tex_coord_out); /* TODO placeholder!!! */
+   float normal_ratio = step(.01, bm);
+   vec3 norm = (1. - normal_ratio) * normal_out;
+   norm += normal_ratio * bm * texture(map_Bump, tex_out).xyz;
+   norm = normalize((trans * vec4(norm, 1.)).xyz);
+
+   vec3 ambient = Ka;
+
+   vec3 diffuse = Kd * max(dot(norm, lightDir), 0.0);
+
+   color_out = texture(map_Kd, tex_out);
+   color_out.rgb *= .4 * ambient + .7 * diffuse;
+   color_out.a = d;
 }
