@@ -34,6 +34,8 @@
 #endif
 
 #define DELIM " \t\n"
+#define NAEV_ORTHO_SCALE 5         /**< Half of the cam.ortho_scale defined in the Blender script */
+#define NAEV_ORTHO_DIST 9*sqrtf(2) /**< Distance from camera to origin in the Blender script */
 
 
 typedef struct {
@@ -316,15 +318,6 @@ Object *object_loadFromFile( const char *filename )
    mesh_create(&object->meshes, name, corners, material);
    free(name);
 
-   /* Calculate bounding sphere */
-   GLfloat r2 = 0, r2i;
-   for (int i=0; i<array_size(vertex); i+=3) {
-      r2i = pow2(vertex[i+0]) + pow2(vertex[i+1]) + pow2(vertex[i+2]);
-      r2 = MAX(r2, r2i);
-   }
-   object->radius = sqrtf(r2);
-
-
    /* cleans up */
    array_free(vertex);
    array_free(texture);
@@ -411,13 +404,16 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
 void object_renderSolidPart( Object *object, const Solid *solid, const char *part_name, GLfloat alpha, double scale )
 {
    gl_Matrix4 projection;
+   GLfloat od, os;
    int i;
 
    glUseProgram(shaders.material.program);
 
+   od = NAEV_ORTHO_DIST;
+   os = NAEV_ORTHO_SCALE / scale;
    projection = gl_gameToScreenMatrix(gl_view_matrix);
    projection = gl_Matrix4_Translate(projection, solid->pos.x, solid->pos.y, 0);
-   projection = gl_Matrix4_Mult(projection, gl_Matrix4_Ortho(-1/scale, 1/scale, -1/scale, 1/scale, object->radius, -object->radius));
+   projection = gl_Matrix4_Mult(projection, gl_Matrix4_Ortho(-os, os, -os, os, od, -od));
    projection = gl_Matrix4_Rotate(projection, M_PI/4, 1., 0., 0.);
    projection = gl_Matrix4_Rotate(projection, M_PI/2 + solid->dir, 0., 1., 0.);
    gl_Matrix4_Uniform(shaders.material.trans, projection);
