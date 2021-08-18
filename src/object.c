@@ -38,6 +38,25 @@
 #define NAEV_ORTHO_DIST 9*sqrtf(2) /**< Distance from camera to origin in the Blender script */
 
 
+typedef struct Material_ {
+   char *name;
+   GLfloat Ka[3], Kd[3], Ks[3];
+   GLfloat Ns, Ni, d, bm;
+   glTexture *map_Kd, *map_Bump;
+} Material;
+
+typedef struct Mesh_ {
+   char *name;
+   gl_vbo *vbo;
+   int num_corners;
+   int material;
+} Mesh;
+
+typedef struct Object_ {
+   Mesh *meshes;
+   Material *materials;
+} Object;
+
 typedef struct {
    GLfloat ver[3];
    GLfloat tex[2];
@@ -45,9 +64,9 @@ typedef struct {
 } Vertex;
 
 
-static glTexture *zeroTexture = NULL;
-static glTexture *oneTexture = NULL;
-static unsigned int emptyTextureRefs = 0;
+static glTexture *zeroTexture       = NULL;
+static glTexture *oneTexture        = NULL;
+static unsigned int emptyTextureRefs= 0;
 
 
 static void mesh_create( Mesh **meshes, const char* name,
@@ -406,7 +425,7 @@ static void object_renderMesh( const Object *object, int part, GLfloat alpha )
 
    glUniform3fv(shaders.material.Ka, 1, material->Ka);
    glUniform3fv(shaders.material.Kd, 1, material->Kd);
-   glUniform1f(shaders.material.d, material->d * alpha);
+   glUniform1f(shaders.material.d,  material->d * alpha);
    glUniform1f(shaders.material.bm, material->bm);
 
    /* binds textures */
