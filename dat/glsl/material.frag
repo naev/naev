@@ -13,9 +13,9 @@ const vec3 lightDir = vec3(0.0, 0.0, -1.0);
 
 void main(void) {
    float normal_ratio = step(0.01, bm);
-   vec3 norm = (1.0 - normal_ratio) * normal_out;
-   norm += normal_ratio * bm * texture(map_Bump, tex_out).xyz;
-   norm = normalize((trans * vec4(norm, 1.0)).xyz);
+   vec3 norm      = (1.0 - normal_ratio) * normal_out;
+   norm          += normal_ratio * bm * texture(map_Bump, tex_out).xyz;
+   norm           = normalize((trans * vec4(norm, 1.0)).xyz);
 
    vec3 ambient   = Ka;
 
