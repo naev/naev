@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Koala">
  <base_type>Koala</base_type>
- <GFX>koala</GFX>
+ <GFX size="46">koala</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Courier</class>

@@ -11,6 +11,7 @@
 #include "collision.h"
 #include "commodity.h"
 #include "nxml.h"
+#include "object.h"
 #include "opengl.h"
 #include "outfit.h"
 #include "sound.h"
@@ -127,6 +128,8 @@ typedef struct Ship_ {
    double dmg_absorb; /**< Damage absorption in per one [0:1] with 1 being 100% absorption. */
 
    /* graphics */
+   Object *gfx_3d; /**< 3d model of the ship */
+   double gfx_3d_scale;/**< scale for 3d model of the ship */
    glTexture *gfx_space; /**< Space sprite sheet. */
    glTexture *gfx_engine; /**< Space engine glow sprite sheet. */
    glTexture *gfx_target; /**< Targeting window graphic. */

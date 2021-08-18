@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Admonisher">
  <base_type>Admonisher</base_type>
- <GFX>admonisher</GFX>
+ <GFX size="68">admonisher</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>

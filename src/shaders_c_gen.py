@@ -204,6 +204,14 @@ SHADERS = [
       }
    ),
    Shader(
+      name = "material",
+      vs_path = "material.vert",
+      fs_path = "material.frag",
+      attributes = ["vertex", "vertex_normal", "vertex_tex"],
+      uniforms = ["projection", "map_Kd", "map_Bump", "Ka", "Kd", "d", "bm"],
+      subroutines = {},
+   ),
+   Shader(
       name = "colorblind",
       vs_path = "postprocess.vert",
       fs_path = "colorblind.frag",

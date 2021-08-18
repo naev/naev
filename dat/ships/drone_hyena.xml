@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Drone (Hyena)">
  <base_type>Drone</base_type>
- <GFX>drone_hyena</GFX>
+ <GFX size="70">drone_hyena</GFX>
  <GUI>brushed</GUI>
  <rarity>3</rarity>
  <sound>engine</sound>

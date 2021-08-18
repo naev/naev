@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Proteron Archimedes">
  <base_type>Archimedes</base_type>
- <GFX sx="12" sy="12">archimedes</GFX>
+ <GFX size="130" sx="12" sy="12">archimedes</GFX>
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

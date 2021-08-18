@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Scintillation">
  <base_type>Scintillation</base_type>
- <GFX>scintillation</GFX>
+ <GFX size="70">scintillation</GFX>
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

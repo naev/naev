@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Light Drone">
  <base_type>Za'lek Light Drone</base_type>
- <GFX>zalek_drone_light</GFX>
+ <GFX size="40">zalek_drone_light</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class display="Robotic Interceptor">Interceptor</class>

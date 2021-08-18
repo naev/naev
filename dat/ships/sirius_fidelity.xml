@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Fidelity">
  <base_type>Fidelity</base_type>
- <GFX>fidelity</GFX>
+ <GFX size="60">fidelity</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

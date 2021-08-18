@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Llama">
  <base_type>Llama</base_type>
- <GFX>llama</GFX>
+ <GFX size="47">llama</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Yacht</class>
