@@ -12,9 +12,9 @@ out vec4 color_out;
 const vec3 lightDir = normalize( vec3(0.0, 0.0, -1.0) );
 
 void main(void) {
-   float normal_ratio = step(0.01, bm);
-   vec3 norm      = (1.0 - normal_ratio) * normal;
-   norm          += normal_ratio * bm * texture(map_Bump, tex_coord).xyz;
+   vec3 norm      = normal;
+   if (bm > 0.01)
+      norm += bm * texture(map_Bump, tex_coord).xyz * 2.0 - 1.0;
    norm           = normalize((projection * vec4(norm, 0.0)).xyz);
 
    vec3 ambient   = Ka;
