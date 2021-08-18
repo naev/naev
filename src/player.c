@@ -2037,7 +2037,6 @@ void player_targetHostile (void)
 {
    unsigned int tp;
    double d, td;
-   int inRange;
    Pilot *const* pilot_stack;
 
    tp = PLAYER_ID;
@@ -2049,16 +2048,19 @@ void player_targetHostile (void)
          continue;
 
       /* Must be a valid target. */
-      if (!pilot_validTarget( player.p, pilot_stack[i] ))
+      if (!pilot_canTarget( pilot_stack[i] ))
          continue;
 
       /* Must be hostile. */
-      if (pilot_isHostile(pilot_stack[i])) {
-         inRange = pilot_inRangePilot(player.p, pilot_stack[i], &td);
-         if (tp == PLAYER_ID || ((inRange == 1) && (td < d))) {
-            d  = td;
-            tp = pilot_stack[i]->id;
-         }
+      if (!pilot_isHostile(pilot_stack[i]))
+         continue;
+
+      if (pilot_inRangePilot(player.p, pilot_stack[i], &td) != 1 )
+         continue;
+
+      if (tp == PLAYER_ID || ((td < d))) {
+         d  = td;
+         tp = pilot_stack[i]->id;
       }
    }
 
