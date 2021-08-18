@@ -11,6 +11,8 @@
 function foo( data ) -- normal task
 function _bar( data ) -- subtask
 function __hoge( data ) -- internal use function
+
+-- Remark: the (sub)taskdata is passed as the (sub)task function argument
 --]]
 
 --[[
@@ -308,9 +310,6 @@ end
 --[[
 -- Tries to hyperspace asap.
 --]]
-function hyperspace( target )
-   hyperspace( target )
-end
 function hyperspace_shoot( target )
    if target == nil then
       target = ai.rndhyptarget()
@@ -402,21 +401,18 @@ function __landgo ( planet )
 
    -- Need to start braking
    elseif dist < bdist then
-      ai.pushsubtask( "_landstop", planet )
+      ai.pushsubtask( "_landland", planet )
+      ai.pushsubtask( "_subbrake" )
    end
 
 end
-function _landstop ( planet )
-   ai.brake()
-   if ai.isstopped() then
-      ai.stop() -- Will stop the pilot if below err vel
-      if not ai.land( planet ) then
-         ai.popsubtask()
-      else
-         local p = ai.pilot()
-         p:msg(p:followers(), "land", planet)
-         ai.poptask() -- Done, pop task
-      end
+function _landland ( planet )
+   if not ai.land( planet ) then
+      ai.popsubtask()
+   else
+      local p = ai.pilot()
+      p:msg(p:followers(), "land", planet)
+      ai.poptask() -- Done, pop task
    end
 end
 
@@ -550,7 +546,8 @@ function _run_hyp( data )
       if ai.instantJump() then
          ai.pushsubtask( "_hyp_jump", jump )
       else
-         ai.pushsubtask( "_hyp_brake", jump )
+         ai.pushsubtask( "_hyp_jump", jump )
+         ai.pushsubtask("_subbrake")
       end
    end
 
@@ -577,7 +574,8 @@ function _run_landgo( data )
    local plt      = ai.pilot()
 
    if dist < bdist then -- Need to start braking
-      ai.pushsubtask( "_landstop", planet )
+      ai.pushsubtask( "_landland", planet )
+      ai.pushsubtask( "_subbrake" )
    else
 
       local dozigzag = false
@@ -661,16 +659,9 @@ function __hyp_approach( target )
       if ai.instantJump() then
          ai.pushsubtask("_hyp_jump", target)
       else
-         ai.pushsubtask("_hyp_brake", target)
+         ai.pushsubtask("_hyp_jump", target)
+         ai.pushsubtask("_subbrake")
       end
-   end
-end
-function _hyp_brake ( jump )
-   ai.brake()
-   if ai.isstopped() then
-      ai.stop()
-      ai.popsubtask()
-      ai.pushsubtask("_hyp_jump", jump)
    end
 end
 function _hyp_jump ( jump )
