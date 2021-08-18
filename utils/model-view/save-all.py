@@ -41,5 +41,5 @@ for i in os.listdir('3d'):
 
     for obj in ship.values():
         obj = RenderObject(program, obj)
-        program.draw(obj, RES, RES, math.pi / 2)
+        program.draw(obj, RES, RES, rot=0.)
     fb.save(f"png-exports/{i}.png")
