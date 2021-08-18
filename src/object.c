@@ -182,49 +182,46 @@ static void materials_readFromFile( const char *filename, Material **materials )
          readGLfloat(curr->Kd, 3, &saveptr);
       } else if (strcmp(token, "Ks") == 0) {
          readGLfloat(curr->Ks, 3, &saveptr);
-      } else if (strcmp(token, "map_Kd") == 0) {
-         token = strtok_r(NULL, DELIM, &saveptr);
-         if (strcmp(token, "-s") == 0) {
-            LOG(_("-s (texture scaling) option ignored for %s"), "map_Kd");
-            float ignored;
-            do
-               token = strtok_r(NULL, DELIM, &saveptr);
-            while (sscanf(token, "%f", &ignored) == 1);
+      } else if (strncmp(token, "map_", 4) == 0) {
+         glTexture **map;
+         if (strcmp(token, "map_Kd") == 0)
+            map = &curr->map_Kd;
+         else if (strcmp(token, "map_Bump") == 0)
+            map = &curr->map_Bump;
+         else {
+            LOG(_("Can't understand token %s"), token);
+            continue;
          }
-         else if (token[0] == '-')
-            ERR(_("Options not supported for %s"), "map_Kd");
-
-         /* computes the path to texture */
-         copy_filename = strdup(filename);
-	 asprintf(&texture_filename, "%s/%s", dirname(copy_filename), token);
-         curr->map_Kd = gl_newImage(texture_filename, 0);
-         free(copy_filename);
-         free(texture_filename);
-      } else if (strcmp(token, "map_Bump") == 0) {
-         token = strtok_r(NULL, DELIM, &saveptr);
+         /* Note: we can't tokenize the command line here; options may be follwed by a filename containing whitespace chars. */
+         char *args = strtok_r(NULL, "\n", &saveptr), *endp;
          while (1) {
-            if (strcmp(token, "-bm") == 0) {
-               token = strtok_r(NULL, DELIM, &saveptr);
-               sscanf(token, "%f", &curr->bm);
-               token = strtok_r(NULL, DELIM, &saveptr);
+            while (isspace(*args))
+               args++;
+            if (strncmp(args, "-bm", 3) == 0 && isspace(args[3])) {
+               args += 3;
+               curr->bm = strtof(args, &endp);
+               assert("Bad -bm argument" && endp != args);
+               args = endp;
             }
-            else if (strcmp(token, "-s") == 0) {
-               LOG(_("-s (texture scaling) option ignored for %s"), "map_Bump");
-               float ignored;
-               do
-                  token = strtok_r(NULL, DELIM, &saveptr);
-               while (sscanf(token, "%f", &ignored) == 1);
+            else if (strncmp(args, "-s", 2) == 0 && isspace(args[2])) {
+               endp = args + 2;
+               LOG(_("-s (texture scaling) option ignored for %s"), token);
+               do {
+                  args = endp;
+                  (void) strtof(args, &endp);
+               }
+               while (endp != args);
             }
+            else if (args[0] == '-')
+               ERR(_("Options not supported for %s"), token);
             else
                break;
          }
-	 if (token[0] == '-')
-            ERR(_("Options not supported for %s"), "map_Bump");
 
          /* computes the path to texture */
          copy_filename = strdup(filename);
-	 asprintf(&texture_filename, "%s/%s", dirname(copy_filename), token);
-         curr->map_Bump = gl_newImage(texture_filename, 0);
+	 asprintf(&texture_filename, "%s/%s", dirname(copy_filename), args);
+         *map = gl_newImage(texture_filename, 0);
          free(copy_filename);
          free(texture_filename);
       } else if (strcmp(token, "Ke") == 0 || strcmp(token, "illum") == 0) {
