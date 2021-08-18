@@ -63,7 +63,6 @@ void main(void) {
 class RenderObject:
     def __init__(self, program, obj):
         self.mtl_list = obj.mtl_list
-        self.radius = obj.radius
         self.vao = glGenVertexArrays(1)
 
         glBindVertexArray(self.vao)
@@ -103,7 +102,7 @@ class ObjProgram:
     def draw(self, obj, width, height, rot):
         glBindVertexArray(obj.vao)
 
-        scale = obj.radius
+        scale = 5  # matching "camobj" setup in naev-artwork/3D/render.sh
 
         if width < height:
             scale_w = scale
@@ -112,7 +111,7 @@ class ObjProgram:
             scale_h = scale
             scale_w = scale_h * (width / height)
 
-        trans = glm.ortho(-scale_w, scale_w, -scale_h, scale_h, -scale, scale)
+        trans = glm.ortho(-scale_w, scale_w, -scale_h, scale_h, -9*math.sqrt(2), 9*math.sqrt(2))
         trans = glm.rotate(trans, math.pi / 4, glm.vec3(1, 0, 0))
         trans = glm.rotate(trans, rot + math.pi / 2, glm.vec3(0, 1, 0))
         glUniformMatrix4fv(self.uniforms["trans"], 1, GL_FALSE, trans.to_list())
