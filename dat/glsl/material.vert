@@ -1,13 +1,13 @@
 uniform mat4 projection;
 
 in vec4 vertex;
-in vec3 normal;
-in vec2 tex;
-out vec2 tex_out;
-out vec3 normal_out;
+in vec3 vertex_normal;
+in vec2 vertex_tex;
+out vec2 tex_coord;
+out vec3 normal;
 
 void main(void) {
-   tex_out     = vec2(tex.x, -tex.y);
-   normal_out  = normal;
+   tex_coord   = vec2(vertex_tex.x, -vertex_tex.y);
+   normal      = vertex_normal;
    gl_Position = projection * vertex;
 }

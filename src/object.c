@@ -413,10 +413,10 @@ static void object_renderMesh( const Object *object, int part, GLfloat alpha )
    /* activates vertices and texture coords */
    glEnableVertexAttribArray(shaders.material.vertex);
    gl_vboActivateAttribOffset(mesh->vbo, shaders.material.vertex, ver_offset, 3, GL_FLOAT, sizeof(Vertex));
-   glEnableVertexAttribArray(shaders.material.tex);
-   gl_vboActivateAttribOffset(mesh->vbo, shaders.material.tex, tex_offset, 2, GL_FLOAT, sizeof(Vertex));
-   glEnableVertexAttribArray(shaders.material.normal);
-   gl_vboActivateAttribOffset(mesh->vbo, shaders.material.normal, nor_offset, 3, GL_FLOAT, sizeof(Vertex));
+   glEnableVertexAttribArray(shaders.material.vertex_tex);
+   gl_vboActivateAttribOffset(mesh->vbo, shaders.material.vertex_tex, tex_offset, 2, GL_FLOAT, sizeof(Vertex));
+   glEnableVertexAttribArray(shaders.material.vertex_normal);
+   gl_vboActivateAttribOffset(mesh->vbo, shaders.material.vertex_normal, nor_offset, 3, GL_FLOAT, sizeof(Vertex));
 
    /* Set material */
    assert("Part has no material" && (mesh->material != -1));
