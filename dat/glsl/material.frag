@@ -1,4 +1,4 @@
-uniform mat4 trans;
+uniform mat4 projection;
 
 uniform sampler2D map_Kd, map_Bump;
 
@@ -15,7 +15,7 @@ void main(void) {
    float normal_ratio = step(0.01, bm);
    vec3 norm      = (1.0 - normal_ratio) * normal_out;
    norm          += normal_ratio * bm * texture(map_Bump, tex_out).xyz;
-   norm           = normalize((trans * vec4(norm, 1.0)).xyz);
+   norm           = normalize((projection * vec4(norm, 1.0)).xyz);
 
    vec3 ambient   = Ka;
 

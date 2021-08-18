@@ -454,7 +454,7 @@ void object_renderSolidPart( const Object *object, const Solid *solid, const cha
    projection = gl_Matrix4_Mult(projection, gl_Matrix4_Ortho(-os, os, -os, os, od, -od));
    projection = gl_Matrix4_Rotate(projection, M_PI/4, 1., 0., 0.);
    projection = gl_Matrix4_Rotate(projection, M_PI/2 + solid->dir, 0., 1., 0.);
-   gl_Matrix4_Uniform(shaders.material.trans, projection);
+   gl_Matrix4_Uniform(shaders.material.projection, projection);
 
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LESS);  /* XXX this changes the global DepthFunc */
