@@ -463,6 +463,7 @@ void object_renderSolidPart( const Object *object, const Solid *solid, const cha
    //r = object->radius * scale;
 
    /*
+   // TODO fix this check to avoid rendering when not necessary
    if ((x+r < 0.) || (x-r > SCREEN_W) ||
          (y+r < 0.) || (y-r > SCREEN_H))
       return;
