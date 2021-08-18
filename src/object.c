@@ -382,9 +382,9 @@ void object_free( Object *object )
    }
 }
 
-static void object_renderMesh( Object *object, int part, GLfloat alpha )
+static void object_renderMesh( const Object *object, int part, GLfloat alpha )
 {
-   Mesh *mesh = &object->meshes[part];
+   const Mesh *mesh = &object->meshes[part];
 
    /* computes relative addresses of the vertice and texture coords */
    const int ver_offset = offsetof(Vertex, ver);
@@ -421,18 +421,17 @@ static void object_renderMesh( Object *object, int part, GLfloat alpha )
 }
 
 
-void object_renderSolidPart( Object *object, const Solid *solid, const char *part_name, GLfloat alpha, double scale )
+void object_renderSolidPart( const Object *object, const Solid *solid, const char *part_name, GLfloat alpha, double scale )
 {
    gl_Matrix4 projection;
-   GLfloat od, os;
    int i;
+   const GLfloat od = NAEV_ORTHO_DIST;
+   const GLfloat os = NAEV_ORTHO_SCALE / scale;
 
    glUseProgram(shaders.material.program);
 
-   od = NAEV_ORTHO_DIST;
-   os = NAEV_ORTHO_SCALE / scale;
    projection = gl_gameToScreenMatrix(gl_view_matrix);
-   projection = gl_Matrix4_Translate(projection, solid->pos.x, solid->pos.y, 0);
+   projection = gl_Matrix4_Translate(projection, solid->pos.x, solid->pos.y, 0.);
    projection = gl_Matrix4_Mult(projection, gl_Matrix4_Ortho(-os, os, -os, os, od, -od));
    projection = gl_Matrix4_Rotate(projection, M_PI/4, 1., 0., 0.);
    projection = gl_Matrix4_Rotate(projection, M_PI/2 + solid->dir, 0., 1., 0.);

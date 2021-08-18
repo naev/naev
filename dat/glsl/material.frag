@@ -17,11 +17,11 @@ void main(void) {
    norm += normal_ratio * bm * texture(map_Bump, tex_out).xyz;
    norm = normalize((trans * vec4(norm, 1.0)).xyz);
 
-   vec3 ambient = Ka;
+   vec3 ambient   = Ka;
 
-   vec3 diffuse = Kd * max(dot(norm, lightDir), 0.0);
+   vec3 diffuse   = Kd * max(dot(norm, lightDir), 0.0);
 
-   color_out = texture(map_Kd, tex_out);
+   color_out      = texture(map_Kd, tex_out);
    color_out.rgb *= 0.4 * ambient + 0.7 * diffuse;
-   color_out.a = d;
+   color_out.a    = d;
 }
