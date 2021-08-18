@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-15 09:05-0400\n"
-"PO-Revision-Date: 2021-08-15 13:05+0000\n"
+"PO-Revision-Date: 2021-08-18 18:34+0000\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/naev/naev/de/>\n"
 "Language: de\n"
@@ -7633,11 +7633,6 @@ msgstr ""
 "günstig sind."
 
 #: dat/assets/jorlan.xml:31
-#, fuzzy
-#| msgid ""
-#| "Rather atypically for a heavy-industry world, the people of Jorlan don't "
-#| "really have a habit of drinking. You see numerous other spacefarers, but "
-#| "no natives."
 msgid ""
 "Rather atypically for a heavy-industry world, the people of Jorlan don't "
 "really have a habit of drinking. You see numerous other spacefarers, but "
@@ -7645,7 +7640,7 @@ msgid ""
 msgstr ""
 "Eher untypisch für eine Welt der Schwerindustrie haben die Menschen in "
 "Jorlan nicht wirklich die Angewohnheit zu trinken. Man sieht zahlreiche "
-"andere Raumfahrer, aber keine Einheimischen."
+"andere Raumfahrer, aber fast keine Einheimischen."
 
 #: dat/assets/jugreny.xml:2
 msgid "Jugreny"
@@ -57559,15 +57554,12 @@ msgid "What the hell?!"
 msgstr "Was zur Hölle?!"
 
 #: dat/missions/minerva/kex4.lua:41
-#, fuzzy, lua-format
-#| msgid ""
-#| "You have been assigned with obtaining information from Major Malik at %s "
-#| "in the %s system."
+#, lua-format
 msgid ""
 "You have been assigned with obtaining information from Jie de Luca at %s in "
 "the %s system."
 msgstr ""
-"Du wurdest damit beauftragt, Informationen von Major Malik bei %s im „%s“-"
+"Du wurdest damit beauftragt, Informationen von Jie de Luca bei %s im „%s“-"
 "System zu erhalten."
 
 #. TODO custom graphic?
@@ -57579,17 +57571,14 @@ msgstr "Du siehst jemanden, der mit einem kleinen Schiffsmodell spielt."
 
 #. If not accepted, misn_state will still be nil
 #: dat/missions/minerva/kex4.lua:70
-#, fuzzy
-#| msgid "You have agreed to help Kex obtain information from Major Malik."
 msgid "You have agreed to help Kex obtain information from Jie de Luca."
 msgstr ""
-"Du hast zugestimmt, Kex zu helfen, Informationen von Major Malik zu erhalten."
+"Du hast zugestimmt, Kex zu helfen, Informationen von Jie de Luca zu erhalten."
 
 #: dat/missions/minerva/kex4.lua:73
-#, fuzzy, lua-format
-#| msgid "Go to %s in the %s system to find Major Malik"
+#, lua-format
 msgid "Go to %s in the %s system to find Jie de Luca"
-msgstr "Gehe nach %s im „%s“-System, um Major Malik zu finden"
+msgstr "Gehe nach %s im „%s“-System, um Jie de Luca zu finden"
 
 #: dat/missions/minerva/kex4.lua:93 dat/missions/minerva/kex4.lua:268
 #, fuzzy
@@ -57610,7 +57599,7 @@ msgstr "#rMISSION FEHLGESCHLAGEN! Du hättest den Transport überfallen sollen!"
 #: dat/missions/minerva/kex4.lua:101 dat/missions/minerva/kex4.lua:227
 #: dat/missions/minerva/kex4.lua:328 dat/missions/minerva/kex4.lua:419
 msgid "Jie de Luca"
-msgstr ""
+msgstr "Jie de Luca"
 
 #. Mission is over
 #: dat/missions/minerva/kex4.lua:115
