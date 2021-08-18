@@ -107,6 +107,17 @@ function abort ()
    end
 end
 
+-- Clears pilots include the player's escorts
+local function clear_pilots ()
+   local pp = player.pilot()
+   pilot.clear()
+   for k,p in ipairs(pp:followers()) do
+      if p:flags("carried") then
+         p:rm()
+      end
+   end
+end
+
 --[[
    Common Teleporting Functions
 --]]
@@ -134,8 +145,9 @@ function enter_the_ring ()
 end
 -- Goes back to Totoran (landed)
 function leave_the_ring ()
+   local pp = player.pilot()
    -- Clear pilots so escorts get docked
-   pilot.clear()
+   clear_pilots()
    -- Fix the map up
    local sys = gauntletsys
    sys:setKnown(false)
@@ -144,7 +156,6 @@ function leave_the_ring ()
    end
    -- Undo player invincibility stuff and land
    hook.land("land")
-   local pp = player.pilot()
    pp:setHide( true ) -- clear hidden flag
    pp:setInvincible( false )
    pp:setInvisible( false )
@@ -246,7 +257,7 @@ function enter_wave ()
    end
 
    -- Get rid of pilots
-   pilot.clear()
+   clear_pilots()
    pilot.toggleSpawn(false)
 
    -- Metafactions
@@ -257,7 +268,7 @@ function enter_wave ()
    wave_round_setup()
 end
 function wave_round_setup ()
-   pilot.clear() -- clear remaining pilots if necessary
+   clear_pilots() -- clear remaining pilots if necessary
 
    -- Heal up and be nice to the player
    local pp = player.pilot()
