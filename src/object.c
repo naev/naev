@@ -56,9 +56,9 @@ static void mesh_create( Mesh **meshes, const char* name,
    if (array_size(corners) == 0)
       return;
    if (name == NULL)
-      ERR("No name for current part");
+      ERR(_("No name for current part"));
    if (material == -1)
-      ERR("No material for current part");
+      ERR(_("No material for current part"));
 
    Mesh *mesh = &array_grow(meshes);
    mesh->name = strdup(name);
@@ -125,11 +125,11 @@ static char* SDL_RWgets( char *str, int size, SDL_RWops *ctx )
 
 static void materials_readFromFile( const char *filename, Material **materials )
 {
-   DEBUG("Loading material from %s", filename);
+   DEBUG(_("Loading material from %s"), filename);
 
    SDL_RWops *f = PHYSFSRWOPS_openRead(filename);
    if (!f)
-      ERR("Cannot open object file %s", filename);
+      ERR(_("Cannot open object file %s"), filename);
 
    Material *curr = &array_back(*materials);
 
@@ -149,7 +149,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
          curr->d = 1.;
          curr->bm = 0.;
          curr->map_Kd = curr->map_Bump = NULL;
-         DEBUG("Reading new material %s", curr->name);
+         DEBUG(_("Reading new material %s"), curr->name);
       } else if (strcmp(token, "Ns") == 0) {
          readGLfloat(&curr->Ns, 1, &saveptr);
       } else if (strcmp(token, "Ni") == 0) {
@@ -165,14 +165,14 @@ static void materials_readFromFile( const char *filename, Material **materials )
       } else if (strcmp(token, "map_Kd") == 0) {
          token = strtok_r(NULL, DELIM, &saveptr);
          if (strcmp(token, "-s") == 0) {
-            WARN("-s (texture scaling) option ignored for map_Kd");
+            LOG(_("-s (texture scaling) option ignored for %s"), "map_Kd");
             float ignored;
             do
                token = strtok_r(NULL, DELIM, &saveptr);
             while (sscanf(token, "%f", &ignored) == 1);
          }
          else if (token[0] == '-')
-            ERR("Options not supported for map_Kd");
+            ERR(_("Options not supported for %s"), "map_Kd");
 
          /* computes the path to texture */
          copy_filename = strdup(filename);
@@ -189,7 +189,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
                token = strtok_r(NULL, DELIM, &saveptr);
             }
             else if (strcmp(token, "-s") == 0) {
-               WARN("-s (texture scaling) option ignored for map_Bump");
+               LOG(_("-s (texture scaling) option ignored for %s"), "map_Bump");
                float ignored;
                do
                   token = strtok_r(NULL, DELIM, &saveptr);
@@ -199,7 +199,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
                break;
          }
 	 if (token[0] == '-')
-            ERR("Options not supported for map_Bump");
+            ERR(_("Options not supported for %s"), "map_Bump");
 
          /* computes the path to texture */
          copy_filename = strdup(filename);
@@ -212,7 +212,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
       } else if (token[0] == '#') {
          /* Comment */
       } else {
-         WARN("Can't understand token %s", token);
+         LOG(_("Can't understand token %s"), token);
       }
    }
 
@@ -238,7 +238,8 @@ Object *object_loadFromFile( const char *filename )
 
    SDL_RWops *f = PHYSFSRWOPS_openRead(filename);
    if (!f)
-      ERR("Cannot open object file %s", filename);
+      ERR(_("Cannot open object file %s"), filename);
+   DEBUG(_("Loading object file %s"), filename);
 
    char *name = NULL;
    int material = -1;
@@ -323,14 +324,14 @@ Object *object_loadFromFile( const char *filename )
                break;
 
          if (material == array_size(object->materials))
-            ERR("No such material %s", token);
+            ERR(_("No such material %s"), token);
       } else if (token[0] == '#') {
          /* Comment */
       } else if (strcmp(token, "l") == 0 || strcmp(token, "s") == 0) {
          /* Ignore commands: line, smoothing */
       } else {
          /* TODO Ignore s (smoothing), l (line) with no regrets? */
-         WARN("Can't understand token %s", token);
+         LOG(_("Can't understand token %s"), token);
       }
    }
 
