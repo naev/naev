@@ -182,7 +182,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
          free(texture_filename);
       } else if (strcmp(token, "map_Bump") == 0) {
          token = strtok_r(NULL, DELIM, &saveptr);
-         while (true) {
+         while (1) {
             if (strcmp(token, "-bm") == 0) {
                token = strtok_r(NULL, DELIM, &saveptr);
                sscanf(token, "%f", &curr->bm);
