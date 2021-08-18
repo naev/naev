@@ -7,7 +7,7 @@
  * @file object.c
  *
  * @brief Object Loader.
- * http://local.wasp.uwa.edu.au/~pbourke/dataformats/obj/
+ * http://www.paulbourke.net/dataformats/obj/
  */
 
 
