@@ -35,7 +35,6 @@
 
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
 
-#define SHIP_3DEXT   ".obj" /**< Ship graphics extension format. */
 #define SHIP_ENGINE  "_engine" /**< Engine graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
 #define SHIP_COMM    "_comm" /**< Communication graphic extension. */
@@ -510,7 +509,7 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
    base = delim==NULL ? strdup( buf ) : strndup( buf, delim-buf );
 
    /* Load the 3d model */
-   snprintf(str, sizeof(str), SHIP_3DGFX_PATH"%s/%s"SHIP_3DEXT, base, buf);
+   snprintf(str, sizeof(str), SHIP_3DGFX_PATH"%s/%s/%s.obj", base, buf, buf);
    if (PHYSFS_exists(str)) {
       temp->gfx_3d = object_loadFromFile(str);
    }
