@@ -34,8 +34,8 @@
 #endif
 
 #define DELIM " \t\n"
-#define NAEV_ORTHO_SCALE 10        /**< The cam.ortho_scale defined in the Blender script */
-#define NAEV_ORTHO_DIST 9*sqrtf(2) /**< Distance from camera to origin in the Blender script */
+#define NAEV_ORTHO_SCALE 10.       /**< The cam.ortho_scale defined in the Blender script */
+#define NAEV_ORTHO_DIST 9.*M_SQRT2/**< Distance from camera to origin in the Blender script */
 
 
 typedef struct Material_ {
@@ -55,6 +55,7 @@ typedef struct Mesh_ {
 typedef struct Object_ {
    Mesh *meshes;
    Material *materials;
+   GLfloat radius;
 } Object;
 
 typedef struct {
@@ -250,6 +251,8 @@ static void materials_readFromFile( const char *filename, Material **materials )
  */
 Object *object_loadFromFile( const char *filename )
 {
+   GLfloat *v;
+   int i;
    GLfloat *vertex = array_create(GLfloat);   /**< vertex coordinates */
    GLfloat *texture = array_create(GLfloat);  /**< texture coordinates */
    GLfloat *normal = array_create(GLfloat);  /**< normal coordinates */
@@ -274,7 +277,7 @@ Object *object_loadFromFile( const char *filename )
    object->meshes = array_create(Mesh);
    object->materials = array_create(Material);
 
-   char line[256];
+   char line[STRMAX_SHORT];
    while (SDL_RWgets(line, sizeof(line), f)) {
       const char *token;
       assert("Line too long" && (line[strlen(line) - 1] == '\n'));
@@ -356,6 +359,13 @@ Object *object_loadFromFile( const char *filename )
 
    mesh_create(&object->meshes, name, corners, material);
    free(name);
+
+   /* Calculate maximum mesh size (from center). */
+   for (i=0; i<array_size(corners); i++) {
+      v = corners[i].ver;
+      object->radius = MAX( object->radius, v[0]*v[0]+v[1]*v[1]+v[2]*v[2] );
+   }
+   object->radius = sqrt( object->radius );
 
    /* cleans up */
    array_free(vertex);
@@ -446,14 +456,25 @@ void object_renderSolidPart( const Object *object, const Solid *solid, const cha
    int i;
    const GLfloat od = NAEV_ORTHO_DIST;
    const GLfloat os = NAEV_ORTHO_SCALE / scale;
+   double x, y; //, r;
+
+   x = solid->pos.x;
+   y = solid->pos.y;
+   //r = object->radius * scale;
+
+   /*
+   if ((x+r < 0.) || (x-r > SCREEN_W) ||
+         (y+r < 0.) || (y-r > SCREEN_H))
+      return;
+   */
 
    glUseProgram(shaders.material.program);
 
    projection = gl_gameToScreenMatrix(gl_view_matrix);
-   projection = gl_Matrix4_Translate(projection, solid->pos.x, solid->pos.y, 0.);
+   projection = gl_Matrix4_Translate(projection, x, y, 0.);
    projection = gl_Matrix4_Mult(projection, gl_Matrix4_Ortho(-os, os, -os, os, od, -od));
-   projection = gl_Matrix4_Rotate(projection, M_PI/4, 1., 0., 0.);
-   projection = gl_Matrix4_Rotate(projection, M_PI/2 + solid->dir, 0., 1., 0.);
+   projection = gl_Matrix4_Rotate(projection, M_PI/4., 1., 0., 0.);
+   projection = gl_Matrix4_Rotate(projection, M_PI/2. + solid->dir, 0., 1., 0.);
    gl_Matrix4_Uniform(shaders.material.projection, projection);
 
    glEnable(GL_DEPTH_TEST);
