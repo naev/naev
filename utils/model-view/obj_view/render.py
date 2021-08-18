@@ -8,56 +8,8 @@ from OpenGL.arrays.vbo import VBO
 import glm
 import math
 
-vert = """
-#version 150
-
-uniform mat4 trans;
-
-in vec4 vertex;
-in vec3 normal;
-in vec2 tex;
-out vec2 tex_out;
-out vec3 normal_out;
-
-void main(void) {
-   tex_out = tex;
-   normal_out = normal;
-   gl_Position = trans * vertex;
-}
-"""
-
-
-frag = """
-#version 150
-
-uniform mat4 trans;
-
-uniform sampler2D map_Kd, map_Bump;
-
-uniform vec3 Ka, Kd;
-uniform float d, bm;
-
-in vec2 tex_out;
-in vec3 normal_out;
-out vec4 color_out;
-
-const vec3 lightDir = vec3(0, 0, -1);
-
-void main(void) {
-   float normal_ratio = step(.01, bm);
-   vec3 norm = (1. - normal_ratio) * normal_out;
-   norm += normal_ratio * bm * texture(map_Bump, tex_out).xyz;
-   norm = normalize((trans * vec4(norm, 1.)).xyz);
-
-   vec3 ambient = Ka;
-
-   vec3 diffuse = Kd * max(dot(norm, lightDir), 0.0);
-
-   color_out = texture(map_Kd, tex_out);
-   color_out.rgb *= .4 * ambient + .7 * diffuse;
-   color_out.a = d;
-}
-"""
+vert = '#version 150\n\n' + open('../../dat/glsl/material.vert').read()
+frag = '#version 150\n\n' + open('../../dat/glsl/material.frag').read()
 
 
 class RenderObject:
@@ -75,13 +27,13 @@ class RenderObject:
         glEnableVertexAttribArray(vertex_attrib)
         glVertexAttribPointer(vertex_attrib, 3, GL_FLOAT, GL_FALSE, 8 * 4, c_void_p(0))
 
-        tex_attrib = program.attribs["tex"]
-        glEnableVertexAttribArray(tex_attrib)
-        glVertexAttribPointer(tex_attrib, 2, GL_FLOAT, GL_FALSE, 8 * 4, c_void_p(3 * 4))
+        vertex_tex_attrib = program.attribs["vertex_tex"]
+        glEnableVertexAttribArray(vertex_tex_attrib)
+        glVertexAttribPointer(vertex_tex_attrib, 2, GL_FLOAT, GL_FALSE, 8 * 4, c_void_p(3 * 4))
 
-        normal_attrib = program.attribs["normal"]
-        glEnableVertexAttribArray(normal_attrib)
-        glVertexAttribPointer(normal_attrib, 2, GL_FLOAT, GL_FALSE, 8 * 4, c_void_p(5 * 4))
+        vertex_normal_attrib = program.attribs["vertex_normal"]
+        glEnableVertexAttribArray(vertex_normal_attrib)
+        glVertexAttribPointer(vertex_normal_attrib, 2, GL_FLOAT, GL_FALSE, 8 * 4, c_void_p(5 * 4))
 
 
 class ObjProgram:
@@ -111,10 +63,10 @@ class ObjProgram:
             scale_h = scale
             scale_w = scale_h * (width / height)
 
-        trans = glm.ortho(-scale_w, scale_w, -scale_h, scale_h, -9*math.sqrt(2), 9*math.sqrt(2))
-        trans = glm.rotate(trans, math.pi / 4, glm.vec3(1, 0, 0))
-        trans = glm.rotate(trans, rot + math.pi / 2, glm.vec3(0, 1, 0))
-        glUniformMatrix4fv(self.uniforms["trans"], 1, GL_FALSE, trans.to_list())
+        projection = glm.ortho(-scale_w, scale_w, -scale_h, scale_h, -9*math.sqrt(2), 9*math.sqrt(2))
+        projection = glm.rotate(projection, math.pi / 4, glm.vec3(1, 0, 0))
+        projection = glm.rotate(projection, rot + math.pi / 2, glm.vec3(0, 1, 0))
+        glUniformMatrix4fv(self.uniforms["projection"], 1, GL_FALSE, projection.to_list())
 
         glEnable(GL_DEPTH_TEST)
         glDepthFunc(GL_LESS)

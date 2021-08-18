@@ -6,8 +6,6 @@ from PIL import Image
 def loadTexture(path):
     image = Image.open(path).convert("RGB")
 
-    image = image.transpose(Image.FLIP_TOP_BOTTOM)
-
     texid = glGenTextures(1)
 
     glBindTexture(GL_TEXTURE_2D, texid)
