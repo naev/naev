@@ -740,7 +740,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          }
 
          /* Get size. */
-         xmlr_attr_float_def(node, "_3d_scale", temp->gfx_3d_scale, 0.01);
+         xmlr_attr_float_def(node, "size", temp->gfx_3d_scale, 1);
          xmlr_attr_int_def( node, "sx", sx, 8 );
          xmlr_attr_int_def( node, "sy", sy, 8 );
 

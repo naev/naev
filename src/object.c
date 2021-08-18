@@ -34,7 +34,7 @@
 #endif
 
 #define DELIM " \t\n"
-#define NAEV_ORTHO_SCALE 5         /**< Half of the cam.ortho_scale defined in the Blender script */
+#define NAEV_ORTHO_SCALE 10        /**< The cam.ortho_scale defined in the Blender script */
 #define NAEV_ORTHO_DIST 9*sqrtf(2) /**< Distance from camera to origin in the Blender script */
 
 
