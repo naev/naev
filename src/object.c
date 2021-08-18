@@ -164,7 +164,14 @@ static void materials_readFromFile( const char *filename, Material **materials )
          readGLfloat(curr->Ks, 3, &saveptr);
       } else if (strcmp(token, "map_Kd") == 0) {
          token = strtok_r(NULL, DELIM, &saveptr);
-         if (token[0] == '-')
+         if (strcmp(token, "-s") == 0) {
+            WARN("-s (texture scaling) option ignored for map_Kd");
+            float ignored;
+            do
+               token = strtok_r(NULL, DELIM, &saveptr);
+            while (sscanf(token, "%f", &ignored) == 1);
+         }
+         else if (token[0] == '-')
             ERR("Options not supported for map_Kd");
 
          /* computes the path to texture */
@@ -175,11 +182,22 @@ static void materials_readFromFile( const char *filename, Material **materials )
          free(texture_filename);
       } else if (strcmp(token, "map_Bump") == 0) {
          token = strtok_r(NULL, DELIM, &saveptr);
-	 if (strcmp(token, "-bm") == 0) {
-            token = strtok_r(NULL, DELIM, &saveptr);
-            sscanf(token, "%f", &curr->bm);
-            token = strtok_r(NULL, DELIM, &saveptr);
-	 }
+         while (true) {
+            if (strcmp(token, "-bm") == 0) {
+               token = strtok_r(NULL, DELIM, &saveptr);
+               sscanf(token, "%f", &curr->bm);
+               token = strtok_r(NULL, DELIM, &saveptr);
+            }
+            else if (strcmp(token, "-s") == 0) {
+               WARN("-s (texture scaling) option ignored for map_Bump");
+               float ignored;
+               do
+                  token = strtok_r(NULL, DELIM, &saveptr);
+               while (sscanf(token, "%f", &ignored) == 1);
+            }
+            else
+               break;
+         }
 	 if (token[0] == '-')
             ERR("Options not supported for map_Bump");
 
