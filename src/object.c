@@ -76,11 +76,11 @@ static int readGLfloat( GLfloat *dest, int how_many, char **saveptr )
    while ((token = strtok_r(NULL, DELIM, saveptr)) != NULL) {
       double d;
       sscanf(token, "%lf", &d);
+      assert(num <= how_many);
       dest[num++] = d;
    }
 
-   if (how_many)
-      assert(num == how_many);
+   assert(num == how_many);
    return num;
 }
 
@@ -176,7 +176,8 @@ static void materials_readFromFile( const char *filename, Material **materials )
       } else if (strcmp(token, "map_Bump") == 0) {
          token = strtok_r(NULL, DELIM, &saveptr);
 	 if (strcmp(token, "-bm") == 0) {
-            readGLfloat(&curr->bm, 1, &saveptr);
+            token = strtok_r(NULL, DELIM, &saveptr);
+            sscanf(token, "%f", &curr->bm);
             token = strtok_r(NULL, DELIM, &saveptr);
 	 }
 	 if (token[0] == '-')
