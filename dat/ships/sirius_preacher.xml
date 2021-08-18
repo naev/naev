@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Preacher">
  <base_type>Preacher</base_type>
- <GFX sx="10" sy="10">preacher</GFX>
+ <GFX size="70" sx="10" sy="10">preacher</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Empire Pacifier">
  <base_type>Pacifier</base_type>
- <GFX sx="10" sy="10">pacifier_empire</GFX>
+ <GFX size="77" sx="10" sy="10">pacifier_empire</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

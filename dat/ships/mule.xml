@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Mule">
  <base_type>Mule</base_type>
- <GFX sx="10" sy="10">mule</GFX>
+ <GFX size="96" sx="10" sy="10">mule</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Freighter</class>

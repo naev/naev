@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Taciturnity">
  <base_type>Taciturnity</base_type>
- <GFX sx="10" sy="10">taciturnity</GFX>
+ <GFX size="80" sx="10" sy="10">taciturnity</GFX>
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Reaver">
  <base_type>Reaver</base_type>
- <GFX>reaver</GFX>
+ <GFX size="68">reaver</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

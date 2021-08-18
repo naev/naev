@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Vigilance">
  <base_type>Vigilance</base_type>
- <GFX sx="10" sy="10">vigilance_dvaered</GFX>
+ <GFX size="95" sx="10" sy="10">vigilance_dvaered</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

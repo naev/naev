@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Vendetta">
  <base_type>Vendetta</base_type>
- <GFX>vendetta</GFX>
+ <GFX size="49">vendetta</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

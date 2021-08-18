@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Goddard">
  <base_type>Goddard</base_type>
- <GFX sx="12" sy="12">goddard_dvaered</GFX>
+ <GFX size="125" sx="12" sy="12">goddard_dvaered</GFX>
  <GUI>brushed</GUI>
  <rarity>2</rarity>
  <sound>engine</sound>

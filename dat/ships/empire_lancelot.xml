@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Empire Lancelot">
  <base_type>Lancelot</base_type>
- <GFX>lancelot_empire</GFX>
+ <GFX size="56">lancelot_empire</GFX>
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

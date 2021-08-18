@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Quicksilver">
  <base_type>Quicksilver</base_type>
- <GFX sx="10" sy="10">quicksilver</GFX>
+ <GFX size="70" sx="10" sy="10">quicksilver</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Courier</class>
