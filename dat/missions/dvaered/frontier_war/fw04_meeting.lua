@@ -648,8 +648,8 @@ function checkHamelsen()
    --hamelsen:rename( _("Suspect Hyena") )
 
    hamelsen:taskClear()
-   hamelsen:runaway( player.pilot(), true ) -- First run away (for hellburner) then land
-   hook.timer( 5.0, "hamelsenTowards" )
+   hamelsen:memory().careful = true
+   hamelsen:runaway( player.pilot(), haltpla ) -- Hamelsen heads towards Laars
    hamelsen:setNoDeath()
    hamelsen:setNoDisable()
 
@@ -660,12 +660,6 @@ function checkHamelsen()
    stage = 2
    misn.osdDestroy()
    misn.osdCreate( osd_title, {osd_text4:format(hamelsen:name()) } )
-end
-
--- Hamelsen heads towards Laars
-function hamelsenTowards()
-   hamelsen:taskClear()
-   hamelsen:land( haltpla )
 end
 
 -- Discuss with an officer on Laarss

@@ -4125,12 +4125,16 @@ static int pilotL_attack( lua_State *L )
  * @brief Makes the pilot runaway from another pilot.
  *
  * By default the pilot tries to jump when running away.
+ * Third argument is destination: if false or nil, destination is automatically chosen.
+ * If true, the pilot does not jump nor land and stays in system.
+ * If Jump is given, the pilot tries to use this jump to go hyperspace.
+ * If Planet is given, the pilot tries to land on it.
  *
  * @usage p:runaway( p_enemy ) -- Run away from p_enemy
  * @usage p:runaway( p_enemy, true ) -- Run away from p_enemy but do not jump
  *    @luatparam Pilot p Pilot to tell to runaway from another pilot.
  *    @luatparam Pilot tp Target pilot to runaway from.
- *    @luatparam[opt=false] boolean nojump Whether or not the pilot should try to leave the system (jump or land) when running away.
+ *    @luatparam[opt=false] boolean|Jump|Planet destination.
  * @luasee control
  * @luafunc runaway
  */
@@ -4138,18 +4142,67 @@ static int pilotL_runaway( lua_State *L )
 {
    Pilot *p, *pt;
    Task *t;
-   int nojump;
+   int jumpMode;
+   LuaJump *lj;
+   LuaPlanet *lp;
 
    NLUA_CHECKRW(L);
 
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
    pt     = luaL_validpilot(L,2);
-   nojump = lua_toboolean(L,3);
+
+   if (lua_gettop(L) > 2) {
+      if (lua_isboolean(L,3))
+         jumpMode = lua_toboolean(L,3);
+
+      else if (lua_isjump(L,3)) {
+         lj = lua_tojump(L,3);
+         jumpMode = 2;
+      }
+
+      else if (lua_isplanet(L,3)) {
+         lp = lua_toplanet(L,3);
+         jumpMode = 3;
+      }
+
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
 
    /* Set the task. */
-   t        = pilotL_newtask( L, p, (nojump) ? "runaway_nojump" : "runaway" );
-   lua_pushpilot(L, pt->id);
+
+   switch (jumpMode) {
+      case 0:
+         t = pilotL_newtask( L, p, "runaway" );
+         lua_pushpilot(L, pt->id);
+         break;
+      case 1:
+         t = pilotL_newtask( L, p, "runaway_nojump" );
+         lua_pushpilot(L, pt->id);
+         break;
+      case 2:
+         t = pilotL_newtask( L, p, "runaway_jump" );
+         lua_newtable(L);
+         lua_pushnumber( L, 1 );
+         lua_pushpilot(L, pt->id);
+         lua_settable( L, -3 );
+         lua_pushnumber( L, 2 );
+         lua_pushjump(L, *lj);
+         lua_settable( L, -3 );
+         break;
+      case 3:
+         t = pilotL_newtask( L, p, "runaway_land" );
+         lua_newtable(L);
+         lua_pushnumber( L, 1 );
+         lua_pushpilot(L, pt->id);
+         lua_settable( L, -3 );
+         lua_pushnumber( L, 2 );
+         lua_pushplanet(L, *lp);
+         lua_settable( L, -3 );
+         break;
+   }
+
    t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;

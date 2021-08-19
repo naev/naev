@@ -117,7 +117,7 @@ int nlua_loadSystem( nlua_env env )
  *
  * Typical example would be something like:
  * @code
- * cur = system.get() -- Gets current system
+ * cur = system.cur() -- Gets current system
  * sys = system.get( "Gamma Polaris" )
  * @endcode
  *

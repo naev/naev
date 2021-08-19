@@ -457,6 +457,17 @@ function runaway_nojump( target )
    if __run_target( target ) then return end
    __shoot_turret( target )
 end
+function runaway_jump( data )
+   local t = data[2]
+   mem.target_bias = vec2.newP( rnd.rnd()*t:radius()/2, rnd.rnd()*360 )
+   ai.pushsubtask( "_run_hyp", data )
+end
+function runaway_land( data )
+   local p = data[2]
+   mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
+   ai.pushsubtask( "_run_landgo", data )
+end
+
 function _run_target( target )
    __run_target( target )
 end
