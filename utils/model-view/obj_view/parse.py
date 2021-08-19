@@ -16,6 +16,15 @@ def gammaToLinear(x):
 def load_material(l):
     return tuple( gammaToLinear(float(i)) for i in l)
 
+def load_vector(v):
+    return tuple(float(i) for i in v)
+
+def load_normal(l):
+    n = load_vector(l)
+    return n
+    norm = math.sqrt( n[0]**2 + n[1]**2 + n[2]**2 )
+    return tuple(map( lambda x: x/norm, n ))
+
 def base_path():
     return pathlib.Path(__file__).parents[3]
 
@@ -142,13 +151,13 @@ def parse_obj(path):
             cur_object.mtl_list[-1][2] += 3
         # Vertex
         elif l[0] == 'v':
-            v_list.append(tuple(float(i) for i in l[1:4]))
+            v_list.append(load_vector(l[1:4]))
         # Texture vertex
         elif l[0] == 'vt':
-            vt_list.append(tuple(float(i) for i in l[1:3]))
+            vt_list.append(load_vector(l[1:3]))
         # Vertex normal
         elif l[0] == 'vn':
-            vn_list.append(tuple(float(i) for i in l[1:4]))
+            vn_list.append(load_normal(l[1:4]))
         # Object
         elif l[0] == 'o':
             cur_object = Object()
