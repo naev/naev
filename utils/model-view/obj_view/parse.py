@@ -1,12 +1,16 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import os
 import math
+import os
+import pathlib
 
 from .material import Material
 from .object import Object
 from .texture import loadTexture
 
+
+def base_path():
+    return pathlib.Path(__file__).parents[3]
 
 def mtl_getopt(args, arg_spec):
     results = {}

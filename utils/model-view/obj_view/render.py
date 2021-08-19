@@ -8,10 +8,10 @@ from OpenGL.arrays.vbo import VBO
 import glm
 import math
 
-base_path = "./"
+from .parse import base_path
 
-vert = '#version 150\n\n' + open(base_path+'dat/glsl/material.vert').read()
-frag = '#version 150\n\n' + open(base_path+'dat/glsl/material.frag').read()
+vert = '#version 150\n\n' + open(base_path() / 'dat/glsl/material.vert').read()
+frag = '#version 150\n\n' + open(base_path() / 'dat/glsl/material.frag').read()
 
 class RenderObject:
     def __init__(self, program, obj):
