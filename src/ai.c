@@ -2373,14 +2373,33 @@ static int aiL_getlandplanet( lua_State *L )
 /**
  * @brief Lands on a planet.
  *
+ *    @luaparam [opt] Planet pnt planet to land on
  *    @luatreturn boolean Whether landing was successful.
  *    @luafunc land
  */
 static int aiL_land( lua_State *L )
 {
-   int ret;
+   int ret, i;
    Planet *planet;
    HookParam hparam;
+   Planet *pnt;
+
+   if (!lua_isnoneornil(L,1)) {
+      pnt = luaL_validplanet( L, 1 );
+
+      /* Find the planet. */
+      for (i=0; i < array_size(cur_system->planets); i++) {
+         if (cur_system->planets[i] == pnt) {
+            break;
+         }
+      }
+      if (i >= array_size(cur_system->planets)) {
+         NLUA_ERROR( L, _("Planet '%s' not found in system '%s'"), pnt->name, cur_system->name );
+         return 0;
+      }
+
+      cur_pilot->nav_planet = i;
+   }
 
    ret = 0;
 
@@ -2428,12 +2447,20 @@ static int aiL_land( lua_State *L )
 /**
  * @brief Tries to enter hyperspace.
  *
+ *    @luaparam [opt] System sys Optional System to jump to
  *    @luatreturn number|nil Distance if too far away.
  *    @luafunc hyperspace
  */
 static int aiL_hyperspace( lua_State *L )
 {
    int dist;
+   JumpPoint *jp;
+
+   /* Find the target jump. */
+   if (!lua_isnoneornil(L,1)) {
+      jp = luaL_validjump( L, 1 );
+      cur_pilot->nav_hyperspace = jp - cur_system->jumps;
+   }
 
    dist = space_hyperspace(cur_pilot);
    if (dist == 0.) {

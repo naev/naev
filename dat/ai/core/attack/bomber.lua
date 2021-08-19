@@ -10,7 +10,7 @@ end
 --ships bigger than they are
 --]]
 function atk_bomber( target )
-   target = _atk_com_think( target )
+   target = __atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff
@@ -18,7 +18,7 @@ function atk_bomber( target )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable( target ) then return end
+   if not __atk_check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -26,10 +26,10 @@ function atk_bomber( target )
 
    -- TODO bombers need their own specific routines
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
-      _atk_g_ranged( target, dist )
+      __atk_g_ranged( target, dist )
 
    else
-      _atk_f_flyby( target, dist )
+      __atk_f_flyby( target, dist )
    end
 end
 
