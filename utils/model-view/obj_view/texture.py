@@ -9,7 +9,7 @@ def loadTexture(path):
     texid = glGenTextures(1)
 
     glBindTexture(GL_TEXTURE_2D, texid)
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, image.width, image.height,
                  0, GL_RGB, GL_UNSIGNED_BYTE, image.tobytes())
 
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
@@ -24,7 +24,7 @@ def solidTexture(r, g, b):
     texid = glGenTextures(1)
 
     glBindTexture(GL_TEXTURE_2D, texid)
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB, 1, 1,
                  0, GL_RGB, GL_FLOAT, [r, g, b])
 
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)

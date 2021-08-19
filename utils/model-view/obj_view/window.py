@@ -27,6 +27,8 @@ class Window:
         self.window = glutCreateWindow("Obj Viewer")
         self.rot = rot
 
+        glEnable( GL_FRAMEBUFFER_SRGB )
+
     def main_loop(self, objs):
         self.program = ObjProgram()
         self.program.use()

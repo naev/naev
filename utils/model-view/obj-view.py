@@ -42,6 +42,8 @@ ship = parse_obj(args.obj)
 if args.save is not None:
     fb = Framebuffer(args.res, args.res)
 
+    glEnable( GL_FRAMEBUFFER_SRGB )
+
     glViewport(0, 0, args.res, args.res)
 
     program = ObjProgram()
