@@ -8,7 +8,6 @@ mem.aggressive = true
 
 
 function create ()
-
    -- Not too many credits.
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
 
@@ -16,24 +15,6 @@ function create ()
    local r = rnd.rnd(0,20)
    if r == 0 then
       ai.pilot():broadcast(_("The Proteron are watching you."))
-   end
-
-   -- Get refuel chance
-   local p = player.pilot()
-   if p:exists() then
-      local standing = ai.getstanding( p ) or -1
-      mem.refuel = rnd.rnd( 2000, 4000 )
-      if standing < 0 then
-         mem.refuel_no = _("\"My fuel isn't for sale.\"")
-      elseif standing < 50 then
-         if rnd.rnd() > 0.8 then
-            mem.refuel_no = _("\"Sorry, my fuel isn't for sale.\"")
-         end
-      else
-         mem.refuel = mem.refuel * 0.6
-      end
-      -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _("\"I can transfer some fuel for %s.\""), creditstring(mem.refuel) )
    end
 
    -- See if can be bribed
@@ -58,6 +39,26 @@ function create ()
 
    -- Finish up creation
    create_post()
+end
+
+function hail ()
+   -- Get refuel chance
+   local pp = player.pilot()
+   if pp:exists() and mem.refuel == nil then
+      local standing = ai.getstanding( pp ) or -1
+      mem.refuel = rnd.rnd( 2000, 4000 )
+      if standing < 0 then
+         mem.refuel_no = _("\"My fuel isn't for sale.\"")
+      elseif standing < 50 then
+         if rnd.rnd() > 0.8 then
+            mem.refuel_no = _("\"Sorry, my fuel isn't for sale.\"")
+         end
+      else
+         mem.refuel = mem.refuel * 0.6
+      end
+      -- Most likely no chance to refuel
+      mem.refuel_msg = string.format( _("\"I can transfer some fuel for %s.\""), creditstring(mem.refuel) )
+   end
 end
 
 -- taunts

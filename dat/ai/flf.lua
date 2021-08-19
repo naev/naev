@@ -30,13 +30,25 @@ function create ()
    -- Give monies.
    ai.setcredits( rnd.rnd(ps:price()/600, ps:price()/100) )
 
+   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+
+   -- Set how far they attack
+   mem.ambushclose = 4000 + 1000 * ps:size()
+   mem.stealth = p:flags("stealth")
+
+   -- Finish up creation
+   create_post()
+end
+
+
+function hail ()
    -- Get standing.
    local pp = player.pilot()
-   if pp:exists() then
+   if pp:exists() and mem.bribe == nil then
       local standing = ai.getstanding( pp ) or -1
 
       -- Handle bribes.
-      mem.bribe = math.sqrt( p:stats().mass ) * (300. * rnd.rnd() + 850.)
+      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.rnd() + 850.)
       if standing > -30 or
             (standing > -60 and rnd.rnd() > 0.8) or
             (rnd.rnd() > 0.4) then
@@ -56,20 +68,10 @@ function create ()
          mem.refuel_no = _([["I can't spare fuel for you."]])
       end
    end
-
-   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
-
-   -- Set how far they attack
-   mem.ambushclose = 4000 + 1000 * ps:size()
-   mem.stealth = p:flags("stealth")
-
-   -- Finish up creation
-   create_post()
 end
 
 
 function taunt ( target, offense )
-
    -- Only 50% of actually taunting.
    if rnd.rnd(0,1) == 0 then
       return

@@ -91,6 +91,7 @@ void ai_cleartasks( Pilot* p );
  */
 void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg );
 void ai_discovered( Pilot* discovered );
+void ai_hail( Pilot* recipient );
 void ai_refuel( Pilot* refueler, unsigned int target );
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker );
 void ai_think( Pilot* pilot, const double dt );

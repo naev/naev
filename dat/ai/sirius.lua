@@ -25,9 +25,19 @@ function create ()
    -- Not too many credits.
    ai.setcredits( rnd.rnd(ps:price()/200, ps:price()/50) )
 
+   mem.loiter = 2 -- This is the amount of waypoints the pilot will pass through before leaving the system
+
+   -- Set how far they attack
+   mem.enemyclose = 2000 + 2000 * ps:size()
+
+   -- Finish up creation
+   create_post()
+end
+
+function hail ()
    -- Get refuel chance
    local pp = player.pilot()
-   if pp:exists() then
+   if pp:exists() and mem.refuel == nil then
       local standing = ai.getstanding( pp ) or -1
       mem.refuel = rnd.rnd( 1000, 2000 )
       if standing < 0 then
@@ -45,14 +55,6 @@ function create ()
       -- Can't be bribed
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
    end
-
-   mem.loiter = 2 -- This is the amount of waypoints the pilot will pass through before leaving the system
-
-   -- Set how far they attack
-   mem.enemyclose = 2000 + 2000 * ps:size()
-
-   -- Finish up creation
-   create_post()
 end
 
 -- taunts

@@ -139,18 +139,6 @@ function create ()
       mem.bribe_paid = bribe_paid_list[ rnd.rnd(1,#bribe_paid_list) ]
    end
 
-   -- Deal with refueling
-   local pp = player.pilot()
-   if pp:exists() then
-      local standing = ai.getstanding( pp ) or -1
-      mem.refuel = rnd.rnd( 2000, 4000 )
-      if standing > 60 then
-         mem.refuel = mem.refuel * 0.5
-      end
-      mem.refuel_msg = string.format(_("\"For you, only %s for a jump of fuel.\""),
-            creditstring(mem.refuel))
-   end
-
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Set how far they attack
@@ -159,6 +147,21 @@ function create ()
 
    -- Finish up creation
    create_post()
+end
+
+
+function hail ()
+   -- Deal with refueling
+   local pp = player.pilot()
+   if pp:exists() and mem.refuel == nil then
+      local standing = ai.getstanding( pp ) or -1
+      mem.refuel = rnd.rnd( 2000, 4000 )
+      if standing > 60 then
+         mem.refuel = mem.refuel * 0.5
+      end
+      mem.refuel_msg = string.format(_("\"For you, only %s for a jump of fuel.\""),
+            creditstring(mem.refuel))
+   end
 end
 
 

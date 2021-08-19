@@ -919,6 +919,41 @@ void ai_discovered( Pilot* discovered )
 
 
 /**
+ * @brief Triggers the hail() function in the pilot's AI.
+ *
+ *    @param recipient Pilot that is being hailed.
+ */
+void ai_hail( Pilot* recipient )
+{
+   HookParam hparam[2];
+
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp       = recipient->id;
+   hparam[1].type       = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "hail", hparam );
+   pilot_runHook( recipient, PILOT_HOOK_HAIL );
+
+   /* Must have an AI profile and not be player. */
+   if (recipient->ai == NULL)
+      return;
+
+   ai_setPilot( recipient ); /* Sets cur_pilot. */
+
+   /* Only run if hail function exists. */
+   nlua_getenv(cur_pilot->ai->env, "hail");
+   if (lua_isnil(naevL,-1)) {
+      lua_pop(naevL,1);
+      return;
+   }
+
+   if (nlua_pcall(cur_pilot->ai->env, 0, 0)) {
+      WARN( _("Pilot '%s' ai '%s' -> 'hail': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL, -1));
+      lua_pop(naevL, 1);
+   }
+}
+
+
+/**
  * @brief Has a pilot attempt to refuel the other.
  *
  *    @param refueler Pilot doing the refueling.

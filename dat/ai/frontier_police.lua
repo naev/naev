@@ -22,15 +22,22 @@ local taunt_list = {
 
 -- Create function
 function create ()
-
    -- Credits.
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
 
+   -- Handle misc stuff
+   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+
+   create_post()
+end
+
+-- When hailed
+function hail ()
    -- Handle refueling
-   mem.refuel = rnd.rnd( 1000, 3000 )
-   local p = player.pilot()
-   if p:exists() then
-      local standing = ai.getstanding( p ) or -1
+   local pp = player.pilot()
+   if pp:exists() and mem.refuel == nil then
+      mem.refuel = rnd.rnd( 1000, 3000 )
+      local standing = ai.getstanding( pp ) or -1
       if standing > 50 or
             (standing > 0 and rnd.rnd() > 0.8) or
             (rnd.rnd() > 0.3) then
@@ -51,11 +58,6 @@ function create ()
          mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
       end
    end
-
-   -- Handle misc stuff
-   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
-
-   create_post()
 end
 
 -- taunts

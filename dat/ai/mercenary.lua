@@ -22,7 +22,6 @@ local taunt_list_defensive = {
 }
 
 function create ()
-
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/150, ai.pilot():ship():price()/50) )
 
    mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750 * rnd.rnd() + 2500)
@@ -33,18 +32,21 @@ function create ()
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
    end
 
-   -- Refuel
-   mem.refuel = rnd.rnd( 3000, 5000 )
-   local pp = player.pilot()
-   if pp:exists() then
-      mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-            creditstring(mem.refuel))
-   end
-
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Finish up creation
    create_post()
+end
+
+-- When hailed
+function hail ()
+   -- Refuel
+   local pp = player.pilot()
+   if pp:exists() and mem.refuel == nil then
+      mem.refuel = rnd.rnd( 3000, 5000 )
+      mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
+            creditstring(mem.refuel))
+   end
 end
 
 -- taunts
