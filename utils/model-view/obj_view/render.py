@@ -52,7 +52,7 @@ class ObjProgram:
     def use(self):
         glUseProgram(self.program)
 
-    def draw(self, obj, width, height, rot):
+    def draw(self, obj, width, height, rot, rot_z):
         glBindVertexArray(obj.vao)
 
         scale = 5  # matching "camobj" setup in naev-artwork/3D/render.sh
@@ -67,6 +67,7 @@ class ObjProgram:
         projection = glm.ortho(-scale_w, scale_w, -scale_h, scale_h, -9*math.sqrt(2), 9*math.sqrt(2))
         projection = glm.rotate(projection, math.pi / 4, glm.vec3(1, 0, 0))
         projection = glm.rotate(projection, rot + math.pi / 2, glm.vec3(0, 1, 0))
+        projection = glm.rotate(projection, rot_z, glm.vec3(0, 0, 1))
         glUniformMatrix4fv(self.uniforms["projection"], 1, GL_FALSE, projection.to_list())
 
         glEnable(GL_DEPTH_TEST)
