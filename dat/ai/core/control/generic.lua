@@ -217,7 +217,7 @@ end
 function control_attack( si )
    local target = ai.taskdata()
    -- Needs to have a target
-   if not target:exists() then
+   if not target or not target:exists() then
       ai.poptask()
       return
    end
