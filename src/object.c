@@ -440,8 +440,12 @@ static void object_renderMesh( const Object *object, int part, GLfloat alpha )
    Material *material = object->materials + mesh->material;
    material->Kd[3] = alpha;
 
-   glUniform3fv(shaders.material.Ka, 1, material->Ka);
-   glUniform3fv(shaders.material.Kd, 1, material->Kd);
+   glUniform1f(shaders.material.Ns, material->Ns);
+   glUniform3f(shaders.material.Ka, material->Ka[0], material->Ka[1], material->Ka[2] );
+   glUniform3f(shaders.material.Kd, material->Kd[0], material->Kd[1], material->Kd[2] );
+   glUniform3f(shaders.material.Ks, material->Ks[0], material->Ks[1], material->Ks[2] );
+   glUniform3f(shaders.material.Ke, material->Ke[0], material->Ke[1], material->Ke[2] );
+   glUniform1f(shaders.material.Ni, material->Ni);
    glUniform1f(shaders.material.d,  material->d * alpha);
    glUniform1f(shaders.material.bm, material->bm);
 

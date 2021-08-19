@@ -58,6 +58,9 @@ def parse_mtl(path):
         # Specular
         elif l[0] == 'Ks':
             cur_material.Ks = load_material( l[1:4] )
+        # Emission
+        elif l[0] == 'Ke':
+            cur_material.Ke = load_material( l[1:4] )
         elif l[0] == 'Ns':
             cur_material.Ns = float(l[1])
         elif l[0] == 'Ni':

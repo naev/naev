@@ -3,13 +3,14 @@
 from .texture import solidTexture
 
 class Material:
+    Ns = None
     Ka = None
     Kd = None
     Ks = None
-    Ns = None
+    Ke = None
     Ni = None
     bm = 0.0
-    d = 1.0
+    d  = None
 
     def __init__(self):
        self.map_Kd = solidTexture(1, 1, 1)

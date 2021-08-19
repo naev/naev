@@ -28,15 +28,20 @@ const vec3 lightDir = normalize( vec3(0.0, 0.0, -1.0) );
 
 void main(void) {
    vec3 norm = normal;
+
    if (bm > 0.01)
       norm += bm * texture(map_Bump, tex_coord).xyz * 2.0 - 1.0;
    norm = normalize((projection * vec4(norm, 0.0)).xyz);
 
-   vec3 ambient= Ka;
+   float light = max(dot(norm, lightDir), 0.0);
 
-   vec3 diffuse= Kd * max(dot(norm, lightDir), 0.0);
+   vec3 La = vec3(1.0) * max(dot(norm, lightDir), 0.0) * 0.5;
+   vec3 Ld = vec3(1.0) * 1.5;
+   vec3 Ls = vec3(0.0);
 
-   color_out   = texture(map_Kd, tex_coord);
-   color_out.rgb *= 0.4 * ambient + 0.7 * diffuse;
-   color_out.a = d;
+   vec4 tex_Kd = texture(map_Kd, tex_coord);
+
+   color_out = vec4(
+         tex_Kd.rgb * ( Ke + Ka * La + Kd * Ld + Ks * pow( Ls, vec3(Ns) ) ),
+         d );
 }

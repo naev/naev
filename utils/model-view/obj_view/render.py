@@ -72,12 +72,16 @@ class ObjProgram:
         glEnable(GL_DEPTH_TEST)
         glDepthFunc(GL_LESS)
 
-        glUniform1i(self.uniforms["map_Kd"], 0)
-        glUniform1i(self.uniforms["map_Bump"], 1)
+        glUniform1i( self.uniforms["map_Kd"], 0 )
+        glUniform1i( self.uniforms["map_Bump"], 1 )
         
         for (mtl, start, count) in obj.mtl_list:
+            glUniform1f(self.uniforms["Ns"], mtl.Ns)
             glUniform3f(self.uniforms["Kd"], *mtl.Kd)
             glUniform3f(self.uniforms["Ka"], *mtl.Ka)
+            glUniform3f(self.uniforms["Ks"], *mtl.Ks)
+            glUniform3f(self.uniforms["Ke"], *mtl.Ke)
+            #glUniform1f(self.uniforms["Ni"], mtl.Ni)
             glUniform1f(self.uniforms["d"], mtl.d)
             glUniform1f(self.uniforms["bm"], mtl.bm)
 
