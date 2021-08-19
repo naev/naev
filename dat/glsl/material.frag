@@ -19,7 +19,7 @@ uniform vec3 Ke;  /* Emissive colour. */
 uniform float Ni; /* Optical density. */
 uniform float d;  /* Dissolve (opacity). */
 
-uniform float bm;
+uniform float bm; /* Bump mapping parameter. */
 
 in vec2 tex_coord;
 in vec3 normal;
@@ -29,22 +29,25 @@ out vec4 color_out;
 const vec3 lightDir = normalize( vec3(0.0, 0.0, -1.0) );
 
 void main(void) {
+   /* Compute normal taking into account the bump map. */
    vec3 norm = normal;
-
    if (bm > 0.01)
       norm += bm * texture(map_Bump, tex_coord).xyz * 2.0 - 1.0;
-   norm = normalize((projection * vec4(norm, 0.0)).xyz);
+   /* http://www.lighthouse3d.com/tutorials/glsl-tutorial/the-normal-matrix/ */
+   mat3 projection_normal = transpose(inverse(mat3(projection)));
+   norm = normalize(projection_normal * norm);
 
-   float light = max(dot(norm, lightDir), 0.0);
-
-   vec3 La = vec3(1.0) * max(dot(norm, lightDir), 0.0) * 0.5;
-   vec3 Ld = vec3(1.0) * 1.5;
+   /* Compute lighting. */
+   vec3 La = vec3(1.0) * max(dot(norm, lightDir), 0.0) * 1.0;
+   vec3 Ld = vec3(1.0) * 1.0;
    vec3 Ls = vec3(0.0);
 
+   /* Set up textures. */
    vec4 tex_Kd = texture(map_Kd, tex_coord);
    vec4 tex_Ks = texture(map_Ks, tex_coord);
    vec4 tex_Ke = texture(map_Ke, tex_coord);
 
+   /* We do the model here. */
    color_out = vec4(
          tex_Kd.rgb * ( Ke * tex_Ke.rgb + Ka * La + Kd * Ld + Ks * tex_Ks.rgb * pow( Ls, vec3(Ns) ) ),
          d );
