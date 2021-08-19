@@ -52,7 +52,7 @@ class ObjProgram:
     def use(self):
         glUseProgram(self.program)
 
-    def draw(self, obj, width, height, rot):
+    def draw(self, obj, width, height, rot, rot_z):
         glBindVertexArray(obj.vao)
 
         scale = 5  # matching "camobj" setup in naev-artwork/3D/render.sh
@@ -65,16 +65,25 @@ class ObjProgram:
             scale_w = scale_h * (width / height)
 
         projection = glm.ortho(-scale_w, scale_w, -scale_h, scale_h, -9*math.sqrt(2), 9*math.sqrt(2))
-        projection = glm.rotate(projection, math.pi / 4, glm.vec3(1, 0, 0))
-        projection = glm.rotate(projection, rot + math.pi / 2, glm.vec3(0, 1, 0))
+
+        model = glm.mat4()
+        model = glm.rotate(model, rot + math.pi / 2, glm.vec3(0, 1, 0))
+        model = glm.rotate(model, rot_z, glm.vec3(0, 0, 1))
+
         glUniformMatrix4fv(self.uniforms["projection"], 1, GL_FALSE, projection.to_list())
+        glUniformMatrix4fv(self.uniforms["model"], 1, GL_FALSE, model.to_list())
+
+        glEnable(  GL_BLEND )
+        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA )
 
         glEnable(GL_DEPTH_TEST)
         glDepthFunc(GL_LESS)
 
         glUniform1i( self.uniforms["map_Kd"], 0 )
-        glUniform1i( self.uniforms["map_Bump"], 1 )
-        
+        glUniform1i( self.uniforms["map_Ks"], 1 )
+        glUniform1i( self.uniforms["map_Ke"], 2 )
+        glUniform1i( self.uniforms["map_Bump"], 3 )
+
         for (mtl, start, count) in obj.mtl_list:
             glUniform1f(self.uniforms["Ns"], mtl.Ns)
             glUniform3f(self.uniforms["Kd"], *mtl.Kd)
@@ -89,6 +98,12 @@ class ObjProgram:
             glBindTexture(GL_TEXTURE_2D, mtl.map_Kd)
 
             glActiveTexture(GL_TEXTURE1)
+            glBindTexture(GL_TEXTURE_2D, mtl.map_Ks)
+
+            glActiveTexture(GL_TEXTURE2)
+            glBindTexture(GL_TEXTURE_2D, mtl.map_Ke)
+
+            glActiveTexture(GL_TEXTURE3)
             glBindTexture(GL_TEXTURE_2D, mtl.map_Bump)
 
             glDrawArrays(GL_TRIANGLES, start, count)

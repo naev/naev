@@ -13,8 +13,18 @@ def gammaToLinear(x):
         return x / 12.92
     return pow((x + 0.055) / 1.055, 2.4)
 
+def load_vector(v):
+    return tuple(float(i) for i in v)
+
 def load_material(l):
-    return tuple( gammaToLinear(float(i)) for i in l)
+    return load_vector(l)
+    #return tuple( gammaToLinear(float(i)) for i in l)
+
+def load_normal(l):
+    n = load_vector(l)
+    return n
+    norm = math.sqrt( n[0]**2 + n[1]**2 + n[2]**2 )
+    return tuple(map( lambda x: x/norm, n ))
 
 def base_path():
     return pathlib.Path(__file__).parents[3]
@@ -76,6 +86,16 @@ def parse_mtl(path):
             opts, rest = mtl_getopt(l[1:], {'s': 3})
             map_Kd = ' '.join(rest)
             cur_material.map_Kd = loadTexture(os.path.dirname(path) + '/' + map_Kd)
+        elif l[0] == 'map_Ks':
+            # XXX handle s
+            opts, rest = mtl_getopt(l[1:], {'s': 3})
+            map_Ks = ' '.join(rest)
+            cur_material.map_Ks = loadTexture(os.path.dirname(path) + '/' + map_Ks)
+        elif l[0] == 'map_Ke':
+            # XXX handle s
+            opts, rest = mtl_getopt(l[1:], {'s': 3})
+            map_Ke = ' '.join(rest)
+            cur_material.map_Ke = loadTexture(os.path.dirname(path) + '/' + map_Ke)
         elif l[0] == 'map_Bump':
             # XXX handle s
             opts, rest = mtl_getopt(l[1:], {'s': 3, 'bm': 1})
@@ -132,13 +152,13 @@ def parse_obj(path):
             cur_object.mtl_list[-1][2] += 3
         # Vertex
         elif l[0] == 'v':
-            v_list.append(tuple(float(i) for i in l[1:4]))
+            v_list.append(load_vector(l[1:4]))
         # Texture vertex
         elif l[0] == 'vt':
-            vt_list.append(tuple(float(i) for i in l[1:3]))
+            vt_list.append(load_vector(l[1:3]))
         # Vertex normal
         elif l[0] == 'vn':
-            vn_list.append(tuple(float(i) for i in l[1:4]))
+            vn_list.append(load_normal(l[1:4]))
         # Object
         elif l[0] == 'o':
             cur_object = Object()
