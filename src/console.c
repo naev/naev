@@ -507,7 +507,7 @@ int cli_init (void)
 
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
-   gl_fontInit( cli_font, FONT_MONOSPACE_PATH, conf.font_size_console, FONT_PATH_PREFIX, 0 );
+   gl_fontInit( cli_font, _(FONT_MONOSPACE_PATH), conf.font_size_console, FONT_PATH_PREFIX, 0 );
 
    /* Allocate the buffer. */
    cli_buffer = array_create(char*);

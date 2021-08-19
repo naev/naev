@@ -150,7 +150,7 @@ static int omsg_getFontID( int size )
 
    /* Create font. */
    font = &array_grow( &omsg_font_array );
-   gl_fontInit( &font->font, FONT_MONOSPACE_PATH, size, FONT_PATH_PREFIX, 0 );
+   gl_fontInit( &font->font, _(FONT_MONOSPACE_PATH), size, FONT_PATH_PREFIX, 0 );
    font->size = size;
    return array_size(omsg_font_array) - 1;
 }
