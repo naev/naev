@@ -405,6 +405,8 @@ void object_free( Object *object )
       Material *material = &object->materials[i];
       free(material->name);
       gl_freeTexture(material->map_Kd);
+      gl_freeTexture(material->map_Ke);
+      gl_freeTexture(material->map_Ks);
       gl_freeTexture(material->map_Bump);
    }
 
