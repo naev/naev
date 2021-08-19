@@ -76,6 +76,16 @@ def parse_mtl(path):
             opts, rest = mtl_getopt(l[1:], {'s': 3})
             map_Kd = ' '.join(rest)
             cur_material.map_Kd = loadTexture(os.path.dirname(path) + '/' + map_Kd)
+        elif l[0] == 'map_Ks':
+            # XXX handle s
+            opts, rest = mtl_getopt(l[1:], {'s': 3})
+            map_Ks = ' '.join(rest)
+            cur_material.map_Ks = loadTexture(os.path.dirname(path) + '/' + map_Ks)
+        elif l[0] == 'map_Ke':
+            # XXX handle s
+            opts, rest = mtl_getopt(l[1:], {'s': 3})
+            map_Ke = ' '.join(rest)
+            cur_material.map_Ke = loadTexture(os.path.dirname(path) + '/' + map_Ke)
         elif l[0] == 'map_Bump':
             # XXX handle s
             opts, rest = mtl_getopt(l[1:], {'s': 3, 'bm': 1})

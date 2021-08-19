@@ -42,7 +42,7 @@ typedef struct Material_ {
    char *name;
    GLfloat Ka[3], Kd[3], Ks[3], Ke[3];
    GLfloat Ns, Ni, d, bm;
-   glTexture *map_Kd, *map_Bump;
+   glTexture *map_Kd, *map_Ks, *map_Ke, *map_Bump;
 } Material;
 
 typedef struct Mesh_ {
@@ -174,9 +174,11 @@ static void materials_readFromFile( const char *filename, Material **materials )
          token = strtok_r(NULL, DELIM, &saveptr);
          curr = &array_grow(materials);
          curr->name = strdup(token);
+         curr->Ni = 0.;
+         curr->Ns = 0.;
          curr->d = 1.;
          curr->bm = 0.;
-         curr->map_Kd = curr->map_Bump = NULL;
+         curr->map_Kd = curr->map_Ks = curr->map_Ke = curr->map_Bump = NULL;
          DEBUG(_("Reading new material %s"), curr->name);
       } else if (strcmp(token, "Ns") == 0) {
          readGLfloat(&curr->Ns, 1, &saveptr);
@@ -196,6 +198,10 @@ static void materials_readFromFile( const char *filename, Material **materials )
          glTexture **map;
          if (strcmp(token, "map_Kd") == 0)
             map = &curr->map_Kd;
+         else if (strcmp(token, "map_Ks") == 0)
+            map = &curr->map_Ks;
+         else if (strcmp(token, "map_Ke") == 0)
+            map = &curr->map_Ke;
          else if (strcmp(token, "map_Bump") == 0)
             map = &curr->map_Bump;
          else {
@@ -451,9 +457,16 @@ static void object_renderMesh( const Object *object, int part, GLfloat alpha )
 
    /* binds textures */
    glUniform1i(shaders.material.map_Kd, 0);
-   glUniform1i(shaders.material.map_Bump, 1);
-   glActiveTexture(GL_TEXTURE1);
+   glUniform1i(shaders.material.map_Ks, 1);
+   glUniform1i(shaders.material.map_Ke, 2);
+   glUniform1i(shaders.material.map_Bump, 3);
+   glActiveTexture(GL_TEXTURE3);
    glBindTexture(GL_TEXTURE_2D, material->map_Bump == NULL ? zeroTexture->texture : material->map_Bump->texture);
+   glActiveTexture(GL_TEXTURE2);
+   glBindTexture(GL_TEXTURE_2D, material->map_Ke == NULL ? oneTexture->texture : material->map_Ke->texture);
+   glActiveTexture(GL_TEXTURE1);
+   glBindTexture(GL_TEXTURE_2D, material->map_Ks == NULL ? oneTexture->texture : material->map_Ks->texture);
+   /* Need TEXTURE0 to be last. */
    glActiveTexture(GL_TEXTURE0);
    glBindTexture(GL_TEXTURE_2D, material->map_Kd == NULL ? oneTexture->texture : material->map_Kd->texture);
 

@@ -6,6 +6,8 @@ uniform mat4 projection;
 
 /* Textures. */
 uniform sampler2D map_Kd;  /* Diffuse map. */
+uniform sampler2D map_Ks;  /* Specular map. */
+uniform sampler2D map_Ke;  /* Emission map. */
 uniform sampler2D map_Bump;/* Bump map. */
 
 /* Phong model parameters. */
@@ -40,8 +42,10 @@ void main(void) {
    vec3 Ls = vec3(0.0);
 
    vec4 tex_Kd = texture(map_Kd, tex_coord);
+   vec4 tex_Ks = texture(map_Ks, tex_coord);
+   vec4 tex_Ke = texture(map_Ke, tex_coord);
 
    color_out = vec4(
-         tex_Kd.rgb * ( Ke + Ka * La + Kd * Ld + Ks * pow( Ls, vec3(Ns) ) ),
+         tex_Kd.rgb * ( Ke * tex_Ke.rgb + Ka * La + Kd * Ld + Ks * tex_Ks.rgb * pow( Ls, vec3(Ns) ) ),
          d );
 }

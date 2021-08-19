@@ -73,7 +73,9 @@ class ObjProgram:
         glDepthFunc(GL_LESS)
 
         glUniform1i( self.uniforms["map_Kd"], 0 )
-        glUniform1i( self.uniforms["map_Bump"], 1 )
+        glUniform1i( self.uniforms["map_Ks"], 1 )
+        glUniform1i( self.uniforms["map_Ke"], 2 )
+        glUniform1i( self.uniforms["map_Bump"], 3 )
         
         for (mtl, start, count) in obj.mtl_list:
             glUniform1f(self.uniforms["Ns"], mtl.Ns)
@@ -89,6 +91,12 @@ class ObjProgram:
             glBindTexture(GL_TEXTURE_2D, mtl.map_Kd)
 
             glActiveTexture(GL_TEXTURE1)
+            glBindTexture(GL_TEXTURE_2D, mtl.map_Ks)
+
+            glActiveTexture(GL_TEXTURE2)
+            glBindTexture(GL_TEXTURE_2D, mtl.map_Ke)
+
+            glActiveTexture(GL_TEXTURE3)
             glBindTexture(GL_TEXTURE_2D, mtl.map_Bump)
 
             glDrawArrays(GL_TRIANGLES, start, count)
