@@ -8,7 +8,7 @@ from OpenGL.GL import *
 from obj_view.render import ObjProgram, RenderObject
 
 # Rotations per second
-ROT_RATE = .75
+ROT_RATE = 0.5
 
 class Window:
     prev_time = 0
@@ -45,7 +45,7 @@ class Window:
         dt = cur_time - self.prev_time
         self.prev_time = cur_time
 
-        self.rot += self.rot_dir * dt * (2 * math.pi) * (ROT_RATE / 1000);
+        self.rot += self.rot_dir * dt * (2. * math.pi) * ROT_RATE / 1e3;
 
         glClearColor(1., 1., 1., 1.)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -62,11 +62,13 @@ class Window:
         glViewport(0, 0, w, h)
 
     def keyboard_down_cb(self, key, x, y):
-       if key == b'a':
-          self.rot_dir = 1
-       elif key == b'd':
-          self.rot_dir = -1
+        if key == b'\x1b' or key == b'q':
+            glutDestroyWindow(self.window)
+        elif key == b'a':
+            self.rot_dir = 1
+        elif key == b'd':
+            self.rot_dir = -1
 
     def keyboard_up_cb(self, key, x, y):
-       if key in b'ad':
-          self.rot_dir = 0
+        if key in b'ad':
+            self.rot_dir = 0
