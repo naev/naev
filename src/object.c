@@ -104,11 +104,15 @@ static int readGLfloat( GLfloat *dest, int how_many, char **saveptr )
    return num;
 }
 
-static int readGLcolour( GLfloat col[3], char **saveptr )
+static int readGLmaterial( GLfloat col[3], char **saveptr )
 {
    int ret = readGLfloat( col, 3, saveptr );
+   /*
+    * Not strictly colours, so we ignore gamma, although this might not be the best idea.
+    * TODO Probably should look at what blender expects us to do.
    for (int i=0; i<3; i++)
       col[i] = gammaToLinear( col[i] );
+   */
    return ret;
 }
 
@@ -187,13 +191,13 @@ static void materials_readFromFile( const char *filename, Material **materials )
       } else if (strcmp(token, "d") == 0) {
          readGLfloat(&curr->d, 1, &saveptr);
       } else if (strcmp(token, "Ka") == 0) {
-         readGLcolour( curr->Ka, &saveptr );
+         readGLmaterial( curr->Ka, &saveptr );
       } else if (strcmp(token, "Kd") == 0) {
-         readGLcolour( curr->Kd, &saveptr );
+         readGLmaterial( curr->Kd, &saveptr );
       } else if (strcmp(token, "Ks") == 0) {
-         readGLcolour( curr->Ks, &saveptr );
+         readGLmaterial( curr->Ks, &saveptr );
       } else if (strcmp(token, "Ke") == 0) {
-         readGLcolour( curr->Ke, &saveptr );
+         readGLmaterial( curr->Ke, &saveptr );
       } else if (strncmp(token, "map_", 4) == 0) {
          glTexture **map;
          if (strcmp(token, "map_Kd") == 0)
