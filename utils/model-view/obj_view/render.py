@@ -74,6 +74,9 @@ class ObjProgram:
         glUniformMatrix4fv(self.uniforms["projection_view"], 1, GL_FALSE, projection_view.to_list())
         glUniformMatrix4fv(self.uniforms["projection_model"], 1, GL_FALSE, projection_model.to_list())
 
+        glEnable(  GL_BLEND )
+        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA )
+
         glEnable(GL_DEPTH_TEST)
         glDepthFunc(GL_LESS)
 
@@ -81,7 +84,7 @@ class ObjProgram:
         glUniform1i( self.uniforms["map_Ks"], 1 )
         glUniform1i( self.uniforms["map_Ke"], 2 )
         glUniform1i( self.uniforms["map_Bump"], 3 )
-        
+
         for (mtl, start, count) in obj.mtl_list:
             glUniform1f(self.uniforms["Ns"], mtl.Ns)
             glUniform3f(self.uniforms["Kd"], *mtl.Kd)
