@@ -34,10 +34,9 @@ end
 -- When hailed
 function hail ()
    -- Handle refueling
-   local pp = player.pilot()
-   if pp:exists() and mem.refuel == nil then
+   if mem.refuel == nil then
       mem.refuel = rnd.rnd( 1000, 3000 )
-      local standing = ai.getstanding( pp ) or -1
+      local standing = ai.getstanding( player.pilot() ) or -1
       if standing > 50 or
             (standing > 0 and rnd.rnd() > 0.8) or
             (rnd.rnd() > 0.3) then

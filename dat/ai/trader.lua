@@ -17,10 +17,9 @@ end
 
 function hail ()
    mem.bribe_no = _([["The Space Traders do not negotiate with criminals."]])
-   local pp = player.pilot()
-   if pp:exists() and mem.refuel == nil then
+   if mem.refuel == nil then
       mem.refuel = rnd.rnd( 3000, 5000 )
-      local standing = ai.getstanding( pp ) or -1
+      local standing = ai.getstanding( player.pilot() ) or -1
       if standing > 50 then
          mem.refuel = mem.refuel * 0.75
       elseif standing > 80 then

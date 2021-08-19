@@ -56,9 +56,8 @@ end
 -- When hailed
 function hail ()
    -- Get refuel chance
-   local pp = player.pilot()
-   if pp:exists() and mem.refuel == nil then
-      local standing = ai.getstanding( pp ) or -1
+   if mem.refuel == nil then
+      local standing = ai.getstanding( player.pilot() ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing < 0 then
          mem.refuel_no = _([["My fuel is property of the Empire."]])

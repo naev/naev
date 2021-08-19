@@ -14,8 +14,7 @@ end
 
 function hail ()
    -- Refuel
-   local pp = player.pilot()
-   if pp:exists() and mem.refuel == nil then
+   if mem.refuel == nil then
       mem.refuel = rnd.rnd( 1000, 3000 )
       mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
             creditstring(mem.refuel))

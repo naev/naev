@@ -36,10 +36,9 @@ end
 -- When hailed
 function hail ()
    -- Refueling
-   local pp = player.pilot()
-   if pp:exists() and mem.refuel == nil then
+   if mem.refuel == nil then
       mem.refuel = rnd.rnd( 2000, 4000 )
-      local standing = ai.getstanding( pp ) or -1
+      local standing = ai.getstanding( player.pilot() ) or -1
       if standing > 60 then mem.refuel = mem.refuel * 0.7 end
       mem.refuel_msg = string.format( _([["I could do you the favour of refueling for the price of %s."]]),
             creditstring(mem.refuel) )

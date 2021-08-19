@@ -39,9 +39,8 @@ end
 -- When hailed
 function hail ()
    -- Handle refueling
-   local pp = player.pilot()
-   if pp:exists() and mem.refuel == nil then
-      local standing = ai.getstanding( pp ) or -1
+   if mem.refuel == nil then
+      local standing = ai.getstanding( player.pilot() ) or -1
       if standing < 50 then
          mem.refuel_no = _([["You are not worthy of my attention."]])
       else

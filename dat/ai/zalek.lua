@@ -70,9 +70,8 @@ end
 
 function hail ()
    -- Get refuel chance
-   local pp = player.pilot()
-   if pp:exists() and mem.refuel == nil then
-      local standing = ai.getstanding( pp ) or -1
+   if mem.refuel == nil then
+      local standing = ai.getstanding( player.pilot() ) or -1
       mem.refuel = rnd.rnd( 1000, 2000 )
       if standing < -10 then
          mem.refuel_no = _([["I do not have fuel to spare."]])

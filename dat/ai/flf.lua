@@ -43,9 +43,8 @@ end
 
 function hail ()
    -- Get standing.
-   local pp = player.pilot()
-   if pp:exists() and mem.bribe == nil then
-      local standing = ai.getstanding( pp ) or -1
+   if mem.bribe == nil then
+      local standing = ai.getstanding( player.pilot() ) or -1
 
       -- Handle bribes.
       mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.rnd() + 850.)
