@@ -7,6 +7,13 @@ from .material import Material
 from .object import Object
 from .texture import loadTexture
 
+def gammaToLinear(x):
+    if x <= 0.04045:
+        return x / 12.92
+    return pow((x + 0.055) / 1.055, 2.4)
+
+def load_material(l):
+    return tuple( gammaToLinear(float(i)) for i in l)
 
 def mtl_getopt(args, arg_spec):
     results = {}
@@ -44,13 +51,13 @@ def parse_mtl(path):
             cur_material = m
         # Ambient
         elif l[0] == 'Ka':
-            cur_material.Ka = tuple(float(i) for i in l[1:4])
+            cur_material.Ka = load_material( l[1:4] )
         # Diffuse
         elif l[0] == 'Kd':
-            cur_material.Kd = tuple(float(i) for i in l[1:4])
+            cur_material.Kd = load_material( l[1:4] )
         # Specular
         elif l[0] == 'Ks':
-            cur_material.Ks = tuple(float(i) for i in l[1:4])
+            cur_material.Ks = load_material( l[1:4] )
         elif l[0] == 'Ns':
             cur_material.Ns = float(l[1])
         elif l[0] == 'Ni':
