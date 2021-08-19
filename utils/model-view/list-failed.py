@@ -7,9 +7,9 @@ import os
 import sys
 
 from obj_view.window import Window
-from obj_view.parse import parse_obj
+from obj_view.parse import base_path, parse_obj
 
-ROOT = '../../artwork/gfx/ship/3d'
+ROOT = str(base_path() / 'artwork/gfx/ship/3d')
 
 window = Window(0)
 

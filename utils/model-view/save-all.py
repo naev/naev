@@ -10,15 +10,15 @@ import shutil
 from OpenGL.GL import *
 
 from obj_view.window import Window
-from obj_view.parse import parse_obj
+from obj_view.parse import base_path, parse_obj
 from obj_view.fb import Framebuffer
 from obj_view.render import ObjProgram, RenderObject
 
-shutil.rmtree('png-exports', ignore_errors=True)
-os.mkdir('png-exports')
-
-ROOT = '../../artwork/gfx/ship/3d'
 RES = 2048
+ROOT = base_path() / 'artwork/gfx/ship/3d'
+OUT = base_path() / 'utils/model-view/png-exports'
+shutil.rmtree(OUT, ignore_errors=True)
+os.mkdir(OUT)
 
 window = Window(0)
 fb = Framebuffer(RES, RES)
@@ -41,4 +41,4 @@ for path in glob.glob(f'{ROOT}/*/*/*.obj'):
     for obj in ship.values():
         obj = RenderObject(program, obj)
         program.draw(obj, RES, RES, rot=0.)
-    fb.save(os.path.join('png-exports', os.path.basename(path)+'.png'))
+    fb.save(OUT / (os.path.basename(path)+'.png'))

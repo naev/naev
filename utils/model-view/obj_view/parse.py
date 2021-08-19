@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import os
 import math
+import os
+import pathlib
 
 from .material import Material
 from .object import Object
@@ -14,6 +15,9 @@ def gammaToLinear(x):
 
 def load_material(l):
     return tuple( gammaToLinear(float(i)) for i in l)
+
+def base_path():
+    return pathlib.Path(__file__).parents[3]
 
 def mtl_getopt(args, arg_spec):
     results = {}
