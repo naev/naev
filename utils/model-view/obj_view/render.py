@@ -64,15 +64,14 @@ class ObjProgram:
             scale_h = scale
             scale_w = scale_h * (width / height)
 
-        projection_view = glm.ortho(-scale_w, scale_w, -scale_h, scale_h, -9*math.sqrt(2), 9*math.sqrt(2))
-        projection_view = glm.rotate(projection_view, math.pi / 4, glm.vec3(1, 0, 0))
+        projection = glm.ortho(-scale_w, scale_w, -scale_h, scale_h, -9*math.sqrt(2), 9*math.sqrt(2))
 
-        projection_model = glm.mat4()
-        projection_model = glm.rotate(projection_model, rot + math.pi / 2, glm.vec3(0, 1, 0))
-        projection_model = glm.rotate(projection_model, rot_z, glm.vec3(0, 0, 1))
+        model = glm.mat4()
+        model = glm.rotate(model, rot + math.pi / 2, glm.vec3(0, 1, 0))
+        model = glm.rotate(model, rot_z, glm.vec3(0, 0, 1))
 
-        glUniformMatrix4fv(self.uniforms["projection_view"], 1, GL_FALSE, projection_view.to_list())
-        glUniformMatrix4fv(self.uniforms["projection_model"], 1, GL_FALSE, projection_model.to_list())
+        glUniformMatrix4fv(self.uniforms["projection"], 1, GL_FALSE, projection.to_list())
+        glUniformMatrix4fv(self.uniforms["model"], 1, GL_FALSE, model.to_list())
 
         glEnable(  GL_BLEND )
         glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA )

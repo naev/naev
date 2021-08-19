@@ -208,7 +208,7 @@ SHADERS = [
       vs_path = "material.vert",
       fs_path = "material.frag",
       attributes = ["vertex", "vertex_normal", "vertex_tex"],
-      uniforms = ["projection_view", "projection_model", "map_Kd", "map_Ks", "map_Ke", "map_Bump", "Ns", "Ka", "Kd", "Ks", "Ke", "Ni", "d", "bm"],
+      uniforms = ["projection", "model", "map_Kd", "map_Ks", "map_Ke", "map_Bump", "Ns", "Ka", "Kd", "Ks", "Ke", "Ni", "d", "bm"],
       subroutines = {},
    ),
    Shader(
