@@ -46,6 +46,8 @@ mem.angle          = 180 --  Requested angle between follower and target's veloc
 mem.Kp             = 10 --  First control coefficient
 mem.Kd             = 20 -- Second control coefficient
 
+mem.target_bias      = vec2.new(0,0) -- Initialize land bias, just in case
+
 -- Required control rate that represents the number of seconds between each
 -- control() call
 control_rate   = 2
@@ -157,8 +159,7 @@ function handle_messages( si )
          elseif msgtype == "hyperspace" then
             ai.pushtask("hyperspace", data)
          elseif msgtype == "land" then
-            mem.land = ai.planetfrompos(data):pos()
-            ai.pushtask("land")
+            ai.pushtask("land", data)
          elseif msgtype == "l_attacked" then
             if not si.fighting and should_attack( data, si ) then
                ai.pushtask("attack", data)

@@ -40,7 +40,7 @@ end
 -- Main control function for fighter behavior.
 --]]
 function atk_fighter( target )
-   target = _atk_com_think( target )
+   target = __atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff
@@ -48,7 +48,7 @@ function atk_fighter( target )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable( target ) then return end
+   if not __atk_check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -56,14 +56,14 @@ function atk_fighter( target )
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
-      _atk_g_ranged( target, dist ) -- Use generic ranged function
+      __atk_g_ranged( target, dist ) -- Use generic ranged function
 
    -- Otherwise melee
    else
       if target:stats().mass < 200 then
-         _atk_f_space_sup( target, dist )
+         __atk_f_space_sup( target, dist )
       else
-         _atk_f_flyby( target, dist )
+         __atk_f_flyby( target, dist )
       end
    end
 end
@@ -74,13 +74,13 @@ end
 -- Uses a combination of facing and distance to determine what action to take
 -- This version is slightly less aggressive and cruises by the target
 --]]
-function _atk_f_flyby( target, dist )
+function __atk_f_flyby( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if _atk_decide_zz() then
+   if __atk_decide_zz() then
       ai.pushsubtask("_atk_zigzag", target)
    end
 
@@ -88,7 +88,7 @@ function _atk_f_flyby( target, dist )
    if dist > (3 * range) then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         _atk_keep_distance()
+         __atk_keep_distance()
          ai.accel()
       else
          dir = ai.iface(target)
@@ -128,7 +128,7 @@ function _atk_f_flyby( target, dist )
       ai.shoot(true)
 
       -- Also try to shoot missiles
-      _atk_dogfight_seekers( dist, dir )
+      __atk_dogfight_seekers( dist, dir )
    end
 end
 
@@ -138,13 +138,13 @@ end
 --
 --This is designed for fighters engaging other fighters
 --]]
-function _atk_f_space_sup( target, dist )
+function __atk_f_space_sup( target, dist )
    local range = ai.getweaprange(3)
    local dir   = 0
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if _atk_decide_zz() then
+   if __atk_decide_zz() then
       ai.pushsubtask("_atk_zigzag", target)
    end
 
@@ -152,7 +152,7 @@ function _atk_f_space_sup( target, dist )
    if dist > (range) then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         _atk_keep_distance()
+         __atk_keep_distance()
          ai.accel()
       else
          dir = ai.iface(target)
@@ -184,7 +184,7 @@ function _atk_f_space_sup( target, dist )
       ai.shoot(true)
 
       -- Also try to shoot missiles
-      _atk_dogfight_seekers( dist, dir )
+      __atk_dogfight_seekers( dist, dir )
 
    --within close range; aim and blast away with everything
    else
