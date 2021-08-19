@@ -36,6 +36,7 @@ class Window:
 
         glutDisplayFunc(self.display_cb)
         glutReshapeFunc(self.reshape_cb)
+        glutSpecialFunc(self.keyboard_special)
         glutKeyboardFunc(self.keyboard_down_cb)
         glutKeyboardUpFunc(self.keyboard_up_cb)
         glutMainLoop()
@@ -60,6 +61,12 @@ class Window:
         self.width = w
         self.height = h
         glViewport(0, 0, w, h)
+
+    def keyboard_special(self, key, x, y):
+        if key == GLUT_KEY_LEFT:
+            self.rot_dir = 1
+        elif key == GLUT_KEY_RIGHT:
+            self.rot_dir = -1
 
     def keyboard_down_cb(self, key, x, y):
         if key == b'\x1b' or key == b'q':
