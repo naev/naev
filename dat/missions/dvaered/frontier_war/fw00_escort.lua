@@ -500,7 +500,7 @@ function hamelsen_attacked( )
    if shield < 10 then
       hamelsen:control()
       hamelsen:memory().careful = true
-      hamelsen:runaway(player.pilot(), jump.get( system.cur() ), "Radix") -- I don't want her to try to jump at closest one
+      hamelsen:runaway(player.pilot(), jump.get( system.cur(), "Radix")) -- I don't want her to try to jump at closest one
       hook.rm(attack)
       ambushDied() -- One less
    end
