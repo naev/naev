@@ -362,6 +362,7 @@ function control ()
 
 
    -- Run custom function if applicable
+   task = ai.taskname() -- Reget the task in case something got pushed ontop
    if task then
       local cc = control_funcs[ task ]
       if cc then
