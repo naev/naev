@@ -4142,7 +4142,7 @@ static int pilotL_runaway( lua_State *L )
 {
    Pilot *p, *pt;
    Task *t;
-   int jumpMode;
+   int nojump;
    LuaJump *lj;
    LuaPlanet *lp;
 
@@ -4152,36 +4152,17 @@ static int pilotL_runaway( lua_State *L )
    p      = luaL_validpilot(L,1);
    pt     = luaL_validpilot(L,2);
 
+   /* Set the task depending on the last parameter. */
    if (lua_gettop(L) > 2) {
-      if (lua_isboolean(L,3))
-         jumpMode = lua_toboolean(L,3);
+      if (lua_isboolean(L,3)) {
+         nojump = lua_toboolean(L,3);
+         t = pilotL_newtask( L, p, (nojump) ? "runaway_nojump" : "runaway" );
+         lua_pushpilot(L, pt->id);
+         t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+      }
 
       else if (lua_isjump(L,3)) {
          lj = lua_tojump(L,3);
-         jumpMode = 2;
-      }
-
-      else if (lua_isplanet(L,3)) {
-         lp = lua_toplanet(L,3);
-         jumpMode = 3;
-      }
-
-      else
-         NLUA_INVALID_PARAMETER(L);
-   }
-
-   /* Set the task. */
-
-   switch (jumpMode) {
-      case 0:
-         t = pilotL_newtask( L, p, "runaway" );
-         lua_pushpilot(L, pt->id);
-         break;
-      case 1:
-         t = pilotL_newtask( L, p, "runaway_nojump" );
-         lua_pushpilot(L, pt->id);
-         break;
-      case 2:
          t = pilotL_newtask( L, p, "runaway_jump" );
          lua_newtable(L);
          lua_pushnumber( L, 1 );
@@ -4190,8 +4171,11 @@ static int pilotL_runaway( lua_State *L )
          lua_pushnumber( L, 2 );
          lua_pushjump(L, *lj);
          lua_settable( L, -3 );
-         break;
-      case 3:
+         t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+      }
+
+      else if (lua_isplanet(L,3)) {
+         lp = lua_toplanet(L,3);
          t = pilotL_newtask( L, p, "runaway_land" );
          lua_newtable(L);
          lua_pushnumber( L, 1 );
@@ -4200,10 +4184,17 @@ static int pilotL_runaway( lua_State *L )
          lua_pushnumber( L, 2 );
          lua_pushplanet(L, *lp);
          lua_settable( L, -3 );
-         break;
-   }
+         t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+      }
 
-   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
+   else {
+      t = pilotL_newtask( L, p, "runaway" );
+      lua_pushpilot(L, pt->id);
+      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+   }
 
    return 0;
 }
