@@ -49,10 +49,10 @@ class Window:
         dt = cur_time - self.prev_time
         self.prev_time = cur_time
 
-        self.rot += self.rot_dir * dt * (2. * math.pi) * ROT_RATE / 1e3
-        self.rot_z += self.rot_z_dir * dt * (2. * math.pi) * ROT_RATE / 1e3
+        self.rot    += self.rot_dir * dt * (2. * math.pi) * ROT_RATE / 1e3
+        self.rot_z  += self.rot_z_dir * dt * (2. * math.pi) * ROT_RATE / 1e3
 
-        glClearColor(1., 1., 1., 1.)
+        glClearColor(0.1, 0.1, 0.1, 1.)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         for obj in self.objs:
