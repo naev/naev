@@ -40,7 +40,7 @@
 
 typedef struct Material_ {
    char *name;
-   GLfloat Ka[3], Kd[3], Ks[3];
+   GLfloat Ka[3], Kd[3], Ks[3], Ke[3];
    GLfloat Ns, Ni, d, bm;
    glTexture *map_Kd, *map_Bump;
 } Material;
@@ -102,6 +102,14 @@ static int readGLfloat( GLfloat *dest, int how_many, char **saveptr )
 
    assert(num == how_many);
    return num;
+}
+
+static int readGLcolour( GLfloat col[3], char **saveptr )
+{
+   int ret = readGLfloat( col, 3, saveptr );
+   for (int i=0; i<3; i++)
+      col[i] = gammaToLinear( col[i] );
+   return ret;
 }
 
 
@@ -177,11 +185,13 @@ static void materials_readFromFile( const char *filename, Material **materials )
       } else if (strcmp(token, "d") == 0) {
          readGLfloat(&curr->d, 1, &saveptr);
       } else if (strcmp(token, "Ka") == 0) {
-         readGLfloat(curr->Ka, 3, &saveptr);
+         readGLcolour( curr->Ka, &saveptr );
       } else if (strcmp(token, "Kd") == 0) {
-         readGLfloat(curr->Kd, 3, &saveptr);
+         readGLcolour( curr->Kd, &saveptr );
       } else if (strcmp(token, "Ks") == 0) {
-         readGLfloat(curr->Ks, 3, &saveptr);
+         readGLcolour( curr->Ks, &saveptr );
+      } else if (strcmp(token, "Ke") == 0) {
+         readGLcolour( curr->Ke, &saveptr );
       } else if (strncmp(token, "map_", 4) == 0) {
          glTexture **map;
          if (strcmp(token, "map_Kd") == 0)
