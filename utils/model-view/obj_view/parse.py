@@ -13,11 +13,12 @@ def gammaToLinear(x):
         return x / 12.92
     return pow((x + 0.055) / 1.055, 2.4)
 
-def load_material(l):
-    return tuple( gammaToLinear(float(i)) for i in l)
-
 def load_vector(v):
     return tuple(float(i) for i in v)
+
+def load_material(l):
+    return load_vector(l)
+    #return tuple( gammaToLinear(float(i)) for i in l)
 
 def load_normal(l):
     n = load_vector(l)

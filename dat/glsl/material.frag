@@ -27,7 +27,7 @@ out vec4 color_out;
 
 /* Illumination. */
 //const vec3 lightDir = normalize( vec3(0.0, 0.0, 1.0) );
-const vec3 lightDir = normalize( vec3(0.0, 1.0, 0.0) );
+const vec3 lightDir = normalize( vec3(1.0, 0.5, 0.1) );
 
 void main(void) {
    /* Compute normal taking into account the bump map. */
@@ -39,8 +39,8 @@ void main(void) {
 
    /* Compute lighting. */
    vec3 La = vec3(1.0) * max(dot(norm, lightDir), 0.0) * 1.0;
-   vec3 Ld = vec3(1.0) * 1.0;
-   vec3 Ls = vec3(0.0);
+   const vec3 Ld = vec3(1.0) * 1.0;
+   const vec3 Ls = vec3(0.0);
 
    /* Set up textures. */
    vec3 Td = texture(map_Kd, tex_coord).rgb;

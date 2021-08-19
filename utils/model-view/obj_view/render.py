@@ -65,9 +65,9 @@ class ObjProgram:
             scale_w = scale_h * (width / height)
 
         projection_view = glm.ortho(-scale_w, scale_w, -scale_h, scale_h, -9*math.sqrt(2), 9*math.sqrt(2))
+        projection_view = glm.rotate(projection_view, math.pi / 4, glm.vec3(1, 0, 0))
 
         projection_model = glm.mat4()
-        projection_model = glm.rotate(projection_model, math.pi / 4, glm.vec3(1, 0, 0))
         projection_model = glm.rotate(projection_model, rot + math.pi / 2, glm.vec3(0, 1, 0))
         projection_model = glm.rotate(projection_model, rot_z, glm.vec3(0, 0, 1))
 
