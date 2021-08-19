@@ -13,8 +13,8 @@ ROT_RATE = 0.5
 class Window:
     prev_time = 0
     rot_dir = 0
-    width = 800
-    height = 600
+    width = 1280
+    height = 720
     objs = None
 
     def __init__(self, rot):
@@ -22,7 +22,7 @@ class Window:
         glutInitContextVersion(3, 2)
         glutInitContextProfile(GLUT_CORE_PROFILE)
         glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE)
-        glutInitWindowSize(800, 600)
+        glutInitWindowSize(self.width, self.height)
         glutInitWindowPosition(0, 0)
         self.window = glutCreateWindow("Obj Viewer")
         self.rot = rot
