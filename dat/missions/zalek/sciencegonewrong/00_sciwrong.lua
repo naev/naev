@@ -161,7 +161,8 @@ function second_trd()
      return
   end
   player.pay(-pho_mny)
-  carg_id = misn.cargoAdd("Phosphine", 3)
+  local c = misn.cargoNew(N_("Phosphine"), N_("A colourless, flammable, poisonous gas."))
+  carg_id = misn.cargoAdd(c, 3)
   tk.msg(title[1], text[9])
   osd_msg[3] = osd_msg[3]:format(t_sys[1]:name(), t_pla[1]:name())
   misn.osdCreate(misn_title, {osd_msg[3]})

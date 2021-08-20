@@ -94,7 +94,8 @@ function accept ()
          dest:name(), ret:name(), retsys:name() ))
    misn.osdCreate(title[2], {misn_desc[1]:format(dest:name(),destsys:name())})
    -- Set up the goal
-   prisoners = misn.cargoAdd("Prisoners", 0)
+   local c = misn.cargoNew( N_("Prisoners"), N_("FLF prisoners.") )
+   prisoners = misn.cargoAdd( c, 0 )
    tk.msg( title[2], text[3] )
 
    -- Set hooks

@@ -40,10 +40,6 @@ OSDdesc[2] = _("Drop off the equipment at %s in the %s system")
 
 payment = 2500000
 
--- Cargo Details
-cargo = "Equipment"
-cargoAmount = 20
-
 title = {}  --stage titles
 text = {}   --mission text
 
@@ -137,7 +133,8 @@ function land ()
       else
 
          tk.msg( title[3], text[3] )
-         cargoID = misn.cargoAdd(cargo, cargoAmount)  -- adds cargo
+         local c = misn.cargoNew( N_("Equipment"), N_("Some heavy reinforced crates of equipment.") )
+         cargoID = misn.cargoAdd( c, 20 )
          pickedup = true
 
          misn.markerMove( marker, delivSys )  -- destination

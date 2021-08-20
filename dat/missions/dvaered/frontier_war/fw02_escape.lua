@@ -294,7 +294,8 @@ function land()
       therus = misn.npcAdd("discussThe", theru_name, portrait_therus, theru_desc)
       strafer = misn.npcAdd("discussStr", straf_name, portrait_strafer, straf_desc)
 
-      commando = misn.cargoAdd("Commando", commMass) -- TODO: see if it gets auto-removed at the end of mission
+      local c = misn.cargoNew( N_("Commando"), N_("A commando unit.") )
+      commando = misn.cargoAdd( c, commMass ) -- TODO: see if it gets auto-removed at the end of mission
 
       stage = 1
       misn.osdActive(2)

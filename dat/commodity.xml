@@ -169,21 +169,6 @@
   <faction_modifier type="Za'lek">0.5</faction_modifier>
  </commodity>
  <commodity>
-  <name>Bomb</name>
- </commodity>
- <commodity>
-  <name>Colonists</name>
- </commodity>
- <commodity>
-  <name>Commando</name>
- </commodity>
- <commodity>
-  <name>Datapad</name>
- </commodity>
- <commodity>
-  <name>Equipment</name>
- </commodity>
- <commodity>
   <name>Fuel</name>
   <gfx_space>fuel.webp</gfx_space>
  </commodity>
@@ -192,39 +177,6 @@
   <gfx_space>flowers.webp</gfx_space>
  </commodity>
  <commodity>
-  <name>Gregar</name>
- </commodity>
- <commodity>
-  <name>Jorek</name>
- </commodity>
- <commodity>
-  <name>Goods</name>
- </commodity>
- <commodity>
   <name>Person</name>
- </commodity>
- <commodity>
-  <name>Phosphine</name>
- </commodity>
- <commodity>
-  <name>Prisoners</name>
- </commodity>
- <commodity>
-  <name>Prototype</name>
- </commodity>
- <commodity>
-  <name>Recipes</name>
- </commodity>
- <commodity>
-  <name>Secret Technology</name>
- </commodity>
- <commodity>
-  <name>The Rescued Children</name>
- </commodity>
- <commodity>
-  <name>Tourists</name>
- </commodity>
- <commodity>
-  <name>VIP</name>
  </commodity>
 </Commodities>

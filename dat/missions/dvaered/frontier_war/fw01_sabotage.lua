@@ -239,7 +239,8 @@ function hamfresser()
       tk.msg( ham_title, ham_text3:format(sabotpla:name(), sabotsys:name()) )
       stage = 1
       hook.enter("enter")
-      bomblet = misn.cargoAdd("Bomb", bombMass)
+      local c = misn.cargoNew( N_("Bomb"), N_("A gift from the High Command to Lord Battleaddict.") )
+      bomblet = misn.cargoAdd( c, bombMass )
 
       misn.markerRm(mark)
       misn.osdActive(2)
