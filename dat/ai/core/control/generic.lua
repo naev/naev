@@ -115,77 +115,87 @@ function control_manual ()
 end
 
 function handle_messages( si )
+   local taskchange = false
    local p = ai.pilot()
    local l = p:leader()
    for _, v in ipairs(ai.messages()) do
       local sender, msgtype, data = table.unpack(v)
 
-      if not sender:exists() then
-         return
-      end
+      -- Skip message from nonexistent sender
+      if sender:exists() then
 
-      -- Below we only handle if they came from allies
-      -- (So far, only allies would send in the first place, but this check future-proofs things.
-      -- One day it might be interesting to have non-allied snitches whose tips get checked out...)
-      if p:faction():areAllies( sender:faction() ) then
-         if msgtype == "scanned" then
-            if mem.doscans and data ~= nil and data:exists() then
-               mem.scanned = mem.scanned or {} -- Create table if doesn't exist
-               table.insert( mem.scanned, data )
-               -- Stop scanning if they got information about the scan
-               if ai.taskname() == "scan" and ai.taskdata() == data then
-                  ai.poptask()
-               end
-            end
-         end
-      end
-
-      -- Messages coming from followers
-      if sender:leader() == p then
-         if msgtype == "f_attacked" then
-            if not si.fighting and should_attack( data, si ) then
-               ai.pushtask("attack", data)
-               -- Also signal to other followers
-               for k,v in ipairs(p:followers()) do
-                  p:msg( v, "l_attacked", data )
+         -- Below we only handle if they came from allies
+         -- (So far, only allies would send in the first place, but this check future-proofs things.
+         -- One day it might be interesting to have non-allied snitches whose tips get checked out...)
+         if p:faction():areAllies( sender:faction() ) then
+            if msgtype == "scanned" then
+               if mem.doscans and data ~= nil and data:exists() then
+                  mem.scanned = mem.scanned or {} -- Create table if doesn't exist
+                  table.insert( mem.scanned, data )
+                  -- Stop scanning if they got information about the scan
+                  if ai.taskname() == "scan" and ai.taskdata() == data then
+                     ai.poptask()
+                     taskchange = true
+                  end
                end
             end
          end
 
-      -- Below we only handle if they came from the glorious leader
-      elseif sender == l then
-         if msgtype == "form-pos" then
-            mem.form_pos = data
-         elseif msgtype == "hyperspace" then
-            ai.pushtask("hyperspace", data)
-         elseif msgtype == "land" then
-            ai.pushtask("land", data)
-         elseif msgtype == "l_attacked" then
-            if not si.fighting and should_attack( data, si ) then
-               ai.pushtask("attack", data)
-            end
-
-         -- Escort commands
-         -- Attack target
-         elseif msgtype == "e_attack" then
-            if data ~= nil and data:exists() then
-               if data:leader() ~= l then
-                  clean_task( ai.taskname() )
-                  ai.pushtask("attack_forced", data)
+         -- Messages coming from followers
+         if sender:leader() == p then
+            if msgtype == "f_attacked" then
+               if not si.fighting and should_attack( data, si ) then
+                  ai.pushtask("attack", data)
+                  -- Also signal to other followers
+                  for k,v in ipairs(p:followers()) do
+                     p:msg( v, "l_attacked", data )
+                  end
+                  taskchange = true
                end
             end
-         -- Hold position
-         elseif msgtype == "e_hold" then
-            ai.pushtask("hold")
-         -- Return to carrier
-         elseif msgtype == "e_return" then
-            ai.pushtask( "flyback", p:flags("carried") )
-         -- Clear orders
-         elseif msgtype == "e_clear" then
-            p:taskClear()
+
+         -- Below we only handle if they came from the glorious leader
+         elseif sender == l then
+            if msgtype == "form-pos" then
+               mem.form_pos = data
+            elseif msgtype == "hyperspace" then
+               ai.pushtask("hyperspace", data)
+               taskchange = true
+            elseif msgtype == "land" then
+               ai.pushtask("land", data)
+               taskchange = true
+            elseif msgtype == "l_attacked" then
+               if not si.fighting and should_attack( data, si ) then
+                  ai.pushtask("attack", data)
+                  taskchange = true
+               end
+
+            -- Escort commands
+            -- Attack target
+            elseif msgtype == "e_attack" then
+               if data ~= nil and data:exists() then
+                  if data:leader() ~= l then
+                     clean_task( ai.taskname() )
+                     ai.pushtask("attack_forced", data)
+                     taskchange = true
+                  end
+               end
+            -- Hold position
+            elseif msgtype == "e_hold" then
+               ai.pushtask("hold")
+               taskchange = true
+            -- Return to carrier
+            elseif msgtype == "e_return" then
+               ai.pushtask( "flyback", p:flags("carried") )
+               taskchange = true
+            -- Clear orders
+            elseif msgtype == "e_clear" then
+               p:taskClear()
+            end
          end
       end
    end
+   return taskchange
 end
 
 function should_attack( enemy, si )
@@ -259,7 +269,7 @@ function control ()
    local si = _stateinfo( task )
 
    lead_fleet()
-   handle_messages( si )
+   local taskchange = handle_messages( si )
 
    -- Select new leader
    local l = p:leader()
@@ -282,6 +292,9 @@ function control ()
          ai.stealth(false)
       end
    end
+
+   -- Task changed so we stop thinking and focus on new task
+   if taskchange then return end
 
    -- If command is forced we basically override everything
    if si.forced then
@@ -357,7 +370,7 @@ function control ()
       else
          idle()
       end
-
+      return -- Should have gotten a new task
    end
 
 
