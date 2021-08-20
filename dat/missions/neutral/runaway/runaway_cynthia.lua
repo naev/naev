@@ -27,7 +27,8 @@ require "missions/neutral/common"
 npc_name = _("Young Teenager")
 bar_desc = _("A pretty teenager sits alone at a table.")
 title = _("The Runaway")
-cargoname = _("Person")
+cargoname = N_("Cynthia")
+cargodesc = N_("A young teenager.")
 misn_desc_pre_accept = _([[She looks out of place in the bar. As you approach, she seems to stiffen.
     "H..H..Hi", she stutters. "My name is Cynthia. Could you give me a lift? I really need to get out of here.
     I can't pay you much, just what I have on me, %s." You wonder who she must be to have this many credits on her person. "I need you to take me to Zhiru."
@@ -77,7 +78,8 @@ function accept ()
    misn.osdCreate(title,osd_text)
    misn.osdActive(1)
 
-   cargoID = misn.cargoAdd( cargoname, 0 )
+   local c = misn.cargoNew( cargoname, cargodesc )
+   cargoID = misn.cargoAdd( c, 0 )
 
    misn.setTitle( title )
 
