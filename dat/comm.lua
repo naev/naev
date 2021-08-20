@@ -375,6 +375,10 @@ function comm( plt )
    p(_([["Sorry, I'm busy now."]]))
    vn.jump("menu")
 
+   vn.label("refueling_already")
+   p(_([["What part of 'on my way' don't you understand?"]]))
+   vn.jump("menu")
+
    vn.label("refuel_refueling")
    vn.na(_("Pilot is already refueling you."))
    vn.jump("menu")
@@ -400,6 +404,9 @@ function comm( plt )
       local val = mem.refuel
       if val==nil or plt:flags("manualcontrol") then
          vn.jump("refuel_busy")
+      end
+      if plt:flags("refueling") then
+         vn.jump("refueling_already")
       end
    end )
    p( function ()
