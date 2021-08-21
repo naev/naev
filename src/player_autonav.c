@@ -428,8 +428,9 @@ static void player_autonav (void)
             player_autonavEnd();
          }
          else {
-            player_autonavFollow( &p->solid->pos, &p->solid->vel, pilot_isDisabled(p)==0, &d );
-            if (pilot_isDisabled(p) && (!tc_rampdown))
+            ret = (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_BOARDABLE));
+            player_autonavFollow( &p->solid->pos, &p->solid->vel, !ret, &d );
+            if (ret && (!tc_rampdown))
                player_autonavRampdown(d);
          }
          break;
