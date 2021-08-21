@@ -1,4 +1,5 @@
-local formation = require("scripts/formation")
+local formation = require "scripts.formation"
+local lanes = require "ai.misc.lanes"
 
 --[[
 -- Variables to adjust AI
@@ -33,6 +34,7 @@ mem.formation     = "circle" -- Formation to use when commanding fleet
 mem.form_pos      = nil -- Position in formation (for follower)
 mem.leadermaxdist = nil -- Distance from leader to run back to leader
 mem.gather_range  = 800 -- Radius in which the pilot looks for gatherables
+mem.lane_return   = nil -- Distance at which the pilot will try to return to safe lanes
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates
 of the point the pilot has to follow when using follow_accurate.
@@ -333,7 +335,7 @@ function control ()
                return
             -- Cool down if the current weapon set is suffering from >= 20% accuracy loss.
             -- This equates to a temperature of 560K presently.
-            elseif (p:weapsetHeat() > .2) then
+            elseif (p:weapsetHeat() > 0.2) then
                mem.cooldown = true
                p:setCooldown(true)
                return
@@ -357,6 +359,16 @@ function control ()
       end
    end
 
+   -- Check to see if we want to go back to the lanes
+   local lr = mem.lane_return
+   if lr then
+      local d, p = lanes.getDistance2( p:pos() )
+      if d > lr*lr then
+         ai.pushtask( "moveto_nobrake", p )
+         return
+      end
+   end
+
    -- Get new task
    if task == nil then
       -- See what decision to take
@@ -371,7 +383,6 @@ function control ()
       end
       return -- Should have gotten a new task
    end
-
 
    -- Run custom function if applicable
    task = ai.taskname() -- Reget the task in case something got pushed ontop
