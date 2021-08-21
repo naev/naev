@@ -3,6 +3,7 @@ require "numstring"
 
 -- Settings
 mem.aggressive = true
+mem.lanes_useneutral = true
 
 local bribe_no_list = {
    _([["You insult my honour."]]),
