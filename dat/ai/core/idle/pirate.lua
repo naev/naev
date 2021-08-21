@@ -266,6 +266,7 @@ control_funcs.ambush_moveto = function ()
    if __tryengage( p ) then return end
 end
 control_funcs.ambush_stalk = function ()
+   local p = ai.pilot()
    local target = ai.taskdata()
    if not target or not target:exists() then
       ai.poptask()
