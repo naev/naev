@@ -2376,7 +2376,7 @@ static int outfit_parse( Outfit* temp, const char* file )
                      temp->name, group, PILOT_WEAPON_SETS);
             }
 
-            temp->group = CLAMP(0, 9, group - 1);
+            temp->group = CLAMP(0, 9, group);
          }
 
          /*

@@ -10,7 +10,7 @@
   <gfx_store>jammer1.webp</gfx_store>
   <limit>jammer</limit>
  </general>
- <specific type="modification" group="7">
+ <specific type="modification" group="6">
   <active />
   <ew_hide>90</ew_hide>
   <energy_loss>40</energy_loss>
