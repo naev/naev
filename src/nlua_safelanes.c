@@ -99,9 +99,9 @@ static int safelanesL_get( lua_State *L )
       else if (strcmp(std,"hostile")==0)
          standing |= SAFELANES_HOSTILE;
       else if (strcmp(std,"non-friendly")==0)
-         standing |= SAFELANES_NEUTRAL & SAFELANES_HOSTILE;
+         standing |= SAFELANES_NEUTRAL | SAFELANES_HOSTILE;
       else if (strcmp(std,"non-hostile")==0)
-         standing |= SAFELANES_NEUTRAL & SAFELANES_FRIENDLY;
+         standing |= SAFELANES_NEUTRAL | SAFELANES_FRIENDLY;
       else
          NLUA_ERROR(L,_("Unknown standing type '%s'!"), std);
    }

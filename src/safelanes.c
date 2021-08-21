@@ -209,11 +209,11 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
             fe = areEnemies(faction,lf);
             fa = areAllies(faction,lf);
             skip = 1;
-            if ((standing & SAFELANES_FRIENDLY) && !fa)
+            if ((standing & SAFELANES_FRIENDLY) && fa)
                skip = 0;
-            if ((standing & SAFELANES_NEUTRAL) && (fe || fa))
+            if ((standing & SAFELANES_NEUTRAL) && !fe)
                skip = 0;
-            if ((standing & SAFELANES_HOSTILE) && !fe)
+            if ((standing & SAFELANES_HOSTILE) && fe)
                skip = 0;
             if (skip)
                continue;
