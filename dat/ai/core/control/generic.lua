@@ -34,7 +34,6 @@ mem.formation     = "circle" -- Formation to use when commanding fleet
 mem.form_pos      = nil -- Position in formation (for follower)
 mem.leadermaxdist = nil -- Distance from leader to run back to leader
 mem.gather_range  = 800 -- Radius in which the pilot looks for gatherables
-mem.lane_return   = nil -- Distance at which the pilot will try to return to safe lanes
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates
 of the point the pilot has to follow when using follow_accurate.
@@ -213,6 +212,15 @@ function should_attack( enemy, si )
       return false
    end
 
+   -- Check to see if we want to go back to the lanes
+   local lr = mem.enemyclose
+   if lr then
+      local d, pos = lanes.getDistance2( enemy:pos() )
+      if d > lr*lr then
+         return false
+      end
+   end
+
    -- Check if we have minimum range to engage
    if mem.enemyclose then
       local dist = ai.dist2( enemy )
@@ -360,11 +368,11 @@ function control ()
    end
 
    -- Check to see if we want to go back to the lanes
-   local lr = mem.lane_return
+   local lr = mem.enemyclose
    if lr then
-      local d, p = lanes.getDistance2( p:pos() )
-      if d > lr*lr then
-         ai.pushtask( "moveto_nobrake", p )
+      local d, pos = lanes.getDistance2( p:pos() )
+      if d < math.huge and d > lr*lr then
+         ai.pushtask( "moveto_nobrake", pos )
          return
       end
    end
