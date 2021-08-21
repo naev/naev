@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-15 09:05-0400\n"
-"PO-Revision-Date: 2021-08-21 19:24+0000\n"
+"PO-Revision-Date: 2021-08-22 01:13+0000\n"
 "Last-Translator: Festerdam <festerdam@posteo.net>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
@@ -281,19 +281,19 @@ msgstr ""
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * Modelos das naves"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * Música"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * Sons"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * Imagens dos planetas"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -301,6 +301,9 @@ msgid ""
 "didn't actively participate, by allowing me to use their data they did me a "
 "great favour and let me concentrate on the coding."
 msgstr ""
+"   Não teria sido possível sem a equipa Vega Strike. Embora não terem "
+"participado ativamente, ao permitirem-me usar os seus dados, fizeram-me um "
+"grande favor e permitiram-me concentrar na programação."
 
 #: dat/AUTHORS:72
 msgid "Joel Hans <wolorf@gmail.com>"
@@ -316,7 +319,7 @@ msgstr ""
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
-msgstr ""
+msgstr "   Ajudou no início do projeto. Grande estimulador da moral."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
@@ -335,6 +338,8 @@ msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
+"   Embora não usarmos a biblioteca SDL_collide em si, foi uma inspiração "
+"para as próprias rotinas de colisão de Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
@@ -371,8 +376,11 @@ msgid "   * Sprite gimp script"
 msgstr ""
 
 #: dat/AUTHORS:92
+#, fuzzy
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
+"   Embora não ter sido usado diretamente, ajudou a criar o nosso próprio "
+"script para sprites."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
@@ -380,7 +388,7 @@ msgstr ""
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * Ruído de turbulência"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -408,6 +416,8 @@ msgstr ""
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom naev content."
 msgstr ""
+"   Artista talentoso, um dos primeiros a criar conteúdo personalizado para "
+"naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
@@ -415,12 +425,14 @@ msgstr ""
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
-msgstr ""
+msgstr "   * Arte e programação"
 
 #: dat/AUTHORS:107
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
+"   É bom ver mais alguém a trabalhar no código de Naev e na sua documentação "
+"Lua."
 
 #: dat/AUTHORS:109
 msgid "Dimitry Marakasov"
@@ -440,7 +452,7 @@ msgstr ""
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
-msgstr ""
+msgstr "   * Programou funcionalidades fixes"
 
 #: dat/AUTHORS:115
 msgid ""
@@ -454,7 +466,7 @@ msgstr ""
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
-msgstr ""
+msgstr "   * Acelerou muito o processo de geração de nébulas"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
@@ -467,6 +479,7 @@ msgstr ""
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
 msgstr ""
+"   Provavelmente a implementação de autotools mais limpa que alguma vez vi."
 
 #: dat/AUTHORS:124
 msgid "Cypher3c <cypher3c@gmail.com>"
@@ -482,11 +495,11 @@ msgstr ""
 
 #: dat/AUTHORS:128
 msgid "   * Missions"
-msgstr ""
+msgstr "   * Missões"
 
 #: dat/AUTHORS:129
 msgid "   * Misc coding support"
-msgstr ""
+msgstr "   * Apoio variado na programação"
 
 #: dat/AUTHORS:131
 msgid "Fisherman"
@@ -508,7 +521,7 @@ msgstr ""
 
 #: dat/AUTHORS:136
 msgid "   * Python programmer extraordinaire"
-msgstr ""
+msgstr "   * Programador de Python extraordinário"
 
 #: dat/AUTHORS:137
 msgid "His utilities save gray hairs for everyone."
@@ -520,7 +533,7 @@ msgstr ""
 
 #: dat/AUTHORS:140
 msgid "   * Artist of most of the nebulae."
-msgstr ""
+msgstr "   * Artista que criou a maioria das nébulas."
 
 #: dat/AUTHORS:142
 msgid "Galileus"
@@ -588,7 +601,7 @@ msgstr ""
 
 #: dat/AUTHORS:166
 msgid "   * Ship log"
-msgstr ""
+msgstr "   * Diário de bordo do navio"
 
 #: dat/AUTHORS:167
 msgid "   * Solar system information screen"
@@ -596,7 +609,7 @@ msgstr ""
 
 #: dat/AUTHORS:169
 msgid "Music by Matthew Pablo"
-msgstr ""
+msgstr "Música de Matthew Pablo"
 
 #: dat/AUTHORS:170
 msgid "http://www.matthewpablo.com"
