@@ -80,8 +80,9 @@ function scom.spawn( pilots, faction )
       local r = system.cur():radius() * 0.8
       local p = vec2.newP( rnd.rnd() * r, rnd.rnd() * 360 )
       local m = 3000 -- margin
+      local L = lanes.get(faction, "non-friendly")
       for i = 1,20 do
-         local np = lanes.getNonPoint( lanes.get(faction), p, r, m )
+         local np = lanes.getNonPoint( L, p, r, m )
          if np and #pilot.getHostiles( faction, m, np ) == 0 then
             origin = np
             break

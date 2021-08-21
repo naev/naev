@@ -216,18 +216,23 @@ end
 
 
 -- Same as safelanes.get but does caching
-function lanes.get( ... )
+function lanes.get( f, standing )
    -- We try to cache the lane graph per system
    local nc = naev.cache()
    if not nc.lanes then nc.lanes = {} end
    local ncl = nc.lanes
    local sc = system.cur()
    if ncl.system ~= sc then
-      ncl.lanes = safelanes.get( ... )
-      ncl.v, ncl.e = safelanesToGraph( ncl.lanes )
-      ncl.system = sc
-    end
-   return ncl
+      ncl.L = {}
+   end
+   local key = f:nameRaw()..standing
+   if not ncl.L[key] then
+      local L = {}
+      L.lanes  = safelanes.get( f, standing )
+      L.v, L.e = safelanesToGraph( L.lanes )
+      ncl.L[key] = L
+   end
+   return ncl.L[key]
 end
 
 
