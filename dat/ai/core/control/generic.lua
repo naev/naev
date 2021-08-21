@@ -46,7 +46,7 @@ mem.angle          = 180 --  Requested angle between follower and target's veloc
 mem.Kp             = 10 --  First control coefficient
 mem.Kd             = 20 -- Second control coefficient
 
-mem.target_bias      = vec2.new(0,0) -- Initialize land bias, just in case
+mem.target_bias    = vec2.new(0,0) -- Initialize land bias, just in case
 
 -- Required control rate that represents the number of seconds between each
 -- control() call
