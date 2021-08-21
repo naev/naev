@@ -451,9 +451,9 @@ static void safelanes_initStacks_faction (void)
    presence_budget = array_create_size( double*, array_size(faction_stack) );
    systems_stack = system_getAll();
    for (fi=0; fi<array_size(faction_stack); fi++) {
-      presence_budget[fi] = array_create_size( double, array_size(systems_stack) );
+      array_push_back( &presence_budget, array_create_size( double, array_size(systems_stack) ) );
       for (s=0; s<array_size(systems_stack); s++)
-         presence_budget[fi][s] = system_getPresence( &systems_stack[s], faction_stack[fi].id );
+         array_push_back( &presence_budget[fi], system_getPresence( &systems_stack[s], faction_stack[fi].id ) );
    }
 }
 
