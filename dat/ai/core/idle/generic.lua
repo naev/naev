@@ -2,6 +2,7 @@ local lanes = require 'ai.core.misc.lanes'
 
 -- Default task to run when idle
 function idle ()
+   local p = ai.pilot()
    local task = ai.taskname()
    local si = _stateinfo( task )
    -- Aggressives will try to find enemies first, before falling back on
@@ -40,7 +41,7 @@ function idle ()
             return
          end
 
-         mem.route = lanes.getRoute( mem.goal_pos )
+         mem.route = lanes.getRoute( p, mem.goal_pos )
       end
 
       -- Arrived at goal
@@ -97,8 +98,8 @@ function idle ()
       else
          -- Go to an interesting
          if not mem.route then
-            local target = lanes.getPointInterest()
-            mem.route = lanes.getRoute( target )
+            local target = lanes.getPointInterest( p )
+            mem.route = lanes.getRoute( p, target )
          end
          local pos = mem.route[1]
          table.remove( mem.route, 1 )

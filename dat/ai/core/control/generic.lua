@@ -1,5 +1,5 @@
 local formation = require "scripts.formation"
-local lanes = require "ai.misc.lanes"
+local lanes = require "ai.core.misc.lanes"
 
 --[[
 -- Variables to adjust AI
@@ -215,7 +215,7 @@ function should_attack( enemy, si )
    -- Check to see if we want to go back to the lanes
    local lr = mem.enemyclose
    if lr then
-      local d, pos = lanes.getDistance2( enemy:pos() )
+      local d, pos = lanes.getDistance2( ai.pilot(), enemy:pos() )
       if d > lr*lr then
          return false
       end
@@ -370,7 +370,7 @@ function control ()
    -- Check to see if we want to go back to the lanes
    local lr = mem.enemyclose
    if lr then
-      local d, pos = lanes.getDistance2( p:pos() )
+      local d, pos = lanes.getDistance2( p, p:pos() )
       if d < math.huge and d > lr*lr then
          ai.pushtask( "moveto_nobrake", pos )
          return
