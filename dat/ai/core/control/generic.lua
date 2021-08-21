@@ -61,12 +61,12 @@ control_rate   = 2
 stateinfo = {
    attack = {
       fighting = true,
-      attack = true,
+      attack   = true,
    },
    attack_forced = {
-      forced = true,
+      forced   = true,
       fighting = true,
-      attack = true,
+      attack   = true,
       noattack = true,
    },
    runaway = {
@@ -77,11 +77,11 @@ stateinfo = {
       noattack = true,
    },
    hold = {
-      forced = true,
+      forced   = true,
       noattack = true,
    },
    flyback = {
-      forced = true,
+      forced   = true,
       noattack = true,
    },
 }
@@ -92,8 +92,7 @@ function _stateinfo( task )
    return stateinfo[ task ] or {}
 end
 
-function lead_fleet ()
-   local p = ai.pilot()
+function lead_fleet( p )
    if #p:followers() ~= 0 then
       if mem.formation == nil then
          formation.clear(p)
@@ -111,7 +110,7 @@ end
 
 -- Run instead of "control" when under manual control; use should be limited
 function control_manual ()
-   lead_fleet()
+   lead_fleet( ai.pilot() )
 end
 
 function handle_messages( si )
@@ -268,7 +267,7 @@ function control ()
    local task = ai.taskname()
    local si = _stateinfo( task )
 
-   lead_fleet()
+   lead_fleet( p )
    local taskchange = handle_messages( si )
 
    -- Select new leader
