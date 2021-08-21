@@ -6,6 +6,7 @@ require "numstring"
 
 -- Always run away
 mem.aggressive = false
+mem.lanes_useneutral = true
 
 function create ()
    -- Probably the ones with the most money

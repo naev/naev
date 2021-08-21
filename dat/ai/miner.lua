@@ -3,6 +3,8 @@ require 'ai.core.idle.miner'
 require 'ai.core.misc.distress'
 require "numstring"
 
+mem.lanes_useneutral = true
+
 function create ()
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/500, ai.pilot():ship():price()/200) )
 

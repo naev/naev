@@ -3,6 +3,7 @@ require 'ai.core.idle.advertiser'
 require 'ai.core.misc.distress'
 require "numstring"
 
+mem.lanes_useneutral = true
 
 function create ()
    -- Credits.

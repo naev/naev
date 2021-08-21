@@ -4,6 +4,7 @@ require 'ai.core.misc.distress'
 require "numstring"
 
 mem.careful   = false
+mem.lanes_useneutral = true
 
 function create ()
    -- Credits.

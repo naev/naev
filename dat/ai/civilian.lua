@@ -3,6 +3,8 @@ require 'ai.core.idle.civilian'
 require 'ai.core.misc.distress'
 require "numstring"
 
+mem.lanes_useneutral = true
+
 local bribe_no_list = {
    _([["Just leave me alone!"]]),
    _([["What do you want from me!?"]]),

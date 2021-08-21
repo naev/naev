@@ -41,7 +41,7 @@ function idle ()
             return
          end
 
-         mem.route = lanes.getRoute( p, mem.goal_pos )
+         mem.route = lanes.getRouteP( p, mem.goal_pos )
       end
 
       -- Arrived at goal
@@ -98,8 +98,8 @@ function idle ()
       else
          -- Go to an interesting
          if not mem.route then
-            local target = lanes.getPointInterest( p )
-            mem.route = lanes.getRoute( p, target )
+            local target = lanes.getPointInterestP( p )
+            mem.route = lanes.getRouteP( p, target )
          end
          local pos = mem.route[1]
          table.remove( mem.route, 1 )

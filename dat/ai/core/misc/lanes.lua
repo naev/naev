@@ -201,18 +201,32 @@ local function closestPointLine( a, b, p )
 end
 
 
-local function getCache ()
+-- Caches lanes locally in pilot's memory
+local function getCacheP( p )
+   local mem = p:memory()
+   if not mem.__lanes then
+      local L = {}
+      local standing = (mem.lanes_useneutral and "non-hostile") or "friendly"
+      L.lanes = safelanes.get( p:faction(), standing )
+      L.v, L.e = safelanesToGraph( L.lanes )
+      mem.__lanes = L
+   end
+   return mem.__lanes
+end
+
+
+-- Same as safelanes.get but does caching
+function lanes.get( ... )
    -- We try to cache the lane graph per system
-   -- TODO handle hostile lanes and such
    local nc = naev.cache()
    if not nc.lanes then nc.lanes = {} end
    local ncl = nc.lanes
    local sc = system.cur()
    if ncl.system ~= sc then
-      ncl.lanes = safelanes.get()
+      ncl.lanes = safelanes.get( ... )
       ncl.v, ncl.e = safelanesToGraph( ncl.lanes )
       ncl.system = sc
-   end
+    end
    return ncl
 end
 
@@ -220,20 +234,22 @@ end
 --[[
 -- Gets distance and nearest point to safe lanes from a position
 --]]
-function lanes.getDistance( p, pos )
-   local d, lpos = lanes.getDistance2( p, pos )
+function lanes.getDistance( L, pos )
+   local d, lpos = lanes.getDistance2( L, pos )
    return math.sqrt(d), lpos
+end
+function lanes.getDistanceP( p, pos )
+   return lanes.getDistance( getCacheP(p), pos )
 end
 
 
 --[[
 -- Gets squared distance and nearest point to safe lanes from a position
 --]]
-function lanes.getDistance2( p, pos )
-   local ncl = getCache()
+function lanes.getDistance2( L, pos )
    local d = math.huge
    local lp = pos
-   for k,v in ipairs(ncl.lanes) do
+   for k,v in ipairs(L.lanes) do
       local pp = closestPointLine( v[1], v[2], pos )
       local dp = pos:dist2( pp )
       if dp < d then
@@ -243,13 +259,49 @@ function lanes.getDistance2( p, pos )
    end
    return d, lp
 end
+function lanes.getDistance2P( p, pos )
+   return lanes.getDistance2( getCacheP(p), pos )
+end
 
 
 --[[
 -- Tries to get a point outside of the lanes, around a point at a radius rad.
 -- We'll project the pos into radius if it is out of bounds.
 --]]
-function lanes.getNonPoint( p, pos, rad, margin, biasdir )
+function lanes.getNonPoint( L, pos, rad, margin, biasdir )
+   margin = margin or ews
+   local margin2 = margin*margin
+   local srad2 = math.pow( system.cur():radius(), 2 )
+
+   -- Make sure pos is in radius
+   if pos:dist2() > srad2 then
+      local m,a = pos:polar()
+      pos = vec2.newP( system.cur():radius(), a )
+   end
+
+   -- Just some brute force sampling at different scales
+   local n = 18
+   local inc = 360 / n
+   local sign = 1
+   if rnd.rnd() < 0.5 then sign = -1 end
+   for s in ipairs{1.0, 0.5, 1.5, 2.0, 3.0, 5.0} do
+      local a = biasdir or rnd.rnd() * 360
+      local r = rad * s
+      for i=1,n do
+         local pp = pos + vec2.newP( r, a )
+         a = a + i * inc * sign
+         sign = sign * -1
+         if pp:dist2() < srad2 then
+            local d = lanes.getDistance2( L, pp )
+            if d > margin2 then
+               return pp
+            end
+         end
+      end
+   end
+   return nil
+end
+function lanes.getNonPointP( p, pos, rad, margin, biasdir )
    local ews
    if not pos or not rad or not margin then
       ews = p:stats().ew_stealth
@@ -260,88 +312,17 @@ function lanes.getNonPoint( p, pos, rad, margin, biasdir )
    local margin2 = margin*margin
    local srad2 = math.pow( system.cur():radius(), 2 )
 
-   -- Make sure pos is in radius
-   if pos:dist2() > srad2 then
-      local m,a = pos:polar()
-      pos = vec2.newP( system.cur():radius(), a )
-   end
-
-   -- Just some brute force sampling at different scales
-   local n = 18
-   local inc = 360 / n
-   local sign = 1
-   if rnd.rnd() < 0.5 then sign = -1 end
-   for s in ipairs{1.0, 0.5, 1.5, 2.0, 3.0, 5.0} do
-      local a = biasdir or rnd.rnd() * 360
-      local r = rad * s
-      for i=1,n do
-         local pp = pos + vec2.newP( r, a )
-         a = a + i * inc * sign
-         sign = sign * -1
-         if pp:dist2() < srad2 then
-            local d = lanes.getDistance2( p, pp )
-            if d > margin2 then
-               return pp
-            end
-         end
-      end
-   end
-   return nil
+   local L = getCacheP( p )
+   return lanes.getNonPoint( L, pos, rad, margin, biasdir )
 end
 
-
---[[
--- Same as getNonPoint but for factions.
---]]
-function lanes.getNonPointF( f, pos, rad, margin, biasdir )
-   local p, ews
-   if not pos or not rad or not margin then
-      p = ai.pilot()
-      ews = p:stats().ew_stealth
-   end
-   pos = pos or p:pos()
-   rad = rad or math.min( 2000, ews )
-   margin = margin or ews
-   local margin2 = margin*margin
-   local srad2 = math.pow( system.cur():radius(), 2 )
-
-   -- Make sure pos is in radius
-   if pos:dist2() > srad2 then
-      local m,a = pos:polar()
-      pos = vec2.newP( system.cur():radius(), a )
-   end
-
-   -- Just some brute force sampling at different scales
-   local n = 18
-   local inc = 360 / n
-   local sign = 1
-   if rnd.rnd() < 0.5 then sign = -1 end
-   for s in ipairs{1.0, 0.5, 1.5, 2.0, 3.0, 5.0} do
-      local a = biasdir or rnd.rnd() * 360
-      local r = rad * s
-      for i=1,n do
-         local pp = pos + vec2.newP( r, a )
-         a = a + i * inc * sign
-         sign = sign * -1
-         if pp:dist2() < srad2 then
-            local d = lanes.getDistance2( p, pp )
-            if d > margin2 then
-               return pp
-            end
-         end
-      end
-   end
-   return nil
-end
 
 
 --[[
 -- Gets a random point of interest
 --]]
-function lanes.getPointInterest( p, pos )
-   pos = pos or p:pos()
-   local ncl = getCache()
-   local lv, le = ncl.v, ncl.e
+function lanes.getPointInterest( L, pos )
+   local lv, le = L.v, L.e
 
    -- Case nothing of interest we just return a random position like in the old days
    -- TODO do something smarter here
@@ -360,16 +341,18 @@ function lanes.getPointInterest( p, pos )
    end
    --]]
 end
+function lanes.getPointInterestP( p, pos )
+   pos = pos or p:pos()
+   local L = getCacheP(p)
+   return lanes.getPointInterest( L, pos )
+end
 
 
 --[[
 -- Computes the route for the pilot to get to target.
 --]]
-function lanes.getRoute( p, target, pos )
-
-   pos = pos or p:pos()
-   local ncl = getCache()
-   local lv, le = ncl.v, ncl.e
+function lanes.getRoute( L, target, pos )
+   local lv, le = L.v, L.e
 
    -- Case no lanes in the system
    if #lv == 0 then
@@ -399,6 +382,11 @@ function lanes.getRoute( p, target, pos )
    end
 
    return S
+end
+function lanes.getRouteP( p, target, pos )
+   pos = pos or p:pos()
+   local L = getCacheP(p)
+   return lanes.getRoute( L, target, pos )
 end
 
 return lanes
