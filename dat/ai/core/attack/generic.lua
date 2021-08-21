@@ -107,6 +107,8 @@ function ___atk_g_ranged_dogfight( target, dist )
    -- Check if in range to shoot missiles
    if dist < ai.getweaprange( 4 ) and dir < 30 then
       ai.weapset( 4 )
+      ai.shoot()
+      ai.shoot(true)
    else
       -- Test if we should zz
       if ai.pilot():stats().mass < 400 and __atk_decide_zz() then
@@ -172,6 +174,8 @@ function ___atk_g_ranged_strafe( target, dist )
       if dir < 30 then
          ai.set_shoot_indicator(false)
          ai.weapset( 4 )
+         ai.shoot()
+         ai.shoot(true)
          -- If he managed to shoot, reinitialize the timer
          if ai.shoot_indicator() and not ai.timeup(1) then
             ai.settimer(1, 13.0)
@@ -210,6 +214,8 @@ function ___atk_g_ranged_kite( target, dist )
    if dir < 30 then
       if dist < range*0.95 then
          ai.weapset( 4 )
+         ai.shoot()
+         ai.shoot(true)
       end
 
       if dir < 10 then

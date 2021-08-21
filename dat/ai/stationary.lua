@@ -96,6 +96,8 @@ function attack ()
    -- Long-range
    if dir < 10 then
       ai.weapset( 4 ) -- Missiles, it's a fire group
+      ai.shoot()
+      ai.shoot(true)
    end
 end
 

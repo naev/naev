@@ -11,7 +11,7 @@
   <gfx_store>accuracy_forward.webp</gfx_store>
   <limit>emergency_shield_booster</limit>
  </general>
- <specific type="modification" group="8">
+ <specific type="modification" group="7">
   <lua>outfits/utility/emergency_shield_booster.lua</lua>
  </specific>
 </outfit>

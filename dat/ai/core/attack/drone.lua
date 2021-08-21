@@ -47,6 +47,8 @@ function __atk_drone_ranged( target, dist )
    -- Check if in range
    if dist < ai.getweaprange( 4 ) and dir < 30 then
       ai.weapset( 4 )
+      ai.shoot()
+      ai.shoot(true)
    else
       -- First test if we should zz
       if __atk_decide_zz() then

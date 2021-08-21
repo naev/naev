@@ -11,7 +11,7 @@
   <limit>ionizer</limit>
   <desc_extra>Automatically triggers when target armour is below 50%.</desc_extra>
  </general>
- <specific type="modification" group="7">
+ <specific type="modification" group="6">
   <active />
   <fwd_dam_as_dis>100</fwd_dam_as_dis>
   <fwd_damage>-70</fwd_damage>
