@@ -389,12 +389,14 @@ function control ()
    end
 
    -- Check to see if we want to go back to the lanes
-   local lr = mem.enemyclose
-   if lr then
-      local d, pos = lanes.getDistance2P( p, p:pos() )
-      if d < math.huge and d > lr*lr then
-         ai.pushtask( "moveto_nobrake", pos )
-         return
+   if si.fighting then
+      local lr = mem.enemyclose
+      if lr then
+         local d, pos = lanes.getDistance2P( p, p:pos() )
+         if d < math.huge and d > lr*lr then
+            ai.pushtask( "moveto_nobrake", pos )
+            return
+         end
       end
    end
 

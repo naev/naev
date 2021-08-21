@@ -322,7 +322,6 @@ function lanes.getNonPointP( p, pos, rad, margin, biasdir )
 end
 
 
-
 --[[
 -- Gets a random point of interest
 --]]
@@ -332,18 +331,28 @@ function lanes.getPointInterest( L, pos )
    -- Case nothing of interest we just return a random position like in the old days
    -- TODO do something smarter here
    if #lv == 0 then
-      local r = rnd.rnd() * system.cur():radius()
-      local a = rnd.rnd() * 360
       return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.rnd() * 360 )
    end
 
    return lv[ rnd.rnd(1,#lv) ]
-   -- TODO try to find elements in the connected component and not random
    --[[
+   -- TODO try to find elements in the connected component and not random
    local sv = nearestVertex( lv, pos )
    local S = djikstra( lv, le, sv )
+   local Sfar = {}
    for k,v in ipairs(S) do
+      if pos:dist2(v) > 1000*1000 then
+         table.insert( Sfar, v )
+      end
    end
+
+   -- No far points, this shouldn't happen, but return random point in this case
+   if #Sfar == 0 then
+      return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.rnd() * 360 )
+   end
+
+   -- Random far away point
+   return Sfar[ rnd.rnd(1, #Sfar) ]
    --]]
 end
 function lanes.getPointInterestP( p, pos )
