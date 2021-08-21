@@ -16,7 +16,6 @@
 #include <libgen.h>
 #include <stddef.h>
 #include <string.h>
-#include "physfsrwops.h"
 #include "SDL_image.h"
 
 #include "naev.h"
@@ -28,6 +27,7 @@
 #include "camera.h"
 #include "gui.h"
 #include "log.h"
+#include "ndata.h"
 
 #if defined(_WIN32) || defined(_WIN64)
 # define strtok_r strtok_s
@@ -117,59 +117,22 @@ static int readGLmaterial( GLfloat col[3], char **saveptr )
 }
 
 
-/*
- * @brief Behaves exactly as standard fgets() but accepts a
- * SDL_RWops context instead of a FILE
- */
-static char* SDL_RWgets( char *str, int size, SDL_RWops *ctx )
-{
-   int i, done = 0;
-   int read, to_read = 16;
-
-   while (done + 1 < size) {
-      if (to_read + done + 1 > size)
-         to_read = size - (done + 1);
-      read = SDL_RWread(ctx, str + done, 1, to_read);
-
-      if (read == 0) {
-         /* EOF occured */
-         if (done == 0)
-            /* No bytes read */
-            return NULL;
-         break;
-      }
-
-      for (i = 0; i < read; ++i)
-         if (str[done + i] == '\n') {
-            str[done + i + 1] = 0;
-            SDL_RWseek(ctx, - read + i + 1, SEEK_CUR);
-            return str;
-         }
-
-      done += read;
-      to_read *= 2;
-   }
-
-   assert(done + 1 == size);
-   str[done] = '\0';
-   return str;
-}
-
 static void materials_readFromFile( const char *filename, Material **materials )
 {
+   char *filebuf, *filesaveptr, *line;
+   size_t filesize;
    DEBUG(_("Loading material from %s"), filename);
 
-   SDL_RWops *f = PHYSFSRWOPS_openRead(filename);
-   if (!f)
+   filebuf = ndata_read( filename, &filesize );
+   if (filebuf == NULL)
       ERR(_("Cannot open object file %s"), filename);
 
    Material *curr = &array_back(*materials);
 
-   char line[256];
-   while (SDL_RWgets(line, sizeof(line), f)) {
+   line = strtok_r(filebuf, "\n", &filesaveptr);
+   while (line != NULL) {
       const char *token;
       char *saveptr, *copy_filename, *texture_filename;
-      assert("Line too long" && (line[strlen(line) - 1] == '\n'));
       token = strtok_r(line, DELIM, &saveptr);
 
       if (token == NULL) {
@@ -199,7 +162,7 @@ static void materials_readFromFile( const char *filename, Material **materials )
       } else if (strcmp(token, "Ke") == 0) {
          readGLmaterial( curr->Ke, &saveptr );
       } else if (strncmp(token, "map_", 4) == 0) {
-         glTexture **map;
+         glTexture **map = NULL;
          if (strcmp(token, "map_Kd") == 0)
             map = &curr->map_Kd;
          else if (strcmp(token, "map_Ks") == 0)
@@ -208,42 +171,42 @@ static void materials_readFromFile( const char *filename, Material **materials )
             map = &curr->map_Ke;
          else if (strcmp(token, "map_Bump") == 0)
             map = &curr->map_Bump;
-         else {
+         else
             LOG(_("Can't understand token %s"), token);
-            continue;
-         }
          /* Note: we can't tokenize the command line here; options may be follwed by a filename containing whitespace chars. */
-         char *args = strtok_r(NULL, "\n", &saveptr), *endp;
-         while (1) {
-            while (isspace(*args))
-               args++;
-            if (strncmp(args, "-bm", 3) == 0 && isspace(args[3])) {
-               args += 3;
-               curr->bm = strtof(args, &endp);
-               assert("Bad -bm argument" && endp != args);
-               args = endp;
-            }
-            else if (strncmp(args, "-s", 2) == 0 && isspace(args[2])) {
-               endp = args + 2;
-               LOG(_("-s (texture scaling) option ignored for %s"), token);
-               do {
+         if (map != NULL) {
+            char *args = strtok_r(NULL, "\n", &saveptr), *endp;
+            while (1) {
+               while (isspace(*args))
+                  args++;
+               if (strncmp(args, "-bm", 3) == 0 && isspace(args[3])) {
+                  args += 3;
+                  curr->bm = strtof(args, &endp);
+                  assert("Bad -bm argument" && endp != args);
                   args = endp;
-                  (void) strtof(args, &endp);
                }
-               while (endp != args);
+               else if (strncmp(args, "-s", 2) == 0 && isspace(args[2])) {
+                  endp = args + 2;
+                  LOG(_("-s (texture scaling) option ignored for %s"), token);
+                  do {
+                     args = endp;
+                     (void) strtof(args, &endp);
+                  }
+                  while (endp != args);
+               }
+               else if (args[0] == '-')
+                  ERR(_("Options not supported for %s"), token);
+               else
+                  break;
             }
-            else if (args[0] == '-')
-               ERR(_("Options not supported for %s"), token);
-            else
-               break;
-         }
 
-         /* computes the path to texture */
-         copy_filename = strdup(filename);
-	 asprintf(&texture_filename, "%s/%s", dirname(copy_filename), args);
-         *map = gl_newImage(texture_filename, 0);
-         free(copy_filename);
-         free(texture_filename);
+            /* computes the path to texture */
+            copy_filename = strdup(filename);
+            asprintf(&texture_filename, "%s/%s", dirname(copy_filename), args);
+            *map = gl_newImage(texture_filename, 0);
+            free(copy_filename);
+            free(texture_filename);
+         }
       } else if (strcmp(token, "Ke") == 0 || strcmp(token, "illum") == 0) {
          /* Ignore commands: [e]missive coefficient, illumination mode */
       } else if (token[0] == '#') {
@@ -251,9 +214,11 @@ static void materials_readFromFile( const char *filename, Material **materials )
       } else {
          LOG(_("Can't understand token %s"), token);
       }
+
+      line = strtok_r(NULL, "\n", &filesaveptr);
    }
 
-   SDL_RWclose(f);
+   free(filebuf);
 }
 
 
@@ -274,9 +239,11 @@ Object *object_loadFromFile( const char *filename )
    GLfloat *texture = array_create(GLfloat);  /**< texture coordinates */
    GLfloat *normal = array_create(GLfloat);  /**< normal coordinates */
    Vertex *corners = array_create(Vertex);    /**< corners of the triangle faces */
+   char *filebuf, *filesaveptr, *line;
+   size_t filesize;
 
-   SDL_RWops *f = PHYSFSRWOPS_openRead(filename);
-   if (!f)
+   filebuf = ndata_read( filename, &filesize );
+   if (filebuf == NULL)
       ERR(_("Cannot open object file %s"), filename);
    DEBUG(_("Loading object file %s"), filename);
 
@@ -294,10 +261,9 @@ Object *object_loadFromFile( const char *filename )
    object->meshes = array_create(Mesh);
    object->materials = array_create(Material);
 
-   char line[STRMAX_SHORT];
-   while (SDL_RWgets(line, sizeof(line), f)) {
+   line = strtok_r(filebuf, "\n", &filesaveptr);
+   while (line != NULL) {
       const char *token;
-      assert("Line too long" && (line[strlen(line) - 1] == '\n'));
       char *saveptr, *copy_filename, *material_filename;
       token = strtok_r(line, DELIM, &saveptr);
 
@@ -372,6 +338,8 @@ Object *object_loadFromFile( const char *filename )
          /* TODO Ignore s (smoothing), l (line) with no regrets? */
          LOG(_("Can't understand token %s"), token);
       }
+
+      line = strtok_r(NULL, "\n", &filesaveptr);
    }
 
    mesh_create(&object->meshes, name, corners, material);
@@ -385,11 +353,11 @@ Object *object_loadFromFile( const char *filename )
    object->radius = sqrt( object->radius );
 
    /* cleans up */
+   free(filebuf);
    array_free(vertex);
    array_free(texture);
    array_free(normal);
    array_free(corners);
-   SDL_RWclose(f);
 
    return object;
 }
