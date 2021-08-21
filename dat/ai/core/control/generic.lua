@@ -223,9 +223,7 @@ function should_attack( enemy, si )
          if ldata and ldata:exists() then
             -- Check to see if the pilot group the leader is fighting is the
             -- same as the current enenmy
-            local lel = ldata:leader() or ldata
-            local el = enemy:leader() or enemy
-            if lel == el then
+            if __sameFleet( ldata, enemy ) then
                return true
             end
          end
@@ -454,7 +452,8 @@ function control_funcs.loiter ()
    return false
 end
 function control_funcs.runaway ()
-   if mem.norun or ai.pilot():leader() ~= nil then
+   local p = ai.pilot()
+   if mem.norun or p:leader() ~= nil then
       ai.poptask()
       return true
    end
@@ -469,7 +468,7 @@ function control_funcs.runaway ()
    local dist = ai.dist( target )
 
    -- Should return to combat?
-   local parmour, pshield = ai.pilot():health()
+   local parmour, pshield = p:health()
    if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
          (mem.armour_return > 0 and parmour >= mem.armour_return)) then
       ai.poptask() -- "attack" should be above "runaway"
@@ -767,8 +766,9 @@ end
 -- Puts the pilot into cooldown mode if its weapons are overly hot and its shields are relatively high.
 -- This can happen during combat, so mem.heatthreshold should be quite high.
 function should_cooldown()
-   local mean = ai.pilot():weapsetHeat()
-   local _, pshield = ai.pilot():health()
+   local p = ai.pilot()
+   local mean = p:weapsetHeat()
+   local _, pshield = p:health()
 
    -- Don't want to cool down again so soon.
    -- By default, 15 ticks will be 30 seconds.
@@ -779,7 +779,7 @@ function should_cooldown()
    -- Not sure this is better...
    elseif mean > mem.heatthreshold and pshield > 50 then
       mem.cooldown = true
-      ai.pilot():setCooldown(true)
+      p:setCooldown(true)
    end
    if pshield == nil then
       player.msg("pshield = nil")
