@@ -433,7 +433,7 @@ end
 --]]
 function runaway( target )
    -- Target must exist
-   if not target:exists() then
+   if not target or not target:exists() then
       ai.poptask()
       return
    end
@@ -486,7 +486,7 @@ function __run_target( target )
    local plt    = ai.pilot()
 
    -- Target must exist
-   if not target:exists() then
+   if not target or not target:exists() then
       ai.poptask()
       return true
    end
@@ -513,19 +513,22 @@ function __run_target( target )
    return false
 end
 function __shoot_turret( target )
+   -- Target must exist
+   if not target and not target:exists() then
+      return
+   end
+
    -- Shoot the target
-   if target and target:exists() then
-      ai.hostile(target)
-      ai.settarget(target)
-      local dist    = ai.dist(target)
-      -- See if we have some turret to use
-      if ai.hasturrets() then
-         if dist < ai.getweaprange(3) then
-            ai.weapset( 3 )
-            ai.shoot( true )
-            ai.weapset( 4 )
-            ai.shoot( true )
-         end
+   ai.hostile(target)
+   ai.settarget(target)
+   local dist    = ai.dist(target)
+   -- See if we have some turret to use
+   if ai.hasturrets() then
+      if dist < ai.getweaprange(3) then
+         ai.weapset( 3 )
+         ai.shoot( true )
+         ai.weapset( 4 )
+         ai.shoot( true )
       end
    end
 end
