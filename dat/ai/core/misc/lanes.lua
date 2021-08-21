@@ -48,6 +48,53 @@ local function safelanesToGraph( lanes )
    return vertices, edges
 end
 
+local function connected( vertices, edges, source )
+   local L = {}
+   for k,v in ipairs(vertices) do
+      L[k] = 0
+   end
+   L[source] = 1
+
+   --[=[
+   local function _N(T,k) do
+      -- Get neighbours
+      for k,e in ipairs(E) do
+         if e[1] == k then --and L[e[2]] == 0 then
+            table.insert( T, e[2] )
+         elseif e[2] == k then --and L[e[1]] == 0 then
+            table.insert( T, e[1] )
+         end
+      end
+   end
+   --]=]
+
+   local N = { source }
+   while #N > 0 do
+      for k,v in ipairs(N) do
+         L[v] = 1
+      end
+      local NN = {}
+      for k,v in ipairs(N) do
+         for i,e in ipairs(edges) do
+            if e[1] == v and L[e[2]] == 0 then
+               table.insert( NN, e[2] )
+            elseif e[2] == v and L[e[1]] == 0 then
+               table.insert( NN, e[1] )
+            end
+         end
+      end
+      N = NN
+   end
+
+   local Q = {}
+   for k,v in ipairs(L) do
+      if v then
+         table.insert( Q, vertices[k] )
+      end
+   end
+   return Q
+end
+
 --[[
 -- You run of the mill djikstra algorithm
 --]]
@@ -334,14 +381,12 @@ function lanes.getPointInterest( L, pos )
       return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.rnd() * 360 )
    end
 
-   return lv[ rnd.rnd(1,#lv) ]
-   --[[
-   -- TODO try to find elements in the connected component and not random
+   -- Get the connected components
    local sv = nearestVertex( lv, pos )
-   local S = djikstra( lv, le, sv )
+   local S = connected( lv, le, sv )
    local Sfar = {}
    for k,v in ipairs(S) do
-      if pos:dist2(v) > 1000*1000 then
+      if pos:dist2(v) > 1000*1000 then -- TODO better threshold
          table.insert( Sfar, v )
       end
    end
@@ -353,7 +398,6 @@ function lanes.getPointInterest( L, pos )
 
    -- Random far away point
    return Sfar[ rnd.rnd(1, #Sfar) ]
-   --]]
 end
 function lanes.getPointInterestP( p, pos )
    pos = pos or p:pos()
