@@ -55,19 +55,6 @@ local function connected( vertices, edges, source )
    end
    L[source] = 1
 
-   --[=[
-   local function _N(T,k) do
-      -- Get neighbours
-      for k,e in ipairs(E) do
-         if e[1] == k then --and L[e[2]] == 0 then
-            table.insert( T, e[2] )
-         elseif e[2] == k then --and L[e[1]] == 0 then
-            table.insert( T, e[1] )
-         end
-      end
-   end
-   --]=]
-
    local N = { source }
    while #N > 0 do
       for k,v in ipairs(N) do
@@ -313,6 +300,33 @@ function lanes.getDistance2( L, pos )
 end
 function lanes.getDistance2P( p, pos )
    return lanes.getDistance2( getCacheP(p), pos )
+end
+
+
+function lanes.getPoint( L )
+   local lv, le = L.v, L.e
+   local elen = {}
+   local td = 0
+   for k,e in ipairs(le) do
+      local d = lv[e[1]]:dist( lv[e[2]] )
+      td = td + d
+      table.insert( elen, d )
+   end
+   local r = rnd.rnd()
+   local raccum = 0
+   for k,v in ipairs(elen) do
+      local rv = v / td
+      raccum = raccum + rv
+      if r < raccum then
+         local e = le[k]
+         local a = (r - raccum - rv) / rv
+         return lv[e[1]] * a + lv[e[2]] * (1-a)
+      end
+   end
+   return nil
+end
+function lanes.getPointP( p )
+   return lanes.getPoint( getCacheP(p) )
 end
 
 
