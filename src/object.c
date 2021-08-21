@@ -428,6 +428,8 @@ void object_free( Object *object )
       gl_freeTexture(oneTexture);
       zeroTexture = oneTexture = NULL;
    }
+
+   free(object);
 }
 
 static void object_renderMesh( const Object *object, int part, GLfloat alpha )
