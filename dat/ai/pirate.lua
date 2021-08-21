@@ -43,7 +43,7 @@ local bribe_prompt_list = join_tables( {
 }, bribe_prompt_common )
 local bribe_prompt_nearby_list = join_tables( {
    _([["It'll cost you %s for us to ignore your pile of rubbish."]]),
-   _([["We'm in a good mood so we'll let you go for %s."]]),
+   _([["We're in a good mood so we'll let you go for %s."]]),
    _([["Send us %s or you're dead."]]),
    _([["Shut up and give us your money! %s now."]]),
    _([["You give us %s and we'll act like we never saw you."]]),
