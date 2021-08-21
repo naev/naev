@@ -527,6 +527,7 @@ static int pilotL_add( lua_State *L )
    pilot_clearFlagsRaw( flags );
    vectnull(&vn); /* Need to determine angle. */
    jump = NULL;
+   planet = NULL;
    a    = 0.;
 
    /* Parse first argument - Ship Name */
@@ -643,10 +644,28 @@ static int pilotL_add( lua_State *L )
    /* Create the pilot. */
    p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0 );
    lua_pushpilot(L,p);
+   pplt = pilot_get( p );
+
+   /* Set the memory stuff. */
+   if (jump != NULL) {
+      LuaJump lj;
+      lj.srcid = jump->from->id;
+      lj.destid = cur_system->id;
+
+      nlua_getenv( pplt->ai->env, AI_MEM );
+      lua_pushjump(L, lj);
+      lua_setfield(L,-2,"create_jump");
+      lua_pop(L,1);
+   }
+   else if (planet != NULL) {
+      nlua_getenv( pplt->ai->env, AI_MEM );
+      lua_pushplanet(L,planet->id);
+      lua_setfield(L,-2,"create_planet");
+      lua_pop(L,1);
+   }
 
    /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
    if ((jump != NULL) && pilot_isFlagRaw( flags, PILOT_STEALTH )) {
-      pplt = pilot_get( p );
       space_calcJumpInPos( cur_system, jump->from, &pplt->solid->pos, &pplt->solid->vel, &pplt->solid->dir, pplt );
    }
    return 1;
