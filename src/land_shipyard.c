@@ -68,7 +68,7 @@ void shipyard_open( unsigned int wid )
    int w, h, sw, sh;
    int iw, ih;
    int bw, bh, padding, off;
-   int th;
+   int tw, th;
    int y;
    const char *buf;
    glTexture *t;
@@ -130,13 +130,13 @@ void shipyard_open( unsigned int wid )
          "Fabricator:\n"
          "Crew:\n"
          "\n"
+         "Base Properties\n"
          "CPU:\n"
          "Mass:\n"
          "Thrust:\n"
          "Speed:\n"
          "Turn:\n"
          "Time Constant:\n"
-         "\n"
          "Absorption:\n"
          "Shield:\n"
          "Armour:\n"
@@ -144,14 +144,16 @@ void shipyard_open( unsigned int wid )
          "Cargo Space:\n"
          "Fuel:\n"
          "Fuel Use:\n"
+         "\n"
          "Price:\n"
          "Money:\n"
          "License:\n");
-   th = gl_printHeightRaw( &gl_defFont, 106, buf );
+   tw = gl_printWidthRaw( &gl_defFont, buf );
+   th = gl_printHeightRaw( &gl_defFont, tw, buf );
    y  = -35;
    window_addText( wid, 20+iw+20, y,
-         128, th, 0, "txtSDesc", &gl_defFont, &cFontGrey, buf );
-   window_addText( wid, 20+iw+20+128, y,
+         tw+20, th, 0, "txtSDesc", &gl_defFont, &cFontGrey, buf );
+   window_addText( wid, 20+iw+20+tw+20, y,
          w-sw-40-(20+iw+20+128), th, 0, "txtDDesc", &gl_defFont, NULL, NULL );
    y -= th;
    window_addText( wid, 20+iw+20, y,
@@ -288,13 +290,13 @@ void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%d\n"
          "\n"
+         "\n"
          "%.0f %s\n"
          "%s %s\n"
          "%.0f kN/tonne\n"
          "%.0f m/s\n"
          "%.0f deg/s\n"
          "%.0f%%\n"
-         "\n"
          "%.0f%% damage\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
@@ -302,6 +304,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%.0f %s\n"
          "%d %s\n"
          "%d %s\n"
+         "\n"
          "%s\n"
          "%s\n"
          "%s\n"),
