@@ -957,13 +957,13 @@ int gl_printText( const glFont *ft_font,
       double bx, double by, int line_height,
       const glColour* c, const char *fmt, ... )
 {
-   char text[4096]; /* holds the string */
+   char text[STRMAX]; /* holds the string */
    va_list ap;
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsnprintf(text, 4096, fmt, ap);
+      vsnprintf(text, sizeof(text), fmt, ap);
       va_end(ap);
    }
 
