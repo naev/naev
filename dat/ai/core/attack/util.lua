@@ -103,12 +103,12 @@ end
 -- Tries to shoot seekers at close range
 --]]
 function __atk_dogfight_seekers( dist, dir )
-   if dist < ai.getweaprange( 4 ) and dist > 100 then
-      ai.weapset( 4 )
-      if dir < 20 then
-         ai.shoot()
+   if dist > 100 then
+      if dist < ai.getweaprange( 4 ) and dir < 20  then
+         ai.weapset( 4 )
+      elseif dist < ai.getweaprange( 9 ) then
+         ai.weapset( 9 )
       end
-      ai.shoot(true)
    end
 end
 

@@ -527,8 +527,7 @@ function __shoot_turret( target )
       if dist < ai.getweaprange(3) then
          ai.weapset( 3 )
          ai.shoot( true )
-         ai.weapset( 4 )
-         ai.shoot( true )
+         ai.weapset( 9 )
       end
    end
 end
