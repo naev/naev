@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-21 20:36-0400\n"
-"PO-Revision-Date: 2021-08-22 01:13+0000\n"
+"PO-Revision-Date: 2021-08-22 18:35+0000\n"
 "Last-Translator: Festerdam <festerdam@posteo.net>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
@@ -106,7 +106,7 @@ msgstr ""
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr ""
+msgstr "O que mais resta? Perguntas."
 
 #: dat/intro:34
 msgid ""
@@ -768,7 +768,7 @@ msgstr ""
 
 #: dat/assets/abacus.xml:2
 msgid "Abacus"
-msgstr ""
+msgstr "Ábaco"
 
 #: dat/assets/abacus.xml:26
 msgid ""
@@ -778,6 +778,11 @@ msgid ""
 "researchers on site at any one time. Tourism is out of the question, so is a "
 "bar."
 msgstr ""
+"Ábaco é um planeta muito grande em comparação com outros planetas rochosos. "
+"Os Soromitas estabeleceram aqui um posto-avançado de investigação para "
+"descobrir mais sobre a estrutura interna do planeta. É um posto muito "
+"pequeno, com apenas algumas dúzias de investigadores no local a qualquer "
+"hora. Turismo está fora de questão, assim como um bar."
 
 #: dat/assets/adham.xml:2
 msgid "Adham"
@@ -815,6 +820,10 @@ msgid ""
 "kept at an acceptable, though uncomfortable, low. Most patrons of this "
 "spaceport bar are in full winter gear."
 msgstr ""
+"Aquecimento nos planetas classe P é muitas vezes um assunto caro. É por isso "
+"que a temperatura aqui é mantida a um nível aceitável, mas ainda assim "
+"desconfortavelmente baixo. A maioria dos clientes neste bar estão "
+"completamente vestidos com roupas de inverno."
 
 #: dat/assets/aera.xml:2
 msgid "Aera"
@@ -893,6 +902,10 @@ msgid ""
 "very welcome. Running costs are kept low which means maintenance and service "
 "suffer. Nevertheless, it's quite possible to have a good time here."
 msgstr ""
+"Embora não se possa chamar este bar um lugar inóspede, este ainda assim não "
+"te faz sentir muito bem-vindo. Os custos de funcionamento são mantidos "
+"baixos, o que significa que a manutenção e o serviço sofrem. No entanto, "
+"pode-se mesmo assim passar um bom tempo aqui."
 
 #: dat/assets/akios_station.xml:2
 msgid "Akios Station"
@@ -71668,7 +71681,7 @@ msgstr ""
 
 #: src/debris.c:59
 msgid "No debris special effects found."
-msgstr ""
+msgstr "Não foram encontrados efeitos especiais para detritos."
 
 #: src/debug.c:58
 msgid "SIGFPE (raised by program)"
@@ -71676,7 +71689,7 @@ msgstr ""
 
 #: src/debug.c:59
 msgid "SIGFPE (integer divide by zero)"
-msgstr ""
+msgstr "SIGFPE (número inteiro dividido por zero)"
 
 #: src/debug.c:60
 msgid "SIGFPE (integer overflow)"
@@ -71684,7 +71697,7 @@ msgstr ""
 
 #: src/debug.c:61
 msgid "SIGFPE (floating-point divide by zero)"
-msgstr ""
+msgstr "SIGFPE (número fracionário dividido por zero)"
 
 #: src/debug.c:62
 msgid "SIGFPE (floating-point overflow)"
