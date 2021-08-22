@@ -83,7 +83,7 @@ function approach_kex ()
             pos = "right" }
 
       vn.na(_("You tell Kex about you encounter with the transports and how you weren't able to find the supposed cargo."))
-      kex(_([["Damn it. That must have been a decoy. The delivery logs are always a mess and there always seem to be mainly repeated by modified entries. I picked the most likely, but there was also another at the same time and it could have been that one. "]]))
+      kex(_([["Damn it. That must have been a decoy. The delivery logs are always a mess, and they always seem to be mainly repeated by modified entries. I picked the most likely, but there was also another at the same time, and it could have been that one. "]]))
 
       vn.appear( maikki, "slideleft", 1, "linear" )
       vn.sfxEerie()
