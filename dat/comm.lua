@@ -198,7 +198,7 @@ function comm( plt )
 
          if logo then
             vn.setColor( {1, 1, 1}, 1 )
-            logo:draw( x+namebox_text_w+10+bw + (logo_size-logo_w)*0.5, y+bh + (logo_size-logo_h)*0.5, 0, logo_scale )
+            logo:draw( x+namebox_text_w+10+bw + (logo_size-logo_w*logo_scale)*0.5, y+bh + (logo_size-logo_h*logo_scale)*0.5, 0, logo_scale )
          end
       end
       vn.setForeground( render_namebox )
