@@ -233,7 +233,7 @@ function should_attack( enemy, si )
 
    -- Check to see if we want to go back to the lanes
    local lr = mem.enemyclose
-   if lr then
+   if mem.natural and lr then
       local d, pos = lanes.getDistance2P( p, enemy:pos() )
       if d > lr*lr then
          return false
@@ -387,7 +387,7 @@ function control ()
    end
 
    -- Check to see if we want to go back to the lanes
-   if si.fighting then
+   if mem.natural and si.fighting then
       local lr = mem.enemyclose
       if lr then
          local d, pos = lanes.getDistance2P( p, p:pos() )
