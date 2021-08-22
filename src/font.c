@@ -697,13 +697,13 @@ void gl_print( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *fmt, ... )
 {
-   char text[256]; /* holds the string */
+   char text[STRMAX_SHORT]; /* holds the string */
    va_list ap;
 
    if (fmt == NULL) return;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsnprintf(text, 256, fmt, ap);
+      vsnprintf(text, sizeof(text), fmt, ap);
       va_end(ap);
    }
 
@@ -763,13 +763,13 @@ int gl_printMaxRaw( const glFont *ft_font, const int max, double x, double y,
 int gl_printMax( const glFont *ft_font, const int max, double x, double y,
       const glColour* c, const char *fmt, ... )
 {
-   char text[256]; /* holds the string */
+   char text[STRMAX_SHORT]; /* holds the string */
    va_list ap;
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsnprintf(text, 256, fmt, ap);
+      vsnprintf(text, sizeof(text), fmt, ap);
       va_end(ap);
    }
 
@@ -843,13 +843,13 @@ int gl_printMid( const glFont *ft_font, const int width,
       double x, double y,
       const glColour* c, const char *fmt, ... )
 {
-   char text[256]; /* holds the string */
+   char text[STRMAX_SHORT]; /* holds the string */
    va_list ap;
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsnprintf(text, 256, fmt, ap);
+      vsnprintf(text, sizeof(text), fmt, ap);
       va_end(ap);
    }
 
@@ -1022,13 +1022,13 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
  */
 int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
 {
-   char text[256]; /* holds the string */
+   char text[STRMAX_SHORT]; /* holds the string */
    va_list ap;
 
    if (fmt == NULL) return 0;
    else { /* convert the symbols to text */
       va_start(ap, fmt);
-      vsnprintf(text, 256, fmt, ap);
+      vsnprintf(text, sizeof(text), fmt, ap);
       va_end(ap);
    }
 
