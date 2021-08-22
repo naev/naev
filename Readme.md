@@ -79,7 +79,7 @@ git submodule init
 git submodule update
 ```
 
-Not that `git submodule update` has to be run every time you `git pull` to stay
+Note that `git submodule update` has to be run every time you `git pull` to stay
 up to date. This can also be done automatically by setting the following
 configuration:
 
