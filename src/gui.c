@@ -1459,7 +1459,7 @@ static void gui_blink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarSh
 
    if (blinkVar < blinkInterval/2.) {
       projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
-      projection = gl_Matrix4_Scale(projection, vr, vr, 1);
+      projection = gl_Matrix4_Scale(projection, 2*vr, 2*vr, 1);
       gl_beginSolidProgram(projection, col);
       gl_vboActivateAttribOffset( gui_planet_blink_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, 8 );
@@ -1525,8 +1525,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    /* Default values. */
    planet = cur_system->planets[ind];
-   r     = planet->radius*2. / res;
-   vr    = overlay ? planet->mo.radius : MAX( r, 15.);
+   r     = planet->radius / res;
+   vr    = overlay ? planet->mo.radius : MAX( r, 7.5 );
 
    if (overlay) {
       cx    = planet->pos.x / res;
@@ -1543,7 +1543,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
-      if (x*x + y*y > pow2(w-r)) {
+      if (x*x + y*y > pow2(w-2*r)) {
          if ((player.p->nav_planet == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
@@ -1578,7 +1578,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       gui_blink( w, h, rc, cx, cy, vr, shape, col, RADAR_BLINK_PLANET, blink_planet);
 
    glUseProgram(shaders.planetmarker.program);
-   gl_renderShader( cx, cy, vr/2., vr/2., 0., &shaders.planetmarker, col, 1 );
+   gl_renderShader( cx, cy, vr, vr, 0., &shaders.planetmarker, col, 1 );
 
    if (overlay) {
       snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
@@ -1607,8 +1607,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
-   r     = jumppoint_gfx->sw / res;
-   vr    = overlay ? jp->mo.radius : MAX( r, 10. );
+   r     = jumppoint_gfx->sw/2. / res;
+   vr    = overlay ? jp->mo.radius : MAX( r, 5. );
    if (overlay) {
       cx    = jp->pos.x / res;
       cy    = jp->pos.y / res;
@@ -1639,7 +1639,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
-      if (x*x + y*y > pow2(w-r)) {
+      if (x*x + y*y > pow2(w-2*r)) {
          if ((player.p->nav_hyperspace == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
@@ -1665,12 +1665,12 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       col = &cGreen;
 
    glLineWidth( 3. );
-   gl_renderTriangleEmpty( cx - 1, cy, -jp->angle, vr, 2., &cBlack );
-   gl_renderTriangleEmpty( cx + 1, cy, -jp->angle, vr, 2., &cBlack );
-   gl_renderTriangleEmpty( cx, cy - 1, -jp->angle, vr, 2., &cBlack );
-   gl_renderTriangleEmpty( cx, cy + 1, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx - 1, cy, -jp->angle, 2*vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx + 1, cy, -jp->angle, 2*vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy - 1, -jp->angle, 2*vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy + 1, -jp->angle, 2*vr, 2., &cBlack );
 
-   gl_renderTriangleEmpty( cx, cy, -jp->angle, vr, 2., col );
+   gl_renderTriangleEmpty( cx, cy, -jp->angle, 2*vr, 2., col );
    glLineWidth( 1. );
 
    /* Render name. */
