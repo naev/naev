@@ -982,7 +982,7 @@ int gl_printText( const glFont *ft_font,
  */
 int gl_printWidthRaw( const glFont *ft_font, const char *text )
 {
-   GLfloat n;
+   GLfloat n, nmax;
    size_t i;
    uint32_t ch;
 
@@ -991,7 +991,7 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
    glFontStash *stsh = gl_fontGetStash( ft_font );
 
    gl_fontKernStart();
-   n = 0.;
+   nmax = n = 0.;
    i = 0;
    while ((ch = u8_nextchar( text, &i ))) {
       /* Ignore escape sequence. */
@@ -1002,12 +1002,21 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
          continue;
       }
 
+      /* Newline. */
+      if (text[i] == '\n') {
+         nmax = MAX( nmax, n );
+         n = 0.;
+         i++;
+         continue;
+      }
+
       /* Increment width. */
       glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
       n += gl_fontKernGlyph( stsh, ch, glyph ) + glyph->adv_x;
    }
+   nmax = MAX( nmax, n );
 
-   return (int)round(n);
+   return (int)round(nmax);
 }
 
 
