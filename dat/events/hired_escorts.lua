@@ -205,8 +205,13 @@ function land ()
       evt.save(false)
    end
 
-   -- No sense continuing is there is no bar on the planet.
-   if not planet.cur():services()["bar"] then return end
+   -- Ignore on uninhabited and planets without bars
+   local pnt = planet.cur()
+   local services = pnt:services()
+   local flags = pnt:flags()
+   if not services.inhabited or not services.bar or flags.nomissionspawn then
+      return
+   end
 
    -- Create NPCs for pilots you can hire.
    createPilotNPCs()
