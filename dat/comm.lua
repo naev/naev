@@ -111,7 +111,9 @@ local function bribe_msg( plt, group )
          str = _([["We'll need at least %s to not leave you as a hunk of floating debris."]])
       end
       str = string.format( str, cstr )
-      return string.format(_("%s\n\nThis action will bribe %d %s pilots.\nYou have %s. Pay #r%s#0?"), str, #bribeable, plt:faction():name(), chave, cstr )
+      return string.format(n_("%s\n\nThis action will bribe %d %s pilot.\nYou have %s. Pay #r%s#0?",
+                              "%s\n\nThis action will bribe %d %s pilots.\nYou have %s. Pay #r%s#0?", #bribeable),
+            str, #bribeable, plt:faction():name(), chave, cstr )
    else
       local cost = bribe_cost( plt )
       local str = mem.bribe_prompt
@@ -276,7 +278,7 @@ function comm( plt )
       end
       local cstr = creditstring( player.credits() )
       local cdif = creditstring( cost - player.credits() )
-      return string.format(_("You only have %s credits. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
+      return string.format(_("You only have %s. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
    end )
    vn.jump("menu")
 
@@ -325,7 +327,7 @@ function comm( plt )
    vn.na( function ()
       local cstr = creditstring( player.credits() )
       local cdif = creditstring( bribe_nearby_cost - player.credits() )
-      return string.format(_("You only have %s credits. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
+      return string.format(_("You only have %s. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
    end )
    vn.jump("menu")
 
