@@ -324,10 +324,11 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    glUseProgram(shaders.texture_interpolate.program);
 
    /* Bind the textures. */
-   glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE_2D, ta->texture);
    glActiveTexture( GL_TEXTURE1 );
    glBindTexture( GL_TEXTURE_2D, tb->texture);
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE_2D, ta->texture);
+   /* Always end with TEXTURE0 active. */
 
    /* Must have colour for now. */
    if (c == NULL)
@@ -358,7 +359,6 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
 
    /* Clear state. */
    glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
-   glActiveTexture( GL_TEXTURE0 );
 
    /* anything failed? */
    gl_checkErr();
