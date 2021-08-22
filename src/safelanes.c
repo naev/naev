@@ -790,7 +790,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
          presence_budget[fi][si] -= cost_best;
          if (presence_budget[fi][si] >= cost_cheapest_other)
             turns_next_time++;
-	 else {
+         else {
             presence_budget[fi][si] = 0; /* Nothing more to do here; tell ourselves. */
             if (lal[fi] == NULL)
                lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];

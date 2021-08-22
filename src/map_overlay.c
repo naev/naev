@@ -577,7 +577,7 @@ void ovr_render( double dt )
                   known = 0;
                break;
             default:
-	       ERR( _("Invalid vertex type.") );
+               ERR( _("Invalid vertex type.") );
          }
       }
 

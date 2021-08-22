@@ -350,7 +350,7 @@ static void nebu_renderPuffs( int below_player )
             puff->y += SCREEN_H + 2*NEBULA_PUFF_BUFFER;
 
          /* Render */
-	 col_blend( &col, &puff->col, &cBlack, conf.nebu_brightness );
+         col_blend( &col, &puff->col, &cBlack, conf.nebu_brightness );
          gl_blitStatic( nebu_pufftexs[puff->tex],
                puff->x, puff->y, &col );
       }

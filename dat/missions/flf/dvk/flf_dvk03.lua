@@ -174,11 +174,11 @@ function enter ()
          -- Spawn Dvaered and Empire ships
          dv_fleet = {}
 
-	 local empire_lge_attack = {"Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
-	                            "Empire Admonisher", "Empire Admonisher", "Empire Admonisher",
-				    "Empire Pacifier",
-				    "Empire Hawking",
-				    "Empire Peacemaker"}
+         local empire_lge_attack = {"Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
+                                    "Empire Admonisher", "Empire Admonisher", "Empire Admonisher",
+                                    "Empire Pacifier",
+                                    "Empire Hawking",
+                                    "Empire Peacemaker"}
          nf = fleet.add( 1, empire_lge_attack, "Empire", ms:pos(), nil, {ai="empire_norun"} )
          for i, j in ipairs( nf ) do
             dv_fleet[ #dv_fleet + 1 ] = j

@@ -59,7 +59,7 @@ float sdRhombus( vec2 p, vec2 b )
 /* Uneven capsule oriented on Y axis. */
 float sdUnevenCapsuleY( vec2 p, float ra, float rb, float h )
 {
-	p.x = abs(p.x);
+   p.x = abs(p.x);
 
    float b = (ra-rb)/h;
    vec2  c = vec2(sqrt(1.0-b*b),b);

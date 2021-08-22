@@ -14,10 +14,10 @@ void main(void) {
    vec2 uv = pos;
    float m = 1.0 / dimensions.x;
 
-	/* Outter stuff. */
-	float w = 1.0 * m;
-	float inner = 1.0-w-m;
-	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
+   /* Outter stuff. */
+   float w = 1.0 * m;
+   float inner = 1.0-w-m;
+   float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
    /* Rotation matrix. */
    float dts = 0.1 * max( 0.5, 100.0 / r );

@@ -12,12 +12,12 @@ float cro(in vec2 a, in vec2 b ) { return a.x*b.y - a.y*b.x; }
 
 float smin( float a, float b, float k )
 {
-	float h = max( k-abs(a-b), 0.0 )/k;
-	return min( a, b ) - h*h*k*(1.0/4.0);
+   float h = max( k-abs(a-b), 0.0 )/k;
+   return min( a, b ) - h*h*k*(1.0/4.0);
 }
 float sdSmoothUnion( float d1, float d2, float k )
  {
-	return smin( d1, d2, k );
+   return smin( d1, d2, k );
 }
 
 float sdSegment( in vec2 p, in vec2 a, in vec2 b )
@@ -38,7 +38,7 @@ float sdPie( vec2 p, vec2 c, float r )
 
 float sdUnevenCapsuleY( in vec2 p, in float ra, in float rb, in float h )
 {
-	p.x = abs(p.x);
+   p.x = abs(p.x);
 
    float b = (ra-rb)/h;
    vec2  c = vec2(sqrt(1.0-b*b),b);
@@ -139,8 +139,8 @@ vec4 sdf_pilot2( vec4 color, vec2 uv )
    const float arclen1 = M_PI/4.0;
    const float arclen2 = M_PI/7.0;
 
-	float w = 2.0 * m;
-	float inner = 1.0-w-m;
+   float w = 2.0 * m;
+   float inner = 1.0-w-m;
    float d = sdArc( uv, CS(0.0), CS(arclen1), inner, w );
 
    vec2 yuv = vec2( uv.x, abs(uv.y) );
@@ -161,10 +161,10 @@ vec4 sdf_planet( vec4 color, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
-	/* Outter stuff. */
-	float w = 1.0 * m;
-	float inner = 1.0-w-m;
-	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
+   /* Outer stuff. */
+   float w = 1.0 * m;
+   float inner = 1.0-w-m;
+   float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
    /* Rotation matrix. */
    float dts = 0.1 * max( 0.5, 100.0 * m );
@@ -219,10 +219,10 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
-	/* Outter stuff. */
-	float w = 2.0 * m;
-	float inner = 1.0-w-m;
-	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
+   /* Outter stuff. */
+   float w = 2.0 * m;
+   float inner = 1.0-w-m;
+   float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
    /* Inner steps */
    float dts = 0.05 * max( 0.5, 100.0 * m );
@@ -260,10 +260,10 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
 
 vec4 bg( vec2 uv )
 {
-	vec3 c;
+   vec3 c;
    uv *= 10.0;
-	if (mod( floor(uv.x)+floor(uv.y), 2.0 ) == 0.0)
-		c = vec3( 0.2 );
+   if (mod( floor(uv.x)+floor(uv.y), 2.0 ) == 0.0)
+      c = vec3( 0.2 );
    else
       c = vec3( 0.0 );
    c = gammaToLinear( c );
@@ -291,10 +291,10 @@ uniform float u_time = 0.0;
 
 vec4 bg( vec2 uv )
 {
-	vec3 c;
+   vec3 c;
    uv *= 10.0;
-	if (mod( floor(uv.x)+floor(uv.y), 2.0 ) == 0.0)
-		c = vec3( 0.8 );
+   if (mod( floor(uv.x)+floor(uv.y), 2.0 ) == 0.0)
+      c = vec3( 0.8 );
    else
       c = vec3( 0.2 );
    return vec4( c, 1.0 );
@@ -305,33 +305,33 @@ const float PULSE_WIDTH    = 0.1;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
-	//Sawtooth function to pulse from centre.
-	float u_time = fract(u_time * PULSE_SPEED);
-	vec2 off = uv - vec2(0.5);
-	float dist = length( off );
+   //Sawtooth function to pulse from centre.
+   float u_time = fract(u_time * PULSE_SPEED);
+   vec2 off = uv - vec2(0.5);
+   float dist = length( off );
 
-	vec4 col;
+   vec4 col;
 
-	//Only distort the pixels within the parameter distance from the centre
+   //Only distort the pixels within the parameter distance from the centre
    float diff = dist - u_time;
-	if ((diff <= PULSE_WIDTH) && (diff >= -PULSE_WIDTH)) {
-		//The pixel offset distance based on the input parameters
-		//float sdiff = (1.0 - pow(abs(diff * 10.0), 0.38));
-		float sdiff = (1.0 - abs(diff * 10.0));
+   if ((diff <= PULSE_WIDTH) && (diff >= -PULSE_WIDTH)) {
+      //The pixel offset distance based on the input parameters
+      //float sdiff = (1.0 - pow(abs(diff * 10.0), 0.38));
+      float sdiff = (1.0 - abs(diff * 10.0));
       float tdist = u_time * dist;
 
-		/* Perform the distortion and reduce the effect over time */
-		uv += ((normalize(off) * diff * sdiff) / (tdist * 60.0));
-		//Color = texture( tex, uv );
-		col = bg( uv );
+      /* Perform the distortion and reduce the effect over time */
+      uv += ((normalize(off) * diff * sdiff) / (tdist * 60.0));
+      //Color = texture( tex, uv );
+      col = bg( uv );
 
-		/* Blow out the color and reduce the effect over time */
-		col += color * sdiff / (tdist * 60.0);
-	}
-	else
-		col = bg( uv );
+      /* Blow out the color and reduce the effect over time */
+      col += color * sdiff / (tdist * 60.0);
+   }
+   else
+      col = bg( uv );
 
-	return col;
+   return col;
 }
 ]]
 

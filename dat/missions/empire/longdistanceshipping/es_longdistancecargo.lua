@@ -62,9 +62,8 @@ function create()
    if destplanet == nil then
       misn.finish(false)
    end
-   if destplanet:faction() == faction.get( "Empire" )
-         or destplanet:faction() == faction.get( "Independent" ) then
-    	misn.finish(false)
+   if destplanet:faction() == faction.get( "Empire" ) or destplanet:faction() == faction.get( "Independent" ) then
+      misn.finish(false)
    end
 
    -- mission generics
@@ -79,7 +78,7 @@ function create()
       timelimit:add(time.create( 0, 0, math.floor((numjumps-1) / jumpsperstop) * stuperjump ))
    end
 
-	--Determine risk of piracy
+   --Determine risk of piracy
    if avgrisk == 0 then
       piracyrisk = piracyrisk[1]
       riskreward = 0
@@ -97,7 +96,7 @@ function create()
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    amount     = rnd.rnd(10 + 3 * tier, 20 + 4 * tier)
-	jumpreward = commodity.price(cargo)*1.5
+   jumpreward = commodity.price(cargo)*1.5
    distreward = math.log(300*commodity.price(cargo))/100
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 

@@ -273,7 +273,7 @@ Object *object_loadFromFile( const char *filename )
          while ((token = strtok_r(NULL, DELIM, &saveptr)) != NULL) {
             /* computes the path to materials */
             copy_filename = strdup(filename);
-	    asprintf(&material_filename, "%s/%s", dirname(copy_filename), token);
+            asprintf(&material_filename, "%s/%s", dirname(copy_filename), token);
             materials_readFromFile(material_filename, &object->materials);
             free(copy_filename);
             free(material_filename);
@@ -312,7 +312,7 @@ Object *object_loadFromFile( const char *filename )
             memcpy(face->ver, vertex  + i_v * 3, sizeof(GLfloat) * 3);
             if (i_t >= 0)
                memcpy(face->tex, texture + i_t * 2, sizeof(GLfloat) * 2);
-	    else
+            else
                memset(face->tex, 0, sizeof(GLfloat) * 2);
             memcpy(face->nor, normal  + i_n * 3, sizeof(GLfloat) * 3);
             ++num;
