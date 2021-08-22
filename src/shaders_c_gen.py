@@ -252,6 +252,10 @@ SHADERS = [
       fs_path = "factiondisk.frag",
    ),
    SimpleShader(
+      name = "planetmarker",
+      fs_path = "planetmarker.frag",
+   ),
+   SimpleShader(
       name = "progressbar",
       fs_path = "progressbar.frag",
    ),
