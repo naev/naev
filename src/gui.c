@@ -2031,7 +2031,11 @@ char* gui_pick (void)
 {
    char* gui;
 
-   if (player.gui && (player.guiOverride == 1 || strcmp(player.p->ship->gui,"default")==0))
+   /* Don't do set a gui if player is dead. This can be triggered through
+    * naev_resize and can cause an issue if player is dead. */
+   if ((player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD))
+      gui = NULL;
+   else if (player.gui && (player.guiOverride == 1 || strcmp(player.p->ship->gui,"default")==0))
       gui = player.gui;
    else
       gui = player.p->ship->gui;
@@ -2052,6 +2056,8 @@ int gui_load( const char* name )
 
    /* Set defaults. */
    gui_cleanup();
+   if (name==NULL)
+      return 0;
    gui_name = strdup(name);
 
    /* Open file. */
@@ -2067,11 +2073,6 @@ int gui_load( const char* name )
       nlua_freeEnv(gui_env);
       gui_env = LUA_NOREF;
    }
-
-   /* Don't do anything if player is dead. This can be triggered through
-    * naev_resize and cause errosr when player is dead. */
-   if ((player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD))
-      return 0;
 
    /* Create Lua state. */
    gui_env = nlua_newEnv(1);
