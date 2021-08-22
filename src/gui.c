@@ -2071,7 +2071,7 @@ int gui_load( const char* name )
    /* Don't do anything if player is dead. This can be triggered through
     * naev_resize and cause errosr when player is dead. */
    if ((player.p != NULL) || pilot_isFlag(player.p,PILOT_DEAD))
-      return;
+      return 0;
 
    /* Create Lua state. */
    gui_env = nlua_newEnv(1);
