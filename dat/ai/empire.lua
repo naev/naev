@@ -55,34 +55,36 @@ end
 
 -- When hailed
 function hail ()
-   -- Get refuel chance
-   if mem.refuel == nil then
-      local standing = ai.getstanding( player.pilot() ) or -1
-      mem.refuel = rnd.rnd( 2000, 4000 )
-      if standing < 0 then
-         mem.refuel_no = _([["My fuel is property of the Empire."]])
-      elseif standing < 40 then
-         if rnd.rnd() > 0.8 then
-            mem.refuel_no = _([["My fuel is property of the Empire."]])
-         end
-      else
-         mem.refuel = mem.refuel * 0.6
-      end
-      -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _([["I suppose I could spare some fuel for %s, but you'll have to do the paperwork."]]), creditstring(mem.refuel) )
+   if mem.setuphail then return end
 
-      -- See if can be bribed
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500 * rnd.rnd() + 1750)
-      if standing > 0 or
-            (standing > -20 and rnd.rnd() > 0.7) or
-            (standing > -50 and rnd.rnd() > 0.5) or
-            (rnd.rnd() > 0.3) then
-         mem.bribe_prompt = string.format(_([["For some %s I could forget about seeing you."]]), creditstring(mem.bribe) )
-         mem.bribe_paid = _([["Now scram before I change my mind."]])
-      else
-         mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+   -- Get refuel chance
+   local standing = ai.getstanding( player.pilot() ) or -1
+   mem.refuel = rnd.rnd( 2000, 4000 )
+   if standing < 0 then
+      mem.refuel_no = _([["My fuel is property of the Empire."]])
+   elseif standing < 40 then
+      if rnd.rnd() > 0.8 then
+         mem.refuel_no = _([["My fuel is property of the Empire."]])
       end
+   else
+      mem.refuel = mem.refuel * 0.6
    end
+   -- Most likely no chance to refuel
+   mem.refuel_msg = string.format( _([["I suppose I could spare some fuel for %s, but you'll have to do the paperwork."]]), creditstring(mem.refuel) )
+
+   -- See if can be bribed
+   mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500 * rnd.rnd() + 1750)
+   if (mem.natural or mem.allowbribe) and (standing > 0 or
+         (standing > -20 and rnd.rnd() > 0.7) or
+         (standing > -50 and rnd.rnd() > 0.5) or
+         (rnd.rnd() > 0.3)) then
+      mem.bribe_prompt = string.format(_([["For some %s I could forget about seeing you."]]), creditstring(mem.bribe) )
+      mem.bribe_paid = _([["Now scram before I change my mind."]])
+   else
+      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+   end
+
+   mem.setuphail = true
 end
 
 -- taunts

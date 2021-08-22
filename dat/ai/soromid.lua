@@ -65,11 +65,11 @@ function hail ()
 
       -- Handle bribing
       mem.bribe = 3 * math.sqrt( ai.pilot():stats().mass ) * (500 * rnd.rnd() + 1750)
-      if standing > 20 or
+      if (mem.natural or mem.allowbribe) and (standing > 20 or
             (standing > 0 and rnd.rnd() > 0.8) or
             (standing > -20 and rnd.rnd() > 0.6) or
             (standing > -50 and rnd.rnd() > 0.4) or
-            (rnd.rnd() > 0.2) then
+            (rnd.rnd() > 0.2)) then
          mem.bribe_prompt = string.format(_([["For %s I'll give you enough time to get out of my sight."]]), creditstring(mem.bribe) )
          mem.bribe_paid = _([["Now get out of my sight."]])
       else

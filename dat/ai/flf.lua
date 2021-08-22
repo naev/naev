@@ -42,31 +42,33 @@ end
 
 
 function hail ()
+   if mem.setuphail then return end
+
    -- Get standing.
-   if mem.bribe == nil then
-      local standing = ai.getstanding( player.pilot() ) or -1
+   local standing = ai.getstanding( player.pilot() ) or -1
 
-      -- Handle bribes.
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.rnd() + 850.)
-      if standing > -30 or
-            (standing > -60 and rnd.rnd() > 0.8) or
-            (rnd.rnd() > 0.4) then
-         mem.bribe_prompt = string.format(_([["It'll cost you %s for me to ignore your dirty presence."]]), creditstring(mem.bribe))
-         mem.bribe_paid = _([["Begone before I change my mind."]])
-      else
-         mem.bribe_no = _([["The only way to deal with scum like you is with cannons!"]])
-      end
-
-      -- Handle refueling.
-      if standing > 70 or
-            (standing > 30 and rnd.rnd() > 0.8) or
-            (standing > 0 and rnd.rnd() > 0.5) then
-         mem.refuel = rnd.rnd( 1000, 2000 )
-         mem.refuel_msg = string.format(_([["I should be able to spare some fuel for %s."]]), creditstring(mem.refuel))
-      else
-         mem.refuel_no = _([["I can't spare fuel for you."]])
-      end
+   -- Handle bribes.
+   mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (300. * rnd.rnd() + 850.)
+   if (mem.natural or mem.allowbribe) and (standing > -30 or
+         (standing > -60 and rnd.rnd() > 0.8) or
+         (rnd.rnd() > 0.4)) then
+      mem.bribe_prompt = string.format(_([["It'll cost you %s for me to ignore your dirty presence."]]), creditstring(mem.bribe))
+      mem.bribe_paid = _([["Begone before I change my mind."]])
+   else
+      mem.bribe_no = _([["The only way to deal with scum like you is with cannons!"]])
    end
+
+   -- Handle refueling.
+   if standing > 70 or
+         (standing > 30 and rnd.rnd() > 0.8) or
+         (standing > 0 and rnd.rnd() > 0.5) then
+      mem.refuel = rnd.rnd( 1000, 2000 )
+      mem.refuel_msg = string.format(_([["I should be able to spare some fuel for %s."]]), creditstring(mem.refuel))
+   else
+      mem.refuel_no = _([["I can't spare fuel for you."]])
+   end
+
+   mem.setuphail = true
 end
 
 

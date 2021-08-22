@@ -17,16 +17,21 @@ function create ()
 end
 
 function hail ()
+   if mem.setuphail then return end
+
+   -- bribes
    mem.bribe_no = _([["The Space Traders do not negotiate with criminals."]])
-   if mem.refuel == nil then
-      mem.refuel = rnd.rnd( 3000, 5000 )
-      local standing = ai.getstanding( player.pilot() ) or -1
-      if standing > 50 then
-         mem.refuel = mem.refuel * 0.75
-      elseif standing > 80 then
-         mem.refuel = mem.refuel * 0.5
-      end
-      mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-            creditstring(mem.refuel))
+
+   -- Refueling
+   mem.refuel = rnd.rnd( 3000, 5000 )
+   local standing = ai.getstanding( player.pilot() ) or -1
+   if standing > 50 then
+      mem.refuel = mem.refuel * 0.75
+   elseif standing > 80 then
+      mem.refuel = mem.refuel * 0.5
    end
+   mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
+         creditstring(mem.refuel))
+
+   mem.setuphail = true
 end

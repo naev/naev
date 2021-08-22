@@ -51,7 +51,7 @@ function create()
       mem.bribe_no = msg
       mem.armour_run = 0 -- Drones don't run
       -- Drones can get indirectly bribed as part of fleets
-      mem.bribe = math.sqrt( p:stats().mass ) * (500. * rnd.rnd() + 1750.)
+      mem.bribe = math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
       create_post()
       return
    end
@@ -69,30 +69,32 @@ function create()
 end
 
 function hail ()
-   -- Get refuel chance
-   if mem.refuel == nil then
-      local standing = ai.getstanding( player.pilot() ) or -1
-      mem.refuel = rnd.rnd( 1000, 2000 )
-      if standing < -10 then
-         mem.refuel_no = _([["I do not have fuel to spare."]])
-      else
-         mem.refuel = mem.refuel * 0.6
-      end
-      -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _([["I will agree to refuel your ship for %s."]]), creditstring(mem.refuel) )
+   if mem.setuphail then return end
 
-      -- See if can be bribed
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500 * rnd.rnd() + 1750)
-      if standing > 0 or
-            (standing > -20 and rnd.rnd() > 0.8) or
-            (standing > -50 and rnd.rnd() > 0.6) or
-            (rnd.rnd() > 0.4) then
-         mem.bribe_prompt = string.format(_([["We will agree to end the battle for %s."]]), creditstring(mem.bribe) )
-         mem.bribe_paid = _([["Temporarily stopping fire."]])
-      else
-         mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
-      end
+   -- Get refuel chance
+   local standing = ai.getstanding( player.pilot() ) or -1
+   mem.refuel = rnd.rnd( 1000, 2000 )
+   if standing < -10 then
+      mem.refuel_no = _([["I do not have fuel to spare."]])
+   else
+      mem.refuel = mem.refuel * 0.6
    end
+   -- Most likely no chance to refuel
+   mem.refuel_msg = string.format( _([["I will agree to refuel your ship for %s."]]), creditstring(mem.refuel) )
+
+   -- See if can be bribed
+   mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500 * rnd.rnd() + 1750)
+   if (mem.natural or mem.allowbribe) and (standing > 0 or
+         (standing > -20 and rnd.rnd() > 0.8) or
+         (standing > -50 and rnd.rnd() > 0.6) or
+         (rnd.rnd() > 0.4)) then
+      mem.bribe_prompt = string.format(_([["We will agree to end the battle for %s."]]), creditstring(mem.bribe) )
+      mem.bribe_paid = _([["Temporarily stopping fire."]])
+   else
+      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+   end
+
+   mem.setuphail = true
 end
 
 function taunt ( target, offense )

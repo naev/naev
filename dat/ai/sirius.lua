@@ -35,25 +35,27 @@ function create ()
 end
 
 function hail ()
-   -- Get refuel chance
-   if mem.refuel == nil then
-      local standing = ai.getstanding( player.pilot() ) or -1
-      mem.refuel = rnd.rnd( 1000, 2000 )
-      if standing < 0 then
-         mem.refuel_no = _([["I do not have fuel to spare."]])
-      elseif standing > 30 then
-         if rnd.rnd() < 0.5 then
-            mem.refuel_no = _([["I do not have fuel to spare."]])
-         end
-      else
-         mem.refuel = mem.refuel * 0.6
-      end
-      -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _([["I would be able to refuel your ship for %s."]]), creditstring(mem.refuel) )
+   if mem.setuphail then return end
 
-      -- Can't be bribed
-      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+   -- Get refuel chance
+   local standing = ai.getstanding( player.pilot() ) or -1
+   mem.refuel = rnd.rnd( 1000, 2000 )
+   if standing < 0 then
+      mem.refuel_no = _([["I do not have fuel to spare."]])
+   elseif standing > 30 then
+      if rnd.rnd() < 0.5 then
+         mem.refuel_no = _([["I do not have fuel to spare."]])
+      end
+   else
+      mem.refuel = mem.refuel * 0.6
    end
+   -- Most likely no chance to refuel
+   mem.refuel_msg = string.format( _([["I would be able to refuel your ship for %s."]]), creditstring(mem.refuel) )
+
+   -- Can't be bribed
+   mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+
+   mem.setuphail = true
 end
 
 -- taunts

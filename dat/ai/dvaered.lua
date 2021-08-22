@@ -38,23 +38,25 @@ end
 
 -- When hailed
 function hail ()
-   -- Handle refueling
-   if mem.refuel == nil then
-      local standing = ai.getstanding( player.pilot() ) or -1
-      if standing < 50 then
-         mem.refuel_no = _([["You are not worthy of my attention."]])
-      else
-         mem.refuel = rnd.rnd( 1000, 3000 )
-         mem.refuel_msg = string.format(_([["For you I could make an exception for %s."]]), creditstring(mem.refuel))
-      end
+   if mem.setuphail then return end
 
-      -- Handle bribing
-      if rnd.rnd() > 0.4 then
-         mem.bribe_no = _([["I shall especially enjoy your death."]])
-      else
-         mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
-      end
+   -- Handle refueling
+   local standing = ai.getstanding( player.pilot() ) or -1
+   if standing < 50 then
+      mem.refuel_no = _([["You are not worthy of my attention."]])
+   else
+      mem.refuel = rnd.rnd( 1000, 3000 )
+      mem.refuel_msg = string.format(_([["For you I could make an exception for %s."]]), creditstring(mem.refuel))
    end
+
+   -- Handle bribing
+   if rnd.rnd() > 0.4 then
+      mem.bribe_no = _([["I shall especially enjoy your death."]])
+   else
+      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+   end
+
+   mem.setuphail = true
 end
 
 -- taunts
