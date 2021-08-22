@@ -42,7 +42,7 @@ misn_desc = string.format(_("You have been assigned with obtaining information f
 
 -- TODO custom graphic?
 jie_portrait = portrait.get()
-jie_image = portrait.getFullPath(portrait)
+jie_image = portrait.getFullPath(jie_portrait)
 jie_description = _("You see an individual matching the description of Jie de Luca.")
 
 money_reward = 700e3
