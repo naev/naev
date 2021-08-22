@@ -449,7 +449,7 @@ function runaway( target )
       ai.pushsubtask( "_run_hyp", {target, t} )
    elseif t == nil then
       mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
-      ai.pushsubtask( "_run_landgo", {target,p} )
+      ai.pushsubtask( "_run_landgo", {target, p} )
    else
       -- find which one is the closest
       local pilpos = ai.pilot():pos()
@@ -460,7 +460,7 @@ function runaway( target )
          ai.pushsubtask( "_run_hyp", {target, t} )
       else
          mem.target_bias = vec2.newP( rnd.rnd()*p:radius()/2, rnd.rnd()*360 )
-         ai.pushsubtask( "_run_landgo", {target,p} )
+         ai.pushsubtask( "_run_landgo", {target, p} )
       end
    end
 end
@@ -521,7 +521,7 @@ function __shoot_turret( target )
    -- Shoot the target
    ai.hostile(target)
    ai.settarget(target)
-   local dist    = ai.dist(target)
+   local dist = ai.dist(target)
    -- See if we have some turret to use
    if ai.hasturrets() then
       if dist < ai.getweaprange(3) then
