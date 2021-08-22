@@ -514,7 +514,7 @@ function __run_target( target )
 end
 function __shoot_turret( target )
    -- Target must exist
-   if not target and not target:exists() then
+   if not target or not target:exists() then
       return
    end
 
