@@ -6,10 +6,10 @@ in vec2 tex_coord_out;
 out vec4 color_out;
 
 // Colour cutoffs, corresponding to "dist" below.
-const float glyph_center     = 0.5;
-const float outline_center   = 0.3;
-const float glyph_stepsize   = 0.1;
-const float outline_stepsize = 0.125;
+const float glyph_center     = 0.538;
+const float outline_center   = 0.1535;
+const float glyph_stepsize   = 0.2325;
+const float outline_stepsize = 0.1175;
 
 void main(void) {
    // dist is a value between 0 and 1 with 0.5 on the edge and 1 inside it.
