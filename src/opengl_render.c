@@ -737,7 +737,7 @@ void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glCol
 
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
-   glDisableVertexAttribArray(shaders.safelanes.vertex);
+   glDisableVertexAttribArray(shd->vertex);
    glUseProgram(0);
    gl_checkErr();
 }
